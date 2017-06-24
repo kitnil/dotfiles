@@ -1,0 +1,103 @@
+(use-modules (gnu)
+	     (gnu system nss))
+
+(use-service-modules ssh
+		     desktop
+		     xorg
+		     cups
+		     mail)
+
+(use-package-modules bootloaders
+		     emacs
+		     cups
+		     mail
+		     wm
+		     certs
+		     fonts
+		     cryptsetup)
+
+(define 20-intel.conf "
+# Fix tearing on intel
+# https://wiki.archlinux.org/index.php/Intel_Graphics
+# https://github.com/8p8c/my-guix/blob/master/config.scm
+Section \"Device\"
+   Identifier  \"Intel Graphics\"
+   Driver      \"intel\"
+   Option      \"TearFree\" \"true\"
+EndSection
+")
+
+(define %custom-desktop-services
+  (modify-services %desktop-services
+		   (slim-service-type config => (slim-configuration
+						 (inherit config)
+						 (startx
+						  (xorg-start-command
+						   #:configuration-file
+						   (xorg-configuration-file
+						    #:extra-config (list 20-intel.conf))))))))
+
+(operating-system
+  (host-name "magnolia")
+  (timezone "Europe/Moscow")
+  (locale "en_US.utf8")
+
+  (bootloader (grub-configuration (grub grub-efi)
+				  (device "/dev/sda")))
+
+  (mapped-devices
+   (list (mapped-device
+	  (source (uuid "426c93b5-43ca-48b7-ac65-1a2a19c606b0"))
+	  (target "dragnof")
+	  (type luks-device-mapping))))
+
+  (file-systems (cons* (file-system
+                        (device "my-root")
+                        (title 'label)
+                        (mount-point "/")
+                        (type "ext4"))
+                       (file-system
+                        (device "/dev/sda1")
+                        (mount-point "/boot/efi")
+                        (type "vfat"))
+		       %base-file-systems))
+
+  (users (cons (user-account
+                (name "natsu")
+		(uid 1000)
+                (comment "Natsu Dragneel")
+                (group "users")
+
+                (supplementary-groups '("wheel"
+                                        "audio"
+					"video"
+					"lpadmin"
+					"lp"))
+                (home-directory "/home/natsu"))
+               %base-user-accounts))
+
+  (packages (cons* i3-wm
+		   i3status
+		   cups
+		   cryptsetup
+		   dovecot
+		   emacs
+		   emacs-guix
+		   nss-certs
+		   font-liberation
+		   %base-packages))
+
+  (services (cons* (service openssh-service-type
+			    (openssh-configuration
+			     (port-number 2222)))
+		   (service cups-service-type
+			    (cups-configuration
+			     (web-interface? #t)
+			     (extensions
+			      (list cups-filters hplip))))
+		   (dovecot-service
+		    #:config (dovecot-configuration
+			      (mail-location "maildir:~/Maildir:INBOX=~/Maildir/INBOX:LAYOUT=fs")
+			      (disable-plaintext-auth? #f)
+			      (listen '("127.0.0.1"))))
+		   %custom-desktop-services)))

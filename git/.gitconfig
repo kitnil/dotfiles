@@ -1,0 +1,8 @@
+[user]
+	email = go.wigust@gmail.com
+	name = Oleg Pykhalov
+[sendemail]
+	smtpEncryption = tls
+	smtpServer = smtp.gmail.com
+	smtpUser = go.wigust@gmail.com
+	smtpServerPort = 587

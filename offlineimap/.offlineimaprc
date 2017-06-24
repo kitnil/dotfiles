@@ -1,0 +1,22 @@
+[general]
+pythonfile = ~/.offlineimap.py
+accounts = Gmail
+
+[Account Gmail]
+localrepository = Local
+remoterepository = GmailRemote
+
+[Repository GmailRemote]
+type = Gmail
+remoteuser = go.wigust@gmail.com
+remotepasseval = get_pass('go.wigust@gmail.com')
+folderfilter = lambda folder: folder in ['INBOX']
+sslcacertfile = /etc/ssl/certs/ca-certificates.crt
+realdelete = no
+
+[Repository Local]
+type = IMAP
+remotehost = localhost
+remoteuser = natsu
+remotepasseval = get_pass('natsu@localhost')
+ssl = no
