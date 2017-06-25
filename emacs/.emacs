@@ -1,5 +1,7 @@
 (package-initialize)
 
+(ffap-bindings)
+
 (winner-mode 1)
 (windmove-default-keybindings)
 
@@ -21,8 +23,6 @@
           ("youtube" . browse-url-mpv)
 	  ("." . browse-url-firefox))))
 
-(global-set-key (kbd "C-c o") 'browse-url-at-point)
-(global-set-key (kbd "C-c f") 'find-file-at-point)
 (global-set-key (kbd "C-c g b") 'guix-switch-to-buffer)
 (global-set-key (kbd "C-c g x") 'guix-extended-command)
 (global-set-key (kbd "C-c i") 'imenu)
