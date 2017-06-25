@@ -14,6 +14,7 @@
 (add-hook 'python-mode-hook 'electric-pair-mode)
 (add-hook 'minibuffer-inactive-mode-hook 'paredit-mode)
 (add-hook 'compilation-mode-hook (lambda () (setq tab-width 13)))
+(add-hook 'LaTeX-mode-hook 'prettify-symbols-mode)
 
 ;; Make eww default for most URLs
 ;; https://github.com/littlestone/.emacs.d.sai/blob/e47d5cb326ec7ef824dab3ff99dc009349dd93af/settings/my-misc.el
