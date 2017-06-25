@@ -8,6 +8,7 @@
 (setq browse-url-mpv-program "mpv")
 (setq browse-url-mpv-arguments nil)
 (setq python-shell-interpreter "python3")
+(setq inhibit-compacting-font-caches t)
 
 (add-hook 'prog-mode-hook 'hs-minor-mode)
 (add-hook 'python-mode-hook 'electric-pair-mode)
