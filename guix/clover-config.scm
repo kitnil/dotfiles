@@ -1,9 +1,19 @@
-;; This is an operating system configuration template
-;; for a "bare bones" setup, with no X11 display server.
+(use-modules (gnu)
+	     (gnu system nss))
 
-(use-modules (gnu))
-(use-service-modules networking ssh)
-(use-package-modules admin)
+(use-service-modules ssh
+		     desktop
+		     xorg
+		     cups)
+
+(use-package-modules bootloaders
+		     emacs
+		     cups
+		     wm
+		     certs
+		     fonts
+                     xdisorg
+		     cryptsetup)
 
 (operating-system
   (host-name "clover")
@@ -28,13 +38,27 @@
                 (home-directory "/home/natsu"))
                %base-user-accounts))
 
-  ;; Globally-installed packages.
-  (packages %base-packages)
+  (packages (cons* i3-wm
+		   i3status
+		   cups
+                   rofi
+		   cryptsetup
+		   emacs
+		   emacs-guix
+		   nss-certs
+                   font-dejavu
+		   font-liberation
+		   %base-packages))
 
-  ;; Add services to the baseline: a DHCP client and
-  ;; an SSH server.
-  (services (cons* (dhcp-client-service)
-                   (service openssh-service-type
-                            (openssh-configuration
-                              (port-number 22)))
-                   %base-services)))
+  (services (cons* (service openssh-service-type
+			    (openssh-configuration
+			     (port-number 22)))
+		   (service cups-service-type
+			    (cups-configuration
+			     (web-interface? #t)
+			     (extensions
+			      (list cups-filters hplip))))
+		   (service guix-publish-service-type
+			    (guix-publish-configuration
+			     (host "0.0.0.0")))
+		   %desktop-services)))
