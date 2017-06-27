@@ -89,7 +89,7 @@ EndSection
 
   (services (cons* (service openssh-service-type
 			    (openssh-configuration
-			     (port-number 2222)))
+			     (port-number 22)))
 		   (service cups-service-type
 			    (cups-configuration
 			     (web-interface? #t)
