@@ -51,7 +51,7 @@ EndSection
 	  (type luks-device-mapping))))
 
   (file-systems (cons* (file-system
-                        (device "my-root")
+                        (device "magnolia-root")
                         (title 'label)
                         (mount-point "/")
                         (type "ext4"))
