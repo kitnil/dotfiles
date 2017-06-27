@@ -44,12 +44,6 @@ EndSection
   (bootloader (grub-configuration (grub grub-efi)
 				  (device "/dev/sda")))
 
-  (mapped-devices
-   (list (mapped-device
-	  (source (uuid "426c93b5-43ca-48b7-ac65-1a2a19c606b0"))
-	  (target "dragnof")
-	  (type luks-device-mapping))))
-
   (file-systems (cons* (file-system
                         (device "magnolia-root")
                         (title 'label)
