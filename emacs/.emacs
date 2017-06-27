@@ -5,6 +5,9 @@
 (winner-mode 1)
 (windmove-default-keybindings)
 
+(setenv "INSIDE_EMACS" (format "%s,comint" emacs-version))
+(pinentry-start)
+
 (setq browse-url-mpv-program "mpv")
 (setq browse-url-mpv-arguments nil)
 (setq python-shell-interpreter "python3")
