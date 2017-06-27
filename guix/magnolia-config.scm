@@ -83,6 +83,7 @@ EndSection
 		   emacs
 		   emacs-guix
 		   nss-certs
+                   font-dejavu
 		   font-liberation
 		   %base-packages))
 
