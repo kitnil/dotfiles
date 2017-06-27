@@ -4,13 +4,11 @@
 (use-service-modules ssh
 		     desktop
 		     xorg
-		     cups
-		     mail)
+		     cups)
 
 (use-package-modules bootloaders
 		     emacs
 		     cups
-		     mail
 		     wm
 		     certs
 		     fonts
@@ -80,7 +78,6 @@ EndSection
 		   i3status
 		   cups
 		   cryptsetup
-		   dovecot
 		   emacs
 		   emacs-guix
 		   nss-certs
@@ -95,9 +92,4 @@ EndSection
 			     (web-interface? #t)
 			     (extensions
 			      (list cups-filters hplip))))
-		   (dovecot-service
-		    #:config (dovecot-configuration
-			      (mail-location "maildir:~/Maildir:INBOX=~/Maildir/INBOX:LAYOUT=fs")
-			      (disable-plaintext-auth? #f)
-			      (listen '("127.0.0.1"))))
 		   %custom-desktop-services)))
