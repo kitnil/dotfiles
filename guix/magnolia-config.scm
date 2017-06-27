@@ -12,6 +12,7 @@
 		     wm
 		     certs
 		     fonts
+                     xdisorg
 		     cryptsetup)
 
 (define 20-intel.conf "
@@ -77,6 +78,7 @@ EndSection
   (packages (cons* i3-wm
 		   i3status
 		   cups
+                   rofi
 		   cryptsetup
 		   emacs
 		   emacs-guix
