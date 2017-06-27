@@ -64,7 +64,7 @@ EndSection
   (users (cons (user-account
                 (name "natsu")
 		(uid 1000)
-                (comment "Natsu Dragneel")
+                (comment "Oleg Pykhalov")
                 (group "users")
 
                 (supplementary-groups '("wheel"
