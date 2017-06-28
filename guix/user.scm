@@ -1,12 +1,16 @@
 (use-package-modules admin
-		     autotools
 		     aspell
+		     autotools
 		     backup
 		     bittorrent
+		     compression
+		     conkeror
+		     databases
 		     dictionaries
 		     emacs
 		     fonts
 		     gcc
+		     gettext
 		     gdb
 		     ghostscript
 		     gnu-doc
@@ -20,6 +24,7 @@
 		     java
 		     libreoffice
 		     llvm
+		     m4
 		     mail
 		     ncdu
 		     package-management
@@ -49,12 +54,15 @@
 
 (packages->manifest
  (list aria2
+       ;; BUG: python-scipy
        aspell
        aspell-dict-en
        aspell-dict-ru
        autoconf
        automake
+       bzip2
        clang
+       conkeror
        emacs-auctex
        emacs-cider
        emacs-company
@@ -64,7 +72,6 @@
        emacs-git-timemachine
        emacs-ob-ipython
        emacs-org
-       paredit
        emacs-pdf-tools
        emacs-projectile
        emacs-rainbow-delimiters
@@ -77,19 +84,25 @@
        emacs-writegood-mode
        emacs-yasnippet
        feh
+       gcc
        gdb
        git
        gnu-c-manual
+       gnu-gettext
+       gnu-make
        gnupg
        graphviz
        gs-fonts
+       guile-2.2
        htop
        icecat
        icedtea
        inkscape
        json-c
        jupyter
+       libgcrypt
        libreoffice
+       m4
        magit
        mercurial
        mpv
@@ -100,6 +113,7 @@
        offlineimap
        openssh
        parallel
+       paredit
        password-store
        pavucontrol
        perl
@@ -109,7 +123,6 @@
        python
        python-matplotlib
        python-pyqt
-       ;; BUG: python-scipy
        python-sphinx
        python-sympy
        qemu
@@ -120,6 +133,7 @@
        rxvt-unicode
        setxkbmap
        sicp
+       sqlite
        stow
        texinfo
        texlive
