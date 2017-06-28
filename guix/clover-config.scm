@@ -1,5 +1,6 @@
 (use-modules (gnu)
-	     (gnu system nss))
+	     (gnu system nss)
+	     (linux-nonfree))
 
 (use-service-modules ssh
 		     desktop
@@ -8,12 +9,13 @@
 		     pm)
 
 (use-package-modules bootloaders
+		     admin
 		     emacs
 		     cups
 		     wm
 		     certs
 		     fonts
-                     xdisorg
+		     xdisorg
 		     cryptsetup)
 
 (operating-system
@@ -22,33 +24,38 @@
   (locale "en_US.utf8")
 
   (bootloader (grub-configuration (device "/dev/sda")))
+
+  (kernel linux-nonfree)
+  (firmware (list firmware-non-free))
+
   (file-systems (cons (file-system
-                        (device "clover-root")
-                        (title 'label)
-                        (mount-point "/")
-                        (type "ext4"))
-                      %base-file-systems))
+			(device "clover-root")
+			(title 'label)
+			(mount-point "/")
+			(type "ext4"))
+		      %base-file-systems))
 
   (users (cons (user-account
-                (name "natsu")
-                (uid 1000)
-                (comment "Oleg Pykhalov")
-                (group "users")
-                (supplementary-groups '("wheel"
-                                        "audio" "video"))
-                (home-directory "/home/natsu"))
-               %base-user-accounts))
+		(name "natsu")
+		(uid 1000)
+		(comment "Oleg Pykhalov")
+		(group "users")
+		(supplementary-groups '("wheel"
+					"audio" "video"))
+		(home-directory "/home/natsu"))
+	       %base-user-accounts))
 
   (packages (cons* i3-wm
 		   i3status
 		   cups
-                   rofi
+		   rofi
 		   cryptsetup
 		   emacs
 		   emacs-guix
 		   nss-certs
-                   font-dejavu
+		   font-dejavu
 		   font-liberation
+		   wpa-supplicant
 		   %base-packages))
 
   (services (cons* (service tlp-service-type)
