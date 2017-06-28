@@ -3,6 +3,7 @@
 		     autotools
 		     backup
 		     bittorrent
+		     commencement
 		     compression
 		     conkeror
 		     databases
@@ -84,7 +85,7 @@
        emacs-writegood-mode
        emacs-yasnippet
        feh
-       gcc
+       gcc-toolchain-7
        gdb
        git
        gnu-c-manual
