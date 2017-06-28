@@ -4,7 +4,8 @@
 (use-service-modules ssh
 		     desktop
 		     xorg
-		     cups)
+		     cups
+		     pm)
 
 (use-package-modules bootloaders
 		     emacs
@@ -50,7 +51,8 @@
 		   font-liberation
 		   %base-packages))
 
-  (services (cons* (service openssh-service-type
+  (services (cons* (service tlp-service-type)
+		   (service openssh-service-type
 			    (openssh-configuration
 			     (port-number 22)))
 		   (service cups-service-type
