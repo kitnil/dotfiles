@@ -17,8 +17,8 @@ URxvt*scrollTtyKeypress: true
 URxvt.font: xft:monospace:size=13
 
 ! Colors
-URxvt*background: #000000
-URxvt*foreground: #B2B2B2
+URxvt*background: #ffffff
+URxvt*foreground: #000000
 ! black
 URxvt*color0:  #000000
 URxvt*color8:  #686868
