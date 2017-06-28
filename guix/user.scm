@@ -27,6 +27,7 @@
 		     llvm
 		     m4
 		     mail
+		     man
 		     ncdu
 		     package-management
 		     parallel
@@ -95,6 +96,7 @@
        graphviz
        gs-fonts
        guile-2.2
+       help2man
        htop
        icecat
        icedtea
