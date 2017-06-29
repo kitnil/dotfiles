@@ -115,7 +115,6 @@
        nmap
        notmuch
        offlineimap
-       obs
        openssh
        parallel
        paredit
