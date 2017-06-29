@@ -37,6 +37,12 @@
 ;; (with-eval-after-load 'geiser-guile
 ;;   (add-to-list 'geiser-guile-load-path "~/src/guix"))
 
+(defun guix-src-grep (regexp)
+  (interactive "sGREP: ")
+  (rgrep regexp
+	 "*.scm"
+	 (concat guix-directory "/gnu/packages")))
+
 (use-package browse-url
   :commands browse-url-mpv
   :config
