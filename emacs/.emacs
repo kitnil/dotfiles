@@ -47,6 +47,22 @@
   :commands browse-url-mpv
   :config
   (progn
+    (setq browse-url-mpv-remote-program "~/bin/mpv-remote")
+
+    (defun browse-url-mpv-remote (url &optional new-window)
+      "Ask the mpv video player to load URL.
+Defaults to the URL around or before point.  Passes the strings
+in the variable `browse-url-mpv-arguments' to mpv."
+      (interactive (browse-url-interactive-arg "URL: "))
+      (setq url (browse-url-encode-url url))
+      (let* ((process-environment (browse-url-process-environment)))
+	(apply 'start-process
+	       (concat "mpv " url) nil
+	       browse-url-mpv-remote-program
+	       (append
+		browse-url-mpv-remote-arguments
+		(list (car (split-string url "&")))))))
+
     (defun browse-url-mpv (url &optional new-window)
       "Ask the mpv video player to load URL.
 Defaults to the URL around or before point.  Passes the strings
@@ -383,6 +399,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
     ("d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
  '(default-input-method "russian-computer")
  '(display-time-mode t)
+ '(magit-auto-revert-mode nil)
  '(magit-repository-directories (quote (("~/src/math" . 0) ("~/src/guix" . 0))))
  '(nnir-notmuch-remove-prefix "/home/natsu/Maildir/")
  '(notmuch-saved-searches
