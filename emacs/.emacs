@@ -37,6 +37,24 @@
 ;; (with-eval-after-load 'geiser-guile
 ;;   (add-to-list 'geiser-guile-load-path "~/src/guix"))
 
+(use-package browse-url
+  :commands browse-url-mpv
+  :config
+  (progn
+    (defun browse-url-mpv (url &optional new-window)
+      "Ask the mpv video player to load URL.
+Defaults to the URL around or before point.  Passes the strings
+in the variable `browse-url-mpv-arguments' to mpv."
+      (interactive (browse-url-interactive-arg "URL: "))
+      (setq url (browse-url-encode-url url))
+      (let* ((process-environment (browse-url-process-environment)))
+	(apply 'start-process
+	       (concat "mpv " url) nil
+	       browse-url-mpv-program
+	       (append
+		browse-url-mpv-arguments
+		(list url)))))))
+
 (use-package which-key
   :diminish which-key-mode
   :config (which-key-mode))
