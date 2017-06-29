@@ -89,6 +89,7 @@
        gcc-toolchain-7
        gdb
        git
+       (list git "send-email")
        gnu-c-manual
        gnu-gettext
        gnu-make
