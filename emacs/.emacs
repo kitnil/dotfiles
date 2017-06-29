@@ -34,8 +34,8 @@
 (global-set-key (kbd "<f5>") 'recompile)
 
 (setq guix-directory "~/src/guix")
-(with-eval-after-load 'geiser-guile
-  (add-to-list 'geiser-guile-load-path "~/src/guix"))
+;; (with-eval-after-load 'geiser-guile
+;;   (add-to-list 'geiser-guile-load-path "~/src/guix"))
 
 (use-package which-key
   :diminish which-key-mode
