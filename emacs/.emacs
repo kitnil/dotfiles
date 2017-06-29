@@ -361,6 +361,15 @@
  '(display-time-mode t)
  '(magit-repository-directories (quote (("~/src/math" . 0) ("~/src/guix" . 0))))
  '(nnir-notmuch-remove-prefix "/home/natsu/Maildir/")
+ '(notmuch-saved-searches
+   (quote
+    ((:name "inbox" :query "tag:inbox" :key "i")
+     (:name "unread" :query "tag:unread" :key "u")
+     (:name "flagged" :query "tag:flagged" :key "f")
+     (:name "sent" :query "tag:sent" :key "t")
+     (:name "drafts" :query "tag:draft" :key "d")
+     (:name "all mail" :query "*" :key "a")
+     (:name "today" :query "date:today"))))
  '(org-agenda-files (quote ("~/.notes")))
  '(safe-local-variable-values
    (quote
