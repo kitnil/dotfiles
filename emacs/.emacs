@@ -83,7 +83,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
   :config (add-hook 'prog-mode-hook 'undo-tree-mode))
 
 (use-package projectile-global-mode
-  :config (projectile-global-mode))
+  :init (projectile-global-mode))
 
 (use-package rainbow-identifiers
   :config (add-hook 'prog-mode-hook 'rainbow-identifiers-mode))
