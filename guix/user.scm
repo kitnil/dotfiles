@@ -64,6 +64,7 @@
        automake
        bzip2
        clang
+       clojure
        conkeror
        emacs-auctex
        emacs-cider
