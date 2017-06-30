@@ -28,6 +28,7 @@
 		     m4
 		     mail
 		     man
+		     maths
 		     ncdu
 		     package-management
 		     parallel
@@ -109,6 +110,7 @@
        libreoffice
        m4
        magit
+       maxima
        mercurial
        mpv
        ncdu
