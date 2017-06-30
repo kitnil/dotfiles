@@ -77,6 +77,10 @@ in the variable `browse-url-mpv-arguments' to mpv."
 		browse-url-mpv-arguments
 		(list url)))))))
 
+(use-package cc-mode
+  :config
+  (add-hook 'c-mode-hook 'electric-pair-mode))
+
 (use-package which-key
   :diminish which-key-mode
   :config (which-key-mode))
@@ -221,6 +225,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
 	     ;; "#fedora-devel"
 	     ;; "#fedora-noc"
 	     ;; "#fedora-meeting"
+	     "#gnu"
 	     "#guile"
 	     "#guix"
 	     "##japanese"
