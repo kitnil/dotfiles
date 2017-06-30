@@ -113,6 +113,7 @@
        maxima
        mercurial
        mpv
+       mps-youtube
        ncdu
        neofetch
        nmap
