@@ -4,7 +4,8 @@
 (use-service-modules ssh
 		     desktop
 		     xorg
-		     cups)
+		     cups
+		     pm)
 
 (use-package-modules bootloaders
 		     emacs
@@ -92,4 +93,7 @@ EndSection
 		   (service guix-publish-service-type
 			    (guix-publish-configuration
 			     (host "0.0.0.0")))
+		   (service tlp-service-type
+			    (tlp-configuration
+			     (wol-disable? #f)))
 		   %custom-desktop-services)))
