@@ -156,4 +156,5 @@
        xmodmap
        xprop
        xrdb
-       youtube-dl))
+       youtube-dl
+       wakelan))
