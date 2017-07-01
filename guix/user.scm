@@ -30,6 +30,7 @@
 		     man
 		     maths
 		     ncdu
+		     networking
 		     package-management
 		     parallel
 		     password-utils
@@ -87,6 +88,7 @@
        emacs-which-key
        emacs-writegood-mode
        emacs-yasnippet
+       ethtool
        feh
        gcc-toolchain-7
        gdb
