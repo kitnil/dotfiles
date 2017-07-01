@@ -406,6 +406,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
  '(display-time-mode t)
  '(magit-auto-revert-mode nil)
  '(magit-repository-directories (quote (("~/src/math" . 0) ("~/src/guix" . 0))))
+ '(mouse-yank-at-point t)
  '(nnir-notmuch-remove-prefix "/home/natsu/Maildir/")
  '(notmuch-saved-searches
    (quote
