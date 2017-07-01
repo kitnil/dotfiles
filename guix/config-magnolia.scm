@@ -5,7 +5,8 @@
 		     desktop
 		     xorg
 		     cups
-		     pm)
+		     pm
+		     version-control)
 
 (use-package-modules bootloaders
 		     emacs
@@ -98,4 +99,7 @@ EndSection
 		   (service tlp-service-type
 			    (tlp-configuration
 			     (wol-disable? #f)))
+		   (service git-daemon-service-type
+			    (git-daemon-configuration
+			     (user-path "")))
 		   %custom-desktop-services)))
