@@ -420,7 +420,9 @@ in the variable `browse-url-mpv-arguments' to mpv."
      (:name "leti-user" :query "from:leti-user@googlegroups.com")
      (:name "patch-today" :query "subject:patch date:today")
      (:name "youtube" :query "from:noreply@youtube.com")
-     (:name "youtube-today" :query "from:noreply@youtube.com date:today"))))
+     (:name "youtube-today" :query "from:noreply@youtube.com date:today")
+     (:name "youtube-unread" :query "from:noreply@youtube.com tag:unread")
+     (:name "headhunter-unread" :query "from:no_reply@hh.ru tag:unread"))))
  '(org-agenda-files (quote ("~/.notes")))
  '(safe-local-variable-values
    (quote
