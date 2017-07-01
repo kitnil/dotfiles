@@ -35,7 +35,9 @@ EndSection
 						  (xorg-start-command
 						   #:configuration-file
 						   (xorg-configuration-file
-						    #:extra-config (list 20-intel.conf))))))))
+						    #:extra-config (list 20-intel.conf))))
+						 (auto-login? #t)
+						 (default-user "natsu")))))
 
 (operating-system
   (host-name "magnolia")
