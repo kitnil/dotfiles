@@ -102,4 +102,7 @@ EndSection
 		   (service git-daemon-service-type
 			    (git-daemon-configuration
 			     (user-path "")))
-		   %custom-desktop-services)))
+		   %custom-desktop-services))
+
+  ;; Allow resolution of '.local' host names with mDNS.
+  (name-service-switch %mdns-host-lookup-nss))
