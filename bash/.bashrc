@@ -27,3 +27,4 @@ alias la='ls -a'
 alias l1='ls -1'
 alias suspend='sudo loginctl suspend'
 export EDITOR=zile
+export GPG_TTY=$(tty)
