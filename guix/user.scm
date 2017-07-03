@@ -123,6 +123,7 @@
        notmuch
        offlineimap
        openssh
+       paperkey
        parallel
        paredit
        password-store
