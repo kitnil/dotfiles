@@ -122,6 +122,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
   :config (add-hook 'shell-mode-hook 'guix-prettify-mode))
 
 (use-package notmuch
+  :bind (("C-c m" . notmuch))
   :commands notmuch)
 
 (use-package erc
