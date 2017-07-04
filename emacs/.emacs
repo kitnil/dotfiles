@@ -258,37 +258,12 @@ in the variable `browse-url-mpv-arguments' to mpv."
 	  (append erc-autojoin-channels-alist irc-netlist-gnome)))
   :config
   (progn
-    (setq erc-hide-list '("JOIN" "PART" "QUIT" "NICK"))
-    (setq erc-autojoin-mode t)
-    (setq erc-autojoin-timing 'ident)
-    (setq erc-server-auto-reconnect t) ;; set to nil if spam
-    (setq erc-kill-server-buffer-on-quit nil)
-    (setq erc-kill-buffer-on-part nil)
-    (setq erc-whowas-on-nosuchnick t) ;; if nick is unknown, use whowas
-    (setq erc-timestamp-format "%H:%M ")
-    (setq erc-hide-timestamps t)
-    (setq erc-server-reconnect-timeout 60)
-    (setq erc-server-send-ping-timeout 180)
-    (setq erc-server-send-ping-interval 45)
-    (setq erc-accidental-paste-threshold-seconds 0.5)
-    (setq erc-nick-uniquifier nil)
-    (setq erc-server-reconnect-attempts t) ; Always reconnect
-    (setq erc-flood-protect t)
-    (setq erc-log-insert-log-on-open t)
-    (setq erc-track-position-in-mode-line 't)
-    (setq erc-track-switch-direction 'importantce)
-    (setq erc-track-faces-priority-list '(erc-current-nick-face erc-keyword-face))
-    (setq erc-track-priority-faces-only 'all)
-    (setq erc-join-buffer 'bury)
-
     (eval-after-load 'erc
       '(progn
 	 (erc-track-mode t)
 	 (erc-log-mode)
 	 (require 'erc-fill)
 	 (erc-fill-mode t)))
-
-    (setq erc-networks-alist nil)
 
     (add-hook 'erc-mode-hook
 	      '(lambda ()
@@ -406,6 +381,34 @@ in the variable `browse-url-mpv-arguments' to mpv."
     ("d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
  '(default-input-method "russian-computer")
  '(display-time-mode t)
+ '(erc-accidental-paste-threshold-seconds 0.5)
+ '(erc-autojoin-mode t)
+ '(erc-autojoin-timing (quote ident))
+ '(erc-email-userid "go.wigust@gmail.com")
+ '(erc-flood-protect t t)
+ '(erc-hide-timestamps t)
+ '(erc-join-buffer (quote bury))
+ '(erc-kill-buffer-on-part nil)
+ '(erc-kill-server-buffer-on-quit nil)
+ '(erc-log-insert-log-on-open t)
+ '(erc-modules
+   (quote
+    (autojoin button completion fill irccontrols list log match menu move-to-prompt netsplit networks noncommands readonly ring smiley stamp track)))
+ '(erc-networks-alist nil)
+ '(erc-nick-uniquifier nil)
+ '(erc-server-auto-reconnect t)
+ '(erc-server-reconnect-attempts t)
+ '(erc-server-reconnect-timeout 60)
+ '(erc-server-send-ping-interval 45)
+ '(erc-server-send-ping-timeout 180)
+ '(erc-timestamp-format "%H:%M ")
+ '(erc-track-faces-priority-list (quote (erc-current-nick-face erc-keyword-face)))
+ '(erc-track-position-in-mode-line (quote t))
+ '(erc-track-priority-faces-only (quote all))
+ '(erc-track-switch-direction (quote importantce))
+ '(erc-try-new-nick-p nil)
+ '(erc-user-full-name "Oleg Pykhalov")
+ '(erc-whowas-on-nosuchnick t)
  '(magit-auto-revert-mode nil)
  '(magit-repository-directories (quote (("~/src/math" . 0) ("~/src/guix" . 0))))
  '(mouse-yank-at-point t)
