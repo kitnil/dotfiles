@@ -101,6 +101,8 @@
        graphviz
        gs-fonts
        guile-2.2
+       guile-ssh
+       guix
        help2man
        htop
        icecat

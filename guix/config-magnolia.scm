@@ -15,7 +15,10 @@
 		     certs
 		     fonts
                      xdisorg
-		     cryptsetup)
+		     cryptsetup
+                     ssh
+		     guile
+		     package-management)
 
 (define 20-intel.conf "
 # Fix tearing on intel
@@ -80,9 +83,13 @@ EndSection
 		   cryptsetup
 		   emacs
 		   emacs-guix
+		   guile-2.2
+		   guix
 		   nss-certs
                    font-dejavu
 		   font-liberation
+                   guile-ssh
+		   openssh
 		   %base-packages))
 
   (services (cons* (service openssh-service-type
