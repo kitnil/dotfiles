@@ -1,0 +1,24 @@
+-*- mode: org -*-
+
+Hi, I'm happy GuixSD user for some time now.  This is some staff that
+can help that I spend some time to find.
+
+* Issues
+
+** guix offload %load-path different under local and ssh
+To fix this https://debbugs.gnu.org/cgi/bugreport.cgi?bug=27386
+#+BEGIN_SRC shell
+  export GUILE_LOAD_COMPILED_PATH="${GUILE_LOAD_COMPILED_PATH}:/run/current-system/profile/lib/guile/2.2/site-ccache:/run/current-system/profile/share/guile/site/2.2"
+  export GUILE_LOAD_PATH="${GUILE_LOAD_PATH}:/run/current-system/profile/share/guile/site/2.2"
+#+END_SRC
+
+** non-free intel wireless
+I discovered two guys fixed this:
+- https://github.com/Silverbeard00/guix-packages
+- https://gitlab.com/ng0_guix/guix_packages_nonfree
+
+* Howto
+
+** [[https://lists.gnu.org/archive/html/help-guix/2017-05/msg00090.html][Configure guix for develop]]
+
+** [[https://github.com/pjotrp/guix-notes.git][guix-notes]]
