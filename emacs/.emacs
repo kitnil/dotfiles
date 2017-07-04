@@ -122,6 +122,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
   :config (add-hook 'shell-mode-hook 'guix-prettify-mode))
 
 (use-package notmuch
+  :bind (("C-c m" . notmuch))
   :commands notmuch)
 
 (use-package erc
@@ -228,6 +229,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
 	     "#gnu"
 	     "#guile"
 	     "#guix"
+	     "#grub"
 	     "##japanese"
 	     "#latex"
 	     "#python"
@@ -406,6 +408,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
  '(display-time-mode t)
  '(magit-auto-revert-mode nil)
  '(magit-repository-directories (quote (("~/src/math" . 0) ("~/src/guix" . 0))))
+ '(mouse-yank-at-point t)
  '(nnir-notmuch-remove-prefix "/home/natsu/Maildir/")
  '(notmuch-saved-searches
    (quote
@@ -419,7 +422,12 @@ in the variable `browse-url-mpv-arguments' to mpv."
      (:name "leti-user" :query "from:leti-user@googlegroups.com")
      (:name "patch-today" :query "subject:patch date:today")
      (:name "youtube" :query "from:noreply@youtube.com")
-     (:name "youtube-today" :query "from:noreply@youtube.com date:today"))))
+     (:name "youtube-today" :query "from:noreply@youtube.com date:today")
+     (:name "youtube-unread" :query "from:noreply@youtube.com tag:unread")
+     (:name "headhunter-unread" :query "from:no_reply@hh.ru tag:unread")
+     (:name "pykhalov-unread" :query "from:pykhalov@gmail.com tag:unread")
+     (:name "artgames" :query "tag:unread subject:ArtGames LP")
+     (:name "my-email" :query "from:go.wigust@gmail.com"))))
  '(org-agenda-files (quote ("~/.notes")))
  '(safe-local-variable-values
    (quote

@@ -6,7 +6,8 @@
 		     desktop
 		     xorg
 		     cups
-		     pm)
+		     pm
+		     version-control)
 
 (use-package-modules bootloaders
 		     admin
@@ -17,6 +18,29 @@
 		     fonts
 		     xdisorg
 		     cryptsetup)
+
+(define 20-intel.conf "
+# Fix tearing on intel
+# https://wiki.archlinux.org/index.php/Intel_Graphics
+# https://github.com/8p8c/my-guix/blob/master/config.scm
+Section \"Device\"
+   Identifier  \"Intel Graphics\"
+   Driver      \"intel\"
+   Option      \"TearFree\" \"true\"
+EndSection
+")
+
+(define %custom-desktop-services
+  (modify-services %desktop-services
+		   (slim-service-type config => (slim-configuration
+						 (inherit config)
+						 (startx
+						  (xorg-start-command
+						   #:configuration-file
+						   (xorg-configuration-file
+						    #:extra-config (list 20-intel.conf))))
+						 (auto-login? #t)
+						 (default-user "natsu")))))
 
 (operating-system
   (host-name "clover")
@@ -58,7 +82,9 @@
 		   wpa-supplicant
 		   %base-packages))
 
-  (services (cons* (service tlp-service-type)
+  (services (cons* (service tlp-service-type
+			    (tlp-configuration
+			     (wol-disable? #f)))
 		   (service openssh-service-type
 			    (openssh-configuration
 			     (port-number 22)))
@@ -70,4 +96,10 @@
 		   (service guix-publish-service-type
 			    (guix-publish-configuration
 			     (host "0.0.0.0")))
-		   %desktop-services)))
+		   (service git-daemon-service-type
+			    (git-daemon-configuration
+			     (user-path "")))
+		   %custom-desktop-services))
+
+  ;; Allow resolution of '.local' host names with mDNS.
+  (name-service-switch %mdns-host-lookup-nss))

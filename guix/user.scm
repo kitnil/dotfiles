@@ -92,6 +92,7 @@
        feh
        gcc-toolchain-7
        gdb
+       ghostscript/x
        git
        (list git "send-email")
        gnu-c-manual
