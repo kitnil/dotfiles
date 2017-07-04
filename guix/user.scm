@@ -98,7 +98,6 @@
        gnu-gettext
        gnu-make
        gnupg
-       graphviz
        gs-fonts
        guile-2.2
        guile-ssh
