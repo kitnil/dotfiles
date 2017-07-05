@@ -133,6 +133,7 @@
        pinentry
        pkg-config
        ponymix
+       pulseaudio
        python
        python-matplotlib
        python-pyqt
