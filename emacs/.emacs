@@ -318,6 +318,10 @@ in the variable `browse-url-mpv-arguments' to mpv."
     (add-hook 'scheme-mode-hook 'guix-devel-mode)
     (setq geiser-active-implementations (quote (guile)))))
 
+(use-package proced
+  :commands proced
+  :config (add-hook 'proced-mode 'guix-prettify-mode))
+
 (use-package magit
   :bind (("C-c g s" . magit-status)
 	 ("C-c g p" . magit-dispatch-popup)
