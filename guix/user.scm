@@ -157,6 +157,7 @@
        vera
        virt-viewer
        wget
+       xclip
        xdotool
        xev
        xmodmap
