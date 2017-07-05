@@ -142,6 +142,15 @@ in the variable `browse-url-mpv-arguments' to mpv."
 	       :nick "wigust"
 	       :password nil))
 
+    (defun erc-connect-indymedia ()
+      "Connect to indymedia irc network"
+      (interactive)
+      (add-to-list 'erc-networks-alist '(indymedia "irc.indymedia.org"))
+      (erc-tls :server "irc.indymedia.org"
+	       :port 6697
+	       :nick "wigust"
+	       :password nil))
+
     (defun erc-connect-gitter ()
       "Connect to gitter irc network"
       (interactive)
@@ -237,6 +246,8 @@ in the variable `browse-url-mpv-arguments' to mpv."
 	     ;; "#fedora-qa"
 	     "#sagemath"
 	     "#scheme")
+	    ("indymedia.org"
+	     "#riseup")
 	    ("gitter.im")
 	    ("oftc.net"
 	     "#debian"
@@ -316,6 +327,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
   (progn
     (add-hook 'scheme-mode-hook 'paredit-mode)
     (add-hook 'scheme-mode-hook 'guix-devel-mode)
+    (add-hook 'scheme-mode-hook 'show-paren-mode)
     (setq geiser-active-implementations (quote (guile)))))
 
 (use-package proced
@@ -438,7 +450,10 @@ in the variable `browse-url-mpv-arguments' to mpv."
  '(org-agenda-files (quote ("~/.notes")))
  '(safe-local-variable-values
    (quote
-    ((eval when
+    ((Base . 10)
+     (Syntax . Common-Lisp)
+     (Package . Maxima)
+     (eval when
 	   (and
 	    (buffer-file-name)
 	    (file-regular-p
