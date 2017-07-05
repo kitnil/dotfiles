@@ -387,6 +387,9 @@ in the variable `browse-url-mpv-arguments' to mpv."
 (use-package google-translate-mode
   :commands google-translate-mode)
 
+(use-package imaxima
+  :commands imaxima)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -425,6 +428,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
  '(erc-try-new-nick-p nil)
  '(erc-user-full-name "Oleg Pykhalov")
  '(erc-whowas-on-nosuchnick t)
+ '(imaxima-scale-factor 1.5)
  '(magit-auto-revert-mode nil)
  '(magit-repository-directories (quote (("~/src/math" . 0) ("~/src/guix" . 0))))
  '(mouse-yank-at-point t)
