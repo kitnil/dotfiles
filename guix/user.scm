@@ -24,6 +24,7 @@
 		     inkscape
 		     java
 		     libreoffice
+		     lisp
 		     llvm
 		     m4
 		     mail
@@ -81,6 +82,7 @@
        emacs-projectile
        emacs-rainbow-delimiters
        emacs-rainbow-identifiers
+       emacs-slime
        emacs-sx
        emacs-transpose-frame
        emacs-undo-tree
@@ -90,7 +92,9 @@
        emacs-yasnippet
        ethtool
        feh
+       ffmpeg
        gcc-toolchain-7
+       gcl
        gdb
        ghostscript/x
        git
