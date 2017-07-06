@@ -414,7 +414,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
     (setq TeX-save-query nil)))
 
 (use-package google-translate-mode
-  :commands google-translate-mode)
+  :bind (("C-c t t t" . google-translate-mode)))
 
 (use-package imaxima
   :commands imaxima)
