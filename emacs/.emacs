@@ -5,7 +5,11 @@
 (setq inhibit-compacting-font-caches t)
 
 (use-package elec-pair
-  :bind (("C-c t p p" . electric-pair-mode)))
+  :bind (("C-c t p p" . electric-pair-mode))
+  :config
+  (progn
+    (add-hook 'c-mode-hook 'electric-pair-mode)
+    (add-hook 'python-mode-hook 'electric-pair-mode)))
 
 (use-package paren
   :bind (("C-c t p m" . show-paren-mode)))
@@ -28,8 +32,7 @@
 (use-package python
   :config
   (progn
-    (setq python-shell-interpreter "python3")
-    (add-hook 'python-mode-hook 'electric-pair-mode)))
+    (setq python-shell-interpreter "python3")))
 
 (use-package paredit
   :config
@@ -86,10 +89,6 @@ in the variable `browse-url-mpv-arguments' to mpv."
 	       (append
 		browse-url-mpv-remote-arguments
 		(list (car (split-string url "&")))))))))
-
-(use-package cc-mode
-  :config
-  (add-hook 'c-mode-hook 'electric-pair-mode))
 
 (use-package which-key
   :diminish which-key-mode
