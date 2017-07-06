@@ -1,8 +1,17 @@
 (package-initialize)
 
 (setenv "INSIDE_EMACS" (format "%s,comint" emacs-version))
-(global-set-key (kbd "<f5>") 'recompile)
+
 (setq inhibit-compacting-font-caches t)
+
+(use-package compile
+  :bind ("<f5>" . recompile))
+
+(use-package server
+  :config
+  (progn
+    (unless (server-running-p)
+      (server-start))))
 
 (use-package elec-pair
   :bind (("C-c t p p" . electric-pair-mode))
@@ -450,7 +459,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
  '(erc-whowas-on-nosuchnick t)
  '(imaxima-scale-factor 1.5)
  '(magit-auto-revert-mode nil)
- '(magit-repository-directories (quote (("~/src/math" . 0) ("~/src/guix" . 0))))
+ '(magit-repository-directories (quote (("~/src/math" . 0) ("~/src/guix" . 0) ("~/src/emacs-emamux" . 0) ("~/src/emacs-org-edit-latex" . 0) ("~/src/emacs-dired-hacks" . 0) ("~/src/emacs-which-key" . 0))))
  '(mouse-yank-at-point t)
  '(nnir-notmuch-remove-prefix "/home/natsu/Maildir/")
  '(notmuch-saved-searches
