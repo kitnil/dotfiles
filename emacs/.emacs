@@ -31,8 +31,13 @@
     (setq python-shell-interpreter "python3")
     (add-hook 'python-mode-hook 'electric-pair-mode)))
 
-(use-package minibuffer
-  :config (add-hook 'minibuffer-inactive-mode-hook 'paredit-mode))
+(use-package paredit
+  :config
+  (progn
+    (add-hook 'geiser-repl-mode-hook 'paredit-mode)
+    (add-hook 'scheme-mode-hook 'paredit-mode)
+    (add-hook 'minibuffer-inactive-mode-hook 'paredit-mode)
+    (add-hook 'emacs-lisp-mode-hook 'paredit-mode)))
 
 (use-package tex-mode
   :config (add-hook 'LaTeX-mode-hook 'prettify-symbols-mode))
@@ -334,15 +339,10 @@ in the variable `browse-url-mpv-arguments' to mpv."
     (add-hook 'dired-mode-hook 'guix-prettify-mode)
     (add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)))
 
-(use-package elisp-mode
-  :commands elisp-mode
-  :config (add-hook 'emacs-lisp-mode-hook 'paredit-mode))
-
 (use-package scheme
   :commands scheme-mode
   :config
   (progn
-    (add-hook 'scheme-mode-hook 'paredit-mode)
     (add-hook 'scheme-mode-hook 'guix-devel-mode)
     (add-hook 'scheme-mode-hook 'show-paren-mode)
     (setq geiser-active-implementations (quote (guile)))))
@@ -390,8 +390,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
   :config (setq display-time-24hr-format t))
 
 (use-package geiser-guile
-  :commands geiser-repl-mode
-  :config (add-hook 'geiser-repl-mode-hook 'paredit-mode))
+  :commands geiser-repl-mode)
 
 (use-package doc-view)
 
