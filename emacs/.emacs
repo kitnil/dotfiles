@@ -369,6 +369,9 @@ in the variable `browse-url-mpv-arguments' to mpv."
 (use-package savehist-mode
   :config (savehist-mode t))
 
+(use-package save-place-mode
+  :config (save-place-mode t))
+
 (use-package git-gutter
   :config (add-hook 'prog-mode-hook 'git-gutter-mode))
 
