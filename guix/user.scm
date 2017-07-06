@@ -32,6 +32,7 @@
 		     maths
 		     ncdu
 		     networking
+		     ocaml
 		     package-management
 		     parallel
 		     password-utils
@@ -138,6 +139,7 @@
        pinentry
        pkg-config
        ponymix
+       proof-general
        pulseaudio
        python
        python-matplotlib
