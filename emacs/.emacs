@@ -366,6 +366,9 @@ in the variable `browse-url-mpv-arguments' to mpv."
 	 ("C-c v p" . magit-dispatch-popup)
 	 ("C-c v l" . magit-list-repositories)))
 
+(use-package savehist-mode
+  :config (savehist-mode t))
+
 (use-package git-gutter
   :config (add-hook 'prog-mode-hook 'git-gutter-mode))
 
