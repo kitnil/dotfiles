@@ -4,6 +4,12 @@
 (global-set-key (kbd "<f5>") 'recompile)
 (setq inhibit-compacting-font-caches t)
 
+(use-package elec-pair
+  :bind (("C-c t p p" . electric-pair-mode)))
+
+(use-package paren
+  :bind (("C-c t p m" . show-paren-mode)))
+
 (use-package ffap
   :config (ffap-bindings))
 
