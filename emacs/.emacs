@@ -155,7 +155,8 @@ in the variable `browse-url-mpv-arguments' to mpv."
       (rgrep regexp
 	     "*.scm"
 	     (concat guix-directory "/gnu/packages")))
-    (setq guix-directory "~/src/guix")))
+    (setq guix-directory "~/src/guix")
+    (add-hook 'dired-mode-hook 'guix-prettify-mode)))
 
 (use-package erc
   :bind (("C-c e a" . erc-connect-all)
@@ -346,7 +347,6 @@ in the variable `browse-url-mpv-arguments' to mpv."
   :commands dired-mode
   :config
   (progn
-    (add-hook 'dired-mode-hook 'guix-prettify-mode)
     (add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)))
 
 (use-package elisp-mode
