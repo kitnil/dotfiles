@@ -349,6 +349,9 @@ in the variable `browse-url-mpv-arguments' to mpv."
     (add-hook 'dired-mode-hook 'guix-prettify-mode)
     (add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)))
 
+(use-package elisp-mode
+  :config (add-hook 'emacs-lisp-mode-hook 'show-paren-mode))
+
 (use-package scheme
   :commands scheme-mode
   :config
