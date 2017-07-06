@@ -1,67 +1,52 @@
 (package-initialize)
 
-(ffap-bindings)
-
-(winner-mode 1)
-(windmove-default-keybindings)
-
 (setenv "INSIDE_EMACS" (format "%s,comint" emacs-version))
-(pinentry-start)
-
-(setq browse-url-mpv-program "mpv")
-(setq browse-url-mpv-arguments nil)
-(setq python-shell-interpreter "python3")
+(global-set-key (kbd "<f5>") 'recompile)
 (setq inhibit-compacting-font-caches t)
 
-(add-hook 'prog-mode-hook 'hs-minor-mode)
-(add-hook 'python-mode-hook 'electric-pair-mode)
-(add-hook 'minibuffer-inactive-mode-hook 'paredit-mode)
-(add-hook 'compilation-mode-hook (lambda () (setq tab-width 13)))
-(add-hook 'LaTeX-mode-hook 'prettify-symbols-mode)
+(use-package ffap
+  :config (ffap-bindings))
 
-;; Make eww default for most URLs
-;; https://github.com/littlestone/.emacs.d.sai/blob/e47d5cb326ec7ef824dab3ff99dc009349dd93af/settings/my-misc.el
-(if (consp browse-url-browser-function)
-    (setcdr (assoc "." browse-url-browser-function) 'browse-url-firefox)
-  (setq browse-url-browser-function
-        `(("^ftp://.*" . browse-ftp-tramp)
-          ("youtube" . browse-url-mpv)
-	  ("." . browse-url-firefox))))
+(use-package winner
+  :config
+  (progn
+    (winner-mode 1)
+    (windmove-default-keybindings)))
 
-(global-set-key (kbd "C-c g b") 'guix-switch-to-buffer)
-(global-set-key (kbd "C-c g x") 'guix-extended-command)
-(global-set-key (kbd "C-c i") 'imenu)
-(global-set-key (kbd "<f5>") 'recompile)
+(use-package pinentry
+  :config (pinentry-start))
 
-(setq guix-directory "~/src/guix")
-;; (with-eval-after-load 'geiser-guile
-;;   (add-to-list 'geiser-guile-load-path "~/src/guix"))
+(use-package hideshow
+  :config (add-hook 'prog-mode-hook 'hs-minor-mode))
 
-(defun guix-src-grep (regexp)
-  (interactive "sGREP: ")
-  (rgrep regexp
-	 "*.scm"
-	 (concat guix-directory "/gnu/packages")))
+(use-package python
+  :config
+  (progn
+    (setq python-shell-interpreter "python3")
+    (add-hook 'python-mode-hook 'electric-pair-mode)))
+
+(use-package minibuffer
+  :config (add-hook 'minibuffer-inactive-mode-hook 'paredit-mode))
+
+(use-package tex-mode
+  :config (add-hook 'LaTeX-mode-hook 'prettify-symbols-mode))
+
+(use-package imenu
+  :bind (("C-c i" . imenu)))
 
 (use-package browse-url
   :commands browse-url-mpv
   :config
   (progn
+    (setq browse-url-mpv-program "mpv")
+    (setq browse-url-mpv-arguments nil)
     (setq browse-url-mpv-remote-program "~/bin/mpv-remote")
-
-    (defun browse-url-mpv-remote (url &optional new-window)
-      "Ask the mpv video player to load URL.
-Defaults to the URL around or before point.  Passes the strings
-in the variable `browse-url-mpv-arguments' to mpv."
-      (interactive (browse-url-interactive-arg "URL: "))
-      (setq url (browse-url-encode-url url))
-      (let* ((process-environment (browse-url-process-environment)))
-	(apply 'start-process
-	       (concat "mpv " url) nil
-	       browse-url-mpv-remote-program
-	       (append
-		browse-url-mpv-remote-arguments
-		(list (car (split-string url "&")))))))
+    (if (consp browse-url-browser-function)
+	(setcdr (assoc "." browse-url-browser-function) 'browse-url-firefox)
+      (setq browse-url-browser-function
+	    `(("^ftp://.*" . browse-ftp-tramp)
+	      ("youtube" . browse-url-mpv)
+	      ("." . browse-url-firefox))))
 
     (defun browse-url-mpv (url &optional new-window)
       "Ask the mpv video player to load URL.
@@ -75,7 +60,21 @@ in the variable `browse-url-mpv-arguments' to mpv."
 	       browse-url-mpv-program
 	       (append
 		browse-url-mpv-arguments
-		(list url)))))))
+		(list url)))))
+
+    (defun browse-url-mpv-remote (url &optional new-window)
+      "Ask the mpv video player to load URL.
+Defaults to the URL around or before point.  Passes the strings
+in the variable `browse-url-mpv-arguments' to mpv."
+      (interactive (browse-url-interactive-arg "URL: "))
+      (setq url (browse-url-encode-url url))
+      (let* ((process-environment (browse-url-process-environment)))
+	(apply 'start-process
+	       (concat "mpv " url) nil
+	       browse-url-mpv-remote-program
+	       (append
+		browse-url-mpv-remote-arguments
+		(list (car (split-string url "&")))))))))
 
 (use-package cc-mode
   :config
@@ -124,6 +123,18 @@ in the variable `browse-url-mpv-arguments' to mpv."
 (use-package notmuch
   :bind (("C-c m" . notmuch))
   :commands notmuch)
+
+(use-package guix-help
+  :bind (("C-c g b" . guix-switch-to-buffer)
+	 ("C-c g x" . guix-extended-command))
+  :config
+  (progn
+    (defun guix-src-grep (regexp)
+      (interactive "sGREP: ")
+      (rgrep regexp
+	     "*.scm"
+	     (concat guix-directory "/gnu/packages")))
+    (setq guix-directory "~/src/guix")))
 
 (use-package erc
   :bind (("C-c e a" . erc-connect-all)
@@ -335,9 +346,9 @@ in the variable `browse-url-mpv-arguments' to mpv."
   :config (add-hook 'proced-mode 'guix-prettify-mode))
 
 (use-package magit
-  :bind (("C-c g s" . magit-status)
-	 ("C-c g p" . magit-dispatch-popup)
-	 ("C-c g l" . magit-list-repositories)))
+  :bind (("C-c v s" . magit-status)
+	 ("C-c v p" . magit-dispatch-popup)
+	 ("C-c v l" . magit-list-repositories)))
 
 (use-package org
   :mode ("\\.notes\\'" . org-mode)
@@ -353,10 +364,13 @@ in the variable `browse-url-mpv-arguments' to mpv."
        (python . t)
        (ipython . t)))
     (setq org-babel-python-command python-shell-interpreter)
-    (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5))))
+    (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
+    (setq org-todo-keywords
+       '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)")))))
 
 (use-package shell
-  :bind (("C-c s" . shell)))
+  :bind (("C-c s s" . shell)
+	 ("C-c s e" . eshell)))
 
 (use-package calendar
   :commands calendar
