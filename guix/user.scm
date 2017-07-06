@@ -74,6 +74,7 @@
        emacs-company
        emacs-debbugs
        emacs-dired-hacks
+       emacs-expand-region
        emacs-git-gutter
        emacs-git-timemachine
        emacs-ob-ipython
