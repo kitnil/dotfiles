@@ -130,9 +130,11 @@ in the variable `browse-url-mpv-arguments' to mpv."
   :commands shell
   :config (add-hook 'shell-mode-hook 'guix-prettify-mode))
 
+(use-package gnus
+  :bind (("C-c m g" . gnus)))
+
 (use-package notmuch
-  :bind (("C-c m" . notmuch))
-  :commands notmuch)
+  :bind (("C-c m n" . notmuch)))
 
 (use-package guix-help
   :bind (("C-c g b" . guix-switch-to-buffer)
