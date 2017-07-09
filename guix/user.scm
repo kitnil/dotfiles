@@ -102,6 +102,7 @@
        gdb
        ghostscript/x
        gimp
+       gnuplot
        git
        (list git "send-email")
        gnu-c-manual
