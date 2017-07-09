@@ -98,6 +98,7 @@
        ethtool
        feh
        ffmpeg
+       (list font-adobe-source-han-sans "jp")
        gcc-toolchain-7
        gcl
        gdb
