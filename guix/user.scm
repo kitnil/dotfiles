@@ -79,6 +79,7 @@
        emacs-expand-region
        emacs-git-gutter
        emacs-git-timemachine
+       emacs-multiple-cursors
        emacs-ob-ipython
        emacs-org
        emacs-pdf-tools
