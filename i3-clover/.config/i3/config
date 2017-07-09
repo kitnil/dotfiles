@@ -160,7 +160,7 @@ bindsym $mod+r mode "resize"
 # finds out, if available)
 bar {
         status_command i3status
-        position top
+        position bottom
 }
 
 for_window [class="Remote-viewer"] floating enable
