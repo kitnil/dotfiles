@@ -36,6 +36,7 @@
   :config (pinentry-start))
 
 (use-package hideshow
+  :diminish hs-minor-mode
   :config (add-hook 'prog-mode-hook 'hs-minor-mode))
 
 (use-package python
