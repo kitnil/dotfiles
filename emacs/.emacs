@@ -45,6 +45,7 @@
     (setq python-shell-interpreter "python3")))
 
 (use-package paredit
+  :diminish paredit-mode
   :config
   (progn
     (add-hook 'geiser-repl-mode-hook 'paredit-mode)
