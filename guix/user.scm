@@ -99,6 +99,7 @@
        feh
        ffmpeg
        (list font-adobe-source-han-sans "jp")
+       font-wqy-zenhei
        gcc-toolchain-7
        gcl
        gdb
