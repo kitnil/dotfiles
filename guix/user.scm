@@ -179,4 +179,6 @@
        xprop
        xrdb
        youtube-dl
-       wakelan))
+       wakelan
+       xlsfonts
+       xset))
