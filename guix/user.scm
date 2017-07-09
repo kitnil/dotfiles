@@ -14,6 +14,7 @@
 		     gettext
 		     gdb
 		     ghostscript
+		     gimp
 		     gnu-doc
 		     gnupg
 		     gnuzilla
@@ -100,6 +101,7 @@
        gcl
        gdb
        ghostscript/x
+       gimp
        git
        (list git "send-email")
        gnu-c-manual
