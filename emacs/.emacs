@@ -479,7 +479,15 @@ in the variable `browse-url-mpv-arguments' to mpv."
  '(erc-whowas-on-nosuchnick t)
  '(imaxima-scale-factor 1.5)
  '(magit-auto-revert-mode nil)
- '(magit-repository-directories (quote (("~/src/math" . 0) ("~/src/guix" . 0) ("~/src/emacs-emamux" . 0) ("~/src/emacs-org-edit-latex" . 0) ("~/src/emacs-dired-hacks" . 0) ("~/src/emacs-which-key" . 0))))
+ '(magit-repository-directories
+   (quote
+    (("~/src/math" . 0)
+     ("~/src/guix" . 0)
+     ("~/src/emacs-emamux" . 0)
+     ("~/src/emacs-org-edit-latex" . 0)
+     ("~/src/emacs-dired-hacks" . 0)
+     ("~/src/emacs-which-key" . 0)
+     ("~/src/guile" . 0))))
  '(mouse-yank-at-point t)
  '(nnir-notmuch-remove-prefix "/home/natsu/Maildir/")
  '(notmuch-saved-searches
