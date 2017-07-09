@@ -383,7 +383,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
   :config (save-place-mode t))
 
 (use-package git-gutter
-  :config (add-hook 'prog-mode-hook 'git-gutter-mode))
+  :config (global-git-gutter-mode +1))
 
 (use-package org
   :mode ("\\.notes\\'" . org-mode)
