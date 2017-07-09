@@ -333,6 +333,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
   :bind (("C-c SPC" . er/expand-region)))
 
 (use-package company
+  :diminish company-mode
   :config (add-hook 'prog-mode-hook 'company-mode))
 
 (use-package hl-todo
