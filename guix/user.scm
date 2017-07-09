@@ -132,6 +132,7 @@
        neofetch
        nmap
        notmuch
+       ocaml
        offlineimap
        openssh
        paperkey
