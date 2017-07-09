@@ -53,6 +53,9 @@
     (add-hook 'minibuffer-inactive-mode-hook 'paredit-mode)
     (add-hook 'emacs-lisp-mode-hook 'paredit-mode)))
 
+(use-package multiple-cursors
+  :config (multiple-cursors-mode))
+
 (use-package tex-mode
   :config (add-hook 'LaTeX-mode-hook 'prettify-symbols-mode))
 
