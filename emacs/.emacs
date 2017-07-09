@@ -131,6 +131,9 @@ in the variable `browse-url-mpv-arguments' to mpv."
 (use-package projectile-global-mode
   :init (projectile-global-mode))
 
+(use-package rainbow-mode
+  :bind (("C-c t c r" . rainbow-mode)))
+
 (use-package rainbow-identifiers
   :config (add-hook 'prog-mode-hook 'rainbow-identifiers-mode))
 
