@@ -13,6 +13,11 @@ set $mod Mod4
 
 set $term urxvt256c-ml
 
+client.focused          #000000 #66CD00 #000000
+client.focused_inactive #000000 #DCDAD5 #000000
+client.unfocused        #000000 #DCDAD5 #000000
+client.urgent           #FF3030 #FF3030 #000000
+
 # Pulse audio controls
 bindsym XF86AudioRaiseVolume exec ponymix increase 5
 bindsym XF86AudioLowerVolume exec ponymix decrease 5
@@ -162,12 +167,20 @@ bar {
         status_command i3status
         position bottom
 	separator_symbol ::
+        colors {
+                   background #DCDAD5
+                   statusline #000000
+                   focused_workspace  #000000 #66CD00
+                   active_workspace   #000000 #DCDAD5
+                   inactive_workspace #000000 #DCDAD5
+                   urgent_workspace   #000000 #FF3030
+        }
 }
 
 for_window [class="Remote-viewer"] floating enable
 
 # exec --no-startup-id gnome-settings-daemon
-exec --no-startup-id feh --bg-scale ~/Pictures/Wallpapers/Natural_Landscape_Alps_Matterhorn_4k.jpg
+exec --no-startup-id feh --bg-scale ~/Pictures/Wallpapers/current.png
 # exec --no-startup-id redshift & > /dev/null 2>&
 exec --no-startup-id setxkbmap -layout us,ru -option grp:win_space_toggle # keyboard layout
 exec --no-startup-id xrdb -merge ~/.Xresources
