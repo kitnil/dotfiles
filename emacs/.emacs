@@ -383,6 +383,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
   :config (save-place-mode t))
 
 (use-package git-gutter
+  :diminish git-gutter-mode
   :config (global-git-gutter-mode +1))
 
 (use-package org
