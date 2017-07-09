@@ -343,6 +343,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
     (add-hook 'prog-mode-hook 'hl-todo-mode)))
 
 (use-package yasnippet
+  :diminish yas-minor-mode
   :config
   (progn
     (yas-reload-all)
