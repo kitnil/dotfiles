@@ -171,7 +171,8 @@ in the variable `browse-url-mpv-arguments' to mpv."
 	 ("C-c e f" . erc-connect-freenode)
 	 ("C-c e d" . erc-connect-debian)
 	 ("C-c e g" . erc-connect-gitter)
-	 ("C-c e G" . erc-connect-gnome))
+	 ("C-c e G" . erc-connect-gnome)
+	 ("C-c e t" . erc-connect-twitch))
   :init
   (progn
     (defun erc-connect-twitch ()
