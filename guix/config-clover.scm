@@ -1,6 +1,7 @@
 (use-modules (gnu)
 	     (gnu system nss)
-	     (linux-nonfree))
+	     (linux-nonfree)
+	     (guix store))
 
 (use-service-modules ssh
 		     desktop
@@ -32,15 +33,19 @@ EndSection
 
 (define %custom-desktop-services
   (modify-services %desktop-services
-		   (slim-service-type config => (slim-configuration
-						 (inherit config)
-						 (startx
-						  (xorg-start-command
-						   #:configuration-file
-						   (xorg-configuration-file
-						    #:extra-config (list 20-intel.conf))))
-						 (auto-login? #t)
-						 (default-user "natsu")))))
+    (guix-service-type config =>
+                       (guix-configuration
+                        (inherit config)
+			(substitute-urls (append %default-substitute-urls '("http://magnolia.local")))))
+    (slim-service-type config => (slim-configuration
+				  (inherit config)
+				  (startx
+				   (xorg-start-command
+				    #:configuration-file
+				    (xorg-configuration-file
+				     #:extra-config (list 20-intel.conf))))
+				  (auto-login? #t)
+				  (default-user "natsu")))))
 
 (operating-system
   (host-name "clover")
