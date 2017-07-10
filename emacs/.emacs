@@ -481,6 +481,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
  '(erc-try-new-nick-p nil)
  '(erc-user-full-name "Oleg Pykhalov")
  '(erc-whowas-on-nosuchnick t)
+ '(geiser-guile-binary "guile")
  '(imaxima-scale-factor 1.5)
  '(magit-auto-revert-mode nil)
  '(magit-repository-directories
