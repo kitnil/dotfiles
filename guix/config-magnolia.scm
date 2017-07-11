@@ -6,7 +6,9 @@
 		     xorg
 		     cups
 		     pm
-		     version-control)
+		     version-control
+		     admin
+		     mcron)
 
 (use-package-modules bootloaders
 		     emacs
@@ -122,6 +124,8 @@ EndSection
 		   (service git-daemon-service-type
 			    (git-daemon-configuration
 			     (user-path "")))
+		   (service mcron-service-type)
+		   (service rottlog-service-type)
 		   %custom-desktop-services))
 
   ;; Allow resolution of '.local' host names with mDNS.
