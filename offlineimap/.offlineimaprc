@@ -5,18 +5,21 @@ accounts = Gmail
 [Account Gmail]
 localrepository = Local
 remoterepository = GmailRemote
+maxage = 14
+maxsize = 2000000
 
 [Repository GmailRemote]
 type = Gmail
 remoteuser = go.wigust@gmail.com
-remotepasseval = get_pass('go.wigust@gmail.com')
+remotepasseval = get_pass('go.wigust')
 folderfilter = lambda folder: folder in ['INBOX']
 sslcacertfile = /etc/ssl/certs/ca-certificates.crt
 realdelete = no
 
 [Repository Local]
-type = IMAP
-remotehost = localhost
-remoteuser = natsu
-remotepasseval = get_pass('natsu@localhost')
-ssl = no
+type = GmailMaildir
+localfolders = ~/Maildir
+
+
+
+
