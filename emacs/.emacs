@@ -51,7 +51,6 @@
   :diminish paredit-mode
   :config
   (progn
-    (add-hook 'geiser-repl-mode-hook 'paredit-mode)
     (add-hook 'scheme-mode-hook 'paredit-mode)
     (add-hook 'minibuffer-inactive-mode-hook 'paredit-mode)
     (add-hook 'emacs-lisp-mode-hook 'paredit-mode)))
