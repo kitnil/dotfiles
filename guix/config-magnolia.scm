@@ -31,17 +31,30 @@ Section \"Device\"
 EndSection
 ")
 
+(define %guix-daemon-config
+  (guix-configuration
+   ;; Disable substitutes altogether.
+   ;; (substitute-urls '())
+   ;; (authorized-keys '())
+   (max-silent-time 7200)
+   (timeout (* 4 max-silent-time))
+
+   (extra-options '("--max-jobs=6" "--cores=3"
+                    "--cache-failures"
+                    "--gc-keep-outputs" "--gc-keep-derivations"))))
+
 (define %custom-desktop-services
   (modify-services %desktop-services
-		   (slim-service-type config => (slim-configuration
-						 (inherit config)
-						 (startx
-						  (xorg-start-command
-						   #:configuration-file
-						   (xorg-configuration-file
-						    #:extra-config (list 20-intel.conf))))
-						 (auto-login? #t)
-						 (default-user "natsu")))))
+    (guix-service-type config => %guix-daemon-config)
+    (slim-service-type config => (slim-configuration
+				  (inherit config)
+				  (startx
+				   (xorg-start-command
+				    #:configuration-file
+				    (xorg-configuration-file
+				     #:extra-config (list 20-intel.conf))))
+				  (auto-login? #t)
+				  (default-user "natsu")))))
 
 (operating-system
   (host-name "magnolia")
