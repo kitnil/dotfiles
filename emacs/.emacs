@@ -403,8 +403,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
      'org-babel-load-languages
      '((emacs-lisp . nil)
        (R . t)
-       (python . t)
-       (ipython . t)))
+       (python . t)))
     (setq org-babel-python-command python-shell-interpreter)
     (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
     (setq org-todo-keywords
