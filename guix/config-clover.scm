@@ -31,12 +31,18 @@ Section \"Device\"
 EndSection
 ")
 
+(define %guix-daemon-config
+  (guix-configuration
+   (substitute-urls (append %default-substitute-urls '("http://magnolia.local")))
+   (max-silent-time 7200)
+   (timeout (* 4 max-silent-time))
+   (extra-options '("--max-jobs=4" "--cores=2"
+                    "--cache-failures"
+                    "--gc-keep-outputs" "--gc-keep-derivations"))))
+
 (define %custom-desktop-services
   (modify-services %desktop-services
-    (guix-service-type config =>
-                       (guix-configuration
-                        (inherit config)
-			(substitute-urls (append %default-substitute-urls '("http://magnolia.local")))))
+    (guix-service-type config => %guix-daemon-config)
     (slim-service-type config => (slim-configuration
 				  (inherit config)
 				  (startx
