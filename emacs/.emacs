@@ -4,6 +4,9 @@
 
 (setq inhibit-compacting-font-caches t)
 
+(use-package ibuffer
+  :bind (("C-c b" . ibuffer)))
+
 (use-package compile
   :bind ("<f5>" . recompile))
 
