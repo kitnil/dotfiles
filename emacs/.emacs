@@ -427,6 +427,13 @@ in the variable `browse-url-mpv-arguments' to mpv."
 (use-package geiser-guile
   :commands geiser-repl-mode)
 
+(use-package info-look)
+
+(use-package geiser-doc)
+
+(use-package info
+  :config (info-initialize))
+
 (use-package doc-view)
 
 (use-package pdf-tools
