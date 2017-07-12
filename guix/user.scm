@@ -121,6 +121,7 @@
        libreoffice
        m4
        magit
+       mailutils
        maxima
        mercurial
        mpv
