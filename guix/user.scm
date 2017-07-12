@@ -42,6 +42,7 @@
 		     qemu
 		     qt
 		     rsync
+		     samba
 		     scanner
 		     scheme
 		     shells
@@ -144,6 +145,7 @@
        rsnapshot
        rsync
        rxvt-unicode
+       samba
        setxkbmap
        sicp
        sqlite
