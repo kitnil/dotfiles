@@ -114,6 +114,7 @@
        htop
        icecat
        icedtea
+       iperf
        json-c
        libgcrypt
        libreoffice
