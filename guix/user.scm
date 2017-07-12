@@ -109,6 +109,7 @@
        guile-2.2
        guile-ssh
        guix
+       haunt
        help2man
        htop
        icecat
