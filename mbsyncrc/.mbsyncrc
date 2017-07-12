@@ -17,6 +17,6 @@ Channel gmail
 Master :gmail-remote:
 Slave :gmail-local:
 Patterns "INBOX" # Sync only INBOX
-Create Both
-Expunge Both
-SyncState *
+# Create Both
+# Expunge Both
+# SyncState *
