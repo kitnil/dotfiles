@@ -115,6 +115,7 @@
        icecat
        icedtea
        iperf
+       isync
        json-c
        libgcrypt
        libreoffice
