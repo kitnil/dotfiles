@@ -24,7 +24,7 @@ ethernet _first_ {
 }
 
 tztime local {
-        format = "%d/%m/%y %H:%M"
+        format = "%Y-%m-%d %H:%M"
 }
 
 load {
