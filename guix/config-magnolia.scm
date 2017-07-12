@@ -118,9 +118,6 @@ EndSection
 		   (service guix-publish-service-type
 			    (guix-publish-configuration
 			     (host "0.0.0.0")))
-		   (service tlp-service-type
-			    (tlp-configuration
-			     (wol-disable? #f)))
 		   (service git-daemon-service-type
 			    (git-daemon-configuration
 			     (user-path "")))
