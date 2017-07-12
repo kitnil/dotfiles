@@ -11,6 +11,7 @@ general {
         interval = 5
 }
 
+order += "disk /"
 order += "ethernet _first_"
 order += "load"
 order += "tztime local"
@@ -28,6 +29,10 @@ tztime local {
 
 load {
         format = "%1min"
+}
+
+disk "/" {
+        format = "%avail"
 }
 
 volume master {
