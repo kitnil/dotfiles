@@ -1,4 +1,5 @@
 (use-package-modules admin
+		     android
 		     aspell
 		     autotools
 		     backup
@@ -57,7 +58,8 @@
 		     xorg)
 
 (packages->manifest
- (list aria2
+ (list adb
+       aria2
        aspell
        aspell-dict-en
        aspell-dict-ru
