@@ -1,10 +1,11 @@
 (setq user-mail-address	"go.wigust@gmail.com"
       user-full-name	"Oleg Pykhalov"
 
-      gnus-select-method  '(nnmaildir "natsu"
-				      (directory "/home/natsu/Maildir")
-				      (nnir-search-engine notmuch)
-				      (nnir-notmuch-remove-prefix "/home/natsu/Maildir/"))
+      gnus-select-method
+      '(nnimap "clover"
+	       (nnimap-address "localhost")  ; it could also be imap.googlemail.com if that's your server.
+	       (nnimap-server-port "imaps"))
+
       gnus-permanently-visible-groups ".*INBOX"
 
       mm-discouraged-alternatives '("text/html" "text/richtext")
