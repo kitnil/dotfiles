@@ -83,7 +83,6 @@
        emacs-rainbow-delimiters
        emacs-rainbow-identifiers
        emacs-rainbow-mode
-       emacs-slime
        emacs-sx
        emacs-transpose-frame
        emacs-undo-tree
