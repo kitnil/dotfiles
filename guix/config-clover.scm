@@ -8,7 +8,8 @@
 		     xorg
 		     cups
 		     pm
-		     version-control)
+		     version-control
+		     mail)
 
 (use-package-modules bootloaders
 		     admin
@@ -110,6 +111,11 @@ EndSection
 		   (service git-daemon-service-type
 			    (git-daemon-configuration
 			     (user-path "")))
+		   (dovecot-service
+		    #:config (dovecot-configuration
+			      (mail-location "maildir:~/Maildir:INBOX=~/Maildir/INBOX:LAYOUT=fs")
+			      (disable-plaintext-auth? #f)
+			      (listen '("127.0.0.1"))))
 		   %custom-desktop-services))
 
   ;; Allow resolution of '.local' host names with mDNS.
