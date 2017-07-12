@@ -14,7 +14,6 @@
 		     gettext
 		     gdb
 		     ghostscript
-		     gimp
 		     gnu-doc
 		     gnupg
 		     gnuzilla
@@ -22,7 +21,6 @@
 		     guile
 		     image-viewers
 		     imagemagick
-		     inkscape
 		     java
 		     libreoffice
 		     lisp
@@ -40,7 +38,6 @@
 		     perl
 		     pkg-config
 		     pulseaudio
-		     python
 		     qemu
 		     qt
 		     rsync
@@ -61,15 +58,12 @@
 
 (packages->manifest
  (list aria2
-       ;; BUG: python-scipy
        aspell
        aspell-dict-en
        aspell-dict-ru
        autoconf
        automake
        bzip2
-       clang
-       clojure
        conkeror
        emacs-auctex
        emacs-cider
@@ -80,7 +74,6 @@
        emacs-git-gutter
        emacs-git-timemachine
        emacs-multiple-cursors
-       emacs-ob-ipython
        emacs-org
        emacs-pdf-tools
        emacs-projectile
@@ -100,11 +93,8 @@
        ffmpeg
        (list font-adobe-source-han-sans "jp")
        font-wqy-zenhei
-       gcc-toolchain-7
-       gcl
        gdb
        ghostscript/x
-       gimp
        gnuplot
        git
        (list git "send-email")
@@ -120,9 +110,7 @@
        htop
        icecat
        icedtea
-       inkscape
        json-c
-       jupyter
        libgcrypt
        libreoffice
        m4
@@ -136,7 +124,6 @@
        nmap
        notmuch
        ocaml
-       offlineimap
        openssh
        paperkey
        parallel
@@ -149,11 +136,6 @@
        ponymix
        proof-general
        pulseaudio
-       python
-       python-matplotlib
-       python-pyqt
-       python-sphinx
-       python-sympy
        qemu
        racket
        redshift
@@ -170,7 +152,6 @@
        translate-shell
        tree
        vera
-       virt-viewer
        wget
        xclip
        xdotool
