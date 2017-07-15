@@ -382,7 +382,8 @@ in the variable `browse-url-mpv-arguments' to mpv."
 (use-package magit
   :bind (("C-c v s" . magit-status)
 	 ("C-c v p" . magit-dispatch-popup)
-	 ("C-c v l" . magit-list-repositories)))
+	 ("C-c v l" . magit-list-repositories)
+	 ("C-c v v" . magit-stage)))
 
 (use-package savehist-mode
   :config (savehist-mode t))
