@@ -370,6 +370,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
   :commands scheme-mode
   :config
   (progn
+    (setq indent-tabs-mode nil)
     (add-hook 'scheme-mode-hook 'guix-devel-mode)
     (add-hook 'scheme-mode-hook 'show-paren-mode)
     (setq geiser-active-implementations (quote (guile)))))
