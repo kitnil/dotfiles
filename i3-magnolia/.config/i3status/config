@@ -7,8 +7,8 @@
 # If the above line is not correctly displayed, fix your editor first!
 
 general {
-        colors = false
-        interval = 5
+    colors = false
+    interval = 5
 }
 
 order += "disk /"
@@ -18,20 +18,20 @@ order += "tztime local"
 order += "volume master"
 
 ethernet _first_ {
-        format_up = "E: %ip"
-        format_down = "E: down"
+    format_up = "E: %ip"
+    format_down = "E: down"
 }
 
 tztime local {
-        format = "%Y-%m-%d %H:%M"
+    format = "%Y-%m-%d %H:%M"
 }
 
 load {
-        format = "%1min"
+    format = "%1min"
 }
 
 disk "/" {
-        format = "%avail"
+    format = "%avail"
 }
 
 volume master {
