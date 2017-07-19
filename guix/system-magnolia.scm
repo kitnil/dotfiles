@@ -1,3 +1,7 @@
+;; GuixSD configuration file for the desktop machine.
+;; Copyright © 2017 Oleg Pykhalov <go.wigust@gmail.com>
+;; Released under the GNU GPLv3 or any later version.
+
 (use-modules (gnu)
              (gnu system nss))
 
