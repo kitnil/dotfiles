@@ -123,6 +123,8 @@ EndSection
   (services (cons* (service openssh-service-type
                             (openssh-configuration
                              (port-number 22)))
+                   ;; https://localhost:631
+                   ;; be sure librejs is disabled in browser
                    (service cups-service-type
                             (cups-configuration
                              (web-interface? #t)
