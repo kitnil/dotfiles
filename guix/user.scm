@@ -70,6 +70,7 @@
        automake
        bzip2
        conkeror
+       emacs-aggressive-indent
        emacs-auctex
        emacs-cider
        emacs-company
