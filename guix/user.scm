@@ -46,6 +46,7 @@
                      samba
                      scanner
                      scheme
+                     screen
                      shells
                      spice
                      ssh
@@ -151,6 +152,7 @@
        rsync
        rxvt-unicode
        samba
+       screen
        setxkbmap
        sicp
        sqlite
