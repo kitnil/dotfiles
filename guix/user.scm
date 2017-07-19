@@ -177,5 +177,6 @@
        youtube-dl
        wakelan
        unzip
+       xclip
        xlsfonts
        xset))
