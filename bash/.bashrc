@@ -36,5 +36,6 @@ export GUILE_LOAD_PATH="${GUILE_LOAD_PATH}:/run/current-system/profile/share/gui
 
 alias guix-configure="./configure --localstatedir=/var --prefix=''"
 alias rsync-daemon="rsync --config=rsyncd.conf --daemon"
+alias guix-make='guix environment guix --ad-hoc help2man -- make'
 
 export GUIX_BUILD_OPTIONS="--keep-failed"
