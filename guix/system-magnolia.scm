@@ -75,6 +75,11 @@ EndSection
                         (device "/dev/sda1")
                         (mount-point "/boot/efi")
                         (type "vfat"))
+		       (file-system
+                        (device "magnolia-data")
+                        (title 'label)
+                        (mount-point "/srv")
+                        (type "ext4"))
 		       %base-file-systems))
 
   (users (cons (user-account
