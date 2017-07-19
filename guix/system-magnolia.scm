@@ -8,7 +8,8 @@
 		     pm
 		     version-control
 		     admin
-		     mcron)
+		     mcron
+                     mail)
 
 (use-package-modules bootloaders
 		     emacs
@@ -129,6 +130,14 @@ EndSection
 		   (service git-daemon-service-type
 			    (git-daemon-configuration
 			     (user-path "")))
+		   (dovecot-service
+		    #:config (dovecot-configuration
+                              (mail-location
+                               (string-append
+                                "maildir:~/Maildir:INBOX=~/Maildir/INBOX:"
+                                "LAYOUT=fs"))
+			      (disable-plaintext-auth? #f)
+			      (listen '("127.0.0.1"))))
 		   (service mcron-service-type)
 		   (service rottlog-service-type)
 		   %custom-desktop-services))
