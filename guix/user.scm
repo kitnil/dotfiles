@@ -176,5 +176,6 @@
        xrdb
        youtube-dl
        wakelan
+       unzip
        xlsfonts
        xset))
