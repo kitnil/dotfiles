@@ -568,6 +568,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
  '(shr-width 80)
  '(smtpmail-smtp-server "smtp.gmail.com")
  '(smtpmail-smtp-service 25)
+ '(tab-always-indent (quote complete))
  '(tool-bar-mode nil)
  '(trans-target "ru")
  '(vc-follow-symlinks t)
