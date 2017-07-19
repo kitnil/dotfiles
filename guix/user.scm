@@ -10,6 +10,7 @@
                      databases
                      dictionaries
                      emacs
+                     file
                      fonts
                      gcc
                      gettext
@@ -93,6 +94,7 @@
        ethtool
        feh
        ffmpeg
+       file
        (list font-adobe-source-han-sans "jp")
        font-wqy-zenhei
        gdb
