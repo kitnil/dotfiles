@@ -167,6 +167,7 @@
        translate-shell
        tree
        vera
+       virt-viewer
        wget
        xclip
        xdotool
