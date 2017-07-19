@@ -148,6 +148,7 @@
        ponymix
        proof-general
        pulseaudio
+       python-internetarchive
        qemu
        racket
        redshift
