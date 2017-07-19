@@ -1,6 +1,8 @@
 (package-initialize)
 
 (setenv "INSIDE_EMACS" (format "%s,comint" emacs-version))
+(setq user-mail-address	"go.wigust@gmail.com"
+      user-full-name	"Oleg Pykhalov")
 
 (setq inhibit-compacting-font-caches t)
 
