@@ -80,6 +80,7 @@
        emacs-git-gutter
        emacs-git-timemachine
        emacs-multiple-cursors
+       emacs-lua-mode
        emacs-org
        emacs-pdf-tools
        emacs-projectile
