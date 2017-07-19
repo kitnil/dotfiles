@@ -95,7 +95,6 @@ EndSection
                 (uid 1000)
                 (comment "Oleg Pykhalov")
                 (group "users")
-
                 (supplementary-groups '("wheel"
                                         "audio"
                                         "video"
