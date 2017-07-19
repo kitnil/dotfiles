@@ -526,6 +526,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
      (:name "my-email" :query "from:go.wigust@gmail.com")
      (:name "family" :query "from:pykhalov@gmail.com from:gitarika@rambler.ru tag:unread"))))
  '(org-agenda-files (quote ("~/.notes")))
+ '(projectile-completion-system (quote default))
  '(safe-local-variable-values
    (quote
     ((Base . 10)
