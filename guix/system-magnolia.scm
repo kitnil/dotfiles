@@ -20,7 +20,8 @@
 		     cryptsetup
                      ssh
 		     guile
-		     package-management)
+		     package-management
+		     bash)
 
 (define 20-intel.conf "
 # Fix tearing on intel
@@ -48,6 +49,8 @@ EndSection
 (define %custom-desktop-services
   (modify-services %desktop-services
     (guix-service-type config => %guix-daemon-config)
+    (special-files-service-type config => `(("/bin/sh" ,(file-append bash "/bin/sh"))
+					    ("/usr/bin/env" ,(file-append coreutils "/bin/env"))))
     (slim-service-type config => (slim-configuration
 				  (inherit config)
 				  (startx
