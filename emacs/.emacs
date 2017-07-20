@@ -25,6 +25,11 @@
     (add-hook 'c-mode-hook 'electric-pair-mode)
     (add-hook 'python-mode-hook 'electric-pair-mode)))
 
+(use-package aggressive-indent
+  :config
+  (progn
+    (add-hook 'prog-mode-hook 'aggressive-indent-mode)))
+
 (use-package paren
   :bind (("C-c t p m" . show-paren-mode)))
 
