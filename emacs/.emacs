@@ -162,6 +162,10 @@ in the variable `browse-url-mpv-arguments' to mpv."
 (use-package notmuch
   :bind (("C-c m n" . notmuch)))
 
+(use-package guix-repl
+  :config
+  (setq guix-directory "~/src/guix"))
+
 (use-package guix-help
   :bind (("C-c g b" . guix-switch-to-buffer)
 	 ("C-c g x" . guix-extended-command))
