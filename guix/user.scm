@@ -12,6 +12,7 @@
                      emacs
                      file
                      fonts
+                     fontutils
                      gcc
                      gettext
                      gdb
@@ -99,6 +100,7 @@
        ffmpeg
        file
        (list font-adobe-source-han-sans "jp")
+       fontconfig
        font-wqy-zenhei
        gcc-toolchain-7
        gdb
