@@ -99,6 +99,7 @@
        feh
        ffmpeg
        file
+       ;; Make 'fc-cache -f' after installing fonts
        (list font-adobe-source-han-sans "jp")
        fontconfig
        font-wqy-zenhei
