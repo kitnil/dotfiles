@@ -13,7 +13,8 @@
                      version-control
                      admin
                      mcron
-                     mail)
+                     mail
+		     networking)
 
 (use-package-modules bootloaders
                      emacs
@@ -149,6 +150,8 @@ EndSection
                               (listen '("127.0.0.1"))))
                    (service mcron-service-type)
                    (service rottlog-service-type)
+		   (service bitlbee-service-type
+			    (bitlbee-configuration))
                    %custom-desktop-services))
 
   ;; Allow resolution of '.local' host names with mDNS.
