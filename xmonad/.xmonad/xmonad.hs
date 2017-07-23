@@ -179,7 +179,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 -- which denotes layout choice.
 --
 myLayout = gaps [ (U, gap)
-                , (D, gap)
+                , (D, gap + 20)
                 , (R, gap)
                 , (L, gap) ]
            $ mySpacing
