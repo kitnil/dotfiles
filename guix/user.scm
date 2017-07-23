@@ -60,6 +60,7 @@
                      video
                      web
                      wget
+		     wm
                      xdisorg
                      xorg)
 
@@ -188,5 +189,6 @@
        wakelan
        unzip
        xclip
+       xinit
        xlsfonts
        xset))
