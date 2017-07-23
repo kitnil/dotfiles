@@ -24,6 +24,7 @@
                      guile
                      image-viewers
                      imagemagick
+		     haskell
                      java
                      libreoffice
 		     linux
@@ -107,6 +108,7 @@
        font-wqy-zenhei
        gcc-toolchain-7
        gdb
+       ghc
        ghostscript/x
        gnuplot
        git
