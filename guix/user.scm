@@ -17,6 +17,7 @@
                      gettext
                      gdb
                      ghostscript
+		     gimp
                      gnu-doc
                      gnupg
                      gnuzilla
@@ -110,6 +111,7 @@
        gcc-toolchain-7
        gdb
        ghc
+       gimp
        ghostscript/x
        gnuplot
        git
