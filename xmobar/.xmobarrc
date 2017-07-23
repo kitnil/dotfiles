@@ -22,9 +22,12 @@ Config { font = "xft:Monospace:pixelsize=16:antialias=true:hinting=true"
                     , Run Memory ["-t","Mem: <usedratio>%"] 10
                     , Run Com "uname" ["-s","-r"] "" 36000
                     , Run Date "%a %b %_d %Y %H:%M" "date" 10
+                    , Run Kbd [ ("en" , "<fc=#00008B>en</fc>")
+                              , ("ru" , "<fc=#ff0000>ru</fc>")
+                              ]
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = " %cpu% | %memory% | %enp6s0% }\
-                    \{ %date% | %uname% "
+       , template = " %cpu%  %memory%  %enp6s0% }\
+                    \{ %uname%  %date%  %kbd% "
        }
