@@ -5,6 +5,7 @@
 import XMonad
 import XMonad.Layout.Gaps
 import XMonad.Layout.Spacing -- smart space around windows
+import XMonad.Util.Cursor
 import Data.Monoid
 import System.Exit
 
@@ -234,8 +235,7 @@ myLogHook = return ()
 -- with mod-q.  Used by, e.g., XMonad.Layout.PerWorkspace to initialize
 -- per-workspace layout choices.
 --
--- By default, do nothing.
-myStartupHook = return ()
+myStartupHook = setDefaultCursor xC_left_ptr
 
 ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
