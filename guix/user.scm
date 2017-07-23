@@ -166,6 +166,7 @@
        samba
        screen
        setxkbmap
+       shellcheck
        sicp
        sqlite
        stow
