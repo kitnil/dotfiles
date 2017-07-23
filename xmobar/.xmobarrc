@@ -1,6 +1,6 @@
-Config { font = "xft:xos4 Monospace:pixelsize=14:antialias=true:hinting=true"
-       , additionalFonts = [ "xft:FontAwesome:pixelsize=14:antialias=true:hinting=true" ]
        , borderColor = "black"
+Config { font = "xft:xos4 Monospace:pixelsize=16:antialias=true:hinting=true"
+       , additionalFonts = [ "xft:FontAwesome:pixelsize=16:antialias=true:hinting=true" ]
        , border = TopB
        , bgColor = "black"
        , fgColor = "grey"
