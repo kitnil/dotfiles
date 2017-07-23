@@ -543,7 +543,8 @@ in the variable `browse-url-mpv-arguments' to mpv."
  '(projectile-use-git-grep t)
  '(safe-local-variable-values
    (quote
-    ((Base . 10)
+    ((aggressive-indent-mode)
+     (Base . 10)
      (Syntax . Common-Lisp)
      (Package . Maxima)
      (eval when
