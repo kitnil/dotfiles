@@ -1,5 +1,5 @@
-Config { font = "-misc-fixed-*-*-*-*-14-*-*-*-*-*-*-*"
-       , additionalFonts = []
+Config { font = "xft:xos4 Monospace:pixelsize=14:antialias=true:hinting=true"
+       , additionalFonts = [ "xft:FontAwesome:pixelsize=14:antialias=true:hinting=true" ]
        , borderColor = "black"
        , border = TopB
        , bgColor = "black"
