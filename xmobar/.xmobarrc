@@ -27,5 +27,5 @@ Config { font = "-misc-fixed-*-*-*-*-14-*-*-*-*-*-*-*"
        , sepChar = "%"
        , alignSep = "}{"
        , template = "%cpu% | %memory% * %swap% | %enp6s0% }\
-                    \{ <fc=#ee9a00>%date%</fc> | %uname%"
+                    \{ %date% | %uname%"
        }
