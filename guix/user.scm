@@ -26,6 +26,7 @@
                      imagemagick
                      java
                      libreoffice
+		     linux
                      lisp
                      llvm
                      m4
@@ -63,6 +64,7 @@
 
 (packages->manifest
  (list adb
+       alsa-utils
        aria2
        aspell
        aspell-dict-en
