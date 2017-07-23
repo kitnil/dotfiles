@@ -21,7 +21,7 @@ Config { font = "xft:Monospace:pixelsize=16:antialias=true:hinting=true"
                                "--normal","green","--high","red"] 10
                     , Run Memory ["-t","Mem: <usedratio>%"] 10
                     , Run Com "uname" ["-s","-r"] "" 36000
-                    , Run Date "%a %b %_d %Y %H:%M" "date" 10
+                    , Run Date "%A %B %_d %Y %H:%M" "date" 10
                     , Run Kbd [ ("en" , "<fc=#00008B>en</fc>")
                               , ("ru" , "<fc=#ff0000>ru</fc>")
                               ]
