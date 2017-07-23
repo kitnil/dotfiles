@@ -121,6 +121,7 @@
        guile-2.2
        guile-ssh
        guix
+       haskell-mode
        haunt
        help2man
        htop
