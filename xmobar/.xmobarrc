@@ -26,6 +26,6 @@ Config { font = "-misc-fixed-*-*-*-*-14-*-*-*-*-*-*-*"
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = "%cpu% | %memory% * %swap% | %enp6s0% }\
-                    \{ %date% | %uname%"
+       , template = " %cpu% | %memory% * %swap% | %enp6s0% }\
+                    \{ %date% | %uname% "
        }
