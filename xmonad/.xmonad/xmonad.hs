@@ -1,11 +1,6 @@
---
--- xmonad example config file.
---
--- A template showing all available configuration hooks,
--- and how to override the defaults in your own xmonad.hs conf file.
---
--- Normally, you'd only override those defaults you care about.
---
+-- Xmonad configuration file for the desktop machine.
+-- Copyright © 2017 Oleg Pykhalov <go.wigust@gmail.com>
+-- Released under the GNU GPLv3 or any later version.
 
 import XMonad
 import Data.Monoid
