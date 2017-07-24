@@ -200,6 +200,15 @@ in the variable `browse-url-mpv-arguments' to mpv."
 	       :nick "wigust"
 	       :password nil))
 
+    (defun erc-connect-globalgamers ()
+      "Connect to globalgamers irc network"
+      (interactive)
+      (add-to-list 'erc-networks-alist '(globalgamers "irc.globalgamers.net"))
+      (erc-tls :server "irc.globalgamers.net"
+	       :port 6660
+	       :nick "wigust"
+	       :password nil))
+
     (defun erc-connect-indymedia ()
       "Connect to indymedia irc network"
       (interactive)
@@ -313,6 +322,8 @@ in the variable `browse-url-mpv-arguments' to mpv."
 	    ("oftc.net"
 	     "#debian"
 	     "#debian-next")
+	    ("globalgamers"
+	     "#Touhou")
 	    ("twitch.tv"
 	     "#cattzs"
 	     "#retched"
