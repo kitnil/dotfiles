@@ -282,7 +282,6 @@ myStatusBar = "xmobar"
 -- Run xmonad with the settings you specify. No need to modify this.
 --
 main = do
-  spawn "feh --bg-scale ~/Pictures/Wallpapers/current.png"
   xmproc <- spawnPipe myStatusBar
   xmonad $ fullscreenSupport $ defaults xmproc
 
