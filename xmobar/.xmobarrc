@@ -23,8 +23,8 @@ Config { font = "xft:Monospace:pixelsize=16:antialias=true:hinting=true"
                     , Run Memory ["-t","Mem: <usedratio>%"] 10
                     , Run Com "uname" ["-s","-r"] "" 36000
                     , Run Date "%A %B %_d %Y %H:%M" "date" 10
-                    , Run Kbd [ ("en" , "en")
-                              , ("ru" , "<fc=#FF0000>ru</fc>")
+                    , Run Kbd [ ("us" , "US")
+                              , ("ru" , "<fc=#FF0000>RU</fc>")
                               ]
                     , Run DiskU [("/", "<used>/<size>"), ("sdb1", "<used>/<size>")]
                       ["-L", "20", "-H", "50", "-m", "1", "-p", "3"] 20
