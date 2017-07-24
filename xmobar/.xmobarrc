@@ -28,6 +28,6 @@ Config { font = "xft:Monospace:pixelsize=16:antialias=true:hinting=true"
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = " %cpu%  %memory%  %enp6s0% }\
-                    \{ %uname%  %date%  %kbd% "
+       , template = " %kbd%  %cpu%  %memory%  %enp6s0% }\
+                    \{ %uname%  %date% "
        }
