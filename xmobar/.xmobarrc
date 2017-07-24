@@ -4,7 +4,7 @@ Config { font = "xft:Monospace:pixelsize=16:antialias=true:hinting=true"
        , border = TopB
        , bgColor = "#DCDAD5"
        , fgColor = "#000000"
-       , alpha = 0
+       , alpha = 255
        , position = Bottom
        , textOffset = -1
        , iconOffset = -1
