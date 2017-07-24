@@ -190,7 +190,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 
 myLayout = tiled
        ||| horizontalTiled
-       ||| noBorders (fullscreenFull Full)
+       ||| smartBorders (fullscreenFull Full)
   where
      -- default tiling algorithm partitions the screen into two panes
      tiled   = mySpacing $ avoidStruts $ Tall nmaster delta ratio
@@ -228,7 +228,6 @@ myManageHook = composeAll
     , className =? "Gimp"           --> doFloat
     , resource  =? "desktop_window" --> doIgnore
     , resource  =? "kdesktop"       --> doIgnore ]
-    <+> manageDocks
     <+> fullscreenManageHook
     <+> (isFullscreen --> doFullFloat)
 
