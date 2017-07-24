@@ -14,7 +14,8 @@
                      admin
                      mcron
                      mail
-		     networking)
+                     networking
+                     shepherd)
 
 (use-package-modules bootloaders
                      emacs
@@ -27,7 +28,8 @@
                      ssh
                      guile
                      package-management
-                     bash)
+                     bash
+                     linux)
 
 (define 20-intel.conf "
 # Fix tearing on intel
@@ -39,6 +41,38 @@ Section \"Device\"
    Option      \"TearFree\" \"true\"
 EndSection
 ")
+
+(define start-firewall
+  ;; Rules to throttle malicious SSH connection attempts.  This will allow at
+  ;; most 3 connections per minute from any host, and will block the host for
+  ;; another minute if this rate is exceeded.  Taken from
+  ;; <http://www.la-samhna.de/library/brutessh.html#3>.
+  #~(let ((iptables
+           (lambda (str)
+             (zero? (apply system*
+                           #$(file-append iptables
+                                          "/sbin/iptables")
+                           (string-tokenize str))))))
+      (format #t "Installing iptables SSH rules...~%")
+      (and (iptables "-A INPUT -p tcp --dport 22 -m state \
+  --state NEW -m recent --set --name SSH -j ACCEPT")
+           (iptables "-A INPUT -p tcp --dport 22 -m recent \
+  --update --seconds 60 --hitcount 4 --rttl \
+  --name SSH -j LOG --log-prefix SSH_brute_force")
+           (iptables "-A INPUT -p tcp --dport 22 -m recent \
+  --update --seconds 60 --hitcount 4 --rttl --name SSH -j DROP"))))
+
+(define firewall-service
+  ;; The "firewall".  Make it a Shepherd service because as an activation
+  ;; script it might run too early, before the Netfilter modules can be
+  ;; loaded for some reason.
+  (simple-service 'firewall shepherd-root-service-type
+                  (list (shepherd-service
+                         (provision '(firewall))
+                         (requirement '())
+                         (start #~(lambda ()
+                                    #$start-firewall))
+                         (respawn? #f)))))
 
 (define %guix-daemon-config
   (guix-configuration
@@ -122,6 +156,7 @@ EndSection
                    font-liberation
                    guile-ssh
                    openssh
+                   iptables
                    %base-packages))
 
   (services (cons* (service openssh-service-type
@@ -150,8 +185,9 @@ EndSection
                               (listen '("127.0.0.1"))))
                    (service mcron-service-type)
                    (service rottlog-service-type)
-		   (service bitlbee-service-type
-			    (bitlbee-configuration))
+                   (service bitlbee-service-type
+                            (bitlbee-configuration))
+                   firewall-service
                    %custom-desktop-services))
 
   ;; Allow resolution of '.local' host names with mDNS.
