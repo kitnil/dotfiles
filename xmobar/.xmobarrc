@@ -8,7 +8,7 @@ Config { font = "xft:Monospace:pixelsize=16:antialias=true:hinting=true"
        , position = Bottom
        , textOffset = -1
        , iconOffset = -1
-       , lowerOnStart = True
+       , lowerOnStart = False
        , pickBroadest = False
        , persistent = False
        , hideOnStart = False
