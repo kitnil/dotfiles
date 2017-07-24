@@ -29,9 +29,10 @@ Config { font = "xft:Monospace:pixelsize=16:antialias=true:hinting=true"
                     , Run DiskU [("/", "<used>/<size>"), ("sdb1", "<used>/<size>")]
                       ["-L", "20", "-H", "50", "-m", "1", "-p", "3"] 20
                     , Run DiskIO [("/", "<read>/<write>"), ("sdb1", "<read>/<write>")] [] 10
+                    , Run StdinReader
                     ]
        , sepChar = "%"
        , alignSep = "}{"
-       , template = " %kbd%  %cpu%  %memory%  %disku%  %diskio%  %enp6s0% }\
-                    \{ %uname%  %date% "
+       , template = " %StdinReader% }\
+                    \{ %cpu%  %memory%  %disku%  %diskio%  %enp6s0%  %kbd%  %date% "
        }

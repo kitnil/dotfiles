@@ -3,6 +3,11 @@
 -- Released under the GNU GPLv3 or any later version.
 
 import XMonad
+import System.IO
+import XMonad.Hooks.DynamicLog
+import XMonad.Util.Loggers
+import XMonad.Util.Font
+import XMonad.Util.Run(spawnPipe)
 import XMonad.Hooks.ManageDocks
 import XMonad.Layout.Fullscreen
 import XMonad.Layout.NoBorders
@@ -244,7 +249,20 @@ myEventHook = mempty
 -- Perform an arbitrary action on each internal state change or X event.
 -- See the 'XMonad.Hooks.DynamicLog' extension for examples.
 --
-myLogHook = return ()
+
+-- myLogHook = return ()
+
+myLogHook xmproc = dynamicLogWithPP xmobarPP
+                              { ppOutput = hPutStrLn xmproc
+                              , ppCurrent = xmobarColor "#228B22" "" . wrap "[" "]"
+                              , ppHiddenNoWindows = xmobarColor "#333333" ""
+                              , ppVisible = wrap "(" ")"
+                              , ppUrgent  = xmobarColor "red" "#228B22"
+                              , ppTitle   = const ""
+                              , ppLayout  = const ""
+                              , ppSep = "  "
+                              , ppExtras = [logTitle]
+                              }
 
 ------------------------------------------------------------------------
 -- Startup hook
@@ -255,22 +273,25 @@ myLogHook = return ()
 --
 myStartupHook = setDefaultCursor xC_left_ptr
 
+myStatusBar = "xmobar"
+
 ------------------------------------------------------------------------
 -- Now run xmonad with all the defaults we set up.
 
 -- Run xmonad with the settings you specify. No need to modify this.
 --
-main = xmonad
-     $ fullscreenSupport
-     $ defaults
-
+main = do
+  spawn "feh --bg-scale ~/Pictures/Wallpapers/current.png"
+  xmproc <- spawnPipe myStatusBar
+  xmonad $ defaults xmproc
+  
 -- A structure containing your configuration settings, overriding
 -- fields in the default config. Any you don't override, will
 -- use the defaults defined in xmonad/XMonad/Config.hs
 --
 -- No need to modify this.
 --
-defaults = def {
+defaults xmproc = def {
       -- simple stuff
         terminal           = myTerminal,
         focusFollowsMouse  = myFocusFollowsMouse,
@@ -289,7 +310,7 @@ defaults = def {
         layoutHook         = myLayout,
         manageHook         = myManageHook,
         handleEventHook    = myEventHook,
-        logHook            = myLogHook,
+        logHook            = myLogHook xmproc,
         startupHook        = myStartupHook
     }
 
