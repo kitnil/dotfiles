@@ -15,8 +15,9 @@ Config { font = "xft:Monospace:pixelsize=16:antialias=true:hinting=true"
        , iconRoot = "."
        , allDesktops = True
        , overrideRedirect = True
-       , commands = [ Run Network "enp6s0" ["-L","0","-H","32",
-                                            "--normal","#228B22","--high","#FF0000"] 10
+       , commands = [ Run Network "enp6s0" ["-L","0","-H","32", "-S", "True",
+                                            "--normal","#228B22","--high","#FF0000",
+                                            "--template","<dev>: <rx> <tx>"] 10
                     , Run Cpu ["-L","3","-H","50",
                                "--normal","#228B22","--high","#FF0000"] 10
                     , Run Memory ["-t","Mem: <usedratio>%"] 10
