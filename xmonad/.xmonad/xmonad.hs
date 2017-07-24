@@ -12,6 +12,7 @@ import XMonad.Hooks.ManageDocks
 import XMonad.Layout.Fullscreen
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Spacing -- smart space around windows
+import XMonad.Hooks.ManageHelpers
 import XMonad.Util.Cursor
 import Data.Monoid
 import System.Exit
@@ -187,13 +188,13 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 -- which denotes layout choice.
 --
 
-myLayout = mySpacing $ avoidStruts tiled
-       ||| Mirror tiled
-       ||| Full
+myLayout = tiled
+       ||| horizontalTiled
        ||| noBorders (fullscreenFull Full)
   where
      -- default tiling algorithm partitions the screen into two panes
-     tiled   = Tall nmaster delta ratio
+     tiled   = mySpacing $ avoidStruts $ Tall nmaster delta ratio
+     horizontalTiled   = mySpacing $ avoidStruts $ Mirror $ Tall nmaster delta ratio
 
      -- The default number of windows in the master pane
      nmaster = 1
@@ -229,6 +230,7 @@ myManageHook = composeAll
     , resource  =? "kdesktop"       --> doIgnore ]
     <+> manageDocks
     <+> fullscreenManageHook
+    <+> (isFullscreen --> doFullFloat)
 
 ------------------------------------------------------------------------
 -- Event handling
@@ -283,7 +285,7 @@ myStatusBar = "xmobar"
 main = do
   spawn "feh --bg-scale ~/Pictures/Wallpapers/current.png"
   xmproc <- spawnPipe myStatusBar
-  xmonad $ defaults xmproc
+  xmonad $ fullscreenSupport $ defaults xmproc
 
 -- A structure containing your configuration settings, overriding
 -- fields in the default config. Any you don't override, will
