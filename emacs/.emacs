@@ -6,6 +6,9 @@
 
 (setq inhibit-compacting-font-caches t)
 
+(use-package menu-bar
+  :config (menu-bar-mode -1))
+
 (use-package ibuffer
   :bind (("C-c b" . ibuffer)))
 
