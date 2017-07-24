@@ -284,7 +284,7 @@ main = do
   spawn "feh --bg-scale ~/Pictures/Wallpapers/current.png"
   xmproc <- spawnPipe myStatusBar
   xmonad $ defaults xmproc
-  
+
 -- A structure containing your configuration settings, overriding
 -- fields in the default config. Any you don't override, will
 -- use the defaults defined in xmonad/XMonad/Config.hs
