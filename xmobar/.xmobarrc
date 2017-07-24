@@ -4,7 +4,7 @@ Config { font = "xft:Monospace:pixelsize=16:antialias=true:hinting=true"
        , border = TopB
        , bgColor = "#DCDAD5"
        , fgColor = "#000000"
-       , alpha = 255
+       , alpha = 0
        , position = Bottom
        , textOffset = -1
        , iconOffset = -1
@@ -16,14 +16,14 @@ Config { font = "xft:Monospace:pixelsize=16:antialias=true:hinting=true"
        , allDesktops = True
        , overrideRedirect = True
        , commands = [ Run Network "enp6s0" ["-L","0","-H","32",
-                                            "--normal","green","--high","red"] 10
+                                            "--normal","#228B22","--high","#FF0000"] 10
                     , Run Cpu ["-L","3","-H","50",
-                               "--normal","green","--high","red"] 10
+                               "--normal","#228B22","--high","#FF0000"] 10
                     , Run Memory ["-t","Mem: <usedratio>%"] 10
                     , Run Com "uname" ["-s","-r"] "" 36000
                     , Run Date "%A %B %_d %Y %H:%M" "date" 10
-                    , Run Kbd [ ("en" , "<fc=#00008B>en</fc>")
-                              , ("ru" , "<fc=#ff0000>ru</fc>")
+                    , Run Kbd [ ("en" , "en")
+                              , ("ru" , "<fc=#FF0000>ru</fc>")
                               ]
                     ]
        , sepChar = "%"
