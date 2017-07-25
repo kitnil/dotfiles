@@ -163,6 +163,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
   :bind (("C-c m g" . gnus)))
 
 (use-package notmuch
+  :commands notmuch-search
   :bind (("C-c m n" . notmuch)))
 
 (use-package guix-repl
