@@ -381,12 +381,12 @@ in the variable `browse-url-mpv-arguments' to mpv."
   :diminish yas-minor-mode
   :config
   (progn
-    (yas-reload-all)
-    (add-hook 'prog-mode-hook 'yas-minor-mode)
-    (add-hook 'latex-mode-hook 'yas-minor-mode)
     (setq yas-snippet-dirs
 	  '("~/.emacs.d/snippets"
-	    "~/.guix-profile/share/emacs/yasnippet-snippets/"))))
+	    "~/.guix-profile/share/emacs/yasnippet-snippets/"))
+    (yas-reload-all)
+    (add-hook 'prog-mode-hook 'yas-minor-mode)
+    (add-hook 'latex-mode-hook 'yas-minor-mode)))
 
 (use-package dired
   :commands dired-mode
