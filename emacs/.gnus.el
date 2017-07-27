@@ -8,3 +8,5 @@
       mm-discouraged-alternatives '("text/html" "text/richtext")
       gnus-check-new-newsgroups nil
       gnus-thread-hide-subtree t)
+
+(add-to-list 'gnus-secondary-select-methods '(nntp "news.gwene.org"))
