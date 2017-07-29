@@ -404,9 +404,12 @@ in the variable `browse-url-mpv-arguments' to mpv."
   :config
   (progn
     (setq indent-tabs-mode nil)
-    (add-hook 'scheme-mode-hook 'guix-devel-mode)
     (add-hook 'scheme-mode-hook 'show-paren-mode)
     (setq geiser-active-implementations (quote (guile)))))
+
+(use-package guix-devel
+  :diminish guix-devel-mode
+  :config (add-hook 'scheme-mode-hook 'guix-devel-mode))
 
 (use-package proced
   :commands proced
