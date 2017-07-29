@@ -82,9 +82,7 @@ EndSection
    (max-silent-time 7200)
    (timeout (* 4 max-silent-time))
 
-   (extra-options '("--max-jobs=6" "--cores=3"
-                    "--cache-failures"
-                    "--gc-keep-outputs" "--gc-keep-derivations"))))
+   (extra-options '("--max-jobs=6" "--cores=3"))))
 
 (define %custom-desktop-services
   (modify-services %desktop-services
