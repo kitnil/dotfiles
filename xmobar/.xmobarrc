@@ -34,5 +34,5 @@ Config { font = "xft:Monospace:pixelsize=16:antialias=true:hinting=true"
        , sepChar = "%"
        , alignSep = "}{"
        , template = " %StdinReader% }\
-                    \{ %cpu%  %memory%  %disku%  %diskio%  %enp6s0%  %kbd%  %date% "
+                    \{ %enp6s0%  %diskio%  %cpu%  %memory%  %disku%  %kbd%  %date% "
        }
