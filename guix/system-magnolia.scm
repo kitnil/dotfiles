@@ -125,6 +125,14 @@ EndSection
                          (title 'label)
                          (mount-point "/srv")
                          (type "ext4"))
+                       (file-system
+                         (device "tmpfs")
+                         (mount-point "/tmp")
+                         (type "tmpfs")
+                         (flags '(no-suid no-dev))
+                         (options "mode=1777,size=16G")
+                         (needed-for-boot? #t)
+                         (check? #f))
                        %base-file-systems))
 
   (users (cons (user-account
