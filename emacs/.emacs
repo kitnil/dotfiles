@@ -392,7 +392,8 @@ in the variable `browse-url-mpv-arguments' to mpv."
   :commands dired-mode
   :config
   (progn
-    (add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)))
+    (add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)
+    (dired-async-mode 1)))
 
 (use-package elisp-mode
   :config (add-hook 'emacs-lisp-mode-hook 'show-paren-mode))

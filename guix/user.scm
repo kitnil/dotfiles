@@ -77,6 +77,7 @@
        bzip2
        conkeror
        emacs-aggressive-indent
+       emacs-async
        emacs-auctex
        emacs-cider
        emacs-company
