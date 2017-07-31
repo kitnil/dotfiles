@@ -161,7 +161,8 @@ in the variable `browse-url-mpv-arguments' to mpv."
   :config (add-hook 'shell-mode-hook 'guix-prettify-mode))
 
 (use-package gnus
-  :bind (("C-c m g" . gnus)))
+  :bind (("C-c m g" . gnus))
+  :config (add-hook 'message-sent-hook 'gnus-score-followup-thread))
 
 (use-package notmuch
   :commands notmuch-search
