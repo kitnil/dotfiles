@@ -34,8 +34,6 @@ export GPG_TTY=$(tty)
 export GUILE_LOAD_COMPILED_PATH="${GUILE_LOAD_COMPILED_PATH}:/run/current-system/profile/lib/guile/2.2/site-ccache:/run/current-system/profile/share/guile/site/2.2"
 export GUILE_LOAD_PATH="${GUILE_LOAD_PATH}:/run/current-system/profile/share/guile/site/2.2"
 
-export GUIX_BUILD_OPTIONS="--keep-failed"
-
 alias guix-configure="./configure --localstatedir=/var --prefix=''"
 alias guix-upgrade="guix package -m $HOME/dotfiles/guix/user.scm -u"
 alias rsync-daemon="rsync --config=rsyncd.conf --daemon"
