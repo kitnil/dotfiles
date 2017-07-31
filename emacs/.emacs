@@ -366,7 +366,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
 		  (setq erc-server-error-occurred nil)))))
 
 (use-package expand-region
-  :bind (("C-c SPC" . er/expand-region)))
+  :bind (("<f8>" . er/expand-region)))
 
 (use-package company
   :diminish company-mode
