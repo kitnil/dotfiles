@@ -490,6 +490,14 @@ in the variable `browse-url-mpv-arguments' to mpv."
 (use-package imaxima
   :commands imaxima)
 
+(use-package hydra
+  :config
+  (progn
+    (defhydra hydra-buffer (global-map "<f7>")
+      "buffer"
+      ("n" next-buffer "next")
+      ("p" previous-buffer "previous"))))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
