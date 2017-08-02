@@ -478,7 +478,10 @@ in the variable `browse-url-mpv-arguments' to mpv."
   :config (setq display-time-24hr-format t))
 
 (use-package geiser-guile
-  :commands geiser-repl-mode)
+  :commands geiser-repl-mode
+  :config
+  (with-eval-after-load 'geiser-guile
+    (add-to-list 'geiser-guile-load-path "~/src/guix")))
 
 (use-package info-look)
 
