@@ -15,7 +15,8 @@
                      mcron
                      mail
                      networking
-                     shepherd)
+                     shepherd
+                     rsync)
 
 (use-package-modules bootloaders
                      emacs
@@ -193,6 +194,8 @@ EndSection
                    (service rottlog-service-type)
                    (service bitlbee-service-type
                             (bitlbee-configuration))
+                   (service rsync-service-type
+                            (rsync-configuration))
                    firewall-service
                    %custom-desktop-services))
 
