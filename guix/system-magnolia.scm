@@ -16,7 +16,8 @@
                      mail
                      networking
                      shepherd
-                     rsync)
+                     rsync
+                     databases)
 
 (use-package-modules bootloaders
                      emacs
@@ -197,6 +198,8 @@ EndSection
                    (service rsync-service-type
                             (rsync-configuration))
                    firewall-service
+                   (service mysql-service-type
+                            (mysql-configuration))
                    %custom-desktop-services))
 
   ;; Allow resolution of '.local' host names with mDNS.
