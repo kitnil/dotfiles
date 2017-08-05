@@ -16,6 +16,7 @@ import XMonad.Hooks.ManageHelpers
 import XMonad.Util.Cursor
 import Data.Monoid
 import System.Exit
+import XMonad.Actions.CycleWS
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
@@ -85,6 +86,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- Resize viewed windows to the correct size
     , ((modm,               xK_n     ), refresh)
+
+    , ((modm,               xK_Page_Down),  nextWS)
+    , ((modm,               xK_Page_Up),    prevWS)
 
     -- Move focus to the next window
     , ((modm,               xK_Tab   ), windows W.focusDown)
