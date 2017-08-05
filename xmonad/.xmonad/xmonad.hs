@@ -2,8 +2,12 @@
 -- Copyright © 2017 Oleg Pykhalov <go.wigust@gmail.com>
 -- Released under the GNU GPLv3 or any later version.
 
+{-# LANGUAGE FlexibleInstances     #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
+
 import XMonad
 import System.IO
+import Control.Arrow ((***), second)
 import XMonad.Hooks.DynamicLog
 import XMonad.Util.Loggers
 import XMonad.Util.Font
@@ -20,6 +24,16 @@ import XMonad.Actions.CycleWS
 
 import qualified XMonad.StackSet as W
 import qualified Data.Map        as M
+
+-- Flip a layout, compute its 180 degree rotated form.
+newtype Flip l a = Flip (l a) deriving (Show, Read)
+instance LayoutClass l a => LayoutClass (Flip l) a where
+    runLayout (W.Workspace i (Flip l) ms) r = (map (second flipRect) *** fmap Flip)
+                                                `fmap` runLayout (W.Workspace i l ms) (flipRect r)
+                                         where screenWidth = fromIntegral $ rect_width r
+                                               flipRect (Rectangle rx ry rw rh) = Rectangle (screenWidth - rx - (fromIntegral rw)) ry rw rh
+    handleMessage (Flip l) = fmap (fmap Flip) . handleMessage l
+    description (Flip l) = "Flip "++ description l
 
 -- The preferred terminal program, which is used in a binding below and by
 -- certain contrib modules.
@@ -197,7 +211,7 @@ myLayout = tiled
        ||| smartBorders (fullscreenFull Full)
   where
      -- default tiling algorithm partitions the screen into two panes
-     tiled   = mySpacing $ avoidStruts $ Tall nmaster delta ratio
+     tiled   = avoidStruts $ mySpacing $ Flip $ Tall nmaster delta ratio
      horizontalTiled   = mySpacing $ avoidStruts $ Mirror $ Tall nmaster delta ratio
 
      -- The default number of windows in the master pane
