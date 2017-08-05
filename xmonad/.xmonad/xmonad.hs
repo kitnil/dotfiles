@@ -212,7 +212,7 @@ myLayout = tiled
   where
      -- default tiling algorithm partitions the screen into two panes
      tiled   = avoidStruts $ mySpacing $ Flip $ Tall nmaster delta ratio
-     horizontalTiled   = mySpacing $ avoidStruts $ Mirror $ Tall nmaster delta ratio
+     horizontalTiled   = avoidStruts $ mySpacing $ Mirror $ Tall nmaster delta ratio
 
      -- The default number of windows in the master pane
      nmaster = 1
