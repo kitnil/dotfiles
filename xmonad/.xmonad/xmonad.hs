@@ -40,6 +40,7 @@ instance LayoutClass l a => LayoutClass (Flip l) a where
 -- certain contrib modules.
 --
 myTerminal      = "urxvt"
+myEditor        = "emacs"
 
 -- Whether focus follows the mouse pointer.
 myFocusFollowsMouse :: Bool
@@ -83,6 +84,9 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- launch a terminal
     [ ((modm .|. shiftMask, xK_Return), spawn $ XMonad.terminal conf)
+
+    -- launch editor
+    , ((modm .|. shiftMask, xK_e), spawn myEditor)
 
     -- launch rofi
     , ((modm,               xK_d     ), spawn "rofi -show run")
