@@ -17,6 +17,7 @@ import XMonad.Layout.Fullscreen
 import XMonad.Layout.NoBorders
 import XMonad.Layout.Spacing -- smart space around windows
 import XMonad.Hooks.ManageHelpers
+import XMonad.Layout.PerWorkspace
 import XMonad.Util.Cursor
 import Data.Monoid
 import System.Exit
@@ -209,6 +210,7 @@ myMouseBindings (XConfig {XMonad.modMask = modm}) = M.fromList $
 myLayout = tiled
        ||| horizontalTiled
        ||| smartBorders (fullscreenFull Full)
+       ||| onWorkspace "4" tiled tiled
   where
      -- default tiling algorithm partitions the screen into two panes
      tiled   = avoidStruts $ mySpacing $ Flip $ Tall nmaster delta ratio
