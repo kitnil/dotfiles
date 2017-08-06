@@ -91,8 +91,6 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     -- launch rofi
     , ((modm,               xK_d     ), spawn "rofi -show run")
 
-    -- launch gmrun
-    , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
     -- pulseaudio
     , ((modm,               xK_m     ), spawn "ponymix toggle")
     , ((modm,               xK_comma ), spawn "ponymix decrease 5")
@@ -349,7 +347,6 @@ help = unlines ["The default modifier key is 'alt'. Default keybindings:",
     "-- launching and killing programs",
     "mod-Shift-Enter  Launch xterminal",
     "mod-p            Launch rofi",
-    "mod-Shift-p      Launch gmrun",
     "mod-Shift-c      Close/kill the focused window",
     "mod-s        Rotate through the available layout algorithms",
     "mod-Shift-s  Reset the layouts on the current workSpace to default",
