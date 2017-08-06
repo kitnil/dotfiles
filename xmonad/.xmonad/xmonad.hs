@@ -93,6 +93,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
     -- launch gmrun
     , ((modm .|. shiftMask, xK_p     ), spawn "gmrun")
+    -- pulseaudio
+    , ((modm,               xK_m     ), spawn "ponymix toggle")
+    , ((modm,               xK_comma ), spawn "ponymix decrease 5")
+    , ((modm,               xK_period ), spawn "ponymix increase 5")
 
     -- close focused window
     , ((modm .|. shiftMask, xK_c     ), kill)
@@ -119,7 +123,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_k     ), windows W.focusUp  )
 
     -- Move focus to the master window
-    , ((modm,               xK_m     ), windows W.focusMaster  )
+    -- , ((modm,               xK_m     ), windows W.focusMaster  )
 
     -- Swap the focused window and the master window
     , ((modm,               xK_Return), windows W.swapMaster)
@@ -140,10 +144,10 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm,               xK_t     ), withFocused $ windows . W.sink)
 
     -- Increment the number of windows in the master area
-    , ((modm              , xK_comma ), sendMessage (IncMasterN 1))
+    , ((modm              , xK_equal ), sendMessage (IncMasterN 1))
 
     -- Deincrement the number of windows in the master area
-    , ((modm              , xK_period), sendMessage (IncMasterN (-1)))
+    , ((modm              , xK_minus), sendMessage (IncMasterN (-1)))
 
     -- Toggle the status bar gap
     -- Use this binding with avoidStruts from Hooks.ManageDocks.
@@ -356,7 +360,7 @@ help = unlines ["The default modifier key is 'alt'. Default keybindings:",
     "mod-Shift-Tab  Move focus to the previous window",
     "mod-j          Move focus to the next window",
     "mod-k          Move focus to the previous window",
-    "mod-m          Move focus to the master window",
+    -- "mod-m          Move focus to the master window",
     "",
     "-- modifying the window order",
     "mod-Return   Swap the focused window and the master window",
@@ -370,9 +374,10 @@ help = unlines ["The default modifier key is 'alt'. Default keybindings:",
     "-- floating layer support",
     "mod-t  Push window back into tiling; unfloat and re-tile it",
     "",
-    "-- increase or decrease number of windows in the master area",
-    "mod-comma  (mod-,)   Increment the number of windows in the master area",
-    "mod-period (mod-.)   Deincrement the number of windows in the master area",
+    "-- increase or decrease volume",
+    "mod-m      (mod-m)   Mute volume",
+    "mod-comma  (mod-.)   Increment volume",
+    "mod-period (mod-,)   Deincrement volume",
     "",
     "-- quit, or restart",
     "mod-Shift-q  Quit xmonad",
