@@ -38,4 +38,5 @@ alias guix-configure="./configure --localstatedir=/var --prefix=''"
 alias guix-upgrade="guix package -m $HOME/dotfiles/guix/user.scm -u"
 alias rsync-daemon="rsync --config=rsyncd.conf --daemon"
 alias guix-make='guix environment guix --ad-hoc help2man -- make'
+alias guix-make-tags='guix environment guix -- make tags'
 alias get-email='mbsync -a && notmuch new'
