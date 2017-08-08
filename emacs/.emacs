@@ -144,6 +144,14 @@ in the variable `browse-url-mpv-arguments' to mpv."
   :bind (("C-c u" . undo-tree-visualize))
   :config (add-hook 'prog-mode-hook 'undo-tree-mode))
 
+(use-package flx-ido
+  :config
+  (progn
+    (flx-ido-mode 1)
+    ;; disable ido faces to see flx highlights.
+    (setq ido-enable-flex-matching t)
+    (setq ido-use-faces nil)))
+
 (use-package projectile-global-mode
   :init (projectile-global-mode))
 
@@ -555,6 +563,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
  '(erc-user-full-name "Oleg Pykhalov")
  '(erc-whowas-on-nosuchnick t)
  '(geiser-guile-binary "guile")
+ '(ido-mode (quote buffer) nil (ido))
  '(imaxima-scale-factor 1.5)
  '(magit-auto-revert-mode nil)
  '(magit-repository-directories
