@@ -79,6 +79,7 @@ myFocusedBorderColor = "#66CD00"
 
 ------------------------------------------------------------------------
 -- Key bindings. Add, modify or remove key bindings here.
+-- https://www.cl.cam.ac.uk/~mgk25/ucs/keysymdef.h
 --
 myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
 
