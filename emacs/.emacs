@@ -528,6 +528,18 @@ in the variable `browse-url-mpv-arguments' to mpv."
       ("n" next-buffer "next")
       ("p" previous-buffer "previous"))))
 
+(use-package engine-mode
+  :config
+  (progn
+    (engine-mode t)
+    (setq engine/browser-function 'browse-url-chromium)
+    (defengine searx
+      "http://searx.tk/?q=%s"
+      :keybinding "x")
+    (defengine youtube
+      "http://www.youtube.com/results?aq=f&oq=&search_query=%s"
+      :keybinding "y")))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
