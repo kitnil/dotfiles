@@ -152,6 +152,10 @@ in the variable `browse-url-mpv-arguments' to mpv."
     (setq ido-enable-flex-matching t)
     (setq ido-use-faces nil)))
 
+(use-package smex
+  :bind (("M-x" . smex)
+	 ("M-X" . smex-major-mode-commands)))
+
 (use-package projectile-global-mode
   :init (projectile-global-mode))
 

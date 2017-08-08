@@ -90,7 +90,7 @@
   the-silver-searcher
 
   ;; Emacs
-  emacs-company emacs-undo-tree emacs-flx emacs-projectile
+  emacs-company emacs-undo-tree emacs-flx emacs-projectile emacs-smex
   emacs-multiple-cursors paredit emacs-aggressive-indent emacs-transpose-frame
   emacs-expand-region
   emacs-dired-hacks emacs-pdf-tools
