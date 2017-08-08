@@ -41,7 +41,7 @@
   bzip2 unzip
 
   ;; Git
-  magit emacs-git-gutter emacs-git-timemachine
+  magit emacs-git-gutter emacs-git-timemachine emacs-gitpatch
   git
 
   ;; Version control
