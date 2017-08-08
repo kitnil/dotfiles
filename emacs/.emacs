@@ -590,7 +590,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
      (:name "drafts" :query "tag:draft" :key "d")
      (:name "all mail" :query "*" :key "a")
      (:name "today" :query "date:today")
-     (:name "leti-user" :query "from:leti-user@googlegroups.com")
+     (:name "leti-user" :query "from:leti-user@googlegroups.com tag:unread")
      (:name "patch-today" :query "subject:patch date:today")
      (:name "youtube" :query "from:noreply@youtube.com")
      (:name "youtube-today" :query "from:noreply@youtube.com date:today")
