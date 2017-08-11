@@ -211,7 +211,8 @@ in the variable `browse-url-mpv-arguments' to mpv."
     (add-hook 'dired-mode-hook 'guix-prettify-mode)))
 
 (use-package erc
-  :bind (("C-c e a" . erc-connect-all)
+  :bind (("C-c e l" . erc-connect-localhost)
+	 ("C-c e a" . erc-connect-all)
 	 ("C-c e f" . erc-connect-freenode)
 	 ("C-c e d" . erc-connect-debian)
 	 ("C-c e g" . erc-connect-gitter)
@@ -219,6 +220,14 @@ in the variable `browse-url-mpv-arguments' to mpv."
 	 ("C-c e t" . erc-connect-twitch))
   :init
   (progn
+    (defun erc-connect-localhost ()
+      "Connect to localhost irc network"
+      (interactive)
+      (erc :server "localhost"
+	   :port 6667
+	   :nick "natsu"
+	   :password nil))
+
     (defun erc-connect-twitch ()
       "Connect to twitch irc network"
       (interactive)
