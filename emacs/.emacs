@@ -401,6 +401,9 @@ in the variable `browse-url-mpv-arguments' to mpv."
 		  ;; Re-establish the connection even if the server closed it.
 		  (setq erc-server-error-occurred nil)))))
 
+(use-package erc-hl-nicks
+  :after erc)
+
 (use-package expand-region
   :bind (("<f8>" . er/expand-region)))
 
