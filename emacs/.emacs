@@ -540,7 +540,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
     (setq TeX-save-query nil)))
 
 (use-package google-translate-mode
-  :bind (("C-c t t t" . google-translate-mode))
+  :bind (("C-c t t" . google-translate-mode))
   :config (add-hook 'Info-mode-hook 'google-translate-mode))
 
 (use-package imaxima
