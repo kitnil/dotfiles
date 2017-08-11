@@ -6,6 +6,34 @@
 
 (setq inhibit-compacting-font-caches t)
 
+(use-package hi-lock
+  :commands (highlight-regexp-list unhighlight-regexp-list)
+  :config
+  (progn
+    (setq highlight-words-list '(("proced" . "font-lock-keyword-face")
+                                 ("expres" . "bold")
+                                 ("case" . "font-lock-keyword-face")
+                                 ("symbol" . "bold")
+                                 ("compound" . "font-lock-keyword-face")
+                                 ("condition" . "bold")
+                                 ("predicate" . "bold")
+                                 ("value" . "bold")
+                                 ("decompos" . "font-lock-keyword-face")
+                                 ("defin" . "font-lock-keyword-face")))
+
+    (defun highlight-regexp-list ()
+      (interactive)
+      (mapcar (lambda (word-font)
+                (highlight-regexp (concat "\\w*" (car word-font) "\\w*")
+                                  (cdr word-font)))
+              highlight-words-list))
+
+    (defun unhighlight-regexp-list ()
+      (interactive)
+      (mapcar (lambda (word-font)
+                (unhighlight-regexp (concat "\\w*" (car word-font) "\\w*")))
+              highlight-words-list))))
+
 (use-package menu-bar
   :config (menu-bar-mode -1))
 
