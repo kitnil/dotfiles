@@ -647,7 +647,8 @@ in the variable `browse-url-mpv-arguments' to mpv."
  '(projectile-use-git-grep t)
  '(safe-local-variable-values
    (quote
-    ((eval setq-default truncate-lines 1)
+    ((rainbow-identifiers-mode)
+     (eval setq-default truncate-lines 1)
      (eval add-hook
 	   (quote compilation-mode-hook)
 	   (lambda nil
