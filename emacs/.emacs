@@ -90,13 +90,6 @@
     (setq browse-url-mpv-program "mpv")
     (setq browse-url-mpv-arguments nil)
     (setq browse-url-mpv-remote-program "~/bin/mpv-remote")
-    (if (consp browse-url-browser-function)
-	(setcdr (assoc "." browse-url-browser-function) 'browse-url-firefox)
-      (setq browse-url-browser-function
-	    `(("^ftp://.*" . browse-ftp-tramp)
-	      ("youtube" . browse-url-mpv)
-	      ("." . browse-url-firefox))))
-
     (defun browse-url-mpv (url &optional new-window)
       "Ask the mpv video player to load URL.
 Defaults to the URL around or before point.  Passes the strings
@@ -110,6 +103,12 @@ in the variable `browse-url-mpv-arguments' to mpv."
 	       (append
 		browse-url-mpv-arguments
 		(list url)))))
+
+    (setq browse-url-browser-function
+	  `(("^ftp://.*" . browse-ftp-tramp)
+	    ("^https?://w*\\.?youtube.com/watch\\?v=.*" . browse-url-mpv)
+	    ("^https?://w*\\.?github.com/.*" . browse-url-chromium)
+	    ("." . browse-url-default-browser)))
 
     (defun browse-url-mpv-remote (url &optional new-window)
       "Ask the mpv video player to load URL.
@@ -147,6 +146,12 @@ in the variable `browse-url-mpv-arguments' to mpv."
 (use-package debbugs-gnu
   :commands debbugs-gnu
   :config (add-to-list 'debbugs-gnu-all-packages "guix-patches"))
+
+(use-package debbugs-browse
+  :after browse-url
+  :config
+  (add-to-list 'browse-url-browser-function
+	       '("^https?://debbugs\\.gnu\\.org/.*" . debbugs-browse-url)))
 
 (use-package undo-tree
   :bind (("C-c u" . undo-tree-visualize))
