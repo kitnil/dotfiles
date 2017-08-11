@@ -1,8 +1,9 @@
 (package-initialize)
 
 (setenv "INSIDE_EMACS" (format "%s,comint" emacs-version))
-(setq user-mail-address	"go.wigust@gmail.com"
-      user-full-name	"Oleg Pykhalov")
+
+(setq user-mail-address "go.wigust@gmail.com")
+(setq user-full-name "Oleg Pykhalov")
 
 (setq inhibit-compacting-font-caches t)
 
@@ -132,18 +133,18 @@ in the variable `browse-url-mpv-arguments' to mpv."
       (interactive (browse-url-interactive-arg "URL: "))
       (setq url (browse-url-encode-url url))
       (let* ((process-environment (browse-url-process-environment)))
-	(apply 'start-process
-	       (concat "mpv " url) nil
-	       browse-url-mpv-program
-	       (append
-		browse-url-mpv-arguments
-		(list url)))))
+        (apply 'start-process
+               (concat "mpv " url) nil
+               browse-url-mpv-program
+               (append
+                browse-url-mpv-arguments
+                (list url)))))
 
     (setq browse-url-browser-function
-	  `(("^ftp://.*" . browse-ftp-tramp)
-	    ("^https?://w*\\.?youtube.com/watch\\?v=.*" . browse-url-mpv)
-	    ("^https?://w*\\.?github.com/.*" . browse-url-chromium)
-	    ("." . browse-url-default-browser)))
+          `(("^ftp://.*" . browse-ftp-tramp)
+            ("^https?://w*\\.?youtube.com/watch\\?v=.*" . browse-url-mpv)
+            ("^https?://w*\\.?github.com/.*" . browse-url-chromium)
+            ("." . browse-url-default-browser)))
 
     (defun browse-url-mpv-remote (url &optional new-window)
       "Ask the mpv video player to load URL.
@@ -152,12 +153,12 @@ in the variable `browse-url-mpv-arguments' to mpv."
       (interactive (browse-url-interactive-arg "URL: "))
       (setq url (browse-url-encode-url url))
       (let* ((process-environment (browse-url-process-environment)))
-	(apply 'start-process
-	       (concat "mpv " url) nil
-	       browse-url-mpv-remote-program
-	       (append
-		browse-url-mpv-remote-arguments
-		(list (car (split-string url "&")))))))))
+        (apply 'start-process
+               (concat "mpv " url) nil
+               browse-url-mpv-remote-program
+               (append
+                browse-url-mpv-remote-arguments
+                (list (car (split-string url "&")))))))))
 
 (use-package which-key
   :diminish which-key-mode
@@ -167,16 +168,16 @@ in the variable `browse-url-mpv-arguments' to mpv."
   :after dired
   :config
   (setq dired-open-extensions
-	(quote
-	 (("docx" . "libreoffice")
-	  ("doc" . "libreoffice")
-	  ("xlsx" . "libreoffice")
-	  ("xls" . "libreoffice")
-	  ("mp3" . "mpv")
-	  ("webm" . "mpv")
-	  ("mkv" . "mpv")
-	  ("mp4" . "mpv")
-	  ("flv" . "mpv")))))
+        (quote
+         (("docx" . "libreoffice")
+          ("doc" . "libreoffice")
+          ("xlsx" . "libreoffice")
+          ("xls" . "libreoffice")
+          ("mp3" . "mpv")
+          ("webm" . "mpv")
+          ("mkv" . "mpv")
+          ("mp4" . "mpv")
+          ("flv" . "mpv")))))
 
 (use-package debbugs-gnu
   :commands debbugs-gnu
@@ -186,7 +187,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
   :after browse-url
   :config
   (add-to-list 'browse-url-browser-function
-	       '("^https?://debbugs\\.gnu\\.org/.*" . debbugs-browse-url)))
+               '("^https?://debbugs\\.gnu\\.org/.*" . debbugs-browse-url)))
 
 (use-package undo-tree
   :bind (("C-c u" . undo-tree-visualize))
@@ -202,7 +203,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
 
 (use-package smex
   :bind (("M-x" . smex)
-	 ("M-X" . smex-major-mode-commands)))
+         ("M-X" . smex-major-mode-commands)))
 
 (use-package projectile-global-mode
   :init (projectile-global-mode))
@@ -234,106 +235,137 @@ in the variable `browse-url-mpv-arguments' to mpv."
 
 (use-package guix-help
   :bind (("C-c g b" . guix-switch-to-buffer)
-	 ("C-c g x" . guix-extended-command))
+         ("C-c g x" . guix-extended-command))
   :config
   (progn
     (defun guix-src-grep (regexp)
       (interactive "sGREP: ")
       (rgrep regexp
-	     "*.scm"
-	     (concat guix-directory "/gnu/packages")))
+             "*.scm"
+             (concat guix-directory "/gnu/packages")))
     (setq guix-directory "~/src/guix")
     (add-hook 'dired-mode-hook 'guix-prettify-mode)))
 
 (use-package erc
   :bind (("C-c e l" . erc-connect-localhost)
-	 ("C-c e a" . erc-connect-all)
-	 ("C-c e f" . erc-connect-freenode)
-	 ("C-c e d" . erc-connect-debian)
-	 ("C-c e g" . erc-connect-gitter)
-	 ("C-c e G" . erc-connect-gnome)
-	 ("C-c e t" . erc-connect-twitch))
+         ("C-c e a" . erc-connect-all)
+         ("C-c e f" . erc-connect-freenode)
+         ("C-c e d" . erc-connect-debian)
+         ("C-c e g" . erc-connect-gitter)
+         ("C-c e G" . erc-connect-gnome)
+         ("C-c e t" . erc-connect-twitch))
   :init
   (progn
+    (setq erc-accidental-paste-threshold-seconds 0.5)
+    (setq erc-autojoin-mode t)
+    (setq erc-autojoin-timing (quote ident))
+    (setq erc-email-userid "go.wigust@gmail.com")
+    (setq erc-flood-protect t)
+    (setq erc-hide-timestamps t)
+    (setq erc-join-buffer (quote bury))
+    (setq erc-kill-buffer-on-part nil)
+    (setq erc-kill-server-buffer-on-quit nil)
+    (setq erc-log-insert-log-on-open t)
+    (setq erc-modules (quote (autojoin button completion fill irccontrols list
+                                       log match menu move-to-prompt netsplit
+                                       networks noncommands readonly ring
+                                       smiley stamp track)))
+    (setq erc-networks-alist nil)
+    (setq erc-nick-uniquifier nil)
+    (setq erc-server-auto-reconnect t)
+    (setq erc-server-reconnect-attempts t)
+    (setq erc-server-reconnect-timeout 60)
+    (setq erc-server-send-ping-interval 45)
+    (setq erc-server-send-ping-timeout 180)
+    (setq erc-timestamp-format "%H:%M ")
+    (setq erc-track-faces-priority-list (quote (erc-current-nick-face
+                                                erc-keyword-face)))
+    (setq erc-track-position-in-mode-line (quote t))
+    (setq erc-track-priority-faces-only (quote all))
+    (setq erc-track-switch-direction (quote importantce))
+    (setq erc-try-new-nick-p nil)
+    (setq erc-user-full-name "Oleg Pykhalov")
+    (setq erc-whowas-on-nosuchnick t)
+
     (defun erc-connect-localhost ()
       "Connect to localhost irc network"
       (interactive)
       (erc :server "localhost"
-	   :port 6667
-	   :nick "natsu"
-	   :password nil))
+           :port 6667
+           :nick "natsu"
+           :password nil))
 
     (defun erc-connect-twitch ()
       "Connect to twitch irc network"
       (interactive)
       (add-to-list 'erc-networks-alist '(twitch "irc.chat.twitch.tv"))
       (erc-tls :server "irc.chat.twitch.tv"
-	       :port 6697
-	       :nick "wigust"
-	       :password nil))
+               :port 6697
+               :nick "wigust"
+               :password nil))
 
     (defun erc-connect-globalgamers ()
       "Connect to globalgamers irc network"
       (interactive)
       (add-to-list 'erc-networks-alist '(globalgamers "irc.globalgamers.net"))
       (erc-tls :server "irc.globalgamers.net"
-	       :port 6660
-	       :nick "wigust"
-	       :password nil))
+               :port 6660
+               :nick "wigust"
+               :password nil))
 
     (defun erc-connect-indymedia ()
       "Connect to indymedia irc network"
       (interactive)
       (add-to-list 'erc-networks-alist '(indymedia "irc.indymedia.org"))
       (erc-tls :server "irc.indymedia.org"
-	       :port 6697
-	       :nick "wigust"
-	       :password nil))
+               :port 6697
+               :nick "wigust"
+               :password nil))
 
     (defun erc-connect-gitter ()
       "Connect to gitter irc network"
       (interactive)
       (add-to-list 'erc-networks-alist '(gitter "irc.gitter.im"))
       (erc-tls :server "irc.gitter.im"
-	       :port 6697
-	       :nick "wigust"
-	       :password nil))
+               :port 6697
+               :nick "wigust"
+               :password nil))
 
     (defun erc-connect-gnome ()
       "Connect to gnome irc network"
       (interactive)
       (erc-tls :server "irc.gnome.org"
-	       :port 6697
-	       :nick "wigust"))
+               :port 6697
+               :nick "wigust"))
 
     (defun erc-connect-freenode ()
       "Connect to freenode irc network"
       (interactive)
       (erc-tls :server "irc.freenode.net"
-	       :port 6697
-	       :nick "wigust"
-	       :password nil))
+               :port 6697
+               :nick "wigust"
+               :password nil))
 
     (defun erc-connect-debian ()
       "Connect to debian irc network"
       (interactive)
       (erc-tls :server "irc.oftc.net"
-	       :port 6697
-	       :nick "wigust"))
+               :port 6697
+               :nick "wigust"))
 
     (defun erc-connect-rizon ()
       "Connect to highway irc network"
       (interactive)
       (erc-tls :server "irc.rizon.net"
-	       :port 6697
-	       :nick "wigust"))
+               :port 6697
+               :nick "wigust"))
 
     (defun erc-connect-highway ()
       "Connect to highway irc network"
       (interactive)
       (erc-tls :server "irc.irchighway.net"
-	       :port 6697
-	       :nick "wigust"))
+               :port 6697
+               :nick "wigust"))
 
     (defun erc-connect-all ()
       "Connect to all configured irc networks"
@@ -345,96 +377,95 @@ in the variable `browse-url-mpv-arguments' to mpv."
       (erc-connect-twitch)
       (erc-connect-rizon))
 
-    
     (defvar irc-gnome-servers '("umu.se" "gimp.net" "gimp.ca" "gnome.org" "y.se" "poop.nl"))
 
     (defvar irc-gnome-channels '("#bugs" "#docs" "#gnome" "#gnome-hackers" "#gnome-shell" "#newcomers"))
 
     (defun irc-netlist (irc-networks irc-channels)
       (let (irc-netlist)
-	(dolist (irc-network irc-networks irc-netlist)
-	  (if (equal irc-netlist nil)
-	      (setq irc-netlist
-		    (list (cons irc-network irc-channels)))
-	    (setq irc-netlist (append irc-netlist
-				      (list (cons irc-network irc-channels))))))))
+        (dolist (irc-network irc-networks irc-netlist)
+          (if (equal irc-netlist nil)
+              (setq irc-netlist
+                    (list (cons irc-network irc-channels)))
+            (setq irc-netlist (append irc-netlist
+                                      (list (cons irc-network irc-channels))))))))
 
     (defvar irc-netlist-gnome (irc-netlist irc-gnome-servers irc-gnome-channels))
 
     (setq erc-autojoin-channels-alist
-	  (quote
-	   (("freenode.net"
-	     "##c"
-	     "#clojure"
-	     "##math"
-	     "#icecat"
-	     "#emacs"
-	     ;; "#fedora"
-	     ;; "#fedora-admin"
-	     ;; "#fedora-devel"
-	     ;; "#fedora-noc"
-	     ;; "#fedora-meeting"
-	     "#gnu"
-	     "#guile"
-	     "#guix"
-	     "#nixos"
-	     "#grub"
-	     "#haskell"
-	     "#xmonad"
-	     "#filmsbykris"
-	     "##japanese"
-	     "#latex"
-	     "#python"
-	     "#scipy"
-	     ;; "#fedora-qa"
-	     "#sagemath"
-	     "#scheme")
-	    ("indymedia.org"
-	     "#riseup")
-	    ("gitter.im")
-	    ("oftc.net"
-	     "#debian"
-	     "#debian-next")
-	    ("globalgamers"
-	     "#Touhou")
-	    ("twitch.tv"
-	     "#cattzs"
-	     "#retched"
-	     "#bbsssssssss"
-	     "#team_treehouse"
-	     "#rw_grim")
-	    ("uworld.se"
-	     "#coalgirls"))))
+          (quote
+           (("freenode.net"
+             "##c"
+             "#clojure"
+             "##math"
+             "#icecat"
+             "#emacs"
+             ;; "#fedora"
+             ;; "#fedora-admin"
+             ;; "#fedora-devel"
+             ;; "#fedora-noc"
+             ;; "#fedora-meeting"
+             "#gnu"
+             "#guile"
+             "#guix"
+             "#nixos"
+             "#grub"
+             "#haskell"
+             "#xmonad"
+             "#filmsbykris"
+             "##japanese"
+             "#latex"
+             "#python"
+             "#scipy"
+             ;; "#fedora-qa"
+             "#sagemath"
+             "#scheme")
+            ("indymedia.org"
+             "#riseup")
+            ("gitter.im")
+            ("oftc.net"
+             "#debian"
+             "#debian-next")
+            ("globalgamers"
+             "#Touhou")
+            ("twitch.tv"
+             "#cattzs"
+             "#retched"
+             "#bbsssssssss"
+             "#team_treehouse"
+             "#rw_grim")
+            ("uworld.se"
+             "#coalgirls"))))
 
     (defun erc-netlist (irc-netlist)
       (dolist (irc-net irc-netlist)
-	(append erc-autojoin-channels-alist irc-net)))
+        (append erc-autojoin-channels-alist irc-net)))
 
     (setq erc-autojoin-channels-alist
-	  (append erc-autojoin-channels-alist irc-netlist-gnome)))
+          (append erc-autojoin-channels-alist irc-netlist-gnome)))
   :config
   (progn
     (eval-after-load 'erc
       '(progn
-	 (erc-track-mode t)
-	 (erc-log-mode)
-	 (require 'erc-fill)
-	 (erc-fill-mode t)))
+         (erc-track-mode t)
+         (erc-log-mode)
+         (require 'erc-fill)
+         (erc-fill-mode t)))
 
     (add-hook 'erc-mode-hook
-	      '(lambda ()
-		 (require 'erc-pcomplete)
-		 (pcomplete-erc-setup)
-		 (erc-completion-mode 1)
-		 (erc-ring-mode 1)
-		 (setq pcomplete-ignore-case t)))
+              '(lambda ()
+                 (require 'erc-pcomplete)
+                 (pcomplete-erc-setup)
+                 (erc-completion-mode 1)
+                 (erc-ring-mode 1)
+                 (setq pcomplete-ignore-case t)))
     (add-hook 'erc-insert-post-hook 'erc-truncate-buffer)
     ;; bug#18527: 24.3; ERC does not reconnect when server disconnects me
     ;; https://lists.gnu.org/archive/html/bug-gnu-emacs/2015-12/msg01414.html
     (add-hook 'erc-disconnected-hook
-	      #'(lambda (nick host-name reason)
-		  ;; Re-establish the connection even if the server closed it.
-		  (setq erc-server-error-occurred nil)))))
+              #'(lambda (nick host-name reason)
+                  ;; Re-establish the connection even if the server closed it.
+                  (setq erc-server-error-occurred nil)))))
 
 (use-package erc-hl-nicks
   :after erc)
@@ -470,8 +501,8 @@ in the variable `browse-url-mpv-arguments' to mpv."
   :config
   (progn
     (setq yas-snippet-dirs
-	  '("~/.emacs.d/snippets"
-	    "~/.guix-profile/share/emacs/yasnippet-snippets/"))
+          '("~/.emacs.d/snippets"
+            "~/.guix-profile/share/emacs/yasnippet-snippets/"))
     (yas-reload-all)
     (add-hook 'prog-mode-hook 'yas-minor-mode)
     (add-hook 'latex-mode-hook 'yas-minor-mode)))
@@ -504,9 +535,9 @@ in the variable `browse-url-mpv-arguments' to mpv."
 
 (use-package magit
   :bind (("C-c v s" . magit-status)
-	 ("C-c v p" . magit-dispatch-popup)
-	 ("C-c v l" . magit-list-repositories)
-	 ("C-c v v" . magit-stage)))
+         ("C-c v p" . magit-dispatch-popup)
+         ("C-c v l" . magit-list-repositories)
+         ("C-c v v" . magit-stage)))
 
 (use-package savehist-mode
   :config (savehist-mode t))
@@ -521,8 +552,8 @@ in the variable `browse-url-mpv-arguments' to mpv."
 (use-package org
   :mode ("\\.notes\\'" . org-mode)
   :bind (("C-c c" . org-capture)
-	 ("C-c a" . org-agenda)
-	 ("C-c l" . org-store-link))
+         ("C-c a" . org-agenda)
+         ("C-c l" . org-store-link))
   :config
   (progn
     (org-babel-do-load-languages
@@ -533,18 +564,18 @@ in the variable `browse-url-mpv-arguments' to mpv."
     (setq org-babel-python-command python-shell-interpreter)
     (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
     (setq org-todo-keywords
-       '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)")))))
+          '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)")))))
 
 (use-package shell
   :bind (("C-c s s" . shell)
-	 ("C-c s e" . eshell)))
+         ("C-c s e" . eshell)))
 
 (use-package calendar
   :commands calendar
   :config
   (progn
     (setq calendar-date-style 'european
-	  calendar-week-start-day 1)))
+          calendar-week-start-day 1)))
 
 (use-package time
   :commands display-time
@@ -589,6 +620,10 @@ in the variable `browse-url-mpv-arguments' to mpv."
       ("n" next-buffer "next")
       ("p" previous-buffer "previous"))))
 
+(defun searx-email ()
+  (interactive)
+  (engine/search-searx (s-chop-prefix "<" (s-chop-suffix ">" (thing-at-point 'email)))))
+
 (use-package engine-mode
   :config
   (progn
@@ -612,34 +647,6 @@ in the variable `browse-url-mpv-arguments' to mpv."
  '(debbugs-gnu-default-packages (quote ("guix" "guix-patches")))
  '(default-input-method "russian-computer")
  '(ediff-window-setup-function (quote ediff-setup-windows-plain))
- '(erc-accidental-paste-threshold-seconds 0.5)
- '(erc-autojoin-mode t)
- '(erc-autojoin-timing (quote ident))
- '(erc-email-userid "go.wigust@gmail.com")
- '(erc-flood-protect t t)
- '(erc-hide-timestamps t)
- '(erc-join-buffer (quote bury))
- '(erc-kill-buffer-on-part nil)
- '(erc-kill-server-buffer-on-quit nil)
- '(erc-log-insert-log-on-open t)
- '(erc-modules
-   (quote
-    (autojoin button completion fill irccontrols list log match menu move-to-prompt netsplit networks noncommands readonly ring smiley stamp track)))
- '(erc-networks-alist nil)
- '(erc-nick-uniquifier nil)
- '(erc-server-auto-reconnect t)
- '(erc-server-reconnect-attempts t)
- '(erc-server-reconnect-timeout 60)
- '(erc-server-send-ping-interval 45)
- '(erc-server-send-ping-timeout 180)
- '(erc-timestamp-format "%H:%M ")
- '(erc-track-faces-priority-list (quote (erc-current-nick-face erc-keyword-face)))
- '(erc-track-position-in-mode-line (quote t))
- '(erc-track-priority-faces-only (quote all))
- '(erc-track-switch-direction (quote importantce))
- '(erc-try-new-nick-p nil)
- '(erc-user-full-name "Oleg Pykhalov")
- '(erc-whowas-on-nosuchnick t)
  '(geiser-guile-binary "guile")
  '(gitpatch-mail-database (quote ("guix-patches@gnu.org")))
  '(ido-mode (quote buffer) nil (ido))
@@ -685,47 +692,47 @@ in the variable `browse-url-mpv-arguments' to mpv."
     ((rainbow-identifiers-mode)
      (eval setq-default truncate-lines 1)
      (eval add-hook
-	   (quote compilation-mode-hook)
-	   (lambda nil
-	     (setq-local truncate-lines 1)))
+           (quote compilation-mode-hook)
+           (lambda nil
+             (setq-local truncate-lines 1)))
      (eval add-hook
-	   (quote shell-mode-hook)
-	   (quote guix-build-log-minor-mode))
+           (quote shell-mode-hook)
+           (quote guix-build-log-minor-mode))
      (eval add-hook
-	   (quote compilation-mode-hook)
-	   (quote guix-build-log-minor-mode))
+           (quote compilation-mode-hook)
+           (quote guix-build-log-minor-mode))
      (aggressive-indent-mode)
      (Base . 10)
      (Syntax . Common-Lisp)
      (Package . Maxima)
      (eval when
-	   (and
-	    (buffer-file-name)
-	    (file-regular-p
-	     (buffer-file-name))
-	    (string-match-p "^[^.]"
-			    (buffer-file-name)))
-	   (unless
-	       (featurep
-		(quote package-build))
-	     (let
-		 ((load-path
-		   (cons "../package-build" load-path)))
-	       (require
-		(quote package-build))))
-	   (package-build-minor-mode)
-	   (set
-	    (make-local-variable
-	     (quote package-build-working-dir))
-	    (expand-file-name "../working/"))
-	   (set
-	    (make-local-variable
-	     (quote package-build-archive-dir))
-	    (expand-file-name "../packages/"))
-	   (set
-	    (make-local-variable
-	     (quote package-build-recipes-dir))
-	    default-directory))
+           (and
+            (buffer-file-name)
+            (file-regular-p
+             (buffer-file-name))
+            (string-match-p "^[^.]"
+                            (buffer-file-name)))
+           (unless
+               (featurep
+                (quote package-build))
+             (let
+                 ((load-path
+                   (cons "../package-build" load-path)))
+               (require
+                (quote package-build))))
+           (package-build-minor-mode)
+           (set
+            (make-local-variable
+             (quote package-build-working-dir))
+            (expand-file-name "../working/"))
+           (set
+            (make-local-variable
+             (quote package-build-archive-dir))
+            (expand-file-name "../packages/"))
+           (set
+            (make-local-variable
+             (quote package-build-recipes-dir))
+            default-directory))
      (eval modify-syntax-entry 43 "'")
      (eval modify-syntax-entry 36 "'")
      (eval modify-syntax-entry 126 "'")
