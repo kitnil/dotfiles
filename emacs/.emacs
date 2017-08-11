@@ -612,13 +612,15 @@ in the variable `browse-url-mpv-arguments' to mpv."
  '(magit-auto-revert-mode nil)
  '(magit-repository-directories
    (quote
-    (("~/src/math" . 0)
+    (("/srv/src/math" . 0)
      ("~/src/guix" . 0)
-     ("~/src/emacs-emamux" . 0)
-     ("~/src/emacs-org-edit-latex" . 0)
-     ("~/src/emacs-dired-hacks" . 0)
-     ("~/src/emacs-which-key" . 0)
-     ("~/src/guile" . 0))))
+     ("/srv/src/emacs-emamux" . 0)
+     ("/srv/src/emacs-org-edit-latex" . 0)
+     ("/srv/src/emacs-dired-hacks" . 0)
+     ("/srv/src/emacs-which-key" . 0)
+     ("~/src/guile" . 0)
+     ("/srv/src/emacs-org-edit-latex" . 0)
+     ("/srv/src/emacs-org-pomodoro" . 0))))
  '(mouse-yank-at-point t)
  '(nnir-notmuch-remove-prefix "/home/natsu/Maildir/")
  '(notmuch-saved-searches
