@@ -21,6 +21,13 @@
     (unless (server-running-p)
       (server-start))))
 
+(use-package shr
+  :bind (("C-c w" . eww))
+  :config
+  (progn
+    (setq shr-width 80)
+    (setq shr-use-fonts nil)))
+
 (use-package elec-pair
   :bind (("C-c t p p" . electric-pair-mode))
   :config
@@ -697,7 +704,6 @@ in the variable `browse-url-mpv-arguments' to mpv."
      (bug-reference-bug-regexp . "<https?://\\(debbugs\\|bugs\\)\\.gnu\\.org/\\([0-9]+\\)>"))))
  '(scroll-bar-mode nil)
  '(send-mail-function (quote smtpmail-send-it))
- '(shr-width 80)
  '(smtpmail-smtp-server "smtp.gmail.com")
  '(smtpmail-smtp-service 25)
  '(sp-base-key-bindings (quote sp))
