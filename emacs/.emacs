@@ -66,6 +66,14 @@
     (add-hook 'minibuffer-inactive-mode-hook 'paredit-mode)
     (add-hook 'emacs-lisp-mode-hook 'paredit-mode)))
 
+(use-package smartparens
+  :config
+  (progn
+    (require 'smartparens-config)
+    (add-hook 'prog-mode-hook 'smartparens-mode)
+    (add-hook 'emacs-lisp-mode-hook 'smartparens-strict-mode)
+    (add-hook 'scheme-mode-hook 'smartparens-strict-mode)))
+
 (use-package multiple-cursors
   :config (multiple-cursors-mode))
 
@@ -669,6 +677,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
  '(shr-width 80)
  '(smtpmail-smtp-server "smtp.gmail.com")
  '(smtpmail-smtp-service 25)
+ '(sp-base-key-bindings (quote sp))
  '(tab-always-indent (quote complete))
  '(tool-bar-mode nil)
  '(trans-target "ru")
