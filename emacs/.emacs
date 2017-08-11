@@ -378,9 +378,11 @@ in the variable `browse-url-mpv-arguments' to mpv."
       (erc-connect-twitch)
       (erc-connect-rizon))
 
-    (defvar irc-gnome-servers '("umu.se" "gimp.net" "gimp.ca" "gnome.org" "y.se" "poop.nl"))
+    (defvar irc-gnome-servers '("umu.se" "gimp.net" "gimp.ca"
+                                "gnome.org" "y.se" "poop.nl"))
 
-    (defvar irc-gnome-channels '("#bugs" "#docs" "#gnome" "#gnome-hackers" "#gnome-shell" "#newcomers"))
+    (defvar irc-gnome-channels '("#bugs" "#docs" "#gnome" "#gnome-hackers"
+                                 "#gnome-shell" "#newcomers"))
 
     (defun irc-netlist (irc-networks irc-channels)
       (let (irc-netlist)
@@ -388,10 +390,13 @@ in the variable `browse-url-mpv-arguments' to mpv."
           (if (equal irc-netlist nil)
               (setq irc-netlist
                     (list (cons irc-network irc-channels)))
-            (setq irc-netlist (append irc-netlist
-                                      (list (cons irc-network irc-channels))))))))
+            (setq irc-netlist (append
+                               irc-netlist
+                               (list (cons irc-network irc-channels))))))))
 
-    (defvar irc-netlist-gnome (irc-netlist irc-gnome-servers irc-gnome-channels))
+    (defvar irc-netlist-gnome (irc-netlist
+                               irc-gnome-servers
+                               irc-gnome-channels))
 
     (setq erc-autojoin-channels-alist
           (quote
@@ -559,7 +564,8 @@ in the variable `browse-url-mpv-arguments' to mpv."
        (R . t)
        (python . t)))
     (setq org-babel-python-command python-shell-interpreter)
-    (setq org-format-latex-options (plist-put org-format-latex-options :scale 1.5))
+    (setq org-format-latex-options
+          (plist-put org-format-latex-options :scale 1.5))
     (setq org-todo-keywords
           '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)")))))
 
@@ -597,7 +603,8 @@ in the variable `browse-url-mpv-arguments' to mpv."
   :mode (("\\.pdf\\'" . pdf-view-mode))
   :config
   (progn
-    (add-hook 'TeX-after-compilation-finished-functions #'TeX-revert-document-buffer)
+    (add-hook 'TeX-after-compilation-finished-functions
+              #'TeX-revert-document-buffer)
     (add-hook 'pdf-view-mode-hook 'auto-revert-mode)
     (setq TeX-view-program-selection '((output-pdf "PDF Tools")))
     (setq TeX-save-query nil)))
@@ -617,10 +624,6 @@ in the variable `browse-url-mpv-arguments' to mpv."
       ("n" next-buffer "next")
       ("p" previous-buffer "previous"))))
 
-(defun searx-email ()
-  (interactive)
-  (engine/search-searx (s-chop-prefix "<" (s-chop-suffix ">" (thing-at-point 'email)))))
-
 (use-package engine-mode
   :config
   (progn
@@ -631,7 +634,11 @@ in the variable `browse-url-mpv-arguments' to mpv."
       :keybinding "x")
     (defengine youtube
       "http://www.youtube.com/results?aq=f&oq=&search_query=%s"
-      :keybinding "y")))
+      :keybinding "y")
+    (defun searx-email ()
+      (interactive)
+      (engine/search-searx
+       (s-chop-prefix "<" (s-chop-suffix ">" (thing-at-point 'email)))))))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
@@ -640,7 +647,10 @@ in the variable `browse-url-mpv-arguments' to mpv."
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
    (quote
-    ("d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
+    ("d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879"
+     "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0"
+     "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4"
+     default)))
  '(debbugs-gnu-default-packages (quote ("guix" "guix-patches")))
  '(default-input-method "russian-computer")
  '(ediff-window-setup-function (quote ediff-setup-windows-plain))
@@ -679,8 +689,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
      (:name "headhunter-unread" :query "from:no_reply@hh.ru tag:unread")
      (:name "pykhalov-unread" :query "from:pykhalov@gmail.com tag:unread")
      (:name "artgames" :query "tag:unread subject:ArtGames LP")
-     (:name "my-email" :query "from:go.wigust@gmail.com")
-     (:name "family" :query "from:pykhalov@gmail.com from:gitarika@rambler.ru tag:unread"))))
+     (:name "my-email" :query "from:go.wigust@gmail.com"))))
  '(org-agenda-files (quote ("~/.notes")))
  '(projectile-completion-system (quote ido))
  '(projectile-use-git-grep t)
