@@ -606,6 +606,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
  '(erc-user-full-name "Oleg Pykhalov")
  '(erc-whowas-on-nosuchnick t)
  '(geiser-guile-binary "guile")
+ '(gitpatch-mail-database (quote ("guix-patches@gnu.org")))
  '(ido-mode (quote buffer) nil (ido))
  '(imaxima-scale-factor 1.5)
  '(magit-auto-revert-mode nil)
