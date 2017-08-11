@@ -244,6 +244,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
              "*.scm"
              (concat guix-directory "/gnu/packages")))
     (setq guix-directory "~/src/guix")
+    (add-hook 'proced-post-display-hook 'guix-prettify-mode)
     (add-hook 'dired-mode-hook 'guix-prettify-mode)))
 
 (use-package erc
@@ -528,10 +529,6 @@ in the variable `browse-url-mpv-arguments' to mpv."
 (use-package guix-devel
   :diminish guix-devel-mode
   :config (add-hook 'scheme-mode-hook 'guix-devel-mode))
-
-(use-package proced
-  :commands proced
-  :config (add-hook 'proced-mode 'guix-prettify-mode))
 
 (use-package magit
   :bind (("C-c v s" . magit-status)
