@@ -33,7 +33,7 @@
     "emacs-company"
     "emacs-undo-tree" "emacs-flx" "emacs-projectile"
     "emacs-smex"
-    "emacs-multiple-cursors" "emacs-smartparens"
+    "emacs-multiple-cursors" "emacs-smartparens" "emacs-page-break-lines"
     "emacs-aggressive-indent"
     "emacs-transpose-frame"
     "emacs-engine-mode"

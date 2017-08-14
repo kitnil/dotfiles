@@ -229,6 +229,12 @@ in the variable `browse-url-mpv-arguments' to mpv."
   :commands notmuch-search
   :bind (("C-c m n" . notmuch)))
 
+(use-package page-break-lines
+  :config
+  (progn
+    (add-hook 'emacs-lisp-mode-hook 'page-break-lines-mode)
+    (add-hook 'scheme-mode-hook 'page-break-lines-mode)))
+
 (use-package guix-repl
   :config
   (setq guix-directory "~/src/guix"))
