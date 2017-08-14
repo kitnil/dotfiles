@@ -21,7 +21,7 @@
     "python-internetarchive"
     "haunt" "python-ghp-import"
     "icedtea" "emacs-cider"
-    "emacs-rpm-spec-mode" "emacs-nix-mode"
+    "emacs-rpm-spec-mode" "emacs-nix-mode" "emacs-ebuild-mode"
     "emacs-sx"
     "emacs-slime"
     "racket"
