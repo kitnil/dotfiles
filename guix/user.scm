@@ -29,7 +29,7 @@
     "ocaml"
     "emacs-org" "emacs-org-edit-latex" "emacs-org-pomodoro"
     "emacs-ag"
-    "the-silver-searcher" "cloc"
+    "the-silver-searcher" "cloc" "emacs-highlight-symbol"
     "emacs-company"
     "emacs-undo-tree" "emacs-flx" "emacs-projectile"
     "emacs-smex"
