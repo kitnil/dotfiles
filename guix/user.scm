@@ -66,7 +66,7 @@
     "samba"
     "rxvt-unicode"
     "screen" "tmux"
-    "vera" "sicp" "man-pages"
+    "vera" "sicp" "man-pages" "emacs-rfcview"
     "tome4"
     "aria2" "wget"
     "xclip" "wgetpaste"
