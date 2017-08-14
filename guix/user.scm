@@ -34,7 +34,7 @@
     "emacs-undo-tree" "emacs-flx" "emacs-projectile"
     "emacs-smex"
     "emacs-multiple-cursors" "emacs-smartparens" "emacs-page-break-lines"
-    "emacs-aggressive-indent"
+    "emacs-aggressive-indent" "emacs-goto-chg"
     "emacs-transpose-frame"
     "emacs-engine-mode"
     "emacs-expand-region"
