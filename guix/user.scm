@@ -21,7 +21,7 @@
     "python-internetarchive"
     "haunt" "python-ghp-import"
     "icedtea" "emacs-cider"
-    "emacs-rpm-spec-mode"
+    "emacs-rpm-spec-mode" "emacs-nix-mode"
     "emacs-sx"
     "racket"
     "haskell-mode" "ghc" "xmobar" "xmonad" "ghc-xmonad-contrib"
