@@ -640,6 +640,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
       :keybinding "y")
     (defun searx-email ()
       (interactive)
+      (require 's)
       (engine/search-searx
        (s-chop-prefix "<" (s-chop-suffix ">" (thing-at-point 'email)))))))
 
