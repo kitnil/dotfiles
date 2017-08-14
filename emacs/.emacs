@@ -65,10 +65,7 @@
     (add-hook 'python-mode-hook 'electric-pair-mode)))
 
 (use-package aggressive-indent
-  :diminish aggressive-indent-mode
-  :config
-  (progn
-    (add-hook 'prog-mode-hook 'aggressive-indent-mode)))
+  :diminish aggressive-indent-mode)
 
 (use-package paren
   :bind (("C-c t p m" . show-paren-mode)))
