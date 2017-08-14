@@ -68,7 +68,7 @@
     "screen" "tmux"
     "vera" "sicp" "man-pages" "emacs-rfcview"
     "tome4"
-    "aria2" "wget"
+    "aria2" "wget" "emacs-wget"
     "xclip" "wgetpaste"
     "xdotool" "xev" "xinit" "xlsfonts" "xorg-server" "xprop"
     "xrdb" "xset" "xmodmap" "setxkbmap"
