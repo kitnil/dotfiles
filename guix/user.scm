@@ -16,7 +16,7 @@
     "ghostscript-with-x"
     "gs-fonts" "emacs-auctex" "texlive" "texinfo" "graphviz"
     "lua" "emacs-lua-mode"
-    "node" "php" "emacs-web-mode"
+    "node" "php" "emacs-web-mode" "emacs-request"
     "conkeror" "icecat" "chromium"
     "python-internetarchive"
     "haunt" "python-ghp-import"
