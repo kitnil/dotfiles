@@ -8,7 +8,7 @@
     "translate-shell"
     "gettext"
     "bzip2" "unzip"
-    "magit" "emacs-git-gutter" "emacs-git-timemachine"
+    "magit" "emacs-git-gutter" "emacs-git-timemachine" "git-modes"
     "emacs-erc-hl-nicks"
     "git"
     "mercurial"
