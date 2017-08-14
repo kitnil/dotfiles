@@ -23,6 +23,7 @@
     "icedtea" "emacs-cider"
     "emacs-rpm-spec-mode" "emacs-nix-mode"
     "emacs-sx"
+    "emacs-slime"
     "racket"
     "haskell-mode" "ghc" "xmobar" "xmonad" "ghc-xmonad-contrib"
     "ocaml"
