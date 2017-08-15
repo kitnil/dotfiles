@@ -279,11 +279,6 @@ in the variable `browse-url-mpv-arguments' to mpv."
     (setq erc-server-auto-reconnect t)
     (setq erc-server-reconnect-attempts t)
     (setq erc-server-reconnect-timeout 60)
-    (setq erc-server-send-ping-interval 45)
-    (setq erc-server-send-ping-timeout 180)
-    (setq erc-timestamp-format "%H:%M ")
-    (setq erc-track-faces-priority-list (quote (erc-current-nick-face
-                                                erc-keyword-face)))
     (setq erc-track-position-in-mode-line (quote t))
     (setq erc-track-priority-faces-only (quote all))
     (setq erc-track-switch-direction (quote importantce))
