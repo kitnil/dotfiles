@@ -227,6 +227,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
   :bind (("C-c m n" . notmuch)))
 
 (use-package page-break-lines
+  :diminish page-break-lines-mode
   :config
   (progn
     (add-hook 'emacs-lisp-mode-hook 'page-break-lines-mode)
