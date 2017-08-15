@@ -2,35 +2,13 @@
 ;; Copyright © 2017 Oleg Pykhalov <go.wigust@gmail.com>
 ;; Released under the GNU GPLv3 or any later version.
 
-(use-modules (gnu)
-             (gnu system nss))
+(use-modules (gnu) (gnu system nss))
 
-(use-service-modules ssh
-                     desktop
-                     xorg
-                     cups
-                     pm
-                     version-control
-                     admin
-                     mcron
-                     mail
-                     networking
-                     shepherd
-                     rsync)
+(use-service-modules ssh desktop xorg cups pm version-control admin mcron mail
+                     networking shepherd rsync)
 
-(use-package-modules bootloaders
-                     emacs
-                     cups
-                     wm
-                     certs
-                     fonts
-                     xdisorg
-                     cryptsetup
-                     ssh
-                     guile
-                     package-management
-                     bash
-                     linux)
+(use-package-modules bootloaders emacs cups wm certs fonts xdisorg cryptsetup
+                     ssh guile package-management bash linux)
 
 (define 20-intel.conf "
 # Fix tearing on intel
@@ -104,6 +82,11 @@ EndSection
                                   (auto-login? #t)
                                   (default-user "natsu")))))
 
+
+;;;
+;;; Operating system.
+;;;
+
 (operating-system
   (host-name "magnolia")
   (timezone "Europe/Moscow")
@@ -141,29 +124,18 @@ EndSection
                 (uid 1000)
                 (comment "Oleg Pykhalov")
                 (group "users")
-                (supplementary-groups '("wheel"
-                                        "audio"
-                                        "video"
-                                        "lpadmin"
-                                        "lp"))
+                (supplementary-groups '("wheel" "audio" "video" "lpadmin" "lp"))
                 (home-directory "/home/natsu"))
                %base-user-accounts))
 
-  (packages (cons* i3-wm
-                   i3status
+  (packages (cons* i3-wm i3status rofi
                    cups
-                   rofi
                    cryptsetup
-                   emacs
-                   emacs-guix
-                   guile-2.2
-                   guix
+                   emacs emacs-guix
+                   guile-2.2 guile-ssh guix
                    nss-certs
-                   font-dejavu
-                   font-liberation
-                   guile-ssh
-                   openssh
-                   iptables
+                   font-dejavu font-liberation
+                   iptables openssh
                    %base-packages))
 
   (services (cons* (service openssh-service-type
