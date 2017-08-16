@@ -10,6 +10,11 @@
 (use-package-modules bootloaders emacs cups wm certs fonts xdisorg cryptsetup
                      ssh guile package-management bash linux)
 
+
+;;;
+;;; Firewall service
+;;;
+
 (define start-firewall
   ;; Rules to throttle malicious SSH connection attempts.  This will allow at
   ;; most 3 connections per minute from any host, and will block the host for
