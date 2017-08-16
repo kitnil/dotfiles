@@ -47,6 +47,11 @@
                                     #$start-firewall))
                          (respawn? #f)))))
 
+
+;;;
+;;; guix-daemon
+;;;
+
 (define %guix-daemon-config
   (guix-configuration
    ;; Import keys
