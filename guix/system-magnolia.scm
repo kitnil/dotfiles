@@ -5,7 +5,7 @@
 (use-modules (gnu) (gnu system nss))
 
 (use-service-modules ssh desktop xorg cups pm version-control admin mcron mail
-                     networking shepherd rsync)
+                     networking shepherd rsync cuirass)
 
 (use-package-modules bootloaders emacs cups wm certs fonts xdisorg cryptsetup
                      ssh guile package-management bash linux)
@@ -81,6 +81,28 @@ EndSection
                                      #:extra-config (list 20-intel.conf))))
                                   (auto-login? #t)
                                   (default-user "natsu")))))
+
+
+;;;
+;;; Cuirass.
+;;;
+
+(define %cuirass-specs
+  ;; Cuirass specifications to build Guix.
+  #~(list `((#:name . "guix")
+            (#:url . "git://magnolia.local/~natsu/src/guix")
+            (#:load-path . ".")
+
+            ;; FIXME: Currently this must be an absolute file name because
+            ;; the 'evaluate' command of Cuirass loads it with
+            ;; 'primitive-load'.
+            ;; Use our own variant of Cuirass' 'examples/gnu-system.scm'.
+            (#:file . #$(local-file "cuirass-jobs.scm"))
+            (#:no-compile? #t)      ;don't try to run ./bootstrap etc.
+
+            (#:proc . hydra-jobs)
+            (#:arguments (subset . "core"))
+            (#:branch . "master"))))
 
 
 ;;;
@@ -169,6 +191,11 @@ EndSection
                    (service rsync-service-type
                             (rsync-configuration))
                    firewall-service
+                   (service cuirass-service-type
+                            (cuirass-configuration
+                             (use-substitutes? #t)
+                             ;; (load-path '("/home/natsu/src/guix/packages"))
+                             (specifications %cuirass-specs)))
                    %custom-desktop-services))
 
   ;; Allow resolution of '.local' host names with mDNS.

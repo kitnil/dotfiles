@@ -1,7 +1,8 @@
-(use-modules (gnu)
-             (ng0 packages chromium))
+(define (spec->packages spec)
+  (call-with-values (lambda ()
+		      (specification->package+output spec)) list))
 
-(define packages
+(define packages-list
   '("alsa-utils"
     "pulseaudio" "ponymix" "pavucontrol"
     "aspell" "aspell-dict-en" "aspell-dict-ru" "shellcheck"
@@ -17,9 +18,9 @@
     "gs-fonts" "emacs-auctex" "texlive" "texinfo" "graphviz"
     "lua" "emacs-lua-mode"
     "node" "php" "emacs-web-mode" "emacs-request"
-    "conkeror" "icecat" "chromium"
+    "conkeror" "icecat"
     "python-internetarchive"
-    "haunt" "python-ghp-import"
+    "haunt"
     "icedtea" "emacs-cider"
     "emacs-rpm-spec-mode" "emacs-nix-mode" "emacs-ebuild-mode"
     "emacs-sx"
@@ -74,5 +75,5 @@
     "xrdb" "xset" "xmodmap" "setxkbmap"
     "desktop-file-utils" "redshift"))
 
-(packages->manifest (map (compose list
-                                  specification->package+output) packages))
+(packages->manifest
+ (map spec->packages packages-list))
