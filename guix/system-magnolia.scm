@@ -55,6 +55,11 @@
 
    (extra-options '("--max-jobs=6" "--cores=3"))))
 
+
+;;;
+;;; Desktop services
+;;;
+
 (define 20-intel.conf "
 # Fix tearing on intel
 # https://wiki.archlinux.org/index.php/Intel_Graphics
