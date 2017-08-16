@@ -371,12 +371,16 @@ in the variable `browse-url-mpv-arguments' to mpv."
     (defun erc-connect-all ()
       "Connect to all configured irc networks"
       (interactive)
+      (erc-connect-localhost)
       (erc-connect-debian)
       (erc-connect-freenode)
       (erc-connect-gnome)
       (erc-connect-gitter)
       (erc-connect-twitch)
-      (erc-connect-rizon))
+      (erc-connect-rizon)
+      ;; (erc-connect-highway) ; No autojoin channels
+      (erc-connect-globalgamers)
+      (erc-connect-indymedia))
 
     (defvar irc-gnome-servers '("umu.se" "gimp.net" "gimp.ca"
                                 "gnome.org" "y.se" "poop.nl"))
