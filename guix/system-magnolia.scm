@@ -10,17 +10,6 @@
 (use-package-modules bootloaders emacs cups wm certs fonts xdisorg cryptsetup
                      ssh guile package-management bash linux)
 
-(define 20-intel.conf "
-# Fix tearing on intel
-# https://wiki.archlinux.org/index.php/Intel_Graphics
-# https://github.com/8p8c/my-guix/blob/master/config.scm
-Section \"Device\"
-   Identifier  \"Intel Graphics\"
-   Driver      \"intel\"
-   Option      \"TearFree\" \"true\"
-EndSection
-")
-
 (define start-firewall
   ;; Rules to throttle malicious SSH connection attempts.  This will allow at
   ;; most 3 connections per minute from any host, and will block the host for
@@ -62,6 +51,19 @@ EndSection
    (timeout (* 4 max-silent-time))
 
    (extra-options '("--max-jobs=6" "--cores=3"))))
+
+(define 20-intel.conf "
+# Fix tearing on intel
+# https://wiki.archlinux.org/index.php/Intel_Graphics
+# https://github.com/8p8c/my-guix/blob/master/config.scm
+Section \"Device\"
+   Identifier  \"Intel Graphics\"
+   Driver      \"intel\"
+   Option      \"AccelMethod\"  \"sna\"
+   Option      \"SwapbuffersWait\" \"true\"
+   Option      \"TearFree\" \"true\"
+EndSection
+")
 
 (define %custom-desktop-services
   (modify-services %desktop-services
