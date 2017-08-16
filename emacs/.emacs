@@ -7,6 +7,136 @@
 
 (setq inhibit-compacting-font-caches t)
 
+
+;;;
+;;; Custom set variables
+;;;
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   (quote
+    ("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
+ '(debbugs-gnu-default-packages (quote ("guix" "guix-patches")))
+ '(default-input-method "russian-computer")
+ '(ediff-window-setup-function (quote ediff-setup-windows-plain))
+ '(geiser-guile-binary "guile")
+ '(gitpatch-mail-database (quote ("guix-patches@gnu.org")))
+ '(ido-mode (quote buffer) nil (ido))
+ '(imaxima-scale-factor 1.5)
+ '(magit-auto-revert-mode nil)
+ '(magit-repository-directories
+   (quote
+    (("/srv/src/math" . 0)
+     ("~/src/guix" . 0)
+     ("/srv/src/emacs-emamux" . 0)
+     ("/srv/src/emacs-org-edit-latex" . 0)
+     ("/srv/src/emacs-dired-hacks" . 0)
+     ("/srv/src/emacs-which-key" . 0)
+     ("~/src/guile" . 0)
+     ("/srv/src/emacs-org-edit-latex" . 0)
+     ("/srv/src/emacs-org-pomodoro" . 0))))
+ '(mouse-yank-at-point t)
+ '(nnir-notmuch-remove-prefix "/home/natsu/Maildir/")
+ '(notmuch-saved-searches
+   (quote
+    ((:name "inbox" :query "tag:inbox" :key "i")
+     (:name "unread" :query "tag:unread" :key "u")
+     (:name "flagged" :query "tag:flagged" :key "f")
+     (:name "sent" :query "tag:sent" :key "t")
+     (:name "drafts" :query "tag:draft" :key "d")
+     (:name "all mail" :query "*" :key "a")
+     (:name "today" :query "date:today")
+     (:name "leti-user" :query "from:leti-user@googlegroups.com tag:unread")
+     (:name "patch-today" :query "subject:patch date:today")
+     (:name "youtube" :query "from:noreply@youtube.com")
+     (:name "youtube-today" :query "from:noreply@youtube.com date:today")
+     (:name "youtube-unread" :query "from:noreply@youtube.com tag:unread")
+     (:name "headhunter-unread" :query "from:no_reply@hh.ru tag:unread")
+     (:name "pykhalov-unread" :query "from:pykhalov@gmail.com tag:unread")
+     (:name "artgames" :query "tag:unread subject:ArtGames LP")
+     (:name "my-email" :query "from:go.wigust@gmail.com"))))
+ '(org-agenda-files (quote ("~/.notes")))
+ '(safe-local-variable-values
+   (quote
+    ((rainbow-identifiers-mode)
+     (eval setq-default truncate-lines 1)
+     (eval add-hook
+           (quote compilation-mode-hook)
+           (lambda nil
+             (setq-local truncate-lines 1)))
+     (eval add-hook
+           (quote shell-mode-hook)
+           (quote guix-build-log-minor-mode))
+     (eval add-hook
+           (quote compilation-mode-hook)
+           (quote guix-build-log-minor-mode))
+     (aggressive-indent-mode)
+     (Base . 10)
+     (Syntax . Common-Lisp)
+     (Package . Maxima)
+     (eval when
+           (and
+            (buffer-file-name)
+            (file-regular-p
+             (buffer-file-name))
+            (string-match-p "^[^.]"
+                            (buffer-file-name)))
+           (unless
+               (featurep
+                (quote package-build))
+             (let
+                 ((load-path
+                   (cons "../package-build" load-path)))
+               (require
+                (quote package-build))))
+           (package-build-minor-mode)
+           (set
+            (make-local-variable
+             (quote package-build-working-dir))
+            (expand-file-name "../working/"))
+           (set
+            (make-local-variable
+             (quote package-build-archive-dir))
+            (expand-file-name "../packages/"))
+           (set
+            (make-local-variable
+             (quote package-build-recipes-dir))
+            default-directory))
+     (eval modify-syntax-entry 43 "'")
+     (eval modify-syntax-entry 36 "'")
+     (eval modify-syntax-entry 126 "'")
+     (bug-reference-bug-regexp . "<https?://\\(debbugs\\|bugs\\)\\.gnu\\.org/\\([0-9]+\\)>"))))
+ '(scroll-bar-mode nil)
+ '(send-mail-function (quote smtpmail-send-it))
+ '(smtpmail-smtp-server "smtp.gmail.com")
+ '(smtpmail-smtp-service 25)
+ '(sp-base-key-bindings (quote sp))
+ '(tab-always-indent (quote complete))
+ '(tool-bar-mode nil)
+ '(trans-target "ru")
+ '(vc-follow-symlinks t)
+ '(x-underline-at-descent-line t))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(default ((t (:family "DejaVu Sans Mono" :foundry "PfEd" :slant normal :weight normal :height 143 :width normal))))
+ '(sml/filename ((t (:inherit sml/global :foreground "red" :weight normal))))
+ '(sml/line-number ((t (:inherit sml/modes :weight normal))))
+ '(sml/modified ((t (:inherit sml/not-modified :foreground "black" :weight normal))))
+ '(sml/read-only ((t (:inherit sml/not-modified :foreground "black" :weight normal)))))
+(put 'narrow-to-region 'disabled nil)
+
+
+;;;
+;;; Highlight
+;;;
+
 (use-package hi-lock
   :commands (highlight-regexp-list unhighlight-regexp-list)
   :config
@@ -658,123 +788,3 @@ in the variable `browse-url-mpv-arguments' to mpv."
       (engine/search-searx
        (s-chop-prefix "<" (s-chop-suffix ">" (thing-at-point 'email)))))))
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-    ("d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879"
-     "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0"
-     "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4"
-     default)))
- '(debbugs-gnu-default-packages (quote ("guix" "guix-patches")))
- '(default-input-method "russian-computer")
- '(ediff-window-setup-function (quote ediff-setup-windows-plain))
- '(geiser-guile-binary "guile")
- '(gitpatch-mail-database (quote ("guix-patches@gnu.org")))
- '(ido-mode (quote buffer) nil (ido))
- '(imaxima-scale-factor 1.5)
- '(magit-auto-revert-mode nil)
- '(magit-repository-directories
-   (quote
-    (("/srv/src/math" . 0)
-     ("~/src/guix" . 0)
-     ("/srv/src/emacs-emamux" . 0)
-     ("/srv/src/emacs-org-edit-latex" . 0)
-     ("/srv/src/emacs-dired-hacks" . 0)
-     ("/srv/src/emacs-which-key" . 0)
-     ("~/src/guile" . 0)
-     ("/srv/src/emacs-org-edit-latex" . 0)
-     ("/srv/src/emacs-org-pomodoro" . 0))))
- '(mouse-yank-at-point t)
- '(nnir-notmuch-remove-prefix "/home/natsu/Maildir/")
- '(notmuch-saved-searches
-   (quote
-    ((:name "inbox" :query "tag:inbox" :key "i")
-     (:name "unread" :query "tag:unread" :key "u")
-     (:name "flagged" :query "tag:flagged" :key "f")
-     (:name "sent" :query "tag:sent" :key "t")
-     (:name "drafts" :query "tag:draft" :key "d")
-     (:name "all mail" :query "*" :key "a")
-     (:name "today" :query "date:today")
-     (:name "leti-user" :query "from:leti-user@googlegroups.com tag:unread")
-     (:name "patch-today" :query "subject:patch date:today")
-     (:name "youtube" :query "from:noreply@youtube.com")
-     (:name "youtube-today" :query "from:noreply@youtube.com date:today")
-     (:name "youtube-unread" :query "from:noreply@youtube.com tag:unread")
-     (:name "headhunter-unread" :query "from:no_reply@hh.ru tag:unread")
-     (:name "pykhalov-unread" :query "from:pykhalov@gmail.com tag:unread")
-     (:name "artgames" :query "tag:unread subject:ArtGames LP")
-     (:name "my-email" :query "from:go.wigust@gmail.com"))))
- '(org-agenda-files (quote ("~/.notes")))
- '(projectile-completion-system (quote ido))
- '(projectile-use-git-grep t)
- '(safe-local-variable-values
-   (quote
-    ((rainbow-identifiers-mode)
-     (eval setq-default truncate-lines 1)
-     (eval add-hook
-           (quote compilation-mode-hook)
-           (lambda nil
-             (setq-local truncate-lines 1)))
-     (eval add-hook
-           (quote shell-mode-hook)
-           (quote guix-build-log-minor-mode))
-     (eval add-hook
-           (quote compilation-mode-hook)
-           (quote guix-build-log-minor-mode))
-     (aggressive-indent-mode)
-     (Base . 10)
-     (Syntax . Common-Lisp)
-     (Package . Maxima)
-     (eval when
-           (and
-            (buffer-file-name)
-            (file-regular-p
-             (buffer-file-name))
-            (string-match-p "^[^.]"
-                            (buffer-file-name)))
-           (unless
-               (featurep
-                (quote package-build))
-             (let
-                 ((load-path
-                   (cons "../package-build" load-path)))
-               (require
-                (quote package-build))))
-           (package-build-minor-mode)
-           (set
-            (make-local-variable
-             (quote package-build-working-dir))
-            (expand-file-name "../working/"))
-           (set
-            (make-local-variable
-             (quote package-build-archive-dir))
-            (expand-file-name "../packages/"))
-           (set
-            (make-local-variable
-             (quote package-build-recipes-dir))
-            default-directory))
-     (eval modify-syntax-entry 43 "'")
-     (eval modify-syntax-entry 36 "'")
-     (eval modify-syntax-entry 126 "'")
-     (bug-reference-bug-regexp . "<https?://\\(debbugs\\|bugs\\)\\.gnu\\.org/\\([0-9]+\\)>"))))
- '(scroll-bar-mode nil)
- '(send-mail-function (quote smtpmail-send-it))
- '(smtpmail-smtp-server "smtp.gmail.com")
- '(smtpmail-smtp-service 25)
- '(sp-base-key-bindings (quote sp))
- '(tab-always-indent (quote complete))
- '(tool-bar-mode nil)
- '(trans-target "ru")
- '(vc-follow-symlinks t)
- '(x-underline-at-descent-line t))
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(default ((t (:family "DejaVu Sans Mono" :foundry "PfEd" :slant normal :weight normal :height 143 :width normal)))))
-(put 'narrow-to-region 'disabled nil)
