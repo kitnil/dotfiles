@@ -27,7 +27,7 @@
     "emacs-sx"
     "emacs-slime"
     "racket"
-    "haskell-mode" "ghc" "xmobar" "xmonad" "ghc-xmonad-contrib"
+    "haskell-mode" "ghc" "xmobar" "xmonad" "ghc-xmonad-contrib" "rofi"
     "ocaml"
     "emacs-org" "emacs-org-edit-latex" "emacs-org-pomodoro"
     "emacs-ag"
