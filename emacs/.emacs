@@ -620,6 +620,11 @@ in the variable `browse-url-mpv-arguments' to mpv."
 (use-package imaxima
   :commands imaxima)
 
+(use-package smart-mode-line
+  :config
+  (progn
+    (sml/setup)))
+
 (use-package hydra
   :config
   (progn
