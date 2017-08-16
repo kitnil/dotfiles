@@ -211,11 +211,6 @@ EndSection
                    (service rsync-service-type
                             (rsync-configuration))
                    firewall-service
-                   (service cuirass-service-type
-                            (cuirass-configuration
-                             (use-substitutes? #t)
-                             ;; (load-path '("/home/natsu/src/guix/packages"))
-                             (specifications %cuirass-specs)))
                    %custom-desktop-services))
 
   ;; Allow resolution of '.local' host names with mDNS.
