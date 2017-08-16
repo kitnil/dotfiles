@@ -286,6 +286,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
     (setq erc-try-new-nick-p nil)
     (setq erc-user-full-name "Oleg Pykhalov")
     (setq erc-whowas-on-nosuchnick t)
+    (setq erc-track-exclude-types '("NICK" "333" "353" "JOIN" "QUIT" "PART"))
 
     (defun erc-connect-localhost ()
       "Connect to localhost irc network"
