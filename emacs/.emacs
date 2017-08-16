@@ -203,7 +203,15 @@ in the variable `browse-url-mpv-arguments' to mpv."
          ("M-X" . smex-major-mode-commands)))
 
 (use-package projectile-global-mode
-  :init (projectile-global-mode))
+  :bind (("C-c p m" . projectile-commander))
+  :init
+  (progn
+    (setq projectile-mode-line nil)
+    (projectile-global-mode))
+  :config
+  (progn
+    (setq projectile-completion-system (quote ido))
+    (setq projectile-use-git-grep t)))
 
 (use-package rainbow-mode
   :bind (("C-c t c r" . rainbow-mode)))
