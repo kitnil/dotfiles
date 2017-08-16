@@ -52,6 +52,7 @@
     "parallel" "adb"
     "adwaita-icon-theme"
     "fontconfig" "font-adobe-source-han-sans" "font-hack"
+    "font-dejavu" "font-liberation"
     "font-wqy-zenhei"
     "gcc-toolchain" "gdb" "gnu-c-manual" "json-c"
     "autoconf" "automake" "make" "m4" "pkg-config"
