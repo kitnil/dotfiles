@@ -788,3 +788,5 @@ in the variable `browse-url-mpv-arguments' to mpv."
       (engine/search-searx
        (s-chop-prefix "<" (s-chop-suffix ">" (thing-at-point 'email)))))))
 
+(use-package saveplace
+  :init (save-place-mode 1))
