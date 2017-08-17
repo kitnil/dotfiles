@@ -90,7 +90,7 @@ myKeys conf@(XConfig {XMonad.modMask = modm}) = M.fromList $
     , ((modm .|. shiftMask, xK_e), spawn myEditor)
 
     -- launch rofi
-    , ((modm,               xK_d     ), spawn "rofi -show run")
+    , ((modm,               xK_d     ), spawn "rofi -modi combi,window -show combi -combi-modi run,drun")
 
     -- pulseaudio
     , ((modm,               xK_m     ), spawn "ponymix toggle")
