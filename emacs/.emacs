@@ -577,6 +577,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
             ("globalgamers"
              "#Touhou")
             ("twitch.tv"
+             "#tsoding"
              "#cattzs"
              "#retched"
              "#bbsssssssss"
