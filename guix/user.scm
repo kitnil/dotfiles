@@ -10,7 +10,7 @@
     "gettext"
     "bzip2" "unzip"
     "magit" "emacs-git-gutter" "emacs-git-timemachine" "git-modes"
-    "emacs-git-messenger"
+    "emacs-git-messenger" "emacs-browse-at-remote"
     "emacs-erc-hl-nicks"
     "git"
     "mercurial"
