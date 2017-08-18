@@ -330,7 +330,8 @@ in the variable `browse-url-mpv-arguments' to mpv."
 
 (use-package smex
   :bind (("M-x" . smex)
-         ("M-X" . smex-major-mode-commands)))
+         ("M-X" . smex-major-mode-commands)
+         ("<menu>" . smex)))
 
 (use-package projectile-global-mode
   :bind (("C-c p m" . projectile-commander))
