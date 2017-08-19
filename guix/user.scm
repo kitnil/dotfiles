@@ -48,7 +48,7 @@
     "emacs-async" "emacs-use-package"
     "feh" "gimp"
     "ffmpeg" "mpv" "mps-youtube" "youtube-dl"
-    "file" "htop" "ncdu" "neofetch" "tree" "stow" "strace"
+    "file" "htop" "ncdu" "neofetch" "tree" "stow" "strace" "hdparm"
     "parallel" "adb"
     "adwaita-icon-theme"
     "fontconfig" "font-adobe-source-han-sans" "font-hack"
