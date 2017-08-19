@@ -194,17 +194,18 @@
     (add-hook 'eval-expression-minibuffer-setup-hook 'electric-pair-mode)))
 
 (use-package elec-pair
-  :bind (("C-c t p p" . electric-pair-mode))
+  :bind (("C-c t p" . electric-pair-mode))
   :config
   (progn
     (add-hook 'c-mode-hook 'electric-pair-mode)
     (add-hook 'python-mode-hook 'electric-pair-mode)))
 
 (use-package aggressive-indent
-  :diminish aggressive-indent-mode)
+  :diminish aggressive-indent-mode
+  :bind (("C-c t a" . aggressive-indent-mode)))
 
 (use-package paren
-  :bind (("C-c t p m" . show-paren-mode)))
+  :bind (("C-c t m" . show-paren-mode)))
 
 (use-package ffap
   :config (ffap-bindings))
@@ -349,7 +350,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
     (setq projectile-use-git-grep t)))
 
 (use-package rainbow-mode
-  :bind (("C-c t c r" . rainbow-mode)))
+  :bind (("C-c t r" . rainbow-mode)))
 
 (use-package rainbow-identifiers
   :config (add-hook 'prog-mode-hook 'rainbow-identifiers-mode))
