@@ -1,36 +1,49 @@
 ;; -*-lisp-*-
 
+;; (push #p"/home/natsu/src/stumpwm/" asdf:*central-registry*)
+;; (ql:quickload "stumpwm")
+
 (in-package :stumpwm)
 
 ;; (require 'swank)
+;; (in-package :swank)
 ;; (swank:create-server)
 
 (set-module-dir "/home/natsu/.stumpwm.d/modules/")
 
-;; prompt the user for an interactive command. The first arg is an
+;; Prompt the user for an interactive command.  The first arg is an
 ;; optional initial contents.
 (defcommand colon1 (&optional (initial "")) (:rest)
   (let ((cmd (read-one-line (current-screen) ": " :initial-input initial)))
     (when cmd
       (eval-command cmd t))))
 
-(stumpwm:run-shell-command "xsetroot -cursor_name left_ptr")
+(stumpwm:run-shell-command "xsetroot -cursor_name left_ptr") ; Fix cursor icon
 
 
 ;;;
 ;;; Keybinds
 ;;;
 
-(set-prefix-key (kbd "F20"))
+(set-prefix-key (kbd "F20")) ; Super (Win) key in redefined .Xmodmap
 
 (define-key *root-map* (kbd "RET") "exec urxvt")
-(define-key *root-map* (kbd "v") "exec /home/natsu/bin/xclip-mpv.sh")
+
 (define-key *root-map* (kbd "b") "colon1 exec icecat http://www.")
 (define-key *root-map* (kbd "C-s") "colon1 exec xterm -e ssh localhost")
 (define-key *root-map* (kbd "C-l") "exec xlock")
+
+;; (define-key *root-map* (kbd "\\") "exec setxkbmap us")
+
+;; Pulseaudio management
 (define-key *root-map* (kbd "m") "exec ponymix toggle")
 (define-key *root-map* (kbd ",") "exec ponymix decrease 5")
 (define-key *root-map* (kbd ".") "exec ponymix increase 5")
+(define-key *root-map* (kbd "/") ; Switch between loudspeakers and headphones
+  "exec /home/natsu/bin/pulseaudio-switch-sink.sh")
+(define-key *root-map* (kbd "\\") "exec /home/natsu/bin/toggle-input-method.sh")
+;; Open video from clipboard with mpv
+(define-key *root-map* (kbd "v") "exec /home/natsu/bin/xclip-mpv.sh")
 
 
 ;;;
@@ -75,7 +88,8 @@
 ;;; Fonts
 ;;;
 
-;; (set-font "-misc-fixed-medium-r-semicondensed--13-120-75-75-c-60-iso8859-1")
+(set-font "-misc-fixed-medium-r-semicondensed--13-120-75-75-c-60-iso8859-1")
+;; (in-package :clx-truetype)
 (load-module "ttf-fonts")
 (xft:cache-fonts)
 (set-font (make-instance 'xft:font :family "DejaVu Sans Mono" :subfamily "Book" :size 14))
@@ -141,4 +155,6 @@
 (define-frame-preference "Emacs"
   (1 t t :restore "emacs-editing-dump" :title "...xdvi")
   (0 t t :create "emacs-dump" :class "Emacs"))
+
+
 
