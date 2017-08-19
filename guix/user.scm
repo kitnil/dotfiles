@@ -74,7 +74,7 @@
     "aria2" "wget" "emacs-wget"
     "xclip" "wgetpaste"
     "xdotool" "xev" "xinit" "xlsfonts" "xorg-server" "xprop"
-    "xrdb" "xset" "xmodmap" "setxkbmap"
+    "xrdb" "xset" "xmodmap" "setxkbmap" "xsetroot"
     "desktop-file-utils" "redshift"))
 
 (packages->manifest
