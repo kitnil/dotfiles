@@ -62,7 +62,8 @@
  '(org-agenda-files (quote ("~/.notes")))
  '(safe-local-variable-values
    (quote
-    ((rainbow-identifiers-mode)
+    ((bug-reference-bug-regexp . "#\\(?2:[0-9]+\\)")
+     (rainbow-identifiers-mode)
      (eval setq-default truncate-lines 1)
      (eval add-hook
            (quote compilation-mode-hook)
