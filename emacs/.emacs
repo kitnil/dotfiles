@@ -375,6 +375,9 @@ in the variable `browse-url-mpv-arguments' to mpv."
   :config
   (setq guix-directory "~/src/guix"))
 
+(use-package guix-command
+  :bind (("C-c g p" . guix)))
+
 (use-package guix-help
   :bind (("C-c g b" . guix-switch-to-buffer)
          ("C-c g x" . guix-extended-command))
