@@ -234,9 +234,7 @@
   :config
   (progn
     (require 'smartparens-config)
-    (add-hook 'prog-mode-hook 'smartparens-mode)
-    (add-hook 'emacs-lisp-mode-hook 'smartparens-strict-mode)
-    (add-hook 'scheme-mode-hook 'smartparens-strict-mode)))
+    (add-hook 'prog-mode-hook 'smartparens-strict-mode)))
 
 (use-package multiple-cursors
   :config (multiple-cursors-mode))
