@@ -188,6 +188,11 @@
     (setq shr-width 80)
     (setq shr-use-fonts nil)))
 
+(use-package simple
+  :config
+  (progn
+    (add-hook 'eval-expression-minibuffer-setup-hook 'electric-pair-mode)))
+
 (use-package elec-pair
   :bind (("C-c t p p" . electric-pair-mode))
   :config
