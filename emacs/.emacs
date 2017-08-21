@@ -188,11 +188,6 @@
     (setq shr-width 80)
     (setq shr-use-fonts nil)))
 
-(use-package simple
-  :config
-  (progn
-    (add-hook 'eval-expression-minibuffer-setup-hook 'electric-pair-mode)))
-
 (use-package elec-pair
   :bind (("C-c t p" . electric-pair-mode))
   :config
@@ -380,6 +375,12 @@ in the variable `browse-url-mpv-arguments' to mpv."
 (use-package guix-repl
   :config
   (setq guix-directory "~/src/guix"))
+
+(use-package guix-utils
+  :config
+  (progn
+    (setq guix-find-file-function 'org-open-file)
+    (add-to-list 'org-file-apps '("\\.png\\'" . "feh %s"))))
 
 (use-package guix-command
   :bind (("C-c g p" . guix)))
@@ -687,6 +688,11 @@ in the variable `browse-url-mpv-arguments' to mpv."
   :diminish guix-devel-mode
   :config (add-hook 'scheme-mode-hook 'guix-devel-mode))
 
+;; (use-package guix-external
+;;   :config
+;;   (progn
+;;     (setq guix-guile-program '("~/.guix-profile/bin/guile" "--no-auto-compile"))))
+
 (use-package magit
   :bind (("C-c v s" . magit-status)
          ("C-c v p" . magit-dispatch-popup)
@@ -719,7 +725,15 @@ in the variable `browse-url-mpv-arguments' to mpv."
     (setq org-format-latex-options
           (plist-put org-format-latex-options :scale 1.5))
     (setq org-todo-keywords
-          '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)")))))
+          '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)")))
+    (setq org-capture-templates '(("" "" entry (file "~/org/notes.org") "")
+                                  ("w" "Web site" entry
+                                   (file "~/.web.org")
+                                   "* %a :website:\n\n%U %?\n\n%:initial")))))
+
+(use-package org-protocol)
+
+(use-package org-protocol-capture-html)
 
 (use-package shell
   :bind (("C-c s s" . shell)
@@ -800,3 +814,24 @@ in the variable `browse-url-mpv-arguments' to mpv."
 
 (use-package saveplace
   :init (save-place-mode 1))
+
+(use-package edit-server
+  :disabled
+  :init
+  (progn
+    (edit-server-start)))
+
+(load-file "/home/natsu/.stumpwm.d/modules/util/swm-emacs/stumpwm-utils.el" t)
+(load-file "/home/natsu/.stumpwm.d/modules/util/swm-emacs/stumpwm-mode.el" t)
+
+(use-package slime
+  :init
+  (progn
+    (load (expand-file-name "~/quicklisp/slime-helper.el"))
+    (setq inferior-lisp-program "/home/natsu/.guix-profile/bin/sbcl")))
+
+(use-package slime-company
+  :after company
+  :config
+  (progn
+    (slime-setup '(slime-company))))
