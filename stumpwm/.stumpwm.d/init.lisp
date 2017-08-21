@@ -117,7 +117,9 @@
    " ^6*%l"                     ; net
    al/battery-mode-string)
 
- *mouse-focus-policy* :sloppy)
+ ;; Don't set it to “sloppy”,
+ ;; because it could switch window after switch desktop
+ *mouse-focus-policy* :click)
 
 
 ;;;
