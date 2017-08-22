@@ -374,10 +374,10 @@ in the variable `browse-url-mpv-arguments' to mpv."
   (setq guix-directory "~/src/guix"))
 
 (use-package guix-utils
+  :after org
   :config
   (progn
-    (setq guix-find-file-function 'org-open-file)
-    (add-to-list 'org-file-apps '("\\.png\\'" . "feh %s"))))
+    (setq guix-find-file-function 'org-open-file)))
 
 (use-package guix-command
   :bind (("C-c g p" . guix)))
@@ -732,7 +732,8 @@ in the variable `browse-url-mpv-arguments' to mpv."
     (setq org-capture-templates '(("" "" entry (file "~/org/notes.org") "")
                                   ("w" "Web site" entry
                                    (file "~/.web.org")
-                                   "* %a :website:\n\n%U %?\n\n%:initial")))))
+                                   "* %a :website:\n\n%U %?\n\n%:initial")))
+    (add-to-list 'org-file-apps '("\\.png\\'" . "feh %s"))))
 
 (use-package org-protocol)
 
