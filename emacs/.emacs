@@ -139,32 +139,27 @@
 ;;;
 
 (use-package hi-lock
-  :commands (highlight-regexp-list unhighlight-regexp-list)
   :config
   (progn
-    (setq highlight-words-list '(("proced" . "font-lock-keyword-face")
-                                 ("expres" . "bold")
-                                 ("case" . "font-lock-keyword-face")
-                                 ("symbol" . "bold")
-                                 ("compound" . "font-lock-keyword-face")
-                                 ("condition" . "bold")
-                                 ("predicate" . "bold")
-                                 ("value" . "bold")
-                                 ("decompos" . "font-lock-keyword-face")
-                                 ("defin" . "font-lock-keyword-face")))
-
-    (defun highlight-regexp-list ()
-      (interactive)
-      (mapcar (lambda (word-font)
-                (highlight-regexp (concat "\\w*" (car word-font) "\\w*")
-                                  (cdr word-font)))
-              highlight-words-list))
-
-    (defun unhighlight-regexp-list ()
-      (interactive)
-      (mapcar (lambda (word-font)
-                (unhighlight-regexp (concat "\\w*" (car word-font) "\\w*")))
-              highlight-words-list))))
+    (setq highlight-words-list
+          '(("proced" . "font-lock-function-name-face")
+            ("expres" . "bold")
+            ("function" . "font-lock-function-name-face")
+            ("case" . "font-lock-keyword-face")
+            ("symbol" . "bold")
+            ("compound" . "font-lock-function-name-face")
+            ("condition" . "font-lock-keyword-face")
+            ("predicate" . "bold")
+            ("value" . "bold")
+            ("decompos" . "font-lock-function-name-face")
+            ("define" . "font-lock-keyword-face")))
+    (add-hook 'Info-mode-hook
+              (lambda ()
+                (mapcar (lambda (word-font)
+                          (font-lock-add-keywords
+                           nil `(,(concat "\\<\\(" (car word-font) "\\)") 1
+                                 ,(cdr word-font) t)))
+                        highlight-words-list)))))
 
 (use-package ibuffer
   :bind (("C-c b" . ibuffer)))
