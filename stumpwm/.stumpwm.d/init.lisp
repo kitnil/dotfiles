@@ -1,13 +1,9 @@
 ;; -*-lisp-*-
 
-;; (push #p"/home/natsu/src/stumpwm/" asdf:*central-registry*)
-;; (ql:quickload "stumpwm")
-
 (in-package :stumpwm)
 
-;; (require 'swank)
-;; (in-package :swank)
-;; (swank:create-server)
+(setf *startup-message* nil) ; Disable welcome message.
+(stumpwm:run-shell-command "xsetroot -cursor_name left_ptr") ; Fix cursor icon
 
 (set-module-dir "/home/natsu/.stumpwm.d/modules/")
 
@@ -18,78 +14,34 @@
     (when cmd
       (eval-command cmd t))))
 
-(stumpwm:run-shell-command "xsetroot -cursor_name left_ptr") ; Fix cursor icon
-
 
 ;;;
 ;;; Keybinds
 ;;;
 
-(set-prefix-key (kbd "F20")) ; Super (Win) key in redefined .Xmodmap
+(stumpwm:set-prefix-key (stumpwm:kbd "F20"))
 
 (define-key *root-map* (kbd "RET") "exec urxvt")
-
-(define-key *root-map* (kbd "b") "colon1 exec icecat http://www.")
-(define-key *root-map* (kbd "C-s") "colon1 exec xterm -e ssh localhost")
 (define-key *root-map* (kbd "C-l") "exec xlock")
 
-;; (define-key *root-map* (kbd "\\") "exec setxkbmap us")
-
-;; Pulseaudio management
+;; Pulseaudio
 (define-key *root-map* (kbd "m") "exec ponymix toggle")
 (define-key *root-map* (kbd ",") "exec ponymix decrease 5")
 (define-key *root-map* (kbd ".") "exec ponymix increase 5")
+
 (define-key *root-map* (kbd "/") ; Switch between loudspeakers and headphones
   "exec /home/natsu/bin/pulseaudio-switch-sink.sh")
+
 (define-key *root-map* (kbd "\\") "exec /home/natsu/bin/toggle-input-method.sh")
-;; Open video from clipboard with mpv
+
+;; Mpv
 (define-key *root-map* (kbd "v") "exec /home/natsu/bin/xclip-mpv.sh")
-
-
-;;;
-;;; Frames
-;;;
-
-;; (defun send-key-last-frame (key)
-;;   (focus-last-frame (current-group))
-;;   (let ((scroll-keycode
-;;          (xlib:keysym->keycodes *display*
-;;                                 (keysym-name->keysym key))))
-;;     (xtest:fake-key-event *display* scroll-keycode t)
-;;     (xtest:fake-key-event *display* scroll-keycode nil)
-;;     (focus-last-frame (current-group))))
-
-;; (defcommand scroll-last-down () ()
-;;   "Scroll down the last frame that had focus"
-;;   (send-key-last-frame "Page_Down"))
-
-;; (defcommand scroll-last-up () ()
-;;   "Scroll up the last frame that had focus"
-;;   (send-key-last-frame "Page_Up"))
-
-;; (define-key *root-map* (kbd "C-M-v") "scroll-last-down")
-;; (global "s-b" "scroll-last-up")
-
-;; Web jump (works for Google and Imdb)
-(defmacro make-web-jump (name prefix)
-  `(defcommand ,(intern name) (search) ((:rest ,(concatenate 'string name " search: ")))
-    (substitute #\+ #\Space search)
-    (run-shell-command (concatenate 'string ,prefix search))))
-
-(make-web-jump "google" "firefox http://www.google.fr/search?q=")
-(make-web-jump "imdb" "firefox http://www.imdb.com/find?q=")
-
-;; C-t M-s is a terrble binding, but you get the idea.
-(define-key *root-map* (kbd "M-s") "google")
-(define-key *root-map* (kbd "i") "imdb")
 
 
 ;;;
 ;;; Fonts
 ;;;
 
-(set-font "-misc-fixed-medium-r-semicondensed--13-120-75-75-c-60-iso8859-1")
-;; (in-package :clx-truetype)
 (load-module "ttf-fonts")
 (xft:cache-fonts)
 (set-font (make-instance 'xft:font :family "DejaVu Sans Mono" :subfamily "Book" :size 14))
@@ -99,27 +51,65 @@
 ;;; Gravity
 ;;;
 
+(load-module "cpu")
+(load-module "disk")
+;; (load-module "mpd")
+(load-module "mem")
+(load-module "net")
+;; (load-module "battery-portable")
+;; (load-module "notifications")
+
 (setf
  *message-window-gravity* :center
  *input-window-gravity*   :center
-
+ *timeout-wait*           3
  *window-info-format*
  (format nil "^>^B^5*%c ^b^6*%w^7*x^6*%h^7*~%%t")
+
+ *normal-border-width* 3
+ *transient-border-width* 3
+ *maxsize-border-width* 3
+ *window-border-style* :tight
 
  *time-format-string-default*
  (format nil "^5*%H:%M:%S~%^2*%A~%^7*%d %B")
 
  *mode-line-timeout* 5
+
  *screen-mode-line-format*
- '("^5*" (:eval (time-format "%k:%M"))
-   " ^2*%n"                     ; group name
-   " ^7*%c"                     ; cpu
-   " ^6*%l"                     ; net
-   al/battery-mode-string)
+ '("[%n]" ; Group name
+   "  %w" ; Windows list
+   "^>"   ; Align right
+   "  %c" ; CPU
+   ;; (:eval (time-format "%k:%M")) ; Net
+   "  %l")
 
  ;; Don't set it to “sloppy”,
  ;; because it could switch window after switch desktop
  *mouse-focus-policy* :click)
+
+(setf *window-format* "%m%n%s%c")
+(setf *mode-line-timeout* 1)
+
+;; Use this command to see window properties; needed by the
+;; (define-frame-preference ...) functions, below.
+
+(define-key *root-map* (kbd "I") "show-window-properties")
+
+(setq *ignore-wm-inc-hints* t)
+
+
+;;;
+;;; Windows colors
+;;;
+
+(set-win-bg-color "#DCDAD5")
+(set-unfocus-color "#A9A9A9")
+(set-focus-color "#66CD00")
+(set-fg-color "#000000")
+(set-bg-color "#FFFFFF")
+(set-border-color "#66CD00")
+(set-msg-border-width 3)
 
 
 ;;;
@@ -135,28 +125,49 @@
 ;; restored from *data-dir*/create file.
 ;; TIP: if the :restore flag is set then group dump is restored even for an
 ;; existing group using *data-dir*/restore file.
-(define-frame-preference "Default"
-  ;; frame raise lock (lock AND raise == jumpto)
-  (0 t nil :class "Konqueror" :role "...konqueror-mainwindow")
-  (1 t nil :class "XTerm"))
 
-(define-frame-preference "Ardour"
-  (0 t   t   :instance "ardour_editor" :type :normal)
-  (0 t   t   :title "Ardour - Session Control")
-  (0 nil nil :class "XTerm")
-  (1 t   nil :type :normal)
-  (1 t   t   :instance "ardour_mixer")
-  (2 t   t   :instance "jvmetro")
-  (1 t   t   :instance "qjackctl")
-  (3 t   t   :instance "qjackctl" :role "qjackctlMainForm"))
-
-(define-frame-preference "Shareland"
-  (0 t   nil :class "XTerm")
-  (1 nil t   :class "aMule"))
+(define-frame-preference "Chromium"
+    (0 t t :create "chromium-dump" :class "Chromium-browser"))
 
 (define-frame-preference "Emacs"
   (1 t t :restore "emacs-editing-dump" :title "...xdvi")
-  (0 t t :create "emacs-dump" :class "Emacs"))
+  (1 t t :create "emacs-dump" :class "Emacs")
+  (0 t t :class "Conkeror"))
 
+(defcommand conkeror () ()
+  "Start conkeror unless it is already running, in which case focus it."
+  (run-or-raise "conkeror" '(:class "Conkeror")))
 
+(define-key *root-map* (kbd "w") "conkeror")
 
+(defcommand chromium () ()
+  "Start chromium unless it is already running, in which case focus it."
+  (run-or-raise "chromium-browser" '(:class "Chromium-browser")))
+
+
+;;;
+;;; Mode-line
+;;;
+
+(setq *mode-line-border-color* "#DCDAD5"
+      *mode-line-foreground-color* "#000000"
+      *mode-line-background-color* "#DCDAD5")
+
+
+;;;
+;;; Groups
+;;;
+
+;; Turn on/off the mode line for the current head only.
+(stumpwm:toggle-mode-line (stumpwm:current-screen)
+			  (stumpwm:current-head))
+
+(defun range (max &key (min 0) (step 1))
+  "Get a list of integers."
+  (loop for n from min below max by step
+     collect n))
+
+;; Rebind groups to PREFIX-NUMBER.
+(mapcar #'(lambda (x) (define-key *root-map* (kbd (write-to-string x))
+			(format nil "~A ~D" "gselect" x)))
+	(range 10 :min 1 :step 1))
