@@ -33,7 +33,7 @@
     "emacs-org" "emacs-org-edit-latex" "emacs-org-pomodoro"
     "emacs-ag"
     "the-silver-searcher" "cloc" "emacs-highlight-symbol"
-    "emacs-company"
+    "emacs-company" "company-quickhelp"
     "emacs-undo-tree" "emacs-flx" "emacs-projectile"
     "emacs-smex"
     "emacs-multiple-cursors" "emacs-smartparens" "emacs-page-break-lines"

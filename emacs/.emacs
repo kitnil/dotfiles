@@ -633,6 +633,12 @@ in the variable `browse-url-mpv-arguments' to mpv."
   :diminish company-mode
   :config (add-hook 'prog-mode-hook 'company-mode))
 
+(use-package company-quickhelp
+  :after company
+  :config
+  (eval-after-load 'company
+    '(define-key company-active-map (kbd "C-c h") #'company-quickhelp-manual-begin)))
+
 (use-package web-mode
   :config
   (progn
