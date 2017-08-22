@@ -818,8 +818,8 @@ in the variable `browse-url-mpv-arguments' to mpv."
   (progn
     (edit-server-start)))
 
-(load-file "/home/natsu/.stumpwm.d/modules/util/swm-emacs/stumpwm-utils.el" t)
-(load-file "/home/natsu/.stumpwm.d/modules/util/swm-emacs/stumpwm-mode.el" t)
+(load-file "/home/natsu/.stumpwm.d/modules/util/swm-emacs/stumpwm-utils.el")
+(load-file "/home/natsu/.stumpwm.d/modules/util/swm-emacs/stumpwm-mode.el")
 
 (use-package slime
   :init
