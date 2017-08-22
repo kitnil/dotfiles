@@ -166,9 +166,6 @@
                 (unhighlight-regexp (concat "\\w*" (car word-font) "\\w*")))
               highlight-words-list))))
 
-(use-package menu-bar
-  :config (menu-bar-mode -1))
-
 (use-package ibuffer
   :bind (("C-c b" . ibuffer)))
 
