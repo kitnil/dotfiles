@@ -624,6 +624,12 @@ in the variable `browse-url-mpv-arguments' to mpv."
 (use-package expand-region
   :bind (("<f8>" . er/expand-region)))
 
+(use-package semantic
+  :config
+  (progn
+    (add-hook 'c-mode-hook 'semantic-mode)
+    (add-hook 'c-mode-hook 'semantic-idle-summary-mode)))
+
 (use-package company
   :diminish company-mode
   :config (add-hook 'prog-mode-hook 'company-mode))
