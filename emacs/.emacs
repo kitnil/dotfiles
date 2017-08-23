@@ -636,6 +636,13 @@ in the variable `browse-url-mpv-arguments' to mpv."
 (use-package gtags
   :config (add-hook 'c-mode-hook '(lambda () (gtags-mode 1))))
 
+(use-package semantic/util-modes
+  :after semantic
+  :config
+  (progn
+    (add-to-list 'semantic-default-submodes 'global-semantic-stickyfunc-mode)
+    (add-hook 'c-mode-hook 'semantic-stickyfunc-mode)))
+
 (use-package company
   :diminish company-mode
   :config (add-hook 'prog-mode-hook 'company-mode))
