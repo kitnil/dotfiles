@@ -55,7 +55,7 @@
     "fontconfig" "font-adobe-source-han-sans" "font-hack"
     "font-dejavu" "font-liberation"
     "font-wqy-zenhei"
-    "gcc-toolchain" "gdb" "gnu-c-manual" "json-c" "stress"
+    "gcc-toolchain" "gdb" "gnu-c-manual" "json-c" "stress" "global"
     "autoconf" "automake" "make" "m4" "pkg-config"
     "clang" "help2man"
     "gnupg" "libgcrypt" "pinentry" "paperkey" "password-store"
