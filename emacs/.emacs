@@ -624,6 +624,9 @@ in the variable `browse-url-mpv-arguments' to mpv."
 (use-package expand-region
   :bind (("<f8>" . er/expand-region)))
 
+(use-package whitespace
+  :bind (("C-c t w" . whitespace-mode)))
+
 (use-package semantic
   :config
   (progn
