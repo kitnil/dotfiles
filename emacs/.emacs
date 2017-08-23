@@ -695,7 +695,17 @@ in the variable `browse-url-mpv-arguments' to mpv."
   :bind (("C-c v s" . magit-status)
          ("C-c v p" . magit-dispatch-popup)
          ("C-c v l" . magit-list-repositories)
-         ("C-c v v" . magit-stage)))
+         ("C-c v v" . magit-stage))
+  :config
+  (progn
+    (defun local-magit-initially-hide-unmerged (section)
+      (and (not magit-insert-section--oldroot)
+           (eq (magit-section-type section) 'unpushed)
+           (equal (magit-section-value section) "@{upstream}..")
+           'hide))
+
+    (add-hook 'magit-section-set-visibility-hook
+              'local-magit-initially-hide-unmerged)))
 
 (use-package savehist-mode
   :config (savehist-mode t))
