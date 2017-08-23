@@ -36,7 +36,7 @@
     "emacs-company" "company-quickhelp"
     "emacs-undo-tree" "emacs-flx" "emacs-projectile"
     "emacs-smex"
-    "emacs-multiple-cursors" "emacs-smartparens" "emacs-page-break-lines"
+    "emacs-multiple-cursors" "emacs-smartparens"
     "emacs-aggressive-indent" "emacs-goto-chg"
     "emacs-transpose-frame"
     "emacs-engine-mode"
