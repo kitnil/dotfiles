@@ -635,7 +635,10 @@ in the variable `browse-url-mpv-arguments' to mpv."
     (add-hook 'c-mode-hook 'semantic-idle-summary-mode)))
 
 (use-package gtags
-  :config (add-hook 'c-mode-hook '(lambda () (gtags-mode 1))))
+  :config
+  (progn
+    (add-hook 'c-mode-hook '(lambda () (gtags-mode 1)))
+    (add-hook 'lua-mode-hook '(lambda () (gtags-mode 1)))))
 
 (use-package ggtags
   :after gtags
