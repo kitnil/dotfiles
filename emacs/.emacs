@@ -875,3 +875,6 @@ in the variable `browse-url-mpv-arguments' to mpv."
   :config
   (progn
     (slime-setup '(slime-company))))
+
+(use-package flyspell
+  :config (add-hook 'prog-mode-hook 'flyspell-mode))

@@ -26,6 +26,7 @@
     "emacs-rpm-spec-mode" "emacs-nix-mode" "emacs-ebuild-mode"
     "emacs-sx"
     "emacs-slime" "gcl" "sbcl" "racket"
+    "emacs-flycheck"
     "sbcl-stumpwm-with-slynk" "emacs-stumpwm-mode"
     "haskell-mode" "ghc" "xmobar" "xmonad" "ghc-xmonad-contrib" "rofi"
     "ghc-pandoc"
