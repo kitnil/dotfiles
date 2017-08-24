@@ -358,6 +358,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
   :bind (("C-c m n" . notmuch)))
 
 (use-package page-break-lines
+  :disabled
   :diminish page-break-lines-mode
   :config
   (progn
