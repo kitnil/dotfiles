@@ -21,10 +21,21 @@ then
 else
     PS1='\u@\h \w\$ '
 fi
+
 alias ls='ls -p --color'
 alias ll='ls -lh'
 alias la='ls -a'
 alias l1='ls -1'
+
+alias dir='ls -ba'
+
+alias ss="ps -aux"
+alias dot='ls .[a-zA-Z0-9_]*'
+
+alias c="clear"
+alias m="more"
+alias j="jobs"
+
 alias suspend='sudo loginctl suspend'
 
 export EDITOR=zile
