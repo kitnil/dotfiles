@@ -32,7 +32,7 @@
     "ghc-pandoc"
     "ocaml"
     "emacs-org" "emacs-org-edit-latex" "emacs-org-pomodoro"
-    "emacs-ag"
+    "emacs-ag" "emacs-sr-speedbar"
     "the-silver-searcher" "cloc" "emacs-highlight-symbol"
     "emacs-company" "company-quickhelp"
     "emacs-undo-tree" "emacs-flx" "emacs-projectile"
