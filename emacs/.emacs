@@ -668,6 +668,10 @@ in the variable `browse-url-mpv-arguments' to mpv."
   (eval-after-load 'company
     '(define-key company-active-map (kbd "C-c h") #'company-quickhelp-manual-begin)))
 
+(use-package company-lua
+  :after company
+  :config (add-to-list 'company-backends 'company-lua))
+
 (use-package web-mode
   :config
   (progn

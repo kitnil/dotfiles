@@ -17,7 +17,7 @@
     "guile" "guile-git" "guile-ssh" "guix"
     "ghostscript-with-x"
     "gs-fonts" "emacs-auctex" "texlive" "texinfo" "graphviz"
-    "lua" "emacs-lua-mode"
+    "lua" "emacs-lua-mode" "emacs-company-lua"
     "node" "php" "emacs-web-mode" "emacs-request"
     "conkeror" "icecat"
     "python-internetarchive"
