@@ -636,6 +636,17 @@ in the variable `browse-url-mpv-arguments' to mpv."
 (use-package gtags
   :config (add-hook 'c-mode-hook '(lambda () (gtags-mode 1))))
 
+(use-package ggtags
+  :after gtags
+  :config
+  (progn
+    (add-hook 'c-mode-common-hook
+              (lambda ()
+                (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
+                  (ggtags-mode 1))))
+    (setq ggtags-mode-line-project-name nil)
+    (setq ggtags-highlight-tag nil)))
+
 (use-package semantic/util-modes
   :after semantic
   :config
