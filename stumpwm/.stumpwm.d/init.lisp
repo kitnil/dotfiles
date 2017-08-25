@@ -126,13 +126,24 @@
 ;; TIP: if the :restore flag is set then group dump is restored even for an
 ;; existing group using *data-dir*/restore file.
 
-(define-frame-preference "Chromium"
-    (0 t t :create "chromium-dump" :class "Chromium-browser"))
+
+;;;
+;;; Emacs
+;;;
 
 (define-frame-preference "Emacs"
   (1 t t :restore "emacs-editing-dump" :title "...xdvi")
   (1 t t :create "emacs-dump" :class "Emacs")
   (0 t t :class "Conkeror"))
+
+
+
+;;;
+;;; Browsers
+;;;
+
+(define-frame-preference "Chromium"
+    (0 t t :create "chromium-dump" :class "Chromium-browser"))
 
 (defcommand conkeror () ()
   "Start conkeror unless it is already running, in which case focus it."
