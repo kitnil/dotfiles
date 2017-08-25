@@ -189,3 +189,20 @@
 (mapcar #'(lambda (x) (define-key *root-map* (kbd (write-to-string x))
 			(format nil "~A ~D" "gselect" x)))
 	(range 10 :min 1 :step 1))
+
+
+
+;;;
+;;; Frames
+;;;
+
+(defcommand warp-mouse-active-frame () ()
+  (let* ((current-frame (tile-group-current-frame (current-group)))
+         (pointer-x (- (+ (frame-x current-frame) (frame-width current-frame)) 100))
+         (pointer-y (+ 100 (frame-y current-frame))))
+    (warp-pointer (current-screen) pointer-x pointer-y)))
+
+(define-key *root-map* (kbd "t") "warp-mouse-active-frame")
+
+(define-key *root-map* (kbd "C-2") "vsplit")
+(define-key *root-map* (kbd "C-3") "hsplit")
