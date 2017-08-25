@@ -178,8 +178,6 @@
 ;;; Groups
 ;;;
 
-(define-key *root-map* (kbd "s") "exec scrot '/home/natsu/Pictures/Screenshots/%Y-%m-%d_$wx$h.png'")
-
 (defun range (max &key (min 0) (step 1))
   "Get a list of integers."
   (loop for n from min below max by step
@@ -206,3 +204,11 @@
 
 (define-key *root-map* (kbd "C-2") "vsplit")
 (define-key *root-map* (kbd "C-3") "hsplit")
+
+
+
+;;;
+;;; Screenshots
+;;;
+
+(define-key *root-map* (kbd "s") "exec scrot '/home/natsu/Pictures/Screenshots/%Y-%m-%d_$wx$h.png'")
