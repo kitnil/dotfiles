@@ -726,6 +726,9 @@ in the variable `browse-url-mpv-arguments' to mpv."
   :diminish guix-devel-mode
   :config (add-hook 'scheme-mode-hook 'guix-devel-mode))
 
+(use-package guix-build-log
+  :diminish guix-build-log-minor-mode)
+
 ;; (use-package guix-external
 ;;   :config
 ;;   (progn
