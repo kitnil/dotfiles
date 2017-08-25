@@ -167,6 +167,7 @@
 ;;; Groups
 ;;;
 
+(define-key *root-map* (kbd "s") "exec scrot '/home/natsu/Pictures/Screenshots/%Y-%m-%d_$wx$h.png'")
 
 (defun range (max &key (min 0) (step 1))
   "Get a list of integers."
