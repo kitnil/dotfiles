@@ -130,6 +130,8 @@
  '(sml/filename ((t (:inherit sml/global :foreground "red" :weight normal))))
  '(sml/line-number ((t (:inherit sml/modes :weight normal))))
  '(sml/modified ((t (:inherit sml/not-modified :foreground "black" :weight normal))))
+ '(sml/position-percentage ((t (:foreground "black"))))
+ '(sml/process ((t (:foreground "red"))))
  '(sml/read-only ((t (:inherit sml/not-modified :foreground "black" :weight normal)))))
 (put 'narrow-to-region 'disabled nil)
 
@@ -830,6 +832,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
   :commands imaxima)
 
 (use-package smart-mode-line
+  :disabled
   :config
   (progn
     (sml/setup)))
