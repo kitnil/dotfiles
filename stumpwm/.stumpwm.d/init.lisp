@@ -149,18 +149,24 @@
 ;;; Mode-line
 ;;;
 
-(setq *mode-line-border-color* "#DCDAD5"
+(setq *mode-line-border-color*     "#DCDAD5"
       *mode-line-foreground-color* "#000000"
       *mode-line-background-color* "#DCDAD5")
+
+(defcommand toggle-modeline () ()
+  "Toggle mode line."
+  (stumpwm:toggle-mode-line (stumpwm:current-screen)
+                            (stumpwm:current-head)))
+
+(toggle-modeline) ; Turn on start
+
+(define-key *root-map* (kbd "b") "toggle-modeline")
 
 
 ;;;
 ;;; Groups
 ;;;
 
-;; Turn on/off the mode line for the current head only.
-(stumpwm:toggle-mode-line (stumpwm:current-screen)
-			  (stumpwm:current-head))
 
 (defun range (max &key (min 0) (step 1))
   "Get a list of integers."
