@@ -777,10 +777,28 @@ in the variable `browse-url-mpv-arguments' to mpv."
           (plist-put org-format-latex-options :scale 1.5))
     (setq org-todo-keywords
           '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)")))
-    (setq org-capture-templates '(("" "" entry (file "~/org/notes.org") "")
+    (setq org-capture-templates '(("c" "Note" entry
+                                   (file "~/org/notes.org")
+                                   "* %T %?")
                                   ("w" "Web site" entry
                                    (file "~/.web.org")
-                                   "* %a :website:\n\n%U %?\n\n%:initial")))
+                                   "* %a :website:\n\n%U %?\n\n%:initial")
+                                  ("r" "Respond ro email" entry
+                                   (file+headline
+                                    (concat org-directory "/inbox.org") "Email")
+                                   "* REPLY to [[mailto:%:fromaddress][%:fromname]] on %a\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+1d\"))\n%U\n\n"
+                                   :immediate-finish t
+                                   :prepend t)
+                                  ("f" "File email" entry
+                                   (file+headline
+                                    (concat org-directory "/inbox.org") "Email")
+                                   "* %U %a by [[mailto:%:fromaddress][%:fromname]]\n\n%i%?\n"
+                                   :immediate-finish nil
+                                   :prepend nil)
+                                  ("t" "Task" entry
+                                   (file+headline
+                                    (concat org-directory "/tasks.org") "Tasks")
+                                   "* TODO %? \n%T" :prepend t)))
     (add-to-list 'org-file-apps '("\\.png\\'" . "feh %s"))))
 
 (use-package org-protocol)
