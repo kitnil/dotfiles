@@ -134,8 +134,9 @@ EndSection
   (timezone "Europe/Moscow")
   (locale "en_US.utf8")
 
-  (bootloader (grub-configuration (grub grub-efi)
-                                  (device "/dev/sda")))
+  (bootloader (bootloader-configuration
+               (bootloader grub-efi-bootloader)
+               (target "/boot/efi")))
 
   (file-systems (cons* (file-system
                          (device "magnolia-root")
