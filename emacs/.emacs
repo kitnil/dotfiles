@@ -729,10 +729,11 @@ in the variable `browse-url-mpv-arguments' to mpv."
 (use-package guix-build-log
   :diminish guix-build-log-minor-mode)
 
-;; (use-package guix-external
-;;   :config
-;;   (progn
-;;     (setq guix-guile-program '("~/.guix-profile/bin/guile" "--no-auto-compile"))))
+(use-package guix-external
+  :config
+  (progn
+    (setq guix-guile-program '("/home/natsu/src/guix/pre-inst-env"
+                               "guile" "--no-auto-compile"))))
 
 (use-package magit
   :bind (("C-c v s" . magit-status)
