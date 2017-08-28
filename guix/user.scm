@@ -35,7 +35,7 @@
     "emacs-ag" "emacs-sr-speedbar"
     "the-silver-searcher" "cloc" "emacs-dumb-jump"
     "emacs-highlight-symbol" "emacs-highlight-numbers"
-    "emacs-company" "company-quickhelp"
+    "emacs-company" "emacs-company-quickhelp"
     "emacs-undo-tree" "emacs-flx" "emacs-projectile"
     "emacs-smex"
     "emacs-multiple-cursors" "emacs-smartparens"
