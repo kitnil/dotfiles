@@ -232,6 +232,7 @@
     (add-hook 'prog-mode-hook 'smartparens-strict-mode)))
 
 (use-package multiple-cursors
+  :bind (("<f7>" . mc/mark-next-like-this))
   :config (multiple-cursors-mode))
 
 (use-package tex-mode
