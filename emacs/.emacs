@@ -886,6 +886,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
   :config (add-to-list 'debbugs-gnu-all-packages "guix-patches"))
 
 (use-package undo-tree
+  :diminish undo-tree-mode
   :bind (("C-c u" . undo-tree-visualize))
   :config (add-hook 'prog-mode-hook 'undo-tree-mode))
 
