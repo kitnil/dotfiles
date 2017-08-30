@@ -953,3 +953,8 @@ in the variable `browse-url-mpv-arguments' to mpv."
 
 (use-package sr-speedbar
   :bind (("C-c s b" . sr-speedbar-toggle)))
+
+(use-package prog-mode
+  :config
+  (progn
+    (add-hook 'prog-mode-hook 'prettify-symbols-mode)))
