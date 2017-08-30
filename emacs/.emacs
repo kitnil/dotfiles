@@ -28,17 +28,6 @@
  '(ido-mode (quote buffer) nil (ido))
  '(imaxima-scale-factor 1.5)
  '(magit-auto-revert-mode nil)
- '(magit-repository-directories
-   (quote
-    (("/srv/src/math" . 0)
-     ("~/src/guix" . 0)
-     ("/srv/src/emacs-emamux" . 0)
-     ("/srv/src/emacs-org-edit-latex" . 0)
-     ("/srv/src/emacs-dired-hacks" . 0)
-     ("/srv/src/emacs-which-key" . 0)
-     ("~/src/guile" . 0)
-     ("/srv/src/emacs-org-edit-latex" . 0)
-     ("/srv/src/emacs-org-pomodoro" . 0))))
  '(mouse-yank-at-point t)
  '(nnir-notmuch-remove-prefix "/home/natsu/Maildir/")
  '(notmuch-saved-searches
@@ -473,7 +462,12 @@
            'hide))
 
     (add-hook 'magit-section-set-visibility-hook
-              'local-magit-initially-hide-unmerged)))
+              'local-magit-initially-hide-unmerged)
+
+    (setq magit-repository-directories
+      (directory-files (expand-file-name "/srv/git")
+		       t
+		       "^\\([^.]\\|\\.[^.]\\|\\.\\..\\)"))))
 
 (use-package git-gutter
   :diminish git-gutter-mode
