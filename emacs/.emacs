@@ -163,6 +163,33 @@
                                  ,(cdr word-font) t)))
                         highlight-words-list)))))
 
+(use-package rainbow-mode
+  :bind (("C-c t r" . rainbow-mode)))
+
+(use-package rainbow-identifiers
+  :config (add-hook 'prog-mode-hook 'rainbow-identifiers-mode))
+
+(use-package rainbow-delimiters
+  :config (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
+
+(use-package hl-todo
+  :config
+  (progn
+    (add-hook 'latex-mode-hook 'hl-todo-mode)
+    (add-hook 'prog-mode-hook 'hl-todo-mode)))
+
+
+;;;
+;;; Built in
+;;;
+
+(use-package dired
+  :commands dired-mode
+  :config
+  (progn
+    (add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)
+    (dired-async-mode 1)))
+
 (use-package ibuffer
   :bind (("C-c b" . ibuffer)))
 
@@ -189,10 +216,6 @@
     (add-hook 'c-mode-hook 'electric-pair-mode)
     (add-hook 'python-mode-hook 'electric-pair-mode)))
 
-(use-package aggressive-indent
-  :diminish aggressive-indent-mode
-  :bind (("C-c t a" . aggressive-indent-mode)))
-
 (use-package paren
   :bind (("C-c t m" . show-paren-mode)))
 
@@ -217,19 +240,67 @@
   (progn
     (setq python-shell-interpreter "python3")))
 
-(use-package paredit
-  :diminish paredit-mode
+(use-package savehist-mode
+  :config (savehist-mode t))
+
+(use-package save-place-mode
+  :config (save-place-mode t))
+
+(use-package shell
+  :bind(("C-c s s" . shell)
+         ("C-c s e" . eshell))
+  :config (add-hook 'shell-mode-hook 'guix-prettify-mode))
+
+(use-package whitespace
+  :bind (("C-c t w" . whitespace-mode)))
+
+(use-package calendar
+  :commands calendar
   :config
   (progn
-    (add-hook 'scheme-mode-hook 'paredit-mode)
-    (add-hook 'minibuffer-inactive-mode-hook 'paredit-mode)
-    (add-hook 'emacs-lisp-mode-hook 'paredit-mode)))
+    (setq calendar-date-style 'european
+          calendar-week-start-day 1)))
+
+(use-package time
+  :commands display-time
+  :config (setq display-time-24hr-format t))
+
+(use-package info-look)
+
+(use-package info
+  :config (info-initialize))
+
+(use-package doc-view)
+
+(use-package time
+  :commands display-time
+  :config (setq display-time-24hr-format t))
+
+(use-package info-look)
+
+(use-package info
+  :config (info-initialize))
+
+(use-package doc-view)
+
+
+;;;
+;;; Structured editing
+;;;
 
 (use-package smartparens
   :config
   (progn
     (require 'smartparens-config)
     (add-hook 'prog-mode-hook 'smartparens-strict-mode)))
+
+
+;;;
+;;; Selection
+;;;
+
+(use-package expand-region
+  :bind (("<f8>" . er/expand-region)))
 
 (use-package multiple-cursors
   :bind (("<f7>" . mc/mark-next-like-this))
@@ -241,79 +312,45 @@
 (use-package imenu
   :bind (("C-c i" . imenu)))
 
-(use-package browse-url
-  :commands browse-url-mpv
+
+;;;
+;;; Tags
+;;;
+
+(use-package semantic
   :config
   (progn
-    (setq browse-url-mpv-program "mpv")
-    (setq browse-url-mpv-arguments nil)
-    (setq browse-url-mpv-remote-program "~/bin/mpv-remote")
-    (defun browse-url-mpv (url &optional new-window)
-      "Ask the mpv video player to load URL.
-Defaults to the URL around or before point.  Passes the strings
-in the variable `browse-url-mpv-arguments' to mpv."
-      (interactive (browse-url-interactive-arg "URL: "))
-      (setq url (browse-url-encode-url url))
-      (let* ((process-environment (browse-url-process-environment)))
-        (apply 'start-process
-               (concat "mpv " url) nil
-               browse-url-mpv-program
-               (append
-                browse-url-mpv-arguments
-                (list url)))))
+    (add-hook 'c-mode-hook 'semantic-mode)
+    (add-hook 'c-mode-hook 'semantic-idle-summary-mode)))
 
-    (setq browse-url-browser-function
-          `(("^ftp://.*" . browse-ftp-tramp)
-            ("^https?://w*\\.?youtube.com/watch\\?v=.*" . browse-url-mpv)
-            ("^https?://w*\\.?github.com/.*" . browse-url-chromium)
-            ("." . browse-url-default-browser)))
-
-    (defun browse-url-mpv-remote (url &optional new-window)
-      "Ask the mpv video player to load URL.
-Defaults to the URL around or before point.  Passes the strings
-in the variable `browse-url-mpv-arguments' to mpv."
-      (interactive (browse-url-interactive-arg "URL: "))
-      (setq url (browse-url-encode-url url))
-      (let* ((process-environment (browse-url-process-environment)))
-        (apply 'start-process
-               (concat "mpv " url) nil
-               browse-url-mpv-remote-program
-               (append
-                browse-url-mpv-remote-arguments
-                (list (car (split-string url "&")))))))))
-
-(use-package which-key
-  :diminish which-key-mode
-  :config (which-key-mode))
-
-(use-package dired-open
-  :after dired
+(use-package semantic/util-modes
+  :after semantic
   :config
-  (setq dired-open-extensions
-        (quote
-         (("docx" . "libreoffice")
-          ("doc" . "libreoffice")
-          ("xlsx" . "libreoffice")
-          ("xls" . "libreoffice")
-          ("mp3" . "mpv")
-          ("webm" . "mpv")
-          ("mkv" . "mpv")
-          ("mp4" . "mpv")
-          ("flv" . "mpv")))))
+  (progn
+    (add-to-list 'semantic-default-submodes 'global-semantic-stickyfunc-mode)
+    (add-hook 'c-mode-hook 'semantic-stickyfunc-mode)))
 
-(use-package debbugs-gnu
-  :commands debbugs-gnu
-  :config (add-to-list 'debbugs-gnu-all-packages "guix-patches"))
-
-(use-package debbugs-browse
-  :after browse-url
+(use-package gtags
   :config
-  (add-to-list 'browse-url-browser-function
-               '("^https?://debbugs\\.gnu\\.org/.*" . debbugs-browse-url)))
+  (progn
+    (add-hook 'c-mode-hook '(lambda () (gtags-mode 1)))
+    (add-hook 'lua-mode-hook '(lambda () (gtags-mode 1)))))
 
-(use-package undo-tree
-  :bind (("C-c u" . undo-tree-visualize))
-  :config (add-hook 'prog-mode-hook 'undo-tree-mode))
+(use-package ggtags
+  :after gtags
+  :config
+  (progn
+    (add-hook 'c-mode-common-hook
+              (lambda ()
+                (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
+                  (ggtags-mode 1))))
+    (setq ggtags-mode-line-project-name nil)
+    (setq ggtags-highlight-tag nil)))
+
+
+;;;
+;;; Completion
+;;;
 
 (use-package flx-ido
   :config
@@ -328,29 +365,39 @@ in the variable `browse-url-mpv-arguments' to mpv."
          ("M-X" . smex-major-mode-commands)
          ("<menu>" . smex)))
 
-(use-package projectile-global-mode
-  :bind (("C-c p m" . projectile-commander))
-  :init
-  (progn
-    (setq projectile-mode-line nil)
-    (projectile-global-mode))
+(use-package elisp-mode
+  :config (add-hook 'emacs-lisp-mode-hook 'show-paren-mode))
+
+(use-package company
+  :diminish company-mode
+  :config (add-hook 'prog-mode-hook 'company-mode))
+
+(use-package company-quickhelp
+  :after company
+  :config
+  (eval-after-load 'company
+    '(define-key company-active-map
+       (kbd "C-c h") #'company-quickhelp-manual-begin)))
+
+(use-package company-lua
+  :after company
+  :config (add-to-list 'company-backends 'company-lua))
+
+(use-package yasnippet
+  :diminish yas-minor-mode
   :config
   (progn
-    (setq projectile-completion-system (quote ido))
-    (setq projectile-use-git-grep t)))
+    (setq yas-snippet-dirs
+          '("~/.emacs.d/snippets"
+            "~/.guix-profile/share/emacs/yasnippet-snippets/"))
+    (yas-reload-all)
+    (add-hook 'prog-mode-hook 'yas-minor-mode)
+    (add-hook 'latex-mode-hook 'yas-minor-mode)))
 
-(use-package rainbow-mode
-  :bind (("C-c t r" . rainbow-mode)))
-
-(use-package rainbow-identifiers
-  :config (add-hook 'prog-mode-hook 'rainbow-identifiers-mode))
-
-(use-package rainbow-delimiters
-  :config (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
-
-(use-package shell
-  :commands shell
-  :config (add-hook 'shell-mode-hook 'guix-prettify-mode))
+
+;;;
+;;; Email
+;;;
 
 (use-package gnus
   :bind (("C-c m g" . gnus))
@@ -360,13 +407,106 @@ in the variable `browse-url-mpv-arguments' to mpv."
   :commands notmuch-search
   :bind (("C-c m n" . notmuch)))
 
-(use-package page-break-lines
-  :disabled
-  :diminish page-break-lines-mode
+
+;;;
+;;; Org
+;;;
+
+(use-package org
+  :mode ("\\.notes\\'" . org-mode)
+  :bind (("C-c c" . org-capture)
+         ("C-c a" . org-agenda)
+         ("C-c l" . org-store-link))
   :config
   (progn
-    (add-hook 'emacs-lisp-mode-hook 'page-break-lines-mode)
-    (add-hook 'scheme-mode-hook 'page-break-lines-mode)))
+    (org-babel-do-load-languages
+     'org-babel-load-languages
+     '((emacs-lisp . nil)
+       (R . t)
+       (python . t)))
+    (setq org-babel-python-command python-shell-interpreter)
+    (setq org-format-latex-options
+          (plist-put org-format-latex-options :scale 1.5))
+    (setq org-todo-keywords
+          '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)")))
+    (setq org-capture-templates '(("c" "Note" entry
+                                   (file "~/org/notes.org")
+                                   "* %T %?")
+                                  ("w" "Web site" entry
+                                   (file "~/.web.org")
+                                   "* %a :website:\n\n%U %?\n\n%:initial")
+                                  ("r" "Respond ro email" entry
+                                   (file+headline
+                                    (concat org-directory "/inbox.org") "Email")
+                                   "* REPLY to [[mailto:%:fromaddress][%:fromname]] on %a\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+1d\"))\n%U\n\n"
+                                   :immediate-finish t
+                                   :prepend t)
+                                  ("f" "File email" entry
+                                   (file+headline
+                                    (concat org-directory "/inbox.org") "Email")
+                                   "* %U %a by [[mailto:%:fromaddress][%:fromname]]\n\n%i%?\n"
+                                   :immediate-finish nil
+                                   :prepend nil)
+                                  ("t" "Task" entry
+                                   (file+headline
+                                    (concat org-directory "/tasks.org") "Tasks")
+                                   "* TODO %? \n%T" :prepend t)))
+    (add-to-list 'org-file-apps '("\\.png\\'" . "feh %s"))))
+
+(use-package org-protocol)
+
+(use-package org-protocol-capture-html)
+
+
+;;;
+;;; Version control
+;;;
+
+(use-package magit
+  :bind (("C-c v s" . magit-status)
+         ("C-c v p" . magit-dispatch-popup)
+         ("C-c v l" . magit-list-repositories)
+         ("C-c v v" . magit-stage))
+  :config
+  (progn
+    (defun local-magit-initially-hide-unmerged (section)
+      (and (not magit-insert-section--oldroot)
+           (eq (magit-section-type section) 'unpushed)
+           (equal (magit-section-value section) "@{upstream}..")
+           'hide))
+
+    (add-hook 'magit-section-set-visibility-hook
+              'local-magit-initially-hide-unmerged)))
+
+(use-package git-gutter
+  :diminish git-gutter-mode
+  :config (global-git-gutter-mode +1))
+
+
+;;;
+;;; Lisp
+;;;
+
+(use-package scheme
+  :commands scheme-mode
+  :config
+  (progn
+    (setq indent-tabs-mode nil)
+    (add-hook 'scheme-mode-hook 'show-paren-mode)
+    (setq geiser-active-implementations (quote (guile)))))
+
+(use-package guix-devel
+  :diminish guix-devel-mode
+  :config (add-hook 'scheme-mode-hook 'guix-devel-mode))
+
+(use-package guix-build-log
+  :diminish guix-build-log-minor-mode)
+
+(use-package guix-external
+  :config
+  (progn
+    (setq guix-guile-program '("/home/natsu/src/guix/pre-inst-env"
+                               "guile" "--no-auto-compile"))))
 
 (use-package guix-repl
   :config
@@ -394,6 +534,34 @@ in the variable `browse-url-mpv-arguments' to mpv."
     (setq guix-directory "~/src/guix")
     (add-hook 'proced-post-display-hook 'guix-prettify-mode)
     (add-hook 'dired-mode-hook 'guix-prettify-mode)))
+
+(use-package geiser-guile
+  :commands geiser-repl-mode
+  :config
+  (with-eval-after-load 'geiser-guile
+    (add-to-list 'geiser-guile-load-path "~/src/guix")))
+
+(use-package geiser-doc)
+
+(use-package slime
+  :init
+  (progn
+    (load (expand-file-name "~/quicklisp/slime-helper.el"))
+    (setq inferior-lisp-program "/home/natsu/.guix-profile/bin/sbcl")
+    (load-file "/home/natsu/.stumpwm.d/modules/util/swm-emacs/stumpwm-utils.el")
+    (load-file "/home/natsu/.stumpwm.d/modules/util/swm-emacs/stumpwm-mode.el")))
+
+(use-package slime-company
+  :after company
+  :config
+  (progn
+    (slime-setup '(slime-company))))
+
+
+;;;
+;;; IRC
+;;;
+
 
 (use-package erc
   :bind (("C-c e l" . erc-connect-localhost)
@@ -515,15 +683,11 @@ in the variable `browse-url-mpv-arguments' to mpv."
     (defun erc-connect-all ()
       "Connect to all configured irc networks"
       (interactive)
-      (erc-connect-localhost)
-      (erc-connect-debian)
-      (erc-connect-freenode)
-      (erc-connect-gnome)
-      (erc-connect-gitter)
-      (erc-connect-twitch)
-      (erc-connect-rizon)
+      (erc-connect-localhost) (erc-connect-debian)
+      (erc-connect-freenode) (erc-connect-gnome)
+      (erc-connect-gitter) (erc-connect-twitch)
+      (erc-connect-rizon) (erc-connect-globalgamers)
       ;; (erc-connect-highway) ; No autojoin channels
-      (erc-connect-globalgamers)
       (erc-connect-indymedia))
 
     (defvar irc-gnome-servers '("umu.se" "gimp.net" "gimp.ca"
@@ -542,55 +706,28 @@ in the variable `browse-url-mpv-arguments' to mpv."
                                irc-netlist
                                (list (cons irc-network irc-channels))))))))
 
-    (defvar irc-netlist-gnome (irc-netlist
-                               irc-gnome-servers
-                               irc-gnome-channels))
+    (defvar irc-netlist-gnome (irc-netlist irc-gnome-servers
+                                           irc-gnome-channels))
 
     (setq erc-autojoin-channels-alist
           (quote
-           (("freenode.net"
-             ;; "##c"
-             ;; "#clojure"
-             ;; "##math"
-             "#icecat"
-             "#emacs"
-             ;; "#fedora"
-             ;; "#fedora-admin"
-             ;; "#fedora-devel"
-             ;; "#fedora-noc"
-             ;; "#fedora-meeting"
-             "#gnu"
-             "#guile"
-             "#guix"
-             ;; "#nixos"
-             ;; "#grub"
-             ;; "#haskell"
-             ;; "#xmonad"
-             ;; "#filmsbykris"
-             ;; "##japanese"
-             ;; "#latex"
-             ;; "#python"
-             ;; "#scipy"
-             ;; "#fedora-qa"
-             ;; "#sagemath"
+           (("freenode.net" "#icecat" "#emacs"
+             ;; "##c" ;; "#clojure" ;; "##math"
+             
+             ;; "#fedora" ;; "#fedora-admin" ;; "#fedora-devel"
+             ;; "#fedora-noc" ;; "#fedora-meeting" ;; "#fedora-qa"
+             "#gnu" "#guile" "#guix"
+             ;; "#nixos" ;; "#grub" ;; "#haskell" ;; "#xmonad"
+             ;; "#filmsbykris" ;; "##japanese" ;; "#latex"
+             ;; "#python" ;; "#scipy" ;; "#sagemath"
              "#scheme")
-            ("indymedia.org"
-             "#riseup")
+            ("indymedia.org" "#riseup")
             ("gitter.im")
-            ("oftc.net"
-             "#debian"
-             "#debian-next")
-            ("globalgamers"
-             "#Touhou")
-            ("twitch.tv"
-             "#tsoding"
-             "#cattzs"
-             "#retched"
-             "#bbsssssssss"
-             "#team_treehouse"
-             "#rw_grim")
-            ("uworld.se"
-             "#coalgirls"))))
+            ("oftc.net" "#debian" "#debian-next")
+            ("globalgamers" "#Touhou")
+            ("twitch.tv" "#tsoding" "#cattzs" "#retched"
+             "#bbsssssssss" "#team_treehouse" "#rw_grim")
+            ("uworld.se" "#coalgirls"))))
 
     (defun erc-netlist (irc-netlist)
       (dolist (irc-net irc-netlist)
@@ -625,55 +762,143 @@ in the variable `browse-url-mpv-arguments' to mpv."
 (use-package erc-hl-nicks
   :after erc)
 
-(use-package expand-region
-  :bind (("<f8>" . er/expand-region)))
+
+;;;
+;;; Disabled
+;;;
 
-(use-package whitespace
-  :bind (("C-c t w" . whitespace-mode)))
-
-(use-package semantic
+(use-package page-break-lines
+  :disabled
+  :diminish page-break-lines-mode
   :config
   (progn
-    (add-hook 'c-mode-hook 'semantic-mode)
-    (add-hook 'c-mode-hook 'semantic-idle-summary-mode)))
+    (add-hook 'emacs-lisp-mode-hook 'page-break-lines-mode)
+    (add-hook 'scheme-mode-hook 'page-break-lines-mode)))
 
-(use-package gtags
+(use-package edit-server
+  :disabled
+  :init
+  (progn
+    (edit-server-start)))
+
+(use-package paredit
+  :disabled
+  :diminish paredit-mode
   :config
   (progn
-    (add-hook 'c-mode-hook '(lambda () (gtags-mode 1)))
-    (add-hook 'lua-mode-hook '(lambda () (gtags-mode 1)))))
+    (add-hook 'scheme-mode-hook 'paredit-mode)
+    (add-hook 'minibuffer-inactive-mode-hook 'paredit-mode)
+    (add-hook 'emacs-lisp-mode-hook 'paredit-mode)))
 
-(use-package ggtags
-  :after gtags
+(use-package smart-mode-line
+  :disabled
   :config
   (progn
-    (add-hook 'c-mode-common-hook
-              (lambda ()
-                (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
-                  (ggtags-mode 1))))
-    (setq ggtags-mode-line-project-name nil)
-    (setq ggtags-highlight-tag nil)))
+    (sml/setup)))
 
-(use-package semantic/util-modes
-  :after semantic
+(use-package hydra
+  :disabled
   :config
   (progn
-    (add-to-list 'semantic-default-submodes 'global-semantic-stickyfunc-mode)
-    (add-hook 'c-mode-hook 'semantic-stickyfunc-mode)))
+    (defhydra hydra-buffer (global-map "<f7>")
+      "buffer"
+      ("n" next-buffer "next")
+      ("p" previous-buffer "previous"))))
 
-(use-package company
-  :diminish company-mode
-  :config (add-hook 'prog-mode-hook 'company-mode))
 
-(use-package company-quickhelp
-  :after company
+
+;;;
+;;; Misc
+;;;
+
+(use-package aggressive-indent
+  :diminish aggressive-indent-mode
+  :bind (("C-c t a" . aggressive-indent-mode)))
+
+(use-package browse-url
+  :commands browse-url-mpv
   :config
-  (eval-after-load 'company
-    '(define-key company-active-map (kbd "C-c h") #'company-quickhelp-manual-begin)))
+  (progn
+    (setq browse-url-mpv-program "mpv")
+    (setq browse-url-mpv-arguments nil)
+    (setq browse-url-mpv-remote-program "~/bin/mpv-remote")
+    (defun browse-url-mpv (url &optional new-window)
+      "Ask the mpv video player to load URL.
+Defaults to the URL around or before point.  Passes the strings
+in the variable `browse-url-mpv-arguments' to mpv."
+      (interactive (browse-url-interactive-arg "URL: "))
+      (setq url (browse-url-encode-url url))
+      (let* ((process-environment (browse-url-process-environment)))
+        (apply 'start-process
+               (concat "mpv " url) nil
+               browse-url-mpv-program
+               (append
+                browse-url-mpv-arguments
+                (list url)))))
 
-(use-package company-lua
-  :after company
-  :config (add-to-list 'company-backends 'company-lua))
+    (setq browse-url-browser-function
+          `(("^ftp://.*" . browse-ftp-tramp)
+            ("^https?://w*\\.?youtube.com/watch\\?v=.*" . browse-url-mpv)
+            ("^https?://w*\\.?github.com/.*" . browse-url-chromium)
+            ("." . browse-url-default-browser)))
+
+    (defun browse-url-mpv-remote (url &optional new-window)
+      "Ask the mpv video player to load URL.
+Defaults to the URL around or before point.  Passes the strings
+in the variable `browse-url-mpv-arguments' to mpv."
+      (interactive (browse-url-interactive-arg "URL: "))
+      (setq url (browse-url-encode-url url))
+      (let* ((process-environment (browse-url-process-environment)))
+        (apply 'start-process
+               (concat "mpv " url) nil
+               browse-url-mpv-remote-program
+               (append
+                browse-url-mpv-remote-arguments
+                (list (car (split-string url "&")))))))))
+
+(use-package debbugs-browse
+  :after browse-url
+  :config
+  (add-to-list 'browse-url-browser-function
+               '("^https?://debbugs\\.gnu\\.org/.*" . debbugs-browse-url)))
+
+(use-package which-key
+  :diminish which-key-mode
+  :config (which-key-mode))
+
+(use-package dired-open
+  :after dired
+  :config
+  (setq dired-open-extensions
+        (quote
+         (("docx" . "libreoffice")
+          ("doc" . "libreoffice")
+          ("xlsx" . "libreoffice")
+          ("xls" . "libreoffice")
+          ("mp3" . "mpv")
+          ("webm" . "mpv")
+          ("mkv" . "mpv")
+          ("mp4" . "mpv")
+          ("flv" . "mpv")))))
+
+(use-package debbugs-gnu
+  :commands debbugs-gnu
+  :config (add-to-list 'debbugs-gnu-all-packages "guix-patches"))
+
+(use-package undo-tree
+  :bind (("C-c u" . undo-tree-visualize))
+  :config (add-hook 'prog-mode-hook 'undo-tree-mode))
+
+(use-package projectile-global-mode
+  :bind (("C-c p m" . projectile-commander))
+  :init
+  (progn
+    (setq projectile-mode-line nil)
+    (projectile-global-mode))
+  :config
+  (progn
+    (setq projectile-completion-system (quote ido))
+    (setq projectile-use-git-grep t)))
 
 (use-package web-mode
   :config
@@ -687,155 +912,6 @@ in the variable `browse-url-mpv-arguments' to mpv."
     (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
     (add-to-list 'auto-mode-alist '("\\.php?\\'" . web-mode))
     (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))))
-
-(use-package hl-todo
-  :config
-  (progn
-    (add-hook 'latex-mode-hook 'hl-todo-mode)
-    (add-hook 'prog-mode-hook 'hl-todo-mode)))
-
-(use-package yasnippet
-  :diminish yas-minor-mode
-  :config
-  (progn
-    (setq yas-snippet-dirs
-          '("~/.emacs.d/snippets"
-            "~/.guix-profile/share/emacs/yasnippet-snippets/"))
-    (yas-reload-all)
-    (add-hook 'prog-mode-hook 'yas-minor-mode)
-    (add-hook 'latex-mode-hook 'yas-minor-mode)))
-
-(use-package dired
-  :commands dired-mode
-  :config
-  (progn
-    (add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)
-    (dired-async-mode 1)))
-
-(use-package elisp-mode
-  :config (add-hook 'emacs-lisp-mode-hook 'show-paren-mode))
-
-(use-package scheme
-  :commands scheme-mode
-  :config
-  (progn
-    (setq indent-tabs-mode nil)
-    (add-hook 'scheme-mode-hook 'show-paren-mode)
-    (setq geiser-active-implementations (quote (guile)))))
-
-(use-package guix-devel
-  :diminish guix-devel-mode
-  :config (add-hook 'scheme-mode-hook 'guix-devel-mode))
-
-(use-package guix-build-log
-  :diminish guix-build-log-minor-mode)
-
-(use-package guix-external
-  :config
-  (progn
-    (setq guix-guile-program '("/home/natsu/src/guix/pre-inst-env"
-                               "guile" "--no-auto-compile"))))
-
-(use-package magit
-  :bind (("C-c v s" . magit-status)
-         ("C-c v p" . magit-dispatch-popup)
-         ("C-c v l" . magit-list-repositories)
-         ("C-c v v" . magit-stage))
-  :config
-  (progn
-    (defun local-magit-initially-hide-unmerged (section)
-      (and (not magit-insert-section--oldroot)
-           (eq (magit-section-type section) 'unpushed)
-           (equal (magit-section-value section) "@{upstream}..")
-           'hide))
-
-    (add-hook 'magit-section-set-visibility-hook
-              'local-magit-initially-hide-unmerged)))
-
-(use-package savehist-mode
-  :config (savehist-mode t))
-
-(use-package save-place-mode
-  :config (save-place-mode t))
-
-(use-package git-gutter
-  :diminish git-gutter-mode
-  :config (global-git-gutter-mode +1))
-
-(use-package org
-  :mode ("\\.notes\\'" . org-mode)
-  :bind (("C-c c" . org-capture)
-         ("C-c a" . org-agenda)
-         ("C-c l" . org-store-link))
-  :config
-  (progn
-    (org-babel-do-load-languages
-     'org-babel-load-languages
-     '((emacs-lisp . nil)
-       (R . t)
-       (python . t)))
-    (setq org-babel-python-command python-shell-interpreter)
-    (setq org-format-latex-options
-          (plist-put org-format-latex-options :scale 1.5))
-    (setq org-todo-keywords
-          '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)")))
-    (setq org-capture-templates '(("c" "Note" entry
-                                   (file "~/org/notes.org")
-                                   "* %T %?")
-                                  ("w" "Web site" entry
-                                   (file "~/.web.org")
-                                   "* %a :website:\n\n%U %?\n\n%:initial")
-                                  ("r" "Respond ro email" entry
-                                   (file+headline
-                                    (concat org-directory "/inbox.org") "Email")
-                                   "* REPLY to [[mailto:%:fromaddress][%:fromname]] on %a\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+1d\"))\n%U\n\n"
-                                   :immediate-finish t
-                                   :prepend t)
-                                  ("f" "File email" entry
-                                   (file+headline
-                                    (concat org-directory "/inbox.org") "Email")
-                                   "* %U %a by [[mailto:%:fromaddress][%:fromname]]\n\n%i%?\n"
-                                   :immediate-finish nil
-                                   :prepend nil)
-                                  ("t" "Task" entry
-                                   (file+headline
-                                    (concat org-directory "/tasks.org") "Tasks")
-                                   "* TODO %? \n%T" :prepend t)))
-    (add-to-list 'org-file-apps '("\\.png\\'" . "feh %s"))))
-
-(use-package org-protocol)
-
-(use-package org-protocol-capture-html)
-
-(use-package shell
-  :bind (("C-c s s" . shell)
-         ("C-c s e" . eshell)))
-
-(use-package calendar
-  :commands calendar
-  :config
-  (progn
-    (setq calendar-date-style 'european
-          calendar-week-start-day 1)))
-
-(use-package time
-  :commands display-time
-  :config (setq display-time-24hr-format t))
-
-(use-package geiser-guile
-  :commands geiser-repl-mode
-  :config
-  (with-eval-after-load 'geiser-guile
-    (add-to-list 'geiser-guile-load-path "~/src/guix")))
-
-(use-package info-look)
-
-(use-package geiser-doc)
-
-(use-package info
-  :config (info-initialize))
-
-(use-package doc-view)
 
 (use-package pdf-tools
   :mode (("\\.pdf\\'" . pdf-view-mode))
@@ -854,20 +930,6 @@ in the variable `browse-url-mpv-arguments' to mpv."
 (use-package imaxima
   :commands imaxima)
 
-(use-package smart-mode-line
-  :disabled
-  :config
-  (progn
-    (sml/setup)))
-
-(use-package hydra
-  :config
-  (progn
-    (defhydra hydra-buffer (global-map "<f7>")
-      "buffer"
-      ("n" next-buffer "next")
-      ("p" previous-buffer "previous"))))
-
 (use-package engine-mode
   :config
   (progn
@@ -884,30 +946,6 @@ in the variable `browse-url-mpv-arguments' to mpv."
       (require 's)
       (engine/search-searx
        (s-chop-prefix "<" (s-chop-suffix ">" (thing-at-point 'email)))))))
-
-(use-package saveplace
-  :init (save-place-mode 1))
-
-(use-package edit-server
-  :disabled
-  :init
-  (progn
-    (edit-server-start)))
-
-(load-file "/home/natsu/.stumpwm.d/modules/util/swm-emacs/stumpwm-utils.el")
-(load-file "/home/natsu/.stumpwm.d/modules/util/swm-emacs/stumpwm-mode.el")
-
-(use-package slime
-  :init
-  (progn
-    (load (expand-file-name "~/quicklisp/slime-helper.el"))
-    (setq inferior-lisp-program "/home/natsu/.guix-profile/bin/sbcl")))
-
-(use-package slime-company
-  :after company
-  :config
-  (progn
-    (slime-setup '(slime-company))))
 
 (use-package flyspell
   :config (add-hook 'prog-mode-hook 'flyspell-mode))
