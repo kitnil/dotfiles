@@ -51,7 +51,10 @@
  '(org-agenda-files (quote ("~/.notes")))
  '(safe-local-variable-values
    (quote
-    ((bug-reference-bug-regexp . "#\\(?2:[0-9]+\\)")
+    ((eval add-to-list
+           (quote geiser-guile-load-path)
+           (expand-file-name "."))
+     (bug-reference-bug-regexp . "#\\(?2:[0-9]+\\)")
      (rainbow-identifiers-mode)
      (eval setq-default truncate-lines 1)
      (eval add-hook
