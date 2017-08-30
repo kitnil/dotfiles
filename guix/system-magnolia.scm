@@ -5,10 +5,10 @@
 (use-modules (gnu) (gnu system nss))
 
 (use-service-modules ssh desktop xorg cups pm version-control admin mcron mail
-                     networking shepherd rsync cuirass)
+                     networking shepherd rsync cuirass web)
 
 (use-package-modules bootloaders emacs cups wm certs fonts xdisorg cryptsetup
-                     ssh guile package-management bash linux)
+                     ssh guile package-management bash linux version-control)
 
 
 ;;;
@@ -124,6 +124,25 @@ EndSection
             (#:arguments (subset . "core"))
             (#:branch . "master"))))
 
+(define %cgit-configuration-nginx
+  (list
+   (nginx-server-configuration
+    (root cgit)
+    (locations
+     (list
+      (nginx-location-configuration
+       (uri "@cgit")
+       (body '("fastcgi_param SCRIPT_FILENAME $document_root/lib/cgit/cgit.cgi;"
+               "fastcgi_param PATH_INFO $uri;"
+               "fastcgi_param QUERY_STRING $args;"
+               "fastcgi_param HTTP_HOST $server_name;"
+               "fastcgi_pass 127.0.0.1:9000;")))))
+    (try-files (list "$uri" "@cgit"))
+    (http-port 19418)
+    (https-port #f)
+    (ssl-certificate #f)
+    (ssl-certificate-key #f))))
+
 
 ;;;
 ;;; Operating system.
@@ -211,6 +230,11 @@ EndSection
                             (bitlbee-configuration))
                    (service rsync-service-type
                             (rsync-configuration))
+                   (service nginx-service-type)
+                   (service fcgiwrap-service-type)
+                   (service cgit-service-type
+                            (cgit-configuration
+                             (nginx %cgit-configuration-nginx)))
                    firewall-service
                    %custom-desktop-services))
 
