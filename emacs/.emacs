@@ -176,8 +176,11 @@
   :commands dired-mode
   :config
   (progn
-    (add-hook 'dired-mode-hook 'turn-on-gnus-dired-mode)
-    (dired-async-mode 1)))
+    (defun my-dired-mode-hook ()
+      (turn-on-gnus-dired-mode)
+      (dired-async-mode t)
+      (setq-local truncate-lines t))
+    (add-hook 'dired-mode-hook 'my-dired-mode-hook)))
 
 (use-package ibuffer
   :bind (("C-c b" . ibuffer)))
