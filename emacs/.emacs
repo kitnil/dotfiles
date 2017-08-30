@@ -485,11 +485,16 @@
   :config (add-hook 'after-save-hook 'check-parens nil t))
 
 (use-package scheme
-  :commands scheme-mode
+  :preface
+  (defvar scheme-prettify-symbols-alist
+    '(("lambda" . 955)))
   :config
   (progn
-    (setq indent-tabs-mode nil)
-    (add-hook 'scheme-mode-hook 'show-paren-mode)
+    (defun my-scheme-mode-hook ()
+      (setq-local prettify-symbols-alist scheme-prettify-symbols-alist)
+      (prettify-symbols-mode)
+      (show-paren-mode))
+    (add-hook 'scheme-mode-hook 'my-scheme-mode-hook)
     (setq geiser-active-implementations (quote (guile)))))
 
 (use-package guix-devel
