@@ -365,9 +365,6 @@
          ("M-X" . smex-major-mode-commands)
          ("<menu>" . smex)))
 
-(use-package elisp-mode
-  :config (add-hook 'emacs-lisp-mode-hook 'show-paren-mode))
-
 (use-package company
   :diminish company-mode
   :config (add-hook 'prog-mode-hook 'company-mode))
@@ -486,6 +483,12 @@
 ;;;
 ;;; Lisp
 ;;;
+
+(use-package elisp-mode
+  :config (add-hook 'emacs-lisp-mode-hook 'show-paren-mode))
+
+(use-package lisp-mode
+  :config (add-hook 'after-save-hook 'check-parens nil t))
 
 (use-package scheme
   :commands scheme-mode
