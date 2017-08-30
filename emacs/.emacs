@@ -713,9 +713,8 @@
 
     (setq erc-autojoin-channels-alist
           (quote
-           (("freenode.net" "#icecat" "#emacs"
-             ;; "##c" ;; "#clojure" ;; "##math"
-             
+           (("freenode.net" "#icecat" "#emacs" "##math"
+             ;; "##c" ;; "#clojure"
              ;; "#fedora" ;; "#fedora-admin" ;; "#fedora-devel"
              ;; "#fedora-noc" ;; "#fedora-meeting" ;; "#fedora-qa"
              "#gnu" "#guile" "#guix"
