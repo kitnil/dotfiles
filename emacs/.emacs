@@ -441,7 +441,15 @@
             (progn
               (gnus-summary-read-group group 1) ; have to show at least one old message
               (gnus-summary-refer-article message-id)) ; simpler than org-gnus method?
-          (message "Couldn't get relevant infos for switching to Gnus."))))))
+          (message "Couldn't get relevant infos for switching to Gnus."))))
+
+    (defun send-buffer-as-mail ()
+      (interactive)
+      (let ((str (buffer-string)))
+        (compose-mail)
+        (save-excursion
+          (message-goto-body)
+          (insert str))))))
 
 (use-package notmuch
   :commands notmuch-search
