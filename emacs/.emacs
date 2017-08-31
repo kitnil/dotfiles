@@ -780,7 +780,7 @@
              ;; "#nixos" ;; "#grub" ;; "#haskell" ;; "#xmonad"
              ;; "#filmsbykris" ;; "##japanese" ;; "#latex"
              ;; "#python" ;; "#scipy" ;; "#sagemath"
-             "#scheme")
+             "#lisp" "#scheme")
             ("indymedia.org" "#riseup")
             ("gitter.im")
             ("oftc.net" "#debian" "#debian-next")
