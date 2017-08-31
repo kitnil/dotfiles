@@ -413,6 +413,8 @@
 
 (use-package gnus
   :bind (("C-c m g" . gnus))
+  :preface
+  (setq mail-user-agent 'gnus-user-agent)
   :config
   (progn
     (add-hook 'message-sent-hook 'gnus-score-followup-thread)
