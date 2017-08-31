@@ -377,6 +377,9 @@
          ("M-X" . smex-major-mode-commands)
          ("<menu>" . smex)))
 
+(use-package helm
+  :config (setq helm-locate-project-list my-projects))
+
 (use-package company
   :diminish company-mode
   :config (add-hook 'prog-mode-hook 'company-mode))
