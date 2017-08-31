@@ -203,7 +203,7 @@
         (forward-line 4)
         (delete-region (point-min) (point)))
       (goto-char (point-max))
-      (emacs-lisp-mode))))
+      (lisp-interaction-mode))))
 
 (use-package compile
   :bind ("<f5>" . recompile))
