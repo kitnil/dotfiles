@@ -7,6 +7,11 @@
 
 (setq inhibit-compacting-font-caches t)
 
+(defvar my-projects
+  (directory-files (expand-file-name "/srv/git")
+                   t
+                   "^\\([^.]\\|\\.[^.]\\|\\.\\..\\)"))
+
 
 ;;;
 ;;; Custom set variables
@@ -482,10 +487,7 @@
     (add-hook 'magit-section-set-visibility-hook
               'local-magit-initially-hide-unmerged)
 
-    (setq magit-repository-directories
-      (directory-files (expand-file-name "/srv/git")
-		       t
-		       "^\\([^.]\\|\\.[^.]\\|\\.\\..\\)"))))
+    (setq magit-repository-directories my-projects)))
 
 (use-package git-gutter
   :diminish git-gutter-mode
