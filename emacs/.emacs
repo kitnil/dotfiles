@@ -186,7 +186,19 @@
     (add-hook 'dired-mode-hook 'my-dired-mode-hook)))
 
 (use-package ibuffer
-  :bind (("C-c b" . ibuffer)))
+  :bind (("C-c b i" . ibuffer)
+         ("C-c b s" . scratch))
+  :preface
+  (defun scratch ()
+    (interactive)
+    (let ((current-mode major-mode))
+      (switch-to-buffer-other-window (get-buffer-create "*scratch*"))
+      (goto-char (point-min))
+      (when (looking-at ";")
+        (forward-line 4)
+        (delete-region (point-min) (point)))
+      (goto-char (point-max))
+      (emacs-lisp-mode))))
 
 (use-package compile
   :bind ("<f5>" . recompile))
