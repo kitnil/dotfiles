@@ -1,5 +1,5 @@
 (setq gnus-select-method
-      '(nnimap "clover"
+      '(nnimap "USER"
 	       (nnimap-address "localhost")  ; it could also be imap.googlemail.com if that's your server.
 	       (nnimap-server-port "imaps"))
 
