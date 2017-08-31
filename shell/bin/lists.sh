@@ -2,13 +2,13 @@
 
 # Get mailing list
 
-target=/tmp/$0
+origin=/tmp/$1-origin
+output=/tmp/$1
 
-rsync -rltpHS --delete-excluded rsync://lists.gnu.org/mbox/$0 $target
+rsync -rltpHS --delete-excluded rsync://lists.gnu.org/mbox/$1/ /tmp/$1-origin
 
-output=/tmp/lists
-
-for file in ~/MailingListArchives/*; do
-    mkdir -p $output/$dir/$(basename $file)
-    mb2md -s $file -d $output/$(basename $file)
+for f in $origin/*; do
+    [ -e $f ] || continue
+    mkdir -p $output/$(basename $f)
+    mb2md -s $f -d $output/$(basename $f)
 done
