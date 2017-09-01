@@ -906,7 +906,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
           `(("^ftp://.*" . browse-ftp-tramp)
             ("^https?://w*\\.?youtube.com/watch\\?v=.*" . browse-url-mpv)
             ("^https?://w*\\.?github.com/.*" . browse-url-chromium)
-            ("." . browse-url-default-browser)))
+            ("." . browse-url-conkeror)))
 
     (defun browse-url-mpv-remote (url &optional new-window)
       "Ask the mpv video player to load URL.
