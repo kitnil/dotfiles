@@ -190,6 +190,12 @@
       (setq-local truncate-lines t))
     (add-hook 'dired-mode-hook 'my-dired-mode-hook)))
 
+(use-package replace
+  :config
+  (defun my-occur-mode-hook ()
+    (setq-local truncate-lines t))
+  (add-hook 'occur-mode-hook 'my-occur-mode-hook))
+
 (use-package ibuffer
   :bind (("C-c b i" . ibuffer)
          ("C-c b s" . scratch))
