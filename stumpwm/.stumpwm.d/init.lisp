@@ -134,7 +134,8 @@
 (define-frame-preference "Emacs"
   (1 t t :restore "emacs-editing-dump" :title "...xdvi")
   (1 t t :create "emacs-dump" :class "Emacs")
-  (0 t t :class "Conkeror"))
+  (0 t t :class "Conkeror")
+  (2 t t :class "mpv"))
 
 
 
