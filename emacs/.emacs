@@ -842,7 +842,6 @@
     (add-hook 'scheme-mode-hook 'page-break-lines-mode)))
 
 (use-package edit-server
-  :disabled
   :init
   (progn
     (edit-server-start)))
