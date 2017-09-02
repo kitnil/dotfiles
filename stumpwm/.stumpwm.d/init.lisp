@@ -221,5 +221,10 @@
 
 (load-module "swm-gaps")
 (setf swm-gaps:*inner-gaps-size* 10)
-(setf swm-gaps:*outer-gaps-size* 20)
+(setf swm-gaps:*outer-gaps-size* 10)
 
+(defcommand my-fullscreen () ()
+	    (swm-gaps:toggle-gaps)
+	    (fullscreen))
+
+(define-key *root-map* (kbd "F11") "my-fullscreen")
