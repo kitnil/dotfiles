@@ -213,3 +213,13 @@
 ;;;
 
 (define-key *root-map* (kbd "s") "exec scrot '/home/natsu/Pictures/Screenshots/%Y-%m-%d_$wx$h.png'")
+
+
+;;;
+;;; Gaps
+;;;
+
+(load-module "swm-gaps")
+(setf swm-gaps:*inner-gaps-size* 10)
+(setf swm-gaps:*outer-gaps-size* 20)
+
