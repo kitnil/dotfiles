@@ -1023,3 +1023,53 @@ in the variable `browse-url-mpv-arguments' to mpv."
   :config
   (progn
     (add-hook 'prog-mode-hook 'prettify-symbols-mode)))
+
+(use-package haskell-mode
+  :preface
+  (defvar haskell-prettify-symbols-alist
+    '(("::"     . ?∷)
+      ("forall" . ?∀)
+      ("exists" . ?∃)
+      ("->"     . ?→)
+      ("<-"     . ?←)
+      ("=>"     . ?⇒)
+      ("~>"     . ?⇝)
+      ("<~"     . ?⇜)
+      ("."      . ?∘)
+      ("<>"     . ?⨂)
+      ("msum"   . ?⨁)
+      ("\\"     . ?λ)
+      ("not"    . ?¬)
+      ("&&"     . ?∧)
+      ("||"     . ?∨)
+      ("/="     . ?≠)
+      ("<="     . ?≤)
+      (">="     . ?≥)
+      ("<<<"    . ?⋘)
+      (">>>"    . ?⋙)
+
+      ("`elem`"             . ?∈)
+      ("`notElem`"          . ?∉)
+      ("`member`"           . ?∈)
+      ("`notMember`"        . ?∉)
+      ("`union`"            . ?∪)
+      ("`intersection`"     . ?∩)
+      ("`isSubsetOf`"       . ?⊆)
+      ("`isProperSubsetOf`" . ?⊂)
+      ("undefined"          . ?⊥)
+
+      ("True"  . ?T)
+      ("False" . ?F)))
+  :config
+  (progn
+    (defun my-haskell-mode-hook ()
+      (setq-local prettify-symbols-alist haskell-prettify-symbols-alist)
+      (prettify-symbols-mode)
+      (show-paren-mode))
+    (add-hook 'haskell-mode-hook 'my-scheme-mode-hook)
+    (add-hook 'inferior-haskell-mode-hook 'my-haskell-mode-hook)))
+
+(let ((x 1))
+  (shell-command (concat "feh --bg-scale ~/Pictures/Wallpapers/"
+			 (cond ((eq x 1) "current.png")
+			       ((eq x 2) "guixsd-1920x1080.png")))))
