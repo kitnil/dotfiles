@@ -35,7 +35,7 @@
 (define-key *root-map* (kbd "\\") "exec /home/natsu/bin/toggle-input-method.sh")
 
 ;; Mpv
-(define-key *root-map* (kbd "v") "exec /home/natsu/bin/xclip-mpv.sh")
+(define-key *root-map* (kbd "C-v") "exec /home/natsu/bin/xclip-mpv.sh")
 
 
 ;;;
@@ -151,6 +151,12 @@
   (run-or-raise "conkeror" '(:class "Conkeror")))
 
 (define-key *root-map* (kbd "w") "conkeror")
+
+(defcommand mpv () ()
+  "Start conkeror unless it is already running, in which case focus it."
+  (run-or-raise "mpv" '(:class "mpv")))
+
+(define-key *root-map* (kbd "v") "mpv")
 
 (defcommand chromium () ()
   "Start chromium unless it is already running, in which case focus it."
