@@ -525,8 +525,10 @@
   (progn
     (defun local-magit-initially-hide-unmerged (section)
       (and (not magit-insert-section--oldroot)
-           (eq (magit-section-type section) 'unpushed)
-           (equal (magit-section-value section) "@{upstream}..")
+           (or (eq (magit-section-type section) 'unpushed)
+               (equal (magit-section-value section) "@{upstream}..")
+               (eq (magit-section-type section) 'stashes)
+               (equal (magit-section-value section) "refs/stash"))
            'hide))
 
     (add-hook 'magit-section-set-visibility-hook
