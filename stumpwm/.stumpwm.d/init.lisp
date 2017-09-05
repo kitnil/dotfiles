@@ -162,6 +162,8 @@
   "Start chromium unless it is already running, in which case focus it."
   (run-or-raise "chromium-browser" '(:class "Chromium-browser")))
 
+(define-key *root-map* (kbd "c") "chromium")
+
 
 ;;;
 ;;; Mode-line
