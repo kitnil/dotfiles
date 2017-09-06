@@ -474,38 +474,62 @@
          ("C-c l" . org-store-link))
   :config
   (progn
-    (org-babel-do-load-languages
-     'org-babel-load-languages
-     '((emacs-lisp . nil)
-       (R . t)
-       (python . t)))
+    (org-babel-do-load-languages 'org-babel-load-languages
+                                 '((emacs-lisp . nil)
+                                   (R . t)
+                                   (python . t)))
+
     (setq org-babel-python-command python-shell-interpreter)
+
     (setq org-format-latex-options
           (plist-put org-format-latex-options :scale 1.5))
+
     (setq org-todo-keywords
           '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)")))
-    (setq org-capture-templates '(("c" "Note" entry
-                                   (file "~/org/notes.org")
-                                   "* %T %?")
-                                  ("w" "Web site" entry
-                                   (file "~/.web.org")
-                                   "* %a :website:\n\n%U %?\n\n%:initial")
-                                  ("r" "Respond ro email" entry
-                                   (file+headline
-                                    (concat org-directory "/inbox.org") "Email")
-                                   "* REPLY to [[mailto:%:fromaddress][%:fromname]] on %a\nDEADLINE: %(org-insert-time-stamp (org-read-date nil t \"+1d\"))\n%U\n\n"
-                                   :immediate-finish t
-                                   :prepend t)
-                                  ("f" "File email" entry
-                                   (file+headline
-                                    (concat org-directory "/inbox.org") "Email")
-                                   "* %U %a by [[mailto:%:fromaddress][%:fromname]]\n\n%i%?\n"
-                                   :immediate-finish nil
-                                   :prepend nil)
-                                  ("t" "Task" entry
-                                   (file+headline
-                                    (concat org-directory "/tasks.org") "Tasks")
-                                   "* TODO %? \n%T" :prepend t)))
+
+    (setq org-capture-templates
+          '(("c" "Note" item (file "~/.notes")
+             "%?")
+
+            ;; Requires org-capture-extension
+            ;; https://github.com/sprig/org-capture-extension
+            ("L" "Protocol Link" item (file "~/.web.org")
+             "[[%:link][%:description]]")
+
+            ("r" "Respond ro email" entry
+             (file+headline (concat org-directory "/inbox.org") "Email")
+             "[[mailto:%:fromaddress][%:fromname]]"
+             :immediate-finish t
+             :prepend t)
+
+            ("f" "File email" entry
+             (file+headline (concat org-directory "/inbox.org") "Email")
+             "* %U %a by [[mailto:%:fromaddress][%:fromname]]\n\n%i%?\n"
+             :immediate-finish nil
+             :prepend nil)
+
+            ("t" "Tasks" entry
+             (file+headline (concat org-directory "/.notes") "Tasks")
+             "* TODO %? \n%T" :prepend t)
+
+            ("i" "TODO" entry (file (concat org-directory "/TODO.gpg"))
+             "* %?")))
+
+    ;; (org-link-set-parameters "file"
+    ;;                   :face (lambda (path)
+    ;;                           (when (not (file-remote-p path))
+    ;;                             (if (file-exists-p path)
+    ;;                                 'org-link 'org-warning))))
+
+    ;; (defun my-org-mode-hook ()
+    ;;   (dolist (face '(org-level-1 org-level-2 org-level-3
+    ;;                               org-level-4 org-level-5))
+    ;;     (set-face-attribute face nil
+    ;;                         :weight 'normal
+    ;;                         :height 1.0
+    ;;                         :foreground "#000000")))
+
+    ;; (add-hook 'org-mode-hook 'my-org-mode-hook)
     (add-to-list 'org-file-apps '("\\.png\\'" . "feh %s"))))
 
 (use-package org-protocol)
