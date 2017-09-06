@@ -1,17 +1,5 @@
 -*- mode: org -*-
 
-Hi, I'm happy GuixSD user for some time now.  This is some staff that
-can help that I spend a bit of time to find.
+Hi, I'm happy GuixSD.
 
-* Issues
-
-** non-free intel wireless
-I discovered two guys fixed this:
-- https://github.com/Silverbeard00/guix-packages
-- https://gitlab.com/ng0_guix/guix_packages_nonfree
-
-* Howto
-
-** [[https://lists.gnu.org/archive/html/help-guix/2017-05/msg00090.html][Configure guix for develop]]
-
-** [[https://github.com/pjotrp/guix-notes.git][guix-notes]]
+![magnolia](https://i.imgur.com/guR4ItF.png)
