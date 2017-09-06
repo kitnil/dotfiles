@@ -639,6 +639,7 @@
 (use-package geiser-doc)
 
 (use-package slime
+  :disabled
   :init
   (progn
     (load (expand-file-name "~/quicklisp/slime-helper.el"))
