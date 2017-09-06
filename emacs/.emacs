@@ -1090,7 +1090,9 @@ in the variable `browse-url-mpv-arguments' to mpv."
       ("undefined"          . ?⊥)
 
       ("True"  . ?T)
-      ("False" . ?F)))
+      ("False" . ?F)
+
+      (".." . ?…)))
   :config
   (progn
     (defun my-haskell-mode-hook ()
