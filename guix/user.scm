@@ -49,7 +49,7 @@
     "emacs-writegood-mode"
     "emacs-rainbow-delimiters" "emacs-rainbow-identifiers" "emacs-rainbow-mode"
     "emacs-async" "emacs-use-package"
-    "feh" "gimp" "inkscape"
+    "feh" "gimp" "inkscape" "scrot"
     "ruby" "bundler"
     "ffmpeg" "mpv" "mps-youtube" "youtube-dl" "audacity"
     "file" "htop" "ncdu" "neofetch" "tree" "stow" "strace" "hdparm"
