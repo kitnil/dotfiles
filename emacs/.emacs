@@ -587,6 +587,7 @@
       (prettify-symbols-mode)
       (show-paren-mode))
     (add-hook 'scheme-mode-hook 'my-scheme-mode-hook)
+    (add-hook 'geiser-repl-mode-hook 'my-scheme-mode-hook)
     (setq geiser-active-implementations (quote (guile)))))
 
 (use-package guix-devel
