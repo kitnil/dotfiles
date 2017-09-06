@@ -228,6 +228,7 @@
     (setq shr-use-fonts nil)))
 
 (use-package elec-pair
+  :disabled
   :bind (("C-c t p" . electric-pair-mode))
   :config
   (progn
