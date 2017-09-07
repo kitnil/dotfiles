@@ -2,6 +2,8 @@
 
 (setenv "INSIDE_EMACS" (format "%s,comint" emacs-version))
 
+(setq load-prefer-newer t)
+
 (setq user-mail-address "go.wigust@gmail.com")
 (setq user-full-name "Oleg Pykhalov")
 
@@ -1146,3 +1148,6 @@ in the variable `browse-url-mpv-arguments' to mpv."
   (shell-command (concat "feh --bg-scale ~/Pictures/Wallpapers/"
 			 (cond ((eq x 1) "current.png")
 			       ((eq x 2) "guixsd-1920x1080.png")))))
+
+(use-package js2-mode
+  :mode (("\\.js\\'" . js2-mode)))
