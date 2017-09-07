@@ -74,7 +74,7 @@
     "rsync" "rsnapshot"
     "samba"
     "rxvt-unicode"
-    "screen" "tmux"
+    "screen" "tmux" "fbida"
     "vera" "sicp" "man-pages" "emacs-rfcview"
     "tome4"
     "aria2" "wget" "emacs-wget" "emacs-restclient"
