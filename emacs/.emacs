@@ -456,7 +456,45 @@
         (compose-mail)
         (save-excursion
           (message-goto-body)
-          (insert str))))))
+          (insert str))))
+
+    (defun switch-to-gnus (&optional arg)
+      "Switch to a Gnus related buffer.
+    Candidates are buffers starting with
+     *mail or *reply or *wide reply
+     *Summary or
+     *Group*
+    Use a prefix argument to start Gnus if no candidate exists."
+      (interactive "P")
+      (let (candidate
+            (alist '(("^\\*\\(mail\\|\\(wide \\)?reply\\)" t)
+                     ("^\\*Group")
+                     ("^\\*Summary")
+                     ("^\\*Article" nil (lambda ()
+                                          (buffer-live-p
+                                           gnus-article-current-summary))))))
+        (catch 'none-found
+          (dolist (item alist)
+            (let (last
+                  (regexp (nth 0 item))
+                  (optional (nth 1 item))
+                  (test (nth 2 item)))
+              (dolist (buf (buffer-list))
+                (when (and (string-match regexp (buffer-name buf))
+                           (> (buffer-size buf) 0))
+                  (setq last buf)))
+              (cond ((and last (or (not test) (funcall test)))
+                     (setq candidate last))
+                    (optional
+                     nil)
+                    (t
+                     (throw 'none-found t))))))
+        (cond (candidate
+               (switch-to-buffer candidate))
+              (arg
+               (gnus))
+              (t
+               (error "No candidate found")))))))
 
 (use-package notmuch
   :commands notmuch-search
