@@ -275,7 +275,14 @@
   :config (add-hook 'shell-mode-hook 'guix-prettify-mode))
 
 (use-package whitespace
-  :bind (("C-c t w" . whitespace-mode)))
+  :bind (("C-c t w" . whitespace-mode))
+  :config
+  (progn
+    (set-face-attribute 'whitespace-space
+                        nil :background nil :foreground "gainsboro")
+    (mapcar (lambda (el)
+              (delete el whitespace-style))
+            '(newline newline-mark))))
 
 (use-package calendar
   :commands calendar
