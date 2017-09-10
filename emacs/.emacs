@@ -1163,5 +1163,5 @@ in the variable `browse-url-mpv-arguments' to mpv."
 			 (cond ((eq x 1) "current.png")
 			       ((eq x 2) "guixsd-1920x1080.png")))))
 
-(use-package js2-mode
-  :mode (("\\.js\\'" . js2-mode)))
+(use-package rjsx-mode
+  :mode (("\\.js\\'" . rjsx-mode)))
