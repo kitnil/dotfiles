@@ -36,6 +36,7 @@
  '(gitpatch-mail-database (quote ("guix-patches@gnu.org")))
  '(ido-mode (quote buffer) nil (ido))
  '(imaxima-scale-factor 1.5)
+ '(indent-tabs-mode nil)
  '(magit-auto-revert-mode nil)
  '(mouse-yank-at-point t)
  '(nnir-notmuch-remove-prefix "/home/natsu/Maildir/")
