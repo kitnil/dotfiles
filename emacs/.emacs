@@ -1,5 +1,7 @@
 (package-initialize)
 
+(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+
 (setenv "INSIDE_EMACS" (format "%s,comint" emacs-version))
 
 (setq load-prefer-newer t)
