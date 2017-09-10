@@ -1165,3 +1165,18 @@ in the variable `browse-url-mpv-arguments' to mpv."
 
 (use-package rjsx-mode
   :mode (("\\.js\\'" . rjsx-mode)))
+
+(use-package emms
+  :config
+  (progn
+    (require 'emms-playlist-mode)
+    (setq emms-source-file-default-directory "/srv/archive/cool-music/")))
+
+(use-package emms-player-mpv
+  :config
+  (progn
+    (add-to-list 'emms-player-list 'emms-player-mpv)
+    (mapcar (lambda (parameter)
+              (add-to-list 'emms-player-mpv-parameters parameter))
+            '("--no-resume-playback"
+              "--keep-open=no"))))
