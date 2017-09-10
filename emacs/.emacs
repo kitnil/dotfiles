@@ -1218,3 +1218,18 @@ in the variable `browse-url-mpv-arguments' to mpv."
 	         (coda [(4 "") "m" "n"]))
 	       :word-count 5))
       (insert "]"))))
+
+(use-package indium-repl
+  :preface
+  (require 'indium)
+  :config
+  (progn
+    (defvar indium-repl-prettify-symbols-alist
+      '(("function" . 955)
+        ("=>" . ?⇒)))
+    (defun my-indium-repl-mode-hook ()
+      (setq-local prettify-symbols-alist indium-repl-prettify-symbols-alist)
+      (prettify-symbols-mode)
+      (show-paren-mode))
+    (add-hook 'js2-mode-hook 'my-indium-repl-mode-hook)
+    (add-hook 'indium-repl-mode-hook 'my-indium-repl-mode-hook)))
