@@ -1166,6 +1166,15 @@ in the variable `browse-url-mpv-arguments' to mpv."
 (use-package rjsx-mode
   :mode (("\\.js\\'" . rjsx-mode)))
 
+(use-package tern
+  :config
+  (add-hook 'rjsx-mode-hook 'tern-mode))
+
+(use-package company-tern
+  :after company
+  :config
+  (add-to-list 'company-backends 'company-tern))
+
 (use-package emms
   :config
   (progn
