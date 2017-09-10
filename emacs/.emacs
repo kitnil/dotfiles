@@ -38,6 +38,8 @@
  '(imaxima-scale-factor 1.5)
  '(indent-tabs-mode nil)
  '(magit-auto-revert-mode nil)
+ '(magit-log-arguments (quote ("--graph" "--color" "--decorate" "-n256")))
+ '(magit-log-section-arguments (quote ("-n256" "--decorate")))
  '(mouse-yank-at-point t)
  '(nnir-notmuch-remove-prefix "/home/natsu/Maildir/")
  '(notmuch-saved-searches
