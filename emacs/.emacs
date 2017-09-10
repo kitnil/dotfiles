@@ -1059,7 +1059,12 @@ in the variable `browse-url-mpv-arguments' to mpv."
     (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
     (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
     (add-to-list 'auto-mode-alist '("\\.php?\\'" . web-mode))
-    (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))))
+    (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
+    (setq-default web-mode-markup-indent-offset 2)
+    (setq-default web-mode-code-indent-offset 2)
+    (setq-default web-mode-css-indent-offset 2)
+    (setq-default web-mode-style-padding 2)
+    (add-hook 'web-mode-hook 'tern-mode)))
 
 (use-package pdf-tools
   :mode (("\\.pdf\\'" . pdf-view-mode))
