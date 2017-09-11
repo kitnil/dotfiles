@@ -158,3 +158,7 @@
 (load-module "clipboard-history")
 (define-key *root-map* (kbd "C-y") "show-clipboard-history")
 (clipboard-history:start-clipboard-manager)
+
+(load-module "globalwindows")
+(define-key *root-map* (kbd "M-1") "global-windowlist")
+(define-key *root-map* (kbd "M-2") "global-pull-windowlist")
