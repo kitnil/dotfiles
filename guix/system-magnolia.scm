@@ -100,7 +100,7 @@ EndSection
                                     #:configuration-file
                                     (xorg-configuration-file
                                      #:extra-config (list 20-intel.conf))))
-                                  (auto-login? #t)
+                                  (auto-login? #f)
                                   (default-user "natsu")))))
 
 
