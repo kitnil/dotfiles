@@ -868,7 +868,7 @@
              ;; "##c" ;; "#clojure"
              ;; "#fedora" ;; "#fedora-admin" ;; "#fedora-devel"
              ;; "#fedora-noc" ;; "#fedora-meeting" ;; "#fedora-qa"
-             "#gnu" "#guile" "#guix"
+             "#gnu" "#guile" "#guix" "#stumpwm"
              ;; "#nixos" ;; "#grub" ;; "#haskell" ;; "#xmonad"
              ;; "#filmsbykris" ;; "##japanese" ;; "#latex"
              ;; "#python" ;; "#scipy" ;; "#sagemath"
