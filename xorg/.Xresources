@@ -43,3 +43,14 @@ URxvt*color14: #54FFFF
 ! white
 URxvt*color7:  #B2B2B2
 URxvt*color15: #FFFFFF
+
+! 
+! XTerm
+
+XTerm.vt100.saveLines: 4096
+XTerm.vt100.faceName: Monospace:size=14:antialias=true
+XTerm.vt100.metaSendsEscape: true
+
+! Fix <C-h> in Emacs
+XTerm.vt100.backarrowKey: false
+XTerm.ttyModes: erase ^?
