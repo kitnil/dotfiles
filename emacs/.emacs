@@ -184,6 +184,10 @@
 ;;; Built in
 ;;;
 
+(use-package menu-bar
+  :preface
+  (menu-bar-mode 0))
+
 (use-package dired
   :commands dired-mode
   :config
