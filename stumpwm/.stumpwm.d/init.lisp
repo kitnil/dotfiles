@@ -7,36 +7,6 @@
 
 (set-module-dir "/home/natsu/.stumpwm.d/modules/")
 
-;; Prompt the user for an interactive command.  The first arg is an
-;; optional initial contents.
-(defcommand colon1 (&optional (initial "")) (:rest)
-  (let ((cmd (read-one-line (current-screen) ": " :initial-input initial)))
-    (when cmd
-      (eval-command cmd t))))
-
-
-;;;
-;;; Keybinds
-;;;
-
-(stumpwm:set-prefix-key (stumpwm:kbd "F20"))
-
-(define-key *root-map* (kbd "RET") "exec urxvt")
-(define-key *root-map* (kbd "C-l") "exec xlock")
-
-;; Pulseaudio
-(define-key *root-map* (kbd "m") "exec ponymix toggle")
-(define-key *root-map* (kbd ",") "exec ponymix decrease 5")
-(define-key *root-map* (kbd ".") "exec ponymix increase 5")
-
-(define-key *root-map* (kbd "/") ; Switch between loudspeakers and headphones
-  "exec /home/natsu/bin/pulseaudio-switch-sink.sh")
-
-(define-key *root-map* (kbd "\\") "exec /home/natsu/bin/toggle-input-method.sh")
-
-;; Mpv
-(define-key *root-map* (kbd "C-v") "exec /home/natsu/bin/xclip-mpv.sh")
-
 
 ;;;
 ;;; Fonts
@@ -53,11 +23,8 @@
 
 (load-module "cpu")
 (load-module "disk")
-;; (load-module "mpd")
 (load-module "mem")
 (load-module "net")
-;; (load-module "battery-portable")
-;; (load-module "notifications")
 
 (setf
  *message-window-gravity* :center
@@ -91,11 +58,6 @@
 (setf *window-format* "%m%n%s%c")
 (setf *mode-line-timeout* 1)
 
-;; Use this command to see window properties; needed by the
-;; (define-frame-preference ...) functions, below.
-
-(define-key *root-map* (kbd "I") "show-window-properties")
-
 (setq *ignore-wm-inc-hints* t)
 
 
@@ -128,41 +90,29 @@
 
 
 ;;;
-;;; Emacs
-;;;
-
-(define-frame-preference "Emacs"
-  (1 t t :restore "emacs-editing-dump" :title "...xdvi")
-  (1 t t :create "emacs-dump" :class "Emacs")
-  (0 t t :class "Conkeror")
-  (2 t t :class "mpv"))
-
-
-
-;;;
 ;;; Browsers
 ;;;
 
-(define-frame-preference "Chromium"
-    (0 t t :create "chromium-dump" :class "Chromium-browser"))
+(defcommand icecat () ()
+            "Start icecat unless it is already running, in which case focus it."
+            (run-or-raise "icecat" '(:class "Icecat")))
 
 (defcommand conkeror () ()
-  "Start conkeror unless it is already running, in which case focus it."
-  (run-or-raise "conkeror" '(:class "Conkeror")))
-
-(define-key *root-map* (kbd "w") "conkeror")
-
-(defcommand mpv () ()
-  "Start conkeror unless it is already running, in which case focus it."
-  (run-or-raise "mpv" '(:class "mpv")))
-
-(define-key *root-map* (kbd "v") "mpv")
+            "Start conkeror unless it is already running, in which case focus it."
+            (run-or-raise "conkeror" '(:class "Conkeror")))
 
 (defcommand chromium () ()
   "Start chromium unless it is already running, in which case focus it."
   (run-or-raise "chromium-browser" '(:class "Chromium-browser")))
 
-(define-key *root-map* (kbd "c") "chromium")
+
+;;;
+;;; Video
+;;;
+
+(defcommand mpv () ()
+            "Start mpv unless it is already running, in which case focus it."
+            (run-or-raise "mpv" '(:class "mpv")))
 
 
 ;;;
@@ -180,24 +130,6 @@
 
 (toggle-modeline) ; Turn on start
 
-(define-key *root-map* (kbd "b") "toggle-modeline")
-
-
-;;;
-;;; Groups
-;;;
-
-(defun range (max &key (min 0) (step 1))
-  "Get a list of integers."
-  (loop for n from min below max by step
-     collect n))
-
-;; Rebind groups to PREFIX-NUMBER.
-(mapcar #'(lambda (x) (define-key *root-map* (kbd (write-to-string x))
-			(format nil "~A ~D" "gselect" x)))
-	(range 10 :min 1 :step 1))
-
-
 
 ;;;
 ;;; Frames
@@ -209,19 +141,6 @@
          (pointer-y (+ 100 (frame-y current-frame))))
     (warp-pointer (current-screen) pointer-x pointer-y)))
 
-(define-key *root-map* (kbd "t") "warp-mouse-active-frame")
-
-(define-key *root-map* (kbd "C-2") "vsplit")
-(define-key *root-map* (kbd "C-3") "hsplit")
-
-
-
-;;;
-;;; Screenshots
-;;;
-
-(define-key *root-map* (kbd "s") "exec scrot '/home/natsu/Pictures/Screenshots/%Y-%m-%d_$wx$h.png'")
-
 
 ;;;
 ;;; Gaps
@@ -230,9 +149,3 @@
 (load-module "swm-gaps")
 (setf swm-gaps:*inner-gaps-size* 10)
 (setf swm-gaps:*outer-gaps-size* 10)
-
-(defcommand my-fullscreen () ()
-	    (swm-gaps:toggle-gaps)
-	    (fullscreen))
-
-(define-key *root-map* (kbd "F11") "my-fullscreen")
