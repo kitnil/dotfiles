@@ -152,3 +152,5 @@
 
 (load-module "kbd-layouts")
 (kbd-layouts:keyboard-layout-list "us" "ru")
+
+(load-module "screenshot")
