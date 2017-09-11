@@ -532,6 +532,10 @@
                                    (R . t)
                                    (python . t)))
 
+    ;; (defun my-org-confirm-babel-evaluate (lang body)
+    ;;   (not (string= lang "ditaa")))  ; don't ask for ditaa
+    ;; (setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
+
     (setq org-babel-python-command python-shell-interpreter)
 
     (setq org-format-latex-options
