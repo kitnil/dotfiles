@@ -1166,11 +1166,6 @@ in the variable `browse-url-mpv-arguments' to mpv."
     (add-hook 'haskell-mode-hook 'my-scheme-mode-hook)
     (add-hook 'inferior-haskell-mode-hook 'my-haskell-mode-hook)))
 
-(let ((x 1))
-  (shell-command (concat "feh --bg-scale ~/Pictures/Wallpapers/"
-			 (cond ((eq x 1) "current.png")
-			       ((eq x 2) "guixsd-1920x1080.png")))))
-
 (use-package rjsx-mode
   :mode (("\\.js\\'" . rjsx-mode)))
 
