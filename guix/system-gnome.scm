@@ -27,7 +27,8 @@
   (timezone "Europe/Moscow")
   (locale "en_US.utf8")
 
-  (bootloader (grub-configuration (device "/dev/sda")))
+  (bootloader (grub-configuration (target "/dev/sda")
+                                  (terminal-outputs '(console))))
 
   (file-systems (cons (file-system
                         (device "my-root")
