@@ -110,6 +110,11 @@
 ;;; Video
 ;;;
 
+(defcommand pavucontrol () ()
+            "Start pavucontrol unless it is already running, in which
+case focus it."
+            (run-or-raise "pavucontrol" '(:class "Pavucontrol")))
+
 (defcommand mpv () ()
             "Start mpv unless it is already running, in which case focus it."
             (run-or-raise "mpv" '(:class "mpv")))
