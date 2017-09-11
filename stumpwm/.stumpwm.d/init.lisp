@@ -154,3 +154,7 @@
 (kbd-layouts:keyboard-layout-list "us" "ru")
 
 (load-module "screenshot")
+
+(load-module "clipboard-history")
+(define-key *root-map* (kbd "C-y") "show-clipboard-history")
+(clipboard-history:start-clipboard-manager)
