@@ -196,7 +196,12 @@
       (turn-on-gnus-dired-mode)
       (dired-async-mode t)
       (setq-local truncate-lines t))
-    (add-hook 'dired-mode-hook 'my-dired-mode-hook)))
+    (add-hook 'dired-mode-hook 'my-dired-mode-hook)
+    (mapcar (lambda (extension)
+              (add-to-list 'dired-guess-shell-alist-user
+                           `(,extension
+                             ,"mpv --no-resume-playback --keep-open=no")))
+            '("\\.mp4$" "\\.webm$"))))
 
 (use-package replace
   :config
