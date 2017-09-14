@@ -1242,3 +1242,6 @@ in the variable `browse-url-mpv-arguments' to mpv."
       (show-paren-mode))
     (add-hook 'js2-mode-hook 'my-indium-repl-mode-hook)
     (add-hook 'indium-repl-mode-hook 'my-indium-repl-mode-hook)))
+
+(use-package markdown-mode
+  :config (setq markdown-fontify-code-blocks-natively t))
