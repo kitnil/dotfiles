@@ -1253,3 +1253,11 @@ in the variable `browse-url-mpv-arguments' to mpv."
 
 (use-package markdown-mode
   :config (setq markdown-fontify-code-blocks-natively t))
+
+(use-package bash-completion
+  :config
+  (progn
+    (autoload 'bash-completion-dynamic-complete
+      "bash-completion" "BASH completion hook")
+    (add-hook 'shell-dynamic-complete-functions
+              'bash-completion-dynamic-complete)))
