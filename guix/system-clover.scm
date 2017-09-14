@@ -63,7 +63,7 @@ EndSection
                                     #:configuration-file
                                     (xorg-configuration-file
                                      #:extra-config (list 20-intel.conf))))
-                                  (auto-login? #t)
+                                  (auto-login? #f)
                                   (default-user "natsu")))))
 
 (operating-system
@@ -71,7 +71,9 @@ EndSection
   (timezone "Europe/Moscow")
   (locale "en_US.utf8")
 
-  (bootloader (grub-configuration (device "/dev/sda")))
+  (bootloader (bootloader-configuration
+               (bootloader grub-bootloader)
+               (target "/dev/sda")))
 
   (kernel linux-nonfree)
   (firmware (list firmware-non-free))
@@ -89,14 +91,14 @@ EndSection
                 (comment "Oleg Pykhalov")
                 (group "users")
                 (supplementary-groups '("wheel"
-                                        "audio" "video"))
+                                        "audio"
+                                        "video"
+                                        "lpadmin"
+                                        "lp"))
                 (home-directory "/home/natsu"))
                %base-user-accounts))
 
-  (packages (cons* i3-wm
-                   i3status
-                   cups
-                   rofi
+  (packages (cons* cups
                    cryptsetup
                    emacs
                    emacs-guix
