@@ -148,6 +148,7 @@
     "guile-git"
     "guile-sdl2"
     "guile-ssh"
+    "guile-syntax-highlight"
     "guix"
     "haskell-mode"
     "haunt"
