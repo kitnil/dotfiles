@@ -130,6 +130,7 @@
     "gcc-toolchain"
     "gcl"
     "gdb"
+    "geiser"
     "gettext"
     "ghc"
     "ghc-pandoc"
