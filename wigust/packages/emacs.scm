@@ -1317,3 +1317,37 @@ See the function `wordgen' for complete description.
           (base32
            "1q3yf45fmbjppv3ahb1gdb95pa3kyn18x5m23ihpxz1pziz3a074")))))))
 
+(define-public emacs-know-your-http-well
+  (package
+    (name "emacs-know-your-http-well")
+    (version "0.5.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append
+             "https://github.com/for-GET/know-your-http-well/archive/"
+             "v" version ".tar.gz"))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32
+         "1y3kwz88awcgwaivlswq0q4g2i02762r23lpwg61bfqy5lrjjqnj"))))
+    (arguments
+     `(#:phases
+       (modify-phases %standard-phases
+         (add-after 'unpack 'install-json-files
+           (lambda* (#:key outputs #:allow-other-keys)
+             (for-each (lambda (directory)
+                         (copy-recursively directory
+                                           (string-append
+                                            (assoc-ref outputs "out")
+                                            directory)))
+                       '("js" "json"))))
+         (add-after 'unpack 'chdir-elisp
+           ;; Elisp directory is not in root of the source.
+           (lambda _
+             (chdir "emacs"))))))
+    (build-system emacs-build-system)
+    (home-page "https://github.com/for-GET/know-your-http-well")
+    (synopsis "Meaning of HTTP headers codes")
+    (description "Meaning of HTTP headers codes.")
+    (license license:gpl3+)))
