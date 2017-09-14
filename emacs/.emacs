@@ -224,6 +224,14 @@
       (goto-char (point-max))
       (lisp-interaction-mode))))
 
+(use-package diff-mode
+  :config
+  (progn
+    (defun my-diff-mode-hook ()
+      (setq-local truncate-lines t))
+
+    (add-hook 'diff-mode-hook 'my-diff-mode-hook)))
+
 (use-package compile
   :bind ("<f5>" . recompile))
 
