@@ -68,6 +68,7 @@
     "emacs-loop"
     "emacs-lua-mode"
     "emacs-makey"
+    "emacs-markdown-mode"
     "emacs-multiple-cursors"
     "emacs-nix-mode"
     "emacs-nnreddit"
