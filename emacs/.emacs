@@ -567,22 +567,22 @@
              "[[%:link][%:description]]")
 
             ("r" "Respond ro email" entry
-             (file+headline (concat org-directory "/inbox.org") "Email")
+             (file+headline "inbox.org" "Email")
              "[[mailto:%:fromaddress][%:fromname]]"
              :immediate-finish t
              :prepend t)
 
             ("f" "File email" entry
-             (file+headline (concat org-directory "/inbox.org") "Email")
+             (file+headline "inbox.org" "Email")
              "* %U %a by [[mailto:%:fromaddress][%:fromname]]\n\n%i%?\n"
              :immediate-finish nil
              :prepend nil)
 
             ("t" "Tasks" entry
-             (file+headline (concat org-directory "/.notes") "Tasks")
+             (file+headline ".notes" "Tasks")
              "* TODO %? \n%T" :prepend t)
 
-            ("i" "TODO" entry (file (concat org-directory "/TODO.gpg"))
+            ("i" "TODO" entry (file "/TODO.gpg")
              "* %?")))
 
     ;; (org-link-set-parameters "file"
