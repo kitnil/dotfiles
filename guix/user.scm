@@ -55,6 +55,7 @@
     "emacs-git-timemachine"
     "emacs-gitpatch"
     "emacs-goto-chg"
+    "emacs-helm-notmuch"
     "emacs-helm-youtube"
     "emacs-helpful"
     "emacs-highlight-defined"
