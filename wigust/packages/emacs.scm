@@ -48,6 +48,7 @@
   #:use-module (gnu packages xorg)
   #:use-module (gnu packages lesstif)
   #:use-module (gnu packages image)
+  #:use-module (gnu packages mail)
   #:use-module (gnu packages linux)
   #:use-module (gnu packages version-control)
   #:use-module (gnu packages imagemagick)
@@ -1379,4 +1380,26 @@ See the function `wordgen' for complete description.
 It provides auto-completion for HTTP methods and headers in
 @code{restclient-mode}.  Completion source is given by
 @code{know-your-http-well}.")
+    (license license:gpl3+)))
+
+(define-public emacs-helm-notmuch
+  (package
+    (name "emacs-helm-notmuch")
+    (version "1.1")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append "https://github.com/xuchunyang/helm-notmuch/archive/"
+                           version ".tar.gz"))
+       (sha256
+        (base32
+         "09b3jllppfmk0mb1qvgcx705jwixqn5ggl0bql6g5a3i7yy6xpyd"))))
+    (build-system emacs-build-system)
+    (propagated-inputs
+     `(("notmuch" ,notmuch)
+       ("emacs-helm" ,emacs-helm)))
+    (home-page "https://github.com/xuchunyang/helm-notmuch")
+    (synopsis "Search emails with Notmuch and Helm")
+    (description "Search emails, searching result displays as you type
+thanks to helm.")
     (license license:gpl3+)))
