@@ -258,7 +258,8 @@
     "xrdb"
     "xset"
     "xsetroot"
-    "youtube-dl"))
+    "youtube-dl"
+    "zip"))
 
 (packages->manifest
  (map spec->packages %packages-list))
