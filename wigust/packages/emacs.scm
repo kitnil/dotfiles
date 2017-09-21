@@ -1240,7 +1240,7 @@ See the function `wordgen' for complete description.
        ("magit-popup" ,emacs-magit-popup)))))
 
 (define-public emacs-checkout
-  (let ((commit "767b3a7429d94d1565256565fda2060c95ca4f73")
+  (let ((commit "6d6dc246f93486fc8370399b6e1af8a17f371e4f")
         (revision "1"))
     (package
       (inherit emacs)
@@ -1277,7 +1277,7 @@ See the function `wordgen' for complete description.
                         "/run/current-system/profile/bin"
                         "/run/current-system/profile/sbin")))))
          (sha256
-          (base32 "1kr046v62z1a6sbj6gcibdasbiahyq8zyszv2zzsdq2y8d7yq54g"))))
+          (base32 "17x0jpyg6wrdh5wn9yf1135gkdcprbcx1hj2wiwla57dh7rihils"))))
       (native-inputs
        `(("autoconf" ,autoconf)
          ("automake" ,automake)
