@@ -1614,3 +1614,38 @@ Key features:
   arXiv, Google Scholar, Library of Congress, etc.
 - Imports BibTeX entries from CrossRef and other sources.")
     (license license:gpl3+)))
+
+(define-public emacs-org-ref
+  (package
+    (name "emacs-org-ref")
+    (version "1.1.1")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append "https://github.com/jkitchin/org-ref/archive/"
+                           "v" version ".tar.gz"))
+       (sha256
+        (base32
+         "1k422dxfhbn6jrdz6dj6z765xwgj7jdc09bqb2dv3k0s5jpjn66r"))))
+    (build-system emacs-build-system)
+    (propagated-inputs
+     `(("emacs-dash" ,emacs-dash)
+       ("emacs-helm" ,emacs-helm)
+       ("emacs-helm-bibtex" ,emacs-helm-bibtex)
+       ("emacs-ivy" ,emacs-ivy)
+       ("emacs-hydra" ,emacs-hydra)
+       ("emacs-key-chord" ,emacs-key-chord)
+       ("emacs-s" ,emacs-s)
+       ("emacs-f" ,emacs-f)
+       ("emacs-pdf-tools" ,emacs-pdf-tools)))
+    (home-page "https://github.com/jkitchin/org-ref")
+    (synopsis "Citations, cross-references and bibliographies in org-mode")
+    (description
+     "Lisp code to setup bibliography, cite, ref and label org-mode links.
+Also sets up reftex and helm for org-mode citations.  The links are
+clickable and do things that are useful.
+
+The default setup uses helm-bibtex.
+
+You should really read org-ref.org in this package for details.")
+    (license license:gpl3+)))
