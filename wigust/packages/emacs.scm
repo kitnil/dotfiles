@@ -1574,3 +1574,43 @@ See http://github.com/cpitclaudel/biblio.el for more information, including
 documentation on extending this framework.
 ")
     (license license:gpl3+)))
+
+(define-public emacs-helm-bibtex
+  (package
+    (name "emacs-helm-bibtex")
+    (version "2.0.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append "https://github.com/tmalsburg/helm-bibtex/archive/"
+                           version ".tar.gz"))
+       (sha256
+        (base32
+         "0yv7y8zaimzkva8rnxmmix2dmzybwiv2pjwhx0n1khp2vcjrxmx2"))))
+    (build-system emacs-build-system)
+    (propagated-inputs
+     `(("emacs-helm" ,emacs-helm)
+       ("emacs-parsebib" ,emacs-parsebib)
+       ("emacs-s" ,emacs-s)
+       ("emacs-dash" ,emacs-dash)
+       ("emacs-f" ,emacs-f)
+       ("emacs-biblio" ,emacs-biblio)))
+    (home-page "https://github.com/tmalsburg/helm-bibtex")
+    (synopsis "A bibliography manager based on Helm")
+    (description "A bibliography manager for Emacs, based on Helm and
+the bibtex-completion backend.
+
+Key features:
+- Quick access to your bibliography from within Emacs
+- Powerful search capabilities
+- Provides instant search results as you type
+- Tightly integrated with LaTeX authoring, emails, Org mode, etc.
+- Open the PDFs, URLs, or DOIs associated with an entry
+- Insert LaTeX cite commands, Ebib links, or Pandoc citations,
+  BibTeX entries, or plain text references at point, attach PDFs to
+  emails
+- Support for note taking
+- Quick access to online bibliographic databases such as Pubmed,
+  arXiv, Google Scholar, Library of Congress, etc.
+- Imports BibTeX entries from CrossRef and other sources.")
+    (license license:gpl3+)))
