@@ -1535,28 +1535,33 @@ documentation on extending this framework.
     (license license:gpl3+)))
 
 (define-public emacs-helm-bibtex
-  (package
-    (name "emacs-helm-bibtex")
-    (version "2.0.0")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "https://github.com/tmalsburg/helm-bibtex/archive/"
-                           version ".tar.gz"))
-       (sha256
-        (base32
-         "0yv7y8zaimzkva8rnxmmix2dmzybwiv2pjwhx0n1khp2vcjrxmx2"))))
-    (build-system emacs-build-system)
-    (propagated-inputs
-     `(("emacs-helm" ,emacs-helm)
-       ("emacs-parsebib" ,emacs-parsebib)
-       ("emacs-s" ,emacs-s)
-       ("emacs-dash" ,emacs-dash)
-       ("emacs-f" ,emacs-f)
-       ("emacs-biblio" ,emacs-biblio)))
-    (home-page "https://github.com/tmalsburg/helm-bibtex")
-    (synopsis "A bibliography manager based on Helm")
-    (description "A bibliography manager for Emacs, based on Helm and
+  (let ((commit "8ed898fb5a68f18e9bb9973832a5c1f8abcfc463")
+        (revision "1"))
+    (package
+      (name "emacs-helm-bibtex")
+      (version (string-append "2.0.0" "-" revision "."
+                              (string-take commit 7)))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/tmalsburg/helm-bibtex.git")
+               (commit commit)))
+         (file-name (string-append name "-" version "-checkout"))
+         (sha256
+          (base32
+           "14lyx0vbqr97p3anzrsp7m3q0kqclyjcdwplpraim403fcklzbnz"))))
+      (build-system emacs-build-system)
+      (propagated-inputs
+       `(("emacs-helm" ,emacs-helm)
+         ("emacs-parsebib" ,emacs-parsebib)
+         ("emacs-s" ,emacs-s)
+         ("emacs-dash" ,emacs-dash)
+         ("emacs-f" ,emacs-f)
+         ("emacs-biblio" ,emacs-biblio)))
+      (home-page "https://github.com/tmalsburg/helm-bibtex")
+      (synopsis "A bibliography manager based on Helm")
+      (description "A bibliography manager for Emacs, based on Helm and
 the bibtex-completion backend.
 
 Key features:
@@ -1572,7 +1577,7 @@ Key features:
 - Quick access to online bibliographic databases such as Pubmed,
   arXiv, Google Scholar, Library of Congress, etc.
 - Imports BibTeX entries from CrossRef and other sources.")
-    (license license:gpl3+)))
+      (license license:gpl3+))))
 
 (define-public emacs-org-ref
   (package
