@@ -1,7 +1,8 @@
 (setq gnus-select-method
       '(nnimap "USER"
-	       (nnimap-address "localhost")  ; it could also be imap.googlemail.com if that's your server.
-	       (nnimap-server-port "imaps"))
+               ;; It could also be imap.googlemail.com if that's your server.
+               (nnimap-address "localhost")
+               (nnimap-server-port "imaps"))
 
       gnus-permanently-visible-groups ".*INBOX"
 
