@@ -18,3 +18,7 @@
 
 (setq gnus-extra-headers '(To Cc Newsgroups Keywords List-Id)
       nnmail-extra-headers gnus-extra-headers)
+
+(setq gnus-parameters
+      '(("^INBOX$"
+         (gnus-thread-sort-functions 'gnus-thread-sort-by-score))))
