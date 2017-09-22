@@ -119,6 +119,11 @@ case focus it."
             "Start mpv unless it is already running, in which case focus it."
             (run-or-raise "mpv" '(:class "mpv")))
 
+(defcommand xclip-mpv () ()
+            "Play video from clipboard."
+            (stumpwm:run-shell-command
+             "exec mpv $(xclip -o -selection clipboard)"))
+
 
 ;;;
 ;;; Mode-line
