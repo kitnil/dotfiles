@@ -124,6 +124,9 @@ case focus it."
             (stumpwm:run-shell-command
              "exec mpv $(xclip -o -selection clipboard)"))
 
+(push '(:class "mpv") stumpwm:*deny-raise-request*)
+(push '(:class "mpv") *deny-map-request*)
+
 
 ;;;
 ;;; Mode-line
