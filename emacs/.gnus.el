@@ -10,6 +10,7 @@
       gnus-thread-hide-subtree t)
 
 (add-to-list 'gnus-secondary-select-methods '(nntp "news.gwene.org"))
+(add-to-list 'gnus-secondary-select-methods '(nntp "news.gmane.org"))
 
 
 ;; (Info-goto-node "(gnus) Scoring On Other Headers")
