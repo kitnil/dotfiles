@@ -242,6 +242,7 @@
     "stow"
     "strace"
     "stress"
+    "tcpdump"
     "texinfo"
     "texlive"
     "the-silver-searcher"
