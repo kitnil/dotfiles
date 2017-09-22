@@ -1258,6 +1258,24 @@ See the function `wordgen' for complete description.
                  (zero? (system* "sh" "autogen.sh"))))
              (delete 'reset-gzip-timestamps))))))))
 
+(define-public emacs-minimal-checkout
+  ;; This is the version that you should use as an input to packages that just
+  ;; need to byte-compile .el files.
+  (package
+    (inherit emacs-checkout)
+    (name "emacs-minimal")
+    (synopsis "The extensible text editor (used only for byte-compilation)")
+    (build-system gnu-build-system)
+    (arguments
+     (substitute-keyword-arguments (package-arguments emacs)
+       ((#:phases phases)
+        `(modify-phases ,phases
+           (delete 'install-site-start)))))
+    (inputs
+     `(("ncurses" ,ncurses)))
+    (native-inputs
+     `(("pkg-config" ,pkg-config)))))
+
 (define-public emacs-indium-checkout
   (let ((commit "d98a9e0cd11d8230c4c3d0b59c4ac60520e34ebb")
         (revision "1"))
