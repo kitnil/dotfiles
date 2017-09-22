@@ -30,6 +30,7 @@
     "emacs-aggressive-indent"
     "emacs-async"
     "emacs-auctex"
+    "emacs-avy"
     "emacs-bash-completion"
     "emacs-browse-at-remote"
     "emacs-cider"
