@@ -38,7 +38,7 @@ alias j="jobs"
 
 alias suspend='sudo loginctl suspend'
 
-export EDITOR=zile
+export EDITOR=emacsclient
 
 export GPG_TTY=$(tty)
 
