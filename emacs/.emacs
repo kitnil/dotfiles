@@ -983,7 +983,6 @@
 ;;;
 
 (use-package aggressive-indent
-  :diminish aggressive-indent-mode
   :bind (("C-c t a" . aggressive-indent-mode))
   :config
   (mapcar (lambda (mode)
