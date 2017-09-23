@@ -185,6 +185,8 @@
 ;;; Built in
 ;;;
 
+(add-hook 'occur-mode-hook (lambda () (setq-local truncate-lines t)))
+
 (use-package menu-bar
   :preface
   (menu-bar-mode 0))
@@ -204,12 +206,6 @@
                              `(,extension
                                ,"mpv --no-resume-playback --keep-open=no")))
               '("\\.mp4$" "\\.webm$")))))
-
-(use-package replace
-  :config
-  (defun my-occur-mode-hook ()
-    (setq-local truncate-lines t))
-  (add-hook 'occur-mode-hook 'my-occur-mode-hook))
 
 (use-package ibuffer
   :bind (("C-c b i" . ibuffer)
