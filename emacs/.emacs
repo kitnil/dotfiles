@@ -548,7 +548,8 @@
     (org-babel-do-load-languages 'org-babel-load-languages
                                  '((emacs-lisp . nil)
                                    (R . t)
-                                   (python . t)))
+                                   (python . t)
+                                   (shell . t)))
 
     ;; (defun my-org-confirm-babel-evaluate (lang body)
     ;;   (not (string= lang "ditaa")))  ; don't ask for ditaa
