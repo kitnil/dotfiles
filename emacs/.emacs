@@ -303,11 +303,15 @@
             '(newline newline-mark))))
 
 (use-package calendar
-  :commands calendar
+  :commands calendar-current-date
   :config
   (progn
     (setq calendar-date-style 'european
-          calendar-week-start-day 1)))
+          calendar-week-start-day 1)
+    (defun mkdir-current-date ()
+      (interactive)
+      (mkdir (apply (lambda (m d y) (format "%s-%s-%s~" m d y))
+                    (calendar-current-date))))))
 
 (use-package time
   :commands display-time
