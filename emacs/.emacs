@@ -984,7 +984,7 @@
 
 (use-package aggressive-indent
   :bind (("C-c t a" . aggressive-indent-mode))
-  :config
+  :init
   (mapcar (lambda (mode)
             (add-hook mode 'aggressive-indent-mode))
           '(scheme-mode-hook emacs-lisp-mode-hook lisp-mode-hook)))
