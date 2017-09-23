@@ -1129,7 +1129,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
        (s-chop-prefix "<" (s-chop-suffix ">" (thing-at-point 'email)))))))
 
 (use-package flyspell
-  :config (add-hook 'prog-mode-hook 'flyspell-mode))
+  :config (add-hook 'message-mode-hook 'flyspell-mode))
 
 (use-package sr-speedbar
   :bind (("C-c s b" . sr-speedbar-toggle)))
