@@ -1131,6 +1131,9 @@ in the variable `browse-url-mpv-arguments' to mpv."
 (use-package flyspell
   :config (add-hook 'message-mode-hook 'flyspell-mode))
 
+(use-package flycheck
+  :config (add-hook 'prog-mode-hook 'flycheck-mode))
+
 (use-package sr-speedbar
   :bind (("C-c s b" . sr-speedbar-toggle)))
 
