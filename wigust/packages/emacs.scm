@@ -1230,8 +1230,8 @@ See the function `wordgen' for complete description.
       (arguments
        (substitute-keyword-arguments
            `(#:parallel-build? #t
-                               #:tests? #f
-                               ,@(package-arguments emacs))
+             #:tests? #f
+             ,@(package-arguments emacs))
          ((#:phases phases)
           `(modify-phases ,phases
              (add-after 'unpack 'autogen
