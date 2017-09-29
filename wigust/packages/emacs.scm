@@ -907,25 +907,6 @@ Also have the following, more convenient key bindings for company mode in my
     (description "Sourcemap parser")
     (license license:gpl3+)))
 
-(define-public emacs-sr-speedbar
-  (package
-    (name "emacs-sr-speedbar")
-    (version "20161025")
-    (source
-     (origin
-       (method url-fetch)
-       (uri "https://www.emacswiki.org/emacs/download/sr-speedbar.el")
-       (file-name (string-append "sr-speedbar-" version ".el"))
-       (sha256
-        (base32
-         "15kvl270a5xx1w5fjlrawslnpwyks2x17356xcr0idhv5xw2wn30"))))
-    (build-system emacs-build-system)
-    (home-page "https://www.emacswiki.org/emacs/download/sr-speedbar.el")
-    (synopsis "Same frame Emacs @code{speedbar}")
-    (description "Show the speedbar in the same Emacs frame or in an extra
-window.  Customize the inital width of the speedbar.")
-    (license license:gpl3+)))
-
 (define-public emacs-stickyfunc-enhance
   (let ((commit "13bdba51fcd83ccbc3267959d23afc94d458dcb0")
         (revision "1"))
