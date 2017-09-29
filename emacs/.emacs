@@ -190,6 +190,10 @@
 
 (add-hook 'occur-mode-hook (lambda () (setq-local truncate-lines t)))
 
+(use-package mwheel
+  :bind (("<C-mouse-4>" . text-scale-increase)
+         ("<C-mouse-5>" . text-scale-decrease)))
+
 (use-package menu-bar
   :preface
   (menu-bar-mode 0))
