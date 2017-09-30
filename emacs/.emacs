@@ -190,6 +190,9 @@
 
 (add-hook 'occur-mode-hook (lambda () (setq-local truncate-lines t)))
 
+(use-package scroll-lock
+  :bind (("<Scroll_Lock>" . scroll-lock-mode)))
+
 (use-package mwheel
   :bind (("<C-mouse-4>" . text-scale-increase)
          ("<C-mouse-5>" . text-scale-decrease)))
