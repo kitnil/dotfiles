@@ -1072,7 +1072,8 @@ in the variable `browse-url-mpv-arguments' to mpv."
           ("webm" . "mpv")
           ("mkv" . "mpv")
           ("mp4" . "mpv")
-          ("flv" . "mpv")))))
+          ("flv" . "mpv")
+          ("png" . "feh")))))
 
 (use-package debbugs-gnu
   :commands debbugs-gnu
