@@ -358,7 +358,11 @@
   :config
   (progn
     (require 'smartparens-config)
-    (add-hook 'prog-mode-hook 'smartparens-strict-mode)))
+    (mapcar (lambda (mode) (add-hook mode 'smartparens-strict-mode))
+            '(scheme-mode-hook
+              emacs-lisp-mode-hook
+              lisp-mode-hook
+              c-mode-hook))))
 
 
 ;;;
