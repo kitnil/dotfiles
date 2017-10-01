@@ -264,6 +264,13 @@
     (add-hook 'c-mode-hook 'electric-pair-mode)
     (add-hook 'python-mode-hook 'electric-pair-mode)))
 
+(use-package cc-cmds
+  :config
+  (progn
+    (add-hook 'c-mode-hook 'c-toggle-auto-newline)
+    (add-hook 'c-mode-hook '(lambda () (add-to-list 'c-cleanup-list
+                                               'space-before-funcall)))))
+
 (use-package paren
   :bind (("C-c t m" . show-paren-mode)))
 
