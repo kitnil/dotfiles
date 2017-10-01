@@ -17,8 +17,8 @@ URxvt*scrollTtyKeypress: true
 URxvt.font: xft:monospace:size=13
 
 ! Colors
-URxvt*background: #ffffff
-URxvt*foreground: #000000
+URxvt*background: #000000
+URxvt*foreground: #FFFFFF
 ! black
 URxvt*color0:  #000000
 URxvt*color8:  #686868
@@ -46,6 +46,9 @@ URxvt*color15: #FFFFFF
 
 ! 
 ! XTerm
+
+XTerm.vt100.foreground: white
+XTerm.vt100.background: black
 
 XTerm.vt100.saveLines: 4096
 XTerm.vt100.faceName: Monospace:size=14:antialias=true

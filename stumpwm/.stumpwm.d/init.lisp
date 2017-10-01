@@ -91,8 +91,8 @@
 ;;;
 
 (set-win-bg-color "#DCDAD5")
-(set-unfocus-color "#A9A9A9")
-(set-focus-color "#66CD00")
+(set-unfocus-color "#000000")
+(set-focus-color "#DCDAD5")
 (set-fg-color "#000000")
 (set-bg-color "#FFFFFF")
 (set-border-color "#66CD00")
@@ -159,9 +159,9 @@ case focus it."
 ;;; Mode-line
 ;;;
 
-(setq *mode-line-border-color*     "#DCDAD5"
-      *mode-line-foreground-color* "#000000"
-      *mode-line-background-color* "#DCDAD5")
+(setq *mode-line-border-color*     "#000000"
+      *mode-line-foreground-color* "#ffffff"
+      *mode-line-background-color* "#000000")
 
 (defcommand toggle-modeline () ()
   "Toggle mode line."
