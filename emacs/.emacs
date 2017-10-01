@@ -1014,7 +1014,7 @@
   :init
   (mapcar (lambda (mode)
             (add-hook mode 'aggressive-indent-mode))
-          '(scheme-mode-hook emacs-lisp-mode-hook lisp-mode-hook)))
+          '(scheme-mode-hook emacs-lisp-mode-hook lisp-mode-hook c-mode-hook)))
 
 (use-package browse-url
   :commands browse-url-mpv
