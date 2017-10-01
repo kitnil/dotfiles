@@ -1257,6 +1257,23 @@ See the function `wordgen' for complete description.
     (native-inputs
      `(("pkg-config" ,pkg-config)))))
 
+(define-syntax-rule (define-my-packages (var-name pkg) ...)
+  (begin
+    (define-public var-name
+      (package
+        (inherit pkg)
+        (name (string-append (package-name pkg) "-checkout"))
+        (arguments
+         (cons* #:emacs emacs-checkout
+                (package-arguments pkg)))))
+    ...))
+
+(define-my-packages
+  (emacs-auctex-checkout emacs-auctex)
+  (emacs-xelb-checkout emacs-xelb)
+  (emacs-exwm-checkout emacs-exwm)
+  (emacs-exwm-x-checkout emacs-exwm-x))
+
 (define-public emacs-indium-checkout
   (let ((commit "d98a9e0cd11d8230c4c3d0b59c4ac60520e34ebb")
         (revision "1"))
