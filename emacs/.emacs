@@ -445,9 +445,11 @@
 (use-package company-quickhelp
   :after company
   :config
-  (eval-after-load 'company
-    '(define-key company-active-map
-       (kbd "C-c h") #'company-quickhelp-manual-begin)))
+  (progn
+    (eval-after-load 'company
+      '(define-key company-active-map
+         (kbd "C-c h") #'company-quickhelp-manual-begin))
+    (company-quickhelp-mode t)))
 
 (use-package company-lua
   :after company
