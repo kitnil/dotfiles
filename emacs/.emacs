@@ -474,6 +474,9 @@
     (eval-after-load 'company
       '(define-key company-active-map
          (kbd "C-c h") #'company-quickhelp-manual-begin))
+    (custom-theme-set-variables
+     'manoj-dark
+     '(company-quickhelp-color-background "black"))
     (company-quickhelp-mode t)))
 
 (use-package company-lua
