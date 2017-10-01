@@ -228,8 +228,7 @@ EndSection
                    (service rottlog-service-type)
                    (service bitlbee-service-type
                             (bitlbee-configuration))
-                   (service rsync-service-type
-                            (rsync-configuration))
+                   (service rsync-service-type)
                    (service nginx-service-type)
                    (service fcgiwrap-service-type)
                    (service cgit-service-type

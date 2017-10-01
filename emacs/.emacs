@@ -440,7 +440,12 @@
 
 (use-package company
   :diminish company-mode
-  :config (add-hook 'prog-mode-hook 'company-mode))
+  :config
+  (progn
+    (add-hook 'prog-mode-hook 'company-mode)
+    (setq company-clang-insert-arguments nil)
+    (setq company-gtags-insert-arguments nil)
+    (setq company-semantic-insert-arguments nil)))
 
 (use-package company-quickhelp
   :after company
