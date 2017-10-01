@@ -154,6 +154,17 @@ case focus it."
 
 (define-key *root-map* (kbd "v") "mpv")
 (define-key *root-map* (kbd "C-v") "xclip-mpv")
+
+
+;;;
+;;; Terminal
+;;;
+
+(defcommand xterm () ()
+            "Start XTerm unless it is already running, in which case focus it."
+            (run-or-raise "xterm" '(:class "XTerm")))
+
+
 
 ;;;
 ;;; Mode-line
