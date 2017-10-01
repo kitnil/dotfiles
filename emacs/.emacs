@@ -628,7 +628,13 @@
              "* TODO %? \n%T" :prepend t)
 
             ("i" "TODO" entry (file "/TODO.gpg")
-             "* %?")))
+             "* %?")
+
+            ("p" "pdfview" item (file "~/.pdf-notes")
+             "%a %?")
+
+            ("b" "blog" plain (file "~/public_html/IDEA.org")
+             "%?")))
 
     ;; (org-link-set-parameters "file"
     ;;                   :face (lambda (path)
