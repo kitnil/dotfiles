@@ -202,3 +202,14 @@ case focus it."
 (load-module "globalwindows")
 (define-key *root-map* (kbd "M-1") "global-windowlist")
 (define-key *root-map* (kbd "M-2") "global-pull-windowlist")
+
+
+;;;
+;;; SLIME
+;;;
+
+(ql:quickload "swank")
+(swank-loader:init)
+(swank:create-server :port 4004
+                     :style swank:*communication-style*
+                     :dont-close t)
