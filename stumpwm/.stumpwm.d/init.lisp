@@ -152,6 +152,8 @@ case focus it."
 (push '(:class "mpv") stumpwm:*deny-raise-request*)
 (push '(:class "mpv") *deny-map-request*)
 
+(define-key *root-map* (kbd "v") "mpv")
+(define-key *root-map* (kbd "C-v") "xclip-mpv")
 
 ;;;
 ;;; Mode-line
