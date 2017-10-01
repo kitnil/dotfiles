@@ -391,7 +391,13 @@
   :config (multiple-cursors-mode))
 
 (use-package tex-mode
-  :config (add-hook 'LaTeX-mode-hook 'prettify-symbols-mode))
+  :config
+  (progn
+    (add-hook 'LaTeX-mode-hook 'prettify-symbols-mode)
+    (defun compile-latex ()
+      (interactive)
+      (org-latex-export-to-latex)
+      (recompile))))
 
 (use-package imenu
   :bind (("C-c i" . imenu)))
