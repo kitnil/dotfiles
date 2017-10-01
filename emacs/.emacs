@@ -1318,3 +1318,6 @@ in the variable `browse-url-mpv-arguments' to mpv."
       "bash-completion" "BASH completion hook")
     (add-hook 'shell-dynamic-complete-functions
               'bash-completion-dynamic-complete)))
+
+(use-package writeroom-mode
+  :config (setq writeroom-bottom-divider-width 0))

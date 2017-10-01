@@ -124,6 +124,7 @@
     "emacs-which-key"
     "emacs-wordgen"
     "emacs-writegood-mode"
+    "emacs-writeroom"
     "emacs-yasnippet"
     "emacs-yasnippet-snippets"
     "ethtool"
