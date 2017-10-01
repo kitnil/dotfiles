@@ -1001,6 +1001,9 @@
 ;;; Misc
 ;;;
 
+(use-package avy
+  :config (avy-setup-default))
+
 (use-package aggressive-indent
   :bind (("C-c t a" . aggressive-indent-mode))
   :init
