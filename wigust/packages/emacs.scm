@@ -760,27 +760,6 @@ for instructions.")
     (description "Get major mode's parent modes")
     (license license:gpl3+)))
 
-(define-public emacs-pos-tip
-  (package
-    (name "emacs-pos-tip")
-    (version "0.4.5")
-    (source
-     (origin
-       (method url-fetch)
-       (uri "https://www.emacswiki.org/emacs/download/pos-tip.el")
-       (file-name (string-append "pos-tip-" version ".el"))
-       (sha256
-        (base32
-         "1c14693h903mbgapks9zgxl6l3pkipc5r7n4ik0szjl4hsghc4z3"))))
-    (build-system emacs-build-system)
-    (home-page "https://www.emacswiki.org/emacs/pos-tip.el")
-    (synopsis "Function to display a tooltip at mouse position")
-    (description "The standard library tooltip.el provides the function for
-displaying a tooltip at mouse position which allows users to easily show it.
-However, locating tooltip at arbitrary buffer position in window is not easy.
-This program provides such function to be used by other frontend programs.")
-    (license license:gpl2+)))
-
 (define-public emacs-rjsx-mode
   (package
     (name "emacs-rjsx-mode")
