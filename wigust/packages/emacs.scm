@@ -1759,3 +1759,44 @@ setup like below:
 
 (setq irfc-assoc-mode t)")
     (license license:gpl3+)))
+
+(define-public emacs-move-text
+  (package
+    (name "emacs-move-text")
+    (version "2.0.8")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append "https://github.com/emacsfodder/move-text/archive/"
+                           version ".tar.gz"))
+       (sha256
+        (base32
+         "1sjfja9r25692pgcldgnjzkapzy970m14jh9l4pajysiqcdk72g0"))))
+    (build-system emacs-build-system)
+    (home-page "https://github.com/emacsfodder/move-text")
+    (synopsis "Move current line or region with M-up or M-down")
+    (description "MoveText is a re-write of the old move-text and
+compatible with >= Emacs 25.1
+
+It allows you to move the current line using M-up / M-down if a region
+is marked, it will move the region instead.
+
+Using the prefix (C-u *number* or META *number*) you can predefine how
+many lines move-text will travel.
+
+
+Installation:
+
+Put move-text.el to your load-path.
+The load-path is usually ~/elisp/.
+It's set in your ~/.emacs like this:
+(add-to-list 'load-path (expand-file-name \"~/elisp\"))
+\nAnd the following to your ~/.emacs startup file.
+
+(require 'move-text)
+(move-text-default-bindings)
+
+Acknowledgements:
+
+ Original v1.x was a Feature extracted from basic-edit-toolkit.el - by Andy Stewart (LazyCat) ")
+    (license license:gpl3+)))
