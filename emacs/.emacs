@@ -741,8 +741,7 @@
     (load (expand-file-name "~/quicklisp/slime-helper.el"))
     (setq inferior-lisp-program "/home/natsu/.guix-profile/bin/sbcl")
     (load-file "/home/natsu/.stumpwm.d/modules/util/swm-emacs/stumpwm-utils.el")
-    (load-file "/home/natsu/.stumpwm.d/modules/util/swm-emacs/stumpwm-mode.el")
-    (load-file "/home/natsu/quicklisp/slime-helper.el")))
+    (load-file "/home/natsu/.stumpwm.d/modules/util/swm-emacs/stumpwm-mode.el")))
 
 (use-package slime-company
   :after company
