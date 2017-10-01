@@ -5,6 +5,31 @@
 (setf *startup-message* nil) ; Disable welcome message.
 (stumpwm:run-shell-command "xsetroot -cursor_name left_ptr") ; Fix cursor icon
 
+(defcommand emms-previous () ()
+            "Emacs Emms previous in playlist."
+            (run-shell-command "emacsclient --eval '(emms-previous)'"))
+
+(defcommand emms-next () ()
+            "Emacs Emms next in playlist."
+            (run-shell-command "emacsclient --eval '(emms-next)'"))
+
+(defcommand emms-stop () ()
+            "Emacs Emms stop."
+            (run-shell-command "emacsclient --eval '(emms-stop)'"))
+
+(define-interactive-keymap (emms) ()
+  ((kbd "SPC") "emms-stop")
+
+  ((kbd "Up") "emms-previous")
+  ((kbd "C-p") "emms-previous")
+  ((kbd "p") "emms-previous")
+  ((kbd "k") "emms-previous")
+
+  ((kbd "Down") "emms-next")
+  ((kbd "C-n") "emms-next")
+  ((kbd "n") "emms-next")
+  ((kbd "j") "emms-next"))
+
 (set-module-dir "/home/natsu/.stumpwm.d/modules/")
 
 
