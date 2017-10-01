@@ -267,11 +267,27 @@
 (use-package cc-cmds
   :bind (("<M-up>" . move-text-up)
          ("<M-down>" . move-text-down))
+  :preface
+  (defvar c-mode-prettify-symbols-alist
+    '(("->"     . ?→)
+
+      ("not"    . ?¬)
+      ("&&"     . ?∧)
+      ("||"     . ?∨)
+      ("!="     . ?≠)
+      ("<="     . ?≤)
+      (">="     . ?≥)
+
+      ("true"  . ?T)
+      ("false" . ?F)))
   :config
   (progn
-    (add-hook 'c-mode-hook 'c-toggle-auto-newline)
-    (add-hook 'c-mode-hook '(lambda () (add-to-list 'c-cleanup-list
-                                               'space-before-funcall)))))
+    (defun my-c-mode-hook ()
+      (setq-local prettify-symbols-alist c-mode-prettify-symbols-alist)
+      (prettify-symbols-mode)
+      (c-toggle-auto-newline)
+      (add-to-list 'c-cleanup-list 'space-before-funcall))
+    (add-hook 'c-mode-hook 'my-c-mode-hook)))
 
 (use-package paren
   :bind (("C-c t m" . show-paren-mode)))
