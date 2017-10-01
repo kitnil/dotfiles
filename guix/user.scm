@@ -77,6 +77,7 @@
     "emacs-lua-mode"
     "emacs-makey"
     "emacs-markdown-mode"
+    "emacs-move-text"
     "emacs-multiple-cursors"
     "emacs-nix-mode"
     "emacs-nnreddit"

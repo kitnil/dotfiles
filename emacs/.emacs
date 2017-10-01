@@ -265,6 +265,8 @@
     (add-hook 'python-mode-hook 'electric-pair-mode)))
 
 (use-package cc-cmds
+  :bind (("<M-up>" . move-text-up)
+         ("<M-down>" . move-text-down))
   :config
   (progn
     (add-hook 'c-mode-hook 'c-toggle-auto-newline)
