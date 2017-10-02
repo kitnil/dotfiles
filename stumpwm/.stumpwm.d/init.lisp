@@ -164,6 +164,7 @@ case focus it."
             "Start XTerm unless it is already running, in which case focus it."
             (run-or-raise "xterm" '(:class "XTerm")))
 
+(define-key *root-map* (kbd "c") "xterm")
 
 
 ;;;
