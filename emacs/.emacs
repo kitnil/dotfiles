@@ -621,20 +621,17 @@
             ("L" "Protocol Link" item (file "~/.web.org")
              "[[%:link][%:description]]")
 
-            ("r" "Respond ro email" entry
-             (file+headline "inbox.org" "Email")
+            ("r" "Respond ro email" entry (file+headline "inbox.org" "Email")
              "[[mailto:%:fromaddress][%:fromname]]"
              :immediate-finish t
              :prepend t)
 
-            ("f" "File email" entry
-             (file+headline "inbox.org" "Email")
+            ("f" "File email" entry (file+headline "inbox.org" "Email")
              "* %U %a by [[mailto:%:fromaddress][%:fromname]]\n\n%i%?\n"
              :immediate-finish nil
              :prepend nil)
 
-            ("t" "Tasks" entry
-             (file+headline ".notes" "Tasks")
+            ("t" "Tasks" entry (file+headline ".notes" "Tasks")
              "* TODO %? \n%T" :prepend t)
 
             ("i" "TODO" entry (file "/TODO.gpg")
