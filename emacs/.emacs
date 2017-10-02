@@ -285,7 +285,6 @@
     (defun my-c-mode-hook ()
       (setq-local prettify-symbols-alist c-mode-prettify-symbols-alist)
       (prettify-symbols-mode)
-      (c-toggle-auto-newline)
       (add-to-list 'c-cleanup-list 'space-before-funcall))
     (add-hook 'c-mode-hook 'my-c-mode-hook)))
 
