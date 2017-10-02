@@ -328,7 +328,7 @@
   :config
   (progn
     (set-face-attribute 'whitespace-space
-                        nil :background nil :foreground "gainsboro")
+                        nil :background nil :foreground "dim gray")
     (mapcar (lambda (el)
               (delete el whitespace-style))
             '(newline newline-mark))))
