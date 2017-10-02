@@ -476,7 +476,8 @@
          (kbd "C-c h") #'company-quickhelp-manual-begin))
     (custom-theme-set-variables
      'manoj-dark
-     '(company-quickhelp-color-background "black"))
+     '(company-quickhelp-color-background "gold")
+     '(company-quickhelp-color-foreground "black"))
     (company-quickhelp-mode t)))
 
 (use-package company-lua
