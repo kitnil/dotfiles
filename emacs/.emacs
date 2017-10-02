@@ -640,6 +640,9 @@
             ("p" "pdfview" item (file "~/.pdf-notes")
              "%a %?")
 
+            ("g" "guix" plain (file "guix.org")
+             "%?")
+
             ("b" "blog" plain (file "~/public_html/IDEA.org")
              "%?")))
 
