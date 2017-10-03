@@ -2,7 +2,7 @@
 ;; Copyright © 2017 Oleg Pykhalov <go.wigust@gmail.com>
 ;; Released under the GNU GPLv3 or any later version.
 
-(use-modules (gnu) (gnu system nss))
+(use-modules (gnu) (gnu system nss) (iptables ru))
 
 (use-service-modules ssh desktop xorg cups pm version-control admin mcron mail
                      networking shepherd rsync cuirass web)
@@ -16,36 +16,45 @@
 ;;;
 
 (define start-firewall
-  ;; Rules to throttle malicious SSH connection attempts.  This will allow at
-  ;; most 3 connections per minute from any host, and will block the host for
-  ;; another minute if this rate is exceeded.  Taken from
-  ;; <http://www.la-samhna.de/library/brutessh.html#3>.
   #~(let ((iptables
            (lambda (str)
-             (zero? (apply system*
-                           #$(file-append iptables
-                                          "/sbin/iptables")
-                           (string-tokenize str))))))
-      (format #t "Installing iptables SSH rules...~%")
-      (and (iptables "-A INPUT -p tcp --dport 22 -m state \
-  --state NEW -m recent --set --name SSH -j ACCEPT")
-           (iptables "-A INPUT -p tcp --dport 22 -m recent \
-  --update --seconds 60 --hitcount 4 --rttl \
-  --name SSH -j LOG --log-prefix SSH_brute_force")
-           (iptables "-A INPUT -p tcp --dport 22 -m recent \
-  --update --seconds 60 --hitcount 4 --rttl --name SSH -j DROP"))))
+             (zero? (system (string-join `(,#$(file-append iptables
+                                                           "/sbin/iptables")
+                                           ,str) " "))))))
+      (format #t "Install iptables rules.~%")
+      ;; Rules to throttle malicious SSH connection attempts.  This will allow
+      ;; at most 3 connections per minute from any host, and will block the
+      ;; host for another minute if this rate is exceeded.  Taken from
+      ;; <http://www.la-samhna.de/library/brutessh.html#3>.
+      (and (iptables "-A INPUT -p tcp --dport 22 \
+-m state --state NEW -m recent --set --name SSH -j ACCEPT")
+           (iptables "-A INPUT -p tcp --dport 22 \
+-m recent --update --seconds 60 --hitcount 4 --rttl \
+--name SSH -j LOG --log-prefix SSH_brute_force")
+           (iptables "-A INPUT -p tcp --dport 22 \
+-m recent --update --seconds 60 --hitcount 4 --rttl \
+--name SSH -j DROP")
+           (iptables %iptables-https)
+           (iptables %iptables-warning)
+           (iptables %iptables-promo))))
 
 (define firewall-service
   ;; The "firewall".  Make it a Shepherd service because as an activation
   ;; script it might run too early, before the Netfilter modules can be
   ;; loaded for some reason.
   (simple-service 'firewall shepherd-root-service-type
-                  (list (shepherd-service
-                         (provision '(firewall))
-                         (requirement '())
-                         (start #~(lambda ()
-                                    #$start-firewall))
-                         (respawn? #f)))))
+                  (list
+                   (shepherd-service
+                    (provision '(firewall))
+                    (requirement '())
+                    (start #~(lambda _
+                               #$start-firewall))
+                    (respawn? #f)
+                    (stop #~(lambda _
+                              (zero?
+                               (system* #$(file-append iptables
+                                                       "/sbin/iptables")
+                                        "-F"))))))))
 
 
 ;;;
