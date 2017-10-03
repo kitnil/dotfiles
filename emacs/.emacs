@@ -639,6 +639,9 @@
             ("p" "pdfview" item (file "~/.pdf-notes")
              "%a %?")
 
+            ("e" "emacs" plain (file "emacs.org")
+             "%?")
+
             ("g" "guix" plain (file "guix.org")
              "%?")
 
