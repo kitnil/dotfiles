@@ -57,3 +57,7 @@ alias guix-upgrade="guix package -m $HOME/dotfiles/guix/user.scm -u"
 alias guix-configure="./configure --localstatedir=/var --prefix=''"
 alias guix-make='guix environment guix --ad-hoc help2man -- make'
 alias guix-make-tags='guix environment guix -- make tags'
+
+alias guix-system-reconfigure="sudo GUILE_LOAD_PATH=\"$HOME/src/iptables\
+:$GUILE_LOAD_PATH\" guix system reconfigure \
+$HOME/dotfiles/guix/system-magnolia.scm"
