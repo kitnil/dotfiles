@@ -1341,3 +1341,17 @@ in the variable `browse-url-mpv-arguments' to mpv."
 
 (use-package writeroom-mode
   :config (setq writeroom-bottom-divider-width 0))
+
+(use-package git-auto-commit-mode
+  :config
+  (progn
+    ;; (setq gac-automatically-push-p t)
+
+    ;; Without a .dir-locals.el file
+    ;; https://www.emacswiki.org/emacs/DirectoryVariables
+    (dir-locals-set-class-variables 'dir-local-var-git-auto-commit
+				    (quote
+				     ((nil . ((mode . git-auto-commit))))))
+
+    (dir-locals-set-directory-class org-directory
+                                    'dir-local-var-git-auto-commit)))

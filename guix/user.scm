@@ -57,6 +57,7 @@
     "emacs-flx"
     "emacs-flycheck"
     "emacs-ggtags"
+    "emacs-git-auto-commit-mode"
     "emacs-git-gutter"
     "emacs-git-messenger"
     "emacs-git-timemachine"
