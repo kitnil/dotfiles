@@ -1090,8 +1090,15 @@ in the variable `browse-url-mpv-arguments' to mpv."
 (use-package debbugs-browse
   :after browse-url
   :config
-  (add-to-list 'browse-url-browser-function
-               '("^https?://debbugs\\.gnu\\.org/.*" . debbugs-browse-url)))
+  (progn
+    (add-to-list 'browse-url-browser-function
+                 '("^https?://debbugs\\.gnu\\.org/.*" . debbugs-browse-url))
+    (defun debbugs-gnu-guix ()
+      (interactive)
+      (debbugs-gnu '("serious" "important" "normal") '("guix")))
+    (defun debbugs-gnu-guix-patches ()
+      (interactive)
+      (debbugs-gnu '("serious" "important" "normal") '("guix-patches")))))
 
 (use-package which-key
   :diminish which-key-mode
