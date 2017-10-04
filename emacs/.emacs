@@ -1340,7 +1340,29 @@ in the variable `browse-url-mpv-arguments' to mpv."
               'bash-completion-dynamic-complete)))
 
 (use-package writeroom-mode
-  :config (setq writeroom-bottom-divider-width 0))
+  :config
+  (progn
+    (setq writeroom-bottom-divider-width 0)
+    (defun manoj-dark-more ()
+      "Make fringes and header dark."
+      (custom-theme-set-faces
+       'manoj-dark
+       '(fringe ((t (:background "black" :foreground "Wheat"))))
+       '(header-line
+         ((t (:background "black" :foreground "grey90" :height 0.9))))))
+    (defun manoj-dark-default ()
+      "Make fringes and header default color."
+      (custom-theme-set-faces
+       'manoj-dark
+       '(fringe ((t (:background "grey30" :foreground "Wheat"))))
+       '(header-line
+         ((t (:box (:line-width -1 :color "grey20" :style released-button)
+                   :background "grey20"
+                   :foreground "grey90"
+                   :height 0.9))))))
+    (add-hook 'writeroom-mode-hook (lambda () (if writeroom-mode
+                                             (manoj-dark-more)
+                                           (manoj-dark-default))))))
 
 (use-package git-auto-commit-mode
   :config
