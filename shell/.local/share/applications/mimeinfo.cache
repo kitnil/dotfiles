@@ -1,0 +1,5 @@
+[MIME Cache]
+x-scheme-handler/mailto=gnus.desktop;
+x-scheme-handler/org-protocol=org-protocol.desktop;
+image/jpeg=feh.desktop
+image/png=feh.desktop
