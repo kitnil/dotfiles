@@ -217,6 +217,16 @@ case focus it."
 
 
 ;;;
+;;; Pinentry
+;;;
+
+(ql:quickload "cffi")
+(ql:quickload "usocket-server")
+
+(load-module "pinentry")
+
+
+;;;
 ;;; SLIME
 ;;;
 
