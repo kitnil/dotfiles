@@ -578,6 +578,7 @@
                (error "No candidate found")))))))
 
 (use-package notmuch
+  :preface (setq mail-user-agent 'gnus-user-agent)
   :commands notmuch-search
   :bind (("C-c m n" . notmuch)))
 
