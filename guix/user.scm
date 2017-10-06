@@ -270,6 +270,7 @@
     "vc-dwim"
     "vera"
     "virt-viewer"
+    "w3m"
     "wakelan"
     "wget"
     "wgetpaste"
