@@ -68,4 +68,10 @@ $HOME/dotfiles/guix/system-magnolia.scm"
 
 alias guix-pull="guix pull --url=git://magnolia.local/~natsu/src/guix"
 alias pre-guix="$HOME/src/guix/pre-inst-env guix"
+export GUIX_PULL_URL="git://magnolia.local/~natsu/src/guix"
+
 alias feh-svg="feh --magick-timeout 10"
+
+export HISTSIZE=5000
+export HISTFILESIZE=$HISTSIZE
+
