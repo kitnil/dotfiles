@@ -67,3 +67,4 @@ alias guix-system-build="GUILE_LOAD_PATH=\"$HOME/src/iptables\
 $HOME/dotfiles/guix/system-magnolia.scm"
 
 alias guix-pull="guix pull --url=git://magnolia.local/~natsu/src/guix"
+alias feh-svg="feh --magick-timeout 10"
