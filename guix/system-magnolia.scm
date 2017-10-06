@@ -184,7 +184,7 @@ EndSection
                          (device "tmpfs")
                          (mount-point "/tmp")
                          (type "tmpfs")
-                         (flags '(no-suid no-dev))
+                         (flags '(no-dev))
                          (options "mode=1777,size=16G")
                          (needed-for-boot? #t)
                          (check? #f))
