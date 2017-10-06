@@ -1779,3 +1779,26 @@ Acknowledgements:
 
  Original v1.x was a Feature extracted from basic-edit-toolkit.el - by Andy Stewart (LazyCat) ")
     (license license:gpl3+)))
+
+(define-public emacs-git-auto-commit-mode
+  (package
+    (name "emacs-git-auto-commit-mode")
+    (version "4.4.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append
+             "https://github.com/ryuslash/git-auto-commit-mode/archive/"
+             version ".tar.gz"))
+       (sha256
+        (base32
+         "04avxmalsl3b7zi2vipfw9rb4wrwysnipsbch96skviql9axk870"))))
+    (build-system emacs-build-system)
+    (home-page "http://projects.ryuslash.org/git-auto-commit-mode/")
+    (synopsis "Emacs Minor mode to automatically commit and push")
+    (description "git-auto-commit-mode is an Emacs minor mode that
+tries to commit changes to a file after every save.
+
+When `gac-automatically-push-p' is non-nil, it also tries to push to
+the current upstream.")
+    (license license:gpl3+)))
