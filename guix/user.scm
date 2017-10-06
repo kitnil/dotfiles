@@ -231,6 +231,7 @@
     "python-starred"
     "qemu"
     "racket"
+    "rdiff-backup"
     "recutils"
     "redshift"
     "rofi"
