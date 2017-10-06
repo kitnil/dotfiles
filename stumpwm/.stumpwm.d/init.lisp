@@ -91,9 +91,9 @@
 (set-win-bg-color "#DCDAD5")
 (set-unfocus-color "#000000")
 (set-focus-color "#DCDAD5")
-(set-fg-color "#000000")
-(set-bg-color "#FFFFFF")
-(set-border-color "#66CD00")
+(set-fg-color "#FFFFFF")
+(set-bg-color "#000000")
+(set-border-color "#FF0000")
 (set-msg-border-width 3)
 
 
