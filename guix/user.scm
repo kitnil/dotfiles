@@ -204,6 +204,7 @@
     "mysql"
     "ncdu"
     "ncurses"
+    "ncurses:doc"
     "neofetch"
     "netcat"
     "nmap"
