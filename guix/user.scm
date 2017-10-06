@@ -177,6 +177,7 @@
     "htop"
     "icecat"
     "icedtea"
+    "imagemagick"
     "inkscape"
     "iperf"
     "isync"
