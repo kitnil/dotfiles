@@ -13,6 +13,7 @@ Account gmail
 MaildirStore gmail-local
 Path ~/Maildir/
 Inbox ~/Maildir/INBOX
+SubFolders Verbatim
 
 Channel gmail
 Master :gmail-remote:
