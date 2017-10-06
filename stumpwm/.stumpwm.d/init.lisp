@@ -52,8 +52,6 @@
 (load-module "net")
 
 (setf
- *message-window-gravity* :center
- *input-window-gravity*   :center
  *timeout-wait*           3
  *window-info-format*
  (format nil "^>^B^5*%c ^b^6*%w^7*x^6*%h^7*~%%t")
