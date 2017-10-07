@@ -414,8 +414,14 @@
 (use-package semantic
   :config
   (progn
-    (add-hook 'c-mode-hook 'semantic-mode)
-    (add-hook 'c-mode-hook 'semantic-idle-summary-mode)))
+    ;; Semantic
+    (global-semantic-decoration-mode t)
+    (global-semantic-highlight-func-mode t)
+    (global-semantic-show-unmatched-syntax-mode t)
+    ;; (global-semantic-idle-completions-mode t)
+
+    ;; CC-mode
+    (add-hook 'c-mode-hook 'semantic-mode)))
 
 (use-package semantic/util-modes
   :after semantic
