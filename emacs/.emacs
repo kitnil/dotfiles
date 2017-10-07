@@ -651,6 +651,9 @@
             ("g" "guix" plain (file "guix.org")
              "%?")
 
+            ("v" "video" plein (file "video.org")
+             "%?")
+
             ("b" "blog" plain (file "~/public_html/IDEA.org")
              "%?")))
 
