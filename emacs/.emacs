@@ -189,6 +189,9 @@
 
 (add-hook 'occur-mode-hook (lambda () (setq-local truncate-lines t)))
 
+(use-package simple
+  :bind (("C-c t l" . toggle-truncate-lines)))
+
 (use-package scroll-lock
   :bind (("<Scroll_Lock>" . scroll-lock-mode)))
 
