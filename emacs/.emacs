@@ -832,7 +832,6 @@
       ("n" next-buffer "next")
       ("p" previous-buffer "previous"))))
 
-
 
 ;;;
 ;;; Misc
