@@ -7,6 +7,11 @@
   #:use-module (guix git-download)
   #:use-module (guix gexp)
   #:use-module (gnu packages)
+  #:use-module (gnu packages games)
+  #:use-module (gnu packages sdl)
+  #:use-module (gnu packages fontutils)
+  #:use-module (gnu packages xorg)
+  #:use-module (gnu packages perl)
   #:use-module (guix build-system trivial))
 
 (define-public stb
@@ -43,3 +48,39 @@
       (synopsis "stb single-file public domain libraries for C/C++")
       (description "stb single-file public domain libraries for C/C++")
       (license license:expat))))
+
+(define-public angband-nonfree
+  ;; TODO: Sound, X11.
+  (package
+    (inherit angband)
+    (name "angband-nonfree")
+    (version "4.1.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append "http://rephial.org/downloads/4.1/"
+                           "angband-" version ".tar.gz"))
+       (sha256
+        (base32
+         "0vhvzbrm6hwca2yp02pg2vzg4c5yf65whg0bmjbalmhy1r4kw51x"))))
+    (inputs
+     `(("sdl-union" ,(sdl-union (list sdl sdl-image sdl-mixer sdl-ttf)))
+       ("freetype" ,freetype)
+       ("libx11" ,libx11)
+       ("perl" ,perl)
+       ,@(package-inputs angband)))
+    (arguments
+     `(#:tests?
+       #f
+       #:configure-flags
+       (list (string-append "--bindir=" %output "/bin")
+             (string-append "--sysconfdir=" %output "/share/angband")
+             "--enable-sdl" "CFLAGS=-fgnu89-inline" "--enable-sdl-mixer")
+       #:phases
+       (modify-phases %standard-phases
+         (add-after 'unpack 'autogen.sh
+           (lambda _
+             (zero? (system* "sh" "autogen.sh"))
+             (substitute* "src/main-sdl.c" (("SDL_ttf.h") "SDL/SDL_ttf.h"))
+             (substitute* "src/main-sdl.c" (("SDL_image.h") "SDL/SDL_image.h"))
+             #t)))))))
