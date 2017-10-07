@@ -999,7 +999,10 @@ in the variable `browse-url-mpv-arguments' to mpv."
   :config (add-hook 'message-mode-hook 'flyspell-mode))
 
 (use-package flycheck
-  :config (add-hook 'prog-mode-hook 'flycheck-mode))
+  :config
+  (progn
+    (add-hook 'prog-mode-hook 'flycheck-mode)
+    (setq flycheck-display-errors-delay 2)))
 
 (use-package sr-speedbar
   :bind (("C-c s b" . sr-speedbar-toggle)))
