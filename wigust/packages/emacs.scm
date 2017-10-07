@@ -1802,3 +1802,19 @@ tries to commit changes to a file after every save.
 When `gac-automatically-push-p' is non-nil, it also tries to push to
 the current upstream.")
     (license license:gpl3+)))
+
+(define-public emacs-lacarte
+  (package
+    (name "emacs-lacarte")
+    (version "0.1")
+    (source (origin
+              (method url-fetch)
+              (uri "https://www.emacswiki.org/emacs/download/lacarte.el")
+              (sha256
+               (base32
+                "0m3swrvxz0cy01pd4kag626fxqp4l2zzwpgr26yp5wpsfxl9avv8"))))
+    (build-system emacs-build-system)
+    (home-page "https://www.emacswiki.org/emacs/lacarte.el")
+    (synopsis "Execute menu items as commands, with completion")
+    (description "Execute menu items as commands, with completion.")
+    (license license:gpl3)))
