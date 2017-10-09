@@ -75,3 +75,4 @@ alias feh-svg="feh --magick-timeout 10"
 export HISTSIZE=5000
 export HISTFILESIZE=$HISTSIZE
 
+export CDPATH=/srv
