@@ -35,7 +35,6 @@
     ("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
  '(debbugs-gnu-default-packages (quote ("guix" "guix-patches")))
  '(default-input-method "russian-computer")
- '(ediff-window-setup-function (quote ediff-setup-windows-plain))
  '(geiser-guile-binary "guile")
  '(gitpatch-mail-database (quote ("guix-patches@gnu.org")))
  '(ido-mode (quote buffer) nil (ido))
@@ -236,8 +235,11 @@
   :config
   (progn
     (defun my-diff-mode-hook ()
-      (setq-local truncate-lines t))
-
+      (setq-local truncate-lines t)
+      (setq ediff-window-setup-function 'ediff-setup-windows-default))
+    (defun ediff-setup-windows-default (buffer-A buffer-B buffer-C control-buffer)
+      (funcall 'ediff-setup-windows-plain
+	       buffer-A buffer-B buffer-C control-buffer))
     (add-hook 'diff-mode-hook 'my-diff-mode-hook)))
 
 (use-package compile
