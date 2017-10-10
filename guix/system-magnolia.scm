@@ -2,7 +2,7 @@
 ;; Copyright © 2017 Oleg Pykhalov <go.wigust@gmail.com>
 ;; Released under the GNU GPLv3 or any later version.
 
-(use-modules (gnu) (gnu system nss) (iptables ru))
+(use-modules (gnu) (gnu system nss))
 
 (use-service-modules ssh desktop xorg cups pm version-control admin mcron mail
                      networking shepherd rsync cuirass web)
@@ -22,21 +22,32 @@
                                                            "/sbin/iptables")
                                            ,str) " "))))))
       (format #t "Install iptables rules.~%")
-      ;; Rules to throttle malicious SSH connection attempts.  This will allow
-      ;; at most 3 connections per minute from any host, and will block the
-      ;; host for another minute if this rate is exceeded.  Taken from
-      ;; <http://www.la-samhna.de/library/brutessh.html#3>.
-      (and (iptables "-A INPUT -p tcp --dport 22 \
+      (and
+       ;; Rules to throttle malicious SSH connection attempts.  This will
+       ;; allow at most 3 connections per minute from any host, and will block
+       ;; the host for another minute if this rate is exceeded.  Taken from
+       ;; <http://www.la-samhna.de/library/brutessh.html#3>.
+       (iptables "-A INPUT -p tcp --dport 22 \
 -m state --state NEW -m recent --set --name SSH -j ACCEPT")
-           (iptables "-A INPUT -p tcp --dport 22 \
+       (iptables "-A INPUT -p tcp --dport 22 \
 -m recent --update --seconds 60 --hitcount 4 --rttl \
 --name SSH -j LOG --log-prefix SSH_brute_force")
-           (iptables "-A INPUT -p tcp --dport 22 \
+       (iptables "-A INPUT -p tcp --dport 22 \
 -m recent --update --seconds 60 --hitcount 4 --rttl \
 --name SSH -j DROP")
-           (iptables %iptables-https)
-           (iptables %iptables-warning)
-           (iptables %iptables-promo))))
+
+       ;; Rules to accept web traffic only on private network.
+       (iptables "-A INPUT -p tcp --dport 80 -s 192.168.0.0/16 -j ACCEPT")
+       (iptables "-A INPUT -p tcp --dport 80 -s 127.0.0.0/8 -j ACCEPT")
+       (iptables "-A INPUT -p tcp --dport 80 -j DROP")
+
+       ;; Rules to throttle HTTP connection redirections.  Taken from
+       ;; <https://www.opennet.ru/tips/2999_iptables_block_tor.shtml>.
+       (iptables "-A INPUT -p tcp --sport 443 --tcp-flags RST RST -j DROP")
+       (iptables "-A INPUT -p tcp --sport 80 -m string \
+--string \"Location: http://warning.rt.ru\" --algo bm -j DROP")
+       (iptables "-A INPUT -p tcp --sport 80 -m string \
+--string \"Location: http://promo.nw.rt.ru\" --algo bm -j DROP"))))
 
 (define firewall-service
   ;; The "firewall".  Make it a Shepherd service because as an activation
