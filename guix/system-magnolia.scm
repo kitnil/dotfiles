@@ -4,11 +4,11 @@
 
 (use-modules (gnu) (gnu system nss))
 
-(use-service-modules ssh desktop xorg cups pm version-control admin mcron mail
-                     networking shepherd rsync cuirass web)
+(use-service-modules ssh desktop xorg cups version-control mail
+                     networking shepherd rsync web)
 
-(use-package-modules bootloaders emacs cups wm certs fonts xdisorg cryptsetup
-                     ssh guile package-management bash linux version-control)
+(use-package-modules bootloaders emacs cups certs cryptsetup ssh guile
+                     package-management bash linux android version-control)
 
 
 ;;;
@@ -124,30 +124,31 @@ EndSection
 
 
 ;;;
-;;; Cuirass.
+;;; NGINX
 ;;;
 
-(define %cuirass-specs
-  ;; Cuirass specifications to build Guix.
-  #~(list `((#:name . "guix")
-            (#:url . "git://magnolia.local/~natsu/src/guix")
-            (#:load-path . ".")
-
-            ;; FIXME: Currently this must be an absolute file name because
-            ;; the 'evaluate' command of Cuirass loads it with
-            ;; 'primitive-load'.
-            ;; Use our own variant of Cuirass' 'examples/gnu-system.scm'.
-            (#:file . #$(local-file "cuirass-jobs.scm"))
-            (#:no-compile? #t)      ;don't try to run ./bootstrap etc.
-
-            (#:proc . hydra-jobs)
-            (#:arguments (subset . "core"))
-            (#:branch . "master"))))
+(define %file-share-configuration-nginx
+  (nginx-configuration
+   (server-blocks
+    (list
+     (nginx-server-configuration
+      (server-name '("www.magnolia.local"))
+      (root "/srv/share")
+      (try-files (list "$uri $uri/index.html"))
+      (locations
+       (list
+        (nginx-location-configuration
+         (uri "/")
+         (body '()))))
+      (https-port #f)
+      (ssl-certificate #f)
+      (ssl-certificate-key #f))))))
 
 (define %cgit-configuration-nginx
   (list
    (nginx-server-configuration
     (root cgit)
+    (server-name `("cgit.magnolia.local"))
     (locations
      (list
       (nginx-location-configuration
@@ -158,7 +159,6 @@ EndSection
                "fastcgi_param HTTP_HOST $server_name;"
                "fastcgi_pass 127.0.0.1:9000;")))))
     (try-files (list "$uri" "@cgit"))
-    (http-port 19418)
     (https-port #f)
     (ssl-certificate #f)
     (ssl-certificate-key #f))))
@@ -201,41 +201,43 @@ EndSection
                          (check? #f))
                        %base-file-systems))
 
+  (groups (cons
+           (user-group (name "adbusers"))
+           %base-groups))
+
   (users (cons (user-account
                 (name "natsu")
                 (uid 1000)
                 (comment "Oleg Pykhalov")
                 (group "users")
-                (supplementary-groups '("wheel" "audio" "video" "lpadmin" "lp"))
+                (supplementary-groups '("wheel" "audio" "video" "lpadmin" "lp"
+                                        "adbusers"))
                 (home-directory "/home/natsu"))
                %base-user-accounts))
 
-  (packages (cons* i3-wm i3status rofi
-                   cups
-                   cryptsetup
-                   emacs emacs-guix
-                   guile-2.2 guile-ssh guix
-                   nss-certs
-                   font-dejavu font-liberation
-                   iptables openssh
+  (hosts-file
+   ;; Create a /etc/hosts file with aliases for "localhost"
+   ;; and "mymachine", as well as for Facebook servers.
+   (plain-file "hosts"
+               (string-append (local-host-aliases host-name)
+                              "127.0.0.1 www." host-name ".local" "\n"
+                              "127.0.0.1 cgit." host-name ".local" "\n"
+                              %facebook-host-aliases)))
+
+  (packages (cons* cups cryptsetup emacs emacs-guix guile-ssh guix
+                   nss-certs iptables openssh
                    %base-packages))
 
   (services (cons* (service openssh-service-type
                             (openssh-configuration
                              (port-number 22)))
-                   ;; https://localhost:631
-                   ;; be sure librejs is disabled in browser
+                   ;; Configure CUPS on https://localhost:631
+                   ;; and be sure librejs is disabled in browser
                    (service cups-service-type
                             (cups-configuration
                              (web-interface? #t)
                              (extensions
                               (list cups-filters hplip))))
-                   (service guix-publish-service-type
-                            (guix-publish-configuration
-                             (host "0.0.0.0")))
-                   (service git-daemon-service-type
-                            (git-daemon-configuration
-                             (user-path "")))
                    (dovecot-service
                     #:config (dovecot-configuration
                               (mail-location
@@ -244,16 +246,21 @@ EndSection
                                 "LAYOUT=fs"))
                               (disable-plaintext-auth? #f)
                               (listen '("127.0.0.1"))))
-                   (service mcron-service-type)
-                   (service rottlog-service-type)
-                   (service bitlbee-service-type
-                            (bitlbee-configuration))
+                   (service guix-publish-service-type
+                            (guix-publish-configuration
+                             (host "0.0.0.0")
+                             (port 3000)))
+                   (service git-daemon-service-type
+                            (git-daemon-configuration
+                             (user-path "")))
                    (service rsync-service-type)
-                   (service nginx-service-type)
+                   (service nginx-service-type %file-share-configuration-nginx)
                    (service fcgiwrap-service-type)
+                   (tor-service)
                    (service cgit-service-type
                             (cgit-configuration
                              (nginx %cgit-configuration-nginx)))
+                   (simple-service 'adb udev-service-type (list android-udev-rules))
                    firewall-service
                    %custom-desktop-services))
 
