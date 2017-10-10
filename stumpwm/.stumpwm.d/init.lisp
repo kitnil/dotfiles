@@ -39,7 +39,10 @@
 
 (load-module "ttf-fonts")
 (xft:cache-fonts)
-(set-font (make-instance 'xft:font :family "DejaVu Sans Mono" :subfamily "Book" :size 14))
+(set-font (make-instance 'xft:font
+                         :family "DejaVu Sans Mono"
+                         :subfamily "Book"
+                         :size 14))
 
 
 ;;;
@@ -51,32 +54,18 @@
 (load-module "mem")
 (load-module "net")
 
-(setf
- *timeout-wait*           3
- *window-info-format*
- (format nil "^>^B^5*%c ^b^6*%w^7*x^6*%h^7*~%%t")
+(setf *timeout-wait* 3
+      *mode-line-timeout* 5)
 
- *normal-border-width* 3
- *transient-border-width* 3
- *maxsize-border-width* 3
- *window-border-style* :tight
+(setf *time-format-string-default* (format nil "^5*%H:%M:%S~%^2*%A~%^7*%d %B"))
 
- *time-format-string-default*
- (format nil "^5*%H:%M:%S~%^2*%A~%^7*%d %B")
+(setf *window-border-style* :tight)
 
- *mode-line-timeout* 5
+;; Don't set it to “sloppy”,
+;; because it could switch window after switch desktop
+(setf *mouse-focus-policy* :click)
 
- *screen-mode-line-format*
- '("[%n]" ; Group name
-   "  %w" ; Windows list
-   "^>"   ; Align right
-   "  %c" ; CPU
-   ;; (:eval (time-format "%k:%M")) ; Net
-   "  %l")
-
- ;; Don't set it to “sloppy”,
- ;; because it could switch window after switch desktop
- *mouse-focus-policy* :click)
+(setf *window-info-format* (format nil "^>^B^5*%c ^b^6*%w^7*x^6*%h^7*~%%t"))
 
 (setf *window-format* "%s%m %n [%i] %c")
 (setf *mode-line-timeout* 1)
@@ -147,8 +136,8 @@ case focus it."
   (run-shell-command "xterm -e pulsemixer"))
 
 (defcommand mpv () ()
-            "Start mpv unless it is already running, in which case focus it."
-            (run-or-raise "mpv" '(:class "mpv")))
+  "Start mpv unless it is already running, in which case focus it."
+  (run-or-raise "mpv" '(:class "mpv")))
 
 (defcommand xclip-mpv () ()
             "Play video from clipboard."
@@ -194,10 +183,12 @@ case focus it."
 ;;;
 
 (defcommand warp-mouse-active-frame () ()
-  (let* ((current-frame (tile-group-current-frame (current-group)))
-         (pointer-x (- (+ (frame-x current-frame) (frame-width current-frame)) 100))
-         (pointer-y (+ 100 (frame-y current-frame))))
-    (warp-pointer (current-screen) pointer-x pointer-y)))
+            (let* ((current-frame (tile-group-current-frame (current-group)))
+                   (pointer-x (- (+ (frame-x current-frame)
+                                    (frame-width current-frame))
+                                 100))
+                   (pointer-y (+ 100 (frame-y current-frame))))
+              (warp-pointer (current-screen) pointer-x pointer-y)))
 
 
 ;;;
