@@ -138,6 +138,10 @@
 case focus it."
             (run-or-raise "pavucontrol" '(:class "Pavucontrol")))
 
+(defcommand pulsemixer () ()
+  "Start pulsemixer."
+  (run-shell-command "xterm -e pulsemixer"))
+
 (defcommand mpv () ()
             "Start mpv unless it is already running, in which case focus it."
             (run-or-raise "mpv" '(:class "mpv")))
