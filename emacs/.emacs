@@ -770,7 +770,8 @@
   :commands geiser-repl-mode
   :config
   (with-eval-after-load 'geiser-guile
-    (add-to-list 'geiser-guile-load-path "~/src/guix")))
+    (add-to-list 'geiser-guile-load-path "/home/natsu/src/guix")
+    (setq geiser-guile-binary '("guile" "--no-auto-compile"))))
 
 (use-package geiser-doc)
 
