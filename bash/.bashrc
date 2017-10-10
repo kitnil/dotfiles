@@ -61,8 +61,7 @@ alias guix-make-tags='guix environment guix -- make tags'
 alias guix-system-reconfigure="sudo guix system reconfigure \
 $HOME/dotfiles/guix/system-magnolia.scm"
 
-alias guix-system-build="GUILE_LOAD_PATH=\"$HOME/src/iptables\
-:$GUILE_LOAD_PATH\" guix system build \
+alias guix-system-build="guix system build \
 $HOME/dotfiles/guix/system-magnolia.scm"
 
 alias guix-pull="guix pull --url=git://magnolia.local/~natsu/src/guix"
