@@ -186,6 +186,7 @@ case focus it."
   (stumpwm:toggle-mode-line (stumpwm:current-screen)
                             (stumpwm:current-head)))
 
+(setf *screen-mode-line-format* "%n^>%c%l%d")
 
 
 ;;;
