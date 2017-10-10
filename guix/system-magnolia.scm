@@ -7,7 +7,7 @@
 (use-service-modules ssh desktop xorg cups version-control mail
                      networking shepherd rsync web)
 
-(use-package-modules bootloaders emacs cups certs cryptsetup ssh guile
+(use-package-modules bootloaders emacs cups certs cryptsetup tls ssh guile
                      package-management bash linux android version-control)
 
 
@@ -138,6 +138,18 @@ EndSection
       (ssl-certificate #f)
       (ssl-certificate-key #f))))))
 
+(define guix-publish-nginx-service
+  (simple-service
+   'guix-publish-nginx nginx-service-type
+   (list
+    (nginx-server-configuration
+     (server-name '("guix.magnolia.local"))
+     (locations
+      (list
+       (nginx-location-configuration
+        (uri "/")
+        (body '("proxy_pass http://localhost:3000;")))))))))
+
 (define %cgit-configuration-nginx
   (list
    (nginx-server-configuration
@@ -216,15 +228,16 @@ EndSection
                (string-append (local-host-aliases host-name)
                               "127.0.0.1 www." host-name ".local" "\n"
                               "127.0.0.1 cgit." host-name ".local" "\n"
+                              "127.0.0.1 guix." host-name ".local" "\n"
                               %facebook-host-aliases)))
 
-  (packages (cons* cups cryptsetup emacs emacs-guix guile-ssh guix
-                   nss-certs iptables openssh
-                   %base-packages))
+  (packages (cons* cups cryptsetup certbot emacs emacs-guix guile-ssh guix
+                   nss-certs iptables openssh %base-packages))
 
   (services (cons* (service openssh-service-type
                             (openssh-configuration
                              (port-number 22)))
+
                    ;; Configure CUPS on https://localhost:631
                    ;; and be sure librejs is disabled in browser
                    (service cups-service-type
@@ -232,6 +245,7 @@ EndSection
                              (web-interface? #t)
                              (extensions
                               (list cups-filters hplip))))
+
                    (dovecot-service
                     #:config (dovecot-configuration
                               (mail-location
@@ -240,22 +254,34 @@ EndSection
                                 "LAYOUT=fs"))
                               (disable-plaintext-auth? #f)
                               (listen '("127.0.0.1"))))
+
                    (service guix-publish-service-type
                             (guix-publish-configuration
                              (host "0.0.0.0")
                              (port 3000)))
+
                    (service git-daemon-service-type
                             (git-daemon-configuration
                              (user-path "")))
+
                    (service rsync-service-type)
+
                    (service nginx-service-type %file-share-configuration-nginx)
+
                    (service fcgiwrap-service-type)
+
                    (tor-service)
+
                    (service cgit-service-type
                             (cgit-configuration
                              (nginx %cgit-configuration-nginx)))
+
+                   guix-publish-nginx-service
+
                    (simple-service 'adb udev-service-type (list android-udev-rules))
+
                    firewall-service
+
                    %custom-desktop-services))
 
   ;; Allow resolution of '.local' host names with mDNS.
