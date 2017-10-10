@@ -427,8 +427,7 @@
   :after semantic
   :config
   (progn
-    (add-to-list 'semantic-default-submodes 'global-semantic-stickyfunc-mode)
-    (add-hook 'c-mode-hook 'semantic-stickyfunc-mode)))
+    (add-to-list 'semantic-default-submodes 'global-semantic-stickyfunc-mode)))
 
 (use-package gtags
   :config
