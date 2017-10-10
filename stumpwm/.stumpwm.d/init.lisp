@@ -186,7 +186,6 @@ case focus it."
   (stumpwm:toggle-mode-line (stumpwm:current-screen)
                             (stumpwm:current-head)))
 
-(toggle-modeline) ; Turn on start
 
 
 ;;;
