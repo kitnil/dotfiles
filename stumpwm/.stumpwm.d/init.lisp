@@ -78,7 +78,7 @@
  ;; because it could switch window after switch desktop
  *mouse-focus-policy* :click)
 
-(setf *window-format* "%m%n%s%c")
+(setf *window-format* "%s%m %n [%i] %c")
 (setf *mode-line-timeout* 1)
 
 (setq *ignore-wm-inc-hints* t)
