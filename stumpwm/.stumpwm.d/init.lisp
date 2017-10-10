@@ -96,6 +96,10 @@
 (set-border-color "#FF0000")
 (set-msg-border-width 3)
 
+(setf *normal-border-width* 5
+      *transient-border-width* 5
+      *maxsize-border-width* 5)
+
 
 ;;;
 ;;; Window placement policy
