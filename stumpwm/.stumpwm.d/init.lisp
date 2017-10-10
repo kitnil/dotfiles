@@ -197,8 +197,8 @@ case focus it."
 ;;;
 
 (load-module "swm-gaps")
-(setf swm-gaps:*inner-gaps-size* 10)
-(setf swm-gaps:*outer-gaps-size* 10)
+(setf swm-gaps:*inner-gaps-size* 5
+      swm-gaps:*outer-gaps-size* 25)
 
 (load-module "kbd-layouts")
 (kbd-layouts:keyboard-layout-list "us" "ru")
