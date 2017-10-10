@@ -134,12 +134,6 @@ EndSection
      (nginx-server-configuration
       (server-name '("www.magnolia.local"))
       (root "/srv/share")
-      (try-files (list "$uri $uri/index.html"))
-      (locations
-       (list
-        (nginx-location-configuration
-         (uri "/")
-         (body '()))))
       (https-port #f)
       (ssl-certificate #f)
       (ssl-certificate-key #f))))))
