@@ -585,7 +585,16 @@
               (arg
                (gnus))
               (t
-               (error "No candidate found")))))))
+               (error "No candidate found")))))
+
+    (mailcap-add-mailcap-entry "image"
+                               "jpeg"
+                               '((viewer  . "feh %s")
+                                 (type    . "image/jpeg")))
+    (mailcap-add-mailcap-entry "image"
+                               "jpg"
+                               '((viewer  . "feh %s")
+                                 (type    . "image/jpg")))))
 
 (use-package notmuch
   :preface (setq mail-user-agent 'gnus-user-agent)
