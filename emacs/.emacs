@@ -276,6 +276,7 @@
   (defvar c-mode-prettify-symbols-alist
     '(("->"     . ?→)
 
+      ("=="     . ?≡)
       ("not"    . ?¬)
       ("&&"     . ?∧)
       ("||"     . ?∨)
