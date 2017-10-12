@@ -465,6 +465,9 @@
          ("M-X" . smex-major-mode-commands)
          ("<menu>" . smex)))
 
+(use-package ido-vertical-mode
+  :config (ido-vertical-mode 1))
+
 (use-package helm
   :config (setq helm-locate-project-list my-projects))
 

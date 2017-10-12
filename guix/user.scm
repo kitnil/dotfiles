@@ -70,6 +70,7 @@
     "emacs-highlight-numbers"
     "emacs-highlight-symbol"
     "emacs-htmlize"
+    "emacs-ido-vertical-mode"
     "emacs-indium"
     "emacs-irfc"
     "emacs-json-mode"
