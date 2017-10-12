@@ -110,15 +110,15 @@
 ;;;
 
 (defcommand icecat () ()
-            "Start icecat unless it is already running, in which case focus it."
-            (run-or-raise "icecat" '(:class "Icecat")))
+  "Start or focus icecat."
+  (run-or-raise "icecat" '(:class "Icecat")))
 
 (defcommand conkeror () ()
-            "Start conkeror unless it is already running, in which case focus it."
-            (run-or-raise "conkeror" '(:class "Conkeror")))
+  "Start or focus conkeror."
+  (run-or-raise "conkeror" '(:class "Conkeror")))
 
 (defcommand chromium () ()
-  "Start chromium unless it is already running, in which case focus it."
+  "Start or focus chromium."
   (run-or-raise "chromium-browser" '(:class "Chromium-browser")))
 
 
@@ -127,22 +127,20 @@
 ;;;
 
 (defcommand pavucontrol () ()
-            "Start pavucontrol unless it is already running, in which
-case focus it."
-            (run-or-raise "pavucontrol" '(:class "Pavucontrol")))
+  "Start or focus pavucontrol."
+  (run-or-raise "pavucontrol" '(:class "Pavucontrol")))
 
 (defcommand pulsemixer () ()
   "Start pulsemixer."
   (run-shell-command "xterm -e pulsemixer"))
 
 (defcommand mpv () ()
-  "Start mpv unless it is already running, in which case focus it."
+  "Start or focus mpv."
   (run-or-raise "mpv" '(:class "mpv")))
 
 (defcommand xclip-mpv () ()
-            "Play video from clipboard."
-            (stumpwm:run-shell-command
-             "exec mpv $(xclip -o -selection clipboard)"))
+  "Play video from clipboard."
+  (stumpwm:run-shell-command "exec mpv $(xclip -o -selection clipboard)"))
 
 (push '(:class "mpv") stumpwm:*deny-raise-request*)
 (push '(:class "mpv") *deny-map-request*)
@@ -156,8 +154,8 @@ case focus it."
 ;;;
 
 (defcommand xterm () ()
-            "Start XTerm unless it is already running, in which case focus it."
-            (run-or-raise "xterm" '(:class "XTerm")))
+  "Start or focus XTerm."
+  (run-or-raise "xterm" '(:class "XTerm")))
 
 (define-key *root-map* (kbd "c") "xterm")
 
