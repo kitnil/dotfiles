@@ -114,7 +114,6 @@
   (run-or-raise "icecat" '(:class "Icecat")))
 
 (define-key *root-map* (kbd "w") "icecat")
-(define-key *root-map* (kbd "C-w") "icecat")
 
 (defcommand conkeror () ()
   "Start or focus conkeror."
@@ -123,6 +122,8 @@
 (defcommand chromium () ()
   "Start or focus chromium."
   (run-or-raise "chromium-browser" '(:class "Chromium-browser")))
+
+(define-key *root-map* (kbd "C-w") "chromium")
 
 
 ;;;
