@@ -1204,3 +1204,6 @@ in the variable `browse-url-mpv-arguments' to mpv."
 
     (dir-locals-set-directory-class org-directory
                                     'dir-local-var-git-auto-commit)))
+
+(use-package sh-script
+  :mode ("PKGBUILD\\'" . shell-script-mode))
