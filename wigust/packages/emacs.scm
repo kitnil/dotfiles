@@ -521,6 +521,7 @@ newsreader.")
     (description "@code{npm-mode} provides a minor mode to work with npm
 projects.")
     (license license:gpl3+)))
+
 (define-public emacs-org-protocol-capture-html
   (let ((commit "0e39b7e2261599d28e6bbd094a0657d9315719bc")
         (revision "1"))
