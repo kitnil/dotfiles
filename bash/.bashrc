@@ -74,3 +74,5 @@ export HISTSIZE=5000
 export HISTFILESIZE=$HISTSIZE
 
 export CDPATH=/srv
+
+alias youtube-dl-proxy='youtube-dl --proxy "socks5://localhost:9050/"'
