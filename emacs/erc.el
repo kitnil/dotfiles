@@ -189,7 +189,7 @@
              ;; "#clojure"
              ;; "#fedora" ;; "#fedora-admin" ;; "#fedora-devel"
              ;; "#fedora-noc" ;; "#fedora-meeting" ;; "#fedora-qa"
-             "#gnu" "#fsf" "#gnus" "#guile" "#guix" "#stumpwm"
+             "#gnu" "#fsf" "#gnus" "#guile" "#guix" "#stumpwm" "#replicant"
              ;; "#nixos" ;; "#grub" ;; "#haskell" ;; "#xmonad"
              ;; "#filmsbykris" ;; "##japanese" ;; "#latex"
              ;; "#python" ;; "#scipy" ;; "#sagemath"
