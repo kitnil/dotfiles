@@ -103,30 +103,6 @@
       (description "Company backend for Lua")
       (license license:gpl3+))))
 
-(define-public emacs-company-quickhelp
-  (package
-    (name "emacs-company-quickhelp")
-    (version "2.3.0")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append
-             "https://github.com/expez/company-quickhelp/archive/"
-             version ".tar.gz"))
-       (file-name (string-append name "-" version ".tar.gz"))
-       (sha256
-        (base32
-         "0xrn2z1dgk5gmkmp2jkn9g83ckk39lqp5pyyv8rl7f6gqvib3qh0"))))
-    (build-system emacs-build-system)
-    (propagated-inputs
-     `(("emacs-pos-tip" ,emacs-pos-tip)
-       ("emacs-company" ,emacs-company)))
-    (home-page "https://www.github.com/expez/company-quickhelp")
-    (synopsis "Popup documentation for completion candidates")
-    (description "Emacs @code{company-mode} extension to show a documentation
-for the completion candidate.")
-    (license license:gpl3+)))
-
 (define-public emacs-company-tern
   (package
     (name "emacs-company-tern")
@@ -304,52 +280,6 @@ dumb text search, @code{elisp-refs} actually parses the code, so it's never
 confused by comments or @code{foo-bar} matching @code{foo}.")
     (license license:gpl3+)))
 
-(define-public emacs-ggtags
-  (package
-    (name "emacs-ggtags")
-    (version "0.8.12")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "http://elpa.gnu.org/packages/ggtags-"
-                           version ".el"))
-       (sha256
-        (base32
-         "0ny3llk021g6r0s75xdm4hzpbxv393ddm2r6f2xdk8kqnq4gnirp"))))
-    (build-system emacs-build-system)
-    (home-page "https://github.com/leoliu/ggtags")
-    (synopsis "Frontend to GNU Global source code tagging system")
-    (description "Emacs frontend to GNU Global source code tagging system.
-
-The goal is to make working with GNU Global in Emacs as effortlessly and
-intuitively as possible and to integrate tightly with standard emacs packages.
-
-Features:
-@itemize
-@item Build on @code{compile.el} for asynchronicity and its large feature-set.
-@item Automatically update Global's tag files when needed with tuning for
-large source trees.
-@item Intuitive navigation among multiple matches with mode-line display of
-current match, total matches and exit status.
-@item Read tag with completion.
-@item Show definition at point.
-@item Jump to #include files.
-@item Support search history and saving a search to register/bookmark.
-@item Query replace.
-@item Manage Global's environment variables on a per-project basis.
-@item Highlight (definition) tag at point.
-@item Abbreviated display of file names.
-@item Support all Global search backends: @code{grep}, @code{idutils}, etc.
-@item Support exuberant ctags @url{http://ctags.sourceforge.net/} and
-@code{pygments} backend.
-@item Support all Global's output formats: @code{grep}, @code{ctags-x},
-@code{cscope} etc.
-@item Support projects on remote hosts (e.g. via ``tramp``).
-@item Support eldoc.
-@item Search @code{GTAGSLIBPATH} for references and symbols.
-@end itemize\n")
-    (license license:gpl3+)))
-
 (define-public emacs-helm-youtube
   (let ((revision "1")
         (commit "202c27fc3b54927611e9d9c764465e1b42ef7e41"))
@@ -489,115 +419,6 @@ It s customizable: it's easy to add or redefine what exactly consitutes a
 provides many features for JavaScript development, including a REPL (with auto
 completion) & object inspection, an inspector, with history and navigation,
 and even a stepping Debugger, similar to @code{edebug}, or @code{cider}.")
-    (license license:gpl3+)))
-
-(define-public emacs-json-mode
-  (package
-    (name "emacs-json-mode")
-    (version "1.7.0")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "https://github.com/joshwnj/json-mode/archive/"
-                           "v" version ".tar.gz"))
-       (sha256
-        (base32
-         "06h45p4cn767pk9sqi2zb1c65wy5gyyijqxzpglp80zwxhvajdz5"))))
-    (build-system emacs-build-system)
-    (propagated-inputs
-     `(("emacs-json-reformat" ,emacs-json-reformat)
-       ("emacs-json-snatcher" ,emacs-json-snatcher)))
-    (home-page
-     "https://github.com/joshwnj/json-mode")
-    (synopsis "Major mode for editing JSON files.")
-    (description "Extend the builtin js-mode's syntax highlighting ")
-    (license license:gpl3+)))
-
-(define-public emacs-json-reformat
-  (package
-    (name "emacs-json-reformat")
-    (version "0.0.6")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "https://github.com/gongo/json-reformat/archive/"
-                           version ".tar.gz"))
-       (sha256
-        (base32
-         "11fbq4scrgr7m0iwnzcrn2g7xvqwm2gf82sa7zy1l0nil7265p28"))))
-    (build-system emacs-build-system)
-    (home-page "https://github.com/gongo/json-reformat")
-    (synopsis "Reformatting tool for JSON")
-    (description "json-reformat.el is a reformatting tool for
-JSON (http://json.org/).
-
-## Usage
-
-  1. Specify region
-  2. Call 'M-x json-reformat-region'
-
-## Customize
-
-  - `json-reformat:indent-width'
-  - `json-reformat:pretty-string?'
-")
-    (license license:gpl3+)))
-
-(define-public emacs-json-snatcher
-  (package
-    (name "emacs-json-snatcher")
-    (version "1.0.0")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "https://github.com/Sterlingg/json-snatcher/archive/"
-                           version ".tar.gz"))
-       (sha256
-        (base32
-         "1nfiwsifpdiz0lbrqa77nl0crnfrv5h85ans9b0g5rggnmyshcfb"))))
-    (build-system emacs-build-system)
-    (home-page "http://github.com/sterlingg/json-snatcher")
-    (synopsis "Grabs the path to JSON values in a JSON file")
-    (description "Well this was my first excursion into ELisp programmming.
-It didn't go too badly once I fiddled around with a bunch of the functions.
-
-The process of getting the path to a JSON value at point starts with
-a call to the jsons-print-path function.
-
-It works by parsing the current buffer into a list of parse tree nodes
-if the buffer hasn't already been parsed in the current Emacs session.
-While parsing, the region occupied by the node is recorded into the
-jsons-parsed-regions hash table as a list.The list contains the location
-of the first character occupied by the node, the location of the last
-character occupied, and the path to the node.  The parse tree is also stored
-in the jsons-parsed list for possible future use.
-
-Once the buffer has been parsed, the node at point is looked up in the
-jsons-curr-region list, which is the list of regions described in the
-previous paragraph for the current buffer.  If point is not in one of these
-interval ranges nil is returned, otherwise the path to the value is returned
-in the form [<key-string>] for objects, and [<loc-int>] for arrays.
-eg: ['value1'][0]['value2'] gets the array at with name value1, then gets the
-0th element of the array (another object), then gets the value at 'value2'.
-
-
-Installation:
-
-IMPORTANT: Works ONLY in Emacs 24 due to the use of the lexical-binding variable.
-
-To install add the json-snatcher.el file to your load-path, and
-add the following lines to your .emacs file:
-(require 'json-snatcher)
-(defun js-mode-bindings ()
-  \"Sets a hotkey for using the json-snatcher plugin.\"
-  (when (string-match  \"\\\\.json$\" (buffer-name))
-      (local-set-key (kbd \"C-c C-g\") 'jsons-print-path)))
-(add-hook 'js-mode-hook 'js-mode-bindings)
-(add-hook 'js2-mode-hook 'js-mode-bindings)
-
-This binds the key to snatch the path to the JSON value to C-c C-g only
-when either JS mode, or JS2 mode is active on a buffer ending with
-the .json extension.")
     (license license:gpl3+)))
 
 (define-public emacs-list-utils
