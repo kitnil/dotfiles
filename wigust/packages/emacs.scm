@@ -1233,7 +1233,10 @@ See the function `wordgen' for complete description.
     (inputs
      `(("ncurses" ,ncurses)))
     (native-inputs
-     `(("pkg-config" ,pkg-config)))))
+     `(("pkg-config" ,pkg-config)
+       ("gnutls" ,gnutls)
+       ,@(package-native-inputs emacs-checkout)))
+    (arguments (package-arguments emacs-checkout))))
 
 (define-syntax-rule (define-my-packages (var-name pkg) ...)
   (begin
