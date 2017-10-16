@@ -11,10 +11,14 @@
 
 (setq inhibit-compacting-font-caches t)
 
-(defvar my-projects
-  (directory-files (expand-file-name "/srv/git")
-                   t
-                   "^\\([^.]\\|\\.[^.]\\|\\.\\..\\)"))
+(defun me-update-my-projects ()
+  (interactive)
+  (setq my-projects
+        (directory-files (expand-file-name "/srv/git")
+                         t
+                         "^\\([^.]\\|\\.[^.]\\|\\.\\..\\)")))
+
+(me-update-my-projects)
 
 
 ;;;
@@ -719,7 +723,13 @@
     (add-hook 'magit-section-set-visibility-hook
               'local-magit-initially-hide-unmerged)
 
-    (setq magit-repository-directories my-projects)))
+    (defun me-update-magit-repository-directories ()
+      (setq magit-repository-directories my-projects))
+
+    (me-update-magit-repository-directories)
+
+    (add-hook 'magit-repolist-mode-hook
+              'me-update-magit-repository-directories)))
 
 (use-package git-gutter
   :diminish git-gutter-mode
