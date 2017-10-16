@@ -317,9 +317,7 @@
   :config (add-hook 'prog-mode-hook 'hs-minor-mode))
 
 (use-package python
-  :config
-  (progn
-    (setq python-shell-interpreter "python3")))
+  :config (setq python-shell-interpreter "python3"))
 
 (use-package savehist-mode
   :config (savehist-mode t))
