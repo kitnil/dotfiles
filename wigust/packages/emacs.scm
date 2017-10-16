@@ -1159,12 +1159,11 @@ See the function `wordgen' for complete description.
        ("magit-popup" ,emacs-magit-popup)))))
 
 (define-public emacs-checkout
-  (let ((commit "61225964edbaa01e49a6e776af00502ab31767b5")
-        (revision "1"))
+  (let ((commit "16e85456e70174f1d97fc5a7cd8a199b8f0e7e70"))
     (package
       (inherit emacs)
       (name "emacs")
-      (version (string-append (package-version emacs) "-" revision "."
+      (version (string-append "26" "."
                               (string-take commit 7)))
       (source
        (origin
@@ -1196,7 +1195,7 @@ See the function `wordgen' for complete description.
                         "/run/current-system/profile/bin"
                         "/run/current-system/profile/sbin")))))
          (sha256
-          (base32 "1c6mhxw6ngmlcxy2rma6qji0qicdskz0p2fjmjrl5yyb3cczhx79"))))
+          (base32 "187qdrhv34gk487b871ldgxdhpb2p0cy09s28laq4cizdka2x2r2"))))
       (native-inputs
        `(("autoconf" ,autoconf)
          ("automake" ,automake)
@@ -1209,8 +1208,8 @@ See the function `wordgen' for complete description.
       (arguments
        (substitute-keyword-arguments
            `(#:parallel-build? #t
-             #:tests? #f
-             ,@(package-arguments emacs))
+                               #:tests? #f
+                               ,@(package-arguments emacs))
          ((#:phases phases)
           `(modify-phases ,phases
              (add-after 'unpack 'autogen
