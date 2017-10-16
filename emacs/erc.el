@@ -27,10 +27,9 @@
 ;;; Theme
 ;;;
 
-(load-theme 'manoj-dark)
 (custom-set-faces '(default ((t (:family "DejaVu Sans Mono" :foundry "PfEd"
-                                        :slant normal :weight normal
-                                        :height 143 :width normal)))))
+                                         :slant normal :weight normal
+                                         :height 143 :width normal)))))
 
 
 ;;;
