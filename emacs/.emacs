@@ -166,13 +166,13 @@
             ("value" . "bold")
             ("decompos" . "font-lock-function-name-face")
             ("define" . "font-lock-keyword-face")))
-    (add-hook 'Info-mode-hook
-              (lambda ()
-                (mapcar (lambda (word-font)
-                          (font-lock-add-keywords
-                           nil `(,(concat "\\<\\(" (car word-font) "\\)") 1
-                                 ,(cdr word-font) t)))
-                        highlight-words-list)))))
+    (defun me-info-highlight-words
+        (lambda ()
+          (mapcar (lambda (word-font)
+                    (font-lock-add-keywords
+                     nil `(,(concat "\\<\\(" (car word-font) "\\)") 1
+                           ,(cdr word-font) t)))
+                  highlight-words-list)))))
 
 (use-package rainbow-mode
   :bind (("C-c t r" . rainbow-mode)))
