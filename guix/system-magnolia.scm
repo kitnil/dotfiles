@@ -5,7 +5,7 @@
 (use-modules (gnu) (gnu system nss))
 
 (use-service-modules ssh desktop xorg cups version-control mail
-                     networking shepherd rsync web)
+                     networking shepherd rsync web spice)
 
 (use-package-modules bootloaders emacs cups certs cryptsetup tls ssh guile
                      package-management bash linux android version-control)
@@ -281,6 +281,8 @@ EndSection
                    (simple-service 'adb udev-service-type (list android-udev-rules))
 
                    firewall-service
+
+                   (spice-vdagent-service)
 
                    %custom-desktop-services))
 
