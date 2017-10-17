@@ -149,6 +149,38 @@ functions and types that are suggested for use by the C++ Core
 Guidelines maintained by the Standard C++ Foundation.")
       (license license:bsd-3))))
 
+(define-public libtgvoip
+  (let ((commit "651594b3cef23051ca7370ddd14d7c23377d6341")
+        (revision "1"))
+    (package
+      (name "libtgvoip")
+      (version (string-append "0.0.1-" revision "."
+                              (string-take commit 7)))
+      (source (origin
+                (method git-fetch)
+                (uri (git-reference
+                      (url "https://github.com/telegramdesktop/libtgvoip.git")
+                      (commit commit)))
+                (file-name (string-append name "-" version "-checkout"))
+                (sha256
+                 (base32
+                  "1cbsbqi7pr8cr4gfb6qmqfw8gq0ql4i00lplax1wikqbxp2mfb6v"))))
+      (build-system trivial-build-system)
+      (inputs `(("source" ,source)))
+      (arguments
+       `(#:modules ((guix build utils))
+         #:builder
+         (begin
+           (use-modules (guix build utils))
+           (copy-recursively (assoc-ref %build-inputs "source")
+                             (string-append %output "/share/libtgvoip")))))
+      (home-page "https://github.com/telegramdesktop/libtgvoip")
+      (synopsis "VoIP library for Telegram clients")
+      (description "@code{libtgvoip} provides a VoIP library for
+Telegram clients.")
+      ;; TODO: no licence
+      (license license:bsd-3))))
+
 (define-public microsoft-gsl
   (let ((commit "4c5fdb541f36211361a05595a3d89fb0afcbec50")
         (revision "1"))
