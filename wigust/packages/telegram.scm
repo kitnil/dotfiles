@@ -29,6 +29,8 @@
   #:use-module (gnu packages check)
   #:use-module (gnu packages gcc)
 
+  #:use-module (guix build-system python)
+
   #:use-module (guix build-system gnu)
   #:use-module (guix build-system emacs)
   #:use-module (guix build-system glib-or-gtk)
@@ -122,6 +124,30 @@ who package standalone applications and who need complete control over
 dependency versions.")
     ;; TODO: no licence
     (license license:expat)))
+
+(define-public python-gyp
+  (let ((commit "5e2b3ddde7cda5eb6bc09a5546a76b00e49d888f")
+        (revision "1"))
+    (package
+      (name "python-gyp")
+      (version (string-append "0.0.1-" revision "."
+                              (string-take commit 7)))
+      (source (origin
+                (method git-fetch)
+                (uri (git-reference
+                      (url "https://chromium.googlesource.com/external/gyp.git")
+                      (commit commit)))
+                (file-name (string-append name "-" version "-checkout"))
+                (sha256
+                 (base32
+                  "0fr7nxcrk292djmxzpcjaphnsd123k31gp8jnd91vwknhq6snmv9"))))
+      (build-system python-build-system)
+      (home-page "https://github.com/Microsoft/GSL")
+      (synopsis "Guidelines Support Library")
+      (description "The Guideline Support Library (GSL) contains
+functions and types that are suggested for use by the C++ Core
+Guidelines maintained by the Standard C++ Foundation.")
+      (license license:bsd-3))))
 
 (define-public microsoft-gsl
   (let ((commit "4c5fdb541f36211361a05595a3d89fb0afcbec50")
