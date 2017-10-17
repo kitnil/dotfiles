@@ -81,6 +81,48 @@
   #:use-module (srfi srfi-1)
   #:use-module (ice-9 match))
 
+(define-public mason
+  (package
+    (name "mason")
+    (version "0.15.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append "https://github.com/mapbox/mason/archive/"
+                           "v" version ".tar.gz"))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32
+         "15lxq81s1h3zvg9wkqbxpv4r8s711fyzh6mhs24r9j27qccm3mlr"))))
+    (build-system trivial-build-system)
+    (inputs `(("source" ,source)))
+    (native-inputs
+     `(("source" ,source)
+       ("tar" ,tar)
+       ("gzip" ,gzip)))
+    (arguments
+     `(#:modules ((guix build utils))
+       #:builder
+       (begin
+         (use-modules (guix build utils))
+         (let ((tar (string-append (assoc-ref %build-inputs "tar")
+                                   "/bin/tar"))
+               (path (string-append (assoc-ref %build-inputs "gzip") "/bin")))
+           (setenv "PATH" path)
+           (system* tar "xvf" (assoc-ref %build-inputs "source"))
+           (chdir (string-append "mason-" ,version))
+           (copy-recursively "." (string-append %output "/share/mason"))
+           (mkdir-p (string-append (string-append %output "/bin")))
+           (symlink (string-append %output "/share/mason/mason")
+                    (string-append (string-append %output "/bin/mason")))))))
+    (home-page "https://github.com/mapbox/mason")
+    (synopsis "Package manager for C/C++ apps")
+    (description "Mason is a package manager designed for developers
+who package standalone applications and who need complete control over
+dependency versions.")
+    ;; TODO: no licence
+    (license license:expat)))
+
 (define-public microsoft-gsl
   (let ((commit "4c5fdb541f36211361a05595a3d89fb0afcbec50")
         (revision "1"))
