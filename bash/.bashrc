@@ -76,3 +76,5 @@ export HISTFILESIZE=$HISTSIZE
 export CDPATH=/srv
 
 alias youtube-dl-proxy='youtube-dl --proxy "socks5://localhost:9050/"'
+
+alias mpv-q='mpv --msg-level=all=no --no-resume-playback'
