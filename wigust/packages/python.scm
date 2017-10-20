@@ -197,3 +197,55 @@
          ,@(alist-delete "python-github"
                          (package-propagated-inputs base)
                          equal?))))))
+
+(define-public python-pytz-2016-10
+  (package
+    (inherit python-pytz)
+    (version "2016.10")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "pytz" version ".zip"))
+       (sha256
+        (base32
+         "05qrqh9iy20ilah6pam2khzb9lq3d6r9glfp97nigqjzjxkg1yxa"))))))
+
+(define-public python-gitsome
+  (package
+    (name "python-gitsome")
+    (version "0.7.2")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "gitsome" version))
+       (sha256
+        (base32
+         "0q1rnbfbvkwv39qzjnisk8l8fl46m25pvp7gv1lc0j0g28hg9ln4"))))
+    (build-system python-build-system)
+    (inputs
+     `(("python-ply" ,python-ply)
+       ("python-uritemplate" ,python-uritemplate)
+       ("python-docopt" ,python-docopt)
+       ("python-pytz" ,python-pytz-2016-10)
+       ("python-feedparser" ,python-feedparser)
+       ("python-pygments" ,python-pygments)
+       ("python-click" ,python-click)
+       ("python-colorama" ,python-colorama)
+       ("python-requests" ,python-requests)
+       ("python-prompt-toolkit" ,python-prompt-toolkit)
+       ("python-numpydoc" ,python-numpydoc)
+       ("python-mock" ,python-mock)))
+    (arguments
+     `(#:tests? #f
+       #:phases
+       (modify-phases %standard-phases
+         (add-after 'unpack 'bootstrap
+           (lambda _ (substitute* '("setup.py" "gitsome.egg-info/requires.txt")
+                  (("uritemplate.py") "uritemplate"))))
+         (add-before 'check 'pre-check (lambda _ (setenv "HOME" (getcwd)) #t)))))
+    (home-page "https://github.com/donnemartin/gitsome")
+    (synopsis "A Supercharged Git/Shell Autocompleter with GitHub
+Integration")
+    (description "A Supercharged Git/Shell Autocompleter with GitHub Integration.")
+    (license license:gpl3+)))
+
