@@ -1550,6 +1550,7 @@ the current upstream.")
        (uri (string-append
              "https://github.com/rakanalh/emacs-dashboard/archive/"
              version ".tar.gz"))
+       (file-name (string-append name "-" version ".tar.gz"))
        (sha256
         (base32
          "1738lmbgq6gk24hcwic0qjyajr21l5xzhya4pv58dw1bhd6vxv9g"))))
