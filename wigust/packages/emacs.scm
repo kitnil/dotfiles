@@ -1697,3 +1697,22 @@ to perform regression test for packages that provide font-lock rules.")
     (synopsis "Consistent ESS-like eval interface for various REPLs")
     (description "Consistent ESS-like eval interface for various REPLs")
     (license license:gpl3+)))
+
+(define-public emacs-beginend
+  (package
+    (name "emacs-beginend")
+    (version "2.0.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append "https://github.com/DamienCassou/beginend/archive/"
+                           "v" version ".tar.gz"))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32
+         "0z4rbwffh9vxfvcrlvym4p73z7gf72q0b5iv33llbpcpbijknnrq"))))
+    (build-system emacs-build-system)
+    (home-page "https://github.com/DamienCassou/beginend")
+    (synopsis "Redefine M-< and M-> for some modes")
+    (description "Redefine M-< and M-> for some modes.")
+    (license license:gpl3+)))
