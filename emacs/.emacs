@@ -1210,3 +1210,5 @@ in the variable `browse-url-mpv-arguments' to mpv."
 
 (use-package dashboard
   :config (dashboard-setup-startup-hook))
+
+(use-package eval-in-repl)
