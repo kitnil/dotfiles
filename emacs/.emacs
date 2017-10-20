@@ -63,7 +63,7 @@
      (:name "pykhalov-unread" :query "from:pykhalov@gmail.com tag:unread")
      (:name "artgames" :query "tag:unread subject:ArtGames LP")
      (:name "my-email" :query "from:go.wigust@gmail.com"))))
- '(org-agenda-files (quote ("~/.notes")))
+ '(org-agenda-files nil)
  '(safe-local-variable-values
    (quote
     ((eval add-to-list
