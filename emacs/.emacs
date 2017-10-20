@@ -1207,3 +1207,6 @@ in the variable `browse-url-mpv-arguments' to mpv."
 
 (use-package sh-script
   :mode ("PKGBUILD\\'" . shell-script-mode))
+
+(use-package dashboard
+  :config (dashboard-setup-startup-hook))
