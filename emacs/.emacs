@@ -767,6 +767,9 @@
   :config
   (setq guix-directory "~/src/guix"))
 
+(use-package guix-location
+  :bind (("C-c g e" . guix-edit)))
+
 (use-package guix-utils
   :after org
   :config
