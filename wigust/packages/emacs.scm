@@ -1538,3 +1538,26 @@ the current upstream.")
     (synopsis "Makes ido-mode display vertically")
     (description "Makes ido-mode display prospects vertically.")
     (license license:gpl3+)))
+
+(define-public emacs-dashboard
+  (package
+    (name "emacs-dashboard")
+    (version "1.2.4")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append
+             "https://github.com/rakanalh/emacs-dashboard/archive/"
+             version ".tar.gz"))
+       (sha256
+        (base32
+         "1738lmbgq6gk24hcwic0qjyajr21l5xzhya4pv58dw1bhd6vxv9g"))))
+    (build-system emacs-build-system)
+    (propagated-inputs
+     `(("emacs-page-break-lines" ,emacs-page-break-lines)))
+    (arguments '(#:include '("\\.el$" "\\.txt$" "\\.png$")))
+    (home-page "https://github.com/rakanalh/emacs-dashboard")
+    (synopsis "A startup screen extracted from Spacemacs")
+    (description "An extensible Emacs dashboard, with sections for
+bookmarks, projectil projects, org-agenda and more. ")
+    (license license:gpl3+)))
