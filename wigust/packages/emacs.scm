@@ -1741,3 +1741,26 @@ to perform regression test for packages that provide font-lock rules.")
     (synopsis "Redefine M-< and M-> for some modes")
     (description "Redefine M-< and M-> for some modes.")
     (license license:gpl3+)))
+
+(define-public emacs-eros
+  (let ((commit "a42e45c9b2397156c684330b0fc90ee0eba773f5")
+        (revision "1"))
+    (package
+      (name "emacs-eros")
+      (version (string-append "0.0.1" "-" revision "."
+                              (string-take commit 7)))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/xiongtx/eros.git")
+               (commit commit)))
+         (file-name (string-append name "-" version "-checkout"))
+         (sha256
+          (base32
+           "0whlsq90v13fz69k3wjrwcwb9gkpfxqjd75mg3nrp85j9nwhb5i4"))))
+      (build-system emacs-build-system)
+      (home-page "https://github.com/xiongtx/eros")
+      (synopsis "Evaluation result overlays")
+      (description "@code{eros} provides evaluation result overlays.")
+      (license license:gpl3+))))
