@@ -1561,3 +1561,24 @@ the current upstream.")
     (description "An extensible Emacs dashboard, with sections for
 bookmarks, projectil projects, org-agenda and more. ")
     (license license:gpl3+)))
+
+(define-public emacs-sml-mode
+  (package
+    (name "emacs-sml-mode")
+    (version "6.7")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append "http://elpa.gnu.org/packages/sml-mode-"
+                           version ".el"))
+       (sha256
+        (base32
+         "041dmxx7imiy99si9pscwjh5y4h02y3lirzhv1cfxqr3ghxngf9x"))))
+    (build-system emacs-build-system)
+    (home-page "http://elpa.gnu.org/packages/sml-mode.html")
+    (synopsis "Major mode for editing (Standard) ML")
+    (description "SML-MODE is a major Emacs mode for editing Standard ML.
+It provides syntax highlighting and automatic indentation and
+comes with sml-proc which allows interaction with an inferior SML
+interactive loop.")
+    (license license:gpl3+)))
