@@ -1212,3 +1212,6 @@ in the variable `browse-url-mpv-arguments' to mpv."
   :config (dashboard-setup-startup-hook))
 
 (use-package eval-in-repl)
+
+(use-package beginend
+  :config (beginend-global-mode))
