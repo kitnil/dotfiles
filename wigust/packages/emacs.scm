@@ -71,6 +71,7 @@
   #:use-module (gnu packages fribidi)
   #:use-module (gnu packages gd)
   #:use-module (gnu packages fontutils)
+  #:use-module (gnu packages ocaml)
   #:use-module (gnu packages emacs)
   #:use-module (guix utils)
   #:use-module (srfi srfi-1)
@@ -1660,3 +1661,38 @@ to perform regression test for packages that provide font-lock rules.")
 @item Thorough font-lock and indent.
 @end itemize\n")
       (license license:gpl3+))))
+
+(define-public emacs-eval-in-repl
+  (package
+    (name "emacs-eval-in-repl")
+    (version "0.9.6")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append
+             "https://github.com/kaz-yos/eval-in-repl/archive/"
+             "v" version ".tar.gz"))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32
+         "1lw97llr0lzipbi4a7q7qrjvqz9g7bip46rkm88sgbagh218sjr4"))))
+    (build-system emacs-build-system)
+    (propagated-inputs
+     `(("emacs-dash" ,emacs-dash)
+       ("emacs-paredit" ,paredit)
+       ("emacs-ace-window" ,emacs-ace-window)))
+    (inputs
+     `(("emacs-slime" ,emacs-slime)
+       ("emacs-sml-mode" ,emacs-sml-mode)
+       ("emacs-cider" ,emacs-cider)
+       ("geiser" ,geiser)
+       ("emacs-lua-mode" ,emacs-lua-mode)
+       ("emacs-js2-mode" ,emacs-js2-mode)
+       ("emacs-inf-ruby" ,emacs-inf-ruby)
+       ("emacs-tuareg" ,emacs-tuareg)
+       ("emacs-hy-mode" ,emacs-hy-mode)
+       ("emacs-racket-mode" ,emacs-racket-mode)))
+    (home-page "https://github.com/kaz-yos/eval-in-repl/")
+    (synopsis "Consistent ESS-like eval interface for various REPLs")
+    (description "Consistent ESS-like eval interface for various REPLs")
+    (license license:gpl3+)))
