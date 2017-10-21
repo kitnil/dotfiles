@@ -11,6 +11,13 @@
 
 (setq inhibit-compacting-font-caches t)
 
+(defun find-user-init-file ()
+  "Edit this config."
+  (interactive)
+  (find-file user-init-file))
+
+(global-set-key (kbd "C-c e c") 'find-user-init-file)
+
 (defun me-update-my-projects ()
   (interactive)
   (setq my-projects
