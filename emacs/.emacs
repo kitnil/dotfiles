@@ -1,3 +1,14 @@
+;;; .emacs --- user-init-file
+
+;; Copyright © 2017 Oleg Pykhalov <go.wigust@gmail.com>
+;; Released under the GNU GPLv3 or any later version.
+
+;;; Commentary:
+;;
+;; GNU Emacs configuration file.
+
+;;; Code:
+
 (package-initialize)
 
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
@@ -1225,3 +1236,6 @@ in the variable `browse-url-mpv-arguments' to mpv."
 
 (use-package beginend
   :config (beginend-global-mode))
+
+(provide 'wigust-user-init-file)
+;;; .emacs ends here
