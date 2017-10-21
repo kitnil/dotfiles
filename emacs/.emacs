@@ -1231,7 +1231,11 @@ in the variable `browse-url-mpv-arguments' to mpv."
 (use-package dashboard
   :config (dashboard-setup-startup-hook))
 
-(use-package eval-in-repl)
+(use-package eval-in-repl
+  :config
+  (progn
+    (add-hook 'geiser-mode-hook
+              '(lambda () (local-set-key (kbd "<C-return>") 'eir-eval-in-geiser)))))
 
 (use-package beginend
   :config (beginend-global-mode))
