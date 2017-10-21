@@ -78,7 +78,6 @@
      (:name "youtube-today" :query "from:noreply@youtube.com date:today")
      (:name "youtube-unread" :query "from:noreply@youtube.com tag:unread")
      (:name "headhunter-unread" :query "from:no_reply@hh.ru tag:unread")
-     (:name "pykhalov-unread" :query "from:pykhalov@gmail.com tag:unread")
      (:name "artgames" :query "tag:unread subject:ArtGames LP")
      (:name "my-email" :query "from:go.wigust@gmail.com"))))
  '(org-agenda-files nil)
