@@ -1235,7 +1235,9 @@ in the variable `browse-url-mpv-arguments' to mpv."
   :config
   (progn
     (add-hook 'geiser-mode-hook
-              '(lambda () (local-set-key (kbd "<C-return>") 'eir-eval-in-geiser)))))
+              '(lambda () (local-set-key (kbd "<C-return>") 'eir-eval-in-geiser)))
+    (add-hook 'sh-mode-hook
+              '(lambda() (local-set-key (kbd "C-<return>") 'eir-eval-in-shell)))))
 
 (use-package beginend
   :diminish
