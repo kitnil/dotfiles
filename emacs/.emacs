@@ -1238,6 +1238,24 @@ in the variable `browse-url-mpv-arguments' to mpv."
               '(lambda () (local-set-key (kbd "<C-return>") 'eir-eval-in-geiser)))))
 
 (use-package beginend
+  :diminish
+  beginend-bs-mode
+  beginend-compilation-mode
+  beginend-dired-mode
+  beginend-elfeed-search-mode
+  beginend-global-mode
+  beginend-ibuffer-mode
+  beginend-magit-status-mode
+  beginend-message-mode
+  beginend-notmuch-search-mode
+  beginend-occur-mode
+  beginend-org-agenda-mode
+  beginend-prodigy-mode
+  beginend-prog-mode
+  beginend-prog-mode
+  beginend-recentf-dialog-mode
+  beginend-vc-dir-mode
+
   :config (beginend-global-mode))
 
 (provide 'wigust-user-init-file)
