@@ -512,7 +512,8 @@
             "~/.guix-profile/share/emacs/yasnippet-snippets/"))
     (yas-reload-all)
     (add-hook 'prog-mode-hook 'yas-minor-mode)
-    (add-hook 'latex-mode-hook 'yas-minor-mode)))
+    (add-hook 'latex-mode-hook 'yas-minor-mode)
+    (add-hook 'message-mode-hook 'yas-minor-mode)))
 
 
 ;;;
