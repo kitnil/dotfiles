@@ -151,6 +151,9 @@
   "Play video from clipboard."
   (run-shell-command "exec mpv $(xclip -o -selection clipboard)"))
 
+(defcommand mpv-music () ()
+  "Play music."
+  (run-shell-command "exec mpv --msg-level=all=no --no-resume-playback /srv/music/*"))
 
 (define-key *root-map* (kbd "v") "mpv")
 (define-key *root-map* (kbd "C-v") "xclip-mpv")
