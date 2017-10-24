@@ -430,14 +430,9 @@
 (use-package semantic
   :config
   (progn
-    ;; Semantic
     (global-semantic-decoration-mode t)
     (global-semantic-highlight-func-mode t)
-    (global-semantic-show-unmatched-syntax-mode t)
-    ;; (global-semantic-idle-completions-mode t)
-
-    ;; CC-mode
-    (add-hook 'c-mode-hook 'semantic-mode)))
+    (global-semantic-show-unmatched-syntax-mode t)))
 
 (use-package semantic/util-modes
   :after semantic
