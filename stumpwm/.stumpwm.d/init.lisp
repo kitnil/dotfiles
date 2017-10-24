@@ -96,6 +96,11 @@
 
 (clear-window-placement-rules)
 
+(define-frame-preference "Default"
+    (0 nil t :class "mpv")
+  (1 nil t :class "Emacs")
+  (2 nil t :class "XTerm"))
+
 ;; Last rule to match takes precedence!
 ;; TIP: if the argument to :title or :role begins with an ellipsis, a substring
 ;; match is performed.
