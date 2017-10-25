@@ -751,8 +751,9 @@
 
 (use-package scheme
   :preface
-  (defvar scheme-prettify-symbols-alist
-    '(("lambda" . 955)))
+  (setq scheme-prettify-symbols-alist
+        '(("lambda" . ?λ)
+          ("lambda*" . (?λ (Br . Bl) ?*))))
   :config
   (progn
     (defun my-scheme-mode-hook ()
