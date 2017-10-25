@@ -30,6 +30,7 @@
 (global-set-key (kbd "C-c e c") 'find-user-init-file)
 
 (defun me-update-my-projects ()
+  "Rescan my projects directory."
   (interactive)
   (setq my-projects
         (directory-files (expand-file-name "/srv/git")
