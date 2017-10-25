@@ -1052,7 +1052,8 @@ in the variable `browse-url-mpv-arguments' to mpv."
 (use-package prog-mode
   :config
   (progn
-    (add-hook 'prog-mode-hook 'prettify-symbols-mode)))
+    (add-hook 'prog-mode-hook 'prettify-symbols-mode)
+    (setq prettify-symbols-unprettify-at-point 'right-edge)))
 
 (use-package haskell-mode
   :preface
