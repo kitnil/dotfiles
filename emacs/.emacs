@@ -29,15 +29,14 @@
 
 (global-set-key (kbd "C-c e c") 'find-user-init-file)
 
-(defun me-update-my-projects ()
-  "Rescan my projects directory."
-  (interactive)
-  (setq my-projects
-        (directory-files (expand-file-name "/srv/git")
-                         t
-                         "^\\([^.]\\|\\.[^.]\\|\\.\\..\\)")))
+(defvar default-projects-directory "/srv/git")
 
-(me-update-my-projects)
+(defun list-projects (directory)
+  "Return a list of projects."
+  (interactive)
+  (directory-files (expand-file-name directory)
+                   t
+                   "^\\([^.]\\|\\.[^.]\\|\\.\\..\\)"))
 
 
 ;;;
@@ -462,7 +461,8 @@
   :config (ido-vertical-mode 1))
 
 (use-package helm
-  :config (setq helm-locate-project-list my-projects))
+  :config
+  (setq helm-locate-project-list (list-projects default-projects-directory)))
 
 (use-package company
   :diminish company-mode
@@ -705,7 +705,8 @@
             'local-magit-initially-hide-unmerged)
 
   (defun me-update-magit-repository-directories ()
-    (setq magit-repository-directories my-projects))
+    (setq magit-repository-directories
+          (list-projects default-projects-directory)))
 
   (me-update-magit-repository-directories)
 
