@@ -1292,7 +1292,9 @@ in the variable `browse-url-mpv-arguments' to mpv."
     (add-hook 'geiser-mode-hook
               '(lambda () (local-set-key (kbd "<C-return>") 'eir-eval-in-geiser)))
     (add-hook 'sh-mode-hook
-              '(lambda() (local-set-key (kbd "C-<return>") 'eir-eval-in-shell)))))
+              '(lambda() (local-set-key (kbd "C-<return>") 'eir-eval-in-shell)))
+    (add-hook 'lisp-mode-hook
+              '(lambda() (local-set-key (kbd "C-<return>") 'eir-eval-in-slime)))))
 
 (use-package beginend
   :diminish
