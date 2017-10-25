@@ -773,57 +773,78 @@
     (add-hook 'geiser-repl-mode-hook 'my-scheme-mode-hook)
     (setq geiser-active-implementations (quote (guile)))))
 
-(use-package guix-devel
-  :diminish guix-devel-mode
-  :config (add-hook 'scheme-mode-hook 'guix-devel-mode))
+
+;;;
+;;; Guix
+;;;
 
-(use-package guix-build-log
-  :diminish guix-build-log-minor-mode)
-
-(use-package guix-external
+(use-package guix
+  :load-path "/home/natsu/src/emacs-guix/elisp"
   :config
   (progn
-    (setq guix-guile-program '("/home/natsu/src/guix/pre-inst-env"
-                               "guile" "--no-auto-compile"))))
+    (use-package guix-devel
+      :diminish guix-devel-mode
+      :config (add-hook 'scheme-mode-hook 'guix-devel-mode))
 
-(use-package guix-repl
-  :config
-  (setq guix-directory "~/src/guix"))
+    (use-package guix-build-log
+      :diminish guix-build-log-minor-mode)
 
-(use-package guix-location
-  :bind (("C-c g e" . guix-edit)))
+    (use-package guix-external
+      :config
+      (progn
+        (setq guix-guile-program '("/home/natsu/src/guix/pre-inst-env"
+                                   "guile" "--no-auto-compile"))))
 
-(use-package guix-utils
-  :after org
+    (use-package guix-repl
+      :config
+      (setq guix-directory "~/src/guix"))
+
+    (use-package guix-location
+      :bind (("C-c g e" . guix-edit)))
+
+    (use-package guix-read
+      :config (setq guix-read-package-name-function
+                    'guix-read-package-name-at-point))
+
+    (use-package guix-utils
+      :after org
+      :config
+      (setq guix-find-file-function 'org-open-file))
+
+    (use-package guix-command
+      :bind (("C-c g p" . guix)))
+
+    (use-package guix-help
+      :bind (("C-c g b" . guix-switch-to-buffer)
+             ("C-c g x" . guix-extended-command))
+      :config
+      (progn
+        (defun guix-src-grep (regexp)
+          (interactive "sGREP: ")
+          (rgrep regexp
+                 "*.scm"
+                 (concat guix-directory "/gnu/packages")))
+        (setq guix-directory "~/src/guix")
+        (add-hook 'proced-post-display-hook 'guix-prettify-mode)
+        (add-hook 'dired-mode-hook 'guix-prettify-mode)))))
+
+
+;;;
+;;; Geiser
+;;;
+
+(use-package geiser
   :config
   (progn
-    (setq guix-find-file-function 'org-open-file)))
+    (use-package geiser-guile
+      :commands geiser-repl-mode
+      :config
+      (with-eval-after-load 'geiser-guile
+        (add-to-list 'geiser-guile-load-path "/home/natsu/src/guix")
+        (setq geiser-guile-binary '("guile" "--no-auto-compile"))))
 
-(use-package guix-command
-  :bind (("C-c g p" . guix)))
+    (use-package geiser-doc)))
 
-(use-package guix-help
-  :bind (("C-c g b" . guix-switch-to-buffer)
-         ("C-c g x" . guix-extended-command))
-  :config
-  (progn
-    (defun guix-src-grep (regexp)
-      (interactive "sGREP: ")
-      (rgrep regexp
-             "*.scm"
-             (concat guix-directory "/gnu/packages")))
-    (setq guix-directory "~/src/guix")
-    (add-hook 'proced-post-display-hook 'guix-prettify-mode)
-    (add-hook 'dired-mode-hook 'guix-prettify-mode)))
-
-(use-package geiser-guile
-  :commands geiser-repl-mode
-  :config
-  (with-eval-after-load 'geiser-guile
-    (add-to-list 'geiser-guile-load-path "/home/natsu/src/guix")
-    (setq geiser-guile-binary '("guile" "--no-auto-compile"))))
-
-(use-package geiser-doc)
 
 (use-package slime
   :disabled
