@@ -845,15 +845,42 @@
 
     (use-package geiser-doc)))
 
+
+;;;
+;;; Slime
+;;;
 
 (use-package slime
-  :disabled
   :init
   (progn
     (load (expand-file-name "~/quicklisp/slime-helper.el"))
     (setq inferior-lisp-program "/home/natsu/.guix-profile/bin/sbcl")
-    (load-file "/home/natsu/.stumpwm.d/modules/util/swm-emacs/stumpwm-utils.el")
-    (load-file "/home/natsu/.stumpwm.d/modules/util/swm-emacs/stumpwm-mode.el")))
+
+    (require 'cl)
+
+    (defun slime-style-init-command (port-filename _coding-system extra-args)
+      "Return a string to initialize Lisp."
+      (let ((loader (if (file-name-absolute-p slime-backend)
+                        slime-backend
+                      (concat slime-path slime-backend))))
+        ;; Return a single form to avoid problems with buffered input.
+        (format "%S\n\n"
+                `(progn
+                   (load ,(slime-to-lisp-filename (expand-file-name loader))
+                         :verbose t)
+                   (funcall (read-from-string "swank-loader:init"))
+                   (funcall (read-from-string "swank:start-server")
+                            ,(slime-to-lisp-filename port-filename)
+                            ,@extra-args)))))
+
+    (defun slime-style (&optional style)
+      (interactive
+       (list (intern-soft (read-from-minibuffer "Style: " "nil"))))
+      (lexical-let ((style style))
+        (slime-start
+         :init (lambda (x y)
+                 (slime-style-init-command
+                  x y `(:style ,style :dont-close t))))))))
 
 (use-package slime-company
   :after company
