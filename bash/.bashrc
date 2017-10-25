@@ -80,3 +80,5 @@ export CDPATH=/srv
 alias youtube-dl-proxy='youtube-dl --proxy "socks5://localhost:9050/"'
 
 alias mpv-q='mpv --msg-level=all=no --no-resume-playback'
+
+pre-guix-upgrade () { "$HOME/src/guix/pre-inst-env" guix package --dry-run --do-not-upgrade chromium kodi --upgrade; }
