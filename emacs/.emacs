@@ -754,7 +754,15 @@
   :preface
   (setq scheme-prettify-symbols-alist
         '(("lambda" . ?λ)
-          ("lambda*" . (?λ (Br . Bl) ?*))))
+          ("lambda*" . (?λ (Br . Bl) ?*))
+          ("#t" . ?T)
+          ("#f" . ?F)
+          ("not" . ?¬)
+          ("and" . ?∧)
+          ("or" . ?∨)
+          ("eq?" . ≡)
+          ("<=" . ?≤)
+          (">=" . ?≥)))
   :config
   (progn
     (defun my-scheme-mode-hook ()
