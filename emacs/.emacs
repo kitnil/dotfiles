@@ -486,6 +486,7 @@
   :config
   (progn
     (add-hook 'prog-mode-hook 'company-mode)
+    (add-hook 'slime-repl-mode-hook 'company-mode)
     (setq company-clang-insert-arguments nil)
     (setq company-gtags-insert-arguments nil)
     (setq company-semantic-insert-arguments nil)))
