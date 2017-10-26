@@ -603,9 +603,9 @@
 
 (use-package org
   :mode ("\\.notes\\'" . org-mode)
-  :bind (("C-c c" . org-capture)
-         ("C-c a" . org-agenda)
-         ("C-c l" . org-store-link))
+  :bind (("C-c c c" . org-capture)
+         ("C-c c a" . org-agenda)
+         ("C-c c l" . org-store-link))
   :config
   (org-babel-do-load-languages 'org-babel-load-languages
                                '((emacs-lisp . nil)
