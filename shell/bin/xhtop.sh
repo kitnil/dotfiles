@@ -1,3 +1,5 @@
 #!/bin/sh
-exec -a htop urxvtc -name htop -e htop $@
 
+PROGRAM=htop
+
+exec xterm -name $PROGRAM -e $PROGRAM "$@"
