@@ -204,6 +204,10 @@
 
 (add-hook 'occur-mode-hook (lambda () (setq-local truncate-lines t)))
 
+(use-package saveplace
+  :config
+  (save-place-mode t))
+
 (use-package simple
   :bind (("C-c t l" . toggle-truncate-lines)))
 
