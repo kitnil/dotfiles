@@ -359,8 +359,17 @@
                   (calendar-current-date)))))
 
 (use-package time
-  :commands display-time
-  :config (setq display-time-24hr-format t))
+  :bind (("C-c a a" . display-time-world))
+  :config
+  (setq display-time-24hr-format t)
+  (setq display-time-world-time-format "%Z\t%d %B %H:%M")
+  (setq display-time-world-list '(("Europe/Moscow"    "Europe/Moscow")
+                                  ("Europe/Berlin"    "Europe/Berlin")
+                                  ("Europe/London"    "Europe/London")
+                                  ("Europe/Istanbul"  "Europe/Istanbul")
+                                  ("America/Winnipeg" "America/Winnipeg")
+                                  ("America/New_York" "America/New_York")
+                                  ("Asia/Tokyo"       "Asia/Tokyo"))))
 
 (use-package info-look)
 
