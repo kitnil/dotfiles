@@ -397,7 +397,8 @@
 (use-package smartparens
   :config
   (require 'smartparens-config)
-  (add-hook 'prog-mode-hook 'smartparens-strict-mode))
+  (add-hook 'prog-mode-hook 'smartparens-strict-mode)
+  (add-hook 'shell-mode-hook 'smartparens-strict-mode))
 
 
 ;;;
