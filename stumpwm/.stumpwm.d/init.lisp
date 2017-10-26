@@ -156,6 +156,7 @@
   (run-shell-command "exec mpv --msg-level=all=no --no-resume-playback /srv/music/*"))
 
 (defcommand youtube-dl () ()
+  "Download video."
   (run-shell-command "exec urxvtc -name youtube-dl -e youtube-dl $(xclip -o -selection clipboard)"))
 
 (defcommand youtube-dl-play () ()
