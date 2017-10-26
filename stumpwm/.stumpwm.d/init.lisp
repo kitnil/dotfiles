@@ -155,6 +155,9 @@
   "Play music."
   (run-shell-command "exec mpv --msg-level=all=no --no-resume-playback /srv/music/*"))
 
+(defcommand youtube-dl () ()
+  (run-shell-command "exec urxvtc -name youtube-dl -e youtube-dl $(xclip -o -selection clipboard)"))
+
 (define-key *root-map* (kbd "v") "mpv")
 (define-key *root-map* (kbd "C-v") "xclip-mpv")
 
