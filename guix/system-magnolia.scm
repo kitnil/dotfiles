@@ -104,7 +104,17 @@ EndSection
 ")
 
 (define %custom-desktop-services
-  (modify-services %desktop-services
+  ;; Desktop service provides:
+  ;;
+  ;; Disable NETWORK-MANAGER-SERVICE-TYPE
+  ;; Fix tearing on Intel video card 20-INTEL.CONF
+  ;; Files /bin/sh and /usr/bin/env
+  ;;
+  ;; Inspired by https://lists.gnu.org/archive/html/help-guix/2016-01/msg00064.html
+  (modify-services (remove (lambda (service)
+                             (or (eq? (service-kind service)
+                                     network-manager-service-type)))
+                           %desktop-services)
     (guix-service-type config => %guix-daemon-config)
     (special-files-service-type config => `(("/bin/sh"
                                              ,(file-append
@@ -283,6 +293,8 @@ EndSection
                    firewall-service
 
                    (spice-vdagent-service)
+
+                   (dhcp-client-service)
 
                    %custom-desktop-services))
 
