@@ -2,7 +2,9 @@
 ;; Copyright © 2017 Oleg Pykhalov <go.wigust@gmail.com>
 ;; Released under the GNU GPLv3 or any later version.
 
-(use-modules (gnu) (gnu system nss))
+(use-modules (gnu)
+             (gnu system nss)
+             (srfi srfi-1))
 
 (use-service-modules ssh desktop xorg cups version-control mail
                      networking shepherd rsync web spice)
@@ -181,6 +183,32 @@ EndSection
 
 
 ;;;
+;;; Support functions
+;;;
+
+(define (cartesian-product . lists)
+  (fold-right (lambda (xs ys)
+                (append-map (lambda (x)
+                              (map (lambda (y)
+                                     (cons x y))
+                                   ys))
+                            xs))
+              '(())
+              lists))
+
+
+;;;
+;;; /etc/hosts
+;;;
+
+(define (prefix-local-host-aliases prefix host-name domain)
+  (string-join (map (lambda (x)
+                      (string-append (string-join x " ") "." host-name domain))
+                    (cartesian-product '("127.0.0.1" "::1") prefix))
+               "\n"))
+
+
+;;;
 ;;; Operating system.
 ;;;
 
@@ -236,9 +264,8 @@ EndSection
    ;; and "mymachine", as well as for Facebook servers.
    (plain-file "hosts"
                (string-append (local-host-aliases host-name)
-                              "127.0.0.1 www." host-name ".local" "\n"
-                              "127.0.0.1 cgit." host-name ".local" "\n"
-                              "127.0.0.1 guix." host-name ".local" "\n"
+                              (prefix-local-host-aliases '("cgit" "guix" "www")
+                                                         host-name ".local")
                               %facebook-host-aliases)))
 
   (packages (cons* cups cryptsetup certbot emacs emacs-guix guile-ssh guix
