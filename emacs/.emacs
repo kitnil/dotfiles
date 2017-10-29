@@ -1282,5 +1282,11 @@ in the variable `browse-url-mpv-arguments' to mpv."
 
   :config (beginend-global-mode))
 
+(use-package elfeed
+  :config
+  (setq elfeed-feeds
+        '("http://nullprogram.com/feed/"
+          "http://planet.emacsen.org/atom.xml")))
+
 (provide 'wigust-user-init-file)
 ;;; .emacs ends here
