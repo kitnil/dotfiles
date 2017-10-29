@@ -189,6 +189,9 @@
 (use-package rainbow-mode
   :bind (("C-c t r" . rainbow-mode)))
 
+(use-package rainbow-identifiers
+  :config (add-hook 'prog-mode-hook 'rainbow-identifiers-mode))
+
 (use-package rainbow-delimiters
   :config (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
 
