@@ -762,10 +762,10 @@
   :config
   (defun my-scheme-mode-hook ()
     (setq-local prettify-symbols-alist scheme-prettify-symbols-alist)
-    (prettify-symbols-mode)
-    (show-paren-mode))
+    (show-paren-mode)
+    (prettify-symbols-mode))
   (add-hook 'scheme-mode-hook 'my-scheme-mode-hook)
-  (add-hook 'geiser-repl-mode-hook 'my-scheme-mode-hook)
+  (add-hook 'geiser-repl-mode-hook 'show-paren-mode)
   (setq geiser-active-implementations (quote (guile))))
 
 
