@@ -748,16 +748,17 @@
 (use-package scheme
   :preface
   (setq scheme-prettify-symbols-alist
-        '(("lambda" . ?λ)
+        '(("lambda"  . ?λ)
           ("lambda*" . (?λ (Br . Bl) ?*))
-          ("#t" . ?T)
-          ("#f" . ?F)
-          ("not" . ?¬)
-          ("and" . ?∧)
-          ("or" . ?∨)
-          ("eq?" . ≡)
-          ("<=" . ?≤)
-          (">=" . ?≥)))
+          ("#t"      . ?T)
+          ("#f"      . ?F)
+          ("not"     . ?¬)
+          ("and"     . ?∧)
+          ("or"      . ?∨)
+          ("eq?"     . ≡)
+          ("<="      . ?≤)
+          (">="      . ?≥)
+          ("->"      . ?→)))
   :config
   (defun my-scheme-mode-hook ()
     (setq-local prettify-symbols-alist scheme-prettify-symbols-alist)
