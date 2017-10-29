@@ -212,118 +212,122 @@ EndSection
 ;;; Operating system.
 ;;;
 
-(operating-system
-  (host-name "magnolia")
-  (timezone "Europe/Moscow")
-  (locale "en_US.utf8")
+(define %system-magnolia
+  (operating-system
+    (host-name "magnolia")
+    (timezone "Europe/Moscow")
+    (locale "en_US.utf8")
 
-  (bootloader (bootloader-configuration
-               (bootloader grub-efi-bootloader)
-               (target "/boot/efi")))
+    (bootloader (bootloader-configuration
+                 (bootloader grub-efi-bootloader)
+                 (target "/boot/efi")))
 
-  (file-systems (cons* (file-system
-                         (device "magnolia-root")
-                         (title 'label)
-                         (mount-point "/")
-                         (type "ext4"))
-                       (file-system
-                         (device "/dev/sda1")
-                         (mount-point "/boot/efi")
-                         (type "vfat"))
-                       (file-system
-                         (device "magnolia-data")
-                         (title 'label)
-                         (mount-point "/srv")
-                         (type "ext4"))
-                       (file-system
-                         (device "tmpfs")
-                         (mount-point "/tmp")
-                         (type "tmpfs")
-                         (flags '(no-dev))
-                         (options "mode=1777,size=16G")
-                         (needed-for-boot? #t)
-                         (check? #f))
-                       %base-file-systems))
+    (file-systems (cons* (file-system
+                           (device "magnolia-root")
+                           (title 'label)
+                           (mount-point "/")
+                           (type "ext4"))
+                         (file-system
+                           (device "/dev/sda1")
+                           (mount-point "/boot/efi")
+                           (type "vfat"))
+                         (file-system
+                           (device "magnolia-data")
+                           (title 'label)
+                           (mount-point "/srv")
+                           (type "ext4"))
+                         (file-system
+                           (device "tmpfs")
+                           (mount-point "/tmp")
+                           (type "tmpfs")
+                           (flags '(no-dev))
+                           (options "mode=1777,size=16G")
+                           (needed-for-boot? #t)
+                           (check? #f))
+                         %base-file-systems))
 
-  (groups (cons
-           (user-group (name "adbusers"))
-           %base-groups))
+    (groups (cons
+             (user-group (name "adbusers"))
+             %base-groups))
 
-  (users (cons (user-account
-                (name "natsu")
-                (uid 1000)
-                (comment "Oleg Pykhalov")
-                (group "users")
-                (supplementary-groups '("wheel" "audio" "video" "lpadmin" "lp"
-                                        "adbusers"))
-                (home-directory "/home/natsu"))
-               %base-user-accounts))
+    (users (cons (user-account
+                  (name "natsu")
+                  (uid 1000)
+                  (comment "Oleg Pykhalov")
+                  (group "users")
+                  (supplementary-groups '("wheel" "audio" "video" "lpadmin" "lp"
+                                          "adbusers"))
+                  (home-directory "/home/natsu"))
+                 %base-user-accounts))
 
-  (hosts-file
-   ;; Create a /etc/hosts file with aliases for "localhost"
-   ;; and "mymachine", as well as for Facebook servers.
-   (plain-file "hosts"
-               (string-append (local-host-aliases host-name)
-                              (prefix-local-host-aliases '("cgit" "guix" "www")
-                                                         host-name ".local")
-                              %facebook-host-aliases)))
+    (hosts-file
+     ;; Create a /etc/hosts file with aliases for "localhost"
+     ;; and "mymachine", as well as for Facebook servers.
+     (plain-file "hosts"
+                 (string-append (local-host-aliases host-name)
+                                (prefix-local-host-aliases '("cgit" "guix" "www")
+                                                           host-name ".local")
+                                %facebook-host-aliases)))
 
-  (packages (cons* cups cryptsetup certbot emacs emacs-guix guile-ssh guix
-                   nss-certs iptables openssh %base-packages))
+    (packages (cons* cups cryptsetup certbot emacs emacs-guix guile-ssh guix
+                     nss-certs iptables openssh %base-packages))
 
-  (services (cons* (service openssh-service-type
-                            (openssh-configuration
-                             (port-number 22)))
+    (services (cons* (service openssh-service-type
+                              (openssh-configuration
+                               (port-number 22)))
 
-                   ;; Configure CUPS on https://localhost:631
-                   ;; and be sure librejs is disabled in browser
-                   (service cups-service-type
-                            (cups-configuration
-                             (web-interface? #t)
-                             (extensions
-                              (list cups-filters hplip))))
+                     ;; Configure CUPS on https://localhost:631
+                     ;; and be sure librejs is disabled in browser
+                     (service cups-service-type
+                              (cups-configuration
+                               (web-interface? #t)
+                               (extensions
+                                (list cups-filters hplip))))
 
-                   (dovecot-service
-                    #:config (dovecot-configuration
-                              (mail-location
-                               (string-append
-                                "maildir:~/Maildir:INBOX=~/Maildir/INBOX:"
-                                "LAYOUT=fs"))
-                              (disable-plaintext-auth? #f)
-                              (listen '("127.0.0.1"))))
+                     (dovecot-service
+                      #:config (dovecot-configuration
+                                (mail-location
+                                 (string-append
+                                  "maildir:~/Maildir:INBOX=~/Maildir/INBOX:"
+                                  "LAYOUT=fs"))
+                                (disable-plaintext-auth? #f)
+                                (listen '("127.0.0.1"))))
 
-                   (service guix-publish-service-type
-                            (guix-publish-configuration
-                             (host "0.0.0.0")
-                             (port 3000)))
+                     (service guix-publish-service-type
+                              (guix-publish-configuration
+                               (host "0.0.0.0")
+                               (port 3000)))
 
-                   (service git-daemon-service-type
-                            (git-daemon-configuration
-                             (user-path "")))
+                     (service git-daemon-service-type
+                              (git-daemon-configuration
+                               (user-path "")))
 
-                   (service rsync-service-type)
+                     (service rsync-service-type)
 
-                   (service nginx-service-type %file-share-configuration-nginx)
+                     (service nginx-service-type %file-share-configuration-nginx)
 
-                   (service fcgiwrap-service-type)
+                     (service fcgiwrap-service-type)
 
-                   (tor-service)
+                     (tor-service)
 
-                   (service cgit-service-type
-                            (cgit-configuration
-                             (nginx %cgit-configuration-nginx)))
+                     (service cgit-service-type
+                              (cgit-configuration
+                               (nginx %cgit-configuration-nginx)))
 
-                   guix-publish-nginx-service
+                     guix-publish-nginx-service
 
-                   (simple-service 'adb udev-service-type (list android-udev-rules))
+                     (simple-service 'adb udev-service-type (list android-udev-rules))
 
-                   firewall-service
+                     firewall-service
 
-                   (spice-vdagent-service)
+                     (spice-vdagent-service)
 
-                   (dhcp-client-service)
+                     (dhcp-client-service)
 
-                   %custom-desktop-services))
+                     %custom-desktop-services))
 
-  ;; Allow resolution of '.local' host names with mDNS.
-  (name-service-switch %mdns-host-lookup-nss))
+    ;; Allow resolution of '.local' host names with mDNS.
+    (name-service-switch %mdns-host-lookup-nss)))
+
+%system-magnolia
+;;; system-magnolia.scm ends here
