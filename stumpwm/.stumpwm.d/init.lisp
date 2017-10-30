@@ -93,14 +93,6 @@
 ;;; Video
 ;;;
 
-(defcommand pavucontrol () ()
-  "Start or focus pavucontrol."
-  (run-or-raise "pavucontrol" '(:class "Pavucontrol")))
-
-(defcommand pulsemixer () ()
-  "Start pulsemixer."
-  (run-shell-command "xterm -e pulsemixer"))
-
 (defcommand mpv () ()
   "Start or focus mpv."
   (run-or-raise "mpv" '(:class "mpv")))
