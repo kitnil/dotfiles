@@ -525,30 +525,6 @@
   :config
   (add-hook 'message-sent-hook 'gnus-score-followup-thread)
 
-  (defun notmuch-to-gnus-group (file)
-    "Calculate the Gnus group name from the given file name."
-    (let ((group (file-name-directory (directory-file-name (file-name-directory file)))))
-      (setq group (replace-regexp-in-string ".*/Maildir/" "nnimap+USER:" group))
-      (setq group (replace-regexp-in-string "/$" "" group))
-      (if (string-match ":$" group)
-          (concat group "INBOX")
-        (replace-regexp-in-string ":\\." ":" group))))
-
-  (defun notmuch-goto-message-in-gnus ()
-    "Open a summary buffer containing the current notmuch article."
-    (interactive)
-    (unless (gnus-alive-p) (with-temp-buffer (gnus)))
-    (let ((group (notmuch-to-gnus-group (notmuch-show-get-filename)))
-          (message-id
-           (replace-regexp-in-string "\"" ""
-                                     (replace-regexp-in-string "^id:" ""
-                                                               (notmuch-show-get-message-id)))))
-      (if (and group message-id)
-          (progn
-            (gnus-summary-read-group group 1) ; have to show at least one old message
-            (gnus-summary-refer-article message-id)) ; simpler than org-gnus method?
-        (message "Couldn't get relevant infos for switching to Gnus."))))
-
   (defun send-buffer-as-mail ()
     (interactive)
     (let ((str (buffer-string)))
@@ -607,7 +583,31 @@
 (use-package notmuch
   :preface (setq mail-user-agent 'gnus-user-agent)
   :commands notmuch-search
-  :bind (("C-c m n" . notmuch)))
+  :bind (("C-c m n" . notmuch))
+  :config
+  (defun notmuch-to-gnus-group (file)
+    "Calculate the Gnus group name from the given file name."
+    (let ((group (file-name-directory (directory-file-name (file-name-directory file)))))
+      (setq group (replace-regexp-in-string ".*/Maildir/" "nnimap+USER:" group))
+      (setq group (replace-regexp-in-string "/$" "" group))
+      (if (string-match ":$" group)
+          (concat group "INBOX")
+        (replace-regexp-in-string ":\\." ":" group))))
+
+  (defun notmuch-goto-message-in-gnus ()
+    "Open a summary buffer containing the current notmuch article."
+    (interactive)
+    (unless (gnus-alive-p) (with-temp-buffer (gnus)))
+    (let ((group (notmuch-to-gnus-group (notmuch-show-get-filename)))
+          (message-id
+           (replace-regexp-in-string "\"" ""
+                                     (replace-regexp-in-string "^id:" ""
+                                                               (notmuch-show-get-message-id)))))
+      (if (and group message-id)
+          (progn
+            (gnus-summary-read-group group 1) ; have to show at least one old message
+            (gnus-summary-refer-article message-id)) ; simpler than org-gnus method?
+        (message "Couldn't get relevant infos for switching to Gnus.")))))
 
 
 ;;;
