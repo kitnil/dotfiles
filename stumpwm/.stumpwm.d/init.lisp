@@ -74,13 +74,13 @@
   "Start or focus conkeror."
   (run-or-raise "conkeror" '(:class "Conkeror")))
 
-(define-key *root-map* (kbd "w") "conkeror")
+(define-key *root-map* (kbd "C-w") "conkeror")
 
 (defcommand icecat () ()
   "Start or focus icecat."
   (run-or-raise "icecat" '(:class "Icecat")))
 
-(define-key *root-map* (kbd "C-w") "icecat")
+(define-key *root-map* (kbd "w") "icecat")
 
 (defcommand chromium () ()
   "Start or focus chromium."
