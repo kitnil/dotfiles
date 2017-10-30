@@ -22,10 +22,10 @@ else
     PS1='\u@\h \w\$ '
 fi
 
-alias ls='ls -p --color'
-alias ll='ls -lh'
-alias la='ls -a'
-alias l1='ls -1'
+alias lc='ls -p --color'
+alias ll='lc -lh'
+alias la='lc -a'
+alias l1='lc -1'
 
 alias dir='ls -ba'
 
