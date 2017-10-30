@@ -107,7 +107,7 @@
 
 (defcommand xclip-mpv () ()
   "Play video from clipboard."
-  (run-shell-command "exec mpv $(xclip -o -selection clipboard)"))
+  (run-shell-command (join (list "exec mpv" (get-x-selection)) #\ )))
 
 (defcommand mpv-music () ()
   "Play music."
