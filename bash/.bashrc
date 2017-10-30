@@ -40,8 +40,6 @@ alias suspend='sudo loginctl suspend'
 
 export EDITOR=emacsclient
 
-emi () { emacs -nw -Q --insert <("$1"); }
-
 export GPG_TTY=$(tty)
 
 export GUILE_LOAD_COMPILED_PATH="${GUILE_LOAD_COMPILED_PATH}\
