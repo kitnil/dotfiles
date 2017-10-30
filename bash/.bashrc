@@ -40,7 +40,7 @@ alias suspend='sudo loginctl suspend'
 
 export EDITOR=emacsclient
 
-function emi { emacs -nw -Q --insert $@; }
+emi () { emacs -nw -Q --insert <("$1"); }
 
 export GPG_TTY=$(tty)
 
