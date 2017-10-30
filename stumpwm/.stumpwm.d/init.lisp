@@ -225,8 +225,8 @@
 (clipboard-history:start-clipboard-manager)
 
 (load-module "globalwindows")
-(define-key *root-map* (kbd "M-1") "global-windowlist")
-(define-key *root-map* (kbd "M-2") "global-pull-windowlist")
+(define-key *root-map* (kbd "M-quoteright") "global-windowlist")
+(define-key *root-map* (kbd "M-quotedbl") "global-pull-windowlist")
 
 
 ;;;
