@@ -810,6 +810,9 @@
   (use-package guix-help
     :bind (("C-c g b" . guix-switch-to-buffer)
            ("C-c g x" . guix-extended-command))
+    :init
+    (setq Info-directory-list
+          (append (list "/home/natsu/src/guix/doc") Info-directory-list))
     :config
     (defun guix-src-grep (regexp)
       (interactive "sGREP: ")
