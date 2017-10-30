@@ -126,6 +126,31 @@
 
 
 ;;;
+;;; Utils
+;;;
+
+(defun join-to-stream (stream list &optional (delimiter #\&))
+  (destructuring-bind (&optional first &rest rest) list
+    (when first
+      (write-string first stream)
+      (when rest
+        (write-char delimiter stream)
+        (join-to-stream stream rest delimiter)))))
+
+(defun join (list &optional (delimiter #\&))
+  (with-output-to-string (stream)
+    (join-to-stream stream list delimiter)))
+
+(defcommand run-xterm-command (cmd &optional collect-output-p) ((:shell "/bin/sh -c "))
+  "Run the specified shell command in XTerm."
+  (run-prog *shell-program*
+            :args (list "-c" (join (list "xterm -name" cmd "-e" cmd) #\ ))
+            :wait nil))
+
+(define-key *root-map* (kbd "M-!") "run-xterm-command")
+
+
+;;;
 ;;; Pulseaudio
 ;;;
 
