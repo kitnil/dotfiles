@@ -708,7 +708,8 @@
   :bind (("C-c v s" . magit-status)
          ("C-c v p" . magit-dispatch-popup)
          ("C-c v l" . magit-list-repositories)
-         ("C-c v v" . magit-stage))
+         ("C-c v v" . magit-stage)
+         ("C-c v r" . magit-diff-toggle-refine-hunk))
   :config
   (defun local-magit-initially-hide-unmerged (section)
     (and (not magit-insert-section--oldroot)
