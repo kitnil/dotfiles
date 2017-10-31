@@ -86,3 +86,5 @@ guix-search-recsel () { guix package -s "$1" | recsel -p name,synopsis,homepage;
 alias xclip-clipboard="xclip -i -selection clipboard"
 
 alias rdiff-backup-home="screen rdiff-backup /home/natsu /srv/backup/home/natsu"
+
+alias emc="emacsclient -nw"
