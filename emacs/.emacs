@@ -735,6 +735,9 @@
   :diminish git-gutter-mode
   :config (global-git-gutter-mode +1))
 
+(use-package browse-at-remote
+  :bind (("C-c v o" . browse-at-remote)))
+
 
 ;;;
 ;;; Lisp
