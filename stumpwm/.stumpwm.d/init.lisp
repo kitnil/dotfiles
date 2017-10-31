@@ -103,7 +103,7 @@
 
 (defcommand mpv-music () ()
   "Play music."
-  (run-shell-command "exec mpv --msg-level=all=no --no-resume-playback /srv/music/*"))
+  (run-shell-command "exec mpv --keep-open=no --msg-level=all=no --no-resume-playback /srv/music/*"))
 
 (defcommand youtube-dl () ()
   "Download video."
