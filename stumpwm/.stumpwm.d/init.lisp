@@ -156,9 +156,11 @@
   (run-shell-command
    "pacmd set-sink-volume 0 $(printf '0x%x' $(( $(pacmd dump|grep set-sink-volume|cut -f3 -d' ') - 0xf00)) ) &> /dev/null"))
 
-(define-interactive-keymap (volume) ()
+(define-interactive-keymap volume ()
   ((kbd "Up") "vol-up")
   ((kbd "Down") "vol-down"))
+
+(define-key *root-map* (kbd "M-v") "volume")
 
 
 ;;;
