@@ -1156,6 +1156,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
   (add-to-list 'company-backends 'company-tern))
 
 (use-package emms
+  :bind (("C-c m m" . emms))
   :config
   (require 'emms-playlist-mode)
   (setq emms-source-file-default-directory "/srv/archive/cool-music/"))
