@@ -101,6 +101,10 @@
   "Play video from clipboard."
   (run-shell-command (join (list "exec mpv" (get-x-selection)) #\ )))
 
+(defcommand kodi-cli-youtube () ()
+  "Send video from clipboard to Kodi."
+  (run-shell-command (join (list "exec kodi-cli -y" (get-x-selection)) #\ )))
+
 (defcommand mpv-music () ()
   "Play music."
   (run-shell-command "exec mpv --keep-open=no --msg-level=all=no --no-resume-playback /srv/music/*"))
