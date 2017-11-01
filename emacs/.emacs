@@ -1261,7 +1261,11 @@ in the variable `browse-url-mpv-arguments' to mpv."
   :mode ("PKGBUILD\\'" . shell-script-mode))
 
 (use-package dashboard
-  :config (dashboard-setup-startup-hook))
+  :config
+  (dashboard-setup-startup-hook)
+  (setq dashboard-page-separator "
+
+"))
 
 (use-package eval-in-repl
   :config
