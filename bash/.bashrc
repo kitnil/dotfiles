@@ -88,3 +88,5 @@ alias xclip-clipboard="xclip -i -selection clipboard"
 alias rdiff-backup-home="screen rdiff-backup /home/natsu /srv/backup/home/natsu"
 
 alias emc="emacsclient -nw"
+
+alias git-signature="git log --show-signature -1"
