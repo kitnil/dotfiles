@@ -1300,6 +1300,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
           "http://planet.emacsen.org/atom.xml")))
 
 (use-package shift-number
+  :load-path "/home/natsu/src/emacs-shift-number"
   :bind (("C-c C-=" . shift-number-up)
          ("C-c C--" . shift-number-down)))
 
