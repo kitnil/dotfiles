@@ -808,6 +808,8 @@
     :config
     (setq guix-find-file-function 'org-open-file))
 
+  (use-package guix-derivation)
+
   (use-package guix-command
     :bind (("C-c g p" . guix)))
 
