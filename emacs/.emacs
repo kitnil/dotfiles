@@ -1299,5 +1299,9 @@ in the variable `browse-url-mpv-arguments' to mpv."
         '("http://nullprogram.com/feed/"
           "http://planet.emacsen.org/atom.xml")))
 
+(use-package shift-number
+  :bind (("C-c C-=" . shift-number-up)
+         ("C-c C--" . shift-number-down)))
+
 (provide 'wigust-user-init-file)
 ;;; .emacs ends here
