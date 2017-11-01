@@ -751,6 +751,7 @@
   :config (add-hook 'after-save-hook 'check-parens nil t))
 
 (use-package scheme
+  :mode ("\\.tmpl\\'" . scheme-mode)
   :preface
   (setq scheme-prettify-symbols-alist
         '(("lambda"  . ?λ)
