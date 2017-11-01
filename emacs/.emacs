@@ -519,7 +519,8 @@
 ;;;
 
 (use-package gnus
-  :bind (("C-c m g" . gnus))
+  :bind (("C-c m g" . gnus)
+         ("C-c m s g" . switch-to-gnus))
   :preface
   (setq mail-user-agent 'gnus-user-agent)
   :config
