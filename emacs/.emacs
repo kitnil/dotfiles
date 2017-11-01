@@ -960,6 +960,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
   (setq browse-url-browser-function
         `(("^ftp://.*" . browse-ftp-tramp)
           ("^https?://w*\\.?youtube.com/watch\\?v=.*" . browse-url-mpv)
+          ("^https?://w*\\.?youtube.com/.*" . browse-url-chromium)
           ("^https?://w*\\.?github.com/.*" . browse-url-chromium)
           ("." . browse-url-conkeror)))
 
