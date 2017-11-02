@@ -14,7 +14,7 @@
 ;; (Info-goto-node "(gnus) Scoring On Other Headers")
 ;; I e s p To RET <your name> RET
 
-(setq gnus-extra-headers '(List-Id)
+(setq gnus-extra-headers '(List-Id To)
       nnmail-extra-headers gnus-extra-headers)
 
 (setq gnus-parameters
