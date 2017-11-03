@@ -1,3 +1,13 @@
 -*- mode: org -*-
 
-[[https://i.imgur.com/guR4ItF.png]]
+My configuration files primarily for FOSS applications.
+
+To setup them I use [[https://www.gnu.org/software/stow/][GNU Stow]] like so:
+
+  : cd dotfiles
+  : stow DIRECTORY
+
+Some files you already have could conflict.  Stow will tell you which
+are.  So make sure to backup them moving somewhere with:
+
+  : mv CONFLICT_CONFIG_FILE BACKUP_DIRECTORY
