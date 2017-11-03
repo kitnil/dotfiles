@@ -1276,7 +1276,11 @@ in the variable `browse-url-mpv-arguments' to mpv."
   (add-hook 'sh-mode-hook
             '(lambda() (local-set-key (kbd "C-<return>") 'eir-eval-in-shell)))
   (add-hook 'lisp-mode-hook
-            '(lambda() (local-set-key (kbd "C-<return>") 'eir-eval-in-slime))))
+            '(lambda() (local-set-key (kbd "C-<return>") 'eir-eval-in-slime)))
+  (add-hook 'python-mode-hook
+            '(lambda() (local-set-key (kbd "C-<return>") 'eir-eval-in-python)))
+  (add-hook 'emacs-lisp-mode-hook
+            '(lambda() (local-set-key (kbd "C-<return>") 'eir-eval-in-ielm))))
 
 (use-package beginend
   :diminish
