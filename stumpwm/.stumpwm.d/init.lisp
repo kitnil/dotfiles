@@ -84,7 +84,7 @@
 
 (defcommand chromium () ()
   "Start or focus chromium."
-  (run-or-raise "chromium-browser" '(:class "Chromium-browser")))
+  (run-or-raise "chromium" '(:class "Chromium-browser")))
 
 (define-key *root-map* (kbd "M-w") "chromium")
 
