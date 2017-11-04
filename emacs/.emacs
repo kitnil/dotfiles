@@ -6,81 +6,1027 @@
 ;;; Commentary:
 ;;
 ;; GNU Emacs configuration file.
+;;
+;; Inspired by https://github.com/jwiegley/dot-emacs
 
 ;;; Code:
 
-(package-initialize)
+(setq user-mail-address "go.wigust@gmail.com")
+(setq user-full-name    "Oleg Pykhalov")
 
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+(setq initial-scratch-message "")
+(setq initial-major-mode 'fundamental-mode)
 
-(setenv "INSIDE_EMACS" (format "%s,comint" emacs-version))
+(when t (setq use-package-verbose t) (use-package benchmark-init))
+
+(setq display-time-24hr-format t)
+(setq calendar-date-style 'european)
+(setq calendar-week-start-day 1)
+
+(setq default-input-method "russian-computer")
 
 (setq load-prefer-newer t)
 
-(setq user-mail-address "go.wigust@gmail.com")
-(setq user-full-name "Oleg Pykhalov")
+(package-initialize)
 
 (setq inhibit-compacting-font-caches t)
 
-(defun find-user-init-file ()
-  "Edit this config."
-  (interactive)
-  (find-file user-init-file))
+(add-hook 'prog-mode-hook (lambda () (setq indent-tabs-mode nil)))
+(setq tab-always-indent 'complete)
 
-(global-set-key (kbd "C-c e c") 'find-user-init-file)
+(tool-bar-mode -1)
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
+(blink-cursor-mode -1)
 
-(defvar default-projects-directory "/srv/git")
+(setq save-place-mode t)
+(setq mouse-yank-at-point t)
+
+(setq vc-follow-symlinks t)
+
+(setq prettify-symbols-unprettify-at-point 'right-edge)
+
+(defconst projects-directory "/srv/git")
 
 (defun list-projects (directory)
-  "Return a list of projects."
+  "Return a list of projects in the DIRECTORY."
   (interactive)
   (directory-files (expand-file-name directory)
                    t
                    "^\\([^.]\\|\\.[^.]\\|\\.\\..\\)"))
 
+(defun copy-current-buffer-file-name ()
+  (interactive)
+  (let ((name (buffer-file-name))) (kill-new name) (message name)))
+
+(defun find-user-init-file ()
+  "Find user init file."
+  (interactive)
+  (find-file user-init-file))
+
+(bind-key "C-c 0"         #'copy-current-buffer-name)
+(bind-key "C-c e c"       #'find-user-init-file)
+(bind-key "<Scroll_Lock>" #'scroll-lock-mode)
+(bind-key "C-c t l"       #'toggle-truncate-lines)
+(bind-key "<C-mouse-4>"   #'text-scale-increase)
+(bind-key "<C-mouse-5>"   #'text-scale-decrease)
+(bind-key "C-c b i"       #'ibuffer)
+(bind-key "C-c b s"       #'scratch)
+(bind-key "<f5>"          #'compile)
+(bind-key "C-c t p"       #'electric-pair-mode)
+(bind-key "C-c m g"       #'gnus)
+(bind-key "C-c m s g"     #'switch-to-gnus)
+(bind-key "C-c t m"       #'show-paren-mode)
+(bind-key "C-c i"         #'imenu)
+(bind-key "C-c f"         #'ffap)
+
+(setq mail-user-agent 'gnus-user-agent)
+(setq send-mail-function #'smtpmail-send-it)
+(setq smtpmail-smtp-server "smtp.gmail.com")
+
+(defun send-buffer-as-mail ()
+  (interactive)
+  (let ((str (buffer-string)))
+    (compose-mail)
+    (save-excursion
+      (message-goto-body)
+      (insert str))))
+
+(put 'narrow-to-region 'disabled nil)
+
+(add-to-list 'auto-mode-alist '("PKGBUILD" . shell-script-mode))
+
+(use-package rainbow-mode :bind (("C-c t r" . rainbow-mode)))
+
+(defun turn-on-truncate-lines ()
+  "Convenience method to turn on `truncate-lines'."
+  (interactive)
+  (toggle-truncate-lines 1))
+
+(defmacro hook-into-modes (func modes)
+  `(dolist (mode-hook ,modes)
+     (add-hook mode-hook ,func)))
+
+(hook-into-modes #'turn-on-truncate-lines
+                 '(dired-mode-hook occur-mode-hook diff-mode-hook))
+
+(add-hook 'message-mode-hook #'flyspell-mode)
+
+(eval-after-load 'dired (progn (turn-on-gnus-dired-mode)
+                               (dired-async-mode t)))
+
+(with-eval-after-load 'dired-x
+  (mapcar (lambda (extension)
+            (add-to-list 'dired-guess-shell-alist-user
+                         `(,extension
+                           ,"mpv --no-resume-playback --keep-open=no")))
+          '("\\.mp4$" "\\.webm$")))
+
+(defun scratch ()
+  "Open scratch buffer."
+  (interactive)
+  (let ((current-mode major-mode))
+    (switch-to-buffer-other-window (get-buffer-create "*scratch*"))
+    (goto-char (point-min))
+    (when (looking-at ";")
+      (forward-line 4)
+      (delete-region (point-min) (point)))
+    (goto-char (point-max))
+    (lisp-interaction-mode)))
+
+(use-package server :config (unless (server-running-p) (server-start)))
+
+(use-package shr
+  :commands eww
+  :bind (("C-c w" . eww))
+  :config (setq shr-width 80) (setq shr-use-fonts nil))
+
+(use-package move-text
+  :bind (("<M-up>" . move-text-up)
+         ("<M-down>" . move-text-down)))
+
+(use-package cc-cmds
+  :mode (("\\.[ch]\\'" . c-mode))
+  :preface
+  (defconst c--prettify-symbols-alist
+    '(("->"     . ?→)
+      ("=="     . ?≡)
+      ("not"    . ?¬)
+      ("&&"     . ?∧)
+      ("||"     . ?∨)
+      ("!="     . ?≠)
+      ("<="     . ?≤)
+      (">="     . ?≥)
+      ("true"  . ?T)
+      ("false" . ?F)))
+  :config
+  (set (make-local-variable 'prettify-symbols-alist)
+       c--prettify-symbols-alist)
+  (mapc (lambda (mode) (add-hook 'c-mode-hook mode))
+        '(show-paren-mode prettify-symbols-mode))
+  (add-to-list 'c-cleanup-list 'space-before-funcall))
+
+(use-package winner
+  :defer 5
+  :config
+  (winner-mode 1)
+  (windmove-default-keybindings))
+
+(use-package hideshow
+  :diminish hs-minor-mode
+  :config (add-hook 'prog-mode-hook 'hs-minor-mode))
+
+(use-package python
+  :mode ("\\.py\\'" . python-mode)
+  :config (setq python-shell-interpreter "python3"))
+
+(use-package saveplace
+  :config (save-place-mode t))
+
+(use-package savehist
+  :defer 5
+  :config (savehist-mode t))
+
+(use-package shell
+  :bind (("C-c s s" . shell)
+         ("C-c s e" . eshell))
+  :config (add-hook 'shell-mode-hook #'guix-prettify-mode))
+
+(use-package whitespace
+  :config
+  (mapc (lambda (font)
+          (set-face-attribute font nil :background nil :foreground "gainsboro"))
+        '(whitespace-space whitespace-indentation))
+  (mapc (lambda (el) (delete el whitespace-style)) '(newline newline-mark))
+  (add-hook 'prog-mode-hook #'whitespace-mode))
+
+(use-package calendar
+  :defer 5
+  :config
+  (defun mkdir-current-date ()
+    "Make directrory with current date."
+    (interactive)
+    (mkdir (apply (lambda (m d y) (format "%s-%s-%s~" m d y))
+                  (calendar-current-date)))))
+
+(use-package time
+  :commands display-time-world
+  :bind (("C-c a a" . display-time-world))
+  :config
+  (setq display-time-world-time-format "%Z\t%d %B %H:%M")
+  (setq display-time-world-list '(("Europe/Moscow"    "Europe/Moscow")
+                                  ("Europe/Berlin"    "Europe/Berlin")
+                                  ("Europe/London"    "Europe/London")
+                                  ("Europe/Istanbul"  "Europe/Istanbul")
+                                  ("America/Winnipeg" "America/Winnipeg")
+                                  ("America/New_York" "America/New_York")
+                                  ("Asia/Tokyo"       "Asia/Tokyo"))))
+
+(use-package info
+  :defer 5
+  :config
+  (info-initialize)
+  (add-to-list 'Info-directory-list "/home/natsu/src/guile-chickadee/doc"))
+
+(use-package info-look :defer 5)
+
+(use-package doc-view :defer 5)
+
+(use-package smartparens
+  :defer 5
+  :config
+  (require 'smartparens-config)
+  (setq sp-base-key-bindings 'sp)
+  (sp-use-smartparens-bindings)
+  (smartparens-global-strict-mode))
+
+(use-package expand-region :bind (("<f8>" . er/expand-region)))
+
+(use-package multiple-cursors
+  :bind (("<f7>" . mc/mark-next-like-this))
+  :config (multiple-cursors-mode))
+
+(use-package tex-mode
+  :mode (("\\.tex\\'" . latex-mode)
+         ("\\.texi\\'" . texinfo-mode))
+  :config (add-hook 'LaTeX-mode-hook 'prettify-symbols-mode))
+
+(use-package semantic
+  :defer t
+  :config
+  (global-semantic-decoration-mode t)
+  (global-semantic-highlight-func-mode t)
+  (global-semantic-show-unmatched-syntax-mode t))
+
+(use-package semantic/util-modes
+  :after semantic
+  :config
+  (add-to-list 'semantic-default-submodes 'global-semantic-stickyfunc-mode))
+
+(use-package lua-mode :mode (("\\.lua\\'" . lua-mode)))
+
+(use-package gtags
+  :after (cc-cmds lua-mode)
+  :config
+  (hook-into-modes (lambda () (gtags-mode 1)) '(c-mode-hook lua-mode-hook)))
+
+(use-package ggtags
+  :after gtags
+  :config
+  (add-hook 'c-mode-common-hook
+            (lambda ()
+              (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
+                (ggtags-mode 1))))
+  (setq ggtags-mode-line-project-name nil)
+  (setq ggtags-highlight-tag nil))
+
+(use-package ido
+  ;; https://masteringemacs.org/article/introduction-to-ido-mode
+  :defer 5
+  :config
+  (setq ido-enable-flex-matching t)
+  (setq ido-use-faces nil)
+  (ido-mode 'buffers))
+
+(use-package flx-ido
+  :after ido
+  :config
+  (flx-ido-mode 1))
+
+(use-package smex
+  :after ido
+  :bind (("M-x"    . smex)
+         ("M-X"    . smex-major-mode-commands)
+         ("<menu>" . smex)))
+
+(use-package ido-vertical-mode :after ido :config (ido-vertical-mode 1))
+
+(use-package helm
+  :defer 5
+  :config
+  (setq helm-locate-project-list (list-projects projects-directory)))
+
+(use-package company
+  :defer 5
+  :config
+  (setq company-clang-insert-arguments nil)
+  (setq company-gtags-insert-arguments nil)
+  (setq company-semantic-insert-arguments nil)
+  (global-company-mode))
+
+(use-package company-quickhelp
+  :after company
+  :config
+  (define-key company-active-map (kbd "C-c h") #'company-quickhelp-manual-begin)
+  (company-quickhelp-mode t))
+
+(use-package company-lua
+  :after company
+  :config (add-to-list 'company-backends 'company-lua))
+
+(use-package yasnippet
+  :defer 5
+  :config
+  (setq yas-snippet-dirs '("~/.emacs.d/snippets"
+                           "~/.guix-profile/share/emacs/yasnippet-snippets/"))
+  (yas-reload-all)
+  (yas-global-mode))
+
+(use-package gitpatch
+  :commands gitpatch-mail
+  :config
+  (setq gitpatch-mail-database (list "guix-patches@gnu.org")))
+
+(use-package gnus
+  :commands gnus
+  :config
+  (defun switch-to-gnus (&optional arg)
+    "Switch to a Gnus related buffer.
+    Candidates are buffers starting with
+     *mail or *reply or *wide reply
+     *Summary or
+     *Group*
+    Use a prefix argument to start Gnus if no candidate exists."
+    (interactive "P")
+    (let (candidate
+          (alist '(("^\\*\\(mail\\|\\(wide \\)?reply\\)" t)
+                   ("^\\*Group")
+                   ("^\\*Summary")
+                   ("^\\*Article" nil (lambda ()
+                                        (buffer-live-p
+                                         gnus-article-current-summary))))))
+      (catch 'none-found
+        (dolist (item alist)
+          (let (last
+                (regexp (nth 0 item))
+                (optional (nth 1 item))
+                (test (nth 2 item)))
+            (dolist (buf (buffer-list))
+              (when (and (string-match regexp (buffer-name buf))
+                         (> (buffer-size buf) 0))
+                (setq last buf)))
+            (cond ((and last (or (not test) (funcall test)))
+                   (setq candidate last))
+                  (optional
+                   nil)
+                  (t
+                   (throw 'none-found t))))))
+      (cond (candidate
+             (switch-to-buffer candidate))
+            (arg
+             (gnus))
+            (t
+             (error "No candidate found"))))))
+
+(use-package notmuch
+  :commands notmuch-search
+  :bind (("C-c m n" . notmuch))
+  :config
+  (setq nnir-notmuch-remove-prefix "/home/natsu/Maildir/")
+
+  (defun notmuch-to-gnus-group (file)
+    "Calculate the Gnus group name from the given file name."
+    (let ((group (file-name-directory
+                  (directory-file-name (file-name-directory file)))))
+      (setq group (replace-regexp-in-string ".*/Maildir/" "nnimap+USER:" group))
+      (setq group (replace-regexp-in-string "/$" "" group))
+      (if (string-match ":$" group)
+          (concat group "INBOX")
+        (replace-regexp-in-string ":\\." ":" group))))
+
+  (defun notmuch-goto-message-in-gnus ()
+    "Open a summary buffer containing the current notmuch article."
+    (interactive)
+    (unless (gnus-alive-p) (with-temp-buffer (gnus)))
+    (let ((group (notmuch-to-gnus-group (notmuch-show-get-filename)))
+          (message-id
+           (replace-regexp-in-string
+            "\"" ""
+            (replace-regexp-in-string "^id:" ""
+                                      (notmuch-show-get-message-id)))))
+      (if (and group message-id)
+          (progn
+            (gnus-summary-read-group group 1) ; show at least one old message
+            (gnus-summary-refer-article message-id))
+        (message "Couldn't get relevant infos for switching to Gnus.")))))
+
 
 ;;;
-;;; Custom set variables
+;;; Org
 ;;;
 
+(use-package org
+  :mode ("\\.notes\\'" . org-mode)
+  :bind (("C-c c c" . org-capture)
+         ("C-c c a" . org-agenda)
+         ("C-c c l" . org-store-link))
+  :config
+  (defun org-compile-latex ()
+    (interactive)
+    (org-latex-export-to-latex)
+    (recompile))
+
+  (setq org-agenda-files nil)
+  (org-babel-do-load-languages 'org-babel-load-languages
+                               '((emacs-lisp . nil)
+                                 (R . t)
+                                 (python . t)
+                                 (shell . t)))
+
+  ;; (defun my-org-confirm-babel-evaluate (lang body)
+  ;;   (not (string= lang "ditaa")))  ; don't ask for ditaa
+  ;; (setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
+
+  (setq org-format-latex-options
+        (plist-put org-format-latex-options :scale 1.5))
+
+  (setq org-todo-keywords
+        '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)")))
+
+  (setq org-capture-templates
+        '(("c" "Note" item (file "~/.notes")
+           "%?")
+
+          ;; Requires org-capture-extension
+          ;; https://github.com/sprig/org-capture-extension
+          ("L" "Protocol Link" item (file "~/.web.org")
+           "[[%:link][%:description]]")
+
+          ("r" "Respond ro email" entry (file+headline "inbox.org" "Email")
+           "[[mailto:%:fromaddress][%:fromname]]"
+           :immediate-finish t
+           :prepend t)
+
+          ("f" "File email" entry (file+headline "inbox.org" "Email")
+           "* %U %a by [[mailto:%:fromaddress][%:fromname]]\n\n%i%?\n"
+           :immediate-finish nil
+           :prepend nil)
+
+          ("t" "Tasks" entry (file+headline ".notes" "Tasks")
+           "* TODO %? \n%T" :prepend t)
+
+          ("i" "TODO" entry (file "/TODO.gpg")
+           "* %?")
+
+          ("p" "pdfview" item (file "~/.pdf-notes")
+           "%a %?")
+
+          ("e" "emacs" plain (file "emacs.org")
+           "%?")
+
+          ("g" "guix" plain (file "guix.org")
+           "%?")
+
+          ("v" "video" plain (file "video.org")
+           "%?")
+
+          ("b" "blog" plain (file "~/public_html/IDEA.org")
+           "%?")))
+  (add-to-list 'org-file-apps '("\\.png\\'" . "feh %s")))
+
+(use-package magit
+  :bind (("C-c v s" . magit-status)
+         ("C-c v p" . magit-dispatch-popup)
+         ("C-c v l" . magit-list-repositories)
+         ("C-c v v" . magit-stage)
+         ("C-c v r" . magit-diff-toggle-refine-hunk))
+  :init
+  (defun update-magit-repository-directories ()
+    (setq magit-repository-directories
+          (list-projects projects-directory)))
+  (add-hook 'after-init-hook 'update-magit-repository-directories)
+  :config
+  (setq magit-log-arguments (list "--graph" "--color" "--decorate" "-n64"))
+  (setq magit-log-section-arguments (list "-n256" "--decorate"))
+  (defun local-magit-initially-hide-unmerged (section)
+    (and (not magit-insert-section--oldroot)
+         (or (eq (magit-section-type section) 'unpushed)
+             (equal (magit-section-value section) "@{upstream}..")
+             (eq (magit-section-type section) 'stashes)
+             (equal (magit-section-value section) "refs/stash"))
+         'hide))
+
+  (add-hook 'magit-section-set-visibility-hook
+            'local-magit-initially-hide-unmerged))
+
+(use-package git-gutter
+  :defer 5
+  :diminish git-gutter-mode
+  :config (global-git-gutter-mode 1))
+
+(use-package browse-at-remote :bind (("C-c v o" . browse-at-remote)))
+
+(use-package elisp-mode
+  :mode (("\\.el\\'" . emacs-lisp-mode)
+         ("\\.emacs\\'" . emacs-lisp-mode))
+  :preface
+  (defconst elisp--prettify-symbols-alist
+    '(("lambda"  . ?λ)
+      ("lambda*" . (?λ (Br . Bl) ?*))
+      ("not"     . ?¬)
+      ("and"     . ?∧)
+      ("or"      . ?∨)
+      ("eq?"     . ≡)
+      ("<="      . ?≤)
+      (">="      . ?≥)
+      ("->"      . ?→)))
+  :config
+  (setq-local prettify-symbols-alist elisp--prettify-symbols-alist)
+  (mapc (lambda (mode) (add-hook 'emacs-lisp-mode-hook mode))
+        '(show-paren-mode prettify-symbols-mode)))
+
+(use-package lisp-mode
+  :defer t
+  :config (add-hook 'after-save-hook 'check-parens nil t))
+
+(use-package scheme
+  :mode (("\\.tmpl\\'" . scheme-mode)
+         ("\\.sxml\\'" . scheme-mode)
+         ("\\.scm\\'" . scheme-mode))
+  :preface
+  (defconst scheme--prettify-symbols-alist
+    '(("lambda"  . ?λ)
+      ("lambda*" . (?λ (Br . Bl) ?*))
+      ("#t"      . ?T)
+      ("#f"      . ?F)
+      ("not"     . ?¬)
+      ("and"     . ?∧)
+      ("or"      . ?∨)
+      ("eq?"     . ≡)
+      ("<="      . ?≤)
+      (">="      . ?≥)
+      ("->"      . ?→)))
+  :config
+  (setq geiser-active-implementations (quote (guile)))
+  (setq-local prettify-symbols-alist scheme--prettify-symbols-alist)
+  (mapc (lambda (mode) (add-hook 'scheme-mode-hook mode))
+        '(show-paren-mode
+          prettify-symbols-mode)))
+
+
+;;;
+;;; Guix
+;;;
+
+(use-package guix
+  :load-path "/home/natsu/src/emacs-guix/elisp"
+  :bind (("C-c g e" . guix-edit)
+         ("C-c g p" . guix)
+         ("C-c g b" . guix-switch-to-buffer)
+         ("C-c g x" . guix-extended-command))
+  :diminish (guix-build-log-minor-mode)
+  :config
+  (add-to-list 'Info-directory-list "/home/natsu/src/guix/doc")
+  (add-hook 'proced-post-display-hook 'guix-prettify-mode)
+  (add-hook 'dired-mode-hook 'guix-prettify-mode)
+  (add-hook 'scheme-mode-hook 'guix-devel-mode)
+  (setq guix-directory "~/src/guix")
+  (setq guix-guile-program '("/home/natsu/src/guix/pre-inst-env"
+                             "guile" "--no-auto-compile"))
+  (setq guix-read-package-name-function #'guix-read-package-name-at-point)
+
+  (use-package guix-utils
+    :after org
+    :config
+    (setq guix-find-file-function 'org-open-file))
+
+  (use-package guix-derivation))
+
+
+;;;
+;;; Geiser
+;;;
+
+(use-package geiser-guile
+  :after scheme
+  :config
+  (add-hook 'scheme-mode-hook #'geiser-mode)
+  (with-eval-after-load 'geiser-guile
+    (add-to-list 'geiser-guile-load-path "/home/natsu/src/guix")
+    (setq geiser-guile-binary '("guile" "--no-auto-compile"))))
+
+(use-package geiser-doc :after geiser-guile)
+
+
+;;;
+;;; Slime
+;;;
+
+(use-package slime
+  :defer t
+  :config
+  (load (expand-file-name "~/quicklisp/slime-helper.el"))
+  (setq inferior-lisp-program "/home/natsu/.guix-profile/bin/sbcl")
+
+  (require 'cl)
+
+  (defun slime-style-init-command (port-filename _coding-system extra-args)
+    "Return a string to initialize Lisp."
+    (let ((loader (if (file-name-absolute-p slime-backend)
+                      slime-backend
+                    (concat slime-path slime-backend))))
+      ;; Return a single form to avoid problems with buffered input.
+      (format "%S\n\n"
+              `(progn
+                 (load ,(slime-to-lisp-filename (expand-file-name loader))
+                       :verbose t)
+                 (funcall (read-from-string "swank-loader:init"))
+                 (funcall (read-from-string "swank:start-server")
+                          ,(slime-to-lisp-filename port-filename)
+                          ,@extra-args)))))
+
+  (defun slime-style (&optional style)
+    (interactive
+     (list (intern-soft (read-from-minibuffer "Style: " "nil"))))
+    (lexical-let ((style style))
+      (slime-start
+       :init (lambda (x y)
+               (slime-style-init-command
+                x y `(:style ,style :dont-close t)))))))
+
+(use-package slime-company
+  :after company
+  :config
+  (slime-setup '(slime-company)))
+
+
+;;;
+;;; Misc
+;;;
+
+(use-package avy
+  :defer 5
+  :config (avy-setup-default))
+
+(use-package aggressive-indent
+  :defer 5
+  :bind (("C-c t a" . aggressive-indent-mode))
+  :init
+  (mapc (lambda (mode) (add-hook mode #'aggressive-indent-mode))
+        '(scheme-mode-hook emacs-lisp-mode-hook lisp-mode-hook c-mode-hook)))
+
+(use-package browse-url
+  :defer t
+  :config
+  (setq browse-url-mpv-program "mpv")
+  (setq browse-url-mpv-arguments nil)
+  (setq browse-url-mpv-remote-program "~/bin/mpv-remote")
+  (defun browse-url-mpv (url &optional new-window)
+    "Ask the mpv video player to load URL.
+Defaults to the URL around or before point.  Passes the strings
+in the variable `browse-url-mpv-arguments' to mpv."
+    (interactive (browse-url-interactive-arg "URL: "))
+    (setq url (browse-url-encode-url url))
+    (let* ((process-environment (browse-url-process-environment)))
+      (apply 'start-process
+             (concat "mpv " url) nil
+             browse-url-mpv-program
+             (append
+              browse-url-mpv-arguments
+              (list url)))))
+  (add-to-list 'browse-url-browser-function
+               '("^https?://debbugs\\.gnu\\.org/.*" . debbugs-browse-url))
+
+  (setq browse-url-browser-function
+        `(("^ftp://.*" . browse-ftp-tramp)
+          ("^https?://w*\\.?youtube.com/watch\\?v=.*" . browse-url-mpv)
+          ("^https?://w*\\.?youtube.com/.*" . browse-url-chromium)
+          ("^https?://w*\\.?github.com/.*" . browse-url-chromium)
+          ("." . browse-url-conkeror)))
+
+  (defun browse-url-mpv-remote (url &optional new-window)
+    "Ask the mpv video player to load URL.
+Defaults to the URL around or before point.  Passes the strings
+in the variable `browse-url-mpv-arguments' to mpv."
+    (interactive (browse-url-interactive-arg "URL: "))
+    (setq url (browse-url-encode-url url))
+    (let* ((process-environment (browse-url-process-environment)))
+      (apply 'start-process
+             (concat "mpv " url) nil
+             browse-url-mpv-remote-program
+             (append
+              browse-url-mpv-remote-arguments
+              (list (car (split-string url "&"))))))))
+
+(use-package debbugs
+  :defer t
+  :config
+  (use-package debbugs-browse
+    :after browse-url
+    :config
+    (setq debbugs-gnu-default-packages (list "guix" "guix-patches"))
+    (defun debbugs-gnu-guix ()
+      (interactive)
+      (debbugs-gnu '("serious" "important" "normal") '("guix")))
+    (defun debbugs-gnu-guix-patches ()
+      (interactive)
+      (debbugs-gnu '("serious" "important" "normal") '("guix-patches")))))
+
+(use-package which-key
+  :defer 5
+  :diminish which-key-mode
+  :config (which-key-mode))
+
+(use-package dired-open
+  :defer 5
+  :after dired
+  :config
+  (setq dired-open-extensions
+        (quote
+         (("docx" . "libreoffice")
+          ("doc" . "libreoffice")
+          ("xlsx" . "libreoffice")
+          ("xls" . "libreoffice")
+          ("mp3" . "mpv")
+          ("webm" . "mpv")
+          ("mkv" . "mpv")
+          ("mp4" . "mpv")
+          ("flv" . "mpv")
+          ("png" . "feh")
+          ("jpg" . "feh")
+          ("jpeg" . "feh")))))
+
+(use-package debbugs-gnu
+  :commands debbugs-gnu
+  :config (add-to-list 'debbugs-gnu-all-packages "guix-patches"))
+
+(use-package undo-tree
+  :diminish undo-tree-mode
+  :bind (("C-c u" . undo-tree-visualize))
+  :config (add-hook 'prog-mode-hook 'undo-tree-mode))
+
+(use-package projectile-global-mode
+  :bind (("C-c p m" . projectile-commander))
+  :init
+  (setq projectile-mode-line nil)
+  (projectile-global-mode)
+  :config
+  (setq projectile-completion-system (quote ido))
+  (setq projectile-use-git-grep t))
+
+(use-package web-mode
+  :mode (("\\.phtml\\'"     . web-mode)
+         ("\\.tpl\\.php\\'" . web-mode)
+         ("\\.[agj]sp\\'"   . web-mode)
+         ("\\.as[cp]x\\'"   . web-mode)
+         ("\\.erb\\'"       . web-mode)
+         ("\\.mustache\\'"  . web-mode)
+         ("\\.djhtml\\'"    . web-mode)
+         ("\\.php?\\'"      . web-mode)
+         ("\\.html?\\'"     . web-mode))
+  :config
+  (setq-default web-mode-markup-indent-offset 2)
+  (setq-default web-mode-code-indent-offset 2)
+  (setq-default web-mode-css-indent-offset 2)
+  (setq-default web-mode-style-padding 2)
+  (add-hook 'web-mode-hook 'tern-mode))
+
+(use-package pdf-tools
+  :mode (("\\.pdf\\'" . pdf-view-mode))
+  :config
+  (add-hook 'TeX-after-compilation-finished-functions
+            #'TeX-revert-document-buffer)
+  (add-hook 'pdf-view-mode-hook 'auto-revert-mode)
+  (setq TeX-view-program-selection '((output-pdf "PDF Tools")))
+  (setq TeX-save-query nil))
+
+(use-package google-translate-mode
+  :bind   (("C-c t t" . google-translate-mode))
+  :config (setq trans-target "ru"))
+
+(use-package imaxima
+  :commands imaxima
+  :config   (setq imaxima-scale-factor 1.5))
+
+(use-package engine-mode
+  :config
+  (engine-mode t)
+  (setq engine/browser-function 'browse-url-chromium)
+  (defengine searx
+    "http://searx.tk/?q=%s"
+    :keybinding "x")
+  (defengine youtube
+    "http://www.youtube.com/results?aq=f&oq=&search_query=%s"
+    :keybinding "y")
+  (defun searx-email ()
+    (interactive)
+    (require 's)
+    (engine/search-searx
+     (s-chop-prefix "<" (s-chop-suffix ">" (thing-at-point 'email))))))
+
+(use-package flycheck
+  :defer 5
+  :config
+  (add-hook 'prog-mode-hook 'flycheck-mode)
+  (setq flycheck-display-errors-delay 2))
+
+(use-package sr-speedbar
+  :bind (("C-c s b" . sr-speedbar-toggle)))
+
+(use-package haskell-mode
+  :defer t
+  :preface
+  (defconst haskell--prettify-symbols-alist
+    '(("::"                 . ?∷)
+      ("forall"             . ?∀)
+      ("exists"             . ?∃)
+      ("->"                 . ?→)
+      ("<-"                 . ?←)
+      ("=>"                 . ?⇒)
+      ("~>"                 . ?⇝)
+      ("<~"                 . ?⇜)
+      ("."                  . ?∘)
+      ("<>"                 . ?⨂)
+      ("msum"               . ?⨁)
+      ("\\"                 . ?λ)
+      ("not"                . ?¬)
+      ("&&"                 . ?∧)
+      ("||"                 . ?∨)
+      ("/="                 . ?≠)
+      ("<="                 . ?≤)
+      (">="                 . ?≥)
+      ("<<<"                . ?⋘)
+      (">>>"                . ?⋙)
+      ("`elem`"             . ?∈)
+      ("`notElem`"          . ?∉)
+      ("`member`"           . ?∈)
+      ("`notMember`"        . ?∉)
+      ("`union`"            . ?∪)
+      ("`intersection`"     . ?∩)
+      ("`isSubsetOf`"       . ?⊆)
+      ("`isProperSubsetOf`" . ?⊂)
+      ("undefined"          . ?⊥)
+      ("True"               . ?T)
+      ("False"              . ?F)
+      (".."                 . ?…)))
+  :config
+  (set (make-local-variable 'prettify-symbols-alist)
+       haskell--prettify-symbols-alist)
+  (mapc (lambda (mode) (add-hook 'inferior-haskell-mode-hook mode))
+        '(show-paren-mode
+          prettify-symbols-mode)))
+
+(use-package rjsx-mode :mode (("\\.js\\'" . rjsx-mode)))
+
+(use-package tern
+  :after rjsx-mode
+  :config (add-hook 'rjsx-mode-hook 'tern-mode))
+
+(use-package company-tern
+  :after company
+  :config (add-to-list 'company-backends 'company-tern))
+
+(use-package emms
+  :bind (("C-c m m" . emms))
+  :config
+  (require 'emms-playlist-mode)
+  (setq emms-source-file-default-directory "~/Music"))
+
+(use-package emms-player-mpv
+  :after emms
+  :config
+  (add-to-list 'emms-player-list 'emms-player-mpv)
+  (mapcar (lambda (parameter)
+            (add-to-list 'emms-player-mpv-parameters parameter))
+          '("--no-resume-playback"
+            "--keep-open=no")))
+
+(use-package wordgen
+  :defer 5
+  :config
+  (defun random-words ()
+    (interactive)
+    (mapcar (lambda (word) (insert (concat word " ")))
+            (wordgen
+             '((result (concat-reeval [(2 1) (5 2) (4 3)] syl))
+               (syl (++ c v coda))
+               (c [(4 "p") (5 "t") (5 "k") (3 "m")
+                   (4 "n") (3 "s") (4 "l") (3 "r")])
+               (v ["a" "e" "i" "o" "u"])
+               (coda [(4 "") "m" "n"]))
+             :word-count 5)))
+
+  (defun random-words-javascript ()
+    (interactive)
+    (insert "[")
+    (mapcar (lambda (word) (insert (concat "'" word "'" ", ")))
+            (wordgen
+             '((result (concat-reeval [(2 1) (5 2) (4 3)] syl))
+               (syl (++ c v coda))
+               (c [(4 "p") (5 "t") (5 "k") (3 "m")
+                   (4 "n") (3 "s") (4 "l") (3 "r")])
+               (v ["a" "e" "i" "o" "u"])
+               (coda [(4 "") "m" "n"]))
+             :word-count 5))
+    (insert "]")))
+
+(use-package indium-repl
+  :defer t
+  :config
+  (defvar indium-repl-prettify-symbols-alist
+    '(("function" . 955)
+      ("=>" . ?⇒)))
+  (defun my-indium-repl-mode-hook ()
+    (setq-local prettify-symbols-alist indium-repl-prettify-symbols-alist)
+    (prettify-symbols-mode)
+    (show-paren-mode))
+  (add-hook 'js2-mode-hook 'my-indium-repl-mode-hook)
+  (add-hook 'indium-repl-mode-hook 'my-indium-repl-mode-hook))
+
+(use-package markdown-mode
+  :defer t
+  :config (setq markdown-fontify-code-blocks-natively t))
+
+(use-package bash-completion
+  :after shell
+  :config
+  (autoload 'bash-completion-dynamic-complete
+    "bash-completion" "BASH completion hook")
+  (add-hook 'shell-dynamic-complete-functions
+            'bash-completion-dynamic-complete))
+
+(use-package writeroom-mode
+  :commands writeroom-mode
+  :config
+  (setq writeroom-bottom-divider-width 0)
+  (defun manoj-dark-more ()
+    "Make fringes and header dark."
+    (custom-theme-set-faces
+     'manoj-dark
+     '(fringe ((t (:background "black" :foreground "Wheat"))))
+     '(header-line
+       ((t (:background "black" :foreground "grey90" :height 0.9))))))
+  (defun manoj-dark-default ()
+    "Make fringes and header default color."
+    (custom-theme-set-faces
+     'manoj-dark
+     '(fringe ((t (:background "grey30" :foreground "Wheat"))))
+     '(header-line
+       ((t (:box (:line-width -1 :color "grey20" :style released-button)
+                 :background "grey20"
+                 :foreground "grey90"
+                 :height 0.9))))))
+  (add-hook 'writeroom-mode-hook (lambda () (if writeroom-mode
+                                           (manoj-dark-more)
+                                         (manoj-dark-default)))))
+
+(use-package eval-in-repl
+  :defer 30
+  :config
+  (add-hook 'geiser-mode-hook
+            (lambda () (local-set-key (kbd "<C-return>") 'eir-eval-in-geiser)))
+  (add-hook 'sh-mode-hook
+            (lambda () (local-set-key (kbd "C-<return>") 'eir-eval-in-shell)))
+  (add-hook 'lisp-mode-hook
+            (lambda () (local-set-key (kbd "C-<return>") 'eir-eval-in-slime)))
+  (add-hook 'python-mode-hook
+            (lambda () (local-set-key (kbd "C-<return>") 'eir-eval-in-python)))
+  (add-hook 'emacs-lisp-mode-hook
+            (lambda () (local-set-key (kbd "C-<return>") 'eir-eval-in-ielm))))
+
+(use-package beginend
+  :defer 5
+  :diminish (beginend-bs-mode
+             beginend-compilation-mode
+             beginend-dired-mode
+             beginend-elfeed-search-mode
+             beginend-global-mode
+             beginend-ibuffer-mode
+             beginend-magit-status-mode
+             beginend-message-mode
+             beginend-notmuch-search-mode
+             beginend-occur-mode
+             beginend-org-agenda-mode
+             beginend-prodigy-mode
+             beginend-prog-mode
+             beginend-prog-mode
+             beginend-recentf-dialog-mode
+             beginend-vc-dir-mode)
+  :config   (beginend-global-mode))
+
+(use-package elfeed
+  :commands elfeed
+  :config
+  (setq elfeed-feeds '("http://nullprogram.com/feed/"
+                       "http://planet.emacsen.org/atom.xml")))
+
+(use-package shift-number
+  :load-path "/home/natsu/src/emacs-shift-number"
+  :bind (("C-c C-=" . shift-number-up)
+         ("C-c C--" . shift-number-down)))
+
+(benchmark-init/show-durations-tabulated)
+
+;; (benchmark-init/show-durations-tree)
+
+;; ucs-normalize
+
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(custom-safe-themes
-   (quote
-    ("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" "d677ef584c6dfc0697901a44b885cc18e206f05114c8a3b7fde674fce6180879" "a8245b7cc985a0610d71f9852e9f2767ad1b852c2bdea6f4aadc12cce9c4d6d0" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
- '(debbugs-gnu-default-packages (quote ("guix" "guix-patches")))
- '(default-input-method "russian-computer")
- '(geiser-guile-binary "guile")
- '(gitpatch-mail-database (quote ("guix-patches@gnu.org")))
- '(ido-mode (quote buffer) nil (ido))
- '(imaxima-scale-factor 1.5)
- '(indent-tabs-mode nil)
- '(magit-auto-revert-mode nil)
- '(magit-log-arguments (quote ("--graph" "--color" "--decorate" "-n256")))
- '(magit-log-section-arguments (quote ("-n256" "--decorate")))
- '(mouse-yank-at-point t)
- '(nnir-notmuch-remove-prefix "/home/natsu/Maildir/")
- '(notmuch-saved-searches
-   (quote
-    ((:name "inbox" :query "tag:inbox" :key "i")
-     (:name "unread" :query "tag:unread" :key "u")
-     (:name "flagged" :query "tag:flagged" :key "f")
-     (:name "sent" :query "tag:sent" :key "t")
-     (:name "drafts" :query "tag:draft" :key "d")
-     (:name "all mail" :query "*" :key "a")
-     (:name "today" :query "date:today")
-     (:name "leti-user" :query "from:leti-user@googlegroups.com tag:unread")
-     (:name "patch-today" :query "subject:patch date:today")
-     (:name "youtube" :query "from:noreply@youtube.com")
-     (:name "youtube-today" :query "from:noreply@youtube.com date:today")
-     (:name "youtube-unread" :query "from:noreply@youtube.com tag:unread")
-     (:name "headhunter-unread" :query "from:no_reply@hh.ru tag:unread")
-     (:name "artgames" :query "tag:unread subject:ArtGames LP")
-     (:name "my-email" :query "from:go.wigust@gmail.com"))))
- '(org-agenda-files nil)
  '(safe-local-variable-values
    (quote
     ((eval add-to-list
@@ -134,17 +1080,7 @@
      (eval modify-syntax-entry 43 "'")
      (eval modify-syntax-entry 36 "'")
      (eval modify-syntax-entry 126 "'")
-     (bug-reference-bug-regexp . "<https?://\\(debbugs\\|bugs\\)\\.gnu\\.org/\\([0-9]+\\)>"))))
- '(scroll-bar-mode nil)
- '(send-mail-function (quote smtpmail-send-it))
- '(smtpmail-smtp-server "smtp.gmail.com")
- '(smtpmail-smtp-service 25)
- '(sp-base-key-bindings (quote sp))
- '(tab-always-indent (quote complete))
- '(tool-bar-mode nil)
- '(trans-target "ru")
- '(vc-follow-symlinks t)
- '(x-underline-at-descent-line t))
+     (bug-reference-bug-regexp . "<https?://\\(debbugs\\|bugs\\)\\.gnu\\.org/\\([0-9]+\\)>")))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -157,1162 +1093,6 @@
  '(sml/position-percentage ((t (:foreground "black"))))
  '(sml/process ((t (:foreground "red"))))
  '(sml/read-only ((t (:inherit sml/not-modified :foreground "black" :weight normal)))))
-(put 'narrow-to-region 'disabled nil)
 
-
-;;;
-;;; Highlight
-;;;
-
-(use-package hi-lock
-  :config
-  (setq highlight-words-list
-        '(("proced" . "font-lock-function-name-face")
-          ("expres" . "bold")
-          ("function" . "font-lock-function-name-face")
-          ("case" . "font-lock-keyword-face")
-          ("symbol" . "bold")
-          ("compound" . "font-lock-function-name-face")
-          ("condition" . "font-lock-keyword-face")
-          ("predicate" . "bold")
-          ("value" . "bold")
-          ("decompos" . "font-lock-function-name-face")
-          ("define" . "font-lock-keyword-face")))
-  (defun me-info-highlight-words
-      (lambda ()
-        (mapcar (lambda (word-font)
-                  (font-lock-add-keywords
-                   nil `(,(concat "\\<\\(" (car word-font) "\\)") 1
-                         ,(cdr word-font) t)))
-                highlight-words-list))))
-
-(use-package rainbow-mode
-  :bind (("C-c t r" . rainbow-mode)))
-
-(use-package rainbow-identifiers)
-
-(use-package rainbow-delimiters
-  :config (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
-
-(use-package hl-todo
-  :config
-  (add-hook 'latex-mode-hook 'hl-todo-mode)
-  (add-hook 'prog-mode-hook 'hl-todo-mode))
-
-
-;;;
-;;; Built in
-;;;
-
-(add-hook 'occur-mode-hook (lambda () (setq-local truncate-lines t)))
-
-(use-package saveplace
-  :config
-  (save-place-mode t))
-
-(use-package simple
-  :bind (("C-c t l" . toggle-truncate-lines)))
-
-(use-package scroll-lock
-  :bind (("<Scroll_Lock>" . scroll-lock-mode)))
-
-(use-package mwheel
-  :bind (("<C-mouse-4>" . text-scale-increase)
-         ("<C-mouse-5>" . text-scale-decrease)))
-
-(use-package menu-bar
-  :preface
-  (menu-bar-mode 0))
-
-(use-package dired
-  :commands dired-mode
-  :config
-  (defun my-dired-mode-hook ()
-    (turn-on-gnus-dired-mode)
-    (dired-async-mode t)
-    (setq-local truncate-lines t))
-  (add-hook 'dired-mode-hook 'my-dired-mode-hook)
-  (with-eval-after-load 'dired-x
-    (mapcar (lambda (extension)
-              (add-to-list 'dired-guess-shell-alist-user
-                           `(,extension
-                             ,"mpv --no-resume-playback --keep-open=no")))
-            '("\\.mp4$" "\\.webm$"))))
-
-(use-package ibuffer
-  :bind (("C-c b i" . ibuffer)
-         ("C-c b s" . scratch))
-  :preface
-  (defun scratch ()
-    (interactive)
-    (let ((current-mode major-mode))
-      (switch-to-buffer-other-window (get-buffer-create "*scratch*"))
-      (goto-char (point-min))
-      (when (looking-at ";")
-        (forward-line 4)
-        (delete-region (point-min) (point)))
-      (goto-char (point-max))
-      (lisp-interaction-mode))))
-
-(use-package diff-mode
-  :config
-  (defun my-diff-mode-hook ()
-    (setq-local truncate-lines t)
-    (setq ediff-window-setup-function 'ediff-setup-windows-default))
-  (defun ediff-setup-windows-default (buffer-A buffer-B buffer-C control-buffer)
-    (funcall 'ediff-setup-windows-plain
-             buffer-A buffer-B buffer-C control-buffer))
-  (add-hook 'diff-mode-hook 'my-diff-mode-hook))
-
-(use-package compile
-  :bind ("<f5>" . recompile))
-
-(use-package server
-  :config
-  (unless (server-running-p)
-    (server-start)))
-
-(use-package shr
-  :bind (("C-c w" . eww))
-  :config
-  (setq shr-width 80)
-  (setq shr-use-fonts nil))
-
-(use-package elec-pair
-  :disabled
-  :bind (("C-c t p" . electric-pair-mode))
-  :config
-  (add-hook 'c-mode-hook 'electric-pair-mode)
-  (add-hook 'python-mode-hook 'electric-pair-mode))
-
-(use-package cc-cmds
-  :bind (("<M-up>" . move-text-up)
-         ("<M-down>" . move-text-down))
-  :preface
-  (defvar c-mode-prettify-symbols-alist
-    '(("->"     . ?→)
-
-      ("=="     . ?≡)
-      ("not"    . ?¬)
-      ("&&"     . ?∧)
-      ("||"     . ?∨)
-      ("!="     . ?≠)
-      ("<="     . ?≤)
-      (">="     . ?≥)
-
-      ("true"  . ?T)
-      ("false" . ?F)))
-  :config
-  (defun my-c-mode-hook ()
-    (setq-local prettify-symbols-alist c-mode-prettify-symbols-alist)
-    (prettify-symbols-mode)
-    (add-to-list 'c-cleanup-list 'space-before-funcall))
-  (add-hook 'c-mode-hook 'my-c-mode-hook))
-
-(use-package paren
-  :bind (("C-c t m" . show-paren-mode)))
-
-(use-package ffap
-  :config (ffap-bindings))
-
-(use-package winner
-  :config
-  (winner-mode 1)
-  (windmove-default-keybindings))
-
-(use-package pinentry
-  :config (pinentry-start))
-
-(use-package hideshow
-  :diminish hs-minor-mode
-  :config (add-hook 'prog-mode-hook 'hs-minor-mode))
-
-(use-package python
-  :config (setq python-shell-interpreter "python3"))
-
-(use-package savehist-mode
-  :config (savehist-mode t))
-
-(use-package save-place-mode
-  :config (save-place-mode t))
-
-(use-package shell
-  :bind(("C-c s s" . shell)
-         ("C-c s e" . eshell))
-  :config (add-hook 'shell-mode-hook 'guix-prettify-mode))
-
-(use-package whitespace
-  :bind (("C-c t w" . whitespace-mode))
-  :config
-  (set-face-attribute 'whitespace-space
-                      nil :background nil :foreground "dim gray")
-  (mapcar (lambda (el)
-            (delete el whitespace-style))
-          '(newline newline-mark)))
-
-(use-package calendar
-  :commands calendar-current-date
-  :config
-  (setq calendar-date-style 'european
-        calendar-week-start-day 1)
-  (defun mkdir-current-date ()
-    (interactive)
-    (mkdir (apply (lambda (m d y) (format "%s-%s-%s~" m d y))
-                  (calendar-current-date)))))
-
-(use-package time
-  :bind (("C-c a a" . display-time-world))
-  :config
-  (setq display-time-24hr-format t)
-  (setq display-time-world-time-format "%Z\t%d %B %H:%M")
-  (setq display-time-world-list '(("Europe/Moscow"    "Europe/Moscow")
-                                  ("Europe/Berlin"    "Europe/Berlin")
-                                  ("Europe/London"    "Europe/London")
-                                  ("Europe/Istanbul"  "Europe/Istanbul")
-                                  ("America/Winnipeg" "America/Winnipeg")
-                                  ("America/New_York" "America/New_York")
-                                  ("Asia/Tokyo"       "Asia/Tokyo"))))
-
-(use-package info-look)
-
-(use-package info
-  :config (info-initialize))
-
-(use-package doc-view)
-
-(use-package time
-  :commands display-time
-  :config (setq display-time-24hr-format t))
-
-(use-package info-look)
-
-(use-package info
-  :config (info-initialize))
-
-(use-package doc-view)
-
-
-;;;
-;;; Structured editing
-;;;
-
-(use-package smartparens
-  :config
-  (require 'smartparens-config)
-  (add-hook 'prog-mode-hook 'smartparens-strict-mode)
-  (add-hook 'shell-mode-hook 'smartparens-strict-mode))
-
-
-;;;
-;;; Selection
-;;;
-
-(use-package expand-region
-  :bind (("<f8>" . er/expand-region)))
-
-(use-package multiple-cursors
-  :bind (("<f7>" . mc/mark-next-like-this))
-  :config (multiple-cursors-mode))
-
-(use-package tex-mode
-  :config
-  (add-hook 'LaTeX-mode-hook 'prettify-symbols-mode)
-  (defun compile-latex ()
-    (interactive)
-    (org-latex-export-to-latex)
-    (recompile)))
-
-(use-package imenu
-  :bind (("C-c i" . imenu)))
-
-
-;;;
-;;; Tags
-;;;
-
-(use-package semantic
-  :config
-  (global-semantic-decoration-mode t)
-  (global-semantic-highlight-func-mode t)
-  (global-semantic-show-unmatched-syntax-mode t))
-
-(use-package semantic/util-modes
-  :after semantic
-  :config
-  (add-to-list 'semantic-default-submodes 'global-semantic-stickyfunc-mode))
-
-(use-package gtags
-  :config
-  (add-hook 'c-mode-hook '(lambda () (gtags-mode 1)))
-  (add-hook 'lua-mode-hook '(lambda () (gtags-mode 1))))
-
-(use-package ggtags
-  :after gtags
-  :config
-  (add-hook 'c-mode-common-hook
-            (lambda ()
-              (when (derived-mode-p 'c-mode 'c++-mode 'java-mode)
-                (ggtags-mode 1))))
-  (setq ggtags-mode-line-project-name nil)
-  (setq ggtags-highlight-tag nil))
-
-
-;;;
-;;; Completion
-;;;
-
-(use-package flx-ido
-  :config
-  (flx-ido-mode 1)
-  ;; disable ido faces to see flx highlights.
-  (setq ido-enable-flex-matching t)
-  (setq ido-use-faces nil))
-
-(use-package smex
-  :bind (("M-x" . smex)
-         ("M-X" . smex-major-mode-commands)
-         ("<menu>" . smex)))
-
-(use-package ido-vertical-mode
-  :config (ido-vertical-mode 1))
-
-(use-package helm
-  :config
-  (setq helm-locate-project-list (list-projects default-projects-directory)))
-
-(use-package company
-  :diminish company-mode
-  :config
-  (add-hook 'prog-mode-hook 'company-mode)
-  (add-hook 'slime-repl-mode-hook 'company-mode)
-  (setq company-clang-insert-arguments nil)
-  (setq company-gtags-insert-arguments nil)
-  (setq company-semantic-insert-arguments nil))
-
-(use-package company-quickhelp
-  :after company
-  :config
-  (eval-after-load 'company
-    '(define-key company-active-map
-       (kbd "C-c h") #'company-quickhelp-manual-begin))
-  (company-quickhelp-mode t))
-
-(use-package company-lua
-  :after company
-  :config (add-to-list 'company-backends 'company-lua))
-
-(use-package yasnippet
-  :diminish yas-minor-mode
-  :config
-  (setq yas-snippet-dirs
-        '("~/.emacs.d/snippets"
-          "~/.guix-profile/share/emacs/yasnippet-snippets/"))
-  (yas-reload-all)
-  (add-hook 'prog-mode-hook 'yas-minor-mode)
-  (add-hook 'latex-mode-hook 'yas-minor-mode)
-  (add-hook 'message-mode-hook 'yas-minor-mode))
-
-
-;;;
-;;; Email
-;;;
-
-(use-package gnus
-  :bind (("C-c m g" . gnus)
-         ("C-c m s g" . switch-to-gnus))
-  :preface
-  (setq mail-user-agent 'gnus-user-agent)
-  :config
-  (add-hook 'message-sent-hook 'gnus-score-followup-thread)
-
-  (defun send-buffer-as-mail ()
-    (interactive)
-    (let ((str (buffer-string)))
-      (compose-mail)
-      (save-excursion
-        (message-goto-body)
-        (insert str))))
-
-  (defun switch-to-gnus (&optional arg)
-    "Switch to a Gnus related buffer.
-    Candidates are buffers starting with
-     *mail or *reply or *wide reply
-     *Summary or
-     *Group*
-    Use a prefix argument to start Gnus if no candidate exists."
-    (interactive "P")
-    (let (candidate
-          (alist '(("^\\*\\(mail\\|\\(wide \\)?reply\\)" t)
-                   ("^\\*Group")
-                   ("^\\*Summary")
-                   ("^\\*Article" nil (lambda ()
-                                        (buffer-live-p
-                                         gnus-article-current-summary))))))
-      (catch 'none-found
-        (dolist (item alist)
-          (let (last
-                (regexp (nth 0 item))
-                (optional (nth 1 item))
-                (test (nth 2 item)))
-            (dolist (buf (buffer-list))
-              (when (and (string-match regexp (buffer-name buf))
-                         (> (buffer-size buf) 0))
-                (setq last buf)))
-            (cond ((and last (or (not test) (funcall test)))
-                   (setq candidate last))
-                  (optional
-                   nil)
-                  (t
-                   (throw 'none-found t))))))
-      (cond (candidate
-             (switch-to-buffer candidate))
-            (arg
-             (gnus))
-            (t
-             (error "No candidate found")))))
-
-  (mailcap-add-mailcap-entry "image"
-                             "jpeg"
-                             '((viewer  . "feh %s")
-                               (type    . "image/jpeg")))
-  (mailcap-add-mailcap-entry "image"
-                             "jpg"
-                             '((viewer  . "feh %s")
-                               (type    . "image/jpg"))))
-
-(use-package notmuch
-  :preface (setq mail-user-agent 'gnus-user-agent)
-  :commands notmuch-search
-  :bind (("C-c m n" . notmuch))
-  :config
-  (defun notmuch-to-gnus-group (file)
-    "Calculate the Gnus group name from the given file name."
-    (let ((group (file-name-directory (directory-file-name (file-name-directory file)))))
-      (setq group (replace-regexp-in-string ".*/Maildir/" "nnimap+USER:" group))
-      (setq group (replace-regexp-in-string "/$" "" group))
-      (if (string-match ":$" group)
-          (concat group "INBOX")
-        (replace-regexp-in-string ":\\." ":" group))))
-
-  (defun notmuch-goto-message-in-gnus ()
-    "Open a summary buffer containing the current notmuch article."
-    (interactive)
-    (unless (gnus-alive-p) (with-temp-buffer (gnus)))
-    (let ((group (notmuch-to-gnus-group (notmuch-show-get-filename)))
-          (message-id
-           (replace-regexp-in-string "\"" ""
-                                     (replace-regexp-in-string "^id:" ""
-                                                               (notmuch-show-get-message-id)))))
-      (if (and group message-id)
-          (progn
-            (gnus-summary-read-group group 1) ; have to show at least one old message
-            (gnus-summary-refer-article message-id)) ; simpler than org-gnus method?
-        (message "Couldn't get relevant infos for switching to Gnus.")))))
-
-
-;;;
-;;; Org
-;;;
-
-(use-package org
-  :mode ("\\.notes\\'" . org-mode)
-  :bind (("C-c c c" . org-capture)
-         ("C-c c a" . org-agenda)
-         ("C-c c l" . org-store-link))
-  :config
-  (org-babel-do-load-languages 'org-babel-load-languages
-                               '((emacs-lisp . nil)
-                                 (R . t)
-                                 (python . t)
-                                 (shell . t)))
-
-  ;; (defun my-org-confirm-babel-evaluate (lang body)
-  ;;   (not (string= lang "ditaa")))  ; don't ask for ditaa
-  ;; (setq org-confirm-babel-evaluate 'my-org-confirm-babel-evaluate)
-
-  (setq org-babel-python-command python-shell-interpreter)
-
-  (setq org-format-latex-options
-        (plist-put org-format-latex-options :scale 1.5))
-
-  (setq org-todo-keywords
-        '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)")))
-
-  (setq org-capture-templates
-        '(("c" "Note" item (file "~/.notes")
-           "%?")
-
-          ;; Requires org-capture-extension
-          ;; https://github.com/sprig/org-capture-extension
-          ("L" "Protocol Link" item (file "~/.web.org")
-           "[[%:link][%:description]]")
-
-          ("r" "Respond ro email" entry (file+headline "inbox.org" "Email")
-           "[[mailto:%:fromaddress][%:fromname]]"
-           :immediate-finish t
-           :prepend t)
-
-          ("f" "File email" entry (file+headline "inbox.org" "Email")
-           "* %U %a by [[mailto:%:fromaddress][%:fromname]]\n\n%i%?\n"
-           :immediate-finish nil
-           :prepend nil)
-
-          ("t" "Tasks" entry (file+headline ".notes" "Tasks")
-           "* TODO %? \n%T" :prepend t)
-
-          ("i" "TODO" entry (file "/TODO.gpg")
-           "* %?")
-
-          ("p" "pdfview" item (file "~/.pdf-notes")
-           "%a %?")
-
-          ("e" "emacs" plain (file "emacs.org")
-           "%?")
-
-          ("g" "guix" plain (file "guix.org")
-           "%?")
-
-          ("v" "video" plain (file "video.org")
-           "%?")
-
-          ("b" "blog" plain (file "~/public_html/IDEA.org")
-           "%?")))
-
-  ;; (org-link-set-parameters "file"
-  ;;                   :face (lambda (path)
-  ;;                           (when (not (file-remote-p path))
-  ;;                             (if (file-exists-p path)
-  ;;                                 'org-link 'org-warning))))
-
-  ;; (defun my-org-mode-hook ()
-  ;;   (dolist (face '(org-level-1 org-level-2 org-level-3
-  ;;                               org-level-4 org-level-5))
-  ;;     (set-face-attribute face nil
-  ;;                         :weight 'normal
-  ;;                         :height 1.0
-  ;;                         :foreground "#000000")))
-
-  ;; (add-hook 'org-mode-hook 'my-org-mode-hook)
-  (add-to-list 'org-file-apps '("\\.png\\'" . "feh %s")))
-
-(use-package org-protocol)
-
-(use-package org-protocol-capture-html)
-
-
-;;;
-;;; Version control
-;;;
-
-(use-package magit
-  :bind (("C-c v s" . magit-status)
-         ("C-c v p" . magit-dispatch-popup)
-         ("C-c v l" . magit-list-repositories)
-         ("C-c v v" . magit-stage)
-         ("C-c v r" . magit-diff-toggle-refine-hunk))
-  :config
-  (defun local-magit-initially-hide-unmerged (section)
-    (and (not magit-insert-section--oldroot)
-         (or (eq (magit-section-type section) 'unpushed)
-             (equal (magit-section-value section) "@{upstream}..")
-             (eq (magit-section-type section) 'stashes)
-             (equal (magit-section-value section) "refs/stash"))
-         'hide))
-
-  (add-hook 'magit-section-set-visibility-hook
-            'local-magit-initially-hide-unmerged)
-
-  (defun me-update-magit-repository-directories ()
-    (setq magit-repository-directories
-          (list-projects default-projects-directory)))
-
-  (me-update-magit-repository-directories)
-
-  (add-hook 'magit-repolist-mode-hook
-            'me-update-magit-repository-directories))
-
-(use-package git-gutter
-  :diminish git-gutter-mode
-  :config (global-git-gutter-mode +1))
-
-(use-package browse-at-remote
-  :bind (("C-c v o" . browse-at-remote)))
-
-
-;;;
-;;; Lisp
-;;;
-
-(use-package elisp-mode
-  :config (add-hook 'emacs-lisp-mode-hook 'show-paren-mode))
-
-(use-package lisp-mode
-  :config (add-hook 'after-save-hook 'check-parens nil t))
-
-(use-package scheme
-  :mode (("\\.tmpl" . scheme-mode)
-         ("\\.sxml" . scheme-mode))
-  :preface
-  (setq scheme-prettify-symbols-alist
-        '(("lambda"  . ?λ)
-          ("lambda*" . (?λ (Br . Bl) ?*))
-          ("#t"      . ?T)
-          ("#f"      . ?F)
-          ("not"     . ?¬)
-          ("and"     . ?∧)
-          ("or"      . ?∨)
-          ("eq?"     . ≡)
-          ("<="      . ?≤)
-          (">="      . ?≥)
-          ("->"      . ?→)))
-  :config
-  (defun my-scheme-mode-hook ()
-    (setq-local prettify-symbols-alist scheme-prettify-symbols-alist)
-    (show-paren-mode)
-    (prettify-symbols-mode))
-  (add-hook 'scheme-mode-hook 'my-scheme-mode-hook)
-  (add-hook 'geiser-repl-mode-hook 'show-paren-mode)
-  (setq geiser-active-implementations (quote (guile))))
-
-
-;;;
-;;; Guix
-;;;
-
-(use-package guix
-  :load-path "/home/natsu/src/emacs-guix/elisp"
-  :config
-  (use-package guix-devel
-    :diminish guix-devel-mode
-    :config (add-hook 'scheme-mode-hook 'guix-devel-mode))
-
-  (use-package guix-build-log
-    :diminish guix-build-log-minor-mode)
-
-  (use-package guix-external
-    :config
-    (setq guix-guile-program '("/home/natsu/src/guix/pre-inst-env"
-                               "guile" "--no-auto-compile")))
-
-  (use-package guix-repl
-    :config
-    (setq guix-directory "~/src/guix"))
-
-  (use-package guix-location
-    :bind (("C-c g e" . guix-edit)))
-
-  (use-package guix-read
-    :config (setq guix-read-package-name-function
-                  'guix-read-package-name-at-point))
-
-  (use-package guix-utils
-    :after org
-    :config
-    (setq guix-find-file-function 'org-open-file))
-
-  (use-package guix-derivation)
-
-  (use-package guix-command
-    :bind (("C-c g p" . guix)))
-
-  (use-package guix-help
-    :bind (("C-c g b" . guix-switch-to-buffer)
-           ("C-c g x" . guix-extended-command))
-    :init
-    (add-to-list 'Info-directory-list "/home/natsu/src/guix/doc")
-    :config
-    (defun guix-src-grep (regexp)
-      (interactive "sGREP: ")
-      (rgrep regexp
-             "*.scm"
-             (concat guix-directory "/gnu/packages")))
-    (setq guix-directory "~/src/guix")
-    (add-hook 'proced-post-display-hook 'guix-prettify-mode)
-    (add-hook 'dired-mode-hook 'guix-prettify-mode)))
-
-
-;;;
-;;; Geiser
-;;;
-
-(use-package geiser
-  :config
-  (use-package geiser-guile
-    :commands geiser-repl-mode
-    :config
-    (with-eval-after-load 'geiser-guile
-      (add-to-list 'geiser-guile-load-path "/home/natsu/src/guix")
-      (setq geiser-guile-binary '("guile" "--no-auto-compile"))))
-
-  (use-package geiser-doc))
-
-
-;;;
-;;; Slime
-;;;
-
-(use-package slime
-  :init
-  (load (expand-file-name "~/quicklisp/slime-helper.el"))
-  (setq inferior-lisp-program "/home/natsu/.guix-profile/bin/sbcl")
-
-  (require 'cl)
-
-  (defun slime-style-init-command (port-filename _coding-system extra-args)
-    "Return a string to initialize Lisp."
-    (let ((loader (if (file-name-absolute-p slime-backend)
-                      slime-backend
-                    (concat slime-path slime-backend))))
-      ;; Return a single form to avoid problems with buffered input.
-      (format "%S\n\n"
-              `(progn
-                 (load ,(slime-to-lisp-filename (expand-file-name loader))
-                       :verbose t)
-                 (funcall (read-from-string "swank-loader:init"))
-                 (funcall (read-from-string "swank:start-server")
-                          ,(slime-to-lisp-filename port-filename)
-                          ,@extra-args)))))
-
-  (defun slime-style (&optional style)
-    (interactive
-     (list (intern-soft (read-from-minibuffer "Style: " "nil"))))
-    (lexical-let ((style style))
-      (slime-start
-       :init (lambda (x y)
-               (slime-style-init-command
-                x y `(:style ,style :dont-close t)))))))
-
-(use-package slime-company
-  :after company
-  :config
-  (slime-setup '(slime-company)))
-
-
-;;;
-;;; Disabled
-;;;
-
-(use-package page-break-lines
-  :disabled
-  :diminish page-break-lines-mode
-  :config
-  (add-hook 'emacs-lisp-mode-hook 'page-break-lines-mode)
-  (add-hook 'scheme-mode-hook 'page-break-lines-mode))
-
-(use-package edit-server
-  :init
-  (edit-server-start))
-
-(use-package paredit
-  :disabled
-  :diminish paredit-mode
-  :config
-  (add-hook 'scheme-mode-hook 'paredit-mode)
-  (add-hook 'minibuffer-inactive-mode-hook 'paredit-mode)
-  (add-hook 'emacs-lisp-mode-hook 'paredit-mode))
-
-(use-package smart-mode-line
-  :disabled
-  :config
-  (sml/setup))
-
-(use-package hydra
-  :disabled
-  :config
-  (defhydra hydra-buffer (global-map "<f7>")
-    "buffer"
-    ("n" next-buffer "next")
-    ("p" previous-buffer "previous")))
-
-
-
-;;;
-;;; Misc
-;;;
-
-(use-package avy
-  :config (avy-setup-default))
-
-(use-package aggressive-indent
-  :bind (("C-c t a" . aggressive-indent-mode))
-  :init
-  (mapcar (lambda (mode)
-            (add-hook mode 'aggressive-indent-mode))
-          '(scheme-mode-hook emacs-lisp-mode-hook lisp-mode-hook c-mode-hook)))
-
-(use-package browse-url
-  :commands browse-url-mpv
-  :config
-  (setq browse-url-mpv-program "mpv")
-  (setq browse-url-mpv-arguments nil)
-  (setq browse-url-mpv-remote-program "~/bin/mpv-remote")
-  (defun browse-url-mpv (url &optional new-window)
-    "Ask the mpv video player to load URL.
-Defaults to the URL around or before point.  Passes the strings
-in the variable `browse-url-mpv-arguments' to mpv."
-    (interactive (browse-url-interactive-arg "URL: "))
-    (setq url (browse-url-encode-url url))
-    (let* ((process-environment (browse-url-process-environment)))
-      (apply 'start-process
-             (concat "mpv " url) nil
-             browse-url-mpv-program
-             (append
-              browse-url-mpv-arguments
-              (list url)))))
-
-  (setq browse-url-browser-function
-        `(("^ftp://.*" . browse-ftp-tramp)
-          ("^https?://w*\\.?youtube.com/watch\\?v=.*" . browse-url-mpv)
-          ("^https?://w*\\.?youtube.com/.*" . browse-url-chromium)
-          ("^https?://w*\\.?github.com/.*" . browse-url-chromium)
-          ("." . browse-url-conkeror)))
-
-  (defun browse-url-mpv-remote (url &optional new-window)
-    "Ask the mpv video player to load URL.
-Defaults to the URL around or before point.  Passes the strings
-in the variable `browse-url-mpv-arguments' to mpv."
-    (interactive (browse-url-interactive-arg "URL: "))
-    (setq url (browse-url-encode-url url))
-    (let* ((process-environment (browse-url-process-environment)))
-      (apply 'start-process
-             (concat "mpv " url) nil
-             browse-url-mpv-remote-program
-             (append
-              browse-url-mpv-remote-arguments
-              (list (car (split-string url "&"))))))))
-
-(use-package debbugs-browse
-  :after browse-url
-  :config
-  (add-to-list 'browse-url-browser-function
-               '("^https?://debbugs\\.gnu\\.org/.*" . debbugs-browse-url))
-  (defun debbugs-gnu-guix ()
-    (interactive)
-    (debbugs-gnu '("serious" "important" "normal") '("guix")))
-  (defun debbugs-gnu-guix-patches ()
-    (interactive)
-    (debbugs-gnu '("serious" "important" "normal") '("guix-patches"))))
-
-(use-package which-key
-  :diminish which-key-mode
-  :config (which-key-mode))
-
-(use-package dired-open
-  :after dired
-  :config
-  (setq dired-open-extensions
-        (quote
-         (("docx" . "libreoffice")
-          ("doc" . "libreoffice")
-          ("xlsx" . "libreoffice")
-          ("xls" . "libreoffice")
-          ("mp3" . "mpv")
-          ("webm" . "mpv")
-          ("mkv" . "mpv")
-          ("mp4" . "mpv")
-          ("flv" . "mpv")
-          ("png" . "feh")
-          ("jpg" . "feh")
-          ("jpeg" . "feh")))))
-
-(use-package debbugs-gnu
-  :commands debbugs-gnu
-  :config (add-to-list 'debbugs-gnu-all-packages "guix-patches"))
-
-(use-package undo-tree
-  :diminish undo-tree-mode
-  :bind (("C-c u" . undo-tree-visualize))
-  :config (add-hook 'prog-mode-hook 'undo-tree-mode))
-
-(use-package projectile-global-mode
-  :bind (("C-c p m" . projectile-commander))
-  :init
-  (setq projectile-mode-line nil)
-  (projectile-global-mode)
-  :config
-  (setq projectile-completion-system (quote ido))
-  (setq projectile-use-git-grep t))
-
-(use-package web-mode
-  :config
-  (add-to-list 'auto-mode-alist '("\\.phtml\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.tpl\\.php\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.[agj]sp\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.as[cp]x\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.erb\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.mustache\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.djhtml\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.php?\\'" . web-mode))
-  (add-to-list 'auto-mode-alist '("\\.html?\\'" . web-mode))
-  (setq-default web-mode-markup-indent-offset 2)
-  (setq-default web-mode-code-indent-offset 2)
-  (setq-default web-mode-css-indent-offset 2)
-  (setq-default web-mode-style-padding 2)
-  (add-hook 'web-mode-hook 'tern-mode))
-
-(use-package pdf-tools
-  :mode (("\\.pdf\\'" . pdf-view-mode))
-  :config
-  (add-hook 'TeX-after-compilation-finished-functions
-            #'TeX-revert-document-buffer)
-  (add-hook 'pdf-view-mode-hook 'auto-revert-mode)
-  (setq TeX-view-program-selection '((output-pdf "PDF Tools")))
-  (setq TeX-save-query nil))
-
-(use-package google-translate-mode
-  :bind (("C-c t t" . google-translate-mode))
-  :config (add-hook 'Info-mode-hook 'google-translate-mode))
-
-(use-package imaxima
-  :commands imaxima)
-
-(use-package engine-mode
-  :config
-  (engine-mode t)
-  (setq engine/browser-function 'browse-url-chromium)
-  (defengine searx
-    "http://searx.tk/?q=%s"
-    :keybinding "x")
-  (defengine youtube
-    "http://www.youtube.com/results?aq=f&oq=&search_query=%s"
-    :keybinding "y")
-  (defun searx-email ()
-    (interactive)
-    (require 's)
-    (engine/search-searx
-     (s-chop-prefix "<" (s-chop-suffix ">" (thing-at-point 'email))))))
-
-(use-package flyspell
-  :config (add-hook 'message-mode-hook 'flyspell-mode))
-
-(use-package flycheck
-  :config
-  (add-hook 'prog-mode-hook 'flycheck-mode)
-  (setq flycheck-display-errors-delay 2))
-
-(use-package sr-speedbar
-  :bind (("C-c s b" . sr-speedbar-toggle)))
-
-(use-package prog-mode
-  :config
-  (add-hook 'prog-mode-hook 'prettify-symbols-mode)
-  (setq prettify-symbols-unprettify-at-point 'right-edge))
-
-(use-package haskell-mode
-  :preface
-  (defvar haskell-prettify-symbols-alist
-    '(("::"     . ?∷)
-      ("forall" . ?∀)
-      ("exists" . ?∃)
-      ("->"     . ?→)
-      ("<-"     . ?←)
-      ("=>"     . ?⇒)
-      ("~>"     . ?⇝)
-      ("<~"     . ?⇜)
-      ("."      . ?∘)
-      ("<>"     . ?⨂)
-      ("msum"   . ?⨁)
-      ("\\"     . ?λ)
-      ("not"    . ?¬)
-      ("&&"     . ?∧)
-      ("||"     . ?∨)
-      ("/="     . ?≠)
-      ("<="     . ?≤)
-      (">="     . ?≥)
-      ("<<<"    . ?⋘)
-      (">>>"    . ?⋙)
-
-      ("`elem`"             . ?∈)
-      ("`notElem`"          . ?∉)
-      ("`member`"           . ?∈)
-      ("`notMember`"        . ?∉)
-      ("`union`"            . ?∪)
-      ("`intersection`"     . ?∩)
-      ("`isSubsetOf`"       . ?⊆)
-      ("`isProperSubsetOf`" . ?⊂)
-      ("undefined"          . ?⊥)
-
-      ("True"  . ?T)
-      ("False" . ?F)
-
-      (".." . ?…)))
-  :config
-  (defun my-haskell-mode-hook ()
-    (setq-local prettify-symbols-alist haskell-prettify-symbols-alist)
-    (prettify-symbols-mode)
-    (show-paren-mode))
-  (add-hook 'haskell-mode-hook 'my-scheme-mode-hook)
-  (add-hook 'inferior-haskell-mode-hook 'my-haskell-mode-hook))
-
-(use-package rjsx-mode
-  :mode (("\\.js\\'" . rjsx-mode)))
-
-(use-package tern
-  :config
-  (add-hook 'rjsx-mode-hook 'tern-mode))
-
-(use-package company-tern
-  :after company
-  :config
-  (add-to-list 'company-backends 'company-tern))
-
-(use-package emms
-  :bind (("C-c m m" . emms))
-  :config
-  (require 'emms-playlist-mode)
-  (setq emms-source-file-default-directory "/srv/archive/cool-music/"))
-
-(use-package emms-player-mpv
-  :config
-  (add-to-list 'emms-player-list 'emms-player-mpv)
-  (mapcar (lambda (parameter)
-            (add-to-list 'emms-player-mpv-parameters parameter))
-          '("--no-resume-playback"
-            "--keep-open=no")))
-
-(use-package wordgen
-  :config
-  (defun random-words ()
-    (interactive)
-    (mapcar (lambda (word) (insert (concat word " ")))
-            (wordgen
-             '((result (concat-reeval [(2 1) (5 2) (4 3)] syl))
-               (syl (++ c v coda))
-               (c [(4 "p") (5 "t") (5 "k") (3 "m")
-                   (4 "n") (3 "s") (4 "l") (3 "r")])
-               (v ["a" "e" "i" "o" "u"])
-               (coda [(4 "") "m" "n"]))
-             :word-count 5)))
-
-  (defun random-words-javascript ()
-    (interactive)
-    (insert "[")
-    (mapcar (lambda (word) (insert (concat "'" word "'" ", ")))
-            (wordgen
-             '((result (concat-reeval [(2 1) (5 2) (4 3)] syl))
-               (syl (++ c v coda))
-               (c [(4 "p") (5 "t") (5 "k") (3 "m")
-                   (4 "n") (3 "s") (4 "l") (3 "r")])
-               (v ["a" "e" "i" "o" "u"])
-               (coda [(4 "") "m" "n"]))
-             :word-count 5))
-    (insert "]")))
-
-(use-package indium-repl
-  :preface
-  (require 'indium)
-  :config
-  (defvar indium-repl-prettify-symbols-alist
-    '(("function" . 955)
-      ("=>" . ?⇒)))
-  (defun my-indium-repl-mode-hook ()
-    (setq-local prettify-symbols-alist indium-repl-prettify-symbols-alist)
-    (prettify-symbols-mode)
-    (show-paren-mode))
-  (add-hook 'js2-mode-hook 'my-indium-repl-mode-hook)
-  (add-hook 'indium-repl-mode-hook 'my-indium-repl-mode-hook))
-
-(use-package markdown-mode
-  :config (setq markdown-fontify-code-blocks-natively t))
-
-(use-package bash-completion
-  :config
-  (autoload 'bash-completion-dynamic-complete
-    "bash-completion" "BASH completion hook")
-  (add-hook 'shell-dynamic-complete-functions
-            'bash-completion-dynamic-complete))
-
-(use-package writeroom-mode
-  :config
-  (setq writeroom-bottom-divider-width 0)
-  (defun manoj-dark-more ()
-    "Make fringes and header dark."
-    (custom-theme-set-faces
-     'manoj-dark
-     '(fringe ((t (:background "black" :foreground "Wheat"))))
-     '(header-line
-       ((t (:background "black" :foreground "grey90" :height 0.9))))))
-  (defun manoj-dark-default ()
-    "Make fringes and header default color."
-    (custom-theme-set-faces
-     'manoj-dark
-     '(fringe ((t (:background "grey30" :foreground "Wheat"))))
-     '(header-line
-       ((t (:box (:line-width -1 :color "grey20" :style released-button)
-                 :background "grey20"
-                 :foreground "grey90"
-                 :height 0.9))))))
-  (add-hook 'writeroom-mode-hook (lambda () (if writeroom-mode
-                                           (manoj-dark-more)
-                                         (manoj-dark-default)))))
-
-(use-package git-auto-commit-mode
-  :config
-  ;; (setq gac-automatically-push-p t)
-
-  ;; Without a .dir-locals.el file
-  ;; https://www.emacswiki.org/emacs/DirectoryVariables
-  (dir-locals-set-class-variables 'dir-local-var-git-auto-commit
-                                  (quote
-                                   ((nil . ((mode . git-auto-commit))))))
-
-  (dir-locals-set-directory-class org-directory
-                                  'dir-local-var-git-auto-commit))
-
-(use-package sh-script
-  :mode ("PKGBUILD\\'" . shell-script-mode))
-
-(use-package dashboard
-  :config
-  (dashboard-setup-startup-hook)
-  (setq dashboard-page-separator "
-
-"))
-
-(use-package eval-in-repl
-  :config
-  (add-hook 'geiser-mode-hook
-            '(lambda () (local-set-key (kbd "<C-return>") 'eir-eval-in-geiser)))
-  (add-hook 'sh-mode-hook
-            '(lambda() (local-set-key (kbd "C-<return>") 'eir-eval-in-shell)))
-  (add-hook 'lisp-mode-hook
-            '(lambda() (local-set-key (kbd "C-<return>") 'eir-eval-in-slime)))
-  (add-hook 'python-mode-hook
-            '(lambda() (local-set-key (kbd "C-<return>") 'eir-eval-in-python)))
-  (add-hook 'emacs-lisp-mode-hook
-            '(lambda() (local-set-key (kbd "C-<return>") 'eir-eval-in-ielm))))
-
-(use-package beginend
-  :diminish
-  beginend-bs-mode
-  beginend-compilation-mode
-  beginend-dired-mode
-  beginend-elfeed-search-mode
-  beginend-global-mode
-  beginend-ibuffer-mode
-  beginend-magit-status-mode
-  beginend-message-mode
-  beginend-notmuch-search-mode
-  beginend-occur-mode
-  beginend-org-agenda-mode
-  beginend-prodigy-mode
-  beginend-prog-mode
-  beginend-prog-mode
-  beginend-recentf-dialog-mode
-  beginend-vc-dir-mode
-
-  :config (beginend-global-mode))
-
-(use-package elfeed
-  :config
-  (setq elfeed-feeds
-        '("http://nullprogram.com/feed/"
-          "http://planet.emacsen.org/atom.xml")))
-
-(use-package shift-number
-  :load-path "/home/natsu/src/emacs-shift-number"
-  :bind (("C-c C-=" . shift-number-up)
-         ("C-c C--" . shift-number-down)))
-
-(provide 'wigust-user-init-file)
+(provide 'user-init-file)
 ;;; .emacs ends here
