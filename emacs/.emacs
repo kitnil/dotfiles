@@ -38,6 +38,7 @@
 (menu-bar-mode -1)
 (scroll-bar-mode -1)
 (blink-cursor-mode -1)
+(setq visible-bell t)
 
 (setq save-place-mode t)
 (setq mouse-yank-at-point t)
