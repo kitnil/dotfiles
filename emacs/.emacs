@@ -195,9 +195,13 @@
 
 (use-package whitespace
   :config
-  (mapc (lambda (font)
-          (set-face-attribute font nil :background nil :foreground "gainsboro"))
-        '(whitespace-space whitespace-indentation))
+  (defun toggle-whitespace-color (light)
+    (interactive)
+    (let ((foreground (if light "gainsboro" "gray20")))
+      (mapc (lambda (font)
+              (set-face-attribute font nil
+                                  :background nil :foreground foreground))
+            '(whitespace-space whitespace-indentation))))
   (mapc (lambda (el) (delete el whitespace-style)) '(newline newline-mark))
   (add-hook 'prog-mode-hook #'whitespace-mode))
 
