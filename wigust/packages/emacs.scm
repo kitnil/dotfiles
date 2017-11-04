@@ -1843,10 +1843,27 @@ other.
        (sha256
         (base32
          "0z4rbwffh9vxfvcrlvym4p73z7gf72q0b5iv33llbpcpbijknnrq"))))
+    (arguments
+     `(#:phases
+       (modify-phases %standard-phases
+         (add-before 'install 'check
+           (lambda* (#:key inputs #:allow-other-keys)
+             (zero? (system* "emacs" "--batch" "-L" "."
+                             "-l" "test/test-helper.el"
+                             "-l" "test/beginend-dired-test.el"
+                             "-l" "test/beginend-marks-test.el"
+                             "-l" "test/beginend-narrowing-test.el"
+                             "-l" "test/beginend-prog-test.el"
+                             "-f" "ert-run-tests-batch-and-exit")))))))
     (build-system emacs-build-system)
+    (inputs
+     `(("emacs-undercover" ,emacs-undercover))) ; For tests.
     (home-page "https://github.com/DamienCassou/beginend")
-    (synopsis "Redefine M-< and M-> for some modes")
-    (description "Redefine M-< and M-> for some modes.")
+    (synopsis "Redefine @code{M-<} and @code{M->} for Emacs modes")
+    (description "@code{beginend} redefines @code{M-<} and @code{M->}
+keybindings for Emacs modes so that point moves to meaningful
+locations. Redefined keys are still accessible by pressing the same
+key again.")
     (license license:gpl3+)))
 
 (define-public emacs-eros
@@ -1917,4 +1934,3 @@ keep Parens and Indentation inline with one another.")
 @code{shift-number-up} to increase and @code{shift-number-down} to
 decrease the number at point.")
     (license license:gpl3+)))
-
