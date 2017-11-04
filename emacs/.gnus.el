@@ -32,3 +32,4 @@
                              (type    . "image/jpg")))
 
 (add-hook 'message-sent-hook #'gnus-score-followup-thread)
+(add-hook 'gnus-summary-mode-hook #'hl-line-mode)
