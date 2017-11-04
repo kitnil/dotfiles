@@ -986,6 +986,11 @@ in the variable `browse-url-mpv-arguments' to mpv."
 (use-package eval-in-repl
   :defer 30
   :config
+  (defun toggle-eir-jump-after-eval ()
+    (interactive)
+    (if eir-jump-after-eval
+        (setq eir-jump-after-eval nil)
+      (setq eir-jump-after-eval t)))
   (add-hook 'geiser-mode-hook
             (lambda () (local-set-key (kbd "<C-return>") 'eir-eval-in-geiser)))
   (add-hook 'sh-mode-hook
