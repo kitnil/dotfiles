@@ -1779,6 +1779,57 @@ facilitate running from the source tree without having to install the
 code or fiddle with evil @code{load-path}.")
       (license license:gpl3+))))
 
+(define-public emacs-assess
+  (package
+    (name "emacs-assess")
+    (version "0.4")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append "https://github.com/phillord/assess"
+                           "/archive/" "v" version ".tar.gz"))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32
+         "19q1zhalljzidg5lwl3l293ypqpy6x1bn8h1wr4a4jjzzv56ahak"))))
+    (inputs
+     `(("emacs-m-buffer-el" ,emacs-m-buffer-el)))
+    (arguments
+     `(#:phases
+       (modify-phases %standard-phases
+         (add-before 'install 'check
+           (lambda* (#:key inputs #:allow-other-keys)
+             (zero? (system* "emacs" "--batch" "-L" "."
+                             "-L" (string-append
+                                   (assoc-ref inputs "emacs-m-buffer-el")
+                                   "/share/emacs/site-lisp/guix.d/m-buffer-el-"
+                                   ,(package-version emacs-m-buffer-el))
+                             "-l" "test/assess-test.el"
+                             "-f" "ert-run-tests-batch-and-exit")))))))
+    (build-system emacs-build-system)
+    (home-page "https://github.com/phillord/assess")
+    (synopsis "Test support functions for Emacs")
+    (description "@code{assess} provides additional support for
+testing Emacs packages.
+
+It provides:
+
+@itemize
+@item A set of predicates for comparing strings, buffers and file
+contents.
+@item Explainer functions for all predicates giving useful output.
+@item Macros for creating many temporary buffers at once, and for
+restoring the buffer list.
+@item Methods for testing indentation, by comparision or
+roundtripping.
+@item Methods for testing fontification.
+@item Assess aims to be a stateless as possible, leaving Emacs
+unchanged whether the tests succeed or fail, with respect to buffers,
+open files and so on.  This helps to keep tests independent from each
+other.
+@end itemize\n")
+    (license license:gpl3+)))
+
 (define-public emacs-beginend
   (package
     (name "emacs-beginend")
