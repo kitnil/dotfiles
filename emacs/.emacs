@@ -885,7 +885,9 @@ in the variable `browse-url-mpv-arguments' to mpv."
 (use-package emms
   :bind (("C-c m m m" . emms)
          ("C-c m m n" . emms-next)
-         ("C-c m m p" . emms-previous))
+         ("C-c m m p" . emms-previous)
+         ("C-c m m d" . emms-play-directory)
+         ("C-c m m s" . emms-stop))
   :config
   (require 'emms-playlist-mode)
   (setq emms-source-file-default-directory "~/Music"))
