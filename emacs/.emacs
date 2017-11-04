@@ -343,7 +343,8 @@
   (setq gitpatch-mail-database (list "guix-patches@gnu.org")))
 
 (use-package gnus
-  :commands gnus
+  :bind (("C-c m g g" . gnus)
+         ("C-c m g s" . switch-to-gnus))
   :config
   (defun switch-to-gnus (&optional arg)
     "Switch to a Gnus related buffer.
