@@ -986,7 +986,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
                                          (manoj-dark-default)))))
 
 (use-package eval-in-repl
-  :defer 30
+  :defer 5
   :config
   (defun toggle-eir-jump-after-eval ()
     (interactive)
