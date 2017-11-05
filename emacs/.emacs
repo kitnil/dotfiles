@@ -578,17 +578,19 @@
 ;;;
 
 (use-package guix
-  :load-path "/home/natsu/src/emacs-guix/elisp"
+  :mode (("\\.tmpl\\'" . scheme-mode)
+         ("\\.sxml\\'" . scheme-mode)
+         ("\\.scm\\'" . scheme-mode))
   :bind (("C-c g e" . guix-edit)
          ("C-c g p" . guix)
          ("C-c g b" . guix-switch-to-buffer)
          ("C-c g x" . guix-extended-command))
-  :diminish (guix-build-log-minor-mode)
-  :config
-  (add-to-list 'Info-directory-list "/home/natsu/src/guix/doc")
+  :init
+  (add-hook 'scheme-mode-hook 'guix-devel-mode)
   (add-hook 'proced-post-display-hook 'guix-prettify-mode)
   (add-hook 'dired-mode-hook 'guix-prettify-mode)
-  (add-hook 'scheme-mode-hook 'guix-devel-mode)
+  :config
+  (add-to-list 'Info-directory-list "/home/natsu/src/guix/doc")
   (setq guix-directory "~/src/guix")
   (setq guix-guile-program '("/home/natsu/src/guix/pre-inst-env"
                              "guile" "--no-auto-compile"))
