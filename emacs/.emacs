@@ -677,7 +677,7 @@
         '(scheme-mode-hook emacs-lisp-mode-hook lisp-mode-hook c-mode-hook)))
 
 (use-package browse-url
-  :defer t
+  :defer 5
   :config
   (setq browse-url-mpv-program "mpv")
   (setq browse-url-mpv-arguments nil)
