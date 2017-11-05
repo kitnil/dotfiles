@@ -720,7 +720,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
               (list (car (split-string url "&"))))))))
 
 (use-package debbugs
-  :defer t
+  :defer 5
   :config
   (use-package debbugs-browse
     :after browse-url
