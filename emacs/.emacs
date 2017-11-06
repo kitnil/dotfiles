@@ -317,6 +317,8 @@
 
 (use-package helm
   :defer 5
+  :bind (("C-c h i" . helm-imenu)
+         ("C-c h o" . helm-occur))
   :config
   (setq helm-locate-project-list (list-projects projects-directory)))
 
