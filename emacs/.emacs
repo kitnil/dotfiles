@@ -242,7 +242,8 @@
   :defer 5
   :config
   (info-initialize)
-  (add-to-list 'Info-directory-list "/home/natsu/src/guile-chickadee/doc"))
+  (add-to-list 'Info-directory-list "/home/natsu/src/guile-chickadee/doc")
+  (add-to-list 'Info-directory-list "/home/natsu/src/guix/doc"))
 
 (use-package info-look :defer 5)
 
@@ -603,7 +604,6 @@
   (add-hook 'proced-post-display-hook 'guix-prettify-mode)
   (add-hook 'dired-mode-hook 'guix-prettify-mode)
   :config
-  (add-to-list 'Info-directory-list "/home/natsu/src/guix/doc")
   (setq guix-directory "~/src/guix")
   (setq guix-guile-program '("/home/natsu/src/guix/pre-inst-env"
                              "guile" "--no-auto-compile"))
