@@ -512,7 +512,8 @@
          ("C-c v p" . magit-dispatch-popup)
          ("C-c v l" . magit-list-repositories)
          ("C-c v v" . magit-stage)
-         ("C-c v r" . magit-diff-toggle-refine-hunk))
+         ("C-c v r" . magit-diff-toggle-refine-hunk)
+         ("C-c v c" . magit-clone))
   :init
   (defun update-magit-repository-directories ()
     (setq magit-repository-directories
