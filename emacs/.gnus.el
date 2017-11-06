@@ -16,15 +16,5 @@
 (setq gnus-parameters '(("^INBOX$" (gnus-thread-sort-functions
                                     'gnus-thread-sort-by-score))))
 
-(mailcap-add-mailcap-entry "image"
-                           "jpeg"
-                           '((viewer  . "feh %s")
-                             (type    . "image/jpeg")))
-
-(mailcap-add-mailcap-entry "image"
-                           "jpg"
-                           '((viewer  . "feh %s")
-                             (type    . "image/jpg")))
-
 (add-hook 'message-sent-hook #'gnus-score-followup-thread)
 (add-hook 'gnus-summary-mode-hook #'hl-line-mode)
