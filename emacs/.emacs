@@ -209,7 +209,9 @@
       (mapc (lambda (font)
               (set-face-attribute font nil
                                   :background nil :foreground foreground))
-            '(whitespace-space whitespace-indentation))))
+            '(whitespace-space whitespace-indentation)))
+    (set-face-attribute whitespace-tab nil
+                        :background nil :foreground "gold4"))
   (toggle-whitespace-color t)
   (mapc (lambda (el) (delete el whitespace-style)) '(newline newline-mark))
   (add-hook 'prog-mode-hook #'whitespace-mode))
