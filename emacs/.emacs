@@ -49,6 +49,14 @@
 
 (defconst projects-directory "/srv/git")
 
+(defun toggle-manoj-dark-theme ()
+  "Toggle theme for night nerding."
+  (interactive)
+  (load-theme 'manoj-dark)
+  (custom-theme-set-variables
+   'manoj-dark '(company-quickhelp-color-background "black"))
+  (toggle-whitespace-color nil))
+
 (defun list-projects (directory)
   "Return a list of projects in the DIRECTORY."
   (interactive)
@@ -197,11 +205,12 @@
   :config
   (defun toggle-whitespace-color (light)
     (interactive)
-    (let ((foreground (if light "gainsboro" "gray20")))
+    (let ((foreground (if light "gainsboro" "gray15")))
       (mapc (lambda (font)
               (set-face-attribute font nil
                                   :background nil :foreground foreground))
             '(whitespace-space whitespace-indentation))))
+  (toggle-whitespace-color t)
   (mapc (lambda (el) (delete el whitespace-style)) '(newline newline-mark))
   (add-hook 'prog-mode-hook #'whitespace-mode))
 
