@@ -2,15 +2,13 @@
 ;; Copyright © 2017 Oleg Pykhalov <go.wigust@gmail.com>
 ;; Released under the GNU GPLv3 or any later version.
 
-(use-modules (gnu)
-             (gnu system nss)
-             (srfi srfi-1))
+(use-modules (gnu) (gnu system nss) (srfi srfi-1))
 
-(use-service-modules ssh desktop xorg cups version-control mail
-                     networking shepherd rsync web spice)
+(use-service-modules ssh desktop xorg cups version-control mail networking
+                     shepherd rsync web spice)
 
-(use-package-modules bootloaders emacs cups certs cryptsetup tls ssh guile
-                     package-management bash linux android version-control)
+(use-package-modules bash bootloaders certs linux android version-control
+                     cups)
 
 
 ;;;
@@ -265,46 +263,41 @@ EndSection
      ;; and "mymachine", as well as for Facebook servers.
      (plain-file "hosts"
                  (string-append (local-host-aliases host-name)
-                                (prefix-local-host-aliases '("cgit" "guix" "www")
-                                                           host-name ".local")
+                                (prefix-local-host-aliases
+                                 '("cgit" "guix" "www") host-name ".local")
                                 %facebook-host-aliases)))
 
-    (packages (cons* cups cryptsetup certbot emacs emacs-guix guile-ssh guix
-                     nss-certs iptables openssh %base-packages))
+    (packages (cons nss-certs ; for HTTPS access
+                    %base-packages))
 
-    (services (cons* (service openssh-service-type
-                              (openssh-configuration
-                               (port-number 22)))
+    (services (cons* (dhcp-client-service)
 
-                     ;; Configure CUPS on https://localhost:631
-                     ;; and be sure librejs is disabled in browser
+                     firewall-service
+
+                     (service openssh-service-type)
+
                      (service cups-service-type
                               (cups-configuration
-                               (web-interface? #t)
-                               (extensions
-                                (list cups-filters hplip))))
+                               (web-interface? #t) ; LibreJS could block JS
+                               (extensions (list cups-filters hplip))))
 
                      (dovecot-service
                       #:config (dovecot-configuration
-                                (mail-location
-                                 (string-append
-                                  "maildir:~/Maildir:INBOX=~/Maildir/INBOX:"
-                                  "LAYOUT=fs"))
+                                (listen '("127.0.0.1"))
                                 (disable-plaintext-auth? #f)
-                                (listen '("127.0.0.1"))))
+                                (mail-location
+                                 (string-append "maildir:~/Maildir"
+                                                ":INBOX=~/Maildir/INBOX"
+                                                ":LAYOUT=fs"))))
 
                      (service guix-publish-service-type
                               (guix-publish-configuration
-                               (host "0.0.0.0")
-                               (port 3000)))
+                               (host "0.0.0.0") (port 3000)))
 
                      (service git-daemon-service-type
-                              (git-daemon-configuration
-                               (user-path "")))
+                              (git-daemon-configuration (user-path "")))
 
                      (service rsync-service-type)
-
-                     (service nginx-service-type %file-share-configuration-nginx)
 
                      (service fcgiwrap-service-type)
 
@@ -314,15 +307,15 @@ EndSection
                               (cgit-configuration
                                (nginx %cgit-configuration-nginx)))
 
+                     (service nginx-service-type
+                              %file-share-configuration-nginx)
+
                      guix-publish-nginx-service
 
-                     (simple-service 'adb udev-service-type (list android-udev-rules))
-
-                     firewall-service
+                     (simple-service 'adb udev-service-type
+                                     (list android-udev-rules))
 
                      (spice-vdagent-service)
-
-                     (dhcp-client-service)
 
                      %custom-desktop-services))
 
@@ -330,4 +323,5 @@ EndSection
     (name-service-switch %mdns-host-lookup-nss)))
 
 %system-magnolia
+
 ;;; system-magnolia.scm ends here

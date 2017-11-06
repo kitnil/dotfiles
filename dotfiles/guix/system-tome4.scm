@@ -1,10 +1,11 @@
-;; GuixSD configuration file for the virtual machine.
+;; GuixSD configuration file for the game machine.
 ;; Copyright © 2017 Oleg Pykhalov <go.wigust@gmail.com>
 ;; Released under the GNU GPLv3 or any later version.
 
-(use-modules (gnu) (gnu system nss))
-(use-service-modules desktop xorg spice)
-(use-package-modules certs gnome bash)
+(use-modules (gnu)
+             (wigust packages games))
+(use-service-modules desktop xorg)
+(use-package-modules certs fonts bash xfce)
 
 (define %custom-desktop-services
   (modify-services %desktop-services
@@ -17,19 +18,18 @@
     (slim-service-type config => (slim-configuration
                                   (inherit config)
                                   (auto-login? #t)
-                                  (auto-login-session (file-append
-                                                       gnome-session
-                                                       "/bin/gnome-session"))
-                                  (default-user "bob")))))
+                                  (auto-login-session (file-append xfce
+                                                                   "/bin/startxfce4"))
+                                  (default-user "alice")))))
 
 (operating-system
-  (host-name "gnome")
+  (host-name "xfce")
   (timezone "Europe/Moscow")
   (locale "en_US.utf8")
 
   (bootloader (grub-configuration (target "/dev/sda")
                                   (terminal-outputs '(console))))
-
+  
   (file-systems (cons (file-system
                         (device "my-root")
                         (title 'label)
@@ -37,21 +37,29 @@
                         (type "ext4"))
                       %base-file-systems))
 
-  (users (cons (user-account
-                (name "bob")
-                (comment "Alice's brother")
-                (group "users")
-                (supplementary-groups '("wheel" "netdev"
-                                        "audio" "video"))
-                (home-directory "/home/bob"))
-               %base-user-accounts))
+  (users (cons* (user-account
+                 (name "alice")
+                 (comment "Bob's sister")
+                 (group "users")
+                 (supplementary-groups '("wheel"
+                                         "audio" "video"))
+                 (home-directory "/home/alice"))
+                (user-account
+                 (name "happy")
+                 (uid 1001)
+                 (comment "Happy")
+                 (group "users")
+                 (supplementary-groups '("wheel"))
+                 (home-directory "/home/happy"))
+                %base-user-accounts))
 
   (packages (cons* nss-certs
-                   gvfs
+                   font-liberation
+                   font-dejavu
+                   angband-nonfree
                    %base-packages))
-
-  (services (cons* (gnome-desktop-service)
-                   (spice-vdagent-service)
+  
+  (services (cons* (xfce-desktop-service)
                    %custom-desktop-services))
 
   (name-service-switch %mdns-host-lookup-nss))
