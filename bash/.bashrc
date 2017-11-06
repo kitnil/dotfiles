@@ -91,3 +91,6 @@ alias emc="emacsclient -nw"
 alias git-signature="git log --show-signature -1"
 
 alias guile="guile --no-auto-compile"
+
+alias tra="trans en:ru"
+alias trr="trans ru:en"
