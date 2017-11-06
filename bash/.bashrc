@@ -30,7 +30,6 @@ alias l1='lc -1'
 alias dir='ls -ba'
 
 alias ss="ps -aux"
-alias dot='ls .[a-zA-Z0-9_]*'
 
 alias c="clear"
 alias m="more"
@@ -95,3 +94,9 @@ alias guile="guile --no-auto-compile"
 alias tra="trans en:ru"
 alias trr="trans ru:en"
 alias turn-screen-off="xset dpms force off"
+
+guix-graph ()
+{
+    guix graph --type=references "$1" \
+        | dot -Gsize="10,10" -Gratio=0.7 -Tpng -Nfontsize=48 > "$2.png";
+}
