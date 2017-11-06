@@ -94,3 +94,4 @@ alias guile="guile --no-auto-compile"
 
 alias tra="trans en:ru"
 alias trr="trans ru:en"
+alias turn-screen-off="xset dpms force off"
