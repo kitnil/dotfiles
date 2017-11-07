@@ -901,6 +901,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
   :config (add-to-list 'company-backends 'company-tern))
 
 (use-package emms
+  :defer 5
   :bind (("C-c m m m" . emms)
          ("C-c m m n" . emms-next)
          ("C-c m m p" . emms-previous)
@@ -908,6 +909,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
          ("C-c m m s" . emms-stop))
   :config
   (require 'emms-playlist-mode)
+  (require 'emms-mark)
   (setq emms-source-file-default-directory "~/Music"))
 
 (use-package emms-player-mpv
