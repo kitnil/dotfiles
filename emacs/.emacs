@@ -1050,6 +1050,10 @@ in the variable `browse-url-mpv-arguments' to mpv."
   :bind (("C-c C-=" . shift-number-up)
          ("C-c C--" . shift-number-down)))
 
+(use-package lacarte
+  :defer 5
+  :bind (("<menu>" . lacarte-execute-menu-command)))
+
 (benchmark-init/show-durations-tabulated)
 
 ;; (benchmark-init/show-durations-tree)
