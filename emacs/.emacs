@@ -255,7 +255,8 @@
   (require 'smartparens-config)
   (setq sp-base-key-bindings 'sp)
   (sp-use-smartparens-bindings)
-  (smartparens-global-strict-mode))
+  (smartparens-global-strict-mode)
+  (add-hook 'minibuffer-inactive-mode-hook 'smartparens-mode))
 
 (use-package expand-region :bind (("<f8>" . er/expand-region)))
 
