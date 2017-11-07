@@ -260,7 +260,8 @@
 (use-package expand-region :bind (("<f8>" . er/expand-region)))
 
 (use-package multiple-cursors
-  :bind (("<f7>" . mc/mark-next-like-this))
+  :bind (("<f7>" . mc/mark-next-like-this)
+         ("<C-down-mouse-1>" . mc/add-cursor-on-click))
   :config (multiple-cursors-mode))
 
 (use-package tex-mode
