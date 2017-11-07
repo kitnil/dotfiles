@@ -1909,3 +1909,27 @@ keep Parens and Indentation inline with one another.")
 @code{shift-number-up} to increase and @code{shift-number-down} to
 decrease the number at point.")
     (license license:gpl3+)))
+
+(define-public emacs-download-region
+  (let ((commit "eb9e557529a73b4cfc8281c70dd0d95db333fffa")
+        (revision "1"))
+    (package
+      (name "emacs-download-region")
+      (version (string-append "0.0.1" "-" revision "."
+                              (string-take commit 7)))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/zk-phi/download-region.git")
+               (commit commit)))
+         (file-name (string-append name "-" version "-checkout"))
+         (sha256
+          (base32
+           "0v52djg39b6k2snizd9x0qc009ws5y0ywqsfwhqgcbs5ymzh7dsc"))))
+      (build-system emacs-build-system)
+      (home-page "https://github.com/zk-phi/download-region")
+      (synopsis "In buffer download manager for Emacs")
+      (description "@code{download-region} provides in buffer
+downloading manager for Emacs.")
+      (license license:gpl3+))))
