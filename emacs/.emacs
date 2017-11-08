@@ -583,10 +583,11 @@
       ("->"      . ?→)))
   :config
   (setq geiser-active-implementations (quote (guile)))
-  (setq-local prettify-symbols-alist scheme--prettify-symbols-alist)
   (mapc (lambda (mode) (add-hook 'scheme-mode-hook mode))
         '(show-paren-mode
-          prettify-symbols-mode)))
+          prettify-symbols-mode
+          (lambda () (setq-local prettify-symbols-alist
+                            scheme--prettify-symbols-alist)))))
 
 
 ;;;
