@@ -834,6 +834,19 @@ in the variable `browse-url-mpv-arguments' to mpv."
   (defengine youtube
     "http://www.youtube.com/results?aq=f&oq=&search_query=%s"
     :keybinding "y")
+  (defengine github
+    (s-join "+"
+            (list "https://github.com/search?ref=simplesearch&q=%s"
+                  "-language:objectivec"
+                  "-language:java"
+                  "-language:javascript"
+                  "-language:csharp"
+                  "-language:kotlin"
+                  "-language:swift"
+                  "-language:php"
+                  "-language:vue"
+                  "-language:autohotkey"))
+    :keybinding "g")
   (defun searx-email ()
     (interactive)
     (require 's)
