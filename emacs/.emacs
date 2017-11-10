@@ -518,6 +518,7 @@
          ("C-c v c" . magit-clone))
   :init
   (defun update-magit-repository-directories ()
+    (interactive)
     (setq magit-repository-directories
           (list-projects projects-directory)))
   (add-hook 'after-init-hook 'update-magit-repository-directories)
