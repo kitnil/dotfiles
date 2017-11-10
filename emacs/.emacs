@@ -81,7 +81,7 @@
 (bind-key "<C-mouse-5>"   #'text-scale-decrease)
 (bind-key "C-c b i"       #'ibuffer)
 (bind-key "C-c b s"       #'scratch)
-(bind-key "<f5>"          #'compile)
+(bind-key "<f5>"          #'recompile)
 (bind-key "C-c t p"       #'electric-pair-mode)
 (bind-key "C-c m g"       #'gnus)
 (bind-key "C-c m s g"     #'switch-to-gnus)
