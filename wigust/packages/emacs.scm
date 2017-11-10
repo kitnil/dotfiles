@@ -1933,3 +1933,29 @@ decrease the number at point.")
       (description "@code{download-region} provides in buffer
 downloading manager for Emacs.")
       (license license:gpl3+))))
+
+(define-public emacs-emms-player-simple-mpv
+  (let ((commit "1af7838037c86872e897bea872d279ff080c28c6")
+        (revision "1"))
+    (package
+      (name "emacs-emms-player-simple-mpv")
+      (version (string-append "0.4.0" "-" revision "."
+                              (string-take commit 7)))
+
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/momomo5717/emms-player-simple-mpv.git")
+               (commit commit)))
+         (file-name (string-append name "-" version "-checkout"))
+         (sha256
+          (base32
+           "1xgkpw89pyn4p37l5rz9dw8yg065slzq8l5z69n6nam9hndcnjsh"))))
+      (build-system emacs-build-system)
+      (propagated-inputs `(("emacs-emms" ,emms)))
+      (home-page "https://github.com/momomo5717/emms-player-simple-mpv")
+      (synopsis "An extension of emms-player-simple.el for mpv JSON IPC")
+      (description "@code{emms-player-simple-mpv} provides macros and
+functions for defining emms simple players of mpv.")
+      (license license:gpl3+))))
