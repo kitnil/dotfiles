@@ -1011,10 +1011,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
        ((t (:box (:line-width -1 :color "grey20" :style released-button)
                  :background "grey20"
                  :foreground "grey90"
-                 :height 0.9))))))
-  (add-hook 'writeroom-mode-hook (lambda () (if writeroom-mode
-                                           (manoj-dark-more)
-                                         (manoj-dark-default)))))
+                 :height 0.9)))))))
 
 (use-package eval-in-repl
   :defer 5
