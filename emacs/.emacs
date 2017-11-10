@@ -503,6 +503,9 @@
            "%?")
 
           ("b" "blog" plain (file "~/public_html/IDEA.org")
+           "%?")
+
+          ("w" "work" plain (file "~/Documents/work.org")
            "%?")))
   (add-to-list 'org-file-apps '("\\.png\\'" . "feh %s")))
 
