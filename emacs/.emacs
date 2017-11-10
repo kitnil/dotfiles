@@ -147,7 +147,6 @@
 
 (use-package shr
   :commands eww
-  :bind (("C-c w" . eww))
   :config (setq shr-width 80) (setq shr-use-fonts nil))
 
 (use-package move-text
