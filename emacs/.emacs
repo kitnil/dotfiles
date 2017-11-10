@@ -993,6 +993,9 @@ in the variable `browse-url-mpv-arguments' to mpv."
 
 (use-package writeroom-mode
   :commands writeroom-mode
+  :bind (("C-c w <" . writeroom-decrease-width)
+         ("C-c w >" . writeroom-increase-width)
+         ("C-c w =" . writeroom-adjust-width))
   :config
   (setq writeroom-bottom-divider-width 0)
   (defun manoj-dark-more ()
