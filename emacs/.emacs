@@ -616,8 +616,7 @@
 
   (use-package guix-utils
     :after org
-    :config
-    (setq guix-find-file-function 'org-open-file))
+    :config (setq guix-find-file-function 'org-open-file))
 
   (use-package guix-derivation))
 
