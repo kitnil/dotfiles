@@ -314,8 +314,7 @@
 (use-package smex
   :after ido
   :bind (("M-x"    . smex)
-         ("M-X"    . smex-major-mode-commands)
-         ("<menu>" . smex)))
+         ("M-X"    . smex-major-mode-commands)))
 
 (use-package ido-vertical-mode :after ido :config (ido-vertical-mode 1))
 
