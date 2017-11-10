@@ -398,8 +398,8 @@
 
 (use-package notmuch
   :commands notmuch-search
-  :bind (("C-c m n n" . notmuch)
-         ("C-c m n s" . notmuch-search))
+  :bind (("C-c n n" . notmuch)
+         ("C-c n s" . notmuch-search))
   :config
   (setq nnir-notmuch-remove-prefix "/home/natsu/Maildir/")
 
