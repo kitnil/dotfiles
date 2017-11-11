@@ -54,7 +54,9 @@
   (interactive)
   (load-theme 'manoj-dark)
   (custom-theme-set-variables
-   'manoj-dark '(company-quickhelp-color-background "black"))
+   'manoj-dark '(company-quickhelp-color-foreground "black"))
+  (custom-theme-set-variables
+   'manoj-dark '(company-quickhelp-color-background "gold"))
   (toggle-whitespace-color nil))
 
 (defun list-projects (directory)
