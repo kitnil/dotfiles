@@ -1031,6 +1031,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
          ("C-c w =" . writeroom-adjust-width))
   :config
   (setq writeroom-bottom-divider-width 0)
+  (advice-add 'text-scale-adjust :after #'visual-fill-column-adjust)
   (defun manoj-dark-more ()
     "Make fringes and header dark."
     (custom-theme-set-faces
