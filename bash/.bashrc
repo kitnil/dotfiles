@@ -100,3 +100,6 @@ guix-graph ()
     guix graph --type=references "$1" \
         | dot -Gsize="10,10" -Gratio=0.7 -Tpng -Nfontsize=48 > "$2.png";
 }
+
+# https://linuxconfig.org/how-to-disable-bash-shell-commands-history-on-linux
+alias disable-history="set +o history" # For current session.
