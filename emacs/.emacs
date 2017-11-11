@@ -951,11 +951,11 @@ in the variable `browse-url-mpv-arguments' to mpv."
 
 (use-package emms
   :defer 5
-  :bind (("C-c m m m" . emms)
-         ("C-c m m n" . emms-next)
-         ("C-c m m p" . emms-previous)
-         ("C-c m m d" . emms-play-directory)
-         ("C-c m m s" . emms-stop))
+  :bind (("C-c m m" . emms)
+         ("C-c m n" . emms-next)
+         ("C-c m p" . emms-previous)
+         ("C-c m d" . emms-play-directory)
+         ("C-c m s" . emms-stop))
   :config
   (require 'emms-playlist-mode)
   (require 'emms-mark)
