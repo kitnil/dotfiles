@@ -1,3 +1,5 @@
+! https://wiki.archlinux.org/index.php/Xterm
+
 ! Scrollbar
 URxvt.scrollBar: false
 URxvt.scrollBar_right: false
@@ -81,3 +83,6 @@ XTerm.vt100.metaSendsEscape: true
 ! Fix <C-h> in Emacs
 XTerm.vt100.backarrowKey: false
 XTerm.ttyModes: erase ^?
+
+! Clipboard instead primary
+XTerm.vt100.selectToClipboard: true
