@@ -1125,12 +1125,6 @@ in the variable `browse-url-mpv-arguments' to mpv."
            (quote compilation-mode-hook)
            (lambda nil
              (setq-local truncate-lines 1)))
-     (eval add-hook
-           (quote shell-mode-hook)
-           (quote guix-build-log-minor-mode))
-     (eval add-hook
-           (quote compilation-mode-hook)
-           (quote guix-build-log-minor-mode))
      (aggressive-indent-mode)
      (Base . 10)
      (Syntax . Common-Lisp)
