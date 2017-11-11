@@ -830,12 +830,42 @@ in the variable `browse-url-mpv-arguments' to mpv."
   :config
   (engine-mode t)
   (setq engine/browser-function 'browse-url-chromium)
+
   (defengine searx
     "http://searx.tk/?q=%s"
     :keybinding "x")
+
+  (defengine duckduckgo
+    "https://duckduckgo.com/?q=%s"
+    :keybinding "d")
+
+  (defengine rfcs
+    "http://pretty-rfc.herokuapp.com/search?q=%s")
+
+  (defengine stack-overflow
+    "https://stackoverflow.com/search?q=%s")
+
+  (defengine google
+    "http://www.google.com/search?ie=utf-8&oe=utf-8&q=%s"
+    :keybinding "g")
+
   (defengine youtube
     "http://www.youtube.com/results?aq=f&oq=&search_query=%s"
     :keybinding "y")
+
+  (defengine wikipedia
+    "http://www.wikipedia.org/search-redirect.php?language=en&go=Go&search=%s"
+    :keybinding "w"
+    :docstring "Searchin' the wikis.")
+
+  (defengine wiktionary
+    (concat "https://www.wikipedia.org"
+            "/search-redirect.php"
+            "?family=wiktionary"
+            "&language=en"
+            "&go=Go"
+            "&search=%s"))
+
   (defengine github
     (s-join "+"
             (list "https://github.com/search?ref=simplesearch&q=%s"
