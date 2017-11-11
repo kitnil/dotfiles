@@ -107,7 +107,9 @@
 
 (add-to-list 'auto-mode-alist '("PKGBUILD" . shell-script-mode))
 
-(use-package rainbow-mode :bind (("C-c t r" . rainbow-mode)))
+(use-package rainbow-mode
+  :bind (("C-c t r" . rainbow-mode))
+  :config (add-hook 'conf-xdefaults-mode-hook #'rainbow-mode))
 
 (defun turn-on-truncate-lines ()
   "Convenience method to turn on `truncate-lines'."
