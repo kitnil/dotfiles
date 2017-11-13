@@ -70,6 +70,19 @@
   (interactive)
   (let ((name (buffer-file-name))) (kill-new name) (message name)))
 
+(defun delete-current-buffer-file ()
+  "Delete the current buffer and the file connected with it"
+  (interactive)
+  (let ((filename (buffer-file-name))
+        (buffer (current-buffer))
+        (name (buffer-name)))
+    (if (not (and filename (file-exists-p filename)))
+        (kill-buffer buffer)
+      (when (yes-or-no-p "Are you sure, want to remove this file? ")
+        (delete-file filename)
+        (kill-buffer buffer)
+        (message "File '%s' successfully removed" filename)))))
+
 (defun find-user-init-file ()
   "Find user init file."
   (interactive)
