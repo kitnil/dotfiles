@@ -123,7 +123,7 @@
 (add-to-list 'auto-mode-alist '("PKGBUILD" . shell-script-mode))
 
 (use-package rainbow-mode
-  :bind (("C-c t r" . rainbow-mode))
+  :bind (("C-c o r" . rainbow-mode))
   :config (add-hook 'conf-xdefaults-mode-hook #'rainbow-mode))
 
 (defun turn-on-truncate-lines ()
@@ -335,7 +335,8 @@
 (use-package helm
   :defer 5
   :bind (("C-c h i" . helm-imenu)
-         ("C-c h o" . helm-occur))
+         ("C-c h o" . helm-occur)
+         ("C-c t t" . helm-stumpwm-commands))
   :config
   (setq helm-locate-project-list (list-projects projects-directory)))
 
@@ -702,7 +703,7 @@
 
 (use-package aggressive-indent
   :defer 5
-  :bind (("C-c t a" . aggressive-indent-mode))
+  :bind (("C-c o a" . aggressive-indent-mode))
   :init
   (mapc (lambda (mode) (add-hook mode #'aggressive-indent-mode))
         '(scheme-mode-hook emacs-lisp-mode-hook lisp-mode-hook c-mode-hook)))
@@ -833,7 +834,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
   (setq TeX-save-query nil))
 
 (use-package google-translate-mode
-  :bind   (("C-c t t" . google-translate-mode))
+  :bind   (("C-c o t" . google-translate-mode))
   :config (setq trans-target "ru"))
 
 (use-package imaxima
