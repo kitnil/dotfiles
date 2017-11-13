@@ -47,6 +47,8 @@
 
 (setq prettify-symbols-unprettify-at-point 'right-edge)
 
+(setq dired-listing-switches (purecopy "-alh"))
+
 (defconst projects-directory "/srv/git")
 
 (defun toggle-manoj-dark-theme ()
