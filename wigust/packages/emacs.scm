@@ -1819,18 +1819,19 @@ other.
        (sha256
         (base32
          "0z4rbwffh9vxfvcrlvym4p73z7gf72q0b5iv33llbpcpbijknnrq"))))
-    (arguments
-     `(#:phases
-       (modify-phases %standard-phases
-         (add-before 'install 'check
-           (lambda* (#:key inputs #:allow-other-keys)
-             (zero? (system* "emacs" "--batch" "-L" "."
-                             "-l" "test/test-helper.el"
-                             "-l" "test/beginend-dired-test.el"
-                             "-l" "test/beginend-marks-test.el"
-                             "-l" "test/beginend-narrowing-test.el"
-                             "-l" "test/beginend-prog-test.el"
-                             "-f" "ert-run-tests-batch-and-exit")))))))
+    ;; TODO: Tests.
+    ;; (arguments
+    ;;  `(#:phases
+    ;;    (modify-phases %standard-phases
+    ;;      (add-before 'install 'check
+    ;;        (lambda* (#:key inputs #:allow-other-keys)
+    ;;          (zero? (system* "emacs" "--batch" "-L" "."
+    ;;                          "-l" "test/test-helper.el"
+    ;;                          "-l" "test/beginend-dired-test.el"
+    ;;                          "-l" "test/beginend-marks-test.el"
+    ;;                          "-l" "test/beginend-narrowing-test.el"
+    ;;                          "-l" "test/beginend-prog-test.el"
+    ;;                          "-f" "ert-run-tests-batch-and-exit")))))))
     (build-system emacs-build-system)
     (inputs
      `(("emacs-undercover" ,emacs-undercover))) ; For tests.
