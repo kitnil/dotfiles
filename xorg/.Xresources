@@ -49,8 +49,8 @@ URxvt*color15: #FFFFFF
 ! 
 ! XTerm
 
-XTerm.vt100.foreground: black
-XTerm.vt100.background: white
+XTerm.vt100.foreground: white
+XTerm.vt100.background: black
 
 XTerm*color0:  #000000
 XTerm*color8:  #686868
