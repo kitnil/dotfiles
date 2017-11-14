@@ -79,6 +79,8 @@
         xsetroot
         xterm      ; $TERM
 
+        openssh    ; SSH
+
         screen     ; Terminal multiplexer
 
         redshift   ; Eyes saver.
