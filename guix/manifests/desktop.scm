@@ -63,6 +63,7 @@
 
         ;; $EDITOR
         emacs                 ; The best editor
+        emacs-debbugs         ; <https://debbugs.gnu.org/> interface
         emacs-guix            ; Guix interface
         geiser                ; Scheme bridge
         emacs-engine-mode     ; Define searches on websites
