@@ -61,6 +61,7 @@
   #:use-module (gnu packages glib)
   #:use-module (gnu packages acl)
   #:use-module (gnu packages package-management)
+  #:use-module (gnu packages password-utils)
   #:use-module (gnu packages perl)
   #:use-module (gnu packages pdf)
   #:use-module (gnu packages scheme)
@@ -2055,3 +2056,22 @@ tramp.")
       (description "ewmctrl provides an Emacs interface to the wmctrl
 command-line window-management program.")
       (license license:gpl3+))))
+
+(define-public emacs-password-store
+  (package
+    (inherit password-store)
+    (name "emacs-password-store")
+    (build-system emacs-build-system)
+    (arguments
+     `(#:phases
+       (modify-phases %standard-phases
+         (add-after 'unpack 'chdir-elisp
+           ;; Elisp directory is not in root of the source.
+           (lambda _
+             (chdir "contrib/emacs"))))))
+    (propagated-inputs
+     `(,@(package-propagated-inputs password-store)
+       ("emacs-f" ,emacs-f)))
+    (synopsis "Emacs interface to @code{password store}")
+    (description "Emacs interface to @code{password store}")
+    (license license:gpl3+)))
