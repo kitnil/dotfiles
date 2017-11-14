@@ -2075,3 +2075,25 @@ command-line window-management program.")
     (synopsis "Emacs interface to @code{password store}")
     (description "Emacs interface to @code{password store}")
     (license license:gpl3+)))
+
+(define-public emacs-auth-password-store
+  (package
+    (name "emacs-auth-password-store")
+    (version "2.0.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append "https://github.com/DamienCassou"
+                           "/auth-password-store"
+                           "/archive/" "v" version ".tar.gz"))
+       (sha256
+        (base32
+         "1n9623hsx6vsq87y6a2731ydfi0x8fvfb6m7fbdfy726d4pnr09q"))))
+    (build-system emacs-build-system)
+    (propagated-inputs
+     `(("emacs-f" ,emacs-f)
+       ("emacs-password-store" ,emacs-password-store)))
+    (home-page "https://github.com/DamienCassou/auth-password-store")
+    (synopsis "Integrate Emacs auth-source with password-store")
+    (description "Integrate Emacs auth-source with password-store")
+    (license license:gpl3+)))
