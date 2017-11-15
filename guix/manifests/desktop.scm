@@ -79,6 +79,7 @@
         emacs-company            ; Complition framework
         emacs-company-quickhelp  ; Help pages for Company
         emacs-smartparens        ; Structured editing
+        emacs-transpose-frame    ; M-x transpose-frame
 
         ;; X11 utils.  See <~/.xsession> and <~/.stumpwm.d/init.lisp>.
         setxkbmap  ; Keyboard layout
