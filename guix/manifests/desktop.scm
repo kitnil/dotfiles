@@ -82,6 +82,7 @@
         emacs-smartparens        ; Structured editing
         emacs-transpose-frame    ; M-x transpose-frame
         emacs-multiple-cursors   ; Multi cursor
+        emacs-gitpatch           ; Send patches
 
         ;; X11 utils.  See <~/.xsession> and <~/.stumpwm.d/init.lisp>.
         setxkbmap  ; Keyboard layout

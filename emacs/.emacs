@@ -143,6 +143,8 @@
                                   ("America/New_York" "America/New_York")
                                   ("Asia/Tokyo"       "Asia/Tokyo"))))
 
+(setq gitpatch-mail-database (list "guix-patches@gnu.org"))
+
 (save-place-mode)            ; Remember position in files
 (setq mouse-yank-at-point t) ; Ignore mouse position on paste
 (setq vc-follow-symlinks t)  ; Do not ask about following link in Git projects
