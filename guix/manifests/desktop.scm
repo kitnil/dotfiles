@@ -57,6 +57,8 @@
         font-liberation ; Times New Roman replcement
         fontconfig      ; Make `fc-cache -f' after installing addional fonts.
 
+        pavucontrol     ; Pulseaudio control graphical interface
+
         sbcl   ; For StumpWM.  See <https://stumpwm.github.io/>.
 
         ;; For helm-stumpwm-commands and stumpish
