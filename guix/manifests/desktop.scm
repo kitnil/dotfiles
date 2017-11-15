@@ -84,6 +84,7 @@
         emacs-multiple-cursors   ; Multi cursor
         emacs-gitpatch           ; Send patches
         emacs-slime              ; Sbcl repl
+        emacs-erc-hl-nicks       ; for ERC
 
         ;; X11 utils.  See <~/.xsession> and <~/.stumpwm.d/init.lisp>.
         setxkbmap  ; Keyboard layout
