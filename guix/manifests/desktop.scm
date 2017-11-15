@@ -58,6 +58,7 @@
         fontconfig      ; Make `fc-cache -f' after installing addional fonts.
 
         pavucontrol     ; Pulseaudio control graphical interface
+        pulsemixer      ; Pulseaudio control CLI
 
         sbcl   ; For StumpWM.  See <https://stumpwm.github.io/>.
 
