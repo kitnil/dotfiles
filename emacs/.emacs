@@ -133,6 +133,8 @@
 ;;; Misc
 ;;;
 
+(setq trans-target "ru")
+
 (with-eval-after-load 'time
   (setq display-time-world-time-format "%Z\t%d %B %H:%M")
   (setq display-time-world-list '(("Europe/Moscow"    "Europe/Moscow")
