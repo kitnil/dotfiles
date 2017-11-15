@@ -37,6 +37,8 @@
 (set-border-color "#A52A2A")
 (set-msg-border-width 3)
 
+(set-float-focus-color "#A52A2A")
+
 (setf *normal-border-width* 5
       *transient-border-width* 5
       *maxsize-border-width* 5)
