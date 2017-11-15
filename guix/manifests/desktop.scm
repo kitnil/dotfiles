@@ -29,6 +29,8 @@
         aspell-dict-en  ; English
         aspell-dict-ru  ; Russian
 
+        translate-shell ; Translation in CLI and Emacs
+
         git             ; Version control
         magit           ; Emacs interface for Git
 
