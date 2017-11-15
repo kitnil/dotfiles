@@ -1,11 +1,30 @@
 ;; Copyright © 2017 Oleg Pykhalov <go.wigust@gmail.com>
 ;; Released under the GNU GPLv3 or any later version.
 
-(setq user-mail-address "go.wigust@gmail.com")
-(setq user-full-name    "Oleg Pykhalov")
+;; Tip: "M-x e" on `(emacs-init-time)'.
+
+(setq load-prefer-newer t)
+
+(setq user-mail-address    "go.wigust@gmail.com")
+(setq user-full-name       "Oleg Pykhalov")
+(setq default-input-method "russian-computer")
+
+(setq display-time-24hr-format t)
+(setq calendar-date-style 'european)
+(setq calendar-week-start-day 1)
+
+(setq mail-user-agent 'gnus-user-agent)
 
 (when (display-graphic-p)
-  (load-theme 'manoj-dark))
+  (load-theme 'manoj-dark)
+  (setq visible-bell t))
+
+
+;;;
+;;; Enable functions
+;;;
+
+(put 'narrow-to-region 'disabled nil)
 
 
 ;;;
@@ -19,25 +38,43 @@
 
 
 ;;;
+;;; Usability functions
+;;;
+
+(defun delete-current-buffer-file ()
+  "Delete the current buffer and the file connected with it"
+  (interactive)
+  (let ((filename (buffer-file-name))
+        (buffer (current-buffer))
+        (name (buffer-name)))
+    (if (not (and filename (file-exists-p filename)))
+        (kill-buffer buffer)
+      (when (yes-or-no-p "Are you sure, want to remove this file? ")
+        (delete-file filename)
+        (kill-buffer buffer)
+        (message "File '%s' successfully removed" filename)))))
+
+(defun send-buffer-as-mail ()
+  (interactive)
+  (let ((str (buffer-string)))
+    (compose-mail)
+    (save-excursion
+      (message-goto-body)
+      (insert str))))
+
+(defun turn-on-truncate-lines ()
+  "Convenience method to turn on `truncate-lines'."
+  (interactive)
+  (toggle-truncate-lines 1))
+
+
+;;;
 ;;; General functions for use
 ;;;
 
 (defun wi-expand-file-names (files)
     (mapcar (lambda (file) (expand-file-name file))
             files))
-
-
-;;;
-;;; URLs for browse-url functions
-;;;
-
-(setq browse-url-browser-function
-      `(("^ftp://.*" . browse-ftp-tramp)
-        ("^https?://debbugs\\.gnu\\.org/.*" . debbugs-browse-url)
-        ("^https?://w*\\.?youtube.com/watch\\?v=.*" . browse-url-mpv)
-        ("^https?://w*\\.?youtube.com/.*" . browse-url-chromium)
-        ("^https?://w*\\.?github.com/.*" . browse-url-chromium)
-        ("." . browse-url-firefox)))
 
 
 ;;;
@@ -60,14 +97,6 @@
   (setq guix-directory "~/src/guix"))
 
 (setq guix-read-package-name-function #'guix-read-package-name-at-point)
-
-
-;;;
-;;; winner-undo and winner-redo
-;;;
-
-(winner-mode 1)
-(windmove-default-keybindings)
 
 
 ;;;
@@ -99,44 +128,43 @@
 (with-eval-after-load 'semantic
   (global-semantic-decoration-mode t))
 
-;;; Complition framework.  See <https://company-mode.github.io/>
-
-(with-eval-after-load 'company
-  (setq company-clang-insert-arguments nil)
-  (setq company-gtags-insert-arguments nil)
-  (setq company-semantic-insert-arguments nil))
-
 
 ;;;
-;;; Structured editing.  See <https://github.com/bbatsov/smartparens>
+;;; Misc
 ;;;
 
-(smartparens-global-mode)
-(require 'smartparens-config)
+(with-eval-after-load 'time
+  (setq display-time-world-time-format "%Z\t%d %B %H:%M")
+  (setq display-time-world-list '(("Europe/Moscow"    "Europe/Moscow")
+                                  ("Europe/Berlin"    "Europe/Berlin")
+                                  ("Europe/London"    "Europe/London")
+                                  ("Europe/Istanbul"  "Europe/Istanbul")
+                                  ("America/Winnipeg" "America/Winnipeg")
+                                  ("America/New_York" "America/New_York")
+                                  ("Asia/Tokyo"       "Asia/Tokyo"))))
 
-
-;;;
-;;; Snippets
-;;;
+(save-place-mode)            ; Remember position in files
+(setq mouse-yank-at-point t) ; Ignore mouse position on paste
+(setq vc-follow-symlinks t)  ; Do not ask about following link in Git projects
+(setq dired-listing-switches (purecopy "-alh")) ; Prettify dired
 
-(setq yas-snippet-dirs (list "~/.emacs.d/snippets"
-                             "~/.guix-profile/share/emacs/yasnippet-snippets/"))
-(yas-global-mode)
-(yas-reload-all)
+(global-prettify-symbols-mode)
+(setq prettify-symbols-unprettify-at-point 'right-edge)
 
-
-;;;
-;;; Multiple cursors
-;;;
-;;; More usable then default `mouse-buffer-menu' on mouse.
+(setq browse-url-browser-function
+      `(("^ftp://.*" . browse-ftp-tramp)
+        ("^https?://debbugs\\.gnu\\.org/.*" . debbugs-browse-url)
+        ("^https?://w*\\.?youtube.com/watch\\?v=.*" . browse-url-mpv)
+        ("^https?://w*\\.?youtube.com/.*" . browse-url-chromium)
+        ("^https?://w*\\.?github.com/.*" . browse-url-chromium)
+        ("." . browse-url-firefox)))
 
-(multiple-cursors-mode)
-(global-set-key (kbd "<C-down-mouse-1>") 'mc/toggle-cursor-on-click)
+(with-eval-after-load 'debbugs-gnu
+  (setq debbugs-gnu-default-packages (list "guix" "guix-patches")))
 
-
-;;;
-;;; Documentation
-;;;
+(with-eval-after-load 'sendmail
+  (setq send-mail-function #'smtpmail-send-it)
+  (setq smtpmail-smtp-server "smtp.gmail.com"))
 
 ;; Code from: https://github.com/alezost/guix.el/pull/9#issuecomment-340556583
 (with-eval-after-load 'info
@@ -147,16 +175,29 @@
                                             "~/src/stumpwm"))
                 Info-directory-list)))
 
+(multiple-cursors-mode)
+(global-set-key (kbd "<C-down-mouse-1>") 'mc/toggle-cursor-on-click)
+
+(setq yas-snippet-dirs (list "~/.emacs.d/snippets"
+                             "~/.guix-profile/share/emacs/yasnippet-snippets/"))
+(yas-global-mode)
+(yas-reload-all)
+
+(with-eval-after-load 'company
+  (setq company-clang-insert-arguments nil)
+  (setq company-gtags-insert-arguments nil)
+  (setq company-semantic-insert-arguments nil))
+
+(smartparens-global-mode)
+(require 'smartparens-config)
+
+(winner-mode 1)
+(windmove-default-keybindings)
+
 (which-key-mode)
 
-(with-eval-after-load 'debbugs-gnu
-  (setq debbugs-gnu-default-packages (list "guix" "guix-patches")))
-
-(with-eval-after-load 'sendmail
-  (setq send-mail-function #'smtpmail-send-it)
-  (setq smtpmail-smtp-server "smtp.gmail.com"))
-
-;; (add-hook 'scheme-mode-hook #'geiser-mode)
+(setq helm-firefox-default-directory "~/.mozilla/icecat/")
+(setq ewmctrl-wmctrl-path "~/.guix-profile/bin/wmctrl")
 
 (defun debbugs-gnu-guix ()
   (interactive)
