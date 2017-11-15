@@ -113,11 +113,11 @@
 
 (defcommand youtube-dl () ()
   "Download video."
-  (run-shell-command "exec urxvtc -name youtube-dl -e youtube-dl $(xclip -o -selection clipboard)"))
+  (run-shell-command "exec xterm -name youtube-dl -e youtube-dl $(xclip -o -selection clipboard)"))
 
 (defcommand youtube-dl-play () ()
   "Download video and play it."
-  (run-shell-command "exec urxvtc -name youtube-dl -e youtube-dl --exec 'mpv {}' $(xclip -o -selection clipboard)"))
+  (run-shell-command "exec xterm -name youtube-dl -e youtube-dl --exec 'mpv {}' $(xclip -o -selection clipboard)"))
 
 (define-key *root-map* (kbd "v") "mpv")
 (define-key *root-map* (kbd "C-v") "xclip-mpv")
