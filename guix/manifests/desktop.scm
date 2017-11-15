@@ -76,6 +76,8 @@
         emacs-helm               ; Narrowing framework
         emacs-yasnippet          ; Snippets
         emacs-yasnippet-snippets
+        emacs-company            ; Complition framework
+        emacs-company-quickhelp  ; Help pages for Company
 
         ;; X11 utils.  See <~/.xsession> and <~/.stumpwm.d/init.lisp>.
         setxkbmap  ; Keyboard layout
