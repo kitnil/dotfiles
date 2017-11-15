@@ -62,14 +62,14 @@
         xprop
 
         ;; $EDITOR
-        emacs                 ; The best editor
-        emacs-debbugs         ; <https://debbugs.gnu.org/> interface
-        emacs-guix            ; Guix interface
-        geiser                ; Scheme bridge
-        emacs-engine-mode     ; Define searches on websites
-        emacs-projectile      ; Project functions
-        emacs-helm-projectile ; Helm interface for Projectile
-        emacs-helm            ; Narrowing framework
+        emacs                    ; The best editor
+        emacs-debbugs            ; <https://debbugs.gnu.org/> interface
+        emacs-guix               ; Guix interface
+        geiser                   ; Scheme bridge
+        emacs-engine-mode        ; Define searches on websites
+        emacs-projectile         ; Project functions
+        emacs-helm-projectile    ; Helm interface for Projectile
+        emacs-helm               ; Narrowing framework
 
         ;; X11 utils.  See <~/.xsession> and <~/.stumpwm.d/init.lisp>.
         setxkbmap  ; Keyboard layout
