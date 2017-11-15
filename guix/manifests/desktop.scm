@@ -78,6 +78,7 @@
         emacs-yasnippet-snippets
         emacs-company            ; Complition framework
         emacs-company-quickhelp  ; Help pages for Company
+        emacs-smartparens        ; Structured editing
 
         ;; X11 utils.  See <~/.xsession> and <~/.stumpwm.d/init.lisp>.
         setxkbmap  ; Keyboard layout
