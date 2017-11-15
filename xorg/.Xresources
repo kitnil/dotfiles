@@ -40,3 +40,16 @@ XTerm.ttyModes: erase ^?
 
 ! Clipboard instead primary
 XTerm.vt100.selectToClipboard: true
+
+! Inspired by:   https://www.gnu.org/software/emacs/manual/html_node/emacs/Fonts.html#Fonts
+! Get code from: https://www.emacswiki.org/emacs/XftGnuEmacs
+Emacs.FontBackend: xft
+Emacs.font: Monospace-14
+
+! https://snarfed.org/emacs_x_resources
+! Emacs.menuBar: off
+Emacs.verticalScrollBars: off
+Emacs.toolBar: off
+
+! (emacs) Table of Resources
+Emacs.cursorBlink: off
