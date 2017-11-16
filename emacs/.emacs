@@ -86,6 +86,13 @@
 (global-set-key (kbd "C-c h p f") #'helm-projectile-find-file-dwim)
 (global-set-key (kbd "C-c h s") #'helm-stumpwm-commands)
 
+(which-key-add-key-based-replacements "C-c m" "mail")
+(global-set-key (kbd "C-c m b") #'wi-send-buffer-as-mail)
+
+(which-key-add-key-based-replacements "C-c m g" "gnus")
+(global-set-key (kbd "C-c m g g") #'gnus)
+(global-set-key (kbd "C-c m g s") #'switch-to-gnus)
+
 (which-key-add-key-based-replacements "C-c s" "shell")
 (global-set-key (kbd "C-c s s") #'shell)
 (global-set-key (kbd "C-c s e") #'eshell)
