@@ -12,6 +12,7 @@
              (gnu packages mail)
              (gnu packages password-utils)
              (gnu packages screen)
+             (gnu packages bittorrent)
              (gnu packages version-control)
              (gnu packages video)
              (gnu packages virtualization)
@@ -102,7 +103,8 @@
         redshift   ; Eyes saver.
 
         ;; Downloaders.
-        youtube-dl ; Video and music from websites
+        transmission ; Bittorrent
+        youtube-dl   ; Video and music from websites
         wget))
 
 (packages->manifest %desktop-packages)
