@@ -86,7 +86,7 @@
 (which-key-add-key-based-replacements "C-c h p" "helm-projectile")
 (global-set-key (kbd "C-c h p p") #'helm-projectile)
 (global-set-key (kbd "C-c h p f") #'helm-projectile-find-file-dwim)
-(global-set-key (kbd "C-c h s") #'helm-stumpwm-commands)
+(global-set-key (kbd "C-c h w") #'helm-stumpwm-commands)
 
 (which-key-add-key-based-replacements "C-c p x" "projectile-shell")
 (which-key-add-key-based-replacements "C-c p s" "projectile-search")
@@ -100,7 +100,13 @@
 
 (which-key-add-key-based-replacements "C-c s" "shell")
 (global-set-key (kbd "C-c s s") #'shell)
+(global-set-key (kbd "C-c s c") #'compilation-shell-minor-mode)
 (global-set-key (kbd "C-c s e") #'eshell)
+
+(which-key-add-key-based-replacements "C-c c" "org")
+(global-set-key (kbd "C-c c c") #'org-capture)
+(global-set-key (kbd "C-c c a") #'org-agenda)
+(global-set-key (kbd "C-c c a") #'org-store-link)
 
 (which-key-add-key-based-replacements "C-c &" "yasnippet")
 
