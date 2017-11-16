@@ -80,6 +80,8 @@
 
 (which-key-add-key-based-replacements "C-c h" "helm")
 (global-set-key (kbd "C-c h i") #'helm-imenu)
+(global-set-key (kbd "C-c h s") #'helm-pass)
+(global-set-key (kbd "C-c h y") #'helm-show-kill-ring)
 
 (which-key-add-key-based-replacements "C-c h p" "helm-projectile")
 (global-set-key (kbd "C-c h p p") #'helm-projectile)
