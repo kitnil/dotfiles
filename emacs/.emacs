@@ -17,31 +17,30 @@
 
 (setq mail-user-agent 'gnus-user-agent)
 
-(when (display-graphic-p)
-  (setq visible-bell t)
+(setq visible-bell t)
 
-  (load-theme 'manoj-dark)
+(load-theme 'manoj-dark)
 
-  (custom-theme-set-faces
-   'manoj-dark
-   '(fringe ((t (:background "black" :foreground "Wheat"))))
-   '(header-line
-     ((t (:background "black" :foreground "grey90" :height 0.9)))))
+(custom-theme-set-faces
+ 'manoj-dark
+ '(fringe ((t (:background "black" :foreground "Wheat"))))
+ '(header-line
+   ((t (:background "black" :foreground "grey90" :height 0.9)))))
 
-  (with-eval-after-load 'whitespace
-    (setq whitespace-style (quote (face tabs spaces trailing
-                                        space-before-tab newline
-                                        indentation empty
-                                        space-after-tab space-mark
-                                        tab-mark)))
+(with-eval-after-load 'whitespace
+  (setq whitespace-style (quote (face tabs spaces trailing
+                                      space-before-tab newline
+                                      indentation empty
+                                      space-after-tab space-mark
+                                      tab-mark)))
 
-    (let ((foreground "gray15"))
-      (mapc (lambda (font)
-              (set-face-attribute font nil
-                                  :background nil :foreground foreground))
-            '(whitespace-space whitespace-indentation))))
+  (let ((foreground "gray15"))
+    (mapc (lambda (font)
+            (set-face-attribute font nil
+                                :background nil :foreground foreground))
+          '(whitespace-space whitespace-indentation))))
 
-  (add-hook 'prog-mode-hook 'whitespace-mode))
+(add-hook 'prog-mode-hook 'whitespace-mode)
 
 
 ;;;
@@ -277,6 +276,10 @@
 ;;;
 ;;; Misc
 ;;;
+
+(setq debpaste-user-name "wigust")
+
+(pdf-tools-install)
 
 (with-eval-after-load 'eww
   (setq shr-width 80)
