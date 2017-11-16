@@ -28,7 +28,7 @@
                                    networks noncommands readonly ring
                                    smiley stamp track)))
 
-(defun erc-connect-localhost ()
+(defun wi-erc-connect-localhost ()
   "Connect to localhost irc network"
   (interactive)
   (erc :server "localhost"
@@ -36,7 +36,7 @@
        :nick "natsu"
        :password nil))
 
-(defun erc-connect-twitch ()
+(defun wi-erc-connect-twitch ()
   "Connect to twitch irc network"
   (interactive)
   (add-to-list 'erc-networks-alist '(twitch "irc.chat.twitch.tv"))
@@ -45,7 +45,7 @@
            :nick "wigust"
            :password nil))
 
-(defun erc-connect-globalgamers ()
+(defun wi-erc-connect-globalgamers ()
   "Connect to globalgamers irc network"
   (interactive)
   (add-to-list 'erc-networks-alist '(globalgamers "irc.globalgamers.net"))
@@ -54,7 +54,7 @@
            :nick "wigust"
            :password nil))
 
-(defun erc-connect-indymedia ()
+(defun wi-erc-connect-indymedia ()
   "Connect to indymedia irc network"
   (interactive)
   (add-to-list 'erc-networks-alist '(indymedia "irc.indymedia.org"))
@@ -63,7 +63,7 @@
            :nick "wigust"
            :password nil))
 
-(defun erc-connect-gitter ()
+(defun wi-erc-connect-gitter ()
   "Connect to gitter irc network"
   (interactive)
   (add-to-list 'erc-networks-alist '(gitter "irc.gitter.im"))
@@ -72,14 +72,14 @@
            :nick "wigust"
            :password nil))
 
-(defun erc-connect-gnome ()
+(defun wi-erc-connect-gnome ()
   "Connect to gnome irc network"
   (interactive)
   (erc-tls :server "irc.gnome.org"
            :port 6697
            :nick "wigust"))
 
-(defun erc-connect-freenode ()
+(defun wi-erc-connect-freenode ()
   "Connect to freenode irc network"
   (interactive)
   (erc-tls :server "irc.freenode.net"
@@ -87,55 +87,55 @@
            :nick "wigust"
            :password nil))
 
-(defun erc-connect-debian ()
+(defun wi-erc-connect-debian ()
   "Connect to debian irc network"
   (interactive)
   (erc-tls :server "irc.oftc.net"
            :port 6697
            :nick "wigust"))
 
-(defun erc-connect-rizon ()
+(defun wi-erc-connect-rizon ()
   "Connect to highway irc network"
   (interactive)
   (erc-tls :server "irc.rizon.net"
            :port 6697
            :nick "wigust"))
 
-(defun erc-connect-highway ()
+(defun wi-erc-connect-highway ()
   "Connect to highway irc network"
   (interactive)
   (erc-tls :server "irc.irchighway.net"
            :port 6697
            :nick "wigust"))
 
-(defun erc-connect-all ()
+(defun wi-erc-connect-all ()
   "Connect to all configured irc networks"
   (interactive)
-  (erc-connect-localhost) (erc-connect-debian)
-  (erc-connect-freenode) (erc-connect-gnome)
-  (erc-connect-gitter) (erc-connect-twitch)
-  (erc-connect-rizon) (erc-connect-globalgamers)
-  ;; (erc-connect-highway) ; No autojoin channels
-  (erc-connect-indymedia))
+  (wi-erc-connect-localhost) (wi-erc-connect-debian)
+  (wi-erc-connect-freenode) (wi-erc-connect-gnome)
+  (wi-erc-connect-gitter) (wi-erc-connect-twitch)
+  (wi-erc-connect-rizon) (wi-erc-connect-globalgamers)
+  ;; (wi-erc-connect-highway) ; No autojoin channels
+  (wi-erc-connect-indymedia))
 
-(defvar irc-gnome-servers '("umu.se" "gimp.net" "gimp.ca"
-                            "gnome.org" "y.se" "poop.nl"))
+(defvar wi-irc-gnome-servers '("umu.se" "gimp.net" "gimp.ca"
+                               "gnome.org" "y.se" "poop.nl"))
 
-(defvar irc-gnome-channels '("#bugs" "#docs" "#gnome" "#gnome-hackers"
-                             "#gnome-shell" "#newcomers"))
+(defvar wi-irc-gnome-channels '("#bugs" "#docs" "#gnome" "#gnome-hackers"
+                                "#gnome-shell" "#newcomers"))
 
-(defun irc-netlist (irc-networks irc-channels)
-  (let (irc-netlist)
-    (dolist (irc-network irc-networks irc-netlist)
-      (if (equal irc-netlist nil)
-          (setq irc-netlist
+(defun wi-erc-netlist (irc-networks irc-channels)
+  (let (wi-erc-netlist)
+    (dolist (irc-network irc-networks wi-erc-netlist)
+      (if (equal wi-erc-netlist nil)
+          (setq wi-erc-netlist
                 (list (cons irc-network irc-channels)))
-        (setq irc-netlist (append
-                           irc-netlist
-                           (list (cons irc-network irc-channels))))))))
+        (setq wi-erc-netlist (append
+                              wi-erc-netlist
+                              (list (cons irc-network irc-channels))))))))
 
-(defvar irc-netlist-gnome (irc-netlist irc-gnome-servers
-                                       irc-gnome-channels))
+(defvar wi-erc-netlist-gnome (wi-erc-netlist wi-irc-gnome-servers
+                                             wi-irc-gnome-channels))
 
 (setq erc-autojoin-channels-alist
       (quote
@@ -156,9 +156,9 @@
          "#bbsssssssss" "#team_treehouse" "#rw_grim")
         ("uworld.se" "#coalgirls"))))
 
-(defun erc-netlist (irc-netlist)
-  (dolist (irc-net irc-netlist)
+(defun erc-netlist (wi-erc-netlist)
+  (dolist (irc-net wi-erc-netlist)
     (append erc-autojoin-channels-alist irc-net)))
 
 (setq erc-autojoin-channels-alist
-      (append erc-autojoin-channels-alist irc-netlist-gnome))
+      (append erc-autojoin-channels-alist wi-erc-netlist-gnome))
