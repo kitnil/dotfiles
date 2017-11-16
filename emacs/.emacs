@@ -31,10 +31,10 @@
 ;;; Keybindings
 ;;;
 
-(global-set-key (kbd "C-c f f") #'ffap)
-(global-set-key (kbd "C-c f p") #'guix-edit)
-(global-set-key (kbd "C-c b b") #'ibuffer)
-(global-set-key (kbd "C-c v s") #'magit-status)
+(global-set-key (kbd "C-c f") #'ffap)
+(global-set-key (kbd "C-c p") #'guix-edit)
+(global-set-key (kbd "C-c s") #'magit-status)
+(global-set-key (kbd "C-c l") #'magit-list-repositories)
 
 
 ;;;
@@ -75,6 +75,12 @@
 (defun wi-expand-file-names (files)
     (mapcar (lambda (file) (expand-file-name file))
             files))
+
+(defun wi-list-files-in-dir (directory)
+  "Return a list of files in the DIRECTORY."
+  (directory-files (expand-file-name directory)
+                   t
+                   "^\\([^.]\\|\\.[^.]\\|\\.\\..\\)"))
 
 
 ;;;
@@ -132,6 +138,17 @@
 ;;;
 ;;; Misc
 ;;;
+
+(defvar wi-projects-directory "/srv/git")
+
+(defun wi-update-magit-repository-directories (directory)
+  "Update list of files in `DIRECTORY' for `magit-list-repositories'."
+  (interactive)
+  (setq magit-repository-directories (wi-list-files-in-dir directory)))
+
+(wi-update-magit-repository-directories wi-projects-directory)
+
+(setq helm-locate-project-list (wi-list-files-in-dir wi-projects-directory))
 
 (setq trans-target "ru")
 
@@ -194,6 +211,8 @@
 
 (smartparens-global-mode)
 (require 'smartparens-config)
+(sp-use-smartparens-bindings)
+(add-hook 'minibuffer-inactive-mode-hook 'smartparens-mode)
 
 (winner-mode 1)
 (windmove-default-keybindings)
