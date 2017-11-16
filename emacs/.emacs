@@ -54,8 +54,6 @@
 ;;;
 ;;; See <https://www.gnu.org/software/emacs/manual/html_node/elisp/Key-Binding-Conventions.html>
 
-(global-set-key (kbd "<f5>")  #'flyspell-mode)
-
 (which-key-add-key-based-replacements "C-c v" "magit")
 (global-set-key (kbd "C-c v l") #'magit-list-repositories)
 (global-set-key (kbd "C-c v s") #'magit-status)
@@ -67,6 +65,12 @@
 (which-key-add-key-based-replacements "C-c t" "toggle")
 (global-set-key (kbd "C-c t i") #'aggressive-indent-mode)
 (global-set-key (kbd "C-c t t") #'toggle-truncate-lines)
+(global-set-key (kbd "C-c t s") #'flyspell-mode)
+(global-set-key (kbd "C-c t c") #'flycheck-mode)
+(global-set-key (kbd "C-c t m") #'flymake-mode)
+(global-set-key (kbd "C-c t w") #'whitespace-mode)
+(global-set-key (kbd "C-c t p") #'smartparens-global-mode)
+(global-set-key (kbd "C-c t l") #'prettify-symbols-mode)
 
 (which-key-add-key-based-replacements "C-c r" "rething")
 (global-set-key (kbd "C-c r r") #'revert-buffer)
@@ -80,7 +84,7 @@
 (global-set-key (kbd "C-c h p f") #'helm-projectile-find-file-dwim)
 (global-set-key (kbd "C-c h s") #'helm-stumpwm-commands)
 
-(which-key-add-key-based-replacements "C-c s s" "shell")
+(which-key-add-key-based-replacements "C-c s" "shell")
 (global-set-key (kbd "C-c s s") #'shell)
 (global-set-key (kbd "C-c s e") #'eshell)
 
@@ -261,6 +265,7 @@
 (show-paren-mode)
 
 (setq projectile-completion-system 'default)
+(projectile-global-mode)
 
 (setq helm-locate-project-list (wi-list-files-in-dir wi-projects-directory))
 
@@ -327,7 +332,10 @@
 (with-eval-after-load 'smartparens
   (require 'smartparens-config)
   (sp-use-smartparens-bindings)
-  (add-hook 'minibuffer-inactive-mode-hook 'smartparens-mode))
+  (add-hook 'minibuffer-inactive-mode-hook 'smartparens-mode)
+  (add-hook 'emacs-lisp-mode-hook 'smartparens-strict-mode)
+  (add-hook 'lisp-mode-hook 'smartparens-strict-mode)
+  (add-hook 'scheme-mode-hook 'smartparens-strict-mode))
 
 (winner-mode 1)
 (windmove-default-keybindings)
