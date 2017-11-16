@@ -86,6 +86,9 @@
 (global-set-key (kbd "C-c h p f") #'helm-projectile-find-file-dwim)
 (global-set-key (kbd "C-c h s") #'helm-stumpwm-commands)
 
+(which-key-add-key-based-replacements "C-c p x" "projectile-shell")
+(which-key-add-key-based-replacements "C-c p s" "projectile-search")
+
 (which-key-add-key-based-replacements "C-c m" "mail")
 (global-set-key (kbd "C-c m b") #'wi-send-buffer-as-mail)
 
