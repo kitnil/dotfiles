@@ -16,8 +16,30 @@
 (setq mail-user-agent 'gnus-user-agent)
 
 (when (display-graphic-p)
+  (setq visible-bell t)
+
   (load-theme 'manoj-dark)
-  (setq visible-bell t))
+
+  (custom-theme-set-faces
+   'manoj-dark
+   '(fringe ((t (:background "black" :foreground "Wheat"))))
+   '(header-line
+     ((t (:background "black" :foreground "grey90" :height 0.9)))))
+
+  (with-eval-after-load 'whitespace
+    (setq whitespace-style (quote (face tabs spaces trailing
+                                        space-before-tab newline
+                                        indentation empty
+                                        space-after-tab space-mark
+                                        tab-mark)))
+
+    (let ((foreground "gray15"))
+      (mapc (lambda (font)
+              (set-face-attribute font nil
+                                  :background nil :foreground foreground))
+            '(whitespace-space whitespace-indentation))))
+
+  (add-hook 'prog-mode-hook 'whitespace-mode))
 
 
 ;;;
@@ -30,13 +52,21 @@
 ;;;
 ;;; Keybindings
 ;;;
+;;; See <https://www.gnu.org/software/emacs/manual/html_node/elisp/Key-Binding-Conventions.html>
 
+(global-set-key (kbd "<f5>")  #'flyspell-mode)
 (global-set-key (kbd "C-c d") #'magit-list-repositories)
 (global-set-key (kbd "C-c e") #'guix-edit)
 (global-set-key (kbd "C-c f") #'ffap)
+(global-set-key (kbd "C-c i") #'aggressive-indent-mode)
 (global-set-key (kbd "C-c l") #'redraw-display)
+(global-set-key (kbd "C-c m") #'helm-imenu)
 (global-set-key (kbd "C-c p") #'projectile-find-file)
-(global-set-key (kbd "C-c s") #'magit-status)
+(global-set-key (kbd "C-c r") #'revert-buffer)
+(global-set-key (kbd "C-c s") #'shell)
+(global-set-key (kbd "C-c t") #'toggle-truncate-lines)
+(global-set-key (kbd "C-c v") #'magit-status)
+(global-set-key (kbd "C-c w") #'helm-stumpwm-commands)
 
 
 ;;;
@@ -63,11 +93,6 @@
     (save-excursion
       (message-goto-body)
       (insert str))))
-
-(defun wi-turn-on-truncate-lines ()
-  "Convenience method to turn on `truncate-lines'."
-  (interactive)
-  (toggle-truncate-lines 1))
 
 
 ;;;
@@ -211,6 +236,10 @@
 ;;; Misc
 ;;;
 
+(with-eval-after-load 'eww
+  (setq shr-width 80)
+  (setq shr-use-fonts nil))
+
 (show-paren-mode)
 
 (setq projectile-completion-system 'default)
@@ -254,13 +283,14 @@
   (setq smtpmail-smtp-server "smtp.gmail.com"))
 
 ;; Code from: https://github.com/alezost/guix.el/pull/9#issuecomment-340556583
-(with-eval-after-load 'info
-  (info-initialize)
-  (setq Info-directory-list
-        (append (wi-expand-file-names (list "~/src/guile-chickadee/doc"
-                                            "~/src/guix/doc"
-                                            "~/src/stumpwm"))
-                Info-directory-list)))
+;; (with-eval-after-load 'info
+;;   (info-initialize)
+;;   (setq Info-directory-list
+;;         (append (wi-expand-file-names (list "~/src/guix/doc"))
+;;                 Info-directory-list)))
+;;
+;; Alternative: https://lists.gnu.org/archive/html/help-guix/2017-03/msg00140.html
+;; See <~/.bashrc>
 
 (multiple-cursors-mode)
 (global-set-key (kbd "<C-down-mouse-1>") 'mc/toggle-cursor-on-click)
