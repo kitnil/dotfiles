@@ -55,18 +55,36 @@
 ;;; See <https://www.gnu.org/software/emacs/manual/html_node/elisp/Key-Binding-Conventions.html>
 
 (global-set-key (kbd "<f5>")  #'flyspell-mode)
-(global-set-key (kbd "C-c d") #'magit-list-repositories)
-(global-set-key (kbd "C-c e") #'guix-edit)
-(global-set-key (kbd "C-c f") #'ffap)
-(global-set-key (kbd "C-c i") #'aggressive-indent-mode)
-(global-set-key (kbd "C-c l") #'redraw-display)
-(global-set-key (kbd "C-c m") #'helm-imenu)
-(global-set-key (kbd "C-c p") #'projectile-find-file)
-(global-set-key (kbd "C-c r") #'revert-buffer)
-(global-set-key (kbd "C-c s") #'shell)
-(global-set-key (kbd "C-c t") #'toggle-truncate-lines)
-(global-set-key (kbd "C-c v") #'magit-status)
-(global-set-key (kbd "C-c w") #'helm-stumpwm-commands)
+
+(which-key-add-key-based-replacements "C-c v" "magit")
+(global-set-key (kbd "C-c v l") #'magit-list-repositories)
+(global-set-key (kbd "C-c v s") #'magit-status)
+
+(which-key-add-key-based-replacements "C-c f" "point")
+(global-set-key (kbd "C-c f e") #'guix-edit)
+(global-set-key (kbd "C-c f f") #'ffap)
+
+(which-key-add-key-based-replacements "C-c t" "toggle")
+(global-set-key (kbd "C-c t i") #'aggressive-indent-mode)
+(global-set-key (kbd "C-c t t") #'toggle-truncate-lines)
+
+(which-key-add-key-based-replacements "C-c r" "rething")
+(global-set-key (kbd "C-c r r") #'revert-buffer)
+(global-set-key (kbd "C-c r l") #'redraw-display)
+
+(which-key-add-key-based-replacements "C-c h" "helm")
+(global-set-key (kbd "C-c h i") #'helm-imenu)
+
+(which-key-add-key-based-replacements "C-c h p" "helm-projectile")
+(global-set-key (kbd "C-c h p p") #'helm-projectile)
+(global-set-key (kbd "C-c h p f") #'helm-projectile-find-file-dwim)
+(global-set-key (kbd "C-c h s") #'helm-stumpwm-commands)
+
+(which-key-add-key-based-replacements "C-c s s" "shell")
+(global-set-key (kbd "C-c s s") #'shell)
+(global-set-key (kbd "C-c s e") #'eshell)
+
+(which-key-add-key-based-replacements "C-c &" "yasnippet")
 
 
 ;;;
