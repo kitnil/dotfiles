@@ -31,11 +31,12 @@
 ;;; Keybindings
 ;;;
 
-(global-set-key (kbd "C-c f") #'ffap)
+(global-set-key (kbd "C-c d") #'magit-list-repositories)
 (global-set-key (kbd "C-c e") #'guix-edit)
-(global-set-key (kbd "C-c s") #'magit-status)
-(global-set-key (kbd "C-c l") #'magit-list-repositories)
+(global-set-key (kbd "C-c f") #'ffap)
+(global-set-key (kbd "C-c l") #'redraw-display)
 (global-set-key (kbd "C-c p") #'projectile-find-file)
+(global-set-key (kbd "C-c s") #'magit-status)
 
 
 ;;;
@@ -85,6 +86,27 @@
 
 
 ;;;
+;;; Elisp
+;;;
+
+(with-eval-after-load 'elisp-mode
+  (defconst wi-elisp--prettify-symbols-alist
+    '(("lambda"  . ?λ)
+      ("lambda*" . (?λ (Br . Bl) ?*))
+      ("not"     . ?¬)
+      ("and"     . ?∧)
+      ("or"      . ?∨)
+      ("eq?"     . ≡)
+      ("<="      . ?≤)
+      (">="      . ?≥)
+      ("->"      . ?→)))
+  (add-hook 'c-mode-hook (lambda ()
+                           (set (make-local-variable 'prettify-symbols-alist)
+                                wi-elisp--prettify-symbols-alist)))
+  (add-hook 'c-mode-hook #'prettify-symbols-mode))
+
+
+;;;
 ;;; Guile and Guix
 ;;;
 
@@ -95,7 +117,26 @@
   (add-to-list 'geiser-guile-load-path "/home/natsu/src/guix")
   (setq geiser-guile-binary '("guile" "--no-auto-compile")))
 
-(add-hook 'scheme-mode-hook 'guix-devel-mode)
+(with-eval-after-load 'scheme
+  (add-hook 'scheme-mode-hook 'guix-devel-mode)
+  (defconst wi-scheme--prettify-symbols-alist
+    '(("lambda"  . ?λ)
+      ("lambda*" . (?λ (Br . Bl) ?*))
+      ("#t"      . ?T)
+      ("#f"      . ?F)
+      ("not"     . ?¬)
+      ("and"     . ?∧)
+      ("or"      . ?∨)
+      ("eq?"     . ≡)
+      ("<="      . ?≤)
+      (">="      . ?≥)
+      ("->"      . ?→)))
+  (add-hook 'c-mode-hook (lambda ()
+                           (set (make-local-variable 'prettify-symbols-alist)
+                                wi-scheme--prettify-symbols-alist)))
+
+  (add-hook 'c-mode-hook #'prettify-symbols-mode))
+
 (add-hook 'proced-post-display-hook 'guix-prettify-mode)
 (add-hook 'shell-mode-hook #'guix-prettify-mode)
 (add-hook 'dired-mode-hook 'guix-prettify-mode)
@@ -111,7 +152,7 @@
 ;;;
 
 (with-eval-after-load 'cc-mode
-  (defconst c--prettify-symbols-alist
+  (defconst wi-c--prettify-symbols-alist
     '(("->"     . ?→)
       ("=="     . ?≡)
       ("not"    . ?¬)
@@ -125,7 +166,7 @@
 
   (add-hook 'c-mode-hook (lambda ()
                            (set (make-local-variable 'prettify-symbols-alist)
-                                c--prettify-symbols-alist)))
+                                wi-c--prettify-symbols-alist)))
 
   (add-hook 'c-mode-hook #'prettify-symbols-mode))
 
@@ -137,7 +178,7 @@
 
 
 ;;;
-;;; Misc
+;;; Magit
 ;;;
 
 (defvar wi-projects-directory "/srv/git")
@@ -148,6 +189,31 @@
   (setq magit-repository-directories (wi-list-files-in-dir directory)))
 
 (wi-update-magit-repository-directories wi-projects-directory)
+
+(setq magit-log-arguments (list "--graph" "--color" "--decorate" "-n64"))
+(setq magit-log-section-arguments (list "-n256" "--decorate"))
+
+;; Use `magit-describe-section'
+(defun wi-local-magit-initially-hide-unmerged (section)
+  (and (not magit-insert-section--oldroot)
+       (or (eq (magit-section-type section) 'unpushed)
+           (equal (magit-section-value section) "@{upstream}..")
+           (eq (magit-section-type section) 'stashes)
+           (equal (magit-section-value section) "refs/stash"))
+       'hide))
+
+(add-hook 'magit-section-set-visibility-hook
+          'wi-local-magit-initially-hide-unmerged)
+
+
+
+;;;
+;;; Misc
+;;;
+
+(show-paren-mode)
+
+(setq projectile-completion-system 'default)
 
 (setq helm-locate-project-list (wi-list-files-in-dir wi-projects-directory))
 
@@ -210,9 +276,10 @@
   (setq company-semantic-insert-arguments nil))
 
 (smartparens-global-mode)
-(require 'smartparens-config)
-(sp-use-smartparens-bindings)
-(add-hook 'minibuffer-inactive-mode-hook 'smartparens-mode)
+(with-eval-after-load 'smartparens
+  (require 'smartparens-config)
+  (sp-use-smartparens-bindings)
+  (add-hook 'minibuffer-inactive-mode-hook 'smartparens-mode))
 
 (winner-mode 1)
 (windmove-default-keybindings)
