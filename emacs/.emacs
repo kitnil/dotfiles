@@ -13,6 +13,8 @@
 (setq calendar-date-style 'european)
 (setq calendar-week-start-day 1)
 
+(setq initial-buffer-choice t)
+
 (setq mail-user-agent 'gnus-user-agent)
 
 (when (display-graphic-p)
