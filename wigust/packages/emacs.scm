@@ -2129,3 +2129,24 @@ command-line window-management program.")
       (description "Emacs helm interface for pass, the standard unix
 password manager.")
       (license license:gpl3+))))
+
+(define-public emacs-xml-rpc
+  (package
+    (name "emacs-xml-rpc")
+    (version "1.6.12")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append
+                    "https://github.com/hexmode/xml-rpc-el/archive/"
+                    version ".tar.gz"))
+              (sha256
+               (base32
+                "01izmsxk0ja77nxwgjzyb3k5wgndnx7i9qvkyb8f12bwrjn0rga0"))))
+    (build-system emacs-build-system)
+    ;; TODO: Package tests
+    (home-page "https://github.com/hexmode/xml-rpc-el")
+    (synopsis "XML-RPC client implementation in elisp")
+    (description "This package provides an XML-RPC client
+implementation in elisp, capable of both synchronous and asynchronous
+method calls.")
+    (license license:gpl3+)))
