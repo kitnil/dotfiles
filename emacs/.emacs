@@ -32,16 +32,17 @@
 ;;;
 
 (global-set-key (kbd "C-c f") #'ffap)
-(global-set-key (kbd "C-c p") #'guix-edit)
+(global-set-key (kbd "C-c e") #'guix-edit)
 (global-set-key (kbd "C-c s") #'magit-status)
 (global-set-key (kbd "C-c l") #'magit-list-repositories)
+(global-set-key (kbd "C-c p") #'projectile-find-file)
 
 
 ;;;
 ;;; Usability functions
 ;;;
 
-(defun delete-current-buffer-file ()
+(defun wi-delete-current-buffer-file ()
   "Delete the current buffer and the file connected with it"
   (interactive)
   (let ((filename (buffer-file-name))
@@ -54,7 +55,7 @@
         (kill-buffer buffer)
         (message "File '%s' successfully removed" filename)))))
 
-(defun send-buffer-as-mail ()
+(defun wi-send-buffer-as-mail ()
   (interactive)
   (let ((str (buffer-string)))
     (compose-mail)
@@ -62,7 +63,7 @@
       (message-goto-body)
       (insert str))))
 
-(defun turn-on-truncate-lines ()
+(defun wi-turn-on-truncate-lines ()
   "Convenience method to turn on `truncate-lines'."
   (interactive)
   (toggle-truncate-lines 1))
@@ -150,7 +151,9 @@
 
 (setq helm-locate-project-list (wi-list-files-in-dir wi-projects-directory))
 
-(setq trans-target "ru")
+(require 'google-translate-mode)
+(with-eval-after-load 'google-translate-mode
+  (setq trans-target "ru"))
 
 (with-eval-after-load 'time
   (setq display-time-world-time-format "%Z\t%d %B %H:%M")
@@ -179,9 +182,6 @@
         ("^https?://w*\\.?youtube.com/.*" . browse-url-chromium)
         ("^https?://w*\\.?github.com/.*" . browse-url-chromium)
         ("." . browse-url-firefox)))
-
-(with-eval-after-load 'debbugs-gnu
-  (setq debbugs-gnu-default-packages (list "guix" "guix-patches")))
 
 (with-eval-after-load 'sendmail
   (setq send-mail-function #'smtpmail-send-it)
@@ -222,19 +222,22 @@
 (setq helm-firefox-default-directory "~/.mozilla/icecat/")
 (setq ewmctrl-wmctrl-path "~/.guix-profile/bin/wmctrl")
 
-(defun debbugs-gnu-guix ()
+(with-eval-after-load 'debbugs-gnu
+  (setq debbugs-gnu-default-packages (list "guix" "guix-patches")))
+
+(defun wi-debbugs-gnu-guix ()
   (interactive)
   (debbugs-gnu '("serious" "important" "normal") '("guix")))
 
-(defun debbugs-gnu-guix-patches ()
+(defun wi-debbugs-gnu-guix-patches ()
   (interactive)
   (debbugs-gnu '("serious" "important" "normal") '("guix-patches")))
 
-(defun set-current-frame-80-40 ()
+(defun wi-set-current-frame-80-40 ()
   (interactive)
   (set-frame-size (selected-frame) 80 40))
 
-(defun set-current-frame-80-24 ()
+(defun wi-set-current-frame-80-24 ()
   (interactive)
   (set-frame-size (selected-frame) 80 24))
 
