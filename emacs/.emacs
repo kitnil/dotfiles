@@ -36,11 +36,7 @@
  '(which-key-command-description-face ((t (:inherit font-lock-function-name-face :height 1.0)))))
 
 (with-eval-after-load 'whitespace
-  (setq whitespace-style (quote (face tabs spaces trailing
-                                      space-before-tab newline
-                                      indentation empty
-                                      space-after-tab space-mark
-                                      tab-mark)))
+  (setq whitespace-style '(face tabs spaces trailing lines space-before-tab newline indentation empty space-after-tab space-mark tab-mark))
 
   (let ((foreground "gray15"))
     (mapc (lambda (font)
