@@ -73,6 +73,7 @@
 (global-set-key (kbd "C-c t p") #'smartparens-global-mode)
 (global-set-key (kbd "C-c t l") #'prettify-symbols-mode)
 (global-set-key (kbd "C-c t g") #'guix-prettify-mode)
+(global-set-key (kbd "C-c t h") #'hl-line-mode)
 
 (which-key-add-key-based-replacements "C-c r" "rething")
 (global-set-key (kbd "C-c r r") #'revert-buffer)
