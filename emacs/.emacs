@@ -325,6 +325,23 @@
 (global-prettify-symbols-mode)
 (setq prettify-symbols-unprettify-at-point 'right-edge)
 
+(setq browse-url-mpv-program "mpv")
+(setq browse-url-mpv-arguments nil)
+(setq browse-url-mpv-remote-program "~/bin/mpv-remote")
+(defun browse-url-mpv (url &optional new-window)
+  "Ask the mpv video player to load URL.
+Defaults to the URL around or before point.  Passes the strings
+in the variable `browse-url-mpv-arguments' to mpv."
+  (interactive (browse-url-interactive-arg "URL: "))
+  (setq url (browse-url-encode-url url))
+  (let* ((process-environment (browse-url-process-environment)))
+    (apply 'start-process
+           (concat "mpv " url) nil
+           browse-url-mpv-program
+           (append
+            browse-url-mpv-arguments
+            (list url)))))
+
 (setq browse-url-browser-function
       `(("^ftp://.*" . browse-ftp-tramp)
         ("^https?://debbugs\\.gnu\\.org/.*" . debbugs-browse-url)
