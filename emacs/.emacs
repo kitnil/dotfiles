@@ -32,7 +32,8 @@
  '(magit-diff-hunk-heading ((t (:inherit diff-hunk-header))))
  '(magit-diff-hunk-heading-highlight ((t (:inherit diff-hunk-header))))
  '(magit-diff-removed ((t (:inherit diff-removed))))
- '(magit-diff-removed-highlight ((t (:inherit diff-removed :background "grey10")))))
+ '(magit-diff-removed-highlight ((t (:inherit diff-removed :background "grey10"))))
+ '(which-key-command-description-face ((t (:inherit font-lock-function-name-face :height 1.0)))))
 
 (with-eval-after-load 'whitespace
   (setq whitespace-style (quote (face tabs spaces trailing
