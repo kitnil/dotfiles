@@ -75,6 +75,7 @@
   #:use-module (gnu packages tcl)
   #:use-module (gnu packages bdw-gc)
   #:use-module (gnu packages python)
+  #:use-module (gnu packages python-web)
   #:use-module (guix packages)
   #:use-module (guix download)
   #:use-module (guix git-download)
