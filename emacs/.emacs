@@ -25,7 +25,15 @@
  'manoj-dark
  '(fringe ((t (:background "black" :foreground "Wheat"))))
  '(header-line
-   ((t (:background "black" :foreground "grey90" :height 0.9)))))
+   ((t (:background "black" :foreground "grey90" :height 0.9))))
+ '(magit-diff-added ((t (:inherit diff-added))))
+ '(magit-diff-added-highlight ((t (:inherit diff-added :background "grey10"))))
+ '(magit-diff-context-highlight ((t (:background "grey10"))))
+ '(magit-diff-hunk-heading ((t (:inherit diff-hunk-header))))
+ '(magit-diff-hunk-heading-highlight ((t (:inherit diff-hunk-header))))
+ '(magit-diff-removed ((t (:inherit diff-removed))))
+ '(magit-diff-removed-highlight ((t (:inherit diff-removed :background "grey10"))))
+ '(magit-section-highlight ((t (:background "grey10")))))
 
 (with-eval-after-load 'whitespace
   (setq whitespace-style (quote (face tabs spaces trailing
