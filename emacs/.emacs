@@ -510,8 +510,6 @@
 
 (setq debpaste-user-name "wigust")
 
-(pdf-tools-install)
-
 (with-eval-after-load 'eww
   (setq shr-width 80)
   (setq shr-use-fonts nil))
@@ -519,7 +517,6 @@
 (show-paren-mode)
 
 (setq projectile-completion-system 'default)
-(projectile-global-mode)
 
 (setq helm-locate-project-list (wi-list-files-in-dir wi-projects-directory))
 
@@ -586,20 +583,16 @@ in the variable `browse-url-mpv-arguments' to mpv."
 ;; Alternative: https://lists.gnu.org/archive/html/help-guix/2017-03/msg00140.html
 ;; See <~/.bashrc>
 
-(multiple-cursors-mode)
 (global-set-key (kbd "<C-down-mouse-1>") 'mc/toggle-cursor-on-click)
 
 (setq yas-snippet-dirs (list "~/.emacs.d/snippets"
                              "~/.guix-profile/share/emacs/yasnippet-snippets/"))
-(yas-global-mode)
-(yas-reload-all)
 
 (with-eval-after-load 'company
   (setq company-clang-insert-arguments nil)
   (setq company-gtags-insert-arguments nil)
   (setq company-semantic-insert-arguments nil))
 
-(smartparens-global-mode)
 (with-eval-after-load 'smartparens
   (require 'smartparens-config)
   (sp-use-smartparens-bindings)
