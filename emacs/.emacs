@@ -44,8 +44,6 @@
                                 :background nil :foreground foreground))
           '(whitespace-space whitespace-indentation))))
 
-(add-hook 'prog-mode-hook 'whitespace-mode)
-
 
 ;;;
 ;;; Enable functions
