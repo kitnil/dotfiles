@@ -172,10 +172,10 @@
       ("<="      . ?≤)
       (">="      . ?≥)
       ("->"      . ?→)))
-  (add-hook 'c-mode-hook (lambda ()
-                           (set (make-local-variable 'prettify-symbols-alist)
-                                wi-elisp--prettify-symbols-alist)))
-  (add-hook 'c-mode-hook #'prettify-symbols-mode))
+  (add-hook 'elisp-mode-hook (lambda ()
+                               (set (make-local-variable 'prettify-symbols-alist)
+                                    wi-elisp--prettify-symbols-alist)))
+  (add-hook 'elisp-mode-hook #'prettify-symbols-mode))
 
 
 ;;;
@@ -203,7 +203,7 @@
       ("<="      . ?≤)
       (">="      . ?≥)
       ("->"      . ?→)))
-  (add-hook 'c-mode-hook (lambda ()
+  (add-hook 'scheme-mode-hook (lambda ()
                            (set (make-local-variable 'prettify-symbols-alist)
                                 wi-scheme--prettify-symbols-alist)))
 
