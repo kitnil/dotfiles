@@ -96,6 +96,8 @@
         haunt            ; Guile static site generator
         guile-commonmark ; Commonmark for Guile
 
+        htop ; Pretty top
+
         ;; X11 utils.  See <~/.xsession> and <~/.stumpwm.d/init.lisp>.
         setxkbmap  ; Keyboard layout
         xclip      ; Access clipboard from CLI
