@@ -2242,3 +2242,43 @@ your Emacs.")
       (description "@code{wi-web-search} provides the Emacs function
 to search in web.")
       (license license:gpl3+))))
+
+;; TODO: `M-x mastodon': json-read: End of file while parsing JSON
+(define-public emacs-mastodon
+  (let ((commit "e08bb5794762d22f90e85fd65cef7c143e6b9318")
+        (revision "1"))
+    (package
+      (name "emacs-mastodon")
+      (version (string-append "0.7.1" "-" revision "."
+                              (string-take commit 7)))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/jdenen/mastodon.el.git")
+               (commit commit)))
+         (file-name (string-append name "-" version "-checkout"))
+         (sha256
+          (base32
+           "0bil0xxava04pd4acjqm3bfqm1kjdk4g0czd4zqvacsp5c9sl2qp"))))
+      (arguments
+       `(#:phases
+         (modify-phases %standard-phases
+           (add-after 'unpack 'chdir-elisp
+             ;; Elisp directory is not in root of the source.
+             (lambda _
+               (chdir "lisp")))
+           ;; TODO: Tests:
+           ;; (add-before 'install 'check
+           ;;   (lambda _
+           ;;     (with-directory-excursion ".."
+           ;;       (zero? (system* "emacs" "--batch" "-L" "lisp"
+           ;;                     "-l" "test/ert-helper.el"
+           ;;                     "-f" "ert-run-tests-batch-and-exit")))))
+           )))
+      (build-system emacs-build-system)
+      (home-page "https://github.com/jdenen/mastodon.el")
+      (synopsis "Emacs client for Mastodon social network")
+      (description "This package provides an Emacs client for
+Mastodon federated social network.")
+      (license license:gpl3+))))
