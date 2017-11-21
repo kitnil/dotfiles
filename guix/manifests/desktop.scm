@@ -30,6 +30,8 @@
         aspell-dict-en  ; English
         aspell-dict-ru  ; Russian
 
+        libreoffice     ; Office suite
+
         translate-shell ; Translation in CLI and Emacs
 
         git             ; Version control
