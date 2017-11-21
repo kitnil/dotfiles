@@ -91,6 +91,7 @@
         emacs-aggressive-indent  ; Auto indent minor mode
         emacs-markdown           ; Commonmark major mode
 
+        cflow ; C program call map
         ;; X11 utils.  See <~/.xsession> and <~/.stumpwm.d/init.lisp>.
         setxkbmap  ; Keyboard layout
         xclip      ; Access clipboard from CLI
