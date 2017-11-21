@@ -422,7 +422,7 @@
       (quote
        (("freenode.net" "#icecat" "#emacs" "#grub"
          ;; "#clojure" "##math"
-         "##c"
+         "##c" "#bash"
          ;; "#fedora" "#fedora-admin" "#fedora-devel"
          ;; "#fedora-noc" "#fedora-meeting" "#fedora-qa"
          "#gnu" "#fsf" "#gnus" "#guile" "#guix" "#stumpwm" "#replicant"
