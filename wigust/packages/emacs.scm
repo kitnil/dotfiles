@@ -2220,3 +2220,25 @@ Emacs minor mode to escape sequences in code.")
     (description "Benchmark Emacs Startup time without ever leaving
 your Emacs.")
     (license license:gpl2+))))
+
+(define emacs-wi-web-search
+  (let ((commit "33fa377156f487e41deda62cd92110d707907c66"))
+    (package
+      (name "emacs-wi-web-search")
+      (version (string-append "0.0.1" "-" (string-take commit 7)))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/wigust/.git")
+               (commit commit)))
+         (file-name (string-append name "-" version "-checkout"))
+         (sha256
+          (base32
+           "04lxmd0h7mfjjl0qghrycgff0vcv950j1wqv0dbkr61jxp64n5fv"))))
+      (build-system emacs-build-system)
+      (home-page "https://github.com/wigust/emacs-wi-web-search")
+      (synopsis "Emacs function to search in web")
+      (description "@code{wi-web-search} provides the Emacs function
+to search in web.")
+      (license license:gpl3+))))
