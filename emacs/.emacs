@@ -19,6 +19,8 @@
 
 (setq visible-bell t)
 
+(add-to-list 'exec-path (expand-file-name "~/.guix-profile.d/gdb/bin"))
+
 (load-theme 'manoj-dark)
 
 (custom-theme-set-faces
