@@ -92,6 +92,8 @@
         emacs-markdown           ; Commonmark major mode
 
         cflow ; C program call map
+
+        haunt            ; Guile static site generator
         ;; X11 utils.  See <~/.xsession> and <~/.stumpwm.d/init.lisp>.
         setxkbmap  ; Keyboard layout
         xclip      ; Access clipboard from CLI
