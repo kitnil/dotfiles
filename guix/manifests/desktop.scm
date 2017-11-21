@@ -89,6 +89,7 @@
         emacs-slime              ; Sbcl repl
         emacs-erc-hl-nicks       ; for ERC
         emacs-aggressive-indent  ; Auto indent minor mode
+        emacs-markdown           ; Commonmark major mode
 
         ;; X11 utils.  See <~/.xsession> and <~/.stumpwm.d/init.lisp>.
         setxkbmap  ; Keyboard layout
