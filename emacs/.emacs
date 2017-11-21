@@ -234,7 +234,8 @@
       ("<="     . ?≤)
       (">="     . ?≥)
       ("true"  . ?T)
-      ("false" . ?F)))
+      ("false" . ?F)
+      ("NULL"  . ?N)))
 
   (add-hook 'c-mode-hook (lambda ()
                            (set (make-local-variable 'prettify-symbols-alist)
