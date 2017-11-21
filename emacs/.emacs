@@ -262,7 +262,7 @@
 
 (wi-update-magit-repository-directories wi-projects-directory)
 
-(setq magit-log-arguments (list "--graph" "--color" "--decorate" "-n64"))
+(setq magit-log-arguments (list "--graph" "--color" "--decorate" "-n64" "--show-signature"))
 (setq magit-log-section-arguments (list "-n256" "--decorate"))
 
 ;; Use `magit-describe-section'
