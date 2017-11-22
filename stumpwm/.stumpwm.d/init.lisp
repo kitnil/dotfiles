@@ -126,9 +126,6 @@
             "Turn screen off."
             (run-shell-command "exec xset dpms force off"))
 
-(push '(:class "mpv") stumpwm:*deny-raise-request*)
-(push '(:class "mpv") *deny-map-request*)
-
 
 ;;;
 ;;; Utils
