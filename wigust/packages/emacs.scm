@@ -2306,3 +2306,16 @@ Mastodon federated social network.")
       (description "This package allows to call the @code{mbsync} from
 within Emacs.")
       (license license:gpl3+))))
+
+(define-public emacs-engine-mode-autoload
+  (package
+    (inherit emacs-engine-mode)
+    (name "emacs-engine-mode-autoload")
+    (source
+     (origin
+       (inherit (package-source emacs-engine-mode))
+       (modules '((guix build utils)))
+       (snippet
+        '(substitute* "engine-mode.el"
+           (("\\(cl-defmacro defengine" line)
+            (string-append ";;;###autoload\n" line))))))))
