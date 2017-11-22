@@ -59,7 +59,10 @@
 ;;;
 ;;; See <https://www.gnu.org/software/emacs/manual/html_node/elisp/Key-Binding-Conventions.html>
 
+(which-key-add-key-based-replacements "C-c &" "yasnippet")
+
 (bind-key "C-c b" #'ibuffer)
+(bind-key "<C-down-mouse-1>" 'mc/toggle-cursor-on-click)
 
 (which-key-add-key-based-replacements "C-c v" "magit")
 (bind-key "C-c v l" #'magit-list-repositories)
@@ -124,10 +127,6 @@
 (bind-key "C-c c c" #'org-capture)
 (bind-key "C-c c a" #'org-agenda)
 (bind-key "C-c c a" #'org-store-link)
-
-(which-key-add-key-based-replacements "C-c &" "yasnippet")
-
-(bind-key "<C-down-mouse-1>" 'mc/toggle-cursor-on-click)
 
 
 ;;;
