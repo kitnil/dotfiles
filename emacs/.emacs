@@ -61,72 +61,81 @@
 
 (which-key-add-key-based-replacements "C-c &" "yasnippet")
 
-(bind-key "C-c b" #'ibuffer)
+(bind-key "C-c b" 'ibuffer)
 (bind-key "<C-down-mouse-1>" 'mc/toggle-cursor-on-click)
 
 (which-key-add-key-based-replacements "C-c v" "magit")
-(bind-key "C-c v l" #'magit-list-repositories)
-(bind-key "C-c v s" #'magit-status)
+(bind-keys :prefix "C-c v" :prefix-map wi-version-control-map
+           ("l" . magit-list-repositories)
+           ("s" . magit-status))
 
-(which-key-add-key-based-replacements "C-c f" "point")
-(bind-key "C-c f e" #'guix-edit)
-(bind-key "C-c f f" #'ffap)
+(which-key-add-key-based-replacements "C-c f" "find")
+(bind-keys :prefix "C-c f" :prefix-map wi-find-map
+           ("e" . guix-edit)
+           ("f" . ffap))
 
 (which-key-add-key-based-replacements "C-c t" "toggle")
-(bind-key "C-c t a" #'abbrev-mode)
-(bind-key "C-c t b" #'guix-build-log-minor-mode)
-(bind-key "C-c t c" #'company-mode)
-(bind-key "C-c t f" #'flycheck-mode)
-(bind-key "C-c t g" #'guix-prettify-mode)
-(bind-key "C-c t h" #'hl-line-mode)
-(bind-key "C-c t i" #'aggressive-indent-mode)
-(bind-key "C-c t l" #'prettify-symbols-mode)
-(bind-key "C-c t m" #'flymake-mode)
-(bind-key "C-c t p" #'smartparens-global-mode)
-(bind-key "C-c t s" #'flyspell-mode)
-(bind-key "C-c t t" #'toggle-truncate-lines)
-(bind-key "C-c t w" #'whitespace-mode)
-(bind-key "C-c t y" #'yas-minor-mode)
+(bind-keys :prefix "C-c t" :prefix-map wi-toggle-map
+           ("a" . abbrev-mode)
+           ("b" . guix-build-log-minor-mode)
+           ("c" . company-mode)
+           ("f" . flycheck-mode)
+           ("g" . guix-prettify-mode)
+           ("h" . hl-line-mode)
+           ("i" . aggressive-indent-mode)
+           ("l" . prettify-symbols-mode)
+           ("m" . flymake-mode)
+           ("p" . smartparens-global-mode)
+           ("s" . flyspell-mode)
+           ("t" . toggle-truncate-lines)
+           ("w" . whitespace-mode)
+           ("y" . yas-minor-mode))
 
 (which-key-add-key-based-replacements "C-c r" "rething")
-(bind-key "C-c r r" #'revert-buffer)
-(bind-key "C-c r l" #'redraw-display)
+(bind-keys :prefix "C-c r" :prefix-map wi-rething-map
+           ("r" . revert-buffer)
+           ("l" .  redraw-display))
 
 (which-key-add-key-based-replacements "C-c h" "helm")
-(bind-key "C-c h b" #'helm-buffers-list)
-(bind-key "C-c h i" #'helm-imenu)
-(bind-key "C-c h m" #'helm-make)
-(bind-key "C-c h r" #'helm-bookmarks)
-(bind-key "C-c h s" #'helm-pass)
-(bind-key "C-c h t" #'helm-top)
-(bind-key "C-c h x" #'helm-M-x)
-(bind-key "C-c h y" #'helm-show-kill-ring)
-(bind-key "C-c h w" #'helm-stumpwm-commands)
+(bind-keys :prefix "C-c h" :prefix-map wi-helm-map
+           ("b" . helm-buffers-list)
+           ("i" . helm-imenu)
+           ("m" . helm-make)
+           ("r" . helm-bookmarks)
+           ("s" . helm-pass)
+           ("t" . helm-top)
+           ("x" . helm-M-x)
+           ("y" . helm-show-kill-ring)
+           ("w" . helm-stumpwm-commands))
 
 (which-key-add-key-based-replacements "C-c h p" "helm-projectile")
-(bind-key "C-c h p p" #'helm-projectile)
-(bind-key "C-c h p f" #'helm-projectile-find-file-dwim)
-(bind-key "C-c h p b" #'helm-projectile-switch-to-buffer)
-
 (which-key-add-key-based-replacements "C-c p x" "projectile-shell")
 (which-key-add-key-based-replacements "C-c p s" "projectile-search")
+(bind-keys :prefix "C-c h p" :prefix-map wi-helm-projectile-map
+           ("p" . helm-projectile)
+           ("f" . helm-projectile-find-file-dwim)
+           ("b" . helm-projectile-switch-to-buffer))
 
 (which-key-add-key-based-replacements "C-c m" "mail")
-(bind-key "C-c m b" #'wi-send-buffer-as-mail)
+(bind-keys :prefix "C-c m" :prefix-map wi-mail-map
+           ("b" . wi-send-buffer-as-mail))
 
 (which-key-add-key-based-replacements "C-c m g" "gnus")
-(bind-key "C-c m g g" #'gnus)
-(bind-key "C-c m g s" #'switch-to-gnus)
+(bind-keys :prefix "C-c m g" :prefix-map wi-gnus-map
+           ("g" . gnus)
+           ("s" . switch-to-gnus))
 
 (which-key-add-key-based-replacements "C-c s" "shell")
-(bind-key "C-c s s" #'shell)
-(bind-key "C-c s c" #'compilation-shell-minor-mode)
-(bind-key "C-c s e" #'eshell)
+(bind-keys :prefix "C-c s" :prefix-map wi-shell-map
+           ("s" . shell)
+           ("c" . compilation-shell-minor-mode)
+           ("e" . eshell))
 
 (which-key-add-key-based-replacements "C-c c" "org")
-(bind-key "C-c c c" #'org-capture)
-(bind-key "C-c c a" #'org-agenda)
-(bind-key "C-c c a" #'org-store-link)
+(bind-keys :prefix "C-c c" :prefix-map wi-org-map
+           ("c" . org-capture)
+           ("a" . org-agenda)
+           ("l" . org-store-link))
 
 (add-to-list 'auto-mode-alist '("PKGBUILD" . shell-script-mode))
 
