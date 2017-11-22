@@ -156,21 +156,11 @@
 ;;; Pulseaudio
 ;;;
 
-(defcommand vol-up () ()
-  "Increase the volume from the shell"
-  (run-shell-command
-   "pacmd set-sink-volume 0 $(printf '0x%x' $(( $(pacmd dump|grep set-sink-volume|cut -f3 -d' ') + 0xf00)) ) &> /dev/null"))
+(defcommand pulsemixer () ()
+  "Download video."
+  (run-shell-command "exec xterm -name pulsemixer -e pulsemixer"))
 
-(defcommand vol-down () ()
-  "Decrease the volume  from the shell"
-  (run-shell-command
-   "pacmd set-sink-volume 0 $(printf '0x%x' $(( $(pacmd dump|grep set-sink-volume|cut -f3 -d' ') - 0xf00)) ) &> /dev/null"))
-
-(define-interactive-keymap volume ()
-  ((kbd "Up") "vol-up")
-  ((kbd "Down") "vol-down"))
-
-(define-key *root-map* (kbd "M-v") "volume")
+(define-key *root-map* (kbd "M-v") "pulsemixer")
 
 
 ;;;
