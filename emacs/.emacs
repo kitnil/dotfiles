@@ -128,11 +128,6 @@
 (bind-key "C-c c a" #'org-agenda)
 (bind-key "C-c c a" #'org-store-link)
 
-
-;;;
-;;; Auto modes
-;;;
-
 (add-to-list 'auto-mode-alist '("PKGBUILD" . shell-script-mode))
 
 
