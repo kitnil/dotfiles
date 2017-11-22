@@ -132,6 +132,48 @@
 
 
 ;;;
+;;; Search engines
+;;;
+
+(defengine duckduckgo
+  "https://duckduckgo.com/?q=%s"
+  :keybinding "d")
+
+(defengine github
+  "https://github.com/search?ref=simplesearch&q=%s")
+
+(defengine github-hippie
+  "https://github.com/search?ref=simplesearch&q=%s+-language:objectivec+-language:java+-language:javascript+-language:csharp+-language:kotlin+-language:swift+-language:php+-language:vue+-language:autohotkey")
+
+(defengine google
+  "http://www.google.com/search?ie=utf-8&oe=utf-8&q=%s")
+
+(defengine guix-devel
+  "https://lists.gnu.org/archive/cgi-bin/namazu.cgi?query=%s&submit=Search%%21&idxname=guix-devel&max=20&result=normal&sort=score")
+
+(defengine rfcs
+  "http://pretty-rfc.herokuapp.com/search?q=%s")
+
+(defengine searx
+  "http://searx.tk/?q=%s")
+
+(defengine stack-overflow
+  "https://stackoverflow.com/search?q=%s")
+
+(defengine wikipedia
+  "http://www.wikipedia.org/search-redirect.php?language=en&go=Go&search=%s")
+
+(defengine wiktionary
+  "https://www.wikipedia.org/search-redirect.php?family=wiktionary&language=en&go=Go&search=%s")
+
+(defengine youtube
+  "http://www.youtube.com/results?aq=f&oq=&search_query=%s")
+
+(defengine youtube-latest
+  "https://www.youtube.com/results?sp=CAJQFA%%253D%%253D&search_query=%s")
+
+
+;;;
 ;;; Usability functions
 ;;;
 
