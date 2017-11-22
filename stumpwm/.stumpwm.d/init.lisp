@@ -76,18 +76,20 @@
   "Start or focus conkeror."
   (run-or-raise "conkeror" '(:class "Conkeror")))
 
-(define-key *root-map* (kbd "C-w") "conkeror")
-
 (defcommand icecat () ()
   "Start or focus icecat."
   (run-or-raise "icecat" '(:class "Icecat")))
 
-(define-key *root-map* (kbd "w") "icecat")
-
 (defcommand chromium () ()
-  "Start or focus chromium."
-  (run-or-raise "chromium" '(:class "Chromium-browser")))
+            "Start or focus chromium."
+            (run-or-raise "exec /home/natsu/.guix-profile.d/chromium/bin/chromium" '(:class "Chromium-browser")))
 
+(defcommand chromium-proxy () ()
+            "Start Chromium via proxy"
+            (run-shell-command "chromium --proxy-server='socks5://localhost:9050' --host-resolver-rules='MAP * ~NOTFOUND , EXCLUDE localhost'"))
+
+(define-key *root-map* (kbd "w") "icecat")
+(define-key *root-map* (kbd "C-w") "icecat")
 (define-key *root-map* (kbd "M-w") "chromium")
 
 
