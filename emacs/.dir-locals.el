@@ -3,13 +3,7 @@
 ((nil
   . ((fill-column . 78)
      (tab-width   .  8)
-     (sentence-end-double-space . t)
-
-     (eval . (add-hook 'compilation-mode-hook 'guix-build-log-minor-mode))
-     (eval . (add-hook 'compilation-mode-hook
-                       (lambda () (setq-local truncate-lines 1))))
-     (eval . (add-hook 'shell-mode-hook 'guix-build-log-minor-mode))))
- (c-mode          . ((c-file-style . "gnu")))
+     (sentence-end-double-space . t)))
  (emacs-lisp-mode . ((indent-tabs-mode . nil)))
  (texinfo-mode    . ((indent-tabs-mode . nil)
                      (fill-column . 72))))
