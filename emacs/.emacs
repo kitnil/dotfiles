@@ -130,6 +130,21 @@
 
 (add-to-list 'auto-mode-alist '("PKGBUILD" . shell-script-mode))
 
+(add-hook 'scheme-mode-hook
+          (lambda () (local-set-key (kbd "<C-return>") 'eir-eval-in-geiser)))
+
+(add-hook 'sh-mode-hook
+          (lambda () (local-set-key (kbd "C-<return>") 'eir-eval-in-shell)))
+
+(add-hook 'lisp-mode-hook
+          (lambda () (local-set-key (kbd "C-<return>") 'eir-eval-in-slime)))
+
+(add-hook 'python-mode-hook
+          (lambda () (local-set-key (kbd "C-<return>") 'eir-eval-in-python)))
+
+(add-hook 'emacs-lisp-mode-hook
+          (lambda () (local-set-key (kbd "C-<return>") 'eir-eval-in-ielm)))
+
 
 ;;;
 ;;; Search engines
