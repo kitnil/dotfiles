@@ -14,6 +14,9 @@ fi
 
 export INFOPATH="$HOME/src/guix/doc${INFOPATH:+:}$INFOPATH"
 
+export GUILE_LOAD_PATH="${GUILE_LOAD_PATH}\
+:$HOME/.guix-profile/share/guile/site/2.2/"
+
 wi-guix-graph ()
 {
     guix graph --type=references "$1" \
