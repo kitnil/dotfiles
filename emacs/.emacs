@@ -59,61 +59,82 @@
 ;;;
 ;;; See <https://www.gnu.org/software/emacs/manual/html_node/elisp/Key-Binding-Conventions.html>
 
+(bind-key "C-c b" #'ibuffer)
+
 (which-key-add-key-based-replacements "C-c v" "magit")
-(global-set-key (kbd "C-c v l") #'magit-list-repositories)
-(global-set-key (kbd "C-c v s") #'magit-status)
+(bind-key "C-c v l" #'magit-list-repositories)
+(bind-key "C-c v s" #'magit-status)
 
 (which-key-add-key-based-replacements "C-c f" "point")
-(global-set-key (kbd "C-c f e") #'guix-edit)
-(global-set-key (kbd "C-c f f") #'ffap)
+(bind-key "C-c f e" #'guix-edit)
+(bind-key "C-c f f" #'ffap)
 
 (which-key-add-key-based-replacements "C-c t" "toggle")
-(global-set-key (kbd "C-c t i") #'aggressive-indent-mode)
-(global-set-key (kbd "C-c t t") #'toggle-truncate-lines)
-(global-set-key (kbd "C-c t s") #'flyspell-mode)
-(global-set-key (kbd "C-c t c") #'flycheck-mode)
-(global-set-key (kbd "C-c t m") #'flymake-mode)
-(global-set-key (kbd "C-c t w") #'whitespace-mode)
-(global-set-key (kbd "C-c t p") #'smartparens-global-mode)
-(global-set-key (kbd "C-c t l") #'prettify-symbols-mode)
-(global-set-key (kbd "C-c t g") #'guix-prettify-mode)
-(global-set-key (kbd "C-c t h") #'hl-line-mode)
+(bind-key "C-c t a" #'abbrev-mode)
+(bind-key "C-c t b" #'guix-build-log-minor-mode)
+(bind-key "C-c t c" #'company-mode)
+(bind-key "C-c t f" #'flycheck-mode)
+(bind-key "C-c t g" #'guix-prettify-mode)
+(bind-key "C-c t h" #'hl-line-mode)
+(bind-key "C-c t i" #'aggressive-indent-mode)
+(bind-key "C-c t l" #'prettify-symbols-mode)
+(bind-key "C-c t m" #'flymake-mode)
+(bind-key "C-c t p" #'smartparens-global-mode)
+(bind-key "C-c t s" #'flyspell-mode)
+(bind-key "C-c t t" #'toggle-truncate-lines)
+(bind-key "C-c t w" #'whitespace-mode)
+(bind-key "C-c t y" #'yas-minor-mode)
 
 (which-key-add-key-based-replacements "C-c r" "rething")
-(global-set-key (kbd "C-c r r") #'revert-buffer)
-(global-set-key (kbd "C-c r l") #'redraw-display)
+(bind-key "C-c r r" #'revert-buffer)
+(bind-key "C-c r l" #'redraw-display)
 
 (which-key-add-key-based-replacements "C-c h" "helm")
-(global-set-key (kbd "C-c h i") #'helm-imenu)
-(global-set-key (kbd "C-c h s") #'helm-pass)
-(global-set-key (kbd "C-c h y") #'helm-show-kill-ring)
+(bind-key "C-c h b" #'helm-buffers-list)
+(bind-key "C-c h i" #'helm-imenu)
+(bind-key "C-c h m" #'helm-make)
+(bind-key "C-c h r" #'helm-bookmarks)
+(bind-key "C-c h s" #'helm-pass)
+(bind-key "C-c h t" #'helm-top)
+(bind-key "C-c h x" #'helm-M-x)
+(bind-key "C-c h y" #'helm-show-kill-ring)
+(bind-key "C-c h w" #'helm-stumpwm-commands)
 
 (which-key-add-key-based-replacements "C-c h p" "helm-projectile")
-(global-set-key (kbd "C-c h p p") #'helm-projectile)
-(global-set-key (kbd "C-c h p f") #'helm-projectile-find-file-dwim)
-(global-set-key (kbd "C-c h w") #'helm-stumpwm-commands)
+(bind-key "C-c h p p" #'helm-projectile)
+(bind-key "C-c h p f" #'helm-projectile-find-file-dwim)
+(bind-key "C-c h p b" #'helm-projectile-switch-to-buffer)
 
 (which-key-add-key-based-replacements "C-c p x" "projectile-shell")
 (which-key-add-key-based-replacements "C-c p s" "projectile-search")
 
 (which-key-add-key-based-replacements "C-c m" "mail")
-(global-set-key (kbd "C-c m b") #'wi-send-buffer-as-mail)
+(bind-key "C-c m b" #'wi-send-buffer-as-mail)
 
 (which-key-add-key-based-replacements "C-c m g" "gnus")
-(global-set-key (kbd "C-c m g g") #'gnus)
-(global-set-key (kbd "C-c m g s") #'switch-to-gnus)
+(bind-key "C-c m g g" #'gnus)
+(bind-key "C-c m g s" #'switch-to-gnus)
 
 (which-key-add-key-based-replacements "C-c s" "shell")
-(global-set-key (kbd "C-c s s") #'shell)
-(global-set-key (kbd "C-c s c") #'compilation-shell-minor-mode)
-(global-set-key (kbd "C-c s e") #'eshell)
+(bind-key "C-c s s" #'shell)
+(bind-key "C-c s c" #'compilation-shell-minor-mode)
+(bind-key "C-c s e" #'eshell)
 
 (which-key-add-key-based-replacements "C-c c" "org")
-(global-set-key (kbd "C-c c c") #'org-capture)
-(global-set-key (kbd "C-c c a") #'org-agenda)
-(global-set-key (kbd "C-c c a") #'org-store-link)
+(bind-key "C-c c c" #'org-capture)
+(bind-key "C-c c a" #'org-agenda)
+(bind-key "C-c c a" #'org-store-link)
 
 (which-key-add-key-based-replacements "C-c &" "yasnippet")
+
+(bind-key "<C-down-mouse-1>" 'mc/toggle-cursor-on-click)
+
+
+;;;
+;;; Auto modes
+;;;
+
+(add-to-list 'auto-mode-alist '("PKGBUILD" . shell-script-mode))
 
 
 ;;;
@@ -241,7 +262,8 @@
                            (set (make-local-variable 'prettify-symbols-alist)
                                 wi-c--prettify-symbols-alist)))
 
-  (add-hook 'c-mode-hook #'prettify-symbols-mode))
+  (add-hook 'c-mode-hook #'prettify-symbols-mode)
+  (add-hook 'c-mode-hook #'ggtags-mode))
 
 (with-eval-after-load 'cc-vars
   (add-to-list 'c-cleanup-list 'space-before-funcall))
@@ -503,11 +525,30 @@
           ("w" "work" plain (file "~/Documents/work.org")
            "%?")))
 
-
 
 ;;;
 ;;; Misc
 ;;;
+
+(defun wi-fullname-and-email ()
+  (format "%s <%s>" user-full-name user-mail-address))
+
+(define-skeleton copyright
+  "Insert a copyright by $ORGANIZATION notice at cursor."
+  "FULL_NAME <EMAIL>: "
+  comment-start
+  "Copyright © " `(format-time-string "%Y") " "
+  (or (format "%s <%s>" (wi-fullname-and-email))
+      str)
+  '(if (copyright-offset-too-large-p)
+       (message "Copyright extends beyond `copyright-limit' and won't be updated automatically."))
+  comment-end \n)
+
+(setq copyright-names-regexp (wi-fullname-and-email))
+
+;; TODO: Add to guix (add-hook 'before-save-hook 'copyright-update)
+
+(setq quickurl-format-function (lambda (url) (format "<%s>" (quickurl-url-url url))))
 
 (setq w3m-fill-column 80)
 
@@ -577,16 +618,16 @@ in the variable `browse-url-mpv-arguments' to mpv."
   (setq smtpmail-smtp-server "smtp.gmail.com"))
 
 ;; Code from: https://github.com/alezost/guix.el/pull/9#issuecomment-340556583
-;; (with-eval-after-load 'info
-;;   (info-initialize)
-;;   (setq Info-directory-list
-;;         (append (wi-expand-file-names (list "~/src/guix/doc"))
-;;                 Info-directory-list)))
+(with-eval-after-load 'info
+  (info-initialize)
+  (setq Info-directory-list
+        (append (wi-expand-file-names (list "~/src/guix/doc"
+					    "~/.guix-profile.d/gdb/share/info"
+					    "~/.guix-profile.d/autotools/share/info"))
+                Info-directory-list)))
 ;;
 ;; Alternative: https://lists.gnu.org/archive/html/help-guix/2017-03/msg00140.html
 ;; See <~/.bashrc>
-
-(global-set-key (kbd "<C-down-mouse-1>") 'mc/toggle-cursor-on-click)
 
 (setq yas-snippet-dirs (list "~/.emacs.d/snippets"
                              "~/.guix-profile/share/emacs/yasnippet-snippets/"))
