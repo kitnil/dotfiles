@@ -566,6 +566,10 @@
 ;;; Misc
 ;;;
 
+(setq elfeed-feeds '("http://nullprogram.com/feed/"
+                     "http://planet.emacsen.org/atom.xml"
+                     "http://www.scheme.dk/planet/atom.xml"))
+
 (defun wi-fullname-and-email ()
   (format "%s <%s>" user-full-name user-mail-address))
 
