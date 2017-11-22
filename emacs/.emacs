@@ -509,6 +509,8 @@
 ;;; Misc
 ;;;
 
+(setq w3m-fill-column 80)
+
 (setq debpaste-user-name "wigust")
 
 (with-eval-after-load 'eww
