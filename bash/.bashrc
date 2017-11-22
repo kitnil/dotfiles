@@ -26,7 +26,7 @@ wi-guix-search-recsel ()
 alias wi-disable-history="set +o history" # Only for current session.
 alias wi-feh-svg="feh --magick-timeout 10"
 alias wi-guile="guile --no-auto-compile"
-alias wi-mpv-q='mpv --msg-level=all=no --no-resume-playback'
+alias wi-mpv-q='mpv --msg-level=all=no --no-resume-playback --keep-open=no'
 alias wi-rdiff-backup-home='screen rdiff-backup $HOME "/srv/backup$HOME"'
 alias wi-tse="trans en:ru"
 alias wi-tsr="trans ru:en"
