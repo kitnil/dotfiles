@@ -1,5 +1,3 @@
-;; -*-lisp-*-
-
 (in-package :stumpwm)
 
 (setf *startup-message* nil)
@@ -8,22 +6,12 @@
 
 (stumpwm:run-shell-command "xsetroot -cursor_name left_ptr")
 
-
-;;;
-;;; Fonts
-;;;
-
 (load-module "ttf-fonts")
 (xft:cache-fonts)
 (set-font (make-instance 'xft:font
                          :family "DejaVu Sans Mono"
                          :subfamily "Book"
                          :size 14))
-
-
-;;;
-;;; Windows colors
-;;;
 
 (setf *window-border-style* :tight)
 
@@ -42,11 +30,6 @@
 (setf *normal-border-width* 5
       *transient-border-width* 5
       *maxsize-border-width* 5)
-
-
-;;;
-;;; Window placement policy
-;;;
 
 ;; Don't set it to “sloppy”,
 ;; because it could switch window after switch desktop
@@ -67,11 +50,6 @@
 ;; If the :restore flag is set then group dump is restored even for an
 ;; existing group using *data-dir*/restore file.
 
-
-;;;
-;;; Browsers
-;;;
-
 (defcommand conkeror () ()
   "Start or focus conkeror."
   (run-or-raise "conkeror" '(:class "Conkeror")))
@@ -91,11 +69,6 @@
 (define-key *root-map* (kbd "w") "icecat")
 (define-key *root-map* (kbd "C-w") "icecat")
 (define-key *root-map* (kbd "M-w") "chromium")
-
-
-;;;
-;;; Video
-;;;
 
 (defcommand mpv () ()
   "Start or focus mpv."
@@ -128,11 +101,6 @@
             "Turn screen off."
             (run-shell-command "exec xset dpms force off"))
 
-
-;;;
-;;; Utils
-;;;
-
 (defun join-to-stream (stream list &optional (delimiter #\&))
   (destructuring-bind (&optional first &rest rest) list
     (when first
@@ -150,51 +118,26 @@
   (run-prog *shell-program*
             :args (list "-c" (join (list "xterm -name" cmd "-e" cmd) #\ ))
             :wait nil))
-
 (define-key *root-map* (kbd "M-!") "run-xterm-command")
-
-
-;;;
-;;; Pulseaudio
-;;;
 
 (defcommand pulsemixer () ()
   "Download video."
   (run-shell-command "exec xterm -name pulsemixer -e pulsemixer"))
-
 (define-key *root-map* (kbd "M-v") "pulsemixer")
-
-
-;;;
-;;; Terminal
-;;;
 
 (defcommand xterm () ()
   "Start or focus XTerm."
   (run-or-raise "xterm" '(:class "XTerm")))
-
 (define-key *root-map* (kbd "c") "xterm")
-
-
-;;;
-;;; Mode-line
-;;;
 
 (setq *mode-line-border-color*     "#000000"
       *mode-line-foreground-color* "#ffffff"
       *mode-line-background-color* "#000000")
-
 (defcommand toggle-modeline () ()
   "Toggle mode line."
   (stumpwm:toggle-mode-line (stumpwm:current-screen)
                             (stumpwm:current-head)))
-
 (setf *screen-mode-line-format* "%n^>%c%l%d")
-
-
-;;;
-;;; Frames
-;;;
 
 (defcommand warp-mouse-active-frame () ()
   "Move mouse cursor to the top right of current frame."
@@ -205,27 +148,12 @@
          (pointer-y (+ 100 (frame-y current-frame))))
     (warp-pointer (current-screen) pointer-x pointer-y)))
 
-
-;;;
-;;; Gaps
-;;;
-
 ;; (load-module "swm-gaps")
 ;; (setf swm-gaps:*inner-gaps-size* 5
 ;;       swm-gaps:*outer-gaps-size* 25)
 
-
-;;;
-;;; Keyboard layouts
-;;;
-
 (load-module "kbd-layouts")
 (kbd-layouts:keyboard-layout-list "us" "ru")
-
-
-;;;
-;;; Screenshots
-;;;
 
 (load-module "screenshot")
 
@@ -242,39 +170,18 @@
 
 (define-key *root-map* (kbd "Print") "screenshot-default")
 
-
-;;;
-;;; Clipboard
-;;;
-
 (load-module "clipboard-history")
 (define-key *root-map* (kbd "C-y") "show-clipboard-history")
 (clipboard-history:start-clipboard-manager)
-
-
-;;;
-;;; Global windows selection
-;;;
 
 (load-module "globalwindows")
 (define-key *root-map* (kbd "M-quoteright") "global-windowlist")
 (define-key *root-map* (kbd "M-quotedbl") "global-pull-windowlist")
 
-
-;;;
-;;; Pinentry
-;;;
-
-;; Dependencies
 (ql:quickload "cffi")
 (ql:quickload "usocket-server")
 
 (load-module "pinentry")
-
-
-;;;
-;;; SLIME
-;;;
 
 (ql:quickload "swank")
 (swank-loader:init)
