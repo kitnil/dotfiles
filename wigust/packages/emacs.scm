@@ -2319,3 +2319,29 @@ within Emacs.")
         '(substitute* "engine-mode.el"
            (("\\(cl-defmacro defengine" line)
             (string-append ";;;###autoload\n" line))))))))
+
+(define-public emacs-org-mind-map
+  (let ((commit "9d6e262bedd94daf9de269f4d56de277275677cb")
+        (revision "1"))
+    (package
+      (name "emacs-org-mind-map")
+      (version (string-append "0.0.1" "-" revision "."
+                              (string-take commit 7)))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/theodorewiles/org-mind-map.git")
+               (commit commit)))
+         (file-name (string-append name "-" version "-checkout"))
+         (sha256
+          (base32
+           "0jgkkgq7g64zckrmjib0hvz0qy3ynz5vz13qbmlpf096l3bb65wn"))))
+      (propagated-inputs
+       `(("emacs-dash" ,emacs-dash)))
+      (build-system emacs-build-system)
+      (home-page "https://github.com/theodorewiles/org-mind-map")
+      (synopsis "Create graphviz directed graphs from Org files")
+      (description "This package creates graphviz directed graphs from
+Org files.")
+      (license license:gpl3+))))
