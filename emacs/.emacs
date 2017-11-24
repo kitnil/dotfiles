@@ -21,22 +21,6 @@
 
 (add-to-list 'exec-path (expand-file-name "~/.guix-profile.d/gdb/bin"))
 
-(load-theme 'manoj-dark)
-
-(custom-theme-set-faces
- 'manoj-dark
- '(fringe ((t (:background "black" :foreground "Wheat"))))
- '(header-line
-   ((t (:background "black" :foreground "grey90" :height 0.9))))
- '(magit-diff-added ((t (:inherit diff-added))))
- '(magit-diff-added-highlight ((t (:inherit diff-added :background "grey10"))))
- '(magit-diff-context-highlight ((t (:background "grey10"))))
- '(magit-diff-hunk-heading ((t (:inherit diff-hunk-header))))
- '(magit-diff-hunk-heading-highlight ((t (:inherit diff-hunk-header))))
- '(magit-diff-removed ((t (:inherit diff-removed))))
- '(magit-diff-removed-highlight ((t (:inherit diff-removed :background "grey10"))))
- '(which-key-command-description-face ((t (:inherit font-lock-function-name-face :height 1.0)))))
-
 (with-eval-after-load 'whitespace
   (setq whitespace-style '(face tabs spaces trailing lines space-before-tab newline indentation empty space-after-tab space-mark tab-mark))
 

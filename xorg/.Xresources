@@ -3,8 +3,8 @@
 ! 
 ! XTerm
 
-XTerm.vt100.foreground: white
-XTerm.vt100.background: black
+XTerm.vt100.foreground: black
+XTerm.vt100.background: white
 
 XTerm*color0:  #000000
 XTerm*color8:  #686868
@@ -52,4 +52,4 @@ Emacs.verticalScrollBars: off
 Emacs.toolBar: off
 
 ! (emacs) Table of Resources
-Emacs.cursorBlink: off
+! Emacs.cursorBlink: off
