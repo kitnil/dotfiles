@@ -104,7 +104,7 @@
         emacs-debbugs            ; <https://debbugs.gnu.org/> interface
         emacs-debpaste           ; Front end to <https://paste.debian.net/>
         emacs-elfeed             ; RSS reader
-        emacs-engine-mode        ; Define searches on websites
+        emacs-engine-mode-autoload ; Define searches on websites
         emacs-erc-hl-nicks       ; for ERC
         emacs-eval-in-repl       ; Evaluate to different Repls
         emacs-ewmctrl            ; Control X windows from Emacs
