@@ -2345,3 +2345,36 @@ within Emacs.")
       (description "This package creates graphviz directed graphs from
 Org files.")
       (license license:gpl3+))))
+
+(define-public emacs-guix-checkout
+  (let ((commit "80980e064a9d5f0fa19ad2ac033d104d42021ce8")
+        (revision "1"))
+    (package
+      (inherit emacs-guix)
+      (version (string-append (package-version emacs-guix)
+                              "-" revision "." (string-take commit 7)))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/alezost/guix.el.git")
+               (commit commit)))
+         (file-name (string-append (package-name emacs-guix)
+                                   "-" version "-checkout"))
+         (sha256
+          (base32
+           "18qnnl18x07399xq41fy9rpzqsvjgm2w4520q5labjl6ndc9y248"))))
+      (arguments
+       (append (package-arguments emacs-guix)
+               '(#:phases
+                 (modify-phases %standard-phases
+                   (add-after 'unpack 'autogen
+                     (lambda _ (zero? (system* "sh" "autogen.sh"))))))))
+      (native-inputs
+       `(("pkg-config" ,pkg-config)
+         ;; 'emacs-minimal' does not find Emacs packages (this is for
+         ;; "guix environment").
+         ("emacs" ,emacs-no-x)
+         ("autoconf" ,autoconf)
+         ("automake" ,automake)
+         ("texinfo" ,texinfo))))))
