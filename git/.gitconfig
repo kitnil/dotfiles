@@ -6,5 +6,3 @@
 	smtpServer = smtp.gmail.com
 	smtpUser = go.wigust@gmail.com
 	smtpServerPort = 587
-[core]
-	pager = cat
