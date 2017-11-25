@@ -654,12 +654,12 @@ in the variable `browse-url-mpv-arguments' to mpv."
             browse-url-mpv-arguments
             (list url)))))
 
+(setq browse-url-firefox-program "firefox")
+
 (setq browse-url-browser-function
       `(("^ftp://.*" . browse-ftp-tramp)
         ("^https?://debbugs\\.gnu\\.org/.*" . debbugs-browse-url)
         ("^https?://w*\\.?youtube.com/watch\\?v=.*" . browse-url-mpv)
-        ("^https?://w*\\.?youtube.com/.*" . browse-url-chromium)
-        ("^https?://w*\\.?github.com/.*" . browse-url-chromium)
         ("." . browse-url-firefox)))
 
 (with-eval-after-load 'sendmail
