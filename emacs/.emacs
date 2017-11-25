@@ -700,7 +700,6 @@ in the variable `browse-url-mpv-arguments' to mpv."
 (which-key-mode)
 (which-key-setup-side-window-right)
 
-(setq helm-firefox-default-directory "~/.mozilla/icecat/")
 (setq ewmctrl-wmctrl-path "~/.guix-profile/bin/wmctrl")
 
 (with-eval-after-load 'debbugs-gnu
