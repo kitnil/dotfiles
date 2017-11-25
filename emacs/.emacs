@@ -113,7 +113,8 @@
 (bind-keys :prefix "C-c s" :prefix-map wi-shell-map
            ("s" . shell)
            ("c" . compilation-shell-minor-mode)
-           ("e" . eshell))
+           ("e" . eshell)
+           ("t" . term))
 
 (which-key-add-key-based-replacements "C-c c" "org")
 (bind-keys :prefix "C-c c" :prefix-map wi-org-map
