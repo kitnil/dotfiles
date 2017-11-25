@@ -64,7 +64,6 @@
         feh             ; Image viewer
         mpv             ; Video and audio player
         ffmpeg          ; Video, audio, images, gif conversion
-        obs             ; Video streaming and recording
 
         gnu-c-manual    ; C language documentation
 
