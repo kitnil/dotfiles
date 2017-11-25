@@ -20,6 +20,8 @@ export GUILE_LOAD_PATH="${GUILE_LOAD_PATH}\
 export EDITOR='emacsclient'
 export MANWIDTH=80
 
+export LOCALE_ARCHIVE="$(readlink ~/.nix-profile/lib/locale)/locale-archive"
+
 wi-guix-graph ()
 {
     guix graph --type=references "$1" \
