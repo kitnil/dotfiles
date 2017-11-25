@@ -26,6 +26,7 @@ wi-guix-graph ()
 wi-guix-search-recsel ()
 { guix package -s "$1" | recsel -p name,synopsis,homepage; }
 
+unalias ls
 alias wi-disable-history="set +o history" # Only for current session.
 alias wi-feh-svg="feh --magick-timeout 10"
 alias wi-guile="guile --no-auto-compile"
