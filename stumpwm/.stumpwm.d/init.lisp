@@ -50,6 +50,10 @@
 ;; If the :restore flag is set then group dump is restored even for an
 ;; existing group using *data-dir*/restore file.
 
+(defcommand emacs () ()
+  "Start emacs unless it is already running, in which case focus it."
+  (run-or-raise "emacsclient -c ." '(:class "Emacs")))
+
 (defcommand conkeror () ()
   "Start or focus conkeror."
   (run-or-raise "conkeror" '(:class "Conkeror")))
