@@ -20,8 +20,6 @@
 
 (setq mail-user-agent 'gnus-user-agent)
 
-(setq visible-bell t)
-
 (add-to-list 'exec-path (expand-file-name "~/.guix-profile.d/gdb/bin"))
 
 (with-eval-after-load 'whitespace
