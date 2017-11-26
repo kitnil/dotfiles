@@ -129,6 +129,11 @@
   (run-shell-command "exec xterm -name pulsemixer -e pulsemixer"))
 (define-key *root-map* (kbd "M-v") "pulsemixer")
 
+(defcommand alsamixer () ()
+  "Download video."
+  (run-shell-command "exec xterm -name alsamixer -e alsamixer"))
+(define-key *root-map* (kbd "M-V") "alsamixer")
+
 (defcommand xterm () ()
   "Start or focus XTerm."
   (run-or-raise "xterm" '(:class "XTerm")))
