@@ -174,6 +174,9 @@
 (defengine youtube-latest
   "https://www.youtube.com/results?sp=CAJQFA%%253D%%253D&search_query=%s")
 
+(defengine youtube-rss
+  "https://www.youtube.com/feeds/videos.xml?channel_id=%s")
+
 
 ;;;
 ;;; Usability functions
