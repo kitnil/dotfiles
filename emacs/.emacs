@@ -325,6 +325,8 @@
   (interactive)
   (setq magit-repository-directories (wi-list-files-in-dir directory)))
 
+(setq magit-repository-directories-depth 1)
+
 (wi-update-magit-repository-directories wi-projects-directory)
 
 (setq magit-log-arguments (list "--graph" "--color" "--decorate" "-n64" "--show-signature"))
