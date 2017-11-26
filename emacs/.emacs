@@ -65,6 +65,7 @@
            ("p" . smartparens-global-mode)
            ("s" . flyspell-mode)
            ("t" . toggle-truncate-lines)
+           ("v" . google-translate-mode)
            ("w" . whitespace-mode)
            ("y" . yas-minor-mode))
 
