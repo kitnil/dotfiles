@@ -22,15 +22,6 @@
 
 (add-to-list 'exec-path (expand-file-name "~/.guix-profile.d/gdb/bin"))
 
-(with-eval-after-load 'whitespace
-  (setq whitespace-style '(face tabs spaces trailing lines space-before-tab newline indentation empty space-after-tab space-mark tab-mark))
-
-  (let ((foreground "gray15"))
-    (mapc (lambda (font)
-            (set-face-attribute font nil
-                                :background nil :foreground foreground))
-          '(whitespace-space whitespace-indentation))))
-
 
 ;;;
 ;;; Enable functions
