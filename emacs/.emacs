@@ -5,6 +5,9 @@
 
 (setq load-prefer-newer t)
 
+;; Makes unpure packages archives unavailable
+(setq package-archives nil)
+
 (setq user-mail-address    "go.wigust@gmail.com")
 (setq user-full-name       "Oleg Pykhalov")
 (setq default-input-method "russian-computer")
