@@ -699,7 +699,6 @@ in the variable `browse-url-mpv-arguments' to mpv."
 (windmove-default-keybindings)
 
 (which-key-mode)
-(which-key-setup-side-window-right)
 
 (setq ewmctrl-wmctrl-path "~/.guix-profile/bin/wmctrl")
 
