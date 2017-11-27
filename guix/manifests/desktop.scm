@@ -158,6 +158,7 @@
         xorg-server ; For testing Stumpwm.
         wmctrl      ; For emacs-ewmctrl
         xwininfo    ; Information about X11 window
+        xdg-utils   ; xdg-mime
 
         lm-sensors ; Watch for temp of hardware
 
