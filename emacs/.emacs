@@ -36,6 +36,10 @@
 ;;;
 ;;; See <https://www.gnu.org/software/emacs/manual/html_node/elisp/Key-Binding-Conventions.html>
 
+(bind-key "<Scroll_Lock>" #'scroll-lock-mode)
+(bind-key "<C-mouse-4>"   #'text-scale-increase)
+(bind-key "<C-mouse-5>"   #'text-scale-decrease)
+
 (which-key-add-key-based-replacements "C-c &" "yasnippet")
 
 (bind-key "C-c b" 'ibuffer)
