@@ -653,8 +653,6 @@ in the variable `browse-url-mpv-arguments' to mpv."
             browse-url-mpv-arguments
             (list url)))))
 
-(setq browse-url-firefox-program "firefox")
-
 (setq browse-url-browser-function
       `(("^ftp://.*" . browse-ftp-tramp)
         ("^https?://debbugs\\.gnu\\.org/.*" . debbugs-browse-url)
