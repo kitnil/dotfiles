@@ -139,6 +139,12 @@
   (run-or-raise "xterm" '(:class "XTerm")))
 (define-key *root-map* (kbd "c") "xterm")
 
+(defcommand xterm-name (cmd &optional collect-output-p) ((:string "window name: "))
+  "Run the specified shell command in XTerm."
+  (run-prog *shell-program*
+            :args (list "-c" (join (list "xterm -name" cmd) #\ ))
+            :wait nil))
+
 (setq *mode-line-border-color*     "#000000"
       *mode-line-foreground-color* "#ffffff"
       *mode-line-background-color* "#000000")
