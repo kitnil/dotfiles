@@ -562,6 +562,9 @@
           ("g" "guix" plain (file "guix.org")
            "%?")
 
+          ("o" "misc" plain (file "misc.org")
+           "%?")
+
           ("m" "music" plain (file "music.org")
            "%?")
 
