@@ -2423,7 +2423,7 @@ Feautures:
 
 @itemize
 @item Independent of a user’s Emacs config.
-@item Customizable via the @code{(locate-user-emacs-file "elesscfg")} config.
+@item Customizable via the @code{(locate-user-emacs-file \"elesscfg\")} config.
 @item Not require an Emacs server to be already running.
 @item Syntax highlighting.
 @item Org-mode file rendering.
@@ -2450,3 +2450,15 @@ editor with athena toolkit" )
     (arguments
      `(#:configure-flags '("--with-x-toolkit=athena")
                          ,@(package-arguments emacs)))))
+
+(define-public emacs-strace-mode-special
+  (package
+    (inherit emacs-strace-mode)
+    (name "emacs-strace-mode-special")
+    (arguments
+     `(#:phases
+       (modify-phases %standard-phases
+         (add-after 'unpack 'patch-source
+           (lambda _
+             (substitute* "strace-mode.el"
+               (("fundamental-mode") "special-mode")))))))))
