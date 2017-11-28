@@ -145,6 +145,11 @@
             :args (list "-c" (join (list "xterm -name" cmd) #\ ))
             :wait nil))
 
+(defcommand github-star () ()
+  "Move mouse to star a project."
+  (ratwarp 1308 176)
+  (ratclick))
+
 (setq *mode-line-border-color*     "#000000"
       *mode-line-foreground-color* "#ffffff"
       *mode-line-background-color* "#000000")
