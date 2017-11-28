@@ -150,6 +150,10 @@
   (ratwarp 1308 176)
   (ratclick))
 
+(defcommand qemu-debian () ()
+  "Run GNOME Debian in QEMU."
+  (run-shell-command (concat "exec " (getenv "HOME") "/bin/debian-gnome.sh")))
+
 (setq *mode-line-border-color*     "#000000"
       *mode-line-foreground-color* "#ffffff"
       *mode-line-background-color* "#000000")
