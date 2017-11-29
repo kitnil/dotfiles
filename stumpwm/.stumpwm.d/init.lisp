@@ -145,6 +145,10 @@
             :args (list "-c" (join (list "xterm -name" cmd) #\ ))
             :wait nil))
 
+(defcommand xterm-big () ()
+  "Start XTerm with big fonts."
+  (run-shell-command "exec xterm -fa 'Monospace' -fs 24"))
+
 (defcommand github-star () ()
   "Move mouse to star a project."
   (ratwarp 1308 176)
