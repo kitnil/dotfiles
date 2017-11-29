@@ -203,6 +203,144 @@ EndSection
 
 
 ;;;
+;;; Packages
+;;;
+
+(define (spec->packages spec)
+  (call-with-values (lambda ()
+                      (specification->package+output spec)) list))
+
+(define %user-packages
+  (map spec->packages
+       (list
+        "setxkbmap" ; Keyboard layout
+        "xclip" ; X clipboard CLI
+        "xrdb"
+        "xset"
+        "xsetroot"
+        "xterm" ; $TERM
+        "xorg-server" ; `xephyr'
+        "wmctrl" ; `ewmctrl'
+        "xwininfo" ; X Window information
+        "xdg-utils"
+
+        ;; For helm-stumpwm-commands and stumpish
+        "rlwrap"
+        "xprop"
+
+        "translate-shell" ; Translation in CLI and Emacs
+
+        "git" ; Version control
+        "gnu-c-manual" ; C language documentation
+        "adb" ; For Replicant (Android distribution) control
+
+        "sbcl" ; For StumpWM.  See <https://stumpwm.github.io/>.
+
+        "gcc-toolchain" ; For Emacs `semantic-mode'
+        "cflow"         ; C program call map
+        "global"        ; Source tagging
+
+        "screen" ; Terminal multiplexer
+
+        "kodi-cli" ; Remote control Kodi
+
+        "openssh" ; `scp'
+
+        "file"
+        "htop"
+        "netcat"
+
+        "lm-sensors" ; `sensors'
+
+        ;; Spelling
+        "aspell"
+        "aspell-dict-en"
+        "aspell-dict-ru"
+
+        "graphviz" ; `dot'
+
+        "adwaita-icon-theme"
+        "font-dejavu"
+        "font-liberation"
+        "font-awesome"
+        "font-wqy-zenhei" ; Chinese, Japanese, Korean
+        "fontconfig" ; `fc-cache -f'
+        "ratpoison"
+        "redshift"
+
+        "feh" ; Image viewer
+        "mpv" ; Video and audio player
+        "ffmpeg" ; Video, audio, images, gif conversion
+
+        "icecat" ; Web browser
+
+        "isync" ; Sync IMAP
+        "notmuch" ; Mail indexer based on Xapian
+
+        "qemu" ;; Encryption and signing
+        "gnupg"
+        "pinentry" ; Password typing for Gnupg
+
+        "password-store" ; Password management
+
+        "recutils" ; Filter records like in `guix --search'
+
+        "pavucontrol" ; Pulseaudio control GUI
+        "pulsemixer" ; Pulseaudio control CLI
+
+        "transmission" ; Bittorrent
+
+        ;; $EDITOR
+        "emacs"                    ; The best editor
+        "emacs-aggressive-indent"  ; Auto indent minor mode
+        "emacs-company"            ; Complition framework
+        "emacs-company-quickhelp"  ; Help pages for Company
+        "emacs-debbugs"            ; <https://debbugs.gnu.org/> interface
+        "emacs-debpaste"           ; Front end to <https://paste.debian.net/>
+        "emacs-elfeed"             ; RSS reader
+        "emacs-engine-mode-autoload" ; Define searches on websites
+        "emacs-erc-hl-nicks"       ; for ERC
+        "emacs-eval-in-repl"       ; Evaluate to different Repls
+        "emacs-ewmctrl"            ; Control X windows from Emacs
+        "emacs-ggtags"             ; Front end to GNU Global
+        "emacs-gitpatch"           ; Send patches
+        "emacs-guix"               ; Guix interface
+        "emacs-helm"               ; Narrowing framework
+        "emacs-helm-firefox"       ; Search for bookmarks in Icecat
+        "emacs-helm-make"          ; Front end to `make'
+        "emacs-helm-pass"          ; Front end to password-store
+        "magit"                    ; Emacs interface for Git
+        "emacs-helm-projectile"    ; Helm interface for Projectile
+        "emacs-highlight-stages"   ; Highlight code stages
+        "emacs-markdown-mode"      ; Commonmark major mode
+        "emacs-multiple-cursors"   ; Multi cursor
+        "emacs-nix-mode"           ; Nix language mode
+        "emacs-org-mind-map"       ; General mind maps from Org files
+        "emacs-projectile"         ; Project functions
+        "emacs-slime"              ; Sbcl repl
+        "emacs-smartparens"        ; Structured editing
+        "emacs-strace-mode"        ; Colorize `strace' logs
+        "emacs-transmission"       ; Front end to transmission-daemon
+        "emacs-transpose-frame"    ; M-x transpose-frame
+        "emacs-use-package"        ; Lazy configuration
+        "emacs-w3m"                ; Front end to w3m command line web browser
+        "emacs-which-key"          ; Key bindings help
+        "emacs-yasnippet"          ; Snippets
+        "emacs-yasnippet-snippets" ; Collection of snippets
+        "emacs-flycheck"           ; Syntax checker
+        "geiser"                   ; Scheme bridge
+
+        "haunt"            ; Guile static site generator
+        "guile-commonmark" ; Commonmark for Guile
+
+        "gwl"              ; Guix workflow management
+
+        ;; Downloaders.
+        "youtube-dl"   ; Video and music from websites
+        "wget")))
+
+
+;;;
 ;;; Operating system.
 ;;;
 
@@ -263,8 +401,9 @@ EndSection
                                  '("cgit" "guix" "www") host-name ".local")
                                 %facebook-host-aliases)))
 
-    (packages (cons* nss-certs ; for HTTPS access
-                     %base-packages))
+    (packages (cons nss-certs ; for HTTPS access
+                    (append %user-packages
+                            %base-packages)))
 
     (services (cons* firewall-service
 
