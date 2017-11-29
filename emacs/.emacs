@@ -626,7 +626,7 @@ the appropriate network slug that we extract from the nick."
 (setq znc-erc-connector 'vbe:znc-erc-connector)
 
 ;; Define networks
-(vbe:znc-add-server "localhost" 8060 "natsu" '(freenode))
+;; (vbe:znc-add-server "localhost" 8060 "natsu" '(freenode))
 
 
 ;;;
