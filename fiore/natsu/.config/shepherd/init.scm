@@ -1,13 +1,13 @@
 (use-modules (shepherd service))
 
-(define %bin-directory "/home/natsu/.guix-profile")
+(define %bin-directory "/var/guix/profiles/system/profile/bin/")
 
 (define redshift
   (make <service>
     #:docstring '("Adjust the color temperature of your screen.")
     #:provides '(redshift)
     #:start (make-forkexec-constructor
-             `(,(string-append %bin-directory "/bin/redshift") "-l" "59:57"))
+             `(,(string-append %bin-directory "redshift") "-l" "59:57"))
     #:stop (make-kill-destructor)
     #:respawn? #t))
 
