@@ -1,0 +1,5 @@
+css=/share/cgit/cgit.css
+logo=/share/cgit/cgit.png
+robots=noindex, nofollow
+virtual-root=/
+scan-path=/srv/git

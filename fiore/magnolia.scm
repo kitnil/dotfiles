@@ -2,7 +2,7 @@
 ;; Copyright © 2017 Oleg Pykhalov <go.wigust@gmail.com>
 ;; Released under the GNU GPLv3 or any later version.
 
-(use-modules (gnu) (gnu system nss) (srfi srfi-1))
+(use-modules (gnu) (srfi srfi-1) (ice-9 popen) (ice-9 rdelim))
 
 (use-service-modules ssh desktop xorg cups version-control mail networking
                      shepherd rsync web spice)
@@ -111,10 +111,7 @@ EndSection
   ;; Files /bin/sh and /usr/bin/env
   ;;
   ;; Inspired by https://lists.gnu.org/archive/html/help-guix/2016-01/msg00064.html
-  (modify-services (remove (lambda (service)
-                             (or (eq? (service-kind service)
-                                     network-manager-service-type)))
-                           %desktop-services)
+  (modify-services %desktop-services
     (guix-service-type config => %guix-daemon-config)
     (special-files-service-type config => `(("/bin/sh"
                                              ,(file-append
@@ -140,44 +137,43 @@ EndSection
 (define %file-share-configuration-nginx
   (nginx-configuration
    (server-blocks
-    (list
-     (nginx-server-configuration
-      (server-name '("www.magnolia.local"))
-      (root "/srv/share")
-      (https-port #f)
-      (ssl-certificate #f)
-      (ssl-certificate-key #f))))))
+    (list (nginx-server-configuration
+           (server-name '("www.magnolia.local"))
+           (root "/srv/share")
+           (https-port #f)
+           (ssl-certificate #f)
+           (ssl-certificate-key #f))))))
 
 (define guix-publish-nginx-service
-  (simple-service
-   'guix-publish-nginx nginx-service-type
-   (list
-    (nginx-server-configuration
-     (server-name '("guix.magnolia.local"))
-     (locations
-      (list
-       (nginx-location-configuration
-        (uri "/")
-        (body '("proxy_pass http://localhost:3000;")))))))))
+  (simple-service 'guix-publish-nginx nginx-service-type
+   (list (nginx-server-configuration
+          (server-name '("guix.magnolia.local"))
+          (locations (list (nginx-location-configuration
+                            (uri "/")
+                            (body '("proxy_pass http://localhost:3000;")))))
+          (https-port #f)
+          (ssl-certificate #f)
+          (ssl-certificate-key #f)))))
+
+(define %cgit-configuration-nginx-body
+    (list "fastcgi_param SCRIPT_FILENAME $document_root/lib/cgit/cgit.cgi;"
+          "fastcgi_param PATH_INFO $uri;"
+          "fastcgi_param QUERY_STRING $args;"
+          "fastcgi_param HTTP_HOST $server_name;"
+          "fastcgi_pass 127.0.0.1:9000;"))
 
 (define %cgit-configuration-nginx
-  (list
-   (nginx-server-configuration
-    (root cgit)
-    (server-name `("cgit.magnolia.local"))
-    (locations
-     (list
-      (nginx-location-configuration
-       (uri "@cgit")
-       (body '("fastcgi_param SCRIPT_FILENAME $document_root/lib/cgit/cgit.cgi;"
-               "fastcgi_param PATH_INFO $uri;"
-               "fastcgi_param QUERY_STRING $args;"
-               "fastcgi_param HTTP_HOST $server_name;"
-               "fastcgi_pass 127.0.0.1:9000;")))))
-    (try-files (list "$uri" "@cgit"))
-    (https-port #f)
-    (ssl-certificate #f)
-    (ssl-certificate-key #f))))
+  (list (nginx-server-configuration
+         (root cgit)
+         (server-name '("cgit.magnolia.local"))
+         (locations (list
+                     (nginx-location-configuration
+                      (uri "@cgit")
+                      (body %cgit-configuration-nginx-body))))
+         (try-files (list "$uri" "@cgit"))
+         (https-port #f)
+         (ssl-certificate #f)
+         (ssl-certificate-key #f))))
 
 
 ;;;
@@ -204,6 +200,145 @@ EndSection
                       (string-append (string-join x " ") "." host-name domain))
                     (cartesian-product '("127.0.0.1" "::1") prefix))
                "\n"))
+
+
+;;;
+;;; Packages
+;;;
+
+(define (spec->packages spec)
+  (call-with-values (lambda ()
+                      (specification->package+output spec)) list))
+
+(define %user-packages
+  (map spec->packages
+       (list
+        "setxkbmap" ; Keyboard layout
+        "xclip" ; X clipboard CLI
+        "xrdb"
+        "xset"
+        "xsetroot"
+        "xterm" ; $TERM
+        "xorg-server" ; `xephyr'
+        "wmctrl" ; `ewmctrl'
+        "xwininfo" ; X Window information
+        "xdg-utils"
+
+        ;; For helm-stumpwm-commands and stumpish
+        "rlwrap"
+        "xprop"
+
+        "translate-shell" ; Translation in CLI and Emacs
+
+        "git" ; Version control
+        "gnu-c-manual" ; C language documentation
+        "adb" ; For Replicant (Android distribution) control
+
+        "sbcl" ; For StumpWM.  See <https://stumpwm.github.io/>.
+
+        "gcc-toolchain" ; For Emacs `semantic-mode'
+        "cflow"         ; C program call map
+        "global"        ; Source tagging
+
+        "screen" ; Terminal multiplexer
+
+        "kodi-cli" ; Remote control Kodi
+
+        "openssh" ; `scp'
+        "nss-certs"
+
+        "file"
+        "htop"
+        "netcat"
+
+        "lm-sensors" ; `sensors'
+
+        ;; Spelling
+        "aspell"
+        "aspell-dict-en"
+        "aspell-dict-ru"
+
+        "graphviz" ; `dot'
+
+        "adwaita-icon-theme"
+        "font-dejavu"
+        "font-liberation"
+        "font-awesome"
+        "font-wqy-zenhei" ; Chinese, Japanese, Korean
+        "fontconfig" ; `fc-cache -f'
+        "ratpoison"
+        "redshift"
+
+        "feh" ; Image viewer
+        "mpv" ; Video and audio player
+        "ffmpeg" ; Video, audio, images, gif conversion
+
+        "icecat" ; Web browser
+
+        "isync" ; Sync IMAP
+        "notmuch" ; Mail indexer based on Xapian
+
+        "qemu" ;; Encryption and signing
+        "gnupg"
+        "pinentry" ; Password typing for Gnupg
+
+        "password-store" ; Password management
+
+        "recutils" ; Filter records like in `guix --search'
+
+        "pavucontrol" ; Pulseaudio control GUI
+        "pulsemixer" ; Pulseaudio control CLI
+
+        "transmission" ; Bittorrent
+
+        ;; $EDITOR
+        "emacs"                    ; The best editor
+        "emacs-aggressive-indent"  ; Auto indent minor mode
+        "emacs-company"            ; Complition framework
+        "emacs-company-quickhelp"  ; Help pages for Company
+        "emacs-debbugs"            ; <https://debbugs.gnu.org/> interface
+        "emacs-debpaste"           ; Front end to <https://paste.debian.net/>
+        "emacs-elfeed"             ; RSS reader
+        "emacs-engine-mode-autoload" ; Define searches on websites
+        "emacs-erc-hl-nicks"       ; for ERC
+        "emacs-eval-in-repl"       ; Evaluate to different Repls
+        "emacs-ewmctrl"            ; Control X windows from Emacs
+        "emacs-ggtags"             ; Front end to GNU Global
+        "emacs-gitpatch"           ; Send patches
+        "emacs-guix"               ; Guix interface
+        "emacs-helm"               ; Narrowing framework
+        "emacs-helm-firefox"       ; Search for bookmarks in Icecat
+        "emacs-helm-make"          ; Front end to `make'
+        "emacs-helm-pass"          ; Front end to password-store
+        "magit"                    ; Emacs interface for Git
+        "emacs-helm-projectile"    ; Helm interface for Projectile
+        "emacs-highlight-stages"   ; Highlight code stages
+        "emacs-markdown-mode"      ; Commonmark major mode
+        "emacs-multiple-cursors"   ; Multi cursor
+        "emacs-nix-mode"           ; Nix language mode
+        "emacs-org-mind-map"       ; General mind maps from Org files
+        "emacs-projectile"         ; Project functions
+        "emacs-slime"              ; Sbcl repl
+        "emacs-smartparens"        ; Structured editing
+        "emacs-strace-mode"        ; Colorize `strace' logs
+        "emacs-transmission"       ; Front end to transmission-daemon
+        "emacs-transpose-frame"    ; M-x transpose-frame
+        "emacs-use-package"        ; Lazy configuration
+        "emacs-w3m"                ; Front end to w3m command line web browser
+        "emacs-which-key"          ; Key bindings help
+        "emacs-yasnippet"          ; Snippets
+        "emacs-yasnippet-snippets" ; Collection of snippets
+        "emacs-flycheck"           ; Syntax checker
+        "geiser"                   ; Scheme bridge
+
+        "haunt"            ; Guile static site generator
+        "guile-commonmark" ; Commonmark for Guile
+
+        "gwl"              ; Guix workflow management
+
+        ;; Downloaders.
+        "youtube-dl"   ; Video and music from websites
+        "wget")))
 
 
 ;;;
@@ -267,12 +402,9 @@ EndSection
                                  '("cgit" "guix" "www") host-name ".local")
                                 %facebook-host-aliases)))
 
-    (packages (cons nss-certs ; for HTTPS access
-                    %base-packages))
+    (packages (append %user-packages %base-packages))
 
-    (services (cons* (dhcp-client-service)
-
-                     firewall-service
+    (services (cons* firewall-service
 
                      (service openssh-service-type)
 
@@ -301,21 +433,19 @@ EndSection
 
                      (service fcgiwrap-service-type)
 
-                     (tor-service)
+                     (tor-service (local-file "torrc"))
+
+                     (service nginx-service-type
+                              %file-share-configuration-nginx)
 
                      (service cgit-service-type
                               (cgit-configuration
                                (nginx %cgit-configuration-nginx)))
 
-                     (service nginx-service-type
-                              %file-share-configuration-nginx)
-
                      guix-publish-nginx-service
 
                      (simple-service 'adb udev-service-type
                                      (list android-udev-rules))
-
-                     (spice-vdagent-service)
 
                      %custom-desktop-services))
 
