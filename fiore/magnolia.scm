@@ -206,6 +206,22 @@ EndSection
 ;;; Packages
 ;;;
 
+(define-public emacs-athena
+  ;; GTK+ could kill emacs --daemon,
+  ;; see <https://bugzilla.gnome.org/show_bug.cgi?id=85715>.
+  (package
+    (inherit emacs)
+    (name "emacs-athena")
+    (synopsis "The extensible, customizable, self-documenting text
+editor with athena toolkit" )
+    (build-system gnu-build-system)
+    (inputs `(("inotify-tools" ,inotify-tools)
+              ("libxaw" ,libxaw)
+              ,@(alist-delete "gtk+" (package-inputs emacs))))
+    (arguments
+     `(#:configure-flags '("--with-x-toolkit=athena")
+                         ,@(package-arguments emacs)))))
+
 (define (spec->packages spec)
   (call-with-values (lambda ()
                       (specification->package+output spec)) list))
@@ -292,7 +308,7 @@ EndSection
         "transmission" ; Bittorrent
 
         ;; $EDITOR
-        "emacs"                    ; The best editor
+        "emacs-athena"             ; The best editor
         "emacs-aggressive-indent"  ; Auto indent minor mode
         "emacs-company"            ; Complition framework
         "emacs-company-quickhelp"  ; Help pages for Company
