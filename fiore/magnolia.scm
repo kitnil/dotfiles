@@ -2,13 +2,18 @@
 ;; Copyright © 2017 Oleg Pykhalov <go.wigust@gmail.com>
 ;; Released under the GNU GPLv3 or any later version.
 
-(use-modules (gnu) (srfi srfi-1) (ice-9 popen) (ice-9 rdelim))
+(use-modules (gnu)
+             (guix packages)
+             (guix build-system gnu)
+             (srfi srfi-1)
+             (ice-9 popen)
+             (ice-9 rdelim))
 
 (use-service-modules ssh desktop xorg cups version-control mail networking
                      shepherd rsync web spice)
 
 (use-package-modules bash bootloaders certs linux android version-control
-                     cups)
+                     cups emacs xorg)
 
 
 ;;;
@@ -206,7 +211,7 @@ EndSection
 ;;; Packages
 ;;;
 
-(define-public emacs-athena
+(define emacs-athena
   ;; GTK+ could kill emacs --daemon,
   ;; see <https://bugzilla.gnome.org/show_bug.cgi?id=85715>.
   (package
@@ -215,8 +220,7 @@ EndSection
     (synopsis "The extensible, customizable, self-documenting text
 editor with athena toolkit" )
     (build-system gnu-build-system)
-    (inputs `(("inotify-tools" ,inotify-tools)
-              ("libxaw" ,libxaw)
+    (inputs `(("libxaw" ,libxaw)
               ,@(alist-delete "gtk+" (package-inputs emacs))))
     (arguments
      `(#:configure-flags '("--with-x-toolkit=athena")
@@ -308,7 +312,7 @@ editor with athena toolkit" )
         "transmission" ; Bittorrent
 
         ;; $EDITOR
-        "emacs-athena"             ; The best editor
+        ;; "emacs-athena"             ; The best editor
         "emacs-aggressive-indent"  ; Auto indent minor mode
         "emacs-company"            ; Complition framework
         "emacs-company-quickhelp"  ; Help pages for Company
