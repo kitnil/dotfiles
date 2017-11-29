@@ -1,0 +1,11 @@
+;; -*-lisp-*-
+
+(require :asdf)
+(push #p"/home/natsu/quicklisp/local-projects/stumpwm/" asdf:*central-registry*)
+;; (require :stumpwm)
+;; (require :swank)
+;; (swank-loader::setup)
+;; (swank:create-server :dont-close t)
+(ql:quickload "stumpwm")
+;; (stumpwm:stumpwm ":1")
+(stumpwm:stumpwm)
