@@ -243,6 +243,14 @@ editor with athena toolkit" )
         "wmctrl" ; `ewmctrl'
         "xwininfo" ; X Window information
         "xdg-utils"
+        "xdotool" ; Mouse and keyboard automation
+        "gvfs"
+        "glib:bin"
+        "desktop-file-utils"
+        "xdg-utils"
+
+        "emacs-znc"
+        "znc"
 
         ;; For helm-stumpwm-commands and stumpish
         "rlwrap"
@@ -251,6 +259,8 @@ editor with athena toolkit" )
         "translate-shell" ; Translation in CLI and Emacs
 
         "git" ; Version control
+        "git:send-email"
+
         "gnu-c-manual" ; C language documentation
         "adb" ; For Replicant (Android distribution) control
 
@@ -265,11 +275,16 @@ editor with athena toolkit" )
         "kodi-cli" ; Remote control Kodi
 
         "openssh" ; `scp'
-        "nss-certs"
+        "nss-certs" ; for https
 
-        "file"
-        "htop"
-        "netcat"
+        "file" ; Information about file from magic
+        "htop" ; Pretty `top'
+        "ncdu" ; TUI `du'
+        "netcat" ; TCP
+        "python-pygments" ; Colorize output
+        "tree" ; List files as a tree
+        "cloc" ; Count code
+        "unzip"
 
         "lm-sensors" ; `sensors'
 
@@ -277,6 +292,8 @@ editor with athena toolkit" )
         "aspell"
         "aspell-dict-en"
         "aspell-dict-ru"
+
+        "python-clf" ; Interface to <https://commandlinefu.com/>
 
         "graphviz" ; `dot'
 
@@ -286,12 +303,15 @@ editor with athena toolkit" )
         "font-awesome"
         "font-wqy-zenhei" ; Chinese, Japanese, Korean
         "fontconfig" ; `fc-cache -f'
+        "font-misc-misc" ; for `xterm'
         "ratpoison"
         "redshift"
 
         "feh" ; Image viewer
         "mpv" ; Video and audio player
         "ffmpeg" ; Video, audio, images, gif conversion
+        "imagemagick" ; Pipe to `display'
+        "obs" ; OBS Studio
 
         "icecat" ; Web browser
 
@@ -308,11 +328,11 @@ editor with athena toolkit" )
 
         "pavucontrol" ; Pulseaudio control GUI
         "pulsemixer" ; Pulseaudio control CLI
+        "alsa-utils"
 
         "transmission" ; Bittorrent
 
         ;; $EDITOR
-        ;; "emacs-athena"             ; The best editor
         "emacs-aggressive-indent"  ; Auto indent minor mode
         "emacs-company"            ; Complition framework
         "emacs-company-quickhelp"  ; Help pages for Company
@@ -331,16 +351,21 @@ editor with athena toolkit" )
         "emacs-helm-make"          ; Front end to `make'
         "emacs-helm-pass"          ; Front end to password-store
         "magit"                    ; Emacs interface for Git
+        "emacs-git-gutter"
         "emacs-helm-projectile"    ; Helm interface for Projectile
         "emacs-highlight-stages"   ; Highlight code stages
         "emacs-markdown-mode"      ; Commonmark major mode
+        "emacs-org"                ; Org
         "emacs-multiple-cursors"   ; Multi cursor
         "emacs-nix-mode"           ; Nix language mode
         "emacs-org-mind-map"       ; General mind maps from Org files
         "emacs-projectile"         ; Project functions
         "emacs-slime"              ; Sbcl repl
         "emacs-smartparens"        ; Structured editing
-        "emacs-strace-mode"        ; Colorize `strace' logs
+        "strace"
+        "emacs-move-text"
+        "shellcheck"
+        "emacs-strace-mode-special" ; Colorize `strace' logs
         "emacs-transmission"       ; Front end to transmission-daemon
         "emacs-transpose-frame"    ; M-x transpose-frame
         "emacs-use-package"        ; Lazy configuration
@@ -349,12 +374,17 @@ editor with athena toolkit" )
         "emacs-yasnippet"          ; Snippets
         "emacs-yasnippet-snippets" ; Collection of snippets
         "emacs-flycheck"           ; Syntax checker
+        "emacs-rainbow-delimiters" ; Prettify parentheses
         "geiser"                   ; Scheme bridge
 
         "haunt"            ; Guile static site generator
         "guile-commonmark" ; Commonmark for Guile
 
         "gwl"              ; Guix workflow management
+
+        "stow"             ; Dotfiles management
+        "make"             ; GNU Make
+        "ghc-pandoc"       ; Convert Markdown
 
         ;; Downloaders.
         "youtube-dl"   ; Video and music from websites
@@ -422,7 +452,8 @@ editor with athena toolkit" )
                                  '("cgit" "guix" "www") host-name ".local")
                                 %facebook-host-aliases)))
 
-    (packages (append %user-packages %base-packages))
+    (packages (cons emacs-athena
+                    (append %user-packages %base-packages)))
 
     (services (cons* firewall-service
 
