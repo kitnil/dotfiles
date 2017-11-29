@@ -2437,20 +2437,6 @@ Feautures:
 @end itemize\n")
     (license license:expat)))
 
-(define-public emacs-athena
-  (package
-    (inherit emacs)
-    (name "emacs-athena")
-    (synopsis "The extensible, customizable, self-documenting text
-editor with athena toolkit" )
-    (build-system gnu-build-system)
-    (inputs `(("inotify-tools" ,inotify-tools)
-              ("libxaw" ,libxaw)
-              ,@(alist-delete "gtk+" (package-inputs emacs))))
-    (arguments
-     `(#:configure-flags '("--with-x-toolkit=athena")
-                         ,@(package-arguments emacs)))))
-
 (define-public emacs-strace-mode-special
   (package
     (inherit emacs-strace-mode)
