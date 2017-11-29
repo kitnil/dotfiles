@@ -11,3 +11,7 @@ Some files you already have could conflict.  Stow will tell you which
 are.  So make sure to backup them moving somewhere with:
 
   : $ mv CONFLICT_CONFIG_FILE BACKUP_DIRECTORY
+
+* Thanks to
+
+  - https://github.com/wiedzmin/stumpwm-config
