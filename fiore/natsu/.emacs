@@ -91,6 +91,23 @@
            ("y" . helm-show-kill-ring)
            ("w" . helm-stumpwm-commands))
 
+(which-key-add-key-based-replacements "C-c i" "ivy")
+(which-key-add-key-based-replacements "C-c i h" "counsel-help")
+(which-key-add-key-based-replacements "C-c i g" "counsel-git")
+(bind-keys :prefix "C-c i" :prefix-map wi-ivy-map
+           ("b"   . ivy-switch-buffer)
+           ("f"   . counsel-find-file)
+           ("g f" . counsel-git)
+           ("g v" . counsel-git-grep)
+           ("h f" . counsel-describe-function)
+           ("h i" . counsel-info-lookup-symbol)
+           ("h l" . counsel-find-library)
+           ("h u" . counsel-unicode-char)
+           ("h v" . counsel-describe-variable)
+           ("r"   . ivy-resume)
+           ("s"   . swiper)
+           ("x"   . counsel-M-x))
+
 (which-key-add-key-based-replacements "C-c h p" "helm-projectile")
 (which-key-add-key-based-replacements "C-c p x" "projectile-shell")
 (which-key-add-key-based-replacements "C-c p s" "projectile-search")
