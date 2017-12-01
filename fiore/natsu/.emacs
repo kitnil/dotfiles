@@ -751,7 +751,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
 ;; See <~/.bashrc>
 
 (setq yas-snippet-dirs (list "~/.emacs.d/snippets"
-                             "~/.guix-profile/share/emacs/yasnippet-snippets/"))
+                             "/run/current-system/profile/share/emacs/yasnippet-snippets/"))
 
 (with-eval-after-load 'company
   (setq company-clang-insert-arguments nil)
@@ -771,7 +771,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
 
 (which-key-mode)
 
-(setq ewmctrl-wmctrl-path "~/.guix-profile/bin/wmctrl")
+(setq ewmctrl-wmctrl-path "/run/current-system/profile/bin/wmctrl")
 
 (with-eval-after-load 'debbugs-gnu
   (setq debbugs-gnu-default-packages (list "guix" "guix-patches")))
