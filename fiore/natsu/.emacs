@@ -666,6 +666,10 @@ the appropriate network slug that we extract from the nick."
 ;;; Misc
 ;;;
 
+(add-hook 'shell-mode-hook (lambda ()
+                             (progn (setq paragraph-separate "[ 	]*$")
+                                    (setq paragraph-start "\\|[ 	]*$"))))
+
 (setq elfeed-feeds '("http://nullprogram.com/feed/"
                      "http://planet.emacsen.org/atom.xml"
                      "http://www.scheme.dk/planet/atom.xml"))
