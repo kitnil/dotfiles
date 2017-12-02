@@ -1,0 +1,2 @@
+audio.sources=pulse
+audio.pulse.source=0
