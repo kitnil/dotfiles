@@ -175,6 +175,9 @@
 (defengine google
   "http://www.google.com/search?ie=utf-8&oe=utf-8&q=%s")
 
+(defengine google-video
+  "https://www.google.com/search?q=%s&tbm=vid")
+
 (defengine guix-devel
   "https://lists.gnu.org/archive/cgi-bin/namazu.cgi?query=%s&submit=Search%%21&idxname=guix-devel&max=20&result=normal&sort=score")
 
