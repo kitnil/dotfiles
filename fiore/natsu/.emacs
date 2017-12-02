@@ -19,6 +19,7 @@
 (setq initial-buffer-choice t)
 
 (setq mail-user-agent 'gnus-user-agent)
+(setq smtpmail-queue-mail t)
 
 (add-to-list 'exec-path (expand-file-name "~/.guix-profile.d/gdb/bin"))
 
