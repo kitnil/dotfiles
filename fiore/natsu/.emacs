@@ -835,4 +835,4 @@ in the variable `browse-url-mpv-arguments' to mpv."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- )
+ '(highlight-stages-level-1-face ((t (:foreground "deep sky blue")))))
