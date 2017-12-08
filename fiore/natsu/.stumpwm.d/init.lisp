@@ -18,7 +18,7 @@
 (setf *ignore-wm-inc-hints* t)
 
 (set-win-bg-color "#DCDAD5")
-(set-unfocus-color "#000000")
+(set-unfocus-color "#FFFFFF")
 (set-focus-color "#A52A2A")
 (set-fg-color "#000000")
 (set-bg-color "#FFFFFF")
