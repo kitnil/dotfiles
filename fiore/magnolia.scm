@@ -473,6 +473,22 @@ editor with athena toolkit" )
 
                      (service cups-service-type
                               (cups-configuration
+                               (location-access-controls
+                                (list (location-access-control
+                                       (path "/")
+                                       (access-controls '("Order allow,deny"
+                                                          "Allow localhost"
+                                                          "Allow 192.168.0.*")))
+                                      (location-access-control
+                                       (path "/admin")
+                                       (access-controls '("Order allow,deny"
+                                                          "Allow localhost")))
+                                      (location-access-control
+                                       (path "/admin/conf")
+                                       (access-controls '("Order allow,deny"
+                                                          "AuthType Basic"
+                                                          "Require user @SYSTEM"
+                                                          "Allow localhost")))))
                                (web-interface? #t) ; LibreJS could block JS
                                (extensions (list cups-filters hplip))))
 
