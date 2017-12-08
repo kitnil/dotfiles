@@ -44,4 +44,5 @@ alias wi-youtube-dl-proxy='youtube-dl --proxy "socks5://localhost:9050/"'
 alias wi-guix-environment-guix='guix environment --pure guix --ad-hoc help2man'
 alias wi-guix-configure="./configure --localstatedir=/var --prefix=''"
 alias emacs-no-x="emacs -nw"
+alias ps-tree="ps -ejH"
 export MANPATH=$MANPATH:/home/natsu/.nix-profile/share/man
