@@ -176,7 +176,7 @@
 
 (load-module "swm-gaps")
 (setf swm-gaps:*inner-gaps-size* 5
-      swm-gaps:*outer-gaps-size* 0)
+      swm-gaps:*outer-gaps-size* 5)
 
 (load-module "kbd-layouts")
 (kbd-layouts:keyboard-layout-list "us" "ru")
