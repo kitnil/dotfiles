@@ -26,7 +26,7 @@ setxkbmap -option terminate:ctrl_alt_bksp
 
 # Wallpaper
 # feh --bg-scale ~/Pictures/Wallpapers/current.png
-xsetroot -solid black
+xsetroot -solid white
 
 # Rxvt colors and other
 xrdb -merge ~/.Xresources
