@@ -520,21 +520,19 @@ editor with athena toolkit" )
 
                      (service cgit-service-type
                               (cgit-configuration
-                               (config-file
-                                (cgit-conf
-                                 (branch-sort "age")
-                                 (enable-commit-graph? #t)
-                                 (enable-follow-links? #t)
-                                 (enable-index-links? #t)
-                                 (enable-log-filecount? #t)
-                                 (enable-log-linecount? #t)
-                                 (enable-remote-branches? #t)
-                                 (enable-subject-links? #t)
-                                 (remove-suffix? #t)
-                                 (enable-index-owner? #f)
-                                 (root-title (string-join (list "Cgit on" host-name)))
-                                 (snapshots (list "tar.gz"))
-                                 (clone-prefix "git://magnolia.local/~natsu")))
+                               (branch-sort "age")
+                               (enable-commit-graph? #t)
+                               (enable-follow-links? #t)
+                               (enable-index-links? #t)
+                               (enable-log-filecount? #t)
+                               (enable-log-linecount? #t)
+                               (enable-remote-branches? #t)
+                               (enable-subject-links? #t)
+                               (remove-suffix? #t)
+                               (enable-index-owner? #f)
+                               (root-title (string-join (list "Cgit on" host-name)))
+                               (snapshots (list "tar.gz"))
+                               (clone-prefix (list "git://magnolia.local/~natsu"))
                                (nginx %cgit-configuration-nginx)))
 
                      guix-publish-nginx-service
