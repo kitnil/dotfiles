@@ -248,6 +248,7 @@ editor with athena toolkit" )
         "glib:bin"
         "desktop-file-utils"
         "xdg-utils"
+        "xrandr" ; Change screen resolution
 
         "emacs-znc"
         "znc"
