@@ -159,7 +159,7 @@
 
 (defcommand qemu-debian () ()
   "Run GNOME Debian in QEMU."
-  (run-shell-command (concat "exec " (getenv "HOME") "/bin/debian-gnome.sh")))
+  (run-shell-command (concat "exec " (getenv "HOME") "/bin/debian.sh")))
 
 (setq *mode-line-border-color*     "#000000"
       *mode-line-foreground-color* "#ffffff"
