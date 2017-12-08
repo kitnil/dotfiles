@@ -98,13 +98,16 @@
   "Download video and play it."
   (run-shell-command "exec xterm -name youtube-dl -e youtube-dl --exec 'mpv {}' $(xclip -o -selection clipboard)"))
 
-(define-key *root-map* (kbd "v") "mpv")
-(define-key *root-map* (kbd "C-v") "xclip-mpv")
+(define-key *root-map* (kbd "m") "mpv")
+(define-key *root-map* (kbd "C-m") "xclip-mpv")
 
 (defcommand turn-screen-off () ()
             "Turn screen off."
             (run-shell-command "exec xset dpms force off"))
 
+(defcommand kill-mpv () ()
+  "Kill all mpv instanses."
+  (run-shell-command "killall mpv"))
 (defun join-to-stream (stream list &optional (delimiter #\&))
   (destructuring-bind (&optional first &rest rest) list
     (when first
@@ -127,12 +130,12 @@
 (defcommand pulsemixer () ()
   "Download video."
   (run-shell-command "exec xterm -name pulsemixer -e pulsemixer"))
-(define-key *root-map* (kbd "M-v") "pulsemixer")
+(define-key *root-map* (kbd "v") "pulsemixer")
 
 (defcommand alsamixer () ()
   "Download video."
   (run-shell-command "exec xterm -name alsamixer -e alsamixer"))
-(define-key *root-map* (kbd "M-V") "alsamixer")
+(define-key *root-map* (kbd "C-v") "alsamixer")
 
 (defcommand xterm () ()
   "Start or focus XTerm."
