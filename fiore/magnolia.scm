@@ -519,6 +519,8 @@ editor with athena toolkit" )
                      (service nginx-service-type
                               %file-share-configuration-nginx)
 
+                     (spice-vdagent-service)
+
                      (service cgit-service-type
                               (cgit-configuration
                                (branch-sort "age")
