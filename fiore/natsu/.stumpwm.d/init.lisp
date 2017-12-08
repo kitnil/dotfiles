@@ -27,9 +27,9 @@
 
 (set-float-focus-color "#A52A2A")
 
-(setf *normal-border-width* 2
-      *transient-border-width* 2
-      *maxsize-border-width* 2)
+(setf *normal-border-width* 3
+      *transient-border-width* 3
+      *maxsize-border-width* 3)
 
 ;; Don't set it to “sloppy”,
 ;; because it could switch window after switch desktop
