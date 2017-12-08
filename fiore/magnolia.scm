@@ -506,7 +506,8 @@ editor with athena toolkit" )
                                (host "0.0.0.0") (port 3000)))
 
                      (service git-daemon-service-type
-                              (git-daemon-configuration (user-path "")))
+                              (git-daemon-configuration (user-path "")
+                                                        (export-all? #t)))
 
                      (service rsync-service-type)
 
