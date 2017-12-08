@@ -285,6 +285,15 @@ editor with athena toolkit" )
         "tree" ; List files as a tree
         "cloc" ; Count code
         "unzip"
+        "iptables"
+        "ncurses"
+        "nmap"
+        "openssl"
+        "rsync"
+        "tcpdump"
+        "w3m"
+        "strace"
+        "shellcheck"
 
         "lm-sensors" ; `sensors'
 
@@ -306,6 +315,9 @@ editor with athena toolkit" )
         "font-misc-misc" ; for `xterm'
         "ratpoison"
         "redshift"
+
+        "cups"
+        "libreoffice"
 
         "feh" ; Image viewer
         "mpv" ; Video and audio player
@@ -362,9 +374,7 @@ editor with athena toolkit" )
         "emacs-projectile"         ; Project functions
         "emacs-slime"              ; Sbcl repl
         "emacs-smartparens"        ; Structured editing
-        "strace"
         "emacs-move-text"
-        "shellcheck"
         "emacs-strace-mode-special" ; Colorize `strace' logs
         "emacs-transmission"       ; Front end to transmission-daemon
         "emacs-transpose-frame"    ; M-x transpose-frame
@@ -376,6 +386,8 @@ editor with athena toolkit" )
         "emacs-flycheck"           ; Syntax checker
         "emacs-rainbow-delimiters" ; Prettify parentheses
         "geiser"                   ; Scheme bridge
+        "emacs-rainbow-mode"       ; Show colors in codes
+        "emacs-ivy"                ; Complition framework
 
         "haunt"            ; Guile static site generator
         "guile-commonmark" ; Commonmark for Guile
