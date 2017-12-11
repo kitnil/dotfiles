@@ -43,6 +43,7 @@ alias wi-xclip-clipboard="xclip -i -selection clipboard"
 alias wi-youtube-dl-proxy='youtube-dl --proxy "socks5://localhost:9050/"'
 alias wi-guix-environment-guix='guix environment --pure guix --ad-hoc help2man'
 alias wi-guix-configure="./configure --localstatedir=/var --prefix=''"
+alias wi-backup='$(guix build duplicity)/bin/duplicity --no-encryption --exclude /home/natsu/.cache /home/natsu file:///srv/backup'
 alias emacs-no-x="emacs -nw"
 alias emacs-org-video="emacs -nw ~/org/video.org"
 alias ps-tree="ps -ejH"
