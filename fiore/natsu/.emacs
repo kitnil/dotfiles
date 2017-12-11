@@ -412,6 +412,8 @@
 (add-hook 'magit-section-set-visibility-hook
           'wi-local-magit-initially-hide-unmerged)
 
+(add-hook 'git-commit-mode-hook 'auto-fill-mode)
+
 
 ;;;
 ;;; ERC
