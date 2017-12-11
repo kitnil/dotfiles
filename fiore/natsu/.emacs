@@ -698,6 +698,12 @@ the appropriate network slug that we extract from the nick."
 ;;; Misc
 ;;;
 
+(add-hook 'prog-mode-hook
+          (lambda ()
+            (font-lock-add-keywords nil
+                                    '(("\\<\\(TODO\\|FIXME\\):" 1
+                                       font-lock-warning-face t)))))
+
 (add-hook 'shell-mode-hook (lambda ()
                              (progn (setq paragraph-separate "[ 	]*$")
                                     (setq paragraph-start "\\|[ 	]*$"))))
