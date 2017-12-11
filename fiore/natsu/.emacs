@@ -704,6 +704,8 @@ the appropriate network slug that we extract from the nick."
                                     '(("\\<\\(TODO\\|FIXME\\):" 1
                                        font-lock-warning-face t)))))
 
+(add-hook 'ibuffer-mode-hook 'hl-line-mode)
+
 (add-hook 'shell-mode-hook (lambda ()
                              (progn (setq paragraph-separate "[ 	]*$")
                                     (setq paragraph-start "\\|[ 	]*$"))))
