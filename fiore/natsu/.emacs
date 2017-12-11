@@ -371,6 +371,7 @@
                                 wi-c--prettify-symbols-alist)))
 
   (add-hook 'c-mode-hook #'rainbow-delimiters-mode)
+  (add-hook 'c-mode-hook #'smartparens-strict-mode)
   (add-hook 'c-mode-hook #'prettify-symbols-mode)
   (add-hook 'c-mode-hook #'ggtags-mode))
 
