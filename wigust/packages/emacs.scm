@@ -78,6 +78,27 @@
   #:use-module (srfi srfi-1)
   #:use-module (ice-9 match))
 
+(define-public emacs-athena
+  ;; GTK+ could kill emacs --daemon,
+  ;; see <https://bugzilla.gnome.org/show_bug.cgi?id=85715>.
+  (package
+    (inherit emacs)
+    (name "emacs-athena")
+    (source
+     (origin
+       (inherit (package-source emacs))
+       (patches (fold cons* '()
+                      (origin-patches (package-source emacs))
+                      (search-patches "emacs-xterm-mouse-support.patch")))))
+    (synopsis "The extensible, customizable, self-documenting text
+editor with athena toolkit" )
+    (build-system gnu-build-system)
+    (inputs `(("libxaw" ,libxaw)
+              ,@(alist-delete "gtk+" (package-inputs emacs))))
+    (arguments
+     `(#:configure-flags '("--with-x-toolkit=athena")
+                         ,@(package-arguments emacs)))))
+
 (define-public emacs-company-lua
   (let ((commit "0be8122f3adf57ad27953bf4b03545d6298d3da4")
         (revision "1"))

@@ -1,0 +1,367 @@
+https://debbugs.gnu.org/cgi/bugreport.cgi?bug=29552
+
+diff --git a/lisp/menu-bar.el b/lisp/menu-bar.el
+index 972f84ee6c..0c40c4ba12 100644
+--- a/lisp/menu-bar.el
++++ b/lisp/menu-bar.el
+@@ -2460,6 +2460,31 @@ tty-menu--initial-menu-x
+ 
+ This is meant to be used only for debugging TTY menus.")
+ 
++(defun tty-menu-bar-open-with-mouse (event)
++  "Opens menu-bar menu on a TTY frame.
++
++If EVENT is a mouse-click on the menu-bar of a TTY frame, drop
++down the corresponding menu."
++  (interactive "e")
++  (let* ((pos (event-start event))
++         (frame (posn-window pos))
++         (area (posn-area pos))
++         (x (car (posn-x-y pos)))
++         (menu (menu-bar-menu-at-x-y x 0 frame)))
++    ;; Find first column of clicked menu-bar item. There must be a
++    ;; smarter way ...
++    (while (and (>= x 0)
++                (eq menu (menu-bar-menu-at-x-y (1- x) 0 frame)))
++      (setq x (1- x)))
++    (popup-menu (or
++                 (lookup-key-ignore-too-long
++                  global-map (vector 'menu-bar menu))
++                 (lookup-key-ignore-too-long
++                  (current-local-map) (vector 'menu-bar menu))
++                 (cdar (minor-mode-key-binding (vector 'menu-bar menu)))
++                 (mouse-menu-bar-map))
++                (posn-at-x-y x 0 nil t) nil t)))
++
+ (defun menu-bar-open (&optional frame)
+   "Start key navigation of the menu bar in FRAME.
+ 
+@@ -2584,6 +2609,8 @@ tty-menu-navigation-map
+     (define-key map [C-down-mouse-2] 'tty-menu-ignore)
+     (define-key map [C-down-mouse-3] 'tty-menu-ignore)
+     (define-key map [mouse-movement] 'tty-menu-mouse-movement)
++    ;; Do not deselect menu, when mouse is hovering over the menu-bar.
++    (define-key map [menu-bar mouse-movement] 'tty-menu-mouse-movement)
+     map)
+   "Keymap used while processing TTY menus.")
+ 
+diff --git a/lisp/xt-mouse.el b/lisp/xt-mouse.el
+index d704cfa4e8..b1ecbb41d3 100644
+--- a/lisp/xt-mouse.el
++++ b/lisp/xt-mouse.el
+@@ -67,6 +67,21 @@ xterm-mouse-translate-1
+       ;; the value 'mouse-click.
+       (when ev-command (put ev-command 'event-kind 'mouse-click))
+ 
++      ;; notify display engine to (de)highlight text with mouse-face
++      ;; property
++      (when ev-data
++        (let* ((window (posn-window ev-data))
++               (x (+ (car (posn-x-y ev-data))
++                     (car (window-edges window))))
++               (y (+ (cdr (posn-x-y ev-data))
++                     (cadr (window-edges window)))))
++          (and (with-current-buffer (window-buffer window)
++                 header-line-format)
++               (not (eq ev-where 'mode-line))
++               (not (eq ev-where 'header-line))
++               (setq y (1+ y)))
++          (note-mouse-highlight (window-frame window) x y)))
++
+       (cond
+        ((null event) nil)		;Unknown/bogus byte sequence!
+        (is-down
+@@ -76,7 +91,10 @@ xterm-mouse-translate-1
+               ;; to guard against that.
+               (copy-sequence event))
+ 	vec)
+-       (is-move vec)
++       (is-move
++        (if track-mouse
++            vec
++          []))
+        (t
+ 	(let* ((down (terminal-parameter nil 'xterm-mouse-last-down))
+ 	       (down-data (nth 1 down))
+@@ -147,6 +165,14 @@ xterm-mouse-utf-8
+   :risky t
+   :group 'xterm)
+ 
++(defcustom xterm-mouse-highlight t
++  "Non-nil enables display of help-echo properties and
++mouse-face highlighting for text under the mouse."
++  :version "27.1"
++  :type 'boolean
++  :risky t
++  :group 'xterm)
++
+ (defun xterm-mouse--read-coordinate ()
+   "Read a mouse coordinate from the current terminal.
+ If `xterm-mouse-utf-8' was non-nil when
+@@ -266,8 +292,8 @@ xterm-mouse-event
+              (left (nth 0 ltrb))
+              (top (nth 1 ltrb))
+              (posn (if w
+-                                (posn-at-x-y (- x left) (- y top) w t)
+-                              (append (list nil 'menu-bar)
++                       (posn-at-x-y (- x left) (- y top) w t)
++                     (append (list nil 'menu-bar)
+                              (nthcdr 2 (posn-at-x-y x y)))))
+              (event (list type posn)))
+         (setcar (nthcdr 3 posn) timestamp)
+@@ -322,7 +348,12 @@ xterm-mouse-mode
+ single clicks are supported.  When turned on, the normal xterm
+ mouse functionality for such clicks is still available by holding
+ down the SHIFT key while pressing the mouse button."
+-  :global t :group 'mouse
++  :global t
++  :group 'mouse
++  :keymap (let ((map (make-sparse-keymap)))
++            (define-key map [menu-bar mouse-1]
++              'tty-menu-bar-open-with-mouse)
++            map)
+   (funcall (if xterm-mouse-mode 'add-hook 'remove-hook)
+            'terminal-init-xterm-hook
+            'turn-on-xterm-mouse-tracking-on-terminal)
+@@ -350,6 +381,12 @@ xterm-mouse-tracking-enable-sequence
+ \"\\e[?1002h\" \"Mouse motion mode\": Enables reports for mouse
+             motion events during dragging operations.
+ 
++\"\\e[?1003h\" \"Any event tracking mode\": Enables reports for
++            all mouse events. In particular all mouse motion
++            events will be reported and not only those during
++            dragging operations. This sequence enables
++            highlighting of text under the mouse cursor.
++
+ \"\\e[?1005h\" \"UTF-8 coordinate extension\": Enables an
+             extension to the basic mouse mode, which uses UTF-8
+             characters to overcome the 223 row/column limit.
+@@ -368,18 +405,18 @@ xterm-mouse-tracking-enable-sequence
+   (apply #'concat (xterm-mouse--tracking-sequence ?h)))
+ 
+ (defconst xterm-mouse-tracking-enable-sequence
+-  "\e[?1000h\e[?1002h\e[?1005h\e[?1006h"
++  "\e[?1000h\e[?1002h\e[?1005h\e[?1006h\e[?1003h"
+   "Control sequence to enable xterm mouse tracking.
+ Enables basic mouse tracking, mouse motion events and finally
+ extended tracking on terminals that support it. The following
+ escape sequences are understood by modern xterms:
+ 
+-\"\\e[?1000h\" \"Basic mouse mode\": Enables reports for mouse
++\"\\e[?1000h\" \"Basic mouse mode\": Disables reports for mouse
+             clicks. There is a limit to the maximum row/column
+             position (<= 223), which can be reported in this
+             basic mode.
+ 
+-\"\\e[?1002h\" \"Mouse motion mode\": Enables reports for mouse
++\"\\e[?1002h\" \"Mouse motion mode\": Disables reports for mouse
+             motion events during dragging operations.
+ 
+ \"\\e[?1005h\" \"UTF-8 coordinate extension\": Enables an extension
+@@ -388,11 +425,17 @@ xterm-mouse-tracking-enable-sequence
+             extension may conflict with non UTF-8 applications or
+             non UTF-8 locales.
+ 
+-\"\\e[?1006h\" \"SGR coordinate extension\": Enables a newer
++\"\\e[?1006h\" \"SGR coordinate extension\": Disables a newer
+             alternative extension to the basic mouse mode, which
+             overcomes the 223 row/column limit without the
+             drawbacks of the UTF-8 coordinate extension.
+ 
++\"\\e[?1003h\" \"Any event tracking mode\": Disables reports for
++            all mouse events, in particular mouse motion events
++            will allways be reported and not only during dragging
++            operations. This sequence disables highlighting of
++            text under the mouse cursor.
++
+ The two extension modes are mutually exclusive, where the last
+ given escape sequence takes precedence over the former.")
+ 
+@@ -408,7 +451,7 @@ xterm-mouse-tracking-disable-sequence
+   (apply #'concat (nreverse (xterm-mouse--tracking-sequence ?l))))
+ 
+ (defconst xterm-mouse-tracking-disable-sequence
+-  "\e[?1006l\e[?1005l\e[?1002l\e[?1000l"
++  "\e[?1003l\e[?1006l\e[?1005l\e[?1002l\e[?1000l"
+   "Reset the modes set by `xterm-mouse-tracking-enable-sequence'.")
+ 
+ (make-obsolete-variable
+@@ -422,7 +465,8 @@ xterm-mouse--tracking-sequence
+ enable, ?l to disable)."
+   (mapcar
+    (lambda (code) (format "\e[?%d%c" code suffix))
+-   `(1000 1002 ,@(when xterm-mouse-utf-8 '(1005)) 1006)))
++   `(1000 1002 ,@(when xterm-mouse-utf-8 '(1005)) 1006 ,@(when
++   xterm-mouse-highlight '(1003)))))
+ 
+ (defun turn-on-xterm-mouse-tracking-on-terminal (&optional terminal)
+   "Enable xterm mouse tracking on TERMINAL."
+diff --git a/src/keyboard.c b/src/keyboard.c
+index b18dc1abbe..31e4933c14 100644
+--- a/src/keyboard.c
++++ b/src/keyboard.c
+@@ -652,6 +652,19 @@ add_command_key (Lisp_Object key)
+   if (this_command_key_count >= ASIZE (this_command_keys))
+     this_command_keys = larger_vector (this_command_keys, 1, -1);
+ 
++  /* Only store the first and the last event in a series of mouse-movements. */
++  if (EQ (EVENT_HEAD (key), Qmouse_movement) && this_command_key_count >= 2)
++    {
++      Lisp_Object ev1 = AREF (this_command_keys, this_command_key_count - 2);
++      Lisp_Object ev2 = AREF (this_command_keys, this_command_key_count - 1);
++      if (EQ (EVENT_HEAD (ev1), Qmouse_movement) &&
++          EQ (EVENT_HEAD (ev2), Qmouse_movement))
++        {
++          ASET (this_command_keys, this_command_key_count - 1, key);
++          return;
++        }
++    }
++
+   ASET (this_command_keys, this_command_key_count, key);
+   ++this_command_key_count;
+ }
+diff --git a/src/term.c b/src/term.c
+index 06695d1ec6..f10259c08c 100644
+--- a/src/term.c
++++ b/src/term.c
+@@ -793,8 +793,6 @@ tty_write_glyphs (struct frame *f, struct glyph *string, int len)
+   cmcheckmagic (tty);
+ }
+ 
+-#ifdef HAVE_GPM			/* Only used by GPM code.  */
+-
+ static void
+ tty_write_glyphs_with_face (register struct frame *f, register struct glyph *string,
+ 			    register int len, register int face_id)
+@@ -851,7 +849,6 @@ tty_write_glyphs_with_face (register struct frame *f, register struct glyph *str
+ 
+   cmcheckmagic (tty);
+ }
+-#endif
+ 
+ /* An implementation of insert_glyphs for termcap frames. */
+ 
+@@ -2371,9 +2368,7 @@ frame's terminal). */)
+ 			       Mouse
+  ***********************************************************************/
+ 
+-#ifdef HAVE_GPM
+-
+-#ifndef HAVE_WINDOW_SYSTEM
++#if defined (HAVE_GPM) && !defined (HAVE_WINDOW_SYSTEM)
+ void
+ term_mouse_moveto (int x, int y)
+ {
+@@ -2387,7 +2382,7 @@ term_mouse_moveto (int x, int y)
+   last_mouse_x = x;
+   last_mouse_y = y;  */
+ }
+-#endif /* HAVE_WINDOW_SYSTEM */
++#endif /* HAVE_GPM && !HAVE_WINDOW_SYSTEM */
+ 
+ /* Implementation of draw_row_with_mouse_face for TTY/GPM.  */
+ void
+@@ -2421,6 +2416,7 @@ tty_draw_row_with_mouse_face (struct window *w, struct glyph_row *row,
+   cursor_to (f, save_y, save_x);
+ }
+ 
++#ifdef HAVE_GPM
+ static bool
+ term_mouse_movement (struct frame *frame, Gpm_Event *event)
+ {
+@@ -2798,12 +2794,17 @@ mouse_get_xy (int *x, int *y)
+   enum scroll_bar_part part_dummy;
+   Time time_dummy;
+ 
+-  if (FRAME_TERMINAL (sf)->mouse_position_hook)
++  if (Fterminal_parameter (Qnil, Qxterm_mouse_mode))
++    {
++      lmx = Fterminal_parameter (Qnil, Qxterm_mouse_x);
++      lmy = Fterminal_parameter (Qnil, Qxterm_mouse_y);
++    }
++  else if (FRAME_TERMINAL (sf)->mouse_position_hook)
+     (*FRAME_TERMINAL (sf)->mouse_position_hook) (&sf, -1,
+                                                  &lisp_dummy, &part_dummy,
+-						 &lmx, &lmy,
+-						 &time_dummy);
+-  if (!NILP (lmx))
++                                                 &lmx, &lmy,
++                                                 &time_dummy);
++  if (INTEGERP (lmx) && INTEGERP (lmy))
+     {
+       *x = XINT (lmx);
+       *y = XINT (lmy);
+@@ -3064,7 +3065,7 @@ read_menu_input (struct frame *sf, int *x, int *y, int min_y, int max_y,
+ 	  || sf != SELECTED_FRAME ())
+ 	return MI_QUIT_MENU;
+       if (EQ (cmd, Qtty_menu_mouse_movement))
+-	mouse_get_xy (x, y);
++        mouse_get_xy (x, y);
+       else if (EQ (cmd, Qtty_menu_next_menu))
+ 	{
+ 	  usable_input = 0;
+@@ -4541,6 +4542,9 @@ bigger, or it may make it blink, or it may do nothing at all.  */);
+ 
+   DEFSYM (Qtty_mode_set_strings, "tty-mode-set-strings");
+   DEFSYM (Qtty_mode_reset_strings, "tty-mode-reset-strings");
++  DEFSYM (Qxterm_mouse_mode, "xterm-mouse-mode");
++  DEFSYM (Qxterm_mouse_x, "xterm-mouse-x");
++  DEFSYM (Qxterm_mouse_y, "xterm-mouse-y");
+ 
+ #ifndef MSDOS
+   DEFSYM (Qtty_menu_next_item, "tty-menu-next-item");
+diff --git a/src/xdisp.c b/src/xdisp.c
+index 016e7044ca..96fba761a6 100644
+--- a/src/xdisp.c
++++ b/src/xdisp.c
+@@ -29568,9 +29568,7 @@ draw_row_with_mouse_face (struct window *w, int start_x, struct glyph_row *row,
+       return;
+     }
+ #endif
+-#if defined (HAVE_GPM) || defined (MSDOS) || defined (WINDOWSNT)
+   tty_draw_row_with_mouse_face (w, row, start_hpos, end_hpos, draw);
+-#endif
+ }
+ 
+ /* Display the active region described by mouse_face_* according to DRAW.  */
+@@ -31571,6 +31569,31 @@ note_mouse_highlight (struct frame *f, int x, int y)
+   define_frame_cursor1 (f, cursor, pointer);
+ }
+ 
++DEFUN ("note-mouse-highlight", Fnote_mouse_highlight, Snote_mouse_highlight,
++       3, 3, 0,
++       doc: /* Take proper action when the mouse has moved to position
++X, Y on frame F with regards to highlighting portions of display that
++have mouse-face properties.  Also de-highlight portions of display
++where the mouse was before, set the mouse pointer shape as appropriate
++for the mouse coordinates, and activate help echo (tooltips).  X and Y
++can be negative or out of range.  */)
++  (Lisp_Object frame, Lisp_Object x, Lisp_Object y)
++{
++  CHECK_FRAME(frame);
++  CHECK_NUMBER(x);
++  CHECK_NUMBER(y);
++
++  /* silently do nothing, if frame is not on a terminal */
++  if (XFRAME(frame)->output_method != output_termcap &&
++      XFRAME(frame)->output_method != output_msdos_raw)
++    return Qnil;
++
++  note_mouse_highlight(XFRAME(frame), XINT(x), XINT(y));
++  fflush_unlocked(FRAME_TTY(XFRAME(frame))->output);
++
++  return Qnil;
++}
++
+ 
+ /* EXPORT for RIF:
+    Clear any mouse-face on window W.  This function is part of the
+@@ -32253,6 +32276,8 @@ They are still logged to the *Messages* buffer.  */);
+   defsubr (&Stool_bar_height);
+   defsubr (&Slookup_image_map);
+ #endif
++
++  defsubr (&Snote_mouse_highlight);
+   defsubr (&Sline_pixel_height);
+   defsubr (&Sformat_mode_line);
+   defsubr (&Sinvisible_p);
