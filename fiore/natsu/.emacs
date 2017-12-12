@@ -698,6 +698,8 @@ the appropriate network slug that we extract from the nick."
 ;;; Misc
 ;;;
 
+(add-hook 'strace-mode-hook 'hl-line-mode)
+
 (add-hook 'prog-mode-hook
           (lambda ()
             (font-lock-add-keywords nil
