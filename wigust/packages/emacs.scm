@@ -2113,8 +2113,34 @@ command-line window-management program.")
          "1n9623hsx6vsq87y6a2731ydfi0x8fvfb6m7fbdfy726d4pnr09q"))))
     (build-system emacs-build-system)
     (propagated-inputs
-     `(("emacs-f" ,emacs-f)
+     `(("emacs-dash" ,emacs-dash)
+       ("emacs-f" ,emacs-f)
+       ("emacs-s" ,emacs-s)
        ("emacs-password-store" ,emacs-password-store)))
+    (arguments
+     `(#:phases
+       (modify-phases %standard-phases
+         (add-before 'install 'check
+           (lambda* (#:key inputs #:allow-other-keys)
+             (zero? (system* "emacs" "--batch" "-L" "."
+                             "-L" (string-append
+                                   (assoc-ref inputs "emacs-password-store")
+                                   "/share/emacs/site-lisp/guix.d/password-store-"
+                                   ,(package-version emacs-password-store))
+                             "-L" (string-append
+                                   (assoc-ref inputs "emacs-f")
+                                   "/share/emacs/site-lisp/guix.d/f-"
+                                   ,(package-version emacs-f))
+                             "-L" (string-append
+                                   (assoc-ref inputs "emacs-s")
+                                   "/share/emacs/site-lisp/guix.d/s-"
+                                   ,(package-version emacs-s))
+                             "-L" (string-append
+                                   (assoc-ref inputs "emacs-dash")
+                                   "/share/emacs/site-lisp/guix.d/dash-"
+                                   ,(package-version emacs-dash))
+                             "-l" "test/auth-password-store-tests.el"
+                             "-f" "ert-run-tests-batch-and-exit")))))))
     (home-page "https://github.com/DamienCassou/auth-password-store")
     (synopsis "Integrate Emacs auth-source with password-store")
     (description "Integrate Emacs auth-source with password-store")
