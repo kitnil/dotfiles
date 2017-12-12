@@ -2,18 +2,15 @@
 ;; Copyright © 2017 Oleg Pykhalov <go.wigust@gmail.com>
 ;; Released under the GNU GPLv3 or any later version.
 
-(use-modules (gnu)
-             (guix packages)
-             (guix build-system gnu)
-             (srfi srfi-1)
-             (ice-9 popen)
-             (ice-9 rdelim))
+(use-modules (gnu) (srfi srfi-1) (ice-9 popen) (ice-9 rdelim))
 
-(use-service-modules ssh desktop xorg cups version-control mail networking
-                     shepherd rsync web spice)
+(use-service-modules cups desktop mail networking rsync shepherd spice
+ssh version-control web xorg)
 
-(use-package-modules bash bootloaders certs linux android version-control
-                     cups emacs xorg)
+(use-package-modules admin android backup bash bootloaders certs cups
+databases file fonts fontutils freedesktop gnome gnupg graphviz linux
+ncurses ratpoison readline rsync pulseaudio screen ssh version-control
+virtualization wget xdisorg xorg zile)
 
 
 ;;;
@@ -167,18 +164,10 @@ EndSection
           "fastcgi_param HTTP_HOST $server_name;"
           "fastcgi_pass 127.0.0.1:9000;"))
 
-(define %cgit-configuration-nginx
-  (list (nginx-server-configuration
-         (root cgit)
-         (server-name '("cgit.magnolia.local"))
-         (locations (list
-                     (nginx-location-configuration
-                      (uri "@cgit")
-                      (body %cgit-configuration-nginx-body))))
-         (try-files (list "$uri" "@cgit"))
-         (https-port #f)
-         (ssl-certificate #f)
-         (ssl-certificate-key #f))))
+(define %cgit-configuration-nginx-custom
+  (nginx-server-configuration
+   (inherit %cgit-configuration-nginx)
+   (server-name '("cgit.magnolia.local"))))
 
 
 ;;;
@@ -205,203 +194,6 @@ EndSection
                       (string-append (string-join x " ") "." host-name domain))
                     (cartesian-product '("127.0.0.1" "::1") prefix))
                "\n"))
-
-
-;;;
-;;; Packages
-;;;
-
-(define emacs-athena
-  ;; GTK+ could kill emacs --daemon,
-  ;; see <https://bugzilla.gnome.org/show_bug.cgi?id=85715>.
-  (package
-    (inherit emacs)
-    (name "emacs-athena")
-    (synopsis "The extensible, customizable, self-documenting text
-editor with athena toolkit" )
-    (build-system gnu-build-system)
-    (inputs `(("libxaw" ,libxaw)
-              ,@(alist-delete "gtk+" (package-inputs emacs))))
-    (arguments
-     `(#:configure-flags '("--with-x-toolkit=athena")
-                         ,@(package-arguments emacs)))))
-
-(define (spec->packages spec)
-  (call-with-values (lambda ()
-                      (specification->package+output spec)) list))
-
-(define %user-packages
-  (map spec->packages
-       (list
-        "setxkbmap" ; Keyboard layout
-        "xclip" ; X clipboard CLI
-        "xrdb"
-        "xset"
-        "xsetroot"
-        "xterm" ; $TERM
-        "xorg-server" ; `xephyr'
-        "wmctrl" ; `ewmctrl'
-        "xwininfo" ; X Window information
-        "xdg-utils"
-        "xdotool" ; Mouse and keyboard automation
-        "gvfs"
-        "glib:bin"
-        "desktop-file-utils"
-        "xdg-utils"
-        "xrandr" ; Change screen resolution
-
-        "emacs-znc"
-        "znc"
-
-        ;; For helm-stumpwm-commands and stumpish
-        "rlwrap"
-        "xprop"
-
-        "translate-shell" ; Translation in CLI and Emacs
-
-        "git" ; Version control
-        "git:send-email"
-
-        "gnu-c-manual" ; C language documentation
-        "adb" ; For Replicant (Android distribution) control
-
-        "sbcl" ; For StumpWM.  See <https://stumpwm.github.io/>.
-
-        "gcc-toolchain" ; For Emacs `semantic-mode'
-        "cflow"         ; C program call map
-        "global"        ; Source tagging
-
-        "screen" ; Terminal multiplexer
-
-        "kodi-cli" ; Remote control Kodi
-
-        "openssh" ; `scp'
-        "nss-certs" ; for https
-
-        "file" ; Information about file from magic
-        "htop" ; Pretty `top'
-        "ncdu" ; TUI `du'
-        "netcat" ; TCP
-        "python-pygments" ; Colorize output
-        "tree" ; List files as a tree
-        "cloc" ; Count code
-        "unzip"
-        "iptables"
-        "ncurses"
-        "nmap"
-        "openssl"
-        "rsync"
-        "tcpdump"
-        "w3m"
-        "strace"
-        "shellcheck"
-
-        "lm-sensors" ; `sensors'
-
-        ;; Spelling
-        "aspell"
-        "aspell-dict-en"
-        "aspell-dict-ru"
-
-        "python-clf" ; Interface to <https://commandlinefu.com/>
-
-        "graphviz" ; `dot'
-
-        "adwaita-icon-theme"
-        "font-dejavu"
-        "font-liberation"
-        "font-awesome"
-        "font-wqy-zenhei" ; Chinese, Japanese, Korean
-        "fontconfig" ; `fc-cache -f'
-        "font-misc-misc" ; for `xterm'
-        "ratpoison"
-        "redshift"
-
-        "cups"
-        "libreoffice"
-
-        "feh" ; Image viewer
-        "mpv" ; Video and audio player
-        "ffmpeg" ; Video, audio, images, gif conversion
-        "imagemagick" ; Pipe to `display'
-        "obs" ; OBS Studio
-
-        "icecat" ; Web browser
-
-        "isync" ; Sync IMAP
-        "notmuch" ; Mail indexer based on Xapian
-
-        "qemu" ;; Encryption and signing
-        "gnupg"
-        "pinentry" ; Password typing for Gnupg
-
-        "password-store" ; Password management
-
-        "recutils" ; Filter records like in `guix --search'
-
-        "pavucontrol" ; Pulseaudio control GUI
-        "pulsemixer" ; Pulseaudio control CLI
-        "alsa-utils"
-
-        "transmission" ; Bittorrent
-
-        ;; $EDITOR
-        "emacs-aggressive-indent"  ; Auto indent minor mode
-        "emacs-company"            ; Complition framework
-        "emacs-company-quickhelp"  ; Help pages for Company
-        "emacs-debbugs"            ; <https://debbugs.gnu.org/> interface
-        "emacs-debpaste"           ; Front end to <https://paste.debian.net/>
-        "emacs-elfeed"             ; RSS reader
-        "emacs-engine-mode-autoload" ; Define searches on websites
-        "emacs-erc-hl-nicks"       ; for ERC
-        "emacs-eval-in-repl"       ; Evaluate to different Repls
-        "emacs-ewmctrl"            ; Control X windows from Emacs
-        "emacs-ggtags"             ; Front end to GNU Global
-        "emacs-gitpatch"           ; Send patches
-        "emacs-guix"               ; Guix interface
-        "emacs-helm"               ; Narrowing framework
-        "emacs-helm-firefox"       ; Search for bookmarks in Icecat
-        "emacs-helm-make"          ; Front end to `make'
-        "emacs-helm-pass"          ; Front end to password-store
-        "magit"                    ; Emacs interface for Git
-        "emacs-git-gutter"
-        "emacs-helm-projectile"    ; Helm interface for Projectile
-        "emacs-highlight-stages"   ; Highlight code stages
-        "emacs-markdown-mode"      ; Commonmark major mode
-        "emacs-org"                ; Org
-        "emacs-multiple-cursors"   ; Multi cursor
-        "emacs-nix-mode"           ; Nix language mode
-        "emacs-org-mind-map"       ; General mind maps from Org files
-        "emacs-projectile"         ; Project functions
-        "emacs-slime"              ; Sbcl repl
-        "emacs-smartparens"        ; Structured editing
-        "emacs-move-text"
-        "emacs-strace-mode-special" ; Colorize `strace' logs
-        "emacs-transmission"       ; Front end to transmission-daemon
-        "emacs-transpose-frame"    ; M-x transpose-frame
-        "emacs-use-package"        ; Lazy configuration
-        "emacs-w3m"                ; Front end to w3m command line web browser
-        "emacs-which-key"          ; Key bindings help
-        "emacs-yasnippet"          ; Snippets
-        "emacs-yasnippet-snippets" ; Collection of snippets
-        "emacs-flycheck"           ; Syntax checker
-        "emacs-rainbow-delimiters" ; Prettify parentheses
-        "geiser"                   ; Scheme bridge
-        "emacs-rainbow-mode"       ; Show colors in codes
-        "emacs-ivy"                ; Complition framework
-
-        "haunt"            ; Guile static site generator
-        "guile-commonmark" ; Commonmark for Guile
-
-        "gwl"              ; Guix workflow management
-
-        "stow"             ; Dotfiles management
-        "make"             ; GNU Make
-        "ghc-pandoc"       ; Convert Markdown
-
-        ;; Downloaders.
-        "youtube-dl"   ; Video and music from websites
-        "wget")))
 
 
 ;;;
@@ -451,7 +243,9 @@ editor with athena toolkit" )
                   (uid 1000)
                   (comment "Oleg Pykhalov")
                   (group "users")
-                  (supplementary-groups '("wheel" "audio" "video" "lpadmin" "lp"
+                  (supplementary-groups '("wheel"
+                                          "audio" "video"
+                                          "lpadmin" "lp"
                                           "adbusers"))
                   (home-directory "/home/natsu"))
                  %base-user-accounts))
@@ -465,8 +259,64 @@ editor with athena toolkit" )
                                  '("cgit" "guix" "www") host-name ".local")
                                 %facebook-host-aliases)))
 
-    (packages (cons emacs-athena
-                    (append %user-packages %base-packages)))
+    ;; Lightweight desktop with custom packages from guix-wigust
+    (packages
+     (cons*
+      desktop-file-utils
+      gvfs
+      setxkbmap   ; Keyboard layout
+      wmctrl      ; `ewmctrl'
+      xclip       ; X clipboard CLI
+      xdg-utils
+      xdotool     ; Mouse and keyboard automation
+      xorg-server ; `xephyr'
+      xrandr      ; Change screen resolution
+      xrdb
+      xset
+      xsetroot
+      xterm       ; $TERM
+      xwininfo    ; X Window information
+      ;; For helm-stumpwm-commands and stumpish
+      rlwrap
+      xprop
+
+      (list git "send-email")
+      adb       ; For Replicant (Android distribution) control
+      cups      ; Printer
+      duplicity ; Incremental backup
+      file      ; Information about file from magic
+      git       ; Version control
+      gnupg
+      graphviz  ; `dot'
+      iptables
+      ncurses
+      nss-certs ; for https
+      openssh   ; `scp'
+      pinentry  ; Password typing for Gnupg
+      qemu
+      recutils  ; Filter records like in `guix --search'
+      rsync
+      screen
+      strace
+      tcpdump
+      tree      ; List files as a tree
+      wget
+      zile
+
+      adwaita-icon-theme
+      font-awesome
+      font-dejavu
+      font-liberation
+      font-misc-misc  ; for `xterm'
+      font-wqy-zenhei ; Chinese, Japanese, Korean
+      fontconfig      ; `fc-cache -f'
+      ratpoison       ; StumpWM father
+
+      alsa-utils
+      pavucontrol ; Pulseaudio control GUI
+      pulsemixer  ; Pulseaudio control CLI
+
+      %base-packages))
 
     (services (cons* firewall-service
 
@@ -521,6 +371,7 @@ editor with athena toolkit" )
 
                      (spice-vdagent-service)
 
+                     ;; TODO: Upload to Guix
                      (service cgit-service-type
                               (cgit-configuration
                                (branch-sort "age")
@@ -536,7 +387,7 @@ editor with athena toolkit" )
                                (root-title (string-join (list "Cgit on" host-name)))
                                (snapshots (list "tar.gz"))
                                (clone-prefix (list "git://magnolia.local/~natsu"))
-                               (nginx %cgit-configuration-nginx)))
+                               (nginx (list %cgit-configuration-nginx-custom))))
 
                      guix-publish-nginx-service
 
