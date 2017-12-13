@@ -698,6 +698,18 @@ the appropriate network slug that we extract from the nick."
 ;;; Misc
 ;;;
 
+(defun wi-god-mode-update-cursor ()
+  (let ((limited-colors-p (> 257 (length (defined-colors)))))
+    (cond (god-local-mode (progn
+                            (set-face-background 'mode-line (if limited-colors-p "white" "#e9e2cb"))
+                            (set-face-background 'mode-line-inactive (if limited-colors-p "white" "#e9e2cb"))))
+          (t (progn
+               (set-face-background 'mode-line (if limited-colors-p "black" "grey75"))
+               (set-face-background 'mode-line-inactive (if limited-colors-p "grey20" "grey90")))))))
+
+(add-hook 'god-mode-enabled-hook 'wi-god-mode-update-cursor)
+(add-hook 'god-mode-disabled-hook 'wi-god-mode-update-cursor)
+
 (setq mml-secure-insert-signature 'always)
 
 (add-hook 'strace-mode-hook 'hl-line-mode)
