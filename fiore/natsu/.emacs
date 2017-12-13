@@ -141,6 +141,9 @@
            ("l" . org-store-link))
 
 (bind-key "<f5>" #'recompile)
+(bind-key "<f6>" #'god-local-mode)
+(bind-key "<M-f6>" #'god-mode-all)
+
 (add-to-list 'auto-mode-alist '("PKGBUILD" . shell-script-mode))
 
 (add-hook 'scheme-mode-hook
