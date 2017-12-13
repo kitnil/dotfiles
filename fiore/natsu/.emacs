@@ -698,6 +698,8 @@ the appropriate network slug that we extract from the nick."
 ;;; Misc
 ;;;
 
+(setq mml-secure-insert-signature 'always)
+
 (add-hook 'strace-mode-hook 'hl-line-mode)
 
 (add-hook 'prog-mode-hook
