@@ -2495,3 +2495,29 @@ Feautures:
            (lambda _
              (substitute* "strace-mode.el"
                (("fundamental-mode") "special-mode")))))))))
+
+(define-public emacs-ibuffer-projectile
+  (let ((commit "c18ac540ee46cb759fc5df18747f6e8d23563011")
+        (revision "1"))
+    (package
+      (name "emacs-ibuffer-projectile")
+      (version (string-append "0.2" "-" revision "."
+                              (string-take commit 7)))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/purcell/ibuffer-projectile.git")
+               (commit commit)))
+         (file-name (string-append name "-" version "-checkout"))
+         (sha256
+          (base32
+           "1nd26cwwdpnwj0g4w393rd59klpyr6wqrnyr6scmwb5d06bsm44n"))))
+      (build-system emacs-build-system)
+      (propagated-inputs
+       `(("emacs-projectile" ,emacs-projectile)))
+      (home-page "https://github.com/purcell/ibuffer-projectile")
+      (synopsis "Group ibuffer's list by projectile root")
+      (description "Adds functionality to Emacs @code{ibuffer} for
+grouping buffers by their projectile root directory.")
+      (license license:gpl3+))))
