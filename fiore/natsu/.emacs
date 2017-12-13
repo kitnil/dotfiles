@@ -140,6 +140,7 @@
            ("a" . org-agenda)
            ("l" . org-store-link))
 
+(bind-key "<f5>" #'recompile)
 (add-to-list 'auto-mode-alist '("PKGBUILD" . shell-script-mode))
 
 (add-hook 'scheme-mode-hook
