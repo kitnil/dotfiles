@@ -313,7 +313,7 @@
                            (set (make-local-variable 'prettify-symbols-alist)
                                 wi-scheme--prettify-symbols-alist)))
 
-  (add-hook 'c-mode-hook #'prettify-symbols-mode))
+  (add-hook 'scheme-mode-hook #'prettify-symbols-mode))
 
 (add-hook 'proced-post-display-hook 'guix-prettify-mode)
 (add-hook 'shell-mode-hook #'guix-prettify-mode)
