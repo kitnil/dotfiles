@@ -4,8 +4,8 @@
 
 (use-modules (gnu) (srfi srfi-1) (ice-9 popen) (ice-9 rdelim))
 
-(use-service-modules cups desktop mail networking rsync shepherd spice
-ssh version-control web xorg)
+(use-service-modules cups desktop dns mail networking rsync shepherd
+spice ssh version-control web xorg)
 
 (use-package-modules admin android backup bash bootloaders certs cups
 databases file fonts fontutils freedesktop gnome gnupg graphviz linux
@@ -168,6 +168,28 @@ EndSection
   (nginx-server-configuration
    (inherit %cgit-configuration-nginx)
    (server-name '("cgit.magnolia.local"))))
+
+
+;;;
+;;; KNOT
+;;;
+
+(define-zone-entries local.zone
+  ;; Name TTL Class Type Data
+  ("@"  ""  "IN"  "A"  "127.0.0.1")
+  ("@"  ""  "IN"  "NS" "ns")
+  ("ns" ""  "IN"  "A"  "127.0.0.1")
+  ("cgit.magnolia.local." ""  "IN"  "A"  "192.168.105.120")
+  ("guix.magnolia.local." ""  "IN"  "A"  "192.168.105.120")
+  ("www.magnolia.local." ""  "IN"  "A"  "192.168.105.120"))
+
+(define master-zone
+  (knot-zone-configuration
+   (domain "local")
+   (zone (zone-file
+          (origin "local")
+          (entries local.zone)))))
+
 
 
 ;;;
@@ -393,6 +415,10 @@ EndSection
 
                      (simple-service 'adb udev-service-type
                                      (list android-udev-rules))
+
+                     (service knot-service-type
+                              (knot-configuration
+                               (zones (list master-zone))))
 
                      %custom-desktop-services))
 
