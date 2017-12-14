@@ -2620,6 +2620,68 @@ orientation.  This library implements a minor mode that highlights
 the previously visible buffer part after each scroll.")
     (license license:gpl3+)))
 
+(define-public emacs-24
+  (package
+    (name "emacs-24")
+    (version "24.5")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append "mirror://gnu/emacs/emacs-"
+                                  version ".tar.xz"))
+              (sha256
+               (base32
+                "0kn3rzm91qiswi0cql89kbv6mqn27rwsyjfb8xmwy9m5s8fxfiyx"))))
+    (build-system glib-or-gtk-build-system)
+    (arguments
+     '(#:phases (alist-cons-before
+                 'configure 'fix-/bin/pwd
+                 (lambda _
+                   ;; Use `pwd', not `/bin/pwd'.
+                   (substitute* (find-files "." "^Makefile\\.in$")
+                     (("/bin/pwd")
+                      "pwd")))
+                 %standard-phases)))
+    (inputs
+     `(("gnutls"  ,gnutls)
+       ("ncurses" ,ncurses)
+
+       ;; TODO: Add the optional dependencies.
+       ("libx11"  ,libx11)
+       ("gtk+"    ,gtk+)
+       ("libxft"  ,libxft)
+       ("libtiff" ,libtiff)
+       ("giflib"  ,giflib)
+       ("libjpeg" ,libjpeg-8)
+       ("acl"     ,acl)
+
+       ;; When looking for libpng `configure' links with `-lpng -lz', so we
+       ;; must also provide zlib as an input.
+       ("libpng" ,libpng)
+       ("zlib"   ,zlib)
+
+       ("librsvg"  ,librsvg)
+       ("libxpm"   ,libxpm)
+       ("libxml2"  ,libxml2)
+       ("libice"   ,libice)
+       ("libsm"    ,libsm)
+       ("alsa-lib" ,alsa-lib)
+       ("dbus"     ,dbus)))
+    (native-inputs
+     `(("pkg-config" ,pkg-config)
+       ("texinfo"    ,texinfo)))
+    (home-page "http://www.gnu.org/software/emacs/")
+    (synopsis "The extensible, customizable, self-documenting text editor")
+    (description
+     "GNU Emacs is an extensible and highly customizable text editor.  It is
+based on an Emacs Lisp interpreter with extensions for text editing.  Emacs
+has been extended in essentially all areas of computing, giving rise to a
+vast array of packages supporting, e.g., email, IRC and XMPP messaging,
+spreadsheets, remote server editing, and much more.  Emacs includes extensive
+documentation on all aspects of the system, from basic editing to writing
+large Lisp programs.  It has full Unicode support for nearly all human
+languages.")
+    (license license:gpl3+)))
+
 (define-public emacs-ibuffer-projectile
   (let ((commit "c18ac540ee46cb759fc5df18747f6e8d23563011")
         (revision "1"))
