@@ -2682,6 +2682,18 @@ large Lisp programs.  It has full Unicode support for nearly all human
 languages.")
     (license license:gpl3+)))
 
+(define-public emacs-no-x-toolkit-24
+  (package (inherit emacs-24)
+    (location (source-properties->location (current-source-location)))
+    (name "emacs-no-x-toolkit-24")
+    (synopsis "The extensible, customizable, self-documenting text
+editor (without an X toolkit)" )
+    (build-system gnu-build-system)
+    (inputs (append `(("inotify-tools" ,inotify-tools))
+                    (alist-delete "gtk+" (package-inputs emacs))))
+    (arguments (append '(#:configure-flags '("--with-x-toolkit=no"))
+                       (package-arguments emacs)))))
+
 (define-public emacs-ibuffer-projectile
   (let ((commit "c18ac540ee46cb759fc5df18747f6e8d23563011")
         (revision "1"))
@@ -2707,3 +2719,4 @@ languages.")
       (description "Adds functionality to Emacs @code{ibuffer} for
 grouping buffers by their projectile root directory.")
       (license license:gpl3+))))
+
