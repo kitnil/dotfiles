@@ -170,6 +170,9 @@
   "https://duckduckgo.com/?q=%s"
   :keybinding "d")
 
+(defengine melpa
+  "https://melpa.org/#/?q=%s")
+
 (defengine github
   "https://github.com/search?ref=simplesearch&q=%s")
 
