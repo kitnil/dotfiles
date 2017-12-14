@@ -199,3 +199,63 @@
          ,@(alist-delete "python-github"
                          (package-propagated-inputs base)
                          equal?))))))
+
+;; TODO: make test fails to found ddgr
+(define-public python-ddgr
+  (package
+    (name "python-ddgr")
+    (version "1.2")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append "https://github.com/jarun/ddgr/archive/"
+                           "v" version ".tar.gz"))
+       (sha256
+        (base32
+         "0n1p8837qk86az0kazi7brphnffrg5kmp8blslywk7clcf48p0m9"))))
+    (build-system gnu-build-system)
+    (native-inputs
+     `(("python" ,python)))
+    (arguments
+     `(#:test-target
+       "test"
+       #:make-flags (list (string-append "PREFIX=" %output))
+       #:phases
+       (modify-phases %standard-phases
+         (add-after 'unpack 'patch-absolute-file-names
+           (lambda* (#:key inputs #:allow-other-keys)
+             (substitute* "Makefile"
+               (("\\./ddgr" line) (string-join (list "ls" "-l" line))))
+             #t))
+         (add-after 'unpack 'patch-shebangs
+           (lambda* (#:key inputs #:allow-other-keys)
+             (substitute* "ddgr"
+               (("#!/usr/bin/env python3")
+                (string-append "#!" (assoc-ref inputs "python") "/bin/python")))
+             #t))
+         (delete 'configure)
+         (delete 'check)
+         (add-after 'install 'check
+           (assoc-ref %standard-phases 'check)))))
+    (home-page "https://github.com/jarun/ddgr/")
+    (synopsis "DuckDuckGo from the terminal")
+    (description "@code{ddgr} provides a command-line interface to
+@url{https://duckduckgo.com/,DuckDuckGo} search engine.
+
+Features:
+
+@itemize
+@item Fast and clean (no ads, stray URLs or clutter), custom color
+@item Navigate result pages from omniprompt, open URLs in browser
+@item Search and option completion scripts for Bash, Zsh and Fish
+@item DuckDuckGo Bang support (along with completion)
+@item Open the first result directly in browser (as in I'm Feeling Ducky)
+@item Non-stop searches: fire new searches at omniprompt without exiting
+@item Keywords (e.g. filetype:mime, site:somesite.com) support
+@item Specify region, disable safe search
+@item HTTPS proxy support, Do Not Track set, optionally disable User Agent
+@item Support custom url handler script or cmdline utility
+@item Comprehensive documentation, man page with handy usage examples
+@item Minimal dependencies
+@end itemize\n")
+    (license license:gpl3+)))
