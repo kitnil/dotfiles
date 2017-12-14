@@ -2576,6 +2576,26 @@ Feautures:
 timestamps and date-time format strings library for Emacs.")
     (license license:gpl3+)))
 
+(define-public emacs-logview
+  (package
+    (name "emacs-logview")
+    (version "0.8.2")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append
+                    "https://github.com/doublep/logview/archive/"
+                    "0.8.2" ".tar.gz"))
+              (sha256
+               (base32
+                "1if22ypjdz0w8dbgyxi2vgffaaqid4bc0i3004g0jy345cjr63kn"))))
+    (propagated-inputs
+     `(("emacs-datetime" ,emacs-datetime)))
+    (build-system emacs-build-system)
+    (home-page "https://github.com/doublep/logview/")
+    (synopsis "Emacs mode for viewing log files")
+    (description "@code{logview} provides an Emacs mode to view log files.")
+    (license license:gpl3+)))
+
 (define-public emacs-ibuffer-projectile
   (let ((commit "c18ac540ee46cb759fc5df18747f6e8d23563011")
         (revision "1"))
