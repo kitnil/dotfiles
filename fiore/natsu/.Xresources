@@ -51,7 +51,7 @@ Emacs.font: Monospace-14
 
 ! https://snarfed.org/emacs_x_resources
 ! Emacs.menuBar: off
-Emacs.verticalScrollBars: off
+! Emacs.verticalScrollBars: off
 Emacs.toolBar: off
 
 ! (emacs) Table of Resources
