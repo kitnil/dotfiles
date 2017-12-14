@@ -2557,6 +2557,25 @@ Feautures:
              (substitute* "strace-mode.el"
                (("fundamental-mode") "special-mode")))))))))
 
+(define-public emacs-datetime
+  (package
+    (name "emacs-datetime")
+    (version "0.3")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append
+                    "https://github.com/doublep/datetime/archive/"
+                    "0.3" ".tar.gz"))
+              (sha256
+               (base32
+                "12wqpj67rjij2ki7nmw38rz3k2bsq68pk6zswknlcn9qhp1zd9w9"))))
+    (build-system emacs-build-system)
+    (home-page "https://github.com/doublep/datetime/")
+    (synopsis "Library to work with dates in Emacs")
+    (description "Parsing, formatting, matching and recoding
+timestamps and date-time format strings library for Emacs.")
+    (license license:gpl3+)))
+
 (define-public emacs-ibuffer-projectile
   (let ((commit "c18ac540ee46cb759fc5df18747f6e8d23563011")
         (revision "1"))
