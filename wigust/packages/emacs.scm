@@ -2203,7 +2203,8 @@ command-line window-management program.")
                              "-f" "ert-run-tests-batch-and-exit")))))))
     (home-page "https://github.com/DamienCassou/auth-password-store")
     (synopsis "Integrate Emacs auth-source with password-store")
-    (description "Integrate Emacs auth-source with password-store")
+    (description "@code{emacs-auth-password-store} integrates Emacs
+auth-source library with @code{password-store}.")
     (license license:gpl3+)))
 
 (define-public emacs-helm-pass
