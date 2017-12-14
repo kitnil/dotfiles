@@ -31,6 +31,7 @@ XTerm*color7:  #B2B2B2
 XTerm*color15: #FFFFFF
 
 XTerm.vt100.scrollBar: true
+XTerm.vt100.cursorBlink: true
 
 XTerm.vt100.saveLines: 4096
 XTerm.vt100.faceName: Monospace:size=14:antialias=true
