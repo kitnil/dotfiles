@@ -157,6 +157,15 @@ EndSection
           (ssl-certificate #f)
           (ssl-certificate-key #f)))))
 
+(define natsu-nginx-service
+  (simple-service 'natsu-nginx nginx-service-type
+   (list (nginx-server-configuration
+         (server-name '("natsu.magnolia.local"))
+         (root "/home/natsu/public_html")
+         (https-port #f)
+         (ssl-certificate #f)
+         (ssl-certificate-key #f)))))
+
 (define %cgit-configuration-nginx-body
     (list "fastcgi_param SCRIPT_FILENAME $document_root/lib/cgit/cgit.cgi;"
           "fastcgi_param PATH_INFO $uri;"
@@ -181,7 +190,8 @@ EndSection
   ("ns" ""  "IN"  "A"  "127.0.0.1")
   ("cgit.magnolia.local." ""  "IN"  "A"  "192.168.105.120")
   ("guix.magnolia.local." ""  "IN"  "A"  "192.168.105.120")
-  ("www.magnolia.local." ""  "IN"  "A"  "192.168.105.120"))
+  ("www.magnolia.local." ""  "IN"  "A"  "192.168.105.120")
+  ("natsu.magnolia.local." ""  "IN"  "A"  "192.168.105.120"))
 
 (define master-zone
   (knot-zone-configuration
@@ -278,7 +288,7 @@ EndSection
      (plain-file "hosts"
                  (string-append (local-host-aliases host-name)
                                 (prefix-local-host-aliases
-                                 '("cgit" "guix" "www") host-name ".local")
+                                 '("cgit" "guix" "www" "natsu") host-name ".local")
                                 %facebook-host-aliases)))
 
     ;; Lightweight desktop with custom packages from guix-wigust
@@ -413,6 +423,7 @@ EndSection
                                (nginx (list %cgit-configuration-nginx-custom))))
 
                      guix-publish-nginx-service
+                     natsu-nginx-service
 
                      (simple-service 'adb udev-service-type
                                      (list android-udev-rules))
