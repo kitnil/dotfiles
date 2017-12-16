@@ -183,6 +183,9 @@
 (defengine github-hippie
   "https://github.com/search?ref=simplesearch&q=%s+-language:objectivec+-language:java+-language:javascript+-language:csharp+-language:kotlin+-language:swift+-language:php+-language:vue+-language:autohotkey")
 
+(defengine openhub
+  "https://www.openhub.net/p?ref=homepage&query=%s")
+
 (defengine google
   "http://www.google.com/search?ie=utf-8&oe=utf-8&q=%s")
 
