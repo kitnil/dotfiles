@@ -714,6 +714,8 @@ the appropriate network slug that we extract from the nick."
 ;;; Misc
 ;;;
 
+(add-hook 'dired-mode-hook 'hl-line-mode)
+
 (defun wi-god-mode-update-cursor ()
   (let ((limited-colors-p (> 257 (length (defined-colors)))))
     (cond (god-local-mode (progn
