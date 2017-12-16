@@ -294,7 +294,8 @@
   (add-hook 'elisp-mode-hook (lambda ()
                                (set (make-local-variable 'prettify-symbols-alist)
                                     wi-elisp--prettify-symbols-alist)))
-  (add-hook 'elisp-mode-hook #'prettify-symbols-mode))
+  (add-hook 'elisp-mode-hook #'prettify-symbols-mode)
+  (add-hook 'elisp-mode-hook #'rainbow-delimiters-mode))
 
 
 ;;;
@@ -327,7 +328,8 @@
                            (set (make-local-variable 'prettify-symbols-alist)
                                 wi-scheme--prettify-symbols-alist)))
 
-  (add-hook 'scheme-mode-hook #'prettify-symbols-mode))
+  (add-hook 'scheme-mode-hook #'prettify-symbols-mode)
+  (add-hook 'scheme-mode-hook #'rainbow-delimiters-mode))
 
 (add-hook 'proced-post-display-hook 'guix-prettify-mode)
 (add-hook 'shell-mode-hook #'guix-prettify-mode)
