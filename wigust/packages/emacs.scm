@@ -2720,3 +2720,27 @@ editor (without an X toolkit)" )
 grouping buffers by their projectile root directory.")
       (license license:gpl3+))))
 
+(define-public emacs-crux
+  (let ((commit "4f5c8fefd5a6aa52e128c4a0401cc86410d6ac8f")
+        (revision "1"))
+    (package
+      (name "emacs-crux")
+      (version (string-append "0.3.0" "-" revision "."
+                              (string-take commit 7)))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/bbatsov/crux.git")
+               (commit commit)))
+         (file-name (string-append name "-" version "-checkout"))
+         (sha256
+          (base32
+           "1fdxvv25cs01sg6fmvmzxpzvs50i6v8n2jya60lbavxqqhi0sbxd"))))
+      (build-system emacs-build-system)
+      (home-page "https://github.com/bbatsov/crux")
+      (synopsis "Collection of useful functions for Emacs")
+      (description
+       "@{crux} provides a collection of useful functions for Emacs.")
+      (license license:gpl3+))))
+
