@@ -143,6 +143,7 @@
 (bind-key "<f5>" #'recompile)
 (bind-key "<f6>" #'god-local-mode)
 (bind-key "<M-f6>" #'god-mode-all)
+(bind-key "M-z" #'zap-up-to-char)
 
 (add-to-list 'auto-mode-alist '("PKGBUILD" . shell-script-mode))
 
@@ -725,6 +726,14 @@ the appropriate network slug that we extract from the nick."
 ;;;
 ;;; Misc
 ;;;
+
+;; Deletes up to the provided character
+;; Doesn’t delete the provided character
+;; Starts the point from before the character rather than after
+;;
+;; Source: https://www.emacswiki.org/emacs/ZapUpToChar
+(autoload 'zap-up-to-char "misc"
+  "Kill up to, but not including ARGth occurrence of CHAR." t)
 
 (add-hook 'dired-mode-hook 'hl-line-mode)
 
