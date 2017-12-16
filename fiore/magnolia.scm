@@ -5,7 +5,7 @@
 (use-modules (gnu) (srfi srfi-1) (ice-9 popen) (ice-9 rdelim))
 
 (use-service-modules cups desktop dns mail networking rsync shepherd
-spice ssh version-control web xorg)
+spice ssh version-control web xorg cgit)
 
 (use-package-modules admin android backup bash bootloaders certs cups
 databases file fonts fontutils freedesktop gnome gnupg graphviz linux
