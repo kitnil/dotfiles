@@ -8,9 +8,9 @@
 spice ssh version-control web xorg cgit)
 
 (use-package-modules admin android backup bash bootloaders certs cups
-databases file fonts fontutils freedesktop gnome gnupg graphviz linux
-ncurses ratpoison readline rsync pulseaudio screen ssh version-control
-virtualization wget xdisorg xorg zile)
+databases dns file fonts fontutils freedesktop gnome gnupg graphviz
+linux ncurses ratpoison readline rsync pulseaudio screen ssh
+version-control virtualization wget xdisorg xorg zile)
 
 
 ;;;
@@ -311,6 +311,7 @@ EndSection
       gnupg
       graphviz  ; `dot'
       iptables
+      knot
       ncurses
       nss-certs ; for https
       openssh   ; `scp'
