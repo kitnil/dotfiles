@@ -742,7 +742,8 @@ the appropriate network slug that we extract from the nick."
 
 (setq elfeed-feeds '("http://nullprogram.com/feed/"
                      "http://planet.emacsen.org/atom.xml"
-                     "http://www.scheme.dk/planet/atom.xml"))
+                     "http://www.scheme.dk/planet/atom.xml"
+                     "https://lwn.net/headlines/newrss"))
 
 (defun wi-fullname-and-email ()
   (format "%s <%s>" user-full-name user-mail-address))
