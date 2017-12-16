@@ -170,6 +170,10 @@
   "https://duckduckgo.com/?q=%s"
   :keybinding "d")
 
+(defengine startpage
+  "https://www.startpage.com/do/search?query=%s"
+  :keybinding "st")
+
 (defengine melpa
   "https://melpa.org/#/?q=%s")
 
