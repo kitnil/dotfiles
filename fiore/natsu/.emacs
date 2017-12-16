@@ -774,9 +774,8 @@ the appropriate network slug that we extract from the nick."
 
 (setq debpaste-user-name "wigust")
 
-(with-eval-after-load 'eww
-  (setq shr-width 80)
-  (setq shr-use-fonts nil))
+(setq shr-width 80)
+(setq shr-use-fonts nil)
 
 (show-paren-mode)
 
