@@ -3,6 +3,8 @@
 
 ;; Tip: "M-x e" on `(emacs-init-time)'.
 
+;; Prevent stale elisp bytecode from shadowing more up-to-date source
+;; files.  Source: <https://github.com/technomancy/better-defaults>
 (setq load-prefer-newer t)
 
 ;; Makes unpure packages archives unavailable
