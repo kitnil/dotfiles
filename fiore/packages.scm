@@ -1,10 +1,10 @@
 (use-modules (gnu) (guix packages) (wigust packages emacs))
 
-(use-package-modules admin aspell bittorrent code commencement
+(use-package-modules admin aspell audio bittorrent code commencement
 compression dictionaries emacs gcc glib gnuzilla guile haskell
 image-viewers imagemagick kodi libreoffice linux lisp mail messaging
-ncdu package-management password-utils python scheme tls video w3m web
-xdisorg)
+ncdu package-management password-utils python scheme tls
+version-control video w3m web xdisorg)
 
 (packages->manifest
  (list
@@ -16,12 +16,17 @@ xdisorg)
   gwl              ; Guix workflow management
   haunt            ; Guile static site generator
 
+  aria2        ; Download utility
   kodi-cli     ; Remote control Kodi
   transmission ; Bittorrent
   youtube-dl   ; Video and music from websites
 
   redshift  ; Color temperature
   python-clf ; Interface to <https://commandlinefu.com/>
+
+  gource ; 3D visualisation tool for source control repositories
+
+  cli-visualizer
 
   icecat ; Web browser
 
@@ -87,6 +92,8 @@ xdisorg)
   emacs-debbugs            ; <https://debbugs.gnu.org/> interface
   emacs-elfeed             ; RSS reader
   emacs-erc-hl-nicks       ; for ERC
+  emacs-default-encrypt    ; Sign mail automatically
+  emacs-god-mode           ; Commands without modifier keys
   emacs-ggtags             ; Front end to GNU Global
   emacs-git-gutter
   emacs-gitpatch           ; Send patches
