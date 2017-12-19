@@ -60,6 +60,7 @@ version-control video w3m web xdisorg)
   znc
 
   gnu-c-manual ; C language documentation
+  man-pages
   sicp         ; Structure and Interpretation of Computer Programs
 
   sbcl ; For StumpWM.  See <https://stumpwm.github.io/>.
@@ -76,15 +77,20 @@ version-control video w3m web xdisorg)
 
   emacs-athena
   emacs-engine-mode-autoload ; Define searches on websites
+  emacs-strace-mode-special ; Colorize `strace' logs
 
+  emacs-add-hooks
+  emacs-esup
+  emacs-helm-gtags
+  emacs-fancy-narrow
+  emacs-crux
   emacs-debpaste           ; Front end to <https://paste.debian.net/>
-  emacs-helm-firefox       ; Search for bookmarks in Icecat
-  emacs-helm-pass          ; Front end to password-store
   emacs-eval-in-repl       ; Evaluate to different Repls
   emacs-ewmctrl            ; Control X windows from Emacs
-  emacs-org-mind-map       ; General mind maps from Org files
+  emacs-helm-firefox       ; Search for bookmarks in Icecat
+  emacs-helm-pass          ; Front end to password-store
   emacs-move-text
-  emacs-strace-mode-special ; Colorize `strace' logs
+  emacs-org-mind-map       ; General mind maps from Org files
 
   emacs-aggressive-indent  ; Auto indent minor mode
   emacs-company            ; Complition framework
