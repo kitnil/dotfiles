@@ -127,6 +127,7 @@ alias guix-configure="./configure --localstatedir=/var --prefix=''"
 alias guix-environment='guix environment --pure guix --ad-hoc help2man strace git gdb'
 alias guix-wigust='GUIX_PACKAGE_PATH=$HOME/src/guix-wigust guix'
 alias history-grep="history | grep"
+alias list-bindings="bind -P"
 alias list-functions="compgen -A function"
 alias mpv-quite='mpv --msg-level=all=no --no-resume-playback --keep-open=no'
 alias ps-tree="ps -ejH"
