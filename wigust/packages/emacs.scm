@@ -2767,3 +2767,26 @@ much more natural feeling, where the region stays static (instead of
 being brutally moved to a blank slate) and is clearly highlighted with
 respect to the rest of the buffer.")
     (license license:gpl2+)))
+
+(define-public emacs-add-hooks
+  (package
+    (name "emacs-add-hooks")
+    (version "3.1.1")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append
+                    "https://github.com/nickmccurdy/add-hooks/archive/"
+                    version ".tar.gz"))
+              (sha256
+               (base32
+                "03a28gb3298g7pc2qji9hi44p4d99ljp5mpi9cmg42ldv8fl6549"))))
+    (build-system emacs-build-system)
+    (home-page "https://github.com/nickmccurdy/add-hooks/")
+    (synopsis " Emacs function for setting multiple hooks")
+    (description "Typically, you would need to call add-hook multiple
+times with similar arguments to declare multiple functions for one
+hook, or vice versa. add-hooks-pair is a variant that takes multiple
+hooks or functions that apply to each other. The add-hooks function
+tidies up duplicate hook and function names further into a single
+declarative call (inspired by the bind-key package).")
+    (license license:gpl3+)))
