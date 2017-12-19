@@ -59,6 +59,34 @@ guix-root-update ()
     ln -s $(readlink $HOME/$GUIX_LATEST) $ROOT_GUIX_LATEST
 }
 
+guix-system-build ()
+{
+    GUIX_PACKAGE_PATH=$HOME/src/guix-wigust ./pre-inst-env \
+                     guix system build ~/dotfiles/fiore/magnolia.scm
+}
+
+pre-guix-reconfigure ()
+{
+    sudo -E ./pre-inst-env \
+         env GUIX_PACKAGE_PATH=$HOME/src/guix-wigust \
+         guix system reconfigure $HOME/dotfiles/fiore/magnolia.scm
+}
+
+guix-hash ()
+{
+    guix hash -rx $1
+}
+
+git-hash ()
+{
+    git -C $1 rev-parse HEAD
+}
+
+guix-environment-make ()
+{
+    guix environment --pure guix --ad-hoc help2man -- make
+}
+
 history-usage ()
 {
     history \
@@ -67,6 +95,22 @@ history-usage ()
         | column -c3 -s " " -t \
         | sort -nr \
         | nl
+}
+
+etags-el ()
+{
+    find . -name '*.el' -print | etags -
+}
+
+etags-c ()
+{
+    find . -name '*.[ch]' -print | etags --append -
+}
+
+youtube-dl-uploader ()
+{
+    URL=$1
+    nohup youtube-dl --output '/srv/videos/%(uploader_id)s/%(title)s-%(id)s.%(ext)s' $URL &
 }
 
 unalias ls
@@ -80,7 +124,7 @@ alias feh-svg="feh --magick-timeout 10"
 alias free-human="free -ht"
 alias guile-no-autocompile="guile --no-auto-compile"
 alias guix-configure="./configure --localstatedir=/var --prefix=''"
-alias guix-environment='guix environment --pure guix --ad-hoc help2man'
+alias guix-environment='guix environment --pure guix --ad-hoc help2man strace git gdb'
 alias guix-wigust='GUIX_PACKAGE_PATH=$HOME/src/guix-wigust guix'
 alias history-grep="history | grep"
 alias list-functions="compgen -A function"
