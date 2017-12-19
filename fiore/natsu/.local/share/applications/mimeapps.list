@@ -1,0 +1,4 @@
+[Default Applications]
+x-scheme-handler/mailto=gnus.desktop;
+image/png=feh.desktop;
+application/pdf=xpdf.desktop;
