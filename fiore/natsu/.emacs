@@ -7,6 +7,11 @@
 ;; files.  Source: <https://github.com/technomancy/better-defaults>
 (setq load-prefer-newer t)
 
+;; (require 'benchmark-init)
+
+;; To disable collection of benchmark data after init is done.
+;; (add-hook 'after-init-hook 'benchmark-init/deactivate)
+
 ;; Makes unpure packages archives unavailable
 (setq package-archives nil)
 
@@ -24,6 +29,11 @@
 (setq smtpmail-queue-mail t)
 
 (add-to-list 'exec-path (expand-file-name "~/.guix-profile.d/gdb/bin"))
+
+;; TODO: Make initialization without require
+
+(use-package org-protocol :defer 5)
+(use-package jl-encrypt :defer 5)
 
 
 ;;;
@@ -48,6 +58,14 @@
 
 (bind-key "C-c b" 'ibuffer)
 (bind-key "<C-down-mouse-1>" 'mc/toggle-cursor-on-click)
+
+(which-key-add-key-based-replacements "C-c a" "align")
+(bind-keys :prefix "C-c a" :prefix-map wi-align-map
+           ("r" . align-regexp))
+
+(which-key-add-key-based-replacements "C-c o" "split")
+(bind-keys :prefix "C-c o" :prefix-map wi-split-map
+           ("s" . sp-split-sexp))
 
 (which-key-add-key-based-replacements "C-c v" "magit")
 (bind-keys :prefix "C-c v" :prefix-map wi-version-control-map
@@ -78,10 +96,33 @@
            ("w" . whitespace-mode)
            ("y" . yas-minor-mode))
 
+(which-key-add-key-based-replacements "C-c e" "expand")
+(bind-keys :prefix "C-c e" :prefix-map wi-expand-map
+           ("w"  . er/mark-word)
+           ("s"  . er/mark-symbol)
+           ("S"  . er/mark-symbol-with-prefix)
+           ("n"  . er/mark-next-accessor)
+           ("m"  . er/mark-method-call)
+           ("'"  . er/mark-inside-quotes)
+           ("\"" . er/mark-outside-quotes)
+           ("p"  . er/mark-inside-pairs)
+           ("P"  . er/mark-outside-pairs)
+           ("c"  . er/mark-comment)
+           ("u"  . er/mark-url)
+           ("e"  . er/mark-email)
+           ("d"  . er/mark-defun))
+
 (which-key-add-key-based-replacements "C-c r" "rething")
 (bind-keys :prefix "C-c r" :prefix-map wi-rething-map
            ("r" . revert-buffer)
-           ("l" .  redraw-display))
+           ("l" . redraw-display)
+           ("f" . transpose-frame)
+           ("w" . transpose-frame))
+
+(which-key-add-key-based-replacements "C-c r t" "transpose")
+(bind-keys :prefix "C-c r t" :prefix-map wi-transpose-map
+           ("f" . transpose-frame)
+           ("w" . crux-transpose-windows))
 
 (which-key-add-key-based-replacements "C-c h" "helm")
 (bind-keys :prefix "C-c h" :prefix-map wi-helm-map
@@ -142,10 +183,12 @@
            ("a" . org-agenda)
            ("l" . org-store-link))
 
-(bind-key "<f5>" #'recompile)
-(bind-key "<f6>" #'god-local-mode)
+(bind-key "<f5>"   #'recompile)
+(bind-key "<f6>"   #'god-local-mode)
+(bind-key "<f7>"   #'mc/mark-next-like-this)
+(bind-key "<f8>"   #'er/expand-region)
 (bind-key "<M-f6>" #'god-mode-all)
-(bind-key "M-z" #'zap-up-to-char)
+(bind-key "M-z"    #'zap-up-to-char)
 
 (add-to-list 'auto-mode-alist '("PKGBUILD" . shell-script-mode))
 
@@ -177,6 +220,14 @@
   "https://www.startpage.com/do/search?query=%s"
   :keybinding "st")
 
+(defengine startpage-hippie
+  (concat "https://www.startpage.com/do/dsearch?query=%s"
+          "+c"
+          "+-c%%2B%%2B"
+          "+-c%%23&cat=web"
+          "&pl=opensearch"
+          "&language=english"))
+
 (defengine melpa
   "https://melpa.org/#/?q=%s")
 
@@ -184,7 +235,16 @@
   "https://github.com/search?ref=simplesearch&q=%s")
 
 (defengine github-hippie
-  "https://github.com/search?ref=simplesearch&q=%s+-language:objectivec+-language:java+-language:javascript+-language:csharp+-language:kotlin+-language:swift+-language:php+-language:vue+-language:autohotkey")
+  (concat "https://github.com/search?ref=simplesearch&q=%s"
+          "+-language:objectivec"
+          "+-language:java"
+          "+-language:javascript"
+          "+-language:csharp"
+          "+-language:kotlin"
+          "+-language:swift"
+          "+-language:php"
+          "+-language:vue"
+          "+-language:autohotkey"))
 
 (defengine openhub
   "https://www.openhub.net/p?ref=homepage&query=%s")
@@ -196,7 +256,9 @@
   "https://www.google.com/search?q=%s&tbm=vid")
 
 (defengine guix-devel
-  "https://lists.gnu.org/archive/cgi-bin/namazu.cgi?query=%s&submit=Search%%21&idxname=guix-devel&max=20&result=normal&sort=score")
+  (concat "https://lists.gnu.org/archive/cgi-bin/namazu.cgi?query=%s"
+          "&submit=Search%%21"
+          "&idxname=guix-devel&max=20" "&result=normal" "&sort=score"))
 
 (defengine rfcs
   "http://pretty-rfc.herokuapp.com/search?q=%s")
@@ -211,13 +273,17 @@
   "http://www.wikipedia.org/search-redirect.php?language=en&go=Go&search=%s")
 
 (defengine wiktionary
-  "https://www.wikipedia.org/search-redirect.php?family=wiktionary&language=en&go=Go&search=%s")
+  (concat "https://www.wikipedia.org/search-redirect.php?family=wiktionary"
+          "&language=en" "&go=Go" "&search=%s"))
 
 (defengine youtube
   "http://www.youtube.com/results?aq=f&oq=&search_query=%s")
 
 (defengine youtube-latest
   "https://www.youtube.com/results?sp=CAJQFA%%253D%%253D&search_query=%s")
+
+(defengine youtube-live
+  "https://www.youtube.com/results?sp=EgJAAQ%%253D%%253D&search_query=%s")
 
 (defengine youtube-rss
   "https://www.youtube.com/feeds/videos.xml?channel_id=%s")
@@ -283,23 +349,19 @@
 ;;; Elisp
 ;;;
 
-(with-eval-after-load 'elisp-mode
-  (defconst wi-elisp--prettify-symbols-alist
-    '(("lambda"  . ?λ)
-      ("lambda*" . (?λ (Br . Bl) ?*))
-      ("not"     . ?¬)
-      ("and"     . ?∧)
-      ("or"      . ?∨)
-      ("eq?"     . ≡)
-      ("<="      . ?≤)
-      (">="      . ?≥)
-      ("->"      . ?→)))
-  (add-hook 'elisp-mode-hook (lambda ()
-                               (set (make-local-variable 'prettify-symbols-alist)
-                                    wi-elisp--prettify-symbols-alist)))
-  (add-hook 'elisp-mode-hook #'prettify-symbols-mode)
-  (add-hook 'elisp-mode-hook #'rainbow-delimiters-mode))
-
+(defconst wi-elisp--prettify-symbols-alist
+  '(("lambda"  . ?λ)
+    ("lambda*" . (?λ (Br . Bl) ?*))
+    ("not"     . ?¬)
+    ("and"     . ?∧)
+    ("or"      . ?∨)
+    ("eq?"     . ≡)
+    ("<="      . ?≤)
+    (">="      . ?≥)
+    ("->"      . ?→)))
+(add-hook 'elisp-mode-hook (lambda ()
+                             (set (make-local-variable 'prettify-symbols-alist)
+                                  wi-elisp--prettify-symbols-alist)))
 
 ;;;
 ;;; Guile and Guix
@@ -312,31 +374,29 @@
   (add-to-list 'geiser-guile-load-path "/home/natsu/src/guix")
   (setq geiser-guile-binary '("guile" "--no-auto-compile")))
 
-(with-eval-after-load 'scheme
-  (add-hook 'scheme-mode-hook 'guix-devel-mode)
-  (defconst wi-scheme--prettify-symbols-alist
-    '(("lambda"  . ?λ)
-      ("lambda*" . (?λ (Br . Bl) ?*))
-      ("#t"      . ?T)
-      ("#f"      . ?F)
-      ("'()"     . ?E)
-      ("not"     . ?¬)
-      ("and"     . ?∧)
-      ("or"      . ?∨)
-      ("eq?"     . ≡)
-      ("<="      . ?≤)
-      (">="      . ?≥)
-      ("->"      . ?→)))
-  (add-hook 'scheme-mode-hook (lambda ()
-                           (set (make-local-variable 'prettify-symbols-alist)
-                                wi-scheme--prettify-symbols-alist)))
+(defconst wi-scheme--prettify-symbols-alist
+  '(("lambda"  . ?λ)
+    ("lambda*" . (?λ (Br . Bl) ?*))
+    ("#t"      . ?T)
+    ("#f"      . ?F)
+    ("'()"     . ?E)
+    ("not"     . ?¬)
+    ("and"     . ?∧)
+    ("or"      . ?∨)
+    ("eq?"     . ≡)
+    ("<="      . ?≤)
+    (">="      . ?≥)
+    ("->"      . ?→)
+    ("x_1" . (?x (Br . Bl) ?₁))
+    ("x_2" . (?x (Br . Bl) ?₂))
+    ("y_1" . (?y (Br . Bl) ?₁))
+    ("y_2" . (?y (Br . Bl) ?₂))))
 
-  (add-hook 'scheme-mode-hook #'prettify-symbols-mode)
-  (add-hook 'scheme-mode-hook #'rainbow-delimiters-mode))
-
-(add-hook 'proced-post-display-hook 'guix-prettify-mode)
-(add-hook 'shell-mode-hook #'guix-prettify-mode)
-(add-hook 'dired-mode-hook 'guix-prettify-mode)
+(add-hooks
+ '(((scheme-mode-hook geiser-repl-mode-hook)
+    . (lambda ()
+        (set (make-local-variable 'prettify-symbols-alist)
+             wi-scheme--prettify-symbols-alist)))))
 
 (with-eval-after-load 'guix-repl
   (setq guix-directory "~/src/guix"))
@@ -348,51 +408,36 @@
 ;;; C-mode
 ;;;
 
-(with-eval-after-load 'cc-mode
-  (defconst wi-c--prettify-symbols-alist
-    '(("->"        . (?  (Br . Bl) ?→ (Br . Bl) ? ))
-      ("=="        . ?≡)
-      ("!"         . ?¬)
-      ("&&"        . ?∧)
-      ("||"        . ?∨)
-      ("!="        . ?≢)
-      ("<="        . ?≤)
-      (">="        . ?≥)
-      ("true"      . ?T)
-      ("false"     . ?F)
-      ("NULL"      . ?N)
-      ("int"       . ?ℤ)
-      ("float"     . ?ℚ)
-      ("union"     . ?∪)
-      (" * "       . (? (Br . Bl) ?· (Br . Bl) ? ))
-      (" / "       . (? (Br . Bl) ?÷ (Br . Bl) ? ))
-      ("#include"  .?⊃)
-      ("#define"   .?∃)
-      ("return"    . ?↵)
-      ("uint32_t"  . (?ℕ (Br . Bl) ?₃ (Br . Bl) ?₂))
-      ("uint8_t"   . (?ℕ (Br . Bl) ?₈))
-      ("void"      . ?Ø)
-      ("break"     . ?∎)
-      ("rand"      . ?𝔼)
-      ("    {"     . ? )
-      ("    }"     . ? )
-      ("	{" . ? )
-      ("	}" . ? )
-      (" {"        . ? )
-      (", "        . ? )
-      (","         . ? )
-      (";"         . ? )
-      ("]["        . ? )
-      (" % "       . (?  (Br . Bl) ?m (Br . Bl) ?o (Br . Bl) ?d (Br . Bl) ? ))))
+(defconst wi-c--prettify-symbols-alist
+  '(("->"        . (?  (Br . Bl) ?→ (Br . Bl) ? ))
+    ("=="        . ?≡)
+    ("!"         . ?¬)
+    ("&&"        . ?∧)
+    ("||"        . ?∨)
+    ("!="        . ?≢)
+    ("<="        . ?≤)
+    (">="        . ?≥)
+    ("true"      . ?T)
+    ("false"     . ?F)
+    ("NULL"      . ?N)
+    ("int"       . ?ℤ)
+    ("float"     . ?ℚ)
+    ("union"     . ?∪)
+    (" * "       . (? (Br . Bl) ?· (Br . Bl) ? ))
+    (" / "       . (? (Br . Bl) ?÷ (Br . Bl) ? ))
+    ("uint32_t"  . (?ℕ (Br . Bl) ?₃ (Br . Bl) ?₂))
+    ("uint8_t"   . (?ℕ (Br . Bl) ?₈))
+    ("void"      . ?Ø)
+    ("rand"      . ?𝔼)
+    ("x_1" . (?x (Br . Bl) ?₁))
+    ("x_2" . (?x (Br . Bl) ?₂))
+    ("y_1" . (?y (Br . Bl) ?₁))
+    ("y_2" . (?y (Br . Bl) ?₂))
+    (" % "       . (?  (Br . Bl) ?m (Br . Bl) ?o (Br . Bl) ?d (Br . Bl) ? ))))
 
-  (add-hook 'c-mode-hook (lambda ()
-                           (set (make-local-variable 'prettify-symbols-alist)
-                                wi-c--prettify-symbols-alist)))
-
-  (add-hook 'c-mode-hook #'rainbow-delimiters-mode)
-  (add-hook 'c-mode-hook #'smartparens-strict-mode)
-  (add-hook 'c-mode-hook #'prettify-symbols-mode)
-  (add-hook 'c-mode-hook #'ggtags-mode))
+(add-hook 'c-mode-hook (lambda ()
+                         (set (make-local-variable 'prettify-symbols-alist)
+                              wi-c--prettify-symbols-alist)))
 
 (with-eval-after-load 'cc-vars
   (add-to-list 'c-cleanup-list 'space-before-funcall))
@@ -581,7 +626,7 @@
          "##c" "#bash"
          ;; "#fedora" "#fedora-admin" "#fedora-devel"
          ;; "#fedora-noc" "#fedora-meeting" "#fedora-qa"
-         "#gnu" "#fsf" "#gnus" "#guile" "#guix" "#stumpwm" "#replicant"
+         "#gnu" "#fsf" "#gnus" "#guile" "#guix" "#stumpwm" "#replicant" "#gdb"
          ;; "#nixos" "#haskell" "#xmonad"
          ;; "#filmsbykris" "##japanese" "#latex"
          ;; "#python" "#scipy" "#sagemath"
@@ -721,13 +766,56 @@ the appropriate network slug that we extract from the nick."
 
 (setq znc-erc-connector 'vbe:znc-erc-connector)
 
-;; Define networks
-;; (vbe:znc-add-server "localhost" 8060 "natsu" '(freenode))
+;; ;; Define networks
+(use-package znc :defer 5
+  :config (vbe:znc-add-server "localhost" 8060 "natsu" '(freenode)))
 
 
 ;;;
 ;;; Misc
 ;;;
+
+(defun wi-copy-file-name ()
+  "Return current buffer file name."
+  (interactive)
+  (kill-new (buffer-file-name)))
+
+(add-hook 'diff-mode-hook (lambda () (setq-local truncate-lines t)))
+
+(defun wi-sort-sexps (reverse beg end)
+  "Sort sexps in the Region."
+  (interactive "*P\nr")
+  (save-restriction
+    (narrow-to-region beg end)
+    (goto-char (point-min))
+    (let ((nextrecfun (lambda () (skip-syntax-forward "-.>")))
+          (endrecfun  #'forward-sexp))
+      (sort-subr reverse nextrecfun endrecfun))))
+
+(add-hooks
+ '(((benchmark-init/tabulated-mode-hook debbugs-gnu-mode-hook
+     dired-mode-hook ewmctrl-mode-hook guix-output-list-mode-hook
+     ibuffer-mode-hook strace-mode-hook)
+    . hl-line-mode)
+   ((diff-mode-hook dired-mode-hook proced-post-display-hook
+     shell-mode-hook)
+    . guix-prettify-mode)
+   ((c-mode-hook) . ggtags-mode)
+   ((scheme-mode-hook) . guix-devel-mode)
+   ((prog-mode-hook) . prettify-symbols-mode)
+   ((prog-mode-hook) . rainbow-delimiters-mode)
+   ((prog-mode-hook
+     minibuffer-inactive-mode-hook
+     geiser-repl-mode-hook)
+    . smartparens-strict-mode)
+   ((prog-mode-hook) . yas-minor-mode)))
+
+(defun wi-find-stumpwm-init-file ()
+  "Edit the `stumpwm-init-file', in another window."
+  (interactive)
+  (find-file-other-window (expand-file-name "~/.stumpwm.d/init.lisp")))
+
+(global-undo-tree-mode)
 
 ;; Deletes up to the provided character
 ;; Doesn’t delete the provided character
@@ -737,7 +825,23 @@ the appropriate network slug that we extract from the nick."
 (autoload 'zap-up-to-char "misc"
   "Kill up to, but not including ARGth occurrence of CHAR." t)
 
-(add-hook 'dired-mode-hook 'hl-line-mode)
+;; <https://www.reddit.com/r/emacs/comments/7htdzk/show_reddit_prettyprint_debugger_frames/>
+(defun wi-debugger-pp-frame ()
+  (interactive)
+  (let ((inhibit-read-only t)
+        (frame (backtrace-frame (debugger-frame-number))))
+    (set-buffer (pop-to-buffer "*BT: Frame*"))
+    (cl-destructuring-bind (special fn &rest args) frame
+      (erase-buffer)
+      (progn
+        (insert "(" (pp-to-string fn))
+        (dolist (arg args)
+          (insert "\n" (pp-to-string arg)))
+        (insert ")"))
+      (goto-char (point-min))
+      (indent-pp-sexp))))
+
+;; (define-key debugger-mode-map "r" 'wi-debugger-pp-frame)
 
 (defun wi-god-mode-update-cursor ()
   (let ((limited-colors-p (> 257 (length (defined-colors)))))
@@ -753,10 +857,8 @@ the appropriate network slug that we extract from the nick."
 
 (setq mml-secure-insert-signature 'always)
 
-(add-hook 'strace-mode-hook 'hl-line-mode)
-(add-hook 'ewmctrl-mode-hook 'hl-line-mode)
-(add-hook 'debbugs-gnu-mode-hook 'hl-line-mode)
-
+;; TODO: Add to guix emacs package
+(setq ispell-aspell-dict-dir "/run/current-system/profile/lib/aspell")
 
 (add-hook 'prog-mode-hook
           (lambda ()
@@ -764,17 +866,16 @@ the appropriate network slug that we extract from the nick."
                                     '(("\\<\\(TODO\\|FIXME\\):" 1
                                        font-lock-warning-face t)))))
 
-(add-hook 'ibuffer-mode-hook 'hl-line-mode)
-
 (add-hook 'shell-mode-hook (lambda ()
                              (progn (setq paragraph-separate "[ 	]*$")
                                     (setq paragraph-start "\\|[ 	]*$"))))
 
-(setq elfeed-feeds '("http://nullprogram.com/feed/"
-                     "http://planet.emacsen.org/atom.xml"
-                     "http://www.scheme.dk/planet/atom.xml"
-                     "https://lwn.net/headlines/newrss"
-                     "https://fedoramagazine.org/feed/"))
+(setq elfeed-feeds
+      '("http://nullprogram.com/feed/"
+        "http://planet.emacsen.org/atom.xml"
+        "http://www.scheme.dk/planet/atom.xml"
+        "https://lwn.net/headlines/newrss"
+        "https://fedoramagazine.org/feed/"))
 
 (defun wi-fullname-and-email ()
   (format "%s <%s>" user-full-name user-mail-address))
@@ -854,7 +955,17 @@ in the variable `browse-url-mpv-arguments' to mpv."
       `(("^ftp://.*" . browse-ftp-tramp)
         ("^https?://debbugs\\.gnu\\.org/.*" . debbugs-browse-url)
         ("^https?://w*\\.?youtube.com/watch\\?v=.*" . browse-url-mpv)
+        ;; TODO: ("https?://bugs.gnu.org/.*" . debbugs-browse-url)
         ("." . browse-url-firefox)))
+
+(with-eval-after-load 'yasnippet
+  (setq yas-snippet-dirs
+        (append (wi-expand-file-names
+                 '("~/.emacs.d/snippets"
+                   "~/src/guix/etc/snippets"
+                   "~/.guix-profile/share/emacs/yasnippet-snippets"))
+                yas-snippet-dirs))
+  (yas-reload-all))
 
 (with-eval-after-load 'sendmail
   (setq send-mail-function #'smtpmail-send-it)
@@ -864,16 +975,14 @@ in the variable `browse-url-mpv-arguments' to mpv."
 (with-eval-after-load 'info
   (info-initialize)
   (setq Info-directory-list
-        (append (wi-expand-file-names (list "~/src/guix/doc"
-					    "~/.guix-profile.d/gdb/share/info"
-					    "~/.guix-profile.d/autotools/share/info"))
+        (append (wi-expand-file-names
+                 '("~/src/guix/doc"
+                   "~/.guix-profile.d/gdb/share/info"
+                   "~/.guix-profile.d/autotools/share/info"))
                 Info-directory-list)))
 ;;
 ;; Alternative: https://lists.gnu.org/archive/html/help-guix/2017-03/msg00140.html
 ;; See <~/.bashrc>
-
-(setq yas-snippet-dirs (list "~/.emacs.d/snippets"
-                             "/run/current-system/profile/share/emacs/yasnippet-snippets/"))
 
 (with-eval-after-load 'company
   (setq company-clang-insert-arguments nil)
@@ -882,11 +991,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
 
 (with-eval-after-load 'smartparens
   (require 'smartparens-config)
-  (sp-use-smartparens-bindings)
-  (add-hook 'minibuffer-inactive-mode-hook 'smartparens-mode)
-  (add-hook 'emacs-lisp-mode-hook 'smartparens-strict-mode)
-  (add-hook 'lisp-mode-hook 'smartparens-strict-mode)
-  (add-hook 'scheme-mode-hook 'smartparens-strict-mode))
+  (sp-use-smartparens-bindings))
 
 (winner-mode 1)
 (windmove-default-keybindings)
@@ -931,4 +1036,9 @@ in the variable `browse-url-mpv-arguments' to mpv."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(highlight-stages-level-1-face ((t (:foreground "deep sky blue")))))
+ '(highlight-stages-level-1-face ((t (:foreground "deep sky blue"))))
+ '(magit-diff-added ((t (:foreground "#22aa22"))))
+ '(magit-diff-added-highlight ((t (:foreground "#22aa22"))))
+ '(magit-diff-context-highlight ((t (:foreground "grey50"))))
+ '(magit-diff-removed ((t (:foreground "#aa2222"))))
+ '(magit-diff-removed-highlight ((t (:foreground "#aa2222")))))
