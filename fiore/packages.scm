@@ -2,8 +2,8 @@
 
 (use-package-modules admin aspell audio bittorrent code commencement
 compression dictionaries emacs gcc glib gnuzilla guile haskell
-image-viewers imagemagick kodi libreoffice linux lisp mail messaging
-ncdu package-management password-utils python scheme tls
+image-viewers imagemagick kodi libreoffice linux lisp mail man
+messaging ncdu package-management password-utils python scheme tls
 version-control video w3m web xdisorg)
 
 (packages->manifest
@@ -78,6 +78,8 @@ version-control video w3m web xdisorg)
   emacs-athena
   emacs-engine-mode-autoload ; Define searches on websites
   emacs-strace-mode-special ; Colorize `strace' logs
+
+  python-starred ; Fetch a list of stars from GitHub user
 
   emacs-add-hooks
   emacs-esup
