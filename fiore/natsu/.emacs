@@ -293,6 +293,10 @@
 ;;; Usability functions
 ;;;
 
+(defun wi-shell-current-dir ()
+  (interactive)
+  (shell (concat "*shell " default-directory "*")))
+
 (defun close-all-parentheses ()
   (interactive "*")
   (let ((closing nil))
