@@ -813,7 +813,8 @@ the appropriate network slug that we extract from the nick."
    ((prog-mode-hook) . rainbow-delimiters-mode)
    ((prog-mode-hook
      minibuffer-inactive-mode-hook
-     geiser-repl-mode-hook)
+     geiser-repl-mode-hook
+     git-commit-mode-hook)
     . smartparens-strict-mode)
    ((prog-mode-hook) . yas-minor-mode)))
 
