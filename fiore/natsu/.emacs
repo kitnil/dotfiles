@@ -56,7 +56,12 @@
 
 (which-key-add-key-based-replacements "C-c &" "yasnippet")
 
-(bind-key "C-c b" 'ibuffer)
+(which-key-add-key-based-replacements "C-c b" "buffer")
+(bind-keys :prefix "C-c b" :prefix-map wi-buffer-map
+           ("b" . ibuffer)
+           ("e" . wi-switch-to-scratch-elisp)
+           ("w" . wi-switch-to-eww))
+
 (bind-key "<C-down-mouse-1>" 'mc/toggle-cursor-on-click)
 
 (which-key-add-key-based-replacements "C-c a" "align")
@@ -295,6 +300,14 @@
 ;;;
 ;;; Usability functions
 ;;;
+
+(defun wi-switch-to-scratch-elisp ()
+  (interactive)
+  (switch-to-buffer "*scratch*"))
+
+(defun wi-switch-to-eww ()
+  (interactive)
+  (switch-to-buffer "*eww*"))
 
 (defun wi-shell-current-dir ()
   (interactive)
