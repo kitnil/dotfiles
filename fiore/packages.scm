@@ -1,4 +1,5 @@
-(use-modules (gnu) (guix packages) (wigust packages emacs))
+(use-modules (gnu) (guix packages)
+             (wigust packages emacs) (wigust packages python))
 
 (use-package-modules admin aspell audio bittorrent code commencement
 compression dictionaries emacs gcc glib gnuzilla guile haskell
