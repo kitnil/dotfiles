@@ -218,6 +218,9 @@
 ;;; Search engines
 ;;;
 
+(defengine arch-packages
+  "https://www.archlinux.org/packages/?sort=&q=%s")
+
 (defengine duckduckgo
   "https://duckduckgo.com/?q=%s"
   :keybinding "d")
@@ -240,6 +243,19 @@
 (defengine github
   "https://github.com/search?ref=simplesearch&q=%s")
 
+(defengine github-hippie-gpl
+  (concat "https://github.com/search?ref=simplesearch&q=%s"
+          "+-language:objectivec"
+          "+-language:java"
+          "+-language:javascript"
+          "+-language:csharp"
+          "+-language:kotlin"
+          "+-language:swift"
+          "+-language:php"
+          "+-language:vue"
+          "+-language:autohotkey"
+          "+license%%3Agpl"))
+
 (defengine github-hippie
   (concat "https://github.com/search?ref=simplesearch&q=%s"
           "+-language:objectivec"
@@ -251,6 +267,10 @@
           "+-language:php"
           "+-language:vue"
           "+-language:autohotkey"))
+
+(defengine github-gpl
+  (concat "https://github.com/search?ref=simplesearch&q=%s"
+          "+license%%3Agpl"))
 
 (defengine openhub
   "https://www.openhub.net/p?ref=homepage&query=%s")
@@ -266,8 +286,17 @@
           "&submit=Search%%21"
           "&idxname=guix-devel&max=20" "&result=normal" "&sort=score"))
 
+(defengine mankier
+  "https://www.mankier.com/?q=%s")
+
+(defengine tldr
+  "https://tldr.ostera.io/%s")
+
 (defengine rfcs
   "http://pretty-rfc.herokuapp.com/search?q=%s")
+
+(defengine reddit-unixporn
+  "https://www.reddit.com/r/unixporn/search?q=%s&restrict_sr=on")
 
 (defengine searx
   "http://searx.tk/?q=%s")
