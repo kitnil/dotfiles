@@ -937,7 +937,8 @@ the appropriate network slug that we extract from the nick."
         "https://lwn.net/headlines/newrss"
         "https://fedoramagazine.org/feed/"
         "http://planet.emacsen.org/atom.xml"
-        "http://steckerhalter.tk/index.xml"))
+        "http://steckerhalter.tk/index.xml"
+        "https://www.reddit.com/r/freegames/.rss"))
 
 (defun wi-fullname-and-email ()
   (format "%s <%s>" user-full-name user-mail-address))
