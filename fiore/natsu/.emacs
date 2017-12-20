@@ -194,6 +194,7 @@
 (bind-key "<f8>"   #'er/expand-region)
 (bind-key "<M-f6>" #'god-mode-all)
 (bind-key "M-z"    #'zap-up-to-char)
+(bind-key "C-c u"  #'undo-tree-visualize)
 
 (add-to-list 'auto-mode-alist '("PKGBUILD" . shell-script-mode))
 
