@@ -942,12 +942,11 @@ the appropriate network slug that we extract from the nick."
   (format "%s <%s>" user-full-name user-mail-address))
 
 (define-skeleton copyright
-  "Insert a copyright by $ORGANIZATION notice at cursor."
+  "Insert a copyright by $USER notice at cursor."
   "FULL_NAME <EMAIL>: "
   comment-start
-  "Copyright © " `(format-time-string "%Y") " "
-  (or (format "%s <%s>" (wi-fullname-and-email))
-      str)
+  "; Copyright © " `(format-time-string "%Y") " "
+  (or (wi-fullname-and-email) str)
   '(if (copyright-offset-too-large-p)
        (message "Copyright extends beyond `copyright-limit' and won't be updated automatically."))
   comment-end \n)
