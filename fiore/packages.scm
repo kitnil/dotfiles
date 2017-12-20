@@ -2,8 +2,8 @@
              (wigust packages emacs) (wigust packages python))
 
 (use-package-modules admin aspell audio bittorrent code commencement
-compression dictionaries emacs gcc glib gnuzilla guile haskell
-image-viewers imagemagick kodi libreoffice linux lisp mail man
+compression databases dictionaries emacs gcc glib gnuzilla guile
+haskell image-viewers imagemagick kodi libreoffice linux lisp mail man
 messaging ncdu package-management password-utils python scheme tls
 version-control video w3m web xdisorg)
 
@@ -43,17 +43,18 @@ version-control video w3m web xdisorg)
   libreoffice ; Office suite
   ghc-pandoc  ; Convert Markdown
 
-  htop            ; Pretty `top'
-  unzip
-  shellcheck
-  stow            ; Dotfiles management
-  gnu-make        ; GNU Make
   cloc            ; Count code
+  gnu-make        ; GNU Make
+  htop            ; Pretty `top'
   lm-sensors      ; `sensors'
   ncdu            ; TUI `du'
   netcat          ; TCP
   nmap
   openssl
+  shellcheck
+  sqlite
+  stow            ; Dotfiles management
+  unzip
 
   translate-shell ; Translation in CLI and Emacs
 
@@ -96,6 +97,7 @@ version-control video w3m web xdisorg)
   emacs-org-mind-map       ; General mind maps from Org files
 
   emacs-aggressive-indent  ; Auto indent minor mode
+  emacs-beginend
   emacs-company            ; Complition framework
   emacs-company-quickhelp  ; Help pages for Company
   emacs-debbugs            ; <https://debbugs.gnu.org/> interface
@@ -111,6 +113,8 @@ version-control video w3m web xdisorg)
   emacs-helm-make          ; Front end to `make'
   emacs-helm-projectile    ; Helm interface for Projectile
   emacs-highlight-stages   ; Highlight code stages
+  emacs-htmlize
+  emacs-highlight-symbol
   emacs-ivy                ; Complition framework
   emacs-markdown-mode      ; Commonmark major mode
   emacs-multiple-cursors   ; Multi cursor
@@ -123,6 +127,7 @@ version-control video w3m web xdisorg)
   emacs-smartparens        ; Structured editing
   emacs-transmission       ; Front end to transmission-daemon
   emacs-transpose-frame    ; M-x transpose-frame
+  emacs-undo-tree          ; Undo visualisation
   emacs-use-package        ; Lazy configuration
   emacs-w3m                ; Front end to w3m command line web browser
   emacs-which-key          ; Key bindings help
