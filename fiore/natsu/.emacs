@@ -285,8 +285,11 @@
 (defengine youtube-live
   "https://www.youtube.com/results?sp=EgJAAQ%%253D%%253D&search_query=%s")
 
-(defengine youtube-rss
+(defengine youtube-rss-channel
   "https://www.youtube.com/feeds/videos.xml?channel_id=%s")
+
+(defengine youtube-rss-user
+  "https://www.youtube.com/feeds/videos.xml?user=%s")
 
 
 ;;;
