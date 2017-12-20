@@ -264,6 +264,14 @@
 (defengine google
   "http://www.google.com/search?ie=utf-8&oe=utf-8&q=%s")
 
+(defengine google-door-music
+  ;; https://github.com/gotbletu/dotfiles/blob/66b2ce9744564a48717c97163a5c34ad1b56d50e/surfraw/.config/surfraw/elvi/opendir_music
+  (concat "https://www.google.com/search?q=%s"
+          "%%20%%2B(.ogg|.mp3|.wav|.ac3|.flac|.wma|.m4a)"
+          "%%20%%2Bintitle:%%22index%%20of%%22%%20"
+          "-inurl:(jsp|pl|php|html|aspx|htm|cf|shtml)%%20"
+          "-inurl:(listen77|mp3raid|mp3toss|mp3drug|index_of|wallywashis)"))
+
 (defengine google-video
   "https://www.google.com/search?q=%s&tbm=vid")
 
