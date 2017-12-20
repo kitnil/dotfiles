@@ -225,35 +225,11 @@
   "https://duckduckgo.com/?q=%s"
   :keybinding "d")
 
-(defengine startpage
-  "https://www.startpage.com/do/search?query=%s"
-  :keybinding "st")
-
-(defengine startpage-hippie
-  (concat "https://www.startpage.com/do/dsearch?query=%s"
-          "+c"
-          "+-c%%2B%%2B"
-          "+-c%%23&cat=web"
-          "&pl=opensearch"
-          "&language=english"))
-
-(defengine melpa
-  "https://melpa.org/#/?q=%s")
-
 (defengine github
   "https://github.com/search?ref=simplesearch&q=%s")
 
-(defengine github-hippie-gpl
+(defengine github-gpl
   (concat "https://github.com/search?ref=simplesearch&q=%s"
-          "+-language:objectivec"
-          "+-language:java"
-          "+-language:javascript"
-          "+-language:csharp"
-          "+-language:kotlin"
-          "+-language:swift"
-          "+-language:php"
-          "+-language:vue"
-          "+-language:autohotkey"
           "+license%%3Agpl"))
 
 (defengine github-hippie
@@ -268,12 +244,18 @@
           "+-language:vue"
           "+-language:autohotkey"))
 
-(defengine github-gpl
+(defengine github-hippie-gpl
   (concat "https://github.com/search?ref=simplesearch&q=%s"
+          "+-language:objectivec"
+          "+-language:java"
+          "+-language:javascript"
+          "+-language:csharp"
+          "+-language:kotlin"
+          "+-language:swift"
+          "+-language:php"
+          "+-language:vue"
+          "+-language:autohotkey"
           "+license%%3Agpl"))
-
-(defengine openhub
-  "https://www.openhub.net/p?ref=homepage&query=%s")
 
 (defengine google
   "http://www.google.com/search?ie=utf-8&oe=utf-8&q=%s")
@@ -289,20 +271,38 @@
 (defengine mankier
   "https://www.mankier.com/?q=%s")
 
-(defengine tldr
-  "https://tldr.ostera.io/%s")
+(defengine melpa
+  "https://melpa.org/#/?q=%s")
 
-(defengine rfcs
-  "http://pretty-rfc.herokuapp.com/search?q=%s")
+(defengine openhub
+  "https://www.openhub.net/p?ref=homepage&query=%s")
 
 (defengine reddit-unixporn
   "https://www.reddit.com/r/unixporn/search?q=%s&restrict_sr=on")
+
+(defengine rfcs
+  "http://pretty-rfc.herokuapp.com/search?q=%s")
 
 (defengine searx
   "http://searx.tk/?q=%s")
 
 (defengine stack-overflow
   "https://stackoverflow.com/search?q=%s")
+
+(defengine startpage
+  "https://www.startpage.com/do/search?query=%s"
+  :keybinding "st")
+
+(defengine startpage-hippie
+  (concat "https://www.startpage.com/do/dsearch?query=%s"
+          "+c"
+          "+-c%%2B%%2B"
+          "+-c%%23&cat=web"
+          "&pl=opensearch"
+          "&language=english"))
+
+(defengine tldr
+  "https://tldr.ostera.io/%s")
 
 (defengine wikipedia
   "http://www.wikipedia.org/search-redirect.php?language=en&go=Go&search=%s")
