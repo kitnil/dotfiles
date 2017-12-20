@@ -14,7 +14,7 @@ version-control video w3m web xdisorg)
   aspell-dict-ru
 
   guile-commonmark ; Commonmark for Guile
-  gwl              ; Guix workflow management
+  ;; gwl              ; Guix workflow management
   haunt            ; Guile static site generator
 
   aria2        ; Download utility
