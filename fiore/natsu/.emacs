@@ -25,7 +25,6 @@
 
 (setq initial-buffer-choice t)
 
-(setq mail-user-agent 'gnus-user-agent)
 (setq smtpmail-queue-mail t)
 
 (add-to-list 'exec-path (expand-file-name "~/.guix-profile.d/gdb/bin"))
@@ -34,6 +33,11 @@
 
 (use-package org-protocol :defer 5)
 (use-package jl-encrypt :defer 5)
+
+;; See: <https://notmuchmail.org/pipermail/notmuch/2014/019797.html>
+(use-package notmuch
+  :commands notmuch-search
+  :config (setq mail-user-agent 'gnus-user-agent))
 
 
 ;;;
