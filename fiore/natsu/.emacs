@@ -868,7 +868,8 @@ the appropriate network slug that we extract from the nick."
      git-commit-mode-hook
      org-mode-hook)
     . smartparens-strict-mode)
-   ((prog-mode-hook) . yas-minor-mode)))
+   ((prog-mode-hook) . yas-minor-mode)
+   ((prog-mode-hook) . hs-minor-mode )))
 
 (defun wi-find-stumpwm-init-file ()
   "Edit the `stumpwm-init-file', in another window."
