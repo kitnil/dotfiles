@@ -24,6 +24,7 @@ version-control video w3m web xdisorg)
 
   redshift  ; Color temperature
   python-clf ; Interface to <https://commandlinefu.com/>
+  neofetch
 
   gource ; 3D visualisation tool for source control repositories
 
@@ -41,6 +42,7 @@ version-control video w3m web xdisorg)
   obs         ; OBS Studio
 
   libreoffice ; Office suite
+  xpdf        ; Standart PDF reader XAW
   ghc-pandoc  ; Convert Markdown
 
   cloc            ; Count code
@@ -103,6 +105,7 @@ version-control video w3m web xdisorg)
   emacs-debbugs            ; <https://debbugs.gnu.org/> interface
   emacs-elfeed             ; RSS reader
   emacs-erc-hl-nicks       ; for ERC
+  emacs-expand-region
   emacs-default-encrypt    ; Sign mail automatically
   emacs-god-mode           ; Commands without modifier keys
   emacs-ggtags             ; Front end to GNU Global
