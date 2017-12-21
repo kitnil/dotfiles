@@ -965,7 +965,13 @@ the appropriate network slug that we extract from the nick."
         "https://fedoramagazine.org/feed/"
         "http://planet.emacsen.org/atom.xml"
         "http://steckerhalter.tk/index.xml"
-        "https://www.reddit.com/r/freegames/.rss"))
+        "https://www.reddit.com/r/freegames/.rss"
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UC2eYFnH61tmytImy1mTYvhA" video)
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCkK9UDm_ZNrq_rIXCz3xCGA" video)
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCMV8p6Lb-bd6UZtTc_QD4zA" video)
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCbHXJGd7c8Hy4z0-YX1Jf3Q" video)
+        ("https://www.youtube.com/feeds/videos.xml?user=tuxreviews" video)
+        ("https://www.youtube.com/feeds/videos.xml?user=EposVox" video)))
 
 (defun wi-fullname-and-email ()
   (format "%s <%s>" user-full-name user-mail-address))
