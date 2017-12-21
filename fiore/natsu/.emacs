@@ -479,35 +479,44 @@
 ;;;
 
 (defconst wi-c--prettify-symbols-alist
-  '(("->"        . (?  (Br . Bl) ?→ (Br . Bl) ? ))
-    ("=="        . ?≡)
-    ("!"         . ?¬)
-    ("&&"        . ?∧)
-    ("||"        . ?∨)
-    ("!="        . ?≢)
-    ("<="        . ?≤)
-    (">="        . ?≥)
-    ("true"      . ?T)
-    ("false"     . ?F)
-    ("NULL"      . ?N)
-    ("int"       . ?ℤ)
-    ("float"     . ?ℚ)
-    ("union"     . ?∪)
-    (" * "       . (? (Br . Bl) ?· (Br . Bl) ? ))
-    (" / "       . (? (Br . Bl) ?÷ (Br . Bl) ? ))
-    ("uint32_t"  . (?ℕ (Br . Bl) ?₃ (Br . Bl) ?₂))
-    ("uint8_t"   . (?ℕ (Br . Bl) ?₈))
-    ("void"      . ?Ø)
-    ("rand"      . ?𝔼)
+  '((" % " . (? (Br . Bl) ?m
+                (Br . Bl) ?o
+                (Br . Bl) ?d
+                (Br . Bl) ? ))
+    (" * " . (? (Br . Bl) ?·
+                (Br . Bl) ? ))
+    (" / " . (? (Br . Bl) ?÷
+                (Br . Bl) ? ))
+    ("!" . ?¬)
+    ("!=" . ?≢)
+    ("&&" . ?∧)
+    ("->" . (?  (Br . Bl) ?→
+                (Br . Bl) ? ))
+    ("<=" . ?≤)
+    ("==" . ?≡)
+    (">=" . ?≥)
+    ("NULL" . ?N)
+    ("false" . ?F)
+    ("float" . ?ℚ)
+    ("int" . ?ℤ)
+    ("rand" . ?𝔼)
+    ("true" . ?T)
+    ("uint32_t" . (?ℕ (Br . Bl) ?₃
+                      (Br . Bl) ?₂))
+    ("uint8_t" . (?ℕ (Br . Bl) ?₈))
+    ("union" . ?∪)
+    ("void" . ?Ø)
     ("x_1" . (?x (Br . Bl) ?₁))
     ("x_2" . (?x (Br . Bl) ?₂))
     ("y_1" . (?y (Br . Bl) ?₁))
     ("y_2" . (?y (Br . Bl) ?₂))
-    (" % "       . (?  (Br . Bl) ?m (Br . Bl) ?o (Br . Bl) ?d (Br . Bl) ? ))))
+    ("||" . ?∨)))
 
-(add-hook 'c-mode-hook (lambda ()
-                         (set (make-local-variable 'prettify-symbols-alist)
-                              wi-c--prettify-symbols-alist)))
+(add-hook 'c-mode-hook
+          (lambda ()
+            (set (make-local-variable 'prettify-symbols-alist)
+                 wi-c--prettify-symbols-alist)))
+(add-hook 'c-mode-hook 'prettify-symbols-mode)
 
 (with-eval-after-load 'cc-vars
   (add-to-list 'c-cleanup-list 'space-before-funcall))
