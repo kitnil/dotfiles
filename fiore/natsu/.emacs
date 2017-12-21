@@ -229,6 +229,12 @@
   "https://duckduckgo.com/?q=%s"
   :keybinding "d")
 
+(defengine explainshell
+  "https://www.explainshell.com/explain?cmd=%s")
+
+(defengine fdroid
+  "https://f-droid.org/packages/#q=%s")
+
 (defengine github
   "https://github.com/search?ref=simplesearch&q=%s")
 
