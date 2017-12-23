@@ -99,6 +99,58 @@ editor with athena toolkit" )
      `(#:configure-flags '("--with-x-toolkit=athena")
                          ,@(package-arguments emacs)))))
 
+(define-public emacs-athena-next
+  (let ((commit "4122d54067c61bbdff5aab7ddf5dfe5b5797b218"))
+    (package
+      (inherit emacs-athena)
+      (name "emacs-athena-next")
+      (version (string-append "26" "." (string-take commit 7)))
+      (source
+       (origin
+         (method url-fetch)
+         (uri (string-append "https://git.savannah.gnu.org/cgit/"
+                             "emacs.git/snapshot/emacs-"
+                             commit ".tar.gz"))
+         (file-name (string-append name "-" version ".tar.gz"))
+         (patches (search-patches "emacs-exec-path.patch"
+                                  "emacs-source-date-epoch.patch"))
+         (modules '((guix build utils)))
+         (snippet
+          ;; Delete the bundled byte-compiled elisp files and
+          ;; generated autoloads.
+          '(with-directory-excursion "lisp"
+             (for-each delete-file
+                       (append (find-files "." "\\.elc$")
+                               (find-files "." "loaddefs\\.el$")))
+
+             ;; Make sure Tramp looks for binaries in the right places on
+             ;; remote GuixSD machines, where 'getconf PATH' returns
+             ;; something bogus.
+             (substitute* "net/tramp-sh.el"
+               ;; Patch the line after "(defcustom tramp-remote-path".
+               (("\\(tramp-default-remote-path")
+                (format #f "(tramp-default-remote-path ~s ~s ~s ~s "
+                        "~/.guix-profile/bin" "~/.guix-profile/sbin"
+                        "/run/current-system/profile/bin"
+                        "/run/current-system/profile/sbin")))))
+         (sha256
+          (base32 "1bngb51hjwjygv8gj9hdnbyvch2w1v9c5dg24igmk95sj7ncx0yq"))))
+      (native-inputs
+       `(("autoconf" ,autoconf)
+         ("automake" ,automake)
+         ,@(package-native-inputs emacs)))
+      (arguments
+       (substitute-keyword-arguments
+           `(#:parallel-build? #t
+             #:tests? #f
+             ,@(package-arguments emacs))
+         ((#:phases phases)
+          `(modify-phases ,phases
+             (add-after 'unpack 'autogen
+               (lambda _
+                 (zero? (system* "sh" "autogen.sh"))))
+             (delete 'reset-gzip-timestamps))))))))
+
 (define-public emacs-company-lua
   (let ((commit "0be8122f3adf57ad27953bf4b03545d6298d3da4")
         (revision "1"))
