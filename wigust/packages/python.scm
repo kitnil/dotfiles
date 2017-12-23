@@ -259,3 +259,27 @@ Features:
 @item Minimal dependencies
 @end itemize\n")
     (license license:gpl3+)))
+
+(define-public python-unicode
+  (package
+    (name "python-unicode")
+    (version "2.4")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append
+             "http://kassiopeia.juls.savba.sk/~garabik/software/unicode/"
+             "unicode_" version ".tar.gz"))
+       (sha256
+        (base32
+         "0p01axlakaksjmrfndh9ly313rc306yq3qjisda2h9fc54ih8wwg"))))
+    (build-system python-build-system)
+    (home-page "http://kassiopeia.juls.savba.sk/")
+    (synopsis "Display unicode character properties")
+    (description "@code{unicode} is a command-line utility that
+displays properties for a given unicode character, or searches unicode
+database for a given name.")
+    (license license:gpl3+)))
+
+(define-public python2-unicode
+  (package-with-python2 python-unicode))
