@@ -82,11 +82,6 @@ git-hash ()
     git -C $1 rev-parse HEAD
 }
 
-guix-environment-make ()
-{
-    guix environment --pure guix --ad-hoc help2man -- make
-}
-
 history-usage ()
 {
     history \
