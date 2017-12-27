@@ -232,6 +232,9 @@
 (defengine explainshell
   "https://www.explainshell.com/explain?cmd=%s")
 
+(defengine debfiles
+  "https://packages.debian.org/search?searchon=contents&keywords=%s")
+
 (defengine fdroid
   "https://f-droid.org/packages/#q=%s")
 
