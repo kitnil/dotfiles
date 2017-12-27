@@ -3,6 +3,9 @@
 
 ;; Tip: "M-x e" on `(emacs-init-time)'.
 
+;; Prettify without breaking indentation,
+;; see <http://endlessparentheses.com/using-prettify-symbols-in-clojure-and-elisp-without-breaking-indentation.html>.
+
 ;; Prevent stale elisp bytecode from shadowing more up-to-date source
 ;; files.  Source: <https://github.com/technomancy/better-defaults>
 (setq load-prefer-newer t)
@@ -459,22 +462,8 @@
   (setq geiser-guile-binary '("guile" "--no-auto-compile")))
 
 (defconst wi-scheme--prettify-symbols-alist
-  '(("lambda"  . ?λ)
-    ("lambda*" . (?λ (Br . Bl) ?*))
-    ("#t"      . ?T)
-    ("#f"      . ?F)
-    ("'()"     . ?E)
-    ("not"     . ?¬)
-    ("and"     . ?∧)
-    ("or"      . ?∨)
-    ("eq?"     . ≡)
-    ("<="      . ?≤)
-    (">="      . ?≥)
-    ("->"      . ?→)
-    ("x_1" . (?x (Br . Bl) ?₁))
-    ("x_2" . (?x (Br . Bl) ?₂))
-    ("y_1" . (?y (Br . Bl) ?₁))
-    ("y_2" . (?y (Br . Bl) ?₂))))
+  '(("lambda" . ?λ)
+    ("lambda*" . (?λ (Br . Bl) ?*))))
 
 (add-hooks
  '(((scheme-mode-hook geiser-repl-mode-hook)
@@ -895,7 +884,6 @@ the appropriate network slug that we extract from the nick."
     . guix-prettify-mode)
    ((c-mode-hook) . ggtags-mode)
    ((scheme-mode-hook) . guix-devel-mode)
-   ((prog-mode-hook) . prettify-symbols-mode)
    ((prog-mode-hook) . rainbow-delimiters-mode)
    ((prog-mode-hook
      minibuffer-inactive-mode-hook
