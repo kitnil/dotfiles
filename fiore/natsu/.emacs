@@ -705,7 +705,7 @@
       (quote
        (("freenode.net" "#icecat" "#emacs" "#grub"
          ;; "#clojure" "##math"
-         "##c" "#bash"
+         "##c" "#bash" "#SDL" "#chicken"
          ;; "#fedora" "#fedora-admin" "#fedora-devel"
          ;; "#fedora-noc" "#fedora-meeting" "#fedora-qa"
          "#gnu" "#fsf" "#gnus" "#guile" "#guix" "#stumpwm" "#replicant" "#gdb"
