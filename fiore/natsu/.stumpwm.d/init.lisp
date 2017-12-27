@@ -183,6 +183,9 @@
 
 (load-module "screenshot")
 
+(defcommand set-background-dark () ()
+  (run-shell-command "xsetroot -solid black"))
+
 (defun time-date-and-time-restrict ()
   (time-format "%Y-%m-%d-%H-%M-%S"))
 
