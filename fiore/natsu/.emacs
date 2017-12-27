@@ -773,6 +773,9 @@
           ("g" "guix" plain (file "guix.org")
            "%?")
 
+          ("r" "read" plain (file "read.org")
+           "%?")
+
           ("o" "misc" plain (file "misc.org")
            "%?")
 
