@@ -105,7 +105,7 @@ etags-c ()
 youtube-dl-uploader ()
 {
     URL=$1
-    nohup youtube-dl --output '/srv/videos/%(uploader_id)s/%(title)s-%(id)s.%(ext)s' $URL &
+    youtube-dl --output '/srv/videos/%(uploader_id)s/%(title)s-%(id)s.%(ext)s' $URL
 }
 
 unalias ls
