@@ -344,6 +344,9 @@
 (defengine youtube-rss-user
   "https://www.youtube.com/feeds/videos.xml?user=%s")
 
+(defengine webarchive
+  "https://web.archive.org/web/*/%s")
+
 
 ;;;
 ;;; Usability functions
