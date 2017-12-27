@@ -119,6 +119,7 @@ alias emacs-no-x="emacs -nw"
 alias emacs-org-video="emacs -nw ~/org/video.org"
 alias feh-svg="feh --magick-timeout 10"
 alias free-human="free -ht"
+alias git-show-contributers='PAGER= git shortlog -sne'
 alias guile-no-autocompile="guile --no-auto-compile"
 alias guix-configure="./configure --localstatedir=/var --prefix=''"
 alias guix-environment='guix environment --pure guix --ad-hoc help2man strace git gdb'
