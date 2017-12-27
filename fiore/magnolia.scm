@@ -142,7 +142,6 @@ EndSection
     (list (nginx-server-configuration
            (server-name '("www.magnolia.local"))
            (root "/srv/share")
-           (https-port #f)
            (ssl-certificate #f)
            (ssl-certificate-key #f))))))
 
@@ -153,7 +152,6 @@ EndSection
           (locations (list (nginx-location-configuration
                             (uri "/")
                             (body '("proxy_pass http://localhost:3000;")))))
-          (https-port #f)
           (ssl-certificate #f)
           (ssl-certificate-key #f)))))
 
@@ -162,7 +160,6 @@ EndSection
    (list (nginx-server-configuration
          (server-name '("natsu.magnolia.local"))
          (root "/home/natsu/public_html")
-         (https-port #f)
          (ssl-certificate #f)
          (ssl-certificate-key #f)))))
 
