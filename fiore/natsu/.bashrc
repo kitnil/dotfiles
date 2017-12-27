@@ -108,6 +108,8 @@ youtube-dl-uploader ()
     youtube-dl --output '/srv/videos/%(uploader_id)s/%(title)s-%(id)s.%(ext)s' $URL
 }
 
+export GUIX_PACKAGE_PATH=$HOME/src/guix-wigust
+
 unalias ls
 unalias grep
 
