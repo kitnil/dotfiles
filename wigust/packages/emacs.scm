@@ -2507,7 +2507,7 @@ Org files.")
       (license license:gpl3+))))
 
 (define-public emacs-guix-checkout
-  (let ((commit "80980e064a9d5f0fa19ad2ac033d104d42021ce8")
+  (let ((commit "cacfb7c063f29193d71ef3588f0d0c342d2f84c8")
         (revision "1"))
     (package
       (inherit emacs-guix)
@@ -2523,7 +2523,7 @@ Org files.")
                                    "-" version "-checkout"))
          (sha256
           (base32
-           "18qnnl18x07399xq41fy9rpzqsvjgm2w4520q5labjl6ndc9y248"))))
+           "1aaggksxcwvsddlv2aj8n2bwh0j8bbg8wn7yrl4kjf5ahp07gx6a"))))
       (arguments
        (append (package-arguments emacs-guix)
                '(#:phases
