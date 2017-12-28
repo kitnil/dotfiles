@@ -2912,3 +2912,25 @@ major or minor mode.
 Hitting @code{RET} enables the mode, @code{C-z} shows the mode
 documentation.")
     (license license:gpl3+)))
+
+(define-public emacs-rsw-elisp
+  (package
+    (name "emacs-rsw-elisp")
+    (version "1.0.5")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append "https://github.com/rswgnu/rsw-elisp"
+                                  "/archive/" version ".tar.gz"))
+
+              (sha256
+               (base32
+                "1jnn7xfwl3wxc87v44ccsf1wwp80par3xgcvfb1icd6zchjmlcps"))))
+    (build-system emacs-build-system)
+    (home-page "https://github.com/rswgnu/rsw-elisp")
+    (synopsis "Improved expressions that interactively evaluate Emacs Lisp")
+    (description "This package improves and replaces the GNU Emacs commands
+that interactively evaluate Emacs Lisp expressions.  The new commands replace
+standard key bindings and are all prefixed with rsw-elisp-.  They work the
+same way as the old commands when called non-interactively; only the
+interactive behavior should be different.")
+    (license license:gpl3+)))
