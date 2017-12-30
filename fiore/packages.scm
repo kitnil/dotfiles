@@ -1,11 +1,12 @@
 (use-modules (gnu) (guix packages)
              (wigust packages emacs) (wigust packages python))
 
-(use-package-modules admin aspell audio bittorrent code commencement
-compression databases dictionaries emacs gcc glib gnuzilla guile
-haskell image-viewers imagemagick kodi libreoffice linux lisp mail man
-messaging ncdu package-management password-utils python scheme tls
-version-control video w3m web xdisorg)
+(use-package-modules admin aspell audio bittorrent code conkeror
+commencement compression databases dictionaries emacs gcc glib
+gnuzilla guile haskell image-viewers imagemagick kodi libreoffice
+linux lisp mail man messaging ncdu ncurses package-management
+password-utils pdf python scheme tls version-control video w3m web
+xdisorg)
 
 (packages->manifest
  (list
@@ -30,6 +31,7 @@ version-control video w3m web xdisorg)
 
   cli-visualizer
 
+  conkeror
   icecat ; Web browser
 
   isync   ; Sync IMAP
@@ -46,16 +48,19 @@ version-control video w3m web xdisorg)
   ghc-pandoc  ; Convert Markdown
 
   cloc            ; Count code
+  diffoscope
   gnu-make        ; GNU Make
   htop            ; Pretty `top'
   lm-sensors      ; `sensors'
   ncdu            ; TUI `du'
+  ncurses
   netcat          ; TCP
   nmap
   openssl
   shellcheck
   sqlite
   stow            ; Dotfiles management
+  the-silver-searcher
   unzip
 
   translate-shell ; Translation in CLI and Emacs
@@ -85,15 +90,16 @@ version-control video w3m web xdisorg)
 
   python-starred ; Fetch a list of stars from GitHub user
 
+  emacs-eval-in-repl       ; Evaluate to different Repls
   emacs-add-hooks
-  emacs-esup
-  emacs-helm-gtags
-  emacs-fancy-narrow
   emacs-crux
   emacs-debpaste           ; Front end to <https://paste.debian.net/>
-  emacs-eval-in-repl       ; Evaluate to different Repls
+  emacs-esup
   emacs-ewmctrl            ; Control X windows from Emacs
+  emacs-fancy-narrow
   emacs-helm-firefox       ; Search for bookmarks in Icecat
+  emacs-helm-gtags
+  emacs-helm-mode-manager
   emacs-helm-pass          ; Front end to password-store
   emacs-move-text
   emacs-org-mind-map       ; General mind maps from Org files
@@ -103,22 +109,24 @@ version-control video w3m web xdisorg)
   emacs-company            ; Complition framework
   emacs-company-quickhelp  ; Help pages for Company
   emacs-debbugs            ; <https://debbugs.gnu.org/> interface
+  emacs-default-encrypt    ; Sign mail automatically
   emacs-elfeed             ; RSS reader
   emacs-erc-hl-nicks       ; for ERC
   emacs-expand-region
-  emacs-default-encrypt    ; Sign mail automatically
-  emacs-god-mode           ; Commands without modifier keys
+  emacs-ffap-rfc-space
   emacs-ggtags             ; Front end to GNU Global
   emacs-git-gutter
   emacs-gitpatch           ; Send patches
+  emacs-god-mode           ; Commands without modifier keys
   emacs-guix               ; Guix interface
   emacs-helm               ; Narrowing framework
   emacs-helm-make          ; Front end to `make'
   emacs-helm-projectile    ; Helm interface for Projectile
   emacs-highlight-stages   ; Highlight code stages
-  emacs-htmlize
   emacs-highlight-symbol
+  emacs-htmlize
   emacs-ivy                ; Complition framework
+  emacs-lua-mode
   emacs-markdown-mode      ; Commonmark major mode
   emacs-multiple-cursors   ; Multi cursor
   emacs-nix-mode           ; Nix language mode
@@ -136,6 +144,8 @@ version-control video w3m web xdisorg)
   emacs-which-key          ; Key bindings help
   emacs-yasnippet          ; Snippets
   emacs-yasnippet-snippets ; Collection of snippets
+  haskell-mode
+
   flycheck                 ; Syntax checker
   geiser                   ; Scheme bridge
   magit                    ; Emacs interface for Git
