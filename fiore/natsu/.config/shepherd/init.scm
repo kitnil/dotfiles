@@ -1,6 +1,6 @@
 (use-modules (shepherd service))
 
-(define %bin-directory "/var/guix/profiles/system/profile/bin/")
+(define %bin-directory "/home/natsu/.guix-profile/bin/")
 
 (define redshift
   (make <service>
@@ -11,8 +11,17 @@
     #:stop (make-kill-destructor)
     #:respawn? #t))
 
-(register-services redshift)
+(define transmission
+  (make <service>
+    #:docstring '("Light-weight BitTorrent client")
+    #:provides '(transmission)
+    #:start (make-forkexec-constructor
+             (list (string-append %bin-directory "transmission-daemon")))
+    #:stop (make-kill-destructor)
+    #:respawn? #t))
 
-(start 'redshift)
+(register-services redshift transmission)
+
+(start 'transmission)
 
 (action 'shepherd 'daemonize)
