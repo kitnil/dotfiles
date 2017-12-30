@@ -136,3 +136,5 @@ alias trans-en="trans en:ru"
 alias trans-ru="trans ru:en"
 alias xclip-kill-clipboard="xclip -i -selection clipboard"
 alias youtube-dl-proxy='youtube-dl --proxy "socks5://localhost:9050/"'
+export CHICKEN_REPOSITORY=~/.eggs/lib/chicken/8
+export CHICKEN_DOC_REPOSITORY=/home/natsu/.eggs/share/chicken-doc

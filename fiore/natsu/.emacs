@@ -32,6 +32,9 @@
 
 (add-to-list 'exec-path (expand-file-name "~/.guix-profile.d/gdb/bin"))
 
+(setenv "CHICKEN_DOC_REPOSITORY" (expand-file-name "~/.eggs/share/chicken-doc"))
+(setenv "CHICKEN_REPOSITORY" (expand-file-name "~/.eggs/lib/chicken/8"))
+
 ;; TODO: Make initialization without require
 
 (use-package org-protocol :defer 5)
@@ -455,7 +458,7 @@
 ;;;
 
 (with-eval-after-load 'geiser
-  (setq geiser-active-implementations (quote (guile))))
+  (setq geiser-active-implementations (quote (guile chicken))))
 
 (with-eval-after-load 'geiser-guile
   (add-to-list 'geiser-guile-load-path "/home/natsu/src/guix")
