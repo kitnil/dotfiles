@@ -1051,9 +1051,8 @@ in the variable `browse-url-mpv-arguments' to mpv."
 (setq browse-url-browser-function
       `(("^ftp://.*" . browse-ftp-tramp)
         ("^https?://debbugs\\.gnu\\.org/.*" . debbugs-browse-url)
-        ("^https?://w*\\.?youtube.com/watch\\?v=.*" . browse-url-mpv)
         ;; TODO: ("https?://bugs.gnu.org/.*" . debbugs-browse-url)
-        ("." . browse-url-firefox)))
+        ("." . browse-url-conkeror)))
 
 (with-eval-after-load 'yasnippet
   (setq yas-snippet-dirs

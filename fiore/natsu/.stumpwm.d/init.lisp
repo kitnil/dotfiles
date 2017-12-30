@@ -65,8 +65,8 @@
             "Start Chromium via proxy"
             (run-shell-command "chromium --proxy-server='socks5://localhost:9050' --host-resolver-rules='MAP * ~NOTFOUND , EXCLUDE localhost'"))
 
-(define-key *root-map* (kbd "w") "icecat")
-(define-key *root-map* (kbd "C-w") "icecat")
+(define-key *root-map* (kbd "w") "conkeror")
+(define-key *root-map* (kbd "C-w") "conkeror")
 (define-key *root-map* (kbd "M-w") "chromium")
 
 (defcommand mpv () ()
