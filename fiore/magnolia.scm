@@ -145,6 +145,16 @@ EndSection
            (ssl-certificate #f)
            (ssl-certificate-key #f))))))
 
+(define torrent-nginx-service
+  (simple-service 'torrent-publish-nginx nginx-service-type
+   (list (nginx-server-configuration
+          (server-name '("torrent.magnolia.local"))
+          (locations (list (nginx-location-configuration
+                            (uri "/")
+                            (body '("proxy_pass http://localhost:9091;")))))
+          (ssl-certificate #f)
+          (ssl-certificate-key #f)))))
+
 (define guix-publish-nginx-service
   (simple-service 'guix-publish-nginx nginx-service-type
    (list (nginx-server-configuration
@@ -188,6 +198,7 @@ EndSection
   ("cgit.magnolia.local." ""  "IN"  "A"  "192.168.105.120")
   ("guix.magnolia.local." ""  "IN"  "A"  "192.168.105.120")
   ("www.magnolia.local." ""  "IN"  "A"  "192.168.105.120")
+  ("torrent.magnolia.local." ""  "IN"  "A"  "192.168.105.120")
   ("natsu.magnolia.local." ""  "IN"  "A"  "192.168.105.120"))
 
 (define master-zone
@@ -285,7 +296,8 @@ EndSection
      (plain-file "hosts"
                  (string-append (local-host-aliases host-name)
                                 (prefix-local-host-aliases
-                                 '("cgit" "guix" "www" "natsu") host-name ".local")
+                                 '("cgit" "guix" "www" "natsu" "torrent")
+                                 host-name ".local")
                                 %facebook-host-aliases)))
 
     ;; Lightweight desktop with custom packages from guix-wigust
@@ -420,6 +432,7 @@ EndSection
                                (nginx (list %cgit-configuration-nginx-custom))))
 
                      guix-publish-nginx-service
+                     torrent-nginx-service
                      natsu-nginx-service
 
                      (simple-service 'adb udev-service-type
