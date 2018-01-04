@@ -2965,3 +2965,22 @@ interactive behavior should be different.")
     (synopsis "Convert between PCRE, Emacs and rx regexp syntax")
     (description "Convert between PCRE, Emacs and rx regexp syntax.")
     (license license:gpl3+))))
+
+(define-public emacs-interactive-align
+  (package
+    (name "emacs-interactive-align")
+    (version "0.1.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append "https://github.com/mkcms/interactive-align/"
+                           "archive/" "v" version ".tar.gz"))
+
+       (sha256
+        (base32
+         "0sibpgb4lp6yy3pziak8f3hz4b28yj0dqy2nzh51z3d0b63h528m"))))
+    (build-system emacs-build-system)
+    (home-page "https://github.com/mkcms/interactive-align/")
+    (synopsis "Interactive align-regexp command in Emacs")
+    (description "Interactive align-regexp command in Emacs")
+    (license license:gpl3+)))
