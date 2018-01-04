@@ -858,6 +858,14 @@ the appropriate network slug that we extract from the nick."
 ;; ;; Define networks
 (use-package znc :defer 5
   :config (vbe:znc-add-server "localhost" 8060 "natsu" '(freenode)))
+(use-package emms-player-mpv
+  :defer 5
+  :config
+  (add-to-list 'emms-player-list 'emms-player-mpv)
+  (add-to-list 'emms-player-mpv-parameters "--no-video")
+  (add-to-list 'emms-player-mpv-parameters "--no-resume-playback")
+  ;; (add-to-list 'emms-player-mpv-parameters "--volume=40")
+  )
 
 
 ;;;
