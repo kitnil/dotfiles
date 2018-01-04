@@ -890,11 +890,7 @@ the appropriate network slug that we extract from the nick."
       (sort-subr reverse nextrecfun endrecfun))))
 
 (add-hooks
- '(((benchmark-init/tabulated-mode-hook debbugs-gnu-mode-hook
-     dired-mode-hook ewmctrl-mode-hook guix-output-list-mode-hook
-     ibuffer-mode-hook strace-mode-hook)
-    . hl-line-mode)
-   ((diff-mode-hook dired-mode-hook proced-post-display-hook
+ '(((diff-mode-hook dired-mode-hook proced-post-display-hook
      shell-mode-hook)
     . guix-prettify-mode)
    ((c-mode-hook) . ggtags-mode)
