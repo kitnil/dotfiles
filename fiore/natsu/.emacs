@@ -145,6 +145,7 @@
 (which-key-add-key-based-replacements "C-c h" "helm")
 (bind-keys :prefix "C-c h" :prefix-map wi-helm-map
            ("b" . helm-buffers-list)
+           ("e" . helm-emms)
            ("i" . helm-imenu)
            ("m" . helm-make)
            ("r" . helm-bookmarks)
