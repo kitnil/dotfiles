@@ -861,13 +861,29 @@ the appropriate network slug that we extract from the nick."
 (use-package znc :defer 5
   :config (vbe:znc-add-server "localhost" 8060 "natsu" '(freenode)))
 (use-package emms-player-mpv
+(use-package emms-setup
   :defer 5
   :config
-  (add-to-list 'emms-player-list 'emms-player-mpv)
-  (add-to-list 'emms-player-mpv-parameters "--no-video")
-  (add-to-list 'emms-player-mpv-parameters "--no-resume-playback")
-  ;; (add-to-list 'emms-player-mpv-parameters "--volume=40")
-  )
+  (emms-standard)
+  (emms-default-players)
+
+  (use-package emms-player-mpv
+    :config
+    (add-to-list 'emms-player-list 'emms-player-mpv)
+    (add-to-list 'emms-player-mpv-parameters "--no-video")
+    (add-to-list 'emms-player-mpv-parameters "--no-resume-playback")
+    ;; (add-to-list 'emms-player-mpv-parameters "--volume=40")
+    ))
+
+(use-package helm-emms
+  :after emms-setup
+  :config
+  (use-package helm-adaptive)
+  (setq helm-emms-use-track-description-function t)
+  (setq emms-track-description-function (lambda (v) (assoc-default 'name v)))
+  (setq emms-source-file-default-directory "/srv/music")
+  (add-to-list 'helm-emms-music-extensions "mkv")
+  (add-to-list 'helm-emms-music-extensions "webm"))
 
 
 ;;;
