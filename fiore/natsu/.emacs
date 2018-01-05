@@ -151,9 +151,10 @@
            ("r" . helm-bookmarks)
            ("s" . helm-pass)
            ("t" . helm-top)
+           ("v" . helm-wigust-stream)
+           ("w" . helm-stumpwm-commands)
            ("x" . helm-M-x)
-           ("y" . helm-show-kill-ring)
-           ("w" . helm-stumpwm-commands))
+           ("y" . helm-show-kill-ring))
 
 (which-key-add-key-based-replacements "C-c i" "ivy")
 (which-key-add-key-based-replacements "C-c i h" "counsel-help")
@@ -885,6 +886,15 @@ the appropriate network slug that we extract from the nick."
   (setq emms-source-file-default-directory "/srv/music")
   (add-to-list 'helm-emms-music-extensions "mkv")
   (add-to-list 'helm-emms-music-extensions "webm"))
+
+(defun helm-wigust-stream ()
+  (helm :sources (helm-build-sync-source "urls"
+                   :action (lambda (x) (concat (browse-url-chromium x)))
+                   :candidates '("https://www.twitch.tv/entr_ru"
+                                 "https://www.twitch.tv/artgameslp"
+                                 "https://www.youtube.com/user/ArtGamesLP")
+                   :fuzzy-match t)
+        :buffer "*helm urls*"))
 
 
 ;;;
