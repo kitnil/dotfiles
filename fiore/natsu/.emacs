@@ -48,6 +48,10 @@
   :commands notmuch-search
   :config (setq mail-user-agent 'gnus-user-agent))
 
+(use-package undo-tree-mode :defer 5 :config (global-undo-tree-mode))
+
+(use-package projectile :defer 5 :config (projectile-global-mode))
+
 
 ;;;
 ;;; Enable functions
@@ -938,8 +942,6 @@ the appropriate network slug that we extract from the nick."
   "Edit the `stumpwm-init-file', in another window."
   (interactive)
   (find-file-other-window (expand-file-name "~/.stumpwm.d/init.lisp")))
-
-(global-undo-tree-mode)
 
 ;; Deletes up to the provided character
 ;; Doesn’t delete the provided character
