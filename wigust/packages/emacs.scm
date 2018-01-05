@@ -2966,6 +2966,27 @@ interactive behavior should be different.")
     (description "Convert between PCRE, Emacs and rx regexp syntax.")
     (license license:gpl3+))))
 
+(define-public emacs-helm-emms
+  (let ((commit "f1d3280f4a8b3523ef8c39ebeb50b8c85a112a2a")
+        (revision "1"))
+    (package
+      (name "emacs-helm-emms")
+      (version "1.3")
+      (source (origin
+                (method git-fetch)
+                (uri (git-reference
+                      (url "https://github.com/emacs-helm/helm-emms/")
+                      (commit commit)))
+
+                (sha256
+                 (base32
+                  "06111034rvh770ljzdbw7d6rkvy40bjvp4c06ss5s624pyd6qd74"))))
+      (build-system emacs-build-system)
+      (home-page "https://github.com/emacs-helm/helm-emms/")
+      (synopsis "Basic helm interface to emms")
+      (description "Basic helm interface to emms")
+      (license license:gpl3+))))
+
 (define-public emacs-interactive-align
   (package
     (name "emacs-interactive-align")
