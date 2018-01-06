@@ -1067,6 +1067,23 @@ the appropriate network slug that we extract from the nick."
 (global-prettify-symbols-mode)
 (setq prettify-symbols-unprettify-at-point 'right-edge)
 
+(defvar browse-url-streamlink-program "streamlink")
+(defvar browse-url-streamlink-arguments '("-p" "mpv"))
+(defvar browse-url-streamlink-quality "best")
+(defun browse-url-streamlink (url &optional new-window)
+  "Ask the mpv video player to load URL.
+Defaults to the URL around or before point.  Passes the strings
+in the variable `browse-url-streamlink-arguments' to mpv."
+  (interactive (browse-url-interactive-arg "URL: "))
+  (let* ((process-environment (browse-url-process-environment)))
+    (apply 'start-process
+           (concat "streamlink " url)
+           nil
+           browse-url-streamlink-program
+           `(,@browse-url-streamlink-arguments
+             ,url
+             ,browse-url-streamlink-quality))))
+
 (setq browse-url-mpv-program "mpv")
 (setq browse-url-mpv-arguments nil)
 (setq browse-url-mpv-remote-program "~/bin/mpv-remote")
