@@ -215,7 +215,7 @@
 (bind-key "M-z"    #'zap-up-to-char)
 (bind-key "C-c u"  #'undo-tree-visualize)
 
-(bind-key "<C-tab>" #'hs-toggle-hiding scheme-mode-map)
+; TODO: (bind-key "<C-tab>" #'hs-toggle-hiding scheme-mode-map)
 
 (add-to-list 'auto-mode-alist '("PKGBUILD" . shell-script-mode))
 
