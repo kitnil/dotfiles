@@ -815,6 +815,24 @@
          :auto-sitemap t
          :sitemap-filename "index")))
 
+(defun wigust-mir-org-uniq ()
+  "Remove duplicate subheadings, preserving order."
+  ;; See <http://lists.gnu.org/archive/html/emacs-orgmode/2018-01/msg00000.html>.
+  (interactive)
+  (let ((seen (make-hash-table :test 'equal))
+        (removed 0))
+    (save-excursion
+      (org-map-entries (lambda ()
+                         (let ((heading (org-get-heading t t t t)))
+                           (if (not (gethash heading seen))
+                               (puthash heading t seen)
+                             (org-cut-subtree)
+                             (org-backward-heading-same-level 1)
+                             (setq removed (1+ removed)))))
+                       (format "LEVEL=%s" (1+ (org-current-level)))
+                       'tree))
+    (message "Removed %d duplicates" removed)))
+
 
 ;;;
 ;;; ZNC
