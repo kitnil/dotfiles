@@ -884,7 +884,6 @@ the appropriate network slug that we extract from the nick."
 (use-package helm-emms
   :after emms-setup
   :config
-  (use-package helm-adaptive)
   (setq helm-emms-use-track-description-function t)
   (setq emms-track-description-function (lambda (v) (assoc-default 'name v)))
   (setq emms-source-file-default-directory "/srv/music")
