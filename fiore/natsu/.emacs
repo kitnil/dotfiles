@@ -891,9 +891,16 @@ the appropriate network slug that we extract from the nick."
   (add-to-list 'helm-emms-music-extensions "mkv")
   (add-to-list 'helm-emms-music-extensions "webm"))
 
-(defun helm-wigust-stream ()
+(defun helm-wigust-stream (func)
+  ""
+  (interactive (list (completing-read "Engine: " '(chromium streamlink))))
   (helm :sources (helm-build-sync-source "urls"
-                   :action (lambda (x) (concat (browse-url-chromium x)))
+                   :action (lambda (candidate)
+                             (funcall (cond ((string-equal func "chromium")
+                                             'browse-url-chromium)
+                                            ((string-equal func "streamlink")
+                                             'browse-url-streamlink))
+                                      candidate))
                    :candidates '("https://www.twitch.tv/entr_ru"
                                  "https://www.twitch.tv/artgameslp"
                                  "https://www.youtube.com/user/ArtGamesLP")
