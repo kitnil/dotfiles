@@ -130,7 +130,7 @@ alias list-functions="compgen -A function"
 alias mpv-quite='mpv --msg-level=all=no --no-resume-playback --keep-open=no'
 alias ps-tree="ps -ejH"
 alias remove-dublicate-lines="awk '!x[$0]++'"
-alias root-guix-pull='sudo guix pull --url=file:///home/natsu/src/guix --branch=wip-cgit'
+alias root-guix-pull='sudo guix pull --url=file:///home/natsu/src/guix --branch=wip-cgit -c 0'
 alias show-functions="declare -f"
 alias show-ip="curl http://ipecho.net/plain"
 alias trans-en="trans en:ru"
