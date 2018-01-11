@@ -881,9 +881,10 @@ the appropriate network slug that we extract from the nick."
 (setq znc-erc-connector 'vbe:znc-erc-connector)
 
 ;; ;; Define networks
-(use-package znc :defer 5
-  :config (vbe:znc-add-server "localhost" 8060 "natsu" '(freenode)))
-(use-package emms-player-mpv
+(use-package znc
+  :defer 5
+  :config (vbe:znc-add-server "localhost" 8060 "natsu" '(freenode twitch)))
+
 (use-package emms-setup
   :defer 5
   :config
