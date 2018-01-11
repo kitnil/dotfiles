@@ -31,8 +31,6 @@ xsetroot -solid black
 # Rxvt colors and other
 xrdb -merge ~/.Xresources
 
-# xmodmap ~/.Xmodmap
-
 export PATH=~/bin:$PATH
 
 # Left hand mouse
