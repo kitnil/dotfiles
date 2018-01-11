@@ -39,8 +39,7 @@
 
 (use-package org-protocol :defer 5)
 (use-package jl-encrypt :defer 5)
-(use-package crux
-  :bind (("C-c o c" . crux-open-with)))
+(use-package crux :defer 5)
 
 ;; See: <https://notmuchmail.org/pipermail/notmuch/2014/019797.html>
 (use-package notmuch
