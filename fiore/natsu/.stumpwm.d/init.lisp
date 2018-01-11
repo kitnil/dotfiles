@@ -1,6 +1,8 @@
 (in-package :stumpwm)
 
 (setf *startup-message* nil)
+(setf *message-window-gravity* :center)
+(setf *input-window-gravity* :center)
 
 (set-module-dir "/home/natsu/.stumpwm.d/modules/")
 
@@ -11,25 +13,25 @@
 (set-font (make-instance 'xft:font
                          :family "DejaVu Sans Mono"
                          :subfamily "Book"
-                         :size 14))
+                         :size 16))
 
 (setf *window-border-style* :tight)
 
 (setf *ignore-wm-inc-hints* t)
 
-(set-win-bg-color "#DCDAD5")
+(set-win-bg-color "#dcdad5")
 (set-unfocus-color "#FFFFFF")
-(set-focus-color "#A52A2A")
-(set-fg-color "#000000")
-(set-bg-color "#FFFFFF")
-(set-border-color "#A52A2A")
-(set-msg-border-width 3)
+(set-focus-color "#daa520")
+(set-fg-color "#ffffff")
+(set-bg-color "#daa520")
+(set-border-color "#daa520")
+(set-msg-border-width 0)
 
-(set-float-focus-color "#A52A2A")
+(set-float-focus-color "#daa520")
 
-(setf *normal-border-width* 3
-      *transient-border-width* 3
-      *maxsize-border-width* 3)
+(setf *normal-border-width* 0
+      *transient-border-width* 0
+      *maxsize-border-width* 0)
 
 ;; Don't set it to “sloppy”,
 ;; because it could switch window after switch desktop
@@ -58,16 +60,26 @@
   (run-or-raise "icecat" '(:class "Icecat")))
 
 (defcommand chromium () ()
-            "Start or focus chromium."
-            (run-or-raise "exec /home/natsu/.guix-profile.d/chromium/bin/chromium" '(:class "Chromium-browser")))
+  "Start or focus chromium."
+  (run-or-raise "exec /home/natsu/.guix-profile.d/chromium/bin/chromium"
+                '(:class "Chromium-browser")))
 
 (defcommand chromium-proxy () ()
-            "Start Chromium via proxy"
-            (run-shell-command "chromium --proxy-server='socks5://localhost:9050' --host-resolver-rules='MAP * ~NOTFOUND , EXCLUDE localhost'"))
+  "Start Chromium via proxy"
+  (run-shell-command (concat "chromium"
+                             " --proxy-server='socks5://localhost:9050'"
+                             " --host-resolver-rules='MAP * ~NOTFOUND"
+                             " , EXCLUDE localhost'")))
 
 (define-key *root-map* (kbd "w") "conkeror")
 (define-key *root-map* (kbd "C-w") "conkeror")
 (define-key *root-map* (kbd "M-w") "chromium")
+
+(defcommand youtube () ()
+  "Start Chromium YouTube"
+  (run-shell-command (concat "chromium"
+                             " --profile-directory=Default"
+                             " --app-id=adnlfjpnmidfimlkaohpidplnoimahfh")))
 
 (defcommand mpv () ()
   "Start or focus mpv."
@@ -83,15 +95,24 @@
 
 (defcommand mpv-music () ()
   "Play music."
-  (run-shell-command "exec mpv --keep-open=no --msg-level=all=no --no-resume-playback /srv/music/*"))
+  (run-shell-command (concat "exec mpv"
+                             " --keep-open=no"
+                             " --msg-level=all=no"
+                             " --no-resume-playback"
+                             " /srv/music/*")))
 
 (defcommand youtube-dl () ()
   "Download video."
-  (run-shell-command "exec xterm -name youtube-dl -e youtube-dl $(xclip -o -selection clipboard)"))
+  (run-shell-command (concat "exec xterm -name youtube-dl"
+                             " -e youtube-dl"
+                             " $(xclip -o -selection clipboard)")))
 
 (defcommand youtube-dl-play () ()
   "Download video and play it."
-  (run-shell-command "exec xterm -name youtube-dl -e youtube-dl --exec 'mpv {}' $(xclip -o -selection clipboard)"))
+  (run-shell-command (concat "exec xterm -name youtube-dl"
+                             " -e youtube-dl"
+                             " --exec 'mpv {}'"
+                             " $(xclip -o -selection clipboard)")))
 
 (define-key *root-map* (kbd "m") "mpv")
 (define-key *root-map* (kbd "C-m") "xclip-mpv")
@@ -156,14 +177,11 @@
   "Run GNOME Debian in QEMU."
   (run-shell-command (concat "exec " (getenv "HOME") "/bin/debian.sh")))
 
-(setq *mode-line-border-color*     "#000000"
-      *mode-line-foreground-color* "#ffffff"
-      *mode-line-background-color* "#000000")
-(defcommand toggle-modeline () ()
-  "Toggle mode line."
-  (stumpwm:toggle-mode-line (stumpwm:current-screen)
-                            (stumpwm:current-head)))
-(setf *screen-mode-line-format* "%n^>%c%l%d")
+(setq *mode-line-border-color*     "#ffffff"
+      *mode-line-foreground-color* "#000000"
+      *mode-line-background-color* "#ffffff")
+
+(setf *screen-mode-line-format* "[^B%n^b] %W")
 
 (defcommand warp-mouse-active-frame () ()
   "Move mouse cursor to the top right of current frame."
