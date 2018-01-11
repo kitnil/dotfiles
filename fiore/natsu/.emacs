@@ -85,7 +85,8 @@
 
 (which-key-add-key-based-replacements "C-c o" "split")
 (bind-keys :prefix "C-c o" :prefix-map wi-split-map
-           ("s" . sp-split-sexp))
+           ("s" . sp-split-sexp)
+           ("c" . crux-open-with))
 
 (which-key-add-key-based-replacements "C-c v" "magit")
 (bind-keys :prefix "C-c v" :prefix-map wi-version-control-map
