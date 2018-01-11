@@ -929,6 +929,8 @@ the appropriate network slug that we extract from the nick."
 ;;; Misc
 ;;;
 
+(default-text-scale-mode)
+
 (defun wi-copy-file-name ()
   "Return current buffer file name."
   (interactive)
