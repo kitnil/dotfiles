@@ -110,7 +110,10 @@ xdisorg)
   emacs-company-quickhelp  ; Help pages for Company
   emacs-debbugs            ; <https://debbugs.gnu.org/> interface
   emacs-default-encrypt    ; Sign mail automatically
+  emacs-default-text-scale ; Scale text in all buffers
   emacs-elfeed             ; RSS reader
+  emacs-emms               ; Video and music player
+  emacs-emms-player-mpv    ; Frontend to MPV for Emms
   emacs-erc-hl-nicks       ; for ERC
   emacs-expand-region
   emacs-ffap-rfc-space
@@ -120,6 +123,7 @@ xdisorg)
   emacs-god-mode           ; Commands without modifier keys
   emacs-guix               ; Guix interface
   emacs-helm               ; Narrowing framework
+  emacs-helm-emms
   emacs-helm-make          ; Front end to `make'
   emacs-helm-projectile    ; Helm interface for Projectile
   emacs-highlight-stages   ; Highlight code stages
@@ -149,4 +153,6 @@ xdisorg)
   flycheck                 ; Syntax checker
   geiser                   ; Scheme bridge
   magit                    ; Emacs interface for Git
+
+  tome4                    ; Tails of Maj'Eyal
   ))
