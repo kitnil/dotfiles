@@ -21,6 +21,7 @@
   #:use-module (guix packages)
   #:use-module (guix download)
   #:use-module (guix git-download)
+  #:use-module (guix hg-download)
   #:use-module (guix gexp)
   #:use-module (guix monads)
   #:use-module (guix store)
@@ -3005,3 +3006,29 @@ interactive behavior should be different.")
     (synopsis "Interactive align-regexp command in Emacs")
     (description "Interactive align-regexp command in Emacs")
     (license license:gpl3+)))
+
+(define-public emacs-lognav-mode
+  (let ((changeset "a9b53f2da040")
+        (revision "1"))
+      (package
+    (name "emacs-lognav-mode")
+    (version (string-append "0.0.5-" revision "." changeset))
+    (source (origin
+              (method hg-fetch)
+              (uri (hg-reference
+                    (url "https://bitbucket.org/ellisvelo/lognav-mode")
+                    (changeset changeset)))
+              (file-name (string-append name "-" version "-checkout"))
+              (sha256
+               (base32
+                "0ka92x63zfgraby5ycypn3ri2s3s2b1m2j7fpb4r37bk9xkf90v4"))))
+    (build-system emacs-build-system)
+    (home-page "https://bitbucket.org/ellisvelo/lognav-mode")
+    (synopsis "Navigate log error messages in Emacs")
+    (description "Lognav-mode is a minor mode used for finding and navigating
+errors within a buffer or a log file.  For example, M-n moves the cursor to
+the first error within the log file.  M-p moves the cursor to the previous
+error.  Lognav-mode only highlights the errors that are visible on the screen
+rather than highlighting all errors found within the buffer.  This is
+especially useful when opening up large log files for analysis.")
+    (license license:gpl2+))))
