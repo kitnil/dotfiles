@@ -20,6 +20,9 @@ export MANPATH=$MANPATH:$HOME/.nix-profile/share/man
 ### Misc
 ###
 
+export CHICKEN_REPOSITORY=~/.eggs/lib/chicken/8
+export CHICKEN_DOC_REPOSITORY=/home/natsu/.eggs/share/chicken-doc
+
 export EDITOR='emacsclient'
 export MANWIDTH=80
 
@@ -120,9 +123,11 @@ alias emacs-org-video="emacs -nw ~/org/video.org"
 alias feh-svg="feh --magick-timeout 10"
 alias free-human="free -ht"
 alias git-show-contributers='PAGER= git shortlog -sne'
+alias git-worktree-list='git worktree list --porcelain'
 alias guile-no-autocompile="guile --no-auto-compile"
 alias guix-configure="./configure --localstatedir=/var --prefix=''"
 alias guix-environment='guix environment --pure guix --ad-hoc help2man strace git gdb'
+alias guix-reconfigure='sudo nohup guix system reconfigure -c 0 magnolia.scm &>/home/natsu/guix-reconfigure.log &'
 alias guix-wigust='GUIX_PACKAGE_PATH=$HOME/src/guix-wigust guix'
 alias history-grep="history | grep"
 alias list-bindings="bind -P"
@@ -137,7 +142,3 @@ alias trans-en="trans en:ru"
 alias trans-ru="trans ru:en"
 alias xclip-kill-clipboard="xclip -i -selection clipboard"
 alias youtube-dl-proxy='youtube-dl --proxy "socks5://localhost:9050/"'
-export CHICKEN_REPOSITORY=~/.eggs/lib/chicken/8
-export CHICKEN_DOC_REPOSITORY=/home/natsu/.eggs/share/chicken-doc
-alias git-worktree-list='git worktree list --porcelain'
-alias guix-reconfigure='sudo nohup guix system reconfigure -c 0 magnolia.scm &>/home/natsu/guix-reconfigure.log &'
