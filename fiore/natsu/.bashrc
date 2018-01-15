@@ -140,3 +140,4 @@ alias youtube-dl-proxy='youtube-dl --proxy "socks5://localhost:9050/"'
 export CHICKEN_REPOSITORY=~/.eggs/lib/chicken/8
 export CHICKEN_DOC_REPOSITORY=/home/natsu/.eggs/share/chicken-doc
 alias git-worktree-list='git worktree list --porcelain'
+alias guix-reconfigure='sudo nohup guix system reconfigure -c 0 magnolia.scm &>/home/natsu/guix-reconfigure.log &'
