@@ -1,3 +1,7 @@
+Create Both
+Expunge Both
+SyncState *
+
 IMAPAccount gmail
 Host imap.gmail.com
 User go.wigust@gmail.com
@@ -22,3 +26,11 @@ Patterns "INBOX" # Sync only INBOX
 # Create Both
 # Expunge Both
 # SyncState *
+
+Channel gmail-sent
+Master :gmail-remote:"[Gmail]/Sent Mail"
+Slave :gmail-local:sent
+
+Group gmail-all
+Channel gmail
+Channel gmail-sent
