@@ -217,6 +217,7 @@
 ; TODO: (bind-key "<C-tab>" #'hs-toggle-hiding scheme-mode-map)
 
 (add-to-list 'auto-mode-alist '("PKGBUILD" . shell-script-mode))
+(add-to-list 'auto-mode-alist '(".mbsyncrc" . conf-mode))
 
 (add-hook 'scheme-mode-hook
           (lambda () (local-set-key (kbd "<C-return>") 'eir-eval-in-geiser)))
