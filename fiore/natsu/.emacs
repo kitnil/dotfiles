@@ -1210,6 +1210,11 @@ in the variable `browse-url-mpv-arguments' to mpv."
 
 (which-key-mode)
 
+(defun wi-debbugs-gnu-list ()
+  (interactive)
+  (let ((debbugs-gnu-current-query `((submitter . ,user-mail-address))))
+    (debbugs-gnu nil)))
+
 (setq ewmctrl-wmctrl-path "/run/current-system/profile/bin/wmctrl")
 
 (with-eval-after-load 'debbugs-gnu
