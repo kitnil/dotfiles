@@ -961,6 +961,11 @@ the appropriate network slug that we extract from the nick."
    '(header-line
      ((t (:background "black" :foreground "grey90" :height 0.9))))))
 
+(defun wi-guix-hydra-latest-builds ()
+  (interactive)
+  (let ((guix-hydra-url "https://berlin.guixsd.org"))
+    (guix-hydra-latest-builds 100)))
+
 (default-text-scale-mode)
 (global-git-gutter-mode)
 
