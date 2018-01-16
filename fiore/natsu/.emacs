@@ -96,6 +96,8 @@
 
 (which-key-add-key-based-replacements "C-c v" "magit")
 (bind-keys :prefix "C-c v" :prefix-map wi-version-control-map
+           ("c" . magit-commit)
+           ("h" . git-gutter:stage-hunk)
            ("l" . magit-list-repositories)
            ("s" . magit-status))
 
