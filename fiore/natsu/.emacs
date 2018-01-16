@@ -50,6 +50,12 @@
 
 (use-package projectile :defer 5 :config (projectile-global-mode))
 
+(setq browse-url-browser-function
+      `(("^ftp://.*" . browse-ftp-tramp)
+        ("^https?://debbugs\\.gnu\\.org/.*" . debbugs-browse-url)
+        ;; TODO: ("https?://bugs.gnu.org/.*" . debbugs-browse-url)
+        ("." . browse-url-conkeror)))
+
 
 ;;;
 ;;; Enable functions
@@ -1127,12 +1133,6 @@ in the variable `browse-url-mpv-arguments' to mpv."
            (append
             browse-url-mpv-arguments
             (list url)))))
-
-(setq browse-url-browser-function
-      `(("^ftp://.*" . browse-ftp-tramp)
-        ("^https?://debbugs\\.gnu\\.org/.*" . debbugs-browse-url)
-        ;; TODO: ("https?://bugs.gnu.org/.*" . debbugs-browse-url)
-        ("." . browse-url-conkeror)))
 
 (with-eval-after-load 'yasnippet
   (setq yas-snippet-dirs
