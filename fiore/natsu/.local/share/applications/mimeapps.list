@@ -2,3 +2,11 @@
 x-scheme-handler/mailto=gnus.desktop;
 image/png=feh.desktop;
 application/pdf=xpdf.desktop;
+text/html=conkeror.desktop;
+text/xml=conkeror.desktop;
+application/xhtml+xml=conkeror.desktop;
+application/xml=conkeror.desktop;
+application/rss+xml=conkeror.desktop;
+application/rdf+xml=conkeror.desktop;
+x-scheme-handler/http=conkeror.desktop;
+x-scheme-handler/https=conkeror.desktop;
