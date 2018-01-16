@@ -898,6 +898,10 @@ the appropriate network slug that we extract from the nick."
   (emms-standard)
   (emms-default-players)
 
+  (setq emms-player-next-function 'emms-next-noerror)
+  (emms-mode-line -1)
+  (setq emms-playing-time-display-p nil)
+
   (use-package emms-player-mpv
     :config
     (add-to-list 'emms-player-list 'emms-player-mpv)
