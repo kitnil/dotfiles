@@ -94,6 +94,10 @@
            ("s" . sp-split-sexp)
            ("c" . crux-open-with))
 
+(which-key-add-key-based-replacements "C-c w" "word")
+(bind-keys :prefix "C-c w" :prefix-map wi-word-map
+           ("t" . show-translation))
+
 (which-key-add-key-based-replacements "C-c v" "magit")
 (bind-keys :prefix "C-c v" :prefix-map wi-version-control-map
            ("c" . magit-commit)
