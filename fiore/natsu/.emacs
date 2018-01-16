@@ -1,4 +1,4 @@
-;; Copyright © 2017 Oleg Pykhalov <go.wigust@gmail.com>
+;; Copyright © 2017, 2018 Oleg Pykhalov <go.wigust@gmail.com>
 ;; Released under the GNU GPLv3 or any later version.
 
 ;; Tip: "M-x e" on `(emacs-init-time)'.

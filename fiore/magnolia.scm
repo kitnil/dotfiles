@@ -1,5 +1,5 @@
 ;; GuixSD configuration file for the desktop machine.
-;; Copyright © 2017 Oleg Pykhalov <go.wigust@gmail.com>
+;; Copyright © 2017, 2018 Oleg Pykhalov <go.wigust@gmail.com>
 ;; Released under the GNU GPLv3 or any later version.
 
 (use-modules (gnu) (srfi srfi-1) (ice-9 popen) (ice-9 rdelim))
