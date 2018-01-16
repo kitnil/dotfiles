@@ -1,6 +1,11 @@
-Create Both
-Expunge Both
-SyncState *
+# Create Both
+
+# Don't enable for Gmail, because Gmail does auto-trashing.
+# See mbsync (1).
+#
+# Expunge Both
+
+# SyncState *
 
 IMAPAccount gmail
 Host imap.gmail.com
@@ -9,7 +14,7 @@ PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/.mailpass.gpg"
 AuthMechs LOGIN
 SSLType IMAPS
 CertificateFile /etc/ssl/certs/ca-certificates.crt
-PipelineDepth 1
+PipelineDepth 50
 
 IMAPStore gmail-remote
 Account gmail
@@ -23,9 +28,6 @@ Channel gmail
 Master :gmail-remote:
 Slave :gmail-local:
 Patterns "INBOX" # Sync only INBOX
-# Create Both
-# Expunge Both
-# SyncState *
 
 Channel gmail-sent
 Master :gmail-remote:"[Gmail]/Sent Mail"
