@@ -1198,7 +1198,10 @@ in the variable `browse-url-mpv-arguments' to mpv."
 
 (with-eval-after-load 'smartparens
   (require 'smartparens-config)
-  (sp-use-smartparens-bindings))
+  (sp-use-smartparens-bindings)
+
+  ;; https://github.com/Fuco1/smartparens/blob/master/docs/pair-management.rst
+  (sp-pair "“" "”"))
 
 (winner-mode 1)
 (windmove-default-keybindings)
