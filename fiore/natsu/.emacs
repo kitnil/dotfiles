@@ -941,6 +941,26 @@ the appropriate network slug that we extract from the nick."
 ;;; Misc
 ;;;
 
+
+(blink-cursor-mode)
+
+(defun wi-manoj-dark ()
+  (interactive)
+  (load-theme 'manoj-dark)
+  (custom-theme-set-faces
+   'manoj-dark
+   ;; '(magit-diff-added ((t (:inherit diff-added))))
+   ;; '(magit-diff-added-highlight ((t (:inherit diff-added :background "grey10"))))
+   ;; '(magit-diff-context-highlight ((t (:background "grey10"))))
+   ;; '(magit-diff-hunk-heading ((t (:inherit diff-hunk-header))))
+   ;; '(magit-diff-hunk-heading-highlight ((t (:inherit diff-hunk-header))))
+   ;; '(magit-diff-removed ((t (:inherit diff-removed))))
+   ;; '(magit-diff-removed-highlight ((t (:inherit diff-removed :background "grey10"))))
+   '(which-key-command-description-face ((t (:inherit font-lock-function-name-face :height 1.0))))
+   '(fringe ((t (:background "black" :foreground "Wheat"))))
+   '(header-line
+     ((t (:background "black" :foreground "grey90" :height 0.9))))))
+
 (default-text-scale-mode)
 (global-git-gutter-mode)
 
