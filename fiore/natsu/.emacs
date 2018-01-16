@@ -907,6 +907,7 @@ the appropriate network slug that we extract from the nick."
     (add-to-list 'emms-player-list 'emms-player-mpv)
     (add-to-list 'emms-player-mpv-parameters "--no-video")
     (add-to-list 'emms-player-mpv-parameters "--no-resume-playback")
+    (add-to-list 'emms-player-mpv-parameters "--keep-open=no")
     ;; (add-to-list 'emms-player-mpv-parameters "--volume=40")
     ))
 
