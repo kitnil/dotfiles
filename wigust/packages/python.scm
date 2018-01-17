@@ -304,3 +304,24 @@ standard.")
 
 (define-public python2-iso-639
   (package-with-python2 python-iso-639))
+
+(define-public python-iso3166
+  (package
+    (name "python-iso3166")
+    (version "0.8")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "iso3166" version))
+       (sha256
+        (base32
+         "0cs9w507dj93jj9z9di93lx2fplf8pma4jkrsvvb258dv6z1gszv"))))
+    (build-system python-build-system)
+    (home-page
+     "http://github.com/deactivated/python-iso3166")
+    (synopsis "Self-contained ISO 3166-1 country definitions")
+    (description "This package provides a ISO 3166-1 country definitions.")
+    (license license:expat)))
+
+(define-public python2-iso3166
+  (package-with-python2 python-iso3166))
