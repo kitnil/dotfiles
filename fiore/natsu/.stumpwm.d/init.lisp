@@ -140,6 +140,9 @@
 (define-key *root-map* (kbd "C-l") "exec xlock -mode blank")
 (define-key *root-map* (kbd "M-l") "turn-screen-off")
 
+(defcommand suspend () ()
+  (run-shell-command "exec loginctl suspend"))
+
 (defcommand run-xterm-command (cmd &optional collect-output-p) ((:shell "/bin/sh -c "))
   "Run the specified shell command in XTerm."
   (run-prog *shell-program*
