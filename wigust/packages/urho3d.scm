@@ -4,6 +4,7 @@
   #:use-module (guix utils)
   #:use-module (guix packages)
   #:use-module (guix download)
+  #:use-module (guix git-download)
   #:use-module (guix gexp)
   #:use-module (guix build-system cmake)
   #:use-module (gnu packages)
@@ -60,3 +61,21 @@
     (synopsis "Cross-platform 2D and 3D game engine")
     (description "Cross-platform 2D and 3D game engine")
     (license license:expat)))
+
+(define-public urho3d-checkout
+  (let ((commit "4af4148048a6443154c6f0498d32626d10f1e86b")
+        (revision "1"))
+    (package
+      (inherit urho3d)
+      (name "urho3d-checkout")
+      (version (string-append (package-version urho3d) "-" revision "."
+                              (string-take commit 7)))
+      (source (origin
+                (method git-fetch)
+                (uri (git-reference
+                      (url "https://github.com/urho3d/Urho3D")
+                      (commit commit)))
+                (file-name (string-append name "-" version "-checkout"))
+                (sha256
+                 (base32
+                  "1nchxswrkfgzsxghi6c55b27zy9127ni7yvnb4xw2xdddyfm1wl0")))))))
