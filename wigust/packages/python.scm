@@ -283,3 +283,24 @@ database for a given name.")
 
 (define-public python2-unicode
   (package-with-python2 python-unicode))
+
+(define-public python-iso-639
+  (package
+    (name "python-iso-639")
+    (version "0.4.5")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "iso-639" version))
+       (sha256
+        (base32
+         "0jffmh4m20q8j27xb2fqbnlghjj0cx8pgsbzqisdg65qh2wd976w"))))
+    (build-system python-build-system)
+    (home-page "https://github.com/noumar/iso639")
+    (synopsis "Python library for ISO 639 standard")
+    (description "This package provides a Python library for ISO 639
+standard.")
+    (license license:agpl3+)))
+
+(define-public python2-iso-639
+  (package-with-python2 python-iso-639))
