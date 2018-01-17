@@ -325,3 +325,24 @@ standard.")
 
 (define-public python2-iso3166
   (package-with-python2 python-iso3166))
+
+(define-public python-pycryptodome
+  (package
+    ;; FIXME: Skipping GMP tests (requires 'mpir' library)
+    (name "python-pycryptodome")
+    (version "3.4.7")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "pycryptodome" version))
+       (sha256
+        (base32
+         "1xrsd6ql4w0ypkxnsg3fivs3r3z6dd93x44lhvam7jzh3gixzn0q"))))
+    (build-system python-build-system)
+    (home-page "http://www.pycryptodome.org")
+    (synopsis "Cryptographic library for Python")
+    (description "This package provides a cryptographic library for Python.")
+    (license license:bsd-2)))
+
+(define-public python2-pycryptodome
+  (package-with-python2 python-pycryptodome))
