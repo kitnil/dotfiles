@@ -1241,6 +1241,11 @@ in the variable `browse-url-mpv-arguments' to mpv."
   (interactive)
   (set-frame-size (selected-frame) 80 24))
 
+(defun wi-wget-insert (url)
+  (interactive "sDownload URL: ")
+  (insert (shell-command-to-string
+           (concat "wget" " -q" " -O-" " " url))))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
