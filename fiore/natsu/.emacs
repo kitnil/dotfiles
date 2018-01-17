@@ -479,7 +479,8 @@
 ;;;
 
 (with-eval-after-load 'geiser
-  (setq geiser-active-implementations (quote (guile chicken))))
+  (setq geiser-active-implementations (quote (guile chicken)))
+  (setq geiser-default-implementation 'guile))
 
 (with-eval-after-load 'geiser-guile
   (add-to-list 'geiser-guile-load-path "/home/natsu/src/guix")
