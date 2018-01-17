@@ -346,3 +346,30 @@ standard.")
 
 (define-public python2-pycryptodome
   (package-with-python2 python-pycryptodome))
+
+(define-public streamlink
+  (package
+    (name "streamlink")
+    (version "0.9.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "streamlink" version))
+       (sha256
+        (base32
+         "1in0jqg9xpqwjkzskyy2iyq8zcfmsqich18mfyr47g62y3pjy98a"))))
+    (build-system python-build-system)
+    (home-page "https://github.com/streamlink/streamlink")
+    (inputs
+     `(("python-pysocks" ,python-pysocks)
+       ("python-websocket-client" ,python-websocket-client)
+       ("python-iso3166" ,python-iso3166)
+       ("python-iso-639" ,python-iso-639)
+       ("python-pycryptodome" ,python-pycryptodome)
+       ("python-requests" ,python-requests)
+       ("python-pytest" ,python-pytest)
+       ("python-mock" ,python-mock)))
+    (synopsis "Extract streams from various services")
+    (description "Streamlink is command-line utility that extracts streams
+from various services and pipes them into a video player of choice.")
+    (license license:bsd-2)))
