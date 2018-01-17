@@ -136,6 +136,10 @@
   (with-output-to-string (stream)
     (join-to-stream stream list delimiter)))
 
+;; Lock screen
+(define-key *root-map* (kbd "C-l") "exec xlock -mode blank")
+(define-key *root-map* (kbd "M-l") "turn-screen-off")
+
 (defcommand run-xterm-command (cmd &optional collect-output-p) ((:shell "/bin/sh -c "))
   "Run the specified shell command in XTerm."
   (run-prog *shell-program*
