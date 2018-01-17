@@ -56,3 +56,23 @@
            (gnus))
           (t
            (error "No candidate found")))))
+
+(setq gnus-visible-headers
+      (concat "^From:"
+              "\\|^Newsgroups:"
+              "\\|^Subject:"
+              "\\|^Date:"
+              "\\|^Followup-To:"
+              "\\|^Reply-To:"
+              "\\|^Organization:"
+              "\\|^Summary:"
+              "\\|^Keywords:"
+              "\\|^To:"
+              "\\|^[BGF]?Cc:"
+              "\\|^Posted-To:"
+              "\\|^Mail-Copies-To:"
+              "\\|^Mail-Followup-To:"
+              "\\|^Apparently-To:"
+              "\\|^User-Agent:"
+              "\\|^Gnus-Warning:"
+              "\\|^Resent-From:"))
