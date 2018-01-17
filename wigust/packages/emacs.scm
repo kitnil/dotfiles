@@ -2991,11 +2991,12 @@ decreasing the default font size in all GUI Emacs frames.")
       (license license:gpl3+))))
 
 (define-public emacs-helm-emms
-  (let ((commit "f1d3280f4a8b3523ef8c39ebeb50b8c85a112a2a")
+  (let ((commit "8133c1a854c8f9e32b3b4c74638fe197535c08f1")
         (revision "1"))
     (package
       (name "emacs-helm-emms")
-      (version "1.3")
+      (version (string-append "1.3" "-" revision "."
+                              (string-take commit 7)))
       (source (origin
                 (method git-fetch)
                 (uri (git-reference
