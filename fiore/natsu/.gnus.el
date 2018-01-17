@@ -76,3 +76,5 @@
               "\\|^User-Agent:"
               "\\|^Gnus-Warning:"
               "\\|^Resent-From:"))
+
+(setq gnus-summary-thread-gathering-function 'gnus-gather-threads-by-references)
