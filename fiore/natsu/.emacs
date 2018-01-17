@@ -50,10 +50,11 @@
 
 (use-package projectile :defer 5 :config (projectile-global-mode))
 
+(use-package debbugs-browse-url :defer 5) ; for debbugs-browse-url
+
 (setq browse-url-browser-function
       `(("^ftp://.*" . browse-ftp-tramp)
-        ("^https?://debbugs\\.gnu\\.org/.*" . debbugs-browse-url)
-        ;; TODO: ("https?://bugs.gnu.org/.*" . debbugs-browse-url)
+        (,debbugs-browse-url-regexp . debbugs-browse-url)
         ("." . browse-url-conkeror)))
 
 
