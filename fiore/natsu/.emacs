@@ -948,6 +948,7 @@ the appropriate network slug that we extract from the nick."
 ;;; Misc
 ;;;
 
+(setq dired-dwim-target t)
 
 (blink-cursor-mode)
 
