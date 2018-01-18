@@ -615,7 +615,6 @@
 (setq erc-join-buffer (quote bury))
 (setq erc-kill-buffer-on-part nil)
 (setq erc-kill-server-buffer-on-quit nil)
-(setq erc-log-insert-log-on-open t)
 (setq erc-networks-alist nil)
 (setq erc-nick-uniquifier nil)
 (setq erc-server-auto-reconnect t)
@@ -1267,6 +1266,9 @@ in the variable `browse-url-mpv-arguments' to mpv."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(erc-modules
+   (quote
+    (completion hl-nicks autojoin button fill irccontrols list match menu move-to-prompt netsplit networks noncommands readonly ring smiley stamp track)))
  '(indent-tabs-mode nil)
  '(safe-local-variable-values
    (quote
