@@ -15,28 +15,28 @@
 ;; To disable collection of benchmark data after init is done.
 ;; (add-hook 'after-init-hook 'benchmark-init/deactivate)
 
-;; Makes unpure packages archives unavailable
-(setq package-archives nil)
+(setq package-archives nil) ; Makes unpure packages archives unavailable
 
-(setq user-mail-address    "go.wigust@gmail.com")
-(setq user-full-name       "Oleg Pykhalov")
-(setq default-input-method "russian-computer")
+(setq user-mail-address "go.wigust@gmail.com")
+(setq user-full-name "Oleg Pykhalov")
+(setq default-input-method "russian-computer") ; C-\ will switch keyboard layout
 
-(setq display-time-24hr-format t)
-(setq calendar-date-style 'european)
-(setq calendar-week-start-day 1)
+(setq display-time-24hr-format t) ; No AM/PM
+(setq calendar-date-style 'european) ; day/month/year style calendar
+(setq calendar-week-start-day 1) ; Monday is the first day of the week
 
-(setq initial-buffer-choice t)
+(setq initial-buffer-choice t) ; Nothing after starting Emacs
 
-(setq smtpmail-queue-mail t)
+(setq smtpmail-queue-mail t) ; Call after typing M-x `smtpmail-send-queued-mail'
 
+;; TODO: Maybe remove
 (add-to-list 'exec-path (expand-file-name "~/.guix-profile.d/gdb/bin"))
 
+;; Geiser chicken
 (setenv "CHICKEN_DOC_REPOSITORY" (expand-file-name "~/.eggs/share/chicken-doc"))
 (setenv "CHICKEN_REPOSITORY" (expand-file-name "~/.eggs/lib/chicken/8"))
 
 ;; TODO: Make initialization without require
-
 (use-package org-protocol :defer 5)
 (use-package jl-encrypt :defer 5)
 (use-package crux :defer 5)
@@ -58,11 +58,7 @@
         (,debbugs-browse-url-regexp . debbugs-browse-url)
         ("." . browse-url-conkeror)))
 
-
-;;;
-;;; Enable functions
-;;;
-
+;; Enable functions
 (put 'narrow-to-region 'disabled nil)
 (put 'dired-find-alternate-file 'disabled nil)
 (put 'set-goal-column 'disabled nil)
