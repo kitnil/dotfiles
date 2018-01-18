@@ -50,7 +50,8 @@
 
 (use-package projectile :defer 5 :config (projectile-global-mode))
 
-(use-package debbugs-browse-url :defer 5) ; for debbugs-browse-url
+;; TODO: Lazy load
+(use-package debbugs-browse) ; for debbugs-browse-url
 
 (setq browse-url-browser-function
       `(("^ftp://.*" . browse-ftp-tramp)
