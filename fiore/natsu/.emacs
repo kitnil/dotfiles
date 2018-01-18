@@ -627,10 +627,10 @@
 (setq erc-user-full-name "Oleg Pykhalov")
 (setq erc-whowas-on-nosuchnick t)
 (setq erc-track-exclude-types '("NICK" "333" "353" "JOIN" "QUIT" "PART"))
-(setq erc-modules (quote (autojoin button completion fill irccontrols list
-                                   log match menu move-to-prompt netsplit
-                                   networks noncommands readonly ring
-                                   smiley stamp track)))
+(setq erc-modules
+      '(autojoin button completion fill irccontrols list match menu
+        move-to-prompt netsplit networks noncommandsreadonly ring
+        smiley stamp track))
 
 (defun wi-erc-connect-localhost ()
   "Connect to localhost irc network"
@@ -1266,9 +1266,6 @@ in the variable `browse-url-mpv-arguments' to mpv."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(erc-modules
-   (quote
-    (completion hl-nicks autojoin button fill irccontrols list match menu move-to-prompt netsplit networks noncommands readonly ring smiley stamp track)))
  '(indent-tabs-mode nil)
  '(safe-local-variable-values
    (quote
