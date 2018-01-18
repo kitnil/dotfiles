@@ -78,3 +78,6 @@
               "\\|^Resent-From:"))
 
 (setq gnus-summary-thread-gathering-function 'gnus-gather-threads-by-references)
+
+;; Mimetypes configured in <~/.mailcap>.
+;; See <https://www.emacswiki.org/emacs/MimeTypesWithGnus>.
