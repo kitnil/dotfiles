@@ -96,12 +96,16 @@
 (bind-keys :prefix "C-c w" :prefix-map wi-word-map
            ("t" . show-translation))
 
-(which-key-add-key-based-replacements "C-c v" "magit")
+(which-key-add-key-based-replacements "C-c v" "version-control")
 (bind-keys :prefix "C-c v" :prefix-map wi-version-control-map
            ("c" . magit-commit)
-           ("h" . git-gutter:stage-hunk)
            ("l" . magit-list-repositories)
            ("s" . magit-status))
+
+(which-key-add-key-based-replacements "C-c v h" "version-control-hunk")
+(bind-keys :prefix "C-c v h" :prefix-map wi-version-control-hunk-map
+           ("s" . git-gutter:stage-hunk)
+           ("r" . git-gutter:revert-hunk))
 
 (which-key-add-key-based-replacements "C-c f" "find")
 (bind-keys :prefix "C-c f" :prefix-map wi-find-map
