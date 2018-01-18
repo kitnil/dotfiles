@@ -4,7 +4,7 @@
 
 (setq gnus-permanently-visible-groups ".*INBOX")
 (setq mm-discouraged-alternatives '("text/html" "text/richtext"))
-(setq gnus-check-new-newsgroups nil)
+(setq gnus-check-new-newsgroups nil) ; Call `gnus-find-new-newsgroups' manually
 
 
 ;; (Info-goto-node "(gnus) Scoring On Other Headers")
