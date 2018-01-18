@@ -314,10 +314,17 @@
 (defengine google-video
   "https://www.google.com/search?q=%s&tbm=vid")
 
+;; TODO: Do more intelegent
+
 (defengine guix-devel
   (concat "https://lists.gnu.org/archive/cgi-bin/namazu.cgi?query=%s"
           "&submit=Search%%21"
           "&idxname=guix-devel&max=20" "&result=normal" "&sort=score"))
+
+(defengine emacs-devel
+  (concat "https://lists.gnu.org/archive/cgi-bin/namazu.cgi?query=%s"
+          "&submit=Search%%21"
+          "&idxname=emacs-devel&max=20" "&result=normal" "&sort=score"))
 
 (defengine mankier
   "https://www.mankier.com/?q=%s")
