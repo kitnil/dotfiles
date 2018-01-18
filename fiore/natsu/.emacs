@@ -205,6 +205,7 @@
 (which-key-add-key-based-replacements "C-c e" "emms")
 (bind-keys :prefix "C-c e" :prefix-map wi-emms-map
            ("e" . emms)
+           ("r" . emms-random)
            ("s" . emms-stop)
            ("n" . emms-next)
            ("p" . emms-previous))
