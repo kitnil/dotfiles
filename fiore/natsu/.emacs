@@ -630,8 +630,7 @@
 (setq erc-track-exclude-types '("NICK" "333" "353" "JOIN" "QUIT" "PART"))
 (setq erc-modules
       '(autojoin button completion fill irccontrols list match menu
-        move-to-prompt netsplit networks noncommandsreadonly ring
-        smiley stamp track))
+        move-to-prompt netsplit networks ring smiley stamp track))
 
 (defun wi-erc-connect-localhost ()
   "Connect to localhost irc network"
