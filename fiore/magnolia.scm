@@ -38,8 +38,10 @@ version-control virtualization wget xdisorg xorg zile)
 -m recent --update --seconds 60 --hitcount 4 --rttl \
 --name SSH -j DROP")
 
-       ;; Rules to accept web traffic only on private network.
-       (iptables "-A INPUT -p tcp --dport 80 -s 192.168.0.0/16 -j ACCEPT")
+       ;; TODO: Map over a list of ports
+       (iptables "-A INPUT -p tcp --dport 80 -s 192.168.0.0/16 -j ACCEPT") ; web
+       (iptables "-A INPUT -p tcp --dport 445 -s 192.168.0.0/16 -j ACCEPT") ; smb
+       (iptables "-A INPUT -p tcp --dport 3389 -s 192.168.0.0/16 -j ACCEPT") ; rdp
        (iptables "-A INPUT -p tcp --dport 80 -s 127.0.0.0/8 -j ACCEPT")
        (iptables "-A INPUT -p tcp --dport 80 -j DROP")
 
