@@ -342,7 +342,7 @@
 (defengine guix-help
   (concat "https://lists.gnu.org/archive/cgi-bin/namazu.cgi?query=%s"
           "&submit=Search%%21"
-          "&idxname=guix-help&max=20" "&result=normal" "&sort=score"))
+          "&idxname=help-guix&max=20" "&result=normal" "&sort=score"))
 
 (defengine guix-help-message-id
   (concat "https://lists.gnu.org/archive/cgi-bin/namazu.cgi?query="
