@@ -486,6 +486,34 @@
                    t
                    "^\\([^.]\\|\\.[^.]\\|\\.\\..\\)"))
 
+;; See <https://lists.gnu.org/archive/html/emacs-devel/2017-12/msg00017.html>.
+(defun wi-git-log (&optional repo commit)
+  "Check REPO for COMMIT and if it exists, display its commit message.
+Interactively, prompt for REPO, defaulting to emacs-master, and
+for COMMIT, defaulting to the commit hash at point."
+  (interactive "p")
+  (let* ((git-dir (if repo
+		      (read-directory-name "Repo: " "/mnt/data/steve/git/"
+					   nil t "emacs-master")
+		    "/mnt/data/steve/git/emacs-master"))
+	 (commit0 (or commit (read-string "Commit: " nil nil (word-at-point))))
+	 (default-directory git-dir)
+	 (output-buffer (get-buffer-create "*git log*"))
+	 (proc (progn
+		 (with-current-buffer output-buffer (erase-buffer))
+		 (call-process "git" nil output-buffer nil
+			       "branch" "--contains" commit0))))
+    (when proc
+      (with-current-buffer output-buffer
+	(goto-char (point-min))
+	(unless (looking-at "[ *]")
+	  (user-error "%s is not on branch %s" commit0
+		      (file-name-base git-dir)))
+	(insert "Branches:\n")
+	(goto-char (point-max))
+	(call-process "git" nil output-buffer nil "log" "-1" commit0)
+	(pop-to-buffer output-buffer)))))
+
 
 ;;;
 ;;; Elisp
