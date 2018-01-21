@@ -330,10 +330,28 @@
           "&submit=Search%%21"
           "&idxname=guix-devel&max=20" "&result=normal" "&sort=score"))
 
+(defengine guix-devel-message-id
+  (concat "https://lists.gnu.org/archive/cgi-bin/namazu.cgi?query="
+          "%%2Bmessage-id%%3A%s"
+          "&submit=Search%%21"
+          "&idxname=guix-devel"
+          "&max=20"
+          "&result=normal"
+          "&sort=score"))
+
 (defengine guix-help
   (concat "https://lists.gnu.org/archive/cgi-bin/namazu.cgi?query=%s"
           "&submit=Search%%21"
           "&idxname=guix-help&max=20" "&result=normal" "&sort=score"))
+
+(defengine guix-help-message-id
+  (concat "https://lists.gnu.org/archive/cgi-bin/namazu.cgi?query="
+          "%%2Bmessage-id%%3A%s"
+          "&submit=Search%%21"
+          "&idxname=help-guix"
+          "&max=20"
+          "&result=normal"
+          "&sort=score"))
 
 (defengine emacs-devel
   (concat "https://lists.gnu.org/archive/cgi-bin/namazu.cgi?query=%s"
