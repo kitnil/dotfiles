@@ -1094,7 +1094,8 @@ the appropriate network slug that we extract from the nick."
      org-mode-hook)
     . smartparens-strict-mode)
    ((prog-mode-hook) . yas-minor-mode)
-   ((prog-mode-hook) . hs-minor-mode )))
+   ((prog-mode-hook) . hs-minor-mode )
+   ((erc-mode-hook) . (lambda () (setq truncate-lines t)))))
 
 (defun wi-find-stumpwm-init-file ()
   "Edit the `stumpwm-init-file', in another window."
