@@ -1054,6 +1054,7 @@ the appropriate network slug that we extract from the nick."
 ;;; Misc
 ;;;
 
+;; See <https://www.emacswiki.org/emacs/DoWhatIMean>
 (setq dired-dwim-target t)
 
 (blink-cursor-mode)
