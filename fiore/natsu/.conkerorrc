@@ -7,6 +7,11 @@ define_webjump("startpage", "https://www.startpage.com/do/search",
 // Minimal font size
 // session_pref("font.minimum-size.x-western", 18);
 
+// Search color
+// Code from <https://www.freelists.org/post/conkeror/Changing-the-way-search-text-is-highlighted>.
+user_pref("ui.textSelectBackground", "#ff0000");
+user_pref("ui.textSelectBackgroundAttention", "#ff0000");
+
 // 
 //
 // History
