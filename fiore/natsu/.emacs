@@ -691,6 +691,7 @@ for COMMIT, defaulting to the commit hash at point."
 (setq erc-modules
       '(autojoin button completion fill irccontrols list match menu
         move-to-prompt netsplit networks ring smiley stamp track))
+(setq erc-fill-function 'erc-fill-static)
 
 (defun wi-erc-connect-localhost ()
   "Connect to localhost irc network"
