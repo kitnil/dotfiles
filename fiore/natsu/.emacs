@@ -367,6 +367,24 @@
           "&result=normal"
           "&sort=score"))
 
+(defengine emacs-orgmode
+  (concat "https://lists.gnu.org/archive/cgi-bin/namazu.cgi?query="
+          "%%2Bmessage-id%%3A%s"
+          "&submit=Search%%21"
+          "&idxname=emacs-orgmode"
+          "&max=20"
+          "&result=normal"
+          "&sort=score"))
+
+(defengine emacs-orgmode-message-id
+  (concat "https://lists.gnu.org/archive/cgi-bin/namazu.cgi?query="
+          "%%2Bmessage-id%%3A%s"
+          "&submit=Search%%21"
+          "&idxname=emacs-orgmode"
+          "&max=20"
+          "&result=normal"
+          "&sort=score"))
+
 (defengine mankier
   "https://www.mankier.com/?q=%s")
 
