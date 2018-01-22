@@ -1067,13 +1067,6 @@ the appropriate network slug that we extract from the nick."
   (load-theme 'manoj-dark)
   (custom-theme-set-faces
    'manoj-dark
-   ;; '(magit-diff-added ((t (:inherit diff-added))))
-   ;; '(magit-diff-added-highlight ((t (:inherit diff-added :background "grey10"))))
-   ;; '(magit-diff-context-highlight ((t (:background "grey10"))))
-   ;; '(magit-diff-hunk-heading ((t (:inherit diff-hunk-header))))
-   ;; '(magit-diff-hunk-heading-highlight ((t (:inherit diff-hunk-header))))
-   ;; '(magit-diff-removed ((t (:inherit diff-removed))))
-   ;; '(magit-diff-removed-highlight ((t (:inherit diff-removed :background "grey10"))))
    '(which-key-command-description-face ((t (:inherit font-lock-function-name-face :height 1.0))))
    '(fringe ((t (:background "black" :foreground "Wheat"))))
    '(header-line
