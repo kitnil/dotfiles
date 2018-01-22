@@ -1043,6 +1043,7 @@ the appropriate network slug that we extract from the nick."
                                              'browse-url-streamlink))
                                       candidate))
                    :candidates '("https://www.twitch.tv/entr_ru"
+                                 "https://www.youtube.com/user/streamguild"
                                  "https://www.twitch.tv/artgameslp"
                                  "https://www.youtube.com/user/ArtGamesLP")
                    :fuzzy-match t)
