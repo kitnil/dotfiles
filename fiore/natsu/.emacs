@@ -110,7 +110,8 @@
 (which-key-add-key-based-replacements "C-c f" "find")
 (bind-keys :prefix "C-c f" :prefix-map wi-find-map
            ("e" . guix-edit)
-           ("f" . ffap))
+           ("f" . ffap)
+           ("r" . ffap-read-only))
 
 (which-key-add-key-based-replacements "C-c t" "toggle")
 (bind-keys :prefix "C-c t" :prefix-map wi-toggle-map
