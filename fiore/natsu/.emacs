@@ -109,8 +109,11 @@
 
 (which-key-add-key-based-replacements "C-c f" "find")
 (bind-keys :prefix "C-c f" :prefix-map wi-find-map
+           ("c" . browse-url-chromium)
            ("e" . guix-edit)
            ("f" . ffap)
+           ("m" . browse-url-mpv)
+           ("i" . browse-url-firefox)
            ("r" . ffap-read-only))
 
 (which-key-add-key-based-replacements "C-c t" "toggle")
