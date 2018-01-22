@@ -1,0 +1,61 @@
+// Search engines
+define_webjump("startpage", "https://www.startpage.com/do/search",
+    $post_data = [["query", "%s"], ["cat", "web"],
+                  ["cmd", "process_search"], ["language", "english"],
+                  ["engine0", "v1all"], ["abp", "-1"]]);
+
+// Minimal font size
+// session_pref("font.minimum-size.x-western", 18);
+
+// 
+//
+// History
+//
+
+define_browser_object_class(
+    "history-url", null, 
+    function (I, prompt) {
+        check_buffer (I.buffer, content_buffer);
+        var result = yield I.buffer.window.minibuffer.read_url(
+            $prompt = prompt,  $use_webjumps = false, $use_history = true, $use_bookmarks = false);
+        yield co_return (result);
+    });
+
+interactive("find-url-from-history",
+            "Find a page from history in the current buffer",
+            "find-url",
+            $browser_object = browser_object_history_url);
+
+interactive("find-url-from-history-new-buffer",
+            "Find a page from history in a new buffer",
+            "find-url-new-buffer",
+            $browser_object = browser_object_history_url);
+
+define_key(content_buffer_normal_keymap, "h", "find-url-from-history-new-buffer");
+define_key(content_buffer_normal_keymap, "H", "find-url-from-history");
+
+// 
+// 
+// http://conkeror.org/Tips
+// 
+
+// Ask before closing the window
+add_hook("window_before_close_hook",
+         function () {
+             var w = get_recent_conkeror_window();
+             var result = (w == null) ||
+                 "y" == (yield w.minibuffer.read_single_character_option(
+                     $prompt = "Quit Conkeror? (y/n)",
+                     $options = ["y", "n"]));
+             yield co_return(result);
+         });
+
+// Big Hint Numbers
+register_user_stylesheet(
+    "data:text/css," +
+        escape(
+            "@namespace url(\"http://www.w3.org/1999/xhtml\");\n" +
+            "span.__conkeror_hint {\n"+
+            "  font-size: 18px !important;\n"+
+            "  line-height: 18px !important;\n"+
+            "}"));
