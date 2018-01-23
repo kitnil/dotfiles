@@ -74,6 +74,7 @@
               "\\|^Mail-Followup-To:"
               "\\|^Apparently-To:"
               "\\|^User-Agent:"
+              "\\|^Message-ID:"
               "\\|^Gnus-Warning:"
               "\\|^Resent-From:"))
 
