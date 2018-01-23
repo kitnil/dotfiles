@@ -40,10 +40,9 @@ wi-guix-graph ()
     guix graph --type=references "$1" | dot -Tsvg > "$2.svg"
 }
 
-guix-search-recsel ()
+wi-guix-search-recsel ()
 {
-    guix package -s "$1" \
-     | recsel -p name,synopsis,homepage
+    guix package -s "$1" | recsel -p name,synopsis,homepage
 }
 
 backup-home ()
