@@ -1357,6 +1357,11 @@ in the variable `browse-url-mpv-arguments' to mpv."
   (insert (shell-command-to-string
            (concat "wget" " -q" " -O-" " " url))))
 
+(defun wi-copy-cgit-guix-path (path)
+  "Copy cgit guix path to kill ring"
+  (interactive "sPath: ")
+  (kill-new (concat "https://git.savannah.gnu.org/cgit/guix.git/tree/" path)))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
