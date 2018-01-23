@@ -214,6 +214,9 @@
 (defun time-date-and-time-restrict ()
   (time-format "%Y-%m-%d-%H-%M-%S"))
 
+;; Tuesday January 3 2005 23:05:25
+(setq *time-format-string-default* "%A %B %e %Y %k:%M:%S")
+
 (defun screenshot-filename ()
   (concat (time-date-and-time-restrict)
           ".png"))
