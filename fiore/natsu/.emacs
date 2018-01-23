@@ -1352,10 +1352,16 @@ in the variable `browse-url-mpv-arguments' to mpv."
   (interactive)
   (set-frame-size (selected-frame) 80 24))
 
-(defun wi-wget-insert (url)
+(defun wi-wget ()
+  (shell-command-to-string (concat "wget" " -q" " -O-" " " url)))
+
+(defun wi-wget-switch (url)
+  "Download a file with wget and open it in buffer"
   (interactive "sDownload URL: ")
-  (insert (shell-command-to-string
-           (concat "wget" " -q" " -O-" " " url))))
+  (let ((buffer (generate-new-buffer "*wget*")))
+    (with-current-buffer buffer
+      (insert (shell-command-to-string (concat "wget" " -q" " -O-" " " url))))
+    (switch-to-buffer buffer)))
 
 (defun wi-copy-cgit-guix-path (path)
   "Copy cgit guix path to kill ring"
