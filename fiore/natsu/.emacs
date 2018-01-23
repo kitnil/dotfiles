@@ -265,6 +265,11 @@
 ;;; Search engines
 ;;;
 
+(with-eval-after-load 'engine-mode
+  (setq engine/keybinding-prefix "C-c k")
+  (engine/set-keymap-prefix (kbd engine/keybinding-prefix))
+  (engine-mode))
+
 (defengine arch-packages
   "https://www.archlinux.org/packages/?sort=&q=%s")
 
@@ -412,7 +417,7 @@
 
 (defengine startpage
   "https://www.startpage.com/do/search?query=%s"
-  :keybinding "st")
+  :keybinding "s")
 
 (defengine startpage-hippie
   (concat "https://www.startpage.com/do/dsearch?query=%s"
