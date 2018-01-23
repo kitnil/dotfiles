@@ -89,9 +89,9 @@
 
 (which-key-add-key-based-replacements "C-c o" "split")
 (bind-keys :prefix "C-c o" :prefix-map wi-split-map
+           ("c" . crux-open-with)
            ("j" . sp-join-sexp)
-           ("s" . sp-split-sexp)
-           ("c" . crux-open-with))
+           ("s" . sp-split-sexp))
 
 (which-key-add-key-based-replacements "C-c w" "word")
 (bind-keys :prefix "C-c w" :prefix-map wi-word-map
