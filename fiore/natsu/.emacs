@@ -1368,6 +1368,13 @@ in the variable `browse-url-mpv-arguments' to mpv."
   (interactive "sPath: ")
   (kill-new (concat "https://git.savannah.gnu.org/cgit/guix.git/tree/" path)))
 
+(defvar wi-guix-git-directory (expand-file-name "~/src/guix"))
+(defun wi-magit-show-commit-guix (commit)
+  "Show a Git `commit' from the Guix checkout."
+  (interactive "sCommit: ")
+  (let ((default-directory wi-guix-git-directory))
+    (magit-show-commit commit)))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
