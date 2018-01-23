@@ -35,10 +35,9 @@ export GUILE_LOAD_PATH="${GUILE_LOAD_PATH}\
 GUIX_LATEST=.config/guix/latest
 ROOT_GUIX_LATEST=/root/$GUIX_LATEST
 
-guix-graph ()
+wi-guix-graph ()
 {
-    guix graph --type=references "$1" \
-        | dot -Gsize="10,10" -Gratio=0.7 -Tpng -Nfontsize=48 > "$2.png"
+    guix graph --type=references "$1" | dot -Tsvg > "$2.svg"
 }
 
 guix-search-recsel ()
