@@ -1375,6 +1375,12 @@ in the variable `browse-url-mpv-arguments' to mpv."
   (let ((default-directory wi-guix-git-directory))
     (magit-show-commit commit)))
 
+(defun wi-magit-find-file-guix (commit file)
+  "Show a `file' from Git `commit' in the Guix checkout."
+  (interactive "sCommit: \nsFile: ")
+  (let ((default-directory wi-guix-git-directory))
+    (magit-find-file commit file)))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
