@@ -215,6 +215,12 @@
            ("r" . emms-random)
            ("s" . emms-stop))
 
+(which-key-add-key-based-replacements "C-c m d" "debbugs")
+(bind-keys :prefix "C-c m d" :prefix-map wi-debbugs-map
+           ("l" . debbugs-gnu)
+           ("s" . debbugs-gnu-search)
+           ("u" . wi-debbugs-gnu-list))
+
 (which-key-add-key-based-replacements "C-c m g" "gnus")
 (bind-keys :prefix "C-c m g" :prefix-map wi-gnus-map
            ("g" . gnus)
