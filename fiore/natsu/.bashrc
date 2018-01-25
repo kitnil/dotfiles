@@ -380,30 +380,29 @@ export GUIX_PACKAGE_PATH=$HOME/src/guix-wigust
 unalias ls
 unalias grep
 
-alias df-total="df -Tha --total"
-alias disable-history="set +o history" # Only for current session.
-alias emacs-no-x="emacs -nw"
-alias emacs-org-video="emacs -nw ~/org/video.org"
-alias feh-svg="feh --magick-timeout 10"
-alias free-human="free -ht"
-alias git-show-contributers='PAGER= git shortlog -sne'
-alias git-worktree-list='git worktree list --porcelain'
-alias guile-no-autocompile="guile --no-auto-compile"
-alias guix-configure="./configure --localstatedir=/var --prefix=''"
-alias guix-environment='guix environment --pure guix --ad-hoc help2man strace git gdb'
-alias guix-reconfigure='sudo nohup guix system reconfigure -c 0 magnolia.scm &>/home/natsu/guix-reconfigure.log &'
-alias guix-wigust='GUIX_PACKAGE_PATH=$HOME/src/guix-wigust guix'
-alias history-grep="history | grep"
-alias list-bindings="bind -P"
-alias list-functions="compgen -A function"
-alias mpv-quite='mpv --msg-level=all=no --no-resume-playback --keep-open=no'
-alias ps-tree="ps -ejH"
-alias remove-dublicate-lines="awk '!x[$0]++'"
-alias root-guix-pull='sudo guix pull --url=file:///home/natsu/src/guix --branch=wip-cgit -c 0'
-alias show-functions="declare -f"
-alias show-ip="curl http://ipecho.net/plain"
-alias trans-en="trans en:ru"
-alias trans-ru="trans ru:en"
-alias xclip-kill-clipboard="xclip -i -selection clipboard"
-alias youtube-dl-proxy='youtube-dl --proxy "socks5://localhost:9050/"'
-
+alias wi-df-total="df -Tha --total"
+alias wi-disable-history="set +o history" # Only for current session.
+alias wi-emacs-no-x="emacs -nw"
+alias wi-emacs-org-video="emacs -nw ~/org/video.org"
+alias wi-feh-svg="feh --magick-timeout 10"
+alias wi-free-human="free -ht"
+alias wi-git-show-contributers='PAGER= git shortlog -sne'
+alias wi-git-worktree-list='git worktree list --porcelain'
+alias wi-guile-no-autocompile="guile --no-auto-compile"
+alias wi-guix-configure="./configure --localstatedir=/var --prefix=''"
+alias wi-guix-environment='guix environment --pure guix --ad-hoc help2man strace git gdb'
+alias wi-guix-reconfigure='sudo nohup guix system reconfigure -c 0 magnolia.scm &>/home/natsu/guix-reconfigure.log &'
+alias wi-guix-wigust='GUIX_PACKAGE_PATH=$HOME/src/guix-wigust guix'
+alias wi-history-grep="history | grep"
+alias wi-list-bindings="bind -P"
+alias wi-list-functions="compgen -A function"
+alias wi-mpv-quite='mpv --msg-level=all=no --no-resume-playback --keep-open=no'
+alias wi-ps-tree="ps -ejH"
+alias wi-remove-dublicate-lines="awk '!x[$0]++'"
+alias wi-root-guix-pull='sudo guix pull --url=file:///home/natsu/src/guix --branch=wip-cgit -c 0'
+alias wi-show-functions="declare -f"
+alias wi-show-ip="curl http://ipecho.net/plain"
+alias wi-trans-en="trans en:ru"
+alias wi-trans-ru="trans ru:en"
+alias wi-xclip-kill-clipboard="xclip -i -selection clipboard"
+alias wi-youtube-dl-proxy='youtube-dl --proxy "socks5://localhost:9050/"'
