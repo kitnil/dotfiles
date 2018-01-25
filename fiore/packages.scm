@@ -121,7 +121,7 @@ xdisorg)
   emacs-git-gutter
   emacs-gitpatch           ; Send patches
   emacs-god-mode           ; Commands without modifier keys
-  emacs-guix               ; Guix interface
+  emacs-guix-checkout      ; Guix interface
   emacs-helm               ; Narrowing framework
   emacs-helm-emms
   emacs-helm-make          ; Front end to `make'
