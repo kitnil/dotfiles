@@ -350,6 +350,23 @@
 
 ;; TODO: Do more intelegent
 
+(defengine info-gnus-english
+  (concat "https://lists.gnu.org/archive/cgi-bin/namazu.cgi?query=%s"
+          "&submit=Search%%21"
+          "&idxname=info-gnus-english"
+          "&max=20"
+          "&result=normal"
+          "&sort=score"))
+
+(defengine info-gnus-english-message-id
+  (concat "https://lists.gnu.org/archive/cgi-bin/namazu.cgi?query="
+          "%%2Bmessage-id%%3A%s"
+          "&submit=Search%%21"
+          "&idxname=info-gnus-english"
+          "&max=20"
+          "&result=normal"
+          "&sort=score"))
+
 (defengine guix-devel
   (concat "https://lists.gnu.org/archive/cgi-bin/namazu.cgi?query=%s"
           "&submit=Search%%21"
