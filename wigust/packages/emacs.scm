@@ -3065,3 +3065,49 @@ especially useful when opening up large log files for analysis.")
      (origin
        (inherit (package-source emacs-debbugs))
        (patches (search-patches "emacs-debbugs-recognize-bugs.gnu.org.patch"))))))
+
+(define-public epipe
+  (let ((commit "a76c922ef9909f4a166e0568ec0e6aa59cd89de2")
+        (revision "1"))
+    (package
+      (name "epipe")
+      (version (string-append "0.0.1" "-" revision "."
+                              (string-take commit 7)))
+      (source (origin
+                (method git-fetch)
+                (uri (git-reference
+                      (url "https://github.com/cute-jumper/epipe")
+                      (commit commit)))
+                (file-name (string-append name "-" version "-checkout"))
+                (sha256
+                 (base32
+                  "0wbqbvkhlf84ihq8iznh224pjcm59clvbxcgrjvp8scdwqc6idh7"))))
+      (build-system trivial-build-system)
+      (inputs
+       `(("bash" ,bash)
+         ("perl" ,perl)))
+      (arguments
+       '(#:modules ((guix build utils))
+         #:builder
+         (begin
+           (use-modules (guix build utils))
+           ;; Copy source
+           (copy-recursively (assoc-ref %build-inputs "source") ".")
+           ;; Patch shebangs
+           (substitute* "epipe"
+             (("/usr/bin/env bash")
+              (string-append (assoc-ref %build-inputs "bash") "/bin/bash")))
+           (substitute* "epipe.pl"
+             (("/usr/bin/perl")
+              (string-append (assoc-ref %build-inputs "perl") "/bin/perl")))
+           ;; Installation
+           (for-each (lambda (file)
+                       (install-file file (string-append %output "/bin")))
+                     '("epipe" "epipe.pl"))
+           #t)))
+      (home-page "https://github.com/cute-jumper/epipe")
+      (synopsis "Pipe to the emacsclient")
+      (description "@code{epipe} provides an utility to use your editor in
+the pipeline, featuring the support for running emacsclient.")
+      ;; No license in the Git repository
+      (license #f))))
