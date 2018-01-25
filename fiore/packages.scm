@@ -112,7 +112,7 @@ xdisorg)
   emacs-default-encrypt    ; Sign mail automatically
   emacs-default-text-scale ; Scale text in all buffers
   emacs-elfeed             ; RSS reader
-  emacs-emms               ; Video and music player
+  emms                     ; Video and music player
   emacs-emms-player-mpv    ; Frontend to MPV for Emms
   emacs-erc-hl-nicks       ; for ERC
   emacs-expand-region
