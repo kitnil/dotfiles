@@ -341,6 +341,9 @@
 (defengine google-video
   "https://www.google.com/search?q=%s&tbm=vid")
 
+(defengine hydra
+  "https://hydra.gnu.org/search?query=%s")
+
 ;; TODO: Do more intelegent
 
 (defengine guix-devel
