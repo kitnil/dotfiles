@@ -91,6 +91,8 @@ valgrind version-control video virtualization w3m web xdisorg)
   password-store  ; Password management
 
   (list glib "bin")
+  dbus
+
   gcc-toolchain ; For Emacs `semantic-mode'
   cflow         ; C program call map
   global        ; Source tagging
