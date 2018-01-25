@@ -391,6 +391,7 @@ alias wi-git-worktree-list='git worktree list --porcelain'
 alias wi-guile-no-autocompile="guile --no-auto-compile"
 alias wi-guix-configure="./configure --localstatedir=/var --prefix=''"
 alias wi-guix-environment='guix environment --pure guix --ad-hoc help2man strace git gdb'
+alias wi-guix-package-update='nohup guix package -u . &> /tmp/guix-package-update-$(date "+%F").log &'
 alias wi-guix-reconfigure='sudo nohup guix system reconfigure -c 0 magnolia.scm &>/home/natsu/guix-reconfigure.log &'
 alias wi-guix-wigust='GUIX_PACKAGE_PATH=$HOME/src/guix-wigust guix'
 alias wi-history-grep="history | grep"
