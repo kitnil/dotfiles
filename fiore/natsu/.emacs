@@ -407,6 +407,18 @@
           "&result=normal"
           "&sort=score"))
 
+(defengine guix-all-date
+  (concat "https://lists.gnu.org/archive/cgi-bin/namazu.cgi"
+          "?query=%s"
+          "&submit=Search%%21"
+          "&idxname=guix-devel"
+          "&idxname=help-guix"
+          "&idxname=bug-guix"
+          "&idxname=guix-patches"
+          "&max=20"
+          "&result=normal"
+          "&sort=date%%3Alate"))
+
 (defengine emacs-devel
   (concat "https://lists.gnu.org/archive/cgi-bin/namazu.cgi?query=%s"
           "&submit=Search%%21"
