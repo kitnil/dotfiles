@@ -108,7 +108,7 @@ xdisorg)
   emacs-beginend
   emacs-company            ; Complition framework
   emacs-company-quickhelp  ; Help pages for Company
-  emacs-debbugs-recognize-bugs ; <https://debbugs.gnu.org/> interface
+  emacs-debbugs-with-bugs  ; <https://debbugs.gnu.org/> interface
   emacs-default-encrypt    ; Sign mail automatically
   emacs-default-text-scale ; Scale text in all buffers
   emacs-elfeed             ; RSS reader
