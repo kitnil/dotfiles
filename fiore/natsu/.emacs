@@ -4,10 +4,10 @@
 ;; Tip: "M-x e" on `(emacs-init-time)'.
 
 ;; Prettify without breaking indentation,
-;; see <http://endlessparentheses.com/using-prettify-symbols-in-clojure-and-elisp-without-breaking-indentation.html>.
+;; Origin <http://endlessparentheses.com/using-prettify-symbols-in-clojure-and-elisp-without-breaking-indentation.html>.
 
 ;; Prevent stale elisp bytecode from shadowing more up-to-date source
-;; files.  Source: <https://github.com/technomancy/better-defaults>
+;; files.  Origin <https://github.com/technomancy/better-defaults>.
 (setq load-prefer-newer t)
 
 ;; (require 'benchmark-init)
@@ -41,10 +41,11 @@
 (use-package jl-encrypt :defer 5)
 (use-package crux :defer 5)
 
-;; See: <https://notmuchmail.org/pipermail/notmuch/2014/019797.html>
 (use-package notmuch
   :commands notmuch-search
-  :config (setq mail-user-agent 'gnus-user-agent))
+  :config
+  ;; See <https://notmuchmail.org/pipermail/notmuch/2014/019797.html>.
+  (setq mail-user-agent 'gnus-user-agent))
 
 (use-package undo-tree-mode :defer 5 :config (global-undo-tree-mode))
 
@@ -67,7 +68,7 @@
 ;;;
 ;;; Keybindings
 ;;;
-;;; See <https://www.gnu.org/software/emacs/manual/html_node/elisp/Key-Binding-Conventions.html>
+;;; See <https://www.gnu.org/software/emacs/manual/html_node/elisp/Key-Binding-Conventions.html>.
 
 (bind-key "<Scroll_Lock>" #'scroll-lock-mode)
 (bind-key "<C-mouse-4>"   #'text-scale-increase)
