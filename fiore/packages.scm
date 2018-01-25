@@ -1,12 +1,16 @@
-(use-modules (gnu) (guix packages)
-             (wigust packages emacs) (wigust packages python))
+(use-modules (gnu)
+             (guix packages)
+             (wigust packages emacs)
+             (wigust packages gource)
+             (wigust packages pulseaudio)
+             (wigust packages python))
 
 (use-package-modules admin aspell audio bittorrent code conkeror
 commencement compression databases dictionaries emacs games gcc glib
-gnuzilla guile haskell image-viewers imagemagick kodi libreoffice
-linux lisp mail man messaging ncdu ncurses package-management
-password-utils pdf python scheme tls version-control video w3m web
-xdisorg)
+gnuzilla graphics guile haskell image-viewers imagemagick kodi
+libreoffice linux lisp mail man messaging ncdu ncurses
+package-management password-utils pdf python rdesktop samba scheme tls
+valgrind version-control video virtualization w3m web xdisorg)
 
 (packages->manifest
  (list
@@ -20,14 +24,13 @@ xdisorg)
 
   aria2        ; Download utility
   kodi-cli     ; Remote control Kodi
+  streamlink   ; `streamlink -p mpv URL QUALITY'
   transmission ; Bittorrent
   youtube-dl   ; Video and music from websites
 
   redshift  ; Color temperature
   python-clf ; Interface to <https://commandlinefu.com/>
   neofetch
-
-  gource ; 3D visualisation tool for source control repositories
 
   cli-visualizer
 
@@ -37,6 +40,7 @@ xdisorg)
   isync   ; Sync IMAP
   notmuch ; Mail indexer based on Xapian
 
+  blender
   feh         ; Image viewer
   ffmpeg      ; Video, audio, images, gif conversion
   imagemagick ; Pipe to `display'
@@ -49,7 +53,9 @@ xdisorg)
 
   cloc            ; Count code
   diffoscope
+  freerdp
   gnu-make        ; GNU Make
+  grep
   htop            ; Pretty `top'
   lm-sensors      ; `sensors'
   ncdu            ; TUI `du'
@@ -57,11 +63,15 @@ xdisorg)
   netcat          ; TCP
   nmap
   openssl
+  pulsemixer-emacs-keybindings
   shellcheck
   sqlite
   stow            ; Dotfiles management
   the-silver-searcher
   unzip
+
+  qemu
+  samba
 
   translate-shell ; Translation in CLI and Emacs
 
@@ -72,6 +82,7 @@ xdisorg)
   man-pages
   sicp         ; Structure and Interpretation of Computer Programs
 
+  chicken ; Chicken Scheme
   sbcl ; For StumpWM.  See <https://stumpwm.github.io/>.
 
   python-pygments ; Colorize output
@@ -83,6 +94,7 @@ xdisorg)
   gcc-toolchain ; For Emacs `semantic-mode'
   cflow         ; C program call map
   global        ; Source tagging
+  valgrind
 
   emacs-athena
   emacs-engine-mode-autoload ; Define searches on websites
@@ -104,15 +116,17 @@ xdisorg)
   emacs-move-text
   emacs-org-mind-map       ; General mind maps from Org files
 
+  emacs-ag
   emacs-aggressive-indent  ; Auto indent minor mode
   emacs-beginend
+  emacs-browse-at-remote
   emacs-company            ; Complition framework
   emacs-company-quickhelp  ; Help pages for Company
+  emacs-constants
   emacs-debbugs-with-bugs  ; <https://debbugs.gnu.org/> interface
   emacs-default-encrypt    ; Sign mail automatically
   emacs-default-text-scale ; Scale text in all buffers
   emacs-elfeed             ; RSS reader
-  emms                     ; Video and music player
   emacs-emms-player-mpv    ; Frontend to MPV for Emms
   emacs-erc-hl-nicks       ; for ERC
   emacs-expand-region
@@ -148,11 +162,23 @@ xdisorg)
   emacs-which-key          ; Key bindings help
   emacs-yasnippet          ; Snippets
   emacs-yasnippet-snippets ; Collection of snippets
+  emms                     ; Video and music player
+  epipe
   haskell-mode
 
+  (list git "gui")
+  (list git "send-email")
+  (list git "svn")
   flycheck                 ; Syntax checker
   geiser                   ; Scheme bridge
+  git
+  gource-good-hash ; 3D visualisation tool for source control repositories
   magit                    ; Emacs interface for Git
+  mercurial
 
+  guile-daemon
+  mcron
+
+  minetest                 ; Open source Minecraft
   tome4                    ; Tails of Maj'Eyal
   ))
