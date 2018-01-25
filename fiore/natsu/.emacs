@@ -344,6 +344,10 @@
 (defengine hydra
   "https://hydra.gnu.org/search?query=%s")
 
+(defengine hydra-job
+  ;; e.g. gource-0.47
+  "https://hydra.gnu.org/job/gnu/master/%s.x86_64-linux")
+
 ;; TODO: Do more intelegent
 
 (defengine guix-devel
