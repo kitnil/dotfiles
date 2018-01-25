@@ -2,7 +2,7 @@
              (wigust packages emacs) (wigust packages python))
 
 (use-package-modules admin aspell audio bittorrent code conkeror
-commencement compression databases dictionaries emacs gcc glib
+commencement compression databases dictionaries emacs games gcc glib
 gnuzilla guile haskell image-viewers imagemagick kodi libreoffice
 linux lisp mail man messaging ncdu ncurses package-management
 password-utils pdf python scheme tls version-control video w3m web
