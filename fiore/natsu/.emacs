@@ -520,6 +520,11 @@
 ;;; Usability functions
 ;;;
 
+(defun wi-dunno ()
+  (interactive)
+  "Insert a `¯\_(ツ)_/¯' thing."
+  (insert "¯\_(ツ)_/¯"))
+
 (defun wi-guix-download (url)
   (interactive "sDownload URL: ")
   (insert (shell-command-to-string (concat "guix download "
