@@ -282,6 +282,9 @@
 (defengine arch-packages
   "https://www.archlinux.org/packages/?sort=&q=%s")
 
+(defengine debfiles
+  "https://packages.debian.org/search?searchon=contents&keywords=%s")
+
 (defengine duckduckgo
   "https://duckduckgo.com/?q=%s"
   :keybinding "d")
