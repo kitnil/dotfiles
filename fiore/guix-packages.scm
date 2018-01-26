@@ -44,6 +44,9 @@ valgrind version-control video virtualization w3m web xdisorg)
    mpv         ; Video and audio player
    obs         ; OBS Studio
 
+   ;; See <https://github.com/NixOS/nixpkgs/issues/16327#issuecomment-303068424>.
+   at-spi2-core
+
    libreoffice ; Office suite
    xpdf        ; Standart PDF reader XAW
    ghc-pandoc  ; Convert Markdown
