@@ -349,6 +349,11 @@ wi-wget-guix-berlin ()
     wget "https://berlin.guixsd.org/nar/gzip/$1"
 }
 
+wi-wget-mirror-site ()
+{
+    wget --mirror -p --convert-links -P /tmp $1
+}
+
 git-hash ()
 {
     git -C $1 rev-parse HEAD
