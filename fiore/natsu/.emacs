@@ -357,6 +357,9 @@
 
 ;; TODO: Do more intelegent
 
+(defengine listinfo-gnu
+  "https://lists.gnu.org/mailman/listinfo/%s")
+
 (defengine info-gnus-english
   (concat "https://lists.gnu.org/archive/cgi-bin/namazu.cgi?query=%s"
           "&submit=Search%%21"
