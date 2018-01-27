@@ -289,6 +289,9 @@
 (defengine debfiles
   "https://packages.debian.org/search?searchon=contents&keywords=%s")
 
+(defengine debcodesearch
+  "https://codesearch.debian.net/search?q=%s")
+
 (defengine duckduckgo
   "https://duckduckgo.com/?q=%s"
   :keybinding "d")
