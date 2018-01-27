@@ -518,6 +518,9 @@
   (concat "https://www.wikipedia.org/search-redirect.php?family=wiktionary"
           "&language=en" "&go=Go" "&search=%s"))
 
+(defengine metal-archives
+  "https://www.metal-archives.com/search?searchString=%s&type=band_name")
+
 (defengine youtube
   "http://www.youtube.com/results?aq=f&oq=&search_query=%s")
 
