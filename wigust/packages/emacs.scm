@@ -3137,3 +3137,23 @@ the pipeline, featuring the support for running emacsclient.")
       (description "This Emacs library provides Helm interface for
 Yasnippet.")
       (license license:gpl2+))))
+
+(define-public emacs-hierarchy
+  (package
+    (name "emacs-hierarchy")
+    (version "0.7.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append
+             "https://github.com/DamienCassou/hierarchy/archive/"
+             "v" version ".tar.gz"))
+       (sha256
+        (base32
+         "1a463v5zk6zis2p8cs4mads3iyxh266yahi6j6y0paggfl2yhkc8"))))
+    (build-system emacs-build-system)
+    (home-page "https://github.com/DamienCassou/hierarchy")
+    (synopsis "Library to create and display hierarchy structures")
+    (description "This package provides an Emacs library to create, query,
+navigate and display hierarchy structures.")
+    (license license:gpl3+)))
