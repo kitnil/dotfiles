@@ -80,3 +80,22 @@
 
 ;; Mimetypes configured in <~/.mailcap>.
 ;; See <https://www.emacswiki.org/emacs/MimeTypesWithGnus>.
+
+;; Emacs ignores mailcap for PDF
+;; See <https://lists.gnu.org/archive/html/info-gnus-english/2016-04/msg00001.html>.
+
+(setcdr
+ (assoc "application" mailcap-mime-data)
+ (remove '("pdf"
+           (viewer . doc-view-mode)
+           (type . "application/pdf")
+           (test eq window-system 'x))
+         (cdr (assoc "application" mailcap-mime-data))))
+
+(setcdr
+ (assoc "application" mailcap-mime-data)
+ (remove '("pdf"
+           (viewer . pdf-view-mode)
+           (type . "application/pdf")
+           (test eq window-system 'x))
+         (cdr (assoc "application" mailcap-mime-data))))
