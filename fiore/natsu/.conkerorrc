@@ -9,8 +9,10 @@ define_webjump("startpage", "https://www.startpage.com/do/search",
 
 // Search color
 // Code from <https://www.freelists.org/post/conkeror/Changing-the-way-search-text-is-highlighted>.
-user_pref("ui.textSelectBackground", "#ff0000");
-user_pref("ui.textSelectBackgroundAttention", "#ff0000");
+// Discussion about color inversion <http://forums.mozillazine.org/viewtopic.php?f=38&t=1331845&start=15>.
+user_pref("ui.textSelectBackgroundDisabled", "#40e0d0");
+user_pref("ui.textSelectBackground", "#87ceeb");
+user_pref("ui.textSelectBackgroundAttention", "#87ceeb");
 
 // 
 //
