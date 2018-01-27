@@ -344,6 +344,11 @@ guix-hash ()
     guix hash -rx $1
 }
 
+wi-wget-guix-berlin ()
+{
+    wget "https://berlin.guixsd.org/nar/gzip/$1"
+}
+
 git-hash ()
 {
     git -C $1 rev-parse HEAD
