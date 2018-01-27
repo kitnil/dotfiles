@@ -1032,6 +1032,42 @@ for COMMIT, defaulting to the commit hash at point."
 
 
 ;;;
+;;; Manage daily TODO files.
+;;;
+
+;; Source <http://sachachua.com/blog/2018/01/2018-01-23-emacs-news/>.
+;; Origin <https://gist.github.com/prathik/ae2899ae2c432dcb0cfe966aa3683eb3>.
+
+(defun wi-todo-create-directory (directory)
+  "Creates the todo directory."
+  (if (file-exists-p directory) (message "Director exists")
+    (make-directory directory)
+    (message "Directory created")))
+
+(defun wi-create-todo-file (directory filename)
+  "Checks if the todo file exists if not creates it."
+  (wi-todo-create-directory directory)
+  (if (file-exists-p filename) (message "Todo exists for the day")
+    (write-region "" nil filename)))
+
+(defun wi-open-todo-file (directory)
+  "Opens a todo file for the current day."
+  (let ((filename (concat directory "/"
+                          (format-time-string "%Y-%m-%d") ".org")))
+    (wi-create-todo-file directory filename)
+    (find-file filename)))
+
+(defun wi-open-todo-file-interactive ()
+  "Creates a daily todo file.
+  Track what needs to be done for the day.  Plan your day better.
+  See what you have accomplished at the end of the day."
+  (interactive)
+  (wi-open-todo-file "~/org"))
+
+(bind-key "C-c c t" 'wi-open-todo-file-interactive)
+
+
+;;;
 ;;; ZNC
 ;;;
 
