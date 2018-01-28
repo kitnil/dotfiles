@@ -385,6 +385,12 @@ youtube-dl-uploader ()
     youtube-dl --output '/srv/videos/%(uploader_id)s/%(title)s-%(id)s.%(ext)s' $URL
 }
 
+wi-licensecheck ()
+{
+    "$(~/src/guix-wip-licensecheck/pre-inst-env guix build licensecheck)\
+/bin/licensecheck" $@
+}
+
 alias wi-list-bindings="bind -P"
 alias wi-list-functions="compgen -A function"
 alias wi-show-command="command -V"
