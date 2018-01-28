@@ -68,9 +68,9 @@ XTerm.vt100.translations: #override \n\
 XTerm*fullscreen: never
 
 ! * Triple click it to select a URL and <S-down-mouse-1> to open a URL.
-XTerm.vt100.translations: #override Shift <Btn1Up>: exec-formatted("xdg-open '%t'", PRIMARY)
+! XTerm.vt100.translations: #override Shift <Btn1Up>: exec-formatted("xdg-open '%t'", PRIMARY)
 
-XTerm*on3Clicks: regex ([[:alpha:]]+://)?([[:alnum:]
+! XTerm*on3Clicks: regex ([[:alpha:]]+://)?([[:alnum:]
 
 ! Origin <https://scarygliders.net/2011/12/01/customize-xterm-the-original-and-best-terminal/>.
 ! Double-click to select URLs.
