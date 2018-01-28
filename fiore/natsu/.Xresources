@@ -42,7 +42,7 @@ XTerm.vt100.backarrowKey: false
 XTerm.ttyModes: erase ^?
 
 ! Clipboard instead primary
-XTerm.vt100.selectToClipboard: true
+! XTerm.vt100.selectToClipboard: true
 
 ! Inspired by:   https://www.gnu.org/software/emacs/manual/html_node/emacs/Fonts.html#Fonts
 ! Get code from: https://www.emacswiki.org/emacs/XftGnuEmacs
@@ -66,6 +66,11 @@ XTerm.vt100.translations: #override \n\
 ! Disable fullscreen hotkey M-RET.  Hotkey conflicts with Weechat,
 ! Midnight Commander, Emacs.
 XTerm*fullscreen: never
+
+! * Triple click it to select a URL and <S-down-mouse-1> to open a URL.
+XTerm.vt100.translations: #override Shift <Btn1Up>: exec-formatted("xdg-open '%t'", PRIMARY)
+
+XTerm*on3Clicks: regex ([[:alpha:]]+://)?([[:alnum:]
 
 ! Origin <https://scarygliders.net/2011/12/01/customize-xterm-the-original-and-best-terminal/>.
 ! Double-click to select URLs.
