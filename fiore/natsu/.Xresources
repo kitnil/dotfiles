@@ -41,6 +41,13 @@ XTerm.vt100.metaSendsEscape: true
 XTerm.vt100.backarrowKey: false
 XTerm.ttyModes: erase ^?
 
+! Allow xterm to report the TERM variable correctly.  Do not set the
+! TERM variable from your ~/.bashrc or ~/.bash_profile or similar
+! file.  The terminal itself should report the correct TERM to the
+! system so that the proper terminfo file will be used.  Two usable
+! terminfo names are xterm and xterm-256color
+XTerm.termName: xterm-256color
+
 ! Clipboard instead primary
 ! XTerm.vt100.selectToClipboard: true
 
