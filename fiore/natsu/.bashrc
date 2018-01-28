@@ -385,6 +385,10 @@ youtube-dl-uploader ()
     youtube-dl --output '/srv/videos/%(uploader_id)s/%(title)s-%(id)s.%(ext)s' $URL
 }
 
+alias wi-list-bindings="bind -P"
+alias wi-list-functions="compgen -A function"
+alias wi-show-command="command -V"
+
 export GUIX_PACKAGE_PATH=$HOME/src/guix-wigust
 
 unalias ls
@@ -408,8 +412,6 @@ alias wi-guix-reconfigure='sudo nohup guix system reconfigure -c 0 magnolia.scm 
 alias wi-guix-refresh='./pre-inst-env env GUILE_LOAD_PATH=$HOME/dotfiles/fiore/:$GUILE_LOAD_PATH GUIX_PACKAGE_PATH= GUIX_GITHUB_TOKEN=$(cat .github-token) guix refresh -m ~/dotfiles/fiore/guix-manifest.scm'
 alias wi-guix-wigust='GUIX_PACKAGE_PATH=$HOME/src/guix-wigust guix'
 alias wi-history-grep="history | grep"
-alias wi-list-bindings="bind -P"
-alias wi-list-functions="compgen -A function"
 alias wi-mpv-quite='mpv --msg-level=all=no --no-resume-playback --keep-open=no'
 alias wi-ps-tree="ps -ejH"
 alias wi-remove-dublicate-lines="awk '!x[$0]++'"
