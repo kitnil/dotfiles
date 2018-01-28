@@ -224,6 +224,7 @@
 (bind-keys :prefix "C-c m d" :prefix-map wi-debbugs-map
            ("b" . debbugs-gnu-bugs)
            ("l" . debbugs-gnu)
+           ("p" . debbugs-gnu-patches)
            ("s" . debbugs-gnu-search)
            ("u" . wi-debbugs-gnu-list))
 
