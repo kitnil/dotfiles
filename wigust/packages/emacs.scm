@@ -3229,3 +3229,27 @@ navigate and display hierarchy structures.")
          (sha256
           (base32
            "1334xm5lj0j9rb9pvh5zvilnmygmh4l1rv7f9gfcadn50iwprsg8")))))))
+
+(define-public emacs-terminal-here
+  (let ((commit "b3659e13d3d41503b4fc59dd2c7ea622631fc3ec")
+        (revision "1"))
+    (package
+      (name "emacs-terminal-here")
+      (version (string-append "1.0-" revision "."
+                              (string-take commit 7)))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/davidshepherd7/terminal-here.git")
+               (commit commit)))
+         (file-name (string-append name "-" version "-checkout"))
+         (sha256
+          (base32
+           "1z3ngwgv8ybwq42lkpavk51a25zdkl6v9xdfi41njpxdpbfcmx8z"))))
+      (build-system emacs-build-system)
+      (home-page "https://github.com/davidshepherd7/terminal-here")
+      (synopsis "Run an external terminal in current directory")
+      (description "Provides commands to help open external terminal emulators
+in the directory of the current buffer.")
+      (license license:gpl3+))))
