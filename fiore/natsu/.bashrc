@@ -413,3 +413,4 @@ alias wi-trans-en="trans en:ru"
 alias wi-trans-ru="trans ru:en"
 
 alias wi-xclip-kill-clipboard="xclip -i -selection clipboard"
+alias wi-screen="exec screen"
