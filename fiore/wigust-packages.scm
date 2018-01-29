@@ -14,6 +14,7 @@
    emacs-engine-mode-autoload ; Define searches on websites
    emacs-strace-mode-special ; Colorize `strace' logs
    emacs-browse-at-remote-gnu
+   emacs-edit-server
 
    python-starred ; Fetch a list of stars from GitHub user
 

@@ -1205,6 +1205,9 @@ the appropriate network slug that we extract from the nick."
 ;;; Misc
 ;;;
 
+(when (and (require 'edit-server nil t) (daemonp))
+  (edit-server-start))
+
 (setq terminal-here-terminal-command '("env" "STY=" "xterm" "-e" "screen"))
 
 ;; See <https://www.emacswiki.org/emacs/DoWhatIMean>
