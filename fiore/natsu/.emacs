@@ -238,6 +238,7 @@
            ("s" . shell)
            ("c" . compilation-shell-minor-mode)
            ("e" . eshell)
+           ("h" . terminal-here)
            ("t" . term))
 
 (which-key-add-key-based-replacements "C-c c" "org")
@@ -1191,6 +1192,8 @@ the appropriate network slug that we extract from the nick."
 ;;;
 ;;; Misc
 ;;;
+
+(setq terminal-here-terminal-command '("env" "STY=" "xterm" "-e" "screen"))
 
 ;; See <https://www.emacswiki.org/emacs/DoWhatIMean>
 (setq dired-dwim-target t)
