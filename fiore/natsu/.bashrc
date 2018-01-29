@@ -365,7 +365,7 @@ alias wi-backup-home='duplicity --no-encryption\
 
 alias wi-wget-mirror-site='wget --mirror -p --convert-links -P /tmp $1'
 
-alias wi-pipe-emacs='emacs -nw -Q --insert <(cat) </dev/tty'
+alias wi-pipe-emacs='emacs -nw --insert <(cat) </dev/tty'
 alias wi-etags-el="find . -name '*.el' -print | etags -"
 alias wi-etags-c="find . -name '*.[ch]' -print | etags --append -"
 
