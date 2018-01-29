@@ -288,6 +288,9 @@
 (defengine arch-packages
   "https://www.archlinux.org/packages/?sort=&q=%s")
 
+(defengine cpan
+  "http://search.cpan.org/search?query=%s&mode=all")
+
 (defengine debfiles
   "https://packages.debian.org/search?searchon=contents&keywords=%s")
 
