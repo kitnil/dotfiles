@@ -391,6 +391,16 @@ wi-licensecheck ()
 /bin/licensecheck" $@
 }
 
+wi-guix-build-natsu ()
+{
+    ./pre-inst-env \
+        env \
+        GUIX_PACKAGE_PATH= \
+        GUILE_LOAD_PATH=$HOME/dotfiles/fiore:$GUILE_LOAD_PATH \
+        guix build --no-grafts \
+        --expression='(@ (guix-packages) guix-collection-packages)'
+}
+
 alias wi-list-bindings="bind -P"
 alias wi-list-functions="compgen -A function"
 alias wi-show-command="command -V"

@@ -10,6 +10,17 @@ libreoffice linux lisp mail man messaging ncdu ncurses
 package-management password-utils pdf python rdesktop samba scheme tls
 valgrind version-control video virtualization w3m web xdisorg)
 
+(define guix-collection-packages-multi
+  (list
+   (list glib "bin")
+   (list git "gui")
+   (list git "send-email")
+   (list git "svn")))
+
+(define guix-collection-packages-big
+   obs         ; OBS Studio
+   )
+
 (define guix-collection-packages
   (list
    aspell
@@ -42,7 +53,6 @@ valgrind version-control video virtualization w3m web xdisorg)
    ffmpeg      ; Video, audio, images, gif conversion
    imagemagick ; Pipe to `display'
    mpv         ; Video and audio player
-   obs         ; OBS Studio
 
    ;; See <https://github.com/NixOS/nixpkgs/issues/16327#issuecomment-303068424>.
    at-spi2-core
@@ -89,7 +99,6 @@ valgrind version-control video virtualization w3m web xdisorg)
 
    password-store  ; Password management
 
-   (list glib "bin")
    dbus
 
    gcc-toolchain ; For Emacs `semantic-mode'
@@ -140,9 +149,6 @@ valgrind version-control video virtualization w3m web xdisorg)
    emms                     ; Video and music player
    haskell-mode
 
-   (list git "gui")
-   (list git "send-email")
-   (list git "svn")
    flycheck                 ; Syntax checker
    geiser                   ; Scheme bridge
    git
