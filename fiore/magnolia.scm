@@ -115,7 +115,10 @@ EndSection
   ;; Files /bin/sh and /usr/bin/env
   ;;
   ;; Inspired by https://lists.gnu.org/archive/html/help-guix/2016-01/msg00064.html
-  (modify-services %desktop-services
+  (modify-services (remove (lambda (service)
+                             (or (eq? (service-kind service)
+                                      network-manager-service-type)))
+                           %desktop-services)
     (guix-service-type config => %guix-daemon-config)
     (special-files-service-type config => `(("/bin/sh"
                                              ,(file-append
@@ -375,6 +378,11 @@ EndSection
       %base-packages))
 
     (services (cons* firewall-service
+                     (static-networking-service "enp6s0"
+                                                "192.168.105.120"
+                                                #:netmask "255.255.255.0"
+                                                #:gateway "192.168.105.1"
+                                                #:name-servers '("77.73.68.161"))
 
                      (service openssh-service-type)
 
