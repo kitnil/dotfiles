@@ -356,12 +356,18 @@
 (defengine google-video
   "https://www.google.com/search?q=%s&tbm=vid")
 
-(defengine hydra
+(defengine guix-hydra
   "https://hydra.gnu.org/search?query=%s")
 
-(defengine hydra-job
+(defengine guix-hydra-job
   ;; e.g. gource-0.47
   "https://hydra.gnu.org/job/gnu/master/%s.x86_64-linux")
+
+(defengine nixos-hydra
+  "https://hydra.nixos.org/search?query=%s")
+
+(defengine nixos-hydra-job
+  "https://hydra.nixos.org/job/gnu/master/%s.x86_64-linux")
 
 ;; TODO: Do more intelegent
 
