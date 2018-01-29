@@ -107,7 +107,6 @@ valgrind version-control video virtualization w3m web xdisorg)
    valgrind
    emacs-ag
    emacs-aggressive-indent  ; Auto indent minor mode
-   emacs-browse-at-remote
    emacs-company            ; Complition framework
    emacs-company-quickhelp  ; Help pages for Company
    emacs-constants
