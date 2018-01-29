@@ -310,6 +310,9 @@
 (defengine fdroid
   "https://f-droid.org/packages/#q=%s")
 
+(defengine fedora-cgit
+  "https://fedorapeople.org/cgit/?q=%s")
+
 (defengine github
   "https://github.com/search?ref=simplesearch&q=%s")
 
