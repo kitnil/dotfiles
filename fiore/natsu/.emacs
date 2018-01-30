@@ -999,8 +999,11 @@ for COMMIT, defaulting to the commit hash at point."
           ("i" "TODO" entry (file "/TODO.gpg")
            "* %?")
 
-          ("p" "pdfview" item (file "~/.pdf-notes")
+          ("n" "pdfview" item (file "~/.pdf-notes")
            "%a %?")
+
+          ("p" "phrase" item (file "phrase.org")
+           "%?")
 
           ("e" "emacs" plain (file "emacs.org")
            "%?")
