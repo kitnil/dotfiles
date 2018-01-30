@@ -171,9 +171,16 @@
             :args (list "-c" (join (list "xterm -name" cmd) #\ ))
             :wait nil))
 
-(defcommand xterm-big () ()
+(setq *wi-xterm-big-command*
+    "exec xterm -fa 'Monospace' -fs 24")
+
+(defcommand wi-xterm-big () ()
   "Start XTerm with big fonts."
-  (run-shell-command "exec xterm -fa 'Monospace' -fs 24"))
+  (run-shell-command *wi-xterm-big-command*))
+
+(defcommand wi-sensors () ()
+  "Start XTerm with `sensors'."
+  (run-shell-command  (concat *wi-xterm-big-command* " -e watch sensors")))
 
 (defcommand github-star () ()
   "Move mouse to star a project."
