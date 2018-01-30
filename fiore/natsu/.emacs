@@ -109,6 +109,11 @@
            ("p" . git-messenger:popup-message)
            ("s" . magit-status))
 
+(which-key-add-key-based-replacements "C-c v b" "browse-at-remote")
+(bind-keys :prefix "C-c v b" :prefix-map wi-browse-at-remote-map
+           ;; TODO: ("g" . wi-browse-at-remote-gnu)
+           ("b" . browse-at-remote))
+
 (which-key-add-key-based-replacements "C-c v h" "version-control-hunk")
 (bind-keys :prefix "C-c v h" :prefix-map wi-version-control-hunk-map
            ("s" . git-gutter:stage-hunk)
