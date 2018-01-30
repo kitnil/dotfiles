@@ -414,3 +414,6 @@ alias wi-trans-ru="trans ru:en"
 
 alias wi-xclip-kill-clipboard="xclip -i -selection clipboard"
 alias wi-screen="exec screen"
+
+# Origin <https://directory.fsf.org/wiki/Template:IRC_text>
+# date --date='TZ="America/Detroit" 12:00 this Fri'
