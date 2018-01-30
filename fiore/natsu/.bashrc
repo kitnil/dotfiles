@@ -321,6 +321,9 @@ wi-git-hash ()
     git -C $1 rev-parse HEAD
 }
 
+alias wi-pre-guix-guile='./pre-inst-env\
+ env GUIX_PACKAGE_PATH= guile --no-auto-compile'
+
 alias wi-guile-guix='GUILE_LOAD_PATH=$HOME/dotfiles/fiore/\
 :$HOME/src/guix-wigust/:$GUILE_LOAD_PATH guile --no-auto-compile'
 
