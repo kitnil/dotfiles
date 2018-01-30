@@ -13,7 +13,10 @@
    emacs-beginend
    emacs-engine-mode-autoload ; Define searches on websites
    emacs-strace-mode-special ; Colorize `strace' logs
+
+   ;; See <https://github.com/rmuslimov/browse-at-remote/pull/46>.
    emacs-browse-at-remote-gnu
+
    emacs-edit-server ; See <https://github.com/stsquad/emacs_chrome/>.
 
    raleigh-reloaded-theme ; GTK2+ and GTK3+ theme
