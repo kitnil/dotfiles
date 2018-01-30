@@ -40,6 +40,8 @@ valgrind version-control video virtualization w3m web xdisorg)
    python-clf ; Interface to <https://commandlinefu.com/>
    neofetch
 
+   lxappearance
+
    cli-visualizer
 
    conkeror
@@ -51,6 +53,7 @@ valgrind version-control video virtualization w3m web xdisorg)
    blender
    feh         ; Image viewer
    ffmpeg      ; Video, audio, images, gif conversion
+   mlt         ; Video editing framework
    imagemagick ; Pipe to `display'
    mpv         ; Video and audio player
 

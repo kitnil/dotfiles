@@ -363,6 +363,7 @@ EndSection
       zile
 
       adwaita-icon-theme
+      hicolor-icon-theme
       font-awesome
       font-dejavu
       font-liberation
