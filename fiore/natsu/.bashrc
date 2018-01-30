@@ -405,6 +405,7 @@ alias wi-git-worktree-list='git worktree list --porcelain'
 alias wi-history-grep="history | grep"
 alias wi-mpv-quite='mpv --msg-level=all=no --no-resume-playback --keep-open=no'
 alias wi-ps-tree="ps -ejH"
+alias wi-pgrep-full='pgrep -fa'
 alias wi-remove-dublicate-lines="awk '!x[$0]++'"
 
 alias wi-show-ip="curl http://ipecho.net/plain"
