@@ -116,6 +116,7 @@ valgrind version-control video virtualization w3m web xdisorg)
    emacs-erc-hl-nicks       ; for ERC
    emacs-expand-region
    emacs-ffap-rfc-space
+   emacs-git-messenger      ; Show commit under the cursor
    emacs-ggtags             ; Front end to GNU Global
    emacs-git-gutter
    emacs-gitpatch           ; Send patches

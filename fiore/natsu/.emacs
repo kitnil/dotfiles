@@ -106,6 +106,7 @@
 (bind-keys :prefix "C-c v" :prefix-map wi-version-control-map
            ("c" . magit-commit)
            ("l" . magit-list-repositories)
+           ("p" . git-messenger:popup-message)
            ("s" . magit-status))
 
 (which-key-add-key-based-replacements "C-c v h" "version-control-hunk")
