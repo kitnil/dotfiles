@@ -12,10 +12,7 @@ valgrind version-control video virtualization w3m web xdisorg)
 
 (define guix-collection-packages-multi
   (list
-   (list glib "bin")
-   (list git "gui")
-   (list git "send-email")
-   (list git "svn")))
+   (list glib "bin")))
 
 (define guix-collection-packages-big
    obs         ; OBS Studio

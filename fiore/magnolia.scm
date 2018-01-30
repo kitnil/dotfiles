@@ -338,7 +338,9 @@ EndSection
       rlwrap
       xprop
 
+      (list git "gui")
       (list git "send-email")
+      (list git "svn")
       adb       ; For Replicant (Android distribution) control
       cups      ; Printer
       duplicity ; Incremental backup
