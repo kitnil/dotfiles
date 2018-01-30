@@ -1520,6 +1520,12 @@ in the variable `browse-url-mpv-arguments' to mpv."
       (insert (shell-command-to-string (concat "wget" " -q" " -O-" " " url))))
     (switch-to-buffer buffer)))
 
+(defun wi-debbugs-get-url (bug-number)
+  "Get a debbugs url according to `BUG-NUMBER'"
+  (interactive "sBug number: ")
+  (kill-new (concat "https://debbugs.gnu.org/cgi/bugreport.cgi?bug="
+                    bug-number)))
+
 (defun wi-copy-cgit-guix-path (path)
   "Copy cgit guix path to kill ring"
   (interactive "sPath: ")
