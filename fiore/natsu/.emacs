@@ -1486,7 +1486,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
 (defun wi-debbugs-gnu-list ()
   (interactive)
   (let ((debbugs-gnu-current-query `((submitter . ,user-mail-address))))
-    (debbugs-gnu nil)))
+    (debbugs-gnu nil nil nil t)))
 
 (setq ewmctrl-wmctrl-path "/run/current-system/profile/bin/wmctrl")
 
