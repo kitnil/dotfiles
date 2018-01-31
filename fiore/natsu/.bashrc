@@ -423,3 +423,4 @@ alias wi-screen="exec screen"
 # date --date='TZ="America/Detroit" 12:00 this Fri'
 
 alias wi-cool-retro-term='$(guix build cool-retro-term)/bin/cool-retro-term'
+alias wi-st='$(guix build st)/bin/st'
