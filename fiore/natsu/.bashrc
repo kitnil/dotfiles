@@ -412,6 +412,7 @@ alias wi-pgrep-full='pgrep -fa'
 alias wi-remove-dublicate-lines="awk '!x[$0]++'"
 
 alias wi-show-ip="wget -qO- http://ipecho.net/plain"
+alias wi-cheat='wget -qO- cheat.sh/'
 
 alias wi-trans-en="trans en:ru"
 alias wi-trans-ru="trans ru:en"
