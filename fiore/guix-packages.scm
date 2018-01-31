@@ -58,7 +58,7 @@ valgrind version-control video virtualization w3m web xdisorg)
    at-spi2-core
 
    libreoffice ; Office suite
-   xpdf        ; Standart PDF reader XAW
+   mupdf       ; Lightweight PDF reader
    ghc-pandoc  ; Convert Markdown
 
    cloc            ; Count code

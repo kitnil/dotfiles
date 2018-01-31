@@ -12,6 +12,9 @@ are.  So make sure to backup them moving somewhere with:
 
   : $ mv CONFLICT_CONFIG_FILE BACKUP_DIRECTORY
 
+After changing file:fiore/natsu/.local/share/applications/mimeapps.list
+  : $ update-desktop-database ~/.local/share/applications/
+
 * Thanks to
 
   - https://github.com/wiedzmin/stumpwm-config
