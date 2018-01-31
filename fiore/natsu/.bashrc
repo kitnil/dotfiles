@@ -411,7 +411,7 @@ alias wi-ps-tree="ps -ejH"
 alias wi-pgrep-full='pgrep -fa'
 alias wi-remove-dublicate-lines="awk '!x[$0]++'"
 
-alias wi-show-ip="curl http://ipecho.net/plain"
+alias wi-show-ip="wget -qO- http://ipecho.net/plain"
 
 alias wi-trans-en="trans en:ru"
 alias wi-trans-ru="trans ru:en"
