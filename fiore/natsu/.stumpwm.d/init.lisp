@@ -85,6 +85,10 @@
   "Start or focus mpv."
   (run-or-raise "mpv" '(:class "mpv")))
 
+(defcommand wi-xclip-emacs () ()
+  "Open file from clipboard."
+  (run-shell-command (join (list "exec emacsclient -c" (get-x-selection)) #\ )))
+
 (defcommand xclip-mpv () ()
   "Play video from clipboard."
   (run-shell-command (join (list "exec mpv" (get-x-selection)) #\ )))
@@ -116,6 +120,7 @@
 
 (define-key *root-map* (kbd "m") "mpv")
 (define-key *root-map* (kbd "C-m") "xclip-mpv")
+(define-key *root-map* (kbd "C-e") "wi-xclip-emacs")
 
 (defcommand turn-screen-off () ()
             "Turn screen off."
