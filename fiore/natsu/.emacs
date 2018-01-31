@@ -714,7 +714,7 @@ for COMMIT, defaulting to the commit hash at point."
              wi-scheme--prettify-symbols-alist)))))
 
 (with-eval-after-load 'guix-repl
-  (setq guix-directory "~/src/guix"))
+  (setq guix-directory (expand-file-name "~/src/guix")))
 
 (setq guix-read-package-name-function #'guix-read-package-name-at-point)
 
