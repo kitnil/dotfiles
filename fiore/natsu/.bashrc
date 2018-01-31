@@ -386,6 +386,16 @@ alias wi-guix-build-natsu="./pre-inst-env env\
  guix build --no-grafts\
  --expression='(@ (guix-packages) guix-collection-packages)'"
 
+alias guix-pre-build-lint-install-package="./pre-inst-env env\
+ GUIX_PACKAGE_PATH=\
+ guix build --no-grafts $PACKAGE --substitute-urls='https://berlin.guixsd.org'\
+ && ./pre-inst-env env\
+ GUIX_PACKAGE_PATH= guix lint $PACKAGE\
+ && ./pre-inst-env env\
+ GUIX_PACKAGE_PATH= guix package -i $PACKAGE\
+ --substitute-urls='https://berlin.guixsd.org'\
+ -p guix-wip-$PACKAGE-profile"
+
 alias wi-list-bindings="bind -P"
 alias wi-list-functions="compgen -A function"
 alias wi-show-command="command -V"
