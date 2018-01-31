@@ -387,7 +387,8 @@ EndSection
                                                 "192.168.105.120"
                                                 #:netmask "255.255.255.0"
                                                 #:gateway "192.168.105.1"
-                                                #:name-servers '("77.73.68.161"))
+                                                #:name-servers '("8.8.8.8"
+                                                                 "8.8.4.4"))
 
                      (service openssh-service-type)
 
