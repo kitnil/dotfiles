@@ -121,6 +121,7 @@
 (define-key *root-map* (kbd "m") "mpv")
 (define-key *root-map* (kbd "C-m") "xclip-mpv")
 (define-key *root-map* (kbd "C-e") "wi-xclip-emacs")
+(define-key *root-map* (kbd "C-M-c") "wi-xterm-big-screen")
 
 (defcommand turn-screen-off () ()
             "Turn screen off."
@@ -182,6 +183,10 @@
 (defcommand wi-xterm-big () ()
   "Start XTerm with big fonts."
   (run-shell-command *wi-xterm-big-command*))
+
+(defcommand wi-xterm-big-screen () ()
+  "Start XTerm with big fonts."
+  (run-shell-command (concat *wi-xterm-big-command* " -e screen")))
 
 (defcommand wi-sensors () ()
   "Start XTerm with `sensors'."
