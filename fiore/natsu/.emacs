@@ -1544,6 +1544,11 @@ in the variable `browse-url-mpv-arguments' to mpv."
   (let ((default-directory wi-guix-git-directory))
     (magit-find-file commit file)))
 
+(defun wi-set-guix-directory (directory)
+  "Set a `GUIX-DIRECTORY' path."
+  (interactive "DDirectory: ")
+  (setq guix-directory directory))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
