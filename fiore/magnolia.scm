@@ -12,6 +12,8 @@ databases dns file fonts fontutils freedesktop gnome gnupg graphviz
 linux ncurses ratpoison readline rsync pulseaudio screen ssh
 version-control virtualization wget xdisorg xorg zile)
 
+(define %source-dir (dirname (current-filename)))
+
 
 ;;;
 ;;; Firewall service
@@ -431,7 +433,7 @@ EndSection
 
                      (service fcgiwrap-service-type)
 
-                     (tor-service (local-file "torrc"))
+                     (tor-service (local-file (string-append %source-dir "/torrc")))
 
                      (service nginx-service-type
                               %file-share-configuration-nginx)
