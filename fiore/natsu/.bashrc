@@ -416,6 +416,8 @@ alias wi-cheat='wget -qO- cheat.sh/'
 
 alias wi-trans-en="trans en:ru"
 alias wi-trans-ru="trans ru:en"
+alias wi-trans-en-shell='trans -shell en:ru'
+alias wi-trans-ru-shell='trans -shell ru:en'
 
 alias wi-xclip-kill-clipboard="xclip -i -selection clipboard"
 alias wi-screen="exec screen"
