@@ -244,7 +244,7 @@
            ("s" . shell)
            ("c" . compilation-shell-minor-mode)
            ("e" . eshell)
-           ("h" . terminal-here)
+           ("h" . wi-terminal-here-launch)
            ("t" . term))
 
 (which-key-add-key-based-replacements "C-c c" "org")
@@ -1228,11 +1228,18 @@ the appropriate network slug that we extract from the nick."
 (when (and (require 'edit-server nil t) (daemonp))
   (edit-server-start))
 
-(let ((project-name (projectile-project-name)))
-    (setq terminal-here-terminal-command
-      (list "env" "STY=" ; Make sure screen doesn't complain STY is set.
-            "xterm" "-title" project-name
-            "-e" "screen" "-S" project-name)))
+;; TODO: Try without use-package.
+(use-package terminal-here
+  :config
+  (defun wi-terminal-here-launch ()
+    "Launch a terminal in the project directory."
+    (interactive)
+    (let* ((project-name (projectile-project-name))
+           (terminal-here-terminal-command
+            (list "env" "STY=" ; Make sure screen doesn't complain STY is set.
+                  "xterm" "-title" project-name
+                  "-e" "screen" "-S" project-name)))
+      (terminal-here-launch-in-directory (projectile-project-root)))))
 
 ;; See <https://www.emacswiki.org/emacs/DoWhatIMean>
 (setq dired-dwim-target t)
