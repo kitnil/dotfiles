@@ -1228,7 +1228,11 @@ the appropriate network slug that we extract from the nick."
 (when (and (require 'edit-server nil t) (daemonp))
   (edit-server-start))
 
-(setq terminal-here-terminal-command '("env" "STY=" "xterm" "-e" "screen"))
+(let ((project-name (projectile-project-name)))
+    (setq terminal-here-terminal-command
+      (list "env" "STY=" ; Make sure screen doesn't complain STY is set.
+            "xterm" "-title" project-name
+            "-e" "screen" "-S" project-name)))
 
 ;; See <https://www.emacswiki.org/emacs/DoWhatIMean>
 (setq dired-dwim-target t)
