@@ -26,6 +26,7 @@
 (setq calendar-week-start-day 1) ; Monday is the first day of the week
 
 (setq initial-buffer-choice t) ; Nothing after starting Emacs
+(setq initial-scratch-message nil) ; Don't put text in *scratch* buffer
 
 (setq smtpmail-queue-mail t) ; Call after typing M-x `smtpmail-send-queued-mail'
 
