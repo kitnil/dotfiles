@@ -55,6 +55,11 @@
   "Start or focus conkeror."
   (run-or-raise "conkeror" '(:class "Conkeror")))
 
+;; Origin <https://github.com/alezost/stumpwm-config/blob/master/utils.lisp#L332>
+(defcommand wi-conkeror-browse-url (url) ((:shell "Browse URL: "))
+  "Browse URL with conkeror."
+  (run-prog "conkeror" :args (list url) :wait nil :search t))
+
 (defcommand icecat () ()
   "Start or focus icecat."
   (run-or-raise "icecat" '(:class "Icecat")))
