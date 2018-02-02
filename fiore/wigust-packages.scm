@@ -31,6 +31,7 @@
    emacs-debpaste           ; Front end to <https://paste.debian.net/>
    emacs-esup
    emacs-ewmctrl            ; Control X windows from Emacs
+   emacs-dumb-jump
    emacs-fancy-narrow
    emacs-helm-firefox       ; Search for bookmarks in Icecat
    emacs-helm-gtags
