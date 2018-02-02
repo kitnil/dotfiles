@@ -131,7 +131,8 @@
 
 (which-key-add-key-based-replacements "C-c f" "find")
 (bind-keys :prefix "C-c f" :prefix-map wi-find-map
-           ("c" . browse-url-chromium)
+           ("c" . browse-url-conkeror)
+           ("g" . browse-url-chromium)
            ("d" . dumb-jump-go)
            ("e" . guix-edit)
            ("f" . ffap)
