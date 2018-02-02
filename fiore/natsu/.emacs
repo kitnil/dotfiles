@@ -37,6 +37,10 @@
 ;; TODO: Maybe remove
 (add-to-list 'exec-path (expand-file-name "~/.guix-profile.d/gdb/bin"))
 
+(defvar ‎wi-headphones "pulse/alsa_output\
+.usb-Logitech_Logitech_USB_Headset-00.analog-stereo"
+  "My USB headphones")
+
 ;; Geiser chicken
 (setenv "CHICKEN_DOC_REPOSITORY" (expand-file-name "~/.eggs/share/chicken-doc"))
 (setenv "CHICKEN_REPOSITORY" (expand-file-name "~/.eggs/lib/chicken/8"))
@@ -1194,7 +1198,9 @@ the appropriate network slug that we extract from the nick."
     (add-to-list 'emms-player-list 'emms-player-mpv)
     (add-to-list 'emms-player-mpv-parameters "--no-video")
     (add-to-list 'emms-player-mpv-parameters "--no-resume-playback")
-    (add-to-list 'emms-player-mpv-parameters "--keep-open=no")))
+    (add-to-list 'emms-player-mpv-parameters "--keep-open=no")
+    (add-to-list 'emms-player-mpv-parameters (concat "--audio-device="
+                                                     ‎wi-headphones))))
 
 (use-package helm-emms
   :after emms-setup
