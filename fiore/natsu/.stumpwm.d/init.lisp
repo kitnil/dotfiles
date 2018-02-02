@@ -179,6 +179,17 @@
             :args (list "-c" (join (list "xterm -name" cmd) #\ ))
             :wait nil))
 
+(defcommand wi-xterm-dark
+    (session &optional collect-output-p) ((:string "session name: "))
+  "Run `xterm' with dark theme."
+  (run-prog *shell-program*
+            :args (list "-c" (join (list "exec" "xterm"
+                                         "-bg" "black" "-fg" "white"
+                                         "-title" session
+                                         "-e" "screen" "-S" session)
+                                   #\ ))
+            :wait nil))
+
 (defcommand wi-screen
     (session &optional collect-output-p)
     ((:string "session name: "))
