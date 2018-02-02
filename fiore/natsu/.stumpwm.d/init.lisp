@@ -15,7 +15,7 @@
                          :subfamily "Book"
                          :size 16))
 
-(setf *window-border-style* :tight)
+(setf *window-border-style* :none)
 
 (setf *ignore-wm-inc-hints* t)
 
@@ -127,9 +127,6 @@
             "Turn screen off."
             (run-shell-command "exec xset dpms force off"))
 
-(defcommand kill-mpv () ()
-  "Kill all mpv instanses."
-  (run-shell-command "killall mpv"))
 (defun join-to-stream (stream list &optional (delimiter #\&))
   (destructuring-bind (&optional first &rest rest) list
     (when first
@@ -216,10 +213,6 @@
          (pointer-y (+ 100 (frame-y current-frame))))
     (warp-pointer (current-screen) pointer-x pointer-y)))
 
-(load-module "swm-gaps")
-(setf swm-gaps:*inner-gaps-size* 5
-      swm-gaps:*outer-gaps-size* 5)
-
 (load-module "kbd-layouts")
 (kbd-layouts:keyboard-layout-list "us" "ru")
 
@@ -248,14 +241,8 @@
 (define-key *root-map* (kbd "C-y") "show-clipboard-history")
 (clipboard-history:start-clipboard-manager)
 
-(load-module "globalwindows")
-(define-key *root-map* (kbd "M-quoteright") "global-windowlist")
-(define-key *root-map* (kbd "M-quotedbl") "global-pull-windowlist")
-
 (ql:quickload "cffi")
 (ql:quickload "usocket-server")
-
-(load-module "pinentry")
 
 (ql:quickload "swank")
 (swank-loader:init)
