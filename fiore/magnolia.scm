@@ -9,8 +9,8 @@ spice ssh version-control web xorg cgit)
 
 (use-package-modules admin android backup bash bootloaders certs cups
 databases dns file fonts fontutils freedesktop gnome gnupg graphviz
-linux ncurses ratpoison readline rsync pulseaudio screen ssh
-version-control virtualization wget xdisorg xorg zile)
+linux ncurses networking ratpoison readline rsync pulseaudio screen
+ssh version-control virtualization wget xdisorg xorg zile)
 
 (define %source-dir (dirname (current-filename)))
 
@@ -72,6 +72,23 @@ version-control virtualization wget xdisorg xorg zile)
                                (system* #$(file-append iptables
                                                        "/sbin/iptables")
                                         "-F"))))))))
+
+
+;;;
+;;; udev
+;;;
+
+(define (quote-string str)
+  (string-append "\"" str "\""))
+
+;; Origin <https://wiki.archlinux.org/index.php/Wake-on-LAN#udev>.
+(define %udev-rule-won
+  (udev-rule
+   "99-wol.rules"
+   (string-append "ACTION==" (quote-string "add")
+                  ", SUBSYSTEM==" (quote-string "net")
+                  ", RUN+=" (quote-string "/run/current-system/profile\
+/sbin/ethtool -s $name wol g"))))
 
 
 ;;;
@@ -346,6 +363,7 @@ EndSection
       adb       ; For Replicant (Android distribution) control
       cups      ; Printer
       duplicity ; Incremental backup
+      ethtool   ; wol (wake on lan)
       file      ; Information about file from magic
       git       ; Version control
       gnupg
@@ -465,7 +483,7 @@ EndSection
                      natsu-nginx-service
 
                      (simple-service 'adb udev-service-type
-                                     (list android-udev-rules))
+                                     (list android-udev-rules %udev-rule-won))
 
                      (service knot-service-type
                               (knot-configuration
