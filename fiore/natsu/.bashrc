@@ -341,7 +341,8 @@ alias wi-guix-package-manifest='nohup guix package\
 alias wi-guix-package-update='nohup guix package\
  -u . &> /tmp/guix-package-update-$(date "+%F").log &'
 
-alias wi-guix-reconfigure='sudo nohup guix system reconfigure -c 0 magnolia.scm &>/home/natsu/guix-reconfigure.log &'
+alias wi-guix-reconfigure='sudo guix system reconfigure -c 0\
+ $HOME/dotfiles/fiore/magnolia.scm'
 
 alias wi-guix-refresh='./pre-inst-env env\
  GUILE_LOAD_PATH=$HOME/dotfiles/fiore/:$GUILE_LOAD_PATH\
