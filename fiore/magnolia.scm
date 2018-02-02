@@ -283,7 +283,14 @@ EndSection
 
     (bootloader (bootloader-configuration
                  (bootloader grub-efi-bootloader)
-                 (target "/boot/efi")))
+                 (target "/boot/efi")
+                 (menu-entries
+                  (list (menu-entry
+                         (label "NixOS's Grub")
+                         (linux "")
+                         (initrd "")
+                         (additional-options '("search --label --set nixos"
+                                               "configfile /boot/grub/grub.cfg")))))))
 
     (file-systems (cons* (file-system
                            (device "magnolia-root")
