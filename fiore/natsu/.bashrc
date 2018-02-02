@@ -397,6 +397,10 @@ alias guix-pre-build-lint-install-package="./pre-inst-env env\
  --substitute-urls='https://berlin.guixsd.org'\
  -p guix-wip-$PACKAGE-profile"
 
+alias wi-guix-bootstrap-configure-make="./bootstrap\
+ && ./configure --localstatedir=/var --prefix=\
+ && make -j 5"
+
 alias wi-list-bindings="bind -P"
 alias wi-list-functions="compgen -A function"
 alias wi-show-command="command -V"
