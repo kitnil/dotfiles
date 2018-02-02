@@ -1,3 +1,8 @@
+;; Copyright © 2018 Oleg Pykhalov <go.wigust@gmail.com>
+;; Released under the GNU GPLv3 or any later version.
+
+(require 'mailcap)
+
 (setq gnus-select-method '(nnimap "USER"
                                   (nnimap-address "localhost")
                                   (nnimap-server-port "imaps")))

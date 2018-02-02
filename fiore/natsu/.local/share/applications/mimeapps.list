@@ -1,6 +1,7 @@
 [Default Applications]
 x-scheme-handler/mailto=gnus.desktop;
 image/png=feh.desktop;
+image/gif=mpv.desktop;
 application/pdf=mupdf.desktop;
 text/html=conkeror.desktop;
 text/xml=conkeror.desktop;
