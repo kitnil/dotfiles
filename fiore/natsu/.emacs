@@ -110,9 +110,13 @@
 
 (which-key-add-key-based-replacements "C-c v" "version-control")
 (bind-keys :prefix "C-c v" :prefix-map wi-version-control-map
+           ("p" . git-messenger:popup-message))
+
+(which-key-add-key-based-replacements "C-c v m" "magit")
+(bind-keys :prefix "C-c v m" :prefix-map wi-magit-map
            ("c" . magit-commit)
            ("l" . magit-list-repositories)
-           ("p" . git-messenger:popup-message)
+           ("r" . magit-diff-toggle-refine-hunk)
            ("s" . magit-status))
 
 (which-key-add-key-based-replacements "C-c v b" "browse-at-remote")
