@@ -437,3 +437,5 @@ alias wi-screen="exec screen"
 
 alias wi-cool-retro-term='$(guix build cool-retro-term)/bin/cool-retro-term'
 alias wi-st='$(guix build st)/bin/st'
+
+alias wi-iptables-show="sudo iptables -n -L"
