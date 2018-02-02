@@ -251,6 +251,7 @@
            ("c" . compilation-shell-minor-mode)
            ("e" . eshell)
            ("h" . wi-terminal-here-launch)
+           ("H" . wi-terminal-here-launch-dark)
            ("t" . term))
 
 (which-key-add-key-based-replacements "C-c c" "org")
@@ -1251,7 +1252,10 @@ the appropriate network slug that we extract from the nick."
               ,@(if wi-terminal-here-dark '("-bg" "black" "-fg" "white")
                   '())
               "-e" "screen" "-S" ,project-name)))
-      (terminal-here-launch-in-directory (projectile-project-root)))))
+      (terminal-here-launch-in-directory (projectile-project-root))))
+  (defun wi-terminal-here-launch-dark ()
+    (interactive)
+    (wi-terminal-here-launch t)))
 
 ;; See <https://www.emacswiki.org/emacs/DoWhatIMean>
 (setq dired-dwim-target t)
