@@ -179,6 +179,19 @@
             :args (list "-c" (join (list "xterm -name" cmd) #\ ))
             :wait nil))
 
+(defcommand wi-screen
+    (session &optional collect-output-p)
+    ((:string "session name: "))
+  "Run `screen' session."
+  (run-prog *shell-program*
+            :args
+            (list "-c"
+                  (join (list "env" "STY=" ; Do not complain `$STY' in `screen'.
+                              "xterm" "-title" session
+                              "-e" "screen" "-S" session)
+                        #\ ))
+            :wait nil))
+
 (setq *wi-xterm-big-command*
     "exec xterm -fa 'Monospace' -fs 24")
 
