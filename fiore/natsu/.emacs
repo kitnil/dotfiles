@@ -1239,14 +1239,18 @@ the appropriate network slug that we extract from the nick."
 ;; TODO: Try without use-package.
 (use-package terminal-here
   :config
-  (defun wi-terminal-here-launch ()
+  (defcustom wi-terminal-here-dark nil
+    "Use a dark theme for `wi-terminal-here-launch'")
+  (defun wi-terminal-here-launch (&optional wi-terminal-here-dark)
     "Launch a terminal in the project directory."
     (interactive)
     (let* ((project-name (projectile-project-name))
            (terminal-here-terminal-command
-            (list "env" "STY=" ; Make sure screen doesn't complain STY is set.
-                  "xterm" "-title" project-name
-                  "-e" "screen" "-S" project-name)))
+            `("env" "STY=" ; Make sure screen doesn't complain STY is set.
+              "xterm" "-title" ,project-name
+              ,@(if wi-terminal-here-dark '("-bg" "black" "-fg" "white")
+                  '())
+              "-e" "screen" "-S" ,project-name)))
       (terminal-here-launch-in-directory (projectile-project-root)))))
 
 ;; See <https://www.emacswiki.org/emacs/DoWhatIMean>
