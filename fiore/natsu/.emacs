@@ -151,6 +151,7 @@
            ("l" . smartparens-strict-mode)
            ("m" . flymake-mode)
            ("p" . projectile-global-mode)
+           ("q" . highlight-stages-mode)
            ("s" . flyspell-mode)
            ("t" . toggle-truncate-lines)
            ("v" . google-translate-mode)
