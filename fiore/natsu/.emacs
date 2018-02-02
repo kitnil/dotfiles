@@ -1239,6 +1239,19 @@ the appropriate network slug that we extract from the nick."
 
 
 ;;;
+;;; Mail
+;;;
+
+(require 'supercite)
+
+;; sc-minor-mode
+(add-hook 'mail-citation-hook 'sc-cite-original)
+
+;; See `sc-nested-citation-p'
+(sc-T-nested-citation)
+
+
+;;;
 ;;; Misc
 ;;;
 
