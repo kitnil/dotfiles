@@ -3279,3 +3279,41 @@ split to display more windows and more buffers, the buffer exits
 @code{darkroom-mode}.  Whenever they are deleted, the buffer re-enters
 @code{darkroom-mode}.")
     (license license:gpl3+)))
+
+(define-public emacs-scratch-el
+  (let ((commit "2cdf2b841ce7a0987093f65b0cc431947549f897")
+        (revision "1"))
+    (package
+      (name "emacs-scratch-el")
+      (version (string-append "1.2" revision "."
+                              (string-take commit 7)))
+      (source (origin
+                (method git-fetch)
+                (uri (git-reference
+                      (url "https://github.com/ieure/scratch-el.git")
+                      (commit commit)))
+                (file-name (string-append name "-" version "-checkout"))
+                (sha256
+                 (base32
+                  "0wscsndynjmnliajqaz28r1ww81j8wh84zwaaswx51abhwgl0idf"))))
+      (build-system emacs-build-system)
+      (native-inputs
+       `(("texinfo" ,texinfo)))
+      (arguments
+       '(#:phases
+         (modify-phases %standard-phases
+           (add-after 'install 'install-doc
+             (lambda* (#:key outputs #:allow-other-keys)
+               (unless (invoke "makeinfo" "scratch.texi")
+                 (error "makeinfo failed"))
+               (install-file "scratch.info"
+                             (string-append (assoc-ref outputs "out")
+                                            "/share/info")))))))
+      (home-page "https://github.com/ieure/scratch-el/")
+      (synopsis "Create scratch buffers with the same mode current buffer")
+      (description "Scratch is an extension to Emacs that enables one to create
+scratch buffers that are in the same mode as the current buffer.  This is
+notably useful when working on code in some language; you may grab code into a
+scratch buffer, and, by virtue of this extension, do so using the Emacs
+formatting rules for that language.")
+      (license license:bsd-2))))
