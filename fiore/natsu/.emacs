@@ -30,6 +30,9 @@
 
 (setq smtpmail-queue-mail t) ; Call after typing M-x `smtpmail-send-queued-mail'
 
+(menu-bar-mode -1)
+(scroll-bar-mode -1)
+
 ;; Default from Emacs 26
 ;; See <http://git.savannah.gnu.org/cgit/emacs.git/commit/etc/NEWS?id=72ee93d68daea00e2ee69417afd4e31b3145a9fa>
 (setq print-quoted t)
@@ -1624,6 +1627,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(fringe ((t nil)))
  '(highlight-stages-level-1-face ((t (:foreground "deep sky blue"))))
  '(magit-diff-added ((t (:foreground "#22aa22"))))
  '(magit-diff-added-highlight ((t (:foreground "#22aa22"))))

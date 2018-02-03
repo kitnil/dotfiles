@@ -196,3 +196,8 @@ interactive("mpv-on-url",
     $prompt = "mpv command");
 
 define_key(content_buffer_normal_keymap, "f8", "mpv-on-url");
+
+function disable_scrollbars (buffer) {
+    buffer.top_frame.scrollbars.visible = false;
+}
+add_hook("create_buffer_late_hook", disable_scrollbars);
