@@ -13,7 +13,7 @@
 (set-font (make-instance 'xft:font
                          :family "DejaVu Sans Mono"
                          :subfamily "Book"
-                         :size 16))
+                         :size 12))
 
 (setf *window-border-style* :none)
 
@@ -22,10 +22,10 @@
 (set-win-bg-color "#dcdad5")
 (set-unfocus-color "#FFFFFF")
 (set-focus-color "#daa520")
-(set-fg-color "#ffffff")
-(set-bg-color "#daa520")
+(set-fg-color "#000000")
+(set-bg-color "#ffffff")
 (set-border-color "#daa520")
-(set-msg-border-width 0)
+(set-msg-border-width 2)
 
 (set-float-focus-color "#daa520")
 
@@ -227,9 +227,14 @@
   "Run GNOME Debian in QEMU."
   (run-shell-command (concat "exec " (getenv "HOME") "/bin/debian.sh")))
 
-(setq *mode-line-border-color*     "#ffffff"
+(setq *mode-line-border-color*     "#bebebe"
       *mode-line-foreground-color* "#000000"
-      *mode-line-background-color* "#ffffff")
+      *mode-line-background-color* "#bebebe")
+
+;; TODO: Theme switching.
+;; (setq *mode-line-border-color*     "#ffffff"
+;;       *mode-line-foreground-color* "#000000"
+;;       *mode-line-background-color* "#ffffff")
 
 (setf *screen-mode-line-format* "[^B%n^b] %W")
 
