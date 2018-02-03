@@ -1253,6 +1253,8 @@ the appropriate network slug that we extract from the nick."
 ;; See `sc-nested-citation-p'
 (sc-T-nested-citation)
 
+(setq sc-auto-fill-region-p nil) ; Disable auto-fill after yanking citations.
+
 
 ;;;
 ;;; Misc
