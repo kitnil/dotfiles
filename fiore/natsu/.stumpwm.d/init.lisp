@@ -252,9 +252,13 @@
 
 (load-module "screenshot")
 
+(defcommand scroll-other-window () ()
+  (stumpwm:run-commands "fother" "window-send-string  " "fother"))
+
+(define-key *root-map* (kbd "C-M-v") "scroll-other-window")
+
 (defcommand set-background-dark () ()
   (run-shell-command "xsetroot -solid black"))
-
 (defun time-date-and-time-restrict ()
   (time-format "%Y-%m-%d-%H-%M-%S"))
 
