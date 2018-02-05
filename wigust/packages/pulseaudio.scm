@@ -19,8 +19,11 @@
 (define-module (wigust packages pulseaudio)
   #:use-module (guix packages)
   #:use-module (guix download)
+  #:use-module ((guix licenses) #:prefix license:)
   #:use-module (gnu packages)
-  #:use-module (gnu packages pulseaudio))
+  #:use-module (gnu packages pulseaudio)
+  #:use-module (gnu packages ncurses)
+  #:use-module (guix build-system cmake))
 
 (define-public pulsemixer-emacs-keybindings
   (package
@@ -31,3 +34,31 @@
               (patches (search-patches "pulsemixer-emacs-keybindings.patch"))))
     (description "Pulsemixer is a PulseAudio mixer with command-line and
 curses-style interfaces with Emacs keybindings.")))
+
+(define-public ncpamixer
+  (package
+    (name "ncpamixer")
+    (version "1.2")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append "https://github.com/fulhax/ncpamixer/archive/"
+                                  version ".tar.gz"))
+              (sha256
+               (base32
+                "1d1vna5bs4dk6jz28slxs4d5d21fm2h39vbljx6np1gzhsnl7c7p"))))
+    (build-system cmake-build-system)
+    (arguments
+     '(#:tests? #f
+       #:make-flags
+       (list (string-append "PREFIX=" (assoc-ref %outputs "out")))
+       #:phases
+       (modify-phases %standard-phases
+         (delete 'configure))))
+    (inputs
+     `(("pulseaudio" ,pulseaudio)
+       ("ncurses" ,ncurses)))
+    (home-page "https://github.com/fulhax/ncpamixer")
+    (synopsis "ncurses PulseAudio Mixer")
+    (description
+     "Command-line ncurses mixer for PulseAudio inspired by pavucontrol.")
+    (license license:x11)))
