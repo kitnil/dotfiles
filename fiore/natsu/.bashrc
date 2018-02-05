@@ -444,3 +444,7 @@ alias wi-cool-retro-term='$(guix build cool-retro-term)/bin/cool-retro-term'
 alias wi-st='$(guix build st)/bin/st'
 
 alias wi-iptables-show="sudo iptables -n -L"
+
+# Origin <https://stackoverflow.com/a/34463802>.
+alias wi-split-directory='i=1; while read l; do mkdir $i; mv $l $((i++));\
+ done< <(ls | xargs -n40)'
