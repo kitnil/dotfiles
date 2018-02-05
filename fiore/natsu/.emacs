@@ -31,7 +31,7 @@
 (setq smtpmail-queue-mail t) ; Call after typing M-x `smtpmail-send-queued-mail'
 
 (menu-bar-mode -1)
-(scroll-bar-mode -1)
+(scroll-bar-mode 1)
 
 ;; Default from Emacs 26
 ;; See <http://git.savannah.gnu.org/cgit/emacs.git/commit/etc/NEWS?id=72ee93d68daea00e2ee69417afd4e31b3145a9fa>
