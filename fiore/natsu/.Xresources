@@ -60,6 +60,13 @@ XTerm*faceSize4: 16
 ! VT font menu: Huge
 XTerm*faceSize5: 22
 
+! Allow xterm to report the TERM variable correctly.  Do not set the
+! TERM variable from your ~/.bashrc or ~/.bash_profile or similar
+! file.  The terminal itself should report the correct TERM to the
+! system so that the proper terminfo file will be used.  Two usable
+! terminfo names are xterm and xterm-256color
+XTerm.termName: xterm-256color
+
 ! https://snarfed.org/emacs_x_resources
 ! Emacs.menuBar: off
 ! Emacs.verticalScrollBars: off
