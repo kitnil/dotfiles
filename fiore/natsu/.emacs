@@ -1389,6 +1389,7 @@ the appropriate network slug that we extract from the nick."
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCkK9UDm_ZNrq_rIXCz3xCGA" video) ; Brian Lunduke
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCMV8p6Lb-bd6UZtTc_QD4zA" video) ; Baggers
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCbHXJGd7c8Hy4z0-YX1Jf3Q" video) ; Matt Hartley
+        ("https://www.youtube.com/feeds/videos.xml?user=LDCNow" video)
         ("https://www.youtube.com/feeds/videos.xml?user=tuxreviews" video)
         ("https://www.youtube.com/feeds/videos.xml?user=EposVox" video)
         ("https://www.youtube.com/feeds/videos.xml?user=gotbletu" video)))
