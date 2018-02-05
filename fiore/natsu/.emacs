@@ -1237,6 +1237,8 @@ the appropriate network slug that we extract from the nick."
 ;;; Misc
 ;;;
 
+(setq hl-sexp-background-color "darkseagreen2")
+
 (when (and (require 'edit-server nil t) (daemonp))
   (edit-server-start))
 

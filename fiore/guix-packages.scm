@@ -124,6 +124,7 @@ valgrind version-control video virtualization w3m web xdisorg)
    emacs-helm               ; Narrowing framework
    emacs-helm-make          ; Front end to `make'
    emacs-helm-projectile    ; Helm interface for Projectile
+   emacs-highlight-sexp
    emacs-highlight-stages   ; Highlight code stages
    emacs-highlight-symbol
    emacs-htmlize
