@@ -193,6 +193,7 @@
 
 (which-key-add-key-based-replacements "C-c h" "helm")
 (bind-keys :prefix "C-c h" :prefix-map wi-helm-map
+           ("&" . helm-yas-complete)
            ("a" . helm-world-time)
            ("b" . helm-buffers-list)
            ("e" . helm-emms)
