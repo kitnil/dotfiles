@@ -1,0 +1,5 @@
+startup_message off
+defscrollback 10000
+
+# Origin <https://wiki.archlinux.org/index.php/GNU_Screen#Use_X_scrolling_mechanism>.
+termcapinfo xterm* ti@:te@
