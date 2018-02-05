@@ -1377,22 +1377,29 @@ the appropriate network slug that we extract from the nick."
                              (progn (setq paragraph-separate "[ 	]*$")
                                     (setq paragraph-start "\\|[ 	]*$"))))
 
-(setq elfeed-feeds
-      '("http://nullprogram.com/feed/"
-        "http://www.scheme.dk/planet/atom.xml"
-        "https://lwn.net/headlines/newrss"
-        "https://fedoramagazine.org/feed/"
-        "http://planet.emacsen.org/atom.xml"
-        "http://steckerhalter.tk/index.xml"
-        "https://www.reddit.com/r/freegames/.rss"
-        ("https://www.youtube.com/feeds/videos.xml?channel_id=UC2eYFnH61tmytImy1mTYvhA" video) ; Luke Smith
-        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCkK9UDm_ZNrq_rIXCz3xCGA" video) ; Brian Lunduke
-        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCMV8p6Lb-bd6UZtTc_QD4zA" video) ; Baggers
-        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCbHXJGd7c8Hy4z0-YX1Jf3Q" video) ; Matt Hartley
-        ("https://www.youtube.com/feeds/videos.xml?user=LDCNow" video)
-        ("https://www.youtube.com/feeds/videos.xml?user=tuxreviews" video)
-        ("https://www.youtube.com/feeds/videos.xml?user=EposVox" video)
-        ("https://www.youtube.com/feeds/videos.xml?user=gotbletu" video)))
+(let ((youtube-rss-channel-id
+       "https://www.youtube.com/feeds/videos.xml?channel_id=")
+      (youtube-rss-user "https://www.youtube.com/feeds/videos.xml?user="))
+  (setq elfeed-feeds
+        `("http://nullprogram.com/feed/"
+          "http://www.scheme.dk/planet/atom.xml"
+          "https://lwn.net/headlines/newrss"
+          "https://fedoramagazine.org/feed/"
+          "http://planet.emacsen.org/atom.xml"
+          "http://steckerhalter.tk/index.xml"
+          "https://www.reddit.com/r/freegames/.rss"
+          (,(concat youtube-rss-channel-id "UC2eYFnH61tmytImy1mTYvhA")
+           video) ; Luke Smith
+          (,(concat youtube-rss-channel-id "UCkK9UDm_ZNrq_rIXCz3xCGA")
+           video) ; Brian Lunduke
+          (,(concat youtube-rss-channel-id "UCMV8p6Lb-bd6UZtTc_QD4zA")
+           video) ; Baggers
+          (,(concat youtube-rss-channel-id "UCbHXJGd7c8Hy4z0-YX1Jf3Q")
+           video) ; Matt Hartley
+          (,(concat youtube-rss-user "LDCNow") video)
+          (,(concat youtube-rss-user "tuxreviews") video)
+          (,(concat youtube-rss-user "EposVox") video)
+          (,(concat youtube-rss-user "gotbletu") video))))
 
 (defun wi-fullname-and-email ()
   (format "%s <%s>" user-full-name user-mail-address))
