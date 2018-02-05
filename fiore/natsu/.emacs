@@ -1009,8 +1009,7 @@ for COMMIT, defaulting to the commit hash at point."
 (setq org-email-link-description-format "Email %c: %s") ; More than 30 character
 
 (setq org-capture-templates
-        '(("c" "Note" item (file "~/.notes")
-           "%?")
+        '(("c" "Note" item (file "~/.notes") "%?")
 
           ;; Requires org-capture-extension
           ;; https://github.com/sprig/org-capture-extension
@@ -1030,38 +1029,17 @@ for COMMIT, defaulting to the commit hash at point."
           ("t" "Tasks" entry (file+headline ".notes" "Tasks")
            "* TODO %? \n%T" :prepend t)
 
-          ("i" "TODO" entry (file "/TODO.gpg")
-           "* %?")
-
-          ("n" "pdfview" item (file "~/.pdf-notes")
-           "%a %?")
-
-          ("p" "phrase" item (file "phrase.org")
-           "%?")
-
-          ("e" "emacs" plain (file "emacs.org")
-           "%?")
-
-          ("g" "guix" plain (file "guix.org")
-           "%?")
-
-          ("r" "read" plain (file "read.org")
-           "%?")
-
-          ("o" "misc" plain (file "misc.org")
-           "%?")
-
-          ("m" "music" plain (file "music.org")
-           "%?")
-
-          ("v" "video" plain (file "video.org")
-           "%?")
-
-          ("b" "blog" plain (file "~/public_html/IDEA.org")
-           "%?")
-
-          ("w" "work" plain (file "~/Documents/work.org")
-           "%?")))
+          ("i" "TODO" entry (file "/TODO.gpg") "* %?")
+          ("n" "pdfview" item (file "~/.pdf-notes") "%a %?")
+          ("p" "phrase" item (file "phrase.org") "%?")
+          ("e" "emacs" plain (file "emacs.org") "%?")
+          ("g" "guix" plain (file "guix.org") "%?")
+          ("r" "read" plain (file "read.org") "%?")
+          ("o" "misc" plain (file "misc.org") "%?")
+          ("m" "music" plain (file "music.org") "%?")
+          ("v" "video" plain (file "video.org") "%?")
+          ("b" "blog" plain (file "~/public_html/IDEA.org") "%?")
+          ("w" "work" plain (file "~/Documents/work.org") "%?")))
 
 (setq org-publish-project-alist
       '(("org-notes"
