@@ -62,6 +62,26 @@
           (t
            (error "No candidate found")))))
 
+(defun gnus-summary-limit-to-score (score &optional below)
+  "Limit to articles with score at or above SCORE if BELOW is nil,
+below otherwise."
+  (interactive (list (string-to-number
+                      (read-string
+                       (format "Limit to articles with score of at %s: "
+                               (if current-prefix-arg "most" "least"))))))
+  (let* ((data gnus-newsgroup-data)
+         (compare (if (or below current-prefix-arg) #'<= #'>=))
+         articles)
+    (while data
+      (when (funcall compare (gnus-summary-article-score
+                              (gnus-data-number (car data)))
+                     score)
+	(push (gnus-data-number (car data)) articles))
+      (setq data (cdr data)))
+    (prog1
+	(gnus-summary-limit articles)
+      (gnus-summary-position-point))))
+
 (setq gnus-visible-headers
       (concat "^From:"
               "\\|^Newsgroups:"
