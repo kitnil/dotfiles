@@ -44,10 +44,6 @@
 .usb-Logitech_Logitech_USB_Headset-00.analog-stereo"
   "My USB headphones")
 
-;; Geiser chicken
-(setenv "CHICKEN_DOC_REPOSITORY" (expand-file-name "~/.eggs/share/chicken-doc"))
-(setenv "CHICKEN_REPOSITORY" (expand-file-name "~/.eggs/lib/chicken/8"))
-
 ;; TODO: Make initialization without require
 (use-package org-protocol :defer 5)
 (use-package jl-encrypt :defer 5)
