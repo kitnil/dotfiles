@@ -24,8 +24,6 @@
 (add-hook 'message-sent-hook #'gnus-score-followup-thread)
 (add-hook 'message-send-hook #'ispell-message) ; Check spelling before sending
 
-(setq gnus-article-skip-boring t) ; Skip citations and signatures
-
 ;; Citations
 (setq message-yank-empty-prefix " ")
 (setq message-yank-prefix "  > ")
