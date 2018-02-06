@@ -1226,24 +1226,22 @@ the appropriate network slug that we extract from the nick."
 (when (and (require 'edit-server nil t) (daemonp))
   (edit-server-start))
 
-;; TODO: Try without use-package.
-(use-package terminal-here
-  :config
-  (defun wi-terminal-here-launch (&optional wi-terminal-here-dark)
-    "Launch a terminal in the project directory.
+(autoload #'terminal-here-launch-in-directory "terminal-here")
+(defun wi-terminal-here-launch (&optional wi-terminal-here-dark)
+  "Launch a terminal in the project directory.
 
 With a prefix argument, launch a terminal with a dark theme in
 the project directory."
-    (interactive)
-    (let* ((project-name (projectile-project-name))
-           (terminal-here-terminal-command
-            `("env" "STY=" ; Make sure screen doesn't complain STY is set.
-              "xterm" "-title" ,project-name
-              ,@(if (or wi-terminal-here-dark current-prefix-arg)
-                    '("-bg" "black" "-fg" "white")
-                  '())
-              "-e" "screen" "-S" ,project-name)))
-      (terminal-here-launch-in-directory (projectile-project-root)))))
+  (interactive)
+  (let* ((project-name (projectile-project-name))
+         (terminal-here-terminal-command
+          `("env" "STY=" ; Make sure screen doesn't complain STY is set.
+            "xterm" "-title" ,project-name
+            ,@(if (or wi-terminal-here-dark current-prefix-arg)
+                  '("-bg" "black" "-fg" "white")
+                '())
+            "-e" "screen" "-S" ,project-name)))
+    (terminal-here-launch-in-directory (projectile-project-root))))
 
 ;; See <https://www.emacswiki.org/emacs/DoWhatIMean>
 (setq dired-dwim-target t)
