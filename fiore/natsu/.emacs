@@ -263,7 +263,6 @@
            ("c" . compilation-shell-minor-mode)
            ("e" . eshell)
            ("h" . wi-terminal-here-launch)
-           ("H" . wi-terminal-here-launch-dark)
            ("t" . term))
 
 (which-key-add-key-based-replacements "C-c c" "org")
@@ -1230,22 +1229,21 @@ the appropriate network slug that we extract from the nick."
 ;; TODO: Try without use-package.
 (use-package terminal-here
   :config
-  (defcustom wi-terminal-here-dark nil
-    "Use a dark theme for `wi-terminal-here-launch'")
   (defun wi-terminal-here-launch (&optional wi-terminal-here-dark)
-    "Launch a terminal in the project directory."
+    "Launch a terminal in the project directory.
+
+With a prefix argument, launch a terminal with a dark theme in
+the project directory."
     (interactive)
     (let* ((project-name (projectile-project-name))
            (terminal-here-terminal-command
             `("env" "STY=" ; Make sure screen doesn't complain STY is set.
               "xterm" "-title" ,project-name
-              ,@(if wi-terminal-here-dark '("-bg" "black" "-fg" "white")
+              ,@(if (or wi-terminal-here-dark current-prefix-arg)
+                    '("-bg" "black" "-fg" "white")
                   '())
               "-e" "screen" "-S" ,project-name)))
-      (terminal-here-launch-in-directory (projectile-project-root))))
-  (defun wi-terminal-here-launch-dark ()
-    (interactive)
-    (wi-terminal-here-launch t)))
+      (terminal-here-launch-in-directory (projectile-project-root)))))
 
 ;; See <https://www.emacswiki.org/emacs/DoWhatIMean>
 (setq dired-dwim-target t)
