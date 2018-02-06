@@ -22,7 +22,6 @@
                                     'gnus-thread-sort-by-score))))
 
 (add-hook 'message-sent-hook #'gnus-score-followup-thread)
-(add-hook 'message-send-hook #'ispell-message) ; Check spelling before sending
 
 ;; Citations
 (setq message-yank-empty-prefix " ")
