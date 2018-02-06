@@ -370,7 +370,7 @@
           "+license%%3Agpl"))
 
 (defengine google
-  "http://www.google.com/search?ie=utf-8&oe=utf-8&q=%s")
+  "https://www.google.com/search?ie=utf-8&oe=utf-8&q=%s")
 
 (defengine google-door-music
   ;; https://github.com/gotbletu/dotfiles/blob/66b2ce9744564a48717c97163a5c34ad1b56d50e/surfraw/.config/surfraw/elvi/opendir_music
