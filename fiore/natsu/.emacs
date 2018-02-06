@@ -95,11 +95,22 @@
 
 (which-key-add-key-based-replacements "C-c a" "text")
 (bind-keys :prefix "C-c a" :prefix-map wi-align-map
-           ("r" . align-regexp))
+           ("a" . align-regexp))
 
 (which-key-add-key-based-replacements "C-c a s" "sort")
 (bind-keys :prefix "C-c a s" :prefix-map wi-sort-map
            ("s" . wi-sort-sexps))
+
+(which-key-add-key-based-replacements "C-c a e" "expand")
+(bind-keys :prefix "C-c a e" :prefix-map wi-expand-map
+           ("e" . er/expand-region)
+           ("q" . er/mark-inside-pairs)
+           ("Q" . er/mark-outside-pairs)
+           ("p" . er/mark-inside-pairs)
+           ("P" . er/mark-outside-pairs)
+           ("m" . er/mark-method-call)
+           ("s" . er/mark-symbol)
+           ("w" . er/mark-word))
 
 (which-key-add-key-based-replacements "C-c o" "split")
 (bind-keys :prefix "C-c o" :prefix-map wi-split-map
