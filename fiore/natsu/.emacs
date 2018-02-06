@@ -137,7 +137,8 @@
            ("f" . ffap)
            ("m" . browse-url-mpv)
            ("i" . browse-url-firefox)
-           ("r" . ffap-read-only))
+           ("r" . ffap-read-only)
+           ("l" . recentf-open-files))
 
 (which-key-add-key-based-replacements "C-c t" "toggle")
 (bind-keys :prefix "C-c t" :prefix-map wi-toggle-map
@@ -193,8 +194,10 @@
            ("a" . helm-world-time)
            ("b" . helm-buffers-list)
            ("e" . helm-emms)
+           ("f" . helm-for-files)
            ("i" . helm-imenu)
            ("m" . helm-make)
+           ("l" . helm-recentf)
            ("r" . helm-bookmarks)
            ("s" . helm-pass)
            ("t" . helm-top)
@@ -1216,6 +1219,11 @@ the appropriate network slug that we extract from the nick."
 ;;;
 ;;; Misc
 ;;;
+
+;; Origin <https://www.emacswiki.org/emacs/RecentFiles>.
+
+(recentf-mode 1)
+(setq recentf-max-menu-items 50)
 
 (setq hl-sexp-background-color "darkseagreen2")
 
