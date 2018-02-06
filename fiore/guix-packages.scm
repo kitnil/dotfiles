@@ -105,6 +105,8 @@ valgrind version-control video virtualization w3m web xdisorg)
    cflow         ; C program call map
    global        ; Source tagging
    valgrind
+
+   bbdb
    emacs-ag
    emacs-aggressive-indent  ; Auto indent minor mode
    emacs-company            ; Complition framework

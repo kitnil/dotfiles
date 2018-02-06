@@ -130,3 +130,6 @@ below otherwise."
            (type . "application/pdf")
            (test eq window-system 'x))
          (cdr (assoc "application" mailcap-mime-data))))
+
+;; Origin <http://bbdb.sourceforge.net/bbdb.html#SEC2>.
+(bbdb-initialize 'gnus 'message)
