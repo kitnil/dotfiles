@@ -26,6 +26,10 @@
 
 (setq gnus-article-skip-boring t) ; Skip citations and signatures
 
+;; Citations
+(setq message-yank-empty-prefix " ")
+(setq message-yank-prefix "  > ")
+(setq message-yank-cited-prefix "  >")
 
 ;; Code from: https://github.com/jwiegley/dot-emacs
 (defun switch-to-gnus (&optional arg)
