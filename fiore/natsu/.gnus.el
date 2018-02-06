@@ -133,3 +133,7 @@ below otherwise."
 
 ;; Origin <http://bbdb.sourceforge.net/bbdb.html#SEC2>.
 (bbdb-initialize 'gnus 'message)
+
+;; Origin <https://emacs.stackexchange.com/a/166>.
+(bbdb-mua-auto-update-init 'message) ; use 'gnus for incoming messages too
+(setq bbdb-mua-auto-update-p 'query) ;; or 'create to create without asking
