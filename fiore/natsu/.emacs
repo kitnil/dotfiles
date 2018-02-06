@@ -224,6 +224,7 @@
            ("h l" . counsel-find-library)
            ("h u" . counsel-unicode-char)
            ("h v" . counsel-describe-variable)
+           ("l" . ivy-recentf)
            ("r"   . ivy-resume)
            ("s"   . swiper)
            ("x"   . counsel-M-x))
