@@ -452,3 +452,5 @@ alias wi-split-directory='i=1; while read l; do mkdir $i; mv $l $((i++));\
 alias wi-wget-mirror="wget -m --random-wait -e robots=off\
  -U mozilla --follow-tags=a -k -a wget.log --html-extension -A.html,.php\
  --base="
+
+alias wi-grep-urls="grep -rh -Po '(?<=href=\")[^\"]*' ."
