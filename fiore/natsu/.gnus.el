@@ -22,6 +22,8 @@
                                     'gnus-thread-sort-by-score))))
 
 (add-hook 'message-sent-hook #'gnus-score-followup-thread)
+(add-hook 'message-send-hook #'ispell-message) ; Check spelling before sending
+
 
 ;; Code from: https://github.com/jwiegley/dot-emacs
 (defun switch-to-gnus (&optional arg)
