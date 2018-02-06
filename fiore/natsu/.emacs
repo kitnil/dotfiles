@@ -97,6 +97,10 @@
 (bind-keys :prefix "C-c a" :prefix-map wi-align-map
            ("r" . align-regexp))
 
+(which-key-add-key-based-replacements "C-c a s" "sort")
+(bind-keys :prefix "C-c a s" :prefix-map wi-sort-map
+           ("s" . wi-sort-sexps))
+
 (which-key-add-key-based-replacements "C-c o" "split")
 (bind-keys :prefix "C-c o" :prefix-map wi-split-map
            ("c" . crux-open-with)
