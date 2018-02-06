@@ -1607,6 +1607,17 @@ in the variable `browse-url-mpv-arguments' to mpv."
   (interactive "DDirectory: ")
   (setq guix-directory directory))
 
+;; TODO:
+;; Origin <https://lists.gnu.org/archive/html/emacs-devel/2017-12/msg00518.html>.
+;; See also <https://github.com/legoscia/messages-are-flowing>.
+;; (defun wi-soften-hardlines ()
+;;     (interactive)
+;;     (save-excursion
+;;       (goto-char (point-min))
+;;       (mail-text)
+;;       (while (search-forward hard-newline nil t)
+;;         (replace-match "\n"))))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
