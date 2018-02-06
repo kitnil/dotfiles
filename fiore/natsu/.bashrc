@@ -454,3 +454,10 @@ alias wi-wget-mirror="wget -m --random-wait -e robots=off\
  --base="
 
 alias wi-grep-urls="grep -rh -Po '(?<=href=\")[^\"]*' ."
+
+# TODO: Escape window names with asterisks.
+# wi-x-resize-window ()
+# {
+#     window_name=$(xwininfo | grep 'Window id' | awk '{ print $5 }')
+#     xdotool search --name "$window_name" windowsize $1 $2
+# }
