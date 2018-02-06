@@ -93,7 +93,7 @@
 
 (bind-key "<C-down-mouse-1>" 'mc/toggle-cursor-on-click)
 
-(which-key-add-key-based-replacements "C-c a" "align")
+(which-key-add-key-based-replacements "C-c a" "text")
 (bind-keys :prefix "C-c a" :prefix-map wi-align-map
            ("r" . align-regexp))
 
