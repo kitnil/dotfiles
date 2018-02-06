@@ -206,6 +206,11 @@
            ("x" . helm-M-x)
            ("y" . helm-show-kill-ring))
 
+(which-key-add-key-based-replacements "C-c h h" "help")
+(bind-keys :prefix "C-c h h" :prefix-map wi-helm-help-map
+           ("m" . helm-man-woman)
+           ("i" . helm-info))
+
 (which-key-add-key-based-replacements "C-c i" "ivy")
 (which-key-add-key-based-replacements "C-c i h" "counsel-help")
 (which-key-add-key-based-replacements "C-c i g" "counsel-git")
