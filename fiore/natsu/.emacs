@@ -516,7 +516,8 @@
   "https://www.mankier.com/?q=%s")
 
 (defengine melpa
-  "https://melpa.org/#/?q=%s")
+  "https://melpa.org/#/?q=%s"
+  :keybinding "m")
 
 (defengine openhub
   "https://www.openhub.net/p?ref=homepage&query=%s")
