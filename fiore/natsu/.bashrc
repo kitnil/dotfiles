@@ -448,3 +448,7 @@ alias wi-iptables-show="sudo iptables -n -L"
 # Origin <https://stackoverflow.com/a/34463802>.
 alias wi-split-directory='i=1; while read l; do mkdir $i; mv $l $((i++));\
  done< <(ls | xargs -n40)'
+
+alias wi-wget-mirror="wget -m --random-wait -e robots=off\
+ -U mozilla --follow-tags=a -k -a wget.log --html-extension -A.html,.php\
+ --base="
