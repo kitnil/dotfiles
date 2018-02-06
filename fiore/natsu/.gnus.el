@@ -24,6 +24,8 @@
 (add-hook 'message-sent-hook #'gnus-score-followup-thread)
 (add-hook 'message-send-hook #'ispell-message) ; Check spelling before sending
 
+(setq gnus-article-skip-boring t) ; Skip citations and signatures
+
 
 ;; Code from: https://github.com/jwiegley/dot-emacs
 (defun switch-to-gnus (&optional arg)
