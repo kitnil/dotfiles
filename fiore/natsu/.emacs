@@ -1397,6 +1397,7 @@ the project directory."
           "http://planet.emacsen.org/atom.xml"
           "http://steckerhalter.tk/index.xml"
           "https://www.reddit.com/r/freegames/.rss"
+          "https://www.bennee.com/~alex/blog/feed/"
           (,(concat youtube-rss-channel-id "UC2eYFnH61tmytImy1mTYvhA")
            video) ; Luke Smith
           (,(concat youtube-rss-channel-id "UCkK9UDm_ZNrq_rIXCz3xCGA")
