@@ -146,15 +146,19 @@
 
 (which-key-add-key-based-replacements "C-c f" "find")
 (bind-keys :prefix "C-c f" :prefix-map wi-find-map
-           ("c" . browse-url-conkeror)
-           ("g" . browse-url-chromium)
            ("d" . dumb-jump-go)
            ("e" . guix-edit)
            ("f" . ffap)
-           ("m" . browse-url-mpv)
+           ("l" . recentf-open-files)
+           ("r" . ffap-read-only))
+
+(which-key-add-key-based-replacements "C-c f b" "browse")
+(bind-keys :prefix "C-c f b" :prefix-map wi-browse-map
+           ("c" . browse-url-conkeror)
+           ("e" . eww)
+           ("g" . browse-url-chromium)
            ("i" . browse-url-firefox)
-           ("r" . ffap-read-only)
-           ("l" . recentf-open-files))
+           ("m" . browse-url-mpv))
 
 (which-key-add-key-based-replacements "C-c t" "toggle")
 (bind-keys :prefix "C-c t" :prefix-map wi-toggle-map
