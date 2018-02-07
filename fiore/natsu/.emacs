@@ -66,6 +66,7 @@
 (setq browse-url-browser-function
       `(("^ftp://.*" . browse-ftp-tramp)
         (,debbugs-browse-url-regexp . debbugs-browse-url)
+        ("^https?://w*\\.?youtube.com/watch\\?v=.*" . browse-url-mpv)
         ("." . browse-url-conkeror)))
 
 ;; Enable functions
