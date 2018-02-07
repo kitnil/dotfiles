@@ -1484,7 +1484,7 @@ in the variable `browse-url-streamlink-arguments' to mpv."
              ,browse-url-streamlink-quality))))
 
 (setq browse-url-mpv-program "mpv")
-(setq browse-url-mpv-arguments nil)
+(setq browse-url-mpv-arguments '("--volume=50"))
 (setq browse-url-mpv-remote-program "~/bin/mpv-remote")
 (defun browse-url-mpv (url &optional new-window)
   "Ask the mpv video player to load URL.
