@@ -3317,3 +3317,25 @@ notably useful when working on code in some language; you may grab code into a
 scratch buffer, and, by virtue of this extension, do so using the Emacs
 formatting rules for that language.")
       (license license:bsd-2))))
+
+(define-public emacs-info-colors
+  (package
+    (name "emacs-info-colors")
+    (version "0.2")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append "https://github.com/ubolonton/info-colors/archive/"
+                           version ".tar.gz"))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32
+         "08xd6y89igxlqpw678xjpxyzs9k28vbbc7sygxcyblgyj6farnml"))
+       (patches (search-patches "emacs-info-colors-add-more-syntax.patch"))))
+    (build-system emacs-build-system)
+    (home-page "https://github.com/ubolonton/info-colors")
+    (synopsis "Extra colors for Info-mode")
+    (description "This package provides a modern adaption of the extra
+coloring provided by Drew Adams @code{info+} package.  To enable this
+@code{(add-hook 'Info-selection-hook 'info-colors-fontify-node)}.")
+    (license license:gpl3+)))
