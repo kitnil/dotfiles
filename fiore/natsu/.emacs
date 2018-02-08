@@ -1290,7 +1290,10 @@ the project directory."
    '(fringe ((t (:background "black" :foreground "Wheat"))))
    '(header-line
      ((t (:background "black" :foreground "grey90" :height 0.9))))
-    '(scroll-bar ((t (:background "black" :foreground "WhiteSmoke"))))))
+   '(scroll-bar ((t (:background "black" :foreground "WhiteSmoke"))))
+   ;; '(mode-line ((t (:background "WhiteSmoke" :foreground "black"))))
+   ;; '(mode-line-inactive ((t (:background "black" :box nil))))
+   '(mode-line-buffer-id ((t (:background "grey15" :foreground "red"))))))
 
 (defun wi-guix-hydra-latest-builds ()
   (interactive)
