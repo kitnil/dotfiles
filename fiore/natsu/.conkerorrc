@@ -190,7 +190,7 @@ interactive("mpv-on-url",
         var spec = load_spec(element);
         var uri = load_spec_uri_string(spec);
         // yield browser_element_shell_command(I.buffer, element, "mpv", cwd);
-        shell_command_with_argument_blind("mpv", uri, $cwd = cwd);
+        shell_command_with_argument_blind("mpv --volume=50", uri, $cwd = cwd);
     },
     $browser_object = browser_object_links,
     $prompt = "mpv command");
