@@ -1635,11 +1635,10 @@ in the variable `browse-url-mpv-arguments' to mpv."
  ;; If there is more than one, they won't work right.
  '(indent-tabs-mode nil)
  '(safe-local-variable-values
-   (quote
-    ((eval modify-syntax-entry 43 "'")
+   '((eval modify-syntax-entry 43 "'")
      (eval modify-syntax-entry 36 "'")
      (eval modify-syntax-entry 126 "'")
-     (bug-reference-bug-regexp . "<https?://\\(debbugs\\|bugs\\)\\.gnu\\.org/\\([0-9]+\\)>")))))
+     (bug-reference-bug-regexp . "<https?://\\(debbugs\\|bugs\\)\\.gnu\\.org/\\([0-9]+\\)>"))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
