@@ -33,6 +33,8 @@ XTerm*color15: #FFFFFF
 XTerm.vt100.scrollBar: true
 XTerm.vt100.cursorBlink: true
 
+*.rightScrollBar: true
+
 XTerm.vt100.saveLines: 4096
 XTerm.vt100.faceName: Monospace:size=14:antialias=true
 XTerm.vt100.metaSendsEscape: true
