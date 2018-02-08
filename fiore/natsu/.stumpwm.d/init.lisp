@@ -279,6 +279,8 @@
 (define-key *root-map* (kbd "C-y") "show-clipboard-history")
 (clipboard-history:start-clipboard-manager)
 
+(load-module "globalwindows")
+
 (ql:quickload "cffi")
 (ql:quickload "usocket-server")
 
