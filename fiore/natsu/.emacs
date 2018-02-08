@@ -1289,7 +1289,8 @@ the project directory."
    '(which-key-command-description-face ((t (:inherit font-lock-function-name-face :height 1.0))))
    '(fringe ((t (:background "black" :foreground "Wheat"))))
    '(header-line
-     ((t (:background "black" :foreground "grey90" :height 0.9))))))
+     ((t (:background "black" :foreground "grey90" :height 0.9))))
+    '(scroll-bar ((t (:background "black" :foreground "WhiteSmoke"))))))
 
 (defun wi-guix-hydra-latest-builds ()
   (interactive)
