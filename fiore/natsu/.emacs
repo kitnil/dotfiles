@@ -587,6 +587,15 @@
 (defengine metal-archives
   "https://www.metal-archives.com/search?searchString=%s&type=band_name")
 
+(defengine libgen
+  (concat "http://libgen.io/search.php?req=%s&"
+          "lg_topic=libgen&"
+          "open=0&"
+          "view=simple&"
+          "res=25&"
+          "phrase=1&"
+          "column=def"))
+
 (defengine youtube
   "http://www.youtube.com/results?aq=f&oq=&search_query=%s")
 
