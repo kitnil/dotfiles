@@ -1448,23 +1448,30 @@ the project directory."
 
 (setq quickurl-format-function (lambda (url) (format "<%s>" (quickurl-url-url url))))
 
+;; `w3m' fonts
 (setq w3m-fill-column 80)
 
-(setq debpaste-user-name "wigust")
+;; TODO: debpaste API broken
+;; (setq debpaste-user-name "wigust")
 
+;; `eww' fonts
 (setq shr-width 80)
 (setq shr-use-fonts nil)
 
+;; Toggle show-paren-mode on
 (show-paren-mode)
 
+;; Don't use ido
 (setq projectile-completion-system 'default)
 
 (setq helm-locate-project-list (wi-list-files-in-dir wi-projects-directory))
 
+;; Google translate with translate-shell program
 (require 'google-translate-mode)
 (with-eval-after-load 'google-translate-mode
   (setq trans-target "ru"))
 
+;; Interested in those timezones
 (with-eval-after-load 'time
   (setq display-time-world-time-format "%Z\t%d %B %H:%M")
   (setq display-time-world-list '(("Europe/Moscow"    "Europe/Moscow")
@@ -1475,6 +1482,7 @@ the project directory."
                                   ("America/New_York" "America/New_York")
                                   ("Asia/Tokyo"       "Asia/Tokyo"))))
 
+;; List of Email addresses to send patches for `gitpatch-mail' command
 (setq gitpatch-mail-database (list "guix-patches@gnu.org"))
 
 (save-place-mode)            ; Remember position in files
@@ -1482,9 +1490,13 @@ the project directory."
 (setq vc-follow-symlinks t)  ; Do not ask about following link in Git projects
 (setq dired-listing-switches (purecopy "-alh")) ; Prettify dired
 
+;; Toggle prettify symbols mode on
 (global-prettify-symbols-mode)
+
+ ; Unprettify symbol after the cursor
 (setq prettify-symbols-unprettify-at-point 'right-edge)
 
+;; In addition to browse-url-* functions
 (defvar browse-url-streamlink-program "streamlink")
 (defvar browse-url-streamlink-arguments '("-p" "mpv"))
 (defvar browse-url-streamlink-quality "best")
@@ -1502,6 +1514,7 @@ in the variable `browse-url-streamlink-arguments' to mpv."
              ,url
              ,browse-url-streamlink-quality))))
 
+;; In addition to browse-url-* functions
 (setq browse-url-mpv-program "mpv")
 (setq browse-url-mpv-arguments '("--volume=50"))
 (setq browse-url-mpv-remote-program "~/bin/mpv-remote")
@@ -1519,6 +1532,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
             browse-url-mpv-arguments
             (list url)))))
 
+;; Code snippets framework
 (with-eval-after-load 'yasnippet
   (setq yas-snippet-dirs
         (append (wi-expand-file-names
@@ -1528,11 +1542,12 @@ in the variable `browse-url-mpv-arguments' to mpv."
                 yas-snippet-dirs))
   (yas-reload-all))
 
+;; Simple Mail Transfer Protocol (SMTP)
 (with-eval-after-load 'sendmail
   (setq send-mail-function #'smtpmail-send-it)
   (setq smtpmail-smtp-server "smtp.gmail.com"))
 
-;; Code from: https://github.com/alezost/guix.el/pull/9#issuecomment-340556583
+;; Origin <https://github.com/alezost/guix.el/pull/9#issuecomment-340556583>.
 (with-eval-after-load 'info
   (info-initialize)
   (setq Info-directory-list
@@ -1542,26 +1557,34 @@ in the variable `browse-url-mpv-arguments' to mpv."
                    "~/.guix-profile.d/autotools/share/info"))
                 Info-directory-list)))
 ;;
-;; Alternative: https://lists.gnu.org/archive/html/help-guix/2017-03/msg00140.html
-;; See <~/.bashrc>
+;; Alternative: <https://lists.gnu.org/archive/html/help-guix/2017-03/msg00140.html>,
+;; see <.bashrc>.
 
+;; Popup completion framework
 (with-eval-after-load 'company
   (setq company-clang-insert-arguments nil)
   (setq company-gtags-insert-arguments nil)
   (setq company-semantic-insert-arguments nil))
 
+;; Structured editing
 (with-eval-after-load 'smartparens
   (require 'smartparens-config)
   (sp-use-smartparens-bindings)
 
-  ;; https://github.com/Fuco1/smartparens/blob/master/docs/pair-management.rst
+  ;; Origin <https://github.com/Fuco1/smartparens/blob/master/docs/pair-management.rst>.
   (sp-pair "“" "”")
   (sp-local-pair 'text-mode "<" ">"))
 
+;; Undo and redo operations on windows and buffers
 (winner-mode 1)
 (windmove-default-keybindings)
 
+;; Display key bindings help window (after some delay)
 (which-key-mode)
+
+;; Set defaults for debbugs-gnu commands
+(with-eval-after-load 'debbugs-gnu
+  (setq debbugs-gnu-default-packages (list "guix" "guix-patches")))
 
 (cl-defun wi-debbugs-gnu-list
     (&optional (mail-address user-mail-address)
@@ -1575,27 +1598,25 @@ With SUPPRESS non-nil argument exclude unarchived bugs."
 
 (setq ewmctrl-wmctrl-path "/run/current-system/profile/bin/wmctrl")
 
-(with-eval-after-load 'debbugs-gnu
-  (setq debbugs-gnu-default-packages (list "guix" "guix-patches")))
-
 (defun wi-debbugs-gnu-guix ()
+  "List Guix bugs on debbugs.gnu.org."
   (interactive)
   (debbugs-gnu '("serious" "important" "normal") '("guix")))
 
 (defun wi-debbugs-gnu-guix-patches ()
+  "List Guix patches on debbugs.gnu.org."
   (interactive)
   (debbugs-gnu '("serious" "important" "normal") '("guix-patches")))
 
 (defun wi-set-current-frame-80-40 ()
+  "Set current frame to 80 pixels width and 40 pixels height."
   (interactive)
   (set-frame-size (selected-frame) 80 40))
 
 (defun wi-set-current-frame-80-24 ()
+  "Set current frame to 80 pixels width and 24 pixels height."
   (interactive)
   (set-frame-size (selected-frame) 80 24))
-
-(defun wi-wget ()
-  (shell-command-to-string (concat "wget" " -q" " -O-" " " url)))
 
 (defun wi-wget-switch (url)
   "Download a file with wget and open it in buffer"
