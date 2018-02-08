@@ -1563,10 +1563,15 @@ in the variable `browse-url-mpv-arguments' to mpv."
 
 (which-key-mode)
 
-(defun wi-debbugs-gnu-list ()
+(cl-defun wi-debbugs-gnu-list
+    (&optional (mail-address user-mail-address)
+               (suppress t))
+  "List bugs on debbugs.gnu.org from USER-MAIL-ADDRESS.
+
+With SUPPRESS non-nil argument exclude unarchived bugs."
   (interactive)
-  (let ((debbugs-gnu-current-query `((submitter . ,user-mail-address))))
-    (debbugs-gnu nil nil nil t)))
+  (let ((debbugs-gnu-current-query `((submitter . ,mail-address))))
+    (debbugs-gnu nil nil nil suppress)))
 
 (setq ewmctrl-wmctrl-path "/run/current-system/profile/bin/wmctrl")
 
