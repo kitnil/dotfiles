@@ -201,3 +201,52 @@ function disable_scrollbars (buffer) {
     buffer.top_frame.scrollbars.visible = false;
 }
 add_hook("create_buffer_late_hook", disable_scrollbars);
+
+// Origin <https://orgmode.org/worg/org-contrib/org-protocol.html>.
+
+function org_store_link (url, title, window) {
+    var cmd_str = 'emacsclient \"org-protocol://store-link'
+        + '?url=' + url
+        + '&title=' + title
+        + "&template=L"
+        + '\"';
+    if (window != null) {
+	window.minibuffer.message('Issuing ' + cmd_str);
+    }
+    shell_command_blind(cmd_str);
+}
+
+interactive("org-store-link", "Stores [[url][title]] as org link and copies url to emacs kill ring",
+	    function (I) {
+		org_store_link(encodeURIComponent(I.buffer.display_uri_string),
+                               encodeURIComponent(I.buffer.document.title),
+                               I.window);
+	    });
+
+// For org-capture (or org-remember — just exchange capture with remember)
+function org_capture (url, title, selection, window) {
+    var cmd_str = 'emacsclient \"org-protocol://capture'
+        + "?url=" + url
+        + "&title=" + title
+        + "&body=" + selection
+        + "&template=l"
+        + '\"';
+    if (window != null) {
+	window.minibuffer.message('Issuing ' + cmd_str);
+    }
+    shell_command_blind(cmd_str);
+}
+
+interactive("org-capture",
+            "Clip URL, title, and selection to capture via org-protocol",
+	    function (I) {
+		org_capture(encodeURIComponent(I.buffer.display_uri_string),
+                            encodeURIComponent(I.buffer.document.title),
+                            encodeURIComponent(I.buffer.top_frame.getSelection()),
+                            I.window);
+	    });
+
+// M-x org-store-link and M-x org-capture (or remember). 
+
+define_key(content_buffer_normal_keymap, "C-c c", "org-capture");
+define_key(content_buffer_normal_keymap, "C-c l", "org-store-link");

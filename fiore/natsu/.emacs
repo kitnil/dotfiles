@@ -1049,8 +1049,12 @@ for COMMIT, defaulting to the commit hash at point."
 
           ;; Requires org-capture-extension
           ;; https://github.com/sprig/org-capture-extension
-          ("L" "Protocol Link" plain (file "~/.web.org")
-           "[[%:link][%:description]]")
+          ("l" "Protocol" item (file "~/.web.org")
+           "[[%:link][%:description]]\n%i"
+           :immediate-finish t)
+          ("L" "Protocol Link" item (file "~/.web.org")
+           "[[%:link][%:description]]"
+           :immediate-finish t)
 
           ("r" "Respond ro email" entry (file+headline "inbox.org" "Email")
            "[[mailto:%:fromaddress][%:fromname]]"
