@@ -1,8 +1,16 @@
 // Search engines
+// Origin <http://conkeror.org/Webjumps>.
+
 define_webjump("startpage", "https://www.startpage.com/do/search",
     $post_data = [["query", "%s"], ["cat", "web"],
                   ["cmd", "process_search"], ["language", "english"],
                   ["engine0", "v1all"], ["abp", "-1"]]);
+
+define_webjump("youtube",
+               "https://www.youtube.com/results?search_query=%s&search=Search");
+
+define_webjump("youtube-latest",
+               "https://www.youtube.com/results?sp=CAJQFA%253D%253D&search_query=%s")
 
 // Minimal font size
 // session_pref("font.minimum-size.x-western", 18);
