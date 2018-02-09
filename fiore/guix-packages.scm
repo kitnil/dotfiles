@@ -6,7 +6,7 @@
 (use-package-modules admin aspell audio bittorrent code conkeror
 commencement compression databases dictionaries emacs games gcc glib
 gnuzilla graphics gtk guile haskell image-viewers imagemagick kodi
-libreoffice linux lisp mail man messaging ncdu ncurses
+libreoffice linux lisp lxde mail man messaging ncdu ncurses
 package-management password-utils pdf python rdesktop samba scheme tls
 valgrind version-control video virtualization w3m web xdisorg)
 
