@@ -2,7 +2,11 @@
 ;; Copyright © 2017, 2018 Oleg Pykhalov <go.wigust@gmail.com>
 ;; Released under the GNU GPLv3 or any later version.
 
-(use-modules (gnu) (srfi srfi-1) (ice-9 popen) (ice-9 rdelim))
+(define-module (magnolia)
+  #:use-module (gnu)
+  #:use-module (srfi srfi-1)
+  #:use-module (ice-9 popen)
+  #:use-module (ice-9 rdelim))
 
 (use-service-modules cups desktop dns mail networking rsync shepherd
 spice ssh version-control web xorg cgit)
