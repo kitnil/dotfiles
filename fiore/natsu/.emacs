@@ -1431,7 +1431,8 @@ the project directory."
           (,(concat youtube-rss-user "LDCNow") video)
           (,(concat youtube-rss-user "tuxreviews") video)
           (,(concat youtube-rss-user "EposVox") video)
-          (,(concat youtube-rss-user "gotbletu") video))))
+          (,(concat youtube-rss-user "gotbletu") video)
+          (,(concat youtube-rss-user "metalx1000") video))))
 
 (defun wi-fullname-and-email ()
   (format "%s <%s>" user-full-name user-mail-address))
