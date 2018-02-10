@@ -461,3 +461,5 @@ alias wi-grep-urls="grep -rh -Po '(?<=href=\")[^\"]*' ."
 #     window_name=$(xwininfo | grep 'Window id' | awk '{ print $5 }')
 #     xdotool search --name "$window_name" windowsize $1 $2
 # }
+
+alias wi-pure-bash="env -i $(readlink $(which bash)) --noprofile --norc"
