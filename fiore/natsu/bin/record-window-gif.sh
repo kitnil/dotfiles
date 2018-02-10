@@ -1,6 +1,6 @@
 #!/bin/sh
 
-# Code from: https://ask.fedoraproject.org/en/question/10272/how-can-i-capture-a-video-of-my-screen-in-fedora/?answer=38332#post-id-38332
+# Origin <https://ask.fedoraproject.org/en/question/10272/how-can-i-capture-a-video-of-my-screen-in-fedora/?answer=38332#post-id-38332>.
 
 NAME=screencast-$(date +%Y%m%d%H%M)
 FPS=5
