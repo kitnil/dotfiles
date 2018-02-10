@@ -12,6 +12,9 @@ define_webjump("youtube",
 define_webjump("youtube-latest",
                "https://www.youtube.com/results?sp=CAJQFA%253D%253D&search_query=%s")
 
+define_webjump("github",
+               "https://github.com/search?ref=simplesearch&q=%s")
+
 // Minimal font size
 // session_pref("font.minimum-size.x-western", 18);
 
