@@ -39,6 +39,8 @@
 
 (clear-window-placement-rules)
 
+(restore-window-placement-rules "~/.desktop.lisp")
+
 ;; Last rule to match takes precedence!
 ;; If the argument to :title or :role begins with an ellipsis, a
 ;; substring match is performed.
