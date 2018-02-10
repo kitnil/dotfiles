@@ -1691,7 +1691,6 @@ With SUPPRESS non-nil argument exclude unarchived bugs."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(fringe ((t nil)))
- '(highlight-stages-level-1-face ((t (:foreground "deep sky blue"))))
  '(magit-diff-added ((t (:foreground "#22aa22"))))
  '(magit-diff-added-highlight ((t (:foreground "#22aa22"))))
  '(magit-diff-context-highlight ((t (:foreground "grey50"))))
