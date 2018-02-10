@@ -1282,15 +1282,21 @@ the appropriate network slug that we extract from the nick."
 With a prefix argument, launch a terminal with a dark theme in
 the project directory."
   (interactive)
-  (let* ((project-name (projectile-project-name))
+  (let* ((project (projectile-project-name))
+         (project-name (if (string-equal project "-")
+                           (read-string "Project: ")
+                         project))
+         (project-directory (if (string-equal project "-")
+                                (read-directory-name "Directory: ")
+                              (projectile-project-root)))
          (terminal-here-terminal-command
           `("env" "STY=" ; Make sure screen doesn't complain STY is set.
-            "xterm" "-title" ,project-name
+            "xterm" "-title" ,(concat "xterm-screen-" project-name)
             ,@(if (or wi-terminal-here-dark current-prefix-arg)
                   '("-bg" "black" "-fg" "white")
                 '())
             "-e" "screen" "-S" ,project-name)))
-    (terminal-here-launch-in-directory (projectile-project-root))))
+    (terminal-here-launch-in-directory project-directory)))
 
 ;; See <https://www.emacswiki.org/emacs/DoWhatIMean>
 (setq dired-dwim-target t)
