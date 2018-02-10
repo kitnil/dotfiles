@@ -278,6 +278,11 @@
            ("s" . debbugs-gnu-search)
            ("u" . wi-debbugs-gnu-list))
 
+(which-key-add-key-based-replacements "C-c m r" "elfeed")
+(bind-keys :prefix "C-c m r" :prefix-map wi-elfeed-map
+           ("r" . elfeed)
+           ("g" . elfeed-update))
+
 (which-key-add-key-based-replacements "C-c m g" "gnus")
 (bind-keys :prefix "C-c m g" :prefix-map wi-gnus-map
            ("g" . gnus)
