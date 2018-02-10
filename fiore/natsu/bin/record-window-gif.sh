@@ -2,11 +2,11 @@
 
 # Code from: https://ask.fedoraproject.org/en/question/10272/how-can-i-capture-a-video-of-my-screen-in-fedora/?answer=38332#post-id-38332
 
-NAME=/tmp/screencast-$(date +%Y%m%d%H%M)
+NAME=screencast-$(date +%Y%m%d%H%M)
 FPS=5
 THREADS=3
 
-tmpfile=/tmp/screengrab.tmp.$$
+tmpfile=screengrab.tmp.$$
 trap 'touch $tmpfile; rm -f $tmpfile' 0
 
 xwininfo > $tmpfile 2>/dev/null
@@ -31,7 +31,7 @@ ffmpeg -y \
        $NAME.mkv \
        $@
 
-palette="/tmp/palette.png"
+palette="palette.png"
 filters="fps=$FPS,scale=0:-1:flags=lanczos"
 
 ffmpeg -v warning -i $NAME.mkv -vf "$filters,palettegen" -threads $THREADS -y $palette
