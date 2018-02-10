@@ -343,6 +343,9 @@
 (defengine cpan
   "http://search.cpan.org/search?query=%s&mode=all")
 
+(defengine cve
+  "https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=%s")
+
 (defengine debfiles
   "https://packages.debian.org/search?searchon=contents&keywords=%s")
 
