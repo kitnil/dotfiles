@@ -616,6 +616,16 @@
 ;;; Usability functions
 ;;;
 
+;; TODO:
+(defmacro wi-define-insert (name-text-list)
+  `(mapc (lambda (name-text)
+           (let ((name (first name-text))
+                 (text (second name-text)))
+             (defun ,(intern (concat "wi-insert-" (symbol-name name))) ()
+               (interactive)
+               (insert text))))
+         ,name-text-list))
+
 (defun wi-dunno ()
   (interactive)
   "Insert a `¯\_(ツ)_/¯' thing."
