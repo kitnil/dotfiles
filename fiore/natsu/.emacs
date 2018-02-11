@@ -1261,6 +1261,8 @@ the appropriate network slug that we extract from the nick."
 
 ;; Origin <https://www.emacswiki.org/emacs/RecentFiles>.
 
+(add-hook 'Info-selection-hook 'info-colors-fontify-node)
+
 (recentf-mode 1)
 (setq recentf-max-menu-items 50)
 

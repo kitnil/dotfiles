@@ -42,6 +42,7 @@
    epipe
    emacs-helm-mode-manager
    emacs-helm-pass          ; Front end to password-store
+   emacs-info-colors        ; Colorize info pages
    emacs-move-text
    emacs-org-mind-map       ; General mind maps from Org files
    emacs-helm-c-yasnippet
