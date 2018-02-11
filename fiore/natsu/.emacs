@@ -87,24 +87,25 @@
 
 (which-key-add-key-based-replacements "C-c &" "yasnippet")
 
-(which-key-add-key-based-replacements "C-c b" "buffer")
-(bind-keys :prefix "C-c b" :prefix-map wi-buffer-map
+(bind-keys :prefix "C-c q q" :prefix-map wi-q-map :which "foo"
+           ("b" . ibuffer)
+           ("e" . wi-switch-to-scratch-elisp)
+           ("w" . wi-switch-to-eww))
+
+(bind-keys :prefix "C-c b" :prefix-map wi-buffer-map :which "buffer"
            ("b" . ibuffer)
            ("e" . wi-switch-to-scratch-elisp)
            ("w" . wi-switch-to-eww))
 
 (bind-key "<C-down-mouse-1>" 'mc/toggle-cursor-on-click)
 
-(which-key-add-key-based-replacements "C-c a" "text")
-(bind-keys :prefix "C-c a" :prefix-map wi-align-map
+(bind-keys :prefix "C-c a" :prefix-map wi-align-map :which "text"
            ("a" . align-regexp))
 
-(which-key-add-key-based-replacements "C-c a s" "sort")
-(bind-keys :prefix "C-c a s" :prefix-map wi-sort-map
+(bind-keys :prefix "C-c a s" :prefix-map wi-sort-map :which "sort"
            ("s" . wi-sort-sexps))
 
-(which-key-add-key-based-replacements "C-c a e" "expand")
-(bind-keys :prefix "C-c a e" :prefix-map wi-expand-map
+(bind-keys :prefix "C-c a e" :prefix-map wi-expand-map :which "expand"
            ("e" . er/expand-region)
            ("q" . er/mark-inside-pairs)
            ("Q" . er/mark-outside-pairs)
@@ -114,55 +115,50 @@
            ("s" . er/mark-symbol)
            ("w" . er/mark-word))
 
-(which-key-add-key-based-replacements "C-c o" "split")
-(bind-keys :prefix "C-c o" :prefix-map wi-split-map
+(bind-keys :prefix "C-c o" :prefix-map wi-split-map :which "split"
            ("c" . crux-open-with)
            ("j" . sp-join-sexp)
            ("s" . sp-split-sexp))
 
-(which-key-add-key-based-replacements "C-c w" "word")
-(bind-keys :prefix "C-c w" :prefix-map wi-word-map
+(bind-keys :prefix "C-c w" :prefix-map wi-word-map :which "word"
            ("t" . show-translation))
 
-(which-key-add-key-based-replacements "C-c v" "version-control")
 (bind-keys :prefix "C-c v" :prefix-map wi-version-control-map
+           :which "version-control"
            ("p" . git-messenger:popup-message))
 
-(which-key-add-key-based-replacements "C-c v m" "magit")
-(bind-keys :prefix "C-c v m" :prefix-map wi-magit-map
+(bind-keys :prefix "C-c v m" :prefix-map wi-magit-map :which "magit"
            ("c" . magit-commit)
            ("l" . magit-list-repositories)
            ("r" . magit-diff-toggle-refine-hunk)
            ("s" . magit-status))
 
-(which-key-add-key-based-replacements "C-c v b" "browse-at-remote")
 (bind-keys :prefix "C-c v b" :prefix-map wi-browse-at-remote-map
+           :which "browse-at-remote"
            ;; TODO: ("g" . wi-browse-at-remote-gnu)
            ("b" . browse-at-remote))
 
 (which-key-add-key-based-replacements "C-c v h" "version-control-hunk")
 (bind-keys :prefix "C-c v h" :prefix-map wi-version-control-hunk-map
+           :which "version-control-hunk"
            ("s" . git-gutter:stage-hunk)
            ("r" . git-gutter:revert-hunk))
 
-(which-key-add-key-based-replacements "C-c f" "find")
-(bind-keys :prefix "C-c f" :prefix-map wi-find-map
+(bind-keys :prefix "C-c f" :prefix-map wi-find-map :which "find"
            ("d" . dumb-jump-go)
            ("e" . guix-edit)
            ("f" . ffap)
            ("l" . recentf-open-files)
            ("r" . ffap-read-only))
 
-(which-key-add-key-based-replacements "C-c f b" "browse")
-(bind-keys :prefix "C-c f b" :prefix-map wi-browse-map
+(bind-keys :prefix "C-c f b" :prefix-map wi-browse-map :which "browse"
            ("c" . browse-url-conkeror)
            ("e" . eww)
            ("g" . browse-url-chromium)
            ("i" . browse-url-firefox)
            ("m" . browse-url-mpv))
 
-(which-key-add-key-based-replacements "C-c t" "toggle")
-(bind-keys :prefix "C-c t" :prefix-map wi-toggle-map
+(bind-keys :prefix "C-c t" :prefix-map wi-toggle-map :which "toggle"
            ("a" . abbrev-mode)
            ("b" . guix-build-log-minor-mode)
            ("c" . company-mode)
@@ -181,8 +177,7 @@
            ("w" . whitespace-mode)
            ("y" . yas-minor-mode))
 
-(which-key-add-key-based-replacements "C-c e" "expand")
-(bind-keys :prefix "C-c e" :prefix-map wi-expand-map
+(bind-keys :prefix "C-c e" :prefix-map wi-expand-map :which "expand"
            ("w"  . er/mark-word)
            ("s"  . er/mark-symbol)
            ("S"  . er/mark-symbol-with-prefix)
@@ -197,20 +192,17 @@
            ("e"  . er/mark-email)
            ("d"  . er/mark-defun))
 
-(which-key-add-key-based-replacements "C-c r" "rething")
-(bind-keys :prefix "C-c r" :prefix-map wi-rething-map
+(bind-keys :prefix "C-c r" :prefix-map wi-rething-map :which "rething"
            ("r" . revert-buffer)
            ("l" . redraw-display)
            ("f" . transpose-frame)
            ("w" . transpose-frame))
 
-(which-key-add-key-based-replacements "C-c r t" "transpose")
-(bind-keys :prefix "C-c r t" :prefix-map wi-transpose-map
+(bind-keys :prefix "C-c r t" :prefix-map wi-transpose-map :which "transpose"
            ("f" . transpose-frame)
            ("w" . crux-transpose-windows))
 
-(which-key-add-key-based-replacements "C-c h" "helm")
-(bind-keys :prefix "C-c h" :prefix-map wi-helm-map
+(bind-keys :prefix "C-c h" :prefix-map wi-helm-map :which "helm"
            ("&" . helm-yas-complete)
            ("a" . helm-world-time)
            ("b" . helm-buffers-list)
@@ -227,88 +219,85 @@
            ("x" . helm-M-x)
            ("y" . helm-show-kill-ring))
 
-(which-key-add-key-based-replacements "C-c h h" "help")
-(bind-keys :prefix "C-c h h" :prefix-map wi-helm-help-map
+(bind-keys :prefix "C-c h h" :prefix-map wi-helm-help-map :which "help"
            ("m" . helm-man-woman)
            ("i" . helm-info))
 
-(which-key-add-key-based-replacements "C-c i" "ivy")
-(which-key-add-key-based-replacements "C-c i h" "counsel-help")
-(which-key-add-key-based-replacements "C-c i g" "counsel-git")
-(bind-keys :prefix "C-c i" :prefix-map wi-ivy-map
-           ("b"   . ivy-switch-buffer)
-           ("f"   . counsel-find-file)
-           ("g f" . counsel-git)
-           ("g v" . counsel-git-grep)
-           ("h f" . counsel-describe-function)
-           ("h i" . counsel-info-lookup-symbol)
-           ("h l" . counsel-find-library)
-           ("h u" . counsel-unicode-char)
-           ("h v" . counsel-describe-variable)
+(bind-keys :prefix "C-c i" :prefix-map wi-ivy-map :which "ivy"
+           ("b" . ivy-switch-buffer)
+           ("f" . counsel-find-file)
            ("l" . ivy-recentf)
-           ("r"   . ivy-resume)
-           ("s"   . swiper)
-           ("x"   . counsel-M-x))
+           ("r" . ivy-resume)
+           ("s" . swiper)
+           ("x" . counsel-M-x))
 
-(which-key-add-key-based-replacements "C-c h p" "helm-projectile")
+(bind-keys :prefix "C-c i g" :prefix-map wi-counsel-git-map
+           :which "counsel-git"
+           ("f" . counsel-git)
+           ("v" . counsel-git-grep))
+
+(bind-keys :prefix "C-c i h" :prefix-map wi-counsel-help-map
+           :which "counsel-help"
+           ("f" . counsel-describe-function)
+           ("i" . counsel-info-lookup-symbol)
+           ("l" . counsel-find-library)
+           ("u" . counsel-unicode-char)
+           ("v" . counsel-describe-variable))
+
 (which-key-add-key-based-replacements "C-c p x" "projectile-shell")
 (which-key-add-key-based-replacements "C-c p s" "projectile-search")
 (bind-keys :prefix "C-c h p" :prefix-map wi-helm-projectile-map
+           :which "helm-projectile"
            ("p" . helm-projectile)
            ("f" . helm-projectile-find-file-dwim)
            ("b" . helm-projectile-switch-to-buffer))
 
-(which-key-add-key-based-replacements "C-c m" "mail")
-(bind-keys :prefix "C-c m" :prefix-map wi-mail-map
+(bind-keys :prefix "C-c m" :prefix-map wi-mail-map :which "mail"
            ("b" . wi-send-buffer-as-mail))
 
-(which-key-add-key-based-replacements "C-c e" "emms")
-(bind-keys :prefix "C-c e" :prefix-map wi-emms-map
+(bind-keys :prefix "C-c e" :prefix-map wi-emms-map :which "emms"
            ("e" . emms)
            ("n" . emms-next)
            ("p" . emms-previous)
            ("r" . emms-random)
            ("s" . emms-stop))
 
-(which-key-add-key-based-replacements "C-c m d" "debbugs")
-(bind-keys :prefix "C-c m d" :prefix-map wi-debbugs-map
+(bind-keys :prefix "C-c m d" :prefix-map wi-debbugs-map :which "debbugs"
            ("b" . debbugs-gnu-bugs)
            ("l" . debbugs-gnu)
            ("p" . debbugs-gnu-patches)
            ("s" . debbugs-gnu-search)
            ("u" . wi-debbugs-gnu-list))
 
-(which-key-add-key-based-replacements "C-c m r" "elfeed")
-(bind-keys :prefix "C-c m r" :prefix-map wi-elfeed-map
+(bind-keys :prefix "C-c m r" :prefix-map wi-elfeed-map :which "elfeed"
            ("r" . elfeed)
            ("g" . elfeed-update))
 
-(which-key-add-key-based-replacements "C-c m g" "gnus")
-(bind-keys :prefix "C-c m g" :prefix-map wi-gnus-map
+(bind-keys :prefix "C-c m g" :prefix-map wi-gnus-map :which "gnus"
            ("g" . gnus)
            ("s" . switch-to-gnus))
 
-(which-key-add-key-based-replacements "C-c s" "shell")
-(bind-keys :prefix "C-c s" :prefix-map wi-shell-map
+(bind-keys :prefix "C-c s" :prefix-map wi-shell-map :which "shell"
            ("s" . shell)
            ("c" . compilation-shell-minor-mode)
            ("e" . eshell)
            ("h" . wi-terminal-here-launch)
            ("t" . term))
 
-(which-key-add-key-based-replacements "C-c c" "org")
-(bind-keys :prefix "C-c c" :prefix-map wi-org-map
+(bind-keys :prefix "C-c c" :prefix-map wi-org-map :which "org"
            ("c" . org-capture)
            ("a" . org-agenda)
            ("l" . org-store-link))
 
-(bind-key "<f5>"   #'recompile)
-(bind-key "<f6>"   #'god-local-mode)
-(bind-key "<f7>"   #'mc/mark-next-like-this)
-(bind-key "<f8>"   #'er/expand-region)
+(which-key-add-key-based-replacements "C-c k" "engine")
+
+(bind-key "<f5>" #'recompile)
+(bind-key "<f6>" #'god-local-mode)
+(bind-key "<f7>" #'mc/mark-next-like-this)
+(bind-key "<f8>" #'er/expand-region)
 (bind-key "<M-f6>" #'god-mode-all)
-(bind-key "M-z"    #'zap-up-to-char)
-(bind-key "C-c u"  #'undo-tree-visualize)
+(bind-key "M-z" #'zap-up-to-char)
+(bind-key "C-c u" #'undo-tree-visualize)
 
 ; TODO: (bind-key "<C-tab>" #'hs-toggle-hiding scheme-mode-map)
 
