@@ -3339,3 +3339,13 @@ formatting rules for that language.")
 coloring provided by Drew Adams @code{info+} package.  To enable this
 @code{(add-hook 'Info-selection-hook 'info-colors-fontify-node)}.")
     (license license:gpl3+)))
+
+(define-public emacs-use-package-which
+  (package
+    (inherit emacs-use-package)
+    (name "emacs-use-package-which")
+    (source
+     (origin
+       (inherit (package-source emacs-use-package))
+       (patches
+        (search-patches "emacs-use-package-add-which-to-bind-key.patch"))))))
