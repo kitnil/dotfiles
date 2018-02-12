@@ -1594,6 +1594,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
 
   ;; Origin <https://github.com/Fuco1/smartparens/blob/master/docs/pair-management.rst>.
   (sp-pair "“" "”")
+  (sp-pair "‘" "’")
   (sp-local-pair 'text-mode "<" ">"))
 
 ;; Undo and redo operations on windows and buffers
