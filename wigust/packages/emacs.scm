@@ -3164,26 +3164,6 @@ navigate and display hierarchy structures.")
       (description "Read Reddit from within Emacs interactively.")
       (license license:gpl3+))))
 
-(define-public emacs-browse-at-remote-gnu
-  (let ((commit "cd2ccdaef8b1d97337d790175f71cc3dbcfcff64")
-        (revision "1"))
-    (package
-      (inherit emacs-browse-at-remote)
-      (name "emacs-browse-at-remote-gnu")
-      (version (string-append "0.9.0-" revision "."
-                              (string-take commit 7)))
-      (source
-       (origin
-         (method git-fetch)
-         (uri (git-reference
-               (url "https://github.com/wigust/browse-at-remote.git")
-               (commit commit)))
-         (file-name (string-append (package-name emacs-browse-at-remote)
-                                   "-" version "-checkout"))
-         (sha256
-          (base32
-           "1334xm5lj0j9rb9pvh5zvilnmygmh4l1rv7f9gfcadn50iwprsg8")))))))
-
 (define-public emacs-terminal-here
   (let ((commit "b3659e13d3d41503b4fc59dd2c7ea622631fc3ec")
         (revision "1"))
