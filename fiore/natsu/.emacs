@@ -99,10 +99,9 @@
 
 (bind-key "<C-down-mouse-1>" 'mc/toggle-cursor-on-click)
 
-(bind-keys :prefix "C-c a" :prefix-map wi-align-map :which "text"
-           ("a" . align-regexp))
-
-(bind-keys :prefix "C-c a s" :prefix-map wi-sort-map :which "sort"
+(bind-keys :prefix "C-c a" :prefix-map wi-text-map :which "text"
+           ("a" . align-regexp)
+           ("p" . wi-mark-paragraph+sort-lines)
            ("s" . wi-sort-sexps))
 
 (bind-keys :prefix "C-c a e" :prefix-map wi-expand-map :which "expand"
@@ -615,6 +614,12 @@
 ;;;
 ;;; Usability functions
 ;;;
+
+(defun wi-mark-paragraph+sort-lines ()
+  "Invoke `mark-paragraph' and `sort-lines'."
+  (interactive)
+  (mark-paragraph)
+  (sort-lines nil (region-beginning) (region-end)))
 
 ;; TODO:
 (defmacro wi-define-insert (name-text-list)
