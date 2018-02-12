@@ -3067,7 +3067,7 @@ especially useful when opening up large log files for analysis.")
        (patches (search-patches "emacs-debbugs-recognize-bugs.gnu.org.patch"))))))
 
 (define-public epipe
-  (let ((commit "a76c922ef9909f4a166e0568ec0e6aa59cd89de2")
+  (let ((commit "c966d549d5416fb92ecf4bd4a0a5a8fc9239e3af")
         (revision "1"))
     (package
       (name "epipe")
@@ -3081,7 +3081,7 @@ especially useful when opening up large log files for analysis.")
                 (file-name (string-append name "-" version "-checkout"))
                 (sha256
                  (base32
-                  "0wbqbvkhlf84ihq8iznh224pjcm59clvbxcgrjvp8scdwqc6idh7"))))
+                  "0lkisi1s7sn12nx8zh58qmsxwnk1rjwryj18wcbr148xqz3swg57"))))
       (build-system trivial-build-system)
       (inputs
        `(("bash" ,bash)
@@ -3106,11 +3106,10 @@ especially useful when opening up large log files for analysis.")
                      '("epipe" "epipe.pl"))
            #t)))
       (home-page "https://github.com/cute-jumper/epipe")
-      (synopsis "Pipe to the emacsclient")
+      (synopsis "Pipe to the @code{emacsclient}")
       (description "@code{epipe} provides an utility to use your editor in
-the pipeline, featuring the support for running emacsclient.")
-      ;; No license in the Git repository
-      (license #f))))
+the pipeline, featuring the support for running @code{emacsclient}.")
+      (license license:gpl3+))))
 
 (define-public emacs-helm-c-yasnippet
   (let ((commit "65ca732b510bfc31636708aebcfe4d2d845b59b0")
