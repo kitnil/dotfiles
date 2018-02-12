@@ -470,6 +470,16 @@
           "&result=normal"
           "&sort=score"))
 
+(defengine guix-help+devel
+  (concat "https://lists.gnu.org/archive/cgi-bin/namazu.cgi"
+          "?query=%s"
+          "&submit=Search%%21"
+          "&idxname=guix-devel"
+          "&idxname=help-guix"
+          "&max=20"
+          "&result=normal"
+          "&sort=score"))
+
 (defengine guix-all
   (concat "https://lists.gnu.org/archive/cgi-bin/namazu.cgi"
           "?query=%s"
