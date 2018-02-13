@@ -402,7 +402,6 @@ EndSection
 
       alsa-utils
       pavucontrol ; Pulseaudio control GUI
-      pulsemixer  ; Pulseaudio control CLI
 
       %base-packages))
 
