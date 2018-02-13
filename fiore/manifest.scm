@@ -6,13 +6,14 @@
              (wigust packages python)
              (wigust packages version-control))
 
-(use-package-modules admin aspell audio bittorrent code conkeror
-commencement compression cran databases dictionaries emacs games gcc
-glib gnuzilla graphics gtk guile haskell image-viewers imagemagick
-kodi libreoffice linux lisp lxde mail man maths messaging ncdu ncurses
-package-management password-utils patchutils perl pdf python rdesktop
-samba scheme statistics texinfo textutils tls valgrind version-control
-video virtualization w3m web xdisorg)
+(use-package-modules admin aspell audio backup bittorrent code
+conkeror commencement compression cran databases dictionaries emacs
+games gcc glib gnuzilla graphics graphviz gtk guile haskell
+image-viewers imagemagick kodi libreoffice linux lisp lxde mail man
+maths messaging ncdu ncurses package-management password-utils
+patchutils perl pdf python rdesktop samba scheme statistics texinfo
+textutils tls valgrind version-control video virtualization w3m web
+xdisorg)
 
 (define guix-collection-packages-multiout
   (list
