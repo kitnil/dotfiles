@@ -1316,7 +1316,7 @@ the project directory."
             ,@(if (or wi-terminal-here-dark current-prefix-arg)
                   '("-bg" "black" "-fg" "white")
                 '())
-            "-e" "screen" "-S" ,project-name)))
+            "-e" "tmux" "new" "-s" ,project-name)))
     (terminal-here-launch-in-directory project-directory)))
 
 ;; See <https://www.emacswiki.org/emacs/DoWhatIMean>
