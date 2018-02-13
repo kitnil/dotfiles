@@ -393,8 +393,8 @@ EndSection
       tcpdump
       tree      ; List files as a tree
       wget
-      zile
       xkill
+      zile
 
       adwaita-icon-theme
       hicolor-icon-theme
