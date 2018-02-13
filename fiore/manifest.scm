@@ -76,7 +76,6 @@ video virtualization w3m web xdisorg)
    grep
    htop            ; Pretty `top'
    ncdu            ; TUI `du'
-   ncurses
    netcat          ; TCP
    nmap
    openssl
