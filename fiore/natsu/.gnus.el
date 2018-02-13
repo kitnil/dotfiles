@@ -23,11 +23,6 @@
 
 (add-hook 'message-sent-hook #'gnus-score-followup-thread)
 
-;; Citations
-(setq message-yank-empty-prefix " ")
-(setq message-yank-prefix "  > ")
-(setq message-yank-cited-prefix "  >")
-
 ;; Code from: https://github.com/jwiegley/dot-emacs
 (defun switch-to-gnus (&optional arg)
   "Switch to a Gnus related buffer.
