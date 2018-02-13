@@ -380,6 +380,7 @@ EndSection
       graphviz  ; `dot'
       iptables
       knot
+      lm-sensors      ; `sensors'
       ncurses
       nss-certs ; for https
       openssh   ; `scp'

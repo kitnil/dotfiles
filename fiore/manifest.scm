@@ -74,7 +74,6 @@ video virtualization w3m web xdisorg)
    gnu-make        ; GNU Make
    grep
    htop            ; Pretty `top'
-   lm-sensors      ; `sensors'
    ncdu            ; TUI `du'
    ncurses
    netcat          ; TCP
