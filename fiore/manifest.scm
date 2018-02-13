@@ -72,6 +72,7 @@ video virtualization w3m web xdisorg)
    dos2unix
    freerdp
    gnu-make        ; GNU Make
+   graphviz  ; `dot'
    grep
    htop            ; Pretty `top'
    ncdu            ; TUI `du'

@@ -377,7 +377,6 @@ EndSection
       file      ; Information about file from magic
       git       ; Version control
       gnupg
-      graphviz  ; `dot'
       iptables
       knot
       lm-sensors      ; `sensors'
