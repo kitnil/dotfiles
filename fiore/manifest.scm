@@ -80,6 +80,7 @@ video virtualization w3m web xdisorg)
    netcat          ; TCP
    nmap
    openssl
+   recutils  ; Filter records like in `guix --search'
    shellcheck
    sqlite
    stow            ; Dotfiles management

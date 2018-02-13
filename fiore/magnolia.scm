@@ -385,7 +385,6 @@ EndSection
       openssh   ; `scp'
       pinentry  ; Password typing for Gnupg
       qemu
-      recutils  ; Filter records like in `guix --search'
       rsync
       strace
       tcpdump
