@@ -368,14 +368,10 @@ EndSection
       rlwrap
       xprop
 
-      (list git "gui")
-      (list git "send-email")
-      (list git "svn")
       adb       ; For Replicant (Android distribution) control
       cups      ; Printer
       ethtool   ; wol (wake on lan)
       file      ; Information about file from magic
-      git       ; Version control
       gnupg
       iptables
       knot

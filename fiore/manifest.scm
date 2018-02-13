@@ -167,8 +167,14 @@ video virtualization w3m web xdisorg)
 
    flycheck                 ; Syntax checker
    geiser                   ; Scheme bridge
+
+   (list git "gui")
+   (list git "send-email")
+   (list git "svn")
+   git       ; Version control
    gource
    magit                    ; Emacs interface for Git
+
    mercurial
 
    guile-daemon
