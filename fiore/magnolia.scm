@@ -394,6 +394,7 @@ EndSection
       tree      ; List files as a tree
       wget
       zile
+      xkill
 
       adwaita-icon-theme
       hicolor-icon-theme
