@@ -779,7 +779,7 @@ for COMMIT, defaulting to the commit hash at point."
 ;;;
 
 (with-eval-after-load 'geiser
-  (setq geiser-active-implementations (quote (guile chicken)))
+  (setq geiser-active-implementations '(guile))
   (setq geiser-default-implementation 'guile))
 
 (with-eval-after-load 'geiser-guile
