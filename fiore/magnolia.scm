@@ -373,7 +373,6 @@ EndSection
       (list git "svn")
       adb       ; For Replicant (Android distribution) control
       cups      ; Printer
-      duplicity ; Incremental backup
       ethtool   ; wol (wake on lan)
       file      ; Information about file from magic
       git       ; Version control

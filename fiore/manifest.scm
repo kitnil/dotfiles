@@ -107,6 +107,7 @@ video virtualization w3m web xdisorg)
    python-pygments ; Colorize output
    w3m
 
+   duplicity ; Incremental backup
    password-store  ; Password management
 
    dbus
