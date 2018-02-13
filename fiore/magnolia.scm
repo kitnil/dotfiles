@@ -388,9 +388,9 @@ EndSection
       qemu
       recutils  ; Filter records like in `guix --search'
       rsync
-      screen
       strace
       tcpdump
+      tmux
       tree      ; List files as a tree
       wget
       xkill
