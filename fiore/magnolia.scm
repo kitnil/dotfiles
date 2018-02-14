@@ -13,7 +13,7 @@ spice ssh version-control web xorg cgit)
 
 (use-package-modules admin android bash bootloaders certs cups
 databases dns file fonts fontutils freedesktop gnome gnupg linux
-ncurses networking ratpoison readline rsync pulseaudio screen ssh
+ncurses networking ratpoison readline rsync pulseaudio screen ssh tmux
 version-control virtualization wget xdisorg xorg zile)
 
 (define %source-dir (dirname (current-filename)))
