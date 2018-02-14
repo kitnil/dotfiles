@@ -1508,7 +1508,7 @@ the project directory."
 (setq helm-locate-project-list (wi-list-files-in-dir wi-projects-directory))
 
 ;; Google translate with translate-shell program
-(require 'google-translate-mode)
+(require 'google-translate-mode nil t)
 (with-eval-after-load 'google-translate-mode
   (setq trans-target "ru"))
 
@@ -1609,7 +1609,7 @@ in the variable `browse-url-mpv-arguments' to mpv."
 
 ;; Structured editing
 (with-eval-after-load 'smartparens
-  (require 'smartparens-config)
+  (require 'smartparens-config nil t)
   (sp-use-smartparens-bindings)
 
   ;; Origin <https://github.com/Fuco1/smartparens/blob/master/docs/pair-management.rst>.
