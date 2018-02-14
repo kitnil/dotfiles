@@ -880,6 +880,10 @@ for COMMIT, defaulting to the commit hash at point."
            (equal (magit-section-value section) "refs/stash"))
        'hide))
 
+;; TODO: Another way will be in a new release,
+;; see <https://emacs.stackexchange.com/a/38782/15092>.
+;; (add-to-list 'magit-section-initial-visibility-alist '(stashes . hide))
+
 (add-hook 'magit-section-set-visibility-hook
           'wi-local-magit-initially-hide-unmerged)
 
