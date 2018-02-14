@@ -219,8 +219,24 @@ interactive("eww-on-url",
     $browser_object = browser_object_links,
     $prompt = "eww command");
 
+
+interactive("emacs-wget-on-url",
+    "Run a wi-wget-switch (inside Emacs) command on the url of a browser object.",
+    function (I) {
+        var cwd = I.local.cwd;
+        var element = yield read_browser_object(I);
+        var spec = load_spec(element);
+        var uri = load_spec_uri_string(spec);
+        // yield browser_element_shell_command(I.buffer, element, "mpv", cwd);
+        shell_command_with_argument_blind("/home/natsu/bin/wi-emacs-wget",
+                                          uri, $cwd = cwd);
+    },
+    $browser_object = browser_object_links,
+    $prompt = "emacs wget command");
+
 define_key(content_buffer_normal_keymap, "f8", "mpv-on-url");
 define_key(content_buffer_normal_keymap, "f7", "eww-on-url");
+define_key(content_buffer_normal_keymap, "f6", "emacs-wget-on-url");
 
 // Origin <https://orgmode.org/worg/org-contrib/org-protocol.html>.
 
