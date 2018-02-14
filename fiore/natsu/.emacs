@@ -280,7 +280,7 @@
            ("s" . shell)
            ("c" . compilation-shell-minor-mode)
            ("e" . eshell)
-           ("h" . wi-terminal-here-launch)
+           ("h" . terminal-here-launch-multiplexer)
            ("t" . term))
 
 (bind-keys :prefix "C-c c" :prefix-map wi-org-map :which "org"
@@ -1301,11 +1301,32 @@ the appropriate network slug that we extract from the nick."
   (edit-server-start))
 
 (autoload #'terminal-here-launch-in-directory "terminal-here")
-(defun wi-terminal-here-launch (&optional wi-terminal-here-dark)
-  "Launch a terminal in the project directory.
 
-With a prefix argument, launch a terminal with a dark theme in
-the project directory."
+(defcustom terminal-here-multiplexer
+  'tmux
+  "The terminal multiplexer to run inside a terminal."
+  :group 'terminal-here
+  :type '(choise tmux screen))
+
+(defcustom terminal-here-multiplexer-terminal 'xterm
+  "Terminal to use in `terminal-here-launch-multiplexer'"
+  :group 'terminal-here
+  :type '(choise xterm))
+
+(defcustom terminal-here-scrollbar t
+  "Use a terminal scrollbar.
+
+To use it with `screen' support you need to set ‘termcapinfo xterm*
+ti@:te@’ in your ‘~/.screenrc’.  See
+<https://wiki.archlinux.org/index.php/GNU_Screen#Use_X_scrolling_mechanism>.")
+
+(defun terminal-here-launch-multiplexer (&optional terminal-here-dark)
+  "Launch a `terminal-here-multiplexer' in
+`terminal-here-multiplexer-terminal' in a project directory.
+
+With a prefix argument, launch a `terminal-here-multiplexer' in
+`terminal-here-multiplexer-terminal' with a dark theme in a
+project directory."
   (interactive)
   (let* ((project (projectile-project-name))
          (project-name (if (string-equal project "-")
@@ -1315,13 +1336,22 @@ the project directory."
                                 (read-directory-name "Directory: ")
                               (projectile-project-root)))
          (terminal-here-terminal-command
-          `("env" "STY=" ; Make sure screen doesn't complain STY is set.
-            "xterm" "-title" ,(concat "xterm-screen-" project-name)
-            "+sb" ; No scrollbar, because `tmux' doesn't cooperate with it.
-            ,@(if (or wi-terminal-here-dark current-prefix-arg)
-                  '("-bg" "black" "-fg" "white")
-                '())
-            "-e" "tmux" "new" "-s" ,project-name)))
+          `(,@(if (eq terminal-here-multiplexer 'screen)
+                  '("env" "STY=")) ; Be sure `screen' not complain about `STY'.
+            ,(symbol-name terminal-here-multiplexer-terminal)
+            ,@(cond ((eq terminal-here-multiplexer-terminal 'xterm)
+                     `("-title"
+                       ,(concat (symbol-name terminal-here-multiplexer-terminal)
+                                "-" (symbol-name terminal-here-multiplexer)
+                                "-" project-name)
+                       ,(if terminal-here-scrollbar "+sb"))))
+            ,@(if (or terminal-here-dark current-prefix-arg)
+                  '("-bg" "black" "-fg" "white"))
+            ,@(cond ((eq terminal-here-multiplexer 'tmux)
+                     '("-e" "tmux" "new" "-s"))
+                    ((eq terminal-here-multiplexer 'screen)
+                     '("-e" "screen" "-S")))
+            ,project-name)))
     (terminal-here-launch-in-directory project-directory)))
 
 ;; See <https://www.emacswiki.org/emacs/DoWhatIMean>
