@@ -1317,6 +1317,7 @@ the project directory."
          (terminal-here-terminal-command
           `("env" "STY=" ; Make sure screen doesn't complain STY is set.
             "xterm" "-title" ,(concat "xterm-screen-" project-name)
+            "+sb" ; No scrollbar, because `tmux' doesn't cooperate with it.
             ,@(if (or wi-terminal-here-dark current-prefix-arg)
                   '("-bg" "black" "-fg" "white")
                 '())
