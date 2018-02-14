@@ -1498,6 +1498,7 @@ the project directory."
 ;; `eww' fonts
 (setq shr-width 80)
 (setq shr-use-fonts nil)
+(setq shr-external-browser 'browse-url-conkeror)
 
 ;; Toggle show-paren-mode on
 (show-paren-mode)
