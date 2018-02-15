@@ -21,9 +21,6 @@ export GDK_CORE_DEVICE_EVENTS=1
 # https://en.wikipedia.org/wiki/Mouse_keys
 setxkbmap -option keypad:pointerkeys
 
-# Enable X11 zap
-setxkbmap -option terminate:ctrl_alt_bksp
-
 # Wallpaper
 # feh --bg-scale ~/Pictures/Wallpapers/current.png
 xsetroot -solid black
