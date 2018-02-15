@@ -1433,6 +1433,7 @@ the appropriate network slug that we extract from the nick."
           "http://steckerhalter.tk/index.xml"
           "https://www.reddit.com/r/freegames/.rss"
           "https://www.bennee.com/~alex/blog/feed/"
+          "https://cestlaz.github.io/rss.xml"
           ("https://bitlove.org/jupiterbroadcasting/bsdnowhd/feed" video)
           (,(concat youtube-rss-channel-id "UC2eYFnH61tmytImy1mTYvhA")
            video) ; Luke Smith
