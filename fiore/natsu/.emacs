@@ -665,11 +665,9 @@
 
 (defun wi-guix-download (url)
   (interactive "sDownload URL: ")
-  (insert (shell-command-to-string (concat "guix download "
-                                           url
-                                           " 2>/dev/null"
-                                           "| tail -n 1"
-                                           "| tr -d '\n'"))))
+  (insert
+   (shell-command-to-string
+    (concat "guix download " url " 2>/dev/null" "| tail -n 1" "| tr -d '\n'"))))
 
 (defun wi-switch-to-scratch-elisp ()
   (interactive)
