@@ -1622,6 +1622,17 @@ With NOT-SUPPRESS non-nil argument include unarchived bugs."
 
 (setq ewmctrl-wmctrl-path "/run/current-system/profile/bin/wmctrl")
 
+(defun wi-calendar-current-date-time ()
+  "Return the formated string of current year month day hour minute."
+  (interactive)
+  (let* ((now (decode-time))
+         (year (nth 5 now))
+         (month (nth 4 now))
+         (day (nth 3 now))
+         (hour (nth 2 now))
+         (minute (nth 1 now)))
+    (kill-new (format "%d-%d-%d %d:%d" year month day hour minute))))
+
 (defun wi-debbugs-gnu-guix ()
   "List Guix bugs on debbugs.gnu.org."
   (interactive)
