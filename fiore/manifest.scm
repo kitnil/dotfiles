@@ -209,6 +209,7 @@ xdisorg)
    emacs-debpaste           ; Front end to <https://paste.debian.net/>
    emacs-default-text-scale ; Scale text in all buffers
    emacs-dumb-jump
+   emacs-edit-indirect
    emacs-esup
    emacs-eval-in-repl       ; Evaluate to different Repls
    emacs-ewmctrl            ; Control X windows from Emacs
