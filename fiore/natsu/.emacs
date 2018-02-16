@@ -1545,8 +1545,36 @@ in the variable `browse-url-streamlink-arguments' to mpv."
              ,browse-url-streamlink-quality))))
 
 ;; In addition to browse-url-* functions
-(setq browse-url-mpv-program "mpv")
-(setq browse-url-mpv-arguments '("--volume=50"))
+(defcustom browse-url-mpv-program "mpv"
+  "The name by which to invoke Conkeror."
+  :type 'string
+  :group 'browse-url)
+
+(defcustom browse-url-mpv-arguments '("--volume=50")
+  "Arguments passed to mpv with `browse-url-mpv'."
+  :type 'list
+  :group 'browse-url)
+
+(defcustom browse-url-mpv-headphones t
+  "Non-nil if browse-url-mpv in headphones."
+  :type 'boolean
+  :group 'browse-url)
+
+(defun toggle-browse-url-mpv-arguments ()
+  "If browse-url-mpv-headphones non-nil set it to t and set
+`browse-url-mpv-arguments' headphones."
+  (interactive)
+  (if browse-url-mpv-headphones
+      (progn (setq browse-url-mpv-arguments '("--volume=50"))
+             (setq browse-url-mpv-headphones nil))
+    (setq browse-url-mpv-arguments
+                (list "--volume=50" "--no-resume-playback"
+                      "--keep-open=no"
+                      (concat "--audio-device=" ‎wi-headphones)))
+    (setq browse-url-mpv-headphones t))
+  (message "MPV for headphones is %s"
+	   (if browse-url-mpv-headphones "enabled" "disabled")))
+
 (setq browse-url-mpv-remote-program "~/bin/mpv-remote")
 (defun browse-url-mpv (url &optional new-window)
   "Ask the mpv video player to load URL.
