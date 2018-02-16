@@ -69,6 +69,7 @@ xdisorg)
    epipe
 
    cloc            ; Count code
+   detox           ; Replace spaces with underscores in filenames
    diffoscope
    dos2unix
    freerdp
