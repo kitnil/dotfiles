@@ -1246,6 +1246,7 @@ the appropriate network slug that we extract from the nick."
   (setq emms-player-next-function 'emms-next-noerror)
   (emms-mode-line -1)
   (setq emms-playing-time-display-p nil)
+  (setq emms-playlist-mode-center-when-go t)
 
   (use-package emms-player-mpv
     :config
