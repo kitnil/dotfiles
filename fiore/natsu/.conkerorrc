@@ -286,3 +286,34 @@ interactive("org-capture",
 
 define_key(content_buffer_normal_keymap, "C-c c", "org-capture");
 define_key(content_buffer_normal_keymap, "C-c l", "org-store-link");
+
+// Origin <http://conkeror.org/Tips#Reload_pages_at_a_certain_interval>.
+
+var ref;
+
+interactive("interval-reload",
+            "Reload current buffer every n minutes",
+            function (I) {
+                var b = I.buffer;
+                var i = yield I.minibuffer.read($prompt="Interval (mm:ss)?");
+
+                if (i.indexOf(":") != -1) {
+                    mmss = i.split(":");
+                    i = ((parseInt(mmss[0]) * 60) + parseInt(mmss[1])) * 1000;
+                } else {
+                    i = parseInt(i) * 1000;
+                }
+
+                ref = call_at_interval(function () {
+                    reload(b);
+                }, i);
+
+                add_hook.call(b, "kill_buffer_hook", function() {
+                    ref.cancel();
+                });
+            });
+
+interactive("cancel-intervals", "Cancel all running interval reloads",
+            function (I) {
+                ref.cancel();
+            });
