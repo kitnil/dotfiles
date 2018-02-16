@@ -1552,7 +1552,11 @@ in the variable `browse-url-streamlink-arguments' to mpv."
   "Ask the mpv video player to load URL.
 Defaults to the URL around or before point.  Passes the strings
 in the variable `browse-url-mpv-arguments' to mpv."
-  (interactive (browse-url-interactive-arg "URL: "))
+  (interactive (flet ((browse-url-url-at-point ; do not add `http://' prefix
+                          () (or (thing-at-point 'url t)
+                                 (let ((f (thing-at-point 'filename t)))
+                                   f))))
+                 (browse-url-interactive-arg "URL: ")))
   (setq url (browse-url-encode-url url))
   (let* ((process-environment (browse-url-process-environment)))
     (apply 'start-process
