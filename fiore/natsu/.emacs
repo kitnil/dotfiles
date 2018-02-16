@@ -603,7 +603,7 @@
           "column=def"))
 
 (defengine youtube
-  "http://www.youtube.com/results?aq=f&oq=&search_query=%s")
+  "https://www.youtube.com/results?aq=f&oq=&search_query=%s")
 
 (defengine youtube-latest
   "https://www.youtube.com/results?sp=CAJQFA%%253D%%253D&search_query=%s")
