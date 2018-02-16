@@ -1334,6 +1334,14 @@ the appropriate network slug that we extract from the nick."
   (interactive)
   (kill-new (buffer-file-name)))
 
+(defun wi-copy-project-file-name ()
+  "Return current buffer file name in current project."
+  (interactive)
+  (kill-new (file-relative-name (buffer-file-name)
+                                (funcall (cl-find-if 'fboundp
+                                                     '(projectile-project-root
+                                                       vc-root-dir))))))
+
 (add-hook 'diff-mode-hook (lambda () (setq-local truncate-lines t)))
 
 (defun wi-sort-sexps (reverse beg end)
