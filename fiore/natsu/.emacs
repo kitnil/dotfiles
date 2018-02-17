@@ -48,6 +48,7 @@
 ;; TODO: Maybe remove
 (add-to-list 'exec-path (expand-file-name "~/.guix-profile.d/gdb/bin"))
 
+;; Look for audio devices ‘mpv --audio-device=help’
 (defvar ‎wi-headphones "pulse/alsa_output\
 .usb-Logitech_Logitech_USB_Headset-00.analog-stereo"
   "My USB headphones")
