@@ -75,6 +75,7 @@
       `(("^ftp://.*" . browse-ftp-tramp)
         (,debbugs-browse-url-regexp . debbugs-browse-url)
         ("^https?://w*\\.?youtube.com/watch\\?v=.*" . browse-url-mpv)
+        ("^https?://hydra\\.gnu\\.org/search\\?query=.*" . browse-url-firefox)
         ("." . browse-url-conkeror)))
 
 ;; Enable functions
