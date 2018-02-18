@@ -1554,7 +1554,7 @@ in the variable `browse-url-streamlink-arguments' to mpv."
 
 ;; In addition to browse-url-* functions
 (defcustom browse-url-mpv-program "mpv"
-  "The name by which to invoke Conkeror."
+  "The name by which to invoke MPV."
   :type 'string
   :group 'browse-url)
 
