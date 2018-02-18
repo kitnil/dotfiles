@@ -1308,6 +1308,7 @@ the appropriate network slug that we extract from the nick."
 (when (and (require 'edit-server nil t) (daemonp))
   (edit-server-start))
 
+(setq terminal-here-terminal-emulators (list "xterm"))
 (setq-default terminal-here-project-root-function #'projectile-project-root)
 
 ;; See <https://www.emacswiki.org/emacs/DoWhatIMean>
