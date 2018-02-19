@@ -245,6 +245,26 @@
              (run-shell-command "xsetroot -solid black")
              (setq wi-dark-theme t))))
 
+(load-module "cpu")
+(load-module "mem")
+(load-module "disk")
+(setf *mode-line-timeout* 2)
+(setf *TIME-MODELINE-STRING* "%a %b %e %k:%M")
+(setf *screen-mode-line-format*
+      (list "[%n]:" '(:eval (write-to-string (group-number (current-group))))
+            "    "
+            '(:eval (write-to-string (window-number (current-window))))
+            ":"
+            "["
+            '(:eval (window-class (current-window)))
+            " "
+            '(:eval (window-name (current-window)))
+            "]"
+            "^>    %D    %M    %t    %c    %d"))
+(setf *mode-line-pad-x* 0)
+(setf *mode-line-pad-y* 0)
+(mode-line)
+
 (defcommand warp-mouse-active-frame () ()
   "Move mouse cursor to the top right of current frame."
   (let* ((current-frame (tile-group-current-frame (current-group)))
