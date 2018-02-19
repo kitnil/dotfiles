@@ -18,16 +18,7 @@
 (setf *window-border-style* :none)
 
 (setf *ignore-wm-inc-hints* t)
-
-(set-win-bg-color "#dcdad5")
-(set-unfocus-color "#FFFFFF")
-(set-focus-color "#daa520")
-(set-fg-color "#000000")
-(set-bg-color "#ffffff")
-(set-border-color "#daa520")
 (set-msg-border-width 2)
-
-(set-float-focus-color "#daa520")
 
 (setf *normal-border-width* 0
       *transient-border-width* 0
@@ -229,16 +220,30 @@
   "Run GNOME Debian in QEMU."
   (run-shell-command (concat "exec " (getenv "HOME") "/bin/debian.sh")))
 
-(setq *mode-line-border-color*     "#bebebe"
-      *mode-line-foreground-color* "#000000"
-      *mode-line-background-color* "#bebebe")
-
-;; TODO: Theme switching.
-;; (setq *mode-line-border-color*     "#ffffff"
-;;       *mode-line-foreground-color* "#000000"
-;;       *mode-line-background-color* "#ffffff")
-
-(setf *screen-mode-line-format* "[^B%n^b] %W")
+(defparameter wi-dark-theme t)
+(set-focus-color "#daa520")
+(set-border-color "#daa520")
+(set-float-focus-color "#daa520")
+(defcommand wi-toggle-theme () ()
+  (if wi-dark-theme
+      (progn (setq *mode-line-border-color*     "#ffffff"
+                   *mode-line-foreground-color* "#000000"
+                   *mode-line-background-color* "#ffffff")
+             (set-win-bg-color "#dcdad5")
+             (set-unfocus-color "#FFFFFF")
+             (set-fg-color "#000000")
+             (set-bg-color "#ffffff")
+             (run-shell-command "xsetroot -solid grey")
+             (setq wi-dark-theme nil))
+      (progn (setq *mode-line-border-color*     "#000000"
+                   *mode-line-foreground-color* "#ffffff"
+                   *mode-line-background-color* "#000000")
+             (set-win-bg-color "#000000")
+             (set-unfocus-color "#000000")
+             (set-fg-color "#ffffff")
+             (set-bg-color "#000000")
+             (run-shell-command "xsetroot -solid black")
+             (setq wi-dark-theme t))))
 
 (defcommand warp-mouse-active-frame () ()
   "Move mouse cursor to the top right of current frame."
