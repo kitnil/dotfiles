@@ -398,7 +398,6 @@ EndSection
       font-misc-misc  ; for `xterm'
       font-wqy-zenhei ; Chinese, Japanese, Korean
       fontconfig      ; `fc-cache -f'
-      ratpoison       ; StumpWM father
 
       alsa-utils
       pavucontrol ; Pulseaudio control GUI
@@ -493,6 +492,8 @@ EndSection
                      (service knot-service-type
                               (knot-configuration
                                (zones (list master-zone))))
+
+                     (xfce-desktop-service)
 
                      %custom-desktop-services))
 
