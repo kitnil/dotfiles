@@ -1443,7 +1443,10 @@ the appropriate network slug that we extract from the nick."
       (youtube-rss-user "https://www.youtube.com/feeds/videos.xml?user="))
   (setq elfeed-feeds
         `("http://nullprogram.com/feed/"
+
           "http://www.scheme.dk/planet/atom.xml"
+          "http://planet.lisp.org/rss20.xml"
+
           "https://lwn.net/headlines/newrss"
           "https://fedoramagazine.org/feed/"
           "http://planet.emacsen.org/atom.xml"
