@@ -1463,6 +1463,8 @@ the appropriate network slug that we extract from the nick."
            video) ; Baggers
           (,(concat youtube-rss-channel-id "UCbHXJGd7c8Hy4z0-YX1Jf3Q")
            video) ; Matt Hartley
+          (,(concat youtube-rss-channel-id "UCgU5tUdVPpfM7sLAMWBTsDg")
+           video) ; computeremotion.com
           (,(concat youtube-rss-user "LDCNow") video)
           (,(concat youtube-rss-user "tuxreviews") video)
           (,(concat youtube-rss-user "EposVox") video)
