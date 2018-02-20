@@ -1038,7 +1038,7 @@ for COMMIT, defaulting to the commit hash at point."
 
 (setq erc-autojoin-channels-alist
       (quote
-       (("freenode.net" "#icecat" "#emacs" "#grub" "#conkeror"
+       (("freenode.net" "#icecat" "#emacs" "#grub" "#conkeror" "#erc"
          ;; "#clojure" "##math"
          "##c" "#bash" "#SDL" "#chicken"
          ;; "#fedora" "#fedora-admin" "#fedora-devel"
