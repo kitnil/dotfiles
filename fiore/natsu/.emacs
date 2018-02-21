@@ -1327,6 +1327,12 @@ the appropriate network slug that we extract from the nick."
 ;;; Misc
 ;;;
 
+(defun wi-ttn-hs-hide-level-1 ()
+  (hs-hide-level 1)
+  (forward-sexp 1))
+
+(setq hs-hide-all-non-comment-function 'wi-ttn-hs-hide-level-1)
+
 ;; Origin <https://www.emacswiki.org/emacs/RecentFiles>.
 
 (add-hook 'Info-selection-hook 'info-colors-fontify-node)
