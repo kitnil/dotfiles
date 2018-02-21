@@ -13,7 +13,7 @@
 (set-font (make-instance 'xft:font
                          :family "DejaVu Sans Mono"
                          :subfamily "Book"
-                         :size 12))
+                         :size 14))
 
 (setf *window-border-style* :none)
 
