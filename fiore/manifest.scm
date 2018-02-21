@@ -136,6 +136,7 @@ xdisorg)
    emacs-ggtags             ; Front end to GNU Global
    emacs-git-gutter
    emacs-git-messenger      ; Show commit under the cursor
+   emacs-git-timemachine
    emacs-gitpatch           ; Send patches
    emacs-god-mode           ; Commands without modifier keys
    emacs-helm               ; Narrowing framework
