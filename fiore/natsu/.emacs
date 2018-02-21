@@ -1333,6 +1333,19 @@ the appropriate network slug that we extract from the nick."
 
 (setq hs-hide-all-non-comment-function 'wi-ttn-hs-hide-level-1)
 
+(defcustom wi-scheme-mode-toggle-hs-minor-mode nil
+  "If non-nil enable `hs-minor-mode' in `scheme-mode'."
+  :type 'boolean)
+
+(defun wi-scheme-mode-toggle-hs-minor-mode ()
+  (interactive)
+  (if wi-scheme-mode-toggle-hs-minor-mode
+      (progn (remove-hook 'scheme-mode-hook 'hs-minor-mode)
+             (setq wi-scheme-mode-toggle-hs-minor-mode nil))
+    (progn (add-hook 'scheme-mode-hook 'hs-minor-mode)
+           (add-hook 'scheme-mode-hook #'hs-hide-all)
+           (setq wi-scheme-mode-toggle-hs-minor-mode t))))
+
 ;; Origin <https://www.emacswiki.org/emacs/RecentFiles>.
 
 (add-hook 'Info-selection-hook 'info-colors-fontify-node)
