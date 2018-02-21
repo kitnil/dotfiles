@@ -18,7 +18,7 @@ XTerm*color10: #54FF54
 XTerm*color3:  #B26818
 XTerm*color11: #EEC900
 ! blue
-XTerm*color4:  #1818B2
+XTerm*color4:  #4169e1
 XTerm*color12: #5454FF
 ! purple
 XTerm*color5:  #B218B2
