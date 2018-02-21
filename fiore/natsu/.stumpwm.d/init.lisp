@@ -302,6 +302,10 @@
 
 (define-key *root-map* (kbd "Print") "screenshot-default")
 
+(defcommand wi-trans () ()
+  "Run `xterm' with `trans' in interactive mode."
+  (run-shell-command "exec xterm -name trans -e 'trans -I en:ru'"))
+
 (load-module "clipboard-history")
 (define-key *root-map* (kbd "C-y") "show-clipboard-history")
 (clipboard-history:start-clipboard-manager)
