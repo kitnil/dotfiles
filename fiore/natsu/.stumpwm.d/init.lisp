@@ -306,6 +306,17 @@
   "Run `xterm' with `trans' in interactive mode."
   (run-shell-command "exec xterm -name trans -e 'trans -I en:ru'"))
 
+;; (define-key *top-map* (kbd "s-1") "gselect 1")
+;; (define-key *top-map* (kbd "s-2") "gselect 2")
+;; (define-key *top-map* (kbd "s-3") "gselect 3")
+;; (define-key *top-map* (kbd "s-4") "gselect 4")
+;; (define-key *top-map* (kbd "s-t") "trans")
+;; (define-key *top-map* (kbd "s-o") "pull-hidden-other")
+;; (define-key *top-map* (kbd "s-c") "")
+;; (define-key *top-map* (kbd "s-TAB") "fother")
+;; (define-key *top-map* (kbd "s-n") "pull-hidden-next")
+;; (define-key *top-map* (kbd "s-p") "pull-hidden-previous")
+
 (load-module "clipboard-history")
 (define-key *root-map* (kbd "C-y") "show-clipboard-history")
 (clipboard-history:start-clipboard-manager)
