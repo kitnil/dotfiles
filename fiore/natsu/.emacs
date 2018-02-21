@@ -782,9 +782,11 @@ for COMMIT, defaulting to the commit hash at point."
     ("<=" . ?≤)
     (">=" . ?≥)
     ("->" . ?→)))
-(add-hook 'elisp-mode-hook (lambda ()
-                             (set (make-local-variable 'prettify-symbols-alist)
-                                  wi-elisp--prettify-symbols-alist)))
+
+(add-hook 'elisp-mode-hook
+          (lambda ()
+            (set (make-local-variable 'prettify-symbols-alist)
+                 wi-elisp--prettify-symbols-alist)))
 
 ;;;
 ;;; Guile and Guix
