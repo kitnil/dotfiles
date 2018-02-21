@@ -1262,13 +1262,28 @@ the appropriate network slug that we extract from the nick."
 
   (use-package emms-player-mpv
     :config
-    ;; (add-to-list 'emms-player-mpv-parameters "--volume=40")
     (add-to-list 'emms-player-list 'emms-player-mpv)
-    (add-to-list 'emms-player-mpv-parameters "--no-video")
-    (add-to-list 'emms-player-mpv-parameters "--no-resume-playback")
-    (add-to-list 'emms-player-mpv-parameters "--keep-open=no")
-    (add-to-list 'emms-player-mpv-parameters (concat "--audio-device="
-                                                     ‎wi-headphones))))
+
+    (defcustom emms-player-mpv-music t
+      "Non-nil if MPV in Emms in music mode.")
+
+    (defun wi-toggle-emms-mpv ()
+      "If browse-url-mpv-headphones non-nil set it to t and set
+`emms-player-mpv-music' headphones."
+      (interactive)
+      (let ((emms-player-mpv-parameters-default '("--keep-open=no"
+                                                  "--no-resume-playback")))
+          (if emms-player-mpv-music
+              (progn (setq emms-player-mpv-parameters
+                           emms-player-mpv-parameters-default)
+                     (setq emms-player-mpv-music nil))
+        (setq emms-player-mpv-parameters
+              `(,@emms-player-mpv-parameters-default
+                ,(concat "--audio-device=" ‎wi-headphones)
+                "--no-video"))
+        (setq emms-player-mpv-music t)))
+      (message "MPV for headphones is %s"
+               (if emms-player-mpv-music "enabled" "disabled")))))
 
 (use-package helm-emms
   :after emms-setup
