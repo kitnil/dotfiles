@@ -1299,8 +1299,15 @@ the appropriate network slug that we extract from the nick."
   (add-to-list 'helm-emms-music-extensions "mkv")
   (add-to-list 'helm-emms-music-extensions "webm"))
 
-(defun helm-wigust-stream (func)
-  ""
+(defcustom wi-helm-wigust-stream-urls
+  '("https://www.twitch.tv/entr_ru"
+    "https://www.youtube.com/user/streamguild"
+    "https://www.twitch.tv/artgameslp"
+    "https://www.youtube.com/user/ArtGamesLP")
+  "List of URLs passed to `wi-helm-wigust-stream'.")
+
+(defun wi-helm-wigust-stream (func)
+  "Open a streaming video URL in Chromium or Streamlink with Helm."
   (interactive (list (completing-read "Engine: " '(chromium streamlink))))
   (helm :sources (helm-build-sync-source "urls"
                    :action (lambda (candidate)
@@ -1309,10 +1316,7 @@ the appropriate network slug that we extract from the nick."
                                             ((string-equal func "streamlink")
                                              'browse-url-streamlink))
                                       candidate))
-                   :candidates '("https://www.twitch.tv/entr_ru"
-                                 "https://www.youtube.com/user/streamguild"
-                                 "https://www.twitch.tv/artgameslp"
-                                 "https://www.youtube.com/user/ArtGamesLP")
+                   :candidates wi-helm-wigust-stream-urls
                    :fuzzy-match t)
         :buffer "*helm urls*"))
 
