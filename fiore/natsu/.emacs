@@ -719,6 +719,11 @@
       (message-goto-body)
       (insert str))))
 
+;; Origin <http://manuel-uberti.github.io/emacs/2018/02/17/magit-bury-buffer/>.
+(defun wi-magit-kill-all-buffers ()
+  "Kill all Magit buffers."
+  (mapc #'kill-buffer (magit-mode-get-buffers)))
+
 
 ;;;
 ;;; General functions for use
