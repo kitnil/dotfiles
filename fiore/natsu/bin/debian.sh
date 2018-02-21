@@ -12,6 +12,6 @@ exec qemu-system-x86_64 \
      -cpu host \
      -soundhw hda \
      -hda /srv/virt/debian-gnome.img \
-     -virtfs local,path="/home/natsu/Documents",security_model=none,mount_tag="TAG_doc" \
+     -virtfs local,path="/srv/share",security_model=none,mount_tag="TAG_share" \
      $@
 # -cdrom /srv/archive/debian/debian-live-9.1.0-amd64-gnome.iso -boot order=d
