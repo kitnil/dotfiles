@@ -1125,7 +1125,7 @@ for COMMIT, defaulting to the commit hash at point."
       '(("org-notes"
          :base-directory "~/org/"
          :base-extension "org"
-         :publishing-directory "~/public_html/"
+         :publishing-directory "~/public_html/org/"
          :recursive t
          :publishing-function org-html-publish-to-html
          :headline-levels 4 ; Just the default for this project.
