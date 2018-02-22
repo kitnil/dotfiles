@@ -1552,6 +1552,10 @@ the appropriate network slug that we extract from the nick."
 (setq shr-use-fonts nil)
 (setq shr-external-browser 'browse-url-conkeror)
 
+;; Not white background in dark themes.
+;; Origin <https://emacs.stackexchange.com/a/3523>
+(setq shr-color-visible-luminance-min 100)
+
 ;; Toggle show-paren-mode on
 (show-paren-mode)
 
