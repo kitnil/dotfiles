@@ -220,7 +220,7 @@
   "Run GNOME Debian in QEMU."
   (run-shell-command (concat "exec " (getenv "HOME") "/bin/debian.sh")))
 
-(defparameter wi-dark-theme t)
+(defparameter wi-dark-theme nil)
 (set-focus-color "#daa520")
 (set-border-color "#daa520")
 (set-float-focus-color "#daa520")
@@ -244,6 +244,7 @@
              (set-bg-color "#000000")
              (run-shell-command "xsetroot -solid black")
              (setq wi-dark-theme t))))
+(wi-toggle-theme)
 
 (load-module "cpu")
 (load-module "mem")
