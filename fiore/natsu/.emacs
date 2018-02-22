@@ -104,6 +104,7 @@
 (bind-keys :prefix "C-c b" :prefix-map wi-buffer-map :which "buffer"
            ("b" . ibuffer)
            ("e" . wi-switch-to-scratch-elisp)
+           ("s" . scratch)
            ("w" . wi-switch-to-eww))
 
 (bind-key "<C-down-mouse-1>" 'mc/toggle-cursor-on-click)
