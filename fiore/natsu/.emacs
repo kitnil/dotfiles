@@ -1520,7 +1520,8 @@ the appropriate network slug that we extract from the nick."
           (,(concat youtube-rss-user "tuxreviews") video)
           (,(concat youtube-rss-user "EposVox") video)
           (,(concat youtube-rss-user "gotbletu") video)
-          (,(concat youtube-rss-user "metalx1000") video))))
+          (,(concat youtube-rss-user "metalx1000") video)
+          (,(concat youtube-rss-user "SsethTzeentach") video games))))
 
 (defun wi-fullname-and-email ()
   (format "%s <%s>" user-full-name user-mail-address))
