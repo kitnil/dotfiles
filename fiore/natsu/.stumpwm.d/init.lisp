@@ -1,3 +1,6 @@
+;; Copyright © 2018 Oleg Pykhalov <go.wigust@gmail.com>
+;; Released under the GNU GPLv3 or any later version.
+
 (in-package :stumpwm)
 
 (setf *startup-message* nil)
@@ -20,9 +23,26 @@
 (setf *ignore-wm-inc-hints* t)
 (set-msg-border-width 2)
 
-(setf *normal-border-width* 0
-      *transient-border-width* 0
-      *maxsize-border-width* 0)
+(setf *normal-border-width* 0)
+(setf *transient-border-width* 0)
+(setf *maxsize-border-width* 0)
+
+
+;;;
+;;; General functions for use
+;;;
+
+(defun join-to-stream (stream list &optional (delimiter #\&))
+  (destructuring-bind (&optional first &rest rest) list
+    (when first
+      (write-string first stream)
+      (when rest
+        (write-char delimiter stream)
+        (join-to-stream stream rest delimiter)))))
+
+(defun join (list &optional (delimiter #\&))
+  (with-output-to-string (stream)
+    (join-to-stream stream list delimiter)))
 
 ;; Don't set it to “sloppy”,
 ;; because it could switch window after switch desktop
@@ -40,13 +60,62 @@
 ;; If the :restore flag is set then group dump is restored even for an
 ;; existing group using *data-dir*/restore file.
 
+
+;;;
+;;; XTerm
+;;;
+
+(defvar *default-group-name*
+  "default")
+
+(defvar *window-format*
+  "%m%n%s %c %50t")
+
+(defvar *wi-xterm-command*
+  "exec xterm")
+
+(defvar *wi-xterm-big-command*
+  "exec xterm -fa 'Monospace' -fs 24")
+
+(defun w3m (url)
+  "Return a `w3m' command to open a URL."
+  (concat "w3m " url))
+
+(defvar *wi-xterm-theme-light*
+  "-bg white -fg black")
+
+(defvar *wi-xterm-theme-dark*
+  "-bg black -fg white")
+
+(defvar *wi-xterm-scrollbar*
+  "+sb")
+
+(defvar *wi-term-execute-flag*
+  "-e")
+
+(defvar *wi-conkeror-command*
+  "conkeror")
+
+(defvar *wi-browser*
+  *wi-conkeror-command*)
+
+(defvar *wi-transmission-hostname*
+  "magnolia")
+
 (defcommand emacs () ()
   "Start emacs unless it is already running, in which case focus it."
   (run-or-raise "emacsclient -c ." '(:class "Emacs")))
 
 (defcommand conkeror () ()
   "Start or focus conkeror."
-  (run-or-raise "conkeror" '(:class "Conkeror")))
+  (run-or-raise *wi-conkeror-command* '(:class "Conkeror")))
+
+(defcommand wi-browse-transmission () ()
+  "Open transmissin WEB client."
+  (run-shell-command (join (list *wi-browser*
+                                 (concat "http://torrent."
+                                         *wi-transmission-hostname* ".local"))
+                           #\ )))
 
 ;; Origin <https://github.com/alezost/stumpwm-config/blob/master/utils.lisp#L332>
 (defcommand wi-conkeror-browse-url (url) ((:shell "Browse URL: "))
@@ -57,10 +126,9 @@
   "Start or focus icecat."
   (run-or-raise "icecat" '(:class "Icecat")))
 
-(defcommand chromium () ()
-  "Start or focus chromium."
-  (run-or-raise "exec /home/natsu/.guix-profile.d/chromium/bin/chromium"
-                '(:class "Chromium-browser")))
+(defcommand wi-chromium () ()
+  "Start or focus Chromium."
+  (run-or-raise "chromium" '(:class "Chromium-browser")))
 
 (defcommand chromium-proxy () ()
   "Start Chromium via proxy"
@@ -69,9 +137,23 @@
                              " --host-resolver-rules='MAP * ~NOTFOUND"
                              " , EXCLUDE localhost'")))
 
-(define-key *root-map* (kbd "w") "conkeror")
-(define-key *root-map* (kbd "C-w") "conkeror")
-(define-key *root-map* (kbd "M-w") "chromium")
+(defcommand wi-w3m () ()
+  "Open a W3M browser in user's home directory."
+  (run-shell-command (join (list *wi-xterm-command*
+                                 *wi-xterm-theme-light*
+                                 *wi-xterm-scrollbar*
+                                 *wi-term-execute-flag*
+                                 (w3m "~"))
+                           #\ )))
+
+(defcommand wi-irc-guix-log () ()
+  "Open an IRC Guix log in `w3m'."
+  (run-shell-command (join (list *wi-xterm-command*
+                                 *wi-xterm-theme-light*
+                                 *wi-xterm-scrollbar*
+                                 *wi-term-execute-flag*
+                                 (w3m "https://gnunet.org/bot/log/guix/"))
+                           #\ )))
 
 (defcommand youtube () ()
   "Start Chromium YouTube"
@@ -79,21 +161,54 @@
                              " --profile-directory=Default"
                              " --app-id=adnlfjpnmidfimlkaohpidplnoimahfh")))
 
-(defcommand mpv () ()
+
+;;;
+;;; MPV
+;;;
+
+;; Look for audio devices ‘mpv --audio-device=help’
+(defvar ‎*wi-headphones*
+  "pulse/alsa_output.usb-Logitech_Logitech_USB_Headset-00.analog-stereo"
+  "Pulseaudio device.  Heaphones.")
+
+(defvar *wi-mpv-program* "mpv"
+ "The name by which to invoke MPV.")
+
+(defparameter *wi-mpv-headphones*
+  nil
+  "If non-nil use heaphones in MPV.")
+
+(defvar *wi-mpv-default-arguments*
+  '("--keep-open=no"))
+
+(defparameter *wi-mpv-arguments*
+  *wi-mpv-default-arguments*)
+
+(defcommand wi-toggle-mpv-arguments () ()
+  (if *wi-mpv-headphones*
+      (progn
+        (setf *wi-mpv-arguments* *wi-mpv-default-arguments*)
+        (setf *wi-mpv-headphones* nil))
+      (progn
+        (setf *wi-mpv-arguments*
+              `(,@*wi-mpv-default-arguments*
+                ,(concat "--audio-device=" ‎*wi-headphones*)))
+        (setf *wi-mpv-headphones* t))))
+
+(defcommand wi-mpv () ()
   "Start or focus mpv."
-  (run-or-raise "mpv" '(:class "mpv")))
+  (run-or-raise (join `(,*wi-mpv-program* ,@*wi-mpv-arguments*) #\ )
+                '(:class "mpv")))
+
+(defcommand wi-xclip-mpv () ()
+  "Play video from clipboard."
+  (run-shell-command
+   (join `(,*wi-mpv-program* ,@*wi-mpv-arguments* ,(get-x-selection))
+         #\ )))
 
 (defcommand wi-xclip-emacs () ()
   "Open file from clipboard."
   (run-shell-command (join (list "exec emacsclient -c" (get-x-selection)) #\ )))
-
-(defcommand xclip-mpv () ()
-  "Play video from clipboard."
-  (run-shell-command (join (list "exec mpv" (get-x-selection)) #\ )))
-
-(defcommand kodi-cli-youtube () ()
-  "Send video from clipboard to Kodi."
-  (run-shell-command (join (list "exec kodi-cli -y" (get-x-selection)) #\ )))
 
 (defcommand mpv-music () ()
   "Play music."
@@ -102,6 +217,12 @@
                              " --msg-level=all=no"
                              " --no-resume-playback"
                              " /srv/music/*")))
+
+
+
+(defcommand kodi-cli-youtube () ()
+  "Send video from clipboard to Kodi."
+  (run-shell-command (join (list "exec kodi-cli -y" (get-x-selection)) #\ )))
 
 (defcommand youtube-dl () ()
   "Download video."
@@ -116,30 +237,9 @@
                              " --exec 'mpv {}'"
                              " $(xclip -o -selection clipboard)")))
 
-(define-key *root-map* (kbd "m") "mpv")
-(define-key *root-map* (kbd "C-m") "xclip-mpv")
-(define-key *root-map* (kbd "C-e") "wi-xclip-emacs")
-(define-key *root-map* (kbd "C-M-c") "wi-xterm-big-screen")
-
 (defcommand turn-screen-off () ()
             "Turn screen off."
             (run-shell-command "exec xset dpms force off"))
-
-(defun join-to-stream (stream list &optional (delimiter #\&))
-  (destructuring-bind (&optional first &rest rest) list
-    (when first
-      (write-string first stream)
-      (when rest
-        (write-char delimiter stream)
-        (join-to-stream stream rest delimiter)))))
-
-(defun join (list &optional (delimiter #\&))
-  (with-output-to-string (stream)
-    (join-to-stream stream list delimiter)))
-
-;; Lock screen
-(define-key *root-map* (kbd "C-l") "exec xlock -mode blank")
-(define-key *root-map* (kbd "M-l") "turn-screen-off")
 
 (defcommand suspend () ()
   (run-shell-command "exec loginctl suspend"))
@@ -149,38 +249,37 @@
   (run-prog *shell-program*
             :args (list "-c" (join (list "xterm -name" cmd "-e" cmd) #\ ))
             :wait nil))
-(define-key *root-map* (kbd "M-!") "run-xterm-command")
+
+(defvar *wi-pulsemixer-command*
+  "pulsemixer")
 
 (defcommand pulsemixer () ()
   "Download video."
-  (run-shell-command "exec xterm -name pulsemixer -e pulsemixer"))
-(define-key *root-map* (kbd "v") "pulsemixer")
+  (run-shell-command (join (list *wi-xterm-command*
+                                 *wi-xterm-theme-dark*
+                                 *wi-xterm-scrollbar*
+                                 *wi-term-execute-flag*
+                                 *wi-pulsemixer-command*)
+                           #\ )))
 
 (defcommand alsamixer () ()
   "Download video."
   (run-shell-command "exec xterm -name alsamixer -e alsamixer"))
-(define-key *root-map* (kbd "C-v") "alsamixer")
 
-(defcommand xterm () ()
+(defcommand wi-xterm-light () ()
   "Start or focus XTerm."
-  (run-or-raise "xterm" '(:class "XTerm")))
-(define-key *root-map* (kbd "c") "xterm")
+  (run-or-raise (join (list *wi-xterm-command* *wi-xterm-theme-light*) #\ )
+                '(:class "XTerm")))
+
+(defcommand wi-xterm-dark () ()
+  "Start or focus XTerm."
+  (run-or-raise (join (list *wi-xterm-command* *wi-xterm-theme-dark*) #\ )
+                '(:class "XTerm")))
 
 (defcommand xterm-name (cmd &optional collect-output-p) ((:string "window name: "))
   "Run the specified shell command in XTerm."
   (run-prog *shell-program*
             :args (list "-c" (join (list "xterm -name" cmd) #\ ))
-            :wait nil))
-
-(defcommand wi-xterm-dark
-    (session &optional collect-output-p) ((:string "session name: "))
-  "Run `xterm' with dark theme."
-  (run-prog *shell-program*
-            :args (list "-c" (join (list "exec" "xterm"
-                                         "-bg" "black" "-fg" "white"
-                                         "-title" session
-                                         "-e" "screen" "-S" session)
-                                   #\ ))
             :wait nil))
 
 (defcommand wi-screen
@@ -196,9 +295,6 @@
                         #\ ))
             :wait nil))
 
-(setq *wi-xterm-big-command*
-    "exec xterm -fa 'Monospace' -fs 24")
-
 (defcommand wi-xterm-big () ()
   "Start XTerm with big fonts."
   (run-shell-command *wi-xterm-big-command*))
@@ -211,12 +307,12 @@
   "Start XTerm with `sensors'."
   (run-shell-command  (concat *wi-xterm-big-command* " -e watch sensors")))
 
-(defcommand github-star () ()
+(defcommand wi-github-star () ()
   "Move mouse to star a project."
   (ratwarp 1308 176)
   (ratclick))
 
-(defcommand qemu-debian () ()
+(defcommand wi-qemu-debian () ()
   "Run GNOME Debian in QEMU."
   (run-shell-command (concat "exec " (getenv "HOME") "/bin/debian.sh")))
 
@@ -266,6 +362,10 @@
 (setf *mode-line-pad-y* 0)
 (mode-line)
 
+;; TODO: Deny the all windows in the mpv class from taking focus.
+;; (push '(:class "mpv") *deny-raise-request*)
+;; (push '(:class "mpv") *deny-map-request*)
+
 (defcommand warp-mouse-active-frame () ()
   "Move mouse cursor to the top right of current frame."
   (let* ((current-frame (tile-group-current-frame (current-group)))
@@ -283,8 +383,6 @@
 (defcommand scroll-other-window () ()
   (stumpwm:run-commands "fother" "window-send-string  " "fother"))
 
-(define-key *root-map* (kbd "C-M-v") "scroll-other-window")
-
 (defcommand set-background-dark () ()
   (run-shell-command "xsetroot -solid black"))
 (defun time-date-and-time-restrict ()
@@ -301,11 +399,32 @@
   "Screenshot with filename like 2017-10-30-03-29-16.png"
   (eval-command (concat "screenshot-window " (screenshot-filename))))
 
-(define-key *root-map* (kbd "Print") "screenshot-default")
-
 (defcommand wi-trans () ()
   "Run `xterm' with `trans' in interactive mode."
   (run-shell-command "exec xterm -name trans -e 'trans -I en:ru'"))
+
+(define-key *root-map* (kbd "m") "wi-mpv")
+(define-key *root-map* (kbd "C-m") "wi-xclip-mpv")
+
+(define-key *root-map* (kbd "C-e") "wi-xclip-emacs")
+(define-key *root-map* (kbd "C-M-c") "wi-xterm-big-screen")
+
+;; Lock screen
+(define-key *root-map* (kbd "C-l") "exec xlock -mode blank")
+(define-key *root-map* (kbd "M-l") "turn-screen-off")
+
+(define-key *root-map* (kbd "M-!") "run-xterm-command")
+(define-key *root-map* (kbd "v") "pulsemixer")
+(define-key *root-map* (kbd "C-v") "alsamixer")
+(define-key *root-map* (kbd "c") "wi-xterm-light")
+(define-key *root-map* (kbd "C-c") "wi-xterm-dark")
+
+(define-key *root-map* (kbd "C-M-v") "scroll-other-window")
+(define-key *root-map* (kbd "Print") "screenshot-default")
+
+(define-key *root-map* (kbd "w") "conkeror")
+(define-key *root-map* (kbd "C-w") "conkeror")
+(define-key *root-map* (kbd "M-w") "wi-chromium")
 
 ;; (define-key *top-map* (kbd "s-1") "gselect 1")
 ;; (define-key *top-map* (kbd "s-2") "gselect 2")
