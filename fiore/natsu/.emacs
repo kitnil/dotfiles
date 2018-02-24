@@ -799,7 +799,11 @@ for COMMIT, defaulting to the commit hash at point."
 
 (with-eval-after-load 'geiser-guile
   (add-to-list 'geiser-guile-load-path "/home/natsu/src/guix")
-  (setq geiser-guile-binary '("guile" "--no-auto-compile")))
+  (setq geiser-guile-binary '("guile" "--no-auto-compile"))
+
+  ;; Origin <https://gnunet.org/bot/log/guile/2018-02-24>
+  ;; (setq geiser-guile-load-path (f-entries "~/src"))
+  )
 
 (defconst wi-scheme--prettify-symbols-alist
   '(("lambda" . ?λ)
