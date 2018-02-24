@@ -1722,15 +1722,14 @@ in the variable `browse-url-mpv-arguments' to mpv."
 (with-eval-after-load 'debbugs-gnu
   (setq debbugs-gnu-default-packages (list "guix" "guix-patches")))
 
-(cl-defun wi-debbugs-gnu-list
-    (&optional (mail-address user-mail-address)
-               (not-suppress t))
+(cl-defun wi-debbugs-gnu-list (&optional (mail-address user-mail-address)
+                                         (not-suppress nil))
   "List bugs on debbugs.gnu.org from USER-MAIL-ADDRESS.
 
-With NOT-SUPPRESS non-nil argument include unarchived bugs."
+With NOT-SUPPRESS non-nil argument include archived bugs."
   (interactive)
   (let ((debbugs-gnu-current-query `((submitter . ,mail-address))))
-    (if (or not-suppress prefix-argument)
+    (if (or current-prefix-arg not-suppress)
         (debbugs-gnu nil nil nil nil)
         (debbugs-gnu nil nil nil t))))
 
