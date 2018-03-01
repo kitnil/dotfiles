@@ -167,7 +167,7 @@
 ;;;
 
 ;; Look for audio devices ‘mpv --audio-device=help’
-(defvar ‎*wi-headphones*
+(defvar *wi-headphones*
   "pulse/alsa_output.usb-Logitech_Logitech_USB_Headset-00.analog-stereo"
   "Pulseaudio device.  Heaphones.")
 
@@ -192,7 +192,7 @@
       (progn
         (setf *wi-mpv-arguments*
               `(,@*wi-mpv-default-arguments*
-                ,(concat "--audio-device=" ‎*wi-headphones*)))
+                ,(concat "--audio-device=" *wi-headphones*)))
         (setf *wi-mpv-headphones* t))))
 
 (defcommand wi-mpv () ()
