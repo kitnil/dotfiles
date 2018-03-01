@@ -17,9 +17,6 @@ export MANWIDTH=80
 
 export INFOPATH="$HOME/src/guix/doc${INFOPATH:+:}$INFOPATH"
 
-export GUILE_LOAD_PATH="${GUILE_LOAD_PATH}\
-:$HOME/.guix-profile/share/guile/site/2.2/"
-
 export GUIX_PACKAGE_PATH=$HOME/src/guix-wigust
 
 # TODO: readlink could fail to enter `guix environment`
