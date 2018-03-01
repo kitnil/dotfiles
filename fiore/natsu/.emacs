@@ -1377,6 +1377,8 @@ the appropriate network slug that we extract from the nick."
   (custom-theme-set-faces
    'manoj-dark
    '(font-lock-function-name-face ((t (:foreground "mediumspringgreen" :weight bold :height 1.0))))
+   '(diff-refine-added ((t (:inherit diff-refine-change :background "#22aa22" :foreground "aquamarine1"))))
+   '(diff-refine-removed ((t (:inherit diff-refine-change :background "#aa2222" :foreground "plum1"))))
    '(which-key-command-description-face ((t (:inherit font-lock-function-name-face :height 1.0))))
    '(fringe ((t (:background "black" :foreground "Wheat"))))
    '(header-line
