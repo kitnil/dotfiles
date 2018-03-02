@@ -1276,7 +1276,7 @@ the appropriate network slug that we extract from the nick."
     :config
     (add-to-list 'emms-player-list 'emms-player-mpv)
 
-    (defcustom emms-player-mpv-music t
+    (defcustom emms-player-mpv-music nil
       "Non-nil if MPV in Emms in music mode.")
 
     (defun wi-toggle-emms-mpv ()
@@ -1295,7 +1295,9 @@ the appropriate network slug that we extract from the nick."
                 "--no-video"))
         (setq emms-player-mpv-music t)))
       (message "MPV for headphones is %s"
-               (if emms-player-mpv-music "enabled" "disabled")))))
+               (if emms-player-mpv-music "enabled" "disabled")))
+
+    (wi-toggle-emms-mpv)))
 
 (use-package helm-emms
   :after emms-setup
