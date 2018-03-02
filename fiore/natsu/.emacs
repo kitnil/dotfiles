@@ -1365,6 +1365,8 @@ the appropriate network slug that we extract from the nick."
 (when (and (require 'edit-server nil t) (daemonp))
   (edit-server-start))
 
+(load-file (expand-file-name "~/src/emacs-terminal-here/terminal-here.el"))
+(setq terminal-here-scrollbar nil)
 (setq terminal-here-terminal-emulators (list "xterm"))
 (setq-default terminal-here-project-root-function #'projectile-project-root)
 
