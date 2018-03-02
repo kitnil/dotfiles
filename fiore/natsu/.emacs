@@ -1358,7 +1358,7 @@ the appropriate network slug that we extract from the nick."
 (add-hook 'Info-selection-hook 'info-colors-fontify-node)
 
 (recentf-mode 1)
-(setq recentf-max-menu-items 50)
+(setq recentf-max-menu-items 500)
 
 (setq hl-sexp-background-color "darkseagreen2")
 
