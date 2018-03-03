@@ -149,7 +149,7 @@ alias wi-wget-mirror="wget -m --random-wait -e robots=off\
  --base="
 
 # Origin <https://github.com/gotbletu/dotfiles/blob/master/aliasrc/.aliasrc#L1152>.
-wget-extension()
+wi-wget-extension()
 {
     wget -r -l1 -H -t1 -nd -N -np -A "$1" -erobots=off "$2"
 }
