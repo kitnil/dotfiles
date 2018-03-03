@@ -1527,6 +1527,8 @@ the appropriate network slug that we extract from the nick."
            video) ; Matt Hartley
           (,(concat youtube-rss-channel-id "UCgU5tUdVPpfM7sLAMWBTsDg")
            video) ; computeremotion.com
+          (,(concat youtube-rss-channel-id "UCZrrEuHiQjN2CUo84g5tk7w")
+           video) ; tripcode!Q/7
           (,(concat youtube-rss-user "LDCNow") video)
           (,(concat youtube-rss-user "tuxreviews") video)
           (,(concat youtube-rss-user "EposVox") video)
