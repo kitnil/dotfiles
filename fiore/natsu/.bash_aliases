@@ -156,6 +156,6 @@ wi-wget-extension()
 
 alias wi-grep-urls="grep -rh -Po '(?<=href=\")[^\"]*' ."
 
-alias guix-narinfo-cache-directory="guile -c '(display\
+alias wi-guix-narinfo-cache-directory="guile -c '(display\
  (string-append (@@ (guix scripts substitute) %narinfo-cache-directory)\
  \"\\n\"))'"
