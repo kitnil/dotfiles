@@ -84,7 +84,7 @@ alias wi-guix-build-natsu="./pre-inst-env env\
  guix build --no-grafts\
  --expression='(@ (guix-packages) guix-collection-packages)'"
 
-alias guix-pre-build-lint-install-package="./pre-inst-env env\
+alias wi-guix-pre-build-lint-install-package="./pre-inst-env env\
  GUIX_PACKAGE_PATH=\
  guix build --no-grafts $PACKAGE --substitute-urls='https://berlin.guixsd.org'\
  && ./pre-inst-env env\
