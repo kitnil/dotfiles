@@ -1,12 +1,6 @@
 ## Copyright © 2017, 2018 Oleg Pykhalov <go.wigust@gmail.com>
 ## Released under the GNU GPLv3 or any later version.
 
-if [ -f "/etc/skel/.bashrc" ]
-then
-  # Load the skel profile's settings.
-  . "/etc/skel/.bashrc"
-fi
-
 wi-guix-graph ()
 {
     guix graph --type=references "$1" | dot -Tsvg > "$2.svg"
