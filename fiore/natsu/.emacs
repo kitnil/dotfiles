@@ -1830,7 +1830,17 @@ With NOT-SUPPRESS non-nil argument include archived bugs."
  ;; If there is more than one, they won't work right.
  '(indent-tabs-mode nil)
  '(safe-local-variable-values
-   '((eval modify-syntax-entry 43 "'")
+   '((TeX-master . "guile.texi")
+     (eval c-set-offset 'access-label '-)
+     (eval c-set-offset 'substatement-open 0)
+     (eval c-set-offset 'arglist-cont-nonempty '+)
+     (eval c-set-offset 'arglist-cont 0)
+     (eval c-set-offset 'arglist-intro '+)
+     (eval c-set-offset 'inline-open 0)
+     (eval c-set-offset 'defun-open 0)
+     (eval c-set-offset 'innamespace 0)
+     (indicate-empty-lines . t)
+     (eval modify-syntax-entry 43 "'")
      (eval modify-syntax-entry 36 "'")
      (eval modify-syntax-entry 126 "'")
      (bug-reference-bug-regexp . "<https?://\\(debbugs\\|bugs\\)\\.gnu\\.org/\\([0-9]+\\)>"))))
