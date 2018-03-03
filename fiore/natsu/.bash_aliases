@@ -16,6 +16,9 @@ wi-git-hash ()
     git -C $1 rev-parse HEAD
 }
 
+unalias ls
+unalias grep
+
 alias wi-pre-guix='$HOME/src/guix/pre-inst-env env GUIX_PACKAGE_PATH= guix'
 
 alias wi-pre-guix-guile='./pre-inst-env\
@@ -102,9 +105,6 @@ alias wi-list-bindings="bind -P"
 alias wi-list-functions="compgen -A function"
 alias wi-show-command="command -V"
 alias wi-show-functions="declare -f"
-
-unalias ls
-unalias grep
 
 alias wi-df-total="df -Tha --total"
 alias wi-disable-history="set +o history" # Only for current session.
