@@ -426,6 +426,8 @@
 (define-key *root-map* (kbd "C-w") "conkeror")
 (define-key *root-map* (kbd "M-w") "wi-chromium")
 
+(define-key *root-map* (kbd "b") "frame-windowlist")
+
 ;; (define-key *top-map* (kbd "s-1") "gselect 1")
 ;; (define-key *top-map* (kbd "s-2") "gselect 2")
 ;; (define-key *top-map* (kbd "s-3") "gselect 3")
