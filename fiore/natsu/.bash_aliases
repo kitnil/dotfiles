@@ -159,3 +159,5 @@ alias wi-grep-urls="grep -rh -Po '(?<=href=\")[^\"]*' ."
 alias wi-guix-narinfo-cache-directory="guile -c '(display\
  (string-append (@@ (guix scripts substitute) %narinfo-cache-directory)\
  \"\\n\"))'"
+
+alias wi-echo-columns-lines="set | grep -E 'COLUMNS|LINES'"
