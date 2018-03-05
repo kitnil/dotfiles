@@ -168,6 +168,11 @@
            ("m" . browse-url-mpv))
 
 (bind-keys :prefix "C-c t" :prefix-map wi-toggle-map :which "toggle"
+           ("F" . flymake-mode)
+           ("P" . projectile-global-mode)
+           ("Q" . highlight-sexp-mode)
+           ("S" . highlight-symbol-mode)
+           ("W" . fci-mode)
            ("a" . abbrev-mode)
            ("b" . guix-build-log-minor-mode)
            ("c" . company-mode)
@@ -177,8 +182,6 @@
            ("h" . hl-line-mode)
            ("i" . aggressive-indent-mode)
            ("l" . smartparens-strict-mode)
-           ("m" . flymake-mode)
-           ("p" . projectile-global-mode)
            ("q" . highlight-stages-mode)
            ("s" . flyspell-mode)
            ("t" . toggle-truncate-lines)
