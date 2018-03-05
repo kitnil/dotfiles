@@ -96,11 +96,6 @@
 
 (which-key-add-key-based-replacements "C-c &" "yasnippet")
 
-(bind-keys :prefix "C-c q q" :prefix-map wi-q-map :which "foo"
-           ("b" . ibuffer)
-           ("e" . wi-switch-to-scratch-elisp)
-           ("w" . wi-switch-to-eww))
-
 (bind-keys :prefix "C-c b" :prefix-map wi-buffer-map :which "buffer"
            ("b" . ibuffer)
            ("e" . wi-switch-to-scratch-elisp)
