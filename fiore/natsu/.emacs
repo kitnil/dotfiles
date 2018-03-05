@@ -646,7 +646,8 @@
   `(mapc (lambda (name-text)
            (let ((name (first name-text))
                  (text (second name-text)))
-             (defun ,(intern (concat "wi-insert-" (symbol-name name))) ()
+             (defun ,(intern (concat "wi-insert-" (symbol-name name)))
+                 nil
                (interactive)
                (insert text))))
          ,name-text-list))
@@ -670,7 +671,8 @@
   (interactive "sDownload URL: ")
   (insert
    (shell-command-to-string
-    (concat "guix download " url " 2>/dev/null" "| tail -n 1" "| tr -d '\n'"))))
+    (concat "guix download " url
+            " 2>/dev/null" "| tail -n 1" "| tr -d '\n'"))))
 
 (defun wi-switch-to-scratch-elisp ()
   (interactive)
@@ -747,10 +749,13 @@ Interactively, prompt for REPO, defaulting to emacs-master, and
 for COMMIT, defaulting to the commit hash at point."
   (interactive "p")
   (let* ((git-dir (if repo
-		      (read-directory-name "Repo: " "/mnt/data/steve/git/"
-					   nil t "emacs-master")
+		      (read-directory-name
+                       "Repo: " "/mnt/data/steve/git/"
+                       nil t "emacs-master")
 		    "/mnt/data/steve/git/emacs-master"))
-	 (commit0 (or commit (read-string "Commit: " nil nil (word-at-point))))
+	 (commit0
+          (or commit
+              (read-string "Commit: " nil nil (word-at-point))))
 	 (default-directory git-dir)
 	 (output-buffer (get-buffer-create "*git log*"))
 	 (proc (progn
@@ -818,7 +823,8 @@ for COMMIT, defaulting to the commit hash at point."
 (with-eval-after-load 'guix-repl
   (setq guix-directory (expand-file-name "~/src/guix")))
 
-(setq guix-read-package-name-function #'guix-read-package-name-at-point)
+(setq guix-read-package-name-function
+      #'guix-read-package-name-at-point)
 
 
 ;;;
@@ -881,13 +887,15 @@ for COMMIT, defaulting to the commit hash at point."
 (defun wi-update-magit-repository-directories (directory)
   "Update list of files in `DIRECTORY' for `magit-list-repositories'."
   (interactive)
-  (setq magit-repository-directories (wi-list-files-in-dir directory)))
+  (setq magit-repository-directories
+        (wi-list-files-in-dir directory)))
 
 (setq magit-repository-directories-depth 1)
 
 (wi-update-magit-repository-directories wi-projects-directory)
 
-(setq magit-log-arguments (list "--graph" "--color" "--decorate" "-n64" "--show-signature"))
+(setq magit-log-arguments (list "--graph" "--color" "--decorate"
+                                "-n64" "--show-signature"))
 (setq magit-log-section-arguments (list "-n256" "--decorate"))
 
 ;; Use `magit-describe-section'
@@ -933,7 +941,8 @@ for COMMIT, defaulting to the commit hash at point."
 (setq erc-try-new-nick-p nil)
 (setq erc-user-full-name "Oleg Pykhalov")
 (setq erc-whowas-on-nosuchnick t)
-(setq erc-track-exclude-types '("NICK" "333" "353" "JOIN" "QUIT" "PART"))
+(setq erc-track-exclude-types
+      '("NICK" "333" "353" "JOIN" "QUIT" "PART"))
 (setq erc-modules
       '(autojoin button completion fill irccontrols list match menu
         move-to-prompt netsplit networks ring smiley stamp track))
@@ -959,7 +968,8 @@ for COMMIT, defaulting to the commit hash at point."
 (defun wi-erc-connect-globalgamers ()
   "Connect to globalgamers irc network"
   (interactive)
-  (add-to-list 'erc-networks-alist '(globalgamers "irc.globalgamers.net"))
+  (add-to-list 'erc-networks-alist
+               '(globalgamers "irc.globalgamers.net"))
   (erc-tls :server "irc.globalgamers.net"
            :port 6660
            :nick "wigust"
@@ -1032,8 +1042,9 @@ for COMMIT, defaulting to the commit hash at point."
 (defvar wi-irc-gnome-servers '("umu.se" "gimp.net" "gimp.ca"
                                "gnome.org" "y.se" "poop.nl"))
 
-(defvar wi-irc-gnome-channels '("#bugs" "#docs" "#gnome" "#gnome-hackers"
-                                "#gnome-shell" "#newcomers"))
+(defvar wi-irc-gnome-channels
+  '("#bugs" "#docs" "#gnome" "#gnome-hackers" "#gnome-shell"
+    "#newcomers"))
 
 (defun wi-erc-netlist (irc-networks irc-channels)
   (let (wi-erc-netlist)
@@ -1041,9 +1052,9 @@ for COMMIT, defaulting to the commit hash at point."
       (if (equal wi-erc-netlist nil)
           (setq wi-erc-netlist
                 (list (cons irc-network irc-channels)))
-        (setq wi-erc-netlist (append
-                              wi-erc-netlist
-                              (list (cons irc-network irc-channels))))))))
+        (setq wi-erc-netlist
+              (append wi-erc-netlist
+                      (list (cons irc-network irc-channels))))))))
 
 (defvar wi-erc-netlist-gnome (wi-erc-netlist wi-irc-gnome-servers
                                              wi-irc-gnome-channels))
@@ -1052,10 +1063,11 @@ for COMMIT, defaulting to the commit hash at point."
       (quote
        (("freenode.net" "#icecat" "#emacs" "#grub" "#conkeror" "#erc"
          ;; "#clojure" "##math"
-         "##c" "#bash" "#SDL" "#chicken"
+         "##c" "#gdb" "#bash" "#SDL" "#chicken"
          ;; "#fedora" "#fedora-admin" "#fedora-devel"
          ;; "#fedora-noc" "#fedora-meeting" "#fedora-qa"
-         "#gnu" "#fsf" "#gnus" "#guile" "#guix" "#stumpwm" "#replicant" "#gdb"
+         "#gnu" "#fsf" "#gnus" "#guile" "#guix" "#stumpwm"
+         "#replicant"
          "##linux" "#linuxdistrocommunity"
          ;; "#nixos" "#haskell" "#xmonad"
          ;; "#filmsbykris" "##japanese" "#latex"
@@ -1546,14 +1558,16 @@ the appropriate network slug that we extract from the nick."
   "; Copyright © " `(format-time-string "%Y") " "
   (or (wi-fullname-and-email) str)
   '(if (copyright-offset-too-large-p)
-       (message "Copyright extends beyond `copyright-limit' and won't be updated automatically."))
+       (message "Copyright extends beyond `copyright-limit' and won't\
+be updated automatically."))
   comment-end \n)
 
 (setq copyright-names-regexp (wi-fullname-and-email))
 
 ;; TODO: Add to guix (add-hook 'before-save-hook 'copyright-update)
 
-(setq quickurl-format-function (lambda (url) (format "<%s>" (quickurl-url-url url))))
+(setq quickurl-format-function
+      (lambda (url) (format "<%s>" (quickurl-url-url url))))
 
 ;; `w3m' fonts
 (setq w3m-fill-column 80)
@@ -1576,7 +1590,8 @@ the appropriate network slug that we extract from the nick."
 ;; Don't use ido
 (setq projectile-completion-system 'default)
 
-(setq helm-locate-project-list (wi-list-files-in-dir wi-projects-directory))
+(setq helm-locate-project-list
+      (wi-list-files-in-dir wi-projects-directory))
 
 ;; Google translate with translate-shell program
 (require 'google-translate-mode nil t)
@@ -1586,13 +1601,14 @@ the appropriate network slug that we extract from the nick."
 ;; Interested in those timezones
 (with-eval-after-load 'time
   (setq display-time-world-time-format "%Z\t%d %B %H:%M")
-  (setq display-time-world-list '(("Europe/Moscow"    "Europe/Moscow")
-                                  ("Europe/Berlin"    "Europe/Berlin")
-                                  ("Europe/London"    "Europe/London")
-                                  ("Europe/Istanbul"  "Europe/Istanbul")
-                                  ("America/Winnipeg" "America/Winnipeg")
-                                  ("America/New_York" "America/New_York")
-                                  ("Asia/Tokyo"       "Asia/Tokyo"))))
+  (setq display-time-world-list
+        '(("Europe/Moscow" "Europe/Moscow")
+          ("Europe/Berlin" "Europe/Berlin")
+          ("Europe/London" "Europe/London")
+          ("Europe/Istanbul" "Europe/Istanbul")
+          ("America/Winnipeg" "America/Winnipeg")
+          ("America/New_York" "America/New_York")
+          ("Asia/Tokyo" "Asia/Tokyo"))))
 
 ;; List of Email addresses to send patches for `gitpatch-mail' command
 (setq gitpatch-mail-database (list "guix-patches@gnu.org"))
@@ -1780,7 +1796,9 @@ With NOT-SUPPRESS non-nil argument include archived bugs."
   (interactive "sDownload URL: ")
   (let ((buffer (generate-new-buffer "*wget*")))
     (with-current-buffer buffer
-      (insert (shell-command-to-string (concat "wget" " -q" " -O-" " " url))))
+      (insert (shell-command-to-string
+               (mapconcat 'identity (list "wget" "-q" "-O-" url)
+                          " "))))
     (switch-to-buffer buffer)))
 
 (defun wi-debbugs-get-url (bug-number)
@@ -1792,7 +1810,8 @@ With NOT-SUPPRESS non-nil argument include archived bugs."
 (defun wi-copy-cgit-guix-path (path)
   "Copy cgit guix path to kill ring"
   (interactive "sPath: ")
-  (kill-new (concat "https://git.savannah.gnu.org/cgit/guix.git/tree/" path)))
+  (kill-new (concat "https://git.savannah.gnu.org/cgit/guix.git/tree/"
+                    path)))
 
 (defvar wi-guix-git-directory (expand-file-name "~/src/guix"))
 (defun wi-magit-show-commit-guix (commit)
