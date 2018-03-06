@@ -1179,6 +1179,9 @@ for COMMIT, defaulting to the commit hash at point."
 
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 
+;; Origin <https://changelog.complete.org/archives/9865-emacs-2-introducing-org-mode>.
+(setq org-ellipsis "…")
+
 
 ;;;
 ;;; Manage daily TODO files.
