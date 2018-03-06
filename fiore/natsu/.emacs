@@ -1177,6 +1177,8 @@ for COMMIT, defaulting to the commit hash at point."
 	   (buffer-string))))
 	(insert (format "#+BEGIN_SRC emacs-lisp :results output silent\n  (with-temp-file %S\n    (insert (base64-decode-string\n      %S)))\n#+END_SRC" filename base64-string))))
 
+(add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+
 
 ;;;
 ;;; Manage daily TODO files.
