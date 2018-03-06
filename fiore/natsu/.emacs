@@ -221,7 +221,7 @@
            ("r" . helm-bookmarks)
            ("s" . helm-pass)
            ("t" . helm-top)
-           ("v" . helm-wigust-stream)
+           ("v" . wi-helm-wigust-stream)
            ("w" . helm-stumpwm-commands)
            ("x" . helm-M-x)
            ("y" . helm-show-kill-ring))
