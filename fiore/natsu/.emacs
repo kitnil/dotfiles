@@ -1485,6 +1485,7 @@ the appropriate network slug that we extract from the nick."
     . guix-prettify-mode)
    ((c-mode-hook) . ggtags-mode)
    ((scheme-mode-hook) . guix-devel-mode)
+   ((prog-mode-hook) . fci-mode)
    ((prog-mode-hook) . rainbow-delimiters-mode)
    ((prog-mode-hook
      minibuffer-inactive-mode-hook
