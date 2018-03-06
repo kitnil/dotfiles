@@ -893,7 +893,7 @@ for COMMIT, defaulting to the commit hash at point."
 (wi-update-magit-repository-directories wi-projects-directory)
 
 (setq magit-log-arguments (list "--graph" "--color" "--decorate"
-                                "-n64" "--show-signature"))
+                                "-n64"))
 (setq magit-log-section-arguments (list "-n256" "--decorate"))
 
 ;; Use `magit-describe-section'
