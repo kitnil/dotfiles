@@ -1319,7 +1319,8 @@ the appropriate network slug that we extract from the nick."
   (add-to-list 'helm-emms-music-extensions "webm"))
 
 (defcustom wi-helm-wigust-stream-urls
-  '("https://www.twitch.tv/entr_ru"
+  '("https://www.twitch.tv/nekrovim"
+    "https://www.twitch.tv/entr_ru"
     "https://www.youtube.com/user/streamguild"
     "https://www.twitch.tv/artgameslp"
     "https://www.youtube.com/user/ArtGamesLP")
