@@ -1500,7 +1500,8 @@ the appropriate network slug that we extract from the nick."
 (defun wi-find-stumpwm-init-file ()
   "Edit the `stumpwm-init-file', in another window."
   (interactive)
-  (find-file-other-window (expand-file-name "~/.stumpwm.d/init.lisp")))
+  (find-file-other-window
+   (expand-file-name "~/.stumpwm.d/init.lisp")))
 
 ;; Deletes up to the provided character
 ;; Doesn’t delete the provided character
@@ -1530,12 +1531,22 @@ the appropriate network slug that we extract from the nick."
 
 (defun wi-god-mode-update-cursor ()
   (let ((limited-colors-p (> 257 (length (defined-colors)))))
-    (cond (god-local-mode (progn
-                            (set-face-background 'mode-line (if limited-colors-p "white" "#e9e2cb"))
-                            (set-face-background 'mode-line-inactive (if limited-colors-p "white" "#e9e2cb"))))
-          (t (progn
-               (set-face-background 'mode-line (if limited-colors-p "black" "grey75"))
-               (set-face-background 'mode-line-inactive (if limited-colors-p "grey20" "grey90")))))))
+    (cond
+     (god-local-mode
+      (progn
+        (set-face-background
+         'mode-line
+         (if limited-colors-p "white" "#e9e2cb"))
+        (set-face-background
+         'mode-line-inactive
+         (if limited-colors-p "white" "#e9e2cb"))))
+     (t (progn
+          (set-face-background
+           'mode-line
+           (if limited-colors-p "black" "grey75"))
+          (set-face-background
+           'mode-line-inactive
+           (if limited-colors-p "grey20" "grey90")))))))
 
 (add-hook 'god-mode-enabled-hook 'wi-god-mode-update-cursor)
 (add-hook 'god-mode-disabled-hook 'wi-god-mode-update-cursor)
@@ -1551,9 +1562,10 @@ the appropriate network slug that we extract from the nick."
                                     '(("\\<\\(TODO\\|FIXME\\):" 1
                                        font-lock-warning-face t)))))
 
-(add-hook 'shell-mode-hook (lambda ()
-                             (progn (setq paragraph-separate "[ 	]*$")
-                                    (setq paragraph-start "\\|[ 	]*$"))))
+(add-hook 'shell-mode-hook
+          (lambda ()
+            (progn (setq paragraph-separate "[ 	]*$")
+                   (setq paragraph-start "\\|[ 	]*$"))))
 
 (let ((youtube-rss-channel-id
        "https://www.youtube.com/feeds/videos.xml?channel_id=")
