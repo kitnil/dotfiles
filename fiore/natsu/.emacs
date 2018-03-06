@@ -1328,7 +1328,12 @@ the appropriate network slug that we extract from the nick."
 
 (defun wi-helm-wigust-stream (func)
   "Open a streaming video URL in Chromium or Streamlink with Helm."
-  (interactive (list (completing-read "Engine: " '(chromium streamlink))))
+  (interactive (list
+                (let ((engine (completing-read "Engine (chromium by default): "
+                                               '(chromium streamlink))))
+                  (if (string-empty-p engine)
+                      "chromium"
+                    engine))))
   (helm :sources (helm-build-sync-source "urls"
                    :action (lambda (candidate)
                              (funcall (cond ((string-equal func "chromium")
