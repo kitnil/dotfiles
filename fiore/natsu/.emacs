@@ -1357,6 +1357,8 @@ the appropriate network slug that we extract from the nick."
 
 (setq ffap-rfc-directories (list (expand-file-name "~/src/rfc")))
 
+(setq irfc-directory (expand-file-name "~/src/rfc"))
+
 (defvar irfc-mode-map
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "h") 'backward-char)
