@@ -19,6 +19,8 @@ export INFOPATH="$HOME/src/guix/doc${INFOPATH:+:}$INFOPATH"
 
 export GUIX_PACKAGE_PATH=$HOME/src/guix-wigust
 
+export PATH=$HOME/bin:$PATH
+
 # TODO: readlink could fail to enter `guix environment`
 # alias wi-pure-bash="env -i $(readlink $(which bash)) --noprofile --norc"
 
