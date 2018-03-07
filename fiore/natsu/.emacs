@@ -1355,6 +1355,8 @@ the appropriate network slug that we extract from the nick."
 ;;; Misc
 ;;;
 
+(setq dumb-jump-max-find-time 4)
+
 (defun wi-replace-with-brackets-ellipsis ()
   "Replace region with \"[…]\"."
   (interactive)
