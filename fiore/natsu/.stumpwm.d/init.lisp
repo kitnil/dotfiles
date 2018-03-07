@@ -358,7 +358,7 @@
             " "
             '(:eval (window-name (current-window)))
             "]"
-            "^>    %D    %M    %t    %c    %d"))
+            "^>    %d"))
 (setf *mode-line-pad-x* 0)
 (setf *mode-line-pad-y* 0)
 (mode-line)
