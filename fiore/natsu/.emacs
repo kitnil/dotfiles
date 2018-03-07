@@ -1117,7 +1117,7 @@ for COMMIT, defaulting to the commit hash at point."
            :prepend t)
 
           ("f" "File email" entry (file+headline "inbox.org" "Email")
-           "* %U %a by [[mailto:%:fromaddress][%:fromname]]\n\n%i%?\n"
+           "* %U %a by [[mailto:%:fromaddress][%:fromname]]"
            :immediate-finish nil
            :prepend nil)
 
