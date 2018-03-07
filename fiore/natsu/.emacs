@@ -1355,6 +1355,12 @@ the appropriate network slug that we extract from the nick."
 ;;; Misc
 ;;;
 
+(defun wi-replace-with-brackets-ellipsis ()
+  "Replace region with \"[…]\"."
+  (interactive)
+  (kill-region (region-beginning) (region-end))
+  (insert "[…]"))
+
 (setq ffap-rfc-directories (list (expand-file-name "~/src/rfc")))
 
 (setq irfc-directory (expand-file-name "~/src/rfc"))
