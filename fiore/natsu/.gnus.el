@@ -131,3 +131,22 @@ below otherwise."
 ;; Origin <https://emacs.stackexchange.com/a/166>.
 (bbdb-mua-auto-update-init 'message) ; use 'gnus for incoming messages too
 (setq bbdb-mua-auto-update-p 'query) ;; or 'create to create without asking
+
+(defcustom wi-gnus-subject-regexp-debbugs
+  (rx-to-string `(and (* "[") "bug" "#" (group (+ alnum)) (* "]") (+ anything))
+                t)
+  "Regexp matching Debbugs bug in Gnus header.")
+
+(defun wi-gnus-subject-match-debbugs ()
+  "Return Debbugs bug number from a Gnus article header."
+  (interactive)
+  (let* ((header (with-current-buffer gnus-summary-buffer
+                   (gnus-summary-article-header)))
+         (subject (mail-header-subject header)))
+    (string-match wi-gnus-subject-regexp-debbugs subject)
+    (string-to-number (match-string 1 subject))))
+
+(defun wi-gnus-browse-debbugs ()
+  "Open current Gnus article in with `debbugs-gnu-bugs'."
+  (interactive)
+  (debbugs-gnu-bugs (wi-gnus-subject-match-debbugs)))
