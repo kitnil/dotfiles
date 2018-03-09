@@ -1879,8 +1879,10 @@ With NOT-SUPPRESS non-nil argument include archived bugs."
 
 (defvar wi-guix-git-directory (expand-file-name "~/src/guix"))
 (defun wi-magit-show-commit-guix (commit)
-  "Show a Git `commit' from the Guix checkout."
-  (interactive "sCommit: ")
+  "Show a Git `commit' from the Guix checkout.
+
+If no commit hash provides, show a commit from hash at current point."
+  (interactive (list (read-string "Commit: " nil nil (word-at-point))))
   (let ((default-directory wi-guix-git-directory))
     (magit-show-commit commit)))
 
