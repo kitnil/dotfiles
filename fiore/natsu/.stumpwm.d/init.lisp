@@ -343,9 +343,6 @@
              (setq wi-dark-theme t))))
 (wi-toggle-theme)
 
-(load-module "cpu")
-(load-module "mem")
-(load-module "disk")
 (setf *mode-line-timeout* 2)
 (setf *TIME-MODELINE-STRING* "%a %b %e %k:%M")
 (setf *screen-mode-line-format*
