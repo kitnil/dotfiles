@@ -277,6 +277,11 @@
   (run-or-raise (join (list *wi-xterm-command* *wi-xterm-theme-dark*) #\ )
                 '(:class "XTerm")))
 
+(defcommand wi-xterm-dark-no-scrollbar () ()
+  "Start or focus XTerm."
+  (run-or-raise (join (list *wi-xterm-command* *wi-xterm-theme-dark* "+sb") #\ )
+                '(:class "XTerm")))
+
 (defcommand xterm-name (cmd &optional collect-output-p) ((:string "window name: "))
   "Run the specified shell command in XTerm."
   (run-prog *shell-program*
