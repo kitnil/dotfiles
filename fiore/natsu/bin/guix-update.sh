@@ -1,3 +1,12 @@
 #!/bin/sh
-GUIX_LATEST=/root/.config/guix/latest
-unlink $GUIX_LATEST && ln -s $(readlink /home/natsu/.config/guix/latest) $GUIX_LATEST
+GUIX_LATEST_USER=/home/natsu/.config/guix/latest
+GUIX_LATEST_ROOT=/root/.config/guix/latest
+
+# Echo evalueated commands
+set -x
+
+# Link to root guix from user guix
+unlink $GUIX_LATEST_ROOT\
+    && ln -s $(readlink $GUIX_LATEST_USER) $GUIX_LATEST_ROOT
+
+test $(readlink $GUIX_LATEST_USER) == $(readlink $GUIX_LATEST_ROOT)
