@@ -307,10 +307,9 @@ EndSection
                            (device "tmpfs")
                            (mount-point "/tmp")
                            (type "tmpfs")
+                           (check? #f)
                            (flags '(no-dev))
-                           (options "mode=1777,size=16G")
-                           (needed-for-boot? #t)
-                           (check? #f))
+                           (options "mode=1777,size=50%"))
                          %base-file-systems))
 
     (groups (cons
