@@ -267,15 +267,17 @@
   "Download video."
   (run-shell-command "exec xterm -name alsamixer -e alsamixer"))
 
-(defcommand wi-xterm-light () ()
+(defcommand wi-run-or-raise-xterm () ()
   "Start or focus XTerm."
   (run-or-raise (join (list *wi-xterm-command* *wi-xterm-theme-light*) #\ )
                 '(:class "XTerm")))
 
-(defcommand wi-xterm-dark () ()
+(defcommand wi-run-xterm () ()
   "Start or focus XTerm."
-  (run-or-raise (join (list *wi-xterm-command* *wi-xterm-theme-dark*) #\ )
-                '(:class "XTerm")))
+  (run-prog *shell-program*
+            :args (list "-c" (join (list *wi-xterm-command*
+                                         *wi-xterm-theme-dark*) #\ ))
+            :wait nil))
 
 (defcommand wi-xterm-dark-no-scrollbar () ()
   "Start or focus XTerm."
@@ -419,8 +421,8 @@
 (define-key *root-map* (kbd "M-!") "run-xterm-command")
 (define-key *root-map* (kbd "v") "pulsemixer")
 (define-key *root-map* (kbd "C-v") "alsamixer")
-(define-key *root-map* (kbd "c") "wi-xterm-light")
-(define-key *root-map* (kbd "C-c") "wi-xterm-dark")
+(define-key *root-map* (kbd "c") "wi-run-or-raise-xterm")
+(define-key *root-map* (kbd "C-c") "wi-run-xterm")
 
 (define-key *root-map* (kbd "C-M-v") "scroll-other-window")
 (define-key *root-map* (kbd "Print") "screenshot-default")
