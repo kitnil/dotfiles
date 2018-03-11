@@ -1269,7 +1269,8 @@ the appropriate network slug that we extract from the nick."
 ;; ;; Define networks
 (use-package znc
   :defer 5
-  :config (vbe:znc-add-server "localhost" 8060 "natsu" '(freenode twitch)))
+  :config
+  (vbe:znc-add-server "localhost" 8060 "natsu" '(freenode perl p2p twitch)))
 
 
 ;;;
