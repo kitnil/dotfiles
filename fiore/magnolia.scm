@@ -393,6 +393,7 @@ EndSection
 
       alsa-utils
       pavucontrol ; Pulseaudio control GUI
+      pulseaudio
 
       %base-packages))
 
