@@ -1356,6 +1356,17 @@ the appropriate network slug that we extract from the nick."
 ;;; Misc
 ;;;
 
+(defun wi-copy-buffer (buffer)
+  "Copy BUFFER to kill ring and save in the GUI’s clipboard."
+  (with-current-buffer (get-buffer buffer)
+    (save-excursion
+      (clipboard-kill-ring-save (point-min) (point-max)))))
+
+(defun wi-copy-current-buffer ()
+  "Copy current buffer to kill ring and save in the GUI’s clipboard."
+  (interactive)
+  (wi-copy-buffer (current-buffer)))
+
 (setq dumb-jump-max-find-time 4)
 
 (defun wi-replace-with-brackets-ellipsis ()
