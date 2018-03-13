@@ -253,9 +253,12 @@ Sets the following basend on PREFIX-MAP:
                 ("y" yas-minor-mode "yasnippet"))
 
 (wi-define-keys "C-c t c" toggle-highlight
+                ("S" highlight-sexp-mode "sexp")
+                ("c" rainbow-mode "colors")
+                ("d" rainbow-delimiters-mode "delimiters")
+                ("i" rainbow-identifiers-mode "identifiers")
                 ("q" highlight-stages-mode "stages")
-                ("s" highlight-symbol-mode "symbol")
-                ("S" highlight-sexp-mode "sexp"))
+                ("s" highlight-symbol-mode "symbol"))
 
 (wi-define-keys "C-c h" helm
                 ("&" helm-yas-complete "yasnippet")
