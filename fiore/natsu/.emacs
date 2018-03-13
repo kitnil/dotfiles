@@ -129,6 +129,7 @@ Sets the following basend on PREFIX-MAP:
 
 (wi-define-switch-to-buffer guile-repl "* Guile REPL *")
 (wi-define-switch-to-buffer eww "*eww*")
+(wi-define-switch-to-buffer nekrovim "#nekrovim")
 
 (defmacro wi-define-find-file (name file)
   `(defun ,(intern (concat "wi-find-file-" (symbol-name name)))
@@ -171,6 +172,9 @@ Sets the following basend on PREFIX-MAP:
                 ("e" wi-switch-to-scratch-elisp "elisp")
                 ("g" wi-switch-to-buffer-guile-repl "guile")
                 ("w" wi-switch-to-buffer-eww "eww"))
+
+(wi-define-keys "C-c b s i" buffer-switch-irc
+                ("n" wi-switch-to-buffer-nekrovim "nekrovim"))
 
 (wi-define-keys "C-c b f" buffer-file
                 ("d" wi-find-file-guixsd "guixsd")
