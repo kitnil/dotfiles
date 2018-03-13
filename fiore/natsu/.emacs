@@ -141,6 +141,15 @@ Sets the following basend on PREFIX-MAP:
 (wi-define-find-file emacs (expand-file-name
                             "~/dotfiles/fiore/natsu/.emacs"))
 
+(defmacro wi-define-magit-status-repo (name directory)
+  `(defun ,(intern (concat "wi-magit-status-repo-"
+                           (symbol-name name)))
+       nil
+     (interactive)
+     (magit-status ,directory)))
+
+(wi-define-magit-status-repo guix (expand-file-name "~/src/guix"))
+
 (bind-key "<Scroll_Lock>" #'scroll-lock-mode)
 (bind-key "<C-mouse-4>" #'text-scale-increase)
 (bind-key "<C-mouse-5>" #'text-scale-decrease)
@@ -206,6 +215,9 @@ Sets the following basend on PREFIX-MAP:
                 ("l" magit-list-repositories "repo list")
                 ("r" magit-diff-toggle-refine-hunk "tg refine")
                 ("s" magit-status "status"))
+
+(wi-define-keys "C-c v m r" magit-repo
+                ("g" wi-magit-status-repo-guix "guix"))
 
 (wi-define-keys "C-c v b" browse-at-remote
                 ;; TODO: ("g" . wi-browse-at-remote-gnu)
