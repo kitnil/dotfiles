@@ -159,11 +159,13 @@ Sets the following basend on PREFIX-MAP:
 
 (wi-define-keys "C-c b" buffer
                 ("b" scratch "scratch" :color blue)
+                ("f" transpose-frame "tr frame")
                 ("i" ibuffer "ibuffer")
                 ("l" redraw-display "redraw")
-                ("f" transpose-frame "tr frame")
-                ("w" crux-transpose-windows "tr window")
-                ("r" revert-buffer "revert"))
+                ("n" next-buffer "next")
+                ("p" previous-buffer "previous")
+                ("r" revert-buffer "revert")
+                ("w" crux-transpose-windows "tr window"))
 
 (wi-define-keys "C-c b s" buffer-switch
                 ("e" wi-switch-to-scratch-elisp "elisp")
