@@ -53,10 +53,10 @@
 .usb-Logitech_Logitech_USB_Headset-00.analog-stereo"
   "My USB headphones")
 
-;; TODO: Make initialization without require
-(use-package org-protocol :defer 5)
-(use-package jl-encrypt :defer 5)
-(use-package crux :defer 5)
+;; TODO: Make initialization without `use-package'
+(use-package org-protocol :defer 5) ; For `org-capture' from Xorg
+(use-package jl-encrypt :defer 5) ; Encrypt email before send
+(use-package crux :defer 5) ; Useful functions like `crux-open-with'
 
 (use-package notmuch
   :commands notmuch-search
