@@ -712,6 +712,17 @@ Sets the following basend on PREFIX-MAP:
 ;;; Usability functions
 ;;;
 
+(defun wi-buffer-major-mode (buffer)
+  "Return major-mode of BUFFER."
+  (cdr (assoc 'major-mode (buffer-local-variables buffer))))
+
+(defun wi-buffers-similar-major-mode ()
+  "Return buffer with similar major-mode as in current buffer."
+  (-filter (lambda (buffer)
+             (string-equal (wi-buffer-major-mode (current-buffer))
+                           (wi-buffer-major-mode buffer)))
+           (buffer-list)))
+
 (defun wi-mark-paragraph+sort-lines ()
   "Invoke `mark-paragraph' and `sort-lines'."
   (interactive)
