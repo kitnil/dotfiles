@@ -548,7 +548,8 @@ Sets the following basend on PREFIX-MAP:
           "&idxname=guix-patches"
           "&max=20"
           "&result=normal"
-          "&sort=date%%3Alate"))
+          "&sort=date%%3Alate")
+    :keybinding "g")
 
 (defengine emacs-devel
   (concat "https://lists.gnu.org/archive/cgi-bin/namazu.cgi?query=%s"
