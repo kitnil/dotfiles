@@ -72,11 +72,28 @@
 ;; TODO: Lazy load
 (use-package debbugs-browse) ; for debbugs-browse-url
 
+(defvar wi-debian-paste-regexp
+  (rx-to-string
+   `(and "http" (* "s") "://paste.debian.net/" (+ alnum) (* "/")) t)
+  "Regexp matching Debian paste URL.")
+
+(defun wi-debian-paste-raw (str)
+  "Return a raw URL from original."
+  (funcall (-lambda ((protocol s domain nth s))
+             (mapconcat 'identity
+                        (list protocol s domain "plain" nth s)
+                        "/"))
+           (split-string str "/")))
+
+(defun wi-browse-url-paste-debian (url &optional new-window)
+  (wi-wget-switch (wi-debian-paste-raw url)))
+
 (setq browse-url-browser-function
       `(("^ftp://.*" . browse-ftp-tramp)
         (,debbugs-browse-url-regexp . debbugs-browse-url)
         ("^https?://w*\\.?youtube.com/watch\\?v=.*" . browse-url-mpv)
         ("^https?://hydra\\.gnu\\.org/search\\?query=.*" . browse-url-firefox)
+        (,wi-debian-paste-regexp . wi-browse-url-paste-debian)
         ("." . browse-url-conkeror)))
 
 ;; Enable functions
