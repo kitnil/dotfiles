@@ -439,7 +439,8 @@ Sets the following basend on PREFIX-MAP:
   "https://fedorapeople.org/cgit/?q=%s")
 
 (defengine github
-  "https://github.com/search?ref=simplesearch&q=%s")
+  "https://github.com/search?ref=simplesearch&q=%s"
+  :keybinding "h")
 
 (defengine github-gpl
   (concat "https://github.com/search?ref=simplesearch&q=%s"
