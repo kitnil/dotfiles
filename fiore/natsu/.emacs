@@ -370,6 +370,7 @@ Sets the following basend on PREFIX-MAP:
                 ("g" elfeed-update "update"))
 
 (wi-define-keys "C-c m g" gnus
+                ("d" wi-gnus-browse-debbugs :color :blue)
                 ("g" gnus "gnus" :color blue)
                 ("s" switch-to-gnus "switch" :color blue))
 
