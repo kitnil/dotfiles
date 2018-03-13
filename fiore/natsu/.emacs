@@ -2018,4 +2018,5 @@ If no commit hash provides, show a commit from hash at current point."
  '(magit-diff-added-highlight ((t (:foreground "#22aa22"))))
  '(magit-diff-context-highlight ((t (:foreground "grey50"))))
  '(magit-diff-removed ((t (:foreground "#aa2222"))))
- '(magit-diff-removed-highlight ((t (:foreground "#aa2222")))))
+ '(magit-diff-removed-highlight ((t (:foreground "#aa2222"))))
+ '(markdown-code-face ((t (:inherit fixed-pitch)))))
