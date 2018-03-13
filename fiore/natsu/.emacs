@@ -1446,6 +1446,9 @@ the appropriate network slug that we extract from the nick."
 
 (setq irfc-directory (expand-file-name "~/src/rfc"))
 
+;; From `irfc-assoc-mode'.
+(add-to-list 'auto-mode-alist '("/rfc[0-9]+\\.txt\\'" . irfc-mode))
+
 (defvar irfc-mode-map
   (let ((map (make-sparse-keymap)))
     (define-key map (kbd "h") 'backward-char)
