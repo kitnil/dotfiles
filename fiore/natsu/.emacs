@@ -114,9 +114,10 @@ Sets the following basend on PREFIX-MAP:
      (which-key-add-key-based-replacements ,prefix
        ,(symbol-name prefix-map))
      (defhydra ,(intern (concat "hydra-" (symbol-name prefix-map)))
-       nil ,(mapconcat 'identity
-                       (split-string (symbol-name prefix-map) "-")
-                       " ")
+       nil
+       ,(mapconcat 'identity
+                   (split-string (symbol-name prefix-map) "-")
+                   " ")
        ,@args
        ("q" nil "quit"))))
 
@@ -157,7 +158,7 @@ Sets the following basend on PREFIX-MAP:
 (which-key-add-key-based-replacements "C-c &" "yasnippet")
 
 (wi-define-keys "C-c b" buffer
-                ("b" scratch "scratch")
+                ("b" scratch "scratch" :color blue)
                 ("i" ibuffer "ibuffer")
                 ("l" redraw-display "redraw")
                 ("f" transpose-frame "tr frame")
@@ -203,7 +204,7 @@ Sets the following basend on PREFIX-MAP:
                 ("u" undo "undo"))
 
 (wi-define-keys "C-c o" open
-                ("c" crux-open-with "xdg-open"))
+                ("c" crux-open-with "xdg-open" :color blue))
 
 (wi-define-keys "C-c w" word
                 ("t" show-translation "translate"))
@@ -212,19 +213,19 @@ Sets the following basend on PREFIX-MAP:
 
 (wi-define-keys "C-c v m" magit
                 ("c" magit-commit "commit")
-                ("l" magit-list-repositories "repo list")
+                ("l" magit-list-repositories "repo list" :color blue)
                 ("r" magit-diff-toggle-refine-hunk "tg refine")
-                ("s" magit-status "status"))
+                ("s" magit-status "status" :color blue))
 
 (wi-define-keys "C-c v m r" magit-repo
-                ("g" wi-magit-status-repo-guix "guix"))
+                ("g" wi-magit-status-repo-guix "guix" :color blue))
 
 (wi-define-keys "C-c v b" browse-at-remote
                 ;; TODO: ("g" . wi-browse-at-remote-gnu)
-                ("b" browse-at-remote "browse"))
+                ("b" browse-at-remote "browse" :color blue))
 
 (wi-define-keys "C-c v H" vc-hunk
-                ("c" magit-commit "commit")
+                ("c" magit-commit "commit" :color blue)
                 ("n" git-gutter:next-hunk "next")
                 ("l" git-messenger:popup-message "line")
                 ("p" git-gutter:previous-hunk "previous")
@@ -232,18 +233,18 @@ Sets the following basend on PREFIX-MAP:
                 ("s" git-gutter:stage-hunk "stage"))
 
 (wi-define-keys "C-c f" find
-                ("d" dumb-jump-go "dumb jump")
-                ("e" guix-edit "guix package")
-                ("f" ffap "thing at point")
-                ("l" recentf-open-files "recent")
-                ("r" ffap-read-only "RO thing at point"))
+                ("d" dumb-jump-go "dumb jump" :color blue)
+                ("e" guix-edit "guix package" :color blue)
+                ("f" ffap "thing at point" :color blue)
+                ("l" recentf-open-files "recent" :color blue)
+                ("r" ffap-read-only "RO thing at point" :color blue))
 
 (wi-define-keys "C-c f b" browse
-                ("c" browse-url-conkeror "conkeror")
-                ("e" eww "eww")
-                ("g" browse-url-chromium "chromium")
-                ("i" browse-url-firefox "firefox")
-                ("m" browse-url-mpv "mpv"))
+                ("c" browse-url-conkeror "conkeror" :color blue)
+                ("e" eww "eww" :color blue)
+                ("g" browse-url-chromium "chromium" :color blue)
+                ("i" browse-url-firefox "firefox" :color blue)
+                ("m" browse-url-mpv "mpv" :color blue))
 
 (wi-define-keys "C-c t" toggle
                 ("F" flymake-mode "flymake")
@@ -273,60 +274,61 @@ Sets the following basend on PREFIX-MAP:
                 ("s" highlight-symbol-mode "symbol"))
 
 (wi-define-keys "C-c h" helm
-                ("&" helm-yas-complete "yasnippet")
-                ("a" helm-world-time "time")
-                ("b" helm-buffers-list "buffers")
-                ("e" helm-emms "emms")
-                ("f" helm-for-files "files")
-                ("i" helm-imenu "imenu")
-                ("l" helm-recentf "recent")
-                ("m" helm-make "make")
-                ("r" helm-bookmarks "bookmarks")
-                ("s" helm-pass "pass")
-                ("t" helm-top "top")
-                ("v" wi-helm-wigust-stream "stream")
-                ("w" helm-stumpwm-commands "stumpwm")
-                ("x" helm-M-x "M-x")
-                ("y" helm-show-kill-ring "kill ring"))
+                ("&" helm-yas-complete "yasnippet" :color blue)
+                ("a" helm-world-time "time" :color blue)
+                ("b" helm-buffers-list "buffers" :color blue)
+                ("e" helm-emms "emms" :color blue)
+                ("f" helm-for-files "files" :color blue)
+                ("i" helm-imenu "imenu" :color blue)
+                ("l" helm-recentf "recent" :color blue)
+                ("m" helm-make "make" :color blue)
+                ("r" helm-bookmarks "bookmarks" :color blue)
+                ("s" helm-pass "pass" :color blue)
+                ("t" helm-top "top" :color blue)
+                ("v" wi-helm-wigust-stream "stream" :color blue)
+                ("w" helm-stumpwm-commands "stumpwm" :color blue)
+                ("x" helm-M-x "M-x" :color blue)
+                ("y" helm-show-kill-ring "kill ring" :color blue))
 
 (wi-define-keys "C-c h H" helm-help
-                ("m" helm-man-woman "man")
-                ("i" helm-info "info"))
+                ("m" helm-man-woman "man" :color blue)
+                ("i" helm-info "info" :color blue))
 
 (wi-define-keys "C-c i" ivy
-                ("b" ivy-switch-buffer "switch buffer")
-                ("f" counsel-find-file "find file")
-                ("l" ivy-recentf "recent")
-                ("r" ivy-resume "resume")
-                ("s" swiper "swiper")
-                ("x" counsel-M-x "M-x"))
+                ("b" ivy-switch-buffer "switch buffer" :color blue)
+                ("f" counsel-find-file "find file" :color blue)
+                ("l" ivy-recentf "recent" :color blue)
+                ("r" ivy-resume "resume" :color blue)
+                ("s" swiper "swiper" :color blue)
+                ("x" counsel-M-x "M-x" :color blue))
 
 (wi-define-keys "C-c i g" counsel-git
-                ("f" counsel-git "git")
-                ("v" counsel-git-grep "grep"))
+                ("f" counsel-git "git" :color blue)
+                ("v" counsel-git-grep "grep" :color blue))
 
 (wi-define-keys "C-c i h" counsel-help
-                ("f" counsel-describe-function "function")
-                ("i" counsel-info-lookup-symbol "symbol")
-                ("l" counsel-find-library "library")
-                ("u" counsel-unicode-char "char")
-                ("v" counsel-describe-variable "variable"))
+                ("f" counsel-describe-function "function" :color blue)
+                ("i" counsel-info-lookup-symbol "symbol" :color blue)
+                ("l" counsel-find-library "library" :color blue)
+                ("u" counsel-unicode-char "char" :color blue)
+                ("v" counsel-describe-variable "variable" :color blue))
 
 (which-key-add-key-based-replacements "C-c p x" "projectile-shell")
 (which-key-add-key-based-replacements "C-c p s" "projectile-search")
 (wi-define-keys "C-c h p" helm-projectile
-                ("b" helm-projectile-switch-to-buffer)
-                ("f" helm-projectile-find-file-dwim)
-                ("p" helm-projectile))
+                ("b" helm-projectile-switch-to-buffer :color blue)
+                ("f" helm-projectile-find-file-dwim :color blue)
+                ("p" helm-projectile :color blue))
 
 (wi-define-keys "C-c m" mail
-                ("b" wi-send-buffer-as-mail))
+                ("b" wi-send-buffer-as-mail :color blue))
 
 (wi-define-keys "C-c m i" irc
                 ("s" erc-track-switch-buffer "switch"))
 
 (wi-define-keys "C-c e" emms
-                ("e" emms "emms")
+                ("c" emms-pause "pause")
+                ("e" emms "emms" :color blue)
                 ("d" emms-play-directory "directory")
                 ("n" emms-next "next")
                 ("p" emms-previous "previous")
@@ -334,30 +336,30 @@ Sets the following basend on PREFIX-MAP:
                 ("s" emms-stop "stop"))
 
 (wi-define-keys "C-c m d" debbugs
-                ("b" debbugs-gnu-bugs "bugs")
-                ("l" debbugs-gnu "gnu")
-                ("m" wi-debbugs-gnu-list "wigust")
-                ("p" debbugs-gnu-patches "patches")
-                ("s" debbugs-gnu-search "search"))
+                ("b" debbugs-gnu-bugs "bugs" :color blue)
+                ("l" debbugs-gnu "gnu" :color blue)
+                ("m" wi-debbugs-gnu-list "wigust" :color blue)
+                ("p" debbugs-gnu-patches "patches" :color blue)
+                ("s" debbugs-gnu-search "search" :color blue))
 
 (wi-define-keys "C-c m r" elfeed
-                ("r" elfeed "elfeed")
+                ("r" elfeed "elfeed" :color blue)
                 ("g" elfeed-update "update"))
 
 (wi-define-keys "C-c m g" gnus
-                ("g" gnus "gnus")
-                ("s" switch-to-gnus "switch"))
+                ("g" gnus "gnus" :color blue)
+                ("s" switch-to-gnus "switch" :color blue))
 
 (wi-define-keys "C-c s" shell
-                ("s" shell "shell")
-                ("c" compilation-shell-minor-mode "complition")
-                ("e" eshell "eshell")
-                ("h" terminal-here-project-launch-multiplexer "here")
-                ("t" term "ansi"))
+                ("s" shell "shell" :color blue)
+                ("c" compilation-shell-minor-mode "complition" :color blue)
+                ("e" eshell "eshell" :color blue)
+                ("h" terminal-here-project-launch-multiplexer "here" :color blue)
+                ("t" term "ansi" :color blue))
 
 (wi-define-keys "C-c c" org
-                ("a" org-agenda "agenda")
-                ("c" org-capture "capture")
+                ("a" org-agenda "agenda" :color blue)
+                ("c" org-capture "capture" :color blue)
                 ("l" org-store-link "link"))
 
 (which-key-add-key-based-replacements "C-c k" "engine")
