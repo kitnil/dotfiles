@@ -129,6 +129,18 @@ Sets the following basend on PREFIX-MAP:
 (wi-define-switch-to-buffer guile-repl "* Guile REPL *")
 (wi-define-switch-to-buffer eww "*eww*")
 
+(defmacro wi-define-find-file (name file)
+  `(defun ,(intern (concat "wi-find-file-" (symbol-name name)))
+       nil
+     (interactive)
+     (find-file ,file)))
+
+(wi-define-find-file guixsd (expand-file-name
+                             "~/dotfiles/fiore/magnolia.scm"))
+
+(wi-define-find-file emacs (expand-file-name
+                            "~/dotfiles/fiore/natsu/.emacs"))
+
 (bind-key "<Scroll_Lock>" #'scroll-lock-mode)
 (bind-key "<C-mouse-4>" #'text-scale-increase)
 (bind-key "<C-mouse-5>" #'text-scale-decrease)
@@ -147,6 +159,10 @@ Sets the following basend on PREFIX-MAP:
                 ("e" wi-switch-to-scratch-elisp "elisp")
                 ("g" wi-switch-to-buffer-guile-repl "guile")
                 ("w" wi-switch-to-buffer-eww "eww"))
+
+(wi-define-keys "C-c b f" buffer-file
+                ("d" wi-find-file-guixsd "guixsd")
+                ("e" wi-find-file-emacs "emacs"))
 
 (bind-key "<C-down-mouse-1>" 'mc/toggle-cursor-on-click)
 
