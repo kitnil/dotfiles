@@ -89,6 +89,36 @@
 ;;; Keybindings
 ;;;
 ;;; See <https://www.gnu.org/software/emacs/manual/html_node/elisp/Key-Binding-Conventions.html>.
+(defmacro wi-define-keys (prefix prefix-map &rest args)
+  "Define keys.
+PREFIX - prefix key for these bindings.
+PREFIX-MAP - prefix key for these bindings.
+
+Sets the following basend on PREFIX-MAP:
+- which - description of these bindings.
+- hydra - hydra function name.
+- hydra-comment - hydra description of these bindings."
+  `(progn
+     (bind-keys :prefix ,prefix
+                :prefix-map ,(intern (concat "wi-"
+                                             (symbol-name prefix-map)
+                                             "-map"))
+                ,@(mapcar (lambda (arg)
+                            (let ((key (first arg))
+                                  (func (second arg)))
+                              (cons key func)))
+                          args)
+                ("h" . ,(intern (concat "hydra-"
+                                        (symbol-name prefix-map)
+                                        "/body"))))
+     (which-key-add-key-based-replacements ,prefix
+       ,(symbol-name prefix-map))
+     (defhydra ,(intern (concat "hydra-" (symbol-name prefix-map)))
+       nil ,(mapconcat 'identity
+                       (split-string (symbol-name prefix-map) "-")
+                       " ")
+       ,@args
+       ("q" nil "quit"))))
 
 (bind-key "<Scroll_Lock>" #'scroll-lock-mode)
 (bind-key "<C-mouse-4>" #'text-scale-increase)
