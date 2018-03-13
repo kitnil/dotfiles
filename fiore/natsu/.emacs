@@ -120,25 +120,6 @@ Sets the following basend on PREFIX-MAP:
        ,@args
        ("q" nil "quit"))))
 
-(bind-key "<Scroll_Lock>" #'scroll-lock-mode)
-(bind-key "<C-mouse-4>" #'text-scale-increase)
-(bind-key "<C-mouse-5>" #'text-scale-decrease)
-
-(which-key-add-key-based-replacements "C-c &" "yasnippet")
-
-(bind-keys :prefix "C-c b" :prefix-map wi-buffer-map :which "buffer"
-           ("b" . scratch)
-           ("i" . ibuffer)
-           ("h" . hydra-buffer/body)
-           ("w" . wi-switch-to-eww))
-
-(defhydra hydra-buffer nil
-  "buffer"
-  ("b" ibuffer "list")
-  ("n" next-buffer "next")
-  ("p" previous-buffer "previous")
-  ("q" nil "quit"))
-
 (defmacro wi-define-switch-to-buffer (name buffer)
   `(defun ,(intern (concat "wi-switch-to-buffer-" (symbol-name name)))
        nil
@@ -146,76 +127,97 @@ Sets the following basend on PREFIX-MAP:
      (switch-to-buffer ,buffer)))
 
 (wi-define-switch-to-buffer guile-repl "* Guile REPL *")
+(wi-define-switch-to-buffer eww "*eww*")
 
-(bind-keys :prefix "C-c b s" :prefix-map wi-buffer-switch-map
-           :which "switch"
-           ("e" . wi-switch-to-scratch-elisp)
-           ("g" . wi-switch-to-buffer-guile-repl)
-           ("h" . hydra-buffer-switch/body))
+(bind-key "<Scroll_Lock>" #'scroll-lock-mode)
+(bind-key "<C-mouse-4>" #'text-scale-increase)
+(bind-key "<C-mouse-5>" #'text-scale-decrease)
+
+(which-key-add-key-based-replacements "C-c &" "yasnippet")
+
+(wi-define-keys "C-c b" buffer
+                ("b" scratch "scratch")
+                ("i" ibuffer "ibuffer")
+                ("l" redraw-display "redraw")
+                ("f" transpose-frame "tr frame")
+                ("w" crux-transpose-windows "tr window")
+                ("r" revert-buffer "revert"))
+
+(wi-define-keys "C-c b s" buffer-switch
+                ("e" wi-switch-to-scratch-elisp "elisp")
+                ("g" wi-switch-to-buffer-guile-repl "guile")
+                ("w" wi-switch-to-buffer-eww "eww"))
 
 (bind-key "<C-down-mouse-1>" 'mc/toggle-cursor-on-click)
 
-(bind-keys :prefix "C-c a" :prefix-map wi-text-map :which "text"
-           ("a" . align-regexp)
-           ("p" . wi-mark-paragraph+sort-lines)
-           ("s" . wi-sort-sexps))
+(wi-define-keys "C-c a" text
+                ("a" align-regexp "align rx")
+                ("p" wi-mark-paragraph+sort-lines "paragraph")
+                ("u" undo "undo"))
 
-(bind-keys :prefix "C-c a e" :prefix-map wi-expand-map :which "expand"
-           ("e" . er/expand-region)
-           ("q" . er/mark-inside-pairs)
-           ("Q" . er/mark-outside-pairs)
-           ("p" . er/mark-inside-pairs)
-           ("P" . er/mark-outside-pairs)
-           ("m" . er/mark-method-call)
-           ("s" . er/mark-symbol)
-           ("w" . er/mark-word))
+(wi-define-keys "C-c a e" expand
+                ("'" er/mark-inside-quotes "in quotes")
+                ("P" er/mark-inside-pairs "in pairs")
+                ("S" er/mark-symbol-with-prefix "prefix symbol")
+                ("\"" er/mark-outside-quotes "out quotes")
+                ("c" er/mark-comment "comment")
+                ("d" er/mark-defun "defun")
+                ("e" er/expand-region "region")
+                ("E" er/mark-email "email")
+                ("m" er/mark-method-call "method")
+                ("n" er/mark-next-accessor "next accessor")
+                ("p" er/mark-outside-pairs "out pairs")
+                ("s" er/mark-symbol "symbol")
+                ("u" er/mark-url "url")
+                ("w" er/mark-word "word"))
 
-(bind-keys :prefix "C-c o" :prefix-map wi-split-map :which "split"
-           ("c" . crux-open-with)
-           ("j" . sp-join-sexp)
-           ("s" . sp-split-sexp))
+(wi-define-keys "C-c a s" text-sexp
+                ("j" sp-join-sexp "join")
+                ("s" sp-split-sexp "split")
+                ("S" wi-sort-sexps "sort")
+                ("u" undo "undo"))
 
-(bind-keys :prefix "C-c w" :prefix-map wi-word-map :which "word"
-           ("t" . show-translation))
+(wi-define-keys "C-c o" open
+                ("c" crux-open-with "xdg-open"))
 
-(bind-keys :prefix "C-c v" :prefix-map wi-version-control-map
-           :which "version-control"
-           ("p" . git-messenger:popup-message))
+(wi-define-keys "C-c w" word
+                ("t" show-translation "translate"))
 
-(bind-keys :prefix "C-c v m" :prefix-map wi-magit-map :which "magit"
-           ("c" . magit-commit)
-           ("l" . magit-list-repositories)
-           ("r" . magit-diff-toggle-refine-hunk)
-           ("s" . magit-status))
+(which-key-add-key-based-replacements "C-c v" "vc")
 
-(bind-keys :prefix "C-c v b" :prefix-map wi-browse-at-remote-map
-           :which "browse-at-remote"
-           ;; TODO: ("g" . wi-browse-at-remote-gnu)
-           ("b" . browse-at-remote))
+(wi-define-keys "C-c v m" magit
+                ("c" magit-commit "commit")
+                ("l" magit-list-repositories "repo list")
+                ("r" magit-diff-toggle-refine-hunk "tg refine")
+                ("s" magit-status "status"))
 
-(wi-define-keys "C-c v h"
-                vc-hunk
+(wi-define-keys "C-c v b" browse-at-remote
+                ;; TODO: ("g" . wi-browse-at-remote-gnu)
+                ("b" browse-at-remote "browse"))
+
+(wi-define-keys "C-c v H" vc-hunk
                 ("c" magit-commit "commit")
                 ("n" git-gutter:next-hunk "next")
+                ("l" git-messenger:popup-message "line")
                 ("p" git-gutter:previous-hunk "previous")
                 ("r" git-gutter:revert-hunk "revert")
                 ("s" git-gutter:stage-hunk "stage"))
 
-(bind-keys :prefix "C-c f" :prefix-map wi-find-map :which "find"
-           ("d" . dumb-jump-go)
-           ("e" . guix-edit)
-           ("f" . ffap)
-           ("l" . recentf-open-files)
-           ("r" . ffap-read-only))
+(wi-define-keys "C-c f" find
+                ("d" dumb-jump-go "dumb jump")
+                ("e" guix-edit "guix package")
+                ("f" ffap "thing at point")
+                ("l" recentf-open-files "recent")
+                ("r" ffap-read-only "RO thing at point"))
 
-(bind-keys :prefix "C-c f b" :prefix-map wi-browse-map :which "browse"
-           ("c" . browse-url-conkeror)
-           ("e" . eww)
-           ("g" . browse-url-chromium)
-           ("i" . browse-url-firefox)
-           ("m" . browse-url-mpv))
+(wi-define-keys "C-c f b" browse
+                ("c" browse-url-conkeror "conkeror")
+                ("e" eww "eww")
+                ("g" browse-url-chromium "chromium")
+                ("i" browse-url-firefox "firefox")
+                ("m" browse-url-mpv "mpv"))
 
-(wi-define-keys "C-c t" toggle-map
+(wi-define-keys "C-c t" toggle
                 ("F" flymake-mode "flymake")
                 ("P" projectile-global-mode "projectile")
                 ("W" fci-mode "fci")
@@ -234,122 +236,98 @@ Sets the following basend on PREFIX-MAP:
                 ("w" whitespace-mode "whitespace")
                 ("y" yas-minor-mode "yasnippet"))
 
-(wi-define-keys "C-c t c" toggle-highlight-map
+(wi-define-keys "C-c t c" toggle-highlight
                 ("q" highlight-stages-mode "stages")
                 ("s" highlight-symbol-mode "symbol")
                 ("S" highlight-sexp-mode "sexp"))
 
-(bind-keys :prefix "C-c e" :prefix-map wi-expand-map :which "expand"
-           ("w"  . er/mark-word)
-           ("s"  . er/mark-symbol)
-           ("S"  . er/mark-symbol-with-prefix)
-           ("n"  . er/mark-next-accessor)
-           ("m"  . er/mark-method-call)
-           ("'"  . er/mark-inside-quotes)
-           ("\"" . er/mark-outside-quotes)
-           ("p"  . er/mark-inside-pairs)
-           ("P"  . er/mark-outside-pairs)
-           ("c"  . er/mark-comment)
-           ("u"  . er/mark-url)
-           ("e"  . er/mark-email)
-           ("d"  . er/mark-defun))
+(wi-define-keys "C-c h" helm
+                ("&" helm-yas-complete "yasnippet")
+                ("a" helm-world-time "time")
+                ("b" helm-buffers-list "buffers")
+                ("e" helm-emms "emms")
+                ("f" helm-for-files "files")
+                ("i" helm-imenu "imenu")
+                ("l" helm-recentf "recent")
+                ("m" helm-make "make")
+                ("r" helm-bookmarks "bookmarks")
+                ("s" helm-pass "pass")
+                ("t" helm-top "top")
+                ("v" wi-helm-wigust-stream "stream")
+                ("w" helm-stumpwm-commands "stumpwm")
+                ("x" helm-M-x "M-x")
+                ("y" helm-show-kill-ring "kill ring"))
 
-(bind-keys :prefix "C-c r" :prefix-map wi-rething-map :which "rething"
-           ("r" . revert-buffer)
-           ("l" . redraw-display)
-           ("f" . transpose-frame)
-           ("w" . transpose-frame))
+(wi-define-keys "C-c h H" helm-help
+                ("m" helm-man-woman "man")
+                ("i" helm-info "info"))
 
-(bind-keys :prefix "C-c r t" :prefix-map wi-transpose-map :which "transpose"
-           ("f" . transpose-frame)
-           ("w" . crux-transpose-windows))
+(wi-define-keys "C-c i" ivy
+                ("b" ivy-switch-buffer "switch buffer")
+                ("f" counsel-find-file "find file")
+                ("l" ivy-recentf "recent")
+                ("r" ivy-resume "resume")
+                ("s" swiper "swiper")
+                ("x" counsel-M-x "M-x"))
 
-(bind-keys :prefix "C-c h" :prefix-map wi-helm-map :which "helm"
-           ("&" . helm-yas-complete)
-           ("a" . helm-world-time)
-           ("b" . helm-buffers-list)
-           ("e" . helm-emms)
-           ("f" . helm-for-files)
-           ("i" . helm-imenu)
-           ("m" . helm-make)
-           ("l" . helm-recentf)
-           ("r" . helm-bookmarks)
-           ("s" . helm-pass)
-           ("t" . helm-top)
-           ("v" . wi-helm-wigust-stream)
-           ("w" . helm-stumpwm-commands)
-           ("x" . helm-M-x)
-           ("y" . helm-show-kill-ring))
+(wi-define-keys "C-c i g" counsel-git
+                ("f" counsel-git "git")
+                ("v" counsel-git-grep "grep"))
 
-(bind-keys :prefix "C-c h h" :prefix-map wi-helm-help-map :which "help"
-           ("m" . helm-man-woman)
-           ("i" . helm-info))
-
-(bind-keys :prefix "C-c i" :prefix-map wi-ivy-map :which "ivy"
-           ("b" . ivy-switch-buffer)
-           ("f" . counsel-find-file)
-           ("l" . ivy-recentf)
-           ("r" . ivy-resume)
-           ("s" . swiper)
-           ("x" . counsel-M-x))
-
-(bind-keys :prefix "C-c i g" :prefix-map wi-counsel-git-map
-           :which "counsel-git"
-           ("f" . counsel-git)
-           ("v" . counsel-git-grep))
-
-(bind-keys :prefix "C-c i h" :prefix-map wi-counsel-help-map
-           :which "counsel-help"
-           ("f" . counsel-describe-function)
-           ("i" . counsel-info-lookup-symbol)
-           ("l" . counsel-find-library)
-           ("u" . counsel-unicode-char)
-           ("v" . counsel-describe-variable))
+(wi-define-keys "C-c i h" counsel-help
+                ("f" counsel-describe-function "function")
+                ("i" counsel-info-lookup-symbol "symbol")
+                ("l" counsel-find-library "library")
+                ("u" counsel-unicode-char "char")
+                ("v" counsel-describe-variable "variable"))
 
 (which-key-add-key-based-replacements "C-c p x" "projectile-shell")
 (which-key-add-key-based-replacements "C-c p s" "projectile-search")
-(bind-keys :prefix "C-c h p" :prefix-map wi-helm-projectile-map
-           :which "helm-projectile"
-           ("p" . helm-projectile)
-           ("f" . helm-projectile-find-file-dwim)
-           ("b" . helm-projectile-switch-to-buffer))
+(wi-define-keys "C-c h p" helm-projectile
+                ("b" helm-projectile-switch-to-buffer)
+                ("f" helm-projectile-find-file-dwim)
+                ("p" helm-projectile))
 
-(bind-keys :prefix "C-c m" :prefix-map wi-mail-map :which "mail"
-           ("b" . wi-send-buffer-as-mail))
+(wi-define-keys "C-c m" mail
+                ("b" wi-send-buffer-as-mail))
 
-(bind-keys :prefix "C-c e" :prefix-map wi-emms-map :which "emms"
-           ("e" . emms)
-           ("n" . emms-next)
-           ("p" . emms-previous)
-           ("r" . emms-random)
-           ("s" . emms-stop))
+(wi-define-keys "C-c m i" irc
+                ("s" erc-track-switch-buffer "switch"))
 
-(bind-keys :prefix "C-c m d" :prefix-map wi-debbugs-map :which "debbugs"
-           ("b" . debbugs-gnu-bugs)
-           ("l" . debbugs-gnu)
-           ("p" . debbugs-gnu-patches)
-           ("s" . debbugs-gnu-search)
-           ("u" . wi-debbugs-gnu-list))
+(wi-define-keys "C-c e" emms
+                ("e" emms "emms")
+                ("d" emms-play-directory "directory")
+                ("n" emms-next "next")
+                ("p" emms-previous "previous")
+                ("r" emms-random "random")
+                ("s" emms-stop "stop"))
 
-(bind-keys :prefix "C-c m r" :prefix-map wi-elfeed-map :which "elfeed"
-           ("r" . elfeed)
-           ("g" . elfeed-update))
+(wi-define-keys "C-c m d" debbugs
+                ("b" debbugs-gnu-bugs "bugs")
+                ("l" debbugs-gnu "gnu")
+                ("m" wi-debbugs-gnu-list "wigust")
+                ("p" debbugs-gnu-patches "patches")
+                ("s" debbugs-gnu-search "search"))
 
-(bind-keys :prefix "C-c m g" :prefix-map wi-gnus-map :which "gnus"
-           ("g" . gnus)
-           ("s" . switch-to-gnus))
+(wi-define-keys "C-c m r" elfeed
+                ("r" elfeed "elfeed")
+                ("g" elfeed-update "update"))
 
-(bind-keys :prefix "C-c s" :prefix-map wi-shell-map :which "shell"
-           ("s" . shell)
-           ("c" . compilation-shell-minor-mode)
-           ("e" . eshell)
-           ("h" . terminal-here-project-launch-multiplexer)
-           ("t" . term))
+(wi-define-keys "C-c m g" gnus
+                ("g" gnus "gnus")
+                ("s" switch-to-gnus "switch"))
 
-(bind-keys :prefix "C-c c" :prefix-map wi-org-map :which "org"
-           ("c" . org-capture)
-           ("a" . org-agenda)
-           ("l" . org-store-link))
+(wi-define-keys "C-c s" shell
+                ("s" shell "shell")
+                ("c" compilation-shell-minor-mode "complition")
+                ("e" eshell "eshell")
+                ("h" terminal-here-project-launch-multiplexer "here")
+                ("t" term "ansi"))
+
+(wi-define-keys "C-c c" org
+                ("a" org-agenda "agenda")
+                ("c" org-capture "capture")
+                ("l" org-store-link "link"))
 
 (which-key-add-key-based-replacements "C-c k" "engine")
 
@@ -730,10 +708,6 @@ Sets the following basend on PREFIX-MAP:
 (defun wi-switch-to-scratch-elisp ()
   (interactive)
   (switch-to-buffer "*scratch*"))
-
-(defun wi-switch-to-eww ()
-  (interactive)
-  (switch-to-buffer "*eww*"))
 
 (defun wi-shell-current-dir ()
   (interactive)
