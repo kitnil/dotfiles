@@ -202,7 +202,7 @@
                 '(:class "mpv")))
 
 (defcommand wi-xclip-mpv () ()
-  "Play video from clipboard."
+  "Play video from clipboard with mpv."
   (run-shell-command
    (join `(,*wi-mpv-program* ,@*wi-mpv-arguments* ,(get-x-selection))
          #\ )))
