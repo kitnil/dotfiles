@@ -97,10 +97,9 @@
 (which-key-add-key-based-replacements "C-c &" "yasnippet")
 
 (bind-keys :prefix "C-c b" :prefix-map wi-buffer-map :which "buffer"
-           ("b" . ibuffer)
-           ("e" . wi-switch-to-scratch-elisp)
+           ("b" . scratch)
+           ("i" . ibuffer)
            ("h" . hydra-buffer/body)
-           ("s" . scratch)
            ("w" . wi-switch-to-eww))
 
 (defhydra hydra-buffer nil
@@ -109,6 +108,20 @@
   ("n" next-buffer "next")
   ("p" previous-buffer "previous")
   ("q" nil "quit"))
+
+(defmacro wi-define-switch-to-buffer (name buffer)
+  `(defun ,(intern (concat "wi-switch-to-buffer-" (symbol-name name)))
+       nil
+     (interactive)
+     (switch-to-buffer ,buffer)))
+
+(wi-define-switch-to-buffer guile-repl "* Guile REPL *")
+
+(bind-keys :prefix "C-c b s" :prefix-map wi-buffer-switch-map
+           :which "switch"
+           ("e" . wi-switch-to-scratch-elisp)
+           ("g" . wi-switch-to-buffer-guile-repl)
+           ("h" . hydra-buffer-switch/body))
 
 (bind-key "<C-down-mouse-1>" 'mc/toggle-cursor-on-click)
 
