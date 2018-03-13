@@ -99,8 +99,16 @@
 (bind-keys :prefix "C-c b" :prefix-map wi-buffer-map :which "buffer"
            ("b" . ibuffer)
            ("e" . wi-switch-to-scratch-elisp)
+           ("h" . hydra-buffer/body)
            ("s" . scratch)
            ("w" . wi-switch-to-eww))
+
+(defhydra hydra-buffer nil
+  "buffer"
+  ("b" ibuffer "list")
+  ("n" next-buffer "next")
+  ("p" previous-buffer "previous")
+  ("q" nil "quit"))
 
 (bind-key "<C-down-mouse-1>" 'mc/toggle-cursor-on-click)
 
