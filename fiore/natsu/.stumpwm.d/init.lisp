@@ -207,6 +207,22 @@
    (join `(,*wi-mpv-program* ,@*wi-mpv-arguments* ,(get-x-selection))
          #\ )))
 
+
+;;;
+;;; Streamlink
+;;;
+
+(defvar *wi-streamlink-program* "streamlink")
+(defvar *wi-streamlink-arguments* '("-p" "mpv"))
+
+(defcommand wi-xclip-streamlink () ()
+  "Play video from clipboard with streamlink."
+  (run-shell-command
+   (join `(,*wi-streamlink-program* ,@*wi-streamlink-arguments*
+                                    ,(get-x-selection)
+                                    "best")
+         #\ )))
+
 (defcommand wi-xclip-emacs () ()
   "Open file from clipboard."
   (run-shell-command (join (list "exec emacsclient -c" (get-x-selection)) #\ )))
