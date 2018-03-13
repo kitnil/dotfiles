@@ -193,24 +193,13 @@ Sets the following basend on PREFIX-MAP:
            ;; TODO: ("g" . wi-browse-at-remote-gnu)
            ("b" . browse-at-remote))
 
-(which-key-add-key-based-replacements "C-c v h" "version-control-hunk")
-(bind-keys :prefix "C-c v h" :prefix-map wi-version-control-hunk-map
-           :which "version-control-hunk"
-           ("c" . magit-commit)
-           ("h" . hydra-git-gutter/body)
-           ("n" . git-gutter:next-hunk)
-           ("p" . git-gutter:previous-hunk)
-           ("r" . git-gutter:revert-hunk)
-           ("s" . git-gutter:stage-hunk))
-
-(defhydra hydra-git-gutter nil
-  "git hunk"
-  ("c" magit-commit "commit")
-  ("n" git-gutter:next-hunk "next")
-  ("p" git-gutter:previous-hunk "previous")
-  ("r" git-gutter:revert-hunk "revert")
-  ("q" nil "quit")
-  ("s" git-gutter:stage-hunk "stage"))
+(wi-define-keys "C-c v h"
+                vc-hunk
+                ("c" magit-commit "commit")
+                ("n" git-gutter:next-hunk "next")
+                ("p" git-gutter:previous-hunk "previous")
+                ("r" git-gutter:revert-hunk "revert")
+                ("s" git-gutter:stage-hunk "stage"))
 
 (bind-keys :prefix "C-c f" :prefix-map wi-find-map :which "find"
            ("d" . dumb-jump-go)
