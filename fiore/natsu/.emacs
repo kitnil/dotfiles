@@ -1806,7 +1806,10 @@ the appropriate network slug that we extract from the nick."
 
           "https://lwn.net/headlines/newrss"
           "https://fedoramagazine.org/feed/"
+
           "http://planet.emacsen.org/atom.xml"
+          "http://planet.gnu.org/atom.xml"
+
           "http://steckerhalter.tk/index.xml"
           "https://www.reddit.com/r/freegames/.rss"
           "https://www.bennee.com/~alex/blog/feed/"
