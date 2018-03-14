@@ -1580,7 +1580,9 @@ the appropriate network slug that we extract from the nick."
    '(scroll-bar ((t (:background "black" :foreground "WhiteSmoke"))))
    ;; '(mode-line ((t (:background "WhiteSmoke" :foreground "black"))))
    ;; '(mode-line-inactive ((t (:background "black" :box nil))))
-   '(mode-line-buffer-id ((t (:background "grey15" :foreground "red"))))))
+   '(mode-line-buffer-id ((t (:background "grey15" :foreground "red"))))
+   '(elfeed-search-title-face ((t (:foreground "dim gray"))))
+   '(elfeed-search-unread-title-face ((t (:foreground "white"))))))
 
 (defun wi-guix-hydra-latest-builds ()
   (interactive)
