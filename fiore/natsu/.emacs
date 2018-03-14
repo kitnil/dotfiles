@@ -119,6 +119,53 @@
     (funcall ffap-info-finder filename))
    ((error "No such file or directory `%s'" filename))))
 
+(defun wi-find-file-at-point (&optional filename)
+  "Find FILENAME, guessing a default from text around point.
+If `ffap-url-regexp' is not nil, the FILENAME may also be an URL.
+With a prefix, this command behaves exactly like `ffap-file-finder'.
+If `ffap-require-prefix' is set, the prefix meaning is reversed.
+See also the variables `ffap-dired-wildcards', `ffap-newfile-prompt',
+and the functions `ffap-file-at-point' and `ffap-url-at-point'."
+  (interactive)
+  (if (and (called-interactively-p 'interactive)
+	   (if ffap-require-prefix (not current-prefix-arg)
+	     current-prefix-arg))
+      ;; Do exactly the ffap-file-finder command, even the prompting:
+      (let (current-prefix-arg)		; we already interpreted it
+	(call-interactively ffap-file-finder))
+    (or filename (setq filename (ffap-prompter)))
+    (let ((url (ffap-url-p filename))
+          (info-page (ffap-info-p filename)))
+      (cond
+       (url
+	(let (current-prefix-arg)
+	  (funcall ffap-url-fetcher url)))
+       (info-page
+        (let (current-prefix-arg)
+          (info info-page)))
+       ((and ffap-pass-wildcards-to-dired
+	     ffap-dired-wildcards
+	     (string-match ffap-dired-wildcards filename))
+	(funcall ffap-directory-finder filename))
+       ((and ffap-dired-wildcards
+	     (string-match ffap-dired-wildcards filename)
+	     find-file-wildcards
+	     ;; Check if it's find-file that supports wildcards arg
+	     (memq ffap-file-finder '(find-file find-alternate-file)))
+	(funcall ffap-file-finder (expand-file-name filename) t))
+       ((or (not ffap-newfile-prompt)
+	    (file-exists-p filename)
+	    (y-or-n-p "File does not exist, create buffer? "))
+	(funcall ffap-file-finder
+		 ;; expand-file-name fixes "~/~/.emacs" bug sent by CHUCKR.
+		 (expand-file-name filename)))
+       ;; User does not want to find a non-existent file:
+       ((signal 'file-error (list "Opening file buffer"
+				  "No such file or directory"
+				  filename)))))))
+
+(advice-add 'find-file-at-point :override #'wi-find-file-at-point)
+
 ;; Enable functions
 (put 'narrow-to-region 'disabled nil)
 (put 'dired-find-alternate-file 'disabled nil)
