@@ -94,11 +94,16 @@
          (+ alnum) (* "/") (* "rss")) t)
   "Regexp matching LWN GNU/Linux news site.")
 
+(defvar wi-url-hydra-regexp
+  (rx-to-string
+   `(and "http" (* "s") "://hydra.gnu.org" (* "/")) t)
+  "Regexp matching GNU Hydra CI.")
+
 (setq browse-url-browser-function
       `(("^ftp://.*" . browse-ftp-tramp)
         (,debbugs-browse-url-regexp . debbugs-browse-url)
         ("^https?://w*\\.?youtube.com/watch\\?v=.*" . browse-url-mpv)
-        ("^https?://hydra\\.gnu\\.org/search\\?query=.*" . browse-url-firefox)
+        (,wi-url-hydra-regexp . browse-url-firefox)
         (,wi-lwn-regexp . eww-browse-url)
         (,wi-debian-paste-regexp . wi-browse-url-paste-debian)
         ("." . browse-url-conkeror)))
