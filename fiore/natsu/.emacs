@@ -277,6 +277,7 @@ Sets the following basend on PREFIX-MAP:
                 ("m" browse-url-mpv "mpv" :color blue))
 
 (wi-define-keys "C-c t" toggle
+                ("A" auto-save-mode "autosave")
                 ("F" flymake-mode "flymake")
                 ("P" projectile-global-mode "projectile")
                 ("W" fci-mode "fci")
