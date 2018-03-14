@@ -2106,6 +2106,7 @@ If no commit hash provides, show a commit from hash at current point."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(debug-on-error nil)
  '(indent-tabs-mode nil)
  '(safe-local-variable-values
    '((TeX-master . "guile.texi")
