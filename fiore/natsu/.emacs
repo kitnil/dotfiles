@@ -1695,6 +1695,7 @@ the appropriate network slug that we extract from the nick."
      org-mode-hook)
     . smartparens-strict-mode)
    ((prog-mode-hook) . yas-minor-mode)
+   ((org-mode-hook) . yas-minor-mode)
    ((prog-mode-hook) . hs-minor-mode )
    ((erc-mode-hook) . (lambda () (setq truncate-lines t)))))
 
