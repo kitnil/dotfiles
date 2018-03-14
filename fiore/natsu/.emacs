@@ -77,6 +77,11 @@
    `(and "http" (* "s") "://paste.debian.net/" (+ alnum) (* "/")) t)
   "Regexp matching Debian paste URL.")
 
+(defvar wi-url-gnu-lists-regexp
+  (rx-to-string
+   `(and "http" (* "s") "://lists.gnu.org" (* alnum)) t)
+  "Regexp matching GNU mailing lists URL.")
+
 (defun wi-debian-paste-raw (str)
   "Return a raw URL from original."
   (funcall (-lambda ((protocol s domain nth s))
@@ -105,6 +110,7 @@
         ("^https?://w*\\.?youtube.com/watch\\?v=.*" . browse-url-mpv)
         (,wi-url-hydra-regexp . browse-url-firefox)
         (,wi-lwn-regexp . eww-browse-url)
+        (,wi-url-gnu-lists-regexp . eww-browse-url)
         (,wi-debian-paste-regexp . wi-browse-url-paste-debian)
         ("." . browse-url-conkeror)))
 
