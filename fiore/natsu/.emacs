@@ -1810,6 +1810,8 @@ the appropriate network slug that we extract from the nick."
           "http://planet.emacsen.org/atom.xml"
           "http://planet.gnu.org/atom.xml"
 
+          "https://oremacs.com/atom.xml" ; abo-abo
+
           "http://steckerhalter.tk/index.xml"
           "https://www.reddit.com/r/freegames/.rss"
           "https://www.bennee.com/~alex/blog/feed/"
