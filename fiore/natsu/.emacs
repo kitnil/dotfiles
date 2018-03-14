@@ -2134,6 +2134,10 @@ If no commit hash provides, show a commit from hash at current point."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(fringe ((t nil)))
+ '(irfc-head-name-face ((t (:inherit font-lock-function-name-face))))
+ '(irfc-head-number-face ((t (:inherit font-lock-function-name-face))))
+ '(irfc-requirement-keyword-face ((t nil)))
+ '(irfc-rfc-link-face ((t (:inherit link))))
  '(magit-diff-added ((t (:foreground "#22aa22"))))
  '(magit-diff-added-highlight ((t (:foreground "#22aa22"))))
  '(magit-diff-context-highlight ((t (:foreground "grey50"))))
