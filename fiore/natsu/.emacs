@@ -88,11 +88,18 @@
 (defun wi-browse-url-paste-debian (url &optional new-window)
   (wi-wget-switch (wi-debian-paste-raw url)))
 
+(defvar wi-lwn-regexp
+  (rx-to-string
+   `(and "http" (* "s") "://lwn.net/Articles/"
+         (+ alnum) (* "/") (* "rss")) t)
+  "Regexp matching LWN GNU/Linux news site.")
+
 (setq browse-url-browser-function
       `(("^ftp://.*" . browse-ftp-tramp)
         (,debbugs-browse-url-regexp . debbugs-browse-url)
         ("^https?://w*\\.?youtube.com/watch\\?v=.*" . browse-url-mpv)
         ("^https?://hydra\\.gnu\\.org/search\\?query=.*" . browse-url-firefox)
+        (,wi-lwn-regexp . eww-browse-url)
         (,wi-debian-paste-regexp . wi-browse-url-paste-debian)
         ("." . browse-url-conkeror)))
 
