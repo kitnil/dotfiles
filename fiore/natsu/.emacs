@@ -124,6 +124,16 @@
     (funcall ffap-info-finder filename))
    ((error "No such file or directory `%s'" filename))))
 
+(defun wi-github-issue-at-point (&optional issue)
+  "Start `browse-url', defaulting to issue at point.  See `ffap'. "
+  (interactive)
+  (or issue (setq issue (thing-at-point 'number t)))
+  (if (numberp issue)
+      (browse-url
+       (concat (car (browse-at-remote--remote-ref default-directory))
+               "/issues/" (number-to-string issue))))
+  ((error "No issue number at point `%s'" issue)))
+
 (defun wi-find-file-at-point (&optional filename)
   "Find FILENAME, guessing a default from text around point.
 If `ffap-url-regexp' is not nil, the FILENAME may also be an URL.
@@ -336,6 +346,11 @@ Sets the following basend on PREFIX-MAP:
                 ("f" ffap "thing at point" :color blue)
                 ("l" recentf-open-files "recent" :color blue)
                 ("r" ffap-read-only "RO thing at point" :color blue))
+
+(wi-define-keys "C-c f v" find-vc
+                ("g" wi-github-issue-at-point "gh is")
+                ("n" next-line "next")
+                ("p" previous-line "previous"))
 
 (wi-define-keys "C-c f b" browse
                 ("c" browse-url-conkeror "conkeror" :color blue)
