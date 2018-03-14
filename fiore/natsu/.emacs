@@ -103,6 +103,22 @@
         (,wi-debian-paste-regexp . wi-browse-url-paste-debian)
         ("." . browse-url-conkeror)))
 
+(defcustom ffap-info-finder 'info
+  "The command called by `wi-info-at-point' to find an Info file."
+  :type 'function
+  :group 'ffap
+  :risky t)
+
+(defun wi-info-at-point (&optional filename)
+  "Start Info, defaulting to file at point.  See `ffap'. "
+  (interactive)
+  (or filename (setq filename (thing-at-point 'filename t)))
+  (cond
+   ((and ffap-info-regexp
+         (string-match ffap-info-regexp filename))
+    (funcall ffap-info-finder filename))
+   ((error "No such file or directory `%s'" filename))))
+
 ;; Enable functions
 (put 'narrow-to-region 'disabled nil)
 (put 'dired-find-alternate-file 'disabled nil)
