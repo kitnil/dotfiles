@@ -481,8 +481,16 @@ Sets the following basend on PREFIX-MAP:
                 ("g" elfeed-update "update"))
 
 (wi-define-keys "C-c m g" gnus
+                ("=" gnus-summary-expand-window "expand")
+                ("RET" gnus-summary-scroll-up "prev page")
+                ("S-SPC" gnus-summary-prev-page "next page")
+                ("SPC" gnus-summary-next-page "scroll")
                 ("d" wi-gnus-browse-debbugs :color :blue)
                 ("g" gnus "gnus" :color blue)
+                ("k" gnus-summary-kill-thread "kill thread")
+                ("n" gnus-summary-next-article "next article")
+                ("p" gnus-summary-prev-article "prev article")
+                ("o" gnus-summary-top-thread "top thread")
                 ("s" switch-to-gnus "switch" :color blue))
 
 (wi-define-keys "C-c s" shell
