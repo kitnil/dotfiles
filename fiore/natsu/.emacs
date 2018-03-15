@@ -347,11 +347,20 @@ Sets the following basend on PREFIX-MAP:
                 ("s" git-gutter:stage-hunk "stage"))
 
 (wi-define-keys "C-c f" find
-                ("d" dumb-jump-go "dumb jump" :color blue)
                 ("e" guix-edit "guix package" :color blue)
                 ("f" ffap "thing at point" :color blue)
                 ("l" recentf-open-files "recent" :color blue)
                 ("r" ffap-read-only "RO thing at point" :color blue))
+
+(wi-define-keys "C-c f d" dumb-jump
+                ("g" dumb-jump-go "go")
+                ("o" dumb-jump-go-other-window "other window")
+                ("e" dumb-jump-go-prefer-external "go external")
+                ("x" dumb-jump-go-prefer-external-other-window
+                 "go external other window")
+                ("i" dumb-jump-go-prompt "prompt")
+                ("l" dumb-jump-quick-look "quick look")
+                ("b" dumb-jump-back "back"))
 
 (wi-define-keys "C-c f v" find-vc
                 ("g" wi-github-issue-at-point "gh is")
