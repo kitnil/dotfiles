@@ -455,6 +455,11 @@ Sets the following basend on PREFIX-MAP:
                 ("r" emms-random "random")
                 ("s" emms-stop "stop"))
 
+(wi-define-keys "C-c e v" volume
+                ("g" pulseaudio-control-set-volume "set")
+                ("n" pulseaudio-control-increase-volume "increase")
+                ("p" pulseaudio-control-decrease-volume "decrease"))
+
 (wi-define-keys "C-c m d" debbugs
                 ("b" debbugs-gnu-bugs "bugs" :color blue)
                 ("l" debbugs-gnu "gnu" :color blue)
@@ -1556,6 +1561,9 @@ the appropriate network slug that we extract from the nick."
 ;;;
 ;;; Misc
 ;;;
+
+(setq pulseaudio-control-pactl-path
+      "/run/current-system/profile/bin/pactl")
 
 (defun wi-copy-buffer (buffer)
   "Copy BUFFER to kill ring and save in the GUI’s clipboard."
