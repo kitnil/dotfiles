@@ -28,6 +28,7 @@ Channel gmail
 Master :gmail-remote:
 Slave :gmail-local:
 Patterns "INBOX" # Sync only INBOX
+Sync Pull
 
 Channel gmail-sent
 Master :gmail-remote:"[Gmail]/Sent Mail"
