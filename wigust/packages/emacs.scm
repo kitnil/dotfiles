@@ -2508,7 +2508,7 @@ Org files.")
       (license license:gpl3+))))
 
 (define-public emacs-guix-checkout
-  (let ((commit "b4d897f7daafb5794809760340548b96b0a89ac3")
+  (let ((commit "c694b1825bfc2609096df625fa9259b57848af96")
         (revision "1"))
     (package
       (inherit emacs-guix)
@@ -2518,13 +2518,13 @@ Org files.")
        (origin
          (method git-fetch)
          (uri (git-reference
-               (url "https://github.com/alezost/guix.el.git")
+               (url "https://github.com/wigust/guix.el.git")
                (commit commit)))
          (file-name (string-append (package-name emacs-guix)
                                    "-" version "-checkout"))
          (sha256
           (base32
-           "1bl6k0vdjl9b10pz76afwnmagjjazp1pxl9rash4m1f6zry4hbj7"))))
+           "1kzvhyjc3n7fkk7ksj5y4j11kkw27whfrl3x9dxs389mgbhhp4hf"))))
       (arguments
        (append (package-arguments emacs-guix)
                '(#:phases
