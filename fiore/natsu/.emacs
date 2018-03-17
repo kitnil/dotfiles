@@ -507,7 +507,7 @@ Sets the following basend on PREFIX-MAP:
 
 (which-key-add-key-based-replacements "C-c k" "engine")
 
-(bind-key "<f5>" #'aye-create)
+(bind-key "<f5>" #'aya-create)
 (bind-key "<f6>" #'aya-expand)
 (bind-key "<f7>" #'mc/mark-next-like-this)
 (bind-key "<f8>" #'er/expand-region)
