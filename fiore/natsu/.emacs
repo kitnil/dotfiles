@@ -2126,6 +2126,20 @@ With NOT-SUPPRESS non-nil argument include archived bugs."
   (kill-new (concat "https://git.savannah.gnu.org/cgit/guix.git/tree/"
                     path)))
 
+(defun wi-info-remote-copy-current-node ()
+  "Copy URL to current Info node."
+  (interactive)
+  (kill-new
+   (concat "https://www.gnu.org/software/"
+           (file-name-sans-extension
+            (file-name-nondirectory Info-current-file))
+           "/manual/html_node/"
+           (let ((split-str (split-string Info-current-node " ")))
+             (if (> (length split-str) 1)
+                 (mapconcat 'identity split-str "-")
+               Info-current-node))
+           ".html")))
+
 (defvar wi-guix-git-directory (expand-file-name "~/src/guix"))
 (defun wi-magit-show-commit-guix (commit)
   "Show a Git `commit' from the Guix checkout.
