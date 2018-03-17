@@ -507,8 +507,8 @@ Sets the following basend on PREFIX-MAP:
 
 (which-key-add-key-based-replacements "C-c k" "engine")
 
-(bind-key "<f5>" #'recompile)
-(bind-key "<f6>" #'god-local-mode)
+(bind-key "<f5>" #'aye-create)
+(bind-key "<f6>" #'aya-expand)
 (bind-key "<f7>" #'mc/mark-next-like-this)
 (bind-key "<f8>" #'er/expand-region)
 (bind-key "<M-f6>" #'god-mode-all)
