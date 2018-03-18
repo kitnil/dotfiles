@@ -1320,6 +1320,8 @@ for COMMIT, defaulting to the commit hash at point."
 ;;   (setq org-todo-keywords
 ;;         '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)"))))
 
+(setq org-startup-folded 'showall) ; Show all in `org-mode' at startup
+
 (setq org-email-link-description-format "Email %c: %s") ; More than 30 character
 
 (setq org-capture-templates
