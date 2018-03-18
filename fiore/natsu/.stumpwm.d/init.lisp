@@ -426,6 +426,7 @@
 
 (define-key *root-map* (kbd "m") "wi-mpv")
 (define-key *root-map* (kbd "C-m") "wi-xclip-mpv")
+(define-key *root-map* (kbd "M-m") "wi-xclip-streamlink")
 
 (define-key *root-map* (kbd "C-e") "wi-xclip-emacs")
 (define-key *root-map* (kbd "C-M-c") "wi-xterm-big-screen")
