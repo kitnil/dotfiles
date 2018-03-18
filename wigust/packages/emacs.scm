@@ -3307,3 +3307,29 @@ Using this package is easy, just call @code{academic-phrases} to get a list of
 phrases organized by topic, or call @code{academic-phrases-by-section} to
 browse the phrases by the paper section and fill-in the blanks if required.")
       (license license:gpl3+))))
+
+(define-public emacs-grep-context
+  (let ((commit "a17c57e66687a54e195e08afe776bdd60cb6c0a7"))
+    (package
+      (name "emacs-grep-context")
+      (version (git-version "0.1" "1" commit))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/mkcms/grep-context.git")
+               (commit commit)))
+         (file-name (string-append name "-" version "-checkout"))
+         (sha256
+          (base32
+           "1nqfa6kjzjshww4hnwg1c0vcr90bdjihy3kmixq3c3jkvxg99b62"))))
+      (build-system emacs-build-system)
+      (propagated-inputs
+       `(("emacs-dash" ,emacs-dash)))
+      (home-page "https://github.com/nashamri/academic-phrases")
+      (synopsis "Increase context in compilation and grep buffers")
+      (description
+       "This package provides an Emacs package for more context in
+compilation/grep buffers.  Works with @code{wgrep}, @code{ack}, @code{ag},
+@code{ivy}.")
+      (license license:gpl3+))))
