@@ -521,6 +521,7 @@ Sets the following basend on PREFIX-MAP:
 (add-to-list 'auto-mode-alist '(".mbsyncrc" . conf-mode))
 (add-to-list 'auto-mode-alist '(".conkerorrc" . js-mode))
 (add-to-list 'auto-mode-alist '("manifest" . scheme-mode))
+(add-to-list 'auto-mode-alist '(".guile" . scheme-mode))
 
 (add-hook 'scheme-mode-hook
           (lambda ()
