@@ -214,13 +214,28 @@
 
 (defvar *wi-streamlink-program* "streamlink")
 (defvar *wi-streamlink-arguments* '("-p" "mpv"))
+(defvar *wi-streamlink-player-arguments* nil)
+(defvar *wi-streamlink-quality* "best")
+
+(defun wi-single-quote-string (str)
+  (let ((string-quote "'"))
+    (concat string-quote str string-quote)))
+
+(defun wi-quote-string (str)
+  (let ((string-quote "\""))
+    (concat string-quote str string-quote)))
 
 (defcommand wi-xclip-streamlink () ()
   "Play video from clipboard with streamlink."
   (run-shell-command
-   (join `(,*wi-streamlink-program* ,@*wi-streamlink-arguments*
-                                    ,(get-x-selection)
-                                    "best")
+   (join `(,*wi-streamlink-program*
+           ,@*wi-streamlink-arguments*
+           ,@(if *wi-streamlink-player-arguments*
+                 `("--player-args" ,(wi-single-quote-string
+                                     (join *wi-streamlink-player-arguments*
+                                           #\ ))))
+           ,(get-x-selection)
+           ,*wi-streamlink-quality*)
          #\ )))
 
 (defcommand wi-xclip-emacs () ()
