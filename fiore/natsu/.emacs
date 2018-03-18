@@ -1582,6 +1582,18 @@ the appropriate network slug that we extract from the nick."
 ;;; Misc
 ;;;
 
+(dolist (elt '((compile . compilation-mode-map)
+               (grep . grep-mode-map)
+               (ivy . ivy-occur-grep-mode-map)
+               (ag . ag-mode-map)
+               (ack . ack-mode-map)))
+  (eval-after-load (car elt)
+    `(progn
+       (define-key ,(cdr elt) (kbd "+")
+         #'grep-context-more-around-point)
+       (define-key ,(cdr elt) (kbd "-")
+         #'grep-context-less-around-point))))
+
 (setq pulseaudio-control-pactl-path
       "/run/current-system/profile/bin/pactl")
 
