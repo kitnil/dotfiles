@@ -662,53 +662,34 @@ Sets the following basend on PREFIX-MAP:
 
 ;; TODO: Do more intelegent
 
+(defmacro wi-defengine-ml-gnu (idxname &optional message-id)
+  `(defengine ,(if message-id
+                   (intern (concat (symbol-name idxname) "-message-id"))
+                 idxname)
+     (concat "https://lists.gnu.org/archive/cgi-bin/namazu.cgi?query="
+             (if ,message-id "" "%s")
+             "&submit=Search%%21"
+             (if ,message-id "%%2Bmessage-id%%3A%s" "")
+             "&idxname=" ,(symbol-name idxname)
+             "&max=20"
+             "&result=normal"
+             "&sort=score")))
+
 (defengine listinfo-gnu
   "https://lists.gnu.org/mailman/listinfo/%s")
 
-(defengine info-gnus-english
-  (concat "https://lists.gnu.org/archive/cgi-bin/namazu.cgi?query=%s"
-          "&submit=Search%%21"
-          "&idxname=info-gnus-english"
-          "&max=20"
-          "&result=normal"
-          "&sort=score"))
-
-(defengine info-gnus-english-message-id
-  (concat "https://lists.gnu.org/archive/cgi-bin/namazu.cgi?query="
-          "%%2Bmessage-id%%3A%s"
-          "&submit=Search%%21"
-          "&idxname=info-gnus-english"
-          "&max=20"
-          "&result=normal"
-          "&sort=score"))
-
-(defengine guix-devel
-  (concat "https://lists.gnu.org/archive/cgi-bin/namazu.cgi?query=%s"
-          "&submit=Search%%21"
-          "&idxname=guix-devel&max=20" "&result=normal" "&sort=score"))
-
-(defengine guix-devel-message-id
-  (concat "https://lists.gnu.org/archive/cgi-bin/namazu.cgi?query="
-          "%%2Bmessage-id%%3A%s"
-          "&submit=Search%%21"
-          "&idxname=guix-devel"
-          "&max=20"
-          "&result=normal"
-          "&sort=score"))
-
-(defengine guix-help
-  (concat "https://lists.gnu.org/archive/cgi-bin/namazu.cgi?query=%s"
-          "&submit=Search%%21"
-          "&idxname=help-guix&max=20" "&result=normal" "&sort=score"))
-
-(defengine guix-help-message-id
-  (concat "https://lists.gnu.org/archive/cgi-bin/namazu.cgi?query="
-          "%%2Bmessage-id%%3A%s"
-          "&submit=Search%%21"
-          "&idxname=help-guix"
-          "&max=20"
-          "&result=normal"
-          "&sort=score"))
+(wi-defengine-ml-gnu info-gnus-english)
+(wi-defengine-ml-gnu emacs-devel t)
+(wi-defengine-ml-gnu emacs-devel)
+(wi-defengine-ml-gnu emacs-orgmode t)
+(wi-defengine-ml-gnu emacs-orgmode)
+(wi-defengine-ml-gnu guix-devel t)
+(wi-defengine-ml-gnu guix-devel)
+(wi-defengine-ml-gnu guix-help t)
+(wi-defengine-ml-gnu guix-help)
+(wi-defengine-ml-gnu help-gnu-emacs t)
+(wi-defengine-ml-gnu help-gnu-emacs)
+(wi-defengine-ml-gnu info-gnus-english-message-id)
 
 (defengine guix-help+devel
   (concat "https://lists.gnu.org/archive/cgi-bin/namazu.cgi"
@@ -744,48 +725,6 @@ Sets the following basend on PREFIX-MAP:
           "&result=normal"
           "&sort=date%%3Alate")
     :keybinding "g")
-
-(defengine emacs-devel
-  (concat "https://lists.gnu.org/archive/cgi-bin/namazu.cgi?query=%s"
-          "&submit=Search%%21"
-          "&idxname=emacs-devel&max=20" "&result=normal" "&sort=score"))
-
-(defengine emacs-devel-message-id
-  (concat "https://lists.gnu.org/archive/cgi-bin/namazu.cgi?query="
-          "%%2Bmessage-id%%3A%s"
-          "&submit=Search%%21"
-          "&idxname=emacs-devel"
-          "&max=20"
-          "&result=normal"
-          "&sort=score"))
-
-(defengine help-gnu-emacs
-  (concat "https://lists.gnu.org/archive/cgi-bin/namazu.cgi?query=%s"
-          "&submit=Search%%21"
-          "&idxname=help-gnu-emacs&max=20" "&result=normal" "&sort=score"))
-
-(defengine help-gnu-emacs-message-id
-  (concat "https://lists.gnu.org/archive/cgi-bin/namazu.cgi?query="
-          "%%2Bmessage-id%%3A%s"
-          "&submit=Search%%21"
-          "&idxname=help-gnu-emacs"
-          "&max=20"
-          "&result=normal"
-          "&sort=score"))
-
-(defengine emacs-orgmode
-  (concat "https://lists.gnu.org/archive/cgi-bin/namazu.cgi?query=%s"
-          "&submit=Search%%21"
-          "&idxname=emacs-orgmode&max=20" "&result=normal" "&sort=score"))
-
-(defengine emacs-orgmode-message-id
-  (concat "https://lists.gnu.org/archive/cgi-bin/namazu.cgi?query="
-          "%%2Bmessage-id%%3A%s"
-          "&submit=Search%%21"
-          "&idxname=emacs-orgmode"
-          "&max=20"
-          "&result=normal"
-          "&sort=score"))
 
 (defengine mankier
   "https://www.mankier.com/?q=%s")
