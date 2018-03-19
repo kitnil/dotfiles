@@ -506,6 +506,9 @@ Sets the following basend on PREFIX-MAP:
                 ("o" gnus-summary-top-thread "top thread")
                 ("s" switch-to-gnus "switch" :color blue))
 
+(wi-define-keys "C-c m g m" gnus-message
+                (";" wi-replace-with-brackets-ellipsis "ellipsis"))
+
 (wi-define-keys "C-c s" shell
                 ("s" shell "shell" :color blue)
                 ("c" compilation-shell-minor-mode "complition" :color blue)
