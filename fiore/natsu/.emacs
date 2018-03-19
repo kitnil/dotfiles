@@ -660,8 +660,6 @@ Sets the following basend on PREFIX-MAP:
 (defengine nixos-hydra-job
   "https://hydra.nixos.org/job/gnu/master/%s.x86_64-linux")
 
-;; TODO: Do more intelegent
-
 (defmacro wi-defengine-ml-gnu (idxname &optional message-id)
   `(defengine ,(if message-id
                    (intern (concat (symbol-name idxname) "-message-id"))
@@ -675,8 +673,7 @@ Sets the following basend on PREFIX-MAP:
              "&result=normal"
              "&sort=score")))
 
-(defengine listinfo-gnu
-  "https://lists.gnu.org/mailman/listinfo/%s")
+(defengine listinfo-gnu "https://lists.gnu.org/mailman/listinfo/%s")
 
 (wi-defengine-ml-gnu info-gnus-english)
 (wi-defengine-ml-gnu emacs-devel t)
