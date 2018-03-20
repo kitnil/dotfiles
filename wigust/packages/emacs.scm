@@ -3405,6 +3405,30 @@ difficult to debug with Emacs’ built-in macroexpand, which continues expansion
 until the top-level form is no longer a macro call.")
       (license license:gpl3+))))
 
+(define-public emacs-magit-org-todos-el
+  (package
+    (name "emacs-magit-org-todos-el")
+    (version "0.1.1")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append "https://github.com/danielma/magit-org-todos.el"
+                           "/archive/" version ".tar.gz"))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32
+         "0pnc9421pd2bz2vgcmlbi3rk7vnhks7m8im8l864j1hvllqsl8n3"))))
+    (build-system emacs-build-system)
+    (home-page "https://github.com/Malabarba/validate.el")
+    (synopsis "Get todo.org into Emacs Magit status")
+    (description "This package allows you to get @file{todo.org} into your
+magit status.
+
+If you have a @file{todo.org} file with @code{TODO} items in the root of your
+repository, @code{magit-org-todos} will create a section in your Magit status
+buffer with each of your todos.")
+    (license license:gpl3+)))
+
 (define-public emacs-pg
   (let ((commit "4f6516ec3946d95dcef49abb6703cc89ecb5183d"))
     (package
