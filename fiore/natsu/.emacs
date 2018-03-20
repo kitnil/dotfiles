@@ -1068,6 +1068,8 @@ for COMMIT, defaulting to the commit hash at point."
 ;;; Magit
 ;;;
 
+(magit-org-todos-autoinsert)
+
 (defvar wi-projects-directory (expand-file-name "~/src"))
 
 (defun wi-update-magit-repository-directories (directory)
