@@ -2092,7 +2092,8 @@ With NOT-SUPPRESS non-nil argument include archived bugs."
     (with-current-buffer buffer
       (insert (shell-command-to-string
                (mapconcat 'identity (list "wget" "-q" "-O-" url)
-                          " "))))
+                          " ")))
+      (special-mode))
     (switch-to-buffer buffer)))
 
 (defun wi-debbugs-get-url (bug-number)
