@@ -519,11 +519,14 @@ Sets the following basend on PREFIX-MAP:
                 (";" wi-replace-with-brackets-ellipsis "ellipsis"))
 
 (wi-define-keys "C-c s" shell
-                ("s" shell "shell" :color blue)
-                ("c" compilation-shell-minor-mode "complition" :color blue)
                 ("e" eshell "eshell" :color blue)
                 ("h" terminal-here-project-launch-multiplexer "here" :color blue)
                 ("t" term "ansi" :color blue))
+
+(wi-define-keys "C-c s s" shell-dumb
+                ("M-r" helm-shell-history "history" :color blue)
+                ("c" compilation-shell-minor-mode "complition" :color blue)
+                ("s" shell "shell" :color blue))
 
 (wi-define-keys "C-c c" org
                 ("a" org-agenda "agenda" :color blue)
