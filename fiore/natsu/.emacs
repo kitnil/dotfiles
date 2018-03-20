@@ -205,7 +205,8 @@ and the functions `ffap-file-at-point' and `ffap-url-at-point'."
   (or (ffap-locate-file name t guix-devel-ffap-patch-directories)
       (expand-file-name name (car guix-devel-ffap-patch-directories))))
 
-(add-to-list 'ffap-alist '("\\.patch" . guix-devel-ffap-patch))
+(with-eval-after-load 'ffap
+    (add-to-list 'ffap-alist '("\\.patch" . guix-devel-ffap-patch)))
 
 (advice-add 'find-file-at-point :override #'wi-find-file-at-point)
 
