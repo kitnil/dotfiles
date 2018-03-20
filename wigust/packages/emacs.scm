@@ -3447,6 +3447,17 @@ buffer with each of your todos.")
           (base32
            "18fkjcz69g4dyaxhf9j8svr5x6dhsdnglddwisis8hdn504scpfj"))))
       (build-system emacs-build-system)
+      (arguments
+       '(#:phases
+         (modify-phases %standard-phases
+           (add-before 'check 'patch-helm-shell-history-file
+             (lambda _
+               (let ((file "helm-shell-history.el"))
+                 (chmod file #o644)
+                 (emacs-substitute-sexps file
+                   ("(defvar helm-shell-history-file"
+                    `(expand-file-name "~/.bash_history"))))
+               #t)))))
       (home-page "https://github.com/yuutayamada/helm-shell-history")
       (synopsis "Find shell history with Emacs Helm")
       (description "This package provides an Emacs Helm interface to search
