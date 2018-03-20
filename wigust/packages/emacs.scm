@@ -3431,6 +3431,28 @@ repository, @code{magit-org-todos} will create a section in your Magit status
 buffer with each of your todos.")
       (license license:gpl3+))))
 
+(define-public emacs-helm-shell-history
+  (let ((commit "110d3c35c52fe4b89b29e79ea4c8626bce7266a1"))
+    (package
+      (name "emacs-helm-shell-history")
+      (version (git-version "0.1" "1" commit))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/yuutayamada/helm-shell-history.git")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "18fkjcz69g4dyaxhf9j8svr5x6dhsdnglddwisis8hdn504scpfj"))))
+      (build-system emacs-build-system)
+      (home-page "https://github.com/yuutayamada/helm-shell-history")
+      (synopsis "Find shell history with Emacs Helm")
+      (description "This package provides an Emacs Helm interface to search
+throw a shell history.")
+      (license license:gpl3+))))
+
 (define-public emacs-pg
   (let ((commit "4f6516ec3946d95dcef49abb6703cc89ecb5183d"))
     (package
