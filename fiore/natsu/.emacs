@@ -358,8 +358,10 @@ Sets the following basend on PREFIX-MAP:
                 ("p" hl-todo-previous "prev"))
 
 (wi-define-keys "C-c a P" text-page
-                ("n" forward-page "next")
-                ("p" backward-page "prev"))
+                ("[" backward-paragraph "prev paragraph")
+                ("]" forward-paragraph "next paragraph")
+                ("n" forward-page "next page")
+                ("p" backward-page "prev page"))
 
 (wi-define-keys "C-c a S" text-symbol
                 ("n" highlight-symbol-next "next")
