@@ -317,3 +317,20 @@ interactive("cancel-intervals", "Cancel all running interval reloads",
             function (I) {
                 ref.cancel();
             });
+
+define_mime_type_table("external_content_handlers",
+    {
+        "*": getenv("EDITOR"),
+        text: { "*": getenv("EDITOR") },
+        image: { "*": "feh" },
+        video: { "*": "mpv" },
+        audio: { "*": "mpv" },
+        application: {
+            pdf: "zathura",
+            postscript: "zathura",
+            "x-dvi": "zathura"
+        }
+    },
+    "Structure associating MIME types and MIME type patterns with "+
+    "the names of programs for handling those them.  The key \"*\" "+
+    "is a pattern-matching symbol which matches anything.");
