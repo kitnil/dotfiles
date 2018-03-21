@@ -3266,6 +3266,32 @@ coloring provided by Drew Adams @code{info+} package.  To enable this
        (patches
         (search-patches "emacs-use-package-add-which-to-bind-key.patch"))))))
 
+(define-public emacs-origami
+  (let ((commit "1f38085c8f9af7842765ed63f7d6dfe4dab59366")
+        (revision "1"))
+    (package
+      (name "emacs-origami")
+      (version (string-append "0.1" revision "."
+                              (string-take commit 7)))
+      (source (origin
+                (method git-fetch)
+                (uri (git-reference
+                      (url "https://github.com/gregsexton/origami.el.git")
+                      (commit commit)))
+                (file-name (string-append name "-" version "-checkout"))
+                (sha256
+                 (base32
+                  "0ha1qsz2p36pqa0sa2sp83lspbgx5lr7930qxnwd585liajzdd9x"))))
+      (build-system emacs-build-system)
+      (propagated-inputs
+       `(("emacs-s" ,emacs-s)
+         ("emacs-dash" ,emacs-dash)))
+      (home-page "https://github.com/gregsexton/origami.el.git")
+      (synopsis "A folding minor mode for Emacs")
+      (description
+       "This package provides a text folding minor mode for Emacs.")
+      (license license:expat))))
+
 (define-public emacs-auto-yasnippet
   (let ((commit "d1ccfea87312c6dd8cf8501ab5b71b1d3d44d95b"))
     (package
