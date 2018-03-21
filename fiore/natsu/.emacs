@@ -315,7 +315,7 @@ Sets the following basend on PREFIX-MAP:
 
 (wi-define-keys "C-c a" text
                 ("a" align-regexp "align rx")
-                ("p" wi-mark-paragraph+sort-lines "paragraph")
+                ("P" wi-mark-paragraph+sort-lines "paragraph")
                 ("u" undo "undo"))
 
 (wi-define-keys "C-c a e" expand
@@ -333,6 +333,10 @@ Sets the following basend on PREFIX-MAP:
                 ("s" er/mark-symbol "symbol")
                 ("u" er/mark-url "url")
                 ("w" er/mark-word "word"))
+
+(wi-define-keys "C-c a S" text-symbol
+                ("n" highlight-symbol-next "next")
+                ("p" highlight-symbol-prev "prev"))
 
 (wi-define-keys "C-c a s" text-sexp
                 ("j" sp-join-sexp "join")
