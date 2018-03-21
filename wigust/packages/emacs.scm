@@ -3828,3 +3828,28 @@ name and password.  To skip it press a @key{Return} key.
 You could get a Epkg package list by invoking @code{epkg-list-packages} in
 Emacs.")
     (license license:gpl3+)))
+
+(define-public emacs-lice-el
+  (let ((commit "4339929927c62bd636f89bb39ea999d18d269250"))
+    (package
+      (name "emacs-lice-el")
+      (version (git-version "0.2" "1" commit))
+      (source (origin
+                (method git-fetch)
+                (uri (git-reference
+                      (url "https://github.com/buzztaiki/lice-el.git")
+                      (commit commit)))
+                (file-name (git-file-name name version))
+                (sha256
+                 (base32
+                  "0879z761b7gajkhq176ps745xpdrivch349crransv8fnsc759yb"))))
+      (build-system emacs-build-system)
+      (home-page "https://github.com/buzztaiki/lice-el")
+      (synopsis "License and header template for Emacs")
+      (description "@code{lice.el} provides following features:
+
+@itemize
+@item License template management.
+@item File header insertion.
+@end itemize\n")
+      (license license:gpl3+))))
