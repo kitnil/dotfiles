@@ -307,7 +307,8 @@ Sets the following basend on PREFIX-MAP:
                 ("w" wi-switch-to-buffer-eww "eww"))
 
 (wi-define-keys "C-c b s i" buffer-switch-irc
-                ("n" wi-switch-to-buffer-nekrovim "nekrovim"))
+                ("n" wi-switch-to-buffer-nekrovim "nekrovim")
+                ("SPC" erc-track-switch-buffer "track"))
 
 (wi-define-keys "C-c b f" buffer-file
                 ("d" wi-find-file-guixsd "guixsd")
