@@ -221,6 +221,7 @@ and the functions `ffap-file-at-point' and `ffap-url-at-point'."
 ;;; Keybindings
 ;;;
 ;;; See <https://www.gnu.org/software/emacs/manual/html_node/elisp/Key-Binding-Conventions.html>.
+;;; Watch about hydra <https://www.youtube.com/watch?v=_qZliI1BKzI>.
 (defmacro wi-define-keys (prefix prefix-map &rest args)
   "Define keys.
 PREFIX - prefix key for these bindings.
