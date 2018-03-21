@@ -1515,6 +1515,12 @@ the appropriate network slug that we extract from the nick."
   (setq emms-playing-time-display-p nil)
   (setq emms-playlist-mode-center-when-go t)
 
+  (define-key emms-playlist-mode-map (kbd "r")
+    (lambda ()
+      (interactive)
+      (emms-random)
+      (emms-playlist-mode-center-current)))
+
   (use-package emms-player-mpv
     :config
     (add-to-list 'emms-player-list 'emms-player-mpv)
