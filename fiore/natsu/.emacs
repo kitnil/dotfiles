@@ -410,7 +410,6 @@ Sets the following basend on PREFIX-MAP:
                 ("b" guix-build-log-minor-mode "guix")
                 ("c" company-mode "company")
                 ("e" prettify-symbols-mode "prettify")
-                ("f" flycheck-mode "flycheck")
                 ("g" guix-prettify-mode "guix")
                 ("i" aggressive-indent-mode "aggressive")
                 ("l" hl-line-mode "line")
@@ -420,6 +419,12 @@ Sets the following basend on PREFIX-MAP:
                 ("v" google-translate-mode "google")
                 ("w" whitespace-mode "whitespace")
                 ("y" yas-minor-mode "yasnippet"))
+
+(wi-define-keys "C-c t f" flycheck
+                ("f" flycheck-mode "toggle")
+                ("l" flycheck-list-errors "list")
+                ("n" flycheck-next-error "next")
+                ("p" flycheck-previous-error "prev"))
 
 (wi-define-keys "C-c t c" toggle-highlight
                 ("S" highlight-sexp-mode "sexp")
