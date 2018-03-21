@@ -105,10 +105,20 @@
    `(and "http" (* "s") "://hydra.gnu.org" (* "/")) t)
   "Regexp matching GNU Hydra CI.")
 
+(defvar wi-twitch-url-regexp
+  (rx "http" (zero-or-more "s") "://" (zero-or-more "www.")
+      "twitch.tv"))
+
+(defvar wi-twitch-video-url-regexp
+  (concat wi-twitch-url-regexp
+          (rx "/videos/" (one-or-more digit) line-end)))
+
 (setq browse-url-browser-function
       `(("^ftp://.*" . browse-ftp-tramp)
         (,debbugs-browse-url-regexp . debbugs-browse-url)
         ("^https?://w*\\.?youtube.com/watch\\?v=.*" . browse-url-mpv)
+        (,wi-twitch-video-url-regexp . browse-url-mpv)
+        (,wi-twitch-url-regexp . browse-url-streamlink)
         (,wi-url-hydra-regexp . browse-url-firefox)
         (,wi-lwn-regexp . eww-browse-url)
         (,wi-url-gnu-lists-regexp . eww-browse-url)
