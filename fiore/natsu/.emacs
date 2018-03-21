@@ -260,6 +260,8 @@ Sets the following basend on PREFIX-MAP:
                                         "/body"))))
      (which-key-add-key-based-replacements ,prefix
        ,(symbol-name prefix-map))
+     (which-key-add-key-based-replacements ,(concat prefix " h")
+       "hydra")
      (defhydra ,(intern (concat "hydra-" (symbol-name prefix-map)))
        (:color pink)
        ,(mapconcat 'identity
