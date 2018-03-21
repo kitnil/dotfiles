@@ -1557,6 +1557,55 @@ the appropriate network slug that we extract from the nick."
 
 
 ;;;
+;;; RFC
+;;;
+
+(setq ffap-rfc-directories (list (expand-file-name "~/src/rfc")))
+
+(setq irfc-directory (expand-file-name "~/src/rfc"))
+
+;; From `irfc-assoc-mode'.
+(add-to-list 'auto-mode-alist '("/rfc[0-9]+\\.txt\\'" . irfc-mode))
+
+(defvar irfc-mode-map
+  (let ((map (make-sparse-keymap)))
+    (define-key map (kbd "h") 'backward-char)
+    (define-key map (kbd "l") 'forward-char)
+    (define-key map (kbd "e") 'scroll-down)
+    (define-key map (kbd "SPC") 'scroll-up)
+    (define-key map (kbd "J") 'irfc-scroll-up-one-line)
+    (define-key map (kbd "K") 'irfc-scroll-down-one-line)
+    (define-key map (kbd ",") 'end-of-buffer)
+    (define-key map (kbd ".") 'beginning-of-buffer)
+    (define-key map (kbd "T") 'irfc-render-toggle)
+    (define-key map (kbd "q") 'irfc-quit)
+    (define-key map (kbd "o") 'irfc-follow)
+    (define-key map (kbd "v") 'irfc-visit)
+    (define-key map (kbd "r") 'irfc-reference-goto)
+    (define-key map (kbd "g") 'irfc-head-goto)
+    (define-key map (kbd "F") 'irfc-head-number-goto)
+    (define-key map (kbd "G") 'irfc-page-goto)
+    (define-key map (kbd "n") 'irfc-page-next)
+    (define-key map (kbd "p") 'irfc-page-prev)
+    (define-key map (kbd ">") 'irfc-page-last)
+    (define-key map (kbd "<") 'irfc-page-first)
+    (define-key map (kbd "b") 'irfc-page-table)
+    (define-key map (kbd "N") 'irfc-head-next)
+    (define-key map (kbd "P") 'irfc-head-prev)
+    (define-key map (kbd "G") 'irfc-table-jump)
+    (define-key map (kbd "<tab>") 'irfc-rfc-link-next)
+    (define-key map (kbd "<backtab>") 'irfc-rfc-link-prev)
+    map)
+  "Keymap used by `irfc-mode'.")
+
+(custom-set-faces
+ '(irfc-head-name-face ((t (:inherit font-lock-function-name-face))))
+ '(irfc-head-number-face ((t (:inherit font-lock-function-name-face))))
+ '(irfc-requirement-keyword-face ((t nil)))
+ '(irfc-rfc-link-face ((t (:inherit link)))))
+
+
+;;;
 ;;; Misc
 ;;;
 
@@ -1608,44 +1657,6 @@ the appropriate network slug that we extract from the nick."
   (interactive)
   (kill-region (region-beginning) (region-end))
   (insert "[…]"))
-
-(setq ffap-rfc-directories (list (expand-file-name "~/src/rfc")))
-
-(setq irfc-directory (expand-file-name "~/src/rfc"))
-
-;; From `irfc-assoc-mode'.
-(add-to-list 'auto-mode-alist '("/rfc[0-9]+\\.txt\\'" . irfc-mode))
-
-(defvar irfc-mode-map
-  (let ((map (make-sparse-keymap)))
-    (define-key map (kbd "h") 'backward-char)
-    (define-key map (kbd "l") 'forward-char)
-    (define-key map (kbd "e") 'scroll-down)
-    (define-key map (kbd "SPC") 'scroll-up)
-    (define-key map (kbd "J") 'irfc-scroll-up-one-line)
-    (define-key map (kbd "K") 'irfc-scroll-down-one-line)
-    (define-key map (kbd ",") 'end-of-buffer)
-    (define-key map (kbd ".") 'beginning-of-buffer)
-    (define-key map (kbd "T") 'irfc-render-toggle)
-    (define-key map (kbd "q") 'irfc-quit)
-    (define-key map (kbd "o") 'irfc-follow)
-    (define-key map (kbd "v") 'irfc-visit)
-    (define-key map (kbd "r") 'irfc-reference-goto)
-    (define-key map (kbd "g") 'irfc-head-goto)
-    (define-key map (kbd "F") 'irfc-head-number-goto)
-    (define-key map (kbd "G") 'irfc-page-goto)
-    (define-key map (kbd "n") 'irfc-page-next)
-    (define-key map (kbd "p") 'irfc-page-prev)
-    (define-key map (kbd ">") 'irfc-page-last)
-    (define-key map (kbd "<") 'irfc-page-first)
-    (define-key map (kbd "b") 'irfc-page-table)
-    (define-key map (kbd "N") 'irfc-head-next)
-    (define-key map (kbd "P") 'irfc-head-prev)
-    (define-key map (kbd "G") 'irfc-table-jump)
-    (define-key map (kbd "<tab>") 'irfc-rfc-link-next)
-    (define-key map (kbd "<backtab>") 'irfc-rfc-link-prev)
-    map)
-  "Keymap used by `irfc-mode'.")
 
 (defun wi-ttn-hs-hide-level-1 ()
   (hs-hide-level 1)
@@ -2251,10 +2262,6 @@ https://github.com/USER/REPO/commit/SHA1-HASH => SHA1-HASH"
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(fringe ((t nil)))
- '(irfc-head-name-face ((t (:inherit font-lock-function-name-face))))
- '(irfc-head-number-face ((t (:inherit font-lock-function-name-face))))
- '(irfc-requirement-keyword-face ((t nil)))
- '(irfc-rfc-link-face ((t (:inherit link))))
  '(magit-diff-added ((t (:foreground "#22aa22"))))
  '(magit-diff-added-highlight ((t (:foreground "#22aa22"))))
  '(magit-diff-context-highlight ((t (:foreground "grey50"))))
