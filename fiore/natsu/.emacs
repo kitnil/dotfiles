@@ -1402,7 +1402,9 @@ for COMMIT, defaulting to the commit hash at point."
         ("t" "Tasks" entry (file+headline ".notes" "Tasks")
          "* TODO %? \n%T" :prepend t)
 
-        ("b" "blog" plain (file "blog.org") "%?")
+        ("b" "buffer" entry (file "TODO.org") "* TODO [[%F]]%?")
+
+        ("B" "blog" plain (file "blog.org") "%?")
         ("e" "emacs" plain (file "emacs.org") "%?")
         ("g" "guix" plain (file "guix.org") "%?")
         ("i" "TODO" entry (file "TODO.org") "* %?")
