@@ -527,7 +527,8 @@ Sets the following basend on PREFIX-MAP:
 
 (wi-define-keys "C-c s s" shell-dumb
                 ("M-r" helm-shell-history "history" :color blue)
-                ("c" compilation-shell-minor-mode "complition" :color blue)
+                ("C" compilation-shell-minor-mode "complition" :color blue)
+                ("c" wi-shell-cd-current-dir "cd" :color blue)
                 ("s" shell "shell" :color blue))
 
 (wi-define-keys "C-c c" org
@@ -1549,6 +1550,14 @@ the appropriate network slug that we extract from the nick."
 ;;;
 ;;; Misc
 ;;;
+
+(defun wi-shell-cd-current-dir ()
+  "Invoke shell and cd to `default-directory'."
+  (interactive)
+  (let ((dir default-directory))
+    (shell)
+    (insert "cd " dir)
+    (comint-send-input)))
 
 (dolist (elt '((compile . compilation-mode-map)
                (grep . grep-mode-map)
