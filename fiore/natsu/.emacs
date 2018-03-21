@@ -1555,6 +1555,9 @@ the appropriate network slug that we extract from the nick."
 (setq enable-recursive-minibuffers t) ; Enable recursive minibuffer.
 (minibuffer-depth-indicate-mode)      ; Show recursion depth.
 
+;; Origin <https://github.com/Wilfred/.emacs.d/blob/gh-pages/init.org>.
+(setq scroll-preserve-screen-position 'always) ; Preserve scroll pos.
+
 (defun wi-shell-cd-current-dir ()
   "Invoke shell and cd to `default-directory'."
   (interactive)
