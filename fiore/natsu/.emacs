@@ -1408,6 +1408,7 @@ for COMMIT, defaulting to the commit hash at point."
         ("p" "phrase" item (file "phrase.org") "%?")
         ("r" "read" plain (file "read.org") "%?")
         ("v" "video" plain (file "video.org") "%?")
+        ("V" "watch" plain (file "watch.org") "%?")
         ("w" "work" plain (file "work.org") "%?")))
 
 (setq org-publish-project-alist
