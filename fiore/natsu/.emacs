@@ -520,6 +520,7 @@ Sets the following basend on PREFIX-MAP:
                 ("SPC" gnus-summary-next-page "scroll")
                 ("d" wi-gnus-browse-debbugs :color :blue)
                 ("g" gnus "gnus" :color blue)
+                ("G" mbsync "mbsync" :color blue)
                 ("k" gnus-summary-kill-thread "kill thread")
                 ("n" gnus-summary-next-article "next article")
                 ("p" gnus-summary-prev-article "prev article")
