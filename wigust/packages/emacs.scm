@@ -224,11 +224,10 @@ editor with athena toolkit" )
     (build-system emacs-build-system)
     (propagated-inputs
      `(("emacs-makey" ,emacs-makey)))
-    (home-page
-     "https://github.com/steckerhalter/discover-my-major")
+    (home-page "https://github.com/steckerhalter/discover-my-major")
     (synopsis "Discover key bindings for the current Emacs major mode")
-    (description
-     "Discover key bindings and their meaning for the current Emacs major mode ")
+    (description "This package provides allows to discover key bindings and
+their meaning for the current Emacs major-mode.")
     (license license:gpl3+)))
 
 (define-public emacs-dumb-jump
