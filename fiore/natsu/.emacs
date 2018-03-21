@@ -1532,6 +1532,18 @@ the appropriate network slug that we extract from the nick."
   (setq emms-playing-time-display-p nil)
   (setq emms-playlist-mode-center-when-go t)
 
+  (define-key emms-playlist-mode-map (kbd "n")
+    (lambda ()
+      (interactive)
+      (emms-next)
+      (emms-playlist-mode-center-current)))
+
+  (define-key emms-playlist-mode-map (kbd "p")
+    (lambda ()
+      (interactive)
+      (emms-previous)
+      (emms-playlist-mode-center-current)))
+
   (define-key emms-playlist-mode-map (kbd "r")
     (lambda ()
       (interactive)
