@@ -977,18 +977,12 @@ for COMMIT, defaulting to the commit hash at point."
 ;;; Elisp
 ;;;
 
-(defconst wi-elisp--prettify-symbols-alist
+(defvar wi-elisp--prettify-symbols-alist
   '(("lambda" . ?λ)
-    ("lambda*" . (?λ (Br . Bl) ?*))
-    ("not" . ?¬)
-    ("and" . ?∧)
-    ("or" . ?∨)
-    ("eq?" . ≡)
-    ("<=" . ?≤)
-    (">=" . ?≥)
-    ("->" . ?→)))
+    ("lambda*" . (?λ (Br . Bl) ?*)))
+  "Alist of symbol prettifications for `emacs-lisp-mode'.")
 
-(add-hook 'elisp-mode-hook
+(add-hook 'emacs-lisp-mode-hook
           (lambda ()
             (set (make-local-variable 'prettify-symbols-alist)
                  wi-elisp--prettify-symbols-alist)))
