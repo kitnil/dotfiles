@@ -156,18 +156,17 @@ editor with athena toolkit" )
              (delete 'reset-gzip-timestamps))))))))
 
 (define-public emacs-company-lua
-  (let ((commit "0be8122f3adf57ad27953bf4b03545d6298d3da4")
-        (revision "1"))
+  (let ((commit "0be8122f3adf57ad27953bf4b03545d6298d3da4"))
     (package
       (name "emacs-company-lua")
-      (version "0.1")
+      (version (git-version "0.1" "1" commit))
       (source
        (origin
          (method git-fetch)
          (uri (git-reference
                (url "https://github.com/ptrv/company-lua.git")
                (commit commit)))
-         (file-name (string-append name "-" version "-checkout"))
+         (file-name (git-file-name name version))
          (sha256
           (base32
            "1d9i165apgmwns7b2fd5wcpjpkah3dyj20v5sb8ynvz6qhhr5r9c"))))
@@ -179,7 +178,8 @@ editor with athena toolkit" )
          ("emacs-lua-mode" ,emacs-lua-mode)))
       (home-page "https://github.com/ptrv/company-lua")
       (synopsis "Company backend for Lua")
-      (description "Company backend for Lua")
+      (description
+       "This package provides Company backend for Lua programming language.")
       (license license:gpl3+))))
 
 (define-public emacs-company-tern
