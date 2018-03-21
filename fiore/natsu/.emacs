@@ -1701,6 +1701,36 @@ the appropriate network slug that we extract from the nick."
 ;;; Misc
 ;;;
 
+(defvar wi-youtube-url-regexp
+  (rx "http" (zero-or-one "s") "://"
+      (zero-or-one "www.") "youtube.com")
+  "Regexp matching YouTube URL.")
+
+(defvar wi-youtube-video-id-url-regexp
+  (concat wi-youtube-url-regexp
+          (rx "/watch?v=" (group (one-or-more alphanumeric))))
+  "Regexp matching Youtube video ID URL.")
+
+(defun wi-youtube-get-id (url)
+  (string-match wi-youtube-video-id-url-regexp url)
+  (match-string 1 url))
+
+(defun wi-youtube-live-chat-url (id)
+  "Return a YouTube live chat URL."
+  (format "https://www.youtube.com/live_chat?v=%s&is_popout=1" id))
+
+(defun wi-youtube-open-live-chat (url)
+  "Open YouTube live chat from URL."
+  (interactive
+   (let ((clipboard (x-get-clipboard)))
+     (list
+      (if (string-match-p wi-youtube-video-id-url-regexp clipboard)
+          clipboard
+        (read-string "YouTube URL: ")))))
+  (let ((id (wi-youtube-get-id url)))
+    (start-process (concat "youtube-chat-" id) nil "chromium"
+                   (concat "--app=" (wi-youtube-live-chat-url id)))))
+
 ;; Origin <https://github.com/Wilfred/.emacs.d/blob/gh-pages/init.org>.
 (setq enable-recursive-minibuffers t) ; Enable recursive minibuffer.
 (minibuffer-depth-indicate-mode)      ; Show recursion depth.
