@@ -37,6 +37,7 @@
   #:use-module (gnu packages shells)
   #:use-module (gnu packages chez)
   #:use-module (gnu packages code)
+  #:use-module (gnu packages gawk)
   #:use-module (gnu packages guile)
   #:use-module (gnu packages gtk)
   #:use-module (gnu packages gnome)
@@ -3463,6 +3464,47 @@ buffer with each of your todos.")
       (description "This package provides an Emacs Helm interface to search
 throw a shell history.")
       (license license:gpl3+))))
+
+(define-public emacs-awk-it
+  (package
+    (name "emacs-awk-it")
+    (version "0.77")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append "https://emacswiki.org/emacs/download/awk-it.el"))
+       (file-name (string-append "emacs-awk-it-" version ".el"))
+       (sha256
+        (base32
+         "1r1vbi1r3rdbkyb2naciqwja7hxigjhqfxsfcinnygabsi7fw9aw"))))
+    (build-system emacs-build-system)
+    (arguments
+     `(#:phases
+       (modify-phases %standard-phases
+         (add-before 'check 'patch-awk-it-file-first-line
+           (lambda* (#:key inputs #:allow-other-keys)
+             (let ((file "emacs-awk-it.el"))
+               (chmod file #o644)
+               (emacs-substitute-sexps file
+                 ("(defcustom awk-it-file-first-line"
+                  (string-append "#!" (assoc-ref inputs "gawk") "/bin/awk"))))
+             #t)))))
+    (propagated-inputs
+     `(("emacs-yasnippet" ,emacs-yasnippet)))
+    (inputs
+     `(("gawk" ,gawk)))
+    (home-page "https://www.emacswiki.org/emacs/awk-it.el")
+    (synopsis "Run AWK interactively on region")
+    (description "AWK it! allows you to see AWK output as you are typing the
+script; it sends selected region to awk and uses yasnippet as interactive UI.
+
+There are 3 modes of AWK code: simplified syntax(default, see below),
+single line AWK syntax (regular AWK syntax but only inside the default
+match) and raw AWK syntax(full AWK code).  AWK it! can transfrom code
+from one mode to another(not perfect, but it will make an effort) and
+there is also support for multiple lines.  Data is expanded with
+selected yasnippet expand keybinding.")
+    (license license:gpl2+)))
 
 (define-public emacs-pg
   (let ((commit "4f6516ec3946d95dcef49abb6703cc89ecb5183d"))
