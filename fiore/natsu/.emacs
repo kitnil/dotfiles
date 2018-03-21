@@ -336,6 +336,11 @@ Sets the following basend on PREFIX-MAP:
                 ("u" er/mark-url "url")
                 ("w" er/mark-word "word"))
 
+(wi-define-keys "C-c a T" text-todo
+                ("n" hl-todo-next "next")
+                ("o" hl-todo-occur "occur")
+                ("p" hl-todo-previous "prev"))
+
 (wi-define-keys "C-c a P" text-page
                 ("n" forward-page "next")
                 ("p" backward-page "prev"))
@@ -1869,11 +1874,7 @@ the appropriate network slug that we extract from the nick."
 ;; TODO: Add to guix emacs package
 (setq ispell-aspell-dict-dir "/run/current-system/profile/lib/aspell")
 
-(add-hook 'prog-mode-hook
-          (lambda ()
-            (font-lock-add-keywords nil
-                                    '(("\\<\\(TODO\\|FIXME\\):" 1
-                                       font-lock-warning-face t)))))
+(add-hook 'prog-mode-hook 'hl-todo-mode)
 
 (add-hook 'shell-mode-hook
           (lambda ()
