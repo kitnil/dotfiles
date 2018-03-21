@@ -2142,6 +2142,35 @@ If no commit hash provides, show a commit from hash at current point."
   (interactive "DDirectory: ")
   (setq guix-directory directory))
 
+(defvar wi-github-url-regexp
+  (rx "http" (zero-or-one "s") "://github.com"))
+
+(defvar wi-github-user-url-regexp
+  (concat wi-github-url-regexp
+          (rx "/" letter (one-or-more alphanumeric))))
+
+(defvar wi-github-user-repo-url-regexp
+  (concat wi-github-user-url-regexp
+          (rx "/" (one-or-more (or alphanumeric "-" ".")))))
+
+(defvar wi-github-user-repo-commit-url-regexp
+  (concat wi-github-user-repo-url-regexp
+          (rx "/commit" "/" (one-or-more alphanumeric))))
+
+(defun wi-clipboard-github-url-to-commit (url)
+  "Return in kill ring a commit hash from GitHub user's repository
+commit URL.
+
+https://github.com/USER/REPO/commit/SHA1-HASH => SHA1-HASH"
+  (interactive
+   (let ((clipboard (x-get-clipboard)))
+     (list
+      (if (string-match-p wi-github-user-repo-commit-url-regexp
+                          clipboard)
+          clipboard
+        (read-string "Github user's repository commit URL: ")))))
+  (kill-new (car (last (split-string url "/")))))
+
 ;; TODO:
 ;; Origin <https://lists.gnu.org/archive/html/emacs-devel/2017-12/msg00518.html>.
 ;; See also <https://github.com/legoscia/messages-are-flowing>.
