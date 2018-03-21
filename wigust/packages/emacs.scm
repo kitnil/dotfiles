@@ -2009,6 +2009,29 @@ mode for Lisp programming languages.  It will infer some changes to
 keep Parens and Indentation inline with one another.")
     (license license:gpl3+)))
 
+(define-public emacs-rainbow-blocks
+  (let ((commit "dd435d7bb34ff6f162a5f315df308b90b7e9f842"))
+    (package
+      (name "emacs-rainbow-blocks")
+      (version (git-version "1.0.0" "1" commit))
+      (source (origin
+                (method git-fetch)
+                (uri (git-reference
+                      (url "https://github.com/istib/rainbow-blocks.git")
+                      (commit commit)))
+                (file-name (git-file-name name version))
+                (sha256
+                 (base32
+                  "06yfb3i7wzvqrhkb61zib9xvpb5i00s4frizkzff66im05k0n795"))))
+      (build-system emacs-build-system)
+      (home-page "https://github.com/istib/rainbow-blocks")
+      (synopsis "Highlight sexp blocks")
+      (description "Rainbow-blocks is an Emacs mode that highlights blocks
+made of parentheses, brackets, and braces according to their depth.  Each
+successive level is highlighted in a different color.  This makes it easy to
+orient yourself in the code, and tell which statements are at a given level.")
+      (license license:gpl3+))))
+
 (define-public emacs-shift-number
   (package
     (name "emacs-shift-number")
