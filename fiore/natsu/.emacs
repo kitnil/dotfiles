@@ -170,7 +170,8 @@ and the functions `ffap-file-at-point' and `ffap-url-at-point'."
 	(call-interactively ffap-file-finder))
     (or filename (setq filename (ffap-prompter)))
     (let ((url (ffap-url-p filename))
-          (info-page (ffap-info-p filename)))
+          (info-page (ffap-info-p filename))
+          (guix-store-dir (guix-ffap-store-path-p filename)))
       (cond
        (url
 	(let (current-prefix-arg)
@@ -178,6 +179,9 @@ and the functions `ffap-file-at-point' and `ffap-url-at-point'."
        (info-page
         (let (current-prefix-arg)
           (info info-page)))
+       (guix-store-dir
+        (let (current-prefix-arg)
+          (guix-run-in-shell (concat "find " filename))))
        ((and ffap-pass-wildcards-to-dired
 	     ffap-dired-wildcards
 	     (string-match ffap-dired-wildcards filename))
