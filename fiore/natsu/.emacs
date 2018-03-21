@@ -1069,6 +1069,8 @@ for COMMIT, defaulting to the commit hash at point."
 (setq guix-read-package-name-function
       #'guix-read-package-name-at-point)
 
+(add-hook 'guix-env-var-mode-hook 'guix-prettify-mode)
+
 ;; TODO: (add-hook 'guix-env-var-mode-hook 'guix-prettify-mode)
 
 
