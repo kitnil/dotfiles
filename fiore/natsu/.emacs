@@ -91,6 +91,7 @@
            (split-string str "/")))
 
 (defun wi-browse-url-paste-debian (url &optional new-window)
+  "Download a snippet from paste.debian.net and open it in a buffer."
   (wi-wget-switch (wi-debian-paste-raw url)))
 
 (defvar wi-lwn-regexp
