@@ -444,7 +444,6 @@ Sets the following basend on PREFIX-MAP:
                 ("&" helm-yas-complete "yasnippet" :color blue)
                 ("a" helm-world-time "time" :color blue)
                 ("b" helm-buffers-list "buffers" :color blue)
-                ("e" helm-emms "emms" :color blue)
                 ("f" helm-for-files "files" :color blue)
                 ("i" helm-imenu "imenu" :color blue)
                 ("l" helm-recentf "recent" :color blue)
@@ -494,18 +493,17 @@ Sets the following basend on PREFIX-MAP:
                 ("s" erc-track-switch-buffer "switch"))
 
 (wi-define-keys "C-c e" emms
+                ("*" pulseaudio-control-set-volume "set vol")
+                ("+" pulseaudio-control-increase-volume "inc vol")
+                ("-" pulseaudio-control-decrease-volume "dec vol")
+                ("C-s" helm-emms "emms" :color blue)
                 ("c" emms-pause "pause")
-                ("e" emms "emms" :color blue)
                 ("d" emms-play-directory "directory")
+                ("e" emms "emms" :color blue)
                 ("n" emms-next "next")
                 ("p" emms-previous "previous")
                 ("r" emms-random "random")
                 ("s" emms-stop "stop"))
-
-(wi-define-keys "C-c e v" volume
-                ("g" pulseaudio-control-set-volume "set")
-                ("n" pulseaudio-control-increase-volume "increase")
-                ("p" pulseaudio-control-decrease-volume "decrease"))
 
 (wi-define-keys "C-c m d" debbugs
                 ("b" debbugs-gnu-bugs "bugs" :color blue)
