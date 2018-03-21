@@ -335,6 +335,10 @@ Sets the following basend on PREFIX-MAP:
                 ("u" er/mark-url "url")
                 ("w" er/mark-word "word"))
 
+(wi-define-keys "C-c a P" text-page
+                ("n" forward-page "next")
+                ("p" backward-page "prev"))
+
 (wi-define-keys "C-c a S" text-symbol
                 ("n" highlight-symbol-next "next")
                 ("p" highlight-symbol-prev "prev"))
