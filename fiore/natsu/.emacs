@@ -1080,6 +1080,13 @@ for COMMIT, defaulting to the commit hash at point."
 ;;; Magit
 ;;;
 
+(custom-set-faces
+ '(magit-diff-added ((t (:foreground "#22aa22"))))
+ '(magit-diff-added-highlight ((t (:foreground "#22aa22"))))
+ '(magit-diff-context-highlight ((t (:foreground "grey50"))))
+ '(magit-diff-removed ((t (:foreground "#aa2222"))))
+ '(magit-diff-removed-highlight ((t (:foreground "#aa2222")))))
+
 (magit-org-todos-autoinsert)
 
 (defvar wi-projects-directory (expand-file-name "~/src"))
@@ -2261,10 +2268,5 @@ https://github.com/USER/REPO/commit/SHA1-HASH => SHA1-HASH"
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(fringe ((t nil)))
- '(magit-diff-added ((t (:foreground "#22aa22"))))
- '(magit-diff-added-highlight ((t (:foreground "#22aa22"))))
- '(magit-diff-context-highlight ((t (:foreground "grey50"))))
- '(magit-diff-removed ((t (:foreground "#aa2222"))))
- '(magit-diff-removed-highlight ((t (:foreground "#aa2222"))))
+ '(fringe ((t nil))) 
  '(markdown-code-face ((t (:inherit fixed-pitch)))))
