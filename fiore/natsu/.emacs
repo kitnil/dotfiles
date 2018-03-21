@@ -1704,7 +1704,19 @@ the appropriate network slug that we extract from the nick."
    ;; '(mode-line-inactive ((t (:background "black" :box nil))))
    '(mode-line-buffer-id ((t (:background "grey15" :foreground "red"))))
    '(elfeed-search-title-face ((t (:foreground "dim gray"))))
-   '(elfeed-search-unread-title-face ((t (:foreground "white"))))))
+   '(elfeed-search-unread-title-face ((t (:foreground "white")))))
+
+  ;; Origin <https://github.com/Wilfred/.emacs.d/blob/gh-pages/init.org>.
+  (set-face-foreground 'rainbow-delimiters-depth-1-face "white")
+  (set-face-foreground 'rainbow-delimiters-depth-2-face "cyan")
+  (set-face-foreground 'rainbow-delimiters-depth-3-face "yellow")
+  (set-face-foreground 'rainbow-delimiters-depth-4-face "green")
+  (set-face-foreground 'rainbow-delimiters-depth-5-face "orange")
+  (set-face-foreground 'rainbow-delimiters-depth-6-face "purple")
+  (set-face-foreground 'rainbow-delimiters-depth-7-face "white")
+  (set-face-foreground 'rainbow-delimiters-depth-8-face "cyan")
+  (set-face-foreground 'rainbow-delimiters-depth-9-face "yellow")
+  (set-face-foreground 'rainbow-delimiters-unmatched-face "red"))
 
 (defun wi-guix-hydra-latest-builds ()
   (interactive)
