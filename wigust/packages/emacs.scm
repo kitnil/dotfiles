@@ -3488,6 +3488,26 @@ buffer with each of your todos.")
 throw a shell history.")
       (license license:gpl3+))))
 
+(define-public emacs-srfi
+  (package
+    (name "emacs-srfi")
+    (version "1.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append "https://emacswiki.org/emacs/download/srfi.el"))
+       (file-name (string-append "emacs-srfi-" version ".el"))
+       (sha256
+        (base32
+         "05xh6jdgds79xchm01s2r04sv61gglf4v33f1968yw1zfi9g5jhi"))))
+    (build-system emacs-build-system)
+    (home-page "https://www.emacswiki.org/emacs/srfi.el")
+    (synopsis "View Scheme requests for implementation")
+    (description "This file provides a functionality to view SRFIs,
+Scheme Requests for Implementation, using a simple @code{srfi} command.
+To update the local SRFI cache, use @code{srfi-update-cache}.")
+    (license license:gpl2+)))
+
 (define-public emacs-awk-it
   (package
     (name "emacs-awk-it")
