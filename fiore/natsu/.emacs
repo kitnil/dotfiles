@@ -317,6 +317,7 @@ Sets the following basend on PREFIX-MAP:
 (bind-key "<C-down-mouse-1>" 'mc/toggle-cursor-on-click)
 
 (wi-define-keys "C-c a" text
+                ("/" wi-dabbrev-expand "expand")
                 ("a" align-regexp "align rx")
                 ("P" wi-mark-paragraph+sort-lines "paragraph")
                 ("u" undo "undo"))
@@ -836,6 +837,13 @@ Sets the following basend on PREFIX-MAP:
 ;;;
 ;;; Usability functions
 ;;;
+
+;; Origin <https://emacs.stackexchange.com/a/2473>.
+(defun wi-dabbrev-expand ()
+  "Insert space and call `dabbrev-expand'."
+  (interactive)
+  (execute-kbd-macro (kbd "SPC"))
+  (call-interactively #'dabbrev-expand))
 
 (defun wi-buffer-major-mode (buffer)
   "Return major-mode of BUFFER."
