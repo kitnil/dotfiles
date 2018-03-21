@@ -531,8 +531,8 @@ Sets the following basend on PREFIX-MAP:
 
 (wi-define-keys "C-c s" shell
                 ("e" eshell "eshell" :color blue)
-                ("h" terminal-here-project-launch-multiplexer "here" :color blue)
-                ("t" term "ansi" :color blue))
+                ("t" term "ansi" :color blue)
+                ("x" terminal-here-project-launch-multiplexer "xterm" :color blue))
 
 (wi-define-keys "C-c s s" shell-dumb
                 ("M-r" helm-shell-history "history" :color blue)
