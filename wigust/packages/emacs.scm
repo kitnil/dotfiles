@@ -29,9 +29,11 @@
   #:use-module (guix build-system emacs)
   #:use-module (guix build-system glib-or-gtk)
   #:use-module (guix build-system trivial)
+  #:use-module (guix build emacs-utils)
   #:use-module (gnu packages)
   #:use-module (gnu packages audio)
   #:use-module (gnu packages bash)
+  #:use-module (gnu packages databases)
   #:use-module (gnu packages shells)
   #:use-module (gnu packages chez)
   #:use-module (gnu packages code)
@@ -3402,3 +3404,234 @@ useful for debugging macros that expand into another macro form.  These can be
 difficult to debug with Emacs’ built-in macroexpand, which continues expansion
 until the top-level form is no longer a macro call.")
       (license license:gpl3+))))
+
+(define-public emacs-pg
+  (let ((commit "4f6516ec3946d95dcef49abb6703cc89ecb5183d"))
+    (package
+      (name "emacs-pg")
+      (version (git-version "0.1" "1" commit))
+      (source (origin
+                (method git-fetch)
+                (uri (git-reference
+                      (url "https://github.com/cbbrowne/pg.el.git")
+                      (commit commit)))
+                (file-name (git-file-name name version))
+                (sha256
+                 (base32
+                  "1zh7v4nnpzvbi8yj1ynlqlawk5bmlxi6s80b5f2y7hkdqb5q26k0"))))
+      (build-system emacs-build-system)
+      (home-page "https://github.com/cbbrowne/pg.el.git")
+      (synopsis "Emacs Lisp interface for PostgreSQL")
+      (description
+       "This package provides an Emacs Lisp interface for PostgreSQL.
+
+This module lets you access the PostgreSQL object-relational DBMS from Emacs,
+using its socket-level frontend/backend protocol.  The module is capable of
+automatic type coercions from a range of SQL types to the equivalent Emacs
+Lisp type.  This is a low level API, and won't be useful to end users.  Should
+work with GNU Emacs 19.34 and up, and XEmacs 20 and up.  Performance is very
+poor when not byte-compiled.")
+      (license license:gpl3+))))
+
+(define-public emacs-cl-generic
+  (package
+    (name "emacs-cl-generic")
+    (version "0.3")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append "https://elpa.gnu.org/packages/cl-generic-"
+                           version ".el"))
+       (sha256
+        (base32
+         "0vb338bhjpsnrf60qgxny4z5rjrnifahnrv9axd4shay89d894zq"))))
+    (build-system emacs-build-system)
+    (home-page "https://elpa.gnu.org/packages/seq.html")
+    (synopsis "Forward cl-generic compatibility for Emacs before version 25")
+    (description "This package provides a subset of the features of the
+@code{cl-generic} package introduced in Emacs-25, for use on previous
+@code{emacsen}.")
+    (license license:gpl3+)))
+
+(define-public emacs-finalize
+  (package
+  (name "emacs-finalize")
+  (version "2.0.0")
+  (source
+    (origin
+      (method url-fetch)
+      (uri (string-append "https://github.com/skeeto/elisp-finalize/archive/"
+                          version ".tar.gz"))
+      (sha256
+        (base32
+         "077fycy3i5f0kjw5z3rhf4kld5lbk2idz690nkwhkz04vppk4q4x"))))
+  (build-system emacs-build-system)
+  (propagated-inputs
+    `(("emacs-cl-generic" ,emacs-cl-generic)))
+  (home-page "https://github.com/skeeto/elisp-finalize")
+  (synopsis "Finalizers for Emacs Lisp")
+  (description
+    "This package will allows to immediately run a callback (a finalizer)
+after its registered lisp object has been garbage collected.  This allows for
+extra resources, such as buffers and processes, to be cleaned up after the
+object has been freed.")
+  (license license:unlicense)))
+
+(define-public emacs-emacsql
+  (package
+    (name "emacs-emacsql")
+    (version "2.0.3")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append "https://github.com/skeeto/emacsql/archive/"
+                           version ".tar.gz"))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32
+         "04hfjdgl1zc7jysgjc7d7d3xqpr7q1q9gsmzffjd91ii3hpqjgx6"))))
+    (build-system gnu-build-system)
+    (arguments
+     `(#:modules ((ice-9 match)
+                  (srfi srfi-26)
+                  ,@%gnu-build-system-modules
+                  (guix build emacs-utils))
+       #:imported-modules (,@%gnu-build-system-modules
+                           (guix build emacs-utils))
+       #:phases
+       (modify-phases %standard-phases
+         (delete 'configure)
+         (add-before 'build 'patch-elisp-shell-shebangs
+           (lambda _
+             (substitute* (find-files "." "\\.el")
+               (("/bin/sh") (which "sh")))
+             #t))
+         (add-after 'patch-elisp-shell-shebangs 'setenv-emacsloadpath
+           (lambda* (#:key inputs #:allow-other-keys)
+             (define (el-dir store-dir)
+               (match (find-files store-dir "\\.el$")
+                 ((f1 f2 ...) (dirname f1))
+                 (_ "")))
+             (define emacs-prefix? (cut string-prefix? "emacs-" <>))
+             (let* ((emacs-load-paths
+                     (map (match-lambda
+                            (((? emacs-prefix? name) . dir)
+                             (string-append (el-dir dir) ":"))
+                            (_ ""))
+                          inputs))
+                    (emacs-load-path-value
+                     (string-concatenate emacs-load-paths)))
+               (format #t "environment variable `EMACSLOADPATH' set to ~a\n"
+                       emacs-load-path-value)
+               (setenv "EMACSLOADPATH" emacs-load-path-value))
+             #t))
+         (add-after 'setenv-emacsloadpath 'setenv-shell
+           (lambda _
+             (setenv "SHELL" "sh")))
+         (add-after 'setenv-shell 'build-emacsql-sqlite
+           (lambda _
+             (invoke "make" "binary" "CC=gcc")))
+         (add-after 'build-emacsql-sqlite 'install-emacsql-sqlite
+           (lambda* (#:key outputs #:allow-other-keys)
+             (install-file "sqlite/emacsql-sqlite"
+                           (string-append (assoc-ref outputs "out")
+                                          "/bin"))
+             #t))
+         (add-after 'install-emacsql-sqlite 'patch-emacsql-sqlite.el
+           (lambda* (#:key outputs #:allow-other-keys)
+             (let ((file "emacsql-sqlite.el"))
+               (chmod file #o644)
+               (emacs-substitute-sexps file
+                 ("(defvar emacsql-sqlite-user-prompted" 't)
+                 ("(executable-find" (which "gcc"))
+                 ("(defvar emacsql-sqlite-executable"
+                  (string-append (assoc-ref outputs "out")
+                                 "/bin/emacsql-sqlite"))))))
+         (delete 'check) ; No ‘check’ target in ‘./Makefile’.
+         (replace 'install ; No ‘install’ target in ‘./Makefile’.
+           (lambda* (#:key outputs #:allow-other-keys)
+             (let* ((out (assoc-ref outputs "out")))
+               (install-file "sqlite/emacsql-sqlite"
+                             (string-append out "/bin"))
+               (for-each (cut install-file <>
+                              (string-append out "/share/emacs/site-lisp"))
+                         (find-files "." "\\.elc*$")))
+             #t)))))
+    (inputs
+     `(("emacs-minimal" ,emacs-minimal)
+       ("mysql" ,mysql)
+       ("postgresql" ,postgresql)))
+    (propagated-inputs
+     `(("emacs-finalize" ,emacs-finalize)
+       ("emacs-pg" ,emacs-pg)))
+    (home-page "https://github.com/skeeto/emacsql")
+    (synopsis "Emacs high-level SQL database front-end")
+    (description "EmacSQL provides a high-level Emacs Lisp front-end for
+SQLite (primarily), PostgreSQL, MySQL, and potentially other SQL databases.")
+  (license license:gpl3+)))
+
+(define-public emacs-closql
+  (package
+    (name "emacs-closql")
+    (version "0.5.1")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append "https://github.com/emacscollective/closql/archive/"
+                           "v" version ".tar.gz"))
+       (sha256
+        (base32
+         "0wa6r0kgbb7f19039p5f3di4dvrvxfgpd8bkam94fca7jvzj536c"))))
+    (build-system emacs-build-system)
+    (propagated-inputs
+     `(("emacs-emacsql" ,emacs-emacsql)))
+    (home-page "https://github.com/emacscollective/closql")
+    (synopsis "store EIEIO objects using EmacSQL")
+    (description
+     "This package allows to store uniform EIEIO objects in an EmacSQL
+database.  SQLite is used as backend.  This library imposes some restrictions
+on what kind of objects can be stored; it isn't intended to store arbitrary
+objects.  All objects have to share a common superclass and subclasses cannot
+add any additional instance slots.")
+    (license license:gpl3)))
+
+(define-public emacs-epkg
+  (package
+    (name "emacs-epkg")
+    (version "3.0.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append "https://github.com/emacscollective/epkg/archive/"
+                           "v" version ".tar.gz"))
+       (file-name (string-append name "-" version ".tar.gz"))       
+       (sha256
+        (base32
+         "1yy7lw4ggy0f5775ywy4j9n0z8hqpyhk3igl7gn3i54p2cj3pby5"))))
+    (build-system emacs-build-system)
+    (propagated-inputs
+     `(("emacs-closql" ,emacs-closql)
+       ("emacs-dash" ,emacs-dash)))
+    (home-page "https://emacsmirror.net")
+    (synopsis "Browse the Emacsmirror package database")
+    (description "This package provides access to a local copy of the
+Emacsmirror package database.  It provides low-level functions for querying
+the database and a @file{package.el} user interface for browsing the database.
+Epkg itself is not a package manager.
+
+Getting a local copy:
+
+@example
+git clone https://github.com/emacsmirror/epkgs.git ~/.emacs.d/epkgs
+cd ~/.emacs.d/epkgs
+git submodule init
+git config --global url.https://github.com/.insteadOf git@@github.com:
+git submodule update
+@end example
+
+Some submodule may be missing.  In this case Git will prompt for a GitHub user
+name and password.  To skip it press a @key{Return} key.
+
+You could get a Epkg package list by invoking @code{epkg-list-packages} in
+Emacs.")
+    (license license:gpl3+)))
