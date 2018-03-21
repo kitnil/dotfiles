@@ -419,6 +419,7 @@ Sets the following basend on PREFIX-MAP:
 
 (wi-define-keys "C-c t c" toggle-highlight
                 ("S" highlight-sexp-mode "sexp")
+                ("b" rainbow-blocks-mode "blocks")
                 ("c" rainbow-mode "colors")
                 ("d" rainbow-delimiters-mode "delimiters")
                 ("i" rainbow-identifiers-mode "identifiers")
