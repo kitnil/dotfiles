@@ -189,8 +189,10 @@ editor with athena toolkit" )
     (source
      (origin
        (method url-fetch)
-       (uri (string-append "https://github.com/proofit404/company-tern/archive/"
-                           "v" version ".tar.gz"))
+       (uri (string-append
+             "https://github.com/proofit404/company-tern/archive/"
+             "v" version ".tar.gz"))
+       (file-name (string-append name "-" version ".tar.gz"))
        (sha256
         (base32
          "1qgrgnbajgnsnx4az4ajnlrhc73q0xxjikk617nf3cs87x4772a6"))))
@@ -202,7 +204,7 @@ editor with athena toolkit" )
        ("emacs-s" ,emacs-s)))
     (home-page "https://github.com/proofit404/company-tern")
     (synopsis "Tern backend for company-mode")
-    (description "Tern backend for company-mode.")
+    (description "This package provides Tern backend for Company.")
     (license license:gpl3+)))
 
 (define-public emacs-discover-my-major
