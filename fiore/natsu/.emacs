@@ -2200,7 +2200,10 @@ https://github.com/USER/REPO/commit/SHA1-HASH => SHA1-HASH"
  '(debug-on-error nil)
  '(indent-tabs-mode nil)
  '(safe-local-variable-values
-   '((TeX-master . "guile.texi")
+   '((eval progn
+           (put 'with-directory 'scheme-indent-function 1)
+           (put 'with-repository 'scheme-indent-function 2))
+     (TeX-master . "guile.texi")
      (eval c-set-offset 'access-label '-)
      (eval c-set-offset 'substatement-open 0)
      (eval c-set-offset 'arglist-cont-nonempty '+)
