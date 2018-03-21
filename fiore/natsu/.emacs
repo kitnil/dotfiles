@@ -508,9 +508,9 @@ Sets the following basend on PREFIX-MAP:
                 ("c" emms-pause "pause")
                 ("d" emms-play-directory "directory")
                 ("e" emms "emms" :color blue)
-                ("n" emms-next "next")
-                ("p" emms-previous "previous")
-                ("r" emms-random "random")
+                ("n" wi-emms-next "next")
+                ("p" wi-emms-prev "previous")
+                ("r" wi-emms-random "random")
                 ("s" emms-stop "stop"))
 
 (wi-define-keys "C-c m d" debbugs
@@ -1535,6 +1535,24 @@ the appropriate network slug that we extract from the nick."
       (interactive)
       (emms-random)
       (emms-playlist-mode-center-current)))
+
+  (defun wi-emms-next ()
+    "Start playing the next track and show it in echo area."
+    (interactive)
+    (emms-next)
+    (emms-show))
+
+  (defun wi-emms-prev ()
+    "Start playing the previous track and show it in echo area."
+    (interactive)
+    (emms-previous)
+    (emms-show))
+
+  (defun wi-emms-random ()
+    "Start playing the random track and show it in echo area."
+    (interactive)
+    (emms-random)
+    (emms-show))
 
   (use-package emms-player-mpv
     :config
