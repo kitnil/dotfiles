@@ -1075,6 +1075,24 @@ for COMMIT, defaulting to the commit hash at point."
 
 
 ;;;
+;;; Git Gutter
+;;;
+
+(defun wi-git-gutter:stage-hunk ()
+  "Stage this hunk like 'git add -p'."
+  (interactive)
+  (flet ((yes-or-no-p (action)
+                      (y-or-n-p
+                       (format "%s current hunk ? " action))))
+    (git-gutter:query-action "Stage"
+                             #'git-gutter:do-stage-hunk
+                             #'git-gutter)))
+
+(advice-add 'git-gutter:stage-hunk
+            :override #'wi-git-gutter:stage-hunk)
+
+
+;;;
 ;;; Magit
 ;;;
 
