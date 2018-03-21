@@ -246,7 +246,7 @@ Sets the following basend on PREFIX-MAP:
      (which-key-add-key-based-replacements ,prefix
        ,(symbol-name prefix-map))
      (defhydra ,(intern (concat "hydra-" (symbol-name prefix-map)))
-       nil
+       (:color amaranth)
        ,(mapconcat 'identity
                    (split-string (symbol-name prefix-map) "-")
                    " ")
