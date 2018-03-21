@@ -26,7 +26,7 @@
 
 (setq user-mail-address "go.wigust@gmail.com")
 (setq user-full-name "Oleg Pykhalov")
-(setq default-input-method "russian-computer") ; C-\ will switch keyboard layout
+(setq default-input-method "russian-computer") ; <C-\> keyboard layout
 
 (setq display-time-24hr-format t) ; No AM/PM
 (setq calendar-date-style 'european) ; day/month/year style calendar
