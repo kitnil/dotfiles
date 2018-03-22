@@ -1077,8 +1077,6 @@ for COMMIT, defaulting to the commit hash at point."
 (setq guix-read-package-name-function
       #'guix-read-package-name-at-point)
 
-(add-hook 'guix-env-var-mode-hook 'guix-prettify-mode)
-
 ;; TODO: (add-hook 'guix-env-var-mode-hook 'guix-prettify-mode)
 
 
@@ -1922,7 +1920,7 @@ the appropriate network slug that we extract from the nick."
 
 (add-hooks
  '(((diff-mode-hook dired-mode-hook proced-post-display-hook
-     shell-mode-hook)
+     shell-mode-hook ibuffer-mode-hook guix-env-var-mode-hook)
     . guix-prettify-mode)
    ((c-mode-hook) . ggtags-mode)
    ((scheme-mode-hook) . guix-devel-mode)
