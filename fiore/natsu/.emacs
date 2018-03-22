@@ -72,6 +72,11 @@
 ;; TODO: Lazy load
 (use-package debbugs-browse) ; for debbugs-browse-url
 
+(defcustom wi-git "/srv/git"
+  "Directory containing Git repositories."
+  :type 'directory
+  :group 'wi)
+
 (defvar wi-debian-paste-regexp
   (rx-to-string
    `(and "http" (* "s") "://paste.debian.net/" (+ alnum) (* "/")) t)
@@ -1214,11 +1219,6 @@ Non-interactively DIRECTORY is (re-)initialized unconditionally."
   (magit-call-git "init" "--bare"
                   (magit-convert-filename-for-git
                    (expand-file-name directory))))
-
-(defcustom wi-git "/srv/git"
-  "Directory containing Git repositories."
-  :type 'directory
-  :group 'wi)
 
 (defun wi-git-init+add-remote+push (source destination)
   "Initialize bare Git repository in DESTINATION directory,
