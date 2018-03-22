@@ -132,6 +132,11 @@
    `(and "http" (* "s") "://hydra.gnu.org" (* "/")) t)
   "Regexp matching GNU Hydra CI.")
 
+(defvar wi-url-gnunet-bot-log-regexp
+  (rx "http" (zero-or-one "s") "://gnunet.org/bot/log/"
+      (one-or-more alphabetic) (zero-or-one "/") line-end)
+  "Regexp matching GNU Hydra CI.")
+
 (defvar wi-twitch-url-regexp
   (rx "http" (zero-or-more "s") "://" (zero-or-more "www.")
       "twitch.tv"))
@@ -149,6 +154,7 @@
         (,wi-url-hydra-regexp . browse-url-firefox)
         (,wi-lwn-regexp . eww-browse-url)
         (,wi-url-gnu-lists-regexp . eww-browse-url)
+        (,wi-url-gnunet-bot-log-regexp . eww-browse-url)
         (,wi-debian-paste-regexp . wi-browse-url-paste-debian)
         ("." . browse-url-conkeror)))
 
@@ -1431,6 +1437,16 @@ Push branch master to local/master."
 
 (setq erc-autojoin-channels-alist
       (append erc-autojoin-channels-alist wi-erc-netlist-gnome))
+
+(defcustom guix-irc-log-url "https://gnunet.org/bot/log/guix"
+  "URL to IRC #guix channel log."
+  :type 'string
+  :group 'guix)
+
+(defun guix-irc-open-log ()
+  "Open IRC #guix channel log."
+  (interactive)
+  (browse-url guix-irc-log-url))
 
 
 ;;;
