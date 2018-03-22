@@ -993,12 +993,6 @@ Sets the following basend on PREFIX-MAP:
     (mapcar (lambda (file) (expand-file-name file))
             files))
 
-(defun wi-list-files-in-dir (directory)
-  "Return a list of files in the DIRECTORY."
-  (directory-files (expand-file-name directory)
-                   t
-                   "^\\([^.]\\|\\.[^.]\\|\\.\\..\\)"))
-
 ;; See <https://lists.gnu.org/archive/html/emacs-devel/2017-12/msg00017.html>.
 (defun wi-git-log (&optional repo commit)
   "Check REPO for COMMIT and if it exists, display its commit message.
@@ -1175,8 +1169,7 @@ for COMMIT, defaulting to the commit hash at point."
 (defun wi-update-magit-repository-directories (directory)
   "Update list of files in `DIRECTORY' for `magit-list-repositories'."
   (interactive)
-  (setq magit-repository-directories
-        (wi-list-files-in-dir directory)))
+  (setq magit-repository-directories (f-directories directory)))
 
 (setq magit-repository-directories-depth 1)
 
@@ -2156,8 +2149,7 @@ be updated automatically."))
 ;; Don't use ido
 (setq projectile-completion-system 'default)
 
-(setq helm-locate-project-list
-      (wi-list-files-in-dir wi-projects-directory))
+(setq helm-locate-project-list (f-directories wi-projects-directory))
 
 ;; Google translate with translate-shell program
 (require 'google-translate-mode nil t)
