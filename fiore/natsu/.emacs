@@ -1634,6 +1634,7 @@ the appropriate network slug that we extract from the nick."
   (emms-standard)
   (emms-default-players)
 
+  (setq emms-volume-change-function #'emms-volume-pulse-change)
   (setq emms-player-next-function 'emms-next-noerror)
   (emms-mode-line -1)
   (setq emms-playing-time-display-p nil)
