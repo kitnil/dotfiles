@@ -103,9 +103,22 @@
 (defvar *wi-transmission-hostname*
   "magnolia")
 
+
+;;;
+;;; Emacs
+;;;
+
 (defcommand emacs () ()
   "Start emacs unless it is already running, in which case focus it."
   (run-or-raise "emacsclient -c ." '(:class "Emacs")))
+
+(defcommand emacs-org-capture () ()
+  "Capture URL with Emacs Org from GUI clipboard"
+  (run-shell-command
+   (join (list "exec"
+               (concat (getenv "HOME") "/bin/emacs-org-capture")
+               (get-x-selection))
+         #\ )))
 
 (defcommand conkeror () ()
   "Start or focus conkeror."
@@ -443,6 +456,7 @@
 (define-key *root-map* (kbd "C-m") "wi-xclip-mpv")
 (define-key *root-map* (kbd "M-m") "wi-xclip-streamlink")
 
+(define-key *root-map* (kbd "u") "emacs-org-capture")
 (define-key *root-map* (kbd "C-e") "wi-xclip-emacs")
 (define-key *root-map* (kbd "C-M-c") "wi-xterm-big-screen")
 
