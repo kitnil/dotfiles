@@ -120,6 +120,11 @@
                (get-x-selection))
          #\ )))
 
+
+;;;
+;;; Conkeror
+;;;
+
 (defcommand conkeror () ()
   "Start or focus conkeror."
   (run-or-raise *wi-conkeror-command* '(:class "Conkeror")))
