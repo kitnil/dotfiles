@@ -1734,10 +1734,103 @@ the appropriate network slug that we extract from the nick."
 
 
 ;;;
+;;; browse-url
+;;;
+
+(defvar browse-url-streamlink-program "streamlink")
+
+(defvar browse-url-streamlink-arguments '("-p" "mpv"))
+
+(defvar browse-url-streamlink-quality "best")
+
+(defun browse-url-streamlink (url &optional new-window)
+  "Ask the mpv video player to load URL.
+Defaults to the URL around or before point.  Passes the strings
+in the variable `browse-url-streamlink-arguments' to mpv."
+  (interactive (browse-url-interactive-arg "URL: "))
+  (let* ((process-environment (browse-url-process-environment)))
+    (apply 'start-process
+           (concat "streamlink " url)
+           nil
+           browse-url-streamlink-program
+           `(,@browse-url-streamlink-arguments
+             ,url
+             ,browse-url-streamlink-quality))))
+
+(defcustom browse-url-mpv-program "mpv"
+  "The name by which to invoke MPV."
+  :type 'string
+  :group 'browse-url)
+
+(defcustom browse-url-mpv-arguments '("--volume=50")
+  "Arguments passed to mpv with `browse-url-mpv'."
+  :type 'list
+  :group 'browse-url)
+
+(defcustom browse-url-mpv-headphones t
+  "Non-nil if browse-url-mpv in headphones."
+  :type 'boolean
+  :group 'browse-url)
+
+(defun toggle-browse-url-mpv-arguments ()
+  "If browse-url-mpv-headphones non-nil set it to t and set
+`browse-url-mpv-arguments' headphones."
+  (interactive)
+  (if browse-url-mpv-headphones
+      (progn (setq browse-url-mpv-arguments '("--volume=50"))
+             (setq browse-url-mpv-headphones nil))
+    (setq browse-url-mpv-arguments
+                (list "--volume=50" "--no-resume-playback"
+                      "--keep-open=no"
+                      (concat "--audio-device=" ‎wi-headphones)))
+    (setq browse-url-mpv-headphones t))
+  (message "MPV for headphones is %s"
+	   (if browse-url-mpv-headphones "enabled" "disabled")))
+
+(setq browse-url-mpv-remote-program "~/bin/mpv-remote")
+
+(defun browse-url-mpv (url &optional new-window)
+  "Ask the mpv video player to load URL.
+Defaults to the URL around or before point.  Passes the strings
+in the variable `browse-url-mpv-arguments' to mpv."
+  (interactive (flet ((browse-url-url-at-point ; do not add `http://' prefix
+                          () (or (thing-at-point 'url t)
+                                 (let ((f (thing-at-point 'filename t)))
+                                   f))))
+                 (browse-url-interactive-arg "URL: ")))
+  (setq url (browse-url-encode-url url))
+  (let* ((process-environment (browse-url-process-environment)))
+    (apply 'start-process
+           (concat "mpv " url) nil
+           browse-url-mpv-program
+           (append
+            browse-url-mpv-arguments
+            (list url)))))
+
+(defun browse-url-chromium-no-toolbar (url &optional _new-window)
+  "Ask the Chromium WWW browser to load URL.
+Default to the URL around or before point.  The strings in
+variable `browse-url-chromium-arguments' are also passed to
+Chromium.
+The optional argument NEW-WINDOW is not used."
+  (interactive (browse-url-interactive-arg "URL: "))
+  (setq url (browse-url-encode-url url))
+  (let* ((process-environment (browse-url-process-environment)))
+    (apply 'start-process
+	   (concat "chromium " url) nil
+	   browse-url-chromium-program
+	   (append
+	    browse-url-chromium-arguments
+	    (list (concat "--app=" url))))))
+
+
+;;;
 ;;; Misc
 ;;;
 
-(setq youtube-stream-open-chat-function #'browse-url-chromium-plus)
+(setq youtube-stream-open-chat-function
+      #'browse-url-chromium-no-toolbar)
+
 (setq youtube-stream-open-video-function #'browse-url-streamlink)
 
 ;; Origin <https://github.com/Wilfred/.emacs.d/blob/gh-pages/init.org>.
@@ -2094,75 +2187,6 @@ be updated automatically."))
  ; Unprettify symbol after the cursor
 (setq prettify-symbols-unprettify-at-point 'right-edge)
 
-;; In addition to browse-url-* functions
-(defvar browse-url-streamlink-program "streamlink")
-(defvar browse-url-streamlink-arguments '("-p" "mpv"))
-(defvar browse-url-streamlink-quality "best")
-(defun browse-url-streamlink (url &optional new-window)
-  "Ask the mpv video player to load URL.
-Defaults to the URL around or before point.  Passes the strings
-in the variable `browse-url-streamlink-arguments' to mpv."
-  (interactive (browse-url-interactive-arg "URL: "))
-  (let* ((process-environment (browse-url-process-environment)))
-    (apply 'start-process
-           (concat "streamlink " url)
-           nil
-           browse-url-streamlink-program
-           `(,@browse-url-streamlink-arguments
-             ,url
-             ,browse-url-streamlink-quality))))
-
-;; In addition to browse-url-* functions
-(defcustom browse-url-mpv-program "mpv"
-  "The name by which to invoke MPV."
-  :type 'string
-  :group 'browse-url)
-
-(defcustom browse-url-mpv-arguments '("--volume=50")
-  "Arguments passed to mpv with `browse-url-mpv'."
-  :type 'list
-  :group 'browse-url)
-
-(defcustom browse-url-mpv-headphones t
-  "Non-nil if browse-url-mpv in headphones."
-  :type 'boolean
-  :group 'browse-url)
-
-(defun toggle-browse-url-mpv-arguments ()
-  "If browse-url-mpv-headphones non-nil set it to t and set
-`browse-url-mpv-arguments' headphones."
-  (interactive)
-  (if browse-url-mpv-headphones
-      (progn (setq browse-url-mpv-arguments '("--volume=50"))
-             (setq browse-url-mpv-headphones nil))
-    (setq browse-url-mpv-arguments
-                (list "--volume=50" "--no-resume-playback"
-                      "--keep-open=no"
-                      (concat "--audio-device=" ‎wi-headphones)))
-    (setq browse-url-mpv-headphones t))
-  (message "MPV for headphones is %s"
-	   (if browse-url-mpv-headphones "enabled" "disabled")))
-
-(setq browse-url-mpv-remote-program "~/bin/mpv-remote")
-(defun browse-url-mpv (url &optional new-window)
-  "Ask the mpv video player to load URL.
-Defaults to the URL around or before point.  Passes the strings
-in the variable `browse-url-mpv-arguments' to mpv."
-  (interactive (flet ((browse-url-url-at-point ; do not add `http://' prefix
-                          () (or (thing-at-point 'url t)
-                                 (let ((f (thing-at-point 'filename t)))
-                                   f))))
-                 (browse-url-interactive-arg "URL: ")))
-  (setq url (browse-url-encode-url url))
-  (let* ((process-environment (browse-url-process-environment)))
-    (apply 'start-process
-           (concat "mpv " url) nil
-           browse-url-mpv-program
-           (append
-            browse-url-mpv-arguments
-            (list url)))))
-
-;; Code snippets framework
 (with-eval-after-load 'yasnippet
   (setq yas-snippet-dirs
         (append (wi-expand-file-names
