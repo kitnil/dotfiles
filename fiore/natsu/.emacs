@@ -1276,12 +1276,16 @@ Push branch master to local/master."
 ;;; ERC
 ;;;
 
+;; Timestamps
+(setq erc-insert-away-timestamp-function #'erc-insert-timestamp-left)
+(setq erc-hide-timestamps nil)
+(setq erc-timestamp-only-if-changed-flag nil)
+
 (setq erc-accidental-paste-threshold-seconds 0.5)
 (setq erc-autojoin-mode t)
 (setq erc-autojoin-timing (quote ident))
 (setq erc-email-userid user-mail-address)
 (setq erc-flood-protect t)
-(setq erc-hide-timestamps t)
 (setq erc-join-buffer (quote bury))
 (setq erc-kill-buffer-on-part nil)
 (setq erc-kill-server-buffer-on-quit nil)
