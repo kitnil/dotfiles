@@ -1402,6 +1402,10 @@ for COMMIT, defaulting to the commit hash at point."
          "[[%:link][%:description]]"
          :immediate-finish t)
 
+        ("X" "emacs-org-capture" item (file "web.org")
+         "[[%:link]]"
+         :immediate-finish t)
+
         ("r" "Respond ro email" entry (file+headline "inbox.org" "Email")
          "[[mailto:%:fromaddress][%:fromname]]"
          :immediate-finish t
