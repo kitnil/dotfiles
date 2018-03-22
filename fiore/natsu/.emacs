@@ -1462,6 +1462,8 @@ Push branch master to local/master."
 ;;; Org
 ;;;
 
+(setq org-descriptive-links t)
+
 ;; (with-eval-after-load 'org
 ;;   (setq org-format-latex-options
 ;;         (plist-put org-format-latex-options :scale 1.5))
