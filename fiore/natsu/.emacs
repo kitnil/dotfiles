@@ -1046,7 +1046,7 @@ for COMMIT, defaulting to the commit hash at point."
                  wi-elisp--prettify-symbols-alist)))
 
 ;;;
-;;; Guile and Guix
+;;; Guile
 ;;;
 
 (with-eval-after-load 'geiser
@@ -1074,10 +1074,18 @@ for COMMIT, defaulting to the commit hash at point."
 (with-eval-after-load 'guix-repl
   (setq guix-directory (expand-file-name "~/src/guix")))
 
+
+;;;
+;;; Guix
+;;;
+
 (setq guix-read-package-name-function
       #'guix-read-package-name-at-point)
 
-;; TODO: (add-hook 'guix-env-var-mode-hook 'guix-prettify-mode)
+(defun wi-guix-hydra-latest-builds ()
+  (interactive)
+  (let ((guix-hydra-url "https://berlin.guixsd.org"))
+    (guix-hydra-latest-builds 100)))
 
 
 ;;;
@@ -1952,11 +1960,6 @@ The optional argument NEW-WINDOW is not used."
   (set-face-foreground 'rainbow-delimiters-depth-8-face "cyan")
   (set-face-foreground 'rainbow-delimiters-depth-9-face "yellow")
   (set-face-foreground 'rainbow-delimiters-unmatched-face "red"))
-
-(defun wi-guix-hydra-latest-builds ()
-  (interactive)
-  (let ((guix-hydra-url "https://berlin.guixsd.org"))
-    (guix-hydra-latest-builds 100)))
 
 (default-text-scale-mode)
 (global-git-gutter-mode)
