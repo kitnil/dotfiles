@@ -15,6 +15,8 @@
 ;; You may delete these explanatory comments.
 ;; (package-initialize)
 
+(require 'f) ; For `f-directories'.
+
 (setq load-prefer-newer t)
 
 ;; (require 'benchmark-init)
