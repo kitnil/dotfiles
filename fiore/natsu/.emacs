@@ -990,8 +990,7 @@ Sets the following basend on PREFIX-MAP:
 ;;;
 
 (defun wi-expand-file-names (files)
-    (mapcar (lambda (file) (expand-file-name file))
-            files))
+    (mapcar (lambda (file) (expand-file-name file)) files))
 
 ;; See <https://lists.gnu.org/archive/html/emacs-devel/2017-12/msg00017.html>.
 (defun wi-git-log (&optional repo commit)
