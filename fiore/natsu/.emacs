@@ -1735,6 +1735,9 @@ the appropriate network slug that we extract from the nick."
 ;;; Misc
 ;;;
 
+(setq youtube-stream-open-chat-function #'browse-url-chromium-plus)
+(setq youtube-stream-open-video-function #'browse-url-streamlink)
+
 (defvar wi-youtube-url-regexp
   (rx "http" (zero-or-one "s") "://"
       (zero-or-one "www.") "youtube.com")
