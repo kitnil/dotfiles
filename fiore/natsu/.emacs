@@ -1188,6 +1188,33 @@ for COMMIT, defaulting to the commit hash at point."
            (equal (magit-section-value section) "refs/stash"))
        'hide))
 
+(defun magit-init-bare (directory)
+  "Initialize a bare Git repository.
+
+If the directory is below an existing repository, then the user
+has to confirm that a new one should be created inside.  If the
+directory is the root of the existing repository, then the user
+has to confirm that it should be reinitialized.
+
+Non-interactively DIRECTORY is (re-)initialized unconditionally."
+  (interactive
+   (let ((directory (file-name-as-directory
+                     (expand-file-name
+                      (read-directory-name "Create repository in: ")))))
+     (-when-let (toplevel (magit-toplevel directory))
+       (setq toplevel (expand-file-name toplevel))
+       (unless (y-or-n-p (if (file-equal-p toplevel directory)
+                             (format "Reinitialize existing repository %s? "
+                                     directory)
+                           (format "%s is a repository.  Create another in %s? "
+                                   toplevel directory)))
+         (user-error "Abort")))
+     (list directory)))
+  ;; `git init' does not understand the meaning of "~"!
+  (magit-call-git "init" "--bare"
+                  (magit-convert-filename-for-git
+                   (expand-file-name directory))))
+
 ;; TODO: Another way will be in a new release,
 ;; see <https://emacs.stackexchange.com/a/38782/15092>.
 ;; (add-to-list 'magit-section-initial-visibility-alist '(stashes . hide))
