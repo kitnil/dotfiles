@@ -231,8 +231,9 @@ and the functions `ffap-file-at-point' and `ffap-url-at-point'."
 (advice-add 'find-file-at-point :override #'wi-find-file-at-point)
 
 ;; Enable functions
-(put 'narrow-to-region 'disabled nil)
 (put 'dired-find-alternate-file 'disabled nil)
+(put 'narrow-to-page 'disabled nil)
+(put 'narrow-to-region 'disabled nil)
 (put 'set-goal-column 'disabled nil)
 
 
