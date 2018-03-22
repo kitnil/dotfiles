@@ -614,6 +614,11 @@ Sets the following basend on PREFIX-MAP:
 (wi-define-keys "C-c m g m" gnus-message
                 (";" wi-replace-with-brackets-ellipsis "ellipsis"))
 
+(wi-define-keys "C-c m X" redshift
+                ("g" redshift-set-temp "set")
+                ("n" redshift-decrease-temp "decrease")
+                ("p" redshift-increase-temp "increase"))
+
 (wi-define-keys "C-c s" shell
                 ("e" eshell "eshell" :color blue)
                 ("t" term "ansi" :color blue)
