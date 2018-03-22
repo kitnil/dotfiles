@@ -1419,7 +1419,10 @@ for COMMIT, defaulting to the commit hash at point."
         ("B" "blog" plain (file "blog.org") "%?")
         ("e" "emacs" plain (file "emacs.org") "%?")
         ("g" "guix" plain (file "guix.org") "%?")
-        ("i" "TODO" entry (file "TODO.org") "* %?")
+        ("i" "Templates for TODO")
+        ("ii" "TODO" entry (file "TODO.org") "* TODO %?")
+        ("ir" "TODO region" entry (file "TODO.org") "* TODO %i"
+         :immediate-finish t)
         ("m" "music" plain (file "music.org") "%?")
         ("n" "pdfview" item (file "pdf.org") "%a %?")
         ("o" "misc" plain (file "misc.org") "%?")
