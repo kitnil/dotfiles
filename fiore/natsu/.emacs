@@ -1215,6 +1215,30 @@ Non-interactively DIRECTORY is (re-)initialized unconditionally."
                   (magit-convert-filename-for-git
                    (expand-file-name directory))))
 
+(defcustom wi-git "/srv/git"
+  "Directory containing Git repositories."
+  :type 'directory
+  :group 'wi)
+
+(defun wi-git-init+add-remote+push (source destination)
+  "Initialize bare Git repository in DESTINATION directory,
+
+Add local remote pointing to DESTINATION directory.
+
+Push branch master to local/master."
+  (interactive
+   (list
+    (read-directory-name "Source directory: ")
+    (if wi-git wi-git
+      (read-directory-name "Destination directory: "))))
+  (let ((destination
+         (concat (directory-file-name destination)
+                 "/" (file-name-base
+                      (directory-file-name (vc-git-root source))))))
+    (magit-init-bare destination)
+    (magit-remote-add "local" (concat "file://" destination))
+    (magit-push "master" "local/master" nil)))
+
 ;; TODO: Another way will be in a new release,
 ;; see <https://emacs.stackexchange.com/a/38782/15092>.
 ;; (add-to-list 'magit-section-initial-visibility-alist '(stashes . hide))
