@@ -74,10 +74,30 @@
 ;; TODO: Lazy load
 (use-package debbugs-browse) ; for debbugs-browse-url
 
+
+;;;
+;;; Customize
+;;;
+
+(defgroup wi nil
+  "Settings for `wi'."
+  :prefix "wi-"
+  :group  'wi)
+
 (defcustom wi-git "/srv/git"
   "Directory containing Git repositories."
   :type 'directory
   :group 'wi)
+
+(defcustom wi-src (expand-file-name "~/src")
+  "Source code directory."
+  :type 'directory
+  :group 'wi)
+
+
+;;;
+;;; Variables
+;;;
 
 (defvar wi-debian-paste-regexp
   (rx-to-string
@@ -1171,19 +1191,9 @@ for COMMIT, defaulting to the commit hash at point."
 
 (magit-org-todos-autoinsert)
 
-(defvar wi-projects-directory (expand-file-name "~/src"))
-
-(defun wi-update-magit-repository-directories (directory)
-  "Update list of files in `DIRECTORY' for `magit-list-repositories'."
-  (interactive)
-  (setq magit-repository-directories (f-directories directory)))
-
+(setq magit-repository-directories (f-directories wi-src))
 (setq magit-repository-directories-depth 1)
-
-(wi-update-magit-repository-directories wi-projects-directory)
-
-(setq magit-log-arguments (list "--graph" "--color" "--decorate"
-                                "-n64"))
+(setq magit-log-arguments '("--graph" "--color" "--decorate" "-n64"))
 (setq magit-log-section-arguments (list "-n256" "--decorate"))
 
 ;; Use `magit-describe-section'
@@ -2166,7 +2176,7 @@ be updated automatically."))
 ;; Don't use ido
 (setq projectile-completion-system 'default)
 
-(setq helm-locate-project-list (f-directories wi-projects-directory))
+(setq helm-locate-project-list (f-directories wi-src))
 
 ;; Google translate with translate-shell program
 (require 'google-translate-mode nil t)
