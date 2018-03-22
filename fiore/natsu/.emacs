@@ -1877,6 +1877,8 @@ The optional argument NEW-WINDOW is not used."
 ;;; Misc
 ;;;
 
+(setq redshift-temp-increment 100)
+
 (setq youtube-stream-open-chat-function
       #'browse-url-chromium-no-toolbar)
 
