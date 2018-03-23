@@ -3905,6 +3905,33 @@ extensions loaded.")
        "This package provides an Emacs major-mode for easy buffer-navigation")
       (license license:gpl3+))))
 
+(define-public emacs-helm-navi
+  (let ((commit "2256591174ff79f889450fdc10822316819d6476"))
+    (package
+      (name "emacs-helm-navi")
+      (version (git-version "0.1" "1" commit))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/emacs-helm/helm-navi.git")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "0bbb52v1c81a6ap10qi7mqigi237vwrlmf8mg3ckglm1i710636j"))))
+      (build-system emacs-build-system)
+      (propagated-inputs
+       `(("emacs-helm" ,emacs-helm)
+         ("emacs-navi-mode" ,emacs-navi-mode)
+         ("emacs-s" ,emacs-s)))
+      (home-page "https://github.com/emacs-helm/helm-navi")
+      (synopsis "Navigate through a buffer using the headings and keywords")
+      (description
+       "This file provides commands to navigate a buffer using keywords and
+headings provided by @code{navi-mode} and @code{outshine}.")
+      (license license:gpl3+))))
+
 (define-public emacs-lice-el
   (let ((commit "4339929927c62bd636f89bb39ea999d18d269250"))
     (package
