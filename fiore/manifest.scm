@@ -1,19 +1,21 @@
 (use-modules (gnu)
              (guix packages)
+             (guix profiles)
              (wigust packages emacs)
              (wigust packages licensecheck)
              (wigust packages pulseaudio)
              (wigust packages python)
-             (wigust packages version-control))
+             (wigust packages version-control)
+             (local packages emacs))
 
 (use-package-modules admin aspell audio backup bittorrent code
-conkeror commencement compression cran databases dictionaries emacs
-games gcc glib gnuzilla graphics graphviz gtk guile haskell
-image-viewers imagemagick kodi libreoffice linux lisp lxde mail man
-maths messaging ncdu ncurses package-management password-utils
-patchutils perl pdf python rdesktop samba scheme statistics texinfo
-textutils tls valgrind version-control video virtualization w3m web
-xdisorg)
+conkeror commencement compression cran databases elf dictionaries
+emacs games gcc gdb glib gnuzilla graphics graphviz gstreamer gtk
+guile haskell image-viewers imagemagick kodi libreoffice linux lisp
+lxde mail man maths messaging ncdu ncurses node package-management
+password-utils patchutils perl perl-web pdf python rdesktop samba
+scheme statistics texinfo textutils tls tor valgrind version-control
+video virtualization w3m web xdisorg)
 
 (define guix-collection-packages-multiout
   (list
@@ -48,6 +50,11 @@ xdisorg)
    conkeror
    icecat ; Web browser
 
+   node ;Packages in <~/.npm-global/bin/>.
+
+   torsocks
+   tor
+
    isync   ; Sync IMAP
    notmuch ; Mail indexer based on Xapian
 
@@ -57,6 +64,7 @@ xdisorg)
    imagemagick ; Pipe to `display'
    mlt         ; Video editing framework
    mpv         ; Video and audio player
+   obs ;ffmpeg frontend
 
    ;; See <https://github.com/NixOS/nixpkgs/issues/16327#issuecomment-303068424>.
    at-spi2-core
@@ -65,6 +73,13 @@ xdisorg)
    libreoffice ; Office suite
    zathura     ; Lightweight customizable PDF reader
    zathura-pdf-mupdf
+
+   xsel ;clipboard
+   scrot ;screenshot
+
+   perl-uri-escape ;convert url
+
+   patchelf ;patch elf
 
    epipe
 
@@ -114,10 +129,11 @@ xdisorg)
 
    dbus
 
-   cflow         ; C program call map
-   gcc-toolchain ; For Emacs `semantic-mode'
-   global        ; Source tagging
-   valgrind
+   cflow         ;C program call map.
+   gcc-toolchain ;For Emacs `semantic-mode'.
+   gdb           ;GNU debuger.
+   global        ;Source tagging.
+   valgrind      ;Memory debug.
 
    bbdb
    emacs-ag
@@ -133,6 +149,7 @@ xdisorg)
    emacs-erc-hl-nicks       ; for ERC
    emacs-expand-region
    emacs-ffap-rfc-space
+   emacs-fill-column-indicator
    emacs-ggtags             ; Front end to GNU Global
    emacs-git-gutter
    emacs-git-messenger      ; Show commit under the cursor
@@ -145,24 +162,32 @@ xdisorg)
    emacs-highlight-sexp
    emacs-highlight-stages   ; Highlight code stages
    emacs-highlight-symbol
+   emacs-hl-todo
    emacs-htmlize
+   emacs-hydra
+   emacs-irfc
    emacs-ivy                ; Complition framework
    emacs-lua-mode
    emacs-markdown-mode      ; Commonmark major mode
    emacs-multiple-cursors   ; Multi cursor
    emacs-nix-mode           ; Nix language mode
    emacs-org                ; Org
+   emacs-org-bullets
    emacs-projectile         ; Project functions
    emacs-rainbow-delimiters ; Prettify parentheses
    emacs-rainbow-mode       ; Show colors in codes
+   emacs-restclient
    emacs-slime              ; Sbcl repl
    emacs-smartparens        ; Structured editing
+   emacs-suggest
    emacs-transmission       ; Front end to transmission-daemon
    emacs-transpose-frame    ; M-x transpose-frame
    emacs-undo-tree          ; Undo visualisation
    emacs-use-package        ; Lazy configuration
+   emacs-validate
    emacs-w3m                ; Front end to w3m command line web browser
    emacs-which-key          ; Key bindings help
+   emacs-yaml-mode          ; YAML files
    emacs-yasnippet          ; Snippets
    emacs-yasnippet-snippets ; Collection of snippets
    emms                     ; Video and music player
@@ -180,12 +205,19 @@ xdisorg)
 
    mercurial
 
+   gst-plugins-bad
+   gst-plugins-base
+   gst-plugins-good
+   gst-plugins-ugly
+   gstreamer
+
+   guile-2.2
+   guile-readline
    guile-daemon
    guile-colorized
    mcron
 
    minetest                 ; Open source Minecraft
-   tome4                    ; Tails of Maj'Eyal
 
    colordiff
    colormake
@@ -206,34 +238,52 @@ xdisorg)
 
    python-starred ; Fetch a list of stars from GitHub user
 
+   emacs-academic-phrases
    emacs-add-hooks
+   emacs-anywhere-mode
+   emacs-auto-yasnippet
+   emacs-awk-it
    emacs-crux
    emacs-debpaste           ; Front end to <https://paste.debian.net/>
    emacs-default-text-scale ; Scale text in all buffers
    emacs-dumb-jump
    emacs-edit-indirect
+   emacs-emamux
+   emacs-epkg
    emacs-esup
    emacs-eval-in-repl       ; Evaluate to different Repls
    emacs-ewmctrl            ; Control X windows from Emacs
+   emacs-f3
    emacs-fancy-narrow
-   emacs-guix-checkout      ; Guix interface
+   emacs-grep-context
+   emacs-guix-local-checkout ; Guix interface
    emacs-helm-c-yasnippet
    emacs-helm-emms
    emacs-helm-firefox       ; Search for bookmarks in Icecat
    emacs-helm-gtags
    emacs-helm-mode-manager
+   emacs-helm-navi
    emacs-helm-pass          ; Front end to password-store
+   emacs-helm-shell-history
    emacs-ibuffer-projectile
    emacs-info-colors
    emacs-info-colors        ; Colorize info pages
+   emacs-lice-el
+   emacs-macrostep
+   emacs-magit-org-todos-el
+   emacs-mbsync
    emacs-move-text
    emacs-org-mind-map       ; General mind maps from Org files
+   emacs-outshine           ; Emacs outline-mode
+   emacs-redshift
    emacs-scratch-el
    emacs-terminal-here
 
    licensecheck ; Licence checker for source files
 
-   vc-dwim-git-worktree))
+   vc-dwim-git-worktree
+
+   twitchy))
 
 (packages->manifest `(,@guix-collection-packages
                       ,@guix-collection-packages-multiout
