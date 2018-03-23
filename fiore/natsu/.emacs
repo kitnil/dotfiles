@@ -1195,6 +1195,20 @@ for COMMIT, defaulting to the commit hash at point."
 ;;; Magit
 ;;;
 
+(defvar magit-read-reuse-message-target "ORIG_HEAD")
+(setq magit-read-reuse-message-target "HEAD")
+
+(defun wi-magit-read-reuse-message (prompt &optional default)
+  (magit-completing-read prompt (magit-list-refnames)
+                         nil nil nil 'magit-revision-history
+                         (or default
+                             (and (magit-rev-verify
+                                   magit-read-reuse-message-target)
+                                  magit-read-reuse-message-target))))
+
+(advice-add 'magit-read-reuse-message
+            :override #'wi-magit-read-reuse-message)
+
 (magit-org-todos-autoinsert)
 
 (setq magit-repository-directories (f-directories wi-src))
