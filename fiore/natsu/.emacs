@@ -1193,13 +1193,6 @@ for COMMIT, defaulting to the commit hash at point."
 ;;; Magit
 ;;;
 
-(custom-set-faces
- '(magit-diff-added ((t (:foreground "#22aa22"))))
- '(magit-diff-added-highlight ((t (:foreground "#22aa22"))))
- '(magit-diff-context-highlight ((t (:foreground "grey50"))))
- '(magit-diff-removed ((t (:foreground "#aa2222"))))
- '(magit-diff-removed-highlight ((t (:foreground "#aa2222")))))
-
 (magit-org-todos-autoinsert)
 
 (setq magit-repository-directories (f-directories wi-src))
@@ -1782,11 +1775,7 @@ the appropriate network slug that we extract from the nick."
     map)
   "Keymap used by `irfc-mode'.")
 
-(custom-set-faces
- '(irfc-head-name-face ((t (:inherit font-lock-function-name-face))))
- '(irfc-head-number-face ((t (:inherit font-lock-function-name-face))))
- '(irfc-requirement-keyword-face ((t nil)))
- '(irfc-rfc-link-face ((t (:inherit link)))))
+
 
 
 ;;;
@@ -1997,7 +1986,10 @@ The optional argument NEW-WINDOW is not used."
    ;; '(mode-line-inactive ((t (:background "black" :box nil))))
    '(mode-line-buffer-id ((t (:background "grey15" :foreground "red"))))
    '(elfeed-search-title-face ((t (:foreground "dim gray"))))
-   '(elfeed-search-unread-title-face ((t (:foreground "white")))))
+   '(elfeed-search-unread-title-face ((t (:foreground "white"))))
+   '(completions-common-part ((t (:width normal :weight normal
+                                :slant normal :foreground "gold1"
+				:background "black")))))
 
   ;; Origin <https://github.com/Wilfred/.emacs.d/blob/gh-pages/init.org>.
   (set-face-foreground 'rainbow-delimiters-depth-1-face "white")
@@ -2459,10 +2451,20 @@ https://github.com/USER/REPO/commit/SHA1-HASH => SHA1-HASH"
      (eval modify-syntax-entry 36 "'")
      (eval modify-syntax-entry 126 "'")
      (bug-reference-bug-regexp . "<https?://\\(debbugs\\|bugs\\)\\.gnu\\.org/\\([0-9]+\\)>"))))
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(fringe ((t nil))) 
+ '(fringe ((t nil)))
+ '(irfc-head-name-face ((t (:inherit font-lock-function-name-face))))
+ '(irfc-head-number-face ((t (:inherit font-lock-function-name-face))))
+ '(irfc-requirement-keyword-face ((t nil)))
+ '(irfc-rfc-link-face ((t (:inherit link))))
+ '(magit-diff-added ((t (:foreground "#22aa22"))))
+ '(magit-diff-added-highlight ((t (:foreground "#22aa22"))))
+ '(magit-diff-context-highlight ((t (:foreground "grey50"))))
+ '(magit-diff-removed ((t (:foreground "#aa2222"))))
+ '(magit-diff-removed-highlight ((t (:foreground "#aa2222"))))
  '(markdown-code-face ((t (:inherit fixed-pitch)))))
