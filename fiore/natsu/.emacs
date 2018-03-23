@@ -1870,6 +1870,15 @@ The optional argument NEW-WINDOW is not used."
 
 
 ;;;
+;;; Outline
+;;;
+
+(add-hook 'outline-minor-mode-hook 'outshine-hook-function)
+(add-hook 'emacs-lisp-mode-hook 'outline-minor-mode)
+(add-hook 'scheme-mode-hook 'outline-minor-mode)
+
+
+;;;
 ;;; Misc
 ;;;
 
