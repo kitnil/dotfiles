@@ -15,6 +15,15 @@ are.  So make sure to backup them moving somewhere with:
 After changing file:fiore/natsu/.local/share/applications/mimeapps.list
   : $ update-desktop-database ~/.local/share/applications/
 
+* Usage
+
+  #+BEGIN_SRC shell
+    ~/src/guix/pre-inst-env\
+        guix package\
+        -L $HOME/dotfiles\
+        -m $HOME/dotfiles/fiore/manifests/guix-collection-manifest.scm
+  #+END_SRC
+
 * Thanks to
 
   - https://github.com/wiedzmin/stumpwm-config

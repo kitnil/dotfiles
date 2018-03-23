@@ -1,12 +1,9 @@
-(use-modules (gnu)
-             (guix packages)
-             (guix profiles)
-             (wigust packages emacs)
-             (wigust packages licensecheck)
-             (wigust packages pulseaudio)
-             (wigust packages python)
-             (wigust packages version-control)
-             (local packages emacs))
+(define-module (fiore manifests guix-collection)
+  #:use-module (gnu)
+  #:use-module (guix packages)
+  #:use-module (guix profiles)
+  #:export (guix-collection-packages-multiout
+            guix-collection-packages))
 
 (use-package-modules admin aspell audio backup bittorrent code
 conkeror commencement compression cran databases elf dictionaries
@@ -165,7 +162,6 @@ video virtualization w3m web xdisorg)
    emacs-hl-todo
    emacs-htmlize
    emacs-hydra
-   emacs-irfc
    emacs-ivy                ; Complition framework
    emacs-lua-mode
    emacs-markdown-mode      ; Commonmark major mode
@@ -179,12 +175,10 @@ video virtualization w3m web xdisorg)
    emacs-restclient
    emacs-slime              ; Sbcl repl
    emacs-smartparens        ; Structured editing
-   emacs-suggest
    emacs-transmission       ; Front end to transmission-daemon
    emacs-transpose-frame    ; M-x transpose-frame
    emacs-undo-tree          ; Undo visualisation
    emacs-use-package        ; Lazy configuration
-   emacs-validate
    emacs-w3m                ; Front end to w3m command line web browser
    emacs-which-key          ; Key bindings help
    emacs-yaml-mode          ; YAML files
@@ -224,67 +218,3 @@ video virtualization w3m web xdisorg)
    perl
 
    octave))
-
-(define guix-wigust-packages
-  (list
-
-   pulsemixer-emacs-keybindings
-   emacs-athena
-   emacs-beginend
-   emacs-engine-mode-autoload ; Define searches on websites
-   emacs-strace-mode-special ; Colorize `strace' logs
-
-   emacs-edit-server ; See <https://github.com/stsquad/emacs_chrome/>.
-
-   python-starred ; Fetch a list of stars from GitHub user
-
-   emacs-academic-phrases
-   emacs-add-hooks
-   emacs-anywhere-mode
-   emacs-auto-yasnippet
-   emacs-awk-it
-   emacs-crux
-   emacs-debpaste           ; Front end to <https://paste.debian.net/>
-   emacs-default-text-scale ; Scale text in all buffers
-   emacs-dumb-jump
-   emacs-edit-indirect
-   emacs-emamux
-   emacs-epkg
-   emacs-esup
-   emacs-eval-in-repl       ; Evaluate to different Repls
-   emacs-ewmctrl            ; Control X windows from Emacs
-   emacs-f3
-   emacs-fancy-narrow
-   emacs-grep-context
-   emacs-guix-local-checkout ; Guix interface
-   emacs-helm-c-yasnippet
-   emacs-helm-emms
-   emacs-helm-firefox       ; Search for bookmarks in Icecat
-   emacs-helm-gtags
-   emacs-helm-mode-manager
-   emacs-helm-navi
-   emacs-helm-pass          ; Front end to password-store
-   emacs-helm-shell-history
-   emacs-ibuffer-projectile
-   emacs-info-colors
-   emacs-info-colors        ; Colorize info pages
-   emacs-lice-el
-   emacs-macrostep
-   emacs-magit-org-todos-el
-   emacs-mbsync
-   emacs-move-text
-   emacs-org-mind-map       ; General mind maps from Org files
-   emacs-outshine           ; Emacs outline-mode
-   emacs-redshift
-   emacs-scratch-el
-   emacs-terminal-here
-
-   licensecheck ; Licence checker for source files
-
-   vc-dwim-git-worktree
-
-   twitchy))
-
-(packages->manifest `(,@guix-collection-packages
-                      ,@guix-collection-packages-multiout
-                      ,@guix-wigust-packages))
