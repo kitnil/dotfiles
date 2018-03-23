@@ -197,6 +197,8 @@ line at fill column." t)
                         filename)
     filename))
 
+(autoload 'guix-ffap-store-path-p "guix-misc")
+
 (defun wi-find-file-at-point (&optional filename)
   "Find FILENAME, guessing a default from text around point.
 If `ffap-url-regexp' is not nil, the FILENAME may also be an URL.
