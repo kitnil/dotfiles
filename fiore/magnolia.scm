@@ -253,6 +253,7 @@ EndSection
 ;;; Support functions
 ;;;
 
+;; Origin <https://stackoverflow.com/a/20591545>.
 (define (cartesian-product . lists)
   (fold-right (lambda (xs ys)
                 (append-map (lambda (x)
