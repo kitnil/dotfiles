@@ -2,7 +2,7 @@
 ;; Copyright © 2017, 2018 Oleg Pykhalov <go.wigust@gmail.com>
 ;; Released under the GNU GPLv3 or any later version.
 
-(define-module (magnolia)
+(define-module (fiore magnolia)
   #:use-module (gnu)
   #:use-module (srfi srfi-1)
   #:use-module (ice-9 popen)
