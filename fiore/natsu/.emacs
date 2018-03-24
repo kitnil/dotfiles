@@ -577,10 +577,10 @@ Sets the following basend on PREFIX-MAP:
 
 (wi-define-keys "C-c e" emms
                 ("*" pulseaudio-control-set-volume "set vol")
-                ("+" pulseaudio-control-increase-volume "inc vol")
-                ("-" pulseaudio-control-decrease-volume "dec vol")
+                ("+" emms-volume-raise "inc vol")
+                ("-" emms-volume-lower "dec vol")
                 ("C-s" helm-emms "emms" :color blue)
-                ("c" emms-pause "pause")
+                ("P" emms-pause "pause")
                 ("d" emms-play-directory "directory")
                 ("e" emms "emms" :color blue)
                 ("n" wi-emms-next "next")
