@@ -334,8 +334,8 @@ EndSection
      (plain-file "hosts"
                  (string-append (local-host-aliases host-name)
                                 (prefix-local-host-aliases
-                                 '("cgit" "guix" "www" "natsu"
-                                   "torrent" "print")
+                                 '("cgit" "git" "guix" "www"
+                                   "natsu" "torrent" "print")
                                  host-name ".local")
                                 %facebook-host-aliases)))
 
