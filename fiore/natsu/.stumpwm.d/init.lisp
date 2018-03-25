@@ -50,8 +50,8 @@
 
 (clear-window-placement-rules)
 
-(restore-window-placement-rules "~/.desktop.lisp")
-(restore-from-file "~/.stumpwm-dump-desktop.lisp")
+;; (restore-window-placement-rules "~/.desktop.lisp")
+;; (restore-from-file "~/.stumpwm-dump-desktop.lisp")
 
 ;; Last rule to match takes precedence!
 ;; If the argument to :title or :role begins with an ellipsis, a
