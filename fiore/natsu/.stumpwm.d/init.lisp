@@ -88,7 +88,7 @@
 (defvar *wi-xterm-theme-dark*
   "-bg black -fg white")
 
-(defvar *wi-xterm-scrollbar*
+(defvar *wi-xterm-no-scrollbar*
   "+sb")
 
 (defvar *wi-term-execute-flag*
@@ -160,7 +160,7 @@
   "Open a W3M browser in user's home directory."
   (run-shell-command (join (list *wi-xterm-command*
                                  *wi-xterm-theme-light*
-                                 *wi-xterm-scrollbar*
+                                 *wi-xterm-no-scrollbar*
                                  *wi-term-execute-flag*
                                  (w3m "~"))
                            #\ )))
@@ -169,7 +169,7 @@
   "Open an IRC Guix log in `w3m'."
   (run-shell-command (join (list *wi-xterm-command*
                                  *wi-xterm-theme-light*
-                                 *wi-xterm-scrollbar*
+                                 *wi-xterm-no-scrollbar*
                                  *wi-term-execute-flag*
                                  (w3m "https://gnunet.org/bot/log/guix/"))
                            #\ )))
@@ -307,7 +307,7 @@
   "Download video."
   (run-shell-command (join (list *wi-xterm-command*
                                  *wi-xterm-theme-dark*
-                                 *wi-xterm-scrollbar*
+                                 *wi-xterm-no-scrollbar*
                                  *wi-term-execute-flag*
                                  *wi-pulsemixer-command*)
                            #\ )))
@@ -325,7 +325,8 @@
   "Start or focus XTerm."
   (run-prog *shell-program*
             :args (list "-c" (join (list *wi-xterm-command*
-                                         *wi-xterm-theme-dark*) #\ ))
+                                         *wi-xterm-theme-dark*
+                                         *wi-xterm-no-scrollbar*) #\ ))
             :wait nil))
 
 (defcommand wi-xterm-dark-no-scrollbar () ()
