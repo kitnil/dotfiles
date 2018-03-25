@@ -273,6 +273,13 @@ and the functions `ffap-file-at-point' and `ffap-url-at-point'."
 
 
 ;;;
+;;; smart-mode-line
+;;;
+
+(sml/setup)
+
+
+;;;
 ;;; Keybindings
 ;;;
 ;;; See <https://www.gnu.org/software/emacs/manual/html_node/elisp/Key-Binding-Conventions.html>.
@@ -2456,6 +2463,8 @@ https://github.com/USER/REPO/commit/SHA1-HASH => SHA1-HASH"
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default))
  '(debug-on-error nil)
  '(indent-tabs-mode nil)
  '(safe-local-variable-values
