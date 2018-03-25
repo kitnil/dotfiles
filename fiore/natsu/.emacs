@@ -40,8 +40,8 @@
 (setq smtpmail-queue-mail t) ; Call after typing M-x `smtpmail-send-queued-mail'
 
 (menu-bar-mode -1)
-(scroll-bar-mode 1)
 (set-scroll-bar-mode 'right)
+(scroll-bar-mode -1)
 
 ;; Default from Emacs 26
 ;; See <http://git.savannah.gnu.org/cgit/emacs.git/commit/etc/NEWS?id=72ee93d68daea00e2ee69417afd4e31b3145a9fa>
@@ -270,13 +270,6 @@ and the functions `ffap-file-at-point' and `ffap-url-at-point'."
 (put 'narrow-to-page 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
 (put 'set-goal-column 'disabled nil)
-
-
-;;;
-;;; smart-mode-line
-;;;
-
-(sml/setup)
 
 
 ;;;
@@ -2001,6 +1994,11 @@ The optional argument NEW-WINDOW is not used."
 
 (blink-cursor-mode)
 
+
+;;;
+;;; Theme
+;;;
+
 (defun wi-manoj-dark ()
   (interactive)
   (load-theme 'manoj-dark)
@@ -2013,10 +2011,13 @@ The optional argument NEW-WINDOW is not used."
    '(fringe ((t (:background "black" :foreground "Wheat"))))
    '(header-line
      ((t (:background "black" :foreground "grey90" :height 0.9))))
-   '(scroll-bar ((t (:background "black" :foreground "WhiteSmoke"))))
+   ;; '(scroll-bar ((t (:background "black" :foreground "WhiteSmoke"))))
    ;; '(mode-line ((t (:background "WhiteSmoke" :foreground "black"))))
    ;; '(mode-line-inactive ((t (:background "black" :box nil))))
-   '(mode-line-buffer-id ((t (:background "grey15" :foreground "red"))))
+   ;; '(mode-line-buffer-id ((t (:background "grey15" :foreground "red"))))
+   '(mode-line ((t (:background "gray18" :foreground "white" :inverse-video nil :box (:line-width 1 :color "black") :height 1.0))))
+   '(mode-line-inactive ((t (:background "black" :foreground "white" :inverse-video nil :box (:line-width 1 :color "black") :weight light :height 1.0))))
+   '(mode-line-buffer-id ((t (:background "black" :foreground "red"))))
    '(elfeed-search-title-face ((t (:foreground "dim gray"))))
    '(elfeed-search-unread-title-face ((t (:foreground "white"))))
    '(completions-common-part ((t (:width normal :weight normal
@@ -2024,16 +2025,27 @@ The optional argument NEW-WINDOW is not used."
 				:background "black")))))
 
   ;; Origin <https://github.com/Wilfred/.emacs.d/blob/gh-pages/init.org>.
-  (set-face-foreground 'rainbow-delimiters-depth-1-face "white")
-  (set-face-foreground 'rainbow-delimiters-depth-2-face "cyan")
-  (set-face-foreground 'rainbow-delimiters-depth-3-face "yellow")
-  (set-face-foreground 'rainbow-delimiters-depth-4-face "green")
-  (set-face-foreground 'rainbow-delimiters-depth-5-face "orange")
-  (set-face-foreground 'rainbow-delimiters-depth-6-face "purple")
-  (set-face-foreground 'rainbow-delimiters-depth-7-face "white")
-  (set-face-foreground 'rainbow-delimiters-depth-8-face "cyan")
-  (set-face-foreground 'rainbow-delimiters-depth-9-face "yellow")
-  (set-face-foreground 'rainbow-delimiters-unmatched-face "red"))
+  (with-eval-after-load 'rainbow-delimiters
+    (set-face-foreground 'rainbow-delimiters-depth-1-face "white")
+    (set-face-foreground 'rainbow-delimiters-depth-2-face "cyan")
+    (set-face-foreground 'rainbow-delimiters-depth-3-face "yellow")
+    (set-face-foreground 'rainbow-delimiters-depth-4-face "green")
+    (set-face-foreground 'rainbow-delimiters-depth-5-face "orange")
+    (set-face-foreground 'rainbow-delimiters-depth-6-face "purple")
+    (set-face-foreground 'rainbow-delimiters-depth-7-face "white")
+    (set-face-foreground 'rainbow-delimiters-depth-8-face "cyan")
+    (set-face-foreground 'rainbow-delimiters-depth-9-face "yellow")
+    (set-face-foreground 'rainbow-delimiters-unmatched-face "red")))
+
+(wi-manoj-dark)
+
+
+;;;
+;;; smart-mode-line
+;;;
+
+(setq sml/no-confirm-load-theme t)
+(sml/setup)
 
 (default-text-scale-mode)
 (global-git-gutter-mode)
@@ -2464,7 +2476,7 @@ https://github.com/USER/REPO/commit/SHA1-HASH => SHA1-HASH"
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(custom-safe-themes
-   '("a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default))
+   '("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default))
  '(debug-on-error nil)
  '(indent-tabs-mode nil)
  '(safe-local-variable-values
