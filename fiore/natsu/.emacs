@@ -73,8 +73,7 @@
 
 (setq mail-user-agent 'gnus-user-agent)
 
-;; FIXME: Doesn't load on start up
-(use-package undo-tree-mode :defer 5 :config (global-undo-tree-mode))
+(global-undo-tree-mode)
 
 (use-package projectile :defer 5 :config (projectile-global-mode))
 
