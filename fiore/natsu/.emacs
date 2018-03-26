@@ -1720,6 +1720,11 @@ the appropriate network slug that we extract from the nick."
   (add-to-list 'helm-emms-music-extensions "mkv")
   (add-to-list 'helm-emms-music-extensions "webm"))
 
+
+;;;
+;;; Stream
+;;;
+
 (defcustom wi-helm-wigust-stream-urls
   '("https://www.twitch.tv/nekrovim"
     "https://www.twitch.tv/entr_ru"
