@@ -583,9 +583,9 @@ Sets the following basend on PREFIX-MAP:
                 ("P" emms-pause "pause")
                 ("d" emms-play-directory "directory")
                 ("e" emms "emms" :color blue)
-                ("n" wi-emms-next "next")
-                ("p" wi-emms-prev "previous")
-                ("r" wi-emms-random "random")
+                ("n" emms-next-show "next")
+                ("p" emms-previous-show "previous")
+                ("r" emms-random-show "random")
                 ("s" emms-stop "stop"))
 
 (wi-define-keys "C-c m d" debbugs
@@ -1664,7 +1664,41 @@ the appropriate network slug that we extract from the nick."
 
 (add-to-list 'emms-player-list 'emms-player-wi-mpv)
 
+(with-eval-after-load 'emms-setup
+  (emms-standard)
+  (emms-default-players)
+
+  (setq emms-volume-change-function #'emms-volume-pulse-change)
+  (setq emms-player-next-function 'emms-next-noerror)
+  (emms-mode-line -1)
+  (setq emms-playing-time-display-p nil)
+  (setq emms-playlist-mode-center-when-go t))
+
+(defmacro define-emms-advice-after (procedure after-procedure)
+  `(progn
+     (defun ,(intern (concat (symbol-name procedure)
+                             "-"
+                             (mapconcat 'identity
+                                        (cdr (split-string (symbol-name after-procedure)
+                                                           "-"))
+                                        "-")))
+         nil
+       ,(format "Evaluate `%S' and call `%S'." procedure after-procedure)
+       (interactive)
+       (,procedure)
+       (,after-procedure))))
+
+(define-emms-advice-after emms-next emms-playlist-mode-center-current)
+(define-emms-advice-after emms-previous emms-playlist-mode-center-current)
+(define-emms-advice-after emms-random emms-playlist-mode-center-current)
+(define-emms-advice-after emms-next emms-show)
+(define-emms-advice-after emms-previous emms-show)
+(define-emms-advice-after emms-random emms-show)
+
 (dolist (map (list emms-playlist-mode-map))
+  (define-key map (kbd "n") 'emms-next-playlist-mode-center-current)
+  (define-key map (kbd "p") 'emms-previous-playlist-mode-center-current)
+  (define-key map (kbd "r") 'emms-random-playlist-mode-center-current)
   (define-key map (kbd "m") 'emms-player-simple-mpv-mute)
   (define-key map (kbd "[") 'emms-player-simple-mpv-speed-decrease)
   (define-key map (kbd "]") 'emms-player-simple-mpv-speed-increase)
@@ -1675,53 +1709,6 @@ the appropriate network slug that we extract from the nick."
   (define-key map (kbd "F") 'emms-player-simple-mpv-fullscreen)
   (define-key map (kbd "9") 'emms-volume-lower)
   (define-key map (kbd "0") 'emms-volume-raise))
-
-
-(with-eval-after-load 'emms-setup
-  (emms-standard)
-  (emms-default-players)
-
-  (setq emms-volume-change-function #'emms-volume-pulse-change)
-  (setq emms-player-next-function 'emms-next-noerror)
-  (emms-mode-line -1)
-  (setq emms-playing-time-display-p nil)
-  (setq emms-playlist-mode-center-when-go t)
-
-  (define-key emms-playlist-mode-map (kbd "n")
-    (lambda ()
-      (interactive)
-      (emms-next)
-      (emms-playlist-mode-center-current)))
-
-  (define-key emms-playlist-mode-map (kbd "p")
-    (lambda ()
-      (interactive)
-      (emms-previous)
-      (emms-playlist-mode-center-current)))
-
-  (define-key emms-playlist-mode-map (kbd "r")
-    (lambda ()
-      (interactive)
-      (emms-random)
-      (emms-playlist-mode-center-current)))
-
-  (defun wi-emms-next ()
-    "Start playing the next track and show it in echo area."
-    (interactive)
-    (emms-next)
-    (emms-show))
-
-  (defun wi-emms-prev ()
-    "Start playing the previous track and show it in echo area."
-    (interactive)
-    (emms-previous)
-    (emms-show))
-
-  (defun wi-emms-random ()
-    "Start playing the random track and show it in echo area."
-    (interactive)
-    (emms-random)
-    (emms-show)))
 
 (use-package helm-emms
   :after emms-setup
