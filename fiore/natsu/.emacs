@@ -1647,9 +1647,37 @@ the appropriate network slug that we extract from the nick."
 ;;; EMMS
 ;;;
 
-(use-package emms-setup
-  :defer 5
-  :config
+(define-emms-simple-player-mpv wi-mpv '(file url streamlist playlist)
+    (concat "\\`\\(http[s]?\\|mms\\)://\\|"
+            (apply #'emms-player-simple-regexp
+                   "aac" "pls" "m3u" "mpg321"
+                   emms-player-base-format-list))
+    "mpv" "--no-terminal" "--force-window=no" "--audio-display=no"
+    "--no-resume-playback" "--keep-open=no"
+    "--audio-device=pulse/alsa_output.usb\
+-Logitech_Logitech_USB_Headset-00.analog-stereo"
+    "--no-video")
+
+(emms-player-simple-mpv-add-to-converters
+ 'emms-player-wi-mpv "." '(playlist)
+ (lambda (track-name) (format "--playlist=%s" track-name)))
+
+(add-to-list 'emms-player-list 'emms-player-wi-mpv)
+
+(dolist (map (list emms-playlist-mode-map))
+  (define-key map (kbd "m") 'emms-player-simple-mpv-mute)
+  (define-key map (kbd "[") 'emms-player-simple-mpv-speed-decrease)
+  (define-key map (kbd "]") 'emms-player-simple-mpv-speed-increase)
+  (define-key map (kbd "{") 'emms-player-simple-mpv-speed-halve)
+  (define-key map (kbd "}") 'emms-player-simple-mpv-speed-double)
+  (define-key map (kbd "<backspace>") 'emms-player-simple-mpv-speed-normal)
+  (define-key map (kbd "T") 'emms-player-simple-mpv-ontop)
+  (define-key map (kbd "F") 'emms-player-simple-mpv-fullscreen)
+  (define-key map (kbd "9") 'emms-volume-lower)
+  (define-key map (kbd "0") 'emms-volume-raise))
+
+
+(with-eval-after-load 'emms-setup
   (emms-standard)
   (emms-default-players)
 
@@ -1693,34 +1721,7 @@ the appropriate network slug that we extract from the nick."
     "Start playing the random track and show it in echo area."
     (interactive)
     (emms-random)
-    (emms-show))
-
-  (use-package emms-player-mpv
-    :config
-    (add-to-list 'emms-player-list 'emms-player-mpv)
-
-    (defcustom emms-player-mpv-music nil
-      "Non-nil if MPV in Emms in music mode.")
-
-    (defun wi-toggle-emms-mpv ()
-      "If browse-url-mpv-headphones non-nil set it to t and set
-`emms-player-mpv-music' headphones."
-      (interactive)
-      (let ((emms-player-mpv-parameters-default '("--keep-open=no"
-                                                  "--no-resume-playback")))
-          (if emms-player-mpv-music
-              (progn (setq emms-player-mpv-parameters
-                           emms-player-mpv-parameters-default)
-                     (setq emms-player-mpv-music nil))
-        (setq emms-player-mpv-parameters
-              `(,@emms-player-mpv-parameters-default
-                ,(concat "--audio-device=" ‎wi-headphones)
-                "--no-video"))
-        (setq emms-player-mpv-music t)))
-      (message "MPV for headphones is %s"
-               (if emms-player-mpv-music "enabled" "disabled")))
-
-    (wi-toggle-emms-mpv)))
+    (emms-show)))
 
 (use-package helm-emms
   :after emms-setup
