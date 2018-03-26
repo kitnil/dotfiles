@@ -184,6 +184,8 @@
     (funcall ffap-info-finder filename))
    ((error "No such file or directory `%s'" filename))))
 
+(autoload 'browse-at-remote--remote-ref "browse-at-remote")
+
 (defun wi-github-issue-at-point (&optional issue)
   "Start `browse-url', defaulting to issue at point.  See `ffap'. "
   (interactive)
@@ -191,8 +193,8 @@
   (if (numberp issue)
       (browse-url
        (concat (car (browse-at-remote--remote-ref default-directory))
-               "/issues/" (number-to-string issue))))
-  ((error "No issue number at point `%s'" issue)))
+               "/issues/" (number-to-string issue)))
+    (error "No issue number at point `%s'" issue)))
 
 (autoload 'fci-mode "fill-column-indicator"
   "Indicate the location of the fill column by drawing a thin
