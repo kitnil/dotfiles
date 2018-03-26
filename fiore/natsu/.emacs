@@ -152,13 +152,37 @@
   (concat wi-twitch-url-regexp
           (rx "/videos/" (one-or-more digit) line-end)))
 
+(defvar youtube-url-regexp
+  (rx "http" (zero-or-more "s") "://" (zero-or-more "www.")
+      "youtube.com"))
+
+(defvar youtube-url-video-regexp
+  (concat youtube-url-regexp
+          (rx "/watch?v=" (one-or-more alphanumeric) line-end)))
+
+(defun youtube-free-url (url)
+  "Convert youtube.com to hooktube.com URL and put into `kill-ring'.
+
+WARNING:  hooktube.com requries non-free JavaScript."
+  (interactive
+   (let ((clipboard (x-get-clipboard)))
+     (list
+      (if (string-match-p youtube-url-video-regexp
+                          clipboard)
+          clipboard
+        (read-string "YouTube video URL: ")))))
+  (kill-new (concat "https://hooktube.com/watch?v="
+                    (car (last (split-string (car (last (split-string url
+                                                                      "/")))
+                                             "="))))))
+
 (setq browse-url-browser-function
       `(("^ftp://.*" . browse-ftp-tramp)
         (,(format "^%s\\(%s\\)?\\([[:digit:]]+\\)$"
 	  "https?://\\(debbugs\\|bugs\\)\\.gnu\\.org/"
 	  (regexp-quote "cgi/bugreport.cgi?bug="))
          . debbugs-browse-url)
-        ("^https?://w*\\.?youtube.com/watch\\?v=.*" . browse-url-mpv)
+        (,youtube-url-video-regexp . browse-url-mpv)
         (,wi-twitch-video-url-regexp . browse-url-mpv)
         (,wi-twitch-url-regexp . browse-url-streamlink)
         (,wi-url-hydra-regexp . browse-url-firefox)
