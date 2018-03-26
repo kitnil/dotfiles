@@ -55,8 +55,11 @@
 .usb-Logitech_Logitech_USB_Headset-00.analog-stereo"
   "My USB headphones")
 
-;; TODO: Make initialization without `use-package'
-(use-package org-protocol :defer 5) ; For `org-capture' from Xorg
+(autoload 'server-running-p "server")
+(unless (server-running-p)
+  (server-start)
+  (require 'org-protocol) ; For `org-capture' from Xorg
+  )
 
 ;; Encrypt Email message with Gnupg
 (with-eval-after-load 'message
@@ -299,8 +302,8 @@ Sets the following basend on PREFIX-MAP:
                                              (symbol-name prefix-map)
                                              "-map"))
                 ,@(mapcar (lambda (arg)
-                            (let ((key (first arg))
-                                  (func (second arg)))
+                            (let ((key (car arg))
+                                  (func (cadr arg)))
                               (cons key func)))
                           args)
                 ("h" . ,(intern (concat "hydra-"
