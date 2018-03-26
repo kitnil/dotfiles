@@ -2079,7 +2079,7 @@ downloading manager for Emacs.")
       (license license:gpl3+))))
 
 (define-public emacs-emms-player-simple-mpv
-  (let ((commit "1af7838037c86872e897bea872d279ff080c28c6")
+  (let ((commit "101d120ccdee1c2c213fd2f0423c858b21649c00")
         (revision "1"))
     (package
       (name "emacs-emms-player-simple-mpv")
@@ -2092,12 +2092,13 @@ downloading manager for Emacs.")
          (uri (git-reference
                (url "https://github.com/momomo5717/emms-player-simple-mpv.git")
                (commit commit)))
-         (file-name (string-append name "-" version "-checkout"))
+         (file-name (git-file-name name version))
          (sha256
           (base32
-           "1xgkpw89pyn4p37l5rz9dw8yg065slzq8l5z69n6nam9hndcnjsh"))))
+           "1i6rxkm0ra0jbkkwgkwxg3vk5xfl794h1gkgnlpscynz0v94b6ll"))))
       (build-system emacs-build-system)
-      (propagated-inputs `(("emacs-emms" ,emms)))
+      (propagated-inputs
+       `(("emacs-emms" ,emms)))
       (home-page "https://github.com/momomo5717/emms-player-simple-mpv")
       (synopsis "An extension of emms-player-simple.el for mpv JSON IPC")
       (description "@code{emms-player-simple-mpv} provides macros and
