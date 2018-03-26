@@ -1710,12 +1710,13 @@ the appropriate network slug that we extract from the nick."
   (define-key map (kbd "9") 'emms-volume-lower)
   (define-key map (kbd "0") 'emms-volume-raise))
 
-(use-package helm-emms
-  :after emms-setup
-  :config
-  (setq helm-emms-use-track-description-function t)
+(with-eval-after-load 'emms-setup
   (setq emms-track-description-function (lambda (v) (assoc-default 'name v)))
-  (setq emms-source-file-default-directory "/srv/music")
+  (setq emms-source-file-default-directory "/srv/music"))
+
+(with-eval-after-load 'helm-emms
+  (require 'emms-setup)
+  (setq helm-emms-use-track-description-function t)
   (add-to-list 'helm-emms-music-extensions "mkv")
   (add-to-list 'helm-emms-music-extensions "webm"))
 
