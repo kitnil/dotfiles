@@ -63,7 +63,8 @@
   (require 'jl-encrypt)
   (add-hook 'message-setup-hook 'mml-secure-encrypt-if-possible))
 
-(use-package crux :defer 5) ; Useful functions like `crux-open-with'
+(autoload 'crux-transpose-windows "crux" nil t)
+(autoload 'crux-open-with "crux" nil t)
 
 (use-package notmuch
   :commands notmuch-search
