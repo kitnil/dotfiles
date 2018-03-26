@@ -57,7 +57,12 @@
 
 ;; TODO: Make initialization without `use-package'
 (use-package org-protocol :defer 5) ; For `org-capture' from Xorg
-(use-package jl-encrypt :defer 5) ; Encrypt email before send
+
+;; Encrypt Email message with Gnupg
+(with-eval-after-load 'message
+  (require 'jl-encrypt)
+  (add-hook 'message-setup-hook 'mml-secure-encrypt-if-possible))
+
 (use-package crux :defer 5) ; Useful functions like `crux-open-with'
 
 (use-package notmuch
