@@ -74,11 +74,9 @@
 (setq mail-user-agent 'gnus-user-agent)
 
 (global-undo-tree-mode)
+(projectile-global-mode)
 
-(use-package projectile :defer 5 :config (projectile-global-mode))
-
-;; TODO: Lazy load
-(use-package debbugs-browse) ; for debbugs-browse-url
+(autoload 'debbugs-browse-url "debbugs-browse" nil t)
 
 
 ;;;
@@ -153,7 +151,10 @@
 
 (setq browse-url-browser-function
       `(("^ftp://.*" . browse-ftp-tramp)
-        (,debbugs-browse-url-regexp . debbugs-browse-url)
+        (,(format "^%s\\(%s\\)?\\([[:digit:]]+\\)$"
+	  "https?://\\(debbugs\\|bugs\\)\\.gnu\\.org/"
+	  (regexp-quote "cgi/bugreport.cgi?bug="))
+         . debbugs-browse-url)
         ("^https?://w*\\.?youtube.com/watch\\?v=.*" . browse-url-mpv)
         (,wi-twitch-video-url-regexp . browse-url-mpv)
         (,wi-twitch-url-regexp . browse-url-streamlink)
