@@ -66,10 +66,9 @@
 (autoload 'crux-transpose-windows "crux" nil t)
 (autoload 'crux-open-with "crux" nil t)
 
-(use-package notmuch
-  :commands notmuch-search
-  :config
-  ;; See <https://notmuchmail.org/pipermail/notmuch/2014/019797.html>.
+(autoload 'notmuch-search "notmuch" nil t)
+
+(with-eval-after-load 'notmuch
   (setq mail-user-agent 'gnus-user-agent))
 
 (setq mail-user-agent 'gnus-user-agent)
