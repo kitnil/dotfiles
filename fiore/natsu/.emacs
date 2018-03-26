@@ -1605,20 +1605,20 @@ Push branch master to local/master."
 
 ;;; Code:
 
-(defun vbe:znc-add-server (server port user networks)
+(defun znc-setup (server port user networks)
   "Add a server to the list of ZNC servers.
 
 We use SSL inconditionaly. Moreover, we don't store the password
 but put nil instead. At least, we tweak the username to contain
 the network name later, this will be separated again."
-  (add-to-list 'znc-servers
-               (list server port
-                     nil ;; SSL enabled
-                     (mapcar (function (lambda (slug)
-                                         (list slug
-                                               (format "%s/%s" user slug)
-                                               nil)))
-                             networks))))
+  (setq znc-servers
+        (list (list server port
+                    nil ;; SSL enabled
+                    (mapcar (function (lambda (slug)
+                                        (list slug
+                                              (format "%s/%s" user slug)
+                                              nil)))
+                            networks)))))
 
 (defun vbe:znc-erc-connector (&rest R)
   "Connect to ERC using and retrieve password with `auth-source-search'.
@@ -1645,12 +1645,7 @@ the appropriate network slug that we extract from the nick."
 (setq znc-erc-connector 'vbe:znc-erc-connector)
 
 ;; ;; Define networks
-(use-package znc
-  :defer 5
-  :config
-  (vbe:znc-add-server
-   "localhost" 8060 "natsu"
-   '(freenode perl p2p twitch)))
+(znc-setup "localhost" 8060 "natsu" '(freenode perl p2p twitch))
 
 
 ;;;
