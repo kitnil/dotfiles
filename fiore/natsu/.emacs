@@ -1786,6 +1786,15 @@ the appropriate network slug that we extract from the nick."
                    :fuzzy-match t)
         :buffer "*helm urls*"))
 
+(defun erc-twitch (channel)
+  "Open a current buffer with `browse-url-streamlink'"
+  (interactive)
+  (if (car (member channel '("#nekrovim" "#arhont713")))
+      (browse-url-streamlink (concat "https://twitch.tv/"
+                                     (car (last (split-string channel
+                                                              "#")))))
+    (error "“%s” is not a Twitch.tv channel." channel)))
+
 
 ;;;
 ;;; RFC
