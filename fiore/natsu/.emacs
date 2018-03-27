@@ -235,6 +235,17 @@ line at fill column." t)
 
 (autoload 'guix-ffap-store-path-p "guix-misc")
 
+(defcustom guix-profile-path-regexp
+  (rx-to-string `(and line-start
+                      (or "~" ,(getenv "HOME")) "/.guix-profile/"))
+  "Regexp matching Guix profile path."
+  :type 'regexp
+  :group 'guix)
+
+(defun guix-ffap-profile-path-p (filename)
+  "If FILENAME matches `guix-profile-path-regexp', return it."
+  (when (string-match-p guix-profile-path-regexp filename) filename))
+
 (defun wi-find-file-at-point (&optional filename)
   "Find FILENAME, guessing a default from text around point.
 If `ffap-url-regexp' is not nil, the FILENAME may also be an URL.
@@ -253,6 +264,7 @@ and the functions `ffap-file-at-point' and `ffap-url-at-point'."
     (let ((url (ffap-url-p filename))
           (info-page (ffap-info-p filename))
           (guix-store-dir (guix-ffap-store-path-p filename))
+          (guix-profile-dir (guix-ffap-profile-path-p filename))
           (guix-package-source (guix-ffap-store-package-source-path-p
                                 filename)))
       (cond
@@ -268,6 +280,9 @@ and the functions `ffap-file-at-point' and `ffap-url-at-point'."
        (guix-store-dir
         (let (current-prefix-arg)
           (guix-run-in-shell (concat "find " filename))))
+       (guix-profile-dir
+        (let (current-prefix-arg)
+          (guix-run-in-shell (concat "readlink " filename))))
        ((and ffap-pass-wildcards-to-dired
 	     ffap-dired-wildcards
 	     (string-match ffap-dired-wildcards filename))
