@@ -2280,6 +2280,8 @@ be updated automatically."))
 ;; Not white background in dark themes.
 ;; Origin <https://emacs.stackexchange.com/a/3523>
 (setq shr-color-visible-luminance-min 100)
+(advice-add #'shr-colorize-region
+            :around (defun shr-no-colourise-region (&rest ignore)))
 
 ;; Toggle show-paren-mode on
 (show-paren-mode)
