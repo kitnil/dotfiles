@@ -489,7 +489,7 @@ Sets the following basend on PREFIX-MAP:
                 ;; TODO: ("g" . wi-browse-at-remote-gnu)
                 ("b" browse-at-remote "browse" :color blue))
 
-(wi-define-keys "C-c v H" vc-hunk
+(wi-define-keys "C-c v v" vc-hunk
                 ("c" magit-commit "commit" :color blue)
                 ("n" git-gutter:next-hunk "next")
                 ("l" git-messenger:popup-message "line")
