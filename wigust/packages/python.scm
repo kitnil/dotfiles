@@ -283,37 +283,3 @@ database for a given name.")
 
 (define-public python2-unicode
   (package-with-python2 python-unicode))
-
-(define-public twitchy
-  (let ((commit "0c0f925b9c7ff2aed4a3b0046561cb794143c398"))
-    (package
-      (name "twitchy")
-      (version "3.2")
-      (source
-       (origin
-         (method git-fetch)
-         (uri (git-reference
-               (url "https://github.com/BasioMeusPuga/twitchy.git")
-               (commit commit)))
-         (file-name (git-file-name name version))
-         (sha256
-          (base32
-           "02aizvsr744sh8bdqvwwsmp2qpczlzn8fy76h5dyd3517n9nlcz9"))))
-      (build-system python-build-system)
-      (arguments
-       `(#:tests? #t
-         #:phases
-         (modify-phases %standard-phases
-           (add-before 'check 'check-setup
-             (lambda _
-               (setenv "HOME" (getcwd)) ; needs to write to $HOME
-               #t)))))
-      (inputs
-       `(("python-requests" ,python-requests)
-         ("python-setuptools" ,python-setuptools)
-         ("streamlink" ,streamlink)))
-      (home-page "https://github.com/BasioMeusPuga/twitchy")
-      (synopsis "Command-line interface for @uref{twitch.tv, Twitch}")
-      (description "This package provides a command-line interface for
-@uref{twitch.tv, Twitch}")
-      (license license:gpl3+))))
