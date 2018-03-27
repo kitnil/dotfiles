@@ -3957,3 +3957,15 @@ headings provided by @code{navi-mode} and @code{outshine}.")
 @item File header insertion.
 @end itemize\n")
       (license license:gpl3+))))
+
+(define-public emacs-git-messenger-diff-mode
+  (package
+    (inherit emacs-git-messenger)
+    (name "emacs-git-messenger-diff-mode")
+    (source
+     (origin
+       (inherit (package-source emacs-git-messenger))
+       (modules '((guix build utils)))
+         (snippet
+          '(substitute* "git-messenger.el"
+             (("\\(fundamental-mode\\)") "(diff-mode)")))))))
