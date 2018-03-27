@@ -2581,7 +2581,7 @@ https://github.com/USER/REPO/commit/SHA1-HASH => SHA1-HASH"
  '(fringe ((t nil)))
  '(irfc-head-name-face ((t (:inherit font-lock-function-name-face))))
  '(irfc-head-number-face ((t (:inherit font-lock-function-name-face))))
- '(irfc-requirement-keyword-face ((t nil)))
+ '(irfc-requirement-keyword-face ((t (:inherit font-lock-keyword-face))))
  '(irfc-rfc-link-face ((t (:inherit link))))
  '(magit-diff-added ((t (:foreground "#22aa22"))))
  '(magit-diff-added-highlight ((t (:foreground "#22aa22"))))
