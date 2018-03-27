@@ -233,6 +233,15 @@ line at fill column." t)
                         filename)
     filename))
 
+(defun ffap-man-p (filename)
+  "If FILENAME if Man page, return it."
+  (when (string-match-p (rx "/man" (zero-or-more digit)
+                            "/" (one-or-more (or alphanumeric "." "-" "_"))
+                            (zero-or-more ".gz")
+                            line-end)
+                        filename)
+    filename))
+
 (autoload 'guix-ffap-store-path-p "guix-misc")
 
 (defcustom guix-profile-path-regexp
@@ -263,6 +272,7 @@ and the functions `ffap-file-at-point' and `ffap-url-at-point'."
     (or filename (setq filename (ffap-prompter)))
     (let ((url (ffap-url-p filename))
           (info-page (ffap-info-p filename))
+          (man-page (ffap-man-p filename))
           (guix-store-dir (guix-ffap-store-path-p filename))
           (guix-profile-dir (guix-ffap-profile-path-p filename))
           (guix-package-source (guix-ffap-store-package-source-path-p
@@ -274,6 +284,9 @@ and the functions `ffap-file-at-point' and `ffap-url-at-point'."
        (info-page
         (let (current-prefix-arg)
           (info info-page)))
+       (man-page
+        (let (current-prefix-arg)
+          (man man-page)))
        (guix-package-source
         (let (current-prefix-arg)
           (guix-run-in-shell (concat "tar xf " filename))))
