@@ -404,8 +404,9 @@ EndSection
                                                 "192.168.105.120"
                                                 #:netmask "255.255.255.0"
                                                 #:gateway "192.168.105.1"
-                                                #:name-servers '("8.8.8.8"
-                                                                 "8.8.4.4"))
+                                                ;; See <https://freedns.zone>.
+                                                #:name-servers '("37.235.1.174"
+                                                                 "37.235.1.177"))
 
                      (service openssh-service-type)
 
