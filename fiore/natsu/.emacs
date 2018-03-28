@@ -1188,6 +1188,20 @@ for COMMIT, defaulting to the commit hash at point."
   (let ((guix-hydra-url "https://berlin.guixsd.org"))
     (guix-hydra-latest-builds 100)))
 
+(defcustom guix-substitute-servers
+  '("https://berlin.guixsd.org/" "https://hydra.gnu.org/")
+  "List of Guix substitute servers."
+  :type '(repeat string)
+  :group 'guix)
+
+(defun guix-substitute-servers-narinfo (hash)
+  (mapcar (lambda (server)
+            (mapconcat 'identity
+                       (list "wget" "-q" "-O" "-"
+                             (concat server hash ".narinfo"))
+                       " "))
+          guix-substitute-servers))
+
 
 ;;;
 ;;; C-mode
