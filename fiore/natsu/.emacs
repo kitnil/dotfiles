@@ -2318,7 +2318,7 @@ be updated automatically."))
 
 ;; `eww' fonts
 (setq shr-width 80)
-(setq shr-use-fonts nil)
+(setq-default shr-use-fonts nil)
 (setq shr-external-browser 'browse-url-conkeror)
 
 ;; Not white background in dark themes.
