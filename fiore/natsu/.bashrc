@@ -7,9 +7,9 @@ then
     . "/etc/skel/.bashrc"
 fi
 
-if [ -f "$HOME/.bash_aliases" ]
+if [ -f ".bash_aliases" ]
 then
     # Load the Bash aliases and functions.
-    . "$HOME/.bash_aliases"
+    . ".bash_aliases"
 fi
 
