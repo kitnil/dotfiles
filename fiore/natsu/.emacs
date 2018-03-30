@@ -158,7 +158,9 @@
 
 (defvar youtube-url-video-regexp
   (concat youtube-url-regexp
-          (rx "/watch?v=" (one-or-more alphanumeric) line-end)))
+          (rx "/watch?v="
+              (one-or-more (or alphanumeric "-"))
+              line-end)))
 
 (defun youtube-free-url (url)
   "Convert youtube.com to hooktube.com URL and put into `kill-ring'.
