@@ -1846,8 +1846,13 @@ the appropriate network slug that we extract from the nick."
 
 (setq irfc-directory (expand-file-name "~/src/rfc"))
 
-;; From `irfc-assoc-mode'.
-(add-to-list 'auto-mode-alist '("/rfc[0-9]+\\.txt\\'" . irfc-mode))
+(defcustom irfc-file-regexp
+  (rx "rfc" (one-or-more numeric) ".txt")
+  "Regexp matching RFC file."
+  :group 'irfc
+  :type 'regexp)
+
+(add-to-list 'auto-mode-alist `(,irfc-file-regexp . irfc-mode))
 
 (defvar irfc-mode-map
   (let ((map (make-sparse-keymap)))
@@ -2342,7 +2347,7 @@ be updated automatically."))
 
 ;; Interested in those timezones
 (with-eval-after-load 'time
-  (setq display-time-world-time-format "%Z\t%d %B %H:%M")
+  (setq display-time-world-time-format "%Z\t%a\t%d %B %H:%M")
   (setq display-time-world-list
         '(("Europe/Moscow" "Europe/Moscow")
           ("Europe/Berlin" "Europe/Berlin")
