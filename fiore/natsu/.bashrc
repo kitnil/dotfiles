@@ -13,4 +13,7 @@ then
     . ".bash_aliases"
 fi
 
+unalias ls
+unalias grep
+
 function man { emacsclient --eval "(man \"$1\")"; }

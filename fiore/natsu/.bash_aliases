@@ -16,9 +16,6 @@ wi-git-hash ()
     git -C $1 rev-parse HEAD
 }
 
-unalias ls
-unalias grep
-
 alias wi-pre-guix='$HOME/src/guix/pre-inst-env env GUIX_PACKAGE_PATH= guix'
 
 alias wi-pre-guix-guile='./pre-inst-env\
