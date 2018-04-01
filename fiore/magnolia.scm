@@ -362,6 +362,7 @@ EndSection
       ;; For helm-stumpwm-commands and stumpish
       rlwrap
       xprop
+      xhost
 
       adb       ; For Replicant (Android distribution) control
       cups      ; Printer
