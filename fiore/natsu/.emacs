@@ -320,7 +320,7 @@ and the functions `ffap-file-at-point' and `ffap-url-at-point'."
 				  filename)))))))
 
 (with-eval-after-load 'ffap
-    (add-to-list 'ffap-alist '("\\.patch" . guix-devel-ffap-patch)))
+  (add-to-list 'ffap-alist '("\\.patch" . guix-devel-ffap-patch)))
 
 (advice-add 'find-file-at-point :override #'wi-find-file-at-point)
 
