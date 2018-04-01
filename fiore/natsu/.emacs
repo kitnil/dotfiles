@@ -319,13 +319,6 @@ and the functions `ffap-file-at-point' and `ffap-url-at-point'."
 				  "No such file or directory"
 				  filename)))))))
 
-(defvar guix-devel-ffap-patch-directories
-  (list (getenv "GUIX_PACKAGE_PATH") "patches"))
-
-(defun guix-devel-ffap-patch (name)
-  (or (ffap-locate-file name t guix-devel-ffap-patch-directories)
-      (expand-file-name name (car guix-devel-ffap-patch-directories))))
-
 (with-eval-after-load 'ffap
     (add-to-list 'ffap-alist '("\\.patch" . guix-devel-ffap-patch)))
 
