@@ -834,7 +834,8 @@ Sets the following basend on PREFIX-MAP:
   "https://www.google.com/search?q=%s&tbm=vid")
 
 (defengine guix-hydra
-  "https://hydra.gnu.org/search?query=%s")
+  "https://hydra.gnu.org/search?query=%s"
+  :keybinding "c")
 
 (defengine guix-hydra-job
   ;; e.g. gource-0.47
