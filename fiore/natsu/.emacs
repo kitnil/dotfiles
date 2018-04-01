@@ -1558,7 +1558,7 @@ Push branch master to local/master."
 ;;; Org
 ;;;
 
-(setq org-descriptive-links t)
+(setq org-descriptive-links nil)
 
 ;; (with-eval-after-load 'org
 ;;   (setq org-format-latex-options
