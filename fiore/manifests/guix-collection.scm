@@ -16,7 +16,10 @@ video virtualization w3m web xdisorg)
 
 (define guix-collection-packages-multiout
   (list
-   (list glib "bin")))
+   (list glib "bin")
+   (list git "gui")
+   (list git "send-email")
+   (list git "svn")))
 
 (define guix-collection-packages
   (list
@@ -33,7 +36,9 @@ video virtualization w3m web xdisorg)
    kodi-cli     ; Remote control Kodi
    transmission ; Bittorrent
 
+   mps-youtube
    streamlink
+   twitchy
    youtube-dl   ; Video and music from websites
 
    redshift  ; Color temperature
@@ -142,14 +147,12 @@ video virtualization w3m web xdisorg)
    emacs-debbugs ; <https://debbugs.gnu.org/> interface
    emacs-default-encrypt    ; Sign mail automatically
    emacs-elfeed             ; RSS reader
-   emacs-emms-player-mpv    ; Frontend to MPV for Emms
    emacs-erc-hl-nicks       ; for ERC
    emacs-expand-region
    emacs-ffap-rfc-space
    emacs-fill-column-indicator
    emacs-ggtags             ; Front end to GNU Global
    emacs-git-gutter
-   emacs-git-messenger      ; Show commit under the cursor
    emacs-git-timemachine
    emacs-gitpatch           ; Send patches
    emacs-god-mode           ; Commands without modifier keys
@@ -174,6 +177,7 @@ video virtualization w3m web xdisorg)
    emacs-rainbow-mode       ; Show colors in codes
    emacs-restclient
    emacs-slime              ; Sbcl repl
+   emacs-smart-mode-line
    emacs-smartparens        ; Structured editing
    emacs-transmission       ; Front end to transmission-daemon
    emacs-transpose-frame    ; M-x transpose-frame
@@ -190,9 +194,6 @@ video virtualization w3m web xdisorg)
    flycheck                 ; Syntax checker
    geiser                   ; Scheme bridge
 
-   (list git "gui")
-   (list git "send-email")
-   (list git "svn")
    git       ; Version control
    gource
    magit                    ; Emacs interface for Git

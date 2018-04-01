@@ -5,6 +5,7 @@
   #:use-module (wigust packages python)
   #:use-module (wigust packages version-control)
   #:use-module (local packages emacs)
+  #:use-module (gnu packages emacs)
   #:export (guix-wigust-packages))
 
 (define guix-wigust-packages
@@ -31,12 +32,14 @@
    emacs-dumb-jump
    emacs-edit-indirect
    emacs-emamux
+   emacs-emms-player-simple-mpv ; Frontend to MPV for Emms
    emacs-epkg
    emacs-esup
    emacs-eval-in-repl       ; Evaluate to different Repls
    emacs-ewmctrl            ; Control X windows from Emacs
    emacs-f3
    emacs-fancy-narrow
+   emacs-git-messenger-diff-mode
    emacs-grep-context
    emacs-guix-local-checkout ; Guix interface
    emacs-helm-c-yasnippet
@@ -50,6 +53,8 @@
    emacs-ibuffer-projectile
    emacs-info-colors
    emacs-info-colors        ; Colorize info pages
+   emacs-irfc
+   emacs-know-your-http-well
    emacs-lice-el
    emacs-macrostep
    emacs-magit-org-todos-el
@@ -57,15 +62,13 @@
    emacs-move-text
    emacs-org-mind-map       ; General mind maps from Org files
    emacs-outshine           ; Emacs outline-mode
+   emacs-pcre2el
    emacs-redshift
-   emacs-irfc
-   emacs-suggest
-   emacs-validate
    emacs-scratch-el
-   emacs-terminal-here
+   emacs-suggest
+   emacs-terminal-here-checkout
+   emacs-validate
 
    licensecheck ; Licence checker for source files
 
-   vc-dwim-git-worktree
-
-   twitchy))
+   vc-dwim-git-worktree))
