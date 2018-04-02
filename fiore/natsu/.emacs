@@ -76,6 +76,9 @@
 
 (setq mail-user-agent 'gnus-user-agent)
 
+(with-eval-after-load 'mailcap
+  (add-to-list 'mailcap-mime-extensions '(".scm" . "text/x-scheme")))
+
 (global-undo-tree-mode)
 (projectile-global-mode)
 
