@@ -235,6 +235,7 @@ EndSection
   ("@"  ""  "IN"  "NS" "ns")
   ("ns" ""  "IN"  "A"  "127.0.0.1")
   ("cgit.magnolia.local." ""  "IN"  "A"  "192.168.105.120")
+  ("git.magnolia.local." ""  "IN"  "A"  "192.168.105.120")
   ("guix.magnolia.local." ""  "IN"  "A"  "192.168.105.120")
   ("www.magnolia.local." ""  "IN"  "A"  "192.168.105.120")
   ("print.magnolia.local." ""  "IN"  "A"  "192.168.105.120")
