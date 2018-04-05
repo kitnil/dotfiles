@@ -21,6 +21,7 @@
 ;;; along with GNU Guix.  If not, see <http://www.gnu.org/licenses/>.
 
 (define-module (fiore majordomo)
+  #:use-module (srfi srfi-1)
   #:use-module (gnu)
   #:use-module (gnu bootloader u-boot)
   #:use-module (guix gexp)
@@ -29,6 +30,12 @@
   #:use-module ((guix store) #:select (%store-prefix))
   #:use-module (gnu services shepherd)
   #:use-module (gnu services ssh)
+  #:use-module (gnu services desktop)
+  #:use-module (gnu services rsync)
+  #:use-module (gnu services version-control)
+  #:use-module (gnu services mail)
+  #:use-module (gnu services cups)
+  #:use-module (gnu packages cups)
   #:use-module (gnu packages admin)
   #:use-module (gnu packages bash)
   #:use-module (gnu packages bootloaders)
@@ -55,6 +62,8 @@
 ;;; Code:
 
 
+(define %source-dir (dirname (current-filename)))
+
 (define (log-to-info)
   "Return a script that spawns the Info reader on the right section of the
 manual."
@@ -172,90 +181,142 @@ You have been warned.  Thanks for being so brave.\x1b[0m
     (define bare-bones-os
       (load "/home/natsu/src/guix/gnu/system/examples/bare-bones.tmpl"))
 
-    (list (service virtual-terminal-service-type)
+    (cons* (service virtual-terminal-service-type)
 
-          (mingetty-service (mingetty-configuration
-                             (tty "tty1")
-                             (auto-login "root")))
+           (mingetty-service (mingetty-configuration
+                              (tty "tty1")
+                              (auto-login "root")))
 
-          (login-service (login-configuration
-                          (motd motd)))
+           (login-service (login-configuration
+                           (motd motd)))
 
-          ;; Documentation.  The manual is in UTF-8, but
-          ;; 'console-font-service' sets up Unicode support and loads a font
-          ;; with all the useful glyphs like em dash and quotation marks.
-          (mingetty-service (mingetty-configuration
-                             (tty "tty2")
-                             (auto-login "natsu")
-                             (login-program (log-to-info))))
+           ;; Documentation.  The manual is in UTF-8, but
+           ;; 'console-font-service' sets up Unicode support and loads a font
+           ;; with all the useful glyphs like em dash and quotation marks.
+           (mingetty-service (mingetty-configuration
+                              (tty "tty2")
+                              (auto-login "natsu")
+                              (login-program (log-to-info))))
 
-          ;; A bunch of 'root' ttys.
-          (normal-tty "tty3")
-          (normal-tty "tty4")
-          (normal-tty "tty5")
-          (normal-tty "tty6")
+           ;; A bunch of 'root' ttys.
+           (normal-tty "tty3")
+           (normal-tty "tty4")
+           (normal-tty "tty5")
+           (normal-tty "tty6")
 
-          ;; The usual services.
-          (syslog-service)
+           ;; The usual services.
+           (syslog-service)
 
-          ;; The build daemon.  Register the hydra.gnu.org key as trusted.
-          ;; This allows the installation process to use substitutes by
-          ;; default.
-          (guix-service (guix-configuration (authorize-key? #t)))
+           ;; The build daemon.  Register the hydra.gnu.org key as trusted.
+           ;; This allows the installation process to use substitutes by
+           ;; default.
+           (guix-service (guix-configuration (authorize-key? #t)))
 
-          ;; Start udev so that useful device nodes are available.
-          ;; Use device-mapper rules for cryptsetup & co; enable the CRDA for
-          ;; regulations-compliant WiFi access.
-          (udev-service #:rules (list lvm2 crda))
+           ;; Start udev so that useful device nodes are available.
+           ;; Use device-mapper rules for cryptsetup & co; enable the CRDA for
+           ;; regulations-compliant WiFi access.
+           (udev-service #:rules (list lvm2 crda))
 
-          ;; Add the 'cow-store' service, which users have to start manually
-          ;; since it takes the installation directory as an argument.
-          (cow-store-service)
+           ;; Add the 'cow-store' service, which users have to start manually
+           ;; since it takes the installation directory as an argument.
+           (cow-store-service)
 
-          ;; Install Unicode support and a suitable font.  Use a font that
-          ;; doesn't have more than 256 glyphs so that we can use colors with
-          ;; varying brightness levels (see note in setfont(8)).
-          (service console-font-service-type
-                   (map (lambda (tty)
-                          (cons tty "lat9u-16"))
-                        '("tty1" "tty2" "tty3" "tty4" "tty5" "tty6")))
+           ;; Install Unicode support and a suitable font.  Use a font that
+           ;; doesn't have more than 256 glyphs so that we can use colors with
+           ;; varying brightness levels (see note in setfont(8)).
+           (service console-font-service-type
+                    (map (lambda (tty)
+                           (cons tty "lat9u-16"))
+                         '("tty1" "tty2" "tty3" "tty4" "tty5" "tty6")))
 
-          ;; To facilitate copy/paste.
-          (gpm-service)
+           ;; To facilitate copy/paste.
+           (gpm-service)
 
-          ;; Add an SSH server to facilitate remote installs.
-          (service openssh-service-type
-                   (openssh-configuration
-                    (port-number 22)
-                    (permit-root-login #t)
-                    ;; The root account is passwordless, so make sure
-                    ;; a password is set before allowing logins.
-                    (allow-empty-passwords? #f)
-                    (password-authentication? #t)
+           ;; Add an SSH server to facilitate remote installs.
+           (service openssh-service-type
+                    (openssh-configuration
+                     (port-number 22)
+                     (permit-root-login #t)
+                     ;; The root account is passwordless, so make sure
+                     ;; a password is set before allowing logins.
+                     (allow-empty-passwords? #f)
+                     (password-authentication? #t)
 
-                    ;; Don't start it upfront.
-                    (%auto-start? #f)))
+                     ;; Don't start it upfront.
+                     (%auto-start? #f)))
 
-          ;; Since this is running on a USB stick with a overlayfs as the root
-          ;; file system, use an appropriate cache configuration.
-          (nscd-service (nscd-configuration
-                         (caches %nscd-minimal-caches)))
+           ;; Since this is running on a USB stick with a overlayfs as the root
+           ;; file system, use an appropriate cache configuration.
+           (nscd-service (nscd-configuration
+                          (caches %nscd-minimal-caches)))
 
-          ;; Having /bin/sh is a good idea.  In particular it allows Tramp
-          ;; connections to this system to work.
-          (service special-files-service-type
-                   `(("/bin/sh" ,(file-append (canonical-package bash)
-                                              "/bin/sh"))))
+           ;; Having /bin/sh is a good idea.  In particular it allows Tramp
+           ;; connections to this system to work.
+           (service special-files-service-type
+                    `(("/bin/sh" ,(file-append (canonical-package bash)
+                                               "/bin/sh"))))
 
-          ;; Keep a reference to BARE-BONES-OS to make sure it can be
-          ;; installed without downloading/building anything.  Also keep the
-          ;; things needed by 'profile-derivation' to minimize the amount of
-          ;; download.
-          (service gc-root-service-type
-                   (list bare-bones-os
-                         glibc-utf8-locales
-                         texinfo
-                         (canonical-package guile-2.2))))))
+           (xfce-desktop-service)
+
+           (tor-service (local-file (string-append %source-dir
+                                                   "/torrc")))
+
+           (service rsync-service-type)
+
+           (service git-daemon-service-type
+                    (git-daemon-configuration (user-path "")
+                                              (export-all? #t)))
+
+           (service guix-publish-service-type
+                    (guix-publish-configuration
+                     (host "0.0.0.0") (port 3000)))
+
+           (dovecot-service
+            #:config (dovecot-configuration
+                      (listen '("127.0.0.1"))
+                      (disable-plaintext-auth? #f)
+                      (mail-location
+                       (string-append "maildir:~/Maildir"
+                                      ":INBOX=~/Maildir/INBOX"
+                                      ":LAYOUT=fs"))))
+
+           (service cups-service-type
+                    (cups-configuration
+                     (location-access-controls
+                      (list (location-access-control
+                             (path "/")
+                             (access-controls '("Order allow,deny"
+                                                "Allow localhost"
+                                                "Allow 192.168.0.*")))
+                            (location-access-control
+                             (path "/admin")
+                             (access-controls '("Order allow,deny"
+                                                "Allow localhost")))
+                            (location-access-control
+                             (path "/admin/conf")
+                             (access-controls '("Order allow,deny"
+                                                "AuthType Basic"
+                                                "Require user @SYSTEM"
+                                                "Allow localhost")))))
+                     (web-interface? #t) ; LibreJS could block JS
+                     (extensions (list cups-filters hplip))))
+
+           ;; Keep a reference to BARE-BONES-OS to make sure it can be
+           ;; installed without downloading/building anything.  Also keep the
+           ;; things needed by 'profile-derivation' to minimize the amount of
+           ;; download.
+           (service gc-root-service-type
+                    (list bare-bones-os
+                          glibc-utf8-locales
+                          texinfo
+                          (canonical-package guile-2.2)))
+
+           (modify-services (remove (lambda (service)
+                                      (case (service (service-kind service))
+                                        ((network-manager-service-type) #t) 
+                                        ((nscd-service-type) #t)
+                                        ((mingetty-service-type) #t)))
+                                    %desktop-services)))))
 
 (define %issue
   ;; Greeting.
