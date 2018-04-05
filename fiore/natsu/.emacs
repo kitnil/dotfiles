@@ -1827,11 +1827,11 @@ the appropriate network slug that we extract from the nick."
                    :fuzzy-match t)
         :buffer "*helm urls*"))
 
-(defun erc-twitch (channel)
+(defun erc-twitch ()
   "Open a current buffer with `browse-url-streamlink'"
   (interactive)
   (browse-url-streamlink (concat "https://twitch.tv/"
-                                 (car (last (split-string channel
+                                 (car (last (split-string (buffer-name (current-buffer))
                                                           "#"))))))
 
 
