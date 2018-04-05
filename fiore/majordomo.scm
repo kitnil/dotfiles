@@ -43,6 +43,8 @@
   #:use-module (gnu packages nvi)
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-26)
+  #:use-module (fiore manifests guix-collection)
+  #:use-module (fiore manifests wigust)
   #:export (installation-os))
 
 ;;; Commentary:
@@ -319,22 +321,25 @@ You have been warned.  Thanks for being so brave.\x1b[0m
      ;; Explicitly allow for empty passwords.
      (base-pam-services #:allow-empty-passwords? #t))
 
-    (packages (cons* (canonical-package glibc) ;for 'tzselect' & co.
-                     parted gptfdisk ddrescue
-                     grub                  ;mostly so xrefs to its manual work
-                     cryptsetup
-                     mdadm
-                     dosfstools         ;mkfs.fat, for the UEFI boot partition
-                     btrfs-progs
-                     openssh    ;we already have sshd, having ssh/scp can help
-                     wireless-tools iw wpa-supplicant-minimal iproute
-                     ;; XXX: We used to have GNU fdisk here, but as of version
-                     ;; 2.0.0a, that pulls Guile 1.8, which takes unreasonable
-                     ;; space; furthermore util-linux's fdisk is already
-                     ;; available here, so we keep that.
-                     bash-completion
-                     nvi                          ;:wq!
-                     %base-packages))))
+    (packages (append (cons* (canonical-package glibc) ;for 'tzselect' & co.
+                             parted gptfdisk ddrescue
+                             grub                  ;mostly so xrefs to its manual work
+                             cryptsetup
+                             mdadm
+                             dosfstools         ;mkfs.fat, for the UEFI boot partition
+                             btrfs-progs
+                             openssh    ;we already have sshd, having ssh/scp can help
+                             wireless-tools iw wpa-supplicant-minimal iproute
+                             ;; XXX: We used to have GNU fdisk here, but as of version
+                             ;; 2.0.0a, that pulls Guile 1.8, which takes unreasonable
+                             ;; space; furthermore util-linux's fdisk is already
+                             ;; available here, so we keep that.
+                             bash-completion
+                             nvi                          ;:wq!
+                             %base-packages)
+                      guix-collection-packages
+                      guix-collection-packages-multiout
+                      guix-wigust-packages))))
 
 ;; Return the default os here so 'guix system' can consume it directly.
 installation-os

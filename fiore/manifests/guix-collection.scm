@@ -92,7 +92,6 @@ video virtualization w3m web xdisorg)
    freerdp
    gnu-make        ; GNU Make
    graphviz  ; `dot'
-   grep
    htop            ; Pretty `top'
    ncdu            ; TUI `du'
    netcat          ; TCP
