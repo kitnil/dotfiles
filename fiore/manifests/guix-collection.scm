@@ -7,12 +7,12 @@
 
 (use-package-modules admin aspell audio backup bittorrent code
 conkeror commencement compression cran databases elf dictionaries
-emacs games gcc gdb glib gnuzilla graphics graphviz gstreamer gtk
-guile haskell image-viewers imagemagick kodi libreoffice linux lisp
-lxde mail man maths messaging ncdu ncurses node package-management
-password-utils patchutils perl perl-web pdf python rdesktop samba
-scheme statistics texinfo textutils tls tor valgrind version-control
-video virtualization w3m web xdisorg)
+emacs games gcc gdb glib gnu-doc gnuzilla graphics graphviz gstreamer
+gtk guile haskell image-viewers imagemagick kodi libreoffice linux
+lisp lxde mail man maths messaging ncdu ncurses node
+package-management password-utils patchutils perl perl-web pdf python
+rdesktop samba scheme statistics texinfo textutils tls tor valgrind
+version-control video virtualization w3m web xdisorg)
 
 (define guix-collection-packages-multiout
   (list
@@ -116,6 +116,7 @@ video virtualization w3m web xdisorg)
    znc
 
    gnu-c-manual ; C language documentation
+   gnu-standards
    man-pages
    sicp         ; Structure and Interpretation of Computer Programs
 

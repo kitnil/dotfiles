@@ -11,12 +11,12 @@
 (use-service-modules cups desktop dns mail networking rsync shepherd
 spice ssh version-control web xorg cgit)
 
-(use-package-modules admin android bash bootloaders certs cups
+(use-package-modules admin android bash bootloaders certs cryptsetup cups
 databases dns file fonts fontutils freedesktop gnome gnupg linux mail
 ncurses networking ratpoison readline rsync pulseaudio screen ssh tmux
-version-control virtualization wget xdisorg xorg zile)
+version-control virtualization web wget xdisorg xorg zile)
 
-(define %source-dir (dirname (current-filename)))
+(define %source-dir (string-append (getenv "HOME") "/dotfiles/fiore"))
 
 
 ;;;
@@ -379,6 +379,7 @@ EndSection
       pinentry  ; Password typing for Gnupg
       qemu
       rsync
+      sshfs-fuse
       strace
       tcpdump
       tmux
@@ -399,6 +400,10 @@ EndSection
       alsa-utils
       pavucontrol ; Pulseaudio control GUI
       pulseaudio
+
+      httpd
+      mysql
+      cryptsetup
 
       %base-packages))
 
