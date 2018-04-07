@@ -1830,9 +1830,11 @@ the appropriate network slug that we extract from the nick."
 (defun erc-twitch ()
   "Open a current buffer with `browse-url-streamlink'"
   (interactive)
-  (browse-url-streamlink (concat "https://twitch.tv/"
-                                 (car (last (split-string (buffer-name (current-buffer))
-                                                          "#"))))))
+  (let ((url (concat "https://twitch.tv/"
+                     (car (last (split-string (buffer-name (current-buffer))
+                                              "#"))))))
+    (message (concat "Open stream: " url))
+    (browse-url-streamlink url)))
 
 
 ;;;
