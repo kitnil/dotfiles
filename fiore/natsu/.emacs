@@ -1149,6 +1149,14 @@ for COMMIT, defaulting to the commit hash at point."
 ;;; Guile
 ;;;
 
+(defun projectile-run-guile ()
+  "Invoke ‘run-guile’ in the project’s root."
+  (interactive)
+  (let ((geiser-guile-load-path
+         (append (list (expand-file-name (projectile-project-root)))
+                 geiser-guile-load-path)))
+    (run-guile)))
+
 (with-eval-after-load 'geiser
   (setq geiser-active-implementations '(guile))
   (setq geiser-default-implementation 'guile))
