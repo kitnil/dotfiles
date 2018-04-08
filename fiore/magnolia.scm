@@ -79,23 +79,6 @@ version-control virtualization web wget xdisorg xorg zile)
 
 
 ;;;
-;;; udev
-;;;
-
-(define (quote-string str)
-  (string-append "\"" str "\""))
-
-;; Origin <https://wiki.archlinux.org/index.php/Wake-on-LAN#udev>.
-(define %udev-rule-won
-  (udev-rule
-   "99-wol.rules"
-   (string-append "ACTION==" (quote-string "add")
-                  ", SUBSYSTEM==" (quote-string "net")
-                  ", RUN+=" (quote-string "/run/current-system/profile\
-/sbin/ethtool -s $name wol g"))))
-
-
-;;;
 ;;; guix-daemon
 ;;;
 
