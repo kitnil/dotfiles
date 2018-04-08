@@ -2123,7 +2123,11 @@ The optional argument NEW-WINDOW is not used."
    '(elfeed-search-unread-title-face ((t (:foreground "white"))))
    '(completions-common-part ((t (:width normal :weight normal
                                 :slant normal :foreground "gold1"
-				:background "black")))))
+				:background "black"))))
+   '(highlight-stages-level-1-face ((t (:background "turquoise"))))
+   '(highlight-stages-level-2-face ((t (:background "medium turquoise"))))
+   '(highlight-stages-level-3-face ((t (:background "dark turquoise"))))
+   '(highlight-stages-negative-level-face ((t (:background "dark cyan")))))
 
   ;; Origin <https://github.com/Wilfred/.emacs.d/blob/gh-pages/init.org>.
   (with-eval-after-load 'rainbow-delimiters
