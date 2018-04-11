@@ -78,18 +78,19 @@
          (system* "tar" "xvf" (assoc-ref %build-inputs "source"))
          ;; Many commands (like glxinfo) better be searched as words.
          ;; See SRFI-115.
-         (substitute* "inxi"
-           (("/usr/bin/env bash")
-            (string-append (assoc-ref %build-inputs "bash") "/bin/bash"))
-           (("xdpyinfo")
-            (string-append (assoc-ref %build-inputs "xdpyinfo")
-                           "/bin/xdpyinfo"))
-           (("glxinfo")
-            (string-append (assoc-ref %build-inputs "mesa-utils")
-                           "/bin/glxinfo"))
-           (("dmidecode")
-            (string-append (assoc-ref %build-inputs "dmidecode")
-                           "/bin/dmidecode")))
+         (with-fluids ((%default-port-encoding #f))
+           (substitute* "inxi"
+             (("/usr/bin/env bash")
+              (string-append (assoc-ref %build-inputs "bash") "/bin/bash"))
+             (("xdpyinfo")
+              (string-append (assoc-ref %build-inputs "xdpyinfo")
+                             "/bin/xdpyinfo"))
+             (("glxinfo")
+              (string-append (assoc-ref %build-inputs "mesa-utils")
+                             "/bin/glxinfo"))
+             (("dmidecode")
+              (string-append (assoc-ref %build-inputs "dmidecode")
+                             "/bin/dmidecode"))))
          (install-file "inxi" (string-append %output "/bin"))
          (install-file "inxi.1.gz"
                        (string-append %output "/share/doc/man/man1"))
