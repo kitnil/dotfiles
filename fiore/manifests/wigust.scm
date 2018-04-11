@@ -39,6 +39,7 @@
    emacs-ewmctrl            ; Control X windows from Emacs
    emacs-f3
    emacs-fancy-narrow
+   emacs-git-auto-commit-mode
    emacs-git-messenger-diff-mode
    emacs-grep-context
    emacs-guix-local-checkout ; Guix interface
