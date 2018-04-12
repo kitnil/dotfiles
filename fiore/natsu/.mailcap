@@ -1,4 +1,4 @@
 image/png; feh %s
 image/jpeg; feh %s
 image/gif; mpv %s
-application/pdf; mupdf-x11 %s
+application/pdf; zathura %s
