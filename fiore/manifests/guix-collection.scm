@@ -172,6 +172,7 @@ version-control video virtualization w3m web xdisorg)
    emacs-nix-mode           ; Nix language mode
    emacs-org                ; Org
    emacs-org-bullets
+   emacs-php-mode
    emacs-projectile         ; Project functions
    emacs-rainbow-delimiters ; Prettify parentheses
    emacs-rainbow-mode       ; Show colors in codes
