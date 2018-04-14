@@ -271,6 +271,14 @@
 
 
 
+(defcommand htop () ()
+  "Open XTerm with htop."
+  (run-shell-command
+   (join (list *wi-xterm-command* *wi-xterm-theme-dark*
+               *wi-xterm-no-scrollbar* *wi-term-execute-flag*
+               "htop")
+         #\ )))
+
 (defcommand twitchy () ()
   "Open XTerm with twitchy."
   (run-shell-command
