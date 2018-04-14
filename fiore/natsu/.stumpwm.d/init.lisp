@@ -270,6 +270,14 @@
 
 
 
+(defcommand twitchy () ()
+  "Open XTerm with twitchy."
+  (run-shell-command
+   (join (list *wi-xterm-command* *wi-xterm-theme-dark*
+               *wi-xterm-no-scrollbar* *wi-term-execute-flag*
+               "twitchy")
+         #\ )))
+
 (defcommand kodi-cli-youtube () ()
   "Send video from clipboard to Kodi."
   (run-shell-command (join (list "exec kodi-cli -y" (get-x-selection)) #\ )))
