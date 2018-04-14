@@ -2129,17 +2129,7 @@ The optional argument NEW-WINDOW is not used."
    '(highlight-stages-level-3-face ((t (:background "dark turquoise"))))
    '(highlight-stages-negative-level-face ((t (:background "dark cyan"))))
    '(rainbow-delimiters-depth-1-face ((t (:foreground "white"))))
-   '(rainbow-delimiters-depth-2-face ((t (:foreground "cyan"))))
-   '(rainbow-delimiters-depth-3-face ((t (:foreground "yellow"))))
-   '(rainbow-delimiters-depth-4-face ((t (:foreground "green"))))
-   '(rainbow-delimiters-depth-5-face ((t (:foreground "orange"))))
-   '(rainbow-delimiters-depth-6-face ((t (:foreground "purple"))))
-   '(rainbow-delimiters-depth-7-face ((t (:foreground "white"))))
-   '(rainbow-delimiters-depth-8-face ((t (:foreground "cyan"))))
-   '(rainbow-delimiters-depth-9-face ((t (:foreground "yellow"))))
-   '(rainbow-delimiters-unmatched-face ((t (:foreground "red"))))))
-
-(wi-manoj-dark)
+   '(rainbow-delimiters-depth-7-face ((t (:foreground "white"))))))
 
 
 ;;;
@@ -2147,6 +2137,7 @@ The optional argument NEW-WINDOW is not used."
 ;;;
 
 (setq sml/no-confirm-load-theme t)
+(when (daemonp) (setq sml/theme 'light))
 (sml/setup)
 
 (default-text-scale-mode)
@@ -2619,4 +2610,12 @@ https://github.com/USER/REPO/commit/SHA1-HASH => SHA1-HASH"
  '(magit-diff-context-highlight ((t (:foreground "grey50"))))
  '(magit-diff-removed ((t (:foreground "#aa2222"))))
  '(magit-diff-removed-highlight ((t (:foreground "#aa2222"))))
- '(markdown-code-face ((t (:inherit fixed-pitch)))))
+ '(markdown-code-face ((t (:inherit fixed-pitch))))
+ '(rainbow-delimiters-unmatched-face ((t (:foreground "red"))))
+ '(rainbow-delimiters-depth-2-face ((t (:foreground "deep sky blue"))))
+ '(rainbow-delimiters-depth-3-face ((t (:foreground "gold"))))
+ '(rainbow-delimiters-depth-4-face ((t (:foreground "lime green"))))
+ '(rainbow-delimiters-depth-5-face ((t (:foreground "orange"))))
+ '(rainbow-delimiters-depth-6-face ((t (:foreground "purple"))))
+ '(rainbow-delimiters-depth-8-face ((t (:foreground "deep sky blue"))))
+ '(rainbow-delimiters-depth-9-face ((t (:foreground "gold")))))
