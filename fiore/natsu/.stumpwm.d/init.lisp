@@ -258,7 +258,8 @@
 
 (defcommand wi-xclip-emacs () ()
   "Open file from clipboard."
-  (run-shell-command (join (list "exec emacsclient -c" (get-x-selection)) #\ )))
+  (run-shell-command
+   (join (list "exec emacsclient -c" (get-x-selection)) #\ )))
 
 (defcommand mpv-music () ()
   "Play music."
@@ -280,32 +281,37 @@
 
 (defcommand kodi-cli-youtube () ()
   "Send video from clipboard to Kodi."
-  (run-shell-command (join (list "exec kodi-cli -y" (get-x-selection)) #\ )))
+  (run-shell-command
+   (join (list "exec kodi-cli -y" (get-x-selection)) #\ )))
 
 (defcommand youtube-dl () ()
   "Download video."
-  (run-shell-command (concat "exec xterm -name youtube-dl"
-                             " -e youtube-dl"
-                             " $(xclip -o -selection clipboard)")))
+  (run-shell-command
+   (join '("exec" "xterm" "-name youtube-dl" "-e" "youtube-dl"
+           "$(xclip -o -selection clipboard)")
+         #\ )))
 
 (defcommand youtube-dl-play () ()
   "Download video and play it."
-  (run-shell-command (concat "exec xterm -name youtube-dl"
-                             " -e youtube-dl"
-                             " --exec 'mpv {}'"
-                             " $(xclip -o -selection clipboard)")))
+  (run-shell-command
+   (join '("exec" "xterm" "-name" "youtube-dl" "-e" "youtube-dl"
+           "--exec" "'mpv {}'"
+           "$(xclip -o -selection clipboard)")
+         #\ )))
 
 (defcommand turn-screen-off () ()
-            "Turn screen off."
-            (run-shell-command "exec xset dpms force off"))
+  "Turn screen off."
+  (run-shell-command "exec xset dpms force off"))
 
 (defcommand suspend () ()
   (run-shell-command "exec loginctl suspend"))
 
-(defcommand run-xterm-command (cmd &optional collect-output-p) ((:shell "/bin/sh -c "))
+(defcommand run-xterm-command (cmd &optional collect-output-p)
+    ((:shell "/bin/sh -c "))
   "Run the specified shell command in XTerm."
   (run-prog *shell-program*
-            :args (list "-c" (join (list "xterm -name" cmd "-e" cmd) #\ ))
+            :args (list "-c" (join (list "xterm -name" cmd "-e" cmd)
+                                   #\ ))
             :wait nil))
 
 (defvar *wi-pulsemixer-command*
@@ -326,23 +332,28 @@
 
 (defcommand wi-run-or-raise-xterm () ()
   "Start or focus XTerm."
-  (run-or-raise (join (list *wi-xterm-command* *wi-xterm-theme-light*) #\ )
-                '(:class "XTerm")))
+  (run-or-raise
+   (join (list *wi-xterm-command* *wi-xterm-theme-light*)
+         #\ )
+   '(:class "XTerm")))
 
 (defcommand wi-run-xterm () ()
   "Start or focus XTerm."
   (run-prog *shell-program*
             :args (list "-c" (join (list *wi-xterm-command*
                                          *wi-xterm-theme-dark*
-                                         *wi-xterm-no-scrollbar*) #\ ))
+                                         *wi-xterm-no-scrollbar*)
+                                   #\ ))
             :wait nil))
 
 (defcommand wi-xterm-dark-no-scrollbar () ()
   "Start or focus XTerm."
-  (run-or-raise (join (list *wi-xterm-command* *wi-xterm-theme-dark* "+sb") #\ )
-                '(:class "XTerm")))
+  (run-or-raise
+   (join (list *wi-xterm-command* *wi-xterm-theme-dark* "+sb") #\ )
+   '(:class "XTerm")))
 
-(defcommand xterm-name (cmd &optional collect-output-p) ((:string "window name: "))
+(defcommand xterm-name (cmd &optional collect-output-p)
+    ((:string "window name: "))
   "Run the specified shell command in XTerm."
   (run-prog *shell-program*
             :args (list "-c" (join (list "xterm -name" cmd) #\ ))
@@ -367,11 +378,14 @@
 
 (defcommand wi-xterm-big-screen () ()
   "Start XTerm with big fonts."
-  (run-shell-command (concat *wi-xterm-big-command* " -e screen")))
+  (run-shell-command
+   (concat *wi-xterm-big-command* " -e screen")))
 
 (defcommand wi-sensors () ()
   "Start XTerm with `sensors'."
-  (run-shell-command  (concat *wi-xterm-big-command* " -e watch sensors")))
+  (run-shell-command
+   (join (list *wi-xterm-big-command* "-e" "watch" "sensors")
+         #\ )))
 
 (defcommand wi-github-star () ()
   "Move mouse to star a project."
