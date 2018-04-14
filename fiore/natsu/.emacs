@@ -2132,7 +2132,9 @@ The optional argument NEW-WINDOW is not used."
    '(highlight-stages-level-3-face ((t (:background "dark turquoise"))))
    '(highlight-stages-negative-level-face ((t (:background "dark cyan"))))
    '(rainbow-delimiters-depth-1-face ((t (:foreground "white"))))
-   '(rainbow-delimiters-depth-7-face ((t (:foreground "white"))))))
+   '(rainbow-delimiters-depth-7-face ((t (:foreground "white")))))
+  (setq sml/theme 'dark)
+  (sml/setup))
 
 
 ;;;
