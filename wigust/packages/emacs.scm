@@ -3752,25 +3752,27 @@ add any additional instance slots.")
     (license license:gpl3)))
 
 (define-public emacs-epkg
-  (package
-    (name "emacs-epkg")
-    (version "3.0.0")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "https://github.com/emacscollective/epkg/archive/"
-                           "v" version ".tar.gz"))
-       (file-name (string-append name "-" version ".tar.gz"))       
-       (sha256
-        (base32
-         "1yy7lw4ggy0f5775ywy4j9n0z8hqpyhk3igl7gn3i54p2cj3pby5"))))
-    (build-system emacs-build-system)
-    (propagated-inputs
-     `(("emacs-closql" ,emacs-closql)
-       ("emacs-dash" ,emacs-dash)))
-    (home-page "https://emacsmirror.net")
-    (synopsis "Browse the Emacsmirror package database")
-    (description "This package provides access to a local copy of the
+  (let ((commit "432312b9583ed7b88ad9644fd1bf2183765a892e"))
+    (package
+      (name "emacs-epkg")
+      (version (git-version "3.0.0" "1" commit))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/emacscollective/epkg.git")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "0d882kahn7a0vri7a9r15lvmfx1zn2hsga6jfcc6jv0hqbswlb2k"))))
+      (build-system emacs-build-system)
+      (propagated-inputs
+       `(("emacs-closql" ,emacs-closql)
+         ("emacs-dash" ,emacs-dash)))
+      (home-page "https://emacsmirror.net")
+      (synopsis "Browse the Emacsmirror package database")
+      (description "This package provides access to a local copy of the
 Emacsmirror package database.  It provides low-level functions for querying
 the database and a @file{package.el} user interface for browsing the database.
 Epkg itself is not a package manager.
@@ -3790,7 +3792,7 @@ name and password.  To skip it press a @key{Return} key.
 
 You could get a Epkg package list by invoking @code{epkg-list-packages} in
 Emacs.")
-    (license license:gpl3+)))
+      (license license:gpl3+))))
 
 (define-public emacs-outorg
   (let ((commit "78b0695121fb974bc4e971eb4ef7f8afd6d89d64"))
