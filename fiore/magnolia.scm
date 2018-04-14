@@ -228,11 +228,13 @@ EndSection
 ;;; /etc/hosts
 ;;;
 
-(define (prefix-local-host-aliases prefix host-name domain)
+(define (prefix-local-host-aliases prefix host-name domain ip-addresses)
   (string-join (map (lambda (x)
                       (string-append (string-join x " ") "." host-name domain))
-                    (cartesian-product '("127.0.0.1" "::1") prefix))
+                    (cartesian-product ip-addresses prefix))
                "\n"))
+
+(define %magnolia-ip-address "192.168.105.120")
 
 
 ;;;
@@ -296,8 +298,9 @@ EndSection
                                 (prefix-local-host-aliases
                                  '("cgit" "git" "guix" "www"
                                    "natsu" "torrent" "print")
-                                 host-name ".local")
-                                %facebook-host-aliases)))
+                                 host-name ".local"
+                                 (list %magnolia-ip-address))
+                                "\n" %facebook-host-aliases)))
 
     ;; Lightweight desktop with custom packages from guix-wigust
     (packages
@@ -366,7 +369,7 @@ EndSection
 
     (services (cons* firewall-service
                      (static-networking-service "enp6s0"
-                                                "192.168.105.120"
+                                                %magnolia-ip-address
                                                 #:netmask "255.255.255.0"
                                                 #:gateway "192.168.105.1"
                                                 ;; See <http://www.freenom.world>.
