@@ -2357,7 +2357,8 @@ be updated automatically."))
           ("Europe/Istanbul" "Europe/Istanbul")
           ("America/Winnipeg" "America/Winnipeg")
           ("America/New_York" "America/New_York")
-          ("Asia/Tokyo" "Asia/Tokyo"))))
+          ("Asia/Tokyo" "Asia/Tokyo")
+          ("Asia/Bangkok" "Thailand"))))
 
 ;; List of Email addresses to send patches for `gitpatch-mail' command
 (setq gitpatch-mail-database (list "guix-patches@gnu.org"))
