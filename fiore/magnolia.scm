@@ -451,7 +451,7 @@ EndSection
                      natsu-nginx-service
 
                      (simple-service 'adb udev-service-type
-                                     (list android-udev-rules %udev-rule-won))
+                                     (list android-udev-rules))
 
                      (xfce-desktop-service)
 
