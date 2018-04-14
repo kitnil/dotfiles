@@ -2415,6 +2415,7 @@ be updated automatically."))
 ;; Structured editing
 (with-eval-after-load 'smartparens
   (require 'smartparens-config nil t)
+  (setq sp-highlight-pair-overlay nil)
   (sp-use-smartparens-bindings)
 
   ;; Origin <https://github.com/Fuco1/smartparens/blob/master/docs/pair-management.rst>.
