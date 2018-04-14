@@ -162,7 +162,7 @@
 (defvar youtube-url-video-regexp
   (concat youtube-url-regexp
           (rx "/watch?v="
-              (one-or-more (or alphanumeric "-"))
+              (one-or-more (or alphanumeric "-" "_"))
               line-end)))
 
 (defun youtube-free-url (url)
