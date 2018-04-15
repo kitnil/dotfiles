@@ -6,6 +6,7 @@
 	smtpServer = smtp.gmail.com
 	smtpUser = go.wigust@gmail.com
 	smtpServerPort = 587
+	assume8bitEncoding = UTF-8
 [commit]
 	gpgsign = true
 [user]
