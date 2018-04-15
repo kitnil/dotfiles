@@ -413,7 +413,7 @@ Sets the following basend on PREFIX-MAP:
 
 (which-key-add-key-based-replacements "C-c &" "yasnippet")
 
-(wi-define-keys "C-c b" buffer
+(wi-define-keys "C-c g b" buffer
                 ("b" scratch "scratch" :color blue)
                 ("f" transpose-frame "tr frame")
                 ("i" ibuffer "ibuffer")
@@ -423,28 +423,28 @@ Sets the following basend on PREFIX-MAP:
                 ("r" revert-buffer "revert")
                 ("w" crux-transpose-windows "tr window"))
 
-(wi-define-keys "C-c b s" buffer-switch
+(wi-define-keys "C-c g b s" buffer-switch
                 ("e" wi-switch-to-scratch-elisp "elisp")
                 ("g" wi-switch-to-buffer-guile-repl "guile")
                 ("w" wi-switch-to-buffer-eww "eww"))
 
-(wi-define-keys "C-c b s i" buffer-switch-irc
+(wi-define-keys "C-c g b s i" buffer-switch-irc
                 ("n" wi-switch-to-buffer-nekrovim "nekrovim")
                 ("SPC" erc-track-switch-buffer "track"))
 
-(wi-define-keys "C-c b f" buffer-file
+(wi-define-keys "C-c g b f" buffer-file
                 ("d" wi-find-file-guixsd "guixsd")
                 ("e" wi-find-file-emacs "emacs"))
 
 (bind-key "<C-down-mouse-1>" 'mc/toggle-cursor-on-click)
 
-(wi-define-keys "C-c a" text
+(wi-define-keys "C-c g a" text
                 ("/" wi-dabbrev-expand "expand")
                 ("a" align-regexp "align rx")
                 ("P" wi-mark-paragraph+sort-lines "paragraph")
                 ("u" undo "undo"))
 
-(wi-define-keys "C-c a e" expand
+(wi-define-keys "C-c g a e" expand
                 ("'" er/mark-inside-quotes "in quotes")
                 ("P" er/mark-inside-pairs "in pairs")
                 ("S" er/mark-symbol-with-prefix "prefix symbol")
@@ -460,36 +460,36 @@ Sets the following basend on PREFIX-MAP:
                 ("u" er/mark-url "url")
                 ("w" er/mark-word "word"))
 
-(wi-define-keys "C-c a T" text-todo
+(wi-define-keys "C-c g a T" text-todo
                 ("n" hl-todo-next "next")
                 ("o" hl-todo-occur "occur")
                 ("p" hl-todo-previous "prev"))
 
-(wi-define-keys "C-c a P" text-page
+(wi-define-keys "C-c g a P" text-page
                 ("[" backward-paragraph "prev paragraph")
                 ("]" forward-paragraph "next paragraph")
                 ("n" forward-page "next page")
                 ("p" backward-page "prev page"))
 
-(wi-define-keys "C-c a S" text-symbol
+(wi-define-keys "C-c g a S" text-symbol
                 ("n" highlight-symbol-next "next")
                 ("p" highlight-symbol-prev "prev"))
 
-(wi-define-keys "C-c a s" text-sexp
+(wi-define-keys "C-c g a s" text-sexp
                 ("j" sp-join-sexp "join")
                 ("s" sp-split-sexp "split")
                 ("S" wi-sort-sexps "sort")
                 ("u" undo "undo"))
 
-(wi-define-keys "C-c o" open
+(wi-define-keys "C-c g o" open
                 ("c" crux-open-with "xdg-open" :color blue))
 
-(wi-define-keys "C-c w" word
+(wi-define-keys "C-c g w" word
                 ("t" show-translation "translate"))
 
-(which-key-add-key-based-replacements "C-c v" "vc")
+(which-key-add-key-based-replacements "C-c g v" "vc")
 
-(wi-define-keys "C-c v u" merge-upstream
+(wi-define-keys "C-c g v u" merge-upstream
                 ("C" guix-mu-copy-and-commit "copy and commit")
                 ("N" guix-mu-other-next "other next")
                 ("P" guix-mu-other-prev "other prev")
@@ -505,20 +505,20 @@ Sets the following basend on PREFIX-MAP:
                 ("u" undo "undo")
                 ("y" guix-mu-yank "yank"))
 
-(wi-define-keys "C-c v m" magit
+(wi-define-keys "C-c g v m" magit
                 ("c" magit-commit "commit")
                 ("l" magit-list-repositories "repo list" :color blue)
                 ("r" magit-diff-toggle-refine-hunk "tg refine")
                 ("s" magit-status "status" :color blue))
 
-(wi-define-keys "C-c v m r" magit-repo
+(wi-define-keys "C-c g v m r" magit-repo
                 ("g" wi-magit-status-repo-guix "guix" :color blue))
 
-(wi-define-keys "C-c v b" browse-at-remote
+(wi-define-keys "C-c g v b" browse-at-remote
                 ;; TODO: ("g" . wi-browse-at-remote-gnu)
                 ("b" browse-at-remote "browse" :color blue))
 
-(wi-define-keys "C-c v v" vc-hunk
+(wi-define-keys "C-c g v v" vc-hunk
                 ("c" magit-commit "commit" :color blue)
                 ("n" git-gutter:next-hunk "next")
                 ("l" git-messenger:popup-message "line")
@@ -526,13 +526,13 @@ Sets the following basend on PREFIX-MAP:
                 ("r" git-gutter:revert-hunk "revert")
                 ("s" git-gutter:stage-hunk "stage"))
 
-(wi-define-keys "C-c f" find
+(wi-define-keys "C-c g f" find
                 ("e" guix-edit "guix package" :color blue)
                 ("f" ffap "thing at point" :color blue)
                 ("l" recentf-open-files "recent" :color blue)
                 ("r" ffap-read-only "RO thing at point" :color blue))
 
-(wi-define-keys "C-c f d" dumb-jump
+(wi-define-keys "C-c g f d" dumb-jump
                 ("g" dumb-jump-go "go")
                 ("o" dumb-jump-go-other-window "other window")
                 ("e" dumb-jump-go-prefer-external "go external")
@@ -542,19 +542,19 @@ Sets the following basend on PREFIX-MAP:
                 ("l" dumb-jump-quick-look "quick look")
                 ("b" dumb-jump-back "back"))
 
-(wi-define-keys "C-c f v" find-vc
+(wi-define-keys "C-c g f v" find-vc
                 ("g" wi-github-issue-at-point "gh is")
                 ("n" next-line "next")
                 ("p" previous-line "previous"))
 
-(wi-define-keys "C-c f b" browse
+(wi-define-keys "C-c g f b" browse
                 ("c" browse-url-conkeror "conkeror" :color blue)
                 ("e" eww "eww" :color blue)
                 ("g" browse-url-chromium "chromium" :color blue)
                 ("i" browse-url-firefox "firefox" :color blue)
                 ("m" browse-url-mpv "mpv" :color blue))
 
-(wi-define-keys "C-c t" toggle
+(wi-define-keys "C-c g t" toggle
                 ("A" auto-save-mode "autosave")
                 ("F" flymake-mode "flymake")
                 ("P" projectile-global-mode "projectile")
@@ -573,13 +573,13 @@ Sets the following basend on PREFIX-MAP:
                 ("w" whitespace-mode "whitespace")
                 ("y" yas-minor-mode "yasnippet"))
 
-(wi-define-keys "C-c t f" flycheck
+(wi-define-keys "C-c g t f" flycheck
                 ("f" flycheck-mode "toggle")
                 ("l" flycheck-list-errors "list")
                 ("n" flycheck-next-error "next")
                 ("p" flycheck-previous-error "prev"))
 
-(wi-define-keys "C-c t c" toggle-highlight
+(wi-define-keys "C-c g t c" toggle-highlight
                 ("S" highlight-sexp-mode "sexp")
                 ("b" rainbow-blocks-mode "blocks")
                 ("c" rainbow-mode "colors")
@@ -588,7 +588,7 @@ Sets the following basend on PREFIX-MAP:
                 ("q" highlight-stages-mode "stages")
                 ("s" highlight-symbol-mode "symbol"))
 
-(wi-define-keys "C-c h" helm
+(wi-define-keys "C-c g h" helm
                 ("&" helm-yas-complete "yasnippet" :color blue)
                 ("a" helm-world-time "time" :color blue)
                 ("b" helm-buffers-list "buffers" :color blue)
@@ -604,11 +604,11 @@ Sets the following basend on PREFIX-MAP:
                 ("x" helm-M-x "M-x" :color blue)
                 ("y" helm-show-kill-ring "kill ring" :color blue))
 
-(wi-define-keys "C-c h H" helm-help
+(wi-define-keys "C-c g h H" helm-help
                 ("m" helm-man-woman "man" :color blue)
                 ("i" helm-info "info" :color blue))
 
-(wi-define-keys "C-c i" ivy
+(wi-define-keys "C-c g i" ivy
                 ("b" ivy-switch-buffer "switch buffer" :color blue)
                 ("f" counsel-find-file "find file" :color blue)
                 ("l" ivy-recentf "recent" :color blue)
@@ -616,31 +616,31 @@ Sets the following basend on PREFIX-MAP:
                 ("s" swiper "swiper" :color blue)
                 ("x" counsel-M-x "M-x" :color blue))
 
-(wi-define-keys "C-c i g" counsel-git
+(wi-define-keys "C-c g i g" counsel-git
                 ("f" counsel-git "git" :color blue)
                 ("v" counsel-git-grep "grep" :color blue))
 
-(wi-define-keys "C-c i h" counsel-help
+(wi-define-keys "C-c g i h" counsel-help
                 ("f" counsel-describe-function "function" :color blue)
                 ("i" counsel-info-lookup-symbol "symbol" :color blue)
                 ("l" counsel-find-library "library" :color blue)
                 ("u" counsel-unicode-char "char" :color blue)
                 ("v" counsel-describe-variable "variable" :color blue))
 
-(which-key-add-key-based-replacements "C-c p x" "projectile-shell")
-(which-key-add-key-based-replacements "C-c p s" "projectile-search")
-(wi-define-keys "C-c h p" helm-projectile
+(which-key-add-key-based-replacements "C-c g p x" "projectile-shell")
+(which-key-add-key-based-replacements "C-c g p s" "projectile-search")
+(wi-define-keys "C-c g h p" helm-projectile
                 ("b" helm-projectile-switch-to-buffer :color blue)
                 ("f" helm-projectile-find-file-dwim :color blue)
                 ("p" helm-projectile :color blue))
 
-(wi-define-keys "C-c m" mail
+(wi-define-keys "C-c g m" mail
                 ("b" wi-send-buffer-as-mail :color blue))
 
-(wi-define-keys "C-c m i" irc
+(wi-define-keys "C-c g m i" irc
                 ("s" erc-track-switch-buffer "switch"))
 
-(wi-define-keys "C-c e" emms
+(wi-define-keys "C-c g e" emms
                 ("*" pulseaudio-control-set-volume "set vol")
                 ("+" emms-volume-raise "inc vol")
                 ("-" emms-volume-lower "dec vol")
@@ -653,18 +653,18 @@ Sets the following basend on PREFIX-MAP:
                 ("r" emms-random-show "random")
                 ("s" emms-stop "stop"))
 
-(wi-define-keys "C-c m d" debbugs
+(wi-define-keys "C-c g m d" debbugs
                 ("b" debbugs-gnu-bugs "bugs" :color blue)
                 ("l" debbugs-gnu "gnu" :color blue)
                 ("m" wi-debbugs-gnu-list "wigust" :color blue)
                 ("p" debbugs-gnu-patches "patches" :color blue)
                 ("s" debbugs-gnu-search "search" :color blue))
 
-(wi-define-keys "C-c m r" elfeed
+(wi-define-keys "C-c g m r" elfeed
                 ("r" elfeed "elfeed" :color blue)
                 ("g" elfeed-update "update"))
 
-(wi-define-keys "C-c m g" gnus
+(wi-define-keys "C-c g m g" gnus
                 ("=" gnus-summary-expand-window "expand")
                 ("RET" gnus-summary-scroll-up "prev page")
                 ("S-SPC" gnus-summary-prev-page "next page")
@@ -678,40 +678,40 @@ Sets the following basend on PREFIX-MAP:
                 ("o" gnus-summary-top-thread "top thread")
                 ("s" switch-to-gnus "switch" :color blue))
 
-(wi-define-keys "C-c m g m" gnus-message
+(wi-define-keys "C-c g m g m" gnus-message
                 (";" wi-replace-with-brackets-ellipsis "ellipsis"))
 
-(wi-define-keys "C-c m X" redshift
+(wi-define-keys "C-c g m X" redshift
                 ("g" redshift-set-temp "set")
                 ("n" redshift-decrease-temp "decrease")
                 ("p" redshift-increase-temp "increase"))
 
-(wi-define-keys "C-c s" shell
+(wi-define-keys "C-c g s" shell
                 ("e" eshell "eshell" :color blue)
                 ("t" term "ansi" :color blue)
                 ("x" terminal-here-project-launch-multiplexer "xterm" :color blue))
 
-(wi-define-keys "C-c s s" shell-dumb
+(wi-define-keys "C-c g s s" shell-dumb
                 ("M-r" helm-shell-history "history" :color blue)
                 ("C" compilation-shell-minor-mode "complition" :color blue)
                 ("c" wi-shell-cd-current-dir "cd" :color blue)
                 ("s" shell "shell" :color blue))
 
-(wi-define-keys "C-c c" org
+(wi-define-keys "C-c g c" org
                 ("C" open-todo-file-open "new todo file")
                 ("a" org-agenda "agenda" :color blue)
                 ("c" org-capture "capture" :color blue)
                 ("l" org-store-link "link"))
 
-(which-key-add-key-based-replacements "C-c k" "engine")
+(which-key-add-key-based-replacements "C-c g k" "engine")
 
-(bind-key "<f5>" #'aya-create)
-(bind-key "<f6>" #'aya-expand)
-(bind-key "<f7>" #'mc/mark-next-like-this)
-(bind-key "<f8>" #'er/expand-region)
-(bind-key "<M-f6>" #'god-mode-all)
+;; (bind-key "<f5>" #'aya-create)
+;; (bind-key "<f6>" #'aya-expand)
+;; (bind-key "<f7>" #'mc/mark-next-like-this)
+;; (bind-key "<f8>" #'er/expand-region)
+;; (bind-key "<M-f6>" #'god-mode-all)
 (bind-key "M-z" #'zap-up-to-char)
-(bind-key "C-c u" #'undo-tree-visualize)
+(bind-key "C-c g u" #'undo-tree-visualize)
 
 ; TODO: (bind-key "<C-tab>" #'hs-toggle-hiding scheme-mode-map)
 
