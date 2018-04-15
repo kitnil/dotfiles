@@ -709,6 +709,7 @@ Sets the following basend on PREFIX-MAP:
 ;; (bind-key "<M-f6>" #'god-mode-all)
 (bind-key "M-z" #'zap-up-to-char)
 (bind-key "C-c g u" #'undo-tree-visualize)
+(which-key-add-key-based-replacements "C-c g u" "undo")
 
 ; TODO: (bind-key "<C-tab>" #'hs-toggle-hiding scheme-mode-map)
 
