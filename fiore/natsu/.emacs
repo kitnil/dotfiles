@@ -2078,7 +2078,8 @@ The optional argument NEW-WINDOW is not used."
   "Replace region with \"[…]\"."
   (interactive)
   (kill-region (region-beginning) (region-end))
-  (insert "[…]"))
+  (insert "[…]")
+  (newline 2))
 
 (defun wi-ttn-hs-hide-level-1 ()
   (hs-hide-level 1)
