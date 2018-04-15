@@ -3066,15 +3066,6 @@ rather than highlighting all errors found within the buffer.  This is
 especially useful when opening up large log files for analysis.")
     (license license:gpl2+))))
 
-(define-public emacs-debbugs-with-bugs
-  (package
-    (inherit emacs-debbugs)
-    (name "emacs-debbugs-with-bugs")
-    (source
-     (origin
-       (inherit (package-source emacs-debbugs))
-       (patches (search-patches "emacs-debbugs-recognize-bugs.gnu.org.patch"))))))
-
 (define-public emacs-hierarchy
   (package
     (name "emacs-hierarchy")
