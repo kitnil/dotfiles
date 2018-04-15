@@ -341,7 +341,8 @@ dumb text search, @code{elisp-refs} actually parses the code, so it's never
 confused by comments or @code{foo-bar} matching @code{foo}.")
     (license license:gpl3+)))
 
-(define-public emacs-helm-youtube
+;; XXX: Broken.  Upstream doesn't respond.  Alternatively use ivy youtube.
+#;(define-public emacs-helm-youtube
   (let ((revision "1")
         (commit "202c27fc3b54927611e9d9c764465e1b42ef7e41"))
     (package
