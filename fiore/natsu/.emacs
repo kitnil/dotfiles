@@ -64,7 +64,9 @@
 ;; Encrypt Email message with Gnupg
 (with-eval-after-load 'message
   (require 'jl-encrypt)
-  (add-hook 'message-setup-hook 'mml-secure-encrypt-if-possible))
+  (add-hook 'message-setup-hook 'mml-secure-encrypt-if-possible)
+  (let ((map message-mode-map))
+    (define-key map (kbd "<f5>") 'ispell-region)))
 
 (autoload 'crux-transpose-windows "crux" nil t)
 (autoload 'crux-open-with "crux" nil t)
