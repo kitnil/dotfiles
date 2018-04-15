@@ -2189,7 +2189,7 @@ The optional argument NEW-WINDOW is not used."
     . smartparens-strict-mode)
    ((prog-mode-hook) . yas-minor-mode)
    ((org-mode-hook) . yas-minor-mode)
-   ((prog-mode-hook) . hs-minor-mode )
+   ((prog-mode-hook) . hs-minor-mode)
    ((erc-mode-hook) . (lambda () (setq truncate-lines t)))))
 
 (defun wi-find-stumpwm-init-file ()
