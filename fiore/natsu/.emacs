@@ -1404,6 +1404,8 @@ Push branch master to local/master."
 (setq erc-email-userid user-mail-address)
 (setq erc-flood-protect t)
 (setq erc-join-buffer (quote bury))
+(setq erc-query-display 'bury)
+(setq erc-auto-query 'bury)
 (setq erc-kill-buffer-on-part nil)
 (setq erc-kill-server-buffer-on-quit nil)
 (setq erc-networks-alist nil)
