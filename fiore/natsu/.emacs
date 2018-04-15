@@ -2260,7 +2260,8 @@ The optional argument NEW-WINDOW is not used."
 
 (let ((youtube-rss-channel-id
        "https://www.youtube.com/feeds/videos.xml?channel_id=")
-      (youtube-rss-user "https://www.youtube.com/feeds/videos.xml?user="))
+      (youtube-rss-user
+       "https://www.youtube.com/feeds/videos.xml?user="))
   (setq elfeed-feeds
         `("http://nullprogram.com/feed/"
 
@@ -2279,7 +2280,8 @@ The optional argument NEW-WINDOW is not used."
           "https://www.reddit.com/r/freegames/.rss"
           "https://www.bennee.com/~alex/blog/feed/"
           "https://cestlaz.github.io/rss.xml"
-          ("https://bitlove.org/jupiterbroadcasting/bsdnowhd/feed" video)
+          ("https://bitlove.org/jupiterbroadcasting/bsdnowhd/feed"
+           video)
           (,(concat youtube-rss-channel-id "UC2eYFnH61tmytImy1mTYvhA")
            video) ; Luke Smith
           (,(concat youtube-rss-channel-id "UCkK9UDm_ZNrq_rIXCz3xCGA")
