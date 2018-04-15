@@ -1295,6 +1295,13 @@ for COMMIT, defaulting to the commit hash at point."
 (advice-add 'git-gutter:stage-hunk
             :override #'wi-git-gutter:stage-hunk)
 
+(defun wi-git-gutter-refresh-visible-buffers ()
+  "Refresh git-gutter-mode on all visible git-gutter-mode buffers."
+  (dolist (buff (buffer-list))
+    (with-current-buffer buff
+      (when (and git-gutter-mode (get-buffer-window buff))
+        (git-gutter-mode t)))))
+
 
 ;;;
 ;;; Version control
