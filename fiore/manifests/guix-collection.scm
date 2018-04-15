@@ -169,6 +169,7 @@ version-control video virtualization w3m web xdisorg)
    emacs-lua-mode
    emacs-markdown-mode      ; Commonmark major mode
    emacs-multiple-cursors   ; Multi cursor
+   emacs-nginx-mode
    emacs-nix-mode           ; Nix language mode
    emacs-org                ; Org
    emacs-org-bullets
