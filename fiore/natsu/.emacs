@@ -1008,6 +1008,13 @@ Sets the following basend on PREFIX-MAP:
   (execute-kbd-macro (kbd "SPC"))
   (call-interactively #'dabbrev-expand))
 
+(defun wi-dabbrev-expand-until-period ()
+  "Call `wi-dabbrev-expand' until period before cursor."
+  (interactive)
+  (unless (string-equal (char-to-string (char-before)) ".")
+    (wi-dabbrev-expand)
+    (wi-dabbrev-expand-until-period)))
+
 (defun wi-buffer-major-mode (buffer)
   "Return major-mode of BUFFER."
   (cdr (assoc 'major-mode (buffer-local-variables buffer))))
