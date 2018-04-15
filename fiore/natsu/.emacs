@@ -47,9 +47,6 @@
 ;; See <http://git.savannah.gnu.org/cgit/emacs.git/commit/etc/NEWS?id=72ee93d68daea00e2ee69417afd4e31b3145a9fa>
 (setq print-quoted t)
 
-;; TODO: Maybe remove
-(add-to-list 'exec-path (expand-file-name "~/.guix-profile.d/gdb/bin"))
-
 ;; Look for audio devices ‘mpv --audio-device=help’
 (defvar ‎wi-headphones "pulse/alsa_output\
 .usb-Logitech_Logitech_USB_Headset-00.analog-stereo"
