@@ -1164,6 +1164,13 @@ for COMMIT, defaulting to the commit hash at point."
                  geiser-guile-load-path)))
     (run-guile)))
 
+(defun run-guile-with-directory (directory)
+  "Invoke `run-guile' and add directory to %load-path."
+  (interactive "DAdd to %%load-path: ")
+  (let ((geiser-guile-load-path (append (list directory)
+                                        geiser-guile-load-path)))
+    (run-guile)))
+
 (with-eval-after-load 'geiser
   (setq geiser-active-implementations '(guile))
   (setq geiser-default-implementation 'guile))
