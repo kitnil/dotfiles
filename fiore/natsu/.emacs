@@ -2369,6 +2369,7 @@ be updated automatically."))
 (setq mouse-yank-at-point t) ; Ignore mouse position on paste
 (setq vc-follow-symlinks t)  ; Do not ask about following link in Git projects
 (setq dired-listing-switches (purecopy "-alh")) ; Prettify dired
+(setq dired-hide-details-hide-symlink-targets nil)
 
 ;; Toggle prettify symbols mode on
 (global-prettify-symbols-mode)
