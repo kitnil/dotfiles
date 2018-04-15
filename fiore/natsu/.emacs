@@ -2260,9 +2260,6 @@ The optional argument NEW-WINDOW is not used."
 
 (setq mml-secure-insert-signature 'always)
 
-;; TODO: Add to guix emacs package
-(setq ispell-aspell-dict-dir "/run/current-system/profile/lib/aspell")
-
 (add-hook 'prog-mode-hook 'hl-todo-mode)
 
 (add-hook 'shell-mode-hook
