@@ -177,6 +177,7 @@ version-control video virtualization w3m web xdisorg)
    emacs-rainbow-delimiters ; Prettify parentheses
    emacs-rainbow-mode       ; Show colors in codes
    emacs-restclient
+   emacs-scheme-complete
    emacs-slime              ; Sbcl repl
    emacs-smart-mode-line
    emacs-smartparens        ; Structured editing

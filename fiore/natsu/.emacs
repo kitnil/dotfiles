@@ -738,6 +738,10 @@ Sets the following basend on PREFIX-MAP:
           (lambda ()
             (local-set-key (kbd "C-<return>") 'eir-eval-in-ielm)))
 
+(with-eval-after-load 'guix-ui-package
+  (let ((map guix-output-list-mode-map))
+    (define-key map (kbd "<f6>") 'hl-line-mode)))
+
 
 ;;;
 ;;; Search engines
@@ -1181,6 +1185,12 @@ for COMMIT, defaulting to the commit hash at point."
 
 (with-eval-after-load 'guix-repl
   (setq guix-directory (expand-file-name "~/src/guix")))
+
+(autoload 'scheme-smart-complete "scheme-complete" nil t)
+;; (eval-after-load 'scheme
+;;    '(define-key scheme-mode-map "\e\t" 'scheme-smart-complete))
+(setq scheme-default-implementation 'guile)
+(setq *scheme-use-r7rs* nil)
 
 
 ;;;
