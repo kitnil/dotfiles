@@ -2178,6 +2178,7 @@ The optional argument NEW-WINDOW is not used."
      shell-mode-hook ibuffer-mode-hook guix-env-var-mode-hook)
     . guix-prettify-mode)
    ((c-mode-hook) . ggtags-mode)
+   ((dired-mode-hook) . toggle-truncate-lines)
    ((scheme-mode-hook) . guix-devel-mode)
    ((prog-mode-hook) . rainbow-delimiters-mode)
    ((prog-mode-hook
