@@ -66,6 +66,17 @@
     (define-key map (kbd "C-c s") 'ispell-region)
     (define-key map (kbd "C-c e") 'wi-replace-with-brackets-ellipsis)))
 
+(defhydra hydra-dabbrev-expand
+  (:color red)
+  "dabbrev-expand"
+  ("/" wi-dabbrev-expand "expand")
+  ("u" undo "undo"))
+
+(with-eval-after-load 'vc-git
+  (let ((map vc-git-log-edit-mode-map))
+    (define-key map (kbd "C-c /") 'hydra-dabbrev-expand/body)
+    (define-key map (kbd "C-c l") 'vc-chlog)))
+
 (autoload 'crux-transpose-windows "crux" nil t)
 (autoload 'crux-open-with "crux" nil t)
 
