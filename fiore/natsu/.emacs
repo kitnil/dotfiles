@@ -66,8 +66,8 @@
   (require 'jl-encrypt)
   (add-hook 'message-setup-hook 'mml-secure-encrypt-if-possible)
   (let ((map message-mode-map))
-    (define-key map (kbd "<f5>") 'ispell-region)
-    (define-key map (kbd "<f6>") 'wi-replace-with-brackets-ellipsis)))
+    (define-key map (kbd "C-c s") 'ispell-region)
+    (define-key map (kbd "C-c e") 'wi-replace-with-brackets-ellipsis)))
 
 (autoload 'crux-transpose-windows "crux" nil t)
 (autoload 'crux-open-with "crux" nil t)
