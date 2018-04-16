@@ -36,8 +36,6 @@
   #:use-module (ice-9 match))
 
 (define-public inxi-minimal
-  ;; TODO: Add more inputs.
-  ;; See <https://git.archlinux.org/svntogit/community.git/plain/trunk/PKGBUILD?h=packages/inxi>.
   (let ((commit "c934578ffb4f920cb04c91305a54dbdc4aa99d80"))
     (package
       (name "inxi-minimal")
