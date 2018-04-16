@@ -36,67 +36,65 @@
 (define-public inxi
   ;; TODO: Add more inputs.
   ;; See <https://git.archlinux.org/svntogit/community.git/plain/trunk/PKGBUILD?h=packages/inxi>.
-  (let ((commit "c934578ffb4f920cb04c91305a54dbdc4aa99d80")
-        (revision ""))
-      (package
-    (name "inxi")
-    (version (string-append "2.3.56" revision "."
-                            (string-take commit 7)))
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "https://github.com/smxi/inxi"
-                           "/raw/" commit "/inxi.tar.gz"))
-       (file-name (string-append name "-" version ".tar.gz"))
-       (sha256
-        (base32
-         "0cmb95fw4jf5fqxmivwxy63sqyl7jnb3v7sbqqhafx0iwxgxi77h"))))
-    (build-system trivial-build-system)
-    (inputs
-     `(("bash" ,bash)))
-    (native-inputs
-     `(("coreutils" ,coreutils)
-       ("gawk" ,gawk)
-       ("grep" ,grep)
-       ("pciutils" ,pciutils)
-       ("procps" ,procps)
-       ("sed" ,sed)
-       ("tar" ,tar)
-       ("gzip" ,gzip)
-       ("xdpyinfo" ,xdpyinfo)
-       ("mesa-utils" ,mesa-utils)
-       ("dmidecode" ,dmidecode)))
-    (arguments
-     `(#:modules
-       ((guix build utils))
-       #:builder
-       (begin
-         (use-modules (guix build utils))
-         (setenv "PATH" (string-append
-                         (assoc-ref %build-inputs "tar") "/bin" ":"
-                         (assoc-ref %build-inputs "gzip") "/bin"))
-         (system* "tar" "xvf" (assoc-ref %build-inputs "source"))
-         ;; Many commands (like glxinfo) better be searched as words.
-         ;; See SRFI-115.
-         (with-fluids ((%default-port-encoding #f))
-           (substitute* "inxi"
-             (("/usr/bin/env bash")
-              (string-append (assoc-ref %build-inputs "bash") "/bin/bash"))
-             (("xdpyinfo")
-              (string-append (assoc-ref %build-inputs "xdpyinfo")
-                             "/bin/xdpyinfo"))
-             (("glxinfo")
-              (string-append (assoc-ref %build-inputs "mesa-utils")
-                             "/bin/glxinfo"))
-             (("dmidecode")
-              (string-append (assoc-ref %build-inputs "dmidecode")
-                             "/bin/dmidecode"))))
-         (install-file "inxi" (string-append %output "/bin"))
-         (install-file "inxi.1.gz"
-                       (string-append %output "/share/doc/man/man1"))
-         #t)))
-    (home-page "http://inxi.org")
-    (synopsis "Script to get system information")
-    (description
-     "This package provides a script to get system information.")
-    (license license:gpl3+))))
+  (let ((commit "c934578ffb4f920cb04c91305a54dbdc4aa99d80"))
+    (package
+      (name "inxi")
+      (version (git-version "2.3.56" "1" commit))
+      (source
+       (origin
+         (method url-fetch)
+         (uri (string-append "https://github.com/smxi/inxi"
+                             "/raw/" commit "/inxi.tar.gz"))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "0cmb95fw4jf5fqxmivwxy63sqyl7jnb3v7sbqqhafx0iwxgxi77h"))))
+      (build-system trivial-build-system)
+      (inputs
+       `(("bash" ,bash)))
+      (native-inputs
+       `(("coreutils" ,coreutils)
+         ("gawk" ,gawk)
+         ("grep" ,grep)
+         ("pciutils" ,pciutils)
+         ("procps" ,procps)
+         ("sed" ,sed)
+         ("tar" ,tar)
+         ("gzip" ,gzip)
+         ("xdpyinfo" ,xdpyinfo)
+         ("mesa-utils" ,mesa-utils)
+         ("dmidecode" ,dmidecode)))
+      (arguments
+       `(#:modules
+         ((guix build utils))
+         #:builder
+         (begin
+           (use-modules (guix build utils))
+           (setenv "PATH" (string-append
+                           (assoc-ref %build-inputs "tar") "/bin" ":"
+                           (assoc-ref %build-inputs "gzip") "/bin"))
+           (system* "tar" "xvf" (assoc-ref %build-inputs "source"))
+           ;; Many commands (like glxinfo) better be searched as words.
+           ;; See SRFI-115.
+           (with-fluids ((%default-port-encoding #f))
+             (substitute* "inxi"
+               (("/usr/bin/env bash")
+                (string-append (assoc-ref %build-inputs "bash") "/bin/bash"))
+               (("xdpyinfo")
+                (string-append (assoc-ref %build-inputs "xdpyinfo")
+                               "/bin/xdpyinfo"))
+               (("glxinfo")
+                (string-append (assoc-ref %build-inputs "mesa-utils")
+                               "/bin/glxinfo"))
+               (("dmidecode")
+                (string-append (assoc-ref %build-inputs "dmidecode")
+                               "/bin/dmidecode"))))
+           (install-file "inxi" (string-append %output "/bin"))
+           (install-file "inxi.1.gz"
+                         (string-append %output "/share/doc/man/man1"))
+           #t)))
+      (home-page "http://inxi.org")
+      (synopsis "Script to get system information")
+      (description
+       "This package provides a script to get system information.")
+      (license license:gpl3+))))
