@@ -31,6 +31,7 @@
   #:use-module (gnu packages linux)
   #:use-module (gnu packages xorg)
   #:use-module (gnu packages gl)
+  #:use-module (gnu packages file)
   #:use-module (gnu packages admin)
   #:use-module (ice-9 match))
 
@@ -62,9 +63,20 @@
          ("sed" ,sed)
          ("tar" ,tar)
          ("gzip" ,gzip)
-         ("xdpyinfo" ,xdpyinfo)
+         ("dmidecode" ,dmidecode)
+         ("file" ,file)
+         ("iproute" ,iproute)
+         ("kmod" ,kmod)
+         ("lm-sensors" ,lm-sensors)
          ("mesa-utils" ,mesa-utils)
-         ("dmidecode" ,dmidecode)))
+         ("net-tools" ,net-tools)
+         ("sudo" ,sudo)
+         ("usbutils" ,usbutils)
+         ("xdpyinfo" ,xdpyinfo)
+         ("xprop" ,xprop)
+         ("xrandr" ,xrandr)
+         ;; XXX: Add more inputs after packaging them.
+         #;("hddtemp" ,hddtemp)))
       (arguments
        `(#:modules
          ((guix build utils)
