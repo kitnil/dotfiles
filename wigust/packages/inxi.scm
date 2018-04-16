@@ -35,12 +35,12 @@
   #:use-module (gnu packages admin)
   #:use-module (ice-9 match))
 
-(define-public inxi
+(define-public inxi-minimal
   ;; TODO: Add more inputs.
   ;; See <https://git.archlinux.org/svntogit/community.git/plain/trunk/PKGBUILD?h=packages/inxi>.
   (let ((commit "c934578ffb4f920cb04c91305a54dbdc4aa99d80"))
     (package
-      (name "inxi")
+      (name "inxi-minimal")
       (version (git-version "2.3.56" "1" commit))
       (source
        (origin
@@ -62,21 +62,7 @@
          ("procps" ,procps)
          ("sed" ,sed)
          ("tar" ,tar)
-         ("gzip" ,gzip)
-         ("dmidecode" ,dmidecode)
-         ("file" ,file)
-         ("iproute" ,iproute)
-         ("kmod" ,kmod)
-         ("lm-sensors" ,lm-sensors)
-         ("mesa-utils" ,mesa-utils)
-         ("net-tools" ,net-tools)
-         ("sudo" ,sudo)
-         ("usbutils" ,usbutils)
-         ("xdpyinfo" ,xdpyinfo)
-         ("xprop" ,xprop)
-         ("xrandr" ,xrandr)
-         ;; XXX: Add more inputs after packaging them.
-         #;("hddtemp" ,hddtemp)))
+         ("gzip" ,gzip)))
       (arguments
        `(#:modules
          ((guix build utils)
@@ -108,3 +94,24 @@
       (description
        "This package provides a script to get system information.")
       (license license:gpl3+))))
+
+(define-public inxi
+  (package
+    (inherit inxi-minimal)
+    (name "inxi")
+    (native-inputs
+     `(("dmidecode" ,dmidecode)
+       ("file" ,file)
+       ("iproute" ,iproute)
+       ("kmod" ,kmod)
+       ("lm-sensors" ,lm-sensors)
+       ("mesa-utils" ,mesa-utils)
+       ("net-tools" ,net-tools)
+       ("sudo" ,sudo)
+       ("usbutils" ,usbutils)
+       ("xdpyinfo" ,xdpyinfo)
+       ("xprop" ,xprop)
+       ("xrandr" ,xrandr)
+       ;; XXX: Add more inputs after packaging them.
+       ;; ("hddtemp" ,hddtemp)
+       ,@(package-native-inputs inxi-minimal)))))
