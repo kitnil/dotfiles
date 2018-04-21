@@ -602,6 +602,7 @@ Sets the following basend on PREFIX-MAP:
                 ("b" helm-buffers-list "buffers" :color blue)
                 ("f" helm-for-files "files" :color blue)
                 ("i" helm-imenu "imenu" :color blue)
+                ("j" helm-register "register" :color blue)
                 ("l" helm-recentf "recent" :color blue)
                 ("m" helm-make "make" :color blue)
                 ("r" helm-bookmarks "bookmarks" :color blue)
