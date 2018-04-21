@@ -66,6 +66,10 @@
     (define-key map (kbd "C-c s") 'ispell-region)
     (define-key map (kbd "C-c e") 'wi-replace-with-brackets-ellipsis)))
 
+(with-eval-after-load 'guix-devel
+  (let ((map guix-devel-mode-map))
+    (define-key map (kbd "<f5>") 'shell)))
+
 (defhydra hydra-dabbrev-expand
   (:color red)
   "dabbrev-expand"
