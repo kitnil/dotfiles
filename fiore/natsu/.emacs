@@ -70,6 +70,10 @@
   (let ((map guix-devel-mode-map))
     (define-key map (kbd "<f5>") 'shell)))
 
+(with-eval-after-load 'info
+  (let ((map Info-mode-map))
+    (define-key map (kbd "<f8>") 'wi-info-remote-copy-current-node)))
+
 (defhydra hydra-dabbrev-expand
   (:color red)
   "dabbrev-expand"
