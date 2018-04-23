@@ -24,6 +24,7 @@
    emacs-academic-phrases
    emacs-add-hooks
    emacs-anywhere-mode
+   emacs-atomic-chrome
    emacs-auto-yasnippet
    emacs-awk-it
    emacs-crux

@@ -2059,6 +2059,8 @@ The optional argument NEW-WINDOW is not used."
 ;;; Misc
 ;;;
 
+(atomic-chrome-start-server)
+
 (setq redshift-temp-increment 100)
 
 (setq youtube-stream-open-chat-function
