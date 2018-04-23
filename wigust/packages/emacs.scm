@@ -3965,3 +3965,29 @@ bookmarks and history.")
     (description "This package offers a single macro, `let-alist'.  This macro
 takes a first argument (whose value must be an alist) and a body.")
     (license license:gpl3+)))
+
+(define-public emacs-atomic-chrome
+  (let ((commit "4828a29855f4663add5f2075b7d874354e70c02c"))
+    (package
+      (name "emacs-atomic-chrome")
+      (version (git-version "2.0.0" "1" commit))
+      (source (origin
+                (method git-fetch)
+                (uri (git-reference
+                      (url "https://github.com/alpha22jp/atomic-chrome.git")
+                      (commit commit)))
+                (file-name (git-file-name name version))
+                (sha256
+                 (base32
+                  "15yg8752z3iwizja7wkjvkjrj8pig21ynq5l5m5cr3f1bzx74dx7"))))
+      (build-system emacs-build-system)
+      (propagated-inputs
+       `(("emacs-let-alist" ,emacs-let-alist)
+         ("emacs-websocket" ,emacs-websocket)))
+      (home-page "https://github.com/alpha22jp/atomic-chrome/")
+      (synopsis " Edit text area on Chrome with Emacs using Atomic Chrome")
+      (description "This package provides an Emacs version of Atomic Chrome
+which is an extension for Google Chrome browser that allows you to edit text
+areas of the browser in Emacs. It's similar to Edit with Emacs, but has some
+advantages as below with the help of websocket.")
+      (license license:gpl2+))))
