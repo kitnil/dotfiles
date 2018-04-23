@@ -46,6 +46,7 @@
   #:use-module (gnu packages haskell)
   #:use-module (gnu packages tex)
   #:use-module (gnu packages texinfo)
+  #:use-module (gnu packages libevent)
   #:use-module (gnu packages tcl)
   #:use-module (gnu packages tls)
   #:use-module (gnu packages pkg-config)
@@ -3991,3 +3992,46 @@ which is an extension for Google Chrome browser that allows you to edit text
 areas of the browser in Emacs. It's similar to Edit with Emacs, but has some
 advantages as below with the help of websocket.")
       (license license:gpl2+))))
+
+(define-public emacs-perl-live
+  (package
+    (name "emacs-perl-live")
+    (version "1")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append "https://github.com/vividsnow/perl-live/archive/v"
+                           version ".tar.gz"))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32
+         "0i1ila542bgfpb5r1w62w5bnhh97mpp9mwpjbfp3kr8qn1ymvqq4"))))
+    (build-system emacs-build-system)
+    (arguments
+     `(#:phases
+       (modify-phases %standard-phases
+         (add-before 'install 'install-perl-live-pl
+           ;; This build phase installs ‘perl-live.pl’ file
+           ;; and patches a location to this in ‘perl-live.el’.
+           (lambda* (#:key outputs #:allow-other-keys)
+             (let ((data (string-append (assoc-ref outputs "out") "/share/"
+                                        ,name "-" ,version)))
+               (install-file "perl-live.pl" data)
+               (let ((file "perl-live.el"))
+                 (chmod file #o644)
+                 (emacs-substitute-sexps file
+                   ("(defcustom perl-live-bin"
+                    (which "perl"))
+                   ("(defcustom perl-live-script"
+                    (string-append data "/perl-live.pl"))))))))))
+    (native-inputs
+     `(("perl" ,perl)))
+    (propagated-inputs
+     `(("perl-anyevent" ,perl-anyevent)
+       ("perl-package-stash-xs" ,perl-package-stash-xs)
+       ("perl-ev" ,perl-ev) ;optional
+       ("perl-padwalker" ,perl-padwalker)))
+    (home-page "https://github.com/vividsnow/perl-live/")
+    (synopsis "Perl live coding")
+    (description "This package provides a Perl script for live coding.")
+    (license license:gpl3+)))
