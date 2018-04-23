@@ -6,7 +6,8 @@
   #:use-module (gnu)
   #:use-module (srfi srfi-1)
   #:use-module (ice-9 popen)
-  #:use-module (ice-9 rdelim))
+  #:use-module (ice-9 rdelim)
+  #:use-module (fiore manifests fiore))
 
 (use-service-modules cups desktop dns mail networking rsync shepherd
 spice ssh version-control web xorg cgit)
@@ -303,69 +304,7 @@ EndSection
                                 "\n" %facebook-host-aliases)))
 
     ;; Lightweight desktop with custom packages from guix-wigust
-    (packages
-     (cons*
-      desktop-file-utils
-      dovecot
-      gvfs
-      setxkbmap   ; Keyboard layout
-      wmctrl      ; `ewmctrl'
-      xclip       ; X clipboard CLI
-      xdg-utils
-      xdotool     ; Mouse and keyboard automation
-      xorg-server ; `xephyr'
-      xrandr      ; Change screen resolution
-      xrdb
-      xset
-      xsetroot
-      xterm       ; $TERM
-      xwininfo    ; X Window information
-      ;; For helm-stumpwm-commands and stumpish
-      rlwrap
-      xprop
-      xhost
-
-      adb       ; For Replicant (Android distribution) control
-      cups      ; Printer
-      ethtool   ; wol (wake on lan)
-      file      ; Information about file from magic
-      gnupg
-      iptables
-      knot
-      lm-sensors      ; `sensors'
-      ncurses
-      nss-certs ; for https
-      openssh   ; `scp'
-      pinentry  ; Password typing for Gnupg
-      qemu
-      rsync
-      sshfs-fuse
-      strace
-      tcpdump
-      tmux
-      tree      ; List files as a tree
-      wget
-      xkill
-      zile
-
-      adwaita-icon-theme
-      hicolor-icon-theme
-      font-awesome
-      font-dejavu
-      font-liberation
-      font-misc-misc  ; for `xterm'
-      font-wqy-zenhei ; Chinese, Japanese, Korean
-      fontconfig      ; `fc-cache -f'
-
-      alsa-utils
-      pavucontrol ; Pulseaudio control GUI
-      pulseaudio
-
-      httpd
-      mysql
-      cryptsetup
-
-      %base-packages))
+    (packages %fiore-packages)
 
     (services (cons* firewall-service
                      (static-networking-service "enp6s0"
