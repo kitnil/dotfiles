@@ -232,6 +232,12 @@ WARNING:  hooktube.com requries non-free JavaScript."
     (funcall ffap-info-finder filename))
    ((error "No such file or directory `%s'" filename))))
 
+(defun delete-file-at-point (&optional filename)
+  "Remove file, defaulting to file at point."
+  (interactive)
+  (or filename (setq filename (thing-at-point 'filename t)))
+  (delete-file filename))
+
 (autoload 'browse-at-remote--remote-ref "browse-at-remote")
 
 (defun wi-github-issue-at-point (&optional issue)
