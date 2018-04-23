@@ -2194,6 +2194,24 @@ The optional argument NEW-WINDOW is not used."
   (setq sml/theme 'dark)
   (sml/setup))
 
+(defvar wi-theme t
+  "If non-nil use dark theme.
+
+If nil use light theme.")
+
+(defun wi-toggle-theme ()
+  "Toggle between dark and light themes."
+  (interactive)
+  (if wi-theme
+      (progn (mapc (lambda (theme)
+                     (disable-theme theme))
+                   '(manoj-dark smart-mode-line-dark))
+             (enable-theme 'smart-mode-line-light)
+             (setq wi-theme nil))
+    (progn (disable-theme 'smart-mode-line-light)
+           (wi-manoj-dark)
+           (setq wi-theme t))))
+
 
 ;;;
 ;;; smart-mode-line
