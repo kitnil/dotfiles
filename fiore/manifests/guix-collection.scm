@@ -2,17 +2,73 @@
   #:use-module (gnu)
   #:use-module (guix packages)
   #:use-module (guix profiles)
+  #:use-module (gnu packages admin)
+  #:use-module (gnu packages aspell)
+  #:use-module (gnu packages audio)
+  #:use-module (gnu packages backup)
+  #:use-module (gnu packages bittorrent)
+  #:use-module (gnu packages code)
+  #:use-module (gnu packages commencement)
+  #:use-module (gnu packages compression)
+  #:use-module (gnu packages conkeror)
+  #:use-module (gnu packages cran)
+  #:use-module (gnu packages databases)
+  #:use-module (gnu packages dictionaries)
+  #:use-module (gnu packages elf)
+  #:use-module (gnu packages emacs)
+  #:use-module (gnu packages games)
+  #:use-module (gnu packages gcc)
+  #:use-module (gnu packages gdb)
+  #:use-module (gnu packages glib)
+  #:use-module (gnu packages gnu-doc)
+  #:use-module (gnu packages gnuzilla)
+  #:use-module (gnu packages graphics)
+  #:use-module (gnu packages graphviz)
+  #:use-module (gnu packages gstreamer)
+  #:use-module (gnu packages gtk)
+  #:use-module (gnu packages guile)
+  #:use-module (gnu packages haskell)
+  #:use-module (gnu packages image-viewers)
+  #:use-module (gnu packages imagemagick)
+  #:use-module (gnu packages kodi)
+  #:use-module (gnu packages libreoffice)
+  #:use-module (gnu packages license)
+  #:use-module (gnu packages linux)
+  #:use-module (gnu packages lisp)
+  #:use-module (gnu packages lsof)
+  #:use-module (gnu packages lxde)
+  #:use-module (gnu packages mail)
+  #:use-module (gnu packages man)
+  #:use-module (gnu packages maths)
+  #:use-module (gnu packages messaging)
+  #:use-module (gnu packages ncdu)
+  #:use-module (gnu packages ncurses)
+  #:use-module (gnu packages networking)
+  #:use-module (gnu packages node)
+  #:use-module (gnu packages package-management)
+  #:use-module (gnu packages password-utils)
+  #:use-module (gnu packages patchutils)
+  #:use-module (gnu packages pdf)
+  #:use-module (gnu packages perl)
+  #:use-module (gnu packages perl-web)
+  #:use-module (gnu packages python)
+  #:use-module (gnu packages rdesktop)
+  #:use-module (gnu packages samba)
+  #:use-module (gnu packages scheme)
+  #:use-module (gnu packages statistics)
+  #:use-module (gnu packages texinfo)
+  #:use-module (gnu packages textutils)
+  #:use-module (gnu packages tls)
+  #:use-module (gnu packages tor)
+  #:use-module (gnu packages valgrind)
+  #:use-module (gnu packages version-control)
+  #:use-module (gnu packages video)
+  #:use-module (gnu packages virtualization)
+  #:use-module (gnu packages w3m)
+  #:use-module (gnu packages web)
+  #:use-module (gnu packages xdisorg)
   #:export (guix-collection-packages-multiout
             guix-collection-packages))
-
-(use-package-modules admin aspell audio backup bittorrent code
-conkeror commencement compression cran databases elf dictionaries
-emacs games gcc gdb glib gnu-doc gnuzilla graphics graphviz gstreamer
-gtk guile haskell image-viewers imagemagick kodi libreoffice license
-linux lisp lxde mail man maths messaging ncdu networking ncurses node
-package-management password-utils patchutils perl perl-web pdf python
-rdesktop samba scheme statistics texinfo textutils tls tor valgrind
-version-control video virtualization w3m web xdisorg)
 
 (define guix-collection-packages-multiout
   (list
@@ -94,6 +150,7 @@ version-control video virtualization w3m web xdisorg)
    graphviz  ; `dot'
    htop            ; Pretty `top'
    licensecheck ; Licence checker for source files
+   lsof
    ncdu            ; TUI `du'
    netcat          ; TCP
    nmap
