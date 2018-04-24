@@ -162,6 +162,7 @@
    stow            ; Dotfiles management
    the-silver-searcher
    unzip
+   woof
    zip
 
    texinfo
