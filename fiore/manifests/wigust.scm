@@ -1,15 +1,17 @@
 (define-module (fiore manifests wigust)
   #:use-module (wigust packages emacs)
-  #:use-module (wigust packages licensecheck)
   #:use-module (wigust packages pulseaudio)
   #:use-module (wigust packages python)
   #:use-module (wigust packages version-control)
   #:use-module (local packages emacs)
+  #:use-module (local packages guix)
   #:use-module (gnu packages emacs)
   #:export (guix-wigust-packages))
 
 (define guix-wigust-packages
   (list
+
+   guix-custom
 
    pulsemixer-emacs-keybindings
    emacs-athena
@@ -46,6 +48,7 @@
    emacs-guix-local-checkout ; Guix interface
    emacs-helm-c-yasnippet
    emacs-helm-emms
+   emacs-helm-eww
    emacs-helm-firefox       ; Search for bookmarks in Icecat
    emacs-helm-gtags
    emacs-helm-mode-manager
@@ -65,12 +68,11 @@
    emacs-org-mind-map       ; General mind maps from Org files
    emacs-outshine           ; Emacs outline-mode
    emacs-pcre2el
+   emacs-perl-live
    emacs-redshift
    emacs-scratch-el
    emacs-suggest
    emacs-terminal-here-checkout
    emacs-validate
-
-   licensecheck ; Licence checker for source files
 
    vc-dwim-git-worktree))

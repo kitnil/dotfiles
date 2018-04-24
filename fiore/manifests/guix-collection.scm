@@ -8,8 +8,8 @@
 (use-package-modules admin aspell audio backup bittorrent code
 conkeror commencement compression cran databases elf dictionaries
 emacs games gcc gdb glib gnu-doc gnuzilla graphics graphviz gstreamer
-gtk guile haskell image-viewers imagemagick kodi libreoffice linux
-lisp lxde mail man maths messaging ncdu ncurses node
+gtk guile haskell image-viewers imagemagick kodi libreoffice license
+linux lisp lxde mail man maths messaging ncdu networking ncurses node
 package-management password-utils patchutils perl perl-web pdf python
 rdesktop samba scheme statistics texinfo textutils tls tor valgrind
 version-control video virtualization w3m web xdisorg)
@@ -93,12 +93,14 @@ version-control video virtualization w3m web xdisorg)
    gnu-make        ; GNU Make
    graphviz  ; `dot'
    htop            ; Pretty `top'
+   licensecheck ; Licence checker for source files
    ncdu            ; TUI `du'
    netcat          ; TCP
    nmap
    openssl
    recutils  ; Filter records like in `guix --search'
    shellcheck
+   socat
    sqlite
    stow            ; Dotfiles management
    the-silver-searcher
@@ -210,9 +212,10 @@ version-control video virtualization w3m web xdisorg)
    gstreamer
 
    guile-2.2
-   guile-readline
-   guile-daemon
    guile-colorized
+   guile-daemon
+   guile-readline
+   guile-xosd
    mcron
 
    minetest                 ; Open source Minecraft

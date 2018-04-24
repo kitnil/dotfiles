@@ -39,25 +39,28 @@
 
 (define %fiore-packages
   (cons*
+
+   ;; For helm-stumpwm-commands and stumpish
    desktop-file-utils
    dovecot
    gvfs
+   rlwrap
    setxkbmap   ; Keyboard layout
    wmctrl      ; `ewmctrl'
    xclip       ; X clipboard CLI
    xdg-utils
    xdotool     ; Mouse and keyboard automation
+   xdpyinfo
+   xhost
+   xlsfonts
    xorg-server ; `xephyr'
+   xprop
    xrandr      ; Change screen resolution
    xrdb
    xset
    xsetroot
    xterm       ; $TERM
    xwininfo    ; X Window information
-   ;; For helm-stumpwm-commands and stumpish
-   rlwrap
-   xprop
-   xhost
 
    adb       ; For Replicant (Android distribution) control
    cups      ; Printer
