@@ -23,7 +23,8 @@
   #:use-module (gnu packages)
   #:use-module (gnu packages pulseaudio)
   #:use-module (gnu packages ncurses)
-  #:use-module (guix build-system cmake))
+  #:use-module (guix build-system cmake)
+  #:use-module (guix build-system trivial))
 
 (define-public pulsemixer-emacs-keybindings
   (package
@@ -62,3 +63,42 @@ curses-style interfaces with Emacs keybindings.")))
     (description
      "Command-line ncurses mixer for PulseAudio inspired by pavucontrol.")
     (license license:x11)))
+
+(define-public pulseaudio-alsa
+  (package
+    (name "pulseaudio-alsa")
+    (version "0")
+    (source #f)
+    (build-system trivial-build-system)
+    (arguments
+     `(#:modules ((guix build utils))
+       #:builder
+       (begin
+         (use-modules (guix build utils))
+         (let* ((out (assoc-ref %outputs "out"))
+                (etc (string-append out "/etc")))
+           (mkdir-p etc)
+           (call-with-output-file (string-append etc "/asound.conf")
+             (lambda (port)
+               (display "# Use PulseAudio by default
+pcm.!default {
+  type pulse
+  fallback \"sysdefault\"
+  hint {
+    show on
+    description \"Default ALSA Output (currently PulseAudio Sound Server)\"
+  }
+}
+
+ctl.!default {
+  type pulse
+  fallback \"sysdefault\"
+}
+"
+                        port)))
+           #t))))
+    (synopsis "ALSA Configuration for PulseAudio")
+    (description "This package provides a @file{asound.conf} file to configure
+ALSA for PulseAudio.")
+    (home-page #f)
+    (license license:gpl3+)))
