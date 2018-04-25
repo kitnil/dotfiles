@@ -2090,6 +2090,8 @@ The optional argument NEW-WINDOW is not used."
 ;;; Misc
 ;;;
 
+(add-hook 'find-file-hook 'auto-insert)
+
 (atomic-chrome-start-server)
 
 (setq redshift-temp-increment 100)
