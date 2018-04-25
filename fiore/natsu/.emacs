@@ -2101,6 +2101,27 @@ The optional argument NEW-WINDOW is not used."
   (rx "gnu/services/" (one-or-more (or alphanumeric "-")) ".scm" line-end)
   ["guix/gnu/services/service.tmpl" yas-expand-current-buffer])
 
+(defun wi-fullname-and-email ()
+  (format "%s <%s>" user-full-name user-mail-address))
+
+(define-skeleton copyright
+  "Insert a copyright by $USER notice at cursor."
+  "FULL_NAME <EMAIL>: "
+  comment-start
+  "; Copyright © " `(format-time-string "%Y") " "
+  (or (wi-fullname-and-email) str)
+  '(if (copyright-offset-too-large-p)
+       (message "Copyright extends beyond `copyright-limit' and won't\
+be updated automatically."))
+  comment-end \n)
+
+(setq copyright-names-regexp (wi-fullname-and-email))
+
+(add-hook 'before-save-hook 'copyright-update)
+
+(setq quickurl-format-function
+      (lambda (url) (format "<%s>" (quickurl-url-url url))))
+
 
 ;;;
 ;;; Misc
@@ -2424,27 +2445,6 @@ If nil use light theme.")
           (,(concat youtube-rss-user "gotbletu") video)
           (,(concat youtube-rss-user "metalx1000") video)
           (,(concat youtube-rss-user "SsethTzeentach") video games))))
-
-(defun wi-fullname-and-email ()
-  (format "%s <%s>" user-full-name user-mail-address))
-
-(define-skeleton copyright
-  "Insert a copyright by $USER notice at cursor."
-  "FULL_NAME <EMAIL>: "
-  comment-start
-  "; Copyright © " `(format-time-string "%Y") " "
-  (or (wi-fullname-and-email) str)
-  '(if (copyright-offset-too-large-p)
-       (message "Copyright extends beyond `copyright-limit' and won't\
-be updated automatically."))
-  comment-end \n)
-
-(setq copyright-names-regexp (wi-fullname-and-email))
-
-;; TODO: Add to guix (add-hook 'before-save-hook 'copyright-update)
-
-(setq quickurl-format-function
-      (lambda (url) (format "<%s>" (quickurl-url-url url))))
 
 ;; `w3m' fonts
 (setq w3m-fill-column 80)
