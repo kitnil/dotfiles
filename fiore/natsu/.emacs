@@ -870,7 +870,7 @@ Sets the following basend on PREFIX-MAP:
 
 (defengine guix-hydra-job
   ;; e.g. gource-0.47
-  "https://hydra.gnu.org/job/gnu/master/%s.x86_64-linux")
+  "https://hydra.gnu.org/job/gnu/master/%s")
 
 (defengine nixos-hydra
   "https://hydra.nixos.org/search?query=%s")
@@ -1241,6 +1241,27 @@ for COMMIT, defaulting to the commit hash at point."
 ;;;
 ;;; Guix
 ;;;
+
+(defcustom guix-hydra-script "~/src/hello-guile/package.scm"
+  "Script to get package names appropriate for Guix Hydra."
+  :group 'guix-hydra)
+
+(defun guix-hydra-packages (packages)
+  "Return a list of packages appropriate for Guix Hydra."
+  (remove ""
+          (split-string (shell-command-to-string
+                         (mapconcat 'identity
+                                    (append (list (expand-file-name guix-hydra-script))
+                                            packages)
+                                    " "))
+                        "\n")))
+
+(defun guix-hydra-packages-browse (packages)
+  (interactive "sPackages (space separated): ")
+  "Open a WEB browser at Guix Hydra for PACKAGES."
+  (mapc (lambda (package)
+          (engine/search-guix-hydra-job package))
+        (guix-hydra-packages (split-string packages " "))))
 
 (setq guix-read-package-name-function
       #'guix-read-package-name-at-point)
