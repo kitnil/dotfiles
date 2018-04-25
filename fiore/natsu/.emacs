@@ -2087,6 +2087,22 @@ The optional argument NEW-WINDOW is not used."
 
 
 ;;;
+;;; Autotype
+;;;
+
+;; Inspired by https://github.com/suzp1984/donkey/blob/master/elisp/auto-insert/my-auto-insert.el
+
+(defun yas-expand-current-buffer ()
+  "Expand all yasnippet snippets in a current buffer."
+  (interactive)
+  (yas-expand-snippet (buffer-string) (point-min) (point-max)))
+
+(define-auto-insert
+  (rx "gnu/services/" (one-or-more (or alphanumeric "-")) ".scm" line-end)
+  ["guix/gnu/services/service.tmpl" yas-expand-current-buffer])
+
+
+;;;
 ;;; Misc
 ;;;
 
