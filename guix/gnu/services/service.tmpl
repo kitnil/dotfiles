@@ -1,0 +1,40 @@
+;;; GNU Guix --- Functional package management for GNU
+;;; Copyright © `(nth 5 (decode-time))` `user-full-name` <`user-mail-address`>
+;;;
+;;; This file is part of GNU Guix.
+;;;
+;;; GNU Guix is free software; you can redistribute it and/or modify it
+;;; under the terms of the GNU General Public License as published by
+;;; the Free Software Foundation; either version 3 of the License, or (at
+;;; your option) any later version.
+;;;
+;;; GNU Guix is distributed in the hope that it will be useful, but
+;;; WITHOUT ANY WARRANTY; without even the implied warranty of
+;;; MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+;;; GNU General Public License for more details.
+;;;
+;;; You should have received a copy of the GNU General Public License
+;;; along with GNU Guix.  If not, see <http://www.gnu.org/licenses/>.
+
+(define-module (gnu services `(file-name-base (buffer-name))`)
+  #:use-module (gnu services base)
+  #:use-module (gnu services configuration)
+  #:use-module (gnu services shepherd)
+  #:use-module (gnu services web)
+  #:use-module (gnu services)
+  #:use-module (gnu system shadow)
+  #:use-module (guix gexp)
+  #:use-module (guix packages)
+  #:use-module (guix records)
+  #:use-module (guix store)
+  #:export (`(file-name-base (buffer-name))`-configuration
+            `(file-name-base (buffer-name))`-service-type))
+
+;;; Commentary:
+;;;
+;;; This module provides a service definition for the SERVICE_NAME
+;;; SERVICE_DESCRTIPTION
+;;;
+;;; Code:
+
+;;; `(buffer-name)` ends here
