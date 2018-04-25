@@ -37,4 +37,28 @@
 ;;;
 ;;; Code:
 
+(define-record-type* <`(file-name-base (buffer-name))`-configuration>
+  `(file-name-base (buffer-name))`-configuration make-`(file-name-base (buffer-name))`-configuration
+  `(file-name-base (buffer-name))`-configuration?
+  (uid `(file-name-base (buffer-name))`-configuration-uid ;string
+       (default "`(file-name-base (buffer-name))`"))
+  (gid `(file-name-base (buffer-name))`-configuration-gid ;string
+       (default "`(file-name-base (buffer-name))`")))
+
+(define (`(file-name-base (buffer-name))`-activation config)
+  "Return the activation gexp for CONFIG."
+  #~(begin
+      (use-modules (guix build utils))
+      ))
+
+(define `(file-name-base (buffer-name))`-service-type
+  (service-type
+   (name '`(file-name-base (buffer-name))`)
+   (extensions
+    (list (service-extension activation-service-type
+                             `(file-name-base (buffer-name))`-activation)))
+   (default-value (`(file-name-base (buffer-name))`-configuration))
+   (description
+    "Run the `(file-name-base (buffer-name))`.")))
+
 ;;; `(buffer-name)` ends here
