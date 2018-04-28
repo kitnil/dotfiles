@@ -1370,14 +1370,11 @@ for COMMIT, defaulting to the commit hash at point."
   "Insert output of vc-chlog."
   (interactive)
   (let ((default-directory (projectile-project-root)))
-    (insert (shell-command-to-string
-             (mapconcat 'identity
-                        (list "vc-chlog"
-                              "| sed 's/^[ \t]*//'"
-                              "| tail +3"
-                              "| sed '/^$/d'"
-                              "| tr -d '\n'")
-                        " ")))))
+    (insert (shell-command-to-string (mapconcat 'identity
+                                                (list "vc-chlog"
+                                                      "| sed 's/^[ \t]*//'"
+                                                      "| tail +2")
+                                                " ")))))
 
 (defvar magit-read-reuse-message-target "ORIG_HEAD")
 (setq magit-read-reuse-message-target "HEAD")
