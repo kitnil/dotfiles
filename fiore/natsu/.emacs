@@ -188,6 +188,10 @@
               (one-or-more (or alphanumeric "-" "_"))
               line-end)))
 
+(defvar youtube-short-url-video-regexp
+  (rx "http" (zero-or-more "s") "://" (zero-or-more "www.")
+      "youtu.be/" (one-or-more (or alphanumeric "-" "_")) line-end))
+
 (defun youtube-free-url (url)
   "Convert youtube.com to hooktube.com URL and put into `kill-ring'.
 
@@ -211,6 +215,7 @@ WARNING:  hooktube.com requries non-free JavaScript."
 	  (regexp-quote "cgi/bugreport.cgi?bug="))
          . debbugs-browse-url)
         (,youtube-url-video-regexp . browse-url-mpv)
+        (,youtube-short-url-video-regexp . browse-url-mpv)
         (,wi-twitch-video-url-regexp . browse-url-mpv)
         (,wi-twitch-url-regexp . browse-url-streamlink)
         (,wi-url-hydra-regexp . browse-url-firefox)
