@@ -17,7 +17,11 @@ export MANWIDTH=80
 
 export INFOPATH="$HOME/src/guix/doc${INFOPATH:+:}$INFOPATH"
 
-export GUIX_PACKAGE_PATH=$HOME/src/guix-wigust:$HOME/src/guix-local
+export GUIX_PACKAGE_PATH=\
+"$HOME/src/guix-wigust\
+:$HOME/src/guix-local\
+:$HOME/src/guix-packages\
+:$HOME/dotfiles"
 
 export PATH=$HOME/bin:$HOME/.npm-global/bin:$PATH
 

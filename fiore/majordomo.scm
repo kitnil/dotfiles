@@ -1,4 +1,6 @@
-(use-modules (gnu))
+(define-module (fiore majordomo)
+  #:use-module (gnu))
+
 (use-service-modules cups desktop dns mail networking rsync shepherd
 spice ssh version-control web xorg cgit)
 
