@@ -9,7 +9,7 @@ exec qemu-system-x86_64 \
      -smb /srv/share \
      -M q35 \
      -usb \
-     -usbdevice host:04b8:0810 \
-     -net user,hostfwd=tcp::13389-:3389,hostfwd=tcp::13445-:445 \
+     -device usb-host,hostbus=2,hostaddr=4 \
+     -net 'user,hostfwd=tcp::13389-:3389,hostfwd=tcp::13445-:445' \
      -net nic \
      $@
