@@ -2267,9 +2267,9 @@ be updated automatically."))
    '(completions-common-part ((t (:width normal :weight normal
                                 :slant normal :foreground "gold1"
 				:background "black"))))
-   '(highlight-stages-level-1-face ((t (:background "turquoise"))))
-   '(highlight-stages-level-2-face ((t (:background "medium turquoise"))))
-   '(highlight-stages-level-3-face ((t (:background "dark turquoise"))))
+   '(highlight-stages-level-1-face ((t (:background "dark slate gray"))))
+   '(highlight-stages-level-2-face ((t (:background "dark olive green"))))
+   '(highlight-stages-level-3-face ((t (:background "sea green"))))
    '(highlight-stages-negative-level-face ((t (:background "dark cyan"))))
    '(rainbow-delimiters-depth-1-face ((t (:foreground "white"))))
    '(rainbow-delimiters-depth-7-face ((t (:foreground "white")))))
