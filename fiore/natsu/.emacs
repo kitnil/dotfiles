@@ -1196,12 +1196,16 @@ for COMMIT, defaulting to the commit hash at point."
 ;;; Guile
 ;;;
 
-(defun projectile-run-guile ()
-  "Invoke ‘run-guile’ in the project’s root."
+(defun projectile-run-guile (&optional pure)
+  "Invoke ‘run-guile’ in the project’s root.
+
+With a prefix argument, clean `geiser-guile-load-path'."
   (interactive)
-  (let ((geiser-guile-load-path
-         (append (list (expand-file-name (projectile-project-root)))
-                 geiser-guile-load-path)))
+  (let* ((geiser-guile-load-path (if (or pure current-prefix-arg) nil
+                                   geiser-guile-load-path))
+         (geiser-guile-load-path
+          (append (list (expand-file-name (projectile-project-root)))
+                  geiser-guile-load-path)))
     (run-guile)))
 
 (defun run-guile-with-directory (directory)
