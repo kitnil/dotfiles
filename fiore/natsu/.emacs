@@ -778,6 +778,10 @@ Sets the following basend on PREFIX-MAP:
   (let ((map guix-output-list-mode-map))
     (define-key map (kbd "<f6>") 'hl-line-mode)))
 
+(with-eval-after-load 'dired
+  (let ((map dired-mode-map))
+    (define-key map (kbd "C-c o") 'crux-open-with)))
+
 
 ;;;
 ;;; Search engines
