@@ -18,6 +18,8 @@
                          :subfamily "Book"
                          :size 14))
 
+(setf *message-window-y-padding* 3)
+
 (setf *window-border-style* :none)
 
 (setf *ignore-wm-inc-hints* t)
