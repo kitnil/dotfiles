@@ -30,6 +30,7 @@
   #:use-module (gnu packages haskell)
   #:use-module (gnu packages image-viewers)
   #:use-module (gnu packages imagemagick)
+  #:use-module (gnu packages inkscape)
   #:use-module (gnu packages kodi)
   #:use-module (gnu packages libreoffice)
   #:use-module (gnu packages license)
@@ -120,6 +121,7 @@
    feh         ; Image viewer
    ffmpeg      ; Video, audio, images, gif conversion
    imagemagick ; Pipe to `display'
+   inkscape    ; Vector graphics
    mlt         ; Video editing framework
    mpv         ; Video and audio player
    obs ;ffmpeg frontend
@@ -141,6 +143,7 @@
 
    epipe
 
+   ansible         ; Configuration management
    cloc            ; Count code
    detox           ; Replace spaces with underscores in filenames
    diffoscope

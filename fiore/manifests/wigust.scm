@@ -5,6 +5,7 @@
   #:use-module (wigust packages version-control)
   #:use-module (local packages emacs)
   #:use-module (local packages guix)
+  #:use-module (local packages xdisorg)
   #:use-module (gnu packages emacs)
   #:export (guix-wigust-packages))
 
@@ -73,4 +74,6 @@
    emacs-terminal-here-checkout
    emacs-validate
 
-   vc-dwim-git-worktree))
+   vc-dwim-git-worktree
+
+   wrapper-xclip))
