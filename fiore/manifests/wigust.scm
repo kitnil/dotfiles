@@ -3,6 +3,7 @@
   #:use-module (wigust packages pulseaudio)
   #:use-module (wigust packages python)
   #:use-module (wigust packages version-control)
+  #:use-module (local packages emacs)
   #:use-module (local packages guix)
   #:use-module (gnu packages emacs)
   #:export (guix-wigust-packages))
