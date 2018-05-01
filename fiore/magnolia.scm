@@ -36,21 +36,20 @@ version-control virtualization web wget xdisorg xorg zile)
        ;; allow at most 3 connections per minute from any host, and will block
        ;; the host for another minute if this rate is exceeded.  Taken from
        ;; <http://www.la-samhna.de/library/brutessh.html#3>.
-       (iptables "-A INPUT -p tcp --dport 22 \
--m state --state NEW -m recent --set --name SSH -j ACCEPT")
-       (iptables "-A INPUT -p tcp --dport 22 \
--m recent --update --seconds 60 --hitcount 4 --rttl \
---name SSH -j LOG --log-prefix SSH_brute_force")
-       (iptables "-A INPUT -p tcp --dport 22 \
--m recent --update --seconds 60 --hitcount 4 --rttl \
---name SSH -j DROP")
+       #;(iptables "-A INPUT -p tcp --dport 22 -m state \
+  --state NEW -m recent --set --name SSH -j ACCEPT")
+       #;(iptables "-A INPUT -p tcp --dport 22 -m recent \
+  --update --seconds 60 --hitcount 4 --rttl \
+  --name SSH -j LOG --log-prefix SSH_brute_force")
+       #;(iptables "-A INPUT -p tcp --dport 22 -m recent \
+  --update --seconds 60 --hitcount 4 --rttl --name SSH -j DROP")
 
        ;; TODO: Map over a list of ports
-       (iptables "-A INPUT -p tcp --dport 80 -s 192.168.0.0/16 -j ACCEPT") ; web
-       (iptables "-A INPUT -p tcp --dport 445 -s 192.168.0.0/16 -j ACCEPT") ; smb
-       (iptables "-A INPUT -p tcp --dport 3389 -s 192.168.0.0/16 -j ACCEPT") ; rdp
-       (iptables "-A INPUT -p tcp --dport 80 -s 127.0.0.0/8 -j ACCEPT")
-       (iptables "-A INPUT -p tcp --dport 80 -j DROP")
+       #;(iptables "-A INPUT -p tcp --dport 80 -s 192.168.0.0/16 -j ACCEPT") ; web
+       #;(iptables "-A INPUT -p tcp --dport 445 -s 192.168.0.0/16 -j ACCEPT") ; smb
+       #;(iptables "-A INPUT -p tcp --dport 3389 -s 192.168.0.0/16 -j ACCEPT") ; rdp
+       #;(iptables "-A INPUT -p tcp --dport 80 -s 127.0.0.0/8 -j ACCEPT")
+       #;(iptables "-A INPUT -p tcp --dport 80 -j DROP")
 
        ;; Rules to throttle HTTP connection redirections.  Taken from
        ;; <https://www.opennet.ru/tips/2999_iptables_block_tor.shtml>.
