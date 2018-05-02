@@ -1573,9 +1573,9 @@ the current upstream.")
      `(("emacs-page-break-lines" ,emacs-page-break-lines)))
     (arguments '(#:include '("\\.el$" "\\.txt$" "\\.png$")))
     (home-page "https://github.com/rakanalh/emacs-dashboard")
-    (synopsis "A startup screen extracted from Spacemacs")
-    (description "An extensible Emacs dashboard, with sections for
-bookmarks, projectil projects, org-agenda and more. ")
+    (synopsis "Startup screen extracted from Spacemacs")
+    (description "This package provides an extensible Emacs dashboard, with
+sections for bookmarks, projectil projects, org-agenda and more. ")
     (license license:gpl3+)))
 
 (define-public emacs-sml-mode
