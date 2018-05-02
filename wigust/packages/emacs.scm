@@ -1175,43 +1175,6 @@ other.
 @end itemize\n")
     (license license:gpl3+)))
 
-(define-public emacs-beginend
-  (package
-    (name "emacs-beginend")
-    (version "2.0.0")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "https://github.com/DamienCassou/beginend/archive/"
-                           "v" version ".tar.gz"))
-       (file-name (string-append name "-" version ".tar.gz"))
-       (sha256
-        (base32
-         "0z4rbwffh9vxfvcrlvym4p73z7gf72q0b5iv33llbpcpbijknnrq"))))
-    ;; TODO: Tests.
-    ;; (arguments
-    ;;  `(#:phases
-    ;;    (modify-phases %standard-phases
-    ;;      (add-before 'install 'check
-    ;;        (lambda* (#:key inputs #:allow-other-keys)
-    ;;          (zero? (system* "emacs" "--batch" "-L" "."
-    ;;                          "-l" "test/test-helper.el"
-    ;;                          "-l" "test/beginend-dired-test.el"
-    ;;                          "-l" "test/beginend-marks-test.el"
-    ;;                          "-l" "test/beginend-narrowing-test.el"
-    ;;                          "-l" "test/beginend-prog-test.el"
-    ;;                          "-f" "ert-run-tests-batch-and-exit")))))))
-    (build-system emacs-build-system)
-    (inputs
-     `(("emacs-undercover" ,emacs-undercover))) ; For tests.
-    (home-page "https://github.com/DamienCassou/beginend")
-    (synopsis "Redefine @code{M-<} and @code{M->} for Emacs modes")
-    (description "@code{beginend} redefines @code{M-<} and @code{M->}
-keybindings for Emacs modes so that point moves to meaningful
-locations.  Redefined keys are still accessible by pressing the same
-key again.")
-    (license license:gpl3+)))
-
 (define-public emacs-eros
   (let ((commit "a42e45c9b2397156c684330b0fc90ee0eba773f5")
         (revision "1"))
