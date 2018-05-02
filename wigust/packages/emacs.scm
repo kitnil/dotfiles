@@ -1451,7 +1451,7 @@ region instead.")
         (base32
          "04avxmalsl3b7zi2vipfw9rb4wrwysnipsbch96skviql9axk870"))))
     (build-system emacs-build-system)
-    (home-page "http://projects.ryuslash.org/git-auto-commit-mode/")
+    (home-page "https://github.com/ryuslash/git-auto-commit-mode")
     (synopsis "Emacs Minor mode to automatically commit and push")
     (description "@code{git-auto-commit-mode} is an Emacs minor mode that
 tries to commit changes to a file after every save.
