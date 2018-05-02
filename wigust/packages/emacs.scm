@@ -1489,13 +1489,15 @@ the current upstream.")
        (method url-fetch)
        (uri (string-append "https://github.com/benma/visual-regexp.el/archive/"
                            "v" version ".tar.gz"))
+       (file-name (string-append name "-" version ".tar.gz"))
        (sha256
         (base32
          "1czmhvcivlcdyz7rfm0vd4a3xsgmy4qbvbl6yjxc217wrxqflr92"))))
     (build-system emacs-build-system)
     (home-page "https://github.com/benma/visual-regexp.el/")
-    (synopsis "A regexp command with interactive visual feedback")
-    (description "A regexp command with interactive visual feedback")
+    (synopsis "Regexp command with interactive visual feedback")
+    (description "This package provides an Emacs regexp command with
+interactive visual feedback.")
     (license license:gpl3+)))
 
 (define-public emacs-ido-vertical-mode
