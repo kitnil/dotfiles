@@ -3212,16 +3212,6 @@ coloring provided by Drew Adams @code{info+} package.  To enable this
 @code{(add-hook 'Info-selection-hook 'info-colors-fontify-node)}.")
     (license license:gpl3+)))
 
-(define-public emacs-use-package-which
-  (package
-    (inherit emacs-use-package)
-    (name "emacs-use-package-which")
-    (source
-     (origin
-       (inherit (package-source emacs-use-package))
-       (patches
-        (search-patches "emacs-use-package-add-which-to-bind-key.patch"))))))
-
 (define-public emacs-origami
   (let ((commit "1f38085c8f9af7842765ed63f7d6dfe4dab59366")
         (revision "1"))
