@@ -1178,8 +1178,9 @@ byte-compile it (recommended), and put this in your .emacs file:
          "0cxagnmc5ab6idmb26axpizhr4sqglkncc59768yavn3p04jyq63"))))
     (build-system emacs-build-system)
     (home-page "https://github.com/joostkremers/parsebib")
-    (synopsis "A library for parsing bib files")
-    (description "A library for parsing bib files")
+    (synopsis "Library for parsing bib files")
+    (description
+     "This package provides an Emacs library for parsing bib files.")
     (license license:gpl3+)))
 
 (define-public emacs-biblio
