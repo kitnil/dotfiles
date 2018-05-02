@@ -3579,8 +3579,8 @@ bookmarks and history.")
     (build-system emacs-build-system)
     (home-page "https://elpa.gnu.org/packages/let-alist.html")
     (synopsis "Easily let-bind values of an assoc-list by their names")
-    (description "This package offers a single macro, `let-alist'.  This macro
-takes a first argument (whose value must be an alist) and a body.")
+    (description "This package offers a single macro, @code{let-alist}.  This
+macro takes a first argument (whose value must be an alist) and a body.")
     (license license:gpl3+)))
 
 (define-public emacs-atomic-chrome
