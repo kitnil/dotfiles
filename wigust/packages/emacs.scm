@@ -970,6 +970,7 @@ every connection, and is exposed through the callbacks.")
        (method url-fetch)
        (uri (string-append "https://github.com/Fanael/wordgen.el/archive/"
                            version ".tar.gz"))
+       (file-name (string-append name "-" version ".tar.gz"))
        (sha256
         (base32
          "1h2iyixdm49h53pwj9ics9gb9h3g6wa4hainpnjg6mfarf49jkmg"))))
