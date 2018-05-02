@@ -496,7 +496,7 @@ and even a stepping Debugger, similar to @code{edebug}, or @code{cider}.")
         (base32
          "1xc1xh8c82h5gdjbgpdsdclgwxkxbb7h3x3a2bscpm41g8pnan4p"))))
     (build-system emacs-build-system)
-    (home-page "http://github.com/rolandwalker/list-utils")
+    (home-page "https://github.com/rolandwalker/list-utils")
     (synopsis "List-manipulation utility functions")
     (description "List manipulation library for Emacs.")
     (license license:gpl3+)))
