@@ -2632,9 +2632,8 @@ timestamps and date-time format strings library for Emacs.")
      (origin
        (method url-fetch)
        (uri (string-append
-             "http://elpa.gnu.org/packages/on-screen-"
-             version
-             ".el"))
+             "http://elpa.gnu.org/packages/on-screen-" version ".el"))
+       (file-name (string-append name "-" version ".el"))
        (sha256
         (base32
          "15d18mjgv1pnwl6kf3pr5w64q1322p1l1qlfvnckglwmzy5sl2qv"))))
