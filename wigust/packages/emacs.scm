@@ -1231,23 +1231,25 @@ automatically fetched from well-curated sources, and formatted as BibTeX.")
          ("emacs-f" ,emacs-f)
          ("emacs-biblio" ,emacs-biblio)))
       (home-page "https://github.com/tmalsburg/helm-bibtex")
-      (synopsis "A bibliography manager based on Helm")
-      (description "A bibliography manager for Emacs, based on Helm and
-the bibtex-completion backend.
+      (synopsis "Bibliography manager based on Helm")
+      (description "This package provides bibliography manager for Emacs,
+based on Helm and the bibtex-completion backend.
 
 Key features:
-- Quick access to your bibliography from within Emacs
-- Powerful search capabilities
-- Provides instant search results as you type
-- Tightly integrated with LaTeX authoring, emails, Org mode, etc.
-- Open the PDFs, URLs, or DOIs associated with an entry
-- Insert LaTeX cite commands, Ebib links, or Pandoc citations,
-  BibTeX entries, or plain text references at point, attach PDFs to
-  emails
-- Support for note taking
-- Quick access to online bibliographic databases such as Pubmed,
-  arXiv, Google Scholar, Library of Congress, etc.
-- Imports BibTeX entries from CrossRef and other sources.")
+
+@itemize
+@item Quick access to your bibliography from within Emacs
+@item Powerful search capabilities
+@item Provides instant search results as you type
+@item Tightly integrated with LaTeX authoring, emails, Org mode, etc.
+@item Open the PDFs, URLs, or DOIs associated with an entry
+@item Insert LaTeX cite commands, Ebib links, or Pandoc citations,
+BibTeX entries, or plain text references at point, attach PDFs to emails
+@item Support for note taking
+@item Quick access to online bibliographic databases such as Pubmed,
+arXiv, Google Scholar, Library of Congress, etc.
+@item Imports BibTeX entries from CrossRef and other sources.
+@end itemize\n")
       (license license:gpl3+))))
 
 (define-public emacs-org-ref
