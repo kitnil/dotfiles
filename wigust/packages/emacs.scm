@@ -2796,25 +2796,6 @@ compilation/grep buffers.  Works with @code{wgrep}, @code{ack}, @code{ag},
 @code{ivy}.")
       (license license:gpl3+))))
 
-(define-public emacs-validate
-  (package
-    (name "emacs-validate")
-    (version "1.0.5")
-    (source (origin
-              (method url-fetch)
-              (uri (string-append "https://github.com/Malabarba/validate.el"
-                                  "/archive/" version ".tar.gz"))
-              (file-name (string-append name "-" version ".tar.gz"))
-              (sha256
-               (base32
-                "125mbd111f1h1baw0z3fzm48y1bvaigljyzvvnqgrn0shxbj0khg"))))
-    (build-system emacs-build-system)
-    (home-page "https://github.com/Malabarba/validate.el")
-    (synopsis "Emacs library for scheme validation")
-    (description "This Emacs library provides two functions that perform
-schema validation.")
-    (license license:gpl3+)))
-
 (define-public emacs-macrostep
   (let ((commit "424e3734a1ee526a1bd7b5c3cd1d3ef19d184267"))
     (package
