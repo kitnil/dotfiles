@@ -475,26 +475,6 @@ library adds a selection of popular loop structures as well as break and
 continue.")
     (license license:gpl3+)))
 
-(define-public emacs-npm-mode
-  (package
-    (name "emacs-npm-mode")
-    (version "0.6.0")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "https://github.com/mojochao/npm-mode/archive/"
-                           version ".tar.gz"))
-       (file-name (string-append name "-" version ".tar.gz"))
-       (sha256
-        (base32
-         "1kq1ww22dwf8c2i2b4z2ldbbmnihj65kb7n5vzvwkch9h4hxpqh5"))))
-    (build-system emacs-build-system)
-    (home-page "https://github.com/mojochao/npm-mode")
-    (synopsis "Minor mode for working with npm projects")
-    (description "@code{npm-mode} provides a minor mode to work with npm
-projects.")
-    (license license:gpl3+)))
-
 (define-public emacs-org-protocol-capture-html
   (let ((commit "0e39b7e2261599d28e6bbd094a0657d9315719bc")
         (revision "1"))
