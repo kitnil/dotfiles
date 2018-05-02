@@ -574,33 +574,6 @@ Additionally, since rjsx-mode extends the js2 AST, utilities using
 the parse tree gain access to the JSX structure.")
     (license license:gpl3+)))
 
-(define-public emacs-seq
-  (package
-    (name "emacs-seq")
-    (version "2.20")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "http://elpa.gnu.org/packages/seq-" version ".tar"))
-       (sha256
-        (base32
-         "0vrpx6nnyjb0gsypknzagimlhvcvi5y1rcdkpxyqr42415zr8d0n"))))
-    (build-system emacs-build-system)
-    (home-page "http://elpa.gnu.org/packages/seq.html")
-    (synopsis "Sequence manipulation functions")
-    (description "Sequence-manipulation functions that complement basic
-functions provided by subr.el.
-
-All functions are prefixed with \"seq-\".
-
-All provided functions work on lists, strings and vectors.
-
-Functions taking a predicate or iterating over a sequence using a function as
-argument take the function as their first argument and the sequence as their
-second argument.  All other functions take the sequence as their first
-argument.")
-    (license license:gpl3+)))
-
 (define-public emacs-slime-company
   (package
     (name "emacs-slime-company")
