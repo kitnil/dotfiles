@@ -1812,7 +1812,7 @@ other.
     (synopsis "Redefine @code{M-<} and @code{M->} for Emacs modes")
     (description "@code{beginend} redefines @code{M-<} and @code{M->}
 keybindings for Emacs modes so that point moves to meaningful
-locations. Redefined keys are still accessible by pressing the same
+locations.  Redefined keys are still accessible by pressing the same
 key again.")
     (license license:gpl3+)))
 
