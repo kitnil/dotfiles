@@ -1219,6 +1219,11 @@ With a prefix argument, clean `geiser-guile-load-path'."
                                         geiser-guile-load-path)))
     (run-guile)))
 
+(defun emacs-add-to-load-path (directory)
+  "Add DIRECTORY to `load-path'."
+  (interactive "DAdd to `load-path': ")
+  (add-to-list 'load-path (expand-file-name directory)))
+
 (with-eval-after-load 'geiser
   (setq geiser-active-implementations '(guile))
   (setq geiser-default-implementation 'guile))
