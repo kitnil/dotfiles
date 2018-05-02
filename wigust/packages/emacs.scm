@@ -2296,6 +2296,7 @@ method calls.")
               (uri (string-append
                     "https://github.com/alezost/debpaste.el/archive/"
                     "v" version ".tar.gz"))
+              (file-name (string-append name "-" version ".tar.gz"))
               (sha256
                (base32
                 "16qqa32ys3gvxf9x1va2cnjcmw1zvbwgc16pqasgrf4mh7qwsd9b"))))
