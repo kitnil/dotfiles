@@ -1601,9 +1601,9 @@ interactive loop.")
     (propagated-inputs
      `(("emacs-dash" ,emacs-dash)
        ("emacs-s" ,emacs-s)))
-    (home-page "http://github.com/hylang/hy-mode")
+    (home-page "https://github.com/hylang/hy-mode")
     (synopsis "Major mode for Hylang")
-    (description "Major mode for Hylang")
+    (description "This package provides a major mode for Hylang.")
     (license license:gpl3+)))
 
 (define-public emacs-faceup
