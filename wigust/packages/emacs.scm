@@ -2742,6 +2742,7 @@ time is being spent during Emacs startup in order to optimize startup time.")
               (uri (string-append
                     "https://github.com/nickmccurdy/add-hooks/archive/"
                     version ".tar.gz"))
+              (file-name (string-append name "-" version ".tar.gz"))
               (sha256
                (base32
                 "03a28gb3298g7pc2qji9hi44p4d99ljp5mpi9cmg42ldv8fl6549"))))
