@@ -585,60 +585,6 @@ functions.")
     (description "Tern-powered JavaScript integration.")
     (license license:gpl3+)))
 
-(define-public emacs-web-beautify
-  (package
-    (name "emacs-web-beautify")
-    (version "0.3.2")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "https://github.com/yasuyk/web-beautify/archive/"
-                           version ".tar.gz"))
-       (file-name (string-append name "-" version ".tar.gz"))
-       (sha256
-        (base32
-         "1j57hwid74id4swkx2g0iljfawx0k9c7qjrwqc0mv657x9p78hcs"))))
-    (build-system emacs-build-system)
-    (home-page "https://github.com/yasuyk/web-beautify")
-    (synopsis "Format HTML, CSS and JavaScript/JSON")
-    (description "Add the following to your Emacs init file.
-
-    (require 'web-beautify) ;; Not necessary if using ELPA package
-    (eval-after-load 'js2-mode
-      '(define-key js2-mode-map (kbd \"C-c b\") 'web-beautify-js))
-    (eval-after-load 'json-mode
-      '(define-key json-mode-map (kbd \"C-c b\") 'web-beautify-js))
-    (eval-after-load 'sgml-mode
-      '(define-key html-mode-map (kbd \"C-c b\") 'web-beautify-html))
-    (eval-after-load 'css-mode
-      '(define-key css-mode-map (kbd \"C-c b\") 'web-beautify-css))
-
-If you want to automatically format before saving a file,
-add the following hook to your Emacs configuration:
-
-    (eval-after-load 'js2-mode
-      '(add-hook 'js2-mode-hook
-                 (lambda ()
-                   (add-hook 'before-save-hook 'web-beautify-js-buffer t t))))
-
-    (eval-after-load 'json-mode
-      '(add-hook 'json-mode-hook
-                 (lambda ()
-                   (add-hook 'before-save-hook 'web-beautify-js-buffer t t))))
-
-    (eval-after-load 'sgml-mode
-      '(add-hook 'html-mode-hook
-                 (lambda ()
-                   (add-hook 'before-save-hook 'web-beautify-html-buffer t t))))
-
-    (eval-after-load 'css-mode
-      '(add-hook 'css-mode-hook
-                 (lambda ()
-                   (add-hook 'before-save-hook 'web-beautify-css-buffer t t))))
-
-For more information, See URL https://github.com/yasuyk/web-beautify.")
-    (license license:gpl3+)))
-
 (define-public emacs-wordgen
   (package
     (name "emacs-wordgen")
