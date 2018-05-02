@@ -730,31 +730,6 @@ other.
       (description "@code{eros} provides evaluation result overlays.")
       (license license:gpl3+))))
 
-(define-public emacs-parinfer-mode
-  (package
-    (name "emacs-parinfer-mode")
-    (version "0.4.10")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "https://github.com/DogLooksGood/parinfer-mode/archive/"
-                           "v" version ".tar.gz"))
-       (file-name (string-append name "-" version ".tar.gz"))
-       (sha256
-        (base32
-         "06ba9qi59sm9ih9m38fbr8kj4qkvrm58n0c0ngfjz60gnr9x9pcv"))))
-    (propagated-inputs
-     `(("emacs-dash" ,emacs-dash)
-       ("emacs-rainbow-delimiters" ,emacs-rainbow-delimiters)
-       ("emacs-company" ,emacs-company)))
-    (build-system emacs-build-system)
-    (home-page "https://github.com/DogLooksGood/parinfer-mode/")
-    (synopsis "Lisp structure editing mode")
-    (description "@code{parinfer-mode} is a proof-of-concept editor
-mode for Lisp programming languages.  It will infer some changes to
-keep Parens and Indentation inline with one another.")
-    (license license:gpl3+)))
-
 (define-public emacs-password-store
   (package
     (inherit password-store)
