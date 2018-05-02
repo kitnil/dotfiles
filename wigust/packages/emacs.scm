@@ -1119,7 +1119,8 @@ It provides auto-completion for HTTP methods and headers in
         (base32
          "09b3jllppfmk0mb1qvgcx705jwixqn5ggl0bql6g5a3i7yy6xpyd"))))
     (build-system emacs-build-system)
-    ;; TODO: helm-notmuch.el:36:1:Error: Cannot open load file: No such file or directory, notmuch
+    ;; TODO: helm-notmuch.el:36:1:Error: Cannot open load file:
+    ;; No such file or directory, notmuch
     (propagated-inputs
      `(("notmuch" ,notmuch)
        ("emacs-helm" ,emacs-helm)))
