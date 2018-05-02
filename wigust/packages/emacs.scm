@@ -2972,6 +2972,7 @@ especially useful when opening up large log files for analysis.")
        (uri (string-append
              "https://github.com/DamienCassou/hierarchy/archive/"
              "v" version ".tar.gz"))
+       (file-name (string-append name "-" version ".tar.gz"))
        (sha256
         (base32
          "1a463v5zk6zis2p8cs4mads3iyxh266yahi6j6y0paggfl2yhkc8"))))
