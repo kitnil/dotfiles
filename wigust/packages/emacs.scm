@@ -2522,7 +2522,8 @@ Feautures:
               (method url-fetch)
               (uri (string-append
                     "https://github.com/doublep/datetime/archive/"
-                    "0.3" ".tar.gz"))
+                    version ".tar.gz"))
+              (file-name (string-append name "-" version ".tar.gz"))
               (sha256
                (base32
                 "12wqpj67rjij2ki7nmw38rz3k2bsq68pk6zswknlcn9qhp1zd9w9"))))
