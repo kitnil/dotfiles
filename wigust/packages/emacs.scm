@@ -727,29 +727,12 @@ argument.")
     (propagated-inputs
      `(("emacs-slime" ,emacs-slime)
        ("emacs-company" ,emacs-company)))
-    (home-page "http://company-mode.github.io")
-    (synopsis
-     "slime completion backend for company mode")
+    (home-page "https://company-mode.github.io")
+    (synopsis "@code{slime} completion backend for @code{company-mode}")
     (description
-     "This is a backend implementation for the completion package company-mode
-by Nikolaj Schumacher. Supports the normal and the fuzzy completion modes of
-SLIME.
-
-Installation:
-
- Put this file somewhere into your load-path
- (or just into slime-path/contribs) and then call
-
-  (slime-setup '(slime-company))
-
-Also have the following, more convenient key bindings for company mode in my
-.emacs:
-
-  (define-key company-active-map (kbd \"\\C-n\") 'company-select-next)
-  (define-key company-active-map (kbd \"\\C-p\") 'company-select-previous)
-  (define-key company-active-map (kbd \"\\C-d\") 'company-show-doc-buffer)
-  (define-key company-active-map (kbd \"M-.\") 'company-show-location)
-")
+     "This is a backend implementation for the completion package
+@code{company-mode} which supports the normal and the fuzzy completion
+modes of @code{slime}.")
     (license license:gpl3+)))
 
 (define-public emacs-sourcemap
