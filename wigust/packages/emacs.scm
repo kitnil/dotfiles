@@ -3687,10 +3687,10 @@ takes a first argument (whose value must be an alist) and a body.")
        `(("emacs-let-alist" ,emacs-let-alist)
          ("emacs-websocket" ,emacs-websocket)))
       (home-page "https://github.com/alpha22jp/atomic-chrome/")
-      (synopsis " Edit text area on Chrome with Emacs using Atomic Chrome")
+      (synopsis "Edit text area on Chrome with Emacs using Atomic Chrome")
       (description "This package provides an Emacs version of Atomic Chrome
 which is an extension for Google Chrome browser that allows you to edit text
-areas of the browser in Emacs. It's similar to Edit with Emacs, but has some
+areas of the browser in Emacs.  It's similar to Edit with Emacs, but has some
 advantages as below with the help of websocket.")
       (license license:gpl2+))))
 
