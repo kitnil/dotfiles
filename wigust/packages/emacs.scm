@@ -975,6 +975,7 @@ For more information, See URL https://github.com/yasuyk/web-beautify.")
        (method url-fetch)
        (uri (string-append "https://github.com/ahyatt/emacs-websocket/archive/"
                            version ".tar.gz"))
+       (file-name (string-append name "-" version ".tar.gz"))
        (sha256
         (base32
          "07nz1spb2nklyf94fdh1rzbmscms9qxc7ypl77fzyvyw3az6qr50"))))
