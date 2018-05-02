@@ -2162,7 +2162,7 @@ tramp.")
       (build-system emacs-build-system)
       (home-page "https://github.com/flexibeast/ewmctrl")
       (synopsis "")
-      (description "ewmctrl provides an Emacs interface to the wmctrl
+      (description "@code{ewmctrl} provides an Emacs interface to the wmctrl
 command-line window-management program.")
       (license license:gpl3+))))
 
