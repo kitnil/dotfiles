@@ -1791,28 +1791,6 @@ there is also support for multiple lines.  Data is expanded with
 selected yasnippet expand keybinding.")
     (license license:gpl2+)))
 
-(define-public emacs-f3
-  (package
-    (name "emacs-f3")
-    (version "0.1")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "https://github.com/cosmicexplorer/f3/archive/"
-                           version ".tar.gz"))
-       (file-name (string-append name "-" version ".tar.gz"))
-       (sha256
-        (base32
-         "06b8i1jvklm5k3k90n65f197l1miq1xlxqkqpbppw4h3rhl4y98h"))))
-    (build-system emacs-build-system)
-    (propagated-inputs
-     `(("emacs-helm" ,emacs-helm)))
-    (home-page "https://github.com/cosmicexplorer/f3")
-    (synopsis "Fantastic File Finder for Emacs")
-    (description
-     "The Fantastic File Finder for Emacs.  Find files fast, using helm.")
-    (license license:gpl3+)))
-
 (define-public emacs-helm-navi
   (let ((commit "2256591174ff79f889450fdc10822316819d6476"))
     (package
