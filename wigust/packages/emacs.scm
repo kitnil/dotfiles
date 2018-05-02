@@ -232,7 +232,7 @@ their meaning for the current Emacs major-mode.")
 (define-public emacs-dumb-jump
   (package
     (name "emacs-dumb-jump")
-    (version "0.5.0")
+    (version "0.5.2")
     (source
      (origin
        (method url-fetch)
@@ -241,7 +241,7 @@ their meaning for the current Emacs major-mode.")
        (file-name (string-append name "-" version ".tar.gz"))
        (sha256
         (base32
-         "14sfnlgfc81y2il5v0njvmdh39lxpy8kz4j0prlc2rzd2bk0a8n5"))))
+         "07n0xjgpxjpf3vp9gxchkjpydyj0zm166930as0kwiwkhjlsirsf"))))
     (build-system emacs-build-system)
     (propagated-inputs
      `(("emacs-f" ,emacs-f)
