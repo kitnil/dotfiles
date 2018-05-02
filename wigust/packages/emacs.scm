@@ -1048,30 +1048,6 @@ byte-compile it (recommended), and put this in your .emacs file:
   \"Major mode for editing comma-separated value files.\" t)")
     (license license:gpl3+)))
 
-(define-public emacs-biblio
-  (package
-    (name "emacs-biblio")
-    (version "0.1")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "https://github.com/cpitclaudel/biblio.el/archive/"
-                           version ".tar.gz"))
-       (file-name (string-append name "-" version ".tar.gz"))
-       (sha256
-        (base32
-         "109fvivsb4r0rbqljngqrmxqvbnbkqlivczx6brrvlr7ci625lhf"))))
-    (build-system emacs-build-system)
-    (home-page "https://github.com/cpitclaudel/biblio.el")
-    (synopsis "Browse and import bibliographic references")
-    (description "This package provides an extensible Emacs package for
-browsing and fetching references.
-
-@file{biblio.el} makes it easy to browse and gather bibliographic references
-and publications from various sources, by keywords or by DOI.  References are
-automatically fetched from well-curated sources, and formatted as BibTeX.")
-    (license license:gpl3+)))
-
 (define-public emacs-helm-bibtex
   (let ((commit "8ed898fb5a68f18e9bb9973832a5c1f8abcfc463")
         (revision "1"))
