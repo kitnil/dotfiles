@@ -643,38 +643,6 @@ comes with sml-proc which allows interaction with an inferior SML
 interactive loop.")
     (license license:gpl3+)))
 
-(define-public emacs-racket-mode
-  (let ((commit "33877b1bb24faea68842e0396bd5718b84e47451")
-        (revision "1"))
-    (package
-      (name "emacs-racket-mode")
-      (version (string-append "0.0.1" "-" revision "."
-                              (string-take commit 7)))
-      (source
-       (origin
-         (method git-fetch)
-         (uri (git-reference
-               (url "https://github.com/greghendershott/racket-mode")
-               (commit commit)))
-         (file-name (string-append name "-" version "-checkout"))
-         (sha256
-          (base32
-           "0681mzwx08zwbh8qg3s26jw1jn4fw2ljp1akxqkhy08sxhafqvb1"))))
-      (build-system emacs-build-system)
-      (propagated-inputs
-       `(("emacs-faceup" ,emacs-faceup)
-         ("emacs-s" ,emacs-s)))
-      (home-page "https://github.com/greghendershott/racket-mode")
-      (synopsis "Major mode for Racket language")
-      (description "@code{racket-mode} provides:
-
-@itemize
-@item Focus on Racket (not various Schemes).
-@item Follow DrRacket concepts where applicable.
-@item Thorough font-lock and indent.
-@end itemize\n")
-      (license license:gpl3+))))
-
 (define-public emacs-eval-in-repl
   (package
     (name "emacs-eval-in-repl")
