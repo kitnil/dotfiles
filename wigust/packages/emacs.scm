@@ -2481,30 +2481,6 @@ rather than highlighting all errors found within the buffer.  This is
 especially useful when opening up large log files for analysis.")
     (license license:gpl2+))))
 
-(define-public emacs-tree-mode
-  (let ((commit "b06078826d5875d74b0e7b7ac47b0d0917610534")
-        (revision "1"))
-    (package
-      (name "emacs-tree-mode")
-      (version (string-append "0.0.1" "-" revision "."
-                              (string-take commit 7)))
-      (source
-       (origin
-         (method git-fetch)
-         (uri (git-reference
-               (url "https://github.com/emacsorphanage/tree-mode.git")
-               (commit commit)))
-         (file-name (string-append name "-" version "-checkout"))
-         (sha256
-          (base32
-           "13bbdhdmqg4x9yghanhr8fsbsxbnypzxdxgicz31sjjm675kpnix"))))
-      (build-system emacs-build-system)
-      (home-page "https://github.com/emacsorphanage/tree-mode")
-      (synopsis "Emacs mode to manage tree widgets")
-      (description
-       "This package provides an Emacs library to manage tree widgets.")
-      (license license:gpl3+))))
-
 (define-public emacs-md4rd
   (let ((commit "be0fc4951b2d1f5194ffa1fcaac706dbac560500")
         (revision "1"))
