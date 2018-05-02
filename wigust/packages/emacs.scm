@@ -1601,10 +1601,10 @@ Acknowledgements:
     (build-system emacs-build-system)
     (home-page "http://projects.ryuslash.org/git-auto-commit-mode/")
     (synopsis "Emacs Minor mode to automatically commit and push")
-    (description "git-auto-commit-mode is an Emacs minor mode that
+    (description "@code{git-auto-commit-mode} is an Emacs minor mode that
 tries to commit changes to a file after every save.
 
-When `gac-automatically-push-p' is non-nil, it also tries to push to
+When @code{gac-automatically-push-p} is non-nil, it also tries to push to
 the current upstream.")
     (license license:gpl3+)))
 
