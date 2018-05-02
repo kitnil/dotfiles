@@ -1364,27 +1364,6 @@ headings provided by @code{navi-mode} and @code{outshine}.")
           '(substitute* "git-messenger.el"
              (("\\(fundamental-mode\\)") "(diff-mode)")))))))
 
-(define-public emacs-helm-eww
-  (let ((commit "5d6c2c66d4694415ef8a16a6d38a37aeae76c5ac"))
-    (package
-      (name "emacs-helm-eww")
-      (version (git-version "0.1" "1" commit))
-      (source (origin
-                (method git-fetch)
-                (uri (git-reference
-                      (url "https://github.com/emacs-helm/helm-eww.git")
-                      (commit commit)))
-                (file-name (string-append name "-" version "-checkout"))
-                (sha256
-                 (base32
-                  "1x442ylrr7cx587s4rvfh187h3qbkr79qp95qr57a4igxkkw6183"))))
-      (build-system emacs-build-system)
-      (home-page "https://github.com/emacs-helm/helm-eww/")
-      (synopsis "Helm interface to EWW")
-      (description "This package provides a Helm interface for EWW buffers,
-bookmarks and history.")
-      (license license:gpl3+))))
-
 (define-public emacs-atomic-chrome
   (let ((commit "4828a29855f4663add5f2075b7d874354e70c02c"))
     (package
