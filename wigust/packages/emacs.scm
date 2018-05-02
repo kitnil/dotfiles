@@ -413,30 +413,6 @@ It provides auto-completion for HTTP methods and headers in
      "Search emails, searching result displays as you type thanks to helm.")
     (license license:gpl3+)))
 
-(define-public emacs-git-auto-commit-mode
-  (package
-    (name "emacs-git-auto-commit-mode")
-    (version "4.4.0")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append
-             "https://github.com/ryuslash/git-auto-commit-mode/archive/"
-             version ".tar.gz"))
-       (file-name (string-append name "-" version ".tar.gz"))
-       (sha256
-        (base32
-         "04avxmalsl3b7zi2vipfw9rb4wrwysnipsbch96skviql9axk870"))))
-    (build-system emacs-build-system)
-    (home-page "https://github.com/ryuslash/git-auto-commit-mode")
-    (synopsis "Emacs Minor mode to automatically commit and push")
-    (description "@code{git-auto-commit-mode} is an Emacs minor mode that
-tries to commit changes to a file after every save.
-
-When @code{gac-automatically-push-p} is non-nil, it also tries to push to
-the current upstream.")
-    (license license:gpl3+)))
-
 (define-public emacs-eval-in-repl
   (package
     (name "emacs-eval-in-repl")
