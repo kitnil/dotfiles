@@ -2948,25 +2948,23 @@ decreasing the default font size in all GUI Emacs frames.")
       (license license:gpl3+))))
 
 (define-public emacs-helm-emms
-  (let ((commit "8133c1a854c8f9e32b3b4c74638fe197535c08f1")
-        (revision "1"))
+  (let ((commit "8133c1a854c8f9e32b3b4c74638fe197535c08f1"))
     (package
       (name "emacs-helm-emms")
-      (version (string-append "1.3" "-" revision "."
-                              (string-take commit 7)))
+      (version (git-version "1.3" "1" commit))
       (source (origin
                 (method git-fetch)
                 (uri (git-reference
                       (url "https://github.com/emacs-helm/helm-emms/")
                       (commit commit)))
-
+                (file-name (git-file-name name version))
                 (sha256
                  (base32
                   "06111034rvh770ljzdbw7d6rkvy40bjvp4c06ss5s624pyd6qd74"))))
       (build-system emacs-build-system)
       (home-page "https://github.com/emacs-helm/helm-emms/")
       (synopsis "Basic helm interface to emms")
-      (description "Basic helm interface to emms")
+      (description "This package provides a basic Helm interface to Emms.")
       (license license:gpl3+))))
 
 (define-public emacs-interactive-align
