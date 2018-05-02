@@ -578,26 +578,6 @@ When @code{gac-automatically-push-p} is non-nil, it also tries to push to
 the current upstream.")
     (license license:gpl3+)))
 
-(define-public emacs-visual-regexp
-  (package
-    (name "emacs-visual-regexp")
-    (version "1.1.1")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "https://github.com/benma/visual-regexp.el/archive/"
-                           "v" version ".tar.gz"))
-       (file-name (string-append name "-" version ".tar.gz"))
-       (sha256
-        (base32
-         "1czmhvcivlcdyz7rfm0vd4a3xsgmy4qbvbl6yjxc217wrxqflr92"))))
-    (build-system emacs-build-system)
-    (home-page "https://github.com/benma/visual-regexp.el/")
-    (synopsis "Regexp command with interactive visual feedback")
-    (description "This package provides an Emacs regexp command with
-interactive visual feedback.")
-    (license license:gpl3+)))
-
 (define-public emacs-ido-vertical-mode
   (package
     (name "emacs-ido-vertical-mode")
