@@ -1114,6 +1114,7 @@ It provides auto-completion for HTTP methods and headers in
        (method url-fetch)
        (uri (string-append "https://github.com/xuchunyang/helm-notmuch/archive/"
                            version ".tar.gz"))
+       (file-name (string-append name "-" version ".tar.gz"))
        (sha256
         (base32
          "09b3jllppfmk0mb1qvgcx705jwixqn5ggl0bql6g5a3i7yy6xpyd"))))
@@ -1124,8 +1125,8 @@ It provides auto-completion for HTTP methods and headers in
        ("emacs-helm" ,emacs-helm)))
     (home-page "https://github.com/xuchunyang/helm-notmuch")
     (synopsis "Search emails with Notmuch and Helm")
-    (description "Search emails, searching result displays as you type
-thanks to helm.")
+    (description
+     "Search emails, searching result displays as you type thanks to helm.")
     (license license:gpl3+)))
 
 (define-public emacs-csv-mode
