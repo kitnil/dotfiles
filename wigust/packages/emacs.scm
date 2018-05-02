@@ -3552,11 +3552,11 @@ text-mode (i.e. Org-mode).")
        `(("emacs-outorg" ,emacs-outorg)))
       (home-page "https://github.com/alphapapa/outshine")
       (synopsis "Emacs outline with outshine")
-      (description "Outshine attempts to bring the look&feel of Org-mode to
-the (GNU Emacs) world outside of the Org major-mode.  It is an extension of
-outline-minor-mode (Org-mode itself derives from outline-mode), so there is no
-such thing like an 'outshine mode', only `outline-minor-mode' with outshine
-extensions loaded.")
+      (description "Outshine attempts to bring the look and feel of
+@code{org-mode} to an Emacs outside of the Org major-mode.  It is an extension
+of @code{outline-minor-mode} (@code{org-mode} itself derives from
+outline-mode), so there is no such thing like an outshine mode, only
+@code{outline-minor-mode} with outshine extensions loaded.")
       (license license:gpl3+))))
 
 (define-public emacs-navi-mode
