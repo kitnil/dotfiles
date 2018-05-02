@@ -391,26 +391,6 @@ scroll up to read the function name and then scroll down to original position.")
     (description "Tern-powered JavaScript integration.")
     (license license:gpl3+)))
 
-(define-public emacs-wordgen
-  (package
-    (name "emacs-wordgen")
-    (version "0.1.4")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "https://github.com/Fanael/wordgen.el/archive/"
-                           version ".tar.gz"))
-       (file-name (string-append name "-" version ".tar.gz"))
-       (sha256
-        (base32
-         "1h2iyixdm49h53pwj9ics9gb9h3g6wa4hainpnjg6mfarf49jkmg"))))
-    (build-system emacs-build-system)
-    (home-page "https://github.com/Fanael/wordgen.el")
-    (synopsis "Random word generator")
-    (description "This package provides functions to generate random words
-using user-provided rules.")
-    (license license:gpl3+)))
-
 (define-public emacs-indium-checkout
   (let ((commit "d98a9e0cd11d8230c4c3d0b59c4ac60520e34ebb")
         (revision "1"))
