@@ -961,7 +961,7 @@ the current upstream.")
               (uri "https://www.emacswiki.org/emacs/download/lacarte.el")
               (sha256
                (base32
-                "0m3swrvxz0cy01pd4kag626fxqp4l2zzwpgr26yp5wpsfxl9avv8"))))
+                "1sbmk37ljq5j7dsw5c37sbxvlfgdqswh7bi4dknyjzfxlq50f4am"))))
     (build-system emacs-build-system)
     (home-page "https://www.emacswiki.org/emacs/lacarte.el")
     (synopsis "Execute menu items as commands, with completion")
