@@ -206,28 +206,6 @@ editor with athena toolkit" )
 Youtube.")
       (license license:gpl3+))))
 
-(define-public emacs-highlight-defined
-  (package
-    (name "emacs-highlight-defined")
-    (version "0.1.5")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append
-             "https://github.com/Fanael/highlight-defined/archive/"
-             version ".tar.gz"))
-       (file-name (string-append name "-" version ".tar.gz"))
-       (sha256
-        (base32
-         "1ryd66989b5byqdw8jmjrjf0c78iiz72wibld750skcnj5h5h506"))))
-    (build-system emacs-build-system)
-    (home-page "https://github.com/Fanael/highlight-defined")
-    (synopsis "Syntax highlighting of known Elisp symbols")
-    (description "Minor mode providing syntax highlighting of known Emacs Lisp
-symbols.  Currently the code distinguishes Lisp functions, built-in functions,
-macros, faces and variables.  To enable call @code{highlight-defined-mode}. ")
-    (license license:gpl3+)))
-
 (define-public emacs-indium
   (package
     (name "emacs-indium")
