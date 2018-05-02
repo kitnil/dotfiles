@@ -1983,9 +1983,9 @@ tramp.")
            "0ilwvx0qryv3v6xf0gxqwnfm6pf96gxap8h9g3f6z6lk9ff4n1wi"))))
       (build-system emacs-build-system)
       (home-page "https://github.com/flexibeast/ewmctrl")
-      (synopsis "")
-      (description "@code{ewmctrl} provides an Emacs interface to the wmctrl
-command-line window-management program.")
+      (synopsis "Emacs interface to @code{wmctrl}")
+      (description "@code{ewmctrl} provides an Emacs interface to
+@code{wmctrl} command-line window-management program.")
       (license license:gpl3+))))
 
 (define-public emacs-password-store
