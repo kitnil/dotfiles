@@ -2432,7 +2432,7 @@ timestamps and date-time format strings library for Emacs.")
 (define-public emacs-logview
   (package
     (name "emacs-logview")
-    (version "0.8.2")
+    (version "0.9")
     (source (origin
               (method url-fetch)
               (uri (string-append
@@ -2441,7 +2441,7 @@ timestamps and date-time format strings library for Emacs.")
               (file-name (string-append name "-" version ".tar.gz"))
               (sha256
                (base32
-                "1if22ypjdz0w8dbgyxi2vgffaaqid4bc0i3004g0jy345cjr63kn"))))
+                "1vd11ppm46ldqsiwhqgw91p34gbjh1y82r9mxcn9r2gj65nvhxcp"))))
     (propagated-inputs
      `(("emacs-datetime" ,emacs-datetime)))
     (build-system emacs-build-system)
