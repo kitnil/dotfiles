@@ -484,25 +484,6 @@ It provides auto-completion for HTTP methods and headers in
      "Search emails, searching result displays as you type thanks to helm.")
     (license license:gpl3+)))
 
-(define-public emacs-irfc
-  (package
-    (name "emacs-irfc")
-    (version "20130824.507")
-    (source
-     (origin
-       (method url-fetch)
-       (uri "https://www.emacswiki.org/emacs/download/irfc.el")
-       (file-name (string-append "irfc-" version ".el"))
-       (sha256
-        (base32
-         "197ybqwbj8qjh2p9pkf5mvqnrkpcgmv8c5s2gvl6msyrabk0mnca"))))
-    (build-system emacs-build-system)
-    (home-page "https://www.emacswiki.org/emacs/download/irfc.el")
-    (synopsis "Interface for IETF RFC document")
-    (description
-     "This package provides an Emacs interface for IETF RFC document.")
-    (license license:gpl3+)))
-
 (define-public emacs-git-auto-commit-mode
   (package
     (name "emacs-git-auto-commit-mode")
