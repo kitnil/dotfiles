@@ -510,6 +510,7 @@ and even a stepping Debugger, similar to @code{edebug}, or @code{cider}.")
        (method url-fetch)
        (uri (string-append "https://github.com/Wilfred/loop.el/archive/"
                            version ".tar.gz"))
+       (file-name (string-append name "-" version ".tar.gz"))
        (sha256
         (base32
          "1z3rhh3zyjabz36410yz0lp4a0qwwj0387as662wvx3z9y54jia9"))))
