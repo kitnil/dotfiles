@@ -2830,7 +2830,7 @@ documentation.")
               (method url-fetch)
               (uri (string-append "https://github.com/rswgnu/rsw-elisp"
                                   "/archive/" version ".tar.gz"))
-
+              (file-name (string-append name "-" version ".tar.gz"))
               (sha256
                (base32
                 "1jnn7xfwl3wxc87v44ccsf1wwp80par3xgcvfb1icd6zchjmlcps"))))
