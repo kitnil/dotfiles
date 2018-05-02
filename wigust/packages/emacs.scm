@@ -777,27 +777,6 @@ mode for Lisp programming languages.  It will infer some changes to
 keep Parens and Indentation inline with one another.")
     (license license:gpl3+)))
 
-(define-public emacs-shift-number
-  (package
-    (name "emacs-shift-number")
-    (version "0.1")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "https://github.com/alezost/shift-number.el"
-                           "/archive/" "v" version ".tar.gz"))
-       (file-name (string-append name "-" version ".tar.gz"))
-       (sha256
-        (base32
-         "1g79m0hqn9jgpm565vvh8pdfzndc4vw7xisnh5qysj55qfg8cb1x"))))
-    (build-system emacs-build-system)
-    (home-page "https://github.com/alezost/shift-number.el")
-    (synopsis "Increase or decrease the number at point")
-    (description "@code{emacs-shift-number} provides commands
-@code{shift-number-up} to increase and @code{shift-number-down} to
-decrease the number at point.")
-    (license license:gpl3+)))
-
 (define-public emacs-password-store
   (package
     (inherit password-store)
