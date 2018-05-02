@@ -2641,7 +2641,7 @@ timestamps and date-time format strings library for Emacs.")
     (build-system emacs-build-system)
     (home-page
      "https://github.com/michael-heerdegen/on-screen.el")
-    (synopsis "guide your eyes while scrolling")
+    (synopsis "Guide your eyes while scrolling")
     (description
      "Scrolling can be distracting because your eyes may lose
 orientation.  This library implements a minor mode that highlights
