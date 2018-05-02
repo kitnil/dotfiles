@@ -952,22 +952,6 @@ When @code{gac-automatically-push-p} is non-nil, it also tries to push to
 the current upstream.")
     (license license:gpl3+)))
 
-(define-public emacs-lacarte
-  (package
-    (name "emacs-lacarte")
-    (version "0.1")
-    (source (origin
-              (method url-fetch)
-              (uri "https://www.emacswiki.org/emacs/download/lacarte.el")
-              (sha256
-               (base32
-                "1sbmk37ljq5j7dsw5c37sbxvlfgdqswh7bi4dknyjzfxlq50f4am"))))
-    (build-system emacs-build-system)
-    (home-page "https://www.emacswiki.org/emacs/lacarte.el")
-    (synopsis "Execute menu items as commands, with completion")
-    (description "Execute menu items as commands, with completion.")
-    (license license:gpl3)))
-
 (define-public emacs-visual-regexp
   (package
     (name "emacs-visual-regexp")
