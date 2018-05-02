@@ -2046,7 +2046,7 @@ downloading manager for Emacs.")
       (propagated-inputs
        `(("emacs-emms" ,emms)))
       (home-page "https://github.com/momomo5717/emms-player-simple-mpv")
-      (synopsis "An extension of emms-player-simple.el for mpv JSON IPC")
+      (synopsis "Extension of @file{emms-player-simple.el} for mpv JSON IPC")
       (description "@code{emms-player-simple-mpv} provides macros and
 functions for defining emms simple players of mpv.")
       (license license:gpl3+))))
