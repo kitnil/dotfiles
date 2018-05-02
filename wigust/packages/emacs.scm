@@ -471,32 +471,6 @@ scroll up to read the function name and then scroll down to original position.")
       (description "Emacs minor-mode for Stumpwm")
       (license license:gpl3+))))
 
-(define-public emacs-suggest
-  (package
-    (name "emacs-suggest")
-    (version "0.4")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "https://github.com/Wilfred/suggest.el/archive/"
-                           version ".tar.gz"))
-       (file-name (string-append name "-" version ".tar.gz"))
-       (sha256
-        (base32
-         "1760fm3j19w8xxcawq6s859h86q1rdg69pg9yz48n76kwfk3vlgp"))))
-    (build-system emacs-build-system)
-    (propagated-inputs
-     `(("emacs-loop" ,emacs-loop)
-       ("emacs-dash" ,emacs-dash)
-       ("emacs-s" ,emacs-s)
-       ("emacs-f" ,emacs-f)))
-    (home-page "https://github.com/Wilfred/suggest.el")
-    (synopsis "Suggest Elisp functions that give the output requested")
-    (description "Suggest.el will find functions that give the output
-requested.  It's a great way of exploring list, string and arithmetic
-functions.")
-    (license license:gpl3+)))
-
 (define-public emacs-tern
   (package
     (name "emacs-tern")
