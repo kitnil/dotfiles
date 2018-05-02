@@ -3031,7 +3031,7 @@ decreasing the default font size in all GUI Emacs frames.")
        (method url-fetch)
        (uri (string-append "https://github.com/mkcms/interactive-align/"
                            "archive/" "v" version ".tar.gz"))
-
+       (file-name (string-append name "-" version ".tar.gz"))
        (sha256
         (base32
          "0sibpgb4lp6yy3pziak8f3hz4b28yj0dqy2nzh51z3d0b63h528m"))))
