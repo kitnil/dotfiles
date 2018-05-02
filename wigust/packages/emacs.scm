@@ -2231,6 +2231,7 @@ command-line window-management program.")
        (uri (string-append "https://github.com/DamienCassou"
                            "/auth-password-store"
                            "/archive/" "v" version ".tar.gz"))
+       (file-name (string-append name "-" version ".tar.gz"))
        (sha256
         (base32
          "1n9623hsx6vsq87y6a2731ydfi0x8fvfb6m7fbdfy726d4pnr09q"))))
