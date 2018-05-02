@@ -3111,8 +3111,8 @@ coloring provided by Drew Adams @code{info+} package.  To enable this
       (propagated-inputs
        `(("emacs-s" ,emacs-s)
          ("emacs-dash" ,emacs-dash)))
-      (home-page "https://github.com/gregsexton/origami.el.git")
-      (synopsis "A folding minor mode for Emacs")
+      (home-page "https://github.com/gregsexton/origami.el")
+      (synopsis "Folding minor mode for Emacs")
       (description
        "This package provides a text folding minor mode for Emacs.")
       (license license:expat))))
