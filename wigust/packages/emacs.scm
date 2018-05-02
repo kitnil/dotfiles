@@ -1172,6 +1172,7 @@ byte-compile it (recommended), and put this in your .emacs file:
        (method url-fetch)
        (uri (string-append "https://github.com/joostkremers/parsebib/archive/"
                            version ".tar.gz"))
+       (file-name (string-append name "-" version ".tar.gz"))
        (sha256
         (base32
          "0cxagnmc5ab6idmb26axpizhr4sqglkncc59768yavn3p04jyq63"))))
