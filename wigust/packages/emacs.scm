@@ -314,31 +314,6 @@ Additionally, since rjsx-mode extends the js2 AST, utilities using
 the parse tree gain access to the JSX structure.")
     (license license:gpl3+)))
 
-(define-public emacs-slime-company
-  (package
-    (name "emacs-slime-company")
-    (version "1.1")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "https://github.com/anwyn/slime-company/archive/"
-                           "v" version ".tar.gz"))
-       (sha256
-        (base32
-         "1myl79pxj501xfr5qc5a24qddsn2l5iaamg7rf7fpny7mr9v70ar"))
-       (file-name (string-append name "-" version ".tar.gz"))))
-    (build-system emacs-build-system)
-    (propagated-inputs
-     `(("emacs-slime" ,emacs-slime)
-       ("emacs-company" ,emacs-company)))
-    (home-page "https://company-mode.github.io")
-    (synopsis "@code{slime} completion backend for @code{company-mode}")
-    (description
-     "This is a backend implementation for the completion package
-@code{company-mode} which supports the normal and the fuzzy completion
-modes of @code{slime}.")
-    (license license:gpl3+)))
-
 (define-public emacs-stickyfunc-enhance
   (let ((commit "13bdba51fcd83ccbc3267959d23afc94d458dcb0")
         (revision "1"))
