@@ -1564,29 +1564,6 @@ downloading manager for Emacs.")
 functions for defining emms simple players of mpv.")
       (license license:gpl3+))))
 
-(define-public emacs-pulseaudio-control
-  (let ((commit "08c59e1dc45ec96edb62f34036e82cf5f14c0e8b")
-        (revision "1"))
-    (package
-      (name "emacs-pulseaudio-control")
-      (version (string-append "0.0.1" "-" revision "."
-                              (string-take commit 7)))
-      (source
-       (origin
-         (method git-fetch)
-         (uri (git-reference
-               (url "https://github.com/flexibeast/pulseaudio-control.git")
-               (commit commit)))
-         (file-name (string-append name "-" version "-checkout"))
-         (sha256
-          (base32
-           "10cgg1r00kz2fsnnryvzay5pf8s1pwb1dzlds1fbjdnyfvdgammv"))))
-      (build-system emacs-build-system)
-      (home-page "https://github.com/flexibeast/pulseaudio-control")
-      (synopsis "Control @code{pulseaudio} from Emacs")
-      (description "Control @code{pulseaudio} from Emacs")
-      (license license:gpl3+))))
-
 (define-public emacs-helm-firefox
   (let ((commit "0ad34b7b5abc485a86cae6920c14de861cbeb085")
         (revision "1"))
