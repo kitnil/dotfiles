@@ -1809,8 +1809,8 @@ perform regression test for packages that provide font-lock rules.")
     (build-system emacs-build-system)
     (home-page "https://github.com/phillord/m-buffer-el")
     (synopsis "List oriented buffer operations for Emacs")
-    (description "@{m-buffer} provides a set of list-orientated
-functions for operating over the contents of Emacs buffers.")
+    (description "@code{m-buffer} provides a set of list-orientated functions
+for operating over the contents of Emacs buffers.")
     (license license:gpl3+)))
 
 (define-public emacs-load-relative
