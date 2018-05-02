@@ -454,25 +454,6 @@ completion) & object inspection, an inspector, with history and navigation,
 and even a stepping Debugger, similar to @code{edebug}, or @code{cider}.")
     (license license:gpl3+)))
 
-(define-public emacs-list-utils
-  (package
-    (name "emacs-list-utils")
-    (version "0.4.4")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "https://github.com/rolandwalker/list-utils/archive/"
-                           "v" version ".tar.gz"))
-       (file-name (string-append name "-" version ".tar.gz"))
-       (sha256
-        (base32
-         "1xc1xh8c82h5gdjbgpdsdclgwxkxbb7h3x3a2bscpm41g8pnan4p"))))
-    (build-system emacs-build-system)
-    (home-page "https://github.com/rolandwalker/list-utils")
-    (synopsis "List-manipulation utility functions")
-    (description "List manipulation library for Emacs.")
-    (license license:gpl3+)))
-
 (define-public emacs-loop
   (package
     (name "emacs-loop")
