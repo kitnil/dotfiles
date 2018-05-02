@@ -441,25 +441,6 @@ org-protocol-capture-html.sh shell script.  See the README.org file
 for instructions.")
       (license license:gpl3+))))
 
-(define-public emacs-parent-mode
-  (package
-    (name "emacs-parent-mode")
-    (version "2.3")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "https://github.com/Fanael/parent-mode/archive/"
-                           version ".tar.gz"))
-       (file-name (string-append name "-" version ".tar.gz"))
-       (sha256
-        (base32
-         "0gxbl5s1w96v6v55b7aaansgw4sxhzfx9nrsvpk3pfhsibs6yqjd"))))
-    (build-system emacs-build-system)
-    (home-page "https://github.com/Fanael/parent-mode")
-    (synopsis "Get major mode's parent modes")
-    (description "Get major mode's parent modes")
-    (license license:gpl3+)))
-
 (define-public emacs-rjsx-mode
   (package
     (name "emacs-rjsx-mode")
