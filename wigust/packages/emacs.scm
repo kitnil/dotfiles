@@ -619,7 +619,7 @@ for instructions.")
 (define-public emacs-rjsx-mode
   (package
     (name "emacs-rjsx-mode")
-    (version "0.2.0")
+    (version "0.4.0")
     (source
      (origin
        (method url-fetch)
@@ -628,7 +628,7 @@ for instructions.")
        (file-name (string-append name "-" version ".tar.gz"))
        (sha256
         (base32
-         "1vlk298g79nz0cw5sgnp2683gr72x5sfsqbyxjsg521ka3lyjq98"))))
+         "0n43wm7s19csbnk2gsqpnb6pcywa7l51rx5z9d35x13bm9f3q0ap"))))
     (build-system emacs-build-system)
     (propagated-inputs
      `(("emacs-js2-mode" ,emacs-js2-mode)))
