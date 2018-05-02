@@ -1604,31 +1604,6 @@ receiving, posting and deleting pastes using XML-RPC.")
 Emacs minor mode to escape sequences in code.")
       (license license:gpl3+))))
 
-(define-public emacs-esup
-  (let ((commit "a589005a9a888537deef94d6fe38a9b8790c97c7")
-        (revision "1"))
-    (package
-      (name "emacs-esup")
-      (version (string-append "0.6" "-" revision "."
-                              (string-take commit 7)))
-      (source
-       (origin
-         (method git-fetch)
-         (uri (git-reference
-               (url "https://github.com/jschaf/esup.git")
-               (commit commit)))
-         (file-name (string-append name "-" version "-checkout"))
-         (sha256
-          (base32
-           "04lxmd0h7mfjjl0qghrycgff0vcv950j1wqv0dbkr61jxp64n5fv"))))
-      ;; TODO: Add tests
-      (build-system emacs-build-system)
-      (home-page "https://github.com/jschaf/esup")
-      (synopsis "Emacs start up profiler")
-      (description "Benchmark Emacs Startup time without ever leaving
-your Emacs.")
-      (license license:gpl2+))))
-
 (define emacs-wi-web-search
   (let ((commit "33fa377156f487e41deda62cd92110d707907c66"))
     (package
