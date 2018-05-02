@@ -880,6 +880,7 @@ functions.")
        (method url-fetch)
        (uri (string-append "https://github.com/ternjs/tern/archive/"
                            version ".tar.gz"))
+       (file-name (string-append name "-" version ".tar.gz"))
        (sha256
         (base32
          "1pzchd29i6dxfgm0ackr2vc2xqpczjkwl5h6l8jils0bcfaj48ss"))))
