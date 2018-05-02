@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2017 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2017, 2018 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -3269,7 +3269,7 @@ coloring provided by Drew Adams @code{info+} package.  To enable this
                (invoke "emacs" "--batch"
                        "-l" "auto-yasnippet.el"
                        "-l" "auto-yasnippet-test.el"
-                       "-f" "ert-run-tests-batch-and-exit"))))))      
+                       "-f" "ert-run-tests-batch-and-exit"))))))
       (propagated-inputs
        `(("emacs-yasnippet" ,emacs-yasnippet)))
       (home-page "https://github.com/abo-abo/auto-yasnippet/")
