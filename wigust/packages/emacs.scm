@@ -2481,27 +2481,6 @@ rather than highlighting all errors found within the buffer.  This is
 especially useful when opening up large log files for analysis.")
     (license license:gpl2+))))
 
-(define-public emacs-hierarchy
-  (package
-    (name "emacs-hierarchy")
-    (version "0.7.0")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append
-             "https://github.com/DamienCassou/hierarchy/archive/"
-             "v" version ".tar.gz"))
-       (file-name (string-append name "-" version ".tar.gz"))
-       (sha256
-        (base32
-         "1a463v5zk6zis2p8cs4mads3iyxh266yahi6j6y0paggfl2yhkc8"))))
-    (build-system emacs-build-system)
-    (home-page "https://github.com/DamienCassou/hierarchy")
-    (synopsis "Library to create and display hierarchy structures")
-    (description "This package provides an Emacs library to create, query,
-navigate and display hierarchy structures.")
-    (license license:gpl3+)))
-
 (define-public emacs-tree-mode
   (let ((commit "b06078826d5875d74b0e7b7ac47b0d0917610534")
         (revision "1"))
