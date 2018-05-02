@@ -1749,8 +1749,8 @@ interactive loop.")
       (home-page "https://github.com/Lindydancer/faceup")
       (synopsis "Markup language for faces and font-lock regression testing")
       (description "Emacs is capable of highlighting buffers based on
-language-specific `font-lock' rules.  This package makes it possible
-to perform regression test for packages that provide font-lock rules.")
+language-specific @code{font-lock} rules.  This package makes it possible to
+perform regression test for packages that provide font-lock rules.")
       (license license:gpl3+))))
 
 (define-public emacs-racket-mode
