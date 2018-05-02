@@ -1594,6 +1594,7 @@ interactive loop.")
        (method url-fetch)
        (uri (string-append "https://github.com/hylang/hy-mode/archive/"
                            "v" version ".tar.gz"))
+       (file-name (string-append name "-" version ".tar.gz"))
        (sha256
         (base32
          "0sbga36zkyhzrzcczsyjzll7b9qsa215pnlw51m4li2irm23jh17"))))
