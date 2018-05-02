@@ -1539,6 +1539,7 @@ region instead.")
        (uri (string-append
              "https://github.com/ryuslash/git-auto-commit-mode/archive/"
              version ".tar.gz"))
+       (file-name (string-append name "-" version ".tar.gz"))
        (sha256
         (base32
          "04avxmalsl3b7zi2vipfw9rb4wrwysnipsbch96skviql9axk870"))))
