@@ -2961,7 +2961,7 @@ navigate and display hierarchy structures.")
            "13bbdhdmqg4x9yghanhr8fsbsxbnypzxdxgicz31sjjm675kpnix"))))
       (build-system emacs-build-system)
       (home-page "https://github.com/emacsorphanage/tree-mode")
-      (synopsis "A mode to manage tree widgets")
+      (synopsis "Emacs mode to manage tree widgets")
       (description
        "This package provides an Emacs library to manage tree widgets.")
       (license license:gpl3+))))
