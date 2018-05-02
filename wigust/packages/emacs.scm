@@ -281,36 +281,8 @@ installed.  Dumb Jump requires at least GNU Emacs 24.3. ")
              (chdir "servers"))))))
     (home-page "https://github.com/stsquad/emacs_chrome")
     (synopsis "Server that responds to edit requests from Chromium")
-    (description "Provides an edit server to respond to requests from Emacs.
-
-To open pages for editing in new buffers in your existing Emacs
-instance:
-
-@code{(when (require 'edit-server nil t)
-        (setq edit-server-new-frame nil)
-        (edit-server-start))}
-
-To open pages for editing in new frames using a running emacs
-started in --daemon mode:
-
-@code{(when (and (require 'edit-server nil t) (daemonp))
-        (edit-server-start))}
-
-Buffers are edited in `text-mode' by default; to use a different
-major mode, change `edit-server-default-major-mode' or customize
-`edit-server-url-major-mode-alist' to specify major modes based
-on the remote URL:
-
-@code{(setq edit-server-url-major-mode-alist
-        '((\"github\\\\.com\" . markdown-mode)))}
-
-Alternatively, set the mode in `edit-server-start-hook'.  For
-example:
-
-@code{(add-hook 'edit-server-start-hook
-         (lambda ()
-           (when (string-match \"github.com\" (buffer-name))
-             (markdown-mode))))}")
+    (description
+     "This package provides an edit server to respond to requests from Emacs.")
     (license license:gpl3+)))
 
 (define-public emacs-elisp-refs
