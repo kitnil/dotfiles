@@ -509,8 +509,9 @@ continue.")
          "0kzl4q1wf2zhkx9nrymxa67n99iq0bj7zqhpaz4byksna1hsxfmv"))))
     (build-system emacs-build-system)
     (home-page "https://github.com/mickeynp/makey")
-    (synopsis "Interactive commandline mode")
-    (description "Interactive commandline mode")
+    (synopsis "Emacs interactive command-line mode")
+    (description
+     "This package provides an Emacs interactive command-line mode.")
     (license license:gpl3+)))
 
 (define-public emacs-nnreddit
