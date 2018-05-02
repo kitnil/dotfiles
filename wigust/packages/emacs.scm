@@ -612,7 +612,7 @@ projects.")
                (install-file "org-protocol-capture-html.sh"
                              (string-append (assoc-ref outputs "out")
                                             "/bin")))))))
-      (home-page "https://github.com/alphapapa/org-protocol-capture-html.git")
+      (home-page "https://github.com/alphapapa/org-protocol-capture-html")
       (synopsis "Captures Web pages into Org using Pandoc to process HTML")
       (description "This package captures Web pages into Org-mode using Pandoc to
 process HTML.  It can also use eww's eww-readable functionality to
