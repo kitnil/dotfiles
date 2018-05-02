@@ -798,29 +798,6 @@ keep Parens and Indentation inline with one another.")
 decrease the number at point.")
     (license license:gpl3+)))
 
-(define-public emacs-helm-firefox
-  (let ((commit "0ad34b7b5abc485a86cae6920c14de861cbeb085")
-        (revision "1"))
-    (package
-      (name "emacs-helm-firefox")
-      (version (string-append "0.0.1" "-" revision "."
-                              (string-take commit 7)))
-      (source
-       (origin
-         (method git-fetch)
-         (uri (git-reference
-               (url "https://github.com/emacs-helm/helm-firefox.git")
-               (commit commit)))
-         (file-name (string-append name "-" version "-checkout"))
-         (sha256
-          (base32
-           "08mjsi2f9s29fkk35cj1rrparjnkm836qmbfdwdz7y51f9varjbs"))))
-      (build-system emacs-build-system)
-      (home-page "https://github.com/emacs-helm/helm-firefox")
-      (synopsis "Display firefox bookmarks with Emacs Helm interface")
-      (description "Display firefox bookmarks with Emacs Helm interface")
-      (license license:gpl3+))))
-
 (define-public emacs-password-store
   (package
     (inherit password-store)
