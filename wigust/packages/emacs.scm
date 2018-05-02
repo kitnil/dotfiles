@@ -1652,6 +1652,7 @@ the current upstream.")
        (uri (string-append
              "https://github.com/creichert/ido-vertical-mode.el/archive/"
              "v" version ".tar.gz"))
+       (file-name (string-append name "-" version ".tar.gz"))
        (sha256
         (base32
          "0dprdxq8wvqd45dinwj92k0kixr07c8xvspa6i613mjcpxgwjg53"))))
