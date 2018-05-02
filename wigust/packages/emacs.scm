@@ -2679,12 +2679,12 @@ grouping buffers by their projectile root directory.")
     (build-system emacs-build-system)
     (home-page "https://github.com/Malabarba/fancy-narrow/releases")
     (synopsis "Immitate narrow-to-region with more eye-candy")
-    (description "Unlike narrow-to-region, which completely hides text
-outside the narrowed region, this package simply deemphasizes the
-text, makes it readonly, and makes it unreachable. This leads to a
-much more natural feeling, where the region stays static (instead of
-being brutally moved to a blank slate) and is clearly highlighted with
-respect to the rest of the buffer.")
+    (description "Unlike narrow-to-region, which completely hides text outside
+the narrowed region, this package simply deemphasizes the text, makes it
+readonly, and makes it unreachable.  This leads to a much more natural
+feeling, where the region stays static (instead of being brutally moved to a
+blank slate) and is clearly highlighted with respect to the rest of the
+buffer.")
     (license license:gpl2+)))
 
 (define-public emacs-helm-gtags
