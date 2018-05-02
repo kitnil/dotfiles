@@ -2171,6 +2171,7 @@ password manager.")
               (uri (string-append
                     "https://github.com/hexmode/xml-rpc-el/archive/"
                     version ".tar.gz"))
+              (file-name (string-append name "-" version ".tar.gz"))
               (sha256
                (base32
                 "01izmsxk0ja77nxwgjzyb3k5wgndnx7i9qvkyb8f12bwrjn0rga0"))))
