@@ -924,43 +924,6 @@ add the following hook to your Emacs configuration:
 For more information, See URL https://github.com/yasuyk/web-beautify.")
     (license license:gpl3+)))
 
-(define-public emacs-websocket
-  (package
-    (name "emacs-websocket")
-    (version "1.8")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "https://github.com/ahyatt/emacs-websocket/archive/"
-                           version ".tar.gz"))
-       (file-name (string-append name "-" version ".tar.gz"))
-       (sha256
-        (base32
-         "07nz1spb2nklyf94fdh1rzbmscms9qxc7ypl77fzyvyw3az6qr50"))))
-    (build-system emacs-build-system)
-    (home-page "https://github.com/ahyatt/emacs-websocket")
-    (synopsis "Emacs WebSocket client and server")
-    (description "This implements RFC 6455, which can be found at
-@url{http://tools.ietf.org/html/rfc6455}.
-
-This library contains code to connect Emacs as a client to a websocket server,
-and for Emacs to act as a server for websocket connections.
-
-Websockets clients are created by calling @code{websocket-open}, which returns
-a @code{websocket} struct.  Users of this library use the websocket struct,
-and can call methods @code{websocket-send-text}, which sends text over the
-websocket, or @code{websocket-send}, which sends a @code{websocket-frame}
-struct, enabling finer control of what is sent.  A callback is passed to
-@code{websocket-open} that will retrieve websocket frames called from the
-websocket.  Websockets are eventually closed with @code{websocket-close}.
-
-Server functionality is similar.  A server is started with
-@code{websocket-server} called with a port and the callbacks to use, which
-returns a process.  The process can later be closed with
-@code{websocket-server-close}.  A @code{websocket} struct is also created for
-every connection, and is exposed through the callbacks.")
-    (license license:gpl3+)))
-
 (define-public emacs-wordgen
   (package
     (name "emacs-wordgen")
