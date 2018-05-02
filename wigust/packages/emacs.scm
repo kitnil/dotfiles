@@ -716,6 +716,7 @@ modes of @code{slime}.")
        (method url-fetch)
        (uri (string-append "https://github.com/syohex/emacs-sourcemap/archive/"
                            version ".tar.gz"))
+       (file-name (string-append name "-" version ".tar.gz"))
        (sha256
         (base32
          "0bmd5l3cx2iyl7vxn84xdhs80b07kpdpfwki28lh5d0kmm5qs6m6"))))
