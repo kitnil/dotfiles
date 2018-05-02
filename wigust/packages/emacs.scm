@@ -2594,7 +2594,8 @@ timestamps and date-time format strings library for Emacs.")
               (method url-fetch)
               (uri (string-append
                     "https://github.com/doublep/logview/archive/"
-                    "0.8.2" ".tar.gz"))
+                    version ".tar.gz"))
+              (file-name (string-append name "-" version ".tar.gz"))
               (sha256
                (base32
                 "1if22ypjdz0w8dbgyxi2vgffaaqid4bc0i3004g0jy345cjr63kn"))))
