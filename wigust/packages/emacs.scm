@@ -2358,26 +2358,6 @@ blank slate) and is clearly highlighted with respect to the rest of the
 buffer.")
     (license license:gpl2+)))
 
-(define-public emacs-helm-gtags
-  (package
-    (name "emacs-helm-gtags")
-    (version "1.5.6")
-    (source (origin
-              (method url-fetch)
-              (uri (string-append
-                    "https://github.com/syohex/emacs-helm-gtags/archive/"
-                    version ".tar.gz"))
-              (file-name (string-append name "-" version ".tar.gz"))
-              (sha256
-               (base32
-                "1a10snhg6nnnan6w9a7mcziy26vxbsr3c35i0gcarnkdp2yqng36"))))
-    (build-system emacs-build-system)
-    (home-page "https://github.com/syohex/emacs-helm-gtags")
-    (synopsis "Emacs Helm interface to GNU Global")
-    (description
-     "@code{emacs-helm-gtags} provides a Emacs Helm interface to GNU Global.")
-    (license license:gpl3+)))
-
 (define-public emacs-benchmark-init
   (package
     (name "emacs-benchmark-init")
