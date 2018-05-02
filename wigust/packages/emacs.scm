@@ -2805,7 +2805,7 @@ grouping buffers by their projectile root directory.")
       (home-page "https://github.com/bbatsov/crux")
       (synopsis "Collection of useful functions for Emacs")
       (description
-       "@{crux} provides a collection of useful functions for Emacs.")
+       "@code{crux} provides a collection of useful functions for Emacs.")
       (license license:gpl3+))))
 
 (define-public emacs-fancy-narrow
