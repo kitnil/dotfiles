@@ -853,6 +853,9 @@ editor (without an X toolkit)" )
                 (sha256
                  (base32
                   "06111034rvh770ljzdbw7d6rkvy40bjvp4c06ss5s624pyd6qd74"))))
+      (propagated-inputs
+       `(("emacs-helm" ,emacs-helm)
+         ("emms" ,emms)))
       (build-system emacs-build-system)
       (home-page "https://github.com/emacs-helm/helm-emms/")
       (synopsis "Basic helm interface to emms")
