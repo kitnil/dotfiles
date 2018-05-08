@@ -384,6 +384,28 @@ the parse tree gain access to the JSX structure.")
      "Search emails, searching result displays as you type thanks to helm.")
     (license license:gpl3+)))
 
+(define-public emacs-js3-mode
+  (let ((commit "229aeb374f1b1f3ee5c59b8ba3eebb6385c232cb"))
+    (package
+      (name "emacs-js3-mode")
+      (version (git-version "1.1.0" "1" commit))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/thomblake/js3-mode")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "0yd2lck1kq01pxk86jpxff5ih6fxx1a1wvl7v8b5ys7gi33fjqz2"))))
+      (build-system emacs-build-system)
+      (home-page "https://github.com/thomblake/js3-mode")
+      (synopsis "Improved JavaScript editing mode")
+      (description
+       "This package provides a JavaScript editing mode for Emacs.")
+      (license license:gpl3+))))
+
 (define-public emacs-eval-in-repl
   (package
     (name "emacs-eval-in-repl")
