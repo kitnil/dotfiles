@@ -406,6 +406,27 @@ the parse tree gain access to the JSX structure.")
        "This package provides a JavaScript editing mode for Emacs.")
       (license license:gpl3+))))
 
+(define-public emacs-js-comint
+  (package
+    (name "emacs-js-comint")
+    (version "1.1.1")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append "https://github.com/redguardtoo/js-comint/archive/"
+                           version ".tar.gz"))
+       (sha256
+        (base32
+         "0prsmz274i3891w5ppp9wzf4q7jwjsi6yaainwpcpiwx23qckrr6"))))
+    (build-system emacs-build-system)
+    (home-page "https://github.com/redguardtoo/js-comint")
+    (synopsis "JavaScript interpreter in Emacs window")
+    (description "This package provides a program is a comint mode for Emacs
+which allows you to run a compatible javascript REPL like Node.js,
+Spidermonkey, Rhino inside Emacs.  It also defines a few functions for sending
+JavaScript input to it quickly.")
+    (license license:gpl3+)))
+
 (define-public emacs-eval-in-repl
   (package
     (name "emacs-eval-in-repl")
