@@ -10,6 +10,6 @@ exec qemu-system-x86_64 \
      -M q35 \
      -usb \
      -device usb-host,hostbus=2,hostaddr=4 \
-     -net 'user,hostfwd=tcp::13389-:3389,hostfwd=tcp::13445-:445' \
+     -net 'user,hostfwd=tcp::3389-:3389,hostfwd=tcp::445-:445' \
      -net nic \
      $@

@@ -277,6 +277,22 @@
 
 
 
+(defcommand epson () ()
+  "Open XTerm with Epson."
+  (run-shell-command
+   (join (list *wi-xterm-command* *wi-xterm-theme-dark*
+               *wi-xterm-no-scrollbar* *wi-term-execute-flag*
+               "sudo wi-qemu-epson.sh")
+         #\ )))
+
+(defcommand epson-no-graphic () ()
+  "Open XTerm with Epson."
+  (run-shell-command
+   (join (list *wi-xterm-command* *wi-xterm-theme-dark*
+               *wi-xterm-no-scrollbar* *wi-term-execute-flag*
+               "sudo wi-qemu-epson.sh -display none")
+         #\ )))
+
 (defcommand htop () ()
   "Open XTerm with htop."
   (run-shell-command
