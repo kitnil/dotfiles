@@ -122,7 +122,9 @@
    (list git "svn")))
 
 (define guix-collection-packages
-  `(
+  (append
+   (list
+
     aspell
     aspell-dict-en
     aspell-dict-ru
@@ -288,6 +290,6 @@
     colormake
     perl
 
-    octave
+    octave)
 
-    ,@guix-collection-packages-emacs))
+   guix-collection-packages-emacs))

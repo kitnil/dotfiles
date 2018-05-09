@@ -46,7 +46,9 @@
    emacs-terminal-here-checkout))
 
 (define guix-wigust-packages
-  `(
+  (append
+   (list
+
     pulsemixer-emacs-keybindings
     emacs-beginend
 
@@ -76,5 +78,6 @@
 
     vc-dwim-git-worktree
 
-    wrapper-xclip
-    ,@guix-wigust-packages-emacs))
+    wrapper-xclip)
+
+   guix-wigust-packages-emacs))
