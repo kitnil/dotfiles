@@ -70,7 +70,8 @@
   #:use-module (gnu packages xdisorg)
   #:export (guix-collection-packages-multiout
             guix-collection-packages
-            guix-collection-packages-emacs))
+            guix-collection-packages-emacs
+            guix-collection-packages-large))
 
 (define guix-collection-packages-emacs
   (list
@@ -120,6 +121,9 @@
    (list git "gui")
    (list git "send-email")
    (list git "svn")))
+
+(define guix-collection-packages-large
+  (list octave))
 
 (define guix-collection-packages
   (append
@@ -290,6 +294,6 @@
     colormake
     perl
 
-    octave)
+    )
 
    guix-collection-packages-emacs))
