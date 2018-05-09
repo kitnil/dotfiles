@@ -123,7 +123,13 @@
    (list git "svn")))
 
 (define guix-collection-packages-large
-  (list octave))
+  (list
+
+   libreoffice ; Office suite
+
+   octave
+
+   ))
 
 (define guix-collection-packages
   (append
@@ -177,7 +183,6 @@
     at-spi2-core
 
     ghc-pandoc  ; Convert Markdown
-    libreoffice ; Office suite
     zathura     ; Lightweight customizable PDF reader
     zathura-pdf-mupdf
 
