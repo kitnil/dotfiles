@@ -1,0 +1,11 @@
+(defun wi-move-packages (buffer)
+  "Move packages from current cursor position."
+  (let ((package (thing-at-point 'symbol)))
+    (with-current-buffer (get-buffer buffer)
+      (goto-char (point-min))
+      (when (search-forward package nil t)
+        (beginning-of-line)
+        (kill-line 1)
+        (goto-char (point-min))
+        (insert "\n")
+        (yank)))))
