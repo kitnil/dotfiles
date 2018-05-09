@@ -75,44 +75,78 @@
 
 (define guix-collection-packages-emacs
   (list
-   emacs-transpose-frame    ; M-x transpose-frame
-   emacs-undo-tree          ; Undo visualisation
-   emacs-use-package        ; Lazy configuration
-   emacs-slime              ; Sbcl repl
-   emacs-smart-mode-line
-   emacs-smartparens        ; Structured editing
-   emacs-org                ; Org
-   emacs-org-bullets
-   emacs-php-mode
-   emacs-projectile         ; Project functions
-   emacs-rainbow-delimiters ; Prettify parentheses
-   emacs-rainbow-mode       ; Show colors in codes
-   emacs-multiple-cursors   ; Multi cursor
-   emacs-markdown-mode      ; Commonmark major mode
-   emacs-ivy                ; Complition framework
-   emacs-hydra
+
+   bbdb
+   emacs-academic-phrases
+   emacs-add-hooks
+   emacs-ag
+   emacs-aggressive-indent  ; Auto indent minor mode
+   emacs-auto-yasnippet
+   emacs-beginend
+   emacs-browse-at-remote
+   emacs-crux
+   emacs-default-encrypt    ; Sign mail automatically
+   emacs-default-text-scale ; Scale text in all buffers
+   emacs-dumb-jump
+   emacs-edit-server ; See <https://github.com/stsquad/emacs_chrome/>.
+   emacs-emms-player-simple-mpv ; Frontend to MPV for Emms
+   emacs-esup
+   emacs-ewmctrl            ; Control X windows from Emacs
+   emacs-expand-region
+   emacs-f3
+   emacs-fancy-narrow
+   emacs-ffap-rfc-space
+   emacs-fill-column-indicator
+   emacs-git-auto-commit-mode
+   emacs-git-gutter
+   emacs-git-timemachine
+   emacs-grep-context
+   emacs-helm               ; Narrowing framework
+   emacs-helm-eww
+   emacs-helm-firefox       ; Search for bookmarks in Icecat
+   emacs-helm-gtags
+   emacs-helm-make          ; Front end to `make'
+   emacs-helm-mode-manager
+   emacs-helm-projectile    ; Helm interface for Projectile
+   emacs-helm-shell-history
    emacs-highlight-sexp
    emacs-highlight-stages   ; Highlight code stages
    emacs-highlight-symbol
    emacs-hl-todo
-   emacs-helm               ; Narrowing framework
-   emacs-helm-make          ; Front end to `make'
-   emacs-helm-projectile    ; Helm interface for Projectile
-   emacs-git-gutter
-   emacs-git-timemachine
-   emacs-expand-region
-   emacs-ffap-rfc-space
-   emacs-fill-column-indicator
-   emacs-default-encrypt    ; Sign mail automatically
-   emacs-browse-at-remote
-   emacs-aggressive-indent  ; Auto indent minor mode
-   emacs-ag
-   bbdb
+   emacs-hydra
+   emacs-ibuffer-projectile
+   emacs-irfc
+   emacs-ivy                ; Complition framework
+   emacs-know-your-http-well
+   emacs-lice-el
+   emacs-macrostep
+   emacs-magit-org-todos-el
+   emacs-markdown-mode      ; Commonmark major mode
+   emacs-mbsync
+   emacs-move-text
+   emacs-multiple-cursors   ; Multi cursor
    emacs-nix-mode           ; Nix language mode
+   emacs-org                ; Org
+   emacs-org-bullets
+   emacs-org-mind-map       ; General mind maps from Org files
+   emacs-outshine           ; Emacs outline-mode
+   emacs-php-mode
+   emacs-projectile         ; Project functions
+   emacs-rainbow-delimiters ; Prettify parentheses
+   emacs-rainbow-mode       ; Show colors in codes
+   emacs-slime              ; Sbcl repl
+   emacs-smart-mode-line
+   emacs-smartparens        ; Structured editing
+   emacs-suggest
+   emacs-transpose-frame    ; M-x transpose-frame
+   emacs-undo-tree          ; Undo visualisation
+   emacs-use-package        ; Lazy configuration
+   emacs-validate
    emacs-which-key          ; Key bindings help
    emacs-yaml-mode          ; YAML files
    emacs-yasnippet          ; Snippets
    emacs-yasnippet-snippets ; Collection of snippets
+
    ))
 
 (define guix-collection-packages-multiout
