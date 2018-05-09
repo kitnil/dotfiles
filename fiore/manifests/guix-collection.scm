@@ -186,7 +186,7 @@
 
     epipe
 
-    ansible         ; Configuration management
+    ;; FAIL: ansible         ; Configuration management
     cloc            ; Count code
     detox           ; Replace spaces with underscores in filenames
     diffoscope
