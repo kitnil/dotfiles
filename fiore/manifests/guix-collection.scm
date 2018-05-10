@@ -149,14 +149,19 @@
    emacs-yasnippet          ; Snippets
    emacs-yasnippet-snippets ; Collection of snippets
 
+   magit                    ; Emacs interface for Git
+
    ))
 
 (define guix-collection-packages-multiout
   (list
+
    (list glib "bin")
    (list git "gui")
    (list git "send-email")
-   (list git "svn")))
+   (list git "svn")
+
+   ))
 
 (define guix-collection-packages-large
   (list
@@ -209,6 +214,8 @@
     colordiff
     colormake
     perl
+
+    git       ; Version control
 
    ))
 
@@ -334,9 +341,7 @@
     flycheck                 ; Syntax checker
     geiser                   ; Scheme bridge
 
-    git       ; Version control
     gource
-    magit                    ; Emacs interface for Git
 
     mercurial
 
