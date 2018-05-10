@@ -71,7 +71,9 @@
   #:export (guix-collection-packages-multiout
             guix-collection-packages
             guix-collection-packages-emacs
-            guix-collection-packages-large))
+            guix-collection-packages-large
+            guix-collection-packages-spelling
+            guix-collection-packages-important))
 
 (define guix-collection-packages-emacs
   (list
@@ -161,17 +163,58 @@
 
    libreoffice ; Office suite
 
-   octave
+   ;; octave
+
+   ))
+
+(define guix-collection-packages-spelling
+  (list
+
+   aspell
+   aspell-dict-en
+   aspell-dict-ru
+
+   ))
+
+(define guix-collection-packages-important
+  (list
+
+    feh         ; Image viewer
+    ffmpeg      ; Video, audio, images, gif conversion
+    imagemagick ; Pipe to `display'
+
+    ;; See <https://github.com/NixOS/nixpkgs/issues/16327#issuecomment-303068424>.
+    at-spi2-core
+    ghc-pandoc  ; Convert Markdown
+
+    epipe
+    cloc            ; Count code
+    gnu-make        ; GNU Make
+    recutils  ; Filter records like in `guix --search'
+    stow            ; Dotfiles management
+    the-silver-searcher
+    woof
+
+    translate-shell ; Translation in CLI and Emacs
+    password-store  ; Password management
+
+
+    guile-2.2
+    guile-colorized
+    guile-daemon
+    guile-readline
+    guile-xosd
+    mcron
+
+    colordiff
+    colormake
+    perl
 
    ))
 
 (define guix-collection-packages
   (append
    (list
-
-    aspell
-    aspell-dict-en
-    aspell-dict-ru
 
     guile-commonmark ; Commonmark for Guile
     gwl              ; Guix workflow management
@@ -205,18 +248,11 @@
     isync   ; Sync IMAP
     notmuch ; Mail indexer based on Xapian
 
-    feh         ; Image viewer
-    ffmpeg      ; Video, audio, images, gif conversion
-    imagemagick ; Pipe to `display'
     inkscape    ; Vector graphics
     mlt         ; Video editing framework
     mpv         ; Video and audio player
     obs ;ffmpeg frontend
 
-    ;; See <https://github.com/NixOS/nixpkgs/issues/16327#issuecomment-303068424>.
-    at-spi2-core
-
-    ghc-pandoc  ; Convert Markdown
     zathura     ; Lightweight customizable PDF reader
     zathura-pdf-mupdf
 
@@ -227,15 +263,11 @@
 
     patchelf ;patch elf
 
-    epipe
-
     ;; FAIL: ansible         ; Configuration management
-    cloc            ; Count code
     detox           ; Replace spaces with underscores in filenames
     diffoscope
     dos2unix
     freerdp
-    gnu-make        ; GNU Make
     graphviz  ; `dot'
     htop            ; Pretty `top'
     inxi
@@ -245,22 +277,16 @@
     netcat          ; TCP
     nmap
     openssl
-    recutils  ; Filter records like in `guix --search'
     shellcheck
     socat
     sqlite
-    stow            ; Dotfiles management
-    the-silver-searcher
     unzip
-    woof
     zip
 
     texinfo
 
     qemu
     samba
-
-    translate-shell ; Translation in CLI and Emacs
 
     emacs-znc
     znc
@@ -277,7 +303,6 @@
     w3m
 
     duplicity ; Incremental backup
-    password-store  ; Password management
 
     dbus
 
@@ -330,11 +355,9 @@
 
     minetest                 ; Open source Minecraft
 
-    colordiff
-    colormake
-    perl
-
     )
 
    guix-collection-packages-emacs
-   guix-collection-packages-large))
+   guix-collection-packages-large
+   guix-collection-packages-spelling
+   guix-collection-packages-important))

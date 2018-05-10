@@ -35,71 +35,90 @@
   #:use-module (gnu packages xdisorg)
   #:use-module (gnu packages xorg)
   #:use-module (gnu packages zile)
-  #:export (%fiore-packages))
+  #:export (%fiore-packages
+            fiore-fonts-packages
+            fiore-icons-packages))
 
-(define %fiore-packages
-  (cons*
+(define fiore-fonts-packages
+  (list
 
-   ;; For helm-stumpwm-commands and stumpish
-   desktop-file-utils
-   dovecot
-   gvfs
-   rlwrap
-   setxkbmap   ; Keyboard layout
-   wmctrl      ; `ewmctrl'
-   xclip       ; X clipboard CLI
-   xdg-utils
-   xdotool     ; Mouse and keyboard automation
-   xdpyinfo
-   xhost
-   xlsfonts
-   xorg-server ; `xephyr'
-   xprop
-   xrandr      ; Change screen resolution
-   xrdb
-   xset
-   xsetroot
-   xterm       ; $TERM
-   xwininfo    ; X Window information
-
-   adb       ; For Replicant (Android distribution) control
-   cups      ; Printer
-   ethtool   ; wol (wake on lan)
-   file      ; Information about file from magic
-   gnupg
-   iptables
-   knot
-   lm-sensors      ; `sensors'
-   ncurses
-   nss-certs ; for https
-   openssh   ; `scp'
-   pinentry  ; Password typing for Gnupg
-   qemu
-   rsync
-   sshfs-fuse
-   strace
-   tcpdump
-   tmux
-   tree      ; List files as a tree
-   wget
-   xkill
-   zile
-
-   adwaita-icon-theme
-   hicolor-icon-theme
    font-awesome
    font-dejavu
    font-liberation
    font-misc-misc  ; for `xterm'
    font-wqy-zenhei ; Chinese, Japanese, Korean
-   fontconfig      ; `fc-cache -f'
 
-   alsa-utils
-   pavucontrol ; Pulseaudio control GUI
-   pulseaudio
+   ))
 
-   httpd
-   mysql
-   cryptsetup
+(define fiore-icons-packages
+  (list
 
+   adwaita-icon-theme
+   hicolor-icon-theme
+
+   ))
+
+(define %fiore-packages
+  (append
+   (list
+
+    ;; For helm-stumpwm-commands and stumpish
+    desktop-file-utils
+    dovecot
+    gvfs
+    rlwrap
+    setxkbmap   ; Keyboard layout
+    wmctrl      ; `ewmctrl'
+    xclip       ; X clipboard CLI
+    xdg-utils
+    xdotool     ; Mouse and keyboard automation
+    xdpyinfo
+    xhost
+    xlsfonts
+    xorg-server ; `xephyr'
+    xprop
+    xrandr      ; Change screen resolution
+    xrdb
+    xset
+    xsetroot
+    xterm       ; $TERM
+    xwininfo    ; X Window information
+
+    adb       ; For Replicant (Android distribution) control
+    cups      ; Printer
+    ethtool   ; wol (wake on lan)
+    file      ; Information about file from magic
+    gnupg
+    iptables
+    knot
+    lm-sensors      ; `sensors'
+    ncurses
+    nss-certs ; for https
+    openssh   ; `scp'
+    pinentry  ; Password typing for Gnupg
+    qemu
+    rsync
+    sshfs-fuse
+    strace
+    tcpdump
+    tmux
+    tree      ; List files as a tree
+    wget
+    xkill
+    zile
+
+    fontconfig      ; `fc-cache -f'
+
+    alsa-utils
+    pavucontrol ; Pulseaudio control GUI
+    pulseaudio
+
+    httpd
+    mysql
+    cryptsetup
+
+    )
+
+   fiore-fonts-packages
+   fiore-icons-packages
    %base-packages))
