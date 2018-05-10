@@ -238,6 +238,7 @@
     gnu-make        ; GNU Make
     graphviz  ; `dot'
     htop            ; Pretty `top'
+    inxi
     licensecheck ; Licence checker for source files
     lsof
     ncdu            ; TUI `du'
