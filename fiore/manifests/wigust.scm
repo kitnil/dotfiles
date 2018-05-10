@@ -7,7 +7,8 @@
   #:use-module (local packages xdisorg)
   #:use-module (gnu packages emacs)
   #:export (guix-wigust-packages
-            guix-wigust-packages-emacs))
+            guix-wigust-packages-emacs
+            guix-wigust-packages-local))
 
 (define guix-wigust-packages-emacs
   (list
@@ -24,6 +25,13 @@
    emacs-redshift
    emacs-scratch-el
    emacs-terminal-here-checkout))
+
+(define guix-wigust-packages-local
+  (list
+
+   emacs-guix-local-checkout
+
+   ))
 
 (define guix-wigust-packages
   (append
@@ -48,4 +56,5 @@
 
     wrapper-xclip)
 
-   guix-wigust-packages-emacs))
+   guix-wigust-packages-emacs
+   guix-wigust-packages-local))
