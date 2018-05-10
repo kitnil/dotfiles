@@ -6,7 +6,8 @@
   #:use-module (guix profiles)
   #:use-module (fiore manifests fiore))
 
-(packages->manifest `(,@guix-collection-packages-spelling
+(packages->manifest `(,@guix-collection-packages-emacs
+                      ,@guix-collection-packages-spelling
                       ,@guix-collection-packages-multiout
                       ,@guix-wigust-packages
                       ,@fiore-fonts-packages
