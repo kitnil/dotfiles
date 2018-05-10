@@ -336,4 +336,5 @@
 
     )
 
-   guix-collection-packages-emacs))
+   guix-collection-packages-emacs
+   guix-collection-packages-large))
