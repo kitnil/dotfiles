@@ -299,6 +299,10 @@
   (run-shell-command
    (join (list "exec emacsclient -c" (get-x-selection)) #\ )))
 
+(defcommand emacs-anywhere () ()
+  "Run `emacs-anywhere'."
+  (run-shell-command "emacs-anywhere"))
+
 (defcommand mpv-music () ()
   "Play music."
   (run-shell-command (concat "exec mpv"
@@ -544,6 +548,7 @@
 (define-key *root-map* (kbd "u") "emacs-org-capture")
 (define-key *root-map* (kbd "C-e") "wi-xclip-emacs")
 (define-key *root-map* (kbd "C-M-c") "wi-xterm-big-screen")
+(define-key *root-map* (kbd "M-e") "emacs-anywhere")
 
 ;; Lock screen
 (define-key *root-map* (kbd "C-l") "exec xlock -mode blank")
