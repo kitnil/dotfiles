@@ -18,6 +18,7 @@
   #:use-module (gnu packages gnome)
   #:use-module (gnu packages gnupg)
   #:use-module (gnu packages linux)
+  #:use-module (gnu packages lisp)
   #:use-module (gnu packages mail)
   #:use-module (gnu packages ncurses)
   #:use-module (gnu packages networking)
@@ -116,6 +117,9 @@
     httpd
     mysql
     cryptsetup
+
+    sbcl
+    sbcl-stumpwm
 
     )
 

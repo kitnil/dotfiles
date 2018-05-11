@@ -34,3 +34,7 @@ export PATH=$HOME/bin:$HOME/.npm-global/bin:$PATH
 #     window_name=$(xwininfo | grep 'Window id' | awk '{ print $5 }')
 #     xdotool search --name "$window_name" windowsize $1 $2
 # }
+
+# Fix mouse wheel in gtk3
+# https://github.com/stumpwm/stumpwm/wiki/FAQ
+export GDK_CORE_DEVICE_EVENTS=1

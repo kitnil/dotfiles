@@ -7,16 +7,48 @@
 (setf *message-window-gravity* :center)
 (setf *input-window-gravity* :center)
 
-(set-module-dir "/home/natsu/.stumpwm.d/modules/")
+(load "~/quicklisp/setup.lisp")
 
-(stumpwm:run-shell-command "xsetroot -cursor_name left_ptr")
+(ql:quickload "cffi")
+(ql:quickload "usocket-server")
 
-(load-module "ttf-fonts")
-(xft:cache-fonts)
-(set-font (make-instance 'xft:font
-                         :family "DejaVu Sans Mono"
-                         :subfamily "Book"
-                         :size 14))
+(ql:quickload "swank")
+(swank-loader:init)
+(swank:create-server :port 4004
+                     :style swank:*communication-style*
+                     :dont-close t)
+
+(set-module-dir "~/.stumpwm.d/modules/")
+
+(run-shell-command "xsetroot -cursor_name left_ptr")
+(run-shell-command "xrdb -merge ~/.Xresources")
+
+;; Wallpaper
+;; (run-shell-command "feh --bg-scale ~/Pictures/Wallpapers/current.png")
+(run-shell-command "xsetroot -solid black")
+
+;; Disable PC speaker
+(run-shell-command "xset -b")
+
+;; Disable accessiblity features
+;; (run-shell-command "xkbset -a")
+
+;;;
+;;; Keyboard
+;;;
+
+;; Use keyboard as mouse with <Shift+Num Lock>
+;; https://en.wikipedia.org/wiki/Mouse_keys
+(run-shell-command "setxkbmap -option keypad:pointerkeys")
+
+;; Keyboard layout
+(run-shell-command "setxkbmap -layout us,ru -option grp:win_space_toggle")
+
+;; Keyboard speed
+;; (run-shell-command "xset s 0")
+;; (run-shell-command "xset dpms 0 0 1800")
+
+;; (run-shell-command "xmodmap ~/.Xmodmap")
 
 (setf *message-window-y-padding* 3)
 
@@ -467,7 +499,7 @@
             "^>    %d"))
 (setf *mode-line-pad-x* 0)
 (setf *mode-line-pad-y* 0)
-(mode-line)
+;; (mode-line)
 
 ;; TODO: Deny the all windows in the mpv class from taking focus.
 ;; (push '(:class "mpv") *deny-raise-request*)
@@ -481,11 +513,6 @@
                        100))
          (pointer-y (+ 100 (frame-y current-frame))))
     (warp-pointer (current-screen) pointer-x pointer-y)))
-
-(load-module "kbd-layouts")
-(kbd-layouts:keyboard-layout-list "us" "ru")
-
-(load-module "screenshot")
 
 (defcommand scroll-other-window () ()
   (stumpwm:run-commands "fother" "window-send-string  " "fother"))
@@ -545,18 +572,3 @@
 ;; (define-key *top-map* (kbd "s-TAB") "fother")
 ;; (define-key *top-map* (kbd "s-n") "pull-hidden-next")
 ;; (define-key *top-map* (kbd "s-p") "pull-hidden-previous")
-
-(load-module "clipboard-history")
-(define-key *root-map* (kbd "C-y") "show-clipboard-history")
-(clipboard-history:start-clipboard-manager)
-
-(load-module "globalwindows")
-
-(ql:quickload "cffi")
-(ql:quickload "usocket-server")
-
-(ql:quickload "swank")
-(swank-loader:init)
-(swank:create-server :port 4004
-                     :style swank:*communication-style*
-                     :dont-close t)
