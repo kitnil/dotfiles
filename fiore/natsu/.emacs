@@ -2142,6 +2142,8 @@ be updated automatically."))
 ;;; Misc
 ;;;
 
+(setq anywhere-kill-buffer nil)
+
 (add-hook 'find-file-hook 'auto-insert)
 
 (atomic-chrome-start-server)
