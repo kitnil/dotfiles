@@ -1255,6 +1255,17 @@ With a prefix argument, clean `geiser-guile-load-path'."
 (setq scheme-default-implementation 'guile)
 (setq *scheme-use-r7rs* nil)
 
+(defconst wi-hy--prettify-symbols-alist
+  '(("fn" . ?λ)
+    ("True" . (?# (Br . Bl) ?t))
+    ("False" . (?# (Br . Bl) ?f))))
+
+(add-hooks
+ '(((hy-mode-hook)
+    . (lambda ()
+        (set (make-local-variable 'prettify-symbols-alist)
+             wi-hy--prettify-symbols-alist)))))
+
 
 ;;;
 ;;; Guix
