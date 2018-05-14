@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: web-ftp смена пароля
+# key: webftp-passwd
+# --
+К сожалению с помощью Web-FTP нельзя сменить пароль.

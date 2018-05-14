@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: guix-search
+# key: guix-search
+# --
+guix package -s $1 | recsel -p name,synopsis,homepage$0

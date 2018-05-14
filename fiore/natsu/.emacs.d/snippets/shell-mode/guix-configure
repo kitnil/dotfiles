@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: guix-configure
+# key: guix-configure
+# --
+./configure --localstatedir=/var --prefix=''

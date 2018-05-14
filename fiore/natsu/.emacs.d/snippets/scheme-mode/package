@@ -1,0 +1,33 @@
+# key: pkg
+# name: package
+# --
+(define-public $1
+  (package
+    (name "$1")
+    (version "")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append
+               ""))
+              (sha256
+               (base32
+                ""))))
+    (build-system gnu-build-system)
+    (native-inputs
+     `())
+    (inputs
+     `())
+    (arguments
+     `(#:tests? #f  ; no check target
+       #:make-flags (list (string-append "PREFIX=" %output)
+                          (string-append "DEST_PREFIX=" %output))
+       #:phases
+       (modify-phases %standard-phases
+         (add-after 'unpack 'patch-hardcoded-paths
+                    (lambda* (#:key inputs outputs #:allow-other-keys)
+                      (let ((out   (assoc-ref outputs "out")))
+                        #t))))))
+    (home-page "")
+    (synopsis "")
+    (description "")
+    (license )))

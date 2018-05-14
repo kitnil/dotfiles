@@ -1,0 +1,26 @@
+# -*- mode: snippet -*-
+# name: package emacs git
+# key: peg
+# --
+(define-public $2
+  (let ((commit "")
+        (revision "1"))
+    (package
+      (name "$2")
+      (version (string-append "0.0.1" "-" revision "."
+                              (string-take commit 7)))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "$1.git")
+               (commit commit)))
+         (file-name (string-append name "-" version "-checkout"))
+         (sha256
+          (base32
+           ""))))
+      (build-system emacs-build-system)
+      (home-page "$1")
+      (synopsis "")
+      (description "")
+      (license license:gpl3+))))

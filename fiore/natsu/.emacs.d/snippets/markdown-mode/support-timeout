@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: support скорость ответа
+# key: support-timeout
+# --
+Письма, отправленные на адрес ‘support@majordomo.ru’, обрабатываються в течении 2-х часов.

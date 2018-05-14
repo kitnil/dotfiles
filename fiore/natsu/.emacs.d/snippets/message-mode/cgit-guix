@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: cgit-guix
+# key: cgit-guix
+# --
+https://git.savannah.gnu.org/cgit/guix.git/commit/?id=$1

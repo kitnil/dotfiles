@@ -1,0 +1,5 @@
+# key: c
+# name: service-config-entry
+# --
+($1 cgit-configuration-$1 ;$2
+    (default $3))$0
