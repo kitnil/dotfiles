@@ -2161,6 +2161,7 @@ be updated automatically."))
           (lambda () (ispell-change-dictionary "ru")))
 (add-hook 'anywhere-mode-hook 'flyspell-mode)
 (add-hook 'anywhere-mode-hook 'abbrev-mode)
+(add-hook 'anywhere-mode-hook 'yas-minor-mode)
 
 (add-hook 'find-file-hook 'auto-insert)
 
