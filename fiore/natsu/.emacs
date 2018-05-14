@@ -2157,6 +2157,8 @@ be updated automatically."))
 (setq anywhere-major-mode 'text-mode)
 (add-hook 'anywhere-mode-hook
           (lambda () (set-input-method "russian-computer")))
+(add-hook 'anywhere-mode-hook
+          (lambda () (ispell-change-dictionary "ru")))
 
 (add-hook 'find-file-hook 'auto-insert)
 
