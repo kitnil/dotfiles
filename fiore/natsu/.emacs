@@ -2162,6 +2162,13 @@ be updated automatically."))
 (add-hook 'anywhere-mode-hook 'flyspell-mode)
 (add-hook 'anywhere-mode-hook 'abbrev-mode)
 (add-hook 'anywhere-mode-hook 'yas-minor-mode)
+(add-hook 'anywhere-mode-hook
+          (lambda ()
+            (setq-local company-idle-delay 0.1)
+            (setq-local company-minimum-prefix-length 2)))
+(with-eval-after-load 'company
+  (add-to-list 'company-backends 'company-abbrev))
+(add-hook 'anywhere-mode-hook 'company-mode)
 
 (add-hook 'find-file-hook 'auto-insert)
 
