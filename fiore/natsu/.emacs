@@ -2154,6 +2154,7 @@ be updated automatically."))
 ;;;
 
 (setq anywhere-kill-buffer nil)
+(setq anywhere-major-mode 'text-mode)
 
 (add-hook 'find-file-hook 'auto-insert)
 
