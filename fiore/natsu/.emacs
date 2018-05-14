@@ -2155,6 +2155,8 @@ be updated automatically."))
 
 (setq anywhere-kill-buffer nil)
 (setq anywhere-major-mode 'text-mode)
+(add-hook 'anywhere-mode-hook
+          (lambda () (set-input-method "russian-computer")))
 
 (add-hook 'find-file-hook 'auto-insert)
 
