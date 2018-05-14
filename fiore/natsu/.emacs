@@ -2159,6 +2159,7 @@ be updated automatically."))
           (lambda () (set-input-method "russian-computer")))
 (add-hook 'anywhere-mode-hook
           (lambda () (ispell-change-dictionary "ru")))
+(add-hook 'anywhere-mode-hook 'flyspell-mode)
 
 (add-hook 'find-file-hook 'auto-insert)
 
