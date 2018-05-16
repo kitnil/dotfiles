@@ -25,6 +25,8 @@ export GUIX_PACKAGE_PATH=\
 
 export PATH=$HOME/bin:$HOME/.npm-global/bin:$PATH
 
+export GUILE_WARN_DEPRECATED=no
+
 # TODO: readlink could fail to enter `guix environment`
 # alias wi-pure-bash="env -i $(readlink $(which bash)) --noprofile --norc"
 
