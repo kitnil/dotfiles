@@ -23,6 +23,7 @@
    emacs-helm-pass          ; Front end to password-store
    emacs-info-colors        ; Colorize info pages
    emacs-redshift
+   emacs-ivy-yasnippet
    emacs-scratch-el
    emacs-terminal-here-checkout))
 
