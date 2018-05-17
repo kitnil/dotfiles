@@ -19,7 +19,7 @@
 (define-public calamares
   (package
     (name "calamares")
-    (version "3.1.13")
+    (version "3.1.10")
     (source
      (origin
        (method url-fetch)
@@ -28,7 +28,7 @@
        (file-name (string-append name "-" version ".tar.gz"))
        (sha256
         (base32
-         "1l32qpg17kd6v97w8nx95dm3alrwg9j1nk62p4hn2s302zh56c49"))))
+         "1v10fx622prlnnvqw3jaffc5fg6ccwn2hi11vz68g4g98xlif4m2"))))
     (build-system cmake-build-system)
     (arguments
      `(#:out-of-source? #f
