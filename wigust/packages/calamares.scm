@@ -14,6 +14,8 @@
   #:use-module (gnu packages polkit)
   #:use-module (gnu packages boost)
   #:use-module (gnu packages qt)
+  #:use-module (gnu packages freedesktop)
+  #:use-module (gnu packages linux)
   #:use-module (guix build-system cmake))
 
 (define-public calamares
@@ -54,9 +56,11 @@ dummypythonqt plasmalnf\""
        ("kio" ,kio)
        ("kpmcore" ,kpmcore)
        ("extra-cmake-modules" ,extra-cmake-modules)
+       ("libatasmart" ,libatasmart)
        ("parted" ,parted)
        ("polkit-qt" ,polkit-qt)
        ("python-pyqt" ,python-pyqt)
+       ("util-linux" ,util-linux)
        ("qt" ,qt)
        ("qtbase" ,qtbase)
        ("qtwebkit" ,qtwebkit)
