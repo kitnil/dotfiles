@@ -16,7 +16,8 @@
   #:use-module (gnu packages qt)
   #:use-module (gnu packages freedesktop)
   #:use-module (gnu packages linux)
-  #:use-module (guix build-system cmake))
+  #:use-module (guix build-system cmake)
+  #:use-module (guix build utils))
 
 (define-public calamares
   (package
@@ -47,7 +48,18 @@ dummypythonqt plasmalnf\""
                            qtwebkit "/lib/cmake/Qt5WebKitWidgets")
            "-DCMAKE_VERBOSE_MAKEFILE=True"
            "-DCMAKE_BUILD_TYPE=Release"
-           "-DWITH_PYTHONQT:BOOL=ON"))))
+           "-DWITH_PYTHONQT:BOOL=ON"
+           ,(string-append "-DPOLKITQT-1_POLICY_FILES_INSTALL_DIR="
+                           (assoc-ref %outputs "out")
+                           "/share/polkit-1/actions")))
+       #:phases
+       (modify-phases %standard-phases
+         (add-before 'install 'polkit
+           (lambda* (#:key outputs #:allow-other-keys)
+             (substitute* "CMakeLists.txt"
+               (("\\$\\{POLKITQT-1_POLICY_FILES_INSTALL_DIR\\}")
+                (string-append (assoc-ref outputs "out")
+                               "/share/polkit-1/actions"))))))))
     (inputs
      `(("kconfig" ,kconfig)
        ("kcoreaddons" ,kcoreaddons)
