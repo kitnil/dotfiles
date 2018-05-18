@@ -19,6 +19,9 @@
   #:use-module (gnu packages linux)
   #:use-module (gnu packages bootloaders)
   #:use-module (guix build-system cmake)
+  #:use-module (guix build-system gnu)
+  #:use-module (gnu packages perl)
+  #:use-module (gnu packages shells)
   #:use-module (guix build utils))
 
 (define-public boost-1.63
@@ -34,6 +37,81 @@
               (sha256
                (base32
                 "1c5kzhcqahnic55dxcnw7r80qvwx5sfa2sa97yzv7xjrywljbbmy"))))))
+
+(define-public boost-1.59
+  (package
+    (inherit boost)
+    (version "1.59.0")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append
+                    "mirror://sourceforge/boost/boost/" version "/boost_"
+                    (string-map (lambda (x) (if (eq? x #\.) #\_ x)) version)
+                    ".tar.bz2"))
+              (sha256
+               (base32
+                "1jj1aai5rdmd72g90a3pd8sw9vi32zad46xv5av8fhnr48ir6ykj"))))))
+
+(define-public boost-1.54
+  (package
+    (name "boost")
+    (version "1.54.0")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append
+                    "mirror://sourceforge/boost/boost_"
+                    (string-map (lambda (x) (if (eq? x #\.) #\_ x)) version)
+                    ".tar.bz2"))
+              (sha256
+               (base32
+                "0lkv5dzssbl5fmh2nkaszi8x9qbj80pr4acf9i26sj3rvlih1w7z"))))
+    (build-system gnu-build-system)
+    (native-inputs
+     `(("perl" ,perl)
+       ("python" ,python-2)
+       ("tcsh" ,tcsh)))
+    (arguments
+     `(#:phases
+       (alist-replace
+        'configure
+        (lambda* (#:key outputs #:allow-other-keys)
+          (let ((out (assoc-ref outputs "out")))
+            (substitute* '("libs/config/configure"
+                           "libs/spirit/classic/phoenix/test/runtest.sh"
+                           "tools/build/v2/doc/bjam.qbk"
+                           "tools/build/v2/engine/execunix.c"
+                           "tools/build/v2/engine/Jambase"
+                           "tools/build/v2/engine/jambase.c")
+              (("/bin/sh") (which "sh")))
+
+            (setenv "SHELL" (which "sh"))
+            (setenv "CONFIG_SHELL" (which "sh"))
+
+            (zero? (system* "./bootstrap.sh"
+                            (string-append "--prefix=" out)
+                            "--with-toolset=gcc"))))
+        (alist-replace
+         'build
+         (lambda _
+           (zero? (system* "./b2" "threading=multi" "link=shared")))
+
+         (alist-replace
+          'check
+          (lambda _ #t)
+
+          (alist-replace
+           'install
+           (lambda _
+             (zero? (system* "./b2" "install" "threading=multi" "link=shared")))
+           %standard-phases))))))
+
+    (home-page "http://boost.org")
+    (synopsis "Peer-reviewed portable C++ source libraries")
+    (description
+     "A collection of libraries intended to be widely useful, and usable
+across a broad spectrum of applications.")
+    (license (license:x11-style "http://www.boost.org/LICENSE_1_0.txt"
+                                "Some components have other similar licences."))))
 
 (define-public calamares
   (package
@@ -72,10 +150,10 @@ dummypythonqt plasmalnf\""
            "-DCMAKE_VERBOSE_MAKEFILE=True"
            ;; ,(string-append "-DCMAKE_INSTALL_PREFIX=" out)
            ;; "-DCMAKE_BUILD_TYPE=Release"
-           ;; ,(string-append "-DPYTHON_LIBRARY="
-           ;;                 python "/lib/libpython3.6m.so.1.0")
-           ;; ,(string-append "-DPYTHON_INCLUDE_DIR="
-           ;;                 python "/include/python3.6m")
+           ,(string-append "-DPYTHON_LIBRARY="
+                           python "/lib/libpython3.6m.so.1.0")
+           ,(string-append "-DPYTHON_INCLUDE_DIR="
+                           python "/include/python3.6m")
            "-DBoost_DEBUG=1"
            "-DBoost_DETAILED_FAILURE_MSG=1"
            ;; "-DWITH_PYTHON:BOOL=ON"
@@ -159,7 +237,7 @@ dummypythonqt plasmalnf\""
        ("qttools" ,qttools)
        ("qtsvg" ,qtsvg)
        ("solid" ,solid)
-       ("boost" ,boost-1.63)
+       ("boost" ,boost-1.66)
        ("python" ,python)
        ("yaml-cpp" ,yaml-cpp)))
     (home-page "https://calamares.io")
