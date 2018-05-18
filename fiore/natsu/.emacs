@@ -491,6 +491,14 @@ Sets the following basend on PREFIX-MAP:
                 ("u" er/mark-url "url")
                 ("w" er/mark-word "word"))
 
+(wi-define-keys "C-c g a m" multicursor
+                ("t" mc/mark-next-like-this "next like this")
+                ("T" mc/mark-previous-like-this "previous like this")
+                ("s" mc/mark-next-symbol-like-this "next symbol")
+                ("S" mc/mark-previous-symbol-like-this "previous symbol")
+                ("l" mc/mark-next-lines "next line")
+                ("L" mc/mark-previous-lines "previous line"))
+
 (wi-define-keys "C-c g a T" text-todo
                 ("n" hl-todo-next "next")
                 ("o" hl-todo-occur "occur")
