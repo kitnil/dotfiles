@@ -16,6 +16,7 @@
   #:use-module (gnu packages qt)
   #:use-module (gnu packages freedesktop)
   #:use-module (gnu packages linux)
+  #:use-module (gnu packages bootloaders)
   #:use-module (guix build-system cmake)
   #:use-module (guix build utils))
 
@@ -57,7 +58,12 @@ dummypythonqt plasmalnf\""
                   (guix build utils))
        #:phases
        (modify-phases %standard-phases
-         (add-before 'install 'polkit
+         (add-after 'unpack 'patch-partutils
+           (lambda* (#:key inputs #:allow-other-keys)
+             (substitute* "src/modules/partition/core/PartUtils.cpp"
+               (("\"os-prober\"") (string-append "\"" (which "os-prober")
+                                                 "\"")))))
+         (add-before 'install 'patch-cmakelists
            (lambda* (#:key outputs #:allow-other-keys)
              (substitute* "CMakeLists.txt"
                (("\\$\\{POLKITQT-1_POLICY_FILES_INSTALL_DIR\\}")
@@ -83,7 +89,8 @@ dummypythonqt plasmalnf\""
                          (append qt '("kpmcore")))))
                #t))))))
     (inputs
-     `(("kconfig" ,kconfig)
+     `(("os-prober" ,os-prober)
+       ("kconfig" ,kconfig)
        ("kcoreaddons" ,kcoreaddons)
        ("kiconthemes" ,kiconthemes)
        ("ki18n" ,ki18n)
