@@ -58,7 +58,7 @@
        (let ((qtwebkit (assoc-ref %build-inputs "qtwebkit"))
              (python (assoc-ref %build-inputs "python"))
              (out (assoc-ref %outputs "out"))
-             #;(boost (assoc-ref %build-inputs "boost")))
+             (boost (assoc-ref %build-inputs "boost")))
          `("-DWEBVIEW_FORCE_WEBKIT:BOOL=ON"
            "-DSKIP_MODULES=\"webview interactiveterminal initramfs \
 initramfscfg dracut dracutlukscfg dummyprocess dummypython dummycpp \
@@ -66,25 +66,27 @@ dummypythonqt plasmalnf\""
            ,(string-append "-DQt5WebKit_DIR=" qtwebkit "/lib/cmake/Qt5WebKit")
            ,(string-append "-DQt5WebKitWidgets_DIR="
                            qtwebkit "/lib/cmake/Qt5WebKitWidgets")
-           ,(string-append "-DCALAMARES_BOOST_PYTHON3_COMPONENT="
-                           (assoc-ref %build-inputs "boost")
-                           "/lib/libboost_python.so")
+           ;; ,(string-append "-DCALAMARES_BOOST_PYTHON3_COMPONENT="
+           ;;                 (assoc-ref %build-inputs "boost")
+           ;;                 "/lib/libboost_python.so")
            "-DCMAKE_VERBOSE_MAKEFILE=True"
-           ,(string-append "-DCMAKE_INSTALL_PREFIX=" out)
+           ;; ,(string-append "-DCMAKE_INSTALL_PREFIX=" out)
            ;; "-DCMAKE_BUILD_TYPE=Release"
            ;; ,(string-append "-DPYTHON_LIBRARY="
            ;;                 python "/lib/libpython3.6m.so.1.0")
            ;; ,(string-append "-DPYTHON_INCLUDE_DIR="
            ;;                 python "/include/python3.6m")
            "-DBoost_DEBUG=1"
+           "-DBoost_DETAILED_FAILURE_MSG=1"
            ;; "-DWITH_PYTHON:BOOL=ON"
            ;; "-DWITH_PYTHONQT:BOOL=ON"
            ,(string-append "-DPOLKITQT-1_POLICY_FILES_INSTALL_DIR="
                            out "/share/polkit-1/actions")
+           "-DCALAMARES_BOOST_PYTHON3_COMPONENT=python"
            ;; "-DLIB_SUFFIX="
            #;"-DSUPPRESS_BOOST_WARNINGS:BOOL=ON"
            #;,(string-append "-DBoost_INCLUDE_DIRS=" boost "/include")
-           #;,(string-append "-DBoost_LIBRARY_DIRS=" boost "/lib")
+           ;; ,(string-append "-DBoost_LIBRARY_DIR=" boost "/lib")
            #;"-DBoost_NO_BOOST_CMAKE=ON"))
        #:modules ((ice-9 match)
                   (guix build cmake-build-system)
@@ -97,6 +99,11 @@ dummypythonqt plasmalnf\""
                (("\"os-prober\"") (string-append "\"" (which "os-prober")
                                                  "\"")))
              ;; (setenv "BOOST_LIB_SUFFIX" "")
+
+             ;; /tmp/guix-build-calamares-3.1.10.drv-0/calamares-3.1.10/CMakeModules/BoostPython3.cmake
+             ;; (setenv "CALAMARES_BOOST_PYTHON3_COMPONENT"
+             ;;         "libboost_python.so")
+
              (setenv "BOOST_LIBRARYDIR"
                      (string-append (assoc-ref %build-inputs "boost") "/lib"))
              ;; (setenv "BOOST_ROOT" (assoc-ref %build-inputs "boost"))
@@ -111,8 +118,8 @@ dummypythonqt plasmalnf\""
                (("\\$\\{POLKITQT-1_POLICY_FILES_INSTALL_DIR\\}")
                 (string-append (assoc-ref outputs "out")
                                "/share/polkit-1/actions")))))
-         (add-after 'configure 'fail
-             (lambda _ #f))
+         ;; (add-after 'configure 'fail
+         ;;     (lambda _ #f))
          (add-after 'install 'wrap-executable
            (lambda* (#:key inputs outputs #:allow-other-keys)
              (let ((out (assoc-ref outputs "out"))
