@@ -24,10 +24,20 @@
   #:use-module (gnu packages shells)
   #:use-module (guix build utils))
 
-(define-public boost-1.66-python-3
+(define-public boost-1.63-python-3
   (package
-    (inherit boost-1.66)
-    (name "boost-python-3")
+    (inherit boost)
+    (name "boost-1.63-python-3")
+    (version "1.63.0")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append
+                    "mirror://sourceforge/boost/boost/" version "/boost_"
+                    (string-map (lambda (x) (if (eq? x #\.) #\_ x)) version)
+                    ".tar.bz2"))
+              (sha256
+               (base32
+                "1c5kzhcqahnic55dxcnw7r80qvwx5sfa2sa97yzv7xjrywljbbmy"))))
     (native-inputs
      `(("python" ,python)
        ,@(alist-delete "python" (package-native-inputs boost))))))
@@ -130,7 +140,7 @@ dummypythonqt plasmalnf\""
        ("qttools" ,qttools)
        ("qtsvg" ,qtsvg)
        ("solid" ,solid)
-       ("boost" ,boost-1.66-python-3)
+       ("boost" ,boost-1.63-python-3)
        ("python" ,python)
        ("yaml-cpp" ,yaml-cpp)))
     (home-page "https://calamares.io")
