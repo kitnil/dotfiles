@@ -52,6 +52,9 @@ dummypythonqt plasmalnf\""
            ,(string-append "-DPOLKITQT-1_POLICY_FILES_INSTALL_DIR="
                            (assoc-ref %outputs "out")
                            "/share/polkit-1/actions")))
+       #:modules ((ice-9 match)
+                  (guix build cmake-build-system)
+                  (guix build utils))
        #:phases
        (modify-phases %standard-phases
          (add-before 'install 'polkit
@@ -59,7 +62,26 @@ dummypythonqt plasmalnf\""
              (substitute* "CMakeLists.txt"
                (("\\$\\{POLKITQT-1_POLICY_FILES_INSTALL_DIR\\}")
                 (string-append (assoc-ref outputs "out")
-                               "/share/polkit-1/actions"))))))))
+                               "/share/polkit-1/actions")))))
+         (add-after 'install 'wrap-executable
+           (lambda* (#:key inputs outputs #:allow-other-keys)
+             (let ((out (assoc-ref outputs "out"))
+                   (qt (delete #f
+                               (map (lambda (input)
+                                      (match input
+                                        ((name package)
+                                         (if (string-prefix? "qt" name)
+                                             name
+                                             #f))
+                                        (_ #f)))
+                                    inputs))))
+               (wrap-program (string-append out "/bin/calamares")
+                 `("QT_PLUGIN_PATH" ":" prefix
+                   ,(map (lambda (label)
+                           (string-append (assoc-ref inputs label)
+                                          "/lib/qt5/plugins/"))
+                         (append qt '("kpmcore")))))
+               #t))))))
     (inputs
      `(("kconfig" ,kconfig)
        ("kcoreaddons" ,kcoreaddons)
