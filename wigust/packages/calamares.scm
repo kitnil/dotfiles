@@ -24,94 +24,13 @@
   #:use-module (gnu packages shells)
   #:use-module (guix build utils))
 
-(define-public boost-1.63
+(define-public boost-1.66-python-3
   (package
-    (inherit boost)
-    (version "1.63.0")
-    (source (origin
-              (method url-fetch)
-              (uri (string-append
-                    "mirror://sourceforge/boost/boost/" version "/boost_"
-                    (string-map (lambda (x) (if (eq? x #\.) #\_ x)) version)
-                    ".tar.bz2"))
-              (sha256
-               (base32
-                "1c5kzhcqahnic55dxcnw7r80qvwx5sfa2sa97yzv7xjrywljbbmy"))))))
-
-(define-public boost-1.59
-  (package
-    (inherit boost)
-    (version "1.59.0")
-    (source (origin
-              (method url-fetch)
-              (uri (string-append
-                    "mirror://sourceforge/boost/boost/" version "/boost_"
-                    (string-map (lambda (x) (if (eq? x #\.) #\_ x)) version)
-                    ".tar.bz2"))
-              (sha256
-               (base32
-                "1jj1aai5rdmd72g90a3pd8sw9vi32zad46xv5av8fhnr48ir6ykj"))))))
-
-(define-public boost-1.54
-  (package
-    (name "boost")
-    (version "1.54.0")
-    (source (origin
-              (method url-fetch)
-              (uri (string-append
-                    "mirror://sourceforge/boost/boost_"
-                    (string-map (lambda (x) (if (eq? x #\.) #\_ x)) version)
-                    ".tar.bz2"))
-              (sha256
-               (base32
-                "0lkv5dzssbl5fmh2nkaszi8x9qbj80pr4acf9i26sj3rvlih1w7z"))))
-    (build-system gnu-build-system)
+    (inherit boost-1.66)
+    (name "boost-python-3")
     (native-inputs
-     `(("perl" ,perl)
-       ("python" ,python-2)
-       ("tcsh" ,tcsh)))
-    (arguments
-     `(#:phases
-       (alist-replace
-        'configure
-        (lambda* (#:key outputs #:allow-other-keys)
-          (let ((out (assoc-ref outputs "out")))
-            (substitute* '("libs/config/configure"
-                           "libs/spirit/classic/phoenix/test/runtest.sh"
-                           "tools/build/v2/doc/bjam.qbk"
-                           "tools/build/v2/engine/execunix.c"
-                           "tools/build/v2/engine/Jambase"
-                           "tools/build/v2/engine/jambase.c")
-              (("/bin/sh") (which "sh")))
-
-            (setenv "SHELL" (which "sh"))
-            (setenv "CONFIG_SHELL" (which "sh"))
-
-            (zero? (system* "./bootstrap.sh"
-                            (string-append "--prefix=" out)
-                            "--with-toolset=gcc"))))
-        (alist-replace
-         'build
-         (lambda _
-           (zero? (system* "./b2" "threading=multi" "link=shared")))
-
-         (alist-replace
-          'check
-          (lambda _ #t)
-
-          (alist-replace
-           'install
-           (lambda _
-             (zero? (system* "./b2" "install" "threading=multi" "link=shared")))
-           %standard-phases))))))
-
-    (home-page "http://boost.org")
-    (synopsis "Peer-reviewed portable C++ source libraries")
-    (description
-     "A collection of libraries intended to be widely useful, and usable
-across a broad spectrum of applications.")
-    (license (license:x11-style "http://www.boost.org/LICENSE_1_0.txt"
-                                "Some components have other similar licences."))))
+     `(("python" ,python)
+       ,@(alist-delete "python" (package-native-inputs boost))))))
 
 (define-public calamares
   (package
@@ -144,28 +63,16 @@ dummypythonqt plasmalnf\""
            ,(string-append "-DQt5WebKit_DIR=" qtwebkit "/lib/cmake/Qt5WebKit")
            ,(string-append "-DQt5WebKitWidgets_DIR="
                            qtwebkit "/lib/cmake/Qt5WebKitWidgets")
-           ;; ,(string-append "-DCALAMARES_BOOST_PYTHON3_COMPONENT="
-           ;;                 (assoc-ref %build-inputs "boost")
-           ;;                 "/lib/libboost_python.so")
            "-DCMAKE_VERBOSE_MAKEFILE=True"
-           ;; ,(string-append "-DCMAKE_INSTALL_PREFIX=" out)
-           ;; "-DCMAKE_BUILD_TYPE=Release"
            ,(string-append "-DPYTHON_LIBRARY="
                            python "/lib/libpython3.6m.so.1.0")
            ,(string-append "-DPYTHON_INCLUDE_DIR="
                            python "/include/python3.6m")
            "-DBoost_DEBUG=1"
            "-DBoost_DETAILED_FAILURE_MSG=1"
-           ;; "-DWITH_PYTHON:BOOL=ON"
-           ;; "-DWITH_PYTHONQT:BOOL=ON"
            ,(string-append "-DPOLKITQT-1_POLICY_FILES_INSTALL_DIR="
                            out "/share/polkit-1/actions")
-           "-DCALAMARES_BOOST_PYTHON3_COMPONENT=python"
-           ;; "-DLIB_SUFFIX="
-           #;"-DSUPPRESS_BOOST_WARNINGS:BOOL=ON"
-           #;,(string-append "-DBoost_INCLUDE_DIRS=" boost "/include")
-           ;; ,(string-append "-DBoost_LIBRARY_DIR=" boost "/lib")
-           #;"-DBoost_NO_BOOST_CMAKE=ON"))
+           "-DCALAMARES_BOOST_PYTHON3_COMPONENT=python"))
        #:modules ((ice-9 match)
                   (guix build cmake-build-system)
                   (guix build utils))
@@ -176,19 +83,8 @@ dummypythonqt plasmalnf\""
              (substitute* "src/modules/partition/core/PartUtils.cpp"
                (("\"os-prober\"") (string-append "\"" (which "os-prober")
                                                  "\"")))
-             ;; (setenv "BOOST_LIB_SUFFIX" "")
-
-             ;; /tmp/guix-build-calamares-3.1.10.drv-0/calamares-3.1.10/CMakeModules/BoostPython3.cmake
-             ;; (setenv "CALAMARES_BOOST_PYTHON3_COMPONENT"
-             ;;         "libboost_python.so")
-
              (setenv "BOOST_LIBRARYDIR"
                      (string-append (assoc-ref %build-inputs "boost") "/lib"))
-             ;; (setenv "BOOST_ROOT" (assoc-ref %build-inputs "boost"))
-             ;; (setenv "BOOST_LIBRARYDIR"
-             ;;         (string-append (assoc-ref %build-inputs "boost")
-             ;;                        "/lib"))
-             ;; Required to create a package registry file.
              (setenv "HOME" (getcwd))))
          (add-before 'install 'patch-cmakelists
            (lambda* (#:key outputs #:allow-other-keys)
@@ -196,8 +92,6 @@ dummypythonqt plasmalnf\""
                (("\\$\\{POLKITQT-1_POLICY_FILES_INSTALL_DIR\\}")
                 (string-append (assoc-ref outputs "out")
                                "/share/polkit-1/actions")))))
-         ;; (add-after 'configure 'fail
-         ;;     (lambda _ #f))
          (add-after 'install 'wrap-executable
            (lambda* (#:key inputs outputs #:allow-other-keys)
              (let ((out (assoc-ref outputs "out"))
@@ -229,7 +123,6 @@ dummypythonqt plasmalnf\""
        ("libatasmart" ,libatasmart)
        ("parted" ,parted)
        ("polkit-qt" ,polkit-qt)
-       ;; ("python-pyqt" ,python-pyqt)
        ("util-linux" ,util-linux)
        ("qt" ,qt)
        ("qtbase" ,qtbase)
@@ -237,7 +130,7 @@ dummypythonqt plasmalnf\""
        ("qttools" ,qttools)
        ("qtsvg" ,qtsvg)
        ("solid" ,solid)
-       ("boost" ,boost-1.66)
+       ("boost" ,boost-1.66-python-3)
        ("python" ,python)
        ("yaml-cpp" ,yaml-cpp)))
     (home-page "https://calamares.io")
