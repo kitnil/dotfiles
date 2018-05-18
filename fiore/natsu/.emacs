@@ -2384,7 +2384,9 @@ If nil use light theme.")
    ((c-mode-hook) . ggtags-mode)
    ((dired-mode-hook) . toggle-truncate-lines)
    ((scheme-mode-hook) . guix-devel-mode)
-   ((prog-mode-hook) . rainbow-delimiters-mode)
+   ((prog-mode-hook
+     geiser-repl-mode-hook)
+    . rainbow-delimiters-mode)
    ((prog-mode-hook
      minibuffer-inactive-mode-hook
      geiser-repl-mode-hook
