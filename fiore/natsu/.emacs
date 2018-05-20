@@ -2179,22 +2179,36 @@ be updated automatically."))
 
 (setq anywhere-kill-buffer nil)
 (setq anywhere-major-mode 'text-mode)
-(add-hook 'anywhere-mode-hook
-          (lambda () (set-input-method "russian-computer")))
-(add-hook 'anywhere-mode-hook
-          (lambda () (ispell-change-dictionary "ru")))
-(add-hook 'anywhere-mode-hook 'flyspell-mode)
-(add-hook 'anywhere-mode-hook 'abbrev-mode)
-(add-hook 'anywhere-mode-hook 'yas-minor-mode)
-(add-hook 'anywhere-mode-hook
-          (lambda ()
-            (setq-local company-idle-delay 0.1)
-            (setq-local company-minimum-prefix-length 2)))
+(add-hooks '(((anywhere-mode-hook atomic-chrome-edit-mode-hook)
+              . (lambda ()
+                  (set (make-local-variable 'prettify-symbols-alist)
+                       wi-scheme--prettify-symbols-alist)))
+             ((anywhere-mode-hook atomic-chrome-edit-mode-hook)
+              . (lambda () (set-input-method "russian-computer")))
+             ((anywhere-mode-hook atomic-chrome-edit-mode-hook)
+              . (lambda () (ispell-change-dictionary "ru")))
+             ((anywhere-mode-hook atomic-chrome-edit-mode-hook)
+              . flyspell-mode)
+             ((anywhere-mode-hook atomic-chrome-edit-mode-hook)
+              . abbrev-mode)
+             ((anywhere-mode-hook atomic-chrome-edit-mode-hook)
+              . yas-minor-mode)
+             ((anywhere-mode-hook atomic-chrome-edit-mode-hook)
+              . (lambda ()
+                  (setq-local company-idle-delay 0.1)
+                  (setq-local company-minimum-prefix-length 2)))))
+
 (with-eval-after-load 'company
   (add-to-list 'company-backends 'company-abbrev))
 (add-hook 'anywhere-mode-hook 'company-mode)
 (with-eval-after-load 'anywhere-mode
   (let ((map anywhere-mode-map))
+    (define-key map (kbd "C-c '") 'anywhere-exit)
+    (define-key map (kbd "C-c i") 'ispell-buffer)
+    (define-key map (kbd "C-c v") 'ivy-yasnippet)))
+
+(with-eval-after-load 'atomic-chrome
+  (let ((map atomic-chrome-edit-mode-map))
     (define-key map (kbd "C-c '") 'anywhere-exit)
     (define-key map (kbd "C-c i") 'ispell-buffer)
     (define-key map (kbd "C-c v") 'ivy-yasnippet)))
