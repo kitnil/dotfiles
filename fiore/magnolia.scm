@@ -10,7 +10,7 @@
   #:use-module (fiore manifests fiore))
 
 (use-service-modules cups desktop dns mail networking rsync shepherd
-spice ssh version-control web xorg cgit)
+spice ssh version-control virtualization web xorg cgit)
 
 (use-package-modules admin android bash bootloaders certs cryptsetup cups
 databases dns file fonts fontutils freedesktop gnome gnupg linux mail
@@ -286,7 +286,7 @@ EndSection
                   (supplementary-groups '("wheel"
                                           "audio" "video"
                                           "lpadmin" "lp"
-                                          "adbusers"))
+                                          "adbusers" "libvirt"))
                   (home-directory "/home/natsu"))
                  %base-user-accounts))
 
@@ -313,6 +313,13 @@ EndSection
                                                 ;; See <http://www.freenom.world>.
                                                 #:name-servers '("80.80.80.80"
                                                                  "80.80.81.81"))
+
+                     (service libvirt-service-type
+                              (libvirt-configuration
+                               (unix-sock-group "libvirt")
+                               (tls-port "16555")))
+
+                     (service virtlog-service-type)
 
                      (service openssh-service-type)
 
