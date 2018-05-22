@@ -595,3 +595,5 @@
 (clipboard-history:start-clipboard-manager)
 
 (load-module "globalwindows")
+
+(load-module "command-history")
