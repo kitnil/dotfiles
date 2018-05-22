@@ -2793,6 +2793,9 @@ https://github.com/USER/REPO/commit/SHA1-HASH => SHA1-HASH"
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(ediff-even-diff-B ((t (:background "gray35"))))
+ '(ediff-odd-diff-A ((t (:background "gray35"))))
+ '(ediff-odd-diff-B ((t (:background "gray35"))))
  '(fringe ((t nil)))
  '(irfc-head-name-face ((t (:inherit font-lock-function-name-face))))
  '(irfc-head-number-face ((t (:inherit font-lock-function-name-face))))
@@ -2804,11 +2807,11 @@ https://github.com/USER/REPO/commit/SHA1-HASH => SHA1-HASH"
  '(magit-diff-removed ((t (:foreground "#aa2222"))))
  '(magit-diff-removed-highlight ((t (:foreground "#aa2222"))))
  '(markdown-code-face ((t (:inherit fixed-pitch))))
- '(rainbow-delimiters-unmatched-face ((t (:foreground "red"))))
  '(rainbow-delimiters-depth-2-face ((t (:foreground "deep sky blue"))))
  '(rainbow-delimiters-depth-3-face ((t (:foreground "goldenrod"))))
  '(rainbow-delimiters-depth-4-face ((t (:foreground "lime green"))))
  '(rainbow-delimiters-depth-5-face ((t (:foreground "orange"))))
  '(rainbow-delimiters-depth-6-face ((t (:foreground "purple"))))
  '(rainbow-delimiters-depth-8-face ((t (:foreground "deep sky blue"))))
- '(rainbow-delimiters-depth-9-face ((t (:foreground "goldenrod")))))
+ '(rainbow-delimiters-depth-9-face ((t (:foreground "goldenrod"))))
+ '(rainbow-delimiters-unmatched-face ((t (:foreground "red")))))
