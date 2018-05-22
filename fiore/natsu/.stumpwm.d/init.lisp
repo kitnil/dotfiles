@@ -37,12 +37,19 @@
 ;;; Keyboard
 ;;;
 
+(load-module "ttf-fonts")
+(xft:cache-fonts)
+(set-font (make-instance 'xft:font
+                         :family "DejaVu Sans Mono"
+                         :subfamily "Book"
+                         :size 14))
+
 ;; Use keyboard as mouse with <Shift+Num Lock>
 ;; https://en.wikipedia.org/wiki/Mouse_keys
 (run-shell-command "setxkbmap -option keypad:pointerkeys")
 
 ;; Keyboard layout
-(run-shell-command "setxkbmap -layout us,ru -option grp:win_space_toggle")
+;; (run-shell-command "setxkbmap -layout us,ru -option grp:win_space_toggle")
 
 ;; Keyboard speed
 ;; (run-shell-command "xset s 0")
@@ -518,6 +525,11 @@
          (pointer-y (+ 100 (frame-y current-frame))))
     (warp-pointer (current-screen) pointer-x pointer-y)))
 
+(load-module "kbd-layouts")
+(kbd-layouts:keyboard-layout-list "us" "ru")
+
+(load-module "screenshot")
+
 (defcommand scroll-other-window () ()
   (stumpwm:run-commands "fother" "window-send-string  " "fother"))
 
@@ -577,3 +589,9 @@
 ;; (define-key *top-map* (kbd "s-TAB") "fother")
 ;; (define-key *top-map* (kbd "s-n") "pull-hidden-next")
 ;; (define-key *top-map* (kbd "s-p") "pull-hidden-previous")
+
+(load-module "clipboard-history")
+(define-key *root-map* (kbd "C-y") "show-clipboard-history")
+(clipboard-history:start-clipboard-manager)
+
+(load-module "globalwindows")
