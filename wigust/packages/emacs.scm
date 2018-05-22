@@ -77,7 +77,6 @@
   #:use-module (gnu packages fontutils)
   #:use-module (gnu packages ocaml)
   #:use-module (gnu packages emacs)
-  #:use-module (gnu packages cmake)
   #:use-module (guix utils)
   #:use-module (srfi srfi-1)
   #:use-module (ice-9 match))
@@ -1203,20 +1202,3 @@ minibuffer, the snippet contents are temporarily expanded in the buffer.  To
 use it, call @code{M-x ivy-yasnippet} (but make sure you have enabled
 @code{yas-minor-mode} first).")
       (license license:gpl3+))))
-
-(define-public emacs-cmake-mode
-  (package
-    (inherit cmake)
-    (name "emacs-cmake-mode")
-    (build-system emacs-build-system)
-    (arguments
-     `(#:phases
-       (modify-phases %standard-phases
-         (add-after 'unpack 'chdir-elisp
-           ;; Elisp directory is not in root of the source.
-           (lambda _
-             (chdir "Auxiliary"))))))
-    (synopsis "Emacs major mode for editing Cmake expressions")
-    (description "@code{cmakeos-mode} provides an Emacs major mode for editing
-Cmake files.  It supports syntax highlighting, indenting and refilling of
-comments.")))
