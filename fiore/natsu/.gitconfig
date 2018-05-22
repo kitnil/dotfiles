@@ -13,3 +13,5 @@
 	signingkey = 7246E11C69B79569
 [url "https://github.com/"]
 	insteadOf = git@github.com:
+[alias]
+	branches-by-date = for-each-ref --sort=-committerdate refs/heads
