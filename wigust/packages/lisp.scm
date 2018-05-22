@@ -75,4 +75,17 @@
            "1qyvhw73dghs167hcds1k2021w2hakh99zfv0039w7lx259gazl9"))))
       (inputs
        `(("sbcl-alexandria" ,sbcl-alexandria)
-         ,@(package-inputs sbcl-stumpwm))))))
+         ,@(package-inputs sbcl-stumpwm)))
+      (native-inputs `(("texinfo" ,texinfo)))
+      (outputs (append (package-outputs sbcl-stumpwm) '("doc")))
+      (arguments
+       (substitute-keyword-arguments
+           (package-arguments sbcl-stumpwm)
+           ((#:phases phases)
+            `(modify-phases ,phases
+               (add-after 'build-program 'build-documentation
+                 (lambda* (#:key outputs #:allow-other-keys)
+                   (invoke "makeinfo" "stumpwm.texi.in")
+                   (install-file "stumpwm.info"
+                                 (string-append (assoc-ref outputs "doc")
+                                                "/share/info")))))))))))
