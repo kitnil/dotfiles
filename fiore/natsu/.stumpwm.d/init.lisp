@@ -597,3 +597,13 @@
 (load-module "globalwindows")
 
 (load-module "command-history")
+
+(load-module "winner-mode")
+
+(define-key *root-map* (kbd "S-Left") "winner-undo")
+(define-key *root-map* (kbd "S-Right") "winner-redo")
+
+(add-hook *post-command-hook*
+          (lambda (command)
+            (when (member command winner-mode:*default-commands*)
+              (winner-mode:dump-group-to-file))))
