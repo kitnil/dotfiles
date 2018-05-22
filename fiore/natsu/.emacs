@@ -629,6 +629,7 @@ Sets the following basend on PREFIX-MAP:
 
 (wi-define-keys "C-c g h" helm
                 ("&" helm-yas-complete "yasnippet" :color blue)
+                ("R" helm-bookmarks "bookmarks" :color blue)
                 ("a" helm-world-time "time" :color blue)
                 ("b" helm-buffers-list "buffers" :color blue)
                 ("f" helm-for-files "files" :color blue)
@@ -636,7 +637,7 @@ Sets the following basend on PREFIX-MAP:
                 ("j" helm-register "register" :color blue)
                 ("l" helm-recentf "recent" :color blue)
                 ("m" helm-make "make" :color blue)
-                ("r" helm-bookmarks "bookmarks" :color blue)
+                ("r" helm-resume "resume" :color blue)
                 ("s" helm-pass "pass" :color blue)
                 ("t" helm-top "top" :color blue)
                 ("v" wi-helm-wigust-stream "stream" :color blue)
