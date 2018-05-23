@@ -2500,7 +2500,7 @@ If nil use light theme.")
            video) ; tripcode!Q/7
           (,(concat youtube-rss-user "LDCNow") video)
           (,(concat youtube-rss-user "tuxreviews") video)
-          (,(concat youtube-rss-user "EposVox") video)
+          ;; (,(concat youtube-rss-user "EposVox") video)
           (,(concat youtube-rss-user "gotbletu") video)
           (,(concat youtube-rss-user "metalx1000") video)
           (,(concat youtube-rss-user "SsethTzeentach") video games))))
