@@ -14,3 +14,4 @@ then
 fi
 
 function man { emacsclient --eval "(man \"$1\")"; }
+function man-to-pdf { man -t "$1" | ps2pdf - "$1.pdf"; }
