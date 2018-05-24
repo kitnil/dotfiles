@@ -2162,6 +2162,12 @@ be updated automatically."))
 ;;; Misc
 ;;;
 
+(autoload 'bash-completion-dynamic-complete
+  "bash-completion" "BASH completion hook")
+
+(add-hook 'shell-dynamic-complete-functions
+          'bash-completion-dynamic-complete)
+
 (setq anywhere-kill-buffer nil)
 (setq anywhere-major-mode 'text-mode)
 (add-hook 'anywhere-mode-hook
