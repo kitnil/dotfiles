@@ -2277,6 +2277,7 @@ be updated automatically."))
 (recentf-mode 1)
 (setq recentf-max-menu-items 500)
 (setq recentf-max-saved-items nil)
+(setq recentf-auto-cleanup 'never)
 
 (setq hl-sexp-background-color "darkseagreen2")
 
