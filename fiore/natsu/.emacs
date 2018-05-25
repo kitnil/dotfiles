@@ -2400,8 +2400,7 @@ If nil use light theme.")
      git-commit-mode-hook
      org-mode-hook)
     . smartparens-strict-mode)
-   ((prog-mode-hook) . yas-minor-mode)
-   ((org-mode-hook) . yas-minor-mode)
+   ((prog-mode-hook org-mode-hook text-mode-hook) . yas-minor-mode)
    ((prog-mode-hook) . hs-minor-mode)
    ((erc-mode-hook) . (lambda () (setq truncate-lines t)))))
 
