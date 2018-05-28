@@ -734,39 +734,6 @@ Mastodon federated social network.")
            (("\\(cl-defmacro defengine" line)
             (string-append ";;;###autoload\n" line))))))))
 
-(define-public emacs-guix-checkout
-  (let ((commit "c694b1825bfc2609096df625fa9259b57848af96")
-        (revision "1"))
-    (package
-      (inherit emacs-guix)
-      (version (string-append (package-version emacs-guix)
-                              "-" revision "." (string-take commit 7)))
-      (source
-       (origin
-         (method git-fetch)
-         (uri (git-reference
-               (url "https://github.com/wigust/guix.el.git")
-               (commit commit)))
-         (file-name (string-append (package-name emacs-guix)
-                                   "-" version "-checkout"))
-         (sha256
-          (base32
-           "1kzvhyjc3n7fkk7ksj5y4j11kkw27whfrl3x9dxs389mgbhhp4hf"))))
-      (arguments
-       (append (package-arguments emacs-guix)
-               '(#:phases
-                 (modify-phases %standard-phases
-                   (add-after 'unpack 'autogen
-                     (lambda _ (zero? (system* "sh" "autogen.sh"))))))))
-      (native-inputs
-       `(("pkg-config" ,pkg-config)
-         ;; 'emacs-minimal' does not find Emacs packages (this is for
-         ;; "guix environment").
-         ("emacs" ,emacs-no-x)
-         ("autoconf" ,autoconf)
-         ("automake" ,automake)
-         ("texinfo" ,texinfo))))))
-
 (define-public emacs-strace-mode-special
   (package
     (inherit emacs-strace-mode)
