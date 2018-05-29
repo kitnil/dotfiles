@@ -1169,3 +1169,25 @@ minibuffer, the snippet contents are temporarily expanded in the buffer.  To
 use it, call @code{M-x ivy-yasnippet} (but make sure you have enabled
 @code{yas-minor-mode} first).")
       (license license:gpl3+))))
+
+(define-public emacs-helm-lines
+  (let ((commit "4c8d648a2b56e9de79c3199af22e80afe3c01ff5"))
+    (package
+      (name "emacs-helm-lines")
+      (version (git-version "0.1" "1" commit))
+      (source (origin
+                (method git-fetch)
+                (uri (git-reference
+                      (url "https://github.com/torgeir/helm-lines.el.git")
+                      (commit commit)))
+                (file-name (git-file-name name version))
+                (sha256
+                 (base32
+                  "1pxnpplrg1pzs8jgl4ww3hkl2d7r3ixxyjz8f1112634l35ics7c"))))
+      (propagated-inputs `(("emacs-helm" ,emacs-helm)))
+      (build-system emacs-build-system)
+      (home-page "https://github.com/torgeir/helm-lines.el")
+      (synopsis "Helm interface for completing by lines elsewhere in a project")
+      (description "This package provides a Helm interface for completing by
+lines elsewhere in a project.")
+      (license license:gpl3+))))
