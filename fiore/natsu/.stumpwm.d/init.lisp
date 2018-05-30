@@ -37,6 +37,7 @@
 ;;; Keyboard
 ;;;
 
+(ql:quickload "clx-truetype")
 (load-module "ttf-fonts")
 (xft:cache-fonts)
 (set-font (make-instance 'xft:font
