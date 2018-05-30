@@ -281,7 +281,7 @@ line at fill column." t)
                         filename)
     filename))
 
-(autoload 'guix-ffap-store-path-p "guix-misc")
+(autoload 'guix-ffap-store-path-p "guix-ffap")
 
 (defcustom guix-profile-path-regexp
   (rx-to-string `(and line-start
