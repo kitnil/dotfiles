@@ -1,0 +1,8 @@
+#!/bin/sh
+# Send a GUI clipboard to Emacs server.
+
+set -e -x
+
+url=$(echo "$1" | perl -MURI::Escape -ne 'chomp;print uri_escape($_),"\n"')
+
+nohup emacsclient "org-protocol://capture?url=$url&template=X" &>/dev/null &
