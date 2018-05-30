@@ -1,0 +1,63 @@
+/* Input elements hack */
+
+@-moz-document url-prefix(http) {
+    input {
+        border: 1px inset gray;
+        background-color: white;
+        color: black;
+        -moz-appearance: none !important;
+    }
+
+    textarea {
+        border: 1px inset gray;
+        background-color: white;
+        color: black;
+        -moz-appearance: none !important;
+    }
+
+    select {
+        border: 1px inset gray;
+        background-color: white;
+        color: black;
+        -moz-appearance: none !important;
+    }
+
+    input[type="radio"],
+    input[type="checkbox"] {
+        border: 1px inset gray ! important;
+        background-color: white ! important;
+        color: ThreeDFace ! important;
+        -moz-appearance: none !important;
+    }
+
+    *|*::-moz-radio {
+        background-color: white;
+        -moz-appearance: none !important;
+    }
+
+    button,
+    input[type="reset"],
+    input[type="button"],
+    input[type="submit"] {
+        border: 1px outset gray;
+        background-color: #eeeeee;
+        color: black;
+        -moz-appearance: none !important;
+    }
+
+    button:hover,
+    input[type="reset"]:hover,
+    input[type="button"]:hover,
+    input[type="submit"]:hover {
+        background-color: lightgray !important;
+        -moz-appearance: none !important;
+    }
+
+
+    body {
+        background-color: white;
+        color: black;
+        -moz-appearance: none !important;
+    }
+
+}
