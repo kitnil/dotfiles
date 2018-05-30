@@ -611,3 +611,7 @@
           (lambda (command)
             (when (member command winner-mode:*default-commands*)
               (winner-mode:dump-group-to-file))))
+
+(defcommand dump-group-to-file (file) ((:rest "Dump To File: "))
+  "Dumps the frames of the current group of the current screen to the named file."
+  (dump-to-file (dump-group (current-group)) file))
