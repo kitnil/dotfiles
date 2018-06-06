@@ -177,6 +177,30 @@ EndSection
           (ssl-certificate #f)
           (ssl-certificate-key #f)))))
 
+(define zabbix-publish-nginx-service
+  (simple-service 'guix-publish-nginx nginx-service-type
+   (list (nginx-server-configuration
+          (server-name '("zabbix.intr"))
+          (locations (list (nginx-location-configuration
+                            (uri "/")
+                            (body '("resolver 80.80.80.80;"
+                                    "set $target localhost:15081;"
+                                    "proxy_pass http://$target;")))))
+          (ssl-certificate #f)
+          (ssl-certificate-key #f)))))
+
+(define cerb-publish-nginx-service
+  (simple-service 'guix-publish-nginx nginx-service-type
+   (list (nginx-server-configuration
+          (server-name '("cerberus.intr"))
+          (locations (list (nginx-location-configuration
+                            (uri "/")
+                            (body '("resolver 80.80.80.80;"
+                                    "set $target localhost:15080;"
+                                    "proxy_pass http://$target;")))))
+          (ssl-certificate #f)
+          (ssl-certificate-key #f)))))
+
 (define guix-publish-nginx-service
   (simple-service 'guix-publish-nginx nginx-service-type
    (list (nginx-server-configuration
@@ -300,7 +324,12 @@ EndSection
                                    "natsu" "torrent" "print")
                                  host-name ".local"
                                  (list %magnolia-ip-address))
-                                "\n" %facebook-host-aliases)))
+                                "\n"
+                                (prefix-local-host-aliases
+                                 '("zabbix" "cerberus")
+                                 "" "intr"
+                                 (list %magnolia-ip-address))
+                                "\n\n" %facebook-host-aliases)))
 
     ;; Lightweight desktop with custom packages from guix-wigust
     (packages %fiore-packages)
@@ -390,6 +419,8 @@ EndSection
                                (clone-prefix (list "git://magnolia.local/~natsu"))
                                (nginx (list %cgit-configuration-nginx-custom))))
 
+                     zabbix-publish-nginx-service
+                     cerb-publish-nginx-service
                      guix-publish-nginx-service
                      cups-nginx-service
                      torrent-nginx-service
