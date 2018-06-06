@@ -80,6 +80,7 @@
 
    bbdb
    emacs-academic-phrases
+   emacs-ace-window
    emacs-add-hooks
    emacs-ag
    emacs-aggressive-indent  ; Auto indent minor mode

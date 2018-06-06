@@ -520,9 +520,6 @@ Sets the following basend on PREFIX-MAP:
                 ("S" wi-sort-sexps "sort")
                 ("u" undo "undo"))
 
-(wi-define-keys "C-c g o" open
-                ("c" crux-open-with "xdg-open" :color blue))
-
 (wi-define-keys "C-c g w" word
                 ("t" show-translation "translate"))
 
@@ -565,7 +562,7 @@ Sets the following basend on PREFIX-MAP:
                 ("r" git-gutter:revert-hunk "revert")
                 ("s" git-gutter:stage-hunk "stage"))
 
-(wi-define-keys "C-c g f" find
+(wi-define-keys "C-c g o" open
                 ("e" guix-edit "guix package" :color blue)
                 ("f" ffap "thing at point" :color blue)
                 ("l" recentf-open-files "recent" :color blue)
@@ -754,6 +751,8 @@ Sets the following basend on PREFIX-MAP:
 (bind-key "M-z" #'zap-up-to-char)
 (bind-key "C-c g u" #'undo-tree-visualize)
 (which-key-add-key-based-replacements "C-c g u" "undo")
+(bind-key "C-c g f" #'ace-window)
+(which-key-add-key-based-replacements "C-c g f" "ace-window")
 
 ; TODO: (bind-key "<C-tab>" #'hs-toggle-hiding scheme-mode-map)
 
@@ -789,7 +788,7 @@ Sets the following basend on PREFIX-MAP:
 
 (with-eval-after-load 'dired
   (let ((map dired-mode-map))
-    (define-key map (kbd "C-c o") 'crux-open-with)))
+    (define-key map (kbd "C-c x") 'crux-open-with)))
 
 
 ;;;
