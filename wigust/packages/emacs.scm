@@ -1191,3 +1191,30 @@ use it, call @code{M-x ivy-yasnippet} (but make sure you have enabled
       (description "This package provides a Helm interface for completing by
 lines elsewhere in a project.")
       (license license:gpl3+))))
+
+(define-public emacs-bash-completion-2.1.0
+  (let ((commit "24088ede85742a94f8e239ba063e8587e553d844"))
+    (package
+      (inherit emacs-bash-completion)
+      (version (git-version "2.1.0" "1" commit))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/szermatt/emacs-bash-completion.git")
+               (commit commit)))
+         (file-name (git-file-name (package-name emacs-bash-completion)
+                                   version))
+         (sha256
+          (base32
+           "1jqh8d0w3lbqh9yld3lkr0f7l6j46ivpqic7hmj9q3fxfdbwqb7k"))))
+      (arguments
+       `(#:phases
+         (modify-phases %standard-phases
+           (add-before 'install 'configure
+             (lambda* (#:key inputs #:allow-other-keys)
+               (let ((bash (assoc-ref inputs "bash")))
+                 (chmod "bash-completion.el" #o644)
+                 (emacs-substitute-variables "bash-completion.el"
+                   ("bash-completion-prog" (string-append bash "/bin/bash"))))
+               #t))))))))
