@@ -2504,6 +2504,8 @@ If nil use light theme.")
            video) ; computeremotion.com
           (,(concat youtube-rss-channel-id "UCZrrEuHiQjN2CUo84g5tk7w")
            video) ; tripcode!Q/7
+          (,(concat youtube-rss-channel-id "UCVls1GmFKf6WlTraIb_IaJg")
+           video) ; DistroTube
           (,(concat youtube-rss-user "LDCNow") video)
           (,(concat youtube-rss-user "tuxreviews") video)
           ;; (,(concat youtube-rss-user "EposVox") video)
