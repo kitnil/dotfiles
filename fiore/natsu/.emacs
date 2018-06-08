@@ -562,7 +562,7 @@ Sets the following basend on PREFIX-MAP:
                 ("r" git-gutter:revert-hunk "revert")
                 ("s" git-gutter:stage-hunk "stage"))
 
-(wi-define-keys "C-c g o" open
+(wi-define-keys "C-c g f" open
                 ("e" guix-edit "guix package" :color blue)
                 ("f" ffap "thing at point" :color blue)
                 ("l" recentf-open-files "recent" :color blue)
@@ -751,8 +751,8 @@ Sets the following basend on PREFIX-MAP:
 (bind-key "M-z" #'zap-up-to-char)
 (bind-key "C-c g u" #'undo-tree-visualize)
 (which-key-add-key-based-replacements "C-c g u" "undo")
-(bind-key "C-c g f" #'ace-window)
-(which-key-add-key-based-replacements "C-c g f" "ace-window")
+(bind-key "C-c g o" #'ace-window)
+(which-key-add-key-based-replacements "C-c g o" "ace-window")
 
 ; TODO: (bind-key "<C-tab>" #'hs-toggle-hiding scheme-mode-map)
 
