@@ -509,7 +509,9 @@
             " "
             '(:eval (window-name (current-window)))
             "]"
-            "^>    %d"))
+            "^>    "
+            '(:eval (join (split-string (run-shell-command "sensors | grep 'Core.*°C' | cut -d ' ' -f 10 | tr -d [:cntrl:]" t) "°C") #\ ))
+            "    %d"))
 (setf *mode-line-pad-x* 0)
 (setf *mode-line-pad-y* 0)
 ;; (mode-line)
