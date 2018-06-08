@@ -346,6 +346,10 @@
                "htop")
          #\ )))
 
+(defcommand rofi-twitchy () ()
+  "Open Rofi with Twitchy plugin."
+  (run-shell-command "rofi -modi twitchy:rofi-twitchy -show twitchy"))
+
 (defcommand twitchy () ()
   "Open XTerm with twitchy."
   (run-shell-command
