@@ -624,3 +624,9 @@
                          :family "DejaVu Sans Mono"
                          :subfamily "Book"
                          :size 14))
+
+(defcommand majordomo-web-health () ()
+  "Run `xterm' with `jord-health' script."
+  (run-shell-command "exec xterm -name web-health -e '~/bin/jord-health && echo \"\" && read -n 1 -s -r -p \"Press any key to close.\"'"))
+
+(define-key *top-map* (kbd "s-h") "majordomo-web-health")
