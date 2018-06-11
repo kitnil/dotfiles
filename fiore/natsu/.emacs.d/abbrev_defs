@@ -11,7 +11,9 @@
 
 (define-abbrev-table 'asm-mode-abbrev-table '())
 
-(define-abbrev-table 'awk-mode-abbrev-table '())
+(define-abbrev-table 'awk-mode-abbrev-table
+  '(
+   ))
 
 (define-abbrev-table 'bibtex-mode-abbrev-table '())
 
@@ -23,9 +25,13 @@
 
 (define-abbrev-table 'bui-list-mode-abbrev-table '())
 
-(define-abbrev-table 'c++-mode-abbrev-table '())
+(define-abbrev-table 'c++-mode-abbrev-table
+  '(
+   ))
 
-(define-abbrev-table 'c-mode-abbrev-table '())
+(define-abbrev-table 'c-mode-abbrev-table
+  '(
+   ))
 
 (define-abbrev-table 'calendar-mode-abbrev-table '())
 
@@ -63,6 +69,8 @@
 
 (define-abbrev-table 'dns-mode-abbrev-table '())
 
+(define-abbrev-table 'doctex-mode-abbrev-table '())
+
 (define-abbrev-table 'dsssl-mode-abbrev-table '())
 
 (define-abbrev-table 'edebug-eval-mode-abbrev-table '())
@@ -88,6 +96,18 @@
 (define-abbrev-table 'erc-list-menu-mode-abbrev-table '())
 
 (define-abbrev-table 'erc-mode-abbrev-table '())
+
+(define-abbrev-table 'eshell-mode-abbrev-table '())
+
+(define-abbrev-table 'eww-bookmark-mode-abbrev-table '())
+
+(define-abbrev-table 'eww-buffers-mode-abbrev-table '())
+
+(define-abbrev-table 'eww-history-mode-abbrev-table '())
+
+(define-abbrev-table 'eww-mode-abbrev-table '())
+
+(define-abbrev-table 'ftp-mode-abbrev-table '())
 
 (define-abbrev-table 'fundamental-mode-abbrev-table '())
 
@@ -187,19 +207,31 @@
 
 (define-abbrev-table 'idl-mode-abbrev-table '())
 
+(define-abbrev-table 'inferior-python-mode-abbrev-table '())
+
+(define-abbrev-table 'inferior-tcl-mode-abbrev-table '())
+
 (define-abbrev-table 'internal-ange-ftp-mode-abbrev-table '())
+
+(define-abbrev-table 'irfc-mode-abbrev-table '())
 
 (define-abbrev-table 'ivy-occur-grep-mode-abbrev-table '())
 
 (define-abbrev-table 'ivy-occur-mode-abbrev-table '())
 
-(define-abbrev-table 'java-mode-abbrev-table '())
+(define-abbrev-table 'java-mode-abbrev-table
+  '(
+   ))
+
+(define-abbrev-table 'latex-mode-abbrev-table '())
 
 (define-abbrev-table 'lisp-mode-abbrev-table '())
 
 (define-abbrev-table 'locate-mode-abbrev-table '())
 
 (define-abbrev-table 'log-edit-mode-abbrev-table '())
+
+(define-abbrev-table 'log-view-mode-abbrev-table '())
 
 (define-abbrev-table 'magit-cherry-mode-abbrev-table '())
 
@@ -233,6 +265,10 @@
 
 (define-abbrev-table 'mail-abbrevs '())
 
+(define-abbrev-table 'majordomo-mail-mode-abbrev-table '())
+
+(define-abbrev-table 'majordomo-mailsort-mode-abbrev-table '())
+
 (define-abbrev-table 'makefile-automake-mode-abbrev-table '())
 
 (define-abbrev-table 'makefile-bsdmake-mode-abbrev-table '())
@@ -256,9 +292,19 @@
 
 (define-abbrev-table 'messages-buffer-mode-abbrev-table '())
 
+(define-abbrev-table 'net-utils-mode-abbrev-table '())
+
+(define-abbrev-table 'network-connection-mode-abbrev-table '())
+
 (define-abbrev-table 'nix-mode-abbrev-table '())
 
-(define-abbrev-table 'objc-mode-abbrev-table '())
+(define-abbrev-table 'nslookup-mode-abbrev-table '())
+
+(define-abbrev-table 'nxml-mode-abbrev-table '())
+
+(define-abbrev-table 'objc-mode-abbrev-table
+  '(
+   ))
 
 (define-abbrev-table 'occur-edit-mode-abbrev-table '())
 
@@ -272,7 +318,13 @@
 
 (define-abbrev-table 'package-menu-mode-abbrev-table '())
 
-(define-abbrev-table 'pike-mode-abbrev-table '())
+(define-abbrev-table 'php-mode-abbrev-table '())
+
+(define-abbrev-table 'pike-mode-abbrev-table
+  '(
+   ))
+
+(define-abbrev-table 'plain-tex-mode-abbrev-table '())
 
 (define-abbrev-table 'plstore-mode-abbrev-table '())
 
@@ -281,6 +333,10 @@
 (define-abbrev-table 'process-menu-mode-abbrev-table '())
 
 (define-abbrev-table 'prog-mode-abbrev-table '())
+
+(define-abbrev-table 'python-mode-abbrev-table '())
+
+(define-abbrev-table 'python-mode-skeleton-abbrev-table '())
 
 (define-abbrev-table 'ruby-mode-abbrev-table '())
 
@@ -304,6 +360,10 @@
 
 (define-abbrev-table 'slime-xref-mode-abbrev-table '())
 
+(define-abbrev-table 'slitex-mode-abbrev-table '())
+
+(define-abbrev-table 'smbclient-mode-abbrev-table '())
+
 (define-abbrev-table 'smime-mode-abbrev-table '())
 
 (define-abbrev-table 'snippet-mode-abbrev-table '())
@@ -312,9 +372,21 @@
 
 (define-abbrev-table 'speedbar-mode-abbrev-table '())
 
+(define-abbrev-table 'sql-mode-abbrev-table
+  '(
+   ))
+
 (define-abbrev-table 'strace-mode-abbrev-table '())
 
 (define-abbrev-table 'tabulated-list-mode-abbrev-table '())
+
+(define-abbrev-table 'tcl-mode-abbrev-table '())
+
+(define-abbrev-table 'term-mode-abbrev-table '())
+
+(define-abbrev-table 'tex-mode-abbrev-table '())
+
+(define-abbrev-table 'tex-shell-abbrev-table '())
 
 (define-abbrev-table 'texinfo-mode-abbrev-table '())
 
@@ -322,27 +394,32 @@
   '(
     ("аа" "IP адрес" nil 4)
     ("бд" "база данных" nil 0)
-    ("вам" "Вам" nil 1)
-    ("вас" "Вас" nil 1)
-    ("ваш" "Ваш" nil 1)
-    ("вашей" "Вашей" nil 0)
-    ("вашем" "Вашем" nil 1)
+    ("вам" "Вам" nil 32)
+    ("вами" "Вами" nil 9)
+    ("вас" "Вас" nil 9)
+    ("ваш" "Ваш" nil 24)
+    ("ваше" "Ваше" nil 13)
+    ("вашего" "Вашего" nil 11)
+    ("вашей" "Вашей" nil 12)
+    ("вашем" "Вашем" nil 5)
+    ("вашему" "Вашему" nil 3)
+    ("вашим" "Вашим" nil 2)
+    ("ваших" "Ваших" nil 0)
     ("веб" "веб-сайт" nil 0)
     ("вк" "выполните команду" nil 0)
     ("впс" "VPS" nil 0)
-    ("вс" "в случае" nil 0)
+    ("вс" "в случае" nil 1)
     ("вф" "Wi-Fi" nil 0)
-    ("вы" "Вы" nil 2)
+    ("вы" "Вы" nil 46)
     ("ди" "доменное имя" nil 0)
     ("днс" "DNS" nil 3)
     ("енп" "если наблюдаются проблемы при работе с" nil 0)
-    ("з" "Здравствуйте" nil 1)
+    ("з" "Здравствуйте" nil 68)
     ("ин" "интернет" nil 0)
-    ("кс" "компьютерная сеть" nil 0)
+    ("кс" "компьютерная сеть" nil 2)
     ("м" "можете" nil 1)
     ("овв" "Обращаем Ваше внимание" nil 0)
-    ("по" "программа" nil 0)
-    ("под" "подробнее" nil 3)
+    ("под" "подробнее" nil 4)
     ("пр" "прочитать" nil 1)
     ("псн" "пожалуйста, сообщите нам," nil 0)
     ("рвр" "работает в штатном режиме" nil 0)
@@ -354,6 +431,8 @@
 
 (define-abbrev-table 'url-cookie-mode-abbrev-table '())
 
+(define-abbrev-table 'vc-bzr-log-view-mode-abbrev-table '())
+
 (define-abbrev-table 'vc-git-log-edit-mode-abbrev-table '())
 
 (define-abbrev-table 'vc-git-log-view-mode-abbrev-table '())
@@ -361,6 +440,8 @@
 (define-abbrev-table 'vc-git-region-history-mode-abbrev-table '())
 
 (define-abbrev-table 'vc-hg-log-view-mode-abbrev-table '())
+
+(define-abbrev-table 'vc-svn-log-view-mode-abbrev-table '())
 
 (define-abbrev-table 'xref--xref-buffer-mode-abbrev-table '())
 
