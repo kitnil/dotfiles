@@ -17,3 +17,5 @@ function man-in-emacs { emacsclient --eval "(man \"$1\")"; }
 function man-to-pdf { man -t "$1" | ps2pdf - "$1.pdf"; }
 
 complete -W "$(echo `cat ~/.ssh/known_hosts | cut -f 1 -d ' ' | sed -e s/,.*//g | uniq | grep -v "\["`;)" ssh
+
+function vm { ~/src/majordomo/cvm.py $1 | cut -d ' ' -f 2; }
