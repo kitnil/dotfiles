@@ -584,10 +584,10 @@
 (define-key *top-map* (kbd "s-s") "sibling")
 ;; (define-key *top-map* (kbd "s-c") "")
 ;; (define-key *top-map* (kbd "s-TAB") "fother")
-(define-key *top-map* (kbd "s-n") "next-in-frame")
-(define-key *top-map* (kbd "s-p") "prev-in-frame")
 (define-key *top-map* (kbd "M-s-n") "gnext")
 (define-key *top-map* (kbd "M-s-p") "gprev")
+(define-key *top-map* (kbd "s-n") "pull-hidden-next")
+(define-key *top-map* (kbd "s-p") "pull-hidden-previous")
 
 (load-module "clipboard-history")
 (define-key *root-map* (kbd "C-y") "show-clipboard-history")
