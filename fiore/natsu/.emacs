@@ -2196,7 +2196,9 @@ be updated automatically."))
              ((anywhere-mode-hook atomic-chrome-edit-mode-hook)
               . (lambda ()
                   (setq-local company-idle-delay 0.1)
-                  (setq-local company-minimum-prefix-length 2)))))
+                  (setq-local company-minimum-prefix-length 2)))
+             ((anywhere-mode-hook atomic-chrome-edit-mode-hook)
+              . visual-line-mode)))
 
 (with-eval-after-load 'company
   (add-to-list 'company-backends 'company-abbrev))
