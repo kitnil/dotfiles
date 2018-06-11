@@ -630,3 +630,12 @@
   (run-shell-command "exec xterm -name web-health -e '~/bin/jord-health && echo \"\" && read -n 1 -s -r -p \"Press any key to close.\"'"))
 
 (define-key *top-map* (kbd "s-h") "majordomo-web-health")
+
+(defcommand ponymix-decrease () ()
+  (run-shell-command "ponymix decrease 5"))
+
+(defcommand ponymix-increase () ()
+  (run-shell-command "ponymix increase 5"))
+
+(define-key *top-map* (kbd "XF86AudioRaiseVolume") "ponymix-increase")
+(define-key *top-map* (kbd "XF86AudioLowerVolume") "ponymix-decrease")
