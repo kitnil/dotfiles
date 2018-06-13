@@ -58,10 +58,11 @@
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-1))
 
-(define-public sbcl-stumpwm-checkout
+(define-public sbcl-stumpwm-next
   (let ((commit "cec7fd9e963e5da59b05ba0ffbe292dc94fd2947"))
     (package
       (inherit sbcl-stumpwm)
+      (name "sbcl-stumpwm-next")
       (version (git-version (package-version sbcl-stumpwm) "1" commit))
       (source
        (origin
