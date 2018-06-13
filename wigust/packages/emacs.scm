@@ -584,37 +584,6 @@ other.
 auth-source library with @code{password-store}.")
     (license license:gpl3+)))
 
-(define-public emacs-helm-pass
-  (let ((commit "bf5e1ea85ca531f07372eb8e7b9a8812ff3d3a5e")
-        (revision "1"))
-    (package
-      (name "emacs-helm-pass")
-      (version (string-append "0.0.1" "-" revision "."
-                              (string-take commit 7)))
-      (source
-       (origin
-         (method git-fetch)
-         (uri (git-reference
-               (url "https://github.com/jabranham/helm-pass.git")
-               (commit commit)))
-         (file-name (string-append name "-" version "-checkout"))
-         (sha256
-          (base32
-           "1l3dbgl65rcvw7cgqfxm3kvpfj65pj8jhkp9pg4yykli5y0wsbdx"))))
-      (build-system emacs-build-system)
-      (inputs
-       `(("password-store" ,password-store)))
-      (propagated-inputs
-       `(("emacs-f" ,emacs-f)
-         ("emacs-helm" ,emacs-helm)
-         ("emacs-password-store" ,emacs-password-store)
-         ("emacs-auth-password-store" ,emacs-auth-password-store)))
-      (home-page "https://github.com/jabranham/helm-pass")
-      (synopsis "Helm interface for @code{pass}")
-      (description "Emacs helm interface for pass, the standard unix
-password manager.")
-      (license license:gpl3+))))
-
 (define-public emacs-xml-rpc
   (package
     (name "emacs-xml-rpc")
