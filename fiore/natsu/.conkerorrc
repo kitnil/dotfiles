@@ -364,3 +364,4 @@ define_webjump("arch-packages",
 
 // Questions
 define_webjump("linux-questions","http://www.linuxquestions.org/questions/");
+define_webjump("gmane", "http://gmane.org/find.php?list=%s");
