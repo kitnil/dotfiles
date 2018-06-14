@@ -50,6 +50,7 @@
     (build-system go-build-system)
     (arguments
      `(#:import-path "github.com/restic/restic"
+       #:unpack-path "github.com/restic"
       ;; We don't need to install the source code for end-user applications.
        #:install-source? #f
        #:phases
@@ -57,14 +58,14 @@
          (replace 'build
            (lambda* (#:key inputs #:allow-other-keys)
              (with-directory-excursion (string-append
-                                        "src/github.com/restic/restic/restic-"
+                                        "src/github.com/restic/restic-"
                                         ,version)
                (invoke "go" "run" "build.go"))))
 
          (replace 'install
            (lambda* (#:key outputs #:allow-other-keys)
              (let ((out (assoc-ref outputs "out"))
-                   (src (string-append "src/github.com/restic/restic/restic-"
+                   (src (string-append "src/github.com/restic/restic-"
                                        ,version)))
                (install-file (string-append src "/restic")
                              (string-append out "/bin"))
@@ -75,7 +76,7 @@
              (let* ((out (assoc-ref outputs "out"))
                     (man "/share/man")
                     (man-section (string-append man "/man"))
-                    (src (string-append "src/github.com/restic/restic/restic-"
+                    (src (string-append "src/github.com/restic/restic-"
                                         ,version "/doc/man/")))
                ;; Install all the man pages to "out".
                (for-each
