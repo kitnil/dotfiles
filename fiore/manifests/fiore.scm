@@ -115,7 +115,7 @@
     pulseaudio
 
     httpd
-    mysql
+    mariadb
     cryptsetup
 
     sbcl
