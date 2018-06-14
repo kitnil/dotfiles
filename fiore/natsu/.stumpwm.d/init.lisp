@@ -112,8 +112,7 @@
 (defvar *default-group-name*
   "default")
 
-(defvar *window-format*
-  "%m%n%s %c %50t")
+(setf *window-format* "%m%n%s %c %50t")
 
 (defvar *wi-xterm-command*
   "exec xterm")
