@@ -361,3 +361,6 @@ define_webjump("arch-aur", "http://aur.archlinux.org/packages.php?O=0&K=%s");
 define_webjump("arch-packages",
                "https://www.archlinux.org/packages/?sort=&q=%s&limit=50",
                $alternative="https://packages.archlinux.org");
+
+// Questions
+define_webjump("linux-questions","http://www.linuxquestions.org/questions/");
