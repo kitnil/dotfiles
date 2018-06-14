@@ -353,3 +353,11 @@ define_mime_type_table("external_content_handlers",
 
 // Origin <https://github.com/ivoarch/.dot-org-files/blob/master/conkeror.org>
 download_buffer_automatic_open_target=OPEN_NEW_BUFFER_BACKGROUND;
+
+// Arch linux
+define_webjump("arch-forums", "http://bbs.archlinux.org");
+define_webjump("arch-wiki", "http://wiki.archlinux.org/index.php?search=%s");
+define_webjump("arch-aur", "http://aur.archlinux.org/packages.php?O=0&K=%s");
+define_webjump("arch-packages",
+               "https://www.archlinux.org/packages/?sort=&q=%s&limit=50",
+               $alternative="https://packages.archlinux.org");
