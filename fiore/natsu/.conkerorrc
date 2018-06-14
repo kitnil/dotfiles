@@ -350,3 +350,6 @@ define_mime_type_table("external_content_handlers",
     "Structure associating MIME types and MIME type patterns with "+
     "the names of programs for handling those them.  The key \"*\" "+
     "is a pattern-matching symbol which matches anything.");
+
+// Origin <https://github.com/ivoarch/.dot-org-files/blob/master/conkeror.org>
+download_buffer_automatic_open_target=OPEN_NEW_BUFFER_BACKGROUND;
