@@ -64,12 +64,10 @@
          (replace 'install
            (lambda* (#:key outputs #:allow-other-keys)
              (let ((out (assoc-ref outputs "out"))
-                   (utils (assoc-ref outputs "utils"))
                    (src (string-append "src/github.com/restic/restic/restic-"
                                        ,version)))
                (install-file (string-append src "/restic")
                              (string-append out "/bin"))
-               (delete-file (string-append src "/restic"))
                #t)))
 
          (add-after 'install 'install-docs
@@ -86,7 +84,32 @@
                                  (string-append out man-section
                                                 (string-take-right file 1))))
                  (find-files src "\\.[1-9]"))
-             #t))))))
+               #t)))
+
+         (add-after 'install-docs 'install-shell-completion
+           (lambda* (#:key outputs #:allow-other-keys)
+             (let* ((out (assoc-ref outputs "out"))
+                    (bin (string-append out "/bin"))
+                    (etc (string-append out "/etc"))
+                    (share (string-append out "/share")))
+               (for-each
+                (lambda (shell)
+                  (let* ((shell-name (symbol->string shell))
+                         (dir (string-append "etc/completion/" shell-name)))
+                    (mkdir-p dir)
+                    (invoke (string-append bin "/restic") "generate"
+                            (string-append "--" shell-name "-completion")
+                            (string-append dir "/"
+                                           (case shell
+                                             ((bash) "restic")
+                                             ((zsh) "_restic"))))))
+                '(bash zsh))
+               (with-directory-excursion "etc/completion"
+                 (install-file "bash/restic"
+                               (string-append etc "/bash_completion.d"))
+                 (install-file "zsh/_restic"
+                               (string-append share "/zsh/site-functions")))
+               #t))))))
     (home-page "https://restic.net/")
     (synopsis "Backup program with multiple revisions, encryption and more")
     (description "Restic is a program that does backups right and was designed
