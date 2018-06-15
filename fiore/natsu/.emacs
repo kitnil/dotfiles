@@ -2164,6 +2164,9 @@ be updated automatically."))
 ;;; Misc
 ;;;
 
+(add-hook 'comint-output-filter-functions
+          'comint-truncate-buffer)
+
 (autoload 'bash-completion-dynamic-complete
   "bash-completion" "BASH completion hook")
 
