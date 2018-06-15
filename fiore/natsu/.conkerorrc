@@ -381,3 +381,4 @@ define_webjump("yandex", "http://yandex.com/yandsearch?text=%s"); // text
 define_webjump("yandex-ru", "https://yandex.ru/yandsearch?text=%s"); // text ru
 define_webjump("yimages", "http://images.yandex.com/yandsearch?text=%s"); // images
 define_webjump("yimages-ru", "http://images.yandex.ru/yandsearch?text=%s"); // images ru
+define_webjump("ytrans", "http://translate.yandex.com/?lang=en-es&text=%s"); // translate en -> es
