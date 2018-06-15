@@ -396,3 +396,4 @@ define_webjump("trans", "http://translate.google.com/translate_t#auto|en|%s");
 // Popular
 define_webjump("wordpress", "http://wordpress.org/search/%s");
 define_webjump("deviantart", "http://browse.deviantart.com/?q=%s", $alternative="http://www.deviantart.com");
+define_webjump("flickr", "http://www.flickr.com/search/?q=%s", $alternative="http://www.flickr.com");
