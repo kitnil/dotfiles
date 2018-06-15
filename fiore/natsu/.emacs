@@ -1280,6 +1280,8 @@ With a prefix argument, clean `geiser-guile-load-path'."
 ;;; Guix
 ;;;
 
+(setq guix-find-file-function #'org-open-file)
+
 (defcustom guix-hydra-script "~/src/hello-guile/package.scm"
   "Script to get package names appropriate for Guix Hydra."
   :group 'guix-hydra)
