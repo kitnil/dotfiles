@@ -392,3 +392,6 @@ define_webjump("distrowatch", "http://distrowatch.com/table.php?distribution=%s"
 
 // Google
 define_webjump("trans", "http://translate.google.com/translate_t#auto|en|%s");
+
+// Popular
+define_webjump("wordpress", "http://wordpress.org/search/%s");
