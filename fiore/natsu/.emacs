@@ -1799,6 +1799,8 @@ Push branch master to local/master."
 ;; Origin <https://changelog.complete.org/archives/9865-emacs-2-introducing-org-mode>.
 (setq org-ellipsis "…")
 
+(add-to-list 'org-file-apps '("\\.png\\'" . system))
+
 
 ;;;
 ;;; ZNC
