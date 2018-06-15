@@ -400,3 +400,4 @@ define_webjump("flickr", "http://www.flickr.com/search/?q=%s", $alternative="htt
 
 // GIT
 define_webjump("savannah", "https://savannah.gnu.org/search/?words=%s&type_of_search=soft");
+define_webjump("gitorious", "http://gitorious.org/search?q=%s");
