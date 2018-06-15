@@ -397,3 +397,6 @@ define_webjump("trans", "http://translate.google.com/translate_t#auto|en|%s");
 define_webjump("wordpress", "http://wordpress.org/search/%s");
 define_webjump("deviantart", "http://browse.deviantart.com/?q=%s", $alternative="http://www.deviantart.com");
 define_webjump("flickr", "http://www.flickr.com/search/?q=%s", $alternative="http://www.flickr.com");
+
+// GIT
+define_webjump("savannah", "https://savannah.gnu.org/search/?words=%s&type_of_search=soft");
