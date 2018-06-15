@@ -374,3 +374,4 @@ define_webjump("emacswiki",
    "http://www.google.com/cse?cx=004774160799092323420%3A6-ff2s0o6yi"+
        "&q=%s&sa=Search&siteurl=emacswiki.org%2F",
    $alternative="http://www.emacswiki.org/"); // emacswiki
+define_webjump("marmalade", "http://marmalade-repo.org/packages?q=%s"); // emacs marmalade repo
