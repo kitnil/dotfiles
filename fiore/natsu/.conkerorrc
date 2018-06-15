@@ -386,3 +386,6 @@ define_webjump("ytrans", "http://translate.yandex.com/?lang=en-es&text=%s"); // 
 // Kaldata
 define_webjump("kaldata",
     "http://www.kaldata.com/forums/index.php?app=core&module=search&do=search&fromMainBar=1&search_term=%s");
+
+// Distrowatch (Search Distributions)
+define_webjump("distrowatch", "http://distrowatch.com/table.php?distribution=%s");
