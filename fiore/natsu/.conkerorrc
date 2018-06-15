@@ -368,3 +368,9 @@ define_webjump("gmane", "http://gmane.org/find.php?list=%s");
 define_webjump("hackernews", "http://searchyc.com/%s", $alternative = "http://news.ycombinator.com/");
 define_webjump("stackoverflow",  "http://stackoverflow.com/search?q=%s", $alternative = "http://stackoverflow.com/");
 define_webjump("superuser", "http://superuser.com/search?q=%s", $alternative = "http://superuser.com/");
+
+// Emacs
+define_webjump("emacswiki",
+   "http://www.google.com/cse?cx=004774160799092323420%3A6-ff2s0o6yi"+
+       "&q=%s&sa=Search&siteurl=emacswiki.org%2F",
+   $alternative="http://www.emacswiki.org/"); // emacswiki
