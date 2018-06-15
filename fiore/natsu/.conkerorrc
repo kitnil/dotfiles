@@ -366,3 +366,4 @@ define_webjump("arch-packages",
 define_webjump("linux-questions","http://www.linuxquestions.org/questions/");
 define_webjump("gmane", "http://gmane.org/find.php?list=%s");
 define_webjump("hackernews", "http://searchyc.com/%s", $alternative = "http://news.ycombinator.com/");
+define_webjump("stackoverflow",  "http://stackoverflow.com/search?q=%s", $alternative = "http://stackoverflow.com/");
