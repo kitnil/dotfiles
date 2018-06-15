@@ -404,3 +404,11 @@ define_webjump("gitorious", "http://gitorious.org/search?q=%s");
 
 // Lingvo
 define_webjump("lingvo", "http://www.lingvo-online.ru/en/Translate/en-es/%s");
+
+// Clear conkeror history.
+function history_clear () {
+    var history = Cc["@mozilla.org/browser/nav-history-service;1"]
+        .getService(Ci.nsIBrowserHistory);
+    history.removeAllPages();
+}
+interactive("history-clear", "Clear the history.", history_clear);
