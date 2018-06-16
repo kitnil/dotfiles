@@ -407,6 +407,15 @@
          #\ )
    '(:class "XTerm")))
 
+(defcommand run-xterm-light () ()
+  "Start or focus XTerm."
+  (run-prog *shell-program*
+            :args (list "-c" (join (list *wi-xterm-command*
+                                         *wi-xterm-theme-light*
+                                         *wi-xterm-no-scrollbar*)
+                                   #\ ))
+            :wait nil))
+
 (defcommand wi-run-xterm () ()
   "Start or focus XTerm."
   (run-prog *shell-program*
@@ -565,6 +574,7 @@
 (define-key *root-map* (kbd "C-v") "alsamixer")
 (define-key *root-map* (kbd "c") "wi-run-or-raise-xterm")
 (define-key *root-map* (kbd "C-c") "wi-run-xterm")
+(define-key *root-map* (kbd "C-M-c") "run-xterm-light")
 
 (define-key *root-map* (kbd "C-M-v") "scroll-other-window")
 (define-key *root-map* (kbd "Print") "screenshot-default")
