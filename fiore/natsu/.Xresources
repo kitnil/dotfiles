@@ -75,9 +75,9 @@ XTerm*faceSize2: 10
 ! VT font menu: Medium
 XTerm*faceSize3: 12
 ! VT font menu: Large
-XTerm*faceSize4: 16
+XTerm*faceSize4: 14
 ! VT font menu: Huge
-XTerm*faceSize5: 22
+XTerm*faceSize5: 16
 
 ! Allow xterm to report the TERM variable correctly.  Do not set the
 ! TERM variable from your ~/.bashrc or ~/.bash_profile or similar
