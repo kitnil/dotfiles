@@ -595,8 +595,8 @@
 (define-key *top-map* (kbd "s-t") "pull-hidden-other")
 ;; (define-key *top-map* (kbd "s-c") "")
 ;; (define-key *top-map* (kbd "s-TAB") "fother")
-(define-key *top-map* (kbd "s-n") "pull-hidden-next")
 (define-key *top-map* (kbd "s-p") "pull-hidden-previous")
+(define-key *top-map* (kbd "s-n") "next-in-frame")
 (define-key *top-map* (kbd "M-s-n") "gnext")
 (define-key *top-map* (kbd "M-s-p") "gprev")
 
