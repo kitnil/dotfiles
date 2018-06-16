@@ -591,7 +591,7 @@
 ;; (define-key *top-map* (kbd "s-3") "gselect 3")
 ;; (define-key *top-map* (kbd "s-4") "gselect 4")
 ;; (define-key *top-map* (kbd "s-t") "trans")
-(define-key *top-map* (kbd "s-o") "fnext")
+(define-key *top-map* (kbd "s-o") "other-in-frame")
 (define-key *top-map* (kbd "s-t") "pull-hidden-other")
 ;; (define-key *top-map* (kbd "s-c") "")
 ;; (define-key *top-map* (kbd "s-TAB") "fother")
