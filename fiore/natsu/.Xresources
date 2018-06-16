@@ -38,13 +38,13 @@ XTerm.vt100.cursorBlink: false
 XTerm.vt100.locale: true
 
 XTerm.vt100.saveLines: 4096
-! XTerm.vt100.faceName: Monospace:size=12:antialias=true
-! XTerm.vt100.faceName: xft:DejaVu Sans Mono:style=Book:size=11
+XTerm.vt100.faceName: xft:Monospace:size=12:antialias=true
+XTerm.vt100.faceNameDoublesize: xft:WenQuanYi Zen Hei Mono:style=Regular:size=12
 
 ! With japanese font supports.
 ! Origin <https://bbs.archlinux.org/viewtopic.php?pid=1205854#p1205854>.
-xterm*font:     -misc-fixed-medium-r-normal--18-120-100-100-c-90-iso10646-1
-xterm*wideFont: -misc-fixed-medium-r-normal-ja-18-120-100-100-c-180-iso10646-1
+! xterm*font:     -misc-fixed-medium-r-normal--18-120-100-100-c-90-iso10646-1
+! xterm*wideFont: -misc-fixed-medium-r-normal-ja-18-120-100-100-c-180-iso10646-1
 
 ! *VT100.utf8Fonts.font4: -misc-fixed-medium-r-normal--13-120-75-75-c-80-iso10646-1
 ! *VT100.utf8Fonts.font2: -misc-fixed-medium-r-normal--8-80-75-75-c-50-iso10646-1
