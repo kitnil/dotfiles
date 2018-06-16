@@ -236,6 +236,18 @@ interactive("emacs-wget-on-url",
     $browser_object = browser_object_links,
     $prompt = "emacs wget command");
 
+interactive("firefox-esr-on-url",
+            "Run a firefox-esr command on the url of a browser object.",
+    function (I) {
+        var cwd = I.local.cwd;
+        var element = yield read_browser_object(I);
+        var spec = load_spec(element);
+        var uri = load_spec_uri_string(spec);
+        shell_command_with_argument_blind("firefox-esr", uri, $cwd = cwd);
+    },
+    $browser_object = browser_object_links,
+    $prompt = "firefox-esr command");
+
 interactive("chromium-on-url",
     "Run a chromium command on the url of a browser object.",
     function (I) {
