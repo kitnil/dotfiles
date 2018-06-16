@@ -43,6 +43,8 @@
 (set-scroll-bar-mode 'right)
 (scroll-bar-mode -1)
 
+(setq ffap-file-finder 'org-open-file)
+
 ;; Default from Emacs 26
 ;; See <http://git.savannah.gnu.org/cgit/emacs.git/commit/etc/NEWS?id=72ee93d68daea00e2ee69417afd4e31b3145a9fa>
 (setq print-quoted t)
