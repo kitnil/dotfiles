@@ -535,8 +535,6 @@
 (load-module "kbd-layouts")
 (kbd-layouts:keyboard-layout-list "us" "ru")
 
-(load-module "screenshot")
-
 (defcommand scroll-other-window () ()
   (stumpwm:run-commands "fother" "window-send-string  " "fother"))
 
@@ -605,6 +603,9 @@
 (load-module "clipboard-history")
 (define-key *root-map* (kbd "C-y") "show-clipboard-history")
 (clipboard-history:start-clipboard-manager)
+
+(ql:quickload "zpng")
+(load-module "screenshot")
 
 (load-module "globalwindows")
 
