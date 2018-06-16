@@ -49,7 +49,7 @@ XTerm.ttyModes: erase ^?
 ! Inspired by:   https://www.gnu.org/software/emacs/manual/html_node/emacs/Fonts.html#Fonts
 ! Get code from: https://www.emacswiki.org/emacs/XftGnuEmacs
 Emacs.FontBackend: xft
-Emacs.font: Monospace-14
+Emacs.font: Monospace-12
 Emacs.mode-line.attributeBox: nil
 
 ! VT Font Menu: Unreadable
