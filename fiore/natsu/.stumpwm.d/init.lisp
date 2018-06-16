@@ -532,9 +532,6 @@
          (pointer-y (+ 100 (frame-y current-frame))))
     (warp-pointer (current-screen) pointer-x pointer-y)))
 
-(load-module "kbd-layouts")
-(kbd-layouts:keyboard-layout-list "us" "ru")
-
 (defcommand scroll-other-window () ()
   (stumpwm:run-commands "fother" "window-send-string  " "fother"))
 
@@ -603,6 +600,9 @@
 (load-module "clipboard-history")
 (define-key *root-map* (kbd "C-y") "show-clipboard-history")
 (clipboard-history:start-clipboard-manager)
+
+(load-module "kbd-layouts")
+(kbd-layouts:keyboard-layout-list "us" "ru")
 
 (ql:quickload "zpng")
 (load-module "screenshot")
