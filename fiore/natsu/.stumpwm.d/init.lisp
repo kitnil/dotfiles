@@ -593,6 +593,7 @@
 ;; (define-key *top-map* (kbd "s-t") "trans")
 (define-key *top-map* (kbd "s-o") "other-in-frame")
 (define-key *top-map* (kbd "s-t") "pull-hidden-other")
+(define-key *top-map* (kbd "s-\"") "frame-windowlist")
 ;; (define-key *top-map* (kbd "s-c") "")
 ;; (define-key *top-map* (kbd "s-TAB") "fother")
 (define-key *top-map* (kbd "s-n") "next-in-frame")
