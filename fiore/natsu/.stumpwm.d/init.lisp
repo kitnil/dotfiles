@@ -37,14 +37,6 @@
 ;;; Keyboard
 ;;;
 
-(ql:quickload "clx-truetype")
-(load-module "ttf-fonts")
-(xft:cache-fonts)
-(set-font (make-instance 'xft:font
-                         :family "DejaVu Sans Mono"
-                         :subfamily "Book"
-                         :size 14))
-
 ;; Use keyboard as mouse with <Shift+Num Lock>
 ;; https://en.wikipedia.org/wiki/Mouse_keys
 (run-shell-command "setxkbmap -option keypad:pointerkeys")
@@ -624,3 +616,11 @@
 (defcommand dump-group-to-file (file) ((:rest "Dump To File: "))
   "Dumps the frames of the current group of the current screen to the named file."
   (dump-to-file (dump-group (current-group)) file))
+
+(ql:quickload "clx-truetype")
+(load-module "ttf-fonts")
+(xft:cache-fonts)
+(set-font (make-instance 'xft:font
+                         :family "DejaVu Sans Mono"
+                         :subfamily "Book"
+                         :size 14))
