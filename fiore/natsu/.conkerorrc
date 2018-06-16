@@ -272,6 +272,11 @@ define_key(content_buffer_normal_keymap, "f7", "eww-on-url");
 define_key(content_buffer_normal_keymap, "f6", "emacs-wget-on-url");
 define_key(content_buffer_normal_keymap, "f5", "chromium-on-url");
 
+// Origin <http://conkeror.org/Tips#Open_Middle-Clicked_Links_in_New_Buffers>.
+
+require("clicks-in-new-buffer.js");
+clicks_in_new_buffer_target = OPEN_NEW_BUFFER;
+
 // Origin <https://orgmode.org/worg/org-contrib/org-protocol.html>.
 
 function org_store_link (url, title, window) {
