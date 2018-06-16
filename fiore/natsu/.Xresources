@@ -36,7 +36,7 @@ XTerm.vt100.cursorBlink: false
 *.rightScrollBar: true
 
 XTerm.vt100.saveLines: 4096
-XTerm.vt100.faceName: Monospace:size=14:antialias=true
+XTerm.vt100.faceName: Monospace:size=12:antialias=true
 XTerm.vt100.metaSendsEscape: true
 
 ! Fix <C-h> in Emacs
