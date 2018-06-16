@@ -17,6 +17,8 @@ define_webjump("youtube-latest",
 define_webjump("github",
                "https://github.com/search?ref=simplesearch&q=%s")
 
+define_webjump("cerberus", "http://cerberus.intr/index.php/profiles/ticket/%s");
+
 // Minimal font size
 // session_pref("font.minimum-size.x-western", 18);
 
