@@ -261,6 +261,12 @@ interactive("chromium-on-url",
     $browser_object = browser_object_links,
     $prompt = "chromium command");
 
+interactive("anywhere",
+            "Run ‘emacs-anywhere’.",
+            function (I) {
+                yield shell_command("sh ~/bin/emacs-anywhere-conkeror");
+            });
+
 define_key(content_buffer_normal_keymap, "f8", "mpv-on-url");
 define_key(content_buffer_normal_keymap, "f7", "eww-on-url");
 define_key(content_buffer_normal_keymap, "f6", "emacs-wget-on-url");
