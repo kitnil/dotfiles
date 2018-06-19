@@ -142,7 +142,7 @@
 ;;; Emacs
 ;;;
 
-(defcommand emacs () ()
+(defcommand emacsclient () ()
   "Start emacs unless it is already running, in which case focus it."
   (run-or-raise "emacsclient -c ." '(:class "Emacs")))
 
@@ -555,6 +555,8 @@
 (defcommand wi-trans () ()
   "Run `xterm' with `trans' in interactive mode."
   (run-shell-command "exec xterm -name trans -e 'trans -I en:ru'"))
+
+(define-key *root-map* (kbd "e") "emacsclient")
 
 (define-key *root-map* (kbd "m") "wi-mpv")
 (define-key *root-map* (kbd "C-m") "wi-xclip-mpv")
