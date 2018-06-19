@@ -1,5 +1,6 @@
 (define-module (fiore manifests fiore)
   #:use-module (gnu)
+  #:use-module (gnu packages mtools)
   #:use-module (guix packages)
   #:use-module (guix profiles)
   #:use-module (gnu packages admin)
@@ -62,6 +63,9 @@
 (define %fiore-packages
   (append
    (list
+
+    fuse-exfat
+    exfat-utils
 
     ;; For helm-stumpwm-commands and stumpish
     desktop-file-utils
