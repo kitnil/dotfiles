@@ -313,6 +313,13 @@
 
 
 
+(defun xterm-shell-command (command)
+  (run-shell-command
+   (join (list *wi-xterm-command* *wi-xterm-theme-dark*
+               *wi-xterm-no-scrollbar* *wi-term-execute-flag*
+               command)
+         #\ )))
+
 (defcommand epson () ()
   "Open XTerm with Epson."
   (run-shell-command
