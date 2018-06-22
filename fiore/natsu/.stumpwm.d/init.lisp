@@ -314,40 +314,23 @@
                command))))
 
 (defcommand epson () ()
-  "Open XTerm with Epson."
-  (run-shell-command
-   (join (list *wi-xterm-command* *wi-xterm-theme-dark*
-               *wi-xterm-no-scrollbar* *wi-term-execute-flag*
-               "sudo wi-qemu-epson.sh")
-         #\ )))
+  (xterm-shell-command "sudo wi-qemu-epson.sh"))
 
 (defcommand epson-no-graphic () ()
-  "Open XTerm with Epson."
-  (run-shell-command
-   (join (list *wi-xterm-command* *wi-xterm-theme-dark*
-               *wi-xterm-no-scrollbar* *wi-term-execute-flag*
-               "sudo wi-qemu-epson.sh -display none")
-         #\ )))
+  (xterm-shell-command "sudo wi-qemu-epson.sh -display none"))
+
+(defcommand glances () ()
+  (xterm-shell-command "glances"))
 
 (defcommand htop () ()
-  "Open XTerm with htop."
-  (run-shell-command
-   (join (list *wi-xterm-command* *wi-xterm-theme-dark*
-               *wi-xterm-no-scrollbar* *wi-term-execute-flag*
-               "htop")
-         #\ )))
+  (xterm-shell-command "htop"))
 
 (defcommand rofi-twitchy () ()
   "Open Rofi with Twitchy plugin."
   (run-shell-command "rofi -modi twitchy:rofi-twitchy -show twitchy"))
 
 (defcommand twitchy () ()
-  "Open XTerm with twitchy."
-  (run-shell-command
-   (join (list *wi-xterm-command* *wi-xterm-theme-dark*
-               *wi-xterm-no-scrollbar* *wi-term-execute-flag*
-               "twitchy")
-         #\ )))
+  (xterm-shell-command "twitchy"))
 
 (defcommand kodi-cli-youtube () ()
   "Send video from clipboard to Kodi."
@@ -355,11 +338,7 @@
    (join (list "exec kodi-cli -y" (get-x-selection)))))
 
 (defcommand youtube-dl () ()
-  "Download video."
-  (run-shell-command
-   (join '("exec" "xterm" "-name youtube-dl" "-e" "youtube-dl"
-           "$(xclip -o -selection clipboard)")
-         #\ )))
+  (xterm-shell-command (join (list "youtube-dl" (get-x-selection)))))
 
 (defcommand youtube-dl-play () ()
   "Download video and play it."
