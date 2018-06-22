@@ -74,7 +74,7 @@
         (write-char delimiter stream)
         (join-to-stream stream rest delimiter)))))
 
-(defun join (list &optional (delimiter #\&))
+(defun join (list &optional (delimiter #\ ))
   (with-output-to-string (stream)
     (join-to-stream stream list delimiter)))
 
