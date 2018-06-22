@@ -151,8 +151,7 @@
   (run-shell-command
    (join (list "exec"
                (concat (getenv "HOME") "/bin/emacs-org-capture")
-               (get-x-selection))
-         #\ )))
+               (get-x-selection)))))
 
 
 ;;;
@@ -167,8 +166,7 @@
   "Open transmissin WEB client."
   (run-shell-command (join (list *wi-browser*
                                  (concat "http://torrent."
-                                         *wi-transmission-hostname* ".local"))
-                           #\ )))
+                                         *wi-transmission-hostname* ".local")))))
 
 ;; Origin <https://github.com/alezost/stumpwm-config/blob/master/utils.lisp#L332>
 (defcommand wi-conkeror-browse-url (url) ((:shell "Browse URL: "))
@@ -200,8 +198,7 @@
                                  *wi-xterm-theme-light*
                                  *wi-xterm-no-scrollbar*
                                  *wi-term-execute-flag*
-                                 (w3m "~"))
-                           #\ )))
+                                 (w3m "~")))))
 
 (defcommand wi-irc-guix-log () ()
   "Open an IRC Guix log in `w3m'."
@@ -209,8 +206,7 @@
                                  *wi-xterm-theme-light*
                                  *wi-xterm-no-scrollbar*
                                  *wi-term-execute-flag*
-                                 (w3m "https://gnunet.org/bot/log/guix/"))
-                           #\ )))
+                                 (w3m "https://gnunet.org/bot/log/guix/")))))
 
 (defcommand youtube () ()
   "Start Chromium YouTube"
@@ -254,14 +250,13 @@
 
 (defcommand wi-mpv () ()
   "Start or focus mpv."
-  (run-or-raise (join `(,*wi-mpv-program* ,@*wi-mpv-arguments*) #\ )
+  (run-or-raise (join `(,*wi-mpv-program* ,@*wi-mpv-arguments*))
                 '(:class "mpv")))
 
 (defcommand wi-xclip-mpv () ()
   "Play video from clipboard with mpv."
   (run-shell-command
-   (join `(,*wi-mpv-program* ,@*wi-mpv-arguments* ,(get-x-selection))
-         #\ )))
+   (join `(,*wi-mpv-program* ,@*wi-mpv-arguments* ,(get-x-selection)))))
 
 
 ;;;
@@ -291,13 +286,12 @@
                                      (join *wi-streamlink-player-arguments*
                                            #\ ))))
            ,(get-x-selection)
-           ,*wi-streamlink-quality*)
-         #\ )))
+           ,*wi-streamlink-quality*))))
 
 (defcommand wi-xclip-emacs () ()
   "Open file from clipboard."
   (run-shell-command
-   (join (list "exec emacsclient -c" (get-x-selection)) #\ )))
+   (join (list "exec emacsclient -c" (get-x-selection)))))
 
 (defcommand emacs-anywhere () ()
   "Run `emacs-anywhere'."
@@ -317,8 +311,7 @@
   (run-shell-command
    (join (list *wi-xterm-command* *wi-xterm-theme-dark*
                *wi-xterm-no-scrollbar* *wi-term-execute-flag*
-               command)
-         #\ )))
+               command))))
 
 (defcommand epson () ()
   "Open XTerm with Epson."
@@ -359,7 +352,7 @@
 (defcommand kodi-cli-youtube () ()
   "Send video from clipboard to Kodi."
   (run-shell-command
-   (join (list "exec kodi-cli -y" (get-x-selection)) #\ )))
+   (join (list "exec kodi-cli -y" (get-x-selection)))))
 
 (defcommand youtube-dl () ()
   "Download video."
@@ -373,8 +366,7 @@
   (run-shell-command
    (join '("exec" "xterm" "-name" "youtube-dl" "-e" "youtube-dl"
            "--exec" "'mpv {}'"
-           "$(xclip -o -selection clipboard)")
-         #\ )))
+           "$(xclip -o -selection clipboard)"))))
 
 (defcommand turn-screen-off () ()
   "Turn screen off."
@@ -387,8 +379,7 @@
     ((:shell "/bin/sh -c "))
   "Run the specified shell command in XTerm."
   (run-prog *shell-program*
-            :args (list "-c" (join (list "xterm -name" cmd "-e" cmd)
-                                   #\ ))
+            :args (list "-c" (join (list "xterm -name" cmd "-e" cmd)))
             :wait nil))
 
 (defvar *wi-pulsemixer-command*
@@ -400,8 +391,7 @@
                                  *wi-xterm-theme-dark*
                                  *wi-xterm-no-scrollbar*
                                  *wi-term-execute-flag*
-                                 *wi-pulsemixer-command*)
-                           #\ )))
+                                 *wi-pulsemixer-command*))))
 
 (defcommand alsamixer () ()
   "Download video."
@@ -410,8 +400,7 @@
 (defcommand wi-run-or-raise-xterm () ()
   "Start or focus XTerm."
   (run-or-raise
-   (join (list *wi-xterm-command* *wi-xterm-theme-light*)
-         #\ )
+   (join (list *wi-xterm-command* *wi-xterm-theme-light*))
    '(:class "XTerm")))
 
 (defcommand run-xterm-light () ()
@@ -419,8 +408,7 @@
   (run-prog *shell-program*
             :args (list "-c" (join (list *wi-xterm-command*
                                          *wi-xterm-theme-light*
-                                         *wi-xterm-no-scrollbar*)
-                                   #\ ))
+                                         *wi-xterm-no-scrollbar*)))
             :wait nil))
 
 (defcommand wi-run-xterm () ()
@@ -428,21 +416,20 @@
   (run-prog *shell-program*
             :args (list "-c" (join (list *wi-xterm-command*
                                          *wi-xterm-theme-dark*
-                                         *wi-xterm-no-scrollbar*)
-                                   #\ ))
+                                         *wi-xterm-no-scrollbar*)))
             :wait nil))
 
 (defcommand wi-xterm-dark-no-scrollbar () ()
   "Start or focus XTerm."
   (run-or-raise
-   (join (list *wi-xterm-command* *wi-xterm-theme-dark* "+sb") #\ )
+   (join (list *wi-xterm-command* *wi-xterm-theme-dark* "+sb"))
    '(:class "XTerm")))
 
 (defcommand xterm-name (cmd &optional collect-output-p)
     ((:string "window name: "))
   "Run the specified shell command in XTerm."
   (run-prog *shell-program*
-            :args (list "-c" (join (list "xterm -name" cmd) #\ ))
+            :args (list "-c" (join (list "xterm -name" cmd)))
             :wait nil))
 
 (defcommand wi-screen
@@ -454,8 +441,7 @@
             (list "-c"
                   (join (list "env" "STY=" ; Do not complain `$STY' in `screen'.
                               "xterm" "-title" session
-                              "-e" "screen" "-S" session)
-                        #\ ))
+                              "-e" "screen" "-S" session)))
             :wait nil))
 
 (defcommand wi-xterm-big () ()
@@ -470,8 +456,7 @@
 (defcommand wi-sensors () ()
   "Start XTerm with `sensors'."
   (run-shell-command
-   (join (list *wi-xterm-big-command* "-e" "watch" "sensors")
-         #\ )))
+   (join (list *wi-xterm-big-command* "-e" "watch" "sensors"))))
 
 (defcommand wi-github-star () ()
   "Move mouse to star a project."
@@ -521,7 +506,7 @@
             '(:eval (window-name (current-window)))
             "]"
             "^>    "
-            '(:eval (join (split-string (run-shell-command "sensors | grep 'Core.*°C' | cut -d ' ' -f 10 | tr -d [:cntrl:]" t) "°C") #\ ))
+            '(:eval (join (split-string (run-shell-command "sensors | grep 'Core.*°C' | cut -d ' ' -f 10 | tr -d [:cntrl:]" t) "°C")))
             "    %d"))
 (setf *mode-line-pad-x* 0)
 (setf *mode-line-pad-y* 0)
