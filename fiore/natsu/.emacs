@@ -2784,6 +2784,8 @@ https://github.com/USER/REPO/commit/SHA1-HASH => SHA1-HASH"
         (read-string "Github user's repository commit URL: ")))))
   (kill-new (car (last (split-string url "/")))))
 
+(add-to-list 'projectile-project-root-files "environment-variables")
+
 ;; TODO:
 ;; Origin <https://lists.gnu.org/archive/html/emacs-devel/2017-12/msg00518.html>.
 ;; See also <https://github.com/legoscia/messages-are-flowing>.
