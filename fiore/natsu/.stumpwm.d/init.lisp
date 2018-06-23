@@ -125,8 +125,18 @@
 (defvar *wi-xterm-no-scrollbar*
   "+sb")
 
+(defvar *st-command*
+  "exec st")
+
 (defvar *wi-term-execute-flag*
   "-e")
+
+(defvar *st-exec-flag* "-e")
+
+(defvar *st-font-flag* "-f")
+
+(defvar *st-font*
+  "Monospace:size=12")
 
 (defvar *wi-conkeror-command*
   "conkeror")
@@ -307,30 +317,37 @@
 
 
 
-(defun xterm-shell-command (command)
+(defun term-shell-command (command &optional (terminal 'xterm))
   (run-shell-command
-   (join (list *wi-xterm-command* *wi-xterm-theme-dark*
-               *wi-xterm-no-scrollbar* *wi-term-execute-flag*
-               command))))
+   (let ((terminal-name (string-downcase (symbol-name terminal))))
+     (case terminal
+       ((xterm)
+        (join (list terminal-name *wi-xterm-theme-dark*
+                    *wi-xterm-no-scrollbar*
+                    *wi-term-execute-flag* command)))
+       ((st)
+        (join (list terminal-name
+                    *st-font-flag* *st-font*
+                    *st-exec-flag* command)))))))
 
 (defcommand epson () ()
-  (xterm-shell-command "sudo wi-qemu-epson.sh"))
+  (term-shell-command "sudo wi-qemu-epson.sh"))
 
 (defcommand epson-no-graphic () ()
-  (xterm-shell-command "sudo wi-qemu-epson.sh -display none"))
+  (term-shell-command "sudo wi-qemu-epson.sh -display none"))
 
 (defcommand glances () ()
-  (xterm-shell-command "glances"))
+  (term-shell-command "glances"))
 
 (defcommand htop () ()
-  (xterm-shell-command "htop"))
+  (term-shell-command "htop"))
 
 (defcommand rofi-twitchy () ()
   "Open Rofi with Twitchy plugin."
   (run-shell-command "rofi -modi twitchy:rofi-twitchy -show twitchy"))
 
 (defcommand twitchy () ()
-  (xterm-shell-command "twitchy"))
+  (term-shell-command "twitchy"))
 
 (defcommand kodi-cli-youtube () ()
   "Send video from clipboard to Kodi."
@@ -338,7 +355,7 @@
    (join (list "exec kodi-cli -y" (get-x-selection)))))
 
 (defcommand youtube-dl () ()
-  (xterm-shell-command (join (list "youtube-dl" (get-x-selection)))))
+  (term-shell-command (join (list "youtube-dl" (get-x-selection)))))
 
 (defcommand youtube-dl-play () ()
   "Download video and play it."
@@ -361,16 +378,8 @@
             :args (list "-c" (join (list "xterm -name" cmd "-e" cmd)))
             :wait nil))
 
-(defvar *wi-pulsemixer-command*
-  "pulsemixer")
-
 (defcommand pulsemixer () ()
-  "Download video."
-  (run-shell-command (join (list *wi-xterm-command*
-                                 *wi-xterm-theme-dark*
-                                 *wi-xterm-no-scrollbar*
-                                 *wi-term-execute-flag*
-                                 *wi-pulsemixer-command*))))
+  (term-shell-command "pulsemixer" 'st))
 
 (defcommand alsamixer () ()
   "Download video."
