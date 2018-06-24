@@ -1135,3 +1135,26 @@ lines elsewhere in a project.")
                  (emacs-substitute-variables "bash-completion.el"
                    ("bash-completion-prog" (string-append bash "/bin/bash"))))
                #t))))))))
+
+(define-public emacs-guix-next
+  (let ((commit "729e2d43ec34f935c39958f835dc35b6344a5b07")
+        (revision "1"))
+    (package
+      (inherit emacs-guix)
+      (name "emacs-guix-next")
+      (version (git-version (package-version emacs-guix) "1" commit))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/alezost/guix.el")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "1jr5smhl2as954a4kk5jh3c0g4vi4hn6s8318gqs7ym8fdv0xl92"))))
+      (native-inputs
+       `(("autoconf" ,autoconf)
+         ("automake" ,automake)
+         ("texinfo" ,texinfo)
+         ,@(package-native-inputs emacs-guix))))))
