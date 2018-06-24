@@ -77,6 +77,9 @@
   (let ((map guix-devel-mode-map))
     (define-key map (kbd "<f5>") 'shell)))
 
+(with-eval-after-load 'dired
+  (require 'dired-x))
+
 (with-eval-after-load 'info
   (let ((map Info-mode-map))
     (define-key map (kbd "<f8>") 'wi-info-remote-copy-current-node)))
