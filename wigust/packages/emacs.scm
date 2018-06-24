@@ -1158,3 +1158,25 @@ lines elsewhere in a project.")
          ("automake" ,automake)
          ("texinfo" ,texinfo)
          ,@(package-native-inputs emacs-guix))))))
+
+(define-public emacs-mediawiki
+  (let ((commit "8473e12d1839f5287a4227586bf117dad820f867"))
+    (package
+      (name "emacs-mediawiki")
+      (version (git-version "2.2.5" "1" commit))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/hexmode/mediawiki-el.git")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "03rpj3yrk3i1l9yjnamnx38idn6y4zi9zg53bc83sx3g2b4m5v04"))))
+      (build-system emacs-build-system)
+      (home-page
+       "https://github.com/hexmode/mediawiki-el")
+      (synopsis "Mediawiki Emacs frontend")
+      (description "This package provides a Mediawiki Emacs frontend.")
+      (license license:gpl3+))))
