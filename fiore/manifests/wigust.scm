@@ -25,7 +25,8 @@
    emacs-redshift
    emacs-ivy-yasnippet
    emacs-scratch-el
-   emacs-terminal-here-checkout))
+   emacs-terminal-here-checkout
+   emacs-flyspell-correct))
 
 (define guix-wigust-packages-local
   (list

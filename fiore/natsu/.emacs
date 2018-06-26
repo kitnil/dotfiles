@@ -90,6 +90,24 @@
   ("/" wi-dabbrev-expand "expand")
   ("u" undo "undo"))
 
+(defhydra hydra-spelling ()
+  "
+  ^
+  ^Spelling^          ^Errors^            ^Checker^
+  ^────────^──────────^──────^────────────^───────^───────
+  _q_ quit            _<_ previous        _c_ correction
+  ^^                  _>_ next            _d_ dictionary
+  ^^                  _f_ check           _m_ mode
+  ^^                  ^^                  ^^
+  "
+  ("q" nil)
+  ("<" flyspell-correct-previous :color pink)
+  (">" flyspell-correct-next :color pink)
+  ("c" ispell)
+  ("d" ispell-change-dictionary)
+  ("f" flyspell-buffer)
+  ("m" flyspell-mode))
+
 (with-eval-after-load 'vc-git
   (let ((map vc-git-log-edit-mode-map))
     (define-key map (kbd "C-c /") 'hydra-dabbrev-expand/body)
