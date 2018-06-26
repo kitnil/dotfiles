@@ -1180,3 +1180,28 @@ lines elsewhere in a project.")
       (synopsis "Mediawiki Emacs frontend")
       (description "This package provides a Mediawiki Emacs frontend.")
       (license license:gpl3+))))
+
+(define-public emacs-flyspell-correct
+  (let ((commit "0486912f57ac2ec70c472b776c63360462cb32d7"))
+    (package
+      (name "emacs-flyspell-correct")
+      (version (git-version "0.4" "1" commit))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/d12frosted/flyspell-correct.git")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "0qji0bvm14ra4xjlzx1ww4d0ih752j641n3vms1hh12n439bn6vh"))))
+      (build-system emacs-build-system)
+      (propagated-inputs
+       `(("emacs-helm" ,emacs-helm)
+         ("emacs-ivy" ,emacs-ivy)))
+      (home-page "https://github.com/d12frosted/flyspell-correct")
+      (synopsis "Correct words with @code{flyspell} via custom interface")
+      (description "This package provides functionality for correcting words
+via custom interfaces.")
+      (license license:gpl3+))))
