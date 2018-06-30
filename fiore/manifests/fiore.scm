@@ -90,6 +90,7 @@
     xwininfo    ; X Window information
 
     adb       ; For Replicant (Android distribution) control
+    bridge-utils
     cups      ; Printer
     ethtool   ; wol (wake on lan)
     file      ; Information about file from magic
