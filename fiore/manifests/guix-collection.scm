@@ -336,7 +336,6 @@
     emacs-scheme-complete
     emacs-transmission       ; Front end to transmission-daemon
     emacs-w3m                ; Front end to w3m command line web browser
-    emms                     ; Video and music player
     ;; haskell-mode
 
     flycheck                 ; Syntax checker

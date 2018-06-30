@@ -14,6 +14,7 @@
   (list
    emacs-athena
    emacs-engine-mode-autoload ; Define searches on websites
+   emacs-emms-next
    emacs-strace-mode-special ; Colorize `strace' logs
    emacs-anywhere-mode
    emacs-emamux
@@ -49,7 +50,6 @@
     emacs-debpaste           ; Front end to <https://paste.debian.net/>
     emacs-edit-indirect
     emacs-epkg
-    emacs-helm-emms
     emacs-helm-navi
     emacs-pcre2el
     emacs-perl-live

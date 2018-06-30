@@ -1882,26 +1882,18 @@ the appropriate network slug that we extract from the nick."
 ;;; EMMS
 ;;;
 
-(define-emms-simple-player-mpv wi-mpv '(file url streamlist playlist)
-    (concat "\\`\\(http[s]?\\|mms\\)://\\|"
-            (apply #'emms-player-simple-regexp
-                   "aac" "pls" "m3u" "mpg321"
-                   emms-player-base-format-list))
-    "mpv" "--no-terminal" "--force-window=no" "--audio-display=no"
-    "--no-resume-playback" "--keep-open=no"
-    "--audio-device=pulse/alsa_output.usb\
--Logitech_Logitech_USB_Headset-00.analog-stereo"
-    "--no-video")
-
-(emms-player-simple-mpv-add-to-converters
- 'emms-player-wi-mpv "." '(playlist)
- (lambda (track-name) (format "--playlist=%s" track-name)))
-
-(add-to-list 'emms-player-list 'emms-player-wi-mpv)
+(require 'emms-setup)
 
 (with-eval-after-load 'emms-setup
-  (emms-standard)
+  (emms-all)
   (emms-default-players)
+  (setq emms-player-mpv-parameters
+	(append '("--no-terminal" "--force-window=no" "--audio-display=no"
+                  "--no-resume-playback" "--keep-open=no"
+                  "--audio-device=pulse/alsa_output.usb\
+-Logitech_Logitech_USB_Headset-00.analog-stereo"
+                  "--no-video")
+		emms-player-mpv-parameters))
 
   (setq emms-volume-change-function #'emms-volume-pulse-change)
   (setq emms-player-next-function 'emms-next-noerror)
@@ -1934,11 +1926,6 @@ the appropriate network slug that we extract from the nick."
   (define-key map (kbd "n") 'emms-next-playlist-mode-center-current)
   (define-key map (kbd "p") 'emms-previous-playlist-mode-center-current)
   (define-key map (kbd "r") 'emms-random-playlist-mode-center-current)
-  (define-key map (kbd "m") 'emms-player-simple-mpv-mute)
-  (define-key map (kbd "[") 'emms-player-simple-mpv-speed-decrease)
-  (define-key map (kbd "]") 'emms-player-simple-mpv-speed-increase)
-  (define-key map (kbd "{") 'emms-player-simple-mpv-speed-halve)
-  (define-key map (kbd "}") 'emms-player-simple-mpv-speed-double)
   (define-key map (kbd "<backspace>") 'emms-player-simple-mpv-speed-normal)
   (define-key map (kbd "T") 'emms-player-simple-mpv-ontop)
   (define-key map (kbd "F") 'emms-player-simple-mpv-fullscreen)
