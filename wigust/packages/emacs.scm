@@ -1221,3 +1221,25 @@ via custom interfaces.")
          (sha256
           (base32
            "1wg00dr35h9shs6782s20nds8razqibys9ipzi9aa2kb3yhkdp6q")))))))
+
+(define-public emacs-proc-net
+  (let ((commit "10861112a1f3994c8e6374d6c5bb5d734cfeaf73"))
+    (package
+      (name "emacs-proc-net")
+      (version (git-version "0" "1" commit))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/nicferrier/emacs-proc-net.git")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "0nly5h0d6w8dc08ifb2fiqcn4cqcn9crkh2wn0jzlz4zd2x75qrb"))))
+      (build-system emacs-build-system)
+      (home-page "https://github.com/nicferrier/emacs-proc-net")
+      (synopsis "Network process tools")
+      (description "This package provides an Emacs tools for doing stuff with
+network processes.")
+      (license license:gpl3+))))
