@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2017 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2017, 2018 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -103,6 +103,19 @@
     (synopsis "Vim-like file manager")
     (description "Vim-like file manager")
     (license #f)))
+
+(define-public python-requests-2.18
+  (package
+    (inherit python-requests)
+    (version "2.18.0")
+    (name (string-append (package-name python-requests) "-" version))
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "requests" version))
+       (sha256
+        (base32
+         "0p7awxhzd81fwmjbsrx1bb0xkd4f8ynxmz8myyzq8wkqcbwqj0fd"))))))
 
 (define-public python-github
   (let ((commit "c82e90e5bd65eaadeabbdbbbe37bc7e3dc295b3e")
