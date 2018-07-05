@@ -143,6 +143,19 @@
         (base32
          "19c22gbkzs14dcaj4vvjgyfl0iqhhbbp7abblw0hkjhqhnbqci5i"))))))
 
+(define-public python-idna-2.5
+  (package
+    (inherit python-idna)
+    (version "2.5")
+    (name (string-append (package-name python-idna) "-" version))
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "idna" version))
+       (sha256
+        (base32
+         "1ara12a7k2zc69msa0arrvw00gn61a6i6by01xb3lkkc0h4cxd9w"))))))
+
 (define-public python-github
   (let ((commit "c82e90e5bd65eaadeabbdbbbe37bc7e3dc295b3e")
         (revision "1"))
