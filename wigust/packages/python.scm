@@ -77,6 +77,7 @@
   #:use-module (gnu packages python)
   #:use-module (gnu packages python-crypto)
   #:use-module (gnu packages python-web)
+  #:use-module (gnu packages time)
   #:use-module (guix packages)
   #:use-module (guix download)
   #:use-module (guix git-download)
@@ -157,35 +158,38 @@
          "1ara12a7k2zc69msa0arrvw00gn61a6i6by01xb3lkkc0h4cxd9w"))))))
 
 (define-public python-github
-  (let ((commit "c82e90e5bd65eaadeabbdbbbe37bc7e3dc295b3e")
-        (revision "1"))
-    (package
-      (name "python-github")
-      (version (string-append "1.0.0a4" revision "."
-                              (string-take commit 7)))
-      (source (origin
-                (method git-fetch)
-                (uri (git-reference
-                      (url "https://github.com/sigmavirus24/github3.py.git")
-                      (commit commit)))
-                (file-name (string-append name "-" version "-checkout"))
-                (sha256
-                 (base32
-                  "17vfzjshr5p567x28zvilcsy0n814hcx4wjiz185n7p44sgc577r"))))
-      (build-system python-build-system)
-      (propagated-inputs
-       `(("python-ndg-httpsclient" ,python-ndg-httpsclient)
-         ("python-pyasn1" ,python-pyasn1)
-         ("python-pyopenssl" ,python-pyopenssl)
-         ("python-betamax-matchers" ,python-betamax-matchers)
-         ("python-mock" ,python-mock)
-         ("python-pytest" ,python-pytest)
-         ("python-uritemplate" ,python-uritemplate)))
-      (home-page "https://github3py.readthedocs.org")
-      (synopsis "Python wrapper for the GitHub API")
-      (description "Python wrapper for the GitHub API
+  (package
+    (name "python-github")
+    (version "1.1.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append "https://github.com/sigmavirus24/github3.py/archive/"
+                           version ".tar.gz"))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32
+         "1w1qfg16w3gq24yvbmvws7jn77rc3nsv9az9hs2awyppqjb5724d"))))
+    (build-system python-build-system)
+    (propagated-inputs
+     `(("python-ndg-httpsclient" ,python-ndg-httpsclient)
+       ("python-pyasn1" ,python-pyasn1)
+       ("python-pyopenssl" ,python-pyopenssl)
+       ("python-betamax-matchers" ,python-betamax-matchers)
+       ("python-mock" ,python-mock)
+       ("python-pytest" ,python-pytest)
+       ("python-uritemplate" ,python-uritemplate)
+       ("python-dateutil" ,python-dateutil)
+       ("python-requests" ,python-requests-2.18)
+       ("python-certifi" ,python-certifi-2017.4.17)
+       ("python-urllib3" ,python-urllib3-1.21.1)
+       ("python-idna" ,python-idna-2.5)
+       ("python-chardet" ,python-chardet)))
+    (home-page "https://github3py.readthedocs.org")
+    (synopsis "Python wrapper for the GitHub API")
+    (description "Python wrapper for the GitHub API
 @url{http://developer.github.com/v3}.")
-      (license license:bsd-3))))
+    (license license:bsd-3)))
 
 (define-public python2-github
   (let ((base (package-with-python2
