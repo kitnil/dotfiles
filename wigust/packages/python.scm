@@ -130,6 +130,19 @@
         (base32
          "02n16i1dbp8cq974z0wh0pa11s0w2kfh77ksbzljqn31fjzpwlpp"))))))
 
+(define-public python-urllib3-1.21.1
+  (package
+    (inherit python-urllib3)
+    (version "1.21.1")
+    (name (string-append (package-name python-urllib3) "-" version))
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "urllib3" version))
+       (sha256
+        (base32
+         "19c22gbkzs14dcaj4vvjgyfl0iqhhbbp7abblw0hkjhqhnbqci5i"))))))
+
 (define-public python-github
   (let ((commit "c82e90e5bd65eaadeabbdbbbe37bc7e3dc295b3e")
         (revision "1"))
