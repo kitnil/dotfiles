@@ -117,6 +117,19 @@
         (base32
          "0p7awxhzd81fwmjbsrx1bb0xkd4f8ynxmz8myyzq8wkqcbwqj0fd"))))))
 
+(define-public python-certifi-2017.4.17
+  (package
+    (inherit python-certifi)
+    (version "2017.4.17")
+    (name (string-append (package-name python-certifi) "-" version))
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "certifi" version))
+       (sha256
+        (base32
+         "02n16i1dbp8cq974z0wh0pa11s0w2kfh77ksbzljqn31fjzpwlpp"))))))
+
 (define-public python-github
   (let ((commit "c82e90e5bd65eaadeabbdbbbe37bc7e3dc295b3e")
         (revision "1"))
