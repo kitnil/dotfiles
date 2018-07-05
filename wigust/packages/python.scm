@@ -225,21 +225,21 @@
         (revision "1"))
     (package
       (name "python-starred")
-      (version (string-append "1.3.1" revision "."
-                              (string-take commit 7)))
-      (source (origin
-                (method git-fetch)
-                (uri (git-reference
-                      (url "https://github.com/maguowei/starred.git")
-                      (commit commit)))
-                (file-name (string-append name "-" version "-checkout"))
-                (sha256
-                 (base32
-                  "181jr5r4m1dkb081jynlkdmy8cd55673vl8lwzb34q6diqds844a"))))
+      (version "2.0.3")
+      (source
+       (origin
+         (method url-fetch)
+         (uri (string-append "https://github.com/maguowei/starred/archive/"
+                             "v" version ".tar.gz"))
+         (file-name (string-append name "-" version ".tar.gz"))
+         (sha256
+          (base32
+           "116z8zgqj8d9451d8rajkmbfv8zpvwhgrsdcgmhzmlpl5bb22ilp"))))
       (build-system python-build-system)
       (propagated-inputs
        `(("python-click" ,python-click)
-         ("python-github" ,python-github)))
+         ("python-github" ,python-github)
+         ("python-urllib3" ,python-urllib3-1.21.1)))
       (home-page "https://github.com/maguowei/starred")
       (synopsis "Awesome List used GitHub stars")
       (description "Awesome List used GitHub stars.")
