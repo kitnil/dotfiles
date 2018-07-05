@@ -16,3 +16,4 @@
 [alias]
 	branches-by-date = for-each-ref --sort=-committerdate refs/heads
         contributers = shortlog -sne
+        ll= log --format='%H %ae %cI %s'
