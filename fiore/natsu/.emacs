@@ -1103,21 +1103,6 @@ Sets the following basend on PREFIX-MAP:
                (insert text))))
          ,name-text-list))
 
-(defun wi-dunno ()
-  (interactive)
-  "Insert a `¯\_(ツ)_/¯' thing."
-  (insert "¯\_(ツ)_/¯"))
-
-(defun wi-arrow-up ()
-  (interactive)
-  "Insert a `↑' symbol."
-  (insert "↑"))
-
-(defun wi-ellipsis-horizontal ()
-  (interactive)
-  "Insert a `…' symbol."
-  (insert "…"))
-
 (defun wi-guix-download (url)
   (interactive "sDownload URL: ")
   (insert
