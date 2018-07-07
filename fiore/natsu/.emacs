@@ -1393,9 +1393,8 @@ With a prefix argument, clean `geiser-guile-load-path'."
                  wi-c--prettify-symbols-alist)))
 (add-hook 'c-mode-hook 'prettify-symbols-mode)
 
-;; BUG:
-;; (with-eval-after-load 'cc-vars
-;;   (add-to-list 'c-cleanup-list 'space-before-funcall))
+(with-eval-after-load 'cc-vars
+  (setq-default c-cleanup-list '(space-before-funcall scope-operator)))
 
 (with-eval-after-load 'semantic
   (global-semantic-decoration-mode t))
