@@ -1,0 +1,3 @@
+#!/bin/sh
+
+time env GUIX_PACKAGE_PATH= guix pull -c 1 $@
