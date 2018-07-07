@@ -632,3 +632,5 @@
 
 (define-key *top-map* (kbd "XF86AudioRaiseVolume") "ponymix-increase")
 (define-key *top-map* (kbd "XF86AudioLowerVolume") "ponymix-decrease")
+
+(define-key *root-map* (kbd "C-b") "warp-mouse-active-frame")
