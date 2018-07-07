@@ -609,6 +609,7 @@
   "Dumps the frames of the current group of the current screen to the named file."
   (dump-to-file (dump-group (current-group)) file))
 
+(setf xft:*font-dirs* '("/run/current-system/profile/share/fonts/"))
 (ql:quickload "clx-truetype")
 (load-module "ttf-fonts")
 (xft:cache-fonts)
