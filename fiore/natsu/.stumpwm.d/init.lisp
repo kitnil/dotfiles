@@ -48,7 +48,7 @@
 ;; (run-shell-command "xset s 0")
 ;; (run-shell-command "xset dpms 0 0 1800")
 
-;; (run-shell-command "xmodmap ~/.Xmodmap")
+(run-shell-command "xmodmap ~/.Xmodmap")
 
 (setf *message-window-y-padding* 3)
 
