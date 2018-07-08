@@ -106,29 +106,29 @@
 
 (setf *window-format* "%m%n%s %c %50t")
 
-(defvar *wi-xterm-command*
+(defvar *xterm-command*
   "exec xterm")
 
-(defvar *wi-xterm-big-command*
+(defvar *xterm-big-command*
   "exec xterm -fa 'Monospace' -fs 24")
 
 (defun w3m (url)
   "Return a `w3m' command to open a URL."
   (concat "w3m " url))
 
-(defvar *wi-xterm-theme-light*
+(defvar *xterm-theme-light*
   "-bg white -fg black")
 
-(defvar *wi-xterm-theme-dark*
+(defvar *xterm-theme-dark*
   "-bg black -fg white")
 
-(defvar *wi-xterm-no-scrollbar*
+(defvar *xterm-no-scrollbar*
   "+sb")
 
 (defvar *st-command*
   "exec st")
 
-(defvar *wi-term-execute-flag*
+(defvar *term-execute-flag*
   "-e")
 
 (defvar *st-exec-flag* "-e")
@@ -138,13 +138,12 @@
 (defvar *st-font*
   "Monospace:size=12")
 
-(defvar *wi-conkeror-command*
+(defvar *conkeror-command*
   "conkeror")
 
-(defvar *wi-browser*
-  *wi-conkeror-command*)
+(defvar *browser* *conkeror-command*)
 
-(defvar *wi-transmission-hostname*
+(defvar *transmission-hostname*
   "magnolia")
 
 
@@ -170,16 +169,16 @@
 
 (defcommand conkeror () ()
   "Start or focus conkeror."
-  (run-or-raise *wi-conkeror-command* '(:class "Conkeror")))
+  (run-or-raise *conkeror-command* '(:class "Conkeror")))
 
-(defcommand wi-browse-transmission () ()
+(defcommand browse-transmission () ()
   "Open transmissin WEB client."
-  (run-shell-command (join (list *wi-browser*
+  (run-shell-command (join (list *browser*
                                  (concat "http://torrent."
-                                         *wi-transmission-hostname* ".local")))))
+                                         *transmission-hostname* ".local")))))
 
 ;; Origin <https://github.com/alezost/stumpwm-config/blob/master/utils.lisp#L332>
-(defcommand wi-conkeror-browse-url (url) ((:shell "Browse URL: "))
+(defcommand conkeror-browse-url (url) ((:shell "Browse URL: "))
   "Browse URL with conkeror."
   (run-prog "conkeror" :args (list url) :wait nil :search t))
 
@@ -191,7 +190,7 @@
   "Start of focus firefox."
   (run-or-raise "firefox-latest" '(:class "Firefox")))
 
-(defcommand wi-chromium () ()
+(defcommand chromium () ()
   "Start or focus Chromium."
   (run-or-raise "chromium" '(:class "Chromium-browser")))
 
@@ -202,20 +201,20 @@
                              " --host-resolver-rules='MAP * ~NOTFOUND"
                              " , EXCLUDE localhost'")))
 
-(defcommand wi-w3m () ()
+(defcommand w3m () ()
   "Open a W3M browser in user's home directory."
-  (run-shell-command (join (list *wi-xterm-command*
-                                 *wi-xterm-theme-light*
-                                 *wi-xterm-no-scrollbar*
-                                 *wi-term-execute-flag*
+  (run-shell-command (join (list *xterm-command*
+                                 *xterm-theme-light*
+                                 *xterm-no-scrollbar*
+                                 *term-execute-flag*
                                  (w3m "~")))))
 
-(defcommand wi-irc-guix-log () ()
+(defcommand irc-guix-log () ()
   "Open an IRC Guix log in `w3m'."
-  (run-shell-command (join (list *wi-xterm-command*
-                                 *wi-xterm-theme-light*
-                                 *wi-xterm-no-scrollbar*
-                                 *wi-term-execute-flag*
+  (run-shell-command (join (list *xterm-command*
+                                 *xterm-theme-light*
+                                 *xterm-no-scrollbar*
+                                 *term-execute-flag*
                                  (w3m "https://gnunet.org/bot/log/guix/")))))
 
 (defcommand youtube () ()
@@ -230,75 +229,75 @@
 ;;;
 
 ;; Look for audio devices ‘mpv --audio-device=help’
-(defvar *wi-headphones*
+(defvar *headphones*
   "pulse/alsa_output.usb-Logitech_Logitech_USB_Headset-00.analog-stereo"
   "Pulseaudio device.  Heaphones.")
 
-(defvar *wi-mpv-program* "mpv"
+(defvar *mpv-program* "mpv"
  "The name by which to invoke MPV.")
 
-(defparameter *wi-mpv-headphones*
+(defparameter *mpv-headphones*
   nil
   "If non-nil use heaphones in MPV.")
 
-(defvar *wi-mpv-default-arguments*
+(defvar *mpv-default-arguments*
   '("--keep-open=no"))
 
-(defparameter *wi-mpv-arguments*
-  *wi-mpv-default-arguments*)
+(defparameter *mpv-arguments*
+  *mpv-default-arguments*)
 
-(defcommand wi-toggle-mpv-arguments () ()
-  (if *wi-mpv-headphones*
+(defcommand toggle-mpv-arguments () ()
+  (if *mpv-headphones*
       (progn
-        (setf *wi-mpv-arguments* *wi-mpv-default-arguments*)
-        (setf *wi-mpv-headphones* nil))
+        (setf *mpv-arguments* *mpv-default-arguments*)
+        (setf *mpv-headphones* nil))
       (progn
-        (setf *wi-mpv-arguments*
-              `(,@*wi-mpv-default-arguments*
-                ,(concat "--audio-device=" *wi-headphones*)))
-        (setf *wi-mpv-headphones* t))))
+        (setf *mpv-arguments*
+              `(,@*mpv-default-arguments*
+                ,(concat "--audio-device=" *headphones*)))
+        (setf *mpv-headphones* t))))
 
-(defcommand wi-mpv () ()
+(defcommand mpv () ()
   "Start or focus mpv."
-  (run-or-raise (join `(,*wi-mpv-program* ,@*wi-mpv-arguments*))
+  (run-or-raise (join `(,*mpv-program* ,@*mpv-arguments*))
                 '(:class "mpv")))
 
-(defcommand wi-xclip-mpv () ()
+(defcommand xclip-mpv () ()
   "Play video from clipboard with mpv."
   (run-shell-command
-   (join `(,*wi-mpv-program* ,@*wi-mpv-arguments* ,(get-x-selection)))))
+   (join `(,*mpv-program* ,@*mpv-arguments* ,(get-x-selection)))))
 
 
 ;;;
 ;;; Streamlink
 ;;;
 
-(defvar *wi-streamlink-program* "streamlink")
-(defvar *wi-streamlink-arguments* '("-p" "mpv"))
-(defvar *wi-streamlink-player-arguments* nil)
-(defvar *wi-streamlink-quality* "best")
+(defvar *streamlink-program* "streamlink")
+(defvar *streamlink-arguments* '("-p" "mpv"))
+(defvar *streamlink-player-arguments* nil)
+(defvar *streamlink-quality* "best")
 
-(defun wi-single-quote-string (str)
+(defun single-quote-string (str)
   (let ((string-quote "'"))
     (concat string-quote str string-quote)))
 
-(defun wi-quote-string (str)
+(defun quote-string (str)
   (let ((string-quote "\""))
     (concat string-quote str string-quote)))
 
-(defcommand wi-xclip-streamlink () ()
+(defcommand xclip-streamlink () ()
   "Play video from clipboard with streamlink."
   (run-shell-command
-   (join `(,*wi-streamlink-program*
-           ,@*wi-streamlink-arguments*
-           ,@(if *wi-streamlink-player-arguments*
-                 `("--player-args" ,(wi-single-quote-string
-                                     (join *wi-streamlink-player-arguments*
+   (join `(,*streamlink-program*
+           ,@*streamlink-arguments*
+           ,@(if *streamlink-player-arguments*
+                 `("--player-args" ,(single-quote-string
+                                     (join *streamlink-player-arguments*
                                            #\ ))))
            ,(get-x-selection)
-           ,*wi-streamlink-quality*))))
+           ,*streamlink-quality*))))
 
-(defcommand wi-xclip-emacs () ()
+(defcommand xclip-emacs () ()
   "Open file from clipboard."
   (run-shell-command
    (join (list "exec emacsclient -c" (get-x-selection)))))
@@ -322,19 +321,19 @@
    (let ((terminal-name (string-downcase (symbol-name terminal))))
      (case terminal
        ((xterm)
-        (join (list terminal-name *wi-xterm-theme-dark*
-                    *wi-xterm-no-scrollbar*
-                    *wi-term-execute-flag* command)))
+        (join (list terminal-name *xterm-theme-dark*
+                    *xterm-no-scrollbar*
+                    *term-execute-flag* command)))
        ((st)
         (join (list terminal-name
                     *st-font-flag* *st-font*
                     *st-exec-flag* command)))))))
 
 (defcommand epson () ()
-  (term-shell-command "sudo wi-qemu-epson.sh"))
+  (term-shell-command "sudo qemu-epson.sh"))
 
 (defcommand epson-no-graphic () ()
-  (term-shell-command "sudo wi-qemu-epson.sh -display none"))
+  (term-shell-command "sudo qemu-epson.sh -display none"))
 
 (defcommand glances () ()
   (term-shell-command "glances"))
@@ -385,32 +384,32 @@
   "Download video."
   (run-shell-command "exec xterm -name alsamixer -e alsamixer"))
 
-(defcommand wi-run-or-raise-xterm () ()
+(defcommand run-or-raise-xterm () ()
   "Start or focus XTerm."
   (run-or-raise
-   (join (list *wi-xterm-command* *wi-xterm-theme-light*))
+   (join (list *xterm-command* *xterm-theme-light*))
    '(:class "XTerm")))
 
 (defcommand run-xterm-light () ()
   "Start or focus XTerm."
   (run-prog *shell-program*
-            :args (list "-c" (join (list *wi-xterm-command*
-                                         *wi-xterm-theme-light*
-                                         *wi-xterm-no-scrollbar*)))
+            :args (list "-c" (join (list *xterm-command*
+                                         *xterm-theme-light*
+                                         *xterm-no-scrollbar*)))
             :wait nil))
 
-(defcommand wi-run-xterm () ()
+(defcommand run-xterm () ()
   "Start or focus XTerm."
   (run-prog *shell-program*
-            :args (list "-c" (join (list *wi-xterm-command*
-                                         *wi-xterm-theme-dark*
-                                         *wi-xterm-no-scrollbar*)))
+            :args (list "-c" (join (list *xterm-command*
+                                         *xterm-theme-dark*
+                                         *xterm-no-scrollbar*)))
             :wait nil))
 
-(defcommand wi-xterm-dark-no-scrollbar () ()
+(defcommand xterm-dark-no-scrollbar () ()
   "Start or focus XTerm."
   (run-or-raise
-   (join (list *wi-xterm-command* *wi-xterm-theme-dark* "+sb"))
+   (join (list *xterm-command* *xterm-theme-dark* "+sb"))
    '(:class "XTerm")))
 
 (defcommand xterm-name (cmd &optional collect-output-p)
@@ -420,7 +419,7 @@
             :args (list "-c" (join (list "xterm -name" cmd)))
             :wait nil))
 
-(defcommand wi-screen
+(defcommand screen
     (session &optional collect-output-p)
     ((:string "session name: "))
   "Run `screen' session."
@@ -432,35 +431,35 @@
                               "-e" "screen" "-S" session)))
             :wait nil))
 
-(defcommand wi-xterm-big () ()
+(defcommand xterm-big () ()
   "Start XTerm with big fonts."
-  (run-shell-command *wi-xterm-big-command*))
+  (run-shell-command *xterm-big-command*))
 
-(defcommand wi-xterm-big-screen () ()
+(defcommand xterm-big-screen () ()
   "Start XTerm with big fonts."
   (run-shell-command
-   (concat *wi-xterm-big-command* " -e screen")))
+   (concat *xterm-big-command* " -e screen")))
 
-(defcommand wi-sensors () ()
+(defcommand sensors () ()
   "Start XTerm with `sensors'."
   (run-shell-command
-   (join (list *wi-xterm-big-command* "-e" "watch" "sensors"))))
+   (join (list *xterm-big-command* "-e" "watch" "sensors"))))
 
-(defcommand wi-github-star () ()
+(defcommand github-star () ()
   "Move mouse to star a project."
   (ratwarp 1308 176)
   (ratclick))
 
-(defcommand wi-qemu-debian () ()
+(defcommand qemu-debian () ()
   "Run GNOME Debian in QEMU."
   (run-shell-command (concat "exec " (getenv "HOME") "/bin/debian.sh")))
 
-(defparameter wi-dark-theme nil)
+(defparameter dark-theme nil)
 (set-focus-color "#daa520")
 (set-border-color "#daa520")
 (set-float-focus-color "#daa520")
-(defcommand wi-toggle-theme () ()
-  (if wi-dark-theme
+(defcommand toggle-theme () ()
+  (if dark-theme
       (progn (setq *mode-line-border-color*     "#ffffff"
                    *mode-line-foreground-color* "#000000"
                    *mode-line-background-color* "#ffffff")
@@ -469,7 +468,7 @@
              (set-fg-color "#000000")
              (set-bg-color "#ffffff")
              (run-shell-command "xsetroot -solid grey")
-             (setq wi-dark-theme nil))
+             (setq dark-theme nil))
       (progn (setq *mode-line-border-color*     "#000000"
                    *mode-line-foreground-color* "#ffffff"
                    *mode-line-background-color* "#000000")
@@ -478,8 +477,8 @@
              (set-fg-color "#ffffff")
              (set-bg-color "#000000")
              (run-shell-command "xsetroot -solid black")
-             (setq wi-dark-theme t))))
-(wi-toggle-theme)
+             (setq dark-theme t))))
+(toggle-theme)
 
 (setf *mode-line-timeout* 2)
 (setf *TIME-MODELINE-STRING* "%a %b %e %k:%M")
@@ -532,19 +531,19 @@
   "Screenshot with filename like 2017-10-30-03-29-16.png"
   (eval-command (concat "screenshot-window " (screenshot-filename))))
 
-(defcommand wi-trans () ()
+(defcommand trans () ()
   "Run `xterm' with `trans' in interactive mode."
   (run-shell-command "exec xterm -name trans -e 'trans -I en:ru'"))
 
 (define-key *root-map* (kbd "e") "emacsclient")
 
-(define-key *root-map* (kbd "m") "wi-mpv")
-(define-key *root-map* (kbd "C-m") "wi-xclip-mpv")
-(define-key *root-map* (kbd "M-m") "wi-xclip-streamlink")
+(define-key *root-map* (kbd "m") "mpv")
+(define-key *root-map* (kbd "C-m") "xclip-mpv")
+(define-key *root-map* (kbd "M-m") "xclip-streamlink")
 
 (define-key *root-map* (kbd "u") "emacs-org-capture")
-(define-key *root-map* (kbd "C-e") "wi-xclip-emacs")
-(define-key *root-map* (kbd "C-M-c") "wi-xterm-big-screen")
+(define-key *root-map* (kbd "C-e") "xclip-emacs")
+(define-key *root-map* (kbd "C-M-c") "xterm-big-screen")
 (define-key *root-map* (kbd "M-e") "emacs-anywhere")
 
 ;; Lock screen
@@ -554,8 +553,8 @@
 (define-key *root-map* (kbd "M-!") "run-xterm-command")
 (define-key *root-map* (kbd "v") "pulsemixer")
 (define-key *root-map* (kbd "C-v") "alsamixer")
-(define-key *root-map* (kbd "c") "wi-run-or-raise-xterm")
-(define-key *root-map* (kbd "C-c") "wi-run-xterm")
+(define-key *root-map* (kbd "c") "run-or-raise-xterm")
+(define-key *root-map* (kbd "C-c") "run-xterm")
 (define-key *root-map* (kbd "C-M-c") "run-xterm-light")
 
 (define-key *root-map* (kbd "C-M-v") "scroll-other-window")
