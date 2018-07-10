@@ -316,6 +316,34 @@
 
 
 ;;;
+;;; youtube-dl
+;;;
+
+(defun youtube-dl-output (dir)
+  (concat dir "/" "%(title)s.%(ext)s"))
+
+(defvar *music-directory* "/srv/music")
+
+(defvar *youtube-dl-output-music*
+  (youtube-dl-output *music-directory*))
+
+(defcommand youtube-dl () ()
+  (term-shell-command (join (list "youtube-dl" (get-x-selection)))))
+
+(defcommand youtube-dl-music () ()
+  (term-shell-command (join (list "youtube-dl"
+                                  "--output" *youtube-dl-output-music*
+                                  (get-x-selection)))))
+
+(defcommand youtube-dl-play () ()
+  "Download video and play it."
+  (run-shell-command
+   (join '("exec" "xterm" "-name" "youtube-dl" "-e" "youtube-dl"
+           "--exec" "'mpv {}'"
+           "$(xclip -o -selection clipboard)"))))
+
+
+;;;
 ;;; Misc
 ;;;
 
@@ -355,16 +383,6 @@
   "Send video from clipboard to Kodi."
   (run-shell-command
    (join (list "exec kodi-cli -y" (get-x-selection)))))
-
-(defcommand youtube-dl () ()
-  (term-shell-command (join (list "youtube-dl" (get-x-selection)))))
-
-(defcommand youtube-dl-play () ()
-  "Download video and play it."
-  (run-shell-command
-   (join '("exec" "xterm" "-name" "youtube-dl" "-e" "youtube-dl"
-           "--exec" "'mpv {}'"
-           "$(xclip -o -selection clipboard)"))))
 
 (defcommand turn-screen-off () ()
   "Turn screen off."
