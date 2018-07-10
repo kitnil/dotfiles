@@ -315,6 +315,9 @@
                              " /srv/music/*")))
 
 
+;;;
+;;; Misc
+;;;
 
 (defun term-shell-command (command &optional (terminal 'xterm))
   (run-shell-command
