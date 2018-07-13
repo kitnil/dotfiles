@@ -372,6 +372,10 @@
 (defcommand htop () ()
   (term-shell-command "htop"))
 
+(defcommand rofi-drun () ()
+  "Open Rofi to launch `.desktop' file."
+  (run-shell-command "rofi -modi run,drun -show drun"))
+
 (defcommand rofi-twitchy () ()
   "Open Rofi with Twitchy plugin."
   (run-shell-command "rofi -modi twitchy:rofi-twitchy -show twitchy"))
