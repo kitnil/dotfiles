@@ -2493,7 +2493,9 @@ If nil use light theme.")
       (youtube-rss-user
        "https://www.youtube.com/feeds/videos.xml?user="))
   (setq elfeed-feeds
-        `("http://nullprogram.com/feed/"
+        `("https://h-node.org/rss/modifications/en"
+
+          "http://nullprogram.com/feed/"
 
           "http://www.scheme.dk/planet/atom.xml"
           "http://planet.lisp.org/rss20.xml"
