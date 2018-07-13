@@ -267,6 +267,11 @@
   (run-shell-command
    (join `(,*mpv-program* ,@*mpv-arguments* ,(get-x-selection)))))
 
+(defcommand mpv-watch () ()
+  "Play video from file with mpv."
+  (run-shell-command
+   (join `(,*mpv-program* ,@*mpv-arguments* "$(cat /home/natsu/watch)"))))
+
 
 ;;;
 ;;; Streamlink
