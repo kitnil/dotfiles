@@ -57,16 +57,18 @@
   #:use-module (gnu packages xiph)
   #:use-module (gnu packages cdrom))
 
-(define-public cdrkit
+(define-public cdrkit-libre
   (package
-    (name "cdrkit")
+    (name "cdrkit-libre")
     (version "1.1.11")
     (source (origin
               (method url-fetch)
-              (uri (string-append "http://cdrkit.org/releases/" name ".tar.gz"))
+              (uri (string-append
+                    "https://repo.parabola.nu/other/cdrkit-libre/cdrkit-libre-"
+                    version ".tar.gz"))
               (sha256
                (base32
-                "1nj7iv3xrq600i37na9a5idd718piiiqbs4zxvpjs66cdrsk1h6i"))))
+                "0g2zyzb56czh429qy87lvaddzjnlcq8c616ddxsmsshz3clhyzrh"))))
     (build-system cmake-build-system)
     (native-inputs
      `(("bzip2" ,bzip2)
