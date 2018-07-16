@@ -9,8 +9,8 @@
   #:use-module (ice-9 rdelim)
   #:use-module (fiore manifests fiore))
 
-(use-service-modules cups desktop dns mail networking rsync shepherd
-spice ssh version-control virtualization web xorg cgit)
+(use-service-modules certbot cups desktop dns mail networking rsync
+shepherd spice ssh version-control virtualization web xorg cgit)
 
 (use-package-modules admin android bash bootloaders certs cryptsetup cups
 databases dns file fonts fontutils freedesktop gnome gnupg linux mail
@@ -153,6 +153,7 @@ EndSection
    (server-blocks
     (list (nginx-server-configuration
            (server-name '("www.magnolia.local"))
+           (listen '("80"))
            (root "/srv/share")
            (ssl-certificate #f)
            (ssl-certificate-key #f))))))
@@ -161,6 +162,7 @@ EndSection
   (simple-service 'torrent-publish-nginx nginx-service-type
    (list (nginx-server-configuration
           (server-name '("print.magnolia.local"))
+          (listen '("80"))
           (locations (list (nginx-location-configuration
                             (uri "/")
                             (body '("proxy_pass http://localhost:631;")))))
@@ -171,6 +173,7 @@ EndSection
   (simple-service 'torrent-publish-nginx nginx-service-type
    (list (nginx-server-configuration
           (server-name '("torrent.magnolia.local"))
+          (listen '("80"))
           (locations (list (nginx-location-configuration
                             (uri "/")
                             (body '("proxy_pass http://localhost:9091;")))))
@@ -181,6 +184,7 @@ EndSection
   (simple-service 'guix-publish-nginx nginx-service-type
    (list (nginx-server-configuration
           (server-name '("zabbix.intr"))
+          (listen '("80"))
           (locations (list (nginx-location-configuration
                             (uri "/")
                             (body '("resolver 80.80.80.80;"
@@ -193,6 +197,7 @@ EndSection
   (simple-service 'guix-publish-nginx nginx-service-type
    (list (nginx-server-configuration
           (server-name '("cerberus.intr"))
+          (listen '("80"))
           (locations (list (nginx-location-configuration
                             (uri "/")
                             (body '("resolver 80.80.80.80;"
@@ -204,17 +209,21 @@ EndSection
 (define guix-publish-nginx-service
   (simple-service 'guix-publish-nginx nginx-service-type
    (list (nginx-server-configuration
-          (server-name '("guix.magnolia.local"))
+          (server-name '("guix.duckdns.org"))
+          (listen '("80" "443 ssl"))
+          (ssl-certificate
+           "/etc/letsencrypt/live/guix.duckdns.org/fullchain.pem")
+          (ssl-certificate-key
+           "/etc/letsencrypt/live/guix.duckdns.org/privkey.pem")
           (locations (list (nginx-location-configuration
                             (uri "/")
-                            (body '("proxy_pass http://localhost:3000;")))))
-          (ssl-certificate #f)
-          (ssl-certificate-key #f)))))
+                            (body '("proxy_pass http://localhost:3000;")))))))))
 
 (define natsu-nginx-service
   (simple-service 'natsu-nginx nginx-service-type
    (list (nginx-server-configuration
          (server-name '("natsu.magnolia.local"))
+         (listen '("80"))
          (root "/home/natsu/public_html")
          (ssl-certificate #f)
          (ssl-certificate-key #f)))))
@@ -229,7 +238,34 @@ EndSection
 (define %cgit-configuration-nginx-custom
   (nginx-server-configuration
    (inherit %cgit-configuration-nginx)
-   (server-name '("cgit.magnolia.local"))))
+   (listen '("80" "443 ssl"))
+   (ssl-certificate
+    "/etc/letsencrypt/live/cgit.duckdns.org/fullchain.pem")
+   (ssl-certificate-key
+    "/etc/letsencrypt/live/cgit.duckdns.org/privkey.pem")
+   (server-name '("cgit.duckdns.org"))))
+
+(define anongit-nginx-service
+  (simple-service 'anongit-nginx nginx-service-type
+   (list (nginx-server-configuration
+          (listen '("80" "443 ssl"))
+          (server-name '("anongit.duckdns.org"))
+          (root "/srv/git")
+          (ssl-certificate
+           "/etc/letsencrypt/live/anongit.duckdns.org/fullchain.pem")
+          (ssl-certificate-key
+           "/etc/letsencrypt/live/anongit.duckdns.org/privkey.pem")
+          (locations
+           (list
+            (git-http-nginx-location-configuration
+             (git-http-configuration (uri-path "/")
+                                     (export-all? #t)))))))))
+
+(define %nginx-deploy-hook
+  (program-file
+   "nginx-deploy-hook"
+   #~(let ((pid (call-with-input-file "/var/run/nginx/pid" read)))
+       (kill pid SIGHUP))))
 
 
 ;;;
@@ -326,6 +362,11 @@ EndSection
                                  (list %magnolia-ip-address))
                                 "\n"
                                 (prefix-local-host-aliases
+                                 '("cgit" "anongit" "guix")
+                                 "duckdns" ".org"
+                                 (list %magnolia-ip-address))
+                                "\n"
+                                (prefix-local-host-aliases
                                  '("zabbix" "cerberus")
                                  "" "intr"
                                  (list %magnolia-ip-address))
@@ -416,15 +457,32 @@ EndSection
                                (enable-index-owner? #f)
                                (root-title (string-join (list "Cgit on" host-name)))
                                (snapshots (list "tar.gz"))
-                               (clone-prefix (list "git://magnolia.local/~natsu"))
+                               (clone-prefix (list ;; "git://magnolia.local/~natsu"
+                                                   "https://anongit.duckdns.org"))
                                (nginx (list %cgit-configuration-nginx-custom))))
 
                      zabbix-publish-nginx-service
                      cerb-publish-nginx-service
                      guix-publish-nginx-service
+                     anongit-nginx-service
                      cups-nginx-service
                      torrent-nginx-service
                      natsu-nginx-service
+
+                     (service certbot-service-type
+                              (certbot-configuration
+                               (email "go.wigust@gmail.com")
+                               (certificates
+                                (list
+                                 (certificate-configuration
+                                  (domains '("cgit.duckdns.org"))
+                                  (deploy-hook %nginx-deploy-hook))
+                                 (certificate-configuration
+                                  (domains '("guix.duckdns.org"))
+                                  (deploy-hook %nginx-deploy-hook))
+                                 (certificate-configuration
+                                  (domains '("anongit.duckdns.org"))
+                                  (deploy-hook %nginx-deploy-hook))))))
 
                      (simple-service 'adb udev-service-type
                                      (list android-udev-rules))
