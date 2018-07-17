@@ -7,7 +7,9 @@
   #:use-module (srfi srfi-1)
   #:use-module (ice-9 popen)
   #:use-module (ice-9 rdelim)
-  #:use-module (fiore manifests fiore))
+  #:use-module (ice-9 textual-ports)
+  #:use-module (fiore manifests fiore)
+  #:use-module (wigust services dns))
 
 (use-service-modules certbot cups desktop dns mail networking rsync
 shepherd spice ssh version-control virtualization web xorg cgit)
@@ -383,6 +385,13 @@ EndSection
                                                 ;; See <http://www.freenom.world>.
                                                 #:name-servers '("80.80.80.80"
                                                                  "80.80.81.81"))
+
+                     (service ddclient-service-type
+                              (opaque-ddclient-configuration
+                               (ddclient-conf
+                                (call-with-input-file
+                                    (string-append %source-dir "/ddclient.conf")
+                                  get-string-all))))
 
                      (service libvirt-service-type
                               (libvirt-configuration
