@@ -336,9 +336,12 @@
   (term-shell-command (join (list "youtube-dl" (get-x-selection)))))
 
 (defcommand youtube-dl-music () ()
-  (term-shell-command (join (list "youtube-dl"
-                                  "--output" *youtube-dl-output-music*
-                                  (get-x-selection)))))
+  (let ((command (join (list "youtube-dl"
+                             "--output"
+                             (single-quote-string *youtube-dl-output-music*)
+                             (get-x-selection)))))
+    (message (format nil "Run: ~a" command))
+    (term-shell-command command)))
 
 (defcommand youtube-dl-play () ()
   "Download video and play it."
