@@ -1,9 +1,12 @@
 (define-module (fiore manifests wigust)
+  #:use-module (wigust packages cdrom)
   #:use-module (wigust packages emacs)
   #:use-module (wigust packages pulseaudio)
   #:use-module (wigust packages python)
   #:use-module (wigust packages version-control)
+  #:use-module (wigust packages ruby)
   #:use-module (local packages emacs)
+  #:use-module (local packages guix)
   #:use-module (local packages xdisorg)
   #:use-module (gnu packages emacs)
   #:export (guix-wigust-packages
@@ -14,7 +17,7 @@
   (list
    emacs-athena
    emacs-engine-mode-autoload ; Define searches on websites
-   emacs-emms-next
+   emms-next
    emacs-strace-mode-special ; Colorize `strace' logs
    emacs-anywhere-mode
    emacs-emamux
@@ -27,12 +30,17 @@
    emacs-ivy-yasnippet
    emacs-scratch-el
    emacs-terminal-here-checkout
-   emacs-flyspell-correct))
+   emacs-flyspell-correct
+   emacs-hydra-timestamp
+   emacs-mediawiki))
 
 (define guix-wigust-packages-local
   (list
 
-   emacs-guix-local-checkout
+   emacs-guix-misc
+   guix-browse
+   guix-latest-eval
+   guix-misc
 
    ))
 
@@ -40,9 +48,11 @@
   (append
    (list
 
+    cdrkit-libre
+
     pulsemixer-emacs-keybindings
 
-
+    ruby-gitlab
     python-starred ; Fetch a list of stars from GitHub user
 
     emacs-atomic-chrome

@@ -3,17 +3,21 @@
   #:use-module (guix packages)
   #:use-module (guix profiles)
   #:use-module (gnu packages admin)
+  #:use-module (gnu packages algebra)
   #:use-module (gnu packages aspell)
   #:use-module (gnu packages audio)
   #:use-module (gnu packages backup)
   #:use-module (gnu packages bittorrent)
   #:use-module (gnu packages code)
+  #:use-module (gnu packages cmake)
   #:use-module (gnu packages commencement)
   #:use-module (gnu packages compression)
   #:use-module (gnu packages conkeror)
   #:use-module (gnu packages cran)
+  #:use-module (gnu packages cpio)
   #:use-module (gnu packages databases)
   #:use-module (gnu packages dictionaries)
+  #:use-module (gnu packages dns)
   #:use-module (gnu packages elf)
   #:use-module (gnu packages emacs)
   #:use-module (gnu packages games)
@@ -25,6 +29,7 @@
   #:use-module (gnu packages graphics)
   #:use-module (gnu packages graphviz)
   #:use-module (gnu packages gstreamer)
+  #:use-module (gnu packages ghostscript)
   #:use-module (gnu packages gtk)
   #:use-module (gnu packages guile)
   #:use-module (gnu packages haskell)
@@ -46,6 +51,7 @@
   #:use-module (gnu packages ncurses)
   #:use-module (gnu packages networking)
   #:use-module (gnu packages node)
+  #:use-module (gnu packages parallel)
   #:use-module (gnu packages package-management)
   #:use-module (gnu packages password-utils)
   #:use-module (gnu packages patchutils)
@@ -55,8 +61,11 @@
   #:use-module (gnu packages python)
   #:use-module (gnu packages rdesktop)
   #:use-module (gnu packages samba)
+  #:use-module (gnu packages screen)
   #:use-module (gnu packages scheme)
   #:use-module (gnu packages statistics)
+  #:use-module (gnu packages suckless)
+  #:use-module (gnu packages tex)
   #:use-module (gnu packages texinfo)
   #:use-module (gnu packages textutils)
   #:use-module (gnu packages tls)
@@ -68,6 +77,8 @@
   #:use-module (gnu packages w3m)
   #:use-module (gnu packages web)
   #:use-module (gnu packages xdisorg)
+  #:use-module (gnu packages xml)
+  #:use-module (gnu packages xorg)
   #:export (guix-collection-packages-multiout
             guix-collection-packages
             guix-collection-packages-emacs
@@ -85,18 +96,18 @@
    emacs-ag
    emacs-aggressive-indent  ; Auto indent minor mode
    emacs-auto-yasnippet
+   emacs-bash-completion
    emacs-beginend
    emacs-browse-at-remote
+   emacs-cmake-mode
    emacs-crux
    emacs-default-encrypt    ; Sign mail automatically
    emacs-default-text-scale ; Scale text in all buffers
    emacs-dumb-jump
    emacs-edit-server ; See <https://github.com/stsquad/emacs_chrome/>.
-   emacs-emms-player-simple-mpv ; Frontend to MPV for Emms
    emacs-esup
    emacs-ewmctrl            ; Control X windows from Emacs
    emacs-expand-region
-   emacs-f3
    emacs-fancy-narrow
    emacs-ffap-rfc-space
    emacs-fill-column-indicator
@@ -104,6 +115,7 @@
    emacs-git-gutter
    emacs-git-timemachine
    emacs-grep-context
+   emacs-guix
    emacs-helm               ; Narrowing framework
    emacs-helm-eww
    emacs-helm-firefox       ; Search for bookmarks in Icecat
@@ -117,6 +129,7 @@
    emacs-highlight-symbol
    emacs-hl-todo
    emacs-hydra
+   emacs-hy-mode
    emacs-ibuffer-projectile
    emacs-irfc
    emacs-ivy                ; Complition framework
@@ -161,15 +174,14 @@
    (list git "gui")
    (list git "send-email")
    (list git "svn")
-
+   (list alsa-plugins "pulseaudio")
+   (list isc-bind "utils")
    ))
 
 (define guix-collection-packages-large
   (list
 
    libreoffice ; Office suite
-
-   ;; octave
 
    ))
 
@@ -191,6 +203,7 @@
 
     ;; See <https://github.com/NixOS/nixpkgs/issues/16327#issuecomment-303068424>.
     at-spi2-core
+    ghostscript/x
     ghc-pandoc  ; Convert Markdown
 
     epipe
@@ -204,6 +217,7 @@
     translate-shell ; Translation in CLI and Emacs
     password-store  ; Password management
 
+    python-hy
 
     guile-2.2
     guile-colorized
@@ -243,6 +257,7 @@
 
     lxappearance
 
+    alsa-utils
     cli-visualizer
 
     conkeror
@@ -262,29 +277,42 @@
     obs ;ffmpeg frontend
 
     zathura     ; Lightweight customizable PDF reader
+    zathura-djvu
     zathura-pdf-mupdf
 
-    xsel ;clipboard
+    keynav
+    rofi
     scrot ;screenshot
+    xsel ;clipboard
+    st
 
     perl-uri-escape ;convert url
 
     patchelf ;patch elf
 
+    octave
+
+    python-glances
+    htop            ; Pretty `top'
+    inxi
+
     ;; FAIL: ansible         ; Configuration management
+    bc
+    cpio
     detox           ; Replace spaces with underscores in filenames
     diffoscope
     dos2unix
     freerdp
     graphviz  ; `dot'
-    htop            ; Pretty `top'
-    inxi
     licensecheck ; Licence checker for source files
     lsof
+    html-xml-utils
     ncdu            ; TUI `du'
     netcat          ; TCP
     nmap
     openssl
+    parallel
+    reptyr
     shellcheck
     socat
     sqlite
@@ -293,6 +321,7 @@
 
     texinfo
 
+    virt-manager
     qemu
     samba
 
@@ -303,14 +332,16 @@
     gnu-standards
     man-pages
     sicp         ; Structure and Interpretation of Computer Programs
+    texlive
 
     chicken ; Chicken Scheme
     sbcl ; For StumpWM.  See <https://stumpwm.github.io/>.
+    sbcl-stumpwm
 
     python-pygments ; Colorize output
     w3m
 
-    duplicity ; Incremental backup
+    restic ; Incremental backup
 
     dbus
 
@@ -326,6 +357,7 @@
     emacs-debbugs ; <https://debbugs.gnu.org/> interface
     emacs-elfeed             ; RSS reader
     emacs-erc-hl-nicks       ; for ERC
+    emacs-f3
     emacs-ggtags             ; Front end to GNU Global
     emacs-gitpatch           ; Send patches
     emacs-god-mode           ; Commands without modifier keys
@@ -350,13 +382,6 @@
     gst-plugins-good
     gst-plugins-ugly
     gstreamer
-
-    guile-2.2
-    guile-colorized
-    guile-daemon
-    guile-readline
-    guile-xosd
-    mcron
 
     minetest                 ; Open source Minecraft
 

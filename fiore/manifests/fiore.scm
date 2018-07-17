@@ -88,6 +88,7 @@
     xsetroot
     xterm       ; $TERM
     xwininfo    ; X Window information
+    xmodmap
 
     adb       ; For Replicant (Android distribution) control
     bridge-utils
