@@ -1314,10 +1314,15 @@ With a prefix argument, clean `geiser-guile-load-path'."
 (setq guix-read-package-name-function
       #'guix-read-package-name-at-point)
 
-(defun wi-guix-hydra-latest-builds ()
-  (interactive)
-  (let ((guix-hydra-url "https://berlin.guixsd.org"))
-    (guix-hydra-latest-builds 100)))
+(defun wi-guix-hydra-latest-builds (number)
+  (interactive
+   (list (read-number "Number of latest builds: " 64)))
+  (flet ((guix-hydra-latest-builds-custom ()
+          (guix-hydra-latest-builds number :project 'gnu :system "x86_64-linux")))
+    (if current-prefix-arg
+        (let ((guix-hydra-url "https://berlin.guixsd.org"))
+          (funcall #'guix-hydra-latest-builds-custom))
+      (funcall #'guix-hydra-latest-builds-custom))))
 
 (defcustom guix-substitute-servers
   '("https://berlin.guixsd.org/" "https://hydra.gnu.org/")
