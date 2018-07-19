@@ -26,12 +26,14 @@
   #:use-module (guix build-system gnu)
   #:use-module (guix build-system go)
   #:use-module (gnu packages admin)
+  #:use-module (gnu packages autotools)
   #:use-module (gnu packages base)
   #:use-module (gnu packages check)
   #:use-module (gnu packages compression)
   #:use-module (gnu packages curl)
   #:use-module (gnu packages databases)
   #:use-module (gnu packages django)
+  #:use-module (gnu packages file)
   #:use-module (gnu packages gd)
   #:use-module (gnu packages libevent)
   #:use-module (gnu packages image)
@@ -42,6 +44,38 @@
   #:use-module (gnu packages python-web)
   #:use-module (gnu packages time)
   #:use-module (gnu packages tls))
+
+(define-public net-snmp
+  (package
+    (name "net-snmp")
+    (version "5.7.3")
+    (source (origin
+              (method url-fetch/zipbomb)
+              (uri (string-append "mirror://sourceforge/net-snmp/"
+                                  name ".zip"))
+              (sha256
+               (base32
+                "0gkss3zclm23zwpqfhddca8278id7pk6qx1mydpimdrrcndwgpz8"))))
+    (build-system gnu-build-system)
+    (native-inputs
+     `(("autoconf" ,autoconf)
+       ("automake" ,automake)))
+    (inputs
+     `(("file" ,file)
+       ("perl" ,perl)
+       ("openssl" ,openssl)))
+    (arguments
+     `(#:tests? #f
+       #:phases
+       (modify-phases %standard-phases
+         (add-before 'configure 'autoreconf
+           (lambda _
+             (invoke "autoreconf" "-vfi"))))))
+    (home-page "http://net-snmp.sourceforge.net/")
+    (synopsis "Clients and server for the SNMP network monitoring protocol")
+    (description "This package provides clients and server for the SNMP
+network monitoring protocol")
+    (license license:bsd-3)))
 
 (define-public zabbix
   (package
