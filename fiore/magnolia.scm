@@ -9,9 +9,12 @@
   #:use-module (ice-9 rdelim)
   #:use-module (ice-9 textual-ports)
   #:use-module (fiore manifests fiore)
-  #:use-module (wigust services dns))
+  #:use-module (wigust services dns)
+  #:use-module (wigust services monitoring)
+  #:use-module (wigust packages monitoring)
+  #:use-module (wigust packages php))
 
-(use-service-modules certbot cups desktop dns mail networking rsync
+(use-service-modules certbot cups databases desktop dns mail networking rsync
 shepherd spice ssh version-control virtualization web xorg cgit)
 
 (use-package-modules admin android bash bootloaders certs cryptsetup cups
@@ -160,6 +163,22 @@ EndSection
            (ssl-certificate #f)
            (ssl-certificate-key #f))))))
 
+(define zabbix-nginx-service
+  (simple-service 'zabbix-nginx nginx-service-type
+   (list (nginx-server-configuration
+          (server-name '("alerta.duckdns.org"))
+          (root (file-append zabbix "/share/zabbix/php"))
+          (index '("index.php"))
+          (locations
+           (list (let ((php-location (nginx-php-location)))
+                   (nginx-location-configuration
+                    (inherit php-location)
+                    (body (append (nginx-location-configuration-body php-location)
+                                  (list "fastcgi_param PHP_VALUE \"post_max_size = 16M\nmax_execution_time = 300\";")))))))
+          (listen '("80" "443 ssl"))
+          (ssl-certificate "/etc/letsencrypt/live/alerta.duckdns.org/fullchain.pem")
+          (ssl-certificate-key "/etc/letsencrypt/live/alerta.duckdns.org/privkey.pem")))))
+
 (define cups-nginx-service
   (simple-service 'torrent-publish-nginx nginx-service-type
    (list (nginx-server-configuration
@@ -182,7 +201,7 @@ EndSection
           (ssl-certificate #f)
           (ssl-certificate-key #f)))))
 
-(define zabbix-publish-nginx-service
+(define intr-zabbix-publish-nginx-service
   (simple-service 'guix-publish-nginx nginx-service-type
    (list (nginx-server-configuration
           (server-name '("zabbix.intr"))
@@ -359,12 +378,13 @@ EndSection
                  (string-append (local-host-aliases host-name)
                                 (prefix-local-host-aliases
                                  '("cgit" "git" "guix" "www"
-                                   "natsu" "torrent" "print")
+                                   "natsu" "torrent" "print"
+                                   "zabbix")
                                  host-name ".local"
                                  (list %magnolia-ip-address))
                                 "\n"
                                 (prefix-local-host-aliases
-                                 '("cgit" "anongit" "guix")
+                                 '("cgit" "anongit" "guix" "alerta" "weblog")
                                  "duckdns" ".org"
                                  (list %magnolia-ip-address))
                                 "\n"
@@ -375,7 +395,7 @@ EndSection
                                 "\n\n" %facebook-host-aliases)))
 
     ;; Lightweight desktop with custom packages from guix-wigust
-    (packages %fiore-packages)
+    (packages (cons zabbix %fiore-packages))
 
     (services (cons* firewall-service
                      (static-networking-service "enp6s0"
@@ -446,6 +466,15 @@ EndSection
 
                      (tor-service (local-file (string-append %source-dir "/torrc")))
 
+                     (service zabbix-service-type)
+
+                     (postgresql-service)
+
+                     (service php-fpm-service-type
+                              (php-fpm-configuration
+                               (file (local-file "/home/natsu/src/guix-wigust/php-fpm"))
+                               (php php-with-bcmath)))
+
                      (service nginx-service-type
                               %file-share-configuration-nginx)
 
@@ -470,7 +499,8 @@ EndSection
                                                    "https://anongit.duckdns.org"))
                                (nginx (list %cgit-configuration-nginx-custom))))
 
-                     zabbix-publish-nginx-service
+                     zabbix-nginx-service
+                     intr-zabbix-publish-nginx-service
                      cerb-publish-nginx-service
                      guix-publish-nginx-service
                      anongit-nginx-service
@@ -491,6 +521,9 @@ EndSection
                                   (deploy-hook %nginx-deploy-hook))
                                  (certificate-configuration
                                   (domains '("anongit.duckdns.org"))
+                                  (deploy-hook %nginx-deploy-hook))
+                                 (certificate-configuration
+                                  (domains '("alerta.duckdns.org"))
                                   (deploy-hook %nginx-deploy-hook))))))
 
                      (simple-service 'adb udev-service-type
