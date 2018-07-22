@@ -43,29 +43,63 @@
   #:use-module (gnu packages python)
   #:use-module (gnu packages python-web)
   #:use-module (gnu packages time)
-  #:use-module (gnu packages tls))
+  #:use-module (gnu packages tls)
+  #:use-module (gnu packages))
 
 (define-public net-snmp
   (package
     (name "net-snmp")
     (version "5.7.3")
     (source (origin
-              (method url-fetch/zipbomb)
+              (method url-fetch)
               (uri (string-append "mirror://sourceforge/net-snmp/"
                                   name ".zip"))
               (sha256
                (base32
-                "0gkss3zclm23zwpqfhddca8278id7pk6qx1mydpimdrrcndwgpz8"))))
+                "0gkss3zclm23zwpqfhddca8278id7pk6qx1mydpimdrrcndwgpz8"))
+              (patches
+               (map (lambda (file hash)
+                      (origin
+                        (method url-fetch)
+                        (uri (string-append "https://git.alpinelinux.org/cgit/aports/plain/main/net-snmp/"
+                                            file "?id=f25d3fb08341b60b6ccef424399f060dfcf3f1a5"))
+                        (sha256 (base32 hash))))
+                    '("CVE-2015-5621.patch"
+                      "fix-Makefile-PL.patch"
+                      "fix-includes.patch"
+                      "netsnmp-swinst-crash.patch"
+                      "remove-U64-typedef.patch")
+                    '("0mg2mlfb45fnv7m1k9wckrqjfizipyvrl1q4dn1r0zc774mm7zjc"
+                      "1pd85sy04n76q1ri3l33f0zpnnw76nd5mcny2j39ilzp76bjfik5"
+                      "0zpkbb6k366qpq4dax5wknwprhwnhighcp402mlm7950d39zfa3m"
+                      "0gh164wy6zfiwiszh58fsvr25k0ns14r3099664qykgpmickkqid"
+                      "0jcpcpgx4z9k1w0x6km0132n67qc29mz6cialwfjm02l76q2yk5n")))))
     (build-system gnu-build-system)
     (native-inputs
      `(("autoconf" ,autoconf)
-       ("automake" ,automake)))
+       ("automake" ,automake)
+       ("libtool" ,libtool)))
     (inputs
      `(("file" ,file)
        ("perl" ,perl)
        ("openssl" ,openssl)))
     (arguments
      `(#:tests? #f
+       #:configure-flags
+       (list "--with-default-snmp-version=3"
+             "--with-sys-location=Unknown"
+             "--with-sys-contact=root@unknown"
+             "--with-logfile=/var/log/net-snmpd.log"
+             "--with-persistent-directory=/var/lib/net-snmp"
+             (string-append "--with-openssl=" (assoc-ref %build-inputs "openssl"))
+             "--with-mnttab=/proc/mounts")
+       #:make-flags
+       (let ((out (assoc-ref %outputs "out")))
+         (list (string-append "INSTALLSITEARCH=" out
+                              "/lib/perl5/site_perl/" ,(package-version perl)
+                              "/x86_64-linux-thread-multi")
+               (string-append"INSTALLSITEMAN3DIR=" out "/share/man/man3")))
+
        #:phases
        (modify-phases %standard-phases
          (add-before 'configure 'autoreconf
