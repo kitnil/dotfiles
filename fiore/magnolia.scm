@@ -367,7 +367,8 @@ EndSection
                   (supplementary-groups '("wheel"
                                           "audio" "video"
                                           "lpadmin" "lp"
-                                          "adbusers" "libvirt"))
+                                          "adbusers" "libvirt"
+                                          "kvm"))
                   (home-directory "/home/natsu"))
                  %base-user-accounts))
 
