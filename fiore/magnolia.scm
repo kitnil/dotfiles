@@ -12,7 +12,8 @@
   #:use-module (wigust services dns)
   #:use-module (wigust services monitoring)
   #:use-module (wigust packages monitoring)
-  #:use-module (wigust packages php))
+  #:use-module (wigust packages php)
+  #:use-module (wigust packages networking))
 
 (use-service-modules certbot cups databases desktop dns mail networking rsync
 shepherd spice ssh version-control virtualization web xorg cgit)
@@ -534,8 +535,9 @@ EndSection
 
                      %custom-desktop-services))
 
-    (setuid-programs (cons (file-append fping "/sbin/fping")
-                           %setuid-programs))
+    (setuid-programs (cons* (file-append fping "/sbin/fping")
+                            (file-append ubridge "/bin/ubridge")
+                            %setuid-programs))
 
     ;; Allow resolution of '.local' host names with mDNS.
     (name-service-switch %mdns-host-lookup-nss)))
