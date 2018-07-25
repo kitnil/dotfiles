@@ -422,7 +422,10 @@ EndSection
 
                      (service virtlog-service-type)
 
-                     (service openssh-service-type)
+                     (service openssh-service-type
+                              (openssh-configuration
+                               (permit-root-login #t)
+                               (x11-forwarding? #t)))
 
                      (service cups-service-type
                               (cups-configuration
