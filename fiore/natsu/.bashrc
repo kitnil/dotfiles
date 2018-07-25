@@ -20,6 +20,4 @@ complete -W "$(echo `cat ~/.ssh/known_hosts | cut -f 1 -d ' ' | sed -e s/,.*//g 
 
 function vm { ~/src/majordomo/cvm.py $1 | cut -d ' ' -f 2; }
 
-source ~/src/guix/etc/completion/bash/guix-daemon
-
 function stat-link { stat --format=%N $@; }
