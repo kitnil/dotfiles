@@ -356,22 +356,27 @@ EndSection
                            (options "mode=1777,size=50%"))
                          %base-file-systems))
 
-    (groups (cons
-             (user-group (name "adbusers"))
-             %base-groups))
+    (groups (cons* (user-group (name "adbusers"))
+                   (user-group (name "guix-offload"))
+                   %base-groups))
 
-    (users (cons (user-account
-                  (name "natsu")
-                  (uid 1000)
-                  (comment "Oleg Pykhalov")
-                  (group "users")
-                  (supplementary-groups '("wheel"
-                                          "audio" "video"
-                                          "lpadmin" "lp"
-                                          "adbusers" "libvirt"
-                                          "kvm"))
-                  (home-directory "/home/natsu"))
-                 %base-user-accounts))
+    (users (cons* (user-account
+                   (name "natsu")
+                   (uid 1000)
+                   (comment "Oleg Pykhalov")
+                   (group "users")
+                   (supplementary-groups '("wheel"
+                                           "audio" "video"
+                                           "lpadmin" "lp"
+                                           "adbusers" "libvirt"
+                                           "kvm"))
+                   (home-directory "/home/natsu"))
+                  (user-account
+                   (name "guix-offload")
+                   (uid 1982)
+                   (group "guix-offload")
+                   (home-directory "/home/guix-offload"))
+                  %base-user-accounts))
 
     (hosts-file
      ;; Create a /etc/hosts file with aliases for "localhost"
