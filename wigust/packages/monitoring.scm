@@ -118,7 +118,6 @@ network monitoring protocol")
     (source
      (origin
        (method url-fetch)
-       ;; https://netcologne.dl.sourceforge.net/project/zabbix/ZABBIX%20Latest%20Stable/3.4.11/zabbix-3.4.11.tar.gz
        (uri (string-append "https://netcologne.dl.sourceforge.net\
 /project/zabbix/ZABBIX%20Latest%20Stable/" version
 "/zabbix-" version ".tar.gz"))
