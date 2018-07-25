@@ -31,6 +31,15 @@
   #:use-module (gnu packages perl)
   #:use-module (gnu packages pkg-config)
   #:use-module (gnu packages pcre)
+  #:use-module (gnu packages backup)
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-1))
 
+(define-public restic-no-tests
+  (package
+    (inherit restic)
+    (name "restic")
+    (version "0.9.1")
+    (arguments
+     `(#:tests? #f
+       ,@(package-arguments restic)))))
