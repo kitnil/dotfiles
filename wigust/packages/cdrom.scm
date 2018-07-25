@@ -70,7 +70,7 @@
                (base32
                 "0g2zyzb56czh429qy87lvaddzjnlcq8c616ddxsmsshz3clhyzrh"))))
     (build-system cmake-build-system)
-    (native-inputs
+    (inputs
      `(("bzip2" ,bzip2)
        ("libcap" ,libcap)
        ("perl" ,perl)
@@ -84,15 +84,15 @@
              (with-directory-excursion (string-append (assoc-ref outputs "out")
                                                       "/bin")
                (symlink "genisoimage" "mkisofs")
-               (symlink "wodim" "cdrecord")))))))
+               (symlink "wodim" "cdrecord"))
+             #t)))))
     (home-page "http://cdrkit.org/")
-    (synopsis "Portable command-line CD/DVD recorder software, mostly
-compatible with cdrtools")
+    (synopsis "Command-line CD/DVD recorder")
     (description "Cdrkit is a suite of programs for recording CDs and DVDs,
-blanking CD-RW media, creating ISO-9660 filesystem images, extracting audio CD
-data, and more.  The programs included in the cdrkit package were originally
-derived from several sources, most notably mkisofs by Eric Youngdale and
-others, cdda2wav by Heiko Eissfeldt, and cdrecord by Jörg Schilling.  However,
-cdrkit is not affiliated with any of these authors; it is now an independent
-project.")
+blanking CD-RW media, creating ISO-9660 file system images, extracting audio
+CD data, and more.  The programs included in the cdrkit package were
+originally derived from several sources, most notably mkisofs by Eric
+Youngdale and others, cdda2wav by Heiko Eissfeldt, and cdrecord by Jörg
+Schilling.  However, cdrkit is not affiliated with any of these authors; it is
+now an independent project.")
     (license gpl2+)))
