@@ -21,3 +21,9 @@ complete -W "$(echo `cat ~/.ssh/known_hosts | cut -f 1 -d ' ' | sed -e s/,.*//g 
 function vm { ~/src/majordomo/cvm.py $1 | cut -d ' ' -f 2; }
 
 function stat-link { stat --format=%N $@; }
+
+# Origin <https://www.fsf.org/blogs/directory/the-free-software-directory-needs-you-irc-meetups-every-friday-1>.
+#
+# Every Friday at 12:00-15:00 EDT (16:00 to 19:00 UTC)
+# meet on IRC in the #fsf channel on irc.freenode.org
+date-fsf() { date --date='TZ="America/New_York" 12:00 this Fri'; }
