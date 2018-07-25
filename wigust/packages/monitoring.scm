@@ -113,8 +113,12 @@
              (invoke "autoreconf" "-vfi"))))))
     (home-page "http://net-snmp.sourceforge.net/")
     (synopsis "Clients and server for the SNMP network monitoring protocol")
-    (description "This package provides clients and server for the SNMP
-network monitoring protocol")
+    (description "The Simple Network Management Protocol (SNMP) provides a
+framework for the exchange of management information between agents (servers)
+and clients.
+
+The Net-SNMP applications are a collection of command line clients for issuing
+SNMP requests to agents.")
     (license license:bsd-3)))
 
 (define-public zabbix
