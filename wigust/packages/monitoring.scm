@@ -55,6 +55,7 @@
        (method url-fetch)
        (uri (string-append "mirror://sourceforge/net-snmp/"
                            name ".zip"))
+       (file-name (string-append name "-" version ".zip"))
        (sha256
         (base32
          "0gkss3zclm23zwpqfhddca8278id7pk6qx1mydpimdrrcndwgpz8"))
