@@ -159,7 +159,8 @@ SNMP requests to agents.")
                     (etc (string-append php "/etc")))
                (mkdir-p php)
                (copy-recursively "./frontends/php" php)
-               (rename-file front-end-conf (string-append front-end-conf "-example"))
+               (rename-file front-end-conf
+                            (string-append front-end-conf "-example"))
                (symlink "/etc/zabbix" front-end-conf)))))))
     (build-system gnu-build-system)
     (inputs
