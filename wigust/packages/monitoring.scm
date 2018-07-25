@@ -128,9 +128,9 @@ SNMP requests to agents.")
     (source
      (origin
        (method url-fetch)
-       (uri (string-append "https://netcologne.dl.sourceforge.net\
-/project/zabbix/ZABBIX%20Latest%20Stable/" version
-"/zabbix-" version ".tar.gz"))
+       (uri (string-append
+             "mirror://sourceforge/zabbix/ZABBIX%20Latest%20Stable/" version
+             "/zabbix-" version ".tar.gz"))
        (sha256
         (base32
          "0qxgf6hx7ibhjmxd2sxizkjc8df4c9d31wz5hhql409ws98qf173"))))
