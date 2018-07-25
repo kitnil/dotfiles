@@ -53,12 +53,11 @@
     (source
      (origin
        (method url-fetch)
-       (uri (string-append "mirror://sourceforge/net-snmp/"
-                           name ".zip"))
-       (file-name (string-append name "-" version ".zip"))
+       (uri (string-append "mirror://sourceforge/net-snmp/net-snmp/" version
+                           "/net-snmp-" version ".tar.gz"))
        (sha256
         (base32
-         "0gkss3zclm23zwpqfhddca8278id7pk6qx1mydpimdrrcndwgpz8"))
+         "1w5l9w0sgi1zkzq8ww6kc6fzq7ljq59z2d9ks6bdq1vp7ihqkvqj"))
        (patches
         (map (lambda (file hash)
                (origin
