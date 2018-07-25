@@ -135,7 +135,11 @@ network monitoring protocol")
              "--enable-server"
              "--with-postgresql"
              (string-append "--with-libevent="
-                            (assoc-ref %build-inputs "libevent")))
+                            (assoc-ref %build-inputs "libevent"))
+             "--with-net-snmp"
+             (string-append "--with-gnutls="
+                            (assoc-ref %build-inputs "gnutls"))
+             "--with-libcurl")
        #:phases
        (modify-phases %standard-phases
          (add-after 'install 'install-frontend
@@ -155,9 +159,11 @@ network monitoring protocol")
        ;; Server
        ("curl" ,curl)
        ("libevent" ,libevent)
-       ("openssl" ,openssl)
+       ("gnutls" ,gnutls)
        ("postgresql" ,postgresql)
-       ("zlib" ,zlib)))
+       ("zlib" ,zlib)
+       ("net-snmp" ,net-snmp)
+       ("curl" ,curl)))
     (home-page "https://www.zabbix.com/")
     (synopsis "Distributed monitoring solution (client-side agent)")
     (description "This package provides a distributed monitoring
