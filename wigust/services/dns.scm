@@ -106,15 +106,15 @@
   "Return the user accounts and user groups for CONFIG."
   (let ((ddclient-user "ddclient")
         (ddclient-group "ddclient"))
-    (list (user-group (name ddclient-group) (system? #t))
+    (list (user-group
+           (name ddclient-group)
+           (system? #t))
           (user-account
            (name ddclient-user)
            (system? #t)
            (group ddclient-group)
            (comment "ddclientd privilege separation user")
-           (home-directory (string-append "/var/run/" ddclient-user))
-           ;; (shell #~(string-append #$shadow "/sbin/nologin"))
-           ))))
+           (home-directory (string-append "/var/run/" ddclient-user))))))
 
 (define (ddclient-activation config)
   "Return the activation GEXP for CONFIG."
@@ -125,19 +125,22 @@
                (lambda ()
                  (serialize-configuration config
                                           ddclient-configuration-fields))))))
-    (with-imported-modules '((guix build utils))
-      #~(begin
-          (use-modules (guix build utils))
-          (let ((dir "/var/cache/ddclient"))
-            (mkdir-p dir)
-            (chown dir (passwd:uid (getpw "ddclient")) (group:gid (getpw "ddclient"))))
-          ;; 'ddclient' complains about ddclient.conf file permissions, which
-          ;; rules out /gnu/store.  Thus we copy the ddclient.conf to /etc.
-          (mkdir-p "/etc/ddclient")
+    #~(begin
+        (use-modules (guix build utils))
+        ;; 'ddclient' complains about ddclient.conf file permissions, which
+        ;; rules out /gnu/store.  Thus we copy the ddclient.conf to /etc.
+        (let ((user (getpw "ddclient"))
+              (group (getpw "ddclient")))
+          (for-each (lambda (dir)
+                      (mkdir-p dir)
+                      (chmod dir #o700)
+                      (chown dir (passwd:uid user) (group:gid group)))
+                    '("/var/cache/ddclient" "/var/run/ddclient"
+                      "/etc/ddclient"))
           (let ((file "/etc/ddclient/ddclient.conf"))
             (copy-file #$(plain-file "ddclient.conf" config-str) file)
             (chmod file #o600)
-            (chown file (passwd:uid (getpw "ddclient")) (group:gid (getpw "ddclient"))))))))
+            (chown file (passwd:uid user) (group:gid group)))))))
 
 (define (ddclient-shepherd-service config)
   "Return a <shepherd-service> for ddclient with CONFIG."
