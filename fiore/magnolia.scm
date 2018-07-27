@@ -85,6 +85,32 @@ version-control virtualization web wget xdisorg xorg zile)
 
 
 ;;;
+;;; Networking
+;;;
+
+(define start-networking
+  #~(let ((ip
+           (lambda (str)
+             (zero? (system (string-join `(,#$(file-append iproute "/sbin/ip")
+                                           ,str) " "))))))
+      (format #t "Install interface rules.~%")
+      (and (ip "tuntap add tap0 mode tap")
+           (ip "tuntap add tap1 mode tap")
+           (ip "address add 192.168.55.1/24 dev tap0")
+           (ip "address add 192.168.60.1/24 dev tap1"))))
+
+(define custom-networking-service
+  (simple-service 'custom-networking shepherd-root-service-type
+                  (list
+                   (shepherd-service
+                    (provision '(custom-networking))
+                    (requirement '())
+                    (start #~(lambda _
+                               #$start-networking))
+                    (respawn? #f)))))
+
+
+;;;
 ;;; guix-daemon
 ;;;
 
@@ -224,6 +250,19 @@ EndSection
                             (uri "/")
                             (body '("resolver 80.80.80.80;"
                                     "set $target localhost:15080;"
+                                    "proxy_pass http://$target;")))))
+          (ssl-certificate #f)
+          (ssl-certificate-key #f)))))
+
+(define grafana-publish-nginx-service
+  (simple-service 'guix-publish-nginx nginx-service-type
+   (list (nginx-server-configuration
+          (server-name '("grafana.intr"))
+          (listen '("80"))
+          (locations (list (nginx-location-configuration
+                            (uri "/")
+                            (body '("resolver 80.80.80.80;"
+                                    "set $target localhost:15082;"
                                     "proxy_pass http://$target;")))))
           (ssl-certificate #f)
           (ssl-certificate-key #f)))))
@@ -396,15 +435,18 @@ EndSection
                                  (list %magnolia-ip-address))
                                 "\n"
                                 (prefix-local-host-aliases
-                                 '("zabbix" "cerberus")
+                                 '("zabbix" "cerberus" "grafana")
                                  "" "intr"
                                  (list %magnolia-ip-address))
+                                "\n\n"
+                                "192.168.105.112 clover"
                                 "\n\n" %facebook-host-aliases)))
 
     ;; Lightweight desktop with custom packages from guix-wigust
     (packages (cons zabbix %fiore-packages))
 
     (services (cons* firewall-service
+                     custom-networking-service
                      (static-networking-service "enp6s0"
                                                 %magnolia-ip-address
                                                 #:netmask "255.255.255.0"
