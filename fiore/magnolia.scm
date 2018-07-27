@@ -476,7 +476,8 @@ EndSection
 
                      (tor-service (local-file (string-append %source-dir "/torrc")))
 
-                     (service zabbix-service-type)
+                     (service zabbix-server-service-type)
+                     (service zabbix-agentd-service-type)
 
                      (postgresql-service)
 
