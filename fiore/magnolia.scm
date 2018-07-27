@@ -16,7 +16,7 @@
   #:use-module (wigust packages networking))
 
 (use-service-modules certbot cups databases desktop dns mail networking rsync
-shepherd spice ssh version-control virtualization web xorg cgit)
+shepherd spice ssh sysctl version-control virtualization web xorg cgit)
 
 (use-package-modules admin android bash bootloaders certs cryptsetup cups
 databases dns file fonts fontutils freedesktop gnome gnupg linux mail
@@ -412,6 +412,10 @@ EndSection
                                                 ;; See <http://www.freenom.world>.
                                                 #:name-servers '("80.80.80.80"
                                                                  "80.80.81.81"))
+
+                     (service sysctl-service-type
+                              (sysctl-configuration
+                               (settings '(("net.ipv4.ip_forward" . "1")))))
 
                      (service ddclient-service-type
                               (opaque-ddclient-configuration
