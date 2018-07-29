@@ -5,6 +5,7 @@
 (define-module (fiore magnolia)
   #:use-module (gnu)
   #:use-module (srfi srfi-1)
+  #:use-module (ice-9 match)
   #:use-module (ice-9 popen)
   #:use-module (ice-9 rdelim)
   #:use-module (ice-9 textual-ports)
@@ -357,6 +358,14 @@ EndSection
 
 (define %magnolia-ip-address "192.168.105.120")
 
+(define (serialize-hosts lst)
+  (string-join (map (match-lambda
+                      ((ip-address . canonical-hostname)
+                       (format #f "~a ~a"
+                               ip-address canonical-hostname)))
+                    lst)
+               "\n"))
+
 
 ;;;
 ;;; Operating system.
@@ -440,7 +449,12 @@ EndSection
                                  (list %magnolia-ip-address))
                                 "\n\n"
                                 "192.168.105.112 clover"
-                                "\n\n" %facebook-host-aliases)))
+                                "\n\n"
+                                (serialize-hosts
+                                 '(("192.168.100.1" . "router.local")
+                                   ("192.168.105.1" . "switch.local")))
+                                "\n\n"
+                                %facebook-host-aliases)))
 
     ;; Lightweight desktop with custom packages from guix-wigust
     (packages (cons zabbix %fiore-packages))
