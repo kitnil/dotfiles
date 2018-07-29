@@ -1243,3 +1243,27 @@ via custom interfaces.")
       (description "This package provides an Emacs tools for doing stuff with
 network processes.")
       (license license:gpl3+))))
+
+(define-public emacs-build-farm
+  (let ((commit "0e0168d75dba589e58d3034d6d865384ee551d86"))
+    (package
+      (name "emacs-build-farm")
+      (version "0.0.1")
+      (source (origin
+                (method git-fetch)
+                (uri (git-reference
+                      (url "https://github.com/alezost/build-farm.el")
+                      (commit commit)))
+                (file-name (git-file-name name version))
+                (sha256
+                 (base32
+                  "07bp00lyl6q175d93p71wa93ygkm5q6x3xhw1a53vqmsvkyahqps"))))
+      (build-system emacs-build-system)
+      (inputs
+       `(("emacs-bui" ,emacs-bui)
+         ("emacs-magit-popup" ,emacs-magit-popup)))
+      (home-page "https://github.com/alezost/build-farm.el")
+      (synopsis " Interface for Hydra and Cuirass (Nix and Guix build farms)")
+      (description "Emacs-Build-Farm is an Emacs interface for Hydra and Cuirass
+— build farms for Nix and Guix package managers.")
+      (license license:gpl3+))))
