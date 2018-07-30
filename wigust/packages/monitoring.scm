@@ -25,9 +25,11 @@
   #:use-module (guix build-system python)
   #:use-module (guix build-system gnu)
   #:use-module (guix build-system go)
+  #:use-module (guix build-system trivial)
   #:use-module (gnu packages admin)
   #:use-module (gnu packages autotools)
   #:use-module (gnu packages base)
+  #:use-module (gnu packages bash)
   #:use-module (gnu packages check)
   #:use-module (gnu packages compression)
   #:use-module (gnu packages curl)
@@ -179,3 +181,109 @@ SNMP requests to agents.")
     (description "This package provides a distributed monitoring
 solution (client-side agent)")
     (license license:gpl2)))
+
+(define-public autopostgresqlbackup
+  (package
+    (name "autopostgresqlbackup")
+    (version "1.0")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append "mirror://sourceforge/autopgsqlbackup"
+                                  "/AutoPostgreSQLBackup/AutoPostgreSQLBackup-"
+                                  version "/autopostgresqlbackup.sh." version))
+              (file-name (string-append name "-" version ".sh"))
+              (sha256
+               (base32
+                "15a3fw7prd64nq742apsxj0mqiib3nzfp4bdls8dck4n8yjxzl89"))))
+    (build-system trivial-build-system)
+    (inputs
+     `(("bash" ,bash)
+       ("gzip" ,gzip)
+       ("postgresql" ,postgresql)))
+    (arguments
+     `(#:modules ((guix build utils))
+       #:builder
+       (begin
+         (use-modules (guix build utils))
+         (let ((autopostgresqlbackup-file (string-append ,name ".sh")))
+           ;; Copy source
+           (copy-file (assoc-ref %build-inputs "source")
+                      autopostgresqlbackup-file)
+           ;; Patch
+           (substitute* autopostgresqlbackup-file
+             (("#!/bin/bash")
+              ;; Substitute shebang and add conditional load configuration.
+              (string-append "#!" (assoc-ref %build-inputs "bash") "/bin/bash
+
+# Load the autopostgresqlbackup configuration file.
+if [ -f \"$HOME/.config/autopostgresqlbackup.conf\" ]
+then
+    . \"$HOME/.autopostgresqlbackup.conf\"
+elif [ -f \"/etc/autopostgresqlbackup.conf\" ]
+then
+    . \"/etc/autopostgresqlbackup.conf\"
+fi
+"))
+             (("^PATH=.*$" str)
+              ;; Make sure Guix system and user profiles present in ‘PATH’.
+              (string-append str
+                             ":/run/current-system/profile/bin"
+                             ":$HOME/.guix-profile/bin"))
+             (("psql")
+              ;; Make sure ‘psql’ program will be found in right place.
+              (string-append (assoc-ref %build-inputs "postgresql")
+                             "/bin/psql")))
+           (let-syntax ((comment-line-with-variable
+                         (syntax-rules ()
+                           ((_ file (var ...))
+                            (substitute* file
+                              (((string-append "^" var "=.*$") str)
+                               (format #f "# ~a" str)) ...)))))
+             (comment-line-with-variable autopostgresqlbackup-file
+                                         ("USERNAME" "DBHOST" "DBNAMES"
+                                          "BACKUPDIR" "MAILCONTENT"
+                                          "MAXATTSIZE" "MAILADDR" "MDBNAMES"
+                                          "DBEXCLUDE" "CREATE_DATABASE"
+                                          "SEPDIR" "DOWEEKLY" "COMP"
+                                          "POSTBACKUP")))
+           ;; Install
+           (install-file autopostgresqlbackup-file
+                         (string-append %output "/bin"))
+           ;; Documentation
+           (with-output-to-file "autopostgresqlbackup.8"
+             (lambda ()
+               (display
+                (string-append
+                 ".\\\" Copyright (C), 2018  Oleg Pykhalov <go.wigust@gmail.com>
+.\\\" You may distribute this file under the terms of the GNU Free
+.\\\" Documentation License.
+.TH " ,name " 8 " ,version "
+.SH NAME
+" ,name " \\- backup all of your PostgreSQL databases daily,
+weekly, and monthly
+.SH SYNOPSIS
+.B " ,name "
+
+.SH DESCRIPTION
+" ,name " is a shell script (usually executed from a cron job)
+designed to provide a fully automated tool to make periodic backups of
+PostgreSQL databases.
+
+" ,name " can be configured by editing some options in file
+$HOME/.config/" ,name ".conf or /etc/" ,name ".conf.
+.SH FILES
+/etc/" ,name ".conf $HOME/.config/" ,name ".conf
+"))))
+           (invoke (string-append (assoc-ref %build-inputs "gzip")
+                                  "/bin/gzip")
+                   "autopostgresqlbackup.8")
+           (install-file "autopostgresqlbackup.8.gz"
+                         (string-append %output "/share/man/man8"))
+           #t))))
+    (home-page "http://projects.frozenpc.net/autopostgresqlbackup/")
+    (synopsis "Automated tool to make periodic backups of PostgreSQL databases")
+    (description "autopostgresqlbackup is a shell script (usually executed
+from a cron job) designed to provide a fully automated tool to make periodic
+backups of PostgreSQL databases.  autopostgresqlbackup extract databases into
+flat files in a daily, weekly or monthly basis.")
+    (license license:gpl2+)))
