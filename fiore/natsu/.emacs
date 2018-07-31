@@ -2533,6 +2533,8 @@ If nil use light theme.")
            video) ; tripcode!Q/7
           (,(concat youtube-rss-channel-id "UCVls1GmFKf6WlTraIb_IaJg")
            video) ; DistroTube
+          (,(concat youtube-rss-channel-id "UCk9NvmsPBC3lTn_L9kFaylA")
+           video) ; iBSD
           (,(concat youtube-rss-user "LDCNow") video)
           (,(concat youtube-rss-user "tuxreviews") video)
           ;; (,(concat youtube-rss-user "EposVox") video)
