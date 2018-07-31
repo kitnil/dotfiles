@@ -1267,3 +1267,21 @@ network processes.")
       (description "Emacs-Build-Farm is an Emacs interface for Hydra and Cuirass
 — build farms for Nix and Guix package managers.")
       (license license:gpl3+))))
+
+(define-public emacs-gited
+  (package
+    (name "emacs-gited")
+    (version "0.5.3")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append "https://elpa.gnu.org/packages/gited-"
+                                  version ".tar"))
+              (sha256
+               (base32
+                "1bayfclczdzrmay8swszs8lliz5p4nnmjzzz2gh68rc16isjgh2z"))))
+    (build-system emacs-build-system)
+    (home-page "https://elpa.gnu.org/packages/gited.html")
+    (synopsis "Operate on Git branches like dired")
+    (description "This Emacs library lists the branches in a Git repository.
+Then you can operate on them with a dired-like interface.")
+    (license license:gpl3+)))
