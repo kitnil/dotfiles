@@ -127,7 +127,10 @@ version-control virtualization web wget xdisorg xorg zile)
    (max-silent-time 7200)
    (timeout (* 4 max-silent-time))
 
-   (extra-options '("--max-jobs=6" "--cores=3"))))
+   (extra-options '("--max-jobs=6" "--cores=3"
+                    ;; Origin <https://lists.gnu.org/archive/html/guix-devel/2018-07/msg00310.html>.
+                    "--gc-keep-derivations=yes"
+                    "--gc-keep-outputs=yes"))))
 
 
 ;;;
