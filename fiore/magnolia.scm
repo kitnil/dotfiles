@@ -473,12 +473,7 @@ EndSection
                               (sysctl-configuration
                                (settings '(("net.ipv4.ip_forward" . "1")))))
 
-                     (service ddclient-service-type
-                              (opaque-ddclient-configuration
-                               (ddclient-conf
-                                (call-with-input-file
-                                    (string-append %source-dir "/ddclient.conf")
-                                  get-string-all))))
+                     (service ddclient-service-type)
 
                      (service libvirt-service-type
                               (libvirt-configuration
