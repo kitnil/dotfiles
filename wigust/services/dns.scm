@@ -145,9 +145,12 @@ program.")
                     (lambda ()
                       (serialize-configuration config
                                                ddclient-configuration-fields)))
-                "\n\n# Appended from '" ddclient-secret-file "'.\n\n"
-                (with-input-from-file ddclient-secret-file
-                  read-string)))))
+                (if (string-null? ddclient-secret-file)
+                    ""
+                    (format #f "\n\n# Appended from '~a'.\n\n~a"
+                            ddclient-secret-file
+                            (with-input-from-file ddclient-secret-file
+                              read-string)))))))
           (chmod "/etc/ddclient/ddclient.conf" #o600)
           (chown "/etc/ddclient/ddclient.conf"
                  ddclient-user ddclient-group)))))
@@ -163,16 +166,16 @@ program.")
            (documentation "Run ddclient daemon.")
            (start #~(make-forkexec-constructor
                      (list #$(file-append ddclient "/bin/ddclient")
-                           "-foreground" "-file" "/etc/ddclient/ddclient.conf"
-                           "-debug" "-verbose")
+                           "-foreground"
+                           "-file" "/etc/ddclient/ddclient.conf")
                      #:pid-file #$ddclient-pid
                      #:environment-variables
                      (list "SSL_CERT_DIR=/run/current-system/profile\
 /etc/ssl/certs"
                            "SSL_CERT_FILE=/run/current-system/profile\
 /etc/ssl/certs/ca-certificates.crt")
-                     #:user ddclient-user
-                     #:group ddclient-group))
+                     #:user #$ddclient-user
+                     #:group #$ddclient-group))
            (stop #~(make-kill-destructor))))))
 
 (define ddclient-service-type
