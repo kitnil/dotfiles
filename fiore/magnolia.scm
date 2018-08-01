@@ -10,6 +10,7 @@
   #:use-module (ice-9 rdelim)
   #:use-module (ice-9 textual-ports)
   #:use-module (fiore manifests fiore)
+  #:use-module (fiore modules hosts)
   #:use-module (wigust services dns)
   #:use-module (wigust services monitoring)
   #:use-module (wigust packages monitoring)
@@ -334,43 +335,6 @@ EndSection
 
 
 ;;;
-;;; Support functions
-;;;
-
-;; Origin <https://stackoverflow.com/a/20591545>.
-(define (cartesian-product . lists)
-  (fold-right (lambda (xs ys)
-                (append-map (lambda (x)
-                              (map (lambda (y)
-                                     (cons x y))
-                                   ys))
-                            xs))
-              '(())
-              lists))
-
-
-;;;
-;;; /etc/hosts
-;;;
-
-(define (prefix-local-host-aliases prefix host-name domain ip-addresses)
-  (string-join (map (lambda (x)
-                      (string-append (string-join x " ") "." host-name domain))
-                    (cartesian-product ip-addresses prefix))
-               "\n"))
-
-(define %magnolia-ip-address "192.168.105.120")
-
-(define (serialize-hosts lst)
-  (string-join (map (match-lambda
-                      ((ip-address . canonical-hostname)
-                       (format #f "~a ~a"
-                               ip-address canonical-hostname)))
-                    lst)
-               "\n"))
-
-
-;;;
 ;;; Operating system.
 ;;;
 
@@ -429,35 +393,9 @@ EndSection
                    (home-directory "/home/guix-offload"))
                   %base-user-accounts))
 
-    (hosts-file
-     ;; Create a /etc/hosts file with aliases for "localhost"
-     ;; and "mymachine", as well as for Facebook servers.
-     (plain-file "hosts"
-                 (string-append (local-host-aliases host-name)
-                                (prefix-local-host-aliases
-                                 '("cgit" "git" "guix" "www"
-                                   "natsu" "torrent" "print"
-                                   "zabbix")
-                                 host-name ".local"
-                                 (list %magnolia-ip-address))
-                                "\n"
-                                (prefix-local-host-aliases
-                                 '("cgit" "anongit" "guix" "alerta" "weblog")
-                                 "duckdns" ".org"
-                                 (list %magnolia-ip-address))
-                                "\n"
-                                (prefix-local-host-aliases
-                                 '("zabbix" "cerberus" "grafana")
-                                 "" "intr"
-                                 (list %magnolia-ip-address))
-                                "\n\n"
-                                "192.168.105.112 clover"
-                                "\n\n"
-                                (serialize-hosts
-                                 '(("192.168.100.1" . "router.local")
-                                   ("192.168.105.1" . "switch.local")))
-                                "\n\n"
-                                %facebook-host-aliases)))
+    ;; Create a /etc/hosts file with aliases for "localhost"
+    ;; and "mymachine", as well as for Facebook servers.
+    (hosts-file (fiore-hosts-file host-name))
 
     ;; Lightweight desktop with custom packages from guix-wigust
     (packages (cons zabbix %fiore-packages))

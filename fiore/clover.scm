@@ -3,12 +3,13 @@
 ;; Released under the GNU GPLv3 or any later version.
 
 (define-module (fiore clover)
+  #:use-module (fiore modules hosts)
   #:use-module (gnu)
   #:use-module (gnu system nss)
   #:use-module (linux-nonfree)
   #:use-module (guix store))
 
-(use-service-modules ssh desktop xorg cups pm version-control mail)
+(use-service-modules ssh desktop xorg cups networking version-control mail)
 
 (use-package-modules admin android bash bootloaders certs cups
 databases dns file fonts fontutils freedesktop gnome gnupg linux mail
@@ -74,6 +75,10 @@ EndSection
                         (mount-point "/")
                         (type "ext4"))
                       %base-file-systems))
+
+  ;; Create a /etc/hosts file with aliases for "localhost"
+  ;; and "mymachine", as well as for Facebook servers.
+  (hosts-file (fiore-hosts-file host-name))
 
   (users (cons (user-account
                 (name "natsu")
