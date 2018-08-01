@@ -28,7 +28,7 @@ EndSection
 
 (define %guix-daemon-config
   (guix-configuration
-   (substitute-urls '("http://guix.magnolia.local"
+   (substitute-urls '("https://guix.duckdns.org"
                       "https://berlin.guixsd.org"
                       "https://mirror.hydra.gnu.org"
                       "https://hydra.gnu.org"))
