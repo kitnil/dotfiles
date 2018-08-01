@@ -36,7 +36,8 @@ EndSection
    (timeout (* 4 max-silent-time))
    (extra-options '("--max-jobs=4" "--cores=2"
                     "--cache-failures"
-                    "--gc-keep-outputs" "--gc-keep-derivations"))))
+                    "--gc-keep-outputs=yes"
+		    "--gc-keep-derivations=yes"))))
 
 (define %custom-desktop-services
   (modify-services %desktop-services
