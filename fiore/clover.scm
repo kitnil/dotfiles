@@ -143,10 +143,7 @@ EndSection
 
       %base-packages))
 
-  (services (cons* (service tlp-service-type
-                            (tlp-configuration
-                             (wol-disable? #f)))
-                   (service openssh-service-type
+  (services (cons* (service openssh-service-type
                             (openssh-configuration
 			     (permit-root-login #t)
                              (port-number 22)))
