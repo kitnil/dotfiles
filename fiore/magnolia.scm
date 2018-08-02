@@ -99,7 +99,9 @@ version-control virtualization web wget xdisorg xorg zile)
       (and (ip "tuntap add tap0 mode tap")
            (ip "tuntap add tap1 mode tap")
            (ip "address add 192.168.55.1/24 dev tap0")
-           (ip "address add 192.168.60.1/24 dev tap1"))))
+           (ip "address add 192.168.60.1/24 dev tap1")
+           (ip "link set tap0 up")
+           (ip "link set tap1 up"))))
 
 (define custom-networking-service
   (simple-service 'custom-networking shepherd-root-service-type
