@@ -2,46 +2,23 @@
 ;; Copyright © 2018 Oleg Pykhalov <go.wigust@gmail.com>
 ;; Released under the GNU GPLv3 or any later version.
 
-(use-modules (ice-9 match)
-             (ice-9 rdelim)
-             (ice-9 receive)
-             (web client))
+(use-modules (json)
+             (guix import json))
 
-(define %ip-address-cache "/tmp/mcron-ip-address.txt")
 (define %ip-address-mail "go.wigust@gmail.com")
 
-(define (get-ip-adress)
-  (let* ((newline "\n")
-         (newline-lengh (string-length newline)))
-    (receive (response body)
-        (http-get "http://ifconfig.co" #:headers `((User-Agent . "curl")))
-      (if (string= (string-take-right body newline-lengh)
-                   newline)
-          (string-drop-right body newline-lengh)
-          body))))
-
-(define (ip-address-cache=? ip-address)
-  (string=? (call-with-input-file %ip-address-cache
-              read-string)
-            ip-address))
-
-(job '(next-minute '(5))
+(job '(next-minute (range 0 60 5))
      (lambda ()
-       (match (get-ip-adress)
-         (ip-address
-          (if (and (file-exists? %ip-address-cache)
-                   (ip-address-cache=? ip-address))
-              (format #t "IP-address ~s the same as in ~s.\n"
-                      ip-address %ip-address-cache)
-              (begin
-                (and (system (format #f "echo 'Subject: IP-address\n\n~a' | msmtp ~a"
-                                     ip-address %ip-address-mail))
-                     (format #t "Sent ~s IP-address to ~s.\n"
-                             ip-address %ip-address-mail))
-                (and (with-output-to-file %ip-address-cache
-                       (lambda ()
-                         (display ip-address)))
-                     (ip-address-cache=? ip-address)
-                     (format #t "Write ~s IP-address to ~s file.\n"
-                             ip-address %ip-address-cache)))))
-         (_ (error "Failed to get an IP address.")))))
+       (let ((response (json-fetch-alist "http://ifconfig.co/json")))
+         (if response
+             (unless (and (file-exists? "/tmp/ifconfig.co.scm")
+                          (equal? response
+                                  (with-input-from-file "/tmp/ifconfig.co.scm"
+                                    read)))
+               (system
+                (format #f "echo 'Subject: ifconfig.co\n\n~s' | msmtp ~a"
+                        response %ip-address-mail))
+               (with-output-to-file "/tmp/ifconfig.co.scm"
+                 (lambda ()
+                   (write response))))
+             (display "No response from ifconfig.co")))))
