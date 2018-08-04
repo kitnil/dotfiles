@@ -56,14 +56,12 @@
    (ansible-task
     (name "Clean Guix compile directory")
     (module
-     `("shell" . ,(string-join '("git" "checkout" "--" "doc" "po"))))
-    (parameters '()))
+     `("shell" . ,(string-join '("git" "checkout" "--" "doc" "po")))))
    (ansible-task
     (name "Pull latest Guix")
     (module
      `("shell" .
-       ,(string-join '("env" "GUIX_PACKAGE_PATH=" "guix" "pull"))))
-    (parameters '()))))
+       ,(string-join '("env" "GUIX_PACKAGE_PATH=" "guix" "pull")))))))
 
 (define %ansible-dotfiles-tasks
   (list
