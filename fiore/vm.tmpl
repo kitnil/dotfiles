@@ -1,0 +1,50 @@
+(use-modules (gnu)
+             (gnu services base)
+             (gnu services databases)
+             (gnu services networking)
+             (wigust services monitoring)
+             (wigust services dns)
+             (guix gexp)
+             (gnu packages admin)
+             (gnu packages certs)
+             (gnu packages databases)
+             (gnu services dns)
+             (gnu services ssh)
+             (gnu packages dns)
+             (gnu packages curl)
+             (gnu packages ncurses)
+             (gnu packages ssh)
+             (gnu services web)
+             (gnu packages linux)
+             (wigust packages monitoring)
+             (srfi srfi-1)
+             (ice-9 textual-ports))
+
+(let ((os (load "/home/natsu/src/guix/gnu/system/examples/vm-image.tmpl")))
+  (operating-system
+    (inherit os)
+    (timezone "Europe/Moscow")
+    (kernel-arguments '("console=ttyS0"))
+    (users (cons (user-account
+                  (name "natsu")
+                  (comment "Oleg Pykhalov")
+                  (group "users")
+                  (supplementary-groups '("wheel" "netdev"
+                                          "audio" "video"))
+                  (home-directory "/home/natsu")
+                  (password (crypt "***REMOVED***" "bar")))
+                 (operating-system-users os)))
+    (services (cons* (service openssh-service-type
+                              (openssh-configuration
+                               (permit-root-login #t))))
+                     (dhcp-client-service)
+                     (operating-system-user-services os)))
+    (packages (cons* curl knot nss-certs openssh
+                     ncurses ;reset
+                     tcpdump
+                     strace
+                     (operating-system-packages os)))
+    (name-service-switch %mdns-host-lookup-nss)))
+
+
+
