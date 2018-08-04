@@ -415,7 +415,10 @@ EndSection
 
                      (service sysctl-service-type
                               (sysctl-configuration
-                               (settings '(("net.ipv4.ip_forward" . "1")))))
+                               (settings '(("net.ipv4.ip_forward" . "1")
+                                           ("net.ipv4.conf.all.accept_redirects" . "1")
+                                           ("net.ipv4.conf.all.send_redirects" . "1")))))
+                     ;; 92 bytes from switch.local (192.168.105.1): Redirect Host
 
                      (service ddclient-service-type)
 
