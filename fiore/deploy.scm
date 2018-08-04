@@ -54,6 +54,11 @@
            "--ad-hoc" "help2man" "guile-sqlite3" "--" "make" "-j" "4"))))
     (parameters `("args" (("chdir" . "~/src/guix")))))
    (ansible-task
+    (name "Clean Guix compile directory")
+    (module
+     `("shell" . ,(string-join '("git" "checkout" "--" "doc" "po"))))
+    (parameters '()))
+   (ansible-task
     (name "Pull latest Guix")
     (module
      `("shell" .
