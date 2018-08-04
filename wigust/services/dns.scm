@@ -34,8 +34,7 @@
   #:use-module (ice-9 regex)
   #:use-module (ice-9 rdelim)
   #:export (ddclient-service-type
-            ddclient-configuration
-            opaque-ddclient-configuration))
+            ddclient-configuration))
 
 
 ;;;
