@@ -15,7 +15,8 @@
   #:use-module (wigust services monitoring)
   #:use-module (wigust packages monitoring)
   #:use-module (wigust packages php)
-  #:use-module (wigust packages networking))
+  #:use-module (wigust packages networking)
+  #:export (%system-magnolia))
 
 (use-service-modules certbot cups databases desktop dns mail networking rsync
 shepherd spice ssh sysctl version-control virtualization web xorg cgit)
