@@ -81,15 +81,22 @@
                 #:playbooks
                 (list (cons (ansible-playbook-file
                              (ansible-playbook
-                              (hosts '("all"))
+                              (hosts (list (ansible-host (name "fiore"))))
                               (tasks %ansible-guix-tasks))
                              (playbook-file "guix"))
                             (string-append %home-directory
                                            "/src/ansible-wigust-playbooks/guix.yml"))
                       (cons (ansible-playbook-file
                              (ansible-playbook
-                              (hosts '("all"))
+                              (hosts (list (ansible-host (name "fiore"))))
                               (tasks %ansible-dotfiles-tasks))
                              (playbook-file "dotfiles"))
                             (string-append %home-directory
-                                           "/src/ansible-wigust-playbooks/dotfiles.yml")))))
+                                           "/src/ansible-wigust-playbooks/dotfiles.yml"))
+                      (cons (ansible-playbook-file
+                             (ansible-playbook
+                              (hosts (list (ansible-host (name "majordomo"))))
+                              (tasks %ansible-guix-tasks))
+                             (playbook-file "majordomo"))
+                            (string-append %home-directory
+                                           "/src/ansible-wigust-playbooks/majordomo.yml")))))
