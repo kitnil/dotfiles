@@ -52,7 +52,13 @@
        ,(string-join
          '("env" "GUIX_PACKAGE_PATH=" "guix" "environment" "--pure" "guix"
            "--ad-hoc" "help2man" "guile-sqlite3" "--" "make" "-j" "4"))))
-    (parameters `("args" (("chdir" . "~/src/guix")))))))
+    (parameters `("args" (("chdir" . "~/src/guix")))))
+   (ansible-task
+    (name "Pull latest Guix")
+    (module
+     `("shell" .
+       ,(string-join '("env" "GUIX_PACKAGE_PATH=" "guix" "pull"))))
+    (parameters '()))))
 
 (define %ansible-dotfiles-tasks
   (list
