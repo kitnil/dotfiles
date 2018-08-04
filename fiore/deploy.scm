@@ -2,7 +2,8 @@
   #:use-module (fiore magnolia)
   #:use-module (gnu system)
   #:use-module (ansible)
-  #:use-module (srfi srfi-26))
+  #:use-module (srfi srfi-26)
+  #:use-module (ice-9 match))
 
 (define %home-directory
   (getenv "HOME"))
@@ -13,17 +14,14 @@
 (define playbook-file
   (cut string-append %playbooks-directory "/" <> ".yml"))
 
-(define* (ansible-push #:key remote remote-file playbooks)
-  (for-each (lambda (playbook)
-              (system* "scp" playbook (string-append remote ":" remote-file)))
-            playbooks)
-  (format #t "Run `ssh ansible -- ansible-playbook ~a'"
-          (string-join
-           (map
-            (lambda (playbook)
-              (string-drop playbook
-                           (string-length (string-append %home-directory "/"))))
-            playbooks))))
+(define* (ansible-push #:key remote playbooks)
+  (for-each (match-lambda
+              ((playbook . remote-file)
+               (system* "scp" playbook (string-append remote ":" remote-file))
+               (format #t "Run `ssh ansible -- ansible-playbook ~a'.\n"
+                       (string-drop playbook
+                                    (string-length (string-append %home-directory "/"))))))
+            playbooks))
 
 
 ;;;
@@ -71,16 +69,18 @@
 
 (define (fiore-push)
   (ansible-push #:remote "ansible"
-                #:remote-file
-                (string-append (getenv "HOME")
-                               "/src/ansible-wigust-playbooks/guix.yml")
-                #:playbooks (list (ansible-playbook-file
-                                   (ansible-playbook
-                                    (hosts '("all"))
-                                    (tasks %ansible-guix-tasks))
-                                   (playbook-file "guix"))
-                                  (ansible-playbook-file
-                                   (ansible-playbook
-                                    (hosts '("all"))
-                                    (tasks %ansible-dotfiles-tasks))
-                                   (playbook-file "guix")))))
+                #:playbooks
+                (list (cons (ansible-playbook-file
+                             (ansible-playbook
+                              (hosts '("all"))
+                              (tasks %ansible-guix-tasks))
+                             (playbook-file "guix"))
+                            (string-append %home-directory
+                                           "/src/ansible-wigust-playbooks/guix.yml"))
+                      (cons (ansible-playbook-file
+                             (ansible-playbook
+                              (hosts '("all"))
+                              (tasks %ansible-dotfiles-tasks))
+                             (playbook-file "dotfiles"))
+                            (string-append %home-directory
+                                           "/src/ansible-wigust-playbooks/dotfiles.yml")))))
