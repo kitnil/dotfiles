@@ -1137,7 +1137,7 @@ lines elsewhere in a project.")
                #t))))))))
 
 (define-public emacs-guix-next
-  (let ((commit "729e2d43ec34f935c39958f835dc35b6344a5b07")
+  (let ((commit "a7107b35952e1b3089261b869387b3a534f88f3a")
         (revision "1"))
     (package
       (inherit emacs-guix)
@@ -1152,7 +1152,7 @@ lines elsewhere in a project.")
          (file-name (git-file-name name version))
          (sha256
           (base32
-           "1jr5smhl2as954a4kk5jh3c0g4vi4hn6s8318gqs7ym8fdv0xl92"))))
+           "1pr2x63xyqnmva7gsmnm0wykx54ma2ssmj89hfws6g4w186pgsca"))))
       (native-inputs
        `(("autoconf" ,autoconf)
          ("automake" ,automake)
