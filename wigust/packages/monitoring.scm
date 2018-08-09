@@ -38,6 +38,7 @@
   #:use-module (gnu packages libevent)
   #:use-module (gnu packages image)
   #:use-module (gnu packages mail)
+  #:use-module (gnu packages networking)
   #:use-module (gnu packages pcre)
   #:use-module (gnu packages perl)
   #:use-module (gnu packages python)
