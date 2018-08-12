@@ -27,6 +27,7 @@
   #:use-module (guix build-system go)
   #:use-module (guix build-system trivial)
   #:use-module (gnu packages admin)
+  #:use-module (gnu packages autotools)
   #:use-module (gnu packages base)
   #:use-module (gnu packages bash)
   #:use-module (gnu packages check)
@@ -34,6 +35,7 @@
   #:use-module (gnu packages curl)
   #:use-module (gnu packages databases)
   #:use-module (gnu packages django)
+  #:use-module (gnu packages file)
   #:use-module (gnu packages gd)
   #:use-module (gnu packages libevent)
   #:use-module (gnu packages image)
@@ -46,6 +48,81 @@
   #:use-module (gnu packages time)
   #:use-module (gnu packages tls)
   #:use-module (gnu packages))
+
+(define-public net-snmp
+  (package
+    (name "net-snmp")
+    (version "5.7.3")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append "mirror://sourceforge/net-snmp/net-snmp/" version
+                           "/net-snmp-" version ".tar.gz"))
+       (sha256
+        (base32
+         "1w5l9w0sgi1zkzq8ww6kc6fzq7ljq59z2d9ks6bdq1vp7ihqkvqj"))
+       (patches
+        (map (lambda (file hash)
+               (origin
+                 (method url-fetch)
+                 (uri (string-append
+                       "https://git.alpinelinux.org\
+/cgit/aports/plain/main/net-snmp/"
+                       file "?id=f25d3fb08341b60b6ccef424399f060dfcf3f1a5"))
+                 (sha256
+                  (base32
+                   hash))))
+             '("CVE-2015-5621.patch"
+               "fix-Makefile-PL.patch"
+               "fix-includes.patch"
+               "netsnmp-swinst-crash.patch"
+               "remove-U64-typedef.patch")
+             '("0mg2mlfb45fnv7m1k9wckrqjfizipyvrl1q4dn1r0zc774mm7zjc"
+               "1pd85sy04n76q1ri3l33f0zpnnw76nd5mcny2j39ilzp76bjfik5"
+               "0zpkbb6k366qpq4dax5wknwprhwnhighcp402mlm7950d39zfa3m"
+               "0gh164wy6zfiwiszh58fsvr25k0ns14r3099664qykgpmickkqid"
+               "0jcpcpgx4z9k1w0x6km0132n67qc29mz6cialwfjm02l76q2yk5n")))))
+    (build-system gnu-build-system)
+    (native-inputs
+     `(("autoconf" ,autoconf)
+       ("automake" ,automake)
+       ("libtool" ,libtool)))
+    (inputs
+     `(("file" ,file)
+       ("perl" ,perl)
+       ("openssl" ,openssl)))
+    (arguments
+     `(#:tests? #f
+       #:configure-flags
+       (list "--with-default-snmp-version=3"
+             "--with-sys-location=Unknown"
+             "--with-sys-contact=root@unknown"
+             "--with-logfile=/var/log/net-snmpd.log"
+             "--with-persistent-directory=/var/lib/net-snmp"
+             (string-append "--with-openssl="
+                            (assoc-ref %build-inputs "openssl"))
+             "--with-mnttab=/proc/mounts")
+       #:make-flags
+       (let ((out (assoc-ref %outputs "out")))
+         (list (string-append "INSTALLSITEARCH=" out
+                              "/lib/perl5/site_perl/" ,(package-version perl)
+                              "/x86_64-linux-thread-multi")
+               (string-append"INSTALLSITEMAN3DIR=" out "/share/man/man3")))
+
+       #:phases
+       (modify-phases %standard-phases
+         (add-before 'configure 'autoreconf
+           (lambda _
+             (invoke "autoreconf" "-vfi"))))))
+    (home-page "http://net-snmp.sourceforge.net/")
+    (synopsis "Clients and server for the SNMP network monitoring protocol")
+    (description "The Simple Network Management Protocol (SNMP) provides a
+framework for the exchange of management information between agents (servers)
+and clients.
+
+The Net-SNMP applications are a collection of command line clients for issuing
+SNMP requests to agents.")
+    (license license:bsd-3)))
 
 (define-public zabbix
   (package
