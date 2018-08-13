@@ -378,7 +378,6 @@
     mercurial
 
     gst-plugins-bad
-    gst-plugins-base
     gst-plugins-good
     gst-plugins-ugly
     gstreamer
