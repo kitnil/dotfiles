@@ -1,21 +1,24 @@
 #!/bin/sh
 
+image=$1
+qcow=$2
+
 # Create mount direcroty
-mkdir /tmp/debian
+echo mkdir /tmp/$image
 
 # Load kernel module
-modprobe nbd
+echo modprobe nbd
 
 # Mount QEMU image
-qemu-nbd -c /dev/nbd0 /srv/virt/debian-gnome.img
-mount /dev/nbd0p1 /tmp/debian
+echo qemu-nbd -c /dev/nbd0 /srv/virt/$qcow
+echo mount /dev/nbd0p1 /tmp/$image
 
 # Mouch chroot requisites
-mount --bind /dev/pts /tmp/debian/dev/pts
-mount --bind $XDG_RUNTIME_DIR /tmp/debian/var/run/user/1000
-mount --bind /dev/shm /tmp/debian/dev/shm
-mount --bind /srv/share /tmp/debian/mnt
-mount --bind /tmp /tmp/debian/tmp
-mount --bind /dev /tmp/debian/dev
-mount -t proc none /tmp/debian/proc
-mount -t sysfs sys /tmp/debian/sys
+echo mount --bind /dev /tmp/$image/dev
+echo mount --bind /dev/pts /tmp/$image/dev/pts
+echo mount --bind /dev/shm /tmp/$image/dev/shm
+echo mount --bind /srv/share /tmp/$image/mnt
+echo mount --bind /tmp /tmp/$image/tmp
+echo mount --bind $XDG_RUNTIME_DIR /tmp/$image/var/run/user/1000
+echo mount -t proc none /tmp/$image/proc
+echo mount -t sysfs sys /tmp/$image/sys
