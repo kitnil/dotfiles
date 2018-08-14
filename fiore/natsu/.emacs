@@ -673,6 +673,7 @@ Sets the following basend on PREFIX-MAP:
 (wi-define-keys "C-c g i" ivy
                 ("b" ivy-switch-buffer "switch buffer" :color blue)
                 ("f" counsel-find-file "find file" :color blue)
+                ("g" counsel-rg "grep" :color blue)
                 ("l" ivy-recentf "recent" :color blue)
                 ("r" ivy-resume "resume" :color blue)
                 ("s" swiper "swiper" :color blue)
