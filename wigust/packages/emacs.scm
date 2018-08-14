@@ -1285,3 +1285,27 @@ network processes.")
     (description "This Emacs library lists the branches in a Git repository.
 Then you can operate on them with a dired-like interface.")
     (license license:gpl3+)))
+
+(define-public emacs-psysh
+  (package
+    (name "emacs-psysh")
+    (version "0.0.4")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append "https://github.com/emacs-php/psysh.el/archive/"
+                           version ".tar.gz"))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256
+        (base32
+         "0h019yarfgwyvfjsvif1l404a9a9j6jlzyfykyahf7j5850k4fhk"))))
+    (build-system emacs-build-system)
+    (propagated-inputs
+     `(("emacs-s" ,emacs-s)
+       ("emacs-f" ,emacs-f)))
+    (home-page "https://github.com/zonuexe/psysh.el")
+    (synopsis "PsySH, PHP interactive shell (REPL)")
+    (description
+     "This package provides a PHP interactive shell.")
+    (license license:gpl3+)))
+
