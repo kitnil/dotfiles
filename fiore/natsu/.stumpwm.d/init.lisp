@@ -597,11 +597,12 @@
 (define-key *root-map* (kbd "C-w") "conkeror")
 (define-key *root-map* (kbd "M-w") "firefox")
 
-;; (define-key *top-map* (kbd "s-1") "gselect 1")
-;; (define-key *top-map* (kbd "s-2") "gselect 2")
-;; (define-key *top-map* (kbd "s-3") "gselect 3")
-;; (define-key *top-map* (kbd "s-4") "gselect 4")
-;; (define-key *top-map* (kbd "s-t") "trans")
+(define-key *top-map* (kbd "s-m") "mpv")
+(define-key *top-map* (kbd "s-v") "xclip-mpv")
+(define-key *top-map* (kbd "s-e") "emacsclient")
+(define-key *top-map* (kbd "s-w") "firefox")
+(define-key *top-map* (kbd "s-c") "run-or-raise-xterm")
+
 (define-key *top-map* (kbd "s-o") "other-in-frame")
 (define-key *top-map* (kbd "s-t") "pull-hidden-other")
 (define-key *top-map* (kbd "s-\"") "frame-windowlist")
