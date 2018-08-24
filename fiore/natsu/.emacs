@@ -2070,55 +2070,7 @@ If nil use light theme.")
             (progn (setq paragraph-separate "[ 	]*$")
                    (setq paragraph-start "\\|[ 	]*$"))))
 
-(let ((youtube-rss-channel-id
-       "https://www.youtube.com/feeds/videos.xml?channel_id=")
-      (youtube-rss-user
-       "https://www.youtube.com/feeds/videos.xml?user="))
-  (setq elfeed-feeds
-        `("https://h-node.org/rss/modifications/en"
-
-          "http://nullprogram.com/feed/"
-
-          "http://www.scheme.dk/planet/atom.xml"
-          "http://planet.lisp.org/rss20.xml"
-
-          "https://lwn.net/headlines/newrss"
-          "https://fedoramagazine.org/feed/"
-
-          "http://planet.emacsen.org/atom.xml"
-          "http://planet.gnu.org/atom.xml"
-
-          "https://oremacs.com/atom.xml" ; abo-abo
-
-          "http://steckerhalter.tk/index.xml"
-          "https://www.reddit.com/r/freegames/.rss"
-          "https://www.bennee.com/~alex/blog/feed/"
-          "https://cestlaz.github.io/rss.xml"
-          ("https://bitlove.org/jupiterbroadcasting/bsdnowhd/feed"
-           video)
-          (,(concat youtube-rss-channel-id "UC2eYFnH61tmytImy1mTYvhA")
-           video) ; Luke Smith
-          (,(concat youtube-rss-channel-id "UCkK9UDm_ZNrq_rIXCz3xCGA")
-           video) ; Brian Lunduke
-          (,(concat youtube-rss-channel-id "UCMV8p6Lb-bd6UZtTc_QD4zA")
-           video) ; Baggers
-          (,(concat youtube-rss-channel-id "UCbHXJGd7c8Hy4z0-YX1Jf3Q")
-           video) ; Matt Hartley
-          (,(concat youtube-rss-channel-id "UCgU5tUdVPpfM7sLAMWBTsDg")
-           video) ; computeremotion.com
-          (,(concat youtube-rss-channel-id "UCZrrEuHiQjN2CUo84g5tk7w")
-           video) ; tripcode!Q/7
-          (,(concat youtube-rss-channel-id "UCVls1GmFKf6WlTraIb_IaJg")
-           video) ; DistroTube
-          (,(concat youtube-rss-channel-id "UCk9NvmsPBC3lTn_L9kFaylA")
-           video) ; iBSD
-          (,(concat youtube-rss-user "LDCNow") video)
-          (,(concat youtube-rss-user "tuxreviews") video)
-          ;; (,(concat youtube-rss-user "EposVox") video)
-          (,(concat youtube-rss-user "gotbletu") video)
-          (,(concat youtube-rss-user "metalx1000") video)
-          (,(concat youtube-rss-user "SsethTzeentach") video games))))
-
+(load (expand-file-name "~/.emacs.d/erza/elfeed.el"))
 (load (expand-file-name "~/.emacs.d/erza/keys.el"))
 
 ;; `w3m' fonts
