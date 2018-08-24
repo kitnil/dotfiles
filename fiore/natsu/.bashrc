@@ -27,3 +27,5 @@ function stat-link { stat --format=%N $@; }
 # Every Friday at 12:00-15:00 EDT (16:00 to 19:00 UTC)
 # meet on IRC in the #fsf channel on irc.freenode.org
 date-fsf() { date --date='TZ="America/New_York" 12:00 this Fri'; }
+
+cl() { echo $(tput cols)x$(tput lines); }
