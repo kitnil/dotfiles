@@ -50,6 +50,8 @@
 
 (run-shell-command "xmodmap ~/.Xmodmap")
 
+(run-shell-command "keynav")
+
 (setf *message-window-y-padding* 3)
 
 (setf *window-border-style* :none)
