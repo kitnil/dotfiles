@@ -376,6 +376,7 @@ EndSection
 
     (groups (cons* (user-group (name "adbusers"))
                    (user-group (name "guix-offload"))
+                   (user-group (name "telegraf") (system? #t))
                    %base-groups))
 
     (users (cons* (user-account
@@ -394,6 +395,12 @@ EndSection
                    (uid 1982)
                    (group "guix-offload")
                    (home-directory "/home/guix-offload"))
+                  (user-account
+                   (name "telegraf")
+                   (system? #t)
+                   (group "telegraf")
+                   (comment "telegraf privilege separation user")
+                   (home-directory "/var/run/telegraf"))
                   %base-user-accounts))
 
     ;; Create a /etc/hosts file with aliases for "localhost"
