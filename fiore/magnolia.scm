@@ -188,6 +188,15 @@ EndSection
 ;;; NGINX
 ;;;
 
+(define* (ssh-forward #:key port host)
+  (list "resolver 80.80.80.80;"
+        (string-append "set $target localhost:" (number->string port) ";")
+        "proxy_pass http://$target;"
+        (format #f "proxy_set_header Host ~a;" host)
+        "proxy_set_header X-Real-IP $remote_addr;"
+        "proxy_set_header X-Forwarded-for $remote_addr;"
+        "proxy_connect_timeout 300;"))
+
 (define %file-share-configuration-nginx
   (nginx-configuration
    (server-blocks
@@ -236,6 +245,18 @@ EndSection
           (ssl-certificate #f)
           (ssl-certificate-key #f)))))
 
+(define intr-alerta-publish-nginx-service
+  (simple-service 'guix-publish-nginx nginx-service-type
+   (list (nginx-server-configuration
+          (server-name '("alerta.intr"))
+          (listen '("80"))
+          (locations (list (nginx-location-configuration
+                            (uri "/")
+                            (body (ssh-forward #:port 16180
+                                               #:host "alerta.intr")))))
+          (ssl-certificate #f)
+          (ssl-certificate-key #f)))))
+
 (define intr-zabbix-publish-nginx-service
   (simple-service 'guix-publish-nginx nginx-service-type
    (list (nginx-server-configuration
@@ -243,9 +264,8 @@ EndSection
           (listen '("80"))
           (locations (list (nginx-location-configuration
                             (uri "/")
-                            (body '("resolver 80.80.80.80;"
-                                    "set $target localhost:15081;"
-                                    "proxy_pass http://$target;")))))
+                            (body (ssh-forward #:port 15081
+                                               #:host "zabbix.intr")))))
           (ssl-certificate #f)
           (ssl-certificate-key #f)))))
 
@@ -256,9 +276,8 @@ EndSection
           (listen '("80"))
           (locations (list (nginx-location-configuration
                             (uri "/")
-                            (body '("resolver 80.80.80.80;"
-                                    "set $target localhost:15080;"
-                                    "proxy_pass http://$target;")))))
+                            (body (ssh-forward #:port 15080
+                                               #:host "cerberus.intr")))))
           (ssl-certificate #f)
           (ssl-certificate-key #f)))))
 
@@ -269,9 +288,8 @@ EndSection
           (listen '("80"))
           (locations (list (nginx-location-configuration
                             (uri "/")
-                            (body '("resolver 80.80.80.80;"
-                                    "set $target localhost:15082;"
-                                    "proxy_pass http://$target;")))))
+                            (body (ssh-forward #:port 16080
+                                               #:host "grafana.intr")))))
           (ssl-certificate #f)
           (ssl-certificate-key #f)))))
 
@@ -521,12 +539,14 @@ EndSection
 
                      zabbix-nginx-service
                      intr-zabbix-publish-nginx-service
+                     intr-alerta-publish-nginx-service
                      cerb-publish-nginx-service
                      guix-publish-nginx-service
                      anongit-nginx-service
                      cups-nginx-service
                      torrent-nginx-service
                      natsu-nginx-service
+                     grafana-publish-nginx-service
 
                      (service certbot-service-type
                               (certbot-configuration
