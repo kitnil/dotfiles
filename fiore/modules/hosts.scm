@@ -49,8 +49,8 @@
                 (list %magnolia-ip-address))
                "\n\n"
                (serialize-hosts
-                '(("192.168.100.1" . "router.local")
-                  ("192.168.105.1" . "switch.local")
+                '(("192.168.100.1" . "r1.local")
+                  ("192.168.105.1" . "r2.local")
                   ("192.168.105.120" . "magnolia")
                   ("192.168.105.112" . "clover")
                   ("192.168.105.123" . "ansible")
