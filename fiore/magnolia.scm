@@ -211,7 +211,7 @@ EndSection
   (simple-service 'zabbix-nginx nginx-service-type
    (list (nginx-server-configuration
           (server-name '("alerta.duckdns.org"))
-          (root (file-append zabbix "/share/zabbix/php"))
+          (root (file-append zabbix-server "/share/zabbix/php"))
           (index '("index.php"))
           (locations
            (list (let ((php-location (nginx-php-location)))
@@ -426,7 +426,7 @@ EndSection
     (hosts-file (fiore-hosts-file host-name))
 
     ;; Lightweight desktop with custom packages from guix-wigust
-    (packages (cons zabbix %fiore-packages))
+    (packages (cons zabbix-server %fiore-packages))
 
     (services (cons* firewall-service
                      custom-networking-service
