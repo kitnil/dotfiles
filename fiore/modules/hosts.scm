@@ -44,7 +44,7 @@
                 (list %magnolia-ip-address))
                "\n"
                (prefix-local-host-aliases
-                '("zabbix" "cerberus" "grafana")
+                '("alerta" "cerberus" "grafana" "zabbix")
                 "" "intr"
                 (list %magnolia-ip-address))
                "\n\n"
