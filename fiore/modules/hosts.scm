@@ -55,6 +55,7 @@
                   ("192.168.105.112" . "clover")
                   ("192.168.105.123" . "ansible")
                   ("192.168.105.124" . "ajenti")
-                  ("192.168.105.124" . "wordpress.local")))
+                  ("192.168.105.124" . "wordpress.local")
+                  ("192.168.105.120" . "hms-billing.majordomo.ru")))
                "\n\n"
                %facebook-host-aliases)))

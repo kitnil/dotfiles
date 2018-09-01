@@ -245,6 +245,23 @@ EndSection
           (ssl-certificate #f)
           (ssl-certificate-key #f)))))
 
+(define intr-hms-publish-nginx-service
+  (simple-service 'guix-publish-nginx nginx-service-type
+   (list (nginx-server-configuration
+          (server-name '("hms-billing.majordomo.ru"))
+          (listen '("443"))
+          (locations (list (nginx-location-configuration
+                            (uri "/")
+                            (body (list "resolver 80.80.80.80;"
+                                        (string-append "set $target localhost:" (number->string 16280) ";")
+                                        "proxy_pass https://$target;"
+                                        (format #f "proxy_set_header Host ~a;" "hms-billing.majordomo.ru")
+                                        "proxy_set_header X-Real-IP $remote_addr;"
+                                        "proxy_set_header X-Forwarded-for $remote_addr;"
+                                        "proxy_connect_timeout 300;")))))
+          (ssl-certificate #f)
+          (ssl-certificate-key #f)))))
+
 (define intr-alerta-publish-nginx-service
   (simple-service 'guix-publish-nginx nginx-service-type
    (list (nginx-server-configuration
@@ -540,6 +557,7 @@ EndSection
                      zabbix-nginx-service
                      intr-zabbix-publish-nginx-service
                      intr-alerta-publish-nginx-service
+                     intr-hms-publish-nginx-service
                      cerb-publish-nginx-service
                      guix-publish-nginx-service
                      anongit-nginx-service
