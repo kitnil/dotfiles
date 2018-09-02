@@ -85,6 +85,9 @@
 (setf *mouse-focus-policy* :click)
 
 (clear-window-placement-rules)
+(define-frame-preference "Default" (1 nil nil :class "mpv"))
+(define-frame-preference "Default" (3 nil nil :class "mpv" :title "emacs-emms"))
+(define-frame-preference "Default" (0 t nil :title "pulsemixer"))
 
 (setf *new-frame-action* :empty)
 
