@@ -1457,8 +1457,7 @@ the appropriate network slug that we extract from the nick."
 	(append '("--no-terminal" "--force-window=no" "--audio-display=no"
                   "--no-resume-playback" "--keep-open=no"
                   "--audio-device=pulse/alsa_output.usb\
--Logitech_Logitech_USB_Headset-00.analog-stereo"
-                  "--no-video")
+-Logitech_Logitech_USB_Headset-00.analog-stereo")
 		emms-player-mpv-parameters))
 
   (setq emms-volume-change-function #'emms-volume-pulse-change)
