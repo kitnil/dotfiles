@@ -5,6 +5,7 @@
 (define-module (fiore magnolia)
   #:use-module (gnu)
   #:use-module (srfi srfi-1)
+  #:use-module (srfi srfi-26)
   #:use-module (ice-9 match)
   #:use-module (ice-9 popen)
   #:use-module (ice-9 rdelim)
@@ -184,6 +185,12 @@ EndSection
 ;;; NGINX
 ;;;
 
+(define letsencrypt-certificate
+  (cut string-append "/etc/letsencrypt/live/" <> "/fullchain.pem"))
+
+(define letsencrypt-key
+  (cut string-append "/etc/letsencrypt/live/" <> "/privkey.pem"))
+
 (define* (ssh-forward #:key port host)
   (list "resolver 80.80.80.80;"
         (string-append "set $target localhost:" (number->string port) ";")
@@ -216,8 +223,8 @@ EndSection
                     (body (append (nginx-location-configuration-body php-location)
                                   (list "fastcgi_param PHP_VALUE \"post_max_size = 16M\nmax_execution_time = 300\";")))))))
           (listen '("80" "443 ssl"))
-          (ssl-certificate "/etc/letsencrypt/live/alerta.duckdns.org/fullchain.pem")
-          (ssl-certificate-key "/etc/letsencrypt/live/alerta.duckdns.org/privkey.pem")))))
+          (ssl-certificate (letsencrypt-certificate "alerta.duckdns.org"))
+          (ssl-certificate-key (letsencrypt-key "alerta.duckdns.org"))))))
 
 (define cups-nginx-service
   (simple-service 'torrent-publish-nginx nginx-service-type
@@ -311,10 +318,8 @@ EndSection
    (list (nginx-server-configuration
           (server-name '("guix.duckdns.org"))
           (listen '("80" "443 ssl"))
-          (ssl-certificate
-           "/etc/letsencrypt/live/guix.duckdns.org/fullchain.pem")
-          (ssl-certificate-key
-           "/etc/letsencrypt/live/guix.duckdns.org/privkey.pem")
+          (ssl-certificate (letsencrypt-certificate "guix.duckdns.org"))
+          (ssl-certificate-key (letsencrypt-key "guix.duckdns.org"))
           (locations (list (nginx-location-configuration
                             (uri "/")
                             (body '("proxy_pass http://localhost:3000;")))))))))
@@ -339,10 +344,8 @@ EndSection
   (nginx-server-configuration
    (inherit %cgit-configuration-nginx)
    (listen '("80" "443 ssl"))
-   (ssl-certificate
-    "/etc/letsencrypt/live/cgit.duckdns.org/fullchain.pem")
-   (ssl-certificate-key
-    "/etc/letsencrypt/live/cgit.duckdns.org/privkey.pem")
+   (ssl-certificate (letsencrypt-certificate "cgit.duckdns.org"))
+   (ssl-certificate-key (letsencrypt-key "cgit.duckdns.org"))
    (server-name '("cgit.duckdns.org"))))
 
 (define anongit-nginx-service
@@ -351,10 +354,8 @@ EndSection
           (listen '("80" "443 ssl"))
           (server-name '("anongit.duckdns.org"))
           (root "/srv/git")
-          (ssl-certificate
-           "/etc/letsencrypt/live/anongit.duckdns.org/fullchain.pem")
-          (ssl-certificate-key
-           "/etc/letsencrypt/live/anongit.duckdns.org/privkey.pem")
+          (ssl-certificate (letsencrypt-certificate "anongit.duckdns.org"))
+          (ssl-certificate-key (letsencrypt-key "anongit.duckdns.org"))
           (locations
            (list
             (git-http-nginx-location-configuration
@@ -491,7 +492,7 @@ EndSection
                                                           "Require user @SYSTEM"
                                                           "Allow localhost")))))
                                (web-interface? #t) ; LibreJS could block JS
-                               (extensions (list cups-filters hplip))))
+                               (extensions (list cups-filters hplip-minimal))))
 
                      (dovecot-service
                       #:config (dovecot-configuration
