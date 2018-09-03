@@ -11,20 +11,16 @@
   #:use-module (ice-9 textual-ports)
   #:use-module (fiore manifests fiore)
   #:use-module (fiore modules hosts)
-  #:use-module (wigust services dns)
-  #:use-module (wigust services monitoring)
-  #:use-module (wigust packages monitoring)
-  #:use-module (wigust packages php)
-  #:use-module (wigust packages networking)
   #:export (%system-magnolia))
 
 (use-service-modules certbot cups databases desktop dns mail networking rsync
-shepherd spice ssh sysctl version-control virtualization web xorg cgit)
+shepherd spice ssh sysctl version-control virtualization web xorg cgit
+wigust-monitoring)
 
 (use-package-modules admin android bash bootloaders certs cryptsetup cups
-databases dns file fonts fontutils freedesktop gnome gnupg linux mail
-ncurses networking ratpoison readline rsync pulseaudio screen ssh tmux
-version-control virtualization web wget xdisorg xorg zile)
+databases dns file fonts fontutils freedesktop gnome gnupg linux mail ncurses
+networking monitoring ratpoison readline rsync pulseaudio screen ssh tmux
+version-control virtualization web wget xdisorg xorg zile wigust-php)
 
 (define %source-dir (string-append (getenv "HOME") "/dotfiles/fiore"))
 
