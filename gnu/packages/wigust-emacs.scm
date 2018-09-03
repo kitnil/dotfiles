@@ -1348,3 +1348,25 @@ Then you can operate on them with a dired-like interface.")
 capturing user input and paste it with @kbd{C-v} after exit.")
       (home-page #f)
       (license license:gpl3+))))
+
+(define-public emacs-redshift
+  (let ((commit "303f58cf65fb6c7701b587cdd048ca785019ebd0"))
+    (package
+      (name "emacs-redshift")
+      (version (git-version "0.0.1" "1" commit))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://gitlab.com/wigust/emacs-redshift")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "112l3hr9vckna8l38x4wi8sdq0mfv3hh4ip10vlz0q78kgkf9q0m"))))
+      (build-system emacs-build-system)
+      (home-page "https://github.com/wigust/emacs-redshift")
+      (synopsis "Emacs interface to Redshift")
+      (description
+       "This package provides an Emacs interface to Redshift")
+      (license license:gpl3+))))
