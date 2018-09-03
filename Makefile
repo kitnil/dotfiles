@@ -11,9 +11,9 @@ clover-reconfigure:
 	env GUILE_LOAD_PATH=$(HOME)/src/guix-wigust:$(HOME)/src/guix-packages:$(GUILE_LOAD_PATH) sudo -E guix system reconfigure /home/natsu/dotfiles/fiore/clover.scm
 
 magnolia-build:
-	env GUIX_PACKAGE_PATH=$(GUIX_PACKAGE_PATH):$(HOME)/dotfiles GUILE_LOAD_PATH=$(HOME)/src/guix-wigust:$(HOME)/dotfiles:$(GUILE_LOAD_PATH) guix system build $(HOME)/dotfiles/fiore/magnolia.scm
+	env GUILE_LOAD_PATH=$(HOME)/dotfiles:$(GUILE_LOAD_PATH) guix system build $(HOME)/dotfiles/fiore/magnolia.scm
 
 magnolia-reconfigure:
-	sudo env HOME=/home/natsu GUIX_PACKAGE_PATH=$(HOME)/dotfiles GUILE_LOAD_PATH=$(HOME)/src/guix-wigust:$(GUILE_LOAD_PATH) guix system reconfigure $(HOME)/dotfiles/fiore/magnolia.scm
+	sudo env HOME=/home/natsu GUILE_LOAD_PATH=$(HOME)/dotfiles:$(GUILE_LOAD_PATH) guix system reconfigure $(HOME)/dotfiles/fiore/magnolia.scm
 
 all: stow update-mime
