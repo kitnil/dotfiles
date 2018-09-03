@@ -77,6 +77,7 @@
   #:use-module (gnu packages fontutils)
   #:use-module (gnu packages ocaml)
   #:use-module (gnu packages emacs)
+  #:use-module (gnu packages xdisorg)
   #:use-module (guix utils)
   #:use-module (srfi srfi-1)
   #:use-module (ice-9 match))
@@ -1309,3 +1310,41 @@ Then you can operate on them with a dired-like interface.")
      "This package provides a PHP interactive shell.")
     (license license:gpl3+)))
 
+(define-public emacs-anywhere-mode
+  (let ((commit "80a5aa81b7102d27f83e67fb361388a2c80dbc88"))
+    (package
+      (name "emacs-anywhere-mode")
+      (version (git-version "0.1" "1" commit))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://gitlab.com/wigust/emacs-anywhere-mode.git/")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "0avqg4abv7fngwn4vpphf8p6dvasglllrdibhv7rdswg11dpbs22"))))
+      (build-system emacs-build-system)
+      (arguments
+       '(#:phases
+         (modify-phases %standard-phases
+           (add-after 'unpack 'patch-paths
+             (lambda _
+               (substitute* "emacs-anywhere"
+                 (("@XDOTOOL_BIN@") (which "xdotool")))
+               (substitute* "anywhere-mode.el"
+                   (("@XCLIP_BIN@") (which "xclip")))))
+           (add-before 'install 'install-shell-script
+             (lambda* (#:key outputs #:allow-other-keys)
+               (install-file "emacs-anywhere"
+                             (string-append (assoc-ref outputs "out")
+                                            "/bin")))))))
+      (inputs
+       `(("xdotool" ,xdotool)
+         ("xclip" ,xclip)))
+      (synopsis "Emacs Anywhere mode")
+      (description "This package provides an Emacs minor-mode for
+capturing user input and paste it with @kbd{C-v} after exit.")
+      (home-page #f)
+      (license license:gpl3+))))
