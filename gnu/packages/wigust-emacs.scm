@@ -1409,3 +1409,32 @@ capturing user input and paste it with @kbd{C-v} after exit.")
        "This package provides an Emacs Hydra for inserting timestamps.")
       (home-page #f)
       (license license:gpl3+))))
+
+(define-public emacs-guix-misc
+  (let ((commit "6eb52ef6a320a9f535f665b3b400b66448dbeb6f"))
+    (package
+      (name "emacs-guix-misc")
+      (version (string-append "0.0.1" "-" (string-take commit 7)))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://gitlab.com/wigust/emacs-guix-misc")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "19hihkd12gp3mb6fd5bfkkv369ljbm7389g8mik52rdvdn4v1v3j"))))
+      (build-system emacs-build-system)
+      (arguments
+       `(#:phases
+         (modify-phases %standard-phases
+           (add-after 'unpack 'chdir-elisp
+             ;; Elisp directory is not in root of the source.
+             (lambda _
+               (chdir "lisp"))))))
+      (home-page "https://github.com/wigust/emacs-guix-misc")
+      (synopsis "Additional functions for Emacs Guix")
+      (description
+       "This package provides an additional functionality for Emacs Guix.")
+      (license license:gpl3+))))
