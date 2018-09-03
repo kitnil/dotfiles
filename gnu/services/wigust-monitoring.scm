@@ -16,7 +16,7 @@
 ;;; You should have received a copy of the GNU General Public License
 ;;; along with GNU Guix.  If not, see <http://www.gnu.org/licenses/>.
 
-(define-module (wigust services monitoring)
+(define-module (gnu services wigust-monitoring)
   #:use-module (gnu services)
   #:use-module (gnu services configuration)
   #:use-module (gnu services shepherd)
@@ -83,11 +83,16 @@
          (provision '(zabbix-server))
          (documentation "Run zabbix daemon.")
          (start #~(make-forkexec-constructor
-                   (list #$(file-append zabbix "/sbin/zabbix_server")
+                   (list #$(file-append zabbix-server "/sbin/zabbix_server")
                          "--config" "/etc/zabbix/zabbix_server.conf")
                    #:user "zabbix"
                    #:group "zabbix"
-                   #:pid-file "/var/run/zabbix/zabbix_server.pid"))
+                   #:pid-file "/var/run/zabbix/zabbix_server.pid"
+                   #:environment-variables
+                   (list "SSL_CERT_DIR=/run/current-system/profile\
+/etc/ssl/certs"
+                         "SSL_CERT_FILE=/run/current-system/profile\
+/etc/ssl/certs/ca-certificates.crt")))
          (stop #~(make-kill-destructor)))))
 
 (define (zabbix-agentd-shepherd-service config)
@@ -96,11 +101,16 @@
          (provision '(zabbix-agentd))
          (documentation "Run zabbix daemon.")
          (start #~(make-forkexec-constructor
-                   (list #$(file-append zabbix "/sbin/zabbix_agentd")
+                   (list #$(file-append zabbix-server "/sbin/zabbix_agentd")
                          "--config" "/etc/zabbix/zabbix_agentd.conf")
                    #:user "zabbix"
                    #:group "zabbix"
-                   #:pid-file "/var/run/zabbix/zabbix_agentd.pid"))
+                   #:pid-file "/var/run/zabbix/zabbix_agentd.pid"
+                   #:environment-variables
+                   (list "SSL_CERT_DIR=/run/current-system/profile\
+/etc/ssl/certs"
+                         "SSL_CERT_FILE=/run/current-system/profile\
+/etc/ssl/certs/ca-certificates.crt")))
          (stop #~(make-kill-destructor)))))
 
 (define zabbix-server-service-type

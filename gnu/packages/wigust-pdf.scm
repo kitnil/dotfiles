@@ -1,4 +1,4 @@
-(define-module (wigust packages pdf)
+(define-module (gnu packages wigust-pdf)
   #:use-module (guix utils)
   #:use-module (guix packages)
   #:use-module (gnu packages)

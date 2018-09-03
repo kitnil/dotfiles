@@ -1,4 +1,4 @@
-(define-module (wigust packages raleigh)
+(define-module (gnu packages wigust-raleigh)
   #:use-module (ice-9 match)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix utils)

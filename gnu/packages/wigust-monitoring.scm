@@ -16,7 +16,7 @@
 ;;; You should have received a copy of the GNU General Public License
 ;;; along with GNU Guix.  If not, see <http://www.gnu.org/licenses/>.
 
-(define-module (wigust packages monitoring)
+(define-module (gnu packages wigust-monitoring)
   #:use-module (guix packages)
   #:use-module (guix download)
   #:use-module (guix git-download)
