@@ -84,6 +84,8 @@
 ;; because it could switch window after switch desktop
 (setf *mouse-focus-policy* :click)
 
+(setf *suppress-window-placement-indicator* t)
+
 (clear-window-placement-rules)
 (define-frame-preference "Default" (1 nil nil :class "mpv"))
 (define-frame-preference "Default" (3 nil nil :class "mpv" :title "emacs-emms"))
