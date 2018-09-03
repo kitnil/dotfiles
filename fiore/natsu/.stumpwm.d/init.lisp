@@ -96,7 +96,6 @@
 
 (setf *new-frame-action* :empty)
 
-(restore-window-placement-rules "~/.desktop.lisp")
 (restore-from-file "~/.stumpwm-dump-desktop.lisp")
 ;; (dump-desktop-to-file "~/.stumpwm-dump-desktop.lisp")
 
