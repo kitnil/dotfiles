@@ -1370,3 +1370,20 @@ capturing user input and paste it with @kbd{C-v} after exit.")
       (description
        "This package provides an Emacs interface to Redshift")
       (license license:gpl3+))))
+
+(define-public emacs-terminal-here-checkout
+  (let ((commit "c35e7471a33df0e1d37522dc7aad42df9efc40c6"))
+    (package
+      (inherit emacs-terminal-here)
+      (name "emacs-terminal-here-checkout")
+      (version (git-version "1.0" "1" commit))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://gitlab.com/wigust/emacs-terminal-here")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "0m0lydyz80kmd80ibhkjjxdkpf0a62xm3rg5n63yncyjplvi11b9")))))))
