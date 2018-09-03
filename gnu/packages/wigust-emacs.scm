@@ -1387,3 +1387,25 @@ capturing user input and paste it with @kbd{C-v} after exit.")
          (sha256
           (base32
            "0m0lydyz80kmd80ibhkjjxdkpf0a62xm3rg5n63yncyjplvi11b9")))))))
+
+(define-public emacs-hydra-timestamp
+  (let ((commit "49b029193be57eafe542247e42b28a86fd34cdab"))
+    (package
+      (name "emacs-hydra-timestamp")
+      (version (string-append "0.1" "-" (string-take commit 7)))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://gitlab.com/wigust/emacs-hydra-timestamp")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "0pyqsmz3144c6avy075bxddv7czwar9g0rzzgm62saxywfwxjxm8"))))
+      (build-system emacs-build-system)
+      (synopsis "Insert timestamps with Emacs Hydra")
+      (description
+       "This package provides an Emacs Hydra for inserting timestamps.")
+      (home-page #f)
+      (license license:gpl3+))))
