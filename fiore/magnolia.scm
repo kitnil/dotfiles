@@ -384,8 +384,7 @@ EndSection
                  (target "/boot/efi")))
 
     (file-systems (cons* (file-system
-                           (device "magnolia-root")
-                           (title 'label)
+                           (device (file-system-label "magnolia-root"))
                            (mount-point "/")
                            (type "ext4"))
                          (file-system
@@ -393,8 +392,7 @@ EndSection
                            (mount-point "/boot/efi")
                            (type "vfat"))
                          (file-system
-                           (device "magnolia-data")
-                           (title 'label)
+                           (device (file-system-label "magnolia-data"))
                            (mount-point "/srv")
                            (type "ext4"))
                          (file-system
