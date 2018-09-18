@@ -29,3 +29,5 @@ function stat-link { stat --format=%N $@; }
 date-fsf() { date --date='TZ="America/New_York" 12:00 this Fri'; }
 
 cl() { echo $(tput cols)x$(tput lines); }
+
+gpa() { guix package -A $@ | awk '{ print $1"-"$2 }'; }
