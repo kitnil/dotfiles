@@ -10,6 +10,9 @@ clover-build:
 clover-reconfigure:
 	env GUILE_LOAD_PATH=$(HOME)/src/guix-wigust:$(HOME)/src/guix-packages:$(GUILE_LOAD_PATH) sudo -E guix system reconfigure /home/natsu/dotfiles/fiore/clover.scm
 
+magnolia-build-dry:
+	env GUILE_LOAD_PATH=$(HOME)/dotfiles:$(GUILE_LOAD_PATH) guix system build --dry-run $(HOME)/dotfiles/fiore/magnolia.scm
+
 magnolia-build:
 	env GUILE_LOAD_PATH=$(HOME)/dotfiles:$(GUILE_LOAD_PATH) guix system build $(HOME)/dotfiles/fiore/magnolia.scm
 
