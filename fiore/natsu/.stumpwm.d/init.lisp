@@ -199,7 +199,7 @@
 
 (defcommand firefox () ()
   "Start of focus firefox."
-  (run-or-raise "firefox-latest" '(:class "Firefox")))
+  (run-or-raise "firefox" '(:class "Firefox")))
 
 (defcommand chromium () ()
   "Start or focus Chromium."
