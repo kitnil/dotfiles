@@ -88,7 +88,7 @@
 
 (clear-window-placement-rules)
 (define-frame-preference "Default" (1 nil nil :class "mpv"))
-(define-frame-preference "Default" (3 nil nil :class "mpv" :title "emacs-emms"))
+(define-frame-preference "Default" (3 nil t :class "mpv" :title "emacs-emms"))
 (define-frame-preference "Default" (1 nil nil :title "youtube-dl"))
 (define-frame-preference "Default" (0 t nil :title "pulsemixer"))
 (define-frame-preference "Default" (2 t nil :class "Firefox"))
