@@ -216,6 +216,10 @@
   (rx "http" (zero-or-more "s") "://" (zero-or-more "www.")
       "youtu.be/" (one-or-more (or alphanumeric "-" "_")) line-end))
 
+(defvar wi-url-github-regexp
+  (rx "http" (zero-or-one "s") "://github.com")
+  "Regexp matching GitHub.")
+
 (defun youtube-free-url (url)
   "Convert youtube.com to hooktube.com URL and put into `kill-ring'.
 
@@ -247,7 +251,8 @@ WARNING:  hooktube.com requries non-free JavaScript."
         (,wi-url-gnu-lists-regexp . eww-browse-url)
         (,wi-url-gnunet-bot-log-regexp . eww-browse-url)
         (,wi-debian-paste-regexp . wi-browse-url-paste-debian)
-        ("." . browse-url-conkeror)))
+        (,wi-url-github-regexp . browse-url-chromium)
+        ("." . browse-url-firefox)))
 
 (defcustom ffap-info-finder 'info
   "The command called by `wi-info-at-point' to find an Info file."
