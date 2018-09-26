@@ -92,7 +92,7 @@
 (define-frame-preference "Default" (1 nil nil :title "youtube-dl"))
 (define-frame-preference "Default" (0 t nil :title "pulsemixer"))
 (define-frame-preference "Default" (2 t nil :class "Firefox"))
-(define-frame-preference "Default" (2 t nil :class "Conkeror"))
+(define-frame-preference "Default" (2 t nil :class "IceCat"))
 
 (setf *new-frame-action* :empty)
 
@@ -149,10 +149,7 @@
 (defvar *st-font*
   "Monospace:size=12")
 
-(defvar *conkeror-command*
-  "conkeror")
-
-(defvar *browser* *conkeror-command*)
+(defvar *browser* "icecat")
 
 (defvar *transmission-hostname*
   "magnolia")
@@ -175,12 +172,8 @@
 
 
 ;;;
-;;; Conkeror
+;;; WEB
 ;;;
-
-(defcommand conkeror () ()
-  "Start or focus conkeror."
-  (run-or-raise *conkeror-command* '(:class "Conkeror")))
 
 (defcommand browse-transmission () ()
   "Open transmissin WEB client."
@@ -189,13 +182,13 @@
                                          *transmission-hostname* ".local")))))
 
 ;; Origin <https://github.com/alezost/stumpwm-config/blob/master/utils.lisp#L332>
-(defcommand conkeror-browse-url (url) ((:shell "Browse URL: "))
-  "Browse URL with conkeror."
-  (run-prog "conkeror" :args (list url) :wait nil :search t))
+(defcommand browse-url (url) ((:shell "Browse URL: "))
+  "Browse URL with ‘*browser*’."
+  (run-prog *browser* :args (list url) :wait nil :search t))
 
 (defcommand icecat () ()
   "Start or focus icecat."
-  (run-or-raise "icecat" '(:class "Icecat")))
+  (run-or-raise "icecat" '(:class "IceCat")))
 
 (defcommand firefox () ()
   "Start of focus firefox."
@@ -604,9 +597,9 @@
 (define-key *root-map* (kbd "C-M-v") "scroll-other-window")
 (define-key *root-map* (kbd "Print") "screenshot-default")
 
-(define-key *root-map* (kbd "w") "conkeror")
-(define-key *root-map* (kbd "C-w") "conkeror")
-(define-key *root-map* (kbd "M-w") "firefox")
+(define-key *root-map* (kbd "w") "icecat")
+(define-key *root-map* (kbd "C-w") "icecat")
+(define-key *root-map* (kbd "M-w") "icecat")
 
 (define-key *top-map* (kbd "s-m") "mpv")
 (define-key *top-map* (kbd "s-v") "xclip-mpv")
