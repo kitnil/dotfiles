@@ -360,6 +360,10 @@ EndSection
 (define %cgit-configuration-nginx-custom
   (nginx-server-configuration
    (inherit %cgit-configuration-nginx)
+   (locations (append (nginx-server-configuration-locations %cgit-configuration-nginx)
+                      (list (git-http-nginx-location-configuration
+                             (git-http-configuration
+                              (export-all? #t))))))
    (listen '("80" "443 ssl"))
    (ssl-certificate (letsencrypt-certificate "cgit.duckdns.org"))
    (ssl-certificate-key (letsencrypt-key "cgit.duckdns.org"))
@@ -563,7 +567,7 @@ EndSection
                                (root-title (string-join (list "Cgit on" host-name)))
                                (snapshots (list "tar.gz"))
                                (clone-prefix (list ;; "git://magnolia.local/~natsu"
-                                                   "https://anongit.duckdns.org"))
+                                              "https://cgit.duckdns.org/git"))
                                (nginx (list %cgit-configuration-nginx-custom))))
 
                      zabbix-nginx-service
