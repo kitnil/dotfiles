@@ -1207,22 +1207,6 @@ lines elsewhere in a project.")
 via custom interfaces.")
       (license license:gpl3+))))
 
-(define-public emms-next
-  (let ((commit "9f9a9b81f741692f2d188d1b46e72f2b6db8a9a1"))
-    (package
-      (inherit emms)
-      (name (string-append (package-name emms) "-next"))
-      (version (git-version (package-version emms) "1" commit))
-      (source
-       (origin
-         (inherit (package-source emms))
-         (uri (string-append
-               "https://git.savannah.gnu.org/cgit/emms.git/snapshot/emms-"
-               commit ".tar.gz"))
-         (sha256
-          (base32
-           "1wg00dr35h9shs6782s20nds8razqibys9ipzi9aa2kb3yhkdp6q")))))))
-
 (define-public emacs-proc-net
   (let ((commit "10861112a1f3994c8e6374d6c5bb5d734cfeaf73"))
     (package
