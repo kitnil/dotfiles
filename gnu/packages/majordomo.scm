@@ -129,7 +129,10 @@
                                                "/bin/cvm")))
                    (install-file "config.scm"
                                  (path (assoc-ref outputs "out"))))
-                 #t))))))
+                 #t)))
+           (add-before 'check 'set-environment
+             (lambda _
+               (setenv "HOME" (getcwd)))))))
       (native-inputs
        `(("autoconf" ,autoconf)
          ("automake" ,automake)
