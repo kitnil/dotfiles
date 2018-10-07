@@ -262,7 +262,6 @@
     alsa-utils
     cli-visualizer
 
-    conkeror
     icecat ; Web browser
 
     node ;Packages in <~/.npm-global/bin/>.
