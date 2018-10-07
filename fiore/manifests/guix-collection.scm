@@ -277,6 +277,7 @@
     mlt         ; Video editing framework
     mpv         ; Video and audio player
     obs ;ffmpeg frontend
+    vlc
 
     zathura     ; Lightweight customizable PDF reader
     zathura-djvu
