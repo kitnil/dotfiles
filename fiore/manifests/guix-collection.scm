@@ -153,6 +153,7 @@
    emacs-slime              ; Sbcl repl
    emacs-smart-mode-line
    emacs-smartparens        ; Structured editing
+   emacs-string-inflection
    emacs-suggest
    emacs-transpose-frame    ; M-x transpose-frame
    emacs-undo-tree          ; Undo visualisation
