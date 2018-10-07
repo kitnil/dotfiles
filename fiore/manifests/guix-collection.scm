@@ -223,6 +223,7 @@
     guile-colorized
     guile-daemon
     guile-readline
+    guile-ssh
     guile-xosd
     mcron
 
