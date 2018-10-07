@@ -385,7 +385,7 @@
 
     minetest                 ; Open source Minecraft
 
-    )
+    r)
 
    guix-collection-packages-emacs
    guix-collection-packages-large
