@@ -223,6 +223,7 @@
     guile-2.2
     guile-colorized
     guile-daemon
+    guile-git
     guile-readline
     guile-ssh
     guile-xosd
