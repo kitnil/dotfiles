@@ -34,3 +34,5 @@ export GUILE_WARN_DEPRECATED=no
 # Fix mouse wheel in gtk3
 # https://github.com/stumpwm/stumpwm/wiki/FAQ
 export GDK_CORE_DEVICE_EVENTS=1
+
+export RESTIC_REPOSITORY=/srv/backup
