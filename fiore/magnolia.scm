@@ -469,6 +469,31 @@ EndSection
                    (group "telegraf")
                    (comment "telegraf privilege separation user")
                    (home-directory "/var/run/telegraf"))
+                  (user-account
+                   (name "ssh-tunnel")
+                   (group "users")
+                   (comment "SSH forwarding privilege separation user")
+                   (home-directory "/home/ssh-tunnel"))
+                  (user-account
+                   (name "majordomo-ssh-tunnel")
+                   (group "users")
+                   (comment "SSH forwarding privilege separation user")
+                   (home-directory "/home/majordomo-ssh-tunnel"))
+                  (user-account
+                   (name "majordomo-backup")
+                   (group "users")
+                   (comment "SSH for backup privilege separation user")
+                   (home-directory "/home/majordomo-backup"))
+                  (user-account
+                   (name "tail-ssh-tunnel")
+                   (group "users")
+                   (comment "SSH forwarding privilege separation user")
+                   (home-directory "/home/tail-ssh-tunnel"))
+                  (user-account
+                   (name "anonymous")
+                   (group "users")
+                   (comment "Anonymous user")
+                   (home-directory "/home/anonymous"))
                   %base-user-accounts))
 
     ;; Create a /etc/hosts file with aliases for "localhost"
