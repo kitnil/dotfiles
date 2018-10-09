@@ -1,72 +1,65 @@
 (define-module (fiore manifests wigust)
-  #:use-module (wigust packages cdrom)
-  #:use-module (wigust packages emacs)
-  #:use-module (wigust packages pulseaudio)
-  #:use-module (wigust packages python)
-  #:use-module (wigust packages version-control)
-  #:use-module (wigust packages ruby)
-  #:use-module (local packages emacs)
-  #:use-module (local packages guix)
-  #:use-module (local packages xdisorg)
+  #:use-module (chromium chromium)
   #:use-module (gnu packages emacs)
+  #:use-module (gnu packages wigust-emacs)
+  #:use-module (gnu packages wigust-guix)
+  #:use-module (gnu packages wigust-pulseaudio)
+  #:use-module (gnu packages wigust-python)
+  #:use-module (gnu packages wigust-ruby)
+  #:use-module (gnu packages wigust-version-control)
+  #:use-module (gnu packages wigust-xdisorg)
   #:export (guix-wigust-packages
-            guix-wigust-packages-emacs
-            guix-wigust-packages-local))
+            guix-wigust-packages-emacs))
 
 (define guix-wigust-packages-emacs
   (list
-   emacs-athena
-   emacs-engine-mode-autoload ; Define searches on websites
-   emms-next
-   emacs-strace-mode-special ; Colorize `strace' logs
    emacs-anywhere-mode
+   emacs-athena
+   emacs-atomic-chrome
+   emacs-awk-it
+   emacs-debpaste           ; Front end to <https://paste.debian.net/>
+   emacs-edit-indirect
    emacs-emamux
+   emacs-engine-mode-autoload ; Define searches on websites
+   emacs-epkg
    emacs-eval-in-repl       ; Evaluate to different Repls
-   emacs-git-messenger-diff-mode
-   emacs-helm-c-yasnippet
-   emacs-helm-pass          ; Front end to password-store
-   emacs-info-colors        ; Colorize info pages
-   emacs-redshift
-   emacs-ivy-yasnippet
-   emacs-scratch-el
-   emacs-terminal-here-checkout
    emacs-flyspell-correct
-   emacs-hydra-timestamp
-   emacs-mediawiki))
-
-(define guix-wigust-packages-local
-  (list
-
+   emacs-git-messenger-diff-mode
+   emacs-gited
    emacs-guix-misc
-   guix-browse
-   guix-latest-eval
-   guix-misc
-
+   emacs-helm-c-yasnippet
+   emacs-helm-navi
+   emacs-helm-pass          ; Front end to password-store
+   emacs-hydra-timestamp
+   emacs-info-colors        ; Colorize info pages
+   emacs-ivy-yasnippet
+   emacs-mediawiki
+   emacs-pcre2el
+   emacs-perl-live
+   emacs-psysh
+   emacs-redshift
+   emacs-scratch-el
+   emacs-strace-mode-special ; Colorize `strace' logs
+   emacs-terminal-here-checkout
    ))
 
 (define guix-wigust-packages
   (append
    (list
 
-    cdrkit-libre
+    chromium
 
     pulsemixer-emacs-keybindings
 
     ruby-gitlab
     python-starred ; Fetch a list of stars from GitHub user
 
-    emacs-atomic-chrome
-    emacs-awk-it
-    emacs-debpaste           ; Front end to <https://paste.debian.net/>
-    emacs-edit-indirect
-    emacs-epkg
-    emacs-helm-navi
-    emacs-pcre2el
-    emacs-perl-live
+    guix-browse
+    guix-latest-eval
+    guix-misc
 
     vc-dwim-git-worktree
 
     wrapper-xclip)
 
-   guix-wigust-packages-emacs
-   guix-wigust-packages-local))
+   guix-wigust-packages-emacs))

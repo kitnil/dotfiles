@@ -1,20 +1,19 @@
 (define-module (fiore manifests guix-collection)
-  #:use-module (gnu)
-  #:use-module (guix packages)
-  #:use-module (guix profiles)
   #:use-module (gnu packages admin)
   #:use-module (gnu packages algebra)
   #:use-module (gnu packages aspell)
   #:use-module (gnu packages audio)
   #:use-module (gnu packages backup)
   #:use-module (gnu packages bittorrent)
-  #:use-module (gnu packages code)
+  #:use-module (gnu packages cdrom)
+  #:use-module (gnu packages ci)
   #:use-module (gnu packages cmake)
+  #:use-module (gnu packages code)
   #:use-module (gnu packages commencement)
   #:use-module (gnu packages compression)
   #:use-module (gnu packages conkeror)
-  #:use-module (gnu packages cran)
   #:use-module (gnu packages cpio)
+  #:use-module (gnu packages cran)
   #:use-module (gnu packages databases)
   #:use-module (gnu packages dictionaries)
   #:use-module (gnu packages dns)
@@ -23,13 +22,15 @@
   #:use-module (gnu packages games)
   #:use-module (gnu packages gcc)
   #:use-module (gnu packages gdb)
+  #:use-module (gnu packages ghostscript)
+  #:use-module (gnu packages gl)
   #:use-module (gnu packages glib)
   #:use-module (gnu packages gnu-doc)
+  #:use-module (gnu packages gnupg)
   #:use-module (gnu packages gnuzilla)
   #:use-module (gnu packages graphics)
   #:use-module (gnu packages graphviz)
   #:use-module (gnu packages gstreamer)
-  #:use-module (gnu packages ghostscript)
   #:use-module (gnu packages gtk)
   #:use-module (gnu packages guile)
   #:use-module (gnu packages haskell)
@@ -41,8 +42,10 @@
   #:use-module (gnu packages license)
   #:use-module (gnu packages linux)
   #:use-module (gnu packages lisp)
+  #:use-module (gnu packages logging)
   #:use-module (gnu packages lsof)
   #:use-module (gnu packages lxde)
+  #:use-module (gnu packages m4)
   #:use-module (gnu packages mail)
   #:use-module (gnu packages man)
   #:use-module (gnu packages maths)
@@ -51,8 +54,8 @@
   #:use-module (gnu packages ncurses)
   #:use-module (gnu packages networking)
   #:use-module (gnu packages node)
-  #:use-module (gnu packages parallel)
   #:use-module (gnu packages package-management)
+  #:use-module (gnu packages parallel)
   #:use-module (gnu packages password-utils)
   #:use-module (gnu packages patchutils)
   #:use-module (gnu packages pdf)
@@ -61,10 +64,13 @@
   #:use-module (gnu packages python)
   #:use-module (gnu packages rdesktop)
   #:use-module (gnu packages samba)
-  #:use-module (gnu packages screen)
   #:use-module (gnu packages scheme)
+  #:use-module (gnu packages screen)
+  #:use-module (gnu packages shellutils)
+  #:use-module (gnu packages ssh)
   #:use-module (gnu packages statistics)
   #:use-module (gnu packages suckless)
+  #:use-module (gnu packages synergy)
   #:use-module (gnu packages tex)
   #:use-module (gnu packages texinfo)
   #:use-module (gnu packages textutils)
@@ -79,17 +85,19 @@
   #:use-module (gnu packages xdisorg)
   #:use-module (gnu packages xml)
   #:use-module (gnu packages xorg)
-  #:export (guix-collection-packages-multiout
-            guix-collection-packages
+  #:use-module (gnu)
+  #:use-module (guix packages)
+  #:use-module (guix profiles)
+  #:export (guix-collection-packages
             guix-collection-packages-emacs
+            guix-collection-packages-important
             guix-collection-packages-large
-            guix-collection-packages-spelling
-            guix-collection-packages-important))
+            guix-collection-packages-multiout
+            guix-collection-packages-spelling))
 
 (define guix-collection-packages-emacs
   (list
 
-   bbdb
    emacs-academic-phrases
    emacs-ace-window
    emacs-add-hooks
@@ -97,14 +105,17 @@
    emacs-aggressive-indent  ; Auto indent minor mode
    emacs-auto-yasnippet
    emacs-bash-completion
+   emacs-bbdb
    emacs-beginend
    emacs-browse-at-remote
+   emacs-build-farm
    emacs-cmake-mode
    emacs-crux
    emacs-default-encrypt    ; Sign mail automatically
    emacs-default-text-scale ; Scale text in all buffers
    emacs-dumb-jump
    emacs-edit-server ; See <https://github.com/stsquad/emacs_chrome/>.
+   emacs-emms
    emacs-esup
    emacs-ewmctrl            ; Control X windows from Emacs
    emacs-expand-region
@@ -114,6 +125,7 @@
    emacs-git-auto-commit-mode
    emacs-git-gutter
    emacs-git-timemachine
+   emacs-go-mode
    emacs-grep-context
    emacs-guix
    emacs-helm               ; Narrowing framework
@@ -128,14 +140,15 @@
    emacs-highlight-stages   ; Highlight code stages
    emacs-highlight-symbol
    emacs-hl-todo
-   emacs-hydra
    emacs-hy-mode
+   emacs-hydra
    emacs-ibuffer-projectile
    emacs-irfc
    emacs-ivy                ; Complition framework
    emacs-know-your-http-well
    emacs-lice-el
    emacs-macrostep
+   emacs-magit
    emacs-magit-org-todos-el
    emacs-markdown-mode      ; Commonmark major mode
    emacs-mbsync
@@ -163,8 +176,6 @@
    emacs-yaml-mode          ; YAML files
    emacs-yasnippet          ; Snippets
    emacs-yasnippet-snippets ; Collection of snippets
-
-   magit                    ; Emacs interface for Git
 
    ))
 
@@ -206,9 +217,11 @@
     at-spi2-core
     ghostscript/x
     ghc-pandoc  ; Convert Markdown
+    gnuplot
 
-    epipe
     cloc            ; Count code
+    direnv
+    epipe
     gnu-make        ; GNU Make
     recutils  ; Filter records like in `guix --search'
     stow            ; Dotfiles management
@@ -220,13 +233,18 @@
 
     python-hy
 
+    cuirass
+
     guile-2.2
     guile-colorized
     guile-daemon
+    guile-fibers
+    guile-gcrypt
     guile-git
     guile-readline
     guile-ssh
     guile-xosd
+
     mcron
 
     colordiff
@@ -271,6 +289,7 @@
     tor
 
     isync   ; Sync IMAP
+    msmtp
     notmuch ; Mail indexer based on Xapian
 
     inkscape    ; Vector graphics
@@ -286,8 +305,9 @@
     keynav
     rofi
     scrot ;screenshot
-    xsel ;clipboard
     st
+    xev
+    xsel ;clipboard
 
     perl-uri-escape ;convert url
 
@@ -295,9 +315,14 @@
 
     octave
 
-    python-glances
+    hdparm
     htop            ; Pretty `top'
     inxi
+    iotop
+    python-glances
+    multitail
+
+    synergy
 
     ;; FAIL: ansible         ; Configuration management
     bc
@@ -307,9 +332,9 @@
     dos2unix
     freerdp
     graphviz  ; `dot'
+    html-xml-utils
     licensecheck ; Licence checker for source files
     lsof
-    html-xml-utils
     ncdu            ; TUI `du'
     netcat          ; TCP
     nmap
@@ -320,10 +345,13 @@
     socat
     sqlite
     unzip
+    wireshark
     zip
 
     texinfo
 
+
+    cdrkit-libre
     virt-manager
     qemu
     samba
@@ -373,19 +401,25 @@
     emacs-w3m                ; Front end to w3m command line web browser
     ;; haskell-mode
 
-    flycheck                 ; Syntax checker
-    geiser                   ; Scheme bridge
+    emacs-flycheck                 ; Syntax checker
+    emacs-geiser                   ; Scheme bridge
 
     gource
 
     mercurial
 
+    mesa-utils
+    mesa
+
+    gst-plugins-base
     gst-plugins-bad
     gst-plugins-good
     gst-plugins-ugly
     gstreamer
 
     minetest                 ; Open source Minecraft
+
+    m4
 
     r)
 
