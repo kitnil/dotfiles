@@ -341,6 +341,23 @@ EndSection
                             (uri "/")
                             (body '("proxy_pass http://localhost:3000;")))))))))
 
+(define local-esxi-publish-nginx-service
+  (simple-service 'guix-publish-nginx nginx-service-type
+   (list (nginx-server-configuration
+          (server-name '("esxi.local"))
+          (listen '("443"))
+          (locations (list (nginx-location-configuration
+                            (uri "/")
+                            (body (list "resolver 80.80.80.80;"
+                                        (string-append "set $target localhost:" (number->string 17443) ";")
+                                        "proxy_pass https://$target;"
+                                        (format #f "proxy_set_header Host ~a;" "192.168.125.22")
+                                        "proxy_set_header X-Real-IP $remote_addr;"
+                                        "proxy_set_header X-Forwarded-for $remote_addr;"
+                                        "proxy_connect_timeout 300;")))))
+          (ssl-certificate #f)
+          (ssl-certificate-key #f)))))
+
 (define natsu-nginx-service
   (simple-service 'natsu-nginx nginx-service-type
    (list (nginx-server-configuration
@@ -582,6 +599,7 @@ EndSection
                      torrent-nginx-service
                      natsu-nginx-service
                      grafana-publish-nginx-service
+                     ;; local-esxi-publish-nginx-service
 
                      (service certbot-service-type
                               (certbot-configuration
