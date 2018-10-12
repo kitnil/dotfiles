@@ -14,9 +14,9 @@
   #:use-module (fiore modules hosts)
   #:export (%system-magnolia))
 
-(use-service-modules certbot cups databases desktop dns mail networking rsync
-shepherd spice ssh sysctl version-control virtualization web xorg cgit
-wigust-monitoring)
+(use-service-modules certbot cuirass cups databases desktop dns mail
+networking rsync shepherd spice ssh sysctl version-control
+virtualization web xorg cgit wigust-monitoring)
 
 (use-package-modules admin android bash bootloaders certs cryptsetup cups
 databases dns file fonts fontutils freedesktop gnome gnupg linux mail ncurses
@@ -110,6 +110,38 @@ version-control virtualization web wget xdisorg xorg zile wigust-php)
                     (start #~(lambda _
                                #$start-networking))
                     (respawn? #f)))))
+
+
+;;;
+;;; Cuirass
+;;;
+
+;; (define %cuirass-specs
+;;   #~(list
+;;      '((#:name . "my-manifest")
+;;        (#:load-path-inputs . ("guix"))
+;;        (#:package-path-inputs . ("wigust-packages"))
+;;        (#:proc-input . "guix")
+;;        (#:proc-file . "build-aux/cuirass/gnu-system.scm")
+;;        (#:proc . cuirass-jobs)
+;;        (#:proc-args . ((subset . "manifests")
+;;                        (systems . ("x86_64-linux"))
+;;                        (manifests . (("config" . "fiore/manifests/manifest.scm")))))
+;;        (#:inputs . (((#:name . "guix")
+;;                      (#:url . "https://git.savannah.gnu.org/git/guix.git")
+;;                      (#:load-path . ".")
+;;                      (#:branch . "master")
+;;                      (#:no-compile? . #f))
+;;                     ((#:name . "config")
+;;                      (#:url . "https://cgit.duckdns.org/git/dotfiles")
+;;                      (#:load-path . ".")
+;;                      (#:branch . "master")
+;;                      (#:no-compile? . #f))
+;;                     ((#:name . "wigust-packages")
+;;                      (#:url . "https://cgit.duckdns.org/git/guix-wigust")
+;;                      (#:load-path . ".")
+;;                      (#:branch . "master")
+;;                      (#:no-compile? . #f)))))))
 
 
 ;;;
@@ -490,6 +522,11 @@ EndSection
                    (comment "SSH forwarding privilege separation user")
                    (home-directory "/home/tail-ssh-tunnel"))
                   (user-account
+                   (name "tail-backup")
+                   (group "users")
+                   (comment "SSH for backup privilege separation user")
+                   (home-directory "/home/tail-backup"))
+                  (user-account
                    (name "anonymous")
                    (group "users")
                    (comment "Anonymous user")
@@ -648,6 +685,10 @@ EndSection
                                      (list android-udev-rules))
 
                      (xfce-desktop-service)
+
+                     ;; (service cuirass-service-type
+                     ;;          (cuirass-configuration
+                     ;;           (specifications %cuirass-specs)))
 
                      %custom-desktop-services))
 
