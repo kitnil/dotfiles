@@ -218,6 +218,7 @@
     ghostscript/x
     ghc-pandoc  ; Convert Markdown
     gnuplot
+    jq
 
     cloc            ; Count code
     direnv
