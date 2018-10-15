@@ -326,6 +326,18 @@ EndSection
           (ssl-certificate #f)
           (ssl-certificate-key #f)))))
 
+(define intr-web-alerta-publish-nginx-service
+  (simple-service 'guix-publish-nginx nginx-service-type
+   (list (nginx-server-configuration
+          (server-name '("web.alerta.intr"))
+          (listen '("80"))
+          (locations (list (nginx-location-configuration
+                            (uri "/")
+                            (body (ssh-forward #:port 16480
+                                               #:host "web.alerta.intr")))))
+          (ssl-certificate #f)
+          (ssl-certificate-key #f)))))
+
 (define intr-zabbix-publish-nginx-service
   (simple-service 'guix-publish-nginx nginx-service-type
    (list (nginx-server-configuration
@@ -652,6 +664,7 @@ EndSection
                      zabbix-nginx-service
                      intr-zabbix-publish-nginx-service
                      intr-alerta-publish-nginx-service
+                     intr-web-alerta-publish-nginx-service
                      intr-hms-publish-nginx-service
                      intr-rpc-publish-nginx-service
                      cerb-publish-nginx-service
