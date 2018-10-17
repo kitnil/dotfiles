@@ -423,13 +423,6 @@ EndSection
          (ssl-certificate #f)
          (ssl-certificate-key #f)))))
 
-(define %cgit-configuration-nginx-body
-    (list "fastcgi_param SCRIPT_FILENAME $document_root/lib/cgit/cgit.cgi;"
-          "fastcgi_param PATH_INFO $uri;"
-          "fastcgi_param QUERY_STRING $args;"
-          "fastcgi_param HTTP_HOST $server_name;"
-          "fastcgi_pass 127.0.0.1:9000;"))
-
 (define %cgit-configuration-nginx-custom
   (nginx-server-configuration
    (inherit %cgit-configuration-nginx)
