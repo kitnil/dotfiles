@@ -385,6 +385,18 @@ EndSection
                             (uri "/")
                             (body '("proxy_pass http://localhost:3000;")))))))))
 
+(define tail-guix-nginx-service
+  (simple-service 'guix-publish-nginx nginx-service-type
+   (list (nginx-server-configuration
+          (server-name '("guix.tail.local"))
+          (listen '("80"))
+          (ssl-certificate #f)
+          (ssl-certificate-key #f)
+          (locations (list (nginx-location-configuration
+                            (uri "/")
+                            (body (ssh-forward #:port 19080
+                                               #:host "guix.tail.local")))))))))
+
 (define local-esxi-publish-nginx-service
   (simple-service 'guix-publish-nginx nginx-service-type
    (list (nginx-server-configuration
@@ -675,6 +687,7 @@ EndSection
                      natsu-nginx-service
                      grafana-publish-nginx-service
                      ;; local-esxi-publish-nginx-service
+                     tail-guix-nginx-service
 
                      (service certbot-service-type
                               (certbot-configuration
