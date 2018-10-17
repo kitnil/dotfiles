@@ -320,6 +320,7 @@
     htop            ; Pretty `top'
     inxi
     iotop
+    jnettop
     python-glances
     multitail
 
