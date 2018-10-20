@@ -1334,7 +1334,7 @@ capturing user input and paste it with @kbd{C-v} after exit.")
       (license license:gpl3+))))
 
 (define-public emacs-redshift
-  (let ((commit "303f58cf65fb6c7701b587cdd048ca785019ebd0"))
+  (let ((commit "6d0501933b0faff53bcc431a0444675fc896a396"))
     (package
       (name "emacs-redshift")
       (version (git-version "0.0.1" "1" commit))
@@ -1347,7 +1347,7 @@ capturing user input and paste it with @kbd{C-v} after exit.")
          (file-name (git-file-name name version))
          (sha256
           (base32
-           "112l3hr9vckna8l38x4wi8sdq0mfv3hh4ip10vlz0q78kgkf9q0m"))))
+           "1dlwibn5az96yb3vi62a0r6g8d8d5dn5bkkrgrr4w3qn9j64pv3z"))))
       (build-system emacs-build-system)
       (home-page "https://github.com/wigust/emacs-redshift")
       (synopsis "Emacs interface to Redshift")
