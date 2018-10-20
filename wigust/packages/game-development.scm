@@ -1,5 +1,5 @@
 
-(define-module (gnu packages wigust-game-development)
+(define-module (wigust packages game-development)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix packages)
   #:use-module (guix download)

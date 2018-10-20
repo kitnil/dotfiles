@@ -16,7 +16,7 @@
 ;;; You should have received a copy of the GNU General Public License
 ;;; along with GNU Guix.  If not, see <http://www.gnu.org/licenses/>.
 
-(define-module (gnu packages wigust-compression)
+(define-module (wigust packages compression)
   #:use-module (gnu packages compression)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix utils)

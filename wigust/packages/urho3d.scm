@@ -1,4 +1,4 @@
-(define-module (gnu packages wigust-urho3d)
+(define-module (wigust packages urho3d)
   #:use-module (ice-9 match)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix utils)

@@ -1,4 +1,4 @@
-(define-module (gnu packages wigust-xdisorg)
+(define-module (wigust packages xdisorg)
   #:use-module (ice-9 popen)
   #:use-module (ice-9 rdelim)
   #:use-module (guix build utils)

@@ -1,4 +1,4 @@
-(define-module (gnu packages wigust-guile)
+(define-module (wigust packages guile)
   #:use-module (guix utils)
   #:use-module (guix packages)
   #:use-module (gnu packages)

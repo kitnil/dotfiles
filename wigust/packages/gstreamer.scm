@@ -16,7 +16,7 @@
 ;;; You should have received a copy of the GNU General Public License
 ;;; along with GNU Guix.  If not, see <http://www.gnu.org/licenses/>.
 
-(define-module (gnu packages wigust-gstreamer)
+(define-module (wigust packages gstreamer)
   #:use-module (gnu packages gstreamer)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix packages)
