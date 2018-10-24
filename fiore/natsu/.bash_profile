@@ -35,4 +35,4 @@ export GUILE_WARN_DEPRECATED=no
 # https://github.com/stumpwm/stumpwm/wiki/FAQ
 export GDK_CORE_DEVICE_EVENTS=1
 
-export RESTIC_REPOSITORY=/srv/backup
+export RESTIC_REPOSITORY=/srv/backup/magnolia
