@@ -59,6 +59,7 @@
                   ("192.168.105.120" . "hms-billing.majordomo.ru")
                   ("192.168.105.120" . "web.alerta.intr")
                   ("192.168.105.120" . "rpc-mj.intr")
-                  ("192.168.105.120" . "guix.tail.local")))
+                  ("192.168.105.120" . "guix.tail.local")
+                  ("192.168.105.120" . "cgit.tail.local")))
                "\n\n"
                %facebook-host-aliases)))

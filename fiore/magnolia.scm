@@ -397,6 +397,18 @@ EndSection
                             (body (ssh-forward #:port 19080
                                                #:host "guix.tail.local")))))))))
 
+(define tail-cgit-nginx-service
+  (simple-service 'guix-publish-nginx nginx-service-type
+   (list (nginx-server-configuration
+          (server-name '("cgit.tail.local"))
+          (listen '("80"))
+          (ssl-certificate #f)
+          (ssl-certificate-key #f)
+          (locations (list (nginx-location-configuration
+                            (uri "/")
+                            (body (ssh-forward #:port 19080
+                                               #:host "cgit.tail.local")))))))))
+
 (define local-esxi-publish-nginx-service
   (simple-service 'guix-publish-nginx nginx-service-type
    (list (nginx-server-configuration
@@ -681,6 +693,7 @@ EndSection
                      grafana-publish-nginx-service
                      ;; local-esxi-publish-nginx-service
                      tail-guix-nginx-service
+                     tail-cgit-nginx-service
 
                      (service certbot-service-type
                               (certbot-configuration
