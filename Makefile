@@ -16,6 +16,9 @@ magnolia-build-dry:
 magnolia-build:
 	env GUILE_LOAD_PATH=$(HOME)/dotfiles:$(GUILE_LOAD_PATH) guix system build $(HOME)/dotfiles/fiore/magnolia.scm
 
+magnolia-build-pre:
+	$(HOME)/src/guix/pre-inst-env env GUILE_LOAD_PATH=$(HOME)/.config/guix/current/share/guile/site/2.2:$(HOME)/dotfiles:$(GUILE_LOAD_PATH) guix system build $(HOME)/dotfiles/fiore/magnolia.scm
+
 magnolia-reconfigure:
 	sudo env HOME=/home/natsu GUILE_LOAD_PATH=$(HOME)/dotfiles:$(GUILE_LOAD_PATH) guix system reconfigure $(HOME)/dotfiles/fiore/magnolia.scm
 
