@@ -6,6 +6,7 @@
              (gnu packages wigust-python)
              (gnu packages wigust-ruby)
              (gnu packages wigust-version-control)
+             (gnu packages wigust-virtualization)
              (gnu packages wigust-xdisorg))
 
 (define guix-wigust-packages-emacs
@@ -57,6 +58,8 @@
   vc-dwim-git-worktree
 
   wrapper-xclip
+
+  dynamips ;gns3 requirement
 
   guix-wigust-packages-emacs))
 
