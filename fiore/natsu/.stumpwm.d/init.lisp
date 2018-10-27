@@ -7,7 +7,9 @@
 (setf *message-window-gravity* :center)
 (setf *input-window-gravity* :center)
 
-(load "~/quicklisp/setup.lisp")
+(setf *home* (sb-ext:posix-getenv "HOME"))
+
+(load (concat *home* "/quicklisp/setup.lisp"))
 
 (ql:quickload "cffi")
 (ql:quickload "usocket-server")
@@ -18,17 +20,17 @@
                      :style swank:*communication-style*
                      :dont-close t)
 
-(set-module-dir "~/.stumpwm.d/modules/")
+(set-module-dir (concat *home* "/.stumpwm.d/modules/"))
 
 (run-shell-command "xsetroot -cursor_name left_ptr")
-(run-shell-command "xrdb -merge ~/.Xresources")
+(run-shell-command "xrdb -merge " (concat *home* "/.Xresources"))
 
 ;; Wallpaper
 ;; (run-shell-command "feh --bg-scale ~/Pictures/Wallpapers/current.png")
-(run-shell-command "xsetroot -solid black")
+;; (run-shell-command "xsetroot -solid black")
 
 ;; Disable PC speaker
-(run-shell-command "xset -b")
+;; (run-shell-command "xset -b")
 
 ;; Disable accessiblity features
 ;; (run-shell-command "xkbset -a")
@@ -39,7 +41,7 @@
 
 ;; Use keyboard as mouse with <Shift+Num Lock>
 ;; https://en.wikipedia.org/wiki/Mouse_keys
-(run-shell-command "setxkbmap -option keypad:pointerkeys")
+;; (run-shell-command "setxkbmap -option keypad:pointerkeys")
 
 ;; Keyboard layout
 ;; (run-shell-command "setxkbmap -layout us,ru -option grp:win_space_toggle")
@@ -48,20 +50,20 @@
 ;; (run-shell-command "xset s 0")
 ;; (run-shell-command "xset dpms 0 0 1800")
 
-(run-shell-command "xmodmap ~/.Xmodmap")
+(run-shell-command "xmodmap " (concat *home* "/.Xmodmap"))
 
 (run-shell-command "keynav")
 
 (setf *message-window-y-padding* 3)
 
-(setf *window-border-style* :none)
+(setf *window-border-style* :thin)
 
 (setf *ignore-wm-inc-hints* t)
-(set-msg-border-width 2)
+(set-msg-border-width 4)
 
-(setf *normal-border-width* 0)
-(setf *transient-border-width* 0)
-(setf *maxsize-border-width* 0)
+(setf *normal-border-width* 4)
+(setf *transient-border-width* 4)
+(setf *maxsize-border-width* 4)
 
 
 ;;;
@@ -96,8 +98,14 @@
 
 (setf *new-frame-action* :empty)
 
-(restore-from-file "~/.stumpwm-dump-desktop.lisp")
+(restore-from-file (concat *home* "/.stumpwm-dump-desktop.lisp"))
+
+;; (restore-from-file "/home/user/.stumpwm-dump-desktop.lisp")
+;; (restore-from-file "~/.stumpwm-dump-desktop.lisp")
 ;; (dump-desktop-to-file "~/.stumpwm-dump-desktop.lisp")
+
+;; (restore-from-file "/home/user/.stumpwm-dump-desktop.lisp")
+;; (restore-window-placement-rules "/home/user/1.lisp")
 
 ;; Last rule to match takes precedence!
 ;; If the argument to :title or :role begins with an ellipsis, a
@@ -128,6 +136,9 @@
   (concat "w3m " url))
 
 (defvar *xterm-theme-light*
+  (concat "w3m " url)
+)
+(defvar *wi-xterm-theme-light*
   "-bg white -fg black")
 
 (defvar *xterm-theme-dark*
@@ -597,15 +608,14 @@
 (define-key *root-map* (kbd "C-M-v") "scroll-other-window")
 (define-key *root-map* (kbd "Print") "screenshot-default")
 
-(define-key *root-map* (kbd "w") "icecat")
-(define-key *root-map* (kbd "C-w") "icecat")
-(define-key *root-map* (kbd "M-w") "icecat")
-
 (define-key *top-map* (kbd "s-m") "mpv")
 (define-key *top-map* (kbd "s-v") "xclip-mpv")
 (define-key *top-map* (kbd "s-e") "emacsclient")
 (define-key *top-map* (kbd "s-w") "firefox")
 (define-key *top-map* (kbd "s-c") "run-or-raise-xterm")
+(define-key *root-map* (kbd "w") "firefox")
+(define-key *root-map* (kbd "C-w") "firefox")
+(define-key *root-map* (kbd "M-w") "firefox")
 
 (define-key *top-map* (kbd "s-o") "other-in-frame")
 (define-key *top-map* (kbd "s-t") "pull-hidden-other")
@@ -617,30 +627,6 @@
 (define-key *top-map* (kbd "M-s-p") "gprev")
 (define-key *top-map* (kbd "s-n") "next-in-frame")
 (define-key *top-map* (kbd "s-p") "prev-in-frame")
-
-(load-module "clipboard-history")
-(define-key *root-map* (kbd "C-y") "show-clipboard-history")
-(clipboard-history:start-clipboard-manager)
-
-(load-module "kbd-layouts")
-(kbd-layouts:keyboard-layout-list "us" "ru")
-
-(ql:quickload "zpng")
-(load-module "screenshot")
-
-(load-module "globalwindows")
-
-(load-module "command-history")
-
-(load-module "winner-mode")
-
-(define-key *root-map* (kbd "S-Left") "winner-undo")
-(define-key *root-map* (kbd "S-Right") "winner-redo")
-
-(add-hook *post-command-hook*
-          (lambda (command)
-            (when (member command winner-mode:*default-commands*)
-              (winner-mode:dump-group-to-file))))
 
 (defcommand dump-group-to-file (file) ((:rest "Dump To File: "))
   "Dumps the frames of the current group of the current screen to the named file."
@@ -661,6 +647,20 @@
 
 (define-key *top-map* (kbd "s-h") "majordomo-web-health")
 
+(defcommand jord-loadavg () ()
+  "Run `xterm' with `jord-loadavg' script."
+  (run-shell-command "xterm -name web-health -e '~/bin/jord-loadavg && echo \"\" && read -n 1 -s -r -p \"Press any key to close.\"'"))
+
+(defcommand jord-php () ()
+  "Run `xterm' with `jord-php' script."
+  (run-shell-command "exec xterm -name web-health -e '~/bin/jord-php | grep -v 200 && echo \"\" && read -n 1 -s -r -p \"Press any key to close.\"'"))
+
+(define-key *top-map* (kbd "s-h") "jord-loadavg")
+(define-key *top-map* (kbd "s-w") "firefox")
+(define-key *top-map* (kbd "s-e") "emacs")
+(define-key *top-map* (kbd "s-c") "wi-run-or-raise-xterm")
+(define-key *top-map* (kbd "s-M-h") "jord-php")
+
 (defcommand ponymix-decrease () ()
   (run-shell-command "ponymix decrease 5"))
 
@@ -671,3 +671,14 @@
 (define-key *top-map* (kbd "XF86AudioLowerVolume") "ponymix-decrease")
 
 (define-key *root-map* (kbd "C-b") "warp-mouse-active-frame")
+(defcommand xkill () ()
+  "Run `xkill'."
+  (run-shell-command "xkill"))
+
+(define-key *root-map* (kbd "X") "xkill")
+
+(defcommand vnc-magnolia () ()
+  (run-shell-command "exec vncviewer localhost:59555"))
+
+(defcommand pass () ()
+  (run-shell-command "echo -n ***REMOVED*** | xclip -selection primary"))
