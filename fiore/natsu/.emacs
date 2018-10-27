@@ -1783,7 +1783,7 @@ be updated automatically."))
 
 (with-eval-after-load 'company
   (add-to-list 'company-backends 'company-abbrev))
-(add-hook 'anywhere-mode-hook 'company-mode)
+
 (with-eval-after-load 'anywhere-mode
   (let ((map anywhere-mode-map))
     (define-key map (kbd "C-c '") 'anywhere-exit)
