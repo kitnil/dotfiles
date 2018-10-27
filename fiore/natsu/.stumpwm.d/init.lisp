@@ -131,14 +131,7 @@
 (defvar *xterm-big-command*
   "exec xterm -fa 'Monospace' -fs 24")
 
-(defun w3m (url)
-  "Return a `w3m' command to open a URL."
-  (concat "w3m " url))
-
 (defvar *xterm-theme-light*
-  (concat "w3m " url)
-)
-(defvar *wi-xterm-theme-light*
   "-bg white -fg black")
 
 (defvar *xterm-theme-dark*
@@ -631,15 +624,6 @@
 (defcommand dump-group-to-file (file) ((:rest "Dump To File: "))
   "Dumps the frames of the current group of the current screen to the named file."
   (dump-to-file (dump-group (current-group)) file))
-
-(ql:quickload "clx-truetype")
-(setf xft:*font-dirs* '("/run/current-system/profile/share/fonts/"))
-(load-module "ttf-fonts")
-(xft:cache-fonts)
-(set-font (make-instance 'xft:font
-                         :family "DejaVu Sans Mono"
-                         :subfamily "Book"
-                         :size 14))
 
 (defcommand majordomo-web-health () ()
   "Run `xterm' with `jord-health' script."
