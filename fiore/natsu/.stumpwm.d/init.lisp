@@ -642,7 +642,7 @@
 (define-key *top-map* (kbd "s-h") "jord-loadavg")
 (define-key *top-map* (kbd "s-w") "firefox")
 (define-key *top-map* (kbd "s-e") "emacs")
-(define-key *top-map* (kbd "s-c") "wi-run-or-raise-xterm")
+(define-key *top-map* (kbd "s-c") "run-or-raise-xterm")
 (define-key *top-map* (kbd "s-M-h") "jord-php")
 
 (defcommand ponymix-decrease () ()
