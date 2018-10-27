@@ -2,28 +2,61 @@
 ;; Copyright © 2017, 2018 Oleg Pykhalov <go.wigust@gmail.com>
 ;; Released under the GNU GPLv3 or any later version.
 
-(define-module (fiore magnolia)
-  #:use-module (gnu)
-  #:use-module (srfi srfi-1)
-  #:use-module (srfi srfi-26)
-  #:use-module (ice-9 match)
-  #:use-module (ice-9 popen)
-  #:use-module (ice-9 rdelim)
-  #:use-module (ice-9 textual-ports)
-  #:use-module (fiore manifests fiore)
-  #:use-module (fiore modules hosts)
-  #:export (%system-magnolia))
+(use-modules (gnu)
+             ((guix ui) #:select (make-user-module))
+             (guix profiles)
+             (srfi srfi-1)
+             (srfi srfi-26)
+             (ice-9 match)
+             (ice-9 popen)
+             (ice-9 rdelim)
+             (ice-9 textual-ports))
 
 (use-service-modules certbot cuirass cups databases desktop dns mail
 networking rsync shepherd spice ssh sysctl version-control
 virtualization web xorg cgit wigust-monitoring)
 
-(use-package-modules admin android bash bootloaders certs cryptsetup cups
-databases dns file fonts fontutils freedesktop gnome gnupg linux mail ncurses
-networking monitoring ratpoison readline rsync pulseaudio screen ssh tmux
-version-control virtualization web wget xdisorg xorg zile wigust-php)
+(use-package-modules admin android bash bootloaders certs cryptsetup
+cups databases dns file fonts fontutils freedesktop gnome gnupg linux
+mail ncurses networking monitoring ratpoison readline rsync pulseaudio
+screen ssh tmux version-control virtualization web wget xdisorg xorg
+zile wigust-php)
 
 (define %source-dir (string-append (getenv "HOME") "/dotfiles/fiore"))
+
+
+;;;
+;;; General
+;;;
+
+(define (cartesian-product . lists)
+  (fold-right (lambda (xs ys)
+                (append-map (lambda (x)
+                              (map (lambda (y)
+                                     (cons x y))
+                                   ys))
+                            xs))
+              '(())
+              lists))
+
+(define* (prefix-local-host-aliases #:key
+                                    prefixes
+                                    host-name
+                                    domain
+                                    ip-addresses)
+  (string-join (map (lambda (x)
+                      (string-append (string-join x " ")
+                                     "." host-name domain))
+                    (cartesian-product ip-addresses prefixes))
+               "\n"))
+
+(define (serialize-hosts lst)
+  (string-join (map (match-lambda
+                      ((ip-address . canonical-hostname)
+                       (format #f "~a ~a"
+                               ip-address canonical-hostname)))
+                    lst)
+               "\n"))
 
 
 ;;;
@@ -110,38 +143,6 @@ version-control virtualization web wget xdisorg xorg zile wigust-php)
                     (start #~(lambda _
                                #$start-networking))
                     (respawn? #f)))))
-
-
-;;;
-;;; Cuirass
-;;;
-
-;; (define %cuirass-specs
-;;   #~(list
-;;      '((#:name . "my-manifest")
-;;        (#:load-path-inputs . ("guix"))
-;;        (#:package-path-inputs . ("wigust-packages"))
-;;        (#:proc-input . "guix")
-;;        (#:proc-file . "build-aux/cuirass/gnu-system.scm")
-;;        (#:proc . cuirass-jobs)
-;;        (#:proc-args . ((subset . "manifests")
-;;                        (systems . ("x86_64-linux"))
-;;                        (manifests . (("config" . "fiore/manifests/manifest.scm")))))
-;;        (#:inputs . (((#:name . "guix")
-;;                      (#:url . "https://git.savannah.gnu.org/git/guix.git")
-;;                      (#:load-path . ".")
-;;                      (#:branch . "master")
-;;                      (#:no-compile? . #f))
-;;                     ((#:name . "config")
-;;                      (#:url . "https://cgit.duckdns.org/git/dotfiles")
-;;                      (#:load-path . ".")
-;;                      (#:branch . "master")
-;;                      (#:no-compile? . #f))
-;;                     ((#:name . "wigust-packages")
-;;                      (#:url . "https://cgit.duckdns.org/git/guix-wigust")
-;;                      (#:load-path . ".")
-;;                      (#:branch . "master")
-;;                      (#:no-compile? . #f)))))))
 
 
 ;;;
@@ -472,7 +473,7 @@ EndSection
 ;;; Operating system.
 ;;;
 
-(define %system-magnolia
+(let ((ip-address "192.168.105.120"))
   (operating-system
     (host-name "magnolia")
     (timezone "Europe/Moscow")
@@ -564,15 +565,50 @@ EndSection
 
     ;; Create a /etc/hosts file with aliases for "localhost"
     ;; and "mymachine", as well as for Facebook servers.
-    (hosts-file (fiore-hosts-file host-name))
+    (hosts-file (plain-file "hosts"
+                            (string-append (local-host-aliases host-name)
+                                           (prefix-local-host-aliases #:prefixes '("cgit" "esxi" "git" "guix" "www"
+                                                                                   "natsu" "torrent" "print"
+                                                                                   "zabbix")
+                                                                      #:host-name host-name
+                                                                      #:domain ".local"
+                                                                      #:ip-addresses (list ip-address))
+                                           "\n"
+                                           (prefix-local-host-aliases #:prefixes '("cgit" "guix")
+                                                                      #:host-name "tail"
+                                                                      #:domain ".local"
+                                                                      #:ip-addresses (list ip-address))
+                                           "\n"
+                                           (prefix-local-host-aliases #:prefixes '("cgit" "anongit" "guix" "alerta" "weblog")
+                                                                      #:host-name "duckdns"
+                                                                      #:domain ".org"
+                                                                      #:ip-addresses (list ip-address))
+                                           "\n"
+                                           (prefix-local-host-aliases #:prefixes '("alerta" "cerberus" "grafana" "rpc-mj"
+                                                                                   "web.alerta" "zabbix")
+                                                                      #:host-name ""
+                                                                      #:domain "intr"
+                                                                      #:ip-addresses (list ip-address))
+                                           "\n\n"
+                                           (serialize-hosts '(("192.168.100.1" . "r1.local")
+                                                              ("192.168.105.1" . "r2.local")
+                                                              ("192.168.105.120" . "magnolia")
+                                                              ("192.168.105.112" . "clover")
+                                                              ("192.168.105.120" . "hms-billing.majordomo.ru")))
+                                           "\n\n" %facebook-host-aliases)))
 
     ;; Lightweight desktop with custom packages from guix-wigust
-    (packages (cons zabbix-server %fiore-packages))
+    (packages (let ((module (make-user-module '((guix profiles) (gnu)))))
+                (save-module-excursion
+                 (lambda _
+                   (set-current-module module)
+                   (map manifest-entry-item
+                        (manifest-entries (load (string-append %source-dir
+                                                               "/manifests/fiore.scm"))))))))
 
     (services (cons* firewall-service
                      custom-networking-service
-                     (static-networking-service "enp6s0"
-                                                %magnolia-ip-address
+                     (static-networking-service "enp6s0" ip-address
                                                 #:netmask "255.255.255.0"
                                                 #:gateway "192.168.105.1"
                                                 ;; See <http://www.freenom.world>.
@@ -659,7 +695,6 @@ EndSection
 
                      (spice-vdagent-service)
 
-                     ;; TODO: Upload to Guix
                      (service cgit-service-type
                               (cgit-configuration
                                (branch-sort "age")
@@ -718,10 +753,6 @@ EndSection
 
                      (xfce-desktop-service)
 
-                     ;; (service cuirass-service-type
-                     ;;          (cuirass-configuration
-                     ;;           (specifications %cuirass-specs)))
-
                      %custom-desktop-services))
 
     (setuid-programs (cons* (file-append fping "/sbin/fping")
@@ -730,7 +761,5 @@ EndSection
 
     ;; Allow resolution of '.local' host names with mDNS.
     (name-service-switch %mdns-host-lookup-nss)))
-
-%system-magnolia
 
 ;;; system-magnolia.scm ends here
