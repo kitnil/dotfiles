@@ -22,4 +22,7 @@ magnolia-build-pre:
 magnolia-reconfigure:
 	sudo env HOME=/home/natsu GUILE_LOAD_PATH=$(HOME)/dotfiles:$(GUILE_LOAD_PATH) guix system reconfigure $(HOME)/dotfiles/fiore/magnolia.scm
 
+tail-cuirass-pull:
+	$(HOME)/.nix-profile/bin/ansible-playbook $(HOME)/src/hello-ansible/git.yml
+
 all: stow update-mime
