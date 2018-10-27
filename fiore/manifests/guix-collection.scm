@@ -51,6 +51,7 @@ version-control video virtualization w3m web xdisorg xml xorg)
                translate-shell ; Translation in CLI and Emacs
                password-store  ; Password management
 
+               python
                python-hy
 
                cuirass
