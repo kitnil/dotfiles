@@ -11,9 +11,9 @@
 
 (define-abbrev-table 'asm-mode-abbrev-table '())
 
-(define-abbrev-table 'awk-mode-abbrev-table
-  '(
-   ))
+(define-abbrev-table 'awk-mode-abbrev-table '())
+
+(define-abbrev-table 'bbdb-mode-abbrev-table '())
 
 (define-abbrev-table 'bibtex-mode-abbrev-table '())
 
@@ -25,13 +25,11 @@
 
 (define-abbrev-table 'bui-list-mode-abbrev-table '())
 
-(define-abbrev-table 'c++-mode-abbrev-table
-  '(
-   ))
+(define-abbrev-table 'c++-mode-abbrev-table '())
 
-(define-abbrev-table 'c-mode-abbrev-table
-  '(
-   ))
+(define-abbrev-table 'c-mode-abbrev-table '())
+
+(define-abbrev-table 'calc-trail-mode-abbrev-table '())
 
 (define-abbrev-table 'calendar-mode-abbrev-table '())
 
@@ -43,17 +41,23 @@
 
 (define-abbrev-table 'conf-colon-mode-abbrev-table '())
 
+(define-abbrev-table 'conf-desktop-mode-abbrev-table '())
+
 (define-abbrev-table 'conf-javaprop-mode-abbrev-table '())
 
 (define-abbrev-table 'conf-ppd-mode-abbrev-table '())
 
 (define-abbrev-table 'conf-space-mode-abbrev-table '())
 
+(define-abbrev-table 'conf-toml-mode-abbrev-table '())
+
 (define-abbrev-table 'conf-unix-mode-abbrev-table '())
 
 (define-abbrev-table 'conf-windows-mode-abbrev-table '())
 
 (define-abbrev-table 'conf-xdefaults-mode-abbrev-table '())
+
+(define-abbrev-table 'css-mode-abbrev-table '())
 
 (define-abbrev-table 'debbugs-gnu-mode-abbrev-table '())
 
@@ -106,6 +110,8 @@
 (define-abbrev-table 'eww-history-mode-abbrev-table '())
 
 (define-abbrev-table 'eww-mode-abbrev-table '())
+
+(define-abbrev-table 'flymake-diagnostics-buffer-mode-abbrev-table '())
 
 (define-abbrev-table 'ftp-mode-abbrev-table '())
 
@@ -207,6 +213,10 @@
 
 (define-abbrev-table 'idl-mode-abbrev-table '())
 
+(define-abbrev-table 'image-dired-display-image-mode-abbrev-table '())
+
+(define-abbrev-table 'image-dired-thumbnail-mode-abbrev-table '())
+
 (define-abbrev-table 'inferior-python-mode-abbrev-table '())
 
 (define-abbrev-table 'inferior-tcl-mode-abbrev-table '())
@@ -219,9 +229,17 @@
 
 (define-abbrev-table 'ivy-occur-mode-abbrev-table '())
 
-(define-abbrev-table 'java-mode-abbrev-table
-  '(
-   ))
+(define-abbrev-table 'java-mode-abbrev-table '())
+
+(define-abbrev-table 'jord-mail-mode-abbrev-table '())
+
+(define-abbrev-table 'jord-mailsort-mode-abbrev-table '())
+
+(define-abbrev-table 'jord-web-health-mode-abbrev-table '())
+
+(define-abbrev-table 'js-jsx-mode-abbrev-table '())
+
+(define-abbrev-table 'js-mode-abbrev-table '())
 
 (define-abbrev-table 'latex-mode-abbrev-table '())
 
@@ -292,19 +310,21 @@
 
 (define-abbrev-table 'messages-buffer-mode-abbrev-table '())
 
+(define-abbrev-table 'mhtml-mode-abbrev-table '())
+
 (define-abbrev-table 'net-utils-mode-abbrev-table '())
 
 (define-abbrev-table 'network-connection-mode-abbrev-table '())
 
 (define-abbrev-table 'nix-mode-abbrev-table '())
 
+(define-abbrev-table 'nroff-mode-abbrev-table '())
+
 (define-abbrev-table 'nslookup-mode-abbrev-table '())
 
 (define-abbrev-table 'nxml-mode-abbrev-table '())
 
-(define-abbrev-table 'objc-mode-abbrev-table
-  '(
-   ))
+(define-abbrev-table 'objc-mode-abbrev-table '())
 
 (define-abbrev-table 'occur-edit-mode-abbrev-table '())
 
@@ -318,11 +338,11 @@
 
 (define-abbrev-table 'package-menu-mode-abbrev-table '())
 
+(define-abbrev-table 'perl-mode-abbrev-table '())
+
 (define-abbrev-table 'php-mode-abbrev-table '())
 
-(define-abbrev-table 'pike-mode-abbrev-table
-  '(
-   ))
+(define-abbrev-table 'pike-mode-abbrev-table '())
 
 (define-abbrev-table 'plain-tex-mode-abbrev-table '())
 
@@ -341,6 +361,8 @@
 (define-abbrev-table 'ruby-mode-abbrev-table '())
 
 (define-abbrev-table 'scheme-mode-abbrev-table '())
+
+(define-abbrev-table 'scss-mode-abbrev-table '())
 
 (define-abbrev-table 'select-tags-table-mode-abbrev-table '())
 
@@ -372,13 +394,13 @@
 
 (define-abbrev-table 'speedbar-mode-abbrev-table '())
 
-(define-abbrev-table 'sql-mode-abbrev-table
-  '(
-   ))
+(define-abbrev-table 'sql-mode-abbrev-table '())
 
 (define-abbrev-table 'strace-mode-abbrev-table '())
 
 (define-abbrev-table 'tabulated-list-mode-abbrev-table '())
+
+(define-abbrev-table 'tar-mode-abbrev-table '())
 
 (define-abbrev-table 'tcl-mode-abbrev-table '())
 
@@ -394,33 +416,39 @@
   '(
     ("аа" "IP адрес" nil 4)
     ("бд" "база данных" nil 0)
-    ("вам" "Вам" nil 32)
-    ("вами" "Вами" nil 9)
-    ("вас" "Вас" nil 9)
-    ("ваш" "Ваш" nil 24)
-    ("ваше" "Ваше" nil 13)
-    ("вашего" "Вашего" nil 11)
-    ("вашей" "Вашей" nil 12)
-    ("вашем" "Вашем" nil 5)
-    ("вашему" "Вашему" nil 3)
-    ("вашим" "Вашим" nil 2)
-    ("ваших" "Ваших" nil 0)
-    ("веб" "веб-сайт" nil 0)
+    ("вам" "Вам" nil 173)
+    ("вами" "Вами" nil 37)
+    ("вас" "Вас" nil 45)
+    ("ваш" "Ваш" nil 103)
+    ("ваше" "Ваше" nil 50)
+    ("вашего" "Вашего" nil 74)
+    ("вашей" "Вашей" nil 66)
+    ("вашем" "Вашем" nil 37)
+    ("вашему" "Вашему" nil 21)
+    ("вашим" "Вашим" nil 7)
+    ("ваших" "Ваших" nil 5)
+    ("вб" "веб-браузер" nil 2)
     ("вк" "выполните команду" nil 0)
     ("впс" "VPS" nil 0)
-    ("вс" "в случае" nil 1)
+    ("вс" "веб-сайт" nil 15)
     ("вф" "Wi-Fi" nil 0)
-    ("вы" "Вы" nil 46)
+    ("вы" "Вы" nil 185)
+    ("дв" "Сообщите нам, пожалуйста, если у Вас возникнут дополнительные вопросы" nil 11)
     ("ди" "доменное имя" nil 0)
     ("днс" "DNS" nil 3)
     ("енп" "если наблюдаются проблемы при работе с" nil 0)
-    ("з" "Здравствуйте" nil 68)
+    ("з" "Здравствуйте" nil 314)
     ("ин" "интернет" nil 0)
+    ("кпу" "контрольной панели управления" nil 2)
+    ("кпувпс" "контрольной панели управления VPS хостинга" nil 7)
+    ("кпувх" "контрольной панели управления виртуального хостинга" nil 47)
     ("кс" "компьютерная сеть" nil 2)
-    ("м" "можете" nil 1)
+    ("м" "можете" nil 6)
     ("овв" "Обращаем Ваше внимание" nil 0)
-    ("под" "подробнее" nil 4)
-    ("пр" "прочитать" nil 1)
+    ("пиз" "приносим извинения за" nil 0)
+    ("пизпн" "приносим извинения за предоставленные неудобства" nil 0)
+    ("под" "подробнее" nil 7)
+    ("пр" "прочитать" nil 2)
     ("псн" "пожалуйста, сообщите нам," nil 0)
     ("рвр" "работает в штатном режиме" nil 0)
     ("св" "связаться" nil 0)
@@ -444,4 +472,6 @@
 (define-abbrev-table 'vc-svn-log-view-mode-abbrev-table '())
 
 (define-abbrev-table 'xref--xref-buffer-mode-abbrev-table '())
+
+(define-abbrev-table 'yaml-mode-abbrev-table '())
 
