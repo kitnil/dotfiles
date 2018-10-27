@@ -1,9 +1,13 @@
 # Honor per-interactive-shell startup file
 if [ -f ~/.bashrc ]; then . ~/.bashrc; fi
-# if [ -e /home/natsu/.nix-profile/etc/profile.d/nix.sh ]; then . /home/natsu/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
+
 export LC_TIME=en_GB.UTF-8
 
-# Nix
+# Added by Nix installer.
+if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
+    . $HOME/.nix-profile/etc/profile.d/nix.sh;
+fi
+
 export LOCALE_ARCHIVE="$(readlink ~/.nix-profile/lib/locale)/locale-archive"
 export MANPATH=$MANPATH:$HOME/.nix-profile/share/man
 
