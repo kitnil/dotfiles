@@ -1798,8 +1798,6 @@ be updated automatically."))
 
 (add-hook 'find-file-hook 'auto-insert)
 
-(atomic-chrome-start-server)
-
 (setq redshift-temp-increment 100)
 
 (setq youtube-stream-open-chat-function
