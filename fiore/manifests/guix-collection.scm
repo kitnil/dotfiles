@@ -22,7 +22,8 @@ version-control video virtualization w3m web xdisorg xml xorg)
     (,isc-bind "utils")))
 
 (define %large-packages
-  (list libreoffice))
+  (list libreoffice
+        python-pyqt-without-qtwebkit))
 
 (define %spelling-packages
   (list aspell aspell-dict-en aspell-dict-ru))
