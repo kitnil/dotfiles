@@ -1,13 +1,13 @@
 (use-modules (chromium chromium)
              (gnu packages emacs)
-             (gnu packages wigust-emacs)
-             (gnu packages wigust-guix)
-             (gnu packages wigust-pulseaudio)
-             (gnu packages wigust-python)
-             (gnu packages wigust-ruby)
-             (gnu packages wigust-version-control)
-             (gnu packages wigust-virtualization)
-             (gnu packages wigust-xdisorg))
+             (wigust packages emacs)
+             (wigust packages guix)
+             (wigust packages pulseaudio)
+             (wigust packages python)
+             (wigust packages ruby)
+             (wigust packages version-control)
+             (wigust packages virtualization)
+             (wigust packages xdisorg))
 
 (define guix-wigust-packages-emacs
   (list
