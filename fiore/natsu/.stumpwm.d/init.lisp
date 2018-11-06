@@ -30,7 +30,7 @@
 ;; (run-shell-command "xsetroot -solid black")
 
 ;; Disable PC speaker
-;; (run-shell-command "xset -b")
+(run-shell-command "xset -b")
 
 ;; Disable accessiblity features
 ;; (run-shell-command "xkbset -a")
@@ -41,10 +41,10 @@
 
 ;; Use keyboard as mouse with <Shift+Num Lock>
 ;; https://en.wikipedia.org/wiki/Mouse_keys
-;; (run-shell-command "setxkbmap -option keypad:pointerkeys")
+(run-shell-command "setxkbmap -option keypad:pointerkeys")
 
 ;; Keyboard layout
-;; (run-shell-command "setxkbmap -layout us,ru -option grp:win_space_toggle")
+(run-shell-command "setxkbmap -layout us,ru -option grp:win_space_toggle")
 
 ;; Keyboard speed
 ;; (run-shell-command "xset s 0")
@@ -69,6 +69,11 @@
 ;;;
 ;;; General functions for use
 ;;;
+
+(defun range (max &key (min 0) (step 1))
+  "Get a list of integers."
+  (loop for n from min below max by step
+     collect n))
 
 (defun join-to-stream (stream list &optional (delimiter #\&))
   (destructuring-bind (&optional first &rest rest) list
@@ -601,25 +606,35 @@
 (define-key *root-map* (kbd "C-M-v") "scroll-other-window")
 (define-key *root-map* (kbd "Print") "screenshot-default")
 
-(define-key *top-map* (kbd "s-m") "mpv")
-(define-key *top-map* (kbd "s-v") "xclip-mpv")
-(define-key *top-map* (kbd "s-e") "emacsclient")
-(define-key *top-map* (kbd "s-w") "firefox")
-(define-key *top-map* (kbd "s-c") "run-or-raise-xterm")
-(define-key *root-map* (kbd "w") "firefox")
 (define-key *root-map* (kbd "C-w") "firefox")
 (define-key *root-map* (kbd "M-w") "firefox")
+(define-key *root-map* (kbd "w") "firefox")
 
-(define-key *top-map* (kbd "s-o") "other-in-frame")
-(define-key *top-map* (kbd "s-t") "pull-hidden-other")
-(define-key *top-map* (kbd "s-\"") "frame-windowlist")
-(define-key *top-map* (kbd "s-s") "sibling")
-;; (define-key *top-map* (kbd "s-c") "")
-(define-key *top-map* (kbd "s-TAB") "fother")
-(define-key *top-map* (kbd "M-s-n") "gnext")
-(define-key *top-map* (kbd "M-s-p") "gprev")
-(define-key *top-map* (kbd "s-n") "next-in-frame")
-(define-key *top-map* (kbd "s-p") "prev-in-frame")
+;; Rebind groups to PREFIX-NUMBER.
+;; (mapcar #'(lambda (x) (define-key *top-map* (kbd (concat "s-" (write-to-string x)))
+;; 			(format nil "~A ~D" "gselect" x)))
+;; 	(range 10 :min 1 :step 1))
+
+;; (define-key *top-map* (kbd "M-s-n") "gnext")
+;; (define-key *top-map* (kbd "M-s-p") "gprev")
+;; (define-key *top-map* (kbd "s-M-h") "jord-php")
+;; (define-key *top-map* (kbd "s-TAB") "fother")
+;; (define-key *top-map* (kbd "s-\"") "frame-windowlist")
+;; (define-key *top-map* (kbd "s-c") "run-or-raise-xterm")
+;; (define-key *top-map* (kbd "s-c") "run-or-raise-xterm")
+;; (define-key *top-map* (kbd "s-e") "emacs")
+;; (define-key *top-map* (kbd "s-e") "emacsclient")
+;; (define-key *top-map* (kbd "s-h") "jord-loadavg")
+;; (define-key *top-map* (kbd "s-h") nil)
+;; (define-key *top-map* (kbd "s-m") "mpv")
+;; (define-key *top-map* (kbd "s-n") "next-in-frame")
+;; (define-key *top-map* (kbd "s-o") "other-in-frame")
+;; (define-key *top-map* (kbd "s-p") "prev-in-frame")
+;; (define-key *top-map* (kbd "s-s") "sibling")
+;; (define-key *top-map* (kbd "s-t") "pull-hidden-other")
+;; (define-key *top-map* (kbd "s-v") "xclip-mpv")
+;; (define-key *top-map* (kbd "s-w") "firefox")
+;; (define-key *top-map* (kbd "s-w") "firefox")
 
 (defcommand dump-group-to-file (file) ((:rest "Dump To File: "))
   "Dumps the frames of the current group of the current screen to the named file."
@@ -629,8 +644,6 @@
   "Run `xterm' with `jord-health' script."
   (run-shell-command "exec xterm -name web-health -e '~/bin/jord-health && echo \"\" && read -n 1 -s -r -p \"Press any key to close.\"'"))
 
-(define-key *top-map* (kbd "s-h") "majordomo-web-health")
-
 (defcommand jord-loadavg () ()
   "Run `xterm' with `jord-loadavg' script."
   (run-shell-command "xterm -name web-health -e '~/bin/jord-loadavg && echo \"\" && read -n 1 -s -r -p \"Press any key to close.\"'"))
@@ -638,12 +651,6 @@
 (defcommand jord-php () ()
   "Run `xterm' with `jord-php' script."
   (run-shell-command "exec xterm -name web-health -e '~/bin/jord-php | grep -v 200 && echo \"\" && read -n 1 -s -r -p \"Press any key to close.\"'"))
-
-(define-key *top-map* (kbd "s-h") "jord-loadavg")
-(define-key *top-map* (kbd "s-w") "firefox")
-(define-key *top-map* (kbd "s-e") "emacs")
-(define-key *top-map* (kbd "s-c") "run-or-raise-xterm")
-(define-key *top-map* (kbd "s-M-h") "jord-php")
 
 (defcommand ponymix-decrease () ()
   (run-shell-command "ponymix decrease 5"))
