@@ -277,8 +277,10 @@
 
 (defcommand xclip-mpv () ()
   "Play video from clipboard with mpv."
-  (run-shell-command
-   (join `(,*mpv-program* ,@*mpv-arguments* ,(get-x-selection)))))
+  (let ((clipboard (get-x-selection)))
+    (run-shell-command
+     (join `(,*mpv-program* ,@*mpv-arguments* ,clipboard)))
+    (message (concat "Play " clipboard))))
 
 (defcommand mpv-watch () ()
   "Play video from file with mpv."
