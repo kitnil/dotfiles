@@ -10,7 +10,7 @@
 [commit]
 	gpgsign = true
 [user]
-	signingkey = 7246E11C69B79569
+	signingKey = 167F8EA5001AFA9C
 [url "https://github.com/"]
 	insteadOf = git@github.com:
 [alias]
