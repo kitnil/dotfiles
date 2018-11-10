@@ -92,9 +92,8 @@
    (substitute-urls '("https://berlin.guixsd.org"
 
                       ;; TODO: Uncomment when substitute servers become online
-                      ;; "https://mirror.hydra.gnu.org"
-                      ;; "https://hydra.gnu.org"
-                      ))
+                      "https://mirror.hydra.gnu.org"
+                      "https://hydra.gnu.org"))
    ;; (authorized-keys '())
    (max-silent-time 7200)
    (timeout (* 4 max-silent-time))
