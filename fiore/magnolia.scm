@@ -242,6 +242,8 @@
                            (options "mode=1777,size=50%"))
                          %base-file-systems))
 
+    (swap-devices '("/dev/sda3"))
+
     (groups (cons* (user-group (name "adbusers"))
                    (user-group (name "guix-offload"))
                    (user-group (name "telegraf") (system? #t))
