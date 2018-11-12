@@ -132,3 +132,8 @@ ssh-keygen-rsa()
     file="$1"
     ssh-keygen -b 4096 -m pem -f "$HOME/.ssh/id_rsa_$file"
 }
+
+activity()
+{
+    ps -ef | awk '{ print $1 }' | sort | uniq | wc -l;
+}
