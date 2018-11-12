@@ -142,10 +142,16 @@ restic-grep-bash-history()
     pattern="$3"
     grep --no-filename $pattern /mnt/backup/$host/snapshots/*/home/$user/.bash_history | sort -u
 }
+
 ssh-keygen-rsa()
 {
     file="$1"
     ssh-keygen -b 4096 -m pem -f "$HOME/.ssh/id_rsa_$file"
+}
+
+gpu()
+{
+    guix package --substitute-urls='http://cuirass.tld https://berlin.guixsd.org https://mirror.hydra.gnu.org https://hydra.gnu.org' --upgrade=. $@
 }
 
 activity()
