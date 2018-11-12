@@ -126,3 +126,9 @@ jord-web-account-check()
 {
     parallel --will-cite -k 'printf "domain: %s\n" {1}; curl --max-time 10 -L -s -o /dev/null -w "ip-address: %{remote_ip}\nstatus_code: %{http_code}" {1}; printf "\n\n"' ::: $(gms account website $1 | recsel -pname | awk '{ print $2 }')
 }
+
+ssh-keygen-rsa()
+{
+    file="$1"
+    ssh-keygen -b 4096 -m pem -f "$HOME/.ssh/id_rsa_$file"
+}
