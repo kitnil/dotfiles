@@ -1723,6 +1723,10 @@ The optional argument NEW-WINDOW is not used."
   (rx "gnu/services/" (one-or-more (or alphanumeric "-")) ".scm" line-end)
   ["guix/gnu/services/service.tmpl" yas-expand-current-buffer])
 
+(define-auto-insert
+  (rx "vm" (one-or-more (or alphanumeric "-")) ".scm" line-end)
+  ["guix/gnu/system/examples/vm-inherit-image.tmpl" yas-expand-current-buffer])
+
 (defun wi-fullname-and-email ()
   (format "%s <%s>" user-full-name user-mail-address))
 
