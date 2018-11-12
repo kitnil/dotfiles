@@ -127,6 +127,14 @@ jord-web-account-check()
     parallel --will-cite -k 'printf "domain: %s\n" {1}; curl --max-time 10 -L -s -o /dev/null -w "ip-address: %{remote_ip}\nstatus_code: %{http_code}" {1}; printf "\n\n"' ::: $(gms account website $1 | recsel -pname | awk '{ print $2 }')
 }
 
+
+restic-grep-bash-history()
+{
+    user="$1"
+    host="$2"
+    pattern="$3"
+    grep --no-filename $pattern /mnt/backup/$host/snapshots/*/home/$user/.bash_history | sort -u
+}
 ssh-keygen-rsa()
 {
     file="$1"
