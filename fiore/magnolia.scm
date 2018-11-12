@@ -247,6 +247,7 @@
     (groups (cons* (user-group (name "adbusers"))
                    (user-group (name "guix-offload"))
                    (user-group (name "telegraf") (system? #t))
+                   (user-group (name "git") (id 30003))
                    %base-groups))
 
     (users (cons* (user-account
@@ -301,6 +302,12 @@
                    (group "users")
                    (comment "Anonymous user")
                    (home-directory "/home/anonymous"))
+                  (user-account
+                   (name "git")
+                   (group "git")
+                   (uid 30017)
+                   (comment "SSH privilege separation user")
+                   (home-directory "/home/git"))
                   %base-user-accounts))
 
     ;; Create a /etc/hosts file with aliases for "localhost"
