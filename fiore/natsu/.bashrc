@@ -128,6 +128,13 @@ jord-web-account-check()
 }
 
 
+guix-export-archive()
+{
+    path="$1"
+    destination="$2"
+    guix archive --export -r $path | ssh $destination guix archive --import
+}
+
 restic-grep-bash-history()
 {
     user="$1"
