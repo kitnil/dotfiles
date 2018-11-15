@@ -339,6 +339,32 @@
         #:ip-addresses (list ip-address))
        "\n"
        (prefix-local-host-aliases
+        #:prefixes '("cuirass"
+                     "www.cuirass"
+                     "cups"
+                     "www.cups"
+                     "git"
+                     "www.git"
+                     "guix"
+                     "www.guix"
+                     "input"
+                     "www.input"
+                     "torrent"
+                     "www.torrent"
+                     "www"
+                     "zabbix"
+                     "www.zabbix"
+                     "jenkins"
+                     "www.jenkins"
+                     "r1"
+                     "www.r1"
+                     "r2"
+                     "www.r2")
+        #:host-name "tld"
+        #:domain ""
+        #:ip-addresses (list ip-address))
+       "\n"
+       (prefix-local-host-aliases
         #:prefixes '("alerta" "cerberus" "grafana"
                      "rpc-mj" "web.alerta" "zabbix")
         #:host-name ""
