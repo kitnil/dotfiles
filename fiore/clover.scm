@@ -150,7 +150,7 @@ EndSection
                             (cups-configuration
                              (web-interface? #t)
                              (extensions
-                              (list cups-filters hplip))))
+                              (list cups-filters hplip-minimal))))
                    (service guix-publish-service-type
                             (guix-publish-configuration
                              (host "0.0.0.0")))
