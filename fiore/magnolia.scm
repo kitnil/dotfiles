@@ -391,7 +391,8 @@
 
                (service ddclient-service-type)
 
-               (service knot-service-type
+               ;; TODO: Publish new fields to upstream.
+               #;(service knot-service-type
                         (knot-configuration
                          (zones (list master-zone))
                          (listen-v6 #f)
