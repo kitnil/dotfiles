@@ -459,6 +459,9 @@ template:
                             (deploy-hook %nginx-deploy-hook))
                            (certificate-configuration
                             (domains '("alerta.duckdns.org"))
+                            (deploy-hook %nginx-deploy-hook))
+                           (certificate-configuration
+                            (domains '("tail.duckdns.org"))
                             (deploy-hook %nginx-deploy-hook))))))
 
                (extra-special-file "/bin/sh"
