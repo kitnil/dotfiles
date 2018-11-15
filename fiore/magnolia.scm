@@ -357,7 +357,11 @@
                                           #:netmask "255.255.255.0"
                                           #:gateway "192.168.105.1"
                                           ;; See <http://www.freenom.world>.
-                                          #:name-servers '("192.168.105.120"))
+                                          #:name-servers '("80.80.80.80"
+                                                           "80.80.81.81")
+                                          ;; TODO: Fix Knot resolve
+                                          ;; '("192.168.105.120")
+                                          )
 
                (service ddclient-service-type)
 
