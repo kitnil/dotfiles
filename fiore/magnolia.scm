@@ -130,6 +130,13 @@
                  (uri "/")
                  (body '("proxy_pass http://localhost:9091;"))))))
         (nginx-server-configuration
+         (server-name '("jenkins.tld" "www.jenkins.tld"))
+         (listen '("80"))
+         (locations
+          (list (nginx-location-configuration
+                 (uri "/")
+                 (body '("proxy_pass http://localhost:30080;"))))))
+        (nginx-server-configuration
          (server-name '("cuirass.tld" "www.cuirass.tld"))
          (listen '("80"))
          (locations
@@ -248,6 +255,7 @@
                    (user-group (name "guix-offload"))
                    (user-group (name "telegraf") (system? #t))
                    (user-group (name "git") (id 30003))
+                   (user-group (name "jenkins") (id 30004))
                    %base-groups))
 
     (users (cons* (user-account
@@ -308,6 +316,12 @@
                    (uid 30017)
                    (comment "SSH privilege separation user")
                    (home-directory "/home/git"))
+                  (user-account
+                   (name "jenkins")
+                   (group "jenkins")
+                   (uid 30018)
+                   (comment "Jenkins privilege separation user")
+                   (home-directory "/home/jenkins"))
                   %base-user-accounts))
 
     ;; Create a /etc/hosts file with aliases for "localhost"
