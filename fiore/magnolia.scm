@@ -364,6 +364,7 @@
                (service knot-service-type
                         (knot-configuration
                          (zones (list master-zone))
+                         (listen-v6 #f)
                          (extra-options "
 remote:
  - id: hidden
