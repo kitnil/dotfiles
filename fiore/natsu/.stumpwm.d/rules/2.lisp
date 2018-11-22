@@ -1,0 +1,6 @@
+(("Default" 0 T NIL :CLASS "Firefox")
+ ("Default" 0 T NIL :CLASS "IceCat")
+ ("Default" 0 T NIL :TITLE "pulsemixer")
+ ("Default" 3 NIL NIL :CLASS "mpv")
+ ("Default" 3 NIL NIL :TITLE "youtube-dl")
+ ("Default" 3 NIL T :CLASS "mpv" :TITLE "emacs-emms"))

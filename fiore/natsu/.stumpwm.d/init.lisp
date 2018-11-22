@@ -93,17 +93,18 @@
 
 (setf *suppress-window-placement-indicator* t)
 
-(clear-window-placement-rules)
-(define-frame-preference "Default" (1 nil nil :class "mpv"))
-(define-frame-preference "Default" (3 nil t :class "mpv" :title "emacs-emms"))
-(define-frame-preference "Default" (1 nil nil :title "youtube-dl"))
-(define-frame-preference "Default" (0 t nil :title "pulsemixer"))
-(define-frame-preference "Default" (2 t nil :class "Firefox"))
-(define-frame-preference "Default" (2 t nil :class "IceCat"))
-
 (setf *new-frame-action* :empty)
 
-(restore-from-file (concat *home* "/.stumpwm-dump-desktop.lisp"))
+(defcommand desktop-restore (desktop rules) ((:string "Restore desktop: ")
+                                             (:string "Restore rules: "))
+  (let ((desktop (format nil "~a/.stumpwm.d/desktop/~a.lisp" *home* desktop))
+        (rules (format nil "~a/.stumpwm.d/rules/~a.lisp" *home* rules)))
+    (message (format nil "Restore desktop from ~s file." desktop))
+    (message (format nil "Restore rules from ~s file." rules))
+    (restore-from-file desktop)
+    (clear-window-placement-rules)
+    (restore-window-placement-rules rules)
+    (place-existing-windows)))
 
 ;; (restore-from-file "/home/user/.stumpwm-dump-desktop.lisp")
 ;; (restore-from-file "~/.stumpwm-dump-desktop.lisp")
