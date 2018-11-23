@@ -53,6 +53,7 @@ xorg zile)
                 ethtool   ; wol (wake on lan)
                 file      ; Information about file from magic
                 gnupg
+                jq
                 iptables
                 knot
                 lm-sensors      ; `sensors'
