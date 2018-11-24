@@ -110,9 +110,9 @@ ssh-sudo()
 && sudo --user=$1 --login";
 }
 
-jord-vm-ip()
+vm-ip()
 {
-    gms vm ip $1 | recsel -pip_address | awk '{ print $2 }'
+    gms vm ip $1 | recsel -Pip_address
 }
 
 jord-ansible-service-start()
