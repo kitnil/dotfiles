@@ -167,7 +167,7 @@
 ;;;
 
 (define* (proxy host port #:optional (protocol "http"))
-    (list "resolver 192.168.105.120;"
+    (list "resolver 80.80.80.80;"
           (string-append "set $target localhost:" (number->string port) ";")
           (format #f "proxy_pass ~a://$target;" protocol)
           (format #f "proxy_set_header Host ~a;" host)
