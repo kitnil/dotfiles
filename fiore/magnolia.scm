@@ -2,11 +2,11 @@
 ;; Copyright © 2017, 2018 Oleg Pykhalov <go.wigust@gmail.com>
 ;; Released under the GNU GPLv3 or any later version.
 
-(use-modules (gnu) (sysadmin services)
-             (packages php) (services monitoring))
-(use-package-modules bash bootloaders linux monitoring networking)
+(use-modules (gnu) (sysadmin services))
+(use-package-modules bash bootloaders linux monitoring networking php)
 (use-service-modules certbot databases dns networking rsync shepherd
-                     spice ssh virtualization web cgit version-control)
+                     spice ssh virtualization web cgit version-control
+                     monitoring)
 
 (define %source-dir (dirname (current-filename)))
 
@@ -110,24 +110,6 @@
                  (uri "/")
                  (body '("proxy_pass http://localhost:631;"))))))
         (nginx-server-configuration
-         (server-name '("alerta.duckdns.org" "zabbix.tld"))
-         (root (file-append zabbix-server "/share/zabbix/php"))
-         (index '("index.php"))
-         (locations
-          (let ((php-location (nginx-php-location)))
-            (list (nginx-location-configuration
-                   (inherit php-location)
-                   (body (append (nginx-location-configuration-body php-location)
-                                 (list "fastcgi_param PHP_VALUE \"post_max_size = 16M\nmax_execution_time = 300\";"))))
-                  (nginx-location-configuration
-                   (inherit php-location)
-                   (uri "/describe/natsu")
-                   (body (append '("alias /var/www/php;")
-                                 (nginx-location-configuration-body php-location)))))))
-         (listen '("80" "443 ssl"))
-         (ssl-certificate (letsencrypt-certificate "alerta.duckdns.org"))
-         (ssl-certificate-key (letsencrypt-key "alerta.duckdns.org")))
-        (nginx-server-configuration
          (server-name '("torrent.tld" "www.torrent.tld"))
          (listen '("80"))
          (locations
@@ -155,20 +137,21 @@
           (list (nginx-location-configuration
                  (uri "/")
                  (body (proxy "input.tld" 19080))))))
-        (nginx-server-configuration
-         (server-name '("hms-billing.majordomo.ru"))
-         (listen '("443"))
-         (locations
-          (list (nginx-location-configuration
-                 (uri "/")
-                 (body (proxy "hms-billing.majordomo.ru" 16280 "https"))))))
-        (nginx-server-configuration
-         (server-name '("rpc-mj.intr"))
-         (listen '("443"))
-         (locations
-          (list (nginx-location-configuration
-                 (uri "/")
-                 (body (proxy "rpc-mj.intr" 16280 "https"))))))
+        ;; (nginx-server-configuration
+        ;;  (server-name '("hms-billing.majordomo.ru"))
+        ;;  (listen '("443"))
+        ;;  (locations
+        ;;   (list (nginx-location-configuration
+        ;;          (uri "/")
+        ;;          (body (proxy "hms-billing.majordomo.ru" 16280 "https"))))))
+        ;; TODO: 2018/11/26 19:39:52 [error] 6513#0: *1 no "ssl_certificate" is defined in server listening on SSL port while SSL handshaking, client: 192.168.105.120, server: 0.0.0.0:443
+        ;; (nginx-server-configuration
+        ;;  (server-name '("rpc-mj.intr"))
+        ;;  (listen '("443"))
+        ;;  (locations
+        ;;   (list (nginx-location-configuration
+        ;;          (uri "/")
+        ;;          (body (proxy "rpc-mj.intr" 16280 "https"))))))
         (nginx-server-configuration
          (server-name '("alerta.intr"))
          (listen '("80"))
@@ -430,15 +413,37 @@ template:
 
                (service fcgiwrap-service-type)
 
-               (service zabbix-server-service-type)
-               (service zabbix-agentd-service-type)
+               (service zabbix-server-service-type
+                        (zabbix-server-configuration
+                         (db-password "zabbix")
+                         (log-type "console")))
+
+               (service zabbix-agent-service-type)
+
+               (service zabbix-front-end-service-type
+                        (zabbix-front-end-configuration
+                         (db-secret-file "/etc/zabbix/zabbix.secret")
+                         (nginx
+                          (list
+                           (nginx-server-configuration
+                            (inherit %zabbix-front-end-configuration-nginx)
+                            (server-name '("alerta.duckdns.org" "zabbix.tld"))
+                            (locations
+                             (cons (nginx-location-configuration
+                                    (inherit php-location)
+                                    (uri "/describe/natsu")
+                                    (body (append '("alias /var/www/php;")
+                                                  (nginx-location-configuration-body (nginx-php-location)))))
+                                   (nginx-server-configuration-locations %zabbix-front-end-configuration-nginx)))
+                            (listen '("80" "443 ssl"))
+                            (ssl-certificate (letsencrypt-certificate "alerta.duckdns.org"))
+                            (ssl-certificate-key (letsencrypt-key "alerta.duckdns.org")))))))
 
                (postgresql-service)
 
                (service php-fpm-service-type
                         (php-fpm-configuration
-                         (file
-                          (local-file (string-append %source-dir "/php-fpm")))
+                         (timezone "Europe/Moscow")
                          (php php-with-bcmath)))
 
                (service nginx-service-type
