@@ -222,8 +222,10 @@ EndSection
                          ("net.ipv4.conf.all.accept_redirects" . "1")
                          ("net.ipv4.conf.all.send_redirects" . "1")))))
 
-   (service openssh-service-type (openssh-configuration (permit-root-login #t)
-                                                        (x11-forwarding? #t)))
+   (service openssh-service-type
+            (openssh-configuration
+             (gateway-ports? 'client)
+             (x11-forwarding? #t)))
 
    (service cups-service-type
             (cups-configuration
