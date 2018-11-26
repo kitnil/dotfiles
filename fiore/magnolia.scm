@@ -114,11 +114,16 @@
          (root (file-append zabbix-server "/share/zabbix/php"))
          (index '("index.php"))
          (locations
-          (list (let ((php-location (nginx-php-location)))
-                  (nginx-location-configuration
+          (let ((php-location (nginx-php-location)))
+            (list (nginx-location-configuration
                    (inherit php-location)
                    (body (append (nginx-location-configuration-body php-location)
-                                 (list "fastcgi_param PHP_VALUE \"post_max_size = 16M\nmax_execution_time = 300\";")))))))
+                                 (list "fastcgi_param PHP_VALUE \"post_max_size = 16M\nmax_execution_time = 300\";"))))
+                  (nginx-location-configuration
+                   (inherit php-location)
+                   (uri "/describe/natsu")
+                   (body (append '("alias /var/www/php;")
+                                 (nginx-location-configuration-body php-location)))))))
          (listen '("80" "443 ssl"))
          (ssl-certificate (letsencrypt-certificate "alerta.duckdns.org"))
          (ssl-certificate-key (letsencrypt-key "alerta.duckdns.org")))
