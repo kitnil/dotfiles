@@ -96,8 +96,8 @@ export SLACK_CLI_TOKEN='***REMOVED***'
 export JORD_PASS='***REMOVED***'
 export CVM_USER='cron'
 export CVM_PASS='***REMOVED***'
-export GMS_USER='pyhalov'
-export GMS_PASS='***REMOVED***'
+export IHS_USER='pyhalov'
+export IHS_PASS='***REMOVED***'
 
 ansible-host()
 {
@@ -117,16 +117,27 @@ vm-ip()
 
 jord-ansible-service-start()
 {
-    vm="$(gms vm ip $1 | recsel -pip_address | awk '{ print $2 }')"
+    # vm="$(gms vm ip $1 | recsel -pip_address | awk '{ print $2 }')"
+    vm=$1
     ansible --user sup --private-key=$HOME/.ssh/id_rsa_sup --inventory $vm, \
             $vm --module-name service --args "name=$2 state=started" \
-            --become --ask-become-pass
+            --become --extra-vars='ansible_become_pass=***REMOVED***'
 
+}
+
+ssh-forward-vnc()
+{
+    ssh -i $HOME/.ssh/id_rsa_autossh -fNL 59551:localhost:5901 majordomo-ssh-tunnel@guix.duckdns.org
+}
+
+vm-ssh()
+{
+    ssh -l sup $(vm-ip $1)
 }
 
 jord-web-loadavg()
 {
-    watch --color "seq -f 'web%gs' 15 37 | xargs guix environment -l $HOME/src/guile-loadavg/guix.scm -- $HOME/src/guile-loadavg/pre-inst-env loadavg weather"
+    watch --color "seq -f 'web%gs' 15 37 | loadavg weather"
 }
 
 jord-web-account-check()
@@ -170,3 +181,21 @@ activity()
 alias ls='ls -B -p --color=auto'
 
 eval "$(direnv hook bash)"
+sup()
+{
+    host="$1"
+    sshpass -p $JORD_PASS ssh sup@$host
+}
+
+export TMUXIFIER_LAYOUT_PATH="$HOME/.tmuxifier-layouts"
+
+connect()
+{
+    TMUXIFIER_USER=$1 TMUXIFIER_HOST=$2 tmuxifier s ssh $@
+}
+
+top-mysql()
+{
+    web=$1
+    ansible $web -m shell -a "mysql -h $web.majordomo.ru -s -u root -p***REMOVED*** -e \"show full processlist\"" --become | sort -k 6 -n
+}

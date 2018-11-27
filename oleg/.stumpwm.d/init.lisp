@@ -52,11 +52,6 @@
 ;;; General functions for use
 ;;;
 
-(defun range (max &key (min 0) (step 1))
-  "Get a list of integers."
-  (loop for n from min below max by step
-     collect n))
-
 (defun join-to-stream (stream list &optional (delimiter #\&))
   (destructuring-bind (&optional first &rest rest) list
     (when first

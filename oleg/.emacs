@@ -23,6 +23,14 @@
 
 (setq load-prefer-newer t)
 
+(setq epg-gpg-program "gpg")
+
+;; (setq epg-config--program-alist
+;;       '((OpenPGP epg-gpg-program
+;;                  ;; ("gpg2" . "2.1.6")
+;;                  ("gpg" . "1.4.3"))
+;;         (CMS epg-gpgsm-program ("gpgsm" . "2.0.4"))))
+
 ;; (require 'benchmark-init)
 
 ;; To disable collection of benchmark data after init is done.
