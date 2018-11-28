@@ -343,11 +343,7 @@
                      "zabbix"
                      "www.zabbix"
                      "jenkins"
-                     "www.jenkins"
-                     "r1"
-                     "www.r1"
-                     "r2"
-                     "www.r2")
+                     "www.jenkins")
         #:host-name "tld"
         #:domain ""
         #:ip-addresses (list ip-address))
@@ -359,7 +355,11 @@
         #:domain "intr"
         #:ip-addresses (list ip-address))
        "\n\n"
-       (serialize-hosts '(("192.168.105.120" . "hms-billing.majordomo.ru")))
+       (serialize-hosts '(("192.168.100.1" . "r1.tld")
+                          ("192.168.100.1" . "www.r1.tld")
+                          ("192.168.105.1" . "r2.tld")
+                          ("192.168.105.1" . "www.r2.tld")
+                          ("192.168.105.120" . "hms-billing.majordomo.ru")))
        "\n\n" %facebook-host-aliases)))
 
     (packages (custom-packages (string-append %source-dir
