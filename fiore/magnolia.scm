@@ -423,7 +423,7 @@ template:
 
                (service zabbix-server-service-type
                         (zabbix-server-configuration
-                         (include-files '("/etc/zabbix/zabbix.secret"))))
+                         (include-files '("/etc/zabbix/zabbix-server.secret"))))
 
                (service zabbix-agent-service-type)
 
