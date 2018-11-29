@@ -415,8 +415,7 @@ template:
 
                (service zabbix-server-service-type
                         (zabbix-server-configuration
-                         (db-password "zabbix")
-                         (log-type "console")))
+                         (include-files '("/etc/zabbix/zabbix.secret"))))
 
                (service zabbix-agent-service-type)
 
