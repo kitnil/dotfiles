@@ -244,6 +244,8 @@
                    (user-group (name "telegraf") (system? #t))
                    (user-group (name "git") (id 30003))
                    (user-group (name "jenkins") (id 30004))
+                   (user-group (name "influxdb") (id 30005))
+                   (user-group (name "grafana") (id 30006))
                    %base-groups))
 
     (users (cons* (user-account
@@ -262,12 +264,6 @@
                    (uid 1982)
                    (group "guix-offload")
                    (home-directory "/home/guix-offload"))
-                  (user-account
-                   (name "telegraf")
-                   (system? #t)
-                   (group "telegraf")
-                   (comment "telegraf privilege separation user")
-                   (home-directory "/var/run/telegraf"))
                   (user-account
                    (name "ssh-tunnel")
                    (group "users")
@@ -310,6 +306,18 @@
                    (uid 30018)
                    (comment "Jenkins privilege separation user")
                    (home-directory "/home/jenkins"))
+                  (user-account
+                   (name "influxdb")
+                   (group "influxdb")
+                   (uid 30019)
+                   (comment "influxdb privilege separation user")
+                   (home-directory "/home/influxdb"))
+                  (user-account
+                   (name "grafana")
+                   (group "grafana")
+                   (uid 30020)
+                   (comment "grafana privilege separation user")
+                   (home-directory "/home/grafana"))
                   %base-user-accounts))
 
     ;; Create a /etc/hosts file with aliases for "localhost"
