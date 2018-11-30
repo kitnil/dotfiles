@@ -246,6 +246,7 @@
                    (user-group (name "jenkins") (id 30004))
                    (user-group (name "influxdb") (id 30005))
                    (user-group (name "grafana") (id 30006))
+                   (user-group (name "docker") (id 30007))
                    %base-groups))
 
     (users (cons* (user-account
