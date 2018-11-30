@@ -73,7 +73,8 @@
        #:builder
        (begin
          (use-modules (guix build utils))
-         (let ((autopostgresqlbackup-file (string-append ,name ".sh")))
+         (let ((autopostgresqlbackup-file (string-append ,name ".sh"))
+               (postgresql (assoc-ref %build-inputs "postgresql")))
            ;; Copy source
            (copy-file (assoc-ref %build-inputs "source")
                       autopostgresqlbackup-file)
@@ -92,15 +93,17 @@ then
     . \"/etc/autopostgresqlbackup.conf\"
 fi
 "))
-             (("^PATH=.*$" str)
+             (("^PATH=.*$" line)
               ;; Make sure Guix system and user profiles present in ‘PATH’.
-              (string-append str
+              (string-append (string-trim-right line)
                              ":/run/current-system/profile/bin"
-                             ":$HOME/.guix-profile/bin"))
+                             ":$HOME/.guix-profile/bin"
+                             "\n"))
              (("psql")
               ;; Make sure ‘psql’ program will be found in right place.
-              (string-append (assoc-ref %build-inputs "postgresql")
-                             "/bin/psql")))
+              (string-append postgresql "/bin/psql"))
+             (("pg_dump")
+              (string-append postgresql "/bin/pg_dump")))
            (let-syntax ((comment-line-with-variable
                          (syntax-rules ()
                            ((_ file (var ...))
@@ -114,6 +117,7 @@ fi
                                           "DBEXCLUDE" "CREATE_DATABASE"
                                           "SEPDIR" "DOWEEKLY" "COMP"
                                           "POSTBACKUP")))
+           (chmod autopostgresqlbackup-file #o755)
            ;; Install
            (install-file autopostgresqlbackup-file
                          (string-append %output "/bin"))
