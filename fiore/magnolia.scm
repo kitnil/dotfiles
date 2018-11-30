@@ -4,9 +4,9 @@
 
 (use-modules (gnu) (sysadmin services))
 (use-package-modules bash bootloaders linux monitoring networking php)
-(use-service-modules certbot databases dns networking rsync shepherd
-                     spice ssh virtualization web cgit version-control
-                     monitoring)
+(use-service-modules admin certbot databases dns networking rsync
+                     shepherd spice ssh virtualization web cgit
+                     version-control monitoring)
 
 (define %source-dir (dirname (current-filename)))
 
@@ -386,6 +386,19 @@
                                           )
 
                (service ddclient-service-type)
+
+               (service rottlog-service-type
+                        (rottlog-configuration
+                         (inherit (rottlog-configuration))
+                         (rotations (cons (log-rotation
+                                           (files '("/var/log/nginx/access.log"
+                                                    "/var/log/nginx/error.log"))
+                                           (frequency 'daily))
+                                          (map (lambda (rotation)
+                                                 (log-rotation
+                                                  (inherit rotation)
+                                                  (frequency 'daily)))
+                                               %default-rotations)))))
 
                ;; TODO: Publish new fields to upstream.
                #;(service knot-service-type
