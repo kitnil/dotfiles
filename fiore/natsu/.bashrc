@@ -199,3 +199,19 @@ top-mysql()
     web=$1
     ansible $web -m shell -a "mysql -h $web.majordomo.ru -s -u root -p***REMOVED*** -e \"show full processlist\"" --become | sort -k 6 -n
 }
+
+tmux-ls()
+{
+    tmux ls | cut -d ':' -f 1;
+}
+
+tmux-grep()
+{
+    tmux-ls | grep $@
+}
+
+tmux-fzf()
+{
+    session="$1"
+    tmux at -t "$(tmux-ls | fzf)"
+}
