@@ -157,4 +157,5 @@ below otherwise."
 
 (with-eval-after-load 'gnus
   (let ((map gnus-summary-mode-map))
-    (define-key map (kbd "<f5>") 'mbsync)))
+    (define-key map (kbd "<f5>") 'mbsync)
+    (define-key map (kbd "<f6>") 'org-capture)))
