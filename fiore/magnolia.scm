@@ -258,7 +258,8 @@
                                            "audio" "video"
                                            "lpadmin" "lp"
                                            "adbusers" "libvirt"
-                                           "kvm"))
+                                           "kvm"
+                                           "docker"))
                    (home-directory "/home/natsu"))
                   (user-account
                    (name "guix-offload")
