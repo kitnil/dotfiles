@@ -437,7 +437,10 @@ template:
 
                (service zabbix-server-service-type
                         (zabbix-server-configuration
-                         (include-files '("/etc/zabbix/zabbix-server.secret"))))
+                         (include-files '("/etc/zabbix/zabbix-server.secret"))
+                         (extra-options "
+FpingLocation=/run/setuid-programs/fping
+")))
 
                (service zabbix-agent-service-type)
 
