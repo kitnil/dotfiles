@@ -220,6 +220,10 @@
   (rx "http" (zero-or-one "s") "://github.com")
   "Regexp matching GitHub.")
 
+(defvar wi-url-melpa-regexp
+  (rx "http" (zero-or-one "s") "://melpa.org")
+  "Regexp matching Melpa.")
+
 (defun youtube-free-url (url)
   "Convert youtube.com to hooktube.com URL and put into `kill-ring'.
 
@@ -252,6 +256,7 @@ WARNING:  hooktube.com requries non-free JavaScript."
         (,wi-url-gnunet-bot-log-regexp . eww-browse-url)
         (,wi-debian-paste-regexp . wi-browse-url-paste-debian)
         (,wi-url-github-regexp . browse-url-chromium)
+        (,wi-url-melpa-regexp . browse-url-chromium)
         ("." . browse-url-firefox)))
 
 (defcustom ffap-info-finder 'info
