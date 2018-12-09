@@ -925,6 +925,10 @@ With a prefix argument, clean `geiser-guile-load-path'."
                        " "))
           guix-substitute-servers))
 
+(with-eval-after-load 'build-farm-url
+  (add-to-list 'build-farm-url-alist
+               '("http://cuirass.tld" . cuirass)))
+
 
 ;;;
 ;;; C-mode
