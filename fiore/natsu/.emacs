@@ -77,10 +77,6 @@
     (define-key map (kbd "C-c c") 'wi-magit-show-commit-guix)
     (define-key map (kbd "C-c d") 'wi-gnus-browse-debbugs)))
 
-(with-eval-after-load 'guix-devel
-  (let ((map guix-devel-mode-map))
-    (define-key map (kbd "<f5>") 'shell)))
-
 (with-eval-after-load 'dired
   (require 'dired-x))
 
