@@ -346,10 +346,7 @@ and the functions `ffap-file-at-point' and `ffap-url-at-point'."
     (let ((url (ffap-url-p filename))
           (info-page (ffap-info-p filename))
           (man-page (ffap-man-p filename))
-          (guix-store-dir (guix-ffap-store-path-p filename))
-          (guix-profile-dir (guix-ffap-profile-path-p filename))
-          (guix-package-source (guix-ffap-store-package-source-path-p
-                                filename)))
+          (guix-profile-dir (guix-ffap-profile-path-p filename)))
       (cond
        (url
 	(let (current-prefix-arg)
@@ -360,12 +357,6 @@ and the functions `ffap-file-at-point' and `ffap-url-at-point'."
        (man-page
         (let (current-prefix-arg)
           (man man-page)))
-       (guix-package-source
-        (let (current-prefix-arg)
-          (guix-run-in-shell (concat "tar xf " filename))))
-       (guix-store-dir
-        (let (current-prefix-arg)
-          (guix-run-in-shell (concat "find " filename))))
        (guix-profile-dir
         (let (current-prefix-arg)
           (guix-run-in-shell (concat "readlink " filename))))
