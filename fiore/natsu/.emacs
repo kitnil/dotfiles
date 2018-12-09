@@ -1298,6 +1298,14 @@ Push branch master to local/master."
 ;;   (setq org-todo-keywords
 ;;         '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)"))))
 
+(with-eval-after-load 'org
+  (org-babel-do-load-languages
+      'org-babel-load-languages
+      '((R . t)
+        (emacs-lisp . t)
+        (scheme . t)
+        (shell . t))))
+
 (setq org-startup-folded 'showall) ; Show all in `org-mode' at startup
 
 (setq org-email-link-description-format "Email %c: %s") ; More than 30 character
