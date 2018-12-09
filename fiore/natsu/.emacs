@@ -1728,6 +1728,10 @@ The optional argument NEW-WINDOW is not used."
   (yas-expand-snippet (buffer-string) (point-min) (point-max)))
 
 (define-auto-insert
+  (rx "package" (one-or-more (or alphanumeric "-")) ".scm" line-end)
+  ["guix/gnu/packages/package.tmpl" yas-expand-current-buffer])
+
+(define-auto-insert
   (rx "gnu/services/" (one-or-more (or alphanumeric "-")) ".scm" line-end)
   ["guix/gnu/services/service.tmpl" yas-expand-current-buffer])
 
