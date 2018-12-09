@@ -68,6 +68,10 @@
     (define-key map (kbd "C-c s") 'ispell-region)
     (define-key map (kbd "C-c e") 'wi-replace-with-brackets-ellipsis)))
 
+(with-eval-after-load 'prog-mode
+  (let ((map prog-mode-map))
+    (define-key map (kbd "<f5>") 'recompile)))
+
 (with-eval-after-load 'gnus-art
   (let ((map gnus-article-mode-map))
     (define-key map (kbd "C-c c") 'wi-magit-show-commit-guix)
