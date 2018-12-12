@@ -76,7 +76,7 @@ version-control video virtualization w3m web xdisorg xml xorg)
 
 
                guile-commonmark ; Commonmark for Guile
-               gwl              ; Guix workflow management
+               ;; gwl              ; Guix workflow management ; fails to build
                haunt            ; Guile static site generator
 
                aria2        ; Download utility
