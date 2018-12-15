@@ -36,14 +36,20 @@
   #:use-module (ice-9 rdelim))
 
 (define-public python-cvm
-  (let ((source-dir (string-append (getenv "HOME")
-                                   "/src/python-cvm")))
+  (let ((commit "b76b1472f68563bf5ecb79f2fe32bfd2c1421ccb"))
     (package
       (name "python-cvm")
-      (version (string-append "0.0.1"))
-      (source (local-file source-dir
-                          #:recursive? #t
-                          #:select? (git-predicate source-dir)))
+      (version (git-version "0.0.1" "1" commit))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "http://input.tld/git/python-cvm")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "0hswv48wcf1gd9navxkw11gpkc0zh46ljss6fxn853msikp53fwb"))))
       (build-system python-build-system)
       (arguments
        '(#:tests? #f)) ; no tests
@@ -56,16 +62,22 @@
 @uref{http://billing2.intr}")
       (license #f))))
 
-(define-public guile-gms
-  (let ((source-dir (string-append (getenv "HOME")
-                                   "/src/guile-gms")))
+(define-public guile-ihs
+  (let ((commit "322be42226df215c69bc2375359e20232e08a92b"))
     (package
       (home-page "https://majordomo.ru/")
-      (name "guile-gms")
+      (name "guile-ihs")
       (version (string-append "0.0.1"))
-      (source (local-file source-dir
-                          #:recursive? #t
-                          #:select? (git-predicate source-dir)))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "http://input.tld/git/guile-ihs")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "01y4h59rng4119mk4p5hy3kkzr05yr5glzs5xlrx5vnr6lrpcr9r"))))
       (build-system gnu-build-system)
       (arguments
        `(#:modules ((guix build gnu-build-system)
@@ -73,66 +85,66 @@
                     (srfi srfi-26)
                     (ice-9 popen)
                     (ice-9 rdelim))
-          #:phases
-         (modify-phases %standard-phases
-           (add-after 'install 'wrap-program
-             (lambda* (#:key inputs outputs #:allow-other-keys)
-               ;; Make sure the 'guix' command finds GnuTLS,
-               ;; Guile-JSON, and Guile-Git automatically.
-               (let* ((out    (assoc-ref outputs "out"))
-                      (guile  (assoc-ref inputs "guile"))
-                      (gcrypt (assoc-ref inputs "guile-gcrypt"))
-                      (gnutls (assoc-ref inputs "gnutls"))
-                      (guix   (assoc-ref inputs "guix"))
-                      (json   (assoc-ref inputs "guile-json"))
-                      (deps   (list gcrypt gnutls guix json out))
-                      (effective
-                       (read-line
-                        (open-pipe* OPEN_READ
-                                    (string-append guile "/bin/guile")
-                                    "-c" "(display (effective-version))")))
-                      (path   (string-join
-                               (map (cut string-append <>
-                                         "/share/guile/site/"
-                                         effective)
-                                    deps)
-                               ":"))
-                      (gopath (string-join
-                               (map (cut string-append <>
-                                         "/lib/guile/" effective
-                                         "/site-ccache")
-                                    deps)
-                               ":")))
+                   #:phases
+                   (modify-phases %standard-phases
+                     (add-after 'install 'wrap-program
+                       (lambda* (#:key inputs outputs #:allow-other-keys)
+                         ;; Make sure the 'guix' command finds GnuTLS,
+                         ;; Guile-JSON, and Guile-Git automatically.
+                         (let* ((out    (assoc-ref outputs "out"))
+                                (guile  (assoc-ref inputs "guile"))
+                                (gcrypt (assoc-ref inputs "guile-gcrypt"))
+                                (gnutls (assoc-ref inputs "gnutls"))
+                                (guix   (assoc-ref inputs "guix"))
+                                (json   (assoc-ref inputs "guile-json"))
+                                (deps   (list gcrypt gnutls guix json out))
+                                (effective
+                                 (read-line
+                                  (open-pipe* OPEN_READ
+                                              (string-append guile "/bin/guile")
+                                              "-c" "(display (effective-version))")))
+                                (path   (string-join
+                                         (map (cut string-append <>
+                                                   "/share/guile/site/"
+                                                   effective)
+                                              deps)
+                                         ":"))
+                                (gopath (string-join
+                                         (map (cut string-append <>
+                                                   "/lib/guile/" effective
+                                                   "/site-ccache")
+                                              deps)
+                                         ":")))
 
-                 (wrap-program (string-append out "/bin/gms")
-                   `("GUILE_LOAD_PATH" ":" prefix (,path))
-                   `("GUILE_LOAD_COMPILED_PATH" ":" prefix (,gopath)))
+                           (wrap-program (string-append out "/bin/ihs")
+                             `("GUILE_LOAD_PATH" ":" prefix (,path))
+                             `("GUILE_LOAD_COMPILED_PATH" ":" prefix (,gopath)))
 
-                 #t)
-               (let* ((guile  (assoc-ref inputs "guile"))
-                      (effective
-                       (read-line
-                        (open-pipe* OPEN_READ
-                                    (string-append guile "/bin/guile")
-                                    "-c" "(display (effective-version))")))
-                      (path (cut string-append <>
-                                 "/share/guile/site/"
-                                 effective
-                                 "/gms")))
-                 (with-directory-excursion "gms"
-                   (copy-file "config.scm.in" "config.scm")
-                   (substitute* "config.scm"
-                     (("@PACKAGE_NAME@") ,name)
-                     (("@PACKAGE_VERSION@") ,version)
-                     (("@PACKAGE_URL@") ,home-page)
-                     (("@CVM@") (string-append (assoc-ref inputs "cvm")
-                                               "/bin/cvm")))
-                   (install-file "config.scm"
-                                 (path (assoc-ref outputs "out"))))
-                 #t)))
-           (add-before 'check 'set-environment
-             (lambda _
-               (setenv "HOME" (getcwd)))))))
+                           #t)
+                         (let* ((guile  (assoc-ref inputs "guile"))
+                                (effective
+                                 (read-line
+                                  (open-pipe* OPEN_READ
+                                              (string-append guile "/bin/guile")
+                                              "-c" "(display (effective-version))")))
+                                (path (cut string-append <>
+                                           "/share/guile/site/"
+                                           effective
+                                           "/ihs")))
+                           (with-directory-excursion "ihs"
+                             (copy-file "config.scm.in" "config.scm")
+                             (substitute* "config.scm"
+                               (("@PACKAGE_NAME@") ,name)
+                               (("@PACKAGE_VERSION@") ,version)
+                               (("@PACKAGE_URL@") ,home-page)
+                               (("@CVM@") (string-append (assoc-ref inputs "cvm")
+                                                         "/bin/cvm")))
+                             (install-file "config.scm"
+                                           (path (assoc-ref outputs "out"))))
+                           #t)))
+                     (add-before 'check 'set-environment
+                       (lambda _
+                         (setenv "HOME" (getcwd)))))))
       (native-inputs
        `(("autoconf" ,autoconf)
          ("automake" ,automake)
