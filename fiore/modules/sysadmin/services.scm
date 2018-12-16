@@ -18,8 +18,13 @@
   #:use-module (gnu services version-control)
   #:use-module (gnu services xorg)
   #:use-module (gnu)
+  #:use-module (guix channels)
+  #:use-module (guix git)
   #:use-module (guix profiles)
+  #:use-module (guix records)
+  #:use-module (ice-9 format)
   #:use-module (ice-9 match)
+  #:use-module (ice-9 pretty-print)
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-26)
   #:export (custom-packages
@@ -35,7 +40,9 @@
             %nginx-deploy-hook
 
             custom-desktop-services
-            %setuid-custom-programs))
+            %setuid-custom-programs
+
+            ansible-deploy-git))
 
 
 ;;;
@@ -256,9 +263,10 @@ EndSection
                                               ":INBOX=~/Maildir/INBOX"
                                               ":LAYOUT=fs"))))
 
-   (service git-daemon-service-type
-            (git-daemon-configuration (user-path "")
-                                      (export-all? #t)))
+   ;; Spams to /var/log/messages
+   ;; (service git-daemon-service-type
+   ;;          (git-daemon-configuration (user-path "")
+   ;;                                    (export-all? #t)))
 
    (tor-service (local-file tor-config-file))
 
@@ -280,3 +288,119 @@ EndSection
                                    (startx (xorg-start-command
                                             #:configuration-file (xorg-configuration-file
                                                                   #:extra-config (list 20-intel.conf)))))))))
+
+
+;;;
+;;; Deploy
+;;;
+
+(define (channel->sexp channel)
+  `(channel
+    (name ,(channel-name channel))
+    (url ,(channel-url channel))
+    (commit ,(channel-commit channel))))
+
+(define-record-type* <git-checkout>
+  git-checkout make-git-checkout
+  git-checkout?
+  (branch    git-checkout-branch    ;string
+             (default "master"))
+  (directory git-checkout-directory ;boolean
+             (default #f))
+  (url       git-checkout-url)      ;string
+  (force?    git-checkout-force?    ;boolean
+             (default #f)))
+
+(define %magnolia-channels
+  (list (channel
+         (name 'guix)
+         (url "https://cgit.duckdns.org/git/guix")
+         (branch "master"))
+        (channel
+         (name 'guix-wigust)
+         (url "https://cgit.duckdns.org/git/guix-wigust")
+         (branch "master"))
+        (channel
+         (name 'guix-chromium)
+         (url "https://cgit.duckdns.org/git/guix-chromium")
+         (branch "master"))
+        (channel
+         (name 'guix-nonfree)
+         (url "https://cgit.duckdns.org/git/guix-nonfree")
+         (branch "master"))))
+
+(define %magnolia-git
+  (list (git-checkout
+         (url "file:///home/natsu/src/guix")
+         (branch "wip")
+         (directory "/srv/git/guix")
+         (force? #t))
+        (git-checkout
+         (url "file:///home/natsu/src/guix-linux-nonfree")
+         (branch "master")
+         (directory "/srv/git/guix-linux-nonfree"))
+        (git-checkout
+         (url "file:///home/natsu/src/guix-chromium")
+         (branch "master")
+         (directory "/srv/git/guix-chromium"))
+        (git-checkout
+         (url "file:///home/natsu/dotfiles")
+         (branch "master")
+         (directory "/srv/git/dotfiles"))
+        (git-checkout
+         (url "file:///home/natsu/src/hello-jenkins")
+         (branch "master")
+         (directory "/srv/git/hello-jenkins"))))
+
+(define substitute-urls
+  '("http://cuirass.tld"
+    "https://berlin.guixsd.org"
+    "https://mirror.hydra.gnu.org"
+    "https://hydra.gnu.org"))
+
+(define (ansible-env env)
+  (format #f "{{ ansible_env.~a }}" env))
+
+(define ansible-home (ansible-env "HOME"))
+
+(define ansible-hostname "{{ ansible_hostname }}")
+
+(define (ansible-deploy-guix)
+  `(((hosts . guix)
+     (tasks
+      ((tags . file)
+       (name . ,(format #f "Create ~a/.config/guix/channels.scm file"
+                        ansible-home))
+       (copy
+        (content . ,(object->string
+                     (map channel->sexp %magnolia-channels)))
+        (dest . ,(string-append ansible-home
+                                "/.config/guix/channels.scm"))))
+      ((tags . pull)
+       (name . pull)
+       (shell . ,(format #f "guix pull --substitute-urls=~s"
+                         (string-join substitute-urls))))
+      ((tags . (become reconfigure))
+       (name . "reconfigure")
+       (shell . ,(string-join
+                  (list "guix" "system" "reconfigure" "--no-build-hook"
+                        (format #f "--substitute-urls=~s"
+                                (string-join substitute-urls))
+                        "-L" (string-append ansible-home "/dotfiles/fiore/modules")
+                        (string-append ansible-home "/dotfiles/fiore/" ansible-hostname ".scm"))))
+       (become . #t))))))
+
+(define (ansible-deploy-git)
+  `(((tags . git)
+     (hosts . magnolia-git)
+     (tasks
+      ,@(map (match-lambda
+               (($ <git-checkout> branch directory url force?)
+                `((tags . (become git))
+                  (name . ,(format #f "Fetch a `~a' branch of `~a' to `~a'" branch url directory))
+                  (shell . ,(string-join (list "git" "-C" directory
+                                               "fetch" (if force? "--force" "") url
+                                               (string-append branch ":" branch)))))))
+             %magnolia-git)))))
+
+
