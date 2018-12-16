@@ -921,6 +921,16 @@ With a prefix argument, clean `geiser-guile-load-path'."
   (add-to-list 'build-farm-url-alist
                '("http://cuirass.tld" . cuirass)))
 
+(defvar bui-rgrep-directory
+  "~/dotfiles/fiore/manifests/"
+  "Directory to search for a package in `bui-rgrep-manifests' procedure.")
+
+(defun bui-rgrep-manifests ()
+  (interactive)
+  (rgrep (substring-no-properties (aref (tabulated-list-get-entry) 0))
+         "*.scm"
+         (expand-file-name bui-rgrep-directory)))
+
 
 ;;;
 ;;; C-mode
