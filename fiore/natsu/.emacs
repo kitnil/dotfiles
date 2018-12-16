@@ -16,6 +16,7 @@
 ;; (package-initialize)
 
 (require 'f) ; For `f-directories'.
+(require 'cl) ; For `flet'.
 
 (setq load-prefer-newer t)
 
