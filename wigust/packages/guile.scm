@@ -36,7 +36,7 @@
          (file-name (git-file-name name version))
          (sha256
           (base32
-           "08aq6ibm7yxrc0slwf3hwk5hxw0ri2dcz6v8bhlnypnf1bim44c5"))))
+           "1amcn5lljv4w7lnrk4za9q3ad0knk54lv7xn95jwkpkpimkv9jr9"))))
       (build-system gnu-build-system)
       (arguments
        `(#:modules
