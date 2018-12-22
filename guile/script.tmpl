@@ -1,0 +1,21 @@
+#!`(executable-find "sh")`
+# -*- scheme -*-
+exec \${GUILE:-`(executable-find "guile")`} $GUILE_FLAGS -e '(@@ (`(buffer-file-name-drop "guile-")`) main)' -s "\$0" "$@"
+!#
+
+;;;; `(buffer-file-name-drop "guile-")` --- SYNOPSIS
+;;;; Copyright © `(nth 5 (decode-time))` `user-full-name` <`user-mail-address`>
+;;;; Released under the GNU GPLv3 or any later version.
+
+(define-module (`(buffer-file-name-drop "guile-")`))
+
+;;; Commentary:
+;;;
+;;; DESCRIPTION
+;;;
+;;; Code:
+
+(define (main args)
+  )
+
+;;; `(buffer-file-name-drop "guile-")` ends here
