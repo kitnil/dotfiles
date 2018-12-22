@@ -247,6 +247,7 @@
                    (user-group (name "influxdb") (id 30005))
                    (user-group (name "grafana") (id 30006))
                    (user-group (name "docker") (id 30007))
+                   (user-group (name "jenkinsbuild"))
                    %base-groups))
 
     (users (cons* (user-account
@@ -308,6 +309,11 @@
                    (uid 30018)
                    (comment "Jenkins privilege separation user")
                    (home-directory "/home/jenkins"))
+                  (user-account
+                   (name "jenkinsbuilder01")
+                   (group "jenkinsbuild")
+                   (comment "Guix Build User  1")
+                   (home-directory "/home/jenkinsbuild"))
                   (user-account
                    (name "influxdb")
                    (group "influxdb")
