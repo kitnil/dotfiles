@@ -523,9 +523,6 @@ FpingLocation=/run/setuid-programs/fping
                             (domains '("guix.duckdns.org"))
                             (deploy-hook %nginx-deploy-hook))
                            (certificate-configuration
-                            (domains '("anongit.duckdns.org"))
-                            (deploy-hook %nginx-deploy-hook))
-                           (certificate-configuration
                             (domains '("alerta.duckdns.org"))
                             (deploy-hook %nginx-deploy-hook))))))
 
