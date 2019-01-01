@@ -652,7 +652,7 @@
 ;; (define-key *top-map* (kbd "s-w") "firefox")
 ;; (define-key *top-map* (kbd "s-w") "firefox")
 
-(defcommand dump-group-to-file (file) ((:rest "Dump To File: "))
+(defcommand dump-group-to-file (file) (:rest "Dump To File: ")
   "Dumps the frames of the current group of the current screen to the named file."
   (dump-to-file (dump-group (current-group)) file))
 
