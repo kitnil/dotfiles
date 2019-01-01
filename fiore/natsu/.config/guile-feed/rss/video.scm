@@ -90,3 +90,9 @@
    (name "video-tuxreviews")
    (description "GNU/Linux weekly news.")
    (uri (youtube-user name))))
+
+(define-public video-twitch-carolinhr
+  (feed
+   (name "CarolinHR")
+   (description "Tales of Maj'Eayl videos were fun.")
+   (uri (twitch-user "carolinhr"))))
