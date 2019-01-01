@@ -2444,4 +2444,5 @@ https://github.com/USER/REPO/commit/SHA1-HASH => SHA1-HASH"
  '(rainbow-delimiters-depth-6-face ((t (:foreground "purple"))))
  '(rainbow-delimiters-depth-8-face ((t (:foreground "deep sky blue"))))
  '(rainbow-delimiters-depth-9-face ((t (:foreground "goldenrod"))))
- '(rainbow-delimiters-unmatched-face ((t (:foreground "red")))))
+ '(rainbow-delimiters-unmatched-face ((t (:foreground "red"))))
+ '(sh-heredoc ((t (:foreground "tan3")))))
