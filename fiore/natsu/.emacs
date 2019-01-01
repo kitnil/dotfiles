@@ -1,4 +1,4 @@
-;; Copyright © 2017, 2018 Oleg Pykhalov <go.wigust@gmail.com>
+;; Copyright © 2017, 2018, 2019 Oleg Pykhalov <go.wigust@gmail.com>
 ;; Released under the GNU GPLv3 or any later version.
 
 ;; Tip: "M-x e" on `(emacs-init-time)'.
@@ -241,6 +241,23 @@ WARNING:  hooktube.com requries non-free JavaScript."
                                                                       "/")))
                                              "="))))))
 
+(defvar wi-url-emacs-git-commit-regexp
+  (rx "http" (zero-or-one "s") "://git.savannah.gnu.org/"
+      (zero-or-one "c") "git/emacs.git/commit/etc/NEWS?id="
+      (zero-or-more alphanumeric)
+      line-end))
+
+(defvar wi-emacs-git-directory (expand-file-name "~/src/emacs"))
+
+(defun browse-url-emacs-git-commit (url &optional new-window)
+  "Show a Git `commit' from the Emacs checkout.
+
+If no commit hash provides, show a commit from hash at current point."
+  (interactive (list (read-string "Commit: " nil nil (word-at-point))))
+  (let ((default-directory wi-emacs-git-directory)
+        (commit (car (last (split-string url "=")))))
+    (magit-show-commit commit)))
+
 (setq browse-url-browser-function
       `(("^ftp://.*" . browse-ftp-tramp)
         (,(format "^%s\\(%s\\)?\\([[:digit:]]+\\)$"
@@ -258,6 +275,7 @@ WARNING:  hooktube.com requries non-free JavaScript."
         (,wi-debian-paste-regexp . wi-browse-url-paste-debian)
         (,wi-url-github-regexp . browse-url-chromium)
         (,wi-url-melpa-regexp . browse-url-chromium)
+        (,wi-url-emacs-git-commit-regexp . browse-url-emacs-git-commit)
         ("." . browse-url-firefox)))
 
 (defcustom ffap-info-finder 'info
