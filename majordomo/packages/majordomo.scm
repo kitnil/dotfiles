@@ -44,7 +44,7 @@
        (origin
          (method git-fetch)
          (uri (git-reference
-               (url "http://input.tld/git/python-cvm")
+               (url "https://gitlab-ci-token:uhd8qabRUz5dD-HQchLi@anongit.duckdns.org/python/python-cvm.git")
                (commit commit)))
          (file-name (git-file-name name version))
          (sha256
@@ -72,7 +72,7 @@
        (origin
          (method git-fetch)
          (uri (git-reference
-               (url "http://input.tld/git/guile-ihs")
+               (url "https://gitlab-ci-token:uhd8qabRUz5dD-HQchLi@anongit.duckdns.org/guile/guile-ihs.git")
                (commit commit)))
          (file-name (git-file-name name version))
          (sha256
