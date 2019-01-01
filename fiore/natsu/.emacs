@@ -1768,6 +1768,10 @@ The optional argument NEW-WINDOW is not used."
   (rx "vm" (one-or-more (or alphanumeric "-")) ".scm" line-end)
   ["guix/gnu/system/examples/vm-inherit-image.tmpl" yas-expand-current-buffer])
 
+(define-auto-insert
+  (rx "guile" (one-or-more (or alphanumeric "-")) line-end)
+  ["guile/script.tmpl" scheme-mode yas-expand-current-buffer])
+
 (defun wi-fullname-and-email ()
   (format "%s <%s>" user-full-name user-mail-address))
 
