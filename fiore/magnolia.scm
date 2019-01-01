@@ -293,6 +293,7 @@
                    (user-group (name "grafana") (id 30006))
                    (user-group (name "docker") (id 30007))
                    (user-group (name "jenkinsbuild"))
+                   (user-group (name "alerta"))
                    %base-groups))
 
     (users (cons* (user-account
@@ -371,6 +372,11 @@
                    (uid 30020)
                    (comment "grafana privilege separation user")
                    (home-directory "/home/grafana"))
+                  (user-account
+                   (name "alerta")
+                   (group "alerta")
+                   (comment "alerta privilege separation user")
+                   (home-directory "/home/alerta"))
                   %base-user-accounts))
 
     ;; Create a /etc/hosts file with aliases for "localhost"
