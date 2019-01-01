@@ -110,14 +110,14 @@ files are modified.")
 (define-public ruby-gitlab
   (package
     (name "ruby-gitlab")
-    (version "4.2.0")
+    (version "4.8.0")
     (source
      (origin
        (method url-fetch)
        (uri (rubygems-uri "gitlab" version))
        (sha256
         (base32
-         "0wzazdmzhw72r1kkj8ckb1l9ryas582r5d7c6qb609kkfs31rg6m"))))
+         "0pp9d5p5r4s7vpwd7zwmyyn3d7b3xizyfh8grf67j8ndyixc8pl4"))))
     (build-system ruby-build-system)
     (propagated-inputs
      `(("ruby-httparty" ,ruby-httparty)
