@@ -36,3 +36,9 @@
    (name "video-stalkash")
    (description "Рекомендованный канал Nitroxenus")
    (uri (youtube-channel "UCOpm7EqPBtznEwYNNZrz1FQ"))))
+
+(define-public video-twitch-artgameslp
+  (feed
+   (name "video-twitch-artgameslp")
+   (description "Игровой канал ArtGamesLP")
+   (uri (twitch-user "artgameslp"))))
