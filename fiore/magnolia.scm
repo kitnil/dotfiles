@@ -236,7 +236,11 @@
          (locations
           (list (nginx-location-configuration
                  (uri "/")
-                 (body '("proxy_pass http://localhost:3000;"))))))
+                 (body '("proxy_pass http://localhost:3000;")))
+                ;; For use by Certbot.
+                (nginx-location-configuration
+                 (uri "/.well-known")
+                 (body '("root /var/www;"))))))
         (nginx-server-configuration
          (server-name '("user.tld"))
          (listen '("80"))
