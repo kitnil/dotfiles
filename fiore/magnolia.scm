@@ -483,12 +483,16 @@ FpingLocation=/run/setuid-programs/fping
                             (inherit %zabbix-front-end-configuration-nginx)
                             (server-name '("alerta.duckdns.org" "zabbix.tld"))
                             (locations
-                             (cons (nginx-location-configuration
-                                    (inherit php-location)
-                                    (uri "/describe/natsu")
-                                    (body (append '("alias /var/www/php;")
-                                                  (nginx-location-configuration-body (nginx-php-location)))))
-                                   (nginx-server-configuration-locations %zabbix-front-end-configuration-nginx)))
+                             (cons* (nginx-location-configuration
+                                     (inherit php-location)
+                                     (uri "/describe/natsu")
+                                     (body (append '("alias /var/www/php;")
+                                                   (nginx-location-configuration-body (nginx-php-location)))))
+                                    ;; For use by Certbot.
+                                    (nginx-location-configuration
+                                     (uri "/.well-known")
+                                     (body '("root /var/www;")))
+                                    (nginx-server-configuration-locations %zabbix-front-end-configuration-nginx)))
                             (listen '("80" "443 ssl"))
                             (ssl-certificate (letsencrypt-certificate "alerta.duckdns.org"))
                             (ssl-certificate-key (letsencrypt-key "alerta.duckdns.org")))))))
