@@ -504,9 +504,9 @@
   (run-shell-command (concat "exec " (getenv "HOME") "/bin/debian.sh")))
 
 (defparameter dark-theme nil)
-(set-focus-color "#daa520")
-(set-border-color "#daa520")
-(set-float-focus-color "#daa520")
+(set-focus-color "#90EE90")
+(set-border-color "#90EE90")
+(set-float-focus-color "#90EE90")
 (defcommand toggle-theme () ()
   (if dark-theme
       (progn (setq *mode-line-border-color*     "#ffffff"
