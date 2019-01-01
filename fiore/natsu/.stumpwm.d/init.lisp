@@ -192,7 +192,7 @@
                                          *transmission-hostname* ".local")))))
 
 ;; Origin <https://github.com/alezost/stumpwm-config/blob/master/utils.lisp#L332>
-(defcommand browse-url (url) ((:shell "Browse URL: "))
+(defcommand browse-url (url) (:shell "Browse URL: ")
   "Browse URL with ‘*browser*’."
   (run-prog *browser* :args (list url) :wait nil :search t))
 
