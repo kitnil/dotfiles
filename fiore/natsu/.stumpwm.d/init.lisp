@@ -23,7 +23,7 @@
 (set-module-dir (concat *home* "/.stumpwm.d/modules/"))
 
 (run-shell-command "xsetroot -cursor_name left_ptr")
-(run-shell-command "xrdb -merge " (concat *home* "/.Xresources"))
+(run-shell-command (concat "xrdb -merge " *home* "/.Xresources"))
 
 ;; Wallpaper
 ;; (run-shell-command "feh --bg-scale ~/Pictures/Wallpapers/current.png")
