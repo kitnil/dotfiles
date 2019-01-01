@@ -31,7 +31,7 @@
        (origin
          (method git-fetch)
          (uri (git-reference
-               (url "https://cgit.duckdns.org/git/guile-feed")
+               (url "https://anongit.duckdns.org/guile/guile-feed.git")
                (commit commit)))
          (file-name (git-file-name name version))
          (sha256
