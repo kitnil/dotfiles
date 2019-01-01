@@ -530,7 +530,7 @@
 (toggle-theme)
 
 (setf *mode-line-timeout* 2)
-(setf *TIME-MODELINE-STRING* "%a %b %e %k:%M")
+(setf *TIME-MODELINE-STRING* "%a, %e %b %Y %k:%M")
 (setf *screen-mode-line-format*
       (list "[%n]:" '(:eval (write-to-string (group-number (current-group))))
             "    "
