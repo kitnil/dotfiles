@@ -241,22 +241,35 @@ WARNING:  hooktube.com requries non-free JavaScript."
                                                                       "/")))
                                              "="))))))
 
+(cl-defmacro wi-url-savannah-git-commit-regexp (repository &optional (news))
+  `(rx "http" (zero-or-one "s") "://git.savannah.gnu.org/"
+       (zero-or-one "c") ,(format "git/%s.git/commit/" repository)
+       ,(if news "etc/NEWS" "") "?id="
+       (zero-or-more alphanumeric)
+       line-end))
+
 (defvar wi-url-emacs-git-commit-regexp
-  (rx "http" (zero-or-one "s") "://git.savannah.gnu.org/"
-      (zero-or-one "c") "git/emacs.git/commit/etc/NEWS?id="
-      (zero-or-more alphanumeric)
-      line-end))
+  (wi-url-savannah-git-commit-regexp "emacs" (list :news t)))
 
-(defvar wi-emacs-git-directory (expand-file-name "~/src/emacs"))
+(defvar wi-url-guix-git-commit-regexp
+  (wi-url-savannah-git-commit-regexp "guix"))
 
-(defun browse-url-emacs-git-commit (url &optional new-window)
-  "Show a Git `commit' from the Emacs checkout.
+(defmacro define-wi-browse-url-git-commit (repository directory)
+  `(progn
+     (defun ,(intern (concat "browse-url-" (symbol-name repository) "-git-commit")) (url &optional new-window)
+       "Show a Git `commit' from the " ,(symbol-name repository) " checkout.
 
 If no commit hash provides, show a commit from hash at current point."
-  (interactive (list (read-string "Commit: " nil nil (word-at-point))))
-  (let ((default-directory wi-emacs-git-directory)
-        (commit (car (last (split-string url "=")))))
-    (magit-show-commit commit)))
+       (interactive (list (read-string "Commit: " nil nil (word-at-point))))
+       (let ((default-directory ,directory)
+             (commit (car (last (split-string url "=")))))
+         (magit-show-commit commit)))))
+
+(defvar wi-emacs-git-directory (expand-file-name "~/src/emacs"))
+(define-wi-browse-url-git-commit emacs wi-emacs-git-directory)
+
+(defvar wi-guix-git-directory (expand-file-name "~/src/guix"))
+(define-wi-browse-url-git-commit guix wi-guix-git-directory)
 
 (setq browse-url-browser-function
       `(("^ftp://.*" . browse-ftp-tramp)
@@ -276,6 +289,7 @@ If no commit hash provides, show a commit from hash at current point."
         (,wi-url-github-regexp . browse-url-chromium)
         (,wi-url-melpa-regexp . browse-url-chromium)
         (,wi-url-emacs-git-commit-regexp . browse-url-emacs-git-commit)
+        (,wi-url-guix-git-commit-regexp . browse-url-guix-git-commit)
         ("." . browse-url-firefox)))
 
 (defcustom ffap-info-finder 'info
