@@ -17,6 +17,7 @@
 
 (require 'f) ; For `f-directories'.
 (require 'cl) ; For `flet'.
+(require 'subr-x) ; For `string-trim-right'.
 
 (setq load-prefer-newer t)
 
