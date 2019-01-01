@@ -601,6 +601,20 @@
 (define-key *root-map* (kbd "M-!") "run-xterm-command")
 (define-key *root-map* (kbd "v") "pulsemixer")
 (define-key *root-map* (kbd "C-v") "alsamixer")
+
+(defcommand osd-sound () ()
+  (run-shell-command "if pgrep -f osd-sound > /dev/null; then pkill osd-sound; osd-sound; else osd-sound; fi"))
+
+(defcommand volume-decrease () ()
+  (run-shell-command "osd-sound sset Master 5%-"))
+
+(defcommand volume-increase () ()
+  (run-shell-command "osd-sound sset Master 5%+"))
+
+(define-interactive-keymap volume nil
+  ((kbd "-") "volume-decrease")
+  ((kbd "=") "volume-increase"))
+
 (define-key *root-map* (kbd "c") "run-or-raise-xterm")
 (define-key *root-map* (kbd "C-c") "run-xterm")
 (define-key *root-map* (kbd "C-M-c") "run-xterm-light")
