@@ -499,6 +499,7 @@ template:
                         (zabbix-server-configuration
                          (include-files '("/etc/zabbix/zabbix-server.secret"))
                          (extra-options "
+AlertScriptsPath=/etc/zabbix/alertscripts
 FpingLocation=/run/setuid-programs/fping
 ")))
 
