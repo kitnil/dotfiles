@@ -1,5 +1,5 @@
 ;; GuixSD configuration file for the desktop machine.
-;; Copyright © 2017, 2018 Oleg Pykhalov <go.wigust@gmail.com>
+;; Copyright © 2017, 2018, 2019 Oleg Pykhalov <go.wigust@gmail.com>
 ;; Released under the GNU GPLv3 or any later version.
 
 (use-modules (gnu) (sysadmin services))
@@ -117,12 +117,31 @@
                  (uri "/")
                  (body '("proxy_pass http://localhost:9091;"))))))
         (nginx-server-configuration
-         (server-name '("jenkins.tld" "www.jenkins.tld"))
-         (listen '("80"))
+         (server-name '("pipeline.duckdns.org"))
          (locations
-          (list (nginx-location-configuration
-                 (uri "/")
-                 (body '("proxy_pass http://localhost:30080;"))))))
+          (list
+           (nginx-location-configuration
+            (uri "/")
+            (body ((lambda (port protocol host)
+                     (list "resolver 80.80.80.80;"
+                           (string-append "set $target localhost:" (number->string port) ";")
+                           (format #f "proxy_pass ~a://$target;" protocol)
+                           (format #f "proxy_set_header Host ~a;" host)
+
+                           ;; FIXME: It appears that your reverse proxy set up is broken
+                           "proxy_set_header X-Forwarded-Proto $scheme;"
+
+                           "proxy_set_header X-Real-IP $remote_addr;"
+                           "proxy_set_header X-Forwarded-for $remote_addr;"
+                           "proxy_connect_timeout 300;"))
+                   30080 "http" "pipeline.duckdns.org")))
+           ;; For use by Certbot.
+           (nginx-location-configuration
+            (uri "/.well-known")
+            (body '("root /var/www;")))))
+         (listen '("443 ssl"))
+         (ssl-certificate (letsencrypt-certificate "pipeline.duckdns.org"))
+         (ssl-certificate-key (letsencrypt-key "pipeline.duckdns.org")))
         (nginx-server-configuration
          (server-name '("anongit.duckdns.org" "gitlab.tld" "gitlab"))
          (locations
@@ -398,7 +417,8 @@
                           ("192.168.105.1" . "r2.tld")
                           ("192.168.105.1" . "www.r2.tld")
                           ("192.168.105.120" . "hms-billing.majordomo.ru")
-                          ("192.168.105.120" . "anongit.duckdns.org")))
+                          ("192.168.105.120" . "anongit.duckdns.org")
+                          ("192.168.105.120" . "pipeline.duckdns.org")))
        "\n\n" %facebook-host-aliases)))
 
     (packages (custom-packages (string-append %source-dir
@@ -558,6 +578,9 @@ FpingLocation=/run/setuid-programs/fping
                             (deploy-hook %nginx-deploy-hook))
                            (certificate-configuration
                             (domains '("anongit.duckdns.org"))
+                            (deploy-hook %nginx-deploy-hook))
+                           (certificate-configuration
+                            (domains '("pipeline.duckdns.org"))
                             (deploy-hook %nginx-deploy-hook))))))
 
                (extra-special-file "/bin/sh"
