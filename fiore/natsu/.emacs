@@ -949,6 +949,20 @@ With a prefix argument, clean `geiser-guile-load-path'."
          "*.scm"
          (expand-file-name bui-rgrep-directory)))
 
+(defun wi-build-farm (job)
+  "Wrapper for `build-farm' procedure.
+
+Produces URL as https://ci.guix.info/api/latestbuilds?nr=10&jobset=guix-master&job=opam-2.0.1&system=x86_64-linux"
+  (interactive "sJob: ")
+  (let ((build-farm-url "https://ci.guix.info")
+        (number 10)
+        (job (string-trim-right (shell-command-to-string (format "guix-search %s 2>/dev/null" job)))))
+    (apply #'build-farm-get-display
+           build-farm-url 'build 'latest number (list :project nil
+                                                      :jobset "guix-master"
+                                                      :job (concat job ".x86_64-linux")
+                                                      :system nil))))
+
 
 ;;;
 ;;; C-mode
