@@ -959,7 +959,7 @@ Produces URL as https://ci.guix.info/api/latestbuilds?nr=10&jobset=guix-master&j
         (job (string-trim-right (shell-command-to-string (format "guix-search %s 2>/dev/null" job)))))
     (apply #'build-farm-get-display
            build-farm-url 'build 'latest number (list :project nil
-                                                      :jobset "guix-master"
+                                                      :jobset (if current-prefix-arg nil "guix-master")
                                                       :job (concat job ".x86_64-linux")
                                                       :system nil))))
 
