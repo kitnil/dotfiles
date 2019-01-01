@@ -500,6 +500,7 @@ template:
                          (include-files '("/etc/zabbix/zabbix-server.secret"))
                          (extra-options "
 AlertScriptsPath=/etc/zabbix/alertscripts
+ExternalScripts=/etc/zabbix/externalscripts
 FpingLocation=/run/setuid-programs/fping
 ")))
 
