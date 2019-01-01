@@ -124,6 +124,28 @@
                  (uri "/")
                  (body '("proxy_pass http://localhost:30080;"))))))
         (nginx-server-configuration
+         (server-name '("anongit.duckdns.org" "gitlab.tld" "gitlab"))
+         (locations
+          (list
+           (nginx-location-configuration
+            (uri "/")
+            (body ((lambda (port protocol host)
+                     (list "resolver 80.80.80.80;"
+                           (string-append "set $target localhost:" (number->string port) ";")
+                           (format #f "proxy_pass ~a://$target;" protocol)
+                           (format #f "proxy_set_header Host ~a;" host)
+                           "proxy_set_header X-Real-IP $remote_addr;"
+                           "proxy_set_header X-Forwarded-for $remote_addr;"
+                           "proxy_connect_timeout 300;"))
+                   65443 "https" "anongit.duckdns.org")))
+           ;; For use by Certbot.
+           (nginx-location-configuration
+            (uri "/.well-known")
+            (body '("root /var/www;")))))
+         (listen '("80" "443 ssl"))
+         (ssl-certificate (letsencrypt-certificate "anongit.duckdns.org"))
+         (ssl-certificate-key (letsencrypt-key "anongit.duckdns.org")))
+        (nginx-server-configuration
          (server-name '("cuirass.tld" "www.cuirass.tld"))
          (listen '("80"))
          (locations
@@ -375,7 +397,8 @@
                           ("192.168.100.1" . "www.r1.tld")
                           ("192.168.105.1" . "r2.tld")
                           ("192.168.105.1" . "www.r2.tld")
-                          ("192.168.105.120" . "hms-billing.majordomo.ru")))
+                          ("192.168.105.120" . "hms-billing.majordomo.ru")
+                          ("192.168.105.120" . "anongit.duckdns.org")))
        "\n\n" %facebook-host-aliases)))
 
     (packages (custom-packages (string-append %source-dir
