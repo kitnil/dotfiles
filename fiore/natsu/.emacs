@@ -2048,9 +2048,14 @@ If nil use light theme.")
    ((c-mode-hook) . ggtags-mode)
    ((dired-mode-hook) . toggle-truncate-lines)
    ((scheme-mode-hook) . guix-devel-mode)
-   ((prog-mode-hook
-     geiser-repl-mode-hook)
+   ((prog-mode-hook geiser-repl-mode-hook)
     . rainbow-delimiters-mode)
+   ((geiser-repl-mode-hook shell-mode-hook)
+    . (lambda ()
+        (setq bidi-display-reordering nil)))
+   ((geiser-repl-mode-hook shell-mode-hook)
+    . (lambda ()
+        (font-lock-mode -1)))
    ((prog-mode-hook
      minibuffer-inactive-mode-hook
      geiser-repl-mode-hook
