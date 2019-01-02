@@ -533,8 +533,7 @@ FpingLocation=/run/setuid-programs/fping
 
                (service php-fpm-service-type
                         (php-fpm-configuration
-                         (timezone "Europe/Moscow")
-                         (php php-with-bcmath)))
+                         (timezone "Europe/Moscow")))
 
                (service nginx-service-type
                         (nginx-configuration
