@@ -824,25 +824,14 @@ Sets the following basend on PREFIX-MAP:
         ("\\.mbsyncrc" . conf-mode)
         ("manifest" . scheme-mode)))
 
-(add-hook 'scheme-mode-hook
-          (lambda ()
-            (local-set-key (kbd "<C-return>") 'eir-eval-in-geiser)))
-
-(add-hook 'sh-mode-hook
-          (lambda ()
-            (local-set-key (kbd "C-<return>") 'eir-eval-in-shell)))
-
-(add-hook 'lisp-mode-hook
-          (lambda ()
-            (local-set-key (kbd "C-<return>") 'eir-eval-in-slime)))
-
-(add-hook 'python-mode-hook
-          (lambda ()
-            (local-set-key (kbd "C-<return>") 'eir-eval-in-python)))
-
-(add-hook 'emacs-lisp-mode-hook
-          (lambda ()
-            (local-set-key (kbd "C-<return>") 'eir-eval-in-ielm)))
+(mapc (-lambda ((hook key proc))
+        (add-hook hook `(lambda ()
+                          (local-set-key (kbd ,key) ',proc))))
+      '((scheme-mode-hook "<C-return>" eir-eval-in-geiser)
+        (sh-mode-hook "C-<return>" eir-eval-in-shell)
+        (lisp-mode-hook "C-<return>" eir-eval-in-slime)
+        (python-mode-hook "C-<return>" eir-eval-in-python)
+        (emacs-lisp-mode-hook "C-<return>" eir-eval-in-ielm)))
 
 (with-eval-after-load 'guix-ui-package
   (let ((map guix-output-list-mode-map))
