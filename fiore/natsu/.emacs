@@ -2374,7 +2374,8 @@ be updated automatically."))
 
 (add-hook 'Info-selection-hook 'info-colors-fontify-node)
 
-(recentf-mode 1)
+(with-eval-after-load 'tramp
+  (recentf-mode 1))
 (setq recentf-max-menu-items 500)
 (setq recentf-max-saved-items nil)
 (setq recentf-auto-cleanup 'never)
