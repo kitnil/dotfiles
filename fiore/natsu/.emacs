@@ -603,7 +603,7 @@ Sets the following basend on PREFIX-MAP:
                 ("c" magit-commit "commit")
                 ("l" magit-list-repositories "repo list" :color blue)
                 ("r" magit-diff-toggle-refine-hunk "tg refine")
-                ("s" magit-status "status" :color blue))
+                ("s" unpackaged/magit-status "status" :color blue))
 
 (wi-define-keys "C-c g v m r" magit-repo
                 ("g" wi-magit-status-repo-guix "guix" :color blue))
@@ -1569,6 +1569,28 @@ Push branch master to local/master."
           'wi-local-magit-initially-hide-unmerged)
 
 (add-hook 'git-commit-mode-hook 'auto-fill-mode)
+
+;; Origin <https://github.com/alphapapa/unpackaged.el#improved-magit-status-command>.
+(defun unpackaged/magit-status ()
+  "Open a `magit-status' buffer and close the other window so only Magit is visible.
+If a file was visited in the buffer that was active when this
+command was called, go to its unstaged changes section."
+  (interactive)
+  (let* ((buffer-file-path (when buffer-file-name
+                             (file-relative-name buffer-file-name
+                                                 (locate-dominating-file buffer-file-name ".git"))))
+         (section-ident `((file . ,buffer-file-path) (unstaged) (status))))
+    (magit-status)
+    (delete-other-windows)
+    (when buffer-file-path
+      (goto-char (point-min))
+      (cl-loop until (when (equal section-ident (magit-section-ident (magit-current-section)))
+                       (magit-section-show (magit-current-section))
+                       (recenter)
+                       t)
+               do (condition-case nil
+                      (magit-section-forward)
+                    (error (cl-return (magit-status-goto-initial-section-1))))))))
 
 
 ;;;
