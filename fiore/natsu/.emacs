@@ -2587,6 +2587,15 @@ If nil use light theme.")
 
 ;; `eww' fonts
 (setq shr-width 80)
+(with-eval-after-load 'elfeed
+  (defun wi-elfeed-search-show-entry ()
+    "Call `elfeed-search-show-entry' with `shr-width' setted to NIL."
+    (interactive)
+    (let ((shr-width nil))
+      (call-interactively 'elfeed-search-show-entry)))
+  (let ((map elfeed-search-mode-map))
+    (define-key map (kbd "RET") 'wi-elfeed-search-show-entry)))
+
 (setq-default shr-use-fonts nil)
 (setq shr-external-browser 'browse-url-conkeror)
 
