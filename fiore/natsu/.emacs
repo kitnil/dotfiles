@@ -614,6 +614,7 @@ Sets the following basend on PREFIX-MAP:
 
 (wi-define-keys "C-c g v v" vc-hunk
                 ("c" magit-commit "commit" :color blue)
+                ("e" magit-commit-extend "extend" :color blue)
                 ("n" git-gutter:next-hunk "next")
                 ("l" git-messenger:popup-message "line")
                 ("p" git-gutter:previous-hunk "previous")
