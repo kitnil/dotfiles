@@ -1498,7 +1498,8 @@ Produces URL as https://ci.guix.info/api/latestbuilds?nr=10&jobset=guix-master&j
 (advice-add 'magit-read-reuse-message
             :override #'wi-magit-read-reuse-message)
 
-(magit-org-todos-autoinsert)
+;; TODO: This is slow down Emacs startup.
+;; (magit-org-todos-autoinsert)
 
 (setq magit-repository-directories (f-directories wi-src))
 (setq magit-repository-directories-depth 1)
