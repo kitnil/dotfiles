@@ -1774,6 +1774,8 @@ Push branch master to local/master."
 (with-eval-after-load 'org
   (require 'org-protocol) ; For `org-capture' from Xorg
 
+  (add-to-list 'org-file-apps '("\\.png\\'" . system))
+
   (org-babel-do-load-languages
       'org-babel-load-languages
       '((R . t)
@@ -1877,8 +1879,6 @@ Push branch master to local/master."
 
 ;; Origin <https://changelog.complete.org/archives/9865-emacs-2-introducing-org-mode>.
 (setq org-ellipsis "…")
-
-(add-to-list 'org-file-apps '("\\.png\\'" . system))
 
 
 ;;;
