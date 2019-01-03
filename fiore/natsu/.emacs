@@ -15,9 +15,9 @@
 ;; You may delete these explanatory comments.
 ;; (package-initialize)
 
-(require 'f) ; For `f-directories'.
-(require 'cl) ; For `flet'.
-(require 'subr-x) ; For `string-trim-right'.
+(autoload 'f-directories "f" nil t)
+(autoload 'string-trim-right "subr-x" nil t)
+(autoload 'flet "cl" nil t)
 
 (setq load-prefer-newer t)
 
