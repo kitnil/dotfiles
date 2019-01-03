@@ -59,7 +59,6 @@
 (autoload 'server-running-p "server")
 (unless (server-running-p)
   (server-start)
-  (require 'org-protocol) ; For `org-capture' from Xorg
   )
 
 ;; Encrypt Email message with Gnupg
@@ -1773,6 +1772,8 @@ Push branch master to local/master."
 ;;         '((sequence "TODO(t)" "WAIT(w@/!)" "|" "DONE(d!)" "CANCELED(c@)"))))
 
 (with-eval-after-load 'org
+  (require 'org-protocol) ; For `org-capture' from Xorg
+
   (org-babel-do-load-languages
       'org-babel-load-languages
       '((R . t)
