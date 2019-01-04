@@ -197,25 +197,30 @@
 
 (defvar wi-twitch-url-regexp
   (rx "http" (zero-or-more "s") "://" (zero-or-more "www.")
-      "twitch.tv"))
+      "twitch.tv")
+  "Regexp matching Twitch.")
 
 (defvar wi-twitch-video-url-regexp
   (concat wi-twitch-url-regexp
-          (rx "/videos/" (one-or-more digit) line-end)))
+          (rx "/videos/" (one-or-more digit) line-end))
+  "Regexp matching Twitch videos web-page.")
 
 (defvar youtube-url-regexp
   (rx "http" (zero-or-more "s") "://" (zero-or-more "www.")
-      "youtube.com"))
+      "youtube.com")
+  "Regexp matching YouTube.")
 
 (defvar youtube-url-video-regexp
   (concat youtube-url-regexp
           (rx "/watch?v="
               (one-or-more (or alphanumeric "-" "_"))
-              line-end)))
+              line-end))
+  "Regexp matching YouTube videos web-page.")
 
 (defvar youtube-short-url-video-regexp
   (rx "http" (zero-or-more "s") "://" (zero-or-more "www.")
-      "youtu.be/" (one-or-more (or alphanumeric "-" "_")) line-end))
+      "youtu.be/" (one-or-more (or alphanumeric "-" "_")) line-end)
+  "Regexp matching YouTube short URL.")
 
 (defvar wi-url-github-regexp
   (rx "http" (zero-or-one "s") "://github.com")
