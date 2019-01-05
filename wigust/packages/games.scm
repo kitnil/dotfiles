@@ -10,6 +10,7 @@
   #:use-module (gnu packages games)
   #:use-module (gnu packages sdl)
   #:use-module (gnu packages fontutils)
+  #:use-module (gnu packages ncurses)
   #:use-module (gnu packages xorg)
   #:use-module (gnu packages perl)
   #:use-module (guix build-system trivial)
@@ -131,3 +132,40 @@
 for roguelike developers providing an advanced true color console, input, and
 lots of other utilities frequently used in roguelikes.")
       (license license:bsd-3))))
+
+(define-public brogue
+  (package
+    (name "brogue")
+    (version "1.7.5")
+    (source (origin
+              (method url-fetch)
+              (uri "https://sites.google.com/site/broguegame/")
+              (file-name (string-append name "-" version "-linux-amd64.tbz2"))
+              (sha256
+               (base32
+                "0i042zb3axjf0cpgpdh8hvfn66dbfizidyvw0iymjk2n760z2kx7"))))
+    (build-system gnu-build-system)
+    (arguments
+     `(#:tests? #f ;no tests
+       #:phases
+       (modify-phases %standard-phases
+         (delete 'configure)
+         (add-after 'unpack 'substitute-gcc
+           (lambda _
+             (substitute* "Makefile"
+               (("gcc") (which "gcc"))
+               (("\\$\\(CC\\)") (which "gcc")))))
+         ;; TODO: install phase
+         ;; (replace 'install
+         ;;   (lambda* (#:key outputs #:allow-other-keys)
+         ;;     (let ((out (assoc-ref outputs "out")))
+         ;;       (with-directory-excursion ))))
+         )))
+    (inputs
+     `(("libtcod" ,libtcod)
+       ("ncurses" ,ncurses)
+       ("sdl-union" ,(sdl-union (list sdl sdl-image sdl-mixer sdl-ttf)))))
+    (home-page "https://sites.google.com/site/broguegame/")
+    (synopsis "")
+    (description "")
+    (license license:gpl3+)))
