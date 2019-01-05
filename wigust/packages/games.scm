@@ -12,7 +12,12 @@
   #:use-module (gnu packages fontutils)
   #:use-module (gnu packages xorg)
   #:use-module (gnu packages perl)
-  #:use-module (guix build-system trivial))
+  #:use-module (guix build-system trivial)
+  #:use-module (guix build-system gnu)
+  #:use-module (gnu packages autotools)
+  #:use-module (gnu packages python)
+  #:use-module (gnu packages pkg-config)
+  #:use-module (gnu packages compression))
 
 (define-public stb
   (let ((commit "9d9f75eb682dd98b34de08bb5c489c6c561c9fa6")
@@ -84,3 +89,45 @@
              (substitute* "src/main-sdl.c" (("SDL_ttf.h") "SDL/SDL_ttf.h"))
              (substitute* "src/main-sdl.c" (("SDL_image.h") "SDL/SDL_image.h"))
              #t)))))))
+
+(define-public libtcod
+  (let ((commit "e7c4dbb4a5d133333ea30e02881a47dc93e4d5d1"))
+    (package
+      (name "libtcod")
+      (version (git-version "1.10.2" "1" commit))
+      (source (origin
+                (method git-fetch)
+                (uri (git-reference
+                      (url "https://github.com/libtcod/libtcod.git")
+                      (commit commit)))
+                (file-name (git-file-name name version))
+                (sha256
+                 (base32
+                  "0azl0v0mlrj0ghm205b0i5rn9xqw1syxb3pdvzbv1nn8bkgp0rnh"))))
+      (build-system gnu-build-system)
+      (inputs
+       `(("sdl" ,sdl2)
+         ("autoconf" ,autoconf)
+         ("automake" ,automake)
+         ("libtool" ,libtool)
+         ("pkg-config" ,pkg-config)
+         ("zlib" ,zlib)
+         ("python" ,python)))
+      (arguments
+       `(#:phases
+         (modify-phases %standard-phases
+           (add-before 'configure 'bootstrap
+             (lambda* (#:key inputs #:allow-other-keys)
+               (setenv "PATH"
+                       (string-append (assoc-ref inputs "python") "/bin" ":"
+                                      (getenv "PATH")))
+               (chdir "build/autotools") ; autoconf and ./configure
+               (substitute* '("get_version.py" "collect_files.py")
+                 (("/usr/bin/env python") (which "python3")))
+               (invoke "autoreconf" "-vfi"))))))
+      (home-page "https://github.com/libtcod/libtcod")
+      (synopsis "Libraries for roguelike game development")
+      (description "@code{libtcod} is a fast, portable and uncomplicated API
+for roguelike developers providing an advanced true color console, input, and
+lots of other utilities frequently used in roguelikes.")
+      (license license:bsd-3))))
