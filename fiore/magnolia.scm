@@ -156,7 +156,7 @@
                            "proxy_set_header X-Real-IP $remote_addr;"
                            "proxy_set_header X-Forwarded-for $remote_addr;"
                            "proxy_connect_timeout 300;"))
-                   65443 "https" "anongit.duckdns.org")))
+                   65080 "https" "anongit.duckdns.org")))
            ;; For use by Certbot.
            (nginx-location-configuration
             (uri "/.well-known")
