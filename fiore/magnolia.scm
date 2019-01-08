@@ -102,171 +102,20 @@
          (server-name '("www.tld"))
          (listen '("80"))
          (root "/srv/share"))
-        (nginx-server-configuration
-         (server-name '("cups.tld" "www.cups.tld"))
-         (listen '("80"))
-         (locations
-          (list (nginx-location-configuration
-                 (uri "/")
-                 (body '("proxy_pass http://localhost:631;"))))))
-        (nginx-server-configuration
-         (server-name '("torrent.tld" "www.torrent.tld"))
-         (listen '("80"))
-         (locations
-          (list (nginx-location-configuration
-                 (uri "/")
-                 (body '("proxy_pass http://localhost:9091;"))))))
-        (nginx-server-configuration
-         (server-name '("pipeline.duckdns.org"))
-         (locations
-          (list
-           (nginx-location-configuration
-            (uri "/")
-            (body ((lambda (port protocol host)
-                     (list "resolver 80.80.80.80;"
-                           (string-append "set $target localhost:" (number->string port) ";")
-                           (format #f "proxy_pass ~a://$target;" protocol)
-                           (format #f "proxy_set_header Host ~a;" host)
-
-                           ;; FIXME: It appears that your reverse proxy set up is broken
-                           "proxy_set_header X-Forwarded-Proto $scheme;"
-
-                           "proxy_set_header X-Real-IP $remote_addr;"
-                           "proxy_set_header X-Forwarded-for $remote_addr;"
-                           "proxy_connect_timeout 300;"))
-                   30080 "http" "pipeline.duckdns.org")))
-           ;; For use by Certbot.
-           (nginx-location-configuration
-            (uri "/.well-known")
-            (body '("root /var/www;")))))
-         (listen '("443 ssl"))
-         (ssl-certificate (letsencrypt-certificate "pipeline.duckdns.org"))
-         (ssl-certificate-key (letsencrypt-key "pipeline.duckdns.org")))
-        (nginx-server-configuration
-         (server-name '("grafana.wugi.info"))
-         (locations
-          (list
-           (nginx-location-configuration
-            (uri "/")
-            (body ((lambda (port protocol host)
-                     (list "resolver 80.80.80.80;"
-                           (string-append "set $target localhost:" (number->string port) ";")
-                           (format #f "proxy_pass ~a://$target;" protocol)
-                           (format #f "proxy_set_header Host ~a;" host)
-
-                           ;; FIXME: It appears that your reverse proxy set up is broken
-                           "proxy_set_header X-Forwarded-Proto $scheme;"
-
-                           "proxy_set_header X-Real-IP $remote_addr;"
-                           "proxy_set_header X-Forwarded-for $remote_addr;"
-                           "proxy_connect_timeout 300;"))
-                   3080 "http" "grafana.wugi.info")))
-           ;; For use by Certbot.
-           (nginx-location-configuration
-            (uri "/.well-known")
-            (body '("root /var/www;")))))
-         (listen '("443 ssl"))
-         (ssl-certificate (letsencrypt-certificate "grafana.wugi.info"))
-         (ssl-certificate-key (letsencrypt-key "grafana.wugi.info")))
-        (nginx-server-configuration
-         (server-name '("anongit.duckdns.org" "gitlab.tld" "gitlab"))
-         (locations
-          (list
-           (nginx-location-configuration
-            (uri "/")
-            (body ((lambda (port protocol host)
-                     (list "resolver 80.80.80.80;"
-                           (string-append "set $target localhost:" (number->string port) ";")
-                           (format #f "proxy_pass ~a://$target;" protocol)
-                           (format #f "proxy_set_header Host ~a;" host)
-                           "proxy_set_header X-Real-IP $remote_addr;"
-                           "proxy_set_header X-Forwarded-for $remote_addr;"
-                           "proxy_connect_timeout 300;"))
-                   65080 "https" "anongit.duckdns.org")))
-           ;; For use by Certbot.
-           (nginx-location-configuration
-            (uri "/.well-known")
-            (body '("root /var/www;")))))
-         (listen '("80" "443 ssl"))
-         (ssl-certificate (letsencrypt-certificate "anongit.duckdns.org"))
-         (ssl-certificate-key (letsencrypt-key "anongit.duckdns.org")))
-        (nginx-server-configuration
-         (server-name '("cuirass.tld" "www.cuirass.tld"))
-         (listen '("80"))
-         (locations
-          (list (nginx-location-configuration
-                 (uri "/")
-                 (body (proxy "cuirass.tld" 19080))))))
-        (nginx-server-configuration
-         (server-name '("input.tld" "www.input.tld"))
-         (listen '("80"))
-         (locations
-          (list (nginx-location-configuration
-                 (uri "/")
-                 (body (proxy "input.tld" 19080))))))
-        ;; (nginx-server-configuration
-        ;;  (server-name '("hms-billing.majordomo.ru"))
-        ;;  (listen '("443"))
-        ;;  (locations
-        ;;   (list (nginx-location-configuration
-        ;;          (uri "/")
-        ;;          (body (proxy "hms-billing.majordomo.ru" 16280 "https"))))))
-        ;; TODO: 2018/11/26 19:39:52 [error] 6513#0: *1 no "ssl_certificate" is defined in server listening on SSL port while SSL handshaking, client: 192.168.105.120, server: 0.0.0.0:443
-        ;; (nginx-server-configuration
-        ;;  (server-name '("rpc-mj.intr"))
-        ;;  (listen '("443"))
-        ;;  (locations
-        ;;   (list (nginx-location-configuration
-        ;;          (uri "/")
-        ;;          (body (proxy "rpc-mj.intr" 16280 "https"))))))
-        (nginx-server-configuration
-         (server-name '("alerta.intr"))
-         (listen '("80"))
-         (locations
-          (list (nginx-location-configuration
-                 (uri "/")
-                 (body (proxy "alerta.intr" 16180))))))
-        (nginx-server-configuration
-         (server-name '("web.alerta.intr"))
-         (listen '("80"))
-         (locations
-          (list (nginx-location-configuration
-                 (uri "/")
-                 (body (proxy "web.alerta.intr" 16480))))))
-        (nginx-server-configuration
-         (server-name '("zabbix.intr"))
-         (listen '("80"))
-         (locations
-          (list (nginx-location-configuration
-                 (uri "/")
-                 (body (proxy "zabbix.intr" 15081))))))
-        (nginx-server-configuration
-         (server-name '("cerberus.intr"))
-         (listen '("80"))
-         (locations
-          (list (nginx-location-configuration
-                 (uri "/")
-                 (body (proxy "cerberus.intr" 15080))))))
-        (nginx-server-configuration
-         (server-name '("grafana.intr"))
-         (listen '("80"))
-         (locations
-          (list (nginx-location-configuration
-                 (uri "/")
-                 (body (proxy "grafana.intr" 16080))))))
-        (nginx-server-configuration
-         (server-name '("guix.duckdns.org" "guix.tld" "www.guix.tld"))
-         (listen '("80" "443 ssl"))
-         (ssl-certificate (letsencrypt-certificate "guix.duckdns.org"))
-         (ssl-certificate-key (letsencrypt-key "guix.duckdns.org"))
-         (locations
-          (list (nginx-location-configuration
-                 (uri "/")
-                 (body '("proxy_pass http://localhost:3000;")))
-                ;; For use by Certbot.
-                (nginx-location-configuration
-                 (uri "/.well-known")
-                 (body '("root /var/www;"))))))
+        (proxy "cups.tld" 631)
+        (proxy "torrent.tld" 9091)
+        (proxy "jenkins.wugi.info" 30080 #:ssl? #t)
+        (proxy "grafana.wugi.info" 3080 #:ssl? #t)
+        (proxy "gitlab.wugi.info" 65080  #:ssl? #t)
+        (proxy "cuirass.tld" 19080)
+        (proxy "input.tld" 19080)
+        (proxy "prometheus.wugi.info" 65090 #:ssl? #t)
+        (proxy "alerta.intr" 16180)
+        (proxy "web.alerta.intr" 16480)
+        (proxy "zabbix.intr" 15081)
+        (proxy "cerberus.intr" 15080)
+        (proxy "grafana.intr" 16080)
+        (proxy "guix.duckdns.org" 3000 #:ssl? #t)
         (nginx-server-configuration
          (server-name '("user.tld"))
          (listen '("80"))
@@ -454,8 +303,15 @@
                           ("192.168.105.1" . "www.r2.tld")
                           ("192.168.105.120" . "hms-billing.majordomo.ru")
                           ("192.168.105.120" . "anongit.duckdns.org")
-                          ("192.168.105.120" . "pipeline.duckdns.org")))
-       "\n\n" %facebook-host-aliases)))
+                          ("192.168.105.120" . "pipeline.duckdns.org")
+                          ))
+       "\n\n"
+       (prefix-local-host-aliases #:prefixes '("gitlab" "grafana" "jenkins" "prometheus" "zabbix")
+                                  #:host-name "wugi"
+                                  #:domain ".info"
+                                  #:ip-addresses (list ip-address))
+       "\n\n"
+       %facebook-host-aliases)))
 
     (packages (custom-packages (string-append %source-dir
                                               "/manifests/fiore.scm")))
@@ -612,8 +468,12 @@ FpingLocation=/run/setuid-programs/fping
                                          "alerta.duckdns.org"
                                          "anongit.duckdns.org"
                                          "pipeline.duckdns.org"
+                                         ;; TODO: "wugi.info"
                                          "zabbix.wugi.info"
-                                         "grafana.wugi.info"))))))
+                                         "grafana.wugi.info"
+                                         "jenkins.wugi.info"
+                                         "gitlab.wugi.info"
+                                         "prometheus.wugi.info"))))))
 
                (extra-special-file "/bin/sh"
                                    (file-append bash "/bin/sh"))

@@ -17,6 +17,7 @@
   #:use-module (gnu services sysctl)
   #:use-module (gnu services version-control)
   #:use-module (gnu services xorg)
+  #:use-module (gnu services web)
   #:use-module (gnu)
   #:use-module (guix channels)
   #:use-module (guix git)
@@ -171,14 +172,38 @@
 ;;; NGINX
 ;;;
 
-(define* (proxy host port #:optional (protocol "http"))
-    (list "resolver 80.80.80.80;"
-          (string-append "set $target localhost:" (number->string port) ";")
-          (format #f "proxy_pass ~a://$target;" protocol)
-          (format #f "proxy_set_header Host ~a;" host)
-          "proxy_set_header X-Real-IP $remote_addr;"
-          "proxy_set_header X-Forwarded-for $remote_addr;"
-          "proxy_connect_timeout 300;"))
+(define %nginx-certbot
+  (nginx-location-configuration
+   (uri "/.well-known")
+   (body '("root /var/www;"))))
+
+(define* (proxy host port #:key (ssl? #f) (ssl-target? #f) (well-known? #t))
+  (nginx-server-configuration
+   (server-name (list host (string-append "www." host)))
+   (locations (delete #f
+                      (list (nginx-location-configuration
+                             (uri "/")
+                             (body (list "resolver 80.80.80.80;"
+                                         (string-append "set $target localhost:" (number->string port) ";")
+                                         (format #f "proxy_pass ~a://$target;" (if ssl-target? "https" "http"))
+                                         (format #f "proxy_set_header Host ~a;" host)
+                                         "proxy_set_header X-Forwarded-Proto $scheme;"
+                                         "proxy_set_header X-Real-IP $remote_addr;"
+                                         "proxy_set_header X-Forwarded-for $remote_addr;"
+                                         "proxy_connect_timeout 300;")))
+                            (and well-known?
+                                 (nginx-location-configuration
+                                  (uri "/.well-known")
+                                  (body '("root /var/www;")))))))
+   (listen (if ssl?
+               (list "443 ssl")
+               (list "80")))
+   (ssl-certificate (if ssl?
+                        (letsencrypt-certificate host)
+                        #f))
+   (ssl-certificate-key (if ssl?
+                            (letsencrypt-key host)
+                            #f))))
 
 (define %nginx-deploy-hook
   (program-file
