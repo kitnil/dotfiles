@@ -143,6 +143,32 @@
          (ssl-certificate (letsencrypt-certificate "pipeline.duckdns.org"))
          (ssl-certificate-key (letsencrypt-key "pipeline.duckdns.org")))
         (nginx-server-configuration
+         (server-name '("grafana.wugi.info"))
+         (locations
+          (list
+           (nginx-location-configuration
+            (uri "/")
+            (body ((lambda (port protocol host)
+                     (list "resolver 80.80.80.80;"
+                           (string-append "set $target localhost:" (number->string port) ";")
+                           (format #f "proxy_pass ~a://$target;" protocol)
+                           (format #f "proxy_set_header Host ~a;" host)
+
+                           ;; FIXME: It appears that your reverse proxy set up is broken
+                           "proxy_set_header X-Forwarded-Proto $scheme;"
+
+                           "proxy_set_header X-Real-IP $remote_addr;"
+                           "proxy_set_header X-Forwarded-for $remote_addr;"
+                           "proxy_connect_timeout 300;"))
+                   3080 "http" "grafana.wugi.info")))
+           ;; For use by Certbot.
+           (nginx-location-configuration
+            (uri "/.well-known")
+            (body '("root /var/www;")))))
+         (listen '("443 ssl"))
+         (ssl-certificate (letsencrypt-certificate "grafana.wugi.info"))
+         (ssl-certificate-key (letsencrypt-key "grafana.wugi.info")))
+        (nginx-server-configuration
          (server-name '("anongit.duckdns.org" "gitlab.tld" "gitlab"))
          (locations
           (list
@@ -513,7 +539,7 @@ FpingLocation=/run/setuid-programs/fping
                           (list
                            (nginx-server-configuration
                             (inherit %zabbix-front-end-configuration-nginx)
-                            (server-name '("alerta.duckdns.org" "zabbix.tld"))
+                            (server-name '("zabbix.wugi.info" "alerta.duckdns.org" "zabbix.tld"))
                             (locations
                              (cons* (nginx-location-configuration
                                      (inherit php-location)
@@ -525,9 +551,9 @@ FpingLocation=/run/setuid-programs/fping
                                      (uri "/.well-known")
                                      (body '("root /var/www;")))
                                     (nginx-server-configuration-locations %zabbix-front-end-configuration-nginx)))
-                            (listen '("80" "443 ssl"))
-                            (ssl-certificate (letsencrypt-certificate "alerta.duckdns.org"))
-                            (ssl-certificate-key (letsencrypt-key "alerta.duckdns.org")))))))
+                            (listen '("443 ssl"))
+                            (ssl-certificate (letsencrypt-certificate "zabbix.wugi.info"))
+                            (ssl-certificate-key (letsencrypt-key "zabbix.wugi.info")))))))
 
                (postgresql-service)
 
@@ -577,22 +603,17 @@ FpingLocation=/run/setuid-programs/fping
                         (certbot-configuration
                          (email "go.wigust@gmail.com")
                          (certificates
-                          (list
-                           (certificate-configuration
-                            (domains '("cgit.duckdns.org"))
-                            (deploy-hook %nginx-deploy-hook))
-                           (certificate-configuration
-                            (domains '("guix.duckdns.org"))
-                            (deploy-hook %nginx-deploy-hook))
-                           (certificate-configuration
-                            (domains '("alerta.duckdns.org"))
-                            (deploy-hook %nginx-deploy-hook))
-                           (certificate-configuration
-                            (domains '("anongit.duckdns.org"))
-                            (deploy-hook %nginx-deploy-hook))
-                           (certificate-configuration
-                            (domains '("pipeline.duckdns.org"))
-                            (deploy-hook %nginx-deploy-hook))))))
+                          `(,@(map (lambda (host)
+                                     (certificate-configuration
+                                      (domains (list host))
+                                      (deploy-hook %nginx-deploy-hook)))
+                                   (list "cgit.duckdns.org"
+                                         "guix.duckdns.org"
+                                         "alerta.duckdns.org"
+                                         "anongit.duckdns.org"
+                                         "pipeline.duckdns.org"
+                                         "zabbix.wugi.info"
+                                         "grafana.wugi.info"))))))
 
                (extra-special-file "/bin/sh"
                                    (file-append bash "/bin/sh"))
