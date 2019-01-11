@@ -25,6 +25,7 @@
   #:use-module (gnu packages package-management)
   #:use-module (gnu packages pkg-config)
   #:use-module (gnu packages python)
+  #:use-module (gnu packages ssh)
   #:use-module (gnu packages tls)
   #:use-module (guix build utils)
   #:use-module (guix build-system gnu)
@@ -159,4 +160,95 @@
       (synopsis "Guile interface to Majordomo API")
       (description
        "This package provides a Guile interface to Majordomo API.")
+      (license license:gpl3+))))
+
+(define-public guile-loadavg
+  (let ((commit "424360d0b5cbfcb3dee711d47b0f7d139c6c4f7e"))
+    (package
+      (home-page "https://gitlab.com/wigust/guile-loadavg/")
+      (name "guile-loadavg")
+      (version (string-append "0.0.1" "-" (string-take commit 7)))
+      (source (origin
+                (method git-fetch)
+                (uri (git-reference
+                      (url "https://gitlab.wugi.info/guile/guile-loadavg.git")
+                      (commit commit)))
+                (file-name (git-file-name name version))
+                (sha256
+                 (base32
+                  "15zym0xw9rjw5iq1805wbw0j6wfrcihsk400pn03y0zm024wx3ik"))))
+      (build-system gnu-build-system)
+      (arguments
+       `(#:tests? #f
+         #:modules ((guix build gnu-build-system)
+                    (guix build utils)
+                    (srfi srfi-26)
+                    (ice-9 popen)
+                    (ice-9 rdelim))
+        #:phases
+        (modify-phases %standard-phases
+          (add-after 'install 'wrap-program
+            (lambda* (#:key inputs outputs #:allow-other-keys)
+              (let* ((out    (assoc-ref outputs "out"))
+                     (guile  (assoc-ref inputs "guile"))
+                     (gcrypt (assoc-ref inputs "guile-gcrypt"))
+                     (gnutls (assoc-ref inputs "gnutls"))
+                     (guix   (assoc-ref inputs "guix"))
+                     (ssh    (assoc-ref inputs "guile-ssh"))
+                     (deps   (list gcrypt gnutls guix ssh out))
+                     (effective
+                      (read-line
+                       (open-pipe* OPEN_READ
+                                   (string-append guile "/bin/guile")
+                                   "-c" "(display (effective-version))")))
+                     (path   (string-join
+                              (map (cut string-append <>
+                                        "/share/guile/site/"
+                                        effective)
+                                   deps)
+                              ":"))
+                     (gopath (string-join
+                              (map (cut string-append <>
+                                        "/lib/guile/" effective
+                                        "/site-ccache")
+                                   deps)
+                              ":")))
+
+                (wrap-program (string-append out "/bin/loadavg")
+                  `("GUILE_LOAD_PATH" ":" prefix (,path))
+                  `("GUILE_LOAD_COMPILED_PATH" ":" prefix (,gopath)))
+
+                #t)
+              (let* ((guile  (assoc-ref inputs "guile"))
+                     (effective
+                      (read-line
+                       (open-pipe* OPEN_READ
+                                   (string-append guile "/bin/guile")
+                                   "-c" "(display (effective-version))")))
+                     (path (cut string-append <>
+                                "/share/guile/site/"
+                                effective
+                                "/loadavg")))
+                (with-directory-excursion "loadavg"
+                  (copy-file "config.scm.in" "config.scm")
+                  (substitute* "config.scm"
+                    (("@PACKAGE_NAME@") ,name)
+                    (("@PACKAGE_VERSION@") ,version)
+                    (("@PACKAGE_URL@") ,home-page))
+                  (install-file "config.scm"
+                                (path (assoc-ref outputs "out"))))
+                #t))))))
+      (native-inputs
+       `(("autoconf" ,autoconf)
+         ("automake" ,automake)
+         ("pkg-config" ,pkg-config)))
+      (inputs
+       `(("gnutls" ,gnutls)
+         ("guile" ,guile-2.2)
+         ("guile-gcrypt" ,guile-gcrypt)
+         ("guile-ssh" ,guile-ssh)
+         ("guix" ,guix)))
+      (synopsis "Guile interface to Linux loadavg")
+      (description
+       "This package provides a Guile interface to Linux loadavg")
       (license license:gpl3+))))
