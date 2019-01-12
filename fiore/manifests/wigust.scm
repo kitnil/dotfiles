@@ -19,7 +19,6 @@
    emacs-edit-indirect
    emacs-emamux
    emacs-engine-mode-autoload ; Define searches on websites
-   emacs-epkg
    emacs-eval-in-repl       ; Evaluate to different Repls
    emacs-flyspell-correct
    emacs-git-messenger-diff-mode
