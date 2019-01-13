@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: let-pretty-print
+# key: let-pp...
+# --
+(let ((var $1))
+  ((@@ (ice-9 pretty-print) pretty-print) var)
+  var)

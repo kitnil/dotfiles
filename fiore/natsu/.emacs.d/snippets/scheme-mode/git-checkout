@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: git-checkout
+# key: git-checkout
+# --
+(git-checkout
+ (url $1)
+ (branch $2)
+ (commit $3))

@@ -1,0 +1,7 @@
+# key: ss
+# name: system-stdout
+# --
+(let* ((port   (open-pipe $1 OPEN_READ))
+       (output (read-string port)))
+  (close-port port)
+  (string-trim-right output #\newline))

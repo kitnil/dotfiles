@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: pretty-print
+# key: pp...
+# --
+((@@ (ice-9 pretty-print) pretty-print)
+ $1)
