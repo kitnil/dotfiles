@@ -689,3 +689,6 @@
 
 (defcommand pass () ()
   (run-shell-command "echo -n ***REMOVED*** | xclip -selection primary"))
+
+(defcommand youtube-subscriptions () ()
+  (run-shell-command "firefox-d https://www.youtube.com/feed/subscriptions"))
