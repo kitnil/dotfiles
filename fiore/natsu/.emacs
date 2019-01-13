@@ -2914,6 +2914,17 @@ https://github.com/USER/REPO/commit/SHA1-HASH => SHA1-HASH"
 ;;       (while (search-forward hard-newline nil t)
 ;;         (replace-match "\n"))))
 
+(defun wi-find-docker-gitlab-file-name ()
+  (interactive)
+  (let ((file-name (split-string (buffer-file-name) "/")))
+    (find-file
+     (mapconcat 'identity
+                (if (string= (nth 1 file-name) "docker:gitlab:")
+                    `("/srv/src/gitlab-ce" ,@(nthcdr 7 file-name))
+                    `("/docker:gitlab:/opt/gitlab/embedded/service/gitlab-rails"
+                      ,@(nthcdr 4 file-name)))
+                "/"))))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
