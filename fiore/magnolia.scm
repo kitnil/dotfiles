@@ -2,7 +2,7 @@
 ;; Copyright © 2017, 2018, 2019 Oleg Pykhalov <go.wigust@gmail.com>
 ;; Released under the GNU GPLv3 or any later version.
 
-(use-modules (gnu) (sysadmin services))
+(use-modules (gnu) (sysadmin services) (sysadmin sensors))
 (use-package-modules bash bootloaders linux monitoring networking php)
 (use-service-modules admin certbot databases dns networking rsync
                      shepherd spice ssh virtualization web cgit
@@ -386,7 +386,13 @@ ExternalScripts=/etc/zabbix/externalscripts
 FpingLocation=/run/setuid-programs/fping
 ")))
 
-               (service zabbix-agent-service-type)
+               (service zabbix-agent-service-type
+                        (zabbix-agent-configuration
+                         (extra-options "\
+UserParameter=guix.channel.list[*],/etc/zabbix/externalscripts/zabbix_guix --profile=$1 --remote=$2 --available
+UserParameter=guix.channel.diff[*],/etc/zabbix/externalscripts/zabbix_guix --profile=$1 --remote=$2 --diff=$3
+UserParameter=cpu.sensors,/etc/zabbix/externalscripts/zabbix_sensors
+")))
 
                (service zabbix-front-end-service-type
                         (zabbix-front-end-configuration
@@ -479,6 +485,8 @@ FpingLocation=/run/setuid-programs/fping
                                    (file-append bash "/bin/sh"))
                (extra-special-file "/usr/bin/env"
                                    (file-append coreutils "/bin/env"))
+               (extra-special-file "/etc/zabbix/externalscripts/zabbix_sensors"
+                                   zabbix-sensors)
 
                (custom-desktop-services
                 #:tor-config-file (string-append %source-dir "/torrc"))))
