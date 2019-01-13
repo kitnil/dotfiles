@@ -1,17 +1,5 @@
 #!/bin/sh
 
-#xrdb $HOME/.Xresources
-
-#xsetroot -solid grey
-#xterm -geometry 80x24+10+10 -ls -title "$VNCDESKTOP Desktop" &
-#twm &
-
 unset SESSION_MANAGER
 unset DBUS_SESSION_BUS_ADDRESS
-/run/current-system/profile/bin/dbus-launch xfce4-session
-#/run/current-system/profile/bin/startxfce4 &
-
-# export XKL_XMODMAP_DISABLE=1
-# xfwm4 --replace
-
-
+/home/natsu/.guix-profile/bin/stumpwm
