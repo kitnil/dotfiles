@@ -71,7 +71,7 @@ fi
 
 export LOCALE_ARCHIVE="$(readlink ~/.nix-profile/lib/locale)/locale-archive"
 export MANPATH=$MANPATH:$HOME/.nix-profile/share/man
-export EDITOR='emacsclient'
+export EDITOR='emc'
 export MANWIDTH=80
 
 # TODO: readlink could fail to enter `guix environment`

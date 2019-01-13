@@ -1,0 +1,4 @@
+#!/bin/sh
+
+emacsclient -n "$@"
+stumpish emacsclient
