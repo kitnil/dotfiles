@@ -130,8 +130,6 @@ valgrind version-control video virtualization w3m web xdisorg xml xorg)
 
                patchelf ;patch elf
 
-               octave
-
                hdparm
                htop            ; Pretty `top'
                inxi
