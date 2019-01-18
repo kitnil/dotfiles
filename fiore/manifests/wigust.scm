@@ -23,7 +23,6 @@
    emacs-gited
    emacs-guix-misc
    emacs-helm-navi
-   emacs-helm-pass          ; Front end to password-store
    emacs-hydra-timestamp
    emacs-info-colors        ; Colorize info pages
    emacs-ivy-yasnippet
