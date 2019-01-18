@@ -49,6 +49,7 @@
        emacs-grep-context
        emacs-guix
        emacs-helm               ; Narrowing framework
+       emacs-helm-c-yasnippet
        emacs-helm-eww
        emacs-helm-firefox       ; Search for bookmarks in Icecat
        emacs-helm-gtags

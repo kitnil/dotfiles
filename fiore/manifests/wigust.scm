@@ -22,7 +22,6 @@
    emacs-git-messenger-diff-mode
    emacs-gited
    emacs-guix-misc
-   emacs-helm-c-yasnippet
    emacs-helm-navi
    emacs-helm-pass          ; Front end to password-store
    emacs-hydra-timestamp
