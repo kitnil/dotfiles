@@ -27,6 +27,7 @@
        emacs-edit-indirect
        emacs-edit-server ; See <https://github.com/stsquad/emacs_chrome/>.
        emacs-elfeed             ; RSS reader
+       emacs-emamux
        emacs-emms
        emacs-erc-hl-nicks       ; for ERC
        emacs-esup
