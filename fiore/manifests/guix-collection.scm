@@ -183,7 +183,6 @@ valgrind version-control video virtualization w3m web xdisorg xml xorg)
                gnu-standards
                man-pages
                sicp         ; Structure and Interpretation of Computer Programs
-               texlive
 
                chicken ; Chicken Scheme
                sbcl ; For StumpWM.  See <https://stumpwm.github.io/>.
