@@ -30,7 +30,6 @@
    emacs-perl-live
    emacs-psysh
    emacs-redshift
-   emacs-scratch-el
    emacs-strace-mode-special ; Colorize `strace' logs
    emacs-terminal-here-checkout
    ))
