@@ -3,21 +3,24 @@
              (guix profiles))
 
 (use-package-modules admin algebra aspell audio backup bittorrent
-cdrom ci cmake code commencement compression cpio cran
-databases dictionaries dns elf games gcc gdb ghostscript gl glib
+cdrom ci cmake code commencement compression cpio cran curl
+databases dictionaries dns elf games gcc gdb ghostscript golang gl glib
 gnu-doc gnupg gnuzilla graphics graphviz gstreamer gtk guile haskell
 image-viewers imagemagick inkscape kodi libreoffice license linux lisp
 logging lsof lxde m4 mail man maths messaging ncdu ncurses networking
 node package-management parallel password-utils patchutils pdf perl
 perl-web python python-xyz qt rdesktop samba scheme screen shellutils
-ssh statistics sqlite suckless synergy tex texinfo textutils tls tor
-valgrind version-control video virtualization w3m web xdisorg xml xorg)
+ssh statistics sqlite suckless synergy tex texinfo textutils tmux tls tor
+valgrind version-control video virtualization w3m web wget xdisorg
+xml xorg)
 
 (define guix-collection-packages-multiout
   `((,glib "bin")
+    (,bind "utils")
     (,git "gui")
     (,git "send-email")
     (,git "svn")
+    (,guile-2.2 "debug")
     (,alsa-plugins "pulseaudio")
     (,isc-bind "utils")))
 
@@ -56,6 +59,8 @@ valgrind version-control video virtualization w3m web xdisorg xml xorg)
 
                cuirass
 
+               go
+
                guile-2.2
                guile-colorized
                guile-daemon
@@ -74,7 +79,6 @@ valgrind version-control video virtualization w3m web xdisorg xml xorg)
 
                git       ; Version control
 
-
                guile-commonmark ; Commonmark for Guile
                ;; gwl              ; Guix workflow management ; fails to build
                haunt            ; Guile static site generator
@@ -92,7 +96,7 @@ valgrind version-control video virtualization w3m web xdisorg xml xorg)
                python-clf ; Interface to <https://commandlinefu.com/>
                neofetch
 
-               lxappearance
+               xmessage
 
                alsa-utils
                cli-visualizer
@@ -104,6 +108,7 @@ valgrind version-control video virtualization w3m web xdisorg xml xorg)
                torsocks
                tor
 
+               mailutils
                isync   ; Sync IMAP
                msmtp
                notmuch ; Mail indexer based on Xapian
@@ -140,9 +145,12 @@ valgrind version-control video virtualization w3m web xdisorg xml xorg)
 
                synergy
 
+               ansible
+
                ;; FAIL: ansible         ; Configuration management
                bc
                cpio
+               curl
                detox           ; Replace spaces with underscores in filenames
                diffoscope
                dos2unix
@@ -158,15 +166,18 @@ valgrind version-control video virtualization w3m web xdisorg xml xorg)
                parallel
                reptyr
                shellcheck
+               sipcalc
                socat
+               sshpass
                sqlite
                unzip
+               wget
                wireshark
                zip
 
                texinfo
 
-
+               lvm2
                cdrkit-libre
                qemu
                samba
@@ -184,7 +195,10 @@ valgrind version-control video virtualization w3m web xdisorg xml xorg)
 
                chicken ; Chicken Scheme
                sbcl ; For StumpWM.  See <https://stumpwm.github.io/>.
-               sbcl-stumpwm
+               stumpwm
+
+               tmux
+               tmuxifier
 
                python-pygments ; Colorize output
                w3m

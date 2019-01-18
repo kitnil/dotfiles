@@ -1,5 +1,6 @@
 (use-modules (chromium chromium)
              (gnu packages emacs)
+             (wigust packages databases)
              (wigust packages emacs)
              (wigust packages guix)
              (wigust packages pulseaudio)
@@ -36,6 +37,8 @@
 
 (packages->manifest
  (cons*
+
+  autopostgresqlbackup
 
   chromium
 

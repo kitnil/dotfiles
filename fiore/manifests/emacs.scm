@@ -1,7 +1,7 @@
 (use-modules (gnu)
              (guix profiles))
 
-(use-package-modules cmake emacs emacs-xyz package-management)
+(use-package-modules admin cmake docker emacs emacs-xyz package-management)
 
 (packages->manifest
  (list emacs-academic-phrases
@@ -9,6 +9,7 @@
        emacs-add-hooks
        emacs-ag
        emacs-aggressive-indent  ; Auto indent minor mode
+       emacs-ansible-doc
        emacs-auto-yasnippet
        emacs-bash-completion
        emacs-bbdb
@@ -23,7 +24,10 @@
        emacs-debbugs ; <https://debbugs.gnu.org/> interface
        emacs-default-encrypt    ; Sign mail automatically
        emacs-default-text-scale ; Scale text in all buffers
+       emacs-docker-tramp
+       emacs-dockerfile-mode
        emacs-dumb-jump
+       emacs-ebuild-mode
        emacs-edit-indirect
        emacs-edit-server ; See <https://github.com/stsquad/emacs_chrome/>.
        emacs-elfeed             ; RSS reader
@@ -47,6 +51,7 @@
        emacs-go-mode
        emacs-god-mode           ; Commands without modifier keys
        emacs-grep-context
+       emacs-groovy-modes
        emacs-guix
        emacs-helm               ; Narrowing framework
        emacs-helm-c-yasnippet
@@ -86,6 +91,8 @@
        emacs-org-mind-map       ; General mind maps from Org files
        emacs-outshine           ; Emacs outline-mode
        emacs-php-mode
+       emacs-polymode
+       emacs-polymode-ansible
        emacs-projectile         ; Project functions
        emacs-rainbow-delimiters ; Prettify parentheses
        emacs-rainbow-mode       ; Show colors in codes
