@@ -24,6 +24,7 @@
        emacs-default-encrypt    ; Sign mail automatically
        emacs-default-text-scale ; Scale text in all buffers
        emacs-dumb-jump
+       emacs-edit-indirect
        emacs-edit-server ; See <https://github.com/stsquad/emacs_chrome/>.
        emacs-elfeed             ; RSS reader
        emacs-emms

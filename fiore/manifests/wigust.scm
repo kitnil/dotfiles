@@ -16,7 +16,6 @@
    emacs-atomic-chrome
    emacs-awk-it
    emacs-debpaste           ; Front end to <https://paste.debian.net/>
-   emacs-edit-indirect
    emacs-emamux
    emacs-engine-mode-autoload ; Define searches on websites
    emacs-eval-in-repl       ; Evaluate to different Repls
