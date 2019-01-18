@@ -25,7 +25,6 @@
    emacs-helm-navi
    emacs-hydra-timestamp
    emacs-info-colors        ; Colorize info pages
-   emacs-ivy-yasnippet
    emacs-mediawiki
    emacs-pcre2el
    emacs-perl-live
