@@ -10,8 +10,8 @@ image-viewers imagemagick inkscape kodi libreoffice license linux lisp
 logging lsof lxde m4 mail man maths messaging ncdu ncurses networking
 node package-management parallel password-utils patchutils pdf perl
 perl-web python python-xyz qt rdesktop samba scheme screen shellutils
-ssh statistics suckless synergy tex texinfo textutils tls tor valgrind
-version-control video virtualization w3m web xdisorg xml xorg)
+ssh statistics sqlite suckless synergy tex texinfo textutils tls tor
+valgrind version-control video virtualization w3m web xdisorg xml xorg)
 
 (define guix-collection-packages-multiout
   `((,glib "bin")
