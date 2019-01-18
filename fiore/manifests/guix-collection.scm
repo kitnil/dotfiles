@@ -3,7 +3,7 @@
              (guix profiles))
 
 (use-package-modules admin algebra aspell audio backup bittorrent
-cdrom ci cmake code commencement compression conkeror cpio cran
+cdrom ci cmake code commencement compression cpio cran
 databases dictionaries dns elf games gcc gdb ghostscript gl glib
 gnu-doc gnupg gnuzilla graphics graphviz gstreamer gtk guile haskell
 image-viewers imagemagick inkscape kodi libreoffice license linux lisp
