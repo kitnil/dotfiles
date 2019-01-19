@@ -27,7 +27,7 @@ clear
 # ctrl+semicolon start
 shift+KP_5 start
 Escape end
-KP_0 end
+# KP_0 end
 ctrl+bracketleft end
 
 # Emacs keybindings
@@ -60,16 +60,16 @@ shift+KP_End move-left,move-down
 shift+KP_Page_Down move-right,move-down
 
 # KP_5 warp,click 1,end
-KP_5 warp,end
+KP_5 warp,click 1,end
 KP_Subtract warp,click 3,end
 KP_Multiply warp,click 2,end
-KP_Divide warp,click 1,end
+KP_Divide warp,end
 
 # Zoom to the current window
 KP_Add windowzoom
 
 # Zoom to the cursor location with a given height and width
-# c cursorzoom 200 200
+KP_0 cursorzoom 200 200
 
 # Handy for holding ctrl while using keynav:
 # ctrl+h cut-left
