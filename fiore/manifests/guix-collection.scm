@@ -113,7 +113,6 @@ xml xorg)
                msmtp
                notmuch ; Mail indexer based on Xapian
 
-               inkscape    ; Vector graphics
                mlt         ; Video editing framework
                mpv         ; Video and audio player
                obs ;ffmpeg frontend
