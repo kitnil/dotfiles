@@ -134,6 +134,8 @@ xml xorg)
 
                patchelf ;patch elf
 
+               octave
+
                hdparm
                htop            ; Pretty `top'
                inxi
