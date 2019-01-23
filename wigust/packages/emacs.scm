@@ -1423,3 +1423,24 @@ capturing user input and paste it with @kbd{C-v} after exit.")
       (description
        "This package provides an additional functionality for Emacs Guix.")
       (license license:gpl3+))))
+
+(define-public emacs-buffer-move
+  (package
+    (name "emacs-buffer-move")
+    (version "0.6.2")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://github.com/lukhas/buffer-move.git")
+             (commit version)))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32
+         "0xdks4jfqyhkh34y48iq3gz8swp0f526kwnaai5mhgvazvs4za8c"))))
+    (build-system emacs-build-system)
+    (home-page "https://github.com/lukhas/buffer-move")
+    (synopsis "Easily swap Emacs buffers")
+    (description "This package provides a way to swap Emacs buffers without
+typing C-x b on each window.")
+    (license license:gpl3+)))
