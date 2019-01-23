@@ -532,6 +532,12 @@ Sets the following basend on PREFIX-MAP:
                 ("d" wi-find-file-guixsd "guixsd")
                 ("e" wi-find-file-emacs "emacs"))
 
+(wi-define-keys "C-c g b m" move-buffer
+                ("b" buf-move-left "left")
+                ("f" buf-move-right "right")
+                ("n" buf-move-down "down")
+                ("p" buf-move-up "up"))
+
 (bind-key "<C-down-mouse-1>" 'mc/toggle-cursor-on-click)
 
 (wi-define-keys "C-c g a" text
