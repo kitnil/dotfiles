@@ -538,7 +538,9 @@ Sets the following basend on PREFIX-MAP:
                 ("/" wi-dabbrev-expand "expand")
                 ("a" align-regexp "align rx")
                 ("P" wi-mark-paragraph+sort-lines "paragraph")
-                ("u" undo "undo"))
+                ("u" undo "undo")
+                ("p" move-text-up "up")
+                ("n" move-text-down "down"))
 
 (wi-define-keys "C-c g a e" expand
                 ("'" er/mark-inside-quotes "in quotes")
