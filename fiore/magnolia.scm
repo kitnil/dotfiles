@@ -107,6 +107,7 @@
         (proxy "jenkins.wugi.info" 30080 #:ssl? #t)
         (proxy "grafana.wugi.info" 3080 #:ssl? #t)
         (proxy "gitlab.wugi.info" 65080  #:ssl? #t)
+        (proxy "anongit.duckdns.org" 65080  #:ssl? #t)
         (proxy "cuirass.tld" 19080)
         (proxy "input.tld" 19080)
         (proxy "prometheus.wugi.info" 65090 #:ssl? #t)
