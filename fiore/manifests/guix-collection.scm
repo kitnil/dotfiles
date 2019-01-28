@@ -5,7 +5,7 @@
 (use-package-modules admin algebra aspell audio backup bittorrent
 cdrom ci cmake code commencement compression cpio cran curl
 databases dictionaries dns elf games gcc gdb ghostscript golang gl glib
-gnu-doc gnupg gnuzilla graphics graphviz gstreamer gtk guile haskell
+gnu-doc gnupg gnuzilla graphics graphviz gstreamer gtk guile guile-xyz haskell
 image-viewers imagemagick inkscape kodi libreoffice license linux lisp
 logging lsof lxde m4 mail man maths messaging ncdu ncurses networking
 node package-management parallel password-utils patchutils pdf perl
