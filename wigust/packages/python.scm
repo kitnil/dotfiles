@@ -181,16 +181,17 @@
 (define-public python-github
   (package
     (name "python-github")
-    (version "1.1.0")
+    (version "1.2.0")
     (source
      (origin
-       (method url-fetch)
-       (uri (string-append "https://github.com/sigmavirus24/github3.py/archive/"
-                           version ".tar.gz"))
-       (file-name (string-append name "-" version ".tar.gz"))
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://github.com/sigmavirus24/github3.py.git")
+             (commit version)))
+       (file-name (git-file-name name version))
        (sha256
         (base32
-         "1w1qfg16w3gq24yvbmvws7jn77rc3nsv9az9hs2awyppqjb5724d"))))
+         "1zmz488fk4swbmfsc61v8f8b01z3kar0w7wbq35m3m6r7wmgrjh3"))))
     (build-system python-build-system)
     (propagated-inputs
      `(("python-ndg-httpsclient" ,python-ndg-httpsclient)
@@ -205,7 +206,8 @@
        ("python-certifi" ,python-certifi-2017.4.17)
        ("python-urllib3" ,python-urllib3-1.21.1)
        ("python-idna" ,python-idna-2.5)
-       ("python-chardet" ,python-chardet)))
+       ("python-chardet" ,python-chardet)
+       ("python-jwcrypto" ,python-jwcrypto)))
     (home-page "https://github3py.readthedocs.org")
     (synopsis "Python wrapper for the GitHub API")
     (description "Python wrapper for the GitHub API
