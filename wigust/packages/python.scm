@@ -158,6 +158,26 @@
         (base32
          "1ara12a7k2zc69msa0arrvw00gn61a6i6by01xb3lkkc0h4cxd9w"))))))
 
+(define-public python-jwcrypto
+  (package
+    (name "python-jwcrypto")
+    (version "0.6.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "jwcrypto" version))
+       (sha256
+        (base32
+         "0rdnq9qhiazlxcn4birrakcx7fhzky29jvgp258adn895n9c0ym8"))))
+    (build-system python-build-system)
+    (propagated-inputs
+     `(("python-cryptography" ,python-cryptography)))
+    (home-page "https://github.com/latchset/jwcrypto")
+    (synopsis "Implementation of JOSE Web standards")
+    (description
+     "This package provides an implementation of JOSE Web standards.")
+    (license license:lgpl3+)))
+
 (define-public python-github
   (package
     (name "python-github")
