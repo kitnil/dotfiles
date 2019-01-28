@@ -98,7 +98,7 @@
    ;; $ wget https://git.savannah.gnu.org/cgit/guix/maintenance.git/plain/hydra/keys/guix/berlin.guixsd.org-export.pub
    ;; # “guix archive --authorize < berlin.guixsd.org-export.pub”
    (substitute-urls '("http://cuirass.tld"
-                      "https://berlin.guixsd.org"
+                      "https://ci.guix.info"
                       "https://mirror.hydra.gnu.org"))
    ;; (authorized-keys '())
    (max-silent-time 7200)
