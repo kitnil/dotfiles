@@ -244,29 +244,28 @@
     (license license:bsd-3)))
 
 (define-public python-starred
-  (let ((commit "aa4c010c791a4f84f6e26f96685552ef2ef3a4e8")
-        (revision "1"))
-    (package
-      (name "python-starred")
-      (version "2.0.3")
-      (source
-       (origin
-         (method url-fetch)
-         (uri (string-append "https://github.com/maguowei/starred/archive/"
-                             "v" version ".tar.gz"))
-         (file-name (string-append name "-" version ".tar.gz"))
-         (sha256
-          (base32
-           "116z8zgqj8d9451d8rajkmbfv8zpvwhgrsdcgmhzmlpl5bb22ilp"))))
-      (build-system python-build-system)
-      (propagated-inputs
-       `(("python-click" ,python-click)
-         ("python-github" ,python-github)
-         ("python-urllib3" ,python-urllib3-1.21.1)))
-      (home-page "https://github.com/maguowei/starred")
-      (synopsis "Awesome List used GitHub stars")
-      (description "Awesome List used GitHub stars.")
-      (license license:expat))))
+  (package
+    (name "python-starred")
+    (version "2.0.4")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://github.com/maguowei/starred.git")
+             (commit (string-append "v" version))))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32
+         "0acc4n73f2py709nh90yqylqd0v7v9ii1sgg49cazs2b73jzviad"))))
+    (build-system python-build-system)
+    (propagated-inputs
+     `(("python-click" ,python-click)
+       ("python-github" ,python-github)
+       ("python-urllib3" ,python-urllib3-1.21.1)))
+    (home-page "https://github.com/maguowei/starred")
+    (synopsis "Awesome List used GitHub stars")
+    (description "Awesome List used GitHub stars.")
+    (license license:expat)))
 
 (define-public python2-starred
   (let ((base (package-with-python2
