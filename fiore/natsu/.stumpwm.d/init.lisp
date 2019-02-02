@@ -690,5 +690,35 @@
 (defcommand pass () ()
   (run-shell-command "echo -n ***REMOVED*** | xclip -selection primary"))
 
-(defcommand youtube-subscriptions () ()
-  (run-shell-command "firefox-d https://www.youtube.com/feed/subscriptions"))
+(flet ((firefox (url &optional dark)
+         (run-shell-command (format nil (if dark
+                                            "GTK_THEME=Adwaita:dark firefox -P dark --new-window ~S"
+                                            "firefox -P light --new-window ~S")
+                                    url))))
+
+  (defcommand grafana () ()
+    (firefox "https://grafana.wugi.info/" t))
+
+  (defcommand zabbix () ()
+    (firefox "https://zabbix.wugi.info/"))
+
+  (defcommand kibana () ()
+    (firefox "http://localhost:5601/app/kibana"))
+
+  (defcommand gitlab () ()
+    (firefox "https://gitlab.wugi.info/" t))
+
+  (defcommand youtube () ()
+    (firefox "https://www.youtube.com/feed/subscriptions" t))
+
+  (defcommand twitch () ()
+    (firefox "https://www.twitch.tv/directory/game/Tales%20of%20Maj'Eyal" t))
+
+  (defcommand jenkins () ()
+    (firefox "https://jenkins.wugi.info/"))
+
+  (defcommand fiore () ()
+    (firefox "https://jenkins.wugi.info/job/fiore/lastBuild/console"))
+
+  (defcommand cuirass () ()
+    (firefox "https://grafana.wugi.info/d/Ob67YJYiz/fiore?refresh=30s&orgId=1&var-host=cuirass")))
