@@ -158,7 +158,7 @@ ssh-keygen-rsa()
 
 gpu()
 {
-    guix package --substitute-urls='http://cuirass.tld https://berlin.guixsd.org https://mirror.hydra.gnu.org https://hydra.gnu.org' --upgrade=. $@
+    guix package --substitute-urls='http://cuirass.tld https://ci.guix.info https://mirror.hydra.gnu.org' --upgrade=. $@
 }
 
 activity()
