@@ -1680,7 +1680,8 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 (setq erc-user-full-name "Oleg Pykhalov")
 (setq erc-whowas-on-nosuchnick t)
 (setq erc-track-exclude-types
-      '("NICK" "333" "353" "JOIN" "QUIT" "PART"))
+      '("JOIN" "QUIT" "PART" "NICK" "333" "353"))
+(setq erc-hide-list '("JOIN" "PART" "QUIT"))
 (setq erc-modules
       '(autojoin button completion fill irccontrols list match menu
         move-to-prompt netsplit networks ring smiley stamp track))
@@ -1836,6 +1837,10 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
   "Open IRC #guix channel log."
   (interactive)
   (browse-url guix-irc-log-url))
+
+(setq erc-fill-function 'erc-fill-variable)
+(setq erc-fill-prefix " ")
+(setq erc-fill-column 42)
 
 
 ;;;
