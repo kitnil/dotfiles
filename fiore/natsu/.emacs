@@ -385,8 +385,8 @@ and the functions `ffap-file-at-point' and `ffap-url-at-point'."
     (or filename (setq filename (ffap-prompter)))
     (let ((url (ffap-url-p filename))
           (info-page (ffap-info-p filename))
-          (man-page (ffap-man-p filename))
-          (guix-profile-dir (guix-ffap-profile-path-p filename)))
+          ;; (guix-profile-dir (guix-ffap-profile-path-p filename))
+          (man-page (ffap-man-p filename)))
       (cond
        (url
 	(let (current-prefix-arg)
@@ -397,9 +397,9 @@ and the functions `ffap-file-at-point' and `ffap-url-at-point'."
        (man-page
         (let (current-prefix-arg)
           (man man-page)))
-       (guix-profile-dir
-        (let (current-prefix-arg)
-          (guix-run-in-shell (concat "readlink " filename))))
+       ;; (guix-profile-dir
+       ;;  (let (current-prefix-arg)
+       ;;    (guix-run-in-shell (concat "readlink " filename))))
        ((and ffap-pass-wildcards-to-dired
 	     ffap-dired-wildcards
 	     (string-match ffap-dired-wildcards filename))
