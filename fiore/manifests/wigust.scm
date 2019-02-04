@@ -40,8 +40,6 @@
 
   autopostgresqlbackup
 
-  chromium
-
   pulsemixer-emacs-keybindings
 
   ruby-gitlab
