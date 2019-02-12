@@ -1,0 +1,89 @@
+#!/bin/sh
+
+docker run \
+       --name jenkins \
+       --hostname jenkins \
+       --detach \
+       --restart unless-stopped \
+       --add-host gitlab.wugi.info:192.168.105.120 \
+       --user jenkins:"$(getent passwd jenkins | cut -d ':' -f 3,4)" \
+       --volume /home/jenkins:/var/jenkins_home \
+       --publish 30080:8080 \
+       --publish 50000:50000 \
+       jenkins/jenkins:lts
+
+docker run \
+       --name influxdb \
+       --detach \
+       --restart unless-stopped \
+       --env 'INFLUXDB_ADMIN_ENABLED=true' \
+       --publish 8083:8083 \
+       --publish 8086:8086 \
+       --volume /home/influxdb:/var/lib/influxdb \
+       -v /home/natsu/src/hello-docker/influxdb/influxdb.conf:/etc/influxdb/influxdb.conf:ro \
+       influxdb -config /etc/influxdb/influxdb.conf
+
+docker run \
+       --name telegraf \
+       --detach \
+       --restart unless-stopped \
+       --net=container:influxdb \
+       --env HOST_PROC=/host/proc \
+       --volume /proc:/host/proc:ro \
+       --volume /home/natsu/src/hello-telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro \
+       telegraf
+
+docker run \
+       --name grafana \
+       --detach \
+       --restart unless-stopped \
+       --user "$(getent passwd grafana | cut -d ':' -f 3,4)" \
+       --publish 3080:3000 \
+       --volume /home/grafana:/var/lib/grafana \
+       --mount type=bind,source=/etc/localtime,target=/etc/localtime,readonly \
+       -e "GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource,alexanderzobnin-zabbix-app" \
+       grafana/grafana
+
+docker run \
+       --name elasticsearch \
+       --detach \
+       --restart unless-stopped \
+       --volume /srv/elk/data:/usr/share/elasticsearch/data \
+       --volume /srv/elk/backup:/mnt/backup \
+       --volume /home/natsu/src/hello-elk/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml \
+       --publish 9200:9200 \
+       --publish 9300:9300 \
+       docker.elastic.co/elasticsearch/elasticsearch:6.5.1
+
+docker run \
+       --name filebeat \
+       --add-host elasticsearch:192.168.105.120 \
+       --restart unless-stopped \
+       --mount type=bind,source=/home/natsu/src/hello-elk/filebeat.yml,target=/usr/share/filebeat/filebeat.yml \
+       --mount type=bind,source=/var/log,target=/mnt/log,readonly \
+       --mount type=bind,source=/etc/localtime,target=/etc/localtime,readonly \
+       --hostname magnolia.tld \
+       docker.elastic.co/beats/filebeat:6.5.1 -e -strict.perms=false -E output.elasticsearch.hosts=["elasticsearch:9200"] -E name="magnolia.tld"
+
+docker run \
+       --name kibana \
+       --detach \
+       --restart unless-stopped \
+       --publish 5601:5601 \
+       --mount type=bind,source=/home/natsu/src/hello-elk/kibana.yml,target=/usr/share/kibana/config/kibana.yml \
+       docker.elastic.co/kibana/kibana:6.5.1
+
+docker run \
+       --restart unless-stopped \
+       --hostname gitlab \
+       --add-host gitlab.wugi.info:127.0.0.1 \
+       --add-host smtp:192.168.105.120 \
+       --name gitlab \
+       --detach \
+       --publish 65080:80 \
+       --publish 65022:22 \
+       --publish 65090:9090 \
+       --volume /srv/gitlab/etc:/etc/gitlab \
+       --volume /srv/gitlab/logs:/var/log/gitlab \
+       --volume /srv/gitlab/data:/var/opt/gitlab \
+       gitlab/gitlab-ce:11.6.0-ce.0
