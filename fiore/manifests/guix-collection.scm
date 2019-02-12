@@ -61,6 +61,7 @@ xml xorg)
 
                go
 
+               artanis
                guile-2.2
                guile-colorized
                guile-daemon
@@ -68,8 +69,11 @@ xml xorg)
                guile-gcrypt
                guile-git
                guile-readline
+               guile-redis
                guile-ssh
                guile-xosd
+
+               racket
 
                mcron
 
