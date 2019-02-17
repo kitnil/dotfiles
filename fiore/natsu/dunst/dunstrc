@@ -29,7 +29,7 @@
     # the top and down respectively.
     # The width can be negative.  In this case the actual width is the
     # screen width minus the width defined in within the geometry option.
-    geometry = "300x5-30+20"
+    geometry = "300x5-30+40"
 
     # Show how many messages are currently hidden (because of geometry).
     indicate_hidden = yes
@@ -51,7 +51,7 @@
     # Draw a line of "separator_height" pixel height between two
     # notifications.
     # Set to 0 to disable.
-    separator_height = 2
+    separator_height = 3
 
     # Padding between text and separator.
     padding = 8
@@ -179,7 +179,7 @@
     ### Misc/Advanced ###
 
     # dmenu path.
-    dmenu = /usr/bin/dmenu -p dunst:
+    dmenu = /home/natsu/.guix-profile/bin/dmenu -p dunst:
 
     # Browser for opening urls in context menu.
     browser = /home/natsu/.nix-profile/bin/firefox -new-tab
