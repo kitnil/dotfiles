@@ -7,23 +7,30 @@
 (setf *message-window-gravity* :center)
 (setf *input-window-gravity* :center)
 
-(setf *home* (sb-ext:posix-getenv "HOME"))
+(setf *home* "/home/natsu")
 
-(load (concat *home* "/quicklisp/setup.lisp"))
+(load (concat "/home/natsu" "/quicklisp/setup.lisp"))
 
 (ql:quickload "cffi")
 (ql:quickload "usocket-server")
-
 (ql:quickload "swank")
-(swank-loader:init)
-(swank:create-server :port 4004
-                     :style swank:*communication-style*
-                     :dont-close t)
 
-(set-module-dir (concat *home* "/.stumpwm.d/modules/"))
+(defcommand swank (display) ((:string "Swank on DISPLAY: "))
+  (when (not (string= "" display))
+    (swank-loader:init)
+    (swank:create-server :port (+ 4005 (parse-integer display))
+                         :style swank:*communication-style*
+                         :dont-close t)))
+
+(set-prefix-key (kbd "C-i"))
+
+;; (when (string= (getenv "DISPLAY") ":0.2")
+;;   (set-prefix-key (kbd "C-i")))
+
+(set-module-dir (concat "/home/natsu" "/.stumpwm.d/modules/"))
 
 (run-shell-command "xsetroot -cursor_name left_ptr")
-(run-shell-command (concat "xrdb -merge " *home* "/.Xresources"))
+(run-shell-command (concat "xrdb -merge " "/home/natsu" "/.Xresources"))
 
 ;; Wallpaper
 ;; (run-shell-command "feh --bg-scale ~/Pictures/Wallpapers/current.png")
@@ -50,9 +57,11 @@
 ;; (run-shell-command "xset s 0")
 ;; (run-shell-command "xset dpms 0 0 1800")
 
-(run-shell-command "xmodmap " (concat *home* "/.Xmodmap"))
+(run-shell-command "xmodmap " (concat "/home/natsu" "/.Xmodmap"))
 
 (run-shell-command "keynav")
+
+(run-shell-command "dunst")
 
 (setf *message-window-y-padding* 3)
 
@@ -61,9 +70,9 @@
 (setf *ignore-wm-inc-hints* t)
 (set-msg-border-width 4)
 
-(setf *normal-border-width* 4)
-(setf *transient-border-width* 4)
-(setf *maxsize-border-width* 4)
+(setf *normal-border-width* 0)
+(setf *transient-border-width* 0)
+(setf *maxsize-border-width* 0)
 
 
 ;;;
@@ -97,14 +106,16 @@
 
 (defcommand desktop-restore (desktop rules) ((:string "Restore desktop: ")
                                              (:string "Restore rules: "))
-  (let ((desktop (format nil "~a/.stumpwm.d/desktop/~a.lisp" *home* desktop))
-        (rules (format nil "~a/.stumpwm.d/rules/~a.lisp" *home* rules)))
+  (let ((desktop (format nil "~a/.stumpwm.d/desktop/~a.lisp" "/home/natsu" desktop))
+        (rules (format nil "~a/.stumpwm.d/rules/~a.lisp" "/home/natsu" rules)))
     (message (format nil "Restore desktop from ~s file." desktop))
     (message (format nil "Restore rules from ~s file." rules))
     (restore-from-file desktop)
     (clear-window-placement-rules)
     (restore-window-placement-rules rules)
     (place-existing-windows)))
+
+;; (restore-window-placement-rules "/home/natsu/.stumpwm.d/rules/4.lisp")
 
 ;; (restore-from-file "/home/user/.stumpwm-dump-desktop.lisp")
 ;; (restore-from-file "~/.stumpwm-dump-desktop.lisp")
@@ -171,7 +182,7 @@
 
 (defcommand emacsclient () ()
   "Start emacs unless it is already running, in which case focus it."
-  (run-or-raise "emacsclient -c ." '(:class "Emacs")))
+  (run-or-raise "emacsclient -c" '(:class "Emacs")))
 
 (defcommand emacs-org-capture () ()
   "Capture URL with Emacs Org from GUI clipboard"
@@ -203,6 +214,10 @@
 (defcommand firefox () ()
   "Start of focus firefox."
   (run-or-raise "firefox" '(:class "Firefox")))
+
+(defcommand firefox-new-window () ()
+  "Start of focus firefox."
+  (run-shell-command "firefox --new-window"))
 
 (defcommand chromium () ()
   "Start or focus Chromium."
@@ -400,9 +415,19 @@
   "Open Rofi to launch `.desktop' file."
   (run-shell-command "rofi -modi run,drun -show drun"))
 
+(defcommand rofi-ssh () ()
+  "Open Rofi ssh list."
+  (run-shell-command "rofi -width 20 -terminal 'xterm +sb' -modi ssh -show ssh"))
+
+(defcommand rofi-window () ()
+  "Open Rofi window list."
+  (run-shell-command "rofi -modi window -show window"))
+
 (defcommand rofi-twitchy () ()
   "Open Rofi with Twitchy plugin."
   (run-shell-command "rofi -modi twitchy:rofi-twitchy -show twitchy"))
+
+(define-key *root-map* (kbd "@") "rofi-drun")
 
 (defcommand twitchy () ()
   (term-shell-command "twitchy"))
@@ -531,9 +556,13 @@
 
 (setf *mode-line-timeout* 2)
 (setf *TIME-MODELINE-STRING* "%a, %e %b %Y %k:%M")
+;; (mapcar (lambda (g)
+;;           (group-number g)
+;;           (group-name g))
+;;         (screen-groups (current-screen)))
 (setf *screen-mode-line-format*
       (list "[%n]:" '(:eval (write-to-string (group-number (current-group))))
-            "    "
+            (make-string 4 :initial-element #\space)
             '(:eval (write-to-string (window-number (current-window))))
             ":"
             "["
@@ -589,7 +618,16 @@
 (define-key *root-map* (kbd "C-m") "xclip-mpv")
 (define-key *root-map* (kbd "M-m") "xclip-streamlink")
 
-(define-key *root-map* (kbd "u") "emacs-org-capture")
+(defvar *rofi-map* nil
+  "Rofi related bindings hang from this keymap")
+
+(fill-keymap *rofi-map*
+             (kbd "w") "rofi-window"
+             (kbd "s") "rofi-ssh")
+
+(define-key *root-map* (kbd "u") ; *rofi-map*
+  nil)
+
 (define-key *root-map* (kbd "C-e") "xclip-emacs")
 (define-key *root-map* (kbd "C-M-c") "xterm-big-screen")
 (define-key *root-map* (kbd "M-e") "emacs-anywhere")
@@ -623,13 +661,13 @@
 (define-key *root-map* (kbd "Print") "screenshot-default")
 
 (define-key *root-map* (kbd "C-w") "firefox")
-(define-key *root-map* (kbd "M-w") "firefox")
+(define-key *root-map* (kbd "M-w") "firefox-new-window")
 (define-key *root-map* (kbd "w") "firefox")
 
 ;; Rebind groups to PREFIX-NUMBER.
-;; (mapcar #'(lambda (x) (define-key *top-map* (kbd (concat "s-" (write-to-string x)))
-;; 			(format nil "~A ~D" "gselect" x)))
-;; 	(range 10 :min 1 :step 1))
+(mapcar #'(lambda (x) (define-key *top-map* (kbd (concat "s-" (write-to-string x)))
+			(format nil "~A ~D" "gselect" x)))
+	(range 10 :min 1 :step 1))
 
 ;; (define-key *top-map* (kbd "M-s-n") "gnext")
 ;; (define-key *top-map* (kbd "M-s-p") "gprev")
@@ -643,8 +681,6 @@
 ;; (define-key *top-map* (kbd "s-h") "jord-loadavg")
 ;; (define-key *top-map* (kbd "s-h") nil)
 ;; (define-key *top-map* (kbd "s-m") "mpv")
-;; (define-key *top-map* (kbd "s-n") "next-in-frame")
-;; (define-key *top-map* (kbd "s-o") "other-in-frame")
 ;; (define-key *top-map* (kbd "s-p") "prev-in-frame")
 ;; (define-key *top-map* (kbd "s-s") "sibling")
 ;; (define-key *top-map* (kbd "s-t") "pull-hidden-other")
@@ -690,6 +726,12 @@
 (defcommand pass () ()
   (run-shell-command "echo -n ***REMOVED*** | xclip -selection primary"))
 
+(defun current-window-width ()
+  (format-expand *window-formatters* "%w" (current-window)))
+
+(defun current-window-height ()
+  (format-expand *window-formatters* "%h" (current-window)))
+
 (flet ((firefox (url &optional dark)
          (run-shell-command (format nil (if dark
                                             "GTK_THEME=Adwaita:dark firefox -P dark --new-window ~S"
@@ -721,4 +763,85 @@
     (firefox "https://jenkins.wugi.info/job/fiore/lastBuild/console"))
 
   (defcommand cuirass () ()
-    (firefox "https://grafana.wugi.info/d/Ob67YJYiz/fiore?refresh=30s&orgId=1&var-host=cuirass")))
+    (firefox "https://grafana.wugi.info/d/Ob67YJYiz/fiore?refresh=30s&orgId=1&var-host=cuirass"))
+
+  (defcommand yoo (url) ((:string "YouTube URL: "))
+    (gnew "youtube")
+    (restore-group (current-group) (read-dump-from-file "/home/natsu/youtube.lisp"))
+    (term-shell-command (format nil "mpv --no-resume-playback --mute=yes ~s" url))
+    (firefox (format nil "https://www.youtube.com/live_chat?v=~a&is_popout=1"
+                     (cadr (split-string url "=")))
+             t)))
+
+(defun emacsclient-command (&rest args)
+  (run-shell-command (format nil "emacsclient ~a" (join args))))
+
+(defun emacsclient-eval (command)
+  (emacsclient-command (format nil "-e ~s" command)))
+
+(defun emacs-buffer (buffer)
+  (emacsclient-command "-s" "chat"
+                       (format nil "-e ~s"
+                               (format nil "(switch-to-buffer ~s)" buffer))
+                       "-c"))
+
+(defun foo ()
+  (flet ((boo ()
+           (progn
+             (hsplit)
+             (vsplit)
+             (fnext)
+             (fnext)
+             (vsplit)
+             (fnext)
+             (fnext))))
+    (progn
+      (hsplit)
+      (vsplit)
+      (boo)
+      (boo)
+      (vsplit)
+      (boo)
+      (boo))))
+
+(defun emacs-erc ()
+  (mapcar #'(lambda (buffer)
+              (emacs-buffer buffer))
+          '("#bash" "#bootstrappable" "##C" "#chicken" "#emacs" "#erc" "#fsf"
+            "#gdb" "#gnus" "#guile" "#guix" "##linux" "#lisp" "#nixos" "#scheme" "#stumpwm")))
+
+(defun auto-pull-frames ()
+  (mapcar #'(lambda (frame)
+              (pull-window-by-number frame)
+              (fnext))
+          (range 15 :min 0 :step 1)))
+
+(defmacro emacs-bind (key command)
+  `(progn
+     (defcommand ,(intern (concat "emacs-" command)) () ()
+       (emacsclient-command (format nil "(~a)" ,command)))
+     (define-key *top-map* (kbd ,key) ,(concat "emacs-" command))))
+
+(emacs-bind "s-n" "emms-next")
+(emacs-bind "s-p" "emms-previous")
+(emacs-bind "s-P" "emms-pause")
+(emacs-bind "s-r" "emms-random")
+
+(defcommand racket () ()
+  (run-shell-command "drracket"))
+
+(defcommand resolution () ()
+  (run-shell-command "xrandr --output HDMI1 --mode 1920x1080 ; xgamma -gamma 1.0"))
+
+;; Rebind groups to PREFIX-NUMBER.
+(mapcar #'(lambda (x)
+            (when (> x 1)
+              (gnew (write-to-string x)))
+            (define-key *top-map* (kbd (concat "s-" (write-to-string x)))
+	      (format nil "~A ~D" "gselect" x)))
+	(range 10 :min 1 :step 1))
+
+(define-key *top-map* (kbd "s-!") "gmove-and-follow 1")
+(define-key *top-map* (kbd "s-@") "gmove-and-follow 2")
+(define-key *top-map* (kbd "s-#") "gmove-and-follow 3")
+(define-key *top-map* (kbd "s-$") "gmove-and-follow 4")
