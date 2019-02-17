@@ -2,4 +2,5 @@
 
 unset SESSION_MANAGER
 unset DBUS_SESSION_BUS_ADDRESS
+# /run/current-system/profile/bin/dbus-launch xfce4-session
 /home/natsu/.guix-profile/bin/stumpwm
