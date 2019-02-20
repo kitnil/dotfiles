@@ -1444,3 +1444,30 @@ capturing user input and paste it with @kbd{C-v} after exit.")
     (description "This package provides a way to swap Emacs buffers without
 typing C-x b on each window.")
     (license license:gpl3+)))
+
+(define-public emacs-symbol-overlay
+  (let ((commit "11f91ce5b6e5b15f6fef364a701880144ddca6e2"))
+    (package
+      (name "emacs-symbol-overlay")
+      (version (git-version "4.1" "1" commit))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/wolray/symbol-overlay.git")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "0vj424bbgwbsn690qhfbvhla3nqfz22v4ml1ykafxak3nvkm4zxd"))))
+      (build-system emacs-build-system)
+      (home-page "https://github.com/wolray/symbol-overlay/")
+      (synopsis "Highlight symbols with keymap-enabled overlays")
+      (description
+       "Highlighting symbols with overlays while providing a keymap for
+various operations about highlighted symbols.  It was originally inspired by
+the package @code{highlight-symbol}.  The fundamental difference is that in
+@code{symbol-overlay} every symbol is highlighted by the Emacs built-in
+function @code{overlay-put} rather than the @code{font-lock} mechanism used in
+@code{highlight-symbol}.")
+      (license license:gpl3+))))
