@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2018 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2018, 2019 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -88,3 +88,35 @@
     (description "libXss provides an X Window System client interface to the
 MIT-SCREEN-SAVER extension to the X11 protocol.")
     (license license:x11)))
+
+(define-public tabbed
+  (package
+    (name "tabbed")
+    (version "0.6")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://git.suckless.org/tabbed")
+                    (commit version)))
+              (file-name (git-file-name name version))
+              (sha256
+               (base32
+                "1gyhfvim1ckf4g78ysl6l4k9nckipnrp1338zh9klncszfraakj3"))))
+    (build-system gnu-build-system)
+    (inputs
+     `(("xorgproto" ,xorgproto)
+       ("libx11" ,libx11)))
+    (arguments
+       `(#:tests? #f ;no tests
+         #:make-flags (list "CC=gcc"
+                            (string-append "PREFIX=" %output))
+         #:phases
+         (modify-phases %standard-phases
+            ;; no configure script
+           (delete 'configure))))
+    (home-page "https://tools.suckless.org/tabbed/")
+    (synopsis "Frontend to xembed aware applications")
+    (description "Simple generic tabbed frontend to xembed aware applications,
+originally designed for surf but also usable with many other applications,
+i.e. @code{st}, @code{uzbl}, @code{urxvt} and @code{xterm}.")
+    (license license:isc)))
