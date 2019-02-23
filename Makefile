@@ -1,5 +1,5 @@
 stow:
-	stow --target=$(HOME) --dir=fiore natsu
+	stow --target=$(HOME) --dir=$(PWD) oleg
 
 update-mime:
 	update-desktop-database ~/.local/share/applications/
