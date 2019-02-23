@@ -3,7 +3,7 @@
              (guix profiles))
 
 (use-package-modules admin algebra aspell audio backup bittorrent
-cdrom ci cmake code commencement compression cpio cran curl
+cdrom chromium ci cmake code commencement compression cpio cran curl
 databases dictionaries dns elf games gcc gdb ghostscript golang gl glib
 gnu-doc gnupg gnuzilla graphics graphviz gstreamer gtk guile guile-xyz haskell
 image-viewers imagemagick inkscape kodi libreoffice license linux lisp
@@ -106,6 +106,7 @@ xml xorg)
                cli-visualizer
 
                icecat ; Web browser
+	       ungoogled-chromium
 
                node ;Packages in <~/.npm-global/bin/>.
 
