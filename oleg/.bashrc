@@ -170,4 +170,8 @@ activity()
 alias ls='ls -B -p --color=auto'
 
 eval "$(direnv hook bash)"
-. "$HOME/.nix-profile/share/bash-completion/completions/docker"
+
+if [ -f "$HOME/.nix-profile/share/bash-completion/completions/docker" ]
+then
+    . "$HOME/.nix-profile/share/bash-completion/completions/docker"
+fi
