@@ -4,15 +4,15 @@
 
 (use-package-modules admin algebra aspell audio backup bittorrent
 cdrom chromium ci cmake code commencement compression cpio cran curl
-databases dictionaries dns elf games gcc gdb ghostscript golang gl glib
-gnu-doc gnupg gnuzilla graphics graphviz gstreamer gtk guile guile-xyz haskell
-image-viewers imagemagick inkscape kodi libreoffice license linux lisp
-logging lsof lxde m4 mail man maths messaging ncdu ncurses networking
-node package-management parallel password-utils patchutils pdf perl
-perl-web python python-xyz qt rdesktop samba scheme screen shellutils
-ssh statistics sqlite suckless synergy tex texinfo textutils tmux tls tor
-valgrind version-control video virtualization w3m web wget xdisorg
-xml xorg)
+databases dictionaries dns dunst file elf games gcc gdb ghostscript
+golang gl glib gnu-doc gnupg gnuzilla graphics graphviz gstreamer gtk
+guile guile-xyz haskell image-viewers imagemagick inkscape kodi
+libreoffice license linux lisp logging lsof lxde m4 mail man maths
+messaging ncdu ncurses networking node package-management parallel
+password-utils patchutils pdf perl perl-web python python-xyz qt
+rdesktop samba scheme screen shellutils ssh statistics sqlite suckless
+synergy tex texinfo textutils tmux tls tor valgrind version-control
+video virtualization w3m web wget xdisorg xml xorg)
 
 (define guix-collection-packages-multiout
   `((,glib "bin")
@@ -25,8 +25,7 @@ xml xorg)
     (,isc-bind "utils")))
 
 (define %large-packages
-  (list libreoffice
-        python-pyqt-without-qtwebkit))
+  (list libreoffice python-pyqt-without-qtwebkit))
 
 (define %spelling-packages
   (list aspell aspell-dict-en aspell-dict-ru))
@@ -38,9 +37,9 @@ xml xorg)
 
                ;; See <https://github.com/NixOS/nixpkgs/issues/16327#issuecomment-303068424>.
                at-spi2-core
-               ghostscript/x
+               ghostscript/x gnuplot
                ghc-pandoc  ; Convert Markdown
-               gnuplot
+
                jq
 
                cloc            ; Count code
@@ -54,34 +53,19 @@ xml xorg)
                translate-shell ; Translation in CLI and Emacs
                password-store  ; Password management
 
-               python
-               python-hy
-
                cuirass
 
-               go
+               artanis guile-2.2 guile-colorized guile-daemon 
+               guile-fibers guile-gcrypt guile-git guile-readline
+               guile-redis guile-ssh guile-xosd
 
-               artanis
-               guile-2.2
-               guile-colorized
-               guile-daemon
-               guile-fibers
-               guile-gcrypt
-               guile-git
-               guile-readline
-               guile-redis
-               guile-ssh
-               guile-xosd
-
-               racket
+               chicken go m4 racket perl python python-hy r sbcl
 
                mcron
 
-               colordiff
-               colormake
-               perl
+               git colordiff mercurial gource
 
-               git       ; Version control
+               colormake
 
                guile-commonmark ; Commonmark for Guile
                ;; gwl              ; Guix workflow management ; fails to build
@@ -97,43 +81,42 @@ xml xorg)
                youtube-dl   ; Video and music from websites
 
                redshift  ; Color temperature
-               python-clf ; Interface to <https://commandlinefu.com/>
                neofetch
 
-               xmessage
+               python-clf ; Interface to <https://commandlinefu.com/>
 
-               alsa-utils
-               cli-visualizer
+               dbus dunst xmessage
 
-               icecat ; Web browser
-	       ungoogled-chromium
+               alsa-utils cli-visualizer
+
+               ;; WEB
+               icecat ungoogled-chromium
 
                node ;Packages in <~/.npm-global/bin/>.
 
-               torsocks
-               tor
+               tor torsocks
 
-               mailutils
-               isync   ; Sync IMAP
-               msmtp
-               notmuch ; Mail indexer based on Xapian
+               ;; Mail
+               mailutils isync msmtp notmuch
 
-               mlt         ; Video editing framework
-               mpv         ; Video and audio player
-               obs ;ffmpeg frontend
-               vlc
+               gnupg
 
-               zathura     ; Lightweight customizable PDF reader
-               zathura-djvu
-               zathura-pdf-mupdf
+               file tree python-pygments
 
-               keynav
-               rofi
-               scrot ;screenshot
-               st
-               xauth
-               xev
-               xsel ;clipboard
+               ;; Utilities
+               strace tcpdump multitail wireshark
+
+               hdparm
+
+               tmux
+
+               mlt mpv obs vlc
+
+               ;; PDF
+               zathura zathura-djvu zathura-pdf-mupdf
+
+               ;; X11
+               keynav rofi st xauth xev scrot xsel
 
                perl-uri-escape ;convert url
 
@@ -141,13 +124,7 @@ xml xorg)
 
                octave
 
-               hdparm
-               htop            ; Pretty `top'
-               inxi
-               iotop
-               jnettop
-               python-glances
-               multitail
+               htop inxi iotop jnettop python-glances
 
                synergy
 
@@ -156,62 +133,38 @@ xml xorg)
                ;; FAIL: ansible         ; Configuration management
                bc
                cpio
-               curl
-               detox           ; Replace spaces with underscores in filenames
+               detox ; Replace spaces with underscores in filenames
                diffoscope
                dos2unix
                freerdp
-               graphviz  ; `dot'
+               graphviz ;produce `dot' files graphs
                html-xml-utils
                licensecheck ; Licence checker for source files
                lsof
                ncdu            ; TUI `du'
-               netcat          ; TCP
-               nmap
+               netcat          ; TCP nmap
                openssl
-               parallel
+               
                reptyr
                shellcheck
                sipcalc
                socat
                sshpass
-               sqlite
-               unzip
-               wget
-               wireshark
-               zip
+               sqlite unzip zip
+               curl wget
 
                texinfo
 
-               lvm2
-               cdrkit-libre
-               qemu
-               samba
-               ubridge
-               virt-manager
+               lvm2 cdrkit-libre qemu samba ubridge virt-manager
 
                python-pyqt-without-qtwebkit
 
-               znc
+               tmux tmuxifier parallel w3m znc
 
-               gnu-c-manual ; C language documentation
-               gnu-standards
-               man-pages
-               sicp         ; Structure and Interpretation of Computer Programs
+               gnu-c-manual gnu-standards man-pages
+               sicp ; Structure and Interpretation of Computer Programs
 
-               chicken ; Chicken Scheme
-               sbcl ; For StumpWM.  See <https://stumpwm.github.io/>.
-               stumpwm
-
-               tmux
-               tmuxifier
-
-               python-pygments ; Colorize output
-               w3m
-
-               restic ; Incremental backup
-
-               dbus
+               restic ;backup
 
                cflow         ;C program call map.
                gcc-toolchain ;For Emacs `semantic-mode'.
@@ -219,24 +172,13 @@ xml xorg)
                global        ;Source tagging.
                valgrind      ;Memory debug.
 
-               gource
+               mesa mesa-utils
 
-               mercurial
+               gst-plugins-base gst-plugins-bad gst-plugins-good
+               gst-plugins-ugly gstreamer
 
-               mesa-utils
-               mesa
+               minetest ; FOSS Minecraft like game
+               )
 
-               gst-plugins-base
-               gst-plugins-bad
-               gst-plugins-good
-               gst-plugins-ugly
-               gstreamer
-
-               minetest                 ; Open source Minecraft
-
-               m4
-
-               r)
-
-         ;; %large-packages
+         %large-packages
          %spelling-packages))
