@@ -1,5 +1,6 @@
 (use-modules (chromium chromium)
              (gnu packages emacs)
+             (gnu packages docker)
              (wigust packages databases)
              (wigust packages emacs)
              (wigust packages guix)
@@ -17,6 +18,8 @@
    emacs-atomic-chrome
    emacs-awk-it
    emacs-debpaste           ; Front end to <https://paste.debian.net/>
+   emacs-dockerfile-mode
+   emacs-docker-tramp
    emacs-engine-mode-autoload ; Define searches on websites
    emacs-eval-in-repl       ; Evaluate to different Repls
    emacs-flyspell-correct

@@ -24,8 +24,6 @@
        emacs-debbugs ; <https://debbugs.gnu.org/> interface
        emacs-default-encrypt    ; Sign mail automatically
        emacs-default-text-scale ; Scale text in all buffers
-       emacs-docker-tramp
-       emacs-dockerfile-mode
        emacs-dumb-jump
        emacs-ebuild-mode
        emacs-edit-indirect
