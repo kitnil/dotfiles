@@ -60,8 +60,6 @@
    adb       ; For Replicant (Android distribution) control
    cups      ; Printer
    ethtool   ; wol (wake on lan)
-   file      ; Information about file from magic
-   gnupg
    iptables
    knot
    lm-sensors      ; `sensors'
