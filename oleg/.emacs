@@ -482,18 +482,6 @@ Sets the following basend on PREFIX-MAP:
 (wi-define-switch-to-buffer eww "*eww*")
 (wi-define-switch-to-buffer nekrovim "#nekrovim")
 
-(defmacro wi-define-find-file (name file)
-  `(defun ,(intern (concat "wi-find-file-" (symbol-name name)))
-       nil
-     (interactive)
-     (find-file ,file)))
-
-(wi-define-find-file guixsd (expand-file-name
-                             "~/dotfiles/fiore/magnolia.scm"))
-
-(wi-define-find-file emacs (expand-file-name
-                            "~/dotfiles/fiore/natsu/.emacs"))
-
 (defmacro wi-define-magit-status-repo (name directory)
   `(defun ,(intern (concat "wi-magit-status-repo-"
                            (symbol-name name)))
