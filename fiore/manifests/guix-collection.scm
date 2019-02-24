@@ -9,10 +9,10 @@ golang gl glib gnu-doc gnupg gnuzilla graphics graphviz gstreamer gtk
 guile guile-xyz haskell image-viewers imagemagick inkscape kodi
 libreoffice license linux lisp logging lsof lxde m4 mail man maths
 messaging ncdu ncurses networking node package-management parallel
-password-utils patchutils pdf perl perl-web python python-xyz qt
-rdesktop samba scheme screen shellutils ssh statistics sqlite suckless
-synergy tex texinfo textutils tmux tls tor valgrind version-control
-video virtualization w3m web wget xdisorg xml xorg)
+password-utils patchutils pdf perl perl-web pulseaudio python
+python-xyz qt rdesktop samba scheme screen shellutils ssh statistics
+sqlite suckless synergy tex texinfo textutils tmux tls tor valgrind
+version-control video virtualization w3m web wget xdisorg xml xorg)
 
 (define guix-collection-packages-multiout
   `((,glib "bin")
@@ -87,7 +87,7 @@ video virtualization w3m web wget xdisorg xml xorg)
 
                dbus dunst xmessage
 
-               alsa-utils cli-visualizer
+               alsa-utils cli-visualizer pulsemixer pavucontrol
 
                ;; WEB
                icecat ungoogled-chromium
@@ -99,7 +99,7 @@ video virtualization w3m web wget xdisorg xml xorg)
                ;; Mail
                mailutils isync msmtp notmuch
 
-               gnupg
+               gnupg pinentry
 
                file tree python-pygments
 
