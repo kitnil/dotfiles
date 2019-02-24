@@ -201,6 +201,18 @@ EndSection\n")
                            9)
                           %base-user-accounts)))
 
+    (hosts-file
+     (plain-file
+      "hosts"
+      (string-append
+       (local-host-aliases (operating-system-host-name base-system))
+       "\n\n"
+       "192.168.100.1 r1.tld\n"
+       "192.168.105.1 r2.tld\n"
+       "127.0.0.1 gitlab.wugi.info grafana.wugi.info zabbix.wugi.info"
+       "\n\n"
+       %facebook-host-aliases)))
+
     (services (cons* (extra-special-file "/usr/bin/env"
 		    			 (file-append coreutils "/bin/env"))
 
