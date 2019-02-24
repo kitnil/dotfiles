@@ -36,29 +36,30 @@ docker run \
        --name elasticsearch \
        --detach \
        --restart unless-stopped \
-       --volume /srv/elk/data:/usr/share/elasticsearch/data \
+       --volume /var/lib/elasticsearch/data:/usr/share/elasticsearch/data \
        --volume /srv/elk/backup:/mnt/backup \
-       --volume /home/natsu/src/hello-elk/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml \
+       --volume /etc/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml \
        --publish 9200:9200 \
        --publish 9300:9300 \
        docker.elastic.co/elasticsearch/elasticsearch:6.5.1
 
 docker run \
        --name filebeat \
+       --detach \
        --add-host elasticsearch:192.168.105.120 \
        --restart unless-stopped \
-       --mount type=bind,source=/home/natsu/src/hello-elk/filebeat.yml,target=/usr/share/filebeat/filebeat.yml \
+       --mount type=bind,source=/etc/filebeat/filebeat.yml,target=/usr/share/filebeat/filebeat.yml \
        --mount type=bind,source=/var/log,target=/mnt/log,readonly \
        --mount type=bind,source=/etc/localtime,target=/etc/localtime,readonly \
-       --hostname magnolia.tld \
-       docker.elastic.co/beats/filebeat:6.5.1 -e -strict.perms=false -E output.elasticsearch.hosts=["elasticsearch:9200"] -E name="magnolia.tld"
+       --hostname guixsd \
+       docker.elastic.co/beats/filebeat:6.5.1 -e -strict.perms=false -E output.elasticsearch.hosts=["elasticsearch:9200"] -E name="guixsd"
 
 docker run \
        --name kibana \
        --detach \
        --restart unless-stopped \
        --publish 5601:5601 \
-       --mount type=bind,source=/home/natsu/src/hello-elk/kibana.yml,target=/usr/share/kibana/config/kibana.yml \
+       --mount type=bind,source=/etc/kibana/kibana.yml,target=/usr/share/kibana/config/kibana.yml \
        docker.elastic.co/kibana/kibana:6.5.1
 
 docker run \
