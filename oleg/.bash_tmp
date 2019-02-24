@@ -1,0 +1,161 @@
+#!/bin/sh
+
+cerb-auth()
+{
+    CERB_MAIL='pyhalov@majordomo.ru' CERB_PASS="$(pass show majordomo.ru/pyhalov)" $HOME/src/jord/cc.scm
+}
+
+guix-current-commit()
+{
+    guix describe --format=json \
+        | jq --raw-output 'map(select(.name == "guix"))'[0].commit
+}
+
+find-not-current-user()
+{
+    find "$1" -not -user "$(getent passwd $USER | cut -d : -f 3)"
+}
+
+docker-export-archive()
+{
+    image="$1"
+    host="$2"
+    docker save "$image" | bzip2 | ssh "$host" 'bunzip2 | /home/user/.nix-profile/bin/docker load'
+}
+
+export GITLAB_API_PRIVATE_TOKEN="***REMOVED***"
+export GITLAB_API_ENDPOINT="https://gitlab.wugi.info/api/v4"
+export GITLAB_API_HTTPARTY_OPTIONS="{verify: false}"
+
+gitlab-shell-create-project()
+{
+     gitlab create_project "$1" "{visibility: public}"
+}
+
+gitlab-shell-create-project-in-groups()
+{
+    name="$1"
+    group="$2"
+    gitlab create_project "$name" "{visibility: public, namespace_id: $group}"
+    echo "https://gitlab.wugi.info/$group/$name"
+    echo "git@gitlab.wugi.info:$group/$name.git"
+}
+
+ansible-playbook-fetch()
+{
+    ansible-playbook "$HOME/src/hello-ansible/fetch.yml"
+}
+
+jenkins()
+{
+    curl --user 'admin:***REMOVED***' \
+         'http://localhost:30080/job/fiore/build?token=***REMOVED***'
+}
+
+jenkins-wip-guile()
+{
+    curl --user 'admin:***REMOVED***' \
+         'http://localhost:30080/job/wip-guile/build?token=***REMOVED***'
+}
+
+bench-emacs()
+{
+    emacs --batch --eval '(message (emacs-init-time))'
+}
+
+emacs-znc()
+{
+    emacs --daemon=znc
+}
+
+emacsclient-znc()
+{
+    emacsclient --socket-name=znc
+}
+
+firefox-dark()
+{
+    firefox -p dark --new-instance --new-window 'http://zabbix.intr/' --new-window 'https://www.youtube.com/feed/subscriptions' --new-window 'https://www.youtube.com/watch?v=OqtK2Aq0nHo&list=RDMMOqtK2Aq0nHo&start_radio=1'
+}
+
+f() { guix environment --no-grafts -L ~/src/guix-wigust --pure libtcod --ad-hoc strace gdb findutils -- sh -c "cd /tmp/guix-build-libtcod-1.10.2-1.e7c4dbb.drv-$1; source /tmp/guix-build-libtcod-1.10.2-1.e7c4dbb.drv-$1/environment-variables; cd /tmp/guix-build-libtcod-1.10.2-1.e7c4dbb.drv-$1/source/build/autotools; ./configure;"; }
+
+e() { guix environment --no-grafts -L ~/src/guix-wigust --pure libtcod --ad-hoc strace gdb findutils; }
+
+docker-gc()
+{
+    # https://stackoverflow.com/questions/17236796/how-to-remove-old-docker-containers
+    docker ps --filter "status=exited" | grep 'weeks ago' | awk '{ print $1 }' | xargs --no-run-if-empty docker rm
+    # https://forums.docker.com/t/command-to-remove-all-unused-images/20/2
+    docker images -q | xargs docker rmi
+}
+
+alias gnus='emc -e "(gnus)"'
+alias magit-guix='emc -e "(let ((default-directory (expand-file-name \"~/src/guix\"))) (magit-status))"'
+alias emms='emc -e "(emms)"'
+alias elfeed='emc -e "(elfeed)"'
+
+
+pre-build()
+{
+    sudo -E $HOME/src/guix/pre-inst-env \
+         guix system build \
+         --substitute-urls='http://cuirass.tld https://berlin.guixsd.org https://mirror.hydra.gnu.org' \
+         -L $HOME/dotfiles/fiore/modules \
+         $@
+}
+
+pre-reconfigure()
+{
+    sudo -E $HOME/src/guix/pre-inst-env \
+         guix system reconfigure \
+         --substitute-urls='http://cuirass.tld https://berlin.guixsd.org https://mirror.hydra.gnu.org' \
+         -L $HOME/dotfiles/fiore/modules \
+         $@
+}
+
+pre-weather()
+{
+    $HOME/src/guix/pre-inst-env \
+        guix weather \
+        --substitute-urls='http://cuirass.tld https://berlin.guixsd.org https://mirror.hydra.gnu.org' \
+        $@
+}
+
+build()
+{
+    sudo -E \
+         guix system build \
+         --substitute-urls='http://cuirass.tld https://ci.guix.info https://mirror.hydra.gnu.org' \
+         -L $HOME/dotfiles/fiore/modules \
+         $@
+}
+
+reconfigure()
+{
+    sudo -E \
+         guix system reconfigure \
+         --substitute-urls='http://cuirass.tld https://berlin.guixsd.org https://mirror.hydra.gnu.org' \
+         -L $HOME/dotfiles/fiore/modules \
+         $@
+}
+
+firefox-run()
+{
+    GTK_THEME=Adwaita:dark firefox -P default --new-instance;
+}
+
+stumpish-restore-rules()
+{
+    echo '(restore-window-placement-rules "~/.stumpwm.d/rules/4.lisp")' | stumpish -e eval
+}
+
+esxi()
+{
+    echo 192.168.125.22 \
+         192.168.125.21 \
+         192.168.125.14 \
+         192.168.125.13 \
+         192.168.125.12 \
+         192.168.125.11
+}

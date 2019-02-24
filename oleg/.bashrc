@@ -171,7 +171,17 @@ alias ls='ls -B -p --color=auto'
 
 eval "$(direnv hook bash)"
 
+if [ -f "$HOME/.guix-profile/etc/profile.d/nix.sh" ]
+then
+    . "$HOME/.guix-profile/etc/profile.d/nix.sh"
+fi
+
 if [ -f "$HOME/.nix-profile/share/bash-completion/completions/docker" ]
 then
     . "$HOME/.nix-profile/share/bash-completion/completions/docker"
+fi
+
+if [ -f "$HOME/.bash_tmp" ]
+then
+    . "$HOME/.bash_tmp"
 fi
