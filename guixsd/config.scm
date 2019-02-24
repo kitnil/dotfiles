@@ -1,7 +1,7 @@
 (use-modules (gnu) (srfi srfi-1) (srfi srfi-26))
 (use-package-modules admin base certs lisp suckless xdisorg xorg fonts
                      fontutils gnome freedesktop readline)
-(use-service-modules dbus desktop networking sound xorg ssh)
+(use-service-modules dbus desktop networking sound xorg ssh web certbot)
 
 (define 20-intel.conf "\
 # This block fixes tearing on Intel GPU.
@@ -14,6 +14,87 @@ Section \"Device\"
    Option      \"SwapbuffersWait\" \"true\"
    Option      \"TearFree\" \"true\"
 EndSection\n")
+
+
+;;;
+;;; Certbot
+;;;
+
+(define letsencrypt-certificate
+  (cut string-append "/etc/letsencrypt/live/" <> "/fullchain.pem"))
+
+(define letsencrypt-key
+  (cut string-append "/etc/letsencrypt/live/" <> "/privkey.pem"))
+
+
+;;;
+;;; NGINX
+;;;
+
+(define %nginx-certbot
+  (nginx-location-configuration
+   (uri "/.well-known")
+   (body '("root /var/www;"))))
+
+(define* (proxy host port #:key (ssl? #f) (ssl-target? #f) (well-known? #t))
+  (nginx-server-configuration
+   (server-name (list host (string-append "www." host)))
+   (locations (delete #f
+                      (list (nginx-location-configuration
+                             (uri "/")
+                             (body (list "resolver 80.80.80.80;"
+                                         (string-append "set $target localhost:" (number->string port) ";")
+                                         (format #f "proxy_pass ~a://$target;" (if ssl-target? "https" "http"))
+                                         (format #f "proxy_set_header Host ~a;" host)
+                                         "proxy_set_header X-Forwarded-Proto $scheme;"
+                                         "proxy_set_header X-Real-IP $remote_addr;"
+                                         "proxy_set_header X-Forwarded-for $remote_addr;"
+                                         "proxy_connect_timeout 300;")))
+                            (and well-known?
+                                 (nginx-location-configuration
+                                  (uri "/.well-known")
+                                  (body '("root /var/www;")))))))
+   (listen (if ssl?
+               (list "443 ssl")
+               (list "80")))
+   (ssl-certificate (if ssl?
+                        (letsencrypt-certificate host)
+                        #f))
+   (ssl-certificate-key (if ssl?
+                            (letsencrypt-key host)
+                            #f))))
+
+(define %nginx-deploy-hook
+  (program-file
+   "nginx-deploy-hook"
+   #~(let ((pid (call-with-input-file "/var/run/nginx/pid" read)))
+       (kill pid SIGHUP))))
+
+(define %nginx-server-blocks
+  (list (nginx-server-configuration
+         (server-name '("www.tld"))
+         (listen '("80"))
+         (root "/srv/share"))
+        (proxy "cups.tld" 631)
+        (proxy "torrent.tld" 9091)
+        (proxy "jenkins.wugi.info" 30080 #:ssl? #t)
+        (proxy "grafana.wugi.info" 3080 #:ssl? #t)
+        (proxy "gitlab.wugi.info" 65080  #:ssl? #t)
+        (proxy "anongit.duckdns.org" 65080  #:ssl? #t)
+        (proxy "cuirass.tld" 19080)
+        (proxy "input.tld" 19080)
+        (proxy "prometheus.wugi.info" 65090 #:ssl? #t)
+        (proxy "alerta.intr" 16180)
+        (proxy "web.alerta.intr" 16480)
+        (proxy "zabbix.intr" 15081)
+        (proxy "cerberus.intr" 15080)
+        (proxy "grafana.intr" 16080)
+        (proxy "guix.duckdns.org" 3000 #:ssl? #t)))
+
+
+;;;
+;;; Entryp point
+;;;
 
 (let ((base-system (load "/etc/config.scm")))
   (operating-system
@@ -119,5 +200,9 @@ EndSection\n")
 			      (openssh-configuration
 			       (x11-forwarding? #t)
 			       (password-authentication? #f)))
+
+                     (service nginx-service-type
+                              (nginx-configuration
+                               (server-blocks %nginx-server-blocks)))
 
 		     (operating-system-user-services base-system)))))
