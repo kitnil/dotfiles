@@ -2,7 +2,7 @@
 (use-package-modules admin base certs lisp suckless xdisorg xorg fonts
                      fontutils gnome freedesktop readline networking)
 (use-service-modules admin dbus desktop dns networking sound xorg ssh
-                     web certbot monitoring databases)
+                     web certbot monitoring databases mail)
 
 (define 20-intel.conf "\
 # This block fixes tearing on Intel GPU.
@@ -283,6 +283,15 @@ FpingLocation=/run/setuid-programs/fping
                               (zabbix-front-end-configuration
                                (db-secret-file "/etc/zabbix/zabbix.secret")
                                (nginx %zabbix-nginx-configuration)))
+
+                     (dovecot-service
+                      #:config (dovecot-configuration
+                                (listen '("127.0.0.1"))
+                                (disable-plaintext-auth? #f)
+                                (mail-location
+                                 (string-append "maildir:~/Maildir"
+                                                ":INBOX=~/Maildir/INBOX"
+                                                ":LAYOUT=fs"))))
 
 		     (operating-system-user-services base-system)))
     
