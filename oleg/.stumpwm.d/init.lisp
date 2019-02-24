@@ -301,7 +301,7 @@
 (defcommand mpv-watch () ()
   "Play video from file with mpv."
   (run-shell-command
-   (join `(,*mpv-program* ,@*mpv-arguments* "$(cat /home/natsu/watch)"))))
+   (join `(,*mpv-program* ,@*mpv-arguments* ,(concat "$(cat " *home* "/watch)")))))
 
 
 ;;;
