@@ -61,20 +61,14 @@
    cups      ; Printer
    ethtool   ; wol (wake on lan)
    iptables
-   knot
    lm-sensors      ; `sensors'
-   ncurses
    nss-certs ; for https
    openssh   ; `scp'
-   pinentry  ; Password typing for Gnupg
    qemu
    rsync
    sshfs-fuse
    strace
    tcpdump
-   tmux
-   tree      ; List files as a tree
-   wget
    xkill
    zile
 
@@ -86,10 +80,6 @@
    font-misc-misc  ; for `xterm'
    font-wqy-zenhei ; Chinese, Japanese, Korean
    fontconfig      ; `fc-cache -f'
-
-   alsa-utils
-   pavucontrol ; Pulseaudio control GUI
-   pulseaudio
 
    httpd
    mariadb
