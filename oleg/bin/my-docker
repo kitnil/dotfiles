@@ -1,18 +1,6 @@
 #!/bin/sh
 
 docker run \
-       --name jenkins \
-       --hostname jenkins \
-       --detach \
-       --restart unless-stopped \
-       --add-host gitlab.wugi.info:192.168.105.120 \
-       --user jenkins:"$(getent passwd jenkins | cut -d ':' -f 3,4)" \
-       --volume /home/jenkins:/var/jenkins_home \
-       --publish 30080:8080 \
-       --publish 50000:50000 \
-       jenkins/jenkins:lts
-
-docker run \
        --name influxdb \
        --detach \
        --restart unless-stopped \
@@ -87,3 +75,15 @@ docker run \
        --volume /var/log/gitlab:/var/log/gitlab \
        --volume /var/lib/gitlab:/var/opt/gitlab \
        gitlab/gitlab-ce:11.6.0-ce.0
+
+docker run \
+       --name jenkins \
+       --hostname jenkins \
+       --detach \
+       --restart unless-stopped \
+       --add-host gitlab.wugi.info:192.168.105.120 \
+       --user jenkins:"$(getent passwd jenkins | cut -d ':' -f 3,4)" \
+       --volume /home/jenkins:/var/jenkins_home \
+       --publish 30080:8080 \
+       --publish 50000:50000 \
+       jenkins/jenkins:lts
