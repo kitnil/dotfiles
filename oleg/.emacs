@@ -2661,7 +2661,7 @@ If nil use light theme.")
             (progn (setq paragraph-separate "[ 	]*$")
                    (setq paragraph-start "\\|[ 	]*$"))))
 
-(load (expand-file-name "~/.emacs.d/erza/elfeed.el"))
+(load (expand-file-name "~/.emacs.d/.elfeed-feeds.el"))
 
 ;; `w3m' fonts
 (setq w3m-fill-column 80)
