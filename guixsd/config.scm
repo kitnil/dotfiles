@@ -1,7 +1,8 @@
 (use-modules (gnu) (srfi srfi-1) (srfi srfi-26))
 (use-package-modules admin base certs lisp suckless xdisorg xorg fonts
-                     fontutils gnome freedesktop readline)
-(use-service-modules admin dbus desktop dns networking sound xorg ssh web certbot)
+                     fontutils gnome freedesktop readline networking)
+(use-service-modules admin dbus desktop dns networking sound xorg ssh
+                     web certbot monitoring databases)
 
 (define 20-intel.conf "\
 # This block fixes tearing on Intel GPU.
@@ -91,6 +92,26 @@ EndSection\n")
         (proxy "grafana.intr" 16080)
         (proxy "guix.duckdns.org" 3000 #:ssl? #t)))
 
+(define %zabbix-nginx-configuration
+  (list
+   (nginx-server-configuration
+    (inherit %zabbix-front-end-configuration-nginx)
+    (server-name '("zabbix.wugi.info" "alerta.duckdns.org" "zabbix.tld"))
+    (locations
+     (cons* (nginx-location-configuration
+             (inherit php-location)
+             (uri "/describe/natsu")
+             (body (append '("alias /var/www/php;")
+                           (nginx-location-configuration-body (nginx-php-location)))))
+            ;; For use by Certbot.
+            (nginx-location-configuration
+             (uri "/.well-known")
+             (body '("root /var/www;")))
+            (nginx-server-configuration-locations %zabbix-front-end-configuration-nginx)))
+    (listen '("443 ssl"))
+    (ssl-certificate (letsencrypt-certificate "zabbix.wugi.info"))
+    (ssl-certificate-key (letsencrypt-key "zabbix.wugi.info")))))
+
 
 ;;;
 ;;; Entryp point
@@ -123,6 +144,8 @@ EndSection\n")
 		     xhost
                      
                      nss-certs ;SSL certificates
+
+                     fping
 
 		     (operating-system-packages base-system)))
 
@@ -205,7 +228,12 @@ EndSection\n")
 		     (service openssh-service-type
 			      (openssh-configuration
 			       (x11-forwarding? #t)
+                               (gateway-ports? 'client)
 			       (password-authentication? #f)))
+
+                     (service php-fpm-service-type
+                              (php-fpm-configuration
+                               (timezone "Europe/Moscow")))
 
                      (service nginx-service-type
                               (nginx-configuration
@@ -226,4 +254,25 @@ EndSection\n")
                                                         (frequency 'daily)))
                                                      %default-rotations)))))
 
-		     (operating-system-user-services base-system)))))
+                     (postgresql-service)
+
+                     (service zabbix-server-service-type
+                              (zabbix-server-configuration
+                               (include-files '("/etc/zabbix/zabbix-server.secret"))
+                               (extra-options "
+AlertScriptsPath=/etc/zabbix/alertscripts
+ExternalScripts=/etc/zabbix/externalscripts
+FpingLocation=/run/setuid-programs/fping
+")))
+
+                     (service zabbix-agent-service-type)
+
+                     (service zabbix-front-end-service-type
+                              (zabbix-front-end-configuration
+                               (db-secret-file "/etc/zabbix/zabbix.secret")
+                               (nginx %zabbix-nginx-configuration)))
+
+		     (operating-system-user-services base-system)))
+    
+    (setuid-programs (cons (file-append fping "/sbin/fping")
+                           %setuid-programs))))
