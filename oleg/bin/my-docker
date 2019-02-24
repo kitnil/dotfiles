@@ -77,13 +77,13 @@ docker run \
        --restart unless-stopped \
        --hostname gitlab \
        --add-host gitlab.wugi.info:127.0.0.1 \
-       --add-host smtp:192.168.105.120 \
+       --add-host smtp:172.17.0.1 \
        --name gitlab \
        --detach \
        --publish 65080:80 \
        --publish 65022:22 \
        --publish 65090:9090 \
-       --volume /srv/gitlab/etc:/etc/gitlab \
-       --volume /srv/gitlab/logs:/var/log/gitlab \
-       --volume /srv/gitlab/data:/var/opt/gitlab \
+       --volume /etc/gitlab:/etc/gitlab \
+       --volume /var/log/gitlab:/var/log/gitlab \
+       --volume /var/lib/gitlab:/var/opt/gitlab \
        gitlab/gitlab-ce:11.6.0-ce.0
