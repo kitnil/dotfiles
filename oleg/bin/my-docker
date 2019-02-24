@@ -19,8 +19,8 @@ docker run \
        --env 'INFLUXDB_ADMIN_ENABLED=true' \
        --publish 8083:8083 \
        --publish 8086:8086 \
-       --volume /home/influxdb:/var/lib/influxdb \
-       -v /home/natsu/src/hello-docker/influxdb/influxdb.conf:/etc/influxdb/influxdb.conf:ro \
+       --volume /var/lib/influxdb:/var/lib/influxdb \
+       --volume /etc/influxdb/influxdb.conf:/etc/influxdb/influxdb.conf:ro \
        influxdb -config /etc/influxdb/influxdb.conf
 
 docker run \
