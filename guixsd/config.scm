@@ -1,7 +1,7 @@
 (use-modules (gnu) (srfi srfi-1) (srfi srfi-26))
 (use-package-modules admin base certs lisp suckless xdisorg xorg fonts
                      fontutils gnome freedesktop readline)
-(use-service-modules dbus desktop networking sound xorg ssh web certbot)
+(use-service-modules admin dbus desktop dns networking sound xorg ssh web certbot)
 
 (define 20-intel.conf "\
 # This block fixes tearing on Intel GPU.
@@ -153,6 +153,12 @@ EndSection\n")
                    (group "users")
                    (comment "SSH forwarding privilege separation user")
                    (home-directory "/home/majordomo-ssh-tunnel"))
+                  (user-account
+                   (name "tail-ssh-tunnel")
+                   (uid 30015)
+                   (group "users")
+                   (comment "SSH forwarding privilege separation user")
+                   (home-directory "/home/tail-ssh-tunnel"))
                   (append ((lambda* (count #:key
                                       (group "nixbld")
                                       (first-uid 30101)
@@ -204,5 +210,20 @@ EndSection\n")
                      (service nginx-service-type
                               (nginx-configuration
                                (server-blocks %nginx-server-blocks)))
+
+                     (service ddclient-service-type)
+
+                     (service rottlog-service-type
+                              (rottlog-configuration
+                               (inherit (rottlog-configuration))
+                               (rotations (cons (log-rotation
+                                                 (files '("/var/log/nginx/access.log"
+                                                          "/var/log/nginx/error.log"))
+                                                 (frequency 'daily))
+                                                (map (lambda (rotation)
+                                                       (log-rotation
+                                                        (inherit rotation)
+                                                        (frequency 'daily)))
+                                                     %default-rotations)))))
 
 		     (operating-system-user-services base-system)))))
