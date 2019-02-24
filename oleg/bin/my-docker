@@ -25,9 +25,9 @@ docker run \
        --name grafana \
        --detach \
        --restart unless-stopped \
-       --user "$(getent passwd grafana | cut -d ':' -f 3,4)" \
+       --user 30020:0 \
        --publish 3080:3000 \
-       --volume /home/grafana:/var/lib/grafana \
+       --volume /var/lib/grafana:/var/lib/grafana \
        --mount type=bind,source=/etc/localtime,target=/etc/localtime,readonly \
        -e "GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource,alexanderzobnin-zabbix-app" \
        grafana/grafana
