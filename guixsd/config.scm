@@ -182,6 +182,11 @@ EndSection\n")
                    (group "users")
                    (comment "SSH forwarding privilege separation user")
                    (home-directory "/home/tail-ssh-tunnel"))
+                  (user-account
+                   (name "spb")
+                   (group "users")
+                   (comment "SSH forwarding privilege separation user")
+                   (home-directory "/home/spb"))
                   (append ((lambda* (count #:key
                                       (group "nixbld")
                                       (first-uid 30101)
