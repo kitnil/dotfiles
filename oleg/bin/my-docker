@@ -88,3 +88,12 @@ docker run \
        --publish 30080:8080 \
        --publish 50000:50000 \
        jenkins/jenkins:lts
+
+docker run \
+       --name registry \
+       --hostname registry \
+       --detach \
+       --restart unless-stopped \
+       --publish 5000:5000 \
+       --volume /var/lib/docker-registry:/var/lib/registry \
+       registry:2
