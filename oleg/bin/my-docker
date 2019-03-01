@@ -97,3 +97,18 @@ docker run \
        --publish 5000:5000 \
        --volume /var/lib/docker-registry:/var/lib/registry \
        registry:2
+
+docker run \
+       --name malscan \
+       --detach \
+       --interactive \
+       --publish 48080:8080 \
+       --volume /home/oleg/src/malscan:/var/www \
+       localhost:5000/malscannew
+
+docker run \
+       --name malscan-db \
+       --detach \
+       --interactive \
+       --publish 48306:3306 \
+       localhost:5000/ubuntu
