@@ -169,7 +169,7 @@ EndSection\n")
                    (uid 1000)
                    (comment "Oleg Pykhalov")
                    (group "users")
-                   (supplementary-groups '("wheel" "audio" "video" "docker"))
+                   (supplementary-groups '("wheel" "audio" "video" "docker" "kvm"))
                    (home-directory "/home/oleg"))
 		  (user-account
                    (name "majordomo-ssh-tunnel")
@@ -300,5 +300,6 @@ FpingLocation=/run/setuid-programs/fping
 
 		     (operating-system-user-services base-system)))
     
-    (setuid-programs (cons (file-append fping "/sbin/fping")
+    (setuid-programs (cons* (file-append fping "/sbin/fping")
+                            (file-append ubridge "/bin/ubridge")
                            %setuid-programs))))
