@@ -112,7 +112,9 @@
 (with-eval-after-load 'vc-git
   (let ((map vc-git-log-edit-mode-map))
     (define-key map (kbd "C-c /") 'hydra-dabbrev-expand/body)
-    (define-key map (kbd "C-c l") 'vc-chlog)))
+    (define-key map (kbd "C-c l") 'vc-chlog))
+  (let ((map vc-git-log-view-mode-map))
+    (define-key map (kbd "s") 'magit-show-commit)))
 
 (autoload 'crux-transpose-windows "crux" nil t)
 (autoload 'crux-open-with "crux" nil t)
