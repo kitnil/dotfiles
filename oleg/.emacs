@@ -278,6 +278,8 @@ If no commit hash provides, show a commit from hash at current point."
   "Directory containing Guix Git repository.")
 (define-wi-browse-url-git-commit guix wi-guix-git-directory)
 
+(setq browse-url-firefox-program "firefox")
+
 (setq browse-url-browser-function
       `(("^ftp://.*" . browse-ftp-tramp)
         (,(format "^%s\\(%s\\)?\\([[:digit:]]+\\)$"
