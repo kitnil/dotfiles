@@ -7,30 +7,16 @@
 (setf *message-window-gravity* :center)
 (setf *input-window-gravity* :center)
 
-(setf *home* "/home/natsu")
-
-(load (concat "/home/natsu" "/quicklisp/setup.lisp"))
-
-(ql:quickload "cffi")
-(ql:quickload "usocket-server")
-(ql:quickload "swank")
-
-(defcommand swank (display) ((:string "Swank on DISPLAY: "))
-  (when (not (string= "" display))
-    (swank-loader:init)
-    (swank:create-server :port (+ 4005 (parse-integer display))
-                         :style swank:*communication-style*
-                         :dont-close t)))
+(setf *home* "/home/oleg")
+(set-module-dir (concat *home* "/.stumpwm.d/modules/"))
 
 (set-prefix-key (kbd "C-i"))
 
 ;; (when (string= (getenv "DISPLAY") ":0.2")
 ;;   (set-prefix-key (kbd "C-i")))
 
-(set-module-dir (concat "/home/natsu" "/.stumpwm.d/modules/"))
-
 (run-shell-command "xsetroot -cursor_name left_ptr")
-(run-shell-command (concat "xrdb -merge " "/home/natsu" "/.Xresources"))
+(run-shell-command (concat "xrdb -merge " *home* "/.Xresources"))
 
 ;; Wallpaper
 ;; (run-shell-command "feh --bg-scale ~/Pictures/Wallpapers/current.png")
@@ -57,7 +43,7 @@
 ;; (run-shell-command "xset s 0")
 ;; (run-shell-command "xset dpms 0 0 1800")
 
-(run-shell-command "xmodmap " (concat "/home/natsu" "/.Xmodmap"))
+(run-shell-command "xmodmap " (concat *home* "/.Xmodmap"))
 
 (run-shell-command "keynav")
 
@@ -106,8 +92,8 @@
 
 (defcommand desktop-restore (desktop rules) ((:string "Restore desktop: ")
                                              (:string "Restore rules: "))
-  (let ((desktop (format nil "~a/.stumpwm.d/desktop/~a.lisp" "/home/natsu" desktop))
-        (rules (format nil "~a/.stumpwm.d/rules/~a.lisp" "/home/natsu" rules)))
+  (let ((desktop (format nil "~a/.stumpwm.d/desktop/~a.lisp" *home* desktop))
+        (rules (format nil "~a/.stumpwm.d/rules/~a.lisp" *home* rules)))
     (message (format nil "Restore desktop from ~s file." desktop))
     (message (format nil "Restore rules from ~s file." rules))
     (restore-from-file desktop)
@@ -115,7 +101,7 @@
     (restore-window-placement-rules rules)
     (place-existing-windows)))
 
-;; (restore-window-placement-rules "/home/natsu/.stumpwm.d/rules/4.lisp")
+;; (restore-window-placement-rules "/home/oleg/.stumpwm.d/rules/4.lisp")
 
 ;; (restore-from-file "/home/user/.stumpwm-dump-desktop.lisp")
 ;; (restore-from-file "~/.stumpwm-dump-desktop.lisp")
@@ -143,10 +129,10 @@
 (setf *window-format* "%m%n%s %c %50t")
 
 (defvar *xterm-command*
-  "exec xterm")
+  "exec /run/current-system/profile/bin/xterm")
 
 (defvar *xterm-big-command*
-  "exec xterm -fa 'Monospace' -fs 24")
+  "exec /run/current-system/profile/bin/xterm -fa 'Monospace' -fs 24")
 
 (defvar *xterm-theme-light*
   "-bg white -fg black")
@@ -628,6 +614,12 @@
 (define-key *root-map* (kbd "u") ; *rofi-map*
   nil)
 
+(defcommand rofi-stumpwm () ()
+  (run-shell-command (concat "rofi -show stumpwm -modi stumpwm:"
+                             *home* "/bin/rofi-stumpwm")))
+
+(define-key *root-map* (kbd "M-;") "rofi-stumpwm")
+
 (define-key *root-map* (kbd "C-e") "xclip-emacs")
 (define-key *root-map* (kbd "C-M-c") "xterm-big-screen")
 (define-key *root-map* (kbd "M-e") "emacs-anywhere")
@@ -767,7 +759,7 @@
 
   (defcommand yoo (url) ((:string "YouTube URL: "))
     (gnew "youtube")
-    (restore-group (current-group) (read-dump-from-file "/home/natsu/youtube.lisp"))
+    (restore-group (current-group) (read-dump-from-file (concat *home* "/youtube.lisp")))
     (term-shell-command (format nil "mpv --no-resume-playback --mute=yes ~s" url))
     (firefox (format nil "https://www.youtube.com/live_chat?v=~a&is_popout=1"
                      (cadr (split-string url "=")))
