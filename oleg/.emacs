@@ -295,7 +295,7 @@ If no commit hash provides, show a commit from hash at current point."
         (,wi-url-gnu-lists-regexp . eww-browse-url)
         (,wi-url-gnunet-bot-log-regexp . eww-browse-url)
         (,wi-debian-paste-regexp . wi-browse-url-paste-debian)
-        (,wi-url-github-regexp . browse-url-chromium)
+        (,wi-url-github-regexp . browse-url-firefox)
         (,wi-url-melpa-regexp . browse-url-chromium)
         (,wi-url-emacs-git-commit-regexp . browse-url-emacs-git-commit)
         (,wi-url-guix-git-commit-regexp . browse-url-guix-git-commit)
