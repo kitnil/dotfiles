@@ -1259,7 +1259,9 @@ With a prefix argument, clean `geiser-guile-load-path'."
   (let* ((geiser-guile-load-path (if (or pure current-prefix-arg) nil
                                    geiser-guile-load-path))
          (geiser-guile-load-path
-          (append (list (expand-file-name (projectile-project-root)))
+          (append (list (directory-file-name
+                         (expand-file-name
+                          (projectile-project-root))))
                   geiser-guile-load-path)))
     (run-guile)))
 
