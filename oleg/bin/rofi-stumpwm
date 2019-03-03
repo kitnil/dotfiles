@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ -z $@ ]
+then
+    stumpish commands | tr '[:space:]' '\n' | tr -d '[:blank:]' | sed '/^$/d' | sort
+else
+    stumpish $@
+fi
