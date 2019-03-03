@@ -1,0 +1,3 @@
+#!/bin/sh
+
+restic -r /srv/backup/guixsd backup /home/oleg $@
