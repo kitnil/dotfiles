@@ -147,7 +147,7 @@ restic-grep-bash-history()
     user="$1"
     host="$2"
     pattern="$3"
-    grep --no-filename $pattern /mnt/backup/$host/snapshots/*/home/$user/.bash_history | sort -u
+    grep --no-filename $pattern /tmp/backup-$host/snapshots/*/home/$user/.bash_history | sort -u
 }
 
 ssh-keygen-rsa()
