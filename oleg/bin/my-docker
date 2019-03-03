@@ -83,7 +83,7 @@ docker run \
        --detach \
        --restart unless-stopped \
        --add-host gitlab.wugi.info:192.168.105.120 \
-       --user jenkins:"$(getent passwd jenkins | cut -d ':' -f 3,4)" \
+       --user 30018:30004 \
        --volume /home/jenkins:/var/jenkins_home \
        --publish 30080:8080 \
        --publish 50000:50000 \
