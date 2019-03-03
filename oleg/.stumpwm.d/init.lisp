@@ -604,16 +604,6 @@
 (define-key *root-map* (kbd "C-m") "xclip-mpv")
 (define-key *root-map* (kbd "M-m") "xclip-streamlink")
 
-(defvar *rofi-map* nil
-  "Rofi related bindings hang from this keymap")
-
-(fill-keymap *rofi-map*
-             (kbd "w") "rofi-window"
-             (kbd "s") "rofi-ssh")
-
-(define-key *root-map* (kbd "u") ; *rofi-map*
-  nil)
-
 (defcommand rofi-stumpwm () ()
   (run-shell-command (concat "rofi -show stumpwm -modi stumpwm:"
                              *home* "/bin/rofi-stumpwm")))
