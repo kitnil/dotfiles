@@ -97,7 +97,7 @@ version-control video virtualization w3m web wget xdisorg xml xorg)
                tor torsocks
 
                ;; Mail
-               mailutils isync msmtp notmuch
+               isync msmtp notmuch
 
                gnupg pinentry
 
