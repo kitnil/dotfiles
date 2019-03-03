@@ -1,0 +1,3 @@
+#!/bin/sh
+
+ssh -fNL 59588:localhost:5901 majordomo && vncviewer localhost:59588
