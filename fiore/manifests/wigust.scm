@@ -1,5 +1,4 @@
-(use-modules (chromium chromium)
-             (gnu packages emacs)
+(use-modules (gnu packages emacs)
              (gnu packages docker)
              (wigust packages databases)
              (wigust packages emacs)
