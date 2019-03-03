@@ -120,7 +120,7 @@ EndSection\n")
 (let ((base-system (load "/etc/config.scm")))
   (operating-system
     (inherit base-system)
-    (packages (cons* stumpwm
+    (packages (cons* stumpwm sbcl-slime-swank `(,stumpwm "lib")
 
 		     fontconfig font-awesome font-dejavu font-liberation
                      font-misc-misc font-wqy-zenhei
