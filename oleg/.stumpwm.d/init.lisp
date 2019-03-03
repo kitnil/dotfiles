@@ -777,8 +777,8 @@
                                (format nil "(switch-to-buffer ~s)" buffer))
                        "-c"))
 
-(defun foo ()
-  (flet ((boo ()
+(defun grid-split-3x3 ()
+  (flet ((split ()
            (progn
              (hsplit)
              (vsplit)
@@ -790,11 +790,11 @@
     (progn
       (hsplit)
       (vsplit)
-      (boo)
-      (boo)
+      (split)
+      (split)
       (vsplit)
-      (boo)
-      (boo))))
+      (split)
+      (split))))
 
 (defun emacs-erc ()
   (mapcar #'(lambda (buffer)
@@ -837,3 +837,17 @@
 (define-key *top-map* (kbd "s-@") "gmove-and-follow 2")
 (define-key *top-map* (kbd "s-#") "gmove-and-follow 3")
 (define-key *top-map* (kbd "s-$") "gmove-and-follow 4")
+
+(defun current-window-width ()
+  (format-expand *window-formatters* "%w" (current-window)))
+
+(defun current-window-height ()
+  (format-expand *window-formatters* "%h" (current-window)))
+
+(defcommand window-resize-by-half-horizontal () ()
+  ""
+  (resize (- (/ (parse-integer (format-expand *window-formatters* "%w" (current-window))) 2)) 0))
+
+(defcommand window-resize-by-half-vertical () ()
+  ""
+  (resize 0 (- (/ (parse-integer (format-expand *window-formatters* "%h" (current-window))) 2))))
