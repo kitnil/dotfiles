@@ -185,3 +185,6 @@ if [ -f "$HOME/.bash_tmp" ]
 then
     . "$HOME/.bash_tmp"
 fi
+
+alias bridge='bridge -color=always'
+alias ip='ip -color=always'
