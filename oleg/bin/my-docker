@@ -110,5 +110,7 @@ docker run \
        --name malscan-db \
        --detach \
        --interactive \
-       --publish 48306:3306 \
-       localhost:5000/ubuntu
+       --publish 3306:3306 \
+       --volume /var/lib/mysql:/var/lib/mysql \
+       --env MYSQL_ROOT_PASSWORD='' \
+       mariadb:5.5
