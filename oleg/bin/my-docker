@@ -114,3 +114,10 @@ docker run \
        --volume /var/lib/mysql:/var/lib/mysql \
        --env MYSQL_ROOT_PASSWORD='' \
        mariadb:5.5
+
+docker run \
+       --name phpmyadmin \
+       --detach \
+       --link malscan-db:db \
+       --publish 49080:80 \
+       phpmyadmin/phpmyadmin
