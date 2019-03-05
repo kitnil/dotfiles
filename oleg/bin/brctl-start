@@ -14,3 +14,5 @@ ip route add default via 192.168.105.1
 
 ip link set tap0 up
 
+# https://bugzilla.redhat.com/show_bug.cgi?id=542405
+sysctl net.bridge.bridge-nf-call-iptables=0
