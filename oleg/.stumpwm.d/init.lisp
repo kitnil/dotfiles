@@ -845,3 +845,5 @@
                                         (window-name (current-window)))
     (run-shell-command "stumpish emacsclient"))
   (run-shell-command "emacsclient -e '(progn (shell) (delete-other-windows))'"))
+
+(define-key *root-map* (kbd "quoteleft") "emacs-shell")
