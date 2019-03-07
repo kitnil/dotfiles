@@ -798,7 +798,7 @@
 (defmacro emacs-bind (key command)
   `(progn
      (defcommand ,(intern (concat "emacs-" command)) () ()
-       (emacsclient-command (format nil "(~a)" ,command)))
+       (emacsclient-eval (format nil "(~a)" ,command)))
      (define-key *top-map* (kbd ,key) ,(concat "emacs-" command))))
 
 (emacs-bind "s-n" "emms-next")
