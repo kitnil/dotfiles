@@ -735,10 +735,10 @@
   (defcommand twitch () ()
     (firefox "https://www.twitch.tv/directory/game/Tales%20of%20Maj'Eyal" t))
 
-  (defcommand jenkins () ()
+  (defcommand jenkins-index () ()
     (firefox "https://jenkins.wugi.info/"))
 
-  (defcommand fiore () ()
+  (defcommand jenkins-last-build-guixsd () ()
     (firefox "https://jenkins.wugi.info/job/fiore/lastBuild/console"))
 
   (defcommand cuirass () ()
