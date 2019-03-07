@@ -705,6 +705,23 @@
 (defcommand pass () ()
   (run-shell-command "echo -n ***REMOVED*** | xclip -selection primary"))
 
+(define-remapped-keys
+    '(("(Firefox|Chrome|Chromium)"
+       ("C-n"   . "Down")
+       ("C-p"   . "Up")
+       ("C-f"   . "Right")
+       ("C-b"   . "Left")
+       ("C-v"   . "Next")
+       ("M-v"   . "Prior")
+       ("M-w"   . "C-c")
+       ("C-w"   . "C-x")
+       ("C-y"   . "C-v")
+       ("M-<"   . "Home")
+       ("M->"   . "End")
+       ("C-M-b" . "M-Left")
+       ("C-M-f" . "M-Right")
+       ("C-k"   . ("C-S-End" "C-x")))))
+
 (defun current-window-width ()
   (format-expand *window-formatters* "%w" (current-window)))
 
