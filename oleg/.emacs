@@ -2677,7 +2677,7 @@ If nil use light theme.")
     (define-key map (kbd "S-SPC") 'scroll-down-command)))
 
 (setq-default shr-use-fonts nil)
-(setq shr-external-browser 'browse-url-conkeror)
+(setq shr-external-browser 'browse-url-firefox)
 
 ;; Not white background in dark themes.
 ;; Origin <https://emacs.stackexchange.com/a/3523>
