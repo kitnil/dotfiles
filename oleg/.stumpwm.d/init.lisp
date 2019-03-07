@@ -864,3 +864,13 @@
   (run-shell-command "emacsclient -e '(progn (shell) (delete-other-windows))'"))
 
 (define-key *root-map* (kbd "quoteleft") "emacs-shell")
+
+(defcommand emms () ()
+  (unless (uiop/utility:string-prefix-p "emacs"
+                                        (window-name (current-window)))
+    (run-shell-command "stumpish emacsclient"))
+  (run-shell-command
+   (format nil "emacsclient -e ~s"
+           (sb-unicode:lowercase
+            (write-to-string
+             '(progn (emms) (delete-other-windows)))))))
