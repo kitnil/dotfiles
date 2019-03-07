@@ -200,3 +200,5 @@ jenkins-active-jobs()
 {
     jenkins-jobs | grep --color=no red_anime
 }
+
+alias gpi='guix package -i'
