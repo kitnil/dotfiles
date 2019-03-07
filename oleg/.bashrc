@@ -188,3 +188,15 @@ fi
 
 alias bridge='bridge -color=always'
 alias ip='ip -color=always'
+
+jenkins-jobs()
+{
+    curl --silent --user "admin:$(pass show magnolia/jenkins/admin)" \
+         https://jenkins.wugi.info/api/json/ \
+        | jq -r '.jobs[] | [.name, .color] | @tsv'
+}
+
+jenkins-active-jobs()
+{
+    jenkins-jobs | grep --color=no red_anime
+}
