@@ -208,3 +208,8 @@ guix-apply-my-manifest()
     guix package --substitute-urls='https://ci.guix.info http://cuirass.tld' \
          --manifest="$HOME/src/dotfiles/fiore/manifests/natsu-manifest.scm"
 }
+
+grub-list-entries()
+{
+    awk -F\" '$1=="menuentry " {print i++ " : " $2}' /boot/grub/grub.cfg
+}
