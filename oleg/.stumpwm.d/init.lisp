@@ -734,6 +734,9 @@
                                             "firefox -P light --new-window ~S")
                                     url))))
 
+  (defcommand firefox-dark (url) ((:string "URL: "))
+    (firefox url t))
+
   (defcommand grafana () ()
     (firefox "https://grafana.wugi.info/" t))
 
