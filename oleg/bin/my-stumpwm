@@ -11,4 +11,6 @@
  (lambda ()
    (swank:create-server :dont-close t)))
 
-(stumpwm:stumpwm)
+(sb-thread:make-thread
+ (lambda ()
+   (stumpwm:stumpwm)))
