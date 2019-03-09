@@ -131,7 +131,9 @@
   (add-to-list 'mailcap-mime-extensions '(".scm" . "text/x-scheme")))
 
 (global-undo-tree-mode)
+
 (projectile-global-mode)
+(define-key projectile-mode-map (kbd "C-c g p") 'projectile-command-map)
 
 (autoload 'debbugs-browse-url "debbugs-browse" nil t)
 
