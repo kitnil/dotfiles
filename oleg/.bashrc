@@ -213,3 +213,8 @@ grub-list-entries()
 {
     awk -F\" '$1=="menuentry " {print i++ " : " $2}' /boot/grub/grub.cfg
 }
+
+guix-package-show()
+{
+    guix package --search="$1" | recsel -e "name=\"$1\""
+}
