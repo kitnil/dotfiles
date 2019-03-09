@@ -2,7 +2,12 @@
 
 if [ -z $@ ]
 then
-    stumpish commands | tr '[:space:]' '\n' | tr -d '[:blank:]' | sed '/^$/d' | sort
+    stumpish commands \
+        | tr '[:space:]' '\n' \
+        | tr -d '[:blank:]' \
+        | sed '/^$/d' \
+        | grep 'rofi\|emacs' \
+        | sort
 else
     stumpish $@
 fi
