@@ -393,3 +393,45 @@ database for a given name.")
     (synopsis "Open With opens the current page in your other browsers.")
     (description synopsis)
     (license license:mpl2.0)))
+
+(define-public lyricwikia
+  (package
+    (name "lyricwikia")
+    (version "0.1.9")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://github.com/enricobacis/lyricwikia.git")
+                    (commit version)))
+              (file-name (git-file-name name version))
+              (sha256
+               (base32
+                "1dggrfdhyv2ypi2srkxn1xyl5w0l1bq5kph76k8ym7l5273k3fq4"))))
+    (build-system python-build-system)
+    (inputs
+     `(("python-pytest" ,python-pytest)
+       ("python-pytest-runner" ,python-pytest-runner)
+       ("python-responses" ,python-responses)))
+    (propagated-inputs
+     `(("python-beautifulsoup4" ,python-beautifulsoup4)
+       ("python-requests" ,python-requests)
+       ("python-six" ,python-six)))
+    (arguments
+     `(#:phases
+       (modify-phases %standard-phases
+         (add-after 'unpack 'disable-network-test
+           (lambda _
+             (substitute* "tests/test_get_lyrics.py"
+               (("def test_integration\\(\\)" m)
+                (string-append "@pytest.mark.skip(reason=\"Disabled by Guix\")\n"
+                               m)))
+             #t)))))
+    (home-page "https://github.com/enricobacis/lyricwikia/")
+    (synopsis "Python API to get song lyrics from LyricWikia")
+    (description "LyricWikia is an online wiki-based lyrics database and
+encyclopedia. It used to provide full access to song lyrics via API, but the
+service has been discontinued.
+
+This API scrapes the song web page and returns the lyrics. Please verify that
+your use complies with the LyricWikia terms of service.")
+    (license license:expat)))
