@@ -435,3 +435,27 @@ service has been discontinued.
 This API scrapes the song web page and returns the lyrics. Please verify that
 your use complies with the LyricWikia terms of service.")
     (license license:expat)))
+
+(define-public spotify-cli-linux
+  (package
+    (name "spotify-cli-linux")
+    (version "1.4.1")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (pypi-uri "spotify-cli-linux" version))
+       (sha256
+        (base32
+         "0x875nxfiwja4z8yys7hmhhzzxcmzsqivvy12qqalgac8nxpsyz7"))))
+    (build-system python-build-system)
+    (propagated-inputs
+     `(("python-dbus" ,python-dbus)
+       ("lyricwikia" ,lyricwikia)))
+    (arguments
+     `(#:tests? #f))
+    (home-page "https://github.com/pwittchen/spotify-cli-linux")
+    (synopsis "Command line interface to Spotify")
+    (description "This package provides a command line interface to Spotify")
+    (license license:gpl3+)))
+
+
