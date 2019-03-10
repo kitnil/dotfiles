@@ -361,3 +361,35 @@ database for a given name.")
 
 (define-public python2-unicode
   (package-with-python2 python-unicode))
+
+(define-public python-open-with
+  (package
+    (name "python-open-with")
+    (version "7.1.2")
+    (source (origin
+              (method url-fetch)
+              (uri "http://guix.duckdns.org/open_with_linux.py")
+              (sha256
+               (base32
+                "0bhxgsd75c8v37qcl88cjrlbjvfp7yps6ar9y4n0dpml1cm7rd6l"))
+              (file-name (string-append name "-" version))))
+    (build-system trivial-build-system)
+    (native-inputs
+     `(("python" ,python)))
+    (arguments
+     '(#:modules ((guix build utils))
+       #:builder
+       (begin
+         (use-modules (guix build utils))
+         (setenv "PATH" (string-append (assoc-ref %build-inputs "python") "/bin"))
+         (copy-file (assoc-ref %build-inputs "source") "open-with-linux")
+         (chmod "open-with-linux" #o555)
+         (substitute* "open-with-linux"
+           (("/usr/bin/env python") (which "python3"))
+           (("7.1b2") "7.1.2"))
+         (install-file "open-with-linux" (string-append %output "/bin"))
+         #t)))
+    (home-page "https://addons.mozilla.org/en-US/firefox/addon/open-with/")
+    (synopsis "Open With opens the current page in your other browsers.")
+    (description synopsis)
+    (license license:mpl2.0)))
