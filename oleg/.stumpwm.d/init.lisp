@@ -591,9 +591,13 @@
   "Screenshot with filename like 2017-10-30-03-29-16.png"
   (eval-command (concat "screenshot-window " (screenshot-filename))))
 
-(defcommand trans () ()
+(defcommand trans-en-ru () ()
   "Run `xterm' with `trans' in interactive mode."
   (run-shell-command "exec xterm -name trans -e 'trans -I en:ru'"))
+
+(defcommand trans-ru-en () ()
+  "Run `xterm' with `trans' in interactive mode."
+  (run-shell-command "exec xterm -name trans -e 'trans -I ru:en'"))
 
 (define-key *root-map* (kbd "e") "emacsclient")
 
