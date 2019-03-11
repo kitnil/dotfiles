@@ -57,5 +57,7 @@
 
   dynamips ;gns3 requirement
 
+  python-open-with
+
   guix-wigust-packages-emacs))
 

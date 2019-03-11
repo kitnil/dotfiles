@@ -5,11 +5,11 @@
 (use-package-modules admin algebra aspell audio backup bittorrent
 cdrom chromium ci cmake code commencement compression cpio cran curl
 databases dictionaries dns dunst file elf games gcc gdb ghostscript
-golang gl glib gnu-doc gnupg gnuzilla graphics graphviz gstreamer gtk
-guile guile-xyz haskell image-viewers imagemagick inkscape kodi
-libreoffice license linux lisp logging lsof lxde m4 mail man maths
-messaging ncdu ncurses networking node package-management parallel
-password-utils patchutils pdf perl perl-web pulseaudio python
+golang gl glib gnome gnu-doc gnupg gnuzilla graphics graphviz
+gstreamer gtk guile guile-xyz haskell image-viewers imagemagick
+inkscape kodi libreoffice license linux lisp logging lsof lxde m4 mail
+man maths messaging ncdu ncurses networking node package-management
+parallel password-utils patchutils pdf perl perl-web pulseaudio python
 python-xyz qt rdesktop samba scheme screen shellutils ssh statistics
 sqlite suckless synergy tex texinfo textutils tmux tls tor valgrind
 version-control video virtualization w3m web wget xdisorg xml xorg)
@@ -85,7 +85,7 @@ version-control video virtualization w3m web wget xdisorg xml xorg)
 
                python-clf ; Interface to <https://commandlinefu.com/>
 
-               dbus dunst xmessage
+               dbus dunst xmessage libnotify
 
                alsa-utils cli-visualizer pulsemixer pavucontrol
 
@@ -109,6 +109,11 @@ version-control video virtualization w3m web wget xdisorg xml xorg)
                hdparm
 
                tmux
+               fbcat
+
+               glib-networking
+               flatpak
+               nix
 
                mlt mpv obs vlc
 

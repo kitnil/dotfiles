@@ -1,7 +1,8 @@
 (use-modules (gnu)
              (guix profiles))
 
-(use-package-modules admin cmake emacs emacs-xyz package-management)
+(use-package-modules admin cmake emacs emacs-xyz package-management
+                     docker)
 
 (packages->manifest
  (list emacs-academic-phrases
@@ -113,4 +114,8 @@
        emacs-yasnippet-snippets ; Collection of snippets
        emacs-znc
 
-       epipe))
+       epipe
+
+       emacs-docker
+       emacs-docker-tramp
+       emacs-dockerfile-mode))
