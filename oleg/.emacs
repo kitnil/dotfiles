@@ -2326,6 +2326,8 @@ be updated automatically."))
 ;;; Misc
 ;;;
 
+(add-hook 'eshell-mode-hook 'eshell-bookmark-setup)
+
 (add-hook 'comint-output-filter-functions
           'comint-truncate-buffer)
 
