@@ -32,6 +32,7 @@
        emacs-emamux
        emacs-emms
        emacs-erc-hl-nicks       ; for ERC
+       emacs-eshell-bookmark
        emacs-esup
        emacs-ewmctrl            ; Control X windows from Emacs
        emacs-expand-region
