@@ -1,8 +1,7 @@
 (use-modules (gnu)
              (guix profiles))
 
-(use-package-modules admin cmake emacs emacs-xyz package-management
-                     docker)
+(use-package-modules admin cmake emacs emacs-xyz package-management)
 
 (packages->manifest
  (list emacs-academic-phrases
