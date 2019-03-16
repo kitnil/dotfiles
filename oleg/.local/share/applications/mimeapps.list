@@ -12,3 +12,4 @@ application/rss+xml=conkeror.desktop;
 application/rdf+xml=conkeror.desktop;
 x-scheme-handler/http=conkeror.desktop;
 x-scheme-handler/https=conkeror.desktop;
+video/x-matroska=mpv.desktop;
