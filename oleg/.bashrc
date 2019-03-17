@@ -210,6 +210,12 @@ jenkins-active-jobs()
 
 alias gpi='guix package -i'
 
+guix-download-my-manifest()
+{
+    guix environment --substitute-urls='https://ci.guix.info http://cuirass.tld' \
+         --manifest="$HOME/src/dotfiles/fiore/manifests/natsu-manifest.scm"
+}
+
 guix-apply-my-manifest()
 {
     guix package --substitute-urls='https://ci.guix.info http://cuirass.tld' \
