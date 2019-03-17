@@ -189,6 +189,13 @@ fi
 alias bridge='bridge -color=always'
 alias ip='ip -color=always'
 
+jenkins-log()
+{
+    job="$1"
+    curl --silent --user "admin:$(pass show magnolia/jenkins/admin)" \
+         "https://jenkins.wugi.info/job/$job/lastBuild/consoleText"
+}
+
 jenkins-jobs()
 {
     curl --silent --user "admin:$(pass show magnolia/jenkins/admin)" \
