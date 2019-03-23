@@ -117,189 +117,201 @@ EndSection\n")
 ;;; Entryp point
 ;;;
 
-(let ((base-system (load "/etc/config.scm")))
-  (operating-system
-    (inherit base-system)
-    (packages (cons* stumpwm sbcl-slime-swank `(,stumpwm "lib")
+(define %system-guixsd
+  (let ((base-system (load "/etc/config.scm")))
+    (operating-system
+      (inherit base-system)
+      (packages (cons* stumpwm sbcl-slime-swank `(,stumpwm "lib")
 
-		     fontconfig font-awesome font-dejavu font-liberation
-                     font-misc-misc font-wqy-zenhei
+                       fontconfig font-awesome font-dejavu font-liberation
+                       font-misc-misc font-wqy-zenhei
 
-		     adwaita-icon-theme hicolor-icon-theme
+                       adwaita-icon-theme hicolor-icon-theme
 
-		     desktop-file-utils gvfs xrdb xset xsetroot xkill
+                       desktop-file-utils gvfs xrdb xset xsetroot xkill
 
-		     setxkbmap   ;keyboard layout
-		     wmctrl      ;`ewmctrl'
-		     xclip       ;X clipboard CLI
-		     xdg-utils   ;finds a program to open file
-		     xdotool     ;mouse and keyboard automation
-		     xorg-server ;`xephyr' for x11 testing
-		     xrandr      ;change screen resolution
-		     xterm       ;$TERM terminal
-		     xwininfo    ;X window information
-		     ;; For helm-stumpwm-commands and stumpish
-		     rlwrap
-		     xprop
-		     xhost
-                     
-                     nss-certs ;SSL certificates
+                       setxkbmap   ;keyboard layout
+                       wmctrl      ;`ewmctrl'
+                       xclip       ;X clipboard CLI
+                       xdg-utils   ;finds a program to open file
+                       xdotool     ;mouse and keyboard automation
+                       xorg-server ;`xephyr' for x11 testing
+                       xrandr      ;change screen resolution
+                       xterm       ;$TERM terminal
+                       xwininfo    ;X window information
+                       ;; For helm-stumpwm-commands and stumpish
+                       rlwrap
+                       xprop
+                       xhost
 
-                     fping
+                       nss-certs ;SSL certificates
 
-		     (operating-system-packages base-system)))
+                       fping
 
-    (groups (cons* (user-group (name "nixbld")
-                               (system? #t))
-                   ;; (user-group (name "adbusers"))
-                   ;; (user-group (name "guix-offload"))
-                   ;; (user-group (name "telegraf") (system? #t))
-                   ;; (user-group (name "git") (id 30003))
-                   ;; (user-group (name "jenkins") (id 30004))
-                   ;; (user-group (name "influxdb") (id 30005))
-                   ;; (user-group (name "grafana") (id 30006))
-                   (user-group (name "docker")
-                               (system? #t))
-                   ;; (user-group (name "jenkinsbuild"))
-                   ;; (user-group (name "alerta"))
-                   %base-groups))
+                       (operating-system-packages base-system)))
 
-    (users (cons* (user-account
-                   (name "oleg")
-                   (uid 1000)
-                   (comment "Oleg Pykhalov")
-                   (group "users")
-                   (supplementary-groups '("wheel" "audio" "video" "docker" "kvm"))
-                   (home-directory "/home/oleg"))
-		  (user-account
-                   (name "majordomo-ssh-tunnel")
-                   (group "users")
-                   (comment "SSH forwarding privilege separation user")
-                   (home-directory "/home/majordomo-ssh-tunnel"))
-                  (user-account
-                   (name "tail-ssh-tunnel")
-                   (uid 30015)
-                   (group "users")
-                   (comment "SSH forwarding privilege separation user")
-                   (home-directory "/home/tail-ssh-tunnel"))
-                  (user-account
-                   (name "spb")
-                   (group "users")
-                   (comment "SSH forwarding privilege separation user")
-                   (home-directory "/home/spb"))
-                  (append ((lambda* (count #:key
-                                      (group "nixbld")
-                                      (first-uid 30101)
-                                      (shadow shadow))
-                             (unfold (cut > <> count)
-                                     (lambda (n)
-                                       (user-account
-                                        (name (format #f "nixbld~a" n))
-                                        (system? #t)
-                                        (uid (+ first-uid n -1))
-                                        (group group)
-                                        (comment (format #f "Nix Build User ~a" n))
-                                        (home-directory "/var/empty")
-                                        (shell (file-append shadow "/sbin/nologin"))))
-                                     1+
-                                     1))
-                           9)
-                          %base-user-accounts)))
+      (groups (cons* (user-group (name "nixbld")
+                                 (system? #t))
+                     ;; (user-group (name "adbusers"))
+                     ;; (user-group (name "guix-offload"))
+                     ;; (user-group (name "telegraf") (system? #t))
+                     ;; (user-group (name "git") (id 30003))
+                     ;; (user-group (name "jenkins") (id 30004))
+                     ;; (user-group (name "influxdb") (id 30005))
+                     ;; (user-group (name "grafana") (id 30006))
+                     (user-group (name "docker")
+                                 (system? #t))
+                     ;; (user-group (name "jenkinsbuild"))
+                     ;; (user-group (name "alerta"))
+                     %base-groups))
 
-    (hosts-file
-     (plain-file
-      "hosts"
-      (string-append
-       (local-host-aliases (operating-system-host-name base-system))
-       "\n\n"
-       "192.168.100.1 r1.tld\n"
-       "192.168.105.1 r2.tld\n"
-       "127.0.0.1 gitlab.wugi.info grafana.wugi.info zabbix.wugi.info"
-       "\n\n"
-       %facebook-host-aliases)))
+      (users (cons* (user-account
+                     (name "oleg")
+                     (uid 1000)
+                     (comment "Oleg Pykhalov")
+                     (group "users")
+                     (supplementary-groups '("wheel" "audio" "video" "docker" "kvm"))
+                     (home-directory "/home/oleg"))
+                    (user-account
+                     (name "majordomo-ssh-tunnel")
+                     (group "users")
+                     (comment "SSH forwarding privilege separation user")
+                     (home-directory "/home/majordomo-ssh-tunnel"))
+                    (user-account
+                     (name "tail-ssh-tunnel")
+                     (uid 30015)
+                     (group "users")
+                     (comment "SSH forwarding privilege separation user")
+                     (home-directory "/home/tail-ssh-tunnel"))
+                    (user-account
+                     (name "spb")
+                     (group "users")
+                     (comment "SSH forwarding privilege separation user")
+                     (home-directory "/home/spb"))
+                    (append ((lambda* (count #:key
+                                             (group "nixbld")
+                                             (first-uid 30101)
+                                             (shadow shadow))
+                               (unfold (cut > <> count)
+                                       (lambda (n)
+                                         (user-account
+                                          (name (format #f "nixbld~a" n))
+                                          (system? #t)
+                                          (uid (+ first-uid n -1))
+                                          (group group)
+                                          (comment (format #f "Nix Build User ~a" n))
+                                          (home-directory "/var/empty")
+                                          (shell (file-append shadow "/sbin/nologin"))))
+                                       1+
+                                       1))
+                             9)
+                            %base-user-accounts)))
 
-    (services (cons* (extra-special-file "/usr/bin/env"
-		    			 (file-append coreutils "/bin/env"))
+      (hosts-file
+       (plain-file
+        "hosts"
+        (string-append
+         (local-host-aliases (operating-system-host-name base-system))
+         "\n\n"
+         "192.168.100.1 r1.tld\n"
+         "192.168.105.1 r2.tld\n"
+         "192.168.105.120 cuirass.tld\n"
+         "127.0.0.1 gitlab.wugi.info grafana.wugi.info zabbix.wugi.info"
+         "\n\n"
+         %facebook-host-aliases)))
 
-                     ;; Desktop services
-		     (service slim-service-type
-		    	      (slim-configuration
-			       (startx
-				(xorg-start-command
-				 #:configuration-file (xorg-configuration-file
-						       #:extra-config (list 20-intel.conf))))))
-		     (screen-locker-service slock)
-		     (screen-locker-service xlockmore "xlock")
-		     (udisks-service)
-		     (upower-service)
-		     (accountsservice-service)
-		     (colord-service)
-		     (geoclue-service)
-		     (service polkit-service-type)
-		     (elogind-service)
-		     (dbus-service)
-		     (service ntp-service-type)
-		     x11-socket-directory-service
-		     (service alsa-service-type)
+      (services (cons* (extra-special-file "/usr/bin/env"
+                                           (file-append coreutils "/bin/env"))
 
-		     (service openssh-service-type
-			      (openssh-configuration
-			       (x11-forwarding? #t)
-                               (gateway-ports? 'client)
-			       (password-authentication? #f)))
+                       ;; Desktop services
+                       (service slim-service-type
+                                (slim-configuration
+                                 (startx
+                                  (xorg-start-command
+                                   #:configuration-file (xorg-configuration-file
+                                                         #:extra-config (list 20-intel.conf))))))
+                       (screen-locker-service slock)
+                       (screen-locker-service xlockmore "xlock")
+                       (udisks-service)
+                       (upower-service)
+                       (accountsservice-service)
+                       (colord-service)
+                       (geoclue-service)
+                       (service polkit-service-type)
+                       (elogind-service)
+                       (dbus-service)
+                       (service ntp-service-type)
+                       x11-socket-directory-service
+                       (service alsa-service-type)
 
-                     (service php-fpm-service-type
-                              (php-fpm-configuration
-                               (timezone "Europe/Moscow")))
+                       (service openssh-service-type
+                                (openssh-configuration
+                                 (x11-forwarding? #t)
+                                 (gateway-ports? 'client)
+                                 (password-authentication? #f)))
 
-                     (service nginx-service-type
-                              (nginx-configuration
-                               (server-blocks %nginx-server-blocks)))
+                       (service php-fpm-service-type
+                                (php-fpm-configuration
+                                 (timezone "Europe/Moscow")))
 
-                     (service ddclient-service-type)
+                       (service nginx-service-type
+                                (nginx-configuration
+                                 (server-blocks %nginx-server-blocks)))
 
-                     (service rottlog-service-type
-                              (rottlog-configuration
-                               (inherit (rottlog-configuration))
-                               (rotations (cons (log-rotation
-                                                 (files '("/var/log/nginx/access.log"
-                                                          "/var/log/nginx/error.log"))
-                                                 (frequency 'daily))
-                                                (map (lambda (rotation)
-                                                       (log-rotation
-                                                        (inherit rotation)
-                                                        (frequency 'daily)))
-                                                     %default-rotations)))))
+                       (service ddclient-service-type)
 
-                     (postgresql-service)
+                       (service rottlog-service-type
+                                (rottlog-configuration
+                                 (inherit (rottlog-configuration))
+                                 (rotations (cons (log-rotation
+                                                   (files '("/var/log/nginx/access.log"
+                                                            "/var/log/nginx/error.log"))
+                                                   (frequency 'daily))
+                                                  (map (lambda (rotation)
+                                                         (log-rotation
+                                                          (inherit rotation)
+                                                          (frequency 'daily)))
+                                                       %default-rotations)))))
 
-                     (service zabbix-server-service-type
-                              (zabbix-server-configuration
-                               (include-files '("/etc/zabbix/zabbix-server.secret"))
-                               (extra-options "
+                       (postgresql-service #:config-file (postgresql-config-file
+                                                          (hba-file
+                                                           (plain-file "pg_hba.conf"
+                                                                       "
+local	all	all			trust
+host	all	all	127.0.0.1/32    trust
+host	all	all	::1/128         trust
+host	all	all	172.17.0.1/16   trust"))
+                                                          (extra-config '(("listen_addresses" "'0.0.0.0'")))))
+
+                       (service zabbix-server-service-type
+                                (zabbix-server-configuration
+                                 (include-files '("/etc/zabbix/zabbix-server.secret"))
+                                 (extra-options "
 AlertScriptsPath=/etc/zabbix/alertscripts
 ExternalScripts=/etc/zabbix/externalscripts
 FpingLocation=/run/setuid-programs/fping
 ")))
 
-                     (service zabbix-agent-service-type)
+                       (service zabbix-agent-service-type)
 
-                     (service zabbix-front-end-service-type
-                              (zabbix-front-end-configuration
-                               (db-secret-file "/etc/zabbix/zabbix.secret")
-                               (nginx %zabbix-nginx-configuration)))
+                       (service zabbix-front-end-service-type
+                                (zabbix-front-end-configuration
+                                 (db-secret-file "/etc/zabbix/zabbix.secret")
+                                 (nginx %zabbix-nginx-configuration)))
 
-                     (dovecot-service
-                      #:config (dovecot-configuration
-                                (listen '("127.0.0.1"))
-                                (disable-plaintext-auth? #f)
-                                (mail-location
-                                 (string-append "maildir:~/Maildir"
-                                                ":INBOX=~/Maildir/INBOX"
-                                                ":LAYOUT=fs"))))
+                       (dovecot-service
+                        #:config (dovecot-configuration
+                                  (listen '("127.0.0.1"))
+                                  (disable-plaintext-auth? #f)
+                                  (mail-location
+                                   (string-append "maildir:~/Maildir"
+                                                  ":INBOX=~/Maildir/INBOX"
+                                                  ":LAYOUT=fs"))))
 
-		     (operating-system-user-services base-system)))
-    
-    (setuid-programs (cons* (file-append fping "/sbin/fping")
-                            (file-append ubridge "/bin/ubridge")
-                           %setuid-programs))))
+                       (operating-system-user-services base-system)))
+
+      (setuid-programs (cons* (file-append fping "/sbin/fping")
+                              (file-append ubridge "/bin/ubridge")
+                              %setuid-programs)))))
+
+%system-guixsd
