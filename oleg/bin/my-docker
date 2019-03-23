@@ -121,3 +121,17 @@ docker run \
        --link malscan-db:db \
        --publish 49080:80 \
        phpmyadmin/phpmyadmin
+
+docker run \
+       --name alerta \
+       --detach \
+       --add-host db:172.17.0.1 \
+       --publish 47080:8080 \
+       --env DEBUG=1 \
+       --env DATABASE_URL=postgres://alerta:alerta@db:5432/alerta \
+       --env AUTH_REQUIRED=True \
+       --env ADMIN_USERS=admin@localhost \
+       --env PLUGINS=reject,blackout,normalise,enhance \
+       --env INSTALL_PLUGINS=normalise,enhance \
+       --restart unless-stopped \
+       alerta/alerta-web:6.8.2
