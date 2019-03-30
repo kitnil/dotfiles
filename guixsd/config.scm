@@ -226,10 +226,9 @@ EndSection\n")
                        ;; Desktop services
                        (service slim-service-type
                                 (slim-configuration
-                                 (startx
-                                  (xorg-start-command
-                                   #:configuration-file (xorg-configuration-file
-                                                         #:extra-config (list 20-intel.conf))))))
+                                 (xorg-configuration
+                                  (xorg-configuration
+                                   (extra-config (list 20-intel.conf))))))
                        (screen-locker-service slock)
                        (screen-locker-service xlockmore "xlock")
                        (udisks-service)
