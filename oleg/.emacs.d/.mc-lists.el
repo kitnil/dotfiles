@@ -77,6 +77,7 @@
         hydra-multicursor/body
         hydra-multicursor/mc/mark-next-like-this
         hydra-multicursor/mc/mark-next-lines
+        hydra-multicursor/mc/mark-previous-symbol-like-this
         hydra-multicursor/nil
         ido-switch-buffer
         ivy-switch-buffer
@@ -86,4 +87,5 @@
         projectile-compile-project
         repeat
         smartparens-strict-mode
+        text-scale-adjust
         ))
