@@ -9,14 +9,15 @@ golang gl glib gnome gnu-doc gnupg gnuzilla graphics graphviz
 gstreamer gtk guile guile-xyz haskell image-viewers imagemagick
 inkscape kodi libreoffice license linux lisp logging lsof lxde m4 mail
 man maths messaging ncdu ncurses networking node package-management
-parallel password-utils patchutils pdf perl perl-web pulseaudio python
-python-xyz qt rdesktop samba scheme screen shellutils ssh statistics
-sqlite suckless synergy tex texinfo textutils tmux tls tor valgrind
-version-control video virtualization w3m web wget xdisorg xml xorg)
+parallel password-utils patchutils pdf perl perl-web php pulseaudio
+python python-xyz qt readline rdesktop rsync samba scheme screen
+shellutils ssh statistics sqlite suckless synergy tex texinfo
+textutils tmux tls tor valgrind version-control video virtualization
+w3m web wget xdisorg xml xorg)
 
 (define guix-collection-packages-multiout
   `((,glib "bin")
-    (,bind "utils")
+    ;; (,bind "utils")
     (,git "gui")
     (,git "send-email")
     (,git "svn")
@@ -108,9 +109,13 @@ version-control video virtualization w3m web wget xdisorg xml xorg)
 
                hdparm
 
+               console-setup ;set font size in TTY
+               rlwrap ; read-line wrapper
+
                tmux
                fbcat
 
+               gsettings-desktop-schemas
                glib-networking
                flatpak
                nix
@@ -149,6 +154,10 @@ version-control video virtualization w3m web wget xdisorg xml xorg)
                ncdu            ; TUI `du'
                netcat          ; TCP nmap
                openssl
+               nethogs
+               rsync
+
+               php
                
                reptyr
                shellcheck
@@ -185,5 +194,6 @@ version-control video virtualization w3m web wget xdisorg xml xorg)
                minetest ; FOSS Minecraft like game
                )
 
+         guix-collection-packages-multiout
          %large-packages
          %spelling-packages))
