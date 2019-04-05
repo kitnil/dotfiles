@@ -12,13 +12,13 @@
     "blocklist-url": "http://www.example.com/blocklist",
     "cache-size-mb": 4,
     "dht-enabled": true,
-    "download-dir": "/home/natsu/Downloads",
+    "download-dir": "/srv/archive",
     "download-queue-enabled": true,
     "download-queue-size": 5,
     "encryption": 1,
     "idle-seeding-limit": 30,
     "idle-seeding-limit-enabled": false,
-    "incomplete-dir": "/home/natsu/Downloads",
+    "incomplete-dir": "/srv/archive",
     "incomplete-dir-enabled": false,
     "lpd-enabled": false,
     "message-level": 2,
@@ -66,5 +66,5 @@
     "upload-slots-per-torrent": 14,
     "utp-enabled": true,
     "watch-dir-enabled": true,
-    "watch-dir": "/home/natsu/Downloads/torrents"
+    "watch-dir": "/srv/archive/torrents"
 }
