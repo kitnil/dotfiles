@@ -1578,8 +1578,9 @@ Push branch master to local/master."
 ;; see <https://emacs.stackexchange.com/a/38782/15092>.
 ;; (add-to-list 'magit-section-initial-visibility-alist '(stashes . hide))
 
-(add-hook 'magit-section-set-visibility-hook
-          'wi-local-magit-initially-hide-unmerged)
+;; XXX: eq: Symbol’s function definition is void: magit-section-type
+;; (add-hook 'magit-section-set-visibility-hook
+;;           'wi-local-magit-initially-hide-unmerged)
 
 (add-hook 'git-commit-mode-hook 'auto-fill-mode)
 
