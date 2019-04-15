@@ -37,14 +37,17 @@ EndSection\n")
    (uri "/.well-known")
    (body '("root /var/www;"))))
 
-(define* (proxy host port #:key (ssl? #f) (ssl-target? #f) (well-known? #t))
+(define* (proxy host port #:key (ssl? #f) (ssl-target? #f)
+                (well-known? #t) (target #f))
   (nginx-server-configuration
    (server-name (list host (string-append "www." host)))
    (locations (delete #f
                       (list (nginx-location-configuration
                              (uri "/")
                              (body (list "resolver 80.80.80.80;"
-                                         (string-append "set $target localhost:" (number->string port) ";")
+                                         (string-append "set $target "
+                                                        (or target "localhost")
+                                                        ":" (number->string port) ";")
                                          (format #f "proxy_pass ~a://$target;" (if ssl-target? "https" "http"))
                                          (format #f "proxy_set_header Host ~a;" host)
                                          "proxy_set_header X-Forwarded-Proto $scheme;"
@@ -78,7 +81,9 @@ EndSection\n")
          (root "/srv/share"))
         (proxy "cups.tld" 631)
         (proxy "torrent.tld" 9091)
+        (proxy "awx.wugi.info" 80 #:target "192.168.105.133" #:ssl? #t)
         (proxy "jenkins.wugi.info" 30080 #:ssl? #t)
+        (proxy "alerta.wugi.info" 47080 #:ssl? #t)
         (proxy "grafana.wugi.info" 3080 #:ssl? #t)
         (proxy "gitlab.wugi.info" 65080  #:ssl? #t)
         (proxy "anongit.duckdns.org" 65080  #:ssl? #t)
@@ -259,9 +264,34 @@ EndSection\n")
                                 (php-fpm-configuration
                                  (timezone "Europe/Moscow")))
 
+                       (service certbot-service-type
+                                (certbot-configuration
+                                 (email "go.wigust@gmail.com")
+                                 (certificates
+                                  `(,@(map (lambda (host)
+                                             (certificate-configuration
+                                              (domains (list host))
+                                              (deploy-hook %nginx-deploy-hook)))
+                                           (list "cgit.duckdns.org"
+                                                 "guix.duckdns.org"
+                                                 "alerta.duckdns.org"
+                                                 "anongit.duckdns.org"
+                                                 "pipeline.duckdns.org"
+                                                 ;; TODO: "wugi.info"
+                                                 "zabbix.wugi.info"
+                                                 "grafana.wugi.info"
+                                                 "jenkins.wugi.info"
+                                                 "gitlab.wugi.info"
+                                                 "prometheus.wugi.info"
+                                                 "alerta.wugi.info"
+                                                 "awx.wugi.info"))))))
+
                        (service nginx-service-type
                                 (nginx-configuration
                                  (server-blocks %nginx-server-blocks)))
+
+                       ;; (tor-service (string-append (dirname (current-filename))
+                       ;;                             "/torrc"))
 
                        (service ddclient-service-type)
 
