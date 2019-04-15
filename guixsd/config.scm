@@ -126,6 +126,7 @@ EndSection\n")
   (let ((base-system (load "/etc/config.scm")))
     (operating-system
       (inherit base-system)
+      (kernel-arguments '("modprobe.blacklist=pcspkr,snd_pcsp"))
       (packages (cons* stumpwm sbcl-slime-swank `(,stumpwm "lib")
 
                        fontconfig font-awesome font-dejavu font-liberation
