@@ -151,7 +151,7 @@ EndSection\n")
                        (operating-system-packages base-system)))
 
       (groups (cons* (user-group (name "nixbld")
-                                 (system? #t))
+                                 (id 30100))
                      ;; (user-group (name "adbusers"))
                      ;; (user-group (name "guix-offload"))
                      ;; (user-group (name "telegraf") (system? #t))
@@ -189,9 +189,9 @@ EndSection\n")
                      (comment "SSH forwarding privilege separation user")
                      (home-directory "/home/spb"))
                     (append ((lambda* (count #:key
-                                             (group "nixbld")
-                                             (first-uid 30101)
-                                             (shadow shadow))
+                                        (group "nixbld")
+                                        (first-uid 30101)
+                                        (shadow shadow))
                                (unfold (cut > <> count)
                                        (lambda (n)
                                          (user-account
@@ -199,6 +199,12 @@ EndSection\n")
                                           (system? #t)
                                           (uid (+ first-uid n -1))
                                           (group group)
+
+                                          ;; guix-daemon expects GROUP to be listed as a
+                                          ;; supplementary group too:
+                                          ;; <http://lists.gnu.org/archive/html/bug-guix/2013-01/msg00239.html>.
+                                          (supplementary-groups (list group "kvm"))
+
                                           (comment (format #f "Nix Build User ~a" n))
                                           (home-directory "/var/empty")
                                           (shell (file-append shadow "/sbin/nologin"))))
