@@ -322,7 +322,7 @@ EndSection\n")
 local	all	all			trust
 host	all	all	127.0.0.1/32    trust
 host	all	all	::1/128         trust
-host	all	all	172.17.0.1/16   trust"))
+host	all	all	172.16.0.0/12   trust"))
                                                           (extra-config '(("listen_addresses" "'0.0.0.0'")))))
 
                        (service zabbix-server-service-type
