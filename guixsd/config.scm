@@ -1,6 +1,6 @@
 (use-modules (gnu) (srfi srfi-1) (srfi srfi-26))
 (use-package-modules admin base certs lisp suckless xdisorg xorg fonts
-                     fontutils gnome freedesktop readline networking)
+                     android fontutils gnome freedesktop readline networking)
 (use-service-modules admin dbus desktop dns networking sound xorg ssh
                      web certbot monitoring databases mail)
 
@@ -154,6 +154,8 @@ EndSection\n")
 
                        fping
 
+                       adb
+
                        (operating-system-packages base-system)))
 
       (groups (cons* (user-group (name "nixbld")
@@ -165,6 +167,7 @@ EndSection\n")
                      ;; (user-group (name "jenkins") (id 30004))
                      ;; (user-group (name "influxdb") (id 30005))
                      ;; (user-group (name "grafana") (id 30006))
+                     (user-group (name "adbusers"))
                      (user-group (name "docker")
                                  (system? #t))
                      ;; (user-group (name "jenkinsbuild"))
@@ -176,7 +179,7 @@ EndSection\n")
                      (uid 1000)
                      (comment "Oleg Pykhalov")
                      (group "users")
-                     (supplementary-groups '("wheel" "audio" "video" "docker" "kvm"))
+                     (supplementary-groups '("wheel" "adbusers" "audio" "video" "docker" "kvm"))
                      (home-directory "/home/oleg"))
                     (user-account
                      (name "majordomo-ssh-tunnel")
@@ -234,6 +237,9 @@ EndSection\n")
 
       (services (cons* (extra-special-file "/usr/bin/env"
                                            (file-append coreutils "/bin/env"))
+
+                       ;; “adb” and “fastboot” without root privileges
+                       (simple-service 'adb udev-service-type (list android-udev-rules))
 
                        ;; Desktop services
                        (service slim-service-type
