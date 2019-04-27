@@ -95,7 +95,7 @@ EndSection\n")
         (proxy "zabbix.intr" 15081)
         (proxy "cerberus.intr" 15080)
         (proxy "grafana.intr" 16080)
-        (proxy "guix.duckdns.org" 3000 #:ssl? #t)))
+        (proxy "guix.duckdns.org" 5556 #:ssl? #t)))
 
 (define %zabbix-nginx-configuration
   (list
@@ -349,6 +349,11 @@ FpingLocation=/run/setuid-programs/fping
                                    (string-append "maildir:~/Maildir"
                                                   ":INBOX=~/Maildir/INBOX"
                                                   ":LAYOUT=fs"))))
+
+                       (service guix-publish-service-type
+                                (guix-publish-configuration
+                                 (host "0.0.0.0")
+                                 (port 5556)))
 
                        (operating-system-user-services base-system)))
 
