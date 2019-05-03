@@ -35,13 +35,13 @@
   (feed
    (name "video-dubbeltumme")
    (description "Command-line workflow.")
-   (uri (youtube-user name))))
+   (uri (youtube-user "dubbeltumme"))))
 
 (define-public video-gotbletu
   (feed
    (name "video-gotbletu")
    (description "Command-line programs reviews.")
-   (uri (youtube-user name))))
+   (uri (youtube-user "gotbletu"))))
 
 (define-public video-ibsd
   (feed
@@ -71,7 +71,7 @@
   (feed
    (name "video-metalx1000")
    (description "Shell-scripting tutorials.")
-   (uri (youtube-user name))))
+   (uri (youtube-user "metalx1000"))))
 
 (define-public video-ssethtzeentach
   (feed
@@ -89,7 +89,7 @@
   (feed
    (name "video-tuxreviews")
    (description "GNU/Linux weekly news.")
-   (uri (youtube-user name))))
+   (uri (youtube-user "tuxreviews"))))
 
 (define-public video-twitch-carolinhr
   (feed
