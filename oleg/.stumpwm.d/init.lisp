@@ -3,6 +3,8 @@
 
 (in-package :stumpwm)
 
+;; (set-module-dir "~/.guix-profile/share/common-lisp/sbcl-bundle-systems")
+
 (setf *startup-message* nil)
 (setf *message-window-gravity* :center)
 (setf *input-window-gravity* :center)
