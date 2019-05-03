@@ -12,3 +12,9 @@
    (name "emacs-cestlaz")
    (description "Mike Zamansky blog.")
    (uri "https://cestlaz.github.io/rss.xml")))
+
+(define-public emacs-libraries-io
+  (feed
+   (name "emacs-libraries-io")
+   (description "Emacs Libraries.io")
+   (uri "https://libraries.io/search.atom?order=desc&platforms=Emacs&sort=created_at")))
