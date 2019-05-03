@@ -169,8 +169,6 @@ activity()
 # https://www.gnu.org/software/emacs/manual/html_node/efaq/Disabling-backups.html
 alias ls='ls -B -p --color=auto'
 
-eval "$(direnv hook bash)"
-
 if [ -f "$HOME/.guix-profile/etc/profile.d/nix.sh" ]
 then
     . "$HOME/.guix-profile/etc/profile.d/nix.sh"
