@@ -27,7 +27,7 @@ SubFolders Verbatim
 Channel gmail
 Master :gmail-remote:
 Slave :gmail-local:
-Patterns "INBOX" # Sync only INBOX
+Patterns INBOX youtube # Sync only INBOX
 Sync Pull
 
 Channel gmail-sent
