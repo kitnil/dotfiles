@@ -18,3 +18,10 @@
    (name "emacs-libraries-io")
    (description "Emacs Libraries.io")
    (uri "https://libraries.io/search.atom?order=desc&platforms=Emacs&sort=created_at")))
+
+(define-public emacs-sachachua
+  (feed
+   (name "emacs-sachachua")
+   (description "Sacha Chua")
+   (uri "https://sachachua.com/blog/feed/")))
+
