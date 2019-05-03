@@ -19,7 +19,7 @@
 
 ;; Wallpaper
 ;; (run-shell-command "feh --bg-scale ~/Pictures/Wallpapers/current.png")
-;; (run-shell-command "xsetroot -solid black")
+(run-shell-command "xsetroot -solid black")
 
 ;; Disable PC speaker
 (run-shell-command "xset -b")
