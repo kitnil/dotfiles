@@ -55,9 +55,9 @@
 (setf *ignore-wm-inc-hints* t)
 (set-msg-border-width 4)
 
-(setf *normal-border-width* 0)
-(setf *transient-border-width* 0)
-(setf *maxsize-border-width* 0)
+(setf *normal-border-width* 5)
+(setf *transient-border-width* 5)
+(setf *maxsize-border-width* 5)
 
 
 ;;;
