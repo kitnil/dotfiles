@@ -1,0 +1,23 @@
+#!/bin/sh
+
+# Create bridge network
+# Copyright © 2019 Oleg Pykhalov <go.wigust@gmail.com>
+# Released under the GNU GPLv3 or any later version.
+
+# https://wiki.archlinux.org/index.php/Network_bridge#With_iproute2
+
+bridge_name=br0
+interface_name=enp6s0
+network=192.168.105.120/24
+default_gw=192.168.105.1
+
+# https://bugzilla.redhat.com/show_bug.cgi?id=542405
+sysctl net.bridge.bridge-nf-call-iptables=0
+
+ip address del "$network" dev "$interface_name"
+
+ip link add name "$bridge_name" type bridge
+ip link set "$bridge_name" up
+ip link set "$interface_name" master "$bridge_name"
+ip address add "$network" dev "$bridge_name"
+ip route add default via "$default_gw"
