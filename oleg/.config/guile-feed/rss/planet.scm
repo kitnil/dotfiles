@@ -5,7 +5,7 @@
   (feed
    (name "planet-emacs")
    (description "Emacs planet.")
-   (uri "http://planet.emacsen.org/atom.xml")))
+   (uri "https://planet.emacslife.com/atom.xml")))
 
 (define-public planet-gnu
   (feed
