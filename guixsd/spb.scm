@@ -1,8 +1,8 @@
 ;; This is an operating system configuration template
 ;; for a "bare bones" setup, with no X11 display server.
 
-(use-modules (gnu))
-(use-package-modules base bash certs python)
+(use-modules (gnu) (srfi srfi-1) (srfi srfi-26))
+(use-package-modules admin base bash certs python)
 (use-service-modules monitoring networking ssh web)
 (use-modules (services autossh))
 
@@ -209,6 +209,10 @@
                         (type "ext4"))
                       %base-file-systems))
 
+  (groups (cons (user-group (name "nixbld")
+                            (id 30100))
+                %base-groups))
+
   ;; This is where user accounts are specified.  The "root"
   ;; account is implicit, and is initially created with the
   ;; empty password.
@@ -235,7 +239,30 @@
                  (uid 30019)
                  (comment "GitLab Runner privilege separation user")
                  (home-directory "/home/gitlab-runner"))
-                %base-user-accounts))
+                (append ((lambda* (count #:key
+                                    (group "nixbld")
+                                    (first-uid 30101)
+                                    (shadow shadow))
+                           (unfold (cut > <> count)
+                                   (lambda (n)
+                                     (user-account
+                                      (name (format #f "nixbld~a" n))
+                                      (system? #t)
+                                      (uid (+ first-uid n -1))
+                                      (group group)
+
+                                      ;; guix-daemon expects GROUP to be listed as a
+                                      ;; supplementary group too:
+                                      ;; <http://lists.gnu.org/archive/html/bug-guix/2013-01/msg00239.html>.
+                                      (supplementary-groups (list group "kvm"))
+
+                                      (comment (format #f "Nix Build User ~a" n))
+                                      (home-directory "/var/empty")
+                                      (shell (file-append shadow "/sbin/nologin"))))
+                                   1+
+                                   1))
+                         9)
+                        %base-user-accounts)))
 
   ;; Globally-installed packages.
   (packages (cons nss-certs ;SSL certificates
