@@ -228,6 +228,12 @@
                  (uid 30018)
                  (comment "Jenkins privilege separation user")
                  (home-directory "/home/jenkins"))
+                (user-account
+                 (name "gitlab-runner")
+                 (group "users")
+                 (uid 30019)
+                 (comment "GitLab Runner privilege separation user")
+                 (home-directory "/home/gitlab-runner"))
                 %base-user-accounts))
 
   ;; Globally-installed packages.
