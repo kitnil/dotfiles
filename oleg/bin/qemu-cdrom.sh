@@ -37,7 +37,7 @@ qemu-system-x86_64 \
     -enable-kvm \
     -cpu host \
     -daemonize \
-    -net nic,macaddr="$macaddr" -net bridge,br=br0 \
+    -net nic,model=virtio,macaddr="$macaddr" -net bridge,br=br0 \
     -vga virtio \
     -full-screen \
     "$@"
