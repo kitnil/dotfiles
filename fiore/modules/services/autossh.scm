@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2018 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2018, 2019 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -55,7 +55,7 @@
                             #\-))))
 
 (define (serialize-field field-name val)
-  #~(format #f "~a=~a~%" #$(uglify-field-name field-name) #$val))
+  #~(format #f "~a ~a~%" #$(uglify-field-name field-name) #$val))
 
 (define (serialize-number field-name val)
   (serialize-field field-name (number->string val)))
@@ -70,6 +70,10 @@
 
 (define (serialize-boolean field-name val)
   (serialize-string field-name (if val "yes" "no")))
+
+(define extra-options? string?)
+(define (serialize-extra-options field-name val)
+  #~(format #f "~a~%" #$val))
 
 (define-configuration openssh-client-host-configuration
   (host
@@ -90,8 +94,11 @@
   (identity-file
    (string "")
    "")
-  (password-authentication?
-   (boolean #t)
+  (user-known-hosts-file
+   (string "")
+   "")
+  (extra-options
+   (extra-options "")
    ""))
 
 (define (serialize-openssh-client-host-configuration-list field-name val)
@@ -115,6 +122,10 @@
         (default "autossh"))
   (group autossh-configuration-group ;string
          (default "autossh"))
+  (user-id autossh-configuration-user-id ;number
+           (default #f))
+  (group-id autossh-configuration-group-id ;number
+            (default #f))
   (openssh-client-config autossh-configuration-openssh-client-config
                          (default #f))
   (host autossh-configuration-host ;string
@@ -123,31 +134,37 @@
 (define autossh-account
   ;; Return the user accounts and user groups for CONFIG.
   (match-lambda
-    (($ <autossh-configuration> autossh-user autossh-group _)
-     (list (user-group (name autossh-group) (system? #t))
+    (($ <autossh-configuration> user-name group-name user-id group-id _ _)
+     (list (user-group
+            (name group-name)
+            (id group-id))
            (user-account
-            (name autossh-user)
-            (system? #t)
-            (group autossh-group)
+            (name user-name)
+            (uid user-id)
+            (group group-name)
             (comment "autossh privilege separation user")
-            (home-directory (string-append "/var/run/" autossh-user))
+            (home-directory (string-append "/var/run/" user-name))
             (shell #~(string-append #$shadow "/sbin/nologin")))))))
 
 (define autossh-shepherd-service
   (match-lambda
-    (($ <autossh-configuration> autossh-user autossh-group
+    (($ <autossh-configuration> user-name group-name _ _
                                 openssh-client-config host)
      (list (shepherd-service
             (provision '(autossh))
             (documentation "Run autossh daemon.")
             (start #~(make-forkexec-constructor
                       (list (string-append #$autossh "/bin/autossh")
+                            "-NT" "-M" "0"
                             "-F" #$(mixed-text-file "ssh-client.conf"
                                                     (serialize-configuration openssh-client-config
                                                                              openssh-client-configuration-fields))
                             #$host)
-                      #:user #$autossh-user
-                      #:group #$autossh-group))
+                      #:user #$user-name
+                      #:group #$group-name
+                      #:environment-variables
+                      (list "AUTOSSH_PORT=0"
+                            "AUTOSSH_GATETIME=0")))
             (stop #~(make-kill-destructor)))))))
 
 (define autossh-service-type
