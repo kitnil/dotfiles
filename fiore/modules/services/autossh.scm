@@ -42,8 +42,8 @@
 
 ;;; Commentary:
 ;;;
-;;; This module provides a service definition for the SERVICE_NAME
-;;; SERVICE_DESCRTIPTION
+;;; This module provides a service definition for the autossh
+;;; which could be used to establish a SSH proxy connection.
 ;;;
 ;;; Code:
 
