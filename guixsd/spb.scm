@@ -4,7 +4,8 @@
 (use-modules (gnu) (srfi srfi-1) (srfi srfi-26))
 (use-package-modules admin base bash certs python)
 (use-service-modules monitoring networking ssh web)
-(use-modules (services autossh))
+(use-modules (services autossh)
+             (services docker))
 
 
 ;;;
@@ -314,5 +315,7 @@ ServerAliveCountMax 3"))))))
                                    guix-nginx-configuration)
 
                           (service zabbix-agent-service-type)
+
+                          docker-service
 
                    %base-services)))
