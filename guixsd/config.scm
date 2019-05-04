@@ -1,4 +1,5 @@
 (use-modules (gnu) (srfi srfi-1) (srfi srfi-26))
+(use-modules (services docker))
 (use-package-modules admin base certs lisp suckless xdisorg xorg fonts
                      android fontutils gnome freedesktop readline networking)
 (use-service-modules admin dbus desktop dns networking sound xorg ssh
@@ -260,6 +261,8 @@ EndSection\n")
                        (service ntp-service-type)
                        x11-socket-directory-service
                        (service alsa-service-type)
+
+                       docker-service
 
                        (service openssh-service-type
                                 (openssh-configuration
