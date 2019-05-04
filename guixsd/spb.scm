@@ -3,7 +3,8 @@
 
 (use-modules (gnu))
 (use-package-modules base bash certs python)
-(use-service-modules monitoring networking autossh ssh web)
+(use-service-modules monitoring networking ssh web)
+(use-modules (services autossh))
 
 
 ;;;
