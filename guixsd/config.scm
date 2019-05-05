@@ -303,8 +303,9 @@ EndSection\n")
                                 (nginx-configuration
                                  (server-blocks %nginx-server-blocks)))
 
-                       ;; (tor-service (string-append (dirname (current-filename))
-                       ;;                             "/torrc"))
+                       (service tor-service-type
+                                (tor-configuration
+                                 (config-file (local-file "/home/oleg/src/dotfiles/guixsd/torrc"))))
 
                        (service ddclient-service-type)
 
