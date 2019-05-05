@@ -141,3 +141,120 @@ esxi()
          192.168.125.12 \
          192.168.125.11
 }
+
+guix-package-show()
+{
+    guix package --search="$1" | recsel -e "name=\"$1\""
+}
+
+pre-guix-package-show()
+{
+    ./pre-inst-env guix package --search="$1" | recsel -e "name=\"$1\""
+}
+
+setfont-big()
+{
+    setfont ~/.guix-profile/share/consolefonts/Uni3-Terminus32x16.psf.gz
+}
+
+build-guix()
+{
+    guix environment --substitute-urls='https://ci.guix.info http://cuirass.tld' --manifest="$HOME/src/dotfiles/fiore/manifests/natsu-manifest.scm" -- sh -c 'exit' && guix system --substitute-urls='https://ci.guix.info http://cuirass.tld' build "$HOME/src/dotfiles/guixsd/config.scm"
+}
+
+alerta-send-info()
+{
+    alerta send -r guixsd -e bash.tmp -E Production -S 'Linux servers' -s informational -t "$1" -v ERROR
+}
+
+alias guix-pull="guix pull --substitute-urls='https://ci.guix.info http://cuirass.tld'"
+
+mozilla-sync()
+{
+    cp "$HOME/.mozilla/firefox/t4desxpx.light/chrome/userChrome.css" "/tmp/userChrome.css"
+    rsync --verbose --delete --recursive \
+          "$HOME/.mozilla/firefox/j56dvo43.default-1520714705340/" \
+          "$HOME/.mozilla/firefox/t4desxpx.light/"
+    mkdir "$HOME/.mozilla/firefox/t4desxpx.light/chrome/"
+    mv "/tmp/userChrome.css" "$HOME/.mozilla/firefox/t4desxpx.light/chrome/userChrome.css"
+}
+
+guix-update-all()
+{
+    guix pull --substitute-urls='https://ci.guix.info http://cuirass.tld' && \
+        sudo -i guix pull --substitute-urls='https://ci.guix.info http://cuirass.tld' && \
+        guix package --substitute-urls='https://ci.guix.info http://cuirass.tld' --manifest="$HOME/src/dotfiles/fiore/manifests/natsu-manifest.scm" && \
+        sudo -i guix system reconfigure --substitute-urls='https://ci.guix.info http://cuirass.tld' /home/oleg/src/dotfiles/guixsd/config.scm
+}
+
+append-youtube-channel()
+{
+    cat <<EOF >> /srv/data/youtube.scm
+
+(define-public $1
+  "https://www.youtube.com/channel/$2")
+EOF
+}
+
+wallpaper-guixsd()
+{
+    feh \
+        --bg-fill path/l "$HOME/Pictures/Wallpapers/guixsd-1920x1080.png" \
+        --bg-fill path/r "$HOME/Pictures/Wallpapers/guixsd-1920x1080-greyscale.png"
+}
+
+backup-exclude()
+{
+    restic -r /srv/backup/guixsd \
+           -e "$HOME/Downloads/2017-02-24-15-img" \
+           -e "$HOME/vm" \
+           -e "$HOME/.cache" \
+           -e "$HOME/Downloads" \
+           -e "$HOME/GNS3/images" \
+           -e "$HOME/GNS3/projects"  \
+           -e "$HOME/src/replicant" \
+           backup /home/oleg $@
+}
+
+berlin()
+{
+    index="cuirass"
+    for pkg in $("$HOME/src/guix/pre-inst-env" mypkgs); do
+        echo -e "\n\n@ $pkg"
+        curl -s "https://ci.guix.info/api/latestbuilds?nr=64&job=$pkg.x86_64-linux" \
+            | jq -c ".[] | { index: { \"_index\": \"$index\", \"_type\": \"_doc\", _id: .id }}, ." \
+            | curl -H "Content-Type: application/json" -XPOST 192.168.105.120:9200/_bulk --data-binary @-;
+    done
+}
+
+sudo-psql()
+{
+    sudo -u postgres PSQL_HISTORY=/tmp/.psql_history PAGER="$(guix build less)/bin/less -S" $(guix build postgresql)/bin/psql
+}
+
+alias docker-stats-all="docker ps -q | xargs docker stats --no-stream"
+
+export AWX_KEY='***REMOVED***'
+
+# awx-goaccess()
+# {
+#     curl 'http://127.0.0.1:8052/' \
+#          -H 'Authorization: Bearer ***REMOVED***' \
+#          -H 'Content-Type: application/json;charset=utf-8' \
+#          --data "{\"extra_vars\":{\"host_dest\":\"$host\",\"home\":\"$home\",\"site\":\"$site\"}}"
+# }
+
+display-configure()
+{
+    xrandr --output HDMI3 --right-of HDMI1
+}
+
+run-stumpwm()
+{
+    DISPLAY=:4 rlwrap sbcl --load /home/oleg/bin/my-stumpwm
+}
+mpv-youtube-music() { mpv --audio-device=pulse/alsa_output.usb-Logitech_Logitech_USB_Headset-00.analog-stereo --no-resume-playback 'https://www.youtube.com/playlist?list=PLmjgicsUWIkvEKkLN01vm85neXAik3yU2' ; }
+
+guix-gcroot-ansible() { guix package --profile="$HOME/.config/guix/profiles/ansible" --substitute-urls='https://ci.guix.info http://cuirass.tld' -i python ; }
+
+save-manifest() { GUIX_PACKAGE_PATH="$HOME/src/guix-wigust" guix environment --root="$HOME/.config/guix/gcroots/my-manifest" --substitute-urls='https://ci.guix.info http://cuirass.tld' --manifest="$HOME/src/dotfiles/fiore/manifests/natsu-manifest.scm" -- sh -c 'exit' ; }
