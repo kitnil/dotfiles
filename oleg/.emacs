@@ -2332,6 +2332,8 @@ be updated automatically."))
 ;;; Misc
 ;;;
 
+(beginend-global-mode)
+
 (add-hook 'eshell-mode-hook 'eshell-bookmark-setup)
 
 (add-hook 'comint-output-filter-functions
