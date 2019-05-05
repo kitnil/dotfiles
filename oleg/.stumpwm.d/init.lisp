@@ -561,6 +561,7 @@
             '(:eval (window-name (current-window)))
             "]"
             "^>    "
+            ;; "b:" '(:eval (stumpwm:run-shell-command "/home/oleg/bin/jenkins-active-jobs" t))
             "    %d"))
 (setf *mode-line-pad-x* 0)
 (setf *mode-line-pad-y* 0)
