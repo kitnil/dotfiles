@@ -78,7 +78,11 @@ exec ${GUILE:-$(which guile)} $GUILE_FLAGS --no-auto-compile -e '(@@ (guile-aler
                                                                     (number->string 1))
                                                                    ((string=? result "fail")
                                                                     (number->string 0))))
-                                                 ("resource" . "jenkins"))))))
+                                                 ("resource" . "jenkins")
+                                                 ,@(cond ((string=? result "success")
+                                                          '((timeout . 1800)))
+                                                         ((string=? result "fail")
+                                                          '())))))))
       (hash-table->alist (json-string->scm (utf8->string body))))))
 
 ;;; guile-foo ends here
