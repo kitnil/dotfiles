@@ -18,6 +18,7 @@
 (autoload 'f-directories "f" nil t)
 (autoload 'string-trim-right "subr-x" nil t)
 (autoload 'flet "cl" nil t)
+(autoload 'beginend-global-mode "beginend" nil t)
 (require 'dash) ; TODO: Use `autoload' instead of `require'.
 
 (setq load-prefer-newer t)
