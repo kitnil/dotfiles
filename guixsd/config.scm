@@ -54,7 +54,8 @@ EndSection\n")
                                          "proxy_set_header X-Forwarded-Proto $scheme;"
                                          "proxy_set_header X-Real-IP $remote_addr;"
                                          "proxy_set_header X-Forwarded-for $remote_addr;"
-                                         "proxy_connect_timeout 300;")))
+                                         "proxy_connect_timeout 300;"
+                                         "client_max_body_size 0;")))
                             (and well-known?
                                  (nginx-location-configuration
                                   (uri "/.well-known")
