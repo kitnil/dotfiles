@@ -100,6 +100,8 @@
     (restore-window-placement-rules rules)
     (place-existing-windows)))
 
+(define-frame-preference "Default" (1 NIL T :CLASS "mpv" :TITLE "emacs-emms"))
+
 ;; (restore-window-placement-rules "/home/oleg/.stumpwm.d/rules/4.lisp")
 
 ;; (restore-from-file "/home/user/.stumpwm-dump-desktop.lisp")
