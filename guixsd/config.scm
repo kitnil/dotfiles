@@ -234,7 +234,7 @@ EndSection\n")
          "192.168.100.1 r1.tld\n"
          "192.168.105.1 r2.tld\n"
          "192.168.105.120 cuirass.tld\n"
-         "127.0.0.1 gitlab.wugi.info gitea.wugi.info grafana.wugi.info zabbix.wugi.info"
+         "127.0.0.1 gitlab.wugi.info gitea.wugi.info grafana.wugi.info zabbix.wugi.info alerta.wugi.info"
          "\n\n"
          %facebook-host-aliases)))
 
