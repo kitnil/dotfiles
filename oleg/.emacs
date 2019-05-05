@@ -2562,6 +2562,11 @@ If nil use light theme.")
   (interactive)
   (kill-new (buffer-file-name)))
 
+(defun wi-file-name-directory ()
+  "Open dired which contains current file."
+  (interactive)
+  (dired (file-name-directory (file-truename (buffer-file-name)))))
+
 (defun wi-copy-project-file-name ()
   "Return current buffer file name in current project."
   (interactive)
