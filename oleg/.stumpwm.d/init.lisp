@@ -417,7 +417,7 @@
   "Open Rofi with Twitchy plugin."
   (run-shell-command "rofi -modi twitchy:rofi-twitchy -show twitchy"))
 
-(define-key *root-map* (kbd "@") "rofi-drun")
+;; (define-key *root-map* (kbd "@") "rofi-drun")
 
 (defcommand twitchy () ()
   (term-shell-command "twitchy"))
@@ -608,27 +608,27 @@
 
 (define-key *root-map* (kbd "e") "emacsclient")
 
-(define-key *root-map* (kbd "m") "mpv")
-(define-key *root-map* (kbd "C-m") "xclip-mpv")
-(define-key *root-map* (kbd "M-m") "xclip-streamlink")
+;; (define-key *root-map* (kbd "m") "mpv")
+;; (define-key *root-map* (kbd "C-m") "xclip-mpv")
+;; (define-key *root-map* (kbd "M-m") "xclip-streamlink")
 
 (defcommand rofi-stumpwm () ()
   (run-shell-command (concat "rofi -show stumpwm -modi stumpwm:"
                              *home* "/bin/rofi-stumpwm")))
 
-(define-key *root-map* (kbd "M-;") "rofi-stumpwm")
+(define-key *top-map* (kbd "s-:") "rofi-stumpwm")
 
-(define-key *root-map* (kbd "C-e") "xclip-emacs")
-(define-key *root-map* (kbd "C-M-c") "xterm-big-screen")
-(define-key *root-map* (kbd "M-e") "emacs-anywhere")
+;; (define-key *root-map* (kbd "C-e") "xclip-emacs")
+;; (define-key *root-map* (kbd "C-M-c") "xterm-big-screen")
+;; (define-key *root-map* (kbd "M-e") "emacs-anywhere")
 
 ;; Lock screen
-(define-key *root-map* (kbd "C-l") "exec xlock -mode blank")
-(define-key *root-map* (kbd "M-l") "turn-screen-off")
+;; (define-key *root-map* (kbd "C-l") "exec xlock -mode blank")
+;; (define-key *root-map* (kbd "M-l") "turn-screen-off")
 
-(define-key *root-map* (kbd "M-!") "run-xterm-command")
-(define-key *root-map* (kbd "v") "pulsemixer")
-(define-key *root-map* (kbd "C-v") "alsamixer")
+;; (define-key *root-map* (kbd "M-!") "run-xterm-command")
+;; (define-key *root-map* (kbd "v") "pulsemixer")
+;; (define-key *root-map* (kbd "C-v") "alsamixer")
 
 (defcommand osd-sound () ()
   (run-shell-command "if pgrep -f osd-sound > /dev/null; then pkill osd-sound; osd-sound; else osd-sound; fi"))
@@ -643,24 +643,23 @@
   ((kbd "-") "volume-decrease")
   ((kbd "=") "volume-increase"))
 
-(define-key *root-map* (kbd "c") "run-or-raise-xterm")
+(define-key *root-map* (kbd "c") "run-xterm")
 (define-key *root-map* (kbd "C-c") "run-xterm")
-(define-key *root-map* (kbd "C-M-c") "run-xterm-light")
+;; (define-key *root-map* (kbd "C-M-c") "run-xterm-light")
 
-(define-key *root-map* (kbd "C-M-v") "scroll-other-window")
-(define-key *root-map* (kbd "Print") "screenshot-default")
+;; (define-key *root-map* (kbd "C-M-v") "scroll-other-window")
+(define-key *top-map* (kbd "Print") "screenshot-default")
 
-(define-key *root-map* (kbd "C-w") "firefox")
-(define-key *root-map* (kbd "M-w") "firefox-new-window")
-(define-key *root-map* (kbd "w") "firefox")
+(define-key *top-map* (kbd "s-w") "firefox")
+(define-key *top-map* (kbd "s-M-w") "firefox-new-window")
 
 ;; Rebind groups to PREFIX-NUMBER.
 (mapcar #'(lambda (x) (define-key *top-map* (kbd (concat "s-" (write-to-string x)))
 			(format nil "~A ~D" "gselect" x)))
 	(range 10 :min 1 :step 1))
 
-;; (define-key *top-map* (kbd "M-s-n") "gnext")
-;; (define-key *top-map* (kbd "M-s-p") "gprev")
+(define-key *top-map* (kbd "M-s-n") "gnext")
+(define-key *top-map* (kbd "M-s-p") "gprev")
 ;; (define-key *top-map* (kbd "s-M-h") "jord-php")
 ;; (define-key *top-map* (kbd "s-TAB") "fother")
 ;; (define-key *top-map* (kbd "s-\"") "frame-windowlist")
@@ -670,8 +669,9 @@
 ;; (define-key *top-map* (kbd "s-e") "emacsclient")
 ;; (define-key *top-map* (kbd "s-h") "jord-loadavg")
 ;; (define-key *top-map* (kbd "s-h") nil)
-;; (define-key *top-map* (kbd "s-m") "mpv")
-;; (define-key *top-map* (kbd "s-p") "prev-in-frame")
+(define-key *top-map* (kbd "s-m") "mpv")
+(define-key *top-map* (kbd "s-n") "next-in-frame")
+(define-key *top-map* (kbd "s-p") "prev-in-frame")
 ;; (define-key *top-map* (kbd "s-s") "sibling")
 ;; (define-key *top-map* (kbd "s-t") "pull-hidden-other")
 ;; (define-key *top-map* (kbd "s-v") "xclip-mpv")
@@ -703,15 +703,18 @@
 (define-key *top-map* (kbd "XF86AudioRaiseVolume") "ponymix-increase")
 (define-key *top-map* (kbd "XF86AudioLowerVolume") "ponymix-decrease")
 
-(define-key *root-map* (kbd "C-b") "warp-mouse-active-frame")
+;; (define-key *root-map* (kbd "C-b") "warp-mouse-active-frame")
 (defcommand xkill () ()
   "Run `xkill'."
   (run-shell-command "xkill"))
 
-(define-key *root-map* (kbd "X") "xkill")
+;; (define-key *root-map* (kbd "X") "xkill")
 
 (defcommand vnc-magnolia () ()
   (run-shell-command "exec vncviewer localhost:59555"))
+
+(defcommand pass-input () ()
+  (window-send-string "***REMOVED***"))
 
 (defcommand pass () ()
   (run-shell-command "echo -n ***REMOVED*** | xclip -selection primary"))
@@ -745,8 +748,14 @@
                                             "firefox -P light --new-window ~S")
                                     url))))
 
+  (defcommand firefox-light (url) ((:string "URL: "))
+    (firefox url))
+
   (defcommand firefox-dark (url) ((:string "URL: "))
     (firefox url t))
+
+  (defcommand alerta () ()
+    (firefox "https://alerta.wugi.info/"))
 
   (defcommand grafana () ()
     (firefox "https://grafana.wugi.info/" t))
@@ -832,10 +841,17 @@
        (emacsclient-eval (format nil "(~a)" ,command)))
      (define-key *top-map* (kbd ,key) ,(concat "emacs-" command))))
 
-(emacs-bind "s-n" "emms-next")
-(emacs-bind "s-p" "emms-previous")
-(emacs-bind "s-P" "emms-pause")
-(emacs-bind "s-r" "emms-random")
+(defcommand emacs-mms-next () ()
+  (emacsclient-eval (format nil "(~a)" "emms-next")))
+
+(defcommand emacs-emms-previous () ()
+  (emacsclient-eval (format nil "(~a)" "emms-previous")))
+
+(defcommand emacs-emms-pause () ()
+  (emacsclient-eval (format nil "(~a)" "emms-pause")))
+
+(defcommand emacs-emms-random () ()
+  (emacsclient-eval (format nil "(~a)" "emms-random")))
 
 (defcommand racket () ()
   (run-shell-command "drracket"))
@@ -844,12 +860,12 @@
   (run-shell-command "xrandr --output HDMI1 --mode 1920x1080 ; xgamma -gamma 1.0"))
 
 ;; Rebind groups to PREFIX-NUMBER.
-(mapcar #'(lambda (x)
-            (when (> x 1)
-              (gnew (write-to-string x)))
-            (define-key *top-map* (kbd (concat "s-" (write-to-string x)))
-	      (format nil "~A ~D" "gselect" x)))
-	(range 10 :min 1 :step 1))
+;; (mapcar #'(lambda (x)
+;;             (when (> x 1)
+;;               (gnew (write-to-string x)))
+;;             (define-key *top-map* (kbd (concat "s-" (write-to-string x)))
+;; 	      (format nil "~A ~D" "gselect" x)))
+;; 	(range 10 :min 1 :step 1))
 
 (define-key *top-map* (kbd "s-!") "gmove-and-follow 1")
 (define-key *top-map* (kbd "s-@") "gmove-and-follow 2")
@@ -877,7 +893,7 @@
     (run-shell-command "stumpish emacsclient"))
   (run-shell-command "emacsclient -e '(progn (shell) (delete-other-windows))'"))
 
-(define-key *root-map* (kbd "quoteleft") "emacs-shell")
+;; (define-key *root-map* (kbd "quoteleft") "emacs-shell")
 
 (defcommand emms () ()
   (unless (uiop/utility:string-prefix-p "emacs"
