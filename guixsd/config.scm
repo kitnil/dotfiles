@@ -229,7 +229,9 @@ EndSection\n")
        (plain-file
         "hosts"
         (string-append
-         (local-host-aliases (operating-system-host-name base-system))
+         "\
+127.0.0.1 guixsd localhost
+::1       guixsd localhost"
          "\n\n"
          "192.168.100.1 r1.tld\n"
          "192.168.105.1 r2.tld\n"
