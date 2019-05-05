@@ -1,4 +1,9 @@
+stages:
+  - test
+  - deploy
+
 test:
+  stage: test
   tags:
     - shell
   script:
@@ -6,3 +11,13 @@ test:
     - ~/.config/guix/current/bin/guix describe
     - ~/.config/guix/current/bin/guix environment --substitute-urls='https://guix.duckdns.org https://ci.guix.info' --manifest=fiore/manifests/guix-collection.scm -- sh -c exit
     - ~/.config/guix/current/bin/guix system build --load-path=fiore/modules --substitute-urls='https://guix.duckdns.org https://ci.guix.info' guixsd/config.scm
+
+deploy:
+  stage: deploy
+  tags:
+    - shell
+  environment: production
+  script: /bin/sh deploy.sh
+  only:
+    - master
+  when: manual
