@@ -2,6 +2,53 @@
 
 docker run \
        --name influxdb \
+       --hostname influxdb \
+       --net=influxdb \
+       --detach \
+       --restart unless-stopped \
+       --env 'INFLUXDB_ADMIN_ENABLED=true' \
+       --volume /var/lib/influxdb:/var/lib/influxdb \
+       --volume /etc/influxdb/influxdb.conf:/etc/influxdb/influxdb.conf:ro \
+       influxdb
+
+docker run \
+       --name telegraf \
+       --net=influxdb \
+       --hostname telegraf \
+       --detach \
+       --restart unless-stopped \
+       --env HOST_PROC=/host/proc \
+       --volume /proc:/host/proc:ro \
+       --volume $HOME/src/hello-telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro \
+       telegraf
+
+docker run \
+       --name kapacitor \
+       --net=influxdb \
+       --publish 9092:9092 \
+       --hostname kapacitor \
+       -e KAPACITOR_INFLUXDB_0_URLS_0=http://influxdb:8086 \
+       --detach \
+       --restart unless-stopped \
+       --env HOST_PROC=/host/proc \
+       --volume /proc:/host/proc:ro \
+       --volume $HOME/src/hello-kapacitor/kapacitor.conf:/etc/kapacitor/kapacitor.conf:ro \
+       kapacitor
+
+docker run \
+       --name chronograf \
+       --net=influxdb \
+       --hostname chronograf \
+       --detach \
+       --restart unless-stopped \
+       --volume /var/lib/chronograf:/var/lib/chronograf \
+       chronograf
+
+
+docker run \
+       --name influxdb \
+       --hostname influxdb \
+       --network host \
        --detach \
        --restart unless-stopped \
        --env 'INFLUXDB_ADMIN_ENABLED=true' \
@@ -13,18 +60,41 @@ docker run \
 
 docker run \
        --name telegraf \
+       --hostname guixsd \
        --detach \
        --restart unless-stopped \
-       --net=container:influxdb \
        --env HOST_PROC=/host/proc \
        --volume /proc:/host/proc:ro \
-       --volume /etc/telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro \
+       --volume $HOME/src/hello-telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro \
        telegraf
 
 docker run \
-       --name grafana \
+       --name kapacitor \
+       --hostname kapacitor \
        --detach \
        --restart unless-stopped \
+       --env HOST_PROC=/host/proc \
+       --volume /proc:/host/proc:ro \
+       --volume $HOME/src/hello-kapacitor/kapacitor.conf:/etc/kapacitor/kapacitor.conf:ro \
+       --publish 9092:9092 \
+       kapacitor
+
+docker run \
+       --name chronograf \
+       --hostname guixsd \
+       --detach \
+       --restart unless-stopped \
+       --publish 8888:8888 \
+       --volume /var/lib/chronograf:/var/lib/chronograf \
+       --add-host influxdb:172.17.0.1 \
+       chronograf --influxdb-url=http://influxdb:8086
+
+docker run \
+       --name grafana \
+       --hostname grafana \
+       --detach \
+       --restart unless-stopped \
+       --net=influxdb \
        --user 30020:0 \
        --publish 3080:3000 \
        --volume /var/lib/grafana:/var/lib/grafana \
@@ -63,6 +133,28 @@ docker run \
        docker.elastic.co/kibana/kibana:6.5.1
 
 docker run \
+       --name logstash \
+       --hostname logstash \
+       --network host \
+       --add-host elasticsearch:192.168.105.120 \
+       --detach \
+       --restart unless-stopped \
+       --volume "$HOME/src/hello-elk/logstash/":/usr/share/logstash/pipeline/ \
+       docker.elastic.co/logstash/logstash:6.5.1
+
+docker run \
+       --detach \
+       --restart unless-stopped \
+       -v "$HOME/src/elastalert/config/elastalert.yaml:/opt/elastalert/config.yaml" \
+       -v "$HOME/src/elastalert/config/config.json:/opt/elastalert-server/config/config.json" \
+       -v "$HOME/src/elastalert/rules:/opt/elastalert/rules" \
+       -v "$HOME/src/elastalert/rule_templates:/opt/elastalert/rule_templates" \
+       --network host \
+       --name elastalert \
+       --hostname elastalert \
+       bitsensor/elastalert:2.0.1
+
+docker run \
        --restart unless-stopped \
        --hostname gitlab \
        --add-host gitlab.wugi.info:127.0.0.1 \
@@ -75,19 +167,17 @@ docker run \
        --volume /etc/gitlab:/etc/gitlab \
        --volume /var/log/gitlab:/var/log/gitlab \
        --volume /var/lib/gitlab:/var/opt/gitlab \
-       gitlab/gitlab-ce:11.6.0-ce.0
+       gitlab/gitlab-ce:11.10.0-ce.0
 
 docker run \
        --name jenkins \
        --hostname jenkins \
        --detach \
        --restart unless-stopped \
-       --add-host gitlab.wugi.info:192.168.105.120 \
        --user 30018:30004 \
        --volume /home/jenkins:/var/jenkins_home \
        --publish 30080:8080 \
        --publish 50000:50000 \
-       jenkins/jenkins:lts
 
 docker run \
        --name registry \
@@ -127,6 +217,7 @@ docker run \
        --detach \
        --add-host db:172.17.0.1 \
        --publish 47080:8080 \
+       --mount type=bind,source=/etc/localtime,target=/etc/localtime,readonly \
        --env DEBUG=1 \
        --env DATABASE_URL=postgres://alerta:alerta@db:5432/alerta \
        --env AUTH_REQUIRED=True \
@@ -135,3 +226,10 @@ docker run \
        --env INSTALL_PLUGINS=normalise,enhance \
        --restart unless-stopped \
        alerta/alerta-web:6.8.2
+
+docker run \
+       --name tor \
+       --detach \
+       --publish 8118:8118 \
+       --publish 9051:9050 \
+       rdsubhas/tor-privoxy-alpine
