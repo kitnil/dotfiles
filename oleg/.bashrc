@@ -13,6 +13,12 @@ then
     . ".bash_aliases"
 fi
 
+# http://puzan.info/linux/2014-05-14-direnv.html
+if [ -f "$HOME/.guix-profile/bin/direnv" ]
+then
+    eval "$(direnv hook bash)"
+fi
+
 function man-in-emacs { emacsclient --eval "(man \"$1\")"; }
 function man-to-pdf { man -t "$1" | ps2pdf - "$1.pdf"; }
 
