@@ -49,6 +49,8 @@
 
 (setq ffap-file-finder 'org-open-file)
 
+(setq slime-net-coding-system 'utf-8-unix)
+
 ;; Default from Emacs 26
 ;; See <http://git.savannah.gnu.org/cgit/emacs.git/commit/etc/NEWS?id=72ee93d68daea00e2ee69417afd4e31b3145a9fa>
 (setq print-quoted t)
