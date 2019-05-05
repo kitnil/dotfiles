@@ -200,6 +200,12 @@ EndSection\n")
                      (group "users")
                      (comment "SSH forwarding privilege separation user")
                      (home-directory "/home/spb"))
+                    (user-account
+                     (name "awx")
+                     (comment "AWX privilege separation user")
+                     (group "users")
+                     (supplementary-groups '("docker"))
+                     (home-directory "/home/awx"))
                     (append ((lambda* (count #:key
                                         (group "nixbld")
                                         (first-uid 30101)
