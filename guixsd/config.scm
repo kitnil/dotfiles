@@ -334,7 +334,7 @@ EndSection\n")
 
                        (service tor-service-type
                                 (tor-configuration
-                                 (config-file (local-file "/home/oleg/src/dotfiles/guixsd/torrc"))))
+                                 (config-file (local-file "torrc"))))
 
                        (service ddclient-service-type)
 
