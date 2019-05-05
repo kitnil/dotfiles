@@ -1798,26 +1798,29 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 
 (setq erc-autojoin-channels-alist
       (quote
-       (("freenode.net" "#icecat" "#emacs" "#grub" "#conkeror" "#erc"
+       (("freenode.net"
+         ;; "#icecat" "#emacs" "#grub" "#conkeror" "#erc"
          ;; "#clojure" "##math"
-         "##c" "#gdb" "#bash" "#SDL" "#chicken"
+         ;; "##c" "#gdb" "#bash" "#SDL" "#chicken"
          ;; "#fedora" "#fedora-admin" "#fedora-devel"
          ;; "#fedora-noc" "#fedora-meeting" "#fedora-qa"
-         "#gnu" "#fsf" "#gnus" "#guile" "#guix" "#stumpwm"
-         "#bootstrappable"
-         "#replicant"
-         "##linux" "#linuxdistrocommunity"
+         ;; "#gnu" "#fsf" "#gnus"
+         "#guile" "#guix" "#lisp" "#scheme"
+         "#stumpwm" "#bootstrappable"
+         ;; "#replicant"
+         ;; "##linux" "#linuxdistrocommunity"
          ;; "#nixos" "#haskell" "#xmonad"
          ;; "#filmsbykris" "##japanese" "#latex"
          ;; "#python" "#scipy" "#sagemath"
-         "#lisp" "#scheme")
-        ("indymedia.org" "#riseup")
-        ("gitter.im")
-        ("oftc.net" "#debian" "#debian-next")
-        ("globalgamers" "#Touhou")
-        ("twitch.tv" "#tsoding" "#cattzs" "#retched"
-         "#bbsssssssss" "#team_treehouse" "#rw_grim")
-        ("uworld.se" "#coalgirls"))))
+         )
+        ;; ("indymedia.org" "#riseup")
+        ;; ("gitter.im")
+        ;; ("oftc.net" "#debian" "#debian-next")
+        ;; ("globalgamers" "#Touhou")
+        ;; ("twitch.tv" "#tsoding" "#cattzs" "#retched"
+        ;;  "#bbsssssssss" "#team_treehouse" "#rw_grim")
+        ;; ("uworld.se" "#coalgirls")
+        )))
 
 (defun erc-netlist (wi-erc-netlist)
   (dolist (irc-net wi-erc-netlist)
