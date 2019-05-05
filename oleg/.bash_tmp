@@ -122,24 +122,6 @@ pre-weather()
         $@
 }
 
-build()
-{
-    sudo -E \
-         guix system build \
-         --substitute-urls='http://cuirass.tld https://ci.guix.info https://mirror.hydra.gnu.org' \
-         -L $HOME/dotfiles/fiore/modules \
-         $@
-}
-
-reconfigure()
-{
-    sudo -E \
-         guix system reconfigure \
-         --substitute-urls='http://cuirass.tld https://berlin.guixsd.org https://mirror.hydra.gnu.org' \
-         -L $HOME/dotfiles/fiore/modules \
-         $@
-}
-
 firefox-run()
 {
     GTK_THEME=Adwaita:dark firefox -P default --new-instance;
