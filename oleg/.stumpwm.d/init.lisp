@@ -398,6 +398,9 @@
 (defcommand htop () ()
   (term-shell-command "htop"))
 
+(defcommand neofetch () ()
+  (term-shell-command "sh -c 'neofetch; read'"))
+
 (defcommand rofi-drun () ()
   "Open Rofi to launch `.desktop' file."
   (run-shell-command "rofi -modi run,drun -show drun"))
