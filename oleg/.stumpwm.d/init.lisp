@@ -905,3 +905,76 @@
            (sb-unicode:lowercase
             (write-to-string
              '(progn (emms) (delete-other-windows)))))))
+
+(defcommand emacs-gnus () ()
+  (unless (uiop/utility:string-prefix-p "emacs"
+                                        (window-name (current-window)))
+    (run-shell-command "stumpish emacsclient"))
+  (run-shell-command
+   (format nil "emacsclient -e ~s"
+           (sb-unicode:lowercase
+            (write-to-string
+             '(progn (gnus) (delete-other-windows)))))))
+
+(defcommand guix () ()
+  (unless (uiop/utility:string-prefix-p "emacs"
+                                        (window-name (current-window)))
+    (run-shell-command "stumpish emacsclient"))
+  (run-shell-command "magit ~/src/guix"))
+
+(defcommand elfeed () ()
+  (unless (uiop/utility:string-prefix-p "emacs"
+                                        (window-name (current-window)))
+    (run-shell-command "stumpish emacsclient"))
+  (run-shell-command
+   (format nil "emacsclient -e ~s"
+           (sb-unicode:lowercase
+            (write-to-string
+             '(progn (elfeed) (delete-other-windows)))))))
+
+(define-key *top-map* (kbd "s-Tab") "fother")
+
+(define-key *top-map* (kbd "s-k") "delete")
+
+(define-key *top-map* (kbd "s-Right") "move-focus right")
+(define-key *top-map* (kbd "s-Left") "move-focus left")
+(define-key *top-map* (kbd "s-Up") "move-focus up")
+(define-key *top-map* (kbd "s-Down") "move-focus down")
+
+(define-key *top-map* (kbd "S-s-Right") "move-window right")
+(define-key *top-map* (kbd "S-s-Left") "move-window left")
+(define-key *top-map* (kbd "S-s-Up") "move-window up")
+(define-key *top-map* (kbd "S-s-Down") "move-window down")
+
+(defcommand vnc (display) ((:string "display: "))
+  (run-shell-command (concat "vncviewer 127.0.0.1:" display)))
+
+(define-key *top-map* (kbd "s-v") "pulsemixer")
+(define-key *top-map* (kbd "s-r") "vnc")
+(define-key *top-map* (kbd "s-e") "emacsclient")
+(define-key *top-map* (kbd "s-c") "run-or-raise-xterm")
+
+(define-key *top-map* (kbd "s-f") "move-focus right")
+(define-key *top-map* (kbd "s-b") "move-focus left")
+(define-key *top-map* (kbd "s-p") "move-focus up")
+(define-key *top-map* (kbd "s-n") "move-focus down")
+(define-key *top-map* (kbd "s-!") "exec")
+
+(defcommand mpv-music () ()
+  (run-shell-command "mpv https://www.youtube.com/playlist?list=PLmjgicsUWIkvEKkLN01vm85neXAik3yU2"))
+
+(defcommand alerta-close-youtube () ()
+  (run-shell-command "alerta close --filter resource=YouTube"))
+
+;; (require :swank)
+;; (swank-loader:init)
+;; (sb-thread:make-thread
+;;  (lambda ()
+;;    (swank:create-server :port 9007 :dont-close t)))
+
+;; (setq swank:*use-dedicated-output-stream* nil)
+
+;; (run-shell-command "emacsclient -c -s test /home/oleg/src/dotfiles/oleg/.stumpwm.d/init.lisp")
+
+;; (swank:create-server :port 9006 :dont-close t)
+
