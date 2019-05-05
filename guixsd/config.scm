@@ -122,6 +122,26 @@ EndSection\n")
 
 
 ;;;
+;;; nix
+;;;
+
+(use-modules (gnu services shepherd)
+             (gnu packages package-management))
+
+(define nix-service
+  (simple-service 'nix shepherd-root-service-type
+                  (list
+                   (shepherd-service
+                    (provision '(nix))
+                    (documentation "Run nix-daemon.")
+                    (requirement '())
+                    (start #~(make-forkexec-constructor
+                              (list (string-append #$nix "/bin/nix-daemon"))))
+                    (respawn? #f)
+                    (stop #~(make-kill-destructor))))))
+
+
+;;;
 ;;; Entryp point
 ;;;
 
@@ -272,6 +292,7 @@ EndSection\n")
                        x11-socket-directory-service
                        (service alsa-service-type)
 
+                       nix-service
                        docker-service
 
                        (service openssh-service-type
