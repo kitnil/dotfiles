@@ -2857,6 +2857,19 @@ With NOT-SUPPRESS non-nil argument include archived bugs."
       (special-mode))
     (switch-to-buffer buffer)))
 
+(defun wi-wget-switch-gunzip (url)
+  "Download a file with wget and open it in buffer"
+  (interactive "sDownload URL: ")
+  (let ((buffer (generate-new-buffer "*wget*"))
+        (command (mapconcat 'identity
+                            (list "wget" "-q" "-O-" url " | " "gunzip")
+                            " ")))
+    (message command)
+    (with-current-buffer buffer
+      (insert (shell-command-to-string command))
+      (special-mode))
+    (switch-to-buffer buffer)))
+
 (defun wi-debbugs-get-url (bug-number)
   "Get a debbugs url according to `BUG-NUMBER'"
   (interactive "sBug number: ")
