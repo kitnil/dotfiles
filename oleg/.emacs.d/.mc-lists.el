@@ -16,6 +16,7 @@
         fill-paragraph
         forward-sexp
         helm-show-kill-ring
+        hydra--digit-argument
         hydra--negative-argument
         hydra-multicursor/mc/mark-next-symbol-like-this
         hydra-multicursor/mc/mark-previous-like-this
@@ -27,6 +28,7 @@
         kmacro-start-macro-or-insert-counter
         magit-copy-buffer-revision
         mark-sexp
+        mc/mark-next-lines
         message-beginning-of-line
         mouse-yank-primary
         org-beginning-of-line
@@ -63,6 +65,7 @@
         wdired-exit
         wdired-finish-edit
         yaml-electric-backspace
+        yaml-electric-dash-and-dot
         yas-expand
         ))
 
@@ -86,6 +89,7 @@
         mouse-set-region
         projectile-compile-project
         repeat
+        sh-assignment
         smartparens-strict-mode
         text-scale-adjust
         ))
