@@ -710,7 +710,8 @@ Sets the following basend on PREFIX-MAP:
                 ("v" wi-helm-wigust-stream "stream" :color blue)
                 ("w" helm-stumpwm-commands "stumpwm" :color blue)
                 ("x" helm-M-x "M-x" :color blue)
-                ("y" helm-show-kill-ring "kill ring" :color blue))
+                ("y" helm-show-kill-ring "kill ring" :color blue)
+                ("8" helm-ucs "character" :color blue))
 
 (wi-define-keys "C-c g h H" helm-help
                 ("m" helm-man-woman "man" :color blue)
