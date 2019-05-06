@@ -84,6 +84,7 @@ EndSection\n")
         (proxy "cups.tld" 631)
         (proxy "torrent.tld" 9091)
         (proxy "awx.wugi.info" 8052 #:ssl? #t)
+        (proxy "stackstorm.wugi.info" 4443 #:ssl? #t #:ssl-target? #t)
         (proxy "jenkins.wugi.info" 30080 #:ssl? #t)
         (proxy "alerta.wugi.info" 47080 #:ssl? #t)
         (proxy "grafana.wugi.info" 3080 #:ssl? #t)
@@ -204,6 +205,12 @@ EndSection\n")
                      (group "users")
                      (supplementary-groups '("wheel" "adbusers" "audio" "video" "docker" "kvm"))
                      (home-directory "/home/oleg"))
+                    (user-account
+                     (name "stanley")
+                     (comment "Stanley StackStorm")
+                     (group "users")
+                     (supplementary-groups '("kvm"))
+                     (home-directory "/home/stanley"))
                     (user-account
                      (name "majordomo-ssh-tunnel")
                      (group "users")
@@ -326,7 +333,8 @@ EndSection\n")
                                                  "gitea.wugi.info"
                                                  "prometheus.wugi.info"
                                                  "alerta.wugi.info"
-                                                 "awx.wugi.info"))))))
+                                                 "awx.wugi.info"
+                                                 "stackstorm.wugi.info"))))))
 
                        (service nginx-service-type
                                 (nginx-configuration
