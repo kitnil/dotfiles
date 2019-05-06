@@ -235,3 +235,17 @@ guix-package-show()
 {
     guix package --search="$1" | recsel -e "name=\"$1\""
 }
+
+# https://github.com/jarun/Buku/wiki/Third-party-integration
+fb()
+{
+    # save newline separated string into an array
+    mapfile -t website <<< "$(buku -p -f 4 | column -ts$'\t' | fzf --multi)"
+
+    # open each website
+    for i in "${website[@]}"; do
+        index="$(echo "$i" | awk '{print $1}')"
+        buku -p "$index"
+        buku -o "$index"
+    done
+}
