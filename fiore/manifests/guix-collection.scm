@@ -178,7 +178,8 @@ w3m web wget xdisorg xml xorg)
                gnu-c-manual gnu-standards man-pages
                sicp ; Structure and Interpretation of Computer Programs
 
-               restic ;backup
+               ;; XXX: Broken package
+               ;; restic ;backup
 
                cflow         ;C program call map.
                gcc-toolchain ;For Emacs `semantic-mode'.
