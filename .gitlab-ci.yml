@@ -1,0 +1,4 @@
+test:
+  tags:
+    - shell
+  script: ~/.config/guix/current/bin/guix build --load-path="$PWD" --no-grafts guile-ihs
