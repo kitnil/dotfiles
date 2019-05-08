@@ -65,7 +65,7 @@
       (license #f))))
 
 (define-public guile-ihs
-  (let ((commit "ed5ac69ce97afd2ef393ae65790bf3ac49a2a90b"))
+  (let ((commit "22dcdbebc53bed63e96b017b88c30390a63ac8ee"))
     (package
       (home-page "https://majordomo.ru/")
       (name "guile-ihs")
@@ -79,7 +79,7 @@
          (file-name (git-file-name name version))
          (sha256
           (base32
-           "0ck35ncjcac9kf4pwnlj5xxywy7ic9ab09lksd13qvz2iwjwzbgf"))))
+           "1k3qajq1hyigs9jqdglvg6dc4wirgbw2hkgi6h38d6y9hgb2l1wp"))))
       (build-system gnu-build-system)
       (arguments
        `(#:modules ((guix build gnu-build-system)
