@@ -20,4 +20,3 @@ deploy:
   script: /bin/sh deploy.sh
   only:
     - master
-  when: manual
