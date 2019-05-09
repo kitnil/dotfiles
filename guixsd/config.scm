@@ -38,10 +38,20 @@ EndSection\n")
    (uri "/.well-known")
    (body '("root /var/www;"))))
 
-(define* (proxy host port #:key (ssl? #f) (ssl-target? #f)
-                (well-known? #t) (target #f))
+(define* (proxy host port
+                #:key
+                (ssl? #f)
+                (ssl-target? #f)
+                (well-known? #t)
+                (target #f)
+                (sub-domains? #f))
   (nginx-server-configuration
-   (server-name (list host (string-append "www." host)))
+   (server-name (if sub-domains?
+                    (list (string-append sub-domains?
+                                         (string-join (string-split host #\.)
+                                                      "\\.")
+                                         "$"))
+                    (list host (string-append "www." host))))
    (locations (delete #f
                       (list (nginx-location-configuration
                              (uri "/")
@@ -50,7 +60,9 @@ EndSection\n")
                                                         (or target "localhost")
                                                         ":" (number->string port) ";")
                                          (format #f "proxy_pass ~a://$target;" (if ssl-target? "https" "http"))
-                                         (format #f "proxy_set_header Host ~a;" host)
+                                         (if sub-domains?
+                                             "proxy_set_header Host $http_host;"
+                                             (format #f "proxy_set_header Host ~a;" host))
                                          "proxy_set_header X-Forwarded-Proto $scheme;"
                                          "proxy_set_header X-Real-IP $remote_addr;"
                                          "proxy_set_header X-Forwarded-for $remote_addr;"
@@ -88,6 +100,7 @@ EndSection\n")
         (proxy "jenkins.wugi.info" 30080 #:ssl? #t)
         (proxy "alerta.wugi.info" 47080 #:ssl? #t)
         (proxy "grafana.wugi.info" 3080 #:ssl? #t)
+        (proxy "gitlab.wugi.info" 65080 #:sub-domains? "~^(?<group>.*)\\.")
         (proxy "gitlab.wugi.info" 65080  #:ssl? #t)
         (proxy "gitea.wugi.info" 3000 #:ssl? #t)
         (proxy "anongit.duckdns.org" 65080  #:ssl? #t)
