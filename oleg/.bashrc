@@ -249,3 +249,22 @@ fb()
         buku -o "$index"
     done
 }
+
+guix-vm()
+{
+    script="$1"
+
+    # https://wiki.archlinux.org/index.php/QEMU#Creating_bridge_manually
+    printf -v macaddr "52:54:%02x:%02x:%02x:%02x" \
+           $(( $RANDOM & 0xff)) \
+           $(( $RANDOM & 0xff )) \
+           $(( $RANDOM & 0xff)) \
+           $(( $RANDOM & 0xff ))
+
+    /run/setuid-programs/sudo \
+        "$script" -daemonize \
+        -smp cores=4,threads=1 -enable-kvm -cpu host \
+        -m 4096 \
+        -net nic,model=virtio,macaddr="$macaddr" -net bridge,br=br0 \
+        -vga virtio -full-screen
+}
