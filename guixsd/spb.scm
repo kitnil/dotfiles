@@ -5,7 +5,8 @@
 (use-package-modules admin base bash certs python)
 (use-service-modules desktop dbus monitoring networking ssh web)
 (use-modules (services autossh)
-             (services docker))
+             (services docker)
+             (services gitlab))
 
 
 ;;;
