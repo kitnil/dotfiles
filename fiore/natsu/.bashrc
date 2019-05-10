@@ -191,7 +191,26 @@ export TMUXIFIER_LAYOUT_PATH="$HOME/.tmuxifier-layouts"
 
 connect()
 {
-    TMUXIFIER_USER=$1 TMUXIFIER_HOST=$2 tmuxifier s ssh $@
+    host="$1"
+    if [[ "$host" == vm* ]]
+    then
+        hostname="$host"
+        host="$(vm-ip $host)"
+    fi
+
+    if [[ -z "$2" ]]
+    then
+        user="root"
+    else
+        user="$2"
+    fi
+
+    TMUXIFIER_SESSION="$host" TMUXIFIER_HOSTNAME="$hostname" TMUXIFIER_HOST="$host" TMUXIFIER_USER="$user" tmuxifier w ssh-sudo "$@"
+
+    unset TMUXIFIER_HOSTNAME
+    unset TMUXIFIER_HOST
+    unset TMUXIFIER_SESSION
+    unset TMUXIFIER_USER
 }
 
 top-mysql()
