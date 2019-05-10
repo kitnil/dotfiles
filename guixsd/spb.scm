@@ -3,7 +3,7 @@
 
 (use-modules (gnu) (srfi srfi-1) (srfi srfi-26))
 (use-package-modules admin base bash certs python)
-(use-service-modules monitoring networking ssh web)
+(use-service-modules desktop dbus monitoring networking ssh web)
 (use-modules (services autossh)
              (services docker))
 
@@ -318,6 +318,8 @@ ServerAliveCountMax 3"))))))
 
                           (service zabbix-agent-service-type)
 
+                          (elogind-service)
+                          (dbus-service)
                           docker-service
 
                    %base-services)))
