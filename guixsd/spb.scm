@@ -210,11 +210,11 @@
                         (type "ext4"))
                       %base-file-systems))
 
-  (groups (cons (user-group (name "nixbld")
-                            (id 30100))
-                (user-group (name "docker")
-                            (system? #t))
-                %base-groups))
+  (groups (cons* (user-group (name "nixbld")
+                             (id 30100))
+                 (user-group (name "docker")
+                             (system? #t))
+                 %base-groups))
 
   ;; This is where user accounts are specified.  The "root"
   ;; account is implicit, and is initially created with the
