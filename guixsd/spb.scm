@@ -212,6 +212,8 @@
 
   (groups (cons (user-group (name "nixbld")
                             (id 30100))
+                (user-group (name "docker")
+                            (system? #t))
                 %base-groups))
 
   ;; This is where user accounts are specified.  The "root"
@@ -226,7 +228,7 @@
                  ;; makes it a sudoer.  Adding it to "audio"
                  ;; and "video" allows the user to play sound
                  ;; and access the webcam.
-                 (supplementary-groups '("wheel" "audio" "video"))
+                 (supplementary-groups '("wheel" "audio" "video" "docker"))
                  (home-directory "/home/oleg"))
                 (user-account
                  (name "jenkins")
