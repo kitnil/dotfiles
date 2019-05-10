@@ -322,4 +322,6 @@ ServerAliveCountMax 3"))))))
                           (dbus-service)
                           docker-service
 
+                          gitlab-runner
+
                    %base-services)))
