@@ -1471,3 +1471,31 @@ the package @code{highlight-symbol}.  The fundamental difference is that in
 function @code{overlay-put} rather than the @code{font-lock} mechanism used in
 @code{highlight-symbol}.")
       (license license:gpl3+))))
+
+(define-public emacs-whois
+  (let ((commit "3c3c41b12c7a8ea948d268ebc804ad6f4d66b8a1"))
+    (package
+      (name "emacs-whois")
+      (version (git-version "0.0.0" "1" commit))
+      (source (origin
+                (method git-fetch)
+                (uri (git-reference
+                      (url "https://github.com/lassik/emacs-whois.git")
+                      (commit commit)))
+                (file-name (git-file-name name version))
+                (sha256
+                 (base32
+                  "0mpzmpdgq92pkyc0lijjvbivcg8hb6wlbppyilmlc1rizl6crakv"))))
+      (build-system emacs-build-system)
+      (home-page "https://github.com/lassik/emacs-whois/")
+      (synopsis "Extends the whois functionality of Emacs")
+      (description "This package complements (does not replace) the standard
+whois functionality of GNU Emacs.  It provides:
+
+@itemize
+@item whois-mode with font-lock highlighting to make whois responses easier to
+read.
+@item whois-shell function to make a whois query using the system whois
+program instead of Emacs' own (often not up to date) whois client.
+@end itemize\n")
+      (license license:gpl3+))))
