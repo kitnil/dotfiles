@@ -1358,7 +1358,7 @@ capturing user input and paste it with @kbd{C-v} after exit.")
       (license license:gpl3+))))
 
 (define-public emacs-terminal-here-checkout
-  (let ((commit "c4792c8486b190a812ed2ef8492922d185282f54"))
+  (let ((commit "ca1132ae5ea76de9e7122d61eb96f3a95fcce04f"))
     (package
       (inherit emacs-terminal-here)
       (name "emacs-terminal-here-checkout")
@@ -1372,7 +1372,7 @@ capturing user input and paste it with @kbd{C-v} after exit.")
          (file-name (git-file-name name version))
          (sha256
           (base32
-           "0v49pyy0v5hqyvd7aswkslldxfmrhwf5g04hlnxb8d8zspah1jz5"))))
+           "1jixxp62d3bvl1dmn6bbq0gfpb9axccynnfffc0x99ii1ak2hf96"))))
       (propagated-inputs
        `(("emacs-s" ,emacs-s)
          ,@(package-propagated-inputs emacs-terminal-here))))))
