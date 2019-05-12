@@ -17,6 +17,17 @@ Section \"Device\"
    Option      \"TearFree\" \"true\"
 EndSection\n")
 
+(define 30-multihead.conf "\
+Section \"Monitor\"
+    Identifier  \"HDMI1\"
+    Option      \"Primary\" \"true\"
+EndSection
+
+Section \"Monitor\"
+    Identifier  \"HDMI3\"
+    Option      \"RightOf\" \"HDMI1\"
+EndSection")
+
 
 ;;;
 ;;; Certbot
@@ -297,7 +308,8 @@ EndSection\n")
                                 (slim-configuration
                                  (xorg-configuration
                                   (xorg-configuration
-                                   (extra-config (list 20-intel.conf))))))
+                                   (extra-config (list 20-intel.conf
+                                                       30-multihead.conf))))))
                        (screen-locker-service slock)
                        (screen-locker-service xlockmore "xlock")
                        (udisks-service)
