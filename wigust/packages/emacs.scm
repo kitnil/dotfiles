@@ -94,7 +94,8 @@
        (inherit (package-source emacs))
        (patches (fold cons* '()
                       (origin-patches (package-source emacs))
-                      (search-patches "emacs-xterm-mouse-support.patch")))))
+                      (search-patches "emacs-xterm-mouse-support.patch"
+                                      "emacs-tramp-sudo.patch")))))
     (synopsis "The extensible, customizable, self-documenting text
 editor with athena toolkit" )
     (build-system gnu-build-system)
