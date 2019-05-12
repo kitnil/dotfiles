@@ -70,7 +70,7 @@
        emacs-hy-mode
        emacs-hydra
        emacs-ibuffer-projectile
-       ;emacs-irfc
+       emacs-irfc
        emacs-ivy                ; Complition framework
        emacs-ivy-yasnippet
        emacs-know-your-http-well
