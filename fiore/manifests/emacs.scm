@@ -95,6 +95,7 @@
        emacs-rainbow-delimiters ; Prettify parentheses
        emacs-rainbow-mode       ; Show colors in codes
        emacs-restclient
+       emacs-rotate-text
        emacs-scheme-complete
        emacs-scratch-el
        emacs-slime              ; Sbcl repl
