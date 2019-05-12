@@ -1358,7 +1358,7 @@ capturing user input and paste it with @kbd{C-v} after exit.")
       (license license:gpl3+))))
 
 (define-public emacs-terminal-here-checkout
-  (let ((commit "c35e7471a33df0e1d37522dc7aad42df9efc40c6"))
+  (let ((commit "c4792c8486b190a812ed2ef8492922d185282f54"))
     (package
       (inherit emacs-terminal-here)
       (name "emacs-terminal-here-checkout")
@@ -1367,12 +1367,15 @@ capturing user input and paste it with @kbd{C-v} after exit.")
        (origin
          (method git-fetch)
          (uri (git-reference
-               (url "https://gitlab.com/wigust/emacs-terminal-here")
+               (url "https://gitlab.wugi.info/emacs/emacs-terminal-here.git")
                (commit commit)))
          (file-name (git-file-name name version))
          (sha256
           (base32
-           "0m0lydyz80kmd80ibhkjjxdkpf0a62xm3rg5n63yncyjplvi11b9")))))))
+           "0v49pyy0v5hqyvd7aswkslldxfmrhwf5g04hlnxb8d8zspah1jz5"))))
+      (propagated-inputs
+       `(("emacs-s" ,emacs-s)
+         ,@(package-propagated-inputs emacs-terminal-here))))))
 
 (define-public emacs-hydra-timestamp
   (let ((commit "49b029193be57eafe542247e42b28a86fd34cdab"))
