@@ -3050,6 +3050,9 @@ If given a prefix, patch in the branch directory instead."
     (switch-to-buffer "*vc-diff*")
     (goto-char (point-min))))
 
+(ivy-rich-mode 1)
+(setq ivy-format-function #'ivy-format-function-line)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

@@ -72,6 +72,7 @@
        emacs-ibuffer-projectile
        emacs-irfc
        emacs-ivy                ; Complition framework
+       emacs-ivy-rich
        emacs-ivy-yasnippet
        emacs-know-your-http-well
        emacs-lice-el
