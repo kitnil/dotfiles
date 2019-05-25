@@ -20,6 +20,7 @@
        emacs-company            ; Complition framework
        emacs-company-quickhelp  ; Help pages for Company
        emacs-constants
+       emacs-counsel-tramp
        emacs-crux
        emacs-debbugs ; <https://debbugs.gnu.org/> interface
        emacs-default-encrypt    ; Sign mail automatically
@@ -32,6 +33,7 @@
        emacs-emamux
        emacs-emms
        emacs-erc-hl-nicks       ; for ERC
+       emacs-epkg
        emacs-eshell-bookmark
        emacs-esup
        emacs-ewmctrl            ; Control X windows from Emacs
@@ -62,6 +64,7 @@
        emacs-helm-pass          ; Front end to password-store
        emacs-helm-projectile    ; Helm interface for Projectile
        emacs-helm-shell-history
+       emacs-highlight-defined
        emacs-highlight-sexp
        emacs-highlight-stages   ; Highlight code stages
        emacs-highlight-symbol
@@ -99,6 +102,7 @@
        emacs-rotate-text
        emacs-scheme-complete
        emacs-scratch-el
+       emacs-slack
        emacs-slime              ; Sbcl repl
        emacs-smart-mode-line
        emacs-smartparens        ; Structured editing

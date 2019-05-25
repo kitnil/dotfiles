@@ -21,6 +21,7 @@
    emacs-flyspell-correct
    emacs-git-messenger-diff-mode
    emacs-gited
+   emacs-gitlab-ci-mode
    emacs-guix-misc
    emacs-helm-navi
    emacs-hydra-timestamp

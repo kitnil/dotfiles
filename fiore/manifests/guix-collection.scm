@@ -13,7 +13,7 @@ parallel password-utils patchutils pdf perl perl-web php pulseaudio
 python python-xyz qt readline rdesktop rsync samba scheme screen
 shellutils ssh statistics sqlite suckless synergy tex texinfo
 textutils tmux tls tor valgrind version-control video virtualization
-w3m web wget xdisorg xml xorg)
+w3m web wget wm xdisorg xml xorg)
 
 (define guix-collection-packages-multiout
   `((,glib "bin")
@@ -127,6 +127,10 @@ w3m web wget xdisorg xml xorg)
 
                ;; X11
                keynav rofi st xauth xev scrot xsel
+
+               polybar
+
+               sxhkd
 
                perl-uri-escape ;convert url
 
