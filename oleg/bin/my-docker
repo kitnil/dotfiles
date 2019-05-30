@@ -170,6 +170,13 @@ docker run \
        gitlab/gitlab-ce:11.10.0-ce.0
 
 docker run \
+       --name gitlab-monitor \
+       --detach \
+       --restart unless-stopped \
+       --publish 64680:80 \
+       timoschwarzer/gitlab-monitor:latest
+
+docker run \
        --name jenkins \
        --hostname jenkins \
        --detach \
