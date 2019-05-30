@@ -429,7 +429,7 @@ FpingLocation=/run/setuid-programs/fping
                        (operating-system-user-services base-system)))
 
       (setuid-programs (cons* (file-append fping "/sbin/fping")
-                              #;(file-append ubridge "/bin/ubridge")
+                              (file-append ubridge "/bin/ubridge")
                               %setuid-programs)))))
 
 %system-guixsd
