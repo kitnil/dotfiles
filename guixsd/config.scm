@@ -111,6 +111,7 @@ EndSection")
         (proxy "jenkins.wugi.info" 30080 #:ssl? #t)
         (proxy "alerta.wugi.info" 47080 #:ssl? #t)
         (proxy "grafana.wugi.info" 3080 #:ssl? #t)
+        (proxy "dashboard.gitlab.wugi.info" 64680)
         (proxy "gitlab.wugi.info" 65080 #:sub-domains? "~^(?<group>.*)\\.")
         (proxy "gitlab.wugi.info" 65080  #:ssl? #t)
         (proxy "gitea.wugi.info" 3000 #:ssl? #t)
@@ -295,7 +296,7 @@ EndSection")
          "192.168.100.1 r1.tld\n"
          "192.168.105.1 r2.tld\n"
          "192.168.105.120 cuirass.tld\n"
-         "127.0.0.1 gitlab.wugi.info gitea.wugi.info grafana.wugi.info zabbix.wugi.info alerta.wugi.info"
+         "127.0.0.1 dashboard.gitlab.wugi.info gitlab.wugi.info gitea.wugi.info grafana.wugi.info zabbix.wugi.info alerta.wugi.info"
          "\n\n"
          %facebook-host-aliases)))
 
