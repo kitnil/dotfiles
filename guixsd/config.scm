@@ -238,6 +238,7 @@ EndSection")
                      (home-directory "/home/stanley"))
                     (user-account
                      (name "majordomo-ssh-tunnel")
+                     (uid 30011)
                      (group "users")
                      (comment "SSH forwarding privilege separation user")
                      (home-directory "/home/majordomo-ssh-tunnel"))
