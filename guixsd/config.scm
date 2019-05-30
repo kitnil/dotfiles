@@ -123,6 +123,7 @@ EndSection")
         (proxy "zabbix.intr" 15081)
         (proxy "cerberus.intr" 15080)
         (proxy "grafana.intr" 16080)
+        (proxy "nextcloud.wugi.info" 28080 #:ssl? #t)
         (proxy "guix.duckdns.org" 5556 #:ssl? #t)))
 
 (define %zabbix-nginx-configuration
@@ -359,7 +360,8 @@ EndSection")
                                                  "prometheus.wugi.info"
                                                  "alerta.wugi.info"
                                                  "awx.wugi.info"
-                                                 "stackstorm.wugi.info"))))))
+                                                 "stackstorm.wugi.info"
+                                                 "nextcloud.wugi.info"))))))
 
                        (service nginx-service-type
                                 (nginx-configuration
