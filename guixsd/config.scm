@@ -176,7 +176,7 @@ EndSection")
     (operating-system
       (inherit base-system)
       (kernel-arguments '("modprobe.blacklist=pcspkr,snd_pcsp"))
-      (packages (cons* stumpwm sbcl-slime-swank `(,stumpwm "lib")
+      (packages (cons* sbcl stumpwm sbcl-slime-swank `(,stumpwm "lib")
 
                        fontconfig font-awesome font-dejavu font-liberation
                        font-misc-misc font-wqy-zenhei
