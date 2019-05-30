@@ -16,7 +16,7 @@ export CHICKEN_REPOSITORY=~/.eggs/lib/chicken/8
 export CHICKEN_DOC_REPOSITORY=/home/natsu/.eggs/share/chicken-doc
 
 export EDITOR='emacsclient'
-export BROWSER='conkeror'
+export BROWSER='firefox'
 export MANWIDTH=80
 
 export INFOPATH="$HOME/src/guix/doc${INFOPATH:+:}$INFOPATH"
