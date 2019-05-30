@@ -2,6 +2,7 @@
 x-scheme-handler/mailto=gnus.desktop;
 image/png=feh.desktop;
 image/gif=mpv.desktop;
+video/mp4=mpv.desktop;
 image/jpeg=feh.desktop;
 application/pdf=zathura.desktop;
 text/html=conkeror.desktop;
