@@ -4,16 +4,17 @@
 
 (use-package-modules admin algebra aspell audio backup bittorrent
 cdrom chromium ci cmake code commencement compression cpio cran curl
-databases dictionaries dns dunst file elf games gcc gdb ghostscript
-golang gl glib gnome gnu-doc gnupg gnuzilla graphics graphviz
-gstreamer gtk guile guile-xyz haskell image-viewers imagemagick
-inkscape kodi libreoffice license linux lisp logging lsof lxde m4 mail
-man maths messaging ncdu ncurses networking node package-management
-parallel password-utils patchutils pdf perl perl-web php pulseaudio
-python python-xyz qt readline rdesktop rsync samba scheme screen
-shellutils ssh statistics sqlite suckless synergy tex texinfo
-textutils tmux tls tor valgrind version-control video virtualization
-w3m web wget wm xdisorg xml xorg)
+databases dictionaries dns dunst file elf games gcc gdb gimp
+ghostscript golang gl glib gnome gnu-doc gnupg gnuzilla graphics
+graphviz gstreamer gtk guile guile-xyz haskell image-viewers
+imagemagick inkscape kodi libreoffice license linux lisp logging lsof
+lxde m4 mail man maths messaging ncdu ncurses networking node
+package-management parallel password-utils patchutils pdf perl
+perl-web php pulseaudio python python-xyz qt ratpoison readline
+rdesktop rsync samba scheme screen shellutils ssh statistics sqlite
+suckless synergy tex texinfo textutils text-editors tmux tls tor
+valgrind version-control video virtualization w3m xfce web wget wm
+xdisorg xml xorg)
 
 (define guix-collection-packages-multiout
   `((,glib "bin")
@@ -35,6 +36,8 @@ w3m web wget wm xdisorg xml xorg)
  (append (list feh         ; Image viewer
                ffmpeg      ; Video, audio, images, gif conversion
                imagemagick ; Pipe to `display'
+
+               xfce leafpad ratpoison gimp
 
                ;; See <https://github.com/NixOS/nixpkgs/issues/16327#issuecomment-303068424>.
                at-spi2-core
