@@ -33,6 +33,9 @@ XTerm*color15: #FFFFFF
 XTerm.vt100.scrollBar: true
 XTerm.vt100.cursorBlink: false
 
+! https://github.com/eudoxia0/dotfiles/blob/master/sextant/xresources.txt
+XTerm.vt100.internalBorder: 10
+
 *.rightScrollBar: true
 
 XTerm.vt100.locale: true
