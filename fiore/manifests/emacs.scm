@@ -22,6 +22,7 @@
        emacs-constants
        emacs-counsel-tramp
        emacs-crux
+       emacs-dashboard
        emacs-debbugs ; <https://debbugs.gnu.org/> interface
        emacs-default-encrypt    ; Sign mail automatically
        emacs-default-text-scale ; Scale text in all buffers

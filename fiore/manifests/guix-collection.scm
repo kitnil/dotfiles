@@ -44,7 +44,9 @@ xdisorg xml xorg)
                ghostscript/x gnuplot
                ghc-pandoc  ; Convert Markdown
 
+               autojump
                jq
+               nmap
 
                cloc            ; Count code
                direnv
@@ -185,8 +187,7 @@ xdisorg xml xorg)
                gnu-c-manual gnu-standards man-pages
                sicp ; Structure and Interpretation of Computer Programs
 
-               ;; XXX: Broken package
-               ;; restic ;backup
+               restic ;backup
 
                cflow         ;C program call map.
                gcc-toolchain ;For Emacs `semantic-mode'.
@@ -200,7 +201,7 @@ xdisorg xml xorg)
                gst-plugins-ugly gstreamer
 
                minetest ; FOSS Minecraft like game
-               )
+               gimp)
 
          guix-collection-packages-multiout
          %large-packages
