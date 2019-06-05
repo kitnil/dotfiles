@@ -153,6 +153,11 @@ below otherwise."
   (interactive)
   (debbugs-gnu-bugs (wi-gnus-subject-match-debbugs)))
 
+(defun wi-gnus-browse-guix-issues ()
+  "Open current Gnus article in with `debbugs-gnu-bugs'."
+  (interactive)
+  (browse-url (format "https://issues.guix.info/issue/%d" (wi-gnus-subject-match-debbugs))))
+
 (with-eval-after-load 'gnus-group
   (let ((map gnus-group-mode-map))
     (define-key map (kbd "<f5>") 'mbsync)))
