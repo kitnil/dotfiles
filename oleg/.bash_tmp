@@ -269,3 +269,8 @@ screen-on()
     xrandr --output HDMI3 --auto
     xrandr --output HDMI3 --right-of HDMI1
 }
+
+windows-10()
+{
+    qemu-system-x86_64 -smp cores=4,threads=1 -m 4096 -enable-kvm -cpu host -daemonize -vnc :6 /srv/virt/win10-mail.qcow2
+}
