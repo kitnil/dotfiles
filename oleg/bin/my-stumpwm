@@ -6,11 +6,16 @@
 (require :stumpwm)
 (require :swank)
 
+;; (swank-loader::setup)
+
+(stumpwm:stumpwm)
+
 (swank-loader:init)
+(swank:create-server :dont-close t)
 (sb-thread:make-thread
  (lambda ()
    (swank:create-server :dont-close t)))
 
-(sb-thread:make-thread
- (lambda ()
-   (stumpwm:stumpwm)))
+;; (sb-thread:make-thread
+;;  (lambda ()
+;;    (stumpwm:stumpwm)))
