@@ -661,7 +661,7 @@
 ;; (define-key *root-map* (kbd "C-M-c") "run-xterm-light")
 
 ;; (define-key *root-map* (kbd "C-M-v") "scroll-other-window")
-(define-key *top-map* (kbd "Print") "screenshot-default")
+;; (define-key *top-map* (kbd "Print") "screenshot-default")
 
 (define-key *top-map* (kbd "s-w") "firefox")
 (define-key *top-map* (kbd "s-M-w") "firefox-new-window")
