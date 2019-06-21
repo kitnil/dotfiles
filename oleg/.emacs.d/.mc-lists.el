@@ -27,6 +27,7 @@
         kill-sexp
         kmacro-start-macro-or-insert-counter
         magit-copy-buffer-revision
+        mark-paragraph
         mark-sexp
         mc/mark-next-lines
         message-beginning-of-line
