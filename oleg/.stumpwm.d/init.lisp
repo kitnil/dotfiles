@@ -971,6 +971,13 @@
 (define-key *top-map* (kbd "s-N") "move-focus down")
 ;; (define-key *top-map* (kbd "s-!") "exec")
 
+(defcommand clipmenu () ()
+  (run-shell-command "CM_HISTLENGTH=25 CM_LAUNCHER=rofi clipmenu"))
+
+(define-key *root-map* (kbd "y") "clipmenu")
+(define-key *root-map* (kbd "C-y") "clipmenu")
+(define-key *root-map* (kbd "Y") "xclip-kdeconnect-handler")
+
 (defcommand mpv-music () ()
   (run-shell-command "mpv https://www.youtube.com/playlist?list=PLmjgicsUWIkvEKkLN01vm85neXAik3yU2"))
 
