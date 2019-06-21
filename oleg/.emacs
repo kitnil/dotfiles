@@ -51,6 +51,8 @@
 (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
 (setq initial-scratch-message nil) ; Don't put text in *scratch* buffer
 
+(setq terminal-here-multiplexers '("tmux" "screen"))
+
 (setq smtpmail-queue-mail t) ; Call after typing M-x `smtpmail-send-queued-mail'
 
 (menu-bar-mode -1)
