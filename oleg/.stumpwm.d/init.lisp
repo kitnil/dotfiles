@@ -1004,6 +1004,10 @@
   (run-shell-command "xrandr --output HDMI3 --auto")
   (run-shell-command "xrandr --output HDMI3 --right-of HDMI1"))
 
+(defcommand sxhkd-restart () ()
+  (run-shell-command "pkill sxhkd")
+  (run-shell-command "sxhkd"))
+
 ;; (setq swank:*use-dedicated-output-stream* nil)
 
 ;; (run-shell-command "emacsclient -c -s test /home/oleg/src/dotfiles/oleg/.stumpwm.d/init.lisp")
