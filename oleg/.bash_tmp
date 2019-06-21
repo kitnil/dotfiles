@@ -258,3 +258,14 @@ mpv-youtube-music() { mpv --audio-device=pulse/alsa_output.usb-Logitech_Logitech
 guix-gcroot-ansible() { guix package --profile="$HOME/.config/guix/profiles/ansible" --substitute-urls='https://ci.guix.info http://cuirass.tld' -i python ; }
 
 save-manifest() { GUIX_PACKAGE_PATH="$HOME/src/guix-wigust" guix environment --root="$HOME/.config/guix/gcroots/my-manifest" --substitute-urls='https://ci.guix.info http://cuirass.tld' --manifest="$HOME/src/dotfiles/fiore/manifests/natsu-manifest.scm" -- sh -c 'exit' ; }
+
+screen-off()
+{
+    xrandr --output HDMI3 --off
+}
+
+screen-on()
+{
+    xrandr --output HDMI3 --auto
+    xrandr --output HDMI3 --right-of HDMI1
+}
