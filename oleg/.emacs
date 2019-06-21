@@ -38,7 +38,17 @@
 (setq calendar-date-style 'european) ; day/month/year style calendar
 (setq calendar-week-start-day 1) ; Monday is the first day of the week
 
-(setq initial-buffer-choice t) ; Nothing after starting Emacs
+(dashboard-setup-startup-hook)
+(setq dashboard-items '((recents  . 5)
+                        (bookmarks . 5)
+                        (projects . 5)
+                        (agenda . 5)
+                        (registers . 5)))
+;; (with-eval-after-load 'dashboard
+;;   (let ((map dashboard-mode-map))
+;;     (define-key map (kbd "n") 'dashboard-next-section)
+;;     (define-key map (kbd "p") 'dashboard-previous-section)))
+(setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
 (setq initial-scratch-message nil) ; Don't put text in *scratch* buffer
 
 (setq smtpmail-queue-mail t) ; Call after typing M-x `smtpmail-send-queued-mail'
