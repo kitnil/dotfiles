@@ -984,11 +984,18 @@
 (defcommand alerta-close-youtube () ()
   (run-shell-command "alerta close --filter resource=YouTube"))
 
+;; https://lists.gnu.org/archive/html/help-guix/2017-01/msg00033.html
+(require "asdf")
+(load "/home/oleg/.guix-profile/share/emacs/site-lisp/guix.d/slime-2.23/swank.asd")
+(require :swank)
+;; (swank:create-server :port 4005 :dont-close t)
 ;; (require :swank)
 ;; (swank-loader:init)
-;; (sb-thread:make-thread
-;;  (lambda ()
-;;    (swank:create-server :port 9007 :dont-close t)))
+;; ;; (swank:create-server :port 4005 :dont-close t)
+(defcommand swank () ()
+  (sb-thread:make-thread
+   (lambda ()
+     (swank:create-server :port 4005 :dont-close t))))
 
 ;; (setq swank:*use-dedicated-output-stream* nil)
 
