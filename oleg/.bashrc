@@ -7,17 +7,22 @@ then
     . "/etc/skel/.bashrc"
 fi
 
-if [ -f ".bash_aliases" ]
+if [ -f "$HOME/.bash_aliases" ]
 then
     # Load the Bash aliases and functions.
-    . ".bash_aliases"
+    . "$HOME/.bash_aliases"
 fi
 
-# http://puzan.info/linux/2014-05-14-direnv.html
-if [ -f "$HOME/.guix-profile/bin/direnv" ]
+if [ -f "$HOME/.guix-profile/etc/profile.d/autojump.sh" ]
 then
-    eval "$(direnv hook bash)"
+    . "$HOME/.guix-profile/etc/profile.d/autojump.sh"
 fi
+
+# # http://puzan.info/linux/2014-05-14-direnv.html
+# if [ -f "$HOME/.guix-profile/bin/direnv" ]
+# then
+#     eval "$(direnv hook bash)"
+# fi
 
 function man-in-emacs { emacsclient --eval "(man \"$1\")"; }
 function man-to-pdf { man -t "$1" | ps2pdf - "$1.pdf"; }
