@@ -997,6 +997,13 @@
    (lambda ()
      (swank:create-server :port 4005 :dont-close t))))
 
+(defcommand screen-off () ()
+  (run-shell-command "xrandr --output HDMI3 --off"))
+
+(defcommand screen-on () ()
+  (run-shell-command "xrandr --output HDMI3 --auto")
+  (run-shell-command "xrandr --output HDMI3 --right-of HDMI1"))
+
 ;; (setq swank:*use-dedicated-output-stream* nil)
 
 ;; (run-shell-command "emacsclient -c -s test /home/oleg/src/dotfiles/oleg/.stumpwm.d/init.lisp")
