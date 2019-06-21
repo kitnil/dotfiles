@@ -94,7 +94,9 @@
     (define-key map (kbd "C-c b") 'wi-gnus-browse-guix-issues)))
 
 (with-eval-after-load 'dired
-  (require 'dired-x))
+  (require 'dired-x)
+  (let ((map dired-mode-map))
+    (define-key map (kbd "<f8>") 'crux-open-with)))
 
 (with-eval-after-load 'info
   (let ((map Info-mode-map))
