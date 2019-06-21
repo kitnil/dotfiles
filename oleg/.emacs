@@ -3095,6 +3095,21 @@ If given a prefix, patch in the branch directory instead."
     (switch-to-buffer "*vc-diff*")
     (goto-char (point-min))))
 
+(setq rotate-text-symbols
+      '(("define" "define*" "define-public")
+        ("private" "protected" "public")
+        ("android-ndk-build-system" "ant-build-system"
+         "asdf-build-system" "cargo-build-system" "clojure-build-system"
+         "cmake-build-system" "dub-build-system" "dune-build-system"
+         "emacs-build-system" "font-build-system"
+         "glib-or-gtk-build-system" "gnu-build-system" "go-build-system"
+         "guile-build-system" "haskell-build-system"
+         "linux-module-build-system" "meson-build-system"
+         "minify-build-system" "ocaml-build-system" "perl-build-system"
+         "python-build-system" "rakudo-build-system" "r-build-system"
+         "ruby-build-system" "scons-build-system" "texlive-build-system"
+         "trivial-build-system" "waf-build-system")))
+
 (ivy-rich-mode 1)
 (setq ivy-format-function #'ivy-format-function-line)
 
