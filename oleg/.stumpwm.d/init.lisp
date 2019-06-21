@@ -13,6 +13,7 @@
 (set-module-dir (concat *home* "/.stumpwm.d/modules/"))
 
 (set-prefix-key (kbd "C-i"))
+(run-shell-command "sxhkd")
 
 (run-shell-command "xsetroot -cursor_name left_ptr")
 (run-shell-command (concat "xrdb -merge " *home* "/.Xresources"))
