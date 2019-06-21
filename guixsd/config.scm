@@ -206,6 +206,8 @@ EndSection")
 
                        adb
 
+                       nix
+
                        (operating-system-packages base-system)))
 
       (groups (cons* (user-group (name "nixbld")
