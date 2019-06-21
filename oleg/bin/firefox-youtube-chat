@@ -1,0 +1,17 @@
+#!/bin/sh
+
+video="$1"
+
+if [[ $video == https://www.youtube.com* ]]
+then
+    id=$(echo "$1" | cut -d = -f 2)
+    firefox --new-window "https://www.youtube.com/live_chat?v=$id&is_popout=1"
+    notify-send "Open chat $url"
+elif [[ $video == https://www.twitch.tv* ]]
+then
+    channel=${video##*/}
+    firefox --new-window "https://www.twitch.tv/popout/$channel/chat?popout="
+    notify-send "Open chat $url"
+else
+    notify-send "Not a YouTube or Twitch steram"
+fi
