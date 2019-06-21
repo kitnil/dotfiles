@@ -460,7 +460,7 @@
 (defcommand run-or-raise-xterm () ()
   "Start or focus XTerm."
   (run-or-raise
-   (join (list *xterm-command* *xterm-theme-light*))
+   (join (list *xterm-command* *xterm-theme-dark* *xterm-no-scrollbar*))
    '(:class "XTerm")))
 
 (defcommand run-xterm-light () ()
