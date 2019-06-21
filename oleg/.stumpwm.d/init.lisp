@@ -205,7 +205,7 @@
   (run-or-raise "firefox" '(:class "Firefox")))
 
 (defcommand firefox-new-window () ()
-  "Start of focus firefox."
+  "Start Firefox."
   (run-shell-command "firefox --new-window"))
 
 (defcommand chromium () ()
