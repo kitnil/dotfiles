@@ -1,0 +1,10 @@
+#!/bin/sh
+
+face_size()
+{
+    echo "12|24" \
+        | rofi -width 10 -sep '|' -dmenu -p "XTerm face size:"
+}
+
+xterm -fa Monospace -fs "$(face_size)" -bg black -fg white +sb
+
