@@ -2342,6 +2342,10 @@ The optional argument NEW-WINDOW is not used."
   ["guix/gnu/services/service.tmpl" yas-expand-current-buffer])
 
 (define-auto-insert
+  (rx "gnu/tests/" (one-or-more (or alphanumeric "-")) ".scm" line-end)
+  ["guix/gnu/tests/test.tmpl" yas-expand-current-buffer])
+
+(define-auto-insert
   (rx "vm" (one-or-more (or alphanumeric "-")) ".scm" line-end)
   ["guix/gnu/system/examples/vm-inherit-image.tmpl" yas-expand-current-buffer])
 
