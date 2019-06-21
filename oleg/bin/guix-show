@@ -1,0 +1,3 @@
+#!/bin/sh
+
+"$HOME/src/guix/pre-inst-env" guix package --show="$1" | recsel -R name,version | xargs printf "%s-%s\\n"
