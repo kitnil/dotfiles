@@ -1,0 +1,4 @@
+#!/bin/sh
+url=$(echo "$@" | sed 's/guix-log/https/')
+emacsclient --eval "(progn (wi-wget-switch \"$url\") (guix-build-log-mode))"
+stumpish emacsclient
