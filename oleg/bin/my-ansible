@@ -1,0 +1,79 @@
+#!/run/current-system/profile/bin/sh
+# -*- scheme -*-
+exec ${GUILE:-$(which guile)} $GUILE_FLAGS -e '(@@ (my-ansible) main)' -s "$0" "$@"
+!#
+
+;;;; my-ansible --- SYNOPSIS
+;;;; Copyright © 2019 Oleg Pykhalov <go.wigust@gmail.com>
+;;;; Released under the GNU GPLv3 or any later version.
+
+(define-module (my-ansible)
+  #:use-module (json)
+  #:use-module ((guix import utils) #:select (hash-table->alist))
+  #:use-module (ice-9 match)
+  #:use-module (ice-9 rdelim)
+  #:use-module (ice-9 popen)
+  #:use-module (srfi srfi-37))
+
+;;; Commentary:
+;;;
+;;; DESCRIPTION
+;;;
+;;; Code:
+
+(define %options
+  (let ((display-and-exit-proc (lambda (msg)
+                                 (lambda (opt name arg loads)
+                                   (display msg) (quit)))))
+    (list (option '(#\v "version") #f #f
+                  (display-and-exit-proc "my-ansible version 0.0.1\n"))
+          (option '(#\h "help") #f #f
+                  (display-and-exit-proc
+                   "Usage: my-ansible ...")))))
+
+(define %default-options
+  '())
+
+(define (ansible cmd)
+  (setenv "ANSIBLE_STDOUT_CALLBACK" "json")
+  (let* ((port   (open-pipe* OPEN_READ
+                             "ansible"
+                             "--become" "--extra-vars=ansible_become_pass=***REMOVED***"
+                             "-ilocalhost," "localhost"
+                             "-m" "shell"
+                             "-a" cmd))
+         (output (read-string port)))
+    (close-pipe port)
+    (string-trim-right output #\newline)))
+
+(define (main args)
+  ;; (define opts
+  ;;   (args-fold (cdr (program-arguments))
+  ;;              %options
+  ;;              (lambda (opt name arg loads)
+  ;;                (error "Unrecognized option `~A'" name))
+  ;;              (lambda (op loads)
+  ;;                (cons op loads))
+  ;;              %default-options))
+
+  (define (stdout host)
+    (map (match-lambda
+           ((host args ...)
+            (assoc-ref args "stdout_lines")))
+         host))
+
+  (define (hosts task)
+    (assoc-ref task "hosts"))
+
+  (define (parse play)
+    (map (compose stdout hosts)
+         (assoc-ref play "tasks")))
+
+  (match (map parse
+              (assoc-ref (hash-table->alist
+                          (json-string->scm (ansible (cadr args))))
+                         "plays"))
+    ((((output)))
+     (pk 'output output))))
+
+;;; my-ansible ends here
