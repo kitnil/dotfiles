@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: dotfiles-commit-message
+# key: dot
+# condition: git-commit-mode
+# --
+$1: $2.
+
+* `(car (magit-staged-files))`: $2.
