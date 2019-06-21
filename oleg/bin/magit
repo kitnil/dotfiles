@@ -1,0 +1,5 @@
+#!/bin/sh
+
+dir=$1
+
+emacsclient -e "(progn (magit-status \"$dir\") (delete-other-windows))"
