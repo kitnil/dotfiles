@@ -102,6 +102,7 @@
     (place-existing-windows)))
 
 (define-frame-preference "Default" (1 NIL T :CLASS "mpv" :TITLE "emacs-emms"))
+(define-frame-preference "Default" (1 NIL T :CLASS "mpv" :TITLE "firefox"))
 
 ;; (restore-window-placement-rules "/home/oleg/.stumpwm.d/rules/4.lisp")
 
