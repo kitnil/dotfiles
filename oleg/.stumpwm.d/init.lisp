@@ -173,6 +173,9 @@
   "Start emacs unless it is already running, in which case focus it."
   (run-or-raise "emacsclient -c" '(:class "Emacs")))
 
+(defcommand emacsclient-new () ()
+  (run-shell-command "emacsclient -c"))
+
 (defcommand emacs-org-capture () ()
   "Capture URL with Emacs Org from GUI clipboard"
   (run-shell-command
@@ -675,8 +678,8 @@
 ;; (define-key *top-map* (kbd "s-\"") "frame-windowlist")
 ;; (define-key *top-map* (kbd "s-c") "run-or-raise-xterm")
 ;; (define-key *top-map* (kbd "s-c") "run-or-raise-xterm")
-;; (define-key *top-map* (kbd "s-e") "emacs")
-;; (define-key *top-map* (kbd "s-e") "emacsclient")
+(define-key *top-map* (kbd "s-e") "emacsclient")
+(define-key *top-map* (kbd "s-E") "emacsclient-new")
 ;; (define-key *top-map* (kbd "s-h") "jord-loadavg")
 ;; (define-key *top-map* (kbd "s-h") nil)
 (define-key *top-map* (kbd "s-m") "mpv")
