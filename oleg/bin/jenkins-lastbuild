@@ -1,0 +1,6 @@
+#!/bin/sh
+
+job="$1"
+
+curl --silent --user "admin:$(pass show magnolia/jenkins/admin)" \
+     "https://jenkins.wugi.info/job/$job/lastBuild/consoleText"
