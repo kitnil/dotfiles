@@ -159,7 +159,7 @@ setfont-big()
 
 build-guix()
 {
-    guix environment --substitute-urls='https://ci.guix.info http://cuirass.tld' --manifest="$HOME/src/dotfiles/fiore/manifests/natsu-manifest.scm" -- sh -c 'exit' && guix system --substitute-urls='https://ci.guix.info http://cuirass.tld' build "$HOME/src/dotfiles/guixsd/config.scm"
+    guix environment --substitute-urls='https://ci.guix.info http://cuirass.tld' --manifest="$HOME/src/dotfiles/fiore/manifests/natsu-manifest.scm" -- sh -c 'exit' && guix system --substitute-urls='https://ci.guix.info http://cuirass.tld' --load-path="$HOME/src/dotfiles/fiore/modules" build "$HOME/src/dotfiles/guixsd/config.scm"
 }
 
 alerta-send-info()
