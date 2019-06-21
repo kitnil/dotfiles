@@ -1,0 +1,26 @@
+#!/bin/sh
+
+set -e # exit when any command fails
+set -x # show trace
+
+index="$1"
+
+index_create()
+{
+    curl -XPUT "http://localhost:9200/$index"
+}
+
+index_configure()
+{
+    curl -H "Content-Type: application/json" -XPUT --data-binary \
+     '{"properties": {"upload_date": {"type": "date", "format": "yyyyMMdd"}, "title": {"type": "text", "fields":{"keyword":{"type":"keyword","ignore_above":256}}}}}' \
+     "http://localhost:9200/$index/_mapping/_doc"
+}
+
+main()
+{
+    index_create
+    index_configure
+}
+
+main
