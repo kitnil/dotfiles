@@ -625,11 +625,11 @@
 ;; (define-key *root-map* (kbd "C-m") "xclip-mpv")
 ;; (define-key *root-map* (kbd "M-m") "xclip-streamlink")
 
-(defcommand rofi-stumpwm () ()
-  (run-shell-command (concat "rofi -show stumpwm -modi stumpwm:"
-                             *home* "/bin/rofi-stumpwm")))
+;; (defcommand rofi-stumpwm () ()
+;;   (run-shell-command (concat "rofi -show stumpwm -modi stumpwm:"
+;;                              *home* "/bin/rofi-stumpwm")))
 
-(define-key *top-map* (kbd "s-:") "rofi-stumpwm")
+;; (define-key *top-map* (kbd "s-:") "rofi-stumpwm")
 
 ;; (define-key *root-map* (kbd "C-e") "xclip-emacs")
 ;; (define-key *root-map* (kbd "C-M-c") "xterm-big-screen")
