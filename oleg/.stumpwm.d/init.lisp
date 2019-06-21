@@ -287,6 +287,13 @@
      (join `(,*mpv-program* ,@*mpv-arguments* ,clipboard)))
     (message (concat "Play " clipboard))))
 
+(defcommand xclip-kdeconnect-handler () ()
+  "Open URL on Android device via KDE Connect."
+  (let ((clipboard (get-x-selection)))
+    (run-shell-command
+     (join `("kdeconnect-handler" ,clipboard)))
+    (message (concat "Open URL on Android " clipboard))))
+
 (defcommand mpv-watch () ()
   "Play video from file with mpv."
   (run-shell-command
