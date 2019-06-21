@@ -1,0 +1,21 @@
+#!/bin/sh
+# -*- scheme -*-
+exec ${GUILE:-$(which guile)} $GUILE_FLAGS --no-auto-compile -e '(@@ (profile2manifest) main)' -s "$0" "$@"
+!#
+
+;; Origin https://ambrevar.xyz/guix-advance/index.html
+
+(define-module (profile2manifest)
+  #:use-module (guix profiles)
+  #:use-module (ice-9 match)
+  #:use-module (ice-9 pretty-print))
+
+(define (main args)
+  (match (command-line)
+    ((_ where)
+     (pretty-print
+      `(specifications->manifest
+        (map symbol->string
+             ',(map (compose string->symbol manifest-entry-name)
+                    (manifest-entries (profile-manifest where)))))))
+    (_ (error "Please provide the path to a Guix profile."))))
