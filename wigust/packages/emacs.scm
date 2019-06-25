@@ -1529,3 +1529,24 @@ variables.  An interface to GitLab’s CI file linter is also provided via
 @code{gitlab-ci-lint}.")
     (license license:gpl3+)))
 
+(define-public emacs-helm-suggest
+  (let ((commit "7e9687fdbb69312dc5e79630b700c0ce1be8441b"))
+    (package
+      (name "emacs-helm-suggest")
+      (version (git-version "0.1" "0" commit))
+      (source (origin
+                (method git-fetch)
+                (uri (git-reference
+                      (url "https://github.com/xuchunyang/helm-suggest.git")
+                      (commit commit)))
+                (file-name (git-file-name name version))
+                (sha256
+                 (base32
+                  "1jmrcdm980zqmihlss53a4p6k6h4lapsb70lnk9sfcx3cqpmn912"))))
+      (build-system emacs-build-system)
+      (propagated-inputs
+       `(("emacs-helm" ,emacs-helm)))
+      (home-page "https://github.com/xuchunyang/helm-suggest/")
+      (synopsis "Web suggest with Emacs Helm")
+      (description "This package provides web suggestions with Emacs Helm.")
+      (license license:gpl3+))))
