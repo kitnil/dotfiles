@@ -2314,7 +2314,6 @@ The optional argument NEW-WINDOW is not used."
 ;;; Outline
 ;;;
 
-(add-hook 'outline-minor-mode-hook 'outshine-hook-function)
 (with-eval-after-load 'outshine
   (define-key outline-minor-mode-map (kbd "C-M-i") nil))
 
