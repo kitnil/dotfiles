@@ -87,7 +87,9 @@
 
 (with-eval-after-load 'prog-mode
   (let ((map prog-mode-map))
-    (define-key map (kbd "<f5>") 'recompile)))
+    (define-key map (kbd "<f5>") 'recompile)
+    (define-key map (kbd "<f7>") 'highlight-symbol-prev)
+    (define-key map (kbd "<f8>") 'highlight-symbol-next)))
 
 (with-eval-after-load 'gnus-art
   (let ((map gnus-article-mode-map))
