@@ -792,37 +792,6 @@ editor (without an X toolkit)" )
     (arguments (append '(#:configure-flags '("--with-x-toolkit=no"))
                        (package-arguments emacs)))))
 
-(define-public emacs-pcre2el
-  (let ((commit "0b5b2a2c173aab3fd14aac6cf5e90ad3bf58fa7d")
-        (revision "1"))
-      (package
-    (name "emacs-pcre2el")
-    (version (string-append "1.8" "-" revision "."
-                            (string-take commit 7)))
-    (source (origin
-              (method git-fetch)
-              (uri (git-reference
-                    (url "https://github.com/joddie/pcre2el")
-                    (commit commit)))
-              (file-name (string-append name "-" version "-checkout"))
-              (sha256
-               (base32
-                "14br6ad138qx1z822wqssswqiihxiynz1k69p6mcdisr2q8yyi1z"))))
-    ;; TODO: Tests:
-    ;; (native-inputs
-    ;;  `(("ert-runner" ,ert-runner)))
-    ;; (arguments
-    ;;  `(#:phases
-    ;;    (modify-phases %standard-phases
-    ;;      (add-after 'install 'check
-    ;;        (lambda _
-    ;;          (zero? (system* "ert-runner" "pcre2el-tests.el")))))))
-    (build-system emacs-build-system)
-    (home-page "https://github.com/joddie/pcre2el")
-    (synopsis "Convert between PCRE, Emacs and rx regexp syntax")
-    (description "Convert between PCRE, Emacs and rx regexp syntax.")
-    (license license:gpl3+))))
-
 (define-public emacs-lognav-mode
   (let ((changeset "a9b53f2da040")
         (revision "1"))
