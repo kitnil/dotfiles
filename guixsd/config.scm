@@ -125,7 +125,54 @@ EndSection")
         (proxy "cerberus.intr" 15080)
         (proxy "grafana.intr" 16080)
         (proxy "nextcloud.wugi.info" 28080 #:ssl? #t)
-        (proxy "guix.duckdns.org" 5556 #:ssl? #t)))
+        (proxy "guix.duckdns.org" 5556 #:ssl? #t)
+        ((lambda* (host #:key
+                  (ssl? #f)
+                  (ssl-target? #f)
+                  (target #f)
+                  (sub-domains? #f))
+          (nginx-server-configuration
+           (server-name (if sub-domains?
+                            (list (string-append sub-domains?
+                                                 (string-join (string-split host #\.)
+                                                              "\\.")
+                                                 "$"))
+                            (list host (string-append "www." host))))
+           (locations (delete #f
+                              (list (nginx-location-configuration
+                                     (uri "/api/queue")
+                                     (body (list "return 404;")))
+                                    (nginx-location-configuration
+                                     (uri "/")
+                                     (body (list "resolver 80.80.80.80;"
+                                                 (string-append "set $target "
+                                                                "ci.guix.gnu.org"
+                                                                ":" (number->string 80) ";")
+                                                 (format #f "proxy_pass ~a://$target;" "http")
+                                                 (if sub-domains?
+                                                     "proxy_set_header Host $http_host;"
+                                                     (format #f "proxy_set_header Host ~a;" "ci.guix.gnu.org"))
+                                                 "proxy_set_header X-Forwarded-Proto $scheme;"
+                                                 "proxy_set_header X-Real-IP $remote_addr;"
+                                                 "proxy_set_header X-Forwarded-for $remote_addr;"
+                                                 "proxy_connect_timeout 300;"
+                                                 "client_max_body_size 0;"
+                                                 ;; https://qasseta.ru/q/100/368287/cloudfront-%D0%BA%D0%B0%D0%BA-%D0%BD%D0%B0%D1%81%D1%82%D1%80%D0%BE%D0%B8%D1%82%D1%8C-%D0%BE%D0%B1%D1%80%D0%B0%D1%82%D0%BD%D1%8B%D0%B9-%D0%BF%D1%80%D0%BE%D0%BA%D1%81%D0%B8-%D1%81%D0%B5%D1%80%D0%B2%D0%B5%D1%80-%D0%BD%D0%B0-%D1%81%D1%83%D1%89%D0%B5%D1%81%D1%82%D0%B2%D1%83%D1%8E%D1%89%D0%B5%D0%BC-%D0%B2%D0%B5%D0%B1-%D1%81%D0%B0%D0%B9%D1%82%D0%B5-%D0%BE%D0%B1%D1%81%D0%BB%D1%83%D0%B6%D0%B8%D0%B2%D0%B0%D1%8E%D1%89%D0%B5%D0%BC-%D1%80%D0%B0%D1%81%D0%BF%D1%80%D0%BE%D1%81%D1%82%D1%80%D0%B0%D0%BD%D0%B5%D0%BD%D0%B8%D0%B5-%D0%BE%D1%82-s3
+                                                 ;; "proxy_cache_bypass $http_upgrade;"
+                                                 ;; "proxy_set_header Connection 'upgrade';"
+                                                 ;; "proxy_set_header Upgrade $http_upgrade;"
+                                                 ;; "proxy_http_version 1.1;"
+                                                 ))))))
+           (listen (if ssl?
+                       (list "443 ssl")
+                       (list "80")))
+           (ssl-certificate (if ssl?
+                                (letsencrypt-certificate host)
+                                #f))
+           (ssl-certificate-key (if ssl?
+                                    (letsencrypt-key host)
+                                    #f))))
+         "cuirass.wugi.info")))
 
 (define %zabbix-nginx-configuration
   (list
@@ -298,7 +345,7 @@ EndSection")
          "192.168.100.1 r1.tld\n"
          "192.168.105.1 r2.tld\n"
          "192.168.105.120 cuirass.tld\n"
-         "127.0.0.1 dashboard.gitlab.wugi.info gitlab.wugi.info gitea.wugi.info grafana.wugi.info zabbix.wugi.info alerta.wugi.info"
+         "127.0.0.1 dashboard.gitlab.wugi.info gitlab.wugi.info gitea.wugi.info grafana.wugi.info zabbix.wugi.info alerta.wugi.info cuirass.wugi.info"
          "\n\n"
          %facebook-host-aliases)))
 
