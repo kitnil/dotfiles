@@ -182,33 +182,6 @@ editor with athena toolkit" )
     (description "This package provides Tern backend for Company.")
     (license license:gpl3+)))
 
-;; XXX: Broken.  Upstream doesn't respond.  Alternatively use ivy youtube.
-#;(define-public emacs-helm-youtube
-  (let ((revision "1")
-        (commit "202c27fc3b54927611e9d9c764465e1b42ef7e41"))
-    (package
-      (name "emacs-helm-youtube")
-      (version "1.1")
-      (source
-       (origin
-         (method git-fetch)
-         (uri (git-reference
-               (url "https://github.com/maximus12793/helm-youtube.git")
-               (commit commit)))
-         (file-name (string-append name "-" version "-checkout"))
-         (sha256
-          (base32
-           "1wqxcz03fq2z31a1n90dg9ap3451vx1376ijbpfy9sg66pgj8yxv"))))
-      (build-system emacs-build-system)
-      (propagated-inputs
-       `(("emacs-request" ,emacs-request)
-         ("emacs-helm" ,emacs-helm)))
-      (home-page "https://github.com/maximus12793/helm-youtube")
-      (synopsis "Query YouTube and play videos in your browser")
-      (description "This package provides an interactive prompt to search on
-Youtube.")
-      (license license:gpl3+))))
-
 (define-public emacs-indium
   (package
     (name "emacs-indium")
