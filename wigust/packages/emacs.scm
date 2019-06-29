@@ -609,28 +609,6 @@ implementation in elisp, capable of both synchronous and asynchronous
 method calls.")
     (license license:gpl3+)))
 
-(define-public emacs-debpaste
-  (package
-    (name "emacs-debpaste")
-    (version "0.1.5")
-    (source (origin
-              (method url-fetch)
-              (uri (string-append
-                    "https://github.com/alezost/debpaste.el/archive/"
-                    "v" version ".tar.gz"))
-              (file-name (string-append name "-" version ".tar.gz"))
-              (sha256
-               (base32
-                "16qqa32ys3gvxf9x1va2cnjcmw1zvbwgc16pqasgrf4mh7qwsd9b"))))
-    (build-system emacs-build-system)
-    (propagated-inputs `(("emacs-xml-rpc" ,emacs-xml-rpc)))
-    (home-page "https://github.com/alezost/debpaste.el")
-    (synopsis "Emacs interface for the Debian Paste Service")
-    (description "Debpaste is an Emacs interface for the
-@uref{https://paste.debian.net, Debian Paste Service}.  It provides
-receiving, posting and deleting pastes using XML-RPC.")
-    (license license:gpl3+)))
-
 (define emacs-wi-web-search
   (let ((commit "33fa377156f487e41deda62cd92110d707907c66"))
     (package
