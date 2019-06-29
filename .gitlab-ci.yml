@@ -1,0 +1,15 @@
+.build:
+  tags:
+    - shell
+  script:
+    - GUIX_PACKAGE_PATH=. ~/.config/guix/current/bin/guix build --no-grafts --fallback $(grep define-public $FILE | cut -f2 -d' ')
+
+emacs:
+  extends: .build
+  variables:
+    FILE: wigust/packages/emacs.scm
+
+databases:
+  extends: .build
+  variables:
+    FILE: wigust/packages/databases.scm
