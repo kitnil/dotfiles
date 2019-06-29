@@ -22,7 +22,7 @@ sudo -i ./guix-install.sh
 не компилировать все из исходников на своем компьютере.
 
 После установки добавить в свой создать файл `~/.config/guix/channels.scm`
-(при отсутствии создать директорию `~/.config/guix/channels.scm`):
+(при отсутствии создать директорию `~/.config/guix/`):
 ``` scheme
 (cons
  (channel
