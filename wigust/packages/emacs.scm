@@ -343,25 +343,6 @@ the parse tree gain access to the JSX structure.")
     (description "Tern-powered JavaScript integration.")
     (license license:gpl3+)))
 
-(define-public emacs-indium-checkout
-  (let ((commit "d98a9e0cd11d8230c4c3d0b59c4ac60520e34ebb")
-        (revision "1"))
-    (package
-      (inherit emacs-indium)
-      (name "emacs-indium")
-      (version (string-append (package-version emacs-indium) "-" revision "."
-                              (string-take commit 7)))
-      (source
-       (origin
-         (method git-fetch)
-         (uri (git-reference
-               (url "https://github.com/NicolasPetton/Indium.git")
-               (commit commit)))
-         (file-name (string-append name "-" version "-checkout"))
-         (sha256
-          (base32
-           "1q3yf45fmbjppv3ahb1gdb95pa3kyn18x5m23ihpxz1pziz3a074")))))))
-
 (define-public emacs-helm-notmuch
   (package
     (name "emacs-helm-notmuch")
