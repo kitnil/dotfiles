@@ -4,12 +4,147 @@
   script:
     - GUIX_PACKAGE_PATH=. ~/.config/guix/current/bin/guix build --no-grafts --fallback $(grep define-public $FILE | cut -f2 -d' ')
 
-emacs:
+admin:
   extends: .build
   variables:
-    FILE: wigust/packages/emacs.scm
+    FILE: wigust/packages/admin.scm
+
+calamares:
+  extends: .build
+  variables:
+    FILE: wigust/packages/calamares.scm
+
+compression:
+  extends: .build
+  variables:
+    FILE: wigust/packages/compression.scm
 
 databases:
   extends: .build
   variables:
     FILE: wigust/packages/databases.scm
+
+emacs:
+  extends: .build
+  variables:
+    FILE: wigust/packages/emacs.scm
+
+game-development:
+  extends: .build
+  variables:
+    FILE: wigust/packages/game-development.scm
+
+games:
+  extends: .build
+  variables:
+    FILE: wigust/packages/games.scm
+
+gnuzilla:
+  extends: .build
+  variables:
+    FILE: wigust/packages/gnuzilla.scm
+
+golang:
+  extends: .build
+  variables:
+    FILE: wigust/packages/golang.scm
+
+gstreamer:
+  extends: .build
+  variables:
+    FILE: wigust/packages/gstreamer.scm
+
+guile:
+  extends: .build
+  variables:
+    FILE: wigust/packages/guile.scm
+
+guix:
+  extends: .build
+  variables:
+    FILE: wigust/packages/guix.scm
+
+image-viewers:
+  extends: .build
+  variables:
+    FILE: wigust/packages/image-viewers.scm
+
+lisp:
+  extends: .build
+  variables:
+    FILE: wigust/packages/lisp.scm
+
+pdf:
+  extends: .build
+  variables:
+    FILE: wigust/packages/pdf.scm
+
+php:
+  extends: .build
+  variables:
+    FILE: wigust/packages/php.scm
+
+pulseaudio:
+  extends: .build
+  variables:
+    FILE: wigust/packages/pulseaudio.scm
+
+python:
+  extends: .build
+  variables:
+    FILE: wigust/packages/python.scm
+
+raleigh:
+  extends: .build
+  variables:
+    FILE: wigust/packages/raleigh.scm
+
+ruby:
+  extends: .build
+  variables:
+    FILE: wigust/packages/ruby.scm
+
+spectre-meltdown-checker:
+  extends: .build
+  variables:
+    FILE: wigust/packages/spectre-meltdown-checker.scm
+
+urho3d:
+  extends: .build
+  variables:
+    FILE: wigust/packages/urho3d.scm
+
+version-control:
+  extends: .build
+  variables:
+    FILE: wigust/packages/version-control.scm
+
+virtualization:
+  extends: .build
+  variables:
+    FILE: wigust/packages/virtualization.scm
+
+vnc:
+  extends: .build
+  variables:
+    FILE: wigust/packages/vnc.scm
+
+web:
+  extends: .build
+  variables:
+    FILE: wigust/packages/web.scm
+
+xdisorg:
+  extends: .build
+  variables:
+    FILE: wigust/packages/xdisorg.scm
+
+xorg:
+  extends: .build
+  variables:
+    FILE: wigust/packages/xorg.scm
+
+zabbix:
+  extends: .build
+  variables:
+    FILE: wigust/packages/zabbix.scm
