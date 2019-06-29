@@ -1,22 +1,9 @@
 stages:
-  - test
-  - deploy
+  - build
 
-test:
-  stage: test
+build:
+  stage: build
   tags:
     - shell
   script:
-    - ~/.config/guix/current/bin/guix pull --substitute-urls='https://guix.duckdns.org https://ci.guix.info' --url='https://git.savannah.gnu.org/git/guix.git'
-    - ~/.config/guix/current/bin/guix describe
-    - ~/.config/guix/current/bin/guix environment --substitute-urls='https://guix.duckdns.org https://ci.guix.info' --manifest=fiore/manifests/guix-collection.scm -- sh -c exit
-    - ~/.config/guix/current/bin/guix system build --load-path=fiore/modules --substitute-urls='https://guix.duckdns.org https://ci.guix.info' guixsd/config.scm
-
-deploy:
-  stage: deploy
-  tags:
-    - shell
-  environment: production
-  script: /bin/sh deploy.sh
-  only:
-    - master
+    - ~/.config/guix/current/bin/guix weather --substitute-urls='http://cuirass.wugi.info' --coverage --manifest=fiore/manifests/guix-collection.scm | grep '     ' | cut -f 2 | cut -d@ -f 1 | xargs guix build --no-grafts
