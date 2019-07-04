@@ -1,6 +1,6 @@
 Данный репозиторий предоставляет [Guix
 channel](https://www.gnu.org/software/guix/manual/en/html_node/Channels.html),
-который позволяет установить guile-ihs -
+который позволяет установить [guile-ihs](https://gitlab.wugi.info/guile/guile-ihs) -
 [Guile](https://www.gnu.org/software/guile/) клиент для HMS и billing2.
 
 ## Установка
