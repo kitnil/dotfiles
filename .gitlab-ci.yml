@@ -9,11 +9,6 @@ admin:
   variables:
     FILE: wigust/packages/admin.scm
 
-calamares:
-  extends: .build
-  variables:
-    FILE: wigust/packages/calamares.scm
-
 compression:
   extends: .build
   variables:
