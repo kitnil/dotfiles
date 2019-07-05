@@ -64,11 +64,6 @@ lisp:
   variables:
     FILE: wigust/packages/lisp.scm
 
-pdf:
-  extends: .build
-  variables:
-    FILE: wigust/packages/pdf.scm
-
 php:
   extends: .build
   variables:
