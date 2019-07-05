@@ -341,16 +341,14 @@ Features:
 (define-public python-unicode
   (package
     (name "python-unicode")
-    (version "2.4")
+    (version "2.7")
     (source
      (origin
        (method url-fetch)
-       (uri (string-append
-             "http://kassiopeia.juls.savba.sk/~garabik/software/unicode/"
-             "unicode_" version ".tar.gz"))
+       (uri (pypi-uri "unicode" version))
        (sha256
         (base32
-         "0p01axlakaksjmrfndh9ly313rc306yq3qjisda2h9fc54ih8wwg"))))
+         "12zmj01sl4na7qxs65lg1yqppxfk4vl41xl6bh0q0hfxcwv0ir3j"))))
     (build-system python-build-system)
     (home-page "http://kassiopeia.juls.savba.sk/")
     (synopsis "Display unicode character properties")
