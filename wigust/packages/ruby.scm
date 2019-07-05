@@ -84,29 +84,6 @@ files are modified.")
     (home-page "http://github.com/tmm1/http_parser.rb")
     (license license:expat)))
 
-(define-public ruby-em-websocket
-  (package
-    (name "ruby-em-websocket")
-    (version "0.5.1")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (rubygems-uri "em-websocket" version))
-       (sha256
-        (base32
-         "1bsw8vjz0z267j40nhbmrvfz7dvacq4p0pagvyp17jif6mj6v7n3"))))
-    (build-system ruby-build-system)
-    (propagated-inputs
-     `(("ruby-eventmachine" ,ruby-eventmachine)
-       ("ruby-http-parser-rb" ,ruby-http-parser-rb)))
-    (arguments
-     '(#:tests? #f)) ; no required file
-    (synopsis "EventMachine based WebSocket server")
-    (description "EventMachine based WebSocket server")
-    (home-page "http://github.com/igrigorik/em-websocket")
-    (license #f)))
-
-
 (define-public ruby-gitlab
   (package
     (name "ruby-gitlab")
