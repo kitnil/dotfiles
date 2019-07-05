@@ -39,11 +39,6 @@ guix:
   variables:
     FILE: wigust/packages/guix.scm
 
-image-viewers:
-  extends: .build
-  variables:
-    FILE: wigust/packages/image-viewers.scm
-
 lisp:
   extends: .build
   variables:
