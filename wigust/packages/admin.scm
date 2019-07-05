@@ -24,9 +24,9 @@
   #:use-module (guix git-download)
   #:use-module (guix build-system meson)
   #:use-module (gnu packages)
-  #:use-module (gnu packages pkg-config)
-  #:use-module (gnu packages cairo)
+  #:use-module (gnu packages gtk)
   #:use-module (gnu packages image)
+  #:use-module (gnu packages pkg-config)
   #:use-module (gnu packages xorg))
 
 (define-public pscircle
