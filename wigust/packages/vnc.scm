@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2018 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2018, 2019 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -84,40 +84,6 @@
   #:use-module (gnu packages mpi)
   #:use-module (gnu packages web)
   #:use-module (gnu packages ssh))
-
-#;(define-public tightvnc
-  (package
-    (name "tightvnc")
-    (version "1.3.10")
-    (source (origin
-              (method url-fetch)
-              (uri (string-append "mirror://sourceforge/vnc-tight/TightVNC-unix/"
-                                  version "/tightvnc-" version "_unixsrc.tar.gz"))
-              (file-name (string-append name "-" version ".tar.gz"))
-              (sha256
-               (base32
-                "0gcb118yb5rrf2qbsib5n3iynw9y216w3qiwgpwxsmaydvcbn9dz"))))
-    (build-system trivial-build-system)
-    (inputs
-     `(("zlib" ,zlib)
-       ("libjpeg", libjpeg)
-       ("imake", imake)
-       ("gccmakedep", gccmakedep)
-       ("libXmu", libXmu)
-       ("libXaw", libXaw)
-       ("libXpm", libXpm)
-       ("libXp ", libXp )
-       ("perl", perl)
-       ("xauth", xauth)
-       ("openssh", openssh)))
-    
-    (home-page "http://vnc-tight.sourceforge.net/")
-    (synopsis "Virtual network computing server program")
-    (description "VNC stands for Virtual Network Computing.  It is, in
-essence, a remote display system which allows you to view a computing
-`desktop' environment not only on the machine where it is running, but from
-anywhere on the Internet and from a wide variety of machine architectures.")
-    (license license:gpl2+)))
 
 (define-public tigervnc
   (package
