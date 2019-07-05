@@ -372,16 +372,17 @@ JavaScript input to it quickly.")
 (define-public emacs-assess
   (package
     (name "emacs-assess")
-    (version "0.4")
+    (version "0.5")
     (source
      (origin
-       (method url-fetch)
-       (uri (string-append "https://github.com/phillord/assess"
-                           "/archive/" "v" version ".tar.gz"))
-       (file-name (string-append name "-" version ".tar.gz"))
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://github.com/phillord/assess.git")
+             (commit (string-append "v" version))))
+       (file-name (git-file-name name version))
        (sha256
         (base32
-         "19q1zhalljzidg5lwl3l293ypqpy6x1bn8h1wr4a4jjzzv56ahak"))))
+         "15ismdk8fl6xjgkjh9nkn8kgg7rpy2ra7924r1iddlfs2q8l8p4w"))))
     (inputs
      `(("emacs-m-buffer-el" ,emacs-m-buffer-el)
        ("emacs-load-relative" ,emacs-load-relative)))
@@ -395,8 +396,8 @@ JavaScript input to it quickly.")
                            (assoc-ref inputs "emacs-m-buffer-el")
                            "/share/emacs/site-lisp/guix.d/m-buffer-el-"
                            ,(package-version emacs-m-buffer-el))
-                     "-l" "test/assess-test.el"
-                     "-f" "ert-run-tests-batch-and-exit"))))))
+                     "--load" "assess-discover.el"
+                     "--eval" "(assess-discover-run-and-exit-batch t)"))))))
     (build-system emacs-build-system)
     (home-page "https://github.com/phillord/assess")
     (synopsis "Test support functions for Emacs")
