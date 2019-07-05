@@ -84,11 +84,6 @@ virtualization:
   variables:
     FILE: wigust/packages/virtualization.scm
 
-vnc:
-  extends: .build
-  variables:
-    FILE: wigust/packages/vnc.scm
-
 web:
   extends: .build
   variables:
