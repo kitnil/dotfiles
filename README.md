@@ -37,3 +37,20 @@ guix pull
 
 guix install guile-ihs
 ```
+
+## Обновление
+
+Необходимо обновить Guix и Channels командой:
+``` shell
+guix pull
+```
+
+Затем обновить все пакеты:
+``` shell
+guix package --upgrade
+```
+
+или только guile-ihs:
+``` shell
+guix install guile-ihs
+```
