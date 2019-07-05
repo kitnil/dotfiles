@@ -641,18 +641,6 @@ large Lisp programs.  It has full Unicode support for nearly all human
 languages.")
     (license license:gpl3+)))
 
-(define-public emacs-no-x-toolkit-24
-  (package (inherit emacs-24)
-    (location (source-properties->location (current-source-location)))
-    (name "emacs-no-x-toolkit-24")
-    (synopsis "The extensible, customizable, self-documenting text
-editor (without an X toolkit)" )
-    (build-system gnu-build-system)
-    (inputs (append `(("inotify-tools" ,inotify-tools))
-                    (alist-delete "gtk+" (package-inputs emacs))))
-    (arguments (append '(#:configure-flags '("--with-x-toolkit=no"))
-                       (package-arguments emacs)))))
-
 (define-public emacs-lognav-mode
   (let ((changeset "a9b53f2da040")
         (revision "1"))
