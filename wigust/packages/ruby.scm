@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2017, 2018 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2017, 2018, 2019 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -67,7 +67,7 @@ files are modified.")
 
 (define-public ruby-http-parser-rb
   (package
-    (name "ruby-http-parser.rb")
+    (name "ruby-http-parser-rb")
     (version "0.6.0")
     (source
      (origin
