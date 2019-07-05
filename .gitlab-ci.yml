@@ -39,11 +39,6 @@ games:
   variables:
     FILE: wigust/packages/games.scm
 
-gnuzilla:
-  extends: .build
-  variables:
-    FILE: wigust/packages/gnuzilla.scm
-
 golang:
   extends: .build
   variables:
