@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2018 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2018, 2019 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -22,12 +22,7 @@
   #:use-module (guix utils)
   #:use-module (guix download)
   #:use-module (guix git-download)
-  #:use-module (guix build-system cmake)
-  #:use-module (guix build-system gnu)
   #:use-module (guix build-system meson)
-  #:use-module (guix build-system perl)
-  #:use-module (guix build-system python)
-  #:use-module (guix build-system trivial)
   #:use-module (gnu packages)
   #:use-module (gnu packages base)
   #:use-module (gnu packages bash)
@@ -83,48 +78,6 @@
   #:use-module (gnu packages elf)
   #:use-module (gnu packages mpi)
   #:use-module (gnu packages web))
-
-(define-public netcat-openbsd
-  (package
-    (name "netcat-openbsd")
-    (version "1.190")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (string-append "http://ftp.debian.org/debian/pool/main/n/\
-netcat-openbsd/netcat-openbsd_" version ".orig.tar.gz"))
-       (sha256
-        (base32
-         "0dp571m42zc7wvb9bf4hz5a08rcc5fknf0gdp98yq19c754c9k38"))))
-    (build-system gnu-build-system)
-    (inputs
-     `(("netcat-openbsd-debian"
-        ,(origin
-           (method url-fetch)
-           (uri "http://ftp.debian.org/debian/pool/main/n\
-/netcat-openbsd/netcat-openbsd_1.190-2.debian.tar.xz")
-           (sha256
-            (base32
-             "0x43qw5j97xxmgxcclfl740s7i0gwxjks4xwb5g85ir0yprql248"))))))
-    (native-inputs
-     `(("tar" ,tar)
-       ("xz" ,xz)))
-    (arguments
-     `(#:phases
-       (modify-phases %standard-phases
-         (delete 'configure)
-         (add-before 'build 'copy-patches
-           (lambda* (#:key inputs #:allow-other-keys)
-             (invoke (pk (string-append (assoc-ref inputs "tar") "/bin/tar"))
-                     (pk "xvf") (pk (assoc-ref inputs "netcat-openbsd-debian"))))))))
-    (synopsis "TCP/IP swiss army knife")
-    (description
-     "A simple Unix utility which reads and writes data across network connections using TCP or UDP protocol.  It is designed to be a reliable back-end tool that can be used directly or easily driven by other programs and scripts.  At the same time it is a feature-rich network debugging and exploration tool, since it can create almost any kind of connection you would need and has several interesting built-in capabilities.
-
-This package contains the OpenBSD rewrite of netcat, including support for
-IPv6, proxies, and Unix sockets.")
-    (home-page "")
-    (license license:gpl2+)))
 
 (define-public pscircle
   (package
