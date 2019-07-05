@@ -868,29 +868,6 @@ advantages as below with the help of websocket.")
 lines elsewhere in a project.")
       (license license:gpl3+))))
 
-(define-public emacs-guix-next
-  (let ((commit "1ed98be606d41356725f7a9fd1d7f981427aa53a")
-        (revision "1"))
-    (package
-      (inherit emacs-guix)
-      (name "emacs-guix-next")
-      (version (git-version (package-version emacs-guix) "1" commit))
-      (source
-       (origin
-         (method git-fetch)
-         (uri (git-reference
-               (url "https://github.com/alezost/guix.el")
-               (commit commit)))
-         (file-name (git-file-name name version))
-         (sha256
-          (base32
-           "13fcnwcb3kwkkvi8y20nfq7d4xydpv7n6zszb3qq3jrlx7ixbwkw"))))
-      (native-inputs
-       `(("autoconf" ,autoconf)
-         ("automake" ,automake)
-         ("texinfo" ,texinfo)
-         ,@(package-native-inputs emacs-guix))))))
-
 (define-public emacs-mediawiki
   (let ((commit "8473e12d1839f5287a4227586bf117dad820f867"))
     (package
