@@ -24,11 +24,6 @@ game-development:
   variables:
     FILE: wigust/packages/game-development.scm
 
-games:
-  extends: .build
-  variables:
-    FILE: wigust/packages/games.scm
-
 golang:
   extends: .build
   variables:
