@@ -383,19 +383,20 @@ JavaScript input to it quickly.")
         (base32
          "19q1zhalljzidg5lwl3l293ypqpy6x1bn8h1wr4a4jjzzv56ahak"))))
     (inputs
-     `(("emacs-m-buffer-el" ,emacs-m-buffer-el)))
+     `(("emacs-m-buffer-el" ,emacs-m-buffer-el)
+       ("emacs-load-relative" ,emacs-load-relative)))
     (arguments
      `(#:phases
        (modify-phases %standard-phases
          (add-before 'install 'check
            (lambda* (#:key inputs #:allow-other-keys)
-             (zero? (system* "emacs" "--batch" "-L" "."
-                             "-L" (string-append
-                                   (assoc-ref inputs "emacs-m-buffer-el")
-                                   "/share/emacs/site-lisp/guix.d/m-buffer-el-"
-                                   ,(package-version emacs-m-buffer-el))
-                             "-l" "test/assess-test.el"
-                             "-f" "ert-run-tests-batch-and-exit")))))))
+             (invoke "emacs" "--batch" "-L" "."
+                     "-L" (string-append
+                           (assoc-ref inputs "emacs-m-buffer-el")
+                           "/share/emacs/site-lisp/guix.d/m-buffer-el-"
+                           ,(package-version emacs-m-buffer-el))
+                     "-l" "test/assess-test.el"
+                     "-f" "ert-run-tests-batch-and-exit"))))))
     (build-system emacs-build-system)
     (home-page "https://github.com/phillord/assess")
     (synopsis "Test support functions for Emacs")
