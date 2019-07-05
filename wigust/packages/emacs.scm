@@ -253,6 +253,8 @@ the parse tree gain access to the JSX structure.")
         (base32
          "1pzchd29i6dxfgm0ackr2vc2xqpczjkwl5h6l8jils0bcfaj48ss"))))
     (build-system emacs-build-system)
+    (propagated-inputs
+     `(("emacs-auto-complete" ,emacs-auto-complete)))
     (arguments
      `(#:phases
        (modify-phases %standard-phases
