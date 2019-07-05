@@ -192,27 +192,6 @@ JSON gem, NSJSONSerialization, gson.rb, JrJackson, and OkJson.")
     (home-page "http://github.com/intridea/multi_json")
     (license license:expat)))
 
-(define-public ruby-multi-xml
-  (package
-    (name "ruby-multi-xml")
-    (version "0.6.0")
-    (source
-     (origin
-       (method url-fetch)
-       (uri (rubygems-uri "multi_xml" version))
-       (sha256
-        (base32
-         "0lmd4f401mvravi1i1yq7b2qjjli0yq7dfc4p1nj5nwajp7r6hyj"))))
-    (build-system ruby-build-system)
-    (arguments
-     `(#:tests? #f)) ; no tests
-    (synopsis "Provides swappable XML backends utilizing LibXML")
-    (description "Provides swappable XML backends utilizing LibXML, Nokogiri,
-Ox, or REXML.")
-    (home-page "https://github.com/sferik/multi_xml")
-    (license license:expat)))
-
-
 (define-public ruby-terminal-table
   (package
     (name "ruby-terminal-table")
