@@ -214,15 +214,6 @@
 @url{http://developer.github.com/v3}.")
     (license license:bsd-3)))
 
-(define-public python2-github
-  (let ((base (package-with-python2
-               (strip-python2-variant python-github))))
-    (package
-      (inherit base)
-      (propagated-inputs
-       `(("python2-unittest2" ,python2-unittest2)
-         ,@(package-propagated-inputs base))))))
-
 (define-public python-livereload
   (package
     (name "python-livereload")
