@@ -178,7 +178,8 @@ and even a stepping Debugger, similar to @code{edebug}, or @code{cider}.")
            "0l80nb2dxfm1bws1rqqkavswnpyqbwlv84q1zp4lrsfarjb3l56c"))))
       (build-system emacs-build-system)
       (propagated-inputs
-       `(("pandoc" ,ghc-pandoc)))
+       `(("pandoc" ,ghc-pandoc)
+         ("emacs-s" ,emacs-s)))
       (arguments
        `(#:phases
          (modify-phases %standard-phases
