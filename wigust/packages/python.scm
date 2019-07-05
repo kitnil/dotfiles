@@ -106,7 +106,7 @@
     (description "Vim-like file manager")
     (license #f)))
 
-(define-public python-requests-2.18
+(define python-requests-2.18
   (package
     (inherit python-requests)
     (version "2.18.0")
@@ -119,7 +119,7 @@
         (base32
          "0p7awxhzd81fwmjbsrx1bb0xkd4f8ynxmz8myyzq8wkqcbwqj0fd"))))))
 
-(define-public python-certifi-2017.4.17
+(define python-certifi-2017.4.17
   (package
     (inherit python-certifi)
     (version "2017.4.17")
@@ -132,7 +132,7 @@
         (base32
          "02n16i1dbp8cq974z0wh0pa11s0w2kfh77ksbzljqn31fjzpwlpp"))))))
 
-(define-public python-urllib3-1.21.1
+(define python-urllib3-1.21.1
   (package
     (inherit python-urllib3)
     (version "1.21.1")
@@ -145,7 +145,7 @@
         (base32
          "19c22gbkzs14dcaj4vvjgyfl0iqhhbbp7abblw0hkjhqhnbqci5i"))))))
 
-(define-public python-idna-2.5
+(define python-idna-2.5
   (package
     (inherit python-idna)
     (version "2.5")
