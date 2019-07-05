@@ -267,17 +267,6 @@
     (description "Awesome List used GitHub stars.")
     (license license:expat)))
 
-(define-public python2-starred
-  (let ((base (package-with-python2
-               (strip-python2-variant python-starred))))
-    (package
-      (inherit base)
-      (propagated-inputs
-       `(("python2-github2", python2-github)
-         ,@(alist-delete "python-github"
-                         (package-propagated-inputs base)
-                         equal?))))))
-
 ;; TODO: make test fails to found ddgr
 (define-public python-ddgr
   (package
