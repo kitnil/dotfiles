@@ -9,11 +9,6 @@ admin:
   variables:
     FILE: wigust/packages/admin.scm
 
-compression:
-  extends: .build
-  variables:
-    FILE: wigust/packages/compression.scm
-
 databases:
   extends: .build
   variables:
