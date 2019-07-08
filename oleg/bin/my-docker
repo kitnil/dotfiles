@@ -185,6 +185,7 @@ docker run \
        --volume /home/jenkins:/var/jenkins_home \
        --publish 30080:8080 \
        --publish 50000:50000 \
+       jenkins/jenkins:lts
 
 docker run \
        --name registry \
