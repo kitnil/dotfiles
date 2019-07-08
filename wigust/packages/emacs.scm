@@ -1261,3 +1261,26 @@ variables.  An interface to GitLab’s CI file linter is also provided via
       (synopsis "Web suggest with Emacs Helm")
       (description "This package provides web suggestions with Emacs Helm.")
       (license license:gpl3+))))
+
+(define-public emacs-jenkins
+  (let ((commit "9c7b9d4cb39eff7d6ac4d0cbd5ebc103dc86cac2"))
+    (package
+      (name "emacs-jenkins")
+      (version (git-version "0.1" "1" commit)) ;no upstream release
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/rmuslimov/jenkins.el.git")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "1s49xmpc975q1ffb5c7cjrcwpa4a7kcakri26f5vqy3hn1h0c2v7"))))
+      (build-system emacs-build-system)
+      (propagated-inputs
+       `(("emacs-dash" ,emacs-dash)))
+      (home-page "https://github.com/rmuslimov/jenkins.el/")
+      (synopsis "Jenkins client for Emacs")
+      (description "This package provides a Jenkins client for Emacs.")
+      (license license:gpl3+))))
