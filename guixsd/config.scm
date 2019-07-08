@@ -309,6 +309,13 @@ EndSection")
                      (group "users")
                      (supplementary-groups '("docker"))
                      (home-directory "/home/awx"))
+                    (user-account
+                     (name "gitlab-runner")
+                     (uid 30018)
+                     (comment "GitLab Runner")
+                     (group "users")
+                     (supplementary-groups '("adbusers" "docker" "kvm"))
+                     (home-directory "/home/gitlab-runner"))
                     (append ((lambda* (count #:key
                                         (group "nixbld")
                                         (first-uid 30101)
