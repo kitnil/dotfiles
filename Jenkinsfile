@@ -11,7 +11,7 @@ pipeline {
                 }
             }
             steps {
-                sh "~/.config/guix/current/bin/guix pull --substitute-urls='https://ci.guix.info' --profile=guix-jenkins --commit="{GUIX_COMMIT}
+                sh "~/.config/guix/current/bin/guix pull --substitute-urls='https://ci.guix.info' --profile=guix-jenkins --commit="${GUIX_COMMIT}
                 sh "./guix-jenkins/bin/guix describe"
             }
         }
