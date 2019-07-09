@@ -1,0 +1,19 @@
+#!/bin/sh
+
+set -x
+
+output="$(curl -s -X 'EXAMINE INBOX' -u 'oleg:$(pass show guixsd/oleg)' 'imap://localhost' | grep RECENT | awk '{ print $2 }')"
+
+if [ -z "$output" ]
+then
+    alerta close --filter 'event=mail.new'
+else
+    alerta send \
+           --resource guixsd \
+           --event mail.new \
+           --environment Production \
+           --service 'Linux servers' \
+           --severity informational \
+           --text "$output unseen INBOX." \
+           --value "$output"
+fi

@@ -1,0 +1,12 @@
+;; -*-lisp-*-
+
+;; https://github.com/stumpwm/stumpwm/wiki/SetUp
+
+(require :asdf)
+(require :swank)
+
+(swank-loader:init)
+(sb-thread:make-thread
+ (lambda ()
+   (swank:create-server :dont-close t
+                        :port 4005)))

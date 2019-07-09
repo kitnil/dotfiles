@@ -1,0 +1,7 @@
+#!/bin/sh
+
+passwords=$(pass show godaddy.com/api/lexicon)
+key=$(echo "$passwords" | recsel --print-values=key)
+secret=$(echo "$passwords" | recsel --print-values=secret)
+
+docker run --rm -it analogj/lexicon /usr/local/bin/lexicon godaddy list --auth-key "$key" --auth-secret "$secret" wugi.info "$@"

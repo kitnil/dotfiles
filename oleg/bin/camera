@@ -1,0 +1,3 @@
+#!/bin/sh
+
+vlc "http://gitarik:$(pass show )%40@192.168.100.3/nphMotionJpeg?Resolution=640x480&Quality=Standard"

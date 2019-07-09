@@ -1,0 +1,71 @@
+#!/run/current-system/profile/bin/sh
+# -*- scheme -*-
+exec ${GUILE:-$(which guile)} $GUILE_FLAGS -e '(@@ (my-ssh) main)' -s "$0" "$@"
+!#
+
+;;;; my-ssh --- SYNOPSIS
+;;;; Copyright © 2019 Oleg Pykhalov <go.wigust@gmail.com>
+;;;; Released under the GNU GPLv3 or any later version.
+
+(define-module (my-ssh)
+  #:use-module (ssh session)
+  #:use-module (ssh auth)
+  #:use-module (ssh shell)
+  #:use-module (srfi srfi-37))
+
+;;; Commentary:
+;;;
+;;; DESCRIPTION
+;;;
+;;; Code:
+
+(define %options
+  (let ((display-and-exit-proc (lambda (msg)
+                                 (lambda (opt name arg loads)
+                                   (display msg) (quit)))))
+    (list (option '(#\v "version") #f #f
+                  (display-and-exit-proc "guile-ssh version 0.0.1\n"))
+          (option '(#\h "help") #f #f
+                  (display-and-exit-proc
+                   "Usage: guile-ssh ...")))))
+
+(define %default-options
+  '())
+
+(define (find session args)
+  (rexec session (format #f "find ~a" args)))
+
+(define (main args)
+  (define opts
+    (args-fold (cdr (program-arguments))
+               %options
+               (lambda (opt name arg loads)
+                 (error "Unrecognized option `~A'" name))
+               (lambda (op loads)
+                 (cons op loads))
+               %default-options))
+  (let ((s (make-session #:host "localhost")))
+    (connect! s)
+    (userauth-public-key/auto! s)
+    (find s "/etc/letsencrypt/live")))
+
+(use-modules (ssh popen)
+             (ice-9 rdelim)
+             (ssh channel))
+
+(define session (make-session #:host "localhost"))
+(connect! session)
+(userauth-public-key/auto! session)
+
+(let* ((channel (open-remote-input-pipe session "/bin/sh -c \"sudo --stdin --validate --prompt='' <<< ***REMOVED*** && sudo ls /etc/letsencrypt/live\""))
+       (result  (let loop ((line   (read-line channel))
+                           (result '()))
+                  (if (eof-object? line)
+                      (reverse result)
+                      (loop (read-line channel)
+                            (cons line result)))))
+       (exit-status (channel-get-exit-status channel)))
+  (close channel)
+  (values result exit-status))
+
+;;; guile-ssh ends here

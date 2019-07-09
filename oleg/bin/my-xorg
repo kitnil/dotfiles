@@ -1,0 +1,12 @@
+#!/bin/sh
+
+set -x
+
+tty="$(tty | tr -d '\n' | tail -c 1)"
+
+guile --no-auto-compile "$(guix gc -R /run/current-system | grep startx)" \
+      -config /gnu/store/ifkq0wvdnnlqlssq61dp9gi3syc5802a-xserver.conf \
+      -configdir /gnu/store/zxpq72jsxrfirq3y9hq74zrkijb4wmf0-xorg.conf.d \
+      -logverbose \
+      -verbose \
+      ":$tty" "vt$tty"

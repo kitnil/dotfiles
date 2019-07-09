@@ -1,0 +1,16 @@
+#!/bin/sh
+
+output=$(curl --silent \
+              --user "admin:$(pass show magnolia/jenkins/admin)" \
+              https://jenkins.wugi.info/api/json/ \
+             | jq -r '.jobs[] | select(.color | endswith("_anime")) | .name')
+
+if test -z "$output"
+then
+    printf 0
+else
+    printf "%s" "$output" | wc -l | tr -d '\n'
+fi
+
+
+
