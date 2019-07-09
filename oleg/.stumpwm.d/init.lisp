@@ -663,6 +663,9 @@
 ;; (define-key *root-map* (kbd "C-M-v") "scroll-other-window")
 ;; (define-key *top-map* (kbd "Print") "screenshot-default")
 
+;; (define-key *top-map* (kbd "s-w") "firefox")
+;; (define-key *top-map* (kbd "s-M-w") "firefox-new-window")
+
 ;; Rebind groups to PREFIX-NUMBER.
 (mapcar #'(lambda (x) (define-key *top-map* (kbd (concat "s-" (write-to-string x)))
 			(format nil "~A ~D" "gselect" x)))
@@ -675,8 +678,8 @@
 ;; (define-key *top-map* (kbd "s-\"") "frame-windowlist")
 ;; (define-key *top-map* (kbd "s-c") "run-or-raise-xterm")
 ;; (define-key *top-map* (kbd "s-c") "run-or-raise-xterm")
+;; (define-key *top-map* (kbd "s-e") "emacs")
 (define-key *top-map* (kbd "s-e") "emacsclient")
-(define-key *top-map* (kbd "s-E") "emacsclient-new")
 ;; (define-key *top-map* (kbd "s-h") "jord-loadavg")
 ;; (define-key *top-map* (kbd "s-h") nil)
 (define-key *top-map* (kbd "s-m") "mpv")
@@ -686,7 +689,6 @@
 ;; (define-key *top-map* (kbd "s-t") "pull-hidden-other")
 ;; (define-key *top-map* (kbd "s-v") "xclip-mpv")
 (define-key *top-map* (kbd "s-w") "firefox")
-(define-key *top-map* (kbd "s-W") "firefox-new-window")
 
 (defcommand dump-group-to-file (file) (:rest "Dump To File: ")
   "Dumps the frames of the current group of the current screen to the named file."
@@ -963,6 +965,7 @@
 
 (define-key *top-map* (kbd "s-v") "pulsemixer")
 ;; (define-key *top-map* (kbd "s-r") "vnc")
+;; (define-key *top-map* (kbd "s-e") "emacsclient")
 (define-key *top-map* (kbd "s-c") "run-or-raise-xterm")
 
 (define-key *top-map* (kbd "s-F") "move-focus right")
