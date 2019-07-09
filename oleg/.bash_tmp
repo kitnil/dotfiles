@@ -1,5 +1,13 @@
 #!/bin/sh
 
+
+export CVM_USER='cron'
+export CVM_PASS='***REMOVED***'
+export GMS_USER='pyhalov'
+export GMS_PASS='***REMOVED***'
+export IHS_USER='pyhalov'
+export IHS_PASS='***REMOVED***'
+
 cerb-auth()
 {
     CERB_MAIL='pyhalov@majordomo.ru' CERB_PASS="$(pass show majordomo.ru/pyhalov)" $HOME/src/jord/cc.scm
@@ -258,6 +266,21 @@ mpv-youtube-music() { mpv --audio-device=pulse/alsa_output.usb-Logitech_Logitech
 guix-gcroot-ansible() { guix package --profile="$HOME/.config/guix/profiles/ansible" --substitute-urls='https://ci.guix.info http://cuirass.tld' -i python ; }
 
 save-manifest() { GUIX_PACKAGE_PATH="$HOME/src/guix-wigust" guix environment --root="$HOME/.config/guix/gcroots/my-manifest" --substitute-urls='https://ci.guix.info http://cuirass.tld' --manifest="$HOME/src/dotfiles/fiore/manifests/natsu-manifest.scm" -- sh -c 'exit' ; }
+
+ci-dotfiles()
+{
+    curl -X POST \
+         -F token=***REMOVED*** \
+         -F ref=master \
+         https://gitlab.wugi.info/api/v4/projects/19/trigger/pipeline
+}
+
+# gitlab-monitor: ***REMOVED***
+
+windows-10()
+{
+    qemu-system-x86_64 -smp cores=4,threads=1 -m 4096 -enable-kvm -cpu host -daemonize -vnc :6 /srv/virt/win10-mail.qcow2
+}
 
 screen-off()
 {
