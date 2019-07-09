@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: letvar
+# key: letvar
+# --
+(let ((var $1))
+  var)
