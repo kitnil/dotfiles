@@ -273,3 +273,21 @@ guix-vm()
         -net nic,model=virtio,macaddr="$macaddr" -net bridge,br=br0 \
         -vga virtio -full-screen
 }
+
+myreconfigure ()
+{
+    sudo -i guix system reconfigure --load-path="/home/oleg/src/dotfiles/fiore/modules" --no-bootloader --substitute-urls='https://ci.guix.info http://cuirass.tld' /home/oleg/src/dotfiles/guixsd/config.scm
+}
+
+guix-master-staging()
+{
+    git -C "$HOME/src/guix" \
+        shortlog -n upstream/master..upstream/staging
+}
+
+listen-ports()
+{
+    ss -tulpn | awk '{ print $5 }' | cut -d: -f 2 | sort -un | xargs echo
+}
+
+alias vnc-server-android="vncserver -AcceptSetDesktopSize=no -geometry 1280x720"
