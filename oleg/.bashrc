@@ -24,20 +24,39 @@ fi
 #     eval "$(direnv hook bash)"
 # fi
 
-function man-in-emacs { emacsclient --eval "(man \"$1\")"; }
-function man-to-pdf { man -t "$1" | ps2pdf - "$1.pdf"; }
+man-in-emacs()
+{
+    emacsclient --eval "(man \"$1\")"
+}
 
-function stat-link { stat --format=%N $@; }
+man-to-pdf()
+{
+    man -t "$1" | ps2pdf - "$1.pdf"
+}
+
+stat-link()
+{
+    stat --format=%N $@
+}
 
 # Origin <https://www.fsf.org/blogs/directory/the-free-software-directory-needs-you-irc-meetups-every-friday-1>.
 #
 # Every Friday at 12:00-15:00 EDT (16:00 to 19:00 UTC)
 # meet on IRC in the #fsf channel on irc.freenode.org
-date-fsf() { date --date='TZ="America/New_York" 12:00 this Fri'; }
+date-fsf()
+{
+    date --date='TZ="America/New_York" 12:00 this Fri'
+}
 
-cl() { echo $(tput cols)x$(tput lines); }
+cl()
+{
+    echo $(tput cols)x$(tput lines)
+}
 
-gpa() { guix package -A $@ | awk '{ print $1"-"$2 }'; }
+gpa()
+{
+    guix package -A $@ | awk '{ print $1"-"$2 }'
+}
 
 if [ -d "/run/current-system" ]
 then
