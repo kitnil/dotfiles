@@ -1,0 +1,8 @@
+#!/bin/sh
+
+url="$1"
+image="${url##*/}"
+
+cd "$HOME/Pictures/Wallpapers"
+wget "$url"
+feh --bg-fill "$image"
