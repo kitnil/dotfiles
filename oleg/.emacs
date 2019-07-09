@@ -1667,6 +1667,19 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
              (when smerge-mode
                (unpackaged/smerge-hydra/body))))
 
+(defun wi-magit-init (directory group)
+  "Call `magit-init' and create GitLab repository."
+  (interactive "DCreate repository in: \nsGroup: ")
+  (magit-init directory)
+  (let ((name (file-name-nondirectory (directory-file-name directory)))
+        (buffer (get-buffer-create "*wi-magit-init*")))
+    (call-process "gitlab" nil buffer nil "create_project" name
+                   (format "{visibility: public, namespace_id: %s}"
+                           group))
+    (call-process "git" nil buffer nil "remote" "add" "origin"
+                  (format "git@gitlab:~s/~s.git"
+                          group name))))
+
 
 ;;;
 ;;; ERC
