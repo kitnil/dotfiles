@@ -10,7 +10,7 @@ pipeline {
                description: 'Guix Git commit hash')
     }
     stages {
-        stage('Start') {
+        stage('start') {
             steps {
                 sendNotifications 'STARTED'
             }
