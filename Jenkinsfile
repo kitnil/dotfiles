@@ -5,7 +5,9 @@ pipeline {
         label 'guixsd'
     }
     parameters {
-        string(name: 'COMMIT', defaultValue: '', description: 'Guix Git commit hash')
+        string(name: 'GUIX_COMMIT',
+               defaultValue: env.GUIX_COMMIT,
+               description: 'Guix Git commit hash')
     }
     stages {
         stage('Start') {
@@ -15,7 +17,7 @@ pipeline {
         }
         stage('pull') {
             steps {
-                sh "~/.config/guix/current/bin/guix pull --substitute-urls='https://ci.guix.info' --profile=guix-jenkins --commit=${COMMIT}"
+                sh "~/.config/guix/current/bin/guix pull --substitute-urls='https://ci.guix.info' --profile=guix-jenkins --commit=${GUIX_COMMIT}"
                 sh "./guix-jenkins/bin/guix describe"
             }
         }
