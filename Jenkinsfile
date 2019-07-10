@@ -25,10 +25,12 @@ pipeline {
     }
     post {
         success {
-            slackSend color: '#00CC00', iconEmoji: '', message: "Guix pipeline succeed.", username: ''
+            slackSend color: '#00CC00', iconEmoji: '', message: """[Success] $JOB_NAME - Build #$BUILD_ID on $BRANCH_NAME - $NODE_NAME
+Build log on ${BUILD_URL + "console"}""", username: ''
         }
         failure {
-            slackSend color: '#ADD8E6', iconEmoji: '', message: "Guix pipeline failed.", username: ''
+            slackSend color: '#ADD8E6', iconEmoji: '', message: """[Failure] $JOB_NAME - Build #$BUILD_ID on $BRANCH_NAME - $NODE_NAME
+Build log on ${BUILD_URL + "console"}""", username: ''
         }
     }
 }
