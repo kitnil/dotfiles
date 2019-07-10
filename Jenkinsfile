@@ -1,3 +1,5 @@
+@Library('jenkins-wi-shared-library') _
+
 pipeline {
     agent {
         label 'guixsd'
@@ -6,6 +8,11 @@ pipeline {
         string(name: 'COMMIT', defaultValue: '', description: 'Guix Git commit hash')
     }
     stages {
+        stage('Start') {
+            steps {
+                sendNotifications 'STARTED'
+            }
+        }
         stage('pull') {
             steps {
                 sh "~/.config/guix/current/bin/guix pull --substitute-urls='https://ci.guix.info' --profile=guix-jenkins --commit=${COMMIT}"
@@ -24,13 +31,8 @@ pipeline {
         }
     }
     post {
-        success {
-            slackSend color: '#00CC00', iconEmoji: '', message: """[Success] $JOB_NAME - Build #$BUILD_ID on $BRANCH_NAME - $NODE_NAME
-Build log on ${BUILD_URL + "console"}""", username: ''
-        }
-        failure {
-            slackSend color: '#ADD8E6', iconEmoji: '', message: """[Failure] $JOB_NAME - Build #$BUILD_ID on $BRANCH_NAME - $NODE_NAME
-Build log on ${BUILD_URL + "console"}""", username: ''
+        always {
+            sendNotifications currentBuild.result
         }
     }
 }
