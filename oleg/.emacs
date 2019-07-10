@@ -2641,6 +2641,15 @@ If nil use light theme.")
 
 
 ;;;
+;;; Jenkins
+;;;
+
+(setq jenkins-api-token "***REMOVED***")
+(setq jenkins-url "https://jenkins.wugi.info/")
+(setq jenkins-username "admin")
+
+
+;;;
 ;;; smart-mode-line
 ;;;
 
