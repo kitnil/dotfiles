@@ -1,9 +1,0 @@
-stages:
-  - build
-
-build:
-  stage: build
-  tags:
-    - shell
-  script:
-    - ~/.config/guix/current/bin/guix weather --substitute-urls='http://cuirass.wugi.info' --coverage --manifest=fiore/manifests/guix-collection.scm | grep '     ' | cut -f 2 | cut -d@ -f 1 | xargs guix build --no-grafts
