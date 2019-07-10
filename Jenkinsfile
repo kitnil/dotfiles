@@ -2,14 +2,11 @@ pipeline {
     agent {
         label 'guixsd'
     }
+    parameters {
+        string(name: 'COMMIT', defaultValue: '', description: 'Guix Git commit hash')
+    }
     stages {
         stage('pull') {
-            input {
-                message "Commit"
-                parameters {
-                    string(name: 'COMMIT', defaultValue: 'fb2abbd6f5abac8ae0fec594594dd54ff7e3f4db', description: 'Guix Git commit hash')
-                }
-            }
             steps {
                 sh "~/.config/guix/current/bin/guix pull --substitute-urls='https://ci.guix.info' --profile=guix-jenkins --commit=${COMMIT}"
                 sh "./guix-jenkins/bin/guix describe"
