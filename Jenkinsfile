@@ -6,7 +6,7 @@ pipeline {
     }
     parameters {
         string(name: 'GUIX_COMMIT',
-               defaultValue: env.GUIX_COMMIT,
+               defaultValue: '4289d1d71cbbb1895354ec3b0cb8c99a4ce9f9be',
                description: 'Guix Git commit hash')
     }
     stages {
