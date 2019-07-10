@@ -10,13 +10,9 @@ pipeline {
                description: 'Guix Git commit hash')
     }
     stages {
-        stage('start') {
-            steps {
-                sendNotifications 'STARTED'
-            }
-        }
         stage('pull') {
             steps {
+                sendNotifications 'STARTED'
                 sh """~/.config/guix/current/bin/guix pull \
  --substitute-urls='https://ci.guix.info' \
  --profile=guix-jenkins \
