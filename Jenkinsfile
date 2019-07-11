@@ -10,7 +10,7 @@ pipeline {
                description: 'Guix Git commit hash')
     }
     stages {
-        stage('pull') {
+        stage('build') {
             steps {
                 sendNotifications 'STARTED'
                 sh """~/.config/guix/current/bin/guix pull \
@@ -18,18 +18,10 @@ pipeline {
  --profile=guix-jenkins \
  --commit=${GUIX_COMMIT}"""
                 sh "./guix-jenkins/bin/guix describe"
-            }
-        }
-        stage('manifest') {
-            steps {
                 sh """./guix-jenkins/bin/guix environment \
  --substitute-urls='https://ci.guix.info' \
  --manifest=fiore/manifests/guix-collection.scm \
  -- sh -c exit"""
-            }
-        }
-        stage('system') {
-            steps {
                 sh """./guix-jenkins/bin/guix system build \
  --load-path=fiore/modules \
  --substitute-urls='https://ci.guix.info' \
