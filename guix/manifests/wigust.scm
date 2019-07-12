@@ -15,7 +15,6 @@
    emacs-athena
    emacs-atomic-chrome
    emacs-awk-it
-   emacs-debpaste           ; Front end to <https://paste.debian.net/>
    emacs-engine-mode-autoload ; Define searches on websites
    emacs-eval-in-repl       ; Evaluate to different Repls
    emacs-flyspell-correct
@@ -27,7 +26,6 @@
    emacs-hydra-timestamp
    emacs-info-colors        ; Colorize info pages
    emacs-mediawiki
-   emacs-pcre2el
    emacs-perl-live
    emacs-psysh
    emacs-redshift

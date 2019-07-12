@@ -24,6 +24,7 @@
        emacs-crux
        emacs-dashboard
        emacs-debbugs ; <https://debbugs.gnu.org/> interface
+       emacs-debpaste           ; Front end to <https://paste.debian.net/>
        emacs-default-encrypt    ; Sign mail automatically
        emacs-default-text-scale ; Scale text in all buffers
        emacs-dumb-jump
@@ -93,6 +94,7 @@
        emacs-org-bullets
        emacs-org-mind-map       ; General mind maps from Org files
        emacs-outshine           ; Emacs outline-mode
+       emacs-pcre2el
        emacs-php-mode
        emacs-polymode
        emacs-polymode-ansible
