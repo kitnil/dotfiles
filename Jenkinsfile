@@ -20,7 +20,7 @@ pipeline {
                 sh "./guix-jenkins/bin/guix describe"
                 sh """./guix-jenkins/bin/guix environment \
  --substitute-urls='https://ci.guix.info' \
- --manifest=fiore/manifests/guix-collection.scm \
+ --manifest=guix/manifests/oleg.scm \
  -- sh -c exit"""
                 sh """./guix-jenkins/bin/guix system build \
  --load-path=fiore/modules \
