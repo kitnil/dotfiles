@@ -241,3 +241,13 @@ docker run \
        --publish 8118:8118 \
        --publish 9051:9050 \
        rdsubhas/tor-privoxy-alpine
+
+docker run \
+       --restart unless-stopped \
+       --detach \
+       --name redmine \
+       --publish 44080:3000 \
+       --env REDMINE_DB_POSTGRES=192.168.105.120 \
+       --env REDMINE_DB_USERNAME=redmine \
+       --env REDMINE_DB_PASSWORD=redmine \
+       redmine:4.0.4
