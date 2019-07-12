@@ -1,7 +1,7 @@
 .build:
   tags:
-    - shell
     - server
+    - shell
   script:
     - GUIX_PACKAGE_PATH=. ~/.config/guix/current/bin/guix build --no-grafts --fallback $(grep define-public $FILE | cut -f2 -d' ')
 
