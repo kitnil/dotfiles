@@ -1215,31 +1215,6 @@ program instead of Emacs' own (often not up to date) whois client.
 @end itemize\n")
       (license license:gpl3+))))
 
-(define-public emacs-gitlab-ci-mode
-  (package
-    (name "emacs-gitlab-ci-mode")
-    (version "20190425.11.10")
-    (source (origin
-              (method git-fetch)
-              (uri (git-reference
-                    (url "https://gitlab.com/joewreschnig/gitlab-ci-mode.git")
-                    (commit (string-append "v" version))))
-              (file-name (git-file-name name version))
-              (sha256
-               (base32
-                "1jkp9mnbiccqnha9zs646znqyqvy5jjb81kah7ghbkzdqqk2avm0"))))
-    (build-system emacs-build-system)
-    (propagated-inputs
-     `(("emacs-yaml-mode" ,emacs-yaml-mode)))
-    (home-page "https://gitlab.com/joewreschnig/gitlab-ci-mode/")
-    (synopsis "Emacs mode for editing GitLab CI files")
-    (description
-     "@code{gitlab-ci-mode} is a major mode for editing GitLab CI files.  It
-provides syntax highlighting and completion for keywords and special
-variables.  An interface to GitLab’s CI file linter is also provided via
-@code{gitlab-ci-lint}.")
-    (license license:gpl3+)))
-
 (define-public emacs-helm-suggest
   (let ((commit "7e9687fdbb69312dc5e79630b700c0ce1be8441b"))
     (package
@@ -1285,26 +1260,3 @@ variables.  An interface to GitLab’s CI file linter is also provided via
       (description "This package provides a Jenkins client for Emacs.")
       (license license:gpl3+))))
 
-(define-public emacs-matcha
-  (let ((commit "c7df5cf5cdac9ae369e241342389ccda0205eab9"))
-    (package
-      (name "emacs-matcha")
-      (version (git-version "0.0.1" "1" commit)) ;no upstream release
-      (source (origin
-                (method git-fetch)
-                (uri (git-reference
-                      (url "https://github.com/jojojames/matcha.git")
-                      (commit commit)))
-                (file-name (git-file-name name version))
-                (sha256
-                 (base32
-                  "1lfnh1glg6al677m7ci0x8g5wjdhjxlfl3nv1f1ppsw4dpnwsj9b"))))
-      (propagated-inputs
-       `(("emacs-hydra" ,emacs-hydra)
-         ("emacs-transient" ,emacs-transient)))
-      (build-system emacs-build-system)
-      (home-page "https://github.com/jojojames/matcha/")
-      (synopsis "Collection of hydras with a generic interface to launch them")
-      (description "Matcha is provides a collection of transients for various
-packages with a consistent way to use them.")
-      (license license:gpl3+))))
