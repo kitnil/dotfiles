@@ -25,4 +25,7 @@ magnolia-reconfigure:
 tail-cuirass-pull:
 	$(HOME)/.nix-profile/bin/ansible-playbook $(HOME)/src/hello-ansible/git.yml
 
+update-channels:
+	guile/guix-channels-update
+
 all: stow update-mime
