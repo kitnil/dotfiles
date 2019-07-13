@@ -26,13 +26,19 @@
 
 (use-modules (gnu packages)
              (guix build utils)
+             (guix git)
              (guix packages)
+             (guix profiles)
              (ice-9 popen)
              (ice-9 rdelim)
              (srfi srfi-1)
              (srfi srfi-26))
 
-(define %source-dir "/home/oleg/src/guix")
+(define %guix-git "https://git.savannah.gnu.org/git/guix.git")
+
+(define %source-dir
+  ((@@ (guix git) url-cache-directory) %guix-git))
+
 (define %author "go.wigust@gmail.com")
 
 (define (git-output . args)
@@ -54,6 +60,9 @@ newspace."
       (string-drop string (string-length prefix))
       string))
 
+(update-cached-checkout %guix-git
+                        #:ref '(commit . "2a059ab9955d702bf803773bef7a218a9b6cd2da"))
+
 (let ((packages (fold append '()
                       (map (compose (cut find-packages-by-name <>)
                                     (cut string-drop-prefix "gnu: Add " <>)
@@ -61,4 +70,4 @@ newspace."
                            (filter (cut string-prefix? "gnu: Add" <>)
                                    (string-split (git-output "log" (string-append "--author=" %author) "--format=%s")
                                                  #\newline))))))
-  (format #t "~{~a~%~}" (map package-name packages)))
+  (packages->manifest packages))

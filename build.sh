@@ -5,9 +5,11 @@ set -o nounset
 set -o xtrace
 set -o pipefail
 
-guix pull --profile=dotfiles --channels=channels.scm
+guix pull --profile=.guix-profile --channels=channels.scm
 
-GUIX_BIN="./dotfiles/bin/guix"
+GUIX_BIN=".guix-profile/bin/guix"
 "$GUIX_BIN" describe
-"$GUIX_BIN" environment --manifest=guix/manifests/oleg.scm -- sh -c exit
+for manifest in oleg maintenance; do
+    "$GUIX_BIN" environment --manifest="guix/manifests/$manifest.scm" -- sh -c exit
+done
 "$GUIX_BIN" system build --load-path=fiore/modules guixsd/config.scm
