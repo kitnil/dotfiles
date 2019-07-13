@@ -1,0 +1,11 @@
+build:
+  tags:
+    - guixsd
+  script:
+    - ./build.sh
+  only:
+    changes:
+      - ".gitlab-ci.yml"
+      - "build.sh"
+      - "*.scm"
+      - "**/*.scm"
