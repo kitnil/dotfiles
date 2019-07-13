@@ -26,6 +26,7 @@
 
 (use-modules (gnu packages)
              (guix build utils)
+             (guix channels)
              (guix git)
              (guix packages)
              (guix profiles)
@@ -33,6 +34,8 @@
              (ice-9 rdelim)
              (srfi srfi-1)
              (srfi srfi-26))
+
+(define %file-dir (dirname (current-filename)))
 
 (define %guix-git "https://git.savannah.gnu.org/git/guix.git")
 
@@ -60,8 +63,12 @@ newspace."
       (string-drop string (string-length prefix))
       string))
 
-(update-cached-checkout %guix-git
-                        #:ref '(commit . "2a059ab9955d702bf803773bef7a218a9b6cd2da"))
+(update-cached-checkout
+ %guix-git
+ #:ref `(commit . ,(channel-commit (first (filter (lambda (channel)
+                                                    (string=? (symbol->string (channel-name channel))
+                                                              "guix"))
+                                                  (load (string-append (dirname (dirname %file-dir)) "/channels.scm")))))))
 
 (let ((packages (fold append '()
                       (map (compose (cut find-packages-by-name <>)
