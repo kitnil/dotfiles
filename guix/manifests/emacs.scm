@@ -50,6 +50,7 @@
        emacs-git-auto-commit-mode
        emacs-git-gutter
        emacs-git-timemachine
+       emacs-gitlab-ci-mode
        emacs-gitpatch           ; Send patches
        emacs-go-mode
        emacs-god-mode           ; Commands without modifier keys
