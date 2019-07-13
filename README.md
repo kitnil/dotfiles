@@ -23,8 +23,8 @@ $ update-desktop-database ~/.local/share/applications/
 Packages are managed by [GNU Guix](https://guix.gnu.org/):
 
 ``` {.shell}
-guix package --substitute-urls='https://ci.guix.info http://cuirass.tld' \
-     --manifest=fiore/manifests/natsu-manifest.scm
+guix package --substitute-urls='https://ci.guix.info \
+     --manifest=guix/manifests/oleg.scm
 ```
 
 Thanks:
