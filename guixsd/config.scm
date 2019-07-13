@@ -125,6 +125,7 @@ EndSection")
         (proxy "cerberus.intr" 15080)
         (proxy "grafana.intr" 16080)
         (proxy "nextcloud.wugi.info" 28080 #:ssl? #t)
+        (proxy "redmine.wugi.info" 44080 #:ssl? #t)
         (proxy "guix.duckdns.org" 5556 #:ssl? #t)
         ((lambda* (host #:key
                   (ssl? #f)
@@ -419,7 +420,8 @@ EndSection")
                                                  "alerta.wugi.info"
                                                  "awx.wugi.info"
                                                  "stackstorm.wugi.info"
-                                                 "nextcloud.wugi.info"))))))
+                                                 "nextcloud.wugi.info"
+                                                 "redmine.wugi.info"))))))
 
                        (service nginx-service-type
                                 (nginx-configuration
