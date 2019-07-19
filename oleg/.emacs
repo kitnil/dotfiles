@@ -38,8 +38,8 @@
 
 (setq package-archives nil) ; Makes unpure packages archives unavailable
 
-(setq user-mail-address "go.wigust@gmail.com")
-(setq user-full-name "Oleg Pykhalov")
+(setq user-mail-address "pyhalov@majordomo.ru")
+(setq user-full-name "Oleg Pyhalov")
 (setq default-input-method "russian-computer") ; <C-\> keyboard layout
 
 (setq display-time-24hr-format t) ; No AM/PM
@@ -2236,6 +2236,7 @@ the appropriate network slug that we extract from the nick."
                                (irfc-head-prev)
                                (recenter-top-bottom 0)))
         (call-interactively 'other-window)))
+    ;; (define-key map (kbd "<f8>") 'show-translation)
     map)
   "Keymap used by `irfc-mode'.")
 
@@ -2542,8 +2543,8 @@ be updated automatically."))
 
 (setq hl-sexp-background-color "darkseagreen2")
 
-(when (and (require 'edit-server nil t) (daemonp))
-  (edit-server-start))
+;; (when (and (require 'edit-server nil t) (daemonp))
+;;   (edit-server-start))
 
 (setq terminal-here-scrollbar nil)
 (setq terminal-here-terminal-emulators (list "xterm"))
@@ -2870,7 +2871,10 @@ If nil use light theme.")
 ;; Simple Mail Transfer Protocol (SMTP)
 (with-eval-after-load 'sendmail
   (setq send-mail-function #'smtpmail-send-it)
-  (setq smtpmail-smtp-server "smtp.gmail.com"))
+  (setq smtpmail-stream-type 'starttls)
+  (setq smtpmail-smtp-user "pyhalov")
+  (setq smtpmail-smtp-server "smtp.majordomo.ru")
+  (setq smtpmail-smtp-service "587"))
 
 ;; Origin <https://github.com/alezost/guix.el/pull/9#issuecomment-340556583>.
 (with-eval-after-load 'info
@@ -3204,6 +3208,26 @@ If given a prefix, patch in the branch directory instead."
   (let ((tramp-remote-path '(tramp-default-remote-path "/bin"))
         (default-directory "/ssh:eng@dh4-mr.intr:"))
     (find-file "")))
+(defun supeng-find-routers ()
+  (interactive)
+  (mapcar 'find-file
+          '("/ssh:root@78.108.91.85:/root/deploy"
+            "/ssh:root@78.108.93.115:/root/deploy"
+            "/ssh:root@78.108.90.34:/root/deploy"
+            "/ssh:root@78.108.89.188:/root/deploy")))
+
+(defvar ange-ftp-hosts-no-pasv '("localhost")
+  "*List of hosts that do not need PASV (e.g. hosts within your firewall).
+  Used by `ange-ftp-set-passive'.")	; rephrased, added "*" // era
+
+(defun ange-ftp-set-passive ()
+  "Function to send a PASV command to hosts not named in the variable
+  `ange-ft-hosts-no-pasv'. Intended to be called from the hook variable
+  `ange-ftp-process-startup-hook'."	; rephrased significantly // era
+  (if (not (member host ange-ftp-hosts-no-pasv))
+      (ange-ftp-raw-send-cmd proc "passive")))
+
+(add-hook 'ange-ftp-process-startup-hook 'ange-ftp-set-passive)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.

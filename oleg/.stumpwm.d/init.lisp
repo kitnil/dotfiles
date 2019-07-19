@@ -3,6 +3,8 @@
 
 (in-package :stumpwm)
 
+(set-prefix-key (kbd "C-i"))
+
 (setf *startup-message* nil)
 (setf *message-window-gravity* :center)
 (setf *input-window-gravity* :center)
@@ -14,7 +16,7 @@
 (run-shell-command "sxhkd")
 
 (run-shell-command "xsetroot -cursor_name left_ptr")
-(run-shell-command (concat "xrdb -merge " *home* "/.Xresources"))
+(run-shell-command "xrdb -merge " (concat "/home/user" "/.Xresources"))
 
 (run-shell-command "xsetroot -solid black") ; Wallpaper
 (run-shell-command "xset -b") ; Disable PC speaker
@@ -30,7 +32,7 @@
 ;; Keyboard layout
 (run-shell-command "setxkbmap -layout us,ru -option grp:win_space_toggle")
 
-(run-shell-command "xmodmap " (concat *home* "/.Xmodmap"))
+(run-shell-command "xmodmap " (concat "/home/user" "/.Xmodmap"))
 
 (run-shell-command "keynav")
 
@@ -97,6 +99,7 @@
 (setf *window-format* "%m%n%s %c %50t")
 
 (defvar *xterm-command*
+  ;; "exec /home/user/.guix-profile/bin/xterm"
   "exec /run/current-system/profile/bin/xterm")
 
 (defvar *xterm-big-command*
@@ -601,8 +604,8 @@
 
 ;; Rebind groups to PREFIX-NUMBER.
 (mapcar #'(lambda (x) (define-key *top-map* (kbd (concat "s-" (write-to-string x)))
-			(format nil "~A ~D" "gselect" x)))
-	(range 10 :min 1 :step 1))
+                        (format nil "~A ~D" "gselect" x)))
+        (range 10 :min 1 :step 1))
 
 (define-key *top-map* (kbd "M-s-n") "gnext")
 (define-key *top-map* (kbd "M-s-p") "gprev")
@@ -613,6 +616,14 @@
 (define-key *top-map* (kbd "s-p") "prev-in-frame")
 (define-key *top-map* (kbd "s-w") "firefox")
 (define-key *top-map* (kbd "s-W") "firefox-new-window")
+
+(defcommand emacs-shell () ()
+  ""
+  (run-shell-command "stumpish emacsclient")
+  (run-shell-command "emacsclient -e '(progn (shell) (delete-other-windows))'"))
+
+(define-key *top-map* (kbd "s-quoteleft") "emacs-shell")
+(define-key *root-map* (kbd "quoteleft") "emacs-shell")
 
 (defcommand dump-group-to-file (file) (:rest "Dump To File: ")
   "Dumps the frames of the current group of the current screen to the named file."
@@ -646,8 +657,11 @@
 (defcommand vnc-magnolia () ()
   (run-shell-command "exec vncviewer localhost:59555"))
 
-(defcommand pass-input () ()
-  (window-send-string "***REMOVED***"))
+(defcommand pass-route () ()
+  (run-shell-command "echo -n ***REMOVED*** | xclip -selection primary"))
+
+(defcommand pass-eng () ()
+  (run-shell-command "echo -n ***REMOVED*** | xclip -selection primary"))
 
 (defcommand pass () ()
   (run-shell-command "echo -n ***REMOVED*** | xclip -selection primary"))
@@ -675,6 +689,21 @@
 
   (defcommand grafana () ()
     (firefox "https://grafana.wugi.info/" t))
+
+  (defcommand majordomo-la-24-hours () ()
+    (firefox "http://grafana.intr/d/000000021/telegraf-system-dashboard-shared?panelId=54694&fullscreen&orgId=1&var-datasource=influx-telegraf&var-inter=$__auto_interval_inter&var-server=web.*&var-mountpoint=All&var-cpu=All&var-disk=All&var-netif=All&var-server_role=shared-hosting&var-dc=Miran&from=now-12h&to=now" t))
+
+  (defcommand majordomo-upstream () ()
+    (firefox "http://grafana.intr/d/6QgXJjmik/upstream-interfaces-traffic?refresh=5s&orgId=1"))
+
+  (defcommand alerta () ()
+    (firefox "http://alerta.intr/#/alerts?sort-by=lastReceiveTime&status=open&status=unknown&environment=Production"))
+
+  (defcommand cerb () ()
+    (firefox "http://cerberus.intr/index.php/"))
+
+  (defcommand majordomo-zabbix () ()
+    (firefox "https://zabbix.intr/dashboard.php?fullscreen=1"))
 
   (defcommand zabbix () ()
     (firefox "https://zabbix.wugi.info/"))

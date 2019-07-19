@@ -38,7 +38,6 @@ else
         . "$GUIX_PROFILE/etc/profile"
     fi
 
-    export BROWSER='firefox'
     export GUILE_WARN_DEPRECATED=no
     export GUIX_LOCPATH=$HOME/.guix-profile/lib/locale
     export GUIX_PROFILE="$HOME/.guix-profile"
@@ -98,6 +97,8 @@ export CVM_USER='cron'
 export CVM_PASS='***REMOVED***'
 export IHS_USER='pyhalov'
 export IHS_PASS='***REMOVED***'
+export AWX_ADMIN_PASS='***REMOVED***'
+export SUP_PASS='***REMOVED***'
 
 ansible-host()
 {
@@ -107,21 +108,21 @@ ansible-host()
 ssh-sudo()
 {
     ssh -t sup@$2 -- "sudo --stdin --validate --prompt='' <<< $JORD_PASS \
-&& sudo --user=$1 --login";
+&& sudo --user=$1 --login ${@:3}" 2>/dev/null;
 }
 
 vm-ip()
 {
-    gms vm ip $1 | recsel -Pip_address
+    ihs vm ip $1 | recsel -Pip_address
 }
 
-jord-ansible-service-start()
+jord-ansible-service-restart()
 {
     # vm="$(gms vm ip $1 | recsel -pip_address | awk '{ print $2 }')"
     vm=$1
     ansible --user sup --private-key=$HOME/.ssh/id_rsa_sup --inventory $vm, \
-            $vm --module-name service --args "name=$2 state=started" \
-            --become --extra-vars='ansible_become_pass=***REMOVED***'
+            $vm --module-name service --args "name=$2 state=restarted" \
+            --become --extra-vars="ansible_become_pass=***REMOVED*** ansible_ssh_common_args='-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'"
 
 }
 
@@ -132,12 +133,14 @@ ssh-forward-vnc()
 
 vm-ssh()
 {
-    ssh -l sup $(vm-ip $1)
+    ip="$(vm-ip $1)"
+    echo "$ip"
+    ssh -l sup -i $HOME/.ssh/id_rsa_sup "$ip"
 }
 
 jord-web-loadavg()
 {
-    watch --color "seq -f 'web%gs' 15 37 | loadavg weather"
+    watch --color "seq -f 'web%gs' 15 37 | grep -v web24s | xargs loadavg weather"
 }
 
 jord-web-account-check()
@@ -145,6 +148,11 @@ jord-web-account-check()
     parallel --will-cite -k 'printf "domain: %s\n" {1}; curl --max-time 10 -L -s -o /dev/null -w "ip-address: %{remote_ip}\nstatus_code: %{http_code}" {1}; printf "\n\n"' ::: $(gms account website $1 | recsel -pname | awk '{ print $2 }')
 }
 
+domain()
+{
+    domain="$1"
+    ihs web search domain "$domain" | recsel -e "name=\"$domain\""
+}
 
 guix-export-archive()
 {
@@ -180,7 +188,7 @@ activity()
 # https://www.gnu.org/software/emacs/manual/html_node/efaq/Disabling-backups.html
 alias ls='ls -B -p --color=auto'
 
-eval "$(direnv hook bash)"
+#eval "$(direnv hook bash)"
 sup()
 {
     host="$1"
@@ -188,30 +196,6 @@ sup()
 }
 
 export TMUXIFIER_LAYOUT_PATH="$HOME/.tmuxifier-layouts"
-
-connect()
-{
-    host="$1"
-    if [[ "$host" == vm* ]]
-    then
-        hostname="$host"
-        host="$(vm-ip $host)"
-    fi
-
-    if [[ -z "$2" ]]
-    then
-        user="root"
-    else
-        user="$2"
-    fi
-
-    TMUXIFIER_SESSION="$host" TMUXIFIER_HOSTNAME="$hostname" TMUXIFIER_HOST="$host" TMUXIFIER_USER="$user" tmuxifier w ssh-sudo "$@"
-
-    unset TMUXIFIER_HOSTNAME
-    unset TMUXIFIER_HOST
-    unset TMUXIFIER_SESSION
-    unset TMUXIFIER_USER
-}
 
 top-mysql()
 {
@@ -233,4 +217,314 @@ tmux-fzf()
 {
     session="$1"
     tmux at -t "$(tmux-ls | fzf)"
+}
+
+tmux-kill-sessions()
+{
+    parallel tmux kill-session -t {} ::: $(tmux-ls | grep 'vm\|^u')
+}
+
+get-host()
+{
+    getent hosts $1 | awk '{print $1}' | xargs host
+}
+
+pagespeed()
+{
+    echo "https://developers.google.com/speed/pagespeed/insights/?hl=ru&url=$url"
+}
+
+measure_get () {
+    curl -L \
+         -s \
+         -o /dev/null \
+         -w "url_effective: %{url_effective}\\n\
+http_code: %{http_code}\\n\
+num_connects: %{num_connects}\\n\
+num_redirects: %{num_redirects}\\n\
+remote_ip: %{remote_ip}\\n\
+remote_port: %{remote_port}\\n\
+size_download: %{size_download} B\\n\
+speed_download: %{speed_download} B/s\\n\
+time_appconnect: %{time_appconnect} s\\n\
+time_connect: %{time_connect} s\\n\
+time_namelookup: %{time_namelookup} s\\n\
+time_pretransfer: %{time_pretransfer} s\\n\
+time_redirect: %{time_redirect} s\\n\
+time_starttransfer: %{time_starttransfer} s\\n\
+time_total: %{time_total} s\\n" \
+         "$1"
+}
+
+# TODO:
+# ihs-connect()
+# {
+#     account="$1"
+#     unix_account="$(ihs web unix $account)"
+#     web_server="$(echo )"
+# }
+
+htrace.sh()
+{
+    host="$1"
+    docker run --rm -it --name htrace.sh htrace.sh -d "$host" -s -h
+}
+
+guix-pull()
+{
+    guix pull --substitute-urls='http://cuirass.tld https://berlin.guixsd.org https://mirror.hydra.gnu.org'
+}
+
+we()
+{
+    account="$(ihs web unix $1)"
+    ssh-sudo $(echo "$account" | recsel -P name) $(echo "$account" | recsel -P server_name)s
+}
+
+www()
+{
+    ssh-sudo root "$1"
+}
+
+web()
+{
+    account="$(ihs web unix $1)"
+    TMUXIFIER_USER=$(echo "$account" | recsel -P name) TMUXIFIER_HOST=$(echo "$account" | recsel -P server_name)s tmuxifier s ssh
+}
+
+webs()
+{
+    account="$(ihs web unix $1)"
+    ssh-sudo $(echo "$account" | recsel -P name) $(echo "$account" | recsel -P server_name)s
+}
+
+hms()
+{
+    ihs web open "$1"
+}
+
+jord-web-list()
+{
+    printf "http://%s\n" $(getent hosts $(ihs web website $@ | recsel -Pname) | awk '{ print $2 }')
+}
+
+# rsync --list-only rsync://sup@kvm34/vm17051
+# ***REMOVED***
+
+es()
+{
+    account="$1"
+    curl -s -X GET "http://es:9200/logstash-apigw-*/_search" -H 'Content-Type: application/json' -d"{\"from\": 0, \"size\" : 1000, \"query\": {\"match\": {\"account_id\": $account}}}" | jq -r '.hits.hits[] | ._source | [."@timestamp", .account_id, .remote_addr] | @tsv'
+}
+
+mysql-json()
+{
+    mysql --pager='less -S' -u root -h web37 -p***REMOVED*** -e 'SELECT json_object("id", id, "user", user, "host", host, "db", db, "command", command, "time", time, "state", state, "time_ms", time_ms, "stage", stage, "
+max_stage", max_stage, "progress", progress, "memory_used", memory_used, "max_memory_used", max_memory_used, "examined_rows", examined_rows, "query_id", query_id, "tid", tid) FROM information_schema.processlist ORDER BY Time' 2>/dev/null \
+        | tail -n +2 | jq -c -s .
+}
+
+ansible-fetch-logs()
+{
+    for src in $@; do ansible web18s -m fetch -a "src=$src dest=/tmp" --become; done
+}
+
+goaccess-helper()
+{
+    zcat www.pravoved-centre.ru-access.log.*.gz | goaccess -o /tmp/output.html --log-format=COMBINED www.pravoved-centre.ru-access.log 
+}
+
+acc()
+{
+    emc "$(emacs-ihs $1; echo)"
+}
+
+# /usr/bin/python3 /usr/local/bin/gunicorn run:app -c /etc/gunicorn/gunicorn.conf
+
+my()
+{
+    web="web$1"
+    mysql -s -u root -h "$web" -p***REMOVED*** -e 'SELECT * FROM INFORMATION_SCHEMA.PROCESSLIST ORDER BY TIME_MS'
+}
+
+mytop-web()
+{
+  mytop -u root -h "web$1" -p***REMOVED*** "$@"
+}
+
+alias ip='ip --color'
+alias ipba='ip --brief a'
+alias ipbr='ip --brief r'
+
+ban-all()
+{
+    parallel ~/bin/block-ip {} ::: $(seq -f 'web%g' 15 36 | grep -v web24) ::: "$1"
+}
+
+# Select concat('KILL ',id,';') from information_schema.processlist;
+
+ansible-ddos()
+{
+    ANSIBLE_STDOUT_CALLBACK=json ansible-playbook "$HOME/ansible-list-http.yml" \
+        | jq -r '.plays[].tasks[].hosts | .[].stdout' \
+        | grep -v null \
+        | sort -n \
+        | sed 's/\s/\t/'
+}
+
+ansible-spam()
+{
+    ANSIBLE_STDOUT_CALLBACK=json ansible-playbook "$HOME/mail-list-spam.yml" \
+        | jq -r '.plays[].tasks[].hosts | .[].stdout' \
+        | grep -v null \
+        | sort -n \
+        | sed 's/\s/\t/' \
+        | sed 's/@/\t/'
+}
+
+dns-zone()
+{
+    cat out | jq -j '.dnsResourceRecords[] | .ownerName, "."," ", .ttl, " ", .rrClass, " ", .rrType, " ",.data,"\n"' | head
+}
+
+vm-apache-logs()
+{
+    vm_ip="$(vm-ip $1)"
+    ANSIBLE_STDOUT_CALLBACK=json ansible-playbook \
+                           --user sup \
+                           --private-key="$HOME/.ssh/id_rsa_sup" \
+                           --extra-vars="ansible_become_pass=***REMOVED*** ansible_ssh_common_args='-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'" \
+                           -i"$vm_ip", \
+                           "$HOME/ansible-vm-apache-logs.yml" \
+        | jq -r '.plays[].tasks[].hosts | .[].stdout' \
+        | grep -v null \
+        | cut -d ':' -f 2 \
+        | sed -e 's/^[[:space:]]*//'
+}
+
+ns-test()
+{
+    set -x
+    dig +short majordomo.ru @ns.majordomo.ru
+    dig +short majordomo.ru @ns2.majordomo.ru
+    dig +short majordomo.ru @ns3.majordomo.ru
+    set +x
+}
+
+mydel()
+{
+    curl -XDELETE 'web32/ip-filter/81.95.28.29'
+}
+
+ssl-check()
+{
+    for host in $(seq -f 'web%g' 15 37 | grep -v 26 | grep -v 24); do echo "@ $host"; curl -I "https://$host.majordomo.ru/"; done
+}
+
+# ***REMOVED***
+
+ansible-sup-fetch()
+{
+    vm_ip="$(vm-ip vm25846)"
+    ansible \
+        --user sup \
+        --private-key="$HOME/.ssh/id_rsa_sup" \
+        --extra-vars="ansible_become_pass=***REMOVED*** ansible_ssh_common_args='-o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'" \
+        -i"$vm_ip", \
+        $vm_ip \
+        -m fetch \
+        -a "src=/var/www/vm25846/data/www/ugimator.ru/app/Python/glove.6B/glove.6B.300d.txt dest=$HOME" \
+        --become
+}
+
+awx-goaccess()
+{
+    host="$1"
+    home="$2"
+    site="$3"
+    curl 'http://malscan:8052/api/v2/job_templates/10/launch/' -H 'Authorization: Bearer ***REMOVED***' -H 'Content-Type: application/json;charset=utf-8' --data "{\"extra_vars\":{\"host\":\"$host\",\"home\":\"$home\",\"site\":\"$site\"}}"
+}
+
+jord-docker-list()
+{
+    curl -s -X GET -k -u 'gradle:***REMOVED***' https://docker-registry.intr/v2/_catalog | jq
+}
+
+clone-gitlab-intr()
+{
+    # $1=hms/taskexecutor.git
+    url="$1"
+    group_and_repo=$(echo -n "$url" | sed "s@https://gitlab.intr/@@")
+    git clone "https://git:***REMOVED***@gitlab.intr/$group_and_repo"
+}
+
+
+supeng-ssh()
+{
+    ip="$1"
+    pass="$2"
+    sshpass -p "$pass" ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -l root "$ip"
+}
+
+alias r1='supeng-ssh 78.108.89.188 ***REMOVED***'
+alias r2='supeng-ssh 78.108.93.115 ***REMOVED***'
+alias r3='supeng-ssh 78.108.90.34 ***REMOVED***'
+alias r4='supeng-ssh 78.108.91.85 ***REMOVED***'
+
+# alias r1='supeng-ssh 78.108.88.91 ***REMOVED***'
+# alias r2='supeng-ssh 78.108.88.92 ***REMOVED***'
+# alias r3='supeng-ssh 78.108.88.93 ***REMOVED***'
+# alias r4='supeng-ssh 78.108.88.94 ***REMOVED***'
+
+alias ping1='supeng-ssh 78.108.88.8 ***REMOVED***'
+alias ping2='supeng-ssh 78.108.89.141 ***REMOVED***'
+
+alias s1='supeng-ssh 78.108.88.240 ***REMOVED***'
+alias s2='supeng-ssh 178.250.243.49 ***REMOVED***'
+
+alias bitrix='supeng-ssh 178.250.246.138 ***REMOVED***'
+
+alias vm26635='supeng-ssh 78.108.92.88 ***REMOVED***'
+alias vm26638='supeng-ssh 78.108.89.228 ***REMOVED***'
+alias vm26641='supeng-ssh 178.250.240.149 ***REMOVED***'
+
+alias r5='supeng-ssh 178.250.243.152 ***REMOVED***'
+
+export PATH="$PATH:$HOME/go/bin"
+
+elktail-nginx()
+{
+    elktail --url http://es:9200 --index-pattern nginx-2019.07.15
+}
+
+ssh-eng()
+{
+    ***REMOVED***
+}
+
+
+# mysql-cache()
+# {
+#     while :;do echo "select USER,DB,STATE from information_schema.processlist where STATE like '%cache%'" | mysql -N;done
+# }
+
+# my-tcpdump()
+# {
+#     sudo tcpdump -n -pi any $@
+# }
+
+# pass-route()
+# {
+#     echo ***REMOVED***
+#     # PXE 254 и 253
+# }
+
+# apache '{ print $NF, $1, $6, $10, $11 }'
+
+xq-br()
+{
+    ssh -l root br1-mr14.intr -- 'cli -c "show interfaces | display xml"' \
+        | xq '."rpc-reply"."interface-information"."physical-interface"[] \
+ | ."logical-interface"[] \
+ | ."address-family", ."interface-address"';
 }

@@ -11,7 +11,9 @@
 
 (define-abbrev-table 'asm-mode-abbrev-table '())
 
-(define-abbrev-table 'awk-mode-abbrev-table '())
+(define-abbrev-table 'awk-mode-abbrev-table
+  '(
+   ))
 
 (define-abbrev-table 'bbdb-mode-abbrev-table '())
 
@@ -25,9 +27,13 @@
 
 (define-abbrev-table 'bui-list-mode-abbrev-table '())
 
-(define-abbrev-table 'c++-mode-abbrev-table '())
+(define-abbrev-table 'c++-mode-abbrev-table
+  '(
+   ))
 
-(define-abbrev-table 'c-mode-abbrev-table '())
+(define-abbrev-table 'c-mode-abbrev-table
+  '(
+   ))
 
 (define-abbrev-table 'calc-trail-mode-abbrev-table '())
 
@@ -64,6 +70,10 @@
 (define-abbrev-table 'debbugs-gnu-usertags-mode-abbrev-table '())
 
 (define-abbrev-table 'debugger-mode-abbrev-table '())
+
+(define-abbrev-table 'diary-fancy-display-mode-abbrev-table '())
+
+(define-abbrev-table 'diary-mode-abbrev-table '())
 
 (define-abbrev-table 'diff-mode-abbrev-table '())
 
@@ -149,6 +159,8 @@
 
 (define-abbrev-table 'ggtags-view-search-history-mode-abbrev-table '())
 
+(define-abbrev-table 'git-commit-elisp-text-mode-abbrev-table '())
+
 (define-abbrev-table 'git-rebase-mode-abbrev-table '())
 
 (define-abbrev-table 'global-abbrev-table '())
@@ -229,7 +241,9 @@
 
 (define-abbrev-table 'ivy-occur-mode-abbrev-table '())
 
-(define-abbrev-table 'java-mode-abbrev-table '())
+(define-abbrev-table 'java-mode-abbrev-table
+  '(
+   ))
 
 (define-abbrev-table 'jord-mail-mode-abbrev-table '())
 
@@ -281,6 +295,8 @@
 
 (define-abbrev-table 'magit-status-mode-abbrev-table '())
 
+(define-abbrev-table 'magit-submodule-list-mode-abbrev-table '())
+
 (define-abbrev-table 'mail-abbrevs '())
 
 (define-abbrev-table 'majordomo-mail-mode-abbrev-table '())
@@ -316,7 +332,19 @@
 
 (define-abbrev-table 'network-connection-mode-abbrev-table '())
 
+(define-abbrev-table 'nginx-mode-abbrev-table '())
+
 (define-abbrev-table 'nix-mode-abbrev-table '())
+
+(define-abbrev-table 'notmuch-hello-mode-abbrev-table '())
+
+(define-abbrev-table 'notmuch-message-mode-abbrev-table '())
+
+(define-abbrev-table 'notmuch-search-mode-abbrev-table '())
+
+(define-abbrev-table 'notmuch-show-mode-abbrev-table '())
+
+(define-abbrev-table 'notmuch-tree-mode-abbrev-table '())
 
 (define-abbrev-table 'nroff-mode-abbrev-table '())
 
@@ -324,7 +352,9 @@
 
 (define-abbrev-table 'nxml-mode-abbrev-table '())
 
-(define-abbrev-table 'objc-mode-abbrev-table '())
+(define-abbrev-table 'objc-mode-abbrev-table
+  '(
+   ))
 
 (define-abbrev-table 'occur-edit-mode-abbrev-table '())
 
@@ -342,7 +372,9 @@
 
 (define-abbrev-table 'php-mode-abbrev-table '())
 
-(define-abbrev-table 'pike-mode-abbrev-table '())
+(define-abbrev-table 'pike-mode-abbrev-table
+  '(
+   ))
 
 (define-abbrev-table 'plain-tex-mode-abbrev-table '())
 
@@ -415,46 +447,51 @@
 (define-abbrev-table 'text-mode-abbrev-table
   '(
     ("аа" "IP адрес" nil 4)
-    ("бвзс" "благодарим Вас за содействие" nil 1)
     ("бд" "база данных" nil 0)
-    ("вам" "Вам" nil 190)
-    ("вами" "Вами" nil 45)
-    ("вас" "Вас" nil 52)
-    ("ваш" "Ваш" nil 113)
-    ("ваше" "Ваше" nil 53)
-    ("вашего" "Вашего" nil 94)
-    ("вашей" "Вашей" nil 82)
-    ("вашем" "Вашем" nil 43)
-    ("вашему" "Вашему" nil 26)
-    ("ваши" "Ваши" nil 2)
-    ("вашим" "Вашим" nil 8)
-    ("ваших" "Ваших" nil 5)
+    ("бзпи" "благодарим Вас за предоставленную информацию" nil 1)
+    ("бзс" "благодарим Вас за содействие" nil 1)
+    ("вам" "Вам" nil 285)
+    ("вами" "Вами" nil 72)
+    ("вас" "Вас" nil 82)
+    ("ваш" "Ваш" nil 163)
+    ("ваша" "Ваша" nil 1)
+    ("ваше" "Ваше" nil 88)
+    ("вашего" "Вашего" nil 158)
+    ("вашей" "Вашей" nil 141)
+    ("вашем" "Вашем" nil 74)
+    ("вашему" "Вашему" nil 39)
+    ("ваши" "Ваши" nil 4)
+    ("вашим" "Вашим" nil 12)
+    ("ваших" "Ваших" nil 15)
     ("вб" "веб-браузер" nil 2)
+    ("вд" "всего доброго" nil 4)
     ("вк" "выполните команду" nil 0)
     ("впс" "VPS" nil 0)
     ("вс" "веб-сайт" nil 16)
     ("вф" "Wi-Fi" nil 0)
-    ("вы" "Вы" nil 211)
-    ("дв" "Сообщите нам, пожалуйста, если у Вас возникнут дополнительные вопросы" nil 19)
+    ("вы" "Вы" nil 363)
+    ("дв" "Сообщите нам, пожалуйста, если у Вас возникнут дополнительные вопросы" nil 75)
+    ("дд" "добрый день" nil 28)
     ("ди" "доменное имя" nil 0)
     ("днс" "DNS" nil 3)
     ("енп" "если наблюдаются проблемы при работе с" nil 0)
-    ("з" "Здравствуйте" nil 375)
+    ("з" "Здравствуйте" nil 528)
     ("ин" "интернет" nil 0)
-    ("кпу" "контрольной панели управления" nil 2)
-    ("кпувпс" "контрольной панели управления VPS хостинга" nil 9)
-    ("кпувх" "контрольной панели управления виртуального хостинга" nil 59)
-    ("кс" "компьютерная сеть" nil 2)
-    ("м" "можете" nil 6)
+    ("кпу" "контрольной панели управления" nil 27)
+    ("кпувпс" "контрольной панели управления VPS хостинга" nil 18)
+    ("кпувх" "контрольной панели управления виртуального хостинга" nil 103)
+    ("кс" "компьютерная сеть" nil 3)
+    ("м" "можете" nil 12)
     ("овв" "Обращаем Ваше внимание" nil 0)
     ("пиз" "приносим извинения за" nil 0)
     ("пизпн" "приносим извинения за предоставленные неудобства" nil 1)
-    ("под" "подробнее" nil 10)
+    ("под" "подробнее" nil 19)
     ("пр" "прочитать" nil 2)
     ("псн" "пожалуйста, сообщите нам," nil 0)
     ("рвр" "работает в штатном режиме" nil 0)
-    ("св" "связаться" nil 0)
+    ("св" "связаться" nil 1)
     ("снс" "с нашей стороны" nil 0)
+    ("тдв" "Ваш вопрос требует дополнительного времени для решения, ожидайте, пожалуйста, ответа по почте в рамках текущей переписки" nil 2)
     ("тса" "тарифы с администрированием" nil 0)
     ("ус" "устройство" nil 0)
    ))
