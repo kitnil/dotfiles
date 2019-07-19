@@ -658,7 +658,7 @@
 
 (define-key *root-map* (kbd "c") "run-xterm")
 (define-key *root-map* (kbd "C-c") "run-xterm")
-;; (define-key *root-map* (kbd "C-M-c") "run-xterm-light")
+(define-key *root-map* (kbd "C-M-c") "run-xterm-light")
 
 ;; (define-key *root-map* (kbd "C-M-v") "scroll-other-window")
 ;; (define-key *top-map* (kbd "Print") "screenshot-default")
