@@ -4,7 +4,7 @@
 
 (use-package-modules admin algebra aspell audio backup bittorrent
 cdrom chromium ci cmake code commencement compression cpio cran curl
-databases dictionaries dns dunst file elf games gcc gdb gimp
+databases dictionaries dns dunst file elf entr games gcc gdb gimp
 ghostscript golang gl glib gnome gnu-doc gnupg gnuzilla graphics
 graphviz gstreamer gtk guile guile-xyz haskell image-viewers
 imagemagick inkscape kde kodi libreoffice license linux lisp logging
@@ -40,6 +40,8 @@ xdisorg xml xorg)
                xfce leafpad ratpoison gimp
 
                kdeconnect
+
+               entr
 
                ;; See <https://github.com/NixOS/nixpkgs/issues/16327#issuecomment-303068424>.
                at-spi2-core
