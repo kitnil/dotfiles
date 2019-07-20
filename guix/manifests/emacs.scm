@@ -113,6 +113,7 @@
        emacs-smartparens        ; Structured editing
        emacs-string-inflection
        emacs-suggest
+       emacs-terraform-mode
        emacs-transmission       ; Front end to transmission-daemon
        emacs-transpose-frame    ; M-x transpose-frame
        emacs-undo-tree          ; Undo visualisation
