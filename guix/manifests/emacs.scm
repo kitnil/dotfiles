@@ -87,6 +87,7 @@
        emacs-magit
        emacs-magit-org-todos-el
        emacs-markdown-mode      ; Commonmark major mode
+       emacs-matcha
        emacs-mbsync
        emacs-move-text
        emacs-multiple-cursors   ; Multi cursor
