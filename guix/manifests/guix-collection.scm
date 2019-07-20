@@ -7,8 +7,8 @@ cdrom chromium ci cmake code commencement compression cpio cran curl
 databases dictionaries dns dunst file elf games gcc gdb gimp
 ghostscript golang gl glib gnome gnu-doc gnupg gnuzilla graphics
 graphviz gstreamer gtk guile guile-xyz haskell image-viewers
-imagemagick inkscape kodi libreoffice license linux lisp logging lsof
-lxde m4 mail man maths messaging ncdu ncurses networking node
+imagemagick inkscape kde kodi libreoffice license linux lisp logging
+lsof lxde m4 mail man maths messaging ncdu ncurses networking node
 package-management parallel password-utils patchutils pdf perl
 perl-web php pulseaudio python python-xyz qt ratpoison readline
 rdesktop rsync samba scheme screen shellutils ssh statistics sqlite
@@ -38,6 +38,8 @@ xdisorg xml xorg)
                imagemagick ; Pipe to `display'
 
                xfce leafpad ratpoison gimp
+
+               kdeconnect
 
                ;; See <https://github.com/NixOS/nixpkgs/issues/16327#issuecomment-303068424>.
                at-spi2-core
