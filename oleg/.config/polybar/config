@@ -82,10 +82,6 @@ tray-padding = 2
 cursor-click = pointer
 cursor-scroll = ns-resize
 
-[module/xwindow]
-type = internal/xwindow
-label = %title:0:30:...%
-
 [module/xkeyboard]
 type = internal/xkeyboard
 blacklist-0 = num lock
@@ -162,6 +158,8 @@ label = %date% %time%
 
 [module/title]
 type = internal/xwindow
+; label = %title:0:30:...%
+label-maxlen = 50
 
 [module/ewmh]
 type = internal/xworkspaces
