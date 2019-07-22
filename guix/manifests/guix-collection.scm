@@ -177,6 +177,7 @@ xdisorg xml xorg)
                sipcalc
                socat
                sshpass
+               sshfs
                sqlite unzip zip
                curl wget
 
