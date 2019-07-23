@@ -575,9 +575,13 @@ docker-pull-intr()
 jenkins-log()
 {
     for project in $(curl -s -k 'https://admin:***REMOVED***@jenkins.intr/api/json?pretty=true' | jq -r '.jobs[] | .name'); do
+        mkdir -p "$project"
+        cd "$project"
         for job in $(curl -s -k "https://admin:***REMOVED***@jenkins.intr/job/$project/api/json" | jq -r '.jobs[] | .url'); do
+            job_name="$(echo $job | rev | cut -d/ -f 2 | rev)"
             echo "@ $job"
-            curl -u 'admin:***REMOVED***' -s -k "$job/job/master/lastBuild/consoleText"
+            curl -u 'admin:***REMOVED***' -s -k "$job/job/master/lastBuild/consoleText" > "$job_name.log"
         done
+        cd -
     done
 }
