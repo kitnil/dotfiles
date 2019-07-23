@@ -450,6 +450,24 @@ jord-docker-list()
     curl -s -X GET -k -u 'gradle:***REMOVED***' https://docker-registry.intr/v2/_catalog | jq
 }
 
+list-gitlab-intr()
+{
+    group="$1"
+
+    # git user private token: ***REMOVED***
+    curl -H 'PRIVATE-TOKEN: ***REMOVED***' \
+         -H 'Content-Type: application/json' \
+         -k \
+         -X GET \
+         "https://gitlab.intr/api/v4/projects/$group"
+}
+
+list-groups-gitlab-intr()
+{
+    curl -H 'PRIVATE-TOKEN: ***REMOVED***' -H 'Content-Type: application/json' -k -X GET "https://gitlab.intr/api/v4/groups/"
+}
+
+
 clone-gitlab-intr()
 {
     # $1=hms/taskexecutor.git
@@ -494,7 +512,7 @@ export PATH="$PATH:$HOME/go/bin"
 
 elktail-nginx()
 {
-    elktail --url http://es:9200 --index-pattern nginx-2019.07.15
+    elktail --url http://es:9200 --index-pattern nginx-$(date +"%Y.%m.%d")
 }
 
 ssh-eng()
@@ -524,7 +542,33 @@ ssh-eng()
 xq-br()
 {
     ssh -l root br1-mr14.intr -- 'cli -c "show interfaces | display xml"' \
-        | xq '."rpc-reply"."interface-information"."physical-interface"[] \
- | ."logical-interface"[] \
- | ."address-family", ."interface-address"';
+        | xq -y '."rpc-reply"."interface-information"."physical-interface"[] | ."logical-interface" | select(. != null)'
 }
+
+juneos-config()
+{
+    sshpass -p***REMOVED*** ssh -l root "$1" -- 'cli -c "show config | display xml"'
+}
+
+# https://markhneedham.com/blog/2015/11/14/jq-filtering-missing-keys/
+
+stacks()
+{
+    curl -u 'jenkins:***REMOVED***' -X GET http://nginx1.intr:8080/hms
+}
+
+ansible-docker-ps()
+{
+    ansible swarm -m shell -a 'docker ps' --become
+}
+
+docker-pull-intr()
+{
+    group="$1" # For example: “mail”.
+    for repo in $(curl -s -X GET -k -u 'gradle:***REMOVED***' https://docker-registry.intr/v2/_catalog \
+                      | jq -r '.repositories[]' \
+                      | grep "$group/"); do
+        docker pull "docker-registry.intr/$repo"
+    done
+}
+ 
