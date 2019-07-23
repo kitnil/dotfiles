@@ -3229,6 +3229,9 @@ If given a prefix, patch in the branch directory instead."
 
 (add-hook 'ange-ftp-process-startup-hook 'ange-ftp-set-passive)
 
+(setq browse-at-remote-remote-type-domains
+      '(("gitlab.intr" . "gitlab") ("bitbucket.org" . "bitbucket") ("github.com" . "github") ("gitlab.com" . "gitlab") ("git.savannah.gnu.org" . "gnu")))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
