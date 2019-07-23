@@ -572,3 +572,12 @@ docker-pull-intr()
     done
 }
  
+jenkins-log()
+{
+    for project in $(curl -s -k 'https://admin:***REMOVED***@jenkins.intr/api/json?pretty=true' | jq -r '.jobs[] | .name'); do
+        for job in $(curl -s -k "https://admin:***REMOVED***@jenkins.intr/job/$project/api/json" | jq -r '.jobs[] | .url'); do
+            echo "@ $job"
+            curl -u 'admin:***REMOVED***' -s -k "$job/job/master/lastBuild/consoleText"
+        done
+    done
+}
