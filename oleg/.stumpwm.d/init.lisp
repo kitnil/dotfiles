@@ -832,15 +832,6 @@
   ""
   (resize 0 (- (/ (parse-integer (format-expand *window-formatters* "%h" (current-window))) 2))))
 
-(defcommand emacs-shell () ()
-  ""
-  (unless (uiop/utility:string-prefix-p "emacs"
-                                        (window-name (current-window)))
-    (run-shell-command "stumpish emacsclient"))
-  (run-shell-command "emacsclient -e '(progn (shell) (delete-other-windows))'"))
-
-;; (define-key *root-map* (kbd "quoteleft") "emacs-shell")
-
 (defcommand emms () ()
   (unless (uiop/utility:string-prefix-p "emacs"
                                         (window-name (current-window)))
