@@ -317,6 +317,11 @@ es()
     curl -s -X GET "http://es:9200/logstash-apigw-*/_search" -H 'Content-Type: application/json' -d"{\"from\": 0, \"size\" : 1000, \"query\": {\"match\": {\"account_id\": $account}}}" | jq -r '.hits.hits[] | ._source | [."@timestamp", .account_id, .remote_addr] | @tsv'
 }
 
+es-list-indexes()
+{
+    curl -s -X GET "http://es:9200/_cat/indices?v" -H 'Content-Type: application/json'
+}
+
 mysql-json()
 {
     mysql --pager='less -S' -u root -h web37 -p***REMOVED*** -e 'SELECT json_object("id", id, "user", user, "host", host, "db", db, "command", command, "time", time, "state", state, "time_ms", time_ms, "stage", stage, "
