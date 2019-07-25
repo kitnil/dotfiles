@@ -557,7 +557,7 @@ juneos-config()
 
 # https://markhneedham.com/blog/2015/11/14/jq-filtering-missing-keys/
 
-stacks()
+hms-current-stack()
 {
     curl -u 'jenkins:***REMOVED***' -X GET http://nginx1.intr:8080/hms
 }
