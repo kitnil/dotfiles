@@ -595,3 +595,8 @@ ansible-swarm-ps-inspect()
 {
     ansible swarm -m shell -a 'for c in $(docker ps | cut -d " " -f 1 | xargs echo); do docker inspect $c; done' --become
 }
+
+ansible-swarm-network-inspect()
+{
+    ansible swarm -m shell -a 'docker network ls | cut -d " " -f 1 | grep -v NETWORK | xargs docker network inspect' --become
+}
