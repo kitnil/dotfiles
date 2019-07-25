@@ -3262,6 +3262,19 @@ If given a prefix, patch in the branch directory instead."
      (eval modify-syntax-entry 126 "'")
      (bug-reference-bug-regexp . "<https?://\\(debbugs\\|bugs\\)\\.gnu\\.org/\\([0-9]+\\)>"))))
 
+(defun delete-current-buffer-file ()
+  "Delete the current buffer and the file connected with it"
+  (interactive)
+  (let ((filename (buffer-file-name))
+        (buffer (current-buffer))
+        (name (buffer-name)))
+    (if (not (and filename (file-exists-p filename)))
+        (kill-buffer buffer)
+      (when (yes-or-no-p "Are you sure this file should be removed? ")
+        (delete-file filename)
+        (kill-buffer buffer)
+        (message "File '%s' successfully removed" filename)))))
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
