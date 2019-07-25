@@ -593,10 +593,15 @@ jenkins-log()
 
 ansible-swarm-ps-inspect()
 {
-    ansible swarm -m shell -a 'for c in $(docker ps | cut -d " " -f 1 | xargs echo); do docker inspect $c; done' --become
+    ansible swarm -m shell -a 'for c in $(docker ps | grep -v CONTAINER | cut -d " " -f 1 | xargs echo); do docker inspect $c; done' --become
 }
 
 ansible-swarm-network-inspect()
 {
     ansible swarm -m shell -a 'docker network ls | cut -d " " -f 1 | grep -v NETWORK | xargs docker network inspect' --become
+}
+
+br1-mr14.intr()
+{
+    sshpass -p***REMOVED*** ssh -l root br1-mr14.intr
 }
