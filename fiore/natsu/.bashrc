@@ -606,9 +606,21 @@ br1-mr14.intr()
     sshpass -p***REMOVED*** ssh -l root br1-mr14.intr
 }
 
+br1-mr14.intr-ftp-list()
+{
+    curl 'ftp://netcfg:***REMOVED***@172.16.103.111/junos/'
+}
+
 br1-mr14.intr-ftp()
 {
     # Example “config”: br1-mr14.intr_juniper.conf.gz_20190702_170649
     config="$1"
     wget -O- "ftp://netcfg:***REMOVED***@172.16.103.111/junos/$config" | zcat
+}
+
+es-xmlrpc()
+{
+    curl -H 'Content-Type: application/json' \
+         -X POST "http://es.intr:9200/nginx-$(date +"%Y.%m.%d")/_search/" \
+         --data-binary '{"from":0,"query":{"query_string":{"query":"path.keyword:\"/xmlrpc.php\""}},"size":50,"sort":[{"@timestamp":{"order":"desc"}}]}'
 }
