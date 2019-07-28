@@ -121,7 +121,7 @@ xdisorg xml xorg)
                console-setup ;set font size in TTY
                rlwrap ; read-line wrapper
 
-               tmux
+               tmux screen
                fbcat
 
                gsettings-desktop-schemas
