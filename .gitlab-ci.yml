@@ -1,9 +1,9 @@
 .build:
   tags:
-    - server
-    - shell
+    - guixsd
   script:
-    - GUIX_PACKAGE_PATH=. ~/.config/guix/current/bin/guix build --no-grafts --fallback $(grep define-public $FILE | cut -f2 -d' ')
+    - guix pull --profile=.guix-profile --channels=channels.scm
+    - GUIX_PACKAGE_PATH=. .guix-profile/bin/guix build --no-grafts --fallback $(grep define-public $FILE | cut -f2 -d' ')
 
 admin:
   extends: .build
