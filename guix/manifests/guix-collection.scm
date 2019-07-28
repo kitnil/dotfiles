@@ -13,7 +13,7 @@ package-management parallel password-utils patchutils pdf perl
 perl-web php pulseaudio python python-xyz qt ratpoison readline
 rdesktop rsync samba scheme screen shellutils ssh statistics sqlite
 suckless synergy tex texinfo textutils text-editors tmux tls tor
-valgrind version-control video virtualization w3m xfce web wget wm
+valgrind version-control video virtualization vpn w3m xfce web wget wm
 xdisorg xml xorg)
 
 (define guix-collection-packages-multiout
@@ -206,7 +206,9 @@ xdisorg xml xorg)
                gst-plugins-ugly gstreamer
 
                minetest ; FOSS Minecraft like game
-               gimp)
+               gimp
+
+               openvpn)
 
          guix-collection-packages-multiout
          %large-packages
