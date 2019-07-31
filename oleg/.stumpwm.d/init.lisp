@@ -680,6 +680,7 @@
 ;; (define-key *top-map* (kbd "s-c") "run-or-raise-xterm")
 ;; (define-key *top-map* (kbd "s-e") "emacs")
 (define-key *top-map* (kbd "s-e") "emacsclient")
+(define-key *top-map* (kbd "s-E") "emacsclient-new")
 ;; (define-key *top-map* (kbd "s-h") "jord-loadavg")
 ;; (define-key *top-map* (kbd "s-h") nil)
 (define-key *top-map* (kbd "s-m") "mpv")
