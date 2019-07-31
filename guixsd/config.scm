@@ -353,7 +353,10 @@ EndSection")
          "192.168.100.1 r1.tld\n"
          "192.168.105.1 r2.tld\n"
          "192.168.105.120 cuirass.tld\n"
-         "127.0.0.1 dashboard.gitlab.wugi.info gitlab.wugi.info gitea.wugi.info grafana.wugi.info zabbix.wugi.info alerta.wugi.info cuirass.wugi.info"
+         "127.0.0.1 dashboard.gitlab.wugi.info gitlab.wugi.info gitea.wugi.info grafana.wugi.info zabbix.wugi.info alerta.wugi.info cuirass.wugi.info\n"
+         "172.16.103.150 cerberus.intr jenkins.intr wiki.intr alerta.intr grafana.intr hms.intr billing2.intr billing.intr malscan.intr\n"
+         "172.16.103.139 gitlab.intr\n"
+         "172.16.103.90 zabbix.intr"
          "\n\n"
          %facebook-host-aliases)))
 
