@@ -1715,7 +1715,7 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
       '("JOIN" "QUIT" "PART" "NICK" "333" "353"))
 (setq erc-hide-list '("JOIN" "PART" "QUIT"))
 (setq erc-modules
-      '(autojoin button completion fill irccontrols list match menu
+      '(autojoin button completion fill irccontrols list match menu notifications
         move-to-prompt netsplit networks ring smiley stamp track))
 (setq erc-fill-function 'erc-fill-static)
 
