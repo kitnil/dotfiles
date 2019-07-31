@@ -3275,6 +3275,27 @@ If given a prefix, patch in the branch directory instead."
         (kill-buffer buffer)
         (message "File '%s' successfully removed" filename)))))
 
+
+(defun nix-rgrep (regexp)
+  (interactive "sregexp:")
+  (rgrep regexp "*.nix" (expand-file-name "~/src/majordomo/70/")))
+
+(defun nix-php70 ()
+  (interactive)
+  (shell-command "curl -s -k https://jenkins.intr/job/webservices/job/apache2-php70/job/wip/lastBuild/consoleText"))
+
+(defun nix-intr-find-file ()
+  (interactive)
+  (find-file (concat "/ssh:dh4-mr.intr|docker:4649529fa34d:"
+                     (thing-at-point 'filename))))
+
+(setq browse-at-remote-remote-type-domains
+      '(("gitlab.intr" . "gitlab")
+        ("bitbucket.org" . "bitbucket")
+        ("github.com" . "github")
+        ("gitlab.com" . "gitlab")
+        ("git.savannah.gnu.org" . "gnu")))
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
