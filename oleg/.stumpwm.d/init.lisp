@@ -3,8 +3,6 @@
 
 (in-package :stumpwm)
 
-;; (set-module-dir "~/.guix-profile/share/common-lisp/sbcl-bundle-systems")
-
 (setf *startup-message* nil)
 (setf *message-window-gravity* :center)
 (setf *input-window-gravity* :center)
@@ -18,15 +16,8 @@
 (run-shell-command "xsetroot -cursor_name left_ptr")
 (run-shell-command (concat "xrdb -merge " *home* "/.Xresources"))
 
-;; Wallpaper
-;; (run-shell-command "feh --bg-scale ~/Pictures/Wallpapers/current.png")
-(run-shell-command "xsetroot -solid black")
-
-;; Disable PC speaker
-(run-shell-command "xset -b")
-
-;; Disable accessiblity features
-;; (run-shell-command "xkbset -a")
+(run-shell-command "xsetroot -solid black") ; Wallpaper
+(run-shell-command "xset -b") ; Disable PC speaker
 
 ;;;
 ;;; Keyboard
@@ -38,10 +29,6 @@
 
 ;; Keyboard layout
 (run-shell-command "setxkbmap -layout us,ru -option grp:win_space_toggle")
-
-;; Keyboard speed
-;; (run-shell-command "xset s 0")
-;; (run-shell-command "xset dpms 0 0 1800")
 
 (run-shell-command "xmodmap " (concat *home* "/.Xmodmap"))
 
@@ -103,23 +90,6 @@
 
 (define-frame-preference "Default" (1 NIL T :CLASS "mpv" :TITLE "emacs-emms"))
 (define-frame-preference "Default" (1 NIL T :CLASS "mpv" :TITLE "firefox"))
-
-;; (restore-window-placement-rules "/home/oleg/.stumpwm.d/rules/4.lisp")
-
-;; (restore-from-file "/home/user/.stumpwm-dump-desktop.lisp")
-;; (restore-from-file "~/.stumpwm-dump-desktop.lisp")
-;; (dump-desktop-to-file "~/.stumpwm-dump-desktop.lisp")
-
-;; (restore-from-file "/home/user/.stumpwm-dump-desktop.lisp")
-;; (restore-window-placement-rules "/home/user/1.lisp")
-
-;; Last rule to match takes precedence!
-;; If the argument to :title or :role begins with an ellipsis, a
-;; substring match is performed.
-;; If the :create flag is set then a missing group will be created and
-;; restored from *data-dir*/create file.
-;; If the :restore flag is set then group dump is restored even for an
-;; existing group using *data-dir*/restore file.
 
 
 ;;;
@@ -564,10 +534,6 @@
 
 (setf *mode-line-timeout* 2)
 (setf *TIME-MODELINE-STRING* "%a, %e %b %Y %k:%M")
-;; (mapcar (lambda (g)
-;;           (group-number g)
-;;           (group-name g))
-;;         (screen-groups (current-screen)))
 (setf *screen-mode-line-format*
       (list "[%n]:" '(:eval (write-to-string (group-number (current-group))))
             (make-string 4 :initial-element #\space)
@@ -579,15 +545,9 @@
             '(:eval (window-name (current-window)))
             "]"
             "^>    "
-            ;; "b:" '(:eval (stumpwm:run-shell-command "/home/oleg/bin/jenkins-active-jobs" t))
             "    %d"))
 (setf *mode-line-pad-x* 0)
 (setf *mode-line-pad-y* 0)
-;; (mode-line)
-
-;; TODO: Deny the all windows in the mpv class from taking focus.
-;; (push '(:class "mpv") *deny-raise-request*)
-;; (push '(:class "mpv") *deny-map-request*)
 
 (defcommand warp-mouse-active-frame () ()
   "Move mouse cursor to the top right of current frame."
@@ -627,28 +587,6 @@
 
 (define-key *root-map* (kbd "e") "emacsclient")
 
-;; (define-key *root-map* (kbd "m") "mpv")
-;; (define-key *root-map* (kbd "C-m") "xclip-mpv")
-;; (define-key *root-map* (kbd "M-m") "xclip-streamlink")
-
-;; (defcommand rofi-stumpwm () ()
-;;   (run-shell-command (concat "rofi -show stumpwm -modi stumpwm:"
-;;                              *home* "/bin/rofi-stumpwm")))
-
-;; (define-key *top-map* (kbd "s-:") "rofi-stumpwm")
-
-;; (define-key *root-map* (kbd "C-e") "xclip-emacs")
-;; (define-key *root-map* (kbd "C-M-c") "xterm-big-screen")
-;; (define-key *root-map* (kbd "M-e") "emacs-anywhere")
-
-;; Lock screen
-;; (define-key *root-map* (kbd "C-l") "exec xlock -mode blank")
-;; (define-key *root-map* (kbd "M-l") "turn-screen-off")
-
-;; (define-key *root-map* (kbd "M-!") "run-xterm-command")
-;; (define-key *root-map* (kbd "v") "pulsemixer")
-;; (define-key *root-map* (kbd "C-v") "alsamixer")
-
 (defcommand osd-sound () ()
   (run-shell-command "if pgrep -f osd-sound > /dev/null; then pkill osd-sound; osd-sound; else osd-sound; fi"))
 
@@ -666,9 +604,6 @@
 (define-key *root-map* (kbd "C-c") "run-xterm")
 (define-key *root-map* (kbd "C-M-c") "run-xterm-light")
 
-;; (define-key *root-map* (kbd "C-M-v") "scroll-other-window")
-;; (define-key *top-map* (kbd "Print") "screenshot-default")
-
 ;; Rebind groups to PREFIX-NUMBER.
 (mapcar #'(lambda (x) (define-key *top-map* (kbd (concat "s-" (write-to-string x)))
 			(format nil "~A ~D" "gselect" x)))
@@ -676,22 +611,11 @@
 
 (define-key *top-map* (kbd "M-s-n") "gnext")
 (define-key *top-map* (kbd "M-s-p") "gprev")
-;; (define-key *top-map* (kbd "s-M-h") "jord-php")
-;; (define-key *top-map* (kbd "s-TAB") "fother")
-;; (define-key *top-map* (kbd "s-\"") "frame-windowlist")
-;; (define-key *top-map* (kbd "s-c") "run-or-raise-xterm")
-;; (define-key *top-map* (kbd "s-c") "run-or-raise-xterm")
-;; (define-key *top-map* (kbd "s-e") "emacs")
 (define-key *top-map* (kbd "s-e") "emacsclient")
 (define-key *top-map* (kbd "s-E") "emacsclient-new")
-;; (define-key *top-map* (kbd "s-h") "jord-loadavg")
-;; (define-key *top-map* (kbd "s-h") nil)
 (define-key *top-map* (kbd "s-m") "mpv")
 (define-key *top-map* (kbd "s-n") "next-in-frame")
 (define-key *top-map* (kbd "s-p") "prev-in-frame")
-;; (define-key *top-map* (kbd "s-s") "sibling")
-;; (define-key *top-map* (kbd "s-t") "pull-hidden-other")
-;; (define-key *top-map* (kbd "s-v") "xclip-mpv")
 (define-key *top-map* (kbd "s-w") "firefox")
 (define-key *top-map* (kbd "s-W") "firefox-new-window")
 
@@ -720,12 +644,9 @@
 (define-key *top-map* (kbd "XF86AudioRaiseVolume") "ponymix-increase")
 (define-key *top-map* (kbd "XF86AudioLowerVolume") "ponymix-decrease")
 
-;; (define-key *root-map* (kbd "C-b") "warp-mouse-active-frame")
 (defcommand xkill () ()
   "Run `xkill'."
   (run-shell-command "xkill"))
-
-;; (define-key *root-map* (kbd "X") "xkill")
 
 (defcommand vnc-magnolia () ()
   (run-shell-command "exec vncviewer localhost:59555"))
@@ -735,23 +656,6 @@
 
 (defcommand pass () ()
   (run-shell-command "echo -n ***REMOVED*** | xclip -selection primary"))
-
-;; (define-remapped-keys
-;;     '(("(Firefox|Chrome|Chromium)"
-;;        ("C-n"   . "Down")
-;;        ("C-p"   . "Up")
-;;        ("C-f"   . "Right")
-;;        ("C-b"   . "Left")
-;;        ("C-v"   . "Next")
-;;        ("M-v"   . "Prior")
-;;        ("M-w"   . "C-c")
-;;        ("C-w"   . "C-x")
-;;        ("C-y"   . "C-v")
-;;        ("M-<"   . "Home")
-;;        ("M->"   . "End")
-;;        ("C-M-b" . "M-Left")
-;;        ("C-M-f" . "M-Right")
-;;        ("C-k"   . ("C-S-End" "C-x")))))
 
 (defun current-window-width ()
   (format-expand *window-formatters* "%w" (current-window)))
@@ -879,14 +783,6 @@
 (defcommand resolution () ()
   (run-shell-command "xrandr --output HDMI1 --mode 1920x1080 ; xgamma -gamma 1.0"))
 
-;; Rebind groups to PREFIX-NUMBER.
-;; (mapcar #'(lambda (x)
-;;             (when (> x 1)
-;;               (gnew (write-to-string x)))
-;;             (define-key *top-map* (kbd (concat "s-" (write-to-string x)))
-;; 	      (format nil "~A ~D" "gselect" x)))
-;; 	(range 10 :min 1 :step 1))
-
 (define-key *top-map* (kbd "s-!") "gmove-and-follow 1")
 (define-key *top-map* (kbd "s-@") "gmove-and-follow 2")
 (define-key *top-map* (kbd "s-#") "gmove-and-follow 3")
@@ -975,15 +871,12 @@
   (run-shell-command (concat "vncviewer 127.0.0.1:" display)))
 
 (define-key *top-map* (kbd "s-v") "pulsemixer")
-;; (define-key *top-map* (kbd "s-r") "vnc")
-;; (define-key *top-map* (kbd "s-e") "emacsclient")
 (define-key *top-map* (kbd "s-c") "run-or-raise-xterm")
 
 (define-key *top-map* (kbd "s-F") "move-focus right")
 (define-key *top-map* (kbd "s-B") "move-focus left")
 (define-key *top-map* (kbd "s-P") "move-focus up")
 (define-key *top-map* (kbd "s-N") "move-focus down")
-;; (define-key *top-map* (kbd "s-!") "exec")
 
 (defcommand clipmenu () ()
   (run-shell-command "CM_HISTLENGTH=25 CM_LAUNCHER=rofi clipmenu"))
@@ -1002,10 +895,6 @@
 (require "asdf")
 (load "/home/oleg/.guix-profile/share/emacs/site-lisp/guix.d/slime-2.23/swank.asd")
 (require :swank)
-;; (swank:create-server :port 4005 :dont-close t)
-;; (require :swank)
-;; (swank-loader:init)
-;; ;; (swank:create-server :port 4005 :dont-close t)
 (defcommand swank () ()
   (sb-thread:make-thread
    (lambda ()
@@ -1021,10 +910,3 @@
 (defcommand sxhkd-restart () ()
   (run-shell-command "pkill sxhkd")
   (run-shell-command "sxhkd"))
-
-;; (setq swank:*use-dedicated-output-stream* nil)
-
-;; (run-shell-command "emacsclient -c -s test /home/oleg/src/dotfiles/oleg/.stumpwm.d/init.lisp")
-
-;; (swank:create-server :port 9006 :dont-close t)
-
