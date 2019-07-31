@@ -302,6 +302,12 @@
   (run-shell-command
    (join `(,*mpv-program* ,@*mpv-arguments* ,(concat "$(cat " *home* "/watch)")))))
 
+(defcommand majordomo-vnc () ()
+  "Connect to Majordomo VNC"
+  (run-shell-command "majordomo-vnc"))
+
+(define-key *root-map* (kbd "V") "majordomo-vnc")
+
 
 ;;;
 ;;; Streamlink

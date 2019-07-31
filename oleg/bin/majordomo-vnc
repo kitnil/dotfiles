@@ -1,3 +1,3 @@
 #!/bin/sh
 
-ssh -fNL 59588:localhost:5901 majordomo && vncviewer -NoJpeg localhost:59588
+ssh -fNL 59588:localhost:5901 majordomo && vncviewer -PasswordFile ~/.vnc/passwd -NoJpeg localhost:59588
