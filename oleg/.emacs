@@ -3232,6 +3232,11 @@ If given a prefix, patch in the branch directory instead."
 (setq browse-at-remote-remote-type-domains
       '(("gitlab.intr" . "gitlab") ("bitbucket.org" . "bitbucket") ("github.com" . "github") ("gitlab.com" . "gitlab") ("git.savannah.gnu.org" . "gnu")))
 
+(require 'org-redmine)
+(setq org-redmine-uri "http://redmine.intr")
+(setq org-redmine-auth-username "pyhalov")
+(setq org-redmine-auth-password "***REMOVED***")
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
