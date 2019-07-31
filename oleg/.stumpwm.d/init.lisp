@@ -891,6 +891,12 @@
 (define-key *top-map* (kbd "s-@") "gmove-and-follow 2")
 (define-key *top-map* (kbd "s-#") "gmove-and-follow 3")
 (define-key *top-map* (kbd "s-$") "gmove-and-follow 4")
+(define-key *top-map* (kbd "s-%") "gmove-and-follow 5")
+(define-key *top-map* (kbd "s-^") "gmove-and-follow 6")
+(define-key *top-map* (kbd "s-&") "gmove-and-follow 7")
+(define-key *top-map* (kbd "s-*") "gmove-and-follow 8")
+(define-key *top-map* (kbd "s-(") "gmove-and-follow 9")
+(define-key *top-map* (kbd "s-)") "gmove-and-follow 0")
 
 (defun current-window-width ()
   (format-expand *window-formatters* "%w" (current-window)))
