@@ -32,7 +32,7 @@
 ;; Keyboard layout
 (run-shell-command "setxkbmap -layout us,ru -option grp:win_space_toggle")
 
-(run-shell-command "xmodmap " (concat "/home/user" "/.Xmodmap"))
+(run-shell-command "xmodmap " (concat "/home/oleg" "/.Xmodmap"))
 
 (run-shell-command "keynav")
 
