@@ -1,0 +1,13 @@
+(define c (open-connection))
+
+(latest-repository-commit c "https://git.savannah.gnu.org/git/guix.git"
+                          #:ref '(commit . "4289d1d71cbbb1895354ec3b0cb8c99a4ce9f9be"))
+
+(format #t "~{~a~%~}"
+        (filter (lambda (value)
+                  (or (and (string-suffix? "service." value)
+                           (string-prefix? "gnu: Add" value))
+                      (string-prefix? "services:" value)
+                      (string-prefix? "gnu: services:" value)))
+                (string-split (git-output "log" (string-append "--author=" %author) "--format=%s")
+                              #\newline)))
