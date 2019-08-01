@@ -345,20 +345,62 @@ EndSection")
       (hosts-file
        (plain-file
         "hosts"
-        (string-append
-         "\
-127.0.0.1 guixsd localhost
-::1       guixsd localhost"
-         "\n\n"
-         "192.168.100.1 r1.tld\n"
-         "192.168.105.1 r2.tld\n"
-         "192.168.105.120 cuirass.tld\n"
-         "127.0.0.1 dashboard.gitlab.wugi.info gitlab.wugi.info gitea.wugi.info grafana.wugi.info zabbix.wugi.info alerta.wugi.info cuirass.wugi.info\n"
-         "172.16.103.150 cerberus.intr jenkins.intr wiki.intr alerta.intr grafana.intr hms.intr billing2.intr billing.intr malscan.intr\n"
-         "172.16.103.139 gitlab.intr\n"
-         "172.16.103.90 zabbix.intr"
-         "\n\n"
-         %facebook-host-aliases)))
+        (string-join
+         `("127.0.0.1 guixsd localhost"
+           "::1 guixsd localhost"
+
+           "127.0.0.1 alerta.wugi.info"
+           "127.0.0.1 cuirass.wugi.info"
+           "127.0.0.1 dashboard.gitlab.wugi.info"
+           "127.0.0.1 gitea.wugi.info"
+           "127.0.0.1 gitlab.wugi.info"
+           "127.0.0.1 grafana.wugi.info"
+           "127.0.0.1 zabbix.wugi.info"
+
+           "172.16.103.10 web32.intr"
+           "172.16.103.12 web31.intr"
+           "172.16.103.120 web35.intr"
+           "172.16.103.129 web36.intr"
+           "172.16.103.13 web33.intr"
+           "172.16.103.130 web37.intr"
+           "172.16.103.14 web30.intr"
+
+           "172.16.103.150 alerta.intr"
+           "172.16.103.150 billing.intr"
+           "172.16.103.150 billing2.intr"
+           "172.16.103.150 cerberus.intr"
+           "172.16.103.150 grafana.intr"
+           "172.16.103.150 hms.intr"
+           "172.16.103.150 jenkins.intr"
+           "172.16.103.150 malscan.intr"
+           "172.16.103.150 wiki.intr"
+
+           "172.16.103.16 web16.intr"
+           "172.16.103.17 web17.intr"
+           "172.16.103.18 web18.intr"
+           "172.16.103.19 web19.intr"
+           "172.16.103.20 web20.intr"
+           "172.16.103.23 web21.intr"
+           "172.16.103.33 web15.intr"
+           "172.16.103.66 web22.intr"
+           "172.16.103.67 web23.intr"
+           "172.16.103.69 web24.intr"
+           "172.16.103.70 web25.intr"
+           "172.16.103.71 web26.intr"
+           "172.16.103.72 web27.intr"
+           "172.16.103.73 web28.intr"
+           "172.16.103.74 web29.intr"
+           "172.16.103.99 web34.intr"
+
+           "172.16.103.139 gitlab.intr"
+           "172.16.103.90 zabbix.intr"
+
+           "192.168.100.1 r1.tld"
+           "192.168.105.1 r2.tld"
+           "192.168.105.120 cuirass.tld"
+
+           ,%facebook-host-aliases)
+         "\n")))
 
       (services (cons* (extra-special-file "/usr/bin/env"
                                            (file-append coreutils "/bin/env"))
