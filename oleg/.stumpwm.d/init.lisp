@@ -9,13 +9,13 @@
 (setf *message-window-gravity* :center)
 (setf *input-window-gravity* :center)
 
-(set-module-dir (concat "/home/oleg" "/.stumpwm.d/modules/"))
+(set-module-dir "/home/oleg/.stumpwm.d/modules/")
 
 (set-prefix-key (kbd "C-i"))
 (run-shell-command "sxhkd")
 
 (run-shell-command "xsetroot -cursor_name left_ptr")
-(run-shell-command "xrdb -merge " (concat "/home/oleg" "/.Xresources"))
+(run-shell-command "xrdb -merge /home/oleg/.Xresources")
 
 (run-shell-command "xsetroot -solid black") ; Wallpaper
 (run-shell-command "xset -b") ; Disable PC speaker
@@ -31,7 +31,7 @@
 ;; Keyboard layout
 (run-shell-command "setxkbmap -layout us,ru -option grp:win_space_toggle")
 
-(run-shell-command "xmodmap " (concat "/home/oleg" "/.Xmodmap"))
+(run-shell-command "xmodmap " "/home/oleg/.Xmodmap")
 
 (run-shell-command "keynav")
 
@@ -601,6 +601,11 @@
 (define-key *root-map* (kbd "C-c") "run-xterm")
 (define-key *root-map* (kbd "C-M-c") "run-xterm-light")
 
+(defun range (max &key (min 0) (step 1))
+  "Get a list of integers."
+  (loop for n from min below max by step
+     collect n))
+
 ;; Rebind groups to PREFIX-NUMBER.
 (mapcar #'(lambda (x) (define-key *top-map* (kbd (concat "s-" (write-to-string x)))
                         (format nil "~A ~D" "gselect" x)))
@@ -733,7 +738,7 @@
 
   (defcommand yoo (url) ((:string "YouTube URL: "))
     (gnew "youtube")
-    (restore-group (current-group) (read-dump-from-file (concat "/home/oleg" "/youtube.lisp")))
+    (restore-group (current-group) (read-dump-from-file "/home/oleg/youtube.lisp"))
     (term-shell-command (format nil "mpv --no-resume-playback --mute=yes ~s" url))
     (firefox (format nil "https://www.youtube.com/live_chat?v=~a&is_popout=1"
                      (cadr (split-string url "=")))
