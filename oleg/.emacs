@@ -3171,6 +3171,32 @@ If given a prefix, patch in the branch directory instead."
 (ivy-rich-mode 1)
 (setq ivy-format-function #'ivy-format-function-line)
 
+(defun nix-rgrep (regexp)
+  (interactive "sregexp:")
+  (rgrep regexp "*.nix" (expand-file-name "~/src/majordomo/70/")))
+
+(defun nix-php70 ()
+  (interactive)
+  (shell-command "curl -s -k https://jenkins.intr/job/webservices/job/apache2-php70/job/wip/lastBuild/consoleText"))
+
+(defun nix-intr-find-file ()
+  (interactive)
+  (find-file (concat "/ssh:dh4-mr.intr|docker:4649529fa34d:"
+                     (thing-at-point 'filename))))
+
+(setq browse-at-remote-remote-type-domains
+      '(("gitlab.intr" . "gitlab")
+        ("bitbucket.org" . "bitbucket")
+        ("github.com" . "github")
+        ("gitlab.com" . "gitlab")
+        ("git.savannah.gnu.org" . "gnu")))
+
+(defun work-tramp ()
+  (interactive)
+  (let ((tramp-remote-path '(tramp-default-remote-path "/bin"))
+        (default-directory "/ssh:eng@dh4-mr.intr:"))
+    (find-file "")))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
