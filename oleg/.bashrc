@@ -364,3 +364,154 @@ majordomo-add-hosts-mikrotik()
         ssh mikrotik -- /ip dns static add address="$(ssh majordomo -- dig +short a $host.intr 2>/dev/null)" name="$host.intr";
     done
 }
+
+
+xq-br()
+{
+    ssh -l root br1-mr14.intr -- 'cli -c "show interfaces | display xml"' \
+        | xq -y '."rpc-reply"."interface-information"."physical-interface"[] | ."logical-interface" | select(. != null)'
+}
+
+juneos-config()
+{
+    sshpass -p***REMOVED*** ssh -l root "$1" -- 'cli -c "show config | display xml"'
+}
+
+# https://markhneedham.com/blog/2015/11/14/jq-filtering-missing-keys/
+
+hms-current-stack()
+{
+    curl -u 'jenkins:***REMOVED***' -X GET http://nginx1.intr:8080/hms
+}
+
+ansible-docker-ps()
+{
+    ansible swarm -m shell -a 'docker ps' --become
+}
+
+docker-pull-intr()
+{
+    group="$1" # For example: “mail”.
+    for repo in $(curl -s -X GET -k -u 'gradle:***REMOVED***' https://docker-registry.intr/v2/_catalog \
+                      | jq -r '.repositories[]' \
+                      | grep "$group/"); do
+        docker pull "docker-registry.intr/$repo"
+    done
+}
+
+jenkins-log()
+{
+    for project in $(curl -s -k 'https://admin:***REMOVED***@jenkins.intr/api/json?pretty=true' | jq -r '.jobs[] | .name'); do
+        mkdir -p "$project"
+        cd "$project"
+        for job in $(curl -s -k "https://admin:***REMOVED***@jenkins.intr/job/$project/api/json" | jq -r '.jobs[] | .url'); do
+            job_name="$(echo $job | rev | cut -d/ -f 2 | rev)"
+            echo "@ $job"
+            curl -u 'admin:***REMOVED***' -s -k "$job/job/master/lastBuild/consoleText" > "$job_name.log"
+        done
+        cd -
+    done
+}
+
+ansible-swarm-ps-inspect()
+{
+    ansible swarm -m shell -a 'for c in $(docker ps | grep -v CONTAINER | cut -d " " -f 1 | xargs echo); do docker inspect $c; done' --become
+}
+
+ansible-swarm-network-inspect()
+{
+    ansible swarm -m shell -a 'docker network ls | cut -d " " -f 1 | grep -v NETWORK | xargs docker network inspect' --become
+}
+
+br1-mr14.intr()
+{
+    sshpass -p***REMOVED*** ssh -l root br1-mr14.intr
+}
+
+br1-mr14.intr-ftp-list()
+{
+    curl 'ftp://netcfg:***REMOVED***@172.16.103.111/junos/'
+}
+
+br1-mr14.intr-ftp()
+{
+    # Example “config”: br1-mr14.intr_juniper.conf.gz_20190702_170649
+    config="$1"
+    wget -O- "ftp://netcfg:***REMOVED***@172.16.103.111/junos/$config" | zcat
+}
+
+es-xmlrpc()
+{
+    curl -H 'Content-Type: application/json' \
+         -X POST "http://es.intr:9200/nginx-$(date +"%Y.%m.%d")/_search/" \
+         --data-binary '{"from":0,"query":{"query_string":{"query":"path.keyword:\"/xmlrpc.php\""}},"size":50,"sort":[{"@timestamp":{"order":"desc"}}]}'
+}
+
+hms-auth ()
+{
+    curl --silent \
+         --request POST https://api.majordomo.ru/oauth/token \
+         --header 'content-type: application/x-www-form-urlencoded' \
+         --header 'x-requested-with: XMLHttpRequest' \
+         -d "grant_type=password&username=$IHS_USER&password=$IHS_PASS&client_id=service&client_secret=service_secret" \
+        | jq -r '.access_token'
+}
+
+kvm-test-delete-service()
+{
+    curl "https://api.majordomo.ru/rc-staff/service/$1" \
+            -X DELETE --compressed \
+            -H 'Content-type: application/json' \
+            -H "Authorization: Bearer $(hms-auth)"
+}
+
+hms-fetch-services()
+{
+    for page in $(seq 1 50); do
+        curl -s "https://api.majordomo.ru/rc-staff/service?page=$page&sort=name%2Casc&size=20" \
+--compressed \
+-H 'Content-type: application/json' \
+-H 'X-HMS-Pageable: true' \
+-H "Authorization: Bearer $(hms-auth)" \
+-H 'Connection: keep-alive'
+    done
+}
+
+kvm-test-delete-services()
+{
+    input="$1"
+    for service in $(for version in 4 72; do
+                         grep -B 1 "apache2-php$version-.*@kvm-test" "$input" \
+                             | grep id \
+                             | cut -d: -f 2 \
+                             | cut -d, -f 1 \
+                             | sed 's/"//g';
+                     done); do
+        echo "@ $service"
+        curl "https://api.majordomo.ru/rc-staff/service/$service" \
+-X DELETE --compressed \
+-H 'Content-type: application/json' \
+-H "Authorization: Bearer $(hms-auth)"
+    done
+}
+
+kvm-test-delete-sockets()
+{
+    for socket in $(for version in 4; do
+                        grep -B 1 "apache2-php$version-.*@kvm-test" out.json \
+                            | grep id \
+                            | cut -d: -f 2 \
+                            | cut -d, -f 1 \
+                            | sed 's/"//g'
+                    done \
+                        | xargs echo); do
+        echo "@ $socket"
+        curl "https://api.majordomo.ru/rc-staff/service-socket/$socket" \
+-X DELETE --compressed -H 'Content-type: application/json' -H "Authorization: Bearer $(hms-auth)"
+    done
+}
+
+docker-jenkins()
+{
+    docker -H ssh://dh4-mr.intr exec -it 4649529fa34d $@
+}
