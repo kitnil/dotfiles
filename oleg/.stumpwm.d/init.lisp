@@ -9,14 +9,13 @@
 (setf *message-window-gravity* :center)
 (setf *input-window-gravity* :center)
 
-(setf *home* "/home/oleg")
-(set-module-dir (concat *home* "/.stumpwm.d/modules/"))
+(set-module-dir (concat "/home/oleg" "/.stumpwm.d/modules/"))
 
 (set-prefix-key (kbd "C-i"))
 (run-shell-command "sxhkd")
 
 (run-shell-command "xsetroot -cursor_name left_ptr")
-(run-shell-command "xrdb -merge " (concat *home* "/.Xresources"))
+(run-shell-command "xrdb -merge " (concat "/home/oleg" "/.Xresources"))
 
 (run-shell-command "xsetroot -solid black") ; Wallpaper
 (run-shell-command "xset -b") ; Disable PC speaker
@@ -32,7 +31,7 @@
 ;; Keyboard layout
 (run-shell-command "setxkbmap -layout us,ru -option grp:win_space_toggle")
 
-(run-shell-command "xmodmap " (concat *home* "/.Xmodmap"))
+(run-shell-command "xmodmap " (concat "/home/oleg" "/.Xmodmap"))
 
 (run-shell-command "keynav")
 
@@ -76,8 +75,8 @@
 
 (defcommand desktop-restore (desktop rules) ((:string "Restore desktop: ")
                                              (:string "Restore rules: "))
-  (let ((desktop (format nil "~a/.stumpwm.d/desktop/~a.lisp" *home* desktop))
-        (rules (format nil "~a/.stumpwm.d/rules/~a.lisp" *home* rules)))
+  (let ((desktop (format nil "~a/.stumpwm.d/desktop/~a.lisp" "/home/oleg" desktop))
+        (rules (format nil "~a/.stumpwm.d/rules/~a.lisp" "/home/oleg" rules)))
     (message (format nil "Restore desktop from ~s file." desktop))
     (message (format nil "Restore rules from ~s file." rules))
     (restore-from-file desktop)
@@ -268,7 +267,7 @@
 (defcommand mpv-watch () ()
   "Play video from file with mpv."
   (run-shell-command
-   (join `(,*mpv-program* ,@*mpv-arguments* ,(concat "$(cat " *home* "/watch)")))))
+   (join `(,*mpv-program* ,@*mpv-arguments* ,(concat "$(cat " "/home/oleg" "/watch)")))))
 
 (defcommand majordomo-vnc () ()
   "Connect to Majordomo VNC"
@@ -734,7 +733,7 @@
 
   (defcommand yoo (url) ((:string "YouTube URL: "))
     (gnew "youtube")
-    (restore-group (current-group) (read-dump-from-file (concat *home* "/youtube.lisp")))
+    (restore-group (current-group) (read-dump-from-file (concat "/home/oleg" "/youtube.lisp")))
     (term-shell-command (format nil "mpv --no-resume-playback --mute=yes ~s" url))
     (firefox (format nil "https://www.youtube.com/live_chat?v=~a&is_popout=1"
                      (cadr (split-string url "=")))
