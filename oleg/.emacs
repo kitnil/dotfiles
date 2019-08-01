@@ -2869,10 +2869,13 @@ If nil use light theme.")
   (yas-reload-all))
 
 ;; Simple Mail Transfer Protocol (SMTP)
+;; (with-eval-after-load 'sendmail
+;;   (setq send-mail-function #'smtpmail-send-it)
+;;   (setq smtpmail-smtp-user "pyhalov@majordomo.ru")
+;;   (setq smtpmail-smtp-server "router.majordomo.ru"))
 (with-eval-after-load 'sendmail
   (setq send-mail-function #'smtpmail-send-it)
-  (setq smtpmail-smtp-user "pyhalov@majordomo.ru")
-  (setq smtpmail-smtp-server "router.majordomo.ru"))
+  (setq smtpmail-smtp-server "smtp.gmail.com"))
 
 ;; Origin <https://github.com/alezost/guix.el/pull/9#issuecomment-340556583>.
 (with-eval-after-load 'info
