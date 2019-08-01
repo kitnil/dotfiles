@@ -12,6 +12,9 @@
         comint-insert-input
         dabbrev-expand
         delete-indentation
+        dired-next-line
+        dired-toggle-read-only
+        dired-unmark-backward
         electric-newline-and-maybe-indent
         fill-paragraph
         forward-sexp
@@ -63,6 +66,7 @@
         texinfo-insert-@code
         transpose-sexps
         transpose-words
+        undefined
         wdired-exit
         wdired-finish-edit
         yaml-electric-backspace
@@ -91,6 +95,8 @@
         projectile-compile-project
         repeat
         sh-assignment
+        shell
         smartparens-strict-mode
+        terminal-here-project-launch-multiplexer
         text-scale-adjust
         ))
