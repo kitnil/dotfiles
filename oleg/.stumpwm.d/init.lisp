@@ -16,7 +16,7 @@
 (run-shell-command "sxhkd")
 
 (run-shell-command "xsetroot -cursor_name left_ptr")
-(run-shell-command "xrdb -merge " (concat "/home/user" "/.Xresources"))
+(run-shell-command "xrdb -merge " (concat "/home/oleg" "/.Xresources"))
 
 (run-shell-command "xsetroot -solid black") ; Wallpaper
 (run-shell-command "xset -b") ; Disable PC speaker
