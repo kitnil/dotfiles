@@ -310,3 +310,57 @@ listen-ports()
 }
 
 alias vnc-server-android="vncserver -AcceptSetDesktopSize=no -geometry 1280x720"
+export TMUXIFIER_LAYOUT_PATH="$HOME/.tmuxifier-layouts"
+
+supeng-ssh()
+{
+    ip="$1"
+    pass="$2"
+    sshpass -p "$pass" ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -l root "$ip"
+}
+
+alias r1='supeng-ssh 78.108.89.188 ***REMOVED***'
+alias r2='supeng-ssh 78.108.93.115 ***REMOVED***'
+alias r3='supeng-ssh 78.108.90.34 ***REMOVED***'
+alias r4='supeng-ssh 78.108.91.85 ***REMOVED***'
+alias r5='supeng-ssh 178.250.243.152 ***REMOVED***'
+alias r6='supeng-ssh 78.108.91.135 ***REMOVED***'
+alias r7='supeng-ssh 78.108.89.224 ***REMOVED***'
+
+# jenkins-log()
+# {
+#     for project in $(curl -s -k 'https://admin:***REMOVED***@jenkins.intr/api/json?pretty=true' | jq -r '.jobs[] | .name'); do
+#         for job in $(curl -s -k "https://admin:***REMOVED***@jenkins.intr/job/$project/api/json" | jq -r '.jobs[] | .url'); do
+#             echo "@ $job" |
+#             curl -u 'admin:***REMOVED***' -s -k "$job/job/master/lastBuild/consoleText"
+#         done
+#     done
+# }
+
+jenkins-log()
+{
+    for project in $(curl -s -k 'https://admin:***REMOVED***@jenkins.intr/api/json?pretty=true' | jq -r '.jobs[] | .name'); do
+        mkdir -p "$project"
+        cd "$project"
+        for job in $(curl -s -k "https://admin:***REMOVED***@jenkins.intr/job/$project/api/json" | jq -r '.jobs[] | .url'); do
+            job_name="$(echo $job | rev | cut -d/ -f 2 | rev)"
+            echo "@ $job"
+            curl -u 'admin:***REMOVED***' -s -k "$job/job/master/lastBuild/consoleText" > "$job_name.log"
+        done
+        cd -
+    done
+}
+
+majordomo-host()
+{
+    host="$1"
+    ssh majordomo -- dig +short a "$host" 2>/dev/null
+}
+
+majordomo-add-hosts-mikrotik()
+{
+    # Add hosts from Majordomo to MikroTik.
+    for host in $@; do
+        ssh mikrotik -- /ip dns static add address="$(ssh majordomo -- dig +short a $host.intr 2>/dev/null)" name="$host.intr";
+    done
+}
