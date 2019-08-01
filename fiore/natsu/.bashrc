@@ -477,7 +477,7 @@ list-groups-gitlab-intr()
 {
     curl -H 'PRIVATE-TOKEN: ***REMOVED***' \
             -H 'Content-Type: application/json' \
-            -k -X GET "https://gitlab.intr/api/v4/groups/"
+            -s -k -X GET "https://gitlab.intr/api/v4/groups/"
 }
 
 

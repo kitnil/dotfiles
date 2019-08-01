@@ -2871,10 +2871,8 @@ If nil use light theme.")
 ;; Simple Mail Transfer Protocol (SMTP)
 (with-eval-after-load 'sendmail
   (setq send-mail-function #'smtpmail-send-it)
-  (setq smtpmail-stream-type 'starttls)
-  (setq smtpmail-smtp-user "pyhalov")
-  (setq smtpmail-smtp-server "smtp.majordomo.ru")
-  (setq smtpmail-smtp-service "587"))
+  (setq smtpmail-smtp-user "pyhalov@majordomo.ru")
+  (setq smtpmail-smtp-server "router.majordomo.ru"))
 
 ;; Origin <https://github.com/alezost/guix.el/pull/9#issuecomment-340556583>.
 (with-eval-after-load 'info
@@ -3233,6 +3231,8 @@ If given a prefix, patch in the branch directory instead."
       '(("gitlab.intr" . "gitlab") ("bitbucket.org" . "bitbucket") ("github.com" . "github") ("gitlab.com" . "gitlab") ("git.savannah.gnu.org" . "gnu")))
 
 (require 'org-redmine)
+(setq org-redmine-config-default-limit 100)
+(setq org-redmine-limit 100)
 (setq org-redmine-uri "http://redmine.intr")
 (setq org-redmine-auth-username "pyhalov")
 (setq org-redmine-auth-password "***REMOVED***")

@@ -11,6 +11,7 @@ fi
 export LOCALE_ARCHIVE="$(readlink ~/.nix-profile/lib/locale)/locale-archive"
 export MANPATH=$MANPATH:$HOME/.nix-profile/share/man
 
+export GUIX_LOCPATH=$HOME/.guix-profile/lib/locale
 
 export CHICKEN_REPOSITORY=~/.eggs/lib/chicken/8
 export CHICKEN_DOC_REPOSITORY=/home/natsu/.eggs/share/chicken-doc
