@@ -3,20 +3,16 @@
 
 (in-package :stumpwm)
 
+(set-module-dir "/home/oleg/.stumpwm.d/modules/")
 (set-prefix-key (kbd "C-i"))
 
 (setf *startup-message* nil)
 (setf *message-window-gravity* :center)
 (setf *input-window-gravity* :center)
 
-(set-module-dir "/home/oleg/.stumpwm.d/modules/")
-
-(set-prefix-key (kbd "C-i"))
 (run-shell-command "sxhkd")
-
 (run-shell-command "xsetroot -cursor_name left_ptr")
 (run-shell-command "xrdb -merge /home/oleg/.Xresources")
-
 (run-shell-command "xsetroot -solid black") ; Wallpaper
 (run-shell-command "xset -b") ; Disable PC speaker
 
@@ -32,21 +28,16 @@
 (run-shell-command "setxkbmap -layout us,ru -option grp:win_space_toggle")
 
 (run-shell-command "xmodmap " "/home/oleg/.Xmodmap")
-
 (run-shell-command "keynav")
-
 (run-shell-command "dunst")
 
-(setf *message-window-y-padding* 3)
-
-(setf *window-border-style* :thin)
-
-(setf *ignore-wm-inc-hints* t)
 (set-msg-border-width 4)
-
+(setf *ignore-wm-inc-hints* t)
+(setf *maxsize-border-width* 5)
+(setf *message-window-y-padding* 3)
 (setf *normal-border-width* 5)
 (setf *transient-border-width* 5)
-(setf *maxsize-border-width* 5)
+(setf *window-border-style* :thin)
 
 
 ;;;
@@ -70,7 +61,6 @@
 (setf *mouse-focus-policy* :click)
 
 (setf *suppress-window-placement-indicator* t)
-
 (setf *new-frame-action* :empty)
 
 (defcommand desktop-restore (desktop rules) ((:string "Restore desktop: ")
@@ -97,39 +87,20 @@
 
 (setf *window-format* "%m%n%s %c %50t")
 
-(defvar *xterm-command*
-  ;; "exec /home/user/.guix-profile/bin/xterm"
-  "exec /run/current-system/profile/bin/xterm")
-
+(defvar *xterm-command* "exec /run/current-system/profile/bin/xterm")
 (defvar *xterm-big-command*
-  "exec /run/current-system/profile/bin/xterm -fa 'Monospace' -fs 24")
-
-(defvar *xterm-theme-light*
-  "-bg white -fg black")
-
-(defvar *xterm-theme-dark*
-  "-bg black -fg white")
-
-(defvar *xterm-no-scrollbar*
-  "+sb")
-
-(defvar *st-command*
-  "exec st")
-
-(defvar *term-execute-flag*
-  "-e")
-
-(defvar *st-exec-flag* "-e")
-
-(defvar *st-font-flag* "-f")
-
-(defvar *st-font*
-  "Monospace:size=12")
-
+  (join '("exec" "/run/current-system/profile/bin/xterm"
+          "-fa" "Monospace" "-fs" "24")))
+(defvar *xterm-no-scrollbar* "+sb")
+(defvar *xterm-theme-dark* "-bg black -fg white")
+(defvar *xterm-theme-light* "-bg white -fg black")
 (defvar *browser* "icecat")
-
-(defvar *transmission-hostname*
-  "magnolia")
+(defvar *st-command* "exec st")
+(defvar *st-exec-flag* "-e")
+(defvar *st-font* "Monospace:size=12")
+(defvar *st-font-flag* "-f")
+(defvar *term-execute-flag* "-e")
+(defvar *transmission-hostname* "magnolia")
 
 
 ;;;
@@ -779,7 +750,8 @@
   (mapcar #'(lambda (buffer)
               (emacs-buffer buffer))
           '("#bash" "#bootstrappable" "##C" "#chicken" "#emacs" "#erc" "#fsf"
-            "#gdb" "#gnus" "#guile" "#guix" "##linux" "#lisp" "#nixos" "#scheme" "#stumpwm")))
+            "#gdb" "#gnus" "#guile" "#guix" "##linux" "#lisp" "#nixos"
+            "#scheme" "#stumpwm")))
 
 (defun auto-pull-frames ()
   (mapcar #'(lambda (frame)
@@ -811,6 +783,7 @@
 (defcommand resolution () ()
   (run-shell-command "xrandr --output HDMI1 --mode 1920x1080 ; xgamma -gamma 1.0"))
 
+;; groups
 (define-key *top-map* (kbd "s-!") "gmove-and-follow 1")
 (define-key *top-map* (kbd "s-@") "gmove-and-follow 2")
 (define-key *top-map* (kbd "s-#") "gmove-and-follow 3")
