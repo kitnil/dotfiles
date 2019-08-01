@@ -16,7 +16,7 @@
 (run-shell-command "sxhkd")
 
 (run-shell-command "xsetroot -cursor_name left_ptr")
-(run-shell-command "xrdb -merge " (concat "/home/oleg" "/.Xresources"))
+(run-shell-command "xrdb -merge " (concat *home* "/.Xresources"))
 
 (run-shell-command "xsetroot -solid black") ; Wallpaper
 (run-shell-command "xset -b") ; Disable PC speaker
@@ -32,7 +32,7 @@
 ;; Keyboard layout
 (run-shell-command "setxkbmap -layout us,ru -option grp:win_space_toggle")
 
-(run-shell-command "xmodmap " (concat "/home/oleg" "/.Xmodmap"))
+(run-shell-command "xmodmap " (concat *home* "/.Xmodmap"))
 
 (run-shell-command "keynav")
 
