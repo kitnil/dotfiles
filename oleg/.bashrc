@@ -351,12 +351,6 @@ jenkins-log()
     done
 }
 
-majordomo-host()
-{
-    host="$1"
-    ssh majordomo -- dig +short a "$host" 2>/dev/null
-}
-
 majordomo-add-hosts-mikrotik()
 {
     # Add hosts from Majordomo to MikroTik.

@@ -3274,6 +3274,17 @@ If given a prefix, patch in the branch directory instead."
         ("gitlab.com" . "gitlab")
         ("git.savannah.gnu.org" . "gnu")))
 
+(defun work-host (host)
+  "Insert host from work at current point."
+  (interactive "sHost: ")
+  (insert
+   (format
+    "%s %s"
+    (string-trim-right
+     (shell-command-to-string
+      (format "ssh work -- dig +short a %S 2>/dev/null" host)))
+    host)))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
