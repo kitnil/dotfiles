@@ -1,6 +1,6 @@
 (use-modules (gnu) (srfi srfi-1) (srfi srfi-26))
 (use-modules (services docker))
-(use-package-modules admin base certs lisp suckless xdisorg xorg fonts
+(use-package-modules admin base certs linux lisp suckless xdisorg xorg fonts
                      android fontutils gnome freedesktop readline networking)
 (use-service-modules admin dbus desktop dns networking sound xorg ssh
                      web certbot monitoring databases mail)
@@ -255,6 +255,8 @@ EndSection")
                        adb
 
                        nix
+
+                       iptables bridge-utils
 
                        (operating-system-packages base-system)))
 
