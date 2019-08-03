@@ -58,11 +58,11 @@
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-1))
 
-(define-public sbcl-stumpwm-checkout
-  (let ((commit "cec7fd9e963e5da59b05ba0ffbe292dc94fd2947"))
+(define-public stumpwm-checkout
+  (let ((commit "f6966cabdf7cdc3cdecf88dfaaf8a90845264c5d"))
     (package
-      (inherit sbcl-stumpwm)
-      (name (string-append (package-name sbcl-stumpwm) "-checkout"))
+      (inherit stumpwm)
+      (name (string-append (package-name stumpwm) "-checkout"))
       (version (git-version (package-version sbcl-stumpwm) "1" commit))
       (source
        (origin
@@ -73,9 +73,10 @@
          (file-name (git-file-name (package-name sbcl-stumpwm) version))
          (sha256
           (base32
-           "1qyvhw73dghs167hcds1k2021w2hakh99zfv0039w7lx259gazl9"))))
+           "107p68xvfvgxjw0r4hhisndi3ri9q8j4q2rd1iba4ygqscjsg64b"))))
       (inputs
        `(("sbcl-alexandria" ,sbcl-alexandria)
+         ("sbcl-fiasco", sbcl-fiasco)
          ,@(package-inputs sbcl-stumpwm)))
       (native-inputs `(("texinfo" ,texinfo)))
       (outputs (append (package-outputs sbcl-stumpwm) '("doc")))
