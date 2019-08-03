@@ -1,7 +1,8 @@
 (use-modules (gnu) (srfi srfi-1) (srfi srfi-26))
 (use-modules (services docker))
 (use-package-modules admin base certs linux lisp suckless xdisorg xorg fonts
-                     android fontutils gnome freedesktop readline networking)
+                     android fontutils gnome freedesktop readline ncurses
+                     networking)
 (use-service-modules admin dbus desktop dns networking sound xorg ssh
                      web certbot monitoring databases mail)
 
@@ -226,6 +227,8 @@ EndSection")
       (inherit base-system)
       (kernel-arguments '("modprobe.blacklist=pcspkr,snd_pcsp"))
       (packages (cons* sbcl stumpwm `(,stumpwm "lib")
+
+                       ncurses
 
                        fontconfig font-awesome font-dejavu font-liberation
                        font-misc-misc font-wqy-zenhei
