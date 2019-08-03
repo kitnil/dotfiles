@@ -1,2 +1,3 @@
 This repository contains Guix packages not included in Guix package collection
-repository or modified for my own purposes.
+repository or modified for my own purposes. You could use them by setting a
+[Guix Channel](http://guix.gnu.org/manual/en/html_node/Channels.html).

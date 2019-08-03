@@ -1,106 +1,12 @@
-.build:
+stages:
+  - test
+
+test-all:
   tags:
     - guixsd
+  stage: test
   script:
-    - guix pull --profile=.guix-profile --channels=channels.scm
-    - GUIX_PACKAGE_PATH=. .guix-profile/bin/guix build --no-grafts --fallback $(grep define-public $FILE | cut -f2 -d' ')
-
-admin:
-  extends: .build
-  variables:
-    FILE: wigust/packages/admin.scm
-
-databases:
-  extends: .build
-  variables:
-    FILE: wigust/packages/databases.scm
-
-emacs:
-  extends: .build
-  variables:
-    FILE: wigust/packages/emacs.scm
-
-game-development:
-  extends: .build
-  variables:
-    FILE: wigust/packages/game-development.scm
-
-golang:
-  extends: .build
-  variables:
-    FILE: wigust/packages/golang.scm
-
-guile:
-  extends: .build
-  variables:
-    FILE: wigust/packages/guile.scm
-
-guix:
-  extends: .build
-  variables:
-    FILE: wigust/packages/guix.scm
-
-lisp:
-  extends: .build
-  variables:
-    FILE: wigust/packages/lisp.scm
-
-pulseaudio:
-  extends: .build
-  variables:
-    FILE: wigust/packages/pulseaudio.scm
-
-python:
-  extends: .build
-  variables:
-    FILE: wigust/packages/python.scm
-
-raleigh:
-  extends: .build
-  variables:
-    FILE: wigust/packages/raleigh.scm
-
-ruby:
-  extends: .build
-  variables:
-    FILE: wigust/packages/ruby.scm
-
-spectre-meltdown-checker:
-  extends: .build
-  variables:
-    FILE: wigust/packages/spectre-meltdown-checker.scm
-
-urho3d:
-  extends: .build
-  variables:
-    FILE: wigust/packages/urho3d.scm
-
-version-control:
-  extends: .build
-  variables:
-    FILE: wigust/packages/version-control.scm
-
-virtualization:
-  extends: .build
-  variables:
-    FILE: wigust/packages/virtualization.scm
-
-web:
-  extends: .build
-  variables:
-    FILE: wigust/packages/web.scm
-
-xdisorg:
-  extends: .build
-  variables:
-    FILE: wigust/packages/xdisorg.scm
-
-xorg:
-  extends: .build
-  variables:
-    FILE: wigust/packages/xorg.scm
-
-zabbix:
-  extends: .build
-  variables:
-    FILE: wigust/packages/zabbix.scm
+    - sed -i "s/@CI_COMMIT_REF_NAME@/$CI_COMMIT_REF_NAME/" channels.scm
+    - guix pull --profile=.guix-profile --channels=channels.scm 2>/dev/null
+    - .guix-profile/bin/guix describe
+    - .guix-profile/bin/guix build --quiet --no-grafts --fallback $(grep define-public guix/wigust/packages/*.scm | cut -f2 -d' ')
