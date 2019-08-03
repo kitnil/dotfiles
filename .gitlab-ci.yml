@@ -6,7 +6,10 @@ test-all:
     - guixsd
   stage: test
   script:
-    - sed -i "s/@CI_COMMIT_REF_NAME@/$CI_COMMIT_REF_NAME/" channels.scm
+    - sed -i "s|@CI_PROJECT_URL@|$CI_PROJECT_URL.git|" channels.scm
+    - sed -i "s|@CI_COMMIT_REF_NAME@|$CI_COMMIT_REF_NAME|" channels.scm
     - guix pull --profile=.guix-profile --channels=channels.scm 2>/dev/null
     - .guix-profile/bin/guix describe
-    - .guix-profile/bin/guix build --quiet --no-grafts --fallback $(grep define-public guix/wigust/packages/*.scm | cut -f2 -d' ')
+    - |
+      .guix-profile/bin/guix build --quiet --no-grafts --fallback \
+      $(grep define-public guix/wigust/packages/*.scm | cut -f2 -d' ')
