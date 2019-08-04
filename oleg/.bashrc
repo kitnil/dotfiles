@@ -510,3 +510,5 @@ docker-jenkins()
     docker -H ssh://dh4-mr.intr exec -it 4649529fa34d $@
 }
 nix-version() { nix-instantiate --eval -E '(import <nixpkgs> {}).lib.nixpkgsVersion'; }
+
+alias dockerd='sudo herd start docker'
