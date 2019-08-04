@@ -26,7 +26,19 @@
   #:use-module (guix store)
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-26)
-  #:export (docker-service))
+  #:export (docker-service
+            containerd-service))
+
+(define containerd-service
+  (simple-service 'containerd-service shepherd-root-service-type
+                  (list
+                   (shepherd-service
+                    (documentation "containerd daemon.")
+                    (provision '(containerd))
+                    (start #~(make-forkexec-constructor
+                              (list "/home/oleg/.nix-profile/libexec/docker/containerd")
+                              #:log-file "/var/log/containerd.log"))
+                    (stop #~(make-kill-destructor))))))
 
 (define docker-service
   (simple-service 'docker shepherd-root-service-type
@@ -35,7 +47,8 @@
                     (provision '(docker))
                     (auto-start? #f)
                     (documentation "Run docker-daemon.")
-                    (requirement '(dbus-system
+                    (requirement '(;containerd
+                                   dbus-system
                                    elogind
                                    file-system-/sys/fs/cgroup/blkio
                                    file-system-/sys/fs/cgroup/cpu
@@ -45,6 +58,13 @@
                                    networking
                                    udev))
                     (start #~(make-forkexec-constructor
-                              (list "/home/oleg/.nix-profile/bin/dockerd")))
+                              (list "sh" "-c"
+                                    (format #f "'~a'"
+                                            (string-join
+                                             (list ". /home/oleg/.guix-profile/etc/profile.d/nix.sh"
+                                                   "&&" "/home/oleg/.nix-profile/bin/dockerd"
+                                                   "-p" "/var/run/docker.pid"))))
+                              #:pid-file "/var/run/docker.pid"
+                              #:log-file "/var/log/docker.log"))
                     (respawn? #f)
                     (stop #~(make-kill-destructor))))))
