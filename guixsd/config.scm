@@ -1,8 +1,13 @@
-(use-modules (gnu) (srfi srfi-1) (srfi srfi-26))
-(use-modules (services docker))
+(use-modules (gnu)
+             (srfi srfi-1)
+             (srfi srfi-26)
+             (services docker)
+             (wigust packages lisp))
+
 (use-package-modules admin base certs linux lisp suckless xdisorg xorg fonts
                      android fontutils gnome freedesktop readline ncurses
                      networking)
+
 (use-service-modules admin dbus desktop dns networking sound xorg ssh
                      web certbot monitoring databases mail)
 
@@ -39,6 +44,25 @@ EndSection")
 
 (define letsencrypt-key
   (cut string-append "/etc/letsencrypt/live/" <> "/privkey.pem"))
+
+(define %certbot-hosts
+  (list "cgit.duckdns.org"
+        "guix.duckdns.org"
+        "alerta.duckdns.org"
+        "anongit.duckdns.org"
+        "pipeline.duckdns.org"
+        ;; TODO: "wugi.info"
+        "zabbix.wugi.info"
+        "grafana.wugi.info"
+        "jenkins.wugi.info"
+        "gitlab.wugi.info"
+        "gitea.wugi.info"
+        "prometheus.wugi.info"
+        "alerta.wugi.info"
+        "awx.wugi.info"
+        "stackstorm.wugi.info"
+        "nextcloud.wugi.info"
+        "redmine.wugi.info"))
 
 
 ;;;
@@ -226,7 +250,7 @@ EndSection")
     (operating-system
       (inherit base-system)
       (kernel-arguments '("modprobe.blacklist=pcspkr,snd_pcsp"))
-      (packages (cons* sbcl stumpwm `(,stumpwm "lib")
+      (packages (cons* sbcl stumpwm-checkout `(,stumpwm-checkout "lib")
 
                        ncurses
 
@@ -406,6 +430,8 @@ EndSection")
 
            "172.16.103.199 br1-mr14.intr"
 
+           "81.95.28.26 router.majordomo.ru"
+
            ,%facebook-host-aliases)
          "\n")))
 
@@ -457,23 +483,7 @@ EndSection")
                                              (certificate-configuration
                                               (domains (list host))
                                               (deploy-hook %nginx-deploy-hook)))
-                                           (list "cgit.duckdns.org"
-                                                 "guix.duckdns.org"
-                                                 "alerta.duckdns.org"
-                                                 "anongit.duckdns.org"
-                                                 "pipeline.duckdns.org"
-                                                 ;; TODO: "wugi.info"
-                                                 "zabbix.wugi.info"
-                                                 "grafana.wugi.info"
-                                                 "jenkins.wugi.info"
-                                                 "gitlab.wugi.info"
-                                                 "gitea.wugi.info"
-                                                 "prometheus.wugi.info"
-                                                 "alerta.wugi.info"
-                                                 "awx.wugi.info"
-                                                 "stackstorm.wugi.info"
-                                                 "nextcloud.wugi.info"
-                                                 "redmine.wugi.info"))))))
+                                           %certbot-hosts)))))
 
                        (service nginx-service-type
                                 (nginx-configuration
@@ -517,7 +527,18 @@ ExternalScripts=/etc/zabbix/externalscripts
 FpingLocation=/run/setuid-programs/fping
 ")))
 
-                       (service zabbix-agent-service-type)
+                       (service zabbix-agent-service-type
+                                (zabbix-agent-configuration
+;; UserParameter=guix.channel.list[*],/etc/zabbix/externalscripts/zabbix_guix --profile=$1 --remote=$2 --available
+;; UserParameter=guix.channel.diff[*],/etc/zabbix/externalscripts/zabbix_guix --profile=$1 --remote=$2 --diff=$3
+;; UserParameter=cpu.sensors,/etc/zabbix/externalscripts/zabbix_sensors
+                                 (extra-options (string-join
+                                                 (list ""
+                                                       "UserParameter=ssl_cert_check_valid[*], /etc/zabbix/externalscripts/ssl_cert_check.sh valid \"$1\" \"$2\" \"$3\""
+                                                       "UserParameter=ssl_cert_check_expire[*], /etc/zabbix/externalscripts/ssl_cert_check.sh expire \"$1\" \"$2\" \"$3\""
+                                                       (string-join (cons "UserParameter=ssl_cert_hosts[*], /etc/zabbix/externalscripts/ssl_cert_hosts.sh"
+                                                                          %certbot-hosts)))
+                                                 "\n"))))
 
                        (service zabbix-front-end-service-type
                                 (zabbix-front-end-configuration
