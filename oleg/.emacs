@@ -3262,6 +3262,20 @@ If given a prefix, patch in the branch directory instead."
   (interactive)
   (shell-command "curl -s -k https://jenkins.intr/job/webservices/job/apache2-php70/job/wip/lastBuild/consoleText"))
 
+(cl-defun work-jenkins-job-log (project branch &optional (build "lastBuild"))
+  (shell-command
+   (mapconcat 'identity
+              `("curl" "-u" "admin:***REMOVED***" "-s"
+                "-k" ,(format "https://jenkins.intr/job/webservices/job/%s/job/%s/%s/consoleText"
+                              project branch build))
+              " ")))
+
+(defun work-jenkins-job-nixoverlay-log (build)
+  (interactive "sBuild number (empty is lastBuild): ")
+  (work-jenkins-job-log "nixoverlay" "wip-tests" (if (string-equal build "")
+                                                     "lastBuild"
+                                                   build)))
+
 (defun nix-intr-find-file ()
   (interactive)
   (find-file (concat "/ssh:dh4-mr.intr|docker:4649529fa34d:"
