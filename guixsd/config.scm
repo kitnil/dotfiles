@@ -432,6 +432,10 @@ EndSection")
 
            "81.95.28.26 router.majordomo.ru"
 
+           "172.16.103.101 kvm15.intr"
+           "172.16.103.34 kvm-test.intr"
+           "172.16.103.149 hastebin.intr"
+
            ,%facebook-host-aliases)
          "\n")))
 
