@@ -3188,10 +3188,6 @@ If given a prefix, patch in the branch directory instead."
   (interactive "sregexp:")
   (rgrep regexp "*.nix" (expand-file-name "~/src/majordomo/70/")))
 
-(defun nix-php70 ()
-  (interactive)
-  (shell-command "curl -s -k https://jenkins.intr/job/webservices/job/apache2-php70/job/wip/lastBuild/consoleText"))
-
 (defun nix-intr-find-file ()
   (interactive)
   (find-file (concat "/ssh:dh4-mr.intr|docker:4649529fa34d:"
@@ -3262,19 +3258,52 @@ If given a prefix, patch in the branch directory instead."
   (interactive)
   (shell-command "curl -s -k https://jenkins.intr/job/webservices/job/apache2-php70/job/wip/lastBuild/consoleText"))
 
-(cl-defun work-jenkins-job-log (project branch &optional (build "lastBuild"))
-  (shell-command
-   (mapconcat 'identity
-              `("curl" "-u" "admin:***REMOVED***" "-s"
-                "-k" ,(format "https://jenkins.intr/job/webservices/job/%s/job/%s/%s/consoleText"
-                              project branch build))
-              " ")))
+(defun work-jenkins-job-log (project branch build)
+  (interactive
+   (list (read-string "Project: " nil nil "nixoverlay")
+         (completing-read "Branch: " '(master wip-tests))
+         (completing-read "sBuild number (empty is lastBuild): " '(lastBuild))))
+  (let ((buffer (generate-new-buffer (format "*jenkins-%s-%s-%s*" project branch build))))
+    (with-current-buffer buffer
+      (shell-command
+       (mapconcat 'identity
+                  `("curl" "-u" "admin:***REMOVED***" "-s"
+                    "-k" ,(format "https://jenkins.intr/job/webservices/job/%s/job/%s/%s/consoleText"
+                                  project branch build))
+                  " ")
+       buffer))))
 
-(defun work-jenkins-job-nixoverlay-log (build)
-  (interactive "sBuild number (empty is lastBuild): ")
-  (work-jenkins-job-log "nixoverlay" "wip-tests" (if (string-equal build "")
-                                                     "lastBuild"
-                                                   build)))
+(defun work-jenkins-job-nixoverlay-log (build branch)
+  (interactive
+   (list (completing-read "Branch: " '(master wip-tests))
+         (completing-read "sBuild number (empty is lastBuild): " '(lastBuild))))
+  (work-jenkins-job-log "nixoverlay" branch build))
+
+(defun work-jenkins-job-nixoverlay-log-drv (drv)
+  (interactive "sDerivation: ")
+  (let ((default-directory "/ssh:kvm15.intr:")
+        (buffer (generate-new-buffer (format "*%s.log*" drv))))
+    (with-current-buffer buffer
+      (shell-command (concat ". /etc/profile.d/nix.sh; nix-store --read-log " drv)
+                     buffer)
+      (compilation-mode)
+      (toggle-truncate-lines))))
+
+(defun work-nixoverlay-src (package)
+  "Invoke `nix-build' in the nixoverlay's root directory."
+  (interactive "sPackage: ")
+  (projectile-with-default-dir (expand-file-name "~/src/majordomo/_ci/nixpkgs")
+    (find-file
+     (string-trim-right
+      (shell-command-to-string
+       (mapconcat 'identity
+                  `("nix-build" "build.nix"
+                    "--option" "substituters" "'http://kvm15.intr:5556/'"
+                    "--cores" "4"
+                    "-A" ,(concat "nixpkgsUnstable." package ".src")
+                    "--show-trace"
+                    "-K")
+                  " "))))))
 
 (defun nix-intr-find-file ()
   (interactive)
@@ -3304,6 +3333,7 @@ If given a prefix, patch in the branch directory instead."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(tramp-default-method "ssh")
  '(build-farm-build-arguments '("system=x86_64-linux"))
  '(custom-safe-themes
    '("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default))
