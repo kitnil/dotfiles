@@ -512,3 +512,9 @@ docker-jenkins()
 nix-version() { nix-instantiate --eval -E '(import <nixpkgs> {}).lib.nixpkgsVersion'; }
 
 alias dockerd='sudo herd start docker'
+alias get-todos='scp work:/home/user/src/jord/doc/todo.org ~/src/todo.org '
+
+# nix-shell -E 'with import <nixpkgs> {}; callPackage ./default.nix {}' -A luaCrypto
+# nix-build -E 'with import <nixpkgs> {}; callPackage ./default.nix {}';
+
+# grep '^FAIL ' /tmp/6.txt | cut -d '/' -f 2- | cut -d ']' -f 1 | sed 's@^@ext/@'
