@@ -1260,3 +1260,27 @@ program instead of Emacs' own (often not up to date) whois client.
       (description "This package provides a Jenkins client for Emacs.")
       (license license:gpl3+))))
 
+(define-public emacs-slack-patched
+  (let ((commit "ea89ac4291532a136d02bb8852b5dc641622ab73"))
+    (package
+      (inherit emacs-slack)
+      (name "emacs-slack-patched")
+      (version (git-version "0.0.2" "8" commit))
+      (source (origin
+                (method git-fetch)
+                (uri (git-reference
+                      (url "https://github.com/yuya373/emacs-slack.git")
+                      (commit commit)))
+                (file-name (git-file-name name version))
+                (sha256
+                 (base32
+                  "0gnmhlv3gzv5n8ydbg84n9m6i9d0akcvn032ipsyss6bqw1vzl1m"))))
+      (arguments
+       (substitute-keyword-arguments
+           (package-arguments emacs-slack)
+         ((#:phases phases)
+          `(modify-phases ,phases
+             (add-after 'unpack 'patch
+               (lambda _
+                 (substitute* "slack-message-buffer.el"
+                   (("slack-conversations-view") "slack-conversations-history")))))))))))
