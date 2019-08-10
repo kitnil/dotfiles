@@ -3393,4 +3393,5 @@ If given a prefix, patch in the branch directory instead."
  '(rainbow-delimiters-depth-8-face ((t (:foreground "deep sky blue"))))
  '(rainbow-delimiters-depth-9-face ((t (:foreground "goldenrod"))))
  '(rainbow-delimiters-unmatched-face ((t (:foreground "red"))))
+ '(mode-line-inactive ((t :foreground "grey20" :background "#ffffff" :inverse-video nil)))
  '(sh-heredoc ((t (:foreground "tan3")))))
