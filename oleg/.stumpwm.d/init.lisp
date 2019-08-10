@@ -60,6 +60,12 @@
 ;; because it could switch window after switch desktop
 (setf *mouse-focus-policy* :click)
 
+(defcommand mouse-click () ()
+  (setf *mouse-focus-policy* :click))
+
+(defcommand mouse-sloppy () ()
+  (setf *mouse-focus-policy* :sloppy))
+
 (setf *suppress-window-placement-indicator* t)
 (setf *new-frame-action* :empty)
 
