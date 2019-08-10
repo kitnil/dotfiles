@@ -2638,15 +2638,14 @@ If nil use light theme.")
 
 (setq slack-teams nil)
 (setq slack-prefer-current-team t)
+
+;; https://github.com/yuya373/emacs-slack/issues/431
 (slack-register-team
  :name "mjru"
  :default t
- :client-id "36930953924.359258381731"
- :client-secret "20132140572006956784517458769"
- :token "xoxs-36930953924-342444910229-351698389008-a35253de9e6653a382123a933dc70d1325a3a25384c7cbbbae7a1075f493f04c"
- :subscribed-channels '(sups)
- :full-and-display-names t
- )
+ :token "***REMOVED***"
+ :subscribed-channels '(monitoring git tech eng sups)
+ :full-and-display-names t)
 
 
 ;;;
