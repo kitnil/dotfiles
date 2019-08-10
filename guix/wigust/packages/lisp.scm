@@ -59,7 +59,7 @@
   #:use-module (srfi srfi-1))
 
 (define-public stumpwm-checkout
-  (let ((commit "f6966cabdf7cdc3cdecf88dfaaf8a90845264c5d"))
+  (let ((commit "f245674bc7bbf83b8f4ad3783c46e1ed42a5a5a0"))
     (package
       (inherit stumpwm)
       (name (string-append (package-name stumpwm) "-checkout"))
@@ -68,12 +68,12 @@
        (origin
          (method git-fetch)
          (uri (git-reference
-               (url "https://github.com/stumpwm/stumpwm.git")
+               (url "https://gitlab.wugi.info/wigust/stumpwm.git")
                (commit commit)))
          (file-name (git-file-name (package-name sbcl-stumpwm) version))
          (sha256
           (base32
-           "107p68xvfvgxjw0r4hhisndi3ri9q8j4q2rd1iba4ygqscjsg64b"))))
+           "1wwg24aqx69p8frl45nj9fg6g0msngi6arfbxfvnc8cvnaixyjyc"))))
       (inputs
        `(("sbcl-alexandria" ,sbcl-alexandria)
          ("sbcl-fiasco", sbcl-fiasco)
