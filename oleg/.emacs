@@ -3262,7 +3262,7 @@ If given a prefix, patch in the branch directory instead."
   (interactive
    (list (read-string "Project: " nil nil "nixoverlay")
          (completing-read "Branch: " '(master wip-tests))
-         (completing-read "sBuild number (empty is lastBuild): " '(lastBuild))))
+         (completing-read "sBuild number: " '(lastBuild))))
   (let ((buffer (generate-new-buffer (format "*jenkins-%s-%s-%s*" project branch build))))
     (with-current-buffer buffer
       (shell-command
@@ -3281,13 +3281,12 @@ If given a prefix, patch in the branch directory instead."
 
 (defun work-jenkins-job-nixoverlay-log-drv (drv)
   (interactive "sDerivation: ")
-  (let ((default-directory "/ssh:kvm15.intr:")
-        (buffer (generate-new-buffer (format "*%s.log*" drv))))
+  (let ((buffer (generate-new-buffer (format "*%s.log*" drv))))
     (with-current-buffer buffer
-      (shell-command (concat ". /etc/profile.d/nix.sh; nix-store --read-log " drv)
-                     buffer)
-      (compilation-mode)
-      (toggle-truncate-lines))))
+      (let ((default-directory "/ssh:kvm15.intr:"))
+        (shell-command (concat ". /etc/profile.d/nix.sh; nix-store --read-log " drv)
+                       buffer)
+        (compilation-mode)))))
 
 (defun work-nixoverlay-src (package)
   "Invoke `nix-build' in the nixoverlay's root directory."
