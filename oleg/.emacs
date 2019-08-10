@@ -3327,6 +3327,12 @@ If given a prefix, patch in the branch directory instead."
       (format "ssh work -- dig +short a %S 2>/dev/null" host)))
     host)))
 
+(defun projectile-run-shell-guix ()
+  (interactive)
+  (projectile-run-shell)
+  (font-lock-mode)
+  (guix-build-log-minor-mode))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
