@@ -480,6 +480,9 @@
   "Run GNOME Debian in QEMU."
   (run-shell-command (concat "exec " (getenv "HOME") "/bin/debian.sh")))
 
+(setf *float-window-border* 0)
+(setf *float-window-title-height* 0)
+
 (defparameter dark-theme nil)
 (set-focus-color "#90EE90")
 (set-border-color "#90EE90")
