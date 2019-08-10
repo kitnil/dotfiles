@@ -518,3 +518,11 @@ alias get-todos='scp work:/home/user/src/jord/doc/todo.org ~/src/todo.org '
 # nix-build -E 'with import <nixpkgs> {}; callPackage ./default.nix {}';
 
 # grep '^FAIL ' /tmp/6.txt | cut -d '/' -f 2- | cut -d ']' -f 1 | sed 's@^@ext/@'
+
+nix-untar-docker()
+{
+    # argument example: /nix/store/vqi100nf7x7z82pr4lkagasmzl9zj0zp-docker-image-apache2-php56.tar.gz
+    tar xv --wildcards '*/layer.tar' -f "$1" \
+        | tee /tmp/tempstore \
+        | xargs -n1 -I{} tar xvf {}
+}
