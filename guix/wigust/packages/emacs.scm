@@ -1284,3 +1284,33 @@ program instead of Emacs' own (often not up to date) whois client.
                (lambda _
                  (substitute* "slack-message-buffer.el"
                    (("slack-conversations-view") "slack-conversations-history")))))))))))
+
+(define-public emacs-copy-as-format
+  (package
+    (name "emacs-copy-as-format")
+    (version "0.0.8")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://github.com/sshaw/copy-as-format.git")
+                    (commit (string-append "v" version))))
+              (file-name (git-file-name name version))
+              (sha256
+               (base32
+                "0i158bkra7zgq75j08knq2camvlhbs2v8zrsxiyp0mc4q949xysd"))))
+    (build-system emacs-build-system)
+    (home-page "https://github.com/sshaw/copy-as-format/")
+    (synopsis "Copy buffer locations as GitHub/Slack/JIRA as formatted code")
+    (description "Copy buffer locations as GitHub/Slack/JIRA/HipChat formatted
+code and add them to the kill ring.  The buffer will not be modified.
+
+With a prefix argument prompt for the format.  Defaults to
+@code{copy-as-format-default}.
+
+To add formats see @code{copy-as-format-format-alist}.
+
+For AsciiDoc customization see
+@code{copy-as-format-asciidoc-include-file-name} and
+@code{copy-as-format-asciidoc-language-alist}.")
+    (license license:gpl3+)))
+
