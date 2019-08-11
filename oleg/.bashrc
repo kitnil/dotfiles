@@ -526,3 +526,10 @@ nix-untar-docker()
         | tee /tmp/tempstore \
         | xargs -n1 -I{} tar xvf {}
 }
+
+docker-ps-ip()
+{
+    docker ps --format='{{.ID}}' \
+        | xargs docker inspect \
+        | jq -r '.[] | [.NetworkSettings.Networks.bridge.IPAddress, .Config.Image] | @tsv'
+}
