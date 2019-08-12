@@ -549,3 +549,8 @@ nix-build-kvm15()
     pkg="$1"
     nix-build build.nix --option  substituters http://kvm15.intr:5556/ --cores 4 -A nixpkgsUnstable$pkg --keep-going --keep-failed $@
 }
+
+tmux-renumber-windows()
+{
+    tmux movew -r
+}
