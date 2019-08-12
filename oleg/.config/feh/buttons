@@ -1,5 +1,3 @@
-# From examples/buttons
-
-# make scroll wheel (mousewheel up and down) zoom, instead of flipping images
+# Zoom with a scroll wheel instead of flipping images
 zoom_in 4
 zoom_out 5
