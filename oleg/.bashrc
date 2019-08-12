@@ -535,3 +535,17 @@ docker-ps-ip()
 }
 
 complete -C "$HOME/.nix-profile/bin/terraform" terraform
+
+# dockerd --insecure-registry https://docker-registry.intr
+
+nix-ls-store-kvm15()
+{
+    # $1 example: /nix/store/0i2jd68mp5g6h2sa5k9c85rb80sn8hi9-hello-2.10
+    nix ls-store --store http://kvm15.intr:5556/ -lR "$1"
+}
+
+nix-build-kvm15()
+{
+    pkg="$1"
+    nix-build build.nix --option  substituters http://kvm15.intr:5556/ --cores 4 -A nixpkgsUnstable$pkg --keep-going --keep-failed $@
+}
