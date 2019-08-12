@@ -39,7 +39,10 @@
         org-cycle
         org-delete-char
         org-end-of-line
+        org-force-self-insert
+        org-return-indent
         org-self-insert-command
+        org-yank
         outshine-self-insert-command
         overwrite-mode
         recompile
