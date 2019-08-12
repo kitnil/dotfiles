@@ -1,6 +1,7 @@
 build:
   tags:
     - guixsd
+    - shell
   script:
     - ./build.sh
   only:
