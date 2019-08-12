@@ -15,6 +15,7 @@
    emacs-athena
    emacs-atomic-chrome
    emacs-awk-it
+   emacs-copy-as-format
    emacs-engine-mode-autoload ; Define searches on websites
    emacs-eval-in-repl       ; Evaluate to different Repls
    emacs-flyspell-correct
@@ -28,6 +29,7 @@
    emacs-perl-live
    emacs-psysh
    emacs-redshift
+   emacs-slack-patched
    emacs-strace-mode-special ; Colorize `strace' logs
    emacs-terminal-here-checkout
    ))
