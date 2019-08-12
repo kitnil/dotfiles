@@ -2,4 +2,8 @@
 
 # Run giltab-runner
 
-sudo /home/gitlab-runner/.nix-profile/bin/gitlab-runner run --working-directory=/home/gitlab-runner --config=/etc/gitlab-runner/config.toml --service=gitlab-runner --user=gitlab-runner
+sudo /home/gitlab-runner/.nix-profile/bin/gitlab-runner run \
+     --working-directory=/home/gitlab-runner \
+     --config=/etc/gitlab-runner/config.toml \
+     --service=gitlab-runner \
+     --user=gitlab-runner
