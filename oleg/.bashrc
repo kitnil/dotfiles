@@ -533,3 +533,5 @@ docker-ps-ip()
         | xargs docker inspect \
         | jq -r '.[] | [.NetworkSettings.Networks.bridge.IPAddress, .Config.Image] | @tsv'
 }
+
+complete -C "$HOME/.nix-profile/bin/terraform" terraform
