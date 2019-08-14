@@ -103,6 +103,7 @@
        emacs-projectile         ; Project functions
        emacs-rainbow-delimiters ; Prettify parentheses
        emacs-rainbow-mode       ; Show colors in codes
+       emacs-org-redmine
        emacs-restclient
        emacs-rotate-text
        emacs-scheme-complete
