@@ -554,3 +554,13 @@ tmux-renumber-windows()
 {
     tmux movew -r
 }
+
+nix-user-uid()
+{
+    nix-build -E 'with import <nixpkgs> {}; runCommand "foo" {} "id"'
+}
+
+nix-info()
+{
+    nix-shell -p nix-info --run "nix-info -m"
+}
