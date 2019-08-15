@@ -2,9 +2,9 @@
         (name 'guix-wigust)
         (url "https://gitlab.wugi.info/guix/guix-wigust.git")
         (commit
-          "33cc96c1e4cef9415b22111c5d3c044b33e9234c"))
+          "484dae6905026379d4542e160897e20f6cd87788"))
       (channel
         (name 'guix)
         (url "https://git.savannah.gnu.org/git/guix.git")
         (commit
-          "4afdb792497472b968d818a3ed942beb70210389")))
+          "a9815a6cf27dd0e2140038c35d4ad5ef91f6d7d6")))
