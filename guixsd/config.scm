@@ -566,6 +566,7 @@ FpingLocation=/run/setuid-programs/fping
                        (operating-system-user-services base-system)))
 
       (setuid-programs (cons* (file-append fping "/sbin/fping")
+                              (file-append mtr "/sbin/mtr")
                               (file-append ubridge "/bin/ubridge")
                               %setuid-programs)))))
 
