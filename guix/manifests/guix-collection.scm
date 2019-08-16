@@ -131,6 +131,8 @@ xdisorg xml xorg)
 
                mlt mpv obs vlc
 
+               mtr
+
                ;; PDF
                zathura zathura-djvu zathura-pdf-mupdf
 
