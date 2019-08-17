@@ -45,6 +45,7 @@
         org-yank
         outshine-self-insert-command
         overwrite-mode
+        query-replace
         recompile
         slime-space
         smex
@@ -102,4 +103,5 @@
         smartparens-strict-mode
         terminal-here-project-launch-multiplexer
         text-scale-adjust
+        winner-undo
         ))
