@@ -435,6 +435,7 @@ EndSection")
            "172.16.103.101 kvm15.intr"
            "172.16.103.34 kvm-test.intr"
            "172.16.103.149 hastebin.intr"
+           "172.16.103.150 mysql.intr"
 
            ,%facebook-host-aliases)
          "\n")))
