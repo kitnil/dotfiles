@@ -1,0 +1,6 @@
+# key: pp
+# name: pp
+# --
+my $log = $docker->succeed("$1");
+print "\n\\$ $1\n";
+print "$log\n";
