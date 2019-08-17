@@ -20,3 +20,5 @@
 	lll= log --format='%ai %H %s'
 [github]
 	user = wigust
+[gitlab]
+	user = wigust
