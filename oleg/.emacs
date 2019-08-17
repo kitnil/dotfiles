@@ -3272,11 +3272,24 @@ If given a prefix, patch in the branch directory instead."
                   " ")
        buffer))))
 
+(defun work-jenkins-job-php56 ()
+  (interactive)
+  (work-jenkins-job-log "apache2-php56" "wip-tests" "lastBuild"))
+
+(defun work-jenkins-job-nixoverlay-wip ()
+  (interactive)
+  (work-jenkins-job-log "nixoverlay" "wip-nixos-tests" "lastBuild"))
+
 (defun work-jenkins-job-nixoverlay-log (build branch)
   (interactive
    (list (completing-read "Branch: " '(master wip-tests))
          (completing-read "sBuild number (empty is lastBuild): " '(lastBuild))))
   (work-jenkins-job-log "nixoverlay" branch build))
+
+(defun work-jenkins-job-nixoverlay-nixos-log (build)
+  (interactive
+   (list (completing-read "sBuild number (empty is lastBuild): " '(lastBuild))))
+  (work-jenkins-job-log "nixoverlay" "wip-nixos-tests" build))
 
 (defun work-jenkins-job-nixoverlay-log-drv (drv)
   (interactive "sDerivation: ")
