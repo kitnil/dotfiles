@@ -97,6 +97,8 @@
        emacs-org-mind-map       ; General mind maps from Org files
        emacs-outshine           ; Emacs outline-mode
        emacs-pcre2el
+       emacs-phi-search
+       emacs-phi-search-mc
        emacs-php-mode
        emacs-polymode
        emacs-polymode-ansible
