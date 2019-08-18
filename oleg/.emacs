@@ -3328,6 +3328,12 @@ If given a prefix, patch in the branch directory instead."
         ("gitlab.com" . "gitlab")
         ("git.savannah.gnu.org" . "gnu")))
 
+(with-eval-after-load 'forge
+  (setq forge-alist
+        (append '(("gitlab.intr" "gitlab.intr/api/v4" "gitlab.intr"
+                   forge-gitlab-repository))
+                forge-alist)))
+
 (defun work-host (host)
   "Insert host from work at current point."
   (interactive "sHost: ")
