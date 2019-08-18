@@ -95,6 +95,7 @@
         ivy-switch-buffer
         markdown-outdent-or-delete
         mc/toggle-cursor-on-click
+        mouse-save-then-kill
         mouse-set-region
         projectile-compile-project
         repeat
