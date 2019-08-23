@@ -488,6 +488,11 @@ EndSection")
            "172.16.102.91 router-dh1.intr"
            "172.16.102.92 router-dh2.intr"
 
+           "172.16.103.68 staff.intr"
+           "172.16.103.52 galera1.intr"
+           "172.16.103.51 galera2.intr"
+           "172.16.103.50 galera3.intr"
+
            ,%facebook-host-aliases)
          "\n")))
 
