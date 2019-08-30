@@ -581,3 +581,14 @@ skopeo-mj()
     tar="$2" || result # docker-archive:/nix/store/dw0qakl4g58n9idsi35vn0m1d92gs0jw-docker-image-ssh-guest-room.tar.gz
     skopeo copy --dest-creds=gradle:***REMOVED*** --dest-tls-verify=false "docker-archive:$tar" "docker://docker-registry.intr/webservices/$image:master"
 }
+
+git-guix-pre-new-build()
+{
+    number="$1"
+    git log --oneline \
+        | head -n "$number" \
+        | grep Add  \
+        | awk '{ print $NF }' \
+        | cut -d'.' -f 1 \
+        | xargs ./pre-inst-env guix build --no-grafts
+}
