@@ -614,3 +614,9 @@ git-guix-pre-update()
         | cut -d: -f 1 \
         | xargs ./pre-inst-env guix build --no-grafts
 }
+
+git-guix-home()
+{
+    number="$1"
+    git show "$number" | grep home | cut -d'"' -f 2
+}
