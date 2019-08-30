@@ -22,3 +22,8 @@
 	user = wigust
 [gitlab]
 	user = wigust
+[secrets]
+	providers = pass show email/gmail/go.wigust
+        providers = pass show majordomo/redmine.intr/pyhalov
+        providers = pass show hms.majordomo.ru/ac_208112
+        providers = pass show majordomo/mjru.slack.com/pyhalov@majordomo.ru
