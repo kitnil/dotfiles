@@ -569,3 +569,8 @@ print-environ()
 {
     cat "/proc/$1/environ" | tr '\000' '\n'
 }
+
+guix-packages-json()
+{
+    curl https://guix.gnu.org/packages.json
+}
