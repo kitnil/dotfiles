@@ -564,3 +564,8 @@ nix-info()
 {
     nix-shell -p nix-info --run "nix-info -m"
 }
+
+print-environ()
+{
+    cat "/proc/$1/environ" | tr '\000' '\n'
+}
