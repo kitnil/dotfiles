@@ -68,7 +68,7 @@
        (origin
          (method git-fetch)
          (uri (git-reference
-               (url "https://gitlab.wugi.info/wigust/stumpwm.git")
+               (url "https://github.com/wigust/stumpwm.git")
                (commit commit)))
          (file-name (git-file-name (package-name sbcl-stumpwm) version))
          (sha256
