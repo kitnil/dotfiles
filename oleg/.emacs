@@ -3295,6 +3295,12 @@ If given a prefix, patch in the branch directory instead."
    (list (completing-read "sBuild number (empty is lastBuild): " '(lastBuild))))
   (work-jenkins-job-log "nixoverlay" "wip-nixos-tests" build))
 
+
+(defun work-jenkins-job-nixoverlay-nixos-log (build)
+  (interactive
+   (list (completing-read "sBuild number (empty is lastBuild): " '(lastBuild))))
+  (work-jenkins-job-log "nixoverlay" "wip-specific-phpd-version" build))
+
 (defun work-jenkins-job-nixoverlay-log-drv (drv)
   (interactive "sDerivation: ")
   (let ((buffer (generate-new-buffer (format "*%s.log*" drv))))
