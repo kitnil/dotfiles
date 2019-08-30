@@ -592,3 +592,14 @@ git-guix-pre-new-build()
         | cut -d'.' -f 1 \
         | xargs ./pre-inst-env guix build --no-grafts
 }
+
+git-guix-pre-new-lint()
+{
+    number="$1"
+    git log --oneline \
+        | head -n "$number" \
+        | grep Add  \
+        | awk '{ print $NF }' \
+        | cut -d'.' -f 1 \
+        | xargs ./pre-inst-env guix lint
+}
