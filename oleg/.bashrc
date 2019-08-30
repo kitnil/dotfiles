@@ -603,3 +603,14 @@ git-guix-pre-new-lint()
         | cut -d'.' -f 1 \
         | xargs ./pre-inst-env guix lint
 }
+
+git-guix-pre-update()
+{
+    number="$1"
+    git log --oneline \
+        | head -n "$number" \
+        | grep Update \
+        | awk '{ print $3 }' \
+        | cut -d: -f 1 \
+        | xargs ./pre-inst-env guix build --no-grafts
+}
