@@ -93,6 +93,10 @@
     (define-key map (kbd "C-c s") 'ispell-region)
     (define-key map (kbd "C-c e") 'wi-replace-with-brackets-ellipsis)))
 
+(let ((map text-mode-map))
+  (define-key map (kbd "<f7>") 'aya-create)
+  (define-key map (kbd "<f8>") 'aya-expand))
+
 (with-eval-after-load 'prog-mode
   (let ((map prog-mode-map))
     (define-key map (kbd "<f5>") 'recompile)
