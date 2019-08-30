@@ -574,3 +574,10 @@ guix-packages-json()
 {
     curl https://guix.gnu.org/packages.json
 }
+
+skopeo-mj()
+{
+    image="$1" # ssh-guest-room
+    tar="$2" || result # docker-archive:/nix/store/dw0qakl4g58n9idsi35vn0m1d92gs0jw-docker-image-ssh-guest-room.tar.gz
+    skopeo copy --dest-creds=gradle:***REMOVED*** --dest-tls-verify=false "docker-archive:$tar" "docker://docker-registry.intr/webservices/$image:master"
+}
