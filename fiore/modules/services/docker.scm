@@ -58,12 +58,7 @@
                                    networking
                                    udev))
                     (start #~(make-forkexec-constructor
-                              (list "sh" "-c"
-                                    (format #f "'~a'"
-                                            (string-join
-                                             (list ". /home/oleg/.guix-profile/etc/profile.d/nix.sh"
-                                                   "&&" "/home/oleg/.nix-profile/bin/dockerd"
-                                                   "-p" "/var/run/docker.pid"))))
+                              (list "/home/oleg/bin/run-docker")
                               #:pid-file "/var/run/docker.pid"
                               #:log-file "/var/log/docker.log"))
                     (respawn? #f)
