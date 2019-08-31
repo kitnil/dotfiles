@@ -911,3 +911,8 @@
 (defcommand sxhkd-restart () ()
   (run-shell-command "pkill sxhkd")
   (run-shell-command "sxhkd"))
+
+(defcommand passmenu () ()
+  (run-shell-command "passmenu"))
+
+(define-key *top-map* (kbd "s-s") "passmenu")
