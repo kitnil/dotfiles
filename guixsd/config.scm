@@ -236,7 +236,7 @@ EndSection")
                     (documentation "Run nix-daemon.")
                     (requirement '())
                     (start #~(make-forkexec-constructor
-                              (list (string-append #$nix "/bin/nix-daemon"))))
+                              (list "/home/oleg/bin/run-nix-daemon")))
                     (respawn? #f)
                     (stop #~(make-kill-destructor))))))
 
