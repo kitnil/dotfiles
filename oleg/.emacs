@@ -1547,8 +1547,11 @@ Produces URL as https://ci.guix.info/api/latestbuilds?nr=10&jobset=guix-master&j
 ;; TODO: This is slow down Emacs startup.
 ;; (magit-org-todos-autoinsert)
 
-(setq magit-repository-directories (f-directories wi-src))
-(setq magit-repository-directories-depth 1)
+(setq magit-repository-directories
+      (mapcar (lambda (dir)
+                (cons dir 0))
+              (f-directories wi-src)))
+(setq magit-repository-directories-depth 0)
 (setq magit-log-arguments '("--graph" "--color" "--decorate" "-n64"))
 (setq magit-log-section-arguments (list "-n256" "--decorate"))
 
