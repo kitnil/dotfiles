@@ -1,6 +1,13 @@
 #!/bin/sh
 
+set -o errexit
+set -o xtrace
+set -o pipefail
+
 # This scripts establish a VPN tunnel to Majordomo and setups NAT rules.
+
+# username pyhalov
+# password ***REMOVED***
 
 tap="$1"
 
