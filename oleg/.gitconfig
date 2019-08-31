@@ -11,8 +11,6 @@
 	gpgsign = true
 [user]
 	signingKey = 167F8EA5001AFA9C
-[url "https://github.com/"]
-	insteadOf = git@github.com:
 [alias]
 	branches-by-date = for-each-ref --sort=-committerdate refs/heads
         contributers = shortlog -sne
