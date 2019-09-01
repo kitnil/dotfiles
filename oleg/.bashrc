@@ -625,3 +625,8 @@ git-guix-home()
     number="$1"
     git show "$number" | grep home | cut -d'"' -f 2
 }
+
+nix-build-my()
+{
+    nix-build --no-out-link '<nixpkgs>' -A $@
+}
