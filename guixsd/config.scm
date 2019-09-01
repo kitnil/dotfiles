@@ -242,6 +242,23 @@ EndSection")
 
 
 ;;;
+;;; GitLab
+;;;
+
+(define gitlab-runner-service
+  (simple-service 'gitlab-runner shepherd-root-service-type
+                  (list
+                   (shepherd-service
+                    (provision '(gitlab-runner))
+                    (documentation "Run gitlab-runner.")
+                    (requirement '())
+                    (start #~(make-forkexec-constructor
+                              (list "/home/oleg/src/dotfiles/oleg/bin/gitlab-runner-service")))
+                    (respawn? #f)
+                    (stop #~(make-kill-destructor))))))
+
+
+;;;
 ;;; Entryp point
 ;;;
 
@@ -553,6 +570,7 @@ EndSection")
 
                        nix-service
                        docker-service
+                       gitlab-runner-service
 
                        (service openssh-service-type
                                 (openssh-configuration
