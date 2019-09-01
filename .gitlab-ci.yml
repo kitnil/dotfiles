@@ -1,7 +1,6 @@
 build:
   tags:
-    - guixsd
-    - shell
+    - remote
   script:
     - ./build.sh
   only:
