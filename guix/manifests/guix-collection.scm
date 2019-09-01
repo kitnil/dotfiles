@@ -6,15 +6,15 @@
 cdrom chromium ci cmake code commencement compression cpio cran curl
 databases dictionaries dns dunst file elf entr games gcc gdb gimp
 ghostscript golang gl glib gnome gnu-doc gnupg gnuzilla graphics
-graphviz gstreamer gtk guile guile-xyz haskell image-viewers
-imagemagick inkscape kde kodi libreoffice license linux lisp logging
-lsof lxde m4 mail man maths messaging ncdu ncurses networking node
-package-management parallel password-utils patchutils pdf perl
-perl-web php pulseaudio python python-xyz qt ratpoison readline
-rdesktop rsync samba scheme screen shellutils ssh statistics sqlite
-suckless synergy tex texinfo textutils text-editors tmux tls tor
-valgrind version-control video virtualization vpn w3m xfce web wget wm
-xdisorg xml xorg)
+graphviz gstreamer gtk guile guile-xyz haskell haskell-apps
+haskell-xyz image-viewers imagemagick inkscape kde kodi libreoffice
+license linux lisp logging lsof lxde m4 mail man maths messaging ncdu
+ncurses networking node package-management parallel password-utils
+patchutils pdf perl perl-web php pulseaudio python python-xyz qt
+ratpoison readline rdesktop rsync samba scheme screen shellutils ssh
+statistics sqlite suckless synergy tex texinfo textutils text-editors
+tmux tls tor valgrind version-control video virtualization vpn w3m
+xfce web wget wm xdisorg xml xorg)
 
 (define guix-collection-packages-multiout
   `((,glib "bin")
