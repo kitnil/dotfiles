@@ -2,6 +2,7 @@
              (srfi srfi-1)
              (srfi srfi-26)
              (services docker)
+             (services gitlab)
              (wigust packages lisp))
 
 (use-package-modules admin base certs linux lisp suckless xdisorg xorg fonts
@@ -237,23 +238,6 @@ EndSection")
                     (requirement '())
                     (start #~(make-forkexec-constructor
                               (list "/home/oleg/bin/run-nix-daemon")))
-                    (respawn? #f)
-                    (stop #~(make-kill-destructor))))))
-
-
-;;;
-;;; GitLab
-;;;
-
-(define gitlab-runner-service
-  (simple-service 'gitlab-runner shepherd-root-service-type
-                  (list
-                   (shepherd-service
-                    (provision '(gitlab-runner))
-                    (documentation "Run gitlab-runner.")
-                    (requirement '())
-                    (start #~(make-forkexec-constructor
-                              (list "/home/oleg/src/dotfiles/oleg/bin/gitlab-runner-service")))
                     (respawn? #f)
                     (stop #~(make-kill-destructor))))))
 
