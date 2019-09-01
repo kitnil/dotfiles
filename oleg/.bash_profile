@@ -22,7 +22,7 @@ export MANWIDTH=80
 
 export INFOPATH="$HOME/src/guix/doc${INFOPATH:+:}$INFOPATH"
 
-export PATH=$HOME/bin:$HOME/.npm-global/bin:$PATH
+export PATH=$HOME/bin:$HOME/.local/bin:$HOME/go/bin:$HOME/.npm-global/bin:$PATH
 
 export GUILE_WARN_DEPRECATED=no
 
