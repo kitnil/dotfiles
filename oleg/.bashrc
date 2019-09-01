@@ -630,3 +630,10 @@ nix-build-my()
 {
     nix-build --no-out-link '<nixpkgs>' -A $@
 }
+
+archive()
+{
+    for dir in $@; do
+        mv -vi "$dir" /home/oleg/archive/src/
+    done
+}
