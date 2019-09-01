@@ -517,6 +517,10 @@ EndSection")
            "172.16.103.51 galera2.intr"
            "172.16.103.50 galera3.intr"
 
+           "172.16.103.158 maxscale.intr"
+           "172.16.103.149 docker-registry.intr"
+           "172.16.103.150 nexus.intr"
+
            ,%facebook-host-aliases)
          "\n")))
 
