@@ -642,3 +642,6 @@ terraform-init()
 {
     terraform init -plugin-dir ~/.nix-profile/bin
 }
+
+alias tsw='tmuxifier s web'
+alias nn='notmuch new'
