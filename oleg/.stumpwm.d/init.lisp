@@ -522,6 +522,7 @@
             '(:eval (window-name (current-window)))
             "]"
             "^>    "
+            "%N"
             "    %d"))
 (setf *mode-line-pad-x* 0)
 (setf *mode-line-pad-y* 0)
@@ -916,3 +917,6 @@
   (run-shell-command "passmenu"))
 
 (define-key *top-map* (kbd "s-s") "passmenu")
+
+(load-module "notifications")
+(define-key *root-map* (kbd "N") notifications:*notifications-map*)
