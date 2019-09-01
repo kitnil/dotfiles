@@ -918,6 +918,12 @@
 
 (define-key *top-map* (kbd "s-s") "passmenu")
 
+(defcommand dunst-disable () ()
+  (run-shell-command "killall -SIGUSR1 dunst"))
+
+(defcommand dunst-enable () ()
+  (run-shell-command "killall -SIGUSR2 dunst"))
+
 (load-module "notifications")
 (define-key *root-map* (kbd "N") notifications:*notifications-map*)
 
