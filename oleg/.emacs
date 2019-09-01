@@ -3344,6 +3344,8 @@ If given a prefix, patch in the branch directory instead."
 (with-eval-after-load 'forge
   (setq forge-alist
         (append '(("gitlab.intr" "gitlab.intr/api/v4" "gitlab.intr"
+                   forge-gitlab-repository)
+                  ("gitlab.wugi.info" "gitlab.wugi.info/api/v4" "gitlab.wugi.info"
                    forge-gitlab-repository))
                 forge-alist)))
 
