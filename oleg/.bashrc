@@ -637,3 +637,8 @@ archive()
         mv -vi "$dir" /home/oleg/archive/src/
     done
 }
+
+terraform-init()
+{
+    terraform init -plugin-dir ~/.nix-profile/bin
+}
