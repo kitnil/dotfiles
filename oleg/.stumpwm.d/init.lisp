@@ -920,3 +920,5 @@
 
 (load-module "notifications")
 (define-key *root-map* (kbd "N") notifications:*notifications-map*)
+
+(load-module "command-history")
