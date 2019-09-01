@@ -293,6 +293,11 @@ guix-vm()
         -vga virtio -full-screen
 }
 
+myreconfigure-boot ()
+{
+    sudo -i guix system reconfigure --load-path="/home/oleg/src/dotfiles/fiore/modules" --substitute-urls='https://ci.guix.info http://cuirass.tld' /home/oleg/src/dotfiles/guixsd/config.scm
+}
+
 myreconfigure ()
 {
     sudo -i guix system reconfigure --load-path="/home/oleg/src/dotfiles/fiore/modules" --no-bootloader --substitute-urls='https://ci.guix.info http://cuirass.tld' /home/oleg/src/dotfiles/guixsd/config.scm
