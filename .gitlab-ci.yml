@@ -21,7 +21,6 @@ shedule:
     - git config user.email gitlab-runner@wugi.info
     - "git config user.name GitLab Runner"
     - "git commit -m 'channels.scm: Update channels.scm.'"
-    - ./build.sh
     - git remote set-url --push origin $(printf $CI_REPOSITORY_URL | perl -pe 's#.*@(.+?(\:\d+)?)/#git@\1:#')
     - git push origin HEAD:shedule-channels
   only:
