@@ -56,6 +56,10 @@ newspace."
          (url "https://gitlab.wugi.info/guix/guix-wigust.git")
          (commit (git-last-commit url)))
         (channel
+         (name 'guix-majordomo)
+         (url "https://gitlab-ci-token:uhd8qabRUz5dD-HQchLi@anongit.duckdns.org/guix/guix-majordomo.git")
+         (commit (git-last-commit url)))
+        (channel
          (name 'guix)
          (url "https://git.savannah.gnu.org/git/guix.git")
          (commit (git-last-commit url)))))
