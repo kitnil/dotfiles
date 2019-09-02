@@ -3,6 +3,7 @@
              (srfi srfi-26)
              (services docker)
              (services gitlab)
+             (services nix)
              (wigust packages lisp))
 
 (use-package-modules admin base certs linux lisp suckless xdisorg xorg fonts
@@ -223,26 +224,6 @@ EndSection")
 
 
 ;;;
-;;; nix
-;;;
-
-(use-modules (gnu services shepherd)
-             (gnu packages package-management))
-
-(define nix-service
-  (simple-service 'nix shepherd-root-service-type
-                  (list
-                   (shepherd-service
-                    (provision '(nix))
-                    (documentation "Run nix-daemon.")
-                    (requirement '())
-                    (start #~(make-forkexec-constructor
-                              (list "/home/oleg/bin/run-nix-daemon")))
-                    (respawn? #f)
-                    (stop #~(make-kill-destructor))))))
-
-
-;;;
 ;;; Entryp point
 ;;;
 
@@ -281,8 +262,6 @@ EndSection")
                        fping
 
                        adb
-
-                       nix
 
                        iptables bridge-utils
 

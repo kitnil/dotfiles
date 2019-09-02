@@ -6,7 +6,8 @@
 (use-service-modules desktop dbus monitoring networking ssh web)
 (use-modules (services autossh)
              (services docker)
-             (services gitlab))
+             (services gitlab)
+             (services nix))
 
 
 ;;;
@@ -324,5 +325,7 @@ ServerAliveCountMax 3"))))))
                           docker-service
 
                           gitlab-runner-service
+
+                          nix-service
 
                    %base-services)))
