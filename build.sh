@@ -13,5 +13,7 @@ for manifest in oleg maintenance; do
     "$GUIX_BIN" environment --verbosity=0 \
         --manifest="guix/manifests/$manifest.scm" -- sh -c exit
 done
-"$GUIX_BIN" system build --verbosity=0 \
-  --load-path=fiore/modules guixsd/config.scm
+for system in config spb; do
+    "$GUIX_BIN" system build --verbosity=0 \
+        --load-path=fiore/modules "guixsd/$system.scm"
+done
