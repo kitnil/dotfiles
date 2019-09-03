@@ -305,6 +305,7 @@ RemoteForward 0.0.0.0:19080 127.0.0.1:80
 RemoteForward 0.0.0.0:19081 127.0.0.1:8081
 RemoteForward 0.0.0.0:19300 127.0.0.1:3000
 LocalForward 0.0.0.0:8086 127.0.0.1:8086
+LocalForward 0.0.0.0:65022 127.0.0.1:65022
 Compression yes
 ExitOnForwardFailure yes
 ServerAliveInterval 30
