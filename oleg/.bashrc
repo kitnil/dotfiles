@@ -645,3 +645,4 @@ terraform-init()
 
 alias tsw='tmuxifier s web'
 alias nn='notmuch new'
+alias wtr='curl -H "Accept-Language: ru" wttr.in/Санкт-Петербург'
