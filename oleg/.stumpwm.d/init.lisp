@@ -919,10 +919,10 @@
 (define-key *top-map* (kbd "s-s") "passmenu")
 
 (defcommand dunst-disable () ()
-  (run-shell-command "killall -SIGUSR1 dunst"))
+  (run-shell-command "pkill -SIGUSR1 dunst"))
 
 (defcommand dunst-enable () ()
-  (run-shell-command "killall -SIGUSR2 dunst"))
+  (run-shell-command "pkill -SIGUSR2 dunst"))
 
 (defcommand pipeline-dotfiles () ()
   (run-shell-command "firefox https://gitlab.wugi.info/wigust/dotfiles/pipelines"))
