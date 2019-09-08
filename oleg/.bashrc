@@ -640,9 +640,43 @@ archive()
 
 terraform-init()
 {
-    terraform init -plugin-dir ~/.nix-profile/bin
+    terraform init \
+              -plugin-dir ~/.nix-profile/bin \
+              -plugin-dir ~/go/src/gitlab.intr/majordomo/terraform-provider-majordomo
 }
 
 alias tsw='tmuxifier s web'
 alias nn='notmuch new'
 alias wtr='curl -H "Accept-Language: ru" wttr.in/Санкт-Петербург'
+
+
+nixos-interactive-test()
+{
+    version="$1"
+    nix-build build.nix \
+              --cores 4 \
+              -A "nixpkgsUnstable.php$version-test.driver" \
+              --no-out-link --show-trace/bin/nixos-run-vms
+}
+
+terraform-plan()
+{
+    NIX_SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/Majordomo_LLC_Root_CA.crt" \
+                     SSL_CERT_DIR="$HOME/.guix-profile/etc/ssl/certs" \
+                     SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/ca-certificates.crt" \
+                     TF_VAR_GITLAB_TOKEN=***REMOVED*** \
+                     TF_VAR_MAJORDOMO_PASSWORD=***REMOVED*** \
+                     TF_VAR_MAJORDOMO_USER=pyhalov \
+                     terraform plan -out=plan
+}
+
+terraform-apply()
+{
+    NIX_SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/Majordomo_LLC_Root_CA.crt" \
+                     SSL_CERT_DIR="$HOME/.guix-profile/etc/ssl/certs" \
+                     SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/ca-certificates.crt" \
+                     TF_VAR_GITLAB_TOKEN=***REMOVED*** \
+                     TF_VAR_MAJORDOMO_PASSWORD=***REMOVED*** \
+                     TF_VAR_MAJORDOMO_USER=pyhalov \
+                     terraform apply "plan"
+}
