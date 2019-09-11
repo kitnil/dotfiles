@@ -13,10 +13,10 @@ then
     . "$HOME/.bash_aliases"
 fi
 
-if [ -f "$HOME/.guix-profile/etc/profile.d/autojump.sh" ]
-then
-    . "$HOME/.guix-profile/etc/profile.d/autojump.sh"
-fi
+# if [ -f "$HOME/.guix-profile/etc/profile.d/autojump.sh" ]
+# then
+#     . "$HOME/.guix-profile/etc/profile.d/autojump.sh"
+# fi
 
 # # http://puzan.info/linux/2014-05-14-direnv.html
 # if [ -f "$HOME/.guix-profile/bin/direnv" ]
