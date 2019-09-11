@@ -3349,6 +3349,13 @@ If given a prefix, patch in the branch directory instead."
                    forge-gitlab-repository))
                 forge-alist)))
 
+(run-with-timer 0 (* 20 60) '(lambda ()
+                               (interactive)
+                               (unless (get-buffer "*Summary INBOX*")
+                                 (mbsync)
+                                 (let ((mbsync-args '("-a" "--push")))
+                                   (mbsync)))))
+
 (defun work-host (host)
   "Insert host from work at current point."
   (interactive "sHost: ")
