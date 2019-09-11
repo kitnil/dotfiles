@@ -638,11 +638,14 @@ archive()
     done
 }
 
+terraform-init-with-nix()
+{
+    terraform init -plugin-dir ~/.nix-profile/bin $@
+}
+
 terraform-init()
 {
-    terraform init \
-              -plugin-dir ~/.nix-profile/bin \
-              -plugin-dir ~/go/src/gitlab.intr/majordomo/terraform-provider-majordomo
+    terraform-init-with-nix -plugin-dir ~/go/src/gitlab.intr/majordomo/terraform-provider-majordomo
 }
 
 alias tsw='tmuxifier s web'
@@ -659,6 +662,17 @@ nixos-interactive-test()
               --no-out-link --show-trace/bin/nixos-run-vms
 }
 
+terraform-refresh()
+{
+    NIX_SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/Majordomo_LLC_Root_CA.crt" \
+                     SSL_CERT_DIR="$HOME/.guix-profile/etc/ssl/certs" \
+                     SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/ca-certificates.crt" \
+                     TF_VAR_GITLAB_TOKEN=***REMOVED*** \
+                     TF_VAR_MAJORDOMO_PASSWORD=***REMOVED*** \
+                     TF_VAR_MAJORDOMO_USER=pyhalov \
+            terraform refresh
+}
+
 terraform-plan()
 {
     NIX_SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/Majordomo_LLC_Root_CA.crt" \
@@ -667,7 +681,18 @@ terraform-plan()
                      TF_VAR_GITLAB_TOKEN=***REMOVED*** \
                      TF_VAR_MAJORDOMO_PASSWORD=***REMOVED*** \
                      TF_VAR_MAJORDOMO_USER=pyhalov \
-                     terraform plan -out=plan
+            terraform plan -out=plan $@
+}
+
+terraform-import()
+{
+    NIX_SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/Majordomo_LLC_Root_CA.crt" \
+                     SSL_CERT_DIR="$HOME/.guix-profile/etc/ssl/certs" \
+                     SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/ca-certificates.crt" \
+                     TF_VAR_GITLAB_TOKEN=***REMOVED*** \
+                     TF_VAR_MAJORDOMO_PASSWORD=***REMOVED*** \
+                     TF_VAR_MAJORDOMO_USER=pyhalov \
+            terraform import $@
 }
 
 terraform-apply()
@@ -679,4 +704,36 @@ terraform-apply()
                      TF_VAR_MAJORDOMO_PASSWORD=***REMOVED*** \
                      TF_VAR_MAJORDOMO_USER=pyhalov \
                      terraform apply "plan"
+}
+
+terraform-apply-no-plan()
+{
+    NIX_SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/Majordomo_LLC_Root_CA.crt" \
+                     SSL_CERT_DIR="$HOME/.guix-profile/etc/ssl/certs" \
+                     SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/ca-certificates.crt" \
+                     TF_VAR_GITLAB_TOKEN=***REMOVED*** \
+                     TF_VAR_MAJORDOMO_PASSWORD=***REMOVED*** \
+                     TF_VAR_MAJORDOMO_USER=pyhalov \
+            terraform apply
+}
+
+terraform-plan-gitlab()
+{
+    grep resource gitlab/*.tf \
+        | awk '{ gsub("\"",""); print $2, $3 }' \
+        | sed 's/\s/./' \
+        | sed 's/^/-target=/' \
+        | xargs env NIX_SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/Majordomo_LLC_Root_CA.crt" SSL_CERT_DIR="$HOME/.guix-profile/etc/ssl/certs" SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/ca-certificates.crt" TF_VAR_GITLAB_TOKEN=***REMOVED*** TF_VAR_MAJORDOMO_PASSWORD=***REMOVED*** TF_VAR_MAJORDOMO_USER=pyhalov terraform plan -out=plan
+}
+
+find-yml()
+{
+    find -maxdepth 2 -name '*.yml' | grep -vF '.travis.yml' | grep -vF '.gitlab'
+}
+
+export GITHUB_TOKEN_TERRAFORMER=***REMOVED***
+
+terraformer-import-github()
+{
+    terraformer import majordomo --token $GITHUB_TOKEN --organizations wugi-emacs --resources=repositories
 }
