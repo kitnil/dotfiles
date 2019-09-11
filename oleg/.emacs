@@ -3439,3 +3439,4 @@ If given a prefix, patch in the branch directory instead."
  '(rainbow-delimiters-unmatched-face ((t (:foreground "red"))))
  '(mode-line-inactive ((t :foreground "grey20" :background "#ffffff" :inverse-video nil)))
  '(sh-heredoc ((t (:foreground "tan3")))))
+(put 'list-timers 'disabled nil)
