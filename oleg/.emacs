@@ -859,6 +859,8 @@ Sets the following basend on PREFIX-MAP:
 
 ; TODO: (bind-key "<C-tab>" #'hs-toggle-hiding scheme-mode-map)
 
+(add-to-list 'auto-mode-alist '("\\.tfstate" . json-mode))
+
 (mapc (lambda (lst)
         (add-to-list 'auto-mode-alist lst))
       '(("PKGBUILD ." shell-script-mode)
