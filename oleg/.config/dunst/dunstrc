@@ -29,7 +29,7 @@
     # the top and down respectively.
     # The width can be negative.  In this case the actual width is the
     # screen width minus the width defined in within the geometry option.
-    geometry = "500x5-30+50"
+    geometry = "600x5-30+70"
 
     # Show how many messages are currently hidden (because of geometry).
     indicate_hidden = yes
@@ -174,7 +174,7 @@
     sticky_history = yes
 
     # Maximum amount of notifications kept in history
-    history_length = 40
+    history_length = 100
 
     ### Misc/Advanced ###
 
@@ -252,8 +252,8 @@
     #icon = /path/to/icon
 
 [urgency_normal]
-    background = "#285577"
-    foreground = "#ffffff"
+    background = "#ffffff"
+    foreground = "#000000"
     timeout = 10
     # Icon for notifications with normal urgency, uncomment to enable
     #icon = /path/to/icon

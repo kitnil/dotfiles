@@ -31,13 +31,15 @@
 (run-shell-command "keynav")
 (run-shell-command "dunst")
 
-(set-msg-border-width 4)
-(setf *ignore-wm-inc-hints* t)
-(setf *maxsize-border-width* 5)
-(setf *message-window-y-padding* 3)
-(setf *normal-border-width* 5)
-(setf *transient-border-width* 5)
-(setf *window-border-style* :thin)
+(progn
+  (set-msg-border-width 4)
+  (setf *ignore-wm-inc-hints* t)
+  (setf *maxsize-border-width* 3)
+  (setf *message-window-y-padding* 3)
+  (setf *normal-border-width* 3)
+  (setf *transient-border-width* 3)
+  (setf *window-border-style* :thin)
+  )
 
 
 ;;;
@@ -483,20 +485,21 @@
 (setf *float-window-border* 0)
 (setf *float-window-title-height* 0)
 
-(defparameter dark-theme nil)
-(set-focus-color "#90EE90")
-(set-border-color "#90EE90")
-(set-float-focus-color "#90EE90")
+(defparameter dark-theme t)
+(progn
+  (set-focus-color "#90EE90")
+  (set-border-color "#90EE90")
+  (set-float-focus-color "#90EE90"))
 (defcommand toggle-theme () ()
   (if dark-theme
       (progn (setq *mode-line-border-color*     "#ffffff"
                    *mode-line-foreground-color* "#000000"
                    *mode-line-background-color* "#ffffff")
-             (set-win-bg-color "#dcdad5")
-             (set-unfocus-color "#FFFFFF")
+             (set-win-bg-color "#ffffff")
+             (set-unfocus-color "#ffffff")
              (set-fg-color "#000000")
              (set-bg-color "#ffffff")
-             (run-shell-command "xsetroot -solid grey")
+             (run-shell-command "xsetroot -solid '#ffffff'")
              (setq dark-theme nil))
       (progn (setq *mode-line-border-color*     "#000000"
                    *mode-line-foreground-color* "#ffffff"
@@ -508,6 +511,8 @@
              (run-shell-command "xsetroot -solid black")
              (setq dark-theme t))))
 (toggle-theme)
+(setq *suppress-frame-indicator* t)
+;; (sync-all-frame-windows (current-group))
 
 (setf *mode-line-timeout* 2)
 (setf *TIME-MODELINE-STRING* "%a, %e %b %Y %k:%M")
@@ -524,8 +529,9 @@
             "^>    "
             "%N"
             "    %d"))
-(setf *mode-line-pad-x* 0)
-(setf *mode-line-pad-y* 0)
+(setf *mode-line-pad-x* 10)
+(setf *mode-line-pad-y* 5)
+(setf *mode-line-border-width* 0)
 
 (defcommand warp-mouse-active-frame () ()
   "Move mouse cursor to the top right of current frame."
@@ -648,7 +654,7 @@
 (defcommand pass-eng () ()
   (run-shell-command "echo -n ***REMOVED*** | xclip -selection primary"))
 
-(defcommand pass () ()
+(defcommand pass-sup () ()
   (run-shell-command "echo -n ***REMOVED*** | xclip -selection primary"))
 
 (defun current-window-width ()
@@ -931,3 +937,13 @@
 (define-key *root-map* (kbd "N") notifications:*notifications-map*)
 
 (load-module "command-history")
+
+(load-module "swm-gaps")
+
+;; Head gaps run along the 4 borders of the monitor(s)
+(setf swm-gaps:*head-gaps-size* 5)
+
+;; Inner gaps run along all the 4 borders of a window
+(setf swm-gaps:*inner-gaps-size* 5)
+
+(setf swm-gaps:*outer-gaps-size* 0)
