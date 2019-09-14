@@ -1,0 +1,13 @@
+# key: mgu
+# name: majordomo-gitlab-user
+# --
+resource "gitlab_user" "$1" {
+  name             = "$2"
+  username         = "$1"
+  password         = "`(string-trim (shell-command-to-string "pwgen 8 1"))`"
+  email            = "$1@majordomo.ru"
+  is_admin         = false
+  projects_limit   = 0
+  can_create_group = false
+  is_external      = true
+}

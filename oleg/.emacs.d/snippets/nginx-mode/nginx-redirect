@@ -1,0 +1,10 @@
+# key: nginx-redirect
+# name: nginx-redirect
+# --
+server {
+    listen ${1:185.84.108.9};
+    server_name  ${2:example.com} www.$2;
+    location / {
+        rewrite ^(.*)  ${3:$$(yas-choose-value "https" "http")}://${4:example.ru} permanent;
+    }
+}

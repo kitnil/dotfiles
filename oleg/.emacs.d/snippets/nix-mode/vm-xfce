@@ -1,0 +1,17 @@
+# -*- mode: snippet -*-
+# name: vm-xfce
+# key: vm-xfce
+# --
+users.users.alice =
+{
+  isNormalUser = true;
+  description = "Alice Foobar";
+  password = "foobar";
+  extraGroups = [ "wheel" "networkmanager" ];
+};
+
+services.xserver.enable = true;
+services.xserver.displayManager.auto.enable = true;
+services.xserver.displayManager.auto.user = "alice";
+services.xserver.desktopManager.xfce.enable = true;
+environment.systemPackages = [ pkgs.xorg.xmessage ];

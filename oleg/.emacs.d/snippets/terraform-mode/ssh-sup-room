@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: ss
+# key: ss
+# --
+resource "majordomo_server_socket" "$1_ssh_sup" {
+  name = "ssh-sup-room-ssh@$1"
+  address = "$2"
+  port = 1022
+}

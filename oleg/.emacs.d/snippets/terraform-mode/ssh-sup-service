@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: service-ssh
+# key: ssh
+# --
+resource "majordomo_server_service" "service_ssh_sup_$1" {
+  sockets = ["\${majordomo_server_socket.socket_ssh_sup_$1.id}"]
+  template = "5d67938df7619300012fbbdd"
+  name = "ssh-sup-room@$1"
+}
