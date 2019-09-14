@@ -860,6 +860,7 @@ Sets the following basend on PREFIX-MAP:
 ; TODO: (bind-key "<C-tab>" #'hs-toggle-hiding scheme-mode-map)
 
 (add-to-list 'auto-mode-alist '("\\.tfstate" . json-mode))
+(add-to-list 'auto-mode-alist '("bashrc" . sh-mode))
 
 (mapc (lambda (lst)
         (add-to-list 'auto-mode-alist lst))
