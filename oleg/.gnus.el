@@ -168,8 +168,8 @@ below otherwise."
     (define-key map (kbd "<f5>") 'mbsync)
     (define-key map (kbd "<f6>") 'org-capture)))
 
-(gnus-add-configuration
-   '(article
-    (horizontal 1.0
-               (summary 0.60 point)
-               (article 1.0))))
+;; (gnus-add-configuration
+;;    '(article
+;;     (horizontal 1.0
+;;                (summary 0.60 point)
+;;                (article 1.0))))
