@@ -576,14 +576,17 @@
   (run-shell-command "if pgrep -f osd-sound > /dev/null; then pkill osd-sound; osd-sound; else osd-sound; fi"))
 
 (defcommand volume-decrease () ()
-  (run-shell-command "osd-sound sset Master 5%-"))
+  (run-shell-command "ponymix decrease 5"))
 
 (defcommand volume-increase () ()
-  (run-shell-command "osd-sound sset Master 5%+"))
+  (run-shell-command "ponymix increase 5"))
 
 (define-interactive-keymap volume nil
   ((kbd "-") "volume-decrease")
   ((kbd "=") "volume-increase"))
+
+(define-key *top-map* (kbd "s-KP_Add") "volume-increase")
+(define-key *top-map* (kbd "s-KP_Subtract") "volume-decrease")
 
 (define-key *root-map* (kbd "c") "run-xterm")
 (define-key *root-map* (kbd "C-c") "run-xterm")
