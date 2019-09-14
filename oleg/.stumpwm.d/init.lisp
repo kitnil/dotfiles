@@ -595,8 +595,8 @@
 
 ;; Rebind groups to PREFIX-NUMBER.
 (mapcar #'(lambda (x) (define-key *top-map* (kbd (concat "s-" (write-to-string x)))
-                        (format nil "~A ~D" "gselect" x)))
-        (range 10 :min 1 :step 1))
+                   (format nil "~A ~D" "select-window-by-number" x)))
+        (range 10 :min 0 :step 1))
 
 (define-key *top-map* (kbd "M-s-n") "gnext")
 (define-key *top-map* (kbd "M-s-p") "gprev")
