@@ -706,7 +706,7 @@
     (firefox "https://gitlab.wugi.info/" t))
 
   (defcommand music-youtube () ()
-    (firefox "https://music.youtube.com/" t))
+    (run-shell-command "chromium --app=https://music.youtube.com/"))
 
   (defcommand youtube () ()
     (firefox "https://www.youtube.com/feed/subscriptions" t))
