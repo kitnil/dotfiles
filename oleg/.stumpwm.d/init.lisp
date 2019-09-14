@@ -819,11 +819,11 @@
 
 (defcommand window-resize-by-half-horizontal () ()
   ""
-  (resize (- (/ (parse-integer (format-expand *window-formatters* "%w" (current-window))) 2)) 0))
+  (resize (- (round (/ (parse-integer (format-expand *window-formatters* "%w" (current-window))) 2.0))) 0))
 
 (defcommand window-resize-by-half-vertical () ()
   ""
-  (resize 0 (- (/ (parse-integer (format-expand *window-formatters* "%h" (current-window))) 2))))
+  (resize 0 (- (round (/ (parse-integer (format-expand *window-formatters* "%h" (current-window))) 2)))))
 
 (defcommand emms () ()
   (unless (uiop/utility:string-prefix-p "emacs"
