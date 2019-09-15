@@ -10,7 +10,6 @@
 (setf *message-window-gravity* :center)
 (setf *input-window-gravity* :center)
 
-(run-shell-command "sxhkd")
 (run-shell-command "xsetroot -cursor_name left_ptr")
 (run-shell-command "xrdb -merge /home/oleg/.Xresources")
 (run-shell-command "xsetroot -solid black") ; Wallpaper
@@ -28,8 +27,6 @@
 (run-shell-command "setxkbmap -layout us,ru -option grp:win_space_toggle")
 
 (run-shell-command "xmodmap " "/home/oleg/.Xmodmap")
-(run-shell-command "keynav")
-(run-shell-command "clipmenud")
 
 (progn
   (set-msg-border-width 4)

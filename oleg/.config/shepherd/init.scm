@@ -47,6 +47,16 @@
                                                "--eval" "'(let (kill-emacs-hook) (kill-emacs))'")))
     #:respawn? #f))
 
+(define clipmenud-service
+  (make <service>
+    #:docstring '("Clipmenud daemon")
+    #:provides '(clipmenud)
+    #:start (make-forkexec-constructor
+             (list (string-append %bin-directory "clipmenud")))
+    #:stop
+    (make-kill-destructor)
+    #:respawn? #f))
+
 (define dunst-service
   (make <service>
     #:docstring '("Dunst daemon")
@@ -59,6 +69,26 @@
     (make-kill-destructor)
     #:respawn? #f))
 
-(register-services dunst-service emacs-service firefox-service redshift-service transmission-service)
-(for-each start '(dunst emacs firefox redshift transmission))
+(define keynav-service
+  (make <service>
+    #:docstring '("Keynav daemon")
+    #:provides '(keynav)
+    #:start (make-forkexec-constructor
+             (list (string-append %bin-directory "keynav")))
+    #:stop
+    (make-kill-destructor)
+    #:respawn? #f))
+
+(define sxhkd-service
+  (make <service>
+    #:docstring '("Sxhkd daemon")
+    #:provides '(sxhkd)
+    #:start (make-forkexec-constructor
+             (list (string-append %bin-directory "sxhkd")))
+    #:stop
+    (make-kill-destructor)
+    #:respawn? #f))
+
+(register-services clipmenud-service dunst-service keynav-service sxhkd-service emacs-service firefox-service redshift-service transmission-service)
+(for-each start '(clipmenud dunst keynav sxhkd emacs firefox redshift transmission))
 (action 'shepherd 'daemonize)
