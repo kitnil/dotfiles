@@ -47,6 +47,18 @@
                                                "--eval" "'(let (kill-emacs-hook) (kill-emacs))'")))
     #:respawn? #f))
 
-(register-services emacs-service firefox-service redshift-service transmission-service)
-(for-each start '(emacs firefox redshift transmission))
+(define dunst-service
+  (make <service>
+    #:docstring '("Dunst daemon")
+    #:provides '(dunst)
+    #:start (make-forkexec-constructor
+             (list (string-join (list (string-append %bin-directory "dunst")))
+                   "-print")
+             #:log-file "/home/oleg/.config/shepherd/dunst.log")
+    #:stop
+    (make-kill-destructor)
+    #:respawn? #f))
+
+(register-services dunst-service emacs-service firefox-service redshift-service transmission-service)
+(for-each start '(dunst emacs firefox redshift transmission))
 (action 'shepherd 'daemonize)

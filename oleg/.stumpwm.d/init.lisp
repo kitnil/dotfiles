@@ -29,7 +29,6 @@
 
 (run-shell-command "xmodmap " "/home/oleg/.Xmodmap")
 (run-shell-command "keynav")
-(run-shell-command "dunst")
 (run-shell-command "clipmenud")
 
 (progn
