@@ -82,7 +82,8 @@
 (restore-from-file "/home/oleg/src/dotfiles/oleg/.stumpwm.d/desktop/7.lisp")
 
 (define-frame-preference "Default" (1 NIL T :CLASS "mpv" :TITLE "emacs-emms"))
-(define-frame-preference "Default" (1 NIL T :CLASS "mpv" :TITLE "firefox"))
+(define-frame-preference "Default" (3 NIL T :CLASS "mpv" :TITLE "firefox"))
+(define-frame-preference "Default" (4 NIL T :CLASS "XTerm" :TITLE "alerta"))
 
 
 ;;;

@@ -52,7 +52,7 @@
     #:docstring '("Clipmenud daemon")
     #:provides '(clipmenud)
     #:start (make-forkexec-constructor
-             (list (string-append %bin-directory "clipmenud")))
+             (list (string-append "/home/oleg/.nix-profile/bin/clipmenud")))
     #:stop
     (make-kill-destructor)
     #:respawn? #f))
@@ -89,6 +89,34 @@
     (make-kill-destructor)
     #:respawn? #f))
 
-(register-services clipmenud-service dunst-service keynav-service sxhkd-service emacs-service firefox-service redshift-service transmission-service)
-(for-each start '(clipmenud dunst keynav sxhkd emacs firefox redshift transmission))
+(define alerta-service
+  (make <service>
+    #:docstring '("Alerta")
+    #:provides '(alerta)
+    #:start (make-forkexec-constructor
+             (list "/home/oleg/bin/majordomo-alerta"))
+    #:stop
+    (make-kill-destructor)
+    #:respawn? #f))
+
+(register-services alerta-service
+                   clipmenud-service
+                   dunst-service
+                   keynav-service
+                   sxhkd-service
+                   emacs-service
+                   firefox-service
+                   redshift-service
+                   transmission-service)
+
+(for-each start '(clipmenud
+                  dunst
+                  keynav
+                  sxhkd
+                  emacs
+                  firefox
+                  redshift
+                  transmission
+                  alerta))
+
 (action 'shepherd 'daemonize)
