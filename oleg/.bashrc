@@ -759,3 +759,10 @@ herd-reload()
 {
     herd reload root "$HOME/.config/shepherd/init.scm"
 }
+
+herd-kill-services-via-awk()
+{
+    for service in $(awk '/define.*service/ { print $NF }' .config/shepherd/init.scm | sed 's/-service//'); do
+        pkill "$service"
+    done
+}
