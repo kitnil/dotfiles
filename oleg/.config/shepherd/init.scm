@@ -1,24 +1,38 @@
 (use-modules (shepherd service))
 
 (define %bin-directory "/home/oleg/.guix-profile/bin/")
+(define %redshift (string-append %bin-directory "redshift"))
 
-(define redshift
+(define redshift-service
   (make <service>
     #:docstring '("Adjust the color temperature of your screen.")
     #:provides '(redshift)
     #:start (make-forkexec-constructor
-             `(,(string-append %bin-directory "redshift") "-l" "59:57"))
-    #:stop (make-kill-destructor)
-    #:respawn? #t))
+             (list %redshift "-O" "4000")
+             #:log-file "/home/oleg/.config/shepherd/redshift.log")
+    #:stop (make-system-destructor (string-join (list %redshift "-x")))
+    #:respawn? #f))
 
 (define transmission
   (make <service>
     #:docstring '("Light-weight BitTorrent client")
     #:provides '(transmission)
     #:start (make-forkexec-constructor
-             (list (string-append %bin-directory "transmission-daemon")))
+             (list (string-append %bin-directory "transmission-daemon"))
+             #:log-file "/home/oleg/.config/shepherd/transmission.log")
     #:stop (make-kill-destructor)
     #:respawn? #t))
+
+(define firefox-service
+  (make <service>
+    #:docstring '("Firefox daemon")
+    #:provides '(firefox)
+    #:start (make-forkexec-constructor
+             (list "/home/oleg/.nix-profile/bin/firefox")
+             #:log-file "/home/oleg/.config/shepherd/firefox.log")
+    #:stop
+    (make-kill-destructor)
+    #:respawn? #f))
 
 (define emacs-service
   (make <service>
@@ -33,7 +47,6 @@
                                                "--eval" "'(let (kill-emacs-hook) (kill-emacs))'")))
     #:respawn? #f))
 
-(register-services emacs-service)
-(start 'emacs)
-
+(register-services emacs-service firefox-service redshift-service)
+(for-each start '(emacs firefox redshift))
 (action 'shepherd 'daemonize)
