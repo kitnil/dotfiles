@@ -744,3 +744,8 @@ ssh-guix-log-file()
     file="$2"
     ssh "$host" -- guix build --log-file "$file" | xargs ssh "$host" -- bzcat
 }
+
+web()
+{
+    tmux at -t web
+}
