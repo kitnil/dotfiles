@@ -99,6 +99,17 @@
     (make-kill-destructor)
     #:respawn? #f))
 
+(define znc-service
+  (make <service>
+    #:docstring '("Znc")
+    #:provides '(znc)
+    #:start (make-forkexec-constructor
+             (list "/home/oleg/.guix-profile/bin/znc" "--foreground" "--no-color")
+             #:log-file "/home/oleg/.config/shepherd/znc.log")
+    #:stop
+    (make-kill-destructor)
+    #:respawn? #f))
+
 (register-services alerta-service
                    clipmenud-service
                    dunst-service
@@ -107,7 +118,8 @@
                    emacs-service
                    firefox-service
                    redshift-service
-                   transmission-service)
+                   transmission-service
+                   znc-service)
 
 (for-each start '(clipmenud
                   dunst
@@ -117,6 +129,7 @@
                   firefox
                   redshift
                   transmission
-                  alerta))
+                  alerta
+                  znc))
 
 (action 'shepherd 'daemonize)
