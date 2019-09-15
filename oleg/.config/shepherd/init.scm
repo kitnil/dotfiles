@@ -13,7 +13,7 @@
     #:stop (make-system-destructor (string-join (list %redshift "-x")))
     #:respawn? #f))
 
-(define transmission
+(define transmission-service
   (make <service>
     #:docstring '("Light-weight BitTorrent client")
     #:provides '(transmission)
@@ -47,6 +47,6 @@
                                                "--eval" "'(let (kill-emacs-hook) (kill-emacs))'")))
     #:respawn? #f))
 
-(register-services emacs-service firefox-service redshift-service)
-(for-each start '(emacs firefox redshift))
+(register-services emacs-service firefox-service redshift-service transmission-service)
+(for-each start '(emacs firefox redshift transmission))
 (action 'shepherd 'daemonize)
