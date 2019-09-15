@@ -749,3 +749,8 @@ web()
 {
     tmux at -t web
 }
+
+alerta-top()
+{
+    ssh -t work -- 'while true; do .local/bin/alerta top; done'
+}
