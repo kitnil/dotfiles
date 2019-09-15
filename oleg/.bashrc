@@ -754,3 +754,8 @@ alerta-top()
 {
     ssh -t work -- 'while true; do .local/bin/alerta top; done'
 }
+
+herd-reload()
+{
+    herd reload root "$HOME/.config/shepherd/init.scm"
+}
