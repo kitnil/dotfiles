@@ -902,6 +902,24 @@
 (defcommand alerta-close-youtube () ()
   (run-shell-command "alerta close --filter resource=YouTube"))
 
+(define-remapped-keys
+    '(("(Firefox|Chrome)"
+       ("C-n"   . "Down")
+       ("C-p"   . "Up")
+       ("C-f"   . "Right")
+       ("C-b"   . "Left")
+       ("C-v"   . "Next")
+       ("M-v"   . "Prior")
+       ;; ("M-w"   . "C-c")
+       ;; ("C-w"   . "C-x")
+       ;; ("C-y"   . "C-v")
+       ;; ("M-<"   . "Home")
+       ;; ("M->"   . "End")
+       ;; ("C-M-b" . "M-Left")
+       ;; ("C-M-f" . "M-Right")
+       ;; ("C-k"   . ("C-S-End" "C-x"))
+       )))
+
 ;; https://lists.gnu.org/archive/html/help-guix/2017-01/msg00033.html
 (require "asdf")
 (load "/home/oleg/.guix-profile/share/emacs/site-lisp/guix.d/slime-2.23/swank.asd")
