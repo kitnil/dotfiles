@@ -641,6 +641,9 @@
 (defcommand ponymix-increase () ()
   (run-shell-command "ponymix increase 5"))
 
+(define-key *top-map* (kbd "s-=") "ponymix-increase")
+(define-key *top-map* (kbd "s--") "ponymix-decrease")
+
 (define-key *top-map* (kbd "XF86AudioRaiseVolume") "ponymix-increase")
 (define-key *top-map* (kbd "XF86AudioLowerVolume") "ponymix-decrease")
 
