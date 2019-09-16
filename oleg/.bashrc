@@ -766,3 +766,9 @@ herd-kill-services-via-awk()
         pkill "$service"
     done
 }
+
+web-active-current()
+{
+    curl -H 'PRIVATE-TOKEN: ***REMOVED***' -s -k -L \
+            'https://gitlab.intr/hms/config-repo/raw/master/rc-staff-prod.yml'
+}
