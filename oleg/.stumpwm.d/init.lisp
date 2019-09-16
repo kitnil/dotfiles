@@ -4,7 +4,7 @@
 (in-package :stumpwm)
 
 (set-module-dir "/home/oleg/.stumpwm.d/modules/")
-(set-prefix-key (kbd "C-i"))
+;; (set-prefix-key (kbd "C-t"))
 
 (setf *startup-message* nil)
 (setf *message-window-gravity* :center)
@@ -532,6 +532,7 @@
 (setf *mode-line-pad-x* 10)
 (setf *mode-line-pad-y* 5)
 (setf *mode-line-border-width* 0)
+(mode-line)
 
 (defcommand warp-mouse-active-frame () ()
   "Move mouse cursor to the top right of current frame."
@@ -909,10 +910,10 @@
     '(("(Firefox|Chrome)"
        ("C-n"   . "Down")
        ("C-p"   . "Up")
-       ("C-f"   . "Right")
-       ("C-b"   . "Left")
-       ("C-v"   . "Next")
-       ("M-v"   . "Prior")
+       ;; ("C-f"   . "Right")
+       ;; ("C-b"   . "Left")
+       ;; ("C-v"   . "Next")
+       ;; ("M-v"   . "Prior")
        ;; ("M-w"   . "C-c")
        ;; ("C-w"   . "C-x")
        ;; ("C-y"   . "C-v")
