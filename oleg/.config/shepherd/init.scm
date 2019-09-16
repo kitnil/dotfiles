@@ -110,6 +110,16 @@
     (make-kill-destructor)
     #:respawn? #f))
 
+(define kdeconnect-service
+  (make <service>
+    #:docstring '("kdeconnect")
+    #:provides '(kdeconnect)
+    #:start (make-forkexec-constructor
+             (list "/home/oleg/.guix-profile/bin/kdeconnect-indicator"))
+    #:stop
+    (make-kill-destructor)
+    #:respawn? #f))
+
 (register-services alerta-service
                    clipmenud-service
                    dunst-service
@@ -119,7 +129,8 @@
                    firefox-service
                    redshift-service
                    transmission-service
-                   znc-service)
+                   znc-service
+                   kdeconnect-service)
 
 (for-each start '(clipmenud
                   dunst
@@ -130,6 +141,7 @@
                   redshift
                   transmission
                   alerta
-                  znc))
+                  znc
+                  kdeconnect))
 
 (action 'shepherd 'daemonize)
