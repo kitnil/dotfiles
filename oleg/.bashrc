@@ -779,3 +779,9 @@ web-active-current()
     curl -H 'PRIVATE-TOKEN: ***REMOVED***' -s -k -L \
             'https://gitlab.intr/hms/config-repo/raw/master/rc-staff-prod.yml'
 }
+
+docker-strace()
+{
+    container="$1"
+    docker top "$container" | tail -n +2 | awk '{ print $2 }' | sed 's/^/-p/' | xargs strace -f -s 4096
+}
