@@ -587,6 +587,13 @@ skopeo-mj()
     skopeo copy --dest-creds=gradle:***REMOVED*** --dest-tls-verify=false "docker-archive:$tar" "docker://docker-registry.intr/webservices/$image:master"
 }
 
+skopeo-fetch()
+{
+    image="$1"
+    dest="$2"
+    skopeo copy --dest-creds=gradle:***REMOVED*** --dest-tls-verify=false "docker-archive:$tar" "docker://docker-registry.intr/$image" "docker-archive:$dest"
+}
+
 git-guix-pre-new-build()
 {
     number="$1"
