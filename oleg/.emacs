@@ -1285,6 +1285,27 @@ for COMMIT, defaulting to the commit hash at point."
           (lambda ()
             (set (make-local-variable 'prettify-symbols-alist)
                  wi-elisp--prettify-symbols-alist)))
+
+
+;;;
+;;; NIX
+;;;
+
+(defvar wi-nix--prettify-symbols-alist
+  '(("versionAtLeastCut" . ?≥)
+    ("versionOlderCut" . ?<)
+    ("deleteTests" . ?Ø)
+    ("++" . 10746)
+    ("!=" . ?≠)
+    ("&&" . ?∧)
+    ("||" . ?∨))
+  "Alist of symbol prettifications for `nix-mode'.")
+
+(add-hook 'nix-mode-hook
+          (lambda ()
+            (set (make-local-variable 'prettify-symbols-alist)
+                 wi-nix--prettify-symbols-alist)))
+
 
 ;;;
 ;;; Guile
