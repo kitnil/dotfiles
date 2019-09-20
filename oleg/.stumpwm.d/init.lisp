@@ -186,9 +186,7 @@
 
 (defcommand youtube () ()
   "Start Chromium YouTube"
-  (run-shell-command (concat "chromium"
-                             " --profile-directory=Default"
-                             " --app-id=adnlfjpnmidfimlkaohpidplnoimahfh")))
+  (run-shell-command "chromium --app=https://youtube.com/"))
 
 
 ;;;
