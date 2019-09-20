@@ -1298,7 +1298,11 @@ for COMMIT, defaulting to the commit hash at point."
     ("++" . 10746)
     ("!=" . ?≠)
     ("&&" . ?∧)
-    ("||" . ?∨))
+    ("||" . ?∨)
+    ("generic" . ?g)
+    ("version" . ?v)
+    ("optional" . ?o)
+    ("optionals" . (?o (Br . Bl) ?s)))
   "Alist of symbol prettifications for `nix-mode'.")
 
 (add-hook 'nix-mode-hook
