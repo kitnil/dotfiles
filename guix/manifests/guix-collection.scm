@@ -100,7 +100,7 @@ xfce web wget wm xdisorg xml xorg)
                alsa-utils cli-visualizer pulsemixer pavucontrol
 
                ;; WEB
-               iceca
+               icecat
                ;; broken: ungoogled-chromium
 
                ;; XXX: Broken test phase
