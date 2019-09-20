@@ -79,7 +79,7 @@
     (restore-window-placement-rules rules)
     (place-existing-windows)))
 
-(restore-from-file "/home/oleg/src/dotfiles/oleg/.stumpwm.d/desktop/7.lisp")
+(restore-from-file "/home/oleg/src/dotfiles/oleg/.stumpwm.d/desktop/8.lisp")
 
 (define-frame-preference "Default" (1 NIL T :CLASS "mpv" :TITLE "emacs-emms"))
 (define-frame-preference "Default" (3 NIL T :CLASS "mpv" :TITLE "firefox"))
