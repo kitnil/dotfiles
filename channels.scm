@@ -2,7 +2,7 @@
         (name 'guix)
         (url "https://git.savannah.gnu.org/git/guix.git")
         (commit
-         "4afdb792497472b968d818a3ed942beb70210389"))
+         "ee6bfffe1984c63070e5c9510722b586ccd4b35d"))
       (channel
        (name 'guix-wigust)
        (url "@CI_PROJECT_URL@")
