@@ -1415,3 +1415,24 @@ minor mode whose purpose is to automatically feed TRAMP sub-processes with
 passwords for paths matching regexps.")
       (license license:gpl3+))))
 
+(define-public emacs-apache-mode
+  (let ((commit "354f9302a8d805ac80d846adcd1cef10830b3d51"))
+    (package
+      (name "emacs-apache-mode")
+      (version "2.2.0")
+      (source (origin
+                (method git-fetch)
+                (uri (git-reference
+                      (url "https://github.com/emacs-php/apache-mode.git")
+                      (commit version)))
+                (file-name (git-file-name name version))
+                (sha256
+                 (base32
+                  "1grs2x51k8pa6sgfa82s5pwwdfv7zw46ccw0zvd2rvzbhpq21p2z"))))
+      (build-system emacs-build-system)
+      (home-page "https://github.com/emacs-php/apache-mode/")
+      (synopsis "Major mode for editing Apache configuration files")
+      (description "This package provides an Emacs major mode for editing
+Apache configuration files.")
+      (license license:gpl2+))))
+
