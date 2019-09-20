@@ -100,7 +100,8 @@ xfce web wget wm xdisorg xml xorg)
                alsa-utils cli-visualizer pulsemixer pavucontrol
 
                ;; WEB
-               icecat ungoogled-chromium
+               iceca
+               ;; broken: ungoogled-chromium
 
                ;; XXX: Broken test phase
                ;; node ;Packages in <~/.npm-global/bin/>.
