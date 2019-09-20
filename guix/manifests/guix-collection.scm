@@ -102,7 +102,8 @@ xfce web wget wm xdisorg xml xorg)
                ;; WEB
                icecat ungoogled-chromium
 
-               node ;Packages in <~/.npm-global/bin/>.
+               ;; XXX: Broken test phase
+               ;; node ;Packages in <~/.npm-global/bin/>.
 
                tor torsocks
 

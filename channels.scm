@@ -2,7 +2,7 @@
         (name 'guix-wigust)
         (url "https://gitlab.wugi.info/guix/guix-wigust.git")
         (commit
-          "484dae6905026379d4542e160897e20f6cd87788"))
+         "a2a0cd58ac72899822bcce5a7975ce3370125f9f"))
       (channel
         (name 'guix-majordomo)
         (url "https://gitlab-ci-token:uhd8qabRUz5dD-HQchLi@anongit.duckdns.org/guix/guix-majordomo.git")

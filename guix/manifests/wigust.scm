@@ -2,6 +2,7 @@
              (wigust packages databases)
              (wigust packages emacs)
              (wigust packages guix)
+             (wigust packages node)
              (wigust packages pulseaudio)
              (wigust packages python)
              (wigust packages ruby)
@@ -56,5 +57,7 @@
 
   python-open-with
 
-  guix-wigust-packages-emacs))
+  guix-wigust-packages-emacs
+
+  node-fixed))
 
