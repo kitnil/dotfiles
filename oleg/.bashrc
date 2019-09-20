@@ -388,12 +388,17 @@ ansible-docker-ps()
     ansible swarm -m shell -a 'docker ps' --become
 }
 
+docker_list_intr()
+{
+    curl -s -X GET -k -u 'gradle:***REMOVED***' https://docker-registry.intr/v2/_catalog \
+        | jq -r '.repositories[]' \
+        | grep "$group/"
+}
+
 docker-pull-intr()
 {
     group="$1" # For example: “mail”.
-    for repo in $(curl -s -X GET -k -u 'gradle:***REMOVED***' https://docker-registry.intr/v2/_catalog \
-                      | jq -r '.repositories[]' \
-                      | grep "$group/"); do
+    for repo in $docker_list_intr; do
         docker pull "docker-registry.intr/$repo"
     done
 }
@@ -591,7 +596,7 @@ skopeo-fetch()
 {
     image="$1"
     dest="$2"
-    skopeo copy --dest-creds=gradle:***REMOVED*** --dest-tls-verify=false "docker-archive:$tar" "docker://docker-registry.intr/$image" "docker-archive:$dest"
+    skopeo copy --dest-creds=gradle:***REMOVED*** --src-tls-verify=false --dest-tls-verify=false "docker://docker-registry.intr/$image" "docker-archive:$dest"
 }
 
 git-guix-pre-new-build()
