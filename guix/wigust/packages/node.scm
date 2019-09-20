@@ -21,17 +21,20 @@
   #:use-module (guix derivations)
   #:use-module (guix download)
   #:use-module (gnu packages)
-  #:use-module (gnu packages node))
+  #:use-module (gnu packages node)
+  #:use-module (guix utils))
 
-(define node-fixed
+(define-public node-fixed
   (package
     (inherit node)
-    (substitute-keyword-arguments (package-arguments node)
-      ((#:phases phases)
-       `(modify-phases ,phases
-          (add-after 'unpack 'delete-failing-tests
-            (lambda _
-              ;; FIXME: These tests fail with openssl@1.1.1d.
-              (for-each delete-file
-                        '("test/parallel/test-crypto-binary-default.js"
-                          "test/parallel/test-crypto-dh.js")))))))))
+    (name "node-fixed")
+    (arguments
+     (substitute-keyword-arguments (package-arguments node)
+       ((#:phases phases)
+        `(modify-phases ,phases
+           (add-after 'unpack 'delete-failing-tests
+             (lambda _
+               ;; FIXME: These tests fail with openssl@1.1.1d.
+               (for-each delete-file
+                         '("test/parallel/test-crypto-binary-default.js"
+                           "test/parallel/test-crypto-dh.js"))))))))))
