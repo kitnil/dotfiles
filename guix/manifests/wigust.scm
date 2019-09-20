@@ -57,7 +57,7 @@
 
   python-open-with
 
-  guix-wigust-packages-emacs
+  node-fixed
 
-  node-fixed))
+  guix-wigust-packages-emacs))
 
