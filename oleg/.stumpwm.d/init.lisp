@@ -711,7 +711,10 @@
     (firefox "https://gitlab.wugi.info/" t))
 
   (defcommand music-youtube () ()
-    (run-shell-command "chromium --app=https://music.youtube.com/"))
+    (run-or-raise "chromium --app=https://music.youtube.com/"
+                  '(:instance "music.youtube.com")))
+
+  (define-key *top-map* (kbd "s-j") "music-youtube")
 
   (defcommand youtube () ()
     (firefox "https://www.youtube.com/feed/subscriptions" t))
