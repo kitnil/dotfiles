@@ -2091,7 +2091,7 @@ the appropriate network slug that we extract from the nick."
 (setq znc-erc-connector 'vbe:znc-erc-connector)
 
 ;; ;; Define networks
-(znc-setup "localhost" 8060 "natsu" '(freenode perl p2p twitch))
+(znc-setup "localhost" 8060 "natsu" '(freenode))
 
 
 ;;;
