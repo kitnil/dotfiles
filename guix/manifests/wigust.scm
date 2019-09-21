@@ -2,7 +2,6 @@
              (wigust packages databases)
              (wigust packages emacs)
              (wigust packages guix)
-             (wigust packages node)
              (wigust packages pulseaudio)
              (wigust packages python)
              (wigust packages ruby)
@@ -56,8 +55,6 @@
   dynamips ;gns3 requirement
 
   python-open-with
-
-  node-fixed
 
   guix-wigust-packages-emacs))
 
