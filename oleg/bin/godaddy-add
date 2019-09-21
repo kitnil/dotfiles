@@ -1,7 +1,15 @@
 #!/bin/sh
 
+set -e -x
+
 passwords=$(pass show godaddy.com/api/lexicon)
 key=$(echo "$passwords" | recsel --print-values=key)
 secret=$(echo "$passwords" | recsel --print-values=secret)
+domain="$1"
+ip="$2"
 
-docker run --rm -it analogj/lexicon /usr/local/bin/lexicon godaddy list --auth-key "$key" --auth-secret "$secret" wugi.info "$@"
+# Command is taken from https://github.com/AnalogJ/lexicon/issues/279
+# lexicon godaddy create domain.xyz NS --name 'test-1' --content 'ns-763.awsdns-31.net' --log_level DEBUG --output QUIET
+docker run --rm -it analogj/lexicon /usr/local/bin/lexicon godaddy create \
+       --auth-key "$key" --auth-secret "$secret" \
+       wugi.info A --name "$domain" --content "$ip"
