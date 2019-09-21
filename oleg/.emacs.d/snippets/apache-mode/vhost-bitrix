@@ -1,0 +1,41 @@
+# -*- mode: snippet -*-
+# name: vhost
+# key: vhost
+# --
+<VirtualHost 127.0.0.1:${1:port}>
+    ServerName ${2:domain}
+    ServerAlias www.${2:domain}
+    ScriptAlias /cgi-bin /home/${3:web-root}/${2:domain}/www/cgi-bin
+    DocumentRoot /home/${3:web-root}/${2:domain}/www
+    <Directory /home/${3:web-root}/${2:domain}/www>
+        Options +FollowSymLinks -MultiViews +Includes -ExecCGI
+        DirectoryIndex index.php index.html index.htm
+            Require all granted
+        AllowOverride all
+    </Directory>
+    AddDefaultCharset UTF-8
+        UseCanonicalName Off
+    AddHandler server-parsed .shtml .shtm
+    php_admin_flag allow_url_fopen off
+    php_admin_value mbstring.func_overload 2
+    php_admin_value mbstring.internal_encoding UTF-8
+    php_admin_flag display_errors off
+    php_admin_flag session.use_trans_sid off
+    php_admin_value max_input_vars 10000
+    php_admin_value opcache.max_accelerated_files 100003
+    php_admin_value realpath_cache_size 4194304
+    php_admin_value request_order GP
+    php_admin_flag allow_url_include off
+    php_admin_value opcache.revalidate_freq 0
+    # php_admin_value opcache.file_cache "/opcache/5cebd4b5b5259b00018a63f7"
+    <IfModule mod_setenvif.c>
+        SetEnvIf X-Forwarded-Proto https HTTPS=on
+        SetEnvIf X-Forwarded-Proto https PORT=443
+    </IfModule>
+    <IfFile  /home/${3:web-root}/logs>
+    CustomLog /home/${3:web-root}/logs/www.${2:domain}-access.log common-time
+    ErrorLog /home/${3:web-root}/logs/www.${2:domain}-error_log
+    </IfFile>
+    MaxClientsVHost 20
+    AssignUserID "#${4:user}" "#${4:user}"
+</VirtualHost>
