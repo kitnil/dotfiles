@@ -317,20 +317,12 @@ listen-ports()
 alias vnc-server-android="vncserver -AcceptSetDesktopSize=no -geometry 1280x720"
 export TMUXIFIER_LAYOUT_PATH="$HOME/.tmuxifier-layouts"
 
-supeng-ssh()
+sshpass ()
 {
-    ip="$1"
-    pass="$2"
+    password="$1"
+    ip="$2"
     sshpass -p "$pass" ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -l root "$ip"
 }
-
-alias r1='supeng-ssh 78.108.89.188 ***REMOVED***'
-alias r2='supeng-ssh 78.108.93.115 ***REMOVED***'
-alias r3='supeng-ssh 78.108.90.34 ***REMOVED***'
-alias r4='supeng-ssh 78.108.91.85 ***REMOVED***'
-alias r5='supeng-ssh 178.250.243.152 ***REMOVED***'
-alias r6='supeng-ssh 78.108.91.135 ***REMOVED***'
-alias r7='supeng-ssh 78.108.89.224 ***REMOVED***'
 
 # jenkins-log()
 # {
@@ -663,7 +655,7 @@ terraform-init()
 alias tsw='tmuxifier s web'
 alias nn='notmuch new'
 alias wtr='curl -H "Accept-Language: ru" wttr.in/Санкт-Петербург'
-
+alias hylang='docker run --rm -it hylang'
 
 nixos-interactive-test()
 {
@@ -789,4 +781,20 @@ docker-strace()
 {
     container="$1"
     docker top "$container" | tail -n +2 | awk '{ print $2 }' | sed 's/^/-p/' | xargs strace -f -s 4096
+}
+
+docker-strace-pids()
+{
+    container="$1"
+    docker top "$container" | tail -n +2 | awk '{ print $2 }' | sed 's/^/-p/';
+}
+
+vnc-server-zero()
+{
+    while true; do x0vncserver -PasswordFile .vnc/passwd -display :0 -rfbport 5960; sleep 5; done
+}
+
+guix-docker-image-minimal()
+{
+    guix pack -f docker --symlink=/bin=bin bash
 }
