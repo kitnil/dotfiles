@@ -295,12 +295,28 @@ guix-vm()
 
 myreconfigure-boot ()
 {
-    sudo -i guix system reconfigure --load-path="/home/oleg/src/dotfiles/fiore/modules" --substitute-urls='https://ci.guix.info http://cuirass.tld' /home/oleg/src/dotfiles/guixsd/config.scm
+    sudo -i guix system reconfigure \
+         --load-path="$HOME/src/dotfiles/fiore/modules" \
+         --substitute-urls='https://ci.guix.info http://cuirass.tld' \
+         "$HOME/src/dotfiles/guixsd/config.scm"
 }
 
 myreconfigure ()
 {
-    sudo -i guix system reconfigure --load-path="/home/oleg/src/dotfiles/fiore/modules" --no-bootloader --substitute-urls='https://ci.guix.info http://cuirass.tld' /home/oleg/src/dotfiles/guixsd/config.scm
+    sudo -i guix system reconfigure --no-bootloader \
+         --load-path="$HOME/src/dotfiles/fiore/modules" \
+         --substitute-urls='https://ci.guix.info http://cuirass.tld' \
+         "$HOME/src/dotfiles/guixsd/config.scm"
+}
+
+mypull()
+{
+    guix pull --channels="$HOME/src/dotfiles/channels.scm"
+}
+
+mypull-sudo()
+{
+    sudo -i guix pull --channels="$HOME/src/dotfiles/channels.scm"
 }
 
 guix-master-staging()
