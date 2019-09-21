@@ -146,6 +146,19 @@
             (home-directory (string-append "/var/run/" user-name))
             (shell #~(string-append #$shadow "/sbin/nologin")))))))
 
+(define autossh-activation
+  (match-lambda
+    (($ <autossh-configuration> user-name group-name user-id group-id _ _)
+     (with-imported-modules '((guix build utils))
+       #~(begin
+           (let* ((user  (getpw (if #$user-id #$user-id #$user-name)))
+                  (group (getpw (if #$group-id #$group-id #$group-name)))
+                  (chown* (lambda (file)
+                            (chown file (passwd:uid user) (group:gid group)))))
+             (mkdir-p "/etc/autossh")
+             (chown* "/etc/autossh")
+             (for-each chown* (find-files "/etc/autossh"))))))))
+
 (define autossh-shepherd-service
   (match-lambda
     (($ <autossh-configuration> user-name group-name _ _
@@ -174,7 +187,9 @@
     (list (service-extension shepherd-root-service-type
                              autossh-shepherd-service)
           (service-extension account-service-type
-                             autossh-account)))
+                             autossh-account)
+          (service-extension activation-service-type
+                             autossh-activation)))
    (default-value (autossh-configuration))
    (description
     "Run the autossh.")))
