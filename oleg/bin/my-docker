@@ -251,3 +251,5 @@ docker run \
        --env REDMINE_DB_USERNAME=redmine \
        --env REDMINE_DB_PASSWORD=redmine \
        redmine:4.0.4
+
+sudo docker run --name znc --restart=unless-stopped -d -p 6697:6697 -v /var/lib/znc:/znc-data:Z znc:1.7.4-slim
