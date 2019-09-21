@@ -4,6 +4,7 @@
              (services docker)
              (services gitlab)
              (services nix)
+             (services autossh)
              (wigust packages lisp))
 
 (use-package-modules admin base certs linux lisp suckless xdisorg xorg fonts
@@ -626,6 +627,27 @@ FpingLocation=/run/setuid-programs/fping
                                 (guix-publish-configuration
                                  (host "0.0.0.0")
                                  (port 5556)))
+
+
+                       (service autossh-service-type
+                                (autossh-configuration
+                                 (openssh-client-config
+                                  (openssh-client-configuration
+                                   (hosts (list (openssh-client-host-configuration
+                                                 (host "znc.wugi.info")
+                                                 (identity-file "/etc/autossh/id_rsa_oracle")
+                                                 (strict-host-key-checking? #f)
+                                                 (user "opc")
+                                                 (user-known-hosts-file "/dev/null")
+                                                 (extra-options
+                                                  "
+LocalForward 0.0.0.0:8060 127.0.0.1:8060
+Compression yes
+ExitOnForwardFailure yes
+ServerAliveInterval 30
+ServerAliveCountMax 3"))))))
+                                 (host "znc.wugi.info")))
+
 
                        (operating-system-user-services base-system)))
 
