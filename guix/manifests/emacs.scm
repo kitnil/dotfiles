@@ -48,6 +48,7 @@
        emacs-geiser                   ; Scheme bridge
        emacs-ggtags             ; Front end to GNU Global
        emacs-git-auto-commit-mode
+       emacs-gif-screencast
        emacs-git-gutter
        emacs-git-timemachine
        emacs-gitlab-ci-mode

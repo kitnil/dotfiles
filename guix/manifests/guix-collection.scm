@@ -10,11 +10,11 @@ graphics graphviz gstreamer gtk guile guile-xyz haskell haskell-apps
 haskell-xyz image-viewers imagemagick inkscape kde kodi libreoffice
 license linux lisp logging lsof lxde m4 mail man maths messaging ncdu
 ncurses networking node package-management parallel password-utils
-patchutils pdf perl perl-web php pulseaudio python python-xyz qt
+patchutils pdf perl perl-web php pulseaudio pv python python-xyz qt
 ratpoison readline rdesktop rsync samba scheme screen shellutils ssh
-statistics sqlite suckless synergy tex texinfo textutils text-editors
-tmux tls tor valgrind version-control video virtualization vpn w3m
-xfce web wget wm xdisorg xml xorg)
+statistics sqlite suckless syncthing synergy tex texinfo textutils
+text-editors tmux tls tor valgrind version-control video
+virtualization vpn w3m xfce web wget wm xdisorg xml xorg)
 
 (define guix-collection-packages-multiout
   `((,glib "bin")
@@ -173,6 +173,7 @@ xfce web wget wm xdisorg xml xorg)
 
                php
                
+               autossh
                reptyr
                shellcheck
                sipcalc
@@ -209,7 +210,17 @@ xfce web wget wm xdisorg xml xorg)
                minetest ; FOSS Minecraft like game
                gimp
 
-               openvpn)
+               ;; TODO:
+               ;; majordomo-ca-0.0.1
+               ;; nss-certs
+
+               openvpn
+               mosh
+               ponymix
+               procmail
+               pv
+               pwgen
+               syncthing)
 
          guix-collection-packages-multiout
          %large-packages
