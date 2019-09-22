@@ -1923,7 +1923,7 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 
 (setq erc-fill-function 'erc-fill-variable)
 (setq erc-fill-prefix " ")
-(setq erc-fill-column 44)
+(setq erc-fill-column 80)
 
 
 ;;;
