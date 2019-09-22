@@ -103,6 +103,10 @@
     (define-key map (kbd "<f7>") 'highlight-symbol-prev)
     (define-key map (kbd "<f8>") 'highlight-symbol-next)))
 
+(with-eval-after-load 'js-mode
+  (let ((map js-mode-map))
+    (define-key map (kbd "M-.") 'dumb-jump-go)))
+
 (with-eval-after-load 'gnus-art
   (let ((map gnus-article-mode-map))
     (define-key map (kbd "C-c c") 'wi-magit-show-commit-guix)
@@ -670,6 +674,7 @@ Sets the following basend on PREFIX-MAP:
                 ("r" ffap-read-only "RO thing at point" :color blue))
 
 (wi-define-keys "C-c g f d" dumb-jump
+                ("d" dumb-jump-go "go")
                 ("g" dumb-jump-go "go")
                 ("o" dumb-jump-go-other-window "other window")
                 ("e" dumb-jump-go-prefer-external "go external")
