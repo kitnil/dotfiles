@@ -20,6 +20,7 @@
 (autoload 'flet "cl" nil t)
 (autoload 'beginend-global-mode "beginend" nil t)
 (require 'dash) ; TODO: Use `autoload' instead of `require'.
+(require 'cl-lib)
 
 (setq load-prefer-newer t)
 
@@ -2738,6 +2739,20 @@ situation, you should also set the following option in your
       endless/compile-window-size
       (window-width))
    'horizontal))
+
+(defun endless/toggle-comint-compilation ()
+  "Restart compilation with (or without) `comint-mode'."
+  (interactive)
+  (cl-callf (lambda (mode) (if (eq mode t) nil t))
+      (elt compilation-arguments 1))
+  (recompile))
+
+(define-key compilation-mode-map (kbd "C-c i")
+  #'endless/toggle-comint-compilation)
+(define-key compilation-minor-mode-map (kbd "C-c i")
+  #'endless/toggle-comint-compilation)
+(define-key compilation-shell-minor-mode-map (kbd "C-c i")
+  #'endless/toggle-comint-compilation)
 
 
 ;;;
