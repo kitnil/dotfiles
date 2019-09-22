@@ -5,6 +5,7 @@
              (services gitlab)
              (services nix)
              (services autossh)
+	     (packages artwork)
              (wigust packages lisp))
 
 (use-package-modules admin base certs linux lisp suckless xdisorg xorg fonts
@@ -222,6 +223,14 @@ EndSection")
     (listen '("443 ssl"))
     (ssl-certificate (letsencrypt-certificate "zabbix.wugi.info"))
     (ssl-certificate-key (letsencrypt-key "zabbix.wugi.info")))))
+
+
+;;;
+;;; Slim
+;;;
+
+(define %slim-theme
+  (file-append %local-artwork-repository "/slim"))
 
 
 ;;;
@@ -512,6 +521,7 @@ EndSection")
                        ;; Desktop services
                        (service slim-service-type
                                 (slim-configuration
+				 (theme %slim-theme)
                                  (xorg-configuration
                                   (xorg-configuration
                                    (extra-config (list 20-intel.conf
