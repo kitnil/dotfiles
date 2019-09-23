@@ -938,8 +938,7 @@
   (run-shell-command "xrandr --output HDMI3 --off"))
 
 (defcommand screen-on () ()
-  (run-shell-command "xrandr --output HDMI3 --auto")
-  (run-shell-command "xrandr --output HDMI3 --right-of HDMI1"))
+  (run-shell-command "xrandr --output HDMI3 --auto && xrandr --output HDMI3 --right-of HDMI1"))
 
 (defcommand sxhkd-restart () ()
   (run-shell-command "pkill sxhkd")
