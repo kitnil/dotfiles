@@ -1277,6 +1277,15 @@ for COMMIT, defaulting to the commit hash at point."
 	(call-process "git" nil output-buffer nil "log" "-1" commit0)
 	(pop-to-buffer output-buffer)))))
 
+(defun string-to-symbols (str)
+  "Convert a STRING \"ℕ₃₂\" to a list of characters (8469 (Br . Bl)
+8323 (Br . Bl) 8322) suited for `prettify-symbols-mode'."
+  (let ((chars (string-to-list str)))
+    `(,(car chars)
+      ,@(apply 'append (mapcar (lambda (char)
+                                 (list '(Br . Bl) char))
+                               (cdr chars))))))
+
 
 ;;;
 ;;; Elisp
@@ -1512,11 +1521,11 @@ Produces URL as https://ci.guix.info/api/latestbuilds?nr=10&jobset=guix-master&j
     ("y_2" . (?y (Br . Bl) ?₂))
     ("||" . ?∨)))
 
+(add-hook 'c-mode-hook 'prettify-symbols-mode)
 (add-hook 'c-mode-hook
           (lambda ()
             (set (make-local-variable 'prettify-symbols-alist)
                  wi-c--prettify-symbols-alist)))
-(add-hook 'c-mode-hook 'prettify-symbols-mode)
 
 (with-eval-after-load 'cc-vars
   (setq-default c-cleanup-list '(space-before-funcall scope-operator)))
