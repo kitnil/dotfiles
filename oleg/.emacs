@@ -1533,6 +1533,21 @@ Produces URL as https://ci.guix.info/api/latestbuilds?nr=10&jobset=guix-master&j
 (with-eval-after-load 'semantic
   (global-semantic-decoration-mode t))
 
+(defconst wi-asm-mode--prettify-symbols-alist
+  `(("%eax" . ,(string-to-symbols "%eax (ℕ₃₂)"))
+    ("%edi" . ,(string-to-symbols "%edi (ℕ₃₂)"))
+    ("%rbp" . ,(string-to-symbols "%rbp (base→)"))
+    ("%rsp" . ,(string-to-symbols "%rsp (stack→)"))
+    ("$0x0" . (?0))))
+
+(add-hook 'asm-mode-hook 'prettify-symbols-mode)
+(add-hook 'asm-mode-hook
+          (lambda ()
+            (set (make-local-variable 'prettify-symbols-alist)
+                 wi-asm-mode--prettify-symbols-alist)))
+
+(setq disaster-cc "gcc")
+
 
 ;;;
 ;;; Git Gutter
