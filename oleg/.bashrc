@@ -746,11 +746,6 @@ terraform-plan-gitlab()
         | xargs env NIX_SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/Majordomo_LLC_Root_CA.crt" SSL_CERT_DIR="$HOME/.guix-profile/etc/ssl/certs" SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/ca-certificates.crt" TF_VAR_GITLAB_TOKEN=***REMOVED*** TF_VAR_MAJORDOMO_PASSWORD=***REMOVED*** TF_VAR_MAJORDOMO_USER=pyhalov terraform plan -out=plan
 }
 
-find-yml()
-{
-    find -maxdepth 2 -name '*.yml' | grep -vF '.travis.yml' | grep -vF '.gitlab'
-}
-
 export GITHUB_TOKEN_TERRAFORMER=***REMOVED***
 
 terraformer-import-github()
@@ -810,7 +805,51 @@ vnc-server-zero()
     while true; do x0vncserver -PasswordFile .vnc/passwd -display :0 -rfbport 5960; sleep 5; done
 }
 
-guix-docker-image-minimal()
+check-sites-on-ip()
 {
-    guix pack -f docker --symlink=/bin=bin bash
+    ip=$1
+    domains=$@
+    for domain in $domains; do
+        d=$(idn2 $domain)
+        printf "$domain "
+        curl -o /dev/null -s -w "%{http_code}" -k -H "Host: $d" https://$ip/
+        echo
+    done
 }
+
+ansible-auth-hosts()
+{
+    for host in $(ansible all --list-hosts |grep intr); do
+        echo -e "\n@ $host"
+        ssh -oStrictHostKeyChecking=no $host -- uptime
+    done
+}
+
+ansible-cmdb-my()
+{
+    # https://itnext.io/create-a-host-inventory-in-a-minute-with-ansible-c7bf251166d9
+    ansible -m setup --tree out/ all
+    ansible-cmdb -t html_fancy_split -p local_js=1 out/
+}
+
+history-top()
+{
+    # https://www.commandlinefu.com/commands/view/604/list-of-commands-you-use-most-often
+    history | awk '{a[$2]++}END{for(i in a){print a[i] " " i}}' | sort -rn | head
+}
+
+alias guix-docker-image-minimal='guix pack -f docker --symlink=/bin=bin bash'
+alias find-yml="find -maxdepth 2 -name '*.yml' | grep -vF '.travis.yml' | grep -vF '.gitlab'"
+alias docker-describe-image='dive'
+alias ansible-playbook-ping-all="ansible-playbook <(echo -e '---\n- hosts: all\n  tasks:\n    - ping:')"
+alias ansible-playbook-cache-all="ansible-playbook echo -e '---\n- hosts:\n  - all\n  gather_facts: True\n'"
+alias clock='while sleep 1;do tput sc;tput cup 0 $(($(tput cols)-29));date;tput rc;done &'
+alias type-like-movie='echo "You can simulate on-screen typing just like in the movies" | pv -qL 10'
+alias top-by-memory='ps aux | sort -nk +4 | tail'
+alias smtpd='python -m smtpd -n -c DebuggingServer localhost:1025'
+
+# TODO:
+# ansible-galera()
+# {
+#     ansible "galera$1.intr" -m copy -a "src=galera$1/mariadb-bin.0029$2 dest=/home/mariadb/mariadb-bin.0029$2" --become && ansible "galera$1.intr" -m file -a "path=/home/mariadb/mariadb-bin.0029$2 owner=mysql group=mysql" --become
+# }
