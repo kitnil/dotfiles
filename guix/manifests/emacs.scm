@@ -128,6 +128,7 @@
        emacs-yaml-mode          ; YAML files
        emacs-yasnippet          ; Snippets
        emacs-yasnippet-snippets ; Collection of snippets
+       emacs-wgrep
        emacs-znc
 
        epipe
