@@ -29,7 +29,7 @@
     # the top and down respectively.
     # The width can be negative.  In this case the actual width is the
     # screen width minus the width defined in within the geometry option.
-    geometry = "600x5-30+70"
+    geometry = "600x15-5+40"
 
     # Show how many messages are currently hidden (because of geometry).
     indicate_hidden = yes
@@ -85,7 +85,7 @@
 
     ### Text ###
 
-    font = Monospace 12
+    font = Monospace 10
 
     # The spacing between lines.  If the height is smaller than the
     # font height, it will get raised to the font height.
@@ -138,7 +138,7 @@
 
     # Split notifications into multiple lines if they don't fit into
     # geometry.
-    word_wrap = no
+    word_wrap = yes
 
     # When word_wrap is set to no, specify where to ellipsize long lines.
     # Possible values are "start", "middle" and "end".
@@ -245,9 +245,9 @@
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
-    background = "#222222"
+    background = "#ffffff"
     foreground = "#888888"
-    timeout = 10
+    timeout = 5
     # Icon for notifications with low urgency, uncomment to enable
     #icon = /path/to/icon
 

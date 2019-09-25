@@ -1,0 +1,4 @@
+#!/bin/sh
+
+# https://www.commandlinefu.com/commands/view/8821/show-each-new-entry-in-system-messages-as-a-popup
+tail -n0 -f /var/log/messages | while read line; do notify-send --urgency=low "System Message" "$line"; done
