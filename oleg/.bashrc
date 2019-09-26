@@ -838,6 +838,11 @@ history-top()
     history | awk '{a[$2]++}END{for(i in a){print a[i] " " i}}' | sort -rn | head
 }
 
+fast-scan()
+{
+    parallel -j200% -n1 -a textfile-with-hosts.txt nc -vz {} ::: 22
+}
+
 alias guix-docker-image-minimal='guix pack -f docker --symlink=/bin=bin bash'
 alias find-yml="find -maxdepth 2 -name '*.yml' | grep -vF '.travis.yml' | grep -vF '.gitlab'"
 alias docker-describe-image='dive'
@@ -847,9 +852,53 @@ alias clock='while sleep 1;do tput sc;tput cup 0 $(($(tput cols)-29));date;tput 
 alias type-like-movie='echo "You can simulate on-screen typing just like in the movies" | pv -qL 10'
 alias top-by-memory='ps aux | sort -nk +4 | tail'
 alias smtpd='python -m smtpd -n -c DebuggingServer localhost:1025'
+alias biggest='du -s * | sort -n | tail'
+alias colors='for code in {0..255}; do echo -e "\\e[38;05;${code}m $code: Test"; done'
+alias ps-tree='ps awwfux | less -S'
+alias share='script -qf | tee >(nc -kl 5000) >(nc -kl 5001) >(nc -kl 5002)'
+alias internet-programs='lsof -P -i -n | cut -f 1 -d " "| uniq | tail -n +2'
+
+md()
+{
+    mkdir -p "$@" && cd "$@"
+}
+
+backup-mysql()
+{
+    for I in $(mysql -e 'show databases' -s --skip-column-names); do mysqldump $I | gzip > "$I.sql.gz"; done
+}
+
+kernel-graph()
+{
+    lsmod \
+        | perl -e 'print "digraph \"lsmod\" {";<>;while(<>){@_=split/\s+/; print "\"$_[0]\" -> \"$_\"\n" for split/,/,$_[3]}print "}"' \
+        | dot -Tpng \
+        | feh -
+}
+
+netstat-graph()
+{
+    netstat -an \
+        | grep ESTABLISHED \
+        | awk '{print $5}' \
+        | awk -F: '{print $1}' \
+        | sort \
+        | uniq -c \
+        | awk '{ printf("%s\t%s\t",$2,$1) ; for (i = 0; i < $1; i++) {printf("*")}; print "" }'
+}
+
+random-password()
+{
+    length="$1"
+    strings /dev/urandom | grep -o '[[:alnum:]]' | head -n "$length" | tr -d '\n'; echo
+}
+
+# watch -n 1 mysqladmin --user=<user> --password=<password> processlist
 
 # TODO:
 # ansible-galera()
 # {
 #     ansible "galera$1.intr" -m copy -a "src=galera$1/mariadb-bin.0029$2 dest=/home/mariadb/mariadb-bin.0029$2" --become && ansible "galera$1.intr" -m file -a "path=/home/mariadb/mariadb-bin.0029$2 owner=mysql group=mysql" --become
 # }
+
+alias alexa-top="curl -qsSl http://s3.amazonaws.com/alexa-static/top-1m.csv.zip 2>/dev/null | zcat | grep .de | head -1000 | awk -F, '{print }'"
