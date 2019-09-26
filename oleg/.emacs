@@ -109,6 +109,8 @@
     (define-key map (kbd "M-.") 'dumb-jump-go)))
 
 (setq dumb-jump-selector 'ivy)
+(setq dumb-jump-force-searcher 'ag)
+
 (with-eval-after-load 'nix-mode
   (let ((map nix-mode-map))
     (define-key map (kbd "M-.") 'dumb-jump-go)))
