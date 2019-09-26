@@ -110,6 +110,7 @@
 
 (setq dumb-jump-selector 'ivy)
 (setq dumb-jump-force-searcher 'ag)
+(setq ivy-height 30)
 
 (with-eval-after-load 'nix-mode
   (let ((map nix-mode-map))
@@ -3526,9 +3527,7 @@ If given a prefix, patch in the branch directory instead."
      (eval modify-syntax-entry 126 "'")
      (bug-reference-bug-regexp . "<https?://\\(debbugs\\|bugs\\)\\.gnu\\.org/\\([0-9]+\\)>"))))
 
-;; (with-eval-after-load 'tramp
-;;   (require ’tramp-auto-auth)
-;;   (add-to-list 'tramp-auto-auth-alist '("intr" . "***REMOVED***")))
+;; (add-to-list 'tramp-auto-auth-alist '("intr" . "***REMOVED***"))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
