@@ -108,6 +108,11 @@
   (let ((map js-mode-map))
     (define-key map (kbd "M-.") 'dumb-jump-go)))
 
+(setq dumb-jump-selector 'ivy)
+(with-eval-after-load 'nix-mode
+  (let ((map nix-mode-map))
+    (define-key map (kbd "M-.") 'dumb-jump-go)))
+
 (with-eval-after-load 'gnus-art
   (let ((map gnus-article-mode-map))
     (define-key map (kbd "C-c c") 'wi-magit-show-commit-guix)
