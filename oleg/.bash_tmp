@@ -175,8 +175,6 @@ alerta-send-info()
     alerta send -r guixsd -e bash.tmp -E Production -S 'Linux servers' -s informational -t "$1" -v ERROR
 }
 
-alias guix-pull="guix pull --substitute-urls='https://ci.guix.info http://cuirass.tld'"
-
 mozilla-sync()
 {
     cp "$HOME/.mozilla/firefox/t4desxpx.light/chrome/userChrome.css" "/tmp/userChrome.css"
