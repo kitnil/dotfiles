@@ -333,7 +333,7 @@ listen-ports()
 alias vnc-server-android="vncserver -AcceptSetDesktopSize=no -geometry 1280x720"
 export TMUXIFIER_LAYOUT_PATH="$HOME/.tmuxifier-layouts"
 
-sshpass ()
+sshpass-root ()
 {
     password="$1"
     ip="$2"
@@ -695,7 +695,7 @@ terraform-refresh()
 
 terraform-plan()
 {
-    NIX_SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/Majordomo_LLC_Root_CA.crt" \
+    NIX_SSL_CERT_FILE="$HOME/majordomo/office/ssl-certificates/Majordomo_LLC_Root_CA.crt" \
                      SSL_CERT_DIR="$HOME/.guix-profile/etc/ssl/certs" \
                      SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/ca-certificates.crt" \
                      TF_VAR_GITLAB_TOKEN=***REMOVED*** \
@@ -717,7 +717,7 @@ terraform-import()
 
 terraform-apply()
 {
-    NIX_SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/Majordomo_LLC_Root_CA.crt" \
+    NIX_SSL_CERT_FILE="$HOME/majordomo/office/ssl-certificates/Majordomo_LLC_Root_CA.crt" \
                      SSL_CERT_DIR="$HOME/.guix-profile/etc/ssl/certs" \
                      SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/ca-certificates.crt" \
                      TF_VAR_GITLAB_TOKEN=***REMOVED*** \
@@ -902,3 +902,44 @@ random-password()
 # }
 
 alias alexa-top="curl -qsSl http://s3.amazonaws.com/alexa-static/top-1m.csv.zip 2>/dev/null | zcat | grep .de | head -1000 | awk -F, '{print }'"
+
+dnsperf-my()
+{
+    # https://muff.kiev.ua/content/dnsperf-testirovanie-proizvoditelnosti-dns-servera
+    sudo dnsperf -d ~/Downloads/dnsperf-example.txt -s 127.0.0.1 -l 60
+}
+
+
+tmuxifier-webs-user()
+{
+    account="$(ihs web unix $1)"
+    TMUXIFIER_USER=$(echo "$account" | recsel -P name) TMUXIFIER_HOST=$(echo "$account" | recsel -P server_name)s tmuxifier s ssh
+}
+
+tmuxifier-web()
+{
+    web="$1"
+    TMUXIFIER_USER=root TMUXIFIER_HOST="web$web" tmuxifier w ssh-sudo
+}
+
+alias web=tmuxifier-web
+
+tmuxifier-connect-host()
+{
+    host="$1"
+    TMUXIFIER_USER=root TMUXIFIER_HOST="$host" tmuxifier w ssh-sudo
+}
+
+alias c=tmuxifier-connect-host
+
+
+git-clean-up()
+{
+    for dir in apache2-php52 apache2-php53 apache2-php54 apache2-php55 apache2-php56 apache2-php70 apache2-php71 apache2-php72 apache2-php73 ; do
+        cd $dir
+        for branch in $(git branch -r | grep -v master | sed 's|origin/||'); do
+            git push origin --delete $branch
+        done
+        cd -
+    done
+}
