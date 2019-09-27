@@ -29,7 +29,7 @@
     # the top and down respectively.
     # The width can be negative.  In this case the actual width is the
     # screen width minus the width defined in within the geometry option.
-    geometry = "600x15-5+40"
+    geometry = "600x15-15+40"
 
     # Show how many messages are currently hidden (because of geometry).
     indicate_hidden = yes
@@ -228,7 +228,7 @@
     # Xev might be helpful to find names for keys.
 
     # Close notification.
-    # close = ctrl+space
+    close = ctrl+alt+space
 
     # Close all notifications.
     close_all = ctrl+shift+space
