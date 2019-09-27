@@ -61,6 +61,7 @@
 (setq initial-scratch-message nil) ; Don't put text in *scratch* buffer
 
 (setq terminal-here-multiplexers '("tmux" "screen"))
+(setq terminal-here-color 'light)
 
 (setq smtpmail-queue-mail t) ; Call after typing M-x `smtpmail-send-queued-mail'
 
