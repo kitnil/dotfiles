@@ -112,6 +112,8 @@
 (setq dumb-jump-force-searcher 'ag)
 (setq ivy-height 30)
 
+(setq nix-repl-executable-args '("repl" "<nixpkgs>"))
+
 (with-eval-after-load 'nix-mode
   (let ((map nix-mode-map))
     (define-key map (kbd "M-.") 'dumb-jump-go)))
