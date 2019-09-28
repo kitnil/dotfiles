@@ -795,6 +795,10 @@ Sets the following basend on PREFIX-MAP:
 (wi-define-keys "C-c g m" mail
                 ("b" wi-send-buffer-as-mail :color blue))
 
+;; https://endlessparentheses.com/keep-your-slack-distractions-under-control-with-emacs.html
+(wi-define-keys "C-c g m s" slack
+                ("s" slack-select-rooms "select-room"))
+
 (wi-define-keys "C-c g m i" irc
                 ("s" erc-track-switch-buffer "switch"))
 
