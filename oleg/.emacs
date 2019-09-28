@@ -878,6 +878,7 @@ Sets the following basend on PREFIX-MAP:
 
 (add-to-list 'auto-mode-alist '("\\.tfstate" . json-mode))
 (add-to-list 'auto-mode-alist '("bashrc" . sh-mode))
+(add-to-list 'auto-mode-alist '("kresd\\.conf" . lua-mode))
 
 (mapc (lambda (lst)
         (add-to-list 'auto-mode-alist lst))
