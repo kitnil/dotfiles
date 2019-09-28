@@ -135,4 +135,5 @@
 
        emacs-docker
        emacs-docker-tramp
-       emacs-dockerfile-mode))
+       emacs-dockerfile-mode
+       emacs-docker-compose-mode))
