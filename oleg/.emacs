@@ -876,17 +876,16 @@ Sets the following basend on PREFIX-MAP:
 
 ; TODO: (bind-key "<C-tab>" #'hs-toggle-hiding scheme-mode-map)
 
-(add-to-list 'auto-mode-alist '("\\.tfstate" . json-mode))
-(add-to-list 'auto-mode-alist '("bashrc" . sh-mode))
-(add-to-list 'auto-mode-alist '("kresd\\.conf" . lua-mode))
-
 (mapc (lambda (lst)
         (add-to-list 'auto-mode-alist lst))
-      '(("PKGBUILD ." shell-script-mode)
+      '(("PKGBUILD" . shell-script-mode)
         ("\\.conkerorrc" . js-mode)
         ("\\.guile" . scheme-mode)
         ("\\.mbsyncrc" . conf-mode)
-        ("manifest" . scheme-mode)))
+        ("manifest" . scheme-mode)
+        ("\\.tfstate" . json-mode)
+        ("bashrc" . sh-mode)
+        ("kresd\\.conf" . lua-mode)))
 
 (mapc (-lambda ((hook key proc))
         (add-hook hook `(lambda ()
