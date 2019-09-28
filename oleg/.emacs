@@ -58,6 +58,7 @@
 ;;     (define-key map (kbd "n") 'dashboard-next-section)
 ;;     (define-key map (kbd "p") 'dashboard-previous-section)))
 (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
+(setq dashboard-page-separator "\n\n")
 (setq initial-scratch-message nil) ; Don't put text in *scratch* buffer
 
 (setq terminal-here-multiplexers '("tmux" "screen"))
