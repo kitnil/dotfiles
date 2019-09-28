@@ -2723,6 +2723,8 @@ If nil use light theme.")
  :subscribed-channels '(monitoring git tech eng sups)
  :full-and-display-names t)
 
+(setq slack-completing-read-function 'ivy-completing-read)
+
 
 ;;;
 ;;; Jenkins
