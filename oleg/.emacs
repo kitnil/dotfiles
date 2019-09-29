@@ -3485,7 +3485,11 @@ If given a prefix, patch in the branch directory instead."
 (run-with-timer 0 (* 20 60) '(lambda ()
                                (interactive)
                                (unless (get-buffer "*Summary INBOX*")
-                                 (mbsync)
+                                 (mbsync))))
+
+(run-with-timer 0 (* 40 60) '(lambda ()
+                               (interactive)
+                               (unless (get-buffer "*Summary INBOX*")
                                  (let ((mbsync-args '("-a" "--push")))
                                    (mbsync)))))
 
