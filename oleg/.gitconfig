@@ -28,3 +28,5 @@
         providers = pass show majordomo/mjru.slack.com/pyhalov@majordomo.ru
 [gitlab "gitlab.intr/api/v4"]
 	user = pyhalov
+[gitlab "gitlab.wugi.info/api/v4"]
+	user = wigust
