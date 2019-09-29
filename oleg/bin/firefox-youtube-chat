@@ -2,12 +2,12 @@
 
 video="$1"
 
-if [[ $video == https://www.youtube.com* ]]
+if [[ $video == http*://www.youtube.com* ]]
 then
     id=$(echo "$1" | cut -d = -f 2)
     chromium --app="https://www.youtube.com/live_chat?v=$id&is_popout=1"
     notify-send "Open chat $url"
-elif [[ $video == https://www.twitch.tv* ]]
+elif [[ $video == http*://www.twitch.tv* ]]
 then
     channel=${video##*/}
     chromium --app="https://www.twitch.tv/popout/$channel/chat?popout="
