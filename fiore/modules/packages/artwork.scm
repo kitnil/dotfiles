@@ -8,8 +8,8 @@
     (origin
       (method git-fetch)
       (uri (git-reference
-             (url "git://localhost/guix-artwork")
-             (commit commit)))
+            (url "https://gitlab.wugi.info:guix/guix-artwork.git")
+            (commit commit)))
       (file-name (string-append "guix-artwork-" (string-take commit 7)
                                 "-checkout"))
       (sha256
