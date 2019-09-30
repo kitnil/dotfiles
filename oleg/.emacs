@@ -2842,7 +2842,6 @@ situation, you should also set the following option in your
  '(((diff-mode-hook dired-mode-hook proced-post-display-hook
      shell-mode-hook ibuffer-mode-hook guix-env-var-mode-hook)
     . guix-prettify-mode)
-   ((c-mode-hook) . ggtags-mode)
    ((dired-mode-hook) . toggle-truncate-lines)
    ((scheme-mode-hook) . guix-devel-mode)
    ((guix-devel-mode) . goto-address-mode)
