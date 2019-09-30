@@ -116,6 +116,10 @@
 
 (setq nix-repl-executable-args '("repl" "<nixpkgs>"))
 
+(with-eval-after-load 'php-mode
+  (let ((map php-mode-map))
+    (define-key map (kbd "M-.") 'dumb-jump-go)))
+
 (with-eval-after-load 'nix-mode
   (let ((map nix-mode-map))
     (define-key map (kbd "M-.") 'dumb-jump-go)))
