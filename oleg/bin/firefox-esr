@@ -5,4 +5,4 @@
 # To update Firefox's closure run:
 # nix-env -p ~/.nix-profile.d/firefox-esr-52 --timeout 0 -iA nixpkgs.firefox-esr-52
 
-"$HOME/.nix-profile.d/firefox-esr-52/bin/firefox" -P esr52 --new-instance $@
+"$HOME/.nix-profile.d/firefox-esr-52/firefox-esr-52/bin/firefox" -P esr52 --new-instance $@
