@@ -846,6 +846,7 @@ fast-scan()
 alias guix-docker-image-minimal='guix pack -f docker --symlink=/bin=bin bash'
 alias find-yml="find -maxdepth 2 -name '*.yml' | grep -vF '.travis.yml' | grep -vF '.gitlab'"
 alias docker-describe-image='dive'
+alias inxi='inxi --full'
 alias ansible-playbook-ping-all="ansible-playbook <(echo -e '---\n- hosts: all\n  tasks:\n    - ping:')"
 alias ansible-playbook-cache-all="ansible-playbook echo -e '---\n- hosts:\n  - all\n  gather_facts: True\n'"
 alias clock='while sleep 1;do tput sc;tput cup 0 $(($(tput cols)-29));date;tput rc;done &'
