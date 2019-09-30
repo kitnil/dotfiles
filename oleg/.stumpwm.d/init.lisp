@@ -31,11 +31,11 @@
 (progn
   (set-msg-border-width 4)
   (setf *ignore-wm-inc-hints* t)
-  (setf *maxsize-border-width* 3)
+  (setf *maxsize-border-width* 0)
   (setf *message-window-y-padding* 3)
-  (setf *normal-border-width* 3)
+  (setf *normal-border-width* 0)
   (setf *transient-border-width* 3)
-  (setf *window-border-style* :thin)
+  (setf *window-border-style* :none)
   )
 
 
@@ -79,11 +79,12 @@
     (restore-window-placement-rules rules)
     (place-existing-windows)))
 
-(restore-from-file "/home/oleg/src/dotfiles/oleg/.stumpwm.d/desktop/8.lisp")
+;;(restore-from-file "/home/oleg/src/dotfiles/oleg/.stumpwm.d/desktop/8.lisp")
 
 (define-frame-preference "Default" (1 NIL T :CLASS "mpv" :TITLE "emacs-emms"))
 (define-frame-preference "Default" (3 NIL T :CLASS "mpv" :TITLE "firefox"))
 (define-frame-preference "Default" (4 NIL T :CLASS "XTerm" :TITLE "alerta"))
+(define-frame-preference "Default" (0 NIL T :CLASS "Qemu-system-x86_64"))
 
 
 ;;;
@@ -482,6 +483,8 @@
 
 (setf *float-window-border* 0)
 (setf *float-window-title-height* 0)
+
+(setf *mode-line-position* :bottom)
 
 (defparameter dark-theme t)
 (progn
@@ -929,10 +932,10 @@
 (require "asdf")
 (load "/home/oleg/.guix-profile/share/emacs/site-lisp/guix.d/slime-2.24/swank.asd")
 (require :swank)
-(defcommand swank () ()
+(defcommand swank (port) ((:string "Port number: "))
   (sb-thread:make-thread
    (lambda ()
-     (swank:create-server :port 4005 :dont-close t))))
+     (swank:create-server :port (parse-integer port) :dont-close t))))
 
 (defcommand screen-off () ()
   (run-shell-command "xrandr --output HDMI3 --off"))
