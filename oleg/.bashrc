@@ -944,3 +944,14 @@ git-clean-up()
         cd -
     done
 }
+
+tmux-ls()
+{
+    tmux ls | cut -d ':' -f 1;
+}
+
+tmux-fzf()
+{
+    session="$1"
+    tmux at -t "$(tmux-ls | fzf)"
+}
