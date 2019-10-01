@@ -931,9 +931,6 @@ tmuxifier-connect-host()
     TMUXIFIER_USER=root TMUXIFIER_HOST="$host" tmuxifier w ssh-sudo
 }
 
-alias c=tmuxifier-connect-host
-
-
 git-clean-up()
 {
     for dir in apache2-php52 apache2-php53 apache2-php54 apache2-php55 apache2-php56 apache2-php70 apache2-php71 apache2-php72 apache2-php73 ; do
