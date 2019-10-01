@@ -13,6 +13,12 @@ then
     . "$HOME/.bash_aliases"
 fi
 
+if [ -f "/run/current-system/profile/share/bash-completion/completions/ssh" ]
+then
+    . "/run/current-system/profile/share/bash-completion/completions/ssh"
+    shopt -u hostcomplete && complete -F _ssh ssh slogin autossh sidedoor c
+fi
+
 # if [ -f "$HOME/.guix-profile/etc/profile.d/autojump.sh" ]
 # then
 #     . "$HOME/.guix-profile/etc/profile.d/autojump.sh"
