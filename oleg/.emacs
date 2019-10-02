@@ -106,6 +106,10 @@
     (define-key map (kbd "<f7>") 'highlight-symbol-prev)
     (define-key map (kbd "<f8>") 'highlight-symbol-next)))
 
+(with-eval-after-load 'java-mode
+  (let ((map java-mode-map))
+    (define-key map (kbd "M-.") 'dumb-jump-go)))
+
 (with-eval-after-load 'js-mode
   (let ((map js-mode-map))
     (define-key map (kbd "M-.") 'dumb-jump-go)))
