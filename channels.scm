@@ -12,4 +12,4 @@
         (name 'guix)
         (url "https://git.savannah.gnu.org/git/guix.git")
         (commit
-          "ab0ede51c041927a1c35535aec3504f84d7a9751")))
+          "ccbc1c5eb2f3cc1979902b6bfd3e7b31aa66e661")))
