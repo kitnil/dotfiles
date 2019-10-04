@@ -1555,6 +1555,10 @@ Produces URL as https://ci.guix.info/api/latestbuilds?nr=10&jobset=guix-master&j
             (set (make-local-variable 'prettify-symbols-alist)
                  wi-c--prettify-symbols-alist)))
 
+(with-eval-after-load 'c-mode
+  (let ((map c-mode-map))
+    (define-key map (kbd "M-.") 'dumb-jump-go)))
+
 (with-eval-after-load 'cc-vars
   (setq-default c-cleanup-list '(space-before-funcall scope-operator)))
 
