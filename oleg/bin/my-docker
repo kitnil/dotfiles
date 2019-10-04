@@ -253,3 +253,5 @@ docker run \
        redmine:4.0.4
 
 sudo docker run --name znc --restart=unless-stopped -d -p 6697:6697 -v /var/lib/znc:/znc-data:Z znc:1.7.4-slim
+
+alias firefox_java='xhost + ; docker run -ti --rm --name firefox-java -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix cmaohuang/firefox-java'
