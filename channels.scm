@@ -10,6 +10,6 @@
           "276f1d2aa0de76a47139b207e6d1af262cb5fd51"))
       (channel
         (name 'guix)
-        (url "https://git.savannah.gnu.org/git/guix.git")
+        (url "https://gitlab.wugi.info/guix/guix.git")
         (commit
-          "18b3ba6ff2f096193161742a06e4c1ae12600d0c")))
+          "c13546225ad08561ac45a581ffb7a166ffd0f6a4")))
