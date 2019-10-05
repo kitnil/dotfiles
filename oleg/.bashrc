@@ -317,7 +317,8 @@ myreconfigure ()
 
 mypull()
 {
-    guix pull --channels="$HOME/src/dotfiles/channels.scm"
+    guix pull --substitute-urls='https://ci.guix.info http://cuirass.tld' \
+            --channels="$HOME/src/dotfiles/channels.scm"
 }
 
 mypull-sudo()
