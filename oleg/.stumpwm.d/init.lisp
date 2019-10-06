@@ -374,6 +374,8 @@
   "Open Rofi to launch `.desktop' file."
   (run-shell-command "rofi -modi run,drun -show drun"))
 
+(define-key *top-map* (kbd "s-x") "rofi-drun")
+
 (defcommand rofi-ssh () ()
   "Open Rofi ssh list."
   (run-shell-command "rofi -width 20 -terminal 'xterm +sb' -modi ssh -show ssh"))
