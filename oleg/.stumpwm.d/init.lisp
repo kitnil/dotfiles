@@ -378,6 +378,8 @@
   "Open Rofi ssh list."
   (run-shell-command "rofi -width 20 -terminal 'xterm +sb' -modi ssh -show ssh"))
 
+(define-key *top-map* (kbd "S-s-RET") "rofi-ssh")
+
 (defcommand rofi-window () ()
   "Open Rofi window list."
   (run-shell-command "rofi -modi window -show window"))
