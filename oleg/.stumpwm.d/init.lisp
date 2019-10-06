@@ -365,6 +365,8 @@
 (defcommand htop () ()
   (term-shell-command "htop"))
 
+(define-key *top-map* (kbd "s-h") "htop")
+
 (defcommand neofetch () ()
   (term-shell-command "sh -c 'neofetch; read'"))
 
