@@ -31,11 +31,11 @@
 (progn
   (set-msg-border-width 4)
   (setf *ignore-wm-inc-hints* t)
-  (setf *maxsize-border-width* 0)
+  (setf *maxsize-border-width* 3)
   (setf *message-window-y-padding* 3)
-  (setf *normal-border-width* 0)
+  (setf *normal-border-width* 3)
   (setf *transient-border-width* 3)
-  (setf *window-border-style* :none)
+  (setf *window-border-style* :thin)
   )
 
 
