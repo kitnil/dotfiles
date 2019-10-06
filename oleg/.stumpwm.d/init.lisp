@@ -10,10 +10,20 @@
 (setf *message-window-gravity* :center)
 (setf *input-window-gravity* :center)
 
-(run-shell-command "xsetroot -cursor_name left_ptr")
-(run-shell-command "xrdb -merge /home/oleg/.Xresources")
-(run-shell-command "xsetroot -solid white") ; Wallpaper
-(run-shell-command "xset -b") ; Disable PC speaker
+(defcommand cursor-theme () ()
+  (run-shell-command "xsetroot -cursor_name left_ptr"))
+
+(cursor-theme)
+
+(defcommand xrdb () ()
+  (run-shell-command "xrdb -merge /home/oleg/.Xresources"))
+
+(xrdb)
+
+(defcommand speaker-disable () ()
+  (run-shell-command "xset -b"))
+
+(speaker-disable)
 
 ;;;
 ;;; Keyboard
@@ -21,12 +31,21 @@
 
 ;; Use keyboard as mouse with <Shift+Num Lock>
 ;; https://en.wikipedia.org/wiki/Mouse_keys
-(run-shell-command "setxkbmap -option keypad:pointerkeys")
+(defcommand pointer-keys () ()
+  (run-shell-command "setxkbmap -option keypad:pointerkeys"))
+
+(pointer-keys)
 
 ;; Keyboard layout
-(run-shell-command "setxkbmap -layout us,ru -option grp:win_space_toggle")
+(defcommand keyboard-layout () ()
+  (run-shell-command "setxkbmap -layout us,ru -option grp:win_space_toggle"))
 
-(run-shell-command "xmodmap " "/home/oleg/.Xmodmap")
+(keyboard-layout)
+
+(defcommand xmodmap () ()
+  (run-shell-command "xmodmap " "/home/oleg/.Xmodmap"))
+
+(xmodmap)
 
 (progn
   (set-msg-border-width 4)
