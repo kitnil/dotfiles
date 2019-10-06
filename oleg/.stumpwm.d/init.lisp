@@ -341,9 +341,13 @@
    (let ((terminal-name (string-downcase (symbol-name terminal))))
      (case terminal
        ((xterm)
-        (join (list terminal-name *xterm-theme-dark*
-                    *xterm-no-scrollbar*
-                    *term-execute-flag* command)))
+        (join `(,terminal-name ,*xterm-theme-light*
+                               ,*xterm-no-scrollbar*
+                               ,@(if (= (frame-number (window-frame (current-window))) 2)
+                                     '()
+                                     '("-fa" "Monospace" "-fs" "8"))
+                               ,*term-execute-flag*
+                               ,command)))
        ((st)
         (join (list terminal-name
                     *st-font-flag* *st-font*
