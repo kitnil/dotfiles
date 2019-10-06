@@ -120,6 +120,16 @@
     (make-kill-destructor)
     #:respawn? #f))
 
+(define quassel-service
+  (make <service>
+    #:docstring '("quassel")
+    #:provides '(quassel)
+    #:start (make-forkexec-constructor
+             (list (string-append %bin-directory "quassel")))
+    #:stop
+    (make-kill-destructor)
+    #:respawn? #f))
+
 (register-services alerta-service
                    clipmenud-service
                    dunst-service
@@ -130,7 +140,8 @@
                    redshift-service
                    transmission-service
                    znc-service
-                   kdeconnect-service)
+                   kdeconnect-service
+                   quassel-service)
 
 (for-each start '(clipmenud
                   dunst
@@ -142,6 +153,7 @@
                   transmission
                   alerta
                   znc
-                  kdeconnect))
+                  kdeconnect
+                  quassel))
 
 (action 'shepherd 'daemonize)
