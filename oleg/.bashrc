@@ -1005,3 +1005,10 @@ rm-emacs-backups()
     find . -type f -name '*~' -exec rm {} +
 }
 
+galera-df-home()
+{
+    for n in 1 2 3; do
+        echo -e "\n@ galera$n.intr"
+        ssh "galera$n.intr" -- df -h /home
+    done
+}
