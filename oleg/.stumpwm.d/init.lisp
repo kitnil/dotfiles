@@ -388,6 +388,8 @@
   "Open Rofi window list."
   (run-shell-command "rofi -modi window -show window"))
 
+(define-key *top-map* (kbd "s-quoteright") "rofi-window")
+
 (defcommand rofi-twitchy () ()
   "Open Rofi with Twitchy plugin."
   (run-shell-command "rofi -modi twitchy:rofi-twitchy -show twitchy"))
