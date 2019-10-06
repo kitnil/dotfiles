@@ -12,7 +12,7 @@
 
 (run-shell-command "xsetroot -cursor_name left_ptr")
 (run-shell-command "xrdb -merge /home/oleg/.Xresources")
-(run-shell-command "xsetroot -solid black") ; Wallpaper
+(run-shell-command "xsetroot -solid white") ; Wallpaper
 (run-shell-command "xset -b") ; Disable PC speaker
 
 ;;;
