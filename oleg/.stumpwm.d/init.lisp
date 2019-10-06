@@ -362,6 +362,8 @@
 (defcommand glances () ()
   (term-shell-command "glances"))
 
+(define-key *top-map* (kbd "s-H") "glances")
+
 (defcommand htop () ()
   (term-shell-command "htop"))
 
