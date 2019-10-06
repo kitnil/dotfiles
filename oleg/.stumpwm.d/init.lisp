@@ -181,6 +181,8 @@
   "Start or focus Chromium."
   (run-or-raise "chromium" '(:class "Chromium-browser")))
 
+(define-key *top-map* (kbd "C-s-w") "chromium")
+
 (defcommand chromium-proxy () ()
   "Start Chromium via proxy"
   (run-shell-command (concat "chromium"
