@@ -124,7 +124,7 @@
                    clipmenud-service
                    dunst-service
                    keynav-service
-                   sxhkd-service
+                   ;; sxhkd-service
                    emacs-service
                    firefox-service
                    redshift-service
@@ -135,7 +135,7 @@
 (for-each start '(clipmenud
                   dunst
                   keynav
-                  sxhkd
+                  ;; sxhkd
                   emacs
                   firefox
                   redshift
