@@ -420,9 +420,12 @@
 (defcommand run-xterm-light () ()
   "Start or focus XTerm."
   (run-prog *shell-program*
-            :args (list "-c" (join (list *xterm-command*
-                                         *xterm-theme-light*
-                                         *xterm-no-scrollbar*)))
+            :args (list "-c" (join `(,*xterm-command*
+                                     ,*xterm-theme-light*
+                                     ,@(if (= (frame-number (window-frame (current-window))) 2)
+                                           '()
+                                           '("-fa" "Monospace" "-fs" "8"))
+                                     ,*xterm-no-scrollbar*)))
             :wait nil))
 
 (defcommand run-xterm () ()
@@ -589,9 +592,10 @@
 (define-key *top-map* (kbd "s-KP_Add") "volume-increase")
 (define-key *top-map* (kbd "s-KP_Subtract") "volume-decrease")
 
-(define-key *root-map* (kbd "c") "run-xterm")
-(define-key *root-map* (kbd "C-c") "run-xterm")
+(define-key *root-map* (kbd "c") "run-xterm-light")
+(define-key *root-map* (kbd "C-c") "run-xterm-light")
 (define-key *root-map* (kbd "C-M-c") "run-xterm-light")
+(define-key *top-map* (kbd "s-RET") "run-xterm-light")
 
 (defun range (max &key (min 0) (step 1))
   "Get a list of integers."
