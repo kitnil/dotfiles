@@ -183,6 +183,12 @@
 
 (define-key *top-map* (kbd "C-s-w") "chromium")
 
+(defcommand chromium-new-window () ()
+  "Start Chromium."
+  (run-shell-command "chromium"))
+
+(define-key *top-map* (kbd "C-s-W") "chromium-new-window")
+
 (defcommand chromium-proxy () ()
   "Start Chromium via proxy"
   (run-shell-command (concat "chromium"
