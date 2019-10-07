@@ -463,7 +463,8 @@
   (run-prog *shell-program*
             :args (list "-c" (join `(,*xterm-command*
                                      ,*xterm-theme-light*
-                                     ,@(if (= (frame-number (window-frame (current-window))) 2)
+                                     ,@(if (= (frame-number (window-frame (current-window)))
+                                              (if (string= (getenv "DISPLAY") ":1") 0 2))
                                            '()
                                            '("-fa" "Monospace" "-fs" "8"))
                                      ,*xterm-no-scrollbar*)))
