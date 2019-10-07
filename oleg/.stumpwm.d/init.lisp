@@ -363,9 +363,10 @@
        ((xterm)
         (join `(,terminal-name ,*xterm-theme-light*
                                ,*xterm-no-scrollbar*
-                               ,@(if (= (frame-number (tile-group-current-frame (current-group))) 2)
-                                     '()
-                                     `("-fa" "Monospace" "-fs" ,(if (string= (getenv "DISPLAY") ":1") "12" "8")))
+                               ,@(let ((frame (frame-number (tile-group-current-frame (current-group)))))
+                                   (if (or (= frame 2) (= frame 1))
+                                       '()
+                                       `("-fa" "Monospace" "-fs" ,(if (string= (getenv "DISPLAY") ":1") "12" "8"))))
                                ,*term-execute-flag*
                                ,command)))
        ((st)
@@ -456,10 +457,11 @@
   (run-prog *shell-program*
             :args (list "-c" (join `(,*xterm-command*
                                      ,*xterm-theme-light*
-                                     ,@(if (= (frame-number (tile-group-current-frame (current-group)))
-                                              (if (string= (getenv "DISPLAY") ":1") 0 2))
-                                           '()
-                                           '("-fa" "Monospace" "-fs" "8"))
+                                     ,@(let ((frame (frame-number (tile-group-current-frame (current-group)))))
+                                         (if (or (= frame (if (string= (getenv "DISPLAY") ":1") 0 2))
+                                                 (= frame (if (string= (getenv "DISPLAY") ":1") 0 1)))
+                                             '()
+                                             '("-fa" "Monospace" "-fs" "8")))
                                      ,*xterm-no-scrollbar*)))
             :wait nil))
 
