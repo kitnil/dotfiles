@@ -398,6 +398,8 @@
 (defcommand neofetch () ()
   (term-shell-command "sh -c 'neofetch; read'"))
 
+(define-key *top-map* (kbd "C-s-s") "neofetch")
+
 (defcommand rofi-drun () ()
   "Open Rofi to launch `.desktop' file."
   (run-shell-command "rofi -modi run,drun -show drun"))
