@@ -871,9 +871,13 @@
   ""
   (resize (- (round (/ (parse-integer (format-expand *window-formatters* "%w" (current-window))) 2.0))) 0))
 
+(define-key *top-map* (kbd "C-s-Up") "window-resize-by-half-horizontal")
+
 (defcommand window-resize-by-half-vertical () ()
   ""
   (resize 0 (- (round (/ (parse-integer (format-expand *window-formatters* "%h" (current-window))) 2)))))
+
+(define-key *top-map* (kbd "C-s-Down") "window-resize-by-half-vertical")
 
 (defcommand emms () ()
   (unless (uiop/utility:string-prefix-p "emacs"
