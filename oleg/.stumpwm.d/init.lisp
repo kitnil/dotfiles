@@ -98,13 +98,6 @@
     (restore-window-placement-rules rules)
     (place-existing-windows)))
 
-;;(restore-from-file "/home/oleg/src/dotfiles/oleg/.stumpwm.d/desktop/8.lisp")
-
-(define-frame-preference "Default" (1 NIL T :CLASS "mpv" :TITLE "emacs-emms"))
-(define-frame-preference "Default" (3 NIL T :CLASS "mpv" :TITLE "firefox"))
-(define-frame-preference "Default" (4 NIL T :CLASS "XTerm" :TITLE "alerta"))
-(define-frame-preference "Default" (0 NIL T :CLASS "Qemu-system-x86_64"))
-
 
 ;;;
 ;;; XTerm
@@ -1027,3 +1020,12 @@
 
   ;; XXX: Make declarative.
   (swm-gaps:toggle-gaps))
+
+(when (string= (getenv "DISPLAY") ":0")
+  (restore-from-file "/home/oleg/src/dotfiles/oleg/.stumpwm.d/desktop/9.lisp")
+
+  ;; (define-frame-preference "Default" (0 NIL T :CLASS "Qemu-system-x86_64"))
+  (define-frame-preference "Default" (0 NIL T :CLASS "quassel" :TITLE "Chat Monitor"))
+  (define-frame-preference "Default" (3 NIL T :CLASS "XTerm" :TITLE "alerta"))
+  (define-frame-preference "Default" (4 NIL T :CLASS "mpv" :TITLE "emacs-emms"))
+  (define-frame-preference "Default" (4 NIL T :CLASS "mpv" :TITLE "firefox")))
