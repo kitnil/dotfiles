@@ -139,7 +139,7 @@
                    firefox-service
                    redshift-service
                    transmission-service
-                   znc-service
+                   ;; znc-service
                    kdeconnect-service
                    quassel-service)
 
@@ -152,7 +152,7 @@
                   redshift
                   transmission
                   alerta
-                  znc
+                  ;; znc
                   kdeconnect
                   quassel))
 
