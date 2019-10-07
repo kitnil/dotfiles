@@ -871,13 +871,13 @@
   ""
   (resize (- (round (/ (parse-integer (format-expand *window-formatters* "%w" (current-window))) 2.0))) 0))
 
-(define-key *top-map* (kbd "C-s-Up") "window-resize-by-half-horizontal")
+(define-key *top-map* (kbd "C-s-Right") "window-resize-by-half-horizontal")
 
 (defcommand window-resize-by-half-vertical () ()
   ""
   (resize 0 (- (round (/ (parse-integer (format-expand *window-formatters* "%h" (current-window))) 2)))))
 
-(define-key *top-map* (kbd "C-s-Down") "window-resize-by-half-vertical")
+(define-key *top-map* (kbd "C-s-Left") "window-resize-by-half-vertical")
 
 (defcommand emms () ()
   (unless (uiop/utility:string-prefix-p "emacs"
@@ -923,6 +923,8 @@
 (define-key *top-map* (kbd "s-Left") "move-focus left")
 (define-key *top-map* (kbd "s-Up") "move-focus up")
 (define-key *top-map* (kbd "s-Down") "move-focus down")
+(define-key *top-map* (kbd "C-s-Up") "next-in-frame")
+(define-key *top-map* (kbd "C-s-Down") "prev-in-frame")
 
 (define-key *top-map* (kbd "S-s-Right") "move-window right")
 (define-key *top-map* (kbd "S-s-Left") "move-window left")
