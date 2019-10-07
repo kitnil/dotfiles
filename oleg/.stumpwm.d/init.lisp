@@ -1001,7 +1001,6 @@
   (run-shell-command "firefox https://gitlab.wugi.info/wigust/dotfiles/pipelines"))
 
 (load-module "notifications")
-(define-key *root-map* (kbd "N") notifications:*notifications-map*)
 
 (load-module "command-history")
 
