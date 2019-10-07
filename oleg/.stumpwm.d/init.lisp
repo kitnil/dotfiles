@@ -356,12 +356,12 @@
 ;;; Misc
 ;;;
 
-(defun term-shell-command (command &optional (terminal 'xterm))
+(defun term-shell-command (command &key (terminal 'xterm) (color "light"))
   (run-shell-command
    (let ((terminal-name (string-downcase (symbol-name terminal))))
      (case terminal
        ((xterm)
-        (join `(,terminal-name ,*xterm-theme-light*
+        (join `(,terminal-name ,(if (string= color "dark") *xterm-theme-dark* *xterm-theme-light*)
                                ,*xterm-no-scrollbar*
                                ,@(let ((frame (frame-number (tile-group-current-frame (current-group)))))
                                    (if (or (= frame 2) (= frame 1))
