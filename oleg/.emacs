@@ -559,6 +559,8 @@ Sets the following basend on PREFIX-MAP:
 
 (wi-define-magit-status-repo guix (expand-file-name "~/src/guix"))
 
+(setq magit-completing-read-function 'ivy-completing-read)
+
 (bind-key "<Scroll_Lock>" #'scroll-lock-mode)
 (bind-key "<C-mouse-4>" #'text-scale-increase)
 (bind-key "<C-mouse-5>" #'text-scale-decrease)
