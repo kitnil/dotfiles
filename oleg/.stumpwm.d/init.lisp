@@ -385,6 +385,11 @@
 
 (define-key *top-map* (kbd "s-H") "glances")
 
+(defcommand wtf () ()
+  (term-shell-command "wtf" :color "dark"))
+
+(define-key *top-map* (kbd "C-s-h") "wtf")
+
 (defcommand htop () ()
   (term-shell-command "htop"))
 
