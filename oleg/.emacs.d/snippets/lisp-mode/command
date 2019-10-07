@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: command
+# key: command
+# --
+(defcommand $1 () ()
+  $0)
