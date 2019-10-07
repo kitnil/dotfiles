@@ -363,7 +363,7 @@
        ((xterm)
         (join `(,terminal-name ,*xterm-theme-light*
                                ,*xterm-no-scrollbar*
-                               ,@(if (= (frame-number (window-frame (current-window))) 2)
+                               ,@(if (= (frame-number (tile-group-current-frame (current-group))) 2)
                                      '()
                                      `("-fa" "Monospace" "-fs" ,(if (string= (getenv "DISPLAY") ":1") "12" "8")))
                                ,*term-execute-flag*
@@ -456,7 +456,7 @@
   (run-prog *shell-program*
             :args (list "-c" (join `(,*xterm-command*
                                      ,*xterm-theme-light*
-                                     ,@(if (= (frame-number (window-frame (current-window)))
+                                     ,@(if (= (frame-number (tile-group-current-frame (current-group)))
                                               (if (string= (getenv "DISPLAY") ":1") 0 2))
                                            '()
                                            '("-fa" "Monospace" "-fs" "8"))
