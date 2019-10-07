@@ -372,7 +372,7 @@
                                ,*xterm-no-scrollbar*
                                ,@(if (= (frame-number (window-frame (current-window))) 2)
                                      '()
-                                     '("-fa" "Monospace" "-fs" "8"))
+                                     `("-fa" "Monospace" "-fs" ,(if (string= (getenv "DISPLAY") ":1") "12" "8")))
                                ,*term-execute-flag*
                                ,command)))
        ((st)
@@ -1021,3 +1021,9 @@
 (setf swm-gaps:*inner-gaps-size* 5)
 
 (setf swm-gaps:*outer-gaps-size* 0)
+
+(when (string= (getenv "DISPLAY") ":1")
+  (run-shell-command "xsetroot -solid grey")
+
+  ;; XXX: Make declarative.
+  (swm-gaps:toggle-gaps))
