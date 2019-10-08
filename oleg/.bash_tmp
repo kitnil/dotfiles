@@ -211,15 +211,25 @@ wallpaper-guixsd()
 
 backup-exclude()
 {
-    restic -r /srv/backup/guixsd \
-           -e "$HOME/Downloads/2017-02-24-15-img" \
-           -e "$HOME/vm" \
-           -e "$HOME/.cache" \
-           -e "$HOME/Downloads" \
-           -e "$HOME/GNS3/images" \
-           -e "$HOME/GNS3/projects"  \
-           -e "$HOME/src/replicant" \
-           backup /home/oleg $@
+    nice -n 19 ionice -c2 -n7 \
+         restic -r /srv/backup/guixsd \
+         -e "$HOME/.cache" \
+         -e "$HOME/Downloads" \
+         -e "$HOME/Downloads" \
+         -e "$HOME/GNS3/images" \
+         -e "$HOME/GNS3/projects"  \
+         -e "$HOME/archive/src" \
+         -e "$HOME/src/replicant" \
+         -e "$HOME/vm" \
+         -e "$HOME/Videos" \
+         -e "$HOME/.guix-profile" \
+         -e "$HOME/.nix-profile" \
+         -e "$HOME/src/guix" \
+         -e "$HOME/src/guix-wip-forge" \
+         -e "$HOME/src/guix-wip-origin" \
+         -e "$HOME/src/guix-wip-channels" \
+         -e "$HOME/src/macos-simple-kvm" \
+         backup /home/oleg $@
 }
 
 berlin()
