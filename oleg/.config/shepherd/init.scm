@@ -125,7 +125,8 @@
     #:docstring '("quassel")
     #:provides '(quassel)
     #:start (make-forkexec-constructor
-             (list (string-append %bin-directory "quassel")))
+             (list (string-append %bin-directory "quassel"))
+             #:log-file "/home/oleg/.config/shepherd/quassel.log")
     #:stop
     (make-kill-destructor)
     #:respawn? #f))
