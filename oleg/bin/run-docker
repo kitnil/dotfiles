@@ -1,4 +1,4 @@
 #!/bin/sh
 
 . /home/oleg/.guix-profile/etc/profile.d/nix.sh
-/home/oleg/.nix-profile/bin/dockerd -p /var/run/docker.pid
+/home/oleg/.nix-profile/bin/dockerd --default-ulimit nofile=65536:65536 -p /var/run/docker.pid
