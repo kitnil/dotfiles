@@ -356,6 +356,8 @@
 ;;; Misc
 ;;;
 
+(define-key *top-map* (kbd "s-f") "fullscreen")
+
 (defun term-shell-command (command &key (terminal 'xterm) (color "light"))
   (run-shell-command
    (let ((terminal-name (string-downcase (symbol-name terminal))))
