@@ -449,7 +449,7 @@
             :wait nil))
 
 (defcommand pulsemixer () ()
-  (term-shell-command "pulsemixer" 'st))
+  (term-shell-command "pulsemixer" :terminal 'st))
 
 (defcommand alsamixer () ()
   "Download video."
