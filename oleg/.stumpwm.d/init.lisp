@@ -1037,6 +1037,10 @@
 (when (string= (getenv "DISPLAY") ":1")
   (run-shell-command "xsetroot -solid grey")
 
+  (restore-from-file "/home/oleg/src/dotfiles/oleg/.stumpwm.d/desktop/10.lisp")
+  (define-frame-preference "Default" (1 NIL T :CLASS "quassel" :TITLE "Chat Monitor"))
+  (define-frame-preference "Default" (2 NIL T :CLASS "XTerm" :TITLE "alerta"))
+
   ;; XXX: Make declarative.
   (swm-gaps:toggle-gaps))
 
