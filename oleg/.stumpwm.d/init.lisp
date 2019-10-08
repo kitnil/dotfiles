@@ -475,9 +475,14 @@
 (defcommand run-xterm () ()
   "Start or focus XTerm."
   (run-prog *shell-program*
-            :args (list "-c" (join (list *xterm-command*
-                                         *xterm-theme-dark*
-                                         *xterm-no-scrollbar*)))
+            :args (list "-c" (join `(,*xterm-command*
+                                     ,*xterm-theme-dark*
+                                     ,@(let ((frame (frame-number (tile-group-current-frame (current-group)))))
+                                         (if (or (= frame (if (string= (getenv "DISPLAY") ":1") 0 2))
+                                                 (= frame (if (string= (getenv "DISPLAY") ":1") 0 1)))
+                                             '()
+                                             '("-fa" "Monospace" "-fs" "8")))
+                                     ,*xterm-no-scrollbar*)))
             :wait nil))
 
 (defcommand xterm-dark-no-scrollbar () ()
