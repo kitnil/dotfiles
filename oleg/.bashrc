@@ -1012,3 +1012,14 @@ galera-df-home()
         ssh "galera$n.intr" -- df -h /home
     done
 }
+
+router.majordomo.ru()
+{
+    ssh -t work
+    # sshpass -p'***REMOVED***' ssh -vvv -oKexAlgorithms=+diffie-hellman-group1-sha1 -oHostKeyAlgorithms=+ssh-dss -p 1022 -l root -i ~/.ssh/eng_key_rsa router.majordomo.ru
+}
+
+majordomo-backup-mount()
+{
+    sudo -u majordomo-ssh-tunnel restic -r /srv/backup/majordomo mount /mnt/backup
+}
