@@ -3,6 +3,10 @@
 ! 
 ! XTerm
 
+! https://unix.stackexchange.com/questions/109509/how-to-search-xterm-console-history
+XTerm.vt100.printerCommand: /run/current-system/profile/bin/xterm -bg white -fg black +sb -e sh -c 'cat <&3 | less -Sr' 3<&0
+XTerm.vt100.translations: #override Ctrl ~Meta ~Shift <Key>slash: print-everything()
+
 XTerm.vt100.foreground: black
 XTerm.vt100.background: white
 
