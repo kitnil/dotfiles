@@ -555,9 +555,9 @@
 
 (defparameter dark-theme t)
 (progn
-  (set-focus-color "#90EE90")
-  (set-border-color "#90EE90")
-  (set-float-focus-color "#90EE90"))
+  (set-focus-color "#696969")
+  (set-border-color "#696969")
+  (set-float-focus-color "#696969"))
 (defcommand toggle-theme () ()
   (if dark-theme
       (progn (setq *mode-line-border-color*     "#ffffff"
