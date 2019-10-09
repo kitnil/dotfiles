@@ -648,6 +648,11 @@
 (define-key *root-map* (kbd "C-M-c") "run-xterm-light")
 (define-key *top-map* (kbd "s-RET") "run-xterm-light")
 
+(defcommand xfce-terminal () ()
+  (run-shell-command "xfce4-terminal"))
+
+(define-key *top-map* (kbd "M-s-RET") "xfce-terminal")
+
 (defun range (max &key (min 0) (step 1))
   "Get a list of integers."
   (loop for n from min below max by step
