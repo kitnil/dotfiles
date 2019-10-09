@@ -1023,3 +1023,5 @@ majordomo-backup-mount()
 {
     sudo -u majordomo-ssh-tunnel restic -r /srv/backup/majordomo mount /mnt/backup
 }
+
+alias xclipp='xclip -selection secondary'
