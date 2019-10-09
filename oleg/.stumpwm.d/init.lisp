@@ -461,6 +461,19 @@
    (join (list *xterm-command* *xterm-theme-dark* *xterm-no-scrollbar*))
    '(:class "XTerm")))
 
+(defcommand run-xterm-light-big () ()
+  "Start or focus XTerm."
+  (run-prog *shell-program*
+            :args (list "-c" (join `(,*xterm-command*
+                                     ,*xterm-theme-light*
+                                     ,@(let ((frame (frame-number (tile-group-current-frame (current-group)))))
+                                         (if (or (= frame (if (string= (getenv "DISPLAY") ":1") 0 2))
+                                                 (= frame (if (string= (getenv "DISPLAY") ":1") 0 1)))
+                                             '()
+                                             '("-fa" "Monospace" "-fs" "8")))
+                                     "-sl" "1000000")))
+            :wait nil))
+
 (defcommand run-xterm-light () ()
   "Start or focus XTerm."
   (run-prog *shell-program*
@@ -647,6 +660,7 @@
 (define-key *root-map* (kbd "C-c") "run-xterm-light")
 (define-key *root-map* (kbd "C-M-c") "run-xterm-light")
 (define-key *top-map* (kbd "s-RET") "run-xterm-light")
+(define-key *top-map* (kbd "C-s-RET") "run-xterm-light-big")
 
 (defcommand xfce-terminal () ()
   (run-shell-command "xfce4-terminal"))
