@@ -471,7 +471,8 @@
                                                  (= frame (if (string= (getenv "DISPLAY") ":1") 0 1)))
                                              '()
                                              '("-fa" "Monospace" "-fs" "8")))
-                                     "-sl" "1000000")))
+                                     "-sl" "1000000"
+                                     ,*xterm-no-scrollbar*)))
             :wait nil))
 
 (defcommand run-xterm-light () ()
