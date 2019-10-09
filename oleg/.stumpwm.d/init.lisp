@@ -717,13 +717,22 @@
   (run-shell-command "exec vncviewer localhost:59555"))
 
 (defcommand pass-route () ()
-  (run-shell-command "echo -n ***REMOVED*** | xclip -selection primary"))
+  (window-send-string "***REMOVED***
+"))
+
+(define-key *top-map* (kbd "C-s-a") "pass-route")
 
 (defcommand pass-eng () ()
-  (run-shell-command "echo -n ***REMOVED*** | xclip -selection primary"))
+  (window-send-string "***REMOVED***
+"))
+
+(define-key *top-map* (kbd "s-a") "pass-eng")
 
 (defcommand pass-sup () ()
-  (run-shell-command "echo -n ***REMOVED*** | xclip -selection primary"))
+  (window-send-string "***REMOVED***
+"))
+
+(define-key *top-map* (kbd "s-A") "pass-sup")
 
 (defun current-window-width ()
   (format-expand *window-formatters* "%w" (current-window)))
