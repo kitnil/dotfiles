@@ -410,7 +410,9 @@
 
 (defcommand rofi-ssh () ()
   "Open Rofi ssh list."
-  (run-shell-command "rofi -width 20 -terminal 'xterm +sb' -modi ssh -show ssh"))
+  (run-shell-command
+   (format nil "rofi -ssh-command '{terminal} -title {host} -e {ssh-client} {host}' -width 20 -terminal '~a' -modi ssh -show ssh"
+           (xterm-command))))
 
 (define-key *top-map* (kbd "S-s-RET") "rofi-ssh")
 
@@ -460,6 +462,19 @@
   (run-or-raise
    (join (list *xterm-command* *xterm-theme-dark* *xterm-no-scrollbar*))
    '(:class "XTerm")))
+
+(defun xterm-command ()
+  (join `("/run/current-system/profile/bin/xterm"
+          ;; Make sure XTerm terminal size is appropriate for current StumpWM frame.
+          ,@(let ((frame (frame-number (tile-group-current-frame (current-group)))))
+              (if (or (= frame (if (string= (getenv "DISPLAY") ":1") 0 2))
+                      (= frame (if (string= (getenv "DISPLAY") ":1") 0 1)))
+                  '()
+                  '("-fa" "Monospace" "-fs" "8")))
+
+          "-sl" "1000000" ;number of lines
+          ,*xterm-no-scrollbar*
+          ,*xterm-theme-light*)))
 
 (defcommand run-xterm-light-big () ()
   "Start or focus XTerm."
