@@ -980,7 +980,9 @@ jenkins-build-php()
 {
     for job in apache2-php52 apache2-php53 apache2-php54 apache2-php55 apache2-php56 apache2-php70 apache2-php71 apache2-php72 apache2-php73; do
         echo -e "\n@ $job"
-        curl -s -k "https://jenkins.intr/job/webservices/job/$job/job/master/build?delay=0sec" -H 'User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:68.0) Gecko/20100101 Firefox/68.0' -H 'Accept: text/javascript, text/html, application/xml, text/xml, */*' -H 'Accept-Language: en-US,en;q=0.5' --compressed -H 'Referer: https://jenkins.intr/job/webservices/job/apache2-php56/job/19-09/' -H 'X-Requested-With: XMLHttpRequest' -H 'X-Prototype-Version: 1.7' -H 'Content-type: application/x-www-form-urlencoded; charset=UTF-8' -H 'Connection: keep-alive' -H 'Cookie: screenResolution=1920x1080; screenResolution=1920x1080; jenkins-timestamper-offset=-10800000; JSESSIONID.ac64ee9d=node01fchy7dfq5hic1mdefwmc30a96621.node0; screenResolution=1920x1080' -H 'Pragma: no-cache' -H 'Cache-Control: no-cache' --data ''
+        curl -u 'admin:***REMOVED***' -s -k \
+"https://jenkins.intr/job/webservices/job/$job/job/master/build?delay=0sec" \
+-H 'Content-type: application/x-www-form-urlencoded; charset=UTF-8' --data ''
     done
 }
 
