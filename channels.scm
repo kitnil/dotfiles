@@ -12,4 +12,5 @@
         (name 'guix)
         (url "https://gitlab.wugi.info/guix/guix.git")
         (commit
-          "c13546225ad08561ac45a581ffb7a166ffd0f6a4")))
+          "92b919ed85fa219d47c66ab5227bb8d473537477")))
+
