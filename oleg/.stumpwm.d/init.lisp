@@ -918,6 +918,14 @@
 (defcommand resolution () ()
   (run-shell-command "xrandr --output HDMI1 --mode 1920x1080 ; xgamma -gamma 1.0"))
 
+;; Rebind groups to PREFIX-NUMBER.
+(mapcar #'(lambda (x)
+            (define-key *top-map* (kbd (concat "C-s-" (write-to-string x)))
+              (format nil "gselect ~D" x))
+            (define-key *top-map* (kbd (concat "M-s-" (write-to-string x)))
+              (format nil "gmove ~D" x)))
+        (range 10 :min 0 :step 1))
+
 ;; groups
 (define-key *top-map* (kbd "s-!") "gmove-and-follow 1")
 (define-key *top-map* (kbd "s-@") "gmove-and-follow 2")
