@@ -366,7 +366,8 @@
         (join `(,terminal-name ,(if (string= color "dark") *xterm-theme-dark* *xterm-theme-light*)
                                ,*xterm-no-scrollbar*
                                ,@(let ((frame (frame-number (tile-group-current-frame (current-group)))))
-                                   (if (or (= frame 2) (= frame 1))
+                                   (if (or (or (= frame 2) (= frame 1))
+                                           (= (length (group-frames (current-group))) 2))
                                        '()
                                        `("-fa" "Monospace" "-fs" ,(if (string= (getenv "DISPLAY") ":1") "12" "8"))))
                                ,*term-execute-flag*
@@ -468,7 +469,8 @@
           ;; Make sure XTerm terminal size is appropriate for current StumpWM frame.
           ,@(let ((frame (frame-number (tile-group-current-frame (current-group)))))
               (if (or (= frame (if (string= (getenv "DISPLAY") ":1") 0 2))
-                      (= frame (if (string= (getenv "DISPLAY") ":1") 0 1)))
+                      (= frame (if (string= (getenv "DISPLAY") ":1") 0 1))
+                      (length (group-frames (current-group))))
                   '()
                   '("-fa" "Monospace" "-fs" "8")))
 
@@ -483,7 +485,8 @@
                                      ,*xterm-theme-light*
                                      ,@(let ((frame (frame-number (tile-group-current-frame (current-group)))))
                                          (if (or (= frame (if (string= (getenv "DISPLAY") ":1") 0 2))
-                                                 (= frame (if (string= (getenv "DISPLAY") ":1") 0 1)))
+                                                 (= frame (if (string= (getenv "DISPLAY") ":1") 0 1))
+                                                 (length (group-frames (current-group))))
                                              '()
                                              '("-fa" "Monospace" "-fs" "8")))
                                      "-sl" "1000000"
@@ -497,7 +500,8 @@
                                      ,*xterm-theme-light*
                                      ,@(let ((frame (frame-number (tile-group-current-frame (current-group)))))
                                          (if (or (= frame (if (string= (getenv "DISPLAY") ":1") 0 2))
-                                                 (= frame (if (string= (getenv "DISPLAY") ":1") 0 1)))
+                                                 (= frame (if (string= (getenv "DISPLAY") ":1") 0 1))
+                                                 (length (group-frames (current-group))))
                                              '()
                                              '("-fa" "Monospace" "-fs" "8")))
                                      ,*xterm-no-scrollbar*)))
