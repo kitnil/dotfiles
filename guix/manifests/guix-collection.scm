@@ -152,8 +152,6 @@ video virtualization vpn w3m xfce web wget wm xdisorg xml xorg)
 
                synergy
 
-               ansible
-
                ;; FAIL: ansible         ; Configuration management
                bc
                cpio
