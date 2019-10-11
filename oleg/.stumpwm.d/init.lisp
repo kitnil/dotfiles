@@ -469,12 +469,14 @@
 (defun xterm-command ()
   (join `("/run/current-system/profile/bin/xterm"
           ;; Make sure XTerm terminal size is appropriate for current StumpWM frame.
-          ,@(let ((frame (frame-number (tile-group-current-frame (current-group)))))
-              (if (or (= frame (if (string= (getenv "DISPLAY") ":1") 0 2))
-                      (= frame (if (string= (getenv "DISPLAY") ":1") 0 1))
-                      (length (group-frames (current-group))))
-                  '()
-                  '("-fa" "Monospace" "-fs" "8")))
+          ,@(if (not (string= (class-name (class-of (current-group))) "FLOAT-GROUP"))
+                (let ((frame (frame-number (tile-group-current-frame (current-group)))))
+                  (if (or (= frame (if (string= (getenv "DISPLAY") ":1") 0 2))
+                          (= frame (if (string= (getenv "DISPLAY") ":1") 0 1))
+                          (length (group-frames (current-group))))
+                      '()
+                      '("-fa" "Monospace" "-fs" "8")))
+                '())
 
           "-sl" "1000000" ;number of lines
           ,*xterm-no-scrollbar*
@@ -485,14 +487,14 @@
   (run-prog *shell-program*
             :args (list "-c" (join `(,*xterm-command*
                                      ,*xterm-theme-light*
-                                     ,@(let ((frame (and (not (string= (class-name (class-of (current-group))) "FLOAT-GROUP"))
-                                                         (frame-number (tile-group-current-frame (current-group))))))
-                                         (if (and frame
-                                                  (or (= frame (if (string= (getenv "DISPLAY") ":1") 0 2))
-                                                      (= frame (if (string= (getenv "DISPLAY") ":1") 0 1))
-                                                      (length (group-frames (current-group)))))
-                                             '()
-                                             '("-fa" "Monospace" "-fs" "8")))
+                                     ,@(if (not (string= (class-name (class-of (current-group))) "FLOAT-GROUP"))
+                                           (let ((frame (string= (class-name (class-of (current-group))) "FLOAT-GROUP")))
+                                             (if (or (= frame (if (string= (getenv "DISPLAY") ":1") 0 2))
+                                                     (= frame (if (string= (getenv "DISPLAY") ":1") 0 1))
+                                                     (length (group-frames (current-group))))
+                                                 '()
+                                                 '("-fa" "Monospace" "-fs" "8")))
+                                           '())
                                      "-sl" "1000000"
                                      ,*xterm-no-scrollbar*)))
             :wait nil))
@@ -502,14 +504,14 @@
   (run-prog *shell-program*
             :args (list "-c" (join `(,*xterm-command*
                                      ,*xterm-theme-light*
-                                     ,@(let ((frame (and (not (string= (class-name (class-of (current-group))) "FLOAT-GROUP"))
-                                                         (frame-number (tile-group-current-frame (current-group))))))
-                                         (if (and frame
-                                                  (or (= frame (if (string= (getenv "DISPLAY") ":1") 0 2))
-                                                      (= frame (if (string= (getenv "DISPLAY") ":1") 0 1))
-                                                      (length (group-frames (current-group)))))
-                                             '()
-                                             '("-fa" "Monospace" "-fs" "8")))
+                                     ,@(if (not (string= (class-name (class-of (current-group))) "FLOAT-GROUP"))
+                                           (let ((frame (frame-number (tile-group-current-frame (current-group)))))
+                                             (if (or (= frame (if (string= (getenv "DISPLAY") ":1") 0 2))
+                                                     (= frame (if (string= (getenv "DISPLAY") ":1") 0 1))
+                                                     (length (group-frames (current-group))))
+                                                 '()
+                                                 '("-fa" "Monospace" "-fs" "8")))
+                                           '())
                                      ,*xterm-no-scrollbar*)))
             :wait nil))
 
@@ -518,11 +520,13 @@
   (run-prog *shell-program*
             :args (list "-c" (join `(,*xterm-command*
                                      ,*xterm-theme-dark*
-                                     ,@(let ((frame (frame-number (tile-group-current-frame (current-group)))))
-                                         (if (or (= frame (if (string= (getenv "DISPLAY") ":1") 0 2))
-                                                 (= frame (if (string= (getenv "DISPLAY") ":1") 0 1)))
-                                             '()
-                                             '("-fa" "Monospace" "-fs" "8")))
+                                     ,@(if (not (string= (class-name (class-of (current-group))) "FLOAT-GROUP"))
+                                           (let ((frame (frame-number (tile-group-current-frame (current-group)))))
+                                             (if (or (= frame (if (string= (getenv "DISPLAY") ":1") 0 2))
+                                                     (= frame (if (string= (getenv "DISPLAY") ":1") 0 1)))
+                                                 '()
+                                                 '("-fa" "Monospace" "-fs" "8")))
+                                           '())
                                      ,*xterm-no-scrollbar*)))
             :wait nil))
 
