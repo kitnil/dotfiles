@@ -921,6 +921,12 @@
 ;; Rebind groups to PREFIX-NUMBER.
 (mapcar #'(lambda (x)
             (define-key *top-map* (kbd (concat "C-s-" (write-to-string x)))
+              (format nil "gnew ~D" x)))
+        (range 9 :min 2 :step 1))
+
+;; Rebind groups to PREFIX-NUMBER.
+(mapcar #'(lambda (x)
+            (define-key *top-map* (kbd (concat "C-s-" (write-to-string x)))
               (format nil "gselect ~D" x))
             (define-key *top-map* (kbd (concat "M-s-" (write-to-string x)))
               (format nil "gmove ~D" x)))
