@@ -138,7 +138,7 @@ video virtualization vpn w3m xfce web wget wm xdisorg xml xorg)
                ;; X11
                keynav rofi st xauth xev scrot xsel
 
-               polybar
+               ;; polybar
 
                sxhkd
 
