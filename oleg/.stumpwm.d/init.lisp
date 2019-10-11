@@ -108,7 +108,7 @@
 
 (setf *window-format* "%m%n%s %c %50t")
 
-(defvar *xterm-command* "exec /run/current-system/profile/bin/xterm")
+(defvar *xterm-command* "/run/current-system/profile/bin/xterm")
 (defvar *xterm-big-command*
   (join '("exec" "/run/current-system/profile/bin/xterm"
           "-fa" "Monospace" "-fs" "24")))
@@ -363,17 +363,7 @@
    (let ((terminal-name (string-downcase (symbol-name terminal))))
      (case terminal
        ((xterm)
-        (join `(,terminal-name ,(if (string= color "dark") *xterm-theme-dark* *xterm-theme-light*)
-                               ,*xterm-no-scrollbar*
-                               ,@(let ((frame (and (not (string= (class-name (class-of (current-group))) "FLOAT-GROUP"))
-                                                   (frame-number (tile-group-current-frame (current-group))))))
-                                   (if (and frame
-                                            (or (or (= frame 2) (= frame 1))
-                                                (= (length (group-frames (current-group))) 2)))
-                                       '()
-                                       `("-fa" "Monospace" "-fs" ,(if (string= (getenv "DISPLAY") ":1") "12" "8"))))
-                               ,*term-execute-flag*
-                               ,command)))
+        (xterm-command :color color :command command))
        ((st)
         (join (list terminal-name
                     *st-font-flag* *st-font*
@@ -466,68 +456,26 @@
    (join (list *xterm-command* *xterm-theme-dark* *xterm-no-scrollbar*))
    '(:class "XTerm")))
 
-(defun xterm-command ()
-  (join `("/run/current-system/profile/bin/xterm"
+(defun xterm-command (&key (color "light") (command nil))
+  (join `(,*xterm-command*
           ;; Make sure XTerm terminal size is appropriate for current StumpWM frame.
           ,@(if (not (string= (class-name (class-of (current-group))) "FLOAT-GROUP"))
-                (let ((frame (frame-number (tile-group-current-frame (current-group)))))
-                  (if (or (= frame (if (string= (getenv "DISPLAY") ":1") 0 2))
-                          (= frame (if (string= (getenv "DISPLAY") ":1") 0 1))
-                          (length (group-frames (current-group))))
-                      '()
-                      '("-fa" "Monospace" "-fs" "8")))
+                (if (and (> (length (group-frames (current-group))) 2)
+                         (= (frame-number (tile-group-current-frame (current-group)))
+                            (if (string= (getenv "DISPLAY") ":1") 0 2)))
+                    '()
+                    '("-fa" "Monospace" "-fs" "8"))
                 '())
 
           "-sl" "1000000" ;number of lines
           ,*xterm-no-scrollbar*
-          ,*xterm-theme-light*)))
-
-(defcommand run-xterm-light-big () ()
-  "Start or focus XTerm."
-  (run-prog *shell-program*
-            :args (list "-c" (join `(,*xterm-command*
-                                     ,*xterm-theme-light*
-                                     ,@(if (not (string= (class-name (class-of (current-group))) "FLOAT-GROUP"))
-                                           (let ((frame (string= (class-name (class-of (current-group))) "FLOAT-GROUP")))
-                                             (if (or (= frame (if (string= (getenv "DISPLAY") ":1") 0 2))
-                                                     (= frame (if (string= (getenv "DISPLAY") ":1") 0 1))
-                                                     (length (group-frames (current-group))))
-                                                 '()
-                                                 '("-fa" "Monospace" "-fs" "8")))
-                                           '())
-                                     "-sl" "1000000"
-                                     ,*xterm-no-scrollbar*)))
-            :wait nil))
-
-(defcommand run-xterm-light () ()
-  "Start or focus XTerm."
-  (run-prog *shell-program*
-            :args (list "-c" (join `(,*xterm-command*
-                                     ,*xterm-theme-light*
-                                     ,@(if (not (string= (class-name (class-of (current-group))) "FLOAT-GROUP"))
-                                           (let ((frame (frame-number (tile-group-current-frame (current-group)))))
-                                             (if (or (= frame (if (string= (getenv "DISPLAY") ":1") 0 2))
-                                                     (= frame (if (string= (getenv "DISPLAY") ":1") 0 1))
-                                                     (length (group-frames (current-group))))
-                                                 '()
-                                                 '("-fa" "Monospace" "-fs" "8")))
-                                           '())
-                                     ,*xterm-no-scrollbar*)))
-            :wait nil))
+          ,(if (string= color "light") *xterm-theme-light* *xterm-theme-dark*)
+          ,@(if command `("-e" ,command) '()))))
 
 (defcommand run-xterm () ()
   "Start or focus XTerm."
   (run-prog *shell-program*
-            :args (list "-c" (join `(,*xterm-command*
-                                     ,*xterm-theme-dark*
-                                     ,@(if (not (string= (class-name (class-of (current-group))) "FLOAT-GROUP"))
-                                           (let ((frame (frame-number (tile-group-current-frame (current-group)))))
-                                             (if (or (= frame (if (string= (getenv "DISPLAY") ":1") 0 2))
-                                                     (= frame (if (string= (getenv "DISPLAY") ":1") 0 1)))
-                                                 '()
-                                                 '("-fa" "Monospace" "-fs" "8")))
-                                           '())
-                                     ,*xterm-no-scrollbar*)))
+            :args (list "-c" (xterm-command))
             :wait nil))
 
 (defcommand xterm-dark-no-scrollbar () ()
@@ -691,11 +639,11 @@
 (define-key *top-map* (kbd "s-KP_Add") "volume-increase")
 (define-key *top-map* (kbd "s-KP_Subtract") "volume-decrease")
 
-(define-key *root-map* (kbd "c") "run-xterm-light")
-(define-key *root-map* (kbd "C-c") "run-xterm-light")
-(define-key *root-map* (kbd "C-M-c") "run-xterm-light")
-(define-key *top-map* (kbd "s-RET") "run-xterm-light")
-(define-key *top-map* (kbd "C-s-RET") "run-xterm-light-big")
+(define-key *root-map* (kbd "c") "run-xterm")
+(define-key *root-map* (kbd "C-c") "run-xterm")
+(define-key *root-map* (kbd "C-M-c") "run-xterm")
+(define-key *top-map* (kbd "s-RET") "run-xterm")
+(define-key *top-map* (kbd "C-s-RET") "run-xterm")
 
 (defcommand xfce-terminal () ()
   (run-shell-command "xfce4-terminal"))
