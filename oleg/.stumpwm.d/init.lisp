@@ -924,6 +924,8 @@
               (format nil "gnew ~D" x)))
         (range 9 :min 2 :step 1))
 
+(gnew-float "9")
+
 ;; Rebind groups to PREFIX-NUMBER.
 (mapcar #'(lambda (x)
             (define-key *top-map* (kbd (concat "C-s-" (write-to-string x)))
