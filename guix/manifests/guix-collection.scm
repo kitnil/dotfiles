@@ -69,7 +69,8 @@ video virtualization vpn w3m xfce web wget wm xdisorg xml xorg)
                guile-fibers guile-gcrypt guile-git guile-readline
                guile-redis guile-ssh guile-xosd
 
-               chicken go m4 racket perl python python-hy r sbcl
+               chicken go m4 racket perl python ;; python-hy
+               r sbcl
 
                mcron
 
