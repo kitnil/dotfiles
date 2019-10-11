@@ -9,9 +9,7 @@
  emacs-debpaste
  emacs-eval-in-repl
  emacs-flyspell-correct
- emacs-helm-navi
  emacs-hydra-timestamp
- emacs-helm-navi
  emacs-hydra-timestamp
  emacs-mediawiki
  emacs-pcre2el

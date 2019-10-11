@@ -23,7 +23,6 @@
    emacs-git-messenger-diff-mode
    emacs-gited
    emacs-guix-misc
-   emacs-helm-navi
    emacs-hydra-timestamp
    emacs-info-colors        ; Colorize info pages
    emacs-mediawiki
