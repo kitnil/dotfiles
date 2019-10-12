@@ -461,8 +461,11 @@
           ;; Make sure XTerm terminal size is appropriate for current StumpWM frame.
           ,@(if (not (string= (class-name (class-of (current-group))) "FLOAT-GROUP"))
                 (if (and (> (length (group-frames (current-group))) 2)
-                         (= (frame-number (tile-group-current-frame (current-group)))
-                            (if (string= (getenv "DISPLAY") ":1") 0 2)))
+                         (if (string= (getenv "DISPLAY") ":1")
+                             0
+                             (if (= (frame-number (tile-group-current-frame (current-group))) 2)
+                                 2
+                                 1)))
                     '()
                     '("-fa" "Monospace" "-fs" "8"))
                 '())
