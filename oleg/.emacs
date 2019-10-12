@@ -904,7 +904,8 @@ Sets the following basend on PREFIX-MAP:
         ("manifest" . scheme-mode)
         ("\\.tfstate" . json-mode)
         ("bashrc" . sh-mode)
-        ("kresd\\.conf" . lua-mode)))
+        ("kresd\\.conf" . lua-mode)
+        ("\\.luadoc" . lua-mode)))
 
 (mapc (-lambda ((hook key proc))
         (add-hook hook `(lambda ()
