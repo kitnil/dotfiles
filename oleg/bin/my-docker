@@ -1,14 +1,13 @@
 #!/bin/sh
 
-# oleg@guixsd ~$ docker swarm init --advertise-addr 192.168.105.120
-# Swarm initialized: current node (s3uh1u8wg5ozxm17m30x31yn8) is now a manager.
+# oleg@guixsd ~$ docker swarm init
+# Swarm initialized: current node (w0mml9jb9wydvk41f7nfw7f1f) is now a manager.
 
 # To add a worker to this swarm, run the following command:
 
-#     docker swarm join --token SWMTKN-1-3dlfh9vk25nv3fqaulegry5i7tnyvr76vtxf74idki1mmm7sjd-1nvpml8zcbov16wkxoqhrhajb 192.168.105.120:2377
+#     docker swarm join --token SWMTKN-1-0vie91jdas5hytn9z5ku376ax6v8u1pqkfrnvf60qz7k8r6rgd-ekto8dik2zcn2acnhlnc3c4q5 192.168.105.120:2377
 
 # To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
-
 
 docker run \
        --name influxdb \
