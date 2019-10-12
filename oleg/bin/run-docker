@@ -1,4 +1,5 @@
 #!/bin/sh
 
-. /home/oleg/.guix-profile/etc/profile.d/nix.sh
+/run/current-system/profile/bin/modprobe overlay
+. /home/oleg/.nix-profile/etc/profile.d/nix.sh
 /home/oleg/.nix-profile/bin/dockerd --default-ulimit nofile=65536:65536 -p /var/run/docker.pid

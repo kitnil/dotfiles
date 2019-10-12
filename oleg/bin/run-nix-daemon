@@ -1,4 +1,4 @@
 #!/bin/sh
 
-. /home/oleg/.guix-profile/etc/profile.d/nix.sh
+. /home/oleg/.nix-profile/etc/profile.d/nix.sh
 /home/oleg/.nix-profile/bin/nix-daemon
