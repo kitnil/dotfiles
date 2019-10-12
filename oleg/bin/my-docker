@@ -300,14 +300,15 @@ alerta()
             --add-host db:172.17.0.1 \
             --publish 47080:8080 \
             --mount type=bind,source=/etc/localtime,target=/etc/localtime,readonly \
+            --mount type=bind,source=/home/oleg/src/hello-alerta/alertad.conf,target=/app/alertad.conf:ro,readonly \
             --env DEBUG=1 \
             --env DATABASE_URL=postgres://alerta:alerta@db:5432/alerta \
             --env AUTH_REQUIRED=True \
             --env ADMIN_USERS=admin@localhost \
-            --env PLUGINS=reject,blackout,normalise,enhance \
+            --env PLUGINS=reject,blackout,normalise,enhance,slack \
             --env INSTALL_PLUGINS=normalise,enhance,slack \
             --restart unless-stopped \
-            alerta/alerta-web:6.8.2
+            alerta/alerta-web:7.4.1
 }
 
 tor()
