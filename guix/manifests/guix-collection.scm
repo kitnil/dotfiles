@@ -129,7 +129,7 @@ video virtualization vpn w3m xfce web wget wm xdisorg xml xorg)
                gsettings-desktop-schemas
                glib-networking
                flatpak
-               nix
+               ;; nix
 
                mlt mpv obs vlc
 
