@@ -465,7 +465,7 @@
                              0
                              (if (= (frame-number (tile-group-current-frame (current-group))) 2)
                                  2
-                                 1)))
+                                 nil)))
                     '()
                     '("-fa" "Monospace" "-fs" "8"))
                 '())
