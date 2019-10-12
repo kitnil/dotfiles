@@ -9,258 +9,333 @@
 
 # To add a manager to this swarm, run 'docker swarm join-token manager' and follow the instructions.
 
-docker run \
-       --name influxdb \
-       --hostname influxdb \
-       --net=influxdb \
-       --detach \
-       --restart unless-stopped \
-       --env 'INFLUXDB_ADMIN_ENABLED=true' \
-       --volume /var/lib/influxdb:/var/lib/influxdb \
-       --volume /etc/influxdb/influxdb.conf:/etc/influxdb/influxdb.conf:ro \
-       influxdb
+influxdb()
+{
+    docker run \
+            --name influxdb \
+            --hostname influxdb \
+            --net=influxdb \
+            --detach \
+            --restart unless-stopped \
+            --env 'INFLUXDB_ADMIN_ENABLED=true' \
+            --volume /var/lib/influxdb:/var/lib/influxdb \
+            --volume /etc/influxdb/influxdb.conf:/etc/influxdb/influxdb.conf:ro \
+            influxdb
+}
 
-docker run \
-       --name telegraf \
-       --net=influxdb \
-       --hostname telegraf \
-       --detach \
-       --restart unless-stopped \
-       --env HOST_PROC=/host/proc \
-       --volume /proc:/host/proc:ro \
-       --volume $HOME/src/hello-telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro \
-       telegraf
+telegraf()
+{
+    docker run \
+            --name telegraf \
+            --net=influxdb \
+            --hostname telegraf \
+            --detach \
+            --restart unless-stopped \
+            --env HOST_PROC=/host/proc \
+            --volume /proc:/host/proc:ro \
+            --volume $HOME/src/hello-telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro \
+            telegraf
+}
 
-docker run \
-       --name kapacitor \
-       --net=influxdb \
-       --publish 9092:9092 \
-       --hostname kapacitor \
-       -e KAPACITOR_INFLUXDB_0_URLS_0=http://influxdb:8086 \
-       --detach \
-       --restart unless-stopped \
-       --env HOST_PROC=/host/proc \
-       --volume /proc:/host/proc:ro \
-       --volume $HOME/src/hello-kapacitor/kapacitor.conf:/etc/kapacitor/kapacitor.conf:ro \
-       kapacitor
+kapacitor()
+{
+    docker run \
+            --name kapacitor \
+            --net=influxdb \
+            --publish 9092:9092 \
+            --hostname kapacitor \
+            -e KAPACITOR_INFLUXDB_0_URLS_0=http://influxdb:8086 \
+            --detach \
+            --restart unless-stopped \
+            --env HOST_PROC=/host/proc \
+            --volume /proc:/host/proc:ro \
+            --volume $HOME/src/hello-kapacitor/kapacitor.conf:/etc/kapacitor/kapacitor.conf:ro \
+            kapacitor
+}
 
-docker run \
-       --name chronograf \
-       --net=influxdb \
-       --hostname chronograf \
-       --detach \
-       --restart unless-stopped \
-       --volume /var/lib/chronograf:/var/lib/chronograf \
-       chronograf
+chronograf()
+{
+    docker run \
+            --name chronograf \
+            --net=influxdb \
+            --hostname chronograf \
+            --detach \
+            --restart unless-stopped \
+            --volume /var/lib/chronograf:/var/lib/chronograf \
+            chronograf
+}
 
+influxdb()
+{
 
-docker run \
-       --name influxdb \
-       --hostname influxdb \
-       --network host \
-       --detach \
-       --restart unless-stopped \
-       --env 'INFLUXDB_ADMIN_ENABLED=true' \
-       --publish 8083:8083 \
-       --publish 8086:8086 \
-       --volume /var/lib/influxdb:/var/lib/influxdb \
-       --volume /etc/influxdb/influxdb.conf:/etc/influxdb/influxdb.conf:ro \
-       influxdb -config /etc/influxdb/influxdb.conf
+    docker run \
+            --name influxdb \
+            --hostname influxdb \
+            --network host \
+            --detach \
+            --restart unless-stopped \
+            --env 'INFLUXDB_ADMIN_ENABLED=true' \
+            --publish 8083:8083 \
+            --publish 8086:8086 \
+            --volume /var/lib/influxdb:/var/lib/influxdb \
+            --volume /etc/influxdb/influxdb.conf:/etc/influxdb/influxdb.conf:ro \
+            influxdb -config /etc/influxdb/influxdb.conf
+}
 
-docker run \
-       --name telegraf \
-       --hostname guixsd \
-       --detach \
-       --restart unless-stopped \
-       --env HOST_PROC=/host/proc \
-       --volume /proc:/host/proc:ro \
-       --volume $HOME/src/hello-telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro \
-       telegraf
+telegraf()
+{
+    docker run \
+            --name telegraf \
+            --hostname guixsd \
+            --detach \
+            --restart unless-stopped \
+            --env HOST_PROC=/host/proc \
+            --volume /proc:/host/proc:ro \
+            --volume $HOME/src/hello-telegraf/telegraf.conf:/etc/telegraf/telegraf.conf:ro \
+            telegraf
+}
 
-docker run \
-       --name kapacitor \
-       --hostname kapacitor \
-       --detach \
-       --restart unless-stopped \
-       --env HOST_PROC=/host/proc \
-       --volume /proc:/host/proc:ro \
-       --volume $HOME/src/hello-kapacitor/kapacitor.conf:/etc/kapacitor/kapacitor.conf:ro \
-       --publish 9092:9092 \
-       kapacitor
+kapacitor()
+{
+    docker run \
+            --name kapacitor \
+            --hostname kapacitor \
+            --detach \
+            --restart unless-stopped \
+            --env HOST_PROC=/host/proc \
+            --volume /proc:/host/proc:ro \
+            --volume $HOME/src/hello-kapacitor/kapacitor.conf:/etc/kapacitor/kapacitor.conf:ro \
+            --publish 9092:9092 \
+            kapacitor
+}
 
-docker run \
-       --name chronograf \
-       --hostname guixsd \
-       --detach \
-       --restart unless-stopped \
-       --publish 8888:8888 \
-       --volume /var/lib/chronograf:/var/lib/chronograf \
-       --add-host influxdb:172.17.0.1 \
-       chronograf --influxdb-url=http://influxdb:8086
+chronograf()
+{
+    docker run \
+            --name chronograf \
+            --hostname guixsd \
+            --detach \
+            --restart unless-stopped \
+            --publish 8888:8888 \
+            --volume /var/lib/chronograf:/var/lib/chronograf \
+            --add-host influxdb:172.17.0.1 \
+            chronograf --influxdb-url=http://influxdb:8086
+}
 
-docker run \
-       --name grafana \
-       --hostname grafana \
-       --detach \
-       --restart unless-stopped \
-       --net=influxdb \
-       --user 30020:0 \
-       --publish 3080:3000 \
-       --volume /var/lib/grafana:/var/lib/grafana \
-       --mount type=bind,source=/etc/localtime,target=/etc/localtime,readonly \
-       -e "GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource,alexanderzobnin-zabbix-app" \
-       grafana/grafana
+grafana()
+{
+    docker run \
+            --name grafana \
+            --hostname grafana \
+            --detach \
+            --restart unless-stopped \
+            --net=influxdb \
+            --user 30020:0 \
+            --publish 3080:3000 \
+            --volume /var/lib/grafana:/var/lib/grafana \
+            --mount type=bind,source=/etc/localtime,target=/etc/localtime,readonly \
+            -e "GF_INSTALL_PLUGINS=grafana-clock-panel,grafana-simple-json-datasource,alexanderzobnin-zabbix-app" \
+            grafana/grafana
+}
 
-docker run \
-       --name elasticsearch \
-       --detach \
-       --restart unless-stopped \
-       --volume /var/lib/elasticsearch/data:/usr/share/elasticsearch/data \
-       --volume /srv/elk/backup:/mnt/backup \
-       --volume /etc/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml \
-       --publish 9200:9200 \
-       --publish 9300:9300 \
-       docker.elastic.co/elasticsearch/elasticsearch:6.5.1
+elasticsearch()
+{
+    docker run \
+            --name elasticsearch \
+            --detach \
+            --restart unless-stopped \
+            --volume /var/lib/elasticsearch/data:/usr/share/elasticsearch/data \
+            --volume /srv/elk/backup:/mnt/backup \
+            --volume /etc/elasticsearch/config/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml \
+            --publish 9200:9200 \
+            --publish 9300:9300 \
+            docker.elastic.co/elasticsearch/elasticsearch:6.5.1
+}
 
-docker run \
-       --name filebeat \
-       --detach \
-       --add-host elasticsearch:192.168.105.120 \
-       --restart unless-stopped \
-       --mount type=bind,source=/etc/filebeat/filebeat.yml,target=/usr/share/filebeat/filebeat.yml \
-       --mount type=bind,source=/var/log,target=/mnt/log,readonly \
-       --mount type=bind,source=/etc/localtime,target=/etc/localtime,readonly \
-       --hostname guixsd \
-       docker.elastic.co/beats/filebeat:6.5.1 -e -strict.perms=false -E output.elasticsearch.hosts=["elasticsearch:9200"] -E name="guixsd"
+filebeat()
+{
+    docker run \
+            --name filebeat \
+            --detach \
+            --add-host elasticsearch:192.168.105.120 \
+            --restart unless-stopped \
+            --mount type=bind,source=/etc/filebeat/filebeat.yml,target=/usr/share/filebeat/filebeat.yml \
+            --mount type=bind,source=/var/log,target=/mnt/log,readonly \
+            --mount type=bind,source=/etc/localtime,target=/etc/localtime,readonly \
+            --hostname guixsd \
+            docker.elastic.co/beats/filebeat:6.5.1 -e -strict.perms=false -E output.elasticsearch.hosts=["elasticsearch:9200"] -E name="guixsd"
+}
 
-docker run \
-       --name kibana \
-       --detach \
-       --restart unless-stopped \
-       --publish 5601:5601 \
-       --mount type=bind,source=/etc/kibana/kibana.yml,target=/usr/share/kibana/config/kibana.yml \
-       docker.elastic.co/kibana/kibana:6.5.1
+kibana()
+{
+    docker run \
+            --name kibana \
+            --detach \
+            --restart unless-stopped \
+            --publish 5601:5601 \
+            --mount type=bind,source=/etc/kibana/kibana.yml,target=/usr/share/kibana/config/kibana.yml \
+            docker.elastic.co/kibana/kibana:6.5.1
+}
 
-docker run \
-       --name logstash \
-       --hostname logstash \
-       --network host \
-       --add-host elasticsearch:192.168.105.120 \
-       --detach \
-       --restart unless-stopped \
-       --volume "$HOME/src/hello-elk/logstash/":/usr/share/logstash/pipeline/ \
-       docker.elastic.co/logstash/logstash:6.5.1
+logstash()
+{
+    docker run \
+            --name logstash \
+            --hostname logstash \
+            --network host \
+            --add-host elasticsearch:192.168.105.120 \
+            --detach \
+            --restart unless-stopped \
+            --volume "$HOME/src/hello-elk/logstash/":/usr/share/logstash/pipeline/ \
+            docker.elastic.co/logstash/logstash:6.5.1
+}
 
-docker run \
-       --detach \
-       --restart unless-stopped \
-       -v "$HOME/src/elastalert/config/elastalert.yaml:/opt/elastalert/config.yaml" \
-       -v "$HOME/src/elastalert/config/config.json:/opt/elastalert-server/config/config.json" \
-       -v "$HOME/src/elastalert/rules:/opt/elastalert/rules" \
-       -v "$HOME/src/elastalert/rule_templates:/opt/elastalert/rule_templates" \
-       --network host \
-       --name elastalert \
-       --hostname elastalert \
-       bitsensor/elastalert:2.0.1
+elastalert()
+{
+    docker run \
+            --detach \
+            --restart unless-stopped \
+            -v "$HOME/src/elastalert/config/elastalert.yaml:/opt/elastalert/config.yaml" \
+            -v "$HOME/src/elastalert/config/config.json:/opt/elastalert-server/config/config.json" \
+            -v "$HOME/src/elastalert/rules:/opt/elastalert/rules" \
+            -v "$HOME/src/elastalert/rule_templates:/opt/elastalert/rule_templates" \
+            --network host \
+            --name elastalert \
+            --hostname elastalert \
+            bitsensor/elastalert:2.0.1
+}
 
-docker run \
-       --restart unless-stopped \
-       --hostname gitlab \
-       --add-host gitlab.wugi.info:127.0.0.1 \
-       --add-host smtp:172.17.0.1 \
-       --name gitlab \
-       --detach \
-       --publish 65080:80 \
-       --publish 65022:22 \
-       --publish 65090:9090 \
-       --volume /etc/gitlab:/etc/gitlab \
-       --volume /var/log/gitlab:/var/log/gitlab \
-       --volume /var/lib/gitlab:/var/opt/gitlab \
-       gitlab/gitlab-ce:11.10.0-ce.0
+gitlab()
+{
+    docker run \
+            --restart unless-stopped \
+            --hostname gitlab \
+            --add-host gitlab.wugi.info:127.0.0.1 \
+            --add-host smtp:172.17.0.1 \
+            --name gitlab \
+            --detach \
+            --publish 65080:80 \
+            --publish 65022:22 \
+            --publish 65090:9090 \
+            --volume /etc/gitlab:/etc/gitlab \
+            --volume /var/log/gitlab:/var/log/gitlab \
+            --volume /var/lib/gitlab:/var/opt/gitlab \
+            gitlab/gitlab-ce:11.10.0-ce.0
+}
 
-docker run \
-       --name gitlab-monitor \
-       --detach \
-       --restart unless-stopped \
-       --publish 64680:80 \
-       timoschwarzer/gitlab-monitor:latest
+gitlab-monitor()
+{
+    docker run \
+            --name gitlab-monitor \
+            --detach \
+            --restart unless-stopped \
+            --publish 64680:80 \
+            timoschwarzer/gitlab-monitor:latest
+}
 
-docker run \
-       --name jenkins \
-       --hostname jenkins \
-       --detach \
-       --restart unless-stopped \
-       --user 30018:30004 \
-       --volume /home/jenkins:/var/jenkins_home \
-       --publish 30080:8080 \
-       --publish 50000:50000 \
-       jenkins/jenkins:lts
+jenkins()
+{
+    docker run \
+            --name jenkins \
+            --hostname jenkins \
+            --detach \
+            --restart unless-stopped \
+            --user 30018:30004 \
+            --volume /home/jenkins:/var/jenkins_home \
+            --publish 30080:8080 \
+            --publish 50000:50000 \
+            jenkins/jenkins:lts
+}
 
-docker run \
-       --name registry \
-       --hostname registry \
-       --detach \
-       --restart unless-stopped \
-       --publish 5000:5000 \
-       --volume /var/lib/docker-registry:/var/lib/registry \
-       registry:2
+registry()
+{
+    docker run \
+            --name registry \
+            --hostname registry \
+            --detach \
+            --restart unless-stopped \
+            --publish 5000:5000 \
+            --volume /var/lib/docker-registry:/var/lib/registry \
+            registry:2
+}
 
-docker run \
-       --name malscan \
-       --detach \
-       --interactive \
-       --publish 48080:8080 \
-       --volume /home/oleg/src/malscan:/var/www \
-       localhost:5000/malscannew
+malscan()
+{
+    docker run \
+            --name malscan \
+            --detach \
+            --interactive \
+            --publish 48080:8080 \
+            --volume /home/oleg/src/malscan:/var/www \
+            localhost:5000/malscannew
+}
 
-docker run \
-       --name malscan-db \
-       --detach \
-       --interactive \
-       --publish 3306:3306 \
-       --volume /var/lib/mysql:/var/lib/mysql \
-       --env MYSQL_ROOT_PASSWORD='' \
-       mariadb:5.5
+malscan-db()
+{
+    docker run \
+            --name malscan-db \
+            --detach \
+            --interactive \
+            --publish 3306:3306 \
+            --volume /var/lib/mysql:/var/lib/mysql \
+            --env MYSQL_ROOT_PASSWORD='' \
+            mariadb:5.5
+}
 
-docker run \
-       --name phpmyadmin \
-       --detach \
-       --link malscan-db:db \
-       --publish 49080:80 \
-       phpmyadmin/phpmyadmin
+phpmyadmin()
+{
+    docker run \
+            --name phpmyadmin \
+            --detach \
+            --link malscan-db:db \
+            --publish 49080:80 \
+            phpmyadmin/phpmyadmin
+}
 
-docker run \
-       --name alerta \
-       --detach \
-       --add-host db:172.17.0.1 \
-       --publish 47080:8080 \
-       --mount type=bind,source=/etc/localtime,target=/etc/localtime,readonly \
-       --env DEBUG=1 \
-       --env DATABASE_URL=postgres://alerta:alerta@db:5432/alerta \
-       --env AUTH_REQUIRED=True \
-       --env ADMIN_USERS=admin@localhost \
-       --env PLUGINS=reject,blackout,normalise,enhance \
-       --env INSTALL_PLUGINS=normalise,enhance \
-       --restart unless-stopped \
-       alerta/alerta-web:6.8.2
+alerta()
+{
+    docker run \
+            --name alerta \
+            --detach \
+            --add-host db:172.17.0.1 \
+            --publish 47080:8080 \
+            --mount type=bind,source=/etc/localtime,target=/etc/localtime,readonly \
+            --env DEBUG=1 \
+            --env DATABASE_URL=postgres://alerta:alerta@db:5432/alerta \
+            --env AUTH_REQUIRED=True \
+            --env ADMIN_USERS=admin@localhost \
+            --env PLUGINS=reject,blackout,normalise,enhance \
+            --env INSTALL_PLUGINS=normalise,enhance,slack \
+            --restart unless-stopped \
+            alerta/alerta-web:6.8.2
+}
 
-docker run \
-       --name tor \
-       --detach \
-       --publish 8118:8118 \
-       --publish 9051:9050 \
-       rdsubhas/tor-privoxy-alpine
+tor()
+{
+    docker run \
+            --name tor \
+            --detach \
+            --publish 8118:8118 \
+            --publish 9051:9050 \
+            rdsubhas/tor-privoxy-alpine
+}
 
-docker run \
-       --restart unless-stopped \
-       --detach \
-       --name redmine \
-       --publish 44080:3000 \
-       --env REDMINE_DB_POSTGRES=192.168.105.120 \
-       --env REDMINE_DB_USERNAME=redmine \
-       --env REDMINE_DB_PASSWORD=redmine \
-       redmine:4.0.4
+redmine()
+{
+    docker run \
+            --restart unless-stopped \
+            --detach \
+            --name redmine \
+            --publish 44080:3000 \
+            --env REDMINE_DB_POSTGRES=192.168.105.120 \
+            --env REDMINE_DB_USERNAME=redmine \
+            --env REDMINE_DB_PASSWORD=redmine \
+            redmine:4.0.4
+}
 
-sudo docker run --name znc --restart=unless-stopped -d -p 6697:6697 -v /var/lib/znc:/znc-data:Z znc:1.7.4-slim
+znd()
+{
+    docker run --name znc --restart=unless-stopped -d -p 6697:6697 -v /var/lib/znc:/znc-data:Z znc:1.7.4-slim
+}
 
-alias firefox_java='xhost + ; docker run -ti --rm --name firefox-java -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix cmaohuang/firefox-java'
+# alias firefox_java='xhost + ; docker run -ti --rm --name firefox-java -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix cmaohuang/firefox-java'
