@@ -312,7 +312,17 @@ myreconfigure ()
     sudo -i guix system reconfigure --no-bootloader \
          --load-path="$HOME/src/dotfiles/fiore/modules" \
          --substitute-urls='https://ci.guix.info http://cuirass.tld' \
-         "$HOME/src/dotfiles/guixsd/config.scm"
+         --fallback "$HOME/src/dotfiles/guixsd/config.scm"
+}
+
+myprereconfigure()
+{
+    sudo -i GUIX_PACKAGE_PATH="/home/oleg/src/guix-wigust/guix" \
+            /home/oleg/src/guix/pre-inst-env \
+            guix system reconfigure \
+            --load-path="/home/oleg/src/dotfiles/fiore/modules" \
+            --substitute-urls='https://ci.guix.info http://cuirass.tld' \
+            --fallback "/home/oleg/src/dotfiles/guixsd/config.scm"
 }
 
 mypull()
