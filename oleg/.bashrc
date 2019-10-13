@@ -253,7 +253,7 @@ guix-download-my-manifest()
 guix-apply-my-manifest()
 {
     guix package --substitute-urls='https://ci.guix.info http://cuirass.tld' \
-         --manifest="$HOME/src/dotfiles/guix/manifests/oleg.scm"
+         --fallback  --manifest="$HOME/src/dotfiles/guix/manifests/oleg.scm"
 }
 
 grub-list-entries()
