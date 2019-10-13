@@ -343,5 +343,5 @@ znd()
 
 tome4()
 {
-    docker-xorg -e DISPLAY=:0 -w /install -v "$PWD:/install:ro" -v /opt/tome4:/opt/tome4 debian:10 bash
+    docker-xorg -v /srv/share/tome4:/install --network=host --rm -u0: -w /opt/tome4 --hostname tome4 --name tome4 -e DISPLAY=:0 -v /opt/tome4:/opt/tome4  -v /opt/tome4/rootfs/home/user:/root -v /home/oleg/.t-engine:/root/.t-engine tome4:latest bash
 }
