@@ -340,3 +340,8 @@ znd()
 }
 
 # alias firefox_java='xhost + ; docker run -ti --rm --name firefox-java -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix cmaohuang/firefox-java'
+
+tome4()
+{
+    docker-xorg -e DISPLAY=:0 -w /install -v "$PWD:/install:ro" -v /opt/tome4:/opt/tome4 debian:10 bash
+}
