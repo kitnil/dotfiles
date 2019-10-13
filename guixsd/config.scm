@@ -12,8 +12,8 @@
                      android fontutils gnome freedesktop readline ncurses
                      networking)
 
-(use-service-modules admin dbus desktop dns networking sound xorg ssh
-                     web certbot monitoring databases mail)
+(use-service-modules admin dbus desktop docker dns networking sound
+                     xorg ssh web certbot monitoring databases mail)
 
 (define 20-intel.conf "\
 # This block fixes tearing on Intel GPU.
@@ -411,7 +411,7 @@ EndSection")
                        (service alsa-service-type)
 
                        nix-service
-                       docker-service
+                       ;; docker-service
                        gitlab-runner-service
 
                        (service openssh-service-type
@@ -528,6 +528,7 @@ ServerAliveInterval 30
 ServerAliveCountMax 3"))))))
                                  (host "znc.wugi.info")))
 
+                       (service docker-service-type)
 
                        (operating-system-user-services base-system)))
 
