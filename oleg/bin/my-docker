@@ -300,7 +300,7 @@ alerta()
             --add-host db:172.17.0.1 \
             --publish 47080:8080 \
             --mount type=bind,source=/etc/localtime,target=/etc/localtime,readonly \
-            --mount type=bind,source=/home/oleg/src/hello-alerta/alertad.conf,target=/app/alertad.conf:ro,readonly \
+            --mount type=bind,source=/home/oleg/src/hello-alerta/alertad.conf,target=/app/alertad.conf,readonly \
             --env DEBUG=1 \
             --env DATABASE_URL=postgres://alerta:alerta@db:5432/alerta \
             --env AUTH_REQUIRED=True \
