@@ -1519,7 +1519,7 @@ Produces URL as https://ci.guix.info/api/latestbuilds?nr=10&jobset=guix-master&j
 ;;;
 
 (defconst wi-c--prettify-symbols-alist
-  '((" % " . (? (Br . Bl) ?m
+  `((" % " . (? (Br . Bl) ?m
                 (Br . Bl) ?o
                 (Br . Bl) ?d
                 (Br . Bl) ? ))
@@ -1544,6 +1544,8 @@ Produces URL as https://ci.guix.info/api/latestbuilds?nr=10&jobset=guix-master&j
     ("uint32_t" . (?ℕ (Br . Bl) ?₃
                       (Br . Bl) ?₂))
     ("uint8_t" . (?ℕ (Br . Bl) ?₈))
+    ("Uint32" . ,(string-to-symbols "ℕ₃₂"))
+    ("Uint8" . ,(string-to-symbols "ℕ₈"))
     ("union" . ?∪)
     ("void" . ?Ø)
     ("x_1" . (?x (Br . Bl) ?₁))
