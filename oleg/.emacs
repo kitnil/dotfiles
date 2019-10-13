@@ -39,8 +39,8 @@
 
 (setq package-archives nil) ; Makes unpure packages archives unavailable
 
-(setq user-mail-address "pyhalov@majordomo.ru")
-(setq user-full-name "Oleg Pyhalov")
+(setq user-mail-address "go.wigust@gmail.com")
+(setq user-full-name "Oleg Pykhalov")
 (setq default-input-method "russian-computer") ; <C-\> keyboard layout
 
 (setq display-time-24hr-format t) ; No AM/PM
