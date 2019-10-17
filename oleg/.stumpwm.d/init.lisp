@@ -409,6 +409,12 @@
 
 (define-key *top-map* (kbd "S-s-RET") "rofi-ssh")
 
+(defcommand rofi-mycli () ()
+  "Open Rofi mycli."
+  (run-shell-command "rofi -modi mycli:/home/oleg/bin/rofi-mycli -show mycli"))
+
+(define-key *top-map* (kbd "C-S-s-RET") "rofi-mycli")
+
 (defcommand rofi-window () ()
   "Open Rofi window list."
   (run-shell-command "rofi -modi window -show window"))

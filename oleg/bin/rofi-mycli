@@ -1,0 +1,8 @@
+#!/bin/sh
+
+if [ -z $@ ]
+then
+    awk '/mysql:/{ print $1 }' "$HOME/.myclirc"
+else
+    coproc (xterm -bg '#00008b' -fg '#ffd700' -fa Monospace -fs 10 -e mycli -d $@ &>/dev/null &)
+fi
