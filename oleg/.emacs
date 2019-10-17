@@ -868,7 +868,8 @@ Sets the following basend on PREFIX-MAP:
 (wi-define-keys "C-c g s" shell
                 ("e" eshell "eshell" :color blue)
                 ("t" term "ansi" :color blue)
-                ("x" terminal-here-project-launch-multiplexer "xterm" :color blue))
+                ("m" terminal-here-project-launch-multiplexer "xterm" :color blue)
+                ("x" terminal-here-project-launch "xterm" :color blue))
 
 (wi-define-keys "C-c g s s" shell-dumb
                 ("M-r" helm-shell-history "history" :color blue)
