@@ -9,5 +9,5 @@ else
     else
         size=8
     fi
-    coproc (xterm -bg '#00008b' -fg '#ffd700' -fa Monospace -fs "$size" -e mycli -d $@ &>/dev/null &)
+    coproc (xterm -title "mycli@$@" -bg '#00008b' -fg '#ffd700' -fa Monospace -fs "$size" -e mycli -d $@ &>/dev/null &)
 fi
