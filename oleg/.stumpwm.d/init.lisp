@@ -553,9 +553,9 @@
 
 (defparameter dark-theme t)
 (progn
-  (set-focus-color "#696969")
-  (set-border-color "#696969")
-  (set-float-focus-color "#696969"))
+  (set-focus-color "#90EE90")
+  (set-border-color "#90EE90")
+  (set-float-focus-color "#90EE90"))
 (defcommand toggle-theme () ()
   (if dark-theme
       (progn (setq *mode-line-border-color*     "#ffffff"
@@ -1093,11 +1093,12 @@
 
       ;; XXX: Make declarative.
       (swm-gaps:toggle-gaps))
-    (progn (restore-from-file "/home/oleg/src/dotfiles/oleg/.stumpwm.d/desktop/9.lisp")
+    ;;(progn (restore-from-file "/home/oleg/src/dotfiles/oleg/.stumpwm.d/desktop/9.lisp")
 
            ;; (define-frame-preference "Default" (0 NIL T :CLASS "Qemu-system-x86_64"))
-           (define-frame-preference "Default" (0 NIL T :CLASS "quassel" :TITLE "Chat Monitor"))
-           (define-frame-preference "Default" (3 NIL T :CLASS "XTerm" :TITLE "alerta"))
-           (define-frame-preference "Default" (4 NIL T :CLASS "mpv" :TITLE "emacs-emms"))
-           (define-frame-preference "Default" (4 NIL T :CLASS "mpv" :TITLE "firefox"))
-           (define-frame-preference "Default" (1 NIL T :CLASS "t-engine"))))
+           ;; (define-frame-preference "Default" (0 NIL T :CLASS "quassel" :TITLE "Chat Monitor"))
+           ;; (define-frame-preference "Default" (3 NIL T :CLASS "XTerm" :TITLE "alerta"))
+           ;; (define-frame-preference "Default" (4 NIL T :CLASS "mpv" :TITLE "emacs-emms"))
+           ;; (define-frame-preference "Default" (4 NIL T :CLASS "mpv" :TITLE "firefox"))
+           ;; (define-frame-preference "Default" (1 NIL T :CLASS "t-engine"))
+	   )
