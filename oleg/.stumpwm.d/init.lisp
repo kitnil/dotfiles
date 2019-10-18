@@ -462,22 +462,26 @@
    (join (list *xterm-command* *xterm-theme-dark* *xterm-no-scrollbar*))
    '(:class "XTerm")))
 
+(defun small-framep ()
+  (if (not (string= (class-name (class-of (current-group))) "FLOAT-GROUP"))
+      (if (and (> (length (group-frames (current-group))) 2)
+               (if (string= (getenv "DISPLAY") ":1")
+                   (let ((frame (frame-number (tile-group-current-frame (current-group)))))
+                     (if (or (= frame 0)) t nil))
+                   (let ((frame (frame-number (tile-group-current-frame (current-group)))))
+                     (if (or (= frame 2) (= frame 1))
+                         2
+                         nil))))
+          nil
+          t)
+      nil))
+
 (defun xterm-command (&key (color "light") (command nil))
   (join `(,*xterm-command*
           ;; Make sure XTerm terminal size is appropriate for current StumpWM frame.
-          ,@(if (not (string= (class-name (class-of (current-group))) "FLOAT-GROUP"))
-                (if (and (> (length (group-frames (current-group))) 2)
-                         (if (string= (getenv "DISPLAY") ":1")
-                             (let ((frame (frame-number (tile-group-current-frame (current-group)))))
-                               (if (or (= frame 0)) t nil))
-                             (let ((frame (frame-number (tile-group-current-frame (current-group)))))
-                               (if (or (= frame 2) (= frame 1))
-                                   2
-                                   nil))))
-                    '()
-                    '("-fa" "Monospace" "-fs" "8"))
+          ,@(if (small-framep)
+                '("-fa" "Monospace" "-fs" "8")
                 '())
-
           "-sl" "1000000" ;number of lines
           ,*xterm-no-scrollbar*
           ,(if (string= color "light") *xterm-theme-light* *xterm-theme-dark*)
