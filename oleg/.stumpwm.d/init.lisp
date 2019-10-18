@@ -502,6 +502,8 @@
   "Start or focus XTerm."
   (run-shell-command (xterm-command :color "dark")))
 
+(define-key *top-map* (kbd "C-M-S-s-RET") "xterm-dark-no-scrollbar")
+
 (defcommand xterm-name (cmd &optional collect-output-p)
     ((:string "window name: "))
   "Run the specified shell command in XTerm."
