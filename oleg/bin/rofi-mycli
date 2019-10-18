@@ -4,5 +4,10 @@ if [ -z $@ ]
 then
     awk '/mysql:/{ print $1 }' "$HOME/.myclirc"
 else
-    coproc (xterm -bg '#00008b' -fg '#ffd700' -fa Monospace -fs 10 -e mycli -d $@ &>/dev/null &)
+    if [ "$(echo '(print-small-framep)' | stumpish -e eval )" == "0" ]; then
+        size=10
+    else
+        size=8
+    fi
+    coproc (xterm -bg '#00008b' -fg '#ffd700' -fa Monospace -fs "$size" -e mycli -d $@ &>/dev/null &)
 fi

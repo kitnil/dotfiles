@@ -476,6 +476,11 @@
           t)
       nil))
 
+(defcommand print-small-framep () ()
+  (if (small-framep)
+      (progn (message "1") 1)
+      (progn (message "0") 0)))
+
 (defun xterm-command (&key (color "light") (command nil))
   (join `(,*xterm-command*
           ;; Make sure XTerm terminal size is appropriate for current StumpWM frame.
