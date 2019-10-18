@@ -500,9 +500,7 @@
 
 (defcommand xterm-dark-no-scrollbar () ()
   "Start or focus XTerm."
-  (run-or-raise
-   (join (list *xterm-command* *xterm-theme-dark* "+sb"))
-   '(:class "XTerm")))
+  (run-shell-command (xterm-command :color "dark")))
 
 (defcommand xterm-name (cmd &optional collect-output-p)
     ((:string "window name: "))
