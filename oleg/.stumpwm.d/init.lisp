@@ -468,7 +468,8 @@
           ,@(if (not (string= (class-name (class-of (current-group))) "FLOAT-GROUP"))
                 (if (and (> (length (group-frames (current-group))) 2)
                          (if (string= (getenv "DISPLAY") ":1")
-                             0
+                             (let ((frame (frame-number (tile-group-current-frame (current-group)))))
+                               (if (or (= frame 0)) t nil))
                              (let ((frame (frame-number (tile-group-current-frame (current-group)))))
                                (if (or (= frame 2) (= frame 1))
                                    2
