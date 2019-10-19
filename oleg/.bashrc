@@ -1061,3 +1061,8 @@ emacs-list-projects()
          "$(printf "%b" $(emacsclient -e "(mapconcat 'identity (mapcar #'expand-file-name (projectile-load-known-projects)) \"\n\")"))" \
         | tr ' ' '\n'
 }
+
+emacs-cd-project()
+{
+    cd "$(emacs-list-projects | fzf)"
+}
