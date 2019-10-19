@@ -1068,3 +1068,12 @@ projectile-command()
 }
 
 alias projectile-cd="projectile-command cd"
+
+magit()
+{
+    dir="$1"
+    emacsclient -e "(progn (wi-magit-status-dir \"$dir\") \"Open Magit in $dir\")"
+    stumpish emacsclient
+}
+
+alias projectile-magit="projectile-command magit"

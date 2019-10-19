@@ -1619,6 +1619,11 @@ Produces URL as https://ci.guix.info/api/latestbuilds?nr=10&jobset=guix-master&j
 ;;; Version control
 ;;;
 
+(defun wi-magit-status-dir (dir)
+  (let ((default-directory (expand-file-name dir))
+        (magit-display-buffer-function 'magit-display-buffer-fullframe-status-v1))
+    (magit-status)))
+
 (defun vc-chlog ()
   "Insert output of vc-chlog."
   (interactive)
