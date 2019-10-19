@@ -16,7 +16,7 @@
                      xorg ssh web certbot monitoring databases mail)
 
 (define 20-intel.conf "\
-# This block fixes tearing on Intel GPU.
+# Fix tearing for Intel graphics card.
 # Origin: https://wiki.archlinux.org/index.php/Intel_Graphics
 #         https://github.com/8p8c/my-guix/blob/master/config.scm
 Section \"Device\"
