@@ -18,6 +18,7 @@
         electric-newline-and-maybe-indent
         fill-paragraph
         forward-sexp
+        helm-recentf
         helm-show-kill-ring
         hydra--digit-argument
         hydra--negative-argument
