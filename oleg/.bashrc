@@ -1054,3 +1054,10 @@ docker-xorg()
             --device /dev/input \
             $@
 }
+
+emacs-list-projects()
+{
+    bash -c 'echo ${0:1:-1}' \
+         "$(printf "%b" $(emacsclient -e "(mapconcat 'identity (mapcar #'expand-file-name (projectile-load-known-projects)) \"\n\")"))" \
+        | tr ' ' '\n'
+}
