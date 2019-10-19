@@ -1066,3 +1066,5 @@ projectile-command()
 {
     "$@" "$(projectile-ls | fzf)"
 }
+
+alias projectile-cd="projectile-command cd"
