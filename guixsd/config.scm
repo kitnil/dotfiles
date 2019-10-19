@@ -8,9 +8,9 @@
 	     (packages artwork)
              (wigust packages lisp))
 
-(use-package-modules admin base certs linux lisp suckless xdisorg xorg fonts
-                     android fontutils gnome freedesktop readline ncurses
-                     networking)
+(use-package-modules admin base certs docker linux lisp suckless
+                     xdisorg xorg fonts android fontutils gnome
+                     freedesktop readline ncurses networking)
 
 (use-service-modules admin dbus desktop docker dns networking sound
                      xorg ssh web certbot monitoring databases mail)
@@ -274,6 +274,8 @@ EndSection")
                        adb
 
                        iptables bridge-utils
+
+                       docker-cli docker-compose
 
                        (operating-system-packages base-system)))
 

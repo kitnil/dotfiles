@@ -13,8 +13,9 @@ messaging ncdu ncurses networking node package-management parallel
 password-utils patchutils pdf perl perl-web php pulseaudio pv python
 python-xyz qt ratpoison readline rdesktop rsync samba scheme screen
 shellutils ssh statistics sqlite suckless syncthing synergy tex
-texinfo textutils text-editors tmux tls tor valgrind version-control
-video virtualization vpn w3m xfce web wget wm xdisorg xml xorg)
+texinfo textutils text-editors tigervnc tmux tls tor valgrind
+version-control video virtualization vpn w3m xfce web wget wm xdisorg
+xml xorg)
 
 (define guix-collection-packages-multiout
   `((,glib "bin")
@@ -153,7 +154,7 @@ video virtualization vpn w3m xfce web wget wm xdisorg xml xorg)
 
                synergy
 
-               ;; FAIL: ansible         ; Configuration management
+               ansible         ; Configuration management
                bc
                cpio
                detox ; Replace spaces with underscores in filenames
@@ -220,7 +221,12 @@ video virtualization vpn w3m xfce web wget wm xdisorg xml xorg)
                pv
                pwgen
                syncthing
-               quassel)
+               quassel
+
+               tigervnc-server
+               tigervnc-client
+
+               xfce4-screenshooter)
 
          guix-collection-packages-multiout
          %large-packages
