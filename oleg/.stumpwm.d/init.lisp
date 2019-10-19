@@ -476,7 +476,7 @@
           t)
       nil))
 
-(defcommand print-small-framep () ()
+(defcommand current-frame-smallp () ()
   (if (small-framep)
       (progn (message "1") 1)
       (progn (message "0") 0)))
@@ -1083,22 +1083,25 @@
 
 (setf swm-gaps:*outer-gaps-size* 0)
 
+(defcommand alerta () ()
+  (run-or-raise "" '(:title "Alerta - Mozilla Firefox")))
+
 (if (string= (getenv "DISPLAY") ":1")
     (progn
       (run-shell-command "xsetroot -solid grey")
-
       (restore-from-file "/home/oleg/src/dotfiles/oleg/.stumpwm.d/desktop/10.lisp")
       (define-frame-preference "Default" (1 NIL T :CLASS "quassel" :TITLE "Chat Monitor"))
       (define-frame-preference "Default" (2 NIL T :CLASS "XTerm" :TITLE "alerta"))
+      (define-frame-preference "Default" (0 NIL T :CLASS "Qemu-system-x86_64"))
 
       ;; XXX: Make declarative.
-      (swm-gaps:toggle-gaps))
-    ;;(progn (restore-from-file "/home/oleg/src/dotfiles/oleg/.stumpwm.d/desktop/9.lisp")
+      (swm-gaps:toggle-gaps)
 
-           ;; (define-frame-preference "Default" (0 NIL T :CLASS "Qemu-system-x86_64"))
-           ;; (define-frame-preference "Default" (0 NIL T :CLASS "quassel" :TITLE "Chat Monitor"))
-           ;; (define-frame-preference "Default" (3 NIL T :CLASS "XTerm" :TITLE "alerta"))
-           ;; (define-frame-preference "Default" (4 NIL T :CLASS "mpv" :TITLE "emacs-emms"))
-           ;; (define-frame-preference "Default" (4 NIL T :CLASS "mpv" :TITLE "firefox"))
-           ;; (define-frame-preference "Default" (1 NIL T :CLASS "t-engine"))
-	   )
+      (define-key *top-map* (kbd "s-m") "alerta"))
+
+    (progn (restore-from-file "/home/oleg/src/dotfiles/oleg/.stumpwm.d/desktop/9.lisp")
+           (define-frame-preference "Default" (0 NIL T :CLASS "quassel" :TITLE "Chat Monitor"))
+           (define-frame-preference "Default" (3 NIL T :CLASS "XTerm" :TITLE "alerta"))
+           (define-frame-preference "Default" (4 NIL T :CLASS "mpv" :TITLE "emacs-emms"))
+           (define-frame-preference "Default" (4 NIL T :CLASS "mpv" :TITLE "firefox"))
+           (define-frame-preference "Default" (1 NIL T :CLASS "t-engine"))))
