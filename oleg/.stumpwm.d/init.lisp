@@ -876,7 +876,7 @@
   (progn (run-shell-command "emacsclient --eval '(plain-org-wiki)'")
          (run-shell-command "stumpish emacsclient")))
 
-(define-key *top-map* (kbd "s-c") "org")
+(define-key *top-map* (kbd "s-C") "org")
 
 (defun auto-pull-frames ()
   (mapcar #'(lambda (frame)
@@ -1010,6 +1010,7 @@
   (run-shell-command (concat "vncviewer 127.0.0.1:" display)))
 
 (define-key *top-map* (kbd "s-v") "pulsemixer")
+(define-key *top-map* (kbd "s-c") "run-or-raise-xterm")
 
 (define-key *top-map* (kbd "s-F") "move-focus right")
 (define-key *top-map* (kbd "s-B") "move-focus left")
