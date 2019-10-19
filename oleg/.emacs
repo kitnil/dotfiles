@@ -789,7 +789,8 @@ Sets the following basend on PREFIX-MAP:
                 ("l" ivy-recentf "recent" :color blue)
                 ("r" ivy-resume "resume" :color blue)
                 ("s" swiper "swiper" :color blue)
-                ("x" counsel-M-x "M-x" :color blue))
+                ("x" counsel-M-x "M-x" :color blue)
+                ("w" plain-org-wiki "org-wiki" :color blue))
 
 (wi-define-keys "C-c g i g" counsel-git
                 ("f" counsel-git "git" :color blue)
@@ -1994,6 +1995,8 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 ;;;
 ;;; Org
 ;;;
+
+(setq plain-org-wiki-directory (expand-file-name "~/src/org/"))
 
 (setq org-descriptive-links nil)
 
