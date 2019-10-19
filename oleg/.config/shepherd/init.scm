@@ -150,7 +150,7 @@
                   ;; sxhkd
                   emacs
                   firefox
-                  redshift
+                  ;; redshift
                   transmission
                   alerta
                   ;; znc
