@@ -1055,14 +1055,14 @@ docker-xorg()
             $@
 }
 
-emacs-list-projects()
+projectile-ls()
 {
     bash -c 'echo ${0:1:-1}' \
          "$(printf "%b" $(emacsclient -e "(mapconcat 'identity (mapcar #'expand-file-name (projectile-load-known-projects)) \"\n\")"))" \
         | tr ' ' '\n'
 }
 
-emacs-cd-project()
+projectile-command()
 {
-    cd "$(emacs-list-projects | fzf)"
+    "$@" "$(projectile-ls | fzf)"
 }
