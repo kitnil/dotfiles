@@ -866,6 +866,12 @@
             "#gdb" "#gnus" "#guile" "#guix" "##linux" "#lisp" "#nixos"
             "#scheme" "#stumpwm")))
 
+(defcommand gnus () ()
+  (progn (run-shell-command "emacsclient --eval '(gnus)'")
+         (run-shell-command "stumpish emacsclient")))
+
+(define-key *top-map* (kbd "s-g") "gnus")
+
 (defcommand org () ()
   (progn (run-shell-command "emacsclient --eval '(plain-org-wiki)'")
          (run-shell-command "stumpish emacsclient")))
