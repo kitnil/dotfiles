@@ -978,8 +978,6 @@
             (write-to-string
              '(progn (elfeed) (delete-other-windows)))))))
 
-(define-key *top-map* (kbd "s-Tab") "fother")
-
 (define-key *top-map* (kbd "s-k") "delete")
 
 (define-key *top-map* (kbd "s-Right") "move-focus right")
@@ -988,6 +986,8 @@
 (define-key *top-map* (kbd "s-Down") "move-focus down")
 (define-key *top-map* (kbd "C-s-Up") "next-in-frame")
 (define-key *top-map* (kbd "C-s-Down") "prev-in-frame")
+(define-key *top-map* (kbd "s-Tab") "other-in-frame")
+(define-key *top-map* (kbd "s-ISO_Left_Tab") "fother")
 
 (define-key *top-map* (kbd "S-s-Right") "move-window right")
 (define-key *top-map* (kbd "S-s-Left") "move-window left")
