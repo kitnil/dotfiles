@@ -1437,3 +1437,24 @@ passwords for paths matching regexps.")
 Apache configuration files.")
       (license license:gpl2+))))
 
+(define-public emacs-plain-org-wiki
+  (let ((commit "887717c184fb22dd219c78851303a8e5b917f877"))
+    (package
+      (name "emacs-plain-org-wiki")
+      (version "20191013.1833")
+      (source (origin
+                (method git-fetch)
+                (uri (git-reference
+                      (url "https://github.com/abo-abo/plain-org-wiki.git")
+                      (commit commit)))
+                (file-name (git-file-name name version))
+                (sha256
+                 (base32
+                  "0wqxp46zvwswda644mnr92qxyyvakvl2l8w61sg6hy37pwfznx73"))))
+      (build-system emacs-build-system)
+      (propagated-inputs `(("emacs-ivy" ,emacs-ivy)))
+      (home-page "https://github.com/abo-abo/plain-org-wiki")
+      (synopsis "Simple jump-to-org-files in a directory package")
+      (description "Call @code{plain-org-wiki} to either open your Org files, or
+create new ones.")
+      (license license:gpl3+))))
