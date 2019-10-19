@@ -226,7 +226,8 @@ xml xorg)
                tigervnc-server
                tigervnc-client
 
-               xfce4-screenshooter)
+               xfce4-screenshooter
+               xfce4-terminal)
 
          guix-collection-packages-multiout
          %large-packages
