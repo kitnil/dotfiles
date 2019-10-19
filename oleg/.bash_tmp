@@ -305,3 +305,16 @@ windows-10()
 {
     qemu-system-x86_64 -smp cores=4,threads=1 -m 4096 -enable-kvm -cpu host -daemonize -vnc :6 /srv/virt/win10-mail.qcow2
 }
+
+
+mj-php()
+{
+    ssh majordomo -- curl -s http://web30.majordomo.ru/apache2/php52/default/phpinfo-json.php | jq | less
+}
+
+
+# colordiff -u <(nix repl build.nix <<< ':p overlay.php52.drvAttrs' | sed 's|\s|\n|g') <(nix repl build.nix <<< ':p overlay.php52new.drvAttrs' | sed 's|\s|\n|g')
+
+
+# ANSIBLE_HOST_KEY_CHECKING=False ansible vm27976 -m copy -a 'src=.ssh/authorized_keys dest=/root/.ssh/authorized_keys'
+# ANSIBLE_HOST_KEY_CHECKING=False ansible vm27976 -m file -a 'dest=.ssh state=directory mode=0600'
