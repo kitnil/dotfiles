@@ -508,6 +508,9 @@ and the functions `ffap-file-at-point' and `ffap-url-at-point'."
 ;;;
 ;;; Keybindings
 ;;;
+
+(global-set-key (kbd "<f9>") 'vterm-toggle-cd)
+
 ;;; See <https://www.gnu.org/software/emacs/manual/html_node/elisp/Key-Binding-Conventions.html>.
 ;;; Watch about hydra <https://www.youtube.com/watch?v=_qZliI1BKzI>.
 (defmacro wi-define-keys (prefix prefix-map &rest args)
@@ -3541,6 +3544,10 @@ If given a prefix, patch in the branch directory instead."
   (projectile-run-shell)
   (font-lock-mode)
   (guix-build-log-minor-mode))
+
+;; XXX: Package to Guix
+(add-to-list 'load-path "/home/oleg/archive/src/emacs-libvterm")
+(require 'vterm)
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.

@@ -72,6 +72,7 @@
         transpose-sexps
         transpose-words
         undefined
+        vterm--self-insert
         wdired-exit
         wdired-finish-edit
         yaml-electric-backspace
