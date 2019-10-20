@@ -212,7 +212,7 @@ wallpaper-guixsd()
 backup-exclude()
 {
     nice -n 19 ionice -c2 -n7 \
-         restic -r /srv/backup/guixsd \
+         sudo -i $(which restic) -r /srv/backup/guixsd \
          -e "$HOME/.cache" \
          -e "$HOME/Downloads" \
          -e "$HOME/Downloads" \
