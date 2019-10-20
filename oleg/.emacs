@@ -2952,6 +2952,7 @@ situation, you should also set the following option in your
 (setq mml-secure-insert-signature 'always)
 
 (add-hook 'prog-mode-hook 'hl-todo-mode)
+(add-hook 'prog-mode-hook 'which-function-mode)
 
 (add-hook 'shell-mode-hook
           (lambda ()
