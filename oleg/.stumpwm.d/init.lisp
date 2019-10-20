@@ -884,6 +884,12 @@
 
 (define-key *top-map* (kbd "s-i") "guix-wigust")
 
+(defcommand helm-tramp () ()
+  (progn (run-shell-command "emacsclient --eval '(helm-tramp)'")
+         (run-shell-command "stumpish emacsclient")))
+
+(define-key *top-map* (kbd "C-s-e") "helm-tramp")
+
 (defun auto-pull-frames ()
   (mapcar #'(lambda (frame)
               (pull-window-by-number frame)
