@@ -1116,4 +1116,5 @@
            (define-frame-preference "Default" (3 NIL T :CLASS "XTerm" :TITLE "alerta"))
            (define-frame-preference "Default" (4 NIL T :CLASS "mpv" :TITLE "emacs-emms"))
            (define-frame-preference "Default" (4 NIL T :CLASS "mpv" :TITLE "firefox"))
-           (define-frame-preference "Default" (1 NIL T :CLASS "t-engine"))))
+           ;; (define-frame-preference "Default" (1 NIL T :CLASS "t-engine"))
+           ))
