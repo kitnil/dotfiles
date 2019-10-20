@@ -878,6 +878,12 @@
 
 (define-key *top-map* (kbd "s-C") "org")
 
+(defcommand guix-wigust () ()
+  (progn (run-shell-command "emacsclient --eval '(let ((default-directory (expand-file-name \"~/src/guix-wigust/guix/wigust/packages/\"))) (counsel-find-file))'")
+         (run-shell-command "stumpish emacsclient")))
+
+(define-key *top-map* (kbd "s-i") "guix-wigust")
+
 (defun auto-pull-frames ()
   (mapcar #'(lambda (frame)
               (pull-window-by-number frame)
