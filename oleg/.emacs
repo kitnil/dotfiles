@@ -3580,7 +3580,10 @@ If given a prefix, patch in the branch directory instead."
      (eval modify-syntax-entry 126 "'")
      (bug-reference-bug-regexp . "<https?://\\(debbugs\\|bugs\\)\\.gnu\\.org/\\([0-9]+\\)>"))))
 
-;; (add-to-list 'tramp-auto-auth-alist '("intr" . "***REMOVED***"))
+(load (expand-file-name "~/archive/src/vterm-toggle/vterm-toggle.el"))
+(load (expand-file-name "~/src/emacs-tramp-auto-auth/tramp-auto-auth.el"))
+(add-to-list 'tramp-auto-auth-alist '("intr" . "***REMOVED***"))
+(tramp-auto-auth-mode)
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
