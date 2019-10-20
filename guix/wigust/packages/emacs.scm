@@ -1238,6 +1238,28 @@ program instead of Emacs' own (often not up to date) whois client.
       (description "This package provides web suggestions with Emacs Helm.")
       (license license:gpl3+))))
 
+(define-public emacs-helm-tramp
+  (package
+    (name "emacs-helm-tramp")
+    (version "1.3.9")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://github.com/masasam/emacs-helm-tramp.git")
+                    (commit version)))
+              (file-name (git-file-name name version))
+              (sha256
+               (base32
+                "19y97ia4zl50wd22gkb7kkhj713imd5jc92l2xnpw04b59b60di1"))))
+    (build-system emacs-build-system)
+    (propagated-inputs
+     `(("emacs-helm" ,emacs-helm)))
+    (home-page "https://github.com/masasam/emacs-helm-tramp/")
+    (synopsis "Tramp Helm interface for SSH server, Docker and Vagrant")
+    (description "This package provides Tramp Helm interface for SSH server,
+Docker and Vagrant.")
+    (license license:gpl3+)))
+
 (define-public emacs-jenkins
   (let ((commit "9c7b9d4cb39eff7d6ac4d0cbd5ebc103dc86cac2"))
     (package
