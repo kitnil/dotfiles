@@ -18,7 +18,7 @@ shedule:
   script:
     - git config user.email gitlab-runner@wugi.info
     - "git config user.name 'GitLab Runner'"
-    - "git merge -m \"Merge branch 'shedule-channels'\" origin/shedule-channels"
+    - "git merge --strategy-option=ours -m \"Merge branch 'shedule-channels'\" origin/shedule-channels"
     - git remote set-url --push origin $(printf $CI_REPOSITORY_URL | perl -pe 's#.*@(.+?(\:\d+)?)/#git@\1:#')
     - ./guile/guix-channels-update && cat ./channels.scm
     - git add channels.scm
