@@ -1,10 +1,10 @@
 (use-modules (gnu)
              (srfi srfi-1)
              (srfi srfi-26)
-             (services docker)
              (services gitlab)
              (services nix)
              (services autossh)
+             (services kresd)
 	     (packages artwork)
              (wigust packages lisp))
 
@@ -413,7 +413,7 @@ EndSection")
                        (service alsa-service-type)
 
                        nix-service
-                       ;; docker-service
+                       kresd-service
                        gitlab-runner-service
 
                        (service openssh-service-type
@@ -509,7 +509,6 @@ FpingLocation=/run/setuid-programs/fping
                                 (guix-publish-configuration
                                  (host "0.0.0.0")
                                  (port 5556)))
-
 
                        (service autossh-service-type
                                 (autossh-configuration
