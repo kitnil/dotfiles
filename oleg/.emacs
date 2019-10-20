@@ -3584,6 +3584,7 @@ If given a prefix, patch in the branch directory instead."
 (load (expand-file-name "~/src/emacs-tramp-auto-auth/tramp-auto-auth.el"))
 (add-to-list 'tramp-auto-auth-alist '("intr" . "***REMOVED***"))
 (tramp-auto-auth-mode)
+(load (expand-file-name "~/src/emacs-helm-tramp/helm-tramp.el"))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
