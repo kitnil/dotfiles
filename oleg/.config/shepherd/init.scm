@@ -18,7 +18,8 @@
     #:docstring '("Light-weight BitTorrent client")
     #:provides '(transmission)
     #:start (make-forkexec-constructor
-             (list (string-append %bin-directory "transmission-daemon"))
+             (list (string-append %bin-directory "transmission-daemon")
+                   "-e" "/home/oleg/.config/shepherd/transmission.log")
              #:log-file "/home/oleg/.config/shepherd/transmission.log")
     #:stop (make-kill-destructor)
     #:respawn? #t))
