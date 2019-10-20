@@ -413,7 +413,7 @@ EndSection")
                        (service alsa-service-type)
 
                        nix-service
-                       kresd-service
+                       (kresd-service (local-file "kresd.conf"))
                        gitlab-runner-service
 
                        (service openssh-service-type

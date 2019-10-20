@@ -22,7 +22,7 @@
   #:use-module (guix gexp)
   #:export (kresd-service))
 
-(define kresd-service
+(define (kresd-service config)
   (simple-service 'kresd shepherd-root-service-type
                   (list
                    (shepherd-service
@@ -31,7 +31,7 @@
                     (documentation "Run kresd-daemon.")
                     (start #~(make-forkexec-constructor
                               (list "/home/oleg/bin/run-kresd"
-                                    "--config" #$(local-file "/home/oleg/src/docker-wigust/kresd/kresd.conf")
+                                    "--config" #$config
                                     "--quiet" "-f" "1")
                               #:log-file "/var/log/kresd.log"))
                     (respawn? #t)
