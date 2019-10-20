@@ -3520,13 +3520,7 @@ If given a prefix, patch in the branch directory instead."
 (run-with-timer 0 (* 20 60) '(lambda ()
                                (interactive)
                                (unless (get-buffer "*Summary INBOX*")
-                                 (mbsync))))
-
-(run-with-timer 0 (* 40 60) '(lambda ()
-                               (interactive)
-                               (unless (get-buffer "*Summary INBOX*")
-                                 (let ((mbsync-args '("-a" "--push")))
-                                   (mbsync)))))
+                                 (notmuch-poll))))
 
 (defun work-host (host)
   "Insert host from work at current point."
