@@ -114,6 +114,7 @@
        emacs-scratch-el
        emacs-slack
        emacs-slime              ; Sbcl repl
+       emacs-ssh-config-mode
        emacs-smart-mode-line
        emacs-smartparens        ; Structured editing
        emacs-string-inflection
