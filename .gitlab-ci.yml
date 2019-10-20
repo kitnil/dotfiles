@@ -22,7 +22,7 @@ shedule:
     - git remote set-url --push origin $(printf $CI_REPOSITORY_URL | perl -pe 's#.*@(.+?(\:\d+)?)/#git@\1:#')
     - ./guile/guix-channels-update && cat ./channels.scm
     - git add channels.scm
-    - "git commit -m 'channels.scm: Update channels.scm.'"
-    - git push origin HEAD:shedule-channels || true
+    - "git commit -m 'channels.scm: Update channels.scm.' || true"
+    - git push origin HEAD:shedule-channels
   only:
     - schedules
