@@ -4,10 +4,10 @@ if [ -z $@ ]
 then
     awk '/mysql:/{ print $1 }' "$HOME/.myclirc"
 else
-    if [ "$(echo '(print-small-framep)' | stumpish -e eval )" == "0" ]; then
+    if [ "$(echo '(current-frame-smallp)' | stumpish -e eval )" == "0" ]; then
         size=10
     else
         size=8
     fi
-    coproc (xterm -title "mycli@$@" -bg '#00008b' -fg '#ffd700' -fa Monospace -fs "$size" -e mycli -d $@ &>/dev/null &)
+    coproc (xterm -title "mycli@$@" -bg '#fff0f5' -fg '#000000' -fa Monospace -fs "$size" -e mycli -d $@ &>/dev/null &)
 fi
