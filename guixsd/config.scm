@@ -5,6 +5,7 @@
              (services nix)
              (services autossh)
              (services kresd)
+             (services openvpn)
 	     (packages artwork)
              (wigust packages lisp))
 
@@ -415,6 +416,7 @@ EndSection")
                        nix-service
                        (kresd-service (local-file "kresd.conf"))
                        gitlab-runner-service
+                       openvpn-service
 
                        (service openssh-service-type
                                 (openssh-configuration
