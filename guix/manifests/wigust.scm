@@ -32,6 +32,7 @@
    emacs-slack-patched
    emacs-strace-mode-special ; Colorize `strace' logs
    emacs-terminal-here-checkout
+   emacs-plain-org-wiki
    ))
 
 (packages->manifest
