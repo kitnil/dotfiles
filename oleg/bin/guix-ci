@@ -1,0 +1,82 @@
+#!/run/current-system/profile/bin/sh
+# -*- scheme -*-
+exec ${GUILE:-$(which guile)} $GUILE_FLAGS --no-auto-compile -e '(@@ (guix-ci) main)' -s "$0" "$@"
+!#
+
+;;;; guix-ci --- SYNOPSIS
+;;;; Copyright © 2019 Oleg Pykhalov <go.wigust@gmail.com>
+;;;; Released under the GNU GPLv3 or any later version.
+
+(define-module (guix-ci)
+  #:use-module (ice-9 format)
+  #:use-module (guix packages)
+  #:use-module (guix profiles)
+  #:use-module (json)
+  #:use-module (rnrs bytevectors)
+  #:use-module (srfi srfi-11)
+  #:use-module (srfi srfi-37)
+  #:use-module (web client))
+
+;;; Commentary:
+;;;
+;;; DESCRIPTION
+;;;
+;;; Code:
+
+(define %options
+  (let ((display-and-exit-proc (lambda (msg)
+                                 (lambda (opt name arg loads)
+                                   (display msg) (quit)))))
+    (list (option '(#\v "version") #f #f
+                  (display-and-exit-proc "guix-ci version 0.0.1\n"))
+          (option '(#\h "help") #f #f
+                  (display-and-exit-proc
+                   "Usage: guix-ci ...")))))
+
+(define %default-options
+  '())
+
+(define guix-collection
+  (load "/home/oleg/src/dotfiles/guix/manifests/guix-collection.scm"))
+
+(define ci-packages
+  (map (lambda (package)
+         (format #f "https://ci.guix.info/api/latestbuilds?nr=1&jobset=guix-master&job=~a.x86_64-linux" package))
+       (map (lambda (item)
+              (let ((package (manifest-entry-item item)))
+                (string-append (package-name package) "-" (package-version package))))
+            (manifest-entries guix-collection))))
+
+;; Entry point
+(define (main args)
+  (define opts
+    (args-fold (cdr (program-arguments))
+               %options
+               (lambda (opt name arg loads)
+                 (error "Unrecognized option `~A'" name))
+               (lambda (op loads)
+                 (cons op loads))
+               %default-options))
+
+  (map (lambda (uri)
+         (let-values (((response body)
+                       (http-get uri #:headers `((content-type . (application/json))) #:keep-alive? #f)))
+           (let ((output (vector->list (json-string->scm (utf8->string body)))))
+             (if (not (null? output))
+                 (let* ((pkg (car output))
+                        (buildstatus (assoc-ref pkg "buildstatus")))
+                   (if (not (and (= 0 buildstatus)
+                                 (= 1 (assoc-ref pkg "finished"))))
+                       (format #t "~a\t~a\t~a~%"
+                               (case buildstatus
+                                 ((0) 'succeeded)
+                                 ((1) 'failed-build)
+                                 ((2) 'failed-dependency)
+                                 ((3) 'failed-other)
+                                 ((6) 'failed-output)
+                                 ((4) 'cancelled))
+                               (assoc-ref pkg "nixname")
+                               uri)))))))
+       ci-packages))
+
+;;; guix-ci ends here
