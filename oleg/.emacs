@@ -1512,8 +1512,8 @@ With a prefix argument, clean `geiser-guile-load-path'."
 Produces URL as https://ci.guix.info/api/latestbuilds?nr=10&jobset=guix-master&job=opam-2.0.1&system=x86_64-linux"
     (interactive (list (guix-read-package-name)))
     (let ((build-farm-url "https://ci.guix.info")
-          (number 10)
-          (job (string-trim-right (shell-command-to-string (format "guix-search %s 2>/dev/null" job)))))
+          (number 1)
+          (job (string-trim-right (shell-command-to-string (format "guix-package-version %s" job)))))
       (apply #'build-farm-get-display
              build-farm-url 'build 'latest number (list :project nil
                                                         :jobset (if current-prefix-arg nil "guix-master")

@@ -1,0 +1,47 @@
+#!/run/current-system/profile/bin/sh
+# -*- scheme -*-
+exec ${GUILE:-$(which guile)} $GUILE_FLAGS --no-auto-compile -e '(@@ (guix-package-version) main)' -s "$0" "$@"
+!#
+
+;;;; guix-package-version --- SYNOPSIS
+;;;; Copyright © 2019 Oleg Pykhalov <go.wigust@gmail.com>
+;;;; Released under the GNU GPLv3 or any later version.
+
+(define-module (guix-package-version)
+  #:use-module (srfi srfi-37)
+  #:use-module (guix profiles)
+  #:use-module (guix packages)
+  #:use-module (gnu packages))
+
+;;; Commentary:
+;;;
+;;; DESCRIPTION
+;;;
+;;; Code:
+
+(define %options
+  (let ((display-and-exit-proc (lambda (msg)
+                                 (lambda (opt name arg loads)
+                                   (display msg) (quit)))))
+    (list (option '(#\v "version") #f #f
+                  (display-and-exit-proc "guile-guix-package-version version 0.0.1\n"))
+          (option '(#\h "help") #f #f
+                  (display-and-exit-proc
+                   "Usage: guile-guix-package-version ...")))))
+
+(define %default-options
+  '())
+
+(define (main args)
+  (define opts
+    (args-fold (cdr (program-arguments))
+               %options
+               (lambda (opt name arg loads)
+                 (error "Unrecognized option `~A'" name))
+               (lambda (op loads)
+                 (cons op loads))
+               %default-options))
+  (let ((package (manifest-entry-item (car (manifest-entries (specifications->manifest (list (car opts))))))))
+    (display (string-append (package-name package) "-" (package-version package)))))
+
+;;; guile-guix-package-version ends here
