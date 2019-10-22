@@ -3517,10 +3517,11 @@ If given a prefix, patch in the branch directory instead."
                    forge-gitlab-repository))
                 forge-alist)))
 
-(run-with-timer 0 (* 20 60) '(lambda ()
-                               (interactive)
-                               (unless (get-buffer "*Summary INBOX*")
-                                 (notmuch-poll))))
+;; XXX: Make async before uncommenting
+;; (run-with-timer 0 (* 20 60) '(lambda ()
+;;                                (interactive)
+;;                                (unless (get-buffer "*Summary INBOX*")
+;;                                  (notmuch-poll))))
 
 (defun work-host (host)
   "Insert host from work at current point."
