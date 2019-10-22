@@ -3546,11 +3546,11 @@ If given a prefix, patch in the branch directory instead."
 
 (defun sup-capture ()
   (interactive)
-  (find-file (expand-file-name "~/src/work/doc/jord.texi"))
+  (find-file (expand-file-name "~/src/tech-info/tech.texi"))
   (split-window-right)
-  (find-file (expand-file-name "~/src/work/doc/todo.org"))
+  (find-file (expand-file-name "~/src/tech-info/tech.texi"))
   ;; (setq compilation-ask-about-save nil)
-  (compile "./info.sh"))
+  (compile "makeinfo --no-number-sections --css-ref=https://www.gnu.org/software/gnulib/manual.css --no-split --html tech.texi && mv tech.html /var/www/texinfo/majordomo/index.html"))
 
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
