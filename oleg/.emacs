@@ -3544,6 +3544,14 @@ If given a prefix, patch in the branch directory instead."
 (add-to-list 'load-path "/home/oleg/archive/src/emacs-libvterm")
 (require 'vterm)
 
+(defun sup-capture ()
+  (interactive)
+  (find-file (expand-file-name "~/src/work/doc/jord.texi"))
+  (split-window-right)
+  (find-file (expand-file-name "~/src/work/doc/todo.org"))
+  ;; (setq compilation-ask-about-save nil)
+  (compile "./info.sh"))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
