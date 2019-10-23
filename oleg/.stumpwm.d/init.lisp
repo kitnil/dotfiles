@@ -4,7 +4,6 @@
 (in-package :stumpwm)
 
 (set-module-dir "/home/oleg/.stumpwm.d/modules/")
-;; (set-prefix-key (kbd "C-t"))
 
 (setf *startup-message* nil)
 (setf *message-window-gravity* :center)
@@ -356,8 +355,6 @@
 ;;; Misc
 ;;;
 
-(define-key *top-map* (kbd "s-f") "fullscreen")
-
 (defun term-shell-command (command &key (terminal 'xterm) (color "light"))
   (run-shell-command
    (let ((terminal-name (string-downcase (symbol-name terminal))))
@@ -378,8 +375,6 @@
 (defcommand glances () ()
   (term-shell-command "glances"))
 
-(define-key *top-map* (kbd "s-H") "glances")
-
 (defcommand wtf () ()
   (term-shell-command "wtf" :color "dark"))
 
@@ -387,8 +382,6 @@
 
 (defcommand htop () ()
   (term-shell-command "htop"))
-
-(define-key *top-map* (kbd "s-h") "htop")
 
 (defcommand neofetch () ()
   (term-shell-command "sh -c 'neofetch; read'"))
@@ -399,15 +392,11 @@
   "Open Rofi to launch `.desktop' file."
   (run-shell-command "rofi -modi run,drun -show drun"))
 
-(define-key *top-map* (kbd "s-x") "rofi-drun")
-
 (defcommand rofi-ssh () ()
   "Open Rofi ssh list."
   (run-shell-command
    (format nil "rofi -ssh-command '{terminal} -bg \"#f0fff0\" -title \"ssh@{host}\" -e {ssh-client} {host}' -width 20 -terminal '~a' -modi ssh -show ssh"
            (xterm-command))))
-
-(define-key *top-map* (kbd "S-s-RET") "rofi-ssh")
 
 (defcommand rofi-mycli () ()
   "Open Rofi mycli."
@@ -418,8 +407,6 @@
 (defcommand rofi-window () ()
   "Open Rofi window list."
   (run-shell-command "rofi -modi window -show window"))
-
-(define-key *top-map* (kbd "s-quoteright") "rofi-window")
 
 (defcommand rofi-twitchy () ()
   "Open Rofi with Twitchy plugin."
@@ -656,13 +643,9 @@
   ((kbd "-") "volume-decrease")
   ((kbd "=") "volume-increase"))
 
-(define-key *top-map* (kbd "s-KP_Add") "volume-increase")
-(define-key *top-map* (kbd "s-KP_Subtract") "volume-decrease")
-
 (define-key *root-map* (kbd "c") "run-xterm")
 (define-key *root-map* (kbd "C-c") "run-xterm")
 (define-key *root-map* (kbd "C-M-c") "run-xterm")
-(define-key *top-map* (kbd "s-RET") "run-xterm")
 (define-key *top-map* (kbd "C-s-RET") "run-xterm")
 
 (defcommand xfce-terminal () ()
@@ -675,27 +658,14 @@
   (loop for n from min below max by step
      collect n))
 
-;; Rebind groups to PREFIX-NUMBER.
-(mapcar #'(lambda (x) (define-key *top-map* (kbd (concat "s-" (write-to-string x)))
-                   (format nil "~A ~D" "select-window-by-number" x)))
-        (range 10 :min 0 :step 1))
-
 (define-key *top-map* (kbd "M-s-n") "gnext")
 (define-key *top-map* (kbd "M-s-p") "gprev")
-(define-key *top-map* (kbd "s-e") "emacsclient")
-(define-key *top-map* (kbd "s-E") "emacsclient-new")
-(define-key *top-map* (kbd "s-m") "mpv")
-(define-key *top-map* (kbd "s-n") "next-in-frame")
-(define-key *top-map* (kbd "s-p") "prev-in-frame")
-(define-key *top-map* (kbd "s-w") "firefox")
-(define-key *top-map* (kbd "s-W") "firefox-new-window")
 
 (defcommand emacs-shell () ()
   ""
   (run-shell-command "stumpish emacsclient")
   (run-shell-command "emacsclient -e '(progn (shell) (delete-other-windows))'"))
 
-(define-key *top-map* (kbd "s-quoteleft") "emacs-shell")
 (define-key *root-map* (kbd "quoteleft") "emacs-shell")
 
 (defcommand dump-group-to-file (file) (:rest "Dump To File: ")
@@ -720,9 +690,6 @@
 (defcommand ponymix-increase () ()
   (run-shell-command "ponymix increase 5"))
 
-(define-key *top-map* (kbd "s-=") "ponymix-increase")
-(define-key *top-map* (kbd "s--") "ponymix-decrease")
-
 (define-key *top-map* (kbd "XF86AudioRaiseVolume") "ponymix-increase")
 (define-key *top-map* (kbd "XF86AudioLowerVolume") "ponymix-decrease")
 
@@ -743,13 +710,9 @@
   (window-send-string "***REMOVED***
 "))
 
-(define-key *top-map* (kbd "s-a") "pass-eng")
-
 (defcommand pass-sup () ()
   (window-send-string "***REMOVED***
 "))
-
-(define-key *top-map* (kbd "s-A") "pass-sup")
 
 (defun current-window-width ()
   (format-expand *window-formatters* "%w" (current-window)))
@@ -802,8 +765,6 @@
   (defcommand music-youtube () ()
     (run-or-raise "chromium --app=https://music.youtube.com/"
                   '(:instance "music.youtube.com")))
-
-  (define-key *top-map* (kbd "s-j") "music-youtube")
 
   (defcommand youtube () ()
     (firefox "https://www.youtube.com/feed/subscriptions" t))
@@ -870,19 +831,13 @@
   (progn (run-shell-command "emacsclient --eval '(gnus)'")
          (run-shell-command "stumpish emacsclient")))
 
-(define-key *top-map* (kbd "s-g") "gnus")
-
 (defcommand org () ()
   (progn (run-shell-command "emacsclient --eval '(plain-org-wiki)'")
          (run-shell-command "stumpish emacsclient")))
 
-(define-key *top-map* (kbd "s-C") "org")
-
 (defcommand guix-wigust () ()
   (progn (run-shell-command "emacsclient --eval '(let ((default-directory (expand-file-name \"~/src/guix-wigust/guix/wigust/packages/\"))) (counsel-find-file))'")
          (run-shell-command "stumpish emacsclient")))
-
-(define-key *top-map* (kbd "s-i") "guix-wigust")
 
 (defcommand helm-tramp () ()
   (progn (run-shell-command "emacsclient --eval '(helm-tramp)'")
@@ -920,7 +875,6 @@
 (defcommand resolution () ()
   (run-shell-command "xrandr --output HDMI1 --mode 1920x1080 ; xgamma -gamma 1.0"))
 
-;; Rebind groups to PREFIX-NUMBER.
 (mapcar #'(lambda (x)
             (gnew (write-to-string x)))
 	(range 10 :min 2 :step 1))
@@ -934,18 +888,6 @@
             (define-key *top-map* (kbd (concat "M-s-" (write-to-string x)))
               (format nil "gmove ~D" x)))
         (range 10 :min 0 :step 1))
-
-;; groups
-(define-key *top-map* (kbd "s-!") "gmove-and-follow 1")
-(define-key *top-map* (kbd "s-@") "gmove-and-follow 2")
-(define-key *top-map* (kbd "s-#") "gmove-and-follow 3")
-(define-key *top-map* (kbd "s-$") "gmove-and-follow 4")
-(define-key *top-map* (kbd "s-%") "gmove-and-follow 5")
-(define-key *top-map* (kbd "s-^") "gmove-and-follow 6")
-(define-key *top-map* (kbd "s-&") "gmove-and-follow 7")
-(define-key *top-map* (kbd "s-*") "gmove-and-follow 8")
-(define-key *top-map* (kbd "s-(") "gmove-and-follow 9")
-(define-key *top-map* (kbd "s-)") "gmove-and-follow 0")
 
 (defun current-window-width ()
   (format-expand *window-formatters* "%w" (current-window)))
@@ -1001,34 +943,11 @@
             (write-to-string
              '(progn (elfeed) (delete-other-windows)))))))
 
-(define-key *top-map* (kbd "s-KP_Enter") "run-xterm")
-
-(define-key *top-map* (kbd "s-k") "delete")
-
-(define-key *top-map* (kbd "s-Right") "move-focus right")
-(define-key *top-map* (kbd "s-Left") "move-focus left")
-(define-key *top-map* (kbd "s-Up") "move-focus up")
-(define-key *top-map* (kbd "s-Down") "move-focus down")
 (define-key *top-map* (kbd "C-s-Up") "next-in-frame")
 (define-key *top-map* (kbd "C-s-Down") "prev-in-frame")
-(define-key *top-map* (kbd "s-Tab") "other-in-frame")
-(define-key *top-map* (kbd "s-ISO_Left_Tab") "fother")
-
-(define-key *top-map* (kbd "S-s-Right") "move-window right")
-(define-key *top-map* (kbd "S-s-Left") "move-window left")
-(define-key *top-map* (kbd "S-s-Up") "move-window up")
-(define-key *top-map* (kbd "S-s-Down") "move-window down")
 
 (defcommand vnc (display) ((:string "display: "))
   (run-shell-command (concat "vncviewer 127.0.0.1:" display)))
-
-(define-key *top-map* (kbd "s-v") "pulsemixer")
-(define-key *top-map* (kbd "s-c") "run-or-raise-xterm")
-
-(define-key *top-map* (kbd "s-F") "move-focus right")
-(define-key *top-map* (kbd "s-B") "move-focus left")
-(define-key *top-map* (kbd "s-P") "move-focus up")
-(define-key *top-map* (kbd "s-N") "move-focus down")
 
 (defcommand clipmenu () ()
   (run-shell-command "CM_HISTLENGTH=25 CM_LAUNCHER=rofi clipmenu"))
@@ -1083,8 +1002,6 @@
 (defcommand passmenu () ()
   (run-shell-command "passmenu"))
 
-(define-key *top-map* (kbd "s-s") "passmenu")
-
 (defcommand dunst-disable () ()
   (run-shell-command "pkill -SIGUSR1 dunst"))
 
@@ -1111,23 +1028,86 @@
 (defcommand alerta () ()
   (run-or-raise "" '(:title "Alerta - Mozilla Firefox")))
 
-(if (string= (getenv "DISPLAY") ":1")
-    (progn
-      (run-shell-command "xsetroot -solid grey")
-      (restore-from-file "/home/oleg/src/dotfiles/oleg/.stumpwm.d/desktop/10.lisp")
-      (define-frame-preference "Default" (1 NIL T :CLASS "quassel" :TITLE "Chat Monitor"))
-      (define-frame-preference "Default" (2 NIL T :CLASS "XTerm" :TITLE "alerta"))
-      (define-frame-preference "Default" (0 NIL T :CLASS "Qemu-system-x86_64"))
+(defun bind-super ()
+  (define-key *top-map* (kbd "s-f") "fullscreen")
+  (define-key *top-map* (kbd "s-H") "glances")
+  (define-key *top-map* (kbd "s-h") "htop")
+  (define-key *top-map* (kbd "s-x") "rofi-drun")
+  (define-key *top-map* (kbd "S-s-RET") "rofi-ssh")
+  (define-key *top-map* (kbd "s-quoteright") "rofi-window")
+  (define-key *top-map* (kbd "s-KP_Add") "volume-increase")
+  (define-key *top-map* (kbd "s-KP_Subtract") "volume-decrease")
+  (define-key *top-map* (kbd "s-RET") "run-xterm")
+  (define-key *top-map* (kbd "s-e") "emacsclient")
+  (define-key *top-map* (kbd "s-E") "emacsclient-new")
+  (define-key *top-map* (kbd "s-m") "mpv")
+  (define-key *top-map* (kbd "s-n") "next-in-frame")
+  (define-key *top-map* (kbd "s-p") "prev-in-frame")
+  (define-key *top-map* (kbd "s-w") "firefox")
+  (define-key *top-map* (kbd "s-W") "firefox-new-window")
+  (define-key *top-map* (kbd "s-quoteleft") "emacs-shell")
+  (define-key *top-map* (kbd "s-=") "ponymix-increase")
+  (define-key *top-map* (kbd "s--") "ponymix-decrease")
+  (define-key *top-map* (kbd "s-a") "pass-eng")
+  (define-key *top-map* (kbd "s-A") "pass-sup")
+  (define-key *top-map* (kbd "s-j") "music-youtube")
+  (define-key *top-map* (kbd "s-g") "gnus")
+  (define-key *top-map* (kbd "s-C") "org")
+  (define-key *top-map* (kbd "s-i") "guix-wigust")
+  (define-key *top-map* (kbd "s-!") "gmove-and-follow 1")
+  (define-key *top-map* (kbd "s-@") "gmove-and-follow 2")
+  (define-key *top-map* (kbd "s-#") "gmove-and-follow 3")
+  (define-key *top-map* (kbd "s-$") "gmove-and-follow 4")
+  (define-key *top-map* (kbd "s-%") "gmove-and-follow 5")
+  (define-key *top-map* (kbd "s-^") "gmove-and-follow 6")
+  (define-key *top-map* (kbd "s-&") "gmove-and-follow 7")
+  (define-key *top-map* (kbd "s-*") "gmove-and-follow 8")
+  (define-key *top-map* (kbd "s-(") "gmove-and-follow 9")
+  (define-key *top-map* (kbd "s-)") "gmove-and-follow 0")
+  (define-key *top-map* (kbd "s-KP_Enter") "run-xterm")
+  (define-key *top-map* (kbd "s-k") "delete")
+  (define-key *top-map* (kbd "s-Right") "move-focus right")
+  (define-key *top-map* (kbd "s-Left") "move-focus left")
+  (define-key *top-map* (kbd "s-Up") "move-focus up")
+  (define-key *top-map* (kbd "s-Down") "move-focus down")
+  (define-key *top-map* (kbd "s-Tab") "other-in-frame")
+  (define-key *top-map* (kbd "s-ISO_Left_Tab") "fother")
+  (define-key *top-map* (kbd "S-s-Right") "move-window right")
+  (define-key *top-map* (kbd "S-s-Left") "move-window left")
+  (define-key *top-map* (kbd "S-s-Up") "move-window up")
+  (define-key *top-map* (kbd "S-s-Down") "move-window down")
+  (define-key *top-map* (kbd "s-v") "pulsemixer")
+  (define-key *top-map* (kbd "s-c") "run-or-raise-xterm")
+  (define-key *top-map* (kbd "s-F") "move-focus right")
+  (define-key *top-map* (kbd "s-B") "move-focus left")
+  (define-key *top-map* (kbd "s-P") "move-focus up")
+  (define-key *top-map* (kbd "s-N") "move-focus down")
+  (define-key *top-map* (kbd "s-s") "passmenu")
+  (define-key *top-map* (kbd "s-m") "alerta")
+  (define-key *top-map* (kbd "s-j") "music-youtube")
+  (define-key *top-map* (kbd "s-m") "alerta")
+  
+  ;; Rebind groups to PREFIX-NUMBER.
+  (mapcar #'(lambda (x) (define-key *top-map* (kbd (concat "s-" (write-to-string x)))
+                     (format nil "~A ~D" "select-window-by-number" x)))
+          (range 10 :min 0 :step 1)))
 
-      ;; XXX: Make declarative.
-      (swm-gaps:toggle-gaps)
+(cond ((string= (getenv "DISPLAY") ":0")
+       (restore-from-file "/home/oleg/src/dotfiles/oleg/.stumpwm.d/desktop/9.lisp")
+       (define-frame-preference "Default" (0 NIL T :CLASS "quassel" :TITLE "Chat Monitor"))
+       (define-frame-preference "Default" (3 NIL T :CLASS "XTerm" :TITLE "alerta"))
+       ;; (define-frame-preference "Default" (1 NIL T :CLASS "t-engine"))
+       (define-frame-preference "Default" (4 NIL T :CLASS "mpv" :TITLE "emacs-emms"))
+       (define-frame-preference "Default" (4 NIL T :CLASS "mpv" :TITLE "firefox"))
+       (bind-super))
 
-      (define-key *top-map* (kbd "s-m") "alerta"))
+      ((string= (getenv "DISPLAY") ":1")
+       (run-shell-command "xsetroot -solid grey")
+       (restore-from-file "/home/oleg/src/dotfiles/oleg/.stumpwm.d/desktop/10.lisp")
+       (define-frame-preference "Default" (1 NIL T :CLASS "quassel" :TITLE "Chat Monitor"))
+       (define-frame-preference "Default" (2 NIL T :CLASS "XTerm" :TITLE "alerta"))
+       (define-frame-preference "Default" (0 NIL T :CLASS "Qemu-system-x86_64"))
+       (swm-gaps:toggle-gaps) ;XXX: Make declarative.
+       (bind-super))
 
-    (progn (restore-from-file "/home/oleg/src/dotfiles/oleg/.stumpwm.d/desktop/9.lisp")
-           (define-frame-preference "Default" (0 NIL T :CLASS "quassel" :TITLE "Chat Monitor"))
-           (define-frame-preference "Default" (3 NIL T :CLASS "XTerm" :TITLE "alerta"))
-           (define-frame-preference "Default" (4 NIL T :CLASS "mpv" :TITLE "emacs-emms"))
-           (define-frame-preference "Default" (4 NIL T :CLASS "mpv" :TITLE "firefox"))
-           ;; (define-frame-preference "Default" (1 NIL T :CLASS "t-engine"))
-           ))
+      (t (set-prefix-key (kbd "C-i"))))
