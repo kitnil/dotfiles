@@ -1002,6 +1002,8 @@
             (write-to-string
              '(progn (elfeed) (delete-other-windows)))))))
 
+(define-key *top-map* (kbd "s-KP_Enter") "run-xterm")
+
 (define-key *top-map* (kbd "s-k") "delete")
 
 (define-key *top-map* (kbd "s-Right") "move-focus right")
