@@ -15,7 +15,7 @@
 (cursor-theme)
 
 (defcommand xrdb () ()
-  (run-shell-command "xrdb -merge /home/oleg/.Xresources"))
+  (run-shell-command "xrdb /home/oleg/.Xresources"))
 
 (xrdb)
 
