@@ -8,7 +8,9 @@ XTerm.vt100.printerCommand: /run/current-system/profile/bin/xterm -bg '#f5f5f5' 
 XTerm.vt100.translations: #override Ctrl ~Meta ~Shift <Key>slash: print-everything() \n\
     Ctrl Shift <KeyPress> C: copy-selection(CLIPBOARD) \n\
     Ctrl Shift <KeyPress> V: insert-selection(CLIPBOARD) \n\
-    Ctrl Shift <KeyPress> Y: insert-selection(PRIMARY)
+    Ctrl Shift <KeyPress> Y: insert-selection(PRIMARY) \n\
+    Ctrl <Btn4Down>: larger-vt-font() \n\
+    Ctrl <Btn5Down>: smaller-vt-font()
 
 ! Select all XTerm buffer
 XTerm.vt100.on4Clicks: all
