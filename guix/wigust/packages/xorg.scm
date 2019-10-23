@@ -120,3 +120,14 @@ MIT-SCREEN-SAVER extension to the X11 protocol.")
 originally designed for surf but also usable with many other applications,
 i.e. @code{st}, @code{uzbl}, @code{urxvt} and @code{xterm}.")
     (license license:isc)))
+
+(define-public xterm-my
+  (package
+    (inherit xterm)
+    (name "xterm-my")
+    (arguments
+     (substitute-keyword-arguments
+         (package-arguments xterm)
+       ((#:configure-flags flags)
+        ;; XXX: Broken flags: "--enable-double-buffer" "--with-utempter"
+        `(cons "--enable-exec-xterm" ,flags))))))
