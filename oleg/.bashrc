@@ -1084,3 +1084,11 @@ microseconds-to-seconds()
     microseconds=$(echo "scale=2;${seconds}/1000000" | bc)
     echo $microseconds
 }
+
+test-openvpn()
+{
+    # https://serverfault.com/questions/262474/how-to-check-that-an-openvpn-server-is-listening-on-a-remote-port-without-using
+    echo -e "\x38\x01\x00\x00\x00\x00\x00\x00\x00" |
+        timeout 10 nc -u openvpnserver.com 1194 | cat -v
+    # Output example: @$M-^HM--LdM-t|M-^X^@^@^@^@^@@$M-^HM--LdM-t|M-^X^@^@^@^@^@@$M-^HM--LdM-t|M-^X...
+}
