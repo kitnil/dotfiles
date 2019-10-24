@@ -881,6 +881,8 @@
 
 (gnew-float "0")
 
+(stumpwm:run-commands "gselect 1")
+
 ;; Rebind groups to PREFIX-NUMBER.
 (mapcar #'(lambda (x)
             (define-key *top-map* (kbd (concat "C-s-" (write-to-string x)))
