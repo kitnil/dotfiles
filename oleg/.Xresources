@@ -10,7 +10,8 @@ XTerm.vt100.translations: #override Ctrl ~Meta ~Shift <Key>slash: print-everythi
     Ctrl Shift <KeyPress> V: insert-selection(CLIPBOARD) \n\
     Ctrl Shift <KeyPress> Y: insert-selection(PRIMARY) \n\
     Ctrl <Btn4Down>: larger-vt-font() \n\
-    Ctrl <Btn5Down>: smaller-vt-font()
+    Ctrl <Btn5Down>: smaller-vt-font() \n\
+    Ctrl Shift <KeyPress> N: spawn-new-terminal()
 
 ! Select all XTerm buffer
 XTerm.vt100.on4Clicks: all
