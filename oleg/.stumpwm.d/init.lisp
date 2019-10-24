@@ -107,9 +107,9 @@
 
 (setf *window-format* "%m%n%s %c %50t")
 
-(defvar *xterm-command* "/run/current-system/profile/bin/xterm")
+(defvar *xterm-command* "/home/oleg/.guix-profile/bin/xterm")
 (defvar *xterm-big-command*
-  (join '("exec" "/run/current-system/profile/bin/xterm"
+  (join '("exec" "/home/oleg/.guix-profile/bin/xterm"
           "-fa" "Monospace" "-fs" "24")))
 (defvar *xterm-no-scrollbar* "+sb")
 (defvar *xterm-theme-dark* "-bg black -fg white")
@@ -433,7 +433,7 @@
     ((:shell "/bin/sh -c "))
   "Run the specified shell command in XTerm."
   (run-prog *shell-program*
-            :args (list "-c" (join (list "xterm -name" cmd "-e" cmd)))
+            :args (list "-c" (join (list "/home/oleg/.guix-profile/bin/xterm -name" cmd "-e" cmd)))
             :wait nil))
 
 (defcommand pulsemixer () ()
