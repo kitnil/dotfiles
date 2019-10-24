@@ -3560,8 +3560,7 @@ If given a prefix, patch in the branch directory instead."
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(tramp-default-method "ssh")
- '(build-farm-build-arguments '("system=x86_64-linux"))
+ '(build-farm-build-arguments '("jobset=guix-master" "system=x86_64-linux"))
  '(custom-safe-themes
    '("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default))
  '(debug-on-error nil)
@@ -3584,7 +3583,8 @@ If given a prefix, patch in the branch directory instead."
      (eval modify-syntax-entry 43 "'")
      (eval modify-syntax-entry 36 "'")
      (eval modify-syntax-entry 126 "'")
-     (bug-reference-bug-regexp . "<https?://\\(debbugs\\|bugs\\)\\.gnu\\.org/\\([0-9]+\\)>"))))
+     (bug-reference-bug-regexp . "<https?://\\(debbugs\\|bugs\\)\\.gnu\\.org/\\([0-9]+\\)>")))
+ '(tramp-default-method "ssh"))
 
 (load (expand-file-name "~/archive/src/vterm-toggle/vterm-toggle.el"))
 (load (expand-file-name "~/src/emacs-tramp-auto-auth/tramp-auto-auth.el"))
@@ -3613,6 +3613,7 @@ If given a prefix, patch in the branch directory instead."
  '(magit-diff-removed ((t (:foreground "#aa2222"))))
  '(magit-diff-removed-highlight ((t (:foreground "#aa2222"))))
  '(markdown-code-face ((t (:inherit fixed-pitch))))
+ '(mode-line-inactive ((t :foreground "grey20" :background "#ffffff" :inverse-video nil)))
  '(rainbow-delimiters-depth-2-face ((t (:foreground "deep sky blue"))))
  '(rainbow-delimiters-depth-3-face ((t (:foreground "goldenrod"))))
  '(rainbow-delimiters-depth-4-face ((t (:foreground "lime green"))))
@@ -3621,6 +3622,5 @@ If given a prefix, patch in the branch directory instead."
  '(rainbow-delimiters-depth-8-face ((t (:foreground "deep sky blue"))))
  '(rainbow-delimiters-depth-9-face ((t (:foreground "goldenrod"))))
  '(rainbow-delimiters-unmatched-face ((t (:foreground "red"))))
- '(mode-line-inactive ((t :foreground "grey20" :background "#ffffff" :inverse-video nil)))
  '(sh-heredoc ((t (:foreground "tan3")))))
 (put 'list-timers 'disabled nil)
