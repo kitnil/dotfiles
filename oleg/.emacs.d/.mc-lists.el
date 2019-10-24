@@ -46,6 +46,7 @@
         org-yank
         outshine-self-insert-command
         overwrite-mode
+        phi-search
         query-replace
         recompile
         slime-space
@@ -83,6 +84,7 @@
 (setq mc/cmds-to-run-once
       '(
         beginning-of-defun
+        clone-buffer
         compile
         completion-at-point
         eir-eval-in-geiser
