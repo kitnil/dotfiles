@@ -14,7 +14,8 @@
                      freedesktop readline ncurses networking)
 
 (use-service-modules admin dbus desktop docker dns networking sound
-                     xorg ssh web certbot monitoring databases mail)
+                     xorg ssh web cgit version-control certbot
+                     monitoring databases mail)
 
 (define 20-intel.conf "\
 # Fix tearing for Intel graphics card.
@@ -446,6 +447,34 @@ EndSection")
                        (service nginx-service-type
                                 (nginx-configuration
                                  (server-blocks %nginx-server-blocks)))
+
+                       (service cgit-service-type
+                                (cgit-configuration
+                                 (branch-sort "age")
+                                 (enable-commit-graph? #t)
+                                 (enable-follow-links? #t)
+                                 (enable-index-links? #t)
+                                 (enable-log-filecount? #t)
+                                 (enable-log-linecount? #t)
+                                 (enable-remote-branches? #t)
+                                 (enable-subject-links? #t)
+                                 (remove-suffix? #t)
+                                 (enable-index-owner? #f)
+                                 (root-title "Personal Cgit")
+                                 (snapshots (list "tar.gz"))
+                                 (clone-prefix (list ;; "git://magnolia.local/~natsu"
+                                                "https://cgit.duckdns.org/git"))
+                                 (nginx (list (nginx-server-configuration
+                                               (inherit %cgit-configuration-nginx)
+                                               (server-name '("cgit.duckdns.org" "git.tld"))
+                                               (locations
+                                                (append (nginx-server-configuration-locations %cgit-configuration-nginx)
+                                                        (list (git-http-nginx-location-configuration
+                                                               (git-http-configuration
+                                                                (export-all? #t))))))
+                                               (listen '("80" "443 ssl"))
+                                               (ssl-certificate (letsencrypt-certificate "cgit.duckdns.org"))
+                                               (ssl-certificate-key (letsencrypt-key "cgit.duckdns.org")))))))
 
                        (service tor-service-type
                                 (tor-configuration
