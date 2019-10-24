@@ -1077,3 +1077,10 @@ magit()
 }
 
 alias projectile-magit="projectile-command magit"
+
+microseconds-to-seconds()
+{
+    seconds="$1"
+    microseconds=$(echo "scale=2;${seconds}/1000000" | bc)
+    echo $microseconds
+}
