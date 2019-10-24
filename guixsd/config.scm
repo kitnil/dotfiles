@@ -134,6 +134,10 @@ EndSection")
          (server-name '("www.tld"))
          (listen '("80"))
          (root "/srv/share"))
+        (nginx-server-configuration
+         (server-name '("techinfo.intr"))
+         (listen '("80"))
+         (root "/var/www/techinfo.intr"))
         (proxy "cups.tld" 631)
         (proxy "torrent.tld" 9091)
         (proxy "awx.wugi.info" 8052 #:ssl? #t)
@@ -375,7 +379,8 @@ EndSection")
                            "gitea.wugi.info"
                            "gitlab.wugi.info"
                            "grafana.wugi.info"
-                           "zabbix.wugi.info"))
+                           "zabbix.wugi.info"
+                           "techinfo.intr"))
            "::1 guixsd localhost"
 
            "192.168.100.1 r1.tld"
