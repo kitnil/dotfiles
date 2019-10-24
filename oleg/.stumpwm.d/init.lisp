@@ -380,6 +380,9 @@
 
 (define-key *top-map* (kbd "C-s-h") "wtf")
 
+(defcommand top () ()
+  (term-shell-command "top"))
+
 (defcommand htop () ()
   (term-shell-command "htop"))
 
@@ -1033,6 +1036,7 @@
 (defun bind-super ()
   (define-key *top-map* (kbd "s-f") "fullscreen")
   (define-key *top-map* (kbd "s-H") "glances")
+  (define-key *top-map* (kbd "s-t") "top")
   (define-key *top-map* (kbd "s-h") "htop")
   (define-key *top-map* (kbd "s-x") "rofi-drun")
   (define-key *top-map* (kbd "S-s-RET") "rofi-ssh")
