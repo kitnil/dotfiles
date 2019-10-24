@@ -7,7 +7,8 @@
              (wigust packages ruby)
              (wigust packages version-control)
              (wigust packages virtualization)
-             (wigust packages xdisorg))
+             (wigust packages xdisorg)
+             (wigust packages xorg))
 
 (define guix-wigust-packages-emacs
   (list
@@ -57,5 +58,7 @@
 
   python-open-with
 
+  xterm-my
+  
   guix-wigust-packages-emacs))
 

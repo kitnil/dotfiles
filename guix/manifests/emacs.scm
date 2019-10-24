@@ -138,4 +138,6 @@
        emacs-docker
        emacs-docker-tramp
        emacs-dockerfile-mode
-       emacs-docker-compose-mode))
+       emacs-docker-compose-mode
+
+       emacs-ssh-config-mode))

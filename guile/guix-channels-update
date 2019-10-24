@@ -53,11 +53,7 @@ newspace."
 (define (channels)
   (list (channel
          (name 'guix-wigust)
-         (url "https://gitlab.wugi.info/guix/guix-wigust.git")
-         (commit (git-last-commit url)))
-        (channel
-         (name 'guix-majordomo)
-         (url "https://gitlab-ci-token:uhd8qabRUz5dD-HQchLi@anongit.duckdns.org/guix/guix-majordomo.git")
+         (url "file:///home/oleg/src/guix-wigust")
          (commit (git-last-commit url)))
         (channel
          (name 'guix)
