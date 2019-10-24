@@ -677,6 +677,9 @@ Sets the following basend on PREFIX-MAP:
                 ("u" undo "undo")
                 ("y" guix-mu-yank "yank"))
 
+(wi-define-keys "C-c g v t" timemachine
+                ("t" git-timemachine "timemachine"))
+
 (wi-define-keys "C-c g v m" magit
                 ("c" magit-commit "commit")
                 ("l" magit-list-repositories "repo list" :color blue)
