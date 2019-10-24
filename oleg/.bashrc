@@ -1092,3 +1092,6 @@ test-openvpn()
         timeout 10 nc -u openvpnserver.com 1194 | cat -v
     # Output example: @$M-^HM--LdM-t|M-^X^@^@^@^@^@@$M-^HM--LdM-t|M-^X^@^@^@^@^@@$M-^HM--LdM-t|M-^X...
 }
+
+# jq like for http
+alias hq='pup'
