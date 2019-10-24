@@ -312,6 +312,10 @@ mj-php()
     ssh majordomo -- curl -s http://web30.majordomo.ru/apache2/php52/default/phpinfo-json.php | jq | less
 }
 
+qemu-freebsd()
+{
+    qemu-system-x86_64 -net nic,model=virtio -net user,hostfwd=tcp::2222-:22 -smp 2 -m 4096 -hda ~/vm/freebsd-12.qcow2
+}
 
 # colordiff -u <(nix repl build.nix <<< ':p overlay.php52.drvAttrs' | sed 's|\s|\n|g') <(nix repl build.nix <<< ':p overlay.php52new.drvAttrs' | sed 's|\s|\n|g')
 
