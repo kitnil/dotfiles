@@ -858,6 +858,11 @@ ansible-cmdb-my()
     ansible-cmdb -t html_fancy_split -p local_js=1 out/
 }
 
+ansible-fetch-root-history()
+{
+    ansible all -m fetch -a 'src=/root/.bashrc dest=/home/oleg/ansible-out/files' -b
+}
+
 history-top()
 {
     # https://www.commandlinefu.com/commands/view/604/list-of-commands-you-use-most-often
