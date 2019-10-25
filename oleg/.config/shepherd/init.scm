@@ -8,8 +8,7 @@
     #:docstring '("Adjust the color temperature of your screen.")
     #:provides '(redshift)
     #:start (make-forkexec-constructor
-             (list %redshift "-O" "4000")
-             #:log-file "/home/oleg/.config/shepherd/redshift.log")
+             (list %redshift "-O" "4000"))
     #:stop (make-system-destructor (string-join (list %redshift "-x")))
     #:respawn? #f))
 
