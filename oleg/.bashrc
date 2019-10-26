@@ -1060,9 +1060,26 @@ docker-xorg()
             $@
 }
 
+obs-docker-setup()
+{
+    # https://github.com/mviereck/x11docker/wiki/Container-sound:-ALSA-or-Pulseaudio
+
+    $(guix build pulseaudio)/bin/pactl load-module module-native-protocol-unix socket=/tmp/pulseaudio.socket
+    cat > /tmp/pulseaudio.client.conf << EOF
+default-server = unix:/tmp/pulseaudio.socket
+# Prevent a server running in the container
+
+autospawn = no
+daemon-binary = /bin/true
+# Prevent the use of shared memory
+
+enable-shm = false
+EOF
+}
+
 obs-docker()
 {
-    docker-xorg --name obs --rm -v /home/oleg/obs:/home/obs obs
+    docker-xorg --name obs --rm -v /home/oleg/obs:/home/obs --env PULSE_SERVER=unix:/tmp/pulseaudio.socket --env PULSE_COOKIE=/tmp/pulseaudio.cookie --volume /tmp/pulseaudio.socket:/tmp/pulseaudio.socket --volume /tmp/pulseaudio.client.conf:/etc/pulse/client.conf obs
 }
 
 projectile-ls()
