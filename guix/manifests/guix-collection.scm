@@ -185,7 +185,7 @@ xml xorg)
 
                texinfo
 
-               lvm2 cdrkit-libre qemu samba ubridge virt-manager
+               lvm2 cdrkit-libre samba ubridge virt-manager
 
                python-pyqt-without-qtwebkit
 

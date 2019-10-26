@@ -59,6 +59,7 @@
   python-open-with
 
   xterm-my
+  qemu-my
   
   guix-wigust-packages-emacs))
 
