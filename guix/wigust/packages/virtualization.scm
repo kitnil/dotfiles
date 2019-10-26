@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2018 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2018, 2019 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -69,6 +69,7 @@
   #:use-module (guix git-download)
   #:use-module ((guix licenses) #:select (gpl2 gpl2+ gpl3+ lgpl2.1 lgpl2.1+
                                                asl2.0))
+  #:use-module (gnu packages virtualization)
   #:use-module (guix packages)
   #:use-module (guix utils)
   #:use-module (srfi srfi-1))
@@ -96,3 +97,19 @@
     (synopsis "Cisco router emulator")
     (description "@code{dynamips} provides an emulator for a Cisco router.")
     (license gpl2+)))
+
+(define-public qemu-my
+  (package
+    (inherit qemu)
+    (name "qemu-my")
+    (arguments
+     (substitute-keyword-arguments
+         (package-arguments qemu)
+       ((#:phases phases)
+        `(modify-phases ,phases
+           (add-after 'unpack 'patch-source
+             (lambda _
+               ;; Hide menu bar at start.
+               (substitute* "ui/gtk.c"
+                 (("gtk_widget_show_all\\(s->window\\);" original)
+                  (string-append original "\n    gtk_widget_hide(s->menu_bar);")))))))))))
