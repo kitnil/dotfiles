@@ -43,7 +43,7 @@ XTerm*color14: #54FFFF
 XTerm*color7:  #B2B2B2
 XTerm*color15: #FFFFFF
 
-XTerm.vt100.scrollBar: true
+XTerm.vt100.scrollBar: false
 XTerm.vt100.cursorBlink: false
 
 ! https://github.com/eudoxia0/dotfiles/blob/master/sextant/xresources.txt
