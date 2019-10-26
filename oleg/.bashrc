@@ -1060,6 +1060,11 @@ docker-xorg()
             $@
 }
 
+obs-docker()
+{
+    docker-xorg --name obs --rm -v /home/oleg/obs:/home/obs obs
+}
+
 projectile-ls()
 {
     bash -c 'echo ${0:1:-1}' \
