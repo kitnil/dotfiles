@@ -1114,9 +1114,10 @@ microseconds-to-seconds()
 
 test-openvpn()
 {
+    server="$1"
     # https://serverfault.com/questions/262474/how-to-check-that-an-openvpn-server-is-listening-on-a-remote-port-without-using
     echo -e "\x38\x01\x00\x00\x00\x00\x00\x00\x00" |
-        timeout 10 nc -u openvpnserver.com 1194 | cat -v
+        timeout 10 nc -u "$server" 1194 | cat -v
     # Output example: @$M-^HM--LdM-t|M-^X^@^@^@^@^@@$M-^HM--LdM-t|M-^X^@^@^@^@^@@$M-^HM--LdM-t|M-^X...
 }
 
