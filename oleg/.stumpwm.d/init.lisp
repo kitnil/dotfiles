@@ -1033,6 +1033,29 @@
 (defcommand alerta () ()
   (run-or-raise "" '(:title "Alerta - Mozilla Firefox")))
 
+(defun bind-obs ()
+  ;; TODO: Unhardcode window id.
+  ;;       Don't use xdotool.
+
+  (defcommand obs-firefox () ()
+    "Start of focus firefox."
+    (run-or-raise "firefox" '(:class "Firefox"))
+    ;; (window-send-string (kbd "s-3"))
+    ;; (run-shell-command "for window in $(xdotool search --class obs); do xdotool key --window $window key super+3; done")
+    (run-shell-command "xdotool key --window 65011717 key super+3"))
+
+  (define-key *top-map* (kbd "s-w") "obs-firefox")
+  (define-key *top-map* (kbd "s-W") "firefox")
+
+  (defcommand obs-emacsclient () ()
+    "Start emacs unless it is already running, in which case focus it."
+    (run-or-raise "emacsclient -c" '(:class "Emacs"))
+    (run-shell-command "xdotool key --window 65011717 key super+4"))
+
+  (define-key *top-map* (kbd "s-e") "obs-emacsclient")
+  (define-key *top-map* (kbd "s-E") "emacsclient")
+  (define-key *top-map* (kbd "C-s-E") "emacsclient-new"))
+
 (defun bind-super ()
   (define-key *top-map* (kbd "s-f") "fullscreen")
   (define-key *top-map* (kbd "s-H") "glances")
