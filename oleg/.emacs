@@ -3555,6 +3555,21 @@ If given a prefix, patch in the branch directory instead."
   ;; (setq compilation-ask-about-save nil)
   (compile "makeinfo --no-number-sections --css-ref=https://www.gnu.org/software/gnulib/manual.css --no-split --html tech.texi && mv tech.html /var/www/techinfo.intr/index.html"))
 
+(defun majordomo-ivy-find-project ()
+  "Find Majordomo project."
+  (interactive)
+  (find-file
+   (ivy-completing-read "Directory: "
+                        (delete-dups
+                         (seq-filter #'file-directory-p
+                                     (apply #'append
+                                            (mapcar (lambda (dir)
+                                                      (cddr ;skip "." and ".."
+                                                       (directory-files dir t)))
+                                                    (seq-filter #'file-directory-p
+                                                                (cddr ;skip "." and ".."
+                                                                 (directory-files (expand-file-name "~/majordomo") t))))))))))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
