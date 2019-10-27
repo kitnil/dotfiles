@@ -985,28 +985,18 @@ Sets the following basend on PREFIX-MAP:
           "+license%%3Agpl"))
 
 (defengine github-hippie
-  (concat "https://github.com/search?ref=simplesearch&q=%s"
-          "+-language:objectivec"
-          "+-language:java"
-          "+-language:javascript"
-          "+-language:csharp"
-          "+-language:kotlin"
-          "+-language:swift"
-          "+-language:php"
-          "+-language:vue"
-          "+-language:autohotkey"))
+  (mapconcat 'identity
+             '("https://github.com/search?ref=simplesearch&q=%s"
+               "objectivec" "java" "javascript" "csharp" "kotlin"
+               "swift" "php" "vue" "autohotkey")
+             "+-language:"))
 
 (defengine github-hippie-gpl
-  (concat "https://github.com/search?ref=simplesearch&q=%s"
-          "+-language:objectivec"
-          "+-language:java"
-          "+-language:javascript"
-          "+-language:csharp"
-          "+-language:kotlin"
-          "+-language:swift"
-          "+-language:php"
-          "+-language:vue"
-          "+-language:autohotkey"
+  (concat (mapconcat 'identity
+                     '("https://github.com/search?ref=simplesearch&q=%s"
+                       "objectivec" "java" "javascript" "csharp"
+                       "kotlin" "swift" "php" "vue" "autohotkey")
+                     "+-language:")
           "+license%%3Agpl"))
 
 (defengine google
