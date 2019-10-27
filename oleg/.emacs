@@ -873,9 +873,10 @@ Sets the following basend on PREFIX-MAP:
                 ("p" redshift-increase-temp "increase"))
 
 (wi-define-keys "C-c g s" shell
+                ("r" counsel-tramp :color blue)
                 ("e" eshell "eshell" :color blue)
-                ("t" term "ansi" :color blue)
                 ("m" terminal-here-project-launch-multiplexer "xterm" :color blue)
+                ("t" term "ansi" :color blue)
                 ("x" terminal-here-project-launch "xterm" :color blue))
 
 (wi-define-keys "C-c g s s" shell-dumb
