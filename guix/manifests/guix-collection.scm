@@ -208,7 +208,7 @@ xml xorg)
                gst-plugins-ugly gstreamer
 
                minetest ; FOSS Minecraft like game
-               gimp
+               gimp inkscape
 
                ;; TODO:
                ;; majordomo-ca-0.0.1
