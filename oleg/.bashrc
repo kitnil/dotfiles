@@ -993,10 +993,11 @@ wp-cron()
 
 jenkins-build-php()
 {
+    branch="$1"
     for job in apache2-php52 apache2-php53 apache2-php54 apache2-php55 apache2-php56 apache2-php70 apache2-php71 apache2-php72 apache2-php73; do
         echo -e "\n@ $job"
         curl -u 'admin:***REMOVED***' -s -k \
-"https://jenkins.intr/job/webservices/job/$job/job/master/build?delay=0sec" \
+"https://jenkins.intr/job/webservices/job/$job/job/$branch/build?delay=0sec" \
 -H 'Content-type: application/x-www-form-urlencoded; charset=UTF-8' --data ''
     done
 }
