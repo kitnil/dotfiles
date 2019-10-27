@@ -1079,7 +1079,16 @@ EOF
 
 obs-docker()
 {
-    docker-xorg --name obs --rm -v /home/oleg/obs:/home/obs --env PULSE_SERVER=unix:/tmp/pulseaudio.socket --env PULSE_COOKIE=/tmp/pulseaudio.cookie --volume /tmp/pulseaudio.socket:/tmp/pulseaudio.socket --volume /tmp/pulseaudio.client.conf:/etc/pulse/client.conf obs
+    docker-xorg \
+        --name obs \
+        --rm \
+        --env PULSE_SERVER=unix:/tmp/pulseaudio.socket \
+        --env PULSE_COOKIE=/tmp/pulseaudio.cookie \
+        --volume /tmp/pulseaudio.socket:/tmp/pulseaudio.socket \
+        --volume /tmp/pulseaudio.client.conf:/etc/pulse/client.conf \
+        --volume /home/oleg/obs:/home/obs \
+        --volume /srv/music/mp3:/home/obs/music \
+        obs
 }
 
 projectile-ls()
