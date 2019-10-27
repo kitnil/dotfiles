@@ -322,3 +322,13 @@ qemu-freebsd()
 
 # ANSIBLE_HOST_KEY_CHECKING=False ansible vm27976 -m copy -a 'src=.ssh/authorized_keys dest=/root/.ssh/authorized_keys'
 # ANSIBLE_HOST_KEY_CHECKING=False ansible vm27976 -m file -a 'dest=.ssh state=directory mode=0600'
+
+
+# for file in *access.log; do paste <(grep '09:3\|09:4' $file | wc -l) <(echo $file); done | grep -v '^0' | sort -n
+# grep wp_cron www.forum.tv-pc.ru-access.log
+
+# ansible malscan.intr -m copy -a 'src=/var/www/techinfo.intr/index.html dest=/var/www/techinfo.intr/index.html' -b
+
+# nix-build … --builders 'ssh://nixos.intr'
+
+# alias ssh-no-known='ssh -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null'
