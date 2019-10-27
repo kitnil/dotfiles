@@ -122,6 +122,16 @@ pre-reconfigure()
          $@
 }
 
+pre-graph()
+{
+    GUIX_PACKAGE_PATH=$HOME/src/guix-wigust/guix \
+            $HOME/src/guix/pre-inst-env \
+            guix system shepherd-graph \
+            --substitute-urls='http://cuirass.tld https://berlin.guixsd.org https://mirror.hydra.gnu.org' \
+            --load-path=$HOME/src/dotfiles/fiore/modules \
+            $@
+}
+
 pre-weather()
 {
     $HOME/src/guix/pre-inst-env \
