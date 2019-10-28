@@ -31,6 +31,7 @@
   #:use-module (guix build utils)
   #:use-module (guix build-system gnu)
   #:use-module (guix build-system python)
+  #:use-module (guix build-system trivial)
   #:use-module (guix gexp)
   #:use-module (guix git-download)
   #:use-module (guix packages)
@@ -252,4 +253,24 @@
       (synopsis "Guile interface to Linux loadavg")
       (description
        "This package provides a Guile interface to Linux loadavg")
+      (license license:gpl3+))))
+
+(define-public majordomo-ca
+  (let ((commit "9d8c7dc01a94af4a2361395f0888104cbff5b749"))
+    (package
+      (name "majordomo-ca")
+      (version (git-version "0.0.1" "1" commit))
+      (source (local-file "/home/oleg/majordomo/office/ssl-certificates/Majordomo_LLC_Root_CA.crt"))
+      (arguments
+       `(#:modules ((guix build utils))
+         #:builder
+         (begin
+           (use-modules (guix build utils))
+           (install-file (assoc-ref %build-inputs "source")
+                         (string-append %output "/etc/ssl/certs"))
+           #t)))
+      (build-system trivial-build-system)
+      (home-page "https://www.majordomo.ru/")
+      (synopsis "Majordomo CA")
+      (description "This package provides a Majordomo CA")
       (license license:gpl3+))))
