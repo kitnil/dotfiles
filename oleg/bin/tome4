@@ -1,0 +1,10 @@
+#!/bin/sh
+
+docker run -it \
+-v /tmp/.X11-unix:/tmp/.X11-unix \
+-e DISPLAY \
+--device /dev/dri \
+--device /dev/snd \
+-v /etc/localtime:/etc/localtime:ro \
+--device /dev/input \
+-v /srv/share/tome4:/install --network=host --rm -u0: -w /opt/tome4 --hostname tome4 --name tome4 -e DISPLAY=:0 -v /opt/tome4:/opt/tome4  -v /opt/tome4/rootfs/home/user:/root -v /home/oleg/.t-engine:/root/.t-engine tome4:latest ./start.sh
