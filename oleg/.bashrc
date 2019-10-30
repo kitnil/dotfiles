@@ -860,7 +860,7 @@ ansible-cmdb-my()
 
 ansible-fetch-root-history()
 {
-    ansible all -m fetch -a 'src=/root/.bashrc dest=/home/oleg/ansible-out/files' -b
+    ansible all -m fetch -a 'src=/root/.bash_history dest=/home/oleg/ansible-out/files' -b
 }
 
 history-top()
