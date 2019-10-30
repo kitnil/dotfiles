@@ -7,7 +7,8 @@
              (services kresd)
              (services openvpn)
 	     (packages artwork)
-             (wigust packages lisp))
+             (wigust packages lisp)
+             (majordomo packages majordomo))
 
 (use-package-modules admin base certs docker linux lisp suckless
                      xdisorg xorg fonts android fontutils gnome
@@ -278,6 +279,7 @@ EndSection")
                        xhost
 
                        nss-certs ;SSL certificates
+                       majordomo-ca
 
                        fping
 
