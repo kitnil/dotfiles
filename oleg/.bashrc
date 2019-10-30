@@ -1133,3 +1133,10 @@ test-openvpn()
 
 # jq like for http
 alias hq='pup'
+
+guix-graph-chromium()
+{
+    package="$1"
+    GUILE_LOAD_PATH=$HOME/src/guix:GUILE_LOAD_PATH guix graph -b d3js \
+"$package" > /tmp/out.html && chromium --app=file:///tmp/out.html
+}
