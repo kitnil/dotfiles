@@ -453,18 +453,18 @@
    '(:class "XTerm")))
 
 (defun small-framep ()
-  (if (not (string= (class-name (class-of (current-group))) "FLOAT-GROUP"))
+  (if (string= (class-name (class-of (current-group))) "FLOAT-GROUP")
+      nil
       (if (and (> (length (group-frames (current-group))) 2)
-               (if (string= (getenv "DISPLAY") ":1")
-                   (let ((frame (frame-number (tile-group-current-frame (current-group)))))
-                     (if (or (= frame 0)) t nil))
-                   (let ((frame (frame-number (tile-group-current-frame (current-group)))))
-                     (if (or (= frame 2) (= frame 1))
-                         2
-                         nil))))
+               (cond ((string= (getenv "DISPLAY") ":1")
+                      (let ((frame (frame-number (tile-group-current-frame (current-group)))))
+                        (if (or (= frame 0)) t nil)))
+                     ((string= (getenv "DISPLAY") ":0")
+                      (let ((frame (frame-number (tile-group-current-frame (current-group)))))
+                        (if (or (= frame 2) (= frame 1)) 2 nil)))
+                     (t nil)))
           nil
-          t)
-      nil))
+          t)))
 
 (defcommand current-frame-smallp () ()
   (if (small-framep)
