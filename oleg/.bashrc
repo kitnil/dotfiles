@@ -1157,3 +1157,8 @@ vnc-kvm()
 {
     vncviewer kvm28:$(( 6017 + 5900 ))
 }
+
+assh-hosts()
+{
+    assh config json | jq '.hosts | keys'
+}
