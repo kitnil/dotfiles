@@ -1140,3 +1140,15 @@ guix-graph-chromium()
     GUILE_LOAD_PATH=$HOME/src/guix:GUILE_LOAD_PATH guix graph -b d3js \
 "$package" > /tmp/out.html && chromium --app=file:///tmp/out.html
 }
+
+docker-run-ansible()
+{
+    docker run \
+            --network=host \
+            -v /home/oleg/src/dotfiles:/root/src/dotfiles \
+            -v /root/.ssh:/root/.ssh \
+            -v /home/oleg/.ansible-hosts:/etc/ansible/hosts \
+            -v /home/oleg/telnet.yml:/telnet.yml \
+            -v /home/oleg/ansible-out/ansible.cfg:/etc/ansible/ansible.cfg \
+            --rm -it quay.io/ansible/molecule:2.22 sh
+}
