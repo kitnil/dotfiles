@@ -350,6 +350,11 @@ listen-ports()
 alias vnc-server-android="vncserver -AcceptSetDesktopSize=no -geometry 1280x720"
 export TMUXIFIER_LAYOUT_PATH="$HOME/.tmuxifier-layouts"
 
+ssh-root()
+{
+    ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -l root $@
+}
+
 sshpass-root ()
 {
     password="$1"
