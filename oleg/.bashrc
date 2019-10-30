@@ -1167,3 +1167,8 @@ assh-hosts()
 {
     assh config json | jq '.hosts | keys'
 }
+
+bash-pure()
+{
+    env -i $(which bash) --login --noprofile --norc
+}
