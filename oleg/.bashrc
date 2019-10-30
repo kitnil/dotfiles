@@ -1152,3 +1152,8 @@ docker-run-ansible()
             -v /home/oleg/ansible-out/ansible.cfg:/etc/ansible/ansible.cfg \
             --rm -it quay.io/ansible/molecule:2.22 sh
 }
+
+vnc-kvm()
+{
+    vncviewer kvm28:$(( 6017 + 5900 ))
+}
