@@ -88,6 +88,7 @@
         compile
         completion-at-point
         eir-eval-in-geiser
+        eval-last-sexp
         find-file
         helm-M-x
         hydra-multicursor/body
@@ -108,5 +109,6 @@
         smartparens-strict-mode
         terminal-here-project-launch-multiplexer
         text-scale-adjust
+        wgrep-change-to-wgrep-mode
         winner-undo
         ))
