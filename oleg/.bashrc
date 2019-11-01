@@ -1181,3 +1181,5 @@ bash-pure()
 {
     env -i $(which bash) --login --noprofile --norc
 }
+
+alias root-shedule="sudo herd schedule mcron 10"
