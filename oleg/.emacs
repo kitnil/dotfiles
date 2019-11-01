@@ -2834,6 +2834,10 @@ situation, you should also set the following option in your
 (when (daemonp) (setq sml/theme 'light))
 (sml/setup)
 
+(custom-theme-set-faces
+ 'smart-mode-line-light
+ '(mode-line-inactive ((t :foreground "grey20" :background "#ffffff" :inverse-video nil))))
+
 (default-text-scale-mode)
 (global-git-gutter-mode)
 
