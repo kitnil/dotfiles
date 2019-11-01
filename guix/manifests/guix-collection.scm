@@ -210,10 +210,6 @@ xml xorg)
                minetest ; FOSS Minecraft like game
                gimp inkscape
 
-               ;; TODO:
-               ;; majordomo-ca-0.0.1
-               ;; nss-certs
-
                openvpn
                mosh
                ponymix
