@@ -378,7 +378,7 @@
 (defcommand wtf () ()
   (term-shell-command "wtf" :color "dark"))
 
-(define-key *top-map* (kbd "C-s-h") "wtf")
+(define-key *top-map* (kbd "C-s-h") "sampler")
 
 (defcommand top () ()
   (term-shell-command "top"))
@@ -1100,6 +1100,7 @@
   (define-key *top-map* (kbd "s-Up") "move-focus up")
   (define-key *top-map* (kbd "s-Down") "move-focus down")
   (define-key *top-map* (kbd "s-Tab") "other-in-frame")
+  (define-key *top-map* (kbd "C-s-Tab") "fother")
   (define-key *top-map* (kbd "s-ISO_Left_Tab") "fother")
   (define-key *top-map* (kbd "S-s-Right") "move-window right")
   (define-key *top-map* (kbd "S-s-Left") "move-window left")
