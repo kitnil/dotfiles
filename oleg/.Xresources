@@ -4,7 +4,7 @@
 ! XTerm
 
 ! https://unix.stackexchange.com/questions/109509/how-to-search-xterm-console-history
-XTerm.vt100.printerCommand: /run/current-system/profile/bin/xterm -bg '#f5f5f5' -fg black +sb -e sh -c 'cat <&3 | less -Sr' 3<&0
+XTerm.vt100.printerCommand: /home/oleg/.guix-profile/bin/xterm -bg '#f5f5f5' -fg black +sb -e sh -c 'cat <&3 | less -Sr' 3<&0
 XTerm.vt100.translations: #override Ctrl ~Meta ~Shift <Key>slash: print-everything() \n\
     Ctrl Shift <KeyPress> C: copy-selection(CLIPBOARD) \n\
     Ctrl Shift <KeyPress> V: insert-selection(CLIPBOARD) \n\
