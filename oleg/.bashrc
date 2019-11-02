@@ -1194,3 +1194,9 @@ mj-vpn-ssh()
 {
     sshuttle -r majordomo 10.0.0.0/8 172.16.0.0/16
 }
+
+less-color()
+{
+    export LESSOPEN="| ~/.guix-profile/bin/src-hilite-lesspipe.sh %s"
+    export LESS=' -R '
+}
