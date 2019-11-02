@@ -391,6 +391,9 @@
 (defcommand guile () ()
   (term-shell-command "guile"))
 
+(defcommand guix-repl () ()
+  (term-shell-command "guix repl"))
+
 (defcommand python () ()
   (term-shell-command "python3"))
 
@@ -1082,7 +1085,8 @@
 
 (defun bind-super ()
   (define-key *top-map* (kbd "s-r") "guile")
-  (define-key *top-map* (kbd "s-R") "python")
+  (define-key *top-map* (kbd "s-R") "guix-repl")
+  (define-key *top-map* (kbd "C-s-r") "python")
   (define-key *top-map* (kbd "s-f") "fullscreen")
   (define-key *top-map* (kbd "s-H") "glances")
   (define-key *top-map* (kbd "s-t") "top")
