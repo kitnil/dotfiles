@@ -395,10 +395,10 @@
   (term-shell-command "guix repl"))
 
 (defcommand guix-pull () ()
-  (term-shell-command "guix pull; read"))
+  (term-shell-command "sh -c 'guix pull; read'"))
 
 (defcommand notmuch () ()
-  (term-shell-command "notmuch new; read"))
+  (term-shell-command "sh -c 'notmuch new; read'"))
 
 (defcommand python () ()
   (term-shell-command "python3"))
