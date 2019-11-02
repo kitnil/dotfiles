@@ -355,12 +355,12 @@
 ;;; Misc
 ;;;
 
-(defun term-shell-command (command &key (terminal 'xterm) (color "light"))
+(defun term-shell-command (command &key (terminal 'xterm) (color "light") (font nil))
   (run-shell-command
    (let ((terminal-name (string-downcase (symbol-name terminal))))
      (case terminal
        ((xterm)
-        (xterm-command :color color :command command))
+        (xterm-command :color color :command command :font font))
        ((st)
         (join (list terminal-name
                     *st-font-flag* *st-font*
@@ -376,7 +376,9 @@
   (term-shell-command "glances"))
 
 (defcommand sampler () ()
-  (term-shell-command "sampler -c ~/.config/sampler/config.yaml" :color "dark"))
+  (term-shell-command "sampler -c ~/.config/sampler/config.yaml"
+                      :color "dark"
+                      :font '("-fa" "Monospace" "-fs" "10")))
 
 (define-key *top-map* (kbd "C-s-h") "sampler")
 
@@ -471,12 +473,14 @@
       (progn (message "1") 1)
       (progn (message "0") 0)))
 
-(defun xterm-command (&key (color "light") (command nil))
+(defun xterm-command (&key (color "light") (command nil) (font nil))
   (join `(,*xterm-command*
           ;; Make sure XTerm terminal size is appropriate for current StumpWM frame.
-          ,@(if (small-framep)
-                '("-fa" "Monospace" "-fs" "8")
-                '())
+          ,@(if font
+                font
+                (if (small-framep)
+                    '("-fa" "Monospace" "-fs" "8")
+                    '()))
           "-sl" "1000000" ;number of lines
           ,*xterm-no-scrollbar*
           ,(if (string= color "light") *xterm-theme-light* *xterm-theme-dark*)
