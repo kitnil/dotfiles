@@ -1416,6 +1416,22 @@ For AsciiDoc customization see
 Magit and the rest of Emacs.")
       (license license:gpl3+))))
 
+(define-public emacs-tramp-auto-auth-my
+  (let ((commit "21bf0950f03e13d0a442aac6c40ae4e7c51531b3"))
+    (package
+      (inherit emacs-tramp-auto-auth)
+      (name "emacs-tramp-auto-auth-my")
+      (version (git-version "20191027" "1" commit))
+      (source (origin
+                (method git-fetch)
+                (uri (git-reference
+                      (url "https://github.com/wigust/tramp-auto-auth.git")
+                      (commit commit)))
+                (file-name (git-file-name name version))
+                (sha256
+                 (base32
+                  "18brdnhg2k0dqpkd2rfr0wvqiggmq1k27y89sjld670pb4v1gjin")))))))
+
 (define-public emacs-apache-mode
   (let ((commit "354f9302a8d805ac80d846adcd1cef10830b3d51"))
     (package
