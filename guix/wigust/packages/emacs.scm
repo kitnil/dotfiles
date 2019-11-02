@@ -1416,28 +1416,6 @@ For AsciiDoc customization see
 Magit and the rest of Emacs.")
       (license license:gpl3+))))
 
-(define-public emacs-tramp-auto-auth
-  (let ((commit "20216fca1f2f7c5d9beec8bda59e56c91ee07d41"))
-    (package
-      (name "emacs-tramp-auto-auth")
-      (version (git-version "0.0.1" "1" commit))
-      (source (origin
-                (method git-fetch)
-                (uri (git-reference
-                      (url "https://gitlab.wugi.info/emacs/emacs-tramp-auto-auth.git")
-                      (commit commit)))
-                (file-name (git-file-name name version))
-                (sha256
-                 (base32
-                  "1288crwhpwhxzq10pnviq80k9jh3waq375mljyqcwm9w15a9967f"))))
-      (build-system emacs-build-system)
-      (home-page "https://gitlab.wugi.info/emacs/emacs-tramp-auto-auth/")
-      (synopsis "Feed TRAMP with passwords for paths matching regexps")
-      (description "This library provides @code{tramp-auto-auth-mode}: a global
-minor mode whose purpose is to automatically feed TRAMP sub-processes with
-passwords for paths matching regexps.")
-      (license license:gpl3+))))
-
 (define-public emacs-apache-mode
   (let ((commit "354f9302a8d805ac80d846adcd1cef10830b3d51"))
     (package
