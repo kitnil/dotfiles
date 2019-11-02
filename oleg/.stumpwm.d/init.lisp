@@ -388,6 +388,12 @@
 (defcommand htop () ()
   (term-shell-command "htop"))
 
+(defcommand guile () ()
+  (term-shell-command "guile"))
+
+(defcommand python () ()
+  (term-shell-command "python3"))
+
 (defcommand neofetch () ()
   (term-shell-command "sh -c 'neofetch; read'"))
 
