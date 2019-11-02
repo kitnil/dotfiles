@@ -682,6 +682,7 @@ Sets the following basend on PREFIX-MAP:
 
 (wi-define-keys "C-c g v m" magit
                 ("c" magit-commit "commit")
+                ("f" magit-file-dispatch "dispatch")
                 ("l" magit-list-repositories "repo list" :color blue)
                 ("r" magit-diff-toggle-refine-hunk "tg refine")
                 ("s" unpackaged/magit-status "status" :color blue))
