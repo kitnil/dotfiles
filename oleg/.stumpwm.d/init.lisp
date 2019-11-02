@@ -679,6 +679,9 @@
   ((kbd "-") "volume-decrease")
   ((kbd "=") "volume-increase"))
 
+(defcommand pavucontrol () ()
+  (run-shell-command "pavucontrol"))
+
 (define-key *root-map* (kbd "c") "run-xterm")
 (define-key *root-map* (kbd "C-c") "run-xterm")
 (define-key *root-map* (kbd "C-M-c") "run-xterm")
@@ -1090,6 +1093,7 @@
   (define-key *top-map* (kbd "C-s-E") "emacsclient-new"))
 
 (defun bind-super ()
+  (define-key *top-map* (kbd "s-+") "pavucontrol")
   (define-key *top-map* (kbd "s-r") "guile")
   (define-key *top-map* (kbd "s-R") "guix-repl")
   (define-key *top-map* (kbd "C-s-r") "python")
