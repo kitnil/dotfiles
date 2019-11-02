@@ -517,6 +517,10 @@
                               "-e" "screen" "-S" session)))
             :wait nil))
 
+(defcommand st () ()
+  "Start st."
+  (run-shell-command "st -f 'Monospace:size=12'"))
+
 (defcommand xterm-big () ()
   "Start XTerm with big fonts."
   (run-shell-command *xterm-big-command*))
