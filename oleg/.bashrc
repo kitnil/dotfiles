@@ -784,7 +784,12 @@ terraformer-import-github()
     terraformer import majordomo --token $GITHUB_TOKEN --organizations wugi-emacs --resources=repositories
 }
 
-ssh-guix-log-file()
+spb-log()
+{
+    ssh spb -- bzcat "$1"
+}
+
+ssh-guix-build-log-file()
 {
     host="$1"
     file="$2"
