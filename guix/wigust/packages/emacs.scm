@@ -1454,6 +1454,27 @@ Magit and the rest of Emacs.")
 Apache configuration files.")
       (license license:gpl2+))))
 
+(define-public emacs-highlight-indent-guides
+  (let ((commit "0b10f38c54ffc099861ce8463e16a1b07ddbb203"))
+    (package
+      (name "emacs-highlight-indent-guides")
+      (version (git-version "20190108" "1" commit))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/DarthFennec/highlight-indent-guides.git")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32
+           "0fa41y9gdci60417zksj9bgjx1knwh781i3dfphkgr7qbx25iky7"))))
+      (build-system emacs-build-system)
+      (home-page "https://github.com/DarthFennec/highlight-indent-guides/")
+      (synopsis "Minor mode to highlight indentation")
+      (description "This minor mode highlights indentation levels via font-lock.")
+      (license license:gpl3+))))
+
 (define-public emacs-plain-org-wiki
   (let ((commit "887717c184fb22dd219c78851303a8e5b917f877"))
     (package
