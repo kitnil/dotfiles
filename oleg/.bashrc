@@ -1200,3 +1200,8 @@ less-color()
     export LESSOPEN="| ~/.guix-profile/bin/src-hilite-lesspipe.sh %s"
     export LESS=' -R '
 }
+
+dockerfile-lint()
+{
+    docker run --rm -i hadolint/hadolint:v1.17.2-8-g65736cb-debian < Dockerfile
+}
