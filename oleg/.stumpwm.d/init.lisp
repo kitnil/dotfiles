@@ -394,6 +394,9 @@
 (defcommand guix-repl () ()
   (term-shell-command "guix repl"))
 
+(defcommand guix-pull () ()
+  (term-shell-command "guix pull; read"))
+
 (defcommand python () ()
   (term-shell-command "python3"))
 
