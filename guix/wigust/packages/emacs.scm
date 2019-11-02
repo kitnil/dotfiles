@@ -81,6 +81,7 @@
   #:use-module (gnu packages xdisorg)
   #:use-module (gnu packages haskell-xyz)
   #:use-module (guix utils)
+  #:use-module (guix build emacs-utils)
   #:use-module (srfi srfi-1)
   #:use-module (ice-9 match))
 
