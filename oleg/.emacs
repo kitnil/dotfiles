@@ -3603,6 +3603,8 @@ If given a prefix, patch in the branch directory instead."
 (tramp-auto-auth-mode)
 (load (expand-file-name "~/src/emacs-helm-tramp/helm-tramp.el"))
 
+(setq highlight-indent-guides-method 'character)
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -3612,6 +3614,8 @@ If given a prefix, patch in the branch directory instead."
  '(ediff-odd-diff-A ((t (:background "gray35"))))
  '(ediff-odd-diff-B ((t (:background "gray35"))))
  '(fringe ((t nil)))
+ '(highlight-indent-guides-character-face ((t (:foreground "gainsboro"))))
+ '(highlight-indent-guides-even-face ((t (:background "white smoke"))))
  '(irfc-head-name-face ((t (:inherit font-lock-function-name-face))))
  '(irfc-head-number-face ((t (:inherit font-lock-function-name-face))))
  '(irfc-reference-face ((t (:foreground "dim gray" :weight bold))))
