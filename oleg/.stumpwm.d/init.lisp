@@ -521,6 +521,10 @@
   "Start st."
   (run-shell-command "st -f 'Monospace:size=12'"))
 
+(defcommand st-tmux () ()
+  "Start st with tmux."
+  (run-shell-command "st -f 'Monospace:size=12' -e tmux"))
+
 (defcommand xterm-big () ()
   "Start XTerm with big fonts."
   (run-shell-command *xterm-big-command*))
