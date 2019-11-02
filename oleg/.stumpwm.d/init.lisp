@@ -375,8 +375,8 @@
 (defcommand glances () ()
   (term-shell-command "glances"))
 
-(defcommand wtf () ()
-  (term-shell-command "wtf" :color "dark"))
+(defcommand sampler () ()
+  (term-shell-command "sampler -c ~/.config/sampler/config.yaml" :color "dark"))
 
 (define-key *top-map* (kbd "C-s-h") "sampler")
 
