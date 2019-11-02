@@ -132,7 +132,7 @@ xml xorg)
                flatpak
                ;; nix
 
-               mlt mpv obs vlc
+               mlt mpv vlc
 
                ;; PDF
                zathura zathura-djvu zathura-pdf-mupdf
