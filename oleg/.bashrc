@@ -1183,3 +1183,4 @@ bash-pure()
 }
 
 alias root-shedule="sudo herd schedule mcron 10"
+alias tmux-reload="tmux source-file ~/.tmux.conf"
