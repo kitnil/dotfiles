@@ -1189,3 +1189,8 @@ bash-pure()
 
 alias root-shedule="sudo herd schedule mcron 10"
 alias tmux-reload="tmux source-file ~/.tmux.conf"
+
+mj-vpn-ssh()
+{
+    sshuttle -r majordomo 10.0.0.0/8 172.16.0.0/16
+}
