@@ -1081,6 +1081,8 @@
   (define-key *top-map* (kbd "C-s-E") "emacsclient-new"))
 
 (defun bind-super ()
+  (define-key *top-map* (kbd "s-r") "guile")
+  (define-key *top-map* (kbd "s-R") "python")
   (define-key *top-map* (kbd "s-f") "fullscreen")
   (define-key *top-map* (kbd "s-H") "glances")
   (define-key *top-map* (kbd "s-t") "top")
