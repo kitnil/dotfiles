@@ -1167,6 +1167,7 @@
        (restore-from-file "/home/oleg/src/dotfiles/oleg/.stumpwm.d/desktop/9.lisp")
        (define-frame-preference "Default" (0 NIL T :CLASS "quassel" :TITLE "Chat Monitor"))
        (define-frame-preference "Default" (3 NIL T :CLASS "XTerm" :TITLE "alerta"))
+       (define-frame-preference "Default" (4 NIL T :CLASS "XTerm" :TITLE "notmuch"))
        ;; (define-frame-preference "Default" (1 NIL T :CLASS "t-engine"))
        (define-frame-preference "Default" (4 NIL T :CLASS "mpv" :TITLE "emacs-emms"))
        (define-frame-preference "Default" (4 NIL T :CLASS "mpv" :TITLE "firefox"))
