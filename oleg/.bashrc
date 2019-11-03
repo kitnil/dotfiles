@@ -1211,3 +1211,5 @@ ip-to-decimal()
     ip="$1" # e.g. 127.0.0.1
     perl -le "print unpack(\"N\", $ip)"
 }
+
+alias random-pass="perl -le 'print map { (a..z)[rand 26] } 1..8'"
