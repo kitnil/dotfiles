@@ -40,12 +40,15 @@ exec ${GUILE:-$(which guile)} $GUILE_FLAGS --no-auto-compile -e '(@@ (guix-ci) m
   (load "/home/oleg/src/dotfiles/guix/manifests/guix-collection.scm"))
 
 (define ci-packages
-  (map (lambda (package)
-         (format #f "https://ci.guix.info/api/latestbuilds?nr=1&jobset=guix-master&job=~a.x86_64-linux" package))
-       (map (lambda (item)
-              (let ((package (manifest-entry-item item)))
-                (string-append (package-name package) "-" (package-version package))))
-            (manifest-entries guix-collection))))
+  (append (map (lambda (test)
+                 (format #f "https://ci.guix.info/api/latestbuilds?nr=1&jobset=guix-master&job=test.~a.x86_64-linux" test))
+               '("rsync" "cgit" "dovecot" "zabbix" "docker"))
+          (map (lambda (package)
+                 (format #f "https://ci.guix.info/api/latestbuilds?nr=1&jobset=guix-master&job=~a.x86_64-linux" package))
+               (map (lambda (item)
+                      (let ((package (manifest-entry-item item)))
+                        (string-append (package-name package) "-" (package-version package))))
+                    (manifest-entries guix-collection)))))
 
 ;; Entry point
 (define (main args)
