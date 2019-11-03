@@ -1154,9 +1154,7 @@
   (define-key *top-map* (kbd "s-P") "move-focus up")
   (define-key *top-map* (kbd "s-N") "move-focus down")
   (define-key *top-map* (kbd "s-s") "passmenu")
-  (define-key *top-map* (kbd "s-m") "alerta")
   (define-key *top-map* (kbd "s-j") "music-youtube")
-  (define-key *top-map* (kbd "s-m") "alerta")
   
   ;; Rebind groups to PREFIX-NUMBER.
   (mapcar #'(lambda (x) (define-key *top-map* (kbd (concat "s-" (write-to-string x)))
@@ -1181,6 +1179,7 @@
        (define-frame-preference "Default" (2 NIL T :CLASS "XTerm" :TITLE "alerta"))
        (define-frame-preference "Default" (0 NIL T :CLASS "Qemu-system-x86_64"))
        (swm-gaps:toggle-gaps) ;XXX: Make declarative.
-       (bind-super))
+       (bind-super)
+       (define-key *top-map* (kbd "s-m") "alerta"))
 
       (t (set-prefix-key (kbd "C-i"))))
