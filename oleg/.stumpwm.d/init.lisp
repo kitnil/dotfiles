@@ -1049,9 +1049,6 @@
 (defcommand dunst-enable () ()
   (run-shell-command "pkill -SIGUSR2 dunst"))
 
-(defcommand pipeline-dotfiles () ()
-  (run-shell-command "firefox https://gitlab.wugi.info/wigust/dotfiles/pipelines"))
-
 (load-module "notifications")
 
 (load-module "command-history")
