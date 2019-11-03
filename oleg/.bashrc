@@ -1205,3 +1205,9 @@ dockerfile-lint()
 {
     docker run --rm -i hadolint/hadolint:v1.17.2-8-g65736cb-debian < Dockerfile
 }
+
+ip-to-decimal()
+{
+    ip="$1" # e.g. 127.0.0.1
+    perl -le "print unpack(\"N\", $ip)"
+}
