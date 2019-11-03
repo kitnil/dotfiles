@@ -648,8 +648,7 @@ in the directory of the current buffer.")
        (file-name (string-append name "-" version ".tar.gz"))
        (sha256
         (base32
-         "08xd6y89igxlqpw678xjpxyzs9k28vbbc7sygxcyblgyj6farnml"))
-       (patches (search-patches "emacs-info-colors-add-more-syntax.patch"))))
+         "08xd6y89igxlqpw678xjpxyzs9k28vbbc7sygxcyblgyj6farnml"))))
     (build-system emacs-build-system)
     (home-page "https://github.com/ubolonton/info-colors")
     (synopsis "Extra colors for Info-mode")
