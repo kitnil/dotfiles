@@ -745,10 +745,12 @@
 
 (define-key *top-map* (kbd "C-s-a") "pass-route")
 
+;; XXX: Security
 (defcommand pass-eng () ()
   (window-send-string "***REMOVED***
 "))
 
+;; XXX: Security
 (defcommand pass-sup () ()
   (window-send-string "***REMOVED***
 "))
