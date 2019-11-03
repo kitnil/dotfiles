@@ -1213,3 +1213,13 @@ ip-to-decimal()
 }
 
 alias random-pass="perl -le 'print map { (a..z)[rand 26] } 1..8'"
+
+urlescape ()
+{
+    perl -MURI::Escape -lne 'print uri_escape($_)' <<< "$1"
+}
+
+urlunescape ()
+{
+    perl -MURI::Escape -lne 'print uri_unescape($_)' <<< "$1"
+}
