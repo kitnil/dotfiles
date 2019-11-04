@@ -23,7 +23,9 @@
   #:use-module (guix download)
   #:use-module (guix git-download)
   #:use-module (guix build-system meson)
+  #:use-module (guix build-system trivial)
   #:use-module (gnu packages)
+  #:use-module (gnu packages bash)
   #:use-module (gnu packages gtk)
   #:use-module (gnu packages image)
   #:use-module (gnu packages pkg-config)
@@ -55,3 +57,39 @@
     (description
      "@code{pscircle} visualizes Linux processes in a form of radial tree")
     (license license:gpl2+)))
+
+(define-public with
+  (let ((commit "28eb40bbc08d171daabf0210f420477ad75e16d6"))
+    (package
+      (name "with")
+      (version "0.0.1")
+      (source (origin
+                (method git-fetch)
+                (uri (git-reference
+                      (url "https://github.com/mchav/with.git")
+                      (commit commit)))
+                (file-name (git-file-name name version))
+                (sha256
+                 (base32
+                  "0y8m2z4nbq67iy95b581rdfz2hss37fbgxfna66qzz1xgcnfr8cq"))))
+      (build-system trivial-build-system)
+      (inputs
+       `(("bash" ,bash)))
+      (arguments
+       `(#:modules ((guix build utils))
+         #:builder
+         (begin
+           (use-modules (guix build utils))
+           (copy-recursively (assoc-ref %build-inputs "source") ".")
+           (substitute* "with"
+             (("/usr/bin/env bash") (string-append (assoc-ref %build-inputs "bash")
+                                                   "/bin/bash")))
+           (install-file "with" (string-append %output "/bin"))
+           (mkdir-p (string-append %output "/etc/bash_completion.d"))
+           (copy-file "with.bash-completion"
+                      (string-append %output "/etc/bash_completion.d/with"))
+           #t)))
+      (home-page "https://github.com/mchav/with/")
+      (synopsis "Command prefixing for continuous workflow using a single tool")
+      (description "This package provides command prefixing for continuous workflow using a single tool.")
+      (license license:asl2.0))))
