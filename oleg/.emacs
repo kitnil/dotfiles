@@ -3407,6 +3407,8 @@ If given a prefix, patch in the branch directory instead."
 (require 'org-redmine)
 (setq org-redmine-config-default-limit 100)
 (setq org-redmine-limit 100)
+
+;; XXX: Security
 (setq org-redmine-uri "http://redmine.intr")
 (setq org-redmine-auth-username "pyhalov")
 (setq org-redmine-auth-password "***REMOVED***")
