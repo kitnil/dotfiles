@@ -827,7 +827,7 @@ web-active-current()
 docker-strace()
 {
     container="$1"
-    docker top "$container" | tail -n +2 | awk '{ print $2 }' | sed 's/^/-p/' | xargs strace -f -s 4096
+    docker top "$container" | tail -n +2 | awk '{ print $2 }' | sed 's/^/-p/' | xargs strace -o "~/$container.strace" -f -s 4096
 }
 
 docker-strace-pids()
