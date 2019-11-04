@@ -1223,3 +1223,8 @@ urlunescape ()
 {
     perl -MURI::Escape -lne 'print uri_unescape($_)' <<< "$1"
 }
+
+build-farm()
+{
+    emacsclient -e "(wi-build-farm \"$1\")"
+}
