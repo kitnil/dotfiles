@@ -3368,26 +3368,6 @@ If given a prefix, patch in the branch directory instead."
   (find-file (concat "/ssh:dh4-mr.intr|docker:4649529fa34d:"
                      (thing-at-point 'filename))))
 
-(setq browse-at-remote-remote-type-domains
-      '(("gitlab.intr" . "gitlab")
-        ("bitbucket.org" . "bitbucket")
-        ("github.com" . "github")
-        ("gitlab.com" . "gitlab")
-        ("git.savannah.gnu.org" . "gnu")))
-
-(defun work-tramp ()
-  (interactive)
-  (let ((tramp-remote-path '(tramp-default-remote-path "/bin"))
-        (default-directory "/ssh:eng@dh4-mr.intr:"))
-    (find-file "")))
-(defun supeng-find-routers ()
-  (interactive)
-  (mapcar 'find-file
-          '("/ssh:root@78.108.91.85:/root/deploy"
-            "/ssh:root@78.108.93.115:/root/deploy"
-            "/ssh:root@78.108.90.34:/root/deploy"
-            "/ssh:root@78.108.89.188:/root/deploy")))
-
 (defvar ange-ftp-hosts-no-pasv '("localhost")
   "*List of hosts that do not need PASV (e.g. hosts within your firewall).
   Used by `ange-ftp-set-passive'.")	; rephrased, added "*" // era
