@@ -64,6 +64,8 @@ gpa()
     guix package -A $@ | awk '{ print $1"-"$2 }'
 }
 
+export GUIX_GITHUB_TOKEN="***REMOVED***"
+
 if [ -d "/run/current-system" ]
 then
     true
