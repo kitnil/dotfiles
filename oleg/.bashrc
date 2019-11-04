@@ -1230,3 +1230,8 @@ build-farm()
 {
     emacsclient -e "(wi-build-farm \"$1\")"
 }
+
+find-touch-go()
+{
+    find -name '*.go' -exec touch {} +
+}
