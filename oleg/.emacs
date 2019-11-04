@@ -3528,7 +3528,7 @@ If given a prefix, patch in the branch directory instead."
   (guix-build-log-minor-mode))
 
 ;; XXX: Package to Guix
-(add-to-list 'load-path "/home/oleg/archive/src/emacs-libvterm")
+(add-to-list 'load-path (expand-file-name "~/archive/src/emacs-libvterm"))
 (require 'vterm)
 
 (defun sup-capture ()
