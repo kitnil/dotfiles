@@ -1235,3 +1235,8 @@ find-touch-go()
 {
     find -name '*.go' -exec touch {} +
 }
+
+pass-show-fzf()
+{
+    pass show $(find . -not -path './.git/*' -type f | sed 's@\./@@' | sed 's@\.gpg@@' | fzf)
+}
