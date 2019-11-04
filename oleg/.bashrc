@@ -1238,14 +1238,16 @@ find-touch-go()
 
 pass-show-fzf()
 {
-    pass show $(find . -not -path './.git/*' -type f | sed 's@\./@@' | sed 's@\.gpg@@' | fzf)
+    cd ~/.password-store &> /dev/null
+    pass show $(find . -not -path './.gitattributes' -not -path './.git/*' -type f | sed 's@\./@@' | sed 's@\.gpg@@' | fzf)
+    cd - &> /dev/null
 }
 
 pass-list-all()
 {
-    pushd ~/.password-store
+    cd ~/.password-store &> /dev/null
     for password in $(find . -not -path './.gitattributes' -not -path './.git/*' -type f | sed 's@\./@@' | sed 's@\.gpg@@'); do
         pass show $password | sed '/^$/d'
     done
-    popd
+    cd - &> /dev/null
 }
