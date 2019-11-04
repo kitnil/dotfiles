@@ -10,9 +10,9 @@
              (wigust packages lisp)
              (majordomo packages majordomo))
 
-(use-package-modules admin base certs docker linux lisp suckless
-                     xdisorg xorg fonts android fontutils gnome
-                     freedesktop readline ncurses networking)
+(use-package-modules admin base certs cryptsetup docker linux lisp
+                     suckless xdisorg xorg fonts android fontutils
+                     gnome freedesktop readline ncurses networking)
 
 (use-service-modules admin dbus desktop docker dns networking sound
                      xorg ssh web cgit version-control certbot
@@ -288,6 +288,8 @@ EndSection")
                        iptables bridge-utils
 
                        docker-cli docker-compose
+
+                       cryptsetup
 
                        (operating-system-packages base-system)))
 
