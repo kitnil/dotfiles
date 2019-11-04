@@ -3402,7 +3402,11 @@ If given a prefix, patch in the branch directory instead."
 (add-hook 'ange-ftp-process-startup-hook 'ange-ftp-set-passive)
 
 (setq browse-at-remote-remote-type-domains
-      '(("gitlab.intr" . "gitlab") ("bitbucket.org" . "bitbucket") ("github.com" . "github") ("gitlab.com" . "gitlab") ("git.savannah.gnu.org" . "gnu")))
+      '(("gitlab.intr" . "gitlab")
+        ("bitbucket.org" . "bitbucket")
+        ("github.com" . "github")
+        ("gitlab.com" . "gitlab")
+        ("git.savannah.gnu.org" . "gnu")))
 
 (require 'org-redmine)
 (setq org-redmine-config-default-limit 100)
