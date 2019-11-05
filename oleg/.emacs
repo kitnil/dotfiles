@@ -3537,7 +3537,13 @@ If given a prefix, patch in the branch directory instead."
   (split-window-right)
   (find-file (expand-file-name "~/src/tech-info/tech.texi"))
   ;; (setq compilation-ask-about-save nil)
-  (compile "makeinfo --no-number-sections --css-ref=https://www.gnu.org/software/gnulib/manual.css --no-split --html tech.texi && mv tech.html /var/www/techinfo.intr/index.html"))
+  (compile (mapconcat 'identity
+                      '("makeinfo" "--no-number-sections"
+                        "--css-ref=https://www.gnu.org/software/gnulib/manual.css"
+                        "--no-split" "--html" "tech.texi"
+
+                        "&&" "mv" "tech.html" "/var/www/techinfo.intr/index.html")
+                      " ")))
 
 (defun majordomo-ivy-find-project ()
   "Find Majordomo project."
