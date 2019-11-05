@@ -1,15 +1,16 @@
 ;; GuixSD configuration file for the desktop machine.
-;; Copyright © 2017, 2018 Oleg Pykhalov <go.wigust@gmail.com>
+;; Copyright © 2017, 2018, 2019 Oleg Pykhalov <go.wigust@gmail.com>
 ;; Released under the GNU GPLv3 or any later version.
 
 (use-modules (gnu)
              (gnu system nss)
-             (linux-nonfree)
+;             (linux-nonfree)
              (guix store))
 
 (use-service-modules ssh desktop xorg cups networking version-control mail)
 
-(use-package-modules admin android bash bootloaders certs cups
+(use-package-modules admin ;; android
+                     bash bootloaders certs cups cryptsetup
 databases dns file fonts fontutils freedesktop gnome gnupg linux mail
 ncurses networking ratpoison readline rsync pulseaudio screen ssh tmux
 version-control virtualization wget xdisorg xorg zile)
@@ -27,16 +28,13 @@ EndSection
 
 (define %guix-daemon-config
   (guix-configuration
-   (substitute-urls '("https://guix.duckdns.org"
-                      "https://berlin.guixsd.org"
-                      "https://mirror.hydra.gnu.org"
-                      "https://hydra.gnu.org"))
+   (substitute-urls '("https://guix.duckdns.org" "https://ci.guix.info"))
    (max-silent-time 7200)
    (timeout (* 4 max-silent-time))
    (extra-options '("--max-jobs=4" "--cores=2"
                     "--cache-failures"
                     "--gc-keep-outputs=yes"
-		    "--gc-keep-derivations=yes"))))
+                    "--gc-keep-derivations=yes"))))
 
 (define %custom-desktop-services
   (modify-services %desktop-services
@@ -49,13 +47,17 @@ EndSection
     (guix-service-type config => %guix-daemon-config)
     (slim-service-type config => (slim-configuration
                                   (inherit config)
-                                  (startx
-                                   (xorg-start-command
-                                    #:configuration-file
-                                    (xorg-configuration-file
-                                     #:extra-config (list 20-intel.conf))))
-                                  (auto-login? #f)
-                                  (default-user "natsu")))))
+                                  (xorg-configuration
+                                   (xorg-configuration
+                                    (extra-config (list 20-intel.conf))))
+                                  ;; (startx
+                                  ;;  (xorg-start-command
+                                  ;;   #:configuration-file
+                                  ;;   (xorg-configuration-file
+                                  ;;    #:extra-config (list 20-intel.conf))))
+                                  ;; (auto-login? #f)
+                                  ;; (default-user "natsu")
+                                  ))))
 
 (operating-system
   (host-name "clover")
@@ -64,8 +66,8 @@ EndSection
 
   (bootloader (bootloader-configuration (bootloader grub-bootloader) (target "/dev/sda")))
 
-  (kernel linux-nonfree)
-  (firmware (list firmware-non-free))
+;  (kernel linux-nonfree)
+;  (firmware (list firmware-non-free))
 
   (file-systems (cons (file-system
                         (device "clover-root")
@@ -105,7 +107,7 @@ EndSection
       xprop
       xhost
 
-      adb       ; For Replicant (Android distribution) control
+      ;; adb       ; For Replicant (Android distribution) control
       cups      ; Printer
       ethtool   ; wol (wake on lan)
       file      ; Information about file from magic
@@ -140,11 +142,13 @@ EndSection
       pavucontrol ; Pulseaudio control GUI
       pulseaudio
 
+      cryptsetup
+
       %base-packages))
 
   (services (cons* (service openssh-service-type
                             (openssh-configuration
-			     (permit-root-login #t)
+                             (permit-root-login #t)
                              (port-number 22)))
                    (service cups-service-type
                             (cups-configuration
