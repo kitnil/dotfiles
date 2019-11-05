@@ -69,6 +69,7 @@
        emacs-helm-projectile    ; Helm interface for Projectile
        emacs-helm-shell-history
        emacs-highlight-defined
+       emacs-highlight-indent-guides
        emacs-highlight-sexp
        emacs-highlight-stages   ; Highlight code stages
        emacs-highlight-symbol
@@ -108,6 +109,7 @@
        emacs-projectile         ; Project functions
        emacs-rainbow-delimiters ; Prettify parentheses
        emacs-rainbow-mode       ; Show colors in codes
+       emacs-refactor
        emacs-org-redmine
        emacs-restclient
        emacs-rotate-text
@@ -131,6 +133,7 @@
        emacs-yaml-mode          ; YAML files
        emacs-yasnippet          ; Snippets
        emacs-yasnippet-snippets ; Collection of snippets
+       emacs-deadgrep
        emacs-wgrep
        emacs-znc
 

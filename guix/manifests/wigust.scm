@@ -34,6 +34,7 @@
    emacs-strace-mode-special ; Colorize `strace' logs
    emacs-terminal-here-checkout
    emacs-plain-org-wiki
+   emacs-tramp-auto-auth-my
    ))
 
 (packages->manifest

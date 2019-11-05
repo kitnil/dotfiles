@@ -28,7 +28,8 @@ xml xorg)
     (,isc-bind "utils")))
 
 (define %large-packages
-  (list libreoffice python-pyqt-without-qtwebkit))
+  (list ;; libreoffice
+        python-pyqt-without-qtwebkit))
 
 (define %spelling-packages
   (list aspell aspell-dict-en aspell-dict-ru))
@@ -71,7 +72,7 @@ xml xorg)
                guile-redis guile-ssh guile-xosd
 
                chicken go m4 racket perl python ;; python-hy
-               r sbcl
+               r sbcl ghc
 
                mcron
 
@@ -102,7 +103,7 @@ xml xorg)
                alsa-utils cli-visualizer pulsemixer pavucontrol
 
                ;; WEB
-               icecat
+               ;; icecat
                ;; broken: ungoogled-chromium
 
                node ;Packages in <~/.npm-global/bin/>.
@@ -174,6 +175,8 @@ xml xorg)
                php
                
                autossh
+               sshuttle
+
                reptyr
                shellcheck
                sipcalc
@@ -190,6 +193,8 @@ xml xorg)
                python-pyqt-without-qtwebkit
 
                tmux tmuxifier parallel w3m znc
+
+               source-highlight
 
                gnu-c-manual gnu-standards man-pages
                sicp ; Structure and Interpretation of Computer Programs
