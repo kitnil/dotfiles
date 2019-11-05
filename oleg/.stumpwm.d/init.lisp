@@ -872,6 +872,10 @@
   (progn (run-shell-command "emacsclient --eval '(gnus)'")
          (run-shell-command "stumpish emacsclient")))
 
+(defcommand majordomo-find-project () ()
+  (progn (run-shell-command "emacsclient --eval '(majordomo-ivy-find-project)'")
+         (run-shell-command "stumpish emacsclient")))
+
 (defcommand org () ()
   (progn (run-shell-command "emacsclient --eval '(plain-org-wiki)'")
          (run-shell-command "stumpish emacsclient")))
@@ -1122,6 +1126,7 @@
   (define-key *top-map* (kbd "s-j") "music-youtube")
   (define-key *top-map* (kbd "s-g") "gnus")
   (define-key *top-map* (kbd "s-C") "org")
+  (define-key *top-map* (kbd "C-s-C") "majordomo-find-project")
   (define-key *top-map* (kbd "s-i") "guix-wigust")
   (define-key *top-map* (kbd "s-!") "gmove-and-follow 1")
   (define-key *top-map* (kbd "s-@") "gmove-and-follow 2")
