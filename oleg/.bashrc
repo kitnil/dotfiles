@@ -1020,6 +1020,7 @@ jenkins-build-php()
         curl -u 'admin:***REMOVED***' -s -k \
 "https://jenkins.intr/job/webservices/job/$job/job/$branch/build?delay=0sec" \
 -H 'Content-type: application/x-www-form-urlencoded; charset=UTF-8' --data ''
+        sleep 0.5
     done
 }
 
