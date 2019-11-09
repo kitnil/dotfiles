@@ -1252,3 +1252,63 @@ pass-list-all()
     done
     cd - &> /dev/null
 }
+
+gmail-mail()
+{
+    # Source: https://www.commandlinefu.com/commands/view/3380/check-your-unread-gmail-from-the-command-line
+    curl -u "go.wigust:$(pass show email/gmail/go.wigust)" \
+            --silent "https://mail.google.com/mail/feed/atom" \
+        | tr -d '\n' \
+        | awk -F '<entry>' '{for (i=2; i<=NF; i++) {print $i}}' \
+        | sed -n "s/<title>\(.*\)<\/title.*name>\(.*\)<\/name>.*/\2 - \1/p"
+
+    # Alternative variant:
+    # Checks your unread Gmail from the command line
+    # curl -u username --silent "https://mail.google.com/mail/feed/atom" | perl -ne 'print "\t" if /<name>/; print "$2\n" if /<(title|name)>(.*)<\/\1>/;
+
+}
+
+gmail-send()
+{
+    rcpt="$1"
+
+    # Send email with curl and gmail
+    curl -n --ssl-reqd --mail-from "<go.wigust@gmail.com>" --mail-rcpt "$rcpt" --url smtps://smtp.gmail.com:465 -T file.txt
+}
+
+cmdfu()
+{
+    curl -L "http://www.commandlinefu.com/commands/matching/$@/$(echo -n $@ | openssl base64)/plaintext";
+}
+
+clfavs()
+{
+    #  backup all your commandlinefu.com favourites to a plaintext file 
+
+    URL="http://www.commandlinefu.com"
+    wget -O - --save-cookies c --post-data "username=$1&password=$2&submit=Let+me+in" $URL/users/signin
+    for i in `seq 0 25 $3`;do
+        wget -O - --load-cookies c $URL/commands/favourites/plaintext/$i >>$4
+    done
+    rm -f c
+}
+
+gnuplot-bash-history()
+{
+    HISTTIMEFORMAT='' history \
+        | awk '{a[$2]++}END{for(i in a){print a[i] " " i}}' \
+        | sort -rn \
+        | head > /tmp/cmds ; gnuplot -persist <<<'plot "/tmp/cmds" using 1:xticlabels(2) with boxes'
+}
+
+kill-xterm-on-display()
+{
+    display="$1"
+    for pid in $(pidof xterm); do
+        if [[ $1 = $(cat "/proc/$pid/environ" | tr '\000' '\n' | grep DISPLAY | cut -d= -f 2) ]]; then
+            kill $pid
+        fi
+    done
+}
+
+alias dmesg="sudo dmesg -T|sed -e 's|\(^.*'`date +%Y`']\)\(.*\)|\x1b[0;34m\1\x1b[0m - \2|g'"
