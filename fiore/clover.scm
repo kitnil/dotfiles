@@ -59,32 +59,33 @@ EndSection
                                   ;; (default-user "natsu")
                                   ))))
 
-(operating-system
-  (host-name "clover")
-  (timezone "Europe/Moscow")
-  (locale "en_US.utf8")
+(define %guix-system-thinkpad-x200
+  (operating-system
+    (host-name "clover")
+    (timezone "Europe/Moscow")
+    (locale "en_US.utf8")
 
-  (bootloader (bootloader-configuration (bootloader grub-bootloader) (target "/dev/sda")))
+    (bootloader (bootloader-configuration (bootloader grub-bootloader) (target "/dev/sda")))
 
-;  (kernel linux-nonfree)
-;  (firmware (list firmware-non-free))
+                                        ;  (kernel linux-nonfree)
+                                        ;  (firmware (list firmware-non-free))
 
-  (file-systems (cons (file-system
-                        (device "clover-root")
-                        (title 'label)
-                        (mount-point "/")
-                        (type "ext4"))
-                      %base-file-systems))
+    (file-systems (cons (file-system
+                          (device "clover-root")
+                          (title 'label)
+                          (mount-point "/")
+                          (type "ext4"))
+                        %base-file-systems))
 
-  (users (cons (user-account
-                (name "natsu")
-                (uid 1000)
-                (comment "Oleg Pykhalov")
-                (group "users")
-                (supplementary-groups '("wheel"
-                                        "audio" "video"))
-                (home-directory "/home/natsu"))
-               %base-user-accounts))
+    (users (cons (user-account
+                  (name "natsu")
+                  (uid 1000)
+                  (comment "Oleg Pykhalov")
+                  (group "users")
+                  (supplementary-groups '("wheel"
+                                          "audio" "video"))
+                  (home-directory "/home/natsu"))
+                 %base-user-accounts))
     (packages
      (cons*
       desktop-file-utils
@@ -146,30 +147,40 @@ EndSection
 
       %base-packages))
 
-  (services (cons* (service openssh-service-type
-                            (openssh-configuration
-                             (permit-root-login #t)
-                             (port-number 22)))
-                   (service cups-service-type
-                            (cups-configuration
-                             (web-interface? #t)
-                             (extensions
-                              (list cups-filters hplip-minimal))))
-                   (service guix-publish-service-type
-                            (guix-publish-configuration
-                             (host "0.0.0.0")))
-                   (service git-daemon-service-type
-                            (git-daemon-configuration
-                             (user-path "")))
-                   (dovecot-service
-                    #:config (dovecot-configuration
-                              (mail-location
-                               (string-append
-                                "maildir:~/Maildir:INBOX=~/Maildir/INBOX:"
-                                "LAYOUT=fs"))
-                              (disable-plaintext-auth? #f)
-                              (listen '("127.0.0.1"))))
-                   %custom-desktop-services))
+    (services (cons* (service openssh-service-type
+                              (openssh-configuration
+                               (permit-root-login #t)
+                               (port-number 22)))
+                     (service cups-service-type
+                              (cups-configuration
+                               (web-interface? #t)
+                               (extensions
+                                (list cups-filters hplip-minimal))))
+                     (service guix-publish-service-type
+                              (guix-publish-configuration
+                               (host "0.0.0.0")))
+                     (service git-daemon-service-type
+                              (git-daemon-configuration
+                               (user-path "")))
+                     (dovecot-service
+                      #:config (dovecot-configuration
+                                (mail-location
+                                 (string-append
+                                  "maildir:~/Maildir:INBOX=~/Maildir/INBOX:"
+                                  "LAYOUT=fs"))
+                                (disable-plaintext-auth? #f)
+                                (listen '("127.0.0.1"))))
+                     %custom-desktop-services))
 
-  ;; Allow resolution of '.local' host names with mDNS.
-  (name-service-switch %mdns-host-lookup-nss))
+    ;; Allow resolution of '.local' host names with mDNS.
+    (name-service-switch %mdns-host-lookup-nss)))
+
+(list (machine
+       (operating-system %guix-system-thinkpad-x200)
+       (environment managed-host-environment-type)
+       (configuration (machine-ssh-configuration
+                       (host-name "192.168.100.20")
+                       (system "x86_64-linux")
+                       (identity "/home/oleg/.ssh/id_rsa_guix")
+                       ;; (build-locally? #f)
+                       ))))
