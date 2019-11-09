@@ -2076,15 +2076,15 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 
 (setq org-publish-project-alist
       '(("org-notes"
-         :base-directory "~/org/"
+         :base-directory "~/src/org/"
          :base-extension "org"
-         :publishing-directory "~/public_html/org/"
+         :publishing-directory "/var/www/org"
          :recursive t
          :publishing-function org-html-publish-to-html
          :headline-levels 4 ; Just the default for this project.
          :auto-preamble t
          :auto-sitemap t
-         :sitemap-filename "index")))
+         :sitemap-filename "index.org")))
 
 (defun wigust-mir-org-uniq ()
   "Remove duplicate subheadings, preserving order."
