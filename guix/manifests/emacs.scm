@@ -40,6 +40,7 @@
        emacs-esup
        emacs-ewmctrl            ; Control X windows from Emacs
        emacs-expand-region
+       emacs-deadgrep           ; ripgrep front-end
        emacs-f3
        emacs-fancy-narrow
        emacs-ffap-rfc-space
@@ -69,7 +70,6 @@
        emacs-helm-projectile    ; Helm interface for Projectile
        emacs-helm-shell-history
        emacs-highlight-defined
-       emacs-highlight-indent-guides
        emacs-highlight-sexp
        emacs-highlight-stages   ; Highlight code stages
        emacs-highlight-symbol

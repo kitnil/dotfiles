@@ -10,12 +10,12 @@ graphics graphviz gstreamer gtk guile guile-xyz haskell haskell-apps
 haskell-xyz image-viewers imagemagick inkscape irc kde kodi
 libreoffice license linux lisp logging lsof lxde m4 mail man maths
 messaging ncdu ncurses networking node package-management parallel
-password-utils patchutils pdf perl perl-web php pulseaudio pv python
-python-xyz qt ratpoison readline rdesktop rsync samba scheme screen
-shellutils ssh statistics sqlite suckless syncthing synergy tex
-texinfo textutils text-editors tigervnc tmux tls tor valgrind
-version-control video virtualization vpn w3m xfce web wget wm xdisorg
-xml xorg)
+password-utils patchutils pdf perl perl-web php pretty-print
+pulseaudio pv python python-xyz qt ratpoison readline rdesktop rsync
+samba scheme screen shellutils ssh statistics sqlite suckless
+syncthing synergy tex texinfo textutils text-editors tigervnc tmux tls
+tor valgrind version-control video virtualization vpn w3m xfce web
+wget wm xdisorg xml xorg)
 
 (define guix-collection-packages-multiout
   `((,glib "bin")
@@ -35,7 +35,8 @@ xml xorg)
   (list aspell aspell-dict-en aspell-dict-ru))
 
 (packages->manifest
- (append (list feh         ; Image viewer
+ (append (list feh sxiv    ; Image viewers
+
                ffmpeg      ; Video, audio, images, gif conversion
                imagemagick ; Pipe to `display'
 
@@ -125,7 +126,7 @@ xml xorg)
                console-setup ;set font size in TTY
                rlwrap ; read-line wrapper
 
-               tmux screen
+               tmux tmux-xpanes screen
                fbcat
 
                gsettings-desktop-schemas
