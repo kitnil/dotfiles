@@ -476,23 +476,24 @@
    `(:class "XTerm" :title ,title)))
 
 (defun small-framep ()
-  (if (string= (class-name (class-of (current-group))) "FLOAT-GROUP")
-      nil
-      (if (and (> (length (group-frames (current-group))) 2)
-               (cond ((string= (getenv "DISPLAY") ":1")
-                      (let ((frame (frame-number (tile-group-current-frame (current-group)))))
-                        (if (or (= frame 0)) t nil)))
-                     ((string= (getenv "DISPLAY") ":0")
-                      (let ((frame (frame-number (tile-group-current-frame (current-group)))))
-                        (if (or (= frame 2) (= frame 1)) 2 nil)))
-                     (t nil)))
-          nil
-          t)))
+  (cond ((string= (class-name (class-of (current-group))) "FLOAT-GROUP") nil)
+
+        ((string= (getenv "DISPLAY") ":1")
+         (let ((frame (frame-number (tile-group-current-frame (current-group)))))
+           (if (= frame 0) nil t)))
+
+        ((string= (getenv "DISPLAY") ":0")
+         (let ((frame (frame-number (tile-group-current-frame (current-group)))))
+           (if (string-equal (group-name (current-group)) "Default")
+               (not (or (= frame 2) (= frame 1)))
+               (not (or (= frame 0) (= frame 1))))))
+
+        (t nil)))
 
 (defcommand current-frame-smallp () ()
   (if (small-framep)
-      (progn (message "1") 1)
-      (progn (message "0") 0)))
+      (progn (message "small") 1)
+      (progn (message "big") 0)))
 
 (defun xterm-command (&key (color "light") (command nil) (font nil))
   (join `(,*xterm-command*
