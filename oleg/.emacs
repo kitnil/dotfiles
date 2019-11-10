@@ -1394,7 +1394,7 @@ With a prefix argument, clean `geiser-guile-load-path'."
   (setq geiser-default-implementation 'guile))
 
 (with-eval-after-load 'geiser-guile
-  (add-to-list 'geiser-guile-load-path (expand-file-name "~/src/guix"))
+  ;; (add-to-list 'geiser-guile-load-path (expand-file-name "~/src/guix"))
   (setq geiser-guile-binary '("guile" "--no-auto-compile"))
 
   ;; Origin <https://gnunet.org/bot/log/guile/2018-02-24>
