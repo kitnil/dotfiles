@@ -65,6 +65,7 @@ wget wm xdisorg xml xorg)
 
                translate-shell ; Translation in CLI and Emacs
                password-store  ; Password management
+               rofi-pass       ; front-end to password-store
 
                cuirass
 
