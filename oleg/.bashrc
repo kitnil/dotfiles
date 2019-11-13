@@ -1312,3 +1312,8 @@ kill-xterm-on-display()
 }
 
 alias dmesg="sudo dmesg -T|sed -e 's|\(^.*'`date +%Y`']\)\(.*\)|\x1b[0;34m\1\x1b[0m - \2|g'"
+
+alerta-kill()
+{
+    ps auxww | grep alerta | awk '/autossh/ { print $2 }' | xargs kill
+}
