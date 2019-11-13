@@ -1322,3 +1322,13 @@ alerta-kill()
 {
     ps auxww | grep alerta | awk '/autossh/ { print $2 }' | xargs kill
 }
+
+docker-top-strace()
+{
+    container="$1"
+    docker top "$container" \
+        | awk '{ print $2 }' \
+        | tail -n +2 \
+        | sed 's/^/-p/' \
+        | xargs strace -s 10000 -f -o /tmp/docker.strace
+}
