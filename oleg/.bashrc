@@ -1332,3 +1332,5 @@ docker-top-strace()
         | sed 's/^/-p/' \
         | xargs strace -s 10000 -f -o /tmp/docker.strace
 }
+
+alias active-hms='curl -s --user jenkins:***REMOVED*** nginx{1,2}-mr:8080/hms | jq -r .active | uniq'
