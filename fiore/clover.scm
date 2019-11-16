@@ -2,18 +2,9 @@
 ;; Copyright © 2017, 2018, 2019 Oleg Pykhalov <go.wigust@gmail.com>
 ;; Released under the GNU GPLv3 or any later version.
 
-(use-modules (gnu)
-             (gnu system nss)
-;             (linux-nonfree)
-             (guix store))
+(use-modules (gnu) (gnu system nss))
 
-(use-service-modules ssh desktop xorg cups networking version-control mail)
-
-(use-package-modules admin ;; android
-                     bash bootloaders certs cups cryptsetup
-databases dns file fonts fontutils freedesktop gnome gnupg linux mail
-ncurses networking ratpoison readline rsync pulseaudio screen ssh tmux
-version-control virtualization wget xdisorg xorg zile)
+(use-service-modules ssh networking)
 
 (define 20-intel.conf "
 # Fix tearing on intel
@@ -36,29 +27,6 @@ EndSection
                     "--gc-keep-outputs=yes"
                     "--gc-keep-derivations=yes"))))
 
-(define %custom-desktop-services
-  (modify-services %desktop-services
-    (special-files-service-type config => `(("/bin/sh"
-                                             ,(file-append
-                                               bash "/bin/sh"))
-                                            ("/usr/bin/env"
-                                             ,(file-append
-                                               coreutils "/bin/env"))))
-    (guix-service-type config => %guix-daemon-config)
-    (slim-service-type config => (slim-configuration
-                                  (inherit config)
-                                  (xorg-configuration
-                                   (xorg-configuration
-                                    (extra-config (list 20-intel.conf))))
-                                  ;; (startx
-                                  ;;  (xorg-start-command
-                                  ;;   #:configuration-file
-                                  ;;   (xorg-configuration-file
-                                  ;;    #:extra-config (list 20-intel.conf))))
-                                  ;; (auto-login? #f)
-                                  ;; (default-user "natsu")
-                                  ))))
-
 (define %guix-system-thinkpad-x200
   (operating-system
     (host-name "clover")
@@ -78,104 +46,25 @@ EndSection
                         %base-file-systems))
 
     (users (cons (user-account
-                  (name "natsu")
+                  (name "oleg")
                   (uid 1000)
                   (comment "Oleg Pykhalov")
                   (group "users")
-                  (supplementary-groups '("wheel"
-                                          "audio" "video"))
-                  (home-directory "/home/natsu"))
+                  (supplementary-groups '("wheel" "audio" "video"))
+                  (home-directory "/home/oleg"))
                  %base-user-accounts))
-    (packages
-     (cons*
-      desktop-file-utils
-      dovecot
-      gvfs
-      setxkbmap   ; Keyboard layout
-      wmctrl      ; `ewmctrl'
-      xclip       ; X clipboard CLI
-      xdg-utils
-      xdotool     ; Mouse and keyboard automation
-      xorg-server ; `xephyr'
-      xrandr      ; Change screen resolution
-      xrdb
-      xset
-      xsetroot
-      xterm       ; $TERM
-      xwininfo    ; X Window information
-      ;; For helm-stumpwm-commands and stumpish
-      rlwrap
-      xprop
-      xhost
 
-      ;; adb       ; For Replicant (Android distribution) control
-      cups      ; Printer
-      ethtool   ; wol (wake on lan)
-      file      ; Information about file from magic
-      gnupg
-      iptables
-      knot
-      lm-sensors      ; `sensors'
-      ncurses
-      nss-certs ; for https
-      openssh   ; `scp'
-      pinentry  ; Password typing for Gnupg
-      qemu
-      rsync
-      strace
-      tcpdump
-      tmux
-      tree      ; List files as a tree
-      wget
-      xkill
-      zile
+    (packages %base-packages)
 
-      adwaita-icon-theme
-      hicolor-icon-theme
-      font-awesome
-      font-dejavu
-      font-liberation
-      font-misc-misc  ; for `xterm'
-      font-wqy-zenhei ; Chinese, Japanese, Korean
-      fontconfig      ; `fc-cache -f'
-
-      alsa-utils
-      pavucontrol ; Pulseaudio control GUI
-      pulseaudio
-
-      cryptsetup
-
-      %base-packages))
-
-    (services (cons* (service openssh-service-type
-                              (openssh-configuration
-                               (permit-root-login #t)
-                               (port-number 22)))
-                     (service cups-service-type
-                              (cups-configuration
-                               (web-interface? #t)
-                               (extensions
-                                (list cups-filters hplip-minimal))))
-                     (service guix-publish-service-type
-                              (guix-publish-configuration
-                               (host "0.0.0.0")))
-                     (service git-daemon-service-type
-                              (git-daemon-configuration
-                               (user-path "")))
-                     (dovecot-service
-                      #:config (dovecot-configuration
-                                (mail-location
-                                 (string-append
-                                  "maildir:~/Maildir:INBOX=~/Maildir/INBOX:"
-                                  "LAYOUT=fs"))
-                                (disable-plaintext-auth? #f)
-                                (listen '("127.0.0.1"))))
-                     %custom-desktop-services))
+    (services %base-services)
 
     ;; Allow resolution of '.local' host names with mDNS.
-    (name-service-switch %mdns-host-lookup-nss)))
+    ;; (name-service-switch %mdns-host-lookup-nss)
+    ))
 
-(list (machine
+%guix-system-thinkpad-x200
+
+#;(list (machine
        (operating-system %guix-system-thinkpad-x200)
        (environment managed-host-environment-type)
        (configuration (machine-ssh-configuration
