@@ -39,6 +39,8 @@
                            (options "mode=1777,size=50%"))
                          %base-file-systems))
 
+    (swap-devices '("/dev/disk/by-uuid/6e0281d7-abed-4d01-91f3-72481014515a"))
+
     (packages (cons* nss-certs ;SSL certificates
                      majordomo-ca
 
