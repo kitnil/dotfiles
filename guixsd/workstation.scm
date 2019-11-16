@@ -8,7 +8,7 @@
                      suckless xdisorg xorg fonts android fontutils
                      gnome freedesktop readline ncurses networking)
 
-(use-service-modules desktop networking ssh xorg)
+(use-service-modules desktop monitoring networking ssh xorg)
 
 (define %system
   (operating-system
@@ -84,13 +84,14 @@
                                                (user-known-hosts-file "/dev/null")
                                                (extra-options
                                                 "
-RemoteForward 9999 localhost:22
-RemoteForward 16050 127.0.0.1:15050
+RemoteForward 0.0.0.0:9999 localhost:22
+RemoteForward 0.0.0.0:16050 127.0.0.1:10050
 Compression yes
 ExitOnForwardFailure yes
 ServerAliveInterval 30
 ServerAliveCountMax 3"))))))
                                (host "guix.duckdns.org")))
+                     (service zabbix-agent-service-type)
                      %desktop-services))
 
     (setuid-programs (cons* (file-append fping "/sbin/fping")
