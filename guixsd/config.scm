@@ -4,6 +4,7 @@
              (services gitlab)
              (services nix)
              (services autossh)
+             (services jenkins)
              (services kresd)
              (services openvpn)
 	     (packages artwork)
@@ -438,6 +439,7 @@ EndSection")
                        (kresd-service (local-file "kresd.conf"))
                        gitlab-runner-service
                        openvpn-service
+                       jenkins-service
 
                        (service openssh-service-type
                                 (openssh-configuration
