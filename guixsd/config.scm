@@ -587,6 +587,8 @@ ServerAliveCountMax 3"))))))
       (setuid-programs (cons* (file-append fping "/sbin/fping")
                               (file-append mtr "/sbin/mtr")
                               (file-append ubridge "/bin/ubridge")
-                              %setuid-programs)))))
+                              %setuid-programs))
+
+      (sudoers-file (local-file "sudoers")))))
 
 %system-guixsd
