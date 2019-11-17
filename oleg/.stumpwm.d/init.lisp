@@ -820,6 +820,14 @@
   (defcommand jenkins-last-build-guixsd () ()
     (firefox "https://jenkins.wugi.info/job/fiore/lastBuild/console"))
 
+  (defcommand jenkins () ()
+    (run-or-raise "chromium --app=http://localhost:8090/"
+                  '(:instance "jenkins")))
+
+  (defcommand ci (package) ((:string "package: "))
+    (unless (string= package "")
+      (run-shell-command (concat "chromium --app=http://ci.guix.info/search?query=spec%3Aguix-master+system%3Ax86_64-linux+" package))))
+
   (defcommand cuirass () ()
     (firefox "https://grafana.wugi.info/d/Ob67YJYiz/fiore?refresh=30s&orgId=1&var-host=cuirass"))
 
@@ -1125,6 +1133,7 @@
   (define-key *top-map* (kbd "s-a") "pass-eng")
   (define-key *top-map* (kbd "s-A") "pass-sup")
   (define-key *top-map* (kbd "s-j") "music-youtube")
+  (define-key *top-map* (kbd "s-J") "jenkins")
   (define-key *top-map* (kbd "s-g") "gnus")
   (define-key *top-map* (kbd "s-C") "org")
   (define-key *top-map* (kbd "C-s-C") "majordomo-find-project")
