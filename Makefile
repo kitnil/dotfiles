@@ -1,3 +1,6 @@
+deploy:
+	guix deploy -L fiore/modules --no-build-hook guixsd/deploy.scm
+
 stow:
 	stow --target=$(HOME) --dir=$(PWD) oleg
 

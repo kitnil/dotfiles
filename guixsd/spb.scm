@@ -329,4 +329,6 @@ ServerAliveCountMax 3"))))))
 
                           nix-service
 
-                   %base-services)))
+                          %base-services))
+
+  (sudoers-file (local-file "sudoers")))
