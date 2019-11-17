@@ -699,6 +699,11 @@ alias hylang='docker run --rm -it hylang'
 
 alias nix-build-unstable="nix-build $HOME/.nix-defexpr/channels/nixos-unstable"
 
+nix-shell-python()
+{
+    PYTHONPATH="" nix-shell -p "python35.withPackages(ps: with ps; [ $@ ])"
+}
+
 nixos-interactive-test()
 {
     version="$1"
