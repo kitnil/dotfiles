@@ -882,11 +882,11 @@ ansible-cmdb-my()
 ansible-fetch-root-history()
 {
     for file in /root/.bash_history /root/.mysql_history; do
-        ansible all -m fetch -a "src=$file dest=/home/oleg/ansible-out/files fail_on_missing=no" -b
+        ansible majordomo -m fetch -a "src=$file dest=/home/oleg/ansible-out/files fail_on_missing=no" -b
     done
 
-    git -C /home/oleg/ansible-out/files add -A
-    git -C /home/oleg/ansible-out/files commit -m 'Update.'
+    git -C "$HOME/ansible-out/files" add -A
+    git -C "$HOME/ansible-out/files" commit -m 'Update.'
 }
 
 history-top()
