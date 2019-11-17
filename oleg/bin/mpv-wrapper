@@ -1,0 +1,12 @@
+#!/bin/sh
+
+url="${@: -1}"
+
+notify-send "Open video $url"
+
+if [[ "$url" == http*://*vk.com* ]]
+then
+    exec -a "$0" mpv --ytdl-raw-options=username=go.wigust@gmail.com,password="$(pass show vk.com/me)" "$@"
+else
+    exec -a "$0" mpv "$@"
+fi
