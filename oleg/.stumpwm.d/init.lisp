@@ -24,6 +24,9 @@
 
 (speaker-disable)
 
+(defcommand current-window->clipboard () ()
+  (putsel (window-title (current-window))))
+
 ;;;
 ;;; Keyboard
 ;;;
