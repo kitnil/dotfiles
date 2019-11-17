@@ -314,7 +314,7 @@ myreconfigure ()
     sudo -i guix system reconfigure --no-bootloader \
          --load-path="$HOME/src/dotfiles/fiore/modules" \
          --substitute-urls='https://ci.guix.info http://cuirass.tld' \
-         --fallback "$HOME/src/dotfiles/guixsd/config.scm"
+         --fallback "$HOME/src/dotfiles/guixsd/config.scm" $@
 }
 
 myprereconfigure()
