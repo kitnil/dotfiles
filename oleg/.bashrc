@@ -306,7 +306,7 @@ myreconfigure-boot ()
     sudo -i guix system reconfigure \
          --load-path="$HOME/src/dotfiles/fiore/modules" \
          --substitute-urls='https://ci.guix.info http://cuirass.tld' \
-         "$HOME/src/dotfiles/guixsd/config.scm"
+         "$HOME/src/dotfiles/guixsd/guixsd.scm"
 }
 
 myreconfigure ()
@@ -314,7 +314,7 @@ myreconfigure ()
     sudo -i guix system reconfigure --no-bootloader \
          --load-path="$HOME/src/dotfiles/fiore/modules" \
          --substitute-urls='https://ci.guix.info http://cuirass.tld' \
-         --fallback "$HOME/src/dotfiles/guixsd/config.scm" $@
+         --fallback "$HOME/src/dotfiles/guixsd/guixsd.scm" $@
 }
 
 myprereconfigure()
@@ -324,7 +324,7 @@ myprereconfigure()
             guix system reconfigure \
             --load-path="/home/oleg/src/dotfiles/fiore/modules" \
             --substitute-urls='https://ci.guix.info http://cuirass.tld' \
-            --fallback "/home/oleg/src/dotfiles/guixsd/config.scm"
+            --fallback "/home/oleg/src/dotfiles/guixsd/guixsd.scm"
 }
 
 mypull()

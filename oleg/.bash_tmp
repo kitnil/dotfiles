@@ -177,7 +177,7 @@ setfont-big()
 
 build-guix()
 {
-    guix environment --substitute-urls='https://ci.guix.info http://cuirass.tld' --manifest="$HOME/src/dotfiles/fiore/manifests/natsu-manifest.scm" -- sh -c 'exit' && guix system --substitute-urls='https://ci.guix.info http://cuirass.tld' --load-path="$HOME/src/dotfiles/fiore/modules" build "$HOME/src/dotfiles/guixsd/config.scm"
+    guix environment --substitute-urls='https://ci.guix.info http://cuirass.tld' --manifest="$HOME/src/dotfiles/fiore/manifests/natsu-manifest.scm" -- sh -c 'exit' && guix system --substitute-urls='https://ci.guix.info http://cuirass.tld' --load-path="$HOME/src/dotfiles/fiore/modules" build "$HOME/src/dotfiles/guixsd/guixsd.scm"
 }
 
 alerta-send-info()
@@ -200,7 +200,7 @@ guix-update-all()
     guix pull --substitute-urls='https://ci.guix.info http://cuirass.tld' && \
         sudo -i guix pull --substitute-urls='https://ci.guix.info http://cuirass.tld' && \
         guix package --substitute-urls='https://ci.guix.info http://cuirass.tld' --manifest="$HOME/src/dotfiles/fiore/manifests/natsu-manifest.scm" && \
-        sudo -i guix system reconfigure --substitute-urls='https://ci.guix.info http://cuirass.tld' /home/oleg/src/dotfiles/guixsd/config.scm
+        sudo -i guix system reconfigure --substitute-urls='https://ci.guix.info http://cuirass.tld' /home/oleg/src/dotfiles/guixsd/guixsd.scm
 }
 
 append-youtube-channel()

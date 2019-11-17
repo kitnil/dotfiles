@@ -25,7 +25,7 @@ pipeline {
                 sh """./guix-jenkins/bin/guix system build \
  --load-path=fiore/modules \
  --substitute-urls='https://ci.guix.info' \
- guixsd/config.scm"""
+ guixsd/guixsd.scm"""
                 // Build all my Guix packages. Continue on failure.
                 script {
                     ['cava',
