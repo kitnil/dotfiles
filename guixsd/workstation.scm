@@ -10,105 +10,93 @@
 
 (use-service-modules desktop monitoring networking ssh xorg)
 
-(define %system
-  (operating-system
-    (host-name "workstation-guixsd")
-    (timezone "Europe/Moscow")
-    (locale "en_US.utf8")
+(operating-system
+  (host-name "workstation-guixsd")
+  (timezone "Europe/Moscow")
+  (locale "en_US.utf8")
 
-    (bootloader (bootloader-configuration
-                 (bootloader grub-bootloader)
-                 (target "/dev/sda")))
+  (bootloader (bootloader-configuration
+               (bootloader grub-bootloader)
+               (target "/dev/sda")))
 
-    (users (cons (user-account (name "oleg")
-                               (comment "Oleg Pykhalov")
-                               (group "users")
-                               (supplementary-groups '("wheel" "audio" "video")))
-                 %base-user-accounts))
+  (users (cons (user-account (name "oleg")
+                             (comment "Oleg Pykhalov")
+                             (group "users")
+                             (supplementary-groups '("wheel" "audio" "video")))
+               %base-user-accounts))
 
-    (file-systems (cons* (file-system
-                           (device (uuid "11d541d4-7914-4937-8ce0-7e50687ddbc6"))
-                           (mount-point "/")
-                           (type "ext4"))
-                         (file-system
-                           (device "tmpfs")
-                           (mount-point "/tmp")
-                           (type "tmpfs")
-                           (check? #f)
-                           (flags '(no-dev))
-                           (options "mode=1777,size=50%"))
-                         %base-file-systems))
+  (file-systems (cons* (file-system
+                         (device (uuid "11d541d4-7914-4937-8ce0-7e50687ddbc6"))
+                         (mount-point "/")
+                         (type "ext4"))
+                       (file-system
+                         (device "tmpfs")
+                         (mount-point "/tmp")
+                         (type "tmpfs")
+                         (check? #f)
+                         (flags '(no-dev))
+                         (options "mode=1777,size=50%"))
+                       %base-file-systems))
 
-    (swap-devices '("/dev/disk/by-uuid/6e0281d7-abed-4d01-91f3-72481014515a"))
+  (swap-devices '("/dev/disk/by-uuid/6e0281d7-abed-4d01-91f3-72481014515a"))
 
-    (packages (cons* nss-certs ;SSL certificates
-                     majordomo-ca
+  (packages (cons* nss-certs ;SSL certificates
+                   majordomo-ca
 
-                     sbcl stumpwm-checkout `(,stumpwm-checkout "lib")
+                   sbcl stumpwm-checkout `(,stumpwm-checkout "lib")
 
-                     ncurses
+                   ncurses
 
-                     fontconfig font-dejavu
+                   fontconfig font-dejavu
 
-                     adwaita-icon-theme hicolor-icon-theme
+                   adwaita-icon-theme hicolor-icon-theme
 
-                     desktop-file-utils gvfs xrdb xset xsetroot xkill
+                   desktop-file-utils gvfs xrdb xset xsetroot xkill
 
-                     setxkbmap   ;keyboard layout
-                     wmctrl      ;`ewmctrl'
-                     xclip       ;X clipboard CLI
-                     xdg-utils   ;finds a program to open file
-                     xdotool     ;mouse and keyboard automation
-                     xorg-server ;`xephyr' for x11 testing
-                     xrandr      ;change screen resolution
-                     xterm       ;$TERM terminal
-                     xwininfo    ;X window information
-                     ;; For helm-stumpwm-commands and stumpish
-                     rlwrap
-                     xprop
-                     xhost
+                   setxkbmap   ;keyboard layout
+                   wmctrl      ;`ewmctrl'
+                   xclip       ;X clipboard CLI
+                   xdg-utils   ;finds a program to open file
+                   xdotool     ;mouse and keyboard automation
+                   xorg-server ;`xephyr' for x11 testing
+                   xrandr      ;change screen resolution
+                   xterm       ;$TERM terminal
+                   xwininfo    ;X window information
+                   ;; For helm-stumpwm-commands and stumpish
+                   rlwrap
+                   xprop
+                   xhost
 
-                     iptables bridge-utils
-                     cryptsetup
+                   iptables bridge-utils
+                   cryptsetup
 
-                     %base-packages))
+                   %base-packages))
 
-    (services (cons* (service openssh-service-type)
-                     (service autossh-service-type
-                              (autossh-configuration
-                               (openssh-client-config
-                                (openssh-client-configuration
-                                 (hosts (list (openssh-client-host-configuration
-                                               (host "guix.duckdns.org")
-                                               (identity-file "/etc/autossh/id_rsa")
-                                               (strict-host-key-checking? #f)
-                                               (user "majordomo-ssh-tunnel")
-                                               (user-known-hosts-file "/dev/null")
-                                               (extra-options
-                                                "
+  (services (cons* (service openssh-service-type)
+                   (service autossh-service-type
+                            (autossh-configuration
+                             (openssh-client-config
+                              (openssh-client-configuration
+                               (hosts (list (openssh-client-host-configuration
+                                             (host "guix.duckdns.org")
+                                             (identity-file "/etc/autossh/id_rsa")
+                                             (strict-host-key-checking? #f)
+                                             (user "majordomo-ssh-tunnel")
+                                             (user-known-hosts-file "/dev/null")
+                                             (extra-options
+                                              "
 RemoteForward 0.0.0.0:9999 localhost:22
 RemoteForward 0.0.0.0:16050 127.0.0.1:10050
 Compression yes
 ExitOnForwardFailure yes
 ServerAliveInterval 30
 ServerAliveCountMax 3"))))))
-                               (host "guix.duckdns.org")))
-                     (service zabbix-agent-service-type)
-                     %desktop-services))
+                             (host "guix.duckdns.org")))
+                   (service zabbix-agent-service-type)
+                   %desktop-services))
 
-    (setuid-programs (cons* (file-append fping "/sbin/fping")
-                            (file-append mtr "/sbin/mtr")
-                            %setuid-programs))
+  (setuid-programs (cons* (file-append fping "/sbin/fping")
+                          (file-append mtr "/sbin/mtr")
+                          %setuid-programs))
 
-    (sudoers-file (local-file "sudoers"))))
-
-;; %system
-
-(list (machine
-       (operating-system %system)
-       (environment managed-host-environment-type)
-       (configuration (machine-ssh-configuration
-                       (host-name "172.16.100.60")
-                       (system "x86_64-linux")
-                       (user "oleg")
-                       (identity "/home/oleg/.ssh/id_rsa")))))
+  (sudoers-file (local-file "sudoers")))
