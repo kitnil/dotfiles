@@ -848,6 +848,10 @@
                      (cadr (split-string url "=")))
              t)))
 
+(defcommand xpanes-guix () ()
+  (term-shell-command "xpanes -C 1 -c 'ssh -t {}' workstation spb"
+                      :color 'dark))
+
 (defun emacsclient-command (&rest args)
   (run-shell-command (format nil "emacsclient ~a" (join args))))
 
