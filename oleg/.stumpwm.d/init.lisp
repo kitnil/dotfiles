@@ -358,7 +358,7 @@
 ;;; Misc
 ;;;
 
-(defun term-shell-command (command &key (terminal 'xterm) (color "light") (font nil))
+(defun term-shell-command (command &key (terminal 'xterm) (color (if dark-theme "dark" "light")) (font nil))
   (run-shell-command
    (let ((terminal-name (string-downcase (symbol-name terminal))))
      (case terminal
@@ -498,7 +498,7 @@
       (progn (message "small") 1)
       (progn (message "big") 0)))
 
-(defun xterm-command (&key (color "light") (command nil) (font nil))
+(defun xterm-command (&key (color (if dark-theme "dark" "light")) (command nil) (font nil))
   (join `(,*xterm-command*
           ;; Make sure XTerm terminal size is appropriate for current StumpWM frame.
           ,@(if font
@@ -519,7 +519,7 @@
 
 (defcommand xterm-dark-no-scrollbar () ()
   "Start or focus XTerm."
-  (run-shell-command (xterm-command :color "dark")))
+  (run-shell-command (xterm-command :color (if dark-theme "light" "dark"))))
 
 (define-key *top-map* (kbd "C-M-S-s-RET") "xterm-dark-no-scrollbar")
 
