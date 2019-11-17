@@ -840,7 +840,10 @@ docker-strace-pids()
 
 vnc-server-zero()
 {
-    while true; do x0vncserver -PasswordFile .vnc/passwd -display :0 -rfbport 5960; sleep 5; done
+    while true; do
+        x0vncserver -PasswordFile "$HOME/.vnc/passwd" -display :0 -rfbport 5960
+        sleep 5
+    done
 }
 
 check-sites-on-ip()
