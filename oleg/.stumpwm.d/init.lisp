@@ -937,14 +937,6 @@
 
 (stumpwm:run-commands "gselect 1")
 
-;; Rebind groups to PREFIX-NUMBER.
-(mapcar #'(lambda (x)
-            (define-key *top-map* (kbd (concat "C-s-" (write-to-string x)))
-              (format nil "gselect ~D" x))
-            (define-key *top-map* (kbd (concat "M-s-" (write-to-string x)))
-              (format nil "gmove ~D" x)))
-        (range 10 :min 0 :step 1))
-
 (defun current-window-width ()
   (format-expand *window-formatters* "%w" (current-window)))
 
@@ -1169,10 +1161,15 @@
   (define-key *top-map* (kbd "s-N") "move-focus down")
   (define-key *top-map* (kbd "s-s") "passmenu")
   (define-key *top-map* (kbd "s-j") "music-youtube")
-  
+
   ;; Rebind groups to PREFIX-NUMBER.
-  (mapcar #'(lambda (x) (define-key *top-map* (kbd (concat "s-" (write-to-string x)))
-                     (format nil "~A ~D" "select-window-by-number" x)))
+  (mapcar #'(lambda (x)
+              (define-key *top-map* (kbd (concat "s-" (write-to-string x)))
+                (format nil "gselect ~D" x))
+              (define-key *top-map* (kbd (concat "M-s-" (write-to-string x)))
+                (format nil "gmove ~D" x))
+              (define-key *top-map* (kbd (concat "C-s-" (write-to-string x)))
+                (format nil "~A ~D" "select-window-by-number" x)))
           (range 10 :min 0 :step 1)))
 
 (cond ((string= (getenv "DISPLAY") ":0")
