@@ -823,6 +823,9 @@
   (defcommand jenkins-last-build-guixsd () ()
     (firefox "https://jenkins.wugi.info/job/fiore/lastBuild/console"))
 
+  (defcommand tometips () ()
+    (run-shell-command "chromium --app=https://tometips.github.io"))
+
   (defcommand jenkins () ()
     (run-or-raise "chromium --app=http://localhost:8090/"
                   '(:instance "jenkins")))
@@ -1108,6 +1111,7 @@
   (define-key *top-map* (kbd "s-f") "fullscreen")
   (define-key *top-map* (kbd "s-H") "glances")
   (define-key *top-map* (kbd "s-t") "top")
+  (define-key *top-map* (kbd "s-T") "tometips")
   (define-key *top-map* (kbd "s-h") "htop")
   (define-key *top-map* (kbd "s-x") "rofi-drun")
   (define-key *top-map* (kbd "S-s-RET") "rofi-ssh")
