@@ -848,6 +848,10 @@
                      (cadr (split-string url "=")))
              t)))
 
+(defcommand xpanes-top () ()
+  (term-shell-command "xpanes -C 1 -c 'autossh -M0 -t {} top' localhost spb workstation"
+                      :color 'dark))
+
 (defcommand xpanes-guix () ()
   (term-shell-command "xpanes -C 1 -c 'ssh -t {}' workstation spb"
                       :color 'dark))
