@@ -849,7 +849,7 @@
              t)))
 
 (defcommand xpanes-top () ()
-  (term-shell-command "xpanes -C 1 -c 'autossh -M0 -t {} top' localhost spb workstation"
+  (term-shell-command "xpanes -C 1 -c 'autossh -M0 -t {} -- top -d 10' localhost spb workstation oracle"
                       :color 'dark))
 
 (defcommand xpanes-guix () ()
