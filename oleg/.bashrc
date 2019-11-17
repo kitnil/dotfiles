@@ -815,7 +815,7 @@ herd-reload()
 
 herd-kill-services-via-awk()
 {
-    for service in $(awk '/define.*service/ { print $NF }' .config/shepherd/init.scm | sed 's/-service//'); do
+    for service in $(awk '/define.*service/ { print $NF }' "$HOME/.config/shepherd/init.scm" | sed 's/-service//'); do
         pkill "$service"
     done
 }
