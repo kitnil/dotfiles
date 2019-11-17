@@ -697,6 +697,8 @@ alias nn='notmuch new'
 alias wtr='curl -H "Accept-Language: ru" wttr.in/Санкт-Петербург'
 alias hylang='docker run --rm -it hylang'
 
+alias nix-build-unstable="nix-build $HOME/.nix-defexpr/channels/nixos-unstable"
+
 nixos-interactive-test()
 {
     version="$1"
