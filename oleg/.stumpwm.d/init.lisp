@@ -418,7 +418,7 @@
 (defcommand rofi-ssh () ()
   "Open Rofi ssh list."
   (run-shell-command
-   (format nil "rofi -ssh-command '{terminal} -bg \"#f0fff0\" -title \"ssh@{host}\" -e {ssh-client} {host}' -width 20 -terminal '~a' -modi ssh -show ssh"
+   (format nil "rofi -ssh-command '{terminal} -fg \"#000000\" -bg \"#f0fff0\" -title \"ssh@{host}\" -e {ssh-client} {host}' -width 20 -terminal '~a' -modi ssh -show ssh"
            (xterm-command))))
 
 (defcommand rofi-mycli () ()
