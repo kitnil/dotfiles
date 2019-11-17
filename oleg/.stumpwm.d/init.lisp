@@ -826,6 +826,9 @@
   (defcommand tometips () ()
     (run-shell-command "chromium --app=https://tometips.github.io"))
 
+  (defcommand discord () ()
+    (run-shell-command "chromium --app=https://discordapp.com/"))
+
   (defcommand jenkins () ()
     (run-or-raise "chromium --app=http://localhost:8090/"
                   '(:instance "jenkins")))
