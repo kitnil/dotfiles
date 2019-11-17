@@ -11,6 +11,7 @@ exec ${GUILE:-$(which guile)} $GUILE_FLAGS --no-auto-compile -e '(@@ (guix-ci) m
   #:use-module (ice-9 format)
   #:use-module (guix packages)
   #:use-module (guix profiles)
+  #:use-module (guix build utils)
   #:use-module (json)
   #:use-module (rnrs bytevectors)
   #:use-module (srfi srfi-11)
@@ -70,7 +71,7 @@ exec ${GUILE:-$(which guile)} $GUILE_FLAGS --no-auto-compile -e '(@@ (guix-ci) m
                         (buildstatus (assoc-ref pkg "buildstatus")))
                    (if (not (and (= 0 buildstatus)
                                  (= 1 (assoc-ref pkg "finished"))))
-                       (format #t "~a\t~a\t~a~%"
+                       (format #t "~a\t~a\t~a\t~a~%"
                                (case buildstatus
                                  ((0) 'succeeded)
                                  ((1) 'failed-build)
@@ -79,7 +80,9 @@ exec ${GUILE:-$(which guile)} $GUILE_FLAGS --no-auto-compile -e '(@@ (guix-ci) m
                                  ((6) 'failed-output)
                                  ((4) 'cancelled))
                                (assoc-ref pkg "nixname")
-                               uri)))))))
+                               uri
+                               (string-append "http://ci.guix.info/search?query=spec%3Aguix-master+system%3Ax86_64-linux+"
+                                              (package-name->name+version (assoc-ref pkg "nixname"))))))))))
        ci-packages))
 
 ;;; guix-ci ends here
