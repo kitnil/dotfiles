@@ -1125,6 +1125,7 @@ obs-docker()
         --volume /tmp/pulseaudio.socket:/tmp/pulseaudio.socket \
         --volume /tmp/pulseaudio.client.conf:/etc/pulse/client.conf \
         --volume /home/oleg/obs:/home/obs \
+        --volume /home/oleg/.Xauthority:/home/oleg/.Xauthority \
         --volume /srv/music/mp3:/home/obs/music \
         obs
 }
