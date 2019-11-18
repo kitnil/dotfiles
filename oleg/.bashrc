@@ -1132,7 +1132,14 @@ obs-docker()
 
 obs-nix-setup()
 {
-    sudo ln -s $(nix-build-my vaapiIntel) /run/opengl-driver
+    file="/run/opengl-driver"
+    if [ -f "$file" ]
+    then
+        sudo ln -s "$(nix-build-my vaapiIntel)" "$file"
+    else
+        echo "File $file already exists."
+    fi
+
 }
 
 obs-nix()
