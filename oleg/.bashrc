@@ -1130,6 +1130,16 @@ obs-docker()
         obs
 }
 
+obs-nix-setup()
+{
+    sudo ln -s $(nix-build-my vaapiIntel) /run/opengl-driver
+}
+
+obs-nix()
+{
+    nixGLIntel obs "$@"
+}
+
 projectile-ls()
 {
     bash -c 'echo ${0:1:-1}' \
