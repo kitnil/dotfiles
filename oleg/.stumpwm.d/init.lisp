@@ -401,7 +401,9 @@
   (term-shell-command "sh -c 'guix pull; read'"))
 
 (defcommand notmuch () ()
-  (term-shell-command "sh -c 'notmuch new; read'"))
+  (term-shell-command "sh -c 'TMOUT=20; echo \"Fetch mail.\"; notmuch new; notify-send \"Mail fetched.\"; read -p \"Press Enter to close.\"'"
+                      :title "notmuch"
+                      :font '("-fa" "Monospace" "-fs" "8")))
 
 (defcommand python () ()
   (term-shell-command "python3"))
