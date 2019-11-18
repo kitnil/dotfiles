@@ -1150,6 +1150,7 @@
   (define-key *top-map* (kbd "s-j") "music-youtube")
   (define-key *top-map* (kbd "s-J") "jenkins")
   (define-key *top-map* (kbd "s-g") "gnus")
+  (define-key *top-map* (kbd "s-G") "notmuch")
   (define-key *top-map* (kbd "s-C") "org")
   (define-key *top-map* (kbd "C-s-C") "majordomo-find-project")
   (define-key *top-map* (kbd "s-i") "guix-wigust")
