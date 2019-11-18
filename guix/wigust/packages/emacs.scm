@@ -1079,7 +1079,7 @@ capturing user input and paste it with @kbd{C-v} after exit.")
        (origin
          (method git-fetch)
          (uri (git-reference
-               (url "https://gitlab.wugi.info/emacs/emacs-terminal-here.git")
+               (url "https://github.com/wigust/terminal-here")
                (commit commit)))
          (file-name (git-file-name name version))
          (sha256
