@@ -858,7 +858,7 @@
                       :color 'dark))
 
 (defcommand xpanes-guix () ()
-  (term-shell-command "xpanes -C 1 -c 'ssh -t {}' workstation spb"
+  (term-shell-command "xpanes -C 1 -c 'ssh -t {}' guixsd workstation spb"
                       :color 'dark))
 
 (defun emacsclient-command (&rest args)
