@@ -1362,3 +1362,9 @@ docker-top-strace()
 }
 
 alias active-hms='curl -s --user jenkins:***REMOVED*** nginx{1,2}-mr:8080/hms | jq -r .active | uniq'
+
+guix-pull-commit-me-and-root()
+{
+    commit="$1"
+    guix pull --commit="$commit"; sudo -i guix pull --commit="$commit"
+}
