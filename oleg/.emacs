@@ -2678,6 +2678,7 @@ be updated automatically."))
   (load-theme 'manoj-dark)
   (custom-theme-set-faces
    'manoj-dark
+   '(which-func ((t (:foreground "deep sky blue"))))
    '(font-lock-function-name-face ((t (:foreground "mediumspringgreen" :weight bold :height 1.0))))
    '(diff-refine-added ((t (:inherit diff-refine-change :background "#22aa22" :foreground "aquamarine1"))))
    '(diff-refine-removed ((t (:inherit diff-refine-change :background "#aa2222" :foreground "plum1"))))
