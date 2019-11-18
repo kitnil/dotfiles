@@ -436,4 +436,29 @@ your use complies with the LyricWikia terms of service.")
     (description "This package provides a command line interface to Spotify")
     (license license:gpl3+)))
 
-
+(define-public quickwall
+  (package
+    (name "quickwall")
+    (version "0.0.1-4")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://github.com/deepjyoti30/QuickWall.git")
+                    (commit version)))
+              (file-name (git-file-name name version))
+              (sha256
+               (base32
+                "1pf4nnvvnn8gkks26m09hs6rm1bphlihq3671xdg6n0x2jgk7sgf"))))
+    (propagated-inputs
+     `(("python-requests" ,python-requests)))
+    (arguments
+     '(#:phases
+       (modify-phases %standard-phases
+	 (add-before 'install 'set-HOME
+	   (lambda _
+	     (setenv "HOME" "/tmp"))))))
+    (build-system python-build-system)
+    (home-page "https://github.com/deepjyoti30/QuickWall/")
+    (synopsis "Quickly set wallpapers from CLI directly from Unsplash")
+    (description "Quickly set wallpapers from CLI directly from Unsplash")
+    (license license:expat)))
