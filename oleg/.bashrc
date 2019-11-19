@@ -1272,9 +1272,10 @@ find-touch-go()
 
 pass-show-fzf()
 {
-    cd ~/.password-store &> /dev/null
-    pass show $(find . -not -path './.gitattributes' -not -path './.git/*' -type f | sed 's@\./@@' | sed 's@\.gpg@@' | fzf)
-    cd - &> /dev/null
+    (
+        cd ~/.password-store || exit
+        pass show "$(find . -not -path './.gitattributes' -not -path './.git/*' -type f | sed 's@\./@@' | sed 's@\.gpg@@' | fzf)"
+    )
 }
 
 pass-list-all()
