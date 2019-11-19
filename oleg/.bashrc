@@ -1338,8 +1338,8 @@ kill-xterm-on-display()
 {
     display="$1"
     for pid in $(pidof xterm); do
-        if [[ $1 = $(cat "/proc/$pid/environ" | tr '\000' '\n' | grep DISPLAY | cut -d= -f 2) ]]; then
-            kill $pid
+        if [[ $1 = $(tr '\000' '\n' < "/proc/$pid/environ" | grep "$display" | cut -d= -f 2) ]]; then
+            kill "$pid"
         fi
     done
 }
