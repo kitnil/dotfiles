@@ -12,7 +12,8 @@
 
 (use-package-modules admin base certs cryptsetup docker linux lisp
                      suckless xdisorg xorg fonts android fontutils
-                     gnome freedesktop readline ncurses networking)
+                     gnome freedesktop readline ncurses networking
+                     pulseaudio)
 
 (use-service-modules admin dbus desktop docker dns networking sound
                      xorg ssh web cgit version-control certbot
@@ -290,6 +291,8 @@ EndSection")
                        docker-cli docker-compose
 
                        cryptsetup
+
+                       pulseaudio
 
                        (operating-system-packages base-system)))
 
