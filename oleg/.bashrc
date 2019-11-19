@@ -1210,7 +1210,7 @@ docker-run-ansible()
 
 vnc-kvm()
 {
-    vncviewer kvm28:$(( 6017 + 5900 ))
+    vncviewer "kvm$1":$(( 6017 + 5900 ))
 }
 
 assh-hosts()
