@@ -1267,7 +1267,7 @@ build-farm()
 
 find-touch-go()
 {
-    find -name '*.go' -exec touch {} +
+    find . -name '*.go' -exec touch {} +
 }
 
 pass-show-fzf()
