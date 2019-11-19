@@ -1218,10 +1218,7 @@ assh-hosts()
     assh config json | jq '.hosts | keys'
 }
 
-bash-pure()
-{
-    env -i "$(command -v bash)" --login --noprofile --norc
-}
+alias bash-pure='env -i "$(command -v bash)" --login --noprofile --norc'
 
 alias root-shedule="sudo herd schedule mcron 10"
 alias tmux-reload="tmux source-file ~/.tmux.conf"
