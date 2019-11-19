@@ -1279,11 +1279,12 @@ pass-show-fzf()
 
 pass-list-all()
 {
-    cd ~/.password-store &> /dev/null
-    for password in $(find . -not -path './.gitattributes' -not -path './.git/*' -type f | sed 's@\./@@' | sed 's@\.gpg@@'); do
-        pass show $password | sed '/^$/d'
-    done
-    cd - &> /dev/null
+    (
+        cd ~/.password-store || exit
+        for password in $(find . -not -path './.gitattributes' -not -path './.git/*' -type f | sed 's@\./@@' | sed 's@\.gpg@@'); do
+            pass show "$password" | sed '/^$/d'
+        done
+    )
 }
 
 gmail-mail()
