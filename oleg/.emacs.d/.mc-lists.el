@@ -87,6 +87,8 @@
         clone-buffer
         compile
         completion-at-point
+        dired-info
+        dired-maybe-insert-subdir
         eir-eval-in-geiser
         eval-last-sexp
         find-file
