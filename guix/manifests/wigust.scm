@@ -14,7 +14,6 @@
   (list
    emacs-anywhere-mode
    emacs-apache-mode
-   emacs-athena
    emacs-atomic-chrome
    emacs-awk-it
    emacs-copy-as-format

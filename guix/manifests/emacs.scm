@@ -4,7 +4,8 @@
 (use-package-modules admin cmake emacs emacs-xyz package-management)
 
 (packages->manifest
- (list emacs-academic-phrases
+ (list emacs
+       emacs-academic-phrases
        emacs-ace-window
        emacs-add-hooks
        emacs-ag
