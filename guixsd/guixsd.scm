@@ -344,6 +344,12 @@ EndSection")
                      (comment "SSH forwarding privilege separation user")
                      (home-directory "/home/spb-zabbix-ssh-tunnel"))
                     (user-account
+                     (name "oracle-ssh-tunnel")
+                     (uid 30021)
+                     (group "users")
+                     (comment "SSH forwarding privilege separation user")
+                     (home-directory "/home/oracle-ssh-tunnel"))
+                    (user-account
                      (name "spb")
                      (group "users")
                      (comment "SSH forwarding privilege separation user")
