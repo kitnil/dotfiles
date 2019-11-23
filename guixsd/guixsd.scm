@@ -338,6 +338,12 @@ EndSection")
                      (comment "SSH forwarding privilege separation user")
                      (home-directory "/home/tail-ssh-tunnel"))
                     (user-account
+                     (name "spb-zabbix-ssh-tunnel")
+                     (uid 30020)
+                     (group "users")
+                     (comment "SSH forwarding privilege separation user")
+                     (home-directory "/home/spb-zabbix-ssh-tunnel"))
+                    (user-account
                      (name "spb")
                      (group "users")
                      (comment "SSH forwarding privilege separation user")
