@@ -166,7 +166,7 @@
 
 (defcommand firefox () ()
   "Start of focus firefox."
-  (run-or-raise "firefox" '(:class "Firefox")))
+  (run-or-raise "nixGLIntel firefox" '(:class "Firefox")))
 
 (defcommand firefox-new-window () ()
   "Start Firefox."
