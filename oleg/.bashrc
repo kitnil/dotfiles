@@ -1376,3 +1376,30 @@ jenkins-build-project-branch()
 
     echo "$url/lastBuild/console"
 }
+
+# Create a new directory and enter it
+mkd()
+{
+	mkdir -p "$@"
+	cd "$@" || exit
+}
+
+# Make a temporary directory and enter it
+tmpd()
+{
+	local dir
+	if [ $# -eq 0 ]; then
+		dir=$(mktemp -d)
+	else
+		dir=$(mktemp -d -t "${1}.XXXXXXXXXX")
+	fi
+	cd "$dir" || exit
+}
+
+# Run `dig` and display the most useful info
+digga()
+{
+	dig +nocmd "$1" any +multiline +noall +answer
+}
+
+alias ff="feh --borderless --image-bg black --auto-zoom --draw-filename"
