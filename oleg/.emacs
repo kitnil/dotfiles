@@ -196,6 +196,8 @@
   (add-to-list 'mailcap-mime-extensions '(".scm" . "text/x-scheme")))
 
 (global-undo-tree-mode)
+(setq undo-tree-auto-save-history t)
+(setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
 
 (projectile-global-mode)
 (define-key projectile-mode-map (kbd "C-c g p") 'projectile-command-map)
