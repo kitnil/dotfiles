@@ -2724,9 +2724,11 @@ If nil use light theme.")
                      (disable-theme theme))
                    '(manoj-dark smart-mode-line-dark))
              (enable-theme 'smart-mode-line-light)
+             (setq terminal-here-color 'light)
              (setq wi-theme nil))
     (progn (disable-theme 'smart-mode-line-light)
            (wi-manoj-dark)
+           (setq terminal-here-color 'dark)
            (setq wi-theme t))))
 
 
