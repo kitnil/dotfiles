@@ -26,6 +26,7 @@
   #:use-module (guix build-system trivial)
   #:use-module (gnu packages)
   #:use-module (gnu packages bash)
+  #:use-module (gnu packages gawk)
   #:use-module (gnu packages gtk)
   #:use-module (gnu packages image)
   #:use-module (gnu packages pkg-config)
@@ -126,3 +127,39 @@
     (description "This package provides a Git quick statistics is a simple and
 efficient way to access various statistics in git repository.")
     (license license:expat)))
+
+(define-public ok-sh
+  (package
+    (name "ok-sh")
+    (version "0.5.1")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://github.com/whiteinge/ok.sh.git")
+                    (commit version)))
+              (file-name (git-file-name name version))
+              (sha256
+               (base32
+                "0zg9cmqblf1m73vrikksrc0cwjqspa351b9l3jgc6dxrrd6f1x81"))))
+    (build-system trivial-build-system)
+    (inputs
+     `(("bash" ,bash)
+       ("gawk" ,gawk)))
+    (arguments
+     `(#:modules ((guix build utils))
+       #:builder
+       (begin
+         (use-modules (guix build utils))
+         (copy-recursively (assoc-ref %build-inputs "source") ".")
+         (substitute* "ok.sh"
+           (("/usr/bin/env sh") (string-append (assoc-ref %build-inputs "bash")
+                                               "/bin/bash"))
+           (("awk ") (string-append (assoc-ref %build-inputs "gawk")
+                                    "/bin/gawk ")))
+         (install-file "ok.sh" (string-append %output "/bin"))
+         #t)))
+    (home-page "https://github.com/whiteinge/ok.sh/")
+    (synopsis "Bourne shell GitHub API client library focused on interfacing with shell scripts")
+    (description "This package provides a Bourne shell GitHub API client
+library focused on interfacing with shell scripts.")
+    (license license:bsd-3)))
