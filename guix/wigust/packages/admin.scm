@@ -93,3 +93,36 @@
       (synopsis "Command prefixing for continuous workflow using a single tool")
       (description "This package provides command prefixing for continuous workflow using a single tool.")
       (license license:asl2.0))))
+
+(define-public git-quick-stats
+  (package
+    (name "git-quick-stats")
+    (version "2.0.11")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://github.com/arzzen/git-quick-stats.git")
+                    (commit version)))
+              (file-name (git-file-name name version))
+              (sha256
+               (base32
+                "19chwnc936bxf0bnxsvw6nhfxnj0216jx9ajjckw3q440l932799"))))
+    (build-system trivial-build-system)
+    (inputs
+       `(("bash" ,bash)))
+      (arguments
+       `(#:modules ((guix build utils))
+         #:builder
+         (begin
+           (use-modules (guix build utils))
+           (copy-recursively (assoc-ref %build-inputs "source") ".")
+           (substitute* "git-quick-stats"
+             (("/usr/bin/env bash") (string-append (assoc-ref %build-inputs "bash")
+                                                   "/bin/bash")))
+           (install-file "git-quick-stats" (string-append %output "/bin"))
+           #t)))
+    (home-page "https://github.com/arzzen/git-quick-stats/")
+    (synopsis "Git quick statistics")
+    (description "This package provides a Git quick statistics is a simple and
+efficient way to access various statistics in git repository.")
+    (license license:expat)))
