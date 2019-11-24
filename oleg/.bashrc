@@ -68,6 +68,7 @@ export GUIX_GITHUB_TOKEN="***REMOVED***"
 
 if [ -d "/run/current-system" ]
 then
+    export JENKINS_URL="http://localhost:8090"
     true
 else
     . "$HOME/.guix-profile/etc/profile"
@@ -1361,4 +1362,17 @@ guix-pull-commit-me-and-root()
 {
     commit="$1"
     guix pull --commit="$commit"; sudo -i guix pull --commit="$commit"
+}
+
+jenkins-build-project-branch()
+{
+    project="$1"
+    branch="$2"
+    url="$JENKINS_URL/job/guix/job/$project/job/$branch"
+
+    curl -u "admin:$(pass show jenkins/admin)" "$url/build"                     \
+         -H 'Content-type: application/x-www-form-urlencoded; charset=UTF-8'    \
+         --data ''
+
+    echo "$url/lastBuild/console"
 }
