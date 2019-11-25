@@ -470,6 +470,9 @@
   "Download video."
   (run-shell-command "exec xterm -name alsamixer -e alsamixer"))
 
+(defcommand quassel-monitor () ()
+  (run-or-raise "quassel" '(:class "quassel" :title "Chat Monitor")))
+
 (defcommand run-or-raise-xterm () ()
   "Start or focus XTerm."
   (run-or-raise
@@ -1153,7 +1156,7 @@
   (define-key *top-map* (kbd "s-G") "notmuch")
   (define-key *top-map* (kbd "s-C") "org")
   (define-key *top-map* (kbd "C-s-C") "majordomo-find-project")
-  (define-key *top-map* (kbd "s-i") "guix-wigust")
+  (define-key *top-map* (kbd "s-i") "quassel-monitor")
   (define-key *top-map* (kbd "s-!") "gmove-and-follow 1")
   (define-key *top-map* (kbd "s-@") "gmove-and-follow 2")
   (define-key *top-map* (kbd "s-#") "gmove-and-follow 3")
