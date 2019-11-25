@@ -1,3 +1,6 @@
+pull:
+	xpanes -C 1 -c 'ssh -t {} -- sh -c "guix pull --url=https://cgit.duckdns.org/git/guix/guix && sudo -i guix pull --url=https://cgit.duckdns.org/git/guix/guix; read -n 1 -s -r -p \"Press any key to close.\""' guixsd workstation spb
+
 build-systems:
 	guix system build -L "fiore/modules" guixsd/guixsd.scm
 	guix system build -L "fiore/modules" guixsd/spb.scm
