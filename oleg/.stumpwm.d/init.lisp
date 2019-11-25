@@ -408,6 +408,9 @@
 (defcommand python () ()
   (term-shell-command "python3"))
 
+(defcommand ghci () ()
+  (term-shell-command "guix environment --pure ghc -- ghci"))
+
 (defcommand neofetch () ()
   (term-shell-command "sh -c 'neofetch; read'"))
 
