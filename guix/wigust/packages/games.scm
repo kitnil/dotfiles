@@ -187,6 +187,9 @@ lots of other utilities frequently used in roguelikes.")
        ;; https://www.gog.com/game/tales_of_majeyal_embers_of_rage
        ("orcs.teaac" ,(local-file "/opt/tome4/rootfs/opt/tome4/game/t-engine4-linux64/game/addons/orcs.teaac"))
        ,@(package-inputs tome4)))
+    (native-inputs
+     `(("zip" ,zip)
+       ,@(package-native-inputs tome4)))
     (arguments
      (substitute-keyword-arguments
          (package-arguments tome4)
