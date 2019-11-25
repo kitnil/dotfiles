@@ -29,6 +29,7 @@ Master :gmail-remote:
 Slave :gmail-local:
 Patterns INBOX # Sync only INBOX
 MaxMessages 1000
+Expunge slave
 Sync Pull
 
 Group gmail-all
