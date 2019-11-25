@@ -781,7 +781,7 @@
 
 (flet ((firefox (url &optional dark)
          (run-shell-command (format nil (if dark
-                                            "GTK_THEME=Adwaita:dark firefox -P dark --new-window ~S"
+                                            "GTK_THEME=Adwaita:dark nixGLIntel firefox -P dark --new-window ~S"
                                             "firefox -P light --new-window ~S")
                                     url))))
 
