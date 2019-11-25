@@ -687,6 +687,9 @@
 (defcommand volume-increase () ()
   (run-shell-command "ponymix increase 5"))
 
+(defcommand volume-toggle () ()
+  (run-shell-command "ponymix toggle"))
+
 (define-interactive-keymap volume nil
   ((kbd "-") "volume-decrease")
   ((kbd "=") "volume-increase"))
@@ -1123,7 +1126,7 @@
 
 (defun bind-super ()
   (define-key *top-map* (kbd "s-+") "pavucontrol")
-  (define-key *top-map* (kbd "s-_") "pulsemixer")
+  (define-key *top-map* (kbd "s-_") "volume-toggle")
   (define-key *top-map* (kbd "s-r") "guile")
   (define-key *top-map* (kbd "s-R") "guix-repl")
   (define-key *top-map* (kbd "C-s-r") "python")
