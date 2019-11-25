@@ -52,7 +52,7 @@ wget wm xdisorg xml xorg)
                ghc-pandoc  ; Convert Markdown
 
                autojump
-               jq
+               jq jo
                nmap
 
                cloc            ; Count code
@@ -129,6 +129,7 @@ wget wm xdisorg xml xorg)
 
                tmux tmux-xpanes screen
                fbcat
+               shell-functools
 
                gsettings-desktop-schemas
                glib-networking
@@ -153,7 +154,7 @@ wget wm xdisorg xml xorg)
 
                octave
 
-               htop inxi iotop jnettop python-glances
+               htop inxi iotop jnettop python-glances bmon
 
                synergy
 

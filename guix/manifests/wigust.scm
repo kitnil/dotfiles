@@ -1,6 +1,8 @@
 (use-modules (gnu packages emacs)
              (wigust packages databases)
+             (wigust packages admin)
              (wigust packages emacs)
+             (wigust packages games)
              (wigust packages guix)
              (wigust packages pulseaudio)
              (wigust packages python)
@@ -46,6 +48,8 @@
 
   ruby-gitlab
   python-starred ; Fetch a list of stars from GitHub user
+  ok-sh
+  git-quick-stats
 
   guix-browse
   guix-latest-eval
@@ -61,6 +65,9 @@
 
   xterm-my
   qemu-my
+
+  tome4-with-addons
+  quickwall
   
   guix-wigust-packages-emacs))
 
