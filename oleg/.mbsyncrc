@@ -27,16 +27,12 @@ SubFolders Verbatim
 Channel gmail
 Master :gmail-remote:
 Slave :gmail-local:
-Patterns INBOX youtube # Sync only INBOX
+Patterns INBOX # Sync only INBOX
+MaxMessages 1000
 Sync Pull
-
-Channel gmail-sent
-Master :gmail-remote:"[Gmail]/Sent Mail"
-Slave :gmail-local:sent
 
 Group gmail-all
 Channel gmail
-Channel gmail-sent
 
 # Majordomo
 
