@@ -430,6 +430,9 @@
 (defcommand repl-racket () ()
   (term-shell-command "racket" :scrollbar t))
 
+(defcommand repl-nix () ()
+  (term-shell-command "nix repl '<nixpkgs>'" :scrollbar t))
+
 (defcommand repl-node () ()
   (term-shell-command "node" :scrollbar t))
 
