@@ -421,6 +421,9 @@
                       :title "notmuch"
                       :font '("-fa" "Monospace" "-fs" "8")))
 
+(defcommand repl-php () ()
+  (term-shell-command "php -a" :scrollbar t :title "repl-php"))
+
 (defcommand repl-python () ()
   (term-shell-command "python3" :scrollbar t :title "repl-python"))
 
