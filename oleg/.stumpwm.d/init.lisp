@@ -436,6 +436,12 @@
 (defcommand repl-node () ()
   (term-shell-command "node" :scrollbar t))
 
+(defcommand repl-sbcl () ()
+  (term-shell-command "rlwrap sbcl" :scrollbar t :title "sbcl"))
+
+(defcommand repl-chicken () ()
+  (term-shell-command "rlwrap csi" :scrollbar t :title "chicken"))
+
 (defcommand repl-ghci () ()
   (term-shell-command "guix environment --pure --ad-hoc ghc -- ghci"
                       :scrollbar t :title "ghci"))
