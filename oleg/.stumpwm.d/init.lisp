@@ -440,6 +440,10 @@
   (term-shell-command "guix environment --pure --ad-hoc ghc -- ghci"
                       :scrollbar t :title "ghci"))
 
+(defcommand repl-ruby () ()
+  (term-shell-command "guix environment --pure --ad-hoc ruby -- irb"
+                      :scrollbar t :title "ruby"))
+
 (defcommand neofetch () ()
   (term-shell-command "sh -c 'neofetch; read'"))
 
