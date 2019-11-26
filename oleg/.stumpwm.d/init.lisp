@@ -454,6 +454,10 @@
 (defcommand repl-java () ()
   (term-shell-command "docker run --rm -it openjdk:9" :scrollbar t :title "repl-java"))
 
+(defcommand repl-clisp () ()
+  (term-shell-command "guix environment --pure --ad-hoc clisp -- clisp"
+                      :scrollbar t :title "repl-clisp"))
+
 (defcommand repl-erlang () ()
   (term-shell-command "guix environment --pure --ad-hoc erlang -- erl"
                       :scrollbar t :title "repl-erlang"))
