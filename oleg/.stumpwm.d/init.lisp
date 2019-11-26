@@ -421,6 +421,11 @@
 (defcommand python () ()
   (term-shell-command "python3" :scrollbar t))
 
+(defcommand r-language () ()
+  (term-shell-command "R" :scrollbar t :title "r-language"))
+
+(define-key *top-map* (kbd "C-M-s-RET") "r-language")
+
 (defcommand ghci () ()
   (term-shell-command "guix environment --pure ghc -- ghci"
                       :scrollbar t :title "ghci"))
