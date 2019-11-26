@@ -426,6 +426,11 @@
 
 (define-key *top-map* (kbd "C-M-s-RET") "r-language")
 
+(defcommand repl-racket () ()
+  (term-shell-command "racket" :scrollbar t))
+
+(define-key *top-map* (kbd "C-s-R") "repl-racket")
+
 (defcommand ghci () ()
   (term-shell-command "guix environment --pure ghc -- ghci"
                       :scrollbar t :title "ghci"))
