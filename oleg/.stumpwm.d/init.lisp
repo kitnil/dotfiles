@@ -506,8 +506,6 @@
   "Open Rofi mycli."
   (run-shell-command "rofi -modi mycli:/home/oleg/bin/rofi-mycli -show mycli"))
 
-(define-key *top-map* (kbd "C-S-s-RET") "rofi-mycli")
-
 (defcommand rofi-window () ()
   "Open Rofi window list."
   (run-shell-command "rofi -modi window -show window"))
@@ -1188,6 +1186,7 @@
   (run-or-raise "" '(:title "Alerta - Mozilla Firefox")))
 
 (defun bind-super ()
+  (define-key *top-map* (kbd "C-S-s-RET") "rofi-mycli")
   (define-key *top-map* (kbd "C-s-s") "neofetch")
   (define-key *top-map* (kbd "s-+") "pavucontrol")
   (define-key *top-map* (kbd "s-_") "volume-toggle")
