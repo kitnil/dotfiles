@@ -442,6 +442,9 @@
 (defcommand repl-chicken () ()
   (term-shell-command "rlwrap csi" :scrollbar t :title "chicken"))
 
+(defcommand repl-java () ()
+  (term-shell-command "docker run --rm -it openjdk:9" :scrollbar t :title "java"))
+
 (defcommand repl-ghci () ()
   (term-shell-command "guix environment --pure --ad-hoc ghc -- ghci"
                       :scrollbar t :title "ghci"))
