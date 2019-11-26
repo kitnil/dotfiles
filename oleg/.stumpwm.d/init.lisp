@@ -445,6 +445,9 @@
 (defcommand repl-c () ()
   (term-shell-command "docker run --rm -it bic:latest" :scrollbar t :title "c"))
 
+(defcommand repl-hy () ()
+  (term-shell-command "docker run --rm -it hylang:python3.5-buster" :scrollbar t :title "hy"))
+
 (defcommand repl-java () ()
   (term-shell-command "docker run --rm -it openjdk:9" :scrollbar t :title "java"))
 
