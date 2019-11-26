@@ -444,6 +444,10 @@
   (term-shell-command "guix environment --pure --ad-hoc ruby -- irb"
                       :scrollbar t :title "ruby"))
 
+(defcommand repl-bash-pure () ()
+  (term-shell-command "env -i \"$(command -v bash)\" --login --noprofile --norc"
+                      :scrollbar t :title "bash"))
+
 (defcommand neofetch () ()
   (term-shell-command "sh -c 'neofetch; read'"))
 
