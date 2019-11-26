@@ -21,10 +21,10 @@ exec \${GUILE:-\$(which guile)} $GUILE_FLAGS -e '(@@ (`(s-chop-prefix "guile-" (
                                  (lambda (opt name arg loads)
                                    (display msg) (quit)))))
     (list (option '(#\v "version") #f #f
-                  (display-and-exit-proc "`(file-name-nondirectory (buffer-file-name))` version 0.0.1\n"))
+                  (display-and-exit-proc "`(s-chop-prefix "guile-" (file-name-nondirectory (buffer-file-name)))` version 0.0.1\n"))
           (option '(#\h "help") #f #f
                   (display-and-exit-proc
-                   "Usage: `(file-name-nondirectory (buffer-file-name))` ...")))))
+                   "Usage: `(s-chop-prefix "guile-" (file-name-nondirectory (buffer-file-name)))` ...")))))
 
 (define %default-options
   '())
@@ -39,4 +39,4 @@ exec \${GUILE:-\$(which guile)} $GUILE_FLAGS -e '(@@ (`(s-chop-prefix "guile-" (
                  (cons op loads))
                %default-options)))
 
-;;; `(file-name-nondirectory (buffer-file-name))` ends here
+;;; `(let* ((bfn (buffer-file-name)) (file (s-chop-prefix "guile-" (file-name-nondirectory bfn))) (directory (file-name-directory bfn))) (rename-buffer file) (setq buffer-file-name (concat directory file)) file)` ends here
