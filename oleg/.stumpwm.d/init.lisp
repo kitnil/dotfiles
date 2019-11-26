@@ -484,6 +484,9 @@
   (term-shell-command "env -i \"$(command -v bash)\" --login --noprofile --norc"
                       :scrollbar t :title "repl-bash-pure"))
 
+(defcommand docker-debian () ()
+  (term-shell-command "docker run --rm -it debian:10" :scrollbar t :title "docker-debian"))
+
 (defcommand neofetch () ()
   (term-shell-command "sh -c 'neofetch; read'"))
 
