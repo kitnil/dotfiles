@@ -358,12 +358,17 @@
 ;;; Misc
 ;;;
 
-(defun term-shell-command (command &key (terminal 'xterm) (color (if dark-theme "dark" "light")) (font nil) (title nil))
+(defun term-shell-command (command &key
+                                     (terminal 'xterm)
+                                     (color (if dark-theme "dark" "light"))
+                                     (font nil)
+                                     (title nil)
+                                     (scrollbar nil))
   (run-shell-command
    (let ((terminal-name (string-downcase (symbol-name terminal))))
      (case terminal
        ((xterm)
-        (xterm-command :color color :command command :font font :title title))
+        (xterm-command :color color :command command :font font :title title :scrollbar scrollbar))
        ((st)
         (join (list terminal-name
                     *st-font-flag* *st-font*
@@ -409,7 +414,8 @@
   (term-shell-command "python3"))
 
 (defcommand ghci () ()
-  (term-shell-command "guix environment --pure ghc -- ghci"))
+  (term-shell-command "guix environment --pure ghc -- ghci"
+                      :scrollbar t))
 
 (defcommand neofetch () ()
   (term-shell-command "sh -c 'neofetch; read'"))
@@ -508,7 +514,12 @@
       (progn (message "small") 1)
       (progn (message "big") 0)))
 
-(defun xterm-command (&key (color (if dark-theme "dark" "light")) (command nil) (title nil) (font nil))
+(defun xterm-command (&key
+                        (color (if dark-theme "dark" "light"))
+                        (command nil)
+                        (title nil)
+                        (font nil)
+                        (scrollbar nil))
   (join `(,*xterm-command*
           ;; Make sure XTerm terminal size is appropriate for current StumpWM frame.
           ,@(if font
@@ -517,7 +528,7 @@
                     '("-fa" "Monospace" "-fs" "8")
                     '()))
           "-sl" "1000000" ;number of lines
-          ,*xterm-no-scrollbar*
+          ,(if scrollbar "-sb" *xterm-no-scrollbar*)
           ,(if (string= color "light") *xterm-theme-light* *xterm-theme-dark*)
           ,@(if title `("-title" ,title) '())
           ,@(if command `("-e" ,command) '()))))
