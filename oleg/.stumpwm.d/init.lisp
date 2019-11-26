@@ -442,6 +442,9 @@
 (defcommand repl-emacs () ()
   (term-shell-command "emacs -nw -q -e 'ielm'" :scrollbar t :title "repl-emacs"))
 
+(defcommand repl-ocaml () ()
+  (term-shell-command "guix environment --pure --ad-hoc ocaml -- ocaml" :scrollbar t :title "repl-ocaml"))
+
 (defcommand repl-octave () ()
   (term-shell-command "octave" :scrollbar t :title "repl-octave"))
 
