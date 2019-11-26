@@ -1146,6 +1146,7 @@
   (define-key *top-map* (kbd "s-+") "pavucontrol")
   (define-key *top-map* (kbd "s-_") "volume-toggle")
   (define-key *top-map* (kbd "s-r") "guile")
+  (define-key *top-map* (kbd "M-s-r") "ghci")
   (define-key *top-map* (kbd "s-R") "guix-repl")
   (define-key *top-map* (kbd "C-s-r") "python")
   (define-key *top-map* (kbd "s-f") "fullscreen")
