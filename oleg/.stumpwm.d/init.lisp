@@ -415,7 +415,7 @@
 
 (defcommand ghci () ()
   (term-shell-command "guix environment --pure ghc -- ghci"
-                      :scrollbar t))
+                      :scrollbar t :title "ghci"))
 
 (defcommand neofetch () ()
   (term-shell-command "sh -c 'neofetch; read'"))
