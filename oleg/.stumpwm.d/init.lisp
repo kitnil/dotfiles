@@ -172,9 +172,12 @@
   "Start or focus icecat."
   (run-or-raise "icecat" '(:class "IceCat")))
 
+(defun firefox-command ()
+  (join `(,@(if dark-theme '("GTK_THEME=Adwaita:dark") nil) "nixGLIntel" "firefox")))
+
 (defcommand firefox () ()
   "Start of focus firefox."
-  (run-or-raise "nixGLIntel firefox" '(:class "Firefox")))
+  (run-or-raise (firefox-command) '(:class "Firefox")))
 
 (defcommand firefox-new-window () ()
   "Start Firefox."
@@ -1220,13 +1223,13 @@
   (run-commands "gselect 2")
   (unless (current-window)
     (run-shell-command "emacsclient -c")
-    (run-shell-command "GTK_THEME=Adwaita:dark nixGLIntel firefox")))
+    (run-shell-command (firefox-command))))
 
 (defcommand group-5-start-programs () ()
   (run-commands "gselect 5")
   (unless (current-window)
     (run-shell-command "emacsclient -c")
-    (run-shell-command "GTK_THEME=Adwaita:dark nixGLIntel firefox")))
+    (run-shell-command (firefox-command))))
 
 (defun frame-parameters-display-0 ()
   (define-frame-preference "Default" (0 NIL T :CLASS "quassel" :TITLE "Chat Monitor"))
