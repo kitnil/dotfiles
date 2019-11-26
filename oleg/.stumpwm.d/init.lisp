@@ -431,6 +431,11 @@
 
 (define-key *top-map* (kbd "C-s-R") "repl-racket")
 
+(defcommand repl-node () ()
+  (term-shell-command "node" :scrollbar t))
+
+(define-key *top-map* (kbd "C-M-s-R") "repl-node")
+
 (defcommand ghci () ()
   (term-shell-command "guix environment --pure ghc -- ghci"
                       :scrollbar t :title "ghci"))
