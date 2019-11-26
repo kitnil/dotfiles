@@ -22,6 +22,14 @@
 (defcommand speaker-disable () ()
   (run-shell-command "xset -b"))
 
+(defcommand xset-900 () ()
+  (run-shell-command "xset s 900 900")
+  (run-shell-command "xset dpms 900 900 900"))
+
+(defcommand xset-3600 () ()
+  (run-shell-command "xset s 3600 3600")
+  (run-shell-command "xset dpms 3600 3600 3600"))
+
 (speaker-disable)
 
 (defcommand current-window->clipboard () ()
