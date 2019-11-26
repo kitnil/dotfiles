@@ -920,6 +920,10 @@
   (progn (run-shell-command "emacsclient --eval '(plain-org-wiki)'")
          (run-shell-command "stumpish emacsclient")))
 
+(defcommand org-agenda () ()
+  (progn (run-shell-command "emacsclient --eval '(org-agenda)'")
+         (run-shell-command "stumpish emacsclient")))
+
 (defcommand guix-wigust () ()
   (progn (run-shell-command "emacsclient --eval '(let ((default-directory (expand-file-name \"~/src/guix-wigust/guix/wigust/packages/\"))) (counsel-find-file))'")
          (run-shell-command "stumpish emacsclient")))
@@ -1161,6 +1165,7 @@
   (define-key *top-map* (kbd "s-g") "gnus")
   (define-key *top-map* (kbd "s-G") "notmuch")
   (define-key *top-map* (kbd "s-C") "org")
+  (define-key *top-map* (kbd "C-s-c") "org-agenda")
   (define-key *top-map* (kbd "C-s-C") "majordomo-find-project")
   (define-key *top-map* (kbd "s-i") "quassel-monitor")
   (define-key *top-map* (kbd "s-!") "gmove-and-follow 1")
