@@ -439,6 +439,9 @@
 (defcommand repl-nix () ()
   (term-shell-command "nix repl '<nixpkgs>'" :scrollbar t :title "repl-nix"))
 
+(defcommand repl-emacs () ()
+  (term-shell-command "emacs -nw -q -e 'ielm'" :scrollbar t :title "repl-emacs"))
+
 (defcommand repl-octave () ()
   (term-shell-command "octave" :scrollbar t :title "repl-octave"))
 
