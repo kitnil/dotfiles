@@ -418,32 +418,24 @@
                       :title "notmuch"
                       :font '("-fa" "Monospace" "-fs" "8")))
 
-(defcommand python () ()
+(defcommand repl-python () ()
   (term-shell-command "python3" :scrollbar t))
 
-(defcommand r-language () ()
-  (term-shell-command "R" :scrollbar t :title "r-language"))
-
-(define-key *top-map* (kbd "C-M-s-RET") "r-language")
+(defcommand repl-r () ()
+  (term-shell-command "R" :scrollbar t :title "repl-r"))
 
 (defcommand repl-racket () ()
   (term-shell-command "racket" :scrollbar t))
 
-(define-key *top-map* (kbd "C-s-R") "repl-racket")
-
 (defcommand repl-node () ()
   (term-shell-command "node" :scrollbar t))
 
-(define-key *top-map* (kbd "C-M-s-R") "repl-node")
-
-(defcommand ghci () ()
+(defcommand repl-ghci () ()
   (term-shell-command "guix environment --pure ghc -- ghci"
                       :scrollbar t :title "ghci"))
 
 (defcommand neofetch () ()
   (term-shell-command "sh -c 'neofetch; read'"))
-
-(define-key *top-map* (kbd "C-s-s") "neofetch")
 
 (defcommand rofi-drun () ()
   "Open Rofi to launch `.desktop' file."
@@ -1166,12 +1158,16 @@
   (define-key *top-map* (kbd "C-s-E") "emacsclient-new"))
 
 (defun bind-super ()
+  (define-key *top-map* (kbd "C-s-s") "neofetch")
   (define-key *top-map* (kbd "s-+") "pavucontrol")
   (define-key *top-map* (kbd "s-_") "volume-toggle")
   (define-key *top-map* (kbd "s-r") "guile")
-  (define-key *top-map* (kbd "M-s-r") "ghci")
+  (define-key *top-map* (kbd "M-s-r") "repl-ghci")
   (define-key *top-map* (kbd "s-R") "guix-repl")
-  (define-key *top-map* (kbd "C-s-r") "python")
+  (define-key *top-map* (kbd "C-s-r") "repl-python")
+  (define-key *top-map* (kbd "C-M-s-RET") "repl-r")
+  (define-key *top-map* (kbd "C-s-R") "repl-racket")
+  (define-key *top-map* (kbd "C-M-s-R") "repl-node")
   (define-key *top-map* (kbd "s-f") "fullscreen")
   (define-key *top-map* (kbd "s-H") "glances")
   (define-key *top-map* (kbd "s-t") "top")
