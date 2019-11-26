@@ -452,6 +452,9 @@
   (term-shell-command "guix environment --pure --ad-hoc ghc -- ghci"
                       :scrollbar t :title "ghci"))
 
+(defcommand repl-go () ()
+  (term-shell-command "gore" :scrollbar t))
+
 (defcommand repl-ruby () ()
   (term-shell-command "guix environment --pure --ad-hoc ruby -- irb"
                       :scrollbar t :title "ruby"))
