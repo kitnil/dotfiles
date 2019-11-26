@@ -397,10 +397,10 @@
   (term-shell-command "htop"))
 
 (defcommand guile () ()
-  (term-shell-command "guile"))
+  (term-shell-command "guile" :scrollbar t))
 
 (defcommand guix-repl () ()
-  (term-shell-command "guix repl"))
+  (term-shell-command "guix repl" :scrollbar t))
 
 (defcommand guix-pull () ()
   (term-shell-command "sh -c 'guix pull; read'"))
@@ -411,7 +411,7 @@
                       :font '("-fa" "Monospace" "-fs" "8")))
 
 (defcommand python () ()
-  (term-shell-command "python3"))
+  (term-shell-command "python3" :scrollbar t))
 
 (defcommand ghci () ()
   (term-shell-command "guix environment --pure ghc -- ghci"
