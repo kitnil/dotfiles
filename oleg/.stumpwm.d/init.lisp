@@ -442,6 +442,9 @@
 (defcommand repl-chicken () ()
   (term-shell-command "rlwrap csi" :scrollbar t :title "chicken"))
 
+(defcommand repl-c () ()
+  (term-shell-command "docker run --rm -it bic:latest" :scrollbar t :title "c"))
+
 (defcommand repl-java () ()
   (term-shell-command "docker run --rm -it openjdk:9" :scrollbar t :title "java"))
 
