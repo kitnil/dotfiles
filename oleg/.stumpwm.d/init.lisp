@@ -684,11 +684,11 @@
 
 (defcommand trans-en-ru () ()
   "Run `xterm' with `trans' in interactive mode."
-  (run-shell-command "exec xterm -name trans -e 'trans -I en:ru'"))
+  (term-shell-command "trans -I en:ru" :title "trans-en-ru"))
 
 (defcommand trans-ru-en () ()
   "Run `xterm' with `trans' in interactive mode."
-  (run-shell-command "exec xterm -name trans -e 'trans -I ru:en'"))
+  (term-shell-command "trans -I ru:en" :title "trans-ru-en"))
 
 (define-key *root-map* (kbd "e") "emacsclient")
 
