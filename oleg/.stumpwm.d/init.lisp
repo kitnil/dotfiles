@@ -437,7 +437,7 @@
   (term-shell-command "node" :scrollbar t))
 
 (defcommand repl-ghci () ()
-  (term-shell-command "guix environment --pure ghc -- ghci"
+  (term-shell-command "guix environment --pure --ad-hoc ghc -- ghci"
                       :scrollbar t :title "ghci"))
 
 (defcommand neofetch () ()
