@@ -421,6 +421,9 @@
                       :title "notmuch"
                       :font '("-fa" "Monospace" "-fs" "8")))
 
+(defcommand repl-gdb () ()
+  (term-shell-command "gdb" :scrollbar t :title "repl-gdb"))
+
 (defcommand repl-php () ()
   (term-shell-command "php -a" :scrollbar t :title "repl-php"))
 
