@@ -448,6 +448,10 @@
 (defcommand repl-java () ()
   (term-shell-command "docker run --rm -it openjdk:9" :scrollbar t :title "java"))
 
+(defcommand repl-lua () ()
+  (term-shell-command "guix environment --pure --ad-hoc lua -- lua"
+                      :scrollbar t :title "lua"))
+
 (defcommand repl-ghci () ()
   (term-shell-command "guix environment --pure --ad-hoc ghc -- ghci"
                       :scrollbar t :title "ghci"))
