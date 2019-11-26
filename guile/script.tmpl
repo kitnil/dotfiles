@@ -1,6 +1,5 @@
-#!`(executable-find "sh")`
-# -*- scheme -*-
-exec \${GUILE:-\$(which guile)} $GUILE_FLAGS -e '(@@ (`(s-chop-prefix "guile-" (file-name-nondirectory (buffer-file-name)))`) main)' -s "\$0" "$@"
+#!/run/current-system/profile/bin/guile \
+--no-auto-compile -e (`(s-chop-prefix "guile-" (file-name-nondirectory (buffer-file-name)))`) -s
 !#
 
 ;;;; `(s-chop-prefix "guile-" (file-name-nondirectory (buffer-file-name)))` --- SYNOPSIS
@@ -8,7 +7,8 @@ exec \${GUILE:-\$(which guile)} $GUILE_FLAGS -e '(@@ (`(s-chop-prefix "guile-" (
 ;;;; Released under the GNU GPLv3 or any later version.
 
 (define-module (`(s-chop-prefix "guile-" (file-name-nondirectory (buffer-file-name)))`)
-  #:use-module (srfi srfi-37))
+  #:use-module (srfi srfi-37)
+  #:export (main))
 
 ;;; Commentary:
 ;;;
@@ -37,6 +37,7 @@ exec \${GUILE:-\$(which guile)} $GUILE_FLAGS -e '(@@ (`(s-chop-prefix "guile-" (
                  (error "Unrecognized option \`~A'" name))
                (lambda (op loads)
                  (cons op loads))
-               %default-options)))
+               %default-options))
+  )
 
 ;;; `(let* ((bfn (buffer-file-name)) (file (s-chop-prefix "guile-" (file-name-nondirectory bfn))) (directory (file-name-directory bfn))) (rename-buffer file) (setq buffer-file-name (concat directory file)) file)` ends here
