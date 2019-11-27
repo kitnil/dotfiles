@@ -869,6 +869,11 @@
 (defun current-window-height ()
   (format-expand *window-formatters* "%h" (current-window)))
 
+(defcommand twitch-channel-chat (channel) ((:string "channel: "))
+  (run-shell-command
+   (concat "chromium --app=https://www.twitch.tv/popout/"
+           channel "/chat?popout=")))
+
 (flet ((firefox (url &optional dark)
          (run-shell-command (format nil (if dark
                                             "GTK_THEME=Adwaita:dark nixGLIntel firefox -P dark --new-window ~S"
