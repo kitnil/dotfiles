@@ -11,7 +11,7 @@ ERRORS=()
 for f in $(find "$DIRECTORY" -type f -not -path '*.git*' | sort -u); do
 	if file "$f" | grep --quiet shell; then
 		{
-			shellcheck "$f" && echo "[OK]: successfully linted $f"
+			shellcheck "$f" -e SC2046 -e SC2068 -e SC2086 && echo "[OK]: successfully linted $f"
 		} || {
 			# add to errors
 			ERRORS+=("$f")
