@@ -65,6 +65,7 @@ gpa()
 }
 
 export GUIX_GITHUB_TOKEN="***REMOVED***"
+export GUIX_BUILD_OPTIONS="--no-grafts"
 
 if [ -d "/run/current-system" ]
 then
