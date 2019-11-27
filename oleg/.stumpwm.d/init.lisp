@@ -528,8 +528,7 @@
                       :scrollbar t :title "repl-lua"))
 
 (defcommand repl-ghci () ()
-  (term-shell-command "guix environment --pure --ad-hoc ghc -- ghci"
-                      :scrollbar t :title "repl-ghci"))
+  (term-shell-command "ghci" :scrollbar t :title "repl-ghci"))
 
 (defcommand repl-go () ()
   (term-shell-command "gore" :scrollbar t :title "repl-go"))
