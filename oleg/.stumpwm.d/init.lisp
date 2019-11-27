@@ -383,6 +383,11 @@
 (defcommand youtube-dl-music-play () ()
   (youtube-dl-command (get-x-selection) :music t :ad-hoc "mpv {}"))
 
+(defcommand youtube-dl-music-play-url (url) ((:string "URL: "))
+  (youtube-dl-command url
+                      :music t
+                      :ad-hoc "mpv --no-stop-screensaver --title=youtube-dl-music --no-resume-playback {}"))
+
 
 ;;;
 ;;; Misc
