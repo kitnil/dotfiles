@@ -60,12 +60,25 @@
 (progn
   (set-msg-border-width 4)
   (setf *ignore-wm-inc-hints* t)
+  (setf *window-border-style* :thin)
   (setf *maxsize-border-width* 3)
   (setf *message-window-y-padding* 3)
   (setf *normal-border-width* 3)
-  (setf *transient-border-width* 3)
-  (setf *window-border-style* :thin)
-  )
+  (setf *transient-border-width* 3))
+
+(defcommand toggle-window-borders () ()
+  (if (or (= *maxsize-border-width* 3)
+          (= *message-window-y-padding* 3)
+          (= *normal-border-width* 3)
+          (= *transient-border-width* 3))
+      (progn (setf *maxsize-border-width* 0)
+             (setf *message-window-y-padding* 0)
+             (setf *normal-border-width* 0)
+             (setf *transient-border-width* 0))
+      (progn (setf *maxsize-border-width* 3)
+             (setf *message-window-y-padding* 3)
+             (setf *normal-border-width* 3)
+             (setf *transient-border-width* 3))))
 
 
 ;;;
