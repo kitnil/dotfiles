@@ -378,10 +378,13 @@
   (youtube-dl-command (get-x-selection) :music t))
 
 (defcommand youtube-dl-play () ()
-  (youtube-dl-command (get-x-selection) :ad-hoc "mpv {}"))
+  (youtube-dl-command (get-x-selection)
+                      :ad-hoc "mpv --no-stop-screensaver --title=youtube-dl-music --no-resume-playback {}"))
 
 (defcommand youtube-dl-music-play () ()
-  (youtube-dl-command (get-x-selection) :music t :ad-hoc "mpv {}"))
+  (youtube-dl-command (get-x-selection)
+                      :music t
+                      :ad-hoc "mpv --no-stop-screensaver --title=youtube-dl-music --no-resume-playback {}"))
 
 (defcommand youtube-dl-music-play-url (url) ((:string "URL: "))
   (youtube-dl-command url
@@ -1341,6 +1344,7 @@
   ;; (define-frame-preference "Default" (2 NIL T :CLASS "t-engine"))
   (define-frame-preference "Default" (4 NIL T :CLASS "mpv" :TITLE "emacs-emms"))
   (define-frame-preference "Default" (4 NIL T :CLASS "mpv" :TITLE "firefox"))
+  (define-frame-preference "Default" (1 NIL T :CLASS "mpv" :TITLE "youtube-dl-music"))
   (define-frame-preference "3" (0 NIL T :TITLE "http://localhost:8090 - Dashboard [Jenkins] - Mozilla Firefox"))
   (define-frame-preference "Default" (1 NIL NIL :CLASS "obs"))
   (define-frame-preference "2" (0 NIL NIL :CLASS "Emacs"))
