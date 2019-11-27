@@ -425,7 +425,7 @@
 (defcommand htop () ()
   (term-shell-command "htop"))
 
-(defcommand guile () ()
+(defcommand repl-guile () ()
   (term-shell-command "guile" :scrollbar t))
 
 (defcommand guix-repl () ()
@@ -1226,7 +1226,7 @@
   (define-key *top-map* (kbd "C-s-s") "neofetch")
   (define-key *top-map* (kbd "s-+") "pavucontrol")
   (define-key *top-map* (kbd "s-_") "volume-toggle")
-  (define-key *top-map* (kbd "s-r") "guile")
+  (define-key *top-map* (kbd "s-r") "repl-guile")
   (define-key *top-map* (kbd "M-s-r") "repl-ghci")
   (define-key *top-map* (kbd "s-R") "guix-repl")
   (define-key *top-map* (kbd "C-s-r") "repl-python")
