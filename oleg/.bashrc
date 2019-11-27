@@ -901,7 +901,7 @@ ansible-fetch-root-history()
     git -C "$HOME/ansible-out/files" commit -m 'Update.'
 }
 
-history-top()
+bash-history-top()
 {
     # https://www.commandlinefu.com/commands/view/604/list-of-commands-you-use-most-often
     history | awk '{a[$2]++}END{for(i in a){print a[i] " " i}}' | sort -rn | head
