@@ -425,12 +425,6 @@
 (defcommand htop () ()
   (term-shell-command "htop"))
 
-(defcommand repl-guile () ()
-  (term-shell-command "guile" :scrollbar t))
-
-(defcommand guix-repl () ()
-  (term-shell-command "guix repl" :scrollbar t))
-
 (defcommand guix-pull () ()
   (term-shell-command "sh -c 'guix pull; read'"))
 
@@ -438,6 +432,17 @@
   (term-shell-command "sh -c 'TMOUT=20; echo \"Fetch mail.\"; notmuch new; notify-send \"Mail fetched.\"; read -p \"Press Enter to close.\"'"
                       :title "notmuch"
                       :font '("-fa" "Monospace" "-fs" "8")))
+
+
+;;;
+;;; REPL
+;;;
+
+(defcommand repl-guile () ()
+  (term-shell-command "guile" :scrollbar t))
+
+(defcommand guix-repl () ()
+  (term-shell-command "guix repl" :scrollbar t))
 
 (defcommand repl-gdb () ()
   (term-shell-command "gdb" :scrollbar t :title "repl-gdb"))
@@ -514,6 +519,11 @@
 (defcommand repl-bash-pure () ()
   (term-shell-command "env -i \"$(command -v bash)\" --login --noprofile --norc"
                       :scrollbar t :title "repl-bash-pure"))
+
+
+;;;
+;;; Docker
+;;;
 
 (defcommand docker-debian () ()
   (term-shell-command "docker run --rm -it debian:10" :scrollbar t :title "docker-debian"))
