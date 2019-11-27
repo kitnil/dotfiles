@@ -354,33 +354,33 @@
 (defvar *youtube-dl-output-music*
   (youtube-dl-output *music-directory*))
 
-(defcommand youtube-dl () ()
-  (term-shell-command (format nil "sh -c 'TMOUT=20; youtube-dl ~s; read -p \"Press Enter to close.\"'"
-                              (let ((url (get-x-selection)))
-                                (if (string-contains "list=" url)
-                                    (car (split-string url "&"))
-                                    url)))
-                      :title "youtube-dl"
+(defun youtube-dl-command (url &key (ad-hoc nil) (music nil))
+  (message (format nil "Download ~s." url))
+  (term-shell-command (format nil "sh -c 'TMOUT=20; ~a; read -p \"Press Enter to close.\"'"
+                              (join `("youtube-dl"
+                                      ,@(if music
+                                            (list (format nil "--output=~s" *youtube-dl-output-music*))
+                                            nil)
+                                      ,@(if ad-hoc
+                                            (list (format nil "--exec ~s" ad-hoc))
+                                            nil)
+                                      ,(format nil "~s" (if (string-contains "list=" url)
+                                                            (car (split-string url "&"))
+                                                            url)))))
+                      :title (if music "youtube-dl-music" "youtube-dl")
                       :font '("-fa" "Monospace" "-fs" "8")))
 
+(defcommand youtube-dl () ()
+  (youtube-dl-command (get-x-selection)))
+
 (defcommand youtube-dl-music () ()
-  (let ((command (format nil "sh -c 'TMOUT=20; youtube-dl --output=~s ~s; read -p \"Press Enter to close.\"'"
-                         *youtube-dl-output-music*
-                         (let ((url (get-x-selection)))
-                           (if (string-contains "list=" url)
-                               (car (split-string url "&"))
-                               url)))))
-    (message (format nil "Download ~s" url))
-    (term-shell-command command
-                        :title "youtube-dl-music"
-                        :font '("-fa" "Monospace" "-fs" "8"))))
+  (youtube-dl-command (get-x-selection) :music t))
 
 (defcommand youtube-dl-play () ()
-  "Download video and play it."
-  (run-shell-command
-   (join '("exec" "xterm" "-name" "youtube-dl" "-e" "youtube-dl"
-           "--exec" "'mpv {}'"
-           "$(xclip -o -selection clipboard)"))))
+  (youtube-dl-command (get-x-selection) :ad-hoc "mpv {}"))
+
+(defcommand youtube-dl-music-play () ()
+  (youtube-dl-command (get-x-selection) :music t :ad-hoc "mpv {}"))
 
 
 ;;;
