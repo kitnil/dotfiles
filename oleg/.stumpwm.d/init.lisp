@@ -358,6 +358,7 @@
   (message (format nil "Download ~s." url))
   (term-shell-command (format nil "sh -c 'TMOUT=20; ~a; read -p \"Press Enter to close.\"'"
                               (join `("youtube-dl"
+                                      "--restrict-filenames"
                                       ,@(if music
                                             (list (format nil "--output=~s" *youtube-dl-output-music*))
                                             nil)
