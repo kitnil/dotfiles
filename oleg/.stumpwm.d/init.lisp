@@ -567,11 +567,11 @@
    (join (list *xterm-command* *xterm-theme-dark* *xterm-no-scrollbar*))
    '(:class "XTerm")))
 
-(defcommand run-or-raise-xterm-named (title) ((:string "title: "))
+(defcommand run-xterm-named (title) ((:string "title: "))
   "Start or focus XTerm."
-  (run-or-raise
-   (join (list *xterm-command* *xterm-no-scrollbar* "-sl" "100000" "-title" title))
-   `(:class "XTerm" :title ,title)))
+  (run-shell-command (xterm-command :color (if dark-theme "dark" "light")
+                                    :title title
+                                    :scrollbar t)))
 
 (defun small-framep ()
   (cond ((string= (class-name (class-of (current-group))) "FLOAT-GROUP") nil)
@@ -793,7 +793,7 @@
 (define-key *root-map* (kbd "c") "run-xterm")
 (define-key *root-map* (kbd "C-c") "run-xterm")
 (define-key *root-map* (kbd "C-M-c") "run-xterm")
-(define-key *top-map* (kbd "C-s-RET") "run-or-raise-xterm-named")
+(define-key *top-map* (kbd "C-s-RET") "run-xterm-named")
 
 (defcommand xfce-terminal () ()
   (run-shell-command "xfce4-terminal"))
