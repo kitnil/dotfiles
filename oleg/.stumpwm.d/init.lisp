@@ -84,6 +84,14 @@
   (with-output-to-string (stream)
     (join-to-stream stream list delimiter)))
 
+;; https://stackoverflow.com/a/34628127
+(defun string-contains (string1 string2)
+  (cond
+   ((zerop (length string1)) nil) ; string1 is empty (no need to test it every time)
+   ((> (length string1) (length string2)) nil) ; string1 is longer than string2
+   ((string= string1 (subseq string2 0 (length string1))) string1) ; string2 starts with string1
+   (t (string-contains string1 (subseq string2 1))))) ; otherwise shorten string2 by 1 and start over
+
 ;; Don't set it to “sloppy”,
 ;; because it could switch window after switch desktop
 (setf *mouse-focus-policy* :click)
@@ -347,15 +355,25 @@
   (youtube-dl-output *music-directory*))
 
 (defcommand youtube-dl () ()
-  (term-shell-command (join (list "youtube-dl" (get-x-selection)))))
+  (term-shell-command (format nil "sh -c 'TMOUT=20; youtube-dl ~s; read -p \"Press Enter to close.\"'"
+                              (let ((url (get-x-selection)))
+                                (if (string-contains "list=" url)
+                                    (car (split-string url "&"))
+                                    url)))
+                      :title "youtube-dl"
+                      :font '("-fa" "Monospace" "-fs" "8")))
 
 (defcommand youtube-dl-music () ()
-  (let ((command (join (list "youtube-dl"
-                             "--output"
-                             (single-quote-string *youtube-dl-output-music*)
-                             (get-x-selection)))))
-    (message (format nil "Run: ~a" command))
-    (term-shell-command command)))
+  (let ((command (format nil "sh -c 'TMOUT=20; youtube-dl --output=~s ~s; read -p \"Press Enter to close.\"'"
+                         *youtube-dl-output-music*
+                         (let ((url (get-x-selection)))
+                           (if (string-contains "list=" url)
+                               (car (split-string url "&"))
+                               url)))))
+    (message (format nil "Download ~s" url))
+    (term-shell-command command
+                        :title "youtube-dl-music"
+                        :font '("-fa" "Monospace" "-fs" "8"))))
 
 (defcommand youtube-dl-play () ()
   "Download video and play it."
@@ -1302,6 +1320,8 @@
   (define-frame-preference "Default" (0 NIL T :CLASS "quassel" :TITLE "Chat Monitor"))
   (define-frame-preference "Default" (3 NIL T :CLASS "XTerm" :TITLE "alerta"))
   (define-frame-preference "Default" (0 NIL T :CLASS "XTerm" :TITLE "notmuch"))
+  (define-frame-preference "Default" (0 NIL T :CLASS "XTerm" :TITLE "youtube-dl"))
+  (define-frame-preference "Default" (0 NIL T :CLASS "XTerm" :TITLE "youtube-dl-music"))
   ;; (define-frame-preference "Default" (2 NIL T :CLASS "t-engine"))
   (define-frame-preference "Default" (4 NIL T :CLASS "mpv" :TITLE "emacs-emms"))
   (define-frame-preference "Default" (4 NIL T :CLASS "mpv" :TITLE "firefox"))
