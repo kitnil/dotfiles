@@ -487,6 +487,9 @@
 (defcommand repl-emacs () ()
   (term-shell-command "emacs -nw -q -e 'ielm'" :scrollbar t :title "repl-emacs"))
 
+(defcommand repl-kawa () ()
+  (term-shell-command "guix environment --ad-hoc coreutils openjdk kawa rlwrap -- rlwrap kawa" :scrollbar t :title "repl-kawa"))
+
 (defcommand repl-ocaml () ()
   (term-shell-command "guix environment --pure --ad-hoc ocaml -- ocaml" :scrollbar t :title "repl-ocaml"))
 
