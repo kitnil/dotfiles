@@ -502,6 +502,9 @@
 (defcommand repl-sbcl () ()
   (term-shell-command "rlwrap sbcl" :scrollbar t :title "repl-sbcl"))
 
+(defcommand repl-chez-scheme () ()
+  (term-shell-command "guix environment --ad-hoc chez-scheme -- chez-scheme" :scrollbar t :title "repl-chez-scheme"))
+
 (defcommand repl-chicken () ()
   (term-shell-command "rlwrap csi" :scrollbar t :title "repl-chicken"))
 
