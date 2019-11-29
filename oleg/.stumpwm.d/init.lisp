@@ -60,11 +60,7 @@
 (progn
   (set-msg-border-width 4)
   (setf *ignore-wm-inc-hints* t)
-  (setf *window-border-style* :thin)
-  (setf *maxsize-border-width* 3)
-  (setf *message-window-y-padding* 3)
-  (setf *normal-border-width* 3)
-  (setf *transient-border-width* 3))
+  (setf *window-border-style* :thin))
 
 (defcommand toggle-window-borders () ()
   (if (or (= *maxsize-border-width* 3)
@@ -788,7 +784,6 @@
 (setf *mode-line-pad-x* 10)
 (setf *mode-line-pad-y* 5)
 (setf *mode-line-border-width* 0)
-(mode-line)
 
 (defcommand warp-mouse-active-frame () ()
   "Move mouse cursor to the top right of current frame."
@@ -1380,7 +1375,12 @@
 (cond ((string= (getenv "DISPLAY") ":0")
        (restore-from-file "/home/oleg/src/dotfiles/oleg/.stumpwm.d/desktop/9.lisp")
        (frame-parameters-display-0)
-       (bind-super))
+       (bind-super)
+       (setf *maxsize-border-width* 0)
+       (setf *message-window-y-padding* 0)
+       (setf *normal-border-width* 0)
+       (setf *transient-border-width* 0)
+       (set-background-dark))
 
       ((string= (getenv "DISPLAY") ":1")
        (run-shell-command "xsetroot -solid grey")
@@ -1390,6 +1390,10 @@
        (define-frame-preference "Default" (0 NIL T :CLASS "Qemu-system-x86_64"))
        (swm-gaps:toggle-gaps) ;XXX: Make declarative.
        (bind-super)
-       (define-key *top-map* (kbd "s-m") "alerta"))
+       (define-key *top-map* (kbd "s-m") "alerta")
+       (setf *maxsize-border-width* 3)
+       (setf *message-window-y-padding* 3)
+       (setf *normal-border-width* 3)
+       (setf *transient-border-width* 3))
 
       (t (set-prefix-key (kbd "C-i"))))
