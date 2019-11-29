@@ -3499,7 +3499,8 @@ If given a prefix, patch in the branch directory instead."
         ("bitbucket.org" . "bitbucket")
         ("github.com" . "github")
         ("gitlab.com" . "gitlab")
-        ("git.savannah.gnu.org" . "gnu")))
+        ("git.savannah.gnu.org" . "gnu")
+        ("git.net-core.org" . "gitlab")))
 
 (with-eval-after-load 'forge
   (setq forge-alist
