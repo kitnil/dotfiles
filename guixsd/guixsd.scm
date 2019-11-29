@@ -501,7 +501,10 @@ EndSection")
                                                 (append (nginx-server-configuration-locations %cgit-configuration-nginx)
                                                         (list (git-http-nginx-location-configuration
                                                                (git-http-configuration
-                                                                (export-all? #t))))))
+                                                                (export-all? #t)))
+                                                              (nginx-location-configuration
+                                                               (uri "/.well-known")
+                                                               (body '("root /var/www;"))))))
                                                (listen '("80" "443 ssl"))
                                                (ssl-certificate (letsencrypt-certificate "cgit.duckdns.org"))
                                                (ssl-certificate-key (letsencrypt-key "cgit.duckdns.org")))))))
