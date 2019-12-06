@@ -55,6 +55,8 @@
   #:use-module (gnu packages pkg-config)
   #:use-module (gnu packages version-control)
   #:use-module (gnu packages xorg)
+  #:use-module (gnu packages wm)
+  #:use-module (gnu packages lisp-xyz)
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-1))
 
