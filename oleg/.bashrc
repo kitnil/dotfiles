@@ -206,6 +206,8 @@ activity()
     ps -ef | awk '{ print $1 }' | sort | uniq | wc -l;
 }
 
+alias t5='TMOUT=5'
+
 # https://www.gnu.org/software/emacs/manual/html_node/efaq/Disabling-backups.html
 alias ls='ls -B -p --color=auto'
 
