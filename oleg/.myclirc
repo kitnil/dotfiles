@@ -75,7 +75,7 @@ login_path_as_host = False
 
 # Cause result sets to be displayed vertically if they are too wide for the current window,
 # and using normal tabular format otherwise. (This applies to statements terminated by ; or \G.)
-auto_vertical_output = True
+auto_vertical_output = False
 
 # keyword casing preference. Possible values "lower", "upper", "auto"
 keyword_casing = auto
@@ -116,7 +116,7 @@ output.even-row = ""
 ps = "SELECT ID,USER,HOST,DB,COMMAND,TIME,STATE,TIME_MS,STAGE,MAX_STAGE FROM INFORMATION_SCHEMA.PROCESSLIST ORDER BY Time DESC"
 info = "SELECT INFO FROM INFORMATION_SCHEMA.PROCESSLIST WHERE ID='$1'"
 info-all = "SELECT ID,TIME,INFO FROM INFORMATION_SCHEMA.PROCESSLIST WHERE INFO IS NOT NULL ORDER BY Time DESC"
-kill = "SELECT GROUP_CONCAT(CONCAT('KILL ',id,';') SEPARATOR ' ') FROM information_schema.processlist WHERE user='$1'"
+kill = "SELECT GROUP_CONCAT(CONCAT('KILL ',id,';') SEPARATOR ';') FROM information_schema.processlist WHERE user='$1'"
 schema = "SELECT * FROM information_schema.columns WHERE TABLE_SCHEMA='$1' ORDER BY table_name,ordinal_position"
 hostname = SHOW VARIABLES WHERE Variable_name = 'hostname'
 config = SHOW VARIABLES
@@ -124,6 +124,8 @@ connections-current-show = show status where `variable_name` = 'Threads_connecte
 connections-max-show = show variables like 'max_connections'
 connections-max-set-1000 = set global max_connections=1000
 connections-max-set-default = set global max_connections=500
+version = SHOW VARIABLES LIKE "%version%"
+statistics = SELECT * FROM `mysql`.`user` u JOIN `INFORMATION_SCHEMA`.`USER_STATISTICS` s ON u.User=s.USER JOIN `mysql_restrict`.`USER_STATISTICS` ss ON s.USER=ss.USER JOIN `mysql_restrict`.`CPU_RESTRICT` r ON r.USER=ss.USER
 
 # Use the -d option to reference a DSN.
 [alias_dsn]
