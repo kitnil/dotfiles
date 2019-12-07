@@ -3684,5 +3684,6 @@ If given a prefix, patch in the branch directory instead."
  '(rainbow-delimiters-depth-8-face ((t (:foreground "deep sky blue"))))
  '(rainbow-delimiters-depth-9-face ((t (:foreground "goldenrod"))))
  '(rainbow-delimiters-unmatched-face ((t (:foreground "red"))))
+ '(region ((t (:background "wheat" :distant-foreground "gtk_selection_fg_color"))))
  '(sh-heredoc ((t (:foreground "tan3")))))
 (put 'list-timers 'disabled nil)
