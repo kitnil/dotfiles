@@ -1,0 +1,12 @@
+#!/bin/sh
+# Create a GitHub REPOSITORY.
+#
+# Thanks to:
+# https://gist.github.com/alexpchin/dc91e723d4db5018fef8
+# https://stackoverflow.com/a/10325316
+
+set -e -x
+
+repository="$1"
+
+curl -u "wigust:$(pass show github/wigust)" "https://api.github.com/user/repos" -d "{\"name\":\"$repository\"}"
