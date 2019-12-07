@@ -456,6 +456,9 @@
 ;;; REPL
 ;;;
 
+(defcommand repl-groovy () ()
+  (term-shell-command "groovysh" :scrollbar t))
+
 (defcommand repl-guile () ()
   (term-shell-command "guile" :scrollbar t))
 
