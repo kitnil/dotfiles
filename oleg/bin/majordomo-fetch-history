@@ -1,0 +1,8 @@
+#!/bin/sh
+
+for file in /root/.bash_history /root/.mysql_history; do
+    ansible majordomo -m fetch -a "src=$file dest=$HOME/ansible-out/files fail_on_missing=no" -b
+done
+
+git -C "$HOME/ansible-out/files" add -A
+git -C "$HOME/ansible-out/files" commit -m 'Update.'

@@ -893,16 +893,6 @@ ansible-cmdb-my()
     ansible-cmdb -t html_fancy_split -p local_js=1 out/
 }
 
-ansible-fetch-root-history()
-{
-    for file in /root/.bash_history /root/.mysql_history; do
-        ansible majordomo -m fetch -a "src=$file dest=/home/oleg/ansible-out/files fail_on_missing=no" -b
-    done
-
-    git -C "$HOME/ansible-out/files" add -A
-    git -C "$HOME/ansible-out/files" commit -m 'Update.'
-}
-
 bash-history-top()
 {
     # https://www.commandlinefu.com/commands/view/604/list-of-commands-you-use-most-often
@@ -1406,3 +1396,5 @@ digga()
 }
 
 alias ff="feh --borderless --image-bg black --auto-zoom --draw-filename"
+
+. /gnu/store/vpkkq23pgs63x78z3sxf4361pcyi3kgg-docker-cli-18.09.5-checkout/contrib/completion/bash/docker
