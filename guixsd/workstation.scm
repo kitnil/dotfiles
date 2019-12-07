@@ -2,7 +2,10 @@
              (majordomo packages majordomo)
              (guix gexp)
              (wigust packages lisp)
-             (services autossh))
+             (services autossh)
+             (services nix)
+             (srfi srfi-1)
+             (srfi srfi-26))
 
 (use-package-modules admin base certs cryptsetup docker linux lisp
                      suckless xdisorg xorg fonts android fontutils
@@ -19,11 +22,38 @@
                (bootloader grub-bootloader)
                (target "/dev/sda")))
 
+  (groups (cons (user-group (name "nixbld")
+                            (id 30100))
+                %base-groups))
+
   (users (cons (user-account (name "oleg")
                              (comment "Oleg Pykhalov")
                              (group "users")
                              (supplementary-groups '("wheel" "audio" "video")))
-               %base-user-accounts))
+               (append ((lambda* (count #:key
+                                   (group "nixbld")
+                                   (first-uid 30101)
+                                   (shadow shadow))
+                          (unfold (cut > <> count)
+                                  (lambda (n)
+                                    (user-account
+                                     (name (format #f "nixbld~a" n))
+                                     (system? #t)
+                                     (uid (+ first-uid n -1))
+                                     (group group)
+
+                                     ;; guix-daemon expects GROUP to be listed as a
+                                     ;; supplementary group too:
+                                     ;; <http://lists.gnu.org/archive/html/bug-guix/2013-01/msg00239.html>.
+                                     (supplementary-groups (list group "kvm"))
+
+                                     (comment (format #f "Nix Build User ~a" n))
+                                     (home-directory "/var/empty")
+                                     (shell (file-append shadow "/sbin/nologin"))))
+                                  1+
+                                  1))
+                        9)
+                       %base-user-accounts)))
 
   (file-systems (cons* (file-system
                          (device (uuid "11d541d4-7914-4937-8ce0-7e50687ddbc6"))
@@ -93,6 +123,7 @@ ServerAliveInterval 30
 ServerAliveCountMax 3"))))))
                              (host "guix.duckdns.org")))
                    (service zabbix-agent-service-type)
+                   nix-service
                    %desktop-services))
 
   (setuid-programs (cons* (file-append fping "/sbin/fping")

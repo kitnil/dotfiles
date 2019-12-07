@@ -133,7 +133,7 @@ wget wm xdisorg xml xorg)
 
                gsettings-desktop-schemas
                glib-networking
-               flatpak
+               ;; flatpak
                ;; nix
 
                mlt mpv vlc

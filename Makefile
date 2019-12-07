@@ -6,7 +6,7 @@ build-systems:
 	guix system build -L "fiore/modules" guixsd/spb.scm
 	guix system build -L "fiore/modules" guixsd/workstation.scm
 
-guixsd: guixsd/guixsd.scm
+reconfigure-guixsd: guixsd/guixsd.scm
 	sudo -i guix system reconfigure --load-path="$(HOME)/src/dotfiles/fiore/modules" --substitute-urls='https://ci.guix.info http://cuirass.tld' --fallback "$(HOME)/src/dotfiles/guixsd/guixsd.scm"
 
 deploy: build-systems

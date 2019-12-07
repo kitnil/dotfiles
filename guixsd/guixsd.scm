@@ -1,14 +1,16 @@
 (use-modules (gnu)
              (srfi srfi-1)
              (srfi srfi-26)
-             (services gitlab)
-             (services nix)
-             (services autossh)
-             (services kresd)
-             (services openvpn)
-	     (packages artwork)
+             (wigust services gitlab)
+             (wigust services nix)
+             (wigust services autossh)
+             (wigust services kresd)
+             (wigust services openvpn)
              (wigust packages lisp)
-             (majordomo packages majordomo))
+             (majordomo packages majordomo)
+
+             (guix packages)
+             (guix git-download))
 
 (use-package-modules admin base certs cryptsetup docker linux lisp
                      suckless xdisorg xorg fonts android fontutils
@@ -18,6 +20,19 @@
 (use-service-modules admin dbus desktop docker dns networking sound
                      xorg ssh web cgit version-control certbot
                      monitoring databases mail)
+
+(define %local-artwork-repository
+  (let ((commit "549bf7e6408356f23f0f5d95275c4af6c08ac1a7"))
+    (origin
+      (method git-fetch)
+      (uri (git-reference
+            (url "https://cgit.duckdns.org/git/guix/guix-artwork")
+            (commit commit)))
+      (file-name (string-append "guix-artwork-" (string-take commit 7)
+                                "-checkout"))
+      (sha256
+       (base32
+	"0dkalnw6bvnm4x640b05xlfifhsjvk6889gwypmx0asqb0s6lnj6")))))
 
 (define 20-intel.conf "\
 # Fix tearing for Intel graphics card.
@@ -249,8 +264,15 @@ EndSection")
 ;;; Entryp point
 ;;;
 
+
+(define %hardware-file
+  (or (and=> (current-filename)
+             (lambda (file)
+               (string-append (dirname file) "/hardware/guixsd.scm")))
+      "/home/oleg/src/dotfiles/guixsd/hardware/guixsd.scm"))
+
 (define %system-guixsd
-  (let ((base-system (load "/etc/config.scm")))
+  (let ((base-system (load %hardware-file)))
     (operating-system
       (inherit base-system)
       (kernel-arguments '("modprobe.blacklist=pcspkr,snd_pcsp"))
@@ -581,9 +603,9 @@ FpingLocation=/run/setuid-programs/fping
 
                        (service autossh-service-type
                                 (autossh-configuration
-                                 (openssh-client-config
-                                  (openssh-client-configuration
-                                   (hosts (list (openssh-client-host-configuration
+                                 (autossh-client-config
+                                  (autossh-client-configuration
+                                   (hosts (list (autossh-client-host-configuration
                                                  (host "znc.wugi.info")
                                                  (identity-file "/etc/autossh/id_rsa_oracle")
                                                  (strict-host-key-checking? #f)

@@ -9,9 +9,7 @@
          (branch "version-1.0.1"))
         (channel
          (name 'guix-majordomo)
-         (url "file:///home/oleg/src/guix-majordomo")
-         (commit
-          "276f1d2aa0de76a47139b207e6d1af262cb5fd51"))))
+         (url "file:///home/oleg/src/guix-majordomo"))))
 
 (define inferior
   (inferior-for-channels channels))
