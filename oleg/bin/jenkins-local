@@ -1,0 +1,9 @@
+#!/bin/sh
+
+directory="$1"
+job="$2"
+branch="$3"
+
+curl -u "admin:$(pass show jenkins/admin)" -s -k \
+     "http://localhost:8090/job/$directory/job/$job/job/$branch/build?delay=0sec" \
+     -H 'Content-type: application/x-www-form-urlencoded; charset=UTF-8' --data ''
