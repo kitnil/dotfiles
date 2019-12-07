@@ -3362,6 +3362,8 @@ If given a prefix, patch in the branch directory instead."
          "ruby-build-system" "scons-build-system" "texlive-build-system"
          "trivial-build-system" "waf-build-system")))
 
+(add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+
 (ivy-rich-mode 1)
 (setq ivy-format-function #'ivy-format-function-line)
 
