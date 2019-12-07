@@ -3,7 +3,8 @@
 
 (in-package :stumpwm)
 
-(set-module-dir "/home/oleg/.stumpwm.d/modules/")
+;; Load modules from https://github.com/stumpwm/stumpwm-contrib
+(set-module-dir (concat (getenv "HOME") "/.stumpwm.d/modules/"))
 
 (setf *startup-message* nil)
 (setf *message-window-gravity* :center)
@@ -14,8 +15,11 @@
 
 (cursor-theme)
 
+(defcommand keynav () ()
+  (run-shell-command "keynav"))
+
 (defcommand xrdb () ()
-  (run-shell-command "xrdb /home/oleg/.Xresources"))
+  (run-shell-command (format nil "xrdb ~a/.Xresources" (getenv "HOME"))))
 
 (xrdb)
 
@@ -53,7 +57,7 @@
 (keyboard-layout)
 
 (defcommand xmodmap () ()
-  (run-shell-command "xmodmap " "/home/oleg/.Xmodmap"))
+  (run-shell-command "xmodmap " (concat "/.Xmodmap" (getenv "HOME"))))
 
 (xmodmap)
 
@@ -80,6 +84,17 @@
 ;;;
 ;;; General functions for use
 ;;;
+
+(defun password-store-show (password)
+    (run-shell-command (format nil "gpg -d ~a/.password-store/~a.gpg 2>/dev/null"
+                               (getenv "HOME") password)
+     t))
+
+(defun file-get-contents (filename)
+  (with-open-file (stream filename)
+    (let ((contents (make-string (file-length stream))))
+      (read-sequence contents stream)
+      contents)))
 
 (defun join-to-stream (stream list &optional (delimiter #\&))
   (destructuring-bind (&optional first &rest rest) list
@@ -116,8 +131,8 @@
 
 (defcommand desktop-restore (desktop rules) ((:string "Restore desktop: ")
                                              (:string "Restore rules: "))
-  (let ((desktop (format nil "~a/.stumpwm.d/desktop/~a.lisp" "/home/oleg" desktop))
-        (rules (format nil "~a/.stumpwm.d/rules/~a.lisp" "/home/oleg" rules)))
+  (let ((desktop (format nil "~a/.stumpwm.d/desktop/~a.lisp" (getenv "HOME") desktop))
+        (rules (format nil "~a/.stumpwm.d/rules/~a.lisp" (getenv "HOME") rules)))
     (message (format nil "Restore desktop from ~s file." desktop))
     (message (format nil "Restore rules from ~s file." rules))
     (restore-from-file desktop)
@@ -295,7 +310,7 @@
 (defcommand mpv-watch () ()
   "Play video from file with mpv."
   (run-shell-command
-   (join `(,*mpv-program* ,@*mpv-arguments* ,(concat "$(cat " "/home/oleg" "/watch)")))))
+   (join `(,*mpv-program* ,@*mpv-arguments* ,(concat "$(cat " (getenv "HOME") "/watch)")))))
 
 (defcommand majordomo-vnc () ()
   "Connect to Majordomo VNC"
@@ -446,10 +461,21 @@
 (defcommand guix-pull () ()
   (term-shell-command "sh -c 'guix pull; read'"))
 
+(defun fetch-mail-command (command)
+  (format nil "sh -c 'TMOUT=20; echo \"Fetch mail.\"; ~a; notify-send \"Mail fetched.\"; read -p \"Press Enter to close.\"'"
+          command))
+
+(defcommand mbsync-majordomo () ()
+  (term-shell-command (fetch-mail-command "mbsync -a majordomo")
+                      :title "mbsync-majordomo"
+                      :font '("-fa" "Monospace" "-fs" "8")
+                      :color "dark"))
+
 (defcommand notmuch () ()
-  (term-shell-command "sh -c 'TMOUT=20; echo \"Fetch mail.\"; notmuch new; notify-send \"Mail fetched.\"; read -p \"Press Enter to close.\"'"
+  (term-shell-command (fetch-mail-command "notmuch new")
                       :title "notmuch"
-                      :font '("-fa" "Monospace" "-fs" "8")))
+                      :font '("-fa" "Monospace" "-fs" "8")
+                      :color "dark"))
 
 (defvar majordomo-webs
   ;; without web19
@@ -926,20 +952,13 @@
   (run-shell-command "exec vncviewer localhost:59555"))
 
 (defcommand pass-route () ()
-  (window-send-string "***REMOVED***
-"))
+  (window-send-string (format nil "~a~%" (password-store-show "majordomo/ssh/router"))))
 
-(define-key *top-map* (kbd "C-s-a") "pass-route")
-
-;; XXX: Security
 (defcommand pass-eng () ()
-  (window-send-string "***REMOVED***
-"))
+  (window-send-string (format nil "~a~%" (password-store-show "majordomo/ssh/eng"))))
 
-;; XXX: Security
 (defcommand pass-sup () ()
-  (window-send-string "***REMOVED***
-"))
+  (window-send-string (format nil "~a~%" (password-store-show "majordomo/ssh/sup"))))
 
 (defun current-window-width ()
   (format-expand *window-formatters* "%w" (current-window)))
@@ -1316,6 +1335,7 @@
   (define-key *top-map* (kbd "s--") "ponymix-decrease")
   (define-key *top-map* (kbd "s-a") "pass-eng")
   (define-key *top-map* (kbd "s-A") "pass-sup")
+  (define-key *top-map* (kbd "C-s-a") "pass-route")
   (define-key *top-map* (kbd "s-j") "music-youtube")
   (define-key *top-map* (kbd "s-J") "jenkins")
   (define-key *top-map* (kbd "s-g") "gnus")
@@ -1380,6 +1400,7 @@
   (define-frame-preference "Default" (0 NIL T :CLASS "quassel" :TITLE "Chat Monitor"))
   (define-frame-preference "Default" (3 NIL T :CLASS "XTerm" :TITLE "alerta"))
   (define-frame-preference "Default" (0 NIL T :CLASS "XTerm" :TITLE "notmuch"))
+  (define-frame-preference "Default" (0 NIL T :CLASS "XTerm" :TITLE "mbsync-majordomo"))
   (define-frame-preference "Default" (0 NIL T :CLASS "XTerm" :TITLE "youtube-dl"))
   (define-frame-preference "Default" (0 NIL T :CLASS "XTerm" :TITLE "youtube-dl-music"))
   ;; (define-frame-preference "Default" (2 NIL T :CLASS "t-engine"))
