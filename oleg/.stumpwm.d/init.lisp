@@ -451,6 +451,24 @@
                       :title "notmuch"
                       :font '("-fa" "Monospace" "-fs" "8")))
 
+(defvar majordomo-webs
+  ;; without web19
+  (mapcar (lambda (x)
+            (sb-unicode:lowercase (string x)))
+          '(web15 web16 web17 web18
+            web20 web21 web22 web23 web25 web26 web27 web28 web29
+            web30 web31 web32 web33 web34 web35 web36 web37)))
+
+(defcommand xpanes-web-ssh () ()
+  (term-shell-command (join `("xpanes -c 'ssh {}.intr'" ,@majordomo-webs))
+                      :title "xpanes-web-ssh"
+                      :font '("-fa" "Monospace" "-fs" "6")))
+
+(defcommand xpanes-web-top () ()
+  (term-shell-command (join `("xpanes -c 'ssh -t {}.intr top'" ,@majordomo-webs))
+                      :title "xpanes-web-top"
+                      :font '("-fa" "Monospace" "-fs" "6")))
+
 
 ;;;
 ;;; REPL
