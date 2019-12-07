@@ -1283,6 +1283,9 @@
 (defcommand dunst-enable () ()
   (run-shell-command "pkill -SIGUSR2 dunst"))
 
+(defcommand random-password (length) ((:string "Password length: "))
+  (window-send-string (run-shell-command (format nil "bash -i -c 'random-password ~a'" length) t)))
+
 (load-module "notifications")
 
 (load-module "command-history")
