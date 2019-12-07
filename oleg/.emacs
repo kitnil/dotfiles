@@ -919,7 +919,8 @@ Sets the following basend on PREFIX-MAP:
         ("\\.tfstate" . json-mode)
         ("bashrc" . sh-mode)
         ("kresd\\.conf" . lua-mode)
-        ("\\.luadoc" . lua-mode)))
+        ("\\.luadoc" . lua-mode)
+        ("\\.drv" . guix-derivation-mode)))
 
 (mapc (-lambda ((hook key proc))
         (add-hook hook `(lambda ()
