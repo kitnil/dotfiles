@@ -1043,7 +1043,7 @@ jenkins-build-php()
 
 nixpkgs-fix()
 {
-    for file in $(find ~/majordomo/_ci/nixpkgs -type f -name '*.nix'); do
+    for file in $(find ~/majordomo/_ci/nixpkgs* -type f -name '*.nix'); do
         echo -e "\n@ $file"
         sed -i 's|https://gitlab.intr/pyhalov/php52-extra.git|file:///home/oleg/majordomo/pyhalov/php52-extra|g' "$file"
         sed -i 's|git@gitlab.intr:shared/http_errors.git|/home/oleg/majordomo/shared/http_errors|g' "$file"
