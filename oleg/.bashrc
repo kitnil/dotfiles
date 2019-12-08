@@ -1363,11 +1363,9 @@ jenkins-build-project-branch()
     project="$2"
     branch="$3"
     url="$JENKINS_URL/job/$dir/job/$project/job/$branch"
-    crumb=$(curl -u "admin:$(pass show jenkins/admin)" "$JENKINS_URL"/crumbIssuer/api/xml?xpath=concat\(//crumbRequestField,%22:%22,//crumb\))
 
-    curl -X POST                                                                \
-         -u "admin:$(pass show jenkins/admin)"                                  \
-         -H "$crumb"                                                            \
+    curl -X POST                                        \
+         -u "admin:$(pass show jenkins/admin-api-key)"  \
          "$url/build"
 
     echo "$url/lastBuild/console"
