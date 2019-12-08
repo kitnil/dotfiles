@@ -193,7 +193,7 @@ wget wm xdisorg xml xorg)
 
                lvm2 cdrkit-libre samba ubridge virt-manager
 
-               python-pyqt-without-qtwebkit
+               python-pyqt-without-qtwebkit python-pymongo
 
                tmux tmuxifier parallel w3m znc
 
