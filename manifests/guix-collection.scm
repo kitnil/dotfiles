@@ -231,7 +231,9 @@ wget wm xdisorg xml xorg)
                tigervnc-client
 
                xfce4-screenshooter
-               xfce4-terminal)
+               xfce4-terminal
+
+               whois)
 
          guix-collection-packages-multiout
          %large-packages
