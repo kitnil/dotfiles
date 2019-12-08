@@ -1,0 +1,5 @@
+#!/bin/sh
+
+dir="$1"
+emacsclient -e "(progn (wi-magit-status-dir \"$dir\") \"Open Magit in $dir\")"
+stumpish emacsclient
