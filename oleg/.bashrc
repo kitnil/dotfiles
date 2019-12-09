@@ -952,7 +952,7 @@ netstat-graph()
 random-password()
 {
     length="$1"
-    strings /dev/urandom | grep -o '[[:alnum:]]' | head -n "$length" | tr -d '\n'; echo
+    strings /dev/urandom | grep -o '[[:alnum:]]' | head -n "$length" | tr -d '\n'
 }
 
 # watch -n 1 mysqladmin --user=<user> --password=<password> processlist
