@@ -1390,5 +1390,3 @@ digga()
 }
 
 alias ff="feh --borderless --image-bg black --auto-zoom --draw-filename"
-
-. /gnu/store/vpkkq23pgs63x78z3sxf4361pcyi3kgg-docker-cli-18.09.5-checkout/contrib/completion/bash/docker
