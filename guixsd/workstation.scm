@@ -2,8 +2,8 @@
              (majordomo packages majordomo)
              (guix gexp)
              (wigust packages lisp)
-             (services autossh)
-             (services nix)
+             (wigust services autossh)
+             (wigust services nix)
              (srfi srfi-1)
              (srfi srfi-26))
 
@@ -105,9 +105,9 @@
   (services (cons* (service openssh-service-type)
                    (service autossh-service-type
                             (autossh-configuration
-                             (openssh-client-config
-                              (openssh-client-configuration
-                               (hosts (list (openssh-client-host-configuration
+                             (autossh-client-config
+                              (autossh-client-configuration
+                               (hosts (list (autossh-client-host-configuration
                                              (host "guix.duckdns.org")
                                              (identity-file "/etc/autossh/id_rsa")
                                              (strict-host-key-checking? #f)

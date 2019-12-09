@@ -4,10 +4,10 @@
 (use-modules (gnu) (srfi srfi-1) (srfi srfi-26))
 (use-package-modules admin base bash certs python)
 (use-service-modules desktop dbus monitoring networking ssh web)
-(use-modules (services autossh)
-             (services docker)
-             (services gitlab)
-             (services nix))
+(use-modules (wigust services autossh)
+             (wigust services docker)
+             (wigust services gitlab)
+             (wigust services nix))
 
 
 ;;;
@@ -289,9 +289,9 @@
 
                           (service autossh-service-type
                             (autossh-configuration
-                             (openssh-client-config
-                              (openssh-client-configuration
-                               (hosts (list (openssh-client-host-configuration
+                             (autossh-client-config
+                              (autossh-client-configuration
+                               (hosts (list (autossh-client-host-configuration
                                              (host "guix.duckdns.org")
                                              (identity-file "/etc/autossh/id_rsa")
                                              (strict-host-key-checking? #f)
