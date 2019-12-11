@@ -9,5 +9,5 @@ else
     else
         size=8
     fi
-    coproc (xterm -title "mycli@$@" -bg '#fff0f5' -fg '#000000' -fa Monospace -fs "$size" -e env PAGER='less -S' mycli -d $@ &>/dev/null &)
+    coproc (xterm -title "mycli@$@" -bg '#fff0f5' -fg '#000000' -fa Monospace -fs "$size" -e env PAGER='pspg -s 14 -X --force-uniborder --quit-if-one-screen -s 16' mycli -d $@ &>/dev/null &)
 fi
