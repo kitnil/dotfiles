@@ -85,6 +85,11 @@
 ;;; General functions for use
 ;;;
 
+(defun switch-to-emacs ()
+  (unless (uiop/utility:string-prefix-p "Emacs"
+                                        (window-class (current-window)))
+    (run-shell-command "stumpish emacsclient")))
+
 (defun password-store-show (password)
     (run-shell-command (format nil "gpg -d ~a/.password-store/~a.gpg 2>/dev/null"
                                (getenv "HOME") password)
@@ -914,7 +919,7 @@
 
 (defcommand emacs-shell () ()
   ""
-  (run-shell-command "stumpish emacsclient")
+  (switch-to-emacs)
   (run-shell-command "emacsclient -e '(progn (shell) (delete-other-windows))'"))
 
 (define-key *root-map* (kbd "quoteleft") "emacs-shell")
@@ -1102,27 +1107,27 @@
 
 (defcommand gnus () ()
   (progn (run-shell-command "emacsclient --eval '(gnus)'")
-         (run-shell-command "stumpish emacsclient")))
+         (switch-to-emacs)))
 
 (defcommand majordomo-find-project () ()
   (progn (run-shell-command "emacsclient --eval '(majordomo-ivy-find-project)'")
-         (run-shell-command "stumpish emacsclient")))
+         (switch-to-emacs)))
 
 (defcommand org () ()
   (progn (run-shell-command "emacsclient --eval '(plain-org-wiki)'")
-         (run-shell-command "stumpish emacsclient")))
+         (switch-to-emacs)))
 
 (defcommand org-agenda () ()
   (progn (run-shell-command "emacsclient --eval '(org-agenda)'")
-         (run-shell-command "stumpish emacsclient")))
+         (switch-to-emacs)))
 
 (defcommand guix-wigust () ()
   (progn (run-shell-command "emacsclient --eval '(let ((default-directory (expand-file-name \"~/src/guix-wigust/guix/wigust/packages/\"))) (counsel-find-file))'")
-         (run-shell-command "stumpish emacsclient")))
+         (switch-to-emacs)))
 
 (defcommand helm-tramp () ()
   (progn (run-shell-command "emacsclient --eval '(helm-tramp)'")
-         (run-shell-command "stumpish emacsclient")))
+         (switch-to-emacs)))
 
 (define-key *top-map* (kbd "C-s-e") "helm-tramp")
 
@@ -1183,9 +1188,7 @@
 (define-key *top-map* (kbd "C-s-Left") "window-resize-by-half-vertical")
 
 (defcommand emms () ()
-  (unless (uiop/utility:string-prefix-p "emacs"
-                                        (window-name (current-window)))
-    (run-shell-command "stumpish emacsclient"))
+  (switch-to-emacs)
   (run-shell-command
    (format nil "emacsclient -e ~s"
            (sb-unicode:lowercase
@@ -1193,9 +1196,7 @@
              '(progn (emms) (delete-other-windows)))))))
 
 (defcommand emacs-gnus () ()
-  (unless (uiop/utility:string-prefix-p "emacs"
-                                        (window-name (current-window)))
-    (run-shell-command "stumpish emacsclient"))
+  (switch-to-emacs)
   (run-shell-command
    (format nil "emacsclient -e ~s"
            (sb-unicode:lowercase
@@ -1203,15 +1204,11 @@
              '(progn (gnus) (delete-other-windows)))))))
 
 (defcommand guix () ()
-  (unless (uiop/utility:string-prefix-p "emacs"
-                                        (window-name (current-window)))
-    (run-shell-command "stumpish emacsclient"))
+  (switch-to-emacs)
   (run-shell-command "magit ~/src/guix"))
 
 (defcommand elfeed () ()
-  (unless (uiop/utility:string-prefix-p "emacs"
-                                        (window-name (current-window)))
-    (run-shell-command "stumpish emacsclient"))
+  (switch-to-emacs)
   (run-shell-command
    (format nil "emacsclient -e ~s"
            (sb-unicode:lowercase
