@@ -815,7 +815,7 @@ herd-kill-services-via-awk()
 
 web-active-current()
 {
-    curl -H 'PRIVATE-TOKEN: ***REMOVED***' -s -k -L \
+    curl -H "PRIVATE-TOKEN: $(pass show majordomo/gitlab.intr/tokens/terraform)" -s -k -L \
             'https://gitlab.intr/hms/config-repo/raw/master/rc-staff-prod.yml'
 }
 
