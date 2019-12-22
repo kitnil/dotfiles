@@ -426,8 +426,7 @@ ansible-docker-ps()
 docker_list_intr()
 {
     curl -s -X GET -k -u 'gradle:***REMOVED***' https://docker-registry.intr/v2/_catalog \
-        | jq -r '.repositories[]' \
-        | grep "$group/"
+        | jq -r '.repositories[]'
 }
 
 docker-pull-intr()
