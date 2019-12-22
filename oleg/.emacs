@@ -2555,7 +2555,8 @@ be updated automatically."))
               . visual-line-mode)))
 
 (with-eval-after-load 'company
-  (add-to-list 'company-backends 'company-abbrev))
+  (add-to-list 'company-backends 'company-abbrev)
+  (add-to-list 'company-backends 'company-lsp))
 
 (with-eval-after-load 'anywhere-mode
   (let ((map anywhere-mode-map))
