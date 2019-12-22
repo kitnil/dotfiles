@@ -415,7 +415,7 @@ juneos-config()
 
 hms-current-stack()
 {
-    curl -u 'jenkins:***REMOVED***' -X GET http://nginx1.intr:8080/hms
+    curl -u "jenkins:$(pass show majordomo/jenkins/jenkins)" -X GET http://nginx1.intr:8080/hms
 }
 
 ansible-docker-ps()
@@ -623,14 +623,14 @@ skopeo-mj()
 {
     image="$1" # ssh-guest-room
     tar="$2" || result # docker-archive:/nix/store/dw0qakl4g58n9idsi35vn0m1d92gs0jw-docker-image-ssh-guest-room.tar.gz
-    skopeo copy --dest-creds=gradle:***REMOVED*** --dest-tls-verify=false "docker-archive:$tar" "docker://docker-registry.intr/webservices/$image:master"
+    skopeo copy --dest-creds=gradle:"$(pass show majordomo/nexus/gradle)" --dest-tls-verify=false "docker-archive:$tar" "docker://docker-registry.intr/webservices/$image:master"
 }
 
 skopeo-fetch()
 {
     image="$1"
     dest="$2"
-    skopeo copy --dest-creds=gradle:***REMOVED*** --src-tls-verify=false --dest-tls-verify=false "docker://docker-registry.intr/$image" "docker-archive:$dest"
+    skopeo copy --dest-creds=gradle:"$(pass show majordomo/nexus/gradle)" --src-tls-verify=false --dest-tls-verify=false "docker://docker-registry.intr/$image" "docker-archive:$dest"
 }
 
 git-guix-pre-new-build()
@@ -1249,7 +1249,8 @@ pass-list-all()
     (
         cd ~/.password-store || exit
         for password in $(find . -not -path './.gitattributes' -not -path './.git/*' -type f | sed 's@\./@@' | sed 's@\.gpg@@'); do
-            pass show "$password" | sed '/^$/d'
+            pass show "$password" | tr -d '\n'
+            echo
         done
     )
 }
@@ -1324,7 +1325,10 @@ docker-top-strace()
         | xargs strace -s 10000 -f -o /tmp/docker.strace
 }
 
-alias active-hms='curl -s --user jenkins:***REMOVED*** nginx{1,2}-mr:8080/hms | jq -r .active | uniq'
+active-hms()
+{
+    curl -s --user jenkins:"$(pass show majordomo/jenkins/jenkins)" nginx{1,2}-mr:8080/hms | jq -r .active | uniq
+}
 
 guix-pull-commit-me-and-root()
 {

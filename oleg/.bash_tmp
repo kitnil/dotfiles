@@ -44,8 +44,10 @@ ansible-playbook-fetch()
 
 jenkins()
 {
-    curl --user 'admin:***REMOVED***' \
-         'http://localhost:30080/job/fiore/build?token=***REMOVED***'
+    token="$1"
+    password="$2"
+    curl --user "admin:password" \
+"http://localhost:30080/job/fiore/build?token=$(password)"
 }
 
 bench-emacs()
@@ -242,12 +244,10 @@ sudo-psql()
 
 alias docker-stats-all="docker ps -q | xargs docker stats --no-stream"
 
-export AWX_KEY='***REMOVED***'
-
 # awx-goaccess()
 # {
 #     curl 'http://127.0.0.1:8052/' \
-#          -H 'Authorization: Bearer ***REMOVED***' \
+    #          -H 'Authorization: Bearer $BEAR' \
 #          -H 'Content-Type: application/json;charset=utf-8' \
 #          --data "{\"extra_vars\":{\"host_dest\":\"$host\",\"home\":\"$home\",\"site\":\"$site\"}}"
 # }
@@ -269,13 +269,12 @@ save-manifest() { GUIX_PACKAGE_PATH="$HOME/src/guix-wigust" guix environment --r
 
 ci-dotfiles()
 {
+    token="$1"
     curl -X POST \
-         -F token=***REMOVED*** \
+         -F token=$token \
          -F ref=master \
          https://gitlab.wugi.info/api/v4/projects/19/trigger/pipeline
 }
-
-# gitlab-monitor: ***REMOVED***
 
 windows-10()
 {
