@@ -408,7 +408,7 @@ xq-br()
 
 juneos-config()
 {
-    sshpass -p***REMOVED*** ssh -l root "$1" -- 'cli -c "show config | display xml"'
+    sshpass -p$(pass show majordomo/ssh/router) ssh -l root "$1" -- 'cli -c "show config | display xml"'
 }
 
 # https://markhneedham.com/blog/2015/11/14/jq-filtering-missing-keys/
