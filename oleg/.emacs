@@ -2522,8 +2522,8 @@ be updated automatically."))
 
 (add-hook 'eshell-mode-hook 'eshell-bookmark-setup)
 
-(add-hook 'comint-output-filter-functions
-          'comint-truncate-buffer)
+;; (add-hook 'comint-output-filter-functions
+;;           'comint-truncate-buffer)
 
 (autoload 'bash-completion-dynamic-complete
   "bash-completion" "BASH completion hook")
