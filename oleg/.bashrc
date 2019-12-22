@@ -1027,6 +1027,7 @@ nixpkgs-fix()
     for file in $(find . -type f -name '*.nix'); do
         echo -e "\n@ $file"
         sed -i 's|(builtins.fetchGit { url = "git@gitlab.intr:_ci/nixpkgs.git"; ref = ".*"; })|/home/oleg/majordomo/_ci/nixpkgs|g' "$file"
+        sed -i 's|(builtins.fetchGit { url = "git@gitlab.intr:_ci/nixpkgs.git"; inherit ref; })|/home/oleg/majordomo/_ci/nixpkgs|g' "$file"
     done
 }
 
