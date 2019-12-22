@@ -811,11 +811,11 @@
   (set-float-focus-color "#90EE90"))
 (defcommand toggle-theme () ()
   (if dark-theme
-      (progn (setq *mode-line-border-color*     "#ffffff"
-                   *mode-line-foreground-color* "#000000"
-                   *mode-line-background-color* "#ffffff")
-             (set-win-bg-color "#ffffff")
-             (set-unfocus-color "#ffffff")
+      (progn (setq *mode-line-border-color*     "#000000"
+                   *mode-line-foreground-color* "#ffffff"
+                   *mode-line-background-color* "#000000")
+             (set-win-bg-color "#000000")
+             (set-unfocus-color "#000000")
              (set-fg-color "#000000")
              (set-bg-color "#ffffff")
              (run-shell-command "xsetroot -solid '#ffffff'")
