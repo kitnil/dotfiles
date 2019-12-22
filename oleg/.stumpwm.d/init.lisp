@@ -1444,7 +1444,7 @@
        (restore-from-file "/home/oleg/src/dotfiles/oleg/.stumpwm.d/desktop/10.lisp")
        (define-frame-preference "Default" (1 NIL T :CLASS "quassel" :TITLE "Chat Monitor"))
        (define-frame-preference "Default" (2 NIL T :CLASS "XTerm" :TITLE "alerta"))
-       (define-frame-preference "Default" (0 NIL T :CLASS "Qemu-system-x86_64"))
+       (define-frame-preference "Default" (0 NIL NIL :CLASS "Qemu-system-x86_64"))
        (swm-gaps:toggle-gaps) ;XXX: Make declarative.
        (bind-super)
        (define-key *top-map* (kbd "s-m") "alerta")
