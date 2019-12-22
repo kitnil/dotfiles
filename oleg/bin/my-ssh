@@ -57,7 +57,9 @@ exec ${GUILE:-$(which guile)} $GUILE_FLAGS -e '(@@ (my-ssh) main)' -s "$0" "$@"
 (connect! session)
 (userauth-public-key/auto! session)
 
-(let* ((channel (open-remote-input-pipe session "/bin/sh -c \"sudo --stdin --validate --prompt='' <<< ***REMOVED*** && sudo ls /etc/letsencrypt/live\""))
+(define %password (getenv "SUDO_PASSWORD"))
+
+(let* ((channel (open-remote-input-pipe session "/bin/sh -c \"sudo --stdin --validate --prompt='' <<< " %password " && sudo ls /etc/letsencrypt/live\""))
        (result  (let loop ((line   (read-line channel))
                            (result '()))
                   (if (eof-object? line)
