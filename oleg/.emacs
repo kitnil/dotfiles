@@ -106,21 +106,21 @@
     (define-key map (kbd "<f7>") 'highlight-symbol-prev)
     (define-key map (kbd "<f8>") 'highlight-symbol-next)))
 
-(with-eval-after-load 'c-mode
-  (let ((map c-mode-map))
-    (define-key map (kbd "M-.") 'dumb-jump-go)))
+;; (with-eval-after-load 'c-mode
+;;   (let ((map c-mode-map))
+;;     (define-key map (kbd "M-.") 'dumb-jump-go)))
 
-(with-eval-after-load 'java-mode
-  (let ((map java-mode-map))
-    (define-key map (kbd "M-.") 'dumb-jump-go)))
+;; (with-eval-after-load 'java-mode
+;;   (let ((map java-mode-map))
+;;     (define-key map (kbd "M-.") 'dumb-jump-go)))
 
-(with-eval-after-load 'groovy-mode
-  (let ((map groovy-mode-map))
-    (define-key map (kbd "M-.") 'dumb-jump-go)))
+;; (with-eval-after-load 'groovy-mode
+;;   (let ((map groovy-mode-map))
+;;     (define-key map (kbd "M-.") 'dumb-jump-go)))
 
-(with-eval-after-load 'js-mode
-  (let ((map js-mode-map))
-    (define-key map (kbd "M-.") 'dumb-jump-go)))
+;; (with-eval-after-load 'js-mode
+;;   (let ((map js-mode-map))
+;;     (define-key map (kbd "M-.") 'dumb-jump-go)))
 
 (setq dumb-jump-selector 'ivy)
 (setq dumb-jump-force-searcher 'ag)
@@ -128,9 +128,9 @@
 
 (setq nix-repl-executable-args '("repl" "<nixpkgs>"))
 
-(with-eval-after-load 'php-mode
-  (let ((map php-mode-map))
-    (define-key map (kbd "M-.") 'dumb-jump-go)))
+;; (with-eval-after-load 'php-mode
+;;   (let ((map php-mode-map))
+;;     (define-key map (kbd "M-.") 'dumb-jump-go)))
 
 (with-eval-after-load 'nix-mode
   (let ((map nix-mode-map))
