@@ -6,9 +6,6 @@ set -o pipefail
 
 # This scripts establish a VPN tunnel to Majordomo and setups NAT rules.
 
-# username pyhalov
-# password ***REMOVED***
-
 tap="$1"
 
 openvpn --config /etc/openvpn/mj-client.conf
