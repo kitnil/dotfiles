@@ -1,11 +1,11 @@
 
 (defcommand sudo () ()
-  (run-shell-command "xterm & sleep 2 ; xdotool type 'ssh web33s' ; xdotool key Return; sleep 2 ; xdotool type 'sudo -i' ; xdotool key Return ; sleep 2; xdotool type '***REMOVED***' ; xdotool key Return"))
+            (run-shell-command "xterm & sleep 2 ; xdotool type 'ssh web33s' ; xdotool key Return; sleep 2 ; xdotool type 'sudo -i' ; xdotool key Return ; sleep 2; xdotool type 'JORD_PASS' ; xdotool key Return"))
 
 (defmacro define-web (n)
   `(progn
      (defcommand ,(intern (concat "web" (write-to-string n))) () ()
-       (run-shell-command ,(concat "xterm & sleep 2 ; xdotool type 'ssh web" (write-to-string n) "s' ; xdotool key Return; sleep 2 ; xdotool type 'sudo -i' ; xdotool key Return ; sleep 2; xdotool type '***REMOVED***' ; xdotool key Return")))))
+       (run-shell-command ,(concat "xterm & sleep 2 ; xdotool type 'ssh web" (write-to-string n) "s' ; xdotool key Return; sleep 2 ; xdotool type 'sudo -i' ; xdotool key Return ; sleep 2; xdotool type 'JORD_PASS' ; xdotool key Return")))))
 
 (define-web 15)
 (define-web 16)
