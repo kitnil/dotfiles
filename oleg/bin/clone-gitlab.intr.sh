@@ -1,4 +1,4 @@
-# curl -H 'PRIVATE-TOKEN: ***REMOVED***' -H 'Content-Type: application/json' -k -X GET "https://gitlab.intr/api/v4/groups/$group/" | jq
+# curl -H "PRIVATE-TOKEN: $(pass show majordomo/gitlab.intr/tokens/terraform)" -H 'Content-Type: application/json' -k -X GET "https://gitlab.intr/api/v4/groups/$group/" | jq
 
 # $(jq '.[] | .id' < groups.json)
 for group in 7 8 17 70 71 82; do
