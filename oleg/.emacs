@@ -3400,11 +3400,6 @@ If given a prefix, patch in the branch directory instead."
 (setq org-redmine-config-default-limit 100)
 (setq org-redmine-limit 100)
 
-;; XXX: Security
-(setq org-redmine-uri "http://redmine.intr")
-(setq org-redmine-auth-username "pyhalov")
-(setq org-redmine-auth-password "***REMOVED***")
-
 (defun delete-current-buffer-file ()
   "Delete the current buffer and the file connected with it"
   (interactive)
@@ -3603,7 +3598,6 @@ If given a prefix, patch in the branch directory instead."
 
 (load (expand-file-name "~/archive/src/vterm-toggle/vterm-toggle.el"))
 (load (expand-file-name "~/archive/src/tramp-auto-auth/tramp-auto-auth.el"))
-(setq tramp-auto-auth-alist '(("intr" . "***REMOVED***")))
 (tramp-auto-auth-mode)
 (load (expand-file-name "~/src/emacs-helm-tramp/helm-tramp.el"))
 

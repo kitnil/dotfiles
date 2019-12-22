@@ -1,13 +1,5 @@
 #!/bin/sh
 
-
-export CVM_USER='cron'
-export CVM_PASS='***REMOVED***'
-export GMS_USER='pyhalov'
-export GMS_PASS='***REMOVED***'
-export IHS_USER='pyhalov'
-export IHS_PASS='***REMOVED***'
-
 cerb-auth()
 {
     CERB_MAIL='pyhalov@majordomo.ru' CERB_PASS="$(pass show majordomo.ru/pyhalov)" $HOME/src/jord/cc.scm
@@ -30,10 +22,6 @@ docker-export-archive()
     host="$2"
     docker save "$image" | bzip2 | ssh "$host" 'bunzip2 | /home/user/.nix-profile/bin/docker load'
 }
-
-export GITLAB_API_PRIVATE_TOKEN="***REMOVED***"
-export GITLAB_API_ENDPOINT="https://gitlab.wugi.info/api/v4"
-export GITLAB_API_HTTPARTY_OPTIONS="{verify: false}"
 
 gitlab-shell-create-project()
 {
@@ -58,12 +46,6 @@ jenkins()
 {
     curl --user 'admin:***REMOVED***' \
          'http://localhost:30080/job/fiore/build?token=***REMOVED***'
-}
-
-jenkins-wip-guile()
-{
-    curl --user 'admin:***REMOVED***' \
-         'http://localhost:30080/job/wip-guile/build?token=***REMOVED***'
 }
 
 bench-emacs()
