@@ -19,6 +19,8 @@ then
     shopt -u hostcomplete && complete -F _ssh ssh slogin autossh sidedoor c
 fi
 
+export GRADLE_HOME=/opt/gradle
+
 # if [ -f "$HOME/.guix-profile/etc/profile.d/autojump.sh" ]
 # then
 #     . "$HOME/.guix-profile/etc/profile.d/autojump.sh"
