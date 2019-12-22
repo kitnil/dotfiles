@@ -20,7 +20,7 @@
 
   (bootloader (bootloader-configuration
                (bootloader grub-bootloader)
-               (target "/dev/sda")))
+               (target "/dev/sdb")))
 
   (groups (cons (user-group (name "nixbld")
                             (id 30100))
@@ -30,6 +30,7 @@
                              (comment "Oleg Pykhalov")
                              (group "users")
                              (supplementary-groups '("wheel" "audio" "video")))
+               %base-user-accounts
                (append ((lambda* (count #:key
                                    (group "nixbld")
                                    (first-uid 30101)
@@ -56,7 +57,7 @@
                        %base-user-accounts)))
 
   (file-systems (cons* (file-system
-                         (device (uuid "11d541d4-7914-4937-8ce0-7e50687ddbc6"))
+                         (device (uuid (file-system-label "workstation-guix")))
                          (mount-point "/")
                          (type "ext4"))
                        (file-system
@@ -68,7 +69,7 @@
                          (options "mode=1777,size=50%"))
                        %base-file-systems))
 
-  (swap-devices '("/dev/disk/by-uuid/6e0281d7-abed-4d01-91f3-72481014515a"))
+  (swap-devices '("/dev/disk/by-uuid/fdaef2e9-eda2-48d9-80f8-3d6551ee15fb"))
 
   (packages (cons* nss-certs ;SSL certificates
                    majordomo-ca
