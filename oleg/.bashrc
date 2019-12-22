@@ -133,14 +133,6 @@ export MANWIDTH=80
 #     xdotool search --name "$window_name" windowsize $1 $2
 # }
 
-# TODO: gpg
-export SLACK_CLI_TOKEN='***REMOVED***'
-export JORD_PASS='***REMOVED***'
-export CVM_USER='cron'
-export CVM_PASS='***REMOVED***'
-export GMS_USER='pyhalov'
-export GMS_PASS='***REMOVED***'
-
 ansible-host()
 {
     ansible --inventory $1, $1 --become --ask-become-pass ${@:2}
