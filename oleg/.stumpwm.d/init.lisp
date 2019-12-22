@@ -495,6 +495,16 @@
             web20 web21 web22 web23 web25 web26 web27 web28 web29
             web30 web31 web32 web33 web34 web35 web36 web37)))
 
+;; (defvar majordomo-dh
+;;   (mapcar (lambda (x)
+;;             (sb-unicode:lowercase (string x)))
+;;           '(dh1-mr dh2-mr dh3-mr)))
+
+;; (defcommand xpanes-dh-ssh () ()
+;;   (term-shell-command (join `("xpanes -c 'ssh {}.intr'" ,@majordomo-dh))
+;;                       :title "xpanes-dh-ssh"
+;;                       :font '("-fa" "Monospace" "-fs" "6")))
+
 (defcommand xpanes-web-ssh () ()
   (term-shell-command (join `("xpanes -c 'ssh {}.intr'" ,@majordomo-webs))
                       :title "xpanes-web-ssh"
