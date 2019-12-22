@@ -737,9 +737,6 @@ terraform-import()
     NIX_SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/Majordomo_LLC_Root_CA.crt" \
                      SSL_CERT_DIR="$HOME/.guix-profile/etc/ssl/certs" \
                      SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/ca-certificates.crt" \
-                     TF_VAR_GITLAB_TOKEN=***REMOVED*** \
-                     TF_VAR_MAJORDOMO_PASSWORD=***REMOVED*** \
-                     TF_VAR_MAJORDOMO_USER=pyhalov \
             terraform import $@
 }
 
@@ -765,7 +762,7 @@ terraform-apply-gitlab()
         | awk '{ gsub("\"",""); print $2, $3 }' \
         | sed 's/\s/./' \
         | sed 's/^/-target=/' \
-        | xargs env NIX_SSL_CERT_FILE="/run/current-system/profile/etc/ssl/certs/Majordomo_LLC_Root_CA.crt" SSL_CERT_DIR="/run/current-system/profile/etc/ssl/certs" SSL_CERT_FILE="/run/current-system/profile/etc/ssl/certs/ca-certificates.crt" TF_VAR_GITLAB_TOKEN=***REMOVED*** TF_VAR_MAJORDOMO_PASSWORD=***REMOVED*** TF_VAR_MAJORDOMO_USER=pyhalov terraform apply plan
+        | xargs env NIX_SSL_CERT_FILE="/run/current-system/profile/etc/ssl/certs/Majordomo_LLC_Root_CA.crt" SSL_CERT_DIR="/run/current-system/profile/etc/ssl/certs" SSL_CERT_FILE="/run/current-system/profile/etc/ssl/certs/ca-certificates.crt" terraform apply plan
 }
 
 terraform-plan-gitlab()
@@ -774,10 +771,8 @@ terraform-plan-gitlab()
         | awk '{ gsub("\"",""); print $2, $3 }' \
         | sed 's/\s/./' \
         | sed 's/^/-target=/' \
-        | xargs env NIX_SSL_CERT_FILE="/run/current-system/profile/etc/ssl/certs/Majordomo_LLC_Root_CA.crt" SSL_CERT_DIR="/run/current-system/profile/etc/ssl/certs" SSL_CERT_FILE="/run/current-system/profile/etc/ssl/certs/ca-certificates.crt" TF_VAR_GITLAB_TOKEN=***REMOVED*** TF_VAR_MAJORDOMO_PASSWORD=***REMOVED*** TF_VAR_MAJORDOMO_USER=pyhalov terraform plan -out=plan
+        | xargs env NIX_SSL_CERT_FILE="/run/current-system/profile/etc/ssl/certs/Majordomo_LLC_Root_CA.crt" SSL_CERT_DIR="/run/current-system/profile/etc/ssl/certs" SSL_CERT_FILE="/run/current-system/profile/etc/ssl/certs/ca-certificates.crt" terraform plan -out=plan
 }
-
-export GITHUB_TOKEN_TERRAFORMER=***REMOVED***
 
 terraformer-import-github()
 {
