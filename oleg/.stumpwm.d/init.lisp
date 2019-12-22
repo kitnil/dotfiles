@@ -1254,7 +1254,7 @@
 
 ;; https://lists.gnu.org/archive/html/help-guix/2017-01/msg00033.html
 (require "asdf")
-(load "/home/oleg/.guix-profile/share/emacs/site-lisp/guix.d/slime-2.24/swank.asd")
+(load "/home/oleg/.guix-profile/share/emacs/site-lisp/swank.asd")
 (require :swank)
 (defcommand swank (port) ((:string "Port number: "))
   (sb-thread:make-thread
