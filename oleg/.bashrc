@@ -721,9 +721,6 @@ terraform-refresh()
     NIX_SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/Majordomo_LLC_Root_CA.crt" \
                      SSL_CERT_DIR="$HOME/.guix-profile/etc/ssl/certs" \
                      SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/ca-certificates.crt" \
-                     TF_VAR_GITLAB_TOKEN=***REMOVED*** \
-                     TF_VAR_MAJORDOMO_PASSWORD=***REMOVED*** \
-                     TF_VAR_MAJORDOMO_USER=pyhalov \
             terraform refresh
 }
 
@@ -732,9 +729,6 @@ terraform-plan()
     NIX_SSL_CERT_FILE="$HOME/majordomo/office/ssl-certificates/Majordomo_LLC_Root_CA.crt" \
                      SSL_CERT_DIR="$HOME/.guix-profile/etc/ssl/certs" \
                      SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/ca-certificates.crt" \
-                     TF_VAR_GITLAB_TOKEN=***REMOVED*** \
-                     TF_VAR_MAJORDOMO_PASSWORD=***REMOVED*** \
-                     TF_VAR_MAJORDOMO_USER=pyhalov \
             terraform plan -out=plan $@
 }
 
@@ -754,9 +748,6 @@ terraform-apply()
     NIX_SSL_CERT_FILE="$HOME/majordomo/office/ssl-certificates/Majordomo_LLC_Root_CA.crt" \
                      SSL_CERT_DIR="$HOME/.guix-profile/etc/ssl/certs" \
                      SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/ca-certificates.crt" \
-                     TF_VAR_GITLAB_TOKEN=***REMOVED*** \
-                     TF_VAR_MAJORDOMO_PASSWORD=***REMOVED*** \
-                     TF_VAR_MAJORDOMO_USER=pyhalov \
                      terraform apply "plan"
 }
 
@@ -765,9 +756,6 @@ terraform-apply-no-plan()
     NIX_SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/Majordomo_LLC_Root_CA.crt" \
                      SSL_CERT_DIR="$HOME/.guix-profile/etc/ssl/certs" \
                      SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/ca-certificates.crt" \
-                     TF_VAR_GITLAB_TOKEN=***REMOVED*** \
-                     TF_VAR_MAJORDOMO_PASSWORD=***REMOVED*** \
-                     TF_VAR_MAJORDOMO_USER=pyhalov \
             terraform apply
 }
 
