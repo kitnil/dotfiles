@@ -41,7 +41,7 @@
                     (supplementary-groups '("wheel" "netdev"
                                             "audio" "video"))
                     (home-directory "/home/natsu")
-                    (password (crypt "***REMOVED***" "bar")))
+                    (password (crypt "salt" "bar")))
                    (operating-system-users os)))
       (services (cons* 
                  (simple-service 'ddclient-secret shepherd-root-service-type
