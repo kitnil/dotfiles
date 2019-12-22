@@ -1,0 +1,18 @@
+#!/bin/bash
+
+# Block on shared SERVER specific IP-ADDRESS
+
+if [[ -z $1 ]]; then
+    echo "block-ip WEB IP-ADDRESSES"
+fi
+
+web="$1"
+if [[ $web != web* ]]; then
+    web="web$web"
+elif [[ $web == *s ]]; then
+    web=${web%s}
+fi
+
+for ip in ${@:1}; do
+    curl -s -i -XPUT "$web/ip-filter/$ip?ttl=7200&action=setCookie"
+done
