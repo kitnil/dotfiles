@@ -369,23 +369,23 @@ sshpass-root ()
 
 # jenkins-log()
 # {
-#     for project in $(curl -s -k 'https://admin:***REMOVED***@jenkins.intr/api/json?pretty=true' | jq -r '.jobs[] | .name'); do
-#         for job in $(curl -s -k "https://admin:***REMOVED***@jenkins.intr/job/$project/api/json" | jq -r '.jobs[] | .url'); do
+#     for project in $(curl -s -k "https://admin:$(pass show jenkins.intr/admin)@jenkins.intr/api/json?pretty=true" | jq -r '.jobs[] | .name'); do
+#         for job in $(curl -s -k "https://admin:$(pass show jenkins.intr/admin)@jenkins.intr/job/$project/api/json" | jq -r '.jobs[] | .url'); do
 #             echo "@ $job" |
-#             curl -u 'admin:***REMOVED***' -s -k "$job/job/master/lastBuild/consoleText"
+#             curl -u "admin:$(pass show jenkins.intr/admin)" -s -k "$job/job/master/lastBuild/consoleText"
 #         done
 #     done
 # }
 
 jenkins-log()
 {
-    for project in $(curl -s -k 'https://admin:***REMOVED***@jenkins.intr/api/json?pretty=true' | jq -r '.jobs[] | .name'); do
+    for project in $(curl -s -k "https://admin:$(pass show jenkins.intr/admin)@jenkins.intr/api/json?pretty=true" | jq -r '.jobs[] | .name'); do
         mkdir -p "$project"
         cd "$project"
-        for job in $(curl -s -k "https://admin:***REMOVED***@jenkins.intr/job/$project/api/json" | jq -r '.jobs[] | .url'); do
+        for job in $(curl -s -k "https://admin:$(pass show jenkins.intr/admin)@jenkins.intr/job/$project/api/json" | jq -r '.jobs[] | .url'); do
             job_name="$(echo $job | rev | cut -d/ -f 2 | rev)"
             echo "@ $job"
-            curl -u 'admin:***REMOVED***' -s -k "$job/job/master/lastBuild/consoleText" > "$job_name.log"
+            curl -u "admin:$(pass show jenkins.intr/admin)" -s -k "$job/job/master/lastBuild/consoleText" > "$job_name.log"
         done
         cd -
     done
@@ -439,13 +439,13 @@ docker-pull-intr()
 
 jenkins-log()
 {
-    for project in $(curl -s -k 'https://admin:***REMOVED***@jenkins.intr/api/json?pretty=true' | jq -r '.jobs[] | .name'); do
+    for project in $(curl -s -k 'https://admin:$(pass show jenkins.intr/admin)@jenkins.intr/api/json?pretty=true' | jq -r '.jobs[] | .name'); do
         mkdir -p "$project"
         cd "$project"
-        for job in $(curl -s -k "https://admin:***REMOVED***@jenkins.intr/job/$project/api/json" | jq -r '.jobs[] | .url'); do
+        for job in $(curl -s -k "https://admin:$(pass show jenkins.intr/admin)@jenkins.intr/job/$project/api/json" | jq -r '.jobs[] | .url'); do
             job_name="$(echo $job | rev | cut -d/ -f 2 | rev)"
             echo "@ $job"
-            curl -u 'admin:***REMOVED***' -s -k "$job/job/master/lastBuild/consoleText" > "$job_name.log"
+            curl -u 'admin:$(pass show jenkins.intr/admin)' -s -k "$job/job/master/lastBuild/consoleText" > "$job_name.log"
         done
         cd -
     done
@@ -1007,7 +1007,7 @@ jenkins-build-php()
     branch="$1"
     for job in apache2-php52 apache2-php53 apache2-php54 apache2-php55 apache2-php56 apache2-php70 apache2-php71 apache2-php72 apache2-php73 apache2-php74; do
         echo -e "\n@ $job"
-        curl -u 'admin:***REMOVED***' -s -k \
+        curl -u "admin:$(pass show jenkins.intr/admin)" -s -k \
 "https://jenkins.intr/job/webservices/job/$job/job/$branch/build?delay=0sec" \
 -H 'Content-type: application/x-www-form-urlencoded; charset=UTF-8' --data ''
         sleep 0.5
