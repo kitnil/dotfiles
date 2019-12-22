@@ -34,11 +34,13 @@ exec ${GUILE:-$(which guile)} $GUILE_FLAGS -e '(@@ (my-ansible) main)' -s "$0" "
 (define %default-options
   '())
 
+(define %password (getenv "ANSIBLE_PASSWORD"))
+
 (define (ansible cmd)
   (setenv "ANSIBLE_STDOUT_CALLBACK" "json")
   (let* ((port   (open-pipe* OPEN_READ
                              "ansible"
-                             "--become" "--extra-vars=ansible_become_pass=***REMOVED***"
+                             "--become" (string-append "--extra-vars=ansible_become_pass=" %password)
                              "-ilocalhost," "localhost"
                              "-m" "shell"
                              "-a" cmd))
