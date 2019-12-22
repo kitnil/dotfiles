@@ -212,6 +212,11 @@
 (defun firefox-command ()
   (join `(,@(if dark-theme '("GTK_THEME=Adwaita:dark") nil) "nixGLIntel" "firefox")))
 
+;; (defcommand firefox-test () ()
+;;   "Start of focus firefox."
+;;   (run-shell-command (join (list (firefox-command) "-P" "test"))
+;;                      '(:class "Firefox")))
+
 (defcommand firefox () ()
   "Start of focus firefox."
   (run-or-raise (firefox-command) '(:class "Firefox")))
