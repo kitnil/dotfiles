@@ -37,6 +37,8 @@ wget wm xdisorg xml xorg)
 (packages->manifest
  (append (list feh sxiv    ; Image viewers
 
+               qemu
+
                ffmpeg      ; Video, audio, images, gif conversion
                imagemagick ; Pipe to `display'
 
