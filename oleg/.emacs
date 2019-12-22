@@ -3434,7 +3434,7 @@ If given a prefix, patch in the branch directory instead."
     (with-current-buffer buffer
       (shell-command
        (mapconcat 'identity
-                  `("curl" "-u" "admin:***REMOVED***" "-s"
+                  `("curl" "-u" "admin:$(pass show jenkins.intr/admin)" "-s"
                     "-k" ,(format "https://jenkins.intr/job/webservices/job/%s/job/%s/%s/consoleText"
                                   project branch build))
                   " ")
