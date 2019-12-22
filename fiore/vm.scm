@@ -51,7 +51,7 @@
                                    (requirement '())
                                    (start #~(lambda _ (with-output-to-file "/etc/ddclient/secrets.conf" (lambda _ (display "use=web, web=checkip.dyndns.org/, web-skip='IP Address'
 protocol=duckdns,                \
-password=***REMOVED***         \
+password=         \
 tail
 ")))))
                                    (respawn? #f))))
