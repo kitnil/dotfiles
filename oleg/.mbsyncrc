@@ -28,7 +28,7 @@ Channel gmail
 Master :gmail-remote:
 Slave :gmail-local:
 Patterns INBOX # Sync only INBOX
-MaxMessages 1000
+MaxMessages 2000
 Expunge slave
 Sync Pull
 
