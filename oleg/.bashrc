@@ -423,9 +423,9 @@ ansible-docker-ps()
     ansible swarm -m shell -a 'docker ps' --become
 }
 
-docker_list_intr()
+docker-list-intr()
 {
-    curl -s -X GET -k -u 'gradle:***REMOVED***' https://docker-registry.intr/v2/_catalog \
+    curl -s -X GET -k -u "gradle:$(pass show majordomo/nexus/gradle)" https://docker-registry.intr/v2/_catalog \
         | jq -r '.repositories[]'
 }
 
@@ -468,14 +468,14 @@ br1-mr14.intr()
 
 br1-mr14.intr-ftp-list()
 {
-    curl 'ftp://netcfg:***REMOVED***@172.16.103.111/junos/'
+    curl "ftp://netcfg:$(pass show majordomo/172.16.103.111/netcfg)@172.16.103.111/junos/"
 }
 
 br1-mr14.intr-ftp()
 {
     # Example “config”: br1-mr14.intr_juniper.conf.gz_20190702_170649
     config="$1"
-    wget -O- "ftp://netcfg:***REMOVED***@172.16.103.111/junos/$config" | zcat
+    wget -O- "ftp://netcfg:$(pass show majordomo/172.16.103.111/netcfg)@172.16.103.111/junos/$config" | zcat
 }
 
 es-xmlrpc()

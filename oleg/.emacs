@@ -2776,7 +2776,7 @@ If nil use light theme.")
 ;;; Jenkins
 ;;;
 
-(setq jenkins-api-token "***REMOVED***")
+(setq jenkins-api-token "")
 (setq jenkins-url "https://jenkins.wugi.info/")
 (setq jenkins-username "admin")
 
