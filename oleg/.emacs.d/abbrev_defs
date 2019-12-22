@@ -123,6 +123,24 @@
 
 (define-abbrev-table 'flymake-diagnostics-buffer-mode-abbrev-table '())
 
+(define-abbrev-table 'forge-issue-list-mode-abbrev-table '())
+
+(define-abbrev-table 'forge-notifications-mode-abbrev-table '())
+
+(define-abbrev-table 'forge-post-mode-abbrev-table
+  '(
+    ("gas" "/assign @sidorov" nil 1)
+    ("gaz" "/assign @zdetovetskiy" nil 2)
+   ))
+
+(define-abbrev-table 'forge-pullreq-list-mode-abbrev-table '())
+
+(define-abbrev-table 'forge-repository-list-mode-abbrev-table '())
+
+(define-abbrev-table 'forge-topic-list-mode-abbrev-table '())
+
+(define-abbrev-table 'forge-topic-mode-abbrev-table '())
+
 (define-abbrev-table 'ftp-mode-abbrev-table '())
 
 (define-abbrev-table 'fundamental-mode-abbrev-table '())
@@ -183,6 +201,8 @@
 
 (define-abbrev-table 'grep-mode-abbrev-table '())
 
+(define-abbrev-table 'groovy-mode-abbrev-table '())
+
 (define-abbrev-table 'gud-mode-abbrev-table '())
 
 (define-abbrev-table 'guix-build-log-mode-abbrev-table '())
@@ -216,6 +236,8 @@
 (define-abbrev-table 'helm-major-mode-abbrev-table '())
 
 (define-abbrev-table 'helm-moccur-mode-abbrev-table '())
+
+(define-abbrev-table 'helm-occur-mode-abbrev-table '())
 
 (define-abbrev-table 'help-mode-abbrev-table '())
 
@@ -254,6 +276,8 @@
 (define-abbrev-table 'js-jsx-mode-abbrev-table '())
 
 (define-abbrev-table 'js-mode-abbrev-table '())
+
+(define-abbrev-table 'json-mode-abbrev-table '())
 
 (define-abbrev-table 'latex-mode-abbrev-table '())
 
@@ -335,6 +359,8 @@
 (define-abbrev-table 'nginx-mode-abbrev-table '())
 
 (define-abbrev-table 'nix-mode-abbrev-table '())
+
+(define-abbrev-table 'nix-repl-mode-abbrev-table '())
 
 (define-abbrev-table 'notmuch-hello-mode-abbrev-table '())
 
@@ -509,6 +535,8 @@
 (define-abbrev-table 'vc-hg-log-view-mode-abbrev-table '())
 
 (define-abbrev-table 'vc-svn-log-view-mode-abbrev-table '())
+
+(define-abbrev-table 'vterm-mode-abbrev-table '())
 
 (define-abbrev-table 'xref--xref-buffer-mode-abbrev-table '())
 
