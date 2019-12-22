@@ -1372,3 +1372,20 @@ digga()
 }
 
 alias ff="feh --borderless --image-bg black --auto-zoom --draw-filename"
+
+lsp-mode()
+{
+    docker run --tty --interactive --rm                                                 \
+            --volume $PWD:/mnt/workspace                                                \
+            --volume /etc/localtime:/etc/localtime:ro                                   \
+            --volume ~/.gnupg:${HOME}/.gnupg                                            \
+            --volume /var/run/dbus/system_bus_socket:/var/run/dbus/system_bus_socket    \
+            --volume /tmp/.X11-unix:/tmp/.X11-unix                                      \
+            --volume /etc/machine-id:/etc/machine-id:ro                                 \
+            --volume /home/oleg/majordomo/hms:/src                                      \
+            --volume $PWD/emacs.d/:/home/lsp/.emacs.d                                   \
+            --user 1000:1000                                                            \
+            --env DISPLAY=$DISPLAY                                                      \
+            --network=host                                                              \
+            ${1:-yyoncho/lsp-emacs-docker} emacs
+}
