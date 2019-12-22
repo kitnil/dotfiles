@@ -463,7 +463,7 @@ ansible-swarm-network-inspect()
 
 br1-mr14.intr()
 {
-    sshpass -p***REMOVED*** ssh -l root br1-mr14.intr
+    sshpass -p$(pass show pass show majordomo/ssh/router) ssh -l root br1-mr14.intr
 }
 
 br1-mr14.intr-ftp-list()
