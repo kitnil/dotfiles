@@ -1,0 +1,3 @@
+#!/bin/sh
+
+echo "(youtube-dl-music-play-url \"$1\")" | stumpish -e eval
