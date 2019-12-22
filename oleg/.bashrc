@@ -1400,3 +1400,24 @@ git-pull-all()
         (cd $dir; git checkout master; git fetch origin; git pull --rebase -u origin master)
     done
 }
+
+git-all-history()
+{
+    git log --oneline | awk '{ print $1 }' | xargs git show
+}
+
+git-grep-removed()
+{
+    git log --full-diff  -G '\*\*REMOVED\*\*'
+}
+
+git-prune()
+{
+    git reflog expire --expire=now --all && git gc --prune=now --aggressive
+}
+
+bfg()
+{
+    # https://rtyley.github.io/bfg-repo-cleaner/
+    java -jar ~/Downloads/bfg-1.13.0.jar --replace-text <(git-pass-secrets)
+}
