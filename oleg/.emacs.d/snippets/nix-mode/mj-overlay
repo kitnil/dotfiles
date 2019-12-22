@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: mj
+# key: mj
+# --
+with import <nixpkgs> {
+  overlays = [
+    (import /home/oleg/majordomo/_ci/nixpkgs)
+  ];
+};
