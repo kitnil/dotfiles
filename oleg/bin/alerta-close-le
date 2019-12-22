@@ -1,0 +1,7 @@
+#!/bin/sh
+
+set -e -x
+
+for id in $(alerta query --filter severity=informational | awk '/Домен должен быть делегирован на наши/ { print $1 }'); do
+    alerta close --ids $id
+done
