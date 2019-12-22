@@ -1389,3 +1389,10 @@ lsp-mode()
             --network=host                                                              \
             ${1:-yyoncho/lsp-emacs-docker} emacs
 }
+
+git-pull-all()
+{
+    for dir in $@; do
+        (cd $dir; git checkout master; git fetch origin; git pull --rebase -u origin master)
+    done
+}
