@@ -3650,6 +3650,14 @@ If given a prefix, patch in the branch directory instead."
         (put-text-property (match-beginning 3) (match-end 3)
                            'font-lock-face 'info-colors-ref-item-other)))))
 
+(defun majordomo-php-insert ()
+  (interactive)
+  (insert
+   (prin1-to-string
+    '(mapcar (lambda (version)
+               (expand-file-name (format "~/majordomo/webservices/apache2-php%s" (number-to-string version))))
+             '(52 53 54 55 56 70 71 72 73 74)))))
+
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
