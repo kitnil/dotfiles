@@ -64,7 +64,7 @@
   python-open-with
 
   xterm-my
-  qemu-my
+  ;; qemu-my
 
   tome4-with-addons
   quickwall
