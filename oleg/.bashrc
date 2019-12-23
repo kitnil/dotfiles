@@ -1421,3 +1421,11 @@ bfg()
     # https://rtyley.github.io/bfg-repo-cleaner/
     java -jar ~/Downloads/bfg-1.13.0.jar --replace-text <(git-pass-secrets)
 }
+
+ssl-show-certificate-dates()
+{
+    for host in $@; do
+        echo -e "\n\n@ $host";
+        echo | openssl s_client -servername $host -connect $host:443 2>/dev/null | openssl x509 -noout -dates
+    done
+}
