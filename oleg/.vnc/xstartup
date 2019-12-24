@@ -4,4 +4,5 @@ unset SESSION_MANAGER
 unset DBUS_SESSION_BUS_ADDRESS
 
 # /run/current-system/profile/bin/dbus-launch xfce4-session
+# /home/oleg/.guix-profile/bin/ratpoison
 /run/current-system/profile/bin/stumpwm
