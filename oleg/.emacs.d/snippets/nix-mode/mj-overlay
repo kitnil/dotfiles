@@ -4,6 +4,10 @@
 # --
 with import <nixpkgs> {
   overlays = [
-    (import /home/oleg/majordomo/_ci/nixpkgs)
+    (import ${3:$$(yas-choose-value (seq-filter (lambda (dir)
+                                (s-contains-p "nixpkgs" dir))
+                              (seq-filter #'file-directory-p
+                                          (cddr ;skip "." and ".."
+                                           (directory-files (expand-file-name "~/majordomo/_ci/") t)))))})
   ];
 };
