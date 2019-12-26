@@ -463,7 +463,14 @@ ansible-swarm-network-inspect()
 
 br1-mr14.intr()
 {
-    sshpass -p$(pass show pass show majordomo/ssh/router) ssh -l root br1-mr14.intr
+    echo 172.16.103.199
+    sshpass -p$(pass show majordomo/ssh/router) \
+      ssh -F /dev/null                          \
+      -i $HOME/.ssh/eng_key_rsa                 \
+      -o UserKnownHostsFile=/dev/null           \
+      -o StrictHostKeyChecking=no               \
+      -l root                                   \
+      br1-mr14.intr
 }
 
 br1-mr14.intr-ftp-list()
