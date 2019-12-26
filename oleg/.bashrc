@@ -13,12 +13,6 @@ then
     . "$HOME/.bash_aliases"
 fi
 
-if [ -f "/run/current-system/profile/share/bash-completion/completions/ssh" ]
-then
-    . "/run/current-system/profile/share/bash-completion/completions/ssh"
-    shopt -u hostcomplete && complete -F _ssh ssh slogin autossh sidedoor c
-fi
-
 export GRADLE_HOME=/opt/gradle
 
 # if [ -f "$HOME/.guix-profile/etc/profile.d/autojump.sh" ]
