@@ -4,5 +4,8 @@ unset SESSION_MANAGER
 unset DBUS_SESSION_BUS_ADDRESS
 
 # /run/current-system/profile/bin/dbus-launch xfce4-session
-# /home/oleg/.guix-profile/bin/ratpoison
-/run/current-system/profile/bin/stumpwm
+if [[ $DISPLAY = ":1.0" ]]; then
+    /run/current-system/profile/bin/stumpwm
+else
+    /home/oleg/.guix-profile/bin/ratpoison
+fi
