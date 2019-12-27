@@ -57,7 +57,7 @@
                        %base-user-accounts)))
 
   (file-systems (cons* (file-system
-                         (device (uuid (file-system-label "workstation-guix")))
+                         (device (file-system-label "workstation-guix"))
                          (mount-point "/")
                          (type "ext4"))
                        (file-system
