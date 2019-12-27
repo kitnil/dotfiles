@@ -30,7 +30,6 @@
                              (comment "Oleg Pykhalov")
                              (group "users")
                              (supplementary-groups '("wheel" "audio" "video")))
-               %base-user-accounts
                (append ((lambda* (count #:key
                                    (group "nixbld")
                                    (first-uid 30101)
