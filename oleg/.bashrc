@@ -13,7 +13,8 @@ then
     . "$HOME/.bash_aliases"
 fi
 
-export GRADLE_HOME=/opt/gradle
+GRADLE_HOME=/opt/gradle
+export GRADLE_HOME
 
 PYTHONSTARTUP=$HOME/.pythonrc
 export PYTHONSTARTUP
