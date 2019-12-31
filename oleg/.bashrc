@@ -15,6 +15,9 @@ fi
 
 export GRADLE_HOME=/opt/gradle
 
+PYTHONSTARTUP=$HOME/.pythonrc
+export PYTHONSTARTUP
+
 # if [ -f "$HOME/.guix-profile/etc/profile.d/autojump.sh" ]
 # then
 #     . "$HOME/.guix-profile/etc/profile.d/autojump.sh"
