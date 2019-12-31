@@ -4,6 +4,7 @@
              (wigust packages emacs)
              (wigust packages games)
              (wigust packages guix)
+             (wigust packages pspg)
              (wigust packages pulseaudio)
              (wigust packages python)
              (wigust packages ruby)
@@ -65,6 +66,8 @@
 
   tome4-with-addons
   quickwall
+
+  pspg ; SQL pager
   
   guix-wigust-packages-emacs))
 
