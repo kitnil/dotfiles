@@ -858,8 +858,7 @@ check-sites-on-ip()
 ansible-auth-hosts()
 {
     for host in $(ansible all --list-hosts |grep intr); do
-        echo -e "\n@ $host"
-        ssh -oStrictHostKeyChecking=no $host -- uptime
+        printf "%s%s\n" "$host" "$(ssh -oStrictHostKeyChecking=no $host -- uptime)"
     done
 }
 
