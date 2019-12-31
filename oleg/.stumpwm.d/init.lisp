@@ -977,6 +977,11 @@
 (defcommand pass-eng () ()
   (window-send-string (format nil "~a~%" (password-store-show "majordomo/ssh/eng"))))
 
+(defcommand docker-pull () ()
+  (window-send-string (format nil "~a~%" "docker ps --format '{{ .Image }}' | grep master | sort -u | xargs -I{} docker pull {}")))
+
+(define-key *top-map* (kbd "s-D") "docker-pull")
+
 (defcommand pass-sup () ()
   (window-send-string (format nil "~a~%" (password-store-show "majordomo/ssh/sup"))))
 
