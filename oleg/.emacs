@@ -3567,38 +3567,6 @@ If given a prefix, patch in the branch directory instead."
                                                                 (cddr ;skip "." and ".."
                                                                  (directory-files (expand-file-name "~/majordomo") t))))))))))
 
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(build-farm-build-arguments '("jobset=guix-master" "system=x86_64-linux"))
- '(custom-safe-themes
-   '("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default))
- '(debug-on-error nil)
- '(indent-tabs-mode nil)
- '(org-agenda-files '("~/org/inbox.org"))
- '(safe-local-variable-values
-   '((git-auto-commit-mode . t)
-     (eval progn
-           (put 'with-directory 'scheme-indent-function 1)
-           (put 'with-repository 'scheme-indent-function 2))
-     (TeX-master . "guile.texi")
-     (eval c-set-offset 'access-label '-)
-     (eval c-set-offset 'substatement-open 0)
-     (eval c-set-offset 'arglist-cont-nonempty '+)
-     (eval c-set-offset 'arglist-cont 0)
-     (eval c-set-offset 'arglist-intro '+)
-     (eval c-set-offset 'inline-open 0)
-     (eval c-set-offset 'defun-open 0)
-     (eval c-set-offset 'innamespace 0)
-     (indicate-empty-lines . t)
-     (eval modify-syntax-entry 43 "'")
-     (eval modify-syntax-entry 36 "'")
-     (eval modify-syntax-entry 126 "'")
-     (bug-reference-bug-regexp . "<https?://\\(debbugs\\|bugs\\)\\.gnu\\.org/\\([0-9]+\\)>")))
- '(tramp-default-method "ssh"))
-
 (load (expand-file-name "~/archive/src/vterm-toggle/vterm-toggle.el"))
 (load (expand-file-name "~/archive/src/tramp-auto-auth/tramp-auto-auth.el"))
 (tramp-auto-auth-mode)
@@ -3660,6 +3628,38 @@ If given a prefix, patch in the branch directory instead."
     '(mapcar (lambda (version)
                (expand-file-name (format "~/majordomo/webservices/apache2-php%s" (number-to-string version))))
              '(52 53 54 55 56 70 71 72 73 74)))))
+
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(build-farm-build-arguments '("jobset=guix-master" "system=x86_64-linux"))
+ '(custom-safe-themes
+   '("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default))
+ '(debug-on-error nil)
+ '(indent-tabs-mode nil)
+ '(org-agenda-files '("~/org/inbox.org"))
+ '(safe-local-variable-values
+   '((git-auto-commit-mode . t)
+     (eval progn
+           (put 'with-directory 'scheme-indent-function 1)
+           (put 'with-repository 'scheme-indent-function 2))
+     (TeX-master . "guile.texi")
+     (eval c-set-offset 'access-label '-)
+     (eval c-set-offset 'substatement-open 0)
+     (eval c-set-offset 'arglist-cont-nonempty '+)
+     (eval c-set-offset 'arglist-cont 0)
+     (eval c-set-offset 'arglist-intro '+)
+     (eval c-set-offset 'inline-open 0)
+     (eval c-set-offset 'defun-open 0)
+     (eval c-set-offset 'innamespace 0)
+     (indicate-empty-lines . t)
+     (eval modify-syntax-entry 43 "'")
+     (eval modify-syntax-entry 36 "'")
+     (eval modify-syntax-entry 126 "'")
+     (bug-reference-bug-regexp . "<https?://\\(debbugs\\|bugs\\)\\.gnu\\.org/\\([0-9]+\\)>")))
+ '(tramp-default-method "ssh"))
 
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
