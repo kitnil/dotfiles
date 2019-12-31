@@ -80,7 +80,7 @@ wget wm xdisorg xml xorg)
 
                mcron
 
-               git colordiff mercurial gource
+               git colordiff mercurial gource vc-dwim
 
                colormake
 

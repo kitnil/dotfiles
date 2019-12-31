@@ -7,7 +7,6 @@
              (wigust packages pulseaudio)
              (wigust packages python)
              (wigust packages ruby)
-             (wigust packages version-control)
              (wigust packages virtualization)
              (wigust packages xdisorg)
              (wigust packages xorg))
@@ -54,8 +53,6 @@
   guix-browse
   guix-latest-eval
   guix-misc
-
-  vc-dwim-git-worktree
 
   wrapper-xclip
 
