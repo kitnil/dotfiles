@@ -866,8 +866,7 @@ ansible-auth-hosts-sup()
 {
     ansible sup --list-hosts
     for host in $(ansible sup --list-hosts | tail -n +2); do
-        echo -e "\n@ $host"
-        ssh  -p 1022 -l sup -i .ssh/id_rsa_sup_sup -oStrictHostKeyChecking=no $host -- uptime
+        printf "%s%s\n" "$host" "$(ssh  -p 1022 -l sup -i $HOME/.ssh/id_rsa_sup_sup -oStrictHostKeyChecking=no $host -- uptime)"
     done
 }
 
