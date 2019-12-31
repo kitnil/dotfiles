@@ -1,14 +1,6 @@
 (use-modules (gnu)
              (srfi srfi-1)
              (srfi srfi-26)
-             (wigust services gitlab)
-             (wigust services nix)
-             (wigust services autossh)
-             (wigust services kresd)
-             (wigust services openvpn)
-             (wigust packages lisp)
-             (majordomo packages majordomo)
-
              (guix packages)
              (guix git-download))
 
@@ -20,6 +12,15 @@
 (use-service-modules admin dbus desktop docker dns networking sound
                      xorg ssh web cgit version-control certbot
                      monitoring databases mail)
+
+;; Third-party modules
+(use-modules (wigust services gitlab)
+             (wigust services nix)
+             (wigust services autossh)
+             (wigust services kresd)
+             (wigust services openvpn)
+             (wigust packages lisp)
+             (majordomo packages majordomo))
 
 (define %local-artwork-repository
   (let ((commit "549bf7e6408356f23f0f5d95275c4af6c08ac1a7"))
