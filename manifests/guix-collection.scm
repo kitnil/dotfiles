@@ -57,6 +57,8 @@ wget wm xdisorg xml xorg)
                jq jo
                nmap
 
+               lm-sensors
+
                cloc            ; Count code
                direnv
                gnu-make        ; GNU Make
