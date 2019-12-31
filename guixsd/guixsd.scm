@@ -20,6 +20,7 @@
              (wigust services kresd)
              (wigust services openvpn)
              (wigust packages lisp)
+             (wigust packages php)
              (majordomo packages majordomo))
 
 (define %local-artwork-repository
@@ -485,6 +486,7 @@ EndSection")
 
                        (service php-fpm-service-type
                                 (php-fpm-configuration
+                                 (php php-7.3.12)
                                  (timezone "Europe/Moscow")))
 
                        (service certbot-service-type
