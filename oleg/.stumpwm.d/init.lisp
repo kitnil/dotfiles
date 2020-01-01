@@ -1,4 +1,4 @@
-;; Copyright © 2018, 2019 Oleg Pykhalov <go.wigust@gmail.com>
+;; Copyright © 2018, 2019, 2020 Oleg Pykhalov <go.wigust@gmail.com>
 ;; Released under the GNU GPLv3 or any later version.
 
 (in-package :stumpwm)
@@ -609,6 +609,10 @@
 (defcommand repl-bash-pure () ()
   (term-shell-command "env -i \"$(command -v bash)\" --login --noprofile --norc"
                       :scrollbar t :title "repl-bash-pure"))
+
+(defcommand repl-ansible (group) ((:string "Ansible inventory group: "))
+  (term-shell-command (format nil "ansible-console ~a" group)
+                      :scrollbar t :title "repl-ansible" :color 'dark))
 
 
 ;;;
