@@ -1,4 +1,4 @@
-## Copyright © 2018, 2019 Oleg Pykhalov <go.wigust@gmail.com>
+## Copyright © 2018, 2019, 2020 Oleg Pykhalov <go.wigust@gmail.com>
 ## Released under the GNU GPLv3 or any later version.
 
 if [ -f "/etc/skel/.bashrc" ]
@@ -626,9 +626,10 @@ guix-packages-json()
 
 skopeo-mj()
 {
-    image="$1" # ssh-guest-room
-    tar="$2" || result # docker-archive:/nix/store/dw0qakl4g58n9idsi35vn0m1d92gs0jw-docker-image-ssh-guest-room.tar.gz
-    skopeo copy --dest-creds=gradle:"$(pass show majordomo/nexus/gradle)" --dest-tls-verify=false "docker-archive:$tar" "docker://docker-registry.intr/webservices/$image:master"
+    group="$1"
+    image="$2" # ssh-guest-room
+    tar="$3" || result # docker-archive:/nix/store/dw0qakl4g58n9idsi35vn0m1d92gs0jw-docker-image-ssh-guest-room.tar.gz
+    skopeo copy --dest-creds=gradle:"$(pass show majordomo/nexus/gradle)" --dest-tls-verify=false "docker-archive:$tar" "docker://docker-registry.intr/$group/$image:master"
 }
 
 skopeo-fetch()
