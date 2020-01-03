@@ -209,6 +209,7 @@ lots of other utilities frequently used in roguelikes.")
                  (let ((archive (string-append "game/modules/tome-" ,version ".team")))
                    (mkdir-p "mod/class")
                    (system* unzip "-j" archive "mod/class/Game.lua" "-d" "mod/class")
+                   ;; Change tactic grid color from yellow to black.
                    (substitute* "mod/class/Game.lua"
                      (("d5990880") "1a1a1a80"))
                    (system* zip archive "mod/class/Game.lua")))))))))))
