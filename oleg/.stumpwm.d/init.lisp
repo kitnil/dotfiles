@@ -968,6 +968,15 @@
 (define-key *top-map* (kbd "XF86AudioRaiseVolume") "ponymix-increase")
 (define-key *top-map* (kbd "XF86AudioLowerVolume") "ponymix-decrease")
 
+(defcommand ponymix-increase-device-0 () ()
+  (run-shell-command "ponymix increase --device 0 5"))
+
+(defcommand ponymix-decrease-device-0 () ()
+  (run-shell-command "ponymix decrease --device 0 5"))
+
+(define-key *top-map* (kbd "C-s-=") "ponymix-increase-device-0")
+(define-key *top-map* (kbd "C-s--") "ponymix-decrease-device-0")
+
 (defcommand xkill () ()
   "Run `xkill'."
   (run-shell-command "xkill"))
