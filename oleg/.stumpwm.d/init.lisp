@@ -443,7 +443,7 @@
         (xterm-command :color color :command command :font font :title title :scrollbar scrollbar))
        ((st)
         (join (list terminal-name
-                    *st-font-flag* *st-font*
+                    *st-font-flag* (if font font *st-font*)
                     *st-exec-flag* command)))))))
 
 (defcommand epson () ()
@@ -674,7 +674,7 @@
             :wait nil))
 
 (defcommand pulsemixer () ()
-  (term-shell-command "pulsemixer" :terminal 'st))
+  (term-shell-command "pulsemixer" :terminal 'st :font "Monospace:size=8"))
 
 (defcommand alsamixer () ()
   "Download video."
