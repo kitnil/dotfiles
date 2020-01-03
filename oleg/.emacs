@@ -3552,21 +3552,6 @@ If given a prefix, patch in the branch directory instead."
                         "&&" "mv" "tech.html" "/var/www/techinfo.intr/index.html")
                       " ")))
 
-(defun majordomo-ivy-find-project ()
-  "Find Majordomo project."
-  (interactive)
-  (find-file
-   (ivy-completing-read "Directory: "
-                        (delete-dups
-                         (seq-filter #'file-directory-p
-                                     (apply #'append
-                                            (mapcar (lambda (dir)
-                                                      (cddr ;skip "." and ".."
-                                                       (directory-files dir t)))
-                                                    (seq-filter #'file-directory-p
-                                                                (cddr ;skip "." and ".."
-                                                                 (directory-files (expand-file-name "~/majordomo") t))))))))))
-
 (load (expand-file-name "~/archive/src/vterm-toggle/vterm-toggle.el"))
 (load (expand-file-name "~/archive/src/tramp-auto-auth/tramp-auto-auth.el"))
 (tramp-auto-auth-mode)

@@ -1134,7 +1134,7 @@
          (switch-to-emacs)))
 
 (defcommand majordomo-find-project () ()
-  (progn (run-shell-command "emacsclient --eval '(majordomo-ivy-find-project)'")
+  (progn (run-shell-command "emacsclient --eval '(mj-project-ivy)'")
          (switch-to-emacs)))
 
 (defcommand org () ()
