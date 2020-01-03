@@ -1,3 +1,7 @@
 (channel
  (version 0)
- (directory "guix"))
+ (directory "guix")
+ (dependencies
+  (channel
+   (name guix-tome4)
+   (url "https://cgit.duckdns.org/git/guix/guix-tome4"))))
