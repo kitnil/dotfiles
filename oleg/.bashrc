@@ -459,7 +459,7 @@ ansible-swarm-network-inspect()
     ansible swarm -m shell -a 'docker network ls | cut -d " " -f 1 | grep -v NETWORK | xargs docker network inspect' --become
 }
 
-br1-mr14.intr()
+ssh-ignore-br1-mr14.intr()
 {
     echo 172.16.103.199
     sshpass -p$(pass show majordomo/ssh/router) \
