@@ -1,4 +1,4 @@
-;; Copyright © 2017, 2018, 2019 Oleg Pykhalov <go.wigust@gmail.com>
+;; Copyright © 2017, 2018, 2019, 2020 Oleg Pykhalov <go.wigust@gmail.com>
 ;; Released under the GNU GPLv3 or any later version.
 
 ;; Tip: "M-x e" on `(emacs-init-time)'.
@@ -2665,7 +2665,7 @@ be updated automatically."))
 ;; (when (and (require 'edit-server nil t) (daemonp))
 ;;   (edit-server-start))
 
-(setq terminal-here-scrollbar nil)
+(setq terminal-here-scrollbar t)
 (setq terminal-here-terminal-emulators (list "xterm"))
 (setq-default terminal-here-project-root-function #'projectile-project-root)
 
