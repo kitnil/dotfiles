@@ -9,6 +9,7 @@
              (wigust packages python)
              (wigust packages ruby)
              (wigust packages virtualization)
+             (wigust packages tome4)
              (wigust packages xdisorg)
              (wigust packages xorg))
 
@@ -64,7 +65,7 @@
   xterm-my
   ;; qemu-my
 
-  tome4-with-addons
+  tome4-with-addons-custom
   quickwall
 
   pspg ; SQL pager
