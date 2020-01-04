@@ -33,6 +33,7 @@
   #:use-module (guix build-system python)
   #:use-module (guix build-system trivial)
   #:use-module (guix gexp)
+  #:use-module (guix download)
   #:use-module (guix git-download)
   #:use-module (guix packages)
   #:use-module (ice-9 popen)
@@ -256,21 +257,28 @@
       (license license:gpl3+))))
 
 (define-public majordomo-ca
-  (let ((commit "9d8c7dc01a94af4a2361395f0888104cbff5b749"))
-    (package
-      (name "majordomo-ca")
-      (version (git-version "0.0.1" "1" commit))
-      (source (local-file "/home/oleg/majordomo/office/ssl-certificates/Majordomo_LLC_Root_CA.crt"))
-      (arguments
-       `(#:modules ((guix build utils))
-         #:builder
-         (begin
-           (use-modules (guix build utils))
-           (install-file (assoc-ref %build-inputs "source")
-                         (string-append %output "/etc/ssl/certs"))
-           #t)))
-      (build-system trivial-build-system)
-      (home-page "https://www.majordomo.ru/")
-      (synopsis "Majordomo CA")
-      (description "This package provides a Majordomo CA")
-      (license license:gpl3+))))
+  (package
+    (name "majordomo-ca")
+    (version "0.0.1")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append
+                    "https://cgit.duckdns.org"
+                    "/guix/guix-majordomo"
+                    "/plain/majordomo/packages/Majordomo_LLC_Root_CA.crt"))
+              (sha256
+               (base32
+                "1nyj8sns0vfm51bky3cwf2cvx8fqw1nyb678r9v8wrf75ssbzwd0"))))
+    (arguments
+     `(#:modules ((guix build utils))
+       #:builder
+       (begin
+         (use-modules (guix build utils))
+         (install-file (assoc-ref %build-inputs "source")
+                       (string-append %output "/etc/ssl/certs"))
+         #t)))
+    (build-system trivial-build-system)
+    (home-page "https://www.majordomo.ru/")
+    (synopsis "Majordomo CA")
+    (description "This package provides a Majordomo CA")
+    (license license:gpl3+)))
