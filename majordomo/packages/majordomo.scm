@@ -168,13 +168,13 @@
 (define-public guile-loadavg
   (let ((commit "424360d0b5cbfcb3dee711d47b0f7d139c6c4f7e"))
     (package
-      (home-page "https://gitlab.com/wigust/guile-loadavg/")
+      (home-page "https://cgit.duckdns.org/guile/guile-loadavg")
       (name "guile-loadavg")
       (version (string-append "0.0.1" "-" (string-take commit 7)))
       (source (origin
                 (method git-fetch)
                 (uri (git-reference
-                      (url "https://gitlab.wugi.info/guile/guile-loadavg.git")
+                      (url "https://cgit.duckdns.org/git/guile/guile-loadavg")
                       (commit commit)))
                 (file-name (git-file-name name version))
                 (sha256
