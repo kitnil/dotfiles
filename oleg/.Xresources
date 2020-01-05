@@ -127,6 +127,9 @@ XTerm*fullscreen: never
 
 ! Origin <https://scarygliders.net/2011/12/01/customize-xterm-the-original-and-best-terminal/>.
 ! Double-click to select URLs.
+!
+! Defining What Makes Up a Word for Selection Purposes
+! <https://docstore.mik.ua/orelly/unix3/upt/ch05_14.htm>
 XTerm*charClass: 33:48,36-38:48,40-47:48,58-59:48,61:48,63-64:48,95:48,126:48
 
 ! Origin <https://lists.nongnu.org/archive/html/stumpwm-devel/2007-07/msg00022.html>.
