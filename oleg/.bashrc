@@ -1453,3 +1453,11 @@ itoa()
     echo -n $(($((${1}/256))%256)).
     echo $((${1}%256))
 }
+
+pactl-ladspa()
+{
+    # TODO: LADSPA_PATH=/gnu/store/…-swh-plugins/lib/ladspa
+    # https://github.com/gotbletu/shownotes/blob/master/pulseaudio-dynamic-range-compression.md
+    pactl load-module module-ladspa-sink master=0 sink_name=compressor-stereo plugin=sc4_1882 label=sc4 control=1,1.5,401,-30,20,5,12
+    pactl load-module module-ladspa-sink master=1 sink_name=compressor-stereo plugin=sc4_1882 label=sc4 control=1,1.5,401,-30,20,5,12
+}
