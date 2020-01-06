@@ -1079,10 +1079,6 @@
     (run-or-raise "chromium --app=http://localhost:8090/"
                   '(:instance "jenkins")))
 
-  (defcommand ci (package) ((:string "package: "))
-    (unless (string= package "")
-      (run-shell-command (concat "chromium --app=http://ci.guix.info/search?query=spec%3Aguix-master+system%3Ax86_64-linux+" package))))
-
   (defcommand cuirass () ()
     (firefox "https://grafana.wugi.info/d/Ob67YJYiz/fiore?refresh=30s&orgId=1&var-host=cuirass"))
 
@@ -1101,6 +1097,22 @@
 (defcommand xpanes-guix () ()
   (term-shell-command "xpanes -C 1 -c 'ssh -t {}' guixsd workstation spb"
                       :color 'dark))
+
+(defun browse-url-firefox (url &optional new-window)
+  (run-shell-command
+   (join `("firefox"
+           ,@(if new-window '("--new-window") '())
+           ,url))))
+
+(defcommand guix-ci () ()
+  (browse-url-firefox "http://ci.guix.info/jobset/guix-master" t))
+
+(defcommand guix-ci-package (package) ((:string "package: "))
+  (unless (string= package "")
+    (browse-url-firefox
+     (concat "http://ci.guix.info/search?query=spec%3Aguix-master+system%3Ax86_64-linux+"
+             package)
+     t)))
 
 (defun emacsclient-command (&rest args)
   (run-shell-command (format nil "emacsclient ~a" (join args))))
