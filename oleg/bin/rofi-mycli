@@ -9,5 +9,18 @@ else
     else
         size=8
     fi
-    coproc (xterm -title "mycli@$@" -bg '#fff0f5' -fg '#000000' -fa Monospace -fs "$size" -e env PAGER='pspg -s 14 -X --force-uniborder --quit-if-one-screen -s 16' mycli -d $@ &>/dev/null &)
+    case "$@" in
+        web*)
+            coproc (xterm -title "mycli@$@" -bg '#fff0f5' -fg '#000000' -fa Monospace -fs "$size" -e env PAGER='pspg -s 14 -X --force-uniborder --quit-if-one-screen -s 16' mycli --password "$(pass show majordomo/web/mysql/root)" -d $@ &>/dev/null &)
+            ;;
+        maxscale*)
+            coproc (xterm -title "mycli@$@" -bg '#f08080' -fg '#000000' -fa Monospace -fs "$size" -e env PAGER='pspg -s 14 -X --force-uniborder --quit-if-one-screen -s 16' mycli --password "$(pass show majordomo/maxscale.intr/root)" -d $@ &>/dev/null &)
+            ;;
+        galera*)
+            coproc (xterm -title "mycli@$@" -bg '#f08080' -fg '#000000' -fa Monospace -fs "$size" -e env PAGER='pspg -s 14 -X --force-uniborder --quit-if-one-screen -s 16' mycli --password "$(pass show majordomo/mysql.intr/galera1.intr/root)" -d $@ &>/dev/null &)
+            ;;
+        *)
+            coproc (xterm -title "mycli@$@" -bg '#fff0f5' -fg '#000000' -fa Monospace -fs "$size" -e env PAGER='pspg -s 14 -X --force-uniborder --quit-if-one-screen -s 16' mycli -d $@ &>/dev/null &)
+            ;;
+    esac
 fi
