@@ -3557,6 +3557,7 @@ If given a prefix, patch in the branch directory instead."
 (tramp-auto-auth-mode)
 (load (expand-file-name "~/src/emacs-helm-tramp/helm-tramp.el"))
 (load (expand-file-name "~/archive/src/tmp/tmp.iGP0dpFwEX/mj-servers.el") t)
+(load (expand-file-name "~/archive/src/tmp/tmp.iGP0dpFwEX/mj-project.el") t)
 
 (setq highlight-indent-guides-method 'character)
 
