@@ -1,0 +1,6 @@
+#!/bin/sh
+
+. /etc/profile
+. $HOME/.nix-profile/etc/profile.d/nix.sh
+
+exec -a "$0" /home/oleg/.nix-profile/bin/java -jar $HOME/.jenkins/agent.jar "$@"
