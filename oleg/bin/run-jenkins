@@ -1,0 +1,6 @@
+#!/bin/sh
+
+. /etc/profile
+. $HOME/.nix-profile/etc/profile.d/nix.sh
+
+exec -a "$0" $HOME/.nix-profile/bin/java -Xmx512m -jar $HOME/.nix-profile/webapps/jenkins.war --httpPort=8090 --ajp13Port=-1 "$@"
