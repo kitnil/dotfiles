@@ -1,0 +1,58 @@
+#!/run/current-system/profile/bin/guile \
+--no-auto-compile -e (ssh-aliases) -s
+!#
+
+;;;; ssh-aliases --- SYNOPSIS
+;;;; Copyright © 2020 Oleg Pykhalov <go.wigust@gmail.com>
+;;;; Released under the GNU GPLv3 or any later version.
+
+(define-module (ssh-aliases)
+  #:use-module (ice-9 match)
+  #:use-module (ice-9 rdelim)
+  #:use-module (srfi srfi-26)
+  #:use-module (srfi srfi-37)
+  #:export (main))
+
+;;; Commentary:
+;;;
+;;; DESCRIPTION
+;;;
+;;; Code:
+
+(define %options
+  (let ((display-and-exit-proc (lambda (msg)
+                                 (lambda (opt name arg loads)
+                                   (display msg) (quit)))))
+    (list (option '(#\v "version") #f #f
+                  (display-and-exit-proc "ssh-aliases version 0.0.1\n"))
+          (option '(#\h "help") #f #f
+                  (display-and-exit-proc
+                   "Usage: ssh-aliases ...")))))
+
+(define %default-options
+  '())
+
+(define %know-hosts
+  (and=> (getenv "HOME")
+         (lambda (home)
+           (string-append home "/.ssh/known_hosts"))))
+
+(define (main args)
+  (define opts
+    (args-fold (cdr (program-arguments))
+               %options
+               (lambda (opt name arg loads)
+                 (error "Unrecognized option `~A'" name))
+               (lambda (op loads)
+                 (cons op loads))
+               %default-options))
+  (for-each (lambda (host)
+              (format #t "alias ~a=~s~%" host (format #f "ssh ~a" host)))
+            (sort (filter (cut string-suffix? ".intr" <>)
+                          (map (match-lambda ((host _ ...) host))
+                               (map (cut string-split <> #\space)
+                                    (string-split (with-input-from-file %know-hosts read-string)
+                                                  #\newline))))
+                  string<)))
+
+;;; ssh-aliases ends here
