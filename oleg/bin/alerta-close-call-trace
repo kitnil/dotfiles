@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# https://zabbix.intr/host_discovery.php?hostid=1&sid=9f53675fe319e021
+
+set -e -x
+
+for id in $(alerta query --filter severity=critical | awk '/Call Trace:/ { print $1 }'); do
+    alerta close --ids $id
+done
