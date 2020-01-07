@@ -126,7 +126,7 @@ ServerAliveCountMax 3"))))))
                    nix-service
                    (modify-services %desktop-services
                      (guix-service-type config => (guix-configuration
-                                                   (substitute-urls '("https://guix.duckdns.org" "https://ci.guix.info")))))))
+                                                   (substitute-urls '("https://ci.guix.info" "https://guix.duckdns.org")))))))
 
   (setuid-programs (cons* (file-append fping "/sbin/fping")
                           (file-append mtr "/sbin/mtr")
