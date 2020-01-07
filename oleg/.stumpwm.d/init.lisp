@@ -1114,6 +1114,14 @@
              package)
      t)))
 
+(defvar *jenkins-url*
+  "http://localhost:8090")
+
+(defcommand ci-wigust () ()
+  (browse-url-firefox (format nil "~a/job/wigust/" *jenkins-url*) t))
+
+(define-key *top-map* (kbd "M-s-w") "ci-wigust")
+
 (defun emacsclient-command (&rest args)
   (run-shell-command (format nil "emacsclient ~a" (join args))))
 
