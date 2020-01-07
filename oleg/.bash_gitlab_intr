@@ -1,0 +1,24 @@
+#1/bin/sh
+
+export GITLAB_API_PRIVATE_TOKEN="$(pass show majordomo/gitlab.intr/tokens/terraform)"
+export GITLAB_API_ENDPOINT="https://gitlab.intr/api/v4"
+export GITLAB_API_HTTPARTY_OPTIONS="{verify: false}"
+
+gitlab-list-projects()
+{
+    echo
+}
+
+gitlab-shell-create-project()
+{
+     gitlab create_project "$1" "{visibility: public}"
+}
+
+gitlab-shell-create-project-in-groups()
+{
+    name="$1"
+    group="$2"
+    gitlab create_project "$name" "{visibility: public, namespace_id: $group}"
+    echo "https://gitlab.intr/$group/$name"
+    echo "git@gitlab.wugi.info:$group/$name.git"
+}
