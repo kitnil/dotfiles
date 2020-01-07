@@ -100,6 +100,7 @@
        emacs-nix-mode           ; Nix language mode
        emacs-org-bullets
        emacs-org-mind-map       ; General mind maps from Org files
+       emacs-orgit
        emacs-outshine           ; Emacs outline-mode
        emacs-pcre2el
        emacs-phi-search
