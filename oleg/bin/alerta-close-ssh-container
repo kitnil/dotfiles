@@ -1,0 +1,7 @@
+#!/bin/sh
+
+set -e -x
+
+for id in $(alerta query --filter severity=major | awk '/Linux container ssh-guest-room is down/ { print $1 }'); do
+    alerta close --ids $id
+done
