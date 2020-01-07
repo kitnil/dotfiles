@@ -617,6 +617,7 @@ FpingLocation=/run/setuid-programs/fping
                                                  (extra-options
                                                   "
 LocalForward 0.0.0.0:8060 127.0.0.1:8060
+LocalForward 0.0.0.0:6667 127.0.0.1:6667
 Compression yes
 ExitOnForwardFailure yes
 ServerAliveInterval 30
