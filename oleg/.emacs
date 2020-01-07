@@ -304,11 +304,6 @@
   (rx "http" (zero-or-one "s") "://melpa.org")
   "Regexp matching Melpa.")
 
-(defvar wi-medium-regexp
-  (rx "http" (zero-or-more "s") "://" (zero-or-more "www.")
-      "medium.com")
-  "Regexp matching Medium.")
-
 (defun youtube-free-url (url)
   "Convert youtube.com to hooktube.com URL and put into `kill-ring'.
 
@@ -359,11 +354,6 @@ If no commit hash provides, show a commit from hash at current point."
 
 (setq browse-url-firefox-program "firefox")
 
-(defun browse-url-chromium-incognito (url &optional _new-window)
-  (interactive)
-  (let ((browse-url-chromium-arguments '("--incognito")))
-    (browse-url-chromium url _new-window)))
-
 (setq browse-url-browser-function
       `(("^ftp://.*" . browse-ftp-tramp)
         (,(format "^%s\\(%s\\)?\\([[:digit:]]+\\)$"
@@ -383,7 +373,6 @@ If no commit hash provides, show a commit from hash at current point."
         (,wi-url-melpa-regexp . browse-url-firefox)
         (,wi-url-emacs-git-commit-regexp . browse-url-emacs-git-commit)
         (,wi-url-guix-git-commit-regexp . browse-url-guix-git-commit)
-        (,wi-medium-regexp . browse-url-chromium-incognito)
         ("." . browse-url-firefox)))
 
 (defcustom ffap-info-finder 'info
