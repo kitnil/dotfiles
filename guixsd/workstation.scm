@@ -124,7 +124,9 @@ ServerAliveCountMax 3"))))))
                              (host "guix.duckdns.org")))
                    (service zabbix-agent-service-type)
                    nix-service
-                   %desktop-services))
+                   (modify-services %desktop-services
+                     (guix-service-type config => (guix-configuration
+                                                   (substitute-urls '("https://guix.duckdns.org" "https://ci.guix.info")))))))
 
   (setuid-programs (cons* (file-append fping "/sbin/fping")
                           (file-append mtr "/sbin/mtr")
