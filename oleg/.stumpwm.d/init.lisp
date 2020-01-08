@@ -1122,6 +1122,11 @@
 
 (define-key *top-map* (kbd "M-s-w") "ci-wigust")
 
+(defcommand repology-guix-outdated () ()
+  (browse-url-firefox "https://repology.org/projects/?inrepo=gnuguix&outdated=1" t))
+
+(define-key *top-map* (kbd "M-s-d") "repology-guix-outdated")
+
 (defun emacsclient-command (&rest args)
   (run-shell-command (format nil "emacsclient ~a" (join args))))
 
