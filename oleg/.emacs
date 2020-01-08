@@ -2516,6 +2516,12 @@ be updated automatically."))
 (setq quickurl-format-function
       (lambda (url) (format "<%s>" (quickurl-url-url url))))
 
+(defun guix-insert-copyright ()
+  (interactive)
+  (insert (format ";;; Copyright © %s %s\n"
+                  (format-time-string "%Y")
+                  (wi-fullname-and-email))))
+
 
 ;;;
 ;;; Misc
