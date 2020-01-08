@@ -945,6 +945,14 @@
 
 (define-key *root-map* (kbd "quoteleft") "emacs-shell")
 
+(defcommand emacs-guix-edit () ()
+  (let ((clipboard (get-x-selection)))
+    (message (format nil "Guix edit ~a" clipboard))
+    (switch-to-emacs)
+    (run-shell-command (format nil "emacsclient -e '(guix-edit ~s)'" clipboard))))
+
+(define-key *top-map* (kbd "M-s-e") "emacs-guix-edit")
+
 (defcommand dump-group-to-file (file) (:rest "Dump To File: ")
   "Dumps the frames of the current group of the current screen to the named file."
   (dump-to-file (dump-group (current-group)) file))
