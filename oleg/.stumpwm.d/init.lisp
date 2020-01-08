@@ -1091,11 +1091,11 @@
              t)))
 
 (defcommand xpanes-top () ()
-  (term-shell-command "xpanes -C 1 -c 'autossh -M0 -t {} -- top -d 10' localhost spb workstation oracle"
+  (term-shell-command "xpanes -C 1 -c 'autossh -M0 -t {} -- top -d 10' localhost spb workstation.intr oracle"
                       :color 'dark :title "xpanes-top"))
 
 (defcommand xpanes-guix () ()
-  (term-shell-command "xpanes -C 1 -c 'ssh -t {}' guixsd workstation spb"
+  (term-shell-command "xpanes -C 1 -c 'ssh -t {}' guixsd workstation.intr spb"
                       :color 'dark))
 
 (defun browse-url-firefox (url &optional new-window)
