@@ -1132,6 +1132,14 @@
 
 (define-key *top-map* (kbd "M-s-d") "repology-guix-outdated")
 
+(defvar *majordomo-jenkins-url*
+  "https://jenkins.intr")
+
+(defcommand majordomo-jenkins-webservices () ()
+  (browse-url-firefox (format nil "~a/job/webservices" *majordomo-jenkins-url*) t))
+
+(define-key *top-map* (kbd "M-s-W") "majordomo-jenkins-webservices")
+
 (defun emacsclient-command (&rest args)
   (run-shell-command (format nil "emacsclient ~a" (join args))))
 
