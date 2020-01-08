@@ -1418,7 +1418,7 @@ With a prefix argument, clean `geiser-guile-load-path'."
              wi-scheme--prettify-symbols-alist)))))
 
 (with-eval-after-load 'guix-repl
-  (setq guix-directory (expand-file-name "~/src/guix")))
+  (setq guix-directory (expand-file-name "~/src/guix-master")))
 
 (autoload 'scheme-smart-complete "scheme-complete" nil t)
 ;; (eval-after-load 'scheme
