@@ -922,7 +922,8 @@ Sets the following basend on PREFIX-MAP:
         ("bashrc" . sh-mode)
         ("kresd\\.conf" . lua-mode)
         ("\\.luadoc" . lua-mode)
-        ("\\.drv" . guix-derivation-mode)))
+        ("\\.drv" . guix-derivation-mode)
+        (".ansible-hosts" . yaml-mode)))
 
 (mapc (-lambda ((hook key proc))
         (add-hook hook `(lambda ()
