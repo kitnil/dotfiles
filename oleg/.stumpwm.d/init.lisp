@@ -1122,6 +1122,11 @@
 
 (define-key *top-map* (kbd "M-s-w") "ci-wigust")
 
+(defcommand ci-guix () ()
+  (browse-url-firefox (format nil "~a/job/guix/" *jenkins-url*) t))
+
+(define-key *top-map* (kbd "M-s-g") "ci-guix")
+
 (defcommand repology-guix-outdated () ()
   (browse-url-firefox "https://repology.org/projects/?inrepo=gnuguix&outdated=1" t))
 
