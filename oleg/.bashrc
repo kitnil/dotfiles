@@ -1461,3 +1461,8 @@ pactl-ladspa()
     pactl load-module module-ladspa-sink master=0 sink_name=compressor-stereo plugin=sc4_1882 label=sc4 control=1,1.5,401,-30,20,5,12
     pactl load-module module-ladspa-sink master=1 sink_name=compressor-stereo plugin=sc4_1882 label=sc4 control=1,1.5,401,-30,20,5,12
 }
+
+router4.intr()
+{
+    sshpass -p"$(pass show majordomo/router4/root)" ssh router4.intr
+}
