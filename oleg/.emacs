@@ -3615,6 +3615,10 @@ If given a prefix, patch in the branch directory instead."
         (put-text-property (match-beginning 3) (match-end 3)
                            'font-lock-face 'info-colors-ref-item-other)))))
 
+(defun dumb-jump-init-nixpkgs ()
+  (interactive)
+  (with-temp-file ".dumbjump" (insert "+/home/oleg/src/nixpkgs")))
+
 (defun majordomo-php-insert ()
   (interactive)
   (insert
