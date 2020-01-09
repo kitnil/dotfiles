@@ -19,6 +19,9 @@ else
         galera*)
             coproc (xterm -title "mycli@$@" -bg '#f08080' -fg '#000000' -fa Monospace -fs "$size" -e env PAGER='pspg -s 14 -X --force-uniborder --quit-if-one-screen -s 16' mycli --password "$(pass show majordomo/mysql.intr/galera1.intr/root)" -d $@ &>/dev/null &)
             ;;
+        localhost*)
+            coproc (xterm -title "mycli@$@" -bg '#fff0f5' -fg '#000000' -fa Monospace -fs "$size" -e env PAGER='pspg -s 14 -X --force-uniborder --quit-if-one-screen -s 16' mycli -h localhost -u root -p $@ &>/dev/null; read &)
+            ;;
         *)
             coproc (xterm -title "mycli@$@" -bg '#fff0f5' -fg '#000000' -fa Monospace -fs "$size" -e env PAGER='pspg -s 14 -X --force-uniborder --quit-if-one-screen -s 16' mycli -d $@ &>/dev/null &)
             ;;
