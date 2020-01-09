@@ -245,8 +245,6 @@ jenkins-active-jobs()
     jenkins-jobs | grep --color=no red_anime
 }
 
-alias gpi='guix package -i'
-
 guix-download-my-manifest()
 {
     guix environment --substitute-urls='https://ci.guix.info http://cuirass.tld' \
