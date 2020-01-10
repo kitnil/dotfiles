@@ -197,9 +197,9 @@
 (with-eval-after-load 'mailcap
   (add-to-list 'mailcap-mime-extensions '(".scm" . "text/x-scheme")))
 
-(global-undo-tree-mode)
-(setq undo-tree-auto-save-history t)
-(setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
+;; (global-undo-tree-mode)
+;; (setq undo-tree-auto-save-history t)
+;; (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
 
 (projectile-global-mode)
 (define-key projectile-mode-map (kbd "C-c g p") 'projectile-command-map)
@@ -2734,10 +2734,10 @@ If nil use light theme.")
       (progn (mapc (lambda (theme)
                      (disable-theme theme))
                    '(manoj-dark smart-mode-line-dark))
-             (enable-theme 'smart-mode-line-light)
+             ;; (enable-theme 'smart-mode-line-light)
              (setq terminal-here-color 'light)
              (setq wi-theme nil))
-    (progn (disable-theme 'smart-mode-line-light)
+    (progn ;; (disable-theme 'smart-mode-line-light)
            (wi-manoj-dark)
            (setq terminal-here-color 'dark)
            (setq wi-theme t))))
@@ -2849,13 +2849,13 @@ situation, you should also set the following option in your
 ;;; smart-mode-line
 ;;;
 
-(setq sml/no-confirm-load-theme t)
-(when (daemonp) (setq sml/theme 'light))
-(sml/setup)
+;; (setq sml/no-confirm-load-theme t)
+;; (when (daemonp) (setq sml/theme 'light))
+;; (sml/setup)
 
-(custom-theme-set-faces
- 'smart-mode-line-light
- '(mode-line-inactive ((t :foreground "grey20" :background "#ffffff" :inverse-video nil))))
+;; (custom-theme-set-faces
+;;  'smart-mode-line-light
+;;  '(mode-line-inactive ((t :foreground "grey20" :background "#ffffff" :inverse-video nil))))
 
 (default-text-scale-mode)
 (global-git-gutter-mode)
