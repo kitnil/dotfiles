@@ -1,0 +1,78 @@
+(use-modules (git)
+             (git repository)
+             (git reference)
+             (git oid)
+             (git tag)
+             (git commit)
+             (git structs)                        ;signature-email, etc.
+             (srfi srfi-1)
+             (srfi srfi-26)
+             (ice-9 match)
+             (ice-9 vlist))
+
+(define commit-author*
+  (compose signature-name commit-author))
+(define commit-committer*
+  (compose signature-name commit-committer))
+
+(define-syntax-rule (false-if-git-error exp)
+  (catch 'git-error
+    (lambda () exp)
+    (const #f)))
+
+(define* (fold-commits proc seed repo
+                       #:key
+                       (start (reference-target
+                               (repository-head repo)))
+                       end)
+  "Call PROC on each commit of REPO, starting at START (an OID), and until
+END if specified."
+  (let loop ((commit (commit-lookup repo start))
+             (result seed))
+    (let ((parent (false-if-git-error (commit-parent commit))))
+      (if parent
+          (if (and end (oid=? (commit-id parent) end))
+              (proc parent result)
+              (loop parent (proc parent result)))
+          result))))
+
+(define (reviewers repo)
+  "Return a list of review count/committer pairs."
+  (define vhash
+    (fold-commits (lambda (commit result)
+                    (if (string=? (commit-author* commit)
+                                  (commit-committer* commit))
+                        result
+                        (vhash-cons (commit-committer* commit) #t
+                                    result)))
+                  vlist-null
+                  repo))
+
+  (define committers
+    (delete-duplicates
+     (fold-commits (lambda (commit result)
+                     (cons (commit-committer* commit)
+                           result))
+                   '()
+                   repo)))
+
+  (map (lambda (committer)
+         (cons (vhash-fold* (lambda (_ count)
+                              (+ 1 count))
+                            0
+                            committer
+                            vhash)
+               committer))
+       committers))
+
+(define (reviewer< r1 r2)
+  (match r1
+    ((count1 . name1)
+     (match r2
+       ((count2 . name2)
+        (< count1 count2))))))
+
+(libgit2-init!)
+
+(define repo
+  (repository-open "."))
