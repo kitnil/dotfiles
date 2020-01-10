@@ -631,8 +631,9 @@ skopeo-mj()
 {
     group="$1"
     image="$2" # ssh-guest-room
-    tar="$3" || result # docker-archive:/nix/store/dw0qakl4g58n9idsi35vn0m1d92gs0jw-docker-image-ssh-guest-room.tar.gz
-    skopeo copy --dest-creds=gradle:"$(pass show majordomo/nexus/gradle)" --dest-tls-verify=false "docker-archive:$tar" "docker://docker-registry.intr/$group/$image:master"
+    tag = "$3"
+    tar="$4" || result # docker-archive:/nix/store/dw0qakl4g58n9idsi35vn0m1d92gs0jw-docker-image-ssh-guest-room.tar.gz
+    skopeo copy --dest-creds=gradle:"$(pass show majordomo/nexus/gradle)" --dest-tls-verify=false "docker-archive:$tar" "docker://docker-registry.intr/$group/$image:$tag"
 }
 
 skopeo-fetch()
