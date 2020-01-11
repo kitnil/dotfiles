@@ -1148,6 +1148,9 @@
 
 (define-key *top-map* (kbd "M-s-W") "majordomo-jenkins-webservices")
 
+(defcommand majordomo-jenkins-group (group) ((:string "Group: "))
+  (browse-url-firefox (format nil "~a/job/~a" *majordomo-jenkins-url* group) t))
+
 (defun emacsclient-command (&rest args)
   (run-shell-command (format nil "emacsclient ~a" (join args))))
 
