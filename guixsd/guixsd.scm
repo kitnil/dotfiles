@@ -441,6 +441,7 @@ EndSection")
            "192.168.100.1 r1.tld"
            "192.168.105.1 r2.tld"
            "192.168.105.120 cuirass.tld"
+           "172.16.100.60 workstation.intr"
 
            ,%facebook-host-aliases)
          "\n")))
