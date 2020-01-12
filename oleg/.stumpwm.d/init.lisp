@@ -1201,6 +1201,10 @@
   (progn (run-shell-command "emacsclient --eval '(plain-org-wiki)'")
          (switch-to-emacs)))
 
+(defcommand emacs-todo () ()
+  (progn (run-shell-command (format nil "emacsclient --eval '(find-file ~s)'" "~/src/org/todo.org"))
+         (switch-to-emacs)))
+
 (defcommand org-agenda () ()
   (progn (run-shell-command "emacsclient --eval '(org-agenda)'")
          (switch-to-emacs)))
@@ -1409,6 +1413,7 @@
   (define-key *top-map* (kbd "s-RET") "run-xterm")
   (define-key *top-map* (kbd "s-e") "emacsclient")
   (define-key *top-map* (kbd "s-E") "emacsclient-new")
+  (define-key *top-map* (kbd "s-l") "emacs-todo")
   (define-key *top-map* (kbd "s-m") "mpv")
   (define-key *top-map* (kbd "s-n") "next-in-frame")
   (define-key *top-map* (kbd "s-p") "prev-in-frame")
