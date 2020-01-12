@@ -48,11 +48,11 @@
 (setq calendar-week-start-day 1) ; Monday is the first day of the week
 
 (dashboard-setup-startup-hook)
-(setq dashboard-items '((recents  . 5)
-                        (bookmarks . 5)
-                        (projects . 5)
-                        (agenda . 5)
-                        (registers . 5)))
+(setq dashboard-items '((agenda . 10)
+                        (registers . 10)
+                        (recents . 15)
+                        (projects . 30)
+                        (bookmarks . 20)))
 ;; (with-eval-after-load 'dashboard
 ;;   (let ((map dashboard-mode-map))
 ;;     (define-key map (kbd "n") 'dashboard-next-section)
