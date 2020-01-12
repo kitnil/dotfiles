@@ -161,3 +161,4 @@ galera2 = mysql://root@galera2.intr
 galera1 = mysql://root@galera1.intr
 pdns = mysql://pdns@ns1-dh.intr/registrant
 kvm37 = mysql://root@kvm37/registrant
+billing-dev = mysql://xmlrpc@dev.majordomo.ru/billing
