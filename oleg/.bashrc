@@ -122,7 +122,7 @@ emc()
     emacsclient -n "$@"
     stumpish emacsclient
 }
-export EDITOR='emc'
+export EDITOR='emacsclient -nw -c'
 
 export MANWIDTH=80
 

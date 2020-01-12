@@ -16,7 +16,7 @@ export GUIX_LOCPATH=$HOME/.guix-profile/lib/locale
 export CHICKEN_REPOSITORY=~/.eggs/lib/chicken/8
 export CHICKEN_DOC_REPOSITORY=/home/natsu/.eggs/share/chicken-doc
 
-export EDITOR='emacsclient'
+export EDITOR='emacsclient -nw -c'
 export BROWSER='firefox'
 export MANWIDTH=80
 
