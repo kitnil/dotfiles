@@ -1470,3 +1470,14 @@ router4.intr()
 {
     sshpass -p"$(pass show majordomo/router4/root)" ssh router4.intr
 }
+
+docker-openresty()
+{
+    docker run                                  \
+            --entrypoint ''                     \
+            --interactive                       \
+            --name openresty                    \
+            --network=host                      \
+            --tty                               \
+            openresty/openresty:bionic bash
+}
