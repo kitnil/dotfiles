@@ -604,6 +604,16 @@
 (defcommand repl-go () ()
   (term-shell-command "gore" :scrollbar t :title "repl-go"))
 
+(defcommand repl-resty () ()
+  (term-shell-command (format nil (join '("docker" "run" "--entrypoint"
+                                          "''" "--rm" "-it"
+                                          "openresty/openresty:bionic" "bash" "-c" "~s"))
+                              (join '("apt update" "apt install -y git"
+                                      "luarocks install lua-resty-repl"
+                                      "resty-repl")
+                                    #\;))
+                      :scrollbar t :title "repl-java"))
+
 (defcommand repl-ruby () ()
   (term-shell-command "guix environment --pure --ad-hoc ruby -- irb"
                       :scrollbar t :title "repl-ruby"))
