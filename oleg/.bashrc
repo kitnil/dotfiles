@@ -1481,3 +1481,13 @@ docker-openresty()
             --tty                               \
             openresty/openresty:bionic bash
 }
+
+influx-list()
+{
+    curl -G "http://influx.intr:8086/query?pretty=true" --data-urlencode "q=show databases" | jq
+}
+
+influx-show-series()
+{
+    curl -G "http://influx.intr:8086/query?db=telegraf&pretty=true" --data-urlencode "q=SHOW SERIES"
+}
