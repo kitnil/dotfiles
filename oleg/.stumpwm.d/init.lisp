@@ -1000,6 +1000,11 @@
 (defcommand pass-eng () ()
   (window-send-string (format nil "~a~%" (password-store-show "majordomo/ssh/eng"))))
 
+(defcommand insert-ssh-key () ()
+  (window-send-string
+   (format nil "mkdir ~~/.ssh; cat >> ~~/.ssh/authorized_keys <<'EOF'~%~aEOF"
+           (file-get-contents (concat (getenv "HOME") "/.ssh/id_rsa.pub")))))
+
 (defcommand docker-pull () ()
   (window-send-string (format nil "~a~%" "docker ps --format '{{ .Image }}' | grep master | sort -u | xargs -I{} docker pull {}")))
 
