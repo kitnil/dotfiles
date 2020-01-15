@@ -443,6 +443,7 @@ EndSection")
            "192.168.105.120 cuirass.tld"
            "172.16.100.60 workstation.intr"
            "178.250.247.125 gitlab.mjtest jenkins.mjtest"
+           "130.61.95.6 oracle"
 
            ,%facebook-host-aliases)
          "\n")))
