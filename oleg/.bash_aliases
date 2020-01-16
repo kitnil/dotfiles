@@ -158,3 +158,9 @@ alias wi-guix-narinfo-cache-directory="guile -c '(display\
  \"\\n\"))'"
 
 alias wi-echo-columns-lines="set | grep -E 'COLUMNS|LINES'"
+
+alias sw1-mr11.intr='TELNET_PASSWORD="$(pass show majordomo/general)" cisco sw1-mr11.intr'
+alias sw1-mr12.intr='TELNET_PASSWORD="$(pass show majordomo/general)" cisco sw1-mr12.intr'
+alias sw1-mr14.intr='TELNET_PASSWORD="$(pass show majordomo/general)" cisco sw1-mr14.intr'
+alias sw1-mr116.intr='TELNET_PASSWORD="$(pass show majordomo/general)" cisco sw1-mr116.intr'
+alias sw1-mr143.intr='TELNET_PASSWORD="$(pass show majordomo/general)" cisco sw1-mr143.intr'
