@@ -11,7 +11,37 @@
                      suckless xdisorg xorg fonts android fontutils
                      gnome freedesktop readline ncurses networking)
 
-(use-service-modules desktop monitoring networking ssh xorg)
+(use-service-modules desktop dbus monitoring networking ssh xorg)
+
+(define 20-intel.conf "\
+# Fix tearing for Intel graphics card.
+# Origin: https://wiki.archlinux.org/index.php/Intel_Graphics
+#         https://github.com/8p8c/my-guix/blob/master/config.scm
+Section \"Device\"
+   Identifier  \"Intel Graphics\"
+   Driver      \"intel\"
+   Option      \"AccelMethod\"  \"sna\"
+   Option      \"SwapbuffersWait\" \"true\"
+   Option      \"TearFree\" \"true\"
+EndSection\n")
+
+(define 30-multihead.conf "\
+Section \"Monitor\"
+    Identifier  \"HDMI-1\"
+    Option      \"Primary\" \"true\"
+EndSection
+
+Section \"Monitor\"
+    Identifier  \"VGA-1\"
+    Option      \"RightOf\" \"HDMI1\"
+EndSection")
+
+(define %slim-theme
+  (or (and=> (current-filename)
+             (lambda (file)
+               (string-append (dirname (dirname file))
+                              "/fiore/modules/slim-artwork.scm")))
+      "/home/oleg/src/dotfiles/fiore/modules/slim-artwork.scm"))
 
 (operating-system
   (host-name "workstation-guixsd")
@@ -124,7 +154,37 @@ ServerAliveCountMax 3"))))))
                              (host "guix.duckdns.org")))
                    (service zabbix-agent-service-type)
                    nix-service
-                   (modify-services %desktop-services
+
+                   ;; Desktop services
+                   (service slim-service-type
+                            (slim-configuration
+                             (theme %slim-theme)
+                             (xorg-configuration
+                              (xorg-configuration
+                               (extra-config (list 20-intel.conf
+                                                   30-multihead.conf))))))
+                   (screen-locker-service slock)
+                   (screen-locker-service xlockmore "xlock")
+                   (udisks-service)
+                   (upower-service)
+                   (accountsservice-service)
+                   (colord-service)
+                   (geoclue-service)
+                   (service polkit-service-type)
+                   (elogind-service)
+                   (dbus-service)
+                   (service ntp-service-type)
+                   x11-socket-directory-service
+
+                   (static-networking-service "enp3s0" "172.16.100.60"
+                                              #:netmask "255.255.255.0"
+                                              #:gateway "172.16.100.3"
+                                              #:name-servers '("172.16.100.3\nsearch intr majordomo.ru"
+                                                               "172.16.102.2"
+                                                               "172.16.103.2"))
+                   
+
+                   (modify-services %base-services
                      (guix-service-type config => (guix-configuration
                                                    (substitute-urls '("https://ci.guix.gnu.org" "https://guix.duckdns.org")))))))
 
