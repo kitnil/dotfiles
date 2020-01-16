@@ -1435,6 +1435,26 @@
 (defcommand alerta () ()
   (run-or-raise "" '(:title "Alerta - Mozilla Firefox")))
 
+(defun cisco-connect-command (host)
+  (join (list "env" (format nil "TELNET_PASSWORD=~s" (password-store-show "majordomo/general"))
+              "cisco-interact" host)))
+
+(defun cisco-connect (host)
+  (term-shell-command (cisco-connect-command host)
+                      :title (format nil "telnet-~a" host)
+                      :scrollbar t))
+
+(defmacro define-mj-cisco (command)
+  `(progn
+     (defcommand ,command () ()
+       (cisco-connect ,(sb-unicode:lowercase (string command))))))
+
+(define-mj-cisco sw1-mr11.intr)
+(define-mj-cisco sw1-mr12.intr)
+(define-mj-cisco sw1-mr14.intr)
+(define-mj-cisco sw1-mr116.intr)
+(define-mj-cisco sw1-mr143.intr)
+
 (defun bind-super ()
   (define-key *top-map* (kbd "C-S-s-RET") "rofi-mycli")
   (define-key *top-map* (kbd "C-s-s") "neofetch")
