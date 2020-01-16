@@ -517,6 +517,17 @@
                       :title "xpanes-web-top"
                       :font '("-fa" "Monospace" "-fs" "6")))
 
+(defun xpanes-command (command)
+  (format nil "xpanes -c ~s" command))
+
+(defcommand xpanes-web-mycli () ()
+  (term-shell-command (join `(,(xpanes-command
+                                (format nil "mycli --password ~a -d {}"
+                                        (password-store-show "majordomo/web/mysql/root")))
+                               ,@majordomo-webs))
+                      :title "xpanes-web-mycli"
+                      :font '("-fa" "Monospace" "-fs" "6")))
+
 
 ;;;
 ;;; REPL
