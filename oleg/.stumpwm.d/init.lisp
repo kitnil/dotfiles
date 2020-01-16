@@ -536,6 +536,8 @@
                                ,@'("guixsd" "majordomo" "oracle" "spb")))
                       :title "xpanes-restic-snapshots"))
 
+(defcommand-alias restic-snapshots xpanes-restic-snapshots)
+
 
 ;;;
 ;;; REPL
