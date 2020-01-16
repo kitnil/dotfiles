@@ -528,6 +528,14 @@
                       :title "xpanes-web-mycli"
                       :font '("-fa" "Monospace" "-fs" "6")))
 
+(defcommand xpanes-restic-snapshots () ()
+  (term-shell-command (join `(,(xpanes-command (join `("sudo" "-i" ,(format nil "RESTIC_PASSWORD=~a"
+                                                                            (password-store-show "wugi.info/restic/all"))
+                                                              ,(format nil "~a/.guix-profile/bin/restic" (getenv "HOME"))
+                                                              "-r" "/srv/backup/{}" "snapshots")))
+                               ,@'("guixsd" "majordomo" "oracle" "spb")))
+                      :title "xpanes-restic-snapshots"))
+
 
 ;;;
 ;;; REPL
