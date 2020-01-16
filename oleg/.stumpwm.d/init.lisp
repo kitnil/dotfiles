@@ -538,6 +538,12 @@
 
 (defcommand-alias restic-snapshots xpanes-restic-snapshots)
 
+(defun zathura (file)
+  (run-shell-command (format nil "zathura ~s" file)))
+
+(defcommand arcconf () ()
+  (zathura (concat (getenv "HOME") "/.guix-profile/share/doc/arcconf/arcconf.pdf")))
+
 
 ;;;
 ;;; REPL
