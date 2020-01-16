@@ -538,6 +538,11 @@
 
 (defcommand-alias restic-snapshots xpanes-restic-snapshots)
 
+(defcommand xpanes-routers () ()
+  (term-shell-command (join `(,(xpanes-command "ssh -t {}")
+                               ,@'("router4.intr" "vpn-miran.majordomo.ru" "vpn-dh.majordomo.ru")))
+                      :title "xpanes-routers"))
+
 (defun zathura (file)
   (run-shell-command (format nil "zathura ~s" file)))
 
