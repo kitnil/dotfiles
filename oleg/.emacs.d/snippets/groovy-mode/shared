@@ -1,0 +1,4 @@
+# key: shared
+# name: shared
+# --
+@Library('jenkins-wi-shared-library') _
