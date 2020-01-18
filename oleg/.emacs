@@ -54,6 +54,7 @@
                         (projects . 30)
                         (bookmarks . 20)))
 (setq show-week-agenda-p t)
+;; (setq dashboard-org-agenda-categories '("Tasks")) ; version above 1.6.0 required
 ;; (with-eval-after-load 'dashboard
 ;;   (let ((map dashboard-mode-map))
 ;;     (define-key map (kbd "n") 'dashboard-next-section)
