@@ -147,6 +147,8 @@ EndSection")
                                               "
 RemoteForward 0.0.0.0:9999 localhost:22
 RemoteForward 0.0.0.0:16050 127.0.0.1:10050
+LocalForward 0.0.0.0:5901 127.0.0.1:5901
+LocalForward 0.0.0.0:5902 127.0.0.1:5902
 Compression yes
 ExitOnForwardFailure yes
 ServerAliveInterval 30
