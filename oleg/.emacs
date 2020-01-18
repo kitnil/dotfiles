@@ -53,6 +53,7 @@
                         (recents . 15)
                         (projects . 30)
                         (bookmarks . 20)))
+(setq show-week-agenda-p t)
 ;; (with-eval-after-load 'dashboard
 ;;   (let ((map dashboard-mode-map))
 ;;     (define-key map (kbd "n") 'dashboard-next-section)
