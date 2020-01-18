@@ -1454,6 +1454,7 @@
 (define-mj-cisco sw1-mr14.intr)
 (define-mj-cisco sw1-mr116.intr)
 (define-mj-cisco sw1-mr143.intr)
+(define-mj-cisco sw1-dh507.intr)
 
 (defun bind-super ()
   (define-key *top-map* (kbd "C-S-s-RET") "rofi-mycli")
