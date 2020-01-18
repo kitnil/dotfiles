@@ -1039,6 +1039,11 @@ nixpkgs-fix()
     done
 }
 
+nix-repl-mj()
+{
+    echo "overlay = lib.listToAttrs (map (drv: lib.nameValuePair drv.name drv) (import ./build.nix))"
+}
+
 rm-emacs-backups()
 {
     find . -type f -name '*~' -exec rm {} +
