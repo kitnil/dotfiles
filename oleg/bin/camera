@@ -1,3 +1,3 @@
 #!/bin/sh
 
-mpv "http://gitarik:$(pass show wugi.info/camera/192.168.100.3/gitarik)@192.168.100.3/nphMotionJpeg?Resolution=640x480&Quality=Standard"
+mpv --no-resume-playback "http://gitarik:$(pass show wugi.info/camera/192.168.100.3/gitarik)@192.168.100.3/nphMotionJpeg?Resolution=640x480&Quality=Standard"
