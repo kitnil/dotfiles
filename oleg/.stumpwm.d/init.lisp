@@ -1071,6 +1071,9 @@
    (concat "chromium --app=https://www.twitch.tv/popout/"
            channel "/chat?popout=")))
 
+(defvar *jenkins-url*
+  "https://jenkins.wugi.info")
+
 (flet ((firefox (url &optional dark)
          (run-shell-command (format nil (if dark
                                             "GTK_THEME=Adwaita:dark nixGLIntel firefox -P dark --new-window ~S"
@@ -1124,10 +1127,10 @@
     (firefox "https://www.twitch.tv/directory/game/Tales%20of%20Maj'Eyal" t))
 
   (defcommand jenkins-index () ()
-    (firefox "https://jenkins.wugi.info/"))
+    (firefox *jenkins-url*))
 
   (defcommand jenkins-last-build-guixsd () ()
-    (firefox "https://jenkins.wugi.info/job/fiore/lastBuild/console"))
+    (firefox (concat *jenkins-url* "/job/fiore/lastBuild/console")))
 
   (defcommand tometips () ()
     (run-shell-command "chromium --app=https://tometips.github.io"))
@@ -1136,7 +1139,7 @@
     (run-shell-command "chromium --app=https://discordapp.com/"))
 
   (defcommand jenkins () ()
-    (run-or-raise "chromium --app=http://localhost:8090/"
+    (run-or-raise (concat "chromium --app=" *jenkins-url*)
                   '(:instance "jenkins")))
 
   (defcommand cuirass () ()
@@ -1173,9 +1176,6 @@
      (concat "http://ci.guix.info/search?query=spec%3Aguix-master+system%3Ax86_64-linux+"
              package)
      t)))
-
-(defvar *jenkins-url*
-  "http://localhost:8090")
 
 (defcommand ci-wigust () ()
   (browse-url-firefox (format nil "~a/job/wigust/" *jenkins-url*) t))
@@ -1579,7 +1579,7 @@
   (define-frame-preference "Default" (4 NIL T :CLASS "mpv" :TITLE "emacs-emms"))
   (define-frame-preference "Default" (4 NIL T :CLASS "mpv" :TITLE "firefox"))
   (define-frame-preference "Default" (1 NIL T :CLASS "mpv" :TITLE "youtube-dl-music"))
-  (define-frame-preference "3" (0 NIL T :TITLE "http://localhost:8090 - Dashboard [Jenkins] - Mozilla Firefox"))
+  (define-frame-preference "3" (0 NIL T :TITLE "https://jenkins.wugi.info - Dashboard [Jenkins] - Mozilla Firefox"))
   (define-frame-preference "Default" (1 NIL NIL :CLASS "obs"))
   (define-frame-preference "2" (0 NIL NIL :CLASS "Emacs"))
   (define-frame-preference "2" (1 NIL NIL :CLASS "Firefox"))
