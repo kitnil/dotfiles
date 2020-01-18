@@ -1071,6 +1071,16 @@
    (concat "chromium --app=https://www.twitch.tv/popout/"
            channel "/chat?popout=")))
 
+(defcommand ipmi () ()
+  (run-shell-command (concat (getenv "HOME")
+                             "/.nix-profile.d/ipmiview/ipmiview/bin/IPMIView")))
+
+(defcommand ipkvm () ()
+  (run-shell-command
+   (join (list (concat (getenv "HOME")
+                       "/.nix-profile.d/firefox-esr-52/firefox-esr-52/bin/firefox")
+               "-P" "esr52" "--new-instance"))))
+
 (defvar *jenkins-url*
   "https://jenkins.wugi.info")
 
