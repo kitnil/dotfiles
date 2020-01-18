@@ -1047,6 +1047,9 @@
 (defcommand pass-eng () ()
   (window-send-string (format nil "~a~%" (password-store-show "majordomo/ssh/eng"))))
 
+(defcommand pass-ipmi () ()
+  (window-send-string (format nil "~a" (password-store-show "majordomo/ipmi/ADMIN"))))
+
 (defcommand insert-ssh-key () ()
   (window-send-string
    (format nil "mkdir ~~/.ssh; cat >> ~~/.ssh/authorized_keys <<'EOF'~%~aEOF"
