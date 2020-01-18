@@ -2050,10 +2050,12 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
          :immediate-finish t)
         ("L" "Protocol Link" item (file "web.org")
          "[[%:link][%:description]]"
+         ;; (concat "* TODO [[%:link][%:description]]\nSCHEDULED: " (format-time-string "<%Y-%m-%d %a>"))
          :immediate-finish t)
 
         ("X" "emacs-org-capture" item (file "web.org")
          "[[%:link]]"
+         ;; (concat "* TODO [[%:link]]\nSCHEDULED: " (format-time-string "<%Y-%m-%d %a>"))
          :immediate-finish t)
 
         ("r" "Respond ro email" entry (file+headline "inbox.org" "Email")
