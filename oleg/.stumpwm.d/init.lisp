@@ -1456,6 +1456,16 @@
 (define-mj-cisco sw1-mr143.intr)
 (define-mj-cisco sw1-dh507.intr)
 
+(defcommand hms-current-stack () ()
+  (message
+   (run-shell-command
+    (join
+     (list "curl"
+           "--user" (format nil "jenkins:~a"
+                            (password-store-show "majordomo/jenkins/jenkins"))
+           "--request" "GET" "http://nginx1.intr:8080/hms"))
+    t)))
+
 (defun bind-super ()
   (define-key *top-map* (kbd "C-S-s-RET") "rofi-mycli")
   (define-key *top-map* (kbd "C-s-s") "neofetch")
