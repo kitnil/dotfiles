@@ -681,6 +681,11 @@
            (if dark-theme "#000000" "#f0fff0")
            (xterm-command))))
 
+;; TODO:
+;; (defcommand rofi-mytop () ()
+;;   "Open Rofi mytop."
+;;   (run-shell-command "rofi -modi mycli:/home/oleg/bin/rofi-mycli -show mycli"))
+
 (defcommand rofi-mycli () ()
   "Open Rofi mycli."
   (run-shell-command "rofi -modi mycli:/home/oleg/bin/rofi-mycli -show mycli"))
