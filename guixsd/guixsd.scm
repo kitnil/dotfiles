@@ -170,6 +170,7 @@ EndSection")
         (proxy "nextcloud.wugi.info" 28080 #:ssl? #t)
         (proxy "redmine.wugi.info" 44080 #:ssl? #t)
         (proxy "guix.duckdns.org" 5556 #:ssl? #t)
+        (proxy "hms.majordomo.ru" 7777 #:ssl? #f)
         ((lambda* (host #:key
                   (ssl? #f)
                   (ssl-target? #f)
