@@ -2571,6 +2571,10 @@ be updated automatically."))
   (add-to-list 'company-backends 'company-abbrev)
   (add-to-list 'company-backends 'company-lsp))
 
+(require 'lsp-java)
+(add-hook 'java-mode-hook #'lsp)
+(setq lsp-ui-sideline-enable nil) ;right menu
+
 (with-eval-after-load 'anywhere-mode
   (let ((map anywhere-mode-map))
     (define-key map (kbd "C-c '") 'anywhere-exit)
@@ -3680,6 +3684,9 @@ If given a prefix, patch in the branch directory instead."
  '(irfc-requirement-keyword-face ((t (:inherit font-lock-keyword-face))))
  '(irfc-rfc-link-face ((t (:inherit link))))
  '(irfc-table-item-face ((t (:foreground "SpringGreen4"))))
+ '(lsp-ui-sideline-code-action ((t (:foreground "saddle brown"))))
+ '(lsp-ui-sideline-current-symbol ((t (:foreground "black" :box (:line-width -1 :color "black") :weight ultra-bold :height 0.99))))
+ '(lsp-ui-sideline-symbol ((t (:foreground "dim grey" :box (:line-width -1 :color "dim gray") :height 0.99))))
  '(magit-diff-added ((t (:foreground "#22aa22"))))
  '(magit-diff-added-highlight ((t (:foreground "#22aa22"))))
  '(magit-diff-context-highlight ((t (:foreground "grey50"))))
