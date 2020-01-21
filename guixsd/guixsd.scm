@@ -12,8 +12,7 @@
                      monitoring databases mail)
 
 ;; Third-party modules
-(use-modules (wigust services gitlab)
-             (wigust services nix)
+(use-modules (wigust services nix)
              (wigust services autossh)
              (wigust services kresd)
              (wigust services openvpn)
@@ -369,13 +368,6 @@ EndSection")
                      (supplementary-groups '("docker"))
                      (home-directory "/home/awx"))
                     (user-account
-                     (name "gitlab-runner")
-                     (uid 30018)
-                     (comment "GitLab Runner")
-                     (group "users")
-                     (supplementary-groups '("adbusers" "docker" "kvm"))
-                     (home-directory "/home/gitlab-runner"))
-                    (user-account
                      (name "jenkins")
                      (comment "Jenkins")
                      (group "users")
@@ -462,7 +454,6 @@ EndSection")
 
                        nix-service
                        (kresd-service (local-file "kresd.conf"))
-                       gitlab-runner-service
                        openvpn-service
 
                        (service openssh-service-type
