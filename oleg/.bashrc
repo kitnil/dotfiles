@@ -233,7 +233,7 @@ jenkins-log()
          "https://jenkins.wugi.info/job/$job/lastBuild/consoleText"
 }
 
-jenkins-jobs()
+jenkins-jobs-list()
 {
     curl --silent --user "admin:$(pass show magnolia/jenkins/admin)" \
          https://jenkins.wugi.info/api/json/ \
