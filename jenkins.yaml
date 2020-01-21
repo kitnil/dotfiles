@@ -1,0 +1,259 @@
+credentials:
+  system:
+    domainCredentials:
+    - credentials:
+      - string:
+          description: "Slack jenkins Token"
+          id: "slack-token"
+          scope: GLOBAL
+          secret: "***REMOVED***"
+      - basicSSHUserPrivateKey:
+          id: "7239ebd6-86e0-46b6-bf7c-0d21ec4a22af"
+          privateKeySource:
+            directEntry:
+              privateKey: "***REMOVED***"
+          scope: GLOBAL
+          username: "oleg"
+      - string:
+          description: "The actual password for the restic repositories"
+          id: "RESTIC_PASSWORD"
+          scope: GLOBAL
+          secret: "***REMOVED***"
+      - string:
+          id: "majordomo-ansible-vault"
+          scope: GLOBAL
+          secret: "***REMOVED***"
+jenkins:
+  agentProtocols:
+  - "JNLP4-connect"
+  - "Ping"
+  authorizationStrategy:
+    loggedInUsersCanDoAnything:
+      allowAnonymousRead: false
+  crumbIssuer:
+    standard:
+      excludeClientIPFromCrumb: false
+  disableRememberMe: false
+  markupFormatter: "plainText"
+  mode: NORMAL
+  myViewsTabBar: "standard"
+  nodes:
+  - permanent:
+      labelString: "guix nixbld"
+      launcher:
+        command:
+          command: "/home/oleg/src/dotfiles/oleg/bin/run-jenkins-agent"
+      name: "guixsd"
+      remoteFS: "/home/oleg/.jenkins"
+      retentionStrategy:
+        demand:
+          idleDelay: 30
+          inDemandDelay: 0
+  - permanent:
+      launcher:
+        ssh:
+          credentialsId: "7239ebd6-86e0-46b6-bf7c-0d21ec4a22af"
+          host: "oracle"
+          port: 22
+          sshHostKeyVerificationStrategy: "knownHostsFileKeyVerificationStrategy"
+      mode: EXCLUSIVE
+      name: "oracle"
+      remoteFS: "/home/oleg/.jenkins"
+      retentionStrategy:
+        demand:
+          idleDelay: 30
+          inDemandDelay: 0
+  - permanent:
+      labelString: "guix vm"
+      launcher:
+        ssh:
+          credentialsId: "7239ebd6-86e0-46b6-bf7c-0d21ec4a22af"
+          host: "localhost"
+          port: 19022
+          sshHostKeyVerificationStrategy: "knownHostsFileKeyVerificationStrategy"
+      mode: EXCLUSIVE
+      name: "spb"
+      remoteFS: "/home/oleg/.jenkins"
+      retentionStrategy:
+        demand:
+          idleDelay: 30
+          inDemandDelay: 0
+  - permanent:
+      labelString: "guix"
+      launcher:
+        ssh:
+          credentialsId: "7239ebd6-86e0-46b6-bf7c-0d21ec4a22af"
+          host: "localhost"
+          javaPath: "/home/oleg/.nix-profile/bin/java"
+          port: 9999
+          sshHostKeyVerificationStrategy: "knownHostsFileKeyVerificationStrategy"
+      mode: EXCLUSIVE
+      name: "workstation"
+      remoteFS: "/home/oleg/.jenkins"
+      retentionStrategy:
+        demand:
+          idleDelay: 30
+          inDemandDelay: 0
+  numExecutors: 2
+  primaryView:
+    all:
+      name: "all"
+  projectNamingStrategy: "standard"
+  quietPeriod: 5
+  remotingSecurity:
+    enabled: true
+  scmCheckoutRetryCount: 0
+  securityRealm:
+    local:
+      allowsSignup: false
+      enableCaptcha: false
+      users:
+      - id: "admin"
+  slaveAgentPort: -1
+  updateCenter:
+    sites:
+    - id: "default"
+      url: "https://updates.jenkins.io/update-center.json"
+  views:
+  - all:
+      name: "all"
+  viewsTabBar: "standard"
+security:
+  apiToken:
+    creationOfLegacyTokenEnabled: false
+    tokenGenerationOnCreationEnabled: false
+    usageStatisticsEnabled: true
+  downloadSettings:
+    useBrowser: false
+  sSHD:
+    port: -1
+  scriptApproval:
+    approvedSignatures:
+    - "field hudson.model.Slave name"
+    - "method hudson.model.AbstractCIBase getNodes"
+    - "method hudson.model.Node getAssignedLabels"
+    - "staticMethod jenkins.model.Jenkins getInstance"
+    - "staticMethod org.codehaus.groovy.runtime.DefaultGroovyMethods intersect java.util.List\
+      \ java.lang.Iterable"
+unclassified:
+  ansiColorBuildWrapper:
+    colorMaps:
+    - black: "#000000"
+      blackB: "#4C4C4C"
+      blue: "#1E90FF"
+      blueB: "#4682B4"
+      cyan: "#00CDCD"
+      cyanB: "#00FFFF"
+      green: "#00CD00"
+      greenB: "#00FF00"
+      magenta: "#CD00CD"
+      magentaB: "#FF00FF"
+      name: "xterm"
+      red: "#CD0000"
+      redB: "#FF0000"
+      white: "#E5E5E5"
+      whiteB: "#FFFFFF"
+      yellow: "#CDCD00"
+      yellowB: "#FFFF00"
+    - black: "#000000"
+      blackB: "#555555"
+      blue: "#0000AA"
+      blueB: "#5555FF"
+      cyan: "#00AAAA"
+      cyanB: "#55FFFF"
+      defaultBackground: 0
+      defaultForeground: 7
+      green: "#00AA00"
+      greenB: "#55FF55"
+      magenta: "#AA00AA"
+      magentaB: "#FF55FF"
+      name: "vga"
+      red: "#AA0000"
+      redB: "#FF5555"
+      white: "#AAAAAA"
+      whiteB: "#FFFFFF"
+      yellow: "#AA5500"
+      yellowB: "#FFFF55"
+    - black: "black"
+      blackB: "black"
+      blue: "blue"
+      blueB: "blue"
+      cyan: "cyan"
+      cyanB: "cyan"
+      green: "green"
+      greenB: "green"
+      magenta: "magenta"
+      magentaB: "magenta"
+      name: "css"
+      red: "red"
+      redB: "red"
+      white: "white"
+      whiteB: "white"
+      yellow: "yellow"
+      yellowB: "yellow"
+    - black: "#2E3436"
+      blackB: "#2E3436"
+      blue: "#3465A4"
+      blueB: "#3465A4"
+      cyan: "#06989A"
+      cyanB: "#06989A"
+      defaultBackground: 0
+      defaultForeground: 7
+      green: "#4E9A06"
+      greenB: "#4E9A06"
+      magenta: "#75507B"
+      magentaB: "#75507B"
+      name: "gnome-terminal"
+      red: "#CC0000"
+      redB: "#CC0000"
+      white: "#D3D7CF"
+      whiteB: "#D3D7CF"
+      yellow: "#C4A000"
+      yellowB: "#C4A000"
+  bitbucketEndpointConfiguration:
+    endpoints:
+    - bitbucketCloudEndpoint:
+        enableCache: false
+        manageHooks: false
+        repositoriesCacheDuration: 0
+        teamCacheDuration: 0
+  casCGlobalConfig:
+    configurationPath: "/home/oleg/src/wugi/maintenance/jenkins.yaml"
+  gitHubPluginConfig:
+    hookUrl: "http://localhost:8090/github-webhook/"
+  gitSCM:
+    createAccountBasedOnEmail: false
+    showEntireCommitSummaryInChanges: false
+    useExistingAccountWithSameEmail: false
+  globalLibraries:
+    libraries:
+    - defaultVersion: "master"
+      implicit: true
+      name: "jenkins-wi-shared-library"
+      retriever:
+        modernSCM:
+          scm:
+            git:
+              id: "bd758b5d-3235-45c8-be90-4f74edc1506c"
+              remote: "https://cgit.duckdns.org/git/wigust/jenkins-wi-shared-library"
+              traits:
+              - "gitBranchDiscovery"
+  location:
+    adminAddress: "Oleg Pykhalov <go.wigust@gmail.com>"
+    url: "http://localhost:8090/"
+  mailer:
+    charset: "UTF-8"
+    useSsl: false
+  pollSCM:
+    pollingThreadCount: 10
+  slackNotifier:
+    botUser: false
+    room: "#ci"
+    sendAsText: false
+    teamDomain: "home-s2x8742"
+    tokenCredentialId: "slack-token"
+tool:
+  git:
+    installations:
+    - home: "git"
+      name: "Default"
