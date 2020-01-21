@@ -1,0 +1,19 @@
+- job:
+    name: guile
+    project-type: folder
+
+- job:
+    name: guile/guile-feed
+    project-type: multibranch
+    script-path: Jenkinsfile
+    scm:
+      - git:
+          url: https://cgit.duckdns.org/git/guile/guile-feed
+
+- job:
+    name: guix/guix-custom
+    project-type: multibranch
+    script-path: Jenkinsfile
+    scm:
+      - git:
+          url: https://cgit.duckdns.org/git/guix/guix-custom
