@@ -433,7 +433,7 @@ EndSection")
                        ;; Desktop services
                        (service slim-service-type
                                 (slim-configuration
-				 (theme %slim-theme)
+				 ;; (theme %slim-theme) TODO: Fix the theme.
                                  (xorg-configuration
                                   (xorg-configuration
                                    (extra-config (list 20-intel.conf
