@@ -1102,47 +1102,44 @@
 (defvar *jenkins-url*
   "https://jenkins.wugi.info")
 
-(flet ((firefox (url &optional dark)
-         (run-shell-command (format nil (if dark
-                                            "GTK_THEME=Adwaita:dark nixGLIntel firefox -P dark --new-window ~S"
-                                            "firefox -P light --new-window ~S")
-                                    url))))
-
-  (defcommand firefox-light (url) ((:string "URL: "))
-    (firefox url))
-
-  (defcommand firefox-dark (url) ((:string "URL: "))
-    (firefox url t))
+(flet ((firefox (url title &optional dark)
+         (run-or-raise (format nil (if dark
+                                       "GTK_THEME=Adwaita:dark nixGLIntel firefox -P dark --new-window ~S"
+                                       "firefox --new-window ~S")
+                               url)
+                       `(:title ,title))))
 
   (defcommand alerta () ()
-    (firefox "https://alerta.wugi.info/"))
+    (firefox "https://alerta.intr." "Alerta"))
+
+  (defcommand slack () ()
+    (firefox "https://mjru.slack.com/" "Slack"))
 
   (defcommand grafana () ()
-    (firefox "https://grafana.wugi.info/" t))
+    (firefox "https://grafana.intr/" "Grafana"))
 
-  (defcommand majordomo-la-24-hours () ()
-    (firefox "http://grafana.intr/d/000000021/telegraf-system-dashboard-shared?panelId=54694&fullscreen&orgId=1&var-datasource=influx-telegraf&var-inter=$__auto_interval_inter&var-server=web.*&var-mountpoint=All&var-cpu=All&var-disk=All&var-netif=All&var-server_role=shared-hosting&var-dc=Miran&from=now-12h&to=now" t))
+  ;; TODO:
+  ;; (defcommand majordomo-la-24-hours () ()
+  ;;   (firefox "http://grafana.intr/d/000000021/telegraf-system-dashboard-shared?panelId=54694&fullscreen&orgId=1&var-datasource=influx-telegraf&var-inter=$__auto_interval_inter&var-server=web.*&var-mountpoint=All&var-cpu=All&var-disk=All&var-netif=All&var-server_role=shared-hosting&var-dc=Miran&from=now-12h&to=now" t))
 
-  (defcommand majordomo-upstream () ()
-    (firefox "http://grafana.intr/d/6QgXJjmik/upstream-interfaces-traffic?refresh=5s&orgId=1"))
-
-  (defcommand alerta () ()
-    (firefox "http://alerta.intr/#/alerts?sort-by=lastReceiveTime&status=open&status=unknown&environment=Production"))
+  ;; TODO:
+  ;; (defcommand majordomo-upstream () ()
+  ;;   (firefox "http://grafana.intr/d/6QgXJjmik/upstream-interfaces-traffic?refresh=5s&orgId=1"))
 
   (defcommand cerb () ()
-    (firefox "http://cerberus.intr/index.php/"))
+    (firefox "http://cerberus.intr/" "Cerberus"))
 
   (defcommand majordomo-zabbix () ()
-    (firefox "https://zabbix.intr/dashboard.php?fullscreen=1"))
-
-  (defcommand zabbix () ()
-    (firefox "https://zabbix.wugi.info/"))
+    (firefox "https://zabbix.intr/dashboard.php?fullscreen=1" "Dashboard"))
 
   (defcommand kibana () ()
-    (firefox "http://localhost:5601/app/kibana"))
+    (firefox "https://kibana.intr/" "Kibana"))
 
   (defcommand gitlab () ()
-    (firefox "https://gitlab.wugi.info/" t))
+    (firefox "https://gitlab.intr/" "GitLab"))
+
+  (defcommand jenkins-mj () ()
+    (firefox "https://jenkins.intr/" "Jenkins"))
 
   (defcommand music-youtube () ()
     (run-or-raise "chromium --app=https://music.youtube.com/"
@@ -1151,14 +1148,11 @@
   (defcommand youtube () ()
     (firefox "https://www.youtube.com/feed/subscriptions" t))
 
-  (defcommand twitch () ()
+  (defcommand twitch-tome4 () ()
     (firefox "https://www.twitch.tv/directory/game/Tales%20of%20Maj'Eyal" t))
 
   (defcommand jenkins-index () ()
-    (firefox *jenkins-url*))
-
-  (defcommand jenkins-last-build-guixsd () ()
-    (firefox (concat *jenkins-url* "/job/fiore/lastBuild/console")))
+    (firefox *jenkins-url* "Jenkins"))
 
   (defcommand tometips () ()
     (run-shell-command "chromium --app=https://tometips.github.io"))
@@ -1166,7 +1160,7 @@
   (defcommand discord () ()
     (run-shell-command "chromium --app=https://discordapp.com/"))
 
-  (defcommand jenkins () ()
+  (defcommand jenkins-chromium () ()
     (run-or-raise (concat "chromium --app=" *jenkins-url*)
                   '(:instance "jenkins")))
 
@@ -1469,9 +1463,6 @@
 
 (setf swm-gaps:*outer-gaps-size* 0)
 
-(defcommand alerta () ()
-  (run-or-raise "" '(:title "Alerta - Mozilla Firefox")))
-
 (defun cisco-connect-command (host)
   (join (list "env" (format nil "TELNET_PASSWORD=~s" (password-store-show "majordomo/general"))
               "cisco-interact" host)))
@@ -1575,9 +1566,10 @@
   (define-key *top-map* (kbd "s-B") "move-focus left")
   (define-key *top-map* (kbd "s-P") "move-focus up")
   (define-key *top-map* (kbd "s-N") "move-focus down")
-  (define-key *top-map* (kbd "s-s") "passmenu")
+  (define-key *top-map* (kbd "s-S") "passmenu")
   (define-key *top-map* (kbd "s-j") "music-youtube")
   (define-key *top-map* (kbd "s-u") "alerta")
+  (define-key *top-map* (kbd "s-s") "slack")
   (define-key *top-map* (kbd "s-y") "mj-installed-servers")
 
   ;; Rebind groups to PREFIX-NUMBER.
