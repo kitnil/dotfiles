@@ -560,7 +560,12 @@ nix-version() { nix-instantiate --eval -E '(import <nixpkgs> {}).lib.nixpkgsVers
 nix-build-expression()
 {
     file="$1"
-    nix-build -E "(import <nixpkgs> {}).callPackage ./$file {}"
+    nix-build -E "(import <nixpkgs> {}).callPackage ./$file {}" ${@:2}
+}
+nix-build-expression-with()
+{
+    file="$1"
+    nix-build -E "with (import <nixpkgs> {}); with pkgs; callPackage ./$file {}" ${@:2}
 }
 
 alias dockerd='sudo herd start docker'
