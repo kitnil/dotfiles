@@ -76,6 +76,7 @@
         vterm--self-insert
         wdired-exit
         wdired-finish-edit
+        wgrep-finish-edit
         yaml-electric-backspace
         yaml-electric-dash-and-dot
         yas-expand
