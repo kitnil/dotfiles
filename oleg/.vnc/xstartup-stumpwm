@@ -3,4 +3,4 @@
 unset SESSION_MANAGER
 unset DBUS_SESSION_BUS_ADDRESS
 
-/home/oleg/.guix-profile/bin/ratpoison
+/run/current-system/profile/bin/stumpwm
