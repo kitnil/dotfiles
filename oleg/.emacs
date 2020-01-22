@@ -136,6 +136,10 @@
 
 (setq lsp-lua-emmy-jar-path (expand-file-name "EmmyLua-LS-all.jar" user-emacs-directory))
 
+(with-eval-after-load 'perl-mode
+  (let ((map perl-mode-map))
+    (define-key map (kbd "M-.") 'dumb-jump-go)))
+
 (with-eval-after-load 'nix-mode
   (let ((map nix-mode-map))
     (define-key map (kbd "M-.") 'dumb-jump-go)))
