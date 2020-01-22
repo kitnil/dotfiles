@@ -3572,7 +3572,7 @@ If given a prefix, patch in the branch directory instead."
                         "&&" "mv" "tech.html" "/var/www/techinfo.intr/index.html")
                       " ")))
 
-(load (expand-file-name "~/archive/src/vterm-toggle/vterm-toggle.el"))
+(load (expand-file-name "~/archive/src/vterm-toggle/vterm-toggle.el") t)
 (load (expand-file-name "~/archive/src/tramp-auto-auth/tramp-auto-auth.el"))
 (tramp-auto-auth-mode)
 (load (expand-file-name "~/src/emacs-helm-tramp/helm-tramp.el"))
