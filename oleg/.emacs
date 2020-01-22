@@ -2574,6 +2574,7 @@ be updated automatically."))
 (require 'lsp-java)
 (add-hook 'java-mode-hook #'lsp)
 (setq lsp-ui-sideline-enable nil) ;right menu
+(setq lsp-file-watch-threshold nil)
 
 (with-eval-after-load 'anywhere-mode
   (let ((map anywhere-mode-map))
