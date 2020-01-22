@@ -1573,6 +1573,7 @@
   (define-key *top-map* (kbd "s-N") "move-focus down")
   (define-key *top-map* (kbd "s-s") "passmenu")
   (define-key *top-map* (kbd "s-j") "music-youtube")
+  (define-key *top-map* (kbd "s-u") "alerta")
 
   ;; Rebind groups to PREFIX-NUMBER.
   (mapcar #'(lambda (x)
