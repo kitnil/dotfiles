@@ -3640,6 +3640,11 @@ If given a prefix, patch in the branch directory instead."
                (expand-file-name (format "~/majordomo/webservices/apache2-php%s" (number-to-string version))))
              '(52 53 54 55 56 70 71 72 73 74)))))
 
+(defun deadgrep-kvm (str)
+  (interactive "sString to search: ")
+  (let ((default-directory (expand-file-name "~/majordomo/vds/vds-xenial")))
+    (deadgrep str)))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
