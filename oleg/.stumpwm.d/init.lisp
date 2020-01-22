@@ -1297,6 +1297,10 @@
   (progn (run-shell-command "emacsclient --eval '(helm-tramp)'")
          (switch-to-emacs)))
 
+(defcommand mj-installed-servers () ()
+  (progn (run-shell-command "emacsclient --eval '(mj-installed-servers)'")
+         (switch-to-emacs)))
+
 (define-key *top-map* (kbd "C-s-e") "helm-tramp")
 
 (defun auto-pull-frames ()
@@ -1574,6 +1578,7 @@
   (define-key *top-map* (kbd "s-s") "passmenu")
   (define-key *top-map* (kbd "s-j") "music-youtube")
   (define-key *top-map* (kbd "s-u") "alerta")
+  (define-key *top-map* (kbd "s-y") "mj-installed-servers")
 
   ;; Rebind groups to PREFIX-NUMBER.
   (mapcar #'(lambda (x)
