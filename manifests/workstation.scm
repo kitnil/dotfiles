@@ -1,5 +1,5 @@
 ;; GuixSD configuration file for the desktop machine.
-;; Copyright © 2018, 2019, 2020 Oleg Pykhalov <go.wigust@gmail.com>
+;; Copyright © 2018, 2019 Oleg Pykhalov <go.wigust@gmail.com>
 ;; Released under the GNU GPLv3 or any later version.
 
 (use-modules (srfi srfi-1)
@@ -29,5 +29,5 @@
 
 (combined-manifest-from-files
  (map (cut string-append %source-dir "/" <>)
-      '("emacs.scm" "guix-collection.scm" "wigust.scm" "games.scm" ;; "majordomo.scm"
+      '("emacs.scm" "guix-collection.scm" "wigust.scm" ;; "majordomo.scm"
         )))
