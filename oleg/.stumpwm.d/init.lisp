@@ -1110,7 +1110,7 @@
                        `(:title ,title))))
 
   (defcommand alerta () ()
-    (firefox "https://alerta.intr." "Alerta"))
+    (firefox "https://alerta.intr" "Alerta"))
 
   (defcommand slack () ()
     (firefox "https://mjru.slack.com/" "Slack"))
