@@ -3645,6 +3645,8 @@ If given a prefix, patch in the branch directory instead."
   (let ((default-directory (expand-file-name "~/majordomo/vds/vds-xenial")))
     (deadgrep str)))
 
+(defalias 'rg 'deadgrep)
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
