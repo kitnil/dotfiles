@@ -126,6 +126,8 @@ xfce web wget wm xdisorg xml xorg)
 
                python-language-server
 
+               mongodb
+
                ;; Utilities
                strace tcpdump multitail wireshark
 
