@@ -3,6 +3,10 @@
     project-type: folder
 
 - job:
+    name: nix
+    project-type: folder
+
+- job:
     name: guile/guile-feed
     project-type: multibranch
     script-path: Jenkinsfile
@@ -17,3 +21,13 @@
     scm:
       - git:
           url: https://cgit.duckdns.org/git/guix/guix-custom
+
+- job:
+    name: nix/maintenance
+    project-type: multibranch
+    script-path: Jenkinsfile
+    scm:
+      - git:
+          url: https://cgit.duckdns.org/git/nix/nixpkgs
+          shallow-clone: true
+          do-not-fetch-tags: true
