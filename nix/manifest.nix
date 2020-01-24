@@ -1,9 +1,17 @@
-{ pkgs ? import <nixpkgs> { } }:
+with import <nixpkgs> {
+  overlays = [
+    (self: super: {
+      nixGl = (import (builtins.fetchGit {
+        url = "https://github.com/guibou/nixGL";
+        ref = "master";
+      }) { });
+    })
+  ];
+};
 
 with pkgs;
 
-let nixGLIntel = (import ~/archive/src/nixGL {}).nixGLIntel;
-    node_catj = callPackage ~/archive/src/catj {};
+let node_catj = callPackage ~/archive/src/catj { };
 
 in [
   # alacritty
@@ -55,7 +63,7 @@ in [
   nix-prefetch-docker
   nix-serve
   nixfmt
-  nixGLIntel
+  nixGl.nixGLIntel
   nixpkgs-lint
   # nodePackages_12_x.node2nix
   # node_catj
