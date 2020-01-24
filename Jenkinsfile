@@ -1,3 +1,5 @@
+def NODES = ["guix", "guix nixbld", "guix vm"]
+
 pipeline {
     agent {
         label "master"
@@ -13,13 +15,19 @@ pipeline {
         stage("Invoking guix system build") {
             steps {
                 parallelSh cmd: "guix system build /etc/config.scm",
-                nodeLabels: ["guix", "guix nixbld", "guix vm"]
+                nodeLabels: NODES
             }
         }
         stage("Invoking guix package") {
             steps {
                 parallelSh cmd: "guix package --manifest=/home/oleg/manifest.scm",
-                nodeLabels: ["guix", "guix nixbld", "guix vm"]
+                nodeLabels: NODES
+            }
+        }
+        stage("Invoking nix-env") {
+            steps {
+                parallelSh cmd: "NIX_PATH=nixpkgs=$HOME/.nix-defexpr/channels/nixos-unstable nix-env --install '.*' -f $HOME/manifest.nix",
+                nodeLabels: NODES
             }
         }
     }
