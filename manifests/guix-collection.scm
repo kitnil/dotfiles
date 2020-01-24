@@ -153,6 +153,7 @@ xfce web wget wm xdisorg xml xorg)
 
                sxhkd
 
+               perltidy ;format Perl code
                perl-uri-escape ;convert url
 
                patchelf ;patch elf
