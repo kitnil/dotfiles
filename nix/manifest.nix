@@ -40,7 +40,7 @@ in [
   knot-resolver
   ldns
   libressl
-  litecli
+  # litecli TODO: fails to build
   lnav
   lsd
   lua
@@ -57,8 +57,8 @@ in [
   nixfmt
   nixGLIntel
   nixpkgs-lint
-  nodePackages_12_x.node2nix
-  node_catj
+  # nodePackages_12_x.node2nix
+  # node_catj
   obs-studio
   oh
   openjdk
