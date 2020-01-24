@@ -923,7 +923,7 @@ Sets the following basend on PREFIX-MAP:
         ("\\.conkerorrc" . js-mode)
         ("\\.guile" . scheme-mode)
         ("\\.mbsyncrc" . conf-mode)
-        ("manifest" . scheme-mode)
+        ("manifest\\.scm" . scheme-mode)
         ("\\.tfstate" . json-mode)
         ("bashrc" . sh-mode)
         ("kresd\\.conf" . lua-mode)
