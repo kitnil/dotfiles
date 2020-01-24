@@ -8,7 +8,7 @@ pipeline {
         stage("Cloning from local Git") {
             steps {
                 parallelGitClone url: "https://cgit.duckdns.org/git/wigust/dotfiles",
-                nodeLabels: ["guix", "guix nixbld", "guix vm"],
+                nodeLabels: NODES,
                 dir: "/home/oleg/src/dotfiles"
             }
         }

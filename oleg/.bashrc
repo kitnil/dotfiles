@@ -1506,3 +1506,13 @@ nix-python2-with-pkgs()
 {
     nix-shell -p python2  'python2.withPackages (python-packages: with python-packages; [ requests ])'
 }
+
+nix-env-clean()
+{
+    awk '/#/ { print $2 }' "$HOME/manifest.nix" | xargs nix-env -e
+}
+
+nix-env-upgrade()
+{
+    NIX_PATH=nixpkgs=$HOME/.nix-defexpr/channels/nixos-unstable nix-env --install '.*' -f "$HOME/manifest.nix"
+}
