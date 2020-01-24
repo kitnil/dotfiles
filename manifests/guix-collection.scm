@@ -124,6 +124,8 @@ xfce web wget wm xdisorg xml xorg)
 
                file tree python-pygments
 
+               python-language-server
+
                ;; Utilities
                strace tcpdump multitail wireshark
 
