@@ -3,11 +3,6 @@ if [ -f ~/.bashrc ]; then . ~/.bashrc; fi
 
 export LC_TIME=en_GB.UTF-8
 
-# Added by Nix installer.
-if [ -e $HOME/.nix-profile/etc/profile.d/nix.sh ]; then
-    . $HOME/.nix-profile/etc/profile.d/nix.sh;
-fi
-
 export LOCALE_ARCHIVE="$(readlink ~/.nix-profile/lib/locale)/locale-archive"
 export MANPATH=$MANPATH:$HOME/.nix-profile/share/man
 

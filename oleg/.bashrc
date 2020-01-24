@@ -208,9 +208,8 @@ alias t5='TMOUT=5'
 # https://www.gnu.org/software/emacs/manual/html_node/efaq/Disabling-backups.html
 alias ls='ls -B -p --color=auto'
 
-if [ -f "$HOME/.guix-profile/etc/profile.d/nix.sh" ]
-then
-    . "$HOME/.guix-profile/etc/profile.d/nix.sh"
+if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then
+    . "$HOME/.nix-profile/etc/profile.d/nix.sh";
 fi
 
 if [ -f "$HOME/.nix-profile/share/bash-completion/completions/docker" ]
