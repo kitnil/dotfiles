@@ -156,6 +156,7 @@ xfce web wget wm xdisorg xml xorg)
                perl-uri-escape ;convert url
 
                patchelf ;patch elf
+               patchutils
 
                octave
 
