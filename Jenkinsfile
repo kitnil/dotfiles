@@ -1,5 +1,10 @@
 def NODES = ["guix", "guix nixbld", "guix vm"]
 
+def NIX_ENV_COMMAND =
+    [([".", "/home/oleg/.nix-profile/etc/profile.d/nix.sh"].join(" ")),
+     (["NIX_PATH=nixpkgs=/home/oleg/.nix-defexpr/channels/nixos-unstable",
+       "nix-env", "--install", "'.*'", "-f", "/home/oleg/manifest.nix"].join(" "))].join("; ")
+
 pipeline {
     agent {
         label "master"
@@ -26,7 +31,7 @@ pipeline {
         }
         stage("Invoking nix-env") {
             steps {
-                parallelSh cmd: "NIX_PATH=nixpkgs=$HOME/.nix-defexpr/channels/nixos-unstable nix-env --install '.*' -f $HOME/manifest.nix",
+                parallelSh cmd: NIX_ENV_COMMAND,
                 nodeLabels: NODES
             }
         }
