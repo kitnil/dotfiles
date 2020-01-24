@@ -147,6 +147,9 @@
     (restore-window-placement-rules rules)
     (place-existing-windows)))
 
+(defvar workstation?
+  (string-equal (file-get-contents "/etc/hostname") "workstation-guixsd"))
+
 
 ;;;
 ;;; XTerm
@@ -751,11 +754,11 @@
          (let ((frame (frame-number (tile-group-current-frame (current-group)))))
            (if (= frame 0) nil t)))
 
-        ((string= (getenv "DISPLAY") ":0")
+        ((and (not workstation?) (string= (getenv "DISPLAY") ":0"))
          (let ((frame (frame-number (tile-group-current-frame (current-group)))))
            (if (string-equal (group-name (current-group)) "Default")
-               (not (or (= frame 2) (= frame 1)))
-               (not (or (= frame 0) (= frame 1))))))
+	       (or (= frame 0) (= frame 1))
+	       (or (= frame 2) (= frame 1)))))
 
         (t nil)))
 
@@ -1617,7 +1620,7 @@
        (setf *message-window-y-padding* 0)
        (setf *normal-border-width* 0)
        (setf *transient-border-width* 0)
-       (unless (string-equal (file-get-contents "/etc/hostname") "workstation-guixsd")
+       (unless workstation?
 	 (restore-from-file "/home/oleg/src/dotfiles/oleg/.stumpwm.d/desktop/9.lisp")
 	 (bind-super)
 	 (setf *maxsize-border-width* 3)
