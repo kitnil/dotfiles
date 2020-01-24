@@ -5,15 +5,17 @@ with import <nixpkgs> {
         url = "https://github.com/guibou/nixGL";
         ref = "master";
       }) { });
+      catj = (import (builtins.fetchGit {
+        url = "https://cgit.duckdns.org/git/nix/catj";
+        ref = "master";
+      }) { });
     })
   ];
 };
 
 with pkgs;
 
-let node_catj = callPackage ~/archive/src/catj { };
-
-in [
+[
   # alacritty
   ansifilter
   # assh
