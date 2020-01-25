@@ -220,7 +220,7 @@
 ;; [https://www.youtube.com/watch?v=rjOhJMbA-q0][Emacs: window rules and parameters (`display-buffer-alist' and extras) - YouTube]
 ;; [https://protesilaos.com/dotemacs/#h:12591f89-eeea-4b12-93e8-9293504e5a12][Emacs initialisation file (dotemacs) | Protesilaos Stavrou]
 (setq display-buffer-alist
-      '(;; top side window
+      `(;; top side window
         ("\\*\\(Flycheck\\|Package-Lint\\).*"
          (display-buffer-in-side-window)
          (window-height . 0.15)
@@ -228,7 +228,10 @@
          (slot . 0)
          (window-parameters . ((no-other-window . t))))
         ;; bottom side window
-        ("\\*e?shell.*"
+        (,(rx-to-string `(and (zero-or-one "*")
+                              (or (and (zero-or-one "e") "shell")
+                                  (and "Guile REPL"))
+                              (* alnum) (zero-or-one "*")))
          (display-buffer-in-side-window)
          (window-height . 0.25)
          (side . bottom)
