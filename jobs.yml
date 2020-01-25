@@ -90,6 +90,8 @@
     scm:
       - git:
           url: https://cgit.duckdns.org/git/guix/guix
+          shallow-clone: true
+          do-not-fetch-tags: true
 - job:
     name: nix
     project-type: folder
