@@ -1,8 +1,11 @@
 #!/bin/sh
 
 # This script will generate Jenkins jobs in YAML format, so you could
-# use "jenkins-update" program to operate them as described in
+# use "jenkins-jobs" program to operate them as described in
 # https://docs.openstack.org/infra/jenkins-job-builder/project_workflow_multibranch.html
+#
+# The script requires curl, jq, yq programs.
+# Tested on Jenkins 2.204.1.
 #
 # You should set JENKINS_URL and CURL_USER to your credentials, then
 # run the script, e.g. ./generate.sh
