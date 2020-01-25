@@ -1,0 +1,9 @@
+#!/bin/sh
+
+set -e -x
+
+message="$1"
+
+for id in $(alerta query | awk "/$message/ { print \$1 }"); do
+    alerta close --ids $id
+done
