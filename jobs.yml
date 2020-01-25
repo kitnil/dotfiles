@@ -1,19 +1,56 @@
 - job:
-    name: guile
+    name: ansible
     project-type: folder
-
 - job:
-    name: nix
-    project-type: folder
-
-- job:
-    name: guile/guile-feed
+    name: ansible/ansible-cmdb-majordomo
     project-type: multibranch
+    periodic-folder-trigger: 1d
+    prune-dead-branches: true
+    number-to-keep: '10'
+    days-to-keep: '10'
     script-path: Jenkinsfile
     scm:
-      - git:
-          url: https://cgit.duckdns.org/git/guile/guile-feed
-
+      git:
+        url: https://cgit.duckdns.org/git/ansible/ansible-cmdb-majordomo
+- job:
+    name: ansible/fetch-history
+    project-type: multibranch
+    periodic-folder-trigger: 1d
+    prune-dead-branches: true
+    number-to-keep: '10'
+    days-to-keep: '10'
+    script-path: Jenkinsfile
+    scm:
+      git:
+        url: https://cgit.duckdns.org/git/ansible/ansible-majordomo-history
+- job:
+    name: ansible/ping
+    project-type: multibranch
+    periodic-folder-trigger: 1d
+    prune-dead-branches: true
+    number-to-keep: '10'
+    days-to-keep: '10'
+    script-path: Jenkinsfile
+    scm:
+      git:
+        url: https://cgit.duckdns.org/git/ansible/ansible-ping
+- job:
+    name: containers
+    project-type: folder
+- job:
+    name: containers/bitlbee-libpurple
+    project-type: multibranch
+    periodic-folder-trigger: 1d
+    prune-dead-branches: true
+    number-to-keep: '10'
+    days-to-keep: '10'
+    script-path: Jenkinsfile
+    scm:
+      git:
+        url: https://cgit.duckdns.org/git/containers/bitlbee-libpurple
+- job:
+    name: guix
+    project-type: folder
 - job:
     name: guix/guix-custom
     project-type: multibranch
@@ -21,7 +58,42 @@
     scm:
       - git:
           url: https://cgit.duckdns.org/git/guix/guix-custom
-
+- job:
+    name: guix/guix-docker
+    project-type: multibranch
+    periodic-folder-trigger: 1d
+    prune-dead-branches: true
+    number-to-keep: '10'
+    days-to-keep: '10'
+    script-path: Jenkinsfile
+    scm:
+      git:
+        url: https://cgit.duckdns.org/git/guix/guix-docker
+- job:
+    name: guix/maintenance
+    project-type: multibranch
+    periodic-folder-trigger: 1d
+    prune-dead-branches: true
+    number-to-keep: '10'
+    days-to-keep: '10'
+    script-path: Jenkinsfile
+    scm:
+      git:
+        url: https://cgit.duckdns.org/git/guix/guix
+- job:
+    name: nix
+    project-type: folder
+- job:
+    name: nix/gc
+    project-type: multibranch
+    periodic-folder-trigger: 1d
+    prune-dead-branches: true
+    number-to-keep: '10'
+    days-to-keep: '10'
+    script-path: Jenkinsfile
+    scm:
+      git:
+        url: https://cgit.duckdns.org/git/nix/nix-store-gc
 - job:
     name: nix/maintenance
     project-type: multibranch
@@ -31,3 +103,71 @@
           url: https://cgit.duckdns.org/git/nix/nixpkgs
           shallow-clone: true
           do-not-fetch-tags: true
+- job:
+    name: wigust
+    project-type: folder
+- job:
+    name: wigust/awesome
+    project-type: multibranch
+    periodic-folder-trigger: 1d
+    prune-dead-branches: true
+    number-to-keep: '10'
+    days-to-keep: '10'
+    script-path: Jenkinsfile
+    scm:
+      git:
+        url: https://cgit.duckdns.org/git/wigust/awesome
+- job:
+    name: wigust/backup-restic
+    project-type: multibranch
+    periodic-folder-trigger: 1d
+    prune-dead-branches: true
+    number-to-keep: '10'
+    days-to-keep: '10'
+    script-path: Jenkinsfile
+    scm:
+      git:
+        url: https://cgit.duckdns.org/git/wigust/backup-restic
+- job:
+    name: wigust/dotfiles
+    project-type: multibranch
+    periodic-folder-trigger: 1d
+    prune-dead-branches: true
+    number-to-keep: '10'
+    days-to-keep: '10'
+    script-path: Jenkinsfile
+    scm:
+      git:
+        url: file:///home/oleg/src/dotfiles/.git
+- job:
+    name: wigust/dotfiles-ansible
+    project-type: multibranch
+    periodic-folder-trigger: 1d
+    prune-dead-branches: true
+    number-to-keep: '10'
+    days-to-keep: '10'
+    script-path: Jenkinsfile
+    scm:
+      git:
+        url: https://cgit.duckdns.org/git/wigust/dotfiles-ansible
+- job:
+    name: wigust/ssh
+    project-type: multibranch
+    periodic-folder-trigger: 1d
+    prune-dead-branches: true
+    number-to-keep: '10'
+    days-to-keep: '10'
+    script-path: Jenkinsfile
+    scm:
+      git:
+        url: https://cgit.duckdns.org/git/wigust/ssh
+- job:
+    name: guile
+    project-type: folder
+- job:
+    name: guile/guile-feed
+    project-type: multibranch
+    script-path: Jenkinsfile
+    scm:
+      - git:
+          url: https://cgit.duckdns.org/git/guile/guile-feed
