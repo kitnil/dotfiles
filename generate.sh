@@ -22,5 +22,5 @@ folders()
 
 for folder in $(folders); do
     curl --silent --request POST --user "admin:$(pass show jenkins/admin-api-key)" "$JENKINS_URL/job/$folder/api/json" \
-        | yq --yaml-output '[.jobs[] | {"job": { "name": .name, "description": .description, "project-type": "multibranch", "periodic-folder-trigger": "1d", "prune-dead-branches": true, "number-to-keep": "10", "days-to-keep": "10", "script-path": "Jenkinsfile", "scm": {"git": {"url": .url, "credentials-id": "gitlab-git"}}}}]'
+        | yq --arg FOLDER "$folder" --yaml-output '[.jobs[] | {"job": { "name": "\($FOLDER)/\(.name)", "project-type": "multibranch", "periodic-folder-trigger": "1d", "prune-dead-branches": true, "number-to-keep": "10", "days-to-keep": "10", "script-path": "Jenkinsfile", "scm": {"git": {"url": .url}}}}]'
 done
