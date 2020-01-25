@@ -68,11 +68,10 @@
   quickwall
 
   pspg ; SQL pager
-  
-  guix-wigust-packages-emacs
 
   slides-concise-gnu-bash
   documentation-arcconf
 
-  git-splits))
+  git-splits
 
+  guix-wigust-packages-emacs))
