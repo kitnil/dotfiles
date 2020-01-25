@@ -1,0 +1,25 @@
+#! /usr/bin/env nix-shell
+#! nix-shell -i python -p python pythonPackages.pexpect
+
+import os
+import sys
+import pexpect
+
+telnet_password = os.environ['TELNET_PASSWORD']
+
+host = sys.argv[1]
+command = " ".join(sys.argv[2:])
+
+prompt = host + ">"
+child = pexpect.spawn("telnet " + host)
+
+child.expect("Password:")
+child.sendline(telnet_password)
+
+child.expect(prompt)
+child.sendline("terminal length 0")
+
+child.expect(prompt)
+sys.stdout.write(prompt)
+child.interact()
+
