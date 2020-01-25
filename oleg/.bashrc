@@ -112,10 +112,13 @@ fi
 export LOCALE_ARCHIVE="$(readlink ~/.nix-profile/lib/locale)/locale-archive"
 export MANPATH=$MANPATH:$HOME/.nix-profile/share/man
 
-if [ -f "$HOME/.nix-profile/share/bash-completion/completions/nix" ]
-then
-    . "$HOME/.nix-profile/share/bash-completion/completions/nix"
-fi
+nix-completion()
+{
+    if [ -f "$HOME/.nix-profile/share/bash-completion/completions/nix" ]
+    then
+        . "$HOME/.nix-profile/share/bash-completion/completions/nix"
+    fi
+}
 
 emc()
 {
