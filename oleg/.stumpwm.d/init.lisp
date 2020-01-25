@@ -505,6 +505,16 @@
             (sb-unicode:lowercase (string x)))
           '(dh1-mr dh2-mr dh3-mr)))
 
+(defvar majordomo-vpn
+  (mapcar (lambda (x)
+            (concat "vpn-" (sb-unicode:lowercase (string x)) ".majordomo.ru"))
+          '(miran dh office)))
+
+(defcommand xpanes-vpn-ssh () ()
+  (term-shell-command (join `("xpanes -C 1 -c 'ssh {}'" ,@majordomo-vpn))
+                      :title "xpanes-vpn-ssh"
+                      :font '("-fa" "Monospace" "-fs" "6")))
+
 (defcommand xpanes-dh-ssh () ()
   (term-shell-command (join `("xpanes -c 'ssh {}.intr'" ,@majordomo-dh))
                       :title "xpanes-dh-ssh"
