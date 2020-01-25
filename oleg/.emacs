@@ -214,6 +214,47 @@
 
 
 ;;;
+;;; Window configurations
+;;;
+
+;; [https://www.youtube.com/watch?v=rjOhJMbA-q0][Emacs: window rules and parameters (`display-buffer-alist' and extras) - YouTube]
+;; [https://protesilaos.com/dotemacs/#h:12591f89-eeea-4b12-93e8-9293504e5a12][Emacs initialisation file (dotemacs) | Protesilaos Stavrou]
+(setq display-buffer-alist
+      '(;; top side window
+        ("\\*\\(Flycheck\\|Package-Lint\\).*"
+         (display-buffer-in-side-window)
+         (window-height . 0.15)
+         (side . top)
+         (slot . 0)
+         (window-parameters . ((no-other-window . t))))
+        ;; bottom side window
+        ("\\*e?shell.*"
+         (display-buffer-in-side-window)
+         (window-height . 0.25)
+         (side . bottom)
+         (slot . 0))
+        ("\\*\\(Backtrace\\|Warnings\\|Compile-Log\\|[Hh]elp\\|Messages\\)\\*"
+         (display-buffer-in-side-window)
+         (window-height . 0.25)
+         (side . bottom)
+         (slot . 1))
+        ;; right side window
+        ("\\*Faces\\*"
+         (display-buffer-in-side-window)
+         (window-width . 0.333)
+         (side . right)
+         (slot . 0)
+         (window-parameters . ((no-other-window . t)
+                               (mode-line-format . (" "
+                                                    mode-line-buffer-identification)))))
+        ("\\*Custom.*"
+         (display-buffer-in-side-window)
+         (window-width . 0.333)
+         (side . right)
+         (slot . 1))))
+
+
+;;;
 ;;; Customize
 ;;;
 
