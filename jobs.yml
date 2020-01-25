@@ -3,6 +3,7 @@
     project-type: folder
 - job:
     name: ansible/ansible-cmdb-majordomo
+    description: null
     project-type: multibranch
     periodic-folder-trigger: 1d
     prune-dead-branches: true
@@ -14,6 +15,7 @@
           url: https://cgit.duckdns.org/git/ansible/ansible-cmdb-majordomo
 - job:
     name: ansible/fetch-history
+    description: null
     project-type: multibranch
     periodic-folder-trigger: 1d
     prune-dead-branches: true
@@ -25,6 +27,7 @@
           url: https://cgit.duckdns.org/git/ansible/ansible-majordomo-history
 - job:
     name: ansible/ping
+    description: null
     project-type: multibranch
     periodic-folder-trigger: 1d
     prune-dead-branches: true
@@ -39,6 +42,7 @@
     project-type: folder
 - job:
     name: containers/bitlbee-libpurple
+    description: null
     project-type: multibranch
     periodic-folder-trigger: 1d
     prune-dead-branches: true
@@ -49,10 +53,22 @@
       - git:
           url: https://cgit.duckdns.org/git/containers/bitlbee-libpurple
 - job:
+    name: guile
+    project-type: folder
+- job:
+    name: guile/guile-feed
+    description: null
+    project-type: multibranch
+    script-path: Jenkinsfile
+    scm:
+      - git:
+          url: https://cgit.duckdns.org/git/guile/guile-feed
+- job:
     name: guix
     project-type: folder
 - job:
     name: guix/guix-docker
+    description: null
     project-type: multibranch
     periodic-folder-trigger: 1d
     prune-dead-branches: true
@@ -64,6 +80,7 @@
           url: https://cgit.duckdns.org/git/guix/guix-docker
 - job:
     name: guix/maintenance
+    description: null
     project-type: multibranch
     periodic-folder-trigger: 1d
     prune-dead-branches: true
@@ -78,6 +95,7 @@
     project-type: folder
 - job:
     name: nix/gc
+    description: null
     project-type: multibranch
     periodic-folder-trigger: 1d
     prune-dead-branches: true
@@ -89,6 +107,7 @@
           url: https://cgit.duckdns.org/git/nix/nix-store-gc
 - job:
     name: nix/maintenance
+    description: null
     project-type: multibranch
     periodic-folder-trigger: 1d
     prune-dead-branches: true
@@ -105,6 +124,7 @@
     project-type: folder
 - job:
     name: wigust/awesome
+    description: null
     project-type: multibranch
     periodic-folder-trigger: 1d
     prune-dead-branches: true
@@ -116,6 +136,7 @@
           url: https://cgit.duckdns.org/git/wigust/awesome
 - job:
     name: wigust/backup-restic
+    description: null
     project-type: multibranch
     periodic-folder-trigger: 1d
     prune-dead-branches: true
@@ -127,6 +148,7 @@
           url: https://cgit.duckdns.org/git/wigust/backup-restic
 - job:
     name: wigust/dotfiles
+    description: null
     project-type: multibranch
     periodic-folder-trigger: 1d
     prune-dead-branches: true
@@ -138,6 +160,7 @@
           url: file:///home/oleg/src/dotfiles/.git
 - job:
     name: wigust/dotfiles-ansible
+    description: null
     project-type: multibranch
     periodic-folder-trigger: 1d
     prune-dead-branches: true
@@ -149,6 +172,7 @@
           url: https://cgit.duckdns.org/git/wigust/dotfiles-ansible
 - job:
     name: wigust/ssh
+    description: null
     project-type: multibranch
     periodic-folder-trigger: 1d
     prune-dead-branches: true
@@ -158,13 +182,3 @@
     scm:
       - git:
           url: https://cgit.duckdns.org/git/wigust/ssh
-- job:
-    name: guile
-    project-type: folder
-- job:
-    name: guile/guile-feed
-    project-type: multibranch
-    script-path: Jenkinsfile
-    scm:
-      - git:
-          url: https://cgit.duckdns.org/git/guile/guile-feed
