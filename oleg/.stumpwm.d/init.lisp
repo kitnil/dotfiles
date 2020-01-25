@@ -230,6 +230,13 @@
   "Start Firefox."
   (run-shell-command "firefox --new-window"))
 
+(defcommand firefox-beta () ()
+  "Start Firefox Beta."
+  (run-shell-command
+   (join
+    (list (concat (getenv "HOME") "/.nix-profile.d/firefox-beta-bin/firefox-beta-bin/bin/firefox")
+          "-P" "beta" "--new-instance"))))
+
 (defcommand chromium () ()
   "Start or focus Chromium."
   (run-or-raise "chromium" '(:class "Chromium-browser")))
