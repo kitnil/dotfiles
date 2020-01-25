@@ -1,6 +1,7 @@
 (use-modules (gnu packages emacs)
              (wigust packages databases)
              (wigust packages admin)
+             (wigust packages documentation)
              (wigust packages emacs)
              (wigust packages games)
              (wigust packages guix)
@@ -68,5 +69,8 @@
 
   pspg ; SQL pager
   
-  guix-wigust-packages-emacs))
+  guix-wigust-packages-emacs
+
+  slides-concise-gnu-bash
+  documentation-arcconf))
 
