@@ -93,6 +93,18 @@
           shallow-clone: true
           do-not-fetch-tags: true
 - job:
+    name: guix/wigust
+    description: null
+    project-type: multibranch
+    periodic-folder-trigger: 1d
+    prune-dead-branches: true
+    number-to-keep: '10'
+    days-to-keep: '10'
+    script-path: Jenkinsfile
+    scm:
+      - git:
+          url: https://cgit.duckdns.org/git/guix/guix-wigust
+- job:
     name: nix
     project-type: folder
 - job:
