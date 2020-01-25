@@ -8,20 +8,6 @@ folders()
         | jq --raw-output '.jobs[] | .name'
 }
 
-# format()
-# {
-#     input=$1
-#     echo $input
-#         | sed 's@    git@    - git@g' \
-#         | sed 's|https://jenkins.intr/job/|git@gitlab.intr:|g' \
-#         | sed 's|/job||g' \
-#         | sed 's@        url:@          url:@g' \
-#         | sed 's@        credentials-id:@          credentials-id:@g' \
-#         | tee $(basename $folder | sed 's|json|yml|g')
-# }
-
-# curl --silent --request GET --user "admin:$(pass show jenkins/admin-api-key)" $JENKINS_URL/job/wigust/job/awesome/config.xml | xq --raw-output '.["org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject"].sources.data["jenkins.branch.BranchSource"].source.remote'
-
 jobs()
 {
     folder="$1"
