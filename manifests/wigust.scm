@@ -72,5 +72,7 @@
   guix-wigust-packages-emacs
 
   slides-concise-gnu-bash
-  documentation-arcconf))
+  documentation-arcconf
+
+  git-splits))
 
