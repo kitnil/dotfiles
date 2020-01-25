@@ -49,7 +49,7 @@ main()
         echo $folder | yq --yaml-output --arg FOLDER "$folder" '[{"job": {"name": $FOLDER, "project-type": "folder"}}]'
         for job in $(jobs $folder | jq --raw-output '.jobs[] | .name'); do
             giturl=$(giturl $folder $job | xq --raw-output '.["org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject"].sources.data["jenkins.branch.BranchSource"].source.remote')
-            job $folder $job | yq --arg GITURL "$giturl" --arg FOLDER "$folder" --arg JOB "$job" --yaml-output '[.jobs[] | {"job": { "name": "\($FOLDER)/\($JOB)", "project-type": "multibranch", "periodic-folder-trigger": "1d", "prune-dead-branches": true, "number-to-keep": "10", "days-to-keep": "10", "script-path": "Jenkinsfile", "scm": [{"git": {"url": $GITURL}}]}}]'
+            job $folder $job | yq --arg GITURL "$giturl" --arg FOLDER "$folder" --arg JOB "$job" --yaml-output '[.jobs[] | {"job": { "name": "\($FOLDER)/\($JOB)", description: null, "project-type": "multibranch", "periodic-folder-trigger": "1d", "prune-dead-branches": true, "number-to-keep": "10", "days-to-keep": "10", "script-path": "Jenkinsfile", "scm": [{"git": {"url": $GITURL}}]}}]'
         done
     done
 }
