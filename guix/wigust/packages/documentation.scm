@@ -22,6 +22,32 @@
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix build-system trivial))
 
+(define-public slides-concise-gnu-bash
+  (package
+    (name "slides-concise-gnu-bash")
+    (version "2017")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append "http://talk.jpnc.info/bash_lnfw_"
+                                  version ".pdf"))
+              (sha256
+               (base32
+                "1v8nn3p7qiibsmbigdcv8q40pgsq6s8v63193f7qq5y2yhrqml7a"))))
+    (build-system trivial-build-system)
+    (arguments
+     `(#:modules ((guix build utils))
+       #:builder
+       (begin (use-modules (guix build utils))
+              (let ((install-dir (string-append %output "/share/doc/slides-concise-gnu-bash")))
+                (mkdir-p install-dir)
+                (copy-file (assoc-ref %build-inputs "source") (string-append install-dir "/slides-concise-gnu-bash.pdf")))
+              #t)))
+    (home-page "http://talk.jpnc.info/")
+    (synopsis "Introduction to Bash advances usage")
+    (description "This package provides slides for a presention Introduction
+to Bash advances usage.")
+    (license #f)))
+
 (define-public documentation-arcconf
   (package
     (name "documentation-arcconf")
