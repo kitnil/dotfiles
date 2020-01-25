@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2018, 2019 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2018, 2019, 2020 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -163,3 +163,37 @@ efficient way to access various statistics in git repository.")
     (description "This package provides a Bourne shell GitHub API client
 library focused on interfacing with shell scripts.")
     (license license:bsd-3)))
+
+(define-public git-splits
+  (package
+    (name "git-splits")
+    (version "1.1.0")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://github.com/ajdruff/git-splits.git")
+                    (commit version)))
+              (file-name (git-file-name name version))
+              (sha256
+               (base32
+                "14cxcivr10aq5399hf102sbp4gimww7jqr669mbxfly1w7y4yv6y"))))
+    (build-system trivial-build-system)
+    (inputs
+     `(("bash" ,bash)))
+    (arguments
+     `(#:modules ((guix build utils))
+       #:builder
+       (begin
+         (use-modules (guix build utils))
+         (copy-file (string-append (assoc-ref %build-inputs "source") "/git-splits")
+                    "git-splits")
+         (substitute* "git-splits"
+           (("/usr/bin/env bash")
+            (string-append (assoc-ref %build-inputs "bash") "/bin/bash")))
+         (install-file "git-splits" (string-append %output "/bin"))
+         #t)))
+    (home-page "https://github.com/ajdruff/git-splits/")
+    (synopsis "Extracts multiple directories of a git repo into a new branch")
+    (description "git-splits - Extracts directories into a new branch
+with re-written history containing only those directories.")
+    (license license:expat)))
