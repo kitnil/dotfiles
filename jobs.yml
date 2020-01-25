@@ -10,8 +10,8 @@
     days-to-keep: '10'
     script-path: Jenkinsfile
     scm:
-      git:
-        url: https://cgit.duckdns.org/git/ansible/ansible-cmdb-majordomo
+      - git:
+          url: https://cgit.duckdns.org/git/ansible/ansible-cmdb-majordomo
 - job:
     name: ansible/fetch-history
     project-type: multibranch
@@ -21,8 +21,8 @@
     days-to-keep: '10'
     script-path: Jenkinsfile
     scm:
-      git:
-        url: https://cgit.duckdns.org/git/ansible/ansible-majordomo-history
+      - git:
+          url: https://cgit.duckdns.org/git/ansible/ansible-majordomo-history
 - job:
     name: ansible/ping
     project-type: multibranch
@@ -32,8 +32,8 @@
     days-to-keep: '10'
     script-path: Jenkinsfile
     scm:
-      git:
-        url: https://cgit.duckdns.org/git/ansible/ansible-ping
+      - git:
+          url: https://cgit.duckdns.org/git/ansible/ansible-ping
 - job:
     name: containers
     project-type: folder
@@ -46,18 +46,11 @@
     days-to-keep: '10'
     script-path: Jenkinsfile
     scm:
-      git:
-        url: https://cgit.duckdns.org/git/containers/bitlbee-libpurple
+      - git:
+          url: https://cgit.duckdns.org/git/containers/bitlbee-libpurple
 - job:
     name: guix
     project-type: folder
-- job:
-    name: guix/guix-custom
-    project-type: multibranch
-    script-path: Jenkinsfile
-    scm:
-      - git:
-          url: https://cgit.duckdns.org/git/guix/guix-custom
 - job:
     name: guix/guix-docker
     project-type: multibranch
@@ -67,8 +60,8 @@
     days-to-keep: '10'
     script-path: Jenkinsfile
     scm:
-      git:
-        url: https://cgit.duckdns.org/git/guix/guix-docker
+      - git:
+          url: https://cgit.duckdns.org/git/guix/guix-docker
 - job:
     name: guix/maintenance
     project-type: multibranch
@@ -78,8 +71,8 @@
     days-to-keep: '10'
     script-path: Jenkinsfile
     scm:
-      git:
-        url: https://cgit.duckdns.org/git/guix/guix
+      - git:
+          url: https://cgit.duckdns.org/git/guix/guix
 - job:
     name: nix
     project-type: folder
@@ -92,11 +85,15 @@
     days-to-keep: '10'
     script-path: Jenkinsfile
     scm:
-      git:
-        url: https://cgit.duckdns.org/git/nix/nix-store-gc
+      - git:
+          url: https://cgit.duckdns.org/git/nix/nix-store-gc
 - job:
     name: nix/maintenance
     project-type: multibranch
+    periodic-folder-trigger: 1d
+    prune-dead-branches: true
+    number-to-keep: '10'
+    days-to-keep: '10'
     script-path: Jenkinsfile
     scm:
       - git:
@@ -115,8 +112,8 @@
     days-to-keep: '10'
     script-path: Jenkinsfile
     scm:
-      git:
-        url: https://cgit.duckdns.org/git/wigust/awesome
+      - git:
+          url: https://cgit.duckdns.org/git/wigust/awesome
 - job:
     name: wigust/backup-restic
     project-type: multibranch
@@ -126,8 +123,8 @@
     days-to-keep: '10'
     script-path: Jenkinsfile
     scm:
-      git:
-        url: https://cgit.duckdns.org/git/wigust/backup-restic
+      - git:
+          url: https://cgit.duckdns.org/git/wigust/backup-restic
 - job:
     name: wigust/dotfiles
     project-type: multibranch
@@ -137,8 +134,8 @@
     days-to-keep: '10'
     script-path: Jenkinsfile
     scm:
-      git:
-        url: file:///home/oleg/src/dotfiles/.git
+      - git:
+          url: file:///home/oleg/src/dotfiles/.git
 - job:
     name: wigust/dotfiles-ansible
     project-type: multibranch
@@ -148,8 +145,8 @@
     days-to-keep: '10'
     script-path: Jenkinsfile
     scm:
-      git:
-        url: https://cgit.duckdns.org/git/wigust/dotfiles-ansible
+      - git:
+          url: https://cgit.duckdns.org/git/wigust/dotfiles-ansible
 - job:
     name: wigust/ssh
     project-type: multibranch
@@ -159,8 +156,8 @@
     days-to-keep: '10'
     script-path: Jenkinsfile
     scm:
-      git:
-        url: https://cgit.duckdns.org/git/wigust/ssh
+      - git:
+          url: https://cgit.duckdns.org/git/wigust/ssh
 - job:
     name: guile
     project-type: folder
