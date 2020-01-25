@@ -128,6 +128,8 @@ xfce web wget wm xdisorg xml xorg)
 
                mongodb
 
+               httpie
+
                ;; Utilities
                strace tcpdump multitail wireshark
 
