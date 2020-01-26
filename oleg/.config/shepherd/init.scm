@@ -105,7 +105,10 @@
     #:docstring '("Alerta")
     #:provides '(alerta)
     #:start (make-forkexec-constructor
-             (list "/home/oleg/.guix-profile/bin/xterm" "-title" "alerta" "-fa" "Monospace" "-fs" "6" "+sb"
+             (list "/home/oleg/.guix-profile/bin/xterm"
+                   "-title" "alerta"
+                   "-fa" "Monospace" "-fs" "6" "+sb"
+                   "-bg" "black" "-fg" "white"
                    "-e" "/home/oleg/.local/bin/alerta top"))
     #:stop
     (make-kill-destructor)
