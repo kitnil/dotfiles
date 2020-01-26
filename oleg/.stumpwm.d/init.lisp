@@ -806,7 +806,7 @@
 (defcommand run-xterm () ()
   "Start or focus XTerm."
   (run-prog *shell-program*
-            :args (list "-c" (xterm-command))
+            :args (list "-c" (xterm-command :scrollbar t))
             :wait nil))
 
 (defcommand xterm-dark-no-scrollbar () ()
