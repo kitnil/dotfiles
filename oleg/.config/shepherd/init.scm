@@ -18,7 +18,8 @@
     #:provides '(transmission)
     #:start (make-forkexec-constructor
              (list (string-append %bin-directory "transmission-daemon")
-                   "-e" "/home/oleg/.config/shepherd/transmission.log")
+                   "--logfile" "/home/oleg/.config/shepherd/transmission.log"
+                   "--foreground")
              #:log-file "/home/oleg/.config/shepherd/transmission.log")
     #:stop (make-kill-destructor)
     #:respawn? #t))
