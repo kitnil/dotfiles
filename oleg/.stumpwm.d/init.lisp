@@ -1158,6 +1158,9 @@
   (defcommand gitlab () ()
     (firefox "https://gitlab.intr/" "GitLab"))
 
+  (defcommand jenkins () ()
+    (firefox *jenkins-url* "Jenkins"))
+
   (defcommand jenkins-mj () ()
     (firefox "https://jenkins.intr/" "Jenkins"))
 
