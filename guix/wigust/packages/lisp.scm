@@ -93,3 +93,19 @@
                    (install-file "stumpwm.info"
                                  (string-append (assoc-ref outputs "doc")
                                                 "/share/info")))))))))))
+
+(define-public stumpwm-next
+  (let ((commit "603abb210d7130543e42b48a812e57fe343ad935"))
+    (package
+      (inherit stumpwm-checkout)
+      (name "stumpwm-next")
+      (version (git-version (package-version stumpwm) "1" commit))
+      (source (origin
+                (method git-fetch)
+                (uri (git-reference
+                      (url "https://github.com/stumpwm/stumpwm.git")
+                      (commit commit)))
+                (file-name (git-file-name name version))
+                (sha256
+                 (base32
+                  "0dh6652i2gsixff25ac78sila5hn35b0914sqpya5q4ir1lcr1mj")))))))
