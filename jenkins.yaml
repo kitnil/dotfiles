@@ -94,7 +94,7 @@ jenkins:
         demand:
           idleDelay: 30
           inDemandDelay: 0
-  numExecutors: 2
+  numExecutors: 4
   primaryView:
     all:
       name: "all"
@@ -115,6 +115,25 @@ jenkins:
     - id: "default"
       url: "https://updates.jenkins.io/update-center.json"
   views:
+  - list:
+      columns:
+      - "status"
+      - "weather"
+      - "jobName"
+      - "lastSuccess"
+      - "lastFailure"
+      - "lastDuration"
+      - "buildButton"
+      - "favoriteColumn"
+      - "lastBuildConsoleColumn"
+      jobFilters:
+      - buildStatusFilter:
+          building: true
+          inBuildQueue: true
+          includeExcludeTypeString: "includeMatched"
+          neverBuilt: false
+      name: "Running"
+      recurse: true
   - all:
       name: "all"
   viewsTabBar: "standard"
@@ -220,7 +239,7 @@ unclassified:
   casCGlobalConfig:
     configurationPath: "/home/oleg/src/wugi/maintenance/jenkins.yaml"
   gitHubPluginConfig:
-    hookUrl: "http://localhost:8090/github-webhook/"
+    hookUrl: "https://jenkins.wugi.info/github-webhook/"
   gitSCM:
     createAccountBasedOnEmail: false
     showEntireCommitSummaryInChanges: false
@@ -240,7 +259,7 @@ unclassified:
               - "gitBranchDiscovery"
   location:
     adminAddress: "Oleg Pykhalov <go.wigust@gmail.com>"
-    url: "http://localhost:8090/"
+    url: "https://jenkins.wugi.info/"
   mailer:
     charset: "UTF-8"
     useSsl: false
