@@ -22,6 +22,40 @@
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix build-system trivial))
 
+(define-public slides-devops-world-jenkins-casc
+  (package
+    (name "slides-devops-world-jenkins-casc")
+    (version "2018")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (and=> (getenv "HOME")
+                   (lambda (home)
+                     (string-append
+                      "file://" home
+                      "/Downloads"
+                      "/Jenkins-CasC-JW18.pdf"))))
+       (file-name (string-append name "-" version))
+       (sha256
+        (base32
+         "02p4c61f3y00v8plrqmp0926g9ambckbf4gm1fxwhryzgb02fqxy"))))
+    (build-system trivial-build-system)
+    (arguments
+     `(#:modules ((guix build utils))
+       #:builder
+       (begin (use-modules (guix build utils))
+              (let ((install-dir (string-append %output
+                                                "/share/doc/slides-devops-world-2018-jenkins-casc")))
+                (mkdir-p install-dir)
+                (copy-file (assoc-ref %build-inputs "source")
+                           (string-append install-dir "/slides-devops-world-2018-jenkins-casc.pdf")))
+              #t)))
+    (home-page "https://github.com/jenkinsci/configuration-as-code-plugin")
+    (synopsis "Introduction Jenkins Configuration as Code Plugin")
+    (description "This package provides slides for a presention DevOPS World
+2018 Jenkins CasC.")
+    (license #f)))
+
 (define-public slides-concise-gnu-bash
   (package
     (name "slides-concise-gnu-bash")
