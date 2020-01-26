@@ -569,6 +569,9 @@
 (defcommand arcconf () ()
   (zathura (concat (getenv "HOME") "/.guix-profile/share/doc/arcconf/arcconf.pdf")))
 
+(defcommand doc-bash () ()
+  (zathura (concat (getenv "HOME") "/.guix-profile/share/doc/slides-concise-gnu-bash/slides-concise-gnu-bash.pdf")))
+
 
 ;;;
 ;;; REPL
