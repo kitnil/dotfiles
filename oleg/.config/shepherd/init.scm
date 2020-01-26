@@ -99,6 +99,18 @@
     (make-kill-destructor)
     #:respawn? #f))
 
+(define pulsemixer-service
+  (make <service>
+    #:docstring '("Pulsemixer")
+    #:provides '(pulsemixer)
+    #:start (make-forkexec-constructor
+             (list "/home/oleg/.guix-profile/bin/st"
+                   "-f" "Monospace:size=8"
+                   "-e" "/home/oleg/.guix-profile/bin/pulsemixer"))
+    #:stop
+    (make-kill-destructor)
+    #:respawn? #f))
+
 (define znc-service
   (make <service>
     #:docstring '("Znc")
@@ -142,6 +154,7 @@
                    transmission-service
                    ;; znc-service
                    kdeconnect-service
+                   pulsemixer-service
                    quassel-service)
 
 (for-each start '(clipmenud
@@ -153,6 +166,7 @@
                   ;; redshift
                   transmission
                   alerta
+                  pulsemixer
                   ;; znc
                   kdeconnect
                   quassel))
