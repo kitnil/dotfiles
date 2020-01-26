@@ -44,7 +44,7 @@
              #:log-file "/home/oleg/.config/shepherd/emacs.log")
     #:stop
     (make-system-destructor (string-join (list (string-append %bin-directory "emacsclient")
-                                               "--eval" "'(let (kill-emacs-hook) (kill-emacs))'")))
+                                               "--eval" "'(kill-emacs)'")))
     #:respawn? #f))
 
 (define clipmenud-service
