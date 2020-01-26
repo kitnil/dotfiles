@@ -1,0 +1,5 @@
+#!/bin/sh
+
+sleep 5
+
+echo '(place-existing-windows)' | /home/oleg/bin/stumpish -e eval

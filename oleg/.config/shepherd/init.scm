@@ -35,6 +35,16 @@
     (make-kill-destructor)
     #:respawn? #f))
 
+(define place-existing-windows-service
+  (make <service>
+    #:docstring '("Invoke place-existing-windows in StumpWM")
+    #:provides '(place-existing-windows)
+    #:requires '(firefox quassel)
+    #:one-shot? #t
+    #:start (make-forkexec-constructor
+             (list "/home/oleg/bin/run-place-existing-windows"))
+    #:respawn? #f))
+
 (define emacs-service
   (make <service>
     #:docstring '("Emacs daemon")
@@ -157,7 +167,8 @@
                    ;; znc-service
                    kdeconnect-service
                    pulsemixer-service
-                   quassel-service)
+                   quassel-service
+                   place-existing-windows-service)
 
 (for-each start '(clipmenud
                   dunst
@@ -171,6 +182,7 @@
                   pulsemixer
                   ;; znc
                   kdeconnect
-                  quassel))
+                  quassel
+                  place-existing-windows))
 
 (action 'shepherd 'daemonize)
