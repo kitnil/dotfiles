@@ -1615,7 +1615,7 @@
     (run-shell-command (firefox-command))))
 
 (defun frame-parameters-display-0 ()
-  ;; (define-frame-preference "Default" (0 NIL T :CLASS "quassel" :TITLE "Chat Monitor"))
+  (define-frame-preference "Default" (1 NIL T :CLASS "quassel" :TITLE "Chat Monitor"))
   (define-frame-preference "Default" (3 NIL T :CLASS "XTerm" :TITLE "alerta"))
   (define-frame-preference "Default" (0 NIL T :TITLE "pulsemixer"))
   (define-frame-preference "Default" (0 NIL T :CLASS "XTerm" :TITLE "notmuch"))
