@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2018, 2019 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2018, 2019, 2020 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -61,7 +61,7 @@
   #:use-module (srfi srfi-1))
 
 (define-public stumpwm-checkout
-  (let ((commit "f245674bc7bbf83b8f4ad3783c46e1ed42a5a5a0"))
+  (let ((commit "36297060ff07a2042d3e9fcd1fd22bd8fabe3863"))
     (package
       (inherit stumpwm)
       (name (string-append (package-name stumpwm) "-checkout"))
@@ -75,7 +75,7 @@
          (file-name (git-file-name (package-name sbcl-stumpwm) version))
          (sha256
           (base32
-           "1wwg24aqx69p8frl45nj9fg6g0msngi6arfbxfvnc8cvnaixyjyc"))))
+           "1ig5jjpqyfmay5iixnp58z6nyd96mdgq3zpv29knrjfd9iqpcdna"))))
       (inputs
        `(("sbcl-alexandria" ,sbcl-alexandria)
          ("sbcl-fiasco", sbcl-fiasco)
