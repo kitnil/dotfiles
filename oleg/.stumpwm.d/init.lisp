@@ -1643,7 +1643,8 @@
   (define-frame-preference "2" (1 NIL NIL :CLASS "Firefox"))
   (define-frame-preference "5" (0 NIL NIL :CLASS "Emacs"))
   (define-frame-preference "5" (1 NIL NIL :CLASS "Firefox"))
-  (define-frame-preference "3" (1 NIL T :CLASS "Firefox" :TITLE "Slack")))
+  (define-frame-preference "3" (1 NIL T :CLASS "Firefox" :TITLE "Slack"))
+  (define-frame-preference "2" (0 NIL T :CLASS "Firefox" :TITLE "jenkins")))
 
 (cond ((string= (getenv "DISPLAY") ":0")
        (setf *maxsize-border-width* 0)
