@@ -1539,7 +1539,7 @@
   (define-key *top-map* (kbd "s-R") "guix-repl")
   (define-key *top-map* (kbd "C-s-r") "repl-python")
   (define-key *top-map* (kbd "C-M-s-RET") "repl-r")
-  (define-key *top-map* (kbd "C-s-R") "repl-racket")
+  (define-key *top-map* (kbd "C-s-R") "repl-nix")
   (define-key *top-map* (kbd "C-M-s-R") "repl-node")
   (define-key *top-map* (kbd "s-f") "fullscreen")
   (define-key *top-map* (kbd "s-H") "glances")
