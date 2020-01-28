@@ -1601,6 +1601,7 @@
   (define-key *top-map* (kbd "s-s") "slack")
   (define-key *top-map* (kbd "s-y") "mj-installed-servers")
   (define-key *top-map* (kbd "s-;") "colon")
+  (define-key *top-map* (kbd "s-[") "place-existing-windows")
 
   ;; Rebind groups to PREFIX-NUMBER.
   (mapcar #'(lambda (x)
