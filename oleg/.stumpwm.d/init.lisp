@@ -50,6 +50,9 @@
 
 (pointer-keys)
 
+(define-key *root-map* (kbd "C-i") "set-prefix-key C-i")
+(define-key *root-map* (kbd "C-t") "set-prefix-key C-t")
+
 ;; Keyboard layout
 (defcommand keyboard-layout () ()
   (run-shell-command "setxkbmap -layout us,ru -option grp:win_space_toggle"))
