@@ -1138,6 +1138,12 @@
   (defcommand alerta () ()
     (firefox "https://alerta.intr" "Alerta"))
 
+  (defcommand grafana-netflow () ()
+    (firefox "https://grafana.intr/d/000000042/netflow?orgId=1&refresh=1m" "Netflow"))
+
+  (defcommand grafana-upstream-interfaces () ()
+    (firefox "https://grafana.intr/d/6QgXJjmik/upstream-interfaces-traffic?orgId=1" "Upstream interfaces"))
+
   (defcommand slack () ()
     (firefox "https://mjru.slack.com/" "Slack"))
 
@@ -1598,6 +1604,8 @@
   (define-key *top-map* (kbd "s-S") "passmenu")
   (define-key *top-map* (kbd "s-j") "music-youtube")
   (define-key *top-map* (kbd "s-u") "alerta")
+  (define-key *top-map* (kbd "s-U") "grafana-upstream-interfaces")
+  (define-key *top-map* (kbd "C-s-u") "grafana-netflow")
   (define-key *top-map* (kbd "s-s") "slack")
   (define-key *top-map* (kbd "s-y") "mj-installed-servers")
   (define-key *top-map* (kbd "s-;") "colon")
