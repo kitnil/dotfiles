@@ -461,6 +461,9 @@
                     *st-font-flag* (if font font *st-font*)
                     *st-exec-flag* command)))))))
 
+(defcommand zoom () ()
+  (run-shell-command "nixGLIntel boomer"))
+
 (defcommand epson () ()
   (term-shell-command "sudo qemu-epson.sh"))
 
@@ -1613,6 +1616,8 @@
   (define-key *top-map* (kbd "s-y") "mj-installed-servers")
   (define-key *top-map* (kbd "s-;") "colon")
   (define-key *top-map* (kbd "s-[") "place-existing-windows")
+  (define-key *top-map* (kbd "s-SunPrint_Screen") "zoom")
+  (define-key *top-map* (kbd "s-b") "zoom")
 
   ;; Rebind groups to PREFIX-NUMBER.
   (mapcar #'(lambda (x)
