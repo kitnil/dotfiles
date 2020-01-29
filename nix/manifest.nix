@@ -10,6 +10,10 @@ with import <nixpkgs> {
         ref = "master";
       }) { });
     })
+    (import ((builtins.fetchGit {
+      url = "https://github.com/tsoding/boomer";
+      ref = "master";
+    }).outPath + "/overlay"))
   ];
 };
 
@@ -21,6 +25,7 @@ with pkgs;
   # assh
   bat
   # browserpass
+  boomer
   buku
   # cabal-install
   catimg
