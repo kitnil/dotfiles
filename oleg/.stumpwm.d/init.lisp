@@ -1135,6 +1135,9 @@
                                url)
                        `(:title ,title))))
 
+  (defcommand nexus () ()
+    (firefox "http://nexus.intr" "Nexus"))
+
   (defcommand alerta () ()
     (firefox "https://alerta.intr" "Alerta"))
 
