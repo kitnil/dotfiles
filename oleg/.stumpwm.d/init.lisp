@@ -1516,6 +1516,7 @@
 
 (define-mj-cisco sw1-mr11.intr)
 (define-mj-cisco sw1-mr12.intr)
+(define-mj-cisco sw2-mr12.intr)
 (define-mj-cisco sw1-mr14.intr)
 (define-mj-cisco sw1-mr116.intr)
 (define-mj-cisco sw1-mr143.intr)
