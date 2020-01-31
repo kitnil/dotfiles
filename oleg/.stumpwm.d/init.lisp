@@ -1386,13 +1386,9 @@
   ""
   (resize (- (round (/ (parse-integer (format-expand *window-formatters* "%w" (current-window))) 2.0))) 0))
 
-(define-key *top-map* (kbd "C-s-Right") "window-resize-by-half-horizontal")
-
 (defcommand window-resize-by-half-vertical () ()
   ""
   (resize 0 (- (round (/ (parse-integer (format-expand *window-formatters* "%h" (current-window))) 2)))))
-
-(define-key *top-map* (kbd "C-s-Left") "window-resize-by-half-vertical")
 
 (defcommand emms () ()
   (switch-to-emacs)
@@ -1618,6 +1614,8 @@
   (define-key *top-map* (kbd "s-[") "place-existing-windows")
   (define-key *top-map* (kbd "s-SunPrint_Screen") "zoom")
   (define-key *top-map* (kbd "s-b") "zoom")
+  (define-key *top-map* (kbd "C-s-Right") "window-resize-by-half-horizontal")
+  (define-key *top-map* (kbd "C-s-Left") "window-resize-by-half-vertical")
 
   ;; Rebind groups to PREFIX-NUMBER.
   (mapcar #'(lambda (x)
