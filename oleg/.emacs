@@ -3434,15 +3434,6 @@ If given a prefix, patch in the branch directory instead."
 (ivy-rich-mode 1)
 (setq ivy-format-function #'ivy-format-function-line)
 
-(defun nix-rgrep (regexp)
-  (interactive "sregexp:")
-  (rgrep regexp "*.nix" (expand-file-name "~/src/majordomo/70/")))
-
-(defun nix-intr-find-file ()
-  (interactive)
-  (find-file (concat "/ssh:dh4-mr.intr|docker:4649529fa34d:"
-                     (thing-at-point 'filename))))
-
 (defvar ange-ftp-hosts-no-pasv '("localhost")
   "*List of hosts that do not need PASV (e.g. hosts within your firewall).
   Used by `ange-ftp-set-passive'.")	; rephrased, added "*" // era
@@ -3455,13 +3446,6 @@ If given a prefix, patch in the branch directory instead."
       (ange-ftp-raw-send-cmd proc "passive")))
 
 (add-hook 'ange-ftp-process-startup-hook 'ange-ftp-set-passive)
-
-(setq browse-at-remote-remote-type-domains
-      '(("gitlab.intr" . "gitlab")
-        ("bitbucket.org" . "bitbucket")
-        ("github.com" . "github")
-        ("gitlab.com" . "gitlab")
-        ("git.savannah.gnu.org" . "gnu")))
 
 (require 'org-redmine)
 (setq org-redmine-config-default-limit 100)
@@ -3479,85 +3463,6 @@ If given a prefix, patch in the branch directory instead."
         (delete-file filename)
         (kill-buffer buffer)
         (message "File '%s' successfully removed" filename)))))
-
-
-(defun nix-rgrep (regexp)
-  (interactive "sregexp:")
-  (rgrep regexp "*.nix" (expand-file-name "~/src/majordomo/70/")))
-
-(defun nix-php70 ()
-  (interactive)
-  (shell-command "curl -s -k https://jenkins.intr/job/webservices/job/apache2-php70/job/wip/lastBuild/consoleText"))
-
-(defun work-jenkins-job-log (project branch build)
-  (interactive
-   (list (read-string "Project: " nil nil "nixoverlay")
-         (completing-read "Branch: " '(master wip-tests))
-         (completing-read "sBuild number: " '(lastBuild))))
-  (let ((buffer (generate-new-buffer (format "*jenkins-%s-%s-%s*" project branch build))))
-    (with-current-buffer buffer
-      (shell-command
-       (mapconcat 'identity
-                  `("curl" "-u" "admin:$(pass show jenkins.intr/admin)" "-s"
-                    "-k" ,(format "https://jenkins.intr/job/webservices/job/%s/job/%s/%s/consoleText"
-                                  project branch build))
-                  " ")
-       buffer))))
-
-(defun work-jenkins-job-php56 ()
-  (interactive)
-  (work-jenkins-job-log "apache2-php56" "wip-tests" "lastBuild"))
-
-(defun work-jenkins-job-nixoverlay-wip ()
-  (interactive)
-  (work-jenkins-job-log "nixoverlay" "wip-nixos-tests" "lastBuild"))
-
-(defun work-jenkins-job-nixoverlay-log (build branch)
-  (interactive
-   (list (completing-read "Branch: " '(master wip-tests))
-         (completing-read "sBuild number (empty is lastBuild): " '(lastBuild))))
-  (work-jenkins-job-log "nixoverlay" branch build))
-
-(defun work-jenkins-job-nixoverlay-nixos-log (build)
-  (interactive
-   (list (completing-read "sBuild number (empty is lastBuild): " '(lastBuild))))
-  (work-jenkins-job-log "nixoverlay" "wip-nixos-tests" build))
-
-
-(defun work-jenkins-job-nixoverlay-nixos-log (build)
-  (interactive
-   (list (completing-read "sBuild number (empty is lastBuild): " '(lastBuild))))
-  (work-jenkins-job-log "nixoverlay" "wip-specific-phpd-version" build))
-
-(defun work-jenkins-job-nixoverlay-log-drv (drv)
-  (interactive "sDerivation: ")
-  (let ((buffer (generate-new-buffer (format "*%s.log*" drv))))
-    (with-current-buffer buffer
-      (let ((default-directory "/ssh:kvm15.intr:"))
-        (shell-command (concat ". /etc/profile.d/nix.sh; nix-store --read-log " drv)
-                       buffer)
-        (compilation-mode)))))
-
-(defun work-nixoverlay-src (package)
-  "Invoke `nix-build' in the nixoverlay's root directory."
-  (interactive "sPackage: ")
-  (projectile-with-default-dir (expand-file-name "~/src/majordomo/_ci/nixpkgs")
-    (find-file
-     (string-trim-right
-      (shell-command-to-string
-       (mapconcat 'identity
-                  `("nix-build" "build.nix"
-                    "--option" "substituters" "'http://kvm15.intr:5556/'"
-                    "--cores" "4"
-                    "-A" ,(concat "nixpkgsUnstable." package ".src")
-                    "--show-trace"
-                    "-K")
-                  " "))))))
-
-(defun nix-intr-find-file ()
-  (interactive)
-  (find-file (concat "/ssh:dh4-mr.intr|docker:4649529fa34d:"
-                     (thing-at-point 'filename))))
 
 (setq browse-at-remote-remote-type-domains
       '(("gitlab.intr" . "gitlab")
@@ -3580,17 +3485,6 @@ If given a prefix, patch in the branch directory instead."
 ;;                                (interactive)
 ;;                                (unless (get-buffer "*Summary INBOX*")
 ;;                                  (notmuch-poll))))
-
-(defun work-host (host)
-  "Insert host from work at current point."
-  (interactive "sHost: ")
-  (insert
-   (format
-    "%s %s"
-    (string-trim-right
-     (shell-command-to-string
-      (format "ssh work -- dig +short a %S 2>/dev/null" host)))
-    host)))
 
 (defun projectile-run-shell-guix ()
   (interactive)
