@@ -1422,7 +1422,7 @@
 (define-key *top-map* (kbd "C-s-Down") "prev-in-frame")
 
 (defcommand vnc (display) ((:string "display: "))
-  (run-shell-command (concat "vncviewer 127.0.0.1:" display)))
+  (run-shell-command (concat "vncviewer -passwd .vnc/passwd 127.0.0.1:" display)))
 
 (defcommand clipmenu () ()
   (run-shell-command "CM_HISTLENGTH=25 CM_LAUNCHER=rofi clipmenu"))
