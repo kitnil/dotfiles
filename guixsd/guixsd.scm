@@ -16,6 +16,7 @@
              (wigust services autossh)
              (wigust services kresd)
              (wigust services openvpn)
+             (wigust services tftp)
              (wigust packages lisp)
              (wigust packages php)
              (majordomo packages majordomo))
@@ -454,6 +455,7 @@ EndSection")
 
                        nix-service
                        (kresd-service (local-file "kresd.conf"))
+                       tftp-service
                        openvpn-service
 
                        (service openssh-service-type
