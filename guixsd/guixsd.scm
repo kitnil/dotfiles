@@ -103,7 +103,7 @@ EndSection")
                              (uri "/")
                              (body (list "resolver 80.80.80.80;"
                                          (string-append "set $target "
-                                                        (or target "localhost")
+                                                        (or target "127.0.0.1")
                                                         ":" (number->string port) ";")
                                          (format #f "proxy_pass ~a://$target;" (if ssl-target? "https" "http"))
                                          (if sub-domains?
