@@ -40,6 +40,6 @@
 					     #:netmask "255.255.255.0"
 					     #:gateway "192.168.105.1"
 					     #:name-servers '("127.0.0.1\nsearch intr majordomo.ru"
-                                                              "80.80.80.80"
-                                                              "80.80.81.81"))
+                                                              "8.8.8.8"
+                                                              "8.8.4.4"))
 		  %base-services)))
