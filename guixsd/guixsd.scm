@@ -412,7 +412,8 @@ EndSection")
                            "grafana.wugi.info"
                            "zabbix.wugi.info"
                            "techinfo.intr"
-                           "texinfo.tld"))
+                           "texinfo.tld"
+                           "jenkins.wugi.info"))
            "::1 guixsd localhost"
 
            "192.168.100.1 r1.tld"
