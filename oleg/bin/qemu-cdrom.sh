@@ -39,5 +39,4 @@ qemu-system-x86_64 \
     -daemonize \
     -net nic,model=virtio,macaddr="$macaddr" -net bridge,br=br0 \
     -vga virtio \
-    -full-screen \
     "$@"
