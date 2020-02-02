@@ -1,4 +1,6 @@
 (use-modules (gnu)
+             (gnu services shepherd)
+             (gnu services)
              (srfi srfi-1)
              (srfi srfi-26))
 
@@ -604,6 +606,26 @@ ExitOnForwardFailure yes
 ServerAliveInterval 30
 ServerAliveCountMax 3"))))))
                                  (host "znc.wugi.info")))
+
+                       (simple-service 'alerta-top shepherd-root-service-type
+                                       (list
+                                        (shepherd-service
+                                         (provision '(alerta-top))
+                                         (auto-start? #f)
+                                         (documentation "Run alerta top.")
+                                         (start #~(make-forkexec-constructor
+                                                   (list "/home/oleg/.guix-profile/bin/xterm"
+                                                         "-title" "alerta"
+                                                         "-fa" "Monospace" "-fs" "6" "+sb"
+                                                         "-bg" "black" "-fg" "white"
+                                                         "-e" "/home/oleg/.local/bin/alerta top")
+                                                   #:user "oleg"
+                                                   #:group "users"
+                                                   #:environment-variables '("DISPLAY=:0.0"
+                                                                             "TERM=linux"
+                                                                             "PYTHONPATH=/home/oleg/.guix-profile/lib/python3.7/site-packages")))
+                                         (respawn? #t)
+                                         (stop #~(make-kill-destructor)))))
 
                        (service docker-service-type)
 
