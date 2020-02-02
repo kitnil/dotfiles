@@ -920,6 +920,13 @@
 (setf *screen-mode-line-format*
       (list "[%n]:" '(:eval (write-to-string (group-number (current-group))))
             (make-string 4 :initial-element #\space)
+            (join (mapcar (lambda (window)
+                            (let ((wn (window-name window)))
+                              (format nil "~s:[~s]" (window-number window) (if (> (length wn) 5)
+                                                                               (concat (subseq wn 0 5) "...")
+                                                                               wn))))
+                          (take 5 (sort-windows-by-number (group-windows (current-group))))))
+            (make-string 4 :initial-element #\space)
             '(:eval (write-to-string (window-number (current-window))))
             ":"
             "["
@@ -927,9 +934,12 @@
             " "
             '(:eval (window-name (current-window)))
             "]"
-            "^>    "
+            "^>"
+            (make-string 4 :initial-element #\space)
             "%N"
-            "    %d"))
+            (make-string 4 :initial-element #\space)
+            "%d"))
+
 (setf *mode-line-pad-x* 10)
 (setf *mode-line-pad-y* 5)
 (setf *mode-line-border-width* 0)
