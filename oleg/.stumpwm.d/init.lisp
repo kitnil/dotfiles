@@ -920,20 +920,19 @@
 (setf *screen-mode-line-format*
       (list "[%n]:" '(:eval (write-to-string (group-number (current-group))))
             (make-string 4 :initial-element #\space)
-            (join (mapcar (lambda (window)
-                            (let ((wn (window-name window)))
-                              (format nil "~s:[~s]" (window-number window) (if (> (length wn) 5)
-                                                                               (concat (subseq wn 0 5) "...")
-                                                                               wn))))
-                          (take 5 (sort-windows-by-number (group-windows (current-group))))))
+            '(:eval (let* ((window (current-window))
+                           (wn (window-name window)))
+                      (format nil "~a:[~a]" (window-number window) (if (> (length wn) 5)
+                                                                       (concat (subseq wn 0 5) "...")
+                                                                       wn))))
             (make-string 4 :initial-element #\space)
-            '(:eval (write-to-string (window-number (current-window))))
-            ":"
-            "["
-            '(:eval (window-class (current-window)))
-            " "
-            '(:eval (window-name (current-window)))
-            "]"
+            '(:eval (join (mapcar (lambda (window)
+                                    (let ((wn (window-name window)))
+                                      (format nil "~a:[~a]" (window-number window) (if (> (length wn) 5)
+                                                                                       (concat (subseq wn 0 5) "...")
+                                                                                       wn))))
+                           (take 5 (sort-windows-by-number (group-windows (current-group)))))))
+            (make-string 4 :initial-element #\space)
             "^>"
             (make-string 4 :initial-element #\space)
             "%N"
