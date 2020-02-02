@@ -3,6 +3,9 @@
 (define %bin-directory "/home/oleg/.guix-profile/bin/")
 (define %redshift (string-append %bin-directory "redshift"))
 
+(define (without-display environ)
+  (delete (string-append "DISPLAY=" (getenv "DISPLAY")) environ))
+
 (define redshift-service
   (make <service>
     #:docstring '("Adjust the color temperature of your screen.")
@@ -20,6 +23,7 @@
              (list (string-append %bin-directory "transmission-daemon")
                    "--logfile" "/home/oleg/.config/shepherd/transmission.log"
                    "--foreground")
+             #:environment-variables (without-display (environ))
              #:log-file "/home/oleg/.config/shepherd/transmission.log")
     #:stop (make-kill-destructor)
     #:respawn? #t))
@@ -52,6 +56,7 @@
     #:start (make-forkexec-constructor
              (list (string-append %bin-directory "emacs")
                    "--fg-daemon")
+             #:environment-variables (without-display (environ))
              #:log-file "/home/oleg/.config/shepherd/emacs.log")
     #:stop
     (make-system-destructor (string-join (list (string-append %bin-directory "emacsclient")
@@ -166,6 +171,7 @@
              (list "/home/oleg/.nix-profile/bin/java"
                    "-Xmx512m" "-jar" "/home/oleg/.nix-profile/webapps/jenkins.war"
                    "--httpPort=8090" "--ajp13Port=-1")
+             #:environment-variables (without-display (environ))
              #:log-file "/home/oleg/.config/shepherd/jenkins.log")
     #:stop
     (make-kill-destructor)
