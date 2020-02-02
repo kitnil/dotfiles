@@ -1518,3 +1518,18 @@ nix-env-upgrade()
 {
     NIX_PATH=nixpkgs=$HOME/.nix-defexpr/channels/nixos-unstable nix-env --install '.*' -f "$HOME/manifest.nix"
 }
+
+docker-ls-mj-repositories()
+{
+    docker-ls repositories --registry https://docker-registry.intr/ --allow-insecure $@
+}
+
+docker-ls-mj-tags()
+{
+    docker-ls tags --registry https://docker-registry.intr/ --allow-insecure $@
+}
+
+docker-ls-mj-tag()
+{
+    docker-ls tag --registry https://docker-registry.intr/ --allow-insecure $@
+}

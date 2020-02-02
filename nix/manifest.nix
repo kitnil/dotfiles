@@ -36,6 +36,7 @@ with pkgs;
   # dmg2img
   dnsperf
   # docker-compose
+  docker-ls
   # elktail-bin
   fd
   # ferm
