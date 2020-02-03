@@ -1504,6 +1504,11 @@ influx-show-series()
     curl -G "http://influx.intr:8086/query?db=telegraf&pretty=true" --data-urlencode "q=SHOW SERIES"
 }
 
+nix-python-with-pkgs()
+{
+    nix-shell -p python "python.withPackages (python-packages: with python-packages; [ $@ ])"
+}
+
 nix-python2-with-pkgs()
 {
     nix-shell -p python2  'python2.withPackages (python-packages: with python-packages; [ requests ])'
