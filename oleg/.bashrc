@@ -1511,7 +1511,7 @@ nix-python-with-pkgs()
 
 nix-python2-with-pkgs()
 {
-    nix-shell -p python2  'python2.withPackages (python-packages: with python-packages; [ requests ])'
+    nix-shell -p python2 "python2.withPackages (python-packages: with python-packages; [ $@ ])"
 }
 
 nix-env-clean()
