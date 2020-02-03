@@ -1533,3 +1533,22 @@ docker-ls-mj-tag()
 {
     docker-ls tag --registry https://docker-registry.intr/ --allow-insecure $@
 }
+
+firefox-esr-debian()
+{
+    xhost +local:
+
+    docker run                                  \
+      --tty                                     \
+      --interactive                             \
+      --rm                                      \
+      --name                                    \
+      firefox-java                              \
+      --env                                     \
+      DISPLAY=$DISPLAY                          \
+      --volume                                  \
+      /tmp/.X11-unix:/tmp/.X11-unix             \
+      cmaohuang/firefox-java                    \
+      /usr/bin/firefox                          \
+      --new-instance
+}
