@@ -144,7 +144,7 @@ ansible-host()
     ansible --inventory $1, $1 --become --ask-become-pass ${@:2}
 }
 
-ssh-sudo()
+ssh-sudo-interactive()
 {
     ssh -t $2 -- "sudo --stdin --validate --prompt='' <<< $JORD_PASS \
 && sudo --user=$1 --login";
@@ -1552,3 +1552,5 @@ firefox-esr-debian()
       /usr/bin/firefox                          \
       --new-instance
 }
+
+alias ss="PYTHONPATH='' BECOME_PASSWORD=$(pass show majordomo/ssh/eng) SSH_KEY='/home/oleg/.ssh/eng_key_rsa' ssh-sudo"

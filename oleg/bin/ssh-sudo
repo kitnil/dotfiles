@@ -1,0 +1,36 @@
+#! /usr/bin/env nix-shell
+#! nix-shell -i python3 -p python3 python3Packages.paramiko
+
+import os
+import sys
+import paramiko
+
+import warnings
+warnings.filterwarnings(action="ignore",module=".*paramiko.*")
+
+os.environ["TERM"] = "dumb"
+
+ssh_user = os.environ.get("SSH_USER", "eng")
+ssh_key = os.environ["SSH_KEY"]
+ssh_host = sys.argv[1]
+become_user = os.environ.get("BECOME_USER", "root")
+become_password = os.environ["BECOME_PASSWORD"]
+command = " ".join(sys.argv[2:])
+
+user_prompt = ssh_user + "@" + ssh_host.replace(".intr", "") + ":~$ "
+root_prompt = become_user + "@" + ssh_host.replace(".intr", "") + " ~ # "
+ssh_command = "ssh {}".format(ssh_host)
+
+ssh = paramiko.SSHClient()
+ssh.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+ssh.connect(ssh_host, username=ssh_user, key_filename=ssh_key)
+
+stdin, stdout, stderr = ssh.exec_command("sudo -i {}".format(command), get_pty=True)
+stdin.write("{}\n".format(become_password))
+stdin.flush()
+
+print("\n".join(stdout.read().decode("utf-8").splitlines()[1:]))
+
+stderr_output=stderr.read().decode("utf-8")
+if (len(stderr_output) > 0):
+    print("\n".join(stderr_output), file=sys.stderr)
