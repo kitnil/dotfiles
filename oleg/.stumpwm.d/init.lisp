@@ -1192,7 +1192,7 @@
     (firefox "https://jenkins.intr/" "Jenkins"))
 
   (defcommand music-youtube () ()
-    (run-or-raise "chromium --app=https://music.youtube.com/"
+    (run-or-raise "nixGLIntel chromium --app=https://music.youtube.com/"
                   '(:instance "music.youtube.com")))
 
   (defcommand youtube () ()
