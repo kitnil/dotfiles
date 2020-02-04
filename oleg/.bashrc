@@ -1559,3 +1559,7 @@ firefox-esr-debian()
 }
 
 alias ss="PYTHONPATH='' BECOME_PASSWORD=$(pass show majordomo/ssh/eng) SSH_KEY='/home/oleg/.ssh/eng_key_rsa' ssh-sudo"
+
+IFS=$'\n'
+for alias in $(SSH_COMMAND='ss' ssh-aliases); do eval $alias; done
+unset IFS

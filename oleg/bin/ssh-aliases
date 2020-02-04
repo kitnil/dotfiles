@@ -37,6 +37,10 @@
          (lambda (home)
            (string-append home "/.ssh/known_hosts"))))
 
+(define %command
+  (or (and=> (getenv "SSH_COMMAND") (lambda (command) command))
+      "ssh"))
+
 (define (main args)
   (define opts
     (args-fold (cdr (program-arguments))
@@ -47,7 +51,11 @@
                  (cons op loads))
                %default-options))
   (for-each (lambda (host)
-              (format #t "alias ~a=~s~%" host (format #f "ssh ~a" host)))
+              (format #t "alias ~a=~s~%"
+                      (if (string-suffix? ".intr" host)
+                          (string-drop-right host (string-length ".intr"))
+                          host)
+                      (format #f "~a ~a" %command host)))
             (sort (filter (cut string-suffix? ".intr" <>)
                           (map (match-lambda ((host _ ...) host))
                                (map (cut string-split <> #\space)
