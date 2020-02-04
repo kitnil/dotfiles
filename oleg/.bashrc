@@ -1526,7 +1526,7 @@ nix-env-clean()
 
 nix-env-upgrade()
 {
-    NIX_PATH=nixpkgs=$HOME/.nix-defexpr/channels/nixos-unstable nix-env --install '.*' -f "$HOME/manifest.nix"
+    NIXPKGS_CONFIG="$HOME/config.nix" NIX_PATH=nixpkgs=$HOME/.nix-defexpr/channels/nixos-unstable nix-env --install '.*' -f "$HOME/manifest.nix"
 }
 
 docker-ls-mj-repositories()
