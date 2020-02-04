@@ -53,7 +53,7 @@ with pkgs;
   # glibc-locales
   groovy
   hexyl
-  # httpie
+  httpie
   hy
   hyperfine
   jenkins
@@ -81,7 +81,7 @@ with pkgs;
   nixpkgs-lint
   ipmiview
   # nodePackages_12_x.node2nix
-  # node_catj
+  catj
   obs-studio
   oh
   openjdk
@@ -89,8 +89,8 @@ with pkgs;
   passff-host
   pgcli
   pup
-  # python2.7-jenkins-job-builder
-  # python3.7-yamllint
+  pythonPackages.jenkins-job-builder
+  python3Packages.yamllint
   robo3t
   sampler
   screenkey
