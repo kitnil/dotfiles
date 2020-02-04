@@ -30,6 +30,7 @@ with pkgs;
   bat
   # browserpass
   boomer
+  brave
   buku
   # cabal-install
   catimg
