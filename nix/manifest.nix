@@ -67,7 +67,9 @@ with pkgs;
   luarocks
   mediatomb
   mtr
-  mycli
+  (mycli.overrideAttrs (oldAttrs: {
+    propagatedBuildInputs = oldAttrs.propagatedBuildInputs ++ [ python3Packages.paramiko ];
+  }))
   mypaint
   nix
   nix-bash-completions
