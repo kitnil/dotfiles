@@ -3513,6 +3513,7 @@ If given a prefix, patch in the branch directory instead."
 (load (expand-file-name "~/archive/src/vterm-toggle/vterm-toggle.el") t)
 (load (expand-file-name "~/archive/src/tramp-auto-auth/tramp-auto-auth.el"))
 (tramp-auto-auth-mode)
+(load (expand-file-name "~/.emacs.d/tramp-auto-auth-secrets.el") t)
 (load (expand-file-name "~/src/emacs-helm-tramp/helm-tramp.el"))
 (load (expand-file-name "~/archive/src/tmp/tmp.iGP0dpFwEX/mj-servers.el") t)
 (load (expand-file-name "~/archive/src/tmp/tmp.iGP0dpFwEX/mj-project.el") t)
