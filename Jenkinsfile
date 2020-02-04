@@ -9,6 +9,9 @@ pipeline {
     agent {
         label "master"
     }
+    environment {
+        NIXPKGS_CONFIG="${WORKSPACE}/nix/config.nix"
+    }
     stages {
         stage("Cloning from local Git") {
             steps {
