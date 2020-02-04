@@ -9,6 +9,10 @@ with import <nixpkgs> {
         url = "https://cgit.duckdns.org/git/nix/catj";
         ref = "master";
       }) { });
+      ipmiview = (super.callPackage (builtins.fetchGit {
+        url = "https://cgit.duckdns.org/git/nix/ipmiview";
+        ref = "master";
+      }) { });
     })
     (import ((builtins.fetchGit {
       url = "https://github.com/tsoding/boomer";
@@ -73,6 +77,7 @@ with pkgs;
   nixfmt
   nixGl.nixGLIntel
   nixpkgs-lint
+  ipmiview
   # nodePackages_12_x.node2nix
   # node_catj
   obs-studio
