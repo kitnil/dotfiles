@@ -1112,6 +1112,9 @@
    (concat "chromium --app=https://www.twitch.tv/popout/"
            channel "/chat?popout=")))
 
+(defcommand vnc-grafana () ()
+  (run-shell-command "vncviewer 172.16.100.182:5900"))
+
 (defcommand ipmi () ()
   (run-shell-command (concat (getenv "HOME")
                              "/.nix-profile.d/ipmiview/ipmiview/bin/IPMIView")))
