@@ -1,7 +1,7 @@
 #!/bin/sh
 
 # Run qemu-system-x86_64 with KVM and bridge
-# Copyright © 2019 Oleg Pykhalov <go.wigust@gmail.com>
+# Copyright © 2019, 2020 Oleg Pykhalov <go.wigust@gmail.com>
 # Released under the GNU GPLv3 or any later version.
 
 # Make sure /etc/qemu/bridge.conf contains ‘allow br0’.
@@ -41,4 +41,5 @@ qemu-system-x86_64 \
     -vga virtio \
 -full-screen \
 -vnc :3 \
--hda /home/oleg/vm/freebsd-12.qcow2
+-hda ${hda:-/home/oleg/vm/freebsd-12.qcow2} \
+$@
