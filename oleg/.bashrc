@@ -567,7 +567,7 @@ nix-build-expression()
 nix-build-expression-with()
 {
     file="$1"
-    nix-build -E "with (import <nixpkgs> {}); with pkgs; callPackagea ./$file {}" ${@:2}
+    nix-build -E "with (import <nixpkgs> {}); with pkgs; callPackage ./$file {}" ${@:2}
 }
 nix-build-expression-unstable-with()
 {
