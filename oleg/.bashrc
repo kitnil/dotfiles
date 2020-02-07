@@ -574,6 +574,12 @@ nix-build-expression-unstable-with()
     file="$1"
     nix-build -E "with (import <nixos-unstable> {}); with pkgs; callPackage ./$file {}" ${@:2}
 }
+nix-shell-expression-with-overlay()
+{
+    overlay="$1"
+    expression="$2"
+    nix-shell --expr "(import <nixos/nixpkgs> {overlays = [(import $overlay)];}).$expression"
+}
 
 alias dockerd='sudo herd start docker'
 alias get-todos='scp work:/home/user/src/jord/doc/todo.org ~/src/todo.org '
