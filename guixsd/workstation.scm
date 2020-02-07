@@ -27,21 +27,14 @@ EndSection\n")
 
 (define 30-multihead.conf "\
 Section \"Monitor\"
-    Identifier  \"HDMI-1\"
+    Identifier  \"HDMI1\"
     Option      \"Primary\" \"true\"
 EndSection
 
 Section \"Monitor\"
-    Identifier  \"VGA-1\"
+    Identifier  \"VGA1\"
     Option      \"RightOf\" \"HDMI1\"
 EndSection")
-
-(define %slim-theme
-  (or (and=> (current-filename)
-             (lambda (file)
-               (string-append (dirname (dirname file))
-                              "/fiore/modules/slim-artwork.scm")))
-      "/home/oleg/src/dotfiles/fiore/modules/slim-artwork.scm"))
 
 (operating-system
   (host-name "workstation-guixsd")
@@ -160,7 +153,6 @@ ServerAliveCountMax 3"))))))
                    ;; Desktop services
                    (service slim-service-type
                             (slim-configuration
-                             (theme %slim-theme)
                              (xorg-configuration
                               (xorg-configuration
                                (extra-config (list 20-intel.conf
