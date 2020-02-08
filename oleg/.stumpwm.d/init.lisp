@@ -1096,8 +1096,6 @@
 (defcommand docker-pull () ()
   (window-send-string (format nil "~a~%" "docker ps --format '{{ .Image }}' | grep master | sort -u | xargs -I{} docker pull {}")))
 
-(define-key *top-map* (kbd "s-D") "docker-pull")
-
 (defcommand pass-sup () ()
   (window-send-string (format nil "~a~%" (password-store-show "majordomo/ssh/sup"))))
 
@@ -1557,6 +1555,7 @@
   (define-key *top-map* (kbd "C-s-R") "repl-nix")
   (define-key *top-map* (kbd "C-M-s-R") "repl-node")
   (define-key *top-map* (kbd "s-f") "fullscreen")
+  (define-key *top-map* (kbd "s-D") "docker-pull")
   (define-key *top-map* (kbd "s-H") "glances")
   (define-key *top-map* (kbd "s-t") "top")
   (define-key *top-map* (kbd "s-T") "tometips")
