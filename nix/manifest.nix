@@ -54,7 +54,7 @@ with pkgs;
   # glibc-locales
   groovy
   hexyl
-  httpie
+  # httpie
   hy
   hyperfine
   jenkins
