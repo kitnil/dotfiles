@@ -67,6 +67,16 @@ gpa()
 export GUIX_GITHUB_TOKEN="***REMOVED***"
 export GUIX_BUILD_OPTIONS="--no-grafts"
 
+ihs-wrapper() {
+    GUILE_INSTALL_LOCALE=0                      \
+    GUIX_BUILD_OPTIONS=                         \
+    IHS_USER=pyhalov                            \
+    IHS_PASS=$(pass show majordomo/hms/pyhalov) \
+    ihs $@
+}
+
+alias ihs=ihs-wrapper
+
 if [ -d "/run/current-system" ]
 then
     export JENKINS_URL="http://localhost:8090"
