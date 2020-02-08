@@ -1215,6 +1215,9 @@
     (run-or-raise (concat "chromium --app=" *jenkins-url*)
                   '(:instance "jenkins")))
 
+  (defcommand kibana-alerta () ()
+    (run-shell-command "chromium --app=https://kibana.intr/goto/d63fb3a2e0b36deacc8f73f53cc14b4d"))
+
   (defcommand cuirass () ()
     (firefox "https://grafana.wugi.info/d/Ob67YJYiz/fiore?refresh=30s&orgId=1&var-host=cuirass"))
 
