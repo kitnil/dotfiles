@@ -98,6 +98,10 @@
     (define-key map (kbd "C-c s") 'ispell-region)
     (define-key map (kbd "C-c e") 'wi-replace-with-brackets-ellipsis)))
 
+(with-eval-after-load 'view
+  (let ((map view-mode-map))
+    (define-key map (kbd "<f8>") 'delete-current-buffer-file)))
+
 (let ((map text-mode-map))
   (define-key map (kbd "<f7>") 'aya-create)
   (define-key map (kbd "<f8>") 'aya-expand))
