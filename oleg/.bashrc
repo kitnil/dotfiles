@@ -1569,7 +1569,10 @@ firefox-esr-debian()
       --new-instance
 }
 
-alias ss="PYTHONPATH='' BECOME_PASSWORD=$(pass show majordomo/ssh/eng) SSH_KEY='/home/oleg/.ssh/eng_key_rsa' ssh-sudo"
+ss()
+{
+    PYTHONPATH='' SSH_KEY='/home/oleg/.ssh/eng_key_rsa' BECOME_PASSWORD=$(pass show majordomo/ssh/eng) ssh-sudo $@
+}
 
 IFS=$'\n'
 for alias in $(SSH_COMMAND='ss' "$HOME/bin/ssh-aliases"); do eval $alias; done
