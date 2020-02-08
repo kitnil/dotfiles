@@ -139,6 +139,7 @@
        emacs-yasnippet          ; Snippets
        emacs-yasnippet-snippets ; Collection of snippets
        emacs-deadgrep
+       emacs-vterm
        emacs-wgrep
        emacs-znc
 

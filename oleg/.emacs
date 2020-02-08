@@ -3448,10 +3448,6 @@ If given a prefix, patch in the branch directory instead."
   (font-lock-mode)
   (guix-build-log-minor-mode))
 
-;; XXX: Package to Guix
-(add-to-list 'load-path (expand-file-name "~/archive/src/emacs-libvterm"))
-(require 'vterm)
-
 (defun sup-capture ()
   (interactive)
   (find-file (expand-file-name "~/src/work/doc/todo.org"))
