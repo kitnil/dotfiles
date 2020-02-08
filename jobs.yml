@@ -76,6 +76,14 @@
       - git:
           url: https://cgit.duckdns.org/git/guile/guile-feed
 - job:
+    name: guile/guile-ihs
+    description: null
+    project-type: multibranch
+    script-path: Jenkinsfile
+    scm:
+      - git:
+          url: https://cgit.duckdns.org/git/guile/guile-ihs
+- job:
     name: guix
     project-type: folder
 - job:
