@@ -1576,6 +1576,7 @@
   (define-key *top-map* (kbd "s-w") "firefox")
   (define-key *top-map* (kbd "s-W") "firefox-new-window")
   (define-key *top-map* (kbd "s-quoteleft") "emacs-shell")
+  (define-key *top-map* (kbd "s-o") "emacs-anywhere")
   (define-key *top-map* (kbd "s-=") "ponymix-increase")
   (define-key *top-map* (kbd "s--") "ponymix-decrease")
   (define-key *top-map* (kbd "s-a") "pass-eng")
