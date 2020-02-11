@@ -1,4 +1,5 @@
 #!/bin/sh
+# Run safely, e.g.: sudo -i sh -c '/home/oleg/bin/brctl-start; sleep 120; reboot'
 
 ip tuntap add tap0 mode tap
 
