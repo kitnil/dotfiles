@@ -3,14 +3,14 @@
              (guix profiles))
 
 (use-package-modules admin algebra aspell audio backup bittorrent
-cdrom chromium ci cmake code commencement compression cpio cran curl
-databases dictionaries diffoscope dns dunst file elf entr games gcc
-gdb gimp ghostscript golang gl glib gnome gnu-doc gnupg gnuzilla
-graphics graphviz gstreamer gtk guile guile-xyz haskell haskell-apps
-haskell-xyz image-viewers imagemagick inkscape irc kde kodi
-libreoffice license linux lisp logging lsof lxde m4 mail man maths
-messaging ncdu ncurses networking node package-management parallel
-password-utils patchutils pdf perl perl-web php pretty-print
+cdrom chromium chicken ci cmake code commencement compression cpio
+cran curl databases dictionaries diffoscope dns dunst file elf entr
+games gcc gdb gimp ghostscript golang gl glib gnome gnu-doc gnupg
+gnuzilla graphics graphviz gstreamer gtk guile guile-xyz haskell
+haskell-apps haskell-xyz image-viewers imagemagick inkscape irc kde
+kodi libreoffice license linux lisp logging lsof lxde m4 mail man
+maths messaging ncdu ncurses networking node package-management
+parallel password-utils patchutils pdf perl perl-web php pretty-print
 pulseaudio pv python python-xyz python-web qt ratpoison readline
 rdesktop rsync rust-apps samba scheme screen shellutils ssh statistics
 sqlite suckless syncthing synergy tex texinfo textutils text-editors
