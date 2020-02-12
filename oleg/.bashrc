@@ -590,6 +590,10 @@ nix-shell-expression-with-overlay()
     expression="$2"
     nix-shell --expr "(import <nixos/nixpkgs> {overlays = [(import $overlay)];}).$expression"
 }
+nix-build-mj()
+{
+    nix-build --expr "(import <nixpkgs> {overlays = [(import $HOME/majordomo/_ci/nixpkgs)];}).$1"
+}
 
 alias dockerd='sudo herd start docker'
 alias get-todos='scp work:/home/user/src/jord/doc/todo.org ~/src/todo.org '
