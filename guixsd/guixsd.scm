@@ -19,6 +19,7 @@
              (wigust services kresd)
              (wigust services openvpn)
              (wigust services tftp)
+             (wigust packages docker)
              (wigust packages lisp)
              (wigust packages php)
              (majordomo packages majordomo))
@@ -607,7 +608,10 @@ ServerAliveInterval 30
 ServerAliveCountMax 3"))))))
                                  (host "znc.wugi.info")))
 
-                       (service docker-service-type)
+                       (service docker-service-type
+                                (docker-configuration
+                                 (docker my-docker)
+                                 (containerd containerd-without-tests)))
 
                        (operating-system-user-services base-system)))
 
