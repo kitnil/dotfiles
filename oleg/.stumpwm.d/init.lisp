@@ -590,7 +590,8 @@
   (term-shell-command "guile" :scrollbar t))
 
 (defcommand guix-repl () ()
-  (term-shell-command "guix repl" :scrollbar t))
+  (term-shell-command "guix environment --pure --ad-hoc coreutils findutils guile-next guile3.0-colorized guile3.0-readline -- ~/.config/guix/current/bin/guix repl"
+                      :scrollbar t))
 
 (defcommand repl-gdb () ()
   (term-shell-command "gdb" :scrollbar t :title "repl-gdb"))
