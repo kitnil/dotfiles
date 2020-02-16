@@ -11,6 +11,7 @@
         "https://h-node.org/rss/modifications/en"
         "https://lwn.net/headlines/newrss"
         "https://fedoramagazine.org/feed/"
+        ("https://weekly.nixos.org/feeds/all.rss.xml" planet)
         ("http://www.scheme.dk/planet/atom.xml" planet)
         ("http://planet.gnu.org/atom.xml" planet)
         ("http://planet.lisp.org/rss20.xml" planet)
