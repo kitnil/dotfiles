@@ -23,18 +23,25 @@ pipeline {
     environment {
         NIXPKGS_CONFIG="${WORKSPACE}/nix/config.nix"
     }
+    parameters {
+        booleanParam name: 'INVOKE_GUIX_PULL', defaultValue: true,
+        description: 'Invoke guix pull'
+    }
     stages {
         stage("Invoking build.sh") {
+            when { expression { params.INVOKE_GUIX_PULL } }
             steps {
                 sh "${WORKSPACE}/build.sh"
             }
         }
         stage("Invoking guix pull") {
+            when { expression { params.INVOKE_GUIX_PULL } }
             steps {
                 parallelSh cmd: GUIX_PULL_COMMAND, nodeLabels: node_labels
             }
         }
         stage("Invoking guix pull as root") {
+            when { expression { params.INVOKE_GUIX_PULL } }
             steps {
                 parallelSh cmd: "sudo -i ${GUIX_PULL_COMMAND}",
                 nodeLabels: node_labels
