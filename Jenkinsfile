@@ -13,6 +13,11 @@ pipeline {
         NIXPKGS_CONFIG="${WORKSPACE}/nix/config.nix"
     }
     stages {
+        stage("Test") {
+            steps {
+                sh "./build.sh"
+            }
+        }
         stage("Cloning from local Git") {
             steps {
                 parallelGitClone url: "https://cgit.duckdns.org/git/wigust/dotfiles",
