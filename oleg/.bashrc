@@ -1588,6 +1588,36 @@ ss()
     PYTHONPATH='' SSH_KEY='/home/oleg/.ssh/eng_key_rsa' BECOME_PASSWORD=$(pass show majordomo/ssh/eng) ssh-sudo $@
 }
 
+backup_list ()
+{
+    if [ -z "$1" ]; then
+       echo "provide unix_account_name"
+       echo "example: backup_list u168138"
+       (exit 1)
+    else curl -s bareos.intr/_snapshot/slice/$(echo -n $1 | sha1sum  |  cut -c -2)/$1 | jq -r '.[] | [.dataUri.rsync, .time] | @tsv'
+    fi
+}
+
+backup_mount ()
+{
+    if [ -z "$1" ]; then
+       echo "provide unix_account_name"
+       echo "example: backup_mount u168138"
+       (exit 1)
+    else curl -s -XPOST  "bareos.intr/_mount/slice/$(echo -n $1 | sha1sum  |  cut -c -2)/$1?wait=True&timeout=600" | jq -r
+    fi
+}
+
+backup_umount ()
+{
+    if [ -z "$1" ]; then
+       echo "provide unix_account_name"
+       echo "example: backup_umount u168138"
+       (exit 1)
+    else curl -s -XDELETE  "bareos.intr/_mount/slice/$(echo -n $1 | sha1sum  |  cut -c -2)/$1" | jq -r
+    fi
+}
+
 IFS=$'\n'
 for alias in $(SSH_COMMAND='ss' "$HOME/bin/ssh-aliases"); do eval $alias; done
 unset IFS
