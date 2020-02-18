@@ -1678,6 +1678,14 @@
   (define-frame-preference "3" (1 NIL T :CLASS "Firefox" :TITLE "Slack"))
   (define-frame-preference "2" (0 NIL T :CLASS "Firefox" :TITLE "jenkins")))
 
+(defun frame-parameters-display-1 ()
+  (define-frame-preference "Default" (1 NIL T :CLASS "quassel" :TITLE "Chat Monitor"))
+  (define-frame-preference "Default" (2 NIL T :CLASS "XTerm" :TITLE "alerta"))
+  ;; (define-frame-preference "Default" (0 NIL NIL :CLASS "Qemu-system-x86_64"))
+  (define-frame-preference "Default" (1 NIL T :CLASS "XTerm" :TITLE "mbsync-majordomo"))
+  (define-frame-preference "Default" (1 NIL T :CLASS "XTerm" :TITLE "notmuch"))
+  (define-frame-preference "Default" (2 NIL T :TITLE "pulsemixer")))
+
 (cond ((string= (getenv "DISPLAY") ":0")
        (setf *maxsize-border-width* 0)
        (setf *message-window-y-padding* 0)
@@ -1696,15 +1704,13 @@
       ((string= (getenv "DISPLAY") ":1")
        (run-shell-command "xsetroot -solid grey")
        (restore-from-file "/home/oleg/src/dotfiles/oleg/.stumpwm.d/desktop/10.lisp")
-       (define-frame-preference "Default" (1 NIL T :CLASS "quassel" :TITLE "Chat Monitor"))
-       (define-frame-preference "Default" (2 NIL T :CLASS "XTerm" :TITLE "alerta"))
-       (define-frame-preference "Default" (0 NIL NIL :CLASS "Qemu-system-x86_64"))
        (swm-gaps:toggle-gaps) ;XXX: Make declarative.
        (bind-super)
        (define-key *top-map* (kbd "s-m") "alerta")
        (setf *maxsize-border-width* 3)
        (setf *message-window-y-padding* 3)
        (setf *normal-border-width* 3)
-       (setf *transient-border-width* 3))
+       (setf *transient-border-width* 3)
+       (frame-parameters-display-1))
 
       (t (set-prefix-key (kbd "C-i"))))
