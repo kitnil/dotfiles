@@ -9,6 +9,9 @@ telnet_password = os.environ['TELNET_PASSWORD']
 enable_password = os.environ['ENABLE_PASSWORD']
 
 host = sys.argv[1]
+if host.endswith('.intr'):
+    host = host[:-5]
+
 command = " ".join(sys.argv[2:])
 
 prompt = host + ">"
