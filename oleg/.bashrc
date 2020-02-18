@@ -1584,9 +1584,19 @@ firefox-esr-debian()
       --new-instance
 }
 
-ss()
+telnet-expect()
 {
-    PYTHONPATH='' SSH_KEY='/home/oleg/.ssh/eng_key_rsa' BECOME_PASSWORD=$(pass show majordomo/ssh/eng) ssh-sudo $@ \
+    TELNET_PASSWORD=$(pass show majordomo/general) ENABLE_PASSWORD=$(pass show majordomo/ssh/router) cisco-interact $@
+}
+
+ssh-expect()
+{
+    PYTHONPATH='' SSH_KEY='/home/oleg/.ssh/eng_key_rsa' BECOME_PASSWORD=$(pass show majordomo/ssh/eng) ssh-sudo $@
+}
+
+connect()
+{
+    (echo "Connect via ssh-expect"; ssh-expect $@) \
         || (echo "Connect via SSH"; ssh $@) \
         || (echo "Connect via telnet-expect"; telnet-expect $@) \
         || (echo "Connect via telnet"; telnet $@)
@@ -1623,12 +1633,7 @@ backup_umount ()
 }
 
 IFS=$'\n'
-for alias in $(SSH_COMMAND='ss' "$HOME/bin/ssh-aliases"); do eval $alias; done
+for alias in $(SSH_COMMAND='connect' "$HOME/bin/ssh-aliases"); do eval $alias; done
 unset IFS
-
-telnet-expect()
-{
-    TELNET_PASSWORD=$(pass show majordomo/general) ENABLE_PASSWORD=$(pass show majordomo/ssh/router) cisco-interact $@
-}
 
 alias sw1-dh507='telnet-expect sw1-dh507'
