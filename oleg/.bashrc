@@ -1601,6 +1601,8 @@ ssh-expect()
 
 connect()
 {
+    [ $1 == br1-mr14* ] && (ssh-ignore-br1-mr14.intr; exit 0)
+
     if [[ $# -eq 1 ]]
     then
         host=$1; [[ $host == *.intr ]] || host+=.intr
