@@ -1623,3 +1623,10 @@ backup_umount ()
 IFS=$'\n'
 for alias in $(SSH_COMMAND='ss' "$HOME/bin/ssh-aliases"); do eval $alias; done
 unset IFS
+
+telnet-expect()
+{
+    TELNET_PASSWORD=$(pass show majordomo/general) ENABLE_PASSWORD=$(pass show majordomo/ssh/router) cisco-interact $@
+}
+
+alias sw1-dh507='telnet-expect sw1-dh507'
