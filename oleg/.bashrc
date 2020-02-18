@@ -1641,4 +1641,4 @@ IFS=$'\n'
 for alias in $(SSH_COMMAND='connect' "$HOME/bin/ssh-aliases"); do eval $alias; done
 unset IFS
 
-alias sw1-dh507='telnet-expect sw1-dh507'
+alias sw1-dh507='connect sw1-dh507'
