@@ -1586,6 +1586,11 @@ firefox-esr-debian()
 
 telnet-expect()
 {
+    TELNET_PASSWORD=$(pass show majordomo/general) cisco $@
+}
+
+telnet-expect-interact()
+{
     TELNET_PASSWORD=$(pass show majordomo/general) ENABLE_PASSWORD=$(pass show majordomo/ssh/router) cisco-interact $@
 }
 
@@ -1600,10 +1605,11 @@ connect()
     then
         host=$1; [[ $host == *.intr ]] || host+=.intr
         (echo "Connect via ssh"; ssh $host) \
-            || (echo "Fallback to telnet-expect"; telnet-expect $host) \
+            || (echo "Fallback to telnet-expect-interact"; telnet-expect-interact $host) \
             || (echo "Fallback to telnet"; telnet $host)
     else
-        ssh-expect $@
+        ssh-expect $@ \
+            || telnet-expect $@
     fi
 }
 
