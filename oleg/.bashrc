@@ -1596,10 +1596,11 @@ ssh-expect()
 
 connect()
 {
-    (echo "Connect via ssh-expect"; ssh-expect $@) \
-        || (echo "Connect via SSH"; ssh $@) \
-        || (echo "Connect via telnet-expect"; telnet-expect $@) \
-        || (echo "Connect via telnet"; telnet $@)
+    host=$1; [[ $host == *.intr ]] || host+=.intr
+    (echo "Connect via ssh-expect"; ssh-expect $host) \
+        || (echo "Fallback to ssh"; ssh $host) \
+        || (echo "Fallback to telnet-expect"; telnet-expect $host) \
+        || (echo "Fallback to telnet"; telnet $host)
 }
 
 backup_list ()
