@@ -1586,7 +1586,8 @@ firefox-esr-debian()
 
 ss()
 {
-    PYTHONPATH='' SSH_KEY='/home/oleg/.ssh/eng_key_rsa' BECOME_PASSWORD=$(pass show majordomo/ssh/eng) ssh-sudo $@
+    PYTHONPATH='' SSH_KEY='/home/oleg/.ssh/eng_key_rsa' BECOME_PASSWORD=$(pass show majordomo/ssh/eng) ssh-sudo $@ \
+        || (echo "Connect via SSH"; ssh $@)
 }
 
 backup_list ()
