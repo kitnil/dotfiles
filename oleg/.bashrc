@@ -1587,7 +1587,9 @@ firefox-esr-debian()
 ss()
 {
     PYTHONPATH='' SSH_KEY='/home/oleg/.ssh/eng_key_rsa' BECOME_PASSWORD=$(pass show majordomo/ssh/eng) ssh-sudo $@ \
-        || (echo "Connect via SSH"; ssh $@)
+        || (echo "Connect via SSH"; ssh $@) \
+        || (echo "Connect via telnet-expect"; telnet-expect $@) \
+        || (echo "Connect via telnet"; telnet $@)
 }
 
 backup_list ()
