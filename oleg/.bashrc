@@ -1602,12 +1602,17 @@ telnet-expect()
 
 telnet-expect-interact()
 {
-    TELNET_PASSWORD=$(pass show majordomo/general) ENABLE_PASSWORD=$(pass show majordomo/ssh/router) cisco-interact $@
+    TELNET_PASSWORD=$(pass show majordomo/general)      \
+    ENABLE_PASSWORD=$(pass show majordomo/ssh/router)   \
+    cisco-interact $@
 }
 
 ssh-expect()
 {
-    PYTHONPATH='' SSH_KEY='/home/oleg/.ssh/eng_key_rsa' BECOME_PASSWORD=$(pass show majordomo/ssh/eng) timeout 10 ssh-sudo $@
+    PYTHONPATH=''                                       \
+    SSH_KEY='/home/oleg/.ssh/eng_key_rsa'               \
+    BECOME_PASSWORD=$(pass show majordomo/ssh/eng)      \
+    timeout 10 ssh-sudo $@
 }
 
 connect()
