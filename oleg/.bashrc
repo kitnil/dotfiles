@@ -1633,6 +1633,12 @@ connect()
     fi
 }
 
+if [ -f /run/current-system/profile/share/bash-completion/completions/ssh ]
+then
+    . /run/current-system/profile/share/bash-completion/completions/ssh
+    shopt -u hostcomplete && complete -F _ssh connect
+fi
+
 backup_list ()
 {
     if [ -z "$1" ]; then
