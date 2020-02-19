@@ -62,7 +62,7 @@ pipeline {
         }
         stage("Invoking guix package") {
             steps {
-                parallelSh cmd: "guix package --manifest=$HOME_DIR/manifest.scm",
+                parallelSh cmd: "guix environment --manifest=$HOME_DIR/manifest.scm -- sh -c exit",
                 nodeLabels: node_labels
             }
         }
