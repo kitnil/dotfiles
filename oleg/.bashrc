@@ -1677,3 +1677,5 @@ backup_umount ()
 eval "$(SSH_COMMAND='connect' "$HOME/bin/ssh-aliases")"
 
 alias sw1-dh507='connect sw1-dh507'
+
+alias ssh-clean='find ~/.ssh -type s -delete'
