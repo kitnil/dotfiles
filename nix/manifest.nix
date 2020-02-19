@@ -95,7 +95,6 @@ with pkgs;
   pup
   pythonPackages.jenkins-job-builder
   python3Packages.yamllint
-  python3Packages.pdf2image
   robo3t
   sampler
   screenkey
