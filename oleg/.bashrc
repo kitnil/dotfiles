@@ -1687,5 +1687,5 @@ alias ssh-clean='find ~/.ssh -type s -delete'
 
 slideshow()
 {
-    sh -c 'while true; do for file in /tmp/out/*.png; do feh --image-bg "#ffffff" --bg-max $file; sleep 5; done; done & disown'
+    (exec -a slideshow /bin/sh -c 'while true; do for file in /tmp/out/*.png; do feh --image-bg "#ffffff" --bg-max $file; sleep 5; done; done & disown' "$@")
 }
