@@ -1663,8 +1663,6 @@ backup_umount ()
     fi
 }
 
-IFS=$'\n'
-for alias in $(SSH_COMMAND='connect' "$HOME/bin/ssh-aliases"); do eval $alias; done
-unset IFS
+eval "$(SSH_COMMAND='connect' "$HOME/bin/ssh-aliases")"
 
 alias sw1-dh507='connect sw1-dh507'
