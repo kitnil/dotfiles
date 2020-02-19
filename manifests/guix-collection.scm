@@ -247,6 +247,8 @@ vpn w3m xfce web wget wm xdisorg xml xorg)
                xfce4-screenshooter
                xfce4-terminal
 
+               xmodmap
+
                whois)
 
          guix-collection-packages-multiout
