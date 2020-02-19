@@ -1624,9 +1624,14 @@ connect()
     if [[ $# -eq 1 ]]
     then
         host=$1; [[ $host == *.intr ]] || host+=.intr
-        (echo "Connect via ssh"; ssh $host) \
-            || (echo "Fallback to telnet-expect-interact"; telnet-expect-interact $host) \
-            || (echo "Fallback to telnet"; telnet $host)
+        (echo "Connect via ssh with majordomo/ssh/router password";     \
+         sshpass -p$(pass show majordomo/ssh/router) ssh $host)         \
+            || (echo "Connect via ssh with majordomo/ssh/eng password"; \
+                sshpass -p$(pass show majordomo/ssh/eng) ssh $host)     \
+            || (echo "Fallback to telnet-expect-interact";              \
+                telnet-expect-interact $host)                           \
+            || (echo "Fallback to telnet";                              \
+                telnet $host)
     else
         ssh-expect $@ \
             || telnet-expect $@
