@@ -150,7 +150,7 @@ vpn w3m xfce web wget wm xdisorg xml xorg)
                mlt mpv vlc
 
                ;; PDF
-               zathura zathura-djvu zathura-pdf-mupdf
+               zathura zathura-djvu zathura-pdf-mupdf poppler
 
                ;; X11
                keynav rofi st xauth xev scrot xsel
