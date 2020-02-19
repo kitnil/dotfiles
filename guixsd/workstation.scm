@@ -125,7 +125,10 @@ EndSection")
 
                    %base-packages))
 
-  (services (cons* (service openssh-service-type)
+  (services (cons* (service openssh-service-type
+                            (openssh-configuration
+                             (x11-forwarding? #t)
+                             (gateway-ports? 'client)))
                    (service autossh-service-type
                             (autossh-configuration
                              (autossh-client-config
