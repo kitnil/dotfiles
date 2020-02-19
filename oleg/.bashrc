@@ -470,6 +470,17 @@ ansible-swarm-network-inspect()
     ansible swarm -m shell -a 'docker network ls | cut -d " " -f 1 | grep -v NETWORK | xargs docker network inspect' --become
 }
 
+ssh-ignore-sr1-mr13-14.intr()
+{
+    sshpass -p$(pass show majordomo/ssh/router) \
+      ssh -F /dev/null                          \
+      -i $HOME/.ssh/eng_key_rsa                 \
+      -o UserKnownHostsFile=/dev/null           \
+      -o StrictHostKeyChecking=no               \
+      -l root                                   \
+      sr1-mr13-14.intr
+}
+
 ssh-ignore-br1-mr14.intr()
 {
     echo 172.16.103.199
@@ -1601,7 +1612,14 @@ ssh-expect()
 
 connect()
 {
-    [ $1 == br1-mr14* ] && (ssh-ignore-br1-mr14.intr; exit 0)
+    if [[ $1 == br1-mr14* ]]; then
+        ssh-ignore-br1-mr14.intr
+        return
+    fi
+    if [[ $1 == sr1-mr13-14* ]]; then
+        ssh-ignore-sr1-mr13-14.intr
+        return
+    fi
 
     if [[ $# -eq 1 ]]
     then
