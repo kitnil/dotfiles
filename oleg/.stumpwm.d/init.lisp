@@ -1683,7 +1683,7 @@
   (define-frame-preference "Default" (2 NIL T :CLASS "XTerm" :TITLE "alerta"))
   ;; (define-frame-preference "Default" (0 NIL NIL :CLASS "Qemu-system-x86_64"))
   (define-frame-preference "Default" (1 NIL T :CLASS "XTerm" :TITLE "mbsync-majordomo"))
-  (define-frame-preference "Default" (1 NIL T :CLASS "XTerm" :TITLE "notmuch"))
+  (define-frame-preference "Default" (2 NIL T :CLASS "XTerm" :TITLE "notmuch"))
   (define-frame-preference "Default" (2 NIL T :TITLE "pulsemixer")))
 
 (cond ((string= (getenv "DISPLAY") ":0")
