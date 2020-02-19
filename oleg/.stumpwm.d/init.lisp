@@ -743,7 +743,7 @@
   (run-shell-command "exec xset dpms force off"))
 
 (defcommand suspend () ()
-  (run-shell-command "exec loginctl suspend"))
+  (run-shell-command "sudo loginctl suspend"))
 
 (defcommand run-xterm-command (cmd &optional collect-output-p)
     ((:shell "/bin/sh -c "))
