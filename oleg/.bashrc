@@ -1645,7 +1645,7 @@ connect()
 
 if [ -f /run/current-system/profile/share/bash-completion/completions/ssh ]
 then
-    . /run/current-system/profile/share/bash-completion/completions/ssh
+    . /run/current-system/profile/share/bash-completion/completions/ssh &> /dev/null
     shopt -u hostcomplete && complete -F _ssh connect
 fi
 
