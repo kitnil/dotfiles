@@ -2523,6 +2523,8 @@ be updated automatically."))
 
 (setq copyright-names-regexp (wi-fullname-and-email))
 
+;; (setq copyright-limit nil) ;scan whole buffer instead of the default 2000 characters
+
 (add-hook 'before-save-hook 'copyright-update)
 
 (setq quickurl-format-function
