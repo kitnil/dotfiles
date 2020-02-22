@@ -1691,9 +1691,9 @@
        (setf *message-window-y-padding* 0)
        (setf *normal-border-width* 0)
        (setf *transient-border-width* 0)
+       (bind-super)
        (unless workstation?
 	 (restore-from-file "/home/oleg/src/dotfiles/oleg/.stumpwm.d/desktop/9.lisp")
-	 (bind-super)
 	 (setf *maxsize-border-width* 3)
 	 (setf *message-window-y-padding* 3)
 	 (setf *normal-border-width* 3)
