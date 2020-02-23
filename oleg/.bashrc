@@ -82,9 +82,6 @@ alias ihs=ihs-wrapper
 
 if [ -d "/run/current-system" ]
 then
-    JENKINS_URL="http://localhost:8090"
-    export JENKINS_URL
-
     true
 else
     . "$HOME/.guix-profile/etc/profile"
