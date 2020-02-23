@@ -1,4 +1,4 @@
-#! /usr/bin/env nix-shell
+#! /usr/bin/env cached-nix-shell
 #! nix-shell -i python -p python pythonPackages.pexpect
 
 import os

@@ -13,6 +13,10 @@ with import <nixpkgs> {
         url = "https://cgit.duckdns.org/git/nix/ipmiview";
         ref = "master";
       }) { });
+      cached-nix-shell = (super.callPackage (builtins.fetchGit {
+        url = "https://github.com/xzfc/cached-nix-shell";
+        ref = "master";
+      }) { });
     })
     (import ((builtins.fetchGit {
       url = "https://github.com/tsoding/boomer";
@@ -33,6 +37,7 @@ with pkgs;
   brave
   buku
   # cabal-install
+  cached-nix-shell
   catimg
   chromium
   clipmenu
