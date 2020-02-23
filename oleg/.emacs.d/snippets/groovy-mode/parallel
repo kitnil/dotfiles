@@ -1,0 +1,19 @@
+# -*- mode: snippet -*-
+# name: parallel
+# key: parallel
+# --
+stages {
+    stage('Checkout') {
+        stage('Run Tests') {
+            parallel {
+                stage('Java 11') {
+                    stages {
+                        stage('Build') {
+                            steps {}
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
