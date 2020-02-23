@@ -1681,11 +1681,12 @@ backup_umount ()
 
 eval "$(SSH_COMMAND='connect' "$HOME/bin/ssh-aliases")"
 
-alias sw1-dh507='connect sw1-dh507'
-
 alias ssh-clean='find ~/.ssh -type s -delete'
 
 slideshow()
 {
     (exec -a slideshow /bin/sh -c 'while true; do for file in /tmp/out/*.png; do feh --image-bg "#ffffff" --bg-max $file; sleep 5; done; done & disown' "$@")
 }
+
+alias sw1-dh507='connect sw1-dh507'
+alias sw1-mr11="connect sw1-mr11"
