@@ -19,6 +19,15 @@ export GRADLE_HOME
 PYTHONSTARTUP=$HOME/.pythonrc
 export PYTHONSTARTUP
 
+GUIX_GITHUB_TOKEN="***REMOVED***"
+export GUIX_GITHUB_TOKEN
+
+GUIX_BUILD_OPTIONS="--no-grafts"
+export GUIX_BUILD_OPTIONS
+
+TMUXIFIER_LAYOUT_PATH="$HOME/.tmuxifier-layouts"
+export TMUXIFIER_LAYOUT_PATH
+
 # if [ -f "$HOME/.guix-profile/etc/profile.d/autojump.sh" ]
 # then
 #     . "$HOME/.guix-profile/etc/profile.d/autojump.sh"
@@ -64,9 +73,6 @@ gpa()
     guix package -A $@ | awk '{ print $1"-"$2 }'
 }
 
-export GUIX_GITHUB_TOKEN="***REMOVED***"
-export GUIX_BUILD_OPTIONS="--no-grafts"
-
 ihs-wrapper() {
     GUILE_INSTALL_LOCALE=0                      \
     GUIX_BUILD_OPTIONS=                         \
@@ -79,7 +85,9 @@ alias ihs=ihs-wrapper
 
 if [ -d "/run/current-system" ]
 then
-    export JENKINS_URL="http://localhost:8090"
+    JENKINS_URL="http://localhost:8090"
+    export JENKINS_URL
+
     true
 else
     . "$HOME/.guix-profile/etc/profile"
@@ -88,13 +96,26 @@ else
         . "$GUIX_PROFILE/etc/profile"
     fi
 
-    export BROWSER='firefox'
-    export GUILE_WARN_DEPRECATED=no
-    export GUIX_LOCPATH=$HOME/.guix-profile/lib/locale
-    export GUIX_PROFILE="$HOME/.guix-profile"
-    export PATH="$HOME/.config/guix/current/bin${PATH:+:}$PATH"
-    export PATH=$HOME/bin:$HOME/.npm-global/bin:$PATH
-    export INFOPATH="$HOME/src/guix/doc${INFOPATH:+:}$INFOPATH"
+    BROWSER='firefox'
+    export BROWSER
+
+    GUILE_WARN_DEPRECATED=no
+    export GUILE_WARN_DEPRECATED
+
+    GUIX_LOCPATH=$HOME/.guix-profile/lib/locale
+    export GUIX_LOCPATH
+
+    GUIX_PROFILE="$HOME/.guix-profile"
+    export GUIX_PROFILE
+
+    PATH="$HOME/.config/guix/current/bin${PATH:+:}$PATH"
+    export PATH
+
+    PATH=$HOME/bin:$HOME/.npm-global/bin:$PATH
+    export PATH
+
+    INFOPATH="$HOME/src/guix/doc${INFOPATH:+:}$INFOPATH"
+    export INFOPATH
 
     # Fix mouse wheel in gtk3
     # https://github.com/stumpwm/stumpwm/wiki/FAQ
@@ -113,14 +134,29 @@ else
     #XDG_SESSION_TYPE=x11
     #XDG_VTNR=7
 
-    export SSL_CERT_DIR="$HOME/.guix-profile/etc/ssl/certs"
-    export SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/ca-certificates.crt"
-    export GIT_SSL_CAINFO="$SSL_CERT_FILE"
-    export CURL_CA_BUNDLE="$HOME/.guix-profile/etc/ssl/certs/ca-certificates.crt"
+    SSL_CERT_DIR="$HOME/.guix-profile/etc/ssl/certs"
+    export SSL_CERT_DIR
+
+    SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/ca-certificates.crt"
+    export SSL_CERT_FILE
+
+    GIT_SSL_CAINFO="$SSL_CERT_FILE"
+    export GIT_SSL_CAINFO
+
+    CURL_CA_BUNDLE="$HOME/.guix-profile/etc/ssl/certs/ca-certificates.crt"
+    export CURL_CA_BUNDLE
 fi
 
-export LOCALE_ARCHIVE="$(readlink ~/.nix-profile/lib/locale)/locale-archive"
-export MANPATH=$MANPATH:$HOME/.nix-profile/share/man
+if [ -f "$HOME/.nix-profile/share/bash-completion/completions/nix" ]; then
+    LOCALE_ARCHIVE="$(readlink $HOME/.nix-profile/lib/locale)/locale-archive"
+    export LOCALE_ARCHIVE
+fi
+
+if [ -d "$HOME/.nix-profile/share/man" ]
+then
+    MANPATH=$MANPATH:$HOME/.nix-profile/share/man
+    export MANPATH
+fi
 
 nix-completion()
 {
@@ -135,9 +171,12 @@ emc()
     emacsclient -n "$@"
     stumpish emacsclient
 }
-export EDITOR='emacsclient -nw -c'
 
-export MANWIDTH=80
+EDITOR='emacsclient -nw -c'
+export EDITOR
+
+MANWIDTH=80
+export MANWIDTH
 
 # TODO: readlink could fail to enter `guix environment`
 # alias wi-pure-bash="env -i $(readlink $(which bash)) --noprofile --norc"
@@ -362,7 +401,6 @@ listen-ports()
 }
 
 alias vnc-server-android="vncserver -AcceptSetDesktopSize=no -geometry 1280x720"
-export TMUXIFIER_LAYOUT_PATH="$HOME/.tmuxifier-layouts"
 
 ssh-root()
 {
@@ -1256,8 +1294,11 @@ mj-vpn-ssh()
 
 less-color()
 {
-    export LESSOPEN="| ~/.guix-profile/bin/src-hilite-lesspipe.sh %s"
-    export LESS=' -R '
+    LESSOPEN="| ~/.guix-profile/bin/src-hilite-lesspipe.sh %s"
+    export LESSOPEN
+
+    LESS=' -R '
+    export LESS
 }
 
 dockerfile-lint()
