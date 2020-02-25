@@ -1164,6 +1164,9 @@
   (defcommand slack () ()
     (firefox "https://mjru.slack.com/" "Slack"))
 
+  (defcommand check-website () ()
+    (firefox "https://www.uptrends.com/tools/uptime"))
+
   (defcommand grafana () ()
     (firefox "https://grafana.intr/" "Grafana"))
 
