@@ -1241,10 +1241,11 @@
   (term-shell-command "xpanes -t -C 1 -c 'ssh -t {}' guixsd workstation.intr spb"
                       :color 'dark))
 
-(defun browse-url-firefox (url &optional new-window)
+(defun browse-url-firefox (url &optional new-window ssb)
   (run-shell-command
    (join `("firefox"
            ,@(if new-window '("--new-window") '())
+           ,@(if ssb '("--ssb") '())
            ,url))))
 
 (defcommand guix-ci () ()
@@ -1662,7 +1663,7 @@
 (defun frame-parameters-display-0 ()
   (define-frame-preference "Default" (1 NIL T :CLASS "quassel" :TITLE "Chat Monitor"))
   (define-frame-preference "Default" (3 NIL T :CLASS "XTerm" :TITLE "alerta"))
-  (define-frame-preference "Default" (5 NIL T :CLASS "Firefox" :TITLE "Alerta"))
+  ;; (define-frame-preference "Default" (5 NIL T :CLASS "Firefox" :TITLE "Alerta"))
   (define-frame-preference "Default" (4 NIL T :TITLE "pulsemixer"))
   (define-frame-preference "Default" (0 NIL T :TITLE "xpanes-top"))
   (define-frame-preference "Default" (4 NIL T :CLASS "XTerm" :TITLE "notmuch"))
@@ -1673,13 +1674,13 @@
   (define-frame-preference "Default" (4 NIL T :CLASS "mpv" :TITLE "emacs-emms"))
   (define-frame-preference "Default" (4 NIL T :CLASS "mpv" :TITLE "firefox"))
   (define-frame-preference "Default" (1 NIL T :CLASS "mpv" :TITLE "youtube-dl-music"))
-  (define-frame-preference "3" (0 NIL T :TITLE "https://jenkins.wugi.info - Dashboard [Jenkins] - Mozilla Firefox"))
+  ;; (define-frame-preference "3" (0 NIL T :TITLE "https://jenkins.wugi.info - Dashboard [Jenkins] - Mozilla Firefox"))
   (define-frame-preference "Default" (1 NIL NIL :CLASS "obs"))
   (define-frame-preference "2" (0 NIL NIL :CLASS "Emacs"))
-  (define-frame-preference "2" (1 NIL NIL :CLASS "Firefox"))
+  ;; (define-frame-preference "2" (1 NIL NIL :CLASS "Firefox"))
   (define-frame-preference "5" (0 NIL NIL :CLASS "Emacs"))
-  (define-frame-preference "5" (1 NIL NIL :CLASS "Firefox"))
-  (define-frame-preference "3" (1 NIL T :CLASS "Firefox" :TITLE "Slack"))
+  ;; (define-frame-preference "5" (1 NIL NIL :CLASS "Firefox"))
+  ;; (define-frame-preference "3" (1 NIL T :CLASS "Firefox" :TITLE "Slack"))
   (define-frame-preference "2" (0 NIL T :CLASS "Firefox" :TITLE "jenkins")))
 
 (defun frame-parameters-display-1 ()
@@ -1689,6 +1690,39 @@
   (define-frame-preference "Default" (1 NIL T :CLASS "XTerm" :TITLE "mbsync-majordomo"))
   (define-frame-preference "Default" (2 NIL T :CLASS "XTerm" :TITLE "notmuch"))
   (define-frame-preference "Default" (2 NIL T :TITLE "pulsemixer")))
+
+(defcommand run-firefox () ()
+  (gselect "1")
+  (firefox)
+  (renumber 2)
+  (sleep 5)
+  (sb-thread:make-thread
+   (lambda ()
+     (sleep 5)
+
+     (gselect "3")
+     (browse-url-firefox "https://grafana.intr/d/ogvzsY3mb/web-performance-panelized" t t)
+     (browse-url-firefox "https://mjru.slack.com/" t t)
+     (sleep 10)
+
+     (gselect "5")
+     (browse-url-firefox "https://jenkins.wugi.info/view/Failed/" t t)
+     (sleep 5)
+
+     (gselect "6")
+     (browse-url-firefox "https://zabbix.wugi.info/" t t)
+     (sleep 5)
+
+     (gselect "7")
+     (browse-url-firefox "https://billing2.intr/servers?sort_by=name&sort_order=1&equip_server_type_id=3" t)
+     (sleep 5)
+
+     (gselect "8")
+     (browse-url-firefox "https://alerta.intr" t)
+     (browse-url-firefox "https://kibana.intr/goto/d63fb3a2e0b36deacc8f73f53cc14b4d" t t)
+     (sleep 10)
+
+     (gselect "1"))))
 
 (cond ((string= (getenv "DISPLAY") ":0")
        (setf *maxsize-border-width* 0)
