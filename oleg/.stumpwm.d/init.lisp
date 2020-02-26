@@ -524,17 +524,17 @@
           '(miran dh office)))
 
 (defcommand xpanes-vpn-ssh () ()
-  (term-shell-command (join `("xpanes -C 1 -c 'ssh {}'" ,@majordomo-vpn))
+  (term-shell-command (join `("xpanes -t -C 1 -c 'ssh {}'" ,@majordomo-vpn))
                       :title "xpanes-vpn-ssh"
                       :font '("-fa" "Monospace" "-fs" "6")))
 
 (defcommand xpanes-dh-ssh () ()
-  (term-shell-command (join `("xpanes -c 'ssh {}.intr'" ,@majordomo-dh))
+  (term-shell-command (join `("xpanes -t -c 'ssh {}.intr'" ,@majordomo-dh))
                       :title "xpanes-dh-ssh"
                       :font '("-fa" "Monospace" "-fs" "6")))
 
 (defcommand xpanes-web-ssh () ()
-  (term-shell-command (join `("xpanes -c 'ssh {}.intr'" ,@majordomo-webs))
+  (term-shell-command (join `("xpanes -t -c 'ssh {}.intr'" ,@majordomo-webs))
                       :title "xpanes-web-ssh"
                       :font '("-fa" "Monospace" "-fs" "6")))
 
@@ -544,7 +544,7 @@
                       :font '("-fa" "Monospace" "-fs" "6")))
 
 (defun xpanes-command (command)
-  (format nil "xpanes -c ~s" command))
+  (format nil "xpanes -t -c ~s" command))
 
 (defcommand xpanes-web-mycli () ()
   (term-shell-command (join `(,(xpanes-command
@@ -1238,7 +1238,7 @@
                       :color 'dark :title "xpanes-top" :font '("-fa" "Monospace" "-fs" "6")))
 
 (defcommand xpanes-guix () ()
-  (term-shell-command "xpanes -C 1 -c 'ssh -t {}' guixsd workstation.intr spb"
+  (term-shell-command "xpanes -t -C 1 -c 'ssh -t {}' guixsd workstation.intr spb"
                       :color 'dark))
 
 (defun browse-url-firefox (url &optional new-window)
