@@ -3,7 +3,7 @@
 ;;; Copyright © 2016 Marius Bakke <mbakke@fastmail.com>
 ;;; Copyright © 2018 Tobias Geerinckx-Rice <me@tobias.gr>
 ;;; Copyright © 2018 Ricardo Wurmus <rekado@elephly.net>
-;;; Copyright © 2019 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2019, 2020 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -343,7 +343,8 @@
                          "ext/pcre/tests/bug76909.phpt"
 
                          "ext/mbstring/tests/bug78633.phpt"
-                         "ext/mbstring/tests/mb_ereg_search_named_subpatterns.phpt"))
+                         "ext/mbstring/tests/mb_ereg_search_named_subpatterns.phpt"
+                         "ext/zip/tests/bug53885.phpt"))
 
              ;; Skip tests requiring network access.
              (setenv "SKIP_ONLINE_TESTS" "1")
