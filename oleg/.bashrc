@@ -958,6 +958,18 @@ ansible-cmdb-my()
     ansible-cmdb -t html_fancy_split -p local_js=1 out/
 }
 
+ansible-playbook-wrapper()
+{
+    host="$1"
+    ANSIBLE_HOST_KEY_CHECKING="False" ansible-playbook                  \
+            --private-key="$HOME/.ssh/id_rsa"                           \
+            --user=root                                                 \
+            --inventory="$host",                                        \
+            --extra-vars=host="$host"                                   \
+            --extra-vars=ansible_python_interpreter=/usr/bin/python3    \
+            ${@:2}
+}
+
 bash-history-top()
 {
     # https://www.commandlinefu.com/commands/view/604/list-of-commands-you-use-most-often
@@ -1725,3 +1737,4 @@ slideshow()
 
 alias sw1-dh507='connect sw1-dh507'
 alias sw1-mr11="connect sw1-mr11"
+
