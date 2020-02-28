@@ -1675,14 +1675,26 @@ ssh-expect()
 
 connect()
 {
-    if [[ $1 == br1-mr14* ]]; then
-        ssh-ignore-br1-mr14.intr
-        return
-    fi
-    if [[ $1 == sr1-mr13-14* ]]; then
-        ssh-ignore-sr1-mr13-14.intr
-        return
-    fi
+    case "$1" in
+        "help")
+            echo "Usage: HOST COMMAND
+
+Commands:
+  mysql    Connect to host via mycli
+  block IP Block IP address via ip-filter API
+  status   List IP address in ip-filter
+"
+            return
+            ;;
+        br1-mr14*)
+            ssh-ignore-br1-mr14.intr
+            return
+            ;;
+        sr1-mr13-14*)
+            ssh-ignore-sr1-mr13-14.intr
+            return
+            ;;
+    esac
 
     if [[ $# -eq 1 ]]
     then
