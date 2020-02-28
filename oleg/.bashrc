@@ -1696,8 +1696,16 @@ connect()
             || (echo "Fallback to telnet";                              \
                 telnet $host)
     else
-        ssh-expect $@ \
-            || telnet-expect $@
+        case "$2" in
+            "mysql")
+                echo "Connect to $1 via mycli"
+                PAGER='pspg -s 14 -X --force-uniborder --quit-if-one-screen -s 16' mycli --password "$(pass show majordomo/web/mysql/root)" -d "${1%.intr}"
+                ;;
+            *)
+                ssh-expect $@ \
+                    || telnet-expect $@
+                ;;
+        esac
     fi
 }
 
