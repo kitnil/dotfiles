@@ -42,7 +42,7 @@ ansible-playbook-fetch()
     ansible-playbook "$HOME/src/hello-ansible/fetch.yml"
 }
 
-jenkins()
+jenkins-build()
 {
     token="$1"
     password="$2"
