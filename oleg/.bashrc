@@ -1729,8 +1729,9 @@ Commands:
                 echo
                 ;;
             "te")
-                ssh-expect "$1" tail --lines="${3:-1000}" /var/log/taskexecutor.log \
-                    | grep -v 'malware_report'
+                (ssh-expect "$1" tail --lines="${3:-1000}" /var/log/taskexecutor.log \
+                     | grep -v 'malware_report' \
+                     | sed '/^[[:space:]]*$/d')
                 ;;
             *)
                 ssh-expect $@ \
