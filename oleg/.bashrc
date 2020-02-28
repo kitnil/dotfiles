@@ -1718,6 +1718,10 @@ Commands:
                 echo "Connect to $1 via mycli"
                 PAGER='pspg -s 14 -X --force-uniborder --quit-if-one-screen -s 16' mycli --password "$(pass show majordomo/web/mysql/root)" -d "${1%.intr}"
                 ;;
+            "clean")
+                echo "Kill MySQL connections"
+                mysql-kill "$1"
+                ;;
             # $3 is ip-to-block
             "block")
                 curl --silent --head --request PUT "$1/ip-filter/$3?ttl=7200&action=setCookie"
