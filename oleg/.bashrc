@@ -1681,8 +1681,11 @@ connect()
 
 Commands:
   mysql    Connect to host via mycli
+  clean    Kill all MySQL connections
   block IP Block IP address via ip-filter API
   status   List IP address in ip-filter
+  sg       Test SCSI hard-drives
+  te       Print taskexecutor logs
 "
             return
             ;;
