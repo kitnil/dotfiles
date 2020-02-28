@@ -1710,6 +1710,12 @@ Commands:
     else
         # $1=host
         case "$2" in
+            sg)
+                echo "Hint: Install sg3-utils by invoking 'apt install sg3-utils'"
+                for i in {1..8}; do
+                    time connect "${1%.intr}" "sg_read if=/dev/sg$i bs=512 count=100000"
+                done
+                ;;
             web*)
                 connect "${1%.intr}" ${@:3}
                 connect "$2" ${@:3}
