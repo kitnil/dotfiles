@@ -1721,6 +1721,10 @@ Commands:
             "status")
                 curl --silent --request GET "$1/ip-filter"
                 ;;
+            "te")
+                ssh-expect "$1" tail --lines="${3:-1000}" /var/log/taskexecutor.log \
+                    | grep -v 'malware_report'
+                ;;
             *)
                 ssh-expect $@ \
                     || telnet-expect $@
