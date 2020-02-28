@@ -1719,7 +1719,9 @@ Commands:
                 curl --silent --head --request PUT "$1/ip-filter/$3?ttl=7200&action=setCookie"
                 ;;
             "status")
-                curl --silent --request GET "$1/ip-filter"
+                echo "name: blocked-ip-address"
+                echo -n "blocked: "
+                curl --silent --request GET "$1/ip-filter" | cut -d' ' -f 1 | xargs echo
                 ;;
             "te")
                 ssh-expect "$1" tail --lines="${3:-1000}" /var/log/taskexecutor.log \
