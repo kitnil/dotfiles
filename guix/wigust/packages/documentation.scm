@@ -19,8 +19,9 @@
 (define-module (wigust packages documentation)
   #:use-module (guix)
   #:use-module (guix build-system gnu)
+  #:use-module (guix packages)
   #:use-module ((guix licenses) #:prefix license:)
-  #:use-module (guix build-system trivial))
+  #:use-module (guix build-system copy))
 
 (define-public slides-devops-world-jenkins-casc
   (package
@@ -29,27 +30,18 @@
     (source
      (origin
        (method url-fetch)
-       (uri (and=> (getenv "HOME")
-                   (lambda (home)
-                     (string-append
-                      "file://" home
-                      "/Downloads"
-                      "/Jenkins-CasC-JW18.pdf"))))
-       (file-name (string-append name "-" version))
+       (uri "https://static.sched.com/hosted_files/devopsworldjenkinsworld2018/1b/Jenkins CasC JW18.pdf")
+       (file-name (string-append name "-" version ".pdf"))
        (sha256
         (base32
-         "02p4c61f3y00v8plrqmp0926g9ambckbf4gm1fxwhryzgb02fqxy"))))
-    (build-system trivial-build-system)
+         "0qj3n7z47cbl20xxa7jivwmp272qhvcmvw9cdxzp577yd6ma9b4a"))))
+    (build-system copy-build-system)
     (arguments
-     `(#:modules ((guix build utils))
-       #:builder
-       (begin (use-modules (guix build utils))
-              (let ((install-dir (string-append %output
-                                                "/share/doc/slides-devops-world-2018-jenkins-casc")))
-                (mkdir-p install-dir)
-                (copy-file (assoc-ref %build-inputs "source")
-                           (string-append install-dir "/slides-devops-world-2018-jenkins-casc.pdf")))
-              #t)))
+     `(#:install-plan
+       `((,(assoc-ref %build-inputs "source")
+          ,(let ((title (string-drop ,name (string-length "slides-"))))
+             (string-append "/share/doc/" title "/" title ".pdf"))))
+       #:phases (modify-phases %standard-phases (delete 'unpack))))
     (home-page "https://github.com/jenkinsci/configuration-as-code-plugin")
     (synopsis "Introduction Jenkins Configuration as Code Plugin")
     (description "This package provides slides for a presention DevOPS World
@@ -64,18 +56,17 @@
               (method url-fetch)
               (uri (string-append "http://talk.jpnc.info/bash_lnfw_"
                                   version ".pdf"))
+              (file-name (string-append name "-" version ".pdf"))
               (sha256
                (base32
                 "1v8nn3p7qiibsmbigdcv8q40pgsq6s8v63193f7qq5y2yhrqml7a"))))
-    (build-system trivial-build-system)
+    (build-system copy-build-system)
     (arguments
-     `(#:modules ((guix build utils))
-       #:builder
-       (begin (use-modules (guix build utils))
-              (let ((install-dir (string-append %output "/share/doc/slides-concise-gnu-bash")))
-                (mkdir-p install-dir)
-                (copy-file (assoc-ref %build-inputs "source") (string-append install-dir "/slides-concise-gnu-bash.pdf")))
-              #t)))
+     `(#:install-plan
+       `((,(assoc-ref %build-inputs "source")
+          ,(let ((title (string-drop ,name (string-length "slides-"))))
+             (string-append "/share/doc/" title "/" title ".pdf"))))
+       #:phases (modify-phases %standard-phases (delete 'unpack))))
     (home-page "http://talk.jpnc.info/")
     (synopsis "Introduction to Bash advances usage")
     (description "This package provides slides for a presention Introduction
@@ -90,18 +81,17 @@ to Bash advances usage.")
               (method url-fetch)
               (uri (string-append "http://download.adaptec.com/pdfs/user_guides/microsemi_cli_smarthba_smartraid_v"
                                   version ".pdf"))
+              (file-name (string-append name "-" version ".pdf"))
               (sha256
                (base32
                 "0x2bzi1ywpin8504ra9zlzh5aij15gqgfmjj1b5kylaap6vb92xb"))))
-    (build-system trivial-build-system)
+    (build-system copy-build-system)
     (arguments
-     `(#:modules ((guix build utils))
-       #:builder
-       (begin (use-modules (guix build utils))
-              (let ((install-dir (string-append %output "/share/doc/arcconf")))
-                (mkdir-p install-dir)
-                (copy-file (assoc-ref %build-inputs "source") (string-append install-dir "/arcconf.pdf")))
-              #t)))
+     `(#:install-plan
+       `((,(assoc-ref %build-inputs "source")
+          ,(let ((title (string-drop ,name (string-length "documentation-"))))
+             (string-append "/share/doc/" title "/" title ".pdf"))))
+       #:phases (modify-phases %standard-phases (delete 'unpack))))
     (home-page "http://download.adaptec.com/pdfs/user_guides/")
     (synopsis "ARCCONF Command Line Utility")
     (description "Microsemi Smart Storage Controllers User's Guide.")
