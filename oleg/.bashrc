@@ -1696,10 +1696,18 @@ connect()
             || (echo "Fallback to telnet";                              \
                 telnet $host)
     else
+        # $1=host
         case "$2" in
             "mysql")
                 echo "Connect to $1 via mycli"
                 PAGER='pspg -s 14 -X --force-uniborder --quit-if-one-screen -s 16' mycli --password "$(pass show majordomo/web/mysql/root)" -d "${1%.intr}"
+                ;;
+            # $3 is ip-to-block
+            "block")
+                curl --silent --head --request PUT "$1/ip-filter/$3?ttl=7200&action=setCookie"
+                ;;
+            "status")
+                curl --silent --request GET "$1/ip-filter"
                 ;;
             *)
                 ssh-expect $@ \
