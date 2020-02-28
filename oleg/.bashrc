@@ -1714,7 +1714,7 @@ Commands:
         # $1=host
         case "$2" in
             sg)
-                echo "Hint: Install sg3-utils by invoking 'apt install sg3-utils'"
+                ansible "$1" --module-name=apt --args="name=sg3-utils state=present"
                 for i in {1..8}; do
                     time connect "${1%.intr}" "sg_read if=/dev/sg$i bs=512 count=100000"
                 done
