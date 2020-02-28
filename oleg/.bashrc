@@ -1710,6 +1710,10 @@ Commands:
     else
         # $1=host
         case "$2" in
+            web*)
+                connect "${1%.intr}" ${@:3}
+                connect "$2" ${@:3}
+                ;;
             "mysql")
                 echo "Connect to $1 via mycli"
                 PAGER='pspg -s 14 -X --force-uniborder --quit-if-one-screen -s 16' mycli --password "$(pass show majordomo/web/mysql/root)" -d "${1%.intr}"
@@ -1719,9 +1723,10 @@ Commands:
                 curl --silent --head --request PUT "$1/ip-filter/$3?ttl=7200&action=setCookie"
                 ;;
             "status")
-                echo "name: blocked-ip-address"
+                echo "name: ip-filter-$1"
                 echo -n "blocked: "
                 curl --silent --request GET "$1/ip-filter" | cut -d' ' -f 1 | xargs echo
+                echo
                 ;;
             "te")
                 ssh-expect "$1" tail --lines="${3:-1000}" /var/log/taskexecutor.log \
