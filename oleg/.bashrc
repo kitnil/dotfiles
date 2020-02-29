@@ -1686,6 +1686,7 @@ Commands:
   status   List IP address in ip-filter
   sg       Test SCSI hard-drives
   te       Print taskexecutor logs
+  images   Show Docker images
 "
             return
             ;;
@@ -1718,6 +1719,9 @@ Commands:
                 for i in {1..8}; do
                     time connect "${1%.intr}" "sg_read if=/dev/sg$i bs=512 count=100000"
                 done
+                ;;
+            images)
+                connect "${1%.intr}" docker images --no-trunc --format "'{{.ID}}: {{.Repository}}'"
                 ;;
             web*)
                 connect "${1%.intr}" ${@:3}
