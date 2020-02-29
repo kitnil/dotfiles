@@ -636,7 +636,10 @@ nix-shell-expression-with-overlay()
 }
 nix-build-mj()
 {
-    nix-build --expr "(import <nixpkgs> {overlays = [(import $HOME/majordomo/_ci/nixpkgs)];}).$1"
+    nix-build \
+            --option trusted-public-keys 'cache.nixos.intr:6VD7bofl5zZFTEwsIDsUypprsgl7r9I+7OGY4WsubFA=' \
+            --substituters http://cache.nixos.intr/ \
+            --expr "(import <nixpkgs> {overlays = [(import $HOME/majordomo/_ci/nixpkgs)];}).$1"
 }
 
 alias dockerd='sudo herd start docker'
