@@ -1740,25 +1740,25 @@ Commands:
                     | uniq --count \
                     | sort --numeric-sort
                 ;;
-            "mysql")
+            mysql)
                 echo "Connect to $1 via mycli"
                 PAGER='pspg -s 14 -X --force-uniborder --quit-if-one-screen -s 16' mycli --password "$(pass show majordomo/web/mysql/root)" -d "${1%.intr}"
                 ;;
-            "clean")
+            clean)
                 echo "Kill MySQL connections"
                 mysql-kill "$1"
                 ;;
             # $3 is ip-to-block
-            "block")
+            block)
                 curl --silent --head --request PUT "$1/ip-filter/$3?ttl=7200&action=setCookie"
                 ;;
-            "status")
+            status)
                 echo "name: ip-filter-$1"
                 echo -n "blocked: "
                 curl --silent --request GET "$1/ip-filter" | cut -d' ' -f 1 | xargs echo
                 echo
                 ;;
-            "te")
+            te)
                 (ssh-expect "$1" tail --lines="${3:-1000}" /var/log/taskexecutor.log \
                      | grep -v 'malware_report' \
                      | sed '/^[[:space:]]*$/d')
