@@ -1504,6 +1504,14 @@
 (defcommand random-password (length) ((:string "Password length: "))
   (window-send-string (run-shell-command (format nil "bash -i -c 'random-password ~a'" length) t)))
 
+(defcommand alerta-top () ()
+  (run-shell-command (join (list "/home/oleg/.guix-profile/bin/xterm"
+                                 "-title" "alerta"
+                                 "-fa" "Monospace" "-fs" "6" "+sb"
+                                 "-bg" "black" "-fg" "white"
+                                 "-e" "sh" "-c" (format nil "~s" "while true; do /home/oleg/.local/bin/alerta top; sleep 20; done")))))
+
+
 (load-module "notifications")
 
 (load-module "command-history")
