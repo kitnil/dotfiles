@@ -10,12 +10,12 @@ gnuzilla graphics graphviz gstreamer gtk guile guile-xyz haskell
 haskell-apps haskell-xyz image-viewers imagemagick inkscape irc kde
 kodi libreoffice license linux lisp logging lsof lxde m4 mail man
 maths messaging ncdu ncurses networking node package-management
-parallel password-utils patchutils pdf perl perl-web php pretty-print
-pulseaudio pv python python-xyz python-web qt ratpoison readline
-rdesktop rsync rust-apps samba scheme screen shellutils ssh statistics
-sqlite suckless syncthing synergy tex texinfo textutils text-editors
-tigervnc tmux tls tor valgrind version-control video virtualization
-vpn w3m xfce web wget wm xdisorg xml xorg)
+parallel patchutils pdf perl perl-web php pretty-print pulseaudio pv
+python python-xyz python-web qt ratpoison readline rdesktop rsync
+rust-apps samba scheme screen shellutils ssh statistics sqlite
+suckless syncthing synergy tex texinfo textutils text-editors tigervnc
+tmux tls tor valgrind version-control video virtualization vpn w3m
+xfce web wget wm xdisorg xml xorg)
 
 (define guix-collection-packages-multiout
   `((,glib "bin")
@@ -69,8 +69,6 @@ vpn w3m xfce web wget wm xdisorg xml xorg)
                woof
 
                translate-shell ; Translation in CLI and Emacs
-               password-store  ; Password management
-               rofi-pass       ; front-end to password-store
 
                cuirass
 

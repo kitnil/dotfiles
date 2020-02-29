@@ -1493,7 +1493,7 @@
   (run-shell-command "sxhkd"))
 
 (defcommand passmenu () ()
-  (run-shell-command "passmenu"))
+  (run-shell-command "passmenu -c -l 30"))
 
 (defcommand dunst-disable () ()
   (run-shell-command "pkill -SIGUSR1 dunst"))

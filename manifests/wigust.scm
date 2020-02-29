@@ -5,6 +5,7 @@
              (wigust packages emacs)
              (wigust packages games)
              (wigust packages guix)
+             (wigust packages password-utils)
              (wigust packages pspg)
              (wigust packages pulseaudio)
              (wigust packages python)
@@ -73,5 +74,7 @@
   documentation-arcconf
 
   git-splits
+
+  password-store  ; Password management
 
   guix-wigust-packages-emacs))
