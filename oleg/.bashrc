@@ -1680,13 +1680,14 @@ connect()
             echo "Usage: HOST COMMAND
 
 Commands:
-  mysql    Connect to host via mycli
-  clean    Kill all MySQL connections
-  block IP Block IP address via ip-filter API
-  status   List IP address in ip-filter
-  sg       Test SCSI hard-drives
-  te       Print taskexecutor logs
-  images   Show Docker images
+  mysql      Connect to host via mycli
+  clean      Kill all MySQL connections
+  block IP   Block IP address via ip-filter API
+  status     List IP address in ip-filter
+  sg         Test SCSI hard-drives
+  te         Print taskexecutor logs
+  images     Show Docker images
+  containers Show Docker containers
 "
             return
             ;;
@@ -1719,6 +1720,9 @@ Commands:
                 for i in {1..8}; do
                     time connect "${1%.intr}" "sg_read if=/dev/sg$i bs=512 count=100000"
                 done
+                ;;
+            containers)
+                connect "${1%.intr}" docker ps --no-trunc --format "'table {{.ID}}\t{{.Names}}\t{{.Status}}'"
                 ;;
             images)
                 connect "${1%.intr}" docker images --no-trunc --format "'{{.ID}}: {{.Repository}}'"
