@@ -1799,6 +1799,8 @@ slideshow()
     (exec -a slideshow /bin/sh -c 'while true; do for file in /tmp/out/*.png; do feh --image-bg "#ffffff" --bg-max $file; sleep 5; done; done & disown' "$@")
 }
 
+alias pass='EDITOR=zile pass'
+
 alias sw1-dh507='connect sw1-dh507'
 alias sw1-mr11="connect sw1-mr11"
 
