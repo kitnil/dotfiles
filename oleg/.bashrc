@@ -1670,7 +1670,7 @@ ssh-expect()
     PYTHONPATH=''                                       \
     SSH_KEY='/home/oleg/.ssh/eng_key_rsa'               \
     BECOME_PASSWORD=$(pass show majordomo/ssh/eng)      \
-    timeout 10 ssh-sudo $@
+    ssh-sudo $@
 }
 
 connect()
