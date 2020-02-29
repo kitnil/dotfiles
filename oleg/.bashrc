@@ -1680,14 +1680,15 @@ connect()
             echo "Usage: HOST COMMAND
 
 Commands:
-  mysql      Connect to host via mycli
-  clean      Kill all MySQL connections
   block IP   Block IP address via ip-filter API
-  status     List IP address in ip-filter
-  sg         Test SCSI hard-drives
-  te         Print taskexecutor logs
-  images     Show Docker images
+  clean      Kill all MySQL connections
   containers Show Docker containers
+  images     Show Docker images
+  mysql      Connect to host via mycli
+  nginx      Show NGINX users
+  sg         Test SCSI hard-drives
+  status     List IP address in ip-filter
+  te         Print taskexecutor logs
 "
             return
             ;;
@@ -1730,6 +1731,14 @@ Commands:
             web*)
                 connect "${1%.intr}" ${@:3}
                 connect "$2" ${@:3}
+                ;;
+            nginx)
+                connect "${1%.intr}" docker logs --tail "${3:-1000}" nginx \
+                    | awk '{ print $1 }' \
+                    | grep --invert-match --fixed-strings '127.0.0.1' \
+                    | sort \
+                    | uniq --count \
+                    | sort --numeric-sort
                 ;;
             "mysql")
                 echo "Connect to $1 via mycli"
