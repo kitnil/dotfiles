@@ -25,10 +25,10 @@ export GUIX_BUILD_OPTIONS
 TMUXIFIER_LAYOUT_PATH="$HOME/.tmuxifier-layouts"
 export TMUXIFIER_LAYOUT_PATH
 
-# if [ -f "$HOME/.guix-profile/etc/profile.d/autojump.sh" ]
-# then
-#     . "$HOME/.guix-profile/etc/profile.d/autojump.sh"
-# fi
+if [ -f "$HOME/.guix-profile/etc/profile.d/autojump.sh" ]
+then
+    . "$HOME/.guix-profile/etc/profile.d/autojump.sh"
+fi
 
 # # http://puzan.info/linux/2014-05-14-direnv.html
 # if [ -f "$HOME/.guix-profile/bin/direnv" ]
