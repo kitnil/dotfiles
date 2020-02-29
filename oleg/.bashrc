@@ -1686,6 +1686,7 @@ Commands:
   images     Show Docker images
   mysql      Connect to host via mycli
   nginx      Show NGINX users
+  ping       Ping HOST
   sg         Test SCSI hard-drives
   status     List IP address in ip-filter
   te         Print taskexecutor logs
@@ -1721,6 +1722,9 @@ Commands:
                 for i in {1..8}; do
                     time connect "${1%.intr}" "sg_read if=/dev/sg$i bs=512 count=100000"
                 done
+                ;;
+            ping)
+                ping --numeric --count="${3:-3}" "${1%.intr}"
                 ;;
             containers)
                 connect "${1%.intr}" docker ps --no-trunc --format "'table {{.ID}}\t{{.Names}}\t{{.Status}}'"
