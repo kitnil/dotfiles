@@ -1690,6 +1690,7 @@ Commands:
   sg         Test SCSI hard-drives
   status     List IP address in ip-filter
   te         Print taskexecutor logs
+  traceroute Traceroute HOST
 "
             return
             ;;
@@ -1725,6 +1726,9 @@ Commands:
                 ;;
             ping)
                 ping --numeric --count="${3:-3}" "${1%.intr}"
+                ;;
+            traceroute)
+                sudo traceroute "${1%.intr}"
                 ;;
             containers)
                 connect "${1%.intr}" docker ps --no-trunc --format "'table {{.ID}}\t{{.Names}}\t{{.Status}}'"
