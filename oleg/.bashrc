@@ -862,6 +862,13 @@ terraform-plan-gitlab()
         | xargs env NIX_SSL_CERT_FILE="/run/current-system/profile/etc/ssl/certs/Majordomo_LLC_Root_CA.crt" SSL_CERT_DIR="/run/current-system/profile/etc/ssl/certs" SSL_CERT_FILE="/run/current-system/profile/etc/ssl/certs/ca-certificates.crt" terraform plan -out=plan
 }
 
+gitlab-version()
+{
+    curl --header "PRIVATE-TOKEN: $(pass show majordomo/gitlab.intr/tokens/terraform)" \
+            --silent --insecure --location https://gitlab.intr/api/v4/version
+    echo
+}
+
 terraformer-import-github()
 {
     terraformer import majordomo --token $GITHUB_TOKEN --organizations wugi-emacs --resources=repositories
