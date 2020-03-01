@@ -22,6 +22,7 @@
   #:use-module (guix utils)
   #:use-module (guix download)
   #:use-module (guix git-download)
+  #:use-module (guix build-system copy)
   #:use-module (guix build-system meson)
   #:use-module (guix build-system trivial)
   #:use-module (gnu packages)
@@ -197,3 +198,27 @@ library focused on interfacing with shell scripts.")
     (description "git-splits - Extracts directories into a new branch
 with re-written history containing only those directories.")
     (license license:expat)))
+
+(define-public slacktee
+  (package
+    (name "slacktee")
+    (version "1.4.2")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://github.com/coursehero/slacktee.git")
+                    (commit (string-append "v" version))))
+              (file-name (git-file-name name version))
+              (sha256
+               (base32
+                "02dxp2gsgc781adlzbx7mhkw8ra22vkd76z53qcd0cdynygw8546"))))
+    (build-system copy-build-system)
+    (arguments
+     `(#:install-plan
+       `((,(string-append (assoc-ref %build-inputs "source") "/slacktee.sh")
+          ,(string-append "/bin/slacktee")))
+       #:phases (modify-phases %standard-phases (delete 'unpack))))
+    (home-page "https://github.com/coursehero/slacktee/")
+    (synopsis "Bash script that works like tee command with Slack")
+    (description "This package provides a ")
+    (license license:asl2.0)))
