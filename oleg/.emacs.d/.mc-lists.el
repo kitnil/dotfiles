@@ -41,6 +41,7 @@
         org-delete-char
         org-end-of-line
         org-force-self-insert
+        org-kill-line
         org-return-indent
         org-self-insert-command
         org-yank
@@ -110,6 +111,7 @@
         sh-assignment
         shell
         smartparens-strict-mode
+        switch-to-buffer
         terminal-here-project-launch-multiplexer
         text-scale-adjust
         wgrep-change-to-wgrep-mode
