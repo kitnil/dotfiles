@@ -75,6 +75,6 @@
 
   git-splits
 
-  password-store  ; Password management
+  password-store-custom-dmenu ; Password management
 
   guix-wigust-packages-emacs))
