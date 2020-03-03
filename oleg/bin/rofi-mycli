@@ -25,6 +25,9 @@ else
         localhost*)
             coproc (xterm -title "mycli@$@" -bg '#fff0f5' -fg '#000000' -fa Monospace -fs "$size" -e env PAGER='pspg -s 14 -X --force-uniborder --quit-if-one-screen -s 16' mycli -h localhost -u root -p $@ &>/dev/null; read &)
             ;;
+        malscan*)
+            coproc (xterm -title "mycli@$@" -bg '#fff0f5' -fg '#000000' -fa Monospace -fs "$size" -e env PAGER='pspg -s 14 -X --force-uniborder --quit-if-one-screen -s 16' mycli --password "$(pass show malscan.intr/mysql/malscan)" -d $@ &>/dev/null &)
+            ;;
         *)
             coproc (xterm -title "mycli@$@" -bg '#fff0f5' -fg '#000000' -fa Monospace -fs "$size" -e env PAGER='pspg -s 14 -X --force-uniborder --quit-if-one-screen -s 16' mycli -d $@ &>/dev/null &)
             ;;
