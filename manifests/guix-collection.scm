@@ -57,6 +57,7 @@ vpn w3m xfce web wget wm xdisorg xml xorg)
                jq jo
                nmap
 
+               dmidecode
                lm-sensors
 
                cloc            ; Count code
