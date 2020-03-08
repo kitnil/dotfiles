@@ -1690,6 +1690,7 @@ connect()
             echo "Usage: HOST COMMAND
 
 Commands:
+  apache     Print Apache logs
   block IP   Block IP address via ip-filter API
   clean      Kill all MySQL connections
   containers Show Docker containers
@@ -1780,6 +1781,9 @@ Commands:
                 (ssh-expect "$1" tail --lines="${3:-1000}" /var/log/taskexecutor.log \
                      | grep -v 'malware_report' \
                      | sed '/^[[:space:]]*$/d')
+                ;;
+            apache)
+                connect "${1%.intr}" sh -c "'cat /home/$3/logs/*access.log'"
                 ;;
             *)
                 ssh-expect $@ \
