@@ -1719,7 +1719,7 @@ Commands:
     then
         host=$1; [[ $host == *.intr ]] || host+=.intr
         (echo "Connect via ssh with majordomo/ssh/router password";     \
-         sshpass -p$(pass show majordomo/ssh/router) ssh $host)         \
+         sshpass -p$(pass show majordomo/ssh/router) kyrat $host)       \
             || (echo "Connect via ssh with majordomo/ssh/eng password"; \
                 sshpass -p$(pass show majordomo/ssh/eng) ssh $host)     \
             || (echo "Fallback to telnet-expect-interact";              \
