@@ -246,3 +246,17 @@
     scm:
       - git:
           url: https://cgit.duckdns.org/git/games/door-kickers
+- job:
+    name: iso
+    project-type: folder
+- job:
+    name: iso/multicd
+    project-type: multibranch
+    periodic-folder-trigger: 1d
+    prune-dead-branches: true
+    number-to-keep: '10'
+    days-to-keep: '10'
+    script-path: Jenkinsfile
+    scm:
+      - git:
+          url: https://cgit.duckdns.org/git/iso/multicd
