@@ -17,6 +17,10 @@ with import <nixpkgs> {
         url = "https://github.com/xzfc/cached-nix-shell";
         ref = "master";
       }) { });
+      navi = (super.callPackage ((builtins.fetchGit {
+        url = "https://github.com/9999years/nix-config";
+        ref = "master";
+      }).outPath + "/rebeccapkgs/navi") { });
     })
     (import ((builtins.fetchGit {
       url = "https://github.com/tsoding/boomer";
@@ -71,6 +75,7 @@ with pkgs;
   ldns
   libressl
   # litecli TODO: fails to build
+  navi
   lnav
   lsd
   lua
