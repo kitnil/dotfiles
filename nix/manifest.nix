@@ -37,6 +37,7 @@ with pkgs;
   # assh
   bat
   # browserpass
+  bandwidth
   boomer
   brave
   buku
