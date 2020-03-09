@@ -1843,3 +1843,4 @@ alias pass='EDITOR=zile pass'
 alias sw1-dh507='connect sw1-dh507'
 alias sw1-mr11="connect sw1-mr11"
 
+alias glow='glow --style light'
