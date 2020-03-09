@@ -60,6 +60,7 @@ with pkgs;
   git-secrets
   # gita
   # glibc-locales
+  glow
   groovy
   hexyl
   # httpie
