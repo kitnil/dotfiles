@@ -100,6 +100,7 @@ with pkgs;
   # nodePackages_12_x.node2nix
   catj
   obs-studio
+  onefetch
   oh
   openjdk
   packer
