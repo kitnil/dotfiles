@@ -44,6 +44,7 @@ with pkgs;
   # cabal-install
   cached-nix-shell
   catimg
+  chezmoi
   chromium
   clipmenu
   diskus
