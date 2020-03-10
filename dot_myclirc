@@ -1,0 +1,165 @@
+# vi: ft=dosini
+[main]
+
+# Enables context sensitive auto-completion. If this is disabled the all
+# possible completions will be listed.
+smart_completion = True
+
+# Multi-line mode allows breaking up the sql statements into multiple lines. If
+# this is set to True, then the end of the statements must have a semi-colon.
+# If this is set to False then sql statements can't be split into multiple
+# lines. End of line (return) is considered as the end of the statement.
+multi_line = False
+
+# Destructive warning mode will alert you before executing a sql statement
+# that may cause harm to the database such as "drop table", "drop database"
+# or "shutdown".
+destructive_warning = True
+
+# log_file location.
+log_file = ~/.mycli.log
+
+# Default log level. Possible values: "CRITICAL", "ERROR", "WARNING", "INFO"
+# and "DEBUG". "NONE" disables logging.
+log_level = INFO
+
+# Log every query and its results to a file. Enable this by uncommenting the
+# line below.
+# audit_log = ~/.mycli-audit.log
+
+# Timing of sql statments and table rendering.
+timing = True
+
+# Table format. Possible values: ascii, double, github,
+# psql, plain, simple, grid, fancy_grid, pipe, orgtbl, rst, mediawiki, html,
+# latex, latex_booktabs, textile, moinmoin, jira, vertical, tsv, csv.
+# Recommended: ascii
+table_format = ascii
+
+# Syntax coloring style. Possible values (many support the "-dark" suffix):
+# manni, igor, xcode, vim, autumn, vs, rrt, native, perldoc, borland, tango, emacs,
+# friendly, monokai, paraiso, colorful, murphy, bw, pastie, paraiso, trac, default,
+# fruity.
+# Screenshots at http://mycli.net/syntax
+syntax_style = default
+
+# Keybindings: Possible values: emacs, vi.
+# Emacs mode: Ctrl-A is home, Ctrl-E is end. All emacs keybindings are available in the REPL.
+# When Vi mode is enabled you can use modal editing features offered by Vi in the REPL.
+key_bindings = emacs
+
+# Enabling this option will show the suggestions in a wider menu. Thus more items are suggested.
+wider_completion_menu = True
+
+# MySQL prompt
+# \D - The full current date
+# \d - Database name
+# \h - Hostname of the server
+# \m - Minutes of the current time
+# \n - Newline
+# \P - AM/PM
+# \p - Port
+# \R - The current time, in 24-hour military time (0–23)
+# \r - The current time, standard 12-hour time (1–12)
+# \s - Seconds of the current time
+# \t - Product type (Percona, MySQL, MariaDB)
+# \u - Username
+prompt = "\t \u@\h:\d> "
+prompt_continuation = "-> "
+
+# Skip intro info on startup and outro info on exit
+less_chatty = True
+
+# Use alias from --login-path instead of host name in prompt
+login_path_as_host = False
+
+# Cause result sets to be displayed vertically if they are too wide for the current window,
+# and using normal tabular format otherwise. (This applies to statements terminated by ; or \G.)
+auto_vertical_output = False
+
+# keyword casing preference. Possible values "lower", "upper", "auto"
+keyword_casing = auto
+
+# disabled pager on startup
+enable_pager = True
+
+# Custom colors for the completion menu, toolbar, etc.
+[colors]
+completion-menu.completion.current = "bg:#ffffff #000000"
+completion-menu.completion = "bg:#008888 #ffffff"
+completion-menu.meta.completion.current = "bg:#44aaaa #000000"
+completion-menu.meta.completion = "bg:#448888 #ffffff"
+completion-menu.multi-column-meta = "bg:#aaffff #000000"
+scrollbar.arrow = "bg:#003333"
+scrollbar = "bg:#00aaaa"
+selected = "#ffffff bg:#6666aa"
+search = "#ffffff bg:#4444aa"
+search.current = "#ffffff bg:#44aa44"
+bottom-toolbar = "bg:#222222 #aaaaaa"
+bottom-toolbar.off = "bg:#222222 #888888"
+bottom-toolbar.on = "bg:#222222 #ffffff"
+search-toolbar = noinherit bold
+search-toolbar.text = nobold
+system-toolbar = noinherit bold
+arg-toolbar = noinherit bold
+arg-toolbar.text = nobold
+bottom-toolbar.transaction.valid = "bg:#222222 #00ff5f bold"
+bottom-toolbar.transaction.failed = "bg:#222222 #ff005f bold"
+
+# style classes for colored table output
+output.header = "#00ff5f bold"
+output.odd-row = ""
+output.even-row = ""
+
+# Favorite queries.
+[favorite_queries]
+ps = "SELECT ID,USER,HOST,DB,COMMAND,TIME,STATE,TIME_MS,STAGE,MAX_STAGE FROM INFORMATION_SCHEMA.PROCESSLIST ORDER BY Time DESC"
+info = "SELECT INFO FROM INFORMATION_SCHEMA.PROCESSLIST WHERE ID='$1'"
+info-all = "SELECT ID,TIME,INFO FROM INFORMATION_SCHEMA.PROCESSLIST WHERE INFO IS NOT NULL ORDER BY Time DESC"
+kill = "SELECT GROUP_CONCAT(CONCAT('KILL ',id,';') SEPARATOR ';') FROM information_schema.processlist WHERE user='$1'"
+schema = "SELECT * FROM information_schema.columns WHERE TABLE_SCHEMA='$1' ORDER BY table_name,ordinal_position"
+hostname = SHOW VARIABLES WHERE Variable_name = 'hostname'
+config = SHOW VARIABLES
+connections-current-show = show status where `variable_name` = 'Threads_connected'
+connections-max-show = show variables like 'max_connections'
+connections-max-set-1000 = set global max_connections=1000
+connections-max-set-default = set global max_connections=500
+version = SHOW VARIABLES LIKE "%version%"
+statistics = SELECT * FROM `mysql`.`user` u JOIN `INFORMATION_SCHEMA`.`USER_STATISTICS` s ON u.User=s.USER JOIN `mysql_restrict`.`USER_STATISTICS` ss ON s.USER=ss.USER JOIN `mysql_restrict`.`CPU_RESTRICT` r ON r.USER=ss.USER
+
+# Use the -d option to reference a DSN.
+[alias_dsn]
+web15 = mysql://root@web15.intr
+web16 = mysql://root@web16.intr
+web17 = mysql://root@web17.intr
+web18 = mysql://root@web18.intr
+web19 = mysql://root@web19.intr
+web20 = mysql://root@web20.intr
+web21 = mysql://root@web21.intr
+web22 = mysql://root@web22.intr
+web23 = mysql://root@web23.intr
+web25 = mysql://root@web25.intr
+web26 = mysql://root@web26.intr
+web27 = mysql://root@web27.intr
+web28 = mysql://root@web28.intr
+web29 = mysql://root@web29.intr
+web30 = mysql://root@web30.intr
+web31 = mysql://root@web31.intr
+web32 = mysql://root@web32.intr
+web33 = mysql://root@web33.intr
+web34 = mysql://root@web34.intr
+web35 = mysql://root@web35.intr
+web36 = mysql://root@web36.intr
+web37 = mysql://root@web37.intr
+billing = mysql://root@staff.intr/billing
+BillingDB = mysql://root@staff.intr/BillingDB
+majordomo = mysql://majordomo@maxscale.intr/majordomo
+maxscale = mysql://root@maxscale.intr/
+staff = mysql://root@staff.intr
+galera3 = mysql://root@galera3.intr
+galera2 = mysql://root@galera2.intr
+galera1 = mysql://root@galera1.intr
+pdns = mysql://pdns@ns1-dh.intr/registrant
+kvm37 = mysql://root@kvm37/registrant
+billing-dev = mysql://xmlrpc@dev.majordomo.ru/billing
+malscan = mysql://malscan@malscan.intr/malscan
