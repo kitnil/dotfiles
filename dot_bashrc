@@ -1693,3 +1693,8 @@ alias sw1-mr11="connect sw1-mr11"
 alias glow='glow --style light'
 
 alias dotfiles=chezmoi
+
+if [ -f "$HOME/.nix-profile/share/bash-completion/completions/chezmoi.bash" ]; then
+    . "$HOME/.nix-profile/share/bash-completion/completions/chezmoi.bash"
+    complete -o default -F __start_chezmoi dotfiles
+fi
