@@ -1676,7 +1676,10 @@ backup_umount ()
     fi
 }
 
-eval "$(SSH_COMMAND='connect' "$HOME/bin/ssh-aliases")"
+if [ -f "$HOME/.guix-profile/bin/ssh-aliases" ]
+then
+    eval "$(SSH_COMMAND='connect' "ssh-aliases")"
+fi
 
 alias ssh-clean='find ~/.ssh -type s -delete'
 
