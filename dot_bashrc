@@ -531,60 +531,6 @@ hms-auth ()
         | jq -r '.access_token'
 }
 
-kvm-test-delete-service()
-{
-    curl "https://api.majordomo.ru/rc-staff/service/$1" \
-            -X DELETE --compressed \
-            -H 'Content-type: application/json' \
-            -H "Authorization: Bearer $(hms-auth)"
-}
-
-hms-fetch-services()
-{
-    for page in $(seq 1 50); do
-        curl -s "https://api.majordomo.ru/rc-staff/service?page=$page&sort=name%2Casc&size=20" \
---compressed \
--H 'Content-type: application/json' \
--H 'X-HMS-Pageable: true' \
--H "Authorization: Bearer $(hms-auth)" \
--H 'Connection: keep-alive'
-    done
-}
-
-kvm-test-delete-services()
-{
-    input="$1"
-    for service in $(for version in 4 72; do
-                         grep -B 1 "apache2-php$version-.*@kvm-test" "$input" \
-                             | grep id \
-                             | cut -d: -f 2 \
-                             | cut -d, -f 1 \
-                             | sed 's/"//g';
-                     done); do
-        echo "@ $service"
-        curl "https://api.majordomo.ru/rc-staff/service/$service" \
--X DELETE --compressed \
--H 'Content-type: application/json' \
--H "Authorization: Bearer $(hms-auth)"
-    done
-}
-
-kvm-test-delete-sockets()
-{
-    for socket in $(for version in 4; do
-                        grep -B 1 "apache2-php$version-.*@kvm-test" out.json \
-                            | grep id \
-                            | cut -d: -f 2 \
-                            | cut -d, -f 1 \
-                            | sed 's/"//g'
-                    done \
-                        | xargs echo); do
-        echo "@ $socket"
-        curl "https://api.majordomo.ru/rc-staff/service-socket/$socket" \
--X DELETE --compressed -H 'Content-type: application/json' -H "Authorization: Bearer $(hms-auth)"
-    done
-}
-
 docker-jenkins()
 {
     docker -H ssh://dh4-mr.intr exec -it 4649529fa34d $@
