@@ -146,6 +146,10 @@ EndSection")
          (listen '("80"))
          (root "/var/www/techinfo.intr"))
         (nginx-server-configuration
+         (server-name '("iso.wugi.info"))
+         (listen '("80"))
+         (root "/srv/iso"))
+        (nginx-server-configuration
          (server-name '("texinfo.tld"))
          (listen '("80"))
          (root "/var/www/texinfo"))
@@ -415,7 +419,8 @@ EndSection")
                            "zabbix.wugi.info"
                            "techinfo.intr"
                            "texinfo.tld"
-                           "jenkins.wugi.info"))
+                           "jenkins.wugi.info"
+                           "iso.wugi.info"))
            "::1 guixsd localhost"
 
            "192.168.100.1 r1.tld"
