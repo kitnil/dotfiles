@@ -1,0 +1,61 @@
+# Create Both
+
+# Don't enable for Gmail, because Gmail does auto-trashing.
+# See mbsync (1).
+#
+# Expunge Both
+
+# SyncState *
+
+IMAPAccount gmail
+Host imap.gmail.com
+User go.wigust@gmail.com
+PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/.password-store/email/gmail/go.wigust.gpg"
+AuthMechs LOGIN
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+PipelineDepth 50
+
+IMAPStore gmail-remote
+Account gmail
+
+MaildirStore gmail-local
+Path ~/Maildir/
+Inbox ~/Maildir/INBOX
+SubFolders Verbatim
+
+Channel gmail
+Master :gmail-remote:
+Slave :gmail-local:
+Patterns INBOX # Sync only INBOX
+MaxMessages 2000
+Expunge slave
+Sync Pull
+
+Group gmail-all
+Channel gmail
+
+# Majordomo
+
+IMAPAccount majordomo
+Host router.majordomo.ru
+User pyhalov@majordomo.ru
+PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/.mailpass-majordomo.gpg"
+AuthMechs LOGIN
+SSLType None
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+PipelineDepth 50
+
+IMAPStore majordomo-remote
+Account majordomo
+
+MaildirStore majordomo-local
+Path ~/Maildir/
+Inbox ~/Maildir/majordomo
+SubFolders Verbatim
+
+Channel majordomo
+Master :majordomo-remote:
+Slave :majordomo-local:
+Patterns "INBOX" # Sync only INBOX
+Sync Pull
