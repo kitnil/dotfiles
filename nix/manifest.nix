@@ -5,10 +5,6 @@ with import <nixpkgs> {
         url = "https://github.com/guibou/nixGL";
         ref = "master";
       }) { });
-      catj = (import (builtins.fetchGit {
-        url = "https://cgit.duckdns.org/git/nix/catj";
-        ref = "master";
-      }) { });
       ipmiview = (super.callPackage (builtins.fetchGit {
         url = "https://cgit.duckdns.org/git/nix/ipmiview";
         ref = "master";
@@ -31,7 +27,23 @@ with import <nixpkgs> {
 
 with pkgs;
 
-[
+let
+  old = (import (fetchgit {
+    url = "https://github.com/NixOS/nixpkgs";
+    rev = "05626cc86b8a8bbadae7753d2e33661400ff67de";
+    sha256 = "1lx5hs2yzg21pc8fv982kdqhc5j5kxi08h8wn3plx848bcnd8jj6";
+  }) {
+    overlays = [
+      (self: super: {
+        catj = (import (builtins.fetchGit {
+          url = "https://cgit.duckdns.org/git/nix/catj";
+          ref = "master";
+        }) { });
+      })
+    ];
+  });
+
+in [
   # alacritty
   ansifilter
   # assh
@@ -93,12 +105,19 @@ with pkgs;
   nix-generate-from-cpan
   nix-prefetch-docker
   nix-serve
-  nixfmt
+
+  old.nixfmt
+
   nixGl.nixGLIntel
   nixpkgs-lint
   ipmiview
   # nodePackages_12_x.node2nix
-  catj
+
+  # TODO: Fix catj
+  # Setup: Encountered missing or private dependencies:
+  # base >=4.12.0 && <4.13, megaparsec >=7.0.5 && <7.1
+  old.catj
+
   obs-studio
   onefetch
   oh
