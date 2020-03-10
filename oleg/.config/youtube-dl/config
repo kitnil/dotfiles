@@ -1,1 +1,0 @@
---force-ipv4 --restrict-filenames --output ~/Videos/%(title)s.%(ext)s
