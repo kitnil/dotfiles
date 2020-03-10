@@ -14,6 +14,11 @@ pipeline {
                 dir: "$HOME_DIR/.local/share/chezmoi"
             }
         }
+        stage("Invoke chezmoi") {
+            steps {
+                parallelSh cmd: "chezmoi diff; chezmoi apply", nodeLabels: node_labels
+            }
+        }
    }
     post {
         always {
