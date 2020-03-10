@@ -1640,12 +1640,6 @@ firefox-esr-debian()
       --new-instance
 }
 
-if [ -f /run/current-system/profile/share/bash-completion/completions/ssh ]
-then
-    . /run/current-system/profile/share/bash-completion/completions/ssh &> /dev/null
-    shopt -u hostcomplete && complete -F _ssh connect
-fi
-
 backup_list ()
 {
     if [ -z "$1" ]; then
@@ -1679,6 +1673,12 @@ backup_umount ()
 if [ -f "$HOME/.guix-profile/bin/ssh-aliases" ]
 then
     eval "$(SSH_COMMAND='connect' "ssh-aliases")"
+
+    if [ -f /run/current-system/profile/share/bash-completion/completions/ssh ]
+    then
+        . /run/current-system/profile/share/bash-completion/completions/ssh &> /dev/null
+        shopt -u hostcomplete && complete -F _ssh connect
+    fi
 fi
 
 alias ssh-clean='find ~/.ssh -type s -delete'
