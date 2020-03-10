@@ -1,6 +1,7 @@
 (use-modules (gnu packages emacs)
              (wigust packages databases)
              (wigust packages admin)
+             (wigust packages connect)
              (wigust packages documentation)
              (wigust packages emacs)
              (wigust packages games)
@@ -76,5 +77,7 @@
   git-splits
 
   password-store-custom-dmenu ; Password management
+
+  connect ssh-aliases
 
   guix-wigust-packages-emacs))
