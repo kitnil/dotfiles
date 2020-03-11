@@ -244,13 +244,9 @@
   "Start or focus Chromium."
   (run-or-raise "chromium" '(:class "Chromium-browser")))
 
-(define-key *top-map* (kbd "C-s-w") "chromium")
-
 (defcommand chromium-new-window () ()
   "Start Chromium."
   (run-shell-command "chromium"))
-
-(define-key *top-map* (kbd "C-s-W") "chromium-new-window")
 
 (defcommand chromium-proxy () ()
   "Start Chromium via proxy"
@@ -1559,6 +1555,8 @@
     t)))
 
 (defun bind-super ()
+  (define-key *top-map* (kbd "C-s-w") "chromium")
+  (define-key *top-map* (kbd "C-s-W") "chromium-new-window")
   (define-key *top-map* (kbd "C-S-s-RET") "rofi-mycli")
   (define-key *top-map* (kbd "C-s-s") "neofetch")
   (define-key *top-map* (kbd "s-+") "pavucontrol")
