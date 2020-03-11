@@ -1508,19 +1508,19 @@
                                  "-e" "sh" "-c" (format nil "~s" "while true; do /home/oleg/.local/bin/alerta top; sleep 20; done")))))
 
 
-(load-module "notifications")
+;; (load-module "notifications")
 
-(load-module "command-history")
+;; (load-module "command-history")
 
-(load-module "swm-gaps")
+;; (load-module "swm-gaps")
 
-;; Head gaps run along the 4 borders of the monitor(s)
-(setf swm-gaps:*head-gaps-size* 5)
+;; ;; Head gaps run along the 4 borders of the monitor(s)
+;; (setf swm-gaps:*head-gaps-size* 5)
 
-;; Inner gaps run along all the 4 borders of a window
-(setf swm-gaps:*inner-gaps-size* 5)
+;; ;; Inner gaps run along all the 4 borders of a window
+;; (setf swm-gaps:*inner-gaps-size* 5)
 
-(setf swm-gaps:*outer-gaps-size* 0)
+;; (setf swm-gaps:*outer-gaps-size* 0)
 
 (defun cisco-connect-command (host)
   (join (list "env" (format nil "TELNET_PASSWORD=~s" (password-store-show "majordomo/general"))
@@ -1748,7 +1748,7 @@
       ((string= (getenv "DISPLAY") ":1")
        (run-shell-command "xsetroot -solid grey")
        (restore-from-file "/home/oleg/src/dotfiles/oleg/.stumpwm.d/desktop/10.lisp")
-       (swm-gaps:toggle-gaps) ;XXX: Make declarative.
+       ;; (swm-gaps:toggle-gaps) ;XXX: Make declarative.
        (bind-super)
        (define-key *top-map* (kbd "s-m") "alerta")
        (setf *maxsize-border-width* 3)
