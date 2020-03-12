@@ -231,7 +231,7 @@
 
 (defcommand firefox-new-window () ()
   "Start Firefox."
-  (run-shell-command (join (list (firefox-command) "--new-window"))))
+  (run-shell-command "firefox --new-window"))
 
 (defcommand firefox-beta () ()
   "Start Firefox Beta."
