@@ -77,6 +77,7 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     build job: "../../nix/maintenance/wip-local"
                 }
+                build job: "../chezmoi/master"
             }
         }
    }
