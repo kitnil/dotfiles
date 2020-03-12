@@ -274,8 +274,9 @@
        #:builder
        (begin
          (use-modules (guix build utils))
-         (install-file (assoc-ref %build-inputs "source")
-                       (string-append %output "/etc/ssl/certs"))
+         (mkdir-p (string-append %output "/etc/ssl/certs"))
+         (copy-file (assoc-ref %build-inputs "source")
+                    (string-append %output "/etc/ssl/certs/Majordomo_LLC_Root_CA.pem"))
          #t)))
     (build-system trivial-build-system)
     (home-page "https://www.majordomo.ru/")
