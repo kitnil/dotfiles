@@ -940,17 +940,6 @@ backup-mysql()
     for I in $(mysql -e 'show databases' -s --skip-column-names); do mysqldump $I | gzip > "$I.sql.gz"; done
 }
 
-mysql-kill()
-{
-    host="${1:-127.0.0.1}"
-    user="root"
-    password="$(pass show majordomo/web/mysql/root)"
-    for id in $(mysql --silent --user="$user" --password="$password" --host="$host" --execute="SELECT id FROM information_schema.processlist WHERE user like 'u%'"); do
-        echo $id
-        mysql --silent --user="$user" --password="$password" --host="$host" --execute="kill $id;"
-    done
-}
-
 kernel-graph()
 {
     lsmod \
