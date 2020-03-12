@@ -560,8 +560,8 @@ nix-shell-expression-with-overlay()
 nix-build-mj()
 {
     nix-build \
-            --option trusted-public-keys 'cache.nixos.intr:6VD7bofl5zZFTEwsIDsUypprsgl7r9I+7OGY4WsubFA=' \
-            --substituters http://cache.nixos.intr/ \
+            --option trusted-public-keys 'cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= cache.nixos.intr:6VD7bofl5zZFTEwsIDsUypprsgl7r9I+7OGY4WsubFA=' \
+            --substituters 'https://cache.nixos.org/ https://cache.nixos.intr/' \
             --expr "(import <nixpkgs> {overlays = [(import $HOME/majordomo/_ci/nixpkgs)];}).$1"
 }
 
