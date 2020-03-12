@@ -32,7 +32,7 @@
   (let ((commit "36ae61a6004cd8e33252ede7957bd777bcfb8129"))
     (package
       (name "cisco")
-      (version "0.0.1")
+      (version (git-version "0.0.1" "1" commit))
       (source (origin
                 (method git-fetch)
                 (uri (git-reference
@@ -55,7 +55,7 @@ connection to Cisco hardware over Telnet.")
   (let ((commit "6c0ad9a683023ebf8cf7474dbdfee5084f4601f1"))
     (package
       (name "cisco-interact")
-      (version "0.0.1")
+      (version (git-version "0.0.1" "1" commit))
       (source (origin
                 (method git-fetch)
                 (uri (git-reference
@@ -78,7 +78,7 @@ connection to Cisco hardware over Telnet interactively.")
   (let ((commit "09567495371612e3338a564d037afd08c165d9e0"))
     (package
       (name "ssh-sudo")
-      (version "0.0.1")
+      (version (git-version "0.0.1" "1" commit))
       (source (origin
                 (method git-fetch)
                 (uri (git-reference
@@ -101,7 +101,7 @@ connection to servers over SSH.")
   (let ((commit "047f5d2a35d8f97a49545b21614990f6e01f58d3"))
     (package
       (name "ssh-aliases")
-      (version "0.0.1")
+      (version (git-version "0.0.1" "1" commit))
       (source (origin
                 (method git-fetch)
                 (uri (git-reference
@@ -137,10 +137,10 @@ aliases based on SSH known-hosts.")
       (license license:gpl3+))))
 
 (define-public connect
-  (let ((commit "4404b77f69c371d93ad3707b96ea4799ab7e7a9c"))
+  (let ((commit "16eb77a54f44a522805de0d1988f6ba543c2543e"))
     (package
       (name "connect")
-      (version "0.0.1")
+      (version (git-version "0.0.1" "1" commit))
       (source (origin
                 (method git-fetch)
                 (uri (git-reference
@@ -149,7 +149,7 @@ aliases based on SSH known-hosts.")
                 (file-name (git-file-name name version))
                 (sha256
                  (base32
-                  "1xd62r7bhyagmqvp5p7ffsfv5fy9gp8k78vjqhika5n9axw0izfg"))))
+                  "0nc4cjf509k1b5i28k7xxr6bd4rgpwgmrs51l5gxwc7yghfcnzwi"))))
       (build-system trivial-build-system)
       (inputs
        `(("bash" ,bash)
