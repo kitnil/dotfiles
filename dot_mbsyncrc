@@ -40,7 +40,7 @@ Channel gmail
 IMAPAccount majordomo
 Host router.majordomo.ru
 User pyhalov@majordomo.ru
-PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/.mailpass-majordomo.gpg"
+PassCmd "pass show newmail.majordomo.ru/pyhalov@majordomo.ru"
 AuthMechs LOGIN
 SSLType None
 CertificateFile /etc/ssl/certs/ca-certificates.crt
