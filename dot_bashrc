@@ -1637,3 +1637,15 @@ if [ -f "$HOME/.nix-profile/share/bash-completion/completions/chezmoi.bash" ]; t
     . "$HOME/.nix-profile/share/bash-completion/completions/chezmoi.bash"
     complete -o default -F __start_chezmoi dotfiles
 fi
+
+backup()
+{
+    sudo --login                                                                \
+            RESTIC_PASSWORD="$(pass show wugi.info/restic/all)"                 \
+            RESTIC_REPOSITORY="${RESTIC_REPOSITORY:-/srv/backup/guixsd}"        \
+            $HOME/.guix-profile/bin/restic $@
+}
+if [ -f "$HOME/.guix-profile/etc/bash_completion.d/restic" ]; then
+    . "$HOME/.guix-profile/etc/bash_completion.d/restic"
+    complete -o default -F __start_restic backup
+fi
