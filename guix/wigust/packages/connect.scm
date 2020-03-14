@@ -137,7 +137,7 @@ aliases based on SSH known-hosts.")
       (license license:gpl3+))))
 
 (define-public connect
-  (let ((commit "cec094a627ca7fa31296d4c4f1b9042d3e2a1ff8"))
+  (let ((commit "f2d530bcc78d25725ebebb73b96a591e73bf2e4d"))
     (package
       (name "connect")
       (version (git-version "0.0.1" "1" commit))
@@ -149,7 +149,7 @@ aliases based on SSH known-hosts.")
                 (file-name (git-file-name name version))
                 (sha256
                  (base32
-                  "0p5wn4h5w3s5gwj9f16z99v1zhnbcgx1bv3471x11mxbg86jdrwf"))))
+                  "14am3yh9w9p4xr5b3vgr3igl3x31da3aap7kj9i3gvim3vngr56n"))))
       (build-system trivial-build-system)
       (inputs
        `(("guile" ,guile-3.0)
@@ -170,6 +170,8 @@ aliases based on SSH known-hosts.")
               (which "guile"))
              (("@SSH_SUDO@")
               (string-append (assoc-ref %build-inputs "ssh-sudo") "/bin/ssh_sudo"))
+             (("@CISCO@")
+              (string-append (assoc-ref %build-inputs "cisco") "/bin/cisco"))
              (("@CISCO_INTERACT@")
               (string-append (assoc-ref %build-inputs "cisco-interact") "/bin/cisco_interact")))
            (mkdir-p (string-append %output "/bin"))
