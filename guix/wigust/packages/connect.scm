@@ -137,7 +137,7 @@ aliases based on SSH known-hosts.")
       (license license:gpl3+))))
 
 (define-public connect
-  (let ((commit "dbf2aaf852766b4d88a16f11a58ebc44aff0dab2"))
+  (let ((commit "cec094a627ca7fa31296d4c4f1b9042d3e2a1ff8"))
     (package
       (name "connect")
       (version (git-version "0.0.1" "1" commit))
@@ -149,10 +149,10 @@ aliases based on SSH known-hosts.")
                 (file-name (git-file-name name version))
                 (sha256
                  (base32
-                  "1kd4rv1gs1l1ay1azx1d2rimqfy49kpbrzj4bx849n0naqw0xa2r"))))
+                  "0p5wn4h5w3s5gwj9f16z99v1zhnbcgx1bv3471x11mxbg86jdrwf"))))
       (build-system trivial-build-system)
       (inputs
-       `(("bash" ,bash)
+       `(("guile" ,guile-3.0)
          ("cisco", cisco)
          ("cisco-interact", cisco-interact)
          ("ssh-sudo", ssh-sudo)))
@@ -163,21 +163,17 @@ aliases based on SSH known-hosts.")
            (use-modules (guix build utils))
            (setenv "PATH"
                    (string-append
-                    (assoc-ref %build-inputs "bash") "/bin"))
+                    (assoc-ref %build-inputs "guile") "/bin"))
            (copy-recursively (assoc-ref %build-inputs "source") ".")
-           (substitute* "connect.sh"
-             (("/bin/sh")
-              (with-output-to-string
-                (lambda ()
-                  (display (which "bash"))
-                  (newline)
-                  (format #t "PATH=~a:$PATH"
-                          (string-join (map (lambda (package)
-                                              (string-append (assoc-ref %build-inputs package) "/bin"))
-                                            '("cisco" "cisco-interact" "ssh-sudo"))
-                                       ":"))))))
+           (substitute* "connect"
+             (("/run/current-system/profile/bin/guile")
+              (which "guile"))
+             (("@SSH_SUDO@")
+              (string-append (assoc-ref %build-inputs "ssh-sudo") "/bin/ssh_sudo"))
+             (("@CISCO_INTERACT@")
+              (string-append (assoc-ref %build-inputs "cisco-interact") "/bin/cisco_interact")))
            (mkdir-p (string-append %output "/bin"))
-           (copy-file "connect.sh" (string-append %output "/bin/connect"))
+           (copy-file "connect" (string-append %output "/bin/connect"))
            #t)))
       (home-page "https://wugi.info/")
       (synopsis "Bash script to connect to different hardware")
