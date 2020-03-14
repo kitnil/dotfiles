@@ -137,7 +137,7 @@ aliases based on SSH known-hosts.")
       (license license:gpl3+))))
 
 (define-public connect
-  (let ((commit "16eb77a54f44a522805de0d1988f6ba543c2543e"))
+  (let ((commit "dbf2aaf852766b4d88a16f11a58ebc44aff0dab2"))
     (package
       (name "connect")
       (version (git-version "0.0.1" "1" commit))
@@ -149,7 +149,7 @@ aliases based on SSH known-hosts.")
                 (file-name (git-file-name name version))
                 (sha256
                  (base32
-                  "0nc4cjf509k1b5i28k7xxr6bd4rgpwgmrs51l5gxwc7yghfcnzwi"))))
+                  "1kd4rv1gs1l1ay1azx1d2rimqfy49kpbrzj4bx849n0naqw0xa2r"))))
       (build-system trivial-build-system)
       (inputs
        `(("bash" ,bash)
