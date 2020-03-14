@@ -695,14 +695,20 @@
 (defcommand neofetch () ()
   (term-shell-command "sh -c 'neofetch; read'"))
 
+(defun run-rofi (command &optional dark)
+  (run-shell-command
+   (join `("rofi"
+           ,@(if (or dark-theme dark) '("-theme DarkBlue") '())
+           ,command))))
+
 (defcommand rofi-drun () ()
   "Open Rofi to launch `.desktop' file."
-  (run-shell-command "rofi -modi run,drun -show drun"))
+  (run-rofi "-modi run,drun -show drun"))
 
 (defcommand rofi-ssh () ()
   "Open Rofi ssh list."
-  (run-shell-command
-   (format nil "rofi -ssh-command '{terminal} -fg ~s -bg ~s -title \"ssh@{host}\" -e {ssh-client} {host}' -width 20 -terminal '~a' -modi ssh -show ssh"
+  (run-rofi
+   (format nil "-ssh-command '{terminal} -fg ~s -bg ~s -title \"ssh@{host}\" -e {ssh-client} {host}' -width 20 -terminal '~a' -modi ssh -show ssh"
            (if dark-theme "#ffffff" "#000000")
            (if dark-theme "#000000" "#f0fff0")
            (xterm-command))))
@@ -710,19 +716,19 @@
 ;; TODO:
 ;; (defcommand rofi-mytop () ()
 ;;   "Open Rofi mytop."
-;;   (run-shell-command "rofi -modi mycli:/home/oleg/bin/rofi-mycli -show mycli"))
+;;   (run-rofi "-modi mycli:/home/oleg/bin/rofi-mycli -show mycli"))
 
 (defcommand rofi-mycli () ()
   "Open Rofi mycli."
-  (run-shell-command "rofi -modi mycli:/home/oleg/bin/rofi-mycli -show mycli"))
+  (run-rofi "-modi mycli:/home/oleg/bin/rofi-mycli -show mycli"))
 
 (defcommand rofi-window () ()
   "Open Rofi window list."
-  (run-shell-command "rofi -modi window -show window"))
+  (run-rofi "-modi window -show window"))
 
 (defcommand rofi-twitchy () ()
   "Open Rofi with Twitchy plugin."
-  (run-shell-command "rofi -modi twitchy:rofi-twitchy -show twitchy"))
+  (run-rofi "-modi twitchy:rofi-twitchy -show twitchy"))
 
 ;; (define-key *root-map* (kbd "@") "rofi-drun")
 
