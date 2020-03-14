@@ -26,6 +26,8 @@
   #:use-module (gnu packages guile)
   #:use-module (gnu packages python-crypto)
   #:use-module (gnu packages python-xyz)
+  #:use-module (gnu packages password-utils)
+  #:use-module (gnu packages ssh)
   #:use-module ((guix licenses) #:prefix license:))
 
 (define-public cisco
@@ -137,7 +139,7 @@ aliases based on SSH known-hosts.")
       (license license:gpl3+))))
 
 (define-public connect
-  (let ((commit "f2d530bcc78d25725ebebb73b96a591e73bf2e4d"))
+  (let ((commit "e09253e837bee3aa66abb52966f75d66664c2de5"))
     (package
       (name "connect")
       (version (git-version "0.0.1" "1" commit))
@@ -149,13 +151,16 @@ aliases based on SSH known-hosts.")
                 (file-name (git-file-name name version))
                 (sha256
                  (base32
-                  "14am3yh9w9p4xr5b3vgr3igl3x31da3aap7kj9i3gvim3vngr56n"))))
+                  "126d7lnd61pv7iqkhpvas4zksjym80n17p8y7kr8jpk9xrcyk1ni"))))
       (build-system trivial-build-system)
       (inputs
        `(("guile" ,guile-3.0)
          ("cisco", cisco)
          ("cisco-interact", cisco-interact)
-         ("ssh-sudo", ssh-sudo)))
+         ("pass" ,password-store)
+         ("ssh" ,openssh)
+         ("ssh-sudo" ,ssh-sudo)
+         ("sshpass" ,sshpass)))
       (arguments
        `(#:modules ((guix build utils))
          #:builder
@@ -168,6 +173,12 @@ aliases based on SSH known-hosts.")
            (substitute* "connect"
              (("/run/current-system/profile/bin/guile")
               (which "guile"))
+             (("@PASS@")
+              (string-append (assoc-ref %build-inputs "pass") "/bin/pass"))
+             (("@SSH@")
+              (string-append (assoc-ref %build-inputs "ssh") "/bin/ssh"))
+             (("@SSHPASS@")
+              (string-append (assoc-ref %build-inputs "sshpass") "/bin/sshpass"))
              (("@SSH_SUDO@")
               (string-append (assoc-ref %build-inputs "ssh-sudo") "/bin/ssh_sudo"))
              (("@CISCO@")
@@ -178,7 +189,7 @@ aliases based on SSH known-hosts.")
            (copy-file "connect" (string-append %output "/bin/connect"))
            #t)))
       (home-page "https://wugi.info/")
-      (synopsis "Bash script to connect to different hardware")
-      (description "This package provides a Bash script to connect to
+      (synopsis "Guile script to connect to different hardware")
+      (description "This package provides a Guile script to connect to
 different hardware.")
       (license license:gpl3+))))
