@@ -67,7 +67,6 @@
        emacs-helm-gtags
        emacs-helm-make          ; Front end to `make'
        emacs-helm-mode-manager
-       emacs-helm-pass          ; Front end to password-store
        emacs-helm-projectile    ; Helm interface for Projectile
        emacs-helm-shell-history
        emacs-highlight-defined

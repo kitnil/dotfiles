@@ -28,6 +28,7 @@
    emacs-git-messenger-diff-mode
    emacs-gited
    emacs-guix-misc
+   emacs-helm-pass-custom-dmenu ; Front end to password-store
    emacs-highlight-indent-guides
    emacs-hydra-timestamp
    emacs-info-colors        ; Colorize info pages
