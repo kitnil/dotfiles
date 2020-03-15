@@ -216,6 +216,18 @@
       - git:
           url: https://cgit.duckdns.org/git/wigust/dotfiles-ansible
 - job:
+    name: wigust/majordomo-maintenance
+    description: null
+    project-type: multibranch
+    periodic-folder-trigger: 1d
+    prune-dead-branches: true
+    number-to-keep: '10'
+    days-to-keep: '10'
+    script-path: Jenkinsfile
+    scm:
+      - git:
+          url: https://cgit.duckdns.org/git/wigust/majordomo-maintenance
+- job:
     name: wigust/ssh
     description: null
     project-type: multibranch
