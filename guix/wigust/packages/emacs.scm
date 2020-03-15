@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2017, 2018, 2019 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2017, 2018, 2019, 2020 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -80,6 +80,7 @@
   #:use-module (gnu packages emacs-xyz)
   #:use-module (gnu packages xdisorg)
   #:use-module (gnu packages haskell-xyz)
+  #:use-module (wigust packages password-utils)
   #:use-module (guix utils)
   #:use-module (guix build emacs-utils)
   #:use-module (srfi srfi-1)
@@ -476,6 +477,13 @@ other.
     (description "@code{emacs-auth-password-store} integrates Emacs
 auth-source library with @code{password-store}.")
     (license license:gpl3+)))
+
+(define-public emacs-helm-pass-custom-dmenu
+  (package
+    (inherit emacs-helm-pass)
+    (inputs "emacs-helm-pass-custom-dmenu")
+    (inputs `(("password-store" ,password-store-custom-dmenu)
+              ,@(assoc-remove! (package-inputs emacs-helm-pass) "password-store")))))
 
 (define-public emacs-xml-rpc
   (package
