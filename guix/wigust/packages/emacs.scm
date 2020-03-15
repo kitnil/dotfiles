@@ -478,12 +478,21 @@ other.
 auth-source library with @code{password-store}.")
     (license license:gpl3+)))
 
+(define-public emacs-password-store-custom-dmenu
+  (package
+    (inherit emacs-password-store)
+    (name "emacs-password-store-custom-dmenu")
+    (propagated-inputs
+     `(("password-store" ,password-store-custom-dmenu)
+       ,@(assoc-remove! (package-propagated-inputs emacs-password-store) "password-store")))))
+
 (define-public emacs-helm-pass-custom-dmenu
   (package
     (inherit emacs-helm-pass)
-    (inputs "emacs-helm-pass-custom-dmenu")
-    (inputs `(("password-store" ,password-store-custom-dmenu)
-              ,@(assoc-remove! (package-inputs emacs-helm-pass) "password-store")))))
+    (name "emacs-helm-pass-custom-dmenu")
+    (propagated-inputs
+     `(("emacs-password-store" ,emacs-password-store-custom-dmenu)
+       ,@(assoc-remove! (package-propagated-inputs emacs-helm-pass) "emacs-password-store")))))
 
 (define-public emacs-xml-rpc
   (package
