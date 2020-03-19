@@ -244,6 +244,11 @@ gpu()
     guix package --substitute-urls='http://cuirass.tld https://ci.guix.info https://mirror.hydra.gnu.org' --upgrade=. $@
 }
 
+upgrade()
+{
+    (set -ex; sudo -i guix system reconfigure /etc/config.scm; guix package -m $HOME/manifest.scm)
+}
+
 activity()
 {
     ps -ef | awk '{ print $1 }' | sort | uniq | wc -l;
