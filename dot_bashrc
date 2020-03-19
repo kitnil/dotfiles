@@ -1629,6 +1629,7 @@ slideshow()
 }
 
 alias pass='EDITOR=zile pass'
+alias ansible-vault='EDITOR=zile ansible-vault'
 
 alias sw1-dh507='connect sw1-dh507'
 alias sw1-mr11="connect sw1-mr11"
