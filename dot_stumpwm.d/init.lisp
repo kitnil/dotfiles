@@ -1642,7 +1642,7 @@
   (define-key *top-map* (kbd "s-U") "cerb")
   (define-key *top-map* (kbd "M-s-u") "grafana-upstream-interfaces")
   (define-key *top-map* (kbd "C-s-u") "grafana-netflow")
-  (define-key *top-map* (kbd "s-s") "slack")
+  (define-key *top-map* (kbd "s-s") "passmenu")
   (define-key *top-map* (kbd "s-y") "mj-installed-servers")
   (define-key *top-map* (kbd "s-;") "colon")
   (define-key *top-map* (kbd "s-[") "place-existing-windows")
