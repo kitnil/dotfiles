@@ -1645,7 +1645,12 @@ alias glow='glow --style light'
 
 alias nix='EDITOR=less nix'
 
-alias dotfiles='EDITOR=zile chezmoi'
+dotfiles()
+{
+    EDITOR=zile
+    chezmoi="$HOME/.nix-profile/bin/chezmoi"
+    [[ $1 == "template" ]] && $chezmoi add --template --autotemplate $2 || $chezmoi $@
+}
 if [ -f "$HOME/.nix-profile/share/bash-completion/completions/chezmoi.bash" ]; then
     . "$HOME/.nix-profile/share/bash-completion/completions/chezmoi.bash"
     complete -o default -F __start_chezmoi dotfiles
