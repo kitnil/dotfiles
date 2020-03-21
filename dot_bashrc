@@ -1672,3 +1672,5 @@ cut()
 {
     command cut --characters="-$(tput cols)" $@
 }
+
+alias diff=colordiff
