@@ -1673,4 +1673,9 @@ cut()
     command cut --characters="-$(tput cols)" $@
 }
 
+fd()
+{
+    [ "$#" -ne 2 ] && command fd . "$1" || command fd $@
+}
+
 alias diff=colordiff
