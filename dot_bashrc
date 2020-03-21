@@ -401,9 +401,12 @@ listen-ports()
 
 alias vnc-server-android="vncserver -AcceptSetDesktopSize=no -geometry 1280x720"
 
-ssh-root()
+ssh()
 {
-    ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -l root $@
+    command="command ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no"
+    $command $@ \
+        || $command -i $HOME/.ssh/eng_key_rsa -l eng $@ \
+        || $command -i $HOME/.ssh/eng_key_rsa -l root $@
 }
 
 sshpass-root ()
