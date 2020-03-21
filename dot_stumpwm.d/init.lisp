@@ -776,20 +776,13 @@
                                     :title title
                                     :scrollbar t)))
 
+(defvar *small-frame-width* 954)
+
 (defun small-framep ()
-  (cond ((string= (class-name (class-of (current-group))) "FLOAT-GROUP") nil)
-
-        ((string= (getenv "DISPLAY") ":1")
-         (let ((frame (frame-number (tile-group-current-frame (current-group)))))
-           (if (= frame 0) nil t)))
-
-        ((and (not workstation?) (string= (getenv "DISPLAY") ":0"))
-         (let ((frame (frame-number (tile-group-current-frame (current-group)))))
-           (if (string-equal (group-name (current-group)) "Default")
-	       (or (= frame 0) (= frame 1))
-	       (or (= frame 2) (= frame 1)))))
-
-        (t nil)))
+  (let ((group (current-group)))
+    (if (string= (class-name (class-of group)) "FLOAT-GROUP")
+        nil
+        (<= (frame-width (tile-group-current-frame group)) *small-frame-width*))))
 
 (defcommand current-frame-smallp () ()
   (if (small-framep)
