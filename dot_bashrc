@@ -1667,3 +1667,8 @@ if [ -f "$HOME/.guix-profile/etc/bash_completion.d/restic" ]; then
     . "$HOME/.guix-profile/etc/bash_completion.d/restic"
     complete -o default -F __start_restic backup
 fi
+
+cut()
+{
+    command cut --characters="-$(tput cols)" $@
+}
