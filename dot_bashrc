@@ -1288,13 +1288,23 @@ find-touch-go()
     find . -name '*.go' -exec touch {} +
 }
 
-pass-show-fzf()
+password()
 {
-    (
-        cd ~/.password-store || exit
-        pass show "$(find . -not -path './.gitattributes' -not -path './.git/*' -type f | sed 's@\./@@' | sed 's@\.gpg@@' | fzf)"
-    )
+    if [ "$#" -ne 2 ]
+    then
+        (
+            cd "$HOME/.password-store" || exit
+            pass show "$(find . -not -path './.gitattributes' -not -path './.git/*' -type f | sed 's@\./@@' | sed 's@\.gpg@@' | fzf)" \
+                | xclip -i -sel p -f | xclip -i -sel c
+        )
+    else
+        pass $@
+    fi
 }
+if [ -f "$HOME/.guix-profile/etc/bash_completion.d/pass" ]; then
+    . "$HOME/.guix-profile/etc/bash_completion.d/pass"
+    complete -o filenames -F _pass password
+fi
 
 pass-list-all()
 {
