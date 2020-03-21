@@ -78,6 +78,7 @@ in [
   git-secrets
   # gita
   # glibc-locales
+  go2nix
   glow
   groovy
   hexyl
