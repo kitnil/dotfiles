@@ -15,7 +15,7 @@
 	branches-by-date = for-each-ref --sort=-committerdate refs/heads
         branches-by-date-origin = for-each-ref --sort=-committerdate refs/remotes/origin
         contributers = shortlog -sne
-        ll = log --format='%H %ae %cI %s'
+        ll = log --format='%H %cI %ae %s'
 	lll = log --format='%ai %H %s'
         push-skip-ci = push -o ci.skip
 [github]
