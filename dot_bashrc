@@ -1010,13 +1010,20 @@ git-clean-up()
 
 tmux-ls()
 {
-    tmux ls | cut -d ':' -f 1;
+    command tmux ls | cut -d ':' -f 1 2>/dev/null
 }
 
-tmux-fzf()
+tmux()
 {
-    session="$1"
-    tmux at -t "$(tmux-ls | fzf)"
+    case "$1" in
+        list)
+            session="$(tmux-ls | fzf)"
+            [ session == "" ] || (exit 1) && command tmux at -t "$session"
+            ;;
+        *)
+            command tmux $@
+            ;;
+    esac
 }
 
 wp-cron()
