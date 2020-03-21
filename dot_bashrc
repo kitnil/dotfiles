@@ -467,23 +467,10 @@ hms-current-stack()
     curl -u "jenkins:$(pass show majordomo/jenkins/jenkins)" -X GET http://nginx1.intr:8080/hms
 }
 
-ansible-docker-ps()
-{
-    ansible swarm -m shell -a 'docker ps' --become
-}
-
 docker-list-intr()
 {
     curl -s -X GET -k -u "gradle:$(pass show majordomo/nexus/gradle)" https://docker-registry.intr/v2/_catalog \
         | jq -r '.repositories[]'
-}
-
-docker-pull-intr()
-{
-    group="$1" # For example: “mail”.
-    for repo in $docker_list_intr; do
-        docker pull "docker-registry.intr/$repo"
-    done
 }
 
 jenkins-log()
@@ -587,13 +574,6 @@ nix-untar-docker()
     tar xv --wildcards '*/layer.tar' -f "$1" \
         | tee /tmp/tempstore \
         | xargs -n1 -I{} tar xvf {}
-}
-
-docker-ps-ip()
-{
-    docker ps --format='{{.ID}}' \
-        | xargs docker inspect \
-        | jq -r '.[] | [.NetworkSettings.Networks.bridge.IPAddress, .Config.Image] | @tsv'
 }
 
 complete -C "$HOME/.nix-profile/bin/terraform" terraform
@@ -1255,10 +1235,38 @@ less-color()
     export LESS
 }
 
-dockerfile-lint()
+container()
 {
-    docker run --rm -i hadolint/hadolint:v1.17.2-8-g65736cb-debian < Dockerfile
+    case "$1" in
+        lint)
+            docker run --rm --interactive hadolint/hadolint:v1.17.2-8-g65736cb-debian < Dockerfile
+            ;;
+        ip)
+            docker ps --format='{{.ID}}' \
+                | xargs docker inspect \
+                | jq -r '.[] | [.NetworkSettings.Networks.bridge.IPAddress, .Config.Image] | @tsv'
+            ;;
+        intr-list)
+            docker-list-intr
+            ;;
+        intr-pull)
+            group="$1" # For example: “mail”.
+            for repo in $docker_list_intr; do
+                docker pull "docker-registry.intr/$repo"
+            done
+            ;;
+        intr-ps)
+            ANSIBLE_NOCOLOR=1 ansible swarm -m shell -a 'docker ps --no-trunc' --become --ask-become-pass
+            ;;
+        *)
+            docker $@
+            ;;
+    esac
 }
+if [ -f /run/current-system/profile/etc/bash_completion.d/docker ]; then
+    . /run/current-system/profile/etc/bash_completion.d/docker
+    complete -F _docker container
+fi
 
 ip-to-decimal()
 {
