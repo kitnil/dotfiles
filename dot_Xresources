@@ -134,3 +134,11 @@ XTerm*charClass: 33:48,36-38:48,40-47:48,58-59:48,61:48,63-64:48,95:48,126:48
 
 ! Origin <https://lists.nongnu.org/archive/html/stumpwm-devel/2007-07/msg00022.html>.
 XTerm*allowSendEvents: True
+
+! Color output in console
+! Origin <https://wiki.archlinux.org/index.php/Color_output_in_console#man>
+*VT100.colorBDMode: true
+*VT100.colorBD: red
+*VT100.colorULMode: true
+*VT100.colorUL: cyan
+*VT100.veryBoldColors: 6
