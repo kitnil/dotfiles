@@ -1320,6 +1320,7 @@ if [ -f "$HOME/.guix-profile/etc/bash_completion.d/pass" ]; then
     . "$HOME/.guix-profile/etc/bash_completion.d/pass"
     complete -o filenames -F _pass password
 fi
+alias password='EDITOR=zile password'
 
 pass-list-all()
 {
