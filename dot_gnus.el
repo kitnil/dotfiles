@@ -1,4 +1,4 @@
-;; Copyright © 2018, 2019 Oleg Pykhalov <go.wigust@gmail.com>
+;; Copyright © 2018, 2019, 2020 Oleg Pykhalov <go.wigust@gmail.com>
 ;; Released under the GNU GPLv3 or any later version.
 
 (require 'mailcap)
@@ -167,6 +167,8 @@ below otherwise."
   (let ((map gnus-summary-mode-map))
     (define-key map (kbd "<f5>") 'mbsync)
     (define-key map (kbd "<f6>") 'org-capture)))
+
+(setq gnus-summary-line-format "%U%R %i %I%(%[%4L: %-23,23f%]%) %s\n")
 
 ;; (gnus-add-configuration
 ;;    '(article
