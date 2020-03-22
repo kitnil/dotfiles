@@ -137,8 +137,8 @@ XTerm*allowSendEvents: True
 
 ! Color output in console
 ! Origin <https://wiki.archlinux.org/index.php/Color_output_in_console#man>
-*VT100.colorBDMode: true
-*VT100.colorBD: red
-*VT100.colorULMode: true
-*VT100.colorUL: cyan
-*VT100.veryBoldColors: 6
+! *VT100.colorBDMode: true
+! *VT100.colorBD: red
+! *VT100.colorULMode: true
+! *VT100.colorUL: cyan
+! *VT100.veryBoldColors: 6
