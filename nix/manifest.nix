@@ -65,6 +65,7 @@ in [
   dnsperf
   # docker-compose
   docker-ls
+  dragon-drop
   # elktail-bin
   fd
   # ferm
