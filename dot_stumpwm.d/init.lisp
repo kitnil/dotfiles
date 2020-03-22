@@ -1230,7 +1230,8 @@
 
 (defcommand xpanes-top () ()
   (term-shell-command "xpanes -t -C 1 -c 'autossh -M0 -t {} -- top -d 10' localhost spb workstation.intr ci.intr kvm15.intr oracle"
-                      :color 'dark :title "xpanes-top" :font '("-fa" "Monospace" "-fs" "6")))
+                      :color 'dark :title "xpanes-top" :font "Monospace:size=6"
+                      :terminal 'st))
 
 (defcommand xpanes-guix () ()
   (term-shell-command "xpanes -t -C 1 -c 'ssh -t {}' guixsd workstation.intr spb"
