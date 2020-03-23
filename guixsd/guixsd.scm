@@ -7,7 +7,7 @@
 (use-package-modules admin base certs cryptsetup docker linux lisp
                      suckless xdisorg xorg fonts android fontutils
                      gnome freedesktop readline ncurses networking
-                     pulseaudio)
+                     pulseaudio wm)
 
 (use-service-modules admin dbus desktop docker dns networking sound
                      xorg ssh web cgit version-control certbot
@@ -269,6 +269,8 @@ EndSection")
       (inherit base-system)
       (kernel-arguments '("modprobe.blacklist=pcspkr,snd_pcsp"))
       (packages (cons* sbcl stumpwm-checkout `(,stumpwm-checkout "lib")
+
+                       sbcl-stumpwm-ttf-fonts
 
                        ncurses
 
