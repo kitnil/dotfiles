@@ -7,7 +7,7 @@
 (use-package-modules admin base certs cryptsetup docker linux lisp
                      suckless xdisorg xorg fonts android fontutils
                      gnome freedesktop readline ncurses networking
-                     pulseaudio wm)
+                     pulseaudio wm vnc)
 
 (use-service-modules admin dbus desktop docker dns networking sound
                      xorg ssh web cgit version-control certbot
@@ -440,6 +440,20 @@ EndSection")
 
                        ;; “adb” and “fastboot” without root privileges
                        (simple-service 'adb udev-service-type (list android-udev-rules))
+
+                       (simple-service 'vncserver shepherd-root-service-type
+                                       (list
+                                        (shepherd-service
+                                         (provision '(vnc))
+                                         (documentation "Run VNC server on DISPLAY 0.")
+                                         (requirement '(xorg-server))
+                                         (start #~(make-forkexec-constructor
+                                                   (list #$(file-append tigervnc-server "/bin/x0vncserver")
+                                                         "-PasswordFile" "/home/oleg/.vnc/passwd"
+                                                         "-display" ":0"
+                                                         "-rfbport" "5901")))
+                                         (respawn? #t)
+                                         (stop #~(make-kill-destructor)))))
 
                        ;; Desktop services
                        (service slim-service-type
