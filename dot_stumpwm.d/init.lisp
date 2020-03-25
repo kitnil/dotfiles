@@ -1115,9 +1115,7 @@
 
 (defcommand ipkvm () ()
   (run-shell-command
-   (join (list (concat (getenv "HOME")
-                       "/.nix-profile.d/firefox-esr-52/firefox-esr-52/bin/firefox")
-               "-P" "esr52" "--new-instance"))))
+   (join (list "firefox-esr-52" "-P" "esr52" "--new-instance"))))
 
 (defcommand mongo-prod () ()
   (term-shell-command (concat "mongo mongodb://admin:"
