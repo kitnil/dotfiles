@@ -1,0 +1,28 @@
+#!/run/current-system/profile/bin/sh
+# -*- scheme -*-
+exec ${GUILE:-$(which guile)} $GUILE_FLAGS -e '(@@ (docker) main)' -s "$0" "$@"
+!#
+
+(define-module (docker)
+  #:use-module (srfi srfi-1)
+  #:use-module (srfi srfi-26)
+  #:use-module (ice-9 rdelim)
+  #:use-module (ice-9 match))
+
+(define (main args)
+  (pk
+   (filter
+    (match-lambda ((#t service) #t) (else #f))
+    (match (string-split (with-input-from-file "/tmp/service.txt"
+                           read-string)
+                         #\newline)
+      ((head tail ...)
+       (map (lambda (line)
+              (match (delete '() (delete "" (string-split line #\space)))
+                ((replicas name) (list ((match-lambda ((active all) (> active all)))
+                                        (map (lambda (str)
+                                               (string->number str))
+                                             (string-split replicas #\/)))
+                                       name))
+                (else #f)))
+            tail))))))
