@@ -1,0 +1,7 @@
+#!/bin/sh
+
+set -e -x
+
+for alert in $(alerta query --filter severity=critical | awk '/chef cookbook/ { print $1 }'); do
+    alerta close --ids $alert
+done
