@@ -5,6 +5,10 @@ with import <nixpkgs> {
         url = "https://github.com/guibou/nixGL";
         ref = "master";
       }) { });
+      ipmi = (super.callPackage (builtins.fetchGit {
+        url = "https://cgit.duckdns.org/git/nix/ipmi";
+        ref = "master";
+      }) { });
       ipmiview = (super.callPackage (builtins.fetchGit {
         url = "https://cgit.duckdns.org/git/nix/ipmiview";
         ref = "master";
@@ -184,4 +188,27 @@ in [
     chmod 555 $out/bin/firefox-esr-52
   '');
   }))
+
+  (stdenv.mkDerivation {
+    name = "ipmi";
+    builder = writeScript "builder.sh" (''
+      source $stdenv/setup
+      mkdir -p $out/bin
+
+      cat > $out/bin/ipmi <<'EOF'
+      #!${bash}/bin/bash
+      # Wrapper which you could run as `ipmi jenkins.ipmi'
+      export IPMI_HOST=$1
+      export IPMI_OUTPUT=/tmp/$IPMI_HOST.jviewer.jnlp
+      export IPMI_USER=ADMIN
+      export IPMI_PASSWORD=$(pass show majordomo/ipmi/ADMIN)
+      exec -a ipmi ${ipmi}/bin/ipmi "$@"
+      EOF
+      chmod 555 $out/bin/ipmi
+
+      # Oracle's javaws configuration utility.
+      ln -s ${ipmi}/bin/ControlPanel $out/bin/ControlPanel
+    '');
+  })
+
 ]
