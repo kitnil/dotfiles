@@ -39,7 +39,8 @@
   (services (cons (static-networking-service "enp6s0" "192.168.105.120"
 					     #:netmask "255.255.255.0"
 					     #:gateway "192.168.105.1"
-					     #:name-servers '("127.0.0.1\nsearch intr majordomo.ru"
+					     #:name-servers '("192.168.105.120\nsearch intr majordomo.ru"
+                                                              "172.17.0.1"
                                                               "8.8.8.8"
                                                               "8.8.4.4"))
 		  %base-services)))
