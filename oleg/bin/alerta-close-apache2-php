@@ -4,6 +4,8 @@
 
 set -e -x
 
-for id in $(alerta query --filter severity=critical | grep apache2-php | awk '/configtest/ { print $1 }'); do
-    alerta close --ids $id
+for severity in major critical; do
+    for id in $(alerta query --filter severity=$severity | grep apache2-php | awk '/configtest/ { print $1 }'); do
+        alerta close --ids $id
+    done
 done
