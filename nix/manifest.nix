@@ -59,6 +59,7 @@ in [
   chezmoi
   chromium
   clipmenu
+  ctop
   diskus
   dive
   # dmg2img
