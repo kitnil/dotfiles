@@ -178,17 +178,6 @@
       - git:
           url: file:///home/oleg/src/dotfiles/.git
 - job:
-    name: wigust/chezmoi
-    project-type: multibranch
-    periodic-folder-trigger: 1d
-    prune-dead-branches: true
-    number-to-keep: '10'
-    days-to-keep: '10'
-    script-path: Jenkinsfile
-    scm:
-      - git:
-          url: file:///home/oleg/src/chezmoi/.git
-- job:
     name: wigust/org
     project-type: multibranch
     periodic-folder-trigger: 1d
