@@ -1,0 +1,8 @@
+Jenkinsfile
+README.md
+{{- if ne .chezmoi.hostname "guixsd" }}
+.alerta.conf
+{{- end }}
+{{- if ne .chezmoi.hostname "workstation-guixsd" }}
+.alerta.conf
+{{- end }}

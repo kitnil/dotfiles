@@ -1,0 +1,49 @@
+[user]
+	email = go.wigust@gmail.com
+	name = Oleg Pykhalov
+[sendemail]
+	smtpEncryption = tls
+	smtpServer = smtp.gmail.com
+	smtpUser = go.wigust@gmail.com
+	smtpServerPort = 587
+	assume8bitEncoding = UTF-8
+[commit]
+	gpgsign = true
+[user]
+	signingKey = 167F8EA5001AFA9C
+[alias]
+	branches-by-date = for-each-ref --sort=-committerdate refs/heads
+        branches-by-date-origin = for-each-ref --sort=-committerdate refs/remotes/origin
+        contributers = shortlog -sne
+        ll = log --format='%H %cI %ae %s'
+	lll = log --format='%ai %H %s'
+        push-skip-ci = push -o ci.skip
+[github]
+	user = wigust
+[gitlab]
+	user = wigust
+[secrets]
+	# providers = pass show email/gmail/go.wigust
+        # providers = pass show majordomo/redmine.intr/pyhalov
+        # providers = pass show majordomo/mjru.slack.com/pyhalov@majordomo.ru
+        # providers = pass show majordomo/ssh/eng
+        # providers = pass show majordomo/ssh/router
+        # providers = pass show majordomo/cvm/cron
+        # providers = pass show gitlab.wugi.info/wigust-private-token
+        # providers = pass show github/tokens/terraformer
+        # providers = pass show majordomo/gitlab.intr/tokens/terraform
+        # providers = pass show majordomo/mjru.slack.com/tokens/deprecated
+        # providers = pass show wugi.info/camera/192.168.100.3/gitarik
+        # providers = pass show majordomo/router.majordomo.ru
+        # providers = pass show jenkins.intr/admin
+        providers = /home/oleg/bin/git-pass-secrets
+[gitlab "gitlab.intr/api/v4"]
+	user = pyhalov
+[gitlab "gitlab.wugi.info/api/v4"]
+	user = wigust
+[filesystem "Oracle Corporation|1.8.0_222|/dev/sdb2"]
+	timestampResolution = 8001 microseconds
+	minRacyThreshold = 0 nanoseconds
+[filesystem "Oracle Corporation|1.8.0_242|/dev/sdb2"]
+	timestampResolution = 1001 microseconds
+	minRacyThreshold = 4449 microseconds

@@ -1,0 +1,9 @@
+[DEFAULT]
+timezone = Europe/Moscow
+# output = psql
+profile = production
+
+[profile production]
+endpoint = http://alerta.intr/api
+key = {{ pass "majordomo/alerta.intr/key" }}
+sslverify = off

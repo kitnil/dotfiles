@@ -1,0 +1,144 @@
+! https://wiki.archlinux.org/index.php/Xterm
+
+! 
+! XTerm
+
+! https://unix.stackexchange.com/questions/109509/how-to-search-xterm-console-history
+XTerm.vt100.printerCommand: /home/oleg/.guix-profile/bin/xterm -bg '#f5f5f5' -fg black +sb -e sh -c 'cat <&3 | less -Sr' 3<&0
+XTerm.vt100.translations: #override Ctrl ~Meta ~Shift <Key>slash: print-everything() \n\
+    Ctrl Shift <KeyPress> C: copy-selection(CLIPBOARD) \n\
+    Ctrl Shift <KeyPress> V: insert-selection(CLIPBOARD) \n\
+    Ctrl Shift <KeyPress> Y: insert-selection(PRIMARY) \n\
+    Ctrl <Btn4Down>: larger-vt-font() \n\
+    Ctrl <Btn5Down>: smaller-vt-font() \n\
+    Ctrl Shift <KeyPress> N: spawn-new-terminal()
+
+! Select all XTerm buffer
+XTerm.vt100.on4Clicks: all
+
+XTerm.vt100.foreground: black
+XTerm.vt100.background: white
+
+XTerm*color0:  #000000
+XTerm*color8:  #686868
+! red
+XTerm*color1:  #B21818
+XTerm*color9:  #FF5454
+! green
+XTerm*color2:  #66CD00
+XTerm*color10: #54FF54
+! yellow
+XTerm*color3:  #B26818
+XTerm*color11: #EEC900
+! blue
+XTerm*color4:  #4169e1
+XTerm*color12: #5454FF
+! purple
+XTerm*color5:  #B218B2
+XTerm*color13: #FF54FF
+! cyan
+XTerm*color6:  #18B2B2
+XTerm*color14: #54FFFF
+! white
+XTerm*color7:  #B2B2B2
+XTerm*color15: #FFFFFF
+
+XTerm.vt100.scrollBar: true
+XTerm.vt100.cursorBlink: false
+
+! https://github.com/eudoxia0/dotfiles/blob/master/sextant/xresources.txt
+XTerm.vt100.internalBorder: 10
+
+*.rightScrollBar: true
+
+XTerm.vt100.locale: true
+
+XTerm.vt100.saveLines: 4096
+XTerm.vt100.faceName: xft:Monospace:size=12:antialias=true
+XTerm.vt100.faceNameDoublesize: xft:WenQuanYi Zen Hei Mono:style=Regular:size=12
+
+! With japanese font supports.
+! Origin <https://bbs.archlinux.org/viewtopic.php?pid=1205854#p1205854>.
+! xterm*font:     -misc-fixed-medium-r-normal--18-120-100-100-c-90-iso10646-1
+! xterm*wideFont: -misc-fixed-medium-r-normal-ja-18-120-100-100-c-180-iso10646-1
+
+! *VT100.utf8Fonts.font4: -misc-fixed-medium-r-normal--13-120-75-75-c-80-iso10646-1
+! *VT100.utf8Fonts.font2: -misc-fixed-medium-r-normal--8-80-75-75-c-50-iso10646-1
+! *VT100.utf8Fonts.font6: -misc-fixed-medium-r-normal--20-200-75-75-c-100-iso10646-1
+! *VT100.utf8Fonts.font5: -misc-fixed-medium-r-normal--18-120-100-100-c-90-iso10646-1
+! *VT100.utf8Fonts.font3: -misc-fixed-medium-r-normal--14-130-75-75-c-70-iso10646-1
+! *VT100.utf8Fonts.font: -misc-fixed-medium-r-semicondensed--13-120-75-75-c-60-iso10646-1
+
+XTerm.vt100.metaSendsEscape: true
+
+! Fix <C-h> in Emacs
+XTerm.vt100.backarrowKey: false
+XTerm.ttyModes: erase ^?
+
+! Clipboard instead primary
+! XTerm.vt100.selectToClipboard: true
+
+! Inspired by:   https://www.gnu.org/software/emacs/manual/html_node/emacs/Fonts.html#Fonts
+! Get code from: https://www.emacswiki.org/emacs/XftGnuEmacs
+Emacs.FontBackend: xft
+Emacs.font: Monospace-12
+Emacs.mode-line.attributeBox: nil
+
+! VT Font Menu: Unreadable
+XTerm*faceSize1: 8
+! VT font menu: Tiny
+XTerm*faceSize2: 10
+! VT font menu: Medium
+XTerm*faceSize3: 12
+! VT font menu: Large
+XTerm*faceSize4: 14
+! VT font menu: Huge
+XTerm*faceSize5: 16
+
+! Allow xterm to report the TERM variable correctly.  Do not set the
+! TERM variable from your ~/.bashrc or ~/.bash_profile or similar
+! file.  The terminal itself should report the correct TERM to the
+! system so that the proper terminfo file will be used.  Two usable
+! terminfo names are xterm and xterm-256color
+XTerm.termName: xterm-256color
+
+! https://snarfed.org/emacs_x_resources
+Emacs.menuBar: off
+Emacs.verticalScrollBars: off
+Emacs.toolBar: off
+
+! (emacs) Table of Resources
+! Emacs.cursorBlink: off
+
+! Origins <http://invisible-island.net/xterm/manpage/xterm.html#h3-Custom-Key-Bindings>,
+! <https://unix.stackexchange.com/a/277960>, XTERM(1).
+! XTerm.vt100.translations: #override \n\
+  ! Meta <KeyPress> /: dabbrev-expand()
+
+! Origin <https://raw.githubusercontent.com/gotbletu/shownotes/master/xterm_xresources.md>.
+! Disable fullscreen hotkey M-RET.  Hotkey conflicts with Weechat,
+! Midnight Commander, Emacs.
+XTerm*fullscreen: never
+
+! * Triple click it to select a URL and <S-down-mouse-1> to open a URL.
+! XTerm.vt100.translations: #override Shift <Btn1Up>: exec-formatted("xdg-open '%t'", PRIMARY)
+
+! XTerm*on3Clicks: regex ([[:alpha:]]+://)?([[:alnum:]
+
+! Origin <https://scarygliders.net/2011/12/01/customize-xterm-the-original-and-best-terminal/>.
+! Double-click to select URLs.
+!
+! Defining What Makes Up a Word for Selection Purposes
+! <https://docstore.mik.ua/orelly/unix3/upt/ch05_14.htm>
+XTerm*charClass: 33:48,36-38:48,40-47:48,58-59:48,61:48,63-64:48,95:48,126:48
+
+! Origin <https://lists.nongnu.org/archive/html/stumpwm-devel/2007-07/msg00022.html>.
+XTerm*allowSendEvents: True
+
+! Color output in console
+! Origin <https://wiki.archlinux.org/index.php/Color_output_in_console#man>
+! *VT100.colorBDMode: true
+! *VT100.colorBD: red
+! *VT100.colorULMode: true
+! *VT100.colorUL: cyan
+! *VT100.veryBoldColors: 6
