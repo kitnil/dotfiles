@@ -1,4 +1,6 @@
 ;; Add my personal packages to those Guix provides.
+;;
+;; WARNING: Don't use commits because of bin/executable_dotfiles
 (list (channel
        (name 'guix-wigust)
        (url "https://cgit.duckdns.org/git/guix/guix-wigust"))

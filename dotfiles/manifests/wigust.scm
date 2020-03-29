@@ -3,6 +3,7 @@
              (wigust packages admin)
              (wigust packages connect)
              (wigust packages documentation)
+             (wigust packages dotfiles)
              (wigust packages emacs)
              (wigust packages games)
              (wigust packages guix)
@@ -81,6 +82,6 @@
 
   connect ssh-aliases
 
-  (load "guix.scm")
+  dotfiles
 
   guix-wigust-packages-emacs))

@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/sh -e
 
 if [ -f "$HOME/.nix-profile/bin/chezmoi" ]
 then
@@ -10,7 +10,18 @@ fi
 
 case "$1" in
     guix)
-        exec -a chezmoi "$chezmoi" --source @GUIX@ "${@:2}"
+        exec -a chezmoi $chezmoi --source @GUIX@ "${@:2}"
+        ;;
+    pull)
+        guix pull --channels="@GUIX@/dotfiles/channels.scm"
+        sudo --login guix pull --channels="@GUIX@/dotfiles/channels.scm"
+        nix-channel --update
+        ;;
+    reconfigure)
+        $chezmoi --source "@GUIX@" apply
+        guix package --manifest="@GUIX@/dotfiles/manifests/$HOSTNAME.scm"
+        sudo --login guix system reconfigure "@GUIX@/dotfiles/guixsd/$HOSTNAME.scm"
+        NIX_PATH=nixpkgs=/home/oleg/.nix-defexpr/channels/nixos-unstable nix-env --install '.*' -f /home/oleg/manifest.nix
         ;;
     template)
         exec -a chezmoi "$chezmoi" add --template --autotemplate "$@"
