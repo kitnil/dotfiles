@@ -89,13 +89,6 @@ pipeline {
                 nodeLabels: node_labels
             }
         }
-        stage('Trigger jobs') {
-            steps {
-                catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
-                    build job: "../../nix/maintenance/wip-local"
-                }
-            }
-        }
    }
     post {
         always {
