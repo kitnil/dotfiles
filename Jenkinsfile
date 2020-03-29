@@ -6,6 +6,11 @@ pipeline {
     agent {
         label "master"
     }
+    parameters {
+        booleanParam(name: 'CHEZMOI_APPLY',
+                     defaultValue: triggeredBy('UpstreamCause') == true ? false : true,
+                     description: 'Invoke chezmoi apply')
+    }
     stages {
         stage("Invoking git clone") {
             steps {
@@ -16,7 +21,10 @@ pipeline {
         }
         stage("Invoke chezmoi") {
             steps {
-                parallelSh cmd: "chezmoi diff; chezmoi apply", nodeLabels: node_labels
+                script {
+                    apply = params.CHEZMOI_APPLY ? "chezmoi apply" : "true"
+                    parallelSh cmd: "chezmoi diff; $apply", nodeLabels: node_labels
+                }
             }
         }
    }
