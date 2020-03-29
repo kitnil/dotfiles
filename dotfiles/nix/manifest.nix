@@ -27,6 +27,7 @@ with import <nixpkgs> {
       ref = "master";
     }).outPath + "/overlay"))
   ];
+  config = { allowUnfree = true; };
 };
 
 with pkgs;

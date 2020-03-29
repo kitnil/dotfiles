@@ -22,9 +22,6 @@ pipeline {
     agent {
         label "master"
     }
-    environment {
-        NIXPKGS_CONFIG="${WORKSPACE}/dotfiles/nix/config.nix"
-    }
     parameters {
         booleanParam(name: 'INVOKE_GUIX_PULL',
                      defaultValue: triggeredBy('TimerTrigger') == true ? true : false,
