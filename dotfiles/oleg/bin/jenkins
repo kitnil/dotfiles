@@ -1,96 +1,10 @@
-#!/run/current-system/profile/bin/sh
-# -*- scheme -*-
-exec ${GUILE:-$(which guile)} $GUILE_FLAGS -e '(@@ (jenkins) main)' -s "$0" "$@"
-!#
+#!/bin/sh
 
-;;;; jenkins --- Guile client for Jenkins
-;;;; Copyright © 2019 Oleg Pykhalov <go.wigust@gmail.com>
-;;;; Released under the GNU GPLv3 or any later version.
+set -ex
 
-(define-module (jenkins)
-  #:use-module (ice-9 format)
-  #:use-module (rnrs bytevectors)
-  #:use-module (srfi srfi-1)
-  #:use-module (srfi srfi-11)
-  #:use-module (srfi srfi-37)
-  #:use-module (web client))
+curl --request POST --user "admin:$(pass show jenkins.wugi.info/token-admin)" \
+https://jenkins.wugi.info/job/wigust/job/dotfiles/build
 
-;;; Commentary:
-;;;
-;;; This script calls Jenkins API to build a job.
-;;;
-;;; Code:
-
-(define %options
-  (let ((display-and-exit-proc (lambda (msg)
-                                 (lambda (opt name arg loads)
-                                   (display msg) (quit)))))
-    (list (option '(#\a "action") #f #t
-                  (lambda (opt name arg loads)
-                    (alist-cons 'action arg loads)))
-          (option '(#\b "branch") #f #t
-                  (lambda (opt name arg loads)
-                    (alist-cons 'branch arg loads)))
-          (option '(#\D "directory") #f #t
-                  (lambda (opt name arg loads)
-                    (alist-cons 'directory arg loads)))
-          (option '(#\j "job") #f #t
-                  (lambda (opt name arg loads)
-                    (alist-cons 'job arg loads)))
-          (option '(#\U "url") #f #t
-                  (lambda (opt name arg loads)
-                    (alist-cons 'url arg loads)))
-          (option '(#\u "user") #f #t
-                  (lambda (opt name arg loads)
-                    (alist-cons 'user arg loads)))
-          (option '(#\p "password") #f #t
-                  (lambda (opt password arg loads)
-                    (alist-cons 'password arg loads)))
-          (option '(#\t "token") #f #t
-                  (lambda (opt name arg loads)
-                    (alist-cons 'token arg loads)))
-          (option '(#\v "version") #f #f
-                  (display-and-exit-proc "jenkins version 0.0.1\n"))
-          (option '(#\h "help") #f #f
-                  (display-and-exit-proc
-                   "Usage: jenkins ..."))
-          (option '(#\d "dry-run") #f #f
-                (lambda (opt name arg result)
-                  (alist-cons 'dry-run? #t result))))))
-
-(define %default-options
-  '())
-
-(define (main args)
-  (define opts
-    (args-fold (cdr (program-arguments))
-               %options
-               (lambda (opt name arg loads)
-                 (error "Unrecognized option `~A'" name))
-               (lambda (op loads)
-                 (cons op loads))
-               %default-options))
-  (let ((action (assoc-ref opts 'action))
-        (branch (assoc-ref opts 'branch))
-        (directory (assoc-ref opts 'directory))
-        (job (assoc-ref opts 'job))
-        (url (assoc-ref opts 'url))
-        (user (assoc-ref opts 'user))
-        (password (assoc-ref opts 'password))
-        (token (assoc-ref opts 'token))
-        (dry-run? (assoc-ref opts 'dry-run?)))
-
-    (define request
-      (string-append url "/job/" directory "/job/" job "/job/" branch "/" action))
-
-    (define command
-      (string-join (list "curl"
-                         "--user" (string-append user ":" password)
-                         (format #f "--header ~s" "Content-type: application/x-www-form-urlencoded; charset=UTF-8")
-                         "--request" "GET" request)))
-
-    (if dry-run?
-        (format #t "~a~%" command)
-        (system command))))
-
-;;; jenkins ends here
+# curl --request POST --user "admin:$(pass show jenkins.wugi.info/token-admin)" \
+# --data-urlencode json='{"parameter": [{"name":"CHEZMOI_APPLY", "value":"true"},{"name":"INVOKE_GUIX_PULL", "value":"true"}]}' \
+# https://jenkins.wugi.info/job/wigust/job/dotfiles/job/master/build
