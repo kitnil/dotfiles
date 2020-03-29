@@ -51,7 +51,14 @@ pipeline {
             }
         }
         stage("Invoking build.sh") {
-            when { expression { params.INVOKE_GUIX_PULL } }
+            when { anyOf {
+                    expression { params.INVOKE_GUIX_PULL }
+                    changeset "dotfiles/fiore/**"
+                    changeset "dotfiles/guixsd/**"
+                    changeset "dotfiles/manifests/**"
+                    changeset "dotfiles/channels.scm"
+                }
+            }
             steps {
                 dir("dotfiles") {
                     sh "./build.sh"
