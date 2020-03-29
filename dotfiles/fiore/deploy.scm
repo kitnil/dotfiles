@@ -69,7 +69,7 @@
     (name "Clone dotfiles repository")
     (module "git")
     (parameters `(("repo" . "https://cgit.duckdns.org/dotfiles")
-                  ("dest" . "~/dotfiles"))))))
+                  ("dest" . "~/.local/share/chezmoi/dotfiles"))))))
 
 
 ;;;

@@ -1,7 +1,9 @@
 Jenkinsfile
 README.md
+dotfiles
 {{- if ne .chezmoi.hostname "guixsd" }}
 .alerta.conf
+.slacktee
 {{- end }}
 {{- if ne .chezmoi.hostname "workstation-guixsd" }}
 .alerta.conf

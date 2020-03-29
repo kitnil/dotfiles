@@ -5,5 +5,5 @@
 env GUILE_LOAD_PATH=$HOME/dotfiles:$GUILE_LOAD_PATH\
     ./pre-inst-env guix weather\
     --substitute-urls='https://berlin.guixsd.org https://hydra.gnu.org'\
-    -m ~/dotfiles/fiore/manifests/guix-collection-manifest.scm\
+    -m ~/.local/share/chezmoi/dotfiles/fiore/manifests/guix-collection-manifest.scm\
     --system=x86_64-linux

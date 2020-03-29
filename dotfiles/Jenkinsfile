@@ -1,8 +1,6 @@
 String HOME_DIR = "/home/oleg"
 
-String MASTER_LABEL = "guix nixbld"
-
-List<String> node_labels = ["guix", MASTER_LABEL, "guix vm"]
+List<String> node_labels = ["guix", "guix nixbld", "guix vm"]
 
 def NIX_ENV_COMMAND =
     [([".", "$HOME_DIR/.nix-profile/etc/profile.d/nix.sh"].join(" ")),
@@ -23,39 +21,17 @@ pipeline {
         label "master"
     }
     environment {
-        NIXPKGS_CONFIG="${WORKSPACE}/dotfiles/nix/config.nix"
+        NIXPKGS_CONFIG="${WORKSPACE}/nix/config.nix"
     }
     parameters {
-        booleanParam(name: 'INVOKE_GUIX_PULL',
-                     defaultValue: triggeredBy('TimerTrigger') == true ? true : false,
-                     description: 'Invoke guix pull')
-        booleanParam(name: 'CHEZMOI_APPLY',
-                     defaultValue: triggeredBy('UpstreamCause') == true ? false : true,
-                     description: 'Invoke chezmoi apply')
+        booleanParam name: 'INVOKE_GUIX_PULL', defaultValue: true,
+        description: 'Invoke guix pull'
     }
     stages {
-        stage("Git clone chezmoi") {
-            steps {
-                parallelGitClone url: "https://cgit.duckdns.org/git/wigust/dotfiles",
-                nodeLabels: (node_labels - MASTER_LABEL),
-                dir: "$HOME_DIR/.local/share/chezmoi"
-            }
-        }
-        stage("Invoke chezmoi") {
-            steps {
-                script {
-                    chezmoiApply = params.CHEZMOI_APPLY ? "chezmoi apply" : "true"
-                    parallelSh (cmd: "chezmoi diff; $chezmoiApply",
-                                nodeLabels: node_labels)
-                }
-            }
-        }
         stage("Invoking build.sh") {
             when { expression { params.INVOKE_GUIX_PULL } }
             steps {
-                dir("dotfiles") {
-                    sh "./build.sh"
-                }
+                sh "${WORKSPACE}/build.sh"
             }
         }
         stage("Invoking guix pull") {
@@ -69,6 +45,13 @@ pipeline {
             steps {
                 parallelSh cmd: "sudo -i ${GUIX_PULL_COMMAND}",
                 nodeLabels: node_labels
+            }
+        }
+        stage("Invoking git clone") {
+            steps {
+                parallelGitClone url: "https://cgit.duckdns.org/git/wigust/dotfiles",
+                nodeLabels: node_labels,
+                dir: "$HOME_DIR/src/dotfiles"
             }
         }
         stage("Invoking guix system build") {
@@ -94,6 +77,7 @@ pipeline {
                 catchError(buildResult: 'SUCCESS', stageResult: 'FAILURE') {
                     build job: "../../nix/maintenance/wip-local"
                 }
+                build job: "../chezmoi/master"
             }
         }
    }

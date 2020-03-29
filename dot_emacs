@@ -1507,7 +1507,7 @@ With a prefix argument, clean `geiser-guile-load-path'."
                '("http://cuirass.tld" . cuirass)))
 
 (defvar bui-rgrep-directory
-  "~/dotfiles/fiore/manifests/"
+  "~/.local/share/chezmoi/dotfiles/fiore/manifests/"
   "Directory to search for a package in `bui-rgrep-manifests' procedure.")
 
 (defun bui-rgrep-manifests ()
