@@ -81,4 +81,6 @@
 
   connect ssh-aliases
 
+  (load "guix.scm")
+
   guix-wigust-packages-emacs))

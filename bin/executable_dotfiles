@@ -1,0 +1,21 @@
+#!/bin/sh
+
+if [ -f "$HOME/.nix-profile/bin/chezmoi" ]
+then
+    chezmoi="$HOME/.nix-profile/bin/chezmoi"
+else
+    echo "Install chezmoi with Nix."
+    exit 1
+fi
+
+case "$1" in
+    guix)
+        exec -a chezmoi "$chezmoi" --source @GUIX@ "${@:2}"
+        ;;
+    template)
+        exec -a chezmoi "$chezmoi" add --template --autotemplate "$@"
+        ;;
+    *)
+        exec -a chezmoi "$chezmoi" "$@"
+        ;;
+esac
