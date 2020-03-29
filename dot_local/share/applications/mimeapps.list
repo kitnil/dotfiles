@@ -1,0 +1,24 @@
+[Default Applications]
+x-scheme-handler/mailto=gnus.desktop;
+image/png=feh.desktop;
+image/gif=mpv.desktop;
+video/mp4=mpv.desktop;
+video/webm=mpv.desktop;
+image/jpeg=feh.desktop;
+application/pdf=zathura.desktop;
+text/html=firefox.desktop;
+text/xml=firefox.desktop;
+application/xhtml+xml=firefox.desktop;
+application/xml=firefox.desktop;
+application/rss+xml=firefox.desktop;
+application/rdf+xml=firefox.desktop;
+image/gif=firefox.desktop;
+image/jpeg=firefox.desktop;
+image/png=firefox.desktop;
+x-scheme-handler/http=firefox.desktop;
+x-scheme-handler/https=firefox.desktop;
+x-scheme-handler/ftp=firefox.desktop;
+x-scheme-handler/chrome=firefox.desktop;
+video/webm=firefox.desktop;
+application/x-xpinstall=firefox.desktop;
+video/x-matroska=mpv.desktop;

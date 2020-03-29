@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=gnus
+Exec=/home/oleg/bin/emacs-guix-log %u
+Type=Application
+Terminal=false
+Categories=Office;Network;Email;
+MimeType=x-scheme-handler/guix-log;

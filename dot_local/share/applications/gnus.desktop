@@ -1,0 +1,7 @@
+[Desktop Entry]
+Name=gnus
+Exec=/home/natsu/bin/gnus %u
+Type=Application
+Terminal=false
+Categories=Office;Network;Email;
+MimeType=x-scheme-handler/mailto;
