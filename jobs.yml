@@ -176,7 +176,7 @@
     script-path: Jenkinsfile
     scm:
       - git:
-          url: file:///home/oleg/src/dotfiles/.git
+          url: https://cgit.duckdns.org/git/wigust/dotfiles
 - job:
     name: wigust/org
     project-type: multibranch
