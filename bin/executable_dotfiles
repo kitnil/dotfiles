@@ -1,5 +1,7 @@
 #!/bin/sh -e
 
+exec &> >(tee "$HOME/.cache/dotfiles.log")
+
 if [ -f "$HOME/.nix-profile/bin/chezmoi" ]
 then
     chezmoi="$HOME/.nix-profile/bin/chezmoi"
