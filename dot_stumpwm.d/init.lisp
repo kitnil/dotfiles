@@ -784,6 +784,9 @@
         nil
         (<= (frame-width (tile-group-current-frame group)) *small-frame-width*))))
 
+(defcommand current-theme () ()
+  (if dark-theme "dark" "light"))
+
 (defcommand current-frame-smallp () ()
   (if (small-framep)
       (progn (message "small") 1)
