@@ -1,7 +1,10 @@
-#!/bin/sh
+#! /usr/bin/env cached-nix-shell
+#! nix-shell -i bash -p python3 python3Packages.alerta
 
 set -e -x
 
-for id in $(alerta query --filter severity=informational | awk '/Домен должен быть делегирован на наши/ { print $1 }'); do
-    alerta close --ids $id
+for id in $(alerta query --filter severity=informational \
+                | grep 'Домен должен быть делегирован на наши\|A-запись домена не соответствует серверу' \
+                | awk '{ print $1 }'); do
+    alerta delete --ids $id
 done
