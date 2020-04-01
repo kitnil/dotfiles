@@ -65,6 +65,8 @@
 
 (define-abbrev-table 'css-mode-abbrev-table '())
 
+(define-abbrev-table 'deadgrep-mode-abbrev-table '())
+
 (define-abbrev-table 'debbugs-gnu-mode-abbrev-table '())
 
 (define-abbrev-table 'debbugs-gnu-usertags-mode-abbrev-table '())
@@ -82,6 +84,8 @@
 (define-abbrev-table 'display-time-world-mode-abbrev-table '())
 
 (define-abbrev-table 'dns-mode-abbrev-table '())
+
+(define-abbrev-table 'dockerfile-mode-abbrev-table '())
 
 (define-abbrev-table 'doctex-mode-abbrev-table '())
 
@@ -121,6 +125,8 @@
 
 (define-abbrev-table 'eww-mode-abbrev-table '())
 
+(define-abbrev-table 'flycheck-error-list-mode-abbrev-table '())
+
 (define-abbrev-table 'flymake-diagnostics-buffer-mode-abbrev-table '())
 
 (define-abbrev-table 'forge-issue-list-mode-abbrev-table '())
@@ -129,8 +135,9 @@
 
 (define-abbrev-table 'forge-post-mode-abbrev-table
   '(
+    ("gar" "/assign @rezvov" nil 9)
     ("gas" "/assign @sidorov" nil 1)
-    ("gaz" "/assign @zdetovetskiy" nil 2)
+    ("gaz" "/assign @zdetovetskiy" nil 8)
    ))
 
 (define-abbrev-table 'forge-pullreq-list-mode-abbrev-table '())
@@ -198,6 +205,10 @@
 (define-abbrev-table 'gnus-score-mode-abbrev-table '())
 
 (define-abbrev-table 'gnus-sticky-article-mode-abbrev-table '())
+
+(define-abbrev-table 'go-mode-abbrev-table '())
+
+(define-abbrev-table 'godoc-mode-abbrev-table '())
 
 (define-abbrev-table 'grep-mode-abbrev-table '())
 
@@ -289,6 +300,20 @@
 
 (define-abbrev-table 'log-view-mode-abbrev-table '())
 
+(define-abbrev-table 'lsp-browser-mode-abbrev-table '())
+
+(define-abbrev-table 'lsp-java-classpath-mode-abbrev-table '())
+
+(define-abbrev-table 'lsp-log-io-mode-abbrev-table '())
+
+(define-abbrev-table 'lsp-rust-analyzer-status-mode-abbrev-table '())
+
+(define-abbrev-table 'lsp-rust-analyzer-syntax-tree-mode-abbrev-table '())
+
+(define-abbrev-table 'lsp-ui-flycheck-list-mode-abbrev-table '())
+
+(define-abbrev-table 'lsp-ui-imenu-mode-abbrev-table '())
+
 (define-abbrev-table 'magit-cherry-mode-abbrev-table '())
 
 (define-abbrev-table 'magit-diff-mode-abbrev-table '())
@@ -351,6 +376,10 @@
 (define-abbrev-table 'messages-buffer-mode-abbrev-table '())
 
 (define-abbrev-table 'mhtml-mode-abbrev-table '())
+
+(define-abbrev-table 'mj-project-list-mode-abbrev-table '())
+
+(define-abbrev-table 'mj-servers-list-mode-abbrev-table '())
 
 (define-abbrev-table 'net-utils-mode-abbrev-table '())
 
@@ -478,7 +507,7 @@
     ("бзс" "благодарим Вас за содействие" nil 1)
     ("вам" "Вам" nil 285)
     ("вами" "Вами" nil 72)
-    ("вас" "Вас" nil 82)
+    ("вас" "Вас" nil 83)
     ("ваш" "Ваш" nil 163)
     ("ваша" "Ваша" nil 1)
     ("ваше" "Ваше" nil 88)
@@ -501,7 +530,7 @@
     ("ди" "доменное имя" nil 0)
     ("днс" "DNS" nil 3)
     ("енп" "если наблюдаются проблемы при работе с" nil 0)
-    ("з" "Здравствуйте" nil 528)
+    ("з" "Здравствуйте" nil 529)
     ("ин" "интернет" nil 0)
     ("кпу" "контрольной панели управления" nil 27)
     ("кпувпс" "контрольной панели управления VPS хостинга" nil 18)
