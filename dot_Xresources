@@ -103,7 +103,7 @@ XTerm*faceSize5: 16
 XTerm.termName: xterm-256color
 
 ! https://snarfed.org/emacs_x_resources
-Emacs.menuBar: off
+Emacs.menuBar: on
 Emacs.verticalScrollBars: off
 Emacs.toolBar: off
 

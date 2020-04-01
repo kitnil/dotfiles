@@ -68,7 +68,6 @@
 
 (setq smtpmail-queue-mail t) ; Call after typing M-x `smtpmail-send-queued-mail'
 
-(menu-bar-mode -1)
 (set-scroll-bar-mode 'right)
 (scroll-bar-mode -1)
 
@@ -2741,25 +2740,25 @@ be updated automatically."))
   (setq sml/theme 'dark)
   (sml/setup))
 
-(defvar wi-theme t
-  "If non-nil use dark theme.
+(defvar current-dark-theme-p (string-equal (getenv "GTK_THEME") "Adwaita:dark")
+  "If non-nil use dark theme otherwise light theme.")
 
-If nil use light theme.")
+(unless current-dark-theme-p (menu-bar-mode -1))
 
 (defun wi-toggle-theme ()
   "Toggle between dark and light themes."
   (interactive)
-  (if wi-theme
-      (progn (mapc (lambda (theme)
+  (if current-dark-theme-p
+      (progn ;; (disable-theme 'smart-mode-line-light)
+           (wi-manoj-dark)
+           (setq terminal-here-color 'dark)
+           (setq current-dark-theme-p t))
+    (progn (mapc (lambda (theme)
                      (disable-theme theme))
                    '(manoj-dark smart-mode-line-dark))
              ;; (enable-theme 'smart-mode-line-light)
              (setq terminal-here-color 'light)
-             (setq wi-theme nil))
-    (progn ;; (disable-theme 'smart-mode-line-light)
-           (wi-manoj-dark)
-           (setq terminal-here-color 'dark)
-           (setq wi-theme t))))
+             (setq current-dark-theme-p nil))))
 
 
 ;;;
@@ -3613,3 +3612,5 @@ If given a prefix, patch in the branch directory instead."
  '(region ((t (:background "wheat" :distant-foreground "gtk_selection_fg_color"))))
  '(sh-heredoc ((t (:foreground "tan3")))))
 (put 'list-timers 'disabled nil)
+
+(wi-toggle-theme)
