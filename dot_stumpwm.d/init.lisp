@@ -1663,8 +1663,59 @@
 (defcommand group-2-start-programs () ()
   (run-commands "gselect 2")
   (unless (current-window)
-    (run-shell-command "emacsclient -c")
-    (run-shell-command (firefox-command))))
+    (run-shell-command (format nil "emacsclient -c -e ~s"
+                               (sb-unicode:lowercase (write-to-string '(gnus)))))))
+
+(define-key *top-map* (kbd (concat "s-2")) "group-2-start-programs")
+
+(defcommand group-3-start-programs () ()
+  (run-commands "gselect 3")
+  (unless (current-window)
+    (run-shell-command "chromium --new-window https://jenkins.intr/view/Failed")))
+
+(define-key *top-map* (kbd (concat "s-3")) "group-3-start-programs")
+
+(defcommand group-4-start-programs () ()
+  (run-commands "gselect 4")
+  (unless (current-window)
+    (run-shell-command "chromium --new-window https://jenkins.wugi.info/view/Failed/")))
+
+(define-key *top-map* (kbd (concat "s-4")) "group-4-start-programs")
+
+(defcommand group-5-start-programs () ()
+  (run-commands "gselect 5")
+  (unless (current-window)
+    (run-shell-command "kodi")))
+
+(define-key *top-map* (kbd (concat "s-5")) "group-5-start-programs")
+
+(defcommand group-6-start-programs () ()
+  (run-commands "gselect 6")
+  (unless (current-window)
+    (trans-en-ru)))
+
+(define-key *top-map* (kbd (concat "s-6")) "group-6-start-programs")
+
+(defcommand group-7-start-programs () ()
+  (run-commands "gselect 7")
+  (unless (current-window)
+    (repl-nix)))
+
+(define-key *top-map* (kbd (concat "s-7")) "group-7-start-programs")
+
+(defcommand group-8-start-programs () ()
+  (run-commands "gselect 8")
+  (unless (current-window)
+    (run-shell-command "firefox --new-window https://cerberus.intr/")))
+
+(define-key *top-map* (kbd (concat "s-8")) "group-8-start-programs")
+
+(defcommand group-9-start-programs () ()
+  (run-commands "gselect 9")
+  (unless (current-window)
+    (emacs-anywhere)))
+
+(define-key *top-map* (kbd (concat "s-9")) "group-9-start-programs")
 
 (defcommand group-5-start-programs () ()
   (run-commands "gselect 5")
