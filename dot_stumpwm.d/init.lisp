@@ -1112,7 +1112,12 @@
 (defcommand vnc-grafana () ()
   (run-shell-command "vncviewer 172.16.100.182:5900"))
 
-(defcommand ipmi () ()
+(defcommand ipmi (host) ((:string "Hostname: "))
+  (run-shell-command (join (list (concat (getenv "HOME")
+                                         "/.nix-profile/bin/ipmi")
+                                 host))))
+
+(defcommand ipmiview () ()
   (run-shell-command (concat (getenv "HOME")
                              "/.nix-profile.d/ipmiview/ipmiview/bin/IPMIView")))
 
