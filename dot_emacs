@@ -2555,6 +2555,7 @@ be updated automatically."))
 
 (setq anywhere-kill-buffer nil)
 (setq anywhere-major-mode 'text-mode)
+(add-hook 'anywhere-mode-hook '(lambda () (activate-input-method "russian-computer")))
 (add-hooks '(((anywhere-mode-hook atomic-chrome-edit-mode-hook)
               . (lambda ()
                   (set (make-local-variable 'prettify-symbols-alist)
