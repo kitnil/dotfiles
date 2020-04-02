@@ -70,6 +70,8 @@ gpa()
     guix package -A $@ | awk '{ print $1"-"$2 }'
 }
 
+alias bedtime='sudo loginctl suspend'
+
 ihs-wrapper() {
     GUILE_INSTALL_LOCALE=0                      \
     GUIX_BUILD_OPTIONS=                         \
