@@ -2750,16 +2750,16 @@ be updated automatically."))
   "Toggle between dark and light themes."
   (interactive)
   (if current-dark-theme-p
-      (progn ;; (disable-theme 'smart-mode-line-light)
-           (wi-manoj-dark)
-           (setq terminal-here-color 'dark)
-           (setq current-dark-theme-p t))
-    (progn (mapc (lambda (theme)
+      (progn (mapc (lambda (theme)
                      (disable-theme theme))
                    '(manoj-dark smart-mode-line-dark))
              ;; (enable-theme 'smart-mode-line-light)
              (setq terminal-here-color 'light)
-             (setq current-dark-theme-p nil))))
+             (setq current-dark-theme-p nil))
+    (progn ;; (disable-theme 'smart-mode-line-light)
+           (wi-manoj-dark)
+           (setq terminal-here-color 'dark)
+           (setq current-dark-theme-p t))))
 
 
 ;;;
