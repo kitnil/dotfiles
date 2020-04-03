@@ -1397,7 +1397,7 @@
 (defcommand racket () ()
   (run-shell-command "drracket"))
 
-(defcommand resolution () ()
+(defcommand reset-resolution-and-gamma () ()
   (run-shell-command "xrandr --output HDMI1 --mode 1920x1080 ; xgamma -gamma 1.0"))
 
 (defcommand drag-and-drop () ()
