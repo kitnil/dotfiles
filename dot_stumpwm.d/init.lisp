@@ -1400,6 +1400,12 @@
 (defcommand resolution () ()
   (run-shell-command "xrandr --output HDMI1 --mode 1920x1080 ; xgamma -gamma 1.0"))
 
+(defcommand drag-and-drop () ()
+  (run-shell-command "dragon"))
+
+(defcommand drag-and-drop-and-exit () ()
+  (run-shell-command "dragon --and-exit"))
+
 (mapcar #'(lambda (x)
             (gnew (write-to-string x)))
 	(range 10 :min 2 :step 1))
