@@ -90,6 +90,12 @@
 ;;; General functions for use
 ;;;
 
+(defun free-time? ()
+    (let ((day-of-week "%u")
+          (hour "%k"))
+      (or (> (parse-integer (time-format day-of-week)) 5)
+          (> (parse-integer (time-format hour)) 18))))
+
 (defun switch-to-emacs ()
   (unless (uiop/utility:string-prefix-p "Emacs"
                                         (window-class (current-window)))
@@ -1664,28 +1670,35 @@
   (run-commands "gselect 2")
   (unless (current-window)
     (run-shell-command (format nil "emacsclient -c -e ~s"
-                               (sb-unicode:lowercase (write-to-string '(gnus)))))))
+                               (sb-unicode:lowercase (write-to-string '(gnus)))))
+    (if (y-or-n-p "Fetch mail? ") (notmuch))))
 
 (define-key *top-map* (kbd (concat "s-2")) "group-2-start-programs")
 
 (defcommand group-3-start-programs () ()
   (run-commands "gselect 3")
   (unless (current-window)
-    (run-shell-command "chromium --new-window https://jenkins.intr/view/Failed")))
+    (run-shell-command (if (free-time?)
+                           "chromium --new-window https://home-s2x8742.slack.com/"
+                           "chromium --new-window https://mjru.slack.com/"))))
 
 (define-key *top-map* (kbd (concat "s-3")) "group-3-start-programs")
 
 (defcommand group-4-start-programs () ()
   (run-commands "gselect 4")
   (unless (current-window)
-    (run-shell-command "chromium --new-window https://jenkins.wugi.info/view/Failed/")))
+    (run-shell-command (if (free-time?)
+                           "chromium --new-window https://jenkins.wugi.info/view/Failed/"
+                           "chromium --new-window https://jenkins.intr/view/Failed/"))))
 
 (define-key *top-map* (kbd (concat "s-4")) "group-4-start-programs")
 
 (defcommand group-5-start-programs () ()
   (run-commands "gselect 5")
   (unless (current-window)
-    (run-shell-command "kodi")))
+    (run-shell-command (if (free-time?)
+                           "kodi"
+                           "firefox --new-window https://alerta.intr/"))))
 
 (define-key *top-map* (kbd (concat "s-5")) "group-5-start-programs")
 
@@ -1706,7 +1719,10 @@
 (defcommand group-8-start-programs () ()
   (run-commands "gselect 8")
   (unless (current-window)
-    (run-shell-command "firefox --new-window https://cerberus.intr/")))
+    (run-shell-command (if (free-time?)
+                           (format nil "emacsclient -c -e ~s"
+                                   (sb-unicode:lowercase (write-to-string '(elfeed))))
+                           "firefox --new-window https://cerberus.intr/"))))
 
 (define-key *top-map* (kbd (concat "s-8")) "group-8-start-programs")
 
