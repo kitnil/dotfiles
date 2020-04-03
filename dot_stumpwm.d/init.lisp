@@ -1336,8 +1336,12 @@
   (progn (run-shell-command "emacsclient --eval '(gnus)'")
          (switch-to-emacs)))
 
-(defcommand majordomo-find-project () ()
-  (progn (run-shell-command "emacsclient --eval '(mj-project-ivy)'")
+(defcommand wi-project-ivy () ()
+  (progn (run-shell-command "emacsclient --eval '(wi-project-ivy)'")
+         (switch-to-emacs)))
+
+(defcommand wi-project-browse-at-remote () ()
+  (progn (run-shell-command "emacsclient --eval '(wi-project-browse-at-remote)'")
          (switch-to-emacs)))
 
 (defcommand org () ()
@@ -1586,7 +1590,7 @@
   (define-key *top-map* (kbd "s-t") "top")
   (define-key *top-map* (kbd "s-T") "tometips")
   (define-key *top-map* (kbd "s-h") "htop")
-  (define-key *top-map* (kbd "s-x") "rofi-drun")
+  (define-key *top-map* (kbd "C-s-C") "rofi-drun")
   (define-key *top-map* (kbd "S-s-RET") "rofi-ssh")
   (define-key *top-map* (kbd "s-quoteright") "rofi-window")
   (define-key *top-map* (kbd "s-KP_Add") "volume-increase")
@@ -1613,7 +1617,8 @@
   (define-key *top-map* (kbd "s-G") "notmuch")
   (define-key *top-map* (kbd "s-C") "org")
   (define-key *top-map* (kbd "C-s-c") "org-agenda")
-  (define-key *top-map* (kbd "C-s-C") "majordomo-find-project")
+  (define-key *top-map* (kbd "s-x") "wi-project-ivy")
+  (define-key *top-map* (kbd "s-X") "wi-project-browse-at-remote")
   (define-key *top-map* (kbd "s-i") "quassel-monitor")
   (mapcar #'(lambda (pair)
               (let ((command (concat "gmove-and-follow " (write-to-string (car pair))))
