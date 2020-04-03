@@ -504,7 +504,8 @@
 (defcommand notmuch () ()
   (term-shell-command (fetch-mail-command "notmuch new")
                       :title "notmuch"
-                      :font '("-fa" "Monospace" "-fs" "8")
+                      :terminal 'st
+                      :font "Monospace:size=8"
                       :color "dark"))
 
 (defvar majordomo-webs
@@ -1750,7 +1751,7 @@
   (define-frame-preference "Default" (3 NIL NIL :CLASS "Dragon"))
   (define-frame-preference "Default" (3 NIL NIL :CLASS "XTerm" :TITLE "alerta"))
   (define-frame-preference "Default" (4 NIL NIL :TITLE "pulsemixer"))
-  (define-frame-preference "Default" (4 NIL T :CLASS "XTerm" :TITLE "notmuch"))
+  (define-frame-preference "Default" (4 NIL T :TITLE "notmuch"))
   (define-frame-preference "Default" (4 NIL T :CLASS "mpv" :TITLE "emacs-emms"))
   (define-frame-preference "Default" (4 NIL T :CLASS "mpv" :TITLE "firefox"))
   (define-frame-preference "2" (0 NIL NIL :CLASS "Emacs"))
