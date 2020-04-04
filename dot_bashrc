@@ -674,18 +674,6 @@ git-guix-home()
     git show "$number" | grep home | cut -d'"' -f 2
 }
 
-nix-build()
-{
-    [[ $1 == \<* ]] && nixpkgs=$1 || nixpkgs='<nixpkgs>'
-    if [[ ${@:-2} == "-A" ]] || [[ ${@:-2} == "--expr" ]] || [[ ${@:-2} == "-E" ]]
-    then
-        command=${@:-2}
-    else
-        command="-A"
-    fi
-    "$HOME/.nix-profile/bin/nix-build" $nixpkgs --no-out-link $command "${@:1}"
-}
-
 archive-dir()
 {
     for dir in $@; do
