@@ -953,6 +953,8 @@
 (setq *suppress-frame-indicator* t)
 ;; (sync-all-frame-windows (current-group))
 
+(defvar *mode-line-window-number* 10)
+
 (setf *mode-line-timeout* 2)
 (setf *TIME-MODELINE-STRING* "%a, %e %b %Y %k:%M")
 (setf *screen-mode-line-format*
@@ -969,7 +971,7 @@
                                       (format nil "~a:[~a]" (window-number window) (if (> (length wn) 5)
                                                                                        (concat (subseq wn 0 5) "...")
                                                                                        wn))))
-                           (take 5 (sort-windows-by-number (group-windows (current-group)))))))
+                           (take *mode-line-window-number* (sort-windows-by-number (group-windows (current-group)))))))
             (make-string 4 :initial-element #\space)
             "^>"
             (make-string 4 :initial-element #\space)
