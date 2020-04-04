@@ -61,7 +61,7 @@
   #:use-module (srfi srfi-1))
 
 (define-public stumpwm-checkout
-  (let ((commit "36297060ff07a2042d3e9fcd1fd22bd8fabe3863"))
+  (let ((commit "bd9151cda21313a928a1cf410a7c608bcc8459e8"))
     (package
       (inherit stumpwm)
       (name (string-append (package-name stumpwm) "-checkout"))
@@ -75,7 +75,7 @@
          (file-name (git-file-name (package-name sbcl-stumpwm) version))
          (sha256
           (base32
-           "1ig5jjpqyfmay5iixnp58z6nyd96mdgq3zpv29knrjfd9iqpcdna"))))
+           "0qrp9ywn2qb1f1jq7wr7s8di64isf5h4ld91yqh2nb8kfqdf8jsl"))))
       (inputs
        `(("sbcl-alexandria" ,sbcl-alexandria)
          ("sbcl-fiasco", sbcl-fiasco)
