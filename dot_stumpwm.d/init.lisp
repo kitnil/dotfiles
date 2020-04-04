@@ -115,6 +115,16 @@
                                    *notify-to-rest-period*)))
                   (sleep *notify-to-rest-period*))))))
 
+;; https://stackoverflow.com/a/48122810
+(defun filter (predicate x)
+   (if (consp x)  ; if x is a cons, that is a tree:
+       (let ((ca (car x))
+             (cd (filter predicate (cdr x)))) ; filter always the cdr
+         (if (listp ca)                       ; if the car of x is a list (nil or cons)
+             (cons (filter predicate ca) cd)  ; then filter also the car
+             (if (funcall predicate ca) (cons ca cd) cd))) ; car is a non-nil atom!
+       x))        ; if x is a atom (nil or the last cdr of an improper list), return x
+
 (defun switch-to-emacs ()
   (unless (uiop/utility:string-prefix-p "Emacs"
                                         (window-class (current-window)))
