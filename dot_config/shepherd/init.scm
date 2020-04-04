@@ -173,29 +173,31 @@
                    dunst-service
                    keynav-service
                    ;; sxhkd-service
-                   emacs-service
-                   firefox-service
+                   ;; emacs-service
+                   ;; firefox-service
                    redshift-service
                    transmission-service
                    ;; znc-service
                    kdeconnect-service
-                   pulsemixer-service
+                   ;; pulsemixer-service
                    quassel-service
-                   place-existing-windows-service)
+                   ;; place-existing-windows-service
+                   )
 
 (for-each start '(clipmenud
                   dunst
                   keynav
                   ;; sxhkd
-                  emacs
-                  firefox
+                  ;; emacs
+                  ;; firefox
                   ;; redshift
                   transmission
                   ;; alerta
-                  pulsemixer
+                  ;; pulsemixer
                   ;; znc
                   kdeconnect
                   quassel
-                  place-existing-windows))
+                  ;; place-existing-windows
+                  ))
 
 (action 'shepherd 'daemonize)
