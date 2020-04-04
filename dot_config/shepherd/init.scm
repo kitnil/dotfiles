@@ -15,19 +15,6 @@
     #:stop (make-system-destructor (string-join (list %redshift "-x")))
     #:respawn? #f))
 
-(define transmission-service
-  (make <service>
-    #:docstring '("Light-weight BitTorrent client")
-    #:provides '(transmission)
-    #:start (make-forkexec-constructor
-             (list (string-append %bin-directory "transmission-daemon")
-                   "--logfile" "/home/oleg/.config/shepherd/transmission.log"
-                   "--foreground")
-             #:environment-variables (without-display (environ))
-             #:log-file "/home/oleg/.config/shepherd/transmission.log")
-    #:stop (make-kill-destructor)
-    #:respawn? #t))
-
 (define firefox-service
   (make <service>
     #:docstring '("Firefox daemon")
@@ -176,7 +163,6 @@
                    ;; emacs-service
                    ;; firefox-service
                    redshift-service
-                   transmission-service
                    ;; znc-service
                    kdeconnect-service
                    ;; pulsemixer-service
@@ -191,7 +177,6 @@
                   ;; emacs
                   ;; firefox
                   ;; redshift
-                  transmission
                   ;; alerta
                   ;; pulsemixer
                   ;; znc

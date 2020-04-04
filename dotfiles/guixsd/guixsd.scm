@@ -7,7 +7,8 @@
 (use-package-modules admin base certs cryptsetup docker linux lisp
                      suckless xdisorg xorg fonts android fontutils
                      gnome freedesktop readline ncurses networking
-                     pulseaudio wm vnc ssh version-control gnupg)
+                     pulseaudio wm vnc ssh version-control gnupg
+                     bittorrent)
 
 (use-service-modules admin dbus desktop docker dns networking sound
                      xorg ssh web cgit version-control certbot
@@ -443,6 +444,30 @@ EndSection")
 
                        ;; “adb” and “fastboot” without root privileges
                        (simple-service 'adb udev-service-type (list android-udev-rules))
+
+                       (simple-service 'transmission shepherd-root-service-type
+                                       (list
+                                        (shepherd-service
+                                         (provision '(transmission))
+                                         (documentation "Run transmission.")
+                                         (requirement '())
+                                         (start #~(make-forkexec-constructor
+                                                   (list (string-append #$transmission "/bin/transmission-daemon")
+                                                         "--logfile" "/home/oleg/.config/shepherd/transmission.log"
+                                                         "--foreground")
+                                                   #:user "oleg"
+                                                   #:group "users"
+                                                   #:environment-variables
+                                                   (append (list "HOME=/home/oleg"
+                                                                 "SSL_CERT_DIR=/run/current-system/profile/etc/ssl/certs"
+                                                                 "SSL_CERT_FILE=/run/current-system/profile/etc/ssl/certs/ca-certificates.crt")
+                                                           (remove (lambda (str)
+                                                                     (or (string-prefix? "HOME=" str)
+                                                                         (string-prefix? "SSL_CERT_DIR=" str)
+                                                                         (string-prefix? "SSL_CERT_FILE=" str)))
+                                                                   (environ)))))
+                                         (respawn? #f)
+                                         (stop #~(make-kill-destructor)))))
 
                        (simple-service 'jenkins shepherd-root-service-type
                                        (list
