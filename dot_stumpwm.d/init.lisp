@@ -13,18 +13,22 @@
 (defcommand cursor-theme () ()
   (run-shell-command "xsetroot -cursor_name left_ptr"))
 
-(cursor-theme)
+(add-hook '*start-hook* 'cursor-theme)
 
 (defcommand keynav () ()
   (run-shell-command "keynav"))
 
+(add-hook '*start-hook* 'keynav)
+
 (defcommand xrdb () ()
   (run-shell-command (format nil "xrdb ~a/.Xresources" (getenv "HOME"))))
 
-(xrdb)
+(add-hook '*start-hook* 'xrdb)
 
 (defcommand speaker-disable () ()
   (run-shell-command "xset -b"))
+
+(add-hook '*start-hook* 'speaker-disable)
 
 (defcommand xset-900 () ()
   (run-shell-command "xset s 900 900")
@@ -33,8 +37,6 @@
 (defcommand xset-3600 () ()
   (run-shell-command "xset s 3600 3600")
   (run-shell-command "xset dpms 3600 3600 3600"))
-
-(speaker-disable)
 
 (defcommand current-window->clipboard () ()
   (putsel (window-title (current-window))))
@@ -48,7 +50,7 @@
 (defcommand pointer-keys () ()
   (run-shell-command "setxkbmap -option keypad:pointerkeys"))
 
-(pointer-keys)
+(add-hook '*start-hook* 'pointer-keys)
 
 (define-key *root-map* (kbd "C-i") "set-prefix-key C-i")
 (define-key *root-map* (kbd "C-t") "set-prefix-key C-t")
@@ -57,12 +59,12 @@
 (defcommand keyboard-layout () ()
   (run-shell-command "setxkbmap -layout us,ru -option grp:win_space_toggle"))
 
-(keyboard-layout)
+(add-hook '*start-hook* 'keyboard-layout)
 
 (defcommand xmodmap () ()
   (run-shell-command "xmodmap " (concat "/.Xmodmap" (getenv "HOME"))))
 
-(xmodmap)
+(add-hook '*start-hook* 'xmodmap)
 
 (progn
   (set-msg-border-width 4)
