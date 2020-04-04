@@ -528,6 +528,18 @@
                       :font "Monospace:size=8"
                       :color "dark"))
 
+(defvar *notmuch-job* nil)
+
+(defcommand toggle-notmuch-job () ()
+  (if *notmuch-job*
+      (setf *notmuch-job* nil)
+      (setf *notmuch-job* t)))
+
+(defcommand notmuch-job () ()
+  (sb-thread:make-thread
+   (lambda ()
+     (loop while *notmuch-job* do (progn (notmuch) (sleep 3600))))))
+
 (defvar majordomo-webs
   ;; without web19
   (mapcar (lambda (x)
