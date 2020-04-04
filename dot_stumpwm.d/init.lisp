@@ -490,9 +490,10 @@
        ((xterm)
         (xterm-command :color color :command command :font font :title title :scrollbar scrollbar))
        ((st)
-        (join (list terminal-name
-                    *st-font-flag* (if font font *st-font*)
-                    *st-exec-flag* command)))))))
+        (join `(,terminal-name
+                ,*st-font-flag* ,(if font font *st-font*)
+                ,@(if title (list "-t" title) '())
+                ,*st-exec-flag* ,command)))))))
 
 (defcommand zoom () ()
   (run-shell-command "nixGLIntel boomer"))
