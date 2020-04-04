@@ -983,6 +983,8 @@
 (setf *mode-line-pad-y* 5)
 (setf *mode-line-border-width* 0)
 
+(add-hook '*start-hook* 'mode-line)
+
 (defcommand warp-mouse-active-frame () ()
   "Move mouse cursor to the top right of current frame."
   (let* ((current-frame (tile-group-current-frame (current-group)))
