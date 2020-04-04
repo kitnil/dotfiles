@@ -1797,6 +1797,7 @@
   (define-frame-preference "Default" (0 NIL T :CLASS "XTerm" :TITLE "youtube-dl"))
   (define-frame-preference "Default" (0 NIL T :CLASS "XTerm" :TITLE "youtube-dl-music"))
   (define-frame-preference "Default" (0 NIL T :TITLE "xpanes-top"))
+  (define-frame-preference "Default" (0 NIL T :INSTANCE "music.youtube.com"))
   (define-frame-preference "Default" (1 NIL NIL :CLASS "obs"))
   (define-frame-preference "Default" (1 NIL T :CLASS "mpv" :TITLE "youtube-dl-music"))
   (define-frame-preference "Default" (1 NIL T :CLASS "quassel" :TITLE "Chat Monitor"))
