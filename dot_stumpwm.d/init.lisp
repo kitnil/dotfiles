@@ -1084,18 +1084,6 @@
   "Dumps the frames of the current group of the current screen to the named file."
   (dump-to-file (dump-group (current-group)) file))
 
-(defcommand majordomo-web-health () ()
-  "Run `xterm' with `jord-health' script."
-  (run-shell-command "exec xterm -name web-health -e '~/bin/jord-health && echo \"\" && read -n 1 -s -r -p \"Press any key to close.\"'"))
-
-(defcommand jord-loadavg () ()
-  "Run `xterm' with `jord-loadavg' script."
-  (run-shell-command "xterm -name web-health -e '~/bin/jord-loadavg && echo \"\" && read -n 1 -s -r -p \"Press any key to close.\"'"))
-
-(defcommand jord-php () ()
-  "Run `xterm' with `jord-php' script."
-  (run-shell-command "exec xterm -name web-health -e '~/bin/jord-php | grep -v 200 && echo \"\" && read -n 1 -s -r -p \"Press any key to close.\"'"))
-
 (defcommand ponymix-decrease () ()
   (run-shell-command "ponymix decrease 5"))
 
