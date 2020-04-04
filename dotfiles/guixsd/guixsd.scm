@@ -7,7 +7,7 @@
 (use-package-modules admin base certs cryptsetup docker linux lisp
                      suckless xdisorg xorg fonts android fontutils
                      gnome freedesktop readline ncurses networking
-                     pulseaudio wm vnc)
+                     pulseaudio wm vnc ssh version-control gnupg)
 
 (use-service-modules admin dbus desktop docker dns networking sound
                      xorg ssh web cgit version-control certbot
@@ -21,6 +21,7 @@
              (wigust services tftp)
              (wigust packages lisp)
              (wigust packages php)
+             (wigust packages python)
              (majordomo packages majordomo))
 
 (define 20-intel.conf "\
@@ -442,6 +443,45 @@ EndSection")
 
                        ;; “adb” and “fastboot” without root privileges
                        (simple-service 'adb udev-service-type (list android-udev-rules))
+
+                       (simple-service 'jenkins shepherd-root-service-type
+                                       (list
+                                        (shepherd-service
+                                         (provision '(jenkins))
+                                         (documentation "Run jenkins.")
+                                         (requirement '())
+                                         (start #~(make-forkexec-constructor
+                                                   (list "/home/oleg/.nix-profile/bin/jenkins"
+                                                         "--httpPort=8090"
+                                                         "--ajp13Port=-1"
+                                                         "-Djava.awt.headless=true"
+                                                         ;; "-Djenkins.install.runSetupWizard=false"
+                                                         ;; "-Dorg.jenkinsci.plugins.durabletask.BourneShellScript.LAUNCH_DIAGNOSTICS=true"
+                                                         ;; "-Dorg.jenkinsci.plugins.durabletask.BourneShellScript.HEARTBEAT_CHECK_INTERVAL=86400"
+                                                         )
+                                                   #:user "oleg"
+                                                   #:group "users"
+                                                   #:environment-variables
+                                                   (append (list (string-append "PATH="
+                                                                                (string-append #$git "/bin")
+                                                                                ":" (string-append #$ansible "/bin")
+                                                                                ":" (string-append #$sshpass "/bin")
+                                                                                ":" (string-append #$gnupg "/bin")
+                                                                                ":" (string-append #$python-starred "/bin")
+                                                                                ":" "/run/current-system/profile/bin")
+                                                                 "HOME=/home/oleg"
+                                                                 "SSL_CERT_DIR=/run/current-system/profile/etc/ssl/certs"
+                                                                 "SSL_CERT_FILE=/run/current-system/profile/etc/ssl/certs/ca-certificates.crt"
+                                                                 "GIT_SSL_CAINFO=/run/current-system/profile/etc/ssl/certs/ca-certificates.crt")
+                                                           (remove (lambda (str)
+                                                                     (or (string-prefix? "PATH=" str)
+                                                                         (string-prefix? "HOME=" str)
+                                                                         (string-prefix? "SSL_CERT_DIR=" str)
+                                                                         (string-prefix? "SSL_CERT_FILE=" str)
+                                                                         (string-prefix? "GIT_SSL_CAINFO=" str)))
+                                                                   (environ)))))
+                                         (respawn? #f)
+                                         (stop #~(make-kill-destructor)))))
 
                        (simple-service 'vncserver shepherd-root-service-type
                                        (list

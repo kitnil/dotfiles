@@ -168,20 +168,6 @@
     (make-kill-destructor)
     #:respawn? #f))
 
-(define jenkins-service
-  (make <service>
-    #:docstring '("jenkins")
-    #:provides '(jenkins)
-    #:start (make-forkexec-constructor
-             (list "/home/oleg/.nix-profile/bin/java"
-                   "-Xmx512m" "-jar" "/home/oleg/.nix-profile/webapps/jenkins.war"
-                   "--httpPort=8090" "--ajp13Port=-1")
-             #:environment-variables (without-display (environ))
-             #:log-file "/home/oleg/.config/shepherd/jenkins.log")
-    #:stop
-    (make-kill-destructor)
-    #:respawn? #f))
-
 (register-services ;; alerta-service
                    clipmenud-service
                    dunst-service
@@ -190,7 +176,6 @@
                    emacs-service
                    firefox-service
                    redshift-service
-                   jenkins-service
                    transmission-service
                    ;; znc-service
                    kdeconnect-service
@@ -205,7 +190,6 @@
                   emacs
                   firefox
                   ;; redshift
-                  jenkins
                   transmission
                   ;; alerta
                   pulsemixer

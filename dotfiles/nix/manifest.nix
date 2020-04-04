@@ -92,7 +92,6 @@ in [
   # httpie
   hy
   hyperfine
-  jenkins
   knot-resolver
   ldns
   libressl
@@ -189,6 +188,19 @@ in [
     chmod 555 $out/bin/firefox-esr-52
   '');
   }))
+
+  (stdenv.mkDerivation {
+    name = "jenkins";
+    builder = writeScript "builder.sh" (''
+      source $stdenv/setup
+      mkdir -p $out/bin
+      cat > $out/bin/jenkins <<'EOF'
+      #!${bash}/bin/bash
+      exec -a "$0" ${openjdk}/bin/java -Xmx512m -jar ${jenkins}/webapps/jenkins.war "$@"
+      EOF
+      chmod 555 $out/bin/jenkins
+    '');
+  })
 
   (stdenv.mkDerivation {
     name = "ipmi";
