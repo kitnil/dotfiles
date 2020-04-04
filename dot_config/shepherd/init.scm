@@ -182,7 +182,7 @@
     (make-kill-destructor)
     #:respawn? #f))
 
-(register-services alerta-service
+(register-services ;; alerta-service
                    clipmenud-service
                    dunst-service
                    keynav-service
@@ -207,7 +207,7 @@
                   ;; redshift
                   jenkins
                   transmission
-                  alerta
+                  ;; alerta
                   pulsemixer
                   ;; znc
                   kdeconnect
