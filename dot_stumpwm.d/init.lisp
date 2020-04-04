@@ -1711,13 +1711,23 @@
 
   ;; Rebind groups to PREFIX-NUMBER.
   (mapcar #'(lambda (x)
-              (define-key *top-map* (kbd (concat "s-" (write-to-string x)))
-                (format nil "gselect ~D" x))
+              ;; (define-key *top-map* (kbd (concat "s-" (write-to-string x)))
+              ;;   (format nil "gselect ~D" x))
               (define-key *top-map* (kbd (concat "M-s-" (write-to-string x)))
                 (format nil "group-~D-start-programs" x))
               (define-key *top-map* (kbd (concat "C-s-" (write-to-string x)))
                 (format nil "~A ~D" "select-window-by-number" x)))
-          (range 10 :min 0 :step 1)))
+          (range 10 :min 0 :step 1))
+  (define-key *top-map* (kbd (concat "s-1")) "gselect 1")
+  (define-key *top-map* (kbd (concat "s-2")) "group-2-start-programs")
+  (define-key *top-map* (kbd (concat "s-3")) "group-3-start-programs")
+  (define-key *top-map* (kbd (concat "s-4")) "group-4-start-programs")
+  (define-key *top-map* (kbd (concat "s-5")) "group-5-start-programs")
+  (define-key *top-map* (kbd (concat "s-6")) "group-6-start-programs")
+  (define-key *top-map* (kbd (concat "s-7")) "group-7-start-programs")
+  (define-key *top-map* (kbd (concat "s-8")) "group-8-start-programs")
+  (define-key *top-map* (kbd (concat "s-9")) "group-9-start-programs")
+  (define-key *top-map* (kbd (concat "s-0")) "gselect 0"))
 
 (defcommand group-2-start-programs () ()
   (run-commands "gselect 2")
@@ -1726,16 +1736,12 @@
                                (sb-unicode:lowercase (write-to-string '(gnus)))))
     (if (y-or-n-p "Fetch mail? ") (notmuch))))
 
-(define-key *top-map* (kbd (concat "s-2")) "group-2-start-programs")
-
 (defcommand group-3-start-programs () ()
   (run-commands "gselect 3")
   (unless (current-window)
     (run-shell-command (if (free-time?)
                            "chromium --new-window https://home-s2x8742.slack.com/"
                            "chromium --new-window https://mjru.slack.com/"))))
-
-(define-key *top-map* (kbd (concat "s-3")) "group-3-start-programs")
 
 (defcommand group-4-start-programs () ()
   (run-commands "gselect 4")
@@ -1744,8 +1750,6 @@
                            "chromium --new-window https://jenkins.wugi.info/view/Failed/"
                            "chromium --new-window https://jenkins.intr/view/Failed/"))))
 
-(define-key *top-map* (kbd (concat "s-4")) "group-4-start-programs")
-
 (defcommand group-5-start-programs () ()
   (run-commands "gselect 5")
   (unless (current-window)
@@ -1753,21 +1757,15 @@
                            "kodi"
                            "firefox --new-window https://alerta.intr/"))))
 
-(define-key *top-map* (kbd (concat "s-5")) "group-5-start-programs")
-
 (defcommand group-6-start-programs () ()
   (run-commands "gselect 6")
   (unless (current-window)
     (trans-en-ru)))
 
-(define-key *top-map* (kbd (concat "s-6")) "group-6-start-programs")
-
 (defcommand group-7-start-programs () ()
   (run-commands "gselect 7")
   (unless (current-window)
     (repl-nix)))
-
-(define-key *top-map* (kbd (concat "s-7")) "group-7-start-programs")
 
 (defcommand group-8-start-programs () ()
   (run-commands "gselect 8")
@@ -1777,14 +1775,10 @@
                                    (sb-unicode:lowercase (write-to-string '(elfeed))))
                            "firefox --new-window https://cerberus.intr/"))))
 
-(define-key *top-map* (kbd (concat "s-8")) "group-8-start-programs")
-
 (defcommand group-9-start-programs () ()
   (run-commands "gselect 9")
   (unless (current-window)
     (emacs-anywhere)))
-
-(define-key *top-map* (kbd (concat "s-9")) "group-9-start-programs")
 
 (defcommand group-5-start-programs () ()
   (run-commands "gselect 5")
