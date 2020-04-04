@@ -1190,6 +1190,9 @@
 (defvar *jenkins-url*
   "https://jenkins.wugi.info")
 
+(defvar youtube-playlist-cool-music
+  "PLmjgicsUWIkvEKkLN01vm85neXAik3yU2")
+
 (flet ((firefox (url title &optional dark)
          (run-or-raise (format nil (if dark
                                        "GTK_THEME=Adwaita:dark nixGLIntel firefox -P dark --new-window ~S"
@@ -1244,9 +1247,14 @@
   (defcommand jenkins-mj () ()
     (firefox "https://jenkins.intr/" "Jenkins"))
 
+  ;; (defcommand music-youtube () ()
+  ;;   (run-or-raise "nixGLIntel chromium --app=https://music.youtube.com/"
+  ;;                 '(:instance "music.youtube.com")))
+
   (defcommand music-youtube () ()
-    (run-or-raise "nixGLIntel chromium --app=https://music.youtube.com/"
-                  '(:instance "music.youtube.com")))
+    (run-or-raise (concat "nixGLIntel chromium --app=https://www.youtube.com/playlist?list="
+                          youtube-playlist-cool-music)
+                  '(:instance "www.youtube.com__playlist")))
 
   (defcommand youtube () ()
     (firefox "https://www.youtube.com/feed/subscriptions" t))
@@ -1798,6 +1806,7 @@
   (define-frame-preference "Default" (0 NIL T :CLASS "XTerm" :TITLE "youtube-dl-music"))
   (define-frame-preference "Default" (0 NIL T :TITLE "xpanes-top"))
   (define-frame-preference "Default" (0 NIL T :INSTANCE "music.youtube.com"))
+  (define-frame-preference "Default" (0 NIL T :INSTANCE "www.youtube.com__playlist"))
   (define-frame-preference "Default" (1 NIL NIL :CLASS "obs"))
   (define-frame-preference "Default" (1 NIL T :CLASS "mpv" :TITLE "youtube-dl-music"))
   (define-frame-preference "Default" (1 NIL T :CLASS "quassel" :TITLE "Chat Monitor"))
