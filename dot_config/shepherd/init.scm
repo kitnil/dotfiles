@@ -1,4 +1,4 @@
-(use-modules (shepherd service))
+(use-modules (srfi srfi-1) (shepherd service))
 
 (define %bin-directory "/home/oleg/.guix-profile/bin/")
 (define %redshift (string-append %bin-directory "redshift"))
@@ -56,11 +56,16 @@
     #:start (make-forkexec-constructor
              (list (string-append %bin-directory "emacs")
                    "--fg-daemon")
-             #:environment-variables (without-display (environ))
-             #:log-file "/home/oleg/.config/shepherd/emacs.log")
+    #:environment-variables
+    (append (without-display (environ))
+            (if (any (lambda (str) (string-prefix? "GTK_THEME" str)) (environ))
+                '("GTK_THEME=Adwaita:dark")
+                '()))
+    #:log-file "/home/oleg/.config/shepherd/emacs.log")
     #:stop
-    (make-system-destructor (string-join (list (string-append %bin-directory "emacsclient")
-                                               "--eval" "'(kill-emacs)'")))
+    (make-system-destructor
+     (string-join (list (string-append %bin-directory "emacsclient")
+                        "--eval" "'(kill-emacs)'")))
     #:respawn? #f))
 
 (define clipmenud-service
