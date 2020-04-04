@@ -1086,13 +1086,19 @@
   (run-shell-command "exec vncviewer localhost:59555"))
 
 (defcommand pass-route () ()
-  (window-send-string (format nil "~a~%" (password-store-show "majordomo/ssh/router"))))
+  (if (y-or-n-p "Insert router password and press Enter? ")
+      (window-send-string
+       (format nil "~a~%" (password-store-show "majordomo/ssh/router")))))
 
 (defcommand pass-eng () ()
-  (window-send-string (format nil "~a~%" (password-store-show "majordomo/ssh/eng"))))
+  (if (y-or-n-p "Insert eng password and press Enter? ")
+      (window-send-string
+       (format nil "~a~%" (password-store-show "majordomo/ssh/eng")))))
 
 (defcommand pass-ipmi () ()
-  (window-send-string (format nil "~a" (password-store-show "majordomo/ipmi/ADMIN"))))
+  (if (y-or-n-p "Insert IPMI ADMIN password and press Enter? ")
+      (window-send-string
+       (format nil "~a" (password-store-show "majordomo/ipmi/ADMIN")))))
 
 (defcommand insert-ssh-key () ()
   (window-send-string
@@ -1103,7 +1109,9 @@
   (window-send-string (format nil "~a~%" "docker ps --format '{{ .Image }}' | grep master | sort -u | xargs -I{} docker pull {}")))
 
 (defcommand pass-sup () ()
-  (window-send-string (format nil "~a~%" (password-store-show "majordomo/ssh/sup"))))
+  (if (y-or-n-p "Insert sup password and press Enter? ")
+      (window-send-string
+       (format nil "~a~%" (password-store-show "majordomo/ssh/sup")))))
 
 (defun current-window-width ()
   (format-expand *window-formatters* "%w" (current-window)))
