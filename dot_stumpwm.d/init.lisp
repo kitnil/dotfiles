@@ -90,11 +90,19 @@
 ;;; General functions for use
 ;;;
 
+(defvar *work-time* nil)
+
+(defcommand toggle-work-time () ()
+  (if *work-time*
+      (setf *work-time* nil)
+      (setf *work-time* t)))
+
 (defun free-time? ()
     (let ((day-of-week "%u")
           (hour "%k"))
-      (or (> (parse-integer (time-format day-of-week)) 5)
-          (> (parse-integer (time-format hour)) 18))))
+      (unless *work-time*
+        (or (> (parse-integer (time-format day-of-week)) 5)
+            (> (parse-integer (time-format hour)) 18)))))
 
 (defun switch-to-emacs ()
   (unless (uiop/utility:string-prefix-p "Emacs"
