@@ -1887,3 +1887,21 @@
        (frame-parameters-display-1))
 
       (t (set-prefix-key (kbd "C-i"))))
+
+(defcommand clipmenud () ()
+  (run-shell-command
+   (concat (getenv "HOME") "/.nix-profile/bin/clipmenud")))
+
+(add-hook '*start-hook* 'clipmenud)
+
+(defcommand kdeconnect-indicator () ()
+  (run-shell-command
+   (concat (getenv "HOME") "/.guix-profile/bin/kdeconnect-indicator")))
+
+(add-hook '*start-hook* 'kdeconnect-indicator)
+
+(defcommand dunst () ()
+  (run-shell-command
+   (concat (getenv "HOME") "/.guix-profile/bin/dunst")))
+
+(add-hook '*start-hook* 'dunst)
