@@ -973,8 +973,6 @@
             (make-string 4 :initial-element #\space)
             "^>"
             (make-string 4 :initial-element #\space)
-            "%N"
-            (make-string 4 :initial-element #\space)
             "%d"))
 
 (setf *mode-line-pad-x* 10)
