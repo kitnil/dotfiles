@@ -1566,6 +1566,7 @@
 
 (defcommand alerta-top () ()
   (term-shell-command (join (list "sh" "-c" (format nil "~s" "while true; do /home/oleg/.local/bin/alerta top; sleep 20; done")))
+                      :title "alerta-top"
                       :terminal 'st
                       :font "Monospace:size=6"))
 
@@ -1800,7 +1801,7 @@
   (define-frame-preference "Default" (1 NIL T :CLASS "mpv" :TITLE "youtube-dl-music"))
   (define-frame-preference "Default" (1 NIL T :CLASS "quassel" :TITLE "Chat Monitor"))
   (define-frame-preference "Default" (3 NIL NIL :CLASS "Dragon"))
-  (define-frame-preference "Default" (3 NIL NIL :CLASS "XTerm" :TITLE "alerta"))
+  (define-frame-preference "Default" (3 NIL NIL :TITLE "alerta-top"))
   (define-frame-preference "Default" (4 NIL NIL :TITLE "pulsemixer"))
   (define-frame-preference "Default" (4 NIL T :TITLE "notmuch"))
   (define-frame-preference "Default" (4 NIL T :CLASS "mpv" :TITLE "emacs-emms"))
