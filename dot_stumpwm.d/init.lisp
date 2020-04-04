@@ -1252,7 +1252,7 @@
   (defcommand music-youtube () ()
     (run-or-raise (concat "nixGLIntel chromium --app=https://www.youtube.com/playlist?list="
                           youtube-playlist-cool-music)
-                  '(:instance "www.youtube.com__playlist")))
+                  '(:instance "www.youtube.com")))
 
   (defcommand youtube () ()
     (firefox "https://www.youtube.com/feed/subscriptions" t))
