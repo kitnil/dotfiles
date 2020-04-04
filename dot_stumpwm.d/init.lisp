@@ -926,7 +926,7 @@
 
 (setf *mode-line-position* :bottom)
 
-(defparameter dark-theme t)
+(defparameter dark-theme nil)
 (progn
   (set-focus-color "#90EE90")
   (set-border-color "#90EE90")
