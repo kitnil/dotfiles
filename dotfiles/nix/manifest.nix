@@ -82,6 +82,7 @@ in [
   }) {}).firefox
   fzf
   # geckodriver
+  bfg-repo-cleaner
   git-secrets
   # gita
   # glibc-locales
