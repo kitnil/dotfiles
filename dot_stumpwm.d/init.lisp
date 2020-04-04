@@ -1617,6 +1617,12 @@
            "--request" "GET" "http://nginx1.intr:8080/hms"))
     t)))
 
+(defcommand delete-or-kill-window () ()
+  (let ((window (current-window)))
+    (case (read-from-string (window-name window))
+      ((repl-nix) (kill-window window))
+      (t (delete-window window)))))
+
 (defun bind-super ()
   (define-key *top-map* (kbd "C-s-w") "chromium")
   (define-key *top-map* (kbd "C-s-W") "chromium-new-window")
@@ -1676,7 +1682,7 @@
             (7 . #\&) (8 . #\*) (9 . #\()
             (0 . #\))))
   (define-key *top-map* (kbd "s-KP_Enter") "run-xterm")
-  (define-key *top-map* (kbd "s-k") "delete")
+  (define-key *top-map* (kbd "s-k") "delete-or-kill-window")
   (define-key *top-map* (kbd "s-Right") "move-focus right")
   (define-key *top-map* (kbd "s-Left") "move-focus left")
   (define-key *top-map* (kbd "s-Up") "move-focus up")
