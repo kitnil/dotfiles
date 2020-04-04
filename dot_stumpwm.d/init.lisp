@@ -1783,7 +1783,7 @@
   (define-frame-preference "Default" (0 NIL T :INSTANCE "www.youtube.com__playlist"))
   (define-frame-preference "Default" (1 NIL NIL :CLASS "obs"))
   (define-frame-preference "Default" (1 NIL T :CLASS "mpv" :TITLE "youtube-dl-music"))
-  (define-frame-preference "Default" (1 NIL T :CLASS "quassel" :TITLE "Chat Monitor"))
+  (define-frame-preference "Default" (1 NIL T :CLASS "quassel"))
   (define-frame-preference "Default" (3 NIL NIL :CLASS "Dragon"))
   (define-frame-preference "Default" (3 NIL NIL :TITLE "alerta-top"))
   (define-frame-preference "Default" (4 NIL NIL :TITLE "pulsemixer"))
