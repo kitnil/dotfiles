@@ -1457,12 +1457,10 @@
   (run-shell-command "dragon --and-exit"))
 
 (mapcar #'(lambda (x)
-            (gnew (write-to-string x)))
+            (add-group (current-screen) (write-to-string x) :background t))
 	(range 10 :min 2 :step 1))
 
-(gnew-float "0")
-
-(stumpwm:run-commands "gselect 1")
+(add-group (current-screen) "0" :background t :type 'float-group)
 
 (defun current-window-width ()
   (format-expand *window-formatters* "%w" (current-window)))
