@@ -991,14 +991,7 @@
                              #\|)
                        t))))
             (make-string 4 :initial-element #\space)
-            '(:eval (format nil "VOL: ~a"
-                     (if (= 1 (parse-integer (run-shell-command "ponymix is-muted && printf 0 || printf 1" t)))
-                         (bar (parse-integer (string-trim '(#\Newline) (run-shell-command "ponymix get-volume" t))) 10
-                              (if (typep (screen-font (current-screen)) 'CLX-TRUETYPE:FONT)
-                                  #\▮
-                                  #\#)
-                              #\ )
-                         "MUTED")))
+            '(:eval (format nil "VOL: ~a" (volume-current)))
             (make-string 4 :initial-element #\space)
             "%d"))
 
@@ -1052,20 +1045,31 @@
 (defcommand osd-sound () ()
   (run-shell-command "if pgrep -f osd-sound > /dev/null; then pkill osd-sound; osd-sound; else osd-sound; fi"))
 
-(defcommand volume-current () ()
-  (message
-   (format nil "Current volume: ~a%"
-           (string-trim '(#\Newline)
-                        (run-shell-command "ponymix get-volume" t)))))
+(defun volume-current ()
+  (if (= 1 (parse-integer (run-shell-command "ponymix is-muted && printf 0 || printf 1" t)))
+      (bar (parse-integer (string-trim '(#\Newline) (run-shell-command "ponymix get-volume" t))) 10
+           (if (typep (screen-font (current-screen)) 'CLX-TRUETYPE:FONT)
+               #\▮
+               #\#)
+           #\ )
+      "MUTED"))
+
+(defcommand volume-current-message () ()
+  (message (format nil "~a ~a"
+                   (if (typep (screen-font (current-screen)) 'CLX-TRUETYPE:FONT) "♬" "Volume:")
+                   (volume-current))))
 
 (defcommand volume-decrease () ()
-  (run-shell-command "ponymix decrease 5"))
+  (run-shell-command "ponymix decrease 5")
+  (volume-current-message))
 
 (defcommand volume-increase () ()
-  (run-shell-command "ponymix increase 5"))
+  (run-shell-command "ponymix increase 5")
+  (volume-current-message))
 
 (defcommand volume-toggle () ()
-  (run-shell-command "ponymix toggle"))
+  (run-shell-command "ponymix toggle")
+  (volume-current-message))
 
 (define-interactive-keymap volume nil
   ((kbd "-") "volume-decrease")
