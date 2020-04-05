@@ -992,11 +992,13 @@
                        t))))
             (make-string 4 :initial-element #\space)
             '(:eval (format nil "VOL: ~a"
-                     (bar (parse-integer (string-trim '(#\Newline) (run-shell-command "ponymix get-volume" t))) 10
-                      (if (typep (screen-font (current-screen)) 'CLX-TRUETYPE:FONT)
-                          #\▮
-                          #\#)
-                      #\ )))
+                     (if (= 1 (parse-integer (run-shell-command "ponymix is-muted && printf 0 || printf 1" t)))
+                         (bar (parse-integer (string-trim '(#\Newline) (run-shell-command "ponymix get-volume" t))) 10
+                              (if (typep (screen-font (current-screen)) 'CLX-TRUETYPE:FONT)
+                                  #\▮
+                                  #\#)
+                              #\ )
+                         "MUTED")))
             (make-string 4 :initial-element #\space)
             "%d"))
 
