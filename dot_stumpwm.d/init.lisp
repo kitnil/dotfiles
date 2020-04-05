@@ -985,6 +985,9 @@
             (make-string 4 :initial-element #\space)
             "^>"
             (make-string 4 :initial-element #\space)
+            '(:eval (format nil "~a%"
+                     (string-trim '(#\Newline) (run-shell-command "ponymix get-volume" t))))
+            (make-string 4 :initial-element #\space)
             "%d"))
 
 (setf *mode-line-pad-x* 10)
@@ -1044,12 +1047,10 @@
                         (run-shell-command "ponymix get-volume" t)))))
 
 (defcommand volume-decrease () ()
-  (run-shell-command "ponymix decrease 5")
-  (volume-current))
+  (run-shell-command "ponymix decrease 5"))
 
 (defcommand volume-increase () ()
-  (run-shell-command "ponymix increase 5")
-  (volume-current))
+  (run-shell-command "ponymix increase 5"))
 
 (defcommand volume-toggle () ()
   (run-shell-command "ponymix toggle"))
