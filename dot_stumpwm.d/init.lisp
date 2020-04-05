@@ -1061,15 +1061,18 @@
 
 (defcommand volume-decrease () ()
   (run-shell-command "ponymix decrease 5")
-  (volume-current-message))
+  (unless (head-mode-line (current-head))
+    (volume-current-message)))
 
 (defcommand volume-increase () ()
   (run-shell-command "ponymix increase 5")
-  (volume-current-message))
+  (unless (head-mode-line (current-head))
+    (volume-current-message)))
 
 (defcommand volume-toggle () ()
   (run-shell-command "ponymix toggle")
-  (volume-current-message))
+  (unless (head-mode-line (current-head))
+    (volume-current-message)))
 
 (define-interactive-keymap volume nil
   ((kbd "-") "volume-decrease")
