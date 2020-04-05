@@ -12,7 +12,7 @@ fi
 
 case "$1" in
     guix)
-        exec -a chezmoi $chezmoi --source @GUIX@ "${@:2}"
+        exec -a chezmoi $chezmoi --source @GUIX@ --color="${COLOR:-on}" "${@:2}"
         ;;
     pull)
         guix pull --channels="@GUIX@/dotfiles/channels.scm"
