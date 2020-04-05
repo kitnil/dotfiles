@@ -975,7 +975,10 @@
             '(:eval (let* ((window (current-window))
                            (wn (window-name window)))
                       (format nil "~a:[~a]" (window-number window) (if (> (length wn) 10)
-                                                                       (concat (subseq wn 0 10) "...")
+                                                                       (concat (subseq wn 0 10)
+                                                                               (if (typep (screen-font (current-screen)) 'CLX-TRUETYPE:FONT)
+                                                                                   "…"
+                                                                                   "..."))
                                                                        wn))))
             (make-string 4 :initial-element #\space)
             "^>"
@@ -989,7 +992,11 @@
                        t))))
             (make-string 4 :initial-element #\space)
             '(:eval (format nil "VOL: ~a"
-                     (bar (parse-integer (string-trim '(#\Newline) (run-shell-command "ponymix get-volume" t))) 10 #\# #\ )))
+                     (bar (parse-integer (string-trim '(#\Newline) (run-shell-command "ponymix get-volume" t))) 10
+                      (if (typep (screen-font (current-screen)) 'CLX-TRUETYPE:FONT)
+                          #\▮
+                          #\#)
+                      #\ )))
             (make-string 4 :initial-element #\space)
             "%d"))
 
