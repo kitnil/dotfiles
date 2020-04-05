@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: init
+# key: init
+# --
+Initial commit.
+
+* `(car (magit-staged-files))`: New file.

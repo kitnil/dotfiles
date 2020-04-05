@@ -1,0 +1,10 @@
+# -*- mode: snippet -*-
+# name: push
+# key: push...
+# --
+Hello $1,
+
+Pushed as $2 to master.
+
+Thanks,
+Oleg.

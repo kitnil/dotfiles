@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: map-top
+# key: map-top
+# --
+(define-key *top-map* (kbd "$1") "$2")

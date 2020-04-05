@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: guix-system-link
+# key: gsl
+# --
+sudo unlink /root/.config/guix/latest && sudo ln -s $(readlink /home/natsu/.config/guix/latest) /root/.config/guix/latest

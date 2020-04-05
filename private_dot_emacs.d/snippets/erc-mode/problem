@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: problem
+# key: problem
+# --
+I'm using ${1:tool} for ${2:task}.  When I ${3:thing you did with the tool}, I expected it to ${4:expected outcome} because of ${5:documentation link}, but instead it ${6:actual outcome}.

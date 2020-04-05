@@ -1,0 +1,10 @@
+# key: test
+# name: test
+# --
+(dockerNodeTest {
+  description = "$1";
+  action = "${2:$$(yas-choose-value "succeed"
+                                    "execute"
+                                    "waitUntilSucceeds")}";
+  command = "$3"
+})

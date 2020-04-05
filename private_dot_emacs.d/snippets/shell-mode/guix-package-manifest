@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: guix-package-manifest
+# key: gpm
+# --
+GUIX_PACKAGE_PATH=$HOME/src/guix-wigust guix package -m $HOME/dotfiles/guix/manifests/desktop.scm

@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: module-set
+# key: module
+# --
+(set-current-module (resolve-module '($1)))

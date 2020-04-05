@@ -1,0 +1,9 @@
+# key: mj
+# name: mj
+# --
+${2:$$(car (split-string (string-trim-right
+                           (shell-command-to-string
+                            (mapconcat 'identity
+                              (list (expand-file-name "~/.guix-profile/bin/getent") "hosts" (yas-choose-value (mj-hosts--candidates)))
+                                       " ")))
+                     " "))} $1

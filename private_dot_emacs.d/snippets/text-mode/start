@@ -1,0 +1,9 @@
+# -*- mode: snippet -*-
+# name: старт
+# key: start
+# --
+Ваш текущий тарифный план на виртуальном хостинге - “Старт”.
+
+Вам необходимо перейти на тариф “Безлимитный”.
+
+https://www.majordomo.ru/order-service?service=hosting&plan_id=9802&client_type=individual

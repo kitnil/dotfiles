@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: melpa
+# key: melpa
+# --
+melpa.org URLs are not stable: files get modified in place.  For that
+reason, we usually refer directly to upstream VCS repositories.  Could
+you modify the patch accordingly?

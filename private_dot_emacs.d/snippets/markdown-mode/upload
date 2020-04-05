@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: загрузить архив на аккаунт
+# key: upload
+# --
+Для загрузки ${1:файла} на домен, Вы можете воспользоваться FTP, с настройкой которого Вы можете ознакомится
+https://www.majordomo.ru/help/instructions/dobavlenie-saita

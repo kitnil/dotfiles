@@ -1,0 +1,4 @@
+# key: gsr
+# name: guix-system-reconfigure
+# --
+sudo guix system reconfigure $HOME/dotfiles/guix/systems/magnolia.scm

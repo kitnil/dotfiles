@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: define-record-type*
+# key: define-record-type*...
+# --
+(define-record-type* <$1>
+  $1 make-$1
+  $1?
+  $2)

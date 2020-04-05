@@ -1,0 +1,19 @@
+# key: lc
+# name: list-comprehension
+#
+# (use-modules (srfi srfi-42))
+# 
+# https://en.wikipedia.org/wiki/List_comprehension
+# https://en.wikipedia.org/wiki/Comparison_of_programming_languages_(list_comprehension)
+# --
+(define list-comprehension
+  (list-ec (: a 11) (: b 11) (: c 11)
+	   (if (and (= (+ (* a a)
+			  (* b b))
+		       (* c c))
+		    (= (+ a b c)
+		       24)
+		    (< b c)
+		    (< a b))
+	       (list a b c)
+	       '())))

@@ -1,0 +1,16 @@
+# -*- mode: snippet -*-
+# name: распаковать архив
+# key: extract
+# --
+Чтобы распаковать архив на аккаунте, Вы можете воспользоваться SSH, с настройкой которого Вы можете ознакомится:
+
+- https://www.majordomo.ru/help/instructions/config-ssh-linux
+- https://www.majordomo.ru/help/instructions/config-ssh-windows
+- https://www.majordomo.ru/help/instructions/config-ssh-macos
+
+Подключившись через SSH, Вы можете распаковать архив командой:
+
+- tar xf ${1:ИМЯ_АРХИВА}.tar.gz
+- unzip $1.zip
+
+Если потребуется наша помощь в загрузке или распаковке, предоставьте нам архив и путь его распаковки.

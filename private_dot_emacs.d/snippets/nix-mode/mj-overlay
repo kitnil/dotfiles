@@ -1,0 +1,13 @@
+# -*- mode: snippet -*-
+# name: mj
+# key: mj
+# --
+with import <nixpkgs> {
+  overlays = [
+    (import ${3:$$(yas-choose-value (seq-filter (lambda (dir)
+                                (s-contains-p "nixpkgs" dir))
+                              (seq-filter #'file-directory-p
+                                          (cddr ;skip "." and ".."
+                                           (directory-files (expand-file-name "~/majordomo/_ci/") t)))))})
+  ];
+};

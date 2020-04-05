@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: click
+# key: click
+# --
+d.find_elements_by_id("$1")[0].click()

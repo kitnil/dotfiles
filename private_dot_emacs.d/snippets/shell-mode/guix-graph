@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: guix-graph
+# key: guix-graph
+# --
+guix graph --type=${1:$$(yas-choose-value '("references" "package" "reverse" "bag-package" "bag-emerged" "derivation"))} ${2:THING} | dot -Gsize="10,10" -Gratio=0.7 -T${3:$$(yas-choose-value '("png" "svg" "pdf"))} -Nfontsize=48 > "${4:FILE}.png"

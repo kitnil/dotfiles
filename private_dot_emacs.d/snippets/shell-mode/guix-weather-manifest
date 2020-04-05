@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: guix-weather-manifest
+# key: gwm
+# --
+GUIX_PACKAGE_PATH=$HOME/src/guix-wigust guix weather -m $HOME/dotfiles/guix/manifests/desktop.scm

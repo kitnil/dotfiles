@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: guix-wigust
+# key: guix-wigust
+# --
+GUIX_PACKAGE_PATH=$HOME/src/guix-wigust guix $0
