@@ -86,11 +86,11 @@
       (setf *work-time* t)))
 
 (defun free-time? ()
-    (let ((day-of-week "%u")
-          (hour "%k"))
-      (unless *work-time*
-        (or (> (parse-integer (time-format day-of-week)) 5)
-            (> (parse-integer (time-format hour)) 18)))))
+  (let ((day-of-week "%u")
+        (hour (parse-integer (time-format "%k"))))
+    (unless *work-time*
+      (or (> (parse-integer (time-format day-of-week)) 5)
+          (or (> hour 18) (< hour 10))))))
 
 (defvar *notify-to-rest* t)
 (defvar *notify-to-rest-period* 3600)
