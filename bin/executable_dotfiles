@@ -15,7 +15,7 @@ case "$1" in
         chezmoi --source "@GUIX@" apply
         guix package --manifest="@GUIX@/dotfiles/manifests/$HOSTNAME.scm"
         sudo --login guix system reconfigure "@GUIX@/dotfiles/guixsd/$HOSTNAME.scm"
-        NIX_PATH=nixpkgs=/home/oleg/.nix-defexpr/channels/nixos-unstable nix-env --install '.*' -f /home/oleg/manifest.nix
+        NIX_PATH=nixpkgs="$HOME/.nix-defexpr/channels/nixos-unstable" nix-env --install '.*' -f "$HOME/manifest.nix"
         ;;
     template)
         exec -a chezmoi chezmoi add --template --autotemplate "$@"
