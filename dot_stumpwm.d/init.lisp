@@ -1937,7 +1937,7 @@
               (lambda () (pointer-keys))
               (lambda () (keyboard-layout))
               (lambda () (xmodmap))
-              (lambda () (mode-line))
+              ;; (lambda () (mode-line))
               (lambda () (clipmenud))
               (lambda () (kdeconnect-indicator))
               (lambda () (dunst))
