@@ -709,7 +709,7 @@
   (term-shell-command "ghci" :scrollbar t :title "repl-ghci"))
 
 (defcommand repl-go () ()
-  (term-shell-command "gore" :scrollbar t :title "repl-go"))
+  (term-shell-command "gomacro" :scrollbar t :title "repl-go"))
 
 (defcommand repl-resty () ()
   (term-shell-command (format nil (join '("docker" "run" "--entrypoint"
