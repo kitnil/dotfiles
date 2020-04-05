@@ -4,7 +4,7 @@
 set -e -x
 
 for id in $(alerta query --filter severity=informational \
-                | grep 'Домен должен быть делегирован на наши\|A-запись домена не соответствует серверу' \
+                | grep 'Домен должен быть делегирован на наши\|A-запись домена не соответствует серверу\|Обновление архива' \
                 | awk '{ print $1 }'); do
     alerta delete --ids $id
 done
