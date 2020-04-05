@@ -493,6 +493,7 @@ EndSection")
                                                                                 ":" (string-append #$sshpass "/bin")
                                                                                 ":" (string-append #$gnupg "/bin")
                                                                                 ":" (string-append #$python-starred "/bin")
+                                                                                ":" "/run/setuid-programs"
                                                                                 ":" "/run/current-system/profile/bin")
                                                                  "HOME=/home/oleg"
                                                                  "SSL_CERT_DIR=/run/current-system/profile/etc/ssl/certs"
