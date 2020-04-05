@@ -1,6 +1,6 @@
 #!/bin/sh -e
 
-exec &> >(tee "$HOME/.cache/dotfiles.log")
+exec &> >(tee "${XDG_CACHE_HOME:-$HOME/.cache}/dotfiles.log")
 
 case "$1" in
     guix)
