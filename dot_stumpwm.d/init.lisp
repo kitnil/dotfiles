@@ -985,6 +985,14 @@
             (make-string 4 :initial-element #\space)
             "^>"
             (make-string 4 :initial-element #\space)
+            '(:eval (string-trim '(#\Newline)
+                     (format nil "VPN: ~a"
+                      (run-shell-command
+                       (join '("ip --json address"
+                               "jq --raw-output '.[] | select(.ifname == \"tapvpn\") | .addr_info[] | select(.\"family\" == \"inet\") | .local'")
+                             #\|)
+                       t))))
+            (make-string 4 :initial-element #\space)
             '(:eval (format nil "~a%"
                      (string-trim '(#\Newline) (run-shell-command "ponymix get-volume" t))))
             (make-string 4 :initial-element #\space)
