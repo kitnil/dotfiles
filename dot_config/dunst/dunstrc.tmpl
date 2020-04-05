@@ -246,7 +246,8 @@
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
     background = {{- if eq .theme "dark" }} "#000000" {{ else }} "#ffffff" {{- end }}
-    foreground = {{- if eq .theme "dark" }} "#ffffff" {{ else }} "#888888" {{- end }}
+    foreground = {{- if eq .theme "dark" }} "#696969" {{ else }} "#888888" {{- end }}
+    frame_color = {{- if eq .theme "dark" }} "#000000" {{ else }} "#ffffff" {{- end }}
     timeout = 5
     # Icon for notifications with low urgency, uncomment to enable
     #icon = /path/to/icon
