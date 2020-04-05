@@ -1037,11 +1037,19 @@
 (defcommand osd-sound () ()
   (run-shell-command "if pgrep -f osd-sound > /dev/null; then pkill osd-sound; osd-sound; else osd-sound; fi"))
 
+(defcommand volume-current () ()
+  (message
+   (format nil "Current volume: ~a%"
+           (string-trim '(#\Newline)
+                        (run-shell-command "ponymix get-volume" t)))))
+
 (defcommand volume-decrease () ()
-  (run-shell-command "ponymix decrease 5"))
+  (run-shell-command "ponymix decrease 5")
+  (volume-current))
 
 (defcommand volume-increase () ()
-  (run-shell-command "ponymix increase 5"))
+  (run-shell-command "ponymix increase 5")
+  (volume-current))
 
 (defcommand volume-toggle () ()
   (run-shell-command "ponymix toggle"))
@@ -1049,6 +1057,15 @@
 (define-interactive-keymap volume nil
   ((kbd "-") "volume-decrease")
   ((kbd "=") "volume-increase"))
+
+(defcommand volume-increase-device-0 () ()
+  (run-shell-command "ponymix increase --device 0 5"))
+
+(defcommand volume-decrease-device-0 () ()
+  (run-shell-command "ponymix decrease --device 0 5"))
+
+(define-key *top-map* (kbd "C-s-=") "volume-increase-device-0")
+(define-key *top-map* (kbd "C-s--") "volume-decrease-device-0")
 
 (defcommand pavucontrol () ()
   (run-shell-command "pavucontrol"))
@@ -1089,24 +1106,6 @@
 (defcommand dump-group-to-file (file) (:rest "Dump To File: ")
   "Dumps the frames of the current group of the current screen to the named file."
   (dump-to-file (dump-group (current-group)) file))
-
-(defcommand ponymix-decrease () ()
-  (run-shell-command "ponymix decrease 5"))
-
-(defcommand ponymix-increase () ()
-  (run-shell-command "ponymix increase 5"))
-
-(define-key *top-map* (kbd "XF86AudioRaiseVolume") "ponymix-increase")
-(define-key *top-map* (kbd "XF86AudioLowerVolume") "ponymix-decrease")
-
-(defcommand ponymix-increase-device-0 () ()
-  (run-shell-command "ponymix increase --device 0 5"))
-
-(defcommand ponymix-decrease-device-0 () ()
-  (run-shell-command "ponymix decrease --device 0 5"))
-
-(define-key *top-map* (kbd "C-s-=") "ponymix-increase-device-0")
-(define-key *top-map* (kbd "C-s--") "ponymix-decrease-device-0")
 
 (defcommand xkill () ()
   "Run `xkill'."
@@ -1650,6 +1649,10 @@
   (define-key *top-map* (kbd "C-s-C") "rofi-drun")
   (define-key *top-map* (kbd "S-s-RET") "rofi-ssh")
   (define-key *top-map* (kbd "s-quoteright") "rofi-window")
+  (define-key *top-map* (kbd "XF86AudioLowerVolume") "volume-decrease")
+  (define-key *top-map* (kbd "XF86AudioRaiseVolume") "volume-increase")
+  (define-key *top-map* (kbd "s--") "volume-decrease")
+  (define-key *top-map* (kbd "s-=") "volume-increase")
   (define-key *top-map* (kbd "s-KP_Add") "volume-increase")
   (define-key *top-map* (kbd "s-KP_Subtract") "volume-decrease")
   (define-key *top-map* (kbd "s-RET") "run-xterm")
@@ -1663,8 +1666,6 @@
   (define-key *top-map* (kbd "s-W") "firefox-new-window")
   (define-key *top-map* (kbd "s-quoteleft") "emacs-shell")
   (define-key *top-map* (kbd "s-o") "emacs-anywhere")
-  (define-key *top-map* (kbd "s-=") "ponymix-increase")
-  (define-key *top-map* (kbd "s--") "ponymix-decrease")
   (define-key *top-map* (kbd "s-a") "pass-eng")
   (define-key *top-map* (kbd "s-A") "pass-sup")
   (define-key *top-map* (kbd "C-s-a") "pass-route")
