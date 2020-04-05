@@ -993,8 +993,8 @@
                              #\|)
                        t))))
             (make-string 4 :initial-element #\space)
-            '(:eval (format nil "~a%"
-                     (string-trim '(#\Newline) (run-shell-command "ponymix get-volume" t))))
+            '(:eval (format nil "VOL: ~a"
+                     (bar (parse-integer (string-trim '(#\Newline) (run-shell-command "ponymix get-volume" t))) 10 #\# #\ )))
             (make-string 4 :initial-element #\space)
             "%d"))
 
