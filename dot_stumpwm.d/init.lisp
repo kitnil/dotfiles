@@ -1786,7 +1786,7 @@
   (unless (current-window)
     (run-shell-command (if (free-time?)
                            "kodi"
-                           "firefox --new-window https://alerta.intr/"))))
+                           (xpanes-dh-ssh)))))
 
 (defcommand group-6-start-programs () ()
   (run-commands "gselect 6")
@@ -1810,12 +1810,6 @@
   (run-commands "gselect 9")
   (unless (current-window)
     (emacs-anywhere)))
-
-(defcommand group-5-start-programs () ()
-  (run-commands "gselect 5")
-  (unless (current-window)
-    (run-shell-command "emacsclient -c")
-    (run-shell-command (firefox-command))))
 
 (defun rename-group (old-name new-name)
   (or (find-group (current-screen) new-name)
