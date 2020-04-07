@@ -90,7 +90,7 @@
         (hour (parse-integer (time-format "%k"))))
     (unless *work-time*
       (or (> (parse-integer (time-format day-of-week)) 5)
-          (or (> hour 18) (< hour 10))))))
+          (or (>= hour 18) (< hour 10))))))
 
 (defvar *notify-to-rest* t)
 (defvar *notify-to-rest-period* 3600)
