@@ -8,7 +8,7 @@
                      suckless xdisorg xorg fonts android fontutils
                      gnome freedesktop readline ncurses networking
                      pulseaudio wm vnc ssh version-control gnupg
-                     bittorrent)
+                     bittorrent emacs)
 
 (use-service-modules admin dbus desktop docker dns networking sound
                      xorg ssh web cgit version-control certbot
@@ -493,6 +493,7 @@ EndSection")
                                                                                 ":" (string-append #$sshpass "/bin")
                                                                                 ":" (string-append #$gnupg "/bin")
                                                                                 ":" (string-append #$python-starred "/bin")
+                                                                                ":" (string-append #$emacs "/bin")
                                                                                 ":" "/run/setuid-programs"
                                                                                 ":" "/run/current-system/profile/bin")
                                                                  "HOME=/home/oleg"
