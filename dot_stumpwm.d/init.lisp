@@ -283,6 +283,10 @@
   "Start Chromium."
   (run-shell-command "chromium"))
 
+(defcommand chromium-app (url) ((:string "URL: "))
+  "Start Chromium with app mode."
+  (run-shell-command (format nil "chromium --app=~s" url)))
+
 (defcommand chromium-proxy () ()
   "Start Chromium via proxy"
   (run-shell-command (concat "chromium"
