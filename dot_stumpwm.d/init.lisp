@@ -1642,8 +1642,8 @@
 
 (defcommand delete-or-kill-window () ()
   (let ((window (current-window)))
-    (case (read-from-string (window-name window))
-      ((repl-nix) (kill-window window))
+    (case (window-name window)
+      (("repl-nix") (kill-window window))
       (t (delete-window window)))))
 
 (defun bind-super ()
