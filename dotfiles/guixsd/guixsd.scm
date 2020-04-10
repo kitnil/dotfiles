@@ -310,6 +310,8 @@ EndSection")
 
                        docker-cli docker-compose
 
+                       singularity
+
                        cryptsetup
 
                        pulseaudio
@@ -444,6 +446,8 @@ EndSection")
 
                        ;; “adb” and “fastboot” without root privileges
                        (simple-service 'adb udev-service-type (list android-udev-rules))
+
+                       (service singularity-service-type)
 
                        (simple-service 'transmission shepherd-root-service-type
                                        (list
