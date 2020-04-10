@@ -520,7 +520,7 @@ EndSection")
                                                    (list #$(file-append tigervnc-server "/bin/x0vncserver")
                                                          "-PasswordFile" "/home/oleg/.vnc/passwd"
                                                          "-display" ":0"
-                                                         "-rfbport" "5901")))
+                                                         "-rfbport" "5909")))
                                          (respawn? #t)
                                          (stop #~(make-kill-destructor)))))
 
