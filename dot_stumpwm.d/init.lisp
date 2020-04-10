@@ -268,6 +268,10 @@
   "Start Firefox."
   (run-shell-command "firefox --new-window"))
 
+(defcommand firefox-esr-52 () ()
+  "Start of focus Firefox ESR 52."
+  (run-shell-command "firefox-esr-52"))
+
 (defcommand chromium () ()
   "Start or focus Chromium."
   (run-or-raise "chromium" '(:class "Chromium-browser")))
