@@ -106,7 +106,9 @@ with (import (builtins.fetchTarball {
                         (string-split nix-expression
                                       #\newline))))))
 
-  (format #t "Invoking:~%~a~%" (string-join nix-command))
+  (with-output-to-port (current-error-port)
+    (lambda ()
+      (format #t "Invoking:~%~a~%" (string-join nix-command))))
 
   (system (string-join nix-command)))
 
