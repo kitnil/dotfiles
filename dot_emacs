@@ -2915,7 +2915,7 @@ situation, you should also set the following option in your
     . guix-prettify-mode)
    ((dired-mode-hook) . toggle-truncate-lines)
    ((scheme-mode-hook) . guix-devel-mode)
-   ((guix-devel-mode) . goto-address-mode)
+   ((guix-devel-mode magit-revision-mode-hook) . goto-address-mode)
    ((prog-mode-hook geiser-repl-mode-hook)
     . rainbow-delimiters-mode)
    ((geiser-repl-mode-hook shell-mode-hook)
