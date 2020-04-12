@@ -627,6 +627,9 @@
 (defcommand doc-bash () ()
   (zathura (concat (getenv "HOME") "/.guix-profile/share/doc/concise-gnu-bash/concise-gnu-bash.pdf")))
 
+(defcommand doc-perf () ()
+  (zathura (concat (getenv "HOME") "/.guix-profile/share/doc/linux-perf-tools/linux-perf-tools.pdf")))
+
 
 ;;;
 ;;; REPL
