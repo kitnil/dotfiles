@@ -618,7 +618,7 @@
 (defun zathura (file)
   (run-shell-command (format nil "zathura ~s" file)))
 
-(defcommand arcconf () ()
+(defcommand doc-arcconf () ()
   (zathura (concat (getenv "HOME") "/.guix-profile/share/doc/arcconf/arcconf.pdf")))
 
 (defcommand doc-bash () ()
