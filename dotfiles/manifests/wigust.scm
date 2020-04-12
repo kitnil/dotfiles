@@ -75,6 +75,7 @@
 
   slides-concise-gnu-bash
   slides-devops-world-jenkins-casc
+  slides-linux-perf-tools
   documentation-arcconf
 
   git-splits
