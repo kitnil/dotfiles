@@ -621,6 +621,9 @@
 (defcommand doc-arcconf () ()
   (zathura (concat (getenv "HOME") "/.guix-profile/share/doc/arcconf/arcconf.pdf")))
 
+(defcommand doc-jenkins-casc () ()
+  (zathura (concat (getenv "HOME") "/.guix-profile/share/doc/devops-world-jenkins-casc/devops-world-jenkins-casc.pdf")))
+
 (defcommand doc-bash () ()
   (zathura (concat (getenv "HOME") "/.guix-profile/share/doc/concise-gnu-bash/concise-gnu-bash.pdf")))
 
