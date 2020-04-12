@@ -74,6 +74,7 @@
   pspg ; SQL pager
 
   slides-concise-gnu-bash
+  slides-devops-world-jenkins-casc
   documentation-arcconf
 
   git-splits
