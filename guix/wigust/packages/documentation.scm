@@ -23,6 +23,35 @@
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (guix build-system copy))
 
+(define-public slides-linux-perf-tools
+  (package
+    (name "slides-linux-perf-tools")
+    (version "2015")
+    (source
+     (origin
+       (method url-fetch)
+       (uri "https://cdn.oreillystatic.com/en/assets/1/event/122/Linux%20perf%20tools%20Presentation.pdf")
+       (file-name (string-append name "-" version ".pdf"))
+       (sha256
+        (base32
+         "03xjl7bdhjw8v3ikajyyxnqyph35d8ca83yb6skxs7xvlsw11hg5"))))
+    (build-system copy-build-system)
+    (arguments
+     `(#:install-plan
+       `((,(assoc-ref %build-inputs "source")
+          ,(let ((title (string-drop ,name (string-length "slides-"))))
+             (string-append "/share/doc/" title "/" title ".pdf"))))
+       #:phases (modify-phases %standard-phases (delete 'unpack))))
+    (home-page "https://github.com/jenkinsci/configuration-as-code-plugin")
+    (synopsis "Tutorial by Brendan Gregg Velocity conference 2015 Santa Clara")
+    (description "This tutorial explains methodologies for using these tools,
+and provides a tour of four tool types: observability, benchmarking, tuning,
+and static tuning. Many tools will be discussed, including top, iostat,
+tcpdump, sar, perf_events, ftrace, SystemTap, sysdig, and others, as well
+observability frameworks in the Linux kernel: PMCs, tracepoints, kprobes, and
+uprobes.")
+    (license #f)))
+
 (define-public slides-devops-world-jenkins-casc
   (package
     (name "slides-devops-world-jenkins-casc")
