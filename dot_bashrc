@@ -72,6 +72,8 @@ gpa()
 
 alias bedtime='sudo loginctl suspend'
 
+alias aria2c='aria2c --seed-time=0'
+
 ihs-wrapper() {
     GUILE_INSTALL_LOCALE=0                      \
     GUIX_BUILD_OPTIONS=                         \
