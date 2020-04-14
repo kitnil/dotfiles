@@ -188,6 +188,9 @@
 (defvar workstation?
   (string-equal (file-get-contents "/etc/hostname") "workstation-guixsd"))
 
+(defcommand xplanet () ()
+  (run-shell-command "xplanet -center '+960+540' -fov 1"))
+
 
 ;;;
 ;;; XTerm
