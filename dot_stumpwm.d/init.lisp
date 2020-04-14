@@ -610,6 +610,11 @@
 
 (defcommand-alias restic-snapshots xpanes-restic-snapshots)
 
+(defcommand xpanes-ssh-ns () ()
+  (term-shell-command (join `(,(xpanes-command "ssh -t {}")
+                               ,@'("ns1-mr.intr" "ns2-mr.intr" "ns1-dh.intr" "ns2-dh.intr")))
+                      :title "xpanes-routers"))
+
 (defcommand xpanes-routers () ()
   (term-shell-command (join `(,(xpanes-command "ssh -t {}")
                                ,@'("router4.intr" "vpn-miran.majordomo.ru" "vpn-dh.majordomo.ru")))
