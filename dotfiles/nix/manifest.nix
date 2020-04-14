@@ -136,7 +136,7 @@ in [
   pup
   pythonPackages.jenkins-job-builder
   python3Packages.yamllint
-  robo3t
+  old.robo3t
   sampler
   screenkey
   skopeo
