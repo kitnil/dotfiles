@@ -668,6 +668,10 @@
 (defcommand repl-nix () ()
   (term-shell-command "nix repl '<nixpkgs>'" :scrollbar t :title "repl-nix"))
 
+(defcommand repl-nix-unstable () ()
+  (term-shell-command "nix repl /home/oleg/.nix-defexpr/channels/nixos-unstable"
+                      :scrollbar t :title "repl-nix-unstable"))
+
 (defcommand repl-emacs () ()
   (term-shell-command "emacs -nw -q -e 'ielm'" :scrollbar t :title "repl-emacs"))
 
