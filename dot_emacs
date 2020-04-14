@@ -145,7 +145,8 @@
 
 (with-eval-after-load 'nix-mode
   (let ((map nix-mode-map))
-    (define-key map (kbd "M-.") 'dumb-jump-go)))
+    (define-key map (kbd "M-.") 'dumb-jump-go)
+    (define-key map (kbd "C-c C-z") 'nix-repl)))
 
 (with-eval-after-load 'gnus-art
   (let ((map gnus-article-mode-map))
