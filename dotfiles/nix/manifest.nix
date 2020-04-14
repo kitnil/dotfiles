@@ -48,6 +48,8 @@ let
     ];
   });
 
+  operating-system = nixos { config = { services.headphones.enable = true; }; };
+
 in [
   # alacritty
   ansifilter
@@ -222,6 +224,19 @@ in [
 
       # Oracle's javaws configuration utility.
       ln -s ${ipmi}/bin/ControlPanel $out/bin/ControlPanel
+    '');
+  })
+
+  (stdenv.mkDerivation {
+    name = "run-headphones";
+    builder = writeScript "builder.sh" (''
+      source $stdenv/setup
+      mkdir -p $out/bin
+      cat > $out/bin/run-headphones <<'EOF'
+      #!${bash}/bin/bash
+      exec -a headphones ${with lib; (head ((filterAttrs (n: v: n == "headphones") (foldAttrs (n: a: [ n ] ++ a) [ ] operating-system.options.systemd.services.definitions)).headphones)).serviceConfig.ExecStart} "$@"
+      EOF
+      chmod 555 $out/bin/run-headphones
     '');
   })
 
