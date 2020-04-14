@@ -148,6 +148,10 @@
     (define-key map (kbd "M-.") 'dumb-jump-go)
     (define-key map (kbd "C-c C-z") 'nix-repl)))
 
+(setq nix-repl-executable-args
+      (list "repl"
+            (expand-file-name "~/.nix-defexpr/channels/nixos-unstable")))
+
 (with-eval-after-load 'gnus-art
   (let ((map gnus-article-mode-map))
     (define-key map (kbd "C-c c") 'wi-magit-show-commit-guix)
