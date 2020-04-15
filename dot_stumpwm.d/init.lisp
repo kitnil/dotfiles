@@ -613,6 +613,11 @@
 
 (defcommand-alias restic-snapshots xpanes-restic-snapshots)
 
+(defcommand xpanes-ssh-nginx () ()
+  (term-shell-command (join `(,(xpanes-command "ssh -t {}")
+                               ,@'("nginx1-mr.intr" "nginx2-mr.intr")))
+                      :title "xpanes-routers"))
+
 (defcommand xpanes-ssh-ns () ()
   (term-shell-command (join `(,(xpanes-command "ssh -t {}")
                                ,@'("ns1-mr.intr" "ns2-mr.intr" "ns1-dh.intr" "ns2-dh.intr")))
