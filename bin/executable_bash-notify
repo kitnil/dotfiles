@@ -1,7 +1,18 @@
 #!/bin/bash
 
-while true; do
-    [[ $(web30 docker ps --format "'{{ .Names }} {{ .Status }}'" | awk '/mariadb/ { print $NF }') == hour* ]] \
-        || notify-send --urgency=critical 'mariadb restarted'
-    sleep 20
-done
+case $1 in
+    arhont)
+        while true; do
+            youtube-dl -F https://www.twitch.tv/arhont_tv && notify-send --urgency=critical 'arhont_tv online'
+            sleep $((60 * 5))
+        done
+        ;;
+
+    mariadb)
+        while true; do
+            [[ $(web30 docker ps --format "'{{ .Names }} {{ .Status }}'" | awk '/mariadb/ { print $NF }') == hour* ]] \
+                || notify-send --urgency=critical 'mariadb restarted'
+            sleep 20
+        done
+        ;;
+esac
