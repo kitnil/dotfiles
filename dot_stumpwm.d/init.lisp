@@ -999,10 +999,7 @@
             '(:eval (let* ((window (current-window))
                            (wn (window-name window)))
                       (format nil "~a:[~a]" (window-number window) (if (> (length wn) 10)
-                                                                       (concat (subseq wn 0 10)
-                                                                               (if (typep (screen-font (current-screen)) 'CLX-TRUETYPE:FONT)
-                                                                                   "…"
-                                                                                   "..."))
+                                                                       (concat (subseq wn 0 10) "...")
                                                                        wn))))
             (make-string 4 :initial-element #\space)
             "^>"
@@ -1072,15 +1069,13 @@
 (defun volume-current ()
   (if (= 1 (parse-integer (run-shell-command "ponymix is-muted && printf 0 || printf 1" t)))
       (bar (parse-integer (string-trim '(#\Newline) (run-shell-command "ponymix get-volume" t))) 10
-           (if (typep (screen-font (current-screen)) 'CLX-TRUETYPE:FONT)
-               #\▮
-               #\#)
+           #\#
            #\ )
       "MUTED"))
 
 (defcommand volume-current-message () ()
   (message (format nil "~a ~a"
-                   (if (typep (screen-font (current-screen)) 'CLX-TRUETYPE:FONT) "♬" "Volume:")
+                   "Volume:"
                    (volume-current))))
 
 (defcommand volume-decrease () ()
