@@ -5,7 +5,7 @@ from cerbapi import Cerb
 import notify2
 import time
 import os
-
+import argparse
 
 # _context: cerberusweb.contexts.ticket
 # _label: [#JD-43166-193] Запрос из панели AC_225134 (Тема запроса: Перестал работать сайт)
@@ -46,30 +46,57 @@ class Cerberus:
 
         self.api = Cerb(access_key=self.cerberus_key, secret=self.cerberus_secret,
                         base="https://cerberus.intr/index.php/rest/")
+        self.group_list = {}
+        self._load_groups()
 
-    def get_tickets(self, group, status, count=100):
-        result = self.api.search_records('ticket', query='group:{} status:{}'.format(group, status), limit=count)
+    def get_tickets(self, groups, status, count=100):
+        groups_string = ""
+        for i, group in enumerate(groups):
+            if i == 0:
+                groups_string = "("
+            groups_string = groups_string + group
+            if i < len(groups)-1:
+                groups_string = groups_string + " OR "
+            else:
+                groups_string = groups_string + ")"
+        result = self.api.search_records('ticket', query='group:{} status:{}'.format(groups_string, status), limit=count)
         return result
 
-    def get_groups(self):
-        result = self.api.search_records('group')
-        return result
+    def _load_groups(self):
+        self.group_list = self.api.search_records('group')
+
+    def get_group_by_id(self, id):
+        for group in self.group_list['results']:
+            if group['id'] == id:
+                return group['name']
+        return "Undefined"
+
+    def is_valid_group(self, name):
+        for group in self.group_list['results']:
+            if group['name'] == name:
+                return True
+        return False
 
 
 def main():
     cerb = Cerberus()
     known_tickets = []
-    group_list = {}
 
-    groups = cerb.get_groups()
-    for group in groups['results']:
-        group_list[group['id']] = group['name']
+    parser = argparse.ArgumentParser(description="Cerberus notifications")
+    parser.add_argument('-i', default=10, help='Update interval in seconds', type=int)
+    parser.add_argument('-g', default='support@majordomo.ru,admin@majordomo.ru', help='Watching groups')
+    args = parser.parse_args()
+
+    interval_time = args.i
+    watching_groups = args.g.split(",")
+
+    for group in watching_groups:
+        if not cerb.is_valid_group(group):
+            print("Invalid group name: {}".format(group))
+            exit(1)
 
     while(True):
-        tickets = cerb.get_tickets("("
-                                   "admin@majordomo.ru OR "
-                                   "support@majordomo.ru OR "
-                                   "service@majordomo.ru)", "open")
+        tickets = cerb.get_tickets(watching_groups, 'open')
 
         status = tickets['__status']
         if status != 'success':
@@ -89,17 +116,17 @@ def main():
 
             notify2.init("New Tiket")
             n = notify2.Notification("New tiket in group {}: {}\n{}".format(
-                group_list[ticket['group_id']],
+                cerb.get_group_by_id(ticket['group_id']),
                 ticket['subject'],
                 ticket['url']))
             n.set_urgency(notify2.URGENCY_CRITICAL)  # For red notification in dunst case
-            n.set_timeout(10000)
+            n.set_timeout(30000)
             n.show()
 
         known_tickets = actual_tickets
 
         print("Known tickets: {}".format(known_tickets))
-        time.sleep(10)
+        time.sleep(interval_time)
 
 
 if __name__ == '__main__':
