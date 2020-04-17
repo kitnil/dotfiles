@@ -1,0 +1,95 @@
+#! /usr/bin/env cached-nix-shell
+#! nix-shell -i python3 -p "with import <nixpkgs> {overlays = [(self: super: {cerb = (with super; python3.pkgs.buildPythonPackage rec {pname = \"cerbapi\"; version = \"1.0.9\"; src = python3.pkgs.fetchPypi {inherit pname version; sha256 = \"1c5xahjfb60vrwn7hj0n4s66dyzsx81gai7af564n8pkbdylcz37\";}; doCheck = false;});})];}; python3.withPackages (ps: with ps; [ cerb pydbus notify2 pymysql pyopenssl ])"
+
+from cerbapi import Cerb
+import notify2
+import time
+import os
+
+
+# _context: cerberusweb.contexts.ticket
+# _label: [#JD-43166-193] Запрос из панели AC_225134 (Тема запроса: Перестал работать сайт)
+# closed_at: 1587110403
+# closed: 1587110403
+# created: 1587109927
+# elapsed_response_first: 476
+# elapsed_resolution_first: 476
+# id: 12079330
+# importance: 0
+# mask: JD-43166-193
+# num_messages: 3
+# org_id: 0
+# reopen_date: 0
+# spam_score: 0.0001
+# spam_training: N
+# status_id: 0
+# subject: Запрос из панели AC_225134 (Тема запроса: Перестал работать сайт)
+# updated: 1587112328
+# status: open
+# url: https://cerberus.intr/index.php/profiles/ticket/JD-43166-193
+# group_id: 31
+# bucket_id: 27
+# initial_message_id: 14812768
+# initial_response_message_id: 14812861
+# latest_message_id: 14812903
+# owner_id: 0
+
+
+class Cerberus:
+    def __init__(self):
+        try:
+            self.cerberus_key = os.environ['CERBERUS_KEY']
+            self.cerberus_secret = os.environ['CERBERUS_SECRET']
+        except KeyError:
+            print("Check system environment variables CERBERUS_KEY and CERBERUS_SECRET")
+            exit(1)
+
+        self.api = Cerb(access_key=self.cerberus_key, secret=self.cerberus_secret,
+                        base="https://cerberus.intr/index.php/rest/")
+
+    def get_tickets(self, group, status, count=100):
+        result = self.api.search_records('ticket', query='group:{} status:{}'.format(group, status), limit=count)
+        return result
+
+
+def main():
+    cerb = Cerberus()
+    known_tickets = []
+
+    while(True):
+        tickets = cerb.get_tickets("("
+                                   "admin@majordomo.ru OR "
+                                   "support@majordomo.ru OR "
+                                   "support@nethouse.ru OR "
+                                   "service@majordomo.ru)", "open")
+
+        status = tickets['__status']
+        if status != 'success':
+            print("Error: {}".format(tickets))
+            continue
+
+        count = tickets['count']
+        print("Ticket count: {}".format(count))
+
+        results = tickets['results']
+        actual_tickets = []
+
+        for ticket in results:
+            actual_tickets.append(ticket['id'])
+            if ticket['id'] in known_tickets:
+                continue
+
+            notify2.init("New Tiket")
+            n = notify2.Notification("New tiket: {}\n{}".format(ticket['subject'], ticket['url']))
+            n.set_urgency(notify2.URGENCY_CRITICAL)  # For red notification in dunst case
+            n.set_timeout(10000)
+            n.show()
+
+        known_tickets = actual_tickets
+
+        print("Known tickets: {}".format(known_tickets))
+        time.sleep(10)
+
+
+if __name__ == '__main__':
+    main()
