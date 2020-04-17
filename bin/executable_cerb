@@ -69,7 +69,6 @@ def main():
         tickets = cerb.get_tickets("("
                                    "admin@majordomo.ru OR "
                                    "support@majordomo.ru OR "
-                                   "support@nethouse.ru OR "
                                    "service@majordomo.ru)", "open")
 
         status = tickets['__status']
