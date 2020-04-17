@@ -1947,6 +1947,14 @@
   (run-shell-command
    (concat (getenv "HOME") "/.guix-profile/bin/dunst")))
 
+(defcommand cerb () ()
+  (run-shell-command
+   (join (list (concat "CERBERUS_KEY="
+                       (password-store-show "cerberus.intr/api/notification/key"))
+               (concat "CERBERUS_SECRET="
+                       (password-store-show "cerberus.intr/api/notification/secret"))
+               "cerb"))))
+
 (mapcar (lambda (func)
           (add-hook *start-hook* func))
         (list (lambda () (swank "4006"))
