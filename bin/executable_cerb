@@ -51,10 +51,19 @@ class Cerberus:
         result = self.api.search_records('ticket', query='group:{} status:{}'.format(group, status), limit=count)
         return result
 
+    def get_groups(self):
+        result = self.api.search_records('group')
+        return result
+
 
 def main():
     cerb = Cerberus()
     known_tickets = []
+    group_list = {}
+
+    groups = cerb.get_groups()
+    for group in groups['results']:
+        group_list[group['id']] = group['name']
 
     while(True):
         tickets = cerb.get_tickets("("
@@ -71,16 +80,19 @@ def main():
         count = tickets['count']
         print("Ticket count: {}".format(count))
 
-        results = tickets['results']
+        result = tickets['results']
         actual_tickets = []
 
-        for ticket in results:
+        for ticket in result:
             actual_tickets.append(ticket['id'])
             if ticket['id'] in known_tickets:
                 continue
 
             notify2.init("New Tiket")
-            n = notify2.Notification("New tiket: {}\n{}".format(ticket['subject'], ticket['url']))
+            n = notify2.Notification("New tiket in group {}: {}\n{}".format(
+                group_list[ticket['group_id']],
+                ticket['subject'],
+                ticket['url']))
             n.set_urgency(notify2.URGENCY_CRITICAL)  # For red notification in dunst case
             n.set_timeout(10000)
             n.show()
