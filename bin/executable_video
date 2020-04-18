@@ -1,0 +1,7 @@
+#!/bin/bash
+
+unset LD_LIBRARY_PATH # Setted by Nix's Firefox.
+
+notify-send "Open with mpv: $@"
+
+exec -a mpv $HOME/.guix-profile/bin/mpv "$@"
