@@ -78,10 +78,7 @@ in [
   fd
   # ferm
   # filezilla
-  (import (builtins.fetchGit {
-    url = "file:///home/oleg/src/nixpkgs";
-    rev = "04eb086e28f925a976b75d058f60d828beabcc69";
-  }) {}).firefox
+  firefox
   fzf
   # geckodriver
   bfg-repo-cleaner
