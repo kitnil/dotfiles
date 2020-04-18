@@ -1851,7 +1851,7 @@
             (define-frame-preference group (4 NIL NIL :TITLE "pulsemixer"))
             (define-frame-preference group (4 NIL T :TITLE "notmuch"))
             (define-frame-preference group (4 NIL T :CLASS "mpv" :TITLE "emacs-emms"))
-            (define-frame-preference group (4 NIL T :CLASS "mpv" :TITLE "firefox")))
+            (define-frame-preference group (5 NIL T :CLASS "mpv" :TITLE "firefox")))
           '("Default" "1"))
   (define-frame-preference "2" (0 NIL NIL :CLASS "Emacs"))
   (define-frame-preference "2" (0 NIL T :CLASS "Firefox" :TITLE "jenkins"))
