@@ -165,7 +165,9 @@
               (delete (assoc "\\.pdf\\'" dired-guess-shell-alist-default)
                       dired-guess-shell-alist-default)))
   (let ((map dired-mode-map))
-    (define-key map (kbd "<f8>") 'crux-open-with)))
+    (define-key map (kbd "<f8>") 'crux-open-with)
+    (define-key map (kbd "<home>") 'beginning-of-buffer)
+    (define-key map (kbd "<end>") 'end-of-buffer)))
 
 (with-eval-after-load 'info
   (let ((map Info-mode-map))
