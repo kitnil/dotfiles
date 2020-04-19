@@ -21,9 +21,7 @@
   #:use-module (guix build-system gnu)
   #:use-module (guix packages)
   #:use-module ((guix licenses) #:prefix license:)
-  #:use-module (guix build-system copy)
-  #:use-module (guix build-system trivial)
-  #:use-module (gnu packages base))
+  #:use-module (guix build-system copy))
 
 (define-public slides-linux-perf-tools
   (package
@@ -127,24 +125,3 @@ to Bash advances usage.")
     (synopsis "ARCCONF Command Line Utility")
     (description "Microsemi Smart Storage Controllers User's Guide.")
     (license #f)))
-
-(define-public info-libc
-  (package
-    (name "info-libc")
-    (source #f)
-    (build-system trivial-build-system)
-    (inputs
-     `(("glibc" ,glibc)))
-    (arguments
-     `(#:modules ((guix build utils))
-       #:builder
-       (begin
-         (use-modules (guix build utils))
-         (mkdir-p (string-append %output "/share/info"))
-         (copy-recursively (string-append (assoc-ref %build-inputs "glibc") "/share/info")
-                           (string-append %output "/share/info")))))
-    (version (package-version glibc))
-    (home-page (package-home-page glibc))
-    (synopsis (package-synopsis glibc))
-    (description (package-description glibc))
-    (license (package-license glibc))))
