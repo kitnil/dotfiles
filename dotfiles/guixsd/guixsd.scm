@@ -8,7 +8,7 @@
                      suckless xdisorg xorg fonts android fontutils
                      gnome freedesktop readline ncurses networking
                      pulseaudio wm vnc ssh version-control gnupg
-                     bittorrent emacs)
+                     bittorrent emacs audio)
 
 (use-service-modules admin dbus desktop docker dns networking sound
                      xorg ssh web cgit version-control certbot
@@ -513,6 +513,9 @@ EndSection")
                                                                    (environ)))))
                                          (respawn? #f)
                                          (stop #~(make-kill-destructor)))))
+
+                       (service ladspa-service-type
+                                (ladspa-configuration (plugins (list swh-plugins))))
 
                        (simple-service 'vncserver shepherd-root-service-type
                                        (list
