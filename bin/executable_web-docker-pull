@@ -1,0 +1,42 @@
+#!/usr/bin/env -S ansible-playbook --forks 4 --ask-become-pass
+---
+- hosts: web
+  strategy: host_pinned
+  become: yes
+  vars:
+    slack_token: "{{ lookup('passwordstore', 'majordomo/mjru.slack.com/tokens/ansible')}}"
+  tasks:
+    - copy:
+        dest: /root/docker-pull.sh
+        content: |
+          {% raw %}#!/bin/bash
+          set -e -x
+          for repo in $(docker images  --format '{{ .Repository }}' | grep -v sysdig); do
+              docker pull $repo:master
+          done
+          {% endraw %}
+
+    - file:
+        path: /root/docker-pull.sh
+        state: file
+        mode: 0750
+
+    - slack:
+        token: "{{ slack_token }}"
+        msg: "Pull new Docker images on {{ ansible_hostname }}"
+        channel: "#git"
+      delegate_to: localhost
+
+    - name: docker pull
+      command: /root/docker-pull.sh
+      tags:
+        - run
+
+    - name: restart taskexecutor
+      command: restart taskexecutor
+
+    - slack:
+        token: "{{ slack_token }}"
+        msg: "Restart taskexecutor on {{ ansible_hostname }}"
+        channel: "#git"
+      delegate_to: localhost
