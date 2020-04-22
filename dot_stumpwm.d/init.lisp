@@ -676,6 +676,10 @@
 (defcommand repl-nix () ()
   (term-shell-command "nix repl '<nixpkgs>'" :scrollbar t :title "repl-nix"))
 
+(defcommand repl-nix-20-03 () ()
+  (term-shell-command "nix repl /home/oleg/.nix-defexpr/channels/nixos-20-03"
+                      :scrollbar t :title "repl-nix-20-03"))
+
 (defcommand repl-nix-unstable () ()
   (term-shell-command "nix repl /home/oleg/.nix-defexpr/channels/nixos-unstable"
                       :scrollbar t :title "repl-nix-unstable"))
