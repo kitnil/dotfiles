@@ -1,3 +1,4 @@
+;;; .emacs --- Oleg's Emacs configuration
 ;; Copyright © 2017, 2018, 2019, 2020 Oleg Pykhalov <go.wigust@gmail.com>
 ;; Released under the GNU GPLv3 or any later version.
 
@@ -82,7 +83,7 @@
 ;; Look for audio devices ‘mpv --audio-device=help’
 (defvar ‎wi-headphones "pulse/alsa_output\
 .usb-Logitech_Logitech_USB_Headset-00.analog-stereo"
-  "My USB headphones")
+  "My USB headphones.")
 
 (autoload 'server-running-p "server")
 (unless (server-running-p)
@@ -262,7 +263,7 @@
   "Regexp matching GNU mailing lists URL.")
 
 (defun wi-debian-paste-raw (str)
-  "Return a raw URL from original."
+  "Return a raw URL from original STR."
   (funcall (-lambda ((protocol s domain nth s))
              (mapconcat 'identity
                         (list protocol s domain "plain" nth s)
@@ -270,7 +271,9 @@
            (split-string str "/")))
 
 (defun wi-browse-url-paste-debian (url &optional new-window)
-  "Download a snippet from paste.debian.net and open it in a buffer."
+  "Download a snippet from paste.debian.net URL and open it in a buffer.
+If NEW-WINDOW is non-nil, then whenever a document would
+otherwise be loaded in a new window"
   (wi-wget-switch (wi-debian-paste-raw url)))
 
 (defvar wi-lwn-regexp
@@ -402,7 +405,9 @@ If no commit hash provides, show a commit from hash at current point."
   :risky t)
 
 (defun wi-info-at-point (&optional filename)
-  "Start Info, defaulting to file at point.  See `ffap'. "
+  "Start Info, defaulting to file at point.  See `ffap'.
+
+Optional argument FILENAME opens the file instead."
   (interactive)
   (or filename (setq filename (thing-at-point 'filename t)))
   (cond
@@ -412,7 +417,9 @@ If no commit hash provides, show a commit from hash at current point."
    ((error "No such file or directory `%s'" filename))))
 
 (defun delete-file-at-point (&optional filename)
-  "Remove file, defaulting to file at point."
+  "Remove file, defaulting to file at point.
+
+Optional argument FILENAME removes the file instead."
   (interactive)
   (or filename (setq filename (thing-at-point 'filename t)))
   (delete-file filename))
@@ -420,7 +427,7 @@ If no commit hash provides, show a commit from hash at current point."
 (autoload 'browse-at-remote--remote-ref "browse-at-remote")
 
 (defun wi-github-issue-at-point (&optional issue)
-  "Start `browse-url', defaulting to issue at point.  See `ffap'. "
+  "Start `browse-url', defaulting to ISSUE at point.  See `ffap'."
   (interactive)
   (or issue (setq issue (thing-at-point 'number t)))
   (if (numberp issue)
@@ -461,7 +468,7 @@ line at fill column." t)
   :group 'guix)
 
 (defun guix-ffap-profile-path-p (filename)
-  "If FILENAME matches `guix-profile-path-regexp', return it."
+  "Match FILENAME with `guix-profile-path-regexp' regexp and return it."
   (when (string-match-p guix-profile-path-regexp filename) filename))
 
 (defun wi-find-file-at-point (&optional filename)
@@ -545,7 +552,9 @@ PREFIX-MAP - prefix key for these bindings.
 Sets the following basend on PREFIX-MAP:
 - which - description of these bindings.
 - hydra - hydra function name.
-- hydra-comment - hydra description of these bindings."
+- hydra-comment - hydra description of these bindings.
+
+ARGS will be passed to hydra."
   `(progn
      (bind-keys :prefix ,prefix
                 :prefix-map ,(intern (concat "wi-"
@@ -1214,11 +1223,11 @@ Sets the following basend on PREFIX-MAP:
     (wi-dabbrev-expand-until-period)))
 
 (defun wi-buffer-major-mode (buffer)
-  "Return major-mode of BUFFER."
+  "Return `major-mode' of BUFFER."
   (cdr (assoc 'major-mode (buffer-local-variables buffer))))
 
 (defun wi-buffers-similar-major-mode ()
-  "Return buffer with similar major-mode as in current buffer."
+  "Return buffer with similar `major-mode' as in current buffer."
   (-filter (lambda (buffer)
              (string-equal (wi-buffer-major-mode (current-buffer))
                            (wi-buffer-major-mode buffer)))
@@ -1242,6 +1251,7 @@ Sets the following basend on PREFIX-MAP:
          ,name-text-list))
 
 (defun wi-guix-download (url)
+  "Download URL with a \"guix download\" shell command."
   (interactive "sDownload URL: ")
   (insert
    (shell-command-to-string
@@ -1249,14 +1259,17 @@ Sets the following basend on PREFIX-MAP:
             " 2>/dev/null" "| tail -n 1" "| tr -d '\n'"))))
 
 (defun wi-switch-to-scratch-elisp ()
+  "Switch to *scratch* buffer."
   (interactive)
   (switch-to-buffer "*scratch*"))
 
 (defun wi-shell-current-dir ()
+  "Open shell in current buffer directory."
   (interactive)
   (shell (concat "*shell " default-directory "*")))
 
 (defun close-all-parentheses ()
+  "Close all parentheses."
   (interactive "*")
   (let ((closing nil))
     (save-excursion
@@ -1272,7 +1285,7 @@ Sets the following basend on PREFIX-MAP:
     (apply #'insert (nreverse closing))))
 
 (defun wi-delete-current-buffer-file ()
-  "Delete the current buffer and the file connected with it"
+  "Delete the current buffer and the file connected with it."
   (interactive)
   (let ((filename (buffer-file-name))
         (buffer (current-buffer))
@@ -1285,6 +1298,7 @@ Sets the following basend on PREFIX-MAP:
         (message "File '%s' successfully removed" filename)))))
 
 (defun wi-send-buffer-as-mail ()
+  "Send current buffer as body in email."
   (interactive)
   (let ((str (buffer-string)))
     (compose-mail)
@@ -1303,7 +1317,8 @@ Sets the following basend on PREFIX-MAP:
 ;;;
 
 (defun wi-expand-file-names (files)
-    (mapcar (lambda (file) (expand-file-name file)) files))
+  "Expand FILES."
+  (mapcar (lambda (file) (expand-file-name file)) files))
 
 ;; See <https://lists.gnu.org/archive/html/emacs-devel/2017-12/msg00017.html>.
 (defun wi-git-log (&optional repo commit)
@@ -1337,8 +1352,7 @@ for COMMIT, defaulting to the commit hash at point."
 	(pop-to-buffer output-buffer)))))
 
 (defun string-to-symbols (str)
-  "Convert a STRING \"ℕ₃₂\" to a list of characters (8469 (Br . Bl)
-8323 (Br . Bl) 8322) suited for `prettify-symbols-mode'."
+  "Convert a STR string (for example \"ℕ₃₂\") to a list of characters (8469 (Br . Bl) 8323 (Br . Bl) 8322) suited for command `prettify-symbols-mode'."
   (let ((chars (string-to-list str)))
     `(,(car chars)
       ,@(apply 'append (mapcar (lambda (char)
@@ -1392,7 +1406,9 @@ for COMMIT, defaulting to the commit hash at point."
 (defun projectile-run-guile (&optional pure)
   "Invoke ‘run-guile’ in the project’s root.
 
-With a prefix argument, clean `geiser-guile-load-path'."
+Interactively a non-nil prefix argument cleans `geiser-guile-load-path'.
+
+Non-interactively, this uses the optional second argument PURE."
   (interactive)
   (let* ((geiser-guile-load-path (if (or pure current-prefix-arg) nil
                                    geiser-guile-load-path))
@@ -1404,7 +1420,7 @@ With a prefix argument, clean `geiser-guile-load-path'."
     (run-guile)))
 
 (defun run-guile-with-directory (directory)
-  "Invoke `run-guile' and add directory to %load-path."
+  "Invoke `run-guile' and add DIRECTORY to %`load-path'."
   (interactive "DAdd to %%load-path: ")
   (let ((geiser-guile-load-path (append (list directory)
                                         geiser-guile-load-path)))
@@ -1469,7 +1485,7 @@ With a prefix argument, clean `geiser-guile-load-path'."
   :group 'guix-hydra)
 
 (defun guix-hydra-packages (packages)
-  "Return a list of packages appropriate for Guix Hydra."
+  "Return a list of PACKAGES appropriate for Guix Hydra."
   (remove ""
           (split-string (shell-command-to-string
                          (mapconcat 'identity
@@ -1479,8 +1495,8 @@ With a prefix argument, clean `geiser-guile-load-path'."
                         "\n")))
 
 (defun guix-hydra-packages-browse (packages)
-  (interactive "sPackages (space separated): ")
   "Open a WEB browser at Guix Hydra for PACKAGES."
+  (interactive "sPackages (space separated): ")
   (mapc (lambda (package)
           (engine/search-guix-hydra-job package))
         (guix-hydra-packages (split-string packages " "))))
@@ -1489,6 +1505,7 @@ With a prefix argument, clean `geiser-guile-load-path'."
       #'guix-read-package-name-at-point)
 
 (defun wi-guix-hydra-latest-builds (number)
+  "Return a NUMBER of latest builds on Hydra."
   (interactive
    (list (read-number "Number of latest builds: " 64)))
   (flet ((guix-hydra-latest-builds-custom ()
@@ -1505,6 +1522,7 @@ With a prefix argument, clean `geiser-guile-load-path'."
   :group 'guix)
 
 (defun guix-substitute-servers-narinfo (hash)
+  "Download a narinfo for HASH from Guix servers."
   (mapcar (lambda (server)
             (mapconcat 'identity
                        (list "wget" "-q" "-O" "-"
@@ -1521,6 +1539,7 @@ With a prefix argument, clean `geiser-guile-load-path'."
   "Directory to search for a package in `bui-rgrep-manifests' procedure.")
 
 (defun bui-rgrep-manifests ()
+  "Invoke rgrep in `bui-rgrep-directory'."
   (interactive)
   (rgrep (substring-no-properties (aref (tabulated-list-get-entry) 0))
          "*.scm"
@@ -1634,7 +1653,7 @@ Produces URL as https://ci.guix.info/api/latestbuilds?nr=10&jobset=guix-master&j
             :override #'wi-git-gutter:stage-hunk)
 
 (defun wi-git-gutter-refresh-visible-buffers ()
-  "Refresh git-gutter-mode on all visible git-gutter-mode buffers."
+  "Refresh command `git-gutter-mode' on all visible command `git-gutter-mode' buffers."
   (dolist (buff (buffer-list))
     (with-current-buffer buff
       (when (and git-gutter-mode (get-buffer-window buff))
@@ -1646,12 +1665,13 @@ Produces URL as https://ci.guix.info/api/latestbuilds?nr=10&jobset=guix-master&j
 ;;;
 
 (defun wi-magit-status-dir (dir)
+  "Open magit in DIR directory."
   (let ((default-directory (expand-file-name dir))
         (magit-display-buffer-function 'magit-display-buffer-fullframe-status-v1))
     (magit-status)))
 
 (defun vc-chlog ()
-  "Insert output of vc-chlog."
+  "Insert output of `vc-chlog'."
   (interactive)
   (let ((default-directory (projectile-project-root)))
     (insert (shell-command-to-string (mapconcat 'identity
@@ -1664,6 +1684,7 @@ Produces URL as https://ci.guix.info/api/latestbuilds?nr=10&jobset=guix-master&j
 (setq magit-read-reuse-message-target "HEAD")
 
 (defun wi-magit-read-reuse-message (prompt &optional default)
+  "Reuse message for Git commit."
   (magit-completing-read prompt (magit-list-refnames)
                          nil nil nil 'magit-revision-history
                          (or default
@@ -1687,6 +1708,7 @@ Produces URL as https://ci.guix.info/api/latestbuilds?nr=10&jobset=guix-master&j
 
 ;; Use `magit-describe-section'
 (defun wi-local-magit-initially-hide-unmerged (section)
+  "Hide unmerged files in magit SECTION."
   (and (not magit-insert-section--oldroot)
        (or (eq (magit-section-type section) 'unpushed)
            (equal (magit-section-value section) "@{upstream}..")
@@ -1722,11 +1744,11 @@ Non-interactively DIRECTORY is (re-)initialized unconditionally."
                    (expand-file-name directory))))
 
 (defun wi-git-init+add-remote+push (source destination)
-  "Initialize bare Git repository in DESTINATION directory,
+  "Initialize bare Git repository in DESTINATION directory fetched from SOURCE.
 
-Add local remote pointing to DESTINATION directory.
+Then add local remote pointing to DESTINATION directory.
 
-Push branch master to local/master."
+And finally push branch master to local/master."
   (interactive
    (list
     (read-directory-name "Source directory: ")
@@ -1813,7 +1835,7 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
                (unpackaged/smerge-hydra/body))))
 
 (defun wi-magit-init (directory group)
-  "Call `magit-init' and create GitLab repository."
+  "Call `magit-init' and create GitLab repository in project DIRECTORY for GROUP."
   (interactive "DCreate repository in: \nsGroup: ")
   (magit-init directory)
   (let ((name (file-name-nondirectory (directory-file-name directory)))
@@ -1865,7 +1887,7 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 (setq erc-fill-function 'erc-fill-static)
 
 (defun wi-erc-connect-localhost ()
-  "Connect to localhost irc network"
+  "Connect to localhost irc network."
   (interactive)
   (erc :server "localhost"
        :port 6667
@@ -1873,7 +1895,7 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
        :password nil))
 
 (defun wi-erc-connect-twitch ()
-  "Connect to twitch irc network"
+  "Connect to twitch irc network."
   (interactive)
   (add-to-list 'erc-networks-alist '(twitch "irc.chat.twitch.tv"))
   (erc-tls :server "irc.chat.twitch.tv"
@@ -1882,7 +1904,7 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
            :password nil))
 
 (defun wi-erc-connect-globalgamers ()
-  "Connect to globalgamers irc network"
+  "Connect to globalgamers irc network."
   (interactive)
   (add-to-list 'erc-networks-alist
                '(globalgamers "irc.globalgamers.net"))
@@ -1892,7 +1914,7 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
            :password nil))
 
 (defun wi-erc-connect-indymedia ()
-  "Connect to indymedia irc network"
+  "Connect to indymedia irc network."
   (interactive)
   (add-to-list 'erc-networks-alist '(indymedia "irc.indymedia.org"))
   (erc-tls :server "irc.indymedia.org"
@@ -1901,7 +1923,7 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
            :password nil))
 
 (defun wi-erc-connect-gitter ()
-  "Connect to gitter irc network"
+  "Connect to gitter irc network."
   (interactive)
   (add-to-list 'erc-networks-alist '(gitter "irc.gitter.im"))
   (erc-tls :server "irc.gitter.im"
@@ -1910,14 +1932,14 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
            :password nil))
 
 (defun wi-erc-connect-gnome ()
-  "Connect to gnome irc network"
+  "Connect to gnome irc network."
   (interactive)
   (erc-tls :server "irc.gnome.org"
            :port 6697
            :nick "wigust"))
 
 (defun wi-erc-connect-freenode ()
-  "Connect to freenode irc network"
+  "Connect to freenode irc network."
   (interactive)
   (erc-tls :server "irc.freenode.net"
            :port 6697
@@ -1925,28 +1947,28 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
            :password nil))
 
 (defun wi-erc-connect-debian ()
-  "Connect to debian irc network"
+  "Connect to debian irc network."
   (interactive)
   (erc-tls :server "irc.oftc.net"
            :port 6697
            :nick "wigust"))
 
 (defun wi-erc-connect-rizon ()
-  "Connect to highway irc network"
+  "Connect to highway irc network."
   (interactive)
   (erc-tls :server "irc.rizon.net"
            :port 6697
            :nick "wigust"))
 
 (defun wi-erc-connect-highway ()
-  "Connect to highway irc network"
+  "Connect to highway irc network."
   (interactive)
   (erc-tls :server "irc.irchighway.net"
            :port 6697
            :nick "wigust"))
 
 (defun wi-erc-connect-all ()
-  "Connect to all configured irc networks"
+  "Connect to all configured irc networks."
   (interactive)
   (wi-erc-connect-localhost) (wi-erc-connect-debian)
   (wi-erc-connect-freenode) (wi-erc-connect-gnome)
@@ -1963,6 +1985,7 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
     "#newcomers"))
 
 (defun wi-erc-netlist (irc-networks irc-channels)
+  "A machinery to create list of IRC-NETWORKS and IRC-CHANNELS."
   (let (wi-erc-netlist)
     (dolist (irc-network irc-networks wi-erc-netlist)
       (if (equal wi-erc-netlist nil)
@@ -2154,6 +2177,10 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 ;;;
 
 ;; https://raw.githubusercontent.com/vincentbernat/dot.emacs/master/znc.conf.el
+
+
+;;; Commentary:
+;; 
 
 ;;; Code:
 
@@ -3561,6 +3588,10 @@ If given a prefix, patch in the branch directory instead."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(build-farm-build-arguments '("jobset=guix-master" "system=x86_64-linux"))
+ '(company-backends
+   '(company-lsp company-abbrev company-bbdb company-eclim company-semantic company-xcode company-cmake company-capf company-files
+                 (company-dabbrev-code company-gtags company-etags company-keywords)
+                 company-oddmuse company-dabbrev))
  '(custom-safe-themes
    '("3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default))
  '(debug-on-error nil)
@@ -3633,3 +3664,5 @@ If given a prefix, patch in the branch directory instead."
 
 (wi-toggle-theme)
 (setq auto-mode-alist (delete (assoc "\\.drv" auto-mode-alist) auto-mode-alist))
+
+;;; .emacs ends here
