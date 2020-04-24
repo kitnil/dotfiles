@@ -1009,8 +1009,8 @@
             "^>"
             (make-string 4 :initial-element #\space)
             '(:eval (format nil "VPN: ~a" *tapvpn-ip*))
-            ;; (make-string 4 :initial-element #\space)
-            ;; '(:eval (format nil "VOL: ~a" (volume-current)))
+            (make-string 4 :initial-element #\space)
+            '(:eval (format nil "VOL: ~a" *volume-current*))
             (make-string 4 :initial-element #\space)
             "%d"))
 
@@ -1076,18 +1076,26 @@
                    "Volume:"
                    (volume-current))))
 
+(defcommand volume-current-update () ()
+  (sb-thread:make-thread
+   (lambda ()
+     (setq *volume-current* (volume-current)))))
+
 (defcommand volume-decrease () ()
   (run-shell-command "ponymix decrease 5")
+  (volume-current-update)
   (unless (head-mode-line (current-head))
     (volume-current-message)))
 
 (defcommand volume-increase () ()
   (run-shell-command "ponymix increase 5")
+  (volume-current-update)
   (unless (head-mode-line (current-head))
     (volume-current-message)))
 
 (defcommand volume-toggle () ()
   (run-shell-command "ponymix toggle")
+  (volume-current-update)
   (unless (head-mode-line (current-head))
     (volume-current-message)))
 
