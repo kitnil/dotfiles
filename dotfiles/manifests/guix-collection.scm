@@ -239,7 +239,6 @@ vpn w3m xfce web wget wm xdisorg xml xorg)
                pv
                pwgen
                syncthing
-               quassel
 
                tigervnc-server
                tigervnc-client

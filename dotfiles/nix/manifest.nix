@@ -158,6 +158,9 @@ in [
   wtf
   yq
 
+  adwaita-qt libsForQt5.qtstyleplugins kde-gtk-config
+  quassel
+
   (let
     firefox = (import (builtins.fetchTarball {
       url =
