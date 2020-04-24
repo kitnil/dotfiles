@@ -997,22 +997,25 @@
 
 (setf *mode-line-timeout* 2)
 (setf *TIME-MODELINE-STRING* "%a, %e %b %Y %k:%M")
+
 (setf *screen-mode-line-format*
-      (list "%g"
-            (make-string 4 :initial-element #\space)
-            '(:eval (let* ((window (current-window))
-                           (wn (window-name window)))
-                      (format nil "~a:[~a]" (window-number window) (if (> (length wn) 10)
-                                                                       (concat (subseq wn 0 10) "...")
-                                                                       wn))))
-            (make-string 4 :initial-element #\space)
-            "^>"
-            (make-string 4 :initial-element #\space)
-            '(:eval (format nil "VPN: ~a" *tapvpn-ip*))
-            (make-string 4 :initial-element #\space)
-            '(:eval (format nil "VOL: ~a" *volume-current*))
-            (make-string 4 :initial-element #\space)
-            "%d"))
+      `("%g"
+        ,(make-string 4 :initial-element #\space)
+        ,'(:eval (let* ((window (current-window))
+                        (wn (window-name window)))
+                   (format nil "~a:[~a]"
+                           (window-number window)
+                           (if (> (length wn) 10)
+                               (concat (subseq wn 0 10) "...")
+                               wn))))
+        ,(make-string 4 :initial-element #\space)
+        "^>"
+        ,(make-string 4 :initial-element #\space)
+        ,'(:eval (format nil "VPN: ~a" *tapvpn-ip*))
+        ,(make-string 4 :initial-element #\space)
+        ,'(:eval (format nil "VOL: ~a" *volume-current*))
+        ,(make-string 4 :initial-element #\space)
+        "%d"))
 
 (setf *mode-line-pad-x* 10)
 (setf *mode-line-pad-y* 5)
