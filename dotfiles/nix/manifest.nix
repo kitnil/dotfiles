@@ -106,6 +106,7 @@ in [
   (mycli.overrideAttrs (oldAttrs: {
     propagatedBuildInputs = oldAttrs.propagatedBuildInputs ++ [ python3Packages.paramiko ];
   }))
+  dbeaver # SQL client
   mypaint
   nix
   nix-bash-completions
