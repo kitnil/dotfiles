@@ -1008,15 +1008,9 @@
             (make-string 4 :initial-element #\space)
             "^>"
             (make-string 4 :initial-element #\space)
-            '(:eval (string-trim '(#\Newline)
-                     (format nil "VPN: ~a"
-                      (run-shell-command
-                       (join '("ip --json address"
-                               "jq --raw-output '.[] | select(.ifname == \"tapvpn\") | .addr_info[] | select(.\"family\" == \"inet\") | .local'")
-                             #\|)
-                       t))))
-            (make-string 4 :initial-element #\space)
-            '(:eval (format nil "VOL: ~a" (volume-current)))
+            '(:eval (format nil "VPN: ~a" *tapvpn-ip*))
+            ;; (make-string 4 :initial-element #\space)
+            ;; '(:eval (format nil "VOL: ~a" (volume-current)))
             (make-string 4 :initial-element #\space)
             "%d"))
 
@@ -1982,7 +1976,21 @@
                        (sleep 5)
                        (place-existing-windows)
                        (run-commands "fselect 2")
-                       (run-shell-command (concat (getenv "HOME") "/bin/run-emacs")))))))
+                       (run-shell-command (concat (getenv "HOME") "/bin/run-emacs")))))
+              (lambda ()
+                ;; Get VPN IP address and set it to *tapvpn-ip* variable.
+                (sb-thread:make-thread
+                 (lambda ()
+                   (loop while t do
+                        (progn
+                          (setq *tapvpn-ip*
+                                (string-trim '(#\Newline)
+                                             (run-shell-command
+                                              (join '("ip --json address"
+                                                      "jq --raw-output '.[] | select(.ifname == \"tapvpn\") | .addr_info[] | select(.\"family\" == \"inet\") | .local'")
+                                                    #\|)
+                                              t)))
+                          (sleep 10))))))))
 
 ;; (require :ttf-fonts)
 ;; (setf xft:*font-dirs* '("/run/current-system/profile/share/fonts/"))
