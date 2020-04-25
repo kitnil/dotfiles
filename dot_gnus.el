@@ -17,7 +17,7 @@
 ;; (Info-goto-node "(gnus) Scoring On Other Headers")
 ;; I e s p To RET <your name> RET
 
-(setq gnus-extra-headers '(To Cc Keywords Gcc Newsgroups X-GM-LABELS List-Id))
+(setq gnus-extra-headers '(To Cc Keywords Gcc Newsgroups X-GM-LABELS List-Id X-Redmine-Issue-Author))
 (setq nnmail-extra-headers gnus-extra-headers)
 
 (setq gnus-parameters '(("^INBOX$" (gnus-thread-sort-functions
