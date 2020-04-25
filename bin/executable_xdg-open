@@ -20,6 +20,7 @@
                (host (uri-host uri)))
           (cond
            ((string-prefix? host "imgur.com")
+            (notify (format #f "Open in feh ~a" arg))
             (system (format #f "curl --silent ~s | feh -"
                             (uri->string (build-uri 'https
                                                     #:host (string-append "i." host)
