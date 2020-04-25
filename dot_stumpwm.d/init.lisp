@@ -1055,42 +1055,46 @@
 (defvar *imap-recent* 0)
 (defvar *disk-free-root-counter* 0)
 
-(setf *screen-mode-line-format*
-      `("%g"
-        ,(make-string 4 :initial-element #\space)
-        ,'(:eval (let* ((window (current-window))
-                        (wn (window-name window)))
-                   (format nil "~a:[~a]"
-                           (window-number window)
-                           (if (> (length wn) 10)
-                               (concat (subseq wn 0 10) "...")
-                               wn))))
-        ,(make-string 4 :initial-element #\space)
-        "^>"
-        ,@(if (= *torrent-seeds-counter* 0)
-              '()
-              (list (make-string 4 :initial-element #\space)))
-        ,@(if (= *torrent-seeds-counter* 0)
-              '()
-              (list '(:eval (format nil "TOR_SEED: ~a" *torrent-seeds-counter*))))
-        ,@(if (= *imap-recent* 0)
-              '()
-              (list (make-string 4 :initial-element #\space)))
-        ,@(if (= *imap-recent* 0)
-              '()
-              (list '(:eval (format nil "INBOX: ~a" *imap-recent*))))
-        ,(make-string 4 :initial-element #\space)
-        ,'(:eval (format nil "/: ~a" *disk-free-root-counter*))
-        ,(make-string 4 :initial-element #\space)
-        ,'(:eval (format nil "TEMP: ~a" (temp-current)))
-        ,(make-string 4 :initial-element #\space)
-        ,'(:eval (format nil "MEM: ~a" (fmt-mem-available (mem-usage))))
-        ,(make-string 4 :initial-element #\space)
-        ,'(:eval (format nil "VPN: ~a" *tapvpn-ip*))
-        ,(make-string 4 :initial-element #\space)
-        ,'(:eval (format nil "VOL: ~a" *volume-current*))
-        ,(make-string 4 :initial-element #\space)
-        "%d"))
+(defcommand mode-line-update () ()
+  (setf *screen-mode-line-format*
+        `("%g"
+          ,(make-string 4 :initial-element #\space)
+          ,'(:eval (let* ((window (current-window))
+                          (wn (window-name window)))
+                     (format nil "~a:[~a]"
+                             (window-number window)
+                             (if (> (length wn) 10)
+                                 (concat (subseq wn 0 10) "...")
+                                 wn))))
+          ,(make-string 4 :initial-element #\space)
+          "^>"
+          ,@(if (= *torrent-seeds-counter* 0)
+                '()
+                (list (make-string 4 :initial-element #\space)))
+          ,@(if (= *torrent-seeds-counter* 0)
+                '()
+                (list '(:eval (format nil "TOR_SEED: ~a" *torrent-seeds-counter*))))
+          ,@(if (= *imap-recent* 0)
+                '()
+                (list (make-string 4 :initial-element #\space)))
+          ,@(if (= *imap-recent* 0)
+                '()
+                (list '(:eval (format nil "INBOX: ~a" *imap-recent*))))
+          ,(make-string 4 :initial-element #\space)
+          ,'(:eval (format nil "/: ~a" *disk-free-root-counter*))
+          ,(make-string 4 :initial-element #\space)
+          ,'(:eval (format nil "TEMP: ~a" (temp-current)))
+          ,(make-string 4 :initial-element #\space)
+          ,'(:eval (format nil "MEM: ~a" (fmt-mem-available (mem-usage))))
+          ,(make-string 4 :initial-element #\space)
+          ,'(:eval (format nil "VPN: ~a" *tapvpn-ip*))
+          ,(make-string 4 :initial-element #\space)
+          ,'(:eval (format nil "VOL: ~a" *volume-current*))
+          ,(make-string 4 :initial-element #\space)
+          "%d")))
+
+(mode-line-update)
+(mode-line)
 
 (setf *mode-line-pad-x* 10)
 (setf *mode-line-pad-y* 5)
@@ -2105,6 +2109,7 @@
                    (loop while t do
                         (progn
                           (imap-update-recent-count)
+                          (mode-line-update)
                           (sleep 60))))))
               (lambda ()
                 (sb-thread:make-thread
@@ -2119,6 +2124,7 @@
                    (loop while t do
                         (progn
                           (torrent-seeds-update-counter)
+                          (mode-line-update)
                           (sleep 60))))))
               (lambda ()
                 (sb-thread:make-thread
@@ -2126,6 +2132,7 @@
                    (loop while t do
                         (progn
                           (run-shell-command "notmuch new")
+                          (mode-line-update)
                           (sleep (* 60 60)))))))))
 
 ;; (require :ttf-fonts)
