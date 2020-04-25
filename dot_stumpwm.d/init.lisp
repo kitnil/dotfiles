@@ -2145,3 +2145,5 @@
 ;; (set-font "9x15bold")
 
 (require :globalwindows)
+
+(sb-posix:setenv "GTK_THEME" "Adwaita:dark" 1)
