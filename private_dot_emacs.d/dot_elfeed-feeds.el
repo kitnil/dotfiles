@@ -2,6 +2,7 @@
       '("https://oremacs.com/atom.xml"
         "http://steckerhalter.tk/index.xml"
         "http://nullprogram.com/feed/"
+        ("https://news-web.php.net/group.php?group=php.announce&format=rss" php)
         ("https://www.bennee.com/~alex/blog/feed/" emacs)
         ("https://libraries.io/search.atom?order=desc&platforms=Emacs&sort=created_at"
          emacs)
