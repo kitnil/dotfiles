@@ -2067,7 +2067,7 @@
 
 (mapcar (lambda (func)
           (add-hook *start-hook* func))
-        (list (lambda () (swank "4006"))
+        (list (lambda () (swank "4005"))
               (lambda () (cursor-theme))
               (lambda () (keynav))
               (lambda () (xrdb))
