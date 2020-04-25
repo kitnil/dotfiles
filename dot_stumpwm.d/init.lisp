@@ -1775,7 +1775,7 @@
   (define-key *top-map* (kbd "s-h") "htop")
   (define-key *top-map* (kbd "C-s-C") "rofi-drun")
   (define-key *top-map* (kbd "S-s-RET") "rofi-ssh")
-  (define-key *top-map* (kbd "s-quoteright") "rofi-window")
+  (define-key *top-map* (kbd "s-quoteright") "global-windowlist")
   (define-key *top-map* (kbd "XF86AudioLowerVolume") "volume-decrease")
   (define-key *top-map* (kbd "XF86AudioRaiseVolume") "volume-increase")
   (define-key *top-map* (kbd "s--") "volume-decrease")
@@ -2143,3 +2143,5 @@
 (xft:cache-fonts)
 (set-font (make-instance 'xft:font :family "DejaVu Sans Mono" :subfamily "Book" :size 12))
 ;; (set-font "9x15bold")
+
+(require :globalwindows)
