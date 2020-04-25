@@ -1,5 +1,5 @@
 #! /usr/bin/env cached-nix-shell
-#! nix-shell -i python3 -p "with import <nixpkgs> {overlays = [(self: super: {cerb = (with super; python3.pkgs.buildPythonPackage rec {pname = \"cerbapi\"; version = \"1.0.9\"; src = python3.pkgs.fetchPypi {inherit pname version; sha256 = \"1c5xahjfb60vrwn7hj0n4s66dyzsx81gai7af564n8pkbdylcz37\";}; doCheck = false;});})];}; python3.withPackages (ps: with ps; [ cerb pydbus notify2 pymysql pyopenssl ])"
+#! nix-shell -i python3 -p "with import (builtins.fetchTarball {url = "https://github.com/nixos/nixpkgs/archive/8686922e68dfce2786722acad9593ad392297188.tar.gz";}) {overlays = [(self: super: {cerb = (with super; python3.pkgs.buildPythonPackage rec {pname = \"cerbapi\"; version = \"1.0.9\"; src = python3.pkgs.fetchPypi {inherit pname version; sha256 = \"1c5xahjfb60vrwn7hj0n4s66dyzsx81gai7af564n8pkbdylcz37\";}; doCheck = false;});})];}; python3.withPackages (ps: with ps; [ cerb pydbus notify2 pymysql pyopenssl slackclient ])"
 
 from cerbapi import Cerb
 import notify2
