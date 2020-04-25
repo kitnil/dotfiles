@@ -37,6 +37,8 @@
          video)
         ("https://www.youtube.com/feeds/videos.xml?user=metalx1000"
          video)
+        ("https://www.youtube.com/user/OmegaDungeon"
+         video)
         ("https://bitlove.org/jupiterbroadcasting/bsdnowhd/feed"
          video)
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCVls1GmFKf6WlTraIb_IaJg"
