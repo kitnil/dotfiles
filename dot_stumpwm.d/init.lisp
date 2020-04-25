@@ -1076,6 +1076,8 @@
               '()
               (list '(:eval (format nil "INBOX: ~a" *imap-recent*))))
         ,(make-string 4 :initial-element #\space)
+        ,'(:eval (format nil "/: ~a" *disk-free-root-counter*))
+        ,(make-string 4 :initial-element #\space)
         ,'(:eval (format nil "TEMP: ~a" (temp-current)))
         ,(make-string 4 :initial-element #\space)
         ,'(:eval (format nil "MEM: ~a" (fmt-mem-available (mem-usage))))
@@ -2042,6 +2044,19 @@
 (defcommand torrent-seeds-update-counter () ()
   (setq *torrent-seeds-counter* (torrent-seeds)))
 
+(defun disk-free (target)
+  (let ((size (fourth (split-string (second (split-string (run-shell-command (format nil "df -h ~a" target)
+                                                                             t)
+                                                          '(#\newline)))
+                                    '(#\space)))))
+    (if (or (uiop/utility:string-suffix-p size "G")
+            (uiop/utility:string-suffix-p size "M"))
+        (concat size "B")
+        size)))
+
+(defcommand disk-free-root-update-counter () ()
+  (setq *disk-free-root-counter* (disk-free "/")))
+
 (mapcar (lambda (func)
           (add-hook *start-hook* func))
         (list (lambda () (swank "4006"))
@@ -2086,6 +2101,13 @@
                    (loop while t do
                         (progn
                           (imap-update-recent-count)
+                          (sleep 60))))))
+              (lambda ()
+                (sb-thread:make-thread
+                 (lambda ()
+                   (loop while t do
+                        (progn
+                          (disk-free-root-update-counter)
                           (sleep 60))))))
               (lambda ()
                 (sb-thread:make-thread
