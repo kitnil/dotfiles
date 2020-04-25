@@ -112,6 +112,7 @@
         shell
         smartparens-strict-mode
         switch-to-buffer
+        terminal-here-project-launch
         terminal-here-project-launch-multiplexer
         text-scale-adjust
         wgrep-change-to-wgrep-mode
