@@ -1824,7 +1824,7 @@
 (defcommand group-7-start-programs () ()
   (run-commands "gselect 7")
   (unless (current-window)
-    (repl-nix)))
+    (repl-nix-unstable)))
 
 (defcommand group-8-start-programs () ()
   (run-commands "gselect 8")
