@@ -116,3 +116,9 @@
     (inputs
      `(("stumpwm" ,stumpwm-checkout "lib")
        ("clx-truetype" ,sbcl-clx-truetype)))))
+
+(define-public sbcl-stumpwm-checkout-globalwindows
+  (package
+    (inherit sbcl-stumpwm-globalwindows)
+    (inputs
+     `(("stumpwm" ,stumpwm-checkout "lib")))))
