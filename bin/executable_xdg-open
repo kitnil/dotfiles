@@ -8,6 +8,9 @@
 (define xdg-open
   "/run/current-system/profile/bin/xdg-open")
 
+(define (notify str)
+  (system (format #f "notify-send ~s" str)))
+
 (define (main args)
   (let ((arg (last args)))
     (define xdg-open-command
@@ -21,5 +24,8 @@
                             (uri->string (build-uri 'https
                                                     #:host (string-append "i." host)
                                                     #:path (uri-path uri))))))
+           ((string-prefix? host "www.twitch.tv")
+            (notify (format #f "Open in mpv ~a" arg))
+            (system (format #f "mpv ~s" arg)))
            (else (system xdg-open-command))))
         (system xdg-open-command))))
