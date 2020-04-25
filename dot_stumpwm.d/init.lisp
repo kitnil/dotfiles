@@ -440,7 +440,7 @@
 
 (defun youtube-dl-command (url &key (ad-hoc nil) (music nil))
   (message (format nil "Download ~s." url))
-  (term-shell-command (format nil "sh -c 'TMOUT=20; ~a; read -p \"Press Enter to close.\"'"
+  (term-shell-command (format nil "sh -c 'TMOUT=20; ~a; notify-send \"youtube-dl finished\"; read -p \"Press Enter to close.\"'"
                               (join `("youtube-dl"
                                       "--restrict-filenames"
                                       ,@(if music
