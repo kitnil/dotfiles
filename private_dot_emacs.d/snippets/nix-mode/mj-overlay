@@ -10,4 +10,7 @@ with import <nixpkgs> {
                                           (cddr ;skip "." and ".."
                                            (directory-files (expand-file-name "~/majordomo/_ci/") t)))))})
   ];
+  config = {
+    allowUnfree = true;
+  };
 };
