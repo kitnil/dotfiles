@@ -2085,7 +2085,14 @@
                    (loop while t do
                         (progn
                           (torrent-seeds-update-counter)
-                          (sleep 60))))))))
+                          (sleep 60))))))
+              (lambda ()
+                (sb-thread:make-thread
+                 (lambda ()
+                   (loop while t do
+                        (progn
+                          (run-shell-command "notmuch new")
+                          (sleep (* 60 60)))))))))
 
 ;; (require :ttf-fonts)
 ;; (setf xft:*font-dirs* '("/run/current-system/profile/share/fonts/"))
