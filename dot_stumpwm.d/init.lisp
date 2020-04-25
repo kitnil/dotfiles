@@ -1051,6 +1051,10 @@
 (setf *mode-line-timeout* 2)
 (setf *TIME-MODELINE-STRING* "%a, %e %b %Y %k:%M")
 
+(defvar *torrent-seeds-counter* 0)
+(defvar *imap-recent* 0)
+(defvar *disk-free-root-counter* 0)
+
 (setf *screen-mode-line-format*
       `("%g"
         ,(make-string 4 :initial-element #\space)
