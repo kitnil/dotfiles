@@ -99,6 +99,10 @@
     (define-key map (kbd "C-c s") 'ispell-region)
     (define-key map (kbd "C-c e") 'wi-replace-with-brackets-ellipsis)))
 
+(with-eval-after-load 'elisp-mode
+  (let ((map emacs-lisp-mode-map))
+    (define-key map (kbd "C-c C-z") 'wi-switch-to-scratch-elisp)))
+
 (with-eval-after-load 'slime
   (let ((map slime-mode-map))
     (define-key map (kbd "C-c C-z") 'scratch)))
