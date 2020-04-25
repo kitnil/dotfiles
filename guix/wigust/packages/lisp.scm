@@ -109,3 +109,10 @@
                 (sha256
                  (base32
                   "0dh6652i2gsixff25ac78sila5hn35b0914sqpya5q4ir1lcr1mj")))))))
+
+(define-public sbcl-stumpwm-checkout-ttf-fonts
+  (package
+    (inherit sbcl-stumpwm-ttf-fonts)
+    (inputs
+     `(("stumpwm" ,stumpwm-checkout "lib")
+       ("clx-truetype" ,sbcl-clx-truetype)))))
