@@ -18,6 +18,8 @@
         ll = log --format='%H %cI %ae %s'
 	lll = log --format='%ai %H %s'
         push-skip-ci = push -o ci.skip
+	# Credit an author on the latest commit
+	credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
 [github]
 	user = wigust
 [gitlab]
