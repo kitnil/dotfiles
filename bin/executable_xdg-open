@@ -1,14 +1,25 @@
-#!/usr/bin/env bash
+#!/usr/bin/env -S guile --no-auto-compile -e main -s
+!#
 
-case "$1" in
-    https://www.twitch.tv*)
-        exec -a "mpv $1" mpv "$1"
-        ;;
-    https://*imgur.com*)
-        notify-send "Open image with feh."
-        curl --silent "$1" | feh -
-        ;;
-    *)
-        exec -a "$0" /run/current-system/profile/bin/xdg-open "$@"
-        ;;
-esac
+(use-modules (srfi srfi-1)
+             (ice-9 format)
+             (web uri))
+
+(define xdg-open
+  "/run/current-system/profile/bin/xdg-open")
+
+(define (main args)
+  (let ((arg (last args)))
+    (define xdg-open-command
+      (format #f "~a ~s" xdg-open arg))
+    (if (string-prefix? "http" arg)
+        (let* ((uri (string->uri arg))
+               (host (uri-host uri)))
+          (cond
+           ((string-prefix? host "imgur.com")
+            (system (format #f "curl --silent ~s | feh -"
+                            (uri->string (build-uri 'https
+                                                    #:host (string-append "i." host)
+                                                    #:path (uri-path uri))))))
+           (else (system xdg-open-command))))
+        (system xdg-open-command))))
