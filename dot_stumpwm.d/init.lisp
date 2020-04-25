@@ -1939,6 +1939,7 @@
             (define-frame-preference group (4 NIL NIL :TITLE "pulsemixer"))
             (define-frame-preference group (4 NIL T :TITLE "notmuch"))
             (define-frame-preference group (4 NIL T :CLASS "mpv" :TITLE "emacs-emms"))
+            (define-frame-preference group (5 NIL T :CLASS "Vncviewer" :TITLE "guixsd"))
             (define-frame-preference group (5 NIL T :CLASS "mpv" :TITLE "firefox")))
           '("Default" "1"))
   (define-frame-preference "2" (0 NIL NIL :CLASS "Emacs"))
@@ -2083,6 +2084,7 @@
               (lambda () (pulsemixer))
               (lambda () (quassel-monitor))
               (lambda () (music-youtube))
+              (lambda () (vnc "5901"))
               (lambda () (sb-thread:make-thread
                      (lambda ()
                        (sleep 5)
