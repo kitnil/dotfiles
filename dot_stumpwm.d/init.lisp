@@ -1064,6 +1064,8 @@
         ,(make-string 4 :initial-element #\space)
         "^>"
         ,(make-string 4 :initial-element #\space)
+        ,'(:eval (format nil "TOR_SEED: ~a" *torrent-seeds-counter*))
+        ,(make-string 4 :initial-element #\space)
         ,'(:eval (format nil "INBOX: ~a" *imap-recent*))
         ,(make-string 4 :initial-element #\space)
         ,'(:eval (format nil "TEMP: ~a" (temp-current)))
@@ -2023,6 +2025,15 @@
                        (password-store-show "cerberus.intr/api/notification/secret"))
                "cerb"))))
 
+(defun torrent-seeds ()
+  (length (filter (lambda (str)
+                    (string-contains "Seeding" str))
+                  (split-string (run-shell-command "transmission-remote --list" t)
+                                '(#\newline)))))
+
+(defcommand torrent-seeds-update-counter () ()
+  (setq *torrent-seeds-counter* (torrent-seeds)))
+
 (mapcar (lambda (func)
           (add-hook *start-hook* func))
         (list (lambda () (swank "4006"))
@@ -2067,6 +2078,13 @@
                    (loop while t do
                         (progn
                           (imap-update-recent-count)
+                          (sleep 60))))))
+              (lambda ()
+                (sb-thread:make-thread
+                 (lambda ()
+                   (loop while t do
+                        (progn
+                          (torrent-seeds-update-counter)
                           (sleep 60))))))))
 
 ;; (require :ttf-fonts)
