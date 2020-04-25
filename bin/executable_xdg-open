@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+case "$1" in
+    https://www.twitch.tv*)
+        exec -a "mpv $1" mpv "$1"
+        ;;
+    https://*imgur.com*)
+        notify-send "Open image with feh."
+        curl --silent "$1" | feh -
+        ;;
+    *)
+        exec -a "$0" /run/current-system/profile/bin/xdg-open "$@"
+        ;;
+esac
