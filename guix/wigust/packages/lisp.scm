@@ -122,3 +122,9 @@
     (inherit sbcl-stumpwm-globalwindows)
     (inputs
      `(("stumpwm" ,stumpwm-checkout "lib")))))
+
+(define-public sbcl-stumpwm-checkout-swm-gaps
+  (package
+    (inherit sbcl-stumpwm-swm-gaps)
+    (inputs
+     `(("stumpwm" ,stumpwm-checkout "lib")))))
