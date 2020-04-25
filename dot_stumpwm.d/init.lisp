@@ -535,6 +535,17 @@
                       :font '("-fa" "Monospace" "-fs" "8")
                       :color "dark"))
 
+(defcommand imap-update-recent-count () ()
+  (setq *imap-recent*
+        (parse-integer
+         (second (split-string (car (filter (lambda (str)
+                                              (uiop/utility:string-suffix-p str "RECENT"))
+                                            (mapcar (lambda (str)
+                                                      (string-trim '(#\Newline) str))
+                                                    (split-string (run-shell-command (format nil "curl --request 'EXAMINE INBOX' --user 'oleg:~a' imap://localhost" (password-store-show "localhost/imap/oleg")) t)
+                                                                  '(#\^M)))))
+                               '(#\space))))))
+
 (defcommand notmuch () ()
   (term-shell-command (fetch-mail-command "notmuch new")
                       :title "notmuch"
@@ -1049,6 +1060,8 @@
                                wn))))
         ,(make-string 4 :initial-element #\space)
         "^>"
+        ,(make-string 4 :initial-element #\space)
+        ,'(:eval (format nil "INBOX: ~a" *imap-recent*))
         ,(make-string 4 :initial-element #\space)
         ,'(:eval (format nil "TEMP: ~a" (temp-current)))
         ,(make-string 4 :initial-element #\space)
@@ -2044,7 +2057,14 @@
                                                       "jq --raw-output '.[] | select(.ifname == \"tapvpn\") | .addr_info[] | select(.\"family\" == \"inet\") | .local'")
                                                     #\|)
                                               t)))
-                          (sleep 10))))))))
+                          (sleep 10))))))
+              (lambda ()
+                (sb-thread:make-thread
+                 (lambda ()
+                   (loop while t do
+                        (progn
+                          (imap-update-recent-count)
+                          (sleep 60))))))))
 
 ;; (require :ttf-fonts)
 ;; (setf xft:*font-dirs* '("/run/current-system/profile/share/fonts/"))
