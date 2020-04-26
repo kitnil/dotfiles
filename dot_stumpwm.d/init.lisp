@@ -2057,6 +2057,9 @@
 (defcommand disk-free-root-update-counter () ()
   (setq *disk-free-root-counter* (disk-free "/")))
 
+(defcommand scrcpy () ()
+  (run-shell-command "scrcpy --max-fps 30 --turn-screen-off"))
+
 (mapcar (lambda (func)
           (add-hook *start-hook* func))
         (list (lambda () (swank "4005"))

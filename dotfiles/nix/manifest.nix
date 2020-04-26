@@ -127,6 +127,7 @@ in [
   old.catj
 
   obs-studio
+  scrcpy
   onefetch
   oh
   openjdk
