@@ -816,6 +816,17 @@
 
 
 ;;;
+;;; COVID-19
+;;;
+
+(defvar *covid-19-count* "")
+
+(defcommand covid-19-update-count () ()
+  (setq *covid-19-count* (run-shell-command "covid19" t))
+  (mode-line-update))
+
+
+;;;
 ;;; Docker
 ;;;
 
@@ -1068,6 +1079,17 @@
                                  wn))))
           ,(make-string 4 :initial-element #\space)
           "^>"
+          ,@(if (equal *covid-19-count* "")
+                '()
+                (list (make-string 4 :initial-element #\space)))
+          ,@(if (equal *covid-19-count* "")
+                '()
+                (list '(:eval (format nil "COVID-19: ~a"
+                               (let ((count (split-string *covid-19-count* '(#\:))))
+                                 (join (list (first count)
+                                             (format nil "^[^B^2*~a^]" (third count))
+                                             (format nil "^[^B^1*~a^]" (second count)))
+                                       #\:))))))
           ,@(if (= *torrent-seeds-counter* 0)
                 '()
                 (list (make-string 4 :initial-element #\space)))
@@ -2140,7 +2162,14 @@
                         (progn
                           (run-shell-command "notmuch new")
                           (mode-line-update)
-                          (sleep (* 60 60)))))))))
+                          (sleep (* 60 60)))))))
+              (lambda ()
+                (sb-thread:make-thread
+                 (lambda ()
+                   (loop while t do
+                        (progn
+                          (covid-19-update-count)
+                          (sleep (* (* 60 60) 6)))))))))
 
 (require :ttf-fonts)
 (setf xft:*font-dirs* '("/run/current-system/profile/share/fonts/"))
