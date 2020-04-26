@@ -8,7 +8,7 @@
                      suckless xdisorg xorg fonts android fontutils
                      gnome freedesktop readline ncurses networking
                      pulseaudio wm vnc ssh version-control gnupg
-                     bittorrent emacs audio)
+                     bittorrent emacs audio lxde)
 
 (use-service-modules admin dbus desktop docker dns networking sound
                      xorg ssh web cgit version-control certbot
@@ -284,6 +284,7 @@ EndSection")
                        font-misc-misc font-wqy-zenhei
 
                        gnome-themes-standard adwaita-icon-theme hicolor-icon-theme
+                       lxappearance
 
                        desktop-file-utils gvfs xrdb xset xsetroot xkill
 
