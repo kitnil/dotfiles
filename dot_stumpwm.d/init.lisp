@@ -1705,16 +1705,6 @@
 
 ;; (load-module "command-history")
 
-;; (load-module "swm-gaps")
-
-;; ;; Head gaps run along the 4 borders of the monitor(s)
-;; (setf swm-gaps:*head-gaps-size* 5)
-
-;; ;; Inner gaps run along all the 4 borders of a window
-;; (setf swm-gaps:*inner-gaps-size* 5)
-
-;; (setf swm-gaps:*outer-gaps-size* 0)
-
 (defun cisco-connect-command (host)
   (join (list "env" (format nil "TELNET_PASSWORD=~s" (password-store-show "majordomo/general"))
               "cisco-interact" host)))
@@ -2146,5 +2136,15 @@
 ;; (set-font "9x15bold")
 
 (require :globalwindows)
+
+(require :swm-gaps)
+
+;; Head gaps run along the 4 borders of the monitor(s)
+(setf swm-gaps:*head-gaps-size* 5)
+
+;; Inner gaps run along all the 4 borders of a window
+(setf swm-gaps:*inner-gaps-size* 5)
+
+(setf swm-gaps:*outer-gaps-size* 0)
 
 (sb-posix:setenv "GTK_THEME" "Adwaita:dark" 1)

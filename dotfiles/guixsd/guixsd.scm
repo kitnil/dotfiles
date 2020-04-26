@@ -274,7 +274,9 @@ EndSection")
       (kernel-arguments '("modprobe.blacklist=pcspkr,snd_pcsp"))
       (packages (cons* sbcl stumpwm-checkout `(,stumpwm-checkout "lib")
 
-                       sbcl-stumpwm-checkout-ttf-fonts sbcl-stumpwm-checkout-globalwindows
+                       sbcl-stumpwm-checkout-ttf-fonts
+                       sbcl-stumpwm-checkout-globalwindows
+                       sbcl-stumpwm-checkout-swm-gaps
 
                        ncurses
 
