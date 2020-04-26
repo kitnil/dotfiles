@@ -1540,8 +1540,6 @@
   (progn (run-shell-command "emacsclient --eval '(mj-installed-servers)'")
          (switch-to-emacs)))
 
-(define-key *top-map* (kbd "C-s-e") "helm-tramp")
-
 (defun auto-pull-frames ()
   (mapcar #'(lambda (frame)
               (pull-window-by-number frame)
@@ -1753,6 +1751,7 @@
       (t (delete-window window)))))
 
 (defun bind-super ()
+  (define-key *top-map* (kbd "C-s-e") "editor")
   (define-key *top-map* (kbd "C-s-w") "chromium")
   (define-key *top-map* (kbd "C-s-W") "chromium-new-window")
   (define-key *top-map* (kbd "C-S-s-RET") "rofi-mycli")
@@ -2068,6 +2067,9 @@
 
 (defcommand scrcpy () ()
   (run-shell-command "scrcpy --max-fps 30 --turn-screen-off"))
+
+(defcommand editor () ()
+  (run-shell-command "leafpad"))
 
 (mapcar (lambda (func)
           (add-hook *start-hook* func))
