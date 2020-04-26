@@ -32,4 +32,4 @@
             (notify (format #f "Open in mpv ~a" arg))
             (system (format #f "mpv ~s" arg)))
            (else (system xdg-open-command))))
-        (system xdg-open-command))))
+        (system (format #f "~a ~a" xdg-open-command arg)))))
