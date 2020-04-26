@@ -25,6 +25,9 @@
                             (uri->string (build-uri 'https
                                                     #:host (string-append "i." host)
                                                     #:path (uri-path uri))))))
+           ((string-prefix? host "cdn.discordapp.com")
+            (notify (format #f "Open in feh ~a" arg))
+            (system (format #f "curl --silent ~s | feh -" arg)))
            ((string-prefix? host "www.twitch.tv")
             (notify (format #f "Open in mpv ~a" arg))
             (system (format #f "mpv ~s" arg)))
