@@ -283,7 +283,7 @@ EndSection")
                        fontconfig font-awesome font-dejavu font-liberation
                        font-misc-misc font-wqy-zenhei
 
-                       adwaita-icon-theme hicolor-icon-theme
+                       gnome-themes-standard adwaita-icon-theme hicolor-icon-theme
 
                        desktop-file-utils gvfs xrdb xset xsetroot xkill
 
