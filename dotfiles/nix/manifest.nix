@@ -127,6 +127,7 @@ in [
   old.catj
 
   obs-studio
+  androidenv.androidPkgs_9_0.platform-tools
   scrcpy
   onefetch
   oh
