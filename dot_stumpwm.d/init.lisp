@@ -1629,8 +1629,17 @@
 (define-key *top-map* (kbd "C-s-Up") "next-in-frame")
 (define-key *top-map* (kbd "C-s-Down") "prev-in-frame")
 
-(defcommand vnc (display) ((:string "display: "))
-  (run-shell-command (concat "vncviewer -passwd .vnc/passwd 127.0.0.1:" display)))
+(defcommand vnc (display &optional view-only) ((:string "display: "))
+  (run-shell-command
+   (join `("vncviewer"
+           "-AutoSelect=0"
+           "-PreferredEncoding=Raw"
+           "-FullColor=1"
+           "-NoJPEG=1"
+           "-CompressLevel=0"
+           "-passwd" ,(concat (getenv "HOME") "/.vnc/passwd")
+           ,@(if view-only '("-ViewOnly") '())
+           ,(concat "127.0.0.1:" display)))))
 
 (defcommand clipmenu () ()
   (run-shell-command "CM_HISTLENGTH=25 CM_LAUNCHER=rofi clipmenu"))
@@ -2078,7 +2087,7 @@
               (lambda () (pulsemixer))
               (lambda () (quassel-monitor))
               (lambda () (music-youtube))
-              (lambda () (vnc "5901"))
+              (lambda () (vnc "5901" t))
               (lambda () (sb-thread:make-thread
                      (lambda ()
                        (sleep 5)
