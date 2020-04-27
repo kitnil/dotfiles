@@ -161,13 +161,10 @@ then
     export MANPATH
 fi
 
-nix-completion()
-{
-    if [ -f "$HOME/.nix-profile/share/bash-completion/completions/nix" ]
-    then
-        . "$HOME/.nix-profile/share/bash-completion/completions/nix"
-    fi
-}
+if [[ -f "$HOME/.nix-profile/share/bash-completion/completions/nix" ]] && [[ $TERM == xterm-256color ]]
+then
+    . "$HOME/.nix-profile/share/bash-completion/completions/nix"
+fi
 
 emc()
 {
