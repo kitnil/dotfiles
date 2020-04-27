@@ -625,19 +625,6 @@ EndSection")
 
                        (service ddclient-service-type)
 
-                       (service rottlog-service-type
-                                (rottlog-configuration
-                                 (inherit (rottlog-configuration))
-                                 (rotations (cons (log-rotation
-                                                   (files '("/var/log/nginx/access.log"
-                                                            "/var/log/nginx/error.log"))
-                                                   (frequency 'daily))
-                                                  (map (lambda (rotation)
-                                                         (log-rotation
-                                                          (inherit rotation)
-                                                          (frequency 'daily)))
-                                                       %default-rotations)))))
-
                        (postgresql-service #:config-file (postgresql-config-file
                                                           (hba-file
                                                            (plain-file "pg_hba.conf"
