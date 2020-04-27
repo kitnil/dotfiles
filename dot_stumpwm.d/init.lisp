@@ -547,7 +547,8 @@
                                                                      (split-string (run-shell-command (format nil "curl --request 'EXAMINE ~a' --user 'oleg:~a' imap://localhost" mailbox (password-store-show "localhost/imap/oleg")) t)
                                                                                    '(#\^M)))))
                                                 '(#\space)))))
-                       '("INBOX" "majordomo")))))
+                       '("INBOX" "majordomo"))))
+  (mode-line-update))
 
 (defcommand notmuch () ()
   (term-shell-command (fetch-mail-command "notmuch new")
@@ -2138,7 +2139,6 @@
                    (loop while t do
                         (progn
                           (imap-update-recent-count)
-                          (mode-line-update)
                           (sleep 60))))))
               (lambda ()
                 (sb-thread:make-thread
