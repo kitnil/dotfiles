@@ -222,6 +222,11 @@
 (with-eval-after-load 'notmuch
   (setq mail-user-agent 'gnus-user-agent))
 
+(defun stumpwm-imap-update-recent-count ()
+  "Call imap-update-recent-count in StumpWM."
+  (interactive)
+  (call-process "sh" nil nil nil "-c" "echo '(imap-update-recent-count)' | stumpish -e eval"))
+
 (setq mail-user-agent 'gnus-user-agent)
 
 (with-eval-after-load 'mailcap

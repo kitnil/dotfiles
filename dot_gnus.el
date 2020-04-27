@@ -26,6 +26,8 @@
 (add-hook 'message-sent-hook #'gnus-score-followup-thread)
 (add-hook 'gnus-article-mode-hook 'goto-address-mode)
 
+(add-hook 'gnus-exit-group-hook #'stumpwm-imap-update-recent-count)
+
 ;; Code from: https://github.com/jwiegley/dot-emacs
 (defun switch-to-gnus (&optional arg)
   "Switch to a Gnus related buffer.
