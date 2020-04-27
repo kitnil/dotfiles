@@ -3596,6 +3596,17 @@ If given a prefix, patch in the branch directory instead."
 
 (defalias 'rg 'deadgrep)
 
+(with-eval-after-load 'gitlab-snip-helm
+  (setq gitlab-snip-helm-server "gitlab.com")
+  (setq gitlab-snip-helm-user-token
+        (let ((secret (plist-get (nth 0
+                                      (auth-source-search
+                                       :host "gitlab.com/api/v4"
+                                       :user "wigust^token"))
+                                 :secret)))
+          (and (functionp secret)
+               (funcall secret)))))
+
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
