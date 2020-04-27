@@ -79,15 +79,14 @@ alias bedtime='sudo loginctl suspend'
 
 alias aria2c='aria2c --seed-time=0'
 
-ihs-wrapper() {
+ihs()
+{
     GUILE_INSTALL_LOCALE=0                      \
     GUIX_BUILD_OPTIONS=                         \
     IHS_USER=pyhalov                            \
     IHS_PASS=$(pass show majordomo/hms/pyhalov) \
-    ihs $@
+    command ihs $@
 }
-
-alias ihs=ihs-wrapper
 
 if [ -d "/run/current-system" ]
 then
