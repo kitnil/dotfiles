@@ -93,7 +93,7 @@
           (or (>= hour 18) (< hour 10))))))
 
 (defvar *notify-to-rest* t)
-(defvar *notify-to-rest-period* 3600)
+(defvar *notify-to-rest-period* (* 60 20))
 
 (defcommand toggle-notify-to-rest () ()
   (if *notify-to-rest*
