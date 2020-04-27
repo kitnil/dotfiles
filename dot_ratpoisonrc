@@ -1,1 +1,1 @@
-exec firefox -P test
+exec firefox -P test &
