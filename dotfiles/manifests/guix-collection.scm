@@ -91,7 +91,6 @@ vpn w3m xfce web wget wm xdisorg xml xorg)
                haunt            ; Guile static site generator
 
                aria2        ; Download utility
-               kodi
                kodi-cli     ; Remote control Kodi
                transmission ; Bittorrent
 
@@ -175,7 +174,6 @@ vpn w3m xfce web wget wm xdisorg xml xorg)
                bc
                cpio
                detox ; Replace spaces with underscores in filenames
-               diffoscope
                dos2unix
                freerdp
                graphviz ;produce `dot' files graphs

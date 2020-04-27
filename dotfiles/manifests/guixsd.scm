@@ -29,5 +29,4 @@
 
 (combined-manifest-from-files
  (map (cut string-append %source-dir "/" <>)
-      '("emacs.scm" "guix-collection.scm" "wigust.scm" "games.scm" ;; "majordomo.scm"
-        )))
+      '("emacs.scm" "guix-collection.scm" "inferior.scm" "wigust.scm" "games.scm" "majordomo.scm")))
