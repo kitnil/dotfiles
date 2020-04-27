@@ -319,6 +319,8 @@ EndSection")
 
                        pulseaudio
 
+                       libcgroup
+
                        (operating-system-packages base-system)))
 
       (groups (cons* (user-group (name "nixbld")
