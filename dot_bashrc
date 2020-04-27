@@ -301,18 +301,6 @@ jenkins-active-jobs()
     jenkins-jobs | grep --color=no red_anime
 }
 
-guix-download-my-manifest()
-{
-    guix environment --substitute-urls='https://ci.guix.info http://cuirass.tld' \
-         --manifest="$HOME/src/dotfiles/guix/manifests/oleg.scm"
-}
-
-guix-apply-my-manifest()
-{
-    guix package --substitute-urls='https://ci.guix.info http://cuirass.tld' \
-         --fallback  --manifest="$HOME/src/dotfiles/guix/manifests/oleg.scm"
-}
-
 grub-list-entries()
 {
     awk -F\" '$1=="menuentry " {print i++ " : " $2}' /boot/grub/grub.cfg
@@ -332,66 +320,52 @@ fb()
     done
 }
 
-guix-vm()
+guix()
 {
-    script="$1"
+    case "$1" in
+        manifest)
+            command guix package --fallback --manifest="$HOME/manifest.scm"
+            ;;
+        pull)
+            guix_channels="$HOME/channels.scm"
+            guix_command="command guix pull --channels=$guix_channels"
+            (set -ex; $guix_command "${@:2}"; sudo --login $guix_command "${@:2}")
+            ;;
+        prereconfigure)
+            guix_command="$HOME/src/guix/pre-inst-env guix"
+            guix_modules="$HOME/src/dotfiles/fiore/modules"
+            sudo --login GUIX_PACKAGE_PATH="/home/oleg/src/guix-wigust/guix"    \
+                 $guix_command system reconfigure                               \
+                 --load-path=$guix_modules --fallback /etc/config.scm           \
+                 "$@"
+            ;;
+        system)
+            case "$2" in
+                reconfigure)
+                    sudo --login command guix system reconfigure --no-bootloader "${@:3}" /etc/config.scm
+                    ;;
+                switch)
+                    sudo --login command guix system reconfigure "${@:3}" /etc/config.scm
+                    ;;
+            esac
+            ;;
+        master-staging)
+            git -C "$HOME/src/guix" shortlog -n upstream/master..upstream/staging
+            ;;
+        qemu)
+            # https://wiki.archlinux.org/index.php/QEMU#Creating_bridge_manually
+            printf -v macaddr "52:54:%02x:%02x:%02x:%02x" \
+            $(( $RANDOM & 0xff)) $(( $RANDOM & 0xff )) $(( $RANDOM & 0xff)) $(( $RANDOM & 0xff ))
 
-    # https://wiki.archlinux.org/index.php/QEMU#Creating_bridge_manually
-    printf -v macaddr "52:54:%02x:%02x:%02x:%02x" \
-           $(( $RANDOM & 0xff)) \
-           $(( $RANDOM & 0xff )) \
-           $(( $RANDOM & 0xff)) \
-           $(( $RANDOM & 0xff ))
-
-    /run/setuid-programs/sudo \
-        "$script" -daemonize \
-        -smp cores=4,threads=1 -enable-kvm -cpu host \
-        -m 4096 \
-        -net nic,model=virtio,macaddr="$macaddr" -net bridge,br=br0 \
-        -vga virtio -full-screen
-}
-
-myreconfigure-boot ()
-{
-    sudo -i guix system reconfigure \
-         --load-path="$HOME/src/dotfiles/fiore/modules" \
-         --substitute-urls='https://ci.guix.info http://cuirass.tld' \
-         "$HOME/src/dotfiles/guixsd/guixsd.scm"
-}
-
-myreconfigure ()
-{
-    sudo -i guix system reconfigure --no-bootloader \
-         --load-path="$HOME/src/dotfiles/fiore/modules" \
-         --substitute-urls='https://ci.guix.info http://cuirass.tld' \
-         --fallback "$HOME/src/dotfiles/guixsd/guixsd.scm" $@
-}
-
-myprereconfigure()
-{
-    sudo -i GUIX_PACKAGE_PATH="/home/oleg/src/guix-wigust/guix" \
-            /home/oleg/src/guix/pre-inst-env \
-            guix system reconfigure \
-            --load-path="/home/oleg/src/dotfiles/fiore/modules" \
-            --substitute-urls='https://ci.guix.info http://cuirass.tld' \
-            --fallback "/home/oleg/src/dotfiles/guixsd/guixsd.scm"
-}
-
-mypull()
-{
-    guix pull --substitute-urls='https://ci.guix.info http://cuirass.tld' \
-            --channels="$HOME/src/dotfiles/channels.scm"
-}
-
-mypull-sudo()
-{
-    sudo -i guix pull --channels="$HOME/src/dotfiles/channels.scm"
-}
-
-guix-master-staging()
-{
-    git -C "$HOME/src/guix" \
-        shortlog -n upstream/master..upstream/staging
+            sudo command qemu-system-x86_64 -daemonize -enable-kvm                      \
+                 -smp cores=4,threads=1 -cpu host -m 4096 -vga virtio -full-screen      \
+                 -net nic,model=virtio,macaddr="$macaddr" -net bridge,br=br0            \
+                 "$@"
+            ;;
+        *)
+            command guix "$@"
+            ;;
+    esac
 }
 
 listen-ports()
@@ -1377,12 +1351,6 @@ docker-top-strace()
 active-hms()
 {
     curl -s --user jenkins:"$(pass show majordomo/jenkins/jenkins)" nginx{1,2}-mr:8080/hms | jq -r .active | uniq
-}
-
-guix-pull-commit-me-and-root()
-{
-    commit="$1"
-    guix pull --commit="$commit"; sudo -i guix pull --commit="$commit"
 }
 
 jenkins-build-project-branch()
