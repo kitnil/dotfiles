@@ -12,6 +12,7 @@
   (run-shell-command "xsetroot -solid black"))
 
 (set-background-dark)
+(xplanet)
 
 
 ;;;
