@@ -18,6 +18,16 @@ rm() { command rm -i "$@"; }
 cp() { command cp -i "$@"; }
 mv() { command mv -i "$@"; }
 
+cat()
+{
+    if [[ "${@: -1}" == /proc/*/environ ]]
+    then
+        command cat "${@: -1}" | tr '\000' '\n'
+    else
+        command cat "$@"
+    fi
+}
+
 GRADLE_HOME=/opt/gradle
 export GRADLE_HOME
 
@@ -579,11 +589,6 @@ nix-user-uid()
 nix-info()
 {
     nix-shell -p nix-info --run "nix-info -m"
-}
-
-print-environ()
-{
-    cat "/proc/$1/environ" | tr '\000' '\n'
 }
 
 guix-packages-json()
