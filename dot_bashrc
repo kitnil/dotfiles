@@ -1616,7 +1616,7 @@ alias sw1-mr11="connect sw1-mr11"
 
 alias glow='glow --style light'
 
-alias nix='EDITOR=less VISUAL=emc nix'
+alias nix='EDITOR=less VISUAL="emacsclient -cn" nix'
 
 alias dotfiles='EDITOR=zile dotfiles'
 if [ -f "$HOME/.nix-profile/share/bash-completion/completions/chezmoi.bash" ]; then
