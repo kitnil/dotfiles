@@ -277,6 +277,7 @@ EndSection")
                        sbcl-stumpwm-checkout-ttf-fonts
                        sbcl-stumpwm-checkout-globalwindows
                        sbcl-stumpwm-checkout-swm-gaps
+                       stumpish
 
                        ncurses
 
