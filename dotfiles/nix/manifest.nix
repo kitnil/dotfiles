@@ -159,6 +159,7 @@ in [
   wrk
   wtf
   yq
+  vmtouch
 
   adwaita-qt libsForQt5.qtstyleplugins kde-gtk-config
   quassel
