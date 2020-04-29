@@ -468,6 +468,10 @@ ARGS will be passed to hydra."
     (define-key map (kbd "C-c d") 'wi-gnus-browse-debbugs)
     (define-key map (kbd "C-c b") 'wi-gnus-browse-guix-issues)))
 
+(with-eval-after-load 'grep
+  (let ((map grep-mode-map))
+    (define-key map (kbd "C-j") 'compile-goto-error)))
+
 (with-eval-after-load 'info
   (let ((map Info-mode-map))
     (define-key map (kbd "<f8>") 'wi-info-remote-copy-current-node)))
