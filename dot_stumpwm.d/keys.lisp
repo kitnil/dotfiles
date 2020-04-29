@@ -98,6 +98,8 @@
   (define-key *top-map* (kbd "C-s-Right") "window-resize-by-half-horizontal")
   (define-key *top-map* (kbd "C-s-Left") "window-resize-by-half-vertical")
 
+  (define-key *top-map* (kbd "C-M-s-S") "suspend")
+
   (define-key *top-map* (kbd "C-s-=") "volume-increase-device-0")
   (define-key *top-map* (kbd "C-s--") "volume-decrease-device-0")
   (define-key *top-map* (kbd "C-s-RET") "run-xterm-named")
