@@ -39,7 +39,7 @@
   (define-key *top-map* (kbd "s-p") "prev-in-frame")
   (define-key *top-map* (kbd "s-w") "firefox")
   (define-key *top-map* (kbd "s-W") "firefox-new-window")
-  (define-key *top-map* (kbd "s-quoteleft") "emacs-shell")
+  (define-key *top-map* (kbd "s-quoteleft") "emacs-vterm")
   (define-key *top-map* (kbd "s-o") "emacs-anywhere")
   (define-key *top-map* (kbd "s-a") "pass-eng")
   (define-key *top-map* (kbd "s-A") "pass-sup")
@@ -148,7 +148,7 @@
 (define-key *root-map* (kbd "Y") "xclip-kdeconnect-handler")
 (define-key *root-map* (kbd "c") "run-xterm")
 (define-key *root-map* (kbd "e") "emacsclient")
-(define-key *root-map* (kbd "quoteleft") "emacs-shell")
+(define-key *root-map* (kbd "quoteleft") "emacs-vterm")
 (define-key *root-map* (kbd "y") "clipmenu")
 
 (defcommand sxhkd-restart () ()

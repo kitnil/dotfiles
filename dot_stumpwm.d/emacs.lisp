@@ -42,6 +42,11 @@
   (run-shell-command
    (join (list "exec emacsclient -c" (get-x-selection)))))
 
+(defcommand emacs-vterm () ()
+  ""
+  (switch-to-emacs)
+  (run-shell-command "emacsclient -e '(progn (vterm-toggle))'"))
+
 (defcommand emacs-shell () ()
   ""
   (switch-to-emacs)
