@@ -344,10 +344,10 @@ guix()
         prereconfigure)
             guix_command="$HOME/src/guix/pre-inst-env guix"
             guix_modules="$HOME/src/dotfiles/fiore/modules"
-            sudo --login GUIX_PACKAGE_PATH="/home/oleg/src/guix-wigust/guix"    \
+            sudo --login GUIX_PACKAGE_PATH="/home/oleg/src/guix-majordomo:/home/oleg/src/guix-wigust-services/guix:/home/oleg/src/guix-wigust/guix"    \
                  $guix_command system reconfigure                               \
-                 --load-path=$guix_modules --fallback /etc/config.scm           \
-                 "$@"
+                 --load-path=$guix_modules --no-bootloader --fallback /etc/config.scm           \
+                 "${@:3}"
             ;;
         system)
             case "$2" in
