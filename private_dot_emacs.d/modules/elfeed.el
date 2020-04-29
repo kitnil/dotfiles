@@ -64,3 +64,14 @@
          video)
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCgU5tUdVPpfM7sLAMWBTsDg"
          video)))
+
+(with-eval-after-load 'elfeed
+  (defun wi-elfeed-search-show-entry ()
+    "Call `elfeed-search-show-entry' with `shr-width' setted to NIL."
+    (interactive)
+    (let ((shr-width nil))
+      (call-interactively 'elfeed-search-show-entry)))
+  (let ((map elfeed-search-mode-map))
+    (define-key map (kbd "RET") 'wi-elfeed-search-show-entry)
+    (define-key map (kbd "SPC") 'scroll-up-command)
+    (define-key map (kbd "S-SPC") 'scroll-down-command)))
