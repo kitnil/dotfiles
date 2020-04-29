@@ -122,13 +122,9 @@
 ;;; Mail
 ;;;
 
-(defcommand emacs-gnus () ()
-  (switch-to-emacs)
-  (run-shell-command
-   (format nil "emacsclient -e ~s"
-           (sb-unicode:lowercase
-            (write-to-string
-             '(progn (gnus) (delete-other-windows)))))))
+(defcommand gnus () ()
+  (run-shell-command "emacsclient --eval '(gnus)'")
+  (switch-to-emacs))
 
 
 ;;;
