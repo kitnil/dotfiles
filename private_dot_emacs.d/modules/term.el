@@ -36,4 +36,9 @@
   (let ((map vterm-mode-map))
     (define-key map (kbd "<S-prior>") 'scroll-down-command)
     (define-key map (kbd "<S-next>") 'scroll-up-command)
-    (define-key map (kbd "C-u") 'vterm-send-C-u)))
+    (define-key map (kbd "C-u") 'vterm-send-C-u)
+    (define-key map (kbd "<menu>") 'vterm-copy-mode))
+  (let ((map vterm-copy-mode-map))
+    (define-key map (kbd "<menu>") 'vterm-copy-mode)))
+
+
