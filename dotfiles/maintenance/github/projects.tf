@@ -16,3 +16,9 @@ resource "github_repository" "bitlbee-libpurple" {
   description    = "Fork https://github.com/ezkrg/docker-bitlbee-libpurple.git"
   default_branch = "wip-local"
 }
+
+resource "github_repository" "reevefresh" {
+  name           = "reevefresh"
+  description    = "Send notifications about Twitch online channels to Slack channel"
+  default_branch = "master"
+}
