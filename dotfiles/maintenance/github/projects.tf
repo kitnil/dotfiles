@@ -11,6 +11,13 @@ resource "github_repository" "guix" {
   topics         = ["guix", "guile", "scheme"]
 }
 
+resource "github_repository" "guix-wigust" {
+  name           = "guix-wigust"
+  description    = "Extra packages for Guix"
+  default_branch = "master"
+  topics         = ["guix", "guile", "scheme"]
+}
+
 resource "github_repository" "bitlbee-libpurple" {
   name           = "bitlbee-libpurple"
   description    = "Fork https://github.com/ezkrg/docker-bitlbee-libpurple.git"
