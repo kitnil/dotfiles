@@ -29,6 +29,11 @@ resource "github_repository" "jenkins-shared-library" {
   default_branch = "master"
 }
 
+resource "github_repository" "awesome" {
+  name           = "awesome"
+  default_branch = "master"
+}
+
 resource "github_repository" "reevefresh" {
   name           = "reevefresh"
   description    = "Send notifications about Twitch online channels to Slack channel"
