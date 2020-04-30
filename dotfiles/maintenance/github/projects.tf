@@ -1,3 +1,9 @@
+resource "github_repository" "dotfiles" {
+  name           = "dotfiles"
+  description    = "My dotfiles"
+  default_branch = "master"
+}
+
 resource "github_repository" "guix" {
   name           = "guix"
   description    = "Fork https://git.savannah.gnu.org/cgit/guix.git"
