@@ -4,3 +4,9 @@ resource "github_repository" "guix" {
   default_branch = "master"
   topics         = ["guix", "guile", "scheme"]
 }
+
+resource "github_repository" "bitlbee-libpurple" {
+  name           = "bitlbee-libpurple"
+  description    = "Fork https://github.com/ezkrg/docker-bitlbee-libpurple.git"
+  default_branch = "wip-local"
+}
