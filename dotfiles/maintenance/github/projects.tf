@@ -130,3 +130,9 @@ resource "github_repository" "docker-wigust" {
   description    = "Miscellaneous dockerfiles"
   default_branch = "master"
 }
+
+resource "github_repository" "connect-ssh-sudo" {
+  name           = "connect-ssh-sudo"
+  description    = "Python script for connection to a server over SSH and typing root password"
+  default_branch = "master"
+}
