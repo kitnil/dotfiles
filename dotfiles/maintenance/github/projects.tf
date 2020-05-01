@@ -154,3 +154,9 @@ resource "github_repository" "connect-script" {
   description    = "Wrapper for connect-* scripts"
   default_branch = "master"
 }
+
+resource "github_repository" "connect-cisco-interact" {
+  name           = "connect-cisco-interact"
+  description    = "Python script to type commands on Cisco"
+  default_branch = "master"
+}
