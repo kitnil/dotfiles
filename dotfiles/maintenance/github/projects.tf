@@ -136,3 +136,9 @@ resource "github_repository" "connect-ssh-sudo" {
   description    = "Python script for connection to a server over SSH and typing root password"
   default_branch = "master"
 }
+
+resource "github_repository" "connect-ssh-aliases" {
+  name           = "connect-ssh-aliases"
+  description    = "Guile script to generate shell aliases from SSH known_hosts file"
+  default_branch = "master"
+}
