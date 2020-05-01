@@ -124,6 +124,12 @@ resource "github_repository" "firefox-passff" {
   default_branch = "wip"
 }
 
+resource "github_repository" "firefox-org-capture-extension" {
+  name           = "firefox-org-capture-extension"
+  description    = "Fork https://github.com/sprig/org-capture-extension"
+  default_branch = "wip-local"
+}
+
 resource "github_repository" "firefox-tab-slideshow" {
   name           = "firefox-tab-slideshow"
   description    = "Fork https://addons.mozilla.org/en-US/firefox/addon/tab-slideshow-we/"
