@@ -160,3 +160,9 @@ resource "github_repository" "connect-cisco-interact" {
   description    = "Python script to type commands on Cisco"
   default_branch = "master"
 }
+
+resource "github_repository" "connect-cisco" {
+  name           = "connect-cisco"
+  description    = "Python script to autotype password on Cisco"
+  default_branch = "master"
+}
