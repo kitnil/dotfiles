@@ -124,3 +124,9 @@ resource "github_repository" "mikrotik-pxe" {
   description    = "Jenkinsfile for netboot.xyz.kpxe deploy to MikroTik"
   default_branch = "master"
 }
+
+resource "github_repository" "docker-wigust" {
+  name           = "docker-wigust"
+  description    = "Miscellaneous dockerfiles"
+  default_branch = "master"
+}
