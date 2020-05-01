@@ -57,3 +57,9 @@ resource "github_repository" "emacs-org-mode" {
   description    = "Fork git://orgmode.org/org-mode.git"
   default_branch = "master"
 }
+
+resource "github_repository" "nixpkgs" {
+  name           = "nixpkgs"
+  description    = "Fork https://github.com/NixOS/nixpkgs.git"
+  default_branch = "master"
+}
