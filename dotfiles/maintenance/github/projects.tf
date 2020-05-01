@@ -46,6 +46,13 @@ resource "github_repository" "guix-nonfree" {
   topics         = ["guix", "guile", "scheme"]
 }
 
+resource "github_repository" "guix-docker" {
+  name           = "guix-docker"
+  description    = "Docker image build by Guix with guix-daemon"
+  default_branch = "master"
+  topics         = ["guix", "guile", "scheme"]
+}
+
 resource "github_repository" "guix-tome4" {
   name           = "guix-tome4"
   description    = "Guix package for Tales of Maj'Eyal rogue like game"
