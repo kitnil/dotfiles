@@ -124,6 +124,12 @@ resource "github_repository" "firefox-tab-slideshow" {
   default_branch = "master"
 }
 
+resource "github_repository" "python-nmap2json" {
+  name           = "python-nmap2json"
+  description    = "Convert nmap output to JSON"
+  default_branch = "master"
+}
+
 resource "github_repository" "nixpkgs" {
   name           = "nixpkgs"
   description    = "Fork https://github.com/NixOS/nixpkgs.git"
