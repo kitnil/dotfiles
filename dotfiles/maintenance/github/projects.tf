@@ -142,3 +142,9 @@ resource "github_repository" "connect-ssh-aliases" {
   description    = "Guile script to generate shell aliases from SSH known_hosts file"
   default_branch = "master"
 }
+
+resource "github_repository" "connect-guix" {
+  name           = "connect-guix"
+  description    = "Guix packages for connect-* scripts"
+  default_branch = "master"
+}
