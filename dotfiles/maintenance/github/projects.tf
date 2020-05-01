@@ -25,6 +25,13 @@ resource "github_repository" "guix-wigust-services" {
   topics         = ["guix", "guile", "scheme"]
 }
 
+resource "github_repository" "guix-nonfree" {
+  name           = "guix-nonfree"
+  description    = "Extra non-free packages for Guix"
+  default_branch = "master"
+  topics         = ["guix", "guile", "scheme"]
+}
+
 resource "github_repository" "guix-tome4" {
   name           = "guix-tome4"
   description    = "Guix package for Tales of Maj'Eyal rogue like game"
