@@ -118,6 +118,12 @@ resource "github_repository" "emacs-vterm-toggle" {
   default_branch = "wip"
 }
 
+resource "github_repository" "firefox-passff" {
+  name           = "firefox-passff"
+  description    = "Fork https://github.com/passff/passff.git"
+  default_branch = "wip"
+}
+
 resource "github_repository" "firefox-tab-slideshow" {
   name           = "firefox-tab-slideshow"
   description    = "Fork https://addons.mozilla.org/en-US/firefox/addon/tab-slideshow-we/"
