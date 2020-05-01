@@ -21,7 +21,7 @@ resource "github_repository" "guix-wigust" {
 resource "github_repository" "guix-artwork" {
   name           = "guix-artwork"
   description    = "Fork https://git.savannah.nongnu.org/cgit/guix/guix-artwork.git"
-  default_branch = "master"
+  default_branch = "slim-input-panel"
   topics         = ["guix", "guile", "scheme"]
 }
 
