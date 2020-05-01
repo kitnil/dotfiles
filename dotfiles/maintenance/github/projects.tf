@@ -51,3 +51,9 @@ resource "github_repository" "tomegus" {
   description    = "Rogue like game in C"
   default_branch = "master"
 }
+
+resource "github_repository" "emacs-org-mode" {
+  name           = "emacs-org-mode"
+  description    = "Fork git://orgmode.org/org-mode.git"
+  default_branch = "master"
+}
