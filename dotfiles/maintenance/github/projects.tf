@@ -166,3 +166,9 @@ resource "github_repository" "connect-cisco" {
   description    = "Python script to autotype password on Cisco"
   default_branch = "master"
 }
+
+resource "github_repository" "backup-restic" {
+  name           = "backup-restic"
+  description    = "Jenkinsfile for backup with Restic"
+  default_branch = "master"
+}
