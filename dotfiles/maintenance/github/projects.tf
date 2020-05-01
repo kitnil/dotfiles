@@ -148,3 +148,9 @@ resource "github_repository" "connect-guix" {
   description    = "Guix packages for connect-* scripts"
   default_branch = "master"
 }
+
+resource "github_repository" "connect-script" {
+  name           = "connect-script"
+  description    = "Wrapper for connect-* scripts"
+  default_branch = "master"
+}
