@@ -178,3 +178,9 @@ resource "github_repository" "guix-zabbix" {
   description    = "Monitor Guix with Zabbix"
   default_branch = "master"
 }
+
+resource "github_repository" "wrapper-xclip" {
+  name           = "wrapper-xclip"
+  description    = "xclip wrapper"
+  default_branch = "master"
+}
