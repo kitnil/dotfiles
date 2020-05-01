@@ -32,6 +32,13 @@ resource "github_repository" "guix-wigust-services" {
   topics         = ["guix", "guile", "scheme"]
 }
 
+resource "github_repository" "guix-linux-nonfree" {
+  name           = "guix-linux-nonfree"
+  description    = "Non-free Linux kernel modules for Guix"
+  default_branch = "master"
+  topics         = ["guix", "guile", "scheme"]
+}
+
 resource "github_repository" "guix-nonfree" {
   name           = "guix-nonfree"
   description    = "Extra non-free packages for Guix"
