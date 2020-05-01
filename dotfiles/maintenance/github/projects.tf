@@ -69,3 +69,9 @@ resource "github_repository" "multicd" {
   description    = "Fork https://github.com/IsaacSchemm/MultiCD"
   default_branch = "master"
 }
+
+resource "github_repository" "mikrotik-pxe" {
+  name           = "mikrotik-pxe"
+  description    = "Jenkinsfile for netboot.xyz.kpxe deploy to MikroTik"
+  default_branch = "master"
+}
