@@ -61,6 +61,12 @@
          (lambda (home)
            (string-append home "/.cache/src-clean.txt"))))
 
+(define (git-origins directory)
+  (map (cut string-split <> #\tab)
+       (string-split (string-trim-right (system->string "git" "-C" directory
+                                                        "remote" "--verbose"))
+                     #\newline)))
+
 (define (main args)
   (define opts
     (args-fold (cdr (program-arguments))
@@ -112,6 +118,21 @@
                     (cond ((string-null? output)
                            (format #t "~s repository does not contain ~a commits.~%" directory author)
                            (system* "git" "-C" directory "status")
+                           (exit 1))
+                          ((equal? '("") (git-origins directory))
+                           (format #t "No remotes in ~s repository.~%"
+                                   directory)
+                           (exit 1))
+                          ((let ((origin (assoc-ref "origin" (git-origins directory))))
+                             (and origin
+                                  (string-prefix? "https://github.com/"
+                                                  origin)))
+                           (format #t "origin's remote in ~s repository is GitHub.~%"
+                                   directory)
+                           (exit 1))
+                          ((not (assoc "github" (git-origins directory)))
+                           (format #t "No github remote in ~s repository.~%"
+                                   directory)
                            (exit 1))
                           (else (with-output-to-port cache
                                   (lambda ()
