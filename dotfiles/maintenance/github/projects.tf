@@ -145,7 +145,7 @@ resource "github_repository" "nixpkgs" {
 resource "github_repository" "multicd" {
   name           = "multicd"
   description    = "Fork https://github.com/IsaacSchemm/MultiCD"
-  default_branch = "master"
+  default_branch = "wip"
 }
 
 resource "github_repository" "mikrotik-pxe" {
