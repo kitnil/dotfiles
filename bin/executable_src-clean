@@ -1,0 +1,125 @@
+#!/usr/bin/env -S guile --no-auto-compile -e (src-clean) -s
+!#
+
+;;;; src-clean --- Guile script which cleans up src directory
+;;;; Copyright © 2020 Oleg Pykhalov <go.wigust@gmail.com>
+;;;; Released under the GNU GPLv3 or any later version.
+
+(define-module (src-clean)
+  #:use-module (ice-9 format)
+  #:use-module (ice-9 ftw)
+  #:use-module (ice-9 match)
+  #:use-module (ice-9 popen)
+  #:use-module (ice-9 popen)
+  #:use-module (ice-9 rdelim)
+  #:use-module (srfi srfi-1)
+  #:use-module (srfi srfi-26)
+  #:use-module (srfi srfi-37)
+  #:export (main))
+
+;;; Commentary:
+;;;
+;;; This script only depends on Guile, which you could get either with Guix:
+;;;   guix environment --ad-hoc guile
+;;; or Nix:
+;;;   nix-shell -p guile git
+;;;
+;;; src-clean --directory=src --author=go.wigust@gmail.com --ignore=dotfiles,rofi-themes
+;;;
+;;; Code:
+
+(define %options
+  (let ((display-and-exit-proc (lambda (msg)
+                                 (lambda (opt name arg loads)
+                                   (display msg) (quit)))))
+    (list (option '(#\v "version") #f #f
+                  (display-and-exit-proc "src-clean version 0.0.1\n"))
+          (option '(#\a "author") #t #f
+                  (lambda (opt name arg result)
+                    (alist-cons 'author arg result)))
+          (option '(#\d "directory") #t #f
+                  (lambda (opt name arg result)
+                    (alist-cons 'directory arg result)))
+          (option '(#\i "ignore") #t #f
+                  (lambda (opt name arg result)
+                    (alist-cons 'ignore arg result)))
+          (option '(#\h "help") #f #f
+                  (display-and-exit-proc
+                   "Usage: src-clean ...")))))
+
+(define %default-options
+  '())
+
+(define (system->string . args)
+  (let* ((port (apply open-pipe* OPEN_READ args))
+         (output (read-string port)))
+    (close-pipe port)
+    output))
+
+(define %cache-file
+  (and=> (getenv "HOME")
+         (lambda (home)
+           (string-append home "/.cache/src-clean.txt"))))
+
+(define (main args)
+  (define opts
+    (args-fold (cdr (program-arguments))
+               %options
+               (lambda (opt name arg loads)
+                 (error "Unrecognized option `~A'" name))
+               (lambda (op loads)
+                 (cons op loads))
+               %default-options))
+
+  (define author
+    (assoc-ref opts 'author))
+
+  (define ignore
+    (and=> (assoc-ref opts 'ignore)
+           (lambda (ignore)
+             (string-split (assoc-ref opts 'ignore) #\,))))
+
+  (define cache
+    (open-file %cache-file "a"))
+
+  (define cache-existing
+    (string-split (with-input-from-file %cache-file read-string) #\newline))
+
+  (define directories
+    (let ((directories (let ((directory (assoc-ref opts 'directory)))
+                         (match (scandir directory)
+                             (("." ".." files ...)
+                              (map (cut string-append directory "/" <>)
+                                   files))))))
+      (if ignore
+          (fold (lambda (directory directories)
+                  (if (any (cut string= directory <>)
+                           (append ignore cache-existing))
+                      directories
+                      (cons directory directories)))
+                '() directories)
+          directories)))
+
+  (setenv "PAGER" "")
+  (for-each (lambda (directory)
+              (format #t "Checking ~s directory...~%" directory)
+              (if (any (cut string= ".git" <>)
+                       (match (scandir directory)
+                         (("." ".." file ...) file)))
+                  (let ((output (system->string "git" "-C" directory
+                                                "log" "--all" "--format=%H"
+                                                (string-append "--author=" author))))
+                    (cond ((string-null? output)
+                           (format #t "~s repository does not contain ~a commits.~%" directory author)
+                           (system* "git" "-C" directory "status")
+                           (exit 1))
+                          (else (with-output-to-port cache
+                                  (lambda ()
+                                    (display directory)
+                                    (newline))))))
+                  ;; TODO: Output to STDERR
+                  (begin (format #t "~s directory is not a Git repository.~%" directory)
+                         (exit 1))))
+            directories))
+
+;;; src-clean ends here

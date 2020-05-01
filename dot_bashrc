@@ -1647,3 +1647,10 @@ mycut()
 {
     command cut --characters="-$(tput cols)" $@
 }
+
+src-clean()
+{
+    for directory in src archive/src; do
+        command src-clean --directory=$directory --author=go.wigust@gmail.com --ignore=src/dotfiles,src/rofi-themes,src/rfc,src/guix-videos,src/guile,src/fdroiddata,src/emacs-tramp-auto-auth,src/docker-nextcloud,archive/src/sendnotify,archive/src/php,archive/src/my-guix,archive/src/malware-scanner,archive/src/linux-panic,archive/src/linux,archive/src/guile-shepherd,archive/src/groovy,archive/src/gentoo,archive/src/freebsd,archive/src/cpython,archive/src/bash,archive/src/arch-packages,archive/src/arch-community
+    done
+}
