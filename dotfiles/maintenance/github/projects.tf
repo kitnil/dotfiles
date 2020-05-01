@@ -45,3 +45,9 @@ resource "github_repository" "nix-overlay-wigust" {
   description    = "Nix overlay"
   default_branch = "master"
 }
+
+resource "github_repository" "tomegus" {
+  name           = "tomegus"
+  description    = "Rogue like game in C"
+  default_branch = "master"
+}
