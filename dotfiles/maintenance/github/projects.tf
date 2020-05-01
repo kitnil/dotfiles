@@ -172,3 +172,9 @@ resource "github_repository" "backup-restic" {
   description    = "Jenkinsfile for backup with Restic"
   default_branch = "master"
 }
+
+resource "github_repository" "guix-zabbix" {
+  name           = "guix-zabbix"
+  description    = "Monitor Guix with Zabbix"
+  default_branch = "master"
+}
