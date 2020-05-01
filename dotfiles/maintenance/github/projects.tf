@@ -39,3 +39,9 @@ resource "github_repository" "reevefresh" {
   description    = "Send notifications about Twitch online channels to Slack channel"
   default_branch = "master"
 }
+
+resource "github_repository" "nix-overlay-wigust" {
+  name           = "nix-overlay-wigust"
+  description    = "Nix overlay"
+  default_branch = "master"
+}
