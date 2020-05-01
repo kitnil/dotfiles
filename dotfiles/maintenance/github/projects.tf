@@ -63,3 +63,9 @@ resource "github_repository" "nixpkgs" {
   description    = "Fork https://github.com/NixOS/nixpkgs.git"
   default_branch = "master"
 }
+
+resource "github_repository" "multicd" {
+  name           = "multicd"
+  description    = "Fork https://github.com/IsaacSchemm/MultiCD"
+  default_branch = "master"
+}
