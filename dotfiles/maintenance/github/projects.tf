@@ -107,6 +107,11 @@ resource "github_repository" "emacs-org-mode" {
   default_branch = "pdfview"
 }
 
+resource "github_repository" "emacs-tramp-auto-auth" {
+  name           = "emacs-tramp-auto-auth"
+  default_branch = "wip"
+}
+
 resource "github_repository" "emacs-vterm-toggle" {
   name           = "emacs-vterm-toggle"
   description    = "Fork https://github.com/jixiuf/vterm-toggle.git"
