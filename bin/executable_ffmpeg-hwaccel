@@ -1,0 +1,20 @@
+NAME=screencast-$(date +%Y%m%d%H%M)
+size=$(xwininfo -root | grep 'geometry' | awk '{print $2;}')
+
+ffmpeg \
+    -vaapi_device /dev/dri/card0 \
+    -hwaccel vaapi \
+    -hwaccel_output_format vaapi \
+    -r 60 \
+    -s 1920x1080 \
+    -f x11grab -s 1920x1080 -thread_queue_size 512 -i $DISPLAY \
+    -f pulse -ac 2 -thread_queue_size 512 -i 'alsa_input.pci-0000_00_1b.0.analog-stereo' \
+    -f pulse -ac 2 -thread_queue_size 512 -i 'alsa_output.pci-0000_00_1b.0.analog-stereo.monitor' \
+    -filter_complex amix \
+    -vf 'format=nv12|vaapi,hwupload' \
+    -y \
+    -c:v h264_vaapi \
+    -c:a libmp3lame -ar 44100 \
+    -r 60 \
+    -q:a 3 \
+    $NAME.mp4
