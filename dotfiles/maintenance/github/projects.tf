@@ -18,6 +18,13 @@ resource "github_repository" "guix-wigust" {
   topics         = ["guix", "guile", "scheme"]
 }
 
+resource "github_repository" "guix-artwork" {
+  name           = "guix-artwork"
+  description    = "Fork https://git.savannah.nongnu.org/cgit/guix/guix-artwork.git"
+  default_branch = "master"
+  topics         = ["guix", "guile", "scheme"]
+}
+
 resource "github_repository" "guix-misc" {
   name           = "guix-misc"
   description    = "Miscellaneous addons for Guix"
