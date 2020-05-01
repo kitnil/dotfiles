@@ -90,7 +90,7 @@ resource "github_repository" "tomegus" {
 resource "github_repository" "emacs-org-mode" {
   name           = "emacs-org-mode"
   description    = "Fork git://orgmode.org/org-mode.git"
-  default_branch = "master"
+  default_branch = "pdfview"
 }
 
 resource "github_repository" "nixpkgs" {
