@@ -348,12 +348,6 @@ EndSection")
                      (supplementary-groups '("wheel" "adbusers" "audio" "video" "docker" "kvm"))
                      (home-directory "/home/oleg"))
                     (user-account
-                     (name "stanley")
-                     (comment "Stanley StackStorm")
-                     (group "users")
-                     (supplementary-groups '("kvm"))
-                     (home-directory "/home/stanley"))
-                    (user-account
                      (name "majordomo-ssh-tunnel")
                      (uid 30011)
                      (group "users")
