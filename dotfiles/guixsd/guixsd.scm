@@ -326,18 +326,9 @@ EndSection")
 
       (groups (cons* (user-group (name "nixbld")
                                  (id 30100))
-                     ;; (user-group (name "adbusers"))
-                     ;; (user-group (name "guix-offload"))
-                     ;; (user-group (name "telegraf") (system? #t))
-                     ;; (user-group (name "git") (id 30003))
-                     ;; (user-group (name "jenkins") (id 30004))
-                     ;; (user-group (name "influxdb") (id 30005))
-                     ;; (user-group (name "grafana") (id 30006))
                      (user-group (name "adbusers"))
                      (user-group (name "docker")
                                  (system? #t))
-                     ;; (user-group (name "jenkinsbuild"))
-                     ;; (user-group (name "alerta"))
                      %base-groups))
 
       (users (cons* (user-account
