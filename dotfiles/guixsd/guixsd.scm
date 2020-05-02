@@ -383,12 +383,6 @@ EndSection")
                      (comment "SSH forwarding privilege separation user")
                      (home-directory "/home/spb"))
                     (user-account
-                     (name "awx")
-                     (comment "AWX privilege separation user")
-                     (group "users")
-                     (supplementary-groups '("docker"))
-                     (home-directory "/home/awx"))
-                    (user-account
                      (name "jenkins")
                      (comment "Jenkins")
                      (group "users")
