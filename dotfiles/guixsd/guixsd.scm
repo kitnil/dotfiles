@@ -382,12 +382,6 @@ EndSection")
                      (group "users")
                      (comment "SSH forwarding privilege separation user")
                      (home-directory "/home/spb"))
-                    (user-account
-                     (name "jenkins")
-                     (comment "Jenkins")
-                     (group "users")
-                     (supplementary-groups '("adbusers" "docker" "kvm"))
-                     (home-directory "/home/jenkins"))
                     (append ((lambda* (count #:key
                                         (group "nixbld")
                                         (first-uid 30101)
