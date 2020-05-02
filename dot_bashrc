@@ -372,6 +372,15 @@ guix()
                  -net nic,model=virtio,macaddr="$macaddr" -net bridge,br=br0            \
                  "$@"
             ;;
+        clean)
+            (
+                set -ex
+                command guix package --delete-generations=1m
+                command guix pull --delete-generations=1m
+                sudo --login command guix system delete-generations 1m
+                sudo --login command guix pull --delete-generations=1m
+            )
+            ;;
         *)
             command guix "$@"
             ;;
