@@ -266,6 +266,14 @@ EndSection")
                (string-append (dirname file) "/hardware/guixsd.scm")))
       "/home/oleg/src/dotfiles/guixsd/hardware/guixsd.scm"))
 
+(define %guix-daemon-config
+  (guix-configuration
+   ;; (timeout (* 4 max-silent-time))
+   (extra-options '(;; "--max-jobs=6" "--cores=3"
+                    ;; "--gc-keep-derivations=yes"
+                    ;; "--gc-keep-outputs=yes"
+                    "--cache-failures"))))
+
 (define %system-guixsd
   (let ((base-system (load %hardware-file)))
     (operating-system
@@ -666,7 +674,8 @@ ServerAliveCountMax 3"))))))
 
                        (service docker-service-type)
 
-                       (operating-system-user-services base-system)))
+                       (modify-services (operating-system-user-services base-system)
+                         (guix-service-type config => %guix-daemon-config))))
 
       (setuid-programs (cons* (file-append fping "/sbin/fping")
                               (file-append mtr "/sbin/mtr")
