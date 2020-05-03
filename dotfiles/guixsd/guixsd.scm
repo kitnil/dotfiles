@@ -5,10 +5,9 @@
              (srfi srfi-26))
 
 (use-package-modules admin base certs cryptsetup docker linux lisp
-                     suckless xdisorg xorg fonts android fontutils
-                     gnome freedesktop readline ncurses networking
-                     pulseaudio wm vnc ssh version-control gnupg
-                     bittorrent emacs audio lxde)
+suckless xdisorg xorg fonts android fontutils gnome freedesktop
+readline ncurses networking pulseaudio wm vnc ssh bittorrent audio
+lxde version-control)
 
 (use-service-modules admin dbus desktop docker dns networking sound
                      xorg ssh web cgit version-control certbot
@@ -472,11 +471,6 @@ EndSection")
                                                    #:environment-variables
                                                    (append (list (string-append "PATH="
                                                                                 (string-append #$git "/bin")
-                                                                                ":" (string-append #$ansible "/bin")
-                                                                                ":" (string-append #$sshpass "/bin")
-                                                                                ":" (string-append #$gnupg "/bin")
-                                                                                ":" (string-append #$python-starred "/bin")
-                                                                                ":" (string-append #$emacs "/bin")
                                                                                 ":" "/run/setuid-programs"
                                                                                 ":" "/run/current-system/profile/bin")
                                                                  "HOME=/home/oleg"
