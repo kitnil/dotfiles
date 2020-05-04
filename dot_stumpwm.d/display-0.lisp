@@ -30,68 +30,74 @@
             (define-frame-preference group (4 NIL T :CLASS "mpv" :TITLE "emacs-emms"))
             (define-frame-preference group (5 NIL T :CLASS "Vncviewer" :TITLE "guixsd"))
             (define-frame-preference group (5 NIL T :CLASS "mpv" :TITLE "firefox")))
-          '("Default" "1"))
-  (define-frame-preference "2" (0 NIL NIL :CLASS "Emacs"))
-  (define-frame-preference "2" (0 NIL T :CLASS "Firefox" :TITLE "jenkins"))
-  (define-frame-preference "5" (0 NIL NIL :CLASS "Emacs")))
+          '("Default" "1")))
 
 (frame-parameters-display-0)
 
-(defcommand group-2-start-programs () ()
-  (run-commands "gselect 2")
-  (unless (current-window)
-    (run-shell-command (format nil "emacsclient -c -e ~s"
-                               (sb-unicode:lowercase (write-to-string '(gnus)))))
-    (if (y-or-n-p "Fetch mail? ") (notmuch))))
-
-(defcommand group-3-start-programs () ()
-  (run-commands "gselect 3")
-  (unless (current-window)
-    (run-shell-command (if (free-time?)
-                           "chromium --new-window https://home-s2x8742.slack.com/"
-                           "chromium --new-window https://mjru.slack.com/"))))
-
-(defcommand group-4-start-programs () ()
-  (run-commands "gselect 4")
-  (unless (current-window)
-    (run-shell-command (if (free-time?)
-                           "chromium --new-window https://jenkins.wugi.info/view/Failed/"
-                           "chromium --new-window https://jenkins.intr/view/Failed/"))))
-
-(defcommand group-5-start-programs () ()
-  (run-commands "gselect 5")
-  (unless (current-window)
-    (run-shell-command (if (free-time?)
-                           "kodi"
-                           (xpanes-dh-ssh)))))
-
-(defcommand group-6-start-programs () ()
-  (run-commands "gselect 6")
-  (unless (current-window)
-    (trans-en-ru)))
-
-(defcommand group-7-start-programs () ()
-  (run-commands "gselect 7")
-  (unless (current-window)
-    (repl-nix-unstable)))
-
-(defcommand group-8-start-programs () ()
-  (if (= (parse-integer (group-name (current-group))) 8)
+(defun run-frame (group-number &key (frame-0-command nil) (frame-1-command nil))
+  (if (= (parse-integer (group-name (current-group))) group-number)
       (if (current-window)
-          (fother)
+          (run-commands "fnext")
           (let ((screen (current-screen))
                 (group (current-group)))
             (if (and (> (screen-width screen) 1920)
                      (= (length (group-frames group)) 2))
                 (if (= (frame-number (tile-group-current-frame group)) 0)
-                    (run-shell-command (if (free-time?)
-                                           (format nil "emacsclient -c -e ~s"
-                                                   (sb-unicode:lowercase (write-to-string '(elfeed))))
-                                           "firefox --new-window https://cerberus.intr/"))
-                    (run-shell-command "firefox --new-window https://office.majordomo.ru/")))))
-      (run-commands "gselect 8")))
+                    (run-commands frame-0-command)
+                    (run-commands frame-1-command)))))
+      (run-commands (format nil "gselect ~a" group-number))))
+
+(defcommand group-2-start-programs () ()
+  (run-frame 2 :frame-0-command "gnus-new-window" :frame-1-command "elfeed-new-window"))
+
+(defcommand group-3-frame-0-command () ()
+  (run-shell-command (if (free-time?)
+                         "chromium --new-window https://home-s2x8742.slack.com/"
+                         "chromium --new-window https://mjru.slack.com/")))
+
+(defcommand group-3-frame-1-command () ()
+  (run-shell-command (if (free-time?)
+                           "chromium --new-window https://jenkins.wugi.info/view/Failed/"
+                           "chromium --new-window https://jenkins.intr/view/Failed/")))
+
+(defcommand group-3-start-programs () ()
+  (run-frame 3 :frame-0-command "group-3-frame-0-command" :frame-1-command "group-3-frame-1-command"))
+
+(defcommand group-4-frame-0-command () ()
+  (run-shell-command "chromium --new-window https://grafana.intr/d/000000042/netflow?orgId=1"))
+
+(defcommand group-4-frame-1-command () ()
+  (run-shell-command "chromium --new-window https://grafana.intr/d/6QgXJjmik/upstream-interfaces-traffic?orgId=1"))
+
+(defcommand group-4-start-programs () ()
+  (run-frame 4 :frame-0-command "group-4-frame-0-command" :frame-1-command "group-4-frame-1-command"))
+
+(defcommand group-5-frame-0-command () ()
+  (run-shell-command (if (free-time?) "kodi" (xpanes-dh-ssh))))
+
+(defcommand group-5-start-programs () ()
+  (run-frame 5 :frame-0-command "group-5-frame-0-command" :frame-1-command "xpanes-ssh-nginx"))
+
+(defcommand group-6-start-programs () ()
+  (run-frame 6 :frame-0-command "trans-en-ru" :frame-1-command "trans-ru-en"))
+
+(defcommand group-7-start-programs () ()
+  (run-frame 7 :frame-0-command "repl-guix" :frame-1-command "repl-nix-unstable"))
+
+(defcommand group-8-frame-0-command () ()
+  (run-shell-command
+   (if (free-time?)
+       (elfeed)
+       "firefox --new-window https://cerberus.intr/")))
+
+(defcommand group-8-start-programs () ()
+  (run-frame 8 :frame-0-command "group-8-frame-0-command" :frame-1-command "emacs-anywhere"))
+
+(defcommand majordomo-office-shedule-eng () ()
+  (run-shell-command "firefox --new-window https://office.majordomo.ru/shedule2/10"))
+
+(defcommand majordomo-office-shedule-sup () ()
+  (run-shell-command "firefox --new-window https://office.majordomo.ru/shedule2/2"))
 
 (defcommand group-9-start-programs () ()
-  (run-commands "gselect 9")
-  (unless (current-window)
-    (emacs-anywhere)))
+  (run-frame 9 :frame-0-command "majordomo-office-shedule-eng" :frame-1-command "majordomo-office-shedule-sup"))

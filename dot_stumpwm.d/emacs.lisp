@@ -131,6 +131,10 @@
   (run-shell-command "emacsclient --eval '(gnus)'")
   (switch-to-emacs))
 
+(defcommand gnus-new-window () ()
+  (run-shell-command (format nil "emacsclient -c -e ~s"
+                             (sb-unicode:lowercase (write-to-string '(gnus))))))
+
 
 ;;;
 ;;; Guix
@@ -163,5 +167,6 @@
             (write-to-string
              '(progn (elfeed) (delete-other-windows)))))))
 
-
-
+(defcommand elfeed-new-window () ()
+  (run-shell-command
+   (format nil "emacsclient -c -e ~s" (sb-unicode:lowercase (write-to-string '(elfeed))))))

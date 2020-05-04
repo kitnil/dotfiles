@@ -10,7 +10,7 @@
   (define-key *top-map* (kbd "s-_") "volume-toggle")
   (define-key *top-map* (kbd "s-r") "repl-guile")
   (define-key *top-map* (kbd "M-s-r") "repl-ghci")
-  (define-key *top-map* (kbd "s-R") "guix-repl")
+  (define-key *top-map* (kbd "s-R") "repl-guix")
   (define-key *top-map* (kbd "C-s-r") "repl-python")
   (define-key *top-map* (kbd "C-M-s-RET") "repl-r")
   (define-key *top-map* (kbd "C-s-R") "repl-nix")
