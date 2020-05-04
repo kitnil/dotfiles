@@ -6,7 +6,7 @@
 (defcommand repl-guile () ()
   (term-shell-command "guile" :scrollbar t))
 
-(defcommand guix-repl () ()
+(defcommand repl-guix () ()
   (term-shell-command "guix environment --pure --ad-hoc coreutils findutils guile-next guile3.0-colorized guile3.0-readline -- ~/.config/guix/current/bin/guix repl"
                       :scrollbar t))
 
