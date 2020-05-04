@@ -78,10 +78,16 @@
 (defcommand group-8-start-programs () ()
   (run-commands "gselect 8")
   (unless (current-window)
-    (run-shell-command (if (free-time?)
-                           (format nil "emacsclient -c -e ~s"
-                                   (sb-unicode:lowercase (write-to-string '(elfeed))))
-                           "firefox --new-window https://cerberus.intr/"))))
+    (let ((screen (current-screen))
+          (group (current-group)))
+      (if (and (> (screen-width screen) 1920)
+               (= (length (group-frames group)) 2))
+          (if (= (frame-number (tile-group-current-frame group)) 0)
+              (run-shell-command (if (free-time?)
+                                     (format nil "emacsclient -c -e ~s"
+                                             (sb-unicode:lowercase (write-to-string '(elfeed))))
+                                     "firefox --new-window https://cerberus.intr/"))
+              (run-shell-command "firefox --new-window https://office.majordomo.ru/"))))))
 
 (defcommand group-9-start-programs () ()
   (run-commands "gselect 9")
