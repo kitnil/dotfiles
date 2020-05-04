@@ -7,6 +7,7 @@
 
 (define-module (youtube-scm)
   #:use-module (srfi srfi-37)
+  #:use-module (ice-9 match)
   #:use-module (ice-9 popen)
   #:use-module (ice-9 rdelim)
   #:use-module (ice-9 pretty-print)
@@ -26,9 +27,15 @@
     (list (option '(#\u "url") #t #f
                   (lambda (opt name arg result)
                     (alist-cons 'url arg result)))
+          (option '(#\n "name") #t #f
+                  (lambda (opt name arg result)
+                    (alist-cons 'name arg result)))
           (option '(#\m "home-page") #t #f
                   (lambda (opt name arg result)
                     (alist-cons 'home-page arg result)))
+          (option '(#\d "date") #t #f
+                  (lambda (opt name arg result)
+                    (alist-cons 'date arg result)))
           (option '(#\v "version") #f #f
                   (display-and-exit-proc "youtube-scm version 0.0.1\n"))
           (option '(#\h "help") #f #f
@@ -37,6 +44,17 @@
 
 (define %default-options
   '())
+
+(define (system->string . args)
+  (let* ((port (apply open-pipe* OPEN_READ args))
+         (output (read-string port)))
+    (close-pipe port)
+    output))
+
+(define (hash file)
+  (match (string-split (string-trim-right (system->string "guix" "download" file))
+                       #\newline)
+    ((file hash) hash)))
 
 (define (main args)
   (define opts
@@ -47,21 +65,75 @@
                (lambda (op loads)
                  (cons op loads))
                %default-options))
-  (let* ((url (assoc-ref opts 'url))
-         (home-page (assoc-ref opts 'home-page))
-         (port (open-pipe (format #f "youtube-dl --ignore-errors --dump-single-json ~s | jq --raw-output .title"
-                                  url)
-                          OPEN_READ))
-         (output (string-trim-right (read-string port))))
-    (close-pipe port)
-    (pretty-print `(package (name ,output)
-                            (source (origin (method url-fetch)
-                                            (uri ,url)))
-                            (build-system trivial-build-system)
-                            (home-page ,(or home-page ""))
+
+  (define url
+    (assoc-ref opts 'url))
+
+  (define date
+    (or (assoc-ref opts 'date)
+        (let* ((port (open-pipe (format #f "youtube-dl --ignore-errors --dump-single-json ~s | jq --raw-output .upload_date"
+                                        url)
+                                OPEN_READ))
+               (output (string-trim-right (read-string port))))
+          (close-pipe port)
+          output)))
+
+  (define home-page
+    (or (assoc-ref opts 'home-page)
+        (let* ((port (open-pipe (format #f "youtube-dl --ignore-errors --dump-single-json ~s | jq --raw-output .channel_url"
+                                                              url)
+                                                      OPEN_READ))
+               (output (string-trim-right (read-string port))))
+          (close-pipe port)
+          (if (string-prefix? "http://" output)
+              (string-append "https://" (string-drop output (string-length "http://")))
+              output))))
+
+  (define name
+    (or (assoc-ref opts 'name)
+        (let* ((port (open-pipe (format #f "youtube-dl --ignore-errors --dump-single-json ~s | jq --raw-output .title"
+                                        url)
+                                OPEN_READ))
+               (output (string-trim-right (read-string port))))
+          (close-pipe port)
+          output)))
+
+  (define %cache-directory
+    (string-append "/tmp/" name "/"))
+
+  (define %cache-file-video
+    (string-append %cache-directory name "-" date ".mp4"))
+
+  (define %cache-file-audio
+    (string-append %cache-directory name "-" date ".m4a"))
+
+  (system* "youtube-dl" "--no-check-certificate" "--no-cache-dir" "--format" "140" "--output" %cache-file-audio url)
+  (system* "youtube-dl" "--no-check-certificate" "--no-cache-dir" "--format" "137" "--output" %cache-file-video url)
+
+  (pretty-print `(define-public ,(string->symbol (string-append "video-" name))
+                   (package (name ,(string-append "video-" name))
+                            (version ,date)
+                            (source (origin (method youtube-dl-fetch)
+                                            (uri (youtube-dl-reference
+                                                  (url ,url)
+                                                  (format 137)))
+                                            (file-name (string-append (string-drop name (string-length "video-")) "-" version ".mp4"))
+                                            (sha256
+                                             (base32 ,(hash %cache-file-video)))))
+                            (build-system ffmpeg-build-system)
+                            (inputs
+                             `(("audio" ,(origin
+                                           (method youtube-dl-fetch)
+                                           (uri (youtube-dl-reference
+                                                 (url ,url)
+                                                 (format 140)))
+                                           (file-name (string-append (string-drop name (string-length "video-")) "-" version ".m4a"))
+                                           (sha256
+                                            (base32 ,(hash %cache-file-audio)))))))
+                            (home-page ,home-page)
                             (synopsis "")
                             (description "")
-                            (license #f))
-                  #:max-expr-width 79)))
+                            (license #f)))
+                #:max-expr-width 79))
 
 ;;; youtube-scm ends here
