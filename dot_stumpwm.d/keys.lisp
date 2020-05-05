@@ -41,9 +41,6 @@
   (define-key *top-map* (kbd "s-W") "firefox-new-window")
   (define-key *top-map* (kbd "s-quoteleft") "emacs-vterm")
   (define-key *top-map* (kbd "s-o") "emacs-anywhere")
-  (define-key *top-map* (kbd "s-a") "pass-eng")
-  (define-key *top-map* (kbd "s-A") "pass-sup")
-  (define-key *top-map* (kbd "C-s-a") "pass-route")
   (define-key *top-map* (kbd "s-j") "music-youtube")
   (define-key *top-map* (kbd "s-J") "jenkins")
   (define-key *top-map* (kbd "s-g") "gnus")
@@ -83,12 +80,7 @@
   (define-key *top-map* (kbd "s-N") "move-focus down")
   (define-key *top-map* (kbd "s-S") "passmenu")
   (define-key *top-map* (kbd "s-j") "music-youtube")
-  (define-key *top-map* (kbd "s-u") "alerta")
-  (define-key *top-map* (kbd "s-U") "cerb")
-  (define-key *top-map* (kbd "M-s-u") "grafana-upstream-interfaces")
-  (define-key *top-map* (kbd "C-s-u") "grafana-netflow")
   (define-key *top-map* (kbd "s-s") "passmenu")
-  (define-key *top-map* (kbd "s-y") "mj-installed-servers")
   (define-key *top-map* (kbd "s-;") "colon")
   (define-key *top-map* (kbd "s-[") "place-existing-windows")
   (define-key *top-map* (kbd "C-s-h") "sampler")
@@ -118,6 +110,16 @@
   (define-key *top-map* (kbd "M-s-g") "ci-guix")
 
   (define-key *top-map* (kbd "SunPrint_Screen") "xfce-screenshooter")
+
+  ;; Majordomo
+  (define-key *top-map* (kbd "s-a") "majordomo-pass-eng")
+  (define-key *top-map* (kbd "s-A") "majordomo-pass-sup")
+  (define-key *top-map* (kbd "C-s-a") "majordomo-pass-route")
+  (define-key *top-map* (kbd "s-u") "majordomo-alerta")
+  (define-key *top-map* (kbd "s-U") "majordomo-cerb")
+  (define-key *top-map* (kbd "M-s-u") "majordomo-grafana-upstream-interfaces")
+  (define-key *top-map* (kbd "C-s-u") "majordomo-grafana-netflow")
+  (define-key *top-map* (kbd "s-y") "mj-installed-servers")
 
   ;; Rebind groups to PREFIX-NUMBER.
   (mapcar #'(lambda (x)

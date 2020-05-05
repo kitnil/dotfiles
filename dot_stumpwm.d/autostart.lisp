@@ -13,7 +13,7 @@
               (lambda () (clipmenud))
               (lambda () (kdeconnect-indicator))
               (lambda () (dunst))
-              (lambda () (alerta-top))
+              (lambda () (majordomo-alerta-top))
               (lambda () (pulsemixer))
               (lambda () (cursor-theme))
               (lambda () (keynav))))

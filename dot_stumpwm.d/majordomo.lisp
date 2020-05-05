@@ -28,7 +28,7 @@
 ;;; HMS
 ;;;
 
-(defcommand hms-current-stack () ()
+(defcommand majordomo-hms-current-stack () ()
   (message
    (run-shell-command
     (join
@@ -38,14 +38,14 @@
            "--request" "GET" "http://nginx1.intr:8080/hms"))
     t)))
 
-(defcommand mongo-prod () ()
+(defcommand majordomo-mongo-production () ()
   (term-shell-command (concat "mongo mongodb://admin:"
                               (password-store-show "majordomo/mongo/ci.intr/admin")
                               "@hms01-mr.intr:27017,hms02-mr.intr:27017,hms03-mr.intr:27017/admin?replicaSet=hms-rs0")
                       :scrollbar t
                       :title "mongo-prod"))
 
-(defcommand mongo-dev () ()
+(defcommand majordomo-mongo-development () ()
   (term-shell-command (concat "mongo mongodb://admin:"
                               (password-store-show "majordomo/mongo/ci.intr/admin")
                               "@ci.intr:27017/admin")
@@ -57,37 +57,37 @@
 ;;; Monitoring
 ;;;
 
-(defcommand alerta-top () ()
+(defcommand majordomo-alerta-top () ()
   (term-shell-command (join (list "sh" "-c" (format nil "~s" "while true; do /home/oleg/.local/bin/alerta top; sleep 20; done")))
                       :title "alerta-top"
                       :terminal 'st
                       :font "Monospace:size=6"))
 
-(defcommand vnc-grafana () ()
+(defcommand majordomo-vnc-grafana () ()
   (run-shell-command "vncviewer 172.16.100.182:5900"))
 
-(defcommand alerta () ()
+(defcommand majordomo-alerta () ()
     (firefox "https://alerta.intr" "Alerta"))
 
-(defcommand grafana () ()
+(defcommand majordomo-grafana () ()
   (firefox "https://grafana.intr/" "Grafana"))
 
-(defcommand grafana-netflow () ()
+(defcommand majordomo-grafana-netflow () ()
   (firefox "https://grafana.intr/d/000000042/netflow?orgId=1&refresh=1m" "Netflow"))
 
-(defcommand grafana-upstream-interfaces () ()
+(defcommand majordomo-grafana-upstream-interfaces () ()
   (firefox "https://grafana.intr/d/6QgXJjmik/upstream-interfaces-traffic?orgId=1" "Upstream interfaces"))
 
-(defcommand check-website () ()
+(defcommand majordomo-check-website () ()
   (firefox "https://www.uptrends.com/tools/uptime"))
 
 (defcommand majordomo-zabbix () ()
   (firefox "https://zabbix.intr/dashboard.php?fullscreen=1" "Dashboard"))
 
-(defcommand kibana () ()
+(defcommand majordomo-kibana () ()
   (firefox "https://kibana.intr/" "Kibana"))
 
-(defcommand kibana-alerta () ()
+(defcommand majordomo-kibana-alerta () ()
   (run-shell-command "chromium --app=https://kibana.intr/goto/d63fb3a2e0b36deacc8f73f53cc14b4d"))
 
 
@@ -135,16 +135,16 @@
 ;;; Hardware
 ;;;
 
-(defcommand ipmi (host) ((:string "Hostname: "))
+(defcommand majordomo-ipmi (host) ((:string "Hostname: "))
   (run-shell-command (join (list (concat (getenv "HOME")
                                          "/.nix-profile/bin/ipmi")
                                  host))))
 
-(defcommand ipmiview () ()
+(defcommand majordomo-ipmiview () ()
   (run-shell-command (concat (getenv "HOME")
                              "/.nix-profile.d/ipmiview/ipmiview/bin/IPMIView")))
 
-(defcommand ipkvm () ()
+(defcommand majordomo-ipkvm () ()
   (run-shell-command
    (join (list "firefox-esr-52" "-P" "esr52" "--new-instance"))))
 
@@ -153,7 +153,7 @@
 ;;; WEB
 ;;;
 
-(defcommand run-firefox () ()
+(defcommand majordomo-run-firefox () ()
   (gselect "1")
   (firefox)
   (renumber 2)
@@ -191,7 +191,7 @@
 ;;; Tickets
 ;;;
 
-(defcommand cerb () ()
+(defcommand majordomo-cerb () ()
   (run-shell-command
    (join (list (concat "CERBERUS_KEY="
                        (password-store-show "cerberus.intr/api/notification/key"))
@@ -207,7 +207,7 @@
 
 (defvar *work-time* nil)
 
-(defcommand toggle-work-time () ()
+(defcommand majordomo-toggle-work-time () ()
   (if *work-time*
       (setf *work-time* nil)
       (setf *work-time* t)))
@@ -224,37 +224,37 @@
 ;;; SSH
 ;;;
 
-(defcommand xpanes-vpn-ssh () ()
+(defcommand majordomo-xpanes-vpn-ssh () ()
   (term-shell-command (join `("xpanes -t -C 1 -c 'ssh {}'" ,@majordomo-vpn))
                       :title "xpanes-vpn-ssh"
                       :font '("-fa" "Monospace" "-fs" "6")))
 
-(defcommand xpanes-dh-ssh () ()
+(defcommand majordomo-xpanes-dh-ssh () ()
   (term-shell-command (join `("xpanes -t -c 'ssh {}.intr'" ,@majordomo-dh))
                       :title "xpanes-dh-ssh"
                       :font '("-fa" "Monospace" "-fs" "6")))
 
-(defcommand xpanes-web-ssh () ()
+(defcommand majordomo-xpanes-web-ssh () ()
   (term-shell-command (join `("xpanes -t -c 'ssh {}.intr'" ,@majordomo-webs))
                       :title "xpanes-web-ssh"
                       :font '("-fa" "Monospace" "-fs" "6")))
 
-(defcommand xpanes-web-top () ()
+(defcommand majordomo-xpanes-web-top () ()
   (term-shell-command (join `("xpanes -c 'ssh -t {}.intr top'" ,@majordomo-webs))
                       :title "xpanes-web-top"
                       :font '("-fa" "Monospace" "-fs" "6")))
 
-(defcommand xpanes-ssh-nginx () ()
+(defcommand majordomo-xpanes-ssh-nginx () ()
   (term-shell-command (join `(,(xpanes-command "ssh -t {}")
                                ,@'("nginx1-mr.intr" "nginx2-mr.intr")))
                       :title "xpanes-routers"))
 
-(defcommand xpanes-ssh-ns () ()
+(defcommand majordomo-xpanes-ssh-ns () ()
   (term-shell-command (join `(,(xpanes-command "ssh -t {}")
                                ,@'("ns1-mr.intr" "ns2-mr.intr" "ns1-dh.intr" "ns2-dh.intr")))
                       :title "xpanes-routers"))
 
-(defcommand xpanes-routers () ()
+(defcommand majordomo-xpanes-routers () ()
   (term-shell-command (join `(,(xpanes-command "ssh -t {}")
                                ,@'("router4.intr" "vpn-miran.majordomo.ru" "vpn-dh.majordomo.ru")))
                       :title "xpanes-routers"))
@@ -280,7 +280,7 @@
 ;;; Emacs
 ;;;
 
-(defcommand mj-installed-servers () ()
+(defcommand majordomo-mj-installed-servers () ()
   (progn (run-shell-command "emacsclient --eval '(mj-installed-servers)'")
          (switch-to-emacs)))
 
@@ -289,7 +289,7 @@
 ;;; MySQL
 ;;;
 
-(defcommand xpanes-web-mycli () ()
+(defcommand majordomo-xpanes-web-mycli () ()
   (term-shell-command (join `(,(xpanes-command
                                 (format nil "mycli --password ~a -d {}"
                                         (password-store-show "majordomo/web/mysql/root")))
@@ -302,22 +302,22 @@
 ;;; Autotype
 ;;;
 
-(defcommand pass-eng () ()
+(defcommand majordomo-pass-eng () ()
   (if (y-or-n-p "Insert eng password and press Enter? ")
       (window-send-string
        (format nil "~a~%" (password-store-show "majordomo/ssh/eng")))))
 
-(defcommand pass-sup () ()
+(defcommand majordomo-pass-sup () ()
   (if (y-or-n-p "Insert sup password and press Enter? ")
       (window-send-string
        (format nil "~a~%" (password-store-show "majordomo/ssh/sup")))))
 
-(defcommand pass-route () ()
+(defcommand majordomo-pass-route () ()
   (if (y-or-n-p "Insert router password and press Enter? ")
       (window-send-string
        (format nil "~a~%" (password-store-show "majordomo/ssh/router")))))
 
-(defcommand pass-ipmi () ()
+(defcommand majordomo-pass-ipmi () ()
   (if (y-or-n-p "Insert IPMI ADMIN password and press Enter? ")
       (window-send-string
        (format nil "~a" (password-store-show "majordomo/ipmi/ADMIN")))))
@@ -327,5 +327,5 @@
 ;;; Docker
 ;;;
 
-(defcommand docker-pull () ()
+(defcommand majordomo-docker-pull () ()
   (window-send-string (format nil "~a~%" "docker ps --format '{{ .Image }}' | grep master | sort -u | xargs -I{} docker pull {}")))
