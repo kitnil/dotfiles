@@ -9,7 +9,9 @@
   (setq company-gtags-insert-arguments nil)
   (setq company-semantic-insert-arguments nil)
   (add-to-list 'company-backends 'company-abbrev)
-  (add-to-list 'company-backends 'company-lsp))
+  (add-to-list 'company-backends 'company-lsp)
+  (setq company-minimum-prefix-length 1)
+  (setq company-idle-delay 0.0))
 
 
 ;;;
