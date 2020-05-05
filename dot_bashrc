@@ -1654,7 +1654,7 @@ alias diff=colordiff
 
 mycut()
 {
-    command cut --characters="-$(tput cols)" $@
+    command cut --characters="-$(tput cols)" "$@"
 }
 
 src-clean()
