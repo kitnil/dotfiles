@@ -43,61 +43,62 @@
             (if (and (> (screen-width screen) 1920)
                      (= (length (group-frames group)) 2))
                 (if (= (frame-number (tile-group-current-frame group)) 0)
-                    (run-commands frame-0-command)
-                    (run-commands frame-1-command)))))
+                    (funcall frame-0-command)
+                    (funcall frame-1-command)))))
       (run-commands (format nil "gselect ~a" group-number))))
 
 (defcommand group-2-start-programs () ()
-  (run-frame 2 :frame-0-command "gnus-new-window" :frame-1-command "elfeed-new-window"))
-
-(defcommand group-3-frame-0-command () ()
-  (run-shell-command (if (free-time?)
-                         "chromium --new-window https://home-s2x8742.slack.com/"
-                         "chromium --new-window https://mjru.slack.com/")))
-
-(defcommand group-3-frame-1-command () ()
-  (run-shell-command (if (free-time?)
-                           "chromium --new-window https://jenkins.wugi.info/view/Failed/"
-                           "chromium --new-window https://jenkins.intr/view/Failed/")))
+  (run-frame 2 :frame-0-command (lambda () (gnus-new-window)) 
+               :frame-1-command (lambda () (elfeed-new-window))))
 
 (defcommand group-3-start-programs () ()
-  (run-frame 3 :frame-0-command "group-3-frame-0-command" :frame-1-command "group-3-frame-1-command"))
-
-(defcommand group-4-frame-0-command () ()
-  (run-shell-command "chromium --new-window https://grafana.intr/d/000000042/netflow?orgId=1"))
-
-(defcommand group-4-frame-1-command () ()
-  (run-shell-command "chromium --new-window https://grafana.intr/d/6QgXJjmik/upstream-interfaces-traffic?orgId=1"))
+  (run-frame 3 :frame-0-command (lambda ()
+                                  (run-shell-command
+                                   (if (free-time?)
+                                       "chromium --new-window https://home-s2x8742.slack.com/"
+                                       "chromium --new-window https://mjru.slack.com/")))
+               :frame-1-command (lambda ()
+                                  (run-shell-command
+                                   (if (free-time?)
+                                       "chromium --new-window https://jenkins.wugi.info/view/Failed/"
+                                       "chromium --new-window https://jenkins.intr/view/Failed/")))))
 
 (defcommand group-4-start-programs () ()
-  (run-frame 4 :frame-0-command "group-4-frame-0-command" :frame-1-command "group-4-frame-1-command"))
-
-(defcommand group-5-frame-0-command () ()
-  (run-shell-command (if (free-time?) "kodi" (xpanes-dh-ssh))))
+  (run-frame 4 :frame-0-command (lambda ()
+                                  (run-shell-command
+                                   "chromium --new-window https://grafana.intr/d/000000042/netflow?orgId=1"))
+               :frame-1-command (lambda ()
+                                  (run-shell-command
+                                   "chromium --new-window https://grafana.intr/d/6QgXJjmik/upstream-interfaces-traffic?orgId=1"))))
 
 (defcommand group-5-start-programs () ()
-  (run-frame 5 :frame-0-command "group-5-frame-0-command" :frame-1-command "xpanes-ssh-nginx"))
+  (run-frame 5 :frame-0-command (lambda ()
+                                  (run-shell-command
+                                   (if (free-time?) "kodi" (xpanes-dh-ssh))))
+               :frame-1-command (lambda ()
+                                  (run-commands "xpanes-ssh-nginx"))))
 
 (defcommand group-6-start-programs () ()
-  (run-frame 6 :frame-0-command "trans-en-ru" :frame-1-command "trans-ru-en"))
+  (run-frame 6 :frame-0-command (lambda ()
+                                  (run-commands "trans-en-ru"))
+               :frame-1-command (lambda ()
+                                  (run-commands "trans-ru-en"))))
 
 (defcommand group-7-start-programs () ()
-  (run-frame 7 :frame-0-command "repl-guix" :frame-1-command "repl-nix-unstable"))
-
-(defcommand group-8-frame-0-command () ()
-  (run-shell-command
-   (if (free-time?)
-       (elfeed)
-       "firefox --new-window https://cerberus.intr/")))
+  (run-frame 7 :frame-0-command (lambda ()
+                                  (run-commands "repl-guix"))
+               :frame-1-command (lambda ()
+                                  (run-commands "repl-nix-unstable"))))
 
 (defcommand group-8-start-programs () ()
-  (run-frame 8 :frame-0-command "group-8-frame-0-command" :frame-1-command "emacs-anywhere"))
-
-(defcommand majordomo-office-shedule-eng () ()
-  (run-shell-command "firefox --new-window https://office.majordomo.ru/shedule2/10"))
-
-(defcommand majordomo-office-shedule-sup () ()
-  (run-shell-command "firefox --new-window https://office.majordomo.ru/shedule2/2"))
+  (run-frame 8 :frame-0-command (lambda ()
+                                  (run-shell-command
+                                   (if (free-time?)
+                                       (elfeed)
+                                       "firefox --new-window https://cerberus.intr/")))
+               :frame-1-command (lambda ()
+                                  (run-commands "emacs-anywhere"))))
 
 (defcommand group-9-start-programs () ()
-  (run-frame 9 :frame-0-command "majordomo-office-shedule-eng" :frame-1-command "majordomo-office-shedule-sup"))
+  (run-frame 9 :frame-0-command "majordomo-office-shedule-eng"
+               :frame-1-command "majordomo-office-shedule-sup"))

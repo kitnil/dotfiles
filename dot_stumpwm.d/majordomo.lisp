@@ -329,3 +329,14 @@
 
 (defcommand majordomo-docker-pull () ()
   (window-send-string (format nil "~a~%" "docker ps --format '{{ .Image }}' | grep master | sort -u | xargs -I{} docker pull {}")))
+
+
+;;;
+;;; Office
+;;;
+
+(defcommand majordomo-office-shedule-eng () ()
+  (run-shell-command "firefox --new-window https://office.majordomo.ru/shedule2/10"))
+
+(defcommand majordomo-office-shedule-sup () ()
+  (run-shell-command "firefox --new-window https://office.majordomo.ru/shedule2/2"))
