@@ -21,6 +21,9 @@
 
 ;; Simple Mail Transfer Protocol (SMTP)
 (with-eval-after-load 'sendmail
+  (setq smtpmail-smtp-service 587)
+  (setq smtpmail-stream-type 'starttls)
+  (setq smtpmail-debug-info t)
   (setq send-mail-function #'smtpmail-send-it)
   (setq smtpmail-smtp-server "smtp.gmail.com"))
 
