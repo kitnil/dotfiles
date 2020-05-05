@@ -18,6 +18,8 @@
   ("notmuch\\.notmuchmail\\.org" 1000 nil r "List-Id")
   ("skribilo-users\\.nongnu\\.org" 2500 nil r "List-Id"))
  ("references"
+  ("<871rnznwns.fsf@gmail.com>" nil 737550 s)
+  ("<871ro1kocb.fsf@gmail.com>" nil 737551 s)
   ("<87k11yj76r.fsf@gmail.com>" nil 737545 s)
   ("<87o8raj7me.fsf@gmail.com>" nil 737545 s))
  ("thread")
