@@ -2,13 +2,7 @@
 
 (mapcar (lambda (func)
           (add-hook *start-hook* func))
-        (list (lambda () (sb-thread:make-thread
-                     (lambda ()
-                       (sleep 5)
-                       (place-existing-windows)
-                       (run-commands "fselect 2")
-                       (run-shell-command (concat (getenv "HOME") "/bin/run-emacs")))))
-              (lambda () (quassel-monitor))
+        (list (lambda () (quassel-monitor))
               (lambda () (music-youtube))
               (lambda () (clipmenud))
               (lambda () (kdeconnect-indicator))
@@ -16,4 +10,11 @@
               (lambda () (majordomo-alerta-top))
               (lambda () (pulsemixer))
               (lambda () (cursor-theme))
-              (lambda () (keynav))))
+              (lambda () (keynav))
+              (lambda () (vnc "5901" t))
+              (lambda () (sb-thread:make-thread
+                     (lambda ()
+                       (sleep 5)
+                       (place-existing-windows)
+                       (run-commands "fselect 2")
+                       (run-shell-command (concat (getenv "HOME") "/bin/run-emacs")))))))

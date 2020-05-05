@@ -101,8 +101,6 @@
 
 (define-key *root-map* (kbd "V") "majordomo-vnc")
 
-(add-hook *start-hook* (lambda () (vnc "5901" t)))
-
 
 ;;;
 ;;; Switches

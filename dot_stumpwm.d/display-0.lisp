@@ -7,11 +7,13 @@
 (bind-super)
 
 (rename-group *default-group-name* "1")
+(setq *default-group-name* "1")
 (restore-from-file (concat (getenv "HOME") "/src/dotfiles/oleg/.stumpwm.d/desktop/0.lisp"))
 ;; (mapcar #'(lambda (x)
 ;;             (add-group (current-screen) (write-to-string x) :background t))
 ;;         (range 10 :min 2 :step 1))
 (add-group (current-screen) "0" :background t :type 'float-group)
+(gselect "1")
 
 (defun frame-parameters-display-0 ()
   (mapcar (lambda (group)
