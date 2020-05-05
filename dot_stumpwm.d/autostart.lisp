@@ -11,7 +11,11 @@
               (lambda () (pulsemixer))
               (lambda () (cursor-theme))
               (lambda () (keynav))
-              (lambda () (vnc "5901" t))
+              (lambda () (sb-thread:make-thread
+                     (lambda ()
+                       (run-shell-command
+                        (join (list "xdotool behave_screen_edge --delay 500 top exec"
+                                    (vnc-command 5901)))))))
               (lambda () (sb-thread:make-thread
                      (lambda ()
                        (sleep 5)
