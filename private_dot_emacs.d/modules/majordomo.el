@@ -50,6 +50,7 @@
 (load (expand-file-name "~/archive/src/tramp-auto-auth/tramp-auto-auth.el"))
 (tramp-auto-auth-mode)
 (load (expand-file-name "~/.emacs.d/tramp-auto-auth-secrets.el") t)
+(load (expand-file-name "~/src/emacs-helm-tramp/helm-tramp.el") t)
 (load (expand-file-name "~/archive/src/tmp/tmp.iGP0dpFwEX/mj-servers.el") t)
 (load (expand-file-name "~/archive/src/tmp/tmp.iGP0dpFwEX/wi-project.el") t)
 
