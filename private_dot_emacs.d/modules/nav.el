@@ -76,7 +76,7 @@
 (which-key-mode)
 
 ;; Don't use ido
-(setq projectile-completion-system 'default)
+(setq projectile-completion-system 'ivy)
 
 (add-to-list 'projectile-project-root-files "environment-variables")
 
