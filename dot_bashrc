@@ -1664,6 +1664,18 @@ src-clean()
     done
 }
 
+transmission-remote()
+{
+    case "$1" in
+        clean)
+            command transmission-remote --list | awk '$2 == "100%" { system("transmission-remote --torrent " $1 " --remove") }'
+            ;;
+        *)
+            command transmission-remote "$@"
+            ;;
+    esac
+}
+
 rg()
 {
     case "$1" in
