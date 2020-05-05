@@ -1670,6 +1670,8 @@ rg()
         dist)
             command rg "${@:2}" {src/nixpkgs-master,src/guix-master,archive/src/{gentoo,freebsd,openbsd-ports,arch-{community,packages}}}
             ;;
+        *)
+            command rg "$@"
+            ;;
     esac
-
 }
