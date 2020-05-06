@@ -85,5 +85,7 @@
                                   (run-commands "emacs-anywhere"))))
 
 (defcommand group-9-start-programs () ()
-  (run-frame 9 :frame-0-command "majordomo-office-shedule-eng"
-               :frame-1-command "majordomo-office-shedule-sup"))
+  (run-frame 9 :frame-0-command (lambda ()
+                                  (run-commands "majordomo-office-shedule-eng"))
+               :frame-1-command (lambda ()
+                                  (run-commands "majordomo-office-shedule-sup"))))
