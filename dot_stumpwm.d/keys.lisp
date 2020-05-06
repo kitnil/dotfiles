@@ -65,7 +65,7 @@
   (define-key *top-map* (kbd "s-Left") "move-focus left")
   (define-key *top-map* (kbd "s-Up") "move-focus up")
   (define-key *top-map* (kbd "s-Down") "move-focus down")
-  (define-key *top-map* (kbd "s-Tab") "other-in-frame")
+  (define-key *top-map* (kbd "s-Tab") "other-in-frame-or-fother")
   (define-key *top-map* (kbd "C-s-Tab") "fother")
   (define-key *top-map* (kbd "s-ISO_Left_Tab") "fother")
   (define-key *top-map* (kbd "S-s-Right") "move-window right")

@@ -80,6 +80,13 @@
 (defcommand wi-sync-all-frame-windows () ()
   (sync-all-frame-windows (current-group)))
 
+(defcommand other-in-frame-or-fother () ()
+    (let* ((group (current-group))
+           (frame (tile-group-current-frame group)))
+      (if (> (length (frame-sort-windows group frame)) 1)
+          (other-in-frame)
+          (fother))))
+
 
 ;;;
 ;;; Windows
