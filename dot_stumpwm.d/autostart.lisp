@@ -14,4 +14,7 @@
                                     (vnc-command 5901))))
                        (run-shell-command
                         (join (list (format nil "xdotool behave_screen_edge --delay 500 bottom exec sh -c ~s"
-                                            "echo '(music-youtube)' | stumpish -e eval")))))))))
+                                            "echo '(music-youtube)' | stumpish -e eval"))))
+                       (run-shell-command
+                        (join (list (format nil "xdotool behave_screen_edge --delay 500 left exec sh -c ~s"
+                                            "echo '(editor)' | stumpish -e eval")))))))))

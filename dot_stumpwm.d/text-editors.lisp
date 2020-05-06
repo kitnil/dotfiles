@@ -4,4 +4,4 @@
   (run-shell-command "drracket"))
 
 (defcommand editor () ()
-  (run-shell-command "leafpad"))
+  (run-or-raise "leafpad" '(:class "Leafpad") ))
