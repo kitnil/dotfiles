@@ -340,6 +340,7 @@ guix()
             guix_channels="$HOME/channels.scm"
             guix_command="command guix pull --channels=$guix_channels"
             (set -ex; $guix_command "${@:2}"; sudo --login $guix_command "${@:2}")
+            [[ $XDG_SESSION_TYPE == x11 ]] && notify-send --urgency=critical 'Guix pull fineshed'
             ;;
         prereconfigure)
             guix_command="$HOME/src/guix/pre-inst-env guix"
