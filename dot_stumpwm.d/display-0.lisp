@@ -81,7 +81,7 @@
   (run-frame 8 :frame-0-command (lambda ()
                                   (run-shell-command
                                    (if (free-time?)
-                                       (elfeed)
+                                       (run-commands "elfeed")
                                        "firefox --new-window https://cerberus.intr/")))
                :frame-1-command (lambda ()
                                   (run-commands "emacs-anywhere"))))
