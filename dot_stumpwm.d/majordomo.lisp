@@ -169,10 +169,6 @@
      (browse-url-firefox "https://jenkins.wugi.info/view/Failed/" t t)
      (sleep 5)
 
-     (gselect "6")
-     (browse-url-firefox "https://zabbix.wugi.info/" t t)
-     (sleep 5)
-
      (gselect "7")
      (browse-url-firefox "https://billing2.intr/servers?sort_by=name&sort_order=1&equip_server_type_id=3" t)
      (sleep 5)

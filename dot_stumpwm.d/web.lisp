@@ -93,10 +93,10 @@
              package)
      t)))
 
-(defcommand ci-wigust () ()
+(defcommand jenkins-ci-wigust () ()
   (browse-url-firefox (format nil "~a/job/wigust/" *jenkins-url*) t))
 
-(defcommand ci-guix () ()
+(defcommand jenkins-ci-guix () ()
   (browse-url-firefox (format nil "~a/job/guix/" *jenkins-url*) t))
 
 (defcommand repology-guix-outdated () ()
@@ -185,4 +185,5 @@
 (defcommand twitchy () ()
   (term-shell-command "twitchy"))
 
-
+(defcommand zabbix () ()
+  (run-shell-command "chromium --new-window https://zabbix.wugi.info/"))

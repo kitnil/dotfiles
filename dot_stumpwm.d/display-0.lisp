@@ -50,11 +50,13 @@
 
 (defcommand group-4-start-programs () ()
   (run-frame 4 :frame-0-command (lambda ()
-                                  (run-shell-command
-                                   "chromium --new-window https://grafana.intr/d/000000042/netflow?orgId=1"))
+                                  (if (free-time?)
+                                      (run-commands "zabbix")
+                                      (run-commands "majordomo-grafana-netflow")))
                :frame-1-command (lambda ()
-                                  (run-shell-command
-                                   "chromium --new-window https://grafana.intr/d/6QgXJjmik/upstream-interfaces-traffic?orgId=1"))))
+                                  (if (free-time?)
+                                      (run-commands "guix-ci")
+                                      (run-commands "majordomo-grafana-upstream-interfaces")))))
 
 (defcommand group-5-start-programs () ()
   (run-frame 5 :frame-0-command (lambda ()
