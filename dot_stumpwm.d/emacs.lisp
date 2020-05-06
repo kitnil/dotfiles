@@ -56,6 +56,12 @@
   (progn (run-shell-command "emacsclient --eval '(helm-tramp)'")
          (switch-to-emacs)))
 
+(defcommand emacs-counsel-find-file () ()
+  (progn (run-shell-command "emacsclient --eval '(counsel-find-file)'")))
+
+(defcommand emacs-counsel-M-x () ()
+  (progn (run-shell-command "emacsclient --eval '(counsel-M-x)'")))
+
 (defcommand emacs-anywhere () ()
   "Run `emacs-anywhere'."
   (run-shell-command "emacs-anywhere"))

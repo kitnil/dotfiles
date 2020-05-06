@@ -18,7 +18,7 @@
 
 ;; (with-eval-after-load 'tramp
 ;;   (recentf-mode 1))
-(setq recentf-max-menu-items 500)
+(setq recentf-max-menu-items 30)
 (setq recentf-max-saved-items nil)
 (setq recentf-auto-cleanup 'never)
 
@@ -86,5 +86,12 @@
 (add-hook 'prog-mode-hook 'hl-todo-mode)
 ;; (add-hook 'prog-mode-hook 'which-function-mode)
 
-
-
+(ivy-posframe-mode 1)
+(setq ivy-posframe-display-functions-alist
+      '(;;(swiper          . ivy-posframe-display-at-point)
+        ;;(complete-symbol . ivy-posframe-display-at-point)
+        (counsel-find-file . ivy-posframe-display-at-frame-center)
+        (counsel-M-x       . ivy-posframe-display-at-frame-center)
+        (wi-project-ivy    . ivy-posframe-display-at-frame-center)
+        ;;(t               . ivy-posframe-display)
+        ))

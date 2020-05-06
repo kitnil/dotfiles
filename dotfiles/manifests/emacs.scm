@@ -82,6 +82,7 @@
        emacs-irfc
        emacs-ivy                ; Complition framework
        emacs-ivy-clipmenu
+       emacs-ivy-posframe
        emacs-ivy-rich
        emacs-ivy-yasnippet
        emacs-know-your-http-well
