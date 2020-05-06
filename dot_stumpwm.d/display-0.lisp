@@ -28,6 +28,10 @@
                     (funcall frame-1-command)))))
       (run-commands (format nil "gselect ~a" group-number))))
 
+(defcommand group-1-start-programs () ()
+  (run-frame 1 :frame-0-command (lambda () (run-shell-command "run-emacs"))
+               :frame-1-command (lambda () (run-shell-command "quassel"))))
+
 (defcommand group-2-start-programs () ()
   (run-frame 2 :frame-0-command (lambda () (gnus-new-window)) 
                :frame-1-command (lambda () (elfeed-new-window))))

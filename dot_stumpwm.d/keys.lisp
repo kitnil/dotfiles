@@ -131,7 +131,7 @@
               (define-key *top-map* (kbd (concat "C-s-" (write-to-string x)))
                 (format nil "~A ~D" "select-window-by-number" x)))
           (range 10 :min 0 :step 1))
-  (define-key *top-map* (kbd (concat "s-1")) "gselect 1")
+  (define-key *top-map* (kbd (concat "s-1")) "group-1-start-programs")
   (define-key *top-map* (kbd (concat "s-2")) "group-2-start-programs")
   (define-key *top-map* (kbd (concat "s-3")) "group-3-start-programs")
   (define-key *top-map* (kbd (concat "s-4")) "group-4-start-programs")
