@@ -15,6 +15,14 @@
            ,@(if ssb '("--ssb") '())
            ,url))))
 
+(defcommand music-youtube () ()
+  (if (string= (window-res (current-window))
+               "www.youtube.com__playlist")
+      (other-in-frame)
+      (run-or-raise (concat "nixGLIntel chromium --app=https://www.youtube.com/playlist?list="
+                            youtube-playlist-cool-music)
+                    '(:instance "www.youtube.com"))))
+
 (flet ((firefox (url title &optional dark)
          (run-or-raise (format nil (if dark
                                        "GTK_THEME=Adwaita:dark nixGLIntel firefox -P dark --new-window ~S"
@@ -47,11 +55,6 @@
 
   (defcommand jenkins-mj () ()
     (firefox "https://jenkins.intr/" "Jenkins"))
-
-  (defcommand music-youtube () ()
-    (run-or-raise (concat "nixGLIntel chromium --app=https://www.youtube.com/playlist?list="
-                          youtube-playlist-cool-music)
-                  '(:instance "www.youtube.com")))
 
   (defcommand youtube () ()
     (firefox "https://www.youtube.com/feed/subscriptions" t))
