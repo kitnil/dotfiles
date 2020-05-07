@@ -1,3 +1,8 @@
+mjdev.intr()
+{
+    sshpass -p$(pass show mjdev.intr/root) ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@mjdev.intr
+}
+
 majordomo-backup()
 {
     case "$1" in
