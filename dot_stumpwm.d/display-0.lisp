@@ -79,10 +79,9 @@
 
 (defcommand group-8-start-programs () ()
   (run-frame 8 :frame-0-command (lambda ()
-                                  (run-shell-command
-                                   (if (free-time?)
-                                       (run-commands "elfeed")
-                                       "firefox --new-window https://cerberus.intr/")))
+                                  (if (free-time?)
+                                      (run-commands "elfeed-new-window")
+                                      (run-shell-command "firefox --new-window https://cerberus.intr/")))
                :frame-1-command (lambda ()
                                   (run-commands "emacs-anywhere"))))
 
