@@ -1,5 +1,5 @@
 String HOME_DIR = "/home/oleg"
-String MASTER_LABEL = "guix nixbld"
+String MASTER_LABEL = "guixsd"
 List<String> node_labels = ["guix", MASTER_LABEL, "guix vm"]
 
 pipeline {
@@ -23,6 +23,7 @@ pipeline {
             }
         }
         stage("Build Guix things with latest channels") {
+            agent { label "guixsd" }
             when { anyOf {
                     triggeredBy('TimerTrigger')
                     expression { params.WITH_LATEST_GUIX }
