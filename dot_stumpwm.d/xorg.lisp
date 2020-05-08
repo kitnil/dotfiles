@@ -74,6 +74,18 @@
 
 
 ;;;
+;;; xdotool
+;;;
+
+(defun xdotool-behave-screen-edge (command &key position (delay 500) (quiesce 500))
+  (join (list "xdotool" "behave_screen_edge"
+              "--quiesce" (write-to-string quiesce)
+              "--delay" (write-to-string delay)
+              position
+              "exec" "--sync" command)))
+
+
+;;;
 ;;; Hooks
 ;;;
 

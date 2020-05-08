@@ -10,11 +10,16 @@
               (lambda () (sb-thread:make-thread
                      (lambda ()
                        (run-shell-command
-                        (join (list "xdotool behave_screen_edge --delay 500 top exec"
-                                    (vnc-command 5901))))
+                        (join (list (xdotool-behave-screen-edge
+                                     (vnc-command 5901)
+                                     :position "top"))))
                        (run-shell-command
-                        (join (list (format nil "xdotool behave_screen_edge --delay 500 bottom exec sh -c ~s"
-                                            "echo '(music-youtube)' | stumpish -e eval"))))
+                        (join (list (xdotool-behave-screen-edge
+                                     (format nil "sh -c ~s"
+                                             "echo '(music-youtube)' | stumpish -e eval")
+                                     :position "bottom"))))
                        (run-shell-command
-                        (join (list (format nil "xdotool behave_screen_edge --delay 500 left exec sh -c ~s"
-                                            "echo '(editor)' | stumpish -e eval")))))))))
+                        (join (list (xdotool-behave-screen-edge
+                                     (format nil "sh -c ~s"
+                                             "echo '(editor)' | stumpish -e eval")
+                                     :position "left")))))))))
