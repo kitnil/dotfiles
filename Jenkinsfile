@@ -11,7 +11,7 @@ pipeline {
     }
     parameters {
         booleanParam(name: 'WITH_LATEST_GUIX',
-                     defaultValue: triggeredBy('TimerTrigger') == true ? true : false,
+                     defaultValue: false,
                      description: 'Build Guix things with latest channels')
     }
     stages {
@@ -23,7 +23,11 @@ pipeline {
             }
         }
         stage("Build Guix things with latest channels") {
-            when { expression { params.WITH_LATEST_GUIX } }
+            when { anyOf {
+                    triggeredBy('TimerTrigger')
+                    expression { params.WITH_LATEST_GUIX }
+                }
+            }
             steps {
                 dir("dotfiles") {
                     sh "./build.sh"
