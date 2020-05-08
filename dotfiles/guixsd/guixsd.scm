@@ -653,8 +653,8 @@ FpingLocation=/run/setuid-programs/fping
                                  (host "0.0.0.0")
                                  (port 5556)))
 
-                       (service autossh-service-type
-                                (autossh-configuration
+                       (service (@ (wigust services autossh) autossh-service-type)
+                                ((@ (wigust services autossh) autossh-configuration)
                                  (autossh-client-config
                                   (autossh-client-configuration
                                    (hosts (list (autossh-client-host-configuration

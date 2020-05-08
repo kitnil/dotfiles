@@ -129,8 +129,8 @@ EndSection")
                             (openssh-configuration
                              (x11-forwarding? #t)
                              (gateway-ports? 'client)))
-                   (service autossh-service-type
-                            (autossh-configuration
+                   (service (@ (wigust services autossh) autossh-service-type)
+                            ((@ (wigust services autossh) autossh-configuration)
                              (autossh-client-config
                               (autossh-client-configuration
                                (hosts (list (autossh-client-host-configuration
