@@ -75,3 +75,9 @@
     (define-key map (kbd "RET") 'wi-elfeed-search-show-entry)
     (define-key map (kbd "SPC") 'scroll-up-command)
     (define-key map (kbd "S-SPC") 'scroll-down-command)))
+
+(run-at-time nil (* 60 10)
+             #'(lambda ()
+                 (let ((time (current-idle-time)))
+                   (when (and time (> (time-to-seconds time) (* 60 5)))
+                     (elfeed-update)))))
