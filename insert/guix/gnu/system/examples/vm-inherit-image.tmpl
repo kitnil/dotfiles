@@ -1,0 +1,43 @@
+;;; Configuration file for a virtual machine.
+;;; Copyright © `(nth 5 (decode-time))` `user-full-name` <`user-mail-address`>
+;;; Released under the GNU GPLv3 or any later version.
+
+(use-modules (gnu)
+             (gnu services)
+             (guix gexp)
+             (guix gexp)
+             (guix records)
+             (ice-9 match)
+             (ice-9 textual-ports)
+             (srfi srfi-1)
+             (srfi srfi-26))
+
+(use-package-modules admin certs curl dns linux ncurses ssh)
+(use-service-modules base dns networking shepherd ssh web)
+
+(define %home (getenv "HOME"))
+
+(define %vm
+  (let ((os (load (string-append %home "/src/guix/gnu/system/examples/vm-image.tmpl"))))
+    (operating-system
+      (inherit os)
+      (timezone "Europe/Moscow")
+      (kernel-arguments '("console=ttyS0"))
+      (users (cons (user-account
+                    (name "bob")
+                    (comment "Alice's brother")
+                    (group "users")
+                    (supplementary-groups '("wheel" "netdev"
+                                            "audio" "video"))
+                    (home-directory "/home/bob")
+                    (password (crypt "secret" "bar")))
+                   (operating-system-users os)))
+      (services (cons (dhcp-client-service)
+                      (operating-system-user-services os)))
+      (packages (cons* curl #;knot nss-certs openssh
+                       ncurses ;for ‘reset’ command in Bash
+                       strace tcpdump
+                       (operating-system-packages os)))
+      (name-service-switch %mdns-host-lookup-nss))))
+
+%vm
