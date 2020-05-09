@@ -17,6 +17,7 @@ set -o noclobber # do not overwrite files when redirecting output by default.
 rm() { command rm -i "$@"; }
 cp() { command cp -i "$@"; }
 mv() { command mv -i "$@"; }
+emacs() { GTK_THEME= command emacs -nw "$@"; }
 
 cat()
 {
