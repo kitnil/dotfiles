@@ -1412,3 +1412,18 @@ if [ -f "$HOME/.bash.d/majordomo.bash" ]
 then
     . "$HOME/.bash.d/majordomo.bash"
 fi
+
+chezmoi()
+{
+    case "$1" in
+        add-all)
+            for file in $(command chezmoi diff | awk '/a\/home/ { print $NF }' | sed 's/^a//'); do
+                command chezmoi add "$file"
+            done
+            ;;
+        *)
+            command chezmoi "$@"
+            ;;
+    esac
+
+}
