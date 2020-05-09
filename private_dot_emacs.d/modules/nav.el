@@ -95,3 +95,14 @@
         (wi-project-ivy    . ivy-posframe-display-at-frame-center)
         ;;(t               . ivy-posframe-display)
         ))
+
+(load (expand-file-name "~/archive/src/tramp-auto-auth/tramp-auto-auth.el"))
+(add-to-list 'tramp-auto-auth-alist
+             `("intr" . ,(let ((secret (plist-get (nth 0
+                                                       (auth-source-search
+                                                        :host "majordomo-eng"
+                                                        :user "eng"))
+                                                  :secret)))
+                           (and (functionp secret)
+                                (funcall secret)))))
+(tramp-auto-auth-mode)

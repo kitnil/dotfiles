@@ -55,14 +55,6 @@ If no commit hash provides, show a commit from hash at current point."
   (interactive "DDirectory: ")
   (setq guix-directory directory))
 
-(defvar wi-emacs-git-directory (expand-file-name "~/src/emacs")
-  "Directory containing Emacs Git repository.")
-(define-wi-browse-url-git-commit emacs wi-emacs-git-directory)
-
-(defvar wi-guix-git-directory (expand-file-name "~/src/guix")
-  "Directory containing Guix Git repository.")
-(define-wi-browse-url-git-commit guix wi-guix-git-directory)
-
 
 ;;;
 ;;; CI

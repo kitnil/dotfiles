@@ -301,3 +301,11 @@ If no commit hash provides, show a commit from hash at current point."
                   ("gitlab.wugi.info" "gitlab.wugi.info/api/v4" "gitlab.wugi.info"
                    forge-gitlab-repository))
                 forge-alist)))
+
+(defvar wi-emacs-git-directory (expand-file-name "~/src/emacs")
+  "Directory containing Emacs Git repository.")
+(define-wi-browse-url-git-commit emacs wi-emacs-git-directory)
+
+(defvar wi-guix-git-directory (expand-file-name "~/src/guix")
+  "Directory containing Guix Git repository.")
+(define-wi-browse-url-git-commit guix wi-guix-git-directory)
