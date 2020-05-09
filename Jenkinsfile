@@ -9,11 +9,6 @@ pipeline {
     options {
         disableConcurrentBuilds()
     }
-    parameters {
-        booleanParam(name: 'WITH_LATEST_GUIX',
-                     defaultValue: false,
-                     description: 'Build Guix things with latest channels')
-    }
     stages {
         stage("Clone dotfiles from origin/master") {
             steps {
@@ -22,24 +17,19 @@ pipeline {
                 dir: "$HOME_DIR/.local/share/chezmoi"
             }
         }
-        stage("Build Guix things with latest channels") {
-            agent { label "guixsd" }
-            when { anyOf {
-                    triggeredBy('TimerTrigger')
-                    expression { params.WITH_LATEST_GUIX }
-                }
-            }
-            steps {
-                dir("dotfiles") {
-                    sh "./build.sh"
-                }
-            }
-        }
         stage("Build current Guix system") {
             steps {
                 parallelSh (cmd: (["guix system build /etc/config.scm",
                                    "guix environment --manifest=/home/oleg/manifest.scm -- sh -c exit"].join("; ")),
                             nodeLabels: node_labels)
+            }
+        }
+        stage("Build Guix things with latest channels") {
+            agent { label "guixsd" }
+            steps {
+                dir("dotfiles") {
+                    sh "./build.sh"
+                }
             }
         }
    }
