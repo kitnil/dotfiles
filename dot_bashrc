@@ -545,7 +545,24 @@ alias nn='notmuch new'
 alias wtr='curl -H "Accept-Language: ru" wttr.in/Санкт-Петербург'
 alias hylang='docker run --rm -it hylang'
 
-alias nix-build-unstable="nix-build $HOME/.nix-defexpr/channels/nixos-unstable"
+nix-build()
+{
+    case "$1" in
+        nixos-unstable.*)
+            command nix-build "$HOME/.nix-defexpr/channels/nixos-unstable" --no-out-link -A "${1//nixos-unstable./}"
+            ;;
+        master)
+            command nix-build "$HOME/src/nixpkgs-master" --no-out-link "${@:2}"
+            ;;
+        unstable)
+            command nix-build "$HOME/.nix-defexpr/channels/nixos-unstable" --no-out-link "${@:2}"
+            ;;
+        *)
+            command nix-build '<nixpkgs>' --no-out-link "$@"
+            ;;
+    esac
+}
+
 
 nix-shell-python()
 {
