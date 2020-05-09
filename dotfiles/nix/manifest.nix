@@ -103,9 +103,7 @@ in [
   luarocks
   mediatomb
   mtr
-  (mycli.overrideAttrs (oldAttrs: {
-    propagatedBuildInputs = oldAttrs.propagatedBuildInputs ++ [ python3Packages.paramiko ];
-  }))
+  mycli
   dbeaver # SQL client
   mypaint
   nix
