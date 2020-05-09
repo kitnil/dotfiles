@@ -548,7 +548,10 @@ EndSection")
 
                        (service php-fpm-service-type
                                 (php-fpm-configuration
-                                 (php php-7.3.12)
+                                 (php (load (and=> (current-filename)
+                                                   (lambda (file)
+                                                     (string-append (dirname file)
+                                                                    "/php.scm")))))
                                  (timezone "Europe/Moscow")))
 
                        (service certbot-service-type
