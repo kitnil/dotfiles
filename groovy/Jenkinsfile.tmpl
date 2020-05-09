@@ -1,0 +1,14 @@
+pipeline {
+    agent { label "master" }
+    stages {
+        stage("$1") {
+            steps {
+            }
+        }
+    }
+    post {
+        always {
+            sendNotifications currentBuild.result
+        }
+    }
+}
