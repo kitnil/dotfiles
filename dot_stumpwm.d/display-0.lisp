@@ -40,13 +40,13 @@
   (run-frame 3 :frame-0-command (lambda ()
                                   (run-shell-command
                                    (if (free-time?)
-                                       "chromium --new-window https://home-s2x8742.slack.com/"
-                                       "chromium --new-window https://mjru.slack.com/")))
+                                       "chromium --new-window https://jenkins.wugi.info/view/Failed/"
+                                       "chromium --new-window https://jenkins.intr/view/Failed/")))
                :frame-1-command (lambda ()
                                   (run-shell-command
                                    (if (free-time?)
-                                       "chromium --new-window https://jenkins.wugi.info/view/Failed/"
-                                       "chromium --new-window https://jenkins.intr/view/Failed/")))))
+                                       "chromium --new-window https://home-s2x8742.slack.com/"
+                                       "chromium --new-window https://mjru.slack.com/")))))
 
 (defcommand group-4-start-programs () ()
   (run-frame 4 :frame-0-command (lambda ()
