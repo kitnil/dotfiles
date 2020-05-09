@@ -20,7 +20,6 @@ lxde version-control)
              (wigust services openvpn)
              (wigust services tftp)
              (wigust packages lisp)
-             (wigust packages php)
              (wigust packages python)
              (majordomo packages majordomo))
 
@@ -551,7 +550,7 @@ EndSection")
                                  (php (load (and=> (current-filename)
                                                    (lambda (file)
                                                      (string-append (dirname file)
-                                                                    "/php.scm")))))
+                                                                    "/packages/php.scm")))))
                                  (timezone "Europe/Moscow")))
 
                        (service certbot-service-type
