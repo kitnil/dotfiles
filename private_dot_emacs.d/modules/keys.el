@@ -450,10 +450,6 @@ ARGS will be passed to hydra."
 ;;   (let ((map java-mode-map))
 ;;     (define-key map (kbd "M-.") 'dumb-jump-go)))
 
-;; (with-eval-after-load 'groovy-mode
-;;   (let ((map groovy-mode-map))
-;;     (define-key map (kbd "M-.") 'dumb-jump-go)))
-
 ;; (with-eval-after-load 'js-mode
 ;;   (let ((map js-mode-map))
 ;;     (define-key map (kbd "M-.") 'dumb-jump-go)))

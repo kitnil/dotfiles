@@ -82,6 +82,6 @@ Non-interactively, this uses the optional second argument PURE."
 
 (define-auto-insert
   (rx "guile" (one-or-more (or alphanumeric "-")) line-end)
-  ["guile/script.tmpl" scheme-mode yas-expand-current-buffer])
+  ["guile/script" scheme-mode yas-expand-current-buffer])
 
 

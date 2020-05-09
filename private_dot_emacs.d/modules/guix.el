@@ -190,17 +190,17 @@ Produces URL as https://ci.guix.info/api/latestbuilds?nr=10&jobset=guix-master&j
 
 (define-auto-insert
   (rx "package" (one-or-more (or alphanumeric "-")) ".scm" line-end)
-  ["guix/gnu/packages/package.tmpl" yas-expand-current-buffer])
+  ["guix/gnu/packages/package" yas-expand-current-buffer])
 
 (define-auto-insert
   (rx "gnu/services/" (one-or-more (or alphanumeric "-")) ".scm" line-end)
-  ["guix/gnu/services/service.tmpl" yas-expand-current-buffer])
+  ["guix/gnu/services/service" yas-expand-current-buffer])
 
 (define-auto-insert
   (rx "gnu/tests/" (one-or-more (or alphanumeric "-")) ".scm" line-end)
-  ["guix/gnu/tests/test.tmpl" yas-expand-current-buffer])
+  ["guix/gnu/tests/test" yas-expand-current-buffer])
 
 (define-auto-insert
   (rx "vm" (one-or-more (or alphanumeric "-")) ".scm" line-end)
-  ["guix/gnu/system/examples/vm-inherit-image.tmpl" yas-expand-current-buffer])
+  ["guix/gnu/system/examples/vm-inherit-image" yas-expand-current-buffer])
 

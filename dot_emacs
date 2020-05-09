@@ -78,6 +78,7 @@
   (load-config-file "time.el")
   (load-config-file "debbugs.el")
   (load-config-file "text.el")
+  (load-config-file "groovy.el")
   (load-config-file "haskell.el")
   (load-config-file "completion.el")
   (load-config-file "ftp.el")
