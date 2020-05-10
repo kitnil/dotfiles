@@ -82,7 +82,7 @@
 
   password-store-custom-dmenu ; Password management
 
-  connect ssh-aliases
+  ssh-aliases
 
   dotfiles
 
