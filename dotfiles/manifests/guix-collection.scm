@@ -123,7 +123,7 @@ xfce web wget wm xdisorg xml xorg)
 
                file tree python-pygments
 
-               python-language-server
+               ;; TODO: Fix python-parso python-language-server
 
                mongodb
 
