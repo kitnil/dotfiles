@@ -26,10 +26,10 @@
   #:use-module ((guix licenses) #:prefix license:))
 
 (define-public dotfiles
-  (let ((commit "b71712b10133237eef7bc5071b10a527303fd19c"))
+  (let ((commit "e22e16b9aa1cdabe0c7f75aed46e134d0d4a613e"))
     (package
       (name "dotfiles")
-      (version (git-version "0.0.1" "1" commit))
+      (version (git-version "2.0.0" "1" commit))
       (source
        (origin
          (method git-fetch)
@@ -39,7 +39,7 @@
          (file-name (git-file-name name version))
          (sha256
           (base32
-           "1y82zl6cx8668z2rkds9rglhsn6sqn4f92sa6xz021q0nry5n4cf"))))
+           "0s8099j25x36s5pzj90pj103nbpj2dq72rdykvv8842wxiq36q2r"))))
       (build-system trivial-build-system)
       (inputs
        `(("bash" ,bash)))
