@@ -32,7 +32,7 @@ pipeline {
                     String guixBinary = "$WORKSPACE/.guix-profile/bin/guix"
                     (sh (script: "ls -1 $WORKSPACE/dotfiles/guixsd/*.scm", returnStdout: true)).trim().split("\n").each { system ->
                         sh (["$guixBinary system build --load-path=$WORKSPACE/dotfiles/fiore/modules $system",
-                             "$guixBinary environment --manifest=$WORKSPACE/manifests/$system -- sh -c exit"].join("; "))
+                             (["$guixBinary", "environment", ("--manifest=" + "$WORKSPACE/dotfiles/manifests/" + system.split("/").last()), "--", "sh", "-c", "exit"].join(" "))].join("; "))
                     }
                 }
             }
