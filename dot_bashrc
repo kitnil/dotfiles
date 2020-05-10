@@ -96,6 +96,8 @@ ihs()
     GUIX_BUILD_OPTIONS=                         \
     IHS_USER=pyhalov                            \
     IHS_PASS=$(pass show majordomo/hms/pyhalov) \
+    CVM_USER=cron                               \
+    CVM_PASS=$(pass show majordomo/cvm/cron)    \
     command ihs $@
 }
 
