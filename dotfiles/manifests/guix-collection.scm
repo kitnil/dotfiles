@@ -71,7 +71,7 @@ xfce web wget wm xdisorg xml xorg)
 
                translate-shell ; Translation in CLI and Emacs
 
-               cuirass
+               ;; TODO: Fix cuirass
 
                artanis guile-2.2 guile-colorized guile-daemon 
                guile-fibers guile-gcrypt guile-git guile-readline
