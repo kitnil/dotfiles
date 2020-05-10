@@ -101,7 +101,7 @@
        emacs-move-text
        emacs-multiple-cursors   ; Multi cursor
        emacs-nginx-mode
-       emacs-nix-mode           ; Nix language mode
+       ;; TODO: Fix emacs-mmm-mode emacs-nix-mode           ; Nix language mode
        emacs-org-bullets
        emacs-org-mind-map       ; General mind maps from Org files
        emacs-orgit
