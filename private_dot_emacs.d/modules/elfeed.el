@@ -24,7 +24,9 @@
         ("http://planet.gnu.org/atom.xml" planet)
         ("http://planet.lisp.org/rss20.xml" planet)
         ("https://planet.emacslife.com/atom.xml" planet)
-        ("https://twitchrss.appspot.com/vod/artgameslp" video)
+        ("https://twitchrss.appspot.com/vod/artgameslp" game video)
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA" video) ;Mental Outlaw
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCq2QwnKW79w4a55ZQqOBReg" video) ;Irishluck Linux
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCF3d6ZcTRBhnrNC0-cvzicw" video)
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UC1RZz5_cdVQHhhYJVpCDqHA" video)
         ("https://www.youtube.com/feeds/videos.xml?user=elementaller" video)
@@ -36,6 +38,7 @@
         ("https://www.youtube.com/feeds/videos.xml?user=metalx1000" video)
         ("https://www.youtube.com/user/OmegaDungeon" video)
         ("https://bitlove.org/jupiterbroadcasting/bsdnowhd/feed" video)
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCld68syR8Wi-GY_n4CaoJGA" video) ;Brodie Robertson
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCVls1GmFKf6WlTraIb_IaJg" video)
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCkK9UDm_ZNrq_rIXCz3xCGA" video)
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCbHXJGd7c8Hy4z0-YX1Jf3Q" video)
