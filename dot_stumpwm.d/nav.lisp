@@ -123,7 +123,8 @@
 (defcommand delete-or-kill-window () ()
   (let ((window (current-window)))
     (cond
-      ((string= (window-name window) "repl-nix") (kill-window window))
+      ((uiop/utility:string-prefix-p "repl-nix" (window-title window))
+       (kill-window window))
       ((string= (window-class window) "Emacs")
        (emacsclient-eval "(kill-buffer (window-buffer (frame-selected-window)))"))
       (t (delete-window window)))))
