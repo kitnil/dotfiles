@@ -40,6 +40,13 @@ pipeline {
                 }
             }
         }
+        stage("Publish on the Internet") {
+            agent { label "guixsd" }
+            when { not { triggeredBy("TimerTrigger") } }
+            steps {
+                comGithub.push name: "dotfiles"
+            }
+        }
    }
     post {
         always {
