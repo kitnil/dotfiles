@@ -73,7 +73,8 @@ xfce web wget wm xdisorg xml xorg)
 
                ;; TODO: Fix cuirass
 
-               artanis guile-2.2 guile-colorized guile-daemon 
+               ;; TODO: Fix artanis
+               guile-2.2 guile-colorized guile-daemon
                guile-fibers guile-gcrypt guile-git guile-readline
                guile-redis guile-ssh guile-xosd
 
