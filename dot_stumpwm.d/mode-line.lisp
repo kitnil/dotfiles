@@ -26,17 +26,22 @@
                                  wn))))
           ,(make-string 4 :initial-element #\space)
           "^>"
-          ,@(if (equal *covid-19-count* "")
+          ,@(if (or (equal *majordomo-hms-current-stack* "")
+                    (equal *covid-19-count* ""))
                 '()
                 (list (make-string 4 :initial-element #\space)))
-          ,@(if (equal *covid-19-count* "")
-                '()
-                (list '(:eval (format nil "COVID-19: ~a"
-                               (let ((count (split-string *covid-19-count* '(#\:))))
-                                 (join (list (first count)
-                                             (format nil "^[^B^2*~a^]" (third count))
-                                             (format nil "^[^B^1*~a^]" (second count)))
-                                       #\:))))))
+          ,@(if (free-time?)
+                (if (equal *covid-19-count* "")
+                    '()
+                    (list '(:eval (format nil "COVID-19: ~a"
+                                   (let ((count (split-string *covid-19-count* '(#\:))))
+                                     (join (list (first count)
+                                                 (format nil "^[^B^2*~a^]" (third count))
+                                                 (format nil "^[^B^1*~a^]" (second count)))
+                                           #\:))))))
+                (if (equal *majordomo-hms-current-stack* "")
+                    '()
+                    (list '(:eval (format nil "stack: ~a" *majordomo-hms-current-stack*)))))
           ,@(if (= *torrent-seeds-counter* 0)
                 '()
                 (list (make-string 4 :initial-element #\space)))
@@ -84,6 +89,11 @@
                  (lambda ()
                    (loop while t do
                         (progn (ip-address-vpn-update) (sleep 10))))))
+              (lambda () (sb-thread:make-thread
+                     (lambda ()
+                       (loop while t do
+                            (progn (majordomo-hms-current-stack-update) (sleep 10))))
+                     :name "majordomo-hms-current-stack-update"))
               (lambda ()
                 (sb-thread:make-thread
                  (lambda ()

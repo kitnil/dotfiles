@@ -28,15 +28,21 @@
 ;;; HMS
 ;;;
 
+(defvar *majordomo-hms-current-stack* "")
+
 (defcommand majordomo-hms-current-stack () ()
-  (message
-   (run-shell-command
-    (join
-     (list "curl"
-           "--user" (format nil "jenkins:~a"
-                            (password-store-show "majordomo/jenkins/jenkins"))
-           "--request" "GET" "http://nginx1.intr:8080/hms"))
-    t)))
+  (run-shell-command
+   (format nil
+           "~a | jq --join-output .active"
+           (join
+            (list "curl"
+                  "--user" (format nil "jenkins:~a"
+                                   (password-store-show "majordomo/jenkins/jenkins"))
+                  "--request" "GET" "http://nginx1.intr:8080/hms")))
+   t))
+
+(defcommand majordomo-hms-current-stack-update () ()
+  (setq *majordomo-hms-current-stack* (majordomo-hms-current-stack)))
 
 (defcommand majordomo-mongo-production () ()
   (term-shell-command (concat "mongo mongodb://admin:"
@@ -199,19 +205,20 @@
 ;;; Time
 ;;;
 
-(defvar *work-time* nil)
+(defvar *force-free-time* nil)
 
-(defcommand majordomo-toggle-work-time () ()
-  (if *work-time*
-      (setf *work-time* nil)
-      (setf *work-time* t)))
+(defcommand toggle-free-time () ()
+  (if *force-free-time*
+      (setf *force-free-time* nil)
+      (setf *force-free-time* t)))
 
 (defun free-time? ()
   (let ((day-of-week "%u")
         (hour (parse-integer (time-format "%k"))))
-    (unless *work-time*
-      (or (> (parse-integer (time-format day-of-week)) 5)
-          (or (>= hour 18) (< hour 10))))))
+    (or *force-free-time*
+        (> (parse-integer (time-format day-of-week)) 5)
+        (or (>= hour 18)
+            (< hour 10)))))
 
 
 ;;;
