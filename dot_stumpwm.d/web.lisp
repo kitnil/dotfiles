@@ -18,7 +18,7 @@
 (defcommand music-youtube () ()
   (if (string= (window-res (current-window))
                "www.youtube.com__playlist")
-      (other-in-frame)
+      (other-in-frame-or-fother)
       (run-or-raise (concat "nixGLIntel chromium --app=https://www.youtube.com/playlist?list="
                             youtube-playlist-cool-music)
                     '(:instance "www.youtube.com"))))
