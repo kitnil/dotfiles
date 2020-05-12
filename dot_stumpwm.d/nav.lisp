@@ -106,10 +106,26 @@
 (defun current-window-height ()
   (format-expand *window-formatters* "%h" (current-window)))
 
+(defcommand next-in-frame-custom () ()
+  (let ((window (current-window)))
+    (cond
+      ((string= (window-class window) "Emacs")
+       (emacsclient-eval "(next-buffer)"))
+      (t (next-in-frame)))))
+
+(defcommand prev-in-frame-custom () ()
+  (let ((window (current-window)))
+    (cond
+      ((string= (window-class window) "Emacs")
+       (emacsclient-eval "(previous-buffer)"))
+      (t (prev-in-frame)))))
+
 (defcommand delete-or-kill-window () ()
   (let ((window (current-window)))
-    (case (window-name window)
-      (("repl-nix") (kill-window window))
+    (cond
+      ((string= (window-name window) "repl-nix") (kill-window window))
+      ((string= (window-class window) "Emacs")
+       (emacsclient-eval "(kill-buffer (window-buffer (frame-selected-window)))"))
       (t (delete-window window)))))
 
 
