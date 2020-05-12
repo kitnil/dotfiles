@@ -2,8 +2,10 @@
 
 (defvar *disk-free-root-counter* 0)
 
-(defun disk-free (target)
-  (let ((size (fourth (split-string (second (split-string (run-shell-command (format nil "df -h ~a" target)
+(defun disk-free (target &key remote)
+  (let ((size (fourth (split-string (second (split-string (run-shell-command (if remote
+                                                                                 (format nil "ssh ~a -- df -h ~a" remote target)
+                                                                                 (format nil "df -h ~a" target))
                                                                              t)
                                                           '(#\newline)))
                                     '(#\space)))))

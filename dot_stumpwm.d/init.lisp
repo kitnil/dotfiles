@@ -53,6 +53,7 @@
 (load-config-file "mem.lisp")
 (load-config-file "imap.lisp")
 (load-config-file "covid19.lisp")
+(load-config-file "spb.lisp")
 (load-config-file "mode-line.lisp")
 
 ;; (load-config-file "gaps.lisp")

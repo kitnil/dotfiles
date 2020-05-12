@@ -52,6 +52,8 @@
           ,(make-string 4 :initial-element #\space)
           ,'(:eval (format nil "/: ~a" *disk-free-root-counter*))
           ,(make-string 4 :initial-element #\space)
+          ,'(:eval (format nil "spb: /: ~a" *spb-disk-free-root-counter*))
+          ,(make-string 4 :initial-element #\space)
           ,'(:eval (format nil "TEMP: ~a" (temp-current)))
           ,(make-string 4 :initial-element #\space)
           ,'(:eval (format nil "MEM: ~a" (fmt-mem-available (mem-usage))))
