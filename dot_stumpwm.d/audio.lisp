@@ -23,7 +23,8 @@
 (defcommand volume-current-update () ()
   (sb-thread:make-thread
    (lambda ()
-     (setq *volume-current* (volume-current)))))
+     (setq *volume-current* (volume-current)))
+   :name "volume-current-update"))
 
 (defcommand volume-decrease () ()
   (run-shell-command "ponymix decrease 5")

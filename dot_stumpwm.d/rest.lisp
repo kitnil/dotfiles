@@ -21,4 +21,5 @@
                    (format nil "notify-send --urgency=low ~s"
                            (format nil "Take a break.  Next notification in ~a seconds."
                                    *notify-to-rest-period*)))
-                  (sleep *notify-to-rest-period*))))))
+                  (sleep *notify-to-rest-period*))))
+   :name "notify-to-rest"))

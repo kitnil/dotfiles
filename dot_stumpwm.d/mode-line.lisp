@@ -88,7 +88,8 @@
                 (sb-thread:make-thread
                  (lambda ()
                    (loop while t do
-                        (progn (ip-address-vpn-update) (sleep 10))))))
+                        (progn (ip-address-vpn-update) (sleep 10))))
+                 :name "ip-address-vpn-update"))
               (lambda () (sb-thread:make-thread
                      (lambda ()
                        (loop while t do
@@ -98,30 +99,35 @@
                 (sb-thread:make-thread
                  (lambda ()
                    (loop while t do
-                        (progn (imap-update-recent-count) (sleep 60)))))
+                        (progn (imap-update-recent-count) (sleep 60))))
+                 :name "imap-update-recent-count")
                 (sb-thread:make-thread
                  (lambda ()
                    (loop while t do
                         (progn
                           (disk-free-root-update-counter)
-                          (sleep 60)))))
+                          (sleep 60))))
+                 :name "disk-free-root-update-counter")
                 (sb-thread:make-thread
                  (lambda ()
                    (loop while t do
                         (progn
                           (torrent-seeds-update-counter)
                           (mode-line-update)
-                          (sleep 60)))))
+                          (sleep 60))))
+                 :name "torrent-seeds-update-counter")
                 (sb-thread:make-thread
                  (lambda ()
                    (loop while t do
                         (progn
                           (run-shell-command "notmuch new")
                           (mode-line-update)
-                          (sleep (* 60 60))))))
+                          (sleep (* 60 60)))))
+                 :name "notmuch")
                 (sb-thread:make-thread
                  (lambda ()
                    (loop while t do
                         (progn
                           (covid-19-update-count)
-                          (sleep (* (* 60 60) 6)))))))))
+                          (sleep (* (* 60 60) 6)))))
+                 :name "covid-19"))))

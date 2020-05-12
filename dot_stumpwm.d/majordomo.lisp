@@ -184,7 +184,8 @@
      (browse-url-firefox "https://kibana.intr/goto/d63fb3a2e0b36deacc8f73f53cc14b4d" t t)
      (sleep 10)
 
-     (gselect "1"))))
+     (gselect "1"))
+   :name "majordomo-run-firefox"))
 
 
 ;;;

@@ -27,6 +27,7 @@
 (defcommand notmuch-job () ()
   (sb-thread:make-thread
    (lambda ()
-     (loop while *notmuch-job* do (progn (notmuch) (sleep 3600))))))
+     (loop while *notmuch-job* do (progn (notmuch) (sleep 3600))))
+   :name "notmuch"))
 
 

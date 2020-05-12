@@ -22,4 +22,5 @@
                         (join (list (xdotool-behave-screen-edge
                                      (format nil "sh -c ~s"
                                              "echo '(editor)' | stumpish -e eval")
-                                     :position "left")))))))))
+                                     :position "left")))))
+                     :name "xdotool"))))
