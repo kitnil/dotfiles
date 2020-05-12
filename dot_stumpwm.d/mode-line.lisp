@@ -61,7 +61,7 @@
           ,(make-string 4 :initial-element #\space)
           ,'(:eval (format nil "TEMP: ~a" (temp-current)))
           ,(make-string 4 :initial-element #\space)
-          ,'(:eval (format nil "MEM: ~a" (fmt-mem-available (mem-usage))))
+          ,'(:eval (fmt-mem-available (mem-usage) t))
           ,(make-string 4 :initial-element #\space)
           ,'(:eval (format nil "VPN: ~a" *tapvpn-ip*))
           ,(make-string 4 :initial-element #\space)

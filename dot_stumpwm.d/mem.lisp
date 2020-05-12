@@ -13,7 +13,11 @@
   (with-open-file (file #P"/proc/meminfo" :if-does-not-exist nil)
     (read-from-string (get-proc-fd-field file "MemAvailable"))))
 
-(defun fmt-mem-available (mem)
+(defun fmt-mem-available (mem &optional color)
   "Returns a string representing the current available memory."
   (let* ((available (truncate (/ mem 1000))))
-    (format nil "~4D MB" available)))
+    (if color
+        (cond ((< available (* 1024 8)) (format nil "^[^B^2*MEM: ~4D MB^]" available))
+              ((< available (* 1024 4)) (format nil "^[^B^1*MEM: ~4D MB^]" available))
+              (t (format nil "MEM: ~4D MB" available)))
+        (format nil "MEM: ~4D MB" available))))
