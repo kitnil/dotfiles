@@ -106,6 +106,13 @@
 (defun current-window-height ()
   (format-expand *window-formatters* "%h" (current-window)))
 
+(defcommand global-windowlist-custom () ()
+  (let ((window (current-window)))
+    (cond
+      ((string= (window-class window) "Emacs")
+       (emacsclient-eval "(ivy-switch-buffer)"))
+      (t (global-windowlist)))))
+
 (defcommand next-in-frame-custom () ()
   (let ((window (current-window)))
     (cond
