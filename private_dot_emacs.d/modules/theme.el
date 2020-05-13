@@ -33,7 +33,7 @@
    '(rainbow-delimiters-depth-7-face ((t (:foreground "white"))))
    '(next-error ((t (:background "steel blue"))))
    '(region ((t (:background "steel blue"))))
-   '(link ((t (:foreground "#4169e1" :underline t))))
+   '(link ((t (:foreground "deep sky blue" :underline t))))
    '(gnus-summary-high-unread ((t (:foreground "#ffffff" :weight normal))))
    '(gnus-summary-normal-unread ((t (:foreground "white smoke")))))
   (setq sml/theme 'dark)
