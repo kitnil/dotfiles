@@ -22,6 +22,7 @@
    emacs-apache-mode
    emacs-atomic-chrome
    emacs-awk-it
+   emacs-ytel
    emacs-copy-as-format
    emacs-engine-mode-autoload ; Define searches on websites
    emacs-eval-in-repl       ; Evaluate to different Repls
