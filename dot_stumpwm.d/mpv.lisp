@@ -41,13 +41,16 @@
   (run-shell-command
    (join `(,*mpv-program* ,@*mpv-arguments* ,(concat "$(cat " (getenv "HOME") "/watch)")))))
 
-(defcommand mpv-music () ()
-  "Play music."
-  (run-shell-command (concat "exec mpv"
-                             " --keep-open=no"
-                             " --msg-level=all=no"
-                             " --no-resume-playback"
-                             " /srv/music/*")))
+(defcommand music-mpv () ()
+  "Play music in MPV."
+  (let ((window (current-window)))
+    (if (and window (string= (window-title window) "mpv-music"))
+        (other-in-frame-or-fother)
+        (run-or-raise
+         (join (list "mpv" "--keep-open=no" "--msg-level=all=no"
+                     "--no-resume-playback" "--shuffle" "--title=mpv-music"
+                     "/srv/music/*"))
+         '(:title "mpv-music")))))
 
 (defcommand mpv-music () ()
   (run-shell-command "mpv https://www.youtube.com/playlist?list=PLmjgicsUWIkvEKkLN01vm85neXAik3yU2"))
