@@ -16,12 +16,13 @@
            ,url))))
 
 (defcommand music-youtube () ()
-  (if (string= (window-res (current-window))
-               "www.youtube.com__playlist")
-      (other-in-frame-or-fother)
-      (run-or-raise (concat "nixGLIntel chromium --app=https://www.youtube.com/playlist?list="
-                            youtube-playlist-cool-music)
-                    '(:instance "www.youtube.com"))))
+  (let ((window (current-window)))
+    (if (and window (string= (window-res window)
+                             "www.youtube.com__playlist"))
+        (other-in-frame-or-fother)
+        (run-or-raise (concat "nixGLIntel chromium --app=https://www.youtube.com/playlist?list="
+                              youtube-playlist-cool-music)
+                      '(:instance "www.youtube.com")))))
 
 (flet ((firefox (url title &optional dark)
          (run-or-raise (format nil (if dark
