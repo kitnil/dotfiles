@@ -1433,3 +1433,27 @@ Apache configuration files.")
       (description "Call @code{plain-org-wiki} to either open your Org files, or
 create new ones.")
       (license license:gpl3+))))
+
+(define-public emacs-ytel
+  (let ((commit "828323f9acb654d8f61ccbca510b471fb00879ee"))
+    (package
+      (name "emacs-ytel")
+      (version (git-version "0.1.0" "1" commit))
+      (source (origin
+                (method git-fetch)
+                (uri (git-reference
+                      (url "https://github.com/gRastello/ytel.git")
+                      (commit commit)))
+                (file-name (git-file-name name version))
+                (sha256
+                 (base32
+                  "1zixqicpdywzdc2pkx9h08y3kphmn9zcx44bj2rqg3h8xsmjayk5"))))
+      (build-system emacs-build-system)
+      (home-page "https://github.com/gRastello/ytel/")
+      (synopsis "Query YouTube via Invidious")
+      (description "This package provide a major mode to search YouTube videos via an elfeed-like
+buffer.  Information about videos displayed in this buffer can be extracted
+and manipulated by user-defined functions to do various things such as:
+- playing them in some video player
+- download them")
+      (license license:gpl3+))))
