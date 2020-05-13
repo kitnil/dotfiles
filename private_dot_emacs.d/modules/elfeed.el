@@ -7,6 +7,7 @@
         "https://fedoramagazine.org/feed/"
         "https://www.youtube.com/feeds/videos.xml?channel_id=UC_ehNByPcItZU3pXL-4skUA"
         "https://twitchrss.appspot.com/vod/carolinhr"
+        ("https://news.ycombinator.com/rss" news)
         ("http://government.ru/all/rss/" gov ru)
         ("https://git.savannah.gnu.org/cgit/emacs.git/atom/?h=master" vc emacs)
         ("https://git.savannah.gnu.org/cgit/guix.git/atom/?h=master" vc scheme guix)
