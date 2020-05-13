@@ -1,5 +1,12 @@
 (setq redshift-temp-increment 100)
 
+(setq default-frame-alist
+      (append (list ;; '(width  . 73)
+                    ;; '(height . 41)
+                    ;; '(vertical-scroll-bars . nil)
+                    '(internal-border-width . 12))
+              default-frame-alist))
+
 (defun wi-manoj-dark ()
   (interactive)
   (load-theme 'manoj-dark)
