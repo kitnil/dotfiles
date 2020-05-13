@@ -52,6 +52,8 @@
 (put 'narrow-to-region 'disabled nil)
 (put 'set-goal-column 'disabled nil)
 
+(setq-default fill-column 78)
+
 (defun wi-switch-to-scratch-elisp ()
   "Switch to *scratch* buffer."
   (interactive)

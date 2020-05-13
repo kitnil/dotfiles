@@ -13,6 +13,8 @@
             (set (make-local-variable 'prettify-symbols-alist)
                  wi-elisp--prettify-symbols-alist)))
 
+(add-hook 'emacs-lisp-mode-hook #'(lambda () (setq fill-column 70)))
+
 
 ;;;
 ;;; Slime
