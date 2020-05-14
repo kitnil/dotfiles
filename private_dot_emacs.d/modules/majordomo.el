@@ -87,3 +87,18 @@
           (wi-project-candidates-groups-direcotory)))
 
 (majordomo-define-browse-url)
+
+
+;;;
+;;; regex
+;;;
+
+(defvar majordomo-url-gitlab-commit-regexp
+  (rx "http" (zero-or-one "s") "://gitlab.intr/"
+      (one-or-more (or alphanumeric "_" "-" "/"))
+      "/commit/" (one-or-more (or alphanumeric ".")) line-end))
+
+(setq browse-url-browser-function
+      (add-to-list 'browse-url-browser-function
+                   (cons majordomo-url-gitlab-commit-regexp
+                         'browse-url-majordomo-ci-nixpkgs-git-commit)))
