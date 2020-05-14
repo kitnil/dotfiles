@@ -281,17 +281,6 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
      (interactive)
      (magit-status ,directory)))
 
-(defmacro define-wi-browse-url-git-commit (repository directory commit-function)
-  `(progn
-     (defun ,(intern (concat "browse-url-" (symbol-name repository) "-git-commit")) (url &optional new-window)
-       ,(concat "Show a Git `commit' from the " (symbol-name repository) " checkout.
-
-If no commit hash provides, show a commit from hash at current point.")
-       (interactive (list (read-string "Commit: " nil nil (word-at-point))))
-       (let ((default-directory ,directory)
-             (commit (funcall ,commit-function url)))
-         (magit-show-commit commit)))))
-
 (wi-define-magit-status-repo guix (expand-file-name "~/src/guix"))
 
 (with-eval-after-load 'forge
@@ -302,14 +291,12 @@ If no commit hash provides, show a commit from hash at current point.")
                    forge-gitlab-repository))
                 forge-alist)))
 
-(defvar wi-emacs-git-directory (expand-file-name "~/src/emacs")
-  "Directory containing Emacs Git repository.")
-(define-wi-browse-url-git-commit emacs
-  wi-emacs-git-directory
-  (lambda (url) (car (last (split-string url "=")))))
+(wi-define-browse-url-git-commit
+ "emacs"
+ (expand-file-name "~/src/emacs")
+ (lambda (url) (car (last (split-string url "=")))))
 
-(defvar wi-guix-git-directory (expand-file-name "~/src/guix")
-  "Directory containing Guix Git repository.")
-(define-wi-browse-url-git-commit guix
-  wi-guix-git-directory
-  (lambda (url) (car (last (split-string url "=")))))
+(wi-define-browse-url-git-commit
+ "guix"
+ (expand-file-name "~/src/guix")
+ (lambda (url) (car (last (split-string url "=")))))
