@@ -162,6 +162,8 @@ in [
   adwaita-qt libsForQt5.qtstyleplugins kde-gtk-config
   quassel
 
+  python3Packages.alerta
+
   (let
     firefox = (import (builtins.fetchTarball {
       url =
