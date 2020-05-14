@@ -61,7 +61,7 @@
 (defcommand group-5-start-programs () ()
   (run-frame 5 :frame-0-command (lambda ()
                                   (run-shell-command
-                                   (if (free-time?) "kodi" (xpanes-dh-ssh))))
+                                   (if (free-time?) "kodi" (majodomo-xpanes-dh-ssh))))
                :frame-1-command (lambda ()
                                   (run-commands "xpanes-ssh-nginx"))))
 
