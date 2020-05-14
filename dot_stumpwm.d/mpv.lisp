@@ -41,31 +41,16 @@
   (run-shell-command
    (join `(,*mpv-program* ,@*mpv-arguments* ,(concat "$(cat " (getenv "HOME") "/watch)")))))
 
-(defvar *mpv-youtube-playlist*
-  "https://www.youtube.com/playlist?list=PLmjgicsUWIkvEKkLN01vm85neXAik3yU2")
-
-(defvar *mpv-music-directory*
-  "/srv/music/*")
-
-(defun music-mpv-command (&key (remote nil))
+(defcommand music-mpv () ()
   "Play music in MPV."
   (let ((window (current-window)))
     (if (and window (string= (window-title window) "mpv-music"))
         (other-in-frame-or-fother)
         (run-or-raise
-         (join `(,@(if remote
-                        '("notify-send 'Run MPV YouTube Music'")
-                        '())
-                  ,(join (list "mpv" "--keep-open=no" "--msg-level=all=no"
-                               "--no-resume-playback" "--shuffle"
-                               "--title=mpv-music" (if remote
-                                                       *mpv-youtube-playlist*
-                                                       *mpv-music-directory*))))
-               #\;)
+         (join (list "mpv" "--keep-open=no" "--msg-level=all=no"
+                     "--no-resume-playback" "--shuffle" "--title=mpv-music"
+                     "/srv/music/*"))
          '(:title "mpv-music")))))
 
-(defcommand music-mpv () ()
-  (music-mpv-command))
-
-(defcommand music-mpv-youtube () ()
-  (music-mpv-command :remote t))
+(defcommand mpv-music () ()
+  (run-shell-command "mpv https://www.youtube.com/playlist?list=PLmjgicsUWIkvEKkLN01vm85neXAik3yU2"))

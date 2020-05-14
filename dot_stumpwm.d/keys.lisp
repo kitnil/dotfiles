@@ -43,7 +43,7 @@
   (define-key *top-map* (kbd "s-quoteleft") "emacs-vterm")
   (define-key *top-map* (kbd "s-o") "emacs-anywhere")
   (define-key *top-map* (kbd "s-j") "music-mpv")
-  (define-key *top-map* (kbd "s-J") "music-mpv-youtube")
+  (define-key *top-map* (kbd "s-J") "jenkins")
   (define-key *top-map* (kbd "s-g") "gnus")
   (define-key *top-map* (kbd "s-G") "notmuch")
   (define-key *top-map* (kbd "s-C") "org")
