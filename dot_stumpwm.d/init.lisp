@@ -44,6 +44,7 @@
 (load-config-file "android.lisp")
 (load-config-file "kodi.lisp")
 (load-config-file "web.lisp")
+(load-config-file "time.lisp")
 (load-config-file "majordomo.lisp")
 
 (load-config-file "disk.lisp")

@@ -200,27 +200,6 @@
                        (password-store-show "cerberus.intr/api/notification/secret"))
                "cerb"))))
 
-
-
-;;;
-;;; Time
-;;;
-
-(defvar *force-free-time* nil)
-
-(defcommand toggle-free-time () ()
-  (if *force-free-time*
-      (setf *force-free-time* nil)
-      (setf *force-free-time* t)))
-
-(defun free-time? ()
-  (let ((day-of-week "%u")
-        (hour (parse-integer (time-format "%k"))))
-    (or *force-free-time*
-        (> (parse-integer (time-format day-of-week)) 5)
-        (or (>= hour 18)
-            (< hour 10)))))
-
 
 ;;;
 ;;; SSH
