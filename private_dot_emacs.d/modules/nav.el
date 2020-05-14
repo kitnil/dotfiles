@@ -8,6 +8,10 @@
   (interactive)
   (set-frame-size (selected-frame) 80 24))
 
+;; Open buffer in vertical split by default
+(setq split-height-threshold nil)
+(setq split-width-threshold 160)
+
 ;; Origin <https://github.com/Wilfred/.emacs.d/blob/gh-pages/init.org>.
 (setq scroll-preserve-screen-position 'always) ; Preserve scroll pos.
 (setq dumb-jump-max-find-time 4)
