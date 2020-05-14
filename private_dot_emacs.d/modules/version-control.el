@@ -284,7 +284,7 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 (defmacro define-wi-browse-url-git-commit (repository directory commit-function)
   `(progn
      (defun ,(intern (concat "browse-url-" (symbol-name repository) "-git-commit")) (url &optional new-window)
-       (concat "Show a Git `commit' from the " ,(symbol-name repository) " checkout.
+       ,(concat "Show a Git `commit' from the " (symbol-name repository) " checkout.
 
 If no commit hash provides, show a commit from hash at current point.")
        (interactive (list (read-string "Commit: " nil nil (word-at-point))))
