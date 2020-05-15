@@ -1,6 +1,6 @@
 Данный репозиторий предоставляет [Guix
 channel](https://www.gnu.org/software/guix/manual/en/html_node/Channels.html),
-который позволяет установить [guile-ihs](https://gitlab.wugi.info/guile/guile-ihs) -
+который позволяет установить [guile-ihs](https://gitlab.intr/hms/guile-ihs) -
 [Guile](https://www.gnu.org/software/guile/) клиент для HMS и billing2.
 
 ## Установка
@@ -27,7 +27,7 @@ sudo -i ./guix-install.sh
 (cons
  (channel
   (name 'guix-majordomo)
-  (url "https://gitlab-ci-token:uhd8qabRUz5dD-HQchLi@gitlab.wugi.info/guix/guix-majordomo.git"))
+  (url "https://gitlab.intr/package-management/guix-majordomo.git"))
  %default-channels)
 ```
 
