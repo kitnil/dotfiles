@@ -187,6 +187,8 @@ xfce web wget wm xdisorg xml xorg)
                nethogs
                rsync
 
+               xcompmgr
+
                php
                
                autossh

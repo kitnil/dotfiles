@@ -98,3 +98,6 @@
 ;;;
 
 (sb-posix:setenv "GTK_THEME" "Adwaita:dark" 1)
+
+(defcommand xcompmgr () ()
+  (run-shell-command "xcompmgr -c -C -t-5 -l-5 -r10 -o.55"))
