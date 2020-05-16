@@ -31,7 +31,7 @@
   (define-key *top-map* (kbd "s-=") "volume-increase")
   (define-key *top-map* (kbd "s-KP_Add") "volume-increase")
   (define-key *top-map* (kbd "s-KP_Subtract") "volume-decrease")
-  (define-key *top-map* (kbd "s-RET") "run-xterm")
+  (define-key *top-map* (kbd "s-RET") "xfce-terminal")
   (define-key *top-map* (kbd "s-e") "emacsclient")
   (define-key *top-map* (kbd "s-E") "emacsclient-new")
   (define-key *top-map* (kbd "s-l") "emacs-todo")
