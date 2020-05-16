@@ -24,12 +24,14 @@
                              (if (> (length wn) 10)
                                  (concat (subseq wn 0 10) "...")
                                  wn))))
+
           ,(make-string 4 :initial-element #\space)
           "^>"
           ,@(if (or (equal *majordomo-hms-current-stack* "")
                     (equal *covid-19-count* ""))
                 '()
                 (list (make-string 4 :initial-element #\space)))
+
           ,@(if (free-time?)
                 (if (equal *covid-19-count* "")
                     '()
@@ -42,30 +44,43 @@
                 (if (equal *majordomo-hms-current-stack* "")
                     '()
                     (list '(:eval (format nil "stack: ~a" *majordomo-hms-current-stack*)))))
+
           ,@(if (= *torrent-seeds-counter* 0)
                 '()
                 (list (make-string 4 :initial-element #\space)))
           ,@(if (= *torrent-seeds-counter* 0)
                 '()
                 (list '(:eval (format nil "TOR_SEED: ~a" *torrent-seeds-counter*))))
+
           ,@(if (= *imap-recent* 0)
                 '()
                 (list (make-string 4 :initial-element #\space)))
           ,@(if (= *imap-recent* 0)
                 '()
                 (list '(:eval (format nil "INBOX: ~a" *imap-recent*))))
+
           ,(make-string 4 :initial-element #\space)
           ,'(:eval (format nil "/: ~a" *disk-free-root-counter*))
-          ,(make-string 4 :initial-element #\space)
-          ,'(:eval (format nil "spb: /: ~a" *spb-disk-free-root-counter*))
+
+          ,@(if (= *spb-disk-free-root-counter* 0)
+                '()
+                (list (make-string 4 :initial-element #\space)))
+          ,@(if (= *spb-disk-free-root-counter* 0)
+                '()
+                (list '(:eval (format nil "spb: /: ~a" *spb-disk-free-root-counter*))))
+
           ,(make-string 4 :initial-element #\space)
           ,'(:eval (format nil "TEMP: ~a" (temp-current)))
+
           ,(make-string 4 :initial-element #\space)
           ,'(:eval (fmt-mem-available (mem-usage) t))
+
           ,(make-string 4 :initial-element #\space)
           ,'(:eval (format nil "VPN: ~a" *tapvpn-ip*))
+
           ,(make-string 4 :initial-element #\space)
           ,'(:eval (format nil "VOL: ~a" *volume-current*))
+
           ,(make-string 4 :initial-element #\space)
           "%d")))
 
@@ -108,6 +123,13 @@
                           (disk-free-root-update-counter)
                           (sleep 60))))
                  :name "disk-free-root-update-counter")
+                (sb-thread:make-thread
+                 (lambda ()
+                   (loop while t do
+                        (progn
+                          (spb-disk-free-root-update-counter)
+                          (sleep 60))))
+                 :name "mode-line-df-spb")
                 (sb-thread:make-thread
                  (lambda ()
                    (loop while t do
