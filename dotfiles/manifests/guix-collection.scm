@@ -2,20 +2,19 @@
              (guix packages)
              (guix profiles))
 
-(use-package-modules admin algebra aspell astronomy audio backup
-bittorrent cdrom chromium chicken ci cmake code commencement
-compression cpio cran curl databases dictionaries diffoscope dns dunst
-file elf entr games gcc gdb gimp ghostscript golang gl glib gnome
-gnu-doc gnupg gnuzilla graphics graphviz gstreamer gtk guile guile-xyz
-haskell haskell-apps haskell-xyz image-viewers imagemagick inkscape
-irc kde kodi libreoffice license linux lisp logging lsof lxde m4 mail
-man maths messaging ncdu ncurses networking node package-management
-parallel password-utils patchutils pdf perl perl-web php pretty-print
-pulseaudio pv python python-xyz python-web qt ratpoison readline
-rdesktop rsync rust-apps samba scheme screen shellutils ssh statistics
-sqlite suckless syncthing synergy tex texinfo textutils text-editors
-vnc tmux tls tor valgrind version-control video virtualization vpn w3m
-xfce web wget wm xdisorg xml xorg)
+(use-package-modules admin algebra aspell astronomy audio backup bittorrent
+cdrom chromium chicken ci cmake code commencement compression compton cpio
+cran curl databases dictionaries diffoscope dns dunst file elf entr games gcc
+gdb gimp ghostscript golang gl glib gnome gnu-doc gnupg gnuzilla graphics
+graphviz gstreamer gtk guile guile-xyz haskell haskell-apps haskell-xyz
+image-viewers imagemagick inkscape irc kde kodi libreoffice license linux lisp
+logging lsof lxde m4 mail man maths messaging ncdu ncurses networking node
+package-management parallel password-utils patchutils pdf perl perl-web php
+pretty-print pulseaudio pv python python-xyz python-web qt ratpoison readline
+rdesktop rsync rust-apps samba scheme screen shellutils ssh statistics sqlite
+suckless syncthing synergy tex texinfo textutils text-editors vnc tmux tls tor
+valgrind version-control video virtualization vpn w3m xfce web wget wm xdisorg
+xml xorg)
 
 (define guix-collection-packages-multiout
   `((,glib "bin")
@@ -187,7 +186,7 @@ xfce web wget wm xdisorg xml xorg)
                nethogs
                rsync
 
-               xcompmgr
+               picom
 
                php
                
