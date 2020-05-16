@@ -116,7 +116,7 @@ in [
 
   nixGl.nixGLIntel
   nixpkgs-lint
-  ipmiview
+  # TODO: Fix steam ipmiview
   # nodePackages_12_x.node2nix
 
   # TODO: Fix catj
