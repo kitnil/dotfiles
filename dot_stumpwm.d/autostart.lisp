@@ -5,6 +5,7 @@
         (list (lambda () (clipmenud))
               (lambda () (kdeconnect-indicator))
               (lambda () (dunst))
+              (lambda () (picom))
               (lambda () (cursor-theme))
               (lambda () (keynav))
               (lambda () (sb-thread:make-thread
