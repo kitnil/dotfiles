@@ -16,7 +16,7 @@
   (define-key *top-map* (kbd "C-s-R") "repl-nix")
   (define-key *top-map* (kbd "C-M-s-R") "repl-node")
   (define-key *top-map* (kbd "s-f") "emacs-counsel-find-file")
-  (define-key *top-map* (kbd "s-D") "docker-pull")
+  (define-key *top-map* (kbd "s-D") "majordomo-docker-pull")
   (define-key *top-map* (kbd "s-H") "glances")
   (define-key *top-map* (kbd "s-t") "top")
   (define-key *top-map* (kbd "s-T") "tometips")
