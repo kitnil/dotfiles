@@ -7,6 +7,8 @@
 ;;; Xterm
 ;;;
 
+(sb-posix:setenv "TERM_PS1" "gentoo" 1)
+
 (defvar *xterm-command* "/home/oleg/.guix-profile/bin/xterm")
 (defvar *xterm-big-command*
   (join '("exec" "/home/oleg/.guix-profile/bin/xterm"
