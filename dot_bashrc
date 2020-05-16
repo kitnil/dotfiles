@@ -31,6 +31,16 @@ cp() { command cp -i "$@"; }
 mv() { command mv -i "$@"; }
 emacs() { GTK_THEME= command emacs -nw "$@"; }
 
+guile()
+{
+    if [ $INSIDE_EMACS == "vterm" ]
+    then
+        (unset INSIDE_EMACS; command guile "$@")
+    else
+        command guile "$@"
+    fi
+}
+
 cat()
 {
     if [[ "${@: -1}" == /proc/*/environ ]]
