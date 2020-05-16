@@ -1436,3 +1436,8 @@ chezmoi()
     esac
 
 }
+
+novnc()
+{
+    docker run --detach --name novnc --network=host --rm --interactive --tty geek1011/easy-novnc:latest --addr 127.0.0.1:5911 --port 5901
+}
