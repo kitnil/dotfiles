@@ -57,7 +57,7 @@
 (load-config-file "spb.lisp")
 (load-config-file "mode-line.lisp")
 
-;; (load-config-file "gaps.lisp")
+(load-config-file "gaps.lisp")
 
 (defvar workstation?
   (string-equal (file-get-contents "/etc/hostname") "workstation-guixsd"))
