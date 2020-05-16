@@ -59,6 +59,10 @@
 (defcommand current-theme () ()
   (if dark-theme "dark" "light"))
 
+(add-hook *focus-frame-hook*
+          (lambda (current-frame last-frame)
+            (redisplay)))
+
 
 ;;;
 ;;; Windows
