@@ -261,7 +261,7 @@
 ;;; Emacs
 ;;;
 
-(defcommand majordomo-mj-installed-servers () ()
+(defcommand majordomo-servers () ()
   (progn (run-shell-command "emacsclient --eval '(mj-installed-servers)'")
          (switch-to-emacs)))
 

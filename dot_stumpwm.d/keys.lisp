@@ -120,7 +120,7 @@
   (define-key *top-map* (kbd "s-U") "majordomo-cerb")
   (define-key *top-map* (kbd "M-s-u") "majordomo-grafana-upstream-interfaces")
   (define-key *top-map* (kbd "C-s-u") "majordomo-grafana-netflow")
-  (define-key *top-map* (kbd "s-y") "mj-installed-servers")
+  (define-key *top-map* (kbd "s-y") "majordomo-servers")
 
   ;; Rebind groups to PREFIX-NUMBER.
   (mapcar #'(lambda (x)
