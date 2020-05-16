@@ -80,6 +80,8 @@
   (define-key *top-map* (kbd "s-B") "move-focus left")
   (define-key *top-map* (kbd "s-P") "prev-in-frame")
   (define-key *top-map* (kbd "s-N") "next-in-frame")
+  (define-key *top-map* (kbd "C-s-p") "prev-in-frame")
+  (define-key *top-map* (kbd "C-s-n") "next-in-frame")
   (define-key *top-map* (kbd "s-S") "passmenu")
   (define-key *top-map* (kbd "s-s") "passmenu")
   (define-key *top-map* (kbd "s-;") "colon")
