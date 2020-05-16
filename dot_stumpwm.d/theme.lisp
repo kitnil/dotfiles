@@ -30,9 +30,9 @@
 
 (defparameter dark-theme nil)
 (progn
-  (set-focus-color "#072c07")
-  (set-border-color "#072c07")
-  (set-float-focus-color "#072c07"))
+  (set-focus-color "#0a420a")
+  (set-border-color "#0a420a")
+  (set-float-focus-color "#0a420a"))
 (defcommand toggle-theme () ()
   (if dark-theme
       (progn (setq *mode-line-border-color*     "#000000"
@@ -89,11 +89,11 @@
 ;;; Fonts
 ;;;
 
-(require :ttf-fonts)
-(setf xft:*font-dirs* '("/run/current-system/profile/share/fonts/"))
-(setf clx-truetype:+font-cache-filename+ (concat (getenv "HOME") "/.fonts/font-cache.sexp"))
-(xft:cache-fonts)
-(set-font (make-instance 'xft:font :family "DejaVu Sans Mono" :subfamily "Book" :size 11))
+;; (require :ttf-fonts)
+;; (setf xft:*font-dirs* '("/run/current-system/profile/share/fonts/"))
+;; (setf clx-truetype:+font-cache-filename+ (concat (getenv "HOME") "/.fonts/font-cache.sexp"))
+;; (xft:cache-fonts)
+;; (set-font (make-instance 'xft:font :family "DejaVu Sans Mono" :subfamily "Book" :size 11))
 ;; (set-font "9x15bold")
 
 
