@@ -7,4 +7,4 @@
       ignore_errors: yes
 
     - name: run container
-      shell: docker run --restart=unless-stopped --name reevefresh --detach --network=host --env SLACK_API_KEY="{{ lookup('passwordstore', 'slack.com/home-s2x8742.slack.com/tokens/bot')}}" --env TWITCH_API_KEY="{{ lookup('passwordstore', 'twitch.com/api/wi-twitch')}}" localhost:5000/reevefresh:latest --users arhont_tv,tonehack,tsoding,rwxrob,tragedy138,christitustech,awkravchuk,nekrovim
+      shell: docker run --restart=unless-stopped --name reevefresh --detach --network=host --env SLACK_API_KEY="{{ lookup('passwordstore', 'slack.com/home-s2x8742.slack.com/tokens/bot')}}" --env TWITCH_CLIENT_ID="{{ lookup('passwordstore', 'twitch.com/api/wi-twitch/client-id')}}"  --env TWITCH_CLIENT_SECRET="{{ lookup('passwordstore', 'twitch.com/api/wi-twitch/client-secret')}}" --env TWITCH_REDIRECT_URI=http://localhost --env TWITCH_RESPONCE_TYPE=token --env TWITCH_SCOPE=viewing_activity_read localhost:5000/reevefresh:latest --channel '#video' --users arhont_tv,tonehack,tsoding,rwxrob,tragedy138,christitustech,awkravchuk,nekrovim
