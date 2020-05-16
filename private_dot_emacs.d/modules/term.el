@@ -41,14 +41,11 @@
     (define-key map (kbd "<C-backspace>") 'vterm-send-backspace)
     (define-key map (kbd "<menu>") 'vterm-copy-mode))
   (let ((map vterm-copy-mode-map))
-    (define-key map (kbd "<menu>") 'vterm-copy-mode)))
-
-(push (list "find-file-below"
-            (lambda (path)
-              (if-let* ((buf (find-file-noselect path))
-                        (window (display-buffer-below-selected buf nil)))
-                  (select-window window)
-                (message "Failed to open file: %s" path))))
-      vterm-eval-cmds)
-
-
+    (define-key map (kbd "<menu>") 'vterm-copy-mode))
+  (push (list "find-file-below"
+              (lambda (path)
+                (if-let* ((buf (find-file-noselect path))
+                          (window (display-buffer-below-selected buf nil)))
+                    (select-window window)
+                  (message "Failed to open file: %s" path))))
+        vterm-eval-cmds))
