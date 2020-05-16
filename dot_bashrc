@@ -7,32 +7,17 @@ then
     . "/etc/skel/.bashrc"
 fi
 
-vterm_printf()
-{
-    if [ -n "$TMUX" ]; then
-        # Tell tmux to pass the escape sequences through
-        # (Source: http://permalink.gmane.org/gmane.comp.terminal-emulators.tmux.user/1324)
-        printf "\ePtmux;\e\e]%s\007\e\\" "$1"
-    elif [ "${TERM%%-*}" = "screen" ]; then
-        # GNU screen (screen, screen-256color, screen-256color-bce)
-        printf "\eP\e]%s\007\e\\" "$1"
-    else
-        printf "\e]%s\e\\" "$1"
-    fi
-}
-
-vterm_prompt_end()
-{
-    vterm_printf "51;A$(whoami)@$(hostname):$(pwd)"
-}
-
 case $TERM_PS1 in
     gentoo)
         PS1='\[\033[01;32m\]\u@\h\[\033[01;34m\] \w \$\[\033[00m\] '
-        PS1=$PS1'\[$(vterm_prompt_end)\]'
         export PS1
         ;;
 esac
+
+if [ -f "$HOME/.bash_vterm" ]
+then
+    . "$HOME/.bash_vterm"
+fi
 
 if [ -f "$HOME/.bash_aliases" ]
 then
