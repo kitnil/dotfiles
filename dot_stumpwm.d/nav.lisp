@@ -118,6 +118,10 @@
     (cond
       ((string= (window-class window) "Emacs")
        (emacsclient-eval "(next-buffer)"))
+      ((string= (window-class window) "mpv")
+       (window-send-string ">"))
+      ((string= (window-class window) "Firefox")
+       (send-fake-key window (kbd "C-Page_Down")))
       (t (next-in-frame)))))
 
 (defcommand prev-in-frame-custom () ()
@@ -125,6 +129,10 @@
     (cond
       ((string= (window-class window) "Emacs")
        (emacsclient-eval "(previous-buffer)"))
+      ((string= (window-class window) "mpv")
+       (window-send-string "<"))
+      ((string= (window-class window) "Firefox")
+       (send-fake-key window (kbd "C-Page_Up")))
       (t (prev-in-frame)))))
 
 (defcommand delete-or-kill-window () ()
