@@ -14,5 +14,9 @@
 (defcommand vnc (display) ((:string "display: "))
   (run-shell-command (vnc-command (parse-integer display))))
 
+(defcommand vnc-readonly (display) ((:string "display: "))
+  (run-shell-command (vnc-command (parse-integer display)
+                                  :view-only t)))
+
 (defcommand vnc-magnolia () ()
   (run-shell-command "exec vncviewer localhost:59555"))
