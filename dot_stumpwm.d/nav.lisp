@@ -109,9 +109,9 @@
 (defcommand global-windowlist-custom () ()
   (let ((window (current-window)))
     (cond
-      ((string= (window-class window) "Emacs")
+      ((and window (string= (window-class window) "Emacs"))
        (emacsclient-eval "(ivy-switch-buffer)"))
-      (t (global-windowlist)))))
+      (t (globalwindows:global-windowlist)))))
 
 (defcommand next-in-frame-custom () ()
   (let ((window (current-window)))
