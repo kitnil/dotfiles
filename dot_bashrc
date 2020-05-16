@@ -7,6 +7,13 @@ then
     . "/etc/skel/.bashrc"
 fi
 
+case $TERM_PS1 in
+    gentoo)
+        PS1='\[\033[01;32m\]\u@\h\[\033[01;34m\] \w \$\[\033[00m\] '
+        export PS1
+        ;;
+esac
+
 if [ -f "$HOME/.bash_aliases" ]
 then
     # Load the Bash aliases and functions.
