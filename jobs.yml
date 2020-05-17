@@ -1,3 +1,5 @@
+#!/usr/bin/env -S jenkins-jobs --ignore-cache update
+---
 
 - job:
     name: ansible
