@@ -1457,3 +1457,18 @@ and manipulated by user-defined functions to do various things such as:
 - playing them in some video player
 - download them")
       (license license:gpl3+))))
+
+(define-public emacs-dashboard-with-agenda-reverse
+  (let ((commit "dbb6eb420a6b1909fe02c5eaeebfd17ea64297f3"))
+    (package
+      (inherit emacs-dashboard)
+      (name "emacs-dashboard-with-agenda-reverse")
+      (source (origin
+                (method git-fetch)
+                (uri (git-reference
+                      (url "https://cgit.duckdns.org/git/emacs/emacs-dashboard")
+                      (commit commit)))
+                (file-name (git-file-name name (package-version emacs-dashboard)))
+                (sha256
+                 (base32
+                  "1svnsg8lh4v39wkkgc250qa3lcknma17mgd080vf12641r9d847n")))))))
