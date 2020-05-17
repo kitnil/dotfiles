@@ -105,10 +105,10 @@
 ;;;
 
 (defcommand xfce-terminal () ()
-  (run-shell-command "xfce4-terminal"))
+  (run-shell-command "xfce4-terminal --color-bg=black"))
 
 (defcommand run-or-raise-xfce-terminal () ()
-  (run-or-raise "xfce4-terminal"
+  (run-or-raise "xfce4-terminal --color-bg=black"
                 '(:class "Xfce4-terminal")))
 
 
