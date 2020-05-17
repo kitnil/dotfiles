@@ -13,3 +13,4 @@
 (setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
 (setq dashboard-page-separator "\n\n")
 (setq initial-scratch-message nil) ; Don't put text in *scratch* buffer
+(setq dashboard-agenda-reverse t)

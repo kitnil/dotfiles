@@ -23,7 +23,6 @@
        emacs-constants
        emacs-counsel-tramp
        emacs-crux
-       emacs-dashboard
        emacs-debbugs ; <https://debbugs.gnu.org/> interface
        emacs-debpaste           ; Front end to <https://paste.debian.net/>
        emacs-default-encrypt    ; Sign mail automatically
