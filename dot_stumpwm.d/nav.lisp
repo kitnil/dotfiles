@@ -148,6 +148,14 @@
        (emacsclient-eval "(kill-buffer (window-buffer (frame-selected-window)))"))
       (t (delete-window window)))))
 
+(defcommand keybinding-s-o () ()
+  (let ((window (current-window)))
+    (cond
+      ((string= (window-class window) "Emacs")
+       (send-fake-key window (kbd "M-x"))
+       (window-send-string "ffap"))
+      (t (emacs-anywhere)))))
+
 
 ;;;
 ;;; Small frame
