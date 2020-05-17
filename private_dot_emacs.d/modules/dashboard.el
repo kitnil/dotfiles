@@ -1,9 +1,9 @@
 (dashboard-setup-startup-hook)
-(setq dashboard-items '((agenda . 10)
-                        (registers . 10)
-                        (recents . 15)
-                        (projects . 30)
-                        (bookmarks . 20)))
+;; (setq dashboard-items '((agenda . 10)
+;;                         (registers . 10)
+;;                         (recents . 15)
+;;                         (projects . 30)
+;;                         (bookmarks . 20)))
 (setq show-week-agenda-p t)
 ;; (setq dashboard-org-agenda-categories '("Tasks")) ; version above 1.6.0 required
 ;; (with-eval-after-load 'dashboard
