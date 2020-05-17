@@ -61,6 +61,7 @@
             (0 . #\))))
   (define-key *top-map* (kbd "s-KP_Enter") "run-xterm")
   (define-key *top-map* (kbd "s-k") "delete-or-kill-window")
+  (define-key *top-map* (kbd "s-K") "delete")
   (define-key *top-map* (kbd "s-ESC") "delete-or-kill-window")
   (define-key *top-map* (kbd "s-Right") "move-focus right")
   (define-key *top-map* (kbd "s-Left") "move-focus left")
