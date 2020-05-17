@@ -62,12 +62,12 @@
           ,(make-string 4 :initial-element #\space)
           ,'(:eval (format nil "/: ~a" *disk-free-root-counter*))
 
-          ,@(if (= *spb-disk-free-root-counter* 0)
-                '()
-                (list (make-string 4 :initial-element #\space)))
-          ,@(if (= *spb-disk-free-root-counter* 0)
-                '()
-                (list '(:eval (format nil "spb: /: ~a" *spb-disk-free-root-counter*))))
+          ;; ,@(if (= *spb-disk-free-root-counter* 0)
+          ;;       '()
+          ;;       (list (make-string 4 :initial-element #\space)))
+          ;; ,@(if (= *spb-disk-free-root-counter* 0)
+          ;;       '()
+          ;;       (list '(:eval (format nil "spb: /: ~a" *spb-disk-free-root-counter*))))
 
           ,(make-string 4 :initial-element #\space)
           ,'(:eval (format nil "TEMP: ~a" (temp-current)))
@@ -123,13 +123,13 @@
                           (disk-free-root-update-counter)
                           (sleep 60))))
                  :name "disk-free-root-update-counter")
-                (sb-thread:make-thread
-                 (lambda ()
-                   (loop while t do
-                        (progn
-                          (spb-disk-free-root-update-counter)
-                          (sleep 60))))
-                 :name "mode-line-df-spb")
+                ;; (sb-thread:make-thread
+                ;;  (lambda ()
+                ;;    (loop while t do
+                ;;         (progn
+                ;;           (spb-disk-free-root-update-counter)
+                ;;           (sleep 60))))
+                ;;  :name "mode-line-df-spb")
                 (sb-thread:make-thread
                  (lambda ()
                    (loop while t do
