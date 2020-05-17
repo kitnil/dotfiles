@@ -107,6 +107,10 @@
 (defcommand xfce-terminal () ()
   (run-shell-command "xfce4-terminal"))
 
+(defcommand run-or-raise-xfce-terminal () ()
+  (run-or-raise "xfce4-terminal"
+                '(:class "Xfce4-terminal")))
+
 
 ;;;
 ;;; Screen

@@ -75,7 +75,7 @@
   (define-key *top-map* (kbd "S-s-Down") "move-window down")
   (define-key *top-map* (kbd "s-v") "youtube-dl-music")
   (define-key *top-map* (kbd "s-V") "pulsemixer")
-  (define-key *top-map* (kbd "s-c") "run-or-raise-xterm")
+  (define-key *top-map* (kbd "s-c") "run-or-raise-xfce-terminal")
   (define-key *top-map* (kbd "s-F") "move-focus right")
   (define-key *top-map* (kbd "s-B") "move-focus left")
   (define-key *top-map* (kbd "s-P") "prev-in-frame")
