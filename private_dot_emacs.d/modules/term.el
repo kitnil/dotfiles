@@ -50,3 +50,15 @@
                     (select-window window)
                   (message "Failed to open file: %s" path))))
         vterm-eval-cmds))
+
+(defvar wi-vterm--prettify-symbols-alist
+  '(("&&" . ?∧)
+    ("||" . ?∨)
+    ("++" . ?⧺)
+    ("<=" . ?≤)
+    (">=" . ?≥)))
+
+(add-hook 'vterm-mode-hook
+          (lambda ()
+            (set (make-local-variable 'prettify-symbols-alist)
+                 wi-vterm--prettify-symbols-alist)))
