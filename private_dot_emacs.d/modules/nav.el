@@ -112,3 +112,12 @@
                            (and (functionp secret)
                                 (funcall secret)))))
 (tramp-auto-auth-mode)
+
+(defun wi-find-file-readlink ()
+  (interactive)
+  (let ((file-name (buffer-file-name)))
+    (kill-buffer (current-buffer))
+    (find-file
+     (string-trim
+      (shell-command-to-string
+       (format "readlink -f %s" file-name))))))
