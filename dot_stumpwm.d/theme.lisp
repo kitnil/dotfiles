@@ -8,6 +8,9 @@
 (defcommand xplanet () ()
   (run-shell-command "xplanet -center '+960+540' -fov 1"))
 
+(defcommand xplanet-file () ()
+  (run-shell-command "xplanet -num_times 1 -output /tmp/xplanet.png; feh --bg-center /tmp/xplanet.png"))
+
 (defcommand set-background-dark () ()
   (run-shell-command "xsetroot -solid black"))
 
