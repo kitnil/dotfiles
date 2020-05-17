@@ -89,6 +89,12 @@ resource "github_repository" "reevefresh" {
   default_branch = "master"
 }
 
+resource "github_repository" "yeastizzy" {
+  name           = "yeastizzy"
+  description    = "Send notifications about YouTube online channels to Slack channel"
+  default_branch = "master"
+}
+
 resource "github_repository" "nix-overlay-wigust" {
   name           = "nix-overlay-wigust"
   description    = "Nix overlay"
