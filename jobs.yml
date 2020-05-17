@@ -82,6 +82,18 @@
           url: https://cgit.duckdns.org/git/containers/reevefresh
 
 - job:
+    name: containers/yeastizzy
+    project-type: multibranch
+    periodic-folder-trigger: 1d
+    prune-dead-branches: true
+    number-to-keep: '10'
+    days-to-keep: '10'
+    script-path: Jenkinsfile
+    scm:
+      - git:
+          url: https://cgit.duckdns.org/git/containers/yeastizzy
+
+- job:
     name: guile
     project-type: folder
 
