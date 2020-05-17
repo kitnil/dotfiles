@@ -6,7 +6,7 @@
   '(("versionAtLeastCut" . ?≥)
     ("versionOlderCut" . ?<)
     ("deleteTests" . ?Ø)
-    ("++" . 10746)
+    ("++" . ⧺)
     ("!=" . ?≠)
     ("&&" . ?∧)
     ("||" . ?∨)
