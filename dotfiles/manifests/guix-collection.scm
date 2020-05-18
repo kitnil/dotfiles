@@ -121,7 +121,7 @@ xml xorg)
 
                gnupg pinentry
 
-               file tree python-pygments
+               file tree python-pygments exa
 
                ;; TODO: Fix python-parso python-language-server
 
