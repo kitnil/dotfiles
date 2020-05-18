@@ -51,6 +51,16 @@ cat()
     fi
 }
 
+lsd()
+{
+    if [ $INSIDE_EMACS == "vterm" ]
+    then
+        exa --all --long "$@"
+    else
+        ls "$@"
+    fi
+}
+
 GRADLE_HOME=/opt/gradle
 export GRADLE_HOME
 
