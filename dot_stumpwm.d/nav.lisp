@@ -156,6 +156,13 @@
        (window-send-string "ffap"))
       (t (emacs-anywhere)))))
 
+(defcommand keybinding-s-r () ()
+  (let ((window (current-window)))
+    (cond
+      ((string= (window-class window) "Xfce4-terminal")
+       (send-fake-key window (kbd "C-F")))
+      (t (repl-guile)))))
+
 (defcommand keybinding-s-= () ()
   (let ((window (current-window)))
     (cond

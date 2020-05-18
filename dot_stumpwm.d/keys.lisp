@@ -8,7 +8,7 @@
   (define-key *top-map* (kbd "C-s-s") "neofetch")
   (define-key *top-map* (kbd "s-+") "pavucontrol")
   (define-key *top-map* (kbd "s-_") "volume-toggle")
-  (define-key *top-map* (kbd "s-r") "repl-guile")
+  (define-key *top-map* (kbd "s-r") "keybinding-s-r")
   (define-key *top-map* (kbd "M-s-r") "repl-ghci")
   (define-key *top-map* (kbd "s-R") "repl-guix")
   (define-key *top-map* (kbd "C-s-r") "repl-python")
