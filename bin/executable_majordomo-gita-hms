@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+cat > "$HOME/.config/gita/repo_path" <<EOF
+$(for repository in $(ls -1 --directory --indicator-style=none $HOME/majordomo/hms/*); do echo $repository,$(basename $repository); done)
+EOF
+
+case "$1" in
+    week)
+        gita super log --format="%ai %H %s" --date=relative --since="${2:-1} weeks ago"
+        ;;
+    *)
+        exec -a "gita" gita "$@"
+        ;;
+esac
+

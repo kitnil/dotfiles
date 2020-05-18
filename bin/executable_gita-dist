@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+
+cat > "$HOME/.config/gita/repo_path" <<'EOF'
+/home/oleg/archive/src/gentoo,gentoo
+/home/oleg/archive/src/arch-packages,arch-packages
+/home/oleg/archive/src/arch-community,arch-community
+/home/oleg/archive/src/openbsd-ports,openbsd-ports
+/home/oleg/archive/src/freebsd,freebsd
+EOF
+
+exec -a "gita" "$@"
