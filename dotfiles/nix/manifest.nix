@@ -101,6 +101,7 @@ in [
   procs
   hyperfine
   zenith
+  tokei
   lua
   luarocks
   mediatomb
