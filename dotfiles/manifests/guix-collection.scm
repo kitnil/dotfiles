@@ -59,7 +59,7 @@ xml xorg)
                dmidecode
                lm-sensors
 
-               cloc            ; Count code
+               cloc tokei      ; Count code
                direnv
                gnu-make        ; GNU Make
                recutils  ; Filter records like in `guix --search'
