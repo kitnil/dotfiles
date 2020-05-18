@@ -51,6 +51,11 @@ cat()
     fi
 }
 
+benchmark()
+{
+    hyperfine "$@"
+}
+
 lsd()
 {
     if [ $INSIDE_EMACS == "vterm" ]
