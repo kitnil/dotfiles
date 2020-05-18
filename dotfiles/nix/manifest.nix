@@ -100,6 +100,7 @@ in [
   lnav
   procs
   hyperfine
+  zenith
   lua
   luarocks
   mediatomb
