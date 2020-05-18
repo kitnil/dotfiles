@@ -156,6 +156,36 @@
        (window-send-string "ffap"))
       (t (emacs-anywhere)))))
 
+(defcommand keybinding-s-= () ()
+  (let ((window (current-window)))
+    (cond
+      ((string= (window-class window) "Emacs")
+       (send-fake-key window (kbd "C-x"))
+       (send-fake-key window (kbd "C-=")))
+      ((string= (window-class window) "Firefox")
+       (send-fake-key window (kbd "M-=")))
+      ((some (lambda (str)
+               (string= str (window-class window)))
+             '("Chromium-browser" "Xfce4-terminal"))
+       (send-fake-key window (kbd "C-+")))
+      ((string= (window-class window) "XTerm")
+       (send-fake-key window (kbd "S-KP_Add"))))))
+
+(defcommand keybinding-s-- () ()
+  (let ((window (current-window)))
+    (cond
+      ((string= (window-class window) "Emacs")
+       (send-fake-key window (kbd "C-x"))
+       (send-fake-key window (kbd "C--")))
+      ((string= (window-class window) "Firefox")
+       (send-fake-key window (kbd "M--")))
+      ((some (lambda (str)
+               (string= str (window-class window)))
+             '("Chromium-browser" "Xfce4-terminal"))
+       (send-fake-key window (kbd "C--")))
+      ((string= (window-class window) "XTerm")
+       (send-fake-key window (kbd "S-KP_Subtract"))))))
+
 
 ;;;
 ;;; Small frame

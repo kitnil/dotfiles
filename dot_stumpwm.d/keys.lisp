@@ -27,8 +27,8 @@
   (define-key *top-map* (kbd "s-quoteright") "global-windowlist-custom")
   (define-key *top-map* (kbd "XF86AudioLowerVolume") "volume-decrease")
   (define-key *top-map* (kbd "XF86AudioRaiseVolume") "volume-increase")
-  (define-key *top-map* (kbd "s--") "volume-decrease")
-  (define-key *top-map* (kbd "s-=") "volume-increase")
+  (define-key *top-map* (kbd "s--") "keybinding-s--")
+  (define-key *top-map* (kbd "s-=") "keybinding-s-=")
   (define-key *top-map* (kbd "s-KP_Add") "volume-increase")
   (define-key *top-map* (kbd "s-KP_Subtract") "volume-decrease")
   (define-key *top-map* (kbd "s-RET") "xfce-terminal")
@@ -96,8 +96,8 @@
 
   (define-key *top-map* (kbd "C-M-s-S") "suspend")
 
-  (define-key *top-map* (kbd "C-s-=") "volume-increase-device-0")
-  (define-key *top-map* (kbd "C-s--") "volume-decrease-device-0")
+  (define-key *top-map* (kbd "C-s-=") "volume-increase")
+  (define-key *top-map* (kbd "C-s--") "volume-decrease")
   (define-key *top-map* (kbd "C-s-RET") "run-xterm-named")
   (define-key *top-map* (kbd "M-s-RET") "xfce-terminal")
   (define-key *top-map* (kbd "M-s-n") "gnext")
