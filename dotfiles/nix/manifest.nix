@@ -99,6 +99,7 @@ in [
   navi
   lnav
   procs
+  hyperfine
   lua
   luarocks
   mediatomb
