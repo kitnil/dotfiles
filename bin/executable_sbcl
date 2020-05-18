@@ -1,0 +1,4 @@
+#!/bin/sh
+
+exec -a "sbcl" rlwrap /run/current-system/profile/bin/sbcl
+
