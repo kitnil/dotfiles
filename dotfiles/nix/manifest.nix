@@ -98,7 +98,6 @@ in [
   # litecli TODO: fails to build
   navi
   lnav
-  lsd
   lua
   luarocks
   mediatomb
