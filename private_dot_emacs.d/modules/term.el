@@ -62,3 +62,5 @@
           (lambda ()
             (set (make-local-variable 'prettify-symbols-alist)
                  wi-vterm--prettify-symbols-alist)))
+
+(setq vterm-max-scrollback 100000)
