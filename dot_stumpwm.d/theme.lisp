@@ -14,6 +14,10 @@
 (defcommand set-background-dark () ()
   (run-shell-command "xsetroot -solid black"))
 
+(defcommand wallpaper () ()
+  (run-shell-command (format nil "sxiv ~a/archive/src/wallpapers"
+                             (getenv "HOME"))))
+
 (set-background-dark)
 (xplanet)
 
