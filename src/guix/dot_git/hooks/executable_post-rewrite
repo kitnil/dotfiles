@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+branch="$(git rev-parse --abbrev-ref HEAD)"
+
+case $branch in
+    wip-local)
+        exec -a "$0" $HOME/bin/jenkins build guix maintenance
+        ;;
+    master)
+        exec -a "$0" $HOME/bin/jenkins build guix upstream
+        ;;
+esac
