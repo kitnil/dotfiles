@@ -2,8 +2,11 @@
 
 set -ex
 
-curl --request POST --user "admin:$(pass show jenkins.wugi.info/token-admin)" \
-https://jenkins.wugi.info/job/wigust/job/dotfiles/build
+case "$1" in
+    build)
+        curl --request POST --user "admin:$(pass show jenkins.wugi.info/token-admin)" https://jenkins.wugi.info/job/$2/job/$3/build
+        ;;
+esac
 
 # curl --request POST --user "admin:$(pass show jenkins.wugi.info/token-admin)" \
 # --data-urlencode json='{"parameter": [{"name":"CHEZMOI_APPLY", "value":"true"},{"name":"INVOKE_GUIX_PULL", "value":"true"}]}' \
