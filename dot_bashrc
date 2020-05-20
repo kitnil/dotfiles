@@ -46,7 +46,7 @@ guile()
 
 cat()
 {
-    if [[ "${@: -1}" == /proc/*/environ ]]
+    if [[ "${*:-1}" == /proc/*/environ ]]
     then
         command cat "${@: -1}" | tr '\000' '\n'
     else
@@ -104,7 +104,7 @@ man-to-pdf()
 
 stat-link()
 {
-    stat --format=%N $@
+    stat --format=%N "$@"
 }
 
 # Origin <https://www.fsf.org/blogs/directory/the-free-software-directory-needs-you-irc-meetups-every-friday-1>.
@@ -121,11 +121,6 @@ cl()
     echo $(tput cols)x$(tput lines)
 }
 
-gpa()
-{
-    guix package -A $@ | awk '{ print $1"-"$2 }'
-}
-
 alias bedtime='sudo loginctl suspend'
 
 alias aria2c='aria2c --seed-time=0'
@@ -138,7 +133,7 @@ ihs()
     IHS_PASS=$(pass show majordomo/hms/pyhalov) \
     CVM_USER=cron                               \
     CVM_PASS=$(pass show majordomo/cvm/cron)    \
-    command ihs $@
+    command ihs "$@"
 }
 
 if [ -d "/run/current-system" ]
@@ -242,7 +237,7 @@ export MANWIDTH
 
 ansible-host()
 {
-    ansible --inventory $1, $1 --become --ask-become-pass ${@:2}
+    ansible --inventory "$1", "$1" --become --ask-become-pass "${@:2}"
 }
 
 yq()
@@ -270,7 +265,7 @@ ssh()
             then
                 command ssh -t "$host" -- "set +o history; sudo --stdin --validate --prompt='' <<< $(pass show majordomo/ssh/eng); exec -a sudo sudo -i";
             else
-                command ssh -q -t "$host" -- "set +o history; sudo --stdin --validate --prompt='' <<< $(pass show majordomo/ssh/eng); exec -a sudo sudo -i ${@:3}";
+                command ssh -q -t "$host" -- "set +o history; sudo --stdin --validate --prompt='' <<< $(pass show majordomo/ssh/eng); exec -a sudo sudo -i ${*:3}";
             fi
             ;;
         *)
@@ -278,6 +273,7 @@ ssh()
             ;;
     esac
 }
+export -f ssh
 
 jord-vm-ip()
 {
@@ -323,16 +319,6 @@ ssh-keygen-rsa()
 {
     file="$1"
     ssh-keygen -b 4096 -m pem -f "$HOME/.ssh/id_rsa_$file"
-}
-
-gpu()
-{
-    guix package --substitute-urls='http://cuirass.tld https://ci.guix.info https://mirror.hydra.gnu.org' --upgrade=. $@
-}
-
-upgrade()
-{
-    (set -ex; sudo -i guix system reconfigure /etc/config.scm; guix package -m $HOME/manifest.scm)
 }
 
 activity()
@@ -489,17 +475,17 @@ nix-version() { nix-instantiate --eval -E '(import <nixpkgs> {}).lib.nixpkgsVers
 nix-build-expression()
 {
     file="$1"
-    nix-build -E "(import <nixpkgs> {}).callPackage ./$file {}" ${@:2}
+    nix-build -E "(import <nixpkgs> {}).callPackage ./$file {}" "${@:2}"
 }
 nix-build-expression-with()
 {
     file="$1"
-    nix-build -E "with (import <nixpkgs> {}); with pkgs; callPackage ./$file {}" ${@:2}
+    nix-build -E "with (import <nixpkgs> {}); with pkgs; callPackage ./$file {}" "${@:2}"
 }
 nix-build-expression-unstable-with()
 {
     file="$1"
-    nix-build -E "with (import <nixos-unstable> {}); with pkgs; callPackage ./$file {}" ${@:2}
+    nix-build -E "with (import <nixos-unstable> {}); with pkgs; callPackage ./$file {}" "${@:2}"
 }
 nix-shell-expression-with-overlay()
 {
@@ -585,16 +571,16 @@ git-guix-home()
     git show "$number" | grep home | cut -d'"' -f 2
 }
 
-archive-dir()
-{
-    for dir in $@; do
-        mv -vi "$dir" "$HOME/archive/src/"
-    done
-}
+# archive-dir()
+# {
+#     for dir in $@; do
+#         mv -vi "$dir" "$HOME/archive/src/"
+#     done
+# }
 
 terraform-init-with-nix()
 {
-    terraform init -plugin-dir ~/.nix-profile/bin $@
+    terraform init -plugin-dir ~/.nix-profile/bin "$@"
 }
 
 terraform-init()
@@ -628,7 +614,7 @@ nix-build()
 
 nix-shell-python()
 {
-    PYTHONPATH="" nix-shell -p "python35.withPackages(ps: with ps; [ $@ ])"
+    PYTHONPATH="" nix-shell -p "python35.withPackages(ps: with ps; [ $* ])"
 }
 
 nixos-interactive-test()
@@ -653,7 +639,7 @@ terraform-plan()
     NIX_SSL_CERT_FILE="$HOME/majordomo/office/ssl-certificates/Majordomo_LLC_Root_CA.crt" \
                      SSL_CERT_DIR="$HOME/.guix-profile/etc/ssl/certs" \
                      SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/ca-certificates.crt" \
-            terraform plan -out=plan $@
+            terraform plan -out=plan "$@"
 }
 
 terraform-import()
@@ -661,7 +647,7 @@ terraform-import()
     NIX_SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/Majordomo_LLC_Root_CA.crt" \
                      SSL_CERT_DIR="$HOME/.guix-profile/etc/ssl/certs" \
                      SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/ca-certificates.crt" \
-            terraform import $@
+            terraform import "$@"
 }
 
 terraform-apply()
@@ -793,7 +779,7 @@ ansible-playbook-wrapper()
             --inventory="$host",                                        \
             --extra-vars=host="$host"                                   \
             --extra-vars=ansible_python_interpreter=/usr/bin/python3    \
-            ${@:2}
+            "${@:2}"
 }
 
 bash-history-top()
@@ -913,7 +899,7 @@ tmux()
             [ session == "" ] || (exit 1) && command tmux at -t "$session"
             ;;
         *)
-            command tmux $@
+            command tmux "$@"
             ;;
     esac
 }
@@ -939,7 +925,7 @@ docker-xorg()
             --device /dev/snd \
             -v /etc/localtime:/etc/localtime:ro \
             --device /dev/input \
-            $@
+            "$@"
 }
 
 obs-docker-setup()
@@ -1067,7 +1053,7 @@ container()
             ANSIBLE_NOCOLOR=1 ansible swarm -m shell -a 'docker ps --no-trunc' --become --ask-become-pass
             ;;
         *)
-            docker $@
+            docker "$@"
             ;;
     esac
 }
@@ -1114,7 +1100,7 @@ password()
                 | xclip -i -sel p -f | xclip -i -sel c
         )
     else
-        pass $@
+        pass "$@"
     fi
 }
 if [ -f "$HOME/.guix-profile/etc/bash_completion.d/pass" ]; then
@@ -1122,6 +1108,11 @@ if [ -f "$HOME/.guix-profile/etc/bash_completion.d/pass" ]; then
     complete -o filenames -F _pass password
 fi
 alias password='EDITOR=zile password'
+
+genpass()
+{
+    tr -dc 'a-zA-Z0-9_#@.-' < /dev/urandom | head -c ${1:-14}
+}
 
 pass-list-all()
 {
@@ -1159,7 +1150,7 @@ gmail-send()
 
 cmdfu()
 {
-    curl -L "http://www.commandlinefu.com/commands/matching/$@/$(echo -n $@ | openssl base64)/plaintext";
+    curl -L "http://www.commandlinefu.com/commands/matching/$*/$(echo -n $* | openssl base64)/plaintext";
 }
 
 clfavs()
@@ -1267,13 +1258,6 @@ lsp-mode()
             ${1:-yyoncho/lsp-emacs-docker} emacs
 }
 
-git-pull-all()
-{
-    for dir in $@; do
-        (cd $dir; git checkout master; git fetch origin; git pull --rebase -u origin master)
-    done
-}
-
 git-all-history()
 {
     git log --oneline | awk '{ print $1 }' | xargs git show
@@ -1295,12 +1279,9 @@ bfg()
     java -jar ~/Downloads/bfg-1.13.0.jar --replace-text <(git-pass-secrets)
 }
 
-ssl-show-certificate-dates()
+ssl-show-certificate-date()
 {
-    for host in $@; do
-        echo -e "\n\n@ $host";
-        echo | openssl s_client -servername $host -connect $host:443 2>/dev/null | openssl x509 -noout -dates
-    done
+    echo | openssl s_client -servername $host -connect $host:443 2>/dev/null | openssl x509 -noout -dates
 }
 
 atoi()
@@ -1344,12 +1325,12 @@ docker-openresty()
 
 nix-python-with-pkgs()
 {
-    nix-shell -p python "python.withPackages (python-packages: with python-packages; [ $@ ])"
+    nix-shell -p python "python.withPackages (python-packages: with python-packages; [ $* ])"
 }
 
 nix-python2-with-pkgs()
 {
-    nix-shell -p python2 "python2.withPackages (python-packages: with python-packages; [ $@ ])"
+    nix-shell -p python2 "python2.withPackages (python-packages: with python-packages; [ $* ])"
 }
 
 nix-env-clean()
@@ -1418,7 +1399,7 @@ backup()
     sudo --login                                                                \
             RESTIC_PASSWORD="$(pass show wugi.info/restic/all)"                 \
             RESTIC_REPOSITORY="${RESTIC_REPOSITORY:-/srv/backup/guixsd}"        \
-            $HOME/.guix-profile/bin/restic $@
+            $HOME/.guix-profile/bin/restic "$@"
 }
 if [ -f "$HOME/.guix-profile/etc/bash_completion.d/restic" ]; then
     . "$HOME/.guix-profile/etc/bash_completion.d/restic"
@@ -1427,7 +1408,7 @@ fi
 
 fd()
 {
-    [ "$#" -ne 2 ] && command fd . "$1" || command fd $@
+    [ "$#" -ne 2 ] && command fd . "$1" || command fd "$@"
 }
 
 alias diff=colordiff
