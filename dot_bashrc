@@ -7,14 +7,17 @@ then
     . "/etc/skel/.bashrc"
 fi
 
-case $TERM_PS1 in
-    gentoo)
-        PS1='\[\033[01;32m\]\u@\h\[\033[01;34m\] \w \$\[\033[00m\] '
-        export PS1
-        ;;
-esac
+if [[ $TERM != dumb ]]
+then
+    case $TERM_PS1 in
+        gentoo)
+            PS1='\[\033[01;32m\]\u@\h\[\033[01;34m\] \w \$\[\033[00m\] '
+            export PS1
+            ;;
+    esac
+fi
 
-if [ -f "$HOME/.bash_vterm" ]
+if [ -f "$HOME/.bash_vterm" ] && [[ $INSIDE_EMACS == vterm ]]
 then
     . "$HOME/.bash_vterm"
 fi
