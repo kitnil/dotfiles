@@ -1244,18 +1244,18 @@ alias ff="feh --borderless --image-bg black --auto-zoom --draw-filename"
 lsp-mode()
 {
     docker run --tty --interactive --rm                                                 \
-            --volume $PWD:/mnt/workspace                                                \
+            --volume "$PWD:/mnt/workspace"                                              \
             --volume /etc/localtime:/etc/localtime:ro                                   \
-            --volume ~/.gnupg:${HOME}/.gnupg                                            \
+            --volume "~/.gnupg:${HOME}/.gnupg"                                          \
             --volume /var/run/dbus/system_bus_socket:/var/run/dbus/system_bus_socket    \
             --volume /tmp/.X11-unix:/tmp/.X11-unix                                      \
             --volume /etc/machine-id:/etc/machine-id:ro                                 \
             --volume /home/oleg/majordomo/hms:/src                                      \
-            --volume $PWD/emacs.d/:/home/lsp/.emacs.d                                   \
+            --volume "$PWD/emacs.d/:/home/lsp/.emacs.d"                                 \
             --user 1000:1000                                                            \
-            --env DISPLAY=$DISPLAY                                                      \
+            --env DISPLAY="$DISPLAY"                                                    \
             --network=host                                                              \
-            ${1:-yyoncho/lsp-emacs-docker} emacs
+            "${1:-yyoncho/lsp-emacs-docker}" emacs
 }
 
 git-all-history()
@@ -1281,7 +1281,8 @@ bfg()
 
 ssl-show-certificate-date()
 {
-    echo | openssl s_client -servername $host -connect $host:443 2>/dev/null | openssl x509 -noout -dates
+    host="$1"
+    echo | openssl s_client -servername "$host" -connect "$host:443" 2>/dev/null | openssl x509 -noout -dates
 }
 
 atoi()
@@ -1289,7 +1290,7 @@ atoi()
     #Returns the integer representation of an IP arg, passed in ascii dotted-decimal notation (x.x.x.x)
     IP=$1; IPNUM=0
     for (( i=0 ; i<4 ; ++i )); do
-        ((IPNUM+=${IP%%.*}*$((256**$((3-${i}))))))
+        ((IPNUM+=${IP%%.*}*$((256**$((3-i))))))
         IP=${IP#*.}
     done
     echo $IPNUM
@@ -1354,7 +1355,7 @@ firefox-esr-debian()
       --name                                    \
       firefox-java                              \
       --env                                     \
-      DISPLAY=$DISPLAY                          \
+      DISPLAY="$DISPLAY"                        \
       --volume                                  \
       /tmp/.X11-unix:/tmp/.X11-unix             \
       cmaohuang/firefox-java                    \
@@ -1375,11 +1376,6 @@ fi
 
 alias ssh-clean='find ~/.ssh -type s -delete'
 
-slideshow()
-{
-    (exec -a slideshow /bin/sh -c 'while true; do for file in /tmp/out/*.png; do feh --image-bg "#ffffff" --bg-max $file; sleep 5; done; done & disown' "$@")
-}
-
 alias pass='EDITOR=zile pass'
 alias ansible-vault='EDITOR=zile ansible-vault'
 
@@ -1399,7 +1395,7 @@ backup()
     sudo --login                                                                \
             RESTIC_PASSWORD="$(pass show wugi.info/restic/all)"                 \
             RESTIC_REPOSITORY="${RESTIC_REPOSITORY:-/srv/backup/guixsd}"        \
-            $HOME/.guix-profile/bin/restic "$@"
+            "$HOME/.guix-profile/bin/restic" "$@"
 }
 if [ -f "$HOME/.guix-profile/etc/bash_completion.d/restic" ]; then
     . "$HOME/.guix-profile/etc/bash_completion.d/restic"
@@ -1408,7 +1404,12 @@ fi
 
 fd()
 {
-    [ "$#" -ne 2 ] && command fd . "$1" || command fd "$@"
+    if [ "$#" -ne 2 ]
+    then
+        command fd . "$1"
+    else
+        command fd "$@"
+    fi
 }
 
 alias diff=colordiff
@@ -1441,7 +1442,7 @@ rg()
 {
     case "$1" in
         dist)
-            command rg "${@:2}" $HOME/{src/nixpkgs-master,src/guix-master,archive/src/{gentoo,freebsd,openbsd-ports,arch-{community,packages}}}
+            command rg "${@:2}" "$HOME"/{src/nixpkgs-master,src/guix-master,archive/src/{gentoo,freebsd,openbsd-ports,arch-{community,packages}}}
             ;;
         *)
             command rg "$@"
@@ -1451,6 +1452,7 @@ rg()
 
 if [ -f "$HOME/.bash.d/majordomo.bash" ]
 then
+    # shellcheck source=.bash.d/majordomo.bash
     . "$HOME/.bash.d/majordomo.bash"
 fi
 
