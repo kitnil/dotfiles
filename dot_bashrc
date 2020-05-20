@@ -245,10 +245,23 @@ ansible-host()
     ansible --inventory $1, $1 --become --ask-become-pass ${@:2}
 }
 
-ssh-sudo-interactive()
+ssh()
 {
-    ssh -t $2 -- "sudo --stdin --validate --prompt='' <<< $JORD_PASS \
-&& sudo --user=$1 --login";
+    case "$2" in
+        *.intr)
+            user="$1"
+            host="$2"
+            if [[ $# -eq 2 ]]
+            then
+                command ssh -t "$host" -- "set +o history; sudo --stdin --validate --prompt='' <<< $(pass show majordomo/ssh/eng); exec -a sudo sudo -i";
+            else
+                command ssh -q -t "$host" -- "set +o history; sudo --stdin --validate --prompt='' <<< $(pass show majordomo/ssh/eng); exec -a sudo sudo -i ${@:3}";
+            fi
+            ;;
+        *)
+            command ssh "$@"
+            ;;
+    esac
 }
 
 jord-vm-ip()
