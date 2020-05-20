@@ -73,28 +73,54 @@
   (run-shell-command "vncviewer 172.16.100.182:5900"))
 
 (defcommand majordomo-alerta () ()
-    (firefox "https://alerta.intr" "Alerta"))
+  (browse-url-firefox* "https://alerta.intr"
+                       :title "Alerta"))
 
 (defcommand majordomo-grafana () ()
-  (firefox "https://grafana.intr/" "Grafana"))
+  (browse-url-firefox* "https://grafana.intr/"
+                       :title "Grafana"))
 
 (defcommand majordomo-grafana-netflow () ()
-  (firefox "https://grafana.intr/d/000000042/netflow?orgId=1&refresh=1m" "Netflow"))
+  (browse-url-firefox* "https://grafana.intr/d/000000042/netflow?orgId=1&refresh=1m"
+                       :title "Netflow"))
 
 (defcommand majordomo-grafana-upstream-interfaces () ()
-  (firefox "https://grafana.intr/d/6QgXJjmik/upstream-interfaces-traffic?orgId=1" "Upstream interfaces"))
+  (browse-url-firefox* "https://grafana.intr/d/6QgXJjmik/upstream-interfaces-traffic?orgId=1"
+                       :title "Upstream interfaces"))
 
 (defcommand majordomo-check-website () ()
-  (firefox "https://www.uptrends.com/tools/uptime"))
+  (browse-url-firefox* "https://www.uptrends.com/tools/uptime"))
 
 (defcommand majordomo-zabbix () ()
-  (firefox "https://zabbix.intr/dashboard.php?fullscreen=1" "Dashboard"))
+  (browse-url-firefox* "https://zabbix.intr/dashboard.php?fullscreen=1"
+                       :title "Dashboard"))
 
 (defcommand majordomo-kibana () ()
-  (firefox "https://kibana.intr/" "Kibana"))
+  (browse-url-firefox* "https://kibana.intr/"
+                       :title "Kibana"))
 
 (defcommand majordomo-kibana-alerta () ()
   (run-shell-command "chromium --app=https://kibana.intr/goto/d63fb3a2e0b36deacc8f73f53cc14b4d"))
+
+(defcommand majordomo-nexus () ()
+  (browse-url-firefox* "http://nexus.intr"
+                       :title "Nexus"))
+
+(defcommand majordomo-slack () ()
+  (browse-url-firefox* "https://mjru.slack.com/"
+                       :title "Slack"))
+
+(defcommand majordomo-cerb () ()
+  (browse-url-firefox* "http://cerberus.intr/"
+                       :title "Cerberus"))
+
+(defcommand majordomo-gitlab () ()
+  (browse-url-firefox* "https://gitlab.intr/"
+                       :title "GitLab"))
+
+(defcommand majordomo-jenkins () ()
+  (browse-url-firefox* "https://jenkins.intr/"
+                       :title "Jenkins"))
 
 
 ;;;

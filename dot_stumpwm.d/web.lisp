@@ -8,12 +8,19 @@
 (defvar youtube-playlist-cool-music
   "PLmjgicsUWIkvEKkLN01vm85neXAik3yU2")
 
-(defun browse-url-firefox (url &optional new-window ssb)
-  (run-shell-command
-   (join `("firefox"
-           ,@(if new-window '("--new-window") '())
-           ,@(if ssb '("--ssb") '())
-           ,url))))
+(defun browse-url-firefox (url &optional new-window)
+  (run-shell-command (join `("firefox" ,@(if new-window "--new-window" '())
+                                       ,url))))
+
+(defun browse-url-firefox* (url &key (new-window t) title (theme 'dark) ssb)
+  (let ((command (join `(,@(if (equal theme 'dark) '("GTK_THEME=Adwaita:dark") '())
+                           "nixGLIntel" "firefox"
+                           ,@(if new-window '("--new-window") '())
+                           ,@(if ssb '("--ssb") '())
+                           ,url))))
+    (if title
+        (run-or-raise command `(:title ,title))
+        (run-shell-command command))))
 
 (defcommand music-youtube () ()
   (let ((window (current-window)))
@@ -24,87 +31,58 @@
                               youtube-playlist-cool-music)
                       '(:instance "www.youtube.com")))))
 
-(flet ((firefox (url title &optional dark)
-         (run-or-raise (format nil (if dark
-                                       "GTK_THEME=Adwaita:dark nixGLIntel firefox -P dark --new-window ~S"
-                                       "firefox --new-window ~S")
-                               url)
-                       `(:title ,title))))
+(defcommand jenkins () ()
+  (browse-url-firefox* *jenkins-url*
+                       :title "Jenkins"))
 
-  (defcommand nexus () ()
-    (firefox "http://nexus.intr" "Nexus"))
+(defcommand youtube () ()
+  (browse-url-firefox* "https://www.youtube.com/feed/subscriptions" t))
 
-  (defcommand slack () ()
-    (firefox "https://mjru.slack.com/" "Slack"))
+(defcommand twitch-tome4 () ()
+  (browse-url-firefox* "https://www.twitch.tv/directory/game/Tales%20of%20Maj'Eyal" t))
 
-  ;; TODO:
-  ;; (defcommand majordomo-la-24-hours () ()
-  ;;   (firefox "http://grafana.intr/d/000000021/telegraf-system-dashboard-shared?panelId=54694&fullscreen&orgId=1&var-datasource=influx-telegraf&var-inter=$__auto_interval_inter&var-server=web.*&var-mountpoint=All&var-cpu=All&var-disk=All&var-netif=All&var-server_role=shared-hosting&var-dc=Miran&from=now-12h&to=now" t))
+(defcommand jenkins-index () ()
+  (browse-url-firefox* *jenkins-url* "Jenkins"))
 
-  ;; TODO:
-  ;; (defcommand majordomo-upstream () ()
-  ;;   (firefox "http://grafana.intr/d/6QgXJjmik/upstream-interfaces-traffic?refresh=5s&orgId=1"))
+(defcommand tometips () ()
+  (run-shell-command "chromium --app=https://tometips.github.io"))
 
-  (defcommand cerb () ()
-    (firefox "http://cerberus.intr/" "Cerberus"))
+(defcommand discord () ()
+  (run-shell-command "chromium --app=https://discordapp.com/"))
 
-  (defcommand gitlab () ()
-    (firefox "https://gitlab.intr/" "GitLab"))
+(defcommand jenkins-chromium () ()
+  (run-or-raise (concat "chromium --app=" *jenkins-url*)
+                '(:instance "jenkins")))
 
-  (defcommand jenkins () ()
-    (firefox *jenkins-url* "Jenkins"))
+(defcommand cuirass () ()
+  (browse-url-firefox* "https://grafana.wugi.info/d/Ob67YJYiz/fiore?refresh=30s&orgId=1&var-host=cuirass"))
 
-  (defcommand jenkins-mj () ()
-    (firefox "https://jenkins.intr/" "Jenkins"))
-
-  (defcommand youtube () ()
-    (firefox "https://www.youtube.com/feed/subscriptions" t))
-
-  (defcommand twitch-tome4 () ()
-    (firefox "https://www.twitch.tv/directory/game/Tales%20of%20Maj'Eyal" t))
-
-  (defcommand jenkins-index () ()
-    (firefox *jenkins-url* "Jenkins"))
-
-  (defcommand tometips () ()
-    (run-shell-command "chromium --app=https://tometips.github.io"))
-
-  (defcommand discord () ()
-    (run-shell-command "chromium --app=https://discordapp.com/"))
-
-  (defcommand jenkins-chromium () ()
-    (run-or-raise (concat "chromium --app=" *jenkins-url*)
-                  '(:instance "jenkins")))
-
-  (defcommand cuirass () ()
-    (firefox "https://grafana.wugi.info/d/Ob67YJYiz/fiore?refresh=30s&orgId=1&var-host=cuirass"))
-
-  (defcommand yoo (url) ((:string "YouTube URL: "))
-    (gnew "youtube")
-    (restore-group (current-group) (read-dump-from-file "/home/oleg/youtube.lisp"))
-    (term-shell-command (format nil "mpv --no-resume-playback --mute=yes ~s" url))
-    (firefox (format nil "https://www.youtube.com/live_chat?v=~a&is_popout=1"
-                     (cadr (split-string url "=")))
-             t)))
+(defcommand yoo (url) ((:string "YouTube URL: "))
+  (gnew "youtube")
+  (restore-group (current-group) (read-dump-from-file "/home/oleg/youtube.lisp"))
+  (term-shell-command (format nil "mpv --no-resume-playback --mute=yes ~s" url))
+  (browse-url-firefox* (format nil "https://www.youtube.com/live_chat?v=~a&is_popout=1"
+                              (cadr (split-string url "=")))
+           t))
 
 (defcommand guix-ci () ()
-  (browse-url-firefox "http://ci.guix.info/jobset/guix-master" t))
+  (browse-url-browse-url-firefox* "http://ci.guix.info/jobset/guix-master"))
 
 (defcommand guix-ci-package (package) ((:string "package: "))
   (unless (string= package "")
-    (browse-url-firefox
+    (browse-url-browse-url-firefox*
      (concat "http://ci.guix.info/search?query=spec%3Aguix-master+system%3Ax86_64-linux+"
              package)
      t)))
 
 (defcommand jenkins-ci-wigust () ()
-  (browse-url-firefox (format nil "~a/job/wigust/" *jenkins-url*) t))
+  (browse-url-browse-url-firefox* (format nil "~a/job/wigust/" *jenkins-url*)))
 
 (defcommand jenkins-ci-guix () ()
-  (browse-url-firefox (format nil "~a/job/guix/" *jenkins-url*) t))
+  (browse-url-browse-url-firefox* (format nil "~a/job/guix/" *jenkins-url*)))
 
 (defcommand repology-guix-outdated () ()
-  (browse-url-firefox "https://repology.org/projects/?inrepo=gnuguix&outdated=1" t))
+  (browse-url-browse-url-firefox* "https://repology.org/projects/?inrepo=gnuguix&outdated=1"))
 
 (defcommand twitch-channel-chat (channel) ((:string "channel: "))
   (run-shell-command
@@ -146,9 +124,6 @@
 (defcommand icecat () ()
   "Start or focus icecat."
   (run-or-raise "icecat" '(:class "IceCat")))
-
-(defun firefox-command ()
-  (join `(,@(if dark-theme '("GTK_THEME=Adwaita:dark") nil) "nixGLIntel" "firefox")))
 
 (defcommand firefox-test () ()
   "Start of focus firefox."
