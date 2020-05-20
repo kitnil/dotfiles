@@ -22,7 +22,7 @@ xml xorg)
     (,git "gui")
     (,git "send-email")
     (,git "svn")
-    (,guile-2.2 "debug")
+    (,guile-3.0 "debug")
     (,alsa-plugins "pulseaudio")
     (,isc-bind "utils")))
 
@@ -73,7 +73,7 @@ xml xorg)
                ;; TODO: Fix cuirass
 
                ;; TODO: Fix artanis
-               guile-2.2 guile-colorized guile-daemon
+               guile-3.0 guile-colorized guile-daemon
                guile-fibers guile-gcrypt guile-git guile-readline
                guile-redis guile-ssh guile-xosd
 
