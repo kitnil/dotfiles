@@ -20,3 +20,6 @@ map c recolor
 map g reload
 map i toggle_index
 map u follow
+
+map <Button1> scroll half-down # left click
+map <Button3> scroll half-up # right click
