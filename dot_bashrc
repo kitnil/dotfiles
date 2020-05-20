@@ -29,14 +29,18 @@ then
 fi
 
 set -o noclobber # do not overwrite files when redirecting output by default.
-rm() { command rm -i "$@"; }
-cp() { command cp -i "$@"; }
-mv() { command mv -i "$@"; }
+
+alias rm="rm -i"
+alias cp="cp -i"
+alias mv="mv -i"
+
+alias xclipp='xclip -selection secondary'
+
 emacs() { command emacs -nw -Q "$@"; }
 
 guile()
 {
-    if [ $INSIDE_EMACS == "vterm" ]
+    if [ "$INSIDE_EMACS" == "vterm" ]
     then
         (unset INSIDE_EMACS; command guile "$@")
     else
@@ -61,7 +65,7 @@ benchmark()
 
 lsd()
 {
-    if [ $INSIDE_EMACS == "vterm" ]
+    if [ "$INSIDE_EMACS" == "vterm" ]
     then
         exa --all --long "$@"
     else
@@ -118,7 +122,7 @@ date-fsf()
 
 cl()
 {
-    echo $(tput cols)x$(tput lines)
+    echo "$(tput cols)x$(tput lines)"
 }
 
 alias bedtime='sudo loginctl suspend'
@@ -128,7 +132,7 @@ alias aria2c='aria2c --seed-time=0'
 ihs()
 {
     GUILE_INSTALL_LOCALE=0                      \
-    GUIX_BUILD_OPTIONS=                         \
+    GUIX_BUILD_OPTIONS=''                       \
     IHS_USER=pyhalov                            \
     IHS_PASS=$(pass show majordomo/hms/pyhalov) \
     CVM_USER=cron                               \
@@ -198,13 +202,13 @@ else
 fi
 
 if [ -f "$HOME/.nix-profile/share/bash-completion/completions/nix" ]; then
-    LOCALE_ARCHIVE="$(readlink $HOME/.nix-profile/lib/locale)/locale-archive"
+    LOCALE_ARCHIVE="$(readlink "$HOME/.nix-profile/lib/locale")/locale-archive"
     export LOCALE_ARCHIVE
 fi
 
 if [ -d "$HOME/.nix-profile/share/man" ]
 then
-    MANPATH=$MANPATH:$HOME/.nix-profile/share/man
+    MANPATH="$MANPATH:$HOME/.nix-profile/share/man"
     export MANPATH
 fi
 
@@ -255,36 +259,16 @@ jc()
     fi
 }
 
-ssh()
-{
-    case "$2" in
-        *.intr)
-            user="$1"
-            host="$2"
-            if [[ $# -eq 2 ]]
-            then
-                command ssh -t "$host" -- "set +o history; sudo --stdin --validate --prompt='' <<< $(pass show majordomo/ssh/eng); exec -a sudo sudo -i";
-            else
-                command ssh -q -t "$host" -- "set +o history; sudo --stdin --validate --prompt='' <<< $(pass show majordomo/ssh/eng); exec -a sudo sudo -i ${*:3}";
-            fi
-            ;;
-        *)
-            command ssh "$@"
-            ;;
-    esac
-}
-export -f ssh
-
 jord-vm-ip()
 {
-    gms vm ip $1 | recsel -pip_address | awk '{ print $2 }'
+    gms vm ip "$1" | recsel -pip_address | awk '{ print $2 }'
 }
 
 jord-ansible-service-start()
 {
-    vm="$(gms vm ip $1 | recsel -pip_address | awk '{ print $2 }')"
-    ansible --user sup --private-key=$HOME/.ssh/id_rsa_sup --inventory $vm, \
-            $vm --module-name service --args "name=$2 state=started" \
+    vm="$(gms vm ip "$1" | recsel -pip_address | awk '{ print $2 }')"
+    ansible --user sup --private-key="$HOME/.ssh/id_rsa_sup" --inventory "$vm", \
+            "$vm" --module-name service --args "name=$2 state=started"          \
             --become --ask-become-pass
 
 }
@@ -296,7 +280,8 @@ jord-web-loadavg()
 
 jord-web-account-check()
 {
-    parallel --will-cite -k 'printf "domain: %s\n" {1}; curl --max-time 10 -L -s -o /dev/null -w "ip-address: %{remote_ip}\nstatus_code: %{http_code}" {1}; printf "\n\n"' ::: $(gms account website $1 | recsel -pname | awk '{ print $2 }')
+    parallel --will-cite -k 'printf "domain: %s\n" {1}; curl --max-time 10 -L -s -o /dev/null -w "ip-address: %{remote_ip}\nstatus_code: %{http_code}" {1}; printf "\n\n"' \
+        ::: "$(gms account website "$1" | recsel -pname | awk '{ print $2 }')"
 }
 
 
@@ -304,15 +289,8 @@ guix-export-archive()
 {
     path="$1"
     destination="$2"
-    guix archive --export -r $path | ssh $destination guix archive --import
-}
-
-restic-grep-bash-history()
-{
-    user="$1"
-    host="$2"
-    pattern="$3"
-    grep --no-filename $pattern /tmp/backup-$host/snapshots/*/home/$user/.bash_history | sort -u
+    guix archive --export -r "$path" \
+        | ssh "$destination" guix archive --import
 }
 
 ssh-keygen-rsa()
@@ -396,15 +374,15 @@ guix()
         pull)
             guix_channels="$HOME/channels.scm"
             guix_command="command guix pull --channels=$guix_channels"
-            (set -ex; $guix_command "${@:2}"; sudo --login $guix_command "${@:2}")
+            (set -ex; "$guix_command" "${@:2}"; sudo --login "$guix_command" "${@:2}")
             [[ $XDG_SESSION_TYPE == x11 ]] && notify-send --urgency=critical 'Guix pull fineshed'
             ;;
         prereconfigure)
             guix_command="$HOME/src/guix/pre-inst-env guix"
             guix_modules="$HOME/src/dotfiles/fiore/modules"
             sudo --login GUIX_PACKAGE_PATH="/home/oleg/src/guix-majordomo:/home/oleg/src/guix-wigust-services/guix:/home/oleg/src/guix-wigust/guix"    \
-                 $guix_command system reconfigure                               \
-                 --load-path=$guix_modules --no-bootloader --fallback /etc/config.scm           \
+                 "$guix_command" system reconfigure                               \
+                 --load-path="$guix_modules" --no-bootloader --fallback /etc/config.scm           \
                  "${@:3}"
             ;;
         system)
@@ -423,7 +401,7 @@ guix()
         qemu)
             # https://wiki.archlinux.org/index.php/QEMU#Creating_bridge_manually
             printf -v macaddr "52:54:%02x:%02x:%02x:%02x" \
-            $(( $RANDOM & 0xff)) $(( $RANDOM & 0xff )) $(( $RANDOM & 0xff)) $(( $RANDOM & 0xff ))
+            $(( RANDOM & 0xff)) $(( RANDOM & 0xff )) $(( RANDOM & 0xff)) $(( RANDOM & 0xff ))
 
             sudo command qemu-system-x86_64 -daemonize -enable-kvm                      \
                  -smp cores=4,threads=1 -cpu host -m 4096 -vga virtio -full-screen      \
@@ -456,7 +434,7 @@ sshpass-root ()
 {
     password="$1"
     ip="$2"
-    sshpass -p "$pass" ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -l root "$ip"
+    sshpass -p "$password" ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -l root "$ip"
 }
 
 # jenkins-log()
@@ -686,7 +664,10 @@ terraform-plan-gitlab()
 
 terraformer-import-github()
 {
-    terraformer import majordomo --token $GITHUB_TOKEN --organizations wugi-emacs --resources=repositories
+    terraformer import majordomo \
+                --token "$GITHUB_TOKEN" \
+                --organizations wugi-emacs \
+                --resources=repositories
 }
 
 spb-log()
@@ -743,26 +724,6 @@ vnc-server-zero()
     done
 }
 
-check-sites-on-ip()
-{
-    ip=$1
-    domains=$@
-    for domain in $domains; do
-        d=$(idn2 $domain)
-        printf "$domain "
-        curl -o /dev/null -s -w "%{http_code}" -k -H "Host: $d" https://$ip/
-        echo
-    done
-}
-
-ansible-auth-hosts-sup()
-{
-    ansible sup --list-hosts
-    for host in $(ansible sup --list-hosts | tail -n +2); do
-        printf "%s%s\n" "$host" "$(ssh  -p 1022 -l sup -i $HOME/.ssh/id_rsa_sup_sup -oStrictHostKeyChecking=no $host -- uptime)"
-    done
-}
-
 ansible-cmdb-my()
 {
     # https://itnext.io/create-a-host-inventory-in-a-minute-with-ansible-c7bf251166d9
@@ -814,11 +775,6 @@ md()
     mkdir -p "$@" && cd "$@"
 }
 
-backup-mysql()
-{
-    for I in $(mysql -e 'show databases' -s --skip-column-names); do mysqldump $I | gzip > "$I.sql.gz"; done
-}
-
 kernel-graph()
 {
     lsmod \
@@ -857,8 +813,10 @@ dnsperf-my()
 
 tmuxifier-webs-user()
 {
-    account="$(ihs web unix $1)"
-    TMUXIFIER_USER=$(echo "$account" | recsel -P name) TMUXIFIER_HOST=$(echo "$account" | recsel -P server_name)s tmuxifier s ssh
+    account="$(ihs web unix "$1")"
+    TMUXIFIER_USER="$(echo "$account" | recsel -P name)" \
+        TMUXIFIER_HOST="$(echo "$account" | recsel -P server_name)"s \
+        tmuxifier s ssh
 }
 
 tmuxifier-web()
@@ -880,7 +838,7 @@ git-clean-up()
     for dir in apache2-php52 apache2-php53 apache2-php54 apache2-php55 apache2-php56 apache2-php70 apache2-php71 apache2-php72 apache2-php73 ; do
         cd $dir
         for branch in $(git branch -r | grep -v master | sed 's|origin/||'); do
-            git push origin --delete $branch
+            git push origin --delete "$branch"
         done
         cd -
     done
@@ -896,20 +854,18 @@ tmux()
     case "$1" in
         list)
             session="$(tmux-ls | fzf)"
-            [ session == "" ] || (exit 1) && command tmux at -t "$session"
+            if [ "$session" == "" ]
+            then
+                return 1
+            else
+                command tmux at -t "$session"
+            fi
             ;;
         *)
             command tmux "$@"
             ;;
     esac
 }
-
-rm-emacs-backups()
-{
-    find . -type f -name '*~' -exec rm {} +
-}
-
-alias xclipp='xclip -selection secondary'
 
 docker-xorg()
 {
@@ -932,7 +888,7 @@ obs-docker-setup()
 {
     # https://github.com/mviereck/x11docker/wiki/Container-sound:-ALSA-or-Pulseaudio
 
-    $(guix build pulseaudio)/bin/pactl load-module module-native-protocol-unix socket=/tmp/pulseaudio.socket
+    "$(guix build pulseaudio)/bin/pactl" load-module module-native-protocol-unix socket=/tmp/pulseaudio.socket
     cat > /tmp/pulseaudio.client.conf << EOF
 default-server = unix:/tmp/pulseaudio.socket
 # Prevent a server running in the container
@@ -963,7 +919,7 @@ obs-docker()
 projectile-ls()
 {
     bash -c 'echo ${0:1:-1}' \
-         "$(printf "%b" $(emacsclient -e "(mapconcat 'identity (mapcar #'expand-file-name (projectile-load-known-projects)) \"\n\")"))" \
+         "$(printf "%b" "$(emacsclient -e "(mapconcat 'identity (mapcar #'expand-file-name (projectile-load-known-projects)) \"\n\")")")" \
         | tr ' ' '\n'
 }
 
@@ -980,7 +936,7 @@ microseconds-to-seconds()
 {
     seconds="$1"
     microseconds=$(echo "scale=2;${seconds}/1000000" | bc)
-    echo $microseconds
+    echo "$microseconds"
 }
 
 test-openvpn()
@@ -1111,7 +1067,7 @@ alias password='EDITOR=zile password'
 
 genpass()
 {
-    tr -dc 'a-zA-Z0-9_#@.-' < /dev/urandom | head -c ${1:-14}
+    tr -dc 'a-zA-Z0-9_#@.-' < /dev/urandom | head -c "${1:-14}"
 }
 
 pass-list-all()
@@ -1150,7 +1106,7 @@ gmail-send()
 
 cmdfu()
 {
-    curl -L "http://www.commandlinefu.com/commands/matching/$*/$(echo -n $* | openssl base64)/plaintext";
+    curl -L "http://www.commandlinefu.com/commands/matching/$*/$(echo -n "$@" | openssl base64)/plaintext";
 }
 
 clfavs()
@@ -1182,8 +1138,6 @@ kill-xterm-on-display()
         fi
     done
 }
-
-alias dmesg="sudo dmesg -T|sed -e 's|\(^.*'`date +%Y`']\)\(.*\)|\x1b[0;34m\1\x1b[0m - \2|g'"
 
 docker-top-strace()
 {
@@ -1246,7 +1200,7 @@ lsp-mode()
     docker run --tty --interactive --rm                                                 \
             --volume "$PWD:/mnt/workspace"                                              \
             --volume /etc/localtime:/etc/localtime:ro                                   \
-            --volume "~/.gnupg:${HOME}/.gnupg"                                          \
+            --volume "$HOME/.gnupg:${HOME}/.gnupg"                                      \
             --volume /var/run/dbus/system_bus_socket:/var/run/dbus/system_bus_socket    \
             --volume /tmp/.X11-unix:/tmp/.X11-unix                                      \
             --volume /etc/machine-id:/etc/machine-id:ro                                 \
