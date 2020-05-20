@@ -166,3 +166,14 @@
 
 (defcommand zabbix () ()
   (run-shell-command "chromium --new-window https://zabbix.wugi.info/"))
+
+
+;;;
+;;; Reference cards
+;;;
+
+(defun browse-refcard (url)
+  (run-shell-command (format nil "curl --silent ~s | zathura -" url)))
+
+(defcommand refcard-gnus () ()
+  (browse-refcard "https://www.gnu.org/software/emacs/refcards/pdf/gnus-refcard.pdf"))
