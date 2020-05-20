@@ -245,6 +245,16 @@ ansible-host()
     ansible --inventory $1, $1 --become --ask-become-pass ${@:2}
 }
 
+jc()
+{
+    if [[ $# -eq 0 ]]
+    then
+        glow "https://github.com/kellyjonbrazil/jc"
+    else
+        command jc "$@"
+    fi
+}
+
 ssh()
 {
     case "$2" in
@@ -1389,8 +1399,6 @@ alias ansible-vault='EDITOR=zile ansible-vault'
 
 alias sw1-dh507='connect sw1-dh507'
 alias sw1-mr11="connect sw1-mr11"
-
-alias glow='glow --style light'
 
 alias nix='EDITOR=less VISUAL="emacsclient -cn" nix'
 
