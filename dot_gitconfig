@@ -50,3 +50,8 @@
 [filesystem "Oracle Corporation|1.8.0_242|/dev/sdb2"]
 	timestampResolution = 1001 microseconds
 	minRacyThreshold = 4449 microseconds
+[filter "lfs"]
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
+	process = git-lfs filter-process
+	required = true
