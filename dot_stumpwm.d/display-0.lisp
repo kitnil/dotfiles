@@ -73,9 +73,9 @@
 
 (defcommand group-7-start-programs () ()
   (run-frame 7 :frame-0-command (lambda ()
-                                  (run-commands "repl-guix"))
+                                  (run-commands "majordomo-alerta"))
                :frame-1-command (lambda ()
-                                  (run-commands "repl-nix-unstable"))))
+                                  (run-commands "majordomo-zabbix"))))
 
 (defcommand group-8-start-programs () ()
   (run-frame 8 :frame-0-command (lambda ()
