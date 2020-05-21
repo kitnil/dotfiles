@@ -1329,6 +1329,11 @@ firefox-esr-debian()
       --new-instance
 }
 
+mitmproxy()
+{
+    PYTHONPATH='' command mitmproxy --set ssl_insecure=true "$@"
+}
+
 if [ -f "$HOME/.guix-profile/bin/ssh-aliases" ]
 then
     eval "$(SSH_COMMAND='connect' "ssh-aliases")"

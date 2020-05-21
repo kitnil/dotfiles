@@ -90,6 +90,7 @@ in [
   groovy
   hexyl
   # httpie
+  mitmproxy
   hy
   hyperfine
   knot-resolver
