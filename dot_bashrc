@@ -1288,6 +1288,13 @@ bpython()
     nix-shell -p python3 "python3.withPackages (python-packages: with python-packages; [ bpython ])" --run bpython
 }
 
+http-prompt()
+{
+    nix-shell -I "$HOME/.nix-defexpr/channels/nixos-unstable"   \
+              -p http-prompt                                    \
+              --run "http-prompt $@"
+}
+
 nix-python2-with-pkgs()
 {
     nix-shell -p python2 "python2.withPackages (python-packages: with python-packages; [ $* ])"
