@@ -1046,7 +1046,7 @@ find-touch-go()
     find . -name '*.go' -exec touch {} +
 }
 
-password()
+function password()
 {
     if [ "$#" -ne 2 ]
     then
