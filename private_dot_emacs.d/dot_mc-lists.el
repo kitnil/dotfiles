@@ -48,6 +48,7 @@
         outshine-self-insert-command
         overwrite-mode
         phi-search
+        phi-search-backward
         query-replace
         recompile
         slime-space
