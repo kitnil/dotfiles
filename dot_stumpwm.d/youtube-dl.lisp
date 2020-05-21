@@ -28,8 +28,8 @@
 (defcommand youtube-dl () ()
   (youtube-dl-command (get-x-selection)))
 
-(defcommand youtube-dl-music () ()
-  (youtube-dl-command (get-x-selection) :music t))
+(defcommand youtube-dl-music (&optional url) ()
+  (youtube-dl-command (or url (get-x-selection)) :music t))
 
 (defcommand youtube-dl-play () ()
   (youtube-dl-command (get-x-selection)

@@ -135,7 +135,10 @@
 
 (defcommand firefox () ()
   "Start of focus firefox."
-  (run-or-raise (firefox-command) '(:class "Firefox")))
+  (let ((url (get-x-selection)))
+    (if (string-contains "youtube.com" url)
+        (youtube-dl-music url)
+        (run-or-raise (firefox-command) '(:class "Firefox")))))
 
 (defcommand firefox-new-window () ()
   "Start Firefox."
