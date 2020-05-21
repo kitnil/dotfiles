@@ -153,6 +153,24 @@ EndSection")
          (server-name '("texinfo.tld"))
          (listen '("80"))
          (root "/var/www/texinfo"))
+
+        ;; (proxy "hms.majordomo.ru" 7777 #:ssl? #f)
+        ;; (proxy "www.majordomo.ru" 7777 #:ssl? #f)
+        ;; (proxy "majordomo.ru" 7777 #:ssl? #f)
+        ;; (proxy "hms-dev.intr" 7777 #:ssl? #f)
+        (nginx-server-configuration
+         (server-name '("hms-dev.intr" "hms.majordomo.ru"))
+         (listen '("80"))
+         (root "/home/static/hms-frontend")
+         (raw-content (list "\
+location / {
+    proxy_set_header Access-Control-Allow-Origin *;
+    root   /home/static/hms-frontend;
+    index  index.html;
+    try_files $uri $uri/ /index.html;
+}
+")))
+
         (proxy "cups.tld" 631)
         (proxy "torrent.tld" 9091)
         (proxy "awx.wugi.info" 8052 #:ssl? #t)
@@ -176,9 +194,6 @@ EndSection")
         (proxy "nextcloud.wugi.info" 28080 #:ssl? #t)
         (proxy "redmine.wugi.info" 44080 #:ssl? #t)
         (proxy "guix.duckdns.org" 5556 #:ssl? #t)
-        (proxy "hms.majordomo.ru" 7777 #:ssl? #f)
-        (proxy "www.majordomo.ru" 7777 #:ssl? #f)
-        (proxy "majordomo.ru" 7777 #:ssl? #f)
         ((lambda* (host #:key
                   (ssl? #f)
                   (ssl-target? #f)
@@ -414,7 +429,8 @@ EndSection")
                            "texinfo.tld"
                            "jenkins.wugi.info"
                            "iso.wugi.info"
-                           "cgit.duckdns.org"))
+                           "cgit.duckdns.org"
+                           "hms-dev.intr"))
            "::1 guixsd localhost"
 
            "192.168.100.1 r1.tld"
