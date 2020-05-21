@@ -414,10 +414,6 @@ ARGS will be passed to hydra."
   (let ((map emacs-lisp-mode-map))
     (define-key map (kbd "C-c C-z") 'wi-switch-to-scratch-elisp)))
 
-(with-eval-after-load 'slime
-  (let ((map slime-mode-map))
-    (define-key map (kbd "C-c C-z") 'scratch)))
-
 (with-eval-after-load 'view
   (let ((map view-mode-map))
     (define-key map (kbd "<f8>") 'delete-current-buffer-file)))

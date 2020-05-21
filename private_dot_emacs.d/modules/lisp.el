@@ -23,6 +23,8 @@
 (setq slime-net-coding-system 'utf-8-unix)
 (setq slime-truncate-lines nil)
 
+(add-to-list 'slime-contribs 'slime-repl)
+
 
 ;;;
 ;;; hy
