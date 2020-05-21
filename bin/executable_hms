@@ -1,0 +1,21 @@
+#!/bin/bash -e
+
+GUILE_INSTALL_LOCALE=0
+export GUILE_INSTALL_LOCALE
+
+GUIX_BUILD_OPTIONS=''
+export GUIX_BUILD_OPTIONS
+
+IHS_USER=pyhalov
+export IHS_USER
+
+IHS_PASS="$(pass show majordomo/hms/pyhalov)"
+export IHS_PASS
+
+CVM_USER=cron
+export CVM_USER
+
+CVM_PASS="$(pass show majordomo/cvm/cron)"
+export CVM_PASS
+
+command ihs "$@"

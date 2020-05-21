@@ -135,10 +135,15 @@
 
 (defcommand firefox () ()
   "Start of focus firefox."
-  (let ((url (get-x-selection)))
-    (if (string-contains "youtube.com" url)
-        (youtube-dl-music url)
-        (run-or-raise (firefox-command) '(:class "Firefox")))))
+  (let ((clipboard (get-x-selection)))
+    (cond ((string-contains "youtube.com" clipboard)
+           (youtube-dl-music clipboard))
+          ((string-contains "AC_" clipboard)
+           (run-shell-command (format nil "notify-send ~s"
+                                      (string-trim '(#\Newline)
+                                                   (run-shell-command (format nil "hms web unix AC_208112")
+                                                                      t)))))
+          (t (run-or-raise (firefox-command) '(:class "Firefox"))))))
 
 (defcommand firefox-new-window () ()
   "Start Firefox."
