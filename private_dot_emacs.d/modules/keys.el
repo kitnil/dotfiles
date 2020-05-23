@@ -404,8 +404,6 @@ ARGS will be passed to hydra."
 
 ;; Encrypt Email message with Gnupg
 (with-eval-after-load 'message
-  (require 'jl-encrypt)
-  (add-hook 'message-setup-hook 'mml-secure-encrypt-if-possible)
   (let ((map message-mode-map))
     (define-key map (kbd "C-c s") 'ispell-region)
     (define-key map (kbd "C-c e") 'wi-replace-with-brackets-ellipsis)))

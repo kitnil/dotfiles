@@ -1,4 +1,7 @@
-(setq mml-secure-insert-signature 'always)
+;; only sign
+(add-hook 'gnus-message-setup-hook 'mml-secure-message-sign-pgpmime)
+(add-hook 'message-setup-hook 'mml-secure-message-sign-pgpmime)
+
 (setq mail-user-agent 'gnus-user-agent)
 
 ;; (setq epg-config--program-alist
