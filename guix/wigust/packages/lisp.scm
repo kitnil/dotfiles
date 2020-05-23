@@ -152,3 +152,34 @@
       (description "This package provides an implementation of the XEMBED
 protocol that integrates with CLX.")
       (license license:expat))))
+
+(define-public sbcl-stumpwm-checkout-stumptray
+  (let ((commit "dd5b037923ec7d3cc27c55806bcec5a1b8cf4e91")
+        (revision "1"))
+    (package
+      (name "sbcl-stumptray")
+      (version (git-version "0.0.1" revision commit))
+      (source
+       (origin
+         (method git-fetch)
+         (uri (git-reference
+               (url "https://github.com/stumpwm/stumpwm-contrib.git")
+               (commit commit)))
+         (file-name (git-file-name name version))
+         (sha256
+          (base32 "0ahxdj9f884afpzxczx6mx7l4nwg4kw6afqaq7lwhf7lxcwylldn"))))
+      (build-system asdf-build-system/sbcl)
+      (inputs
+       `(("stumpwm" ,stumpwm-checkout "lib")
+         ("alexandria" ,sbcl-alexandria)
+         ("xembed" ,sbcl-clx-xembed)))
+      (arguments
+       '(#:phases
+         (modify-phases %standard-phases
+           (add-after 'unpack 'chdir
+             (lambda _
+               (chdir "modeline/stumptray"))))))
+      (home-page "https://github.com/stumpwm/stumpwm-contrib")
+      (synopsis "")
+      (description "")
+      (license #f))))
