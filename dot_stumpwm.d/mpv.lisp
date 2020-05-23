@@ -49,6 +49,7 @@
         (run-or-raise
          (join (list "mpv" "--keep-open=no" "--msg-level=all=no"
                      "--no-resume-playback" "--shuffle" "--title=mpv-music"
+                     (concat "--input-unix-socket=" (getenv "HOME") "/.mpv/socket")
                      "/srv/music/*"))
          '(:title "mpv-music")))))
 
