@@ -1,5 +1,4 @@
-#!/run/current-system/profile/bin/guile \
---no-auto-compile -e (ssh-aliases) -s
+#!/usr/bin/env -S guile --no-auto-compile -e (ssh-aliases) -s
 !#
 
 ;;;; ssh-aliases --- SYNOPSIS
