@@ -139,7 +139,7 @@
        (send-fake-key window (kbd "C-Page_Up")))
       (t (prev-in-frame)))))
 
-(defcommand delete-or-kill-window () ()
+(defcommand keybinding-s-k () ()
   (let ((window (current-window)))
     (cond
       ((uiop/utility:string-prefix-p "repl-nix" (window-title window))
