@@ -54,7 +54,10 @@
                       (if (string-suffix? ".intr" host)
                           (string-drop-right host (string-length ".intr"))
                           host)
-                      (format #f "~a ~a" %command host)))
+                      (format #f "~a ~a" %command host))
+              (format #t "complete -W ~s ~a~%"
+                      "apache block clean containers images mysql nginx ping sg status te traceroute"
+                      (string-drop-right host (string-length ".intr"))))
             (sort (filter (cut string-suffix? ".intr" <>)
                           (map (match-lambda ((host _ ...) host))
                                (map (cut string-split <> #\space)
