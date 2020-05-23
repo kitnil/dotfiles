@@ -1416,7 +1416,7 @@ rg()
             command rg "${@:2}" "$HOME"/{src/nixpkgs-master,src/guix-master,archive/src/{gentoo,freebsd,openbsd-ports,arch-{community,packages}}}
             ;;
         *)
-            command rg "$@"
+            command rg --no-heading "$@"
             ;;
     esac
 }
