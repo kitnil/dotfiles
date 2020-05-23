@@ -128,3 +128,27 @@
     (inherit sbcl-stumpwm-swm-gaps)
     (inputs
      `(("stumpwm" ,stumpwm-checkout "lib")))))
+
+(define-public sbcl-clx-xembed
+  (let ((commit "a5c4b844d31ee68ffa58c933cc1cdddde6990743")
+        (revision "1"))
+    (package
+      (name "sbcl-xembed")
+      (version (git-version "0.1.0" revision commit))
+      (source (origin
+                (method git-fetch)
+                (uri (git-reference
+                      (url "https://github.com/laynor/clx-xembed.git")
+                      (commit commit)))
+                (file-name (git-file-name name version))
+                (sha256
+                 (base32
+                  "1abx4v36ycmfjdwpjk4hh8058ya8whwia7ds9vd96q2qsrs57f12"))))
+      (build-system asdf-build-system/sbcl)
+      (inputs
+       `(("clx" ,sbcl-clx)))
+      (home-page "https://github.com/laynor/clx-xembed/")
+      (synopsis "Implementation of the XEMBED protocol that integrates with CLX")
+      (description "This package provides an implementation of the XEMBED
+protocol that integrates with CLX.")
+      (license license:expat))))
