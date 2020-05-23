@@ -181,7 +181,7 @@ xdisorg xml xorg)
                licensecheck ; Licence checker for source files
                lsof
                ncdu            ; TUI `du'
-               netcat          ; TCP nmap
+               netcat-openbsd
                openssl
                nethogs
                rsync
