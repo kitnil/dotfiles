@@ -100,8 +100,8 @@
   (define-key *top-map* (kbd "C-s--") "volume-decrease")
   (define-key *top-map* (kbd "C-s-RET") "run-xterm-named")
   (define-key *top-map* (kbd "M-s-RET") "xfce-terminal")
-  (define-key *top-map* (kbd "M-s-n") "gnext")
-  (define-key *top-map* (kbd "M-s-p") "gprev")
+  (define-key *top-map* (kbd "M-s-n") "mpv-next")
+  (define-key *top-map* (kbd "M-s-p") "mpv-previous")
 
   (define-key *top-map* (kbd "M-s-e") "emacs-guix-edit")
 
