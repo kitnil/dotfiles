@@ -53,5 +53,11 @@
                      "/srv/music/*"))
          '(:title "mpv-music")))))
 
+(defcommand mpv-next () ()
+  (run-shell-command "mpvctl next"))
+
+(defcommand mpv-previous () ()
+  (run-shell-command "mpvctl previous"))
+
 (defcommand mpv-music () ()
   (run-shell-command "mpv https://www.youtube.com/playlist?list=PLmjgicsUWIkvEKkLN01vm85neXAik3yU2"))
