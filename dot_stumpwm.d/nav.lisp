@@ -146,6 +146,8 @@
        (kill-window window))
       ((string= (window-class window) "Emacs")
        (emacsclient-eval "(kill-buffer (window-buffer (frame-selected-window)))"))
+      ((string= (window-class window) "Firefox")
+       (send-fake-key window (kbd "M-w")))
       (t (delete-window window)))))
 
 (defcommand keybinding-s-o () ()
