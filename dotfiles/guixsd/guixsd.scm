@@ -309,7 +309,8 @@ location / {
                        gnome-themes-standard adwaita-icon-theme hicolor-icon-theme
                        lxappearance
 
-                       desktop-file-utils gvfs xrdb xset xsetroot xkill
+                       desktop-file-utils xrdb xset xsetroot xkill
+                       ;; gvfs depends on webkitgtk
 
                        setxkbmap   ;keyboard layout
                        wmctrl      ;`ewmctrl'
