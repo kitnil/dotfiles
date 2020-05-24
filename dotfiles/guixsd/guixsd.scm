@@ -493,6 +493,7 @@ location / {
                                                          )
                                                    #:user "oleg"
                                                    #:group "users"
+                                                   #:supplementary-groups #(999)
                                                    #:environment-variables
                                                    (append (list (string-append "PATH="
                                                                                 (string-append #$git "/bin")
