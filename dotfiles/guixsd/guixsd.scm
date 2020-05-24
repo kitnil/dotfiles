@@ -298,6 +298,7 @@ location / {
                        sbcl-stumpwm-checkout-ttf-fonts
                        sbcl-stumpwm-checkout-globalwindows
                        sbcl-stumpwm-checkout-swm-gaps
+                       sbcl-stumpwm-checkout-stumptray
                        stumpish
 
                        ncurses

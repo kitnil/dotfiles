@@ -1,5 +1,7 @@
 (in-package :stumpwm)
 
+(require :stumptray)
+
 (setf *mode-line-position* :bottom)
 
 (defvar *mode-line-window-number* 10)
@@ -82,10 +84,13 @@
           ,'(:eval (format nil "VOL: ~a" *volume-current*))
 
           ,(make-string 4 :initial-element #\space)
-          "%d")))
+          "%d"
+
+          ,(make-string 4 :initial-element #\space))))
 
 (mode-line-update)
 (mode-line)
+(stumptray)
 
 (defcommand ip-address-vpn-update () ()
   (setq *tapvpn-ip*
