@@ -494,7 +494,7 @@ location / {
                                                          )
                                                    #:user "oleg"
                                                    #:group "users"
-                                                   #:supplementary-groups #(999)
+                                                   #:supplementary-groups '("docker")
                                                    #:environment-variables
                                                    (append (list (string-append "PATH="
                                                                                 (string-append #$git "/bin")
