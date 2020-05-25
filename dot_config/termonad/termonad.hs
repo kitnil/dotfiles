@@ -7,7 +7,7 @@ import Termonad.App (defaultMain)
 import Termonad.Config
   ( FontConfig, FontSize(FontSizePoints), Option(Set)
   , ShowScrollbar(ShowScrollbarAlways), defaultConfigOptions, defaultFontConfig
-  , defaultTMConfig, fontConfig, fontFamily, fontSize, options, showScrollbar
+  , defaultTMConfig, fontConfig, fontFamily, fontSize, options, showScrollbar, showMenu
   )
 import Termonad.Config.Colour
   ( AlphaColour, ColourConfig, addColourExtension, createColour
@@ -99,6 +99,7 @@ main = do
                 { fontConfig = fontConf
                   -- Make sure the scrollbar is always visible.
                 , showScrollbar = ShowScrollbarAlways
+                , showMenu = False
                 }
           }
         `addColourExtension` colExt
