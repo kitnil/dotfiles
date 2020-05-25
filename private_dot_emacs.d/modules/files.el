@@ -10,4 +10,5 @@
         ("kresd\\.conf" . lua-mode)
         ("\\.luadoc" . lua-mode)
         ("\\.drv" . guix-derivation-mode)
-        (".ansible-hosts" . yaml-mode)))
+        (".ansible-hosts" . yaml-mode)
+        ("\\.bats" . sh-mode)))
