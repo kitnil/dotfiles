@@ -122,7 +122,7 @@
        (window-send-string ">"))
       ((some (lambda (str)
                (string= str (window-class window)))
-             '("Firefox" "Xfce4-terminal"))
+             '("Firefox" "Chromium-browser" "Xfce4-terminal"))
        (send-fake-key window (kbd "C-Page_Down")))
       (t (next-in-frame)))))
 
@@ -135,7 +135,7 @@
        (window-send-string "<"))
       ((some (lambda (str)
                (string= str (window-class window)))
-             '("Firefox" "Xfce4-terminal"))
+             '("Firefox" "Chromium-browser" "Xfce4-terminal"))
        (send-fake-key window (kbd "C-Page_Up")))
       (t (prev-in-frame)))))
 
