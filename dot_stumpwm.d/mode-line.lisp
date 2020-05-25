@@ -90,7 +90,7 @@
 
 (mode-line-update)
 (mode-line)
-(stumptray)
+(stumptray:stumptray)
 
 (defcommand ip-address-vpn-update () ()
   (setq *tapvpn-ip*
