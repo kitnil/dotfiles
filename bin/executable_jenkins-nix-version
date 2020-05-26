@@ -1,12 +1,12 @@
 #!/run/current-system/profile/bin/guile \
---no-auto-compile -e (nixos) -s
+--no-auto-compile -e (jenkins-nix-version) -s
 !#
 
 ;;;; nixos --- SYNOPSIS
 ;;;; Copyright © 2020 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;; Released under the GNU GPLv3 or any later version.
 
-(define-module (nixos)
+(define-module (jenkins-nix-version)
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-37)
   #:use-module (ice-9 popen)
@@ -61,12 +61,11 @@
   (define nix-commit
     (or (assoc-ref opts 'commit)
         (last (string-split (match:substring
-                             (regexp-exec (make-regexp "(nixos-[[:digit:]]*\\.[[:digit:]]*\\.[[:digit:]]*\\.[[:alnum:]]*)")
+                             (regexp-exec (make-regexp "([[:digit:]]*\\.[[:digit:]]*\\.[[:digit:]]*\\.[[:alnum:]]*)")
                                           (system->string "ssh"
                                                           '("jenkins.intr"
                                                             "--"
-                                                            "cat"
-                                                            "/var/lib/jenkins/.nix-defexpr/channels/manifest.nix"))))
+                                                            "nix-instantiate --eval -E '(import <nixpkgs> {}).lib.version'"))))
                             #\.))))
 
   (define nix-expression
