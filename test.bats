@@ -1,8 +1,7 @@
-#!/usr/bin/env -S bats -t
+#!/usr/bin/env -S bats
 
 @test "run bin/executable_jenkins-nix-version" {
-    command="bin/executable_jenkins-nix-version hello"
-    echo "Invoking: '$command'." >&3; run $command; echo "$output" >&3
+    run bin/executable_jenkins-nix-version hello
     [ "$status" -eq 0 ]
     [[ "$output" == /nix/store/*-hello-* ]]
 }
