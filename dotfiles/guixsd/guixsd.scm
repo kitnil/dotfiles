@@ -194,7 +194,6 @@ location / {
         (proxy "nextcloud.wugi.info" 28080 #:ssl? #t)
         (proxy "redmine.wugi.info" 44080 #:ssl? #t)
         (proxy "guix.duckdns.org" 5556 #:ssl? #t)
-        (proxy "mailman.example.org" 8081)
         ((lambda* (host #:key
                   (ssl? #f)
                   (ssl-target? #f)
@@ -433,8 +432,7 @@ location / {
                            "jenkins.wugi.info"
                            "iso.wugi.info"
                            "cgit.duckdns.org"
-                           "hms-dev.intr"
-                           "mailman.example.org"))
+                           "hms-dev.intr"))
            "::1 guixsd localhost"
 
            "192.168.100.1 r1.tld"
