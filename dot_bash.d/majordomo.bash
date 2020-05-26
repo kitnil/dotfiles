@@ -299,3 +299,10 @@ majordomo-jenkins-log()
         cd -
     done
 }
+
+majordomo-dns-check()
+{
+    for dns in 172.16.103.2 172.16.100.3; do
+        (echo $dns; time dig +short a ${1:-cerberus.intr} @$dns) |& xargs echo
+    done
+}
