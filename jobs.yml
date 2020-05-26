@@ -1,4 +1,4 @@
-#!/usr/bin/env -S jenkins-jobs --ignore-cache update
+#!/usr/bin/env -S PYTHONPATH='' jenkins-jobs --ignore-cache update
 ---
 
 - job:
