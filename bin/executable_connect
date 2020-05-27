@@ -1,5 +1,8 @@
 #!/usr/bin/env bash
 
+set -eu
+set -o pipefail
+
 help_main()
 {
     echo "\
@@ -9,15 +12,14 @@ Run COMMANDS with ARGS
 COMMAND must be one of the sub-commands listed below:
 
    apache
-   block
    clean
    containers
    images
+   ip-filter
    mysql
    nginx
    ping
    sg
-   status
    te
    traceroute
 
@@ -31,6 +33,23 @@ Usage: connect mysql [OPTION] HOST...
 Connect mysql to HOST.
 
   -c, --client=CLIENT    mysql client
+  -h, --help             display this help and exit
+
+Report bugs to: go.wigust@gmail.com."
+}
+
+help_ip_filter()
+{
+    echo "\
+Usage: connect ip-filter [OPTION ...] ACTION [ARG ...] [HOST]
+Connect to HOST and display ip-filter information according to ACTION.
+Some ACTIONS support additional ARGS.
+
+The valid values for ACTION are:
+
+   describe           show ip-filter rules
+   block              add blocking rule
+
   -h, --help             display this help and exit
 
 Report bugs to: go.wigust@gmail.com."
@@ -207,18 +226,66 @@ mycli --password "$(pass show majordomo/web/mysql/root)" -d "${2%.intr}"
             mysql --silent --user="$user" --password="$password" --host="$host" --execute="kill $id;"
         done
         ;;
-    # $3 is ip-to-block
-    block)
-        curl --silent --head --request PUT "$3/ip-filter/$3?ttl=7200&action=setCookie"
-        ;;
-    status)
-        echo "name: ip-filter-$3"
-        echo -n "blocked: "
-        curl --silent --request GET "$3/ip-filter"  \
-            | cut -d' ' -f 1                        \
-            | xargs echo
-        echo
-        ;;
+    ip-filter)
+        case "$2" in
+            --help)
+                help_ip_filter
+                ;;
+            block)
+                if [[ "$4" == *web* ]]
+                then
+                    host="$4"
+                else
+                    echo "$4 is not a web host"
+                    exit 1
+                fi
+                if ! OPTS="$(getopt --options a:r:h --long add:,:remove,help --name parse-options -- "$@")"
+                then
+                    echo "Failed parsing options."
+                    exit 1
+                fi
+                eval set -- "$OPTS"
+                while true; do
+                    case "$1" in
+                        -h | --help )
+                            help_ip_filter
+                            exit 0
+                            ;;
+                        -a | --add )
+                            curl --silent --head --request PUT "$host/ip-filter/$2?ttl=7200&action=setCookie"
+                            shift 2
+                            ;;
+                        -r | --remove )
+                            curl --silent --head --request DELETE "$host/ip-filter/$3?ttl=7200&action=setCookie"
+                            shift 2
+                            ;;
+                        -- )
+                            shift
+                            break
+                            ;;
+                        ,* )
+                            break
+                            ;;
+                    esac
+                done
+                ;;
+            describe)
+                case "$3" in
+                    --help )
+                        help_ip_filter
+                        ;;
+                    *)
+                        echo "name: ip-filter-$4"
+                        echo -n "blocked: "
+                        curl --silent --request GET "$4/ip-filter"  \
+                            | cut -d' ' -f 1                        \
+                            | sort --numeric-sort                   \
+                            | xargs echo
+                        ;;
+                esac
+
+        esac
+    ;;
     te)
         ssh_expect "$2" tail --lines="${3:-1000}" /var/log/taskexecutor.log \
             | grep -v 'malware_report' \
