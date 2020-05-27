@@ -1,5 +1,6 @@
 Jenkinsfile
 test.bats
+tests
 README.md
 dotfiles
 bin/dotfiles
