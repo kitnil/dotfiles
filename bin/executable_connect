@@ -19,6 +19,7 @@ COMMAND must be one of the sub-commands listed below:
    mysql
    nginx
    ping
+   ssh
    sg
    te
    traceroute
