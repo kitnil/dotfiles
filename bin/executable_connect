@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -eu
+set -e
 set -o pipefail
 
 help_main()
@@ -41,15 +41,13 @@ Report bugs to: go.wigust@gmail.com."
 help_ip_filter()
 {
     echo "\
-Usage: connect ip-filter [OPTION ...] ACTION [ARG ...] [HOST]
-Connect to HOST and display ip-filter information according to ACTION.
-Some ACTIONS support additional ARGS.
+Usage: connect ip-filter [OPTION]...
+Connect to HOST's ip-filter.
 
-The valid values for ACTION are:
-
-   describe           show ip-filter rules
-   block              add blocking rule
-
+  -a, --add              add IP to ip-filter
+  -r, --remove           remove IP from ip-filter
+  -d, --describe         list IP address in ip-filter
+  -d, --host             ip-filter host
   -h, --help             display this help and exit
 
 Report bugs to: go.wigust@gmail.com."
@@ -228,64 +226,59 @@ mycli --password "$(pass show majordomo/web/mysql/root)" -d "${2%.intr}"
         done
         ;;
     ip-filter)
-        case "$2" in
-            --help)
-                help_ip_filter
-                ;;
-            block)
-                if [[ "$4" == *web* ]]
-                then
-                    host="$4"
-                else
-                    echo "$4 is not a web host"
-                    exit 1
-                fi
-                if ! OPTS="$(getopt --options a:r:h --long add:,:remove,help --name parse-options -- "$@")"
-                then
-                    echo "Failed parsing options."
-                    exit 1
-                fi
-                eval set -- "$OPTS"
-                while true; do
-                    case "$1" in
-                        -h | --help )
-                            help_ip_filter
-                            exit 0
-                            ;;
-                        -a | --add )
-                            curl --silent --head --request PUT "$host/ip-filter/$2?ttl=7200&action=setCookie"
-                            shift 2
-                            ;;
-                        -r | --remove )
-                            curl --silent --head --request DELETE "$host/ip-filter/$3?ttl=7200&action=setCookie"
-                            shift 2
-                            ;;
-                        -- )
-                            shift
-                            break
-                            ;;
-                        ,* )
-                            break
-                            ;;
-                    esac
-                done
-                ;;
-            describe)
-                case "$3" in
-                    --help )
-                        help_ip_filter
-                        ;;
-                    *)
-                        echo "name: ip-filter-$4"
-                        echo -n "blocked: "
-                        curl --silent --request GET "$4/ip-filter"  \
-                            | cut -d' ' -f 1                        \
-                            | sort --numeric-sort                   \
-                            | xargs echo
-                        ;;
-                esac
-
-        esac
+        if ! OPTS="$(getopt --options arHhd --long add:,remove:,host:,help,describe --name parse-options -- "$@")"
+        then
+            echo "Failed parsing options."
+            exit 1
+        fi
+        eval set -- "$OPTS"
+        while true; do
+            case "$1" in
+                -h | --help )
+                    help_ip_filter
+                    exit 0
+                    ;;
+                -H | --host )
+                    IP_FILTER_HOST="$2"
+                    shift 2
+                    ;;
+                -a | --add )
+                    IP_FILTER_HOST_ADD="$2"
+                    shift 2
+                    ;;
+                -r | --remove )
+                    IP_FILTER_HOST_DELETE="$2"
+                    shift 2
+                    ;;
+                -d | --describe)
+                    IP_FILTER_HOST_DESCRIBE="$2"
+                    shift
+                    ;;
+                -- )
+                    shift
+                    break
+                    ;;
+                ,* )
+                    break
+                    ;;
+            esac
+        done
+        if [ -n $IP_FILTER_HOST_DESCRIBE ]
+        then
+            echo "name: ip-filter-$IP_FILTER_HOST"
+            echo -n "blocked: "
+            curl --silent --request GET "$IP_FILTER_HOST/ip-filter" \
+                | cut -d' ' -f 1 | sort --numeric-sort | xargs echo
+            exit 0
+        fi
+        if [ -n $IP_FILTER_HOST_DELETE ]
+        then
+            curl --silent --head --request DELETE "$IP_FILTER_HOST/ip-filter/$3?ttl=7200&action=setCookie"
+        fi
+        if [ -n $IP_FILTER_HOST_ADD ]
+        then
+            curl --silent --head --request PUT "$IP_FILTER_HOST/ip-filter/$2?ttl=7200&action=setCookie"
+        fi
     ;;
     te)
         ssh_expect "$2" tail --lines="${3:-1000}" /var/log/taskexecutor.log \
