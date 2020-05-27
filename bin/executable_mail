@@ -43,8 +43,12 @@ case "$1" in
             houdinihar@yandex.ru)
                 exec -a "$0" neomutt -F "$HOME/.muttrc_houdinihar_yandex"
                 ;;
+            jenkins@majordomo.ru)
+                exec -a "$0" neomutt -F "$HOME/.muttrc_jenkins_majordomo"
+                ;;
             -A)
-                printf "%s\n" pyhalov@majordomo.ru asfjsdf@mail.ru houdinihar@yandex.ru
+                printf "%s\n" pyhalov@majordomo.ru asfjsdf@mail.ru \
+houdinihar@yandex.ru jenkins@majordomo.ru
                 ;;
             *)
                 help_neomutt
