@@ -74,14 +74,15 @@ _connect_complete()
             COMPREPLY=($(compgen -W "$_connect_subcommands" -- "$word_at_point"))
             ;;
         *)
-            if _connect_is_command "containers" \
-                    || _connect_is_command "emacs" \
-                    || _connect_is_command "images" \
-                    || _connect_is_command "nginx" \
-                    || _connect_is_command "ping" \
-                    || _connect_is_command "sg" \
-                    || _connect_is_command "ssh" \
-                    || _connect_is_command "te" \
+            if _connect_is_command "containers"         \
+                    || _connect_is_command "emacs"      \
+                    || _connect_is_command "images"     \
+                    || _connect_is_command "nginx"      \
+                    || _connect_is_command "ping"       \
+                    || _connect_is_command "sg"         \
+                    || _connect_is_command "shell"      \
+                    || _connect_is_command "ssh"        \
+                    || _connect_is_command "te"         \
                     || _connect_is_command "traceroute" \
                     || _connect_is_command "mysql"
             then

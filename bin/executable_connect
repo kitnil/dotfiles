@@ -19,6 +19,7 @@ COMMAND must be one of the sub-commands listed below:
    mysql
    nginx
    ping
+   shell
    ssh
    sg
    te
@@ -147,9 +148,12 @@ case "$1" in
         ssh_expect "${2%.intr}" docker images --no-trunc --format "'{{.ID}}: {{.Repository}}'"
         ;;
     web*)
-        export MULTIPLE=true
         host="$1"; [[ "$host" == *.intr ]] || host+=.intr
         ssh_sudo "$host" "${@:2}"
+        ;;
+    shell)
+        host="$2"; [[ "$host" == *.intr ]] || host+=.intr
+        ssh_sudo "$host" "${@:3}"
         ;;
     nginx)
         ssh_expect "${2%.intr}" docker logs --tail "${3:-1000}" nginx \
