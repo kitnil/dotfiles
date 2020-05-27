@@ -128,27 +128,27 @@ case "$1" in
     sg)
         echo "Hint: Install sg3-utils by invoking 'apt install sg3-utils'"
         for i in {1..8}; do
-            time ssh_expect "${3%.intr}" "sg_read if=/dev/sg$i bs=512 count=100000"
+            time ssh_expect "${2%.intr}" "sg_read if=/dev/sg$i bs=512 count=100000"
         done
         ;;
     ping)
-        ping --numeric --count="${3:-3}" "${3%.intr}"
+        ping --numeric --count="${4:-3}" "${2%.intr}"
         ;;
     traceroute)
-        sudo traceroute "${3%.intr}"
+        sudo traceroute "${2%.intr}"
         ;;
     containers)
-        ssh_expect "${3%.intr}" docker ps --no-trunc --format "'table {{.ID}}\t{{.Names}}\t{{.Status}}'"
+        ssh_expect "${2%.intr}" docker ps --no-trunc --format "'table {{.ID}}\t{{.Names}}\t{{.Status}}'"
         ;;
     images)
-        ssh_expect "${3%.intr}" docker images --no-trunc --format "'{{.ID}}: {{.Repository}}'"
+        ssh_expect "${2%.intr}" docker images --no-trunc --format "'{{.ID}}: {{.Repository}}'"
         ;;
     web*)
         export MULTIPLE=true
-        ssh_expect "${3%.intr}" "${@:4}"
+        ssh_expect "${2%.intr}" "${@:3}"
         ;;
     nginx)
-        ssh_expect "${3%.intr}" docker logs --tail "${4:-1000}" nginx \
+        ssh_expect "${2%.intr}" docker logs --tail "${3:-1000}" nginx \
             | awk '{ print $1 }' \
             | grep --invert-match --fixed-strings '127.0.0.1' \
             | sort \
@@ -185,15 +185,15 @@ case "$1" in
         done
         case $MYSQL_CLIENT in
             mysql )
-                mysql -h"${3%.intr}" -p"$(pass show majordomo/web/mysql/root)" -uroot
+                mysql -h"${2%.intr}" -p"$(pass show majordomo/web/mysql/root)" -uroot
                 ;;
             mycli )
                 PAGER='pspg -s 14 -X --force-uniborder --quit-if-one-screen -s 16' \
-mycli --password "$(pass show majordomo/web/mysql/root)" -d "${3%.intr}"
+mycli --password "$(pass show majordomo/web/mysql/root)" -d "${2%.intr}"
                 ;;
             * )
                 PAGER='pspg -s 14 -X --force-uniborder --quit-if-one-screen -s 16' \
-mycli --password "$(pass show majordomo/web/mysql/root)" -d "${3%.intr}"
+mycli --password "$(pass show majordomo/web/mysql/root)" -d "${2%.intr}"
                 ;;
         esac
         ;;
@@ -225,7 +225,7 @@ mycli --password "$(pass show majordomo/web/mysql/root)" -d "${3%.intr}"
             | sed '/^[[:space:]]*$/d'
         ;;
     apache)
-        ssh_expect "${3%.intr}" sh -c "'cat /home/$4/logs/*access.log'"
+        ssh_expect "${2%.intr}" sh -c "'cat /home/$4/logs/*access.log'"
         ;;
     *)
         if ! ssh_command "$@"
