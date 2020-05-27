@@ -20,7 +20,7 @@
         push-skip-ci = push -o ci.skip
 	# Credit an author on the latest commit
 	credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
-	mirror = "!f() { (set -x; git push origin; sshpass -Ppassphrase -p$(pass show gitlab.com/id_rsa_gitlab) git push gitlab; sshpass -Ppassphrase -p$(pass show github/ssh/id_rsa_github) git push github; git push majordomo); }; f"
+	mirror = "!f() { (set -x; git push origin; sshpass -Ppassphrase -p$(pass show gitlab.com/id_rsa_gitlab) git push gitlab; sshpass -Ppassphrase -p$(pass show github/ssh/id_rsa_github) git push github; sshpass -Ppassphrase -p$(pass show gitlab.intr/ssh/id_rsa_gitlab_intr) git push majordomo); }; f"
 [github]
 	user = wigust
 [gitlab]
