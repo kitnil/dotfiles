@@ -14,7 +14,7 @@ _connect_complete_host ()
     then
 	# Cache the complete list because it rarely changes and makes
 	# completion much faster.
-	_connect_host="$(awk '/\.intr/ { print $1 }' $HOME/.myclirc 2> /dev/null)"
+	_connect_host="$((awk '/\.intr/ { print $1 }' $HOME/.ssh/known_hosts | cut -d: -f 1 | sed -e 's/\[//' -e 's/\]//' | cut -d, -f 1) 2> /dev/null)"
     fi
     COMPREPLY=($(compgen -W "$_connect_host" -- "$prefix"))
 }
