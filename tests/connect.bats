@@ -23,3 +23,9 @@
     [ "$status" -eq 0 ]
     [[ "$output" == *blocked* ]]
 }
+
+@test "connect shell sw1-mr11.intr show interfaces" {
+    run timeout 3 bin/executable_connect shell sw1-mr11.intr show interfaces
+    [ "$status" -eq 0 ]
+    [[ "$output" == *FastEthernet* ]]
+}
