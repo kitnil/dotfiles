@@ -153,7 +153,10 @@ case "$1" in
         ;;
     shell)
         host="$2"; [[ "$host" == *.intr ]] || host+=.intr
-        ssh_sudo "$host" "${@:3}"
+        if ! ssh_sudo "$host" "${@:3}"
+        then
+            TELNET_PASSWORD="$(pass show majordomo/general)" cisco "$host" "${@:3}"
+        fi
         ;;
     nginx)
         ssh_expect "${2%.intr}" docker logs --tail "${3:-1000}" nginx \
@@ -277,12 +280,6 @@ mycli --password "$(pass show majordomo/web/mysql/root)" -d "${2%.intr}"
         ;;
     apache)
         ssh_expect "${2%.intr}" sh -c "'cat /home/$4/logs/*access.log'"
-        ;;
-    *)
-        if ! ssh_command "$@"
-        then
-            TELNET_PASSWORD="$(pass show majordomo/general)" cisco "$@"
-        fi
         ;;
 esac
 
