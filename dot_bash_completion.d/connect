@@ -10,6 +10,20 @@ _connect_complete_mysql ()
     COMPREPLY=($(compgen -W "$_connect_mysql" -- "$prefix"))
 }
 
+_connect_complete_option ()
+{
+    local subcommand
+    case "${COMP_WORDS[2]}" in
+	-*)     subcommand="";;
+	[a-z]*) subcommand="${COMP_WORDS[2]}";;
+    esac
+    local options="$(${COMP_WORDS[0]} ${COMP_WORDS[1]} $subcommand --help 2> /dev/null \
+                            | grep '^  \+-' \
+                            | sed -e's/^.*--\([a-zA-Z0-9_-]\+\)\(=\?\).*/--\1\2/g')"
+    compopt -o nospace
+    COMPREPLY=($(compgen -W "$options" -- "${COMP_WORDS[${#COMP_WORDS[*]} - 1]}"))
+}
+
 _connect_is_command ()
 {
     local word
@@ -29,6 +43,17 @@ _connect_complete()
 {
     local word_count=${#COMP_WORDS[*]}
     local word_at_point="${COMP_WORDS[$COMP_CWORD]}"
+
+    if [ "$COMP_CWORD" -gt 1 ]
+    then
+	case "$word_at_point" in
+	    -*)
+		_connect_complete_option "$word_at_point"
+		return
+		;;
+	esac
+    fi
+
     case $COMP_CWORD in
         1)
 	    if [ -z "$_connect_subcommands" ]

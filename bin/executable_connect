@@ -8,7 +8,6 @@ Run COMMANDS with ARGS
 
 COMMAND must be one of the sub-commands listed below:
 
-   mysql
    apache
    block
    clean
@@ -31,6 +30,7 @@ help_mysql()
 Usage: connect mysql [OPTION] HOST...
 Connect mysql to HOST.
 
+  -c, --client=CLIENT    mysql client
   -h, --help             display this help and exit
 
 Report bugs to: go.wigust@gmail.com."
