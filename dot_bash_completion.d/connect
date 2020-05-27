@@ -1,0 +1,51 @@
+_connect_complete_mysql ()
+{
+    local prefix="$1"
+    if [ -z "$_connect_mysql" ]
+    then
+	# Cache the complete list because it rarely changes and makes
+	# completion much faster.
+	_connect_mysql="$(awk '/\.intr/ { print $1 }' $HOME/.myclirc 2> /dev/null)"
+    fi
+    COMPREPLY=($(compgen -W "$_connect_mysql" -- "$prefix"))
+}
+
+_connect_is_command ()
+{
+    local word
+    local result="false"
+    for word in ${COMP_WORDS[*]}
+    do
+	if [ "$word" = "$1" ]
+	then
+	    result=true
+	    break
+	fi
+    done
+    $result
+}
+
+_connect_complete()
+{
+    local word_count=${#COMP_WORDS[*]}
+    local word_at_point="${COMP_WORDS[$COMP_CWORD]}"
+    case $COMP_CWORD in
+        1)
+	    if [ -z "$_connect_subcommands" ]
+	    then
+		# Cache the list of subcommands to speed things up.
+		_connect_subcommands="$(connect --help 2> /dev/null \
+                                        | grep '^  ' | cut -c 2-)"
+	    fi
+            COMPREPLY=($(compgen -W "$_connect_subcommands" -- "$word_at_point"))
+            ;;
+        *)
+            if _connect_is_command "mysql"
+            then
+                _connect_complete_mysql "$word_at_point"
+            fi
+            ;;
+    esac
+}
+
+complete -F _connect_complete connect

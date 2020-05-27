@@ -1451,3 +1451,8 @@ if [ -f "$HOME/.bash_completion.d/mail" ]
 then
     . "$HOME/.bash_completion.d/mail"
 fi
+
+if [ -f "$HOME/.bash_completion.d/connect" ]
+then
+    . "$HOME/.bash_completion.d/connect"
+fi

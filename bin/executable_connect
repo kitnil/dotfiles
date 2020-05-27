@@ -1,0 +1,238 @@
+#!/usr/bin/env bash
+
+help_main()
+{
+    echo "\
+Usage: connect COMMANDS ARGS...
+Run COMMANDS with ARGS
+
+COMMAND must be one of the sub-commands listed below:
+
+   mysql
+   apache
+   block
+   clean
+   containers
+   images
+   mysql
+   nginx
+   ping
+   sg
+   status
+   te
+   traceroute
+
+Report bugs to: go.wigust@gmail.com."
+}
+
+help_mysql()
+{
+    echo "\
+Usage: connect mysql [OPTION] HOST...
+Connect mysql to HOST.
+
+  -h, --help             display this help and exit
+
+Report bugs to: go.wigust@gmail.com."
+}
+
+DEBUG="${DEBUG:-false}"
+
+telnet_expect_interact()
+{
+    TELNET_PASSWORD="$(pass show majordomo/general)"    \
+    ENABLE_PASSWORD="$(pass show majordomo/ssh/router)" \
+    cisco-interact "$@"
+}
+
+ssh_expect()
+{
+    PYTHONPATH=''                                       \
+    SSH_KEY="$HOME/.ssh/eng_key_rsa"                    \
+    BECOME_PASSWORD="$(pass show majordomo/ssh/eng)"    \
+    ssh-sudo "$@"
+}
+
+ssh_sudo()
+{
+    ssh -t "$host" -- "set +o history; sudo --stdin --validate --prompt='' <<< $(pass show majordomo/ssh/eng); exec -a sudo sudo -i"
+}
+
+ssh_command()
+{
+    host="$1"
+    if [[ "$host" != *.intr ]] && [[ "$host" != *sw* ]]
+    then
+        host+=.intr
+    fi
+    if [[ "$MULTIPLE" == true ]]
+    then
+        ssh -q -t "$host" -- "set +o history; sudo --stdin --validate --prompt='' <<< $(pass show majordomo/ssh/eng); exec -a sudo sudo -i ${*:2}" | while IFS= read -r line; do printf '%s: %s\n' "$host" "$line"; done
+    else
+        ssh -q -t "$host" -- "set +o history; sudo --stdin --validate --prompt='' <<< $(pass show majordomo/ssh/eng); exec -a sudo sudo -i ${*:2}"
+    fi
+}
+
+case "$1" in
+    --help)
+        help_main
+        exit 0
+        ;;
+    br1-mr14*)
+        echo 172.16.103.199
+        sshpass -p"$(pass show majordomo/ssh/router)"   \
+                ssh -F /dev/null                        \
+                -i "$HOME/.ssh/eng_key_rsa"             \
+                -o UserKnownHostsFile=/dev/null         \
+                -o StrictHostKeyChecking=no             \
+                -l root                                 \
+                br1-mr14.intr
+        exit 0
+        ;;
+    sr1-mr13-14*)
+        sshpass -p"$(pass show majordomo/ssh/router)"   \
+                ssh -F /dev/null                        \
+                -i "$HOME/.ssh/eng_key_rsa"             \
+                -o UserKnownHostsFile=/dev/null         \
+                -o StrictHostKeyChecking=no             \
+                -l root                                 \
+                sr1-mr13-14.intr
+        exit 0
+        ;;
+    ssh)
+        host="$1"
+        if [[ "$host" != *.intr ]] && [[ "$host" != *sw* ]]
+        then
+            host+=.intr
+        fi
+
+        [ "$DEBUG" == true ] && echo "Connect with ssh_sudo() to $host."
+        if ! ssh_sudo "$host"
+        then
+            [ "$DEBUG" == true ] && echo "Connect with sshpass to $host."
+            if ! sshpass -p"$(pass show majordomo/ssh/router)" ssh "$host"
+            then
+                [ "$DEBUG" == true ] && echo "Connect with telnet_expect_interact() to $host."
+                if ! telnet_expect_interact "$host"
+                then
+                    [ "$DEBUG" == true ] && echo "Connect with telnet to $host."
+                    telnet "$host"
+                fi
+            fi
+        fi
+        ;;
+    emacs)
+        host=$1; [[ "$host" == *.intr ]] || host+=.intr
+        GTK_THEME='' command emacs -nw "/ssh:$host|sudo:$host:"
+        ;;
+    sg)
+        echo "Hint: Install sg3-utils by invoking 'apt install sg3-utils'"
+        for i in {1..8}; do
+            time connect "${1%.intr}" "sg_read if=/dev/sg$i bs=512 count=100000"
+        done
+        ;;
+    ping)
+        ping --numeric --count="${3:-3}" "${1%.intr}"
+        ;;
+    traceroute)
+        sudo traceroute "${1%.intr}"
+        ;;
+    containers)
+        connect "${1%.intr}" docker ps --no-trunc --format "'table {{.ID}}\t{{.Names}}\t{{.Status}}'"
+        ;;
+    images)
+        connect "${1%.intr}" docker images --no-trunc --format "'{{.ID}}: {{.Repository}}'"
+        ;;
+    web*)
+        export MULTIPLE=true
+        connect "${1%.intr}" "${@:3}"
+        connect "$2" "${@:3}"
+        ;;
+    nginx)
+        connect "${1%.intr}" docker logs --tail "${3:-1000}" nginx \
+            | awk '{ print $1 }' \
+            | grep --invert-match --fixed-strings '127.0.0.1' \
+            | sort \
+            | uniq --count \
+            | sort --numeric-sort
+        ;;
+    mysql)
+        if ! OPTS="$(getopt --options c:h --long client:,help --name parse-options -- "$@")"
+        then
+            echo "Failed parsing options."
+            exit 1
+        fi
+
+        eval set -- "$OPTS"
+
+        while true; do
+            case "$1" in
+                -h | --help )
+                    help_mysql
+                    exit 0
+                    ;;
+                -c | --client )
+                    MYSQL_CLIENT="$2"
+                    shift 2
+                    ;;
+                -- )
+                    shift
+                    break
+                    ;;
+                ,* )
+                    break
+                    ;;
+            esac
+        done
+        case $MYSQL_CLIENT in
+            mysql )
+                mysql -h"${2%.intr}" -p"$(pass show majordomo/web/mysql/root)" -uroot
+                ;;
+            mycli )
+                PAGER='pspg -s 14 -X --force-uniborder --quit-if-one-screen -s 16' \
+mycli --password "$(pass show majordomo/web/mysql/root)" -d "${2%.intr}"
+                ;;
+            * )
+                PAGER='pspg -s 14 -X --force-uniborder --quit-if-one-screen -s 16' \
+mycli --password "$(pass show majordomo/web/mysql/root)" -d "${2%.intr}"
+                ;;
+        esac
+        ;;
+    clean)
+        echo "Kill MySQL connections"
+        host="${1:-127.0.0.1}"
+        user="root"
+        password="$(pass show majordomo/web/mysql/root)"
+        for id in $(mysql --silent --user="$user" --password="$password" --host="$host" --execute="SELECT id FROM information_schema.processlist WHERE user like 'u%'"); do
+            echo "$id"
+            mysql --silent --user="$user" --password="$password" --host="$host" --execute="kill $id;"
+        done
+        ;;
+    # $3 is ip-to-block
+    block)
+        curl --silent --head --request PUT "$1/ip-filter/$3?ttl=7200&action=setCookie"
+        ;;
+    status)
+        echo "name: ip-filter-$1"
+        echo -n "blocked: "
+        curl --silent --request GET "$1/ip-filter"  \
+            | cut -d' ' -f 1                        \
+            | xargs echo
+        echo
+        ;;
+    te)
+        ssh_expect "$1" tail --lines="${3:-1000}" /var/log/taskexecutor.log \
+            | grep -v 'malware_report' \
+            | sed '/^[[:space:]]*$/d'
+        ;;
+    apache)
+        connect "${1%.intr}" sh -c "'cat /home/$3/logs/*access.log'"
+        ;;
+    *)
+        if ! ssh_command "$@"
+        then
+            TELNET_PASSWORD="$(pass show majordomo/general)" cisco "$@"
+        fi
+        ;;
+esac
+
