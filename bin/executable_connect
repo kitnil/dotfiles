@@ -100,7 +100,7 @@ case "$1" in
         exit 0
         ;;
     ssh)
-        host="$1"
+        host="$2"
         if [[ "$host" != *.intr ]] && [[ "$host" != *sw* ]]
         then
             host+=.intr
@@ -122,34 +122,33 @@ case "$1" in
         fi
         ;;
     emacs)
-        host=$1; [[ "$host" == *.intr ]] || host+=.intr
+        host=$3; [[ "$host" == *.intr ]] || host+=.intr
         GTK_THEME='' command emacs -nw "/ssh:$host|sudo:$host:"
         ;;
     sg)
         echo "Hint: Install sg3-utils by invoking 'apt install sg3-utils'"
         for i in {1..8}; do
-            time connect "${1%.intr}" "sg_read if=/dev/sg$i bs=512 count=100000"
+            time connect "${3%.intr}" "sg_read if=/dev/sg$i bs=512 count=100000"
         done
         ;;
     ping)
-        ping --numeric --count="${3:-3}" "${1%.intr}"
+        ping --numeric --count="${3:-3}" "${3%.intr}"
         ;;
     traceroute)
-        sudo traceroute "${1%.intr}"
+        sudo traceroute "${3%.intr}"
         ;;
     containers)
-        connect "${1%.intr}" docker ps --no-trunc --format "'table {{.ID}}\t{{.Names}}\t{{.Status}}'"
+        connect "${3%.intr}" docker ps --no-trunc --format "'table {{.ID}}\t{{.Names}}\t{{.Status}}'"
         ;;
     images)
-        connect "${1%.intr}" docker images --no-trunc --format "'{{.ID}}: {{.Repository}}'"
+        connect "${3%.intr}" docker images --no-trunc --format "'{{.ID}}: {{.Repository}}'"
         ;;
     web*)
         export MULTIPLE=true
-        connect "${1%.intr}" "${@:3}"
-        connect "$2" "${@:3}"
+        connect "${3%.intr}" "${@:4}"
         ;;
     nginx)
-        connect "${1%.intr}" docker logs --tail "${3:-1000}" nginx \
+        connect "${3%.intr}" docker logs --tail "${4:-1000}" nginx \
             | awk '{ print $1 }' \
             | grep --invert-match --fixed-strings '127.0.0.1' \
             | sort \
@@ -186,21 +185,21 @@ case "$1" in
         done
         case $MYSQL_CLIENT in
             mysql )
-                mysql -h"${2%.intr}" -p"$(pass show majordomo/web/mysql/root)" -uroot
+                mysql -h"${3%.intr}" -p"$(pass show majordomo/web/mysql/root)" -uroot
                 ;;
             mycli )
                 PAGER='pspg -s 14 -X --force-uniborder --quit-if-one-screen -s 16' \
-mycli --password "$(pass show majordomo/web/mysql/root)" -d "${2%.intr}"
+mycli --password "$(pass show majordomo/web/mysql/root)" -d "${3%.intr}"
                 ;;
             * )
                 PAGER='pspg -s 14 -X --force-uniborder --quit-if-one-screen -s 16' \
-mycli --password "$(pass show majordomo/web/mysql/root)" -d "${2%.intr}"
+mycli --password "$(pass show majordomo/web/mysql/root)" -d "${3%.intr}"
                 ;;
         esac
         ;;
     clean)
         echo "Kill MySQL connections"
-        host="${1:-127.0.0.1}"
+        host="${2:-127.0.0.1}"
         user="root"
         password="$(pass show majordomo/web/mysql/root)"
         for id in $(mysql --silent --user="$user" --password="$password" --host="$host" --execute="SELECT id FROM information_schema.processlist WHERE user like 'u%'"); do
@@ -210,23 +209,23 @@ mycli --password "$(pass show majordomo/web/mysql/root)" -d "${2%.intr}"
         ;;
     # $3 is ip-to-block
     block)
-        curl --silent --head --request PUT "$1/ip-filter/$3?ttl=7200&action=setCookie"
+        curl --silent --head --request PUT "$3/ip-filter/$3?ttl=7200&action=setCookie"
         ;;
     status)
-        echo "name: ip-filter-$1"
+        echo "name: ip-filter-$3"
         echo -n "blocked: "
-        curl --silent --request GET "$1/ip-filter"  \
+        curl --silent --request GET "$3/ip-filter"  \
             | cut -d' ' -f 1                        \
             | xargs echo
         echo
         ;;
     te)
-        ssh_expect "$1" tail --lines="${3:-1000}" /var/log/taskexecutor.log \
+        ssh_expect "$2" tail --lines="${3:-1000}" /var/log/taskexecutor.log \
             | grep -v 'malware_report' \
             | sed '/^[[:space:]]*$/d'
         ;;
     apache)
-        connect "${1%.intr}" sh -c "'cat /home/$3/logs/*access.log'"
+        connect "${3%.intr}" sh -c "'cat /home/$4/logs/*access.log'"
         ;;
     *)
         if ! ssh_command "$@"
