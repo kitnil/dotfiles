@@ -164,7 +164,8 @@ case "$1" in
         ;;
     web*)
         export MULTIPLE=true
-        ssh_expect "${2%.intr}" "${@:3}"
+        host="$1"; [[ "$host" == *.intr ]] || host+=.intr
+        ssh_sudo "$host" "${@:2}"
         ;;
     nginx)
         ssh_expect "${2%.intr}" docker logs --tail "${3:-1000}" nginx \
