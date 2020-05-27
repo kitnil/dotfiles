@@ -8,4 +8,4 @@ cat > "$HOME/.config/gita/repo_path" <<'EOF'
 /home/oleg/archive/src/freebsd,freebsd
 EOF
 
-exec -a "gita" "$@"
+exec -a "gita" "gita" "$@"
