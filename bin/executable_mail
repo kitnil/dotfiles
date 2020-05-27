@@ -46,9 +46,12 @@ case "$1" in
             jenkins@majordomo.ru)
                 exec -a "$0" neomutt -F "$HOME/.muttrc_jenkins_majordomo"
                 ;;
+            zabbix.guix@yandex.ru)
+                exec -a "$0" neomutt -F "$HOME/.muttrc_zabbix.guix_yandex"
+                ;;
             -A)
                 printf "%s\n" pyhalov@majordomo.ru asfjsdf@mail.ru \
-houdinihar@yandex.ru jenkins@majordomo.ru
+houdinihar@yandex.ru jenkins@majordomo.ru zabbix.guix@yandex.ru
                 ;;
             *)
                 help_neomutt

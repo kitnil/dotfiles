@@ -1,0 +1,16 @@
+set realname = "zabbix.guix"
+set from = zabbix.guix@yandex.ru
+set use_from = yes
+
+set imap_user = zabbix.guix@yandex.ru
+set imap_pass = {{ pass "email/yandex.ru/zabbix.guix" }}
+set smtp_url = smtp://smtp.yandex.ru:465/
+set smtp_pass = {{ pass "email/yandex.ru/zabbix.guix" }}
+set smtp_authenticators = 'login'
+
+set ssl_starttls = yes
+set ssl_force_tls = yes
+
+set folder = imaps://imap.yandex.ru:993
+set spoolfile = +INBOX
+set record = =Отправленные
