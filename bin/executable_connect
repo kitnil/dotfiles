@@ -128,7 +128,7 @@ case "$1" in
     sg)
         echo "Hint: Install sg3-utils by invoking 'apt install sg3-utils'"
         for i in {1..8}; do
-            time connect "${3%.intr}" "sg_read if=/dev/sg$i bs=512 count=100000"
+            time ssh_expect "${3%.intr}" "sg_read if=/dev/sg$i bs=512 count=100000"
         done
         ;;
     ping)
@@ -138,17 +138,17 @@ case "$1" in
         sudo traceroute "${3%.intr}"
         ;;
     containers)
-        connect "${3%.intr}" docker ps --no-trunc --format "'table {{.ID}}\t{{.Names}}\t{{.Status}}'"
+        ssh_expect "${3%.intr}" docker ps --no-trunc --format "'table {{.ID}}\t{{.Names}}\t{{.Status}}'"
         ;;
     images)
-        connect "${3%.intr}" docker images --no-trunc --format "'{{.ID}}: {{.Repository}}'"
+        ssh_expect "${3%.intr}" docker images --no-trunc --format "'{{.ID}}: {{.Repository}}'"
         ;;
     web*)
         export MULTIPLE=true
-        connect "${3%.intr}" "${@:4}"
+        ssh_expect "${3%.intr}" "${@:4}"
         ;;
     nginx)
-        connect "${3%.intr}" docker logs --tail "${4:-1000}" nginx \
+        ssh_expect "${3%.intr}" docker logs --tail "${4:-1000}" nginx \
             | awk '{ print $1 }' \
             | grep --invert-match --fixed-strings '127.0.0.1' \
             | sort \
@@ -225,7 +225,7 @@ mycli --password "$(pass show majordomo/web/mysql/root)" -d "${3%.intr}"
             | sed '/^[[:space:]]*$/d'
         ;;
     apache)
-        connect "${3%.intr}" sh -c "'cat /home/$4/logs/*access.log'"
+        ssh_expect "${3%.intr}" sh -c "'cat /home/$4/logs/*access.log'"
         ;;
     *)
         if ! ssh_command "$@"
