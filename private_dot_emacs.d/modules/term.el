@@ -64,3 +64,4 @@
                  wi-vterm--prettify-symbols-alist)))
 
 (setq vterm-max-scrollback 100000)
+(setq vterm-min-window-width 160)
