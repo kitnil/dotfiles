@@ -7,16 +7,16 @@ _connect_complete_subcommand ()
     COMPREPLY=($(compgen -W "$subcommands" -- "${COMP_WORDS[$COMP_CWORD]}"))
 }
 
-_connect_complete_mysql ()
+_connect_complete_host ()
 {
     local prefix="$1"
-    if [ -z "$_connect_mysql" ]
+    if [ -z "$_connect_host" ]
     then
 	# Cache the complete list because it rarely changes and makes
 	# completion much faster.
-	_connect_mysql="$(awk '/\.intr/ { print $1 }' $HOME/.myclirc 2> /dev/null)"
+	_connect_host="$(awk '/\.intr/ { print $1 }' $HOME/.myclirc 2> /dev/null)"
     fi
-    COMPREPLY=($(compgen -W "$_connect_mysql" -- "$prefix"))
+    COMPREPLY=($(compgen -W "$_connect_host" -- "$prefix"))
 }
 
 _connect_complete_option ()
@@ -74,9 +74,18 @@ _connect_complete()
             COMPREPLY=($(compgen -W "$_connect_subcommands" -- "$word_at_point"))
             ;;
         *)
-            if _connect_is_command "mysql"
+            if _connect_is_command "containers" \
+                    || _connect_is_command "emacs" \
+                    || _connect_is_command "images" \
+                    || _connect_is_command "nginx" \
+                    || _connect_is_command "ping" \
+                    || _connect_is_command "sg" \
+                    || _connect_is_command "ssh" \
+                    || _connect_is_command "te" \
+                    || _connect_is_command "traceroute" \
+                    || _connect_is_command "mysql"
             then
-                _connect_complete_mysql "$word_at_point"
+                _connect_complete_host "$word_at_point"
             elif _connect_is_command "ip-filter"
             then
                 case $COMP_CWORD in
