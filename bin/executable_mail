@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+
+set -eu
+set -o pipefail
+
+help_main()
+{
+    echo "\
+Usage: mail COMMANDS ARGS...
+Run COMMANDS with ARGS
+
+COMMAND must be one of the sub-commands listed below:
+
+   neomutt
+
+Report bugs to: go.wigust@gmail.com."
+}
+
+help_neomutt()
+{
+    echo "\
+Usage: mail neomutt [OPTION] MAIL_ADDRESS...
+Run neomutt with MAIL_ADDRESS configuration.
+
+  -A                     list available mail addresses
+  -h, --help             display this help and exit
+
+Report bugs to: go.wigust@gmail.com."
+}
+
+case "$1" in
+    --help)
+        help_main
+        ;;
+    neomutt)
+        case "$2" in
+            pyhalov@majordomo.ru)
+                exec -a "$0" neomutt -F "$HOME/.muttrc_pyhalov_majordomo"
+                ;;
+            asfjsdf@mail.ru)
+                exec -a "$0" neomutt -F "$HOME/.muttrc_asfjsdf_mail"
+                ;;
+            houdinihar@yandex.ru)
+                exec -a "$0" neomutt -F "$HOME/.muttrc_houdinihar_yandex"
+                ;;
+            -A)
+                printf "%s\n" pyhalov@majordomo.ru asfjsdf@mail.ru houdinihar@yandex.ru
+                ;;
+            *)
+                help_neomutt
+                ;;
+        esac
+        ;;
+    *)
+        help_main
+        ;;
+esac

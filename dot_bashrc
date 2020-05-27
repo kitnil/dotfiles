@@ -1447,19 +1447,7 @@ novnc()
     docker run --detach --name novnc --network=host --rm --interactive --tty geek1011/easy-novnc:latest --addr 127.0.0.1:5911 --port 5901
 }
 
-mail()
-{
-    case "$1" in
-        pyhalov@majordomo.ru)
-            CONFIG="$HOME/.muttrc_pyhalov_majordomo"
-            ;;
-        asfjsdf@mail.ru)
-            CONFIG="$HOME/.muttrc_asfjsdf_mail"
-            ;;
-        houdinihar@yandex.ru)
-            CONFIG="$HOME/.muttrc_houdinihar_yandex"
-            ;;
-    esac
-    neomutt -F "$CONFIG"
-}
-complete -W "pyhalov@majordomo.ru asfjsdf@mail.ru houdinihar@yandex.ru" mail
+if [ -f "$HOME/.bash_completion.d/mail" ]
+then
+    . "$HOME/.bash_completion.d/mail"
+fi
