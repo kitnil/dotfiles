@@ -14,6 +14,7 @@ COMMAND must be one of the sub-commands listed below:
    apache
    clean
    containers
+   deploy
    images
    ip-filter
    mysql
@@ -280,6 +281,10 @@ mycli --password "$(pass show majordomo/web/mysql/root)" -d "${2%.intr}"
         ;;
     apache)
         ssh_expect "${2%.intr}" sh -c "'cat /home/$4/logs/*access.log'"
+        ;;
+    deploy)
+        host="$2"; [[ "$host" == *.intr ]] || host+=.intr
+        ansible-playbook --limit "$host" --ask-become-pass "$HOME/bin/web-docker-pull"
         ;;
 esac
 
