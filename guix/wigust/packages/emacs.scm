@@ -1472,3 +1472,21 @@ and manipulated by user-defined functions to do various things such as:
                 (sha256
                  (base32
                   "1svnsg8lh4v39wkkgc250qa3lcknma17mgd080vf12641r9d847n")))))))
+
+(define-public emacs-stupid-indent-mode
+  (package
+    (name "emacs-stupid-indent-mode")
+    (version "20170525.1117")
+    (source (origin
+              (method url-fetch)
+              (uri "https://melpa.org/packages/stupid-indent-mode-20170525.1117.el")
+              (file-name (string-append name "-" version ".el"))
+              (sha256
+               (base32
+                "11xbb8h7ap6kllfmpvv2hv0lq85ijy6wm4jqzshffydk367jv791"))))
+    (build-system emacs-build-system)
+    (home-page "https://melpa.org/packages/stupid-indent-mode-20170525.1117.el")
+    (synopsis "Dumb indentation mode")
+    (description "Dumb indentation mode is appropriate for editing buffers
+that Emacs does not fully understand syntactically.")
+    (license license:gpl3+)))
