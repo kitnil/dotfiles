@@ -99,6 +99,11 @@
 ;;; Magit
 ;;;
 
+;; TODO: Delete magit-process-password-prompt-regexps after magit update.
+;; https://github.com/magit/magit/issues/3843
+(setq magit-process-password-prompt-regexps
+      '("^\r?\\(Enter \\)?[Pp]assphrase\\( for \\(RSA \\)?key '.*'\\)?: ?$" "^\\(Enter \\)?[Pp]assword\\( for '\\(https?://\\)?\\(?99:.*\\)'\\)?: ?$" "^.*'s password: ?$" "^Yubikey for .*: ?$" "^Enter PIN for .*: ?$"))
+
 (defvar wi-src (expand-file-name "~/src"))
 
 (defun wi-magit-status-dir (dir)
