@@ -583,8 +583,11 @@ alias hylang='docker run --rm -it hylang'
 nix-build()
 {
     case "$1" in
-        nixos-unstable.*)
-            command nix-build "$HOME/.nix-defexpr/channels/nixos-unstable" --no-out-link -A "${1//nixos-unstable./}"
+        20.03)
+            command nix-build "$HOME/src/nixpkgs-master" --no-out-link "${@:2}"
+            ;;
+        19.09)
+            command nix-build "$HOME/src/nixpkgs-master" --no-out-link "${@:2}"
             ;;
         master)
             command nix-build "$HOME/src/nixpkgs-master" --no-out-link "${@:2}"
@@ -593,7 +596,13 @@ nix-build()
             command nix-build "$HOME/.nix-defexpr/channels/nixos-unstable" --no-out-link "${@:2}"
             ;;
         *)
-            command nix-build '<nixpkgs>' --no-out-link "$@"
+            if [ -d "$1" ]
+            then
+                command nix-build "$1" --no-out-link "${@:2}"
+            elif [[ "$1" != '<nixpkgs>' ]]
+            then
+                command nix-build '<nixpkgs>' --no-out-link "${@:1}"
+            fi
             ;;
     esac
 }
