@@ -36,6 +36,9 @@ alias mv="mv -i"
 
 alias xclipp='xclip -selection secondary'
 
+RIPGREP_CONFIG_PATH="$HOME/.config/ripgrep/ripgreprc"
+export RIPGREP_CONFIG_PATH
+
 emacs() { command emacs -nw -Q "$@"; }
 
 guile()
@@ -219,7 +222,13 @@ fi
 
 emc()
 {
-    emacsclient -n "$@"
+    last_command="$(history -w /dev/stdout | tail --lines=2 | head --lines=1)";
+    if [[ "$last_command" =~ 'rg' ]] && [[ "$last_command" != *last_command* ]]
+    then last_output="$(eval "$last_command")"
+         emacsclient --no-wait +"$(echo "$last_output" | cut -d: -f 2)" "$(echo "$last_output" | cut -d: -f 1)"
+    else
+        emacsclient --no-wait "$@"
+    fi
     stumpish emacsclient
 }
 
