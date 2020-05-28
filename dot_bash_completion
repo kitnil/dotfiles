@@ -1,0 +1,2 @@
+complete -F _gita_completions majordomo-gita-hms
+complete -F _gita_completions majordomo-gita
