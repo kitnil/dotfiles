@@ -116,8 +116,8 @@
   (define-key *top-map* (kbd "SunPrint_Screen") "xfce-screenshooter")
 
   ;; Majordomo
-  (define-key *top-map* (kbd "s-a") "majordomo-pass-eng")
-  (define-key *top-map* (kbd "s-A") "majordomo-pass-sup")
+  (define-key *top-map* (kbd "s-a") "majordomo-pass-gitlab-ssh")
+  (define-key *top-map* (kbd "s-A") "majordomo-pass-eng")
   (define-key *top-map* (kbd "C-s-a") "majordomo-pass-route")
   (define-key *top-map* (kbd "s-u") "majordomo-alerta")
   (define-key *top-map* (kbd "s-U") "majordomo-cerb")

@@ -329,6 +329,11 @@
       (window-send-string
        (format nil "~a" (password-store-show "majordomo/ipmi/ADMIN")))))
 
+(defcommand majordomo-pass-gitlab-ssh () ()
+  (if (y-or-n-p "Insert GitLab SSH password and press Enter? ")
+      (window-send-string
+       (format nil "~a" (password-store-show "gitlab.intr/ssh/id_rsa_gitlab_intr")))))
+
 
 ;;;
 ;;; Docker
