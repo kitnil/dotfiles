@@ -19,7 +19,6 @@
                              (getenv "HOME"))))
 
 (set-background-dark)
-(xplanet)
 
 
 ;;;
