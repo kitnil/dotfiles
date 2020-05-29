@@ -18,6 +18,7 @@
         electric-newline-and-maybe-indent
         fill-paragraph
         forward-sexp
+        haskell-indentation-common-electric-command
         helm-recentf
         helm-show-kill-ring
         hydra--digit-argument
@@ -25,6 +26,8 @@
         hydra-multicursor/mc/mark-next-symbol-like-this
         hydra-multicursor/mc/mark-previous-like-this
         indent-for-tab-command
+        indent-rigidly
+        indent-rigidly-right
         insert-char
         kill-region
         kill-sentence
@@ -95,6 +98,7 @@
         eir-eval-in-geiser
         eval-last-sexp
         find-file
+        handle-switch-frame
         helm-M-x
         hydra-multicursor/body
         hydra-multicursor/mc/mark-next-like-this
