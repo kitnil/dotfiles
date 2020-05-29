@@ -27,25 +27,27 @@
                                  (concat (subseq wn 0 10) "...")
                                  wn))))
 
-          ,(make-string 4 :initial-element #\space)
-          "^>"
-          ,@(if (or (equal *majordomo-hms-current-stack* "")
-                    (equal *covid-19-count* ""))
-                '()
-                (list (make-string 4 :initial-element #\space)))
+	  ;; TODO: Move to majordomo.lisp
+          ;; ,(make-string 4 :initial-element #\space)
+          ;; "^>"
+          ;; ,@(if (or (equal *majordomo-hms-current-stack* "")
+          ;;           (equal *covid-19-count* ""))
+          ;;       '()
+          ;;       (list (make-string 4 :initial-element #\space)))
 
-          ,@(if (free-time?)
-                (if (equal *covid-19-count* "")
-                    '()
-                    (list '(:eval (format nil "COVID-19: ~a"
-                                   (let ((count (split-string *covid-19-count* '(#\:))))
-                                     (join (list (first count)
-                                                 (format nil "^[^B^2*~a^]" (third count))
-                                                 (format nil "^[^B^1*~a^]" (second count)))
-                                           #\:))))))
-                (if (equal *majordomo-hms-current-stack* "")
-                    '()
-                    (list '(:eval (format nil "stack: ~a" *majordomo-hms-current-stack*)))))
+	  ;; TODO: password-store-show
+          ;; ,@(if (free-time?)
+          ;;       (if (equal *covid-19-count* "")
+          ;;           '()
+          ;;           (list '(:eval (format nil "COVID-19: ~a"
+          ;;                          (let ((count (split-string *covid-19-count* '(#\:))))
+          ;;                            (join (list (first count)
+          ;;                                        (format nil "^[^B^2*~a^]" (third count))
+          ;;                                        (format nil "^[^B^1*~a^]" (second count)))
+          ;;                                  #\:))))))
+          ;;       (if (equal *majordomo-hms-current-stack* "")
+          ;;           '()
+          ;;           (list '(:eval (format nil "stack: ~a" *majordomo-hms-current-stack*)))))
 
           ,@(if (= *torrent-seeds-counter* 0)
                 '()
@@ -54,12 +56,13 @@
                 '()
                 (list '(:eval (format nil "TOR_SEED: ~a" *torrent-seeds-counter*))))
 
-          ,@(if (= *imap-recent* 0)
-                '()
-                (list (make-string 4 :initial-element #\space)))
-          ,@(if (= *imap-recent* 0)
-                '()
-                (list '(:eval (format nil "INBOX: ~a" *imap-recent*))))
+	  ;; TODO: password-store-show
+          ;; ,@(if (= *imap-recent* 0)
+          ;;       '()
+          ;;       (list (make-string 4 :initial-element #\space)))
+          ;; ,@(if (= *imap-recent* 0)
+          ;;       '()
+          ;;       (list '(:eval (format nil "INBOX: ~a" *imap-recent*))))
 
           ,(make-string 4 :initial-element #\space)
           ,'(:eval (format nil "/: ~a" *disk-free-root-counter*))
@@ -110,17 +113,20 @@
                    (loop while t do
                         (progn (ip-address-vpn-update) (sleep 10))))
                  :name "ip-address-vpn-update"))
-              (lambda () (sb-thread:make-thread
-                     (lambda ()
-                       (loop while t do
-                            (progn (majordomo-hms-current-stack-update) (sleep 10))))
-                     :name "majordomo-hms-current-stack-update"))
+
+	      ;; TODO: Move to majordomo.lisp
+              ;; (lambda () (sb-thread:make-thread
+              ;;        (lambda ()
+              ;;          (loop while t do
+              ;;               (progn (majordomo-hms-current-stack-update) (sleep 10))))
+              ;;        :name "majordomo-hms-current-stack-update"))
+
               (lambda ()
-                (sb-thread:make-thread
-                 (lambda ()
-                   (loop while t do
-                        (progn (imap-update-recent-count) (sleep 60))))
-                 :name "imap-update-recent-count")
+                ;; (sb-thread:make-thread
+                ;;  (lambda ()
+                ;;    (loop while t do
+                ;;         (progn (imap-update-recent-count) (sleep 60))))
+                ;;  :name "imap-update-recent-count")
                 (sb-thread:make-thread
                  (lambda ()
                    (loop while t do
