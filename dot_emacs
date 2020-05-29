@@ -54,7 +54,6 @@
 (load-config-file "nav.el")
 
 (when (string= (getenv "GTK_THEME") "Adwaita:dark")
-  (load-config-file "dashboard.el")
   (load-config-file "term.el")
   (load-config-file "audio.el")
   (load-config-file "mail.el")
