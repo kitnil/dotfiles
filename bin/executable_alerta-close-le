@@ -8,3 +8,5 @@ for id in $(alerta query --filter severity=informational \
                 | awk '{ print $1 }'); do
     alerta delete --ids $id
 done
+
+alerta delete --filter status=open --filter event=task.finished
