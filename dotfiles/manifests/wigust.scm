@@ -25,7 +25,7 @@
    emacs-ytel
    emacs-copy-as-format
    emacs-stupid-indent-mode
-   emacs-dashboard-with-agenda-reverse
+   ;; emacs-dashboard-with-agenda-reverse
    emacs-engine-mode-autoload ; Define searches on websites
    emacs-eval-in-repl       ; Evaluate to different Repls
    emacs-flyspell-correct

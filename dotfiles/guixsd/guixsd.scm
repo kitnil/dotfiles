@@ -17,6 +17,7 @@ lxde version-control)
 (use-modules (wigust services nix)
              (wigust services autossh)
              (wigust services kresd)
+             (wigust services jenkins)
              (wigust services openvpn)
              (wigust services tftp)
              (wigust packages lisp)
@@ -274,6 +275,7 @@ location / {
                               "/fiore/modules/slim-artwork.scm")))
       "/home/oleg/src/dotfiles/fiore/modules/slim-artwork.scm"))
 
+;; TODO: Get rid of full path
 (define %hardware-file
   (or (and=> (current-filename)
              (lambda (file)
@@ -453,83 +455,8 @@ location / {
 
                        (service singularity-service-type)
 
-                       (simple-service 'transmission shepherd-root-service-type
-                                       (list
-                                        (shepherd-service
-                                         (provision '(transmission))
-                                         (documentation "Run transmission.")
-                                         (requirement '())
-                                         (start #~(make-forkexec-constructor
-                                                   (list (string-append #$transmission "/bin/transmission-daemon")
-                                                         "--logfile" "/home/oleg/.config/shepherd/transmission.log"
-                                                         "--foreground")
-                                                   #:user "oleg"
-                                                   #:group "users"
-                                                   #:environment-variables
-                                                   (append (list "HOME=/home/oleg"
-                                                                 "SSL_CERT_DIR=/run/current-system/profile/etc/ssl/certs"
-                                                                 "SSL_CERT_FILE=/run/current-system/profile/etc/ssl/certs/ca-certificates.crt")
-                                                           (remove (lambda (str)
-                                                                     (or (string-prefix? "HOME=" str)
-                                                                         (string-prefix? "SSL_CERT_DIR=" str)
-                                                                         (string-prefix? "SSL_CERT_FILE=" str)))
-                                                                   (environ)))))
-                                         (respawn? #f)
-                                         (stop #~(make-kill-destructor)))))
-
-                       (simple-service 'jenkins shepherd-root-service-type
-                                       (list
-                                        (shepherd-service
-                                         (provision '(jenkins))
-                                         (documentation "Run jenkins.")
-                                         (requirement '())
-                                         (start #~(make-forkexec-constructor
-                                                   (list "/home/oleg/.nix-profile/bin/jenkins"
-                                                         "--httpPort=8090"
-                                                         "--ajp13Port=-1"
-                                                         "-Djava.awt.headless=true"
-                                                         ;; "-Djenkins.install.runSetupWizard=false"
-                                                         ;; "-Dorg.jenkinsci.plugins.durabletask.BourneShellScript.LAUNCH_DIAGNOSTICS=true"
-                                                         ;; "-Dorg.jenkinsci.plugins.durabletask.BourneShellScript.HEARTBEAT_CHECK_INTERVAL=86400"
-                                                         )
-                                                   #:user "oleg"
-                                                   #:group "users"
-                                                   #:supplementary-groups '("docker")
-                                                   #:environment-variables
-                                                   (append (list (string-append "PATH="
-                                                                                (string-append #$git "/bin")
-                                                                                ":" "/run/setuid-programs"
-                                                                                ":" "/run/current-system/profile/bin")
-                                                                 "HOME=/home/oleg"
-                                                                 "SSL_CERT_DIR=/run/current-system/profile/etc/ssl/certs"
-                                                                 "SSL_CERT_FILE=/run/current-system/profile/etc/ssl/certs/ca-certificates.crt"
-                                                                 "GIT_SSL_CAINFO=/run/current-system/profile/etc/ssl/certs/ca-certificates.crt")
-                                                           (remove (lambda (str)
-                                                                     (or (string-prefix? "PATH=" str)
-                                                                         (string-prefix? "HOME=" str)
-                                                                         (string-prefix? "SSL_CERT_DIR=" str)
-                                                                         (string-prefix? "SSL_CERT_FILE=" str)
-                                                                         (string-prefix? "GIT_SSL_CAINFO=" str)))
-                                                                   (environ)))))
-                                         (respawn? #f)
-                                         (stop #~(make-kill-destructor)))))
-
                        (service ladspa-service-type
                                 (ladspa-configuration (plugins (list swh-plugins))))
-
-                       (simple-service 'vncserver shepherd-root-service-type
-                                       (list
-                                        (shepherd-service
-                                         (provision '(vnc))
-                                         (documentation "Run VNC server on DISPLAY 0.")
-                                         (requirement '(xorg-server))
-                                         (start #~(make-forkexec-constructor
-                                                   (list #$(file-append tigervnc-server "/bin/x0vncserver")
-                                                         "-PasswordFile" "/home/oleg/.vnc/passwd"
-                                                         "-display" ":0"
-                                                         "-rfbport" "5909")))
-                                         (respawn? #t)
-                                         (stop #~(make-kill-destructor)))))
 
                        ;; Desktop services
                        (service slim-service-type
@@ -555,7 +482,6 @@ location / {
 
                        nix-service
                        (kresd-service (local-file "kresd.conf"))
-                       tftp-service
                        openvpn-service
 
                        (service openssh-service-type
@@ -563,14 +489,6 @@ location / {
                                  (x11-forwarding? #t)
                                  (gateway-ports? 'client)
                                  (password-authentication? #f)))
-
-                       (service php-fpm-service-type
-                                (php-fpm-configuration
-                                 (php (load (and=> (current-filename)
-                                                   (lambda (file)
-                                                     (string-append (dirname file)
-                                                                    "/packages/php.scm")))))
-                                 (timezone "Europe/Moscow")))
 
                        (service certbot-service-type
                                 (certbot-configuration
@@ -623,6 +541,8 @@ location / {
 
                        (service ddclient-service-type)
 
+		       ;; TODO: Move those services.
+
                        (postgresql-service #:config-file (postgresql-config-file
                                                           (hba-file
                                                            (plain-file "pg_hba.conf"
@@ -632,6 +552,10 @@ host	all	all	127.0.0.1/32    trust
 host	all	all	::1/128         trust
 host	all	all	172.16.0.0/12   trust"))
                                                           (extra-config '(("listen_addresses" "'0.0.0.0'")))))
+
+                        (service php-fpm-service-type
+                                (php-fpm-configuration
+                                 (timezone "Europe/Moscow")))
 
                        (service zabbix-server-service-type
                                 (zabbix-server-configuration
@@ -644,9 +568,6 @@ FpingLocation=/run/setuid-programs/fping
 
                        (service zabbix-agent-service-type
                                 (zabbix-agent-configuration
-;; UserParameter=guix.channel.list[*],/etc/zabbix/externalscripts/zabbix_guix --profile=$1 --remote=$2 --available
-;; UserParameter=guix.channel.diff[*],/etc/zabbix/externalscripts/zabbix_guix --profile=$1 --remote=$2 --diff=$3
-;; UserParameter=cpu.sensors,/etc/zabbix/externalscripts/zabbix_sensors
                                  (extra-options (string-join
                                                  (list ""
                                                        "UserParameter=ssl_cert_check_valid[*], /etc/zabbix/externalscripts/ssl_cert_check.sh valid \"$1\" \"$2\" \"$3\""
@@ -660,6 +581,10 @@ FpingLocation=/run/setuid-programs/fping
                                  (db-secret-file "/etc/zabbix/zabbix.secret")
                                  (nginx %zabbix-nginx-configuration)))
 
+                       jenkins-service
+
+                       (service docker-service-type)
+
                        (dovecot-service
                         #:config (dovecot-configuration
                                   (listen '("127.0.0.1"))
@@ -668,6 +593,8 @@ FpingLocation=/run/setuid-programs/fping
                                    (string-append "maildir:~/Maildir"
                                                   ":INBOX=~/Maildir/INBOX"
                                                   ":LAYOUT=fs"))))
+
+                       tftp-service
 
                        (service guix-publish-service-type
                                 (guix-publish-configuration
@@ -694,7 +621,29 @@ ServerAliveInterval 30
 ServerAliveCountMax 3"))))))
                                  (host "znc.wugi.info")))
 
-                       (service docker-service-type)
+                       (simple-service 'transmission shepherd-root-service-type
+                                       (list
+                                        (shepherd-service
+                                         (provision '(transmission))
+                                         (documentation "Run transmission.")
+                                         (requirement '())
+                                         (start #~(make-forkexec-constructor
+                                                   (list (string-append #$transmission "/bin/transmission-daemon")
+                                                         "--logfile" "/home/oleg/.config/shepherd/transmission.log"
+                                                         "--foreground")
+                                                   #:user "oleg"
+                                                   #:group "users"
+                                                   #:environment-variables
+                                                   (append (list "HOME=/home/oleg"
+                                                                 "SSL_CERT_DIR=/run/current-system/profile/etc/ssl/certs"
+                                                                 "SSL_CERT_FILE=/run/current-system/profile/etc/ssl/certs/ca-certificates.crt")
+                                                           (remove (lambda (str)
+                                                                     (or (string-prefix? "HOME=" str)
+                                                                         (string-prefix? "SSL_CERT_DIR=" str)
+                                                                         (string-prefix? "SSL_CERT_FILE=" str)))
+                                                                   (environ)))))
+                                         (respawn? #f)
+                                         (stop #~(make-kill-destructor)))))
 
                        (modify-services (operating-system-user-services base-system)
                          (guix-service-type config => %guix-daemon-config))))

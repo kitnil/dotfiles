@@ -7,17 +7,13 @@
   (locale "en_US.utf8")
 
   (bootloader (bootloader-configuration
-               (bootloader grub-efi-bootloader)
-               (target "/boot/efi")))
+               (bootloader grub-bootloader)
+               (target "/dev/sdb")))
 
   (file-systems (cons* (file-system
                          (device (file-system-label "guixsd-root"))
                          (mount-point "/")
                          (type "ext4"))
-                       (file-system
-                         (device (uuid "A2C0-99E9" 'fat))
-                         (mount-point "/boot/efi")
-                         (type "vfat"))
                        (file-system
                          (device (file-system-label "magnolia-data"))
                          (mount-point "/srv")
@@ -31,15 +27,14 @@
                          (options "mode=1777,size=50%"))
                        %base-file-systems))
 
-  (swap-devices '("/dev/disk/by-label/guixsd-swap") ;; '("/dev/sda3")
-                )
-  
+  (swap-devices '("/dev/disk/by-label/guixsd-swap"))
+
   (packages %base-packages)
 
-  (services (cons (static-networking-service "enp6s0" "192.168.105.120"
+  (services (cons (static-networking-service "enp6s0" "192.168.100.120"
 					     #:netmask "255.255.255.0"
-					     #:gateway "192.168.105.1"
-					     #:name-servers '("192.168.105.120\nsearch intr majordomo.ru"
+					     #:gateway "192.168.100.1"
+					     #:name-servers '("192.168.100.120\nsearch intr majordomo.ru"
                                                               "172.17.0.1"
                                                               "8.8.8.8"
                                                               "8.8.4.4"))

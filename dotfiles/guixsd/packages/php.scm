@@ -6,7 +6,7 @@
 (define channels
   (list (channel
          (name 'guix)
-         (url "https://cgit.duckdns.org/git/guix/guix")
+         (url "file:///home/oleg/src/guix")
          (commit
           "ee4db149c29b6d0fe6bcab552f163bbbe5b09738"))))
 
