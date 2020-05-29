@@ -21,6 +21,7 @@
   #:use-module (gnu services shepherd)
   #:use-module (gnu services)
   #:use-module (guix gexp)
+  #:use-module (gnu packages version-control)
   #:export (jenkins-service))
 
 (define jenkins-service
@@ -31,8 +32,28 @@
                     (documentation "Run jenkins.")
                     (requirement '())
                     (start #~(make-forkexec-constructor
-                              (list "/home/oleg/bin/run-jenkins")
+                              (list "/home/oleg/.nix-profile/bin/jenkins"
+                                    "--httpPort=8090"
+                                    "--ajp13Port=-1"
+                                    "-Djava.awt.headless=true")
                               #:user "oleg"
-                              #:group "users"))
+                              #:group "users"
+                              #:supplementary-groups '("docker")
+                              #:environment-variables
+                              (append (list (string-append "PATH="
+                                                           (string-append #$git "/bin")
+                                                           ":" "/run/setuid-programs"
+                                                           ":" "/run/current-system/profile/bin")
+                                            "HOME=/home/oleg"
+                                            "SSL_CERT_DIR=/run/current-system/profile/etc/ssl/certs"
+                                            "SSL_CERT_FILE=/run/current-system/profile/etc/ssl/certs/ca-certificates.crt"
+                                            "GIT_SSL_CAINFO=/run/current-system/profile/etc/ssl/certs/ca-certificates.crt")
+                                      (remove (lambda (str)
+                                                (or (string-prefix? "PATH=" str)
+                                                    (string-prefix? "HOME=" str)
+                                                    (string-prefix? "SSL_CERT_DIR=" str)
+                                                    (string-prefix? "SSL_CERT_FILE=" str)
+                                                    (string-prefix? "GIT_SSL_CAINFO=" str)))
+                                              (environ)))))
                     (respawn? #f)
                     (stop #~(make-kill-destructor))))))
