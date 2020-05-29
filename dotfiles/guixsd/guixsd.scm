@@ -91,6 +91,7 @@ EndSection")
                 #:key
                 (ssl? #f)
                 (ssl-target? #f)
+                (ssl-key? #f)
                 (well-known? #t)
                 (target #f)
                 (sub-domains? #f))
@@ -124,12 +125,8 @@ EndSection")
    (listen (if ssl?
                (list "443 ssl")
                (list "80")))
-   (ssl-certificate (if ssl?
-                        (letsencrypt-certificate host)
-                        #f))
-   (ssl-certificate-key (if ssl?
-                            (letsencrypt-key host)
-                            #f))))
+   (ssl-certificate (if ssl-key? (letsencrypt-certificate host) #f))
+   (ssl-certificate-key (if ssl-key? (letsencrypt-key host) #f))))
 
 (define %nginx-deploy-hook
   (program-file
@@ -174,27 +171,32 @@ location / {
 
         (proxy "cups.tld" 631)
         (proxy "torrent.tld" 9091)
-        (proxy "awx.wugi.info" 8052 #:ssl? #t)
-        (proxy "stackstorm.wugi.info" 4443 #:ssl? #t #:ssl-target? #t)
-        (proxy "jenkins.wugi.info" 8090 #:ssl? #t)
-        (proxy "alerta.wugi.info" 47080 #:ssl? #t)
-        (proxy "grafana.wugi.info" 3080 #:ssl? #t)
+        (proxy "awx.wugi.info" 8052 #:ssl? #t #:ssl-key? #t)
+        (proxy "stackstorm.wugi.info" 4443 #:ssl? #t #:ssl-target? #t #:ssl-key? #t)
+        (proxy "jenkins.wugi.info" 8090 #:ssl? #t #:ssl-key? #t)
+        (proxy "alerta.wugi.info" 47080 #:ssl? #t #:ssl-key? #t)
+        (proxy "grafana.wugi.info" 3080 #:ssl? #t #:ssl-key? #t)
         (proxy "dashboard.gitlab.wugi.info" 64680)
         (proxy "gitlab.wugi.info" 65080 #:sub-domains? "~^(?<group>.*)\\.")
-        (proxy "gitlab.wugi.info" 65080  #:ssl? #t)
-        (proxy "gitea.wugi.info" 3000 #:ssl? #t)
-        (proxy "anongit.duckdns.org" 65080  #:ssl? #t)
+        (proxy "gitlab.wugi.info" 65080  #:ssl? #t #:ssl-key? #t)
+        (proxy "gitea.wugi.info" 3000 #:ssl? #t #:ssl-key? #t)
+        (proxy "anongit.duckdns.org" 65080  #:ssl? #t #:ssl-key? #t)
         (proxy "cuirass.tld" 19080)
         (proxy "input.tld" 19080)
-        (proxy "prometheus.wugi.info" 65090 #:ssl? #t)
+        (proxy "prometheus.wugi.info" 65090 #:ssl? #t #:ssl-key? #t)
         (proxy "alerta.intr" 16180)
         (proxy "web.alerta.intr" 16480)
         (proxy "zabbix.intr" 15081)
         (proxy "cerberus.intr" 15080)
         (proxy "grafana.intr" 16080)
-        (proxy "nextcloud.wugi.info" 28080 #:ssl? #t)
-        (proxy "redmine.wugi.info" 44080 #:ssl? #t)
+        (proxy "nextcloud.wugi.info" 28080 #:ssl? #t #:ssl-key? #t)
+        (proxy "redmine.wugi.info" 44080 #:ssl? #t #:ssl-key? #t)
         (proxy "guix.duckdns.org" 5556 #:ssl? #t)
+        (proxy "pykhaloff.ddns.net" 443
+               #:target "192.168.100.5"
+               #:ssl? #t
+               #:ssl-target? #t
+               #:ssl-key? #f)
         ((lambda* (host #:key
                   (ssl? #f)
                   (ssl-target? #f)
