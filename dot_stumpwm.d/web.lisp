@@ -141,7 +141,7 @@
           ((string-contains "AC_" clipboard)
            (run-shell-command (format nil "notify-send ~s"
                                       (string-trim '(#\Newline)
-                                                   (run-shell-command (format nil "hms web unix AC_208112")
+                                                   (run-shell-command (format nil "hms web unix ~a" clipboard)
                                                                       t)))))
           (t (run-or-raise (firefox-command) '(:class "Firefox"))))))
 
