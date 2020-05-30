@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # Install Majordomo certificate on Debian or Ubuntu.
 set -e -x
 mkdir -p /usr/local/share/ca-certificates

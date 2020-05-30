@@ -9,7 +9,7 @@
     - copy:
         dest: /root/docker-pull.sh
         content: |
-          {% raw %}#!/bin/bash
+          {% raw %}#!/usr/bin/env bash
           set -e -x
           for repo in $(docker images  --format '{{ .Repository }}' | grep -v sysdig); do
               docker pull $repo:master

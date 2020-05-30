@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 NAME=screencast-$(date +%Y%m%d%H%M)
 

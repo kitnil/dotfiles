@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
 unset LD_LIBRARY_PATH # Setted by Nix's Firefox.
 

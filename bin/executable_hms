@@ -1,4 +1,6 @@
-#!/bin/bash -e
+#!/usr/bin/env bash
+
+set -eu
 
 GUILE_INSTALL_LOCALE=0
 export GUILE_INSTALL_LOCALE
