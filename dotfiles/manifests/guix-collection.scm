@@ -117,7 +117,7 @@ xdisorg xml xorg)
                tor torsocks
 
                ;; Mail
-               isync msmtp notmuch
+               isync msmtp notmuch neomutt
 
                gnupg pinentry
 
