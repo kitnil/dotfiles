@@ -79,6 +79,7 @@
       (inputs
        `(("sbcl-alexandria" ,sbcl-alexandria)
          ("sbcl-fiasco", sbcl-fiasco)
+         ("dbus" ,dbus)
          ,@(package-inputs sbcl-stumpwm)))
       (native-inputs `(("texinfo" ,texinfo)))
       (outputs (append (package-outputs sbcl-stumpwm) '("doc")))
@@ -92,7 +93,29 @@
                    (invoke "makeinfo" "stumpwm.texi.in")
                    (install-file "stumpwm.info"
                                  (string-append (assoc-ref outputs "doc")
-                                                "/share/info")))))))))))
+                                                "/share/info"))))
+               (replace 'create-desktop-file
+                 (lambda* (#:key inputs outputs #:allow-other-keys)
+                   (let* ((out (assoc-ref outputs "out"))
+                          (xsessions (string-append out "/share/xsessions"))
+                          (dbus (assoc-ref inputs "dbus")))
+                     (mkdir-p xsessions)
+                     (with-output-to-file
+                         (string-append xsessions "/stumpwm.desktop")
+                       (lambda ()
+                         (display "[Desktop Entry]")
+                         (newline)
+                         (display "Name=stumpwm")
+                         (newline)
+                         (display "Comment=The Stump Window Manager")
+                         (newline)
+                         (format #t "Exec=~a/bin/dbus-launch ~a/bin/stumpwm~%" dbus out)
+                         (format #t "TryExec=~a/bin/dbus-launch ~a/bin/stumpwm~%" dbus out)
+                         (display "Icon=")
+                         (newline)
+                         (display "Type=Application")
+                         (newline)))
+                     #t))))))))))
 
 (define-public stumpwm-next
   (let ((commit "603abb210d7130543e42b48a812e57fe343ad935"))
