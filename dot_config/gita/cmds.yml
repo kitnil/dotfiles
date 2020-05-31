@@ -3,6 +3,11 @@ comaster:
   allow_all: true
   help: checkout the master branch
 
+remaster:
+  cmd: pull --rebase origin master
+  allow_all: true
+  help: rebase on the origin master branch
+
 stat:
   cmd: diff --stat
   help: show edit statistics
