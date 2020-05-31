@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+set -e
+
+DIRECTORIES=("$HOME/src" "$HOME/archive/src")
+
+config()
+{
+    while IFS= read -r -d '' directory
+    do
+        echo "$(dirname "$directory"),$(basename $(dirname "$directory"))"
+    done < <(find "${DIRECTORIES[@]}" -maxdepth 2 -type d -name .git -print0)
+}
+
+cat > "$HOME/.config/gita/repo_path" <<EOF
+$(config)
+EOF
+
+exec -a "$0" gita "$@"
