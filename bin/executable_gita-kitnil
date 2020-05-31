@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+
+set -eu
+
+TERRAFORM_FILE="${TERRAFORM_FILE:-$HOME/.local/share/chezmoi/dotfiles/maintenance/github/projects.tf}"
+
+config()
+{
+    awk '/github_repository/ { gsub("\"",""); print $3 }' "$TERRAFORM_FILE" | while IFS= read -r repository
+    do
+        while IFS= read -r -d '' directory
+        do
+            echo "$directory,$(basename "$directory")"
+        done < <(find "$HOME/src" "$HOME/archive/src" -maxdepth 1 -type d -name "$repository" -print0)
+    done
+}
+
+cat > "$HOME/.config/gita/repo_path" <<EOF
+$(config)
+EOF
+
+exec -a "gita" gita "$@"
