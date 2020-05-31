@@ -6,7 +6,7 @@ config()
 {
     while IFS= read -r -d '' directory
     do
-        echo "$directory,$(basename "$directory")"
+        echo "$directory,$(basename "$(dirname "$directory")")-$(basename "$directory")"
     done < <(find "$HOME/majordomo" -maxdepth 2 -type d -print0)
 }
 
