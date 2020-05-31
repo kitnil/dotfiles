@@ -1,13 +1,6 @@
 #!/usr/bin/env -S bats
 
-@test "imap yandex" {
-    run curl -u"houdinihar:$(pass show email/yandex.ru/houdinihar)" imaps://imap.yandex.ru:993
+@test "run mail inbox for each address" {
+    run bash -c 'mail inbox -A | while IFS= read -r address; do [[ "$(mail inbox "$address")" == *EXISTS* ]]; done'
     [ "$status" -eq 0 ]
-    [[ "$output" == *INBOX* ]]
-}
-
-@test "imap mail.ru" {
-    run curl -u"asfjsdf@mail.ru:$(pass show mail.ru/asfjsdf)" imaps://imap.mail.ru:993
-    [ "$status" -eq 0 ]
-    [[ "$output" == *INBOX* ]]
 }

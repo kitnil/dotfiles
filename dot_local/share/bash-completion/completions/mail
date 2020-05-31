@@ -41,7 +41,7 @@ _mail_complete()
             COMPREPLY=($(compgen -W "$_mail_subcommands" -- "$word_at_point"))
             ;;
         *)
-            if _mail_is_command "neomutt"
+            if _mail_is_command "neomutt" || _mail_is_command "inbox"
             then
                 _mail_complete_available_addresses "$word_at_point"
             fi

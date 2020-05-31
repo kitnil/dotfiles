@@ -11,6 +11,7 @@ Run COMMANDS with ARGS
 
 COMMAND must be one of the sub-commands listed below:
 
+   inbox
    neomutt
 
 Report bugs to: go.wigust@gmail.com."
@@ -28,6 +29,18 @@ Run neomutt with MAIL_ADDRESS configuration.
 Report bugs to: go.wigust@gmail.com."
 }
 
+help_inbox()
+{
+    echo "\
+Usage: mail inbox [OPTION] MAIL_ADDRESS...
+Run curl with MAIL_ADDRESS configuration.
+
+  -A                     list available mail addresses
+  -h, --help             display this help and exit
+
+Report bugs to: go.wigust@gmail.com."
+}
+
 mail_addresses=(pyhalov@majordomo.ru
                 asfjsdf@mail.ru
                 houdinihar@yandex.ru
@@ -37,6 +50,58 @@ mail_addresses=(pyhalov@majordomo.ru
 case "$1" in
     --help)
         help_main
+        ;;
+    inbox)
+        case "$2" in
+            pyhalov@majordomo.ru)
+                exec -a "$0" curl                                                                               \
+                    --silent                                                                                    \
+                    --request "EXAMINE ${3:-INBOX}"                                                             \
+                    --user "pyhalov@majordomo.ru:$(pass show newmail.majordomo.ru/pyhalov@majordomo.ru)"        \
+                    imaps://imap.majordomo.ru:993
+                ;;
+            asfjsdf@mail.ru)
+                exec -a "$0" curl                                               \
+                    --silent                                                    \
+                    --request "EXAMINE ${3:-INBOX}"                             \
+                    --user "asfjsdf@mail.ru:$(pass show mail.ru/asfjsdf)"       \
+                    imaps://imap.mail.ru:993
+                ;;
+            houdinihar@yandex.ru)
+                exec -a "$0" curl                                               \
+                    --silent                                                    \
+                    --request "EXAMINE ${3:-INBOX}"                             \
+                    --user "houdinihar:$(pass show email/yandex.ru/houdinihar)" \
+                    imaps://imap.yandex.ru:993
+                ;;
+            jenkins@majordomo.ru)
+                exec -a "$0" curl                                                               \
+                    --silent                                                                    \
+                    --request "EXAMINE ${3:-INBOX}"                                             \
+                    --user "jenkins@majordomo.ru:$(pass show majordomo/jenkins.intr/admin)"     \
+                    imaps://imap.majordomo.ru:993
+                ;;
+            zabbix.guix@yandex.ru)
+                exec -a "$0" curl                                                       \
+                    --silent                                                            \
+                    --request "EXAMINE ${3:-INBOX}"                                     \
+                    --user "zabbix.guix:$(pass show email/yandex.ru/zabbix.guix)"       \
+                    imaps://imap.yandex.ru:993
+                ;;
+            -A)
+                printf "%s\n" "${mail_addresses[@]}"
+                ;;
+            ll)
+                mail inbox -A | while IFS= read -r address
+                do
+                    echo "$address"
+                    mail inbox "$address"
+                done
+                ;;
+            *)
+                help_inbox
+                ;;
+        esac
         ;;
     neomutt)
         case "$2" in
