@@ -45,7 +45,8 @@ mail_addresses=(pyhalov@majordomo.ru
                 asfjsdf@mail.ru
                 houdinihar@yandex.ru
                 jenkins@majordomo.ru
-                zabbix.guix@yandex.ru)
+                zabbix.guix@yandex.ru
+                localhost)
 
 case "$1" in
     --help)
@@ -88,6 +89,13 @@ case "$1" in
                     --user "zabbix.guix:$(pass show email/yandex.ru/zabbix.guix)"       \
                     imaps://imap.yandex.ru:993
                 ;;
+            localhost)
+                exec -a "$0" curl                               \
+                    --silent                                    \
+                    --request "EXAMINE ${3:-INBOX}"             \
+                    --user "oleg:$(pass localhost/imap/oleg)"   \
+                    imap://localhost
+                ;;
             -A)
                 printf "%s\n" "${mail_addresses[@]}"
                 ;;
@@ -119,6 +127,9 @@ case "$1" in
                 ;;
             zabbix.guix@yandex.ru)
                 exec -a "$0" neomutt -F "$HOME/.muttrc_zabbix.guix_yandex"
+                ;;
+            localhost)
+                exec -a "$0" neomutt -F "$HOME/.muttrc_localhost"
                 ;;
             -A)
                 printf "%s\n" "${mail_addresses[@]}"
