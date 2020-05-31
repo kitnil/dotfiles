@@ -5,7 +5,7 @@ TESTS =						\
   tests/mail.bats
 
 clean:
-	rm -rf cache
+	rm -rf test-tmp
 
 check:
 	bats $(TESTS)

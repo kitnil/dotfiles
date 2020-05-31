@@ -1,3 +1,4 @@
 /dotfiles/maintenance/github/terraform.tfstate.backup
 /dotfiles/maintenance/github/terraform.tfstate
 /dotfiles/maintenance/github/.terraform
+/tmp-cache
