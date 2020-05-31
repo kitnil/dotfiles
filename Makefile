@@ -4,6 +4,9 @@ TESTS =						\
   tests/guix.bats				\
   tests/mail.bats
 
+clean:
+	rm -rf cache
+
 check:
 	bats $(TESTS)
 
