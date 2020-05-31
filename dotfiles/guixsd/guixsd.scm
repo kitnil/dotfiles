@@ -440,8 +440,8 @@ location / {
            "::1 guixsd localhost"
 
            "192.168.100.1 r1.tld"
-           "192.168.105.1 r2.tld"
-           "192.168.105.120 cuirass.tld"
+           "192.168.100.12 r2.tld"
+           "192.168.100.120 cuirass.tld"
            "172.16.100.60 workstation.intr"
            "178.250.247.125 gitlab.mjtest jenkins.mjtest"
            "130.61.95.6 oracle"
