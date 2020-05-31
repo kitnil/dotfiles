@@ -1,3 +1,4 @@
+Makefile
 Jenkinsfile
 test.bats
 tests
