@@ -14,6 +14,7 @@
         ("https://github.com/stumpwm/stumpwm-contrib/commits/master.atom" vc lisp stumpwm)
         ("https://github.com/stumpwm/stumpwm/commits/master.atom" vc lisp stumpwm)
         ("https://github.com/alebcay/awesome-shell/commits/master.atom" vc bash awesome)
+        ("https://github.com/adelin-b/yawhich-key/commits/master.atom" vc bash)
         ("https://news-web.php.net/group.php?group=php.announce&format=rss" php)
         ("https://www.bennee.com/~alex/blog/feed/" emacs)
         ("https://libraries.io/search.atom?order=desc&platforms=Emacs&sort=created_at" emacs)
