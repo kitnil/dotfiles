@@ -1,0 +1,8 @@
+comaster:
+  cmd: checkout master
+  allow_all: true
+  help: checkout the master branch
+
+stat:
+  cmd: diff --stat
+  help: show edit statistics
