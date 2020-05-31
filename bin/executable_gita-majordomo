@@ -16,10 +16,9 @@ EOF
 
 case "$1" in
     week)
-        exec -a "gita" gita super log --format="%ai %H %s" --date=relative --since="${2:-1} weeks ago" "$@"
+        gita super log --format="%ai %H %s" --date=relative --since="${2:-1} weeks ago" "$@"
         ;;
     *)
-        exec -a "gita" gita "$@"
+        exec -a "$0" sshpass -Ppassphrase -p"$(pass show gitlab.intr/ssh/id_rsa_gitlab_intr)" gita "$@"
         ;;
 esac
-
