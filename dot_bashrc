@@ -1463,3 +1463,22 @@ if [ -f "$HOME/.bash_completion.d/connect" ]
 then
     . "$HOME/.bash_completion.d/connect"
 fi
+
+gitlab()
+{
+    GITLAB_API_PRIVATE_TOKEN="$(pass show majordomo/gitlab.intr/tokens/terraform)"
+    GITLAB_API_ENDPOINT="https://gitlab.intr/api/v4"
+    GITLAB_API_HTTPARTY_OPTIONS="{verify: false}"
+
+    case "$1" in
+        create_project)
+            group="$2"
+            name="$3"
+            command gitlab create_project "$name" "{visibility: public, namespace_id: $group}"
+            echo "https://gitlab.intr/$group/$name"
+            echo "git@gitlab.wugi.info:$group/$name.git"
+            ;;
+        *)
+            command gitlab "$@"
+    esac
+}
