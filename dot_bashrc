@@ -1469,6 +1469,14 @@ lexicon()
     docker run --rm --interactive --tty analogj/lexicon lexicon "$@"
 }
 
+slack()
+{
+    curl --request POST                                                                                 \
+            --header 'Content-type: application/json'                                                   \
+            --data "{\"text\":\"$@\"}"                                                                  \
+            https://hooks.slack.com/services/"$(pass show slack.com/home-s2x8742.slack.com/webhook/ci)"
+}
+
 gitlab()
 {
     GITLAB_API_PRIVATE_TOKEN="$(pass show majordomo/gitlab.intr/tokens/terraform)"
