@@ -172,42 +172,6 @@ resource "github_repository" "docker-wigust" {
   default_branch = "master"
 }
 
-resource "github_repository" "connect-ssh-sudo" {
-  name           = "connect-ssh-sudo"
-  description    = "Python script for connection to a server over SSH and typing root password"
-  default_branch = "master"
-}
-
-resource "github_repository" "connect-ssh-aliases" {
-  name           = "connect-ssh-aliases"
-  description    = "Guile script to generate shell aliases from SSH known_hosts file"
-  default_branch = "master"
-}
-
-resource "github_repository" "connect-guix" {
-  name           = "connect-guix"
-  description    = "Guix packages for connect-* scripts"
-  default_branch = "master"
-}
-
-resource "github_repository" "connect-script" {
-  name           = "connect-script"
-  description    = "Wrapper for connect-* scripts"
-  default_branch = "master"
-}
-
-resource "github_repository" "connect-cisco-interact" {
-  name           = "connect-cisco-interact"
-  description    = "Python script to type commands on Cisco"
-  default_branch = "master"
-}
-
-resource "github_repository" "connect-cisco" {
-  name           = "connect-cisco"
-  description    = "Python script to autotype password on Cisco"
-  default_branch = "master"
-}
-
 resource "github_repository" "backup-restic" {
   name           = "backup-restic"
   description    = "Jenkinsfile for backup with Restic"
