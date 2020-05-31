@@ -426,7 +426,12 @@ guix()
                 sudo --login command guix pull --delete-generations=1m
             )
             ;;
-        *)
+        profiles)
+            echo "$(readlink --canonicalize $HOME/.guix-profile)" \
+                 "$(readlink --canonicalize /run/current-system)" \
+                 "$(readlink --canonicalize $HOME/.config/guix/current)"
+            ;;
+            *)
             command guix "$@"
             ;;
     esac
@@ -1494,4 +1499,9 @@ gitlab()
         *)
             command gitlab "$@"
     esac
+}
+
+youtube-dl-to-org()
+{
+    jq --join-output '.entries[] | "- [ ] [[https://www.youtube.com/watch?v=", .id, "]", "[", .title, "]]\n"' "$@"
 }

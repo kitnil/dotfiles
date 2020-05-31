@@ -1,0 +1,5 @@
+#!/bin/sh
+
+curl --silent https://pomber.github.io/covid19/timeseries.json \
+    | jq --join-output '.Russia[-1] | .confirmed, ":", .deaths, ":", .recovered'
+

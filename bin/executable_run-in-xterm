@@ -1,0 +1,12 @@
+#!/bin/bash
+
+input_from_emacs=$*
+temp_file="$(mktemp -t "bash.XXXXXXXXXX")"
+
+{
+    cat $input_from_emacs
+}>$temp_file
+
+xterm -e "bash $temp_file; read wait"
+
+rm --force $temp_file

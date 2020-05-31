@@ -1,0 +1,10 @@
+#!/usr/bin/env ansible-playbook
+---
+- hosts: oracle
+  tasks:
+    - name: stop and remove container
+      shell: docker rm -f yeastizzy
+      ignore_errors: yes
+
+    - name: run container
+      shell: docker run --name yeastizzy --restart=unless-stopped --detach --network=host --env SLACK_API_KEY="{{ lookup('passwordstore', 'slack.com/home-s2x8742.slack.com/tokens/bot')}}" --env YOUTUBE_API_KEY="{{ lookup('passwordstore', '')}}" localhost:5000/yeastizzy:latest --channel '#video' --users UC2eYFnH61tmytImy1mTYvhA,UC4RssVemaZlrfdWbp1Wx,UCVls1GmFKf6WlTraIb_IaJg,UCK-d8Z08ElRz0zgKiAla5fg

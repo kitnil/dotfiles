@@ -1,0 +1,5 @@
+#!/bin/sh -ex
+
+GTK_THEME=Adwaita:dark emacs --daemon
+emacsclient -e '(progn (wi-toggle-theme) (wi-toggle-theme))'
+emacsclient -cn

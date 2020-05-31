@@ -1,0 +1,29 @@
+#!/run/current-system/profile/bin/guile \
+--no-auto-compile -e main -s
+!#
+
+(use-modules (srfi srfi-1)
+             (ice-9 popen)
+             (ice-9 rdelim))
+
+(define (system->string . args)
+  (let* ((port (apply open-pipe* OPEN_READ args))
+         (output (read-string port)))
+    (close-pipe port)
+    output))
+
+(define (main args)
+  (define youtube-channel
+    (string-join (take (string-split (second args) #\/) 5) "/"))
+
+  (define youtube-channel-json
+    (string-append (string-downcase (last (string-split youtube-channel #\/)))
+                   ".json"))
+
+  (display youtube-channel)
+  (newline)
+  (and=> (getenv "HOME")
+         (lambda (home)
+           (with-output-to-file (string-append home "/Videos/youtube-dl-json/" youtube-channel-json)
+             (lambda ()
+               (display (system->string "youtube-dl" "--dump-single-json" "--ignore-errors" youtube-channel)))))))

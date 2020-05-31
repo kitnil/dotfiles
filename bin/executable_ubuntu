@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+export QEMU_AUDIO_DRV=pa
+export QEMU_PA_SERVER=/run/user/1000/pulse/native
+
+qemu-system-x86_64 -name ubuntu -smp cores=4,threads=1 -m 4096 -enable-kvm -cpu host -soundhw hda -daemonize -vga virtio -cdrom $HOME/Downloads/ubuntu-20.04-desktop-amd64.iso -hda $HOME/vm/ubuntu.qcow2

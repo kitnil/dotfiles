@@ -1,0 +1,24 @@
+#!/usr/bin/env bash
+
+set -eux
+
+account=$1
+host=$2
+
+USERNAME="USER:-pyhalov"
+PASSWORD="PASSWORD:-$(pass show majordomo/hms/pyhalov)"
+
+auth ()
+{
+    curl --silent \
+         --request POST https://api-dev.intr/oauth/token \
+         --header 'content-type: application/x-www-form-urlencoded' \
+         --header 'x-requested-with: XMLHttpRequest' \
+         -d "grant_type=password&username=$USERNAME&password=$PASSWORD&client_id=service&client_secret=service_secret" \
+        | jq -r '.access_token'
+}
+
+curl --request POST "https://api-dev.intr/account/$account/transfer" \
+     --header "Authorization: Bearer $(auth)" \
+     --header 'Content-Type: application/json' \
+     --data-binary '{"operationIdentity":null,"params":{"serverId":"'$host'" }}'
