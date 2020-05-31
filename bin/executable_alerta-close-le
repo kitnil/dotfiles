@@ -1,7 +1,7 @@
 #! /usr/bin/env cached-nix-shell
 #! nix-shell -i bash -p python3 python3Packages.alerta
 
-set -e -x
+set -x
 
 for id in $(alerta query --filter severity=informational \
                 | grep 'Домен должен быть делегирован на наши\|A-запись домена не соответствует серверу\|Обновление архива' \
