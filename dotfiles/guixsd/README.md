@@ -7,6 +7,7 @@
 - /etc/openvpn
 - /etc/zabbix
 - /etc/autossh/
+- /etc/nix
 
 # Nix
 
