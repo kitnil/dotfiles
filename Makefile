@@ -1,6 +1,7 @@
 TESTS =					\
   tests/connect.bats				\
   tests/executables.bats			\
+  tests/guix.bats				\
   tests/mail.bats
 
 check:
