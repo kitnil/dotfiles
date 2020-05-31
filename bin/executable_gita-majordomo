@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+set -e
+
+config()
+{
+    while IFS= read -r -d '' directory
+    do
+        echo "$directory,$(basename "$directory")"
+    done < <(find "$HOME/majordomo" -maxdepth 2 -type d -print0)
+}
+
+cat > "$HOME/.config/gita/repo_path" <<EOF
+$(config)
+EOF
+
+case "$1" in
+    week)
+        exec -a "gita" gita super log --format="%ai %H %s" --date=relative --since="${2:-1} weeks ago" "$@"
+        ;;
+    *)
+        exec -a "gita" gita "$@"
+        ;;
+esac
+
