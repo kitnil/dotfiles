@@ -28,6 +28,12 @@ Run neomutt with MAIL_ADDRESS configuration.
 Report bugs to: go.wigust@gmail.com."
 }
 
+mail_addresses=(pyhalov@majordomo.ru
+                asfjsdf@mail.ru
+                houdinihar@yandex.ru
+                jenkins@majordomo.ru
+                zabbix.guix@yandex.ru)
+
 case "$1" in
     --help)
         help_main
@@ -50,8 +56,7 @@ case "$1" in
                 exec -a "$0" neomutt -F "$HOME/.muttrc_zabbix.guix_yandex"
                 ;;
             -A)
-                printf "%s\n" pyhalov@majordomo.ru asfjsdf@mail.ru \
-houdinihar@yandex.ru jenkins@majordomo.ru zabbix.guix@yandex.ru
+                printf "%s\n" "${mail_addresses[@]}"
                 ;;
             *)
                 help_neomutt
