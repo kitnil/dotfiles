@@ -1,0 +1,52 @@
+_lexicon_complete_subcommand ()
+{
+    local command="${COMP_WORDS[1]}"
+    local subcommands="$(${COMP_WORDS[0]} $command --help 2>/dev/null   \
+                        | grep '^  -'                                   \
+                        | awk '{ print $1 }'                            \
+                        | sed 's/,//g')"
+    subcommands+="$(${COMP_WORDS[0]} $command --help 2>/dev/null        \
+                   | sed -n 's/^  {//p;'                                \
+                   | sed 's/}//;'                                       \
+                   | sed 's/,/\n/g'                                     \
+                   | sed 's/\r$//g')"
+    COMPREPLY=($(compgen -W "$subcommands" -- "${COMP_WORDS[$COMP_CWORD]}"))
+}
+
+_lexicon_is_command ()
+{
+    local word
+    local result="false"
+    for word in ${COMP_WORDS[*]}t
+    do
+	if [ "$word" = "$1" ]
+	then
+	    result=true
+	    break
+	fi
+    done
+    $result
+}
+
+_lexicon_complete()
+{
+    local word_count=${#COMP_WORDS[*]}
+    local word_at_point="${COMP_WORDS[$COMP_CWORD]}"
+    case $COMP_CWORD in
+        1)
+	    if [ -z "$_lexicon_subcommands" ]
+	    then
+		# Cache the list of subcommands to speed things up.
+		_lexicon_subcommands="$(lexicon --help 2>/dev/null | grep '^    [a-z]' | awk '{ print $1 }')"
+	    fi
+            COMPREPLY=($(compgen -W "$_lexicon_subcommands" -- "$word_at_point"))
+            ;;
+        *)
+            case $COMP_CWORD in
+		2) _lexicon_complete_subcommand;;
+	    esac
+            ;;
+    esac
+}
+
+complete -F _lexicon_complete lexicon
