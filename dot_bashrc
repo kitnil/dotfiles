@@ -1510,3 +1510,15 @@ youtube-dl-to-org()
 {
     jq --join-output '.entries[] | "- [ ] [[https://www.youtube.com/watch?v=", .id, "]", "[", .title, "]]\n"' "$@"
 }
+
+gita()
+{
+    case "$1" in
+        week)
+            PAGER='' command gita super log --format="%ai %H %s" --date=relative --since="${2:-1} weeks ago" "${@:3}"
+            ;;
+        *)
+            command gita
+            ;;
+    esac
+}

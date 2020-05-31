@@ -15,9 +15,6 @@ $(config)
 EOF
 
 case "$1" in
-    week)
-        exec -a "$0" gita super log --format="%ai %H %s" --date=relative --since="${2:-1} weeks ago" "${@:2}"
-        ;;
     *)
         exec -a "$0" sshpass -Ppassphrase -p"$(pass show gitlab.intr/ssh/id_rsa_gitlab_intr)" gita "$@"
         ;;
