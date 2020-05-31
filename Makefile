@@ -8,3 +8,4 @@ check:
 
 install:
 	chezmoi apply
+	update-desktop-database ~/.local/share/applications

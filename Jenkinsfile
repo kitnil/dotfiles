@@ -26,6 +26,11 @@ pipeline {
                 }
             }
         }
+        stage("Tests") {
+            steps {
+                sh "make check"
+            }
+        }
         stage("Deploy") {
             steps {
                 parallelCall (
