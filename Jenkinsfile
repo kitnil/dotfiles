@@ -1,9 +1,8 @@
 pipeline {
-    agent { label "master" }
+    agent { label "guixsd" }
     options { disableConcurrentBuilds() }
     stages {
         stage("Build") {
-            agent { label "guixsd" }
             steps {
                 script {
                     String hostname = sh (
@@ -32,6 +31,7 @@ pipeline {
             }
         }
         stage("Deploy") {
+            agent { label "master" }
             steps {
                 parallelCall (
                     nodeLabels: ["guix"],
