@@ -1464,6 +1464,11 @@ then
     . "$HOME/.bash_completion.d/connect"
 fi
 
+lexicon()
+{
+    docker run --rm --interactive --tty analogj/lexicon lexicon "$@"
+}
+
 gitlab()
 {
     GITLAB_API_PRIVATE_TOKEN="$(pass show majordomo/gitlab.intr/tokens/terraform)"
