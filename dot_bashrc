@@ -1518,7 +1518,7 @@ gita()
             PAGER='' command gita super log --format="%ai %H %s" --date=relative --since="${2:-1} weeks ago" "${@:3}"
             ;;
         *)
-            command gita
+            command gita "$@"
             ;;
     esac
 }
