@@ -104,7 +104,9 @@ EndSection")
 
                    adwaita-icon-theme hicolor-icon-theme
 
-                   desktop-file-utils gvfs xrdb xset xsetroot xkill
+                   ;; gvfs depends on webkitgtk
+
+                   desktop-file-utils xrdb xset xsetroot xkill
 
                    setxkbmap   ;keyboard layout
                    wmctrl      ;`ewmctrl'
