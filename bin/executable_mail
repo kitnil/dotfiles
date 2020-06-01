@@ -43,6 +43,7 @@ Report bugs to: go.wigust@gmail.com."
 
 mail_addresses=(pyhalov@majordomo.ru
                 asfjsdf@mail.ru
+		rxaetbed@mail.ru
                 houdinihar@yandex.ru
                 jenkins@majordomo.ru
                 zabbix.guix@yandex.ru
@@ -66,6 +67,13 @@ case "$1" in
                     --silent                                                    \
                     --request "EXAMINE ${3:-INBOX}"                             \
                     --user "asfjsdf@mail.ru:$(pass show mail.ru/asfjsdf)"       \
+                    imaps://imap.mail.ru:993
+                ;;
+            rxaetbed@mail.ru)
+                exec -a "$0" curl							\
+                    --silent								\
+                    --request "EXAMINE ${3:-INBOX}"					\
+                    --user "rxaetbed@mail.ru:$(pass show mail.ru/rxaetbed@mail.ru)"	\
                     imaps://imap.mail.ru:993
                 ;;
             houdinihar@yandex.ru)
@@ -118,6 +126,9 @@ case "$1" in
                 ;;
             asfjsdf@mail.ru)
                 exec -a "$0" neomutt -F "$HOME/.muttrc_asfjsdf_mail"
+                ;;
+            rxaetbed@mail.ru)
+                exec -a "$0" neomutt -F "$HOME/.muttrc_rxaetbed_mail"
                 ;;
             houdinihar@yandex.ru)
                 exec -a "$0" neomutt -F "$HOME/.muttrc_houdinihar_yandex"
