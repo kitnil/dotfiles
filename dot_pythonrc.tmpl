@@ -3,8 +3,12 @@ import pymongo
 from pprint import pprint as pp
 import ipaddress
 
-# Setup Mongo
+{{- if eq .work.environment "production" }}
 myclient = pymongo.MongoClient("mongodb://admin:{{ pass "majordomo/mongo/hms/admin" }}@hms01-mr.intr:27017,hms02-mr.intr:27017,hms03-mr.intr:27017/admin?replicaSet=hms-rs0")
+{{ else }}
+myclient = pymongo.MongoClient("mongodb://admin:{{ pass "majordomo/mongo/ci.intr/admin" }}@ci.intr:27017/admin")
+{{- end }}
+
 service = myclient["staffResourceController"]["service"]
 socket = myclient["staffResourceController"]["socket"]
 service_socket = myclient["staffResourceController"]["serviceSocket"]
