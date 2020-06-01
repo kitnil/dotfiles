@@ -168,6 +168,23 @@ location / {
     try_files $uri $uri/ /index.html;
 }
 ")))
+        (nginx-server-configuration
+         (server-name '("api-dev.intr"))
+         (listen '("80"))
+         (raw-content (list "\
+location / {
+    proxy_set_header Access-Control-Allow-Origin *;
+    proxy_set_header X-Real-IP $remote_addr;
+    proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+    proxy_set_header X-NginX-Proxy true;
+    proxy_pass http://localhost:8082/;
+    proxy_ssl_session_reuse off;
+    proxy_set_header Host $http_host;
+    proxy_redirect off;
+    proxy_buffer_size 128k;
+    proxy_buffers 4 256k;
+}
+")))
 
         (proxy "cups.tld" 631)
         (proxy "torrent.tld" 9091)
@@ -436,7 +453,8 @@ location / {
                            "jenkins.wugi.info"
                            "iso.wugi.info"
                            "cgit.duckdns.org"
-                           "hms-dev.intr"))
+                           "hms-dev.intr"
+                           "api-dev.intr"))
            "::1 guixsd localhost"
 
            "192.168.100.1 r1.tld"
