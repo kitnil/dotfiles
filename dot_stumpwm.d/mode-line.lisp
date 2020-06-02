@@ -27,9 +27,10 @@
                                  (concat (subseq wn 0 10) "...")
                                  wn))))
 
+          ,(make-string 4 :initial-element #\space)
+          "^>"
+
 	  ;; TODO: Move to majordomo.lisp
-          ;; ,(make-string 4 :initial-element #\space)
-          ;; "^>"
           ;; ,@(if (or (equal *majordomo-hms-current-stack* "")
           ;;           (equal *covid-19-count* ""))
           ;;       '()
@@ -149,14 +150,14 @@
                           (mode-line-update)
                           (sleep 60))))
                  :name "torrent-seeds-update-counter")
-                (sb-thread:make-thread
-                 (lambda ()
-                   (loop while t do
-                        (progn
-                          (run-shell-command "notmuch new")
-                          (mode-line-update)
-                          (sleep (* 60 60)))))
-                 :name "notmuch")
+                ;; (sb-thread:make-thread
+                ;;  (lambda ()
+                ;;    (loop while t do
+                ;;         (progn
+                ;;           (run-shell-command "notmuch new")
+                ;;           (mode-line-update)
+                ;;           (sleep (* 60 60)))))
+                ;;  :name "notmuch")
                 (sb-thread:make-thread
                  (lambda ()
                    (loop while t do
