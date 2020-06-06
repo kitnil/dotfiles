@@ -40,7 +40,9 @@ with `magit-show-commit' function in ~/src/guix directory.
        (interactive (list (read-string "Commit: " nil nil (word-at-point))))
        (let ((default-directory directory)
              (commit (funcall url->commit url)))
-         (magit-show-commit commit))))
+         (condition-case user-error
+             (magit-show-commit commit)
+           (error (magit-status default-directory))))))
     (format "Show a Git `commit' from the %s checkout.
 
 If no commit hash provides, show a commit from hash at current point."
