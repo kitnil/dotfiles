@@ -383,13 +383,18 @@ guix()
 {
     case "$1" in
         manifest)
-            command guix package --fallback --manifest="$HOME/manifest.scm"
+            command guix package --fallback \
+                    --manifest="$HOME/.local/share/chezmoi/dotfiles/manifests/$HOSTNAME.scm"
             ;;
         pull)
-            guix_channels="$HOME/channels.scm"
-            guix_command="command guix pull --channels=$guix_channels"
-            (set -ex; "$guix_command" "${@:2}"; sudo --login "$guix_command" "${@:2}")
-            [[ $XDG_SESSION_TYPE == x11 ]] && notify-send --urgency=critical 'Guix pull fineshed'
+            guix_command="command guix pull \
+--channels=$HOME/.local/share/chezmoi/dotfiles/channels.scm"
+            if (set -ex; $guix_command "${@:2}"; sudo --login $guix_command "${@:2}")
+            then
+                slack "SUCCESS: $guix_command"
+            else
+                slack "FAILURE: $guix_command"
+            fi
             ;;
         prereconfigure)
             guix_command="$HOME/src/guix/pre-inst-env guix"
@@ -402,10 +407,13 @@ guix()
         system)
             case "$2" in
                 reconfigure)
-                    sudo --login command guix system reconfigure --no-bootloader "${@:3}" /etc/config.scm
+                    sudo --login command guix system reconfigure \
+                         --no-bootloader "${@:3}" \
+                         "$HOME/.local/share/chezmoi/dotfiles/guixsd/$HOSTNAME.scm"
                     ;;
                 switch)
-                    sudo --login command guix system reconfigure "${@:3}" /etc/config.scm
+                    sudo --login command guix system reconfigure "${@:3}" \
+                    "$HOME/.local/share/chezmoi/dotfiles/guixsd/$HOSTNAME.scm"
                     ;;
             esac
             ;;
