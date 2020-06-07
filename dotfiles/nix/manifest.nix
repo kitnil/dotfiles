@@ -85,6 +85,7 @@ in [
   git-secrets
   # gita
   gitAndTools.git-extras
+  gitAndTools.git-open
   # glibc-locales
   go2nix
   glow
