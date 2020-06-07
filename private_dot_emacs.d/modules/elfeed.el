@@ -53,6 +53,12 @@
         ("https://www.youtube.com/feeds/videos.xml?user=tuxreviews" video)
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCgU5tUdVPpfM7sLAMWBTsDg" video)))
 
+(defun elfeed-config ()
+  (interactive)
+  (find-file
+   (expand-file-name
+    "~/.local/share/chezmoi/private_dot_emacs.d/modules/elfeed.el")))
+
 (with-eval-after-load 'elfeed
   (defun wi-elfeed-search-show-entry ()
     "Call `elfeed-search-show-entry' with `shr-width' setted to NIL."
@@ -62,7 +68,8 @@
   (let ((map elfeed-search-mode-map))
     (define-key map (kbd "RET") 'wi-elfeed-search-show-entry)
     (define-key map (kbd "SPC") 'scroll-up-command)
-    (define-key map (kbd "S-SPC") 'scroll-down-command)))
+    (define-key map (kbd "S-SPC") 'scroll-down-command)
+    (define-key map (kbd "<f8>") 'elfeed-config)))
 
 (run-at-time nil (* 60 10)
              #'(lambda ()
