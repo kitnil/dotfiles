@@ -84,6 +84,7 @@ in [
   bfg-repo-cleaner
   git-secrets
   # gita
+  gitAndTools.git-extras
   # glibc-locales
   go2nix
   glow
