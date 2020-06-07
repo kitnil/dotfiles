@@ -140,6 +140,7 @@ in [
   packer
   passff-host
   pgcli
+  prettyping
   pup
   pythonPackages.jenkins-job-builder
   python3Packages.yamllint
