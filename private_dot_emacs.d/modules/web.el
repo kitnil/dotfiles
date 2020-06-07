@@ -462,6 +462,9 @@ WARNING:  hooktube.com requries non-free JavaScript."
        line-end))
 
 (defvar wi-url-emacs-git-commit-regexp
+  (wi-url-savannah-git-commit-regexp "emacs"))
+
+(defvar wi-url-emacs-git-commit-news-regexp
   (wi-url-savannah-git-commit-regexp "emacs" (list :news t)))
 
 (defvar wi-url-guix-git-commit-regexp
@@ -487,6 +490,7 @@ WARNING:  hooktube.com requries non-free JavaScript."
         (,wi-url-github-regexp . browse-url-firefox)
         (,wi-url-melpa-regexp . browse-url-firefox)
         (,wi-url-emacs-git-commit-regexp . browse-url-emacs-git-commit)
+        (,wi-url-emacs-git-commit-news-regexp . browse-url-emacs-git-commit)
         (,wi-url-guix-git-commit-regexp . browse-url-guix-git-commit)
         (,libraries-io-url-regexp . libraries-io-browse-url)
         ("." . browse-url-firefox)))
