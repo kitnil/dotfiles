@@ -36,6 +36,8 @@ alias mv="mv -i"
 
 alias xclipp='xclip -selection secondary'
 
+alias hosts='hosts --auto-sudo'
+
 RIPGREP_CONFIG_PATH="$HOME/.config/ripgrep/ripgreprc"
 export RIPGREP_CONFIG_PATH
 
