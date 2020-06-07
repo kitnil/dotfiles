@@ -75,7 +75,12 @@ ssh_expect()
 
 ssh_sudo()
 {
-    ssh -q -t "$1" -- "set +o history; sudo --stdin --validate --prompt='' <<< $(pass show majordomo/ssh/eng); exec -a sudo sudo -i ${*:2}"
+    if [ $# -lt 2 ]
+    then
+        sshrc "$1"
+    else
+        ssh -q -t "$1" -- "set +o history; sudo --stdin --validate --prompt='' <<< $(pass show majordomo/ssh/eng); exec -a sudo sudo -i ${*:2}"
+    fi
 }
 
 case "$1" in
