@@ -69,7 +69,8 @@
     (define-key map (kbd "RET") 'wi-elfeed-search-show-entry)
     (define-key map (kbd "SPC") 'scroll-up-command)
     (define-key map (kbd "S-SPC") 'scroll-down-command)
-    (define-key map (kbd "<f8>") 'elfeed-config)))
+    (define-key map (kbd "<f8>") 'elfeed-config))
+  (setq elfeed-search-title-max-width 120))
 
 (run-at-time nil (* 60 10)
              #'(lambda ()
