@@ -30,28 +30,28 @@
         ("https://twitchrss.appspot.com/vod/artgameslp" game video)
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA" video) ;Mental Outlaw
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCq2QwnKW79w4a55ZQqOBReg" video) ;Irishluck Linux
-        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCF3d6ZcTRBhnrNC0-cvzicw" video)
-        ("https://www.youtube.com/feeds/videos.xml?channel_id=UC1RZz5_cdVQHhhYJVpCDqHA" video)
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCF3d6ZcTRBhnrNC0-cvzicw" video) ;Nitroxsenys
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UC1RZz5_cdVQHhhYJVpCDqHA" video) ;Nitro Live
         ("https://www.youtube.com/feeds/videos.xml?user=elementaller" video)
         ("https://www.youtube.com/feeds/videos.xml?user=Pashtet495" video)
-        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCOpm7EqPBtznEwYNNZrz1FQ" video)
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCOpm7EqPBtznEwYNNZrz1FQ" video) ;stalkash
         ("https://www.youtube.com/feeds/videos.xml?user=gotbletu" video)
         ("https://www.youtube.com/feeds/videos.xml?user=SsethTzeentach" video)
-        ("https://www.youtube.com/feeds/videos.xml?channel_id=UC2eYFnH61tmytImy1mTYvhA" video)
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UC2eYFnH61tmytImy1mTYvhA" video) ;Luke Smith
         ("https://www.youtube.com/feeds/videos.xml?user=metalx1000" video)
         ("https://www.youtube.com/user/OmegaDungeon" video)
         ("https://bitlove.org/jupiterbroadcasting/bsdnowhd/feed" video)
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCld68syR8Wi-GY_n4CaoJGA" video) ;Brodie Robertson
-        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCVls1GmFKf6WlTraIb_IaJg" video)
-        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCkK9UDm_ZNrq_rIXCz3xCGA" video)
-        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCbHXJGd7c8Hy4z0-YX1Jf3Q" video)
-        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCVls1GmFKf6WlTraIb_IaJg" video)
-        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCMV8p6Lb-bd6UZtTc_QD4zA" video)
-        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCZrrEuHiQjN2CUo84g5tk7w" video)
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCVls1GmFKf6WlTraIb_IaJg" video) ;DistroTube
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCkK9UDm_ZNrq_rIXCz3xCGA" video) ;Bryan Lunduke
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCbHXJGd7c8Hy4z0-YX1Jf3Q" video) ;WP Website Guide
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCMV8p6Lb-bd6UZtTc_QD4zA" video) ;Baggers
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCZrrEuHiQjN2CUo84g5tk7w" video) ;tripcode!Q/7
         ("https://www.youtube.com/feeds/videos.xml?user=dubbeltumme" video)
         ("https://www.youtube.com/feeds/videos.xml?user=LDCNow" video)
         ("https://www.youtube.com/feeds/videos.xml?user=tuxreviews" video)
-        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCgU5tUdVPpfM7sLAMWBTsDg" video)))
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCgU5tUdVPpfM7sLAMWBTsDg" video) ;computeremotion.com
+        ))
 
 (defun elfeed-config ()
   (interactive)
