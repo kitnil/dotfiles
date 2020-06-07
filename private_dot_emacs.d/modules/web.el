@@ -1,3 +1,6 @@
+(require 'request)
+(require 's)
+
 (setq w3m-fill-column 80)
 
 
@@ -249,6 +252,28 @@
 
 
 ;;;
+;;; libraries.io
+;;;
+
+(defvar libraries-io-url-regexp
+  (rx "http" (zero-or-one "s") "://libraries.io"
+      "/" (one-or-more (or alphanumeric "-" "."))
+      "/" (one-or-more (or alphanumeric "-" "."))))
+
+(defun libraries-io-browse-url (url &optional _new-window)
+  (request
+   (concat (let* ((urlobj (url-generic-parse-url url))
+                  (host (url-host urlobj)))
+             (s-replace host (concat host "/api") url))
+           "?api_key=" (password-store-get "libraries.io/api/token"))
+   :parser 'json-read
+   :success (cl-function
+             (lambda (&key data &allow-other-keys)
+               (browse-url (alist-get 'repository_url data) _new-window)))
+   :sync t))
+
+
+;;;
 ;;; browse-url
 ;;;
 
@@ -463,6 +488,7 @@ WARNING:  hooktube.com requries non-free JavaScript."
         (,wi-url-melpa-regexp . browse-url-firefox)
         (,wi-url-emacs-git-commit-regexp . browse-url-emacs-git-commit)
         (,wi-url-guix-git-commit-regexp . browse-url-guix-git-commit)
+        (,libraries-io-url-regexp . libraries-io-browse-url)
         ("." . browse-url-firefox)))
 
 (defun wi-info-remote-copy-current-node ()
