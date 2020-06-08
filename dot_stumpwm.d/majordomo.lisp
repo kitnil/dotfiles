@@ -37,7 +37,7 @@
            (join
             (list "curl"
                   "--user" (format nil "jenkins:~a"
-                                   (password-store-show "majordomo/jenkins/jenkins"))
+                                   (password-store-show "majordomo/private/jenkins/jenkins"))
                   "--request" "GET" "http://nginx1.intr:8080/hms")))
    t))
 
@@ -46,14 +46,14 @@
 
 (defcommand majordomo-mongo-production () ()
   (term-shell-command (concat "mongo mongodb://admin:"
-                              (password-store-show "majordomo/mongo/ci.intr/admin")
+                              (password-store-show "majordomo/private/mongo/ci.intr/admin")
                               "@hms01-mr.intr:27017,hms02-mr.intr:27017,hms03-mr.intr:27017/admin?replicaSet=hms-rs0")
                       :scrollbar t
                       :title "mongo-prod"))
 
 (defcommand majordomo-mongo-development () ()
   (term-shell-command (concat "mongo mongodb://admin:"
-                              (password-store-show "majordomo/mongo/ci.intr/admin")
+                              (password-store-show "majordomo/private/mongo/ci.intr/admin")
                               "@ci.intr:27017/admin")
                       :scrollbar t
                       :title "mongo-dev"))
@@ -139,7 +139,7 @@
 ;;;
 
 (defun cisco-connect-command (host)
-  (join (list "env" (format nil "TELNET_PASSWORD=~s" (password-store-show "majordomo/general"))
+  (join (list "env" (format nil "TELNET_PASSWORD=~s" (password-store-show "majordomo/private/general"))
               "cisco-interact" host)))
 
 (defun cisco-connect (host)
@@ -221,9 +221,9 @@
 (defcommand majordomo-cerb () ()
   (run-shell-command
    (join (list (concat "CERBERUS_KEY="
-                       (password-store-show "cerberus.intr/api/notification/key"))
+                       (password-store-show "majordomo/private/cerberus.intr/api/notification/key"))
                (concat "CERBERUS_SECRET="
-                       (password-store-show "cerberus.intr/api/notification/secret"))
+                       (password-store-show "majordomo/private/cerberus.intr/api/notification/secret"))
                "cerb"))))
 
 
@@ -299,7 +299,7 @@
 (defcommand majordomo-xpanes-web-mycli () ()
   (term-shell-command (join `(,(xpanes-command
                                 (format nil "mycli --password ~a -d {}"
-                                        (password-store-show "majordomo/web/mysql/root")))
+                                        (password-store-show "majordomo/private/web/mysql/root")))
                                ,@majordomo-webs))
                       :title "xpanes-web-mycli"
                       :font '("-fa" "Monospace" "-fs" "6")))
@@ -312,27 +312,27 @@
 (defcommand majordomo-pass-eng () ()
   (if (y-or-n-p "Insert eng password and press Enter? ")
       (window-send-string
-       (format nil "~a~%" (password-store-show "majordomo/ssh/eng")))))
+       (format nil "~a~%" (password-store-show "majordomo/private/ssh/eng")))))
 
 (defcommand majordomo-pass-sup () ()
   (if (y-or-n-p "Insert sup password and press Enter? ")
       (window-send-string
-       (format nil "~a~%" (password-store-show "majordomo/ssh/sup")))))
+       (format nil "~a~%" (password-store-show "majordomo/private/ssh/sup")))))
 
 (defcommand majordomo-pass-route () ()
   (if (y-or-n-p "Insert router password and press Enter? ")
       (window-send-string
-       (format nil "~a~%" (password-store-show "majordomo/ssh/router")))))
+       (format nil "~a~%" (password-store-show "majordomo/private/ssh/router")))))
 
 (defcommand majordomo-pass-ipmi () ()
   (if (y-or-n-p "Insert IPMI ADMIN password and press Enter? ")
       (window-send-string
-       (format nil "~a" (password-store-show "majordomo/ipmi/ADMIN")))))
+       (format nil "~a" (password-store-show "majordomo/private/ipmi/ADMIN")))))
 
 (defcommand majordomo-pass-gitlab-ssh () ()
   (if (y-or-n-p "Insert GitLab SSH password and press Enter? ")
       (window-send-string
-       (format nil "~a" (password-store-show "gitlab.intr/ssh/id_rsa_gitlab_intr")))))
+       (format nil "~a" (password-store-show "majordomo/private/gitlab.intr/gitlab.intr/ssh/id_rsa_gitlab_intr")))))
 
 
 ;;;
