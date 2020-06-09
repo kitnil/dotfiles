@@ -136,12 +136,12 @@ alias aria2c='aria2c --seed-time=0'
 
 ihs()
 {
-    GUILE_INSTALL_LOCALE=0                      \
-    GUIX_BUILD_OPTIONS=''                       \
-    IHS_USER=pyhalov                            \
-    IHS_PASS=$(pass show majordomo/hms/pyhalov) \
-    CVM_USER=cron                               \
-    CVM_PASS=$(pass show majordomo/cvm/cron)    \
+    GUILE_INSTALL_LOCALE=0                                      \
+    GUIX_BUILD_OPTIONS=''                                       \
+    IHS_USER=pyhalov                                            \
+    IHS_PASS="$(pass show majordomo/private/hms/pyhalov)"       \
+    CVM_USER=cron                                               \
+    CVM_PASS="$(pass show majordomo/private/cvm/cron)"          \
     command ihs "$@"
 }
 
@@ -1191,7 +1191,7 @@ docker-top-strace()
 
 active-hms()
 {
-    curl -s --user jenkins:"$(pass show majordomo/jenkins/jenkins)" nginx{1,2}-mr:8080/hms | jq -r .active | uniq
+    curl -s --user jenkins:"$(pass show majordomo/private/jenkins/jenkins)" nginx{1,2}-mr:8080/hms | jq -r .active | uniq
 }
 
 jenkins-build-project-branch()
@@ -1501,7 +1501,7 @@ slack()
 
 gitlab()
 {
-    GITLAB_API_PRIVATE_TOKEN="$(pass show majordomo/gitlab.intr/tokens/terraform)"
+    GITLAB_API_PRIVATE_TOKEN="$(pass show majordomo/private/gitlab.intr/tokens/terraform)"
     GITLAB_API_ENDPOINT="https://gitlab.intr/api/v4"
     GITLAB_API_HTTPARTY_OPTIONS="{verify: false}"
 

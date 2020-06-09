@@ -11,13 +11,13 @@ export GUIX_BUILD_OPTIONS
 IHS_USER=pyhalov
 export IHS_USER
 
-IHS_PASS="$(pass show majordomo/hms/pyhalov)"
+IHS_PASS="$(pass show majordomo/private/hms/pyhalov)"
 export IHS_PASS
 
 CVM_USER=cron
 export CVM_USER
 
-CVM_PASS="$(pass show majordomo/cvm/cron)"
+CVM_PASS="$(pass show majordomo/private/cvm/cron)"
 export CVM_PASS
 
 command ihs "$@"
