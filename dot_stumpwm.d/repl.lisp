@@ -120,7 +120,7 @@
 
 ;; https://lists.gnu.org/archive/html/help-guix/2017-01/msg00033.html
 
-(load (concat (getenv "HOME") "/.guix-profile/share/emacs/site-lisp/swank.asd"))
+(load "/run/current-system/profile/share/emacs/site-lisp/swank.asd")
 
 (require :swank)
 
