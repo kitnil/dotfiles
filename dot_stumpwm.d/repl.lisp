@@ -112,24 +112,3 @@
 (defcommand repl-ansible (group) ((:string "Ansible inventory group: "))
   (term-shell-command (format nil "ansible-console ~a" group)
                       :scrollbar t :title "repl-ansible" :color 'dark))
-
-
-;;;
-;;; Swank
-;;;
-
-;; https://lists.gnu.org/archive/html/help-guix/2017-01/msg00033.html
-
-(load "/run/current-system/profile/share/emacs/site-lisp/swank.asd")
-
-(require :swank)
-
-(defcommand swank (port) ((:string "Port number: "))
-  (sb-thread:make-thread
-   (lambda ()
-     (swank:create-server :port (parse-integer port) :dont-close t))
-   :name "swank"))
-(mapcar (lambda (func)
-          (add-hook *start-hook* func))
-        (list (lambda ()
-                (swank "4005"))))
