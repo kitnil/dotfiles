@@ -1,3 +1,4 @@
+guix.scm
 Makefile
 Jenkinsfile
 test.bats
