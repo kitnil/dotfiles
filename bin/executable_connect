@@ -60,16 +60,16 @@ DEBUG="${DEBUG:-false}"
 
 telnet_expect_interact()
 {
-    TELNET_PASSWORD="$(pass show majordomo/general)"    \
-    ENABLE_PASSWORD="$(pass show majordomo/ssh/router)" \
+    TELNET_PASSWORD="$(pass show majordomo/private/general)"    \
+    ENABLE_PASSWORD="$(pass show majordomo/private/ssh/router)" \
     cisco-interact "$@"
 }
 
 ssh_expect()
 {
-    PYTHONPATH=''                                       \
-    SSH_KEY="$HOME/.ssh/eng_key_rsa"                    \
-    BECOME_PASSWORD="$(pass show majordomo/ssh/eng)"    \
+    PYTHONPATH=''                                               \
+    SSH_KEY="$HOME/.ssh/eng_key_rsa"                            \
+    BECOME_PASSWORD="$(pass show majordomo/private/ssh/eng)"    \
     ssh-sudo "$@"
 }
 
@@ -79,7 +79,7 @@ ssh_sudo()
     then
         sshrc "$1"
     else
-        ssh -q -t "$1" -- "set +o history; sudo --stdin --validate --prompt='' <<< $(pass show majordomo/ssh/eng); exec -a sudo sudo -i ${*:2}"
+        ssh -q -t "$1" -- "set +o history; sudo --stdin --validate --prompt='' <<< $(pass show majordomo/private/ssh/eng); exec -a sudo sudo -i ${*:2}"
     fi
 }
 
@@ -90,22 +90,22 @@ case "$1" in
         ;;
     br1-mr14*)
         echo 172.16.103.199
-        sshpass -p"$(pass show majordomo/ssh/router)"   \
-                ssh -F /dev/null                        \
-                -i "$HOME/.ssh/eng_key_rsa"             \
-                -o UserKnownHostsFile=/dev/null         \
-                -o StrictHostKeyChecking=no             \
-                -l root                                 \
+        sshpass -p"$(pass show majordomo/private/ssh/router)"   \
+                ssh -F /dev/null                                \
+                -i "$HOME/.ssh/eng_key_rsa"                     \
+                -o UserKnownHostsFile=/dev/null                 \
+                -o StrictHostKeyChecking=no                     \
+                -l root                                         \
                 br1-mr14.intr
         exit 0
         ;;
     sr1-mr13-14*)
-        sshpass -p"$(pass show majordomo/ssh/router)"   \
-                ssh -F /dev/null                        \
-                -i "$HOME/.ssh/eng_key_rsa"             \
-                -o UserKnownHostsFile=/dev/null         \
-                -o StrictHostKeyChecking=no             \
-                -l root                                 \
+        sshpass -p"$(pass show majordomo/private/ssh/router)"   \
+                ssh -F /dev/null                                \
+                -i "$HOME/.ssh/eng_key_rsa"                     \
+                -o UserKnownHostsFile=/dev/null                 \
+                -o StrictHostKeyChecking=no                     \
+                -l root                                         \
                 sr1-mr13-14.intr
         exit 0
         ;;
@@ -149,7 +149,7 @@ case "$1" in
         host="$2"; [[ "$host" == *.intr ]] || host+=.intr
         if ! ssh_sudo "$host" "${@:3}"
         then
-            TELNET_PASSWORD="$(pass show majordomo/general)" cisco "$host" "${@:3}"
+            TELNET_PASSWORD="$(pass show majordomo/private/general)" cisco "$host" "${@:3}"
         fi
         ;;
     nginx)
@@ -190,15 +190,15 @@ case "$1" in
         done
         case $MYSQL_CLIENT in
             mysql )
-                mysql -h"${2%.intr}" -p"$(pass show majordomo/web/mysql/root)" -uroot
+                mysql -h"${2%.intr}" -p"$(pass show majordomo/private/web/mysql/root)" -uroot
                 ;;
             mycli )
                 PAGER='pspg -s 14 -X --force-uniborder --quit-if-one-screen -s 16' \
-mycli --password "$(pass show majordomo/web/mysql/root)" -d "${2%.intr}"
+mycli --password "$(pass show majordomo/private/web/mysql/root)" -d "${2%.intr}"
                 ;;
             * )
                 PAGER='pspg -s 14 -X --force-uniborder --quit-if-one-screen -s 16' \
-mycli --password "$(pass show majordomo/web/mysql/root)" -d "${2%.intr}"
+mycli --password "$(pass show majordomo/private/web/mysql/root)" -d "${2%.intr}"
                 ;;
         esac
         ;;
@@ -206,7 +206,7 @@ mycli --password "$(pass show majordomo/web/mysql/root)" -d "${2%.intr}"
         echo "Kill MySQL connections"
         host="${2:-127.0.0.1}"
         user="root"
-        password="$(pass show majordomo/web/mysql/root)"
+        password="$(pass show majordomo/private/web/mysql/root)"
         for id in $(mysql --silent --user="$user" --password="$password" --host="$host" --execute="SELECT id FROM information_schema.processlist WHERE user like 'u%'"); do
             echo "$id"
             mysql --silent --user="$user" --password="$password" --host="$host" --execute="kill $id;"
