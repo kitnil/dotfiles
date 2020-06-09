@@ -6,14 +6,14 @@
 (setf *transient-border-width* 0)
 (bind-super)
 
-(rename-group *default-group-name* "1")
+;; (rename-group *default-group-name* "1")
 (setq *default-group-name* "1")
-(restore-from-file (concat (getenv "HOME") "/.stumpwm.d/desktop-0.lisp"))
+;; (restore-from-file (concat (getenv "HOME") "/.stumpwm.d/desktop-0.lisp"))
 ;; (mapcar #'(lambda (x)
 ;;             (add-group (current-screen) (write-to-string x) :background t))
 ;;         (range 10 :min 2 :step 1))
-(add-group (current-screen) "0" :background t :type 'float-group)
-(gselect "1")
+;; (add-group (current-screen) "0" :background t :type 'float-group)
+;; (gselect "1")
 
 (defun run-frame (group-number &key (frame-0-command nil) (frame-1-command nil))
   (if (= (parse-integer (group-name (current-group))) group-number)
