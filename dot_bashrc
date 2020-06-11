@@ -95,11 +95,11 @@ then
     . "$HOME/.guix-profile/etc/profile.d/autojump.sh"
 fi
 
-# # http://puzan.info/linux/2014-05-14-direnv.html
-# if [ -f "$HOME/.guix-profile/bin/direnv" ]
-# then
-#     eval "$(direnv hook bash)"
-# fi
+# http://puzan.info/linux/2014-05-14-direnv.html
+if [ -f "$HOME/.guix-profile/bin/direnv" ]
+then
+    eval "$(direnv hook bash)"
+fi
 
 man-in-emacs()
 {
