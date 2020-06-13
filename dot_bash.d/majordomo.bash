@@ -228,7 +228,7 @@ majordomo-docker-jenkins()
 
 majordomo-hms-current-stack()
 {
-    curl -u "jenkins:$(pass show majordomo/jenkins/jenkins)" -X GET http://nginx1.intr:8080/hms
+    curl -u "jenkins:$(pass show majordomo/private/jenkins/jenkins)" -X GET http://nginx1.intr:8080/hms
 }
 
 majordomo-hms-auth ()
