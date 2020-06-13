@@ -4,7 +4,7 @@
   strategy: host_pinned
   become: yes
   vars:
-    slack_token: "{{ lookup('passwordstore', 'majordomo/mjru.slack.com/tokens/ansible')}}"
+    slack_token: "{{ lookup('passwordstore', 'majordomo/private/mjru.slack.com/tokens/ansible')}}"
   tasks:
     - copy:
         dest: /root/docker-pull.sh

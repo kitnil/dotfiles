@@ -6,7 +6,7 @@ account=$1
 host=$2
 
 USERNAME="USER:-pyhalov"
-PASSWORD="PASSWORD:-$(pass show majordomo/hms/pyhalov)"
+PASSWORD="PASSWORD:-$(pass show majordomo/private/hms/pyhalov)"
 
 auth ()
 {

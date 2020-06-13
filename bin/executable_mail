@@ -59,7 +59,7 @@ case "$1" in
                 exec -a "$0" curl                                                                               \
                     --silent                                                                                    \
                     --request "EXAMINE ${3:-INBOX}"                                                             \
-                    --user "pyhalov@majordomo.ru:$(pass show newmail.majordomo.ru/pyhalov@majordomo.ru)"        \
+                    --user "pyhalov@majordomo.ru:$(pass show majordomo/private/newmail.majordomo.ru/pyhalov@majordomo.ru)"        \
                     imaps://imap.majordomo.ru:993
                 ;;
             asfjsdf@mail.ru)
@@ -87,7 +87,7 @@ case "$1" in
                 exec -a "$0" curl                                                               \
                     --silent                                                                    \
                     --request "EXAMINE ${3:-INBOX}"                                             \
-                    --user "jenkins@majordomo.ru:$(pass show majordomo/jenkins.intr/admin)"     \
+                    --user "jenkins@majordomo.ru:$(pass show majordomo/public/jenkins.intr/admin)"     \
                     imaps://imap.majordomo.ru:993
                 ;;
             zabbix.guix@yandex.ru)

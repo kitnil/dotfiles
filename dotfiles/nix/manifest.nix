@@ -229,7 +229,7 @@ in [
       export IPMI_HOST=$1
       export IPMI_OUTPUT=/tmp/$IPMI_HOST.jviewer.jnlp
       export IPMI_USER=ADMIN
-      export IPMI_PASSWORD=$(pass show majordomo/ipmi/ADMIN)
+      export IPMI_PASSWORD=$(pass show majordomo/private/ipmi/ADMIN)
       exec -a ipmi ${ipmi}/bin/ipmi "$@"
       EOF
       chmod 555 $out/bin/ipmi

@@ -1,6 +1,6 @@
 mjdev.intr()
 {
-    sshpass -p$(pass show mjdev.intr/root) ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@mjdev.intr
+    sshpass -p$(pass show majordomo/public/mjdev.intr/root) ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@mjdev.intr
 }
 
 majordomo-backup()
@@ -80,30 +80,30 @@ majordomo-galera-df-home()
 
 router4.intr()
 {
-    sshpass -p"$(pass show majordomo/router4/root)" ssh router4.intr
+    sshpass -p"$(pass show majordomo/public/router4/root)" ssh router4.intr
 }
 
 router.majordomo.ru()
 {
     ssh -t work
-    # sshpass -p$(pass show majordomo/router.majordomo.ru) ssh -vvv -oKexAlgorithms=+diffie-hellman-group1-sha1 -oHostKeyAlgorithms=+ssh-dss -p 1022 -l root -i ~/.ssh/eng_key_rsa router.majordomo.ru
+    # sshpass -p$(pass show majordomo/public/majordomo/router.majordomo.ru) ssh -vvv -oKexAlgorithms=+diffie-hellman-group1-sha1 -oHostKeyAlgorithms=+ssh-dss -p 1022 -l root -i ~/.ssh/eng_key_rsa router.majordomo.ru
 }
 
 br1-mr14.intr-ftp-list()
 {
-    curl "ftp://netcfg:$(pass show majordomo/172.16.103.111/netcfg)@172.16.103.111/junos/"
+    curl "ftp://netcfg:$(pass show majordomo/public/majordomo/172.16.103.111/netcfg)@172.16.103.111/junos/"
 }
 
 br1-mr14.intr-ftp()
 {
     # Example “config”: br1-mr14.intr_juniper.conf.gz_20190702_170649
     config="$1"
-    wget -O- "ftp://netcfg:$(pass show majordomo/172.16.103.111/netcfg)@172.16.103.111/junos/$config" | zcat
+    wget -O- "ftp://netcfg:$(pass show majordomo/public/majordomo/172.16.103.111/netcfg)@172.16.103.111/junos/$config" | zcat
 }
 
 majordomo-juneos-config()
 {
-    sshpass -p$(pass show majordomo/ssh/router) ssh -l root "$1" -- 'cli -c "show config | display xml"'
+    sshpass -p$(pass show majordomo/public/majordomo/ssh/router) ssh -l root "$1" -- 'cli -c "show config | display xml"'
 }
 
 majordomo-br1-mr14.intr-xq-br()
@@ -144,7 +144,7 @@ majordomo-jenkins-build-php()
     branch="$1"
     for job in apache2-php52 apache2-php53 apache2-php54 apache2-php55 apache2-php56 apache2-php70 apache2-php71 apache2-php72 apache2-php73 apache2-php74; do
         echo -e "\n@ $job"
-        curl -u "pyhalov:$(pass show jenkins.intr/pyhalov)" -s -k \
+        curl -u "pyhalov:$(pass show majordomo/private/jenkins.intr/pyhalov)" -s -k \
 "https://jenkins.intr/job/webservices/job/$job/job/$branch/build?delay=0sec" \
 -H 'Content-type: application/x-www-form-urlencoded; charset=UTF-8' --data-urlencode json='{"parameter": [{"name":"DEPLOY", "value":"true"}]}'
         sleep 0.5
@@ -172,13 +172,13 @@ majordomo-ansible-auth-hosts()
 
 majordomo-web-active-current()
 {
-    curl -H "PRIVATE-TOKEN: $(pass show majordomo/gitlab.intr/tokens/terraform)" -s -k -L \
+    curl -H "PRIVATE-TOKEN: $(pass show majordomo/public/gitlab.intr/tokens/terraform)" -s -k -L \
             'https://gitlab.intr/hms/config-repo/raw/master/rc-staff-prod.yml'
 }
 
 majordomo-gitlab-version()
 {
-    curl --header "PRIVATE-TOKEN: $(pass show majordomo/gitlab.intr/tokens/terraform)" \
+    curl --header "PRIVATE-TOKEN: $(pass show majordomo/public/gitlab.intr/tokens/terraform)" \
             --silent --insecure --location https://gitlab.intr/api/v4/version
     echo
 }
@@ -189,14 +189,14 @@ majordomo-skopeo-mj()
     image="$2" # ssh-guest-room
     tag = "$3"
     tar="$4" || result # docker-archive:/nix/store/dw0qakl4g58n9idsi35vn0m1d92gs0jw-docker-image-ssh-guest-room.tar.gz
-    skopeo copy --dest-creds=gradle:"$(pass show majordomo/nexus/gradle)" --dest-tls-verify=false "docker-archive:$tar" "docker://docker-registry.intr/$group/$image:$tag"
+    skopeo copy --dest-creds=gradle:"$(pass show majordomo/public/nexus/gradle)" --dest-tls-verify=false "docker-archive:$tar" "docker://docker-registry.intr/$group/$image:$tag"
 }
 
 majordomo-skopeo-fetch()
 {
     image="$1"
     dest="$2"
-    skopeo copy --dest-creds=gradle:"$(pass show majordomo/nexus/gradle)" --src-tls-verify=false --dest-tls-verify=false "docker://docker-registry.intr/$image" "docker-archive:$dest"
+    skopeo copy --dest-creds=gradle:"$(pass show majordomo/public/nexus/gradle)" --src-tls-verify=false --dest-tls-verify=false "docker://docker-registry.intr/$image" "docker-archive:$dest"
 }
 
 # dockerd --insecure-registry https://docker-registry.intr
@@ -250,19 +250,19 @@ majordomo-es-xmlrpc()
 
 majordomo-docker-list-intr()
 {
-    curl -s -X GET -k -u "gradle:$(pass show majordomo/nexus/gradle)" https://docker-registry.intr/v2/_catalog \
+    curl -s -X GET -k -u "gradle:$(pass show majordomo/public/nexus/gradle)" https://docker-registry.intr/v2/_catalog \
         | jq -r '.repositories[]'
 }
 
 majordomo-jenkins-log()
 {
-    for project in $(curl -s -k 'https://admin:$(pass show jenkins.intr/admin)@jenkins.intr/api/json?pretty=true' | jq -r '.jobs[] | .name'); do
+    for project in $(curl -s -k 'https://admin:$(pass show majordomo/public/jenkins.intr/admin)@jenkins.intr/api/json?pretty=true' | jq -r '.jobs[] | .name'); do
         mkdir -p "$project"
         cd "$project"
-        for job in $(curl -s -k "https://admin:$(pass show jenkins.intr/admin)@jenkins.intr/job/$project/api/json" | jq -r '.jobs[] | .url'); do
+        for job in $(curl -s -k "https://admin:$(pass show majordomo/public/jenkins.intr/admin)@jenkins.intr/job/$project/api/json" | jq -r '.jobs[] | .url'); do
             job_name="$(echo $job | rev | cut -d/ -f 2 | rev)"
             echo "@ $job"
-            curl -u 'admin:$(pass show jenkins.intr/admin)' -s -k "$job/job/master/lastBuild/consoleText" > "$job_name.log"
+            curl -u 'admin:$(pass show majordomo/public/jenkins.intr/admin)' -s -k "$job/job/master/lastBuild/consoleText" > "$job_name.log"
         done
         cd -
     done
@@ -288,13 +288,13 @@ majordomo-add-hosts-mikrotik()
 
 majordomo-jenkins-log()
 {
-    for project in $(curl -s -k "https://admin:$(pass show jenkins.intr/admin)@jenkins.intr/api/json?pretty=true" | jq -r '.jobs[] | .name'); do
+    for project in $(curl -s -k "https://admin:$(pass show majordomo/public/jenkins.intr/admin)@jenkins.intr/api/json?pretty=true" | jq -r '.jobs[] | .name'); do
         mkdir -p "$project"
         cd "$project"
-        for job in $(curl -s -k "https://admin:$(pass show jenkins.intr/admin)@jenkins.intr/job/$project/api/json" | jq -r '.jobs[] | .url'); do
+        for job in $(curl -s -k "https://admin:$(pass show majordomo/public/jenkins.intr/admin)@jenkins.intr/job/$project/api/json" | jq -r '.jobs[] | .url'); do
             job_name="$(echo $job | rev | cut -d/ -f 2 | rev)"
             echo "@ $job"
-            curl -u "admin:$(pass show jenkins.intr/admin)" -s -k "$job/job/master/lastBuild/consoleText" > "$job_name.log"
+            curl -u "admin:$(pass show majordomo/public/jenkins.intr/admin)" -s -k "$job/job/master/lastBuild/consoleText" > "$job_name.log"
         done
         cd -
     done

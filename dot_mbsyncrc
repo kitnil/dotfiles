@@ -40,7 +40,7 @@ Channel gmail
 IMAPAccount majordomo
 Host router.majordomo.ru
 User pyhalov@majordomo.ru
-PassCmd "pass show newmail.majordomo.ru/pyhalov@majordomo.ru"
+PassCmd "pass show majordomo/private/newmail.majordomo.ru/pyhalov@majordomo.ru"
 AuthMechs LOGIN
 SSLType None
 CertificateFile /etc/ssl/certs/ca-certificates.crt

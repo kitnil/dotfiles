@@ -468,10 +468,10 @@ sshpass-root ()
 
 # jenkins-log()
 # {
-#     for project in $(curl -s -k "https://admin:$(pass show jenkins.intr/admin)@jenkins.intr/api/json?pretty=true" | jq -r '.jobs[] | .name'); do
-#         for job in $(curl -s -k "https://admin:$(pass show jenkins.intr/admin)@jenkins.intr/job/$project/api/json" | jq -r '.jobs[] | .url'); do
+#     for project in $(curl -s -k "https://admin:$(pass show majordomo/public/jenkins.intr/admin)@jenkins.intr/api/json?pretty=true" | jq -r '.jobs[] | .name'); do
+#         for job in $(curl -s -k "https://admin:$(pass show majordomo/public/jenkins.intr/admin)@jenkins.intr/job/$project/api/json" | jq -r '.jobs[] | .url'); do
 #             echo "@ $job" |
-#             curl -u "admin:$(pass show jenkins.intr/admin)" -s -k "$job/job/master/lastBuild/consoleText"
+#             curl -u "admin:$(pass show majordomo/public/jenkins.intr/admin)" -s -k "$job/job/master/lastBuild/consoleText"
 #         done
 #     done
 # }
