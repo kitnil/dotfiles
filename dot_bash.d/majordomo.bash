@@ -1,6 +1,6 @@
 mjdev.intr()
 {
-    sshpass -p$(pass show majordomo/public/mjdev.intr/root) ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@mjdev.intr
+    sshpass -p"$(pass show majordomo/public/mjdev.intr/root)" ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@mjdev.intr "$@"
 }
 
 majordomo-backup()
