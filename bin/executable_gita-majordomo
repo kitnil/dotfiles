@@ -14,4 +14,4 @@ cat > "$HOME/.config/gita/repo_path" <<EOF
 $(config)
 EOF
 
-exec -a "$0" sshpass -Ppassphrase -p"$(pass show gitlab.intr/ssh/id_rsa_gitlab_intr)" gita "$@"
+exec -a "$0" sshpass -Ppassphrase -p"$(pass show majordomo/private/gitlab.intr/ssh/id_rsa_gitlab_intr)" gita "$@"
