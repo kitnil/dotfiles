@@ -41,14 +41,6 @@
       "ssh"))
 
 (define (main args)
-  (define opts
-    (args-fold (cdr (program-arguments))
-               %options
-               (lambda (opt name arg loads)
-                 (error "Unrecognized option `~A'" name))
-               (lambda (op loads)
-                 (cons op loads))
-               %default-options))
   (for-each (lambda (host)
               (format #t "alias ~a=~s~%"
                       (if (string-suffix? ".intr" host)
