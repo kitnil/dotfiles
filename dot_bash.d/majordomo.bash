@@ -80,7 +80,7 @@ majordomo-galera-df-home()
 
 router4.intr()
 {
-    sshpass -p"$(pass show majordomo/public/router4/root)" ssh router4.intr
+    sshpass -p"$(pass show majordomo/public/router4/root)" ssh router4.intr "$@"
 }
 
 router.majordomo.ru()
