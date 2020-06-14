@@ -80,3 +80,30 @@
       (add-to-list 'browse-url-browser-function
                    (cons majordomo-url-gitlab-commit-regexp
                          'browse-url-majordomo-ci-nixpkgs-git-commit)))
+
+
+;;;
+;;; wi-utils
+;;;
+
+;; Addional procedures which depends on wi-utils
+
+(defun wi-servers-list-xpanes-open-tail-taskexecutor ()
+  "Tail taskexecutor logs."
+  (interactive)
+  (wi-servers-list-xpanes-terminal (mapcar #'car (bui-list-get-marked-args 'general))
+                                   "ssh -t {} -- sudo tail -f /var/log/taskexecutor.log"))
+
+;; TODO: Bind wi-servers-list-xpanes-open-tail-taskexecutor
+;; (define-key map (kbd "T") 'wi-servers-list-xpanes-open-tail-taskexecutor)
+
+(defun wi-servers-list-open-terminal ()
+  "Open `terminal-here' with selected servers."
+  (interactive)
+  (mapcar (lambda (entry)
+            (let ((host (car entry)))
+              (terminal-here (concat "/ssh:" host ":"))))
+          (bui-list-get-marked-args 'general)))
+
+;; TODO: Bind wi-servers-list-open-terminal
+;; (define-key map (kbd "s") 'wi-servers-list-open-terminal)
