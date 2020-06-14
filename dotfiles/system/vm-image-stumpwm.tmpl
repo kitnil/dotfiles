@@ -2,7 +2,7 @@
 (use-service-modules desktop networking ssh xorg shepherd)
 (use-package-modules bootloaders certs fonts nvi
                      package-management wget xorg
-                     wm linux emacs-xyz pulseaudio)
+                     wm linux lisp lisp-xyz pulseaudio)
 
 (define vm-image-motd (plain-file "motd" "
 \x1b[1;37mThis is the GNU system.  Welcome!\x1b[0m
@@ -65,9 +65,10 @@ root ALL=(ALL) ALL
                           sbcl-stumpwm-ttf-fonts
                           sbcl-stumpwm-pass
                           sbcl-stumpwm-stumptray
+                          sbcl-slime-swank
                           strace
-                          emacs-slime
-                          ponymix)
+                          ponymix
+                          sbcl)
                     %base-packages))
 
   (services

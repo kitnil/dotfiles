@@ -1,6 +1,6 @@
 ;; https://lists.gnu.org/archive/html/help-guix/2017-01/msg00033.html
 
-(load "/run/current-system/profile/share/emacs/site-lisp/swank.asd")
+(load "/run/current-system/profile/share/common-lisp/source/sbcl-slime-swank/swank.asd")
 
 (require :swank)
 

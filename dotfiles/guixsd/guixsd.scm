@@ -7,7 +7,7 @@
 (use-package-modules admin base certs cryptsetup docker linux lisp
 suckless xdisorg xorg fonts android fontutils gnome freedesktop
 readline ncurses networking pulseaudio wm vnc ssh bittorrent audio
-lxde version-control)
+lxde version-control lisp-xyz)
 
 (use-service-modules admin dbus desktop docker dns networking sound
                      xorg ssh web cgit version-control certbot
@@ -320,6 +320,7 @@ location / {
                        sbcl-stumpwm-checkout-globalwindows
                        sbcl-stumpwm-checkout-swm-gaps
                        sbcl-stumpwm-checkout-stumptray
+                       sbcl-slime-swank
                        stumpish
 
                        ncurses
