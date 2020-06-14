@@ -124,6 +124,12 @@ resource "github_repository" "emacs-vterm-toggle" {
   default_branch = "wip"
 }
 
+resource "github_repository" "emacs-wi-utils" {
+  name           = "emacs-wi-utils"
+  description    = "Project and server management with Emacs"
+  default_branch = "master"
+}
+
 resource "github_repository" "firefox-passff" {
   name           = "firefox-passff"
   description    = "Fork https://github.com/passff/passff.git"
