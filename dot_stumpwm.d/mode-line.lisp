@@ -81,8 +81,13 @@
           ,(make-string 4 :initial-element #\space)
           ,'(:eval (fmt-mem-available (mem-usage) t))
 
-          ,(make-string 4 :initial-element #\space)
-          ,'(:eval (format nil "VPN: ~a" *tapvpn-ip*))
+          ,@(if (string-equal *tapvpn-ip* "")
+                '()
+                (list (make-string 4 :initial-element #\space)))
+
+          ,@(if (string-equal *tapvpn-ip* "")
+                '()
+                (list '(:eval (format nil "VPN: ~a" *tapvpn-ip*))))
 
           ,(make-string 4 :initial-element #\space)
           ,'(:eval (format nil "VOL: ~a" *volume-current*))
@@ -92,10 +97,7 @@
 
           ,(make-string 4 :initial-element #\space))))
 
-(mode-line-update)
-(mode-line)
-(stumptray:stumptray)
-
+(defvar *tapvpn-ip* "")
 (defcommand ip-address-vpn-update () ()
   (setq *tapvpn-ip*
         (string-trim '(#\Newline)
@@ -104,6 +106,10 @@
                               "jq --raw-output '.[] | select(.ifname == \"tapvpn\") | .addr_info[] | select(.\"family\" == \"inet\") | .local'")
                             #\|)
                       t))))
+
+(mode-line-update)
+(mode-line)
+(stumptray:stumptray)
 
 (mapcar (lambda (func)
           (add-hook *start-hook* func))
