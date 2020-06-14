@@ -2,3 +2,4 @@
 /dotfiles/maintenance/github/terraform.tfstate
 /dotfiles/maintenance/github/.terraform
 /tmp-cache
+/test-tmp/
