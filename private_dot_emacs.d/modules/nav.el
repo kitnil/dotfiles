@@ -102,6 +102,9 @@
         ;;(t               . ivy-posframe-display)
         ))
 
+(setq wi-groups-direcotory "~/majordomo")
+(setq wi-projects-directories '("~/src" "~/archive/src"))
+
 (load (expand-file-name "~/archive/src/tramp-auto-auth/tramp-auto-auth.el"))
 (add-to-list 'tramp-auto-auth-alist
              `("intr" . ,(let ((secret (plist-get (nth 0

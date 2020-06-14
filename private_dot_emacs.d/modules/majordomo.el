@@ -49,8 +49,6 @@
 (load (expand-file-name "~/archive/src/vterm-toggle/vterm-toggle.el") t)
 (load (expand-file-name "~/.emacs.d/tramp-auto-auth-secrets.el") t)
 (load (expand-file-name "~/src/emacs-helm-tramp/helm-tramp.el") t)
-(load (expand-file-name "~/archive/src/tmp/tmp.iGP0dpFwEX/mj-servers.el") t)
-(load (expand-file-name "~/archive/src/tmp/tmp.iGP0dpFwEX/wi-project.el") t)
 
 
 ;;;
@@ -67,26 +65,6 @@
                     `("/docker:gitlab:/opt/gitlab/embedded/service/gitlab-rails"
                       ,@(nthcdr 4 file-name)))
                 "/"))))
-
-
-;;;
-;;; browse-url
-;;;
-
-(defun majordomo-define-browse-url ()
-  (mapcar (lambda (directory)
-            (let* ((parts (split-string directory "/"))
-                   (name (first (last parts)))
-                   (group (string-remove-prefix "_"
-                                                (first (last (delete name
-                                                                     parts)))))
-                   (name+group (concat "majordomo-" group "-" name)))
-              (wi-define-browse-url-git-commit
-               name+group directory (lambda (url)
-                                      (first (last (split-string url "/")))))))
-          (wi-project-candidates-groups-direcotory)))
-
-(majordomo-define-browse-url)
 
 
 ;;;
