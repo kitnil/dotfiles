@@ -19,3 +19,4 @@ check-system:
 install:
 	chezmoi apply
 	update-desktop-database ~/.local/share/applications
+	open-with-linux install
