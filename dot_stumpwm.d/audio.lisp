@@ -9,10 +9,13 @@
   (run-shell-command "if pgrep -f osd-sound > /dev/null; then pkill osd-sound; osd-sound; else osd-sound; fi"))
 
 (defun volume-current ()
-  (if (= 1 (parse-integer (run-shell-command "ponymix is-muted && printf 0 || printf 1" t)))
-      (bar (parse-integer (string-trim '(#\Newline) (run-shell-command "ponymix get-volume" t))) 10
-           #\#
-           #\ )
+  (if (= 1
+         (parse-integer (run-shell-command "ponymix is-muted && printf 0 || printf 1"
+                                           t)))
+      (bar (parse-integer (string-trim '(#\Newline)
+                                       (run-shell-command "ponymix get-volume"
+                                                          t)))
+           10 #\##\ )
       "MUTED"))
 
 (defcommand volume-current-message () ()
