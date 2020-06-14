@@ -45,6 +45,7 @@
    emacs-terminal-here-checkout
    emacs-plain-org-wiki
    emacs-tramp-auto-auth-my
+   emacs-wi-utils
    ))
 
 (packages->manifest
