@@ -9,10 +9,9 @@
 
 (sb-posix:setenv "TERM_PS1" "gentoo" 1)
 
-(defvar *xterm-command* "/home/oleg/.guix-profile/bin/xterm")
+(defvar *xterm-command* "xterm")
 (defvar *xterm-big-command*
-  (join '("exec" "/home/oleg/.guix-profile/bin/xterm"
-          "-fa" "Monospace" "-fs" "24")))
+  (join '("exec" "xterm" "-fa" "Monospace" "-fs" "24")))
 (defvar *xterm-no-scrollbar* "+sb")
 (defvar *xterm-theme-dark* "-bg black -fg white")
 (defvar *xterm-theme-light* "-bg white -fg black")
