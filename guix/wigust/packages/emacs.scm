@@ -1490,3 +1490,29 @@ and manipulated by user-defined functions to do various things such as:
     (description "Dumb indentation mode is appropriate for editing buffers
 that Emacs does not fully understand syntactically.")
     (license license:gpl3+)))
+
+(define-public emacs-wi-utils
+  (package
+    (name "emacs-wi-utils")
+    (version "0.0.1")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://github.com/kitnil/emacs-wi-utils")
+                    (commit (string-append "v" version))))
+              (file-name (git-file-name name version))
+              (sha256
+               (base32
+                "1dv7gjcinw8pbdn5rqvnd98wkvbanvpc4xxis83x0gwp9anrjdc2"))))
+    (build-system emacs-build-system)
+    (inputs
+     `(("emacs-bui" ,emacs-bui)
+       ("emacs-browse-at-remote" ,emacs-browse-at-remote)
+       ("emacs-magit" ,emacs-magit)
+       ("emacs-ivy" ,emacs-ivy)
+       ("emacs-s" ,emacs-s)))
+    (synopsis "Ivy procedures for Git project management")
+    (description "This package provides several Emacs's Ivy procedures to work
+with Git-based projects.")
+    (home-page "https://github.com/kitnil/emacs-wi-utils")
+    (license license:gpl3+)))
