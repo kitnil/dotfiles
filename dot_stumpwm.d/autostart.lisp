@@ -8,6 +8,7 @@
               (lambda () (picom) (xplanet-file))
               (lambda () (cursor-theme))
               (lambda () (keynav))
+              (lambda () (run-commands "volume-decrease")) ;start pulseaudio
               ;; (lambda () (sb-thread:make-thread
               ;;        (lambda ()
               ;;          (run-shell-command
