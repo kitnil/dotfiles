@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+set -eux
+set -o pipefail
+
+gpg --decrypt \
+    --pinentry-mode loopback \
+    --passphrase "$(pass show www.majordomo.ru/gpg/master)" \
+    "$HOME/.password-store/majordomo/private/eng/old.gpg"
+
+gpg --decrypt \
+    --pinentry-mode loopback \
+    --passphrase "$(pass show majordomo/private/eng/old)" \
+    "$HOME/.password-store/majordomo/public/gitlab.intr/tokens/terraform.gpg"
