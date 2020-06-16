@@ -56,30 +56,7 @@
 (load-config-file "covid19.lisp")
 (load-config-file "spb.lisp")
 (load-config-file "mode-line.lisp")
-
-(load-config-file "gaps.lisp")
-
-(defvar workstation?
-  (string-equal (file-get-contents "/etc/hostname") "workstation-guixsd"))
-(cond ((string= (getenv "DISPLAY") ":0")
-       (load-config-file "display-0.lisp")
-       (unless workstation?
-         (setf *maxsize-border-width* 3)
-         (setf *message-window-y-padding* 3)
-         (setf *normal-border-width* 3)
-         (setf *transient-border-width* 3)))
-      ((string= (getenv "DISPLAY") ":1")
-       (run-shell-command "xsetroot -solid grey")
-       (restore-from-file (concat (getenv "HOME") "/src/dotfiles/oleg/.stumpwm.d/desktop/1.lisp"))
-       ;; (swm-gaps:toggle-gaps) ;XXX: Make declarative.
-       (bind-super)
-       (define-key *top-map* (kbd "s-m") "alerta")
-       (setf *maxsize-border-width* 3)
-       (setf *message-window-y-padding* 3)
-       (setf *normal-border-width* 3)
-       (setf *transient-border-width* 3)
-       (frame-parameters-display-1))
-      (t (set-prefix-key (kbd "C-i"))))
+(load-config-file "display-0.lisp")
 
 (setf *startup-message* nil)
 (setf *message-window-gravity* :center)
