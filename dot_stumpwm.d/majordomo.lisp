@@ -46,14 +46,14 @@
 
 (defcommand majordomo-mongo-production () ()
   (term-shell-command (concat "mongo mongodb://admin:"
-                              (password-store-show "majordomo/private/mongo/ci.intr/admin")
+                              (password-store-show "majordomo/public/mongo/ci.intr/admin")
                               "@hms01-mr.intr:27017,hms02-mr.intr:27017,hms03-mr.intr:27017/admin?replicaSet=hms-rs0")
                       :scrollbar t
                       :title "mongo-prod"))
 
 (defcommand majordomo-mongo-development () ()
   (term-shell-command (concat "mongo mongodb://admin:"
-                              (password-store-show "majordomo/private/mongo/ci.intr/admin")
+                              (password-store-show "majordomo/public/mongo/ci.intr/admin")
                               "@ci.intr:27017/admin")
                       :scrollbar t
                       :title "mongo-dev"))
