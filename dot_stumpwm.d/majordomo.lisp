@@ -51,12 +51,25 @@
                       :scrollbar t
                       :title "mongo-prod"))
 
+(defun majordomo-mongo-development-command ()
+  (concat "mongo mongodb://admin:"
+          (password-store-show "majordomo/public/mongo/ci.intr/admin")
+          "@ci.intr:27017/admin"))
+
 (defcommand majordomo-mongo-development () ()
-  (term-shell-command (concat "mongo mongodb://admin:"
-                              (password-store-show "majordomo/public/mongo/ci.intr/admin")
-                              "@ci.intr:27017/admin")
-                      :scrollbar t
-                      :title "mongo-dev"))
+  (term-shell-command (majordomo-mongo-development-command)
+                      :scrollbar t :title "mongo-dev"))
+
+(defcommand majordomo-mongo-development-id-object () ()
+  (let ((clipboard (get-x-selection)))
+    (sb-thread:make-thread
+     (lambda ()
+       (message
+        (run-shell-command (join (list (majordomo-mongo-development-command)
+                                       (format nil "--eval ~s"
+                                               (format nil "load('~a/.mongorc.js'); search('~a')"
+                                                       (getenv "HOME") clipboard))))
+                           t))))))
 
 
 ;;;
