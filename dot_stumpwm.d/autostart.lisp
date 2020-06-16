@@ -2,7 +2,7 @@
 
 (mapcar (lambda (func)
           (add-hook *start-hook* func))
-        (list (lambda () (clipmenud))
+        (list ;; (lambda () (clipmenud))
               (lambda () (kdeconnect-indicator))
               (lambda () (dunst))
               (lambda () (picom) (xplanet-file))
