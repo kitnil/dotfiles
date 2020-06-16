@@ -417,6 +417,9 @@ guix()
                     sudo --login command guix system reconfigure "${@:3}" \
                     "$HOME/.local/share/chezmoi/dotfiles/guixsd/$HOSTNAME.scm"
                     ;;
+                *)
+                    command guix system "${@:2}"
+                    ;;
             esac
             ;;
         master-staging)
