@@ -408,6 +408,11 @@ guix()
             ;;
         system)
             case "$2" in
+                build)
+                    sudo --login command guix system build \
+                         "${@:3}" \
+                         "$HOME/.local/share/chezmoi/dotfiles/guixsd/$HOSTNAME.scm"
+                    ;;
                 reconfigure)
                     sudo --login command guix system reconfigure \
                          --no-bootloader "${@:3}" \
