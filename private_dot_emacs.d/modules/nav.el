@@ -81,6 +81,21 @@
 ;; Display key bindings help window (after some delay)
 (which-key-mode)
 
+(setq whitespace-style
+      '(face tabs
+             spaces
+             trailing
+             ;; lines
+             space-before-tab
+             newline
+             indentation
+             empty
+             space-after-tab
+             space-mark
+             tab-mark
+             ;; newline-mark
+             ))
+
 ;; Don't use ido
 (setq projectile-completion-system 'ivy)
 
