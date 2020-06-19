@@ -57,23 +57,22 @@
                 '()
                 (list '(:eval (format nil "TOR_SEED: ~a" *torrent-seeds-counter*))))
 
-	  ;; TODO: password-store-show
-          ;; ,@(if (= *imap-recent* 0)
-          ;;       '()
-          ;;       (list (make-string 4 :initial-element #\space)))
-          ;; ,@(if (= *imap-recent* 0)
-          ;;       '()
-          ;;       (list '(:eval (format nil "INBOX: ~a" *imap-recent*))))
+          ,@(if (and *imap-recent* (not (= *imap-recent* 0)))
+                (list (make-string 4 :initial-element #\space))
+                '())
+          ,@(if (and *imap-recent* (not (= *imap-recent* 0)))
+                (list '(:eval (format nil "INBOX: ~a" *imap-recent*)))
+                '())
 
           ,(make-string 4 :initial-element #\space)
           ,'(:eval (format nil "/: ~a" *disk-free-root-counter*))
 
-          ;; ,@(if (= *spb-disk-free-root-counter* 0)
-          ;;       '()
-          ;;       (list (make-string 4 :initial-element #\space)))
-          ;; ,@(if (= *spb-disk-free-root-counter* 0)
-          ;;       '()
-          ;;       (list '(:eval (format nil "spb: /: ~a" *spb-disk-free-root-counter*))))
+          ,@(if *spb-disk-free-root-counter*
+                (list (make-string 4 :initial-element #\space))
+                '())
+          ,@(if *spb-disk-free-root-counter*
+                (list '(:eval (format nil "spb: /: ~a" *spb-disk-free-root-counter*)))
+                '())
 
           ,(make-string 4 :initial-element #\space)
           ,'(:eval (format nil "TEMP: ~a" (temp-current)))
@@ -129,11 +128,16 @@
               ;;        :name "majordomo-hms-current-stack-update"))
 
               (lambda ()
-                ;; (sb-thread:make-thread
-                ;;  (lambda ()
-                ;;    (loop while t do
-                ;;         (progn (imap-update-recent-count) (sleep 60))))
-                ;;  :name "imap-update-recent-count")
+                (sb-thread:make-thread
+                 (lambda ()
+                   (loop while t do
+                        (progn (if (gpg-key-opened? (concat (getenv "HOME")
+                                                              "/.password-store/localhost/imap/oleg.gpg"))
+                                   (imap-update-recent-count)
+                                   (setq *imap-recent* nil))
+                               (sleep 60))))
+                 :name "imap-update-recent-count")
+
                 (sb-thread:make-thread
                  (lambda ()
                    (loop while t do
@@ -141,13 +145,15 @@
                           (disk-free-root-update-counter)
                           (sleep 60))))
                  :name "disk-free-root-update-counter")
-                ;; (sb-thread:make-thread
-                ;;  (lambda ()
-                ;;    (loop while t do
-                ;;         (progn
-                ;;           (spb-disk-free-root-update-counter)
-                ;;           (sleep 60))))
-                ;;  :name "mode-line-df-spb")
+
+                (sb-thread:make-thread
+                 (lambda ()
+                   (loop while t do
+                        (progn
+                          (spb-disk-free-root-update-counter)
+                          (sleep 60))))
+                 :name "mode-line-df-spb")
+
                 (sb-thread:make-thread
                  (lambda ()
                    (loop while t do
@@ -156,6 +162,7 @@
                           (mode-line-update)
                           (sleep 60))))
                  :name "torrent-seeds-update-counter")
+
                 ;; (sb-thread:make-thread
                 ;;  (lambda ()
                 ;;    (loop while t do
@@ -164,6 +171,7 @@
                 ;;           (mode-line-update)
                 ;;           (sleep (* 60 60)))))
                 ;;  :name "notmuch")
+
                 (sb-thread:make-thread
                  (lambda ()
                    (loop while t do
