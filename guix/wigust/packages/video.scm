@@ -24,10 +24,11 @@
   #:use-module ((guix licenses) #:prefix license:))
 
 (define-public y2rss
-  (let ((commit "d5bc8173028d1594d6c7575e3f7c309553403074"))
+  (let ((commit "d5bc8173028d1594d6c7575e3f7c309553403074")
+        (revision "1"))
     (package
       (name "y2rss")
-      (version "0.0.1")
+      (version (git-version "0.0.1" "1" commit))
       (source (origin
                 (method git-fetch)
                 (uri (git-reference
