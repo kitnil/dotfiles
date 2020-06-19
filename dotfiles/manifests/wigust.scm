@@ -13,6 +13,7 @@
              (wigust packages python)
              (wigust packages ruby)
              (wigust packages virtualization)
+             (wigust packages video)
              (wigust packages xdisorg)
              (wigust packages xorg))
 
@@ -52,6 +53,8 @@
  (cons*
 
   autopostgresqlbackup
+
+  y2rss
 
   pulsemixer-emacs-keybindings
 
