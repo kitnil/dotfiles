@@ -21,6 +21,10 @@ with import <nixpkgs> {
         url = "https://github.com/9999years/nix-config";
         ref = "master";
       }).outPath + "/rebeccapkgs/navi") { });
+      mpv-notify-send = (super.callPackage ((builtins.fetchGit {
+        url = "https://github.com/emilazy/mpv-notify-send";
+        ref = "master";
+      }).outPath + "/package.nix") { });
     })
     (import ((builtins.fetchGit {
       url = "https://github.com/tsoding/boomer";
@@ -109,6 +113,7 @@ in [
   lua
   luarocks
   mediatomb
+  mpv-notify-send
   mtr
   mycli
   dbeaver # SQL client
