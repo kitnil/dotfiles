@@ -7,8 +7,6 @@
 ;;; Xterm
 ;;;
 
-(sb-posix:setenv "TERM_PS1" "gentoo" 1)
-
 (defvar *xterm-command* "xterm")
 (defvar *xterm-big-command*
   (join '("exec" "xterm" "-fa" "Monospace" "-fs" "24")))
