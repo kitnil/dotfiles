@@ -64,3 +64,4 @@
 (setf *input-window-gravity* :center)
 
 (load-config-file "autostart.lisp")
+(load-config-file "swank.lisp")
