@@ -208,6 +208,8 @@ xdisorg xml xorg)
 
                python-pyqt-without-qtwebkit python-pymongo
 
+               redis
+
                tmux tmuxifier parallel w3m
                ;; znc
 
