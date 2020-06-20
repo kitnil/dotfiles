@@ -453,9 +453,7 @@ location / {
                            "texinfo.tld"
                            "jenkins.wugi.info"
                            "iso.wugi.info"
-                           "cgit.duckdns.org"
-                           "hms-dev.intr"
-                           "api-dev.intr"))
+                           "cgit.duckdns.org"))
            "::1 guixsd localhost"
 
            "192.168.100.1 r1.tld"
