@@ -3,11 +3,11 @@
 setup()
 {
     file="/run/opengl-driver"
-    if [[ -f "$file" ]]
+    if [[ -h "$file" ]]
     then
-        sudo ln -s "$(command nix-build "$HOME/.nix-defexpr/channels/nixos-unstable" --no-out-link -A vaapiIntel)" "$file"
-    else
         echo "File $file already exists."
+    else
+        sudo ln -s "$(command nix-build "$HOME/.nix-defexpr/channels/nixos-unstable" --no-out-link -A vaapiIntel)" "$file"
     fi
 }
 
