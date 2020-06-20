@@ -1,10 +1,10 @@
 (in-package :stumpwm)
 
 (defcommand s-y () ()
-  "Open YouTube if free-time? is nil or majordomo-servers."
+  "Open YouTube if free-time? is nil or mjru-servers."
   (if (free-time?)
       (youtube)
-      (majordomo-servers)))
+      (mjru-servers)))
 
 (defun bind-super ()
   (define-key *top-map* (kbd "C-s-e") "editor")
@@ -22,7 +22,7 @@
   (define-key *top-map* (kbd "C-s-R") "repl-nix")
   (define-key *top-map* (kbd "C-M-s-R") "repl-node")
   (define-key *top-map* (kbd "s-f") "fullscreen")
-  (define-key *top-map* (kbd "s-D") "majordomo-docker-pull")
+  (define-key *top-map* (kbd "s-D") "mjru-docker-pull")
   (define-key *top-map* (kbd "s-H") "glances")
   (define-key *top-map* (kbd "s-t") "top")
   (define-key *top-map* (kbd "s-T") "tometips")
@@ -123,13 +123,13 @@
   (define-key *top-map* (kbd "SunPrint_Screen") "xfce-screenshooter")
 
   ;; Majordomo
-  (define-key *top-map* (kbd "s-a") "majordomo-pass-gitlab-ssh")
-  (define-key *top-map* (kbd "s-A") "majordomo-pass-eng")
-  (define-key *top-map* (kbd "C-s-a") "majordomo-pass-route")
-  (define-key *top-map* (kbd "s-u") "majordomo-alerta")
-  (define-key *top-map* (kbd "s-U") "majordomo-cerb")
-  (define-key *top-map* (kbd "M-s-u") "majordomo-grafana-upstream-interfaces")
-  (define-key *top-map* (kbd "C-s-u") "majordomo-grafana-netflow")
+  (define-key *top-map* (kbd "s-a") "mjru-pass-gitlab-ssh")
+  (define-key *top-map* (kbd "s-A") "mjru-pass-eng")
+  (define-key *top-map* (kbd "C-s-a") "mjru-pass-route")
+  (define-key *top-map* (kbd "s-u") "mjru-alerta")
+  (define-key *top-map* (kbd "s-U") "mjru-cerb")
+  (define-key *top-map* (kbd "M-s-u") "mjru-grafana-upstream-interfaces")
+  (define-key *top-map* (kbd "C-s-u") "mjru-grafana-netflow")
   (define-key *top-map* (kbd "s-y") "s-y")
 
   ;; Rebind groups to PREFIX-NUMBER.

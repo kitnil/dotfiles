@@ -4,9 +4,9 @@
   (format nil "sh -c 'TMOUT=20; echo \"Fetch mail.\"; ~a; notify-send \"Mail fetched.\"; read -p \"Press Enter to close.\"'"
           command))
 
-(defcommand mbsync-majordomo () ()
+(defcommand mjru-mbsync () ()
   (term-shell-command (fetch-mail-command "mbsync -a majordomo")
-                      :title "mbsync-majordomo"
+                      :title "mjru-mbsync"
                       :font '("-fa" "Monospace" "-fs" "8")
                       :color "dark"))
 

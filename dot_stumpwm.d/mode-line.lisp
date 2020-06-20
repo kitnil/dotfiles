@@ -33,8 +33,8 @@
           ,(make-string 4 :initial-element #\space)
           "^>"
 
-	  ;; TODO: Move to majordomo.lisp
-          ;; ,@(if (or (equal *majordomo-hms-current-stack* "")
+	  ;; TODO: Move to mjru.lisp
+          ;; ,@(if (or (equal *mjru-hms-current-stack* "")
           ;;           (equal *covid-19-count* ""))
           ;;       '()
           ;;       (list (make-string 4 :initial-element #\space)))
@@ -49,9 +49,9 @@
           ;;                                        (format nil "^[^B^2*~a^]" (third count))
           ;;                                        (format nil "^[^B^1*~a^]" (second count)))
           ;;                                  #\:))))))
-          ;;       (if (equal *majordomo-hms-current-stack* "")
+          ;;       (if (equal *mjru-hms-current-stack* "")
           ;;           '()
-          ;;           (list '(:eval (format nil "stack: ~a" *majordomo-hms-current-stack*)))))
+          ;;           (list '(:eval (format nil "stack: ~a" *mjru-hms-current-stack*)))))
 
           ,@(if (= *torrent-seeds-counter* 0)
                 '()
@@ -126,12 +126,12 @@
                         (progn (ip-address-vpn-update) (sleep 10))))
                  :name "ip-address-vpn-update"))
 
-	      ;; TODO: Move to majordomo.lisp
+	      ;; TODO: Move to mjru.lisp
               ;; (lambda () (sb-thread:make-thread
               ;;        (lambda ()
               ;;          (loop while t do
-              ;;               (progn (majordomo-hms-current-stack-update) (sleep 10))))
-              ;;        :name "majordomo-hms-current-stack-update"))
+              ;;               (progn (mjru-hms-current-stack-update) (sleep 10))))
+              ;;        :name "mjru-hms-current-stack-update"))
 
               (lambda ()
                 (sb-thread:make-thread

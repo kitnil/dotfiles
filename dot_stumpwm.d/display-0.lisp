@@ -56,11 +56,11 @@
   (run-frame 4 :frame-0-command (lambda ()
                                   (if (free-time?)
                                       (run-commands "zabbix")
-                                      (run-commands "majordomo-grafana-netflow")))
+                                      (run-commands "mjru-grafana-netflow")))
                :frame-1-command (lambda ()
                                   (if (free-time?)
                                       (run-commands "guix-ci")
-                                      (run-commands "majordomo-grafana-upstream-interfaces")))))
+                                      (run-commands "mjru-grafana-upstream-interfaces")))))
 
 (defcommand group-5-start-programs () ()
   (run-frame 5 :frame-0-command (lambda ()
@@ -77,9 +77,9 @@
 
 (defcommand group-7-start-programs () ()
   (run-frame 7 :frame-0-command (lambda ()
-                                  (run-commands "majordomo-alerta"))
+                                  (run-commands "mjru-alerta"))
                :frame-1-command (lambda ()
-                                  (run-commands "majordomo-zabbix"))))
+                                  (run-commands "mjru-zabbix"))))
 
 (defcommand group-8-start-programs () ()
   (run-frame 8 :frame-0-command (lambda ()
@@ -91,6 +91,6 @@
 
 (defcommand group-9-start-programs () ()
   (run-frame 9 :frame-0-command (lambda ()
-                                  (run-commands "majordomo-office-shedule-eng"))
+                                  (run-commands "mjru-office-shedule-eng"))
                :frame-1-command (lambda ()
-                                  (run-commands "majordomo-office-shedule-sup"))))
+                                  (run-commands "mjru-office-shedule-sup"))))

@@ -146,7 +146,7 @@
                                                       (run-shell-command (format nil "hms web unix ~a" clipboard)
                                                                          t)))))))
           ((= (length clipboard) 24)
-           (majordomo-mongo-development-id-object))
+           (mjru-mongo-development-id-object))
           (t (run-or-raise (firefox-command) '(:class "Firefox"))))))
 
 (defcommand firefox-new-window () ()

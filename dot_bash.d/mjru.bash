@@ -3,7 +3,7 @@ mjdev.intr()
     sshpass -p"$(pass show majordomo/public/mjdev.intr/root)" ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no root@mjdev.intr "$@"
 }
 
-majordomo-backup()
+mjru-backup()
 {
     case "$1" in
         list)
@@ -33,7 +33,7 @@ majordomo-backup()
     esac
 }
 
-majordomo-docker()
+mjru-docker()
 {
     case "$1" in
         registry)
@@ -48,7 +48,7 @@ majordomo-docker()
     esac
 }
 
-majordomo-influx()
+mjru-influx()
 {
     case "$1" in
         list)
@@ -60,17 +60,17 @@ majordomo-influx()
     esac
 }
 
-majordomo-sshuttle()
+mjru-sshuttle()
 {
     sshuttle -r majordomo 10.0.0.0/8 172.16.0.0/16
 }
 
-majordomo-vnc()
+mjru-vnc()
 {
     vncviewer "kvm$1":$(( $2 + 5900 ))
 }
 
-majordomo-galera-df-home()
+mjru-galera-df-home()
 {
     for n in 1 2 3; do
         echo -e "\n@ galera$n.intr"
@@ -101,28 +101,28 @@ br1-mr14.intr-ftp()
     wget -O- "ftp://netcfg:$(pass show majordomo/public/majordomo/172.16.103.111/netcfg)@172.16.103.111/junos/$config" | zcat
 }
 
-majordomo-juneos-config()
+mjru-juneos-config()
 {
     sshpass -p$(pass show majordomo/public/majordomo/ssh/router) ssh -l root "$1" -- 'cli -c "show config | display xml"'
 }
 
-majordomo-br1-mr14.intr-xq-br()
+mjru-br1-mr14.intr-xq-br()
 {
     ssh -l root br1-mr14.intr -- 'cli -c "show interfaces | display xml"' \
         | xq -y '."rpc-reply"."interface-information"."physical-interface"[] | ."logical-interface" | select(. != null)'
 }
 
-majordomo-backup-mount()
+mjru-backup-mount()
 {
     sudo -u majordomo-ssh-tunnel restic -r /srv/backup/majordomo mount /mnt/backup
 }
 
-majordomo-nix-repl()
+mjru-nix-repl()
 {
     echo "overlay = lib.listToAttrs (map (drv: lib.nameValuePair drv.name drv) (import ./build.nix))"
 }
 
-majordomo-nix-fix()
+mjru-nix-fix()
 {
     for file in $(find ~/majordomo/_ci/nixpkgs* -type f -name '*.nix'); do
         echo -e "\n@ $file"
@@ -139,7 +139,7 @@ majordomo-nix-fix()
     done
 }
 
-majordomo-jenkins-build-php()
+mjru-jenkins-build-php()
 {
     branch="$1"
     for job in apache2-php52 apache2-php53 apache2-php54 apache2-php55 apache2-php56 apache2-php70 apache2-php71 apache2-php72 apache2-php73 apache2-php74; do
@@ -151,7 +151,7 @@ majordomo-jenkins-build-php()
     done
 }
 
-majordomo-wp-cron()
+mjru-wp-cron()
 {
     dir="$1"
     nice -n 19 ionice -c2 -n7 find /home/u12345 -type f -name wp-cron.php | xargs -n1 dirname | xargs -n1 -I{} sh -c "echo -n '{} ';grep -rl {} /etc/nginx/sites-available | xargs awk -F'-' '\$1~/proxy_pass/ {print \$2}' | uniq" | awk '{print "* * * * * /opt/"$NF"/bin/php",$(NF-1)"/wp-cron.php"}'
@@ -163,27 +163,27 @@ majordomo-wp-cron()
 #     ansible "galera$1.intr" -m copy -a "src=galera$1/mariadb-bin.0029$2 dest=/home/mariadb/mariadb-bin.0029$2" --become && ansible "galera$1.intr" -m file -a "path=/home/mariadb/mariadb-bin.0029$2 owner=mysql group=mysql" --become
 # }
 
-majordomo-ansible-auth-hosts()
+mjru-ansible-auth-hosts()
 {
     for host in $(ansible all --list-hosts |grep intr); do
         printf "%s%s\n" "$host" "$(ssh -oStrictHostKeyChecking=no $host -- uptime)"
     done
 }
 
-majordomo-web-active-current()
+mjru-web-active-current()
 {
     curl -H "PRIVATE-TOKEN: $(pass show majordomo/public/gitlab.intr/tokens/terraform)" -s -k -L \
             'https://gitlab.intr/hms/config-repo/raw/master/rc-staff-prod.yml'
 }
 
-majordomo-gitlab-version()
+mjru-gitlab-version()
 {
     curl --header "PRIVATE-TOKEN: $(pass show majordomo/public/gitlab.intr/tokens/terraform)" \
             --silent --insecure --location https://gitlab.intr/api/v4/version
     echo
 }
 
-majordomo-skopeo-mj()
+mjru-skopeo-mj()
 {
     group="$1"
     image="$2" # ssh-guest-room
@@ -192,7 +192,7 @@ majordomo-skopeo-mj()
     skopeo copy --dest-creds=gradle:"$(pass show majordomo/public/nexus/gradle)" --dest-tls-verify=false "docker-archive:$tar" "docker://docker-registry.intr/$group/$image:$tag"
 }
 
-majordomo-skopeo-fetch()
+mjru-skopeo-fetch()
 {
     image="$1"
     dest="$2"
@@ -201,19 +201,19 @@ majordomo-skopeo-fetch()
 
 # dockerd --insecure-registry https://docker-registry.intr
 
-majordomo-nix-ls-store-kvm15()
+mjru-nix-ls-store-kvm15()
 {
     # $1 example: /nix/store/0i2jd68mp5g6h2sa5k9c85rb80sn8hi9-hello-2.10
     nix ls-store --store http://kvm15.intr:5556/ -lR "$1"
 }
 
-majordomo-nix-build-kvm15()
+mjru-nix-build-kvm15()
 {
     pkg="$1"
     nix-build build.nix --option  substituters http://kvm15.intr:5556/ --cores 4 -A nixpkgsUnstable$pkg --keep-going --keep-failed $@
 }
 
-majordomo-nix-build-mj()
+mjru-nix-build-mj()
 {
     nix-build \
             --option trusted-public-keys 'cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= cache.nixos.intr:6VD7bofl5zZFTEwsIDsUypprsgl7r9I+7OGY4WsubFA=' \
@@ -221,17 +221,17 @@ majordomo-nix-build-mj()
             --expr "(import <nixpkgs> {overlays = [(import $HOME/majordomo/_ci/nixpkgs)];}).$1"
 }
 
-majordomo-docker-jenkins()
+mjru-docker-jenkins()
 {
     docker -H ssh://dh4-mr.intr exec -it 4649529fa34d $@
 }
 
-majordomo-hms-current-stack()
+mjru-hms-current-stack()
 {
     curl -u "jenkins:$(pass show majordomo/private/jenkins/jenkins)" -X GET http://nginx1.intr:8080/hms
 }
 
-majordomo-hms-auth ()
+mjru-hms-auth ()
 {
     curl --silent \
          --request POST https://api.majordomo.ru/oauth/token \
@@ -241,20 +241,20 @@ majordomo-hms-auth ()
         | jq -r '.access_token'
 }
 
-majordomo-es-xmlrpc()
+mjru-es-xmlrpc()
 {
     curl -H 'Content-Type: application/json' \
          -X POST "http://es.intr:9200/nginx-$(date +"%Y.%m.%d")/_search/" \
          --data-binary '{"from":0,"query":{"query_string":{"query":"path.keyword:\"/xmlrpc.php\""}},"size":50,"sort":[{"@timestamp":{"order":"desc"}}]}'
 }
 
-majordomo-docker-list-intr()
+mjru-docker-list-intr()
 {
     curl -s -X GET -k -u "gradle:$(pass show majordomo/public/nexus/gradle)" https://docker-registry.intr/v2/_catalog \
         | jq -r '.repositories[]'
 }
 
-majordomo-jenkins-log()
+mjru-jenkins-log()
 {
     for project in $(curl -s -k 'https://admin:$(pass show majordomo/public/jenkins.intr/admin)@jenkins.intr/api/json?pretty=true' | jq -r '.jobs[] | .name'); do
         mkdir -p "$project"
@@ -268,17 +268,17 @@ majordomo-jenkins-log()
     done
 }
 
-majordomo-ansible-swarm-ps-inspect()
+mjru-ansible-swarm-ps-inspect()
 {
     ansible swarm -m shell -a 'for c in $(docker ps | grep -v CONTAINER | cut -d " " -f 1 | xargs echo); do docker inspect $c; done' --become
 }
 
-majordomo-ansible-swarm-network-inspect()
+mjru-ansible-swarm-network-inspect()
 {
     ansible swarm -m shell -a 'docker network ls | cut -d " " -f 1 | grep -v NETWORK | xargs docker network inspect' --become
 }
 
-majordomo-add-hosts-mikrotik()
+mjru-add-hosts-mikrotik()
 {
     # Add hosts from Majordomo to MikroTik.
     for host in $@; do
@@ -286,7 +286,7 @@ majordomo-add-hosts-mikrotik()
     done
 }
 
-majordomo-jenkins-log()
+mjru-jenkins-log()
 {
     for project in $(curl -s -k "https://admin:$(pass show majordomo/public/jenkins.intr/admin)@jenkins.intr/api/json?pretty=true" | jq -r '.jobs[] | .name'); do
         mkdir -p "$project"
@@ -300,7 +300,7 @@ majordomo-jenkins-log()
     done
 }
 
-majordomo-dns-check()
+mjru-dns-check()
 {
     for dns in 172.16.103.2 172.16.100.3; do
         (echo $dns; time dig +short a ${1:-cerberus.intr} @$dns) |& xargs echo

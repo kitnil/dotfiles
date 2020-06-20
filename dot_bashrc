@@ -1446,10 +1446,10 @@ rg()
     esac
 }
 
-if [ -f "$HOME/.bash.d/majordomo.bash" ]
+if [ -f "$HOME/.bash.d/mjru.bash" ]
 then
-    # shellcheck source=.bash.d/majordomo.bash
-    . "$HOME/.bash.d/majordomo.bash"
+    # shellcheck source=.bash.d/mjru.bash
+    . "$HOME/.bash.d/mjru.bash"
 fi
 
 chezmoi()
