@@ -39,7 +39,6 @@
         ("https://www.youtube.com/feeds/videos.xml?user=SsethTzeentach" video)
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UC2eYFnH61tmytImy1mTYvhA" video) ;Luke Smith
         ("https://www.youtube.com/feeds/videos.xml?user=metalx1000" video)
-        ("https://www.youtube.com/user/OmegaDungeon" video)
         ("https://bitlove.org/jupiterbroadcasting/bsdnowhd/feed" video)
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCld68syR8Wi-GY_n4CaoJGA" video) ;Brodie Robertson
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCVls1GmFKf6WlTraIb_IaJg" video) ;DistroTube
