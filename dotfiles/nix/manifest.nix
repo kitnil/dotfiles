@@ -88,6 +88,7 @@ in [
   bfg-repo-cleaner
   git-secrets
   # gita
+  gitAndTools.delta
   gitAndTools.git-extras
   gitAndTools.git-open
   gitAndTools.git-recent
