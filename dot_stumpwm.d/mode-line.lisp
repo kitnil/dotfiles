@@ -78,7 +78,7 @@
                 '())
 
           ,(make-string 4 :initial-element #\space)
-          ,'(:eval (format nil "TEMP: ~a" (temp-current)))
+          ,'(:eval (fmt-temp-current (temp-current) t))
 
           ,(make-string 4 :initial-element #\space)
           ,'(:eval (fmt-mem-available (mem-usage) t))
