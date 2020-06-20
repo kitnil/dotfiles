@@ -1,5 +1,11 @@
 (in-package :stumpwm)
 
+(defcommand s-y () ()
+  "Open YouTube if free-time? is nil or majordomo-servers."
+  (if (free-time?)
+      (youtube)
+      (majordomo-servers)))
+
 (defun bind-super ()
   (define-key *top-map* (kbd "C-s-e") "editor")
   (define-key *top-map* (kbd "C-s-w") "chromium")
@@ -124,7 +130,7 @@
   (define-key *top-map* (kbd "s-U") "majordomo-cerb")
   (define-key *top-map* (kbd "M-s-u") "majordomo-grafana-upstream-interfaces")
   (define-key *top-map* (kbd "C-s-u") "majordomo-grafana-netflow")
-  (define-key *top-map* (kbd "s-y") "majordomo-servers")
+  (define-key *top-map* (kbd "s-y") "s-y")
 
   ;; Rebind groups to PREFIX-NUMBER.
   (mapcar #'(lambda (x)

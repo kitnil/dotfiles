@@ -90,8 +90,8 @@
            channel "/chat?popout=")))
 
 (defcommand youtube () ()
-  "Start Chromium YouTube"
-  (run-shell-command "chromium --app=https://youtube.com/"))
+  "Open YouTube in Firefox."
+  (run-shell-command "firefox --new-window https://www.youtube.com"))
 
 (defcommand w3m () ()
   "Open a W3M browser in user's home directory."
