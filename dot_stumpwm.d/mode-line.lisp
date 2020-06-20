@@ -68,6 +68,9 @@
                 '())
 
           ,(make-string 4 :initial-element #\space)
+          ,'(:eval (format nil "/srv: ~a" *disk-free-srv-counter*))
+
+          ,(make-string 4 :initial-element #\space)
           ,'(:eval (format nil "/: ~a" *disk-free-root-counter*))
 
           ,@(if *spb-disk-free-root-counter*
@@ -140,6 +143,14 @@
                                    (setq *imap-recent* nil))
                                (sleep 60))))
                  :name "imap-update-recent-count")
+
+                (sb-thread:make-thread
+                 (lambda ()
+                   (loop while t do
+                        (progn
+                          (disk-free-srv-update-counter)
+                          (sleep 60))))
+                 :name "disk-free-srv-update-counter")
 
                 (sb-thread:make-thread
                  (lambda ()

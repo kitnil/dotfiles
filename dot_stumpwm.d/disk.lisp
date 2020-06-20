@@ -1,7 +1,5 @@
 (in-package :stumpwm)
 
-(defvar *disk-free-root-counter* 0)
-
 (defun disk-free (target &key remote)
   (let ((size (fourth (split-string (second (split-string (run-shell-command (if remote
                                                                                  (format nil "ssh ~a -- df -h ~a" remote target)
@@ -15,5 +13,12 @@
            (format nil "~a MB" (delete #\M size)))
           (t size))))
 
+(defvar *disk-free-root-counter* 0)
+
 (defcommand disk-free-root-update-counter () ()
   (setq *disk-free-root-counter* (disk-free "/")))
+
+(defvar *disk-free-srv-counter* 0)
+
+(defcommand disk-free-srv-update-counter () ()
+  (setq *disk-free-srv-counter* (disk-free "/srv")))
