@@ -1,6 +1,5 @@
 (setq elfeed-feeds
       '("https://oremacs.com/atom.xml"
-        "http://steckerhalter.tk/index.xml"
         "http://nullprogram.com/feed/"
         "https://h-node.org/rss/modifications/en"
         "https://lwn.net/headlines/newrss"
