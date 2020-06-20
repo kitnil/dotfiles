@@ -91,6 +91,7 @@ in [
   gitAndTools.git-extras
   gitAndTools.git-open
   gitAndTools.git-recent
+  gitAndTools.pre-commit
   # glibc-locales
   go2nix
   glow
