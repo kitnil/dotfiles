@@ -8,7 +8,8 @@
     run guix pull                               \
             --verbosity=0                       \
             --profile=test-tmp/.guix-profile    \
-            --channels=dotfiles/channels.scm
+            --channels=dotfiles/channels.scm    \
+            --allow-downgrades
     [ "$status" -eq 0 ]
 }
 

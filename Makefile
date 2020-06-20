@@ -1,9 +1,9 @@
 TESTS =						\
   tests/connect.bats				\
   tests/executables.bats			\
-  tests/guix.bats				\
   tests/mail.bats				\
-  tests/majordomo.bats
+  tests/majordomo.bats				\
+  tests/guix.bats
 
 clean:
 	rm -rf test-tmp
