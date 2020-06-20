@@ -26,7 +26,7 @@
 
  chicken go m4 racket perl python python-hy r
 
- colordiff mercurial gource
+ mercurial gource
  
  colormake
 

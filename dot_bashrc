@@ -1410,8 +1410,6 @@ fd()
     fi
 }
 
-alias diff=colordiff
-
 mycut()
 {
     command cut --characters="-$(tput cols)" "$@"

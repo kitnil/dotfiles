@@ -82,7 +82,7 @@ xdisorg xml xorg)
 
                mcron
 
-               git colordiff mercurial gource vc-dwim
+               git mercurial gource vc-dwim
 
                colormake
 
