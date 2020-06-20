@@ -17,7 +17,7 @@
   "Returns a string representing the current available memory."
   (let* ((available (truncate (/ mem 1000))))
     (if color
-        (cond ((< available (* 1024 8)) (format nil "^[^B^2*MEM: ~4D MB^]" available))
+        (cond ((< available (* 1024 8)) (format nil "^[^B^3*MEM: ~4D MB^]" available))
               ((< available (* 1024 4)) (format nil "^[^B^1*MEM: ~4D MB^]" available))
               (t (format nil "MEM: ~4D MB" available)))
         (format nil "MEM: ~4D MB" available))))
