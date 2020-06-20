@@ -523,6 +523,10 @@ location / {
                                 (nginx-configuration
                                  (server-blocks %nginx-server-blocks)))
 
+                       (service gitolite-service-type
+                                (gitolite-configuration
+                                 (admin-pubkey (local-file "/home/oleg/.ssh/id_rsa.pub"))))
+
                        (service cgit-service-type
                                 (cgit-configuration
                                  (branch-sort "age")
