@@ -98,6 +98,7 @@ xdisorg xml xorg)
                streamlink
                twitchy
                youtube-dl   ; Video and music from websites
+               y2rss
 
                redshift  ; Color temperature
                neofetch
