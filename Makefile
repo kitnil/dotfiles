@@ -17,6 +17,7 @@ check-system:
 	guix system vm --no-offload dotfiles/system/vm-image-stumpwm.tmpl
 
 install:
+	bin/executable_gpg-unlock
 	chezmoi apply
 	update-desktop-database ~/.local/share/applications
 	open-with-linux install
