@@ -37,9 +37,9 @@
         ("https://www.youtube.com/feeds/videos.xml?user=gotbletu" video)
         ("https://www.youtube.com/feeds/videos.xml?user=SsethTzeentach" video)
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UC2eYFnH61tmytImy1mTYvhA" video) ;Luke Smith
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCld68syR8Wi-GY_n4CaoJGA" video) ;Brodie Robertson
         ("https://www.youtube.com/feeds/videos.xml?user=metalx1000" video)
         ("https://bitlove.org/jupiterbroadcasting/bsdnowhd/feed" video)
-        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCld68syR8Wi-GY_n4CaoJGA" video) ;Brodie Robertson
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCVls1GmFKf6WlTraIb_IaJg" video) ;DistroTube
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCkK9UDm_ZNrq_rIXCz3xCGA" video) ;Bryan Lunduke
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCbHXJGd7c8Hy4z0-YX1Jf3Q" video) ;WP Website Guide
