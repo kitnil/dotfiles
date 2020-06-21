@@ -209,7 +209,7 @@ virtualization vpn w3m xfce web wget wm xdisorg xml xorg)
 
                python-pyqt-without-qtwebkit python-pymongo
 
-               redis
+               mariadb redis
 
                tmux tmuxifier parallel w3m
                ;; znc
