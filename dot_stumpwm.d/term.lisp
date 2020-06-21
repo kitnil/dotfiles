@@ -19,7 +19,8 @@
                         (command nil)
                         (title nil)
                         (font nil)
-                        (scrollbar nil))
+                        (scrollbar nil)
+                        (lines 4096))
   (join `(,*xterm-command*
           ;; Make sure XTerm terminal size is appropriate for current StumpWM frame.
           ,@(if font
@@ -27,7 +28,7 @@
                 (if (small-framep)
                     '("-fa" "Monospace" "-fs" "8")
                     '()))
-          "-sl" "1000000" ;number of lines
+          "-sl" ,(write-to-string lines)
           ,(if scrollbar "-sb" *xterm-no-scrollbar*)
           ,(if (string= color "light") *xterm-theme-light* *xterm-theme-dark*)
           ,@(if title `("-title" ,title) '())
@@ -42,7 +43,7 @@
 
 (defcommand run-or-raise-xterm () ()
   "Start or focus XTerm."
-  (run-or-raise (xterm-command) '(:class "XTerm")))
+  (run-or-raise (xterm-command :lines 4096) '(:class "XTerm")))
 
 (defcommand run-xterm-named (title) ((:string "title: "))
   "Start or focus XTerm."
