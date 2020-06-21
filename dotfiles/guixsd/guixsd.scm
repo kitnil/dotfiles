@@ -674,7 +674,10 @@ ServerAliveCountMax 3"))))))
       (setuid-programs (cons* (file-append fping "/sbin/fping")
                               (file-append mtr "/sbin/mtr")
                               (file-append ubridge "/bin/ubridge")
-                              %setuid-programs))
+                              (file-append iputils "/bin/ping")
+                              (delete (file-append inetutils "/bin/ping6")
+                                      (delete (file-append inetutils "/bin/ping")
+                                              %setuid-programs))))
 
       (sudoers-file (local-file "sudoers")))))
 
