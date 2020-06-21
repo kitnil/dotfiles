@@ -53,7 +53,7 @@
 (load-config-file "guix.el")
 (load-config-file "nav.el")
 
-(when (string= (getenv "GTK_THEME") "Adwaita:dark")
+(when (or (string= (getenv "GTK_THEME") "Adwaita:dark") (string= (getenv "GTK_THEME") "Adwaita:light"))
   (load-config-file "term.el")
   (load-config-file "audio.el")
   (load-config-file "mail.el")

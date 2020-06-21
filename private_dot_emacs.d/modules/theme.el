@@ -46,25 +46,24 @@
   (setq sml/theme 'dark)
   (sml/setup))
 
-(defvar current-dark-theme-p (string-equal (getenv "GTK_THEME") "Adwaita:dark")
-  "If non-nil use dark theme otherwise light theme.")
+(defvar current-theme-gtk (getenv "GTK_THEME"))
 
-(unless current-dark-theme-p (menu-bar-mode -1))
+(unless current-theme-gtk (menu-bar-mode -1))
 
 (defun wi-toggle-theme ()
   "Toggle between dark and light themes."
   (interactive)
-  (if current-dark-theme-p
+  (if current-theme-gtk
       (progn (mapc (lambda (theme)
                      (disable-theme theme))
                    '(manoj-dark smart-mode-line-dark))
              ;; (enable-theme 'smart-mode-line-light)
              (setq terminal-here-color 'light)
-             (setq current-dark-theme-p nil))
+             (setq current-theme-gtk nil))
     (progn ;; (disable-theme 'smart-mode-line-light)
            (wi-manoj-dark)
            (setq terminal-here-color 'dark)
-           (setq current-dark-theme-p t))))
+           (setq current-theme-gtk t))))
 
 (setq terminal-here-color 'light)
 

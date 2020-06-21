@@ -1,5 +1,11 @@
-#!/bin/sh -ex
+#!/usr/bin/env bash
 
-GTK_THEME=Adwaita:dark emacs --daemon
-emacsclient -e '(progn (wi-toggle-theme) (wi-toggle-theme))'
+set -e
+
+emacs --daemon
+emacsclient -e '(wi-toggle-theme)'
+if [[ $GTK_THEME == Adwaita:dark ]]
+then
+    emacsclient -e '(wi-toggle-theme)'
+fi
 emacsclient -cn
