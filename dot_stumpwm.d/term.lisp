@@ -42,8 +42,7 @@
 
 (defcommand run-or-raise-xterm () ()
   "Start or focus XTerm."
-  (run-or-raise (xterm-command :scrollbar t)
-                '(:class "XTerm")))
+  (run-or-raise (xterm-command) '(:class "XTerm")))
 
 (defcommand run-xterm-named (title) ((:string "title: "))
   "Start or focus XTerm."
