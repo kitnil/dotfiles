@@ -50,6 +50,7 @@
              (set-focus-color "#66cdaa")
              (set-border-color "#66cdaa")
              (set-float-focus-color "#66cdaa")
+             (sb-posix:setenv "GTK_THEME" "Adwaita:light" 1)
              (setq dark-theme nil))
       (progn (setq *mode-line-border-color*     "#000000"
                    *mode-line-foreground-color* "#ffffff"
@@ -62,6 +63,7 @@
              (set-focus-color "#0a420a")
              (set-border-color "#0a420a")
              (set-float-focus-color "#0a420a")
+             (sb-posix:setenv "GTK_THEME" "Adwaita:dark" 1)
              (setq dark-theme t))))
 (toggle-theme)
 (setq *suppress-frame-indicator* t)
