@@ -57,6 +57,11 @@
             :args (list "-c" (xterm-command :scrollbar t))
             :wait nil))
 
+(defcommand run-xterm-light () ()
+  (run-prog *shell-program*
+            :args (list "-c" (xterm-command :scrollbar t :lines 4096 :color "light"))
+            :wait nil))
+
 (defcommand xterm-dark-no-scrollbar () ()
   "Start or focus XTerm."
   (run-shell-command (xterm-command :color (if dark-theme "light" "dark"))))

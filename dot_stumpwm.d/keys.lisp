@@ -50,6 +50,7 @@
   (define-key *top-map* (kbd "s-quoteleft") "emacs-vterm")
   (define-key *top-map* (kbd "s-o") "keybinding-s-o")
   (define-key *top-map* (kbd "s-j") "run-or-raise-xterm")
+  (define-key *top-map* (kbd "M-s-j") "run-xterm-light")
   (define-key *top-map* (kbd "s-J") "jenkins")
   (define-key *top-map* (kbd "s-g") "gnus")
   (define-key *top-map* (kbd "s-G") "notmuch")
