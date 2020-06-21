@@ -27,7 +27,7 @@ case "$1" in
         help_main
         ;;
     server)
-        mariadb -s -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -h"$MYSQL_SERVER" billing <<EOF \
+        mysql -s -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -h"$MYSQL_SERVER" billing <<EOF \
             | awk '{$NF = "https://billing2.intr/servers/edit/"$NF; print}' \
             | expand -t1 | column -t
 SELECT equip_datacenters.name AS dc, equip_racks.name AS rack, equip_servers.name AS name, equip_servers.dcid AS dcid, equip_servers.datacenter_number AS dcnum, equip_servers.equip_server_id AS bil
@@ -37,14 +37,14 @@ ORDER BY equip_racks.name;
 EOF
         ;;
     switch)
-        mariadb -s -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -h"$MYSQL_SERVER" billing <<EOF \
+        mysql -s -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -h"$MYSQL_SERVER" billing <<EOF \
             | awk '{$NF = "https://billing2.intr/switch/edit/"$NF; print}' \
             | expand -t1 | column -t
 SELECT equip_datacenters.name AS dc, equip_racks.name AS rack, equip_switches.snmp_ip, equip_switches.vendor, equip_switches.model AS name, equip_switches.speed, equip_switches.equip_switch_id FROM equip_switches, equip_racks, equip_datacenters WHERE equip_switches.equip_rack_id = equip_racks.equip_rack_id AND equip_racks.equip_datacenter_id = equip_datacenters.equip_datacenter_id ORDER BY equip_racks.name;
 EOF
         ;;
     user)
-        mariadb -s -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -h"$MYSQL_SERVER" billing <<EOF \
+        mysql -s -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -h"$MYSQL_SERVER" billing <<EOF \
             | awk '{$NF = "https://billing2.intr/servers/edit/"$NF; print}' \
             | expand -t1 | column -t
 SELECT equip_datacenters.name AS dc, equip_racks.name AS rack, equip_servers.name AS name, equip_servers.dcid AS dcid, equip_servers.datacenter_number AS dcnum, equip_servers.equip_server_id AS bil
