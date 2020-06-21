@@ -301,7 +301,7 @@
 ;;;
 
 (defcommand mjru-servers () ()
-  (progn (run-shell-command "emacsclient --eval '(mj-installed-servers)'")
+  (progn (run-shell-command "emacsclient --eval '(wi-installed-servers)'")
          (switch-to-emacs)))
 
 
