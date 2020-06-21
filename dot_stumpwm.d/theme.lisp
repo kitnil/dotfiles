@@ -36,19 +36,20 @@
 
 (defparameter dark-theme nil)
 (progn
-  (set-focus-color "#0a420a")
-  (set-border-color "#0a420a")
-  (set-float-focus-color "#0a420a"))
+  )
 (defcommand toggle-theme () ()
   (if dark-theme
-      (progn (setq *mode-line-border-color*     "#000000"
-                   *mode-line-foreground-color* "#ffffff"
-                   *mode-line-background-color* "#000000")
+      (progn (setq *mode-line-border-color*     "#d3d3d3"
+                   *mode-line-foreground-color* "#000000"
+                   *mode-line-background-color* "#d3d3d3")
              (set-win-bg-color "#000000")
              (set-unfocus-color "#000000")
              (set-fg-color "#000000")
-             (set-bg-color "#ffffff")
-             (run-shell-command "xsetroot -solid '#ffffff'")
+             (set-bg-color "#d3d3d3")
+             (run-shell-command "xsetroot -solid '#d3d3d3'")
+             (set-focus-color "#66cdaa")
+             (set-border-color "#66cdaa")
+             (set-float-focus-color "#66cdaa")
              (setq dark-theme nil))
       (progn (setq *mode-line-border-color*     "#000000"
                    *mode-line-foreground-color* "#ffffff"
@@ -58,6 +59,9 @@
              (set-fg-color "#ffffff")
              (set-bg-color "#000000")
              (run-shell-command "xsetroot -solid black")
+             (set-focus-color "#0a420a")
+             (set-border-color "#0a420a")
+             (set-float-focus-color "#0a420a")
              (setq dark-theme t))))
 (toggle-theme)
 (setq *suppress-frame-indicator* t)
