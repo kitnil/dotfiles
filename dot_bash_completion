@@ -1,3 +1,4 @@
 complete -F _gita_completions gita-dist
 complete -F _gita_completions gita-kitnil
 complete -F _gita_completions gita-majordomo
+complete -W "server switch user" mjru-infa

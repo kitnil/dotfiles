@@ -1,0 +1,59 @@
+#!/usr/bin/env bash
+
+set -e
+set -o pipefail
+
+MYSQL_USER="${MYSQL_USER:-root}"
+MYSQL_PASSWORD="${MYSQL_PASSWORD:-$(pass show majordomo/public/maxscale.intr/root)}"
+MYSQL_SERVER="${MYSQL_SERVER:-maxscale.intr}"
+
+help_main()
+{
+    echo "\
+Usage: mjru-infa COMMANDS ARGS...
+Run COMMANDS with ARGS
+
+COMMAND must be one of the sub-commands listed below:
+
+   server
+   switch
+   user
+
+Report bugs to: go.wigust@gmail.com."
+}
+
+case "$1" in
+    --help)
+        help_main
+        ;;
+    server)
+        mariadb -s -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -h"$MYSQL_SERVER" billing <<EOF \
+            | awk '{$NF = "https://billing2.intr/servers/edit/"$NF; print}' \
+            | expand -t1 | column -t
+SELECT equip_datacenters.name AS dc, equip_racks.name AS rack, equip_servers.name AS name, equip_servers.dcid AS dcid, equip_servers.datacenter_number AS dcnum, equip_servers.equip_server_id AS bil
+FROM equip_servers, equip_racks, equip_datacenters
+WHERE equip_servers.equip_rack_id = equip_racks.equip_rack_id AND equip_racks.equip_datacenter_id = equip_datacenters.equip_datacenter_id AND equip_servers.name NOT LIKE 'mj%' AND equip_servers.name NOT LIKE 'nh%'
+ORDER BY equip_racks.name;
+EOF
+        ;;
+    switch)
+        mariadb -s -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -h"$MYSQL_SERVER" billing <<EOF \
+            | awk '{$NF = "https://billing2.intr/switch/edit/"$NF; print}' \
+            | expand -t1 | column -t
+SELECT equip_datacenters.name AS dc, equip_racks.name AS rack, equip_switches.snmp_ip, equip_switches.vendor, equip_switches.model AS name, equip_switches.speed, equip_switches.equip_switch_id FROM equip_switches, equip_racks, equip_datacenters WHERE equip_switches.equip_rack_id = equip_racks.equip_rack_id AND equip_racks.equip_datacenter_id = equip_datacenters.equip_datacenter_id ORDER BY equip_racks.name;
+EOF
+        ;;
+    user)
+        mariadb -s -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -h"$MYSQL_SERVER" billing <<EOF \
+            | awk '{$NF = "https://billing2.intr/servers/edit/"$NF; print}' \
+            | expand -t1 | column -t
+SELECT equip_datacenters.name AS dc, equip_racks.name AS rack, equip_servers.name AS name, equip_servers.dcid AS dcid, equip_servers.datacenter_number AS dcnum, equip_servers.equip_server_id AS bil
+FROM equip_servers, equip_racks, equip_datacenters
+WHERE equip_servers.equip_rack_id = equip_racks.equip_rack_id AND equip_racks.equip_datacenter_id = equip_datacenters.equip_datacenter_id AND equip_servers.name LIKE 'mj%'
+ORDER BY equip_racks.name;
+EOF
+        ;;
+    *)
+        help_main
+        ;;
+esac
