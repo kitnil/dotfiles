@@ -65,3 +65,4 @@
 
 (load-config-file "autostart.lisp")
 (load-config-file "swank.lisp")
+(load-config-file "gaps.lisp")
