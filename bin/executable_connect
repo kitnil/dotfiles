@@ -16,6 +16,7 @@ COMMAND must be one of the sub-commands listed below:
    containers
    deploy
    filter
+   firewall
    unfilter
    images
    interfaces
@@ -126,6 +127,9 @@ case "$1" in
     filter)
         ip="$(connect ssh "$2" -- docker logs --tail 1000 nginx | awk '{print $1}' | sort | uniq -c | sort -nr | fzf | awk '{print $2}')"
         curl --silent --head --request PUT "$2/ip-filter/$ip?ttl=7200&action=setCookie"
+        ;;
+    firewall)
+        connect ssh "$2" -- iptables --line-numbers -n -v -L | jc --iptables -p | yq -y .
         ;;
     unfilter)
         ip="$(connect ssh "$2" -- docker logs --tail 1000 nginx | awk '{print $1}' | sort | uniq -c | sort -nr | fzf | awk '{print $2}')"
