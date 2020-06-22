@@ -367,6 +367,10 @@ location / {
 
                        libcgroup
 
+                       openssh ;autofs
+                       sshfs ;autofs
+                       fuse ;mount -t fuse and autofs
+
                        (operating-system-packages base-system)))
 
       (groups (cons* (user-group (name "nixbld")
@@ -468,6 +472,12 @@ location / {
 
       (services (cons* (extra-special-file "/usr/bin/env"
                                            (file-append coreutils "/bin/env"))
+
+                       ;; mount -t fuse and autofs
+                       (extra-special-file "/bin/sshfs"
+                                           (file-append sshfs "/bin/sshfs"))
+                       (extra-special-file "/bin/ssh"
+                                           (file-append openssh "/bin/ssh"))
 
                        ;; “adb” and “fastboot” without root privileges
                        (simple-service 'adb udev-service-type (list android-udev-rules))
