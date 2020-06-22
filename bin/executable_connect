@@ -20,6 +20,7 @@ COMMAND must be one of the sub-commands listed below:
    unfilter
    images
    interfaces
+   route
    io
    ip-filter
    mysql
@@ -171,6 +172,9 @@ case "$1" in
             | jc --ifconfig \
             | jq --raw-output '.[] | [.rx_packets, .tx_packets, .name, .ipv4_addr, .ipv4_mask, .ipv4_bcast, .mac_addr] | @tsv' \
             | expand -t1 | column -t | sort -n
+        ;;
+    route)
+        connect ssh "$2" -- route | jc --route | jq | yq -y .
         ;;
     net)
         ssh_sudo "$2" iftop -nNP -i "$(connect ssh "$2" ifconfig | jc --ifconfig | jq --raw-output '.[] | .name' | fzf)"
