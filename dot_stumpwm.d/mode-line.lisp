@@ -2,9 +2,6 @@
 
 (require :stumptray)
 
-;; TODO: Fix mode-line in VNC
-(sleep 2)
-
 (setf *mode-line-position* :bottom)
 
 (defvar *mode-line-window-number* 10)
