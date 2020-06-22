@@ -18,6 +18,7 @@ COMMAND must be one of the sub-commands listed below:
    filter
    unfilter
    images
+   interfaces
    io
    ip-filter
    mysql
@@ -160,11 +161,17 @@ case "$1" in
     stat)
         ssh_sudo "$2" env S_COLORS=true iostat -xchztdk 2
         ;;
+    interfaces)
+        connect ssh "$2" ifconfig \
+            | jc --ifconfig \
+            | jq --raw-output '.[] | [.rx_packets, .tx_packets, .name, .ipv4_addr, .ipv4_mask, .ipv4_bcast, .mac_addr] | @tsv' \
+            | expand -t1 | column -t | sort -n
+        ;;
     net)
         ssh_sudo "$2" iftop -nNP -i "$(connect ssh "$2" ifconfig | jc --ifconfig | jq --raw-output '.[] | .name' | fzf)"
         ;;
     sniff)
-        ssh_sudo "$2" tcpdump -vvvApni "$(connect ssh "$2" ifconfig | jc --ifconfig | jq --raw-output '.[] | .name' | fzf)"
+        ssh_sudo "$2" tcpdump -vvvApni "$(connect ssh "$2" ifconfig | jc --ifconfig | jq --raw-output '.[] | .name' | fzf)" "${@:3}"
         ;;
     sg)
         echo "Hint: Install sg3-utils by invoking 'apt install sg3-utils'"
