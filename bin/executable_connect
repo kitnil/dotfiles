@@ -23,6 +23,7 @@ COMMAND must be one of the sub-commands listed below:
    nginx
    ping
    shell
+   sniff
    ssh
    sg
    te
@@ -130,6 +131,9 @@ case "$1" in
         ;;
     net)
         ssh_sudo "$2" iftop -nNP -i "$(connect ssh "$2" ifconfig | jc --ifconfig | jq --raw-output '.[] | .name' | fzf)"
+        ;;
+    sniff)
+        ssh_sudo "$2" tcpdump -vvvApni "$(connect ssh "$2" ifconfig | jc --ifconfig | jq --raw-output '.[] | .name' | fzf)"
         ;;
     sg)
         echo "Hint: Install sg3-utils by invoking 'apt install sg3-utils'"
