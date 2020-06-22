@@ -19,6 +19,7 @@ COMMAND must be one of the sub-commands listed below:
    io
    ip-filter
    mysql
+   net
    nginx
    ping
    shell
@@ -126,6 +127,9 @@ case "$1" in
         ;;
     io)
         ssh_sudo "$2" iotop -qqqtPbod1 | cut --characters="-$(tput cols)"
+        ;;
+    net)
+        ssh_sudo "$2" iftop -nNP -i "$(connect ssh "$2" ifconfig | jc --ifconfig | jq --raw-output '.[] | .name' | fzf)"
         ;;
     sg)
         echo "Hint: Install sg3-utils by invoking 'apt install sg3-utils'"
