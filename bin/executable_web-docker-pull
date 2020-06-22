@@ -32,8 +32,11 @@
       tags:
         - run
 
-    - name: restart taskexecutor
-      command: restart taskexecutor
+    - name: stop taskexecutor
+      command: stop taskexecutor
+
+    - name: start taskexecutor
+      command: start taskexecutor
 
     - slack:
         token: "{{ slack_token }}"
