@@ -27,6 +27,7 @@ COMMAND must be one of the sub-commands listed below:
    shell
    sniff
    ssh
+   sshrc
    sg
    te
    traceroute
@@ -78,7 +79,7 @@ ssh_expect()
     ssh-sudo "$@"
 }
 
-ssh_sudo()
+sshrc_sudo()
 {
     if [ $# -lt 2 ]
     then
@@ -86,6 +87,11 @@ ssh_sudo()
     else
         ssh -q -t "$1" -- "set +o history; sudo --stdin --validate --prompt='' <<< $(pass show majordomo/private/ssh/eng); exec -a sudo sudo -i ${*:2}"
     fi
+}
+
+ssh_sudo()
+{
+    ssh -q -t "$1" -- "set +o history; sudo --stdin --validate --prompt='' <<< $(pass show majordomo/private/ssh/eng); exec -a sudo sudo -i ${*:2}"
 }
 
 case "$1" in
@@ -131,6 +137,16 @@ case "$1" in
 
         [ "$DEBUG" == true ] && echo "Connect with ssh_sudo() to $host."
         ssh_sudo "$host" "${@:3}"
+        ;;
+    sshrc)
+        host="$2"
+        if [[ "$host" != *.intr ]] && [[ "$host" != *sw* ]]
+        then
+            host+=.intr
+        fi
+
+        [ "$DEBUG" == true ] && echo "Connect with sshrc_sudo() to $host."
+        sshrc_sudo "$host" "${@:3}"
         ;;
     emacs)
         host=$3; [[ "$host" == *.intr ]] || host+=.intr
