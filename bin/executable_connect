@@ -15,6 +15,8 @@ COMMAND must be one of the sub-commands listed below:
    clean
    containers
    deploy
+   filter
+   unfilter
    images
    io
    ip-filter
@@ -111,6 +113,14 @@ case "$1" in
                 -l root                                         \
                 sr1-mr13-14.intr
         exit 0
+        ;;
+    filter)
+        ip="$(connect ssh "$2" -- docker logs --tail 1000 nginx | awk '{print $1}' | sort | uniq -c | sort -nr | fzf | awk '{print $2}')"
+        curl --silent --head --request PUT "$2/ip-filter/$ip?ttl=7200&action=setCookie"
+        ;;
+    unfilter)
+        ip="$(connect ssh "$2" -- docker logs --tail 1000 nginx | awk '{print $1}' | sort | uniq -c | sort -nr | fzf | awk '{print $2}')"
+        curl --silent --head --request DELETE "$2/ip-filter/$ip?ttl=7200&action=setCookie"
         ;;
     ssh)
         host="$2"
