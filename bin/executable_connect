@@ -23,6 +23,7 @@ COMMAND must be one of the sub-commands listed below:
    mysql
    net
    nginx
+   nginx-config
    ping
    shell
    sniff
@@ -201,6 +202,9 @@ case "$1" in
             | sort \
             | uniq --count \
             | sort --numeric-sort
+        ;;
+    nginx-config)
+        connect ssh "$2" cat "$(connect ssh "$2" grep -RF server_name /etc/nginx/sites-available | sort -u | fzf | cut -d: -f 1)"
         ;;
     mysql)
         if ! OPTS="$(getopt --options c:h --long client:,help --name parse-options -- "$@")"
