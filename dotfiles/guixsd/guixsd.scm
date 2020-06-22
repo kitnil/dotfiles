@@ -371,6 +371,8 @@ location / {
                        sshfs ;autofs
                        fuse ;mount -t fuse and autofs
 
+                       iftop
+
                        (operating-system-packages base-system)))
 
       (groups (cons* (user-group (name "nixbld")
