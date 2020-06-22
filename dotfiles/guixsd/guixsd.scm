@@ -11,7 +11,7 @@ lxde version-control lisp-xyz)
 
 (use-service-modules admin dbus desktop docker dns networking sound
                      xorg ssh web cgit version-control certbot
-                     monitoring databases mail)
+                     monitoring databases mail autofs)
 
 ;; Third-party modules
 (use-modules (wigust services nix)
@@ -512,6 +512,10 @@ location / {
                        nix-service
                        (kresd-service (local-file "kresd.conf"))
                        openvpn-service
+
+                       (service autofs-service-type
+                                (autofs-configuration
+                                 (config-file (local-file "/etc/autofs/auto.master"))))
 
                        (service openssh-service-type
                                 (openssh-configuration
