@@ -35,6 +35,7 @@ COMMAND must be one of the sub-commands listed below:
    sg
    te
    traceroute
+   uptime
 
 Report bugs to: go.wigust@gmail.com."
 }
@@ -335,6 +336,9 @@ mycli --password "$(pass show majordomo/private/web/mysql/root)" -d "${2%.intr}"
     deploy)
         host="$2"; [[ "$host" == *.intr ]] || host+=.intr
         ansible-playbook --limit "$host" --ask-become-pass "$HOME/bin/web-docker-pull"
+        ;;
+    uptime)
+        connect ssh "$2" -- uptime | jc --uptime
         ;;
 esac
 
