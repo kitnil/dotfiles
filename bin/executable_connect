@@ -28,6 +28,7 @@ COMMAND must be one of the sub-commands listed below:
    sniff
    ssh
    sshrc
+   stat
    sg
    te
    traceroute
@@ -154,6 +155,9 @@ case "$1" in
         ;;
     io)
         ssh_sudo "$2" iotop -qqqtPbod1 | cut --characters="-$(tput cols)"
+        ;;
+    stat)
+        ssh_sudo "$2" env S_COLORS=true iostat -xchztdk 2
         ;;
     net)
         ssh_sudo "$2" iftop -nNP -i "$(connect ssh "$2" ifconfig | jc --ifconfig | jq --raw-output '.[] | .name' | fzf)"
