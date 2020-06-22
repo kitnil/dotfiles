@@ -16,6 +16,7 @@ COMMAND must be one of the sub-commands listed below:
    containers
    deploy
    images
+   io
    ip-filter
    mysql
    nginx
@@ -122,6 +123,9 @@ case "$1" in
     emacs)
         host=$3; [[ "$host" == *.intr ]] || host+=.intr
         GTK_THEME='' command emacs -nw "/ssh:$host|sudo:$host:"
+        ;;
+    io)
+        ssh_sudo "$2" iotop -qqqtPbod1 | cut --characters="-$(tput cols)"
         ;;
     sg)
         echo "Hint: Install sg3-utils by invoking 'apt install sg3-utils'"
