@@ -91,6 +91,7 @@ _connect_complete()
                     || _connect_is_command "shell"      \
                     || _connect_is_command "sniff"      \
                     || _connect_is_command "ssh"        \
+                    || _connect_is_command "sshrc"      \
                     || _connect_is_command "te"         \
                     || _connect_is_command "traceroute" \
                     || _connect_is_command "unfilter"   \
