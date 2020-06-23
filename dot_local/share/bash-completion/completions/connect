@@ -77,15 +77,24 @@ _connect_complete()
             if _connect_is_command "containers"         \
                     || _connect_is_command "deploy"     \
                     || _connect_is_command "emacs"      \
+                    || _connect_is_command "filter"     \
+                    || _connect_is_command "firewall"   \
                     || _connect_is_command "images"     \
+                    || _connect_is_command "interfaces" \
+                    || _connect_is_command "io"         \
+                    || _connect_is_command "mysql"      \
+                    || _connect_is_command "net"        \
                     || _connect_is_command "nginx"      \
                     || _connect_is_command "ping"       \
+                    || _connect_is_command "route"      \
                     || _connect_is_command "sg"         \
                     || _connect_is_command "shell"      \
+                    || _connect_is_command "sniff"      \
                     || _connect_is_command "ssh"        \
                     || _connect_is_command "te"         \
                     || _connect_is_command "traceroute" \
-                    || _connect_is_command "mysql"
+                    || _connect_is_command "unfilter"   \
+                    || _connect_is_command "uptime"
             then
                 _connect_complete_host "$word_at_point"
             elif _connect_is_command "ip-filter"
