@@ -1,1 +1,3 @@
 echo welcome
+
+. "$SSHHOME/.sshrc.d/.bashrc"

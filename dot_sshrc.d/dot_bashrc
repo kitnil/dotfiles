@@ -1,0 +1,16 @@
+my-nix-version()
+{
+    nix-instantiate --eval -E '(import <nixpkgs> {}).lib.nixpkgsVersion'
+}
+
+
+docker-strace-pids()
+{
+    container="$1"
+    docker top "$container" | tail -n +2 | awk '{ print $2 }' | sed 's/^/-p/';
+}
+
+tmux()
+{
+    command tmux -f "$SSHHOME/.sshrc.d/.tmux.conf"
+}
