@@ -1491,7 +1491,7 @@ slack()
 {
     curl --request POST                                                                                 \
             --header 'Content-type: application/json'                                                   \
-            --data "{\"text\":\"$@\"}"                                                                  \
+            --data "{\"channel\":\"${SLACK_CHANNEL:-ci}\", \"text\":\"$@\"}"                            \
             https://hooks.slack.com/services/"$(pass show slack.com/home-s2x8742.slack.com/webhook/ci)"
 }
 
