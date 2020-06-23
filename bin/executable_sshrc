@@ -60,7 +60,12 @@ EOF
             echo $'"$(tar czf - -h -C $SSHHOME $files | openssl enc -base64)"' | tr -s ' ' $'\n' | openssl enc -base64 -d | tar mxzf - -C \$SSHHOME
             export SSHHOME=\$SSHHOME
             echo \"$CMDARG\" >> \$SSHHOME/sshrc.bashrc
-            sudo --stdin --validate --prompt='' <<< $(pass show majordomo/private/ssh/eng); exec -a sudo sudo --preserve-env=SSHHOME,SSHRCCLEANUP --login bash --rcfile \$SSHHOME/sshrc.bashrc
+            if [[ "${SSHRC_BECOME:-no}" == yes ]]
+            then
+                sudo --stdin --validate --prompt='' <<< $(pass show majordomo/private/ssh/eng); exec -a sudo sudo --preserve-env=SSHHOME,SSHRCCLEANUP --login bash --rcfile \$SSHHOME/sshrc.bashrc
+            else
+                bash --rcfile \$SSHHOME/sshrc.bashrc
+            fi
             "
     else
         echo "No such file: $SSHHOME/.sshrc" >&2
