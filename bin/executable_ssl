@@ -6,6 +6,9 @@ set -o pipefail
 TESTSSL="${TESTSSL:-docker run --rm -it drwetter/testssl.sh:3.0}"
 
 case "$1" in
+    date)
+        echo | openssl s_client -servername "$2" -connect "$2:443" 2>/dev/null | openssl x509 -noout -dates
+        ;;
     check)
         $TESTSSL "${@:2}"
         ;;
