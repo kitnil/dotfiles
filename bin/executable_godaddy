@@ -1,15 +1,119 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-set -e -x
+set -e
+set -o pipefail
 
-passwords=$(pass show godaddy.com/api/lexicon)
-key=$(echo "$passwords" | recsel --print-values=key)
-secret=$(echo "$passwords" | recsel --print-values=secret)
+GODADDY_KEY="${GODADDY_KEY:-$(pass show godaddy.com/api/key)}"
+GODADDY_SECRET="${GODADDY_SECRET:-$(pass show godaddy.com/api/secret)}"
+GODADDY_COMMAND="${GODADDY_COMMAND:-lexicon godaddy}"
 
-if [ -z "$RECORD" ]; then
-    record="A"
-else
-    record="$RECORD"
-fi
+help_main()
+{
+    echo "\
+Usage: godaddy COMMANDS ARGS...
+Run COMMANDS with ARGS
 
-docker run --rm -it analogj/lexicon /usr/local/bin/lexicon godaddy list --auth-key "$key" --auth-secret "$secret" wugi.info "$record" "$@"
+COMMAND must be one of the sub-commands listed below:
+
+   add
+   list
+
+Report bugs to: go.wigust@gmail.com."
+}
+
+help_add()
+{
+    echo "\
+Usage: godaddy add COMMANDS ARGS...
+Run COMMANDS with ARGS
+
+COMMAND must be one of the sub-commands listed below:
+
+   a
+   cname
+
+Report bugs to: go.wigust@gmail.com."
+}
+
+help_add_a()
+{
+    echo "\
+Usage: godaddy add a subdomain.example.com 1.2.3.4
+Run COMMANDS with ARGS
+
+Report bugs to: go.wigust@gmail.com."
+}
+
+help_add_cname()
+{
+    echo "\
+Usage: godaddy add cname subdomain.example.com target.domain.com
+Run COMMANDS with ARGS
+
+Report bugs to: go.wigust@gmail.com."
+}
+
+help_list()
+{
+    echo "\
+Usage: godaddy list COMMANDS ARGS...
+Run COMMANDS with ARGS
+
+COMMAND must be one of the sub-commands listed below:
+
+   a
+   cname
+
+Report bugs to: go.wigust@gmail.com."
+}
+
+case "$1" in
+    --help)
+        help_main
+        ;;
+    add)
+        case "$2" in
+            --help)
+                help_add
+                ;;
+            a)
+                if [[ -z "$3" ]]
+                then
+                    help_add_a
+                    exit 1
+                fi
+                $GODADDY_COMMAND create --auth-key "$GODADDY_KEY" --auth-secret "$GODADDY_SECRET" "$GODADDY_DOMAIN_NAME" A --name "$3" --content "$4"
+                ;;
+            cname)
+                if [[ -z "$3" ]]
+                then
+                    help_add_cname
+                    exit 1
+                fi
+                $GODADDY_COMMAND create --auth-key "$GODADDY_KEY" --auth-secret "$GODADDY_SECRET" "$GODADDY_DOMAIN_NAME" CNAME --name "$3" --content "$4"
+                ;;
+            *)
+                help_add
+                ;;
+        esac
+        ;;
+    list)
+        case "$2" in
+            --help)
+                help_list
+                ;;
+            a)
+                $GODADDY_COMMAND list --auth-key "$GODADDY_KEY" --auth-secret "$GODADDY_SECRET" "$GODADDY_DOMAIN_NAME" A "${@:3}"
+                ;;
+            cname)
+                $GODADDY_COMMAND list --auth-key "$GODADDY_KEY" --auth-secret "$GODADDY_SECRET" "$GODADDY_DOMAIN_NAME" CNAME "${@:3}"
+                ;;
+            *)
+                help_list
+                ;;
+        esac
+        ;;
+    *)
+        help_main
+        ;;
+esac

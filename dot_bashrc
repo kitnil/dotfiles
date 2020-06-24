@@ -1530,3 +1530,5 @@ gita()
             ;;
     esac
 }
+
+alias godaddy="GODADDY_DOMAIN_NAME=wugi.info godaddy"
