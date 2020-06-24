@@ -1482,11 +1482,6 @@ then
     . "$HOME/.bash_completion.d/connect"
 fi
 
-lexicon()
-{
-    docker run --rm --interactive --tty analogj/lexicon lexicon "$@"
-}
-
 slack()
 {
     curl --request POST                                                                                 \
