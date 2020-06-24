@@ -103,6 +103,7 @@ in [
   hy
   hyperfine
   knot-resolver
+  lexicon
   ldns
   libressl
   # litecli TODO: fails to build
