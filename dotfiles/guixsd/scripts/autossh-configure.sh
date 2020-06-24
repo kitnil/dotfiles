@@ -21,7 +21,7 @@ fi
 if [ ! -f "/home/autossh/.ssh/config" ]
 then
     cat > "/home/autossh/.ssh/config" << EOF
-Host guix.duckdns.org
+Host back.wugi.info
 User $REMOTE_USER
 RemoteForward $REMOTE_PORT localhost:22
 
@@ -70,7 +70,7 @@ cat > "/etc/default/autossh@guix" << EOF
 
 # Save all your credential/user/port related config in ~/.ssh/config is strongly recommanded
 # Leave hostname here only
-TARGET_HOST=guix.duckdns.org
+TARGET_HOST=back.wugi.info
 
 # === Settings below for ADVANCED users only ===
 
