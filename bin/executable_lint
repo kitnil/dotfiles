@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+set -e
+set -o pipefail
+
+CHECKMAKE="${CHECKMAKE:-docker run --rm -v $PWD/Makefile:/Makefile docker.pkg.github.com/mrtazz/checkmake/checkmake:f127301db6ce6d9861ea0c9b94cd08a9d023fb77}"
+
+help_main()
+{
+    echo "\
+Usage: godaddy COMMANDS ARGS...
+Run COMMANDS with ARGS
+
+COMMAND must be one of the sub-commands listed below:
+
+   Makefile
+
+Report bugs to: go.wigust@gmail.com."
+}
+
+case "$1" in
+    --help)
+        help_main
+        ;;
+    Makefile)
+        $CHECKMAKE ./checkmake Makefile
+        ;;
+    *)
+        help_main
+        ;;
+esac

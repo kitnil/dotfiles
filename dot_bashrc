@@ -1527,13 +1527,3 @@ gita()
 }
 
 alias godaddy="GODADDY_DOMAIN_NAME=wugi.info godaddy"
-
-lint()
-{
-    case "$1" in
-        Makefile)
-            docker run --rm -v $PWD/Makefile:/Makefile docker.pkg.github.com/mrtazz/checkmake/checkmake:f127301db6ce6d9861ea0c9b94cd08a9d023fb77 ./checkmake Makefile
-            ;;
-    esac
-
-}
