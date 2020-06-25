@@ -1,0 +1,96 @@
+* project
+** elisp
+:PROPERTIES:
+:org-generate-root: ~/src/
+:org-generate-variable: pkg-name description
+:END:
+
+# Multi file project template example.
+# To create file in `org-generate-root`, do
+#   M-x org-generate project/elisp
+
+# You can use Mustache template in folder name, file contents.
+# To use this feature, you should enumeration variable
+# as `org-generate-variable` value.
+
+# NOTE: If you want to create directory hierarchy,
+#       Ensure heading name suffixed with '/'.
+
+*** {{pkg-name}}.el/
+**** .github/
+***** workflows/
+****** test.yml
+#+begin_src yml
+name: Main workflow
+on: [push, pull_request]
+#+end_src
+**** .gitignore
+#+begin_src gitignore
+## .gitignore
+
+*-autoloads.el
+*.elc
+/.keg
+#+end_src
+**** Keg
+#+begin_src keg
+  ;; Keg
+
+  (source gnu melpa)
+
+  (package
+   ({{pkg-name}}
+     (recipe . ({{pkg-name}} :fetcher github :repo "conao3/{{pkg-name}}.el"))))
+
+  (dev-dependency cort)
+#+end_src
+**** LICENSE
+#+begin_src fundamental
+                      GNU GENERAL PUBLIC LICENSE
+                        Version 3, 29 June 2007
+
+  Copyright (C) 2007 Free Software Foundation, Inc. <https://fsf.org/>
+  Everyone is permitted to copy and distribute verbatim copies
+  of this license document, but changing it is not allowed.
+
+  ...
+
+#+end_src
+**** Makefile
+#+begin_src makefile
+  ## Makefile
+
+  all:
+#+end_src
+**** README.org
+#+begin_src org
+  ,,* Description
+  {{description}}.
+#+end_src
+**** {{pkg-name}}.el
+#+begin_src elisp
+;;; {{pkg-name}}.el --- {{description}}  -*- lexical-binding: t; -*-
+
+;;; Code:
+
+(defgroup {{pkg-name}} nil
+  "{{description}}."
+  :group 'convenience
+  :link '(url-link :tag "Github" "https://github.com/conao3/{{pkg-name}}.el"))
+
+(provide '{{pkg-name}})
+;;; {{pkg-name}}.el ends here
+#+end_src
+
+**** {{pkg-name}}-test.el
+#+begin_src elisp
+;;; {{pkg-name}}-tests.el --- Test definitions for {{pkg-name}}  -*- lexical-binding: t; -*-
+
+;;; Code:
+
+(require 'cort)
+(require '{{pkg-name}})
+
+;; (provide '{{pkg-name}}-tests)
+;;; {{pkg-name}}-tests.el ends here
+#+end_src
