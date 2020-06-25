@@ -2,12 +2,20 @@
 ;; for a "bare bones" setup, with no X11 display server.
 
 (use-modules (gnu) (srfi srfi-1) (srfi srfi-26))
-(use-package-modules admin base bash certs python)
-(use-service-modules desktop dbus monitoring networking ssh web)
-(use-modules (wigust services autossh)
-             (wigust services docker)
-             (wigust services gitlab)
-             (wigust services nix))
+(use-package-modules admin base bash certs python ssh)
+(use-service-modules desktop dbus monitoring networking ssh web mcron)
+(use-modules (services autossh)
+             (services docker)
+             (services gitlab))
+
+
+;;;
+;;; mcron
+;;;
+
+(define reboot-job
+  #~(job "5 21 * * *"            ;Vixie cron syntax
+         (string-append "[[ $(" #$openssh "/bin/ssh" " -F /dev/null -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -i /home/oleg/.ssh/id_rsa_autossh tail-ssh-tunnel@back.wugi.info -- id) == *30015* ]] || echo b | " #$coreutils "/bin/tee" " /proc/sysrq-trigger")))
 
 
 ;;;
@@ -212,6 +220,7 @@
                         (type "ext4"))
                       %base-file-systems))
 
+  ;; sudo /home/gitlab-runner/.nix-profile/bin/gitlab-runner run --working-directory=/home/gitlab-runner --config=/etc/gitlab-runner/config.toml --service=gitlab-runner --user=gitlab-runner
   (groups (cons* (user-group (name "nixbld")
                              (id 30100))
                  (user-group (name "docker")
@@ -280,7 +289,7 @@
                 "\n\n"
                 "192.168.125.16 cuirass.tld input.tld\n")))
 
-  (services (cons* (service openssh-service-type)
+  (services (cons* (service openssh-service-type (openssh-configuration (use-pam? #f)))
                    (static-networking-service "eno16777736"
                                               "192.168.125.16"
                                               #:netmask "255.255.255.0" 
@@ -289,10 +298,10 @@
 
                           (service autossh-service-type
                             (autossh-configuration
-                             (autossh-client-config
-                              (autossh-client-configuration
-                               (hosts (list (autossh-client-host-configuration
-                                             (host "guix.duckdns.org")
+                             (openssh-client-config
+                              (openssh-client-configuration
+                               (hosts (list (openssh-client-host-configuration
+                                             (host "back.wugi.info")
                                              (identity-file "/etc/autossh/id_rsa")
                                              (strict-host-key-checking? #f)
                                              (user "tail-ssh-tunnel")
@@ -305,12 +314,11 @@ RemoteForward 0.0.0.0:19080 127.0.0.1:80
 RemoteForward 0.0.0.0:19081 127.0.0.1:8081
 RemoteForward 0.0.0.0:19300 127.0.0.1:3000
 LocalForward 0.0.0.0:8086 127.0.0.1:8086
-LocalForward 0.0.0.0:65022 127.0.0.1:65022
 Compression yes
 ExitOnForwardFailure yes
 ServerAliveInterval 30
 ServerAliveCountMax 3"))))))
-                             (host "guix.duckdns.org")))
+                             (host "back.wugi.info")))
 
                           (service guix-publish-service-type
                                    (guix-publish-configuration
@@ -327,8 +335,8 @@ ServerAliveCountMax 3"))))))
 
                           gitlab-runner-service
 
-                          nix-service
+                          (service mcron-service-type
+                                   (mcron-configuration
+                                    (jobs (list reboot-job))))
 
-                          %base-services))
-
-  (sudoers-file (local-file "sudoers")))
+                   %base-services)))
