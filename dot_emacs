@@ -166,6 +166,7 @@
  '(rainbow-delimiters-depth-9-face ((t (:foreground "goldenrod"))))
  '(rainbow-delimiters-unmatched-face ((t (:foreground "red"))))
  '(sh-heredoc ((t (:foreground "tan3"))))
+ '(term-color-black ((t (:background "dim gray" :foreground "dim gray"))))
  '(term-color-blue ((t (:background "#4169e1" :foreground "#4169e1"))))
  '(term-color-cyan ((t (:background "#18B2B2" :foreground "#18B2B2"))))
  '(term-color-green ((t (:background "#66CD00" :foreground "#66CD00"))))
