@@ -592,6 +592,8 @@ host	all	all	::1/128         trust
 host	all	all	172.16.0.0/12   trust"))
                                                           (extra-config '(("listen_addresses" "'0.0.0.0'")))))
 
+                       (service mongodb-service-type)
+
                         (service php-fpm-service-type
                                 (php-fpm-configuration
                                  (timezone "Europe/Moscow")))
