@@ -372,6 +372,7 @@ location / {
                        fuse ;mount -t fuse and autofs
 
                        iftop
+                       net-tools
 
                        (operating-system-packages base-system)))
 
