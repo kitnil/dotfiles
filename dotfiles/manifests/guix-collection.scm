@@ -53,7 +53,7 @@ virtualization vpn w3m xfce web wget wm xdisorg xml xorg)
                ghc-pandoc  ; Convert Markdown
 
                autojump
-               jq jo
+               jq jo jc jtbl
                nmap
 
                dmidecode
