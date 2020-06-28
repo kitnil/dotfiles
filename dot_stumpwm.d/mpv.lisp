@@ -26,8 +26,11 @@
 
 (defcommand mpv () ()
   "Start or focus mpv."
-  (run-or-raise (join `(,*mpv-program* ,@*mpv-arguments*))
-                '(:class "mpv")))
+  (let ((clipboard (get-x-selection)))
+    (cond ((string-contains "youtube.com" clipboard)
+           (run-shell-command (join `(,*mpv-program* ,@*mpv-arguments* ,clipboard))))
+          (t (run-or-raise (join `(,*mpv-program* ,@*mpv-arguments*))
+                           '(:class "mpv"))))))
 
 (defcommand xclip-mpv () ()
   "Play video from clipboard with mpv."
