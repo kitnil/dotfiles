@@ -386,6 +386,7 @@ guix()
                 slack "SUCCESS: $guix_command"
             else
                 slack "FAILURE: $guix_command"
+                return 1
             fi
             ;;
         prereconfigure)
