@@ -189,7 +189,7 @@ case "$1" in
         done
         ;;
     ping)
-        ping --numeric --count="${4:-3}" "${2%.intr}"
+        ping -n -c "${4:-3}" "${2%.intr}"
         ;;
     traceroute)
         sudo traceroute "${2%.intr}"
