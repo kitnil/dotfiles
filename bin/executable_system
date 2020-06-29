@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -eu
+set -o pipefail
+
+case "$1" in
+    upgrade)
+        (
+            set -eux
+            guix pull --allow-downgrades
+            guix system build
+            guix manifest
+            guix system switch
+        )
+        ;;
+esac
