@@ -4,10 +4,10 @@
              (srfi srfi-1)
              (srfi srfi-26))
 
-(use-package-modules admin base certs cryptsetup docker linux lisp
-suckless xdisorg xorg fonts android fontutils gnome freedesktop
-readline ncurses networking pulseaudio wm vnc ssh bittorrent audio
-lxde version-control lisp-xyz)
+(use-package-modules admin base certs cryptsetup docker file linux lisp
+suckless xdisorg xorg fonts android fontutils gnome freedesktop readline
+ncurses networking pulseaudio wm vnc ssh bittorrent audio lxde version-control
+lisp-xyz)
 
 (use-service-modules admin dbus desktop docker dns networking sound
                      xorg ssh web cgit version-control certbot
@@ -371,6 +371,7 @@ location / {
                        sshfs ;autofs
                        fuse ;mount -t fuse and autofs
 
+                       file
                        iftop
                        net-tools
 
