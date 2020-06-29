@@ -374,6 +374,7 @@ location / {
                        file
                        iftop
                        net-tools
+                       tcpdump
 
                        (operating-system-packages base-system)))
 
