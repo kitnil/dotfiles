@@ -47,6 +47,7 @@
   (define-key *top-map* (kbd "s-p") "prev-in-frame-custom")
   (define-key *top-map* (kbd "s-w") "firefox")
   (define-key *top-map* (kbd "s-W") "firefox-new-window")
+  (define-key *top-map* (kbd "s-q") "delete")
   (define-key *top-map* (kbd "s-quoteleft") "emacs-vterm")
   (define-key *top-map* (kbd "s-o") "keybinding-s-o")
   (define-key *top-map* (kbd "s-j") "run-or-raise-xterm")
