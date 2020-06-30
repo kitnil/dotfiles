@@ -35,4 +35,4 @@ web_create_php_service = lambda server, socket, security: web_create_service(ser
 
 web_create_php_services = lambda server: list(map (lambda manifest: web_create_php_service(manifest[0], manifest[1], manifest[2]), [[server, 8074, "default"], [server, 8274, "hardened"], [server, 8374, "hardened_nochmod"], [server, 8174, "unsafe"]]))
 
-hms_task_delete = lambda account_id: myclient["personmgr"]["processingBusinessOperation"].update_many({"personalAccountId":account_id, "state":"PROCESSING"}, {"$set": {"state":"PROCESSED"}})
+hms_task_delete = lambda account_id: myclient["personmgr"]["processingBusinessOperation"].update_many({"personalAccountId":str(account_id), "state":"PROCESSING"}, {"$set": {"state":"ERROR"}})

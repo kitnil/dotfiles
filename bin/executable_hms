@@ -20,4 +20,11 @@ export CVM_USER
 CVM_PASS="$(pass show majordomo/private/cvm/cron)"
 export CVM_PASS
 
-command ihs "$@"
+case "$1" in
+    task-delete)
+        python3 -c "exec(open('/home/oleg/.pythonrc').read()); hms_task_delete($2)"
+        ;;
+    *)
+        command ihs "$@"
+        ;;
+esac
