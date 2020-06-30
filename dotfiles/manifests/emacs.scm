@@ -19,6 +19,7 @@
        emacs-build-farm
        emacs-cmake-mode
        emacs-company            ; Complition framework
+       emacs-company-lsp
        emacs-company-quickhelp  ; Help pages for Company
        emacs-constants
        emacs-counsel-tramp
