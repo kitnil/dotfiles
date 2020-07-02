@@ -47,7 +47,6 @@
    emacs-plain-org-wiki
    emacs-tramp-auto-auth-my
    emacs-wi-utils
-   emacs-org-generate
    ))
 
 (packages->manifest
