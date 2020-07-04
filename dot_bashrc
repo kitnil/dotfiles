@@ -29,6 +29,7 @@ alias xclipp='xclip -selection secondary'
 alias hosts='hosts --auto-sudo'
 
 alias lsns='lsns --notruncate --output-all'
+alias goaccess='goaccess --log-format=COMBINED'
 
 alias catj=gron
 
