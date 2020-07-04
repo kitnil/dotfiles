@@ -20,7 +20,6 @@
         push-skip-ci = push -o ci.skip
 	# Credit an author on the latest commit
 	credit = "!f() { git commit --amend --author \"$1 <$2>\" -C HEAD; }; f"
-	mirror = "!f() { (set -x; git push origin; sshpass -Ppassphrase -p\"$(pass show gitlab.com/id_rsa_gitlab)\" git push gitlab; sshpass -Ppassphrase -p\"$(pass show github/ssh/id_rsa_github)\" git push github; sshpass -Ppassphrase -p\"$(pass show majordomo/private/gitlab.intr/ssh/id_rsa_gitlab_intr)\" git push majordomo; sshpass -Ppassphrase -p\"$(pass show notabug.org/id_rsa_notabug)\" git push notabug); }; f"
         log-2-weeks = log --format='%ai %H %s' --since="2 weeks ago"
 [github]
 	user = wigust

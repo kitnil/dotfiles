@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -x
+
+git push origin
+sshpass -Ppassphrase -p"$(pass show gitlab.com/id_rsa_gitlab)" git push gitlab
+sshpass -Ppassphrase -p"$(pass show github/ssh/id_rsa_github)" git push github
+sshpass -Ppassphrase -p"$(pass show majordomo/private/gitlab.intr/ssh/id_rsa_gitlab_intr)" git push majordomo
+sshpass -Ppassphrase -p"$(pass show notabug.org/id_rsa_notabug)" git push notabug
