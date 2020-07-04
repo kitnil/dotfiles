@@ -41,16 +41,7 @@ let
     url = "https://github.com/NixOS/nixpkgs";
     rev = "05626cc86b8a8bbadae7753d2e33661400ff67de";
     sha256 = "1lx5hs2yzg21pc8fv982kdqhc5j5kxi08h8wn3plx848bcnd8jj6";
-  }) {
-    overlays = [
-      (self: super: {
-        catj = (import (builtins.fetchGit {
-          url = "https://cgit.duckdns.org/git/nix/catj";
-          ref = "master";
-        }) { });
-      })
-    ];
-  });
+  }) { });
 
   operating-system = nixos { config = { services.headphones.enable = true; }; };
 
@@ -134,10 +125,7 @@ in [
   # TODO: Fix steam ipmiview
   # nodePackages_12_x.node2nix
 
-  # TODO: Fix catj
-  # Setup: Encountered missing or private dependencies:
-  # base >=4.12.0 && <4.13, megaparsec >=7.0.5 && <7.1
-  old.catj
+  gron
 
   obs-studio
   androidenv.androidPkgs_9_0.platform-tools
