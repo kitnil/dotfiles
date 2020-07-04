@@ -123,7 +123,8 @@ virtualization vpn w3m xfce web wget wm xdisorg xml xorg)
 
                file tree python-pygments exa
 
-               ;; TODO: Fix python-parso python-language-server
+               ;; TODO: Fix python-parso
+               python-language-server
 
                mongodb
 
