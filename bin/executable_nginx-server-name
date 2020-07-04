@@ -1,0 +1,7 @@
+#!/usr/bin/env -S awk -f
+
+# Return server_name list from /etc/nginx/sites-available/SITE.
+
+BEGIN { PROCINFO["sorted_in"]="@val_num_asc" }
+/server/ && (/\.intr/ || /\.ru/) { gsub(";", ""); domains[$2]++ }
+END { for (domain in domains) print domain }
