@@ -10,7 +10,7 @@ with import <nixpkgs> {
         ref = "master";
       }) { });
       ipmiview = (super.callPackage (builtins.fetchGit {
-        url = "https://cgit.duckdns.org/git/nix/ipmiview";
+        url = "https://github.com/kitnil/nix-ipmiview";
         ref = "master";
       }) { });
       cached-nix-shell = (super.callPackage (builtins.fetchGit {
