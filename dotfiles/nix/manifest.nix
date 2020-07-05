@@ -127,6 +127,7 @@ in [
 
   gron
 
+  audacity
   obs-studio
   androidenv.androidPkgs_9_0.platform-tools
   scrcpy
