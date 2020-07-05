@@ -201,3 +201,9 @@ resource "github_repository" "nix-docker-ipmi" {
   description    = "Nix expression to build Bash script and container to connect to servers via IPMI"
   default_branch = "master"
 }
+
+resource "github_repository" "nix-ipmiview" {
+  name           = "nix-ipmiview"
+  description    = "Nix expression to build IPMIView to run via steam-run"
+  default_branch = "master"
+}
