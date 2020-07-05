@@ -65,7 +65,7 @@ virtualization vpn w3m xfce web wget wm xdisorg xml xorg)
                recutils  ; Filter records like in `guix --search'
                stow            ; Dotfiles management
                the-silver-searcher
-               ripgrep
+               fd ripgrep
                woof
 
                translate-shell ; Translation in CLI and Emacs

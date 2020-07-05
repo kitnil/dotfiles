@@ -70,7 +70,6 @@ in [
   docker-ls
   dragon-drop
   # elktail-bin
-  fd
   # ferm
   # filezilla
   firefox
