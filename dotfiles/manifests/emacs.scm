@@ -43,6 +43,7 @@
        emacs-expand-region
        emacs-deadgrep           ; ripgrep front-end
        emacs-f3
+       emacs-fd
        emacs-fancy-narrow
        emacs-ffap-rfc-space
        emacs-fill-column-indicator
