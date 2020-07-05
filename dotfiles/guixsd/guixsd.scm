@@ -11,14 +11,13 @@ lisp-xyz)
 
 (use-service-modules admin dbus desktop docker dns networking sound
                      xorg ssh web cgit version-control certbot
-                     monitoring databases mail autofs)
+                     monitoring databases mail autofs vpn)
 
 ;; Third-party modules
 (use-modules (wigust services nix)
              (wigust services autossh)
              (wigust services kresd)
              (wigust services jenkins)
-             (wigust services openvpn)
              (wigust services tftp)
              (wigust packages lisp)
              (wigust packages python)
@@ -516,7 +515,21 @@ location / {
 
                        nix-service
                        (kresd-service (local-file "kresd.conf"))
-                       openvpn-service
+
+                       (openvpn-client-service
+                        #:config (openvpn-client-configuration
+                                  (dev 'tap)
+                                  (auth-user-pass "/etc/openvpn/login.conf")
+                                  (remote (list
+                                           ;; vpn-miran.majordomo.ru
+                                           (openvpn-remote-configuration
+                                            (name "78.108.80.230"))
+                                           ;; vpn-dh.majordomo.ru
+                                           (openvpn-remote-configuration
+                                            (name "78.108.91.250"))
+                                           ;; vpn-office.majordomo.ru
+                                           (openvpn-remote-configuration
+                                            (name "81.95.28.29"))))))
 
                        (service autofs-service-type
                                 (autofs-configuration
