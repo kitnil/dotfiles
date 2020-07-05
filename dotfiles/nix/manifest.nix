@@ -6,7 +6,7 @@ with import <nixpkgs> {
         ref = "master";
       }) { });
       ipmi = (super.callPackage (builtins.fetchGit {
-        url = "https://cgit.duckdns.org/git/nix/ipmi";
+        url = "https://github.com/kitnil/nix-docker-ipmi";
         ref = "master";
       }) { });
       ipmiview = (super.callPackage (builtins.fetchGit {
