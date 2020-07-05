@@ -1,0 +1,174 @@
+<domain type='kvm' id='43'>
+  <name>vm31246</name>
+  <uuid>fbf65924-186a-4a99-b678-b6c7a9cad1cf</uuid>
+  <memory unit='KiB'>4194304</memory>
+  <currentMemory unit='KiB'>4194304</currentMemory>
+  <vcpu placement='auto'>2</vcpu>
+  <cputune>
+    <shares>84</shares>
+  </cputune>
+  <numatune>
+    <memory mode='strict' placement='auto'/>
+  </numatune>
+  <resource>
+    <partition>/machine</partition>
+  </resource>
+  <os>
+    <type arch='x86_64' machine='pc-i440fx-artful'>hvm</type>
+    <boot dev='hd'/>
+  </os>
+  <features>
+    <acpi/>
+    <apic/>
+  </features>
+  <cpu mode='custom' match='exact' check='full'>
+    <model fallback='forbid'>Penryn</model>
+    <vendor>Intel</vendor>
+    <feature policy='disable' name='tm2'/>
+    <feature policy='disable' name='est'/>
+    <feature policy='disable' name='monitor'/>
+    <feature policy='disable' name='ds'/>
+    <feature policy='require' name='ss'/>
+    <feature policy='require' name='vme'/>
+    <feature policy='require' name='vmx'/>
+    <feature policy='disable' name='dtes64'/>
+    <feature policy='disable' name='ht'/>
+    <feature policy='disable' name='dca'/>
+    <feature policy='disable' name='pbe'/>
+    <feature policy='disable' name='tm'/>
+    <feature policy='disable' name='pdcm'/>
+    <feature policy='disable' name='ds_cpl'/>
+    <feature policy='disable' name='xtpr'/>
+    <feature policy='require' name='sse4.1'/>
+    <feature policy='disable' name='acpi'/>
+    <feature policy='require' name='ssse3'/>
+    <feature policy='require' name='cx16'/>
+    <feature policy='require' name='nx'/>
+    <feature policy='disable' name='rdtscp'/>
+    <feature policy='disable' name='pdpe1gb'/>
+    <feature policy='disable' name='pcid'/>
+    <feature policy='disable' name='smx'/>
+    <feature policy='disable' name='xsave'/>
+    <feature policy='disable' name='osxsave'/>
+    <feature policy='disable' name='pclmuldq'/>
+    <feature policy='disable' name='sse4.2'/>
+    <feature policy='disable' name='popcnt'/>
+    <feature policy='disable' name='aes'/>
+    <feature policy='require' name='x2apic'/>
+    <feature policy='require' name='hypervisor'/>
+  </cpu>
+  <clock offset='utc'>
+    <timer name='rtc' tickpolicy='catchup'/>
+    <timer name='pit' tickpolicy='delay'/>
+    <timer name='hpet' present='no'/>
+  </clock>
+  <on_poweroff>destroy</on_poweroff>
+  <on_reboot>restart</on_reboot>
+  <on_crash>restart</on_crash>
+  <pm>
+    <suspend-to-mem enabled='no'/>
+    <suspend-to-disk enabled='no'/>
+  </pm>
+  <devices>
+    <emulator>/usr/bin/kvm-spice</emulator>
+    <disk type='file' device='disk'>
+      <driver name='qemu' type='qcow2'/>
+      <source file='//kvm/disks/vm31246.qcow2'/>
+      <backingStore/>
+      <target dev='vda' bus='virtio'/>
+      <alias name='virtio-disk0'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x06' function='0x0'/>
+    </disk>
+    <controller type='usb' index='0' model='ich9-ehci1'>
+      <alias name='usb'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x04' function='0x7'/>
+    </controller>
+    <controller type='usb' index='0' model='ich9-uhci1'>
+      <alias name='usb'/>
+      <master startport='0'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x04' function='0x0' multifunction='on'/>
+    </controller>
+    <controller type='usb' index='0' model='ich9-uhci2'>
+      <alias name='usb'/>
+      <master startport='2'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x04' function='0x1'/>
+    </controller>
+    <controller type='usb' index='0' model='ich9-uhci3'>
+      <alias name='usb'/>
+      <master startport='4'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x04' function='0x2'/>
+    </controller>
+    <controller type='pci' index='0' model='pci-root'>
+      <alias name='pci.0'/>
+    </controller>
+    <controller type='virtio-serial' index='0'>
+      <alias name='virtio-serial0'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x05' function='0x0'/>
+    </controller>
+    <interface type='bridge'>
+      <mac address='00:25:90:00:79:a6'/>
+      <source network='ovs-br82' bridge='ovsbr82'/>
+      <virtualport type='openvswitch'>
+        <parameters interfaceid='23b90f64-0a08-46bd-a653-1ec08705a7b8'/>
+      </virtualport>
+      <bandwidth>
+        <inbound average='15360' peak='30720'/>
+        <outbound average='15360' peak='30720'/>
+      </bandwidth>
+      <target dev='vm31246'/>
+      <model type='virtio'/>
+      <alias name='net0'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x0'/>
+    </interface>
+    <serial type='pty'>
+      <source path='/dev/pts/9'/>
+      <target port='0'/>
+      <alias name='serial0'/>
+    </serial>
+    <console type='pty' tty='/dev/pts/9'>
+      <source path='/dev/pts/9'/>
+      <target type='serial' port='0'/>
+      <alias name='serial0'/>
+    </console>
+    <channel type='unix'>
+      <source mode='bind' path='/var/lib/libvirt/qemu/va-vm31246-virtio.sock'/>
+      <target type='virtio' name='vm31246' state='disconnected'/>
+      <alias name='channel0'/>
+      <address type='virtio-serial' controller='0' bus='0' port='1'/>
+    </channel>
+    <channel type='unix'>
+      <source mode='bind' path='/var/lib/libvirt/qemu/vm31246.agent'/>
+      <target type='virtio' name='org.qemu.guest_agent.0' state='disconnected'/>
+      <alias name='channel1'/>
+      <address type='virtio-serial' controller='0' bus='0' port='2'/>
+    </channel>
+    <input type='keyboard' bus='ps2'>
+      <alias name='input0'/>
+    </input>
+    <input type='mouse' bus='ps2'>
+      <alias name='input1'/>
+    </input>
+    <graphics type='vnc' port='11904' autoport='no' listen='0.0.0.0' keymap='en-us' passwd='xxxxxxxx'>
+      <listen type='address' address='0.0.0.0'/>
+    </graphics>
+    <video>
+      <model type='virtio' heads='1' primary='yes'/>
+      <alias name='video0'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x02' function='0x0'/>
+    </video>
+    <memballoon model='virtio'>
+      <alias name='balloon0'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x07' function='0x0'/>
+    </memballoon>
+    <rng model='virtio'>
+      <backend model='random'>/dev/urandom</backend>
+      <alias name='rng0'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x08' function='0x0'/>
+    </rng>
+  </devices>
+  <seclabel type='none' model='none'/>
+  <seclabel type='dynamic' model='dac' relabel='yes'>
+    <label>+64055:+116</label>
+    <imagelabel>+64055:+116</imagelabel>
+  </seclabel>
+</domain>
