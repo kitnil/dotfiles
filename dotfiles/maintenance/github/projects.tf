@@ -195,3 +195,9 @@ resource "github_repository" "wrapper-xclip" {
   description    = "xclip wrapper"
   default_branch = "master"
 }
+
+resource "github_repository" "nix-docker-ipmi" {
+  name           = "nix-docker-ipmi"
+  description    = "Nix expression to build Bash script and container to connect to servers via IPMI"
+  default_branch = "master"
+}
