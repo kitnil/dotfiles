@@ -75,6 +75,7 @@ in [
   # filezilla
   firefox
   fzf
+  goldendict
   # geckodriver
   bfg-repo-cleaner
   git-secrets
