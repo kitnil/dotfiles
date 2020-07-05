@@ -178,4 +178,8 @@
 
 (setq auto-mode-alist (delete (assoc "\\.drv" auto-mode-alist) auto-mode-alist))
 
+(load (expand-file-name "~/src/emacs-rainbow-fart/rainbow-fart.el") t)
+(setq rainbow-fart-keyword-interval nil)
+(setq rainbow-fart-voice-model "built-in-voice-english")
+
 ;;; .emacs ends here
