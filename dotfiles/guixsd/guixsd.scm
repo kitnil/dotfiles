@@ -470,6 +470,7 @@ location / {
            "172.16.100.60 workstation.intr"
            "178.250.247.125 gitlab.mjtest jenkins.mjtest"
            "130.61.95.6 oracle"
+           "172.16.100.65 zdetovetskiy.intr"
 
            ,%facebook-host-aliases)
          "\n")))
