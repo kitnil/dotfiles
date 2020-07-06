@@ -128,3 +128,14 @@
 (setq org-redmine-config-default-limit 100)
 (setq org-redmine-limit 100)
 
+
+;;;
+;;; org-tanglesync
+;;;
+
+(setq org-tanglesync-watch-files (list (expand-file-name "~/src/org/networking.org")))
+(setq org-tanglesync-default-diff-action :external)
+(require 'org-tanglesync)
+(add-hook 'org-mode-hook 'org-tanglesync-mode)
+(add-hook 'prog-mode-hook 'org-tanglesync-watch-mode)
+(add-hook 'text-mode-hook 'org-tanglesync-watch-mode)

@@ -106,6 +106,7 @@
        emacs-org-generate
        emacs-org-mind-map       ; General mind maps from Org files
        emacs-orgit
+       emacs-org-tanglesync
        emacs-outshine           ; Emacs outline-mode
        emacs-pcre2el
        emacs-phi-search
