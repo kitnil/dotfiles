@@ -136,9 +136,7 @@
 (defcommand firefox () ()
   "Start of focus firefox."
   (let ((clipboard (get-x-selection)))
-    (cond ((string-contains "youtube.com" clipboard)
-           (youtube-dl-music clipboard))
-          ((string-contains "AC_" clipboard)
+    (cond ((string-contains "AC_" clipboard)
            (sb-thread:make-thread
             (lambda ()
               (run-shell-command (format nil "notify-send ~s"
