@@ -47,11 +47,20 @@ accounts.\x1b[0m
                         (type "ext4"))
                       %base-file-systems))
 
-  (users (cons (user-account
+  (users (cons* (user-account
+                (name "oleg")
+                (comment "Oleg Pykhalov")
+                (password "")                     ;no password
+                (uid 1000)
+                (group "users")
+                (supplementary-groups '("wheel" "netdev"
+                                        "audio" "video")))
+               (user-account
                 (name "guest")
                 (comment "GNU Guix Live")
                 (password "")                     ;no password
                 (group "users")
+                (uid 1001)
                 (supplementary-groups '("wheel" "netdev"
                                         "audio" "video")))
                %base-user-accounts))
@@ -60,7 +69,8 @@ accounts.\x1b[0m
   ;; allow for password-less sudo.
   (sudoers-file (plain-file "sudoers" "\
 root ALL=(ALL) ALL
-%wheel ALL=NOPASSWD: ALL\n"))
+%wheel ALL=(ALL) ALL
+oleg ALL=(ALL) NOPASSWD:ALL\n"))
 
   (packages (append (list font-bitstream-vera nss-certs nvi wget)
                     %base-packages))
@@ -71,8 +81,8 @@ root ALL=(ALL) ALL
                  ;; Choose SLiM, which is lighter than the default GDM.
                  (service slim-service-type
                           (slim-configuration
-                           (auto-login? #t)
-                           (default-user "guest")
+                           (auto-login? #f)
+                           (default-user "oleg")
                            (xorg-configuration
                             (xorg-configuration
                              (keyboard-layout keyboard-layout)))))
