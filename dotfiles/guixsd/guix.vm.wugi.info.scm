@@ -6,34 +6,12 @@
 
 (use-modules (gnu) (guix) (srfi srfi-1))
 (use-service-modules desktop networking ssh xorg)
-(use-package-modules bootloaders certs fonts nvi
-                     package-management wget xorg)
-
-(define vm-image-motd (plain-file "motd" "
-\x1b[1;37mThis is the GNU system.  Welcome!\x1b[0m
-
-This instance of Guix is a template for virtualized environments.
-You can reconfigure the whole system by adjusting /etc/config.scm
-and running:
-
-  guix system reconfigure /etc/config.scm
-
-Run '\x1b[1;37minfo guix\x1b[0m' to browse documentation.
-
-\x1b[1;33mConsider setting a password for the 'root' and 'guest' \
-accounts.\x1b[0m
-"))
+(use-package-modules bootloaders certs package-management wget xorg zile)
 
 (operating-system
-  (host-name "gnu")
-  (timezone "Etc/UTC")
+  (host-name "guix.vm.wugi.info")
+  (timezone "Europe/Moscow")
   (locale "en_US.utf8")
-  (keyboard-layout (keyboard-layout "us" "altgr-intl"))
-
-  ;; Label for the GRUB boot menu.
-  (label (string-append "GNU Guix " (package-version guix)))
-
-  (firmware '())
 
   ;; Below we assume /dev/vda is the VM's hard disk.
   ;; Adjust as needed.
@@ -50,66 +28,24 @@ accounts.\x1b[0m
   (users (cons* (user-account
                 (name "oleg")
                 (comment "Oleg Pykhalov")
-                (password "")                     ;no password
                 (uid 1000)
                 (group "users")
                 (supplementary-groups '("wheel" "netdev"
                                         "audio" "video")))
-               (user-account
-                (name "guest")
-                (comment "GNU Guix Live")
-                (password "")                     ;no password
-                (group "users")
-                (uid 1001)
-                (supplementary-groups '("wheel" "netdev"
-                                        "audio" "video")))
                %base-user-accounts))
 
-  ;; Our /etc/sudoers file.  Since 'guest' initially has an empty password,
-  ;; allow for password-less sudo.
   (sudoers-file (plain-file "sudoers" "\
 root ALL=(ALL) ALL
 %wheel ALL=(ALL) ALL
 oleg ALL=(ALL) NOPASSWD:ALL\n"))
 
-  (packages (append (list font-bitstream-vera nss-certs nvi wget)
+  (packages (append (list nss-certs wget zile)
                     %base-packages))
 
   (services
-   (append (list (service xfce-desktop-service-type)
-
-                 ;; Choose SLiM, which is lighter than the default GDM.
-                 (service slim-service-type
-                          (slim-configuration
-                           (auto-login? #f)
-                           (default-user "oleg")
-                           (xorg-configuration
-                            (xorg-configuration
-                             (keyboard-layout keyboard-layout)))))
-
-                 ;; Uncomment the line below to add an SSH server.
-                 (service openssh-service-type)
-
-                 ;; Use the DHCP client service rather than NetworkManager.
-                 (static-networking-service "eth0" "78.108.82.157" #:netmask "255.255.254.0" #:gateway "78.108.83.254" #:name-servers '("8.8.8.8")))
-
-           ;; Remove GDM, ModemManager, NetworkManager, and wpa-supplicant,
-           ;; which don't make sense in a VM.
-           (remove (lambda (service)
-                     (let ((type (service-kind service)))
-                       (or (memq type
-                                 (list gdm-service-type
-                                       wpa-supplicant-service-type
-                                       cups-pk-helper-service-type
-                                       network-manager-service-type
-                                       modem-manager-service-type))
-                           (eq? 'network-manager-applet
-                                (service-type-name type)))))
-                   (modify-services %desktop-services
-                     (login-service-type config =>
-                                         (login-configuration
-                                          (inherit config)
-                                          (motd vm-image-motd)))))))
-
-  ;; Allow resolution of '.local' host names with mDNS.
-  (name-service-switch %mdns-host-lookup-nss))
+   (append (list (service openssh-service-type)
+                 (static-networking-service "eth0" "78.108.82.157"
+                                            #:netmask "255.255.254.0"
+                                            #:gateway "78.108.83.254"
+                                            #:name-servers '("8.8.8.8" "8.8.4.4")))
+           %base-services)))
