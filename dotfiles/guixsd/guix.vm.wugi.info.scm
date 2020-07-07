@@ -4,9 +4,9 @@
 ;;   guix system reconfigure /etc/config.scm
 ;;
 
-(use-modules (gnu) (guix) (srfi srfi-1))
+(use-modules (gnu) (guix) (srfi srfi-1) (srfi srfi-26))
 (use-service-modules desktop networking ssh xorg)
-(use-package-modules bootloaders certs package-management wget xorg zile)
+(use-package-modules admin bootloaders certs package-management wget xorg zile)
 
 (operating-system
   (host-name "guix.vm.wugi.info")
@@ -25,14 +25,41 @@
                         (type "ext4"))
                       %base-file-systems))
 
+  (groups (cons* (user-group (name "nixbld")
+                             (id 30100))
+                 %base-groups))
+
   (users (cons* (user-account
-                (name "oleg")
-                (comment "Oleg Pykhalov")
-                (uid 1000)
-                (group "users")
-                (supplementary-groups '("wheel" "netdev"
-                                        "audio" "video")))
-               %base-user-accounts))
+                 (name "oleg")
+                 (comment "Oleg Pykhalov")
+                 (uid 1000)
+                 (group "users")
+                 (supplementary-groups '("wheel" "netdev"
+                                         "audio" "video")))
+                (append ((lambda* (count #:key
+                                    (group "nixbld")
+                                    (first-uid 30101)
+                                    (shadow shadow))
+                           (unfold (cut > <> count)
+                                   (lambda (n)
+                                     (user-account
+                                      (name (format #f "nixbld~a" n))
+                                      (system? #t)
+                                      (uid (+ first-uid n -1))
+                                      (group group)
+
+                                      ;; guix-daemon expects GROUP to be listed as a
+                                      ;; supplementary group too:
+                                      ;; <http://lists.gnu.org/archive/html/bug-guix/2013-01/msg00239.html>.
+                                      (supplementary-groups (list group "kvm"))
+
+                                      (comment (format #f "Nix Build User ~a" n))
+                                      (home-directory "/var/empty")
+                                      (shell (file-append shadow "/sbin/nologin"))))
+                                   1+
+                                   1))
+                         9)
+                        %base-user-accounts)))
 
   (sudoers-file (plain-file "sudoers" "\
 root ALL=(ALL) ALL
