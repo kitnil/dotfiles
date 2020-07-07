@@ -8,6 +8,12 @@
 (setq lsp-file-watch-threshold nil)
 (setq lsp-lua-emmy-jar-path (expand-file-name "EmmyLua-LS-all.jar" user-emacs-directory))
 
+;; TODO: Spring
+;; (require 'lsp-java-boot)
+;; ;; to enable the lenses
+;; (add-hook 'lsp-mode-hook #'lsp-lens-mode)
+;; (add-hook 'java-mode-hook #'lsp-java-boot-lens-mode)
+
 ;; GNU Emacs 26.3 (build 1, x86_64-pc-linux-gnu, GTK+ Version 3.24.20)
 ;; https://github.com/emacs-lsp/lsp-java/issues/173
 (defun seq-first (sequence)
