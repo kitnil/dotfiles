@@ -34,7 +34,7 @@
        (origin
          (method git-fetch)
          (uri (git-reference
-               (url "https://cgit.duckdns.org/git/wigust/dotfiles")
+               (url "https://github.com/kitnil/dotfiles.git")
                (commit commit)))
          (file-name (git-file-name name version))
          (sha256
@@ -64,7 +64,7 @@
              (copy-file "bin/executable_dotfiles" executable)
              (chmod executable #o555))
            #t)))
-      (home-page "https://gitlab.com/wigust/dotfiles/")
+      (home-page "https://github.com/kitnil/dotfiles")
       (license license:gpl3+)
       (synopsis "WiGust dotfiles")
       (description "This package provides wigust dotfiles which could

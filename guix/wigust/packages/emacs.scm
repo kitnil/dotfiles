@@ -1466,7 +1466,7 @@ and manipulated by user-defined functions to do various things such as:
       (source (origin
                 (method git-fetch)
                 (uri (git-reference
-                      (url "https://cgit.duckdns.org/git/emacs/emacs-dashboard")
+                      (url "https://github.com/wigust/emacs-dashboard.git")
                       (commit commit)))
                 (file-name (git-file-name name (package-version emacs-dashboard)))
                 (sha256
