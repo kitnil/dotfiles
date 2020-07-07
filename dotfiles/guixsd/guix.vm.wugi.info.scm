@@ -6,7 +6,7 @@
 
 (use-modules (gnu) (guix) (srfi srfi-1) (srfi srfi-26))
 (use-service-modules desktop networking ssh xorg)
-(use-package-modules admin bootloaders certs package-management wget xorg zile)
+(use-package-modules admin base bootloaders certs package-management wget xorg zile)
 
 (operating-system
   (host-name "guix.vm.wugi.info")
@@ -74,5 +74,7 @@ oleg ALL=(ALL) NOPASSWD:ALL\n"))
                  (static-networking-service "eth0" "78.108.82.157"
                                             #:netmask "255.255.254.0"
                                             #:gateway "78.108.83.254"
-                                            #:name-servers '("8.8.8.8" "8.8.4.4")))
+                                            #:name-servers '("8.8.8.8" "8.8.4.4"))
+                 (extra-special-file "/usr/bin/env"
+                                     (file-append coreutils "/bin/env")))
            %base-services)))
