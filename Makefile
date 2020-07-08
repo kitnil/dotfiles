@@ -25,4 +25,5 @@ install:
 	chezmoi apply
 	update-desktop-database ~/.local/share/applications
 	open-with-linux install
+	mkdir -p $(HOME)/.config/mpv/scripts
 	ln -sf $(HOME)/.nix-profile/share/mpv/scripts/notify-send.lua $(HOME)/.config/mpv/scripts/notify-send.lua
