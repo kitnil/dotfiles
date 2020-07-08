@@ -225,6 +225,7 @@ location / {
         (proxy "nextcloud.wugi.info" 28080 #:ssl? #t #:ssl-key? #t)
         (proxy "redmine.wugi.info" 44080 #:ssl? #t #:ssl-key? #t)
         (proxy "guix.duckdns.org" 5556 #:ssl? #t)
+        (proxy "guix.wugi.info" 5556)
         (proxy "pykhaloff.ddns.net" 443
                #:target "192.168.100.5"
                #:ssl? #t
