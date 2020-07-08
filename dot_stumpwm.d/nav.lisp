@@ -124,6 +124,10 @@
                (string= str (window-class window)))
              '("Firefox" "Chromium-browser" "Xfce4-terminal"))
        (send-fake-key window (kbd "C-Page_Down")))
+      ((and (string= (window-class window) "XTerm")
+            (string= (window-name window) "tmux"))
+       (send-fake-key window (kbd "C-b"))
+       (send-fake-key window (kbd "n")))
       (t (next-in-frame)))))
 
 (defcommand prev-in-frame-custom () ()
@@ -137,6 +141,10 @@
                (string= str (window-class window)))
              '("Firefox" "Chromium-browser" "Xfce4-terminal"))
        (send-fake-key window (kbd "C-Page_Up")))
+      ((and (string= (window-class window) "XTerm")
+            (string= (window-name window) "tmux"))
+       (send-fake-key window (kbd "C-b"))
+       (send-fake-key window (kbd "p")))
       (t (prev-in-frame)))))
 
 (defcommand keybinding-s-k () ()
@@ -148,6 +156,10 @@
        (emacsclient-eval "(kill-buffer (window-buffer (frame-selected-window)))"))
       ((string= (window-class window) "Firefox")
        (send-fake-key window (kbd "M-w")))
+      ((and (string= (window-class window) "XTerm")
+            (string= (window-name window) "tmux"))
+       (send-fake-key window (kbd "C-b"))
+       (send-fake-key window (kbd "x")))
       (t (delete-window window)))))
 
 (defcommand keybinding-s-o () ()
@@ -163,6 +175,10 @@
     (cond
       ((string= (window-class window) "Xfce4-terminal")
        (send-fake-key window (kbd "C-F")))
+      ((and (string= (window-class window) "XTerm")
+            (string= (window-name window) "tmux"))
+       (send-fake-key window (kbd "C-b"))
+       (send-fake-key window (kbd "[")))
       (t (repl-guile)))))
 
 (defcommand keybinding-s-= () ()
