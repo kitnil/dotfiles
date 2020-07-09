@@ -1,10 +1,28 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-set -ex
+set -e
 
 JENKINS_URL="${JENKINS_URL:-https://jenkins.wugi.info}"
 
+help_main()
+{
+    echo "\
+Usage: connect COMMANDS ARGS...
+Run COMMANDS with ARGS
+
+COMMAND must be one of the sub-commands listed below:
+
+   build
+   stop
+
+Report bugs to: go.wigust@gmail.com."
+}
+
 case "$1" in
+    --help | -h)
+        help_main
+        exit 0
+        ;;
     build)
         curl --request POST --user "admin:$(pass show jenkins.wugi.info/token-admin)" "$JENKINS_URL/job/$2/job/$3/build"
         ;;
@@ -48,6 +66,10 @@ def stopJobs(job) {
 EOF
 )"
         curl --user "admin:$(pass show jenkins.wugi.info/token-admin)" "$JENKINS_URL/scriptText" --data-urlencode "script=$data"
+        ;;
+    *)
+        help_main
+        exit 0
         ;;
 esac
 
