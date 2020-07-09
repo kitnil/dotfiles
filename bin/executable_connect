@@ -44,11 +44,16 @@ Report bugs to: go.wigust@gmail.com."
 help_mysql()
 {
     echo "\
-Usage: connect mysql [OPTION] HOST...
-Connect mysql to HOST.
+Usage: connect mysql [OPTION] COMMANDS HOST...
+Run COMMANDS with ARGS
 
   -c, --client=CLIENT    mysql client
   -h, --help             display this help and exit
+
+COMMAND must be one of the sub-commands listed below:
+
+  connections
+  filter
 
 Report bugs to: go.wigust@gmail.com."
 }
@@ -98,6 +103,16 @@ sshrc_sudo()
 ssh_sudo()
 {
     ssh -q -t "$1" -- "set +o history; sudo --stdin --validate --prompt='' <<< $(pass show majordomo/private/ssh/eng); exec -a sudo sudo -i ${*:2}"
+}
+
+mysql_command()
+{
+    mysql --silent --user="root" --password="$(pass show majordomo/private/web/mysql/root)" --host="$1" "${@:2}"
+}
+
+mysql_list_users_by_connections()
+{
+    mysql_command "$1" --execute="SELECT count(ID) as connections, USER FROM INFORMATION_SCHEMA.PROCESSLIST GROUP BY USER ORDER BY connections;"
 }
 
 case "$1" in
@@ -223,6 +238,19 @@ case "$1" in
         connect ssh "$2" cat "$(connect ssh "$2" grep -RF server_name /etc/nginx/sites-available | sort -u | fzf | cut -d: -f 1)"
         ;;
     mysql)
+        case "$2" in
+            connections)
+                mysql_list_users_by_connections "$3" | expand -t1 | column -t
+                exit 0
+                ;;
+            filter)
+                command="KILL USER "$(mysql_list_users_by_connections "$3" | fzf | awk '{ print $NF }')""
+                echo "$3: $command"
+                mysql_command "$3" --execute="$command;"
+                exit 0
+                ;;
+        esac
+
         if ! OPTS="$(getopt --options c:h --long client:,help --name parse-options -- "$@")"
         then
             echo "Failed parsing options."
@@ -241,6 +269,7 @@ case "$1" in
                     MYSQL_CLIENT="$2"
                     shift 2
                     ;;
+
                 -- )
                     shift
                     break
