@@ -2,9 +2,52 @@
 
 set -ex
 
+JENKINS_URL="${JENKINS_URL:-https://jenkins.wugi.info}"
+
 case "$1" in
     build)
-        curl --request POST --user "admin:$(pass show jenkins.wugi.info/token-admin)" https://jenkins.wugi.info/job/$2/job/$3/build
+        curl --request POST --user "admin:$(pass show jenkins.wugi.info/token-admin)" "$JENKINS_URL/job/$2/job/$3/build"
+        ;;
+    stop)
+        data="$(cat << 'EOF'
+// https://jenkins.intr/script
+
+import java.util.ArrayList
+import hudson.model.*;
+import jenkins.model.Jenkins
+
+// Remove everything which is currently queued
+def q = Jenkins.instance.queue
+for (queued in Jenkins.instance.queue.items) {
+    q.cancel(queued.task)
+}
+
+// stop all the currently running jobs
+for (job in Jenkins.instance.items) {
+    stopJobs(job)
+}
+
+def stopJobs(job) {
+    if (job in com.cloudbees.hudson.plugins.folder.Folder) {
+        for (child in job.items) {
+            stopJobs(child)
+        }
+    } else if (job in org.jenkinsci.plugins.workflow.multibranch.WorkflowMultiBranchProject) {
+        for (child in job.items) {
+            stopJobs(child)
+        }
+    } else if (job in org.jenkinsci.plugins.workflow.job.WorkflowJob) {
+
+        if (job.isBuilding()) {
+            for (build in job.builds) {
+                build.doKill()
+            }
+        }
+    }
+}
+EOF
+)"
+        curl --user "admin:$(pass show jenkins.wugi.info/token-admin)" "$JENKINS_URL/scriptText" --data-urlencode "script=$data"
         ;;
 esac
 
