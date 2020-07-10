@@ -33,6 +33,11 @@ alias goaccess='goaccess --log-format=COMBINED'
 
 alias catj=gron
 
+# https://github.com/andresgongora/synth-shell
+alias dmesg="sudo dmesg --color=auto --reltime --human --nopager --decode"
+alias tree="tree --dirsfirst -C"
+alias free="free -mht"
+
 RIPGREP_CONFIG_PATH="$HOME/.config/ripgrep/ripgreprc"
 export RIPGREP_CONFIG_PATH
 
