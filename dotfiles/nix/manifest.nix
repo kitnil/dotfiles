@@ -117,6 +117,7 @@ in [
   nix-generate-from-cpan
   nix-prefetch-docker
   nix-serve
+  noti
 
   old.nixfmt
 
