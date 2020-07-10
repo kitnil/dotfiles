@@ -1441,6 +1441,12 @@ rg()
     esac
 }
 
+if [ -f "$HOME/.bash.d/slack.bash" ]
+then
+    # shellcheck source=.bash.d/mjru.bash
+    . "$HOME/.bash.d/slack.bash"
+fi
+
 if [ -f "$HOME/.bash.d/mjru.bash" ]
 then
     # shellcheck source=.bash.d/mjru.bash
