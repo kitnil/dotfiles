@@ -28,3 +28,11 @@ matches:
         type: shell
         params:
           cmd: "echo Hello from your shell"
+
+  - trigger: ":vpn"
+    replace: "{{output}}"
+    vars:
+      - name: output
+        type: shell
+        params:
+          cmd: ip --json address | jq --raw-output '.[] | select(.ifname == "tap0") | .addr_info[] | select(."family" == "inet") | .local'
