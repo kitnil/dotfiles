@@ -1274,8 +1274,11 @@ git-prune()
 
 bfg()
 {
-    # https://rtyley.github.io/bfg-repo-cleaner/
-    java -jar ~/Downloads/bfg-1.13.0.jar --replace-text <(git-pass-secrets)
+    case "$1" in
+        pass)
+            command bfg --replace-text <(git-pass-secrets)
+            ;;
+    esac
 }
 
 atoi()
