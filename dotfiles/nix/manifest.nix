@@ -86,6 +86,7 @@ in [
   gitAndTools.git-recent
   gitAndTools.grv
   gitAndTools.pre-commit
+  fac
   # glibc-locales
   go2nix
   glow
