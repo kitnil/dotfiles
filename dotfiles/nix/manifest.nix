@@ -90,6 +90,7 @@ in [
   # glibc-locales
   go2nix
   glow
+  haskellPackages.greenclip
   groovy
   hexyl
   # httpie
