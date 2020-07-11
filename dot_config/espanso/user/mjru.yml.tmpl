@@ -3,5 +3,7 @@ parent: default
 
 matches:
   # Simple text replacement
-  - trigger: ":phone"
+  - trigger: ":mjru-phone"
     replace: "{{ .work.phone }}"
+  - trigger: ":mjru-email"
+    replace: "{{ .work.email }}"

@@ -1,0 +1,9 @@
+name: home
+parent: default
+
+matches:
+  # Simple text replacement
+  - trigger: ":phone"
+    replace: "{{ .home.phone }}"
+  - trigger: ":email"
+    replace: "{{ .home.email }}"
