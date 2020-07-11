@@ -390,7 +390,8 @@ guix()
             ;;
         pull)
             guix_command="command guix pull \
---channels=$HOME/.local/share/chezmoi/dotfiles/channels.scm"
+--channels=$HOME/.local/share/chezmoi/dotfiles/channels.scm \
+--disable-authentication"
             if (set -ex; $guix_command "${@:2}"; sudo --login $guix_command "${@:2}")
             then
                 slack "SUCCESS: $guix_command"
