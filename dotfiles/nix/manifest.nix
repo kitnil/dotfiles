@@ -60,7 +60,6 @@ in [
   catimg
   chezmoi
   chromium
-  clipmenu
   ctop
   diskus
   dive

@@ -6,11 +6,14 @@
 (sb-posix:setenv "CM_HISTLENGTH" "25" 1)
 (sb-posix:setenv "CM_LAUNCHER" "rofi" 1)
 
-(defcommand clipmenu () ()
+(defcommand greenclip () ()
   (run-shell-command
-   (join `("clipmenu" ,@(if (or dark-theme dark) '("-theme DarkBlue") '())))))
+   (join `("rofi"
+           ,@(if (or dark-theme dark) '("-theme DarkBlue") '())
+           ,(format nil "-modi ~s -show" "clipboard:greenclip print")))))
 
-(defcommand clipmenud () ()
+(defcommand greenclip-daemon () ()
   (run-shell-command
-   (concat (getenv "HOME") "/.nix-profile/bin/clipmenud")))
+   (join (list (concat (getenv "HOME") "/.nix-profile/bin/greenclip")
+               "daemon"))))
 

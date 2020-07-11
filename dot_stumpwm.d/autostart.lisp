@@ -2,8 +2,7 @@
 
 (mapcar (lambda (func)
           (add-hook *start-hook* func))
-        (list ;; (lambda () (clipmenud))
-              (lambda () (kdeconnect-indicator))
+        (list (lambda () (kdeconnect-indicator))
               (lambda () (dunst))
               (lambda () (picom) (xplanet-file))
               (lambda () (cursor-theme))

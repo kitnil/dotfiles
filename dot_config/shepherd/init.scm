@@ -55,16 +55,6 @@
                         "--eval" "'(kill-emacs)'")))
     #:respawn? #f))
 
-(define clipmenud-service
-  (make <service>
-    #:docstring '("Clipmenud daemon")
-    #:provides '(clipmenud)
-    #:start (make-forkexec-constructor
-             (list (string-append "/home/oleg/.nix-profile/bin/clipmenud")))
-    #:stop
-    (make-kill-destructor)
-    #:respawn? #f))
-
 (define dunst-service
   (make <service>
     #:docstring '("Dunst daemon")

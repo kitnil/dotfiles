@@ -159,12 +159,12 @@
 
 (define-key *root-map* (kbd "C-M-c") "run-or-raise-xterm")
 (define-key *root-map* (kbd "C-c") "run-or-raise-xterm")
-(define-key *root-map* (kbd "C-y") "clipmenu")
+(define-key *root-map* (kbd "C-y") "greenclip")
 (define-key *root-map* (kbd "Y") "xclip-kdeconnect-handler")
 (define-key *root-map* (kbd "c") "run-or-raise-xterm")
 (define-key *root-map* (kbd "e") "emacsclient")
 (define-key *root-map* (kbd "quoteleft") "emacs-vterm")
-(define-key *root-map* (kbd "y") "clipmenu")
+(define-key *root-map* (kbd "y") "greenclip")
 
 (defcommand sxhkd-restart () ()
   (run-shell-command "sxhkd"))
