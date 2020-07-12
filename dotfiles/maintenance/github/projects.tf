@@ -4,6 +4,12 @@ resource "github_repository" "dotfiles" {
   default_branch = "master"
 }
 
+resource "github_repository" "notes" {
+  name           = "notes"
+  description    = "My notes"
+  default_branch = "master"
+}
+
 resource "github_repository" "guix" {
   name           = "guix"
   description    = "Fork https://git.savannah.gnu.org/cgit/guix.git"
