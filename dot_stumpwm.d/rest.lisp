@@ -18,7 +18,7 @@
    (lambda ()
      (loop while (or *notify-to-rest* *work-time*)
         do (progn (run-shell-command
-                   (format nil "notify-send --urgency=low ~s"
+                   (format nil "notify-send --urgency=critical ~s"
                            (format nil "Take a break.  Next notification in ~a seconds."
                                    *notify-to-rest-period*)))
                   (sleep *notify-to-rest-period*))))
