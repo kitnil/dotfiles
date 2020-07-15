@@ -5,7 +5,7 @@
 ;;
 
 (use-modules (gnu) (guix) (srfi srfi-1) (srfi srfi-26))
-(use-service-modules desktop networking ssh vpn xorg)
+(use-service-modules desktop networking monitoring ssh vpn xorg)
 (use-package-modules admin base bootloaders certs package-management wget xorg zile)
 
 (use-modules (wigust services kresd))
@@ -84,6 +84,10 @@ oleg ALL=(ALL) NOPASSWD:ALL\n"))
                  (extra-special-file "/usr/bin/env"
                                      (file-append coreutils "/bin/env"))
                  (kresd-service (local-file "kresd.conf"))
+                 (service zabbix-agent-service-type
+                          (zabbix-agent-configuration
+                           (server '("back.wugi.info"))
+                           (server-active '("back.wugi.info"))))
                  (openvpn-client-service
                   #:config (openvpn-client-configuration
                             (dev 'tap)
