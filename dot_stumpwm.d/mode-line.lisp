@@ -105,7 +105,7 @@
         (string-trim '(#\Newline)
                      (run-shell-command
                       (join '("ip --json address"
-                              "jq --raw-output '.[] | select(.ifname == \"tap0\") | .addr_info[] | select(.\"family\" == \"inet\") | .local'")
+                              "jq --raw-output '.[] | select(.ifname == \"tapvpn\") | .addr_info[] | select(.\"family\" == \"inet\") | .local'")
                             #\|)
                       t))))
 
