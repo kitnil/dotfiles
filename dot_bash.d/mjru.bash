@@ -306,3 +306,11 @@ mjru-dns-check()
         (echo $dns; time dig +short a ${1:-cerberus.intr} @$dns) |& xargs echo
     done
 }
+
+mjru-jenkins()
+{
+    JENKINS_URL=https://jenkins.intr                                    \
+    JENKINS_USER=admin                                                  \
+    JENKINS_PASSWORD="$(pass show majordomo/public/jenkins.intr/admin)" \
+    jenkins "$@"
+}
