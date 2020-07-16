@@ -17,6 +17,10 @@ export MANWIDTH=80
 
 export INFOPATH="$HOME/src/guix/doc${INFOPATH:+:}$INFOPATH"
 
+if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then
+    . "$HOME/.nix-profile/etc/profile.d/nix.sh";
+fi
+
 export PATH=$HOME/bin:$HOME/.local/bin:$HOME/go/bin:$HOME/.npm-global/bin:/opt/gradle/bin:$PATH
 
 export GUILE_WARN_DEPRECATED=no
