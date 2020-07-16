@@ -1533,3 +1533,18 @@ gita()
 }
 
 alias godaddy="GODADDY_DOMAIN_NAME=wugi.info godaddy"
+
+stumpwm-refcard()
+{
+    (
+        cd "$HOME/src/guix-maintenance/doc/refcard" || exit 1
+        # convert -density 200 -rotate 90 "$(guix build -f build.scm)"/stumpwm-refcard.pdf - | zathura -
+        case "$1" in
+            wallpaper)
+                convert -trim -quality 100 -negate -density 130 -rotate 90 "$(guix build -f build.scm)"/stumpwm-refcard.pdf /tmp/out.png; feh --bg-center /tmp/out.png
+                ;;
+            *)
+                zathura "$(guix build -f build.scm)"/stumpwm-refcard.pdf
+        esac
+    )
+}
