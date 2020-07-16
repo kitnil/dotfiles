@@ -538,7 +538,7 @@ location / {
 
                        (openvpn-client-service
                         #:config (openvpn-client-configuration
-                                  (dev 'tap)
+                                  (dev 'tapvpn)
                                   (auth-user-pass "/etc/openvpn/login.conf")
                                   (remote (list
                                            ;; vpn-miran.majordomo.ru
