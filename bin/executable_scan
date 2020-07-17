@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+# Scan LAN and report in YAML.
+
+set -eu
+set -o pipefail
+
+sudo nmap -oX - -sN -p 22 192.168.100.0/24      \
+    | xq .                                      \
+    | gron                                      \
+    | grep '"@addr"'                            \
+    | gron -u                                   \
+    | yq -y .
