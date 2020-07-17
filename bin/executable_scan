@@ -4,6 +4,24 @@
 set -eu
 set -o pipefail
 
-out="$(sudo nmap -oX - -sN -p ${SCAN_PORT:-22} ${SCAN_NETWORK:-192.168.100.0/24} | xq '.nmaprun.host | map(select(.ports.port.state."@state" != "closed") | .address)')"
-echo "$out" | jq -r 'map(select(type == "array"))[] | .[] | ."@addr"' | paste -d '\t' - -
-echo "$out" | jq -r 'map(select(type == "object"))[] | ."@addr"'
+do_scan()
+{
+    out="$(sudo nmap -oX - -sN -p ${SCAN_PORT:-22} ${SCAN_NETWORK:-192.168.100.0/24} | xq '.nmaprun.host | map(select(.ports.port.state."@state" != "closed") | .address)')"
+    echo "$out" | jq -r 'map(select(type == "array"))[] | .[] | ."@addr"' | paste -d '\t' - -
+    echo "$out" | jq -r 'map(select(type == "object"))[] | ."@addr"'
+}
+
+case "$1" in
+    lan)
+        do_scan
+        ;;
+    lab)
+        for host in $(do_scan | awk '{ print $1 }')
+        do
+            if [[ "$(timeout 3 ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -q root@"$host" uname -a)" == *Debian* ]]
+            then
+                echo "$host"
+            fi
+        done
+        ;;
+esac
