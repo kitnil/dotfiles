@@ -17,3 +17,7 @@
    (join (list (concat (getenv "HOME") "/.nix-profile/bin/greenclip")
                "daemon"))))
 
+(defcommand espanso-daemon () ()
+  (run-shell-command
+   (join (list (concat (getenv "HOME") "/.nix-profile/bin/espanso")
+               "start"))))
