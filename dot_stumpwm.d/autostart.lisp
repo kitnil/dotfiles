@@ -4,7 +4,11 @@
           (add-hook *start-hook* func))
         (list (lambda () (kdeconnect-indicator))
               (lambda () (dunst))
-              (lambda () (picom) (xplanet-file))
+              (lambda ()
+                (greenclip-daemon)
+                (espanso-daemon)
+                (picom)
+                (xplanet-file))
               (lambda () (cursor-theme))
               (lambda () (keynav))
               (lambda () (run-commands "volume-decrease")) ;start pulseaudio
