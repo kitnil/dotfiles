@@ -1,9 +1,9 @@
 (in-package :stumpwm)
 
-(setf *maxsize-border-width* 0)
-(setf *message-window-y-padding* 0)
-(setf *normal-border-width* 0)
-(setf *transient-border-width* 0)
+(setf *maxsize-border-width* 3)
+(setf *message-window-y-padding* 3)
+(setf *normal-border-width* 3)
+(setf *transient-border-width* 3)
 (bind-super)
 
 (rename-group *default-group-name* "1")

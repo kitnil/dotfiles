@@ -31,12 +31,10 @@
 (setf *window-format* "%m%n%s %c %50t")
 (setf *suppress-window-placement-indicator* t)
 
-(setf *float-window-border* 0)
-(setf *float-window-title-height* 0)
+(setf *float-window-border* 3)
+(setf *float-window-title-height* 3)
 
 (defparameter dark-theme nil)
-(progn
-  )
 (defcommand toggle-theme () ()
   (if dark-theme
       (progn (setq *mode-line-border-color*     "#d3d3d3"
