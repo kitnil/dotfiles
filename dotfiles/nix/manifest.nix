@@ -103,6 +103,7 @@ in [
   # litecli TODO: fails to build
   navi
   lnav
+  pastel
   procs
   hyperfine
   zenith
