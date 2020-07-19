@@ -5,6 +5,8 @@
 
 (require "asdf")
 
+(redirect-all-output (concat (getenv "HOME") "/.stumpwm.d/debug-output.txt"))
+
 (defun load-config-file (file)
   (load (concat (getenv "HOME") "/.stumpwm.d/" file)))
 
