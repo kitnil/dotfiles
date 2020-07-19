@@ -211,6 +211,18 @@
       ((string= (window-class window) "XTerm")
        (send-fake-key window (kbd "S-KP_Subtract"))))))
 
+(defcommand keybinding-s-x () ()
+  (let ((clipboard (get-x-selection)))
+    (cond ((string-contains "AC_" clipboard)
+           (sb-thread:make-thread
+            (lambda ()
+              (run-shell-command (format nil "notify-send ~s"
+                                         (string-trim '(#\Newline)
+                                                      (run-shell-command (format nil "hms web unix ~a" clipboard)
+                                                                         t)))))))
+          ((= (length clipboard) 24)
+           (mjru-mongo-development-id-object)))))
+
 
 ;;;
 ;;; Small frame

@@ -57,7 +57,7 @@
   (define-key *top-map* (kbd "s-G") "notmuch")
   (define-key *top-map* (kbd "s-C") "org")
   (define-key *top-map* (kbd "C-s-c") "org-agenda")
-  (define-key *top-map* (kbd "s-x") "emacs-counsel-M-x")
+  (define-key *top-map* (kbd "s-x") "keybinding-s-x")
   (define-key *top-map* (kbd "s-X") "wi-project-ivy")
   (define-key *top-map* (kbd "s-i") "quassel-monitor")
   (mapcar #'(lambda (pair)
