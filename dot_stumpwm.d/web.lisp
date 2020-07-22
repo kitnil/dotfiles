@@ -143,7 +143,7 @@
 
 (defcommand firefox-esr-52 () ()
   "Start of focus Firefox ESR 52."
-  (run-shell-command "firefox-esr-52"))
+  (run-shell-command "firefox-esr-52 --new-instance -P esr52"))
 
 (defcommand chromium () ()
   "Start or focus Chromium."
