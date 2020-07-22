@@ -36,3 +36,7 @@ web_create_php_service = lambda server, socket, security: web_create_service(ser
 web_create_php_services = lambda server: list(map (lambda manifest: web_create_php_service(manifest[0], manifest[1], manifest[2]), [[server, 8074, "default"], [server, 8274, "hardened"], [server, 8374, "hardened_nochmod"], [server, 8174, "unsafe"]]))
 
 hms_task_delete = lambda account_id: myclient["personmgr"]["processingBusinessOperation"].update_many({"personalAccountId":str(account_id), "state":"PROCESSING"}, {"$set": {"state":"ERROR"}})
+
+list_servers = lambda: list(map(lambda server: server['_id'], filter(lambda server: isinstance(server['_id'], str) and "web" in server['_id'], (myclient["staffResourceController"]["server"]).find({}))))
+
+list_ssh_guest_room = lambda: list(map(lambda server: "web24" not in server['name'] and print("{} {}".format(server['name'], web_service_id("ssh-guest-room", server['name']))), filter(lambda server: isinstance(server['_id'], str) and "web" in server['_id'] and "web" in server['name'], (myclient["staffResourceController"]["server"]).find({}))))
