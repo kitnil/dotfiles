@@ -506,6 +506,11 @@ location / {
                        ;; “adb” and “fastboot” without root privileges
                        (simple-service 'adb udev-service-type (list android-udev-rules))
 
+                       (simple-service 'udev-kvm-custom udev-service-type
+                                       (list (udev-rule
+                                              "91-kvm-custom.rules"
+                                              (string-append "KERNEL==\"kvm\", GROUP=\"kvm\", MODE=\"0666\"\n"))))
+
                        (service singularity-service-type)
 
                        (service ladspa-service-type
