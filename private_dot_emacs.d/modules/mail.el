@@ -57,3 +57,33 @@
   "Call imap-update-recent-count in StumpWM."
   (interactive)
   (call-process "sh" nil nil nil "-c" "echo '(imap-update-recent-count)' | stumpish -e eval"))
+
+
+;;;
+;;; Guix
+;;;
+
+(defun guix-patch-reply ()
+  (interactive)
+  (message-goto-body)
+  ;; GPG
+  (when (string= "<#secure method=pgpmime mode=sign>"
+                 (buffer-substring (line-beginning-position) (line-end-position)))
+    (beginning-of-line)
+    (next-logical-line))
+  ;; Body
+  (insert "Hi,\n\n")
+  (search-forward-regexp "diff --git")
+  (search-forward-regexp "@@ ")
+  (beginning-of-line)
+  (next-logical-line)
+  (newline 1)
+  (open-line 2)
+  (insert "[…]")
+  (delete-region (point) (point-max))
+  (newline 2)
+  (insert "Pushed to master.\n\nThanks,\nOleg.")
+  ;; CC
+  (message-goto-cc)
+  (search-backward-regexp "@")
+  (insert "-done"))
