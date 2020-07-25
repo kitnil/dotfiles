@@ -8,6 +8,9 @@
   (interactive)
   (set-frame-size (selected-frame) 80 24))
 
+;; Origin https://emacsredux.com/blog/2020/07/18/automatically-kill-running-processes-on-exit/
+(setq confirm-kill-processes nil)
+
 ;; Open buffer in vertical split by default
 (setq split-height-threshold nil)
 (setq split-width-threshold 160)
