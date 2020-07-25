@@ -35,4 +35,4 @@ matches:
       - name: output
         type: shell
         params:
-          cmd: ip --json address | jq --raw-output '.[] | select(.ifname == "tap0") | .addr_info[] | select(."family" == "inet") | .local'
+          cmd: ip --json address | jq --raw-output '.[] | select(.ifname == "tapvpn") | .addr_info[] | select(."family" == "inet") | .local'
