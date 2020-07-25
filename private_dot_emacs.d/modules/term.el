@@ -21,6 +21,10 @@
             (progn (setq paragraph-separate "[ 	]*$")
                    (setq paragraph-start "\\|[ 	]*$"))))
 
+(add-hook 'shell-mode-hook
+          (lambda ()
+            (set-process-query-on-exit-flag (get-process "shell") nil)))
+
 (add-hook 'eshell-mode-hook 'eshell-bookmark-setup)
 
 ;; (add-hook 'comint-output-filter-functions
