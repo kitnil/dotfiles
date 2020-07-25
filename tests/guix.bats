@@ -9,7 +9,8 @@
             --verbosity=0                       \
             --profile=test-tmp/.guix-profile    \
             --channels=dotfiles/channels.scm    \
-            --allow-downgrades
+            --allow-downgrades                  \
+            --disable-authentication
     [ "$status" -eq 0 ]
 }
 
