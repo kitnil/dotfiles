@@ -491,6 +491,11 @@ location / {
            "172.16.100.65 zdetovetskiy.intr"
            "127.0.0.1 example.com"
 
+           "78.108.86.20 r1"
+           "78.108.87.99 r2"
+           "178.250.246.123 r3"
+           "178.250.247.60 r4"
+
            ,%facebook-host-aliases)
          "\n")))
 
