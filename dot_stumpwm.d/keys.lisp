@@ -186,3 +186,10 @@
        ;; ("C-M-f" . "M-Right")
        ;; ("C-k"   . ("C-S-End" "C-x"))
        )))
+
+(define-remapped-keys
+    `((,(lambda (win)
+          (and (string-contains "https://discord.com/" (window-title win))
+               (string-equal "Chromium-browser" (window-class win))))
+        ("ISO_Next_Group"   . "SunPageUp")
+        ("SPC"   . "SunPageDown"))))
