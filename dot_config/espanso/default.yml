@@ -36,3 +36,6 @@ matches:
         type: shell
         params:
           cmd: ip --json address | jq --raw-output '.[] | select(.ifname == "tapvpn") | .addr_info[] | select(."family" == "inet") | .local'
+
+  - trigger: ":lisp"
+    replace: "https://i.redd.it/cp8lwaue6ca51.jpg"
