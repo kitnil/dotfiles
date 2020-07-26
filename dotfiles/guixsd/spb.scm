@@ -3,10 +3,8 @@
 
 (use-modules (gnu) (srfi srfi-1) (srfi srfi-26))
 (use-package-modules admin base bash certs python ssh)
-(use-service-modules desktop dbus monitoring networking ssh web mcron)
-(use-modules (services autossh)
-             (services docker)
-             (services gitlab))
+(use-service-modules desktop dbus monitoring networking ssh web mcron docker)
+(use-modules (wigust services autossh))
 
 
 ;;;
@@ -247,12 +245,6 @@
                  (uid 30018)
                  (comment "Jenkins privilege separation user")
                  (home-directory "/home/jenkins"))
-                (user-account
-                 (name "gitlab-runner")
-                 (group "users")
-                 (uid 30019)
-                 (comment "GitLab Runner privilege separation user")
-                 (home-directory "/home/gitlab-runner"))
                 (append ((lambda* (count #:key
                                     (group "nixbld")
                                     (first-uid 30101)
@@ -298,9 +290,9 @@
 
                           (service autossh-service-type
                             (autossh-configuration
-                             (openssh-client-config
-                              (openssh-client-configuration
-                               (hosts (list (openssh-client-host-configuration
+                             (autossh-client-config
+                              (autossh-client-configuration
+                               (hosts (list (autossh-client-host-configuration
                                              (host "back.wugi.info")
                                              (identity-file "/etc/autossh/id_rsa")
                                              (strict-host-key-checking? #f)
@@ -331,9 +323,7 @@ ServerAliveCountMax 3"))))))
 
                           (elogind-service)
                           (dbus-service)
-                          docker-service
-
-                          gitlab-runner-service
+                          (service docker-service-type)
 
                           (service mcron-service-type
                                    (mcron-configuration
