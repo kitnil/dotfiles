@@ -355,6 +355,18 @@
 (defcommand mjru-docker-pull () ()
   (window-send-string (format nil "~a~%" "docker ps --format '{{ .Image }}' | grep master | sort -u | xargs -I{} docker pull {}")))
 
+(defcommand docker-firefox-esr-52 () ()
+  (mapcar (lambda (command)
+            (run-shell-command command))
+          (list "xhost +local:"
+                (join (list "docker" "run"
+                            "--network=host" "--rm"
+                            "--volume" "/etc/localtime:/etc/localtime:ro"
+                            "--volume" "/tmp/.X11-unix:/tmp/.X11-unix"
+                            "--user" "1000:997"
+                            "--env" "DISPLAY=$DISPLAY"
+                            "docker-registry.intr/utils/nix-docker-firefox-esr:master")))))
+
 
 ;;;
 ;;; Office
