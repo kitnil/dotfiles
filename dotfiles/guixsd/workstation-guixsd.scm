@@ -101,6 +101,7 @@ EndSection")
                    ncurses
 
                    fontconfig font-dejavu
+                   font-google-noto ;emoji in chromium
 
                    adwaita-icon-theme hicolor-icon-theme
 

@@ -136,8 +136,6 @@ virtualization vpn w3m xfce web wget wm xdisorg xml xorg)
 
                hdparm
 
-               font-google-noto ;emoji in chromium
-
                console-setup ;set font size in TTY
                rlwrap ; read-line wrapper
 

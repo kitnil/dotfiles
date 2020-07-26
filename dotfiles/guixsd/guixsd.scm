@@ -344,6 +344,7 @@ location / {
 
                        fontconfig font-awesome font-dejavu font-liberation
                        font-misc-misc font-wqy-zenhei
+                       font-google-noto ;emoji in chromium
 
                        gnome-themes-standard adwaita-icon-theme hicolor-icon-theme
                        lxappearance
