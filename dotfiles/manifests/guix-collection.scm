@@ -82,7 +82,7 @@ virtualization vpn w3m xfce web wget wm xdisorg xml xorg)
 
                mcron
 
-               git mercurial gource vc-dwim
+               git tig mercurial gource vc-dwim
 
                colormake
 
