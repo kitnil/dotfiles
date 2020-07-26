@@ -21,6 +21,9 @@
 (defcommand mouse-sloppy () ()
   (setf *mouse-focus-policy* :sloppy))
 
+(defcommand xmenu () ()
+  (run-shell-command "xmenu.sh"))
+
 
 ;;;
 ;;; Desktop
