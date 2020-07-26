@@ -85,6 +85,7 @@ in [
   gitAndTools.git-recent
   gitAndTools.grv
   gitAndTools.pre-commit
+  gitAndTools.tig
   fac
   # glibc-locales
   go2nix
