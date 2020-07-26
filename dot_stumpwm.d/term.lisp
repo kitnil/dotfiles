@@ -54,7 +54,7 @@
 (defcommand run-xterm () ()
   "Start or focus XTerm."
   (run-prog *shell-program*
-            :args (list "-c" (xterm-command :scrollbar t))
+            :args (list "-c" (xterm-command))
             :wait nil))
 
 (defcommand run-xterm-light () ()
