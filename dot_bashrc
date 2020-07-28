@@ -461,6 +461,9 @@ guix()
                  "$(readlink --canonicalize /run/current-system)" \
                  "$(readlink --canonicalize $HOME/.config/guix/current)"
             ;;
+        test-vm)
+            eval "$(sed 's,-nic user[^ ]* ,,' "$(./pre-inst-env guix system vm --no-offload "$2")" | tail -1 | sed 's/\sexec\s//') -m 4096  -smp 2 -nic user,model=virtio-net-pci,hostfwd=tcp::10022-:22"
+            ;;
             *)
             command guix "$@"
             ;;
