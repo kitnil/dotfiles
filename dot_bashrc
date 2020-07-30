@@ -52,6 +52,11 @@ emacs()
     esac
 }
 
+emc()
+{
+    command emacsclient --create-frame --tty "$@"
+}
+
 guile()
 {
     if [ "$INSIDE_EMACS" == "vterm" ]
