@@ -1,6 +1,6 @@
 (in-package :stumpwm)
 
-(defcommand s-y () ()
+(defcommand s-I () ()
   "Open YouTube if free-time? is nil or mjru-servers."
   (if (free-time?)
       (youtube)
@@ -132,7 +132,8 @@
   (define-key *top-map* (kbd "s-U") "mjru-cerb")
   (define-key *top-map* (kbd "M-s-u") "mjru-grafana-upstream-interfaces")
   (define-key *top-map* (kbd "C-s-u") "mjru-grafana-netflow")
-  (define-key *top-map* (kbd "s-y") "s-y")
+  (define-key *top-map* (kbd "s-y") "greenclip")
+  (define-key *top-map* (kbd "s-I") "s-I")
 
   ;; Rebind groups to PREFIX-NUMBER.
   (mapcar #'(lambda (x)
