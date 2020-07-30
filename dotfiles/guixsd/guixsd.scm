@@ -552,15 +552,15 @@ location / {
                                   (dev 'tapvpn)
                                   (auth-user-pass "/etc/openvpn/login.conf")
                                   (remote (list
-                                           ;; vpn-miran.majordomo.ru
+                                           ;; 78.108.80.230
                                            (openvpn-remote-configuration
-                                            (name "78.108.80.230"))
-                                           ;; vpn-dh.majordomo.ru
+                                            (name "vpn-miran.majordomo.ru"))
+                                           ;; 78.108.91.250
                                            (openvpn-remote-configuration
-                                            (name "78.108.91.250"))
-                                           ;; vpn-office.majordomo.ru
+                                            (name "vpn-dh.majordomo.ru"))
+                                           ;; 81.95.28.29
                                            (openvpn-remote-configuration
-                                            (name "81.95.28.29"))))))
+                                            (name "vpn-office.majordomo.ru"))))))
 
                        (service autofs-service-type
                                 (autofs-configuration
