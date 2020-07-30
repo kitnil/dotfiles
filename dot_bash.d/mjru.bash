@@ -98,7 +98,7 @@ br1-mr14.intr-ftp()
 {
     # Example “config”: br1-mr14.intr_juniper.conf.gz_20190702_170649
     config="$1"
-    wget -O- "ftp://netcfg:$(pass show majordomo/public/majordomo/172.16.103.111/netcfg)@172.16.103.111/junos/$config" | zcat
+    wget -O- "ftp://netcfg:$(pass show majordomo/public/majordomo/172.16.103.111/netcfg)@bareos.intr/junos/$config" | zcat
 }
 
 mjru-juneos-config()
