@@ -1,0 +1,27 @@
+machine api.github.com
+login wigust
+password {{ pass "github/tokens/api/wigust" }}
+
+machine uploads.github.com
+login wigust
+password {{ pass "github/tokens/api/wigust" }}
+
+machine imap.yandex.ru
+login houdinihar
+password {{ pass "email/yandex.ru/houdinihar" }}
+
+machine imap.rambler.ru
+login houdinihar
+password {{ pass "email/rambler/houdinihar" }}
+
+machine imap.majordomo.ru
+login pyhalov
+password {{ pass "majordomo/private/newmail.majordomo.ru/pyhalov@majordomo.ru" }}
+
+machine localhost
+login oleg
+password {{ pass "localhost/imap/oleg" }}
+
+machine bareos.intr
+login netcfg
+password {{ pass "majordomo/public/majordomo/172.16.103.111/netcfg" }}
