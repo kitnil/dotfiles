@@ -161,8 +161,12 @@
        (send-fake-key window (kbd "M-w")))
       ((and (string= (window-class window) "XTerm")
             (string= (window-name window) "tmux"))
-       (send-fake-key window (kbd "C-b"))
-       (send-fake-key window (kbd "x")))
+       (sb-thread:make-thread
+        (lambda ()
+          (send-fake-key window (kbd "C-b"))
+          (send-fake-key window (kbd "x"))
+          (sleep 0.01)
+          (send-fake-key window (kbd "y")))))
       (t (delete-window window)))))
 
 (defcommand keybinding-s-o () ()
