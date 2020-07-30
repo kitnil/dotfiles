@@ -117,7 +117,7 @@ virtualization vpn w3m xfce web wget wm xdisorg xml xorg)
                tor torsocks
 
                ;; Mail
-               isync msmtp notmuch neomutt
+               isync msmtp notmuch neomutt swaks
 
                gnupg pinentry
 
