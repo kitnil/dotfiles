@@ -236,16 +236,22 @@ then
     . "$HOME/.nix-profile/share/bash-completion/completions/nix"
 fi
 
-emc()
+rg()
 {
-    last_command="$(history -w /dev/stdout | tail --lines=2 | head --lines=1)";
-    if [[ "$last_command" =~ 'rg' ]] && [[ "$last_command" != *last_command* ]]
-    then last_output="$(eval "$last_command")"
-         emacsclient --no-wait +"$(echo "$last_output" | cut -d: -f 2)" "$(echo "$last_output" | cut -d: -f 1)"
-    else
-        emacsclient --no-wait "$@"
-    fi
-    stumpish emacsclient
+    case "$1" in
+        edit)
+            last_command="$(history -w /dev/stdout | tail --lines=2 | head --lines=1)";
+            if [[ "$last_command" =~ 'rg' ]] && [[ "$last_command" != *last_command* ]]
+            then last_output="$(eval "$last_command")"
+                 emacsclient --no-wait +"$(echo "$last_output" | cut -d: -f 2)" "$(echo "$last_output" | cut -d: -f 1)"
+            else
+                emacsclient --no-wait "$@"
+            fi
+            stumpish emacsclient
+            ;;
+        *)
+            command rg "$@"
+    esac
 }
 
 EDITOR='emacsclient -nw -c'
