@@ -125,3 +125,26 @@ to Bash advances usage.")
     (synopsis "ARCCONF Command Line Utility")
     (description "Microsemi Smart Storage Controllers User's Guide.")
     (license #f)))
+
+(define-public documentation-supermicro-3u-mnl-2197
+  (package
+    (name "documentation-supermicro-superserver-3u-mnl-2197")
+    (version "0.0.1")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append "https://www.supermicro.com/manuals/superserver/3U/MNL-2197.pdf"))
+              (file-name (string-append name "-" version ".pdf"))
+              (sha256
+               (base32
+                "0i7bbhp1nqv31q4nhd47gcig5jbi0zdwaxvdkcf2rbv27409sb9f"))))
+    (build-system copy-build-system)
+    (arguments
+     `(#:install-plan
+       `((,(assoc-ref %build-inputs "source")
+          ,(let ((title (string-drop ,name (string-length "documentation-"))))
+             (string-append "/share/doc/" title "/" title ".pdf"))))
+       #:phases (modify-phases %standard-phases (delete 'unpack))))
+    (home-page "http://download.adaptec.com/pdfs/user_guides/")
+    (synopsis "superserver-3u-mnl-2197")
+    (description "superserver-3u-mnl-2197")
+    (license #f)))
