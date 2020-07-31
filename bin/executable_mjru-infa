@@ -18,6 +18,7 @@ COMMAND must be one of the sub-commands listed below:
    server
    switch
    user
+   site
 
 Report bugs to: go.wigust@gmail.com."
 }
@@ -52,6 +53,9 @@ FROM equip_servers, equip_racks, equip_datacenters
 WHERE equip_servers.equip_rack_id = equip_racks.equip_rack_id AND equip_racks.equip_datacenter_id = equip_datacenters.equip_datacenter_id AND equip_servers.name LIKE 'mj%'
 ORDER BY equip_racks.name;
 EOF
+        ;;
+    site)
+        curl --silent https://www.majordomo.ru/sitemap.xml | xq --raw-output '.urlset.url[] | .loc' | sort --unique
         ;;
     *)
         help_main
