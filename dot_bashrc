@@ -626,28 +626,31 @@ alias hylang='docker run --rm -it hylang'
 
 nix-build()
 {
+    if [[ "$(readlink -f "$PWD")" =~ "majordomo" ]]
+    then
+        cmd="sshpass -Ppassphrase -p$(pass show majordomo/private/gitlab.intr/ssh/id_rsa_gitlab_intr) nix-build --no-out-link"
+        if grep --quiet buildLayeredImage default.nix
+        then
+            cmd="docker load --input $($cmd)"
+        fi
+    else
+        cmd="nix-build --no-out-link"
+    fi
     case "$1" in
         20.03)
-            command nix-build "$HOME/src/nixpkgs-master" --no-out-link "${@:2}"
+            $cmd "$HOME/src/nixpkgs-master" "${@:2}"
             ;;
         19.09)
-            command nix-build "$HOME/src/nixpkgs-master" --no-out-link "${@:2}"
+            $cmd "$HOME/src/nixpkgs-master" "${@:2}"
             ;;
         master)
-            command nix-build "$HOME/src/nixpkgs-master" --no-out-link "${@:2}"
+            $cmd "$HOME/src/nixpkgs-master" "${@:2}"
             ;;
         unstable)
-            command nix-build "$HOME/.nix-defexpr/channels/nixos-unstable" --no-out-link "${@:2}"
+            $cmd "$HOME/.nix-defexpr/channels/nixos-unstable" "${@:2}"
             ;;
         *)
-            if [ -d "$1" ]
-            then
-                command nix-build "$1" --no-out-link "${@:2}"
-            elif [[ "$1" != '<nixpkgs>' ]]
-            then
-                command nix-build '<nixpkgs>' --no-out-link "${@:1}"
-            fi
-            ;;
+            $cmd "$@"
     esac
 }
 
