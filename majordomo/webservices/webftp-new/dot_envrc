@@ -1,0 +1,1 @@
+export CI=https://jenkins.intr/job/webservices/job/webftp-new/

@@ -1,0 +1,3 @@
+export NIX_PATH=nixpkgs=https://github.com/nixos/nixpkgs/archive/ce9f1aaa39e.tar.gz
+export CI=https://jenkins.intr/job/webservices/job/ssh2docker/
+
