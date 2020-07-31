@@ -13,6 +13,7 @@ Applications
 	IMG:/home/oleg/.guix-profile/share/icons/hicolor/24x24/apps/gimp.png	Image editor (Gimp)	gimp
 	IMG:/home/oleg/.nix-profile/share/icons/robomongo.png	Mongo	robo3t
 	IMG:/home/oleg/.guix-profile/share/icons/gnome/24x24/devices/video-display.png	OBS	record
+	IMG:/home/oleg/.nix-profile/share/icons/hicolor/32x32/apps/quassel.png	Quassel	quassel
 Container
 	IMG:/home/oleg/.guix-profile/share/icons/hicolor/24x24/apps/qemu.png	Debian 10	echo '(docker-debian)' | stumpish -e eval
 	IMG:/home/oleg/.guix-profile/share/icons/hicolor/24x24/apps/qemu.png	Common Lisp IDE (lem)	echo '(docker-lem)' | stumpish -e eval
