@@ -142,3 +142,8 @@ XTerm*allowSendEvents: True
 ! *VT100.colorULMode: true
 ! *VT100.colorUL: cyan
 ! *VT100.veryBoldColors: 6
+
+xmenu.background: black
+xmenu.foreground: white
+xmenu.border: #0a420a
+xmenu.selbackground: #0a420a
