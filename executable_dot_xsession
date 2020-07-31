@@ -1,3 +1,5 @@
 #!/bin/sh
 
+"$HOME/.guix-profile/bin/xclickroot" -l xmenu.sh &
+
 exec /run/current-system/profile/bin/sbcl --load /home/oleg/bin/my-stumpwm
