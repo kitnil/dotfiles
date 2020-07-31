@@ -6,6 +6,8 @@
 
 # Matches are the substitution rules, when you type the "trigger" string
 # it gets replaced by the "replace" string.
+toggle_key: OFF
+
 matches:
   # Simple text replacement
   - trigger: ":espanso"
