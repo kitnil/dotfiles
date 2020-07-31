@@ -1,0 +1,34 @@
+export_function() {
+  local name=$1
+  local alias_dir=$PWD/.direnv/aliases
+  mkdir -p "$alias_dir"
+  PATH_add "$alias_dir"
+  local target="$alias_dir/$name"
+  if declare -f "$name" >/dev/null; then
+    echo "#!$SHELL" > "$target"
+    declare -f "$name" >> "$target" 2>/dev/null
+    # Notice that we add shell variables to the function trigger.
+    echo "$name \$*" >> "$target"
+    chmod +x "$target"
+  fi
+}
+
+use_guix() {
+    export GUIX_GITHUB_TOKEN='c718ca1e8ca1a751645fb48c5a12046f730ddc06'
+    export GUIX_PACKAGE_PATH=""
+
+    gcroot="${HOME}/.config/guix/gcroots/guix"
+    if [ -L "$gcroot" ]
+    then
+        rm -v "$gcroot"
+    fi
+
+    # https://lists.gnu.org/archive/html/guix-devel/2016-09/msg00859.html
+    eval "$(guix environment --root="$gcroot" --pure guix --ad-hoc direnv help2man guile-sqlite3 guile-gcrypt "$@" --search-paths)"
+
+    build()
+    {
+        make --jobs=4
+    }
+    export_function build
+}
