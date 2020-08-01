@@ -17,6 +17,7 @@
         ("https://news-web.php.net/group.php?group=php.announce&format=rss" php)
         ("https://www.bennee.com/~alex/blog/feed/" emacs)
         ("https://libraries.io/search.atom?order=desc&platforms=Emacs&sort=created_at" emacs)
+        ("https://melpa.org/updates.rss" emacs)
         ("https://cestlaz.github.io/rss.xml" emacs)
         ("https://sachachua.com/blog/feed/" emacs)
         ("https://www.reddit.com/r/freegames/.rss" game)
