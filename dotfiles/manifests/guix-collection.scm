@@ -4,8 +4,8 @@
 
 (use-package-modules admin algebra aspell astronomy audio backup bash
 bittorrent cdrom chromium chicken ci cmake code commencement compression
-compton cpio cran curl databases dictionaries diffoscope dns dunst file elf
-entr games gcc gdb gimp ghostscript golang gl glib gnome gnu-doc gnupg
+compton cpio cran curl databases dictionaries diffoscope dhall dns dunst file
+elf entr games gcc gdb gimp ghostscript golang gl glib gnome gnu-doc gnupg
 gnuzilla graphics graphviz gstreamer gtk guile guile-xyz haskell haskell-apps
 haskell-xyz image-viewers imagemagick inkscape irc kde kodi libreoffice
 license linux lisp logging lsof lxde m4 mail man maths messaging mp3 ncdu
@@ -175,6 +175,8 @@ virtualization vpn w3m xfce web wget wm xdisorg xml xorg)
                synergy
 
                ansible         ; Configuration management
+               dhall
+
                bc
                cpio
                detox ; Replace spaces with underscores in filenames
