@@ -19,6 +19,10 @@ check-system:
 	env GUIX_PACKAGE_PATH=$(HOME)/src/guix-wigust/guix \
 	guix system vm --no-offload dotfiles/system/vm-image-stumpwm.tmpl
 
+.PHONY: configure
+configure:
+	./configure
+
 .PHONY: install
 install:
 	bin/executable_gpg-unlock

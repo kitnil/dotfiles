@@ -1,3 +1,4 @@
+configure
 guix.scm
 Makefile
 Jenkinsfile

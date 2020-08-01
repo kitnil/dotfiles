@@ -1,0 +1,13 @@
+#!/bin/sh
+
+set -exu
+set -o pipefail
+
+dhall text <<< './dhall/mail/yandex.dhall { from = "zabbix.guix@yandex.ru", password = "email/yandex.ru/zabbix.guix" }' > dot_muttrc_zabbix.guix_yandex.tmpl
+dhall text <<< './dhall/mail/yandex.dhall { from = "houdinihar@yandex.ru", password = "email/yandex.ru/houdinihar" }' > dot_muttrc_houdinihar_yandex.tmpl
+
+dhall text <<< './dhall/mail/majordomo.dhall { name = "Jenkins", from = "jenkins@majordomo.ru", password = "majordomo/public/majordomo/jenkins.intr/admin"}' > dot_muttrc_jenkins_majordomo.tmpl
+dhall text <<< './dhall/mail/majordomo.dhall { name = "Олег Пыхалов", from = "pyhalov@majordomo.ru", password = "majordomo/private/newmail.majordomo.ru/pyhalov@majordomo.ru"}' > dot_muttrc_pyhalov_majordomo.tmpl
+
+dhall text <<< './dhall/mail/majordomo.dhall { name = "Александр Великин", from = "asfjsdf@mail.ru", password = "mail.ru/asfjsdf"}' > dot_muttrc_asfjsdf_mail.tmpl
+dhall text <<< './dhall/mail/majordomo.dhall { name = "rxaetbed rxaetbed", from = "rxaetbed@mail.ru", password = "mail.ru/rxaetbed@mail.ru"}' > dot_muttrc_rxaetbed_mail.tmpl
