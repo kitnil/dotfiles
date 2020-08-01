@@ -59,6 +59,14 @@
    (expand-file-name
     "~/.local/share/chezmoi/private_dot_emacs.d/modules/elfeed.el")))
 
+(defun elfeed-guix-show ()
+  (interactive)
+  (shell-command
+   (format "guix show %s"
+           (cadr (split-string (elfeed-entry-title
+                                (car (elfeed-search-selected)))
+                               ": ")))))
+
 (with-eval-after-load 'elfeed
   (defun wi-elfeed-search-show-entry ()
     "Call `elfeed-search-show-entry' with `shr-width' setted to NIL."
@@ -73,6 +81,7 @@
     (define-key map (kbd "SPC") 'scroll-up-command)
     (define-key map (kbd "S-SPC") 'scroll-down-command)
     (define-key map (kbd "<f8>") 'elfeed-config)
+    (define-key map (kbd "B") 'elfeed-guix-show)
     ;; https://www.reddit.com/r/emacs/comments/hq3r36/elfeed_configuration_to_display_in_next_window/
     ;; (define-key map (kbd "n")
     ;;   '(lambda ()
