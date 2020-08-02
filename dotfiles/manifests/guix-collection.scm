@@ -183,6 +183,7 @@ virtualization vpn w3m xfce web wget wm xdisorg xml xorg)
                dos2unix
                freerdp
                graphviz ;produce `dot' files graphs
+               xdot
                html-xml-utils
                licensecheck ; Licence checker for source files
                lsof
