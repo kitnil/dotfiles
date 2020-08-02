@@ -1,4 +1,5 @@
-export_function() {
+export_function()
+{
   local name=$1
   local alias_dir=$PWD/.direnv/aliases
   mkdir -p "$alias_dir"
@@ -13,8 +14,9 @@ export_function() {
   fi
 }
 
-use_guix() {
-    export GUIX_GITHUB_TOKEN='c718ca1e8ca1a751645fb48c5a12046f730ddc06'
+use_guix()
+{
+    export GUIX_GITHUB_TOKEN="$(pass show github/tokens/GUIX_GITHUB_TOKEN)"
     export GUIX_PACKAGE_PATH=""
 
     gcroot="${HOME}/.config/guix/gcroots/guix"
@@ -23,12 +25,25 @@ use_guix() {
         rm -v "$gcroot"
     fi
 
+    PACKAGES_MAINTENANCE=(direnv git sshpass password-store less openssh gnupg)
+    PACKAGES=(help2man guile-sqlite3 guile-gcrypt)
+
     # https://lists.gnu.org/archive/html/guix-devel/2016-09/msg00859.html
-    eval "$(guix environment --root="$gcroot" --pure guix --ad-hoc direnv help2man guile-sqlite3 guile-gcrypt "$@" --search-paths)"
+    eval "$(guix environment --search-paths --root="$gcroot" --pure guix --ad-hoc ${PACKAGES[@]} ${PACKAGES_MAINTENANCE[@]} "$@")"
 
     build()
     {
-        make --jobs=4
+        make -j 2
+        if [ $# -gt 0 ]
+        then
+            ./pre-inst-env guix build --no-grafts --no-offload "$@"
+        fi
     }
     export_function build
+
+    push()
+    {
+        sshpass -Ppassphrase -p"$(pass show localhost/ssh/id_rsa_savannah)" git push --set-upstream origin
+    }
+    export_function push
 }
