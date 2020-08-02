@@ -15,6 +15,8 @@ Applications
 	IMG:/home/oleg/.guix-profile/share/icons/gnome/24x24/devices/video-display.png	OBS	record
 	IMG:/home/oleg/.nix-profile/share/icons/hicolor/32x32/apps/quassel.png	Quassel	quassel
 	Habitica	chromium --app=https://habitica.com/
+Projects
+	Guix	xterm -sl 4096 +sb -bg black -fg white -e 'tmuxifier load-session guix'
 Container
 	IMG:/home/oleg/.guix-profile/share/icons/hicolor/24x24/apps/qemu.png	Debian 10	echo '(docker-debian)' | stumpish -e eval
 	IMG:/home/oleg/.guix-profile/share/icons/hicolor/24x24/apps/qemu.png	Common Lisp IDE (lem)	echo '(docker-lem)' | stumpish -e eval
