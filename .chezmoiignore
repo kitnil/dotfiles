@@ -1,4 +1,5 @@
 configure
+dhall
 guix.scm
 Makefile
 Jenkinsfile
