@@ -95,7 +95,8 @@
     )
   (let ((map elfeed-show-mode-map))
     (define-key map (kbd "h") 'other-window))
-  (setq elfeed-search-title-max-width 120))
+  (setq elfeed-search-title-max-width 120)
+  (add-hook 'elfeed-show-mode-hook 'visual-line-mode))
 
 (run-at-time nil (* 60 10)
              #'(lambda ()
