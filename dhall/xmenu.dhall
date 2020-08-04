@@ -73,5 +73,6 @@ in  ''
 	Web
 		Habitica	chromium --app=https://habitica.com/
 		Sketch	chromium --app=https://excalidraw.com/
+		Algorithms	chromium --app=https://algorithm-visualizer.org/
 	EOF
 	''
