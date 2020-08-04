@@ -123,6 +123,8 @@ in [
   nix-serve
   noti
 
+  logstalgia
+
   old.nixfmt
 
   nixGl.nixGLIntel
