@@ -1,8 +1,8 @@
-(use-modules (gnu) (guix) (srfi srfi-1))
+(use-modules (gnu) (guix) (guix build utils) (ice-9 match) (srfi srfi-1))
 (use-service-modules desktop networking ssh xorg shepherd)
 (use-package-modules bootloaders certs fonts nvi
                      package-management wget xorg
-                     wm linux lisp lisp-xyz pulseaudio)
+                     wm linux lisp lisp-xyz pulseaudio astronomy)
 
 (define vm-image-motd (plain-file "motd" "
 \x1b[1;37mThis is the GNU system.  Welcome!\x1b[0m
@@ -15,9 +15,42 @@ and running:
 
 Run '\x1b[1;37minfo guix\x1b[0m' to browse documentation.
 
-\x1b[1;33mConsider setting a password for the 'root' and 'guest' \
+\x1b[1;33mConsider setting a password for the 'root' and 'oleg' \
 accounts.\x1b[0m
 "))
+
+(define stumpwm-configure
+  (let* ((dotfiles (load "/home/oleg/.local/share/chezmoi/guix.scm"))
+         (home "/home/oleg")
+         (xsession (string-append home "/.xsession"))
+         (cp (file-append coreutils "/bin/cp"))
+         (chown (file-append coreutils "/bin/chown"))
+         (chmod (file-append coreutils "/bin/chmod"))
+         (sbcl (file-append sbcl "/bin/sbcl")))
+    (program-file "vm-image-stumpwm-configure"
+     (with-imported-modules '((guix build utils))
+       #~(begin
+           (use-modules (ice-9 format)
+                        (guix build utils))
+           (let ((user (getpw "oleg"))
+                 (group (getgr "users")))
+             (display "Configure StumpWM...")
+             (copy-recursively (string-append #$dotfiles "/share/dotfiles/dot_stumpwm.d")
+                               (string-append #$home "/.stumpwm.d"))
+             (copy-file (string-append #$dotfiles "/share/dotfiles/dot_Xresources")
+                        (string-append #$home "/.Xresources"))
+             (with-output-to-file "/tmp/run-stumpwm"
+               (lambda ()
+                 (display "\
+(require :asdf)
+(require :stumpwm)
+
+(stumpwm:stumpwm)\n")))
+             (with-output-to-file #$xsession
+               (lambda ()
+                 (format #t "exec ~a --load ~a" #$sbcl "/tmp/run-stumpwm")))
+             (chown #$xsession (passwd:uid user) (group:gid group))
+             (chmod #$xsession #o755)))))))
 
 (operating-system
   (host-name "gnu")
@@ -43,15 +76,16 @@ accounts.\x1b[0m
                       %base-file-systems))
 
   (users (cons (user-account
-                (name "guest")
+                (name "oleg")
                 (comment "GNU Guix Live")
-                (password "")                     ;no password
+                (password (crypt "oleg" "$6$abc"))
                 (group "users")
+                (uid 1000)
                 (supplementary-groups '("wheel" "netdev"
                                         "audio" "video")))
                %base-user-accounts))
 
-  ;; Our /etc/sudoers file.  Since 'guest' initially has an empty password,
+  ;; Our /etc/sudoers file.  Since 'oleg' initially has an empty password,
   ;; allow for password-less sudo.
   (sudoers-file (plain-file "sudoers" "\
 root ALL=(ALL) ALL
@@ -68,6 +102,10 @@ root ALL=(ALL) ALL
                           sbcl-slime-swank
                           strace
                           ponymix
+                          xrandr
+                          xrdb
+                          xplanet
+                          xkill
                           sbcl)
                     %base-packages))
 
@@ -78,7 +116,7 @@ root ALL=(ALL) ALL
                  (service slim-service-type
                           (slim-configuration
                            (auto-login? #t)
-                           (default-user "guest")
+                           (default-user "oleg")
                            (xorg-configuration
                             (xorg-configuration
                              (keyboard-layout keyboard-layout)))))
@@ -90,12 +128,9 @@ root ALL=(ALL) ALL
                                    (documentation "Configure StumpWM")
                                    (requirement '())
                                    (start #~(make-forkexec-constructor
-                                             (list (string-append #$coreutils "/bin/cp") "--recursive" "--verbose"
-                                                   (string-append #$(load "/home/oleg/.local/share/chezmoi/guix.scm")
-                                                                  "/share/dotfiles/dot_stumpwm.d")
-                                                   "/home/guest/.stumpwm.d")
-                                             #:user "guest"
-                                             #:group "users"))
+                                               (list #$stumpwm-configure)
+                                               #:user "oleg"
+                                               #:group "users"))
                                    (one-shot? #t)
                                    (stop #~(make-kill-destructor)))))
 
