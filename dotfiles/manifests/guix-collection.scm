@@ -170,7 +170,7 @@ virtualization vpn w3m xfce web wget wm xdisorg xml xorg)
 
                octave
 
-               htop inxi iotop jnettop python-glances bmon
+               htop inxi iotop jnettop python-glances bmon progress
 
                synergy
 
