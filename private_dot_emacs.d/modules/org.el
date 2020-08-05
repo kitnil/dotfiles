@@ -139,3 +139,11 @@
 (add-hook 'org-mode-hook 'org-tanglesync-mode)
 (add-hook 'prog-mode-hook 'org-tanglesync-watch-mode)
 (add-hook 'text-mode-hook 'org-tanglesync-watch-mode)
+
+
+;;;
+;;; Haunt
+;;;
+
+(setq ox-haunt-base-dir (expand-file-name "~/src/haunt-blog"))
+(setq org-export-with-toc nil)
