@@ -74,5 +74,6 @@ in  ''
 		Habitica	chromium --app=https://habitica.com/
 		Sketch	chromium --app=https://excalidraw.com/
 		Algorithms	chromium --app=https://algorithm-visualizer.org/
+		Byte converter	chromium --app=https://whatsabyte.com/P1/byteconverter.htm
 	EOF
 	''
