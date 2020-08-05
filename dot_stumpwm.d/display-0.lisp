@@ -84,7 +84,7 @@
 (defcommand group-8-start-programs () ()
   (run-frame 8 :frame-0-command (lambda ()
                                   (if (free-time?)
-                                      (run-commands "elfeed-new-window")
+                                      (run-shell-command "chromium --app=https://habitica.com/")
                                       (run-shell-command "firefox --new-window https://cerberus.intr/")))
                :frame-1-command (lambda ()
                                   (run-commands "emacs-anywhere"))))
