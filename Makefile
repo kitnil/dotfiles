@@ -30,3 +30,4 @@ install:
 	update-desktop-database ~/.local/share/applications
 	open-with-linux install
 	ln -sf $(HOME)/.nix-profile/share/mpv/scripts/notify-send.lua $(HOME)/.config/mpv/scripts/notify-send.lua
+	install --mode=644 dotfiles/firefox/userChrome.css $(HOME)/.mozilla/firefox/j56dvo43.default-1520714705340/chrome
