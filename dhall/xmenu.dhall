@@ -29,6 +29,7 @@ in  ''
 		IMG:${nix-profile}/share/icons/hicolor/32x32/apps/quassel.png	Quassel	quassel
 
 	Projects
+	${project { name = "Blog", session = "blog" }}
 	${project { name = "Dotfiles", session = "dotfiles" }}
 	${project { name = "Guix", session = "guix" }}
 	${project { name = "NixOps", session = "nixops" }}
