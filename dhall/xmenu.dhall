@@ -70,6 +70,7 @@ in  ''
 		StumpWM Refcard	echo
 		Planet	echo '(xplanet-file)' | stumpish -e eval
 		Images	echo '(wallpaper)' | stumpish -e eval
+		Paperview	paperview
 
 	Web
 		Habitica	chromium --app=https://habitica.com/
