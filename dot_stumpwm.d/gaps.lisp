@@ -8,4 +8,4 @@
 ;; Inner gaps run along all the 4 borders of a window
 (setf swm-gaps:*inner-gaps-size* 5)
 
-(setf swm-gaps:*outer-gaps-size* 0)
+(setf swm-gaps:*outer-gaps-size* 15)
