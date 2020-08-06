@@ -21,7 +21,8 @@
     (source
      (origin
        (inherit (package-source haunt))
-       (patches (search-patches "haunt-asset-follow-symlinks.patch"))))))
+       (patches (search-patches "haunt-asset-follow-symlinks.patch"
+                                "haunt-customize-read-html-post.patch"))))))
 
 (define-public guile-feed
   (let ((commit "ce1dd1a9f7c0eaeccfd05b328fc254afbfb84e44"))
