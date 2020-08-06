@@ -27,6 +27,7 @@
        emacs-debbugs ; <https://debbugs.gnu.org/> interface
        emacs-debpaste           ; Front end to <https://paste.debian.net/>
        emacs-default-text-scale ; Scale text in all buffers
+       emacs-dhall-mode
        emacs-dumb-jump
        emacs-ebuild-mode
        emacs-edit-indirect
@@ -48,6 +49,7 @@
        emacs-ffap-rfc-space
        emacs-fill-column-indicator
        emacs-flycheck                 ; Syntax checker
+       emacs-jenkinsfile-mode
        emacs-geiser                   ; Scheme bridge
        emacs-ggtags             ; Front end to GNU Global
        emacs-git-auto-commit-mode
@@ -101,6 +103,7 @@
        emacs-multiple-cursors   ; Multi cursor
        emacs-nginx-mode
        emacs-nix-mode           ; Nix language mode
+       emacs-olivetti
        emacs-org-bullets
        emacs-org-generate
        emacs-org-mind-map       ; General mind maps from Org files

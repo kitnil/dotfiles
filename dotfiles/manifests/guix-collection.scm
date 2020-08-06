@@ -3,18 +3,18 @@
              (guix profiles))
 
 (use-package-modules admin algebra aspell astronomy audio backup bash
-bittorrent cdrom chromium chicken ci cmake code commencement compression
-compton cpio cran curl databases dictionaries diffoscope dhall dns dunst file
-elf entr games gcc gdb gimp ghostscript golang gl glib gnome gnu-doc gnupg
-gnuzilla graphics graphviz gstreamer gtk guile guile-xyz haskell haskell-apps
-haskell-xyz image-viewers imagemagick inkscape irc kde kodi libreoffice
+bittorrent cdrom chicken chromium ci cmake code commencement compression
+compton cpio cran curl databases dhall dictionaries diffoscope dns dunst elf
+entr file games gcc gdb ghostscript gimp gl glib gnome gnu-doc gnupg gnuzilla
+golang graphics graphviz gstreamer gtk guile guile-xyz haskell haskell-apps
+haskell-xyz imagemagick image-viewers inkscape irc kde kodi libreoffice
 license linux lisp logging lsof lxde m4 mail man maths messaging mp3 ncdu
 ncurses networking node package-management parallel password-utils patchutils
-pdf perl perl-web php pretty-print pulseaudio pv python python-xyz python-web
-qt ratpoison readline rdesktop rsync rust-apps samba scheme screen shellutils
-shell ssh statistics sqlite suckless syncthing synergy tex texinfo textutils
-text-editors vnc tmux tls tor valgrind version-control video vim
-virtualization vpn w3m xfce web wget wm xdisorg xml xorg)
+pdf perl perl-web php pretty-print pulseaudio pv python python-web python-xyz
+qt ratpoison rdesktop readline rsync rust-apps samba scheme screen shells
+shellutils sqlite ssh statistics suckless syncthing synergy terminals tex
+texinfo text-editors textutils tls tmux tor valgrind version-control video vim
+virtualization vnc vpn w3m web wget wm xdisorg xfce xml xorg)
 
 (define guix-collection-packages-multiout
   `((,glib "bin")
@@ -54,7 +54,7 @@ virtualization vpn w3m xfce web wget wm xdisorg xml xorg)
 
                autojump
                jq jo jc jtbl
-               nmap
+               nmap hosts hss
 
                dmidecode
                lm-sensors
@@ -84,7 +84,7 @@ virtualization vpn w3m xfce web wget wm xdisorg xml xorg)
 
                mcron
 
-               git tig mercurial gource vc-dwim
+               git tig mercurial gource vc-dwim git-cal
 
                colormake
 
@@ -93,6 +93,7 @@ virtualization vpn w3m xfce web wget wm xdisorg xml xorg)
                haunt            ; Guile static site generator
 
                aria2        ; Download utility
+               kodi
                kodi-cli     ; Remote control Kodi
                transmission ; Bittorrent
 
@@ -150,13 +151,14 @@ virtualization vpn w3m xfce web wget wm xdisorg xml xorg)
                ;; flatpak
                ;; nix
 
-               mlt mpv vlc mpg123
+               mlt mpv vlc mpg123 sox
 
                ;; PDF
                zathura zathura-djvu zathura-pdf-mupdf poppler
 
                ;; X11
-               keynav rofi st xauth xev scrot xsel
+               keynav rofi st xauth xev scrot xsel xclickroot xmenu
+               kitty
 
                ;; polybar
 
@@ -170,7 +172,7 @@ virtualization vpn w3m xfce web wget wm xdisorg xml xorg)
 
                octave
 
-               htop inxi iotop jnettop python-glances bmon progress
+               htop inxi iotop jnettop glances bmon progress
 
                synergy
 
@@ -206,14 +208,14 @@ virtualization vpn w3m xfce web wget wm xdisorg xml xorg)
                socat
                sshpass
                sshfs
-               sqlite unzip zip
+               sqlite unzip zip p7zip
                curl wget
 
                texinfo
 
                lvm2 cdrkit-libre samba ubridge virt-manager
 
-               python-pyqt-without-qtwebkit python-pymongo
+               python-pyqt-without-qtwebkit python-pymongo python-evdev
 
                mariadb redis
 

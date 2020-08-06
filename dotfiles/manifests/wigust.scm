@@ -1,7 +1,6 @@
 (use-modules (gnu packages emacs)
              (wigust packages databases)
              (wigust packages admin)
-             (wigust packages connect)
              (wigust packages documentation)
              (wigust packages dotfiles)
              (wigust packages emacs)
@@ -59,7 +58,10 @@
   pulsemixer-emacs-keybindings
 
   ruby-gitlab
-  python-starred ; Fetch a list of stars from GitHub user
+
+  ;; XXX: Failed to build.
+  ;; python-starred ; Fetch a list of stars from GitHub user
+
   ok-sh
   git-quick-stats
 
@@ -88,8 +90,6 @@
   git-splits
 
   password-store-custom-dmenu ; Password management
-
-  ssh-aliases
 
   dotfiles
 
