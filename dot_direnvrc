@@ -37,7 +37,7 @@ use_guix()
         rm -v "$gcroot"
     fi
 
-    PACKAGES_MAINTENANCE=(direnv git sshpass password-store less openssh gnupg)
+    PACKAGES_MAINTENANCE=(direnv git sshpass password-store less openssh gnupg xdot)
     PACKAGES=(help2man guile-sqlite3 guile-gcrypt)
 
     # https://lists.gnu.org/archive/html/guix-devel/2016-09/msg00859.html
