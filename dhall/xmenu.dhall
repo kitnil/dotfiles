@@ -77,5 +77,6 @@ in  ''
 		Sketch	chromium --app=https://excalidraw.com/
 		Algorithms	chromium --app=https://algorithm-visualizer.org/
 		Byte converter	chromium --app=https://whatsabyte.com/P1/byteconverter.htm
+		Spotify	chromium --app=https://open.spotify.com
 	EOF
 	''
