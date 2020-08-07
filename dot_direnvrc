@@ -43,6 +43,12 @@ use_guix()
     # https://lists.gnu.org/archive/html/guix-devel/2016-09/msg00859.html
     eval "$(guix environment --search-paths --root="$gcroot" --pure guix --ad-hoc ${PACKAGES[@]} ${PACKAGES_MAINTENANCE[@]} "$@")"
 
+    configure()
+    {
+        ./configure --localstatedir=/var --prefix=
+    }
+    export_function configure
+
     build()
     {
         make -j 2
