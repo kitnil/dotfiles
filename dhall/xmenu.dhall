@@ -80,5 +80,6 @@ in  ''
 		Spotify	chromium --app=https://open.spotify.com
 		Repl	chromium --app=https://repl.it/
 		Cocalc	chromium --app=https://cocalc.com/
+		Mastodon	chromium --app=https://mastodon.xyz/
 	EOF
 	''
