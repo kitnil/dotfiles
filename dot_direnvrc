@@ -37,7 +37,7 @@ use_guix()
         rm -v "$gcroot"
     fi
 
-    PACKAGES_MAINTENANCE=(direnv git sshpass password-store less openssh gnupg xdot)
+    PACKAGES_MAINTENANCE=(direnv git sshpass password-store less openssh gnupg xdot guile-readline guile-colorized ncurses git-cal)
     PACKAGES=(help2man guile-sqlite3 guile-gcrypt)
 
     # https://lists.gnu.org/archive/html/guix-devel/2016-09/msg00859.html
@@ -64,6 +64,14 @@ use_guix()
         sshpass -Ppassphrase -p"$(pass show localhost/ssh/id_rsa_savannah)" git push --set-upstream origin
     }
     export_function push
+
+    clear
+    git-cal
+    echo "
+build     build a package or just a project if no argument provided
+configure run ./configure with predefined parameters
+push      push to upstream Git repository
+"
 }
 
 use_dotfiles()
