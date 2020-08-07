@@ -79,5 +79,6 @@ in  ''
 		Byte converter	chromium --app=https://whatsabyte.com/P1/byteconverter.htm
 		Spotify	chromium --app=https://open.spotify.com
 		Repl	chromium --app=https://repl.it/
+		Cocalc	chromium --app=https://cocalc.com/
 	EOF
 	''
