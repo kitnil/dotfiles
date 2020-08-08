@@ -21,6 +21,7 @@ lisp-xyz)
              (wigust services tftp)
              (wigust packages lisp)
              (wigust packages python)
+             (wigust packages web)
              (majordomo packages majordomo))
 
 (define 20-intel.conf "\
@@ -146,6 +147,10 @@ EndSection")
          (server-name '("iso.wugi.info"))
          (listen '("80"))
          (root "/srv/iso"))
+        (nginx-server-configuration
+         (server-name '("homer.tld"))
+         (listen '("80"))
+         (root (file-append homer "/share/homer")))
         (nginx-server-configuration
          (server-name '("texinfo.tld"))
          (listen '("80"))
@@ -480,7 +485,8 @@ location / {
                            "texinfo.tld"
                            "jenkins.wugi.info"
                            "iso.wugi.info"
-                           "cgit.duckdns.org"))
+                           "cgit.duckdns.org"
+                           "homer.tld"))
            "::1 guixsd localhost"
 
            "192.168.100.1 r1.tld"
