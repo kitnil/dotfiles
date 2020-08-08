@@ -81,5 +81,6 @@ in  ''
 		Repl	chromium --app=https://repl.it/
 		Cocalc	chromium --app=https://cocalc.com/
 		Mastodon	chromium --app=https://mastodon.xyz/
+		Chess	chromium --app=https://lichess.org/
 	EOF
 	''
