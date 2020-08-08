@@ -133,6 +133,7 @@ in [
   # nodePackages_12_x.node2nix
 
   gron
+  pup # HTML parsing
 
   audacity
   obs-studio
