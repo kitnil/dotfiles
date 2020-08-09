@@ -58,7 +58,6 @@ in [
   # cabal-install
   cached-nix-shell
   catimg
-  chezmoi
   chromium
   ctop
   diskus
