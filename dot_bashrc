@@ -626,15 +626,16 @@ alias hylang='docker run --rm -it hylang'
 
 nix-build()
 {
+    nix_build="$(which nix-build)"
     if [[ "$(readlink -f "$PWD")" =~ "majordomo" ]]
     then
-        cmd="sshpass -Ppassphrase -p$(pass show majordomo/private/gitlab.intr/ssh/id_rsa_gitlab_intr) nix-build --no-out-link"
+        cmd="sshpass -Ppassphrase -p$(pass show majordomo/private/gitlab.intr/ssh/id_rsa_gitlab_intr) $nix_build --no-out-link"
         if grep --quiet buildLayeredImage default.nix
         then
             cmd="docker load --input $($cmd)"
         fi
     else
-        cmd="nix-build --no-out-link"
+        cmd="$nix_build --no-out-link"
     fi
     case "$1" in
         20.03)
@@ -650,7 +651,7 @@ nix-build()
             $cmd "$HOME/.nix-defexpr/channels/nixos-unstable" "${@:2}"
             ;;
         *)
-            $cmd "$@"
+            $cmd '<nixpkgs>' "$@"
     esac
 }
 
