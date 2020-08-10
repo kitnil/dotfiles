@@ -13,6 +13,9 @@ matches:
   - trigger: ":espanso"
     replace: "Hi there!"
 
+  - trigger: ":paste"
+    replace: "paste.debian.net"
+
   # Dates
   - trigger: ":date"
     replace: "{{mydate}}"
