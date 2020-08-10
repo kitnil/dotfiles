@@ -30,3 +30,4 @@ jobs:
         - bin/executable_guix-package-version
         - bin/executable_maintenance
         - bin/executable_rofi-mycli
+        - bin/executable_sshrc
