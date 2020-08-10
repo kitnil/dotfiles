@@ -2,6 +2,7 @@ resource "github_repository" "dotfiles" {
   name           = "dotfiles"
   description    = "My dotfiles"
   default_branch = "master"
+  topics         = ["emacs", "guix", "guile", "nix", "scheme", "shell", "stumpwm"]
 }
 
 resource "github_repository" "notes" {
