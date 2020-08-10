@@ -486,7 +486,8 @@ location / {
                            "jenkins.wugi.info"
                            "iso.wugi.info"
                            "cgit.duckdns.org"
-                           "homer.tld"))
+                           "homer.tld"
+                           "spb"))
            "::1 guixsd localhost"
 
            "192.168.100.1 r1.tld"
