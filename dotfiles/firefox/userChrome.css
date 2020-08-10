@@ -6,9 +6,10 @@
   --animation-speed: 0.4s;
   --button-corner-rounding: 30px;
   --urlbar-container-height: 34px !important;
-  --urlbar-height: 34px !important;
-  --urlbar-toolbar-height: 45px !important;
+  --urlbar-height: 32px !important;
+  --urlbar-toolbar-height: 40px !important;
   --moz-hidden-unscrollable: scroll !important;
+  --toolbarbutton-border-radius: 15px !important;
 }
 
 #TabsToolbar .tabbrowser-tab,
@@ -30,12 +31,24 @@
   display: none;
 }
 
+#urlbar[breakout][breakout-extend],
+#urlbar[breakout][breakout-extend-disabled][open] {
+  /* The z-index needs to be big enough to trump other positioned UI pieces
+     that we want to overlay. 3 is used in the tab bar. */
+  z-index: 3;
+  height: var(--urlbar-height) !important;
+}
+#urlbar-search-button{
+    margin-left: 5px;
+}
+
 tab:not(:active) .tab-background {
   transition: background-color var(--animation-speed) !important;
 }
 :root:not([customizing]) :hover > .tabbrowser-tab:not(:hover) {
   /*filter: blur(3px) brightness(50%);*/
-  transition: blur, ease 0.5s !important;
+  transition: blur, ease 0.5s !imp
+     0K .ortant;
 }
 
 :root:not([customizing]) :not(:hover) > .tabbrowser-tab {
@@ -91,7 +104,7 @@ tab:not([selected]):hover .tab-background {
   min-width: 17px !important;
 }
 
-.titlebar-button {
+.t.itlebar-button {
   padding-left: 10px !important;
   padding-right: 15px !important;
   padding-top: 10px !important;
@@ -146,7 +159,7 @@ tab:not([selected]):hover .tab-background {
   fill: var(--toolbar-color) !important;
 }
 
-.urlbar-page-action[open]:hover {
+.url..bar-page-action[open]:hover {
   background-color: var(--toolbarbutton-active-background) !important;
   fill: var(--toolbar-color) !important;
 }
@@ -206,8 +219,12 @@ tab:not([selected]):hover .tab-background {
   color: var(--lwt-toolbar-field-color, black) !important;
 }
 
+
 .urlbarView {
-  display: none !important;
+  background: var(--toolbar-bgcolor) !important;
+  color: var(--toolbar-color) !important;
+ . border-bottom-left-radius: 15px !important;
+  border-bottom-right-radius: 15px !important;
 }
 
 #pocket-button {
@@ -264,7 +281,7 @@ tab:not([selected]):hover .tab-background {
 }
 
 #TabsToolbar > .titlebar-buttonbox-container {
-  margin-right: 20px;
+  margin.-right: 20px;
 }
 
 #urlbar,
@@ -287,7 +304,7 @@ menuitem,
 menucaption {
   -moz-appearance: none !important;
   height: 36px !important;
-  /* color: black; */
+  color: black;
 }
 
 menu[disabled="true"][_moz-menuactive="false"],
@@ -332,7 +349,7 @@ menu:not(.subviewbutton) > .menu-right {
   width: 0px !important;
 }
 
-menu:not(.subviewbutton) > .menu-right image {
+..menu:not(.subviewbutton) > .menu-right image {
   margin-right: -5px !important;
   margin-top: -2px !important;
   /*border: 6px solid var(--toolbar-color) !important;*/
@@ -377,7 +394,7 @@ menu:not(.subviewbutton) > .menu-right image {
   }
 
   menupopup {
-    margin-left: 1px !important;
+    margin.-left: 1px !important;
   }
 
   menu,
@@ -451,7 +468,7 @@ tree,
 .tree-rows {
 }
 
-#nav-bar:not([customizing]) {
+#nav-bar:not([customizi.ng]) {
   visibility: visible;
   margin-top: -40px;
   transition-delay: 1s;
