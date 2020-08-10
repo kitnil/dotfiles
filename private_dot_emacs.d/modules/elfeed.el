@@ -88,6 +88,7 @@
     (define-key map (kbd "S-SPC") 'scroll-down-command)
     (define-key map (kbd "<f8>") 'elfeed-config)
     (define-key map (kbd "B") 'elfeed-guix-show)
+    (define-key map (kbd "=") 'elfeed-score-map)
     ;; https://www.reddit.com/r/emacs/comments/hq3r36/elfeed_configuration_to_display_in_next_window/
     ;; (define-key map (kbd "n")
     ;;   '(lambda ()
@@ -102,7 +103,11 @@
   (let ((map elfeed-show-mode-map))
     (define-key map (kbd "h") 'other-window))
   (setq elfeed-search-title-max-width 120)
-  (add-hook 'elfeed-show-mode-hook 'visual-line-mode))
+  (add-hook 'elfeed-show-mode-hook 'visual-line-mode)
+
+  ;; score
+  (setq elfeed-search-print-entry-function #'elfeed-score-print-entry)
+  (elfeed-score-enable))
 
 (run-at-time nil (* 60 10)
              #'(lambda ()
