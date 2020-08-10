@@ -23,3 +23,5 @@ jobs:
 
     - name: ShellCheck
       uses: ludeeus/action-shellcheck@0.5.0
+      with:
+        ignore: bin/executable_rofi-mycli
