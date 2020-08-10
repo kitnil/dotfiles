@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# shellcheck disable=SC1091
 . /home/oleg/.nix-profile/etc/profile.d/nix.sh
 
 # NIX_SSL_CERT_FILE="/run/current-system/profile/etc/ssl/certs/Majordomo_LLC_Root_CA.crt"
@@ -11,4 +12,4 @@
 # SSL_CERT_FILE="/run/current-system/profile/etc/ssl/certs/ca-certificates.crt"
 # export SSL_CERT_FILE
 
-exec -a nix-daemon /home/oleg/.nix-profile/bin/nix-daemon "$@"
+/home/oleg/.nix-profile/bin/nix-daemon "$@"

@@ -6,7 +6,7 @@ set -o pipefail
 
 do_scan()
 {
-    out="$(sudo nmap -oX - -sN -p ${SCAN_PORT:-22} ${SCAN_NETWORK:-192.168.100.0/24} | xq '.nmaprun.host | map(select(.ports.port.state."@state" != "closed") | .address)')"
+    out="$(sudo nmap -oX - -sN -p "${SCAN_PORT:-22}" "${SCAN_NETWORK:-192.168.100.0/24}" | xq '.nmaprun.host | map(select(.ports.port.state."@state" != "closed") | .address)')"
     echo "$out" | jq -r 'map(select(type == "array"))[] | .[] | ."@addr"' | paste -d '\t' - -
     echo "$out" | jq -r 'map(select(type == "object"))[] | ."@addr"'
 }

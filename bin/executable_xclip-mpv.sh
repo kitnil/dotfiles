@@ -1,2 +1,2 @@
 #!/bin/sh
-exec mpv $(xclip -o -selection clipboard)
+exec mpv "$(xclip -o -selection clipboard)"

@@ -1,16 +1,16 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 video="$1"
 
 if [[ $video == http*://www.youtube.com* ]]
 then
     id=$(echo "$1" | cut -d = -f 2)
-    notify-send "Open chat $url"
+    notify-send "Open chat $1"
     exec -a "$0" chromium --app="https://www.youtube.com/live_chat?v=$id&is_popout=1" "$@"
 elif [[ $video == http*://www.twitch.tv* ]]
 then
     channel=${video##*/}
-    notify-send "Open chat $url"
+    notify-send "Open chat $1"
     exec -a "$0" chromium --app="https://www.twitch.tv/popout/$channel/chat?popout=" "$@"
 else
     notify-send "Not a YouTube or Twitch steram"

@@ -1,9 +1,52 @@
-#!/bin/sh
+#! /usr/bin/env cached-nix-shell
+#! nix-shell -i bash -p python3 python3Packages.alerta
 
-set -e -x
+set -x
 
-message="$1"
-
-for id in $(alerta query | awk "/$message/ { print \$1 }"); do
-    alerta close --ids $id
-done
+case "$1" in
+    apache)
+        for severity in major critical; do
+            for id in $(alerta query --filter severity=$severity | grep apache2-php | awk '{ print $1 }'); do
+                alerta close --ids "$id"
+            done
+        done
+        for id in $(alerta query --filter severity=major | awk '/IdleWorkers: 0/ { print $1 }'); do
+            alerta close --ids "$id"
+        done
+        ;;
+    chef)
+        for id in $(alerta query --filter severity=critical | awk '/chef cookbook/ { print $1 }'); do
+            alerta close --ids "$id"
+        done
+        ;;
+    domain)
+        for id in $(alerta query --filter severity=informational \
+                        | grep 'Домен должен быть делегирован на наши\|A-запись домена не соответствует серверу\|Обновление архива' \
+                        | awk '{ print $1 }'); do
+            alerta delete --ids "$id"
+        done
+        
+        ;;
+    rss)
+        for id in $(alerta query --filter severity=major | awk '/file-rss:/ { print $1 }'); do
+            alerta close --ids "$id"
+        done
+        ;;
+    ssh)
+        for id in $(alerta query --filter severity=major | awk '/Linux container ssh-guest-room is down/ { print $1 }'); do
+            alerta close --ids "$id"
+        done
+        ;;
+    task)
+        alerta delete --filter status=open --filter event=task.finished
+        ;;
+    trace)
+        for id in $(alerta query --filter severity=critical | awk '/Call Trace:/ { print $1 }'); do
+            alerta close --ids "$id"
+        done
+        ;;
+    *)
+        for id in $(alerta query | awk "/$message/ { print \$1 }"); do
+            alerta close --ids "$id"
+        done
+esac

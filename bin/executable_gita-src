@@ -8,7 +8,7 @@ config()
 {
     while IFS= read -r -d '' directory
     do
-        echo "$(dirname "$directory"),$(basename $(dirname "$directory"))"
+        echo "$(dirname "$directory"),$(basename "$(dirname "$directory")")"
     done < <(find "${DIRECTORIES[@]}" -maxdepth 2 -type d -name .git -print0)
 }
 

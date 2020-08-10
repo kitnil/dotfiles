@@ -17,11 +17,11 @@ valueInRange() {
 
 # Convert a color in RGB to a hexadecimal value.
 rgbToHex() {
-  if valueInRange $1 && valueInRange $2 && valueInRange $3; then
-    printf "rgb($1, $2, $3) -> #%02X%02X%02X\n" $1 $2 $3
-  else
-    rangeError
-  fi
+    if valueInRange "$1" && valueInRange "$2" && valueInRange "$3"; then
+        printf "rgb(%s, %s, %s) -> #%02X%02X%02X\n" "$1" "$2" "$3" "$1" "$2" "$3"
+    else
+        rangeError
+    fi
 }
 
 # Darken a RGB color by percentage
@@ -48,7 +48,7 @@ darkenRgb() {
     blue=255
   fi
 
-  printf "rgb($1, $2, $3) -> rgb($red, $green, $blue)\n"
+  printf "rgb(%s, %s, %s) -> rgb($red, $green, $blue)\n" "$1" "$2" "$3"
 }
 
 # Convert a hexadecimal color to RGB.
@@ -64,7 +64,7 @@ hexToRgb() {
     a=${color:0:2}
     b=${color:2:2}
     c=${color:4:2}
-    printf "#$color -> rgb(%d, %d, %d)\n" 0x${a} 0x${b} 0x${c} 
+    printf "#$color -> rgb(%d, %d, %d)\n" 0x"${a}" 0x"${b}" 0x"${c}" 
   fi
 }
 
@@ -80,11 +80,11 @@ rangeError() {
 
 # Determine if we should run rgbToHex, hexToRgb or simply throw an error.
 if [[ "$#" == 3 ]]; then
-  rgbToHex $1 $2 $3
+  rgbToHex "$1" "$2" "$3"
 elif [[ "$#" == 1 ]]; then
-  hexToRgb $1
+  hexToRgb "$1"
 elif [[ "$#" == 4 ]]; then
-  darkenRgb $1 $2 $3 $4
+  darkenRgb "$1" "$2" "$3" "$4"
 else
   inputError
 fi

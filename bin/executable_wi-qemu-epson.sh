@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # -device usb-host,hostbus=2,hostaddr=4 \
 # -net 'user,hostfwd=tcp::3389-:3389,hostfwd=tcp::445-:445' \

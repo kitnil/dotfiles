@@ -4,7 +4,7 @@
 
 NAME=screencast-$(date +%Y%m%d%H%M)
 FPS=30
-THREADS=3
+# THREADS=3
 
 tmpfile=screengrab.tmp.$$
 trap 'touch $tmpfile; rm -f $tmpfile' 0
@@ -22,14 +22,14 @@ echo "pos=$pos size=$size"
 
 sleep 2
 
-ffmpeg -y \
-       -f x11grab \
-       -r $FPS \
-       -video_size $size \
-       -i ${DISPLAY-0:0}+${pos} \
-       -c:v ffvhuff \
-       $NAME.mkv \
-       $@
+ffmpeg -y                                       \
+       -f x11grab                               \
+       -r $FPS                                  \
+       -video_size "$size"                      \
+       -i "${DISPLAY-0:0}"+"${pos}"             \
+       -c:v ffvhuff                             \
+       "$NAME".mkv                              \
+       "$@"
 
 # palette="palette.png"
 # filters="fps=$FPS,scale=0:-1:flags=lanczos"

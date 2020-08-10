@@ -5,4 +5,4 @@ CAMERA_PASSWORD="${CAMERA_PASSWORD:-$(pass show wugi.info/camera/192.168.100.3/g
 CAMERA_HOST="${CAMERA_HOST:-192.168.100.3}"
 CAMERA_URL="http://$CAMERA_USER:$CAMERA_PASSWORD@$CAMERA_HOST/nphMotionJpeg?Resolution=640x480&Quality=Standard"
 
-exec -a "$0" mpv --no-resume-playback "$CAMERA_URL" "$@"
+mpv --no-resume-playback "$CAMERA_URL" "$@"

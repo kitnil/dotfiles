@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # Run qemu-system-x86_64 with KVM and bridge
 # Copyright © 2019, 2020 Oleg Pykhalov <go.wigust@gmail.com>
@@ -29,17 +29,17 @@
 # You can toggle fullscreen with Ctrl + Alt + F, or by passing -full-screen.
 
 # https://wiki.archlinux.org/index.php/QEMU#Creating_bridge_manually
-printf -v macaddr "52:54:%02x:%02x:%02x:%02x" $(( $RANDOM & 0xff)) $(( $RANDOM & 0xff )) $(( $RANDOM & 0xff)) $(( $RANDOM & 0xff ))
+printf -v macaddr "52:54:%02x:%02x:%02x:%02x" $(( RANDOM & 0xff)) $(( RANDOM & 0xff )) $(( RANDOM & 0xff)) $(( RANDOM & 0xff ))
 
-qemu-system-x86_64 \
-    -smp cores=4,threads=1 \
-    -m 4096 \
-    -enable-kvm \
-    -cpu host \
-    -daemonize \
+qemu-system-x86_64                                              \
+    -smp cores=4,threads=1                                      \
+    -m 4096                                                     \
+    -enable-kvm                                                 \
+    -cpu host                                                   \
+    -daemonize                                                  \
     -net nic,model=virtio,macaddr="$macaddr" -net bridge,br=br0 \
-    -vga virtio \
--full-screen \
--vnc :3 \
--hda ${hda:-/home/oleg/vm/freebsd-12.qcow2} \
-$@
+    -vga virtio                                                 \
+    -full-screen                                                \
+    -vnc :3                                                     \
+    -hda "${hda:-/home/oleg/vm/freebsd-12.qcow2}"               \
+    "$@"

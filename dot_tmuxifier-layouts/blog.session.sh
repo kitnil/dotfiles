@@ -1,4 +1,6 @@
-session_root "~/src/haunt-blog"
+#!/bin/sh
+
+session_root "$HOME/src/haunt-blog"
 if initialize_session "blog"; then
     load_window "blog"
 fi

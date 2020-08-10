@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 # Send a GUI clipboard to Emacs server.
 
 set -e -x

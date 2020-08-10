@@ -1,6 +1,6 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-url="${@: -1}"
+url="${*: -1}"
 
 notify-send "Open video $url"
 

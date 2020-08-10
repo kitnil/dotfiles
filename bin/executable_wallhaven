@@ -3,6 +3,6 @@
 url="$1"
 image="${url##*/}"
 
-cd "$HOME/Pictures/Wallpapers"
+cd "$HOME/Pictures/Wallpapers" || exit
 wget "$url"
 feh --bg-fill "$image"

@@ -1,3 +1,5 @@
+#!/bin/sh
+
 # Set window root path. Default is `$session_root`.
 # Must be called before `new_window`.
 #window_root "~/Projects/guix"

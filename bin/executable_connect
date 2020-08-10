@@ -244,7 +244,7 @@ case "$1" in
                 exit 0
                 ;;
             filter)
-                command="KILL USER "$(mysql_list_users_by_connections "$3" | fzf | awk '{ print $NF }')""
+                command="KILL USER $(mysql_list_users_by_connections "$3" | fzf | awk '{ print $NF }')"
                 echo "$3: $command"
                 mysql_command "$3" --execute="$command;"
                 exit 0
@@ -341,7 +341,7 @@ mycli --password "$(pass show majordomo/private/web/mysql/root)" -d "${2%.intr}"
                     ;;
             esac
         done
-        if [ -n $IP_FILTER_HOST_DESCRIBE ]
+        if [ -n "$IP_FILTER_HOST_DESCRIBE" ]
         then
             echo "name: ip-filter-$IP_FILTER_HOST"
             echo -n "blocked: "
@@ -349,11 +349,11 @@ mycli --password "$(pass show majordomo/private/web/mysql/root)" -d "${2%.intr}"
                 | cut -d' ' -f 1 | sort --numeric-sort | xargs echo
             exit 0
         fi
-        if [ -n $IP_FILTER_HOST_DELETE ]
+        if [ -n "$IP_FILTER_HOST_DELETE" ]
         then
             curl --silent --head --request DELETE "$IP_FILTER_HOST/ip-filter/$3?ttl=7200&action=setCookie"
         fi
-        if [ -n $IP_FILTER_HOST_ADD ]
+        if [ -n "$IP_FILTER_HOST_ADD" ]
         then
             curl --silent --head --request PUT "$IP_FILTER_HOST/ip-filter/$2?ttl=7200&action=setCookie"
         fi

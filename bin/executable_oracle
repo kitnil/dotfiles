@@ -1,3 +1,3 @@
-#!/bin/bash
+#!/usr/bin/env bash
 
-qemu-system-x86_64 -name fedora -smp cores=4,threads=1 -m 4096 -enable-kvm -cpu host -daemonize -vnc :8 -cdrom $HOME/Downloads/V996906-01.iso -hda $HOME/vm/oracle.qcow2
+qemu-system-x86_64 -name fedora -smp cores=4,threads=1 -m 4096 -enable-kvm -cpu host -daemonize -vnc :8 -cdrom "$HOME"/Downloads/V996906-01.iso -hda "$HOME"/vm/oracle.qcow2

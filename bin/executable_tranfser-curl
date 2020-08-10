@@ -2,8 +2,8 @@
 
 set -eux
 
-account=$1
-host=$2
+account="$1"
+host="$2"
 
 USERNAME="USER:-pyhalov"
 PASSWORD="PASSWORD:-$(pass show majordomo/private/hms/pyhalov)"
@@ -21,4 +21,4 @@ auth ()
 curl --request POST "https://api-dev.intr/account/$account/transfer" \
      --header "Authorization: Bearer $(auth)" \
      --header 'Content-Type: application/json' \
-     --data-binary '{"operationIdentity":null,"params":{"serverId":"'$host'" }}'
+     --data-binary '{"operationIdentity":null,"params":{"serverId":"'"$host"'" }}'

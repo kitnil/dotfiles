@@ -1,8 +1,8 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
 # Initialize current Git directory for vc-dwim
 
-local d=.git/c
+d=.git/c
 test -d .git || return 1
 mkdir $d
 touch $d/ChangeLog

@@ -1,3 +1,5 @@
+#!/bin/sh
+
 # Set a custom session root path. Default is `$HOME`.
 # Must be called before `initialize_session`.
 session_root "~/src/guix-master"

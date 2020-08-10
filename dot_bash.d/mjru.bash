@@ -11,7 +11,7 @@ mjru-backup()
                 echo "provide unix_account_name"
                 echo "example: backup_list u168138"
                 (exit 1)
-            else curl -s bareos.intr/_snapshot/slice/$(echo -n $2 | sha1sum  |  cut -c -2)/$2 | jq -r '.[] | [.dataUri.rsync, .time] | @tsv'
+            else curl -s bareos.intr/_snapshot/slice/"$(echo -n "$2" | sha1sum  |  cut -c -2)/$2 | jq -r '.[] | [.dataUri.rsync, .time] | @tsv'"
             fi
             ;;        
         mount)
@@ -19,7 +19,7 @@ mjru-backup()
                 echo "provide unix_account_name"
                 echo "example: backup_mount u168138"
                 (exit 1)
-            else curl -s -XPOST  "bareos.intr/_mount/slice/$(echo -n $2 | sha1sum  |  cut -c -2)/$2?wait=True&timeout=600" | jq -r
+            else curl -s -XPOST  "bareos.intr/_mount/slice/$(echo -n "$2" | sha1sum  |  cut -c -2)/$2?wait=True&timeout=600" | jq -r
             fi
             ;;
         umount)
@@ -27,7 +27,7 @@ mjru-backup()
                 echo "provide unix_account_name"
                 echo "example: backup_umount u168138"
                 (exit 1)
-            else curl -s -XDELETE  "bareos.intr/_mount/slice/$(echo -n $2 | sha1sum  |  cut -c -2)/$2" | jq -r
+            else curl -s -XDELETE  "bareos.intr/_mount/slice/$(echo -n "$2" | sha1sum  |  cut -c -2)/$2" | jq -r
             fi
             ;;
     esac
@@ -103,7 +103,7 @@ br1-mr14.intr-ftp()
 
 mjru-juneos-config()
 {
-    sshpass -p$(pass show majordomo/public/majordomo/ssh/router) ssh -l root "$1" -- 'cli -c "show config | display xml"'
+    sshpass -p"$(pass show majordomo/public/majordomo/ssh/router)" ssh -l root "$1" -- 'cli -c "show config | display xml"'
 }
 
 mjru-br1-mr14.intr-xq-br()
@@ -124,19 +124,21 @@ mjru-nix-repl()
 
 mjru-nix-fix()
 {
-    for file in $(find ~/majordomo/_ci/nixpkgs* -type f -name '*.nix'); do
+    while IFS= read -r -d '' file
+    do
         echo -e "\n@ $file"
         sed -i 's|https://gitlab.intr/pyhalov/php52-extra.git|file:///home/oleg/majordomo/pyhalov/php52-extra|g' "$file"
         sed -i 's|git@gitlab.intr:shared/http_errors.git|/home/oleg/majordomo/shared/http_errors|g' "$file"
         sed -i 's|git@gitlab.intr:|file:///home/oleg/majordomo/|g' "$file"
         sed -i 's|https://gitlab.intr/|file:///home/oleg/majordomo/|g' "$file"
-    done
+    done < <(find ~/majordomo/_ci/nixpkgs* -type f -name '*.nix' -print0)
 
-    for file in $(find . -type f -name '*.nix'); do
+    while IFS= read -r -d '' file
+    do
         echo -e "\n@ $file"
         sed -i 's|(builtins.fetchGit { url = "git@gitlab.intr:_ci/nixpkgs.git"; ref = ".*"; })|/home/oleg/majordomo/_ci/nixpkgs|g' "$file"
         sed -i 's|(builtins.fetchGit { url = "git@gitlab.intr:_ci/nixpkgs.git"; inherit ref; })|/home/oleg/majordomo/_ci/nixpkgs|g' "$file"
-    done
+    done < <(find . -type f -name '*.nix' -print0)
 }
 
 mjru-jenkins-build-php()
@@ -153,7 +155,6 @@ mjru-jenkins-build-php()
 
 mjru-wp-cron()
 {
-    dir="$1"
     nice -n 19 ionice -c2 -n7 find /home/u12345 -type f -name wp-cron.php | xargs -n1 dirname | xargs -n1 -I{} sh -c "echo -n '{} ';grep -rl {} /etc/nginx/sites-available | xargs awk -F'-' '\$1~/proxy_pass/ {print \$2}' | uniq" | awk '{print "* * * * * /opt/"$NF"/bin/php",$(NF-1)"/wp-cron.php"}'
 }
 
@@ -166,7 +167,7 @@ mjru-wp-cron()
 mjru-ansible-auth-hosts()
 {
     for host in $(ansible all --list-hosts |grep intr); do
-        printf "%s%s\n" "$host" "$(ssh -oStrictHostKeyChecking=no $host -- uptime)"
+        printf "%s%s\n" "$host" "$(ssh -oStrictHostKeyChecking=no "$host" -- uptime)"
     done
 }
 
@@ -187,7 +188,7 @@ mjru-skopeo-mj()
 {
     group="$1"
     image="$2" # ssh-guest-room
-    tag = "$3"
+    tag="$3"
     tar="$4" || result # docker-archive:/nix/store/dw0qakl4g58n9idsi35vn0m1d92gs0jw-docker-image-ssh-guest-room.tar.gz
     skopeo copy --dest-creds=gradle:"$(pass show majordomo/public/nexus/gradle)" --dest-tls-verify=false "docker-archive:$tar" "docker://docker-registry.intr/$group/$image:$tag"
 }
@@ -210,7 +211,7 @@ mjru-nix-ls-store-kvm15()
 mjru-nix-build-kvm15()
 {
     pkg="$1"
-    nix-build build.nix --option  substituters http://kvm15.intr:5556/ --cores 4 -A nixpkgsUnstable$pkg --keep-going --keep-failed $@
+    nix-build build.nix --option  substituters http://kvm15.intr:5556/ --cores 4 -A nixpkgsUnstable"$pkg" --keep-going --keep-failed "$@"
 }
 
 mjru-nix-build-mj()
@@ -223,7 +224,7 @@ mjru-nix-build-mj()
 
 mjru-docker-jenkins()
 {
-    docker -H ssh://dh4-mr.intr exec -it 4649529fa34d $@
+    docker -H ssh://dh4-mr.intr exec -it 4649529fa34d "$@"
 }
 
 mjru-hms-current-stack()
@@ -256,20 +257,21 @@ mjru-docker-list-intr()
 
 mjru-jenkins-log()
 {
-    for project in $(curl -s -k 'https://admin:$(pass show majordomo/public/jenkins.intr/admin)@jenkins.intr/api/json?pretty=true' | jq -r '.jobs[] | .name'); do
+    for project in $(curl -s -k "https://admin:$(pass show majordomo/public/jenkins.intr/admin)@jenkins.intr/api/json?pretty=true" | jq -r '.jobs[] | .name'); do
         mkdir -p "$project"
-        cd "$project"
+        cd "$project" || return
         for job in $(curl -s -k "https://admin:$(pass show majordomo/public/jenkins.intr/admin)@jenkins.intr/job/$project/api/json" | jq -r '.jobs[] | .url'); do
-            job_name="$(echo $job | rev | cut -d/ -f 2 | rev)"
+            job_name="$(echo "$job" | rev | cut -d/ -f 2 | rev)"
             echo "@ $job"
-            curl -u 'admin:$(pass show majordomo/public/jenkins.intr/admin)' -s -k "$job/job/master/lastBuild/consoleText" > "$job_name.log"
+            curl -u "admin:$(pass show majordomo/public/jenkins.intr/admin)" -s -k "$job/job/master/lastBuild/consoleText" > "$job_name.log"
         done
-        cd -
+        cd - || return
     done
 }
 
 mjru-ansible-swarm-ps-inspect()
 {
+    # shellcheck disable=SC2016
     ansible swarm -m shell -a 'for c in $(docker ps | grep -v CONTAINER | cut -d " " -f 1 | xargs echo); do docker inspect $c; done' --become
 }
 
@@ -281,29 +283,27 @@ mjru-ansible-swarm-network-inspect()
 mjru-add-hosts-mikrotik()
 {
     # Add hosts from Majordomo to MikroTik.
-    for host in $@; do
-        ssh mikrotik -- /ip dns static add address="$(ssh majordomo -- dig +short a $host.intr 2>/dev/null)" name="$host.intr";
-    done
+    ssh mikrotik -- /ip dns static add address="$(ssh majordomo -- dig +short a "$1" 2>/dev/null)" name="$1";
 }
 
 mjru-jenkins-log()
 {
     for project in $(curl -s -k "https://admin:$(pass show majordomo/public/jenkins.intr/admin)@jenkins.intr/api/json?pretty=true" | jq -r '.jobs[] | .name'); do
         mkdir -p "$project"
-        cd "$project"
+        cd "$project" || return
         for job in $(curl -s -k "https://admin:$(pass show majordomo/public/jenkins.intr/admin)@jenkins.intr/job/$project/api/json" | jq -r '.jobs[] | .url'); do
-            job_name="$(echo $job | rev | cut -d/ -f 2 | rev)"
+            job_name="$(echo "$job" | rev | cut -d/ -f 2 | rev)"
             echo "@ $job"
             curl -u "admin:$(pass show majordomo/public/jenkins.intr/admin)" -s -k "$job/job/master/lastBuild/consoleText" > "$job_name.log"
         done
-        cd -
+        cd - || return
     done
 }
 
 mjru-dns-check()
 {
     for dns in 172.16.103.2 172.16.100.3; do
-        (echo $dns; time dig +short a ${1:-cerberus.intr} @$dns) |& xargs echo
+        (echo $dns; time dig +short a "${1:-cerberus.intr}" @$dns) |& xargs echo
     done
 }
 

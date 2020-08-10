@@ -22,19 +22,19 @@ echo "pos=$pos size=$size"
 
 sleep 2
 
-ffmpeg -y \
-       -f x11grab \
-       -r $FPS \
-       -video_size $size \
-       -i ${DISPLAY-0:0}+${pos} \
-       -c:v ffvhuff \
-       $NAME.mkv \
-       $@
+ffmpeg -y                                       \
+       -f x11grab                               \
+       -r $FPS                                  \
+       -video_size "$size"                      \
+       -i "${DISPLAY-0:0}"+"${pos}"             \
+       -c:v ffvhuff                             \
+       "$NAME".mkv                              \
+       "$@"
 
 palette="palette.png"
 filters="fps=$FPS,scale=0:-1:flags=lanczos"
 
-ffmpeg -v warning -i $NAME.mkv -vf "$filters,palettegen" -threads $THREADS -y $palette
-ffmpeg -v warning -i $NAME.mkv -i $palette -lavfi "$filters [x]; [x][1:v] paletteuse" -threads $THREADS -y $NAME.gif
+ffmpeg -v warning -i "$NAME".mkv -vf "$filters,palettegen" -threads $THREADS -y $palette
+ffmpeg -v warning -i "$NAME".mkv -i $palette -lavfi "$filters [x]; [x][1:v] paletteuse" -threads $THREADS -y "$NAME".gif
 
 rm -f $palette

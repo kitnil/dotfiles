@@ -7,6 +7,6 @@ set -x
 
 # Link to root guix from user guix
 unlink $GUIX_LATEST_ROOT\
-    && ln -s $(readlink $GUIX_LATEST_USER) $GUIX_LATEST_ROOT
+    && ln -s "$(readlink $GUIX_LATEST_USER)" $GUIX_LATEST_ROOT
 
-test $(readlink $GUIX_LATEST_USER) == $(readlink $GUIX_LATEST_ROOT)
+test "$(readlink $GUIX_LATEST_USER)" == "$(readlink $GUIX_LATEST_ROOT)"

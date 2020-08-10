@@ -1,5 +1,6 @@
 #!/bin/sh
+# shellcheck disable=SC1091
 
 . /home/oleg/.nix-profile/etc/profile.d/nix.sh
 
-/home/oleg/.nix-profile/bin/kresd $@
+/home/oleg/.nix-profile/bin/kresd "$@"

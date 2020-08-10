@@ -1,2 +1,2 @@
 #!/bin/sh
-emacsclient -c --eval "(wi-wget-switch \"$@\")"
+emacsclient -c --eval "(wi-wget-switch \"$*\")"
