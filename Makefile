@@ -34,3 +34,10 @@ install:
 	dotfiles/idesk/idesk.scm
 	install --mode=644 dotfiles/idesk/xterm.lnk $(HOME)/.idesktop
 	install --mode=644 dotfiles/idesk/guix.vm.wugi.info.lnk $(HOME)/.idesktop
+	install --mode=755 dotfiles/scripts/guix-channels-update $(HOME)/bin
+	install --mode=755 dotfiles/scripts/guix-ci $(HOME)/bin
+	install --mode=755 dotfiles/scripts/guix-package-version $(HOME)/bin
+	install --mode=755 dotfiles/scripts/guix-profile-to-manifest $(HOME)/bin
+	install --mode=755 dotfiles/scripts/maintenance $(HOME)/bin
+	install --mode=755 dotfiles/scripts/rofi-mycli $(HOME)/bin
+	install --mode=755 dotfiles/scripts/sshrc $(HOME)/bin

@@ -2,6 +2,8 @@
 
 # Block on shared SERVER specific IP-ADDRESS
 
+# shellcheck disable=SC2068
+
 if [[ -z $1 ]]; then
     echo "block-ip WEB IP-ADDRESSES"
 fi

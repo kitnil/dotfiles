@@ -24,11 +24,4 @@ jobs:
     - name: ShellCheck
       uses: ludeeus/action-shellcheck@0.5.0
       with:
-        ignore:
-        - bin/executable_guix-channels-update
-        - bin/executable_guix-ci
-        - bin/executable_guix-package-version
-        - bin/executable_guix-profile-to-manifest
-        - bin/executable_maintenance
-        - bin/executable_rofi-mycli
-        - bin/executable_sshrc
+        ignore: dotfiles/scripts
