@@ -407,7 +407,7 @@ guix()
         pull)
             guix_command="command guix pull \
 --channels=$HOME/.local/share/chezmoi/dotfiles/channels.scm \
---disable-authentication"
+--disable-authentication --allow-downgrades"
             if (set -ex; $guix_command "${@:2}"; sudo --login $guix_command "${@:2}")
             then
                 slack "SUCCESS: $guix_command"
@@ -437,7 +437,7 @@ guix()
                          "$HOME/.local/share/chezmoi/dotfiles/guixsd/$HOSTNAME.scm"
                     ;;
                 switch)
-                    sudo --login command guix system reconfigure "${@:3}" \
+                    sudo --login command guix system reconfigure --allow-downgrades "${@:3}" \
                     "$HOME/.local/share/chezmoi/dotfiles/guixsd/$HOSTNAME.scm"
                     ;;
                 *)
