@@ -114,6 +114,13 @@ resource "github_repository" "tomegus" {
   default_branch = "master"
 }
 
+resource "github_repository" "emacs-dorg" {
+  name           = "emacs-dorg"
+  description    = "Update Org-mode buffer according to Debbugs"
+  default_branch = "master"
+  topics         = ["emacs", "org", "debbug"]
+}
+
 resource "github_repository" "emacs-org-mode" {
   name           = "emacs-org-mode"
   description    = "Fork git://orgmode.org/org-mode.git"
