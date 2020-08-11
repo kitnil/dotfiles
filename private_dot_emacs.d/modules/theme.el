@@ -42,7 +42,10 @@
    '(region ((t (:background "steel blue"))))
    '(link ((t (:foreground "deep sky blue" :underline t))))
    '(gnus-summary-high-unread ((t (:foreground "#ffffff" :weight normal))))
-   '(gnus-summary-normal-unread ((t (:foreground "white smoke")))))
+   '(gnus-summary-normal-unread ((t (:foreground "white smoke"))))
+   '(highlight-indent-guides-character-face ((t (:foreground "gray15"))))
+   '(org-date ((t (:foreground "pale turquoise" :underline nil))))
+   '(org-link ((t (:foreground "pale turquoise" :underline nil)))))
   (setq sml/theme 'dark)
   (sml/setup))
 
