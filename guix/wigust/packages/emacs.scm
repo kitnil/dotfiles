@@ -1516,3 +1516,32 @@ that Emacs does not fully understand syntactically.")
 with Git-based projects.")
     (home-page "https://github.com/kitnil/emacs-wi-utils")
     (license license:gpl3+)))
+
+(define-public emacs-dorg
+  (package
+    (name "emacs-dorg")
+    (version "1.0.2")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://github.com/kitnil/emacs-dorg")
+                    (commit (string-append "v" version))))
+              (file-name (git-file-name name version))
+              (sha256
+               (base32
+                "1ppwr038p6qi794y0k0wc6sgkdi44gplb0xlwc8hxl99lycasac2"))))
+    (build-system emacs-build-system)
+    (inputs
+     `(("emacs-debbugs" ,emacs-debbugs)
+       ("emacs-org" ,emacs-org)
+       ("emacs-el-mock" ,emacs-el-mock)))
+    (arguments
+     `(#:tests? #t
+       #:test-command '("emacs" "-Q" "-batch" "-L" "."
+                        "-l" "test/dorg-tests.el"
+                        "-f" "ert-run-tests-batch-and-exit")))
+    (home-page "https://github.com/kitnil/emacs-dorg")
+    (synopsis "Manage Org-mode entries with Debbugs")
+    (description "This package provides functions for Org-mode to manage
+entries according to information received via Debbugs.")
+    (license license:gpl3+)))
