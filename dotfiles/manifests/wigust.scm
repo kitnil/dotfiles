@@ -22,6 +22,7 @@
    emacs-apache-mode
    emacs-atomic-chrome
    emacs-awk-it
+   emacs-dorg
    emacs-ytel
    emacs-copy-as-format
    emacs-stupid-indent-mode
