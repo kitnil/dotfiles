@@ -111,6 +111,7 @@
        emacs-orgit
        emacs-org-tanglesync
        emacs-outshine           ; Emacs outline-mode
+       emacs-package-lint
        emacs-pcre2el
        emacs-phi-search
        emacs-phi-search-mc
