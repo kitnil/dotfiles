@@ -114,3 +114,24 @@
                  (let ((time (current-idle-time)))
                    (when (and time (> (time-to-seconds time) (* 60 5)))
                      (elfeed-update)))))
+
+
+;;;
+;;; org-capture
+;;;
+
+;; Thanks to http://heikkil.github.io/blog/2015/05/09/notes-from-elfeed-entries/
+
+(defun elfeed-link-title (entry)
+  "Copy the entry title and URL as org link to the clipboard."
+  (let ((titlelink (org-make-link-string (elfeed-entry-link entry)
+                                         (elfeed-entry-title entry))))
+    (when titlelink
+      (kill-new titlelink)
+      (x-set-selection 'PRIMARY titlelink)
+      (message "Yanked: %s" titlelink))))
+
+(defun elfeed-show-link-title ()
+  "Copy the current entry title and URL as org link to the clipboard."
+  (interactive)
+  (elfeed-link-title elfeed-show-entry))
