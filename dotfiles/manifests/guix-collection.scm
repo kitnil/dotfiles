@@ -52,6 +52,7 @@ xml xorg)
                at-spi2-core
                ghostscript/x gnuplot
                ghc-pandoc  ; Convert Markdown
+               grip
 
                autojump
                jq jo jc jtbl

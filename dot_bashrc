@@ -38,6 +38,8 @@ alias dmesg="sudo dmesg --color=auto --reltime --human --nopager --decode"
 alias tree="tree --dirsfirst -C"
 alias free="free -mht"
 
+alias markdown-github=grip
+
 RIPGREP_CONFIG_PATH="$HOME/.config/ripgrep/ripgreprc"
 export RIPGREP_CONFIG_PATH
 
