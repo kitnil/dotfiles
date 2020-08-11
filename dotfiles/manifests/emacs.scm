@@ -1,7 +1,7 @@
 (use-modules (gnu)
              (guix profiles))
 
-(use-package-modules admin cmake emacs emacs-xyz package-management)
+(use-package-modules admin cmake databases emacs emacs-xyz package-management)
 
 (packages->manifest
  (list emacs
@@ -122,6 +122,7 @@
        emacs-rainbow-mode       ; Show colors in codes
        emacs-refactor
        emacs-org-redmine
+       emacs-recutils
        emacs-restclient
        emacs-rotate-text
        emacs-scheme-complete
