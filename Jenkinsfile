@@ -9,8 +9,8 @@ pipeline {
                     nodeLabels: ["guix"],
                     procedure: { nodeLabels ->
                         gitFetch (
-                            url: Constants.gitGuixUrl,
-                            dir: "$Constants.homeDir/.local/share/chezmoi"
+                            url: library('jenkins-wi-shared-library').Constants.gitDotfilesUrl,
+                            dir: library('jenkins-wi-shared-library').Constants.homeDir + "/.local/share/chezmoi"
                         )
                     }
                 )
