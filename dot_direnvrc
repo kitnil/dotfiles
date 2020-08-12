@@ -54,7 +54,18 @@ use_guix()
         make -j 2
         if [ $# -gt 0 ]
         then
-            ./pre-inst-env guix build --no-grafts --no-offload "$@"
+            case "$1" in
+                refresh)
+                    ./pre-inst-env guix refresh -l "${@:2}"                             \
+                        | cut -d: -f 2                                                  \
+                        | tr ' ' '\n'                                                   \
+                        | cut -d@ -f 1                                                  \
+                        | xargs ./pre-inst-env guix build --no-grafts --no-offload
+                    ;;
+                *)
+                    ./pre-inst-env guix build --no-grafts --no-offload "$@"
+                    ;;
+            esac
         fi
     }
     export_function build
