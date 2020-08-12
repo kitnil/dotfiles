@@ -216,7 +216,7 @@ xml xorg)
 
                texinfo
 
-               lvm2 cdrkit-libre samba ubridge virt-manager
+               lvm2 cdrkit-libre samba ubridge
 
                python-pyqt-without-qtwebkit python-pymongo python-evdev
 
