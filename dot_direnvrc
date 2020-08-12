@@ -77,7 +77,7 @@ use_guix()
     export_function push
 
     clear
-    git-cal
+    git-cal --author='Oleg Pykhalov'
     echo "
 build     build a package or just a project if no argument provided
 configure run ./configure with predefined parameters
