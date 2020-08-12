@@ -85,6 +85,21 @@ push      push to upstream Git repository
 "
 }
 
+use_emacs-guix()
+{
+    gcroot="${HOME}/.config/guix/gcroots/guix"
+    if [ -L "$gcroot" ]
+    then
+        rm -v "$gcroot"
+    fi
+
+    PACKAGES_MAINTENANCE=(direnv git sshpass password-store less openssh gnupg xdot guile-readline guile-colorized ncurses git-cal)
+    PACKAGES=(help2man)
+
+    # https://lists.gnu.org/archive/html/guix-devel/2016-09/msg00859.html
+    eval "$(guix environment --search-paths --root="$gcroot" --pure --load=guix.scm --ad-hoc ${PACKAGES[@]} ${PACKAGES_MAINTENANCE[@]} "$@")"
+}
+
 use_dotfiles()
 {
     check()
