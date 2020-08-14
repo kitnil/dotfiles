@@ -79,6 +79,7 @@ in  ''
 		Byte converter	chromium --app=https://whatsabyte.com/P1/byteconverter.htm
 		Spotify	chromium --app=https://open.spotify.com
 		Repl	chromium --app=https://repl.it/
+		The Try It Online	chromium --app=https://tio.run/
 		Cocalc	chromium --app=https://cocalc.com/
 		Mastodon	chromium --app=https://mastodon.xyz/
 		Chess	chromium --app=https://lichess.org/
