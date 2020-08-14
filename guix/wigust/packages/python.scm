@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2017, 2018, 2019 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2017, 2018, 2019, 2020 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -237,7 +237,7 @@
 (define-public python-starred
   (package
     (name "python-starred")
-    (version "2.0.4")
+    (version "3.1.0")
     (source
      (origin
        (method git-fetch)
@@ -247,12 +247,20 @@
        (file-name (git-file-name name version))
        (sha256
         (base32
-         "0acc4n73f2py709nh90yqylqd0v7v9ii1sgg49cazs2b73jzviad"))))
+         "19dgikln2cmayd85g8imfqk7cqzf9px21dik2rrra2j6dq8s60gg"))))
     (build-system python-build-system)
     (propagated-inputs
      `(("python-click" ,python-click)
        ("python-github" ,python-github)
        ("python-urllib3" ,python-urllib3-1.21.1)))
+    (arguments
+     '(#:phases
+       (modify-phases %standard-phases
+	 (add-before 'build 'fix-version
+	   (lambda _
+             (substitute* '("setup.py" "Pipfile.lock")
+               (("==") ">="))
+             #t)))))
     (home-page "https://github.com/maguowei/starred")
     (synopsis "Awesome List used GitHub stars")
     (description "Awesome List used GitHub stars.")
