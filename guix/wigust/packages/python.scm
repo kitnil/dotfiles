@@ -181,7 +181,7 @@
 (define-public python-github
   (package
     (name "python-github")
-    (version "1.2.0")
+    (version "1.3.0")
     (source
      (origin
        (method git-fetch)
@@ -191,7 +191,7 @@
        (file-name (git-file-name name version))
        (sha256
         (base32
-         "1zmz488fk4swbmfsc61v8f8b01z3kar0w7wbq35m3m6r7wmgrjh3"))))
+         "0awsznsailml1lpckhlg302xfhcs971d1h90fpb7n2prh65xc11b"))))
     (build-system python-build-system)
     (propagated-inputs
      `(("python-ndg-httpsclient" ,python-ndg-httpsclient)
