@@ -49,8 +49,11 @@ emacs()
         signals)
             "$BROWSER" https://emacs.stackexchange.com/a/44087
             ;;
+        tty)
+            emacs -nw -Q "${@:2}"
+            ;;
         *)
-            command emacs -nw -Q "$@"
+            command emacs "$@"
     esac
 }
 
