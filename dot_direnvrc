@@ -28,8 +28,14 @@ use_haunt()
 
 use_guix()
 {
-    export GUIX_GITHUB_TOKEN="$(pass show github/tokens/GUIX_GITHUB_TOKEN)"
-    export GUIX_PACKAGE_PATH=""
+    GUIX_GITHUB_TOKEN="$(pass show github/tokens/GUIX_GITHUB_TOKEN)"
+    export GUIX_GITHUB_TOKEN
+    GUIX_PACKAGE_PATH=""
+    export GUIX_PACKAGE_PATH
+    # GUILE_LOAD_PATH=$PWD:$GUILE_LOAD_PATH
+    # export GUILE_LOAD_PATH
+    # GUILE_LOAD_COMPILED_PATH=$PWD:$GUILE_LOAD_COMPILED_PATH
+    # export GUILE_LOAD_COMPILED_PATH
 
     gcroot="${HOME}/.config/guix/gcroots/guix"
     if [ -L "$gcroot" ]
@@ -37,7 +43,21 @@ use_guix()
         rm -v "$gcroot"
     fi
 
-    PACKAGES_MAINTENANCE=(direnv git sshpass password-store less openssh gnupg xdot guile-readline guile-colorized ncurses git-cal)
+    PACKAGES_MAINTENANCE=(
+        direnv
+        git
+        git-cal
+        gnupg
+        guile-colorized
+        guile-readline
+        less
+        ncurses
+        openssh
+        password-store
+        sshpass
+        xdot
+        which
+    )
     PACKAGES=(help2man guile-sqlite3 guile-gcrypt)
 
     # https://lists.gnu.org/archive/html/guix-devel/2016-09/msg00859.html
