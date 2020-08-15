@@ -1,3 +1,5 @@
+(require 'guix-ui-package) ;for guix-show-emacs-package-without-prefix
+
 (setq elfeed-feeds
       '("https://oremacs.com/atom.xml"
         "http://nullprogram.com/feed/"
@@ -89,6 +91,7 @@
     (define-key map (kbd "<f8>") 'elfeed-config)
     (define-key map (kbd "B") 'elfeed-guix-show)
     (define-key map (kbd "=") 'elfeed-score-map)
+    (define-key map (kbd "<f7>") 'elfeed-show-guix-emacs-package)
     ;; https://www.reddit.com/r/emacs/comments/hq3r36/elfeed_configuration_to_display_in_next_window/
     ;; (define-key map (kbd "n")
     ;;   '(lambda ()
@@ -135,3 +138,20 @@
   "Copy the current entry title and URL as org link to the clipboard."
   (interactive)
   (elfeed-link-title elfeed-show-entry))
+
+
+;;;
+;;; Guix
+;;;
+
+(defun guix-show-emacs-package-without-prefix (package-without-prefix)
+  (guix-package-get-display
+   nil 'name (concat "emacs-"
+                     (substring package-without-prefix 0
+                                (seq-position (string-to-list package-without-prefix)
+                                              (string-to-char " "))))))
+
+(defun elfeed-show-guix-emacs-package ()
+  (interactive)
+  (guix-show-emacs-package-without-prefix
+   (elfeed-entry-title (elfeed-search-selected t))))
