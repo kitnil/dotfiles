@@ -1,3 +1,6 @@
+(with-eval-after-load 'guix-repl
+  (setq guix-load-path (expand-file-name "~/src/guix-master")))
+
 (setq guix-find-file-function #'org-open-file)
 
 

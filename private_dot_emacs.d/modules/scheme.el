@@ -48,9 +48,6 @@ Non-interactively, this uses the optional second argument PURE."
         (set (make-local-variable 'prettify-symbols-alist)
              wi-scheme--prettify-symbols-alist)))))
 
-(with-eval-after-load 'guix-repl
-  (setq guix-directory (expand-file-name "~/src/guix-master")))
-
 (autoload 'scheme-smart-complete "scheme-complete" nil t)
 ;; (eval-after-load 'scheme
 ;;    '(define-key scheme-mode-map "\e\t" 'scheme-smart-complete))
