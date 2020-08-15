@@ -5,6 +5,17 @@
 
 
 ;;;
+;;; Graphs
+;;;
+
+(setq guix-dot-default-arguments '())
+
+(defun guix-dot-file-name ()
+  "Return '.dot' file name in the `guix-temporary-directory'."
+  (guix-temporary-file-name "graph-" ".dot"))
+
+
+;;;
 ;;; Debbugs
 ;;;
 

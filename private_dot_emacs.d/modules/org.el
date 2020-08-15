@@ -15,6 +15,7 @@
   (require 'org-protocol) ; For `org-capture' from Xorg
 
   (add-to-list 'org-file-apps '("\\.png\\'" . system))
+  (add-to-list 'org-file-apps '("\\.dot\\'" . "xdot %s"))
 
   (org-babel-do-load-languages
       'org-babel-load-languages
