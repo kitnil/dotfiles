@@ -65,6 +65,7 @@ in  ''
 		Kitty	kitty
 		XFCE	xfce4-terminal
 		Termonad	termonad
+		QTerminal	qterminal
 
 	Wallpaper
 		StumpWM Refcard	echo
