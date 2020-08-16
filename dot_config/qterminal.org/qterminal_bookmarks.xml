@@ -1,0 +1,5 @@
+<qterminal>
+  <group name="ssh">
+    <command name="workstation" value="ssh workstation.intr"/>
+  </group>
+</qterminal>
