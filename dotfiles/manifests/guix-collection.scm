@@ -169,6 +169,7 @@ xml xorg)
                perltidy ;format Perl code
                perl-uri-escape ;convert url
 
+               binutils
                patchelf ;patch elf
                patchutils
 
