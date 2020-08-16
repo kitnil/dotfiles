@@ -179,3 +179,10 @@ use_guile()
     fi
     eval "$(guix environment --search-paths --root="$gcroot" --pure guile --ad-hoc ${PACKAGES[@]} ${PACKAGES_MAINTENANCE[@]} "$@")"
 }
+
+use_fasm()
+{
+    PACKAGES_MAINTENANCE=(bash binutils coreutils direnv)
+    PACKAGES=(fasm)
+    eval "$(guix environment --search-paths --pure --ad-hoc ${PACKAGES[@]} ${PACKAGES_MAINTENANCE[@]} "$@")"
+}
