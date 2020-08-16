@@ -1,3 +1,7 @@
+;; [[https://github.com/syl20bnr/spacemacs/issues/11798][Org source block babel expansion stopped working · Issue #11798 · syl20bnr/spacemacs]]
+(when (version<= "9.2" (org-version))
+  (require 'org-tempo))
+
 ;; Origin <https://changelog.complete.org/archives/9865-emacs-2-introducing-org-mode>.
 (setq org-ellipsis "…")
 
