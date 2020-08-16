@@ -154,3 +154,28 @@ use_dotfiles()
     }
     export_function check
 }
+
+use_guile()
+{
+    unset GUIX_PACKAGE_PATH
+    PACKAGES=(
+        autoconf
+        automake
+        bash
+        coreutils
+        flex
+        gettext
+        libtool
+        readline
+        texinfo
+    )
+    PACKAGES_MAINTENANCE=(
+        direnv
+    )
+    gcroot="${HOME}/.config/guix/gcroots/guile"
+    if [ -L "$gcroot" ]
+    then
+        rm -v "$gcroot"
+    fi
+    eval "$(guix environment --search-paths --root="$gcroot" --pure guile --ad-hoc ${PACKAGES[@]} ${PACKAGES_MAINTENANCE[@]} "$@")"
+}
