@@ -262,7 +262,6 @@ xml xorg)
 
                xfce4-screenshooter
                xfce4-terminal
-               qterminal
 
                xplanet
 

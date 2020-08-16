@@ -173,6 +173,7 @@ in [
 
   adwaita-qt libsForQt5.qtstyleplugins kde-gtk-config
   quassel
+  lxqt.qterminal
 
   python3Packages.alerta
 
