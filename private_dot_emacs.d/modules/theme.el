@@ -76,6 +76,9 @@
 
 (setq hl-sexp-background-color "darkseagreen2")
 
+;; [[https://github.com/emacs-helm/helm/issues/2341][Uncommon symbol on default helm-ff-cache-mode-lighter value · Issue #2341 · emacs-helm/helm]]
+(setq helm-ff-cache-mode-lighter " hff")
+
 
 ;;;
 ;;; Smart mode-line
