@@ -8,7 +8,7 @@ compton configuration-management cpio cran curl databases dhall dictionaries
 diffoscope dns dunst elf entr file games gcc gdb ghostscript gimp gl glib
 gnome gnu-doc gnupg gnuzilla golang graphics graphviz gstreamer gtk guile
 guile-xyz haskell haskell-apps haskell-xyz imagemagick image-viewers inkscape
-irc kde kodi libreoffice license linux lisp logging lsof lxde m4 mail man
+irc kde kodi libreoffice license linux lisp logging lsof lxde lxqt m4 mail man
 maths messaging mp3 ncdu ncurses networking node package-management parallel
 password-utils patchutils pdf perl perl-web php pretty-print pulseaudio pv
 python python-web python-xyz qt ratpoison rdesktop readline rsync rust-apps
@@ -262,6 +262,7 @@ xml xorg)
 
                xfce4-screenshooter
                xfce4-terminal
+               qterminal
 
                xplanet
 
