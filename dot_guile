@@ -1,11 +1,20 @@
 (define-macro (try function)
   `(catch 'quit (lambda () ,function) (const #f)))
 
-(define (system->string . args)
+(define (system->string command)
+  (let* ((port ((@@ (ice-9 popen) open-pipe) command OPEN_READ))
+         (output ((@@ (ice-9 rdelim) read-string) port)))
+    ((@@ (ice-9 popen) close-pipe) port)
+    output))
+
+(define (system->string* . args)
   (let* ((port (apply (@@ (ice-9 popen) open-pipe*) OPEN_READ args))
          (output ((@@ (ice-9 rdelim) read-string) port)))
     ((@@ (ice-9 popen) close-pipe) port)
     output))
+
+(define (expand-file-name path)
+  (system->string (string-join (list "readlink" "-nf" path))))
 
 (cond ((false-if-exception (resolve-interface '(ice-9 readline)))
        =>
