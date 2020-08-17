@@ -109,6 +109,8 @@
   (setq elfeed-search-title-max-width 120)
   (add-hook 'elfeed-show-mode-hook 'visual-line-mode)
 
+  (setq elfeed-search-filter "@1-weeks-ago +unread")
+
   ;; score
   (setq elfeed-search-print-entry-function #'elfeed-score-print-entry)
   (elfeed-score-enable))
