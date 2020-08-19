@@ -98,7 +98,6 @@ in [
   knot-resolver
   lexicon
   ldns
-  libressl
   # litecli TODO: fails to build
   navi
   lnav
