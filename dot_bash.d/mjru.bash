@@ -146,7 +146,7 @@ mjru-jenkins-build-php()
     branch="$1"
     for job in apache2-php52 apache2-php53 apache2-php54 apache2-php55 apache2-php56 apache2-php70 apache2-php71 apache2-php72 apache2-php73 apache2-php74; do
         echo -e "\n@ $job"
-        curl -u "pyhalov:$(pass show majordomo/private/jenkins.intr/pyhalov)" -s -k \
+        curl -u "admin:$(pass show majordomo/public/majordomo/jenkins.intr/admin)" -s -k \
 "https://jenkins.intr/job/webservices/job/$job/job/$branch/build?delay=0sec" \
 -H 'Content-type: application/x-www-form-urlencoded; charset=UTF-8' --data-urlencode json='{"parameter": [{"name":"DEPLOY", "value":"true"}]}'
         sleep 0.5
