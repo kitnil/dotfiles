@@ -98,15 +98,29 @@
        (patches (fold cons* '()
                       (origin-patches (package-source emacs))
                       (search-patches ;; "emacs-xterm-mouse-support.patch"
-                                      "emacs-tramp-sudo.patch")))))
+                       "emacs-tramp-sudo.patch")))))
     (synopsis "The extensible, customizable, self-documenting text
 editor with athena toolkit" )
     (build-system gnu-build-system)
     (inputs `(("libxaw" ,libxaw)
+              ("emacs-texinfo-keybindgs"
+               ,(origin
+                  (method url-fetch)
+                  (uri "https://git.savannah.gnu.org/cgit/emacs.git/patch/lisp/textmodes/texinfo.el?id=05bffa1f0e3e04a501801d8e7417b623ac78a584")
+                  (sha256
+                   (base32
+                    "148gmlkgkibc1211xxk738h7xglbsig9q21rg4bipdk2vii63n20"))
+                  (file-name "emacs-texinfo-keybindgs.patch")))
               ,@(alist-delete "gtk+" (package-inputs emacs))))
     (arguments
-     `(#:configure-flags '("--with-x-toolkit=athena")
-                         ,@(package-arguments emacs)))))
+     (substitute-keyword-arguments (package-arguments emacs)
+       ((#:phases phases)
+        `(modify-phases ,phases
+           (add-after 'unpack 'patch-elisp
+             (lambda* (#:key inputs #:allow-other-keys)
+               (invoke "patch" "-p1" "--input" (assoc-ref inputs "emacs-texinfo-keybindgs"))))))
+       ((#:configure-flags flags)
+        `(cons "--with-x-toolkit=athena" ,flags))))))
 
 (define-public emacs-company-tern
   (package
