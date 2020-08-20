@@ -60,8 +60,7 @@
 
   ruby-gitlab
 
-  ;; XXX: Failed to build.
-  ;; python-starred ; Fetch a list of stars from GitHub user
+  python-starred ; Fetch a list of stars from GitHub user
 
   ok-sh
   git-quick-stats
