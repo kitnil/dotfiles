@@ -170,6 +170,10 @@ below otherwise."
     (define-key map (kbd "<f5>") 'mbsync)
     (define-key map (kbd "<f6>") 'org-capture)))
 
+(with-eval-after-load 'gnus-art
+  (let ((map gnus-article-mode-map))
+    (define-key map (kbd "<f6>") 'org-capture)))
+
 (setq gnus-summary-line-format "%U%R %i %I%(%[%4L: %-23,23f%]%) %s\n")
 
 ;; (gnus-add-configuration

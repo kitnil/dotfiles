@@ -95,7 +95,6 @@ xml xorg)
                haunt            ; Guile static site generator
 
                aria2        ; Download utility
-               kodi
                kodi-cli     ; Remote control Kodi
                transmission ; Bittorrent
 
