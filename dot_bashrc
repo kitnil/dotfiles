@@ -18,8 +18,6 @@ then
     . "$HOME/.bash_aliases"
 fi
 
-set -o noclobber # do not overwrite files when redirecting output by default.
-
 alias rm="rm -i"
 alias cp="cp -i"
 alias mv="mv -i"
