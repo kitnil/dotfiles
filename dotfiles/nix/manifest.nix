@@ -145,8 +145,8 @@ in [
   pgcli
   prettyping
   pup
-  pythonPackages.jenkins-job-builder
-  python3Packages.yamllint
+  old.pythonPackages.jenkins-job-builder
+  old.python3Packages.yamllint
   old.robo3t
   sampler
   screenkey
@@ -174,7 +174,7 @@ in [
   quassel
   lxqt.qterminal
 
-  python3Packages.alerta
+  old.python3Packages.alerta
 
   (let
     firefox = (import (builtins.fetchTarball {
