@@ -156,5 +156,11 @@
 
 (defun elfeed-show-guix-emacs-package ()
   (interactive)
-  (guix-show-emacs-package-without-prefix
-   (elfeed-entry-title (elfeed-search-selected t))))
+  (let* ((entry (elfeed-search-selected t))
+         (title (elfeed-entry-title entry)))
+    (elfeed-untag entry 'unread)
+    (elfeed-search-update-entry entry)
+    (unless (or elfeed-search-remain-on-entry (use-region-p))
+      (forward-line))
+    (guix-show-emacs-package-without-prefix title)
+    (message title)))
