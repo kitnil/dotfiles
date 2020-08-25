@@ -122,6 +122,18 @@ editor with athena toolkit" )
        ((#:configure-flags flags)
         `(cons "--with-x-toolkit=athena" ,flags))))))
 
+(define-public emacs-elfeed-custom
+  (package
+    (inherit emacs-elfeed)
+    (name "emacs-elfeed-custom")
+    (source
+     (origin
+       (inherit (package-source emacs-elfeed))
+       (patches (fold cons* '()
+                      (origin-patches (package-source emacs-elfeed))
+                      (search-patches
+                       "emacs-elfeed-search-fix-browse-at-remote.patch")))))))
+
 (define-public emacs-company-tern
   (package
     (name "emacs-company-tern")
