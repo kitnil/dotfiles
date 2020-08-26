@@ -3,6 +3,7 @@
 
 (require 'lsp-java)
 (add-hook 'java-mode-hook #'lsp)
+(add-hook 'go-mode-hook 'lsp)
 (add-hook 'python-mode-hook 'lsp)
 (setq lsp-ui-sideline-enable nil) ;right menu
 (setq lsp-file-watch-threshold nil)
@@ -19,3 +20,4 @@
 (defun seq-first (sequence)
   "Return the first element of SEQUENCE."
   (seq-elt sequence 0))
+
