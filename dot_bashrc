@@ -41,6 +41,9 @@ alias markdown-github=grip
 RIPGREP_CONFIG_PATH="$HOME/.config/ripgrep/ripgreprc"
 export RIPGREP_CONFIG_PATH
 
+SSHRC_BECOME=yes
+export SSHRC_BECOME
+
 emacs()
 {
     case "$1" in
