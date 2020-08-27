@@ -150,7 +150,7 @@ use_dotfiles()
 {
     check()
     {
-        make check TESTS="tests/connect.bats tests/executables.bats tests/mail.bats tests/majordomo.bats" "$@"
+        make check TESTS="tests/connect.bats tests/executables.bats tests/mail.bats tests/mjru.bats" "$@"
     }
     export_function check
 }
@@ -184,5 +184,12 @@ use_fasm()
 {
     PACKAGES_MAINTENANCE=(bash binutils coreutils direnv)
     PACKAGES=(fasm)
+    eval "$(guix environment --search-paths --pure --ad-hoc ${PACKAGES[@]} ${PACKAGES_MAINTENANCE[@]} "$@")"
+}
+
+use_artanis()
+{
+    PACKAGES_MAINTENANCE=(bash binutils coreutils direnv)
+    PACKAGES=(artanis guile@2)
     eval "$(guix environment --search-paths --pure --ad-hoc ${PACKAGES[@]} ${PACKAGES_MAINTENANCE[@]} "$@")"
 }

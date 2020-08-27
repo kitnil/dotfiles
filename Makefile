@@ -2,7 +2,7 @@ TESTS =						\
   tests/connect.bats				\
   tests/executables.bats			\
   tests/mail.bats				\
-  tests/majordomo.bats				\
+  tests/mjru.bats				\
   tests/guix.bats
 
 .PHONY: clean
