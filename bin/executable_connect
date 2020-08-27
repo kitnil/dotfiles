@@ -128,7 +128,7 @@ case "$1" in
                 -o UserKnownHostsFile=/dev/null                 \
                 -o StrictHostKeyChecking=no                     \
                 -l root                                         \
-                br1-mr14.intr
+                br1-mr14.intr "${@:2}"
         exit 0
         ;;
     sr1-mr13-14*)

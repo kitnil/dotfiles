@@ -29,3 +29,9 @@
     [ "$status" -eq 0 ]
     [[ "$output" == *FastEthernet* ]]
 }
+
+@test "run connect br1-mr14.intr -- id" {
+    run timeout 3 bin/executable_connect br1-mr14.intr -- id
+    [ "$status" -eq 0 ]
+    [[ "$output" == *"uid=0(root)"* ]]
+}
