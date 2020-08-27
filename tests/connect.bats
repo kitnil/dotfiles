@@ -35,3 +35,16 @@
     [ "$status" -eq 0 ]
     [[ "$output" == *"uid=0(root)"* ]]
 }
+
+# XXX: Test exit code
+@test "run SSHRC_BECOME=yes connect sshrc web30.intr -- id" {
+    run env SSHRC_BECOME=yes timeout 3 bin/executable_connect sshrc web30.intr -- id
+    [[ "$output" == *"uid=0(root)"* ]]
+}
+
+# XXX: Test exit code
+@test "run SSHRC_BECOME=yes connect sshrc jenkins.intr -- id" {
+    run env SSHRC_BECOME=yes timeout 3 bin/executable_connect sshrc jenkins.intr -- id
+    [[ "$output" == *"uid=0(root)"* ]]
+}
+

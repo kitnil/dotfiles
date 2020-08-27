@@ -62,7 +62,7 @@ EOF
             echo \"$CMDARG\" >> \$SSHHOME/sshrc.bashrc
             if [[ "${SSHRC_BECOME:-no}" == yes ]]
             then
-                sudo --stdin --validate --prompt='' <<< $(pass show majordomo/private/ssh/eng); exec -a sudo sudo --preserve-env=SSHHOME,SSHRCCLEANUP --login bash --rcfile \$SSHHOME/sshrc.bashrc
+                sudo --stdin --validate --prompt='' <<< $(pass show majordomo/private/ssh/eng); exec -a sudo sudo --preserve-env bash --rcfile \$SSHHOME/sshrc.bashrc
             else
                 bash --rcfile \$SSHHOME/sshrc.bashrc
             fi
