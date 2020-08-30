@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2019 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2019, 2020 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -33,6 +33,7 @@
                     (requirement '())
                     (start #~(make-forkexec-constructor
                               (list "/home/oleg/.nix-profile/bin/jenkins"
+                                    "--httpListenAddress=127.0.0.1"
                                     "--httpPort=8090"
                                     "--ajp13Port=-1"
                                     "-Djava.awt.headless=true")
