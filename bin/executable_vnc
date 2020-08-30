@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+set -eu
+set -o pipefail
+
+case "$1" in
+    vm)
+        ss -o state listening '( dport = 5911 or sport = 5911 )' | grep -q :5911 \
+            || ssh -fNL 5911:localhost:5901 guix.vm.wugi.info
+        vncviewer -AutoSelect=0 -PreferredEncoding=Raw -FullColor=1 -NoJPEG=1 -CompressLevel=0 -passwd ~/.vnc/passwd 127.0.0.1:5911
+        ;;
+esac

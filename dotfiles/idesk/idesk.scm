@@ -27,5 +27,5 @@
              "/home/oleg/.guix-profile/share/icons/gnome/48x48/apps/gnome-terminal.png")
             ("guix.vm.wugi.info.lnk"
              "VNC guix.vm"
-             "/home/oleg/.guix-profile/bin/vncviewer -AutoSelect=0 -PreferredEncoding=Raw -FullColor=1 -NoJPEG=1 -CompressLevel=0 -passwd ~/.vnc/passwd 127.0.0.1:5911"
+             "vnc vm"
              "/home/oleg/.guix-profile/share/icons/hicolor/48x48/apps/tigervnc.png")))
