@@ -1,6 +1,0 @@
-#!/bin/sh
-
-ss -o state listening '( dport = 59588 or sport = 59588 )' | grep -q :59588 \
-    || ssh -fNL 59588:localhost:5901 majordomo
-
-vncviewer -PasswordFile ~/.vnc/passwd -NoJpeg localhost:59588

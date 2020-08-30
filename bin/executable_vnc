@@ -4,6 +4,11 @@ set -eu
 set -o pipefail
 
 case "$1" in
+    mjru)
+        ss -o state listening '( dport = 59588 or sport = 59588 )' | grep -q :59588 \
+            || ssh -fNL 59588:localhost:5901 majordomo
+        vncviewer -PasswordFile ~/.vnc/passwd -NoJpeg localhost:59588
+        ;;
     vm)
         ss -o state listening '( dport = 5911 or sport = 5911 )' | grep -q :5911 \
             || ssh -fNL 5911:localhost:5901 guix.vm.wugi.info
