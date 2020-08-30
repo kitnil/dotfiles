@@ -172,7 +172,9 @@
  '(term-color-magenta ((t (:background "#B218B2" :foreground "#B218B2"))))
  '(term-color-red ((t (:background "#B21818" :foreground "#B21818"))))
  '(term-color-white ((t (:background "#B2B2B2" :foreground "#B2B2B2"))))
- '(term-color-yellow ((t (:background "#B26818" :foreground "#B26818")))))
+ '(term-color-yellow ((t (:background "#B26818" :foreground "#B26818"))))
+ '(tab-bar ((t (:inherit variable-pitch :background "black" :foreground "white"))))
+ '(tab-bar-tab-inactive ((t (:inherit tab-bar-tab :background "dim gray")))))
 (put 'list-timers 'disabled nil)
 
 (setq auto-mode-alist (delete (assoc "\\.drv" auto-mode-alist) auto-mode-alist))

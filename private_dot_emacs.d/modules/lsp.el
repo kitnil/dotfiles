@@ -1,7 +1,7 @@
 (setq read-process-output-max (* 1024 1024)) ;; 1mb
 (setq gc-cons-threshold 100000000)
 
-(require 'lsp-java)
+;; (require 'lsp-java)
 (add-hook 'java-mode-hook #'lsp)
 (add-hook 'go-mode-hook 'lsp)
 (add-hook 'python-mode-hook 'lsp)

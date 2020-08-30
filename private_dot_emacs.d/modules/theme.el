@@ -51,8 +51,6 @@
 
 (defvar current-theme-gtk (getenv "GTK_THEME"))
 
-(menu-bar-mode -1)
-
 (defun wi-toggle-theme ()
   "Toggle between dark and light themes."
   (interactive)
