@@ -3,4 +3,6 @@
 unset SESSION_MANAGER
 unset DBUS_SESSION_BUS_ADDRESS
 
+"$HOME/.guix-profile/bin/xclickroot" -r xmenu.sh &
+
 exec /run/current-system/profile/bin/sbcl --load /home/oleg/bin/my-stumpwm
