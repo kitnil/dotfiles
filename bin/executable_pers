@@ -32,6 +32,16 @@
 (define %default-options
   '())
 
+(define %servers
+  '("web15.intr" "web16.intr" "web17.intr" "web18.intr" "web19.intr"
+    "web20.intr" "web21.intr" "web22.intr" "web23.intr" "web24.intr" "web25.intr" "web26.intr" "web27.intr" "web28.intr" "web29.intr"
+    "web30.intr" "web31.intr" "web32.intr" "web33.intr" "web34.intr" "web35.intr" "web36.intr" "web37.intr"
+
+    "kvm1.intr" "kvm2.intr" "kvm5.intr" "kvm6.intr" "kvm9.intr" "kvm10.intr"
+    "kvm11.intr" "kvm12.intr" "kvm13.intr" "kvm14.intr" "kvm15.intr" "kvm16.intr" "kvm17.intr" "kvm19.intr"
+    "kvm21.intr" "kvm22.intr" "kvm23.intr" "kvm24.intr" "kvm25.intr" "kvm26.intr" "kvm27.intr" "kvm28.intr" "kvm29.intr"
+    "kvm30.intr" "kvm31.intr" "kvm32.intr" "kvm33.intr" "kvm34.intr" "kvm35.intr" "kvm37.intr"))
+
 (define (main args)
   (define opts
     (args-fold (cdr (program-arguments))
@@ -41,66 +51,24 @@
                (lambda (op loads)
                  (cons op loads))
                %default-options))
-  (for-each (lambda (server)
-              (if (null? (filter (match-lambda ((file-name _ ...)
-                                                (string-suffix? server file-name))
-                                               (_ #f))
-                                 (file-system-tree "/tmp/uscreens/S-oleg")))
-                  (system (string-join (list "screen" "-dmS" server "connect" "ssh" server)))
-                  (format #t "~a already connected.~%" server)))
-            '("web15.intr"
-              "web16.intr"
-              "web17.intr"
-              "web18.intr"
-              "web19.intr"
-              "web20.intr"
-              "web21.intr"
-              "web22.intr"
-              "web23.intr"
-              "web24.intr"
-              "web25.intr"
-              "web26.intr"
-              "web27.intr"
-              "web28.intr"
-              "web29.intr"
-              "web30.intr"
-              "web31.intr"
-              "web32.intr"
-              "web33.intr"
-              "web34.intr"
-              "web35.intr"
-              "web36.intr"
-              "web37.intr"
-
-              "kvm1.intr"
-              "kvm2.intr"
-              "kvm5.intr"
-              "kvm6.intr"
-              "kvm9.intr"
-              "kvm10.intr"
-              "kvm11.intr"
-              "kvm12.intr"
-              "kvm13.intr"
-              "kvm14.intr"
-              "kvm15.intr"
-              "kvm16.intr"
-              "kvm17.intr"
-              "kvm19.intr"
-              "kvm21.intr"
-              "kvm22.intr"
-              "kvm23.intr"
-              "kvm24.intr"
-              "kvm25.intr"
-              "kvm26.intr"
-              "kvm27.intr"
-              "kvm28.intr"
-              "kvm29.intr"
-              "kvm30.intr"
-              "kvm31.intr"
-              "kvm32.intr"
-              "kvm33.intr"
-              "kvm34.intr"
-              "kvm35.intr"
-              "kvm37.intr")))
+  (define option
+    (car opts))
+  (if (string= option "kill")
+      (for-each (lambda (server)
+                  (when (filter (match-lambda ((file-name _ ...)
+                                               (string-suffix? server file-name))
+                                              (_ #f))
+                                (file-system-tree "/tmp/uscreens/S-oleg"))
+                    (system (string-join (list "screen" "-r" server)))
+                    (format #t "screen ~a killed.~%" server)))
+                %servers)
+      (for-each (lambda (server)
+                  (if (null? (filter (match-lambda ((file-name _ ...)
+                                                    (string-suffix? server file-name))
+                                                   (_ #f))
+                                     (file-system-tree "/tmp/uscreens/S-oleg")))
+                      (system (string-join (list "screen" "-dmS" server "connect" "ssh" server)))
+                      (format #t "~a already connected.~%" server)))
+                %servers)))
 
 ;;; pers ends here
