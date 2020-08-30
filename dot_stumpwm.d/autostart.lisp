@@ -8,6 +8,7 @@
                 (greenclip-daemon)
                 (espanso-daemon)
                 (picom)
+                (idesk)
                 (xplanet-file))
               (lambda () (cursor-theme))
               (lambda () (keynav))
