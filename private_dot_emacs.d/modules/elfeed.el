@@ -24,7 +24,7 @@
         ("https://cestlaz.github.io/rss.xml" emacs)
         ("https://sachachua.com/blog/feed/" emacs)
         ("https://www.reddit.com/r/freegames/.rss" game)
-        ("https://www.reddit.com/r/selfhosted/.rss" game)
+        ("https://www.reddit.com/r/selfhosted/.rss" reddit)
         ("https://archlinux.org/feeds/planet" planet)
         ("https://weekly.nixos.org/feeds/all.rss.xml" planet)
         ("http://www.scheme.dk/planet/atom.xml" planet)
