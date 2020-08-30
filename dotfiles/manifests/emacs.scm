@@ -40,7 +40,7 @@
        emacs-erc-hl-nicks       ; for ERC
        emacs-epkg
        emacs-eshell-bookmark
-       emacs-esup
+       ;; emacs-esup
        emacs-ewmctrl            ; Control X windows from Emacs
        emacs-expand-region
        emacs-deadgrep           ; ripgrep front-end
