@@ -426,9 +426,9 @@ guix()
             guix_command="$HOME/src/guix/pre-inst-env guix"
             guix_modules="$HOME/src/dotfiles/fiore/modules"
             sudo --login GUIX_PACKAGE_PATH="/home/oleg/src/guix-majordomo:/home/oleg/src/guix-wigust-services/guix:/home/oleg/src/guix-wigust/guix"    \
-                 "$guix_command" system reconfigure                               \
-                 --load-path="$guix_modules" --no-bootloader --fallback /etc/config.scm           \
-                 "${@:3}"
+                 $guix_command system reconfigure                               \
+                 --load-path="$guix_modules" --no-bootloader --fallback "$HOME/.local/share/chezmoi/dotfiles/guixsd/guixsd.scm" \
+                 "${@:2}"
             ;;
         system)
             case "$2" in
