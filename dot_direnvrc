@@ -50,6 +50,7 @@ use_guix()
         gnupg
         guile-colorized
         guile-readline
+        inetutils
         less
         ncurses
         openssh
