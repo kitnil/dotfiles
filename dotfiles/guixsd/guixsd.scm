@@ -296,7 +296,7 @@ location / {
   (list
    (nginx-server-configuration
     (inherit %zabbix-front-end-configuration-nginx)
-    (server-name '("zabbix.wugi.info" "alerta.duckdns.org" "zabbix.tld"))
+    (server-name '("zabbix.wugi.info"))
     (locations
      (cons* (nginx-location-configuration
              (inherit php-location)
@@ -483,7 +483,6 @@ location / {
         "hosts"
         (string-join
          `(,(string-join '("127.0.0.1 guixsd localhost"
-                           "alerta.wugi.info"
                            "cuirass.wugi.info"
                            "dashboard.gitlab.wugi.info"
                            "gitea.wugi.info"
