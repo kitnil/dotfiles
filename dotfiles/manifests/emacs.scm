@@ -90,7 +90,7 @@
        emacs-know-your-http-well
        emacs-lice-el
        emacs-lsp-mode
-       emacs-lsp-java
+       ;; emacs-lsp-java
        emacs-lsp-ui
        emacs-lua-mode
        emacs-macrostep
