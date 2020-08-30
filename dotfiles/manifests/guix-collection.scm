@@ -158,7 +158,7 @@ xml xorg)
                zathura zathura-djvu zathura-pdf-mupdf poppler
 
                ;; X11
-               keynav rofi st xauth xev scrot xsel xclickroot xmenu
+               keynav rofi st xauth xev scrot xsel xclickroot xmenu idesk
                kitty
 
                ;; polybar
