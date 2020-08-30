@@ -3,7 +3,36 @@
 set -eu
 set -o pipefail
 
+help_main()
+{
+    echo "\
+Usage: vnc COMMANDS ARGS...
+Run COMMANDS with ARGS
+
+COMMAND must be one of the sub-commands listed below:
+
+   mjru
+   vm
+   server
+
+Report bugs to: go.wigust@gmail.com."
+}
+
+help_server()
+{
+    echo "\
+Usage: vnc server [OPTION] PORT...
+Run vnc server at PORT.
+
+  -h, --help             display this help and exit
+
+Report bugs to: go.wigust@gmail.com."
+}
+
 case "$1" in
+    --help)
+        help_main
+        ;;
     mjru)
         ss -o state listening '( dport = 59588 or sport = 59588 )' | grep -q :59588 \
             || ssh -fNL 59588:localhost:5901 majordomo
@@ -16,6 +45,9 @@ case "$1" in
         ;;
     server)
         case "$2" in
+            --help)
+                help_server
+                ;;
             5901)
                 vncserver -xstartup "$HOME/.vnc/xstartup" :1
                 ;;
@@ -25,7 +57,12 @@ case "$1" in
             5903)
                 vncserver -geometry 1366x768 -xstartup "$HOME/.vnc/xstartup-stumpwm" :3
                 ;;
+            *)
+                help_server
+                ;;
         esac
-
+        ;;
+    *)
+        help_main
         ;;
 esac
