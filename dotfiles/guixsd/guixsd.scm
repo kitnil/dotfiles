@@ -1,6 +1,7 @@
 (use-modules (gnu)
              (gnu services shepherd)
              (gnu services)
+             (ice-9 format)
              (srfi srfi-1)
              (srfi srfi-26))
 
@@ -87,6 +88,11 @@ EndSection")
    (uri "/.well-known")
    (body '("root /var/www;"))))
 
+(define %mtls
+  (list #~(format #f "ssl_client_certificate ~a;"
+                  #$(local-file "/home/oleg/src/ssl/ca.pem"))
+        "ssl_verify_client on;"))
+
 (define* (proxy host port
                 #:key
                 (ssl? #f)
@@ -94,7 +100,8 @@ EndSection")
                 (ssl-key? #f)
                 (well-known? #t)
                 (target #f)
-                (sub-domains? #f))
+                (sub-domains? #f)
+                (mtls? #f))
   (nginx-server-configuration
    (server-name (if sub-domains?
                     (list (string-append sub-domains?
@@ -126,7 +133,8 @@ EndSection")
                (list "443 ssl")
                (list "80")))
    (ssl-certificate (if ssl-key? (letsencrypt-certificate host) #f))
-   (ssl-certificate-key (if ssl-key? (letsencrypt-key host) #f))))
+   (ssl-certificate-key (if ssl-key? (letsencrypt-key host) #f))
+   (raw-content (if mtls? %mtls '()))))
 
 (define %nginx-deploy-hook
   (program-file
@@ -211,7 +219,7 @@ location / {
         (proxy "torrent.tld" 9091)
         (proxy "awx.wugi.info" 8052 #:ssl? #t #:ssl-key? #t)
         (proxy "stackstorm.wugi.info" 4443 #:ssl? #t #:ssl-target? #t #:ssl-key? #t)
-        (proxy "jenkins.wugi.info" 8090 #:ssl? #t #:ssl-key? #t)
+        (proxy "jenkins.wugi.info" 8090 #:ssl? #t #:ssl-key? #t #:mtls? #t)
         (proxy "alerta.wugi.info" 47080 #:ssl? #t #:ssl-key? #t)
         (proxy "grafana.wugi.info" 3080 #:ssl? #t #:ssl-key? #t)
         (proxy "dashboard.gitlab.wugi.info" 64680)
@@ -302,7 +310,8 @@ location / {
             (nginx-server-configuration-locations %zabbix-front-end-configuration-nginx)))
     (listen '("443 ssl"))
     (ssl-certificate (letsencrypt-certificate "zabbix.wugi.info"))
-    (ssl-certificate-key (letsencrypt-key "zabbix.wugi.info")))))
+    (ssl-certificate-key (letsencrypt-key "zabbix.wugi.info"))
+    (raw-content %mtls))))
 
 
 ;;;
