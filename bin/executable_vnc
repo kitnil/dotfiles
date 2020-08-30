@@ -35,7 +35,7 @@ case "$1" in
         ;;
     mjru)
         ss -o state listening '( dport = 59588 or sport = 59588 )' | grep -q :59588 \
-            || ssh -fNL 59588:localhost:5901 majordomo
+            || ssh -fNL 59588:localhost:5903 majordomo.intr
         vncviewer -PasswordFile ~/.vnc/passwd -NoJpeg localhost:59588
         ;;
     vm)

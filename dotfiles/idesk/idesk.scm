@@ -28,4 +28,8 @@
             ("guix.vm.wugi.info.lnk"
              "VNC guix.vm"
              "vnc vm"
+             "/home/oleg/.guix-profile/share/icons/hicolor/48x48/apps/tigervnc.png")
+            ("workstation.lnk"
+             "VNC work"
+             "vnc mjru"
              "/home/oleg/.guix-profile/share/icons/hicolor/48x48/apps/tigervnc.png")))
