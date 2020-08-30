@@ -30,7 +30,7 @@ install:
 	update-desktop-database ~/.local/share/applications
 	open-with-linux install
 	ln -sf $(HOME)/.nix-profile/share/mpv/scripts/notify-send.lua $(HOME)/.config/mpv/scripts/notify-send.lua
-	dotfiles/idesk/idesk.scm
+	sh -c 'cd dotfiles/idesk; ./idesk.scm'
 	install --mode=644 dotfiles/idesk/xterm.lnk $(HOME)/.idesktop
 	install --mode=644 dotfiles/idesk/guix.vm.wugi.info.lnk $(HOME)/.idesktop
 	install --mode=755 dotfiles/scripts/guix-channels-update $(HOME)/bin
