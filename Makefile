@@ -44,5 +44,5 @@ install:
 
 .PHONY: dist
 dist:
-	guix system build -L dotfiles/guixsd/modules dotfiles/guixsd/guixsd.scm
-	guix system build -L dotfiles/guixsd/modules dotfiles/guixsd/workstation-guixsd.scm
+	sudo --login guix system build -L $(HOME)/.local/share/chezmoi/dotfiles/guixsd/modules $(HOME)/.local/share/chezmoi/dotfiles/guixsd/guixsd.scm
+	sudo --login guix system build -L $(HOME)/.local/share/chezmoi/dotfiles/guixsd/modules $(HOME)/.local/share/chezmoi/dotfiles/guixsd/workstation-guixsd.scm
