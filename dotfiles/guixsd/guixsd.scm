@@ -27,6 +27,7 @@ lisp-xyz)
              (services kresd)
              (services jenkins)
              (services tftp)
+             (services openvpn)
              (packages lisp)
              (packages python)
              (packages web)
@@ -612,20 +613,23 @@ location / {
                        nix-service
                        (kresd-service (local-file "kresd.conf"))
 
-                       (openvpn-client-service
-                        #:config (openvpn-client-configuration
-                                  ;; (dev 'tapvpn)
-                                  (auth-user-pass "/etc/openvpn/login.conf")
-                                  (remote (list
-                                           ;; 78.108.80.230
-                                           (openvpn-remote-configuration
-                                            (name "vpn-miran.majordomo.ru"))
-                                           ;; 78.108.91.250
-                                           (openvpn-remote-configuration
-                                            (name "vpn-dh.majordomo.ru"))
-                                           ;; 81.95.28.29
-                                           (openvpn-remote-configuration
-                                            (name "vpn-office.majordomo.ru"))))))
+                       openvpn-service
+
+                       ;; TODO:
+                       ;; (openvpn-client-service
+                       ;;  #:config (openvpn-client-configuration
+                       ;;            ;; (dev 'tapvpn)
+                       ;;            (auth-user-pass "/etc/openvpn/login.conf")
+                       ;;            (remote (list
+                       ;;                     ;; 78.108.80.230
+                       ;;                     (openvpn-remote-configuration
+                       ;;                      (name "vpn-miran.majordomo.ru"))
+                       ;;                     ;; 78.108.91.250
+                       ;;                     (openvpn-remote-configuration
+                       ;;                      (name "vpn-dh.majordomo.ru"))
+                       ;;                     ;; 81.95.28.29
+                       ;;                     (openvpn-remote-configuration
+                       ;;                      (name "vpn-office.majordomo.ru"))))))
 
                        (service autofs-service-type
                                 (autofs-configuration
