@@ -8,7 +8,7 @@
 
   (bootloader (bootloader-configuration
                (bootloader grub-bootloader)
-               (target "/dev/sdb")))
+               (target "/dev/sda")))
 
   (file-systems (cons* (file-system
                          (device (file-system-label "guixsd-root"))
