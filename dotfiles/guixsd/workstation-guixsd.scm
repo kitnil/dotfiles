@@ -1,7 +1,7 @@
 (use-modules (gnu)
              (majordomo packages majordomo)
              (guix gexp)
-             (wigust packages lisp)
+             (packages lisp)
              (wigust services autossh)
              (wigust services nix)
              (srfi srfi-1)

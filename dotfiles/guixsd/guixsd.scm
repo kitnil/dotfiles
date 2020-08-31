@@ -22,9 +22,9 @@ lisp-xyz)
              (services kresd)
              (services jenkins)
              (services tftp)
-             (wigust packages lisp)
-             (wigust packages python)
-             (wigust packages web)
+             (packages lisp)
+             (packages python)
+             (packages web)
              (majordomo packages majordomo))
 
 (define shepherd-patched
