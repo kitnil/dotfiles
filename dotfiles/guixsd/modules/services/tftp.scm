@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2019 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2020 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -16,31 +16,26 @@
 ;;; You should have received a copy of the GNU General Public License
 ;;; along with GNU Guix.  If not, see <http://www.gnu.org/licenses/>.
 
-(define-module (wigust services gitlab)
+(define-module (services tftp)
   #:use-module (gnu services base)
-  #:use-module (gnu services configuration)
   #:use-module (gnu services shepherd)
   #:use-module (gnu services)
-  #:use-module (gnu system shadow)
   #:use-module (guix gexp)
-  #:use-module (guix store)
-  #:use-module (ice-9 match)
-  #:use-module (srfi srfi-26)
-  #:export (gitlab-runner-service))
+  #:use-module (gnu packages networking)
+  #:export (tftp-service))
 
-(define gitlab-runner-service
-  (simple-service 'gitlab-runner shepherd-root-service-type
+(define tftp-service
+  (simple-service 'tftp shepherd-root-service-type
                   (list
                    (shepherd-service
-                    (provision '(gitlab-runner))
-                    (auto-start? #f)
-                    (documentation "Run gitlab-runner-daemon.")
+                    (provision '(tftp))
+                    (documentation "Run tftp.")
                     (requirement '())
                     (start #~(make-forkexec-constructor
-                              '("/home/gitlab-runner/.nix-profile/bin/gitlab-runner" "run"
-                                "--working-directory=/home/gitlab-runner"
-                                "--config=/etc/gitlab-runner/config.toml"
-                                "--service=gitlab-runner"
-                                "--user=gitlab-runner")))
+                              (list (string-append #$tftp-hpa "/sbin/in.tftpd")
+                                    "--listen"
+                                    "--user" "root"
+                                    "--address" "0.0.0.0:69"
+                                    "--secure" "/srv/tftp" "--foreground")))
                     (respawn? #f)
                     (stop #~(make-kill-destructor))))))

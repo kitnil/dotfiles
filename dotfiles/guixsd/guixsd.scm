@@ -3,7 +3,8 @@
              (gnu services)
              (ice-9 format)
              (srfi srfi-1)
-             (srfi srfi-26))
+             (srfi srfi-26)
+             (guix packages))
 
 (use-package-modules admin base certs cryptsetup docker file linux lisp
 suckless xdisorg xorg fonts android fontutils gnome freedesktop readline
@@ -12,18 +13,36 @@ lisp-xyz)
 
 (use-service-modules admin dbus desktop docker dns networking sound
                      xorg ssh web cgit version-control certbot
-                     monitoring databases mail autofs vpn)
+                     monitoring databases mail vpn)
 
 ;; Third-party modules
-(use-modules (wigust services nix)
-             (wigust services autossh)
-             (wigust services kresd)
-             (wigust services jenkins)
-             (wigust services tftp)
+(use-modules (services autofs)
+             (services nix)
+             (services autossh)
+             (services kresd)
+             (services jenkins)
+             (services tftp)
              (wigust packages lisp)
              (wigust packages python)
              (wigust packages web)
              (majordomo packages majordomo))
+
+(define shepherd-patched
+  (package
+    (inherit shepherd)
+    (source
+     (origin
+       (inherit (package-source shepherd))
+       (patches (fold cons* '()
+                      (origin-patches (package-source shepherd))
+                      (search-patches "shepherd-supplementary-groups.patch")))))))
+
+(module-add! (resolve-module '(gnu packages admin))
+             'shepherd
+             (module-obarray-ref (module-obarray (current-module)) 'shepherd-patched))
+
+;; (pk (module-symbol-binding (resolve-module '(gnu packages admin))
+;;                            'progress))
 
 (define 20-intel.conf "\
 # Fix tearing for Intel graphics card.
@@ -564,7 +583,7 @@ location / {
 
                        (openvpn-client-service
                         #:config (openvpn-client-configuration
-                                  (dev 'tapvpn)
+                                  ;; (dev 'tapvpn)
                                   (auth-user-pass "/etc/openvpn/login.conf")
                                   (remote (list
                                            ;; 78.108.80.230
@@ -704,8 +723,8 @@ FpingLocation=/run/setuid-programs/fping
                                  (host "0.0.0.0")
                                  (port 5556)))
 
-                       (service (@ (wigust services autossh) autossh-service-type)
-                                ((@ (wigust services autossh) autossh-configuration)
+                       (service (@ (services autossh) autossh-service-type)
+                                ((@ (services autossh) autossh-configuration)
                                  (autossh-client-config
                                   (autossh-client-configuration
                                    (hosts (list (autossh-client-host-configuration

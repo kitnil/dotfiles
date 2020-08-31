@@ -16,7 +16,7 @@
 ;;; You should have received a copy of the GNU General Public License
 ;;; along with GNU Guix.  If not, see <http://www.gnu.org/licenses/>.
 
-(define-module (wigust services jenkins)
+(define-module (services jenkins)
   #:use-module (gnu services base)
   #:use-module (gnu services shepherd)
   #:use-module (gnu services)

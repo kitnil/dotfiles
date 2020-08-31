@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2019 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2019, 2020 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -16,7 +16,7 @@
 ;;; You should have received a copy of the GNU General Public License
 ;;; along with GNU Guix.  If not, see <http://www.gnu.org/licenses/>.
 
-(define-module (wigust services autossh)
+(define-module (services autossh)
   #:use-module (gnu packages admin)
   #:use-module (gnu packages ssh)
   #:use-module (gnu services base)

@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2020 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2019, 2020 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -16,26 +16,21 @@
 ;;; You should have received a copy of the GNU General Public License
 ;;; along with GNU Guix.  If not, see <http://www.gnu.org/licenses/>.
 
-(define-module (wigust services tftp)
+(define-module (services nix)
   #:use-module (gnu services base)
   #:use-module (gnu services shepherd)
   #:use-module (gnu services)
   #:use-module (guix gexp)
-  #:use-module (gnu packages networking)
-  #:export (tftp-service))
+  #:export (nix-service))
 
-(define tftp-service
-  (simple-service 'tftp shepherd-root-service-type
+(define nix-service
+  (simple-service 'nix shepherd-root-service-type
                   (list
                    (shepherd-service
-                    (provision '(tftp))
-                    (documentation "Run tftp.")
+                    (provision '(nix))
+                    (documentation "Run nix-daemon.")
                     (requirement '())
                     (start #~(make-forkexec-constructor
-                              (list (string-append #$tftp-hpa "/sbin/in.tftpd")
-                                    "--listen"
-                                    "--user" "root"
-                                    "--address" "0.0.0.0:69"
-                                    "--secure" "/srv/tftp" "--foreground")))
+                              (list "/home/oleg/bin/run-nix-daemon")))
                     (respawn? #f)
                     (stop #~(make-kill-destructor))))))

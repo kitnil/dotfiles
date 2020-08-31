@@ -41,3 +41,7 @@ install:
 	install --mode=755 dotfiles/scripts/maintenance $(HOME)/bin
 	install --mode=755 dotfiles/scripts/rofi-mycli $(HOME)/bin
 	install --mode=755 dotfiles/scripts/sshrc $(HOME)/bin
+
+.PHONY: dist
+dist:
+	guix system build -L $(HOME)/src/guix-majordomo -L $(HOME)/src/guix-wigust/guix -L dotfiles/guixsd/modules dotfiles/guixsd/guixsd.scm

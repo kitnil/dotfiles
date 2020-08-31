@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2019 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2019, 2020 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -16,21 +16,31 @@
 ;;; You should have received a copy of the GNU General Public License
 ;;; along with GNU Guix.  If not, see <http://www.gnu.org/licenses/>.
 
-(define-module (wigust services nix)
+(define-module (services gitlab)
   #:use-module (gnu services base)
+  #:use-module (gnu services configuration)
   #:use-module (gnu services shepherd)
   #:use-module (gnu services)
+  #:use-module (gnu system shadow)
   #:use-module (guix gexp)
-  #:export (nix-service))
+  #:use-module (guix store)
+  #:use-module (ice-9 match)
+  #:use-module (srfi srfi-26)
+  #:export (gitlab-runner-service))
 
-(define nix-service
-  (simple-service 'nix shepherd-root-service-type
+(define gitlab-runner-service
+  (simple-service 'gitlab-runner shepherd-root-service-type
                   (list
                    (shepherd-service
-                    (provision '(nix))
-                    (documentation "Run nix-daemon.")
+                    (provision '(gitlab-runner))
+                    (auto-start? #f)
+                    (documentation "Run gitlab-runner-daemon.")
                     (requirement '())
                     (start #~(make-forkexec-constructor
-                              (list "/home/oleg/bin/run-nix-daemon")))
+                              '("/home/gitlab-runner/.nix-profile/bin/gitlab-runner" "run"
+                                "--working-directory=/home/gitlab-runner"
+                                "--config=/etc/gitlab-runner/config.toml"
+                                "--service=gitlab-runner"
+                                "--user=gitlab-runner")))
                     (respawn? #f)
                     (stop #~(make-kill-destructor))))))
