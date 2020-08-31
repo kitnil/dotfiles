@@ -194,3 +194,13 @@ use_artanis()
     PACKAGES=(artanis guile@2)
     eval "$(guix environment --search-paths --pure --ad-hoc ${PACKAGES[@]} ${PACKAGES_MAINTENANCE[@]} "$@")"
 }
+
+use_mjru_ci_jenkins()
+{
+    jenkins-jobs()
+    {
+        export PYTHONPATH=''
+        "$HOME/.nix-profile/bin/jenkins-jobs" --conf "$HOME/.config/jenkins_jobs/jenkins_jobs_majordomo.ini" "$@"
+    }
+    export_function jenkins-jobs
+}
