@@ -25,7 +25,7 @@ lisp-xyz)
              (packages lisp)
              (packages python)
              (packages web)
-             (majordomo packages majordomo))
+             (packages majordomo))
 
 (define shepherd-patched
   (package

@@ -44,4 +44,4 @@ install:
 
 .PHONY: dist
 dist:
-	guix system build -L $(HOME)/src/guix-majordomo -L dotfiles/guixsd/modules dotfiles/guixsd/guixsd.scm
+	guix system build -L dotfiles/guixsd/modules dotfiles/guixsd/guixsd.scm

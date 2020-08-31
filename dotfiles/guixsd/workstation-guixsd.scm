@@ -1,5 +1,5 @@
 (use-modules (gnu)
-             (majordomo packages majordomo)
+             (packages majordomo)
              (guix gexp)
              (packages lisp)
              (wigust services autossh)
