@@ -204,3 +204,27 @@ use_mjru_ci_jenkins()
     }
     export_function jenkins-jobs
 }
+
+use_mjru_nix()
+{
+    export NIX_ARGS
+    nix-build()
+    {
+        "$HOME/.nix-profile/bin/nix-build" "${NIX_ARGS[@]}" "$@"
+    }
+    export_function nix-build
+    nix-instantiate()
+    {
+        "$HOME/.nix-profile/bin/nix-instantiate" "${NIX_ARGS[@]}" "$@"
+    }
+    export_function nix-instantiate
+    nix-shell()
+    {
+        NIX_ARGS=("--no-out-link"
+                  "--option" "trusted-public-keys" "cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= cache.nixos.intr:6VD7bofl5zZFTEwsIDsUypprsgl7r9I+7OGY4WsubFA="
+                  "--option" "builders" "ssh://nixos.intr x86_64-linux"
+                  "--substituters" "https://cache.nixos.org/ https://cache.nixos.intr/")
+        "$HOME/.nix-profile/bin/nix-shell" "${NIX_ARGS[@]}" "$@"
+    }
+    export_function nix-shell
+}
