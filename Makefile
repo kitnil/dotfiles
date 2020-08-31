@@ -45,3 +45,4 @@ install:
 .PHONY: dist
 dist:
 	guix system build -L dotfiles/guixsd/modules dotfiles/guixsd/guixsd.scm
+	guix system build -L dotfiles/guixsd/modules dotfiles/guixsd/workstation-guixsd.scm
