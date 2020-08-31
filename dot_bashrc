@@ -405,26 +405,20 @@ fb()
 
 guix()
 {
+    guix_modules="$HOME/.local/share/chezmoi/dotfiles/guixsd/modules"
     case "$1" in
         manifest)
-            command guix package --fallback \
+            command guix package \
+                    -L "$HOME/.local/share/chezmoi/dotfiles/guixsd/modules" \
+                    --fallback \
                     --manifest="$HOME/.local/share/chezmoi/dotfiles/manifests/$HOSTNAME.scm"
             ;;
         pull)
-            guix_command="command guix pull \
---channels=$HOME/.local/share/chezmoi/dotfiles/channels.scm \
---disable-authentication --allow-downgrades"
-            if (set -ex; $guix_command "${@:2}"; sudo --login $guix_command "${@:2}")
-            then
-                slack "SUCCESS: $guix_command"
-            else
-                slack "FAILURE: $guix_command"
-                return 1
-            fi
+            guix_command="command guix pull"
+            (set -ex; $guix_command "${@:2}"; sudo --login $guix_command "${@:2}")
             ;;
         prereconfigure)
             guix_command="$HOME/src/guix/pre-inst-env guix"
-            guix_modules="$HOME/src/dotfiles/fiore/modules"
             sudo --login GUIX_PACKAGE_PATH="/home/oleg/src/guix-majordomo:/home/oleg/src/guix-wigust-services/guix:/home/oleg/src/guix-wigust/guix"    \
                  $guix_command system reconfigure                               \
                  --load-path="$guix_modules" --no-bootloader --fallback "$HOME/.local/share/chezmoi/dotfiles/guixsd/guixsd.scm" \
@@ -434,16 +428,20 @@ guix()
             case "$2" in
                 build)
                     sudo --login command guix system build \
+                         -L "$guix_modules" \
                          "${@:3}" \
                          "$HOME/.local/share/chezmoi/dotfiles/guixsd/$HOSTNAME.scm"
                     ;;
                 reconfigure)
                     sudo --login command guix system reconfigure \
+                         -L "$guix_modules" \
                          --no-bootloader "${@:3}" \
                          "$HOME/.local/share/chezmoi/dotfiles/guixsd/$HOSTNAME.scm"
                     ;;
                 switch)
-                    sudo --login command guix system reconfigure --allow-downgrades "${@:3}" \
+                    sudo --login command guix system reconfigure \
+                         -L "$guix_modules" \
+                         "${@:3}" \
                     "$HOME/.local/share/chezmoi/dotfiles/guixsd/$HOSTNAME.scm"
                     ;;
                 *)
