@@ -2,8 +2,8 @@
              (packages majordomo)
              (guix gexp)
              (packages lisp)
-             (wigust services autossh)
-             (wigust services nix)
+             (services autossh)
+             (services nix)
              (srfi srfi-1)
              (srfi srfi-26))
 
@@ -132,8 +132,8 @@ EndSection")
                             (openssh-configuration
                              (x11-forwarding? #t)
                              (gateway-ports? 'client)))
-                   (service (@ (wigust services autossh) autossh-service-type)
-                            ((@ (wigust services autossh) autossh-configuration)
+                   (service (@ (services autossh) autossh-service-type)
+                            ((@ (services autossh) autossh-configuration)
                              (autossh-client-config
                               (autossh-client-configuration
                                (hosts (list (autossh-client-host-configuration
