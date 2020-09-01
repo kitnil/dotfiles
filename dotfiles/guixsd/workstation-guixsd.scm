@@ -13,17 +13,10 @@
 
 (use-service-modules desktop dbus monitoring networking ssh xorg)
 
-(define 20-intel.conf "\
-# Fix tearing for Intel graphics card.
-# Origin: https://wiki.archlinux.org/index.php/Intel_Graphics
-#         https://github.com/8p8c/my-guix/blob/master/config.scm
-Section \"Device\"
-   Identifier  \"Intel Graphics\"
-   Driver      \"intel\"
-   Option      \"AccelMethod\"  \"sna\"
-   Option      \"SwapbuffersWait\" \"true\"
-   Option      \"TearFree\" \"true\"
-EndSection\n")
+(use-modules (config))
+
+;; Fix Jenkins in Docker group
+(module-set! (resolve-module '(gnu packages admin)) 'shepherd shepherd-patched)
 
 (define 30-multihead.conf "\
 Section \"Monitor\"
@@ -93,40 +86,7 @@ EndSection")
 
   (swap-devices '("/dev/disk/by-uuid/fdaef2e9-eda2-48d9-80f8-3d6551ee15fb"))
 
-  (packages (cons* nss-certs ;SSL certificates
-                   majordomo-ca
-
-                   sbcl stumpwm-checkout `(,stumpwm-checkout "lib")
-
-                   ncurses
-
-                   fontconfig font-dejavu
-                   font-google-noto ;emoji in chromium
-
-                   adwaita-icon-theme hicolor-icon-theme
-
-                   ;; gvfs depends on webkitgtk
-
-                   desktop-file-utils xrdb xset xsetroot xkill
-
-                   setxkbmap   ;keyboard layout
-                   wmctrl      ;`ewmctrl'
-                   xclip       ;X clipboard CLI
-                   xdg-utils   ;finds a program to open file
-                   xdotool     ;mouse and keyboard automation
-                   xorg-server ;`xephyr' for x11 testing
-                   xrandr      ;change screen resolution
-                   xterm       ;$TERM terminal
-                   xwininfo    ;X window information
-                   ;; For helm-stumpwm-commands and stumpish
-                   rlwrap
-                   xprop
-                   xhost
-
-                   iptables bridge-utils
-                   cryptsetup
-
-                   %base-packages))
+  (packages %my-system-packages)
 
   (services (cons* (service openssh-service-type
                             (openssh-configuration
