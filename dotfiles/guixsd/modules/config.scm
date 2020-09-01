@@ -33,8 +33,10 @@
   #:use-module (packages web)
   #:use-module (packages majordomo)
   #:use-module (gnu system)
+  #:use-module (guix gexp)
   #:export (20-intel.conf
-            %my-system-packages))
+            %my-system-packages
+            %my-setuid-programs))
 
 (define 20-intel.conf "\
 # Fix tearing for Intel graphics card.
@@ -113,3 +115,12 @@ EndSection\n")
          tcpdump
 
          %base-packages))
+
+(define %my-setuid-programs
+  (cons* (file-append fping "/sbin/fping")
+         (file-append mtr "/sbin/mtr")
+         (file-append ubridge "/bin/ubridge")
+         (file-append iputils "/bin/ping")
+         (delete (file-append inetutils "/bin/ping6")
+                 (delete (file-append inetutils "/bin/ping")
+                         %setuid-programs))))

@@ -680,13 +680,7 @@ ServerAliveCountMax 3"))))))
                        (modify-services (operating-system-user-services base-system)
                          (guix-service-type config => %guix-daemon-config))))
 
-      (setuid-programs (cons* (file-append fping "/sbin/fping")
-                              (file-append mtr "/sbin/mtr")
-                              (file-append ubridge "/bin/ubridge")
-                              (file-append iputils "/bin/ping")
-                              (delete (file-append inetutils "/bin/ping6")
-                                      (delete (file-append inetutils "/bin/ping")
-                                              %setuid-programs))))
+      (setuid-programs %my-setuid-programs)
 
       (sudoers-file (local-file "sudoers")))))
 

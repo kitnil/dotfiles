@@ -148,8 +148,6 @@ ServerAliveCountMax 3"))))))
                      (guix-service-type config => (guix-configuration
                                                    (substitute-urls '("https://ci.guix.gnu.org" "https://guix.duckdns.org")))))))
 
-  (setuid-programs (cons* (file-append fping "/sbin/fping")
-                          (file-append mtr "/sbin/mtr")
-                          %setuid-programs))
+  (setuid-programs %my-setuid-programs)
 
   (sudoers-file (local-file "sudoers")))
