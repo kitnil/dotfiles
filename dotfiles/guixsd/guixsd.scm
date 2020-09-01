@@ -3,13 +3,7 @@
              (gnu services)
              (ice-9 format)
              (srfi srfi-1)
-             (srfi srfi-26)
-             (guix packages)
-             (guix download)
-             ((guix licenses) #:prefix license:)
-             (guix build-system gnu)
-             (gnu packages guile)
-             (gnu packages pkg-config))
+             (srfi srfi-26))
 
 (use-package-modules admin base certs cryptsetup docker file linux lisp
 suckless xdisorg xorg fonts android fontutils gnome freedesktop readline
@@ -28,53 +22,14 @@ lisp-xyz)
              (services jenkins)
              (services tftp)
              (services openvpn)
+             (packages admin)
              (packages lisp)
              (packages python)
              (packages web)
              (packages majordomo))
 
-(define-public shepherd
-  (package
-    (name "shepherd")
-    (version "0.8.1")
-    (source (origin
-              (method url-fetch)
-              (uri (string-append "mirror://gnu/shepherd/shepherd-"
-                                  version ".tar.gz"))
-              (sha256
-               (base32
-                "0x9zr0x3xvk4qkb6jnda451d5iyrl06cz1bjzjsm0lxvjj3fabyk"))
-              (patches (search-patches "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/shepherd-supplementary-groups.patch"))))
-    (build-system gnu-build-system)
-    (arguments
-     '(#:configure-flags '("--localstatedir=/var")))
-    (native-inputs
-     `(("pkg-config" ,pkg-config)
-
-       ;; This is the Guile we use as a cross-compiler...
-       ("guile" ,guile-3.0)))
-    (inputs
-     ;; ... and this is the one that appears in shebangs when cross-compiling.
-     `(("guile" ,guile-3.0)
-
-       ;; The 'shepherd' command uses Readline when used interactively.  It's
-       ;; an unusual use case though, so we don't propagate it.
-       ("guile-readline" ,guile-readline)))
-    (synopsis "System service manager")
-    (description
-     "The GNU Shepherd is a daemon-managing daemon, meaning that it supervises
-the execution of system services, replacing similar functionality found in
-typical init systems.  It provides dependency-handling through a convenient
-interface and is based on GNU Guile.")
-    (license license:gpl3+)
-    (home-page "https://www.gnu.org/software/shepherd/")))
-
-(module-set! (resolve-module '(gnu packages admin))
-             ;; (module-obarray-ref (module-obarray (current-module)) 'shepherd-patched)
-             'shepherd shepherd)
-
-;; (pk (module-symbol-binding (resolve-module '(gnu packages admin))
-;;                            'shepherd))
+;; Fix Jenkins in Docker group
+(module-set! (resolve-module '(gnu packages admin)) 'shepherd shepherd-patched)
 
 (define 20-intel.conf "\
 # Fix tearing for Intel graphics card.

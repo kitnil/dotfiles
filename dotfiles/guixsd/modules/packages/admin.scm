@@ -26,6 +26,7 @@
   #:use-module (guix build-system meson)
   #:use-module (guix build-system trivial)
   #:use-module (gnu packages)
+  #:use-module (gnu packages admin)
   #:use-module (gnu packages bash)
   #:use-module (gnu packages gawk)
   #:use-module (gnu packages gtk)
@@ -222,3 +223,11 @@ with re-written history containing only those directories.")
     (synopsis "Bash script that works like tee command with Slack")
     (description "This package provides a ")
     (license license:asl2.0)))
+
+(define-public shepherd-patched
+  (package
+    (inherit shepherd)
+    (source (origin
+              (inherit (package-source shepherd))
+              (patches (search-patches "shepherd-supplementary-groups.patch"))))))
+
