@@ -61,7 +61,8 @@
   (load-config-file "version-control-lexical.el")
   (load-config-file "version-control.el")
   (load-config-file "erc.el")
-  (load-config-file "org.el")
+  ;; TODO: Fix org.el load hangs on 'emacs --daemon' start-up
+  ;; (load-config-file "org.el")
   (load-config-file "rfc.el")
   (load-config-file "web.el")
   (load-config-file "outline.el")
