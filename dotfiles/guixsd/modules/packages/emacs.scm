@@ -1594,3 +1594,27 @@ entries according to information received via Debbugs.")
     (description "@code{elfeed-score} is an add-on for @code{elfeed} which
 brings @code{gnus} like scoring feeds.")
     (license license:gpl3+)))
+
+(define-public emacs-org-tanglesync-1.1.0
+  (let ((commit "af83a73ae542d5cb3c9d433cbf2ce1d4f4259117")
+        (revision "0"))
+    (package
+     (inherit emacs-org-tanglesync)
+     (version (git-version "1.1" revision commit))
+     (source
+      (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://github.com/mtekman/org-tanglesync.el")
+             (commit commit)))
+       (file-name (git-file-name (package-name emacs-org-tanglesync) version))
+       (sha256
+        (base32 "11rfn0byy0k0321w7fjgpa785ik1nrk1j6d0y4j0j4a8gys5hjr5"))))
+     (arguments
+      `(#:phases
+        (modify-phases %standard-phases
+                       (add-after 'unpack 'patch
+                                  (lambda _
+                                    (substitute* "org-tanglesync.el"
+                                                 (("\\(goto-char lmark\\)" line)
+                                                  (string-append line " (org-end-of-line) (forward-char)")))))))))))
