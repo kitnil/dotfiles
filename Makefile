@@ -15,9 +15,7 @@ check:
 
 .PHONY: check-system
 check-system:
-	$(HOME)/src/guix-master/pre-inst-env \
-	env GUIX_PACKAGE_PATH=$(HOME)/src/guix-wigust/guix \
-	guix system vm --no-offload dotfiles/system/vm-image-stumpwm.tmpl
+	guix system vm -L $(HOME)/.local/share/chezmoi/dotfiles/guixsd/modules --no-offload dotfiles/system/vm-image-stumpwm.tmpl
 
 .PHONY: configure
 configure:
@@ -33,6 +31,8 @@ install:
 	ln -sf $(HOME)/.nix-profile/share/mpv/scripts/notify-send.lua $(HOME)/.config/mpv/scripts/notify-send.lua
 	sh -c 'cd dotfiles/idesk; ./idesk.scm'
 	mkdir -p $(HOME)/.idesktop
+	install --mode=644 dotfiles/idesk/dotfiles.lnk $(HOME)/.idesktop
+	install --mode=644 dotfiles/idesk/guix.lnk $(HOME)/.idesktop
 	install --mode=644 dotfiles/idesk/xterm.lnk $(HOME)/.idesktop
 	install --mode=644 dotfiles/idesk/guix.vm.wugi.info.lnk $(HOME)/.idesktop
 	install --mode=644 dotfiles/idesk/workstation.lnk $(HOME)/.idesktop

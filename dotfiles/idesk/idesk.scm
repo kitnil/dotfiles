@@ -21,9 +21,17 @@
                              (format #t "  X: ~a~%" (x))
                              (format #t "  Y: ~a~%" (y (+ (y) 100)))
                              (display "end\n")))))
-          '(("xterm.lnk"
+          '(("dotfiles.lnk"
+             "Dotfiles"
+             "/home/oleg/.guix-profile/bin/xterm +sb -bg black -fg white -e tmuxifier s dotfiles"
+             "/home/oleg/.guix-profile/share/icons/gnome/48x48/apps/gnome-terminal.png")
+            ("guix.lnk"
+             "Guix"
+             "/home/oleg/.guix-profile/bin/xterm +sb -bg black -fg white -e tmuxifier s guix"
+             "/home/oleg/.guix-profile/share/icons/gnome/48x48/apps/gnome-terminal.png")
+            ("xterm.lnk"
              "XTerm"
-             "/home/oleg/.guix-profile/bin/xterm"
+             "/home/oleg/.guix-profile/bin/xterm +sb -bg black -fg white"
              "/home/oleg/.guix-profile/share/icons/gnome/48x48/apps/gnome-terminal.png")
             ("guix.vm.wugi.info.lnk"
              "VNC guix.vm"

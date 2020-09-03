@@ -2,11 +2,11 @@
 
 # Set window root path. Default is `$session_root`.
 # Must be called before `new_window`.
-window_root "$HOME/src/guix-master"
+# window_root "$HOME/src/guix-master"
 
 # Create new window. If no argument is given, window name will be based on
 # layout file name.
-new_window "guix"
+new_window "machines"
 
 # Split window into panes.
 #split_v 20
@@ -14,7 +14,10 @@ new_window "guix"
 
 # Run commands.
 
-run_cmd 'git-cal --author="Oleg Pykhalov"'
+split_v 50
+run_cmd "ssh workstation.intr"
+split_v 50
+run_cmd "ssh guix.vm.wugi.info"
 #run_cmd "top"     # runs in active pane
 #run_cmd "date" 1  # runs in pane 1
 
@@ -23,4 +26,4 @@ run_cmd 'git-cal --author="Oleg Pykhalov"'
 #send_keys "date" 1 # paste into pane 1
 
 # Set active pane.
-#select_pane 0
+select_pane 0
