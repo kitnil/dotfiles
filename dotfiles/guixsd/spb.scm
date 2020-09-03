@@ -4,7 +4,7 @@
 (use-modules (gnu) (srfi srfi-1) (srfi srfi-26))
 (use-package-modules admin base bash certs python ssh)
 (use-service-modules desktop dbus monitoring networking ssh web mcron docker)
-(use-modules (wigust services autossh))
+(use-modules (services autossh))
 
 
 ;;;

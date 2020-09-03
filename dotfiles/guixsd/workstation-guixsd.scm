@@ -1,9 +1,9 @@
 (use-modules (gnu)
-             (majordomo packages majordomo)
+             (packages majordomo)
              (guix gexp)
-             (wigust packages lisp)
-             (wigust services autossh)
-             (wigust services nix)
+             (packages lisp)
+             (services autossh)
+             (services nix)
              (srfi srfi-1)
              (srfi srfi-26))
 
@@ -13,17 +13,10 @@
 
 (use-service-modules desktop dbus monitoring networking ssh xorg)
 
-(define 20-intel.conf "\
-# Fix tearing for Intel graphics card.
-# Origin: https://wiki.archlinux.org/index.php/Intel_Graphics
-#         https://github.com/8p8c/my-guix/blob/master/config.scm
-Section \"Device\"
-   Identifier  \"Intel Graphics\"
-   Driver      \"intel\"
-   Option      \"AccelMethod\"  \"sna\"
-   Option      \"SwapbuffersWait\" \"true\"
-   Option      \"TearFree\" \"true\"
-EndSection\n")
+(use-modules (config))
+
+;; Fix Jenkins in Docker group
+(module-set! (resolve-module '(gnu packages admin)) 'shepherd shepherd-patched)
 
 (define 30-multihead.conf "\
 Section \"Monitor\"
@@ -93,47 +86,14 @@ EndSection")
 
   (swap-devices '("/dev/disk/by-uuid/fdaef2e9-eda2-48d9-80f8-3d6551ee15fb"))
 
-  (packages (cons* nss-certs ;SSL certificates
-                   majordomo-ca
-
-                   sbcl stumpwm-checkout `(,stumpwm-checkout "lib")
-
-                   ncurses
-
-                   fontconfig font-dejavu
-                   font-google-noto ;emoji in chromium
-
-                   adwaita-icon-theme hicolor-icon-theme
-
-                   ;; gvfs depends on webkitgtk
-
-                   desktop-file-utils xrdb xset xsetroot xkill
-
-                   setxkbmap   ;keyboard layout
-                   wmctrl      ;`ewmctrl'
-                   xclip       ;X clipboard CLI
-                   xdg-utils   ;finds a program to open file
-                   xdotool     ;mouse and keyboard automation
-                   xorg-server ;`xephyr' for x11 testing
-                   xrandr      ;change screen resolution
-                   xterm       ;$TERM terminal
-                   xwininfo    ;X window information
-                   ;; For helm-stumpwm-commands and stumpish
-                   rlwrap
-                   xprop
-                   xhost
-
-                   iptables bridge-utils
-                   cryptsetup
-
-                   %base-packages))
+  (packages %my-system-packages)
 
   (services (cons* (service openssh-service-type
                             (openssh-configuration
                              (x11-forwarding? #t)
                              (gateway-ports? 'client)))
-                   (service (@ (wigust services autossh) autossh-service-type)
-                            ((@ (wigust services autossh) autossh-configuration)
+                   (service (@ (services autossh) autossh-service-type)
+                            ((@ (services autossh) autossh-configuration)
                              (autossh-client-config
                               (autossh-client-configuration
                                (hosts (list (autossh-client-host-configuration
@@ -188,8 +148,6 @@ ServerAliveCountMax 3"))))))
                      (guix-service-type config => (guix-configuration
                                                    (substitute-urls '("https://ci.guix.gnu.org" "https://guix.duckdns.org")))))))
 
-  (setuid-programs (cons* (file-append fping "/sbin/fping")
-                          (file-append mtr "/sbin/mtr")
-                          %setuid-programs))
+  (setuid-programs %my-setuid-programs)
 
   (sudoers-file (local-file "sudoers")))

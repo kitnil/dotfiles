@@ -33,7 +33,6 @@
        emacs-edit-indirect
        emacs-edit-server ; See <https://github.com/stsquad/emacs_chrome/>.
        emacs-elfeed             ; RSS reader
-       emacs-elfeed-score
        emacs-emamux
        emacs-emms
        emacs-emojify
@@ -109,7 +108,6 @@
        emacs-org-generate
        emacs-org-mind-map       ; General mind maps from Org files
        emacs-orgit
-       emacs-org-tanglesync
        emacs-outshine           ; Emacs outline-mode
        emacs-package-lint
        emacs-pcre2el

@@ -1,5 +1,5 @@
-(use-modules (wigust packages databases)
-	     (wigust packages ruby)
+(use-modules (packages databases)
+	     (packages ruby)
 	     (gnu packages chromium))
 
 (list

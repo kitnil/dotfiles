@@ -1,20 +1,20 @@
 (use-modules (gnu packages emacs)
-             (wigust packages databases)
-             (wigust packages admin)
-             (wigust packages documentation)
-             (wigust packages dotfiles)
-             (wigust packages emacs)
-             (wigust packages games)
-             (wigust packages guix)
-             (wigust packages password-utils)
-             (wigust packages pspg)
-             (wigust packages pulseaudio)
-             (wigust packages python)
-             (wigust packages ruby)
-             (wigust packages virtualization)
-             (wigust packages video)
-             (wigust packages xdisorg)
-             (wigust packages xorg))
+             (packages databases)
+             (packages admin)
+             (packages documentation)
+             (packages dotfiles)
+             (packages emacs)
+             (packages games)
+             (packages guix)
+             (packages password-utils)
+             (packages pspg)
+             (packages pulseaudio)
+             (packages python)
+             (packages ruby)
+             (packages virtualization)
+             (packages video)
+             (packages xdisorg)
+             (packages xorg))
 
 (define guix-wigust-packages-emacs
   (list
@@ -28,6 +28,7 @@
    emacs-stupid-indent-mode
    ;; emacs-dashboard-with-agenda-reverse
    emacs-engine-mode-autoload ; Define searches on websites
+   emacs-elfeed-score
    emacs-eval-in-repl       ; Evaluate to different Repls
    emacs-flyspell-correct
    emacs-git-messenger-diff-mode
@@ -38,6 +39,7 @@
    emacs-hydra-timestamp
    emacs-info-colors        ; Colorize info pages
    emacs-mediawiki
+   emacs-org-tanglesync-1.1.0
    emacs-perl-live
    emacs-psysh
    emacs-redshift
@@ -56,7 +58,7 @@
 
   y2rss
 
-  pulsemixer-emacs-keybindings
+  ;; TODO: Fix pulsemixer-emacs-keybindings
 
   ruby-gitlab
 

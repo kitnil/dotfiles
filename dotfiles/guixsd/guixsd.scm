@@ -5,37 +5,26 @@
              (srfi srfi-1)
              (srfi srfi-26))
 
-(use-package-modules admin base certs cryptsetup docker file linux lisp
-suckless xdisorg xorg fonts android fontutils gnome freedesktop readline
-ncurses networking pulseaudio wm vnc ssh bittorrent audio lxde version-control
-lisp-xyz)
+(use-package-modules admin audio android bittorrent linux ssh suckless xdisorg)
 
 (use-service-modules admin dbus desktop docker dns networking sound
                      xorg ssh web cgit version-control certbot
-                     monitoring databases mail autofs vpn)
+                     monitoring databases mail vpn)
 
 ;; Third-party modules
-(use-modules (wigust services nix)
-             (wigust services autossh)
-             (wigust services kresd)
-             (wigust services jenkins)
-             (wigust services tftp)
-             (wigust packages lisp)
-             (wigust packages python)
-             (wigust packages web)
-             (majordomo packages majordomo))
+(use-modules (config)
+             (packages admin)
+             (packages web)
+             (services autofs)
+             (services nix)
+             (services autossh)
+             (services kresd)
+             (services jenkins)
+             (services tftp)
+             (services openvpn))
 
-(define 20-intel.conf "\
-# Fix tearing for Intel graphics card.
-# Origin: https://wiki.archlinux.org/index.php/Intel_Graphics
-#         https://github.com/8p8c/my-guix/blob/master/config.scm
-Section \"Device\"
-   Identifier  \"Intel Graphics\"
-   Driver      \"intel\"
-   Option      \"AccelMethod\"  \"sna\"
-   Option      \"SwapbuffersWait\" \"true\"
-   Option      \"TearFree\" \"true\"
-EndSection\n")
+;; Fix Jenkins in Docker group
+(module-set! (resolve-module '(gnu packages admin)) 'shepherd shepherd-patched)
 
 (define 30-multihead.conf "\
 Section \"Monitor\"
@@ -345,70 +334,7 @@ location / {
     (operating-system
       (inherit base-system)
       (kernel-arguments '("modprobe.blacklist=pcspkr,snd_pcsp"))
-      (packages (cons* sbcl stumpwm-checkout `(,stumpwm-checkout "lib")
-
-                       sbcl-stumpwm-checkout-ttf-fonts
-                       sbcl-stumpwm-checkout-globalwindows
-                       sbcl-stumpwm-checkout-swm-gaps
-                       sbcl-stumpwm-checkout-stumptray
-                       sbcl-slime-swank
-                       stumpish
-
-                       ncurses
-
-                       fontconfig font-awesome font-dejavu font-liberation
-                       font-misc-misc font-wqy-zenhei
-                       font-google-noto ;emoji in chromium
-
-                       gnome-themes-standard adwaita-icon-theme hicolor-icon-theme
-                       lxappearance
-
-                       desktop-file-utils xrdb xset xsetroot xkill
-                       ;; gvfs depends on webkitgtk
-
-                       setxkbmap   ;keyboard layout
-                       wmctrl      ;`ewmctrl'
-                       xclip       ;X clipboard CLI
-                       xdg-utils   ;finds a program to open file
-                       xdotool     ;mouse and keyboard automation
-                       xorg-server ;`xephyr' for x11 testing
-                       xrandr      ;change screen resolution
-                       xterm       ;$TERM terminal
-                       xwininfo    ;X window information
-                       ;; For helm-stumpwm-commands and stumpish
-                       rlwrap
-                       xprop
-                       xhost
-
-                       nss-certs ;SSL certificates
-                       majordomo-ca
-
-                       fping
-
-                       adb
-
-                       iptables bridge-utils
-
-                       docker-cli docker-compose
-
-                       singularity
-
-                       cryptsetup
-
-                       pulseaudio
-
-                       libcgroup
-
-                       openssh ;autofs
-                       sshfs ;autofs
-                       fuse ;mount -t fuse and autofs
-
-                       file
-                       iftop
-                       net-tools
-                       tcpdump
-
-                       (operating-system-packages base-system)))
+      (packages %my-system-packages)
 
       (groups (cons* (user-group (name "nixbld")
                                  (id 30100))
@@ -562,20 +488,23 @@ location / {
                        nix-service
                        (kresd-service (local-file "kresd.conf"))
 
-                       (openvpn-client-service
-                        #:config (openvpn-client-configuration
-                                  (dev 'tapvpn)
-                                  (auth-user-pass "/etc/openvpn/login.conf")
-                                  (remote (list
-                                           ;; 78.108.80.230
-                                           (openvpn-remote-configuration
-                                            (name "vpn-miran.majordomo.ru"))
-                                           ;; 78.108.91.250
-                                           (openvpn-remote-configuration
-                                            (name "vpn-dh.majordomo.ru"))
-                                           ;; 81.95.28.29
-                                           (openvpn-remote-configuration
-                                            (name "vpn-office.majordomo.ru"))))))
+                       openvpn-service
+
+                       ;; TODO:
+                       ;; (openvpn-client-service
+                       ;;  #:config (openvpn-client-configuration
+                       ;;            ;; (dev 'tapvpn)
+                       ;;            (auth-user-pass "/etc/openvpn/login.conf")
+                       ;;            (remote (list
+                       ;;                     ;; 78.108.80.230
+                       ;;                     (openvpn-remote-configuration
+                       ;;                      (name "vpn-miran.majordomo.ru"))
+                       ;;                     ;; 78.108.91.250
+                       ;;                     (openvpn-remote-configuration
+                       ;;                      (name "vpn-dh.majordomo.ru"))
+                       ;;                     ;; 81.95.28.29
+                       ;;                     (openvpn-remote-configuration
+                       ;;                      (name "vpn-office.majordomo.ru"))))))
 
                        (service autofs-service-type
                                 (autofs-configuration
@@ -704,8 +633,8 @@ FpingLocation=/run/setuid-programs/fping
                                  (host "0.0.0.0")
                                  (port 5556)))
 
-                       (service (@ (wigust services autossh) autossh-service-type)
-                                ((@ (wigust services autossh) autossh-configuration)
+                       (service (@ (services autossh) autossh-service-type)
+                                ((@ (services autossh) autossh-configuration)
                                  (autossh-client-config
                                   (autossh-client-configuration
                                    (hosts (list (autossh-client-host-configuration
@@ -751,13 +680,7 @@ ServerAliveCountMax 3"))))))
                        (modify-services (operating-system-user-services base-system)
                          (guix-service-type config => %guix-daemon-config))))
 
-      (setuid-programs (cons* (file-append fping "/sbin/fping")
-                              (file-append mtr "/sbin/mtr")
-                              (file-append ubridge "/bin/ubridge")
-                              (file-append iputils "/bin/ping")
-                              (delete (file-append inetutils "/bin/ping6")
-                                      (delete (file-append inetutils "/bin/ping")
-                                              %setuid-programs))))
+      (setuid-programs %my-setuid-programs)
 
       (sudoers-file (local-file "sudoers")))))
 
