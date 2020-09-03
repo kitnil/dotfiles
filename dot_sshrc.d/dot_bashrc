@@ -1,3 +1,5 @@
+export NIX_AUTO_RUN=0
+
 my-nix-version()
 {
     nix-instantiate --eval -E '(import <nixpkgs> {}).lib.nixpkgsVersion'
