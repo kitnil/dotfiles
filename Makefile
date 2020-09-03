@@ -29,8 +29,10 @@ install:
 	chezmoi apply
 	update-desktop-database ~/.local/share/applications
 	open-with-linux install
+	mkdir -p $(HOME)/.config/mpv/scripts
 	ln -sf $(HOME)/.nix-profile/share/mpv/scripts/notify-send.lua $(HOME)/.config/mpv/scripts/notify-send.lua
 	sh -c 'cd dotfiles/idesk; ./idesk.scm'
+	mkdir -p $(HOME)/.idesktop
 	install --mode=644 dotfiles/idesk/xterm.lnk $(HOME)/.idesktop
 	install --mode=644 dotfiles/idesk/guix.vm.wugi.info.lnk $(HOME)/.idesktop
 	install --mode=644 dotfiles/idesk/workstation.lnk $(HOME)/.idesktop
