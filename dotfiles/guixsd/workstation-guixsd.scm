@@ -13,7 +13,8 @@
 
 (use-service-modules desktop dbus monitoring networking ssh xorg)
 
-(use-modules (config))
+(use-modules (config)
+             (packages admin))
 
 ;; Fix Jenkins in Docker group
 (module-set! (resolve-module '(gnu packages admin)) 'shepherd shepherd-patched)
