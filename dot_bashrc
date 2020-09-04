@@ -1397,6 +1397,17 @@ nix()
 
 }
 
+firefox()
+{
+    case "$1" in
+        kill)
+            pgrep -fa firefox-wrapped | grep -vE 'test|file' | cut -d ' ' -f 1 | xargs kill
+            ;;
+        *)
+            command firefox "${@:2}"
+    esac
+}
+
 firefox-esr-debian()
 {
     xhost +local:
