@@ -18,6 +18,8 @@ then
     . "$HOME/.bash_aliases"
 fi
 
+alias ,c='command'
+
 alias rm="rm -i"
 alias cp="cp -i"
 alias mv="mv -i"
