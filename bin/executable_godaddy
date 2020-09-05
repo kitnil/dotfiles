@@ -30,7 +30,7 @@ Run COMMANDS with ARGS
 COMMAND must be one of the sub-commands listed below:
 
    a
-   cname
+   cname godaddy add cname githunt guix.duckdns.org
 
 Report bugs to: go.wigust@gmail.com."
 }
