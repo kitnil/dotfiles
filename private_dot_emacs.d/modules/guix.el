@@ -218,3 +218,7 @@ Produces URL as https://ci.guix.info/api/latestbuilds?nr=10&jobset=guix-master&j
   (rx "vm" (one-or-more (or alphanumeric "-")) ".scm" line-end)
   ["guix/gnu/system/examples/vm-inherit-image" yas-expand-current-buffer])
 
+
+(define-auto-insert
+  (rx "modules/services/" (one-or-more (or alphanumeric "-")) ".scm" line-end)
+  ["dotfiles/modules/services/service" yas-expand-current-buffer])
