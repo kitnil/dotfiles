@@ -50,6 +50,7 @@ EndSection")
 
 (define %certbot-hosts
   (list "cgit.duckdns.org"
+        "githunt.wugi.info"
         "guix.duckdns.org"
         "alerta.duckdns.org"
         "anongit.duckdns.org"
@@ -210,6 +211,7 @@ location / {
         (proxy "stackstorm.wugi.info" 4443 #:ssl? #t #:ssl-target? #t #:ssl-key? #t)
         (proxy "jenkins.wugi.info" 8090 #:ssl? #t #:ssl-key? #t #:mtls? #t)
         (proxy "alerta.wugi.info" 47080 #:ssl? #t #:ssl-key? #t)
+        (proxy "githunt.wugi.info" 3000 #:ssl? #t #:ssl-key? #t #:mtls? #t)
         (proxy "grafana.wugi.info" 3080 #:ssl? #t #:ssl-key? #t)
         (proxy "dashboard.gitlab.wugi.info" 64680)
         (proxy "gitlab.wugi.info" 65080 #:sub-domains? "~^(?<group>.*)\\.")
