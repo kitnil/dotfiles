@@ -27,7 +27,7 @@ in  ''
 		IMG:${guix-profile}/share/icons/hicolor/24x24/apps/gimp.png	Image editor (Gimp)	gimp
 		IMG:${nix-profile}/share/icons/robomongo.png	Mongo	robo3t
 		IMG:${guix-profile}/share/icons/gnome/24x24/devices/video-display.png	OBS	record
-		IMG:${nix-profile}/share/icons/hicolor/32x32/apps/quassel.png	Quassel	quassel
+		IMG:${nix-profile}/share/icons/hicolor/32x32/apps/quassel.png	Quassel	"echo '(quassel)' | stumpish -e eval"
 
 	Projects
 	${project { name = "Blog", session = "blog" }}
