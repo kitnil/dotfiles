@@ -151,3 +151,10 @@
                 ,@(if title (list "-t" title) '())
                 ,*st-exec-flag* ,command)))))))
 
+
+;;;
+;;; QTerminal
+;;;
+
+(defcommand qterminal () ()
+  (run-shell-command (join (list *fontconfig-file* "qterminal"))))
