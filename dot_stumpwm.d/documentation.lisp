@@ -1,5 +1,8 @@
 (in-package :stumpwm)
 
+(defcommand zeal () ()
+  (run-shell-command (join (list "nixGLIntel" "zeal"))))
+
 (defun zathura (file)
   (run-shell-command (format nil "zathura ~s" file)))
 

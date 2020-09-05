@@ -22,6 +22,7 @@ in  ''
 		Mail
 			IMG:${guix-profile}/share/icons/gnome/24x24/emblems/emblem-mail.png	View	echo '(gnus-new-window)' | stumpish -e eval
 			IMG:${guix-profile}/share/icons/gnome/24x24/actions/mail-send-receive.png	Pull	echo '(notmuch)' | stumpish -e eval
+		Documention (Zeal)	echo '(zeal)' | stumpish -e eval
 		IMG:${guix-profile}/share/icons/hicolor/24x24/apps/leafpad.png	Editor (leafpad)	leafpad
 		IMG:${guix-profile}/share/icons/hicolor/24x24/apps/gimp.png	Image editor (Gimp)	gimp
 		IMG:${nix-profile}/share/icons/robomongo.png	Mongo	robo3t
