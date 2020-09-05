@@ -16,6 +16,7 @@
              (packages admin)
              (packages web)
              (services autofs)
+             (services bittorrent)
              (services nix)
              (services autossh)
              (services kresd)
@@ -663,29 +664,7 @@ ServerAliveInterval 30
 ServerAliveCountMax 3"))))))
                                  (host "znc.wugi.info")))
 
-                       (simple-service 'transmission shepherd-root-service-type
-                                       (list
-                                        (shepherd-service
-                                         (provision '(transmission))
-                                         (documentation "Run transmission.")
-                                         (requirement '())
-                                         (start #~(make-forkexec-constructor
-                                                   (list (string-append #$transmission "/bin/transmission-daemon")
-                                                         "--logfile" "/home/oleg/.config/shepherd/transmission.log"
-                                                         "--foreground")
-                                                   #:user "oleg"
-                                                   #:group "users"
-                                                   #:environment-variables
-                                                   (append (list "HOME=/home/oleg"
-                                                                 "SSL_CERT_DIR=/run/current-system/profile/etc/ssl/certs"
-                                                                 "SSL_CERT_FILE=/run/current-system/profile/etc/ssl/certs/ca-certificates.crt")
-                                                           (remove (lambda (str)
-                                                                     (or (string-prefix? "HOME=" str)
-                                                                         (string-prefix? "SSL_CERT_DIR=" str)
-                                                                         (string-prefix? "SSL_CERT_FILE=" str)))
-                                                                   (environ)))))
-                                         (respawn? #f)
-                                         (stop #~(make-kill-destructor)))))
+                       transmission-service
 
                        (modify-services (operating-system-user-services base-system)
                          (guix-service-type config => %guix-daemon-config))))
