@@ -3,6 +3,10 @@
 
 (use-package-modules admin cmake databases emacs emacs-xyz package-management)
 
+(use-modules (packages emacs))
+
+(module-set! (resolve-module '(gnu packages emacs-xyz)) 'emacs-geiser emacs-geiser-0.10)
+
 (packages->manifest
  (list emacs
        emacs-academic-phrases

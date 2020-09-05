@@ -1618,3 +1618,15 @@ brings @code{gnus} like scoring feeds.")
                                     (substitute* "org-tanglesync.el"
                                                  (("\\(goto-char lmark\\)" line)
                                                   (string-append line " (org-end-of-line) (forward-char)")))))))))))
+
+(define-public emacs-geiser-0.10
+  (package
+    (inherit emacs-geiser)
+    (version "0.10")
+    (source (origin
+             (method url-fetch)
+             (uri (string-append "mirror://savannah/geiser/" version
+                                 "/geiser-" version ".tar.gz"))
+             (sha256
+              (base32
+               "0pj3l7p8d60c9b4vfprnv6g5l61d74pls4b5dvd84cn4ky9mzwjv"))))))
