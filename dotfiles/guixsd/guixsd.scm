@@ -19,6 +19,7 @@
              (services bittorrent)
              (services nix)
              (services autossh)
+             (services intel)
              (services kresd)
              (services jenkins)
              (services tftp)
@@ -665,6 +666,8 @@ ServerAliveCountMax 3"))))))
                                  (host "znc.wugi.info")))
 
                        transmission-service
+
+                       intel-vaapi-service
 
                        (modify-services (operating-system-user-services base-system)
                          (guix-service-type config => %guix-daemon-config))))
