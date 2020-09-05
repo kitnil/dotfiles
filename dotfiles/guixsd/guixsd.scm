@@ -51,6 +51,7 @@ EndSection")
 (define %certbot-hosts
   (list "cgit.duckdns.org"
         "githunt.wugi.info"
+        "homer.wugi.info"
         "guix.duckdns.org"
         "alerta.duckdns.org"
         "anongit.duckdns.org"
@@ -146,9 +147,16 @@ EndSection")
          (listen '("80"))
          (root "/srv/iso"))
         (nginx-server-configuration
-         (server-name '("homer.tld"))
-         (listen '("80"))
-         (root (file-append homer "/share/homer")))
+         (server-name '("homer.wugi.info"))
+         (listen '("443 ssl"))
+         (root (file-append homer "/share/homer"))
+         (locations
+          (list (nginx-location-configuration
+                 (uri "/.well-known")
+                 (body '("root /var/www;")))))
+         (ssl-certificate (letsencrypt-certificate "homer.wugi.info"))
+         (ssl-certificate-key (letsencrypt-key "homer.wugi.info"))
+         (raw-content %mtls))
         (nginx-server-configuration
          (server-name '("texinfo.tld"))
          (listen '("80"))
