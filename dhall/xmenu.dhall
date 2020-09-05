@@ -1,3 +1,5 @@
+let config = /home/oleg/.config/dhall/config.dhall
+
 let guix-profile = "/home/oleg/.guix-profile"
 
 let nix-profile = "/home/oleg/.nix-profile"
@@ -86,5 +88,6 @@ in  ''
 		Sketch	chromium --app=https://excalidraw.com/
 		Spotify	chromium --app=https://open.spotify.com
 		The Try It Online	chromium --app=https://tio.run/
+		Weather	chromium --app=https://yandex.ru/pogoda/
 	EOF
 	''
