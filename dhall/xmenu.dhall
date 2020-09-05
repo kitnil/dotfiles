@@ -74,15 +74,15 @@ in  ''
 		Paperview	paperview
 
 	Web
-		Habitica	chromium --app=https://habitica.com/
-		Sketch	chromium --app=https://excalidraw.com/
 		Algorithms	chromium --app=https://algorithm-visualizer.org/
 		Byte converter	chromium --app=https://whatsabyte.com/P1/byteconverter.htm
-		Spotify	chromium --app=https://open.spotify.com
-		Repl	chromium --app=https://repl.it/
-		The Try It Online	chromium --app=https://tio.run/
-		Cocalc	chromium --app=https://cocalc.com/
-		Mastodon	chromium --app=https://mastodon.xyz/
 		Chess	chromium --app=https://lichess.org/
+		Cocalc	chromium --app=https://cocalc.com/
+		Habitica	chromium --app=https://habitica.com/
+		Mastodon	chromium --app=https://mastodon.xyz/
+		Repl	chromium --app=https://repl.it/
+		Sketch	chromium --app=https://excalidraw.com/
+		Spotify	chromium --app=https://open.spotify.com
+		The Try It Online	chromium --app=https://tio.run/
 	EOF
 	''
