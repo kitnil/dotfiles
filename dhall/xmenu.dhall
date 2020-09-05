@@ -19,7 +19,7 @@ in  ''
 	Applications
 		Browsers
 			IMG:${nix-profile}/share/icons/hicolor/32x32/apps/firefox.png	Firefox	firefox -P default
-			IMG:${nix-profile}/share/icons/hicolor/24x24/apps/chromium.png	Chromium	chromium
+			IMG:${nix-profile}/share/icons/hicolor/24x24/apps/chromium.png	Chromium	echo '(chromium)' | stumpish -e eval
 			IMG:${nix-profile}/share/icons/hicolor/32x32/apps/firefox.png	Firefox (ESR-52)	firefox-esr-52 -P esr52 --new-instance
 		Mail
 			IMG:${guix-profile}/share/icons/gnome/24x24/emblems/emblem-mail.png	View	echo '(gnus-new-window)' | stumpish -e eval

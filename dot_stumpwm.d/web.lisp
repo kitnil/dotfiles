@@ -148,7 +148,8 @@
 
 (defcommand chromium () ()
   "Start or focus Chromium."
-  (run-or-raise "chromium" '(:class "Chromium-browser")))
+  (run-or-raise (join (list *fontconfig-file* "nixGLIntel" "chromium"))
+                '(:class "Chromium-browser")))
 
 (defcommand chromium-new-window () ()
   "Start Chromium."
