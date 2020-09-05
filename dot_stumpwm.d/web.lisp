@@ -131,12 +131,8 @@
                      '(:class "Firefox")))
 
 (defun firefox-command ()
-  (join `(,@(if dark-theme '("GTK_THEME=Adwaita:dark") nil)
-
-            ;; https://discourse.nixos.org/t/fonts-in-nix-installed-packages-on-a-non-nixos-system/5871/9
-            "FONTCONFIG_FILE=/run/current-system/profile/etc/fonts/fonts.conf"
-
-            "nixGLIntel" "firefox")))
+  (join `(,@(if dark-theme '("GTK_THEME=Adwaita:dark") nil) ,*fontconfig-file*
+          "nixGLIntel" "firefox")))
 
 (defcommand firefox () ()
   "Start of focus firefox."

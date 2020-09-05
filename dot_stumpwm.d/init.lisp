@@ -7,6 +7,10 @@
 
 (redirect-all-output (concat (getenv "HOME") "/.stumpwm.d/debug-output.txt"))
 
+;; https://discourse.nixos.org/t/fonts-in-nix-installed-packages-on-a-non-nixos-system/5871/9
+(defvar *fontconfig-file*
+  "FONTCONFIG_FILE=/run/current-system/profile/etc/fonts/fonts.conf")
+
 (defun load-config-file (file)
   (load (concat (getenv "HOME") "/.stumpwm.d/" file)))
 
