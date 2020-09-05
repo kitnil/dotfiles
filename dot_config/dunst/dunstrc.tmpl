@@ -249,22 +249,22 @@
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
-    background = {{- if eq .theme "dark" }} "#000000" {{ else }} "#ffffff" {{- end }}
+    background = {{- if eq .theme "dark" }} "#000000aa" {{ else }} "#ffffff" {{- end }}
     foreground = {{- if eq .theme "dark" }} "#dcdcdc" {{ else }} "#888888" {{- end }}
-    frame_color = {{- if eq .theme "dark" }} "#000000" {{ else }} "#ffffff" {{- end }}
+    frame_color = {{- if eq .theme "dark" }} "#000000aa" {{ else }} "#ffffff" {{- end }}
     timeout = 5
     # Icon for notifications with low urgency, uncomment to enable
     #icon = /path/to/icon
 
 [urgency_normal]
-    background = {{- if eq .theme "dark" }} "#000000" {{ else }} "#ffffff" {{- end }}
+    background = {{- if eq .theme "dark" }} "#000000aa" {{ else }} "#ffffff" {{- end }}
     foreground = {{- if eq .theme "dark" }} "#ffffff" {{ else }} "#000000" {{- end }}
     timeout = 10
     # Icon for notifications with normal urgency, uncomment to enable
     #icon = /path/to/icon
 
 [urgency_critical]
-    background = "#900000"
+    background = "#900000aa"
     foreground = "#ffffff"
     frame_color = "#ff0000"
     timeout = 0
