@@ -42,7 +42,7 @@
                                   (run-commands "quassel"))))
 
 (defcommand group-2-start-programs () ()
-  (run-frame 2 :frame-0-command (lambda () (gnus-new-window)) 
+  (run-frame 2 :frame-0-command (lambda () (spotify))
                :frame-1-command (lambda () (elfeed-new-window))))
 
 (defcommand group-3-start-programs () ()

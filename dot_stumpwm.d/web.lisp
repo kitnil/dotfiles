@@ -146,18 +146,21 @@
   "Start of focus Firefox ESR 52."
   (run-shell-command "firefox-esr-52 --new-instance -P esr52"))
 
+(defun chromium-command (&optional command)
+  ;; (format nil "sh -c ~s" )
+  (join `(,*fontconfig-file* "nixGLIntel" "chromium" ,@command)))
+
 (defcommand chromium () ()
   "Start or focus Chromium."
-  (run-or-raise (join (list *fontconfig-file* "nixGLIntel" "chromium"))
+  (run-or-raise (run-shell-command (chromium-command))
                 '(:class "Chromium-browser")))
 
 (defcommand chromium-new-window () ()
-  "Start Chromium."
-  (run-shell-command "chromium"))
+  (run-shell-command (chromium-command '("--new-window"))))
 
 (defcommand chromium-app (url) ((:string "URL: "))
   "Start Chromium with app mode."
-  (run-shell-command (format nil "chromium --app=~s" url)))
+  (run-shell-command (chromium-command (list (concat "--app=" url)))))
 
 (defcommand chromium-proxy () ()
   "Start Chromium via proxy"
@@ -165,6 +168,9 @@
                              " --proxy-server='socks5://localhost:9050'"
                              " --host-resolver-rules='MAP * ~NOTFOUND"
                              " , EXCLUDE localhost'")))
+
+(defcommand spotify () ()
+  (chromium-app "https://open.spotify.com"))
 
 (defcommand twitchy () ()
   (term-shell-command "twitchy"))
