@@ -1648,3 +1648,18 @@ brings @code{gnus} like scoring feeds.")
      `(("emacs-treemacs" ,emacs-treemacs-no-tests)
        ,@(assoc-remove! (package-propagated-inputs emacs-lsp-java)
                         "emacs-treemacs")))))
+
+(define-public emacs-slime-2.24
+  (package
+    (inherit emacs-slime)
+    (name (package-name emacs-slime))
+    (version "2.24")
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://github.com/slime/slime")
+             (commit (string-append "v" version))))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32 "0js24x42m7b5iymb4rxz501dff19vav5pywnzv50b673rbkaaqvh"))))))
