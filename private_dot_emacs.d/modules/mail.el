@@ -2,6 +2,9 @@
 (add-hook 'gnus-message-setup-hook 'mml-secure-message-sign-pgpmime)
 (add-hook 'message-setup-hook 'mml-secure-message-sign-pgpmime)
 
+;; https://lists.gnu.org/archive/html/guix-devel/2020-09/msg00024.html
+(setq mml-secure-openpgp-sign-with-sender t)
+
 (setq mail-user-agent 'gnus-user-agent)
 
 ;; (setq epg-config--program-alist
