@@ -139,6 +139,7 @@
  '(ediff-even-diff-B ((t (:background "gray35"))))
  '(ediff-odd-diff-A ((t (:background "gray35"))))
  '(ediff-odd-diff-B ((t (:background "gray35"))))
+ '(elfeed-search-unread-title-face ((t nil)))
  '(fringe ((t nil)))
  '(highlight-indent-guides-even-face ((t (:background "white smoke"))))
  '(irfc-head-name-face ((t (:inherit font-lock-function-name-face))))
