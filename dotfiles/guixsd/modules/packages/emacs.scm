@@ -1630,3 +1630,21 @@ brings @code{gnus} like scoring feeds.")
              (sha256
               (base32
                "0pj3l7p8d60c9b4vfprnv6g5l61d74pls4b5dvd84cn4ky9mzwjv"))))))
+
+(define-public emacs-treemacs-no-tests
+  (package
+    (inherit emacs-treemacs)
+    (arguments
+     (substitute-keyword-arguments (package-arguments emacs-treemacs)
+       ((#:phases phases)
+        `(modify-phases ,phases
+           (delete 'check)))
+       ((#:tests? tests?) #f)))))
+
+(define-public emacs-lsp-java-fix-treemacs
+  (package
+    (inherit emacs-lsp-java)
+    (propagated-inputs
+     `(("emacs-treemacs" ,emacs-treemacs-no-tests)
+       ,@(assoc-remove! (package-propagated-inputs emacs-lsp-java)
+                        "emacs-treemacs")))))
