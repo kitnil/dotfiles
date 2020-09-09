@@ -120,7 +120,7 @@ case "$1" in
         help_main
         exit 0
         ;;
-    br1-mr14*)
+    br1*)
         echo 172.16.103.199
         sshpass -p"$(pass show majordomo/private/ssh/router)"   \
                 ssh -F /dev/null                                \
@@ -131,7 +131,7 @@ case "$1" in
                 br1-mr14.intr "${@:2}"
         exit 0
         ;;
-    sr1-mr13-14*)
+    sr1*)
         sshpass -p"$(pass show majordomo/private/ssh/router)"   \
                 ssh -F /dev/null                                \
                 -i "$HOME/.ssh/eng_key_rsa"                     \
