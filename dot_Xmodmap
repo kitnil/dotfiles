@@ -1,3 +1,8 @@
+! Fix for C3800W keyboard where left Ctrl sends Control_L and Super_R
+remove mod4 = Super_R
+keycode 134=0xffe3
+add control = Control_L
+
 ! Unmap capslock
 clear Lock
 keycode 66 = Hyper_L
