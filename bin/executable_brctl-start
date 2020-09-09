@@ -1,20 +1,28 @@
-#!/bin/sh
-# Run safely, e.g.: sudo -i sh -c '/home/oleg/bin/brctl-start; sleep 120; reboot'
+#!/usr/bin/env bash
 
-ip tuntap add tap0 mode tap
+set -ex
 
-ip address del 192.168.105.120/24 dev enp6s0
+case "$1" in
+    --help)
+        echo "Run safely, e.g.: sudo -i sh -c '/home/oleg/bin/brctl-start; sleep 120; reboot'"
+        ;;
+    *)
+        ip tuntap add tap0 mode tap
 
-# Could break office network if tap0 is openvpn connection:
-brctl addbr br0
-brctl addif br0 tap0
-brctl addif br0 enp6s0
+        ip address del 192.168.100.120/24 dev enp6s0
 
-ip link set br0 up
-ip address add 192.168.105.120/24 dev br0
-ip route add default via 192.168.105.1
+        # Could break office network if tap0 is openvpn connection:
+        brctl addbr br0
+        brctl addif br0 tap0
+        brctl addif br0 enp6s0
 
-ip link set tap0 up
+        ip link set br0 up
+        ip address add 192.168.100.120/24 dev br0
+        ip route add default via 192.168.100.1
 
-# https://bugzilla.redhat.com/show_bug.cgi?id=542405
-sysctl net.bridge.bridge-nf-call-iptables=0
+        ip link set tap0 up
+
+        # https://bugzilla.redhat.com/show_bug.cgi?id=542405
+        sysctl net.bridge.bridge-nf-call-iptables=0
+        echo "Hint: Make sure tap10 interfaces inside the bridge by invoking 'brctl addif br0 tap10' and interface is up by invoking 'ip link set tap10 up'."
+esac
