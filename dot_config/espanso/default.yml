@@ -9,6 +9,9 @@
 toggle_key: OFF
 
 matches:
+  - trigger: "smorc"
+    replace: "SMOrc"
+
   # Simple text replacement
   - trigger: ":espanso"
     replace: "Hi there!"
