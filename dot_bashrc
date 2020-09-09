@@ -1615,3 +1615,16 @@ ci()
 {
     "$BROWSER" "$CI"
 }
+
+docker()
+{
+    case "${@: -1}" in
+        web*)
+            host="${@: -1}"; [[ "$host" == *.intr ]] || host+=.intr
+            command docker --tls --host tcp://"${@: -1}":2375 "${@:2:$(($#-2))}"
+            ;;
+        *)
+            command docker "$@"
+            ;;
+    esac
+}
