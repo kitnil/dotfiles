@@ -1385,20 +1385,6 @@ nix-env-clean()
     awk '/#/ { print $2 }' "$HOME/manifest.nix" | xargs nix-env -e
 }
 
-nix()
-{
-    case "$1" in
-        manifest)
-            NIXPKGS_CONFIG="$HOME/config.nix"                                   \
-            NIX_PATH=nixpkgs="$HOME/.nix-defexpr/channels/nixos-unstable"       \
-            nix-env --install '.*' -f "$HOME/manifest.nix" "${@:2}"
-            ;;
-        *)
-            command nix "$@"
-    esac
-
-}
-
 firefox()
 {
     case "$1" in
