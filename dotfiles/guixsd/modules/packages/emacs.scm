@@ -86,6 +86,16 @@
   #:use-module (srfi srfi-1)
   #:use-module (ice-9 match))
 
+(define-public emacs-with-patched-tramp
+  (package
+    (inherit emacs)
+    (source
+     (origin
+       (inherit (package-source emacs))
+       (patches (fold cons* '()
+                      (origin-patches (package-source emacs))
+                      (search-patches "emacs-tramp-sudo.patch")))))))
+
 (define-public emacs-athena
   ;; GTK+ could kill emacs --daemon,
   ;; see <https://bugzilla.gnome.org/show_bug.cgi?id=85715>.
