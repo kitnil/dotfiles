@@ -123,17 +123,6 @@
 (setq wi-groups-direcotory "~/majordomo")
 (setq wi-projects-directories '("~/src" "~/archive/src"))
 
-(load (expand-file-name "~/archive/src/tramp-auto-auth/tramp-auto-auth.el"))
-(add-to-list 'tramp-auto-auth-alist
-             `("intr" . ,(let ((secret (plist-get (nth 0
-                                                       (auth-source-search
-                                                        :host "majordomo-eng"
-                                                        :user "eng"))
-                                                  :secret)))
-                           (and (functionp secret)
-                                (funcall secret)))))
-(tramp-auto-auth-mode)
-
 (defun wi-find-file-readlink ()
   (interactive)
   (let ((file-name (buffer-file-name)))
