@@ -7,8 +7,6 @@
 
 (setq plain-org-wiki-directory (expand-file-name "~/src/org/"))
 
-(setq org-descriptive-links nil)
-
 ;; (with-eval-after-load 'org
 ;;   (setq org-format-latex-options
 ;;         (plist-put org-format-latex-options :scale 1.5))
