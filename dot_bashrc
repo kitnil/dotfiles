@@ -451,6 +451,16 @@ guix()
                     ;;
             esac
             ;;
+        update)
+            (
+                set -e
+                guix pull
+                guix system build
+                guix manifest
+                guix system switch
+                set +e
+            )
+            ;;
         master-staging)
             git -C "$HOME/src/guix" shortlog -n upstream/master..upstream/staging
             ;;
