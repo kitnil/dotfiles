@@ -46,6 +46,7 @@ xml xorg)
 
                kdeconnect
 
+               dialog
                entr
 
                ;; See <https://github.com/NixOS/nixpkgs/issues/16327#issuecomment-303068424>.
