@@ -11,32 +11,32 @@ Run COMMANDS with ARGS
 
 COMMAND must be one of the sub-commands listed below:
 
-   apache
-   clean
-   containers
-   deploy
-   filter
-   firewall
-   unfilter
-   images
-   interfaces
-   route
-   io
-   ip-filter
-   mysql
-   net
-   nginx
-   nginx-config
-   ping
-   shell
-   sniff
-   ssh
-   sshrc
-   stat
-   sg
-   te
-   traceroute
-   uptime
+   apache        show USER's Apache logs
+   clean         kill MySQL connections on SERVER
+   containers    list running containers on SERVER
+   deploy        deploy containers to SERVER
+   filter        add IP address to ip-filter on SERVER
+   firewall      print iptables rules on SERVER
+   unfilter      delete IP address from ip-filter on SERVER
+   images        list container images on SERVER
+   interfaces    list network interfaces on SERVER
+   route         show network route to SERVER
+   io            show input output stats on SERVER
+   ip-filter     control ip-filter on server
+   mysql         connect to MySQL on server
+   net           show network interfaces stats on SERVER
+   nginx         show top requests to NGINX
+   nginx-config  show NGINX config on SERVER
+   ping          ping a SERVER
+   shell         connect to CISCO
+   sniff         run tcpdump on SERVER
+   ssh           connect to server via SSH
+   sshrc         connect to server via SSH with configuration
+   stat          show iostat on SERVER
+   sg            show disk performance on SERVER
+   te            show taskexecutor logs
+   traceroute    show traceroute to SERVER
+   uptime        show uptime on SERVER
 
 Report bugs to: go.wigust@gmail.com."
 }
