@@ -18,6 +18,9 @@ let hms-account =
 		λ(args : { name : Text, server : Text, tarif : Text })
 	  → "${args.server} ${args.name} ${args.tarif}\n\t\t\topen\t\t\t\thms web open ${args.name}\n\t\t\ttoggle\t\t\t\thms web toggle ${args.name}"
 
+let service = λ(args : { name : Text, start : Text, stop : Text })
+	  → "${args.name}\n\t\tStart\t${args.start}\n\t\tStop\t${args.stop}"
+
 in  ''
 	#!/bin/sh
 
@@ -30,9 +33,6 @@ in  ''
 		Mail
 			IMG:${guix-profile}/share/icons/gnome/24x24/emblems/emblem-mail.png	View	echo '(gnus-new-window)' | stumpish -e eval
 			IMG:${guix-profile}/share/icons/gnome/24x24/actions/mail-send-receive.png	Pull	echo '(notmuch)' | stumpish -e eval
-		Espanso
-			Start	espanso start
-			Stop	espanso stop
 		Emacs (Emacs Daemon)	run-emacs
 		Documention (Zeal)	echo '(zeal)' | stumpish -e eval
 		IMG:${guix-profile}/share/icons/hicolor/24x24/apps/leafpad.png	Editor (leafpad)	leafpad
@@ -46,6 +46,9 @@ in  ''
 	${project { name = "Dotfiles", session = "dotfiles" }}
 	${project { name = "Guix", session = "guix" }}
 	${project { name = "NixOps", session = "nixops" }}
+
+	Services
+		${service { name = "Espanso", start = "espanso start", stop = "espanso stop" }}
 
 	Guix
 		Update	xterm +sb -bg black -fg white -e 'bash -ic "guix menu"; read -p "Press any key to close."'
