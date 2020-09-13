@@ -49,6 +49,7 @@ in  ''
 
 	Services
 		${service { name = "Espanso", start = "espanso start", stop = "espanso stop" }}
+		${service { name = "xmodmap", start = "xmodmap /home/oleg/.Xmodmap", stop = "" }}
 
 	Guix
 		Update	xterm +sb -bg black -fg white -e 'bash -ic "guix menu"; read -p "Press any key to close."'
