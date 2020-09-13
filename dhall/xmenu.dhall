@@ -14,6 +14,10 @@ let container =
 		λ(args : { name : Text, icon : Text, command : Text })
 	  → "\tIMG:${args.icon}\t${args.name}\t${args.command}"
 
+let hms-account =
+		λ(args : { name : Text, server : Text, tarif : Text })
+	  → "${args.server} ${args.name} ${args.tarif}\n\t\t\topen\t\t\t\thms web open ${args.name}\n\t\t\ttoggle\t\t\t\thms web toggle ${args.name}"
+
 in  ''
 	#!/bin/sh
 
@@ -84,6 +88,22 @@ in  ''
 		Planet	echo '(xplanet-file)' | stumpish -e eval
 		Images	echo '(wallpaper)' | stumpish -e eval
 		Paperview	paperview
+
+	Work
+		Shared
+			${hms-account { server = "web15", name = "AC_222914", tarif = "Хостинг приложений" }}
+			${hms-account { server = "web15", name = "AC_221357", tarif = "Старт" }}
+			${hms-account { server = "web19", name = "AC_224973", tarif = "Безлимитный+" }}
+			${hms-account { server = "web20", name = "AC_226927", tarif = "Безлимитный+" }}
+			${hms-account { server = "web26", name = "AC_220037", tarif = "Безлимитный+" }}
+			${hms-account { server = "web27", name = "AC_220783", tarif = "Безлимитный" }}
+			${hms-account { server = "web29", name = "AC_216226", tarif = "Безлимитный" }}
+			${hms-account { server = "web29", name = "AC_224079", tarif = "Безлимитный" }}
+			${hms-account { server = "web30", name = "AC_220670", tarif = "Безлимитный+" }}
+			${hms-account { server = "web30", name = "AC_226391", tarif = "Безлимитный" }}
+			${hms-account { server = "web33", name = "AC_208112", tarif = "Безлимитный" }}
+			${hms-account { server = "web37", name = "AC_213062", tarif = "Безлимитный" }}
+			${hms-account { server = "kvm-test", name = "AC_223473", tarif = "Безлимитный" }}
 
 	Web
 		Algorithms	chromium --app=https://algorithm-visualizer.org/
