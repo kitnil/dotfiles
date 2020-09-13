@@ -70,6 +70,8 @@ Connect to HOST's ip-filter.
   -d, --host             ip-filter host
   -h, --help             display this help and exit
 
+Example: 'connect ip-filter --host web30.intr --describe'.
+
 Report bugs to: go.wigust@gmail.com."
 }
 
