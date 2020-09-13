@@ -55,21 +55,9 @@ EndSection")
         "githunt.wugi.info"
         "homer.wugi.info"
         "guix.duckdns.org"
-        "alerta.duckdns.org"
-        "anongit.duckdns.org"
-        "pipeline.duckdns.org"
-        ;; TODO: "wugi.info"
         "zabbix.wugi.info"
-        "grafana.wugi.info"
         "jenkins.wugi.info"
-        "gitlab.wugi.info"
-        "gitea.wugi.info"
-        "prometheus.wugi.info"
-        "alerta.wugi.info"
-        "awx.wugi.info"
-        "stackstorm.wugi.info"
-        "nextcloud.wugi.info"
-        "redmine.wugi.info"))
+        "torrent.wugi.info"))
 
 
 ;;;
@@ -216,28 +204,9 @@ location / {
 ")))
 
         (proxy "cups.tld" 631)
-        (proxy "torrent.tld" 9091)
-        (proxy "awx.wugi.info" 8052 #:ssl? #t #:ssl-key? #t)
-        (proxy "stackstorm.wugi.info" 4443 #:ssl? #t #:ssl-target? #t #:ssl-key? #t)
+        (proxy "torrent.wugi.info" 9091)
         (proxy "jenkins.wugi.info" 8090 #:ssl? #t #:ssl-key? #t #:mtls? #t)
-        (proxy "alerta.wugi.info" 47080 #:ssl? #t #:ssl-key? #t)
         (proxy "githunt.wugi.info" 3000 #:ssl? #t #:ssl-key? #t #:mtls? #t)
-        (proxy "grafana.wugi.info" 3080 #:ssl? #t #:ssl-key? #t)
-        (proxy "dashboard.gitlab.wugi.info" 64680)
-        (proxy "gitlab.wugi.info" 65080 #:sub-domains? "~^(?<group>.*)\\.")
-        (proxy "gitlab.wugi.info" 65080  #:ssl? #t #:ssl-key? #t)
-        (proxy "gitea.wugi.info" 3000 #:ssl? #t #:ssl-key? #t)
-        (proxy "anongit.duckdns.org" 65080  #:ssl? #t #:ssl-key? #t)
-        (proxy "cuirass.tld" 19080)
-        (proxy "input.tld" 19080)
-        (proxy "prometheus.wugi.info" 65090 #:ssl? #t #:ssl-key? #t)
-        (proxy "alerta.intr" 16180)
-        (proxy "web.alerta.intr" 16480)
-        (proxy "zabbix.intr" 15081)
-        (proxy "cerberus.intr" 15080)
-        (proxy "grafana.intr" 16080)
-        (proxy "nextcloud.wugi.info" 28080 #:ssl? #t #:ssl-key? #t)
-        (proxy "redmine.wugi.info" 44080 #:ssl? #t #:ssl-key? #t)
         (proxy "guix.duckdns.org" 5556 #:ssl? #t)
         (proxy "guix.wugi.info" 5556)
         (proxy "pykhaloff.ddns.net" 443
@@ -421,18 +390,12 @@ location / {
         "hosts"
         (string-join
          `(,(string-join '("127.0.0.1 guixsd localhost"
-                           "cuirass.wugi.info"
-                           "dashboard.gitlab.wugi.info"
-                           "gitea.wugi.info"
-                           "gitlab.wugi.info"
-                           "grafana.wugi.info"
                            "zabbix.wugi.info"
                            "techinfo.intr"
                            "texinfo.tld"
                            "jenkins.wugi.info"
                            "iso.wugi.info"
                            "cgit.duckdns.org"
-                           "homer.tld"
                            "spb"))
            "::1 guixsd localhost"
 
