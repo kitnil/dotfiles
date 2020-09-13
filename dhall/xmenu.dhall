@@ -43,6 +43,9 @@ in  ''
 	${project { name = "Guix", session = "guix" }}
 	${project { name = "NixOps", session = "nixops" }}
 
+	Guix
+		Update	xterm +sb -bg black -fg white -e 'bash -ic "guix menu"; read -p "Press any key to close."'
+
 	Container
 	${container
 		{ icon = "${guix-profile}/share/icons/hicolor/24x24/apps/qemu.png"
