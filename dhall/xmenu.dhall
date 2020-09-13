@@ -1,3 +1,5 @@
+-- -*- eval: (setq-local indent-tabs-mode t); -*-
+
 let config = /home/oleg/.config/dhall/config.dhall
 
 let guix-profile = "/home/oleg/.guix-profile"

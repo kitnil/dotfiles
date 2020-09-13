@@ -110,7 +110,8 @@
  '(indent-tabs-mode nil)
  '(org-agenda-files '("~/org/inbox.org" "~/org/todo.org" "~/org/web.org"))
  '(safe-local-variable-values
-   '((projectile-project-test-cmd . "make check")
+   '((eval setq-local indent-tabs-mode t)
+     (projectile-project-test-cmd . "make check")
      (git-auto-commit-mode . t)
      (eval progn
            (put 'with-directory 'scheme-indent-function 1)
