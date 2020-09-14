@@ -1,0 +1,4 @@
+export TF_VAR_GITLAB_TOKEN="$(pass majordomo/private/gitlab.intr/tokens/pyhalov)"
+export TF_VAR_JENKINS_USER=gitlab
+export TF_VAR_JENKINS_PASSWORD="$(pass majordomo/public/jenkins.intr/gitlab)"
+eval "echo Apply to specific resource example: 'terraform apply -target=gitlab_project.homer'"
