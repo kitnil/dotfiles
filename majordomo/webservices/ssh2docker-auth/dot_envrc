@@ -1,3 +1,10 @@
 export NIX_PATH=nixpkgs=https://github.com/nixos/nixpkgs/archive/ce9f1aaa39e.tar.gz
 export CI=https://jenkins.intr/job/webservices/job/ssh2docker/
-
+export MJRU_API_ENDPOINT=http://api-dev.intr
+export MJRU_API_USER=service
+export MJRU_API_PASSWORD="$(pass show majordomo/public/services/dev)"
+export DOCKER_HOST=tcp://web98.intr:2375
+export DOCKER_DAEMON_TCP_PORT=2375
+export DOCKER_TLS_VERIFY=1
+export DOCKER_IMAGE=docker-registry.intr/webservices/ssh-guest-room:master
+export DEBUG=true
