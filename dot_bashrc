@@ -418,8 +418,23 @@ guix()
         menu)
             {
                 exec 3>&1
-                mapfile -t selection < <(dialog --separate-output --title "Guix" --checklist "Guix Operations" 22 72 3 pull "Pull new changes" on "system build" "Build system" on manifest "Apply manifest" on "system switch" "Reconfigure system" on 2>&1 2>&1 1>&3)
-                exit_code=$?
+                mapfile -t options < <(
+                    dialog --separate-output --title "Guix" --checklist "Guix Options" 22 72 3 \
+                           -- --no-offload "--no-offload" off 2>&1 2>&1 1>&3
+                )
+                declare -p options
+                exec 3>&-
+            }
+            {
+                exec 3>&1
+                mapfile -t selection < <(
+                    dialog --separate-output --title "Guix" --checklist "Guix Operations" 22 72 3 \
+                           pull "Pull new changes" on \
+                           "system build" "Build system" on \
+                           manifest "Apply manifest" on \
+                           "system switch" "Reconfigure system" on \
+                           2>&1 2>&1 1>&3
+                )
                 declare -p selection
                 exec 3>&-
             }
@@ -428,7 +443,7 @@ guix()
                 set -ex
                 for operation in "${selection[@]}"
                 do
-                    eval "guix $operation"
+                    eval "guix $operation $options"
                 done
             )
             ;;
