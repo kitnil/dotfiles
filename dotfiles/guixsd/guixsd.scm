@@ -399,6 +399,8 @@ location / {
                            "spb"))
            "::1 guixsd localhost"
 
+           "78.108.82.157 mjru"
+
            "192.168.100.1 r1.tld"
            "192.168.100.12 r2.tld"
            "192.168.100.120 cuirass.tld"
