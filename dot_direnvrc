@@ -228,3 +228,8 @@ use_mjru_nix()
     }
     export_function nix-shell
 }
+
+use_nixpkgs()
+{
+    echo '+/home/oleg/src/nixpkgs' > .dumbjump
+}
