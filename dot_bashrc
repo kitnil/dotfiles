@@ -283,6 +283,24 @@ export MANWIDTH
 #     xdotool search --name "$window_name" windowsize $1 $2
 # }
 
+iptables()
+{
+    case "$1" in
+        block)
+            sudo --login command iptables -I INPUT -s "$2" -j DROP
+            ;;
+        --help)
+            command iptables --help
+            echo "\
+Extra commands:
+block  block IP-ADDRESS on INPUT chain"
+            ;;
+        *)
+            command sudo iptables "$@"
+            ;;
+    esac
+}
+
 ansible-host()
 {
     ansible --inventory "$1", "$1" --become --ask-become-pass "${@:2}"
