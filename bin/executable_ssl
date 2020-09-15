@@ -3,7 +3,7 @@
 set -e
 set -o pipefail
 
-TESTSSL="${TESTSSL:-docker run --rm -it drwetter/testssl.sh:3.0}"
+TESTSSL="${TESTSSL:-docker run --network=host --rm -it drwetter/testssl.sh:3.0}"
 
 case "$1" in
     show)
