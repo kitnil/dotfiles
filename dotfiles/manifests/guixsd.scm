@@ -29,7 +29,4 @@
 
 (combined-manifest-from-files
  (map (cut string-append %source-dir "/" <>)
-      '("emacs.scm" "guix-collection.scm" "wigust.scm"
-        ;; XXX: those inferiors lacks an introduction and cannot be authenticated
-        ;; "inferior.scm" "majordomo.scm"
-        )))
+      '("emacs.scm" "guix-collection.scm" "majordomo.scm" "wigust.scm")))
