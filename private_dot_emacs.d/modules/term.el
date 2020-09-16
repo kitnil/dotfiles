@@ -44,7 +44,7 @@
     (define-key map (kbd "C-y") 'vterm-send-C-y)
     (define-key map (kbd "<C-backspace>") 'vterm-send-backspace)
     (define-key map (kbd "<menu>") 'vterm-copy-mode)
-    (define-key map (kbd "M-/") (lambda () (interactive) (vterm-send-key "/" nil t))))
+    (define-key map (kbd "M-/") 'vterm-dabbrev-expand))
   (let ((map vterm-copy-mode-map))
     (define-key map (kbd "<menu>") 'vterm-copy-mode))
   (push (list "find-file-below"
@@ -70,15 +70,17 @@
 (setq vterm-max-scrollback 100000)
 (setq vterm-min-window-width 160)
 
+(defun vterm-dabbrev-expand-wrapper ()
+  (save-current-buffer
+    (setq-local buffer-read-only nil)
+    (call-interactively #'dabbrev-expand)
+    (thing-at-point 'symbol)))
+
 (defun vterm-dabbrev-expand ()
   (interactive)
-  (let* ((symbol (thing-at-point 'symbol))
-         (completion (save-current-buffer
-                       (setq-local buffer-read-only nil)
-                       (if symbol
-                           (progn (call-interactively #'dabbrev-expand)
-                                  (thing-at-point 'symbol))
-                         (user-error "No possible abbreviation preceding point")))))
-    (dotimes (i (length symbol))
-      (vterm-send-backspace))
-    (vterm-send-string completion t)))
+  (let ((symbol (thing-at-point 'symbol)))
+    (if symbol
+        (progn (dotimes (i (length symbol))
+                 (vterm-send-backspace))
+               (vterm-send-string (vterm-dabbrev-expand-wrapper) t))
+      (vterm-send-string (vterm-dabbrev-expand-wrapper) t))))
