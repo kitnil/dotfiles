@@ -88,7 +88,7 @@ in  ''
 		QTerminal	"echo '(qterminal)' | stumpish -e eval"
 
 	Wallpaper
-		StumpWM Refcard	echo
+		StumpWM Refcard	echo '(refcard-stumpwm)' | stumpish -e eval
 		Planet	echo '(xplanet-file)' | stumpish -e eval
 		Images	echo '(wallpaper)' | stumpish -e eval
 		Paperview	paperview

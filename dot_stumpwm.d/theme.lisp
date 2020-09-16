@@ -18,6 +18,9 @@
   (run-shell-command (format nil "sxiv ~a/archive/src/wallpapers"
                              (getenv "HOME"))))
 
+(defcommand refcard-stumpwm () ()
+  (run-shell-command "bash -ic 'stumpwm-refcard wallpaper'"))
+
 (set-background-dark)
 
 
