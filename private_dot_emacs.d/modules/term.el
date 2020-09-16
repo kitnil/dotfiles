@@ -72,15 +72,13 @@
 
 (defun vterm-dabbrev-expand ()
   (interactive)
-  (let ((symbol (thing-at-point 'symbol)))
-    (if symbol
-        (progn (dotimes (i (length symbol))
-                 (vterm-send-backspace))
-               (let ((completion (with-current-buffer "*vterm-dabbrev*"
-                                   (when (= (buffer-size (current-buffer)) 0)
-                                     (insert symbol))
-                                   (call-interactively #'dabbrev-expand)
-                                   (thing-at-point 'symbol))))
-                 (vterm-send-string completion t)))
-      (with-current-buffer "*vterm-dabbrev*"
-        (delete-region (point-min) (point-max))))))
+  (let* ((symbol (thing-at-point 'symbol))
+         (completion (save-current-buffer
+                       (setq-local buffer-read-only nil)
+                       (if symbol
+                           (progn (call-interactively #'dabbrev-expand)
+                                  (thing-at-point 'symbol))
+                         (user-error "No possible abbreviation preceding point")))))
+    (dotimes (i (length symbol))
+      (vterm-send-backspace))
+    (vterm-send-string completion t)))
