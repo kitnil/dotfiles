@@ -78,9 +78,7 @@
 
 (defun vterm-dabbrev-expand ()
   (interactive)
-  (let ((symbol (thing-at-point 'symbol)))
-    (if symbol
-        (progn (dotimes (i (length symbol))
-                 (vterm-send-backspace))
-               (vterm-send-string (vterm-dabbrev-expand-wrapper) t))
-      (vterm-send-string (vterm-dabbrev-expand-wrapper) t))))
+  (if (thing-at-point 'symbol)
+      (progn (vterm-send-C-w)
+             (vterm-send-string (vterm-dabbrev-expand-wrapper) t))
+    (vterm-send-string (vterm-dabbrev-expand-wrapper) t)))
