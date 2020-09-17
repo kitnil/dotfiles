@@ -34,12 +34,15 @@ in  ''
 			IMG:${guix-profile}/share/icons/gnome/24x24/emblems/emblem-mail.png	View	echo '(gnus-new-window)' | stumpish -e eval
 			IMG:${guix-profile}/share/icons/gnome/24x24/actions/mail-send-receive.png	Pull	echo '(notmuch)' | stumpish -e eval
 		Emacs (Emacs Daemon)	run-emacs
-		Documention (Zeal)	echo '(zeal)' | stumpish -e eval
 		IMG:${guix-profile}/share/icons/hicolor/24x24/apps/leafpad.png	Editor (leafpad)	leafpad
 		IMG:${guix-profile}/share/icons/hicolor/24x24/apps/gimp.png	Image editor (Gimp)	gimp
 		IMG:${nix-profile}/share/icons/robomongo.png	Mongo	robo3t
 		IMG:${guix-profile}/share/icons/gnome/24x24/devices/video-display.png	OBS	echo '(obs)' | stumpish -e eval
 		IMG:${nix-profile}/share/icons/hicolor/32x32/apps/quassel.png	Quassel	"echo '(quassel)' | stumpish -e eval"
+
+	Documention
+		Arch Wiki	firefox file:///home/oleg/.local/share/arch-wiki/html
+		Zeal	echo '(zeal)' | stumpish -e eval
 
 	Projects
 	${project { name = "Blog", session = "blog" }}
