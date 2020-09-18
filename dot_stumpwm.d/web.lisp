@@ -143,15 +143,17 @@
   "Start of focus firefox."
   (let ((clipboard (get-x-selection)))
     (cond ((string-contains "AC_" clipboard)
-           (sb-thread:make-thread
-            (lambda ()
-              (mjru-open-account clipboard))))
-          ((and (uiop/utility:string-prefix-p "u" clipboard)
-                (handler-case (parse-integer (subseq clipboard 1 (length clipboard))) (t (c) nil)))
-           (let ((account (subseq clipboard 1 (length clipboard))))
+           (when (y-or-n-p (format nil "Open ~a account in firefox? " clipboard))
              (sb-thread:make-thread
               (lambda ()
-                (mjru-open-account (concat "AC_" account))))))
+                (mjru-open-account clipboard)))))
+          ((and (uiop/utility:string-prefix-p "u" clipboard)
+                (handler-case (parse-integer (subseq clipboard 1 (length clipboard))) (t (c) nil)))
+           (let ((account (concat "AC_" (subseq clipboard 1 (length clipboard)))))
+             (when (y-or-n-p (format nil "Open ~a account in firefox? " account))
+               (sb-thread:make-thread
+                (lambda ()
+                  (mjru-open-account account))))))
           ;; ((= (length clipboard) 24)
           ;;  (mjru-mongo-development-id-object))
           (t (run-or-raise (firefox-command) '(:class "Firefox"))))))
