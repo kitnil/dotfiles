@@ -136,7 +136,25 @@
 
 (defcommand firefox () ()
   "Start of focus firefox."
-  (run-or-raise (firefox-command) '(:class "Firefox")))
+  (let ((clipboard (get-x-selection)))
+    (cond ((string-contains "AC_" clipboard)
+           (sb-thread:make-thread
+            (lambda ()
+              (run-shell-command (format nil "notify-send ~s"
+                                         (string-trim '(#\Newline)
+                                                      (run-shell-command (format nil "hms web unix ~a" clipboard)
+                                                                         t)))))))
+          ((and (uiop/utility:string-prefix-p "u" clipboard)
+                (handler-case (parse-integer (subseq clipboard 1 (length clipboard))) (t (c) nil)))
+           (let ((account (subseq clipboard 1 (length clipboard))))
+             (sb-thread:make-thread
+              (lambda ()
+                (run-shell-command (format nil "hms web open ~a" (concat "AC_" account)))
+                (run-shell-command (format nil "notify-send ~s"
+                                           (format nil "Open account ~a in Firefox." account)))))))
+          ;; ((= (length clipboard) 24)
+          ;;  (mjru-mongo-development-id-object))
+          (t (run-or-raise (firefox-command) '(:class "Firefox"))))))
 
 (defcommand firefox-new-window () ()
   "Start Firefox."
