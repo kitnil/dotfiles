@@ -134,24 +134,24 @@
   (join `(,@(if dark-theme '("GTK_THEME=Adwaita:dark") nil) ,*fontconfig-file*
           "nixGLIntel" "firefox")))
 
+(defun mjru-open-account (account)
+  (run-shell-command (format nil "hms web open ~a" account))
+  (run-shell-command (format nil "notify-send ~s"
+                             (format nil "Open account ~a in Firefox." account))))
+
 (defcommand firefox () ()
   "Start of focus firefox."
   (let ((clipboard (get-x-selection)))
     (cond ((string-contains "AC_" clipboard)
            (sb-thread:make-thread
             (lambda ()
-              (run-shell-command (format nil "notify-send ~s"
-                                         (string-trim '(#\Newline)
-                                                      (run-shell-command (format nil "hms web unix ~a" clipboard)
-                                                                         t)))))))
+              (mjru-open-account clipboard))))
           ((and (uiop/utility:string-prefix-p "u" clipboard)
                 (handler-case (parse-integer (subseq clipboard 1 (length clipboard))) (t (c) nil)))
            (let ((account (subseq clipboard 1 (length clipboard))))
              (sb-thread:make-thread
               (lambda ()
-                (run-shell-command (format nil "hms web open ~a" (concat "AC_" account)))
-                (run-shell-command (format nil "notify-send ~s"
-                                           (format nil "Open account ~a in Firefox." account)))))))
+                (mjru-open-account (concat "AC_" account))))))
           ;; ((= (length clipboard) 24)
           ;;  (mjru-mongo-development-id-object))
           (t (run-or-raise (firefox-command) '(:class "Firefox"))))))
