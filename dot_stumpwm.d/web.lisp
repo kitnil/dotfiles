@@ -135,7 +135,7 @@
           "nixGLIntel" "firefox")))
 
 (defun mjru-open-account (account)
-  (run-shell-command (format nil "hms web open ~a" account))
+  (run-shell-command (join (list *fontconfig-file* "hms" "web" "open" account)))
   (run-shell-command (format nil "notify-send ~s"
                              (format nil "Open account ~a in Firefox." account))))
 
