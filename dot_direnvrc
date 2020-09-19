@@ -46,6 +46,7 @@ use_guix()
     PACKAGES_MAINTENANCE=(
         direnv
         git
+        git:send-email
         git-cal
         gnupg
         guile-colorized
