@@ -26,8 +26,7 @@
 
 ;;; Commentary:
 ;;;
-;;; This module provides a service definition for the Transmission
-;;; BitTorrent client.
+;;; This module provides a service definition for the `(file-name-base (buffer-name))` service.
 ;;;
 ;;; Code:
 
