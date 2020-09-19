@@ -1466,7 +1466,7 @@ firefox()
             pgrep -fa firefox-wrapped | grep -v 'test' | cut -d ' ' -f 1 | xargs kill
             ;;
         *)
-            command firefox "${@:2}"
+            command firefox "$@"
     esac
 }
 
