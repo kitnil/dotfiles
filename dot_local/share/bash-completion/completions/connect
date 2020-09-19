@@ -1,9 +1,7 @@
 _connect_complete_subcommand ()
 {
     local command="${COMP_WORDS[1]}"
-    local subcommands="$(${COMP_WORDS[0]} $command --help 2> /dev/null \
-                         | grep '^   [a-z]' \
-                         | sed -e's/^ \+\([a-z-]\+\).*$/\1/g')"
+    local subcommands="$(${COMP_WORDS[0]} $command --help 2> /dev/null | awk '/^    [a-z]/ { print $1 }')"
     COMPREPLY=($(compgen -W "$subcommands" -- "${COMP_WORDS[$COMP_CWORD]}"))
 }
 
@@ -68,8 +66,7 @@ _connect_complete()
 	    if [ -z "$_connect_subcommands" ]
 	    then
 		# Cache the list of subcommands to speed things up.
-		_connect_subcommands="$(connect --help 2> /dev/null \
-                                        | grep '^  ' | cut -c 2-)"
+		_connect_subcommands="$(connect --help 2> /dev/null | awk '/^    [a-z]/ { print $1 }')"
 	    fi
             COMPREPLY=($(compgen -W "$_connect_subcommands" -- "$word_at_point"))
             ;;
