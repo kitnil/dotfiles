@@ -1449,14 +1449,14 @@ nix()
 {
     case "$1" in
         manifest)
-            NIXPKGS_CONFIG="$HOME/config.nix"                                   \
-            NIX_PATH=nixpkgs="$HOME/.nix-defexpr/channels/nixos-unstable"       \
-            nix-env --install '.*' -f "$HOME/manifest.nix" "${@:2}"
+            NIXPKGS_CONFIG="$HOME/.local/share/chezmoi/dotfiles/nix/config.nix" \
+            NIX_PATH=nixpkgs="$HOME/.nix-defexpr/channels/nixos-unstable" \
+            nix-env --install '.*' -f "$HOME/.local/share/chezmoi/dotfiles/nix/manifest.nix" "${@:2}"
             ;;
         *)
             command nix "$@"
+            ;;
     esac
-
 }
 
 firefox()
