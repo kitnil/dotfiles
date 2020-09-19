@@ -208,3 +208,13 @@
 
 (defcommand refcard-gnus () ()
   (browse-refcard "https://www.gnu.org/software/emacs/refcards/pdf/gnus-refcard.pdf"))
+
+
+;;;
+;;; Webhook
+;;;
+
+(defcommand webhook () ()
+  (run-shell-command (join (list "/home/oleg/.nix-profile/bin/webhook"
+                                 "-hooks" "/home/oleg/.local/share/chezmoi/dotfiles/webhook/hooks.json"
+                                 "-port" "9090"))))
