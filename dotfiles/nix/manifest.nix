@@ -174,7 +174,11 @@ in [
   quassel
   lxqt.qterminal
 
-  old.python3Packages.alerta
+  (old.python3Packages.alerta.overrideAttrs (old: {
+    patches = [
+      /home/oleg/.local/share/chezmoi/dotfiles/nix/patches/alerta-top-narrow-output.patch
+    ];
+  }))
 
   (let
     firefox = (import (builtins.fetchTarball {
