@@ -91,7 +91,7 @@ in  ''
 		Kitty	kitty
 		XFCE	xfce4-terminal
 		Termonad	termonad
-		QTerminal	"echo '(qterminal)' | stumpish -e eval"
+		QTerminal	echo '(qterminal)' | stumpish -e eval
 
 	Wallpaper
 		StumpWM Refcard	echo '(refcard-stumpwm)' | stumpish -e eval
