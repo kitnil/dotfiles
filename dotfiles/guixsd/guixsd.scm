@@ -23,8 +23,7 @@
              (services kresd)
              (services jenkins)
              (services tftp)
-             (services openvpn)
-             (services webhook))
+             (services openvpn))
 
 ;; Fix Jenkins in Docker group
 (module-set! (resolve-module '(gnu packages admin)) 'shepherd shepherd-patched)
@@ -634,8 +633,6 @@ ServerAliveCountMax 3"))))))
                        transmission-service
 
                        intel-vaapi-service
-
-                       webhook-service
 
                        (modify-services (operating-system-user-services base-system)
                          (guix-service-type config => %guix-daemon-config))))
