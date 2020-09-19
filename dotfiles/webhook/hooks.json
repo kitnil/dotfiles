@@ -1,0 +1,13 @@
+[
+  {
+    "id": "mpv",
+    "execute-command": "/home/oleg/.guix-profile/bin/mpv",
+    "command-working-directory": "/home/oleg",
+    "pass-arguments-to-command": [
+      {
+        "source": "query",
+        "name": "watch"
+      }
+    ]
+  }
+]
