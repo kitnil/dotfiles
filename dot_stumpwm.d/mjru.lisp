@@ -77,10 +77,10 @@
 ;;;
 
 (defcommand mjru-alerta-top () ()
-  (term-shell-command (join (list "sh" "-c" (format nil "~s" "while true; do /home/oleg/.local/bin/alerta top; sleep 20; done")))
+  (term-shell-command (join (list "sh" "-c" (format nil "~s" "while true; do alerta top; sleep 5; done")))
                       :title "alerta-top"
                       :terminal 'st
-                      :font "Monospace:size=6"))
+                      :font "Monospace:size=14"))
 
 (defcommand mjru-vnc-grafana () ()
   (run-shell-command "vncviewer 172.16.100.182:5900"))
