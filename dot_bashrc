@@ -1689,3 +1689,15 @@ docker()
             ;;
     esac
 }
+
+elktail()
+{
+    case "$1" in
+        nginx)
+            command elktail -url 'http://es:9200' -i 'nginx-*' -n 10000 -l -f '%remote_addr %hostname %path %method %code %http_host'
+            ;;
+        *)
+            command elktail "$@"
+            ;;
+    esac
+}
