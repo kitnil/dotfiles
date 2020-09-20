@@ -27,6 +27,7 @@ alias mv="mv -i"
 alias xclipp='xclip -selection secondary'
 
 alias hosts='hosts --auto-sudo'
+alias log='sudo lnav /var/log'
 
 alias lsns='lsns --notruncate --output-all'
 alias goaccess='goaccess --log-format=COMBINED'
