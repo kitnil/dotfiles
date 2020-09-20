@@ -52,6 +52,7 @@
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCbHXJGd7c8Hy4z0-YX1Jf3Q" video) ;WP Website Guide
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCMV8p6Lb-bd6UZtTc_QD4zA" video) ;Baggers
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCZrrEuHiQjN2CUo84g5tk7w" video) ;tripcode!Q/7
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCgY050JAKtaew3IEgGW1qSQ" video) ;Unix way
         ("https://www.youtube.com/feeds/videos.xml?user=dubbeltumme" video)
         ("https://www.youtube.com/feeds/videos.xml?user=LDCNow" video)
         ("https://www.youtube.com/feeds/videos.xml?user=tuxreviews" video)
