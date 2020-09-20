@@ -39,6 +39,7 @@ in  ''
 		IMG:${nix-profile}/share/icons/robomongo.png	Mongo	robo3t
 		IMG:${guix-profile}/share/icons/gnome/24x24/devices/video-display.png	OBS	echo '(obs)' | stumpish -e eval
 		IMG:${nix-profile}/share/icons/hicolor/32x32/apps/quassel.png	Quassel	"echo '(quassel)' | stumpish -e eval"
+		Mypaint	env PYTHONPATH= mypaint
 
 	Documention
 		Arch Wiki	firefox file:///home/oleg/.local/share/arch-wiki/html
