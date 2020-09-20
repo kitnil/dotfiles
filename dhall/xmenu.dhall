@@ -53,6 +53,7 @@ in  ''
 	Services
 		${service { name = "Espanso", start = "espanso start", stop = "espanso stop" }}
 		${service { name = "xmodmap", start = "xmodmap /home/oleg/.Xmodmap", stop = "" }}
+		${service { name = "webhook", start = "echo '(webhook)' | stumpish -e eval", stop = "" }}
 		${service { name = "vnc-5901", start = "vnc server 5901", stop = "vnc-server -kill :5901" }}
 		${service { name = "vnc-5902", start = "vnc server 5902", stop = "vnc-server -kill :5902" }}
 		${service { name = "vnc-5903", start = "vnc server 5903", stop = "vnc-server -kill :5903" }}
