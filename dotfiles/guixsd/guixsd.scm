@@ -156,18 +156,35 @@ EndSection")
         ;; (proxy "www.majordomo.ru" 7777 #:ssl? #f)
         ;; (proxy "majordomo.ru" 7777 #:ssl? #f)
         ;; (proxy "hms-dev.intr" 7777 #:ssl? #f)
+        ;; (proxy "hms.majordomo.ru" 7777 #:ssl? #f)
         (nginx-server-configuration
-         (server-name '("hms-dev.intr" "hms.majordomo.ru"))
-         (listen '("80"))
-         (root "/home/static/hms-frontend")
-         (raw-content (list "\
-location / {
-    proxy_set_header Access-Control-Allow-Origin *;
-    root   /home/static/hms-frontend;
-    index  index.html;
-    try_files $uri $uri/ /index.html;
-}
-")))
+         (server-name '("hms.majordomo.ru"))
+         (listen (list "443 ssl"))
+         (ssl-certificate "/etc/tls/hms.majordomo.ru.pem")
+         (ssl-certificate-key "/etc/tls/hms.majordomo.ru.key")
+         (locations (list (nginx-location-configuration
+                           (uri "/")
+                           (body (list "proxy_pass http://127.0.0.1:7777;"
+                                       "proxy_set_header Host hms.majordomo.ru;"
+                                       "proxy_set_header X-Forwarded-Proto $scheme;"
+                                       "proxy_set_header X-Real-IP $remote_addr;"
+                                       "proxy_set_header X-Forwarded-for $remote_addr;"
+                                       "proxy_connect_timeout 300;"
+                                       "client_max_body_size 0;"))))))
+
+;;         (nginx-server-configuration
+;;          (server-name '("hms-dev.intr" "hms.majordomo.ru"))
+;;          (listen '("80"))
+;;          (root "/home/static/hms-frontend")
+;;          (raw-content (list "\
+;; location / {
+;;     proxy_set_header Access-Control-Allow-Origin *;
+;;     root   /home/static/hms-frontend;
+;;     index  index.html;
+;;     try_files $uri $uri/ /index.html;
+;; }
+;; ")))
+
         (nginx-server-configuration
          (server-name '("api-dev.intr"))
          (listen '("80"))
