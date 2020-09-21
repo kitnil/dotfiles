@@ -107,11 +107,11 @@ in  ''
 			${hms-account { server = "web15", name = "AC_221357", tarif = "Старт" }}
 			${hms-account { server = "web19", name = "AC_224973", tarif = "Безлимитный+" }}
 			${hms-account { server = "web20", name = "AC_226927", tarif = "Безлимитный+" }}
+			${hms-account { server = "web24", name = "AC_220670", tarif = "Безлимитный+" }}
 			${hms-account { server = "web26", name = "AC_220037", tarif = "Безлимитный+" }}
 			${hms-account { server = "web27", name = "AC_220783", tarif = "Безлимитный" }}
 			${hms-account { server = "web29", name = "AC_216226", tarif = "Безлимитный" }}
 			${hms-account { server = "web29", name = "AC_224079", tarif = "Безлимитный" }}
-			${hms-account { server = "web30", name = "AC_220670", tarif = "Безлимитный+" }}
 			${hms-account { server = "web30", name = "AC_226391", tarif = "Безлимитный" }}
 			${hms-account { server = "web33", name = "AC_208112", tarif = "Безлимитный" }}
 			${hms-account { server = "web37", name = "AC_213062", tarif = "Безлимитный" }}
