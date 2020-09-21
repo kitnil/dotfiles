@@ -1,4 +1,4 @@
--- -*- eval: (goto-address-mode 1); -*-
+;; -*- eval: (goto-address-mode 1); -*-
 
 (require 'guix-ui-package) ;for guix-show-emacs-package-without-prefix
 
