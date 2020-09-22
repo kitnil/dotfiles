@@ -92,7 +92,7 @@ in [
   groovy
   hexyl
   # httpie
-  mitmproxy
+  # mitmproxy # XXX: nix-env --set-flag priority
   hy
   hyperfine
   knot-resolver
