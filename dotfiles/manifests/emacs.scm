@@ -26,6 +26,7 @@
        emacs-company            ; Complition framework
        emacs-company-quickhelp  ; Help pages for Company
        emacs-constants
+       emacs-counsel-projectile
        emacs-counsel-tramp
        emacs-crux
        emacs-debbugs ; <https://debbugs.gnu.org/> interface
@@ -74,7 +75,6 @@
        emacs-helm-gtags
        emacs-helm-make          ; Front end to `make'
        emacs-helm-mode-manager
-       emacs-helm-projectile    ; Helm interface for Projectile
        emacs-helm-shell-history
        emacs-highlight-defined
        emacs-highlight-sexp
