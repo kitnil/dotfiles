@@ -1,0 +1,7 @@
+export GUILE_INSTALL_LOCALE=0
+export GUIX_BUILD_OPTIONS=''
+export IHS_USER=pyhalov
+export IHS_PASS="$(pass show majordomo/private/hms/pyhalov)"
+export CVM_USER=cron
+export CVM_PASS="$(pass show majordomo/private/cvm/cron)"
+eval "$(guix time-machine --commit=5b7a1cb077931a020c0b7e3b12f12a7bda221d96 --disable-authentication -- environment --search-paths --pure --load=guix.scm --ad-hoc direnv inetutils openssh password-store)"
