@@ -43,6 +43,7 @@ install:
 	install --mode=755 dotfiles/scripts/maintenance $(HOME)/bin
 	install --mode=755 dotfiles/scripts/rofi-mycli $(HOME)/bin
 	install --mode=755 dotfiles/scripts/sshrc $(HOME)/bin
+	sudo install dotfiles/homer/config.yml /etc/homer
 
 .PHONY: dist
 dist:
