@@ -463,8 +463,7 @@ location / {
            "78.108.87.99 r2"
            "178.250.246.123 r3"
            "178.250.247.60 r4"
-
-           ,%facebook-host-aliases)
+           "")
          "\n")))
 
       (services (cons* (extra-special-file "/usr/bin/env"
