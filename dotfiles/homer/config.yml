@@ -114,3 +114,8 @@ services:
         subtitle: "Oracle Linux machines"
         tag: "vps"
         url: "https://console.eu-frankfurt-1.oraclecloud.com/?tenant=wigust&provider=OracleIdentityCloudService"
+      - name: "DNS"
+        logo: "https://upload.wikimedia.org/wikipedia/commons/e/ef/Oxygen480-categories-applications-internet.svg"
+        subtitle: "wugi.info zone"
+        tag: "dns"
+        url: "https://dcc.godaddy.com/manage/dns?domainName=wugi.info"
