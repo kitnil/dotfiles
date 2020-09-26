@@ -90,7 +90,7 @@ services:
         logo: "https://chocolatey.org/content/packageimages/transmission.3.00.svg"
         subtitle: "Torrent client"
         tag: "torrent"
-        url: "http://localhost:9091/transmission/web/"
+        url: "https://torrent.wugi.info/"
       - name: "ZNC"
         logo: "https://kotabatu.net/wp-content/uploads/2012/04/spoof-identd-znc.svg"
         subtitle: "IRC gateway"

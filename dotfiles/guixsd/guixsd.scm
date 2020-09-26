@@ -248,7 +248,7 @@ location / {
 ")))
 
         (proxy "cups.tld" 631)
-        (proxy "torrent.wugi.info" 9091)
+        (proxy "torrent.wugi.info" 9091 #:ssl? #t #:ssl-key? #t #:mtls? #t)
         (proxy "jenkins.wugi.info" 8090 #:ssl? #t #:ssl-key? #t #:mtls? #t)
         (proxy "githunt.wugi.info" 3000 #:ssl? #t #:ssl-key? #t #:mtls? #t)
         (proxy "guix.duckdns.org" 5556 #:ssl? #t)
@@ -438,6 +438,7 @@ location / {
                            "techinfo.intr"
                            "texinfo.tld"
                            "jenkins.wugi.info"
+                           "torrent.wugi.info"
                            "iso.wugi.info"
                            "cgit.duckdns.org"
                            "spb"
