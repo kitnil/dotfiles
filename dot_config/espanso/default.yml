@@ -12,6 +12,9 @@ matches:
   - trigger: "smorc"
     replace: "SMOrc"
 
+  - trigger: "smha"
+    replace: "SMOrc HahaShrugRight"
+
   # Simple text replacement
   - trigger: ":espanso"
     replace: "Hi there!"
