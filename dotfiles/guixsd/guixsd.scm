@@ -23,7 +23,8 @@
              (services kresd)
              (services jenkins)
              (services tftp)
-             (services openvpn))
+             (services openvpn)
+             (services webssh))
 
 ;; Fix Jenkins in Docker group
 (module-set! (resolve-module '(gnu packages admin)) 'shepherd shepherd-patched)
@@ -57,7 +58,8 @@ EndSection")
         "guix.duckdns.org"
         "zabbix.wugi.info"
         "jenkins.wugi.info"
-        "torrent.wugi.info"))
+        "torrent.wugi.info"
+        "webssh.wugi.info"))
 
 
 ;;;
@@ -246,6 +248,18 @@ location / {
     proxy_buffers 4 256k;
 }
 ")))
+
+        (nginx-server-configuration
+         (inherit %webssh-configuration-nginx)
+         (server-name '("webssh.wugi.info"))
+         (listen '("443 ssl"))
+         (ssl-certificate (letsencrypt-certificate "webssh.wugi.info"))
+         (ssl-certificate-key (letsencrypt-key "webssh.wugi.info"))
+         (locations
+          (cons (nginx-location-configuration
+                 (uri "/.well-known")
+                 (body '("root /var/www;")))
+                (nginx-server-configuration-locations %webssh-configuration-nginx))))
 
         (proxy "cups.tld" 631)
         (proxy "torrent.wugi.info" 9091 #:ssl? #t #:ssl-key? #t #:mtls? #t)
@@ -539,7 +553,10 @@ location / {
                                 (openssh-configuration
                                  (x11-forwarding? #t)
                                  (gateway-ports? 'client)
-                                 (password-authentication? #f)))
+                                 (password-authentication? #f)
+                                 (extra-content "\
+Match Address 127.0.0.1
+PasswordAuthentication yes")))
 
                        (service certbot-service-type
                                 (certbot-configuration
@@ -681,6 +698,15 @@ ServerAliveCountMax 3"))))))
                        transmission-service
 
                        intel-vaapi-service
+
+                       (service webssh-service-type
+                                (webssh-configuration (address "127.0.0.1")
+                                                      (port 8888)
+                                                      (policy 'reject)
+                                                      (known-hosts '("\
+localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOnaDeOzwmrcrq1D8slYaeFozXZ0cpqNU0EvGmgnO29aiKkSD1ehbIV4vSxk3IDXz9ClMVPc1bTUTrYhEVHdCks="
+                                                                     "\
+127.0.0.1 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOnaDeOzwmrcrq1D8slYaeFozXZ0cpqNU0EvGmgnO29aiKkSD1ehbIV4vSxk3IDXz9ClMVPc1bTUTrYhEVHdCks="))))
 
                        (modify-services (operating-system-user-services base-system)
                          (guix-service-type config => %guix-daemon-config))))

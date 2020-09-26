@@ -96,6 +96,11 @@ services:
         subtitle: "IRC gateway"
         tag: "irc"
         url: "http://localhost:8060/"
+      - name: "WebSSH"
+        logo: "https://webssh.wugi.info/static/img/favicon.png"
+        subtitle: "SSH web-client"
+        tag: "ssh"
+        url: "https://webssh.wugi.info/"
   - name: "Third-Party hosting"
     icon: "fas fa-cloud"
     items:
