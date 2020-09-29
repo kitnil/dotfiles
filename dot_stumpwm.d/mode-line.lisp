@@ -190,3 +190,15 @@
                           (covid-19-update-count)
                           (sleep (* (* 60 60) 6)))))
                  :name "covid-19"))))
+
+;; See events.lisp in StumpWM source.
+(setq *mode-line-click-hook*
+      (list (lambda (mode-line button x y)
+              (case button
+                ((1) (fclear))
+                ((2) (volume-toggle))
+                ((3) (run-shell-command "xmenu.sh"))
+                ((4) (gprev))
+                ((5) (gnext))
+                ((8) (volume-decrease))
+                ((9) (volume-increase))))))
