@@ -44,6 +44,8 @@ in  ''
 	Documention
 		Arch Wiki	firefox file:///home/oleg/.local/share/arch-wiki/html
 		Zeal	echo '(zeal)' | stumpish -e eval
+		Books
+			Linux System Programming	zathura /home/oleg/Downloads/beginning-linux-programming/beginning-linux-programming.pdf
 
 	Projects
 	${project { name = "Blog", session = "blog" }}
