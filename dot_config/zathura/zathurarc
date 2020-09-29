@@ -23,3 +23,5 @@ map u follow
 
 map <Button1> scroll half-down # left click
 map <Button3> scroll half-up # right click
+
+map <C-c> exec "sh -c 'printf \"$(realpath $FILE)\" | xclip -i -selection clipboard'"
