@@ -1,42 +1,20 @@
-;; This is an operating system configuration for a VM image.
-;; Modify it as you see fit and instantiate the changes by running:
-;;
-;;   guix system reconfigure /etc/config.scm
-;;
+(use-modules (gnu)
+             (guix)
+             (srfi srfi-1)
+             (srfi srfi-26))
 
-(use-modules (gnu) (guix) (srfi srfi-1))
-(use-service-modules desktop networking ssh xorg web)
-(use-package-modules bootloaders certs fonts nvi
-                     package-management wget xorg)
+(use-service-modules desktop networking monitoring ssh vpn xorg)
+
+(use-package-modules admin base bootloaders certs package-management wget xorg zile)
 
 ;; Third-party modules
-(use-modules (services webssh))
-
-(define vm-image-motd (plain-file "motd" "
-\x1b[1;37mThis is the GNU system.  Welcome!\x1b[0m
-
-This instance of Guix is a template for virtualized environments.
-You can reconfigure the whole system by adjusting /etc/config.scm
-and running:
-
-  guix system reconfigure /etc/config.scm
-
-Run '\x1b[1;37minfo guix\x1b[0m' to browse documentation.
-
-\x1b[1;33mConsider setting a password for the 'root' and 'guest' \
-accounts.\x1b[0m
-"))
+(use-modules (services webssh)
+             (services kresd))
 
 (operating-system
-  (host-name "gnu")
-  (timezone "Etc/UTC")
+  (host-name "guix.vm.wugi.info")
+  (timezone "Europe/Moscow")
   (locale "en_US.utf8")
-  (keyboard-layout (keyboard-layout "us" "altgr-intl"))
-
-  ;; Label for the GRUB boot menu.
-  (label (string-append "GNU Guix " (package-version guix)))
-
-  (firmware '())
 
   ;; Below we assume /dev/vda is the VM's hard disk.
   ;; Adjust as needed.
@@ -50,49 +28,82 @@ accounts.\x1b[0m
                         (type "ext4"))
                       %base-file-systems))
 
-  (users (cons* (user-account
-                (name "oleg")
-                (comment "Oleg Pykhalov")
-                (password "")                     ;no password
-                (uid 1000)
-                (group "users")
-                (supplementary-groups '("wheel" "netdev"
-                                        "audio" "video")))
-               (user-account
-                (name "guest")
-                (comment "GNU Guix Live")
-                (password "")                     ;no password
-                (group "users")
-                (uid 1001)
-                (supplementary-groups '("wheel" "netdev"
-                                        "audio" "video")))
-               %base-user-accounts))
+  (groups (cons* (user-group (name "nixbld")
+                             (id 30100))
+                 %base-groups))
 
-  ;; Our /etc/sudoers file.  Since 'guest' initially has an empty password,
-  ;; allow for password-less sudo.
+  (users (cons* (user-account
+                 (name "oleg")
+                 (comment "Oleg Pykhalov")
+                 (uid 1000)
+                 (group "users")
+                 (supplementary-groups '("wheel" "netdev"
+                                         "audio" "video")))
+                (append ((lambda* (count #:key
+                                    (group "nixbld")
+                                    (first-uid 30101)
+                                    (shadow shadow))
+                           (unfold (cut > <> count)
+                                   (lambda (n)
+                                     (user-account
+                                      (name (format #f "nixbld~a" n))
+                                      (system? #t)
+                                      (uid (+ first-uid n -1))
+                                      (group group)
+
+                                      ;; guix-daemon expects GROUP to be listed as a
+                                      ;; supplementary group too:
+                                      ;; <http://lists.gnu.org/archive/html/bug-guix/2013-01/msg00239.html>.
+                                      (supplementary-groups (list group "kvm"))
+
+                                      (comment (format #f "Nix Build User ~a" n))
+                                      (home-directory "/var/empty")
+                                      (shell (file-append shadow "/sbin/nologin"))))
+                                   1+
+                                   1))
+                         9)
+                        %base-user-accounts)))
+
   (sudoers-file (plain-file "sudoers" "\
 root ALL=(ALL) ALL
 %wheel ALL=(ALL) ALL
 oleg ALL=(ALL) NOPASSWD:ALL\n"))
 
-  (packages (append (list font-bitstream-vera nss-certs nvi wget)
+  (packages (append (list nss-certs wget zile)
+                    (load "desktop-packages.scm")
                     %base-packages))
 
   (services
-   (append (list (service xfce-desktop-service-type)
-
-                 ;; Choose SLiM, which is lighter than the default GDM.
-                 (service slim-service-type
-                          (slim-configuration
-                           (auto-login? #f)
-                           (default-user "oleg")
-                           (xorg-configuration
-                            (xorg-configuration
-                             (keyboard-layout keyboard-layout)))))
-
-                 ;; Uncomment the line below to add an SSH server.
-                 (service openssh-service-type)
-
+   (append (list (service openssh-service-type)
+                 (static-networking-service "eth0" "78.108.82.157"
+                                            #:netmask "255.255.254.0"
+                                            #:gateway "78.108.83.254"
+                                            #:name-servers '("78.108.82.157\nsearch intr majordomo.ru"
+                                                             "172.17.0.1"
+                                                             "8.8.8.8"
+                                                             "8.8.4.4"))
+                 (extra-special-file "/usr/bin/env"
+                                     (file-append coreutils "/bin/env"))
+                 (kresd-service (local-file "kresd.conf"))
+                 (service zabbix-agent-service-type
+                          (zabbix-agent-configuration
+                           (server '("back.wugi.info"))
+                           (server-active '("back.wugi.info"))))
+                 (openvpn-client-service
+                  #:config (openvpn-client-configuration
+                            (dev 'tap)
+                            (auth-user-pass "/etc/openvpn/login.conf")
+                            (remote (list
+                                     ;; vpn-miran.majordomo.ru
+                                     (openvpn-remote-configuration
+                                      (name "78.108.80.230"))
+                                     ;; vpn-dh.majordomo.ru
+                                     (openvpn-remote-configuration
+                                      (name "78.108.91.250"))
+                                     ;; vpn-office.majordomo.ru
+                                     (openvpn-remote-configuration
+                                      (name "81.95.28.29"))))))
+                 
                  (service nginx-service-type
                           (nginx-configuration
                            (server-blocks (list (nginx-server-configuration
@@ -116,28 +127,11 @@ oleg ALL=(ALL) NOPASSWD:ALL\n"))
                                                                "\
 127.0.0.1 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBJItpECN9IUeYtH+kaIjrZ//yXmggmebwhg+qBegHwd0kniwYMIrXBGlNKd2uWw6ErhWL/3IMt7FvslBtgwuQ10="
                                                                "\
-localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBJItpECN9IUeYtH+kaIjrZ//yXmggmebwhg+qBegHwd0kniwYMIrXBGlNKd2uWw6ErhWL/3IMt7FvslBtgwuQ10="))))
-
-                 ;; Use the DHCP client service rather than NetworkManager.
-                 (static-networking-service "eth0" "78.108.82.157" #:netmask "255.255.254.0" #:gateway "78.108.83.254" #:name-servers '("8.8.8.8")))
-
-           ;; Remove GDM, ModemManager, NetworkManager, and wpa-supplicant,
-           ;; which don't make sense in a VM.
-           (remove (lambda (service)
-                     (let ((type (service-kind service)))
-                       (or (memq type
-                                 (list gdm-service-type
-                                       wpa-supplicant-service-type
-                                       cups-pk-helper-service-type
-                                       network-manager-service-type
-                                       modem-manager-service-type))
-                           (eq? 'network-manager-applet
-                                (service-type-name type)))))
-                   (modify-services %desktop-services
-                     (login-service-type config =>
-                                         (login-configuration
-                                          (inherit config)
-                                          (motd vm-image-motd)))))))
+localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBJItpECN9IUeYtH+kaIjrZ//yXmggmebwhg+qBegHwd0kniwYMIrXBGlNKd2uWw6ErhWL/3IMt7FvslBtgwuQ10=")))))
+           (load "desktop.scm")
+           %base-services))
 
   ;; Allow resolution of '.local' host names with mDNS.
   (name-service-switch %mdns-host-lookup-nss))
+
+   

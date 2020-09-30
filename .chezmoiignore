@@ -13,12 +13,16 @@ todo.org
 .alerta.conf
 .slacktee
 .msmtprc
-.muttrc_localhost
-.netrc
 .muttrc_asfjsdf_mail
 .muttrc_houdinihar_yandex
+.muttrc_jenkins_majordomo
+.muttrc_localhost
+.muttrc_nk112233
+.muttrc_pyhalov_majordomo
 .muttrc_rxaetbed_mail
 .muttrc_zabbix.guix_yandex
+.netrc
+.pythonrc
 {{- end }}
 {{- if ne .chezmoi.hostname "workstation-guixsd" }}
 .alerta.conf
