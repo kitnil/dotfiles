@@ -1,7 +1,12 @@
 (in-package :stumpwm)
 
 (defcommand suspend () ()
-  (run-shell-command "sudo loginctl suspend"))
+  (if (y-or-n-p "Suspend the system? ")
+      (run-shell-command "sudo loginctl suspend")))
+
+(defcommand halt () ()
+  (if (y-or-n-p "Halt the system? ")
+      (run-shell-command "sudo halt")))
 
 (defcommand neofetch () ()
   (term-shell-command "sh -c 'neofetch; read'"))
