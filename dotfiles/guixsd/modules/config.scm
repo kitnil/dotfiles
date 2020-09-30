@@ -34,9 +34,13 @@
   #:use-module (packages majordomo)
   #:use-module (gnu system)
   #:use-module (guix gexp)
+  #:use-module (srfi srfi-26)
   #:export (20-intel.conf
             %my-system-packages
-            %my-setuid-programs))
+            %my-setuid-programs
+            %nginx-deploy-hook
+            letsencrypt-certificate
+            letsencrypt-key))
 
 (define 20-intel.conf "\
 # Fix tearing for Intel graphics card.
@@ -124,3 +128,16 @@ EndSection\n")
          (delete (file-append inetutils "/bin/ping6")
                  (delete (file-append inetutils "/bin/ping")
                          %setuid-programs))))
+
+(define letsencrypt-certificate
+  (cut string-append "/etc/letsencrypt/live/" <> "/fullchain.pem"))
+
+(define letsencrypt-key
+  (cut string-append "/etc/letsencrypt/live/" <> "/privkey.pem"))
+
+(define %nginx-deploy-hook
+  (program-file
+   "nginx-deploy-hook"
+   #~(let ((pid (call-with-input-file "/var/run/nginx/pid" read)))
+       (kill pid SIGHUP))))
+

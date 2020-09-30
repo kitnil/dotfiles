@@ -45,12 +45,6 @@ EndSection")
 ;;; Certbot
 ;;;
 
-(define letsencrypt-certificate
-  (cut string-append "/etc/letsencrypt/live/" <> "/fullchain.pem"))
-
-(define letsencrypt-key
-  (cut string-append "/etc/letsencrypt/live/" <> "/privkey.pem"))
-
 (define %certbot-hosts
   (list "cgit.duckdns.org"
         "githunt.wugi.info"
@@ -118,12 +112,6 @@ EndSection")
    (ssl-certificate (if ssl-key? (letsencrypt-certificate host) #f))
    (ssl-certificate-key (if ssl-key? (letsencrypt-key host) #f))
    (raw-content (if mtls? %mtls '()))))
-
-(define %nginx-deploy-hook
-  (program-file
-   "nginx-deploy-hook"
-   #~(let ((pid (call-with-input-file "/var/run/nginx/pid" read)))
-       (kill pid SIGHUP))))
 
 (define %nginx-server-blocks
   (list (nginx-server-configuration

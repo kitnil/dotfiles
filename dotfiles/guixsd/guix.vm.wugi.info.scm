@@ -3,12 +3,13 @@
              (srfi srfi-1)
              (srfi srfi-26))
 
-(use-service-modules desktop networking monitoring ssh vpn xorg)
+(use-service-modules certbot desktop networking monitoring ssh vpn xorg web)
 
 (use-package-modules admin base bootloaders certs package-management wget xorg zile)
 
 ;; Third-party modules
-(use-modules (services webssh)
+(use-modules (config)
+             (services webssh)
              (services kresd))
 
 (operating-system
@@ -69,12 +70,17 @@ root ALL=(ALL) ALL
 %wheel ALL=(ALL) ALL
 oleg ALL=(ALL) NOPASSWD:ALL\n"))
 
-  (packages (append (list nss-certs wget zile)
-                    (load "desktop-packages.scm")
-                    %base-packages))
+  (packages %my-system-packages)
 
   (services
-   (append (list (service openssh-service-type)
+   (append (list (service openssh-service-type
+                          (openssh-configuration
+                           (x11-forwarding? #t)
+                           (gateway-ports? 'client)
+                           (password-authentication? #f)
+                           (extra-content "\
+Match Address 127.0.0.1
+PasswordAuthentication yes")))
                  (static-networking-service "eth0" "78.108.82.157"
                                             #:netmask "255.255.254.0"
                                             #:gateway "78.108.83.254"
@@ -104,14 +110,24 @@ oleg ALL=(ALL) NOPASSWD:ALL\n"))
                                      (openvpn-remote-configuration
                                       (name "81.95.28.29"))))))
 
+                 (service certbot-service-type
+                          (certbot-configuration
+                           (email "go.wigust@gmail.com")
+                           (certificates
+                            `(,@(map (lambda (host)
+                                       (certificate-configuration
+                                        (domains (list host))
+                                        (deploy-hook %nginx-deploy-hook)))
+                                     (list "vm1.wugi.info"))))))
+
                  (service nginx-service-type
                           (nginx-configuration
                            (server-blocks (list (nginx-server-configuration
                                                  (inherit %webssh-configuration-nginx)
-                                                 (server-name '("webssh.guix.vm.wugi.info"))
-                                                 ;; (listen '("443 ssl"))
-                                                 ;; (ssl-certificate (letsencrypt-certificate "webssh.wugi.info"))
-                                                 ;; (ssl-certificate-key (letsencrypt-key "webssh.wugi.info"))
+                                                 (server-name '("vm1.wugi.info"))
+                                                 (listen '("443 ssl"))
+                                                 (ssl-certificate (letsencrypt-certificate "vm1.wugi.info"))
+                                                 (ssl-certificate-key (letsencrypt-key "vm1.wugi.info"))
                                                  (locations
                                                   (cons (nginx-location-configuration
                                                          (uri "/.well-known")
@@ -123,8 +139,6 @@ oleg ALL=(ALL) NOPASSWD:ALL\n"))
                                                 (port 8888)
                                                 (policy 'reject)
                                                 (known-hosts '("\
-78.108.82.157 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBJItpECN9IUeYtH+kaIjrZ//yXmggmebwhg+qBegHwd0kniwYMIrXBGlNKd2uWw6ErhWL/3IMt7FvslBtgwuQ10="
-                                                               "\
 127.0.0.1 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBJItpECN9IUeYtH+kaIjrZ//yXmggmebwhg+qBegHwd0kniwYMIrXBGlNKd2uWw6ErhWL/3IMt7FvslBtgwuQ10="
                                                                "\
 localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBJItpECN9IUeYtH+kaIjrZ//yXmggmebwhg+qBegHwd0kniwYMIrXBGlNKd2uWw6ErhWL/3IMt7FvslBtgwuQ10=")))))

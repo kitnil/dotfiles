@@ -1,6 +1,7 @@
 (use-modules (gnu))
 
 (use-service-modules desktop dbus)
+(use-package-modules suckless xdisorg)
 
 (list (service slim-service-type)
       (screen-locker-service slock)
