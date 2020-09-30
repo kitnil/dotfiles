@@ -9,6 +9,16 @@ bin/dotfiles
 {{- if ne .chezmoi.hostname "guixsd" }}
 .alerta.conf
 .slacktee
+.msmtprc
+.muttrc_asfjsdf_mail
+.muttrc_houdinihar_yandex
+.muttrc_jenkins_majordomo
+.muttrc_localhost
+.muttrc_nk112233
+.muttrc_pyhalov_majordomo
+.muttrc_rxaetbed_mail
+.muttrc_zabbix.guix_yandex
+.pythonrc
 {{- end }}
 {{- if ne .chezmoi.hostname "workstation-guixsd" }}
 .alerta.conf

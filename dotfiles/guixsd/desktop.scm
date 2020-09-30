@@ -1,0 +1,17 @@
+(use-modules (gnu))
+
+(use-service-modules desktop dbus)
+
+(list (service slim-service-type)
+      (screen-locker-service slock)
+      (screen-locker-service xlockmore "xlock")
+      (udisks-service)
+      (upower-service)
+      (accountsservice-service)
+      (colord-service)
+      (geoclue-service)
+      (service polkit-service-type)
+      (elogind-service)
+      (dbus-service)
+      (service ntp-service-type)
+      x11-socket-directory-service)

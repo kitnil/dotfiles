@@ -5,8 +5,10 @@
 ;;
 
 (use-modules (gnu) (guix) (srfi srfi-1) (srfi srfi-26))
-(use-service-modules desktop networking ssh xorg)
+(use-service-modules desktop networking ssh vpn xorg)
 (use-package-modules admin base bootloaders certs package-management wget xorg zile)
+
+(use-modules (wigust services kresd))
 
 (operating-system
   (host-name "guix.vm.wugi.info")
@@ -67,6 +69,7 @@ root ALL=(ALL) ALL
 oleg ALL=(ALL) NOPASSWD:ALL\n"))
 
   (packages (append (list nss-certs wget zile)
+                    (load "desktop-packages.scm")
                     %base-packages))
 
   (services
@@ -74,7 +77,26 @@ oleg ALL=(ALL) NOPASSWD:ALL\n"))
                  (static-networking-service "eth0" "78.108.82.157"
                                             #:netmask "255.255.254.0"
                                             #:gateway "78.108.83.254"
-                                            #:name-servers '("8.8.8.8" "8.8.4.4"))
+                                            #:name-servers '("78.108.82.157\nsearch intr majordomo.ru"
+                                                              "172.17.0.1"
+                                                              "8.8.8.8"
+                                                              "8.8.4.4"))
                  (extra-special-file "/usr/bin/env"
-                                     (file-append coreutils "/bin/env")))
+                                     (file-append coreutils "/bin/env"))
+                 (kresd-service (local-file "kresd.conf"))
+                 (openvpn-client-service
+                  #:config (openvpn-client-configuration
+                            (dev 'tap)
+                            (auth-user-pass "/etc/openvpn/login.conf")
+                            (remote (list
+                                     ;; vpn-miran.majordomo.ru
+                                     (openvpn-remote-configuration
+                                      (name "78.108.80.230"))
+                                     ;; vpn-dh.majordomo.ru
+                                     (openvpn-remote-configuration
+                                      (name "78.108.91.250"))
+                                     ;; vpn-office.majordomo.ru
+                                     (openvpn-remote-configuration
+                                      (name "81.95.28.29")))))))
+           (load "desktop.scm")
            %base-services)))
