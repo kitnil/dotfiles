@@ -50,6 +50,7 @@ in  ''
 			Linux System Programming	zathura /home/oleg/Downloads/beginning-linux-programming/beginning-linux-programming.pdf
 
 	Projects
+	${project { name = "Backup", session = "backup" }}
 	${project { name = "Blog", session = "blog" }}
 	${project { name = "Dotfiles", session = "dotfiles" }}
 	${project { name = "Guix", session = "guix" }}
