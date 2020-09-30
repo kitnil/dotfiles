@@ -41,6 +41,7 @@ in  ''
 		IMG:${nix-profile}/share/icons/hicolor/32x32/apps/quassel.png	Quassel	"echo '(quassel)' | stumpish -e eval"
 		Mypaint	env PYTHONPATH= mypaint
 		Screenshot	xfce4-screenshooter
+		Zoom screen	echo '(zoom)' | stumpish -e eval
 
 	Documention
 		Arch Wiki	firefox file:///home/oleg/.local/share/arch-wiki/html
