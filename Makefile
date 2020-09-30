@@ -45,6 +45,10 @@ install:
 	install --mode=755 dotfiles/scripts/sshrc $(HOME)/bin
 	sudo install dotfiles/homer/config.yml /etc/homer
 
+.PHONY: deploy
+deploy:
+	guix deploy -L $(HOME)/.local/share/chezmoi/dotfiles/guixsd/modules dotfiles/guixsd/deploy.scm
+
 .PHONY: dist
 dist:
 	sudo --login guix system build -L $(HOME)/.local/share/chezmoi/dotfiles/guixsd/modules $(HOME)/.local/share/chezmoi/dotfiles/guixsd/guixsd.scm

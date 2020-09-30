@@ -5,9 +5,12 @@
 ;;
 
 (use-modules (gnu) (guix) (srfi srfi-1))
-(use-service-modules desktop networking ssh xorg)
+(use-service-modules desktop networking ssh xorg web)
 (use-package-modules bootloaders certs fonts nvi
                      package-management wget xorg)
+
+;; Third-party modules
+(use-modules (services webssh))
 
 (define vm-image-motd (plain-file "motd" "
 \x1b[1;37mThis is the GNU system.  Welcome!\x1b[0m
@@ -89,6 +92,31 @@ oleg ALL=(ALL) NOPASSWD:ALL\n"))
 
                  ;; Uncomment the line below to add an SSH server.
                  (service openssh-service-type)
+
+                 (service nginx-service-type
+                          (nginx-configuration
+                           (server-blocks (list (nginx-server-configuration
+                                                 (inherit %webssh-configuration-nginx)
+                                                 (server-name '("webssh.guix.vm.wugi.info"))
+                                                 ;; (listen '("443 ssl"))
+                                                 ;; (ssl-certificate (letsencrypt-certificate "webssh.wugi.info"))
+                                                 ;; (ssl-certificate-key (letsencrypt-key "webssh.wugi.info"))
+                                                 (locations
+                                                  (cons (nginx-location-configuration
+                                                         (uri "/.well-known")
+                                                         (body '("root /var/www;")))
+                                                        (nginx-server-configuration-locations %webssh-configuration-nginx))))))))
+
+                 (service webssh-service-type
+                          (webssh-configuration (address "127.0.0.1")
+                                                (port 8888)
+                                                (policy 'reject)
+                                                (known-hosts '("\
+78.108.82.157 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBJItpECN9IUeYtH+kaIjrZ//yXmggmebwhg+qBegHwd0kniwYMIrXBGlNKd2uWw6ErhWL/3IMt7FvslBtgwuQ10="
+                                                               "\
+127.0.0.1 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBJItpECN9IUeYtH+kaIjrZ//yXmggmebwhg+qBegHwd0kniwYMIrXBGlNKd2uWw6ErhWL/3IMt7FvslBtgwuQ10="
+                                                               "\
+localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBJItpECN9IUeYtH+kaIjrZ//yXmggmebwhg+qBegHwd0kniwYMIrXBGlNKd2uWw6ErhWL/3IMt7FvslBtgwuQ10="))))
 
                  ;; Use the DHCP client service rather than NetworkManager.
                  (static-networking-service "eth0" "78.108.82.157" #:netmask "255.255.254.0" #:gateway "78.108.83.254" #:name-servers '("8.8.8.8")))
