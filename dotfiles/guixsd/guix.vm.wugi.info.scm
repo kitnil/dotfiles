@@ -103,7 +103,7 @@ oleg ALL=(ALL) NOPASSWD:ALL\n"))
                                      ;; vpn-office.majordomo.ru
                                      (openvpn-remote-configuration
                                       (name "81.95.28.29"))))))
-                 
+
                  (service nginx-service-type
                           (nginx-configuration
                            (server-blocks (list (nginx-server-configuration
@@ -133,5 +133,3 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
 
   ;; Allow resolution of '.local' host names with mDNS.
   (name-service-switch %mdns-host-lookup-nss))
-
-   
