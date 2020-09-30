@@ -457,9 +457,10 @@ location / {
                            "cgit.duckdns.org"
                            "spb"
                            ;; Majordomo
-                           "hms-dev.intr"
-                           "api-dev.intr"
-                           "hms-billing-dev.intr"))
+                           ;; "hms-dev.intr"
+                           ;; "api-dev.intr"
+                           ;; "hms-billing-dev.intr"
+                           ))
            "::1 guixsd localhost"
 
            "78.108.82.157 mjru"
