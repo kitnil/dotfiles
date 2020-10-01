@@ -6,8 +6,11 @@
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (gnu packages admin)
   #:use-module (gnu packages bash)
+  #:use-module (gnu packages dns)
   #:use-module (gnu packages guile)
+  #:use-module (gnu packages monitoring)
   #:use-module (gnu packages package-management)
+  #:use-module (gnu packages python)
   #:use-module (guix build utils)
   #:use-module (guix build-system guile)
   #:use-module (guix build-system trivial)
@@ -135,3 +138,52 @@
 channels difference.")
       (synopsis "Monitor Guix in Zabbix")
       (license license:gpl3+))))
+
+(define-public zabbix-dnscheck
+  (package
+    (name "zabbix-dnscheck")
+    (version "1.1")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://github.com/nobodysu/zabbix-dnscheck")
+                    (commit (string-append "v" version))))
+              (file-name (git-file-name name version))
+              (sha256
+               (base32
+                "0gbidg2g2wp29hffb82k4faqrbrgsrq6n9rg3l9asysmzq1dq7mx"))))
+    (build-system trivial-build-system)
+    (inputs
+     `(("bind" ,isc-bind "utils")
+       ("python" ,python)
+       ("zabbix-agentd" ,zabbix-agentd)))
+    (arguments
+     `(#:modules ((guix build utils))
+       #:builder
+       (begin
+         (use-modules (guix build utils))
+         (copy-recursively (assoc-ref %build-inputs "source") ".")
+         (setenv "PATH"
+                 (string-append
+                  (assoc-ref %build-inputs "zabbix-agentd") "/bin/" ":"
+                  (assoc-ref %build-inputs "python") "/bin" ":"
+                  (assoc-ref %build-inputs "bind") "/bin"))
+         (substitute* "externalscripts/dnscheck-send.py"
+           (("#!/usr/bin/env python3") (string-append "#!" (which "python3")))
+           (("'zabbix_sender'") (format #f "~s" (which "zabbix_sender")))
+           (("192.0.2.2") "127.0.0.1"))
+         (substitute* "externalscripts/dnscheck-gather-lld.py"
+           (("#!/usr/bin/env python3") (string-append "#!" (which "python3")))
+           (("'python3'") (format #f "~s" (which "python3")))
+           (("'host'") (format #f "~s" (which "host")))
+           (("'/usr/lib/zabbix/externalscripts/dnscheck-send.py'")
+            (format #f "~s" (string-append %output "/bin/dnscheck-send.py"))))
+         (for-each (lambda (file)
+                     (install-file file (string-append %output "/bin")))
+                   '("externalscripts/dnscheck-send.py"
+                     "externalscripts/dnscheck-gather-lld.py"))
+         #t)))
+    (home-page "https://github.com/nobodysu/zabbix-dnscheck")
+    (synopsis "DNS Check Discovery script")
+    (description "This package provides a DNS Check Discovery.")
+    (license license:unlicense)))
