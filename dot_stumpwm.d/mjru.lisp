@@ -16,7 +16,7 @@
 (defvar mjru-dh
   (mapcar (lambda (x)
             (sb-unicode:lowercase (string x)))
-          '(dh1-mr dh2-mr dh3-mr)))
+          '(dh1-mr dh2-mr dh3-mr dh4-mr dh5-mr)))
 
 (defvar mjru-vpn
   (mapcar (lambda (x)
