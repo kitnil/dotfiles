@@ -23,8 +23,7 @@
              (services kresd)
              (services jenkins)
              (services tftp)
-             (services openvpn)
-             (services webssh))
+             (services openvpn))
 
 ;; Fix Jenkins in Docker group
 (module-set! (resolve-module '(gnu packages admin)) 'shepherd shepherd-patched)

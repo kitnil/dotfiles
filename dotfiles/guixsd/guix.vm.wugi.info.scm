@@ -9,7 +9,6 @@
 
 ;; Third-party modules
 (use-modules (config)
-             (services webssh)
              (services kresd))
 
 (operating-system
