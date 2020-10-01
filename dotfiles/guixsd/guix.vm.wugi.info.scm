@@ -9,6 +9,7 @@
 
 ;; Third-party modules
 (use-modules (config)
+             (services autossh)
              (services kresd))
 
 (operating-system
@@ -87,13 +88,31 @@ PasswordAuthentication yes")))
                                                              "172.17.0.1"
                                                              "8.8.8.8"
                                                              "8.8.4.4"))
+
+                 (service (@ (services autossh) autossh-service-type)
+                          ((@ (services autossh) autossh-configuration)
+                             (autossh-client-config
+                              (autossh-client-configuration
+                               (hosts (list (autossh-client-host-configuration
+                                             (host "back.wugi.info")
+                                             (identity-file "/etc/autossh/id_rsa")
+                                             (strict-host-key-checking? #f)
+                                             (user "vm1-ssh-tunnel")
+                                             (user-known-hosts-file "/dev/null")
+                                             (extra-options
+                                              "
+RemoteForward 0.0.0.0:17022 127.0.0.1:22
+RemoteForward 0.0.0.0:17050 127.0.0.1:10050
+Compression yes
+ExitOnForwardFailure yes
+ServerAliveInterval 30
+ServerAliveCountMax 3"))))))
+                             (host "back.wugi.info")))
+
                  (extra-special-file "/usr/bin/env"
                                      (file-append coreutils "/bin/env"))
                  (kresd-service (local-file "kresd.conf"))
-                 (service zabbix-agent-service-type
-                          (zabbix-agent-configuration
-                           (server '("back.wugi.info"))
-                           (server-active '("back.wugi.info"))))
+                 (service zabbix-agent-service-type)
                  (openvpn-client-service
                   #:config (openvpn-client-configuration
                             (dev 'tap)

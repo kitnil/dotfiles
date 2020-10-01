@@ -401,6 +401,12 @@ location / {
                      (comment "SSH forwarding privilege separation user")
                      (home-directory "/home/oracle-ssh-tunnel"))
                     (user-account
+                     (name "vm1-ssh-tunnel")
+                     (uid 30022)
+                     (group "users")
+                     (comment "SSH forwarding privilege separation user")
+                     (home-directory "/home/vm1-ssh-tunnel"))
+                    (user-account
                      (name "spb")
                      (group "users")
                      (comment "SSH forwarding privilege separation user")
@@ -539,6 +545,8 @@ location / {
 
                        (service openssh-service-type
                                 (openssh-configuration
+                                 (authorized-keys
+                                  `(("vm1-ssh-tunnel" ,(local-file "ssh/id_rsa_vm1.wugi.info.pub"))))
                                  (x11-forwarding? #t)
                                  (gateway-ports? 'client)
                                  (password-authentication? #f)
