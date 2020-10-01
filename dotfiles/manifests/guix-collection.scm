@@ -174,7 +174,7 @@ xml xorg)
                patchelf ;patch elf
                patchutils
 
-               octave
+               ;; octave XXX: Fails to compile.
 
                htop inxi iotop jnettop glances bmon progress
 
