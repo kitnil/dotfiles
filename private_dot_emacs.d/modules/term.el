@@ -56,7 +56,7 @@
         vterm-eval-cmds))
 
 (defvar wi-vterm--prettify-symbols-alist
-  '(("&&" . ?∧)
+  `(("&&" . ?∧)
     ("||" . ?∨)
     ("++" . ?⧺)
     ("<=" . ?≤)

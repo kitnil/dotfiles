@@ -44,6 +44,7 @@ install:
 	install --mode=755 dotfiles/scripts/rofi-mycli $(HOME)/bin
 	install --mode=755 dotfiles/scripts/sshrc $(HOME)/bin
 	sudo install dotfiles/homer/config.yml /etc/homer
+	gpg --decrypt dotfiles/emacs/mjru-network.gpg > $(HOME)/.emacs.d/modules/mjru-network.el
 
 .PHONY: deploy
 deploy:

@@ -107,3 +107,9 @@
 
 ;; TODO: Bind wi-servers-list-open-terminal
 ;; (define-key map (kbd "s") 'wi-servers-list-open-terminal)
+
+
+
+(load (expand-file-name "~/.emacs.d/modules/mjru-network.el"))
+(setq wi-vterm--prettify-symbols-alist
+      (append wi-vterm--prettify-symbols-alist mjru-prettify-hosts))
