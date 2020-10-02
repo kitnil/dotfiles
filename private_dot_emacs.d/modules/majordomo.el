@@ -113,3 +113,9 @@
 (load (expand-file-name "~/.emacs.d/modules/mjru-network.el"))
 (setq wi-vterm--prettify-symbols-alist
       (append wi-vterm--prettify-symbols-alist mjru-prettify-hosts))
+
+(defun mjru-connect-br1-mr14.intr ()
+  (interactive)
+  (vterm)
+  (vterm-send-string "connect br1-mr14.intr")
+  (vterm-send-return))

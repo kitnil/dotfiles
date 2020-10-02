@@ -384,7 +384,9 @@
 ;;;
 
 (defcommand mjru-connect-br1-mr14.intr () ()
-  (emacs-eval '(progn
-                (vterm)
-                (vterm-send-string "connect br1-mr14.intr")
-                (vterm-send-return))))
+  (sb-thread:make-thread
+   (lambda ()
+     (sb-ext:run-program "/home/oleg/.guix-profile/bin/emacs"
+                         `("--name=emacs@br1-mr14.intr" "--eval" "(mjru-connect-br1-mr14.intr)")
+                         :input nil
+                         :output *standard-output*))))
