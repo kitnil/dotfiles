@@ -12,6 +12,8 @@
                 (xplanet-file))
               (lambda () (cursor-theme))
               (lambda () (keynav))
+              (lambda () (keyboard-layout))
+              (lambda () (xmodmap))
               (lambda () (run-commands "volume-decrease")) ;start pulseaudio
               ;; (lambda () (sb-thread:make-thread
               ;;        (lambda ()

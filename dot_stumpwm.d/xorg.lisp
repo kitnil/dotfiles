@@ -38,7 +38,7 @@
   (run-shell-command "setxkbmap -layout us,ru -option grp:win_space_toggle"))
 
 (defcommand xmodmap () ()
-  (run-shell-command "xmodmap " (concat "/.Xmodmap" (getenv "HOME"))))
+  (run-shell-command (format nil "xmodmap ~s" (concat (getenv "HOME") "/.Xmodmap"))))
 
 (defcommand keynav () ()
   (run-shell-command "keynav"))
