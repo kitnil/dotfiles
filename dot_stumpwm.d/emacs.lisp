@@ -17,6 +17,11 @@
 (defun emacsclient-eval (command)
   (emacsclient-command (format nil "-e ~s" command)))
 
+(defun emacs-eval (command)
+  (run-shell-command
+   (format nil "emacs --eval ~s"
+           (sb-unicode:lowercase (write-to-string command)))))
+
 (defun emacs-buffer (buffer)
   (emacsclient-command "-s" "chat"
                        (format nil "-e ~s"

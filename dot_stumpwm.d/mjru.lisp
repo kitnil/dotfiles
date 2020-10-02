@@ -377,3 +377,14 @@
 
 (defcommand mjru-office-shedule-sup () ()
   (run-shell-command "firefox --new-window https://office.majordomo.ru/shedule2/2"))
+
+
+;;;
+;;; Console
+;;;
+
+(defcommand mjru-connect-br1-mr14.intr () ()
+  (emacs-eval '(progn
+                (vterm)
+                (vterm-send-string "connect br1-mr14.intr")
+                (vterm-send-return))))
