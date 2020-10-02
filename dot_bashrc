@@ -1688,3 +1688,11 @@ elktail()
             ;;
     esac
 }
+
+domain()
+{
+    (
+        cd $HOME/bin || exit 0
+        ./domain.yml
+    )
+}
