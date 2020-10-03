@@ -1660,6 +1660,20 @@ gita()
 }
 
 alias godaddy="GODADDY_DOMAIN_NAME=wugi.info godaddy"
+wugi.info()
+{
+    case "$1" in
+        a)
+            godaddy list a
+            ;;
+        cname)
+            godaddy list cname
+            ;;
+        ns)
+            godaddy list ns
+            ;;
+    esac
+}
 
 stumpwm-refcard()
 {
