@@ -63,6 +63,7 @@ COMMAND must be one of the sub-commands listed below:
 
    a
    cname
+   ns
 
 Report bugs to: go.wigust@gmail.com."
 }
@@ -107,6 +108,9 @@ case "$1" in
                 ;;
             cname)
                 $GODADDY_COMMAND list --auth-key "$GODADDY_KEY" --auth-secret "$GODADDY_SECRET" "$GODADDY_DOMAIN_NAME" CNAME "${@:3}"
+                ;;
+            ns)
+                $GODADDY_COMMAND list --auth-key "$GODADDY_KEY" --auth-secret "$GODADDY_SECRET" "$GODADDY_DOMAIN_NAME" NS "${@:3}"
                 ;;
             *)
                 help_list
