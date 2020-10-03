@@ -2,6 +2,12 @@
 #! nix-shell -p "(import (fetchGit { url = \"https://github.com/NorfairKing/dnscheck\"; ref = \"master\"; })).dnscheck" --run "dnscheck domain.yml"
 
 checks:
+- type: ns
+  domain: mjru.wugi.info
+  values:
+  - ns.majordomo.ru.
+  - ns2.majordomo.ru.
+  - ns3.majordomo.ru.
 - type: a
   domain: vm1.wugi.info
   ip: 78.108.82.157
