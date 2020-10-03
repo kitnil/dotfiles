@@ -117,6 +117,7 @@ EndSection\n")
          iftop
          net-tools
          tcpdump
+         ipset
 
          %base-packages))
 
