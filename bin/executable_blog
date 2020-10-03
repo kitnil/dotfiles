@@ -24,5 +24,10 @@ case "$1" in
         fi
         git -C "$HOME/src/blog-wugi-info/" add -A
         git -C "$HOME/src/blog-wugi-info/" commit -m 'Update.'
+        read -p "Push to remote? " -n 1 -r
+        if [[ $REPLY =~ ^[Yy]$ ]]
+        then
+            git -C "$HOME/src/blog-wugi-info/" push
+        fi
         ;;
 esac
