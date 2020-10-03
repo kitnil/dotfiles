@@ -1,0 +1,28 @@
+#!/usr/bin/env bash
+
+blog_output()
+{
+    echo "$(guix build --without-tests=python-orgformat --no-offload --file=$HOME/.local/share/chezmoi/dotfiles/blog/wugi.info.scm)/share/doc/wugi.info"
+}
+
+case "$1" in
+    build)
+        (
+            set -ex
+            cd "$(blog_output)" || exit 1
+            python3 -m http.server 9001
+            echo http://blog.wugi.info/ is servered by NGINX
+        )
+        ;;
+    deploy)
+        cmd="rsync --archive --verbose "$(blog_output)/" "$HOME/src/blog-wugi-info/public""
+        echo "Will invoke: $cmd"
+        read -p "OK? " -n 1 -r
+        if [[ $REPLY =~ ^[Yy]$ ]]
+        then
+            $cmd
+        fi
+        git -C "$HOME/src/blog-wugi-info/" add -A
+        git -C "$HOME/src/blog-wugi-info/" commit -m 'Update.'
+        ;;
+esac
