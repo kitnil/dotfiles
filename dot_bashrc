@@ -1696,3 +1696,13 @@ domain()
         ./domain.yml
     )
 }
+
+brute()
+{
+    sudo grep 'Connection closed' /var/log/messages \
+        | grep --perl-regexp '(?:[0-9]{1,3}\.){3}[0-9]{1,3}' --only-matching \
+        | grep --invert-match 127.0.0.1 \
+        | uniq \
+        | fzf \
+        | xargs sudo ipset add brute
+}
