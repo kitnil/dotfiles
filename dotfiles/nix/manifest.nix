@@ -64,6 +64,10 @@ in [
   dive
   # dmg2img
   dnsperf
+  (import (fetchGit {
+    url = "https://github.com/NorfairKing/dnscheck";
+    ref = "master";
+  })).dnscheck
   # docker-compose
   docker-ls
   dragon-drop
