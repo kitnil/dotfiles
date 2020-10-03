@@ -33,6 +33,7 @@ alias lsns='lsns --notruncate --output-all'
 alias goaccess='goaccess --log-format=COMBINED'
 
 alias catj=gron
+alias sqlite-visualize=sqleton
 
 # https://github.com/andresgongora/synth-shell
 alias dmesg="sudo dmesg --color=auto --reltime --human --nopager --decode"
