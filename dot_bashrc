@@ -82,6 +82,9 @@ cat()
     if [[ "${*:-1}" == /proc/*/environ ]]
     then
         command cat "${@: -1}" | tr '\000' '\n'
+    elif [[ "${*:-1}" == *.md ]]
+    then
+        command glow "$@"
     else
         command cat "$@"
     fi
