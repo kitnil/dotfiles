@@ -1724,3 +1724,13 @@ brute()
         | fzf \
         | xargs sudo ipset add brute
 }
+
+blog()
+{
+    (
+        set -ex
+        cd "$(guix build --without-tests=python-orgformat --no-offload --file=$HOME/.local/share/chezmoi/dotfiles/blog/wugi.info.scm)/share/doc/wugi.info" || exit 1
+        python3 -m http.server 9001
+        echo http://blog.wugi.info/ is servered by NGINX
+    )
+}
