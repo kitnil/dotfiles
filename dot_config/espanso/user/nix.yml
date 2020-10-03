@@ -1,0 +1,6 @@
+name: nix
+parent: default
+
+matches:
+  - trigger: :nix-unstable
+    replace: NIX_PATH=nixpkgs=$HOME/.nix-defexpr/channels/nixos-unstable
