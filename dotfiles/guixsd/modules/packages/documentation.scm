@@ -149,3 +149,28 @@ to Bash advances usage.")
     (synopsis "superserver-3u-mnl-2197")
     (description "superserver-3u-mnl-2197")
     (license #f)))
+
+(define-public book-sicp
+  (package
+    (name "book-sicp")
+    (version "1996")
+    (source (origin
+              (method url-fetch)
+              (uri "https://web.mit.edu/alexmv/6.037/sicp.pdf")
+              (file-name (string-append name "-" version ".pdf"))
+              (sha256
+               (base32
+                "12yszs2pwpas9a6643j5f4z1a0b872jz9i19zpb130vxas3rlw08"))))
+    (build-system copy-build-system)
+    (arguments
+     `(#:install-plan
+       `((,(assoc-ref %build-inputs "source")
+          ,(let ((title (string-drop ,name (string-length "book-"))))
+             (string-append "/share/doc/" title "/" title ".pdf"))))
+       #:phases (modify-phases %standard-phases (delete 'unpack))))
+    (home-page "https://mit.edu/")
+    (synopsis "Structure and Interpretation of Computer Programs, second edition")
+    (description "This package provides a PDF version of book Structure and
+Interpretation of Computer Programs, second edition.")
+    (license #f)))
+
