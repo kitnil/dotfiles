@@ -77,7 +77,8 @@ EndSection")
                 (well-known? #t)
                 (target #f)
                 (sub-domains? #f)
-                (mtls? #f))
+                (mtls? #f)
+                (locations '()))
   (nginx-server-configuration
    (server-name (if sub-domains?
                     (list (string-append sub-domains?
@@ -86,25 +87,26 @@ EndSection")
                                          "$"))
                     (list host (string-append "www." host))))
    (locations (delete #f
-                      (list (nginx-location-configuration
-                             (uri "/")
-                             (body (list "resolver 80.80.80.80;"
-                                         (string-append "set $target "
-                                                        (or target "127.0.0.1")
-                                                        ":" (number->string port) ";")
-                                         (format #f "proxy_pass ~a://$target;" (if ssl-target? "https" "http"))
-                                         (if sub-domains?
-                                             "proxy_set_header Host $http_host;"
-                                             (format #f "proxy_set_header Host ~a;" host))
-                                         "proxy_set_header X-Forwarded-Proto $scheme;"
-                                         "proxy_set_header X-Real-IP $remote_addr;"
-                                         "proxy_set_header X-Forwarded-for $remote_addr;"
-                                         "proxy_connect_timeout 300;"
-                                         "client_max_body_size 0;")))
-                            (and well-known?
-                                 (nginx-location-configuration
-                                  (uri "/.well-known")
-                                  (body '("root /var/www;")))))))
+                      (append (list (nginx-location-configuration
+                                     (uri "/")
+                                     (body (list "resolver 80.80.80.80;"
+                                                 (string-append "set $target "
+                                                                (or target "127.0.0.1")
+                                                                ":" (number->string port) ";")
+                                                 (format #f "proxy_pass ~a://$target;" (if ssl-target? "https" "http"))
+                                                 (if sub-domains?
+                                                     "proxy_set_header Host $http_host;"
+                                                     (format #f "proxy_set_header Host ~a;" host))
+                                                 "proxy_set_header X-Forwarded-Proto $scheme;"
+                                                 "proxy_set_header X-Real-IP $remote_addr;"
+                                                 "proxy_set_header X-Forwarded-for $remote_addr;"
+                                                 "proxy_connect_timeout 300;"
+                                                 "client_max_body_size 0;")))
+                                    (and well-known?
+                                         (nginx-location-configuration
+                                          (uri "/.well-known")
+                                          (body '("root /var/www;")))))
+                              locations)))
    (listen (if ssl?
                (list "443 ssl")
                (list "80")))
@@ -249,6 +251,7 @@ location / {
                 (nginx-server-configuration-locations %webssh-configuration-nginx))))
 
         (proxy "cups.tld" 631)
+        (proxy "blog.wugi.info" 9001)
         (proxy "torrent.wugi.info" 9091 #:ssl? #t #:ssl-key? #t #:mtls? #t)
         (proxy "jenkins.wugi.info" 8090 #:ssl? #t #:ssl-key? #t #:mtls? #t)
         (proxy "githunt.wugi.info" 3000 #:ssl? #t #:ssl-key? #t #:mtls? #t)
@@ -449,6 +452,7 @@ location / {
                            "iso.wugi.info"
                            "cgit.duckdns.org"
                            "spb"
+                           "blog.wugi.info"
                            ;; Majordomo
                            ;; "hms-dev.intr"
                            ;; "api-dev.intr"
