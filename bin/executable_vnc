@@ -33,6 +33,9 @@ case "$1" in
     --help)
         help_main
         ;;
+    client)
+        vncviewer -AutoSelect=0 -PreferredEncoding=Raw -FullColor=1 -NoJPEG=1 -CompressLevel=0 -passwd "$HOME/.vnc/passwd" 127.0.0.1:"$2"
+        ;;
     mjru)
         ssh majordomo.intr -- "pgrep -fa 'Xvnc :3'" \
             || ssh majordomo.intr -- 'vncserver -xstartup "$HOME/.vnc/xstartup" :3'
