@@ -49,7 +49,7 @@ case "$1" in
         vncviewer -AutoSelect=0 -PreferredEncoding=Raw -FullColor=1 -NoJPEG=1 -CompressLevel=0 -passwd ~/.vnc/passwd 127.0.0.1:5911
         ;;
     novnc)
-        docker run --detach --name novnc --network=host geek1011/easy-novnc:latest --addr 127.0.0.1:5911 --port 5910
+        docker run --detach --name novnc --network=host geek1011/easy-novnc:latest --addr 127.0.0.1:5911 --port 5910 --novnc-params "resize=remote"
         ;;
     server)
         case "$2" in
