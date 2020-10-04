@@ -1,0 +1,8 @@
+#!/bin/sh
+
+unset SESSION_MANAGER
+unset DBUS_SESSION_BUS_ADDRESS
+
+"$HOME/.guix-profile/bin/xclickroot" -r xmenu.sh &
+
+exec -a stumpwm /run/current-system/profile/bin/sbcl --load "$HOME/bin/my-stumpwm"

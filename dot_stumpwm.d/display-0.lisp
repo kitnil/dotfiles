@@ -32,9 +32,6 @@
               ((1) (funcall frame-1-command)))))
       (run-commands (format nil "gselect ~a" group-number))))
 
-(defcommand quassel () ()
-  (run-shell-command (join (list *fontconfig-file* "quassel"))))
-
 (defcommand group-1-start-programs () ()
   (run-frame 1 :frame-0-command (lambda ()
                                   (run-shell-command "run-emacs"))

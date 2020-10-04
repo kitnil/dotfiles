@@ -1,0 +1,2 @@
+export FONTCONFIG_FILE=/run/current-system/profile/etc/fonts/fonts.conf
+exec quassel

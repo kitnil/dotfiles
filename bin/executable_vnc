@@ -48,19 +48,25 @@ case "$1" in
             || ssh -fNL 5911:localhost:5901 guix.vm.wugi.info
         vncviewer -AutoSelect=0 -PreferredEncoding=Raw -FullColor=1 -NoJPEG=1 -CompressLevel=0 -passwd ~/.vnc/passwd 127.0.0.1:5911
         ;;
+    novnc)
+        docker run --detach --name novnc --network=host geek1011/easy-novnc:latest --addr 127.0.0.1:5911 --port 5910
+        ;;
     server)
         case "$2" in
             --help)
                 help_server
                 ;;
-            5901)
-                vncserver -xstartup "$HOME/.vnc/xstartup" :1
+            5901|firefox)
+                vncserver -xstartup "$HOME/.vnc/xstartup-firefox" :1
                 ;;
-            5902)
+            5902|workstation)
                 vncserver -geometry 1920x1080 -xstartup "$HOME/.vnc/xstartup-stumpwm" :2
                 ;;
-            5903)
+            5903|small)
                 vncserver -geometry 1366x768 -xstartup "$HOME/.vnc/xstartup-stumpwm" :3
+                ;;
+            5910|quassel)
+                vncserver -xstartup "$HOME/.vnc/xstartup-quassel" :10
                 ;;
             *)
                 help_server
