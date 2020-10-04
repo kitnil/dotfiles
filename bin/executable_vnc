@@ -34,22 +34,26 @@ case "$1" in
         help_main
         ;;
     client)
-        vncviewer -AutoSelect=0 -PreferredEncoding=Raw -FullColor=1 -NoJPEG=1 -CompressLevel=0 -passwd "$HOME/.vnc/passwd" 127.0.0.1:"$2"
-        ;;
-    mjru)
-        ssh majordomo.intr -- "pgrep -fa 'Xvnc :3'" \
-            || ssh majordomo.intr -- 'vncserver -xstartup "$HOME/.vnc/xstartup" :3'
-        ss -o state listening '( dport = 59588 or sport = 59588 )' | grep -q :59588 \
-            || ssh -fNL 59588:localhost:5903 majordomo.intr
-        vncviewer -PasswordFile ~/.vnc/passwd -NoJpeg localhost:59588
-        ;;
-    vm)
-        ss -o state listening '( dport = 5911 or sport = 5911 )' | grep -q :5911 \
-            || ssh -fNL 5911:localhost:5901 guix.vm.wugi.info
-        vncviewer -AutoSelect=0 -PreferredEncoding=Raw -FullColor=1 -NoJPEG=1 -CompressLevel=0 -passwd ~/.vnc/passwd 127.0.0.1:5911
-        ;;
-    novnc)
-        docker run --detach --name novnc --network=host geek1011/easy-novnc:latest --addr 127.0.0.1:5911 --port 5910 --novnc-params "resize=remote"
+        case "$2" in
+            mjru)
+                ssh majordomo.intr -- "pgrep -fa 'Xvnc :3'" \
+                    || ssh majordomo.intr -- 'vncserver -xstartup "$HOME/.vnc/xstartup" :3'
+                ss -o state listening '( dport = 59588 or sport = 59588 )' | grep -q :59588 \
+                    || ssh -fNL 59588:localhost:5903 majordomo.intr
+                vncviewer -PasswordFile ~/.vnc/passwd -NoJpeg localhost:59588
+                ;;
+            vm)
+                ss -o state listening '( dport = 5911 or sport = 5911 )' | grep -q :5911 \
+                    || ssh -fNL 5911:localhost:5901 guix.vm.wugi.info
+                vncviewer -AutoSelect=0 -PreferredEncoding=Raw -FullColor=1 -NoJPEG=1 -CompressLevel=0 -passwd ~/.vnc/passwd 127.0.0.1:5911
+                ;;
+            novnc)
+                docker run --detach --name novnc --network=host geek1011/easy-novnc:latest --addr 127.0.0.1:5911 --port 5910 --novnc-params "resize=remote"
+                ;;
+            *)
+                vncviewer -AutoSelect=0 -PreferredEncoding=Raw -FullColor=1 -NoJPEG=1 -CompressLevel=0 -passwd "$HOME/.vnc/passwd" 127.0.0.1:"$2"
+                ;;
+        esac
         ;;
     server)
         case "$2" in
