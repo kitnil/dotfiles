@@ -107,6 +107,7 @@ in  ''
 		Paperview	paperview
 
 	Work
+		Sampler	echo '(sampler)' | stumpish -e eval
 		Shared
 			${hms-account { server = "web15", name = "AC_222914", tarif = "Хостинг приложений" }}
 			${hms-account { server = "web15", name = "AC_221357", tarif = "Старт" }}
