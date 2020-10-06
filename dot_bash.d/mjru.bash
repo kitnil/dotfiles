@@ -314,3 +314,23 @@ mjru-jenkins()
     JENKINS_PASSWORD="$(pass show majordomo/public/jenkins.intr/admin)" \
     jenkins "$@"
 }
+
+mjru-vm-vnc()
+{
+    (
+        set -ex
+
+        host="$1"
+        vm="$2"
+
+        vncviewer $host:$(connect ssh $host virsh dumpxml $vm | xq -r '.domain.devices.graphics["@port"]') &
+        password="$(ihs vm passwords $vm | awk '{ print $NF }')"
+
+        sleep 1
+        echo "(window-send-string (format nil \"~a~%\" \"$password\"))" | stumpish -e eval
+        sleep 2
+        echo "(window-send-string (format nil \"~a~%\" \"root\"))" | stumpish -e eval
+        sleep 0.5
+        echo "(window-send-string (format nil \"~a~%\" \"$password\"))" | stumpish -e eval
+    )
+}
