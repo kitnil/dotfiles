@@ -138,6 +138,7 @@ web20 = mysql://root@web20.intr
 web21 = mysql://root@web21.intr
 web22 = mysql://root@web22.intr
 web23 = mysql://root@web23.intr
+web24 = mysql://root@web24.intr
 web25 = mysql://root@web25.intr
 web26 = mysql://root@web26.intr
 web27 = mysql://root@web27.intr
