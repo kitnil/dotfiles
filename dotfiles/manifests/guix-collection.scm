@@ -136,6 +136,7 @@ xml xorg)
 
                goaccess
                httpie
+               httping
 
                ;; Utilities
                strace tcpdump multitail wireshark
