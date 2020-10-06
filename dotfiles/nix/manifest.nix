@@ -141,6 +141,8 @@ in [
   gron
   pup # HTML parsing
 
+  ioping
+
   audacity
   obs-studio
   androidenv.androidPkgs_9_0.platform-tools
