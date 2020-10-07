@@ -1146,7 +1146,7 @@ container()
                 | jq -r '.[] | [.NetworkSettings.Networks.bridge.IPAddress, .Config.Image] | @tsv'
             ;;
         intr-list)
-            docker-list-intr
+            mjru-docker-list-intr
             ;;
         intr-pull)
             group="$1" # For example: “mail”.
