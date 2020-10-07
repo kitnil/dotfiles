@@ -321,10 +321,13 @@ mycli --password "$(pass show majordomo/public/web/mysql/root)" -d "${2%.intr}"
         host="${2:-127.0.0.1}"
         user="root"
         password="$(pass show majordomo/public/web/mysql/root)"
-        for id in $(mysql --silent --user="$user" --password="$password" --host="$host" --execute="SELECT id FROM information_schema.processlist WHERE user like 'u%'"); do
-            echo "$id"
-            mysql --silent --user="$user" --password="$password" --host="$host" --execute="kill $id;"
-        done
+        (
+            set +e
+            for id in $(mysql --silent --user="$user" --password="$password" --host="$host" --execute="SELECT id FROM information_schema.processlist WHERE user like 'u%'"); do
+                echo "$id"
+                mysql --silent --user="$user" --password="$password" --host="$host" --execute="kill $id;"
+            done
+        )
         ;;
     ip-filter)
         if ! OPTS="$(getopt --options arHhd --long add:,remove:,host:,help,describe --name parse-options -- "$@")"
