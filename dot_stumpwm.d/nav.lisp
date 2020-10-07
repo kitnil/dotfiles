@@ -247,3 +247,11 @@
   (if (small-framep)
       (progn (message "small") 1)
       (progn (message "big") 0)))
+
+
+;;;
+;;; Clipboard
+;;;
+
+(defcommand window-send-clipboard () ()
+  (window-send-string (get-x-selection)))
