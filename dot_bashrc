@@ -939,7 +939,8 @@ netstat-graph()
         | awk -F: '{print $1}' \
         | sort \
         | uniq -c \
-        | awk '{ printf("%s\t%s\t",$2,$1) ; for (i = 0; i < $1; i++) {printf("*")}; print "" }'
+        | awk '{ printf("%s\t%s\t",$2,$1) ; for (i = 0; i < $1; i++) {printf("*")}; print "" }' \
+        | sort -k2 -n
 }
 
 random-password()
