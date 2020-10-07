@@ -3,19 +3,19 @@
              (guix profiles))
 
 (use-package-modules admin algebra aspell astronomy audio backup bash
-benchmark bittorrent cdrom chicken chromium ci cmake code commencement
-compression compton configuration-management cpio cran curl databases dhall
-dictionaries diffoscope dns dunst elf entr file games gcc gdb ghostscript gimp
-gl glib gnome gnu-doc gnupg gnuzilla golang graphics graphviz gstreamer gtk
-guile guile-xyz haskell haskell-apps haskell-xyz imagemagick image-viewers
-inkscape irc kde kodi libreoffice license linux lisp logging lsof lxde lxqt m4
-mail man maths messaging mp3 ncdu ncurses networking node package-management
-parallel password-utils patchutils pdf perl perl-web php pretty-print
-pulseaudio pv python python-web python-xyz qt ratpoison rdesktop readline
-rsync rust-apps samba scheme screen shells shellutils sqlite ssh statistics
-suckless syncthing synergy terminals tex texinfo text-editors textutils tls
-tmux tor valgrind version-control video vim virtualization vnc vpn w3m web
-wget wm xdisorg xfce xml xorg)
+bittorrent cdrom chicken chromium ci cmake code commencement compression
+compton configuration-management cpio cran curl databases dhall dictionaries
+diffoscope dns dunst elf entr file games gcc gdb ghostscript gimp gl glib
+gnome gnu-doc gnupg gnuzilla golang graphics graphviz gstreamer gtk guile
+guile-xyz haskell haskell-apps haskell-xyz imagemagick image-viewers inkscape
+irc kde kodi libreoffice license linux lisp logging lsof lxde lxqt m4 mail man
+maths messaging mp3 ncdu ncurses networking node package-management parallel
+password-utils patchutils pdf perl perl-web php pretty-print pulseaudio pv
+python python-web python-xyz qt ratpoison rdesktop readline rsync rust-apps
+samba scheme screen shells shellutils sqlite ssh statistics suckless syncthing
+synergy terminals tex texinfo text-editors textutils tls tmux tor valgrind
+version-control video vim virtualization vnc vpn w3m web wget wm xdisorg xfce
+xml xorg)
 
 (define guix-collection-packages-multiout
   `((,glib "bin")
@@ -141,7 +141,7 @@ wget wm xdisorg xfce xml xorg)
                ;; Utilities
                strace tcpdump multitail wireshark
 
-               hdparm fio
+               hdparm
 
                console-setup ;set font size in TTY
                rlwrap ; read-line wrapper
