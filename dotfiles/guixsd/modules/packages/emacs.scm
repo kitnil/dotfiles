@@ -1673,3 +1673,24 @@ brings @code{gnus} like scoring feeds.")
        (file-name (git-file-name name version))
        (sha256
         (base32 "0js24x42m7b5iymb4rxz501dff19vav5pywnzv50b673rbkaaqvh"))))))
+
+(define-public emacs-tickscript-mode
+  (package
+    (name "emacs-tickscript-mode")
+    (version "0.4.1")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://github.com/msherry/tickscript-mode")
+                    (commit version)))
+              (file-name (git-file-name name version))
+              (sha256
+               (base32
+                "173zk9nzjds0rkypmaq8xv5qianivgk16jpzgk0msdsn9kjbd8s9"))))
+    (build-system emacs-build-system)
+    (home-page "https://github.com/msherry/tickscript-mode/")
+    (synopsis "Major mode for Tickscript files")
+    (description "Provides Emacs font-lock, indentation, navigation, and
+utility functions for working with TICKscript, a DSL for use with Kapacitor
+and InfluxDB.")
+    (license license:gpl3+)))
