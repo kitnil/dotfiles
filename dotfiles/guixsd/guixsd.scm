@@ -23,21 +23,60 @@
              (services kresd)
              (services jenkins)
              (services tftp)
-             (services openvpn))
+             (services openvpn)
+             (nongnu packages linux))
 
 ;; Fix Jenkins in Docker group
 (module-set! (resolve-module '(gnu packages admin)) 'shepherd shepherd-patched)
 
-(define 30-multihead.conf "\
-Section \"Monitor\"
-    Identifier  \"HDMI1\"
-    Option      \"Primary\" \"true\"
+(define intel+amdgpu.conf "\
+
+Section \"Device\"
+        Identifier  \"Intel video card\"
+        Driver      \"intel\"
+        BusID       \"PCI:0:2:0\"
+        Option      \"AccelMethod\"  \"sna\"
+        Option      \"SwapbuffersWait\" \"true\"
+        Option      \"TearFree\" \"true\"
 EndSection
 
-Section \"Monitor\"
-    Identifier  \"HDMI3\"
-    Option      \"RightOf\" \"HDMI1\"
-EndSection")
+Section \"Device\"
+        Identifier  \"AMD video card\"
+        Driver      \"amdgpu\"
+        BusID       \"PCI:3:0:0\"
+        Option      \"TearFree\" \"true\"
+EndSection
+
+Section \"Screen\"
+   Identifier  \"Screen 1\"
+   Device      \"Intel video card\"
+   Monitor     \"HDMI1\"
+   DefaultDepth    24
+   SubSection \"Display\"
+       Depth       24
+       Modes       \"1920x1080\"
+   EndSubSection
+EndSection
+
+Section \"Screen\"
+   Identifier  \"Screen 2\"
+   Device      \"AMD video card\"
+   Monitor     \"HDMI3\"
+   DefaultDepth    24
+   SubSection \"Display\"
+       Depth       24
+       Modes       \"1920x1080\"
+   EndSubSection
+EndSection
+
+Section \"ServerLayout\"
+    Identifier  \"Default Layout\"
+    Screen  0   \"Screen 2\"
+    Screen  1   \"Screen 1\" RightOf \"Screen 2\"
+EndSection
+
+")
+
 
 
 ;;;
@@ -362,6 +401,9 @@ location / {
   (let ((base-system (load %hardware-file)))
     (operating-system
       (inherit base-system)
+      (kernel linux)
+      (firmware (cons* amdgpu-firmware linux-firmware
+                       %base-firmware))
       (kernel-arguments '("modprobe.blacklist=pcspkr,snd_pcsp"))
       (packages %my-system-packages)
 
@@ -506,8 +548,7 @@ location / {
 				 ;; (theme %slim-theme) TODO: Fix the theme.
                                  (xorg-configuration
                                   (xorg-configuration
-                                   (extra-config (list 20-intel.conf
-                                                       30-multihead.conf))))))
+                                   (extra-config (list intel+amdgpu.conf))))))
                        (screen-locker-service slock)
                        (screen-locker-service xlockmore "xlock")
                        (udisks-service)

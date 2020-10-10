@@ -8,7 +8,7 @@
 
   (bootloader (bootloader-configuration
                (bootloader grub-bootloader)
-               (target "/dev/sda")))
+               (target "/dev/sdb")))
 
   (file-systems (cons* (file-system
                          (device (file-system-label "guixsd-root"))
@@ -31,7 +31,7 @@
 
   (packages %base-packages)
 
-  (services (cons (static-networking-service "enp6s0" "192.168.100.120"
+  (services (cons (static-networking-service "enp9s0" "192.168.100.120"
 					     #:netmask "255.255.255.0"
 					     #:gateway "192.168.100.1"
 					     #:name-servers '("192.168.100.120\nsearch intr majordomo.ru"

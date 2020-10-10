@@ -471,7 +471,7 @@ guix()
             )
             ;;
         pull)
-            guix_command="command guix pull"
+            guix_command="command guix pull --channels=/home/oleg/.local/share/chezmoi/dotfiles/channels.scm"
             (set -ex; $guix_command "${@:2}"; sudo --login $guix_command "${@:2}")
             ;;
         prereconfigure)

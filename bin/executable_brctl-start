@@ -9,12 +9,12 @@ case "$1" in
     *)
         ip tuntap add tap0 mode tap
 
-        ip address del 192.168.100.120/24 dev enp6s0
+        ip address del 192.168.100.120/24 dev enp9s0
 
         # Could break office network if tap0 is openvpn connection:
         brctl addbr br0
         brctl addif br0 tap0
-        brctl addif br0 enp6s0
+        brctl addif br0 enp9s0
 
         ip link set br0 up
         ip address add 192.168.100.120/24 dev br0
