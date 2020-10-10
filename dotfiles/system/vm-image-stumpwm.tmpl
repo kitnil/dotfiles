@@ -2,7 +2,9 @@
 (use-service-modules desktop networking ssh xorg shepherd)
 (use-package-modules bootloaders certs fonts nvi
                      package-management wget xorg
-                     wm linux lisp lisp-xyz pulseaudio astronomy)
+                     wm linux lisp lisp-xyz pulseaudio astronomy ratpoison)
+
+(use-modules (services vnc))
 
 (define vm-image-motd (plain-file "motd" "
 \x1b[1;37mThis is the GNU system.  Welcome!\x1b[0m
@@ -18,6 +20,34 @@ Run '\x1b[1;37minfo guix\x1b[0m' to browse documentation.
 \x1b[1;33mConsider setting a password for the 'root' and 'oleg' \
 accounts.\x1b[0m
 "))
+
+(define vncserver-configure
+  (let* ((home "/home/oleg")
+         (xstartup (string-append home "/.vnc/xstartup"))
+         (passwd (local-file "/home/oleg/.vnc/passwd"))
+         (cp (file-append coreutils "/bin/cp"))
+         (chown (file-append coreutils "/bin/chown"))
+         (chmod (file-append coreutils "/bin/chmod")))
+    (program-file
+     "vm-image-vncserver-configure"
+     (with-imported-modules '((guix build utils))
+       #~(begin
+           (use-modules (ice-9 format)
+                        (guix build utils))
+           (let ((user (getpw "oleg"))
+                 (group (getgr "users")))
+             (display "Configure vncserver...")
+             (mkdir-p (string-append #$home "/.vnc"))
+             (copy-file #$passwd (string-append #$home "/.vnc/passwd"))
+             (copy-file #$(local-file "/home/oleg/.vnc/config") "/home/oleg/.vnc/config")
+             (chmod (string-append #$home "/.vnc/passwd") #o600))
+           (with-output-to-file #$xstartup
+             (lambda ()
+               (format #t "\
+#!/bin/sh
+exec \"$0\" ~a/bin/ratpoison" #$ratpoison)))
+           (chown #$xstartup (passwd:uid user) (group:gid group))
+           (chmod #$xstartup #o755))))))
 
 (define stumpwm-configure
   (let* ((dotfiles (load "/home/oleg/.local/share/chezmoi/guix.scm"))
@@ -110,7 +140,7 @@ root ALL=(ALL) ALL
                     %base-packages))
 
   (services
-   (append (list
+   (append (list vnc-service
 
                  ;; Choose SLiM, which is lighter than the default GDM.
                  (service slim-service-type
@@ -120,6 +150,19 @@ root ALL=(ALL) ALL
                            (xorg-configuration
                             (xorg-configuration
                              (keyboard-layout keyboard-layout)))))
+
+                 (simple-service 'vncserver-config shepherd-root-service-type
+                                 (list
+                                  (shepherd-service
+                                   (provision '(vncserver-config))
+                                   (documentation "Configure vncserver")
+                                   (requirement '())
+                                   (start #~(make-forkexec-constructor
+                                             (list #$vncserver-configure)
+                                             #:user "oleg"
+                                             #:group "users"))
+                                   (one-shot? #t)
+                                   (stop #~(make-kill-destructor)))))
 
                  (simple-service 'stumpwm-config shepherd-root-service-type
                                  (list
