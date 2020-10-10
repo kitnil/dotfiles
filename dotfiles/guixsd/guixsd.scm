@@ -90,6 +90,7 @@ EndSection
         "guix.duckdns.org"
         "zabbix.wugi.info"
         "jenkins.wugi.info"
+        "monitor.wugi.info"
         "torrent.wugi.info"
         "webssh.wugi.info"))
 
@@ -294,6 +295,7 @@ location / {
         (proxy "torrent.wugi.info" 9091 #:ssl? #t #:ssl-key? #t #:mtls? #t)
         (proxy "jenkins.wugi.info" 8090 #:ssl? #t #:ssl-key? #t #:mtls? #t)
         (proxy "githunt.wugi.info" 3000 #:ssl? #t #:ssl-key? #t #:mtls? #t)
+        (proxy "monitor.wugi.info" 8080)
         (proxy "guix.duckdns.org" 5556 #:ssl? #t)
         (proxy "guix.wugi.info" 5556)
         (proxy "pykhaloff.ddns.net" 443
