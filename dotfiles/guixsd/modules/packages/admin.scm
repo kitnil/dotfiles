@@ -28,10 +28,12 @@
   #:use-module (gnu packages)
   #:use-module (gnu packages admin)
   #:use-module (gnu packages bash)
+  #:use-module (gnu packages firmware)
   #:use-module (gnu packages gawk)
   #:use-module (gnu packages gtk)
   #:use-module (gnu packages image)
   #:use-module (gnu packages pkg-config)
+  #:use-module (gnu packages virtualization)
   #:use-module (gnu packages xorg))
 
 (define-public pscircle
@@ -231,3 +233,43 @@ with re-written history containing only those directories.")
               (inherit (package-source shepherd))
               (patches (search-patches "shepherd-supplementary-groups.patch"))))))
 
+(define-public qemu-windows10
+  (package
+    (name "qemu-windows10")
+    (version "0.0.1")
+    (source #f)
+    (build-system trivial-build-system)
+    (inputs ;TODO: Add VNC
+     `(("bash" ,bash-minimal)
+       ("ovmf" ,ovmf)
+       ("qemu" ,qemu)))
+    (arguments
+     `(#:modules ((guix build utils))
+       #:builder
+       (begin
+         (use-modules (guix build utils))
+         (mkdir-p (string-append %output "/bin"))
+         (let ((script (string-append %output "/bin/qemu-windows10")))
+           (with-output-to-file script
+             (lambda ()
+               (display (string-append "#!" (assoc-ref %build-inputs "bash") "/bin/bash"))
+               (newline)
+               (display (string-join (list "exec -a \"$0\""
+                                           (string-append (assoc-ref %build-inputs "qemu") "/bin/qemu-system-x86_64")
+                                           "-smp" "cores=4,threads=1"
+                                           "-m" "8G"
+                                           "-enable-kvm"
+                                           "-cpu" "host"
+                                           "-daemonize"
+                                           "-vnc" (format #f ":~s" "${QEMU_WINDOWS10_VNC_PORT:-12}")
+                                           "-drive" (format #f "file=~s,format=raw,media=disk" "${QEMU_WINDOWS10_DISK:-/dev/sda}")
+                                           "--bios" "ovmf_x64.bin" "-L" (string-append (assoc-ref %build-inputs "ovmf")
+                                                                                       "/share/firmware"))))
+               (newline)))
+         (chmod script #o755))
+         #t)))
+    (home-page "https://superuser.com/questions/342719/how-to-boot-a-physical-windows-partition-with-qemu/1204834")
+    (synopsis "Script to run Windows 10 on real hard-disk")
+    (description "This package provides a script to run Windows 10 installed
+on a hard-disk.")
+    (license license:expat)))
