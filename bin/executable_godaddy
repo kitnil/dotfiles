@@ -53,6 +53,38 @@ Run COMMANDS with ARGS
 Report bugs to: go.wigust@gmail.com."
 }
 
+help_delete()
+{
+    echo "\
+Usage: godaddy delete COMMANDS ARGS...
+Run COMMANDS with ARGS
+
+COMMAND must be one of the sub-commands listed below:
+
+   a
+   cname godaddy delete cname githunt guix.duckdns.org
+
+Report bugs to: go.wigust@gmail.com."
+}
+
+help_delete_a()
+{
+    echo "\
+Usage: godaddy delete a subdomain.example.com 1.2.3.4
+Run COMMANDS with ARGS
+
+Report bugs to: go.wigust@gmail.com."
+}
+
+help_delete_cname()
+{
+    echo "\
+Usage: godaddy delete cname subdomain.example.com target.domain.com
+Run COMMANDS with ARGS
+
+Report bugs to: go.wigust@gmail.com."
+}
+
 help_list()
 {
     echo "\
@@ -95,6 +127,32 @@ case "$1" in
                 ;;
             *)
                 help_add
+                ;;
+        esac
+        ;;
+    delete)
+        case "$2" in
+            --help)
+                help_delete
+                ;;
+            a)
+                if [[ -z "$3" ]]
+                then
+                    help_delete_a
+                    exit 1
+                fi
+                $GODADDY_COMMAND delete --auth-key "$GODADDY_KEY" --auth-secret "$GODADDY_SECRET" "$GODADDY_DOMAIN_NAME" A --name "$3" --content "$4"
+                ;;
+            cname)
+                if [[ -z "$3" ]]
+                then
+                    help_delete_cname
+                    exit 1
+                fi
+                $GODADDY_COMMAND delete --auth-key "$GODADDY_KEY" --auth-secret "$GODADDY_SECRET" "$GODADDY_DOMAIN_NAME" CNAME --name "$3" --content "$4"
+                ;;
+            *)
+                help_delete
                 ;;
         esac
         ;;
