@@ -12,50 +12,11 @@ checks:
   domain: vm1.wugi.info
   ip: 78.108.82.157
 - type: a
-  domain: bitrix.mj.wugi.info
-  ip: 185.84.108.20
-- type: a
-  domain: mg.wugi.info
-  ip: 141.193.32.19
-- type: a
-  domain: mxtest4.wugi.info
-  ip: 178.250.243.29
-- type: a
-  domain: php52.ru.kvm-test.wugi.info
-  ip: 78.108.80.109
-- type: a
-  domain: php53.ru.kvm-test.wugi.info
-  ip: 78.108.80.109
-- type: a
-  domain: php54.ru.kvm-test.wugi.info
-  ip: 78.108.80.109
-- type: a
-  domain: php55.ru.kvm-test.wugi.info
-  ip: 78.108.80.109
-- type: a
-  domain: php56.ru.kvm-test.wugi.info
-  ip: 78.108.80.109
-- type: a
-  domain: php70.ru.kvm-test.wugi.info
-  ip: 78.108.80.109
-- type: a
-  domain: php71.ru.kvm-test.wugi.info
-  ip: 78.108.80.109
-- type: a
-  domain: php72.ru.kvm-test.wugi.info
-  ip: 78.108.80.109
-- type: a
-  domain: php73.ru.kvm-test.wugi.info
-  ip: 78.108.80.109
-- type: a
   domain: vm1.wugi.info
   ip: 78.108.82.157
 - type: a
   domain: znc.wugi.info
   ip: 130.61.95.6
-- type: cname
-  domain: sub.gitlab.wugi.info
-  value: anongit.duckdns.org.
 - type: cname
   domain: back.wugi.info
   value: guix.duckdns.org.
@@ -78,14 +39,8 @@ checks:
   domain: githunt.wugi.info
   value: guix.duckdns.org.
 - type: cname
-  domain: gitlab.wugi.info
-  value: anongit.duckdns.org.
-- type: cname
   domain: godaddy.wugi.info
   value: add.
-- type: cname
-  domain: grafana.wugi.info
-  value: alerta.duckdns.org.
 - type: cname
   domain: guix.wugi.info
   value: guix.duckdns.org.
@@ -93,17 +48,11 @@ checks:
   domain: homer.wugi.info
   value: guix.duckdns.org.
 - type: cname
-  domain: jenkins.wugi.info
-  value: pipeline.duckdns.org.
-- type: cname
   domain: nextcloud.wugi.info
   value: guix.duckdns.org.
 - type: cname
   domain: pop3.test.wugi.info
   value: pop3.majordomo.ru.
-- type: cname
-  domain: prometheus.wugi.info
-  value: alerta.duckdns.org.
 - type: cname
   domain: redmine.wugi.info
   value: guix.duckdns.org.
