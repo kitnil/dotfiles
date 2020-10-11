@@ -67,6 +67,13 @@ resource "github_repository" "guix-docker" {
   topics         = ["guix", "guile", "scheme"]
 }
 
+resource "github_repository" "guix-door-kickers" {
+  name           = "guix-door-kickers"
+  description    = "Guix package for Door Kickers game"
+  default_branch = "master"
+  topics         = ["guix", "guile", "scheme"]
+}
+
 resource "github_repository" "guix-tome4" {
   name           = "guix-tome4"
   description    = "Guix package for Tales of Maj'Eyal rogue like game"
