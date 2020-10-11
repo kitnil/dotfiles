@@ -81,19 +81,12 @@
          ("sbcl-fiasco", sbcl-fiasco)
          ("dbus" ,dbus)
          ,@(package-inputs sbcl-stumpwm)))
-      (native-inputs `(("texinfo" ,texinfo)))
       (outputs (append (package-outputs sbcl-stumpwm) '("doc")))
       (arguments
        (substitute-keyword-arguments
            (package-arguments sbcl-stumpwm)
            ((#:phases phases)
             `(modify-phases ,phases
-               (add-after 'build-program 'build-documentation
-                 (lambda* (#:key outputs #:allow-other-keys)
-                   (invoke "makeinfo" "stumpwm.texi.in")
-                   (install-file "stumpwm.info"
-                                 (string-append (assoc-ref outputs "doc")
-                                                "/share/info"))))
                (replace 'create-desktop-file
                  (lambda* (#:key inputs outputs #:allow-other-keys)
                    (let* ((out (assoc-ref outputs "out"))
