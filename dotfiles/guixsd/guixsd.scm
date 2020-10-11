@@ -24,6 +24,7 @@
              (services jenkins)
              (services tftp)
              (services openvpn)
+             (services web)
              (nongnu packages linux))
 
 ;; Fix Jenkins in Docker group
@@ -127,7 +128,8 @@ EndSection
                                          "$"))
                     (list host (string-append "www." host))))
    (locations (delete #f
-                      (append (list (nginx-location-configuration
+                      (append locations
+                              (list (nginx-location-configuration
                                      (uri "/")
                                      (body (list "resolver 80.80.80.80;"
                                                  (string-append "set $target "
@@ -145,8 +147,7 @@ EndSection
                                     (and well-known?
                                          (nginx-location-configuration
                                           (uri "/.well-known")
-                                          (body '("root /var/www;")))))
-                              locations)))
+                                          (body '("root /var/www;"))))))))
    (listen (if ssl?
                (list "443 ssl")
                (list "80")))
@@ -297,7 +298,15 @@ location / {
         (proxy "githunt.wugi.info" 3000 #:ssl? #t #:ssl-key? #t #:mtls? #t)
         (proxy "monitor.wugi.info" 8080)
         (proxy "guix.duckdns.org" 5556 #:ssl? #t)
-        (proxy "guix.wugi.info" 5556)
+        (proxy "guix.wugi.info" 5556
+               #:locations
+               (list (nginx-location-configuration
+                      (uri "/guix/describe")
+                      (body '("proxy_pass http://127.0.0.1:8088/guix/describe;"
+                              "proxy_set_header Access-Control-Allow-Origin *;"
+                              "proxy_set_header X-Real-IP $remote_addr;"
+                              "proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;"
+                              "proxy_set_header X-NginX-Proxy true;")))))
         (proxy "pykhaloff.ddns.net" 443
                #:target "192.168.100.5"
                #:ssl? #t
@@ -750,6 +759,8 @@ ServerAliveCountMax 3"))))))
 localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOnaDeOzwmrcrq1D8slYaeFozXZ0cpqNU0EvGmgnO29aiKkSD1ehbIV4vSxk3IDXz9ClMVPc1bTUTrYhEVHdCks="
                                                                      "\
 127.0.0.1 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOnaDeOzwmrcrq1D8slYaeFozXZ0cpqNU0EvGmgnO29aiKkSD1ehbIV4vSxk3IDXz9ClMVPc1bTUTrYhEVHdCks="))))
+
+                       (service nginx-with-lua-service-type)
 
                        (modify-services (operating-system-user-services base-system)
                          (guix-service-type config => %guix-daemon-config))))
