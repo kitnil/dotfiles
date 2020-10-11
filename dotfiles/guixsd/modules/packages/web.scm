@@ -25,6 +25,8 @@
   #:use-module (gnu packages lua)
   #:use-module (gnu packages web)
   #:use-module (guix utils)
+  #:use-module (srfi srfi-1)
+  #:use-module (gnu packages)
   #:use-module ((guix licenses) #:prefix license:))
 
 (define-public homer
@@ -76,6 +78,11 @@ source in /src using webpack.  It's meant to be served by an HTTP server.")
   (package
     (inherit nginx)
     (name "nginx-lua")
+    (source
+     (origin
+       (inherit (package-source nginx))
+       (patches (append (search-patches "nginx-1.15.5-socket_cloexec.patch")
+                        (origin-patches (package-source nginx))))))
     (inputs
      `(("luajit" ,luajit)
        ("lua-nginx-module" ,lua-nginx-module)
