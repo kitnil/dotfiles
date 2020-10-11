@@ -82,7 +82,6 @@
        (add-hook *start-hook* (lambda () (quassel)))))
 
 (when (string= (file-get-contents "/etc/hostname") "gnu")
-  (run-shell-command (join (list "xterm" "-bg" "black" "-fg" "white" ;; "-e" (format nil "~s" )
-                                 ))))
+  (run-shell-command (join (list "xterm" "-bg" "black" "-fg" "white" "-fa" "Monospace" "-fs" "11"))))
 
 ;; "sudo herd status; exec bash"
