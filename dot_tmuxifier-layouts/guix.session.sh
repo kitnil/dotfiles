@@ -13,7 +13,7 @@ if initialize_session "guix"; then
 
   # Load a defined window layout.
     load_window "guix"
-    load_window "guix-machines"
+    # load_window "guix-machines"
 
   # Select the default active window on session creation.
   #select_window 1
