@@ -39,6 +39,7 @@ alias sqlite-visualize=sqleton
 alias dmesg="sudo dmesg --color=auto --reltime --human --nopager --decode"
 alias tree="tree --dirsfirst -C"
 alias free="free -mht"
+alias psc='ps xawf -eo pid,user,cgroup,args'
 
 alias markdown-github=grip
 
