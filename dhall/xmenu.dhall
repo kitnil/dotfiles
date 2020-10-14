@@ -121,6 +121,7 @@ in  ''
 			${hms-account { server = "web30", name = "AC_226391", tarif = "Безлимитный" }}
 			${hms-account { server = "web33", name = "AC_208112", tarif = "Безлимитный" }}
 			${hms-account { server = "web37", name = "AC_213062", tarif = "Безлимитный" }}
+			${hms-account { server = "web15", name = "AC_222228", tarif = "Корпоративный" }}
 			${hms-account { server = "kvm-test", name = "AC_223473", tarif = "Безлимитный" }}
 		VPS
 			Open my account	firefox https://billing2.intr/client/vds/17959
