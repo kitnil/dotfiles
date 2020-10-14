@@ -83,6 +83,7 @@ newspace."
                      "--logfile" "./2del-logfile.org"
                      "--orgfiles"
                      (string-append (assoc-ref %build-inputs "org") "/json.org")
+                     (string-append (assoc-ref %build-inputs "org") "/iso.org")
                      "testdata/end_to_end_test/orgfiles/about-placeholder.org"
                      "templates/blog-format.org")
              (install-file "templates/public_voit.css" install-dir))
