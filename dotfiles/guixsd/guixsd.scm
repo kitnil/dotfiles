@@ -161,6 +161,10 @@ EndSection
          (listen '("80"))
          (root "/srv/share"))
         (nginx-server-configuration
+         (server-name '("netmap.intr"))
+         (listen '("80"))
+         (root "/home/oleg/archive/src/drawthe.net"))
+        (nginx-server-configuration
          (server-name '("techinfo.intr"))
          (listen '("80"))
          (root "/var/www/techinfo.intr"))
@@ -506,6 +510,7 @@ location / {
                            "cgit.duckdns.org"
                            "spb"
                            "blog.wugi.info"
+                           "netmap.intr"
                            ;; Majordomo
                            ;; "hms-dev.intr"
                            ;; "api-dev.intr"
