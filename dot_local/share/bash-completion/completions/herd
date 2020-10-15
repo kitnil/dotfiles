@@ -1,0 +1,43 @@
+_herd_complete_service(){
+    local command="${COMP_WORDS[1]}"
+    local services="$(sudo herd status | awk '/*/ || /^ +/ || /^ -/ { print $NF }' | sort -u)"
+    COMPREPLY=($(compgen -W "$services" -- "${COMP_WORDS[$COMP_CWORD]}"))
+}
+
+_herd_is_command ()
+{
+    local word
+    local result="false"
+    for word in ${COMP_WORDS[*]}t
+    do
+	if [ "$word" = "$1" ]
+	then
+	    result=true
+	    break
+	fi
+    done
+    $result
+}
+
+_herd_complete()
+{
+    local word_count=${#COMP_WORDS[*]}
+    local word_at_point="${COMP_WORDS[$COMP_CWORD]}"
+    case $COMP_CWORD in
+        1)
+	    if [ -z "$_herd_subcommands" ]
+	    then
+		# Cache the list of subcommands to speed things up.
+		_herd_subcommands="enable disable start status stop"
+	    fi
+            COMPREPLY=($(compgen -W "$_herd_subcommands" -- "${COMP_WORDS[$COMP_CWORD]}"))
+            ;;
+        *)
+            case $COMP_CWORD in
+		2) _herd_complete_service;;
+	    esac
+            ;;
+    esac
+}
+
+complete -F _herd_complete herd
