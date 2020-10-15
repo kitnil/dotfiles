@@ -220,6 +220,9 @@ case "$1" in
     sniff)
         ssh_sudo "$2" tcpdump -vvvApni "$(connect ssh "$2" ifconfig | jc --ifconfig | jq --raw-output '.[] | .name' | fzf)" "${@:3}"
         ;;
+    mpstat)
+        ssh_sudo "$2" mpstat 1
+        ;;
     sg)
         echo "Hint: Install sg3-utils by invoking 'apt install sg3-utils'"
         for i in {1..8}; do
