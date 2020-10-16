@@ -1,6 +1,8 @@
 (use-modules (gnu)
              (gnu services shepherd)
              (gnu services)
+             (guix channels)
+             (guix inferior)
              (ice-9 format)
              (srfi srfi-1)
              (srfi srfi-26))
@@ -416,7 +418,20 @@ location / {
   (let ((base-system (load %hardware-file)))
     (operating-system
       (inherit base-system)
-      (kernel linux)
+      (kernel
+       (let*
+           ((channels
+             (list (channel
+                    (name 'nonguix)
+                    (url "https://gitlab.com/nonguix/nonguix")
+                    (commit "694e85778daf6dbb8a6e87949c67e45ead658e55"))
+                   (channel
+                    (name 'guix)
+                    (url "https://git.savannah.gnu.org/git/guix.git")
+                    (commit "00014f769233facebd84f13a00b10032a22cb440"))))
+            (inferior
+             (inferior-for-channels channels)))
+         (first (lookup-inferior-packages inferior "linux" "5.8.14"))))
       (firmware (cons* amdgpu-firmware linux-firmware
                        %base-firmware))
       (kernel-arguments '("modprobe.blacklist=pcspkr,snd_pcsp"))
