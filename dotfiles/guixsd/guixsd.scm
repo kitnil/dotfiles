@@ -54,9 +54,7 @@ Section \"Screen\"
    Identifier  \"Screen 1\"
    Device      \"Intel video card\"
    Monitor     \"HDMI1\"
-   DefaultDepth    24
    SubSection \"Display\"
-       Depth       24
        Modes       \"1920x1080\"
    EndSubSection
 EndSection
@@ -65,17 +63,15 @@ Section \"Screen\"
    Identifier  \"Screen 2\"
    Device      \"AMD video card\"
    Monitor     \"HDMI3\"
-   DefaultDepth    24
    SubSection \"Display\"
-       Depth       24
        Modes       \"1920x1080\"
    EndSubSection
 EndSection
 
 Section \"ServerLayout\"
     Identifier  \"Default Layout\"
-    Screen  0   \"Screen 2\"
-    Screen  1   \"Screen 1\" RightOf \"Screen 2\"
+    Screen  0   \"Screen 1\"
+    Screen  1   \"Screen 2\" RightOf \"Screen 1\"
 EndSection
 
 ")
