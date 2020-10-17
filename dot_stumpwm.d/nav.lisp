@@ -13,7 +13,7 @@
 
 ;; Don't set it to “sloppy”,
 ;; because it could switch window after switch desktop
-(setf *mouse-focus-policy* :click)
+(setf *mouse-focus-policy* :sloppy)
 
 (defcommand mouse-click () ()
   (setf *mouse-focus-policy* :click))
