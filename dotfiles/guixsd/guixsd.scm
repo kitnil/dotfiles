@@ -32,7 +32,8 @@
 ;; Fix Jenkins in Docker group
 (module-set! (resolve-module '(gnu packages admin)) 'shepherd shepherd-patched)
 
-(define intel+amdgpu.conf "\
+(define (intel+amdgpu.conf server-layout)
+  (string-append "\
 
 Section \"Device\"
         Identifier  \"Intel video card\"
@@ -66,15 +67,8 @@ Section \"Screen\"
    SubSection \"Display\"
        Modes       \"1920x1080\"
    EndSubSection
-EndSection
-
-Section \"ServerLayout\"
-    Identifier  \"Default Layout\"
-    Screen  0   \"Screen 1\"
-    Screen  1   \"Screen 2\" RightOf \"Screen 1\"
-EndSection
-
-")
+EndSection\n\n"
+                 server-layout "\n\n"))
 
 
 
@@ -575,7 +569,24 @@ location / {
 				 ;; (theme %slim-theme) TODO: Fix the theme.
                                  (xorg-configuration
                                   (xorg-configuration
-                                   (extra-config (list intel+amdgpu.conf))))))
+                                   (extra-config (list (intel+amdgpu.conf "\
+Section \"ServerLayout\"
+    Identifier  \"Default Layout\"
+    Screen  0   \"Screen 1\"
+    Screen  1   \"Screen 2\" RightOf \"Screen 1\"
+EndSection")))))))
+                       (service slim-service-type
+                                (slim-configuration
+                                 (display ":1")
+                                 (vt "vt8")
+                                 (xorg-configuration
+                                  (xorg-configuration
+                                   (extra-config (list (intel+amdgpu.conf "\
+Section \"ServerLayout\"
+    Identifier  \"Default Layout\"
+    Screen  0   \"Screen 2\"
+    Screen  1   \"Screen 1\" LeftOf \"Screen 2\"
+EndSection")))))))
                        (screen-locker-service slock)
                        (screen-locker-service xlockmore "xlock")
                        (udisks-service)

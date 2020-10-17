@@ -1,5 +1,6 @@
 #!/bin/sh
 
 "$HOME/.guix-profile/bin/xclickroot" -r xmenu.sh &
+DISPLAY=:0.1 "$HOME/.guix-profile/bin/xclickroot" -r xmenu.sh &
 
 exec -a stumpwm /run/current-system/profile/bin/sbcl --load /home/oleg/bin/my-stumpwm

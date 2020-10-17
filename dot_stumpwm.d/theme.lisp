@@ -12,7 +12,8 @@
   (run-shell-command "xplanet -num_times 1 -output /tmp/xplanet.png; feh --bg-center /tmp/xplanet.png"))
 
 (defcommand set-background-dark () ()
-  (run-shell-command "xsetroot -solid black"))
+  (run-shell-command "xsetroot -solid black")
+  (run-shell-command "xsetroot -display :0.1 -solid black"))
 
 (defcommand wallpaper () ()
   (run-shell-command (format nil "sxiv ~a/archive/src/wallpapers"

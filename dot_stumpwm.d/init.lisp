@@ -21,6 +21,7 @@
 (setq *time-format-string-default* "%A %B %e %Y %k:%M:%S")
 
 (cond ((or (string= (getenv "DISPLAY") ":0")
+           (string= (getenv "DISPLAY") ":1")
            (string= (getenv "DISPLAY") ":2")
            (string= (getenv "DISPLAY") ":3"))
        (redirect-all-output (concat (getenv "HOME") "/.stumpwm.d/debug-output.txt"))
