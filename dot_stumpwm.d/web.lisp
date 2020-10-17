@@ -168,7 +168,13 @@
 
 (defun chromium-command (&optional command)
   ;; (format nil "sh -c ~s" )
-  (join `(,*fontconfig-file* "nixGLIntel" "chromium" ,@command)))
+  (join `(,*fontconfig-file*
+          ,@(if (string= (string-trim '(#\Newline) (run-shell-command "printenv DISPLAY" t))
+                         ":0.0")
+                '("nixGLIntel")
+                '())
+          "chromium"
+          ,@command)))
 
 (defcommand chromium () ()
   "Start or focus Chromium."
