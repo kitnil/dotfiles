@@ -86,6 +86,7 @@ in  ''
 
 	Virtual machine
 		IMG:${guix-profile}/share/icons/hicolor/24x24/apps/qemu.png	Ubuntu 20.04	ubuntu
+		IMG:${guix-profile}/share/icons/hicolor/24x24/apps/qemu.png	Windows 10 (disk)	sudo qemu-windows10
 
 	StumpWM
 		Split
