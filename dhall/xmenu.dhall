@@ -39,6 +39,8 @@ in  ''
 		IMG:${nix-profile}/share/icons/robomongo.png	Mongo	robo3t
 		IMG:${guix-profile}/share/icons/gnome/24x24/devices/video-display.png	OBS	obs
 		IMG:${nix-profile}/share/icons/hicolor/32x32/apps/quassel.png	Quassel	"echo '(quassel)' | stumpish -e eval"
+		Games
+			Tales of Maj'Eyal	env DRI_PRIME=1 tome4
 		Pavucontrol	sh -c "echo '(pavucontrol)' | stumpish -e eval"
 		Mypaint	env PYTHONPATH= mypaint
 		Screenshot	xfce4-screenshooter
