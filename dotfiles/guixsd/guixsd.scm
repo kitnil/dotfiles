@@ -42,6 +42,7 @@ Section \"Device\"
         Option      \"AccelMethod\"  \"sna\"
         Option      \"SwapbuffersWait\" \"true\"
         Option      \"TearFree\" \"true\"
+        Option      \"DRI\" \"3\"
 EndSection
 
 Section \"Device\"
@@ -49,6 +50,7 @@ Section \"Device\"
         Driver      \"amdgpu\"
         BusID       \"PCI:3:0:0\"
         Option      \"TearFree\" \"true\"
+        Option      \"DRI\" \"3\"
 EndSection
 
 Section \"Screen\"
