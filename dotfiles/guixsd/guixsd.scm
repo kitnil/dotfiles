@@ -7,7 +7,8 @@
              (srfi srfi-1)
              (srfi srfi-26))
 
-(use-package-modules admin audio android bittorrent linux ssh suckless xdisorg)
+(use-package-modules admin audio android bittorrent linux lua ssh suckless
+                     xdisorg web)
 
 (use-service-modules admin dbus desktop docker dns networking sound
                      xorg ssh web cgit version-control certbot
@@ -26,7 +27,6 @@
              (services jenkins)
              (services tftp)
              (services openvpn)
-             (services web)
              (nongnu packages linux))
 
 ;; Fix Jenkins in Docker group
@@ -298,11 +298,8 @@ location / {
                #:locations
                (list (nginx-location-configuration
                       (uri "/guix/describe")
-                      (body '("proxy_pass http://127.0.0.1:8088/guix/describe;"
-                              "proxy_set_header Access-Control-Allow-Origin *;"
-                              "proxy_set_header X-Real-IP $remote_addr;"
-                              "proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;"
-                              "proxy_set_header X-NginX-Proxy true;")))))
+                      (body (list #~(format #f "content_by_lua_file ~s;"
+                                            #$(local-file "/home/oleg/.local/share/chezmoi/dotfiles/nginx/guix.lua")))))))
         (proxy "pykhaloff.ddns.net" 443
                #:target "192.168.100.5"
                #:ssl? #t
@@ -649,6 +646,15 @@ PasswordAuthentication yes")))
 
                        (service nginx-service-type
                                 (nginx-configuration
+                                 (modules
+                                  (list
+                                   (file-append nginx-lua-module "/etc/nginx/modules/ngx_http_lua_module.so")))
+                                 (lua-package-path (list lua-resty-core
+                                                         lua-resty-lrucache
+                                                         lua-resty-signal
+                                                         lua-tablepool
+                                                         lua-resty-shell))
+                                 (lua-package-cpath (list lua-resty-signal))
                                  (server-blocks %nginx-server-blocks)))
 
                        (service gitolite-service-type
@@ -786,8 +792,6 @@ ServerAliveCountMax 3"))))))
 localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOnaDeOzwmrcrq1D8slYaeFozXZ0cpqNU0EvGmgnO29aiKkSD1ehbIV4vSxk3IDXz9ClMVPc1bTUTrYhEVHdCks="
                                                                      "\
 127.0.0.1 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOnaDeOzwmrcrq1D8slYaeFozXZ0cpqNU0EvGmgnO29aiKkSD1ehbIV4vSxk3IDXz9ClMVPc1bTUTrYhEVHdCks="))))
-
-                       (service nginx-with-lua-service-type)
 
                        (modify-services (operating-system-user-services base-system)
                          (guix-service-type config => %guix-daemon-config))))
