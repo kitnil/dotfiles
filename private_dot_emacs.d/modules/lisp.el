@@ -22,6 +22,7 @@
 
 (setq slime-net-coding-system 'utf-8-unix)
 (setq slime-truncate-lines nil)
+(setq sldb-initial-restart-limit 12)
 
 (add-to-list 'slime-contribs 'slime-repl)
 
