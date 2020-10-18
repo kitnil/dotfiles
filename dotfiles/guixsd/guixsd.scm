@@ -575,7 +575,7 @@ Section \"ServerLayout\"
     Screen  0   \"Screen 1\"
     Screen  1   \"Screen 2\" RightOf \"Screen 1\"
 EndSection")))))))
-                       (service slim-service-type
+                       #;(service slim-service-type
                                 (slim-configuration
                                  (display ":1")
                                  (vt "vt8")
