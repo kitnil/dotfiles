@@ -90,13 +90,6 @@
           (other-in-frame)
           (fother))))
 
-(defcommand (move-focus tile-group) (dir) ((:direction "Direction: "))
-  (let ((group (current-group)))
-    (if (eq (current-window)
-            (frame-window (neighbour dir (tile-group-current-frame group) (group-frames group))))
-        (snext)
-        (move-focus-and-or-window dir))))
-
 
 ;;;
 ;;; Windows

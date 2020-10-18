@@ -20,6 +20,8 @@
 ;; Tuesday January 3 2005 23:05:25
 (setq *time-format-string-default* "%A %B %e %Y %k:%M:%S")
 
+(run-shell-command "/home/oleg/.screenlayout/intel-and-amdgpu.sh")
+
 (cond ((or (string= (getenv "DISPLAY") ":0")
            (string= (getenv "DISPLAY") ":1")
            (string= (getenv "DISPLAY") ":2")
@@ -69,7 +71,7 @@
        (load-config-file "covid19.lisp")
        (load-config-file "spb.lisp")
        (load-config-file "gpg.lisp")
-       (load-config-file "mode-line.lisp")
+       ;; (load-config-file "mode-line.lisp")
        (load-config-file "display-0.lisp")
 
        (setf *startup-message* nil)

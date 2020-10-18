@@ -566,11 +566,12 @@ location / {
 				 ;; (theme %slim-theme) TODO: Fix the theme.
                                  (xorg-configuration
                                   (xorg-configuration
-                                   (extra-config (list (intel+amdgpu.conf "\
+                                   (extra-config (list (intel+amdgpu.conf "" #;"\
 Section \"ServerLayout\"
     Identifier  \"Default Layout\"
-    Screen  0   \"Screen 1\"
-    Screen  1   \"Screen 2\" RightOf \"Screen 1\"
+    Screen  0   \"Screen 2\"
+    Screen  1   \"Screen 1\" LeftOf \"Screen 2\"
+    Option  \"Xinerama\" \"1\"
 EndSection")))))))
                        #;(service slim-service-type
                                 (slim-configuration
