@@ -18,6 +18,11 @@ then
     . "$HOME/.bash_aliases"
 fi
 
+if [ -f "$HOME/.bash_guix" ]
+then
+    . "$HOME/.bash_guix"
+fi
+
 alias ,c='command'
 
 alias rm="rm -i"

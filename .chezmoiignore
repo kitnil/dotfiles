@@ -9,6 +9,9 @@ README.md
 dotfiles
 bin/dotfiles
 todo.org
+{{- if eq .chezmoi.hostname "guixsd" }}
+.bash_guix
+{{- end }}
 {{- if ne .chezmoi.hostname "guixsd" }}
 .alerta.conf
 .slacktee
