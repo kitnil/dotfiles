@@ -10,7 +10,7 @@
                      suckless xdisorg xorg fonts android fontutils
                      gnome freedesktop readline ncurses networking)
 
-(use-service-modules desktop dbus monitoring networking ssh xorg)
+(use-service-modules desktop dbus monitoring networking ssh xorg web)
 
 (use-modules (config)
              (packages admin))
@@ -142,6 +142,16 @@ ServerAliveCountMax 3"))))))
                                               #:name-servers '("172.16.100.3\nsearch intr majordomo.ru"
                                                                "172.16.102.2"
                                                                "172.16.103.2"))
+
+                   (service nginx-service-type
+                            (nginx-configuration
+                             (modules %nginx-modules)
+                             (lua-package-path %nginx-lua-package-path)
+                             (lua-package-cpath %nginx-lua-package-cpath)
+                             (server-blocks (list (nginx-server-configuration
+                                                   (server-name '("work.wugi.info"))
+                                                   (listen '("80"))
+                                                   (locations %nginx-lua-guix))))))
                    
 
                    (modify-services %base-services

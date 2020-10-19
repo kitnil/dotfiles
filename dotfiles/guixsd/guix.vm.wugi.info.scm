@@ -140,6 +140,9 @@ ServerAliveCountMax 3"))))))
 
                  (service nginx-service-type
                           (nginx-configuration
+                           (modules %nginx-modules)
+                           (lua-package-path %nginx-lua-package-path)
+                           (lua-package-cpath %nginx-lua-package-cpath)
                            (server-blocks (list (nginx-server-configuration
                                                  (inherit %webssh-configuration-nginx)
                                                  (server-name '("vm1.wugi.info"))
@@ -147,10 +150,11 @@ ServerAliveCountMax 3"))))))
                                                  (ssl-certificate (letsencrypt-certificate "vm1.wugi.info"))
                                                  (ssl-certificate-key (letsencrypt-key "vm1.wugi.info"))
                                                  (locations
-                                                  (cons (nginx-location-configuration
-                                                         (uri "/.well-known")
-                                                         (body '("root /var/www;")))
-                                                        (nginx-server-configuration-locations %webssh-configuration-nginx))))))))
+                                                  (append %nginx-lua-guix
+                                                          (cons (nginx-location-configuration
+                                                                 (uri "/.well-known")
+                                                                 (body '("root /var/www;")))
+                                                                (nginx-server-configuration-locations %webssh-configuration-nginx)))))))))
 
                  (service webssh-service-type
                           (webssh-configuration (address "127.0.0.1")

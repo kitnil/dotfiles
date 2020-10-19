@@ -7,6 +7,7 @@
   #:use-module (gnu packages file)
   #:use-module (gnu packages linux)
   #:use-module (gnu packages lisp)
+  #:use-module (gnu packages lua)
   #:use-module (gnu packages suckless)
   #:use-module (gnu packages xdisorg)
   #:use-module (gnu packages xorg)
@@ -27,6 +28,8 @@
   #:use-module (gnu packages lxde)
   #:use-module (gnu packages version-control)
   #:use-module (gnu packages lisp-xyz)
+  #:use-module (gnu packages web)
+  #:use-module (gnu services web)
   #:use-module (packages admin)
   #:use-module (packages lisp)
   #:use-module (packages python)
@@ -40,7 +43,14 @@
             %my-setuid-programs
             %nginx-deploy-hook
             letsencrypt-certificate
-            letsencrypt-key))
+            letsencrypt-key
+
+            %mtls
+            proxy
+            %nginx-lua-package-path
+            %nginx-lua-package-cpath
+            %nginx-modules
+            %nginx-lua-guix))
 
 (define 20-intel.conf "\
 # Fix tearing for Intel graphics card.
@@ -150,3 +160,77 @@ EndSection\n")
    #~(let ((pid (call-with-input-file "/var/run/nginx/pid" read)))
        (kill pid SIGHUP))))
 
+
+;;;
+;;; NGINX
+;;;
+
+(define %mtls
+  (list #~(format #f "ssl_client_certificate ~a;"
+                  #$(local-file "/home/oleg/src/ssl/ca.pem"))
+        "ssl_verify_client on;"))
+
+(define* (proxy host port
+                #:key
+                (ssl? #f)
+                (ssl-target? #f)
+                (ssl-key? #f)
+                (well-known? #t)
+                (target #f)
+                (sub-domains? #f)
+                (mtls? #f)
+                (locations '()))
+  (nginx-server-configuration
+   (server-name (if sub-domains?
+                    (list (string-append sub-domains?
+                                         (string-join (string-split host #\.)
+                                                      "\\.")
+                                         "$"))
+                    (list host (string-append "www." host))))
+   (locations (delete #f
+                      (append locations
+                              (list (nginx-location-configuration
+                                     (uri "/")
+                                     (body (list "resolver 80.80.80.80;"
+                                                 (string-append "set $target "
+                                                                (or target "127.0.0.1")
+                                                                ":" (number->string port) ";")
+                                                 (format #f "proxy_pass ~a://$target;" (if ssl-target? "https" "http"))
+                                                 (if sub-domains?
+                                                     "proxy_set_header Host $http_host;"
+                                                     (format #f "proxy_set_header Host ~a;" host))
+                                                 "proxy_set_header X-Forwarded-Proto $scheme;"
+                                                 "proxy_set_header X-Real-IP $remote_addr;"
+                                                 "proxy_set_header X-Forwarded-for $remote_addr;"
+                                                 "proxy_connect_timeout 300;"
+                                                 "client_max_body_size 0;")))
+                                    (and well-known?
+                                         (nginx-location-configuration
+                                          (uri "/.well-known")
+                                          (body '("root /var/www;"))))))))
+   (listen (if ssl?
+               (list "443 ssl")
+               (list "80")))
+   (ssl-certificate (if ssl-key? (letsencrypt-certificate host) #f))
+   (ssl-certificate-key (if ssl-key? (letsencrypt-key host) #f))
+   (raw-content (if mtls? %mtls '()))))
+
+(define %nginx-lua-package-path
+  (list lua-resty-core
+        lua-resty-lrucache
+        lua-resty-signal
+        lua-tablepool
+        lua-resty-shell))
+
+(define %nginx-lua-package-cpath
+  (list lua-resty-signal))
+
+(define %nginx-modules
+  (list
+   (file-append nginx-lua-module "/etc/nginx/modules/ngx_http_lua_module.so")))
+
+(define %nginx-lua-guix
+  (list (nginx-location-configuration
+         (uri "/guix/describe")
+         (body (list #~(format #f "content_by_lua_file ~s;"
+                               #$(local-file "/home/oleg/.local/share/chezmoi/dotfiles/nginx/guix.lua")))))))

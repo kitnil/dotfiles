@@ -7,8 +7,7 @@
              (srfi srfi-1)
              (srfi srfi-26))
 
-(use-package-modules admin audio android bittorrent linux lua ssh suckless
-                     xdisorg web)
+(use-package-modules admin audio android bittorrent linux ssh suckless xdisorg)
 
 (use-service-modules admin dbus desktop docker dns networking sound
                      xorg ssh web cgit version-control certbot
@@ -98,56 +97,6 @@ EndSection\n\n"
   (nginx-location-configuration
    (uri "/.well-known")
    (body '("root /var/www;"))))
-
-(define %mtls
-  (list #~(format #f "ssl_client_certificate ~a;"
-                  #$(local-file "/home/oleg/src/ssl/ca.pem"))
-        "ssl_verify_client on;"))
-
-(define* (proxy host port
-                #:key
-                (ssl? #f)
-                (ssl-target? #f)
-                (ssl-key? #f)
-                (well-known? #t)
-                (target #f)
-                (sub-domains? #f)
-                (mtls? #f)
-                (locations '()))
-  (nginx-server-configuration
-   (server-name (if sub-domains?
-                    (list (string-append sub-domains?
-                                         (string-join (string-split host #\.)
-                                                      "\\.")
-                                         "$"))
-                    (list host (string-append "www." host))))
-   (locations (delete #f
-                      (append locations
-                              (list (nginx-location-configuration
-                                     (uri "/")
-                                     (body (list "resolver 80.80.80.80;"
-                                                 (string-append "set $target "
-                                                                (or target "127.0.0.1")
-                                                                ":" (number->string port) ";")
-                                                 (format #f "proxy_pass ~a://$target;" (if ssl-target? "https" "http"))
-                                                 (if sub-domains?
-                                                     "proxy_set_header Host $http_host;"
-                                                     (format #f "proxy_set_header Host ~a;" host))
-                                                 "proxy_set_header X-Forwarded-Proto $scheme;"
-                                                 "proxy_set_header X-Real-IP $remote_addr;"
-                                                 "proxy_set_header X-Forwarded-for $remote_addr;"
-                                                 "proxy_connect_timeout 300;"
-                                                 "client_max_body_size 0;")))
-                                    (and well-known?
-                                         (nginx-location-configuration
-                                          (uri "/.well-known")
-                                          (body '("root /var/www;"))))))))
-   (listen (if ssl?
-               (list "443 ssl")
-               (list "80")))
-   (ssl-certificate (if ssl-key? (letsencrypt-certificate host) #f))
-   (ssl-certificate-key (if ssl-key? (letsencrypt-key host) #f))
-   (raw-content (if mtls? %mtls '()))))
 
 (define %nginx-server-blocks
   (list (nginx-server-configuration
@@ -296,12 +245,7 @@ location / {
         (proxy "githunt.wugi.info" 3000 #:ssl? #t #:ssl-key? #t #:mtls? #t)
         (proxy "monitor.wugi.info" 8080)
         (proxy "guix.duckdns.org" 5556 #:ssl? #t)
-        (proxy "guix.wugi.info" 5556
-               #:locations
-               (list (nginx-location-configuration
-                      (uri "/guix/describe")
-                      (body (list #~(format #f "content_by_lua_file ~s;"
-                                            #$(local-file "/home/oleg/.local/share/chezmoi/dotfiles/nginx/guix.lua")))))))
+        (proxy "guix.wugi.info" 5556 #:locations %nginx-lua-guix)
         (proxy "pykhaloff.ddns.net" 443
                #:target "192.168.100.5"
                #:ssl? #t
@@ -649,15 +593,9 @@ PasswordAuthentication yes")))
 
                        (service nginx-service-type
                                 (nginx-configuration
-                                 (modules
-                                  (list
-                                   (file-append nginx-lua-module "/etc/nginx/modules/ngx_http_lua_module.so")))
-                                 (lua-package-path (list lua-resty-core
-                                                         lua-resty-lrucache
-                                                         lua-resty-signal
-                                                         lua-tablepool
-                                                         lua-resty-shell))
-                                 (lua-package-cpath (list lua-resty-signal))
+                                 (modules %nginx-modules)
+                                 (lua-package-path %nginx-lua-package-path)
+                                 (lua-package-cpath %nginx-lua-package-cpath)
                                  (server-blocks %nginx-server-blocks)))
 
                        (service gitolite-service-type
