@@ -561,6 +561,9 @@ guix()
         locate)
             locate -d "$HOME/.config/guix/dbfile" "${@:2}"
             ;;
+        xpanes)
+            xpanes -c 'ssh {}' vm1.wugi.info workstation.intr localhost
+            ;;
             *)
             command guix "$@"
             ;;
