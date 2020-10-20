@@ -1,3 +1,5 @@
+#!/bin/sh
+
 # Create session with specified name if it does not already exist. If no
 # argument is given, session name will be based on layout file name.
 if initialize_session "backup"; then
