@@ -10,7 +10,8 @@
 ;; Third-party modules
 (use-modules (config)
              (services autossh)
-             (services kresd))
+             (services kresd)
+             (services openvpn))
 
 (operating-system
   (host-name "guix.vm.wugi.info")
@@ -113,20 +114,7 @@ ServerAliveCountMax 3"))))))
                                      (file-append coreutils "/bin/env"))
                  (kresd-service (local-file "kresd.conf"))
                  (service zabbix-agent-service-type)
-                 (openvpn-client-service
-                  #:config (openvpn-client-configuration
-                            (dev 'tap)
-                            (auth-user-pass "/etc/openvpn/login.conf")
-                            (remote (list
-                                     ;; vpn-miran.majordomo.ru
-                                     (openvpn-remote-configuration
-                                      (name "78.108.80.230"))
-                                     ;; vpn-dh.majordomo.ru
-                                     (openvpn-remote-configuration
-                                      (name "78.108.91.250"))
-                                     ;; vpn-office.majordomo.ru
-                                     (openvpn-remote-configuration
-                                      (name "81.95.28.29"))))))
+                 openvpn-service
 
                  (service certbot-service-type
                           (certbot-configuration
