@@ -225,4 +225,8 @@ EndSection\n")
   (list (nginx-location-configuration
          (uri "/guix/describe")
          (body (list #~(format #f "content_by_lua_file ~s;"
-                               #$(local-file "/home/oleg/.local/share/chezmoi/dotfiles/nginx/guix.lua")))))))
+                               #$(local-file "/home/oleg/.local/share/chezmoi/dotfiles/nginx/guix.lua")))))
+        (nginx-location-configuration
+         (uri "/git/list")
+         (body (list #~(format #f "content_by_lua_file ~s;"
+                               #$(local-file "/home/oleg/.local/share/chezmoi/dotfiles/nginx/mjru.lua")))))))
