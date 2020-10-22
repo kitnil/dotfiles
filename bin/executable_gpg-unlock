@@ -3,12 +3,18 @@
 set -eux
 set -o pipefail
 
-gpg --decrypt \
-    --pinentry-mode loopback \
-    --passphrase "$(pass show www.majordomo.ru/gpg/master)" \
-    "$HOME/.password-store/majordomo/private/eng/old.gpg"
+if [ -f "$HOME/.password-store/www.majordomo.ru/gpg/master.gpg" ]
+then
+    gpg --decrypt                                               \
+        --pinentry-mode loopback                                \
+        --passphrase "$(pass show www.majordomo.ru/gpg/master)" \
+        "$HOME/.password-store/majordomo/private/eng/old.gpg"
+fi
 
-gpg --decrypt \
-    --pinentry-mode loopback \
-    --passphrase "$(pass show majordomo/private/eng/old)" \
-    "$HOME/.password-store/majordomo/public/gitlab.intr/tokens/terraform.gpg"
+if [ -f "$HOME/.password-store/majordomo/private/eng/old" ]
+then
+    gpg --decrypt                                                                       \
+        --pinentry-mode loopback                                                        \
+        --passphrase "$(pass show majordomo/private/eng/old)"                           \
+        "$HOME/.password-store/majordomo/public/gitlab.intr/tokens/terraform.gpg"
+fi
