@@ -13,6 +13,7 @@ todo.org
 .bash_guix
 {{- end }}
 {{- if ne .chezmoi.hostname "guixsd" }}
+.config/espanso/user/home.yml
 .alerta.conf
 .slacktee
 .msmtprc
