@@ -11,7 +11,7 @@ then
         "$HOME/.password-store/majordomo/private/eng/old.gpg"
 fi
 
-if [ -f "$HOME/.password-store/majordomo/private/eng/old" ]
+if [ -f "$HOME/.password-store/majordomo/private/eng/old.gpg" ]
 then
     gpg --decrypt                                                                       \
         --pinentry-mode loopback                                                        \
