@@ -1,0 +1,25 @@
+#!/usr/bin/env bash
+
+help_main()
+{
+    echo "\
+Usage: dns COMMANDS ARGS...
+Run COMMANDS with ARGS
+
+COMMAND must be one of the sub-commands listed below:
+
+  general commands
+    ping          fortio/dnsping
+
+Report bugs to: go.wigust@gmail.com."
+}
+
+case "$1" in
+    ping)
+        docker run fortio/dnsping "${@:2}"
+        ;;
+    *|--help)
+        help_main
+        exit 0
+        ;;
+esac
