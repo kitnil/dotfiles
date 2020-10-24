@@ -19,7 +19,7 @@ with import <nixpkgs> {
       }) { });
       navi = (super.callPackage ((builtins.fetchGit {
         url = "https://github.com/9999years/nix-config";
-        ref = "master";
+        ref = "main";
       }).outPath + "/rebeccapkgs/navi") { });
       mpv-notify-send = (super.callPackage ((builtins.fetchGit {
         url = "https://github.com/emilazy/mpv-notify-send";
