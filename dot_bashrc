@@ -462,6 +462,7 @@ guix()
                            "system build" "Build system" on \
                            manifest "Apply manifest" on \
                            "system switch" "Reconfigure system" on \
+                           "system deploy" "Deploy to remote hosts" on \
                            2>&1 2>&1 1>&3
                 )
                 declare -p selection
@@ -494,6 +495,17 @@ guix()
                          -L "$guix_modules" \
                          "${@:3}" \
                          "$HOME/.local/share/chezmoi/dotfiles/guixsd/$HOSTNAME.scm"
+                    ;;
+                deploy)
+                    (
+                        set -ex
+                        guix_commit="$(curl --silent guix.wugi.info/guix/describe | jq --raw-output '.[] | select(.name == "guix") | .commit')"
+                        ansible remote --module-name shell --args "guix pull --commit=$guix_commit"
+                        # Don't use --become
+                        ansible remote --module-name shell --args "sudo --login guix pull --commit=$guix_commit"
+                        guix deploy -L "$guix_modules" "${@:3}" \
+                             "$HOME/.local/share/chezmoi/dotfiles/guixsd/deploy.scm"
+                    )
                     ;;
                 reconfigure)
                     sudo --login command guix system reconfigure \
