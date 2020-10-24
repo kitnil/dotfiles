@@ -1,7 +1,5 @@
 (in-package :stumpwm)
 
-(require :stumptray)
-
 (setf *mode-line-position* :bottom)
 
 (defvar *mode-line-window-number* 10)
@@ -111,7 +109,6 @@
 
 (mode-line-update)
 (mode-line)
-(stumptray:stumptray)
 
 (mapcar (lambda (func)
           (add-hook *start-hook* func))
