@@ -1,0 +1,2 @@
+(add-hook 'po-subedit-mode-hook (lambda () (ispell-change-dictionary "ru")))
+(add-hook 'po-subedit-exit-hook (lambda () (ispell-buffer)))

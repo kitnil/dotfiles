@@ -84,7 +84,8 @@
   (load-config-file "ftp.el")
   (load-config-file "info.el")
   (load-config-file "majordomo.el")
-  (load-config-file "blog.el"))
+  (load-config-file "blog.el")
+  (load-config-file "po.el"))
 
 ;; (load-config-file "twitch.el")
 ;; (load-config-file "youtube.el")
