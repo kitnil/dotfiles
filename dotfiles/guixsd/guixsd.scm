@@ -26,6 +26,7 @@
              (services jenkins)
              (services tftp)
              (services openvpn)
+             (services vnc)
              (nongnu packages linux))
 
 ;; Fix Jenkins in Docker group
@@ -484,7 +485,29 @@ location / {
            "")
          "\n")))
 
-      (services (cons* (extra-special-file "/usr/bin/env"
+      (services (cons* (service vncserver-service-type (vncserver-configuration
+                                                        (display 1)
+                                                        (user "oleg")
+                                                        (group "users")
+                                                        (directory "/home/oleg")
+                                                        (xstartup "/home/oleg/.vnc/xstartup-firefox")
+                                                        (host-name "guixsd")))
+                       (service vncserver-service-type (vncserver-configuration
+                                                        (display 2)
+                                                        (user "oleg")
+                                                        (group "users")
+                                                        (directory "/home/oleg")
+                                                        (xstartup "/home/oleg/.vnc/xstartup-stumpwm")
+                                                        (host-name "guixsd")))
+                       (service vncserver-service-type (vncserver-configuration
+                                                        (display 10)
+                                                        (user "oleg")
+                                                        (group "users")
+                                                        (directory "/home/oleg")
+                                                        (xstartup "/home/oleg/.vnc/xstartup-quassel")
+                                                        (host-name "guixsd")))
+
+                       (extra-special-file "/usr/bin/env"
                                            (file-append coreutils "/bin/env"))
 
                        ;; mount -t fuse and autofs

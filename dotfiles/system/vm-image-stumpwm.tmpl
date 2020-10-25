@@ -1,3 +1,6 @@
+;; eval ""$(sed 's,-nic user[^ ]* ,,' "$(make check-system)" | tail -1 | sed 's/\sexec\s//')" -m 4096  -smp 2 -nic user,model=virtio-net-pci,hostfwd=tcp::10022-:22"
+;; ssh -fL 5901:localhost:5901 -F /dev/null localhost -p 10022
+
 (use-modules (gnu) (guix) (guix build utils) (ice-9 match) (srfi srfi-1))
 (use-service-modules desktop networking ssh xorg shepherd)
 (use-package-modules bootloaders certs fonts nvi
@@ -45,9 +48,12 @@ accounts.\x1b[0m
              (lambda ()
                (format #t "\
 #!/bin/sh
-exec \"$0\" ~a/bin/ratpoison" #$ratpoison)))
+unset DBUS_SESSION_BUS_ADDRESS
+unset SESSION_MANAGER
+exec -a twm /bin/sh --login -c ~a/bin/twm\n" #$twm)))
+           (chmod #$xstartup #o755)
            (chown #$xstartup (passwd:uid user) (group:gid group))
-           (chmod #$xstartup #o755))))))
+           #t)))))
 
 (define stumpwm-configure
   (let* ((dotfiles (load "/home/oleg/.local/share/chezmoi/guix.scm"))
@@ -136,11 +142,22 @@ root ALL=(ALL) ALL
                           xrdb
                           xplanet
                           xkill
+                          xhost
+                          xdpyinfo
                           sbcl)
                     %base-packages))
 
   (services
-   (append (list vnc-service
+   (append (list (service vncserver-service-type (vncserver-configuration
+                                                  (display 1)
+                                                  (user "oleg")
+                                                  (group "users")
+                                                  (directory "/home/oleg")
+                                                  (xstartup "/home/oleg/.vnc/xstartup")
+                                                  (host-name "gnu")))
+                 ;; (vnc-service 2)
+                 ;; (vnc-service 3)
+                 ;; TODO: Avoid in (modules vnc) add to requirement vncserver-config
 
                  ;; Choose SLiM, which is lighter than the default GDM.
                  (service slim-service-type
@@ -177,8 +194,10 @@ root ALL=(ALL) ALL
                                    (one-shot? #t)
                                    (stop #~(make-kill-destructor)))))
 
-                 ;; Uncomment the line below to add an SSH server.
-                 ;;(service openssh-service-type)
+                 (service openssh-service-type
+                          (openssh-configuration
+                           (authorized-keys
+                            `(("oleg" ,(local-file "/home/oleg/.ssh/id_rsa.pub"))))))
 
                  ;; Use the DHCP client service rather than NetworkManager.
                  (service dhcp-client-service-type))

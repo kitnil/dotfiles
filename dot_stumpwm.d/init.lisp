@@ -10,7 +10,7 @@
   "FONTCONFIG_FILE=/run/current-system/profile/etc/fonts/fonts.conf")
 
 (defcommand quassel () ()
-  (run-shell-command (join (list *fontconfig-file* "quassel"))))
+            (run-shell-command (join (list *fontconfig-file* "/home/oleg/.nix-profile/bin/quassel"))))
 
 (defun load-config-file (file)
   (load (concat (getenv "HOME") "/.stumpwm.d/" file)))

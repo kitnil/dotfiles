@@ -3,4 +3,5 @@
 unset SESSION_MANAGER
 unset DBUS_SESSION_BUS_ADDRESS
 
+xrdb /home/oleg/.Xresources
 exec -a ratpoison /bin/sh --login -c /home/oleg/.guix-profile/bin/ratpoison

@@ -20,11 +20,16 @@
   #:use-module (gnu services shepherd)
   #:use-module (gnu services)
   #:use-module (guix gexp)
+  #:use-module (guix records)
+  #:use-module (ice-9 match)
   #:use-module (gnu packages base)
   #:use-module (gnu packages vnc)
   #:use-module (gnu packages xorg)
   #:use-module (srfi srfi-1)
-  #:export (vnc-service))
+  #:use-module (gnu packages linux)
+  #:export (vncserver-configuration
+            vncserver-configuration?
+            vncserver-service-type))
 
 ;;; Commentary:
 ;;;
@@ -32,29 +37,52 @@
 ;;;
 ;;; Code:
 
-(define vnc-service
-  (simple-service 'vnc shepherd-root-service-type
-                  (list
-                   (shepherd-service
-                    (provision '(vncserver1))
-                    (documentation "Run vnc.")
-                    (requirement '(vncserver-config))
-                    (start #~(make-forkexec-constructor
-                              (list (string-append #$tigervnc-server "/bin/vncserver")
-                                    "-passwd" "/home/oleg/.vnc/passwd"
-                                                        "-fg" "-xstartup" "/home/oleg/.vnc/xstartup" ":1")
-                              #;(system "/bin/sh" "--login" "-c"
-                                     (string-join (list (string-append #$tigervnc-server "/bin/vncserver")
-                                                        "-fg" "-xstartup" "/home/oleg/.vnc/xstartup" ":1")))
-                              #:log-file "/tmp/vncserver.log"
-                              #:user "oleg"
-                              #:group "users"
-                              #:environment-variables
-                              (list (string-append "PATH=" (getenv "PATH")
-                                                   ":" (string-append #$coreutils "/bin")
-                                                   ":" (string-append #$xauth "/bin"))
-                                    "HOME=/home/oleg")))
-                    (respawn? #f)
-                    (stop #~(make-kill-destructor))))))
+(define-record-type* <vncserver-configuration>
+  vncserver-configuration make-vncserver-configuration
+  vncserver-configuration?
+  (vncserver vncserver-configuration-vncserver  ;<package>
+             (default tigervnc-server))
+  (host-name vncserver-configuration-host-name  ;string
+             )
+  (display   vncserver-configuration-display    ;number
+             )
+  (user      vncserver-configuration-user)      ;string
+  (group     vncserver-configuration-group)     ;string
+  (directory vncserver-configuration-directory) ;string
+  (xstartup  vncserver-configuration-xstartup   ;file-like
+             (default #f)))
+
+(define vncserver-shepherd-service
+  (match-lambda
+    (($ <vncserver-configuration> vncserver host-name display user group directory xstartup)
+     (list
+      (shepherd-service
+       (provision (list (string->symbol (string-append "vncserver" (number->string display)))))
+       (documentation "Run vnc.")
+       (start #~(make-forkexec-constructor
+                 (list (string-append #$vncserver "/bin/vncserver") "-fg" "-xstartup" #$xstartup
+                       (string-append ":" (number->string #$display)))
+                 #:log-file (string-append "/var/log/vncserver" (number->string #$display) ".log")
+                 #:user #$user
+                 #:group #$group
+                 #:directory #$directory
+                 #:environment-variables
+                 (list (string-append "PATH=" (getenv "PATH")
+                                      ":" (string-append #$coreutils "/bin")
+                                      ":" (string-append #$xauth "/bin")
+                                      ":" "/run/current-system/profile/bin"
+                                      ":" "/bin")
+                       (string-append "HOME=" #$directory))
+                 #:pid-file (string-append #$directory "/.vnc/" #$host-name ":" #$(number->string display) ".pid")))
+       (requirement '(user-processes host-name udev))
+       (respawn? #f)
+       (stop #~(make-kill-destructor)))))))
+
+(define vncserver-service-type
+  (service-type (name 'vncserver)
+                (extensions (list (service-extension shepherd-root-service-type
+                                                     vncserver-shepherd-service)))
+                (description
+                 "Provide VNC session using the @command{vncserver} program.")))
 
 ;;; vnc.scm ends here
