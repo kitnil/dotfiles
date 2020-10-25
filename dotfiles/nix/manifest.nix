@@ -225,7 +225,7 @@ in [
       mkdir -p $out/bin
       cat > $out/bin/jenkins <<'EOF'
       #!${bash}/bin/bash
-      exec -a "$0" ${openjdk}/bin/java -Xmx512m -jar ${jenkins}/webapps/jenkins.war "$@"
+      exec -a "$0" ${openjdk8}/bin/java -Xmx512m -jar ${jenkins}/webapps/jenkins.war "$@"
       EOF
       chmod 555 $out/bin/jenkins
     '');
