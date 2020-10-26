@@ -21,3 +21,10 @@
   "Return the first element of SEQUENCE."
   (seq-elt sequence 0))
 
+
+;;;
+;;; Python
+;;;
+
+(setq lsp-pyls-plugins-flake8-max-line-length 110)
+(setq lsp-pyls-plugins-pycodestyle-max-line-length 110)
