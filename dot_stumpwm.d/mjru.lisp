@@ -347,6 +347,11 @@
       (window-send-string
        (format nil "~a" (password-store-show "majordomo/private/gitlab.intr/ssh/id_rsa_gitlab_intr")))))
 
+(defcommand mjru-pass-vnc () ()
+  (if (y-or-n-p "Insert VNC SSH password and press Enter? ")
+      (window-send-string
+       (format nil "~a" (password-store-show "majordomo/public/kvm/vnc")))))
+
 
 ;;;
 ;;; Docker
