@@ -226,6 +226,7 @@ case "$1" in
     sg)
         echo "Hint: Install sg3-utils by invoking 'apt install sg3-utils'"
         for i in {1..8}; do
+            echo -e "\n@ /dev/sg$i"
             time ssh_expect "${2%.intr}" "sg_read if=/dev/sg$i bs=512 count=100000"
         done
         ;;
