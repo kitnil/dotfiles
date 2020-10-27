@@ -65,6 +65,7 @@
                  #:log-file (string-append "/var/log/vncserver" (number->string #$display) ".log")
                  #:user #$user
                  #:group #$group
+                 #:supplementary-groups '("users" "docker" "kvm" "audio" "video" "wheel")
                  #:directory #$directory
                  #:environment-variables
                  (list (string-append "PATH=" (getenv "PATH")
