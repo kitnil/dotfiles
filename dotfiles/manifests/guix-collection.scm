@@ -37,6 +37,8 @@ xml xorg)
 (packages->manifest
  (append (list feh sxiv    ; Image viewers
 
+               libvirt
+
                qemu
 
                ffmpeg      ; Video, audio, images, gif conversion
