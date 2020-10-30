@@ -340,14 +340,6 @@ location / {
                (string-append (dirname file) "/hardware/guixsd.scm")))
       "/home/oleg/src/dotfiles/guixsd/hardware/guixsd.scm"))
 
-(define %guix-daemon-config
-  (guix-configuration
-   ;; (timeout (* 4 max-silent-time))
-   (extra-options '(;; "--max-jobs=6" "--cores=3"
-                    ;; "--gc-keep-derivations=yes"
-                    ;; "--gc-keep-outputs=yes"
-                    "--cache-failures"))))
-
 (define %system-guixsd
   (let ((base-system (load %hardware-file)))
     (operating-system
@@ -758,7 +750,9 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
 127.0.0.1 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOnaDeOzwmrcrq1D8slYaeFozXZ0cpqNU0EvGmgnO29aiKkSD1ehbIV4vSxk3IDXz9ClMVPc1bTUTrYhEVHdCks="))))
 
                        (modify-services (operating-system-user-services base-system)
-                         (guix-service-type config => %guix-daemon-config))))
+                         (guix-service-type config => (guix-configuration
+                                                       (inherit %guix-daemon-config)
+                                                       (extra-options '("--cache-failures")))))))
 
       (setuid-programs %my-setuid-programs)
 

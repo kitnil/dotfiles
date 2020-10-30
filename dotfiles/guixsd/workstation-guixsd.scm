@@ -155,8 +155,7 @@ ServerAliveCountMax 3"))))))
                    
 
                    (modify-services %base-services
-                     (guix-service-type config => (guix-configuration
-                                                   (substitute-urls '("https://ci.guix.gnu.org" "https://guix.duckdns.org")))))))
+                     (guix-service-type config => %guix-daemon-config))))
 
   (setuid-programs %my-setuid-programs)
 

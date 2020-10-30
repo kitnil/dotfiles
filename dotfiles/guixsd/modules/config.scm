@@ -29,6 +29,7 @@
   #:use-module (gnu packages version-control)
   #:use-module (gnu packages lisp-xyz)
   #:use-module (gnu packages web)
+  #:use-module (gnu services base)
   #:use-module (gnu services web)
   #:use-module (packages admin)
   #:use-module (packages lisp)
@@ -38,7 +39,9 @@
   #:use-module (gnu system)
   #:use-module (guix gexp)
   #:use-module (srfi srfi-26)
-  #:export (20-intel.conf
+  #:export (%guix-daemon-config
+
+            20-intel.conf
             %my-system-packages
             %my-setuid-programs
             %nginx-deploy-hook
@@ -51,6 +54,12 @@
             %nginx-lua-package-cpath
             %nginx-modules
             %nginx-lua-guix))
+
+(define %guix-daemon-config
+  (guix-configuration
+   (authorized-keys (append (list (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/guix.wugi.info.pub"))
+                            %default-authorized-guix-keys))))
+
 
 (define 20-intel.conf "\
 # Fix tearing for Intel graphics card.

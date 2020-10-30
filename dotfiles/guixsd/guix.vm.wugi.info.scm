@@ -153,7 +153,8 @@ ServerAliveCountMax 3"))))))
                                                                "\
 localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBJItpECN9IUeYtH+kaIjrZ//yXmggmebwhg+qBegHwd0kniwYMIrXBGlNKd2uWw6ErhWL/3IMt7FvslBtgwuQ10=")))))
            (load "desktop.scm")
-           %base-services))
+           (modify-services %base-services
+             (guix-service-type config => %guix-daemon-config))))
 
   ;; Allow resolution of '.local' host names with mDNS.
   (name-service-switch %mdns-host-lookup-nss))
