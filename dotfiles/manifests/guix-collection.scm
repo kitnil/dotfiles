@@ -5,8 +5,8 @@
 (use-package-modules admin algebra aspell astronomy audio backup bash
 bittorrent cdrom chicken chromium ci cmake code commencement compression
 compton configuration-management cpio cran curl databases dhall dictionaries
-diffoscope dns dunst elf entr file games gcc gdb ghostscript gimp gl glib
-gnome gnu-doc gnupg gnuzilla golang graphics graphviz gstreamer gtk guile
+diffoscope dns dunst elf entr file games gettext gcc gdb ghostscript gimp gl
+glib gnome gnu-doc gnupg gnuzilla golang graphics graphviz gstreamer gtk guile
 guile-xyz haskell haskell-apps haskell-xyz imagemagick image-viewers inkscape
 irc kde kodi libreoffice license linux lisp logging lsof lxde lxqt m4 mail man
 maths messaging mp3 ncdu ncurses networking node package-management parallel
@@ -75,6 +75,7 @@ xml xorg)
 
                zsh
 
+               gnu-gettext
                translate-shell ; Translation in CLI and Emacs
 
                ;; TODO: Fix cuirass
