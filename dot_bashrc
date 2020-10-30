@@ -449,7 +449,7 @@ guix()
             command guix package \
                     -L "$HOME/.local/share/chezmoi/dotfiles/guixsd/modules" \
                     --fallback \
-                    --manifest="$HOME/.local/share/chezmoi/dotfiles/manifests/$HOSTNAME.scm"
+                    --manifest="$HOME/.local/share/chezmoi/dotfiles/manifests/$HOSTNAME.scm" "${@:2}"
             ;;
         menu)
             {
