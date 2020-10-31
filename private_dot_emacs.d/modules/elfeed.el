@@ -64,6 +64,7 @@
         ("https://www.youtube.com/feeds/videos.xml?user=LDCNow" video)
         ("https://www.youtube.com/feeds/videos.xml?user=tuxreviews" video)
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCgU5tUdVPpfM7sLAMWBTsDg" video) ;computeremotion.com
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UC2Ik2vXvwJWp0GLBn7oRIQQ" video hardware) ;SpecList
 
         ("https://toot.aquilenet.fr/@civodul.rss" mastodon) ;Ludovic Courtès
         ("https://functional.cafe/@ioa.rss" mastodon) ;ioanna
