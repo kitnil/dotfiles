@@ -243,7 +243,17 @@ location / {
         (proxy "blog.wugi.info" 9001)
         (proxy "torrent.wugi.info" 9091 #:ssl? #t #:ssl-key? #t #:mtls? #t)
         (proxy "jenkins.wugi.info" 8090 #:ssl? #t #:ssl-key? #t #:mtls? #t)
-        (proxy "githunt.wugi.info" 3000 #:ssl? #t #:ssl-key? #t #:mtls? #t)
+        (nginx-server-configuration
+         (server-name '("githunt.wugi.info"))
+         (listen '("443 ssl"))
+         (root (file-append (load "/home/oleg/archive/src/githunt/guix.scm") "/share/githunt"))
+         (locations
+          (list (nginx-location-configuration
+                 (uri "/.well-known")
+                 (body '("root /var/www;")))))
+         (ssl-certificate (letsencrypt-certificate "githunt.wugi.info"))
+         (ssl-certificate-key (letsencrypt-key "githunt.wugi.info"))
+         (raw-content %mtls))
         (proxy "monitor.wugi.info" 8080)
         (proxy "guix.duckdns.org" 5556 #:ssl? #t)
         (proxy "guix.wugi.info" 5556 #:locations %nginx-lua-guix)
