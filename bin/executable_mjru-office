@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+set -e
+set -o pipefail
+
+help_main()
+{
+    echo "\
+Usage: mjru-office COMMANDS ARGS...
+Run COMMANDS with ARGS
+
+COMMAND must be one of the sub-commands listed below:
+
+   off  disable shedule management
+   on   enable shedule management
+
+Report bugs to: go.wigust@gmail.com."
+}
+
+case "$1" in
+    on)
+        mysql -s -h maxscale.intr -uroot -p"$(pass show majordomo/public/majordomo/maxscale.intr/root)" office <<'EOF'
+update employees2 set permissions='a:69:{s:13:"registerUsers";s:1:"0";s:12:"editEmployee";s:1:"1";s:12:"fireEmployee";s:1:"0";s:15:"editPermissions";s:1:"1";s:9:"editDuty1";s:1:"0";s:9:"editDuty2";s:1:"0";s:12:"editShedule1";s:1:"0";s:12:"editShedule2";s:1:"0";s:12:"editShedule4";s:1:"0";s:13:"editShedule10";s:1:"1";s:21:"editAccountingReturns";s:1:"0";s:21:"viewAccountingReturns";s:1:"0";s:18:"excludeUserComings";s:1:"0";s:26:"viewAllComingsAndPenalties";s:1:"0";s:17:"searchCardComings";s:1:"0";s:10:"viewComing";s:1:"0";s:11:"viewComing1";s:1:"0";s:11:"viewComing2";s:1:"0";s:11:"viewComing3";s:1:"0";s:11:"viewComing4";s:1:"0";s:11:"viewComing5";s:1:"0";s:11:"viewComing6";s:1:"0";s:11:"viewComing7";s:1:"0";s:11:"viewComing8";s:1:"0";s:11:"viewComing9";s:1:"0";s:12:"viewComing10";s:1:"0";s:12:"viewComing11";s:1:"0";s:12:"viewComing12";s:1:"0";s:11:"editComing1";s:1:"0";s:11:"editComing2";s:1:"0";s:11:"editComing3";s:1:"0";s:11:"editComing4";s:1:"0";s:11:"editComing5";s:1:"0";s:11:"editComing6";s:1:"0";s:11:"editComing7";s:1:"0";s:11:"editComing8";s:1:"0";s:11:"editComing9";s:1:"0";s:12:"editComing10";s:1:"0";s:12:"editComing11";s:1:"0";s:12:"editComing12";s:1:"0";s:15:"documentPublish";s:1:"0";s:11:"documentAdd";s:1:"0";s:12:"documentEdit";s:1:"0";s:14:"documentDelete";s:1:"0";s:11:"PageEditId1";s:1:"0";s:11:"PageEditId2";s:1:"0";s:13:"equipmentView";s:1:"0";s:13:"equipmentEdit";s:1:"0";s:37:"viewClientIssuesStatForInfoDepartment";s:1:"0";s:37:"editClientIssuesStatForInfoDepartment";s:1:"0";s:9:"viewCards";s:1:"0";s:9:"editCards";s:1:"0";s:14:"uploadCardData";s:1:"0";s:7:"viewSsl";s:1:"1";s:7:"editSsl";s:1:"1";s:11:"viewDomains";s:1:"0";s:11:"editDomains";s:1:"0";s:10:"editNotice";s:1:"0";s:8:"addTalks";s:1:"0";s:9:"editTalks";s:1:"0";s:17:"viewOperatorsStat";s:1:"1";s:19:"viewClientsFeedback";s:1:"1";s:16:"viewOperatorsKpi";s:1:"1";s:16:"editOperatorsKpi";s:1:"1";s:21:"viewAssessmentSupport";s:1:"1";s:21:"editAssessmentSupport";s:1:"1";s:12:"viewTestData";s:1:"0";s:14:"uploadTestData";s:1:"0";s:15:"editAttestation";s:1:"0";}' where uid = 431;
+EOF
+        ;;
+    off)
+        mysql -s -h maxscale.intr -uroot -p"$(pass show majordomo/public/majordomo/maxscale.intr/root)" office <<'EOF'
+update employees2 set permissions='a:69:{s:13:"registerUsers";s:1:"0";s:12:"editEmployee";s:1:"1";s:12:"fireEmployee";s:1:"0";s:15:"editPermissions";s:1:"1";s:9:"editDuty1";s:1:"0";s:9:"editDuty2";s:1:"0";s:12:"editShedule1";s:1:"0";s:12:"editShedule2";s:1:"0";s:12:"editShedule4";s:1:"0";s:13:"editShedule10";s:1:"0";s:21:"editAccountingReturns";s:1:"0";s:21:"viewAccountingReturns";s:1:"0";s:18:"excludeUserComings";s:1:"0";s:26:"viewAllComingsAndPenalties";s:1:"0";s:17:"searchCardComings";s:1:"0";s:10:"viewComing";s:1:"0";s:11:"viewComing1";s:1:"0";s:11:"viewComing2";s:1:"0";s:11:"viewComing3";s:1:"0";s:11:"viewComing4";s:1:"0";s:11:"viewComing5";s:1:"0";s:11:"viewComing6";s:1:"0";s:11:"viewComing7";s:1:"0";s:11:"viewComing8";s:1:"0";s:11:"viewComing9";s:1:"0";s:12:"viewComing10";s:1:"0";s:12:"viewComing11";s:1:"0";s:12:"viewComing12";s:1:"0";s:11:"editComing1";s:1:"0";s:11:"editComing2";s:1:"0";s:11:"editComing3";s:1:"0";s:11:"editComing4";s:1:"0";s:11:"editComing5";s:1:"0";s:11:"editComing6";s:1:"0";s:11:"editComing7";s:1:"0";s:11:"editComing8";s:1:"0";s:11:"editComing9";s:1:"0";s:12:"editComing10";s:1:"0";s:12:"editComing11";s:1:"0";s:12:"editComing12";s:1:"0";s:15:"documentPublish";s:1:"0";s:11:"documentAdd";s:1:"0";s:12:"documentEdit";s:1:"0";s:14:"documentDelete";s:1:"0";s:11:"PageEditId1";s:1:"0";s:11:"PageEditId2";s:1:"0";s:13:"equipmentView";s:1:"0";s:13:"equipmentEdit";s:1:"0";s:37:"viewClientIssuesStatForInfoDepartment";s:1:"0";s:37:"editClientIssuesStatForInfoDepartment";s:1:"0";s:9:"viewCards";s:1:"0";s:9:"editCards";s:1:"0";s:14:"uploadCardData";s:1:"0";s:7:"viewSsl";s:1:"1";s:7:"editSsl";s:1:"1";s:11:"viewDomains";s:1:"0";s:11:"editDomains";s:1:"0";s:10:"editNotice";s:1:"0";s:8:"addTalks";s:1:"0";s:9:"editTalks";s:1:"0";s:17:"viewOperatorsStat";s:1:"1";s:19:"viewClientsFeedback";s:1:"1";s:16:"viewOperatorsKpi";s:1:"1";s:16:"editOperatorsKpi";s:1:"1";s:21:"viewAssessmentSupport";s:1:"1";s:21:"editAssessmentSupport";s:1:"1";s:12:"viewTestData";s:1:"0";s:14:"uploadTestData";s:1:"0";s:15:"editAttestation";s:1:"0";}' where uid = 431;
+EOF
+        ;;
+    --help|*)
+        help_main
+        ;;
+esac
+
