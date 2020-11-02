@@ -32,47 +32,6 @@
 ;; Fix Jenkins in Docker group
 (module-set! (resolve-module '(gnu packages admin)) 'shepherd shepherd-patched)
 
-(define (intel+amdgpu.conf server-layout)
-  (string-append "\
-
-Section \"Device\"
-        Identifier  \"Intel video card\"
-        Driver      \"intel\"
-        BusID       \"PCI:0:2:0\"
-        Option      \"AccelMethod\"  \"sna\"
-        Option      \"SwapbuffersWait\" \"true\"
-        Option      \"TearFree\" \"true\"
-        Option      \"DRI\" \"3\"
-EndSection
-
-Section \"Device\"
-        Identifier  \"AMD video card\"
-        Driver      \"amdgpu\"
-        BusID       \"PCI:3:0:0\"
-        Option      \"TearFree\" \"true\"
-        Option      \"DRI\" \"3\"
-EndSection
-
-Section \"Screen\"
-   Identifier  \"Screen 1\"
-   Device      \"Intel video card\"
-   Monitor     \"HDMI1\"
-   SubSection \"Display\"
-       Modes       \"1920x1080\"
-   EndSubSection
-EndSection
-
-Section \"Screen\"
-   Identifier  \"Screen 2\"
-   Device      \"AMD video card\"
-   Monitor     \"HDMI3\"
-   SubSection \"Display\"
-       Modes       \"1920x1080\"
-   EndSubSection
-EndSection\n\n"
-                 server-layout "\n\n"))
-
-
 
 ;;;
 ;;; Certbot
@@ -532,30 +491,7 @@ location / {
                                 (ladspa-configuration (plugins (list swh-plugins))))
 
                        ;; Desktop services
-                       (service slim-service-type
-                                (slim-configuration
-				 ;; (theme %slim-theme) TODO: Fix the theme.
-                                 (xorg-configuration
-                                  (xorg-configuration
-                                   (extra-config (list (intel+amdgpu.conf "" #;"\
-Section \"ServerLayout\"
-    Identifier  \"Default Layout\"
-    Screen  0   \"Screen 2\"
-    Screen  1   \"Screen 1\" LeftOf \"Screen 2\"
-    Option  \"Xinerama\" \"1\"
-EndSection")))))))
-                       #;(service slim-service-type
-                                (slim-configuration
-                                 (display ":1")
-                                 (vt "vt8")
-                                 (xorg-configuration
-                                  (xorg-configuration
-                                   (extra-config (list (intel+amdgpu.conf "\
-Section \"ServerLayout\"
-    Identifier  \"Default Layout\"
-    Screen  0   \"Screen 2\"
-    Screen  1   \"Screen 1\" LeftOf \"Screen 2\"
-EndSection")))))))
+                       (service slim-service-type)
                        (screen-locker-service slock)
                        (screen-locker-service xlockmore "xlock")
                        (udisks-service)
