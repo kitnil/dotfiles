@@ -73,7 +73,9 @@
                                       ":" (string-append #$xauth "/bin")
                                       ":" "/run/current-system/profile/bin"
                                       ":" "/bin")
-                       (string-append "HOME=" #$directory))
+                       (string-append "HOME=" #$directory)
+                       "SSL_CERT_DIR=/etc/ssl/certs"
+                       "SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt")
                  #:pid-file (string-append #$directory "/.vnc/" #$host-name ":" #$(number->string display) ".pid")))
        (requirement '(user-processes host-name udev))
        (respawn? #f)
