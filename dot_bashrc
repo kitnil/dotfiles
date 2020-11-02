@@ -48,7 +48,7 @@ alias psc='ps xawf -eo pid,user,cgroup,args'
 
 alias markdown-github=grip
 
-alias httping="httping --colors"
+alias httping="httping -s --colors"
 
 RIPGREP_CONFIG_PATH="$HOME/.config/ripgrep/ripgreprc"
 export RIPGREP_CONFIG_PATH
