@@ -20,8 +20,6 @@
 ;; Tuesday January 3 2005 23:05:25
 (setq *time-format-string-default* "%A %B %e %Y %k:%M:%S")
 
-(run-shell-command "/home/oleg/.screenlayout/intel-and-amdgpu.sh")
-
 (cond ((or (string= (getenv "DISPLAY") ":0")
            (string= (getenv "DISPLAY") ":1")
            (string= (getenv "DISPLAY") ":2")
