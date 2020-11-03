@@ -1,0 +1,16 @@
+#!/bin/sh
+
+case "$1" in
+    run)
+        docker run --volume $PWD:/mnt \
+               --detach \
+               --name monitoror \
+               --network=host \
+               -e MO_MONITORABLE_JENKINS_URL=http://localhost:8090 \
+               -e MO_MONITORABLE_JENKINS_LOGIN=admin \
+               -e MO_MONITORABLE_JENKINS_TOKEN="$(pass show jenkins.wugi.info/token-admin)" \
+               -e MO_MONITORABLE_GITLAB_TOKEN="$(pass show gitlab.com/tokens/wigust)" \
+               -e MO_PORT=27375 \
+               monitoror
+        ;;
+esac
