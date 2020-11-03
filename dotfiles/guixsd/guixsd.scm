@@ -32,6 +32,36 @@
 ;; Fix Jenkins in Docker group
 (module-set! (resolve-module '(gnu packages admin)) 'shepherd shepherd-patched)
 
+(define (amdgpu+amdgpu.conf)
+  (string-append "\
+
+Section \"Device\"
+        Identifier  \"amd-video-card-displayport-5\"
+        Driver      \"amdgpu\"
+        Option      \"TearFree\" \"true\"
+        Option      \"DRI\" \"3\"
+EndSection
+
+Section \"Device\"
+        Identifier  \"amd-video-card-hdmi-a-3\"
+        Driver      \"amdgpu\"
+        Option      \"TearFree\" \"true\"
+        Option      \"DRI\" \"3\"
+EndSection
+
+Section \"Screen\"
+   Identifier  \"Screen 1\"
+   Device      \"amd-video-card-displayport-5\"
+   Monitor     \"DisplayPort-5\"
+EndSection
+
+Section \"Screen\"
+   Identifier  \"Screen 2\"
+   Device      \"amd-video-card-hdmi-a-3\"
+   Monitor     \"HDMI-A-3\"
+EndSection\n\n"))
+
+
 
 ;;;
 ;;; Certbot
@@ -491,7 +521,24 @@ location / {
                                 (ladspa-configuration (plugins (list swh-plugins))))
 
                        ;; Desktop services
-                       (service slim-service-type)
+                       (service slim-service-type
+                                (slim-configuration
+				 ;; (theme %slim-theme) TODO: Fix the theme.
+                                 (xorg-configuration
+                                  (xorg-configuration
+                                   (extra-config (list (amdgpu+amdgpu.conf)))))))
+                       #;(service slim-service-type
+                                (slim-configuration
+                                 (display ":1")
+                                 (vt "vt8")
+                                 (xorg-configuration
+                                  (xorg-configuration
+                                   (extra-config (list (intel+amdgpu.conf "\
+Section \"ServerLayout\"
+    Identifier  \"Default Layout\"
+    Screen  0   \"Screen 2\"
+    Screen  1   \"Screen 1\" LeftOf \"Screen 2\"
+EndSection")))))))
                        (screen-locker-service slock)
                        (screen-locker-service xlockmore "xlock")
                        (udisks-service)
