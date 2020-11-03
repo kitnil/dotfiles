@@ -18,7 +18,7 @@ case "$1" in
     ping)
         docker run fortio/dnsping "${@:2}"
         ;;
-    *|--help)
+    --help|*)
         help_main
         exit 0
         ;;
