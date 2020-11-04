@@ -1765,3 +1765,8 @@ docker()
             command docker "$@"
     esac
 }
+
+lsgpu()
+{
+    printf "Memory: %s\n" "$(glxinfo | grep -i -o 'device|memory\|[0-9]\{1,12\} MB' | head -n 1)"
+}
