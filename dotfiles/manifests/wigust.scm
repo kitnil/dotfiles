@@ -95,6 +95,6 @@
 
   dotfiles
 
-  guix-wigust-packages-emacs
+  qemu-windows10
 
-  qemu-windows10))
+  guix-wigust-packages-emacs))
