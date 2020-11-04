@@ -255,3 +255,13 @@
 
 (defcommand window-send-clipboard () ()
   (window-send-string (get-x-selection)))
+
+
+;;;
+;;; Help
+;;;
+
+(defcommand display-0-keys () ()
+  (term-shell-command
+   (join (list "less"
+               (concat (getenv "HOME") "/.local/share/chezmoi/dot_stumpwm.d/display-0.lisp")))))

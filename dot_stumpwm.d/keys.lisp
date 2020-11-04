@@ -49,7 +49,7 @@
   (define-key *top-map* (kbd "s-W") "firefox-new-window")
   (define-key *top-map* (kbd "s-q") "delete")
   (define-key *top-map* (kbd "s-Q") "remove")
-  (define-key *top-map* (kbd "s-quoteleft") "emacs-vterm")
+  (define-key *top-map* (kbd "s-quoteleft") "display-0-keys")
   (define-key *top-map* (kbd "s-o") "keybinding-s-o")
   (define-key *top-map* (kbd "s-j") "run-or-raise-xterm")
   (define-key *top-map* (kbd "M-s-j") "run-xterm-light")
@@ -167,7 +167,7 @@
 (define-key *root-map* (kbd "Y") "xclip-kdeconnect-handler")
 (define-key *root-map* (kbd "c") "run-or-raise-xterm")
 (define-key *root-map* (kbd "e") "emacsclient")
-(define-key *root-map* (kbd "quoteleft") "emacs-vterm")
+(define-key *root-map* (kbd "quoteleft") "display-0-keys")
 (define-key *root-map* (kbd "y") "greenclip")
 
 (defcommand sxhkd-restart () ()
