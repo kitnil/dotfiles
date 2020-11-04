@@ -46,7 +46,7 @@
   (run-frame 3 :frame-0-command (lambda ()
                                   (run-shell-command
                                    (if (free-time?)
-                                       "chromium --new-window https://jenkins.wugi.info/view/Failed/"
+                                       "firefox --new-window https://jenkins.wugi.info/view/Failed/"
                                        "chromium --new-window https://jenkins.intr/view/Failed/")))
                :frame-1-command (lambda ()
                                   (run-shell-command
