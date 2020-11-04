@@ -156,6 +156,8 @@
   (define-key *top-map* (kbd (concat "s-9")) "group-9-start-programs")
   (define-key *top-map* (kbd (concat "s-0")) "gselect 0")
 
+  (define-key *top-map* (kbd (concat "M-s-1")) "group-1-restart-programs")
+
   (define-key *top-map* (kbd (concat "s-Menu")) "xmenu"))
 
 (define-key *root-map* (kbd "C-i") "set-prefix-key C-i")

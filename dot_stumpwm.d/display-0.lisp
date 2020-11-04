@@ -38,6 +38,12 @@
                :frame-1-command (lambda ()
                                   (run-shell-command "vnc client 5901"))))
 
+(defcommand group-1-restart-programs () ()
+  (run-frame 1 :frame-0-command (lambda ()
+                                  (run-shell-command "pkill emacs; run-emacs"))
+               :frame-1-command (lambda ()
+                                  (run-shell-command "sudo herd restart vncserver1; vnc client 5901"))))
+
 (defcommand group-2-start-programs () ()
   (run-frame 2 :frame-0-command (lambda () (spotify))
                :frame-1-command (lambda () (notmuch))))
