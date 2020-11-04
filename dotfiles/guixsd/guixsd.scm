@@ -15,8 +15,8 @@
 
 ;; Third-party modules
 (use-modules (config)
-             (packages admin)
-             (packages web)
+             (wigust packages admin)
+             (wigust packages web)
              (services autofs)
              (services bittorrent)
              (services nix)

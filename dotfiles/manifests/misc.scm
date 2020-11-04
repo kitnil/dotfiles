@@ -1,5 +1,5 @@
-(use-modules (packages databases)
-	     (packages ruby)
+(use-modules (wigust packages databases)
+	     (wigust packages ruby)
 	     (gnu packages chromium))
 
 (list
@@ -18,7 +18,6 @@
  emacs-redshift
  autopostgresqlbackup
  ruby-gitlab
- python-starred ; Fetch a list of stars from GitHub user
  dynamips ;gns3 requirement
  ungoogled-chromium
  ghc-pandoc  ; Convert Markdown

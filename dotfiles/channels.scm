@@ -1,4 +1,7 @@
 (cons* (channel
+        (name 'guix-wigust)
+        (url "https://cgit.duckdns.org/git/guix/guix-wigust"))
+       (channel
         (name 'nonguix)
         (url "https://gitlab.com/nonguix/nonguix")
         ;; Enable signature verification:

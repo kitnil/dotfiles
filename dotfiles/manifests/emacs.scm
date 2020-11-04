@@ -3,7 +3,7 @@
 
 (use-package-modules admin cmake databases emacs emacs-xyz package-management)
 
-(use-modules (packages emacs))
+(use-modules (wigust packages emacs))
 
 (module-set! (resolve-module '(gnu packages emacs-xyz)) 'emacs-geiser emacs-geiser-0.10)
 (module-set! (resolve-module '(gnu packages emacs-xyz)) 'emacs-slime emacs-slime-2.24)

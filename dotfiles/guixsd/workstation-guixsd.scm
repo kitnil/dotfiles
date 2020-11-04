@@ -1,6 +1,5 @@
 (use-modules (gnu)
              (guix gexp)
-             (packages lisp)
              (services autossh)
              (services nix)
              (srfi srfi-1)
@@ -13,7 +12,8 @@
 (use-service-modules desktop dbus monitoring networking ssh xorg web)
 
 (use-modules (config)
-             (packages admin))
+             (wigust packages admin)
+             (wigust packages lisp))
 
 ;; Fix Jenkins in Docker group
 (module-set! (resolve-module '(gnu packages admin)) 'shepherd shepherd-patched)

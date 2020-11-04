@@ -25,4 +25,4 @@
 (define inferior
   (open-inferior cached))
 
-(packages->manifest (lookup-inferior-packages inferior "guile-ihs"))
+(packages->manifest (list (first (lookup-inferior-packages inferior "guile-ihs"))))

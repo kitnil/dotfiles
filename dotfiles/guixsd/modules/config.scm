@@ -31,10 +31,10 @@
   #:use-module (gnu packages web)
   #:use-module (gnu services base)
   #:use-module (gnu services web)
-  #:use-module (packages admin)
-  #:use-module (packages lisp)
-  #:use-module (packages python)
-  #:use-module (packages web)
+  #:use-module (wigust packages admin)
+  #:use-module (wigust packages lisp)
+  #:use-module (wigust packages python)
+  #:use-module (wigust packages web)
   #:use-module (packages majordomo)
   #:use-module (gnu system)
   #:use-module (guix gexp)
@@ -57,7 +57,9 @@
 
 (define %guix-daemon-config
   (guix-configuration
-   (authorized-keys (append (list (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/guix.wugi.info.pub"))
+   (authorized-keys (append (list (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/guix.wugi.info.pub")
+                                  (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/vm1.wugi.info.pub")
+                                  (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/spb.pub"))
                             %default-authorized-guix-keys))))
 
 
