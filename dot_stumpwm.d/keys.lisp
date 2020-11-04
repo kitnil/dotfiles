@@ -108,7 +108,7 @@
 
   (define-key *top-map* (kbd "C-s-=") "volume-increase")
   (define-key *top-map* (kbd "C-s--") "volume-decrease")
-  (define-key *top-map* (kbd "C-s-RET") "run-xterm-named")
+  (define-key *top-map* (kbd "C-s-RET") "st")
   (define-key *top-map* (kbd "M-s-RET") "xfce-terminal")
   (define-key *top-map* (kbd "M-s-n") "mpv-next")
   (define-key *top-map* (kbd "M-s-p") "mpv-previous")
