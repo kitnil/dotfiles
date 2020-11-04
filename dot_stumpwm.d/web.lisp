@@ -202,7 +202,7 @@
   (term-shell-command "twitchy"))
 
 (defcommand zabbix () ()
-  (run-shell-command "chromium --new-window https://zabbix.wugi.info/"))
+  (run-shell-command "firefox --new-window https://zabbix.wugi.info/"))
 
 
 ;;;
