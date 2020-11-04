@@ -89,7 +89,9 @@
                                       (run-shell-command "chromium --app=https://habitica.com/")
                                       (run-shell-command "firefox --new-window https://cerberus.intr/")))
                :frame-1-command (lambda ()
-                                  (run-commands "emacs-anywhere"))))
+                                  (if (free-time?)
+                                      (run-commands "pulsemixer")
+                                      (run-commands "emacs-anywhere")))))
 
 (defcommand group-9-start-programs () ()
   (run-frame 9 :frame-0-command (lambda ()
