@@ -1751,3 +1751,17 @@ brute()
         | fzf \
         | xargs sudo ipset add brute
 }
+
+docker()
+{
+    case "$1" in
+        deploy)
+            command docker rm -f novnc
+            command docker rm -f monitoror
+            monitoror run
+            vnc client novnc
+            ;;
+        *)
+            command docker "$@"
+    esac
+}
