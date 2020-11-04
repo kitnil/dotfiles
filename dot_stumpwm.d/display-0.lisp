@@ -36,7 +36,7 @@
   (run-frame 1 :frame-0-command (lambda ()
                                   (run-shell-command "run-emacs"))
                :frame-1-command (lambda ()
-                                  (run-commands "quassel"))))
+                                  (run-shell-command "vnc client 5901"))))
 
 (defcommand group-2-start-programs () ()
   (run-frame 2 :frame-0-command (lambda () (spotify))
