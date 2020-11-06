@@ -55,7 +55,7 @@ xml xorg)
                at-spi2-core
                ghostscript/x gnuplot
                ghc-pandoc  ; Convert Markdown
-               grip
+               ;; grip ; TODO: Fix conflicting entries for python-cryptography
 
                autojump
                jq jo jc jtbl
@@ -138,7 +138,7 @@ xml xorg)
                mongodb
 
                goaccess
-               httpie
+               ;; httpie ; TODO: Fix conflicting entries for python-cryptography
                httping
 
                ;; Utilities
