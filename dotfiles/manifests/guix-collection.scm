@@ -81,7 +81,7 @@ xml xorg)
                ;; TODO: Fix cuirass
 
                ;; TODO: Fix artanis
-               guile-3.0 guile-colorized guile-daemon
+               guile-colorized guile-daemon
                guile-fibers guile-gcrypt guile-git guile-readline
                guile-redis guile-ssh guile-xosd
 
