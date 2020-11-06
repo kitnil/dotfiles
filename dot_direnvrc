@@ -89,6 +89,10 @@ use_guix()
                     ;;
             esac
         fi
+        for file in po/*/*.po
+        do
+            git update-index --assume-unchanged "$file"
+        done
     }
     export_function build
 
