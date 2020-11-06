@@ -57,14 +57,14 @@
   (if current-theme-gtk
       (progn (mapc (lambda (theme)
                      (disable-theme theme))
-                   '(manoj-dark smart-mode-line-dark))
+                   '(modus-vivendi smart-mode-line-dark))
              ;; (enable-theme 'smart-mode-line-light)
              (setq terminal-here-color 'light)
              (setq current-theme-gtk nil))
     (progn ;; (disable-theme 'smart-mode-line-light)
-           (wi-manoj-dark)
-           (setq terminal-here-color 'dark)
-           (setq current-theme-gtk t))))
+      (load-theme 'modus-vivendi)
+      (setq terminal-here-color 'dark)
+      (setq current-theme-gtk t))))
 
 (setq terminal-here-color 'light)
 
