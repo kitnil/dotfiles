@@ -113,7 +113,32 @@
  '(indent-tabs-mode nil)
  '(org-agenda-files '("~/org/inbox.org" "~/org/todo.org" "~/org/web.org"))
  '(safe-local-variable-values
-   '((eval setq-local indent-tabs-mode t)
+   '((eval let*
+           ((root-dir
+             (expand-file-name
+              (locate-dominating-file default-directory ".dir-locals.el")))
+            (root-dir*
+             (directory-file-name root-dir)))
+           (unless
+               (boundp 'geiser-guile-load-path)
+             (defvar geiser-guile-load-path 'nil))
+           (make-local-variable 'geiser-guile-load-path)
+           (require 'cl-lib)
+           (cl-pushnew root-dir* geiser-guile-load-path :test #'string-equal))
+     (eval let*
+           ((root-dir
+             (expand-file-name
+              (locate-dominating-file default-directory ".dir-locals.el")))
+            (root-dir*
+             (directory-file-name root-dir)))
+           (unless
+               (boundp 'geiser-guile-load-path)
+             (defvar geiser-guile-load-path 'nil))
+           (make-local-variable 'geiser-guile-load-path)
+           (cl-pushnew root-dir* geiser-guile-load-path :test #'string-equal))
+     (eval setq guix-directory
+           (locate-dominating-file default-directory ".dir-locals.el"))
+     (eval setq-local indent-tabs-mode t)
      (projectile-project-test-cmd . "make check")
      (git-auto-commit-mode . t)
      (eval progn
