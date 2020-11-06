@@ -17,7 +17,6 @@
        emacs-aggressive-indent  ; Auto indent minor mode
        emacs-ansible-doc
        emacs-auto-yasnippet
-       emacs-bash-completion
        emacs-bbdb
        emacs-beginend
        emacs-browse-at-remote

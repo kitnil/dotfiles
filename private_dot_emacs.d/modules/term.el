@@ -30,12 +30,6 @@
 ;; (add-hook 'comint-output-filter-functions
 ;;           'comint-truncate-buffer)
 
-(autoload 'bash-completion-dynamic-complete
-  "bash-completion" "BASH completion hook")
-
-(add-hook 'shell-dynamic-complete-functions
-          'bash-completion-dynamic-complete)
-
 (with-eval-after-load 'vterm
   (let ((map vterm-mode-map))
     (define-key map (kbd "<S-prior>") 'scroll-down-command)
