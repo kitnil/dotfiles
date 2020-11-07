@@ -79,6 +79,11 @@
         ("V" "watch" plain (file "watch.org") "%?")
         ("w" "work" plain (file "work.org") "%?")))
 
+(defun org-capture-inbox ()
+  (interactive)
+  (org-capture nil "f")
+  (org-capture-finalize))
+
 (setq org-publish-project-alist
       '(("org-notes"
          :base-directory "~/src/org/"
