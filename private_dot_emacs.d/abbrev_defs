@@ -549,6 +549,7 @@
     ("тдв" "Ваш вопрос требует дополнительного времени для решения, ожидайте, пожалуйста, ответа по почте в рамках текущей переписки" nil 2)
     ("тса" "тарифы с администрированием" nil 0)
     ("ус" "устройство" nil 0)
+    ("melpa" "We don't use MELPA because the files they provide are not reliable (hash may change over time)." nil 0)
    ))
 
 (define-abbrev-table 'url-cookie-mode-abbrev-table '())
