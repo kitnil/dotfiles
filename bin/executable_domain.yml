@@ -33,9 +33,6 @@ checks:
   domain: git.wugi.info
   value: guix.duckdns.org.
 - type: cname
-  domain: gitea.wugi.info
-  value: guix.duckdns.org.
-- type: cname
   domain: githunt.wugi.info
   value: guix.duckdns.org.
 - type: cname
