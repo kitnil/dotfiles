@@ -50,7 +50,7 @@
   (info-initialize)
   (setq Info-directory-list
         (append (wi-expand-file-names
-                 '("~/src/guix/doc"
+                 '("~/src/guix-master/doc"
                    "~/.guix-profile.d/gdb/share/info"
                    "~/.guix-profile.d/autotools/share/info"))
                 Info-directory-list)))

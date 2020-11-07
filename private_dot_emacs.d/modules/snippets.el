@@ -9,7 +9,7 @@
   (setq yas-snippet-dirs
         (append (wi-expand-file-names
                  '("~/.emacs.d/snippets"
-                   "~/src/guix/etc/snippets"
+                   "~/src/guix-master/etc/snippets"
                    "~/.guix-profile/share/emacs/yasnippet-snippets"))
                 yas-snippet-dirs))
   (yas-reload-all))

@@ -49,7 +49,7 @@
 ;;; Version control
 ;;;
 
-(defvar wi-guix-git-directory (expand-file-name "~/src/guix"))
+(defvar wi-guix-git-directory (expand-file-name "~/src/guix-master"))
 (defun wi-magit-show-commit-guix (commit)
   "Show a Git `commit' from the Guix checkout.
 
