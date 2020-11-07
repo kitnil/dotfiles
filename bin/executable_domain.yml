@@ -68,6 +68,3 @@ checks:
 - type: cname
   domain: webssh.vm1.wugi.info
   value: vm1.wugi.info.
-- type: cname
-  domain: zabbix.wugi.info
-  value: alerta.duckdns.org.
