@@ -1,0 +1,21 @@
+- hosts: remote
+  tasks:
+    - uri:
+        url: "http://guix.wugi.info/guix/describe?channel=guix"
+        return_content: yes
+      register: channel
+    - debug: msg={{channel.json.commit}}
+    - guix:
+        commit: '{{channel.json.commit}}'
+
+- hosts: remote
+  become: yes
+  become_flags: '-i'
+  tasks:
+    - uri:
+        url: "http://guix.wugi.info/guix/describe?channel=guix"
+        return_content: yes
+      register: channel
+    - debug: msg={{channel.json.commit}}
+    - guix:
+        commit: '{{channel.json.commit}}'

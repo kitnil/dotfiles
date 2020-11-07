@@ -1,0 +1,22 @@
+# -*- mode: snippet -*-
+# name: ansible-module
+# key: ansible-module...
+# --
+from ansible.module_utils.basic import AnsibleModule
+
+def do_something():
+    return "Something was done!"
+
+def main():
+    module = AnsibleModule(argument_spec=dict())
+    rc = do_something()
+    result = {
+        "msg": "Hello World",
+        "rc:": rc,
+        "failed": False,
+        "changed": False,
+    }
+    module.exit_json(**result)
+
+if __name__ == "__main__":
+    main()

@@ -500,10 +500,7 @@ guix()
             (set -ex; $guix_command "${@:2}"; sudo --login $guix_command "${@:2}")
             ;;
         distribute)
-            guix_commit="$(curl --silent guix.wugi.info/guix/describe | jq --raw-output '.[] | select(.name == "guix") | .commit')"
-            ansible remote --module-name shell --args "guix pull --commit=$guix_commit"
-            # Don't use --become
-            ansible remote --module-name shell --args "sudo --login guix pull --commit=$guix_commit"
+            ansible-playbook "$HOME/.local/share/chezmoi/dotfiles/ansible/guix.yml"
             ;;
         prereconfigure)
             guix_command="$HOME/src/guix/pre-inst-env guix"
