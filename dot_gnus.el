@@ -168,11 +168,13 @@ below otherwise."
 (with-eval-after-load 'gnus
   (let ((map gnus-summary-mode-map))
     (define-key map (kbd "<f5>") 'mbsync)
-    (define-key map (kbd "<f6>") 'org-capture-inbox)))
+    (define-key map (kbd "<f6>") 'org-capture-inbox)
+    (define-key map (kbd "<C-return>") 'org-capture-inbox)))
 
 (with-eval-after-load 'gnus-art
   (let ((map gnus-article-mode-map))
-    (define-key map (kbd "<f6>") 'org-capture-inbox)))
+    (define-key map (kbd "<f6>") 'org-capture-inbox)
+    (define-key map (kbd "<C-return>") 'org-capture-inbox)))
 
 (setq gnus-summary-line-format "%U%R %i %I%(%[%4L: %-23,23f%]%) %s\n")
 
