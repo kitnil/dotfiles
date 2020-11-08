@@ -133,6 +133,9 @@
   (progn (run-shell-command (format nil "emacsclient --eval '(find-file ~s)'" "~/src/org/todo.org"))
          (switch-to-emacs)))
 
+(defcommand emacs-todo-new-window () ()
+  (run-shell-command (format nil "emacsclient -cn --eval '(find-file ~s)'" "~/src/org/todo.org")))
+
 
 ;;;
 ;;; Mail
