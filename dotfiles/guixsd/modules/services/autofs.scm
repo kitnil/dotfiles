@@ -62,6 +62,7 @@
      (list (shepherd-service
             (provision '(autofs))
             (documentation "Run autofs daemon.")
+            (requirement '(user-processes loopback))
             (start #~(make-forkexec-constructor
                       (list (string-append #$autofs "/sbin/automount")
                             "-f" "-p" #$pid-file #$config-file)

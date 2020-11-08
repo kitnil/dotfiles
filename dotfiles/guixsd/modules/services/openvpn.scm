@@ -29,6 +29,7 @@
                    (shepherd-service
                     (provision '(openvpn))
                     (auto-start? #t)
+                    (requirement '(user-processes loopback))
                     (documentation "Run openvpn-daemon.")
                     (start #~(make-forkexec-constructor
                               (list (string-append #$openvpn "/sbin/openvpn")

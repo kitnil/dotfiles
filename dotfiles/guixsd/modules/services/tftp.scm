@@ -30,7 +30,7 @@
                    (shepherd-service
                     (provision '(tftp))
                     (documentation "Run tftp.")
-                    (requirement '())
+                    (requirement '(user-processes loopback))
                     (start #~(make-forkexec-constructor
                               (list (string-append #$tftp-hpa "/sbin/in.tftpd")
                                     "--listen"

@@ -37,7 +37,7 @@
                    (shepherd-service
                     (provision '(transmission))
                     (documentation "Run transmission.")
-                    (requirement '())
+                    (requirement '(user-processes loopback))
                     (start #~(make-forkexec-constructor
                               (list (string-append #$transmission "/bin/transmission-daemon")
                                     "--logfile" "/home/oleg/.config/shepherd/transmission.log"

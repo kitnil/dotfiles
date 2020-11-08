@@ -29,7 +29,7 @@
                    (shepherd-service
                     (provision '(nix))
                     (documentation "Run nix-daemon.")
-                    (requirement '())
+                    (requirement '(user-processes loopback))
                     (start #~(make-forkexec-constructor
                               (list "/home/oleg/bin/run-nix-daemon")))
                     (respawn? #f)

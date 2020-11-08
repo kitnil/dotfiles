@@ -165,6 +165,7 @@
      (list (shepherd-service
             (provision '(autossh))
             (documentation "Run autossh daemon.")
+            (requirement '(user-processes loopback))
             (start #~(make-forkexec-constructor
                       (list (string-append #$autossh "/bin/autossh")
                             "-NT" "-M" "0"

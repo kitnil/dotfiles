@@ -30,7 +30,7 @@
                    (shepherd-service
                     (provision '(jenkins))
                     (documentation "Run jenkins.")
-                    (requirement '())
+                    (requirement '(user-processes loopback))
                     (start #~(make-forkexec-constructor
                               (list "/home/oleg/.nix-profile/bin/jenkins"
                                     "--httpListenAddress=127.0.0.1"

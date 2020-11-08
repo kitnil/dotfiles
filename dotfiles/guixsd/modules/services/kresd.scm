@@ -28,6 +28,7 @@
                    (shepherd-service
                     (provision '(kresd))
                     (auto-start? #t)
+                    (requirement '(user-processes loopback))
                     (documentation "Run kresd-daemon.")
                     (start #~(make-forkexec-constructor
                               (list "/home/oleg/bin/run-kresd"
