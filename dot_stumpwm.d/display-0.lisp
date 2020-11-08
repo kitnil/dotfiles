@@ -17,6 +17,7 @@
 (run-commands "gselect 1")
 
 (defun run-frame (group-number &key
+                                 (restart? nil)
                                  (frame-0-command nil)
                                  (frame-1-command nil)
                                  (frame-2-command nil))
@@ -27,7 +28,7 @@
           ;; Two monitors.
           ((and (> (screen-width screen) 1920)
                 (= (length (group-frames group)) 2))
-           (if (current-window)
+           (if (and (current-window) (not restart?))
                (run-commands "fnext")
                (case (frame-number (tile-group-current-frame group))
                  ((0) (funcall frame-0-command))
@@ -35,7 +36,7 @@
           ;; Two monitor with frames: big, small, medium
           ((and (> (screen-width screen) 1920)
                 (>= (length (group-frames group)) 2))
-           (if (current-window)
+           (if (and (current-window) (not restart?))
                (run-commands "fnext")
                (case (frame-number (tile-group-current-frame group))
                  ((0) (funcall frame-0-command))
