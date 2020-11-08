@@ -377,11 +377,21 @@
 ;;; Office
 ;;;
 
+(defun mjru-office-shedule-open (url)
+  (run-shell-command (format nil "firefox --new-window ~a" url))
+  ;; TODO: Wait for window appear
+  (sb-thread:make-thread
+   (lambda ()
+     (sleep 3) ;Wait for password insert on "Office.majordomo - Mozilla Firefox".
+     (when (string= (window-title (current-window)) "Страница пользователя - Mozilla Firefox")
+       (run-commands "delete")
+       (run-shell-command (format nil "firefox --new-window ~a" url))))))
+
 (defcommand mjru-office-shedule-eng () ()
-  (run-shell-command "firefox --new-window https://office.majordomo.ru/shedule2/10"))
+  (mjru-office-shedule-open "https://office.majordomo.ru/shedule2/10"))
 
 (defcommand mjru-office-shedule-sup () ()
-  (run-shell-command "firefox --new-window https://office.majordomo.ru/shedule2/2"))
+  (mjru-office-shedule-open "https://office.majordomo.ru/shedule2/2"))
 
 
 ;;;
