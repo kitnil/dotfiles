@@ -16,20 +16,36 @@
 (add-group (current-screen) "0" :background t :type 'float-group)
 (run-commands "gselect 1")
 
-(defun run-frame (group-number &key (frame-0-command nil) (frame-1-command nil))
+(defun run-frame (group-number &key
+                                 (frame-0-command nil)
+                                 (frame-1-command nil)
+                                 (frame-2-command nil))
   (if (= (parse-integer (group-name (current-group))) group-number)
       (let ((screen (current-screen))
             (group (current-group)))
-        (if (and (> (screen-width screen) 1920)
-                 (= (length (group-frames group)) 2))
-            (if (current-window)
-                (run-commands "fnext")
-                (if (= (frame-number (tile-group-current-frame group)) 0)
-                    (funcall frame-0-command)
-                    (funcall frame-1-command)))
-            (case (length (group-windows group))
-              ((0) (funcall frame-0-command))
-              ((1) (funcall frame-1-command)))))
+        (cond
+          ;; Two monitors.
+          ((and (> (screen-width screen) 1920)
+                (= (length (group-frames group)) 2))
+           (if (current-window)
+               (run-commands "fnext")
+               (case (frame-number (tile-group-current-frame group))
+                 ((0) (funcall frame-0-command))
+                 ((1) (funcall frame-1-command)))))
+          ;; Two monitor with frames: big, small, medium
+          ((and (> (screen-width screen) 1920)
+                (>= (length (group-frames group)) 2))
+           (if (current-window)
+               (run-commands "fnext")
+               (case (frame-number (tile-group-current-frame group))
+                 ((0) (funcall frame-0-command))
+                 ((1) (funcall frame-2-command))
+                 ((2) (funcall frame-1-command)))))
+          ;; Single monitor.
+          (t
+           (case (length (group-windows group))
+             ((0) (funcall frame-0-command))
+             ((1) (funcall frame-1-command))))))
       (run-commands (format nil "gselect ~a" group-number))))
 
 (defcommand group-1-start-programs () ()
