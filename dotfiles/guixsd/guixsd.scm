@@ -21,7 +21,6 @@
              (services bittorrent)
              (services nix)
              (services autossh)
-             (services intel)
              (services kresd)
              (services jenkins)
              (services tftp)
@@ -730,8 +729,6 @@ ServerAliveCountMax 3"))))))
                                  (host "znc.wugi.info")))
 
                        transmission-service
-
-                       intel-vaapi-service
 
                        (service webssh-service-type
                                 (webssh-configuration (address "127.0.0.1")
