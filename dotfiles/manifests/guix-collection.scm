@@ -65,6 +65,7 @@ xml xorg)
                lm-sensors
 
                cloc            ; Count code
+               diffstat
                direnv
                gnu-make        ; GNU Make
                recutils  ; Filter records like in `guix --search'
