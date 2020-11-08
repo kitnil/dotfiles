@@ -58,7 +58,8 @@
                                   (emacs-todo-new-window))))
 
 (defcommand group-1-restart-programs () ()
-  (run-frame 1 :frame-0-command (lambda ()
+  (run-frame 1 :restart? t
+               :frame-0-command (lambda ()
                                   (run-shell-command "pkill emacs; run-emacs"))
                :frame-1-command (lambda ()
                                   (run-shell-command "sudo herd restart vncserver1; vnc client 5901"))
