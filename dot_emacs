@@ -112,6 +112,7 @@
  '(debug-on-error nil)
  '(indent-tabs-mode nil)
  '(org-agenda-files '("~/org/inbox.org" "~/org/todo.org" "~/org/web.org"))
+ '(python-shell-interpreter "python3")
  '(safe-local-variable-values
    '((eval let*
            ((root-dir
