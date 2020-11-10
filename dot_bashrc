@@ -30,6 +30,7 @@ alias cp="cp -i"
 alias mv="mv -i"
 
 alias xclipp='xclip -selection secondary'
+alias svg=xdot
 
 alias hosts='hosts --auto-sudo'
 alias log='sudo lnav /var/log'
