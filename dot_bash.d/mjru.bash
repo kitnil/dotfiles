@@ -229,7 +229,11 @@ mjru-docker-jenkins()
 
 mjru-hms-current-stack()
 {
-    curl -u "jenkins:$(pass show majordomo/private/jenkins/jenkins)" -X GET http://nginx1.intr:8080/hms
+    (
+        set -x
+        curl -u "jenkins:$(pass show majordomo/private/jenkins/jenkins)" -X GET http://nginx1.intr:8080/hms
+        curl -u "jenkins:$(pass show majordomo/private/jenkins/jenkins)" -X GET http://nginx2.intr:8080/hms
+    )
 }
 
 mjru-hms-auth ()
