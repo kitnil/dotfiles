@@ -159,14 +159,24 @@ case "$1" in
         exit 0
         ;;
     filter)
-        ip="$(connect ssh "$2" -- docker logs --tail 1000 nginx | awk '{print $1}' | sort | uniq -c | sort -nr | fzf | awk '{print $2}')"
-        whois "$ip" | tail -n $(( $(tput lines) - 2))
-        read -p "Are you sure want to filter $ip IP address? " -n 1 -r
-        echo
-        if [[ $REPLY =~ ^[Yy]$ ]]
-        then
-            curl --silent --head --request PUT "$2/ip-filter/$ip?ttl=7200&action=setCookie"
-        fi
+        for ip in $(
+                       connect ssh "$2" -- docker logs --tail 1000 nginx \
+                           | awk '{print $1}' \
+                           | sort \
+                           | uniq -c \
+                           | sort -nr \
+                           | fzf -m \
+                           | awk '{print $2}'
+                   )
+        do
+            whois "$ip" | tail -n $(( $(tput lines) - 2))
+            read -p "Are you sure want to filter $ip IP address? " -n 1 -r
+            echo
+            if [[ $REPLY =~ ^[Yy]$ ]]
+            then
+                curl --silent --head --request PUT "$2/ip-filter/$ip?ttl=7200&action=setCookie"
+            fi
+        done
         ;;
     firewall)
         connect ssh "$2" -- iptables --line-numbers -n -v -L | jc --iptables -p | yq -y .
