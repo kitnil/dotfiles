@@ -338,3 +338,8 @@ mjru-vm-vnc()
         echo "(window-send-string (format nil \"~a~%\" \"$password\"))" | stumpish -e eval
     )
 }
+
+mjru-proxy()
+{
+    ssh -Nf -D 5557 workstation.intr
+}
