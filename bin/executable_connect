@@ -176,7 +176,8 @@ case "$1" in
                            | uniq -c \
                            | sort -nr \
                            | fzf -m \
-                           | awk '{print $2}'
+                           | awk '{print $2}' \
+                           | tac
                    )
         do
             whois "$ip" | tail -n $(( $(tput lines) - 2))
