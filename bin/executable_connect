@@ -137,7 +137,7 @@ case "$1" in
         help_main
         exit 0
         ;;
-    br1*)
+    br*)
         echo 172.16.103.199
         sshpass -p"$(pass show majordomo/private/ssh/router)"   \
                 ssh -F /dev/null                                \
@@ -148,7 +148,7 @@ case "$1" in
                 br1-mr14.intr "${@:2}"
         exit 0
         ;;
-    sr1*)
+    sr*mr*)
         sshpass -p"$(pass show majordomo/private/ssh/router)"   \
                 ssh -F /dev/null                                \
                 -i "$HOME/.ssh/eng_key_rsa"                     \
@@ -156,6 +156,16 @@ case "$1" in
                 -o StrictHostKeyChecking=no                     \
                 -l root                                         \
                 sr1-mr13-14.intr
+        exit 0
+        ;;
+    sr*dh*)
+        sshpass -p"$(pass show majordomo/private/ssh/router)"   \
+                ssh -F /dev/null                                \
+                -i "$HOME/.ssh/eng_key_rsa"                     \
+                -o UserKnownHostsFile=/dev/null                 \
+                -o StrictHostKeyChecking=no                     \
+                -l root                                         \
+                sr1-dh507-508
         exit 0
         ;;
     filter)
