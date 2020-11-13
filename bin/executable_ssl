@@ -5,6 +5,23 @@ set -o pipefail
 
 TESTSSL="${TESTSSL:-docker run --network=host --rm -it drwetter/testssl.sh:3.0}"
 
+help_main()
+{
+    echo "\
+Usage: ssl COMMANDS ARGS...
+Run COMMANDS with ARGS
+
+COMMAND must be one of the sub-commands listed below:
+
+  general commands
+    show        show certificate for DOMAIN
+    date        show certificate date for DOMAIN
+    check       run testssl.sh on DOMAIN
+    search      open https://crt.sh/ in BROWSER
+
+Report bugs to: go.wigust@gmail.com."
+}
+
 case "$1" in
     show)
         echo | openssl s_client -showcerts -servername "$2" -connect "$2:443" 2>/dev/null | openssl x509 -inform pem -noout -text
@@ -17,5 +34,9 @@ case "$1" in
         ;;
     search)
         $BROWSER https://crt.sh/
+        ;;
+    --help|*)
+        help_main
+        exit 0
         ;;
 esac
