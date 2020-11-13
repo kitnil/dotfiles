@@ -169,25 +169,34 @@ case "$1" in
         exit 0
         ;;
     filter)
-        for ip in $(
-                       connect ssh "$2" -- docker logs --tail 1000 nginx \
-                           | awk '{print $1}' \
-                           | sort \
-                           | uniq -c \
-                           | sort -nr \
-                           | fzf -m \
-                           | awk '{print $2}' \
-                           | tac
-                   )
-        do
-            whois "$ip" | tail -n $(( $(tput lines) - 2))
-            read -p "Are you sure want to filter $ip IP address? " -n 1 -r
-            echo
-            if [[ $REPLY =~ ^[Yy]$ ]]
-            then
-                curl --silent --head --request PUT "$2/ip-filter/$ip?ttl=7200&action=setCookie"
-            fi
-        done
+        case "$2" in
+            list)
+                for web in web15 web16 web17 web18 web19 web20 web21 web22 web23 web25 web26 web27 web28 web29 web30 web31 web32 web33 web34 web35 web36 web37
+                do
+                    curl -s http://"$web.intr"/ip-filter | sed "s/^/$web.intr\t/g; s/\s/\t/g"
+                done
+                ;;
+            *)
+                for ip in $(
+                               connect ssh "$2" -- docker logs --tail 1000 nginx \
+                                   | awk '{print $1}' \
+                                   | sort \
+                                   | uniq -c \
+                                   | sort -nr \
+                                   | fzf -m \
+                                   | awk '{print $2}' \
+                                   | tac
+                           )
+                do
+                    whois "$ip" | tail -n $(( $(tput lines) - 2))
+                    read -p "Are you sure want to filter $ip IP address? " -n 1 -r
+                    echo
+                    if [[ $REPLY =~ ^[Yy]$ ]]
+                    then
+                        curl --silent --head --request PUT "$2/ip-filter/$ip?ttl=7200&action=setCookie"
+                    fi
+                done
+        esac
         ;;
     firewall)
         connect ssh "$2" -- iptables --line-numbers -n -v -L | jc --iptables -p | yq -y .
