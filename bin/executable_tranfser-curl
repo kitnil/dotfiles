@@ -14,11 +14,11 @@ auth ()
          --request POST https://api.majordomo.ru/oauth/token \
          --header 'content-type: application/x-www-form-urlencoded' \
          --header 'x-requested-with: XMLHttpRequest' \
-         -d "grant_type=password&username=$IHS_USER&password=$PASS&client_id=service&client_secret=service_secret" \
+         -d "grant_type=password&username=$IHS_USER&password=$IHS_PASS&client_id=service&client_secret=service_secret" \
         | jq -r '.access_token'
 }
 
-curl --request POST https://api.majordomo.ru/account/$account/transfer \
+curl --request POST https://api.majordomo.ru/account/"$account"/transfer \
      --header "Authorization: Bearer $(auth)" \
      --header 'Content-Type: application/json' \
-     --data-binary '{"operationIdentity":null,"params":{"serverId":"web_server_'$host'" }}'
+     --data-binary '{"operationIdentity":null,"params":{"serverId":"web_server_'"$host"'" }}'
