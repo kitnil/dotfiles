@@ -15,4 +15,7 @@ case "$1" in
     check)
         $TESTSSL "${@:2}"
         ;;
+    search)
+        $BROWSER https://crt.sh/
+        ;;
 esac
