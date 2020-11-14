@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: thread
+# key: thread
+# --
+(sb-thread:make-thread
+ (lambda ()
+   $1))
