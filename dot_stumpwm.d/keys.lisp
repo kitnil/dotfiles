@@ -6,6 +6,11 @@
       (youtube)
       (mjru-servers)))
 
+(defcommand kbd-C-s-a () ()
+  "Workaround for SVEN KB-C3800W."
+  (xmodmap)
+  (mjru-pass-route))
+
 (defun bind-super ()
   (define-key *top-map* (kbd "C-s-e") "editor")
   (define-key *top-map* (kbd "C-s-w") "chromium")
@@ -129,7 +134,7 @@
   ;; Majordomo
   (define-key *top-map* (kbd "s-a") "mjru-pass-gitlab-ssh")
   (define-key *top-map* (kbd "s-A") "mjru-pass-eng")
-  (define-key *top-map* (kbd "C-s-a") "mjru-pass-route")
+  (define-key *top-map* (kbd "C-s-a") "kbd-C-s-a")
   (define-key *top-map* (kbd "s-u") "mjru-alerta")
   (define-key *top-map* (kbd "s-U") "mjru-cerb")
   (define-key *top-map* (kbd "M-s-u") "mjru-grafana-upstream-interfaces")
