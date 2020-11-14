@@ -302,7 +302,7 @@ in the variable `browse-url-streamlink-arguments' to mpv."
   :type 'string
   :group 'browse-url)
 
-(defcustom browse-url-mpv-arguments '("--volume=50")
+(defcustom browse-url-mpv-arguments '()
   "Arguments passed to mpv with `browse-url-mpv'."
   :type 'list
   :group 'browse-url)
@@ -311,6 +311,8 @@ in the variable `browse-url-streamlink-arguments' to mpv."
   "Non-nil if browse-url-mpv in headphones."
   :type 'boolean
   :group 'browse-url)
+
+(setq browse-url-mpv-arguments '("--keep-open=no"))
 
 (defun toggle-browse-url-mpv-arguments ()
   "If browse-url-mpv-headphones non-nil set it to t and set
