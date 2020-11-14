@@ -72,10 +72,7 @@
 
 (defcommand group-3-start-programs () ()
   (run-frame 3 :frame-0-command (lambda ()
-                                  (run-shell-command
-                                   (if (free-time?)
-                                       "firefox --new-window https://jenkins.wugi.info/view/Failed/"
-                                       "chromium --new-window https://jenkins.intr/view/Failed/")))
+                                  (run-shell-command "chromium --app=https://habitica.com/"))
                :frame-1-command (lambda ()
                                   (run-shell-command
                                    (if (free-time?)
