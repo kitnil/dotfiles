@@ -95,6 +95,8 @@ in  ''
 		Split
 			Horizontally	echo '(hsplit)' | stumpish -e eval
 			Vertically	echo '(vsplit)' | stumpish -e eval
+		Window
+			Delete	echo '(delete-window)' | stumpish -e eval
 
 	Terminal
 		XTerm	xterm -sl 4096 +sb -bg black -fg white
