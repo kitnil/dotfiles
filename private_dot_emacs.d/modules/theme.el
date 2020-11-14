@@ -63,6 +63,9 @@
              (setq current-theme-gtk nil))
     (progn ;; (disable-theme 'smart-mode-line-light)
       (load-theme 'modus-vivendi)
+      (custom-theme-set-faces
+       'modus-vivendi
+       '(elfeed-search-unread-title-face ((t (:inherit nil :foreground "#ffffff")))))
       (setq terminal-here-color 'dark)
       (setq current-theme-gtk t))))
 
