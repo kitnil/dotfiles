@@ -123,3 +123,5 @@
                                   (run-commands "mjru-office-shedule-eng"))
                :frame-1-command (lambda ()
                                   (run-commands "mjru-office-shedule-sup"))))
+
+(define-frame-preference "1" (1 NIL NIL :CLASS "mpv"))
