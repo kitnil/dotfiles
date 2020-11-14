@@ -390,6 +390,11 @@ ssh-keygen-rsa()
     ssh-keygen -b 4096 -m pem -f "$HOME/.ssh/id_rsa_$file"
 }
 
+ssh-keygen-show-host-key()
+{
+    ssh-keygen -lf <(ssh-keyscan -p 1022 "$1" 2>/dev/null)
+}
+
 activity()
 {
     ps -ef | awk '{ print $1 }' | sort | uniq | wc -l;
