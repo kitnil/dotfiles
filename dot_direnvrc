@@ -120,9 +120,11 @@ use_guix()
     clear
     git-cal --author='Oleg Pykhalov'
     echo "
-build     build a package or just a project if no argument provided
-configure run ./configure with predefined parameters
-push      push to upstream Git repository
+direnv:
+  build        build a package or just a project if no argument provided
+  configure    run ./configure with predefined parameters
+  environment  run 'guix environment' with presetted arguments
+  push         push to upstream Git repository
 "
 }
 
