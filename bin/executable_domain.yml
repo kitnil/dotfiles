@@ -51,9 +51,6 @@ checks:
   domain: pop3.test.wugi.info
   value: pop3.majordomo.ru.
 - type: cname
-  domain: redmine.wugi.info
-  value: guix.duckdns.org.
-- type: cname
   domain: smtp.test.wugi.info
   value: smtp.majordomo.ru.
 - type: cname
