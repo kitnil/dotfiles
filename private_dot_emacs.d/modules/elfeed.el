@@ -116,7 +116,7 @@
     )
   (let ((map elfeed-show-mode-map))
     (define-key map (kbd "h") 'other-window))
-  (setq elfeed-search-title-max-width 120)
+  ;; (setq elfeed-search-title-max-width 120)
   (add-hook 'elfeed-show-mode-hook 'visual-line-mode)
 
   (setq elfeed-search-filter "@1-weeks-ago +unread")
