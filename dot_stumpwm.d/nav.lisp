@@ -265,3 +265,8 @@
   (term-shell-command
    (join (list "less"
                (concat (getenv "HOME") "/.local/share/chezmoi/dot_stumpwm.d/display-0.lisp")))))
+
+(defcommand delete-window! (&optional (window (current-window))) ()
+  (delete-window window)
+  (when (not (current-window))
+    (run-commands "fnext")))
