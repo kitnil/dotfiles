@@ -40,6 +40,15 @@ with `magit-show-commit' function in ~/src/guix directory.
        (interactive (list (read-string "Commit: " nil nil (word-at-point))))
        (let ((default-directory directory)
              (commit (funcall url->commit url)))
+         (when (eq (cdr (assoc 'major-mode
+                               (buffer-local-variables (current-buffer))))
+                   'elfeed-search-mode)
+           (let* ((entry (elfeed-search-selected t))
+                  (title (elfeed-entry-title entry)))
+             (elfeed-untag entry 'unread)
+             (elfeed-search-update-entry entry)
+             (unless (or elfeed-search-remain-on-entry (use-region-p))
+               (forward-line))))
          (condition-case user-error
              (magit-show-commit commit)
            (error (magit-status default-directory))))))
