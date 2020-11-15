@@ -39,9 +39,14 @@ for a colorful Guile experience.\n\n"))))
 (when (string-prefix? "guix" (last (string-split (getcwd) #\/)))
   (use-modules (guix)
                (guix build utils)
+               (guix store)
                (geiser xref)
 
                (system repl command)))
+(define c
+  (if (string-prefix? "guix" (last (string-split (getcwd) #\/)))
+      (open-connection)
+      #f))
 (when (string-prefix? "guix" (last (string-split (getcwd) #\/)))
   (define-meta-command ((xref guix) repl arg)
     "xref SYMBOL
