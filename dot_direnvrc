@@ -56,6 +56,15 @@ use_guix()
     packages=(help2man guile-sqlite3 guile-gcrypt)
     export ENV_PACKAGES="${packages[@]}"
 
+    GIT_SSL_CAINFO=/run/current-system/profile/etc/ssl/certs/ca-certificates.crt
+    export GIT_SSL_CAINFO
+    SSL_CERT_DIR=/etc/ssl/certs
+    export SSL_CERT_DIR
+    NIX_SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
+    export NIX_SSL_CERT_FILE
+    SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt
+    export SSL_CERT_FILE
+
     # https://lists.gnu.org/archive/html/guix-devel/2016-09/msg00859.html
     environment()
     {
