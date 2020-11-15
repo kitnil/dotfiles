@@ -14,7 +14,7 @@
 
 (defun browse-url-firefox* (url &key (new-window t) title (theme 'dark) ssb)
   (let ((command (join `(,@(if (equal theme 'dark) '("GTK_THEME=Adwaita:dark") '())
-                           "nixGLIntel" "firefox"
+                           "firefox"
                            ,@(if new-window '("--new-window") '())
                            ,@(if ssb '("--ssb") '())
                            ,url))))
@@ -27,7 +27,7 @@
     (if (and window (string= (window-res window)
                              "www.youtube.com__playlist"))
         (other-in-frame-or-fother)
-        (run-or-raise (concat "nixGLIntel chromium --app=https://www.youtube.com/playlist?list="
+        (run-or-raise (concat "chromium --app=https://www.youtube.com/playlist?list="
                               youtube-playlist-cool-music)
                       '(:instance "www.youtube.com")))))
 
@@ -132,7 +132,7 @@
 
 (defun firefox-command ()
   (join `(,@(if dark-theme '("GTK_THEME=Adwaita:dark") nil) ,*fontconfig-file*
-          "nixGLIntel" "firefox")))
+            "firefox")))
 
 (defun mjru-open-account (account)
   (run-shell-command (join (list *fontconfig-file* "hms" "web" "open" account)))

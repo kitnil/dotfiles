@@ -12,4 +12,4 @@
     (run-shell-command "xfce4-screenshooter"))
 
 (defcommand zoom () ()
-  (run-shell-command "nixGLIntel boomer"))
+  (run-shell-command "boomer"))
