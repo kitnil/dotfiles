@@ -64,6 +64,13 @@ use_guix()
     }
     export_function environment
 
+    repl()
+    {
+        set -x
+        ./pre-inst-env guix repl -L "$(./pre-inst-env guix build emacs-geiser)"/share/geiser/guile
+    }
+    export_function repl
+
     configure()
     {
         ./configure --localstatedir=/var --prefix=
