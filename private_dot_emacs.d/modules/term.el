@@ -1,4 +1,4 @@
-(setq terminal-here-scrollbar t)
+(setq terminal-here-scrollbar nil)
 (setq terminal-here-terminal-emulators (list "xterm"))
 (setq-default terminal-here-project-root-function #'projectile-project-root)
 (setq terminal-here-multiplexers '("tmux" "screen"))
