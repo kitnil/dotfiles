@@ -34,3 +34,7 @@ convenient interactive line editing and input history.\n\n")))
               (else
                (display "Consider installing the 'guile-colorized' package
 for a colorful Guile experience.\n\n"))))
+
+(use-modules (srfi srfi-1))
+(when (string-prefix? "guix" (last (string-split (getcwd) #\/)))
+  (use-modules (guix)))
