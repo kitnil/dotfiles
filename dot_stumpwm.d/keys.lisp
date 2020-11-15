@@ -66,7 +66,7 @@
   (define-key *top-map* (kbd "C-s-c") "org-agenda")
   (define-key *top-map* (kbd "s-x") "keybinding-s-x")
   (define-key *top-map* (kbd "s-X") "wi-project-ivy")
-  (define-key *top-map* (kbd "s-i") "quassel-monitor")
+  (define-key *top-map* (kbd "s-i") "elfeed")
   (mapcar #'(lambda (pair)
               (let ((command (concat "gmove-and-follow " (write-to-string (car pair))))
                     (key (concat "s-" (string (cdr pair)))))
