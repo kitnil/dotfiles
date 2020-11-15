@@ -46,4 +46,14 @@ for a colorful Guile experience.\n\n"))))
   (define-meta-command ((xref guix) repl arg)
     "xref SYMBOL
 Find symbol in GUILE_PATH"
-    (pk (symbol-location arg))))
+    (pk (symbol-location arg)))
+  (define-meta-command ((gnu guix) repl arg)
+    "gnu MODULE
+Invoke (use-modules (gnu packages MODULE))"
+    (cond ((false-if-exception (resolve-interface `(gnu packages ,arg)))
+           =>
+           (lambda (module)
+             ;; Enable completion and input history at the REPL.
+             (module-use! (current-module) module)))
+          (else
+           (display "Missing module.\n\n")))))
