@@ -30,20 +30,11 @@ use_guix()
 {
     GUIX_GITHUB_TOKEN="$(pass show github/tokens/GUIX_GITHUB_TOKEN)"
     export GUIX_GITHUB_TOKEN
+
     GUIX_PACKAGE_PATH=""
     export GUIX_PACKAGE_PATH
-    # GUILE_LOAD_PATH=$PWD:$GUILE_LOAD_PATH
-    # export GUILE_LOAD_PATH
-    # GUILE_LOAD_COMPILED_PATH=$PWD:$GUILE_LOAD_COMPILED_PATH
-    # export GUILE_LOAD_COMPILED_PATH
 
-    gcroot="${HOME}/.config/guix/gcroots/guix"
-    if [ -L "$gcroot" ]
-    then
-        rm -v "$gcroot"
-    fi
-
-    PACKAGES_MAINTENANCE=(
+    packages_maintenance=(
         direnv
         git
         git:send-email
@@ -60,10 +51,18 @@ use_guix()
         xdot
         which
     )
-    PACKAGES=(help2man guile-sqlite3 guile-gcrypt)
+    export ENV_PACKAGES_MAINTENANCE="${packages_maintenance[@]}"
+
+    packages=(help2man guile-sqlite3 guile-gcrypt)
+    export ENV_PACKAGES="${packages[@]}"
 
     # https://lists.gnu.org/archive/html/guix-devel/2016-09/msg00859.html
-    eval "$(guix environment --search-paths --root="$gcroot" --pure guix --ad-hoc ${PACKAGES[@]} ${PACKAGES_MAINTENANCE[@]} "$@")"
+    environment()
+    {
+        set -x
+        guix environment --pure guix --ad-hoc ${ENV_PACKAGES[@]} ${ENV_PACKAGES_MAINTENANCE[@]} "$@"
+    }
+    export_function environment
 
     configure()
     {
