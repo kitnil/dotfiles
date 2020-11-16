@@ -43,6 +43,7 @@ install:
 	install --mode=755 dotfiles/scripts/maintenance $(HOME)/bin
 	install --mode=755 dotfiles/scripts/rofi-mycli $(HOME)/bin
 	install --mode=755 dotfiles/scripts/sshrc $(HOME)/bin
+	sudo install -m644 dotfiles/guixsd/machines.scm /etc/guix
 	sudo install dotfiles/homer/config.yml /etc/homer
 	gpg --decrypt dotfiles/emacs/mjru-network.gpg > $(HOME)/.emacs.d/modules/mjru-network.el
 
