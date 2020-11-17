@@ -45,6 +45,7 @@
        emacs-eshell-bookmark
        ;; emacs-esup
        emacs-ewmctrl            ; Control X windows from Emacs
+       emacs-execline
        emacs-expand-region
        emacs-deadgrep           ; ripgrep front-end
        emacs-f3
