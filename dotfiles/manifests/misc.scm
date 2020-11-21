@@ -20,8 +20,6 @@
  ruby-gitlab
  dynamips ;gns3 requirement
  ungoogled-chromium
- ghc-pandoc  ; Convert Markdown
-
 
  chicken go m4 racket perl python python-hy r
 

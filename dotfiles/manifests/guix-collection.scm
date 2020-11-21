@@ -14,7 +14,7 @@ password-utils patchutils pdf perl perl-web php pretty-print pulseaudio pv
 python python-web python-xyz qt ratpoison rdesktop readline rsync rust-apps
 samba scheme screen shells shellutils sqlite ssh statistics suckless syncthing
 synergy terminals tex texinfo text-editors textutils tls tmux tor valgrind
-version-control video vim virtualization vnc vpn w3m web wget wm xdisorg xfce
+version-control video virtualization vnc vpn w3m web wget wm xdisorg xfce
 xml xorg)
 
 (define guix-collection-packages-multiout
@@ -54,7 +54,6 @@ xml xorg)
                ;; See <https://github.com/NixOS/nixpkgs/issues/16327#issuecomment-303068424>.
                at-spi2-core
                ghostscript/x gnuplot
-               ghc-pandoc  ; Convert Markdown
                ;; grip ; TODO: Fix conflicting entries for python-cryptography
 
                autojump
@@ -264,8 +263,6 @@ xml xorg)
 
                tigervnc-server
                tigervnc-client
-
-               vim
 
                xfce4-screenshooter
                xfce4-terminal
