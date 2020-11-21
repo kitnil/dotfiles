@@ -462,10 +462,21 @@ guix()
     guix_modules="$HOME/.local/share/chezmoi/dotfiles/guixsd/modules"
     case "$1" in
         manifest)
-            command guix package \
-                    -L "$HOME/.local/share/chezmoi/dotfiles/guixsd/modules" \
-                    --fallback \
-                    --manifest="$HOME/.local/share/chezmoi/dotfiles/manifests/$HOSTNAME.scm" "${@:2}"
+            case "$2" in
+                apply)
+                    command guix package \
+                            -L "$HOME/.local/share/chezmoi/dotfiles/guixsd/modules" \
+                            --fallback \
+                            --manifest="$HOME/.local/share/chezmoi/dotfiles/manifests/$HOSTNAME.scm" "${@:3}"
+                    ;;
+                build)
+                    command guix environment \
+                            -L "$HOME/.local/share/chezmoi/dotfiles/guixsd/modules" \
+                            --fallback \
+                            --manifest="$HOME/.local/share/chezmoi/dotfiles/manifests/$HOSTNAME.scm" "${@:3}" \
+                            -- sh -c 'exit 0'
+                    ;;
+            esac
             ;;
         menu)
             {
@@ -483,7 +494,8 @@ guix()
                     dialog --separate-output --title "Guix" --checklist "Guix Operations" 22 72 3 \
                            pull "Pull new changes" on \
                            "system build" "Build system" on \
-                           manifest "Apply manifest" on \
+                           "manifest build" "Build manifest" on \
+                           "manifest apply" "Apply manifest" on \
                            "system switch" "Reconfigure system" on \
                            "distribute" "Pull on remote hosts" on \
                            "system deploy" "Deploy to remote hosts" on \
