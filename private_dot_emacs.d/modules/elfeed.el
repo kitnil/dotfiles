@@ -63,6 +63,7 @@
         ("https://www.youtube.com/feeds/videos.xml?user=dubbeltumme" video)
         ("https://www.youtube.com/feeds/videos.xml?user=LDCNow" video)
         ("https://www.youtube.com/feeds/videos.xml?user=tuxreviews" video)
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UC_hvS-IJ_SY04Op14v3l4Lg" video) ;Мир IT с Антоном Павленко
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCgU5tUdVPpfM7sLAMWBTsDg" video) ;computeremotion.com
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UC2Ik2vXvwJWp0GLBn7oRIQQ" video hardware) ;SpecList
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UC-7I1gU1r6PxBSl87o-7YEQ" video hardware retro) ;Druaga1
