@@ -70,7 +70,7 @@
         ("https://toot.aquilenet.fr/@civodul.rss" mastodon) ;Ludovic Courtès
         ("https://functional.cafe/@ioa.rss" mastodon) ;ioanna
 
-        ("https://peertube.su/feeds/videos.atom?videoChannelId=5888" video) ;The GNU Guy
+        ("https://video.hardlimit.com/feeds/videos.xml?videoChannelId=39" video) ;The GNU Guy
         ))
 
 (defun elfeed-config ()
