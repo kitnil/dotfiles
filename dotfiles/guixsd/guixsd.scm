@@ -462,7 +462,7 @@ location / {
            "192.168.100.1 r1.tld"
            "192.168.100.12 r2.tld"
            "192.168.100.120 cuirass.tld"
-           "172.16.100.60 workstation.intr"
+           "172.16.100.60 ws1.wugi.info"
            "178.250.247.125 gitlab.mjtest jenkins.mjtest"
            "130.61.95.6 oracle"
            "172.16.100.65 zdetovetskiy.intr"

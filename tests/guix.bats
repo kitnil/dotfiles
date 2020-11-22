@@ -23,9 +23,9 @@
     [ "$status" -eq 0 ]
 }
 
-@test "build workstation-guixsd system" {
+@test "build ws1.wugi.info system" {
     run test-tmp/.guix-profile/bin/guix system build \
-            --load-path=dotfiles/guixsd/modules dotfiles/guixsd/workstation-guixsd.scm
+            --load-path=dotfiles/guixsd/modules dotfiles/guixsd/ws1.wugi.info.scm
     [ "$status" -eq 0 ]
 }
 
@@ -43,9 +43,9 @@
     [ "$status" -eq 0 ]
 }
 
-@test "build workstation-guixsd manifest" {
+@test "build ws1.wugi.info manifest" {
     run test-tmp/.guix-profile/bin/guix environment \
         --load-path=dotfiles/guixsd/modules \
-        --manifest=dotfiles/manifests/workstation-guixsd.scm -- sh -c exit
+        --manifest=dotfiles/manifests/ws1.wugi.info.scm -- sh -c exit
     [ "$status" -eq 0 ]
 }

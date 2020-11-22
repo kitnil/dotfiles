@@ -14,7 +14,7 @@
              (services openvpn))
 
 (operating-system
-  (host-name "guix.vm.wugi.info")
+  (host-name "vm1.wugi.info")
   (timezone "Europe/Moscow")
   (locale "en_US.utf8")
 

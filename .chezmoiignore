@@ -28,6 +28,6 @@ todo.org
 .netrc
 .pythonrc
 {{- end }}
-{{- if ne .chezmoi.hostname "workstation-guixsd" }}
+{{- if ne .chezmoi.hostname "ws1.wugi.info" }}
 .alerta.conf
 {{- end }}

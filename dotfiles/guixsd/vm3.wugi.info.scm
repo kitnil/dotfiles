@@ -8,7 +8,7 @@
 (use-modules (config))
 
 (operating-system
-  (host-name "vm32653")
+  (host-name "vm3.wugi.info")
   (timezone "Europe/Moscow")
   (locale "en_US.utf8")
 

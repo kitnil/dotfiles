@@ -30,7 +30,7 @@ Section \"Monitor\"
 EndSection")
 
 (operating-system
-  (host-name "workstation-guixsd")
+  (host-name "ws1.wugi.info")
   (timezone "Europe/Moscow")
   (locale "en_US.utf8")
 
