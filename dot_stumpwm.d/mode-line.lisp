@@ -188,11 +188,20 @@
                           (sleep (* (* 60 60) 6)))))
                  :name "covid-19"))))
 
+(defcommand mode-line-start-programs () ()
+  (flet ((all-start-programs ()
+           (filter (lambda (str)
+                     (uiop/utility:string-suffix-p str "-start-programs"))
+                   (all-commands))))
+    (run-commands (first (filter (lambda (str)
+                                   (string-contains (write-to-string (group-number (current-group))) str))
+                                 (all-start-programs))))))
+
 ;; See events.lisp in StumpWM source.
 (setq *mode-line-click-hook*
       (list (lambda (mode-line button x y)
               (case button
-                ((1) (fclear))
+                ((1) (mode-line-start-programs))
                 ((2) (volume-toggle))
                 ((3) (run-shell-command "xmenu.sh"))
                 ((4) (gprev))
