@@ -1,9 +1,26 @@
 #!/usr/bin/env bash
 
-set -x
+report()
+{
+    if [ $? -eq 0 ]
+    then
+        printf "\033[32mremote '$1' succeeded\033[0m\n"
+    else
+        printf "\033[32mremote '$1' failed\033[0m\n"
+    fi
+}
 
 git push origin
+report origin
+
 sshpass -Ppassphrase -p"$(pass show gitlab.com/id_rsa_gitlab)" git push gitlab
+report gitlab
+
 sshpass -Ppassphrase -p"$(pass show github/ssh/id_rsa_github)" git push github
+report github
+
 sshpass -Ppassphrase -p"$(pass show majordomo/private/gitlab.intr/ssh/id_rsa_gitlab_intr)" git push majordomo
+report majordomo
+
 sshpass -Ppassphrase -p"$(pass show notabug.org/id_rsa_notabug)" git push notabug
+report notabug
