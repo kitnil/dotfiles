@@ -492,13 +492,13 @@ guix()
                 exec 3>&1
                 mapfile -t selection < <(
                     dialog --separate-output --title "Guix" --checklist "Guix Operations" 22 72 3 \
-                           pull "Pull new changes" on \
-                           "system build" "Build system" on \
-                           "manifest build" "Build manifest" on \
-                           "manifest apply" "Apply manifest" on \
-                           "system switch" "Reconfigure system" on \
-                           "distribute" "Pull on remote hosts" on \
-                           "system deploy" "Deploy to remote hosts" on \
+                           pull "Pull new changes" "${STATE:-on}" \
+                           "system build" "Build system" "${STATE:-on}" \
+                           "manifest build" "Build manifest" "${STATE:-on}" \
+                           "manifest apply" "Apply manifest" "${STATE:-on}" \
+                           "system switch" "Reconfigure system" "${STATE:-on}" \
+                           "distribute" "Pull on remote hosts" "${STATE:-on}" \
+                           "system deploy" "Deploy to remote hosts" "${STATE:-on}" \
                            2>&1 2>&1 1>&3
                 )
                 declare -p selection
