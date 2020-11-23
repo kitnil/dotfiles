@@ -1,7 +1,11 @@
 - hosts: remote
   tasks:
-    - name: Bootstrap a host without python2 installed
-      raw: '[[ -e ~/.guix-profile/bin/python3 ]] || guix install python'
+    - name: Bootstrap a host without python or git installed
+      raw: '([[ -e ~/.guix-profile/bin/python3 ]] && [[ -e ~/.guix-profile/bin/git ]]) || guix install python git'
+    - git:
+        repo: "https://github.com/kitnil/dotfiles"
+        dest: "/home/oleg/.local/share/chezmoi"
+        update: no
     - uri:
         url: "http://guix.wugi.info/guix/describe?channel=guix"
         return_content: yes
@@ -9,6 +13,7 @@
     - debug: msg={{channel.json.commit}}
     - guix:
         commit: '{{channel.json.commit}}'
+        channels: /home/oleg/.local/share/chezmoi/dotfiles/channels.scm
 
 - hosts: remote
   become: yes
@@ -21,3 +26,4 @@
     - debug: msg={{channel.json.commit}}
     - guix:
         commit: '{{channel.json.commit}}'
+        channels: /home/oleg/.local/share/chezmoi/dotfiles/channels.scm

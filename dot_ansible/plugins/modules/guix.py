@@ -5,17 +5,24 @@ from ansible.module_utils.basic import AnsibleModule
 def main():
     module = AnsibleModule(
         argument_spec=dict(
-            commit=dict(type="str", required=True)
+            commit=dict(type="str", required=True),
+            channels=dict(type="str", required=True)
         )
     )
-    channels_before = module.run_command("guix describe --format=json")
-    pull_result = module.run_command("guix pull --channels=/home/oleg/.local/share/chezmoi/dotfiles/channels.scm --commit={}".format(module.params["commit"]))
-    channels_after = module.run_command("guix describe --format=json")
+    def describe():
+        result = module.run_command("guix describe --format=json")
+        try:
+            return json.loads(result[1])
+        except json.JSONDecodeError:
+            return result[1]
+    before = describe()
+    result = module.run_command(f"guix pull --channels={module.params['channels']} --commit={module.params['commit']}")
+    after = describe()
     result = {
-        "msg": {"before": json.loads(channels_before[1]), "after": json.loads(channels_after[1])},
-        "rc:": pull_result if pull_result[0] != 0 else channels_after[0],
-        "failed": pull_result[0] != 0,
-        "changed": channels_before[1] != channels_after[1],
+        "msg": {"before": before, "after": after},
+        "rc:": result if result[0] != 0 else after,
+        "failed": result[0] != 0,
+        "changed": before != after,
     }
     module.exit_json(**result)
 
