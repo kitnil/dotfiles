@@ -1,5 +1,7 @@
 - hosts: remote
   tasks:
+    - name: Bootstrap a host without python2 installed
+      raw: '[[ -e ~/.guix-profile/bin/python3 ]] || guix install python'
     - uri:
         url: "http://guix.wugi.info/guix/describe?channel=guix"
         return_content: yes
