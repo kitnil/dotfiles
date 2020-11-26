@@ -501,6 +501,7 @@
 
 (define-abbrev-table 'text-mode-abbrev-table
   '(
+    ("rif" "remove in favor" nil 0)
     ("аа" "IP адрес" nil 4)
     ("бд" "база данных" nil 0)
     ("бзпи" "благодарим Вас за предоставленную информацию" nil 1)
