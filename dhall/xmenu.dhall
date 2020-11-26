@@ -127,6 +127,7 @@ in  ''
 			${hms-account { server = "web29", name = "AC_224079", tarif = "Безлимитный" }}
 			${hms-account { server = "web30", name = "AC_226391", tarif = "Безлимитный" }}
 			${hms-account { server = "web30", name = "AC_220670", tarif = "Безлимитный+" }}
+			${hms-account { server = "web32", name = "AC_227596", tarif = "Безлимитный" }}
 			${hms-account { server = "web33", name = "AC_208112", tarif = "Безлимитный" }}
 			${hms-account { server = "web37", name = "AC_213062", tarif = "Безлимитный" }}
 			${hms-account { server = "web15", name = "AC_222228", tarif = "Корпоративный" }}
