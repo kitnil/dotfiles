@@ -36,6 +36,7 @@ in  ''
 		Emacs (Emacs Daemon)	run-emacs
 		IMG:${guix-profile}/share/icons/hicolor/24x24/apps/leafpad.png	Editor (leafpad)	leafpad
 		IMG:${guix-profile}/share/icons/hicolor/24x24/apps/gimp.png	Image editor (Gimp)	gimp
+		IPMIView	ipmiview
 		IMG:${nix-profile}/share/icons/robomongo.png	Mongo	robo3t
 		IMG:${guix-profile}/share/icons/gnome/24x24/devices/video-display.png	OBS	env DRI_PRIME=1 LIBVA_DRIVER_NAME=radeonsi obs
 		IMG:${nix-profile}/share/icons/hicolor/32x32/apps/quassel.png	Quassel	"echo '(quassel)' | stumpish -e eval"
