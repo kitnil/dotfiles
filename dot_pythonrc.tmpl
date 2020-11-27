@@ -27,18 +27,22 @@ web_create_service_socket = lambda service_socket_name, ip_address, server, port
 server_id = lambda service_name, server: service.find_one({"name": service_name + "@" + server})['serverId']
 web_find_service = lambda service_name, server: [service for service in service.find({"name": service_name + "@" + server})]
 web_service_id = lambda service_name, server: str(web_find_service(service_name, server)[0]["_id"])
-web_create_service = lambda service_name, service_template_id, template_id, server, server_id, socket, service_socket_id: web_find_service(service_name, server) and web_service_id(service_name, server) or service.insert_one({"serverId": server_id, "serviceTemplateId": service_template_id, "templateId": template_id, "socketIds": [socket], "serviceSocketIds": [service_socket_id], "instanceProps": {}, "name": service_name + "@" + server, "switchedOn": True, "_class": "ru.majordomo.hms.rc.staff.resources.Service"}) and web_service_id(service_name, server)
+web_create_service = lambda service_name, template_id, server, server_id, socket: web_find_service(service_name, server) and web_service_id(service_name, server) or service.insert_one({"serverId": server_id, "templateId": template_id, "socketIds": [socket], "instanceProps": {"security_level": "default"}, "name": service_name + "@" + server, "switchedOn": True, "_class": "ru.majordomo.hms.rc.staff.resources.Service"}) and web_service_id(service_name, server)
 
 web_create_ssh_service = lambda server, ip_address: web_create_service("ssh-guest-room", "5d6693a6f7619300012fbbd5", "5d8a2a2e708301660013776d", server, server_id('nginx', server), web_create_socket("ssh-guest-room-ssh", ip_address, "ssh", server, "1022"), web_create_service_socket("ssh-guest-room-ssh", ip_address, server, "1022"))
 
-web_create_php_service = lambda server, socket, security: web_create_service(server, web_create_socket(server, socket, security), web_create_service_socket(server, socket, security), security)
+# web_create_php_service = lambda server, socket, security: web_create_service(server, web_create_socket(server, socket, security), web_create_service_socket(server, socket, security), security)
+
+def web_create_php_service(server, ip_address, version, port):
+    service = "apache2-php" + version + "-default"
+    web_create_service(
+        service,
+        "5fbfd09871ca57000151e0c4", # php70 template_id
+        server,
+        server_id("nginx", server),
+        web_create_socket(service + "-http", ip_address, "http", server, port),
+    )
 
 web_create_php_services = lambda server: list(map (lambda manifest: web_create_php_service(manifest[0], manifest[1], manifest[2]), [[server, 8074, "default"], [server, 8274, "hardened"], [server, 8374, "hardened_nochmod"], [server, 8174, "unsafe"]]))
 
-hms_task_delete = lambda account_id: myclient["personmgr"]["processingBusinessOperation"].update_many({"personalAccountId":str(account_id), "state":"PROCESSING"}, {"$set": {"state":"ERROR"}})
-
-list_servers = lambda: list(map(lambda server: server['_id'], filter(lambda server: isinstance(server['_id'], str) and "web" in server['_id'], (myclient["staffResourceController"]["server"]).find({}))))
-
-list_ssh_guest_room = lambda: list(map(lambda server: "web24" not in server['name'] and print("{} {}".format(server['name'], web_service_id("ssh-guest-room", server['name']))), filter(lambda server: isinstance(server['_id'], str) and "web" in server['_id'] and "web" in server['name'], (myclient["staffResourceController"]["server"]).find({}))))
-
-list_cron = lambda: list(map(lambda server: "web24" not in server['name'] and print("{} {}".format(server['name'], web_service_id("cron", server['name']))), filter(lambda server: isinstance(server['_id'], str) and "web" in server['_id'] and "web" in server['name'], (myclient["staffResourceController"]["server"]).find({}))))
+hms_task_delete = lambda account_id: myclient["personmgr"]["processingBusinessOperation"].update_many({"personalAccountId":account_id, "state":"PROCESSING"}, {"$set": {"state":"PROCESSED"}})
