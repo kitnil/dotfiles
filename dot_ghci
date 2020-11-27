@@ -1,0 +1,2 @@
+:set +t
+exampleLambda = (\x -> putStrLn "Lambda example: (\\ x -> x) 5") ""
