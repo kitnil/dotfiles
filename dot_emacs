@@ -86,7 +86,8 @@
   (load-config-file "majordomo.el")
   (load-config-file "blog.el")
   (load-config-file "po.el")
-  (load-config-file "python.el"))
+  (load-config-file "python.el")
+  (load-config-file "java.el"))
 
 ;; (load-config-file "twitch.el")
 ;; (load-config-file "youtube.el")
