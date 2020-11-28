@@ -1,3 +1,14 @@
+;; https://github.com/syl20bnr/spacemacs/issues/6181
+;; Avoid 2 second delay in emacsclient startup with Emacs 24.3.50+ and GNU screen 
+;;
+;; (eval-after-load "xterm" ;; term/xterm.el does not provide 'xterm
+;;   '(defadvice xterm--query (around tweak-for-gnu-screen (query handlers) activate)
+;;      ;; GNU screen does not support this sequence
+;;      (unless (string= query "\e]11;?\e\\")
+;;        ad-do-it)))
+;;
+(setq-default xterm-query-timeout nil)
+
 (setq terminal-here-scrollbar nil)
 (setq terminal-here-terminal-emulators (list "xterm"))
 (setq-default terminal-here-project-root-function #'projectile-project-root)
