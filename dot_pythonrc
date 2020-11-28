@@ -1,13 +1,14 @@
-import json
-import os
 from pprint import pprint as pp
 import ipaddress
-import pymongo
+import json
+import os
 
 class MongoHms:
     """Connect to Mongo database and provide methods to control HMS."""
+    import pymongo
+
     def __init__(self):
-        self.myclient = pymongo.MongoClient(
+        self.myclient = self.pymongo.MongoClient(
             "mongodb://"
             + "admin"
             + ":" + os.getenv("HMS_MONGO_PASSWORD")
