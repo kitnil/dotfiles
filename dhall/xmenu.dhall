@@ -26,41 +26,39 @@ in  ''
 
 	cat <<EOF | xmenu | sh &
 	Applications
+		Audio
+			Pavucontrol	sh -c "echo '(pavucontrol)' | stumpish -e eval"
 		Browsers
 			IMG:${nix-profile}/share/icons/hicolor/32x32/apps/firefox.png	Firefox	firefox -P default
 			IMG:${nix-profile}/share/icons/hicolor/24x24/apps/chromium.png	Chromium	echo '(chromium)' | stumpish -e eval
 			IMG:${nix-profile}/share/icons/hicolor/32x32/apps/firefox.png	Firefox (ESR-52)	firefox-esr-52 -P esr52 --new-instance
+		Databases
+			IMG:${nix-profile}/share/icons/robomongo.png	Mongo	robo3t
 		Mail
 			IMG:${guix-profile}/share/icons/gnome/24x24/emblems/emblem-mail.png	View	echo '(gnus-new-window)' | stumpish -e eval
 			IMG:${guix-profile}/share/icons/gnome/24x24/actions/mail-send-receive.png	Pull	echo '(notmuch)' | stumpish -e eval
-		Emacs (Emacs Daemon)	run-emacs
+		Editor
+			Emacs (Emacs Daemon)	run-emacs
+			IMG:${guix-profile}/share/icons/hicolor/24x24/apps/leafpad.png	Leafpad	leafpad
 		Guix
 			Update	xterm +sb -bg black -fg white -e 'bash -ic "guix menu"; read -p "Press any key to close."'
-		IMG:${guix-profile}/share/icons/hicolor/24x24/apps/leafpad.png	Editor (leafpad)	leafpad
-		IMG:${guix-profile}/share/icons/hicolor/24x24/apps/gimp.png	Image editor (Gimp)	gimp
-		IPMIView	ipmiview
-		IMG:${nix-profile}/share/icons/robomongo.png	Mongo	robo3t
-		IMG:${guix-profile}/share/icons/gnome/24x24/devices/video-display.png	OBS	env DRI_PRIME=1 LIBVA_DRIVER_NAME=radeonsi obs
-		IMG:${nix-profile}/share/icons/hicolor/32x32/apps/quassel.png	Quassel	"echo '(quassel)' | stumpish -e eval"
 		Games
 			Tales of Maj'Eyal	env DRI_PRIME=1 tome4
-		Pavucontrol	sh -c "echo '(pavucontrol)' | stumpish -e eval"
-		Mypaint	env PYTHONPATH= mypaint
-		Screenshot	xfce4-screenshooter
-		Zoom screen	echo '(zoom)' | stumpish -e eval
-
-	Documention
-		Arch Wiki	firefox file:///home/oleg/.local/share/arch-wiki/html
-		Zeal	echo '(zeal)' | stumpish -e eval
-		Books
-			Linux System Programming	zathura /home/oleg/Downloads/beginning-linux-programming/beginning-linux-programming.pdf
-
-	Projects
-	${project { name = "Backup", session = "backup" }}
-	${project { name = "Blog", session = "blog" }}
-	${project { name = "Dotfiles", session = "dotfiles" }}
-	${project { name = "Guix", session = "guix" }}
-	${project { name = "NixOps", session = "nixops" }}
+		Images
+			Mypaint	env PYTHONPATH= mypaint
+			IMG:${guix-profile}/share/icons/hicolor/24x24/apps/gimp.png	Gimp	gimp
+		IMG:${nix-profile}/share/icons/hicolor/32x32/apps/quassel.png	Quassel	"echo '(quassel)' | stumpish -e eval"
+		IMG:${guix-profile}/share/icons/gnome/24x24/devices/video-display.png	OBS	env DRI_PRIME=1 LIBVA_DRIVER_NAME=radeonsi obs
+		Screen
+			Screenshot	xfce4-screenshooter
+			Zoom screen	echo '(zoom)' | stumpish -e eval
+		Terminal
+			XTerm	xterm -sl 4096 +sb -bg black -fg white
+			st	st -f Monospace:size=12
+			Kitty	kitty
+			XFCE	xfce4-terminal
+			Termonad	termonad
+			QTerminal	echo '(qterminal)' | stumpish -e eval
 
 	Services
 		${service { name = "Espanso", start = "espanso start", stop = "espanso stop" }}
@@ -69,6 +67,19 @@ in  ''
 		${service { name = "vnc-5901", start = "vnc server 5901", stop = "vnc-server -kill :5901" }}
 		${service { name = "vnc-5902", start = "vnc server 5902", stop = "vnc-server -kill :5902" }}
 		${service { name = "vnc-5903", start = "vnc server 5903", stop = "vnc-server -kill :5903" }}
+
+	Projects
+	${project { name = "Backup", session = "backup" }}
+	${project { name = "Blog", session = "blog" }}
+	${project { name = "Dotfiles", session = "dotfiles" }}
+	${project { name = "Guix", session = "guix" }}
+	${project { name = "NixOps", session = "nixops" }}
+
+	Documention
+		Arch Wiki	firefox file:///home/oleg/.local/share/arch-wiki/html
+		Zeal	echo '(zeal)' | stumpish -e eval
+		Books
+			Linux System Programming	zathura /home/oleg/Downloads/beginning-linux-programming/beginning-linux-programming.pdf
 
 	Container
 	${container
@@ -91,14 +102,6 @@ in  ''
 		IMG:${guix-profile}/share/icons/hicolor/24x24/apps/qemu.png	Ubuntu 20.04	ubuntu
 		IMG:${guix-profile}/share/icons/hicolor/24x24/apps/qemu.png	Windows 10 (disk)	sudo qemu-windows10
 
-	Terminal
-		XTerm	xterm -sl 4096 +sb -bg black -fg white
-		st	st -f Monospace:size=12
-		Kitty	kitty
-		XFCE	xfce4-terminal
-		Termonad	termonad
-		QTerminal	echo '(qterminal)' | stumpish -e eval
-
 	Wallpaper
 		StumpWM Refcard	echo '(refcard-stumpwm)' | stumpish -e eval
 		Planet	echo '(xplanet-file)' | stumpish -e eval
@@ -106,6 +109,7 @@ in  ''
 		Paperview	paperview
 
 	Work
+		IPMIView	ipmiview
 		Sampler	echo '(sampler)' | stumpish -e eval
 		Shared
 			${hms-account { server = "web15", name = "AC_222914", tarif = "Хостинг приложений" }}
