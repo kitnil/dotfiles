@@ -616,7 +616,16 @@ guix()
         xpanes)
             xpanes -c 'ssh {}' vm1.wugi.info workstation.intr localhost
             ;;
-            *)
+        depends)
+            for package in $(guix package --list-installed | cut --fields=1)
+            do
+                if guix graph "$package" | grep --quiet "$2"
+                then
+                    echo "$package"
+                fi
+            done
+            ;;
+        *)
             command guix "$@"
             ;;
     esac
