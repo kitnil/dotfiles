@@ -1412,7 +1412,7 @@ digga()
 	dig +nocmd "$1" any +multiline +noall +answer
 }
 
-alias ff="feh --borderless --image-bg black --auto-zoom --draw-filename"
+alias feh-bg="feh --borderless --image-bg black --auto-zoom --draw-filename"
 
 lsp-mode()
 {

@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+# ff MATCH_STRING DIRECTORY
+
+EDITOR="${EDITOR:-nano}"
+
+if [ -z "$1" ]
+then
+    echo "No pattern provided."
+    exit 1
+fi
+
+# "find" and "grep" command example provided by GNU Emacs 27.1
+mapfile -t output < <(find "${2:-.}" -type d \( -path \*/SCCS -o -path \*/RCS -o -path \*/CVS -o -path \*/MCVS -o -path \*/.src -o -path \*/.svn -o -path \*/.git -o -path \*/.hg -o -path \*/.bzr -o -path \*/_MTN -o -path \*/_darcs -o -path \*/\{arch\} \) -prune -o \! -type d \( -name .\#\* -o -name \*.o -o -name \*\~ -o -name \*.bin -o -name \*.lbin -o -name \*.so -o -name \*.a -o -name \*.ln -o -name \*.blg -o -name \*.bbl -o -name \*.elc -o -name \*.lof -o -name \*.glo -o -name \*.idx -o -name \*.lot -o -name \*.fmt -o -name \*.tfm -o -name \*.class -o -name \*.fas -o -name \*.lib -o -name \*.mem -o -name \*.x86f -o -name \*.sparcf -o -name \*.dfsl -o -name \*.pfsl -o -name \*.d64fsl -o -name \*.p64fsl -o -name \*.lx64fsl -o -name \*.lx32fsl -o -name \*.dx64fsl -o -name \*.dx32fsl -o -name \*.fx64fsl -o -name \*.fx32fsl -o -name \*.sx64fsl -o -name \*.sx32fsl -o -name \*.wx64fsl -o -name \*.wx32fsl -o -name \*.fasl -o -name \*.ufsl -o -name \*.fsl -o -name \*.dxl -o -name \*.lo -o -name \*.la -o -name \*.gmo -o -name \*.mo -o -name \*.toc -o -name \*.aux -o -name \*.cp -o -name \*.fn -o -name \*.ky -o -name \*.pg -o -name \*.tp -o -name \*.vr -o -name \*.cps -o -name \*.fns -o -name \*.kys -o -name \*.pgs -o -name \*.tps -o -name \*.vrs -o -name \*.pyc -o -name \*.pyo \) -prune -o  -type f \( -name \* \) -exec grep --color -i -nH -e "$1" "${@:2}" \{\} +)
+
+case ${#output[@]} in
+    0)
+        echo "No matches."
+        exit 1
+        ;;
+    1)
+        filename="$(echo "${output[0]}" | cut -d: -f 1)"
+        line="$(echo "${output[0]}" | cut -d: -f 2)"
+        $EDITOR +"$line" "$filename"
+        ;;
+    *)
+        match="$(printf "%s\n" "${output[@]}" | fzf --tac --no-sort)"
+        filename="$(echo "$match" | cut -d: -f 1)"
+        line="$(echo "$match" | cut -d: -f 2)"
+        $EDITOR +"$line" "$filename"
+        ;;
+esac
