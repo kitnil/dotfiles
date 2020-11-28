@@ -483,6 +483,28 @@ guix()
                     ;;
             esac
             ;;
+        maintainer)
+            mapfile -t output < <(git log --grep="gnu: Add" --format=%s --author=go.wigust@gmail.com)
+            for line in "${output[@]}"
+            do
+                package="${line/gnu: Add /}"
+                package="${package::-1}"
+                case "$package" in
+                    *Revert*|*service*|premake4|perl-strictures-2|perl-role-tiny-2|emacs-cl-generic|emacs-seq|emacs-emms-player-simple-mpv|php-with-bcmath|shlomif-cmake-modules|go-github-com-muesli-reflow|go-github-com-emirpasic-gods-trees-binaryheap|nginx-socket-cloexec)
+                        printf ""
+                        ;;
+                    *go-github-com*)
+                        printf ""
+                        ;;
+                    *zabbix-agentd*)
+                        printf "zabbix-agentd\nzabbix-server\n"
+                        ;;
+                    *)
+                        echo "$package"
+                        ;;
+                esac
+            done
+            ;;
         menu)
             {
                 exec 3>&1
