@@ -92,13 +92,6 @@ in  ''
 		IMG:${guix-profile}/share/icons/hicolor/24x24/apps/qemu.png	Ubuntu 20.04	ubuntu
 		IMG:${guix-profile}/share/icons/hicolor/24x24/apps/qemu.png	Windows 10 (disk)	sudo qemu-windows10
 
-	StumpWM
-		Split
-			Horizontally	echo '(hsplit)' | stumpish -e eval
-			Vertically	echo '(vsplit)' | stumpish -e eval
-		Window
-			Delete	echo '(delete-window)' | stumpish -e eval
-
 	Terminal
 		XTerm	xterm -sl 4096 +sb -bg black -fg white
 		st	st -f Monospace:size=12
