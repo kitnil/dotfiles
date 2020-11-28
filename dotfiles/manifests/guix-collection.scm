@@ -256,7 +256,7 @@ xml xorg)
                openvpn
                mosh
                ponymix
-               procmail
+               ;; procmail ; fails because of gnutls-dane
                pv
                pwgen
                syncthing
