@@ -41,7 +41,7 @@ in  ''
 			Emacs (Emacs Daemon)	run-emacs
 			IMG:${guix-profile}/share/icons/hicolor/24x24/apps/leafpad.png	Leafpad	leafpad
 		Guix
-			Update	xterm +sb -bg black -fg white -e 'bash -ic "guix menu"; read -p "Press any key to close."'
+			Update	st -f Monospace:size=12 bash -ic 'guix menu; dialog --yesno "Press any key to close." 0 0'
 		Games
 			Tales of Maj'Eyal	env DRI_PRIME=1 tome4
 		Images
