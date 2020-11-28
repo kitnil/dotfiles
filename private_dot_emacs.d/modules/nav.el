@@ -132,3 +132,8 @@
      (string-trim
       (shell-command-to-string
        (format "readlink -f %s" file-name))))))
+
+(add-hook 'find-file-hook
+          '(lambda ()
+             (when (string-match (rx (and any ".guix-profile")) (buffer-file-name))
+               (wi-find-file-readlink))))
