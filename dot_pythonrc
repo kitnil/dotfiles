@@ -39,11 +39,11 @@ class MongoHms:
         """Create socket with specified SOCKET_NAME, IP_ADDRESS, PROTOCOL on SERVER PORT."""
         if not web_find_socket(socket_name, server):
             self.socket.insert_one({"protocol": protocol,
-                               "address": ip_address_to_int(ip_address),
-                               "port": port,
-                               "name": socket_name + "@" + server,
-                               "switchedOn": True,
-                               "_class" : "NetworkSocket"}).inserted_id
+                                    "address": ip_address_to_int(ip_address),
+                                    "port": port,
+                                    "name": socket_name + "@" + server,
+                                    "switchedOn": True,
+                                    "_class" : "NetworkSocket"}).inserted_id
         return web_socket_id(socket_name, server)
 
     def web_service_name_to_server_id(self, service_name, server):
