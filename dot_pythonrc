@@ -1,0 +1,107 @@
+import json
+import os
+from pprint import pprint as pp
+import ipaddress
+import pymongo
+
+class MongoHms:
+    def __init__(self):
+        self.myclient = pymongo.MongoClient(
+            "mongodb://"
+            + "admin"
+            + ":" + os.getenv("HMS_MONGO_PASSWORD")
+            + "@" + ",".join(["hms01-mr.intr:27017",
+                              "hms02-mr.intr:27017",
+                              "hms03-mr.intr:27017"])
+            + "/admin?replicaSet=hms-rs0"
+        )
+        self.service = self.myclient["staffResourceController"]["service"]
+        self.socket = self.myclient["staffResourceController"]["socket"]
+        self.service_socket = self.myclient["staffResourceController"]["serviceSocket"]
+
+    def ip_address_to_int(self, ip_address):
+        return int(ipaddress.ip_address(ip_address))
+
+    def web_find_socket(self, socket_name, server):
+        return [socket for socket in self.socket.find({"name": socket_name + "@" + server})]
+
+    def web_socket_id(self, socket_name, server):
+        return str(web_find_socket(socket_name, server)[0]["_id"])
+
+    def web_create_socket(self, socket_name, ip_address, protocol, server, port):
+        if not web_find_socket(socket_name, server):
+            self.socket.insert_one({"protocol": protocol,
+                               "address": ip_address_to_int(ip_address),
+                               "port": port,
+                               "name": socket_name + "@" + server,
+                               "switchedOn": True,
+                               "_class" : "NetworkSocket"}).inserted_id
+        return web_socket_id(socket_name, server)
+
+    def web_find_service_socket(self, service_socket_name, server):
+        return [service_socket for service_socket in self.service_socket.find({"name": service_socket_name + "@" + server})]
+
+    def web_service_socket_id(self, service_socket_name, server):
+        return str(web_find_service_socket(service_socket_name, server)[0]["_id"])
+
+    def web_create_service_socket(self, service_socket_name, ip_address, server, port):
+        if not web_find_service_socket(service_socket_name, server):
+            self.service_socket.insert_one({
+                "address": ip_address_to_int(ip_address),
+                "port": port,
+                "name": service_socket_name + "@" + server,
+                "switchedOn": True,
+                "_class" : "ru.majordomo.hms.rc.staff.resources.ServiceSocket"
+            }).inserted_id
+        return web_service_socket_id(service_socket_name, server)
+
+    def service_name_to_server_id(self, service_name, server):
+        return self.service.find_one({"name": service_name + "@" + server})['serverId']
+
+    def web_find_service(self, service_name, server):
+        return [service for service in self.service.find({"name": service_name + "@" + server})]
+
+    def web_service_id(self, service_name, server):
+        return str(web_find_service(service_name, server)[0]["_id"])
+
+    def web_create_service(self, service_name, template_id, server, server_id, socket):
+        if not web_find_service(service_name, server):
+            self.service.insert_one({
+                "serverId": server_id,
+                "templateId": template_id,
+                "socketIds": [socket],
+                "instanceProps": {
+                    "security_level": "default"
+                },
+                "name": service_name + "@" + server,
+                "switchedOn": True,
+                "_class": "ru.majordomo.hms.rc.staff.resources.Service"
+        })
+        return web_service_id(service_name, server)
+
+    def web_create_ssh_service(self, server, ip_address):
+        return web_create_service(
+            "ssh-guest-room",
+            "5d6693a6f7619300012fbbd5",
+            "5d8a2a2e708301660013776d",
+            server,
+            service_name_to_server_id('nginx', server),
+            web_create_socket("ssh-guest-room-ssh", ip_address, "ssh", server, "1022"),
+            web_create_service_socket("ssh-guest-room-ssh", ip_address, server, "1022")
+        )
+
+    def web_create_php_service(self, server, ip_address, version, port):
+        service = "apache2-php" + version + "-default"
+        return web_create_service(
+            service,
+            "5fbfd09871ca57000151e0c4", # php80 template_id
+            server,
+            service_name_to_server_id("nginx", server),
+            web_create_socket(service + "-http", ip_address, "http", server, port),
+        )
+
+    def task_delete(self, account_id):
+        return myclient["personmgr"]["processingBusinessOperation"].update_many({
+            "personalAccountId":account_id,
+            "state":"PROCESSING"
+        }, {"$set": {"state":"PROCESSED"}})
