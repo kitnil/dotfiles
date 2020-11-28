@@ -34,6 +34,8 @@ in  ''
 			IMG:${guix-profile}/share/icons/gnome/24x24/emblems/emblem-mail.png	View	echo '(gnus-new-window)' | stumpish -e eval
 			IMG:${guix-profile}/share/icons/gnome/24x24/actions/mail-send-receive.png	Pull	echo '(notmuch)' | stumpish -e eval
 		Emacs (Emacs Daemon)	run-emacs
+		Guix
+			Update	xterm +sb -bg black -fg white -e 'bash -ic "guix menu"; read -p "Press any key to close."'
 		IMG:${guix-profile}/share/icons/hicolor/24x24/apps/leafpad.png	Editor (leafpad)	leafpad
 		IMG:${guix-profile}/share/icons/hicolor/24x24/apps/gimp.png	Image editor (Gimp)	gimp
 		IPMIView	ipmiview
@@ -67,9 +69,6 @@ in  ''
 		${service { name = "vnc-5901", start = "vnc server 5901", stop = "vnc-server -kill :5901" }}
 		${service { name = "vnc-5902", start = "vnc server 5902", stop = "vnc-server -kill :5902" }}
 		${service { name = "vnc-5903", start = "vnc server 5903", stop = "vnc-server -kill :5903" }}
-
-	Guix
-		Update	xterm +sb -bg black -fg white -e 'bash -ic "guix menu"; read -p "Press any key to close."'
 
 	Container
 	${container
