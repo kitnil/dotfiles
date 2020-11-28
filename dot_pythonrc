@@ -1,3 +1,5 @@
+# -*- mode: Python;-*-
+
 from pprint import pprint as pp
 import ipaddress
 import json
