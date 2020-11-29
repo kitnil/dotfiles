@@ -1,9 +1,12 @@
 #!/usr/bin/env bash
 
-if [[ $(git diff guix/upstream.scm) == "" ]]
-then
-    printf '\033[32mPatching "guix/upstream.scm" file.\033[0m\n'
-    patch --strip=1 <<'EOF'
+trap "git restore guix/upstream.scm" EXIT
+
+patch_guix_upstream()
+{
+    if [[ $(git diff guix/upstream.scm) == "" ]]
+    then
+        patch --strip=1 <<'EOF'
 diff --git a/guix/upstream.scm b/guix/upstream.scm
 index 6584d5e4c4..ea94184961 100644
 --- a/guix/upstream.scm
@@ -27,39 +30,33 @@ index 6584d5e4c4..ea94184961 100644
  (define* (package-update store package updaters
                           #:key (key-download 'interactive))
 EOF
-fi
+    fi
+}
 
-if ! [ -e refresh.log ]
-then
-    printf "No refresh.log exists, creating...\n"
-    ./pre-inst-env guix refresh "$(./pre-inst-env guix maintainer)" |& tee refresh.log
-fi
+log_packages_for_upgrade()
+{
+    if ! [ -e refresh.log ]
+    then
+        printf "No refresh.log exists, creating...\n"
+        ./pre-inst-env guix refresh "$(./pre-inst-env guix maintainer)" |& tee refresh.log
+    fi
+}
 
-if [ -z "$1" ]
-then
-    package="$(awk '/would be upgraded/ { print $2 }' refresh.log | fzf)"
-else
-    package="$1"
-fi
+upgrade_package()
+{
+    printf 'Updating "%s" package and remember version.\n' "$package"
+    version="$(./pre-inst-env guix refresh --update "$package" |& awk '/updating from version/ { print $NF }' | sed 's/\.\.\.//')"
+    if [ -z "$version" ]
+    then
+        printf "No version found.\n"
+        exit 1
+    fi
 
-if [ -z "$package" ]
-then
-    printf "No package selected.\n"
-    exit 1
-fi
-
-version="$(./pre-inst-env guix refresh --update "$package" |& awk '/updating from version/ { print $NF }' | sed 's/\.\.\.//')"
-if [ -z "$version" ]
-then
-    printf "No version found.\n"
-    exit 1
-fi
-
-mapfile -t hashes < <(./pre-inst-env guix build "$package" |& awk '/hash:/ { print $NF }')
-if [ "${#hashes[@]}" -ne 0 ]
-then
-    for file in gnu/packages/*.scm
-    do
+    file="$(git diff --stat | awk '/packages/ { print $1 }')"
+    printf 'Trying to build "%s" package.\n' "$package"
+    mapfile -t hashes < <(./pre-inst-env guix build "$package" |& awk '/hash:/ { print $NF }')
+    if [ "${#hashes[@]}" -ne 0 ]
+    then
         if grep --quiet "${hashes[0]}" "$file"
         then
             if git diff "$file" | grep --quiet '(version' 
@@ -73,19 +70,32 @@ then
                         sed --in-place "/$package/d" refresh.log
                     fi
                 fi
-                if [[ $(git diff "$file") == "" ]]
-                then
-                    printf '\033[31merror: Nothing to commit.\033[0m\n'
-                    exit 1
-                else
-                    git commit --message="$(printf "gnu: $package: Update to $version.\n\n* $file ($package): Update to $version.")" "$file"
-                    printf '\033[32mCommit the change in "%s" file.\033[0m\n' "$file"
-                fi
             else
                 git restore "$file"
                 printf '\033[31merror: Failed to update "%s" package. Restoring "%s" file.\033[0m\n' "$package" "$file"
                 exit 1
             fi
         fi
+    fi
+    if [[ $(git diff "$file") == "" ]]
+    then
+        printf '\033[31merror: Nothing to commit.\033[0m\n'
+        exit 1
+    else
+        git commit --message="$(printf "gnu: $package: Update to $version.\n\n* $file ($package): Update to $version.")" "$file"
+        printf '\033[32mCommit the change in "%s" file.\033[0m\n' "$file"
+        git show
+    fi
+}
+
+main()
+{
+    patch_guix_upstream
+    log_packages_for_upgrade
+    select package in $(awk '/would be upgraded/ { print $2 }' refresh.log)
+    do
+        upgrade_package "$package"
     done
-fi
+}
+
+main # Entry point
