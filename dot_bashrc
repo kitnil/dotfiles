@@ -548,8 +548,8 @@ guix()
             ansible-playbook "$HOME/.local/share/chezmoi/dotfiles/ansible/guix.yml"
             ;;
         prereconfigure)
-            guix_command="$HOME/src/guix/pre-inst-env guix"
-            sudo --login GUIX_PACKAGE_PATH="/home/oleg/src/guix-majordomo:/home/oleg/src/guix-wigust-services/guix:/home/oleg/src/guix-wigust/guix"    \
+            guix_command="$HOME/src/guix-master/pre-inst-env guix"
+            sudo --login GUIX_PACKAGE_PATH="/home/oleg/src/guix-majordomo:/home/oleg/src/guix-wigust-services/guix:/home/oleg/src/guix-wigust/guix:/home/oleg/src/nonguix"    \
                  $guix_command system reconfigure                               \
                  --load-path="$guix_modules" --no-bootloader --fallback "$HOME/.local/share/chezmoi/dotfiles/guixsd/guixsd.scm" \
                  "${@:2}"
