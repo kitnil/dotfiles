@@ -54,9 +54,7 @@ oleg ALL=(ALL) NOPASSWD:ALL\n"))
                                                      #:netmask "255.255.254.0"
                                                      #:gateway "78.108.87.254"
                                                      #:name-servers '("8.8.8.8" "8.8.4.4"))
-                          (service openssh-service-type
-                                   (openssh-configuration
-                                    (openssh openssh-sans-x)
-                                   )))
+                          (service zabbix-agent-service-type %vm-zabbix-agent-configuration)
+                          (service openssh-service-type))
                     (modify-services %base-services
                       (guix-service-type config => %guix-daemon-config)))))

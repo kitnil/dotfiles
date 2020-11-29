@@ -31,6 +31,7 @@
   #:use-module (gnu packages web)
   #:use-module (gnu services base)
   #:use-module (gnu services web)
+  #:use-module (gnu services monitoring)
   #:use-module (wigust packages admin)
   #:use-module (wigust packages lisp)
   #:use-module (wigust packages python)
@@ -53,7 +54,9 @@
             %nginx-lua-package-path
             %nginx-lua-package-cpath
             %nginx-modules
-            %nginx-lua-guix))
+            %nginx-lua-guix
+
+            %vm-zabbix-agent-configuration))
 
 (define %guix-daemon-config
   (guix-configuration
@@ -243,3 +246,11 @@ EndSection\n")
          (uri "/git/list")
          (body (list #~(format #f "content_by_lua_file ~s;"
                                #$(local-file "/home/oleg/.local/share/chezmoi/dotfiles/nginx/mjru.lua")))))))
+
+(define %vm-zabbix-agent-configuration
+  (zabbix-agent-configuration
+   (server '("back.wugi.info"))
+   (server-active '("back.wugi.info"))
+   (extra-options (string-join (list "UserParameter=release,/run/current-system/profile/bin/uname -a"
+                                     "HostMetadataItem=release")
+                               "\n"))))
