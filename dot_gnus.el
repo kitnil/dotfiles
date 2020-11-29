@@ -178,6 +178,14 @@ below otherwise."
 
 (setq gnus-summary-line-format "%U%R %i %I%(%[%4L: %-23,23f%]%) %s\n")
 
+(defun gnus-copy-message-id-subject ()
+  (interactive)
+  (let ((header (with-current-buffer gnus-summary-buffer
+                  (gnus-summary-article-header))))
+    (kill-new (format "%s %s"
+                      (mail-header-message-id header)
+                      (mail-header-subject header)))))
+
 ;; (gnus-add-configuration
 ;;    '(article
 ;;     (horizontal 1.0
