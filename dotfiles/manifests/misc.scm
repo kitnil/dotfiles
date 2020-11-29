@@ -16,7 +16,6 @@
  emacs-perl-live
  emacs-psysh
  emacs-redshift
- autopostgresqlbackup
  ruby-gitlab
  dynamips ;gns3 requirement
  ungoogled-chromium

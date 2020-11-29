@@ -53,8 +53,6 @@
 (packages->manifest
  (cons*
 
-  autopostgresqlbackup
-
   y2rss
 
   ;; TODO: Fix pulsemixer-emacs-keybindings
