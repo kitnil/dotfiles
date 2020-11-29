@@ -69,7 +69,15 @@ use_guix()
     environment()
     {
         set -x
-        guix environment --pure guix --ad-hoc ${ENV_PACKAGES[@]} ${ENV_PACKAGES_MAINTENANCE[@]} "$@"
+        case "$1" in
+            build)
+                guix environment --pure guix --ad-hoc ${ENV_PACKAGES[@]} ${ENV_PACKAGES_MAINTENANCE[@]} -- .direnv/aliases/build
+                ;;
+            *)
+                guix environment --pure guix --ad-hoc ${ENV_PACKAGES[@]} ${ENV_PACKAGES_MAINTENANCE[@]} "$@"
+                ;;
+        esac
+
     }
     export_function environment
 
