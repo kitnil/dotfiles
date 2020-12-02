@@ -3,7 +3,9 @@ TESTS =						\
   tests/executables.bats			\
   tests/mail.bats				\
   tests/mjru.bats				\
-  tests/guix.bats
+  tests/guix.bats				\
+  tests/ssh-mjru.bats				\
+  tests/ssh-home.bats
 
 .PHONY: clean
 clean:
@@ -11,6 +13,10 @@ clean:
 
 .PHONY: check
 check:
+	mkdir test-tmp
+	gpg --quiet --decrypt dhall/ssh/ssh.dhall.gpg | dhall text > test-tmp/mjru.conf
+	gpg --quiet --decrypt private_dot_ssh/encrypted_private_config > test-tmp/config
+	gpg --quiet --decrypt private_dot_ssh/encrypted_private_spb.conf > test-tmp/spb.conf
 	bats $(TESTS)
 
 .PHONY: check-system
