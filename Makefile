@@ -46,6 +46,7 @@ install:
 	sudo install -m644 dotfiles/guixsd/machines.scm /etc/guix
 	sudo install dotfiles/homer/config.yml /etc/homer
 	gpg --decrypt dotfiles/emacs/mjru-network.gpg > $(HOME)/.emacs.d/modules/mjru-network.el
+	gpg --quiet --decrypt dhall/ssh/ssh.dhall.gpg | dhall text > $(HOME)/.ssh/mjru.conf
 
 .PHONY: deploy
 deploy:
