@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+mapfile -t hosts < <(ansible all --list-hosts | awk '! /:/ { print $NF }')
+for host in "${hosts[@]}"
+do
+    timeout 3 ssh -o StrictHostKeyChecking=no "$host" -- hostname
+done
