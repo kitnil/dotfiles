@@ -12,3 +12,7 @@
         ("\\.drv" . guix-derivation-mode)
         (".ansible-hosts" . yaml-mode)
         ("\\.bats" . sh-mode)))
+
+;; Encrypted Chezmoi files with names like encrypted_example
+(add-to-list 'file-name-handler-alist
+             `(,(rx (and "encrypted_" (+ alnum))) . epa-file-handler))
