@@ -24,3 +24,8 @@
     [ "$status" -eq 0 ]
     [[ "$output" == *"uid=0(root)"* ]]
 }
+
+@test "ansible hosts are equal to billing2" {
+    run bash -c "[[ $(ansible all --list-hosts |& grep 'web[[:digit:]][[:digit:]]' | wc -l) -eq $(mjru-infa server | grep -c 'web[[:digit:]][[:digit:]]') ]]"
+    [ "$status" -eq 0 ]
+}
