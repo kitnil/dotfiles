@@ -85,6 +85,7 @@
   slides-devops-world-jenkins-casc
   slides-linux-perf-tools
   documentation-arcconf
+  cheatsheet-gdb
 
   git-splits
 
