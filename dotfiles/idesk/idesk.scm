@@ -37,6 +37,10 @@
              "VNC guix.vm"
              "vnc vm"
              "/home/oleg/.guix-profile/share/icons/hicolor/48x48/apps/tigervnc.png")
+            ("vm1.wugi.info.lnk"
+             "VNC vm1"
+             "vnc client vm1.wugi.info"
+             "/home/oleg/.guix-profile/share/icons/hicolor/48x48/apps/tigervnc.png")
             ("workstation.lnk"
              "VNC work"
              "vnc mjru"

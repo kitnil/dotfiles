@@ -40,6 +40,7 @@ install:
 	install --mode=644 dotfiles/idesk/dotfiles.lnk $(HOME)/.idesktop
 	install --mode=644 dotfiles/idesk/guix.lnk $(HOME)/.idesktop
 	install --mode=644 dotfiles/idesk/xterm.lnk $(HOME)/.idesktop
+	install --mode=644 dotfiles/idesk/vm1.wugi.info.lnk $(HOME)/.idesktop
 	install --mode=644 dotfiles/idesk/guix.vm.wugi.info.lnk $(HOME)/.idesktop
 	install --mode=644 dotfiles/idesk/workstation.lnk $(HOME)/.idesktop
 	install --mode=755 dotfiles/scripts/guix-channels-update $(HOME)/bin
