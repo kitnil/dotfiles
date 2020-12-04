@@ -35,6 +35,12 @@ case "$1" in
         ;;
     client)
         case "$2" in
+            vm1*)
+                # NOTE: Could append X509Plain and VncAuth separated by command to SecurityTypes.
+                ssh vm1.wugi.info -- "pgrep -fa 'Xvnc :1'" \
+                    || ssh vm1.wugi.info -- 'vncserver -X509Key ~/.vnc/key.pem -X509Cert ~/.vnc/x509_ca.pem -SecurityTypes X509Vnc :1'
+                vncviewer -passwd ~/.vnc/passwd X509CA=/home/oleg/.vnc/x509_ca.pem vm1.wugi.info:5901
+                ;;
             mjru)
                 ssh majordomo.intr -- "pgrep -fa 'Xvnc :3'" \
                     || ssh majordomo.intr -- 'vncserver -xstartup "$HOME/.vnc/xstartup" :3'
@@ -74,6 +80,14 @@ case "$1" in
                 ;;
             *)
                 help_server
+                ;;
+        esac
+        ;;
+    ssl)
+        case "$2" in
+            vm1*)
+                # [[https://zalinux.ru/?p=3905][Как настроить и использовать сервер TigerVNC в Linux - ZaLinux.ru]]
+                openssl req -x509 -newkey rsa -days 365 -nodes -keyout key.pem -out x509_ca.pem -subj '/CN=vm1.wugi.info'
                 ;;
         esac
         ;;
