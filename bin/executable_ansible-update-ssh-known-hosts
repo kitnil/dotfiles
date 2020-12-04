@@ -3,5 +3,12 @@
 mapfile -t hosts < <(ansible "${1:-all}" --list-hosts | awk '! /:/ { print $NF }')
 for host in "${hosts[@]}"
 do
-    timeout 3 ssh -o StrictHostKeyChecking=no "$host" -- hostname
+    if [[ $(timeout 3 ssh -o StrictHostKeyChecking=no "$host" -- hostname 2>&1) == *"Add correct host key"* ]]
+    then
+        sed -i "/$host/d" "$HOME"/.ssh/known_hosts
+        ssh timeout 3 ssh -o StrictHostKeyChecking=no "$host" -- hostname
+        printf "Update %s in %s file.\n" "$host" "$HOME"/.ssh/known_hosts
+    else
+        printf "%s\n" "$host"
+    fi
 done
