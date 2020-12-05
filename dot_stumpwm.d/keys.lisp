@@ -186,6 +186,7 @@
     '(("(Firefox|Chrome)"
        ("C-n"   . "Down")
        ("C-p"   . "Up")
+       ("M-r"   . "Up")
        ;; ("C-f"   . "Right")
        ;; ("C-b"   . "Left")
        ;; ("C-v"   . "Next")
