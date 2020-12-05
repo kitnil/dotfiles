@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+xq --raw-output '.feed.link[] | select(."@rel"=="self")."@href"' "$@" | xclip -i -selection clipboard
