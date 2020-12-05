@@ -139,6 +139,7 @@ in  ''
 			Street	camera street
 		Chess	chromium --app=https://lichess.org/
 		Cocalc	chromium --app=https://cocalc.com/
+		LaTeX	chromium --app=http://www.overleaf.com/
 		Habitica	chromium --app=https://habitica.com/
 		Mastodon	chromium --app=https://mastodon.xyz/
 		Repl	chromium --app=https://repl.it/
