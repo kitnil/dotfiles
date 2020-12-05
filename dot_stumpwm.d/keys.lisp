@@ -45,7 +45,6 @@
   (define-key *top-map* (kbd "s-RET") "run-xterm")
   (define-key *top-map* (kbd "s-e") "emacsclient")
   (define-key *top-map* (kbd "s-E") "emacsclient-new")
-  (define-key *top-map* (kbd "s-l") "emacs-todo")
   (define-key *top-map* (kbd "s-m") "mpv")
   (define-key *top-map* (kbd "s-M") "music-mpv")
   (define-key *top-map* (kbd "s-n") "next-in-frame-custom")
