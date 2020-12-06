@@ -54,9 +54,6 @@ checks:
   domain: smtp.test.wugi.info
   value: smtp.majordomo.ru.
 - type: cname
-  domain: stackstorm.wugi.info
-  value: guix.duckdns.org.
-- type: cname
   domain: torrent.wugi.info
   value: guix.duckdns.org.
 - type: cname
