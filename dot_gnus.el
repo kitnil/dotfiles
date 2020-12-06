@@ -176,7 +176,7 @@ below otherwise."
     (define-key map (kbd "<f6>") 'org-capture-inbox)
     (define-key map (kbd "<C-return>") 'org-capture-inbox)))
 
-(setq gnus-summary-line-format "%U%R %i %I%(%[%4L: %-23,23f%]%) %s\n")
+(setq gnus-summary-line-format "%U%R %d %i %I%(%[%4L: %-23,23f%]%) %s\n")
 
 (defun gnus-copy-message-id-subject ()
   (interactive)
