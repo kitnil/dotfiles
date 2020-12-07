@@ -14,4 +14,11 @@ cat > "$HOME/.config/gita/repo_path" <<EOF
 $(config)
 EOF
 
+cat > "$HOME/.config/gita/groups.yml" <<EOF
+php: [webservices-apache2-php44, webservices-apache2-php52, webservices-apache2-php53,
+  webservices-apache2-php54, webservices-apache2-php55, webservices-apache2-php70,
+  webservices-apache2-php71, webservices-apache2-php72, webservices-apache2-php73,
+  webservices-apache2-php74, webservices-apache2-php80]
+EOF
+
 exec -a "$0" sshpass -Ppassphrase -p"$(pass show majordomo/private/gitlab.intr/ssh/id_rsa_gitlab_intr)" gita "$@"
