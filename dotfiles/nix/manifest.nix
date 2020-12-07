@@ -232,28 +232,6 @@ in [
   })
 
   (stdenv.mkDerivation {
-    name = "ipmi";
-    builder = writeScript "builder.sh" (''
-      source $stdenv/setup
-      mkdir -p $out/bin
-
-      cat > $out/bin/ipmi <<'EOF'
-      #!${bash}/bin/bash
-      # Wrapper which you could run as `ipmi jenkins.ipmi'
-      export IPMI_HOST=$1
-      export IPMI_OUTPUT=/tmp/$IPMI_HOST.jviewer.jnlp
-      export IPMI_USER=ADMIN
-      export IPMI_PASSWORD=$(pass show majordomo/private/ipmi/ADMIN)
-      exec -a ipmi ${ipmi}/bin/ipmi "$@"
-      EOF
-      chmod 555 $out/bin/ipmi
-
-      # Oracle's javaws configuration utility.
-      ln -s ${ipmi}/bin/ControlPanel $out/bin/ControlPanel
-    '');
-  })
-
-  (stdenv.mkDerivation {
     name = "run-headphones";
     builder = writeScript "builder.sh" (''
       source $stdenv/setup
