@@ -81,14 +81,6 @@ in [
   # geckodriver
   bfg-repo-cleaner
   git-secrets
-  (gitAndTools.gita.overrideAttrs (old: {
-    src = fetchFromGitHub {
-      owner = "nosarthur";
-      repo = "gita";
-      rev = "62eb3d69874f75bdd6f95743e57315bc59890f70";
-      sha256 = "1jn5wnmjbdrrgz9fif7s81pv3g92q0wjcqy5qxl77kjy7iv0kpfp";
-    };
-  }))
   gitAndTools.delta
   gitAndTools.git-extras
   gitAndTools.git-open

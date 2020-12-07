@@ -90,7 +90,7 @@ xml xorg)
 
                mcron
 
-               git tig mercurial gource vc-dwim git-cal
+               git tig mercurial gource vc-dwim git-cal gita
 
                colormake
 
