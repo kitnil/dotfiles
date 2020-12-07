@@ -98,7 +98,7 @@ class MongoHms:
 
     def task_set_processed(self, account_id):
         """Set all running task on ACCOUNT_ID (e.g. "208112") as processed."""
-        return myclient["personmgr"]["processingBusinessOperation"].update_many({
+        return self.myclient["personmgr"]["processingBusinessOperation"].update_many({
             "personalAccountId":account_id,
             "state":"PROCESSING"
         }, {"$set": {"state":"PROCESSED"}})
