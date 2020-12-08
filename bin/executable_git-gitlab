@@ -18,7 +18,7 @@ merge_request()
 
 web_url="$(merge_request | jq --raw-output .web_url)"
 
-echo web_url | xclip -i -sel p -f | xclip -i -sel c
+echo "$web_url" | xclip -i -sel p -f | xclip -i -sel c
 
 if [[ $BROWSE == true ]]
 then
