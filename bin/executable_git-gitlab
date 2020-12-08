@@ -8,10 +8,18 @@ PROJECT_GROUP="${GITLAB_GROUP_NAME:-$(basename "$(dirname $PWD)")}"
 PROJECT_ID="${GITLAB_GROUP_ID:-$(curl --header 'Content-Type: application/json' --header "PRIVATE-TOKEN: $PRIVATE_TOKEN" "https://gitlab.intr/api/v4/projects/$PROJECT_GROUP%2F$PROJECT_NAME" | jq .id)}"
 ASSIGNEE_ID="${GITLAB_ASSIGNEE_ID:-$(curl --header "Content-Type: application/json" --header "PRIVATE-TOKEN: $(pass show majordomo/private/gitlab.intr/tokens/pyhalov)" "https://gitlab.intr/api/v4/users?active=true" | jq '.[] | select(.username == "zdetovetskiy")' | jq .id)}"
 SQUASH="${GITLAB_SQUASH:-false}"
+BROWSE="${GITLAB_BROWSE:-true}"
 
 merge_request()
 {
     curl --request POST --header 'Content-Type: application/json' --header "PRIVATE-TOKEN: $PRIVATE_TOKEN" "https://gitlab.intr/api/v4/projects/$PROJECT_ID/merge_requests" --data "{\"source_branch\": \"$(git branch --show-current)\", \"target_branch\": \"master\", \"title\": \"$(git log -1 --format=%s)\", \"assignee_id\": \"$ASSIGNEE_ID\", \"remove_source_branch\": \"true\", \"squash\": \"$SQUASH\"}"
 }
 
-merge_request | jq --raw-output .web_url | xclip -i -sel p -f | xclip -i -sel c
+web_url="$(merge_request | jq --raw-output .web_url)"
+
+echo web_url | xclip -i -sel p -f | xclip -i -sel c
+
+if [[ $BROWSE == true ]]
+then
+    "$BROWSER" "$web_url"
+fi
