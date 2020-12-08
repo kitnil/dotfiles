@@ -1,26 +1,17 @@
 #!/usr/bin/env bash
 
-report()
+with_report()
 {
-    if [ $? -eq 0 ]
+    if eval "${@:2}"
     then
-        printf "\033[32mremote '$1' succeeded\033[0m\n"
+        printf "\033[32mremote '%s' succeeded\033[0m\n" "$1"
     else
-        printf "\033[35mremote '$1' failed\033[0m\n"
+        printf "\033[35mremote '%s' failed\033[0m\n" "$1"
     fi
 }
 
-git push origin
-report origin
-
-sshpass -Ppassphrase -p"$(pass show gitlab.com/id_rsa_gitlab)" git push gitlab
-report gitlab
-
-sshpass -Ppassphrase -p"$(pass show github/ssh/id_rsa_github)" git push github
-report github
-
-sshpass -Ppassphrase -p"$(pass show majordomo/private/gitlab.intr/ssh/id_rsa_gitlab_intr)" git push majordomo
-report majordomo
-
-sshpass -Ppassphrase -p"$(pass show notabug.org/id_rsa_notabug)" git push notabug
-report notabug
+with_report origin "git push origin"
+with_report gitlab "sshpass -Ppassphrase -p$(pass show gitlab.com/id_rsa_gitlab) git push gitlab"
+with_report github "sshpass -Ppassphrase -p$(pass show github/ssh/id_rsa_github) git push github"
+with_report majordomo "sshpass -Ppassphrase -p$(pass show majordomo/private/gitlab.intr/ssh/id_rsa_gitlab_intr) git push majordomo"
+with_report notabug "sshpass -Ppassphrase -p$(pass show notabug.org/id_rsa_notabug) git push notabug"
