@@ -6,7 +6,7 @@ report()
     then
         printf "\033[32mremote '$1' succeeded\033[0m\n"
     else
-        printf "\033[32mremote '$1' failed\033[0m\n"
+        printf "\033[35mremote '$1' failed\033[0m\n"
     fi
 }
 
