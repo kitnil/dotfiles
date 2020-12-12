@@ -137,3 +137,5 @@
           '(lambda ()
              (when (string-match (rx (and any ".guix-profile")) (buffer-file-name))
                (wi-find-file-readlink))))
+
+(defalias 'center-mode 'olivetti-mode)
