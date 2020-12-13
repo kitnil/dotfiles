@@ -1613,10 +1613,17 @@ fi
 
 backup()
 {
-    sudo --login                                                                \
-            RESTIC_PASSWORD="$(pass show wugi.info/restic/all)"                 \
-            RESTIC_REPOSITORY="${RESTIC_REPOSITORY:-/srv/backup/guixsd}"        \
-            "$HOME/.guix-profile/bin/restic" "$@"
+    case "$1" in
+        clean)
+            backup forget --keep-last 10 --prune "${@:2}"
+            ;;
+        *)
+            sudo --login                                                        \
+                 RESTIC_PASSWORD="$(pass show wugi.info/restic/all)"            \
+                 RESTIC_REPOSITORY="${RESTIC_REPOSITORY:-/srv/backup/guixsd}"   \
+                 "$HOME/.guix-profile/bin/restic" "${@:2}"
+            ;;
+    esac
 }
 if [ -f "$HOME/.guix-profile/etc/bash_completion.d/restic" ]; then
     . "$HOME/.guix-profile/etc/bash_completion.d/restic"
