@@ -1563,6 +1563,9 @@ firefox()
         kill)
             pgrep -fa firefox-wrapped | grep -v 'test' | cut -d ' ' -f 1 | xargs kill
             ;;
+        sync)
+            rsync --archive --progress "$HOME/.mozilla/firefox/j56dvo43.default-1520714705340" vm1.wugi.info:.mozilla/firefox/
+            ;;
         *)
             command firefox "$@"
     esac
