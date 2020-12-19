@@ -91,12 +91,16 @@
              (setf *message-window-y-padding* 0)
              (setf *normal-border-width* 0)
              (setf *transient-border-width* 0)
-             (setq *suppress-frame-indicator* nil))
+             (setq *suppress-frame-indicator* nil)
+             (setf *float-window-border* 0)
+             (setf *float-window-title-height* 0))
       (progn (setf *maxsize-border-width* 3)
              (setf *message-window-y-padding* 3)
              (setf *normal-border-width* 3)
              (setf *transient-border-width* 3)
-             (setq *suppress-frame-indicator* t))))
+             (setq *suppress-frame-indicator* t)
+             (setf *float-window-border* 3)
+             (setf *float-window-title-height* 3))))
 
 
 ;;;
