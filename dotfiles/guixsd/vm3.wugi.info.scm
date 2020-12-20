@@ -2,7 +2,7 @@
 ;; for a "bare bones" setup, with no X11 display server.
 
 (use-modules (gnu))
-(use-service-modules databases monitoring networking ssh)
+(use-service-modules certbot databases monitoring networking ssh web)
 (use-package-modules certs screen ssh)
 
 (use-modules (config))
@@ -56,6 +56,15 @@ oleg ALL=(ALL) NOPASSWD:ALL\n"))
                                                      #:name-servers '("8.8.8.8" "8.8.4.4"))
                           (service zabbix-agent-service-type %vm-zabbix-agent-configuration)
                           (service openssh-service-type)
+                          (service certbot-service-type
+                                   (certbot-configuration
+                                    (email "go.wigust@gmail.com")
+                                    (certificates
+                                     `(,@(map (lambda (host)
+                                                (certificate-configuration
+                                                 (domains (list host))
+                                                 (deploy-hook %nginx-deploy-hook)))
+                                              (list "zabbix.wugi.info"))))))
                           (postgresql-service #:config-file (postgresql-config-file
                                                              (hba-file
                                                               (plain-file "pg_hba.conf"
@@ -64,6 +73,18 @@ local	all	all			trust
 host	all	all	127.0.0.1/32    trust
 host	all	all	::1/128         trust
 host	all	all	172.16.0.0/12   trust"))
-                                                             (extra-config '(("listen_addresses" "'0.0.0.0'"))))))
+                                                             (extra-config '(("listen_addresses" "'0.0.0.0'")))))
+                          (service zabbix-server-service-type
+                                   (zabbix-server-configuration
+                                    (include-files '("/etc/zabbix/zabbix-server.secret"))
+                                    (extra-options "
+AlertScriptsPath=/etc/zabbix/alertscripts
+ExternalScripts=/etc/zabbix/externalscripts
+FpingLocation=/run/setuid-programs/fping
+")))
+                          (service zabbix-front-end-service-type
+                                (zabbix-front-end-configuration
+                                 (db-secret-file "/etc/zabbix/zabbix.secret")
+                                 (nginx %zabbix-nginx-configuration))))
                     (modify-services %base-services
                       (guix-service-type config => %guix-daemon-config)))))

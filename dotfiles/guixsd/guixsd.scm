@@ -71,7 +71,6 @@ EndSection\n\n"))
         "githunt.wugi.info"
         "homer.wugi.info"
         "guix.duckdns.org"
-        "zabbix.wugi.info"
         "jenkins.wugi.info"
         "monitor.wugi.info"
         "torrent.wugi.info"
@@ -298,27 +297,6 @@ location / {
                                     #f))))
          "cuirass.wugi.info")))
 
-(define %zabbix-nginx-configuration
-  (list
-   (nginx-server-configuration
-    (inherit %zabbix-front-end-configuration-nginx)
-    (server-name '("zabbix.wugi.info"))
-    (locations
-     (cons* (nginx-location-configuration
-             (inherit php-location)
-             (uri "/describe/natsu")
-             (body (append '("alias /var/www/php;")
-                           (nginx-location-configuration-body (nginx-php-location)))))
-            ;; For use by Certbot.
-            (nginx-location-configuration
-             (uri "/.well-known")
-             (body '("root /var/www;")))
-            (nginx-server-configuration-locations %zabbix-front-end-configuration-nginx)))
-    (listen '("443 ssl"))
-    (ssl-certificate (letsencrypt-certificate "zabbix.wugi.info"))
-    (ssl-certificate-key (letsencrypt-key "zabbix.wugi.info"))
-    (raw-content %mtls))))
-
 
 ;;;
 ;;; Entryp point
@@ -435,7 +413,6 @@ location / {
         "hosts"
         (string-join
          `(,(string-join '("127.0.0.1 guixsd localhost"
-                           "zabbix.wugi.info"
                            "techinfo.intr"
                            "texinfo.tld"
                            "jenkins.wugi.info"
@@ -659,15 +636,6 @@ host	all	all	172.16.0.0/12   trust"))
                                 (php-fpm-configuration
                                  (timezone "Europe/Moscow")))
 
-                       (service zabbix-server-service-type
-                                (zabbix-server-configuration
-                                 (include-files '("/etc/zabbix/zabbix-server.secret"))
-                                 (extra-options "
-AlertScriptsPath=/etc/zabbix/alertscripts
-ExternalScripts=/etc/zabbix/externalscripts
-FpingLocation=/run/setuid-programs/fping
-")))
-
                        (service zabbix-agent-service-type
                                 (zabbix-agent-configuration
                                  (extra-options (string-join
@@ -677,11 +645,6 @@ FpingLocation=/run/setuid-programs/fping
                                                        (string-join (cons "UserParameter=ssl_cert_hosts[*], /etc/zabbix/externalscripts/ssl_cert_hosts.sh"
                                                                           %certbot-hosts)))
                                                  "\n"))))
-
-                       (service zabbix-front-end-service-type
-                                (zabbix-front-end-configuration
-                                 (db-secret-file "/etc/zabbix/zabbix.secret")
-                                 (nginx %zabbix-nginx-configuration)))
 
                        jenkins-service
 
