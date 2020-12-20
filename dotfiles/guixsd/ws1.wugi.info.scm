@@ -97,7 +97,7 @@ EndSection")
                              (autossh-client-config
                               (autossh-client-configuration
                                (hosts (list (autossh-client-host-configuration
-                                             (host "guix.duckdns.org")
+                                             (host "back.wugi.info")
                                              (identity-file "/etc/autossh/id_rsa")
                                              (strict-host-key-checking? #f)
                                              (user "majordomo-ssh-tunnel")
@@ -112,11 +112,8 @@ Compression yes
 ExitOnForwardFailure yes
 ServerAliveInterval 30
 ServerAliveCountMax 3"))))))
-                             (host "guix.duckdns.org")))
-                   (service zabbix-agent-service-type
-                            (zabbix-agent-configuration
-                             (server '("zabbix.wugi.info"))
-                             (server-active '("zabbix.wugi.info"))))
+                             (host "back.wugi.info")))
+                   (service zabbix-agent-service-type)
                    nix-service
 
                    ;; Desktop services
