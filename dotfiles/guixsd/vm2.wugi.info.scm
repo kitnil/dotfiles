@@ -6,7 +6,8 @@
 (use-package-modules certs screen ssh)
 
 (use-modules (config)
-             (services keepalived))
+             (services keepalived)
+             (services networking))
 
 (operating-system
   (host-name "vm2.wugi.info")
@@ -59,6 +60,12 @@ oleg ALL=(ALL) NOPASSWD:ALL\n"))
                           (service openssh-service-type)
                           (service keepalived-service-type
                                    (keepalived-configuration
-                                    (config-file (local-file "etc/keepalived/vm2.wugi.info.conf")))))
+                                    (config-file (local-file "etc/keepalived/vm2.wugi.info.conf"))))
+                          (service gre-service-type
+                                   (gre-configuration
+                                    (ip-address-local "78.108.87.161")
+                                    (ip-address-remote "78.108.82.157")
+                                    (ip-address "10.0.0.2/24")
+                                    (interface-name "gre1"))))
                     (modify-services %base-services
                       (guix-service-type config => %guix-daemon-config)))))
