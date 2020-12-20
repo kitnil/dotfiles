@@ -251,8 +251,8 @@ EndSection\n")
 
 (define %vm-zabbix-agent-configuration
   (zabbix-agent-configuration
-   (server '("back.wugi.info"))
-   (server-active '("back.wugi.info"))
+   (server '("zabbix.wugi.info"))
+   (server-active '("zabbix.wugi.info"))
    (extra-options (string-join (list "UserParameter=release,/run/current-system/profile/bin/uname -a"
                                      "HostMetadataItem=release")
                                "\n"))))
