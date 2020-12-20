@@ -2,10 +2,11 @@
 ;; for a "bare bones" setup, with no X11 display server.
 
 (use-modules (gnu))
-(use-service-modules networking ssh)
+(use-service-modules networking monitoring ssh)
 (use-package-modules certs screen ssh)
 
-(use-modules (config))
+(use-modules (config)
+             (services keepalived))
 
 (operating-system
   (host-name "vm2.wugi.info")
@@ -55,6 +56,9 @@ oleg ALL=(ALL) NOPASSWD:ALL\n"))
                                                      #:gateway "78.108.87.254"
                                                      #:name-servers '("8.8.8.8" "8.8.4.4"))
                           (service zabbix-agent-service-type %vm-zabbix-agent-configuration)
-                          (service openssh-service-type))
+                          (service openssh-service-type)
+                          (service keepalived-service-type
+                                   (keepalived-configuration
+                                    (config-file (local-file "etc/keepalived/vm2.wugi.info.conf")))))
                     (modify-services %base-services
                       (guix-service-type config => %guix-daemon-config)))))
