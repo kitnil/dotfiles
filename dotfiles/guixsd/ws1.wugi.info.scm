@@ -113,7 +113,10 @@ ExitOnForwardFailure yes
 ServerAliveInterval 30
 ServerAliveCountMax 3"))))))
                              (host "guix.duckdns.org")))
-                   (service zabbix-agent-service-type)
+                   (service zabbix-agent-service-type
+                            (zabbix-agent-configuration
+                             (server '("zabbix.wugi.info"))
+                             (server-active '("zabbix.wugi.info"))))
                    nix-service
 
                    ;; Desktop services
