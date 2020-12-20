@@ -49,7 +49,7 @@
       (shepherd-service
        (provision '(keepalived))
        (documentation "Run keepalived.")
-       (requirement '())
+       (requirement '(loopback))
        (start #~(make-forkexec-constructor
                  (list (string-append #$keepalived "/sbin/keepalived")
                        "--dont-fork" "--log-console" "--log-detail"
