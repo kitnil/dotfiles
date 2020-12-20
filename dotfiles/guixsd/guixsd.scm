@@ -638,6 +638,8 @@ host	all	all	172.16.0.0/12   trust"))
 
                        (service zabbix-agent-service-type
                                 (zabbix-agent-configuration
+                                 (server '("zabbix.wugi.info"))
+                                 (server-active '("zabbix.wugi.info"))
                                  (extra-options (string-join
                                                  (list ""
                                                        "UserParameter=ssl_cert_check_valid[*], /etc/zabbix/externalscripts/ssl_cert_check.sh valid \"$1\" \"$2\" \"$3\""
