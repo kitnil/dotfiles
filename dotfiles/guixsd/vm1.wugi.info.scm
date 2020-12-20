@@ -11,6 +11,8 @@
 (use-modules (config)
              (services autossh)
              (services kresd)
+             (services keepalived)
+             (services networking)
              (services openvpn))
 
 (operating-system
@@ -151,7 +153,16 @@ ServerAliveCountMax 3"))))))
                                                 (known-hosts '("\
 127.0.0.1 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBJItpECN9IUeYtH+kaIjrZ//yXmggmebwhg+qBegHwd0kniwYMIrXBGlNKd2uWw6ErhWL/3IMt7FvslBtgwuQ10="
                                                                "\
-localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBJItpECN9IUeYtH+kaIjrZ//yXmggmebwhg+qBegHwd0kniwYMIrXBGlNKd2uWw6ErhWL/3IMt7FvslBtgwuQ10=")))))
+localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBJItpECN9IUeYtH+kaIjrZ//yXmggmebwhg+qBegHwd0kniwYMIrXBGlNKd2uWw6ErhWL/3IMt7FvslBtgwuQ10="))))
+                 (service keepalived-service-type
+                          (keepalived-configuration
+                           (config-file (local-file "etc/keepalived/vm1.wugi.info.conf"))))
+                 (service gre-service-type
+                          (gre-configuration
+                           (ip-address-local "78.108.82.157")
+                           (ip-address-remote "78.108.87.161")
+                           (ip-address "10.0.0.3/24")
+                           (interface-name "gre1"))))
            (load "desktop.scm")
            (modify-services %base-services
              (guix-service-type config => %guix-daemon-config))))
