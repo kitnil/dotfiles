@@ -2,7 +2,7 @@
 ;; for a "bare bones" setup, with no X11 display server.
 
 (use-modules (gnu))
-(use-service-modules networking ssh)
+(use-service-modules databases monitoring networking ssh)
 (use-package-modules certs screen ssh)
 
 (use-modules (config))
@@ -55,6 +55,15 @@ oleg ALL=(ALL) NOPASSWD:ALL\n"))
                                                      #:gateway "78.108.87.254"
                                                      #:name-servers '("8.8.8.8" "8.8.4.4"))
                           (service zabbix-agent-service-type %vm-zabbix-agent-configuration)
-                          (service openssh-service-type))
+                          (service openssh-service-type)
+                          (postgresql-service #:config-file (postgresql-config-file
+                                                             (hba-file
+                                                              (plain-file "pg_hba.conf"
+                                                                          "
+local	all	all			trust
+host	all	all	127.0.0.1/32    trust
+host	all	all	::1/128         trust
+host	all	all	172.16.0.0/12   trust"))
+                                                             (extra-config '(("listen_addresses" "'0.0.0.0'"))))))
                     (modify-services %base-services
                       (guix-service-type config => %guix-daemon-config)))))
