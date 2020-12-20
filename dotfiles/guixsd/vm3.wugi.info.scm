@@ -27,18 +27,48 @@
   ;; This is where user accounts are specified.  The "root"
   ;; account is implicit, and is initially created with the
   ;; empty password.
-  (users (cons (user-account
-                (name "oleg")
-                (comment "Oleg Pykhalov")
-                (group "users")
+  (users (cons* (user-account
+                 (name "oleg")
+                 (comment "Oleg Pykhalov")
+                 (group "users")
 
-                ;; Adding the account to the "wheel" group
-                ;; makes it a sudoer.  Adding it to "audio"
-                ;; and "video" allows the user to play sound
-                ;; and access the webcam.
-                (supplementary-groups '("wheel"
-                                        "audio" "video")))
-               %base-user-accounts))
+                 ;; Adding the account to the "wheel" group
+                 ;; makes it a sudoer.  Adding it to "audio"
+                 ;; and "video" allows the user to play sound
+                 ;; and access the webcam.
+                 (supplementary-groups '("wheel"
+                                         "audio" "video")))
+                (user-account
+                 (name "majordomo-ssh-tunnel")
+                 (uid 30011)
+                 (group "users")
+                 (comment "SSH forwarding privilege separation user")
+                 (home-directory "/home/majordomo-ssh-tunnel"))
+                (user-account
+                 (name "tail-ssh-tunnel")
+                 (uid 30015)
+                 (group "users")
+                 (comment "SSH forwarding privilege separation user")
+                 (home-directory "/home/tail-ssh-tunnel"))
+                (user-account
+                 (name "spb-zabbix-ssh-tunnel")
+                 (uid 30020)
+                 (group "users")
+                 (comment "SSH forwarding privilege separation user")
+                 (home-directory "/home/spb-zabbix-ssh-tunnel"))
+                (user-account
+                 (name "oracle-ssh-tunnel")
+                 (uid 30021)
+                 (group "users")
+                 (comment "SSH forwarding privilege separation user")
+                 (home-directory "/home/oracle-ssh-tunnel"))
+                (user-account
+                 (name "vm1-ssh-tunnel")
+                 (uid 30022)
+                 (group "users")
+                 (comment "SSH forwarding privilege separation user")
+                 (home-directory "/home/vm1-ssh-tunnel"))
+                %base-user-accounts))
 
   (sudoers-file (plain-file "sudoers" "\
 root ALL=(ALL) ALL
