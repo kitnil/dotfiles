@@ -115,7 +115,10 @@ ServerAliveCountMax 3"))))))
                  (extra-special-file "/usr/bin/env"
                                      (file-append coreutils "/bin/env"))
                  (kresd-service (local-file "kresd.conf"))
-                 (service zabbix-agent-service-type)
+                 (service zabbix-agent-service-type
+                          (zabbix-agent-configuration
+                           (server '("zabbix.wugi.info"))
+                           (server-active '("zabbix.wugi.info"))))
                  openvpn-service
 
                  (service certbot-service-type
