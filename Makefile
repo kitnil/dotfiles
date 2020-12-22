@@ -65,3 +65,7 @@ dist:
 	sudo --login guix system build -L $(HOME)/.local/share/chezmoi/dotfiles/guixsd/modules $(HOME)/.local/share/chezmoi/dotfiles/guixsd/ws1.wugi.info.scm
 	sudo --login guix system build -L $(HOME)/.local/share/chezmoi/dotfiles/guixsd/modules $(HOME)/.local/share/chezmoi/dotfiles/guixsd/spb.scm
 	sudo --login guix system build -L $(HOME)/.local/share/chezmoi/dotfiles/guixsd/modules $(HOME)/.local/share/chezmoi/dotfiles/guixsd/guix.vm.wugi.info.scm
+
+.PHONY: add
+add:
+	chezmoi add --encrypt $(HOME)/.ssh/known_hosts
