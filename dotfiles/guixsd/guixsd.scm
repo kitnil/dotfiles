@@ -25,6 +25,7 @@
              (services jenkins)
              (services tftp)
              (services openvpn)
+             (services syncthing)
              (services vnc)
              (nongnu packages linux))
 
@@ -649,6 +650,9 @@ host	all	all	172.16.0.0/12   trust"))
                                                  "\n"))))
 
                        jenkins-service
+
+                       (service syncthing-service-type
+                                (syncthing-configuration (user "oleg")))
 
                        (service docker-service-type)
 
