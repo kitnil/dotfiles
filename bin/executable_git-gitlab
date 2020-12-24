@@ -11,11 +11,11 @@ assignee_id()
 }
 
 PRIVATE_TOKEN="${GITLAB_PRIVATE_TOKEN:-$(pass show majordomo/private/gitlab.intr/tokens/pyhalov)}"
-PROJECT_NAME="${GITLAB_PROJECT_NAME:-$(basename $PWD)}"
-PROJECT_GROUP="${GITLAB_GROUP_NAME:-$(basename "$(dirname $PWD)")}"
+PROJECT_NAME="${GITLAB_PROJECT_NAME:-$(basename "$PWD")}"
+PROJECT_GROUP="${GITLAB_GROUP_NAME:-$(basename "$(dirname "$PWD")")}"
 PROJECT_ID="${GITLAB_GROUP_ID:-$(curl --header 'Content-Type: application/json' --header "PRIVATE-TOKEN: $PRIVATE_TOKEN" "https://gitlab.intr/api/v4/projects/$PROJECT_GROUP%2F$PROJECT_NAME" | jq .id)}"
 ASSIGNEE_USER="${GITLAB_ASSIGNEE_USER:-zdetovetskiy}"
-ASSIGNEE_ID="${GITLAB_ASSIGNEE_ID:-$(assignee_id $ASSIGNEE_USER)}"
+ASSIGNEE_ID="${GITLAB_ASSIGNEE_ID:-$(assignee_id "$ASSIGNEE_USER")}"
 SQUASH="${GITLAB_SQUASH:-false}"
 BROWSE="${GITLAB_BROWSE:-true}"
 
@@ -30,5 +30,5 @@ echo "$web_url" | xclip -i -sel p -f | xclip -i -sel c
 
 if [[ $BROWSE == true ]]
 then
-    "$BROWSER" "$web_url"
+    "${BROWSER:-firefox}" "$web_url"
 fi
