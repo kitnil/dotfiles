@@ -7,3 +7,6 @@
 ;; (with-eval-after-load 'groovy-mode
 ;;   (let ((map groovy-mode-map))
 ;;     (define-key map (kbd "M-.") 'dumb-jump-go)))
+
+(add-hook 'jenkinsfile-mode-hook
+          #'(lambda () (setq-local page-delimiter "^\s*stage\(")))
