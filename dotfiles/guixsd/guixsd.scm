@@ -430,6 +430,8 @@ location / {
                            ))
            "::1 guixsd localhost"
 
+           "172.16.100.60 workstation.intr"
+
            "78.108.82.157 mjru"
 
            "192.168.100.1 r1.tld"
