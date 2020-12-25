@@ -2,8 +2,8 @@
 ;; for a "bare bones" setup, with no X11 display server.
 
 (use-modules (gnu))
-(use-service-modules certbot databases monitoring networking ssh web)
-(use-package-modules certs screen ssh)
+(use-service-modules certbot databases monitoring networking ssh web vpn)
+(use-package-modules certs curl screen ssh)
 
 (use-modules (config))
 
@@ -76,7 +76,7 @@ root ALL=(ALL) ALL
 oleg ALL=(ALL) NOPASSWD:ALL\n"))
 
   ;; Globally-installed packages.
-  (packages (cons* screen nss-certs %base-packages))
+  (packages (cons* screen nss-certs curl %base-packages))
 
   ;; Add services to the baseline: a DHCP client and
   ;; an SSH server.
@@ -86,6 +86,37 @@ oleg ALL=(ALL) NOPASSWD:ALL\n"))
                                                      #:name-servers '("8.8.8.8" "8.8.4.4"))
                           (service zabbix-agent-service-type %vm-zabbix-agent-configuration)
                           (service openssh-service-type)
+                          ;; (openvpn-client-service #:config (openvpn-client-configuration
+                          ;;                                   (remote
+                          ;;                                    (list (openvpn-remote-configuration
+                          ;;                                           (name "vm1.wugi.info")
+                          ;;                                           (port 1195))
+                          ;;                                          (openvpn-remote-configuration
+                          ;;                                           (name "vm2.wugi.info"))))
+                          ;;                                   (verify-key-usage? #f)))
+                          (service openvpn-service-type
+                                   (openvpn-configuration
+                                    (name "wugi.info")
+                                    (config (plain-file "openvpn.conf"
+                                                        "\
+client
+proto udp
+dev tun
+ca /etc/openvpn/ca.crt
+cert /etc/openvpn/client.crt
+key /etc/openvpn/client.key
+comp-lzo
+persist-key
+persist-tun
+verb 3
+nobind
+ping 5
+ping-restart 10
+resolv-retry infinite
+remote vm1.wugi.info 1195
+remote vm2.wugi.info 1194
+remote-random
+"))))
                           (service certbot-service-type
                                    (certbot-configuration
                                     (email "go.wigust@gmail.com")

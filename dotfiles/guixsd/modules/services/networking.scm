@@ -46,6 +46,8 @@
   (ip-address        gre-configuration-ip-address        ;string
                      (default #f))
   (interface-name    gre-configuration-interface-name    ;string
+                     (default #f))
+  (routes            gre-configuration-routes            ;list of strings
                      (default #f)))
 
 (define gre-service-stop ;; is not used in one-shot type
@@ -56,7 +58,7 @@
 
 (define gre-shepherd-service
   (match-lambda
-    (($ <gre-configuration> iproute ip-address-local ip-address-remote ip-address interface-name)
+    (($ <gre-configuration> iproute ip-address-local ip-address-remote ip-address interface-name routes)
      (list
       (shepherd-service
        (provision '(gre))
@@ -69,7 +71,11 @@
                                              (display "Creating GRE tunnel...\n")
                                              (apply system* (list ip "tunnel" "add" #$interface-name "mode" "gre" "local" #$ip-address-local "remote" #$ip-address-remote "ttl" "255"))
                                              (apply system* (list ip "addr" "add" #$ip-address "dev" #$interface-name))
-                                             (apply system* (list ip "link" "set" #$interface-name "up"))))))))
+                                             (apply system* (list ip "link" "set" #$interface-name "up"))
+                                             (for-each (lambda (route)
+                                                         (apply system* (append (list ip "route")
+                                                                                (string-split route #\space))))
+                                                       '#$routes)))))))
        (respawn? #f)
        (one-shot? #t)
        (stop #~(make-forkexec-constructor

@@ -530,7 +530,10 @@ EndSection")))))))
                        nix-service
                        (kresd-service (local-file "kresd.conf"))
 
-                       openvpn-service
+                       (service openvpn-service-type
+                                (openvpn-configuration
+                                 (name "majordomo.ru")
+                                 (config "/etc/openvpn/openvpn.conf")))
 
                        ;; TODO:
                        ;; (openvpn-client-service

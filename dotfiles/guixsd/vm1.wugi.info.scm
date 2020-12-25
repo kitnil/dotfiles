@@ -3,7 +3,7 @@
              (srfi srfi-1)
              (srfi srfi-26))
 
-(use-service-modules certbot desktop networking monitoring ssh vpn xorg web)
+(use-service-modules certbot desktop networking monitoring ssh sysctl vpn xorg web)
 
 (use-package-modules admin base bootloaders certs package-management wget xorg zile)
 
@@ -119,7 +119,37 @@ ServerAliveCountMax 3"))))))
                           (zabbix-agent-configuration
                            (server '("zabbix.wugi.info"))
                            (server-active '("zabbix.wugi.info"))))
-                 openvpn-service
+
+                 (service openvpn-service-type
+                          (openvpn-configuration
+                           (name "majordomo.ru")
+                           (config "/etc/openvpn/openvpn.conf")))
+
+                 (service openvpn-service-type
+                          (openvpn-configuration
+                           (name "wugi.info")
+                           (config (plain-file "openvpn.conf"
+                                               "\
+proto udp
+dev tun
+ca /etc/openvpn/ca.crt
+cert /etc/openvpn/client.crt
+key /etc/openvpn/client.key
+duplicate-cn
+comp-lzo
+persist-key
+persist-tun
+verb 3
+port 1195
+server 10.9.0.0 255.255.255.0
+dh /etc/openvpn/dh2048.pem
+ifconfig-pool-persist /etc/openvpn/ipp.txt
+client-to-client
+keepalive 5 10
+max-clients 100
+status /var/run/openvpn/status
+push \"route 10.0.0.0 255.255.255.0\"
+"))))
 
                  (service certbot-service-type
                           (certbot-configuration
@@ -165,7 +195,14 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                            (ip-address-local "78.108.82.157")
                            (ip-address-remote "78.108.87.161")
                            (ip-address "10.0.0.3/24")
-                           (interface-name "gre1"))))
+                           (interface-name "gre1")
+                           (routes '("add 10.8.0.0/24 via 10.0.0.2"))))
+                 (service sysctl-service-type
+                          (sysctl-configuration
+                           (settings '(("net.ipv4.ip_forward" . "1")
+                                       ;; ("net.ipv4.conf.all.accept_redirects" . "1")
+                                       ;; ("net.ipv4.conf.all.send_redirects" . "1")
+                                       )))))
            (load "desktop.scm")
            (modify-services %base-services
              (guix-service-type config => %guix-daemon-config))))

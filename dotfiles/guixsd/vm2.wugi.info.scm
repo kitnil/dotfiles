@@ -2,12 +2,13 @@
 ;; for a "bare bones" setup, with no X11 display server.
 
 (use-modules (gnu))
-(use-service-modules certbot networking monitoring ssh web)
+(use-service-modules certbot networking monitoring ssh sysctl web)
 (use-package-modules certs screen ssh)
 
 (use-modules (config)
              (services keepalived)
-             (services networking))
+             (services networking)
+             (services openvpn))
 
 (operating-system
   (host-name "vm2.wugi.info")
@@ -73,7 +74,39 @@ PasswordAuthentication yes")))
                                     (ip-address-local "78.108.87.161")
                                     (ip-address-remote "78.108.82.157")
                                     (ip-address "10.0.0.2/24")
-                                    (interface-name "gre1")))
+                                    (interface-name "gre1")
+                                    (routes '("add 10.9.0.0/24 via 10.0.0.3"))))
+                          (service sysctl-service-type
+                                   (sysctl-configuration
+                                    (settings '(("net.ipv4.ip_forward" . "1")
+                                                ;; ("net.ipv4.conf.all.accept_redirects" . "1")
+                                                ;; ("net.ipv4.conf.all.send_redirects" . "1")
+                                                ))))
+                          (service openvpn-service-type
+                                   (openvpn-configuration
+                                    (name "wugi.info")
+                                    (config (plain-file "openvpn.conf"
+                                                        "\
+proto udp
+dev tun
+ca /etc/openvpn/ca.crt
+cert /etc/openvpn/client.crt
+key /etc/openvpn/client.key
+duplicate-cn
+comp-lzo
+persist-key
+persist-tun
+verb 3
+port 1194
+server 10.8.0.0 255.255.255.0
+dh /etc/openvpn/dh2048.pem
+ifconfig-pool-persist /etc/openvpn/ipp.txt
+client-to-client
+keepalive 5 10
+max-clients 100
+status /var/run/openvpn/status
+push \"route 10.0.0.0 255.255.255.0\"
+"))))
                           (service certbot-service-type
                           (certbot-configuration
                            (email "go.wigust@gmail.com")
