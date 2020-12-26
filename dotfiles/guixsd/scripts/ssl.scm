@@ -23,7 +23,8 @@
 
 ;; SSL certificates for domains which will be coppied to %machines.
 (define %domains
-  '("githunt.wugi.info"))
+  '("githunt.wugi.info"
+    "homer.wugi.info"))
 
 ;; Machines available via OpenSSH.
 (define %machines

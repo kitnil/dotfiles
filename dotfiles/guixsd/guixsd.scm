@@ -19,6 +19,7 @@
              (wigust packages web)
              (services autofs)
              (services bittorrent)
+             (services homer)
              (services nix)
              (services autossh)
              (services kresd)
@@ -105,17 +106,7 @@ EndSection\n\n"))
          (server-name '("iso.wugi.info"))
          (listen '("80"))
          (root "/srv/iso"))
-        (nginx-server-configuration
-         (server-name '("homer.wugi.info"))
-         (listen '("443 ssl"))
-         (root (file-append homer "/share/homer"))
-         (locations
-          (list (nginx-location-configuration
-                 (uri "/.well-known")
-                 (body '("root /var/www;")))))
-         (ssl-certificate (letsencrypt-certificate "homer.wugi.info"))
-         (ssl-certificate-key (letsencrypt-key "homer.wugi.info"))
-         (raw-content %mtls))
+        %homer-nginx-configuration
         (nginx-server-configuration
          (server-name '("texinfo.tld"))
          (listen '("80"))
@@ -425,7 +416,7 @@ location / {
                            ))
            "::1 guixsd localhost"
 
-           "10.0.0.4 githunt.wugi.info"
+           "10.0.0.4 githunt.wugi.info homer.wugi.info"
 
            "172.16.100.60 workstation.intr"
 
@@ -529,6 +520,8 @@ EndSection")))))))
 
                        (service openvpn-service-type %openvpn-configuration-majordomo.ru)
                        (service openvpn-service-type %openvpn-configuration-wugi.info)
+
+                       (service homer-service-type)
 
                        ;; TODO:
                        ;; (openvpn-client-service

@@ -61,6 +61,7 @@
             %vm-zabbix-agent-configuration
 
             %githunt-nginx-configuration
+            %homer-nginx-configuration
             %zabbix-nginx-configuration
 
             %openvpn-configuration-wugi.info
@@ -276,6 +277,19 @@ EndSection\n")
            (body '("root /var/www;")))))
    (ssl-certificate (letsencrypt-certificate "githunt.wugi.info"))
    (ssl-certificate-key (letsencrypt-key "githunt.wugi.info"))
+   (raw-content %mtls)))
+
+(define %homer-nginx-configuration
+  (nginx-server-configuration
+   (server-name '("homer.wugi.info"))
+   (listen '("443 ssl"))
+   (root (file-append homer "/share/homer"))
+   (locations
+    (list (nginx-location-configuration
+           (uri "/.well-known")
+           (body '("root /var/www;")))))
+   (ssl-certificate (letsencrypt-certificate "homer.wugi.info"))
+   (ssl-certificate-key (letsencrypt-key "homer.wugi.info"))
    (raw-content %mtls)))
 
 (define %zabbix-nginx-configuration

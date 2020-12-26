@@ -6,6 +6,7 @@
 (use-package-modules certs screen ssh)
 
 (use-modules (config)
+             (services homer)
              (services keepalived)
              (services networking)
              (services openvpn))
@@ -134,8 +135,10 @@ push \"route 10.0.0.0 255.255.255.0\"
                                                                           (uri "/.well-known")
                                                                           (body '("root /var/www;")))
                                                                          (nginx-server-configuration-locations %webssh-configuration-nginx)))))
-                                                         %githunt-nginx-configuration))))
+                                                         %githunt-nginx-configuration
+                                                         %homer-nginx-configuration))))
 
+                          (service homer-service-type)
                           (service webssh-service-type
                                    (webssh-configuration (address "127.0.0.1")
                                                          (port 8888)
