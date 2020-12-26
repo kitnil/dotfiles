@@ -60,6 +60,7 @@
 
             %vm-zabbix-agent-configuration
 
+            %githunt-nginx-configuration
             %zabbix-nginx-configuration
 
             %openvpn-configuration-wugi.info
@@ -263,6 +264,19 @@ EndSection\n")
    (extra-options (string-join (list "UserParameter=release,/run/current-system/profile/bin/uname -a"
                                      "HostMetadataItem=release")
                                "\n"))))
+
+(define %githunt-nginx-configuration
+  (nginx-server-configuration
+   (server-name '("githunt.wugi.info"))
+   (listen '("443 ssl"))
+   (root (file-append (load "/home/oleg/archive/src/githunt/guix.scm") "/share/githunt"))
+   (locations
+    (list (nginx-location-configuration
+           (uri "/.well-known")
+           (body '("root /var/www;")))))
+   (ssl-certificate (letsencrypt-certificate "githunt.wugi.info"))
+   (ssl-certificate-key (letsencrypt-key "githunt.wugi.info"))
+   (raw-content %mtls)))
 
 (define %zabbix-nginx-configuration
   (list

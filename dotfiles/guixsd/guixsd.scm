@@ -235,17 +235,7 @@ location / {
         (proxy "syncthing.wugi.info" 8384 #:ssl? #t #:ssl-key? #t #:mtls? #t
                ;; https://docs.syncthing.net/users/faq.html#why-do-i-get-host-check-error-in-the-gui-api
                #:proxy-set-header-host "localhost")
-        (nginx-server-configuration
-         (server-name '("githunt.wugi.info"))
-         (listen '("443 ssl"))
-         (root (file-append (load "/home/oleg/archive/src/githunt/guix.scm") "/share/githunt"))
-         (locations
-          (list (nginx-location-configuration
-                 (uri "/.well-known")
-                 (body '("root /var/www;")))))
-         (ssl-certificate (letsencrypt-certificate "githunt.wugi.info"))
-         (ssl-certificate-key (letsencrypt-key "githunt.wugi.info"))
-         (raw-content %mtls))
+        %githunt-nginx-configuration
         (proxy "monitor.wugi.info" 8080)
         (proxy "guix.duckdns.org" 5556 #:ssl? #t)
         (proxy "guix.wugi.info" 5556 #:locations %nginx-lua-guix)
@@ -434,6 +424,8 @@ location / {
                            ;; "hms-billing-dev.intr"
                            ))
            "::1 guixsd localhost"
+
+           "10.0.0.4 githunt.wugi.info"
 
            "172.16.100.60 workstation.intr"
 

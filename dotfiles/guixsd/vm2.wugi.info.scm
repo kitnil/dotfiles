@@ -133,7 +133,8 @@ push \"route 10.0.0.0 255.255.255.0\"
                                                                    (cons (nginx-location-configuration
                                                                           (uri "/.well-known")
                                                                           (body '("root /var/www;")))
-                                                                         (nginx-server-configuration-locations %webssh-configuration-nginx)))))))))
+                                                                         (nginx-server-configuration-locations %webssh-configuration-nginx)))))
+                                                         %githunt-nginx-configuration))))
 
                           (service webssh-service-type
                                    (webssh-configuration (address "127.0.0.1")
