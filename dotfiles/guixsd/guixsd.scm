@@ -232,7 +232,9 @@ location / {
         (proxy "blog.wugi.info" 9001)
         (proxy "torrent.wugi.info" 9091 #:ssl? #t #:ssl-key? #t #:mtls? #t)
         (proxy "jenkins.wugi.info" 8090 #:ssl? #t #:ssl-key? #t #:mtls? #t)
-        (proxy "syncthing.wugi.info" 8384 #:ssl? #t #:ssl-key? #t #:mtls? #t)
+        (proxy "syncthing.wugi.info" 8384 #:ssl? #t #:ssl-key? #t #:mtls? #t
+               ;; https://docs.syncthing.net/users/faq.html#why-do-i-get-host-check-error-in-the-gui-api
+               #:proxy-set-header-host "localhost")
         (nginx-server-configuration
          (server-name '("githunt.wugi.info"))
          (listen '("443 ssl"))
