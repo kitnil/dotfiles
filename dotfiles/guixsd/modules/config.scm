@@ -41,6 +41,7 @@
   #:use-module (guix gexp)
   #:use-module (srfi srfi-26)
   #:use-module (ice-9 format)
+  #:use-module (services openvpn)
   #:export (%guix-daemon-config
 
             20-intel.conf
@@ -59,7 +60,10 @@
 
             %vm-zabbix-agent-configuration
 
-            %zabbix-nginx-configuration))
+            %zabbix-nginx-configuration
+
+            %openvpn-configuration-wugi.info
+            %openvpn-configuration-majordomo.ru))
 
 (define %guix-daemon-config
   (guix-configuration
@@ -281,3 +285,31 @@ EndSection\n")
     (ssl-certificate-key (letsencrypt-key "zabbix.wugi.info"))
     (raw-content %mtls))))
 
+(define %openvpn-configuration-wugi.info
+  (openvpn-configuration
+   (name "wugi.info")
+   (config (plain-file "openvpn.conf"
+                       "\
+client
+proto udp
+dev tun
+ca /etc/openvpn/ca.crt
+cert /etc/openvpn/client.crt
+key /etc/openvpn/client.key
+comp-lzo
+persist-key
+persist-tun
+verb 3
+nobind
+ping 5
+ping-restart 10
+resolv-retry infinite
+remote vm1.wugi.info 1195
+remote vm2.wugi.info 1194
+remote-random
+"))))
+
+(define %openvpn-configuration-majordomo.ru
+  (openvpn-configuration
+   (name "majordomo.ru")
+   (config "/etc/openvpn/openvpn.conf")))

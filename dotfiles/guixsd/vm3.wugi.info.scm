@@ -5,7 +5,8 @@
 (use-service-modules certbot databases monitoring networking ssh web vpn)
 (use-package-modules certs curl screen ssh)
 
-(use-modules (config))
+(use-modules (config)
+             (services openvpn))
 
 (operating-system
   (host-name "vm3.wugi.info")
@@ -94,29 +95,9 @@ oleg ALL=(ALL) NOPASSWD:ALL\n"))
                           ;;                                          (openvpn-remote-configuration
                           ;;                                           (name "vm2.wugi.info"))))
                           ;;                                   (verify-key-usage? #f)))
-                          (service openvpn-service-type
-                                   (openvpn-configuration
-                                    (name "wugi.info")
-                                    (config (plain-file "openvpn.conf"
-                                                        "\
-client
-proto udp
-dev tun
-ca /etc/openvpn/ca.crt
-cert /etc/openvpn/client.crt
-key /etc/openvpn/client.key
-comp-lzo
-persist-key
-persist-tun
-verb 3
-nobind
-ping 5
-ping-restart 10
-resolv-retry infinite
-remote vm1.wugi.info 1195
-remote vm2.wugi.info 1194
-remote-random
-"))))
+
+                          (service openvpn-service-type %openvpn-configuration-wugi.info)
+
                           (service certbot-service-type
                                    (certbot-configuration
                                     (email "go.wigust@gmail.com")
