@@ -554,6 +554,9 @@ guix()
                  --load-path="$guix_modules" --no-bootloader --fallback "$HOME/.local/share/chezmoi/dotfiles/guixsd/guixsd.scm" \
                  "${@:2}"
             ;;
+        repl)
+            GUILE_AUTOCOMPILE=0 command guix repl -L "$guix_modules" "${@:3}"
+            ;;
         system)
             case "$2" in
                 build)
