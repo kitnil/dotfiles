@@ -10,6 +10,8 @@
 
 (with-eval-after-load 'dired
   (require 'dired-x)
+  (setq dired-omit-files
+        (concat dired-omit-files "\\|^\\..+$"))
   (setq dired-guess-shell-alist-default
         (cons (list "\\.pdf\\'" "zathura")
               (delete (assoc "\\.pdf\\'" dired-guess-shell-alist-default)
