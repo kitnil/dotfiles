@@ -40,6 +40,7 @@
   #:use-module (gnu system)
   #:use-module (guix gexp)
   #:use-module (srfi srfi-26)
+  #:use-module (ice-9 format)
   #:export (%guix-daemon-config
 
             20-intel.conf
@@ -189,7 +190,8 @@ EndSection\n")
                 (target #f)
                 (sub-domains? #f)
                 (mtls? #f)
-                (locations '()))
+                (locations '())
+                (proxy-set-header-host #f))
   (nginx-server-configuration
    (server-name (if sub-domains?
                     (list (string-append sub-domains?
@@ -206,9 +208,10 @@ EndSection\n")
                                                                 (or target "127.0.0.1")
                                                                 ":" (number->string port) ";")
                                                  (format #f "proxy_pass ~a://$target;" (if ssl-target? "https" "http"))
-                                                 (if sub-domains?
-                                                     "proxy_set_header Host $http_host;"
-                                                     (format #f "proxy_set_header Host ~a;" host))
+                                                 (format #f "proxy_set_header Host ~a;"
+                                                         (cond (sub-domains? "$http_host;")
+                                                               (proxy-set-header-host proxy-set-header-host)
+                                                               (else host)))
                                                  "proxy_set_header X-Forwarded-Proto $scheme;"
                                                  "proxy_set_header X-Real-IP $remote_addr;"
                                                  "proxy_set_header X-Forwarded-for $remote_addr;"
