@@ -36,6 +36,7 @@
   (define-key *top-map* (kbd "S-s-RET") "rofi-ssh")
   (define-key *top-map* (kbd "s-\"") "global-windowlist")
   (define-key *top-map* (kbd "s-quoteright") "global-windowlist-custom")
+  (define-key *top-map* (kbd "XF86AudioMute") "volume-toggle")
   (define-key *top-map* (kbd "XF86AudioLowerVolume") "volume-decrease")
   (define-key *top-map* (kbd "XF86AudioRaiseVolume") "volume-increase")
   (define-key *top-map* (kbd "s--") "keybinding-s--")
