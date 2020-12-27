@@ -1,3 +1,5 @@
+# -*- mode: Sh; fill-column: 78; -*-
+
 export_function()
 {
   local name=$1
