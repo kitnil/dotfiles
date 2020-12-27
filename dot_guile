@@ -44,7 +44,9 @@ for a colorful Guile experience.\n\n"))))
                (guix store)
                (geiser xref)
 
-               (system repl command)))
+               (system repl command)
+
+               (ice-9 pretty-print)))
 (define c
   (if (string-prefix? "guix" (last (string-split (getcwd) #\/)))
       (open-connection)
