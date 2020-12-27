@@ -135,6 +135,7 @@ direnv:
   configure    run ./configure with predefined parameters
   environment  run 'guix environment' with presetted arguments
   push         push to upstream Git repository
+  repl         run guix repl
 "
 }
 
