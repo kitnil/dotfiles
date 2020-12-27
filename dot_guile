@@ -1,3 +1,5 @@
+;; -*- mode: Scheme; fill-column: 78; -*-
+
 (define-macro (try function)
   `(catch 'quit (lambda () ,function) (const #f)))
 
