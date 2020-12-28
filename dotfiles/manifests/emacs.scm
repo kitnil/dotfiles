@@ -112,7 +112,7 @@
        emacs-org-bullets
        emacs-org-generate
        emacs-org-mind-map       ; General mind maps from Org files
-       ;; emacs-orgit           ; BROKEN
+       emacs-orgit
        emacs-outshine           ; Emacs outline-mode
        emacs-package-lint
        emacs-pcre2el
