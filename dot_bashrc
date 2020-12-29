@@ -557,6 +557,20 @@ guix()
         repl)
             GUILE_AUTOCOMPILE=0 command guix repl -L "$guix_modules" "${@:3}"
             ;;
+        remote)
+            case "$2" in
+                reboot)
+                    ansible-playbook <(
+                        cat <<'EOF'
+- hosts: guix_vm
+  become: true
+  tasks:
+  - reboot: search_paths=/home/oleg/bin
+EOF
+                    )
+                    ;;
+            esac
+            ;;
         system)
             case "$2" in
                 build)

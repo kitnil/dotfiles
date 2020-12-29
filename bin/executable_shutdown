@@ -1,0 +1,10 @@
+#!/bin/sh
+
+case "$1" in
+    -r)
+        /run/current-system/profile/sbin/reboot
+        ;;
+    *)
+        /run/current-system/profile/sbin/shutdown "$@"
+        ;;
+esac
