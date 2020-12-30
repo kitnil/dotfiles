@@ -81,7 +81,6 @@
        emacs-highlight-defined
        emacs-highlight-sexp
        emacs-highlight-stages   ; Highlight code stages
-       emacs-highlight-symbol
        emacs-hl-todo
        emacs-htmlize
        emacs-hy-mode
@@ -138,6 +137,7 @@
        emacs-smartparens        ; Structured editing
        emacs-string-inflection
        emacs-suggest
+       emacs-symbol-overlay
        emacs-terraform-mode
        emacs-transmission       ; Front end to transmission-daemon
        emacs-transpose-frame    ; M-x transpose-frame

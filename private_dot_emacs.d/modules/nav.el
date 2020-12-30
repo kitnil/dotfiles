@@ -110,6 +110,7 @@
 
 (add-hook 'prog-mode-hook 'hl-todo-mode)
 ;; (add-hook 'prog-mode-hook 'which-function-mode)
+(add-hook 'prog-mode-hook 'symbol-overlay-mode)
 
 (ivy-posframe-mode 1)
 (setq ivy-posframe-display-functions-alist

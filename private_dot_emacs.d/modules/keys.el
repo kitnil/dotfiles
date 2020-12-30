@@ -129,8 +129,8 @@ ARGS will be passed to hydra."
                 ("p" backward-page "prev page"))
 
 (wi-define-keys "C-c g a S" text-symbol
-                ("n" highlight-symbol-next "next")
-                ("p" highlight-symbol-prev "prev"))
+                ("n" symbol-overlay-jump-next "next")
+                ("p" symbol-overlay-jump-prev "prev"))
 
 (wi-define-keys "C-c g a s" text-sexp
                 ("j" sp-join-sexp "join")
@@ -424,8 +424,11 @@ ARGS will be passed to hydra."
   (let ((map prog-mode-map))
     (define-key map (kbd "<f5>") 'recompile)
     (define-key map (kbd "<f6>") 'rg)
-    (define-key map (kbd "<f7>") 'highlight-symbol-prev)
-    (define-key map (kbd "<f8>") 'highlight-symbol-next)))
+    (define-key map (kbd "<f7>") 'symbol-overlay-mode)
+    (define-key map (kbd "<f8>") 'symbol-overlay-remove-all)
+    (define-key map (kbd "M-i") 'symbol-overlay-put)
+    (define-key map (kbd "M-n") 'symbol-overlay-switch-forward)
+    (define-key map (kbd "M-p") 'symbol-overlay-switch-backward)))
 
 (with-eval-after-load 'perl-mode
   (let ((map perl-mode-map))
