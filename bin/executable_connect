@@ -13,6 +13,7 @@ COMMAND must be one of the sub-commands listed below:
 
   general commands
     uptime        show uptime on SERVER
+    php           show PHP status on SERVER
 
   disk commands
     io            show input output stats on SERVER
@@ -432,6 +433,21 @@ mycli --password "$(pass show majordomo/public/web/mysql/root)" -d "${2%.intr}"
         ;;
     uptime)
         connect ssh "$2" -- uptime | jc --uptime
+        ;;
+    php)
+        parallel --will-cite -k 'printf "domain: %s\n" {1}; curl --max-time 10 -L -s -o /dev/null -w "ip-address: %{remote_ip}\nstatus_code: %{http_code}" {1}; printf "\n\n"' ::: \
+                 "http://$2/apache2/php44/phpinfo.php" \
+                 "http://$2/apache2/php52/phpinfo.php" \
+                 "http://$2/apache2/php53/phpinfo.php" \
+                 "http://$2/apache2/php54/phpinfo.php" \
+                 "http://$2/apache2/php55/phpinfo.php" \
+                 "http://$2/apache2/php56/phpinfo.php" \
+                 "http://$2/apache2/php70/phpinfo.php" \
+                 "http://$2/apache2/php71/phpinfo.php" \
+                 "http://$2/apache2/php72/phpinfo.php" \
+                 "http://$2/apache2/php73/phpinfo.php" \
+                 "http://$2/apache2/php74/phpinfo.php" \
+                 "http://$2/apache2/php80/phpinfo.php"
         ;;
 esac
 
