@@ -16,6 +16,7 @@
 ;; Third-party modules
 (use-modules (config)
              (wigust packages admin)
+             (wigust packages vnc)
              (wigust packages web)
              (services autofs)
              (services bittorrent)
@@ -439,6 +440,7 @@ location / {
          "\n")))
 
       (services (cons* (service vncserver-service-type (vncserver-configuration
+                                                        (vncserver tigervnc-server-1.10.1)
                                                         (display 1)
                                                         (user "oleg")
                                                         (group "users")
@@ -446,6 +448,7 @@ location / {
                                                         (xstartup "/home/oleg/.vnc/xstartup-firefox")
                                                         (host-name "guixsd")))
                        (service vncserver-service-type (vncserver-configuration
+                                                        (vncserver tigervnc-server-1.10.1)
                                                         (display 2)
                                                         (user "oleg")
                                                         (group "users")
@@ -453,6 +456,7 @@ location / {
                                                         (xstartup "/home/oleg/.vnc/xstartup-stumpwm")
                                                         (host-name "guixsd")))
                        (service vncserver-service-type (vncserver-configuration
+                                                        (vncserver tigervnc-server-1.10.1)
                                                         (display 10)
                                                         (user "oleg")
                                                         (group "users")
