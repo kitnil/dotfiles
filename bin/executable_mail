@@ -46,6 +46,7 @@ mail_addresses=(pyhalov@majordomo.ru
 		rxaetbed@mail.ru
                 houdinihar@yandex.ru
                 jenkins@majordomo.ru
+                i18n.wugi@yandex.ru
                 zabbix.guix@yandex.ru
                 localhost)
 
@@ -89,6 +90,13 @@ case "$1" in
                     --request "EXAMINE ${3:-INBOX}"                                             \
                     --user "jenkins@majordomo.ru:$(pass show majordomo/public/jenkins.intr/admin)"     \
                     imaps://imap.majordomo.ru:993
+                ;;
+            i18n.wugi@yandex.ru)
+                exec -a "$0" curl                                                       \
+                    --silent                                                            \
+                    --request "EXAMINE ${3:-INBOX}"                                     \
+                    --user "i18n.wugi:$(pass show email/yandex.ru/i18n.wugi)"           \
+                    imaps://imap.yandex.ru:993
                 ;;
             zabbix.guix@yandex.ru)
                 exec -a "$0" curl                                                       \
@@ -135,6 +143,9 @@ case "$1" in
                 ;;
             jenkins@majordomo.ru)
                 exec -a "$0" neomutt -F "$HOME/.muttrc_jenkins_majordomo"
+                ;;
+            i18n.wugi@yandex.ru)
+                exec -a "$0" neomutt -F "$HOME/.muttrc_i18n.wugi_yandex"
                 ;;
             zabbix.guix@yandex.ru)
                 exec -a "$0" neomutt -F "$HOME/.muttrc_zabbix.guix_yandex"
