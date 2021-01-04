@@ -2,7 +2,7 @@
 ;; for a "bare bones" setup, with no X11 display server.
 
 (use-modules (gnu))
-(use-service-modules databases dbus desktop docker networking ssh)
+(use-service-modules databases dbus desktop docker networking ssh web)
 (use-package-modules curl certs screen ssh)
 
 (use-modules (config))
@@ -73,6 +73,10 @@ local	all	all			trust
 host	all	all	127.0.0.1/32    trust
 host	all	all	::1/128         trust
 host	all	all	172.16.0.0/12   trust"))
-                                                             (extra-config '(("listen_addresses" "'0.0.0.0'"))))))
+                                                             (extra-config '(("listen_addresses" "'0.0.0.0'")))))
+                          (service redis-service-type)
+                          (service nginx-service-type
+                                   (nginx-configuration
+                                    (server-blocks (list (proxy "i18n.wugi.info" 8080))))))
                     (modify-services %base-services
                       (guix-service-type config => %guix-daemon-config)))))
