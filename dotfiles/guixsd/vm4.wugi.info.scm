@@ -2,7 +2,7 @@
 ;; for a "bare bones" setup, with no X11 display server.
 
 (use-modules (gnu))
-(use-service-modules networking ssh)
+(use-service-modules dbus desktop docker networking ssh)
 (use-package-modules curl certs screen ssh)
 
 (use-modules (config))
@@ -24,6 +24,11 @@
                         (type "ext4"))
                       %base-file-systems))
 
+  (groups (append (list (user-group
+                         (name "docker")
+                         (system? #t)))
+                  %base-groups))
+
   ;; This is where user accounts are specified.  The "root"
   ;; account is implicit, and is initially created with the
   ;; empty password.
@@ -36,8 +41,7 @@
                 ;; makes it a sudoer.  Adding it to "audio"
                 ;; and "video" allows the user to play sound
                 ;; and access the webcam.
-                (supplementary-groups '("wheel"
-                                        "audio" "video")))
+                (supplementary-groups '("wheel" "audio" "video" "docker")))
                %base-user-accounts))
 
   (sudoers-file (plain-file "sudoers" "\
@@ -56,6 +60,10 @@ oleg ALL=(ALL) NOPASSWD:ALL\n"))
                                                      #:name-servers '("8.8.8.8" "8.8.4.4"))
                           (service openssh-service-type
                                    (openssh-configuration
-                                    (password-authentication? #t))))
+                                    (password-authentication? #t)
+                                    (use-pam? #f)))
+                          (dbus-service)
+                          (elogind-service)
+                          (service docker-service-type))
                     (modify-services %base-services
                       (guix-service-type config => %guix-daemon-config)))))
