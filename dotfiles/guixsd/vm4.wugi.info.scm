@@ -3,7 +3,9 @@
 
 (use-modules (gnu))
 (use-service-modules networking ssh)
-(use-package-modules screen ssh)
+(use-package-modules curl certs screen ssh)
+
+(use-modules (config))
 
 (operating-system
   (host-name "vm4.wugi.info")
@@ -38,8 +40,13 @@
                                         "audio" "video")))
                %base-user-accounts))
 
+  (sudoers-file (plain-file "sudoers" "\
+root ALL=(ALL) ALL
+%wheel ALL=(ALL) ALL
+oleg ALL=(ALL) NOPASSWD:ALL\n"))
+
   ;; Globally-installed packages.
-  (packages (cons screen %base-packages))
+  (packages (cons* curl nss-certs screen %base-packages))
 
   ;; Add services to the baseline: a DHCP client and
   ;; an SSH server.
@@ -50,4 +57,5 @@
                           (service openssh-service-type
                                    (openssh-configuration
                                     (password-authentication? #t))))
-                    %base-services)))
+                    (modify-services %base-services
+                      (guix-service-type config => %guix-daemon-config)))))
