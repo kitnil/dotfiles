@@ -298,13 +298,13 @@ location / {
       (kernel (let* ((channels (list (channel
                                       (name 'nonguix)
                                       (url "https://gitlab.com/nonguix/nonguix")
-                                      (commit "694e85778daf6dbb8a6e87949c67e45ead658e55"))
+                                      (commit "d12b4eb46db73307b04476076f072c89d4202f6c"))
                                      (channel
                                       (name 'guix)
                                       (url "https://git.savannah.gnu.org/git/guix.git")
-                                      (commit "00014f769233facebd84f13a00b10032a22cb440"))))
+                                      (commit "efa773f94a18b40f2c63795f364ae87dade76f60"))))
                      (inferior (inferior-for-channels channels)))
-                (first (lookup-inferior-packages inferior "linux" "5.8.14"))))
+                (first (lookup-inferior-packages inferior "linux" "5.10.4"))))
       (firmware (cons* amdgpu-firmware linux-firmware %base-firmware))
       (kernel-arguments '("modprobe.blacklist=pcspkr,snd_pcsp"))
       (packages %my-system-packages)
