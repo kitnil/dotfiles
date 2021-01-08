@@ -38,14 +38,7 @@
   (string-append "\
 
 Section \"Device\"
-        Identifier  \"amd-video-card-displayport-5\"
-        Driver      \"amdgpu\"
-        Option      \"TearFree\" \"true\"
-        Option      \"DRI\" \"3\"
-EndSection
-
-Section \"Device\"
-        Identifier  \"amd-video-card-hdmi-a-3\"
+        Identifier  \"amd-video-card-displayport-0\"
         Driver      \"amdgpu\"
         Option      \"TearFree\" \"true\"
         Option      \"DRI\" \"3\"
@@ -53,15 +46,10 @@ EndSection
 
 Section \"Screen\"
    Identifier  \"Screen 1\"
-   Device      \"amd-video-card-displayport-5\"
-   Monitor     \"DisplayPort-5\"
+   Device      \"amd-video-card-displayport-0\"
+   Monitor     \"DisplayPort-0\"
 EndSection
-
-Section \"Screen\"
-   Identifier  \"Screen 2\"
-   Device      \"amd-video-card-hdmi-a-3\"
-   Monitor     \"HDMI-A-3\"
-EndSection\n\n"))
+\n\n"))
 
 
 
