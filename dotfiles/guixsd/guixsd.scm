@@ -306,7 +306,7 @@ location / {
                      (inferior (inferior-for-channels channels)))
                 (first (lookup-inferior-packages inferior "linux" "5.10.4"))))
       (firmware (cons* amdgpu-firmware linux-firmware %base-firmware))
-      (kernel-arguments '("modprobe.blacklist=pcspkr,snd_pcsp"))
+      (kernel-arguments '("modprobe.blacklist=pcspkr,snd_pcsp" "amdgpu.noretry=0"))
       (packages %my-system-packages)
 
       (groups (cons* (user-group (name "nixbld")
