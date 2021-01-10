@@ -1,0 +1,22 @@
+#!/usr/bin/env python3
+
+import subprocess
+import sys
+
+def main():
+    query = sys.argv[1]
+    urls = [
+        "https://www.e-katalog.ru/ek-list.php?search_=" + query,
+        "https://www.ozon.ru/search/?from_global=true&text=" + query,
+        "https://www.wildberries.ru/catalog/0/search.aspx?search=" + query,
+        "https://www.avito.ru/sankt-peterburg?localPriority=0&q=" + query,
+        "https://www.amazon.com/s?url=search-alias%3Daps&field-keywords=" + query,
+        "https://www.ebay.com/sch/i.html?_nkw=" + query + "&_sacat=0",
+        "https://aliexpress.ru/wholesale?catId=0&initiative_id=SB_20210109221453&SearchText=" + query,
+    ]
+    for url in urls:
+        subprocess.run(["firefox", url])
+
+if __name__ == "__main__":
+    # execute only if run as a script
+    main()
