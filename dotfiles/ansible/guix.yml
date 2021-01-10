@@ -1,4 +1,4 @@
-- hosts: remote
+- hosts: guix_vm
   tasks:
     - name: Bootstrap a host without python or git installed
       raw: '([[ -e ~/.guix-profile/bin/python3 ]] && [[ -e ~/.guix-profile/bin/git ]]) || guix install python git'
@@ -22,7 +22,7 @@
         manifest: /home/oleg/.local/share/chezmoi/dotfiles/manifests/spb.scm
         load_path: /home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules
 
-- hosts: remote
+- hosts: guix_vm
   become: yes
   become_flags: '-i'
   tasks:
