@@ -2,7 +2,7 @@
 ;; for a "bare bones" setup, with no X11 display server.
 
 (use-modules (gnu))
-(use-service-modules databases dbus desktop docker networking ssh web)
+(use-service-modules certbot databases dbus desktop docker networking ssh web)
 (use-package-modules curl certs screen ssh)
 
 (use-modules (config))
@@ -77,6 +77,15 @@ host	all	all	172.16.0.0/12   trust"))
                           (service redis-service-type)
                           (service nginx-service-type
                                    (nginx-configuration
-                                    (server-blocks (list (proxy "i18n.wugi.info" 8080))))))
+                                    (server-blocks (list (proxy "i18n.wugi.info" 8080 #:ssl? #t #:ssl-key? #t)))))
+                          (service certbot-service-type
+                                   (certbot-configuration
+                                    (email "go.wigust@gmail.com")
+                                    (certificates
+                                     `(,@(map (lambda (host)
+                                                (certificate-configuration
+                                                 (domains (list host))
+                                                 (deploy-hook %nginx-deploy-hook)))
+                                              (list "i18n.wugi.info")))))))
                     (modify-services %base-services
                       (guix-service-type config => %guix-daemon-config)))))
