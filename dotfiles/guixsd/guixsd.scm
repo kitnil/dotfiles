@@ -7,7 +7,7 @@
              (srfi srfi-1)
              (srfi srfi-26))
 
-(use-package-modules admin audio android bittorrent linux ssh suckless xdisorg)
+(use-package-modules admin audio android bittorrent linux ssh suckless xdisorg xorg)
 
 (use-service-modules admin dbus desktop docker dns networking sound
                      xorg ssh web cgit version-control certbot
@@ -480,6 +480,7 @@ location / {
 				 ;; (theme %slim-theme) TODO: Fix the theme.
                                  (xorg-configuration
                                   (xorg-configuration
+                                   (modules (delete xf86-video-ati (delete xf86-video-nouveau (delete xf86-video-intel %default-xorg-modules))))
                                    (extra-config (list (amdgpu+amdgpu.conf)))))))
                        #;(service slim-service-type
                                 (slim-configuration
