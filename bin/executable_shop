@@ -1,20 +1,30 @@
 #!/usr/bin/env python3
 
+import argparse
 import subprocess
-import sys
 
 def main():
-    query = sys.argv[1]
-    urls = [
-        "https://www.e-katalog.ru/ek-list.php?search_=" + query,
-        "https://www.ozon.ru/search/?from_global=true&text=" + query,
-        "https://www.wildberries.ru/catalog/0/search.aspx?search=" + query,
-        "https://www.avito.ru/sankt-peterburg?localPriority=0&q=" + query,
-        "https://www.amazon.com/s?url=search-alias%3Daps&field-keywords=" + query,
-        "https://www.ebay.com/sch/i.html?_nkw=" + query + "&_sacat=0",
-        "https://aliexpress.ru/wholesale?catId=0&initiative_id=SB_20210109221453&SearchText=" + query,
-    ]
-    for url in urls:
+    parser = argparse.ArgumentParser(description="Open URLs in online shops")
+    parser.add_argument("-c", "--context", default="generic", required=False, help="Product context")
+    parser.add_argument("products", metavar="P", type=str, nargs="+", help="Product name")
+    args = parser.parse_args()
+    query = args.products[0]
+    urls = {
+        "generic": [
+            "https://www.e-katalog.ru/ek-list.php?search_=" + query,
+            "https://www.ozon.ru/search/?from_global=true&text=" + query,
+            "https://www.wildberries.ru/catalog/0/search.aspx?search=" + query,
+            "https://www.avito.ru/sankt-peterburg?localPriority=0&q=" + query,
+            "https://www.amazon.com/s?url=search-alias%3Daps&field-keywords=" + query,
+            "https://www.ebay.com/sch/i.html?_nkw=" + query + "&_sacat=0",
+            "https://aliexpress.ru/wholesale?catId=0&initiative_id=SB_20210109221453&SearchText=" + query,
+        ],
+        "food": [
+            "https://www.okeydostavka.ru/webapp/wcs/stores/servlet/SearchDisplay?categoryId=&storeId=10653&catalogId=12052&langId=-20&sType=SimpleSearch&resultCatEntryType=2&showResultsPage=true&searchSource=Q&pageView=&beginIndex=0&pageSize=72&searchTerm=" + query,
+            "https://vprok.ru/catalog/search?text=" + query
+        ]
+    }
+    for url in urls[args.context]:
         subprocess.run(["firefox", url])
 
 if __name__ == "__main__":
