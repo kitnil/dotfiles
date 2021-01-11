@@ -5,8 +5,8 @@ set -eux
 account="$1"
 host="$2"
 
-IHS_USER="USER:-pyhalov"
-IHS_PASS="PASSWORD:-$(pass show majordomo/private/hms/pyhalov)"
+IHS_USER="${IHS_USER:-pyhalov}"
+IHS_PASS="${IHS_PASSWORD:-$(pass show majordomo/private/hms/pyhalov)}"
 
 auth ()
 {
