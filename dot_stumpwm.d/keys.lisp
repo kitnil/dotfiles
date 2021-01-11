@@ -179,6 +179,7 @@
 (define-key *root-map* (kbd "e") "emacsclient")
 (define-key *root-map* (kbd "quoteleft") "display-0-keys")
 (define-key *root-map* (kbd "y") "greenclip")
+(define-key *root-map* (kbd "j") "turn-screen-off")
 
 (defcommand sxhkd-restart () ()
   (run-shell-command "sxhkd"))
