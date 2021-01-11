@@ -31,5 +31,11 @@
 
   (packages %base-packages)
 
-  (services (cons (service dhcp-client-service-type)
+  (services (cons (static-networking-service "enp34s0" "192.168.0.144"
+					     #:netmask "255.255.255.0"
+					     #:gateway "192.168.0.1"
+					     #:name-servers '("192.168.0.144\nsearch intr majordomo.ru"
+                                                              "172.17.0.1"
+                                                              "8.8.8.8"
+                                                              "8.8.4.4"))
 		  %base-services)))
