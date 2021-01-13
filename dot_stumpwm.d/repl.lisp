@@ -12,6 +12,9 @@
 (defcommand repl-gdb () ()
   (term-shell-command "gdb" :scrollbar t :title "repl-gdb"))
 
+(defcommand repl-perl () ()
+  (term-shell-command "re.pl" :scrollbar t :title "repl-perl"))
+
 (defcommand repl-php () ()
   (term-shell-command "php -a" :scrollbar t :title "repl-php"))
 
