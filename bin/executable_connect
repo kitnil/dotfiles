@@ -103,7 +103,7 @@ telnet_expect_interact()
 ssh_expect()
 {
     PYTHONPATH=''                                               \
-    SSH_KEY="$HOME/.ssh/eng_key_rsa"                            \
+    SSH_KEY="$HOME/.ssh/id_rsa_majordomo_eng"                            \
     BECOME_PASSWORD="$(pass show majordomo/private/ssh/eng)"    \
     ssh-sudo "$@"
 }
@@ -142,7 +142,7 @@ case "$1" in
         echo 172.16.103.199
         sshpass -p"$(pass show majordomo/private/ssh/router)"   \
                 ssh -F /dev/null                                \
-                -i "$HOME/.ssh/eng_key_rsa"                     \
+                -i "$HOME/.ssh/id_rsa_majordomo_eng"                     \
                 -o UserKnownHostsFile=/dev/null                 \
                 -o StrictHostKeyChecking=no                     \
                 -l root                                         \
@@ -152,7 +152,7 @@ case "$1" in
     sr*mr*)
         sshpass -p"$(pass show majordomo/private/ssh/router)"   \
                 ssh -F /dev/null                                \
-                -i "$HOME/.ssh/eng_key_rsa"                     \
+                -i "$HOME/.ssh/id_rsa_majordomo_eng"                     \
                 -o UserKnownHostsFile=/dev/null                 \
                 -o StrictHostKeyChecking=no                     \
                 -l root                                         \
@@ -162,7 +162,7 @@ case "$1" in
     sr*dh*)
         sshpass -p"$(pass show majordomo/private/ssh/router)"   \
                 ssh -F /dev/null                                \
-                -i "$HOME/.ssh/eng_key_rsa"                     \
+                -i "$HOME/.ssh/id_rsa_majordomo_eng"                     \
                 -o UserKnownHostsFile=/dev/null                 \
                 -o StrictHostKeyChecking=no                     \
                 -l root                                         \

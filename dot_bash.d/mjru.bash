@@ -86,7 +86,7 @@ router4.intr()
 router.majordomo.ru()
 {
     ssh -t work
-    # sshpass -p$(pass show majordomo/public/majordomo/router.majordomo.ru) ssh -vvv -oKexAlgorithms=+diffie-hellman-group1-sha1 -oHostKeyAlgorithms=+ssh-dss -p 1022 -l root -i ~/.ssh/eng_key_rsa router.majordomo.ru
+    # sshpass -p$(pass show majordomo/public/majordomo/router.majordomo.ru) ssh -vvv -oKexAlgorithms=+diffie-hellman-group1-sha1 -oHostKeyAlgorithms=+ssh-dss -p 1022 -l root -i ~/.ssh/id_rsa_majordomo_eng router.majordomo.ru
 }
 
 br1-mr14.intr-ftp-list()
