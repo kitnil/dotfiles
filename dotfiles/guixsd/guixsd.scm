@@ -477,6 +477,8 @@ location / {
                        ;; Desktop services
                        (service slim-service-type
                                 (slim-configuration
+                                 (auto-login? #t)
+                                 (default-user "oleg")
 				 ;; (theme %slim-theme) TODO: Fix the theme.
                                  (xorg-configuration
                                   (xorg-configuration
