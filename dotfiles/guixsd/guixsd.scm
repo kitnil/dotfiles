@@ -299,7 +299,29 @@ location / {
       (initrd microcode-initrd)
       (kernel linux-5.10)
       (firmware (cons* amdgpu-firmware linux-firmware %base-firmware))
-      (kernel-arguments '("modprobe.blacklist=pcspkr,snd_pcsp" "amdgpu.noretry=0"))
+      (kernel-arguments '("modprobe.blacklist=pcspkr,snd_pcsp"
+
+                          ;; Arch Linux Forums
+                          ;; Random freezes with AMD Ryzen on Linux 5.0 / Kernel & Hardware
+                          ;; <https://bbs.archlinux.org/viewtopic.php?id=245608>
+                          ;;
+                          ;; "processor.max_cstate=5"
+
+                          ;; [5.2/5.3][drm:amdgpu_dm_atomic_commit_tail
+                          ;; [amdgpu]] *ERROR* Waiting for fences timed out or interrupted!
+                          ;; (#934) · Issues · drm / amd · GitLab
+                          ;; <https://gitlab.freedesktop.org/drm/amd/-/issues/934>
+                          ;;
+                          "amdgpu.audio=0"
+                          "amdgpu.gpu_recovery=1"
+                          "amdgpu.lockup_timeout=1000"
+                          "amdgpu.noretry=0"
+                          "amdgpu.ppfeaturemask=0xffffffff"
+
+                          ;; "amdgpu.noretry=0"
+                          ;; "amdgpu.dc=0"
+                          ;; "amdgpu.gpu_recovery=1"
+                          ))
       (packages %my-system-packages)
 
       (groups (cons* (user-group (name "nixbld")
@@ -470,8 +492,8 @@ location / {
                        ;; Desktop services
                        (service slim-service-type
                                 (slim-configuration
-                                 (auto-login? #t)
-                                 (default-user "oleg")
+                                 ;; (auto-login? #t)
+                                 ;; (default-user "oleg")
 				 ;; (theme %slim-theme) TODO: Fix the theme.
                                  (xorg-configuration
                                   (xorg-configuration
@@ -492,7 +514,7 @@ EndSection")))))))
                        (screen-locker-service slock)
                        (screen-locker-service xlockmore "xlock")
                        (udisks-service)
-                       (upower-service)
+                       ;; (upower-service)
                        (accountsservice-service)
                        (colord-service)
                        (geoclue-service)
