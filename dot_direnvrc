@@ -98,7 +98,7 @@ use_guix()
 
     build()
     {
-        make -j 2
+        make -j "$(nproc)"
         if [ $# -gt 0 ]
         then
             case "$1" in
