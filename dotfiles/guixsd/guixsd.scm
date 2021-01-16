@@ -29,7 +29,8 @@
              (services openvpn)
              (services syncthing)
              (services vnc)
-             (nongnu packages linux))
+             (nongnu packages linux)
+             (nongnu system linux-initrd))
 
 ;; Fix Jenkins in Docker group
 (module-set! (resolve-module '(gnu packages admin)) 'shepherd shepherd-patched)
@@ -295,16 +296,8 @@ location / {
   (let ((base-system (load %hardware-file)))
     (operating-system
       (inherit base-system)
-      (kernel (let* ((channels (list (channel
-                                      (name 'nonguix)
-                                      (url "https://gitlab.com/nonguix/nonguix")
-                                      (commit "d12b4eb46db73307b04476076f072c89d4202f6c"))
-                                     (channel
-                                      (name 'guix)
-                                      (url "https://git.savannah.gnu.org/git/guix.git")
-                                      (commit "efa773f94a18b40f2c63795f364ae87dade76f60"))))
-                     (inferior (inferior-for-channels channels)))
-                (first (lookup-inferior-packages inferior "linux" "5.10.4"))))
+      (initrd microcode-initrd)
+      (kernel linux-5.10)
       (firmware (cons* amdgpu-firmware linux-firmware %base-firmware))
       (kernel-arguments '("modprobe.blacklist=pcspkr,snd_pcsp" "amdgpu.noretry=0"))
       (packages %my-system-packages)
