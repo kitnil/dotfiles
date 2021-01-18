@@ -173,6 +173,7 @@ xml xorg)
 
                perltidy ;format Perl code
                perl-uri-escape ;convert url
+               perl-moose
 
                binutils
                patchelf ;patch elf
