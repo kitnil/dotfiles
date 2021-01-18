@@ -13,7 +13,7 @@ BROWSE="${GITLAB_BROWSE:-true}"
 
 assignee_id()
 {
-    curl --header "Content-Type: application/json" \
+    curl --verbose --header "Content-Type: application/json" \
          --header "PRIVATE-TOKEN: $PRIVATE_TOKEN" \
          "https://gitlab.intr/api/v4/users?active=true" \
         | jq --raw-output ".[] | select(.username == \"$1\") | .id"
@@ -22,14 +22,19 @@ ASSIGNEE_ID="${GITLAB_ASSIGNEE_ID:-$(assignee_id "$ASSIGNEE_USER")}"
 
 merge_request()
 {
-    curl --request POST --header 'Content-Type: application/json' --header "PRIVATE-TOKEN: $PRIVATE_TOKEN" "https://gitlab.intr/api/v4/projects/$PROJECT_ID/merge_requests" --data "{\"source_branch\": \"$(git branch --show-current)\", \"target_branch\": \"master\", \"title\": \"$(git log -1 --format=%s)\", \"assignee_id\": \"$ASSIGNEE_ID\", \"remove_source_branch\": \"true\", \"squash\": \"$SQUASH\"}"
+    curl --verbose --request POST --header 'Content-Type: application/json' --header "PRIVATE-TOKEN: $PRIVATE_TOKEN" "https://gitlab.intr/api/v4/projects/$PROJECT_ID/merge_requests" --data "{\"source_branch\": \"$(git branch --show-current)\", \"target_branch\": \"master\", \"title\": \"$(git log -1 --format=%s)\", \"assignee_id\": \"$ASSIGNEE_ID\", \"remove_source_branch\": \"true\", \"squash\": \"$SQUASH\"}"
 }
 
 web_url="$(merge_request | jq --raw-output .web_url)"
 
 echo "$web_url" | xclip -i -sel p -f | xclip -i -sel c
 
-if [[ $BROWSE == true ]]
+if [[ "$web_url" == http* ]]
 then
-    "${BROWSER:-firefox}" "$web_url"
+    if [[ $BROWSE == true ]]
+    then
+        "${BROWSER:-firefox}" "$web_url"
+    fi
+else
+    printf "'$web_url' is not a HTTP URL.\n"
 fi
