@@ -197,6 +197,9 @@
 (defcommand zabbix () ()
   (run-shell-command "firefox --new-window https://zabbix.wugi.info/"))
 
+(defcommand shop-food () ()
+  (run-shell-command (join (list "shop" "--context" "food" (get-x-selection)))))
+
 
 ;;;
 ;;; Reference cards
