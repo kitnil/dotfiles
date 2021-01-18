@@ -314,9 +314,19 @@ location / {
                           ;;
                           "amdgpu.audio=0"
                           "amdgpu.gpu_recovery=1"
-                          "amdgpu.lockup_timeout=1000"
+                          ;; "amdgpu.lockup_timeout=1000"
                           "amdgpu.noretry=0"
-                          "amdgpu.ppfeaturemask=0xffffffff"
+                          "amdgpu.ppfeaturemask=0xfffffffb"
+                          ;; "amdgpu.ppfeaturemask=0xffffffff"
+                          ;; "amdgpu.dpm=0"
+
+                          ;; Arch Linux Forums
+                          ;; AMD Vega 64 GPU hang/freezes sporadically under load on recent kernels / Kernel & Hardware
+                          ;; <https://bbs.archlinux.org/viewtopic.php?id=259128>
+                          ;; "amdgpu.dpm=0"
+                          ;; "amdgpu.aspm=0"
+                          ;; "amdgpu.runpm=0"
+                          ;; "amdgpu.bapm=0"
 
                           ;; "amdgpu.noretry=0"
                           ;; "amdgpu.dc=0"
