@@ -1,6 +1,9 @@
 pipeline {
     agent { label "guixsd" }
-    options { disableConcurrentBuilds() }
+    options {
+        disableConcurrentBuilds()
+        timeout(time: 1, unit: "HOURS")
+    }
     stages {
         stage("Deploy") {
             agent { label "master" }
