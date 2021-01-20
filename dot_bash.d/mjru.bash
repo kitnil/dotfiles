@@ -345,3 +345,9 @@ mjru-proxy()
 {
     ssh -Nf -D 5557 workstation.intr
 }
+
+mjru-vlan()
+{
+    echo "PXE is on VLAN 254"
+    echo "chef-server '/usr/sbin/in.tftpd -L -a 192.168.254.1 -s /var/tftpboot'"
+}
