@@ -57,6 +57,7 @@
        emacs-fill-column-indicator
        emacs-flycheck                 ; Syntax checker
        emacs-jenkinsfile-mode
+       emacs-jsonnet-mode
        emacs-geiser                   ; Scheme bridge
        emacs-ggtags             ; Front end to GNU Global
        emacs-git-auto-commit-mode
