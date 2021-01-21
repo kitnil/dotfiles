@@ -2,5 +2,5 @@
 /build-env
 /todo.org
 /.dumbjump
-/.envrc
+/**/.envrc
 /.gradle
