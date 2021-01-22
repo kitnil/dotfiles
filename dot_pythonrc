@@ -22,6 +22,7 @@ class MongoHms:
         self.service = self.myclient["staffResourceController"]["service"]
         self.socket = self.myclient["staffResourceController"]["socket"]
         self.service_socket = self.myclient["staffResourceController"]["serviceSocket"]
+        self.installer = self.myclient["appscat"]["installer"]
 
     def ip_address_to_int(self, ip_address):
         """Convert IP address to integer."""
@@ -102,3 +103,27 @@ class MongoHms:
             "personalAccountId":account_id,
             "state":"PROCESSING"
         }, {"$set": {"state":"PROCESSED"}})
+
+    def wordpress(self, version):
+        from datetime import datetime
+        current_time = datetime.utcnow()
+        self.installer.insert_one({
+            "name" : f"WordPress {version} Installer",
+            "dockerImage" : f"docker-registry.intr/apps/wordpress:{version}",
+            "requiredParams" : [
+                "DB_HOST",
+                "APP_PATH",
+                "APP_TITLE",
+                "DB_NAME",
+                "ADMIN_USERNAME",
+                "DB_PASSWORD",
+                "DB_USER",
+                "ADMIN_EMAIL",
+                "ADMIN_PASSWORD",
+                "DOMAIN_NAME"
+            ],
+            "created" : current_time,
+            "updated" : current_time,
+            "_class" : "ru.majordomo.hms.appscat.model.Installer"
+        })
+
