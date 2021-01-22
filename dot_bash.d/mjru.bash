@@ -351,3 +351,9 @@ mjru-vlan()
     echo "PXE is on VLAN 254"
     echo "chef-server '/usr/sbin/in.tftpd -L -a 192.168.254.1 -s /var/tftpboot'"
 }
+
+mjru-python()
+{
+    echo "Setting HMS_MONGO_PASSWORD environment variable."
+    HMS_MONGO_PASSWORD="$(pass show majordomo/public/mongo/hms/admin)" python3
+}
