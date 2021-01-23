@@ -1863,6 +1863,16 @@ ipmi()
     IPMI_PASSWORD="$(pass show majordomo/public/majordomo/ipmi/ADMIN)" command ipmi "$@"
 }
 
+efi()
+{
+    if [ -d /sys/firmware/efi ]
+    then
+        echo UEFI
+    else
+        echo BIOS
+    fi
+}
+
 PATH="/home/oleg/perl5/bin${PATH:+:${PATH}}"; export PATH;
 PERL5LIB="/home/oleg/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
 PERL_LOCAL_LIB_ROOT="/home/oleg/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
