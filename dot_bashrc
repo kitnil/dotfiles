@@ -1873,6 +1873,17 @@ efi()
     fi
 }
 
+mediatomb()
+{
+    case "$1" in
+        start)
+            command mediatomb -e enp34s0 -f Videos/.mediatomb "${@:2}"
+            ;;
+        *)
+            command mediatomb "$@"
+    esac
+}
+
 PATH="/home/oleg/perl5/bin${PATH:+:${PATH}}"; export PATH;
 PERL5LIB="/home/oleg/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
 PERL_LOCAL_LIB_ROOT="/home/oleg/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
