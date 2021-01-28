@@ -299,7 +299,14 @@ location / {
       (initrd microcode-initrd)
       (kernel linux-5.10)
       (firmware (cons* amdgpu-firmware linux-firmware %base-firmware))
+      ;; (initrd-modules (append '("vfio_pci" "vfio" "vfio_iommu_type1" "vfio_virqfd")
+      ;;                         %base-initrd-modules))
       (kernel-arguments '("modprobe.blacklist=pcspkr,snd_pcsp"
+
+                          ;; "amd_iommu=on"
+                          ;; "iommu=pt" ;<https://wiki.archlinux.org/index.php/PCI_passthrough_via_OVMF#Setting_up_IOMMU>
+                          ;; "pci=realloc"
+                          ;; "vfio-pci.ids=1002:7340,1002:ab38"
 
                           ;; Arch Linux Forums
                           ;; Random freezes with AMD Ryzen on Linux 5.0 / Kernel & Hardware
