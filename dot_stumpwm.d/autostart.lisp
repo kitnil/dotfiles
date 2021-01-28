@@ -15,6 +15,7 @@
               (lambda () (keyboard-layout))
               (lambda () (xmodmap))
               (lambda () (run-commands "volume-decrease")) ;start pulseaudio
+              (lambda () (run-shell-command "/home/oleg/bin/xmodmap.sh"))
               ;; (lambda () (sb-thread:make-thread
               ;;        (lambda ()
               ;;          (run-shell-command
