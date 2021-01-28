@@ -272,7 +272,9 @@ xml xorg)
 
                xmodmap
 
-               whois)
+               whois
+
+               bluez)
 
          guix-collection-packages-multiout
          %large-packages
