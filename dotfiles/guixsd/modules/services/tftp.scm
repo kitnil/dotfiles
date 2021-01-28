@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2020 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2020, 2021 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -36,6 +36,9 @@
                                     "--listen"
                                     "--user" "root"
                                     "--address" "0.0.0.0:69"
-                                    "--secure" "/srv/tftp" "--foreground")))
+                                    "--secure" "/srv/tftp"
+                                    "--foreground"
+                                    "--verbose")
+                              #:log-file  "/var/log/tftp.log"))
                     (respawn? #f)
                     (stop #~(make-kill-destructor))))))
