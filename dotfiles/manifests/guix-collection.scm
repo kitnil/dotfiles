@@ -246,6 +246,8 @@ xml xorg)
                global        ;Source tagging.
                valgrind      ;Memory debug.
 
+               obs
+
                mesa mesa-utils
 
                gst-plugins-base gst-plugins-bad gst-plugins-good
