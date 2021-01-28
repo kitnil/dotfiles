@@ -23,7 +23,8 @@
                                  (frame-0-command nil)
                                  (frame-1-command nil)
                                  (frame-2-command nil))
-  (if (= (parse-integer (group-name (current-group))) group-number)
+  (if (string= (group-name (current-group))
+               (write-to-string group-number))
       (let ((screen (current-screen))
             (group (current-group)))
         (cond
