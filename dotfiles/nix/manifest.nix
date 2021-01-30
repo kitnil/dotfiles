@@ -75,7 +75,7 @@ in [
   # elktail-bin
   # ferm
   # filezilla
-  firefox
+  # firefox
   fzf
   goldendict
   # geckodriver

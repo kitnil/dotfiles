@@ -156,7 +156,7 @@
                   (mjru-open-account account))))))
           ;; ((= (length clipboard) 24)
           ;;  (mjru-mongo-development-id-object))
-          (t (run-or-raise (firefox-command) '(:class "Firefox"))))))
+          (t (run-or-raise (firefox-command) '(:class "Nightly"))))))
 
 (defcommand firefox-new-window () ()
   "Start Firefox."
