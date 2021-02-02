@@ -49,6 +49,8 @@ alias psc='ps xawf -eo pid,user,cgroup,args'
 
 alias markdown-github=grip
 
+alias iostat='iostat -xm 2'
+
 httping()
 {
     case "$1" in
