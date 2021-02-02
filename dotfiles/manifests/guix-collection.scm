@@ -200,6 +200,7 @@ xml xorg)
                licensecheck ; Licence checker for source files
                lsof
                ncdu            ; TUI `du'
+               sysstat
                netcat-openbsd
                openssl
                nethogs
