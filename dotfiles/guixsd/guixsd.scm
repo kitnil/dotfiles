@@ -302,6 +302,8 @@ location / {
 
                           ;; "amd_iommu=on"
                           ;; "iommu=pt" ;<https://wiki.archlinux.org/index.php/PCI_passthrough_via_OVMF#Setting_up_IOMMU>
+                          ;; "kvm_amd.npt=1"
+                          ;; "kvm_amd.avic=1"
                           ;; "pci=realloc"
                           ;; "vfio-pci.ids=1002:7340,1002:ab38"
 
