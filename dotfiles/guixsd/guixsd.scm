@@ -32,9 +32,6 @@
              (nongnu packages linux)
              (nongnu system linux-initrd))
 
-;; Fix Jenkins in Docker group
-(module-set! (resolve-module '(gnu packages admin)) 'shepherd shepherd-patched)
-
 (define (amdgpu+amdgpu.conf)
   (string-append "\
 
@@ -729,6 +726,12 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                          (guix-service-type config => (guix-configuration
                                                        (inherit %guix-daemon-config)
                                                        (extra-options '("--cache-failures")))))))
+
+      (essential-services
+       (modify-services (operating-system-default-essential-services this-operating-system)
+         (shepherd-root-service-type config => (shepherd-configuration
+					        (inherit config)
+					        (shepherd shepherd-patched)))))
 
       (setuid-programs %my-setuid-programs)
 
