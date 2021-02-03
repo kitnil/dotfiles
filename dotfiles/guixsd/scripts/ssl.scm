@@ -3,7 +3,7 @@
 !#
 
 ;;;; ssl --- Deploy ssl for DOMAINS keys to MACHINES
-;;;; Copyright © 2020 Oleg Pykhalov <go.wigust@gmail.com>
+;;;; Copyright © 2020, 2021 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;; Released under the GNU GPLv3 or any later version.
 
 ;; M-x compile
@@ -78,7 +78,8 @@
                               (ssh ssh-destination "--" "rm" "-f" archive)
                               (ssh ssh-destination "--" "sudo" "mkdir" "-p" live-directory)
                               (ssh ssh-destination "--" "sudo" "ln" "-sf" fullchain-destination fullchain-source)
-                              (ssh ssh-destination "--" "sudo" "ln" "-sf" privkey-destination privkey-source)))
+                              (ssh ssh-destination "--" "sudo" "ln" "-sf" privkey-destination privkey-source)
+                              (ssh ssh-destination "--" "sudo" "herd" "restart" "nginx")))
                           %machines)
                 (system** "rm" "-f" host-archive)))
             %domains))
