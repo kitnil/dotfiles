@@ -109,6 +109,7 @@
        emacs-nginx-mode
        emacs-nix-mode           ; Nix language mode
        emacs-olivetti
+       emacs-org-appear
        emacs-org-bullets
        emacs-org-generate
        emacs-org-mind-map       ; General mind maps from Org files

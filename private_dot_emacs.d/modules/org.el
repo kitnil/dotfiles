@@ -155,3 +155,13 @@
 
 (setq ox-haunt-base-dir (expand-file-name "~/src/haunt-blog"))
 (setq org-export-with-toc nil)
+
+
+;;;
+;;; org-appear-mode
+;;;
+
+(add-hook 'org-mode-hook 'org-appear-mode)
+(setq org-appear-autoemphasis t)
+(setq org-appear-autolinks t)
+(setq org-appear-autosubmarkers t)
