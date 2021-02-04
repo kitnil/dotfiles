@@ -215,7 +215,7 @@ xml xorg)
 
                reptyr
                shellcheck
-               sipcalc
+               ipcalc
                socat
                sshpass
                sshfs
