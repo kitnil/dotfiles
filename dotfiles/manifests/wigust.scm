@@ -13,6 +13,7 @@
              (wigust packages ruby)
              (wigust packages virtualization)
              (wigust packages video)
+             (wigust packages telegram)
              (wigust packages xdisorg)
              (wigust packages xorg))
 
@@ -94,5 +95,7 @@
   dotfiles
 
   qemu-windows10
+
+  telegram-without-materialdecoration
 
   guix-wigust-packages-emacs))
