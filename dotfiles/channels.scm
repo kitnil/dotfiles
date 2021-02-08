@@ -1,6 +1,6 @@
 (cons* (channel
         (name 'guix-wigust)
-        (url "https://cgit.duckdns.org/git/guix/guix-wigust"))
+        (url "https://github.com/kitnil/guix-wigust"))
        (channel
         (name 'nonguix)
         (url "https://gitlab.com/nonguix/nonguix")
