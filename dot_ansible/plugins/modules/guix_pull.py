@@ -16,7 +16,7 @@ def main():
         except json.JSONDecodeError:
             return result[1]
     before = describe()
-    result = module.run_command(f"guix pull --channels={module.params['channels']} --commit={module.params['commit']}")
+    result = module.run_command(f"guix pull --allow-downgrades --channels={module.params['channels']} --commit={module.params['commit']}")
     after = describe()
     result = {
         "msg": {"before": before, "after": after},
