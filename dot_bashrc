@@ -691,7 +691,14 @@ EOF
             locate -d "$HOME/.config/guix/dbfile" "${@:2}"
             ;;
         xpanes)
-            xpanes -c 'ssh {}' vm1.wugi.info workstation.intr localhost
+            guix_machines=(
+                vm1.wugi.info
+                vm2.wugi.info
+                vm3.wugi.info
+                ws1.wugi.info
+                localhost
+            )
+            xpanes -c 'ssh {}' "${guix_machines[@]}"
             ;;
         depends)
             for package in $(guix package --list-installed | cut --fields=1)
