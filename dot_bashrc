@@ -512,7 +512,10 @@ guix()
                 exec 3>&1
                 mapfile -t options < <(
                     dialog --separate-output --title "Guix" --checklist "Guix Options" 22 72 3 \
-                           -- --no-offload "--no-offload" off --commit "--commit" off 2>&1 2>&1 1>&3
+                           -- --no-offload "--no-offload" off \
+                           --commit "--commit" off \
+                           --allow-downgrades "--allow-downgrades" off \
+                           2>&1 2>&1 1>&3
                 )
                 declare -p options
                 for option in "${options[@]}"
@@ -523,6 +526,11 @@ guix()
                         options=("${options[@]/--commit}")
                         commit=$(dialog --backtitle "Guix commit" --inputbox "Enter Guix's Git commit" 8 60 2>&1 1>&3)
                         exec 3>&-
+                    fi
+                    if [[ "$option" == "--allow-downgrades" ]]
+                    then
+                        options=("${options[@]/--allow-downgrades}")
+                        allow_downgrades=true
                     fi
                 done
             }
@@ -552,10 +560,18 @@ guix()
             )
             ;;
         pull)
-            guix_command=("command" "guix" "pull" "--channels=/home/oleg/.local/share/chezmoi/dotfiles/channels.scm")
+            guix_command=(
+                "command"
+                "guix" "pull"
+                "--channels=/home/oleg/.local/share/chezmoi/dotfiles/channels.scm"
+            )
             if [[ -n $commit ]]
             then
                 guix_command+=("--commit=$commit")
+            fi
+            if [[ -n $allow_downgrades ]]
+            then
+                guix_command+=("--allow-downgrades")
             fi
             (set -ex; "${guix_command[@]}" "${@:2}"; sudo --login "${guix_command[@]}" "${@:2}")
             ;;
@@ -608,10 +624,17 @@ EOF
                          "$HOME/.local/share/chezmoi/dotfiles/guixsd/$HOSTNAME.scm"
                     ;;
                 switch)
-                    sudo --login command guix system reconfigure \
-                         -L "$guix_modules" \
-                         "${@:3}" \
-                    "$HOME/.local/share/chezmoi/dotfiles/guixsd/$HOSTNAME.scm"
+                    guix_command=(
+                        sudo --login command guix system reconfigure \
+                             -L "$guix_modules" \
+                             "${@:3}" \
+                             "$HOME/.local/share/chezmoi/dotfiles/guixsd/$HOSTNAME.scm"
+                    )
+                    if [[ -n $allow_downgrades ]]
+                    then
+                        guix_command+=("--allow-downgrades")
+                    fi
+                    "${guix_command[@]}"
                     ;;
                 *)
                     command guix system "${@:2}"
