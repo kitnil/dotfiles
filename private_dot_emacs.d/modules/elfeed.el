@@ -73,6 +73,8 @@
         ("https://functional.cafe/@ioa.rss" mastodon) ;ioanna
 
         ("https://video.hardlimit.com/feeds/videos.xml?videoChannelId=39" video) ;The GNU Guy
+
+        ("https://www.pepper.ru/rss/%D0%92%D1%81%D0%B5" shopping)
         ))
 
 (defun elfeed-config ()
