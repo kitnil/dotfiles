@@ -180,6 +180,7 @@
 (define-key *root-map* (kbd "quoteleft") "display-0-keys")
 (define-key *root-map* (kbd "y") "greenclip")
 (define-key *root-map* (kbd "j") "turn-screen-off")
+(define-key *root-map* (kbd "J") "suspend")
 
 (defcommand sxhkd-restart () ()
   (run-shell-command "sxhkd"))
