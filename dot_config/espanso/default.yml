@@ -70,3 +70,6 @@ matches:
 
   - trigger: ":lisp"
     replace: "https://i.redd.it/cp8lwaue6ca51.jpg"
+
+  - trigger: ":pstree"
+    replace: "ps -aef --forest"
