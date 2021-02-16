@@ -11,6 +11,8 @@ matches:
     replace: "apache2-php{44,{52..56},{70..74},80}"
   - trigger: "web..."
     replace: "web15 web16 web17 web18 web19 web20 web21 web22 web23 web24 web25 web26 web27 web28 web29 web30 web31 web32 web33 web34 web35 web36 web37"
+  - trigger: "ns..."
+    replace: "ns1-mr ns2-mr ns1-dh ns2-dh"
   - trigger: "raid..."
     replace: "(arcconf getconfig 1; MegaCli64 -LDInfo -Lall -aALL) |& less"
   - trigger: "ipmi..."
