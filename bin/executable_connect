@@ -434,6 +434,14 @@ mycli --password "$(pass show majordomo/public/web/mysql/root)" -d "${2%.intr}"
     uptime)
         connect ssh "$2" -- uptime | jc --uptime
         ;;
+    ns)
+        printf "NOTE: No expired and registrant are checked.\n\n"
+        for ns in ns ns2 ns3 ns4
+        do
+            dig +short MX yacrm.ru @$ns.majordomo.ru
+            echo ""
+        done
+        ;;
     php)
         parallel --will-cite -k 'printf "domain: %s\n" {1}; curl --max-time 10 -L -s -o /dev/null -w "ip-address: %{remote_ip}\nstatus_code: %{http_code}" {1}; printf "\n\n"' ::: \
                  "http://$2/apache2/php44/phpinfo.php" \
