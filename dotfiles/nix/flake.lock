@@ -1,0 +1,146 @@
+{
+  "nodes": {
+    "flake-compat": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1606424373,
+        "narHash": "sha256-oq8d4//CJOrVj+EcOaSXvMebvuTkmBJuT5tzlfewUnQ=",
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "rev": "99f1c2157fba4bfe6211a321fd0ee43199025dbf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "type": "github"
+      }
+    },
+    "github-com-9999years-nix-config": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1611279922,
+        "narHash": "sha256-tipT+Rp1wI+pLr5temOYg5wuMtsAREsuM96QOXX9RPE=",
+        "owner": "9999years",
+        "repo": "nix-config",
+        "rev": "3d2aef1418cab766ab744129f4308e1596f1335c",
+        "type": "github"
+      },
+      "original": {
+        "owner": "9999years",
+        "repo": "nix-config",
+        "type": "github"
+      }
+    },
+    "github-com-emilazy-mpv-notify-send": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1582585345,
+        "narHash": "sha256-EwVkhyB87TJ3i9xJmmZMSTMUKvfbImI1S+y1vgRWbDk=",
+        "owner": "emilazy",
+        "repo": "mpv-notify-send",
+        "rev": "a2bab8b2fd8e8d14faa875b5cc3a73f1276cd88a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "emilazy",
+        "repo": "mpv-notify-send",
+        "type": "github"
+      }
+    },
+    "github-com-guibou-nixGL": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1604138361,
+        "narHash": "sha256-I9/myywtqh9xrxC94molYpwN4c92dw1jUmfS2+pHwws=",
+        "owner": "guibou",
+        "repo": "nixGL",
+        "rev": "7d6bc1b21316bab6cf4a6520c2639a11c25a220e",
+        "type": "github"
+      },
+      "original": {
+        "owner": "guibou",
+        "repo": "nixGL",
+        "type": "github"
+      }
+    },
+    "github-com-norfairking-dnscheck": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1613121584,
+        "narHash": "sha256-hj71C9WCD4gs/+94SvaXZXPZsLLWlmrMqwteh75UVxE=",
+        "owner": "NorfairKing",
+        "repo": "dnscheck",
+        "rev": "c529b352458eb570bb205d1b464574e8c808dea1",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NorfairKing",
+        "repo": "dnscheck",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1613632122,
+        "narHash": "sha256-EJeG6R2o7bZVwaRZIDKnBI5qtIuCDXqgDm67afnw5JE=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "4ef6da455e926b87d1923c324306e9dc1da8e371",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixpkgs-unstable",
+        "type": "indirect"
+      }
+    },
+    "nixpkgs-20-03": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1608136118,
+        "narHash": "sha256-RkrULFuIoE7vsBxBBGKfRRYGcZsCpe0Qu0G874WGpdM=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "05626cc86b8a8bbadae7753d2e33661400ff67de",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixos-20.03",
+        "type": "indirect"
+      }
+    },
+    "nixpkgs-20-03-firefox": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1577720813,
+        "narHash": "sha256-qyNU+Ey+fVu3xSeZRhxPgpbmcnmtTikd4Bsp6ojDSUg=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "cc3b6aa322f307580d48c975a3b86b4462b645d8",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "cc3b6aa322f307580d48c975a3b86b4462b645d8",
+        "type": "github"
+      }
+    },
+    "root": {
+      "inputs": {
+        "flake-compat": "flake-compat",
+        "github-com-9999years-nix-config": "github-com-9999years-nix-config",
+        "github-com-emilazy-mpv-notify-send": "github-com-emilazy-mpv-notify-send",
+        "github-com-guibou-nixGL": "github-com-guibou-nixGL",
+        "github-com-norfairking-dnscheck": "github-com-norfairking-dnscheck",
+        "nixpkgs": "nixpkgs",
+        "nixpkgs-20-03": "nixpkgs-20-03",
+        "nixpkgs-20-03-firefox": "nixpkgs-20-03-firefox"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
