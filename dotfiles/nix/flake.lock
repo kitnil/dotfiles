@@ -1,6 +1,43 @@
 {
   "nodes": {
+    "deploy-rs": {
+      "inputs": {
+        "flake-compat": "flake-compat",
+        "naersk": "naersk",
+        "nixpkgs": "nixpkgs",
+        "utils": "utils"
+      },
+      "locked": {
+        "lastModified": 1612864896,
+        "narHash": "sha256-pbsvxe05kAWJzPeC6fs4t0Mk8mTZs6u/WQDMBqoA5tA=",
+        "owner": "serokell",
+        "repo": "deploy-rs",
+        "rev": "fecc7e723db40c7e056371467275186b3bbb9ef3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "serokell",
+        "repo": "deploy-rs",
+        "type": "github"
+      }
+    },
     "flake-compat": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1606424373,
+        "narHash": "sha256-oq8d4//CJOrVj+EcOaSXvMebvuTkmBJuT5tzlfewUnQ=",
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "rev": "99f1c2157fba4bfe6211a321fd0ee43199025dbf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "edolstra",
+        "repo": "flake-compat",
+        "type": "github"
+      }
+    },
+    "flake-compat_2": {
       "flake": false,
       "locked": {
         "lastModified": 1606424373,
@@ -80,19 +117,41 @@
         "type": "github"
       }
     },
-    "nixpkgs": {
+    "naersk": {
+      "inputs": {
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
       "locked": {
-        "lastModified": 1613632122,
-        "narHash": "sha256-EJeG6R2o7bZVwaRZIDKnBI5qtIuCDXqgDm67afnw5JE=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "4ef6da455e926b87d1923c324306e9dc1da8e371",
+        "lastModified": 1610392286,
+        "narHash": "sha256-3wFl5y+4YZO4SgRYK8WE7JIS3p0sxbgrGaQ6RMw+d98=",
+        "owner": "nmattia",
+        "repo": "naersk",
+        "rev": "d7bfbad3304fd768c0f93a4c3b50976275e6d4be",
         "type": "github"
       },
       "original": {
-        "id": "nixpkgs",
+        "owner": "nmattia",
+        "ref": "master",
+        "repo": "naersk",
+        "type": "github"
+      }
+    },
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1610942247,
+        "narHash": "sha256-PKo1ATAlC6BmfYSRmX0TVmNoFbrec+A5OKcabGEu2yU=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "7d71001b796340b219d1bfa8552c81995017544a",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
         "ref": "nixpkgs-unstable",
-        "type": "indirect"
+        "repo": "nixpkgs",
+        "type": "github"
       }
     },
     "nixpkgs-20-03": {
@@ -128,16 +187,47 @@
         "type": "github"
       }
     },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1613632122,
+        "narHash": "sha256-EJeG6R2o7bZVwaRZIDKnBI5qtIuCDXqgDm67afnw5JE=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "4ef6da455e926b87d1923c324306e9dc1da8e371",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixpkgs-unstable",
+        "type": "indirect"
+      }
+    },
     "root": {
       "inputs": {
-        "flake-compat": "flake-compat",
+        "deploy-rs": "deploy-rs",
+        "flake-compat": "flake-compat_2",
         "github-com-9999years-nix-config": "github-com-9999years-nix-config",
         "github-com-emilazy-mpv-notify-send": "github-com-emilazy-mpv-notify-send",
         "github-com-guibou-nixGL": "github-com-guibou-nixGL",
         "github-com-norfairking-dnscheck": "github-com-norfairking-dnscheck",
-        "nixpkgs": "nixpkgs",
+        "nixpkgs": "nixpkgs_2",
         "nixpkgs-20-03": "nixpkgs-20-03",
         "nixpkgs-20-03-firefox": "nixpkgs-20-03-firefox"
+      }
+    },
+    "utils": {
+      "locked": {
+        "lastModified": 1610051610,
+        "narHash": "sha256-U9rPz/usA1/Aohhk7Cmc2gBrEEKRzcW4nwPWMPwja4Y=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "3982c9903e93927c2164caa727cd3f6a0e6d14cc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
       }
     }
   },

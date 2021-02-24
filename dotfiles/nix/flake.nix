@@ -33,11 +33,13 @@
       url = "github:NorfairKing/dnscheck";
       flake = false;
     };
+
+    deploy-rs.url = "github:serokell/deploy-rs";
   };
 
   # nixConfig.allowUnfree = true;
 
-  outputs = { self, nixpkgs, nixpkgs-20-03, nixpkgs-20-03-firefox, github-com-norfairking-dnscheck, github-com-guibou-nixGL, github-com-emilazy-mpv-notify-send, ... }:
+  outputs = { self, nixpkgs, nixpkgs-20-03, nixpkgs-20-03-firefox, deploy-rs, github-com-norfairking-dnscheck, github-com-guibou-nixGL, github-com-emilazy-mpv-notify-send, ... }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs { inherit system; };
@@ -260,7 +262,10 @@
       };
     in {
       devShell.x86_64-linux = with pkgs; mkShell {
-        buildInputs = [ nixUnstable ];
+        buildInputs = [
+          nixUnstable
+          deploy-rs.outputs.packages.x86_64-linux.deploy-rs
+        ];
       };
       packages.x86_64-linux = my-packages // {
         union =
@@ -280,5 +285,16 @@
                 '';
               }) { };
       };
+
+      deploy.nodes.localhost = {
+        hostname = "localhost";
+        profiles.profile = {
+          user = "oleg";
+          path = deploy-rs.lib.x86_64-linux.setActivate nixpkgs.legacyPackages.x86_64-linux.hello "./bin/hello";
+        };
+      };
+
+      # TODO: Flake enable checks
+      # checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
     };
 }
