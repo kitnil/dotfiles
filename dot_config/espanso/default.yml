@@ -73,3 +73,6 @@ matches:
 
   - trigger: ":pstree"
     replace: "ps -aef --forest"
+
+  - trigger: ":repquota"
+    replace: "repquota --verbose --all --no-names --group --project --human-readable"
