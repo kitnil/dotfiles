@@ -235,7 +235,8 @@ mjru-hms-current-stack()
         curl -u "jenkins:$(pass show majordomo/private/jenkins/jenkins)" -X GET http://nginx2.intr:8080/hms
     )
     echo "Switch stack example:"
-    echo curl -H "Content-Type: application/json" --data '{"available":["hms2","hms1"],"setActive":"hms1"}' -u "jenkins:jenkins4nginx" -X GET https://api.majordomo.ru
+    echo curl -H "Content-Type: application/json" --data '{"available":["hms2","hms1"],"setActive":"hms1"}' -u "jenkins:$(pass show majordomo/private/jenkins/jenkins)" -X POST http://nginx1.intr:8080/hms
+    echo curl -H "Content-Type: application/json" --data '{"available":["hms2","hms1"],"setActive":"hms1"}' -u "jenkins:$(pass show majordomo/private/jenkins/jenkins)" -X POST http://nginx2.intr:8080/hms
 }
 
 mjru-hms-auth ()
