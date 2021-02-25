@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+mapfile -t files < <(find * -maxdepth 3 -type f -name flake.nix -print)
+
+flakes()
+{
+    for file in "${files[@]}"
+    do
+        group="$(dirname "$(dirname "$file")")"
+        group="${group//./-}"
+        group="${group/_/}"
+        name="$(basename "$(dirname "$file")")"
+        name="${name//./-}"
+        name="${name/_/}"
+        printf '{"from": {"type": "indirect", "id": "%s-%s"}, "to": {"type": "git", "url": "https://gitlab.intr/%s/%s"}}\n' "$group" "$name" "$group" "$name"
+    done | jq --slurp
+}
+
+printf '{"version": 2, "flakes":%s}\n' "$(flakes)" | jq --monochrome-output --compact-output
