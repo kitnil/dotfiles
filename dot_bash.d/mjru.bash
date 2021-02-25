@@ -293,20 +293,6 @@ mjru-add-hosts-mikrotik()
     ssh mikrotik -- /ip dns static add address="$(ssh majordomo -- dig +short a "$1" 2>/dev/null)" name="$1";
 }
 
-mjru-jenkins-log()
-{
-    for project in $(curl -s -k "https://admin:$(pass show majordomo/public/jenkins.intr/admin)@jenkins.intr/api/json?pretty=true" | jq -r '.jobs[] | .name'); do
-        mkdir -p "$project"
-        cd "$project" || return
-        for job in $(curl -s -k "https://admin:$(pass show majordomo/public/jenkins.intr/admin)@jenkins.intr/job/$project/api/json" | jq -r '.jobs[] | .url'); do
-            job_name="$(echo "$job" | rev | cut -d/ -f 2 | rev)"
-            echo "@ $job"
-            curl -u "admin:$(pass show majordomo/public/jenkins.intr/admin)" -s -k "$job/job/master/lastBuild/consoleText" > "$job_name.log"
-        done
-        cd - || return
-    done
-}
-
 mjru-dns-check()
 {
     for dns in 172.16.103.2 172.16.100.3; do
