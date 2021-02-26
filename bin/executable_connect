@@ -179,6 +179,16 @@ case "$1" in
                 else
                     printf "\033[32mINFO:\033[0m galera-backup.intr: Slave_SQL_Running: is equal to 3.\n"
                 fi
+                # connect galera-backup.intr docker exec galera-slave mysql -uroot -p"$(pass show majordomo/public/maxscale.intr/root)" -e 'SELECT @@GLOBAL.gtid_binlog_pos'
+                ;;
+            snapshots)
+                echo "zfs clone pool@zfs-auto-snap_scripted-2019-02-21-1005 pool/mariafromsnap"
+                echo "docker run --rm --hostname galera-slave-temp --name galera-slave-temp -eMYSQL_ALLOW_EMPTY_PASSWORD=1 -v /pool/mariadb/confdir-ro:/etc/mysql/conf.d -v /pool/mariafromsnap/mariadb/datadir:/var/lib/mysql mariadb:10.3"
+                echo "MariaDB [(none)]> stop ALL slaves;"
+                echo "zfs destroy pool/mariafromsnap"
+
+                echo "List ZFS snapshots:"
+                connect ssh galera-backup.intr zfs list -t snapshot
                 ;;
         esac
         ;;
