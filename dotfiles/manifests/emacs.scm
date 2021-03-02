@@ -112,7 +112,7 @@
        emacs-olivetti
        emacs-org-appear
        emacs-org-bullets
-       emacs-org-generate
+       ;; TODO: Fix build emacs-org-generate
        emacs-org-mind-map       ; General mind maps from Org files
        emacs-orgit
        emacs-outshine           ; Emacs outline-mode
