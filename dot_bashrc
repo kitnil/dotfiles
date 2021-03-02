@@ -1613,6 +1613,26 @@ nix()
             NIX_PATH=nixpkgs="$HOME/.nix-defexpr/channels/nixos-unstable" \
             nix-env --install '.*' -f "$HOME/.local/share/chezmoi/dotfiles/nix/manifest.nix" "${@:2}"
             ;;
+        flake)
+            if [[ $2 == init ]]
+            then
+                case "$3" in
+                    majordomo) # TODO Don't use local file-system in "nix flake init majordomo".
+                        (
+                            current_directory="$PWD" || exit 1
+                            cd "$HOME"/majordomo/_ci/nixops-future-kvm
+                            nix-shell --run "bash -c 'cd $current_directory; nix flake init -t $HOME/majordomo/nix/templates#flakeViaNixShell'"
+                        )
+                        ;;
+                    *)
+                        command nix flake init "${@:3}"
+                        ;;
+                esac
+
+            else
+                command nix flake "${@:2}"
+            fi
+            ;;
         *)
             command nix "$@"
             ;;
