@@ -39,7 +39,15 @@
 
   # nixConfig.allowUnfree = true;
 
-  outputs = { self, nixpkgs, nixpkgs-20-03, nixpkgs-20-03-firefox, deploy-rs, github-com-norfairking-dnscheck, github-com-guibou-nixGL, github-com-emilazy-mpv-notify-send, ... }:
+  outputs = { self
+            , nixpkgs
+            , nixpkgs-20-03
+            , nixpkgs-20-03-firefox
+            , deploy-rs
+            , github-com-norfairking-dnscheck
+            , github-com-guibou-nixGL
+            , github-com-emilazy-mpv-notify-send
+            , ... }:
     let
       system = "x86_64-linux";
       pkgs = import nixpkgs { inherit system; };
