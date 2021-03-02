@@ -18,7 +18,10 @@
       url = "github:guibou/nixGL";
       flake = false;
     };
-    # github-com-kitnil-nix-docker-ipmi.url = "github:kitnil/nix-docker-ipmi";
+    github-com-kitnil-nix-docker-ipmi = {
+      url = "github:kitnil/nix-docker-ipmi?ref=flake";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
     # github-com-kitnil-nix-ipmiview.url = "github:kitnil/nix-ipmiview";
     # github-com-xzfc-cached-nix-shell.url = "github:xzfc/cached-nix-shell";
     github-com-9999years-nix-config = {
@@ -47,6 +50,7 @@
             , github-com-norfairking-dnscheck
             , github-com-guibou-nixGL
             , github-com-emilazy-mpv-notify-send
+            , github-com-kitnil-nix-docker-ipmi
             , ... }:
     let
       system = "x86_64-linux";
@@ -212,6 +216,8 @@
 
         inherit (pkgs-20-03.pythonPackages) jenkins-job-builder;
         inherit (pkgs-20-03.python3Packages) yamllint;
+
+        inherit (github-com-kitnil-nix-docker-ipmi.packages.${system}) ipmi;
 
         alerta = with pkgs-20-03; python3Packages.alerta.overrideAttrs (old: {
             patches = [
