@@ -39,7 +39,6 @@
    emacs-hydra-timestamp
    emacs-info-colors        ; Colorize info pages
    emacs-mediawiki
-   emacs-lsp-java-fix-treemacs
    emacs-org-tanglesync-1.1.0
    emacs-perl-live
    emacs-psysh

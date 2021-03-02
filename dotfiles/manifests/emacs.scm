@@ -94,6 +94,7 @@
        emacs-ivy-yasnippet
        emacs-know-your-http-well
        emacs-lice-el
+       emacs-lsp-java
        emacs-lsp-mode
        emacs-lsp-ui
        emacs-lua-mode
