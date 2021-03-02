@@ -267,30 +267,34 @@
           deploy-rs.outputs.packages.x86_64-linux.deploy-rs
         ];
       };
-      packages.x86_64-linux = my-packages // {
-        union =
-          let
-            inherit (lib) collect isDerivation;
-          in
-            pkgs.callPackage ({ stdenv }:
-              stdenv.mkDerivation rec {
-                name = "packages-union";
-                src = false;
-                dontUnpack = true;
-                buildInputs = lib.filter (package: isDerivation package)
-                  (collect isDerivation my-packages);
-                buildPhase = false;
-                installPhase = ''
-                  ${builtins.concatStringsSep "\n" (map (package: "echo ${package} >> $out") buildInputs)} 
-                '';
-              }) { };
-      };
+      packages.x86_64-linux = my-packages;
+        #  // {
+        #   union =
+        #     let
+        #       inherit (lib) collect isDerivation;
+        #     in
+        #       pkgs.callPackage ({ stdenv }:
+        #         stdenv.mkDerivation rec {
+        #           name = "packages-union";
+        #           src = false;
+        #           dontUnpack = true;
+        #           buildInputs = lib.filter (package: isDerivation package)
+        #             (collect isDerivation my-packages);
+        #           buildPhase = false;
+        #           installPhase = ''
+        #           ${builtins.concatStringsSep "\n" (map (package: "echo ${package} >> $out") buildInputs)} 
+        #         '';
+        #         }) { };
+        # }
 
       deploy.nodes.localhost = {
         hostname = "localhost";
         profiles.profile = {
           user = "oleg";
-          path = deploy-rs.lib.x86_64-linux.setActivate nixpkgs.legacyPackages.x86_64-linux.hello "./bin/hello";
+          path = deploy-rs.lib.${system}.activate.noop (pkgs.symlinkJoin {
+            name = "profile";
+            paths = with lib; collect isDerivation self.packages.x86_64-linux;
+          });
         };
       };
 
