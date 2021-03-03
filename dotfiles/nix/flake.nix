@@ -217,7 +217,9 @@
 
         inherit (pkgs.haskellPackages) greenclip;
 
-        # TODO: Flake inherit (import github-com-guibou-nixGL) nixGLIntel;
+        inherit (import github-com-guibou-nixGL {
+          inherit pkgs;
+        }) nixGLIntel;
 
         inherit (pkgs-20-03)
           nixfmt
