@@ -119,7 +119,6 @@
           docker-ls
           dragon-drop
           espanso
-          # elktail-bin
           # ferm
           # filezilla
           # firefox
