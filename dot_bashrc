@@ -193,6 +193,12 @@ ihs()
     command ihs "$@"
 }
 
+if [ -d "$HOME"/.nix-profile ]
+then
+    PATH="$HOME"/.nix-profile/bin:"$PATH"
+    export PATH
+fi
+
 if [ -d "/run/current-system" ]
 then
     true
