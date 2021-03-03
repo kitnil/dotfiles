@@ -148,6 +148,8 @@
 
           logstalgia
 
+          nixUnstable
+          nixos-rebuild
           nixpkgs-lint
           # TODO: Fix steam ipmiview
           # nodePackages_12_x.node2nix
