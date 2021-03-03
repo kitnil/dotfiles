@@ -22,7 +22,7 @@
       url = "github:kitnil/nix-docker-ipmi?ref=flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    # github-com-kitnil-nix-ipmiview.url = "github:kitnil/nix-ipmiview";
+    github-com-kitnil-nix-ipmiview.url = "github:kitnil/nix-ipmiview";
     # github-com-xzfc-cached-nix-shell.url = "github:xzfc/cached-nix-shell";
     github-com-9999years-nix-config = {
       url = "github:9999years/nix-config";
@@ -51,6 +51,7 @@
             , github-com-guibou-nixGL
             , github-com-emilazy-mpv-notify-send
             , github-com-kitnil-nix-docker-ipmi
+            , github-com-kitnil-nix-ipmiview
             , ... }:
     let
       system = "x86_64-linux";
@@ -158,7 +159,6 @@
           nixUnstable
           nixos-rebuild
           nixpkgs-lint
-          # TODO: Fix steam ipmiview
           # nodePackages_12_x.node2nix
 
           gron
@@ -227,6 +227,7 @@
         inherit (pkgs-20-03.python3Packages) yamllint;
 
         inherit (github-com-kitnil-nix-docker-ipmi.packages.${system}) ipmi;
+        inherit (github-com-kitnil-nix-ipmiview.packages.${system}) ipmiview-wrapper;
 
         alerta = with pkgs-20-03; python3Packages.alerta.overrideAttrs (old: {
           patches = [
