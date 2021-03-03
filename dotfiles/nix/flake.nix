@@ -120,7 +120,7 @@
           dragon-drop
           espanso
           # ferm
-          # filezilla
+          filezilla
           # firefox
           fzf
           goldendict
