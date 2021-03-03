@@ -129,7 +129,7 @@
           glow
           groovy
           hexyl
-          # httpie
+          httpie
           mitmproxy
           hy
           hyperfine
