@@ -211,6 +211,26 @@
         "type": "github"
       }
     },
+    "majordomo": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_3",
+        "nixpkgs-deprecated": "nixpkgs-deprecated",
+        "nixpkgs-stable": "nixpkgs-stable"
+      },
+      "locked": {
+        "lastModified": 1614610121,
+        "narHash": "sha256-Y88jTpUuFgJGEfNjVbtfgUWpXF12tZvvFmncNQApon0=",
+        "ref": "master",
+        "rev": "135a86868e1d81c3c4fec2600f730515e7e73d6b",
+        "revCount": 803,
+        "type": "git",
+        "url": "https://gitlab.intr/_ci/nixpkgs"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://gitlab.intr/_ci/nixpkgs"
+      }
+    },
     "naersk": {
       "inputs": {
         "nixpkgs": [
@@ -313,6 +333,38 @@
         "type": "github"
       }
     },
+    "nixpkgs-deprecated": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1443642366,
+        "narHash": "sha256-VuzP9RfndgC6yhL2U8X6stGULoOHr1HcscympKUgwV4=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "9c31c72cafe536e0c21238b2d47a23bfe7d1b033",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "15.09",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs-stable": {
+      "locked": {
+        "lastModified": 1606789930,
+        "narHash": "sha256-fIDdUZHX6OnErpv+ZXEM/479z8WKNyNX9ALsHQpjoeA=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "2fbcd0b9df95306199407e36a038d2cc3aa24786",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixos-20.09",
+        "type": "indirect"
+      }
+    },
     "nixpkgs-unstable": {
       "locked": {
         "lastModified": 1614321075,
@@ -360,6 +412,23 @@
       }
     },
     "nixpkgs_3": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1570630026,
+        "narHash": "sha256-IjHyx3uz9jYBh5R9v6lea5Hd/F6iYTBcyHkXHwSGGFY=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "d5291756487d70bc336e33512a9baf9fa1788faf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "19.09",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_4": {
       "locked": {
         "lastModified": 1613632122,
         "narHash": "sha256-EJeG6R2o7bZVwaRZIDKnBI5qtIuCDXqgDm67afnw5JE=",
@@ -385,7 +454,8 @@
         "github-com-kitnil-nix-ipmiview": "github-com-kitnil-nix-ipmiview",
         "github-com-norfairking-dnscheck": "github-com-norfairking-dnscheck",
         "github-com-tsoding-boomer": "github-com-tsoding-boomer",
-        "nixpkgs": "nixpkgs_3",
+        "majordomo": "majordomo",
+        "nixpkgs": "nixpkgs_4",
         "nixpkgs-20-03": "nixpkgs-20-03",
         "nixpkgs-20-03-firefox": "nixpkgs-20-03-firefox"
       }
