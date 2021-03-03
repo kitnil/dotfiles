@@ -136,7 +136,7 @@
           knot-resolver
           lexicon
           ldns
-          # litecli TODO: fails to build
+          litecli
           navi
           lnav
           pastel
