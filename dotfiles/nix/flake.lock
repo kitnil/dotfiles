@@ -182,15 +182,16 @@
     "github-com-norfairking-dnscheck": {
       "flake": false,
       "locked": {
-        "lastModified": 1613121584,
-        "narHash": "sha256-hj71C9WCD4gs/+94SvaXZXPZsLLWlmrMqwteh75UVxE=",
-        "owner": "NorfairKing",
+        "lastModified": 1614814428,
+        "narHash": "sha256-iWl8Z7q2mS2suNh//lPXKYY9ycFueDjpU7nui+7WkeY=",
+        "owner": "kitnil",
         "repo": "dnscheck",
-        "rev": "c529b352458eb570bb205d1b464574e8c808dea1",
+        "rev": "cffbc6c6dccaa6335d84851b95fb5fb60781156b",
         "type": "github"
       },
       "original": {
-        "owner": "NorfairKing",
+        "owner": "kitnil",
+        "ref": "nix-pkgs-provide-system",
         "repo": "dnscheck",
         "type": "github"
       }

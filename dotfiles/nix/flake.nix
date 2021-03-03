@@ -36,7 +36,7 @@
       flake = false;
     };
     github-com-norfairking-dnscheck = {
-      url = "github:NorfairKing/dnscheck";
+      url = "github:kitnil/dnscheck/nix-pkgs-provide-system";
       flake = false;
     };
     github-com-tsoding-boomer = {
@@ -82,7 +82,6 @@
         };
       };
       lib = pkgs.lib;
-      # TODO: inherit (import github-com-norfairking-dnscheck) dnscheck;
     in {
       devShell.x86_64-linux = with pkgs; mkShell {
         buildInputs = [
@@ -304,6 +303,8 @@
         # });
 
         inherit (majordomo.packages.${system}) elktail;
+
+        inherit (import github-com-norfairking-dnscheck) dnscheck;
 
       } // (let boomer-repo = (github-com-tsoding-boomer.outPath + "/overlay"); in rec {
                   nim_1_0 = pkgs.callPackage (boomer-repo + "/nim_1_0.nix") {};
