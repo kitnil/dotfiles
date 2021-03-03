@@ -1,3 +1,5 @@
+#!/usr/bin/env -S bash -c "nix-shell --run deploy"
+
 {
   description = "Nix package manifest";
   inputs = {
