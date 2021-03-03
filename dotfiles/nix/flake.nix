@@ -72,8 +72,15 @@
         };
       };
       lib = pkgs.lib;
-      # inherit (import github-com-norfairking-dnscheck) dnscheck;
-      my-packages = rec {
+      # TODO: inherit (import github-com-norfairking-dnscheck) dnscheck;
+    in {
+      devShell.x86_64-linux = with pkgs; mkShell {
+        buildInputs = [
+          nixUnstable
+          deploy-rs.outputs.packages.x86_64-linux.deploy-rs
+        ];
+      };
+      packages.x86_64-linux = {
         inherit (pkgs)
           ansifilter
           bat
@@ -222,86 +229,71 @@
         inherit (github-com-kitnil-nix-docker-ipmi.packages.${system}) ipmi;
 
         alerta = with pkgs-20-03; python3Packages.alerta.overrideAttrs (old: {
-            patches = [
-              (fetchurl {
-                url = "https://raw.githubusercontent.com/kitnil/dotfiles/af9f1d52f78955f482d33b8c113c68728b0619f1/dotfiles/nix/patches/alerta-top-narrow-output.patch";
-                sha256 = "07mwlm5x2ia5k05h8b8i53db0r4qpava1jlj6q96r0204qjmi897";
-              })
-            ];
-          }
+          patches = [
+            (fetchurl {
+              url = "https://raw.githubusercontent.com/kitnil/dotfiles/af9f1d52f78955f482d33b8c113c68728b0619f1/dotfiles/nix/patches/alerta-top-narrow-output.patch";
+              sha256 = "07mwlm5x2ia5k05h8b8i53db0r4qpava1jlj6q96r0204qjmi897";
+            })
+          ];
+        }
         );
 
         # TODO: androidenv.androidPkgs_9_0.platform-tools
 
-        firefox-52 = pkgs-20-03-firefox.firefox-esr-52;
-        firefox-52-wrapper = with pkgs-20-03-firefox; stdenv.mkDerivation {
-          name = "firefox-esr-52";
-          builder = writeScript "builder.sh" (''
-            source $stdenv/setup
-            mkdir -p $out/bin
-            cat > $out/bin/firefox-esr-52 <<'EOF'
-            #!${bash}/bin/bash -e
-            exec -a firefox-esr-52 ${firefox-52}/bin/firefox "$@"
-            EOF
-            chmod 555 $out/bin/firefox-esr-52
-          '');
-
-          jenkins = with pkgs; stdenv.mkDerivation {
-            name = "jenkins";
-            builder = writeScript "builder.sh" (''
-              source $stdenv/setup
+        firefox-52-wrapper = with pkgs-20-03-firefox; callPackage ({ stdenv, firefox-esr-52 }:
+          stdenv.mkDerivation {
+            inherit (firefox-esr-52) version;
+            name = "firefox-esr-52";
+            src = false;
+            dontUnpack = true;
+            buildInputs = [ firefox-esr-52 ];
+            buildPhase = ''
+              cat > firefox-esr-52 <<'EOF'
+              #!${bash}/bin/bash -e
+              exec -a firefox-esr-52 ${firefox-esr-52}/bin/firefox "$@"
+              EOF
+            '';
+            installPhase = ''
               mkdir -p $out/bin
-              cat > $out/bin/jenkins <<'EOF'
+              install -m555 firefox-esr-52 $out/bin/firefox-esr-52
+            '';
+          }) {};
+
+        jenkins = with pkgs; callPackage ({ stdenv, openjdk8 }:
+          stdenv.mkDerivation {
+            inherit (jenkins) version;
+            name = "jenkins";
+            src = false;
+            dontUnpack = true;
+            buildInputs = [ openjdk8 jenkins ];
+            buildPhase = ''
+              cat > jenkins <<'EOF'
               #!${bash}/bin/bash
               exec -a "$0" ${openjdk8}/bin/java -Xmx512m -jar ${jenkins}/webapps/jenkins.war "$@"
               EOF
-              chmod 555 $out/bin/jenkins
-            '');
-          };
+            '';
+            installPhase = ''
+              mkdir -p $out/bin
+              install -m555 jenkins $out/bin/jenkins
+            '';
+          }) {};
 
-          # TODO: Flake Add run-headphones.
-          # operating-system = nixos { config = { services.headphones.enable = true; }; };
-          # (stdenv.mkDerivation {
-          #   name = "run-headphones";
-          #   builder = writeScript "builder.sh" (''
-          #     source $stdenv/setup
-          #     mkdir -p $out/bin
-          #     cat > $out/bin/run-headphones <<'EOF'
-          #     #!${bash}/bin/bash
-          #     exec -a headphones ${with lib; (head ((filterAttrs (n: v: n == "headphones") (foldAttrs (n: a: [ n ] ++ a) [ ] operating-system.options.systemd.services.definitions)).headphones)).serviceConfig.ExecStart} "$@"
-          #     EOF
-          #     chmod 555 $out/bin/run-headphones
-          #   '');
-          # });
+        # TODO: Flake Add run-headphones.
+        # operating-system = nixos { config = { services.headphones.enable = true; }; };
+        # (stdenv.mkDerivation {
+        #   name = "run-headphones";
+        #   builder = writeScript "builder.sh" (''
+        #     source $stdenv/setup
+        #     mkdir -p $out/bin
+        #     cat > $out/bin/run-headphones <<'EOF'
+        #     #!${bash}/bin/bash
+        #     exec -a headphones ${with lib; (head ((filterAttrs (n: v: n == "headphones") (foldAttrs (n: a: [ n ] ++ a) [ ] operating-system.options.systemd.services.definitions)).headphones)).serviceConfig.ExecStart} "$@"
+        #     EOF
+        #     chmod 555 $out/bin/run-headphones
+        #   '');
+        # });
 
-        };
       };
-    in {
-      devShell.x86_64-linux = with pkgs; mkShell {
-        buildInputs = [
-          nixUnstable
-          deploy-rs.outputs.packages.x86_64-linux.deploy-rs
-        ];
-      };
-      packages.x86_64-linux = my-packages;
-        #  // {
-        #   union =
-        #     let
-        #       inherit (lib) collect isDerivation;
-        #     in
-        #       pkgs.callPackage ({ stdenv }:
-        #         stdenv.mkDerivation rec {
-        #           name = "packages-union";
-        #           src = false;
-        #           dontUnpack = true;
-        #           buildInputs = lib.filter (package: isDerivation package)
-        #             (collect isDerivation my-packages);
-        #           buildPhase = false;
-        #           installPhase = ''
-        #           ${builtins.concatStringsSep "\n" (map (package: "echo ${package} >> $out") buildInputs)} 
-        #         '';
-        #         }) { };
-        # }
 
       deploy.nodes.localhost = {
         hostname = "localhost";
