@@ -141,7 +141,6 @@
           lnav
           pastel
           procs
-          # TODO: Flake hyperfine
           zenith
           tokei
           lua
