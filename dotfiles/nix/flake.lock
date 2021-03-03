@@ -195,6 +195,22 @@
         "type": "github"
       }
     },
+    "github-com-tsoding-boomer": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1614258352,
+        "narHash": "sha256-3yg0nuJE0Rrw13VEQ/CjjjPN5G4ytssgiesdXwlHaF8=",
+        "owner": "tsoding",
+        "repo": "boomer",
+        "rev": "cc0f5311193da8361ee782a421d6bc4ad8541cf3",
+        "type": "github"
+      },
+      "original": {
+        "owner": "tsoding",
+        "repo": "boomer",
+        "type": "github"
+      }
+    },
     "naersk": {
       "inputs": {
         "nixpkgs": [
@@ -368,6 +384,7 @@
         "github-com-kitnil-nix-docker-ipmi": "github-com-kitnil-nix-docker-ipmi",
         "github-com-kitnil-nix-ipmiview": "github-com-kitnil-nix-ipmiview",
         "github-com-norfairking-dnscheck": "github-com-norfairking-dnscheck",
+        "github-com-tsoding-boomer": "github-com-tsoding-boomer",
         "nixpkgs": "nixpkgs_3",
         "nixpkgs-20-03": "nixpkgs-20-03",
         "nixpkgs-20-03-firefox": "nixpkgs-20-03-firefox"

@@ -36,6 +36,10 @@
       url = "github:NorfairKing/dnscheck";
       flake = false;
     };
+    github-com-tsoding-boomer = {
+      url = "github:tsoding/boomer";
+      flake = false;
+    };
 
     deploy-rs.url = "github:serokell/deploy-rs";
   };
@@ -52,6 +56,7 @@
             , github-com-emilazy-mpv-notify-send
             , github-com-kitnil-nix-docker-ipmi
             , github-com-kitnil-nix-ipmiview
+            , github-com-tsoding-boomer
             , ... }:
     let
       system = "x86_64-linux";
@@ -90,7 +95,6 @@
           # alacritty
           # assh
           # browserpass
-          # TODO: Flake boomer
           brave
           buku
           # cabal-install
@@ -296,7 +300,11 @@
         #   '');
         # });
 
-      };
+
+      } // (let boomer-repo = (github-com-tsoding-boomer.outPath + "/overlay"); in rec {
+                  nim_1_0 = pkgs.callPackage (boomer-repo + "/nim_1_0.nix") {};
+                  boomer = pkgs.callPackage (boomer-repo + "/boomer.nix") { inherit nim_1_0; };
+                });
 
       deploy.nodes.localhost = {
         hostname = "localhost";
