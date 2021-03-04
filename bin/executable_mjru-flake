@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-mapfile -t files < <(find * -maxdepth 3 -type f -name flake.nix -print)
+mapfile -t files < <(find ./ -maxdepth 3 -type f -name flake.nix -print)
 
 flakes()
 {
