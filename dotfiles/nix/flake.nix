@@ -271,27 +271,28 @@
         jenkins = with pkgs;
           let
             pluginCmds = lib.attrsets.mapAttrsToList (n: v:
-              "cp --recursive ${v}/*pi /home/oleg/.jenkins/plugins/${v.name}.jpi") jenkins-plugins; in callPackage ({ stdenv, lib, openjdk8 }:
-          stdenv.mkDerivation {
-            inherit (jenkins) version;
-            name = "jenkins";
-            src = false;
-            dontUnpack = true;
-            buildInputs = [ openjdk8 jenkins ];
-            buildPhase = ''
-              cat > jenkins <<'EOF'
-              #!${bash}/bin/bash
-              rm --force --recursive /home/oleg/.jenkins/{plugins,war}
-              mkdir --parents /home/oleg/.jenkins/plugins
-              ${lib.strings.concatStringsSep "\n" pluginCmds}
-              exec -a "$0" ${openjdk8}/bin/java -Xmx512m -jar ${jenkins}/webapps/jenkins.war "$@"
-              EOF
-            '';
-            installPhase = ''
-              mkdir -p $out/bin
-              install -m555 jenkins $out/bin/jenkins
-            '';
-          }) {};
+              "cp --recursive ${v}/*pi /home/oleg/.jenkins/plugins/${v.name}.jpi") jenkins-plugins;
+          in callPackage ({ stdenv, lib, openjdk8 }:
+            stdenv.mkDerivation {
+              inherit (jenkins) version;
+              name = "jenkins";
+              src = false;
+              dontUnpack = true;
+              buildInputs = [ openjdk8 jenkins ];
+              buildPhase = ''
+                cat > jenkins <<'EOF'
+                #!${bash}/bin/bash
+                rm --force --recursive /home/oleg/.jenkins/{plugins,war}
+                mkdir --parents /home/oleg/.jenkins/plugins
+                ${lib.strings.concatStringsSep "\n" pluginCmds}
+                exec -a "$0" ${openjdk8}/bin/java -Xmx512m -jar ${jenkins}/webapps/jenkins.war "$@"
+                EOF
+              '';
+              installPhase = ''
+                mkdir -p $out/bin
+                install -m555 jenkins $out/bin/jenkins
+              '';
+            }) {};
 
         # TODO: Flake Add run-headphones.
         # operating-system = nixos { config = { services.headphones.enable = true; }; };
