@@ -36,6 +36,20 @@ mjru-backup()
 mjru-docker()
 {
     case "$1" in
+        --help|-h|*)
+            echo "\
+Usage: mjru-docker COMMANDS ARGS...
+RUN mjru-docker with ARGS
+
+COMMAND must be one of the sub-commands listed below:
+
+  general commands
+    registry      list images on internal registry
+    tags          list tags of images
+    tag           describe image tag
+
+Report bugs to: go.wigust@gmail.com."
+            ;;
         registry)
             docker-ls repositories --registry https://docker-registry.intr/ --allow-insecure "${@:2}"
             ;;
