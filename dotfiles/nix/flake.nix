@@ -91,7 +91,10 @@
           deploy-rs.outputs.packages.x86_64-linux.deploy-rs
         ];
       };
-      packages.x86_64-linux = {
+      packages.x86_64-linux =
+        let
+          jenkins-plugins = (import ./plugins.nix { inherit (pkgs) fetchurl stdenv; });
+        in {
         inherit (pkgs)
           ansifilter
           bat
@@ -265,7 +268,10 @@
             '';
           }) {};
 
-        jenkins = with pkgs; callPackage ({ stdenv, openjdk8 }:
+        jenkins = with pkgs;
+          let
+            pluginCmds = lib.attrsets.mapAttrsToList (n: v:
+              "cp --recursive ${v}/*pi /home/oleg/.jenkins/plugins/${v.name}.jpi") jenkins-plugins; in callPackage ({ stdenv, lib, openjdk8 }:
           stdenv.mkDerivation {
             inherit (jenkins) version;
             name = "jenkins";
@@ -275,6 +281,9 @@
             buildPhase = ''
               cat > jenkins <<'EOF'
               #!${bash}/bin/bash
+              rm --force --recursive /home/oleg/.jenkins/{plugins,war}
+              mkdir --parents /home/oleg/.jenkins/plugins
+              ${lib.strings.concatStringsSep "\n" pluginCmds}
               exec -a "$0" ${openjdk8}/bin/java -Xmx512m -jar ${jenkins}/webapps/jenkins.war "$@"
               EOF
             '';
@@ -306,7 +315,7 @@
       } // (let boomer-repo = (github-com-tsoding-boomer.outPath + "/overlay"); in rec {
                   nim_1_0 = pkgs.callPackage (boomer-repo + "/nim_1_0.nix") {};
                   boomer = pkgs.callPackage (boomer-repo + "/boomer.nix") { inherit nim_1_0; };
-                });
+                }) // jenkins-plugins;
 
       deploy.nodes.localhost = {
         hostname = "localhost";
