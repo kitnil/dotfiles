@@ -36,5 +36,5 @@ then
         "${BROWSER:-firefox}" "$web_url"
     fi
 else
-    printf "'$web_url' is not a HTTP URL.\n"
+    printf "'%s' is not a HTTP URL.\n" "$web_url"
 fi
