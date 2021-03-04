@@ -174,7 +174,7 @@
           scrcpy
           onefetch
           oh
-          openjdk
+          openjdk11
           packer
           passff-host
           pgcli
