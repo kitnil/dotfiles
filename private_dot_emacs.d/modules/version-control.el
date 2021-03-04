@@ -306,3 +306,10 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
   ;; https://github.com/magit/magit/issues/3843
   (setq magit-process-password-prompt-regexps
         '("^\r?\\(Enter \\)?[Pp]assphrase\\( for \\(RSA \\)?key '.*'\\)?: ?$" "^\\(Enter \\)?[Pp]assword\\( for '\\(https?://\\)?\\(?99:.*\\)'\\)?: ?$" "^.*'s password: ?$" "^Yubikey for .*: ?$" "^Enter PIN for .*: ?$")))
+
+
+;;;
+;;; todo
+;;;
+
+(magit-todos-mode)
