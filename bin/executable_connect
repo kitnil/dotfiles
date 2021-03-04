@@ -173,7 +173,7 @@ case "$1" in
         case "$2" in
             show)
                 parallel --will-cite -k "printf '{1}: '; mysql -s -h {1} -u root -p\"$(pass show majordomo/public/maxscale.intr/root)\" -e 'SELECT @@GLOBAL.gtid_binlog_pos'" ::: galera{1..3}.intr
-                if [[ $(connect galera-backup.intr docker exec galera-slave mysql -uroot -p"$(pass show majordomo/public/maxscale.intr/root)" -e 'SHOW ALL SLAVES STATUS\G' |& grep -c 'Slave_SQL_Running: Yes') < 3 ]]
+                if [[ $(connect galera-backup.intr docker exec galera-slave mysql -uroot -p"$(pass show majordomo/public/maxscale.intr/root)" -e 'SHOW ALL SLAVES STATUS\G' |& grep -c 'Slave_SQL_Running: Yes') -lt 3 ]]
                 then
                     printf '\033[35mWARNING:\033[0m galera-backup.intr: Slave_SQL_Running: is less than 3.\n'
                 else
