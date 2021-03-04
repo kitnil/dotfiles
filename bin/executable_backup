@@ -12,6 +12,7 @@ case "$1" in
              RESTIC_PASSWORD="$(pass show wugi.info/restic/all)"            \
              RESTIC_REPOSITORY="${RESTIC_REPOSITORY:-/srv/backup/guixsd}"   \
              "$HOME/.guix-profile/bin/restic" "$@"
+        # shellcheck disable=SC2016
         printf "\nRestore /home/oleg/.mozilla backup example:\n    %s\n" \
                'sudo --login RESTIC_PASSWORD="$(pass show wugi.info/restic/all)" RESTIC_REPOSITORY="${RESTIC_REPOSITORY:-/srv/backup/guixsd}" "$HOME/.guix-profile/bin/restic" restore latest --include /home/oleg/.mozilla --target /'
         ;;
