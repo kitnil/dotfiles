@@ -101,6 +101,7 @@
        emacs-macrostep
        emacs-magit
        emacs-magit-org-todos-el
+       emacs-magit-todos
        emacs-forge
        emacs-markdown-mode      ; Commonmark major mode
        emacs-matcha
