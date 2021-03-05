@@ -7,7 +7,8 @@
 @test "run guix pull" {
     run guix pull                               \
             --verbosity=0                       \
-            --profile=test-tmp/.guix-profile
+            --profile=test-tmp/.guix-profile    \
+            --channels=dotfiles/channels.scm
     [ "$status" -eq 0 ]
 }
 
