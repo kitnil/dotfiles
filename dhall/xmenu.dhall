@@ -136,9 +136,6 @@ in  ''
 	Web
 		Algorithms	chromium --app=https://algorithm-visualizer.org/
 		Byte converter	chromium --app=https://whatsabyte.com/P1/byteconverter.htm
-		Camera
-			Home	camera home
-			Street	camera street
 		Chess	chromium --app=https://lichess.org/
 		Cocalc	chromium --app=https://cocalc.com/
 		LaTeX	chromium --app=http://www.overleaf.com/
