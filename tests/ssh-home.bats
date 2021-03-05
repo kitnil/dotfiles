@@ -34,9 +34,3 @@
     [ "$status" -eq 0 ]
     [[ "$output" == *uid=1000* ]]
 }
-
-@test "invoke ssh on mikrotik" {
-    run timeout 10 ssh -F test-tmp/config -o ControlPath=none mikrotik -- quit
-    [ "$status" -eq 0 ]
-    [ "$output" = "interrupted" ]
-}

@@ -272,12 +272,6 @@ mjru-ansible-swarm-network-inspect()
     ansible swarm -m shell -a 'docker network ls | cut -d " " -f 1 | grep -v NETWORK | xargs docker network inspect' --become
 }
 
-mjru-add-hosts-mikrotik()
-{
-    # Add hosts from Majordomo to MikroTik.
-    ssh mikrotik -- /ip dns static add address="$(ssh majordomo -- dig +short a "$1" 2>/dev/null)" name="$1";
-}
-
 mjru-dns-check()
 {
     for dns in 172.16.103.2 172.16.100.3; do
