@@ -1,2 +1,3 @@
 set visible-stats on
 set page-completions off
+set completion-ignore-case On
