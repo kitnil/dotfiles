@@ -27,10 +27,3 @@
     [ "$status" -eq 0 ]
     [[ "$output" == *uid=1000* ]]
 }
-
-@test "invoke id command over ssh on guix.intr" {
-    skip
-    run timeout 10 ssh -F test-tmp/config -o ControlPath=none guix.intr id
-    [ "$status" -eq 0 ]
-    [[ "$output" == *uid=1000* ]]
-}
