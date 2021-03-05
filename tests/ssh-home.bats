@@ -1,5 +1,5 @@
 @test "invoke id command over ssh on spb" {
-    run timeout 10 ssh -F test-tmp/config -o ControlPath=none spb id
+    run timeout 10 ssh -F test-tmp/config -o ControlPath=none -J zabbix.wugi.info spb id
     [ "$status" -eq 0 ]
     [[ "$output" == *uid=1000* ]]
 }
@@ -11,7 +11,7 @@
 }
 
 @test "invoke id command over ssh on majordomo.intr" {
-    run timeout 10 ssh -F test-tmp/config -o ControlPath=none majordomo.intr id
+    run timeout 10 ssh -F test-tmp/config -o ControlPath=none -J zabbix.wugi.info majordomo.intr id
     [ "$status" -eq 0 ]
     [[ "$output" == *uid=1000* ]]
 }
