@@ -4,11 +4,16 @@
     mkdir -p test-tmp
 }
 
+@test "dump current guix channels" {
+    run bash -c "guix describe --format=channels-sans-intro > test-tmp/channels.scm"
+    [ "$status" -eq 0 ]
+}
+
 @test "run guix pull" {
     run guix pull                               \
             --verbosity=0                       \
             --profile=test-tmp/.guix-profile    \
-            --channels=dotfiles/channels.scm
+            --channels=test-tmp/channels.scm
     [ "$status" -eq 0 ]
 }
 
