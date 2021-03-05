@@ -28,6 +28,7 @@
 }
 
 @test "invoke id command over ssh on mr.backup.majordomo.ru" {
+    skip
     run timeout 30 ssh -F test-tmp/config -o ControlPath=none mr.backup.majordomo.ru id
     [ "$status" -eq 0 ]
     [[ "$output" == *uid=1000* ]]
