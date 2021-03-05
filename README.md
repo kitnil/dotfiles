@@ -3,4 +3,4 @@ your dotfiles across multiple machines, securely.")
 
 Thanks:
 
-- [Alex Kost StumpWM configs](https://github.com/wiedzmin/stumpwm-config)
+- [Alex Kost configs](https://github.com/alezost)
