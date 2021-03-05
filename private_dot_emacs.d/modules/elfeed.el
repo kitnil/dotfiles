@@ -77,6 +77,8 @@
         ("https://www.pepper.ru/rss/%D0%92%D1%81%D0%B5" shopping)
 
         ("https://www.opennet.ru/opennews/opennews_all.rss" news)
+
+        ("https://ci.guix.gnu.org/events/rss/" ci guix)
         ))
 
 (defun elfeed-config ()
