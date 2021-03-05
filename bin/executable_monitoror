@@ -2,7 +2,7 @@
 
 case "$1" in
     run)
-        docker run --volume $PWD:/mnt \
+        docker run --volume "$PWD":/mnt \
                --detach \
                --name monitoror \
                --network=host \
