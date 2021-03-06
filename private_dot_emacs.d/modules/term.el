@@ -72,6 +72,8 @@
             (set (make-local-variable 'prettify-symbols-alist)
                  wi-vterm--prettify-symbols-alist)))
 
+(add-hook 'vterm-mode-hook 'goto-address-mode)
+
 (setq vterm-max-scrollback 100000)
 (setq vterm-min-window-width 160)
 
