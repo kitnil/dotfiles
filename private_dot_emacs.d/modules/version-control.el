@@ -309,7 +309,11 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 
 
 ;;;
-;;; todo
+;;; magit-todos
 ;;;
+
+(with-eval-after-load 'magit-todos
+  (setq magit-todos-keywords-list
+        (add-to-list 'magit-todos-keywords-list "XXX")))
 
 (magit-todos-mode)
