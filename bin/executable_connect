@@ -30,6 +30,7 @@ COMMAND must be one of the sub-commands listed below:
     mysql         connect to MySQL on server
 
   networking commands
+    ip            invoke ip address and route on SERVER
     firewall      print iptables rules on SERVER
     interfaces    list network interfaces on SERVER
     ip-filter     control ip-filter on server
@@ -462,6 +463,20 @@ mycli --password "$(pass show majordomo/public/web/mysql/root)" -d "${2%.intr}"
         host="$2"; [[ "$host" == *.intr ]] || host+=.intr
         ansible-playbook --limit "$host" --ask-become-pass "$HOME/bin/web-docker-pull"
         ;;
+    ip)
+        case "$3" in
+            a*)
+                connect ssh "$2" -- ip -color=always address
+                ;;
+            r*)
+                connect ssh "$2" -- ip -color=always route
+                ;;
+            *)
+                connect ssh "$2" -- ip -color=always address
+                connect ssh "$2" -- ip -color=always route
+                ;;
+        esac
+       ;;
     uptime)
         connect ssh "$2" -- uptime | jc --uptime
         ;;

@@ -79,6 +79,7 @@ _connect_complete()
                     || _connect_is_command "images"             \
                     || _connect_is_command "interfaces"         \
                     || _connect_is_command "io"                 \
+                    || _connect_is_command "ip"                 \
                     || _connect_is_command "mysql"              \
                     || _connect_is_command "net"                \
                     || _connect_is_command "nginx"              \
