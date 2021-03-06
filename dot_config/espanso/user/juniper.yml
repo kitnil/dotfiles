@@ -1,0 +1,13 @@
+filter_title: "emacs@br1-mr14.intr"
+matches:
+  - trigger: ":summary"
+    replace: "show bgp summary"
+
+  - trigger: ":cli"
+    replace: "set cli screen-length 0"
+
+  - trigger: ":prometey"
+    replace: "show configuration protocols bgp group PROMETEY"
+
+  - trigger: ":dataix"
+    replace: "show configuration protocols bgp group DATAIX"
