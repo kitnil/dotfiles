@@ -1870,8 +1870,50 @@ ci()
 elktail()
 {
     case "$1" in
+        --help|-h)
+            command elktail --help
+            echo "\
+
+  general commands
+    nginx         show nginx logs
+    hms           show log messages from hms index
+    trace         trace OPERATION_IDENTITY in hms index
+"
+            ;;
         nginx)
             command elktail -url 'http://es:9200' -i 'nginx-*' -n 10000 -l -f '%remote_addr %hostname %path %method %code %http_host'
+            ;;
+        hms)
+            # log_level:DEBUG
+            # log_level:ERROR
+            # stack:"$(curl --silent --user "jenkins:$(pass show majordomo/private/jenkins/jenkins)" -X GET http://nginx1.intr:8080/hms | jq --raw-output .active)"
+            command elktail \
+                    -url 'http://es:9200' \
+                    -i 'hms-*' \
+                    -n 10000 \
+                    -l \
+                    -f '%@timestamp %log_level %stack %sleuth_trace %log_message' \
+                    -a "$(printf "%s" "$(date --utc '+%FT%H:%M:00.000Z' --date '4 hours ago')")" \
+                    "${@:3}" \
+                | grep --invert-match "ftp-user not found by" \
+                | grep --invert-match "org.apache.catalina.connector.RequestFacade" \
+                | grep --invert-match "Running the evict task with compensationTime" \
+                | grep --invert-match "Resolving eureka endpoints via configuration" \
+                | grep --invert-match "quotaUsed: " \
+                | grep --invert-match "unixAccounts quotaReport for host"
+            ;;
+        trace)
+            (
+                set -x
+                command elktail \
+                        -url 'http://es:9200' \
+                        -i 'hms-*' \
+                        -n 10000 \
+                        -l \
+                        -f '%@timestamp %log_level %stack %sleuth_trace %log_message' \
+                        -a "$(printf "%s" "$(date --utc '+%FT%H:%M:00.000Z' --date '5 hours ago')")" \
+                        sleuth_trace:"$2"
+            )
             ;;
         *)
             command elktail "$@"
