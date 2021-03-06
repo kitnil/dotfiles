@@ -161,7 +161,8 @@ case "$1" in
                 connect_junos "$1" cli 'show bgp summary'
                 ;;
             log)
-                for n in $(seq 0 "$(connect_junos "$1" cli 'show system commit' | wc -l)")
+                number="${3:-$(connect_junos "$1" cli 'show system commit' | wc -l)}"
+                for n in $(seq 0 "$number")
                 do
                     echo "root@$1> show system rollback $((n+1)) compare $n"
                     connect_junos "$1" cli "show system rollback $((n+1)) compare $n"
