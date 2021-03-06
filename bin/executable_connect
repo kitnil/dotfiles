@@ -54,6 +54,11 @@ COMMAND must be one of the sub-commands listed below:
     nginx         show top requests to NGINX
     nginx-config  show NGINX config on SERVER
 
+  junos commands
+    br1-mr14.intr miran border
+    sr1-mr13-14.intr miran sr
+    sr1-dh507-508.intr datahouse sr
+
 Report bugs to: go.wigust@gmail.com."
 }
 
@@ -133,7 +138,7 @@ mysql_list_users_by_connections()
     mysql_command "$1" --execute="SELECT count(ID) as connections, USER FROM INFORMATION_SCHEMA.PROCESSLIST GROUP BY USER ORDER BY connections;"
 }
 
-connect_border()
+connect_junos()
 {
     sshpass -p"$(pass show majordomo/private/ssh/router)"       \
             ssh -F /dev/null                                    \
@@ -142,7 +147,7 @@ connect_border()
             -o UserKnownHostsFile=/dev/null                     \
             -o StrictHostKeyChecking=no                         \
             -l root                                             \
-            br1-mr14.intr "${@}"
+            "$1" "${@:2}"
 }
 
 case "$1" in
@@ -150,43 +155,22 @@ case "$1" in
         help_main
         exit 0
         ;;
-    br*)
+    br1-mr14.intr|sr1-mr13-14.intr|sr1-dh507-508.intr)
         case "$2" in
             bgp)
-                connect_border cli 'show bgp summary'
+                connect_junos "$1" cli 'show bgp summary'
                 ;;
             log)
-                for n in $(seq 0 "$(connect_border cli 'show system commit' | wc -l)")
+                for n in $(seq 0 "$(connect_junos "$1" cli 'show system commit' | wc -l)")
                 do
-                    echo "root@br1-mr14.intr> show system rollback $((n+1)) compare $n"
-                    connect_border cli "show system rollback $((n+1)) compare $n"
+                    echo "root@$1> show system rollback $((n+1)) compare $n"
+                    connect_junos "$1" cli "show system rollback $((n+1)) compare $n"
                 done
                 ;;
             *)
-                echo 172.16.103.199
-                connect_border "${@:2}"
+                connect_junos "$1" "${@:2}"
                 ;;
         esac
-        exit 0
-        ;;
-    sr*mr*)
-        sshpass -p"$(pass show majordomo/private/ssh/router)"   \
-                ssh -F /dev/null                                \
-                -i "$HOME/.ssh/id_rsa_majordomo_eng"                     \
-                -o UserKnownHostsFile=/dev/null                 \
-                -o StrictHostKeyChecking=no                     \
-                -l root                                         \
-                sr1-mr13-14.intr
-        exit 0
-        ;;
-    sr*dh*)
-        sshpass -p"$(pass show majordomo/private/ssh/router)"   \
-                ssh -F /dev/null                                \
-                -i "$HOME/.ssh/id_rsa_majordomo_eng"                     \
-                -o UserKnownHostsFile=/dev/null                 \
-                -o StrictHostKeyChecking=no                     \
-                -l root                                         \
-                sr1-dh507-508
         exit 0
         ;;
     galera)
