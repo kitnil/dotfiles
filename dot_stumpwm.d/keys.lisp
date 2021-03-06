@@ -186,7 +186,7 @@
   (run-shell-command "sxhkd"))
 
 (define-remapped-keys
-    '(("(Firefox|Chrome)"
+    '(("(Nightly|Chrome)"
        ("C-n"   . "Down")
        ("C-p"   . "Up")
        ("M-r"   . "Up")

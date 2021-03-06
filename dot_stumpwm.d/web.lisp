@@ -128,7 +128,7 @@
 (defcommand firefox-test () ()
   "Start of focus firefox."
   (run-shell-command (join (list (firefox-command) "-P" "test"))
-                     '(:class "Firefox")))
+                     '(:class "Nightly")))
 
 (defun firefox-command ()
   (join `(,@(if dark-theme '("GTK_THEME=Adwaita:dark") nil) ,*fontconfig-file*
