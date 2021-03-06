@@ -10,8 +10,17 @@ with_report()
     fi
 }
 
-with_report origin "git push origin"
-with_report gitlab "sshpass -Ppassphrase -p$(pass show gitlab.com/id_rsa_gitlab) git push gitlab"
-with_report github "sshpass -Ppassphrase -p$(pass show github/ssh/id_rsa_github) git push github"
-with_report majordomo "sshpass -Ppassphrase -p$(pass show majordomo/private/gitlab.intr/ssh/id_rsa_gitlab_intr) git push majordomo"
-with_report notabug "sshpass -Ppassphrase -p$(pass show notabug.org/id_rsa_notabug) git push notabug"
+with_report origin \
+            "git push origin"
+
+with_report gitlab \
+            "sshpass -Ppassphrase -p$(pass show gitlab.com/id_rsa_gitlab) git push gitlab"
+
+with_report github \
+            "sshpass -Ppassphrase -p$(pass show github/ssh/id_rsa_github) git push github"
+
+with_report majordomo \
+            "sshpass -Ppassphrase -p$(pass show majordomo/private/gitlab.intr/ssh/id_rsa_gitlab_intr) git push majordomo"
+
+with_report notabug \
+            "sshpass -Ppassphrase -p$(pass show notabug.org/id_rsa_notabug) git push notabug"
