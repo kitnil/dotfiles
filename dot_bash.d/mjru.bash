@@ -328,13 +328,13 @@ mjru-network()
 {
     awk '/A\t/ || /A / { print "(\"", $NF, "/32\" . ,(string-to-symbols \"", $1, ".intr\"))" }' \
 	~/majordomo/net/dns-intr/intr-miran.zone \
-	| sed 's/" /"/g; s@ /@/@g; s/ ")/")/g; s/"\./" ./; s/ .intr/.intr/; s/\;//g'
+	| sed 's/" /"/g; s@ /@/@g; s/ ")/")/g; s/"\./" ./; s/ \.intr/.intr/; s/\"\;/"/'
 
     awk '/A\t/ || /A / { print "(\"inet" , $NF, "/24\" . ,(string-to-symbols \"", $1, ".intr\"))" }' \
 	~/majordomo/net/dns-intr/intr-miran.zone \
-	| sed 's/" /"/g; s@ /@/@g; s/ ")/")/g; s/"\./" ./; s/ .intr/.intr/; s/\;//g'
+	| sed 's/" /"/g; s@ /@/@g; s/ ")/")/g; s/"\./" ./; s/ \.intr/.intr/; s/\"\;/"/'
 
     awk '/A\t/ || /A / { print "(\"", $NF, "\" . ,(string-to-symbols \"", $1, ".intr\"))" }' \
 	~/majordomo/net/dns-intr/intr-miran.zone \
-	 | sed 's/" /"/g; s@ /@/@g; s/ ")/")/g; s/ "\./" ./; s/ .intr/.intr/; s/\;//g'
+	 | sed 's/" /"/g; s@ /@/@g; s/ ")/")/g; s/ "\./" ./; s/ \.intr/.intr/; s/\"\;/"/'
 }
