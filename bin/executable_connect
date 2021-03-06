@@ -133,20 +133,40 @@ mysql_list_users_by_connections()
     mysql_command "$1" --execute="SELECT count(ID) as connections, USER FROM INFORMATION_SCHEMA.PROCESSLIST GROUP BY USER ORDER BY connections;"
 }
 
+connect_border()
+{
+    sshpass -p"$(pass show majordomo/private/ssh/router)"       \
+            ssh -F /dev/null                                    \
+            -q                                                  \
+            -i "$HOME/.ssh/id_rsa_majordomo_eng"                \
+            -o UserKnownHostsFile=/dev/null                     \
+            -o StrictHostKeyChecking=no                         \
+            -l root                                             \
+            br1-mr14.intr "${@}"
+}
+
 case "$1" in
     --help)
         help_main
         exit 0
         ;;
     br*)
-        echo 172.16.103.199
-        sshpass -p"$(pass show majordomo/private/ssh/router)"   \
-                ssh -F /dev/null                                \
-                -i "$HOME/.ssh/id_rsa_majordomo_eng"                     \
-                -o UserKnownHostsFile=/dev/null                 \
-                -o StrictHostKeyChecking=no                     \
-                -l root                                         \
-                br1-mr14.intr "${@:2}"
+        case "$2" in
+            bgp)
+                connect_border cli 'show bgp summary'
+                ;;
+            log)
+                for n in $(seq 0 "$(connect_border cli 'show system commit' | wc -l)")
+                do
+                    echo "root@br1-mr14.intr> show system rollback $((n+1)) compare $n"
+                    connect_border cli "show system rollback $((n+1)) compare $n"
+                done
+                ;;
+            *)
+                echo 172.16.103.199
+                connect_border "${@:2}"
+                ;;
+        esac
         exit 0
         ;;
     sr*mr*)
