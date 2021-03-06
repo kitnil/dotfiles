@@ -168,6 +168,9 @@ case "$1" in
                     connect_junos "$1" cli "show system rollback $((n+1)) compare $n"
                 done
                 ;;
+            configuration)
+                connect_junos "$1" cli "show configuration"
+                ;;
             *)
                 connect_junos "$1" "${@:2}"
                 ;;

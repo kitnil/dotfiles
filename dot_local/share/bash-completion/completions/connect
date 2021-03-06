@@ -101,7 +101,7 @@ _connect_complete()
                     || _connect_is_command "sr1-mr13-14.intr" \
                     || _connect_is_command "sr1-dh507-508.intr"
             then
-                COMPREPLY=($(compgen -W "log bgp" -- "${COMP_WORDS[$COMP_CWORD]}"))
+                COMPREPLY=($(compgen -W "configuration bgp log" -- "${COMP_WORDS[$COMP_CWORD]}"))
             elif _connect_is_command "ip-filter"
             then
                 case $COMP_CWORD in
