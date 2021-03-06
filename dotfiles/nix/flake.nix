@@ -149,7 +149,6 @@
           lua
           luarocks
           mediatomb
-          mtr
           mycli
           dbeaver # SQL client
           mypaint

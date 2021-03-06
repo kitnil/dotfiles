@@ -153,12 +153,12 @@ EndSection\n")
          net-tools
          tcpdump
          ipset
+         mtr
 
          %base-packages))
 
 (define %my-setuid-programs
   (cons* (file-append fping "/sbin/fping")
-         (file-append mtr "/sbin/mtr")
          (file-append ubridge "/bin/ubridge")
          (file-append iputils "/bin/ping")
          (delete (file-append inetutils "/bin/ping6")
