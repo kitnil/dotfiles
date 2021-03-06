@@ -17,3 +17,5 @@ matches:
     replace: "(arcconf getconfig 1; MegaCli64 -LDInfo -Lall -aALL) |& less"
   - trigger: "ipmi..."
     replace: "ipmitool mc reset cold # to reset sessions"
+  - trigger: ":junos"
+    replace: "br1-mr14.intr sr1-mr13-14.intr sr1-dh507-508.intr"
