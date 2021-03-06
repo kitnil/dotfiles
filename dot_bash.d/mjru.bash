@@ -323,3 +323,14 @@ mjru-python()
     echo "Setting HMS_MONGO_PASSWORD environment variable."
     HMS_MONGO_PASSWORD="$(pass show majordomo/public/mongo/hms/admin)" python3
 }
+
+mjru-network()
+{
+    awk '/A\t/ || /A / { print "(\"", $NF, "/32\" . ,(string-to-symbols \"", $1, "\"))" }' \
+        ~/majordomo/net/dns-intr/intr-miran.zone \
+        | sed 's/" /"/g; s@ /@/@g; s/ ")/")/g'
+
+    awk '/A\t/ || /A / { print "(\"", $NF, "\" . ,(string-to-symbols \"", $1, "\"))" }' \
+        ~/majordomo/net/dns-intr/intr-miran.zone \
+        | sed 's/" /"/g; s@ /@/@g; s/ ")/")/g'
+}
