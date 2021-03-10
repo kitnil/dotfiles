@@ -523,6 +523,7 @@ guix()
                            -- --no-offload "--no-offload" off \
                            --commit "--commit" off \
                            --allow-downgrades "--allow-downgrades" off \
+                           --fallback "--fallback" off \
                            2>&1 2>&1 1>&3
                 )
                 declare -p options
@@ -539,6 +540,11 @@ guix()
                     then
                         options=("${options[@]/--allow-downgrades}")
                         allow_downgrades=true
+                    fi
+                    if [[ "$option" == "--fallback" ]]
+                    then
+                        options=("${options[@]/--fallback}")
+                        fallback=true
                     fi
                 done
             }
@@ -580,6 +586,10 @@ guix()
             if [[ -n $allow_downgrades ]]
             then
                 guix_command+=("--allow-downgrades")
+            fi
+            if [[ -n $fallback ]]
+            then
+                guix_command+=("--fallback")
             fi
             (set -ex; "${guix_command[@]}" "${@:2}"; sudo --login "${guix_command[@]}" "${@:2}")
             ;;
@@ -643,6 +653,10 @@ EOF
                         guix_command+=("--allow-downgrades")
                     fi
                     "${guix_command[@]}"
+                    if [[ -n $fallback ]]
+                    then
+                        guix_command+=("--fallback")
+                    fi
                     ;;
                 *)
                     command guix system "${@:2}"
