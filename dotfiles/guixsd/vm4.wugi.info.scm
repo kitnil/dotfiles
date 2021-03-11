@@ -65,19 +65,9 @@ oleg ALL=(ALL) NOPASSWD:ALL\n"))
                           (dbus-service)
                           (elogind-service)
                           (service docker-service-type)
-                          (postgresql-service #:config-file (postgresql-config-file
-                                                             (hba-file
-                                                              (plain-file "pg_hba.conf"
-                                                                          "
-local	all	all			trust
-host	all	all	127.0.0.1/32    trust
-host	all	all	::1/128         trust
-host	all	all	172.16.0.0/12   trust"))
-                                                             (extra-config '(("listen_addresses" "'0.0.0.0'")))))
-                          (service redis-service-type)
                           (service nginx-service-type
                                    (nginx-configuration
-                                    (server-blocks (list (proxy "i18n.wugi.info" 8080 #:ssl? #t #:ssl-key? #t)))))
+                                    (server-blocks (list (proxy "file.wugi.info" 5091 #:ssl? #t #:ssl-key? #t)))))
                           (service certbot-service-type
                                    (certbot-configuration
                                     (email "go.wigust@gmail.com")
@@ -86,6 +76,6 @@ host	all	all	172.16.0.0/12   trust"))
                                                 (certificate-configuration
                                                  (domains (list host))
                                                  (deploy-hook %nginx-deploy-hook)))
-                                              (list "i18n.wugi.info")))))))
+                                              (list "file.wugi.info")))))))
                     (modify-services %base-services
                       (guix-service-type config => %guix-daemon-config)))))

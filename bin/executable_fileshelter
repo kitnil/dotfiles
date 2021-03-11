@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+# Inspired by https://github.com/paulgalow/fileshelter-docker/blob/master/docker-compose.yml
+
+set -ex
+
+docker run \
+       --detach \
+       --name=fileshelter \
+       --network=host \
+       --read-only \
+       --volume /var/lib/fileshelter:/var/lib/fileshelter \
+       --volume /var/lib/fileshelter/fileshelter.conf:/etc/fileshelter.conf:ro \
+       paulgalow/fileshelter:4.2.0
