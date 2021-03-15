@@ -2,7 +2,7 @@
 ;; for a "bare bones" setup, with no X11 display server.
 
 (use-modules (gnu))
-(use-service-modules certbot databases dbus desktop docker networking ssh web)
+(use-service-modules certbot databases dbus desktop docker monitoring networking ssh web)
 (use-package-modules curl certs screen ssh)
 
 (use-modules (config))
@@ -76,6 +76,7 @@ oleg ALL=(ALL) NOPASSWD:ALL\n"))
                                                 (certificate-configuration
                                                  (domains (list host))
                                                  (deploy-hook %nginx-deploy-hook)))
-                                              (list "file.wugi.info")))))))
+                                              (list "file.wugi.info"))))))
+                          (service zabbix-agent-service-type %vm-zabbix-agent-configuration))
                     (modify-services %base-services
                       (guix-service-type config => %guix-daemon-config)))))
