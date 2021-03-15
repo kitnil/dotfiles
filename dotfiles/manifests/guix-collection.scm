@@ -135,7 +135,7 @@ xml xorg)
                ;; TODO: Fix python-parso
                python-language-server
 
-               mongodb
+               ;; mongodb
 
                goaccess
                ;; httpie ; TODO: Fix conflicting entries for python-cryptography
@@ -226,7 +226,8 @@ xml xorg)
 
                lvm2 cdrkit-libre samba ubridge
 
-               python-pyqt-without-qtwebkit python-pymongo python-evdev
+               python-pyqt-without-qtwebkit ;; python-pymongo
+               python-evdev
 
                mariadb redis
 
