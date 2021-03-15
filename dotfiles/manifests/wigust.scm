@@ -29,7 +29,6 @@
    emacs-stupid-indent-mode
    ;; emacs-dashboard-with-agenda-reverse
    emacs-engine-mode-autoload ; Define searches on websites
-   emacs-elfeed-score
    emacs-eval-in-repl       ; Evaluate to different Repls
    emacs-flyspell-correct
    emacs-git-messenger-diff-mode
