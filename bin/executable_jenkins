@@ -25,6 +25,9 @@ case "$1" in
         help_main
         exit 0
         ;;
+    console)
+        "$BROWSER" "$JENKINS_URL"/job/"$(basename "$(dirname "$PWD")")"/job/"$(basename "$PWD")"/job/"$(git branch --show-current)"/lastBuild/console
+        ;;
     build)
         curl --request POST --user "$JENKINS_USER:$JENKINS_PASSWORD" "$JENKINS_URL/job/$2/job/$3/build"
         ;;
