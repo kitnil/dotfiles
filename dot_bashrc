@@ -197,7 +197,7 @@ ihs()
 
 if [ -d "$HOME"/.nix-profile ]
 then
-    PATH="$HOME"/.nix-profile/bin:"$PATH"
+    PATH="$PATH":"$HOME"/.nix-profile/bin
     export PATH
 fi
 
