@@ -27,7 +27,7 @@
        emacs-company            ; Complition framework
        emacs-company-quickhelp  ; Help pages for Company
        emacs-constants
-       emacs-counsel-projectile
+       emacs-helm-projectile
        emacs-counsel-tramp
        emacs-crux
        emacs-debbugs ; <https://debbugs.gnu.org/> interface

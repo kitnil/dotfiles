@@ -45,7 +45,7 @@
 
 (projectile-global-mode)
 (define-key projectile-mode-map (kbd "C-c g p") 'projectile-command-map)
-(define-key projectile-mode-map (kbd "C-c g p h") 'counsel-projectile)
+(define-key projectile-mode-map (kbd "C-c g p h") 'helm-projectile)
 
 ;; (global-undo-tree-mode)
 ;; (setq undo-tree-auto-save-history t)
