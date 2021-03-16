@@ -1,0 +1,9 @@
+- hosts: guix.duckdns.org
+  tasks:
+    - name: Restart vnc
+      shell: |
+        sudo /run/current-system/profile/bin/herd stop vncserver2
+        printf "Wait 5 seconds until vncserver2 is down...\n"
+        sleep 5
+        sudo /run/current-system/profile/bin/herd enable vncserver2
+        sudo /run/current-system/profile/bin/herd start vncserver2
