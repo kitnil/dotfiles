@@ -8,7 +8,6 @@
       git:
         repo: "https://github.com/kitnil/dotfiles"
         dest: "/home/oleg/.local/share/chezmoi"
-        update: no
     - name: Describe current Guix
       uri:
         url: "http://guix.wugi.info/guix/describe?channel=guix"
