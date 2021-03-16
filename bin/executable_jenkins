@@ -2,9 +2,16 @@
 
 set -e
 
-JENKINS_URL="${JENKINS_URL:-https://jenkins.wugi.info}"
-JENKINS_USER="${JENKINS_USER:-admin}"
-JENKINS_PASSWORD="${JENKINS_PASSWORD:-$(pass show jenkins.wugi.info/token-admin)}"
+if [[ $PWD == $HOME/majordomo/* ]]
+then
+    JENKINS_URL="https://jenkins.intr"
+    JENKINS_USER="admin"
+    JENKINS_PASSWORD="$(pass majordomo/public/jenkins.intr/admin)"
+else
+    JENKINS_URL="${JENKINS_URL:-https://jenkins.wugi.info}"
+    JENKINS_USER="${JENKINS_USER:-admin}"
+    JENKINS_PASSWORD="${JENKINS_PASSWORD:-$(pass show jenkins.wugi.info/token-admin)}"
+fi
 
 help_main()
 {
