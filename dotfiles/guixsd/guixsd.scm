@@ -2,6 +2,7 @@
              (gnu services shepherd)
              (gnu services)
              (guix channels)
+             (guix gexp)
              (guix inferior)
              (ice-9 format)
              (srfi srfi-1)
@@ -737,6 +738,14 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
 
       (setuid-programs %my-setuid-programs)
 
-      (sudoers-file (local-file "sudoers")))))
+      (sudoers-file (plain-file "sudoers"
+                                (string-join `("root ALL=(ALL) ALL"
+                                               "%wheel ALL=(ALL) ALL"
+                                               "oleg ALL=(ALL) NOPASSWD:ALL"
+                                               ,(format #f "majordomo-ssh-tunnel ALL=(root) NOPASSWD: ~a~%"
+                                                        (string-join '("/run/current-system/profile/bin/herd * vncserver2"
+                                                                       "/run/current-system/profile/bin/herd * vncserver10")
+                                                                     ",")))
+                                             "\n"))))))
 
 %system-guixsd

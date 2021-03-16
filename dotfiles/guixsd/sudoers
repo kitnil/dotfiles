@@ -1,3 +1,0 @@
-root ALL=(ALL) ALL
-%wheel ALL=(ALL) ALL
-oleg ALL=(ALL) NOPASSWD:ALL
