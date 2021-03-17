@@ -159,4 +159,8 @@ ServerAliveCountMax 3"))))))
 
   (setuid-programs %my-setuid-programs)
 
-  (sudoers-file (local-file "sudoers")))
+  (sudoers-file (plain-file "sudoers"
+                            (string-join `("root ALL=(ALL) ALL"
+                                           "%wheel ALL=(ALL) ALL"
+                                           "oleg ALL=(ALL) NOPASSWD:ALL")
+                                         "\n"))))
