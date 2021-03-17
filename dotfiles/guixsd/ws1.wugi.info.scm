@@ -155,7 +155,7 @@ ServerAliveCountMax 3"))))))
                    
 
                    (modify-services %base-services
-                     (guix-service-type config => %guix-daemon-config))))
+                     (guix-service-type config => %guix-daemon-config-with-substitute-urls))))
 
   (setuid-programs %my-setuid-programs)
 

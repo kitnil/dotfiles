@@ -129,4 +129,4 @@ FpingLocation=/run/setuid-programs/fping
                                  (db-secret-file "/etc/zabbix/zabbix.secret")
                                  (nginx %zabbix-nginx-configuration))))
                     (modify-services %base-services
-                      (guix-service-type config => %guix-daemon-config)))))
+                      (guix-service-type config => %guix-daemon-config-with-substitute-urls)))))

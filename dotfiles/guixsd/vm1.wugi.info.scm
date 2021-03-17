@@ -209,7 +209,7 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                                        )))))
            (load "desktop.scm")
            (modify-services %base-services
-             (guix-service-type config => %guix-daemon-config))))
+             (guix-service-type config => %guix-daemon-config-with-substitute-urls))))
 
   ;; Allow resolution of '.local' host names with mDNS.
   (name-service-switch %mdns-host-lookup-nss))

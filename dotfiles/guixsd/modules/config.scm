@@ -43,6 +43,7 @@
   #:use-module (ice-9 format)
   #:use-module (services openvpn)
   #:export (%guix-daemon-config
+            %guix-daemon-config-with-substitute-urls
 
             20-intel.conf
             %my-system-packages
@@ -76,6 +77,11 @@
                                   (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/spb.pub"))
                             %default-authorized-guix-keys))))
 
+(define %guix-daemon-config-with-substitute-urls
+  (guix-configuration
+   (inherit %guix-daemon-config)
+   (substitute-urls '("https://ci.guix.gnu.org"
+                      "https://guix.wugi.info"))))
 
 (define 20-intel.conf "\
 # Fix tearing for Intel graphics card.

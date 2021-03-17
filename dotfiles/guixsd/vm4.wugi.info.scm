@@ -79,4 +79,4 @@ oleg ALL=(ALL) NOPASSWD:ALL\n"))
                                               (list "file.wugi.info"))))))
                           (service zabbix-agent-service-type %vm-zabbix-agent-configuration))
                     (modify-services %base-services
-                      (guix-service-type config => %guix-daemon-config)))))
+                      (guix-service-type config => %guix-daemon-config-with-substitute-urls)))))
