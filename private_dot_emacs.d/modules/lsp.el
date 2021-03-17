@@ -3,6 +3,7 @@
 
 ;; (require 'lsp-java)
 (add-hook 'java-mode-hook #'lsp)
+(add-hook 'kotlin-mode-hook 'lsp)
 (add-hook 'go-mode-hook 'lsp)
 (add-hook 'python-mode-hook 'lsp)
 (setq lsp-ui-sideline-enable nil) ;right menu
