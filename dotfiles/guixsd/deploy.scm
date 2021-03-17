@@ -34,7 +34,7 @@
                        (user "oleg")
                        (host-key "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ/LXhRvCkY5f3ZlawDmtnoqtbd9MaNdNIGLMXevbPgR root@(none)")
                        (identity "/home/oleg/.ssh/id_rsa"))))
-      #;(machine
+      (machine
        (operating-system (load "ws1.wugi.info.scm"))
        (environment managed-host-environment-type)
        (configuration (machine-ssh-configuration
