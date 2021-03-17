@@ -61,6 +61,7 @@ EndSection
         "githunt.wugi.info"
         "homer.wugi.info"
         "guix.duckdns.org"
+        "guix.wugi.info"
         "jenkins.wugi.info"
         "monitor.wugi.info"
         "syncthing.wugi.info"
@@ -217,7 +218,7 @@ location / {
         %githunt-nginx-configuration
         (proxy "monitor.wugi.info" 8080)
         (proxy "guix.duckdns.org" 5556 #:ssl? #t)
-        (proxy "guix.wugi.info" 5556 #:locations %nginx-lua-guix)
+        (proxy "guix.wugi.info" 5556 #:locations %nginx-lua-guix #:ssl? #t #:ssl-key? #t)
         (proxy "pykhaloff.ddns.net" 443
                #:target "192.168.100.5"
                #:ssl? #t
