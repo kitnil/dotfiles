@@ -94,6 +94,7 @@
        emacs-ivy-rich
        emacs-ivy-yasnippet
        emacs-know-your-http-well
+       emacs-kotlin-mode
        emacs-lice-el
        emacs-lsp-java
        emacs-lsp-mode
