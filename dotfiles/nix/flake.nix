@@ -16,6 +16,7 @@
       url = "github:edolstra/flake-compat";
       flake = false;
     };
+    nixpkgs-idea.url = "github:wigust/nixpkgs/a98b0d1e6d7bed029844576e8637ce9807600ad2";
 
     majordomo.url = "git+https://gitlab.intr/_ci/nixpkgs";
 
@@ -63,6 +64,7 @@
             , github-com-kitnil-nix-ipmiview
             , github-com-tsoding-boomer
             , majordomo
+            , nixpkgs-idea
             , ... }:
     let
       system = "x86_64-linux";
@@ -311,6 +313,8 @@
         inherit (majordomo.packages.${system}) elktail;
 
         inherit (import github-com-norfairking-dnscheck) dnscheck;
+
+        inherit ((import nixpkgs-idea { inherit system; config = { allowUnfree = true; }; }).idea) idea-ultimate;
 
       } // (let boomer-repo = (github-com-tsoding-boomer.outPath + "/overlay"); in rec {
                   nim_1_0 = pkgs.callPackage (boomer-repo + "/nim_1_0.nix") {};

@@ -351,6 +351,22 @@
         "type": "github"
       }
     },
+    "nixpkgs-idea": {
+      "locked": {
+        "lastModified": 1616050755,
+        "narHash": "sha256-a5e/8XMA/6t3XY1VG2C6mxawytPqOLCSh1dTtxSfQZw=",
+        "owner": "wigust",
+        "repo": "nixpkgs",
+        "rev": "a98b0d1e6d7bed029844576e8637ce9807600ad2",
+        "type": "github"
+      },
+      "original": {
+        "owner": "wigust",
+        "repo": "nixpkgs",
+        "rev": "a98b0d1e6d7bed029844576e8637ce9807600ad2",
+        "type": "github"
+      }
+    },
     "nixpkgs-stable": {
       "locked": {
         "lastModified": 1606789930,
@@ -458,7 +474,8 @@
         "majordomo": "majordomo",
         "nixpkgs": "nixpkgs_4",
         "nixpkgs-20-03": "nixpkgs-20-03",
-        "nixpkgs-20-03-firefox": "nixpkgs-20-03-firefox"
+        "nixpkgs-20-03-firefox": "nixpkgs-20-03-firefox",
+        "nixpkgs-idea": "nixpkgs-idea"
       }
     },
     "utils": {
