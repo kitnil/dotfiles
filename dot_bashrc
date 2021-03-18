@@ -201,6 +201,13 @@ then
     export PATH
 fi
 
+# TODO: Add java to "$HOME"/.nix-profile/bin and remove the following.
+if [ -d "$HOME"/.nix-profile/lib/openjdk/bin ]
+then
+    PATH="$PATH":"$HOME"/.nix-profile/lib/openjdk/bin
+    export PATH
+fi
+
 if [ -d "/run/current-system" ]
 then
     true
