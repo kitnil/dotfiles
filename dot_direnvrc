@@ -127,6 +127,12 @@ use_guix()
     }
     export_function push
 
+    pull()
+    {
+        sshpass -Ppassphrase -p"$(pass show localhost/ssh/id_rsa_savannah)" git pull --rebase
+    }
+    export_function pull
+
     clear
     git-cal --author='Oleg Pykhalov'
     echo "
@@ -135,6 +141,7 @@ direnv:
   configure    run ./configure with predefined parameters
   environment  run 'guix environment' with presetted arguments
   push         push to upstream Git repository
+  pull         pull changes from upstream Git repository
   repl         run guix repl
 "
 }
