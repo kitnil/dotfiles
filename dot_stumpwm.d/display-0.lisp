@@ -24,7 +24,7 @@
 
 (let ((uptime-seconds (parse-integer (car (split-string (car (split-string (uiop:read-file-string "/proc/uptime") " ")) ".")))))
   (when (< uptime-seconds 60)
-    (term-shell-command "sh -c 'if gpg-unlock; then exit 0; else read; fi'"
+    (term-shell-command "sh -c 'sleep 5; if gpg-unlock; then exit 0; else read; fi'"
                         :terminal 'st
                         :color "dark")))
 
