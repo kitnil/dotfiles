@@ -383,7 +383,7 @@
   (sb-thread:make-thread
    (lambda ()
      (sleep 3) ;Wait for password insert on "Office.majordomo - Mozilla Firefox".
-     (when (string= (window-title (current-window)) "Страница пользователя - Mozilla Firefox")
+     (when (string= (window-title (current-window)) (format nil "Страница пользователя — ~a" *browser-name*))
        (run-commands "delete")
        (run-shell-command (format nil "firefox --new-window ~a" url))))))
 
