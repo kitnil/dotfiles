@@ -19,7 +19,8 @@
 (run-commands "gselect 1")
 
 (when (string-equal (screen-display-string (current-screen)) "DISPLAY=:0.0")
-  (mode-line))
+  (mode-line)
+  (setf *mouse-focus-policy* :sloppy))
 
 (let ((uptime-seconds (parse-integer (car (split-string (car (split-string (uiop:read-file-string "/proc/uptime") " ")) ".")))))
   (when (< uptime-seconds 60)
