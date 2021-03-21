@@ -77,12 +77,6 @@ PasswordAuthentication yes")))
                                     (ip-address "10.0.0.2/24")
                                     (interface-name "gre1")
                                     (routes '("add 10.9.0.0/24 via 10.0.0.3"))))
-                          (service sysctl-service-type
-                                   (sysctl-configuration
-                                    (settings '(("net.ipv4.ip_forward" . "1")
-                                                ;; ("net.ipv4.conf.all.accept_redirects" . "1")
-                                                ;; ("net.ipv4.conf.all.send_redirects" . "1")
-                                                ))))
                           (service openvpn-service-type
                                    (openvpn-configuration
                                     (name "wugi.info")
@@ -148,4 +142,8 @@ push \"route 10.0.0.0 255.255.255.0\"
                                                                         "\
 localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBHVSCVdQEHUaTnBqA2nKQXRmo/74DgnyCyWiOI/f5G7qYUMfDiJqYHqh7YngyxIG9iakEUOaNtr6ljHyBXhlaPQ=")))))
                     (modify-services %base-services
-                      (guix-service-type config => %guix-daemon-config-with-substitute-urls)))))
+                      (guix-service-type _ => %guix-daemon-config-with-substitute-urls)
+                      (sysctl-service-type _ =>
+                                           (sysctl-configuration
+                                            (settings (append '(("net.ipv4.ip_forward" . "1"))
+                                                              %default-sysctl-settings))))) )))

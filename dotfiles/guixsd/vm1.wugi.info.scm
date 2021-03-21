@@ -200,16 +200,14 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                            (ip-address-remote "78.108.87.161")
                            (ip-address "10.0.0.3/24")
                            (interface-name "gre1")
-                           (routes '("add 10.8.0.0/24 via 10.0.0.2"))))
-                 (service sysctl-service-type
-                          (sysctl-configuration
-                           (settings '(("net.ipv4.ip_forward" . "1")
-                                       ;; ("net.ipv4.conf.all.accept_redirects" . "1")
-                                       ;; ("net.ipv4.conf.all.send_redirects" . "1")
-                                       )))))
+                           (routes '("add 10.8.0.0/24 via 10.0.0.2")))))
            (load "desktop.scm")
            (modify-services %base-services
-             (guix-service-type config => %guix-daemon-config-with-substitute-urls))))
+             (guix-service-type _ => %guix-daemon-config-with-substitute-urls)
+             (sysctl-service-type _ =>
+                                  (sysctl-configuration
+                                   (settings (append '(("net.ipv4.ip_forward" . "1"))
+                                                     %default-sysctl-settings)))))))
 
   ;; Allow resolution of '.local' host names with mDNS.
   (name-service-switch %mdns-host-lookup-nss))
