@@ -8,7 +8,7 @@
              (srfi srfi-1)
              (srfi srfi-26))
 
-(use-package-modules admin audio android bittorrent linux ssh suckless xdisorg xorg)
+(use-package-modules admin audio android bittorrent networking linux ssh suckless xdisorg xorg)
 
 (use-service-modules admin dbus desktop docker dns networking sound
                      xorg ssh web cgit version-control certbot
@@ -495,12 +495,23 @@ location / {
                                            (file-append openssh "/bin/ssh"))
 
                        ;; “adb” and “fastboot” without root privileges
-                       (simple-service 'adb udev-service-type (list android-udev-rules))
+                       (udev-rules-service 'android android-udev-rules
+                                           #:groups '("adbusers"))
 
-                       (simple-service 'udev-kvm-custom udev-service-type
-                                       (list (udev-rule
-                                              "91-kvm-custom.rules"
-                                              (string-append "KERNEL==\"kvm\", GROUP=\"kvm\", MODE=\"0666\"\n"))))
+                       (udev-rules-service 'kvm
+                                           (udev-rule
+                                            "91-kvm-custom.rules"
+                                            (string-append "KERNEL==\"kvm\", GROUP=\"kvm\", MODE=\"0666\"\n")))
+
+                       (udev-rules-service 'wol
+                                           (file->udev-rule
+                                            "91-wol.rules"
+                                            (mixed-text-file "91-wol.rules" ;https://wiki.archlinux.org/index.php/Wake-on-LAN
+                                                             #~(string-join
+                                                                (list "ACTION==\"add\""
+                                                                      "SUBSYSTEM==\"net\""
+                                                                      "NAME==\"enp*\""
+                                                                      (format #f "RUN+=\"~a/sbin/ethtool -s $name wol g\"~%" #$ethtool))))))
 
                        (service singularity-service-type)
 
