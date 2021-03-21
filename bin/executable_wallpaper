@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+convert -font DejaVu-Sans-Mono -pointsize 20 -fill '#37CFA6' -draw 'text 1700,30 "1 emacs firefox
+2 spotify notmuch
+3 habitica home-slack|work-slack
+4 zabbix|mjru-grafana-netflow guix-ci|mjru-grafana-upstream-interfaces
+5 kodi|majodomo-xpanes-dh-ssh xpanes-ssh-nginx
+6 trans-en-ru|trans-ru-en
+7 mjru-alerta mjru-zabbix
+8 pulsemixer|emacs-anywhere habitica|cerberus
+9 mjru-office-shedule-eng mjru-office-shedule-sup"' -size 2560x1080 xc:black /tmp/out.png
+feh --bg-center /tmp/out.png

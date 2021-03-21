@@ -9,7 +9,7 @@
                 (espanso-daemon)
                 (picom)
                 (idesk)
-                (xplanet-file))
+                (run-shell-command "/home/oleg/bin/wallpaper"))
               (lambda () (cursor-theme))
               (lambda () (keynav))
               (lambda () (keyboard-layout))
