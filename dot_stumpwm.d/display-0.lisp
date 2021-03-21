@@ -18,6 +18,9 @@
 (add-group (current-screen) "0" :background t :type 'float-group)
 (run-commands "gselect 1")
 
+(when (string-equal (screen-display-string (current-screen)) "DISPLAY=:0.0")
+  (mode-line))
+
 (defun run-frame (group-number &key
                                  (restart? nil)
                                  (frame-0-command nil)

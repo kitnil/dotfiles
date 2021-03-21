@@ -108,7 +108,6 @@
                       t))))
 
 (mode-line-update)
-;; (mode-line)
 
 (mapcar (lambda (func)
           (add-hook *start-hook* func))
