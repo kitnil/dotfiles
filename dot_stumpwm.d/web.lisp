@@ -1,6 +1,7 @@
 (in-package :stumpwm)
 
 (defvar *browser* "firefox")
+(defvar *browser-name* "Nightly")
 
 (defvar *jenkins-url*
   "https://jenkins.wugi.info")
