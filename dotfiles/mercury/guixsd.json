@@ -1,0 +1,27 @@
+{
+  "name": "guixsd",
+  "host": "guix.wugi.info",
+  "port": 22,
+  "user": "oleg",
+  "nohupPath": "/run/current-system/profile/bin/nohup",
+  "sudoNoPasswd": true,
+  "commands": [
+    {
+      "name": "Restart vncserver2",
+      "sudo": true,
+      "cmd": "/bin/sh -c 'herd stop vncserver2; sleep 3; herd enable vncserver2; herd start vncserver2'",
+      "confirm": true
+    },
+    {
+      "name": "Suspend",
+      "cmd": "loginctl suspend --ignore-inhibitors",
+      "confirm": true
+    },
+    {
+      "name": "Shutdown",
+      "sudo": true,
+      "cmd": "halt",
+      "confirm": true
+    }
+  ]
+}
