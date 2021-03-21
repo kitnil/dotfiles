@@ -21,6 +21,12 @@
 (when (string-equal (screen-display-string (current-screen)) "DISPLAY=:0.0")
   (mode-line))
 
+(let ((uptime-seconds (parse-integer (car (split-string (car (split-string (uiop:read-file-string "/proc/uptime") " ")) ".")))))
+  (when (< uptime-seconds 60)
+    (term-shell-command "sh -c 'if gpg-unlock; then exit 0; else read; fi'"
+                        :terminal 'st
+                        :color "dark")))
+
 (defun run-frame (group-number &key
                                  (restart? nil)
                                  (frame-0-command nil)
