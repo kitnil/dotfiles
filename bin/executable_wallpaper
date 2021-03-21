@@ -10,21 +10,21 @@ convert -font DejaVu-Sans-Mono -pointsize 20 -fill '#37CFA6' -draw 'text 1900,30
 3 habitica
   slack
 
-4 zabbix           mjru-grafana-netflow
-  guix-ci          mjru-grafana-upstream-interfaces
+4 zabbix           grafana-netflow
+  guix-ci          grafana-upstream-interfaces
 
-5 kodi             majodomo-xpanes-dh-ssh
-                   xpanes-ssh-nginx
+5 kodi             xpanes dh
+                   xpanes nginx
 
 6 trans-en-ru
   trans-ru-en
 
-7 mjru-alerta
-  mjru-zabbix
+7                  alerta
+                   zabbix
 
 8 pulsemixer       emacs-anywhere
   habitica         cerberus
 
-9                  mjru-office-shedule-eng
-                   mjru-office-shedule-sup"' -size 2560x1080 xc:black /tmp/out.png
+9                  office-shedule-eng
+                   office-shedule-sup"' -size 2560x1080 xc:black /tmp/out.png
 feh --bg-center /tmp/out.png
