@@ -65,7 +65,7 @@
   (run-frame 1 :frame-0-command (lambda ()
                                   (run-shell-command "run-emacs"))
                :frame-1-command (lambda ()
-                                  (run-shell-command "timeout 2 vnc client 5910; vnc client 5901"))
+                                  (run-shell-command "firefox"))
                :frame-2-command (lambda ()
                                   (emacs-todo-new-window))))
 
@@ -74,7 +74,7 @@
                :frame-0-command (lambda ()
                                   (run-shell-command "pkill emacs; run-emacs"))
                :frame-1-command (lambda ()
-                                  (run-shell-command "sudo herd restart vncserver1; vnc client 5901"))
+                                  (run-shell-command "pkill firefox; firefox"))
                :frame-2-command (lambda ()
                                   (emacs-todo-new-window))))
 
