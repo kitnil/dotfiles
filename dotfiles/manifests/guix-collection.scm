@@ -75,6 +75,8 @@ xml xorg)
 
                zsh
 
+               dragon-drop
+
                gnu-gettext
                translate-shell ; Translation in CLI and Emacs
 

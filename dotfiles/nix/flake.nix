@@ -118,7 +118,6 @@
           dnsperf
           # docker-compose
           docker-ls
-          dragon-drop
           espanso
           # ferm
           filezilla
