@@ -130,6 +130,7 @@
        emacs-rainbow-delimiters ; Prettify parentheses
        emacs-rainbow-mode       ; Show colors in codes
        emacs-refactor
+       emacs-rust-mode
        emacs-org-redmine
        emacs-recutils
        emacs-restclient
