@@ -66,9 +66,9 @@
 
 (defcommand group-1-start-programs () ()
   (run-frame 1 :frame-0-command (lambda ()
-                                  (run-shell-command "run-emacs"))
-               :frame-1-command (lambda ()
                                   (run-shell-command "firefox"))
+               :frame-1-command (lambda ()
+                                  (run-shell-command "run-emacs"))
                :frame-2-command (lambda ()
                                   (emacs-todo-new-window))))
 

@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 
 convert -font DejaVu-Sans-Mono -pointsize 20 -fill '#37CFA6' -draw 'text 1900,30 "
-1 emacs
-  firefox
+1 firefox
+  emacs
 
 2 spotify
   notmuch
