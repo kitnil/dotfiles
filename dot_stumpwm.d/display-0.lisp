@@ -22,11 +22,13 @@
   (mode-line)
   (setf *mouse-focus-policy* :sloppy))
 
-(let ((uptime-seconds (parse-integer (car (split-string (car (split-string (uiop:read-file-string "/proc/uptime") " ")) ".")))))
-  (when (< uptime-seconds 60)
-    (term-shell-command "sh -c 'sleep 5; if gpg-unlock; then exit 0; else read; fi'"
-                        :terminal 'st
-                        :color "dark")))
+;; XXX: pam-gnupg race condition
+;;
+;; (let ((uptime-seconds (parse-integer (car (split-string (car (split-string (uiop:read-file-string "/proc/uptime") " ")) ".")))))
+;;   (when (< uptime-seconds 60)
+;;     (term-shell-command "sh -c 'sleep 5; if gpg-unlock; then exit 0; else read; fi'"
+;;                         :terminal 'st
+;;                         :color "dark")))
 
 (defun run-frame (group-number &key
                                  (restart? nil)
