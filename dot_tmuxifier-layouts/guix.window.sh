@@ -2,7 +2,7 @@
 
 # Set window root path. Default is `$session_root`.
 # Must be called before `new_window`.
-window_root "$HOME/src/guix-master"
+window_root "$HOME/src/guix"
 
 # Create new window. If no argument is given, window name will be based on
 # layout file name.

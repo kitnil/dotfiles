@@ -1,5 +1,5 @@
 (with-eval-after-load 'guix-repl
-  (setq guix-load-path (expand-file-name "~/src/guix-master")))
+  (setq guix-load-path (expand-file-name "~/src/guix")))
 
 (setq guix-find-file-function #'org-open-file)
 
@@ -49,7 +49,7 @@
 ;;; Version control
 ;;;
 
-(defvar wi-guix-git-directory (expand-file-name "~/src/guix-master"))
+(defvar wi-guix-git-directory (expand-file-name "~/src/guix"))
 (defun wi-magit-show-commit-guix (commit)
   "Show a Git `commit' from the Guix checkout.
 

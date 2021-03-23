@@ -604,7 +604,7 @@ guix()
             ansible-playbook "$HOME/.local/share/chezmoi/dotfiles/ansible/guix.yml"
             ;;
         prereconfigure)
-            guix_command="$HOME/src/guix-master/pre-inst-env guix"
+            guix_command="$HOME/src/guix/pre-inst-env guix"
             sudo --login GUIX_PACKAGE_PATH="/home/oleg/src/guix-majordomo:/home/oleg/src/guix-wigust-services/guix:/home/oleg/src/guix-wigust/guix:/home/oleg/src/nonguix"    \
                  $guix_command system reconfigure                               \
                  --load-path="$guix_modules" --no-bootloader --fallback "$HOME/.local/share/chezmoi/dotfiles/guixsd/guixsd.scm" \
@@ -1765,7 +1765,7 @@ rg()
 {
     case "$1" in
         dist)
-            command rg "${@:2}" "$HOME"/{src/nixpkgs-master,src/guix-master,archive/src/{gentoo,freebsd,openbsd-ports,arch-{community,packages}}}
+            command rg "${@:2}" "$HOME"/{src/nixpkgs-master,src/guix,archive/src/{gentoo,freebsd,openbsd-ports,arch-{community,packages}}}
             ;;
         *)
             command rg --no-heading "$@"
