@@ -131,9 +131,9 @@
   (run-shell-command (join (list (firefox-command) "-P" "test"))
                      '(:class "Nightly")))
 
+;; XXX: `firefox-command' ignores GTK_THEME until SiteDelta fixes fonts
 (defun firefox-command ()
-  (join `(,@(if dark-theme '("GTK_THEME=Adwaita:dark") nil) ,*fontconfig-file*
-            "firefox")))
+  (join (list "GTK_THEME=Adwaita:light" *fontconfig-file* "firefox")))
 
 (defun mjru-open-account (account)
   (run-shell-command (join (list *fontconfig-file* "hms" "web" "open" account)))
