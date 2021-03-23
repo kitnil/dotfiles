@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2020 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2020, 2021 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -75,7 +75,8 @@
                                       ":" "/bin")
                        (string-append "HOME=" #$directory)
                        "SSL_CERT_DIR=/etc/ssl/certs"
-                       "SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt")
+                       "SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt"
+                       "XAUTHORITY=/home/oleg/.Xauthority.vnc")
                  #:pid-file (string-append #$directory "/.vnc/" #$host-name ":" #$(number->string display) ".pid")))
        (requirement '(user-processes host-name udev))
        (respawn? #f)
