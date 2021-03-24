@@ -89,6 +89,12 @@ case "$1" in
                 # [[https://zalinux.ru/?p=3905][Как настроить и использовать сервер TigerVNC в Linux - ZaLinux.ru]]
                 openssl req -x509 -newkey rsa -days 365 -nodes -keyout key.pem -out x509_ca.pem -subj '/CN=vm1.wugi.info'
                 ;;
+            guix.wugi.info)
+                # [[https://zalinux.ru/?p=3905][Как настроить и использовать сервер TigerVNC в Linux - ZaLinux.ru]]
+                openssl req -x509 -newkey rsa -days 365 -nodes -keyout key.pem -out x509_ca.pem -subj '/CN=guix.wugi.info'
+                install --backup x509_ca.pem "$HOME"/.vnc/x509_ca.pem
+                install --backup key.pem "$HOME"/.vnc/key.pem
+                ;;
         esac
         ;;
     *)
