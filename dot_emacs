@@ -113,13 +113,39 @@
                  (company-dabbrev-code company-gtags company-etags company-keywords)
                  company-oddmuse company-dabbrev))
  '(custom-safe-themes
-   '("a10ca93d065921865932b9d7afae98362ce3c347f43cb0266d025d70bec57af1" "4ce515d79ef94f3b7651c8e2a7c7d81814b9ca911eb2a16955f45f4555faf524" "ba881f92a04cf56df49740324caea02d25442a327f1c33d1a1946f0b9a846f53" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default))
+   '("aa85228e4b6d188c3c0b8553548142c2c75726429614376c26255a51378982f5" "a10ca93d065921865932b9d7afae98362ce3c347f43cb0266d025d70bec57af1" "4ce515d79ef94f3b7651c8e2a7c7d81814b9ca911eb2a16955f45f4555faf524" "ba881f92a04cf56df49740324caea02d25442a327f1c33d1a1946f0b9a846f53" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default))
  '(debug-on-error nil)
  '(indent-tabs-mode nil)
  '(org-agenda-files '("~/org/inbox.org" "~/org/todo.org" "~/org/web.org"))
  '(python-shell-interpreter "python3" t)
  '(safe-local-variable-values
-   '((eval c-set-offset 'inlambda 0)
+   '((eval let
+           ((root-dir-unexpanded
+             (concat
+              (locate-dominating-file default-directory ".dir-locals.el")
+              "guix/")))
+           (when root-dir-unexpanded
+             (let*
+                 ((root-dir
+                   (expand-file-name root-dir-unexpanded))
+                  (root-dir*
+                   (directory-file-name root-dir)))
+               (unless
+                   (boundp 'geiser-guile-load-path)
+                 (defvar geiser-guile-load-path 'nil))
+               (make-local-variable 'geiser-guile-load-path)
+               (require 'cl-lib)
+               (cl-pushnew root-dir* geiser-guile-load-path :test #'string-equal))))
+     (eval setq-local guix-directory
+           (concat
+            (locate-dominating-file default-directory ".dir-locals.el")
+            "guix/"))
+     (eval setq-local geiser-guile-load-path
+           (list
+            (concat
+             (projectile-project-root)
+             "dotfiles/guixsd/modules")))
+     (eval c-set-offset 'inlambda 0)
      (c-block-comment-prefix . "  ")
      (eval let
            ((root-dir-unexpanded
