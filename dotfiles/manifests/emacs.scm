@@ -109,6 +109,7 @@
        emacs-matcha
        emacs-mbsync
        emacs-move-text
+       emacs-multifiles
        emacs-multiple-cursors   ; Multi cursor
        emacs-nginx-mode
        emacs-nix-mode           ; Nix language mode

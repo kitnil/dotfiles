@@ -94,6 +94,7 @@
 ;; (load-config-file "youtube.el")
 
 (autoload 'get-synonyms "thesaurus" nil t)
+(autoload 'mf/mirror-region-in-multifile "multifiles" nil t)
 
 (setq ewmctrl-wmctrl-path "/run/current-system/profile/bin/wmctrl")
 (defalias 'rg 'deadgrep)
