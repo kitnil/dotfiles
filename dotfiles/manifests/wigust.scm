@@ -45,6 +45,7 @@
    emacs-slack-patched
    emacs-strace-mode-special ; Colorize `strace' logs
    emacs-terminal-here-checkout
+   emacs-thesaurus
    emacs-plain-org-wiki
    emacs-wi-utils
    ))

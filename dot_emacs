@@ -93,6 +93,8 @@
 ;; (load-config-file "twitch.el")
 ;; (load-config-file "youtube.el")
 
+(autoload 'get-synonyms "thesaurus" nil t)
+
 (setq ewmctrl-wmctrl-path "/run/current-system/profile/bin/wmctrl")
 (defalias 'rg 'deadgrep)
 
