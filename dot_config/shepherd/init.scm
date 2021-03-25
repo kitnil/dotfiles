@@ -59,10 +59,7 @@
   (make <service>
     #:docstring '("Dunst daemon")
     #:provides '(dunst)
-    #:start (make-forkexec-constructor
-             (list (string-join (list (string-append %bin-directory "dunst")))
-                   "-print")
-             #:log-file "/home/oleg/.config/shepherd/dunst.log")
+    #:start (make-forkexec-constructor (list (string-join (list (string-append %bin-directory "dunst")))))
     #:stop
     (make-kill-destructor)
     #:respawn? #f))
@@ -145,34 +142,8 @@
     (make-kill-destructor)
     #:respawn? #f))
 
-(register-services ;; alerta-service
-                   clipmenud-service
-                   dunst-service
-                   keynav-service
-                   ;; sxhkd-service
-                   ;; emacs-service
-                   ;; firefox-service
-                   redshift-service
-                   ;; znc-service
-                   kdeconnect-service
-                   ;; pulsemixer-service
-                   quassel-service
-                   ;; place-existing-windows-service
-                   )
+(register-services emacs-service)
 
-(for-each start '(clipmenud
-                  dunst
-                  keynav
-                  ;; sxhkd
-                  ;; emacs
-                  ;; firefox
-                  ;; redshift
-                  ;; alerta
-                  ;; pulsemixer
-                  ;; znc
-                  kdeconnect
-                  quassel
-                  ;; place-existing-windows
-                  ))
+(for-each start '(emacs))
 
 (action 'shepherd 'daemonize)
