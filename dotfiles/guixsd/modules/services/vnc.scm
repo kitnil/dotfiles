@@ -76,7 +76,9 @@
                        (string-append "HOME=" #$directory)
                        "SSL_CERT_DIR=/etc/ssl/certs"
                        "SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt"
-                       "XAUTHORITY=/home/oleg/.Xauthority.vnc")
+                       "XAUTHORITY=/home/oleg/.Xauthority.vnc"
+                       "XDG_RUNTIME_DIR=/run/user/1000" ;TODO: Don't hardcode user id
+                       )
                  #:pid-file (string-append #$directory "/.vnc/" #$host-name ":" #$(number->string display) ".pid")))
        (requirement '(user-processes host-name udev))
        (respawn? #f)
