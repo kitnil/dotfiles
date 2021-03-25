@@ -566,6 +566,7 @@ guix()
                            "system switch" "Reconfigure system" "${STATE:-on}" \
                            "distribute" "Pull on remote hosts" "${STATE:-on}" \
                            "system deploy" "Deploy to remote hosts" "${STATE:-on}" \
+                           "describe archive" "Write current channels file" "${STATE:-on}" \
                            2>&1 2>&1 1>&3
                 )
                 declare -p selection
@@ -579,6 +580,17 @@ guix()
                     eval "guix $operation $options"
                 done
             )
+            ;;
+        describe)
+            case "$2" in
+                archive)
+                    command guix describe --format=channels-sans-intro \
+                        | tee "$HOME"/.local/share/chezmoi/dotfiles/channels-current.scm
+                    ;;
+                *)
+                    command guix describe "${@:2}"
+                    ;;
+            esac
             ;;
         pull)
             guix_command=(
