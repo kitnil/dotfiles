@@ -165,3 +165,14 @@
 (setq org-appear-autoemphasis t)
 (setq org-appear-autolinks t)
 (setq org-appear-autosubmarkers t)
+
+
+;;;
+;;; org-roam
+;;;
+
+;; [[https://www.orgroam.com/manual.html][Org-roam User Manual]]
+
+(setq org-roam-directory (expand-file-name "~/src/org"))
+(setq org-roam-db-gc-threshold most-positive-fixnum)
+(require 'org-roam-protocol)
