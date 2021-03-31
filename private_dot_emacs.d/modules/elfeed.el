@@ -79,6 +79,8 @@
         ("https://www.opennet.ru/opennews/opennews_all.rss" news)
 
         ("https://ci.guix.gnu.org/events/rss/" ci guix)
+
+        ("https://lk.sknt.ru/rss.php" internet)
         ))
 
 (defun elfeed-config ()
