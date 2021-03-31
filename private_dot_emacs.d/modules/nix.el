@@ -24,3 +24,5 @@
 (defun dumb-jump-init-nixpkgs ()
   (interactive)
   (with-temp-file ".dumbjump" (insert "+/home/oleg/src/nixpkgs")))
+
+(add-hook 'nix-mode-hook 'goto-address-mode)
