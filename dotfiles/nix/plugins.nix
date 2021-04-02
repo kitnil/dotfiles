@@ -53,6 +53,13 @@ in rec {
       sha256 = "0sggii73jk519w7jd6q2dnk1j6vql3129jddqxzd93wk1fhmywnr";
     };
   };
+  ansible = mkJenkinsPlugin {
+    name = "ansible";
+    src = fetchurl {
+      url = "https://updates.jenkins-ci.org/download/plugins/ansible/1.1/ansible.hpi";
+      sha256 = "1mm70glxj3l3r227bh5vjypangz27pg73dpi2n0kfr0q4rh2mdvv";
+    };
+  };
   ansicolor = mkJenkinsPlugin {
     name = "ansicolor";
     src = fetchurl {
