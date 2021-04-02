@@ -144,6 +144,9 @@ direnv:
   pull         pull changes from upstream Git repository
   repl         run guix repl
 "
+
+    export XDG_RUNTIME_DIR="/run/user/$UID"
+    export EDITOR="$HOME/.guix-profile/bin/emacsclient -nc"
 }
 
 use_emacs-guix()
