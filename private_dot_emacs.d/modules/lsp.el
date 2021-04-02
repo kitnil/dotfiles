@@ -8,6 +8,7 @@
 (add-hook 'python-mode-hook 'lsp)
 (add-hook 'rust-mode-hook 'lsp)
 (add-hook 'c-mode-hook 'lsp)
+(add-hook 'c++-mode-hook 'lsp)
 (setq lsp-ui-sideline-enable nil) ;right menu
 (setq lsp-file-watch-threshold nil)
 (setq lsp-lua-emmy-jar-path (expand-file-name "EmmyLua-LS-all.jar" user-emacs-directory))
