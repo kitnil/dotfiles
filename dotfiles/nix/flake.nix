@@ -160,6 +160,7 @@
           nix-prefetch-docker
           nix-serve
           noti
+          clang-tools # for clangd in lsp-mode
 
           logstalgia
 
