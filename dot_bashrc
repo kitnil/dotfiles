@@ -1649,6 +1649,9 @@ nix-env-clean()
 nix()
 {
     case "$1" in
+        config)
+            nano "$HOME"/.config/nix/nix.conf
+            ;;
         manifest)
             NIXPKGS_CONFIG="$HOME/.local/share/chezmoi/dotfiles/nix/config.nix" \
             NIX_PATH=nixpkgs="$HOME/.nix-defexpr/channels/nixos-unstable" \
