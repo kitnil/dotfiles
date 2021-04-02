@@ -35,7 +35,9 @@ xml xorg)
   (list aspell aspell-dict-en aspell-dict-ru))
 
 (packages->manifest
- (append (list feh sxiv    ; Image viewers
+ (append (list guile-bash
+
+               feh sxiv    ; Image viewers
 
                libvirt
 
