@@ -15,6 +15,9 @@ matches:
   - trigger: "smha"
     replace: "SMOrc HahaShrugRight"
 
+  - trigger: "omg"
+    replace: "https://raw.githubusercontent.com/SpectralOps/senv/master/media/omg.webp"
+
   # Simple text replacement
   - trigger: ":espanso"
     replace: "Hi there!"
