@@ -18,6 +18,9 @@ matches:
   - trigger: "omg"
     replace: "https://raw.githubusercontent.com/SpectralOps/senv/master/media/omg.webp"
 
+  - trigger: "coco"
+    replace: "https://avatars.githubusercontent.com/u/9960400?v=4"
+
   # Simple text replacement
   - trigger: ":espanso"
     replace: "Hi there!"
