@@ -162,6 +162,8 @@
           noti
           clang-tools # for clangd in lsp-mode
 
+          yaml-language-server
+
           logstalgia
 
           nixUnstable
