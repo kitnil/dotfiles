@@ -162,6 +162,7 @@
           noti
           clang-tools # for clangd in lsp-mode
 
+          rnix-lsp
           yaml-language-server
 
           logstalgia
