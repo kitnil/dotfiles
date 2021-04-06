@@ -323,7 +323,8 @@
         inherit ((import nixpkgs-idea { inherit system; config = { allowUnfree = true; }; }).idea)
           idea-ultimate pycharm-professional;
 
-      } // (let boomer-repo = (github-com-tsoding-boomer.outPath + "/overlay"); in rec {
+        } // ( {inherit (pkgs.nodePackages) node2nix; } )
+        // (let boomer-repo = (github-com-tsoding-boomer.outPath + "/overlay"); in rec {
                   nim_1_0 = pkgs.callPackage (boomer-repo + "/nim_1_0.nix") {};
                   boomer = pkgs.callPackage (boomer-repo + "/boomer.nix") { inherit nim_1_0; };
                 })
