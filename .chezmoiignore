@@ -25,6 +25,7 @@ todo.org
 .muttrc_pyhalov_majordomo
 .muttrc_rxaetbed_mail
 .muttrc_zabbix.guix_yandex
+.muttrc_i18n.wugi_yandex
 .netrc
 .pythonrc
 {{- end }}
