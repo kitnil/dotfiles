@@ -1,0 +1,10 @@
+export C_INCLUDE_PATH="$HOME"/archive/src:"$HOME"/src/guile
+for output in $(guix build bash)
+do
+    if [[ $output == *include* ]]
+    then
+        export C_INCLUDE_PATH="$output"/include:"$C_INCLUDE_PATH"
+    fi
+done
+
+echo "Install command: 'guix package --with-source=file://$HOME/src/guile-bash -i guile-bash'."
