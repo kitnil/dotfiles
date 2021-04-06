@@ -36,6 +36,7 @@ COMMAND must be one of the sub-commands listed below:
     ip-filter     control ip-filter on server
     net           show network interfaces stats on SERVER
     ping          ping a SERVER
+    protected     add DOMAIN to protected on SERVER
     route         show network route to SERVER
     sniff         run tcpdump on SERVER
     traceroute    show traceroute to SERVER
@@ -451,6 +452,9 @@ mycli --password "$(pass show majordomo/public/web/mysql/root)" -d "${2%.intr}"
             curl --silent --head --request PUT "$IP_FILTER_HOST/ip-filter/$2?ttl=7200&action=setCookie"
         fi
     ;;
+    protected)
+        curl -i -XPUT "$2"/protected/"$3"?ttl=3600
+        ;;
     te)
         ssh_expect "$2" tail --lines="${3:-1000}" /var/log/taskexecutor.log \
             | grep -v 'malware_report' \

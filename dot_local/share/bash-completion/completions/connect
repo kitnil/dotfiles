@@ -86,6 +86,7 @@ _connect_complete()
                     || _connect_is_command "nginx-config"       \
                     || _connect_is_command "ping"               \
                     || _connect_is_command "php"                \
+                    || _connect_is_command "protected"          \
                     || _connect_is_command "route"              \
                     || _connect_is_command "sg"                 \
                     || _connect_is_command "shell"              \
