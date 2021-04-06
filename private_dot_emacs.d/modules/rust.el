@@ -1,0 +1,38 @@
+(defvar wi-rust--prettify-symbols-alist
+  `(("fn" . ,(string-to-symbols "λ"))
+    ("struct" . ,(string-to-symbols "define-structure"))
+    ("enum" . ,(string-to-symbols "define-enumeration"))
+    ("const" . ,(string-to-symbols "define-constant"))
+    ("static" . ,(string-to-symbols "define-mutable-constant"))
+    ("impl" . ,(string-to-symbols "implement"))
+    ("u8" . ,(string-to-symbols "ℕ₈"))
+    ("u16" . ,(string-to-symbols "ℕ₁₆"))
+    ("u32" . ,(string-to-symbols "ℕ₃₂"))
+    ("u128" . ,(string-to-symbols "ℕ₁₂₈"))
+    ("usize" . ,(string-to-symbols "pointer-size"))
+    ("i8" . ,(string-to-symbols "ℤ₈"))
+    ("i16" . ,(string-to-symbols "ℤ₁₆"))
+    ("i32" . ,(string-to-symbols "ℤ₃₂"))
+    ("i128" . ,(string-to-symbols "ℤ₁₂₈"))
+    ("isize" . ,(string-to-symbols "pointer-size"))
+    ("bool" . ,(string-to-symbols "boolean"))
+    ("derive" . ,(string-to-symbols "automatically-create-implementation"))
+    ;; ("allow" . ,(string-to-symbols "reuse-as-fields-of-another-struct"))
+    ("mut" . ,(string-to-symbols "mutable-bind"))
+    ("type" . ,(string-to-symbols "alias"))
+    ("->" . ,(string-to-symbols "→"))
+
+    ;; https://stackoverflow.com/a/47641166
+    ("&'a" . ,(string-to-symbols "the-lifetime-a"))
+    ("'_" ,(string-to-symbols "anonymous-lifetime"))
+
+    ("use" . ,(string-to-symbols "bind-full-path-to-name"))
+    ("as" . ,(string-to-symbols "bind-import-to-a-different-name"))
+    ("attribute" . ,(string-to-symbols "metadata-applied-to-module"))
+    ("trait" . ,(string-to-symbols "collection-of-methods-defined-for-an-unknown-type-self"))))
+
+(add-hook 'rust-mode-hook
+          (lambda ()
+            (set (make-local-variable 'prettify-symbols-alist)
+                 wi-rust--prettify-symbols-alist)
+            (rainbow-delimiters-mode 0)))

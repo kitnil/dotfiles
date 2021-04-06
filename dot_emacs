@@ -88,7 +88,8 @@
   (load-config-file "po.el")
   (load-config-file "python.el")
   (load-config-file "java.el")
-  (load-config-file "perl.el"))
+  (load-config-file "perl.el")
+  (load-config-file "rust.el"))
 
 ;; (load-config-file "twitch.el")
 ;; (load-config-file "youtube.el")
