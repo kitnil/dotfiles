@@ -2,14 +2,14 @@
         (name 'guix)
         (url "https://git.savannah.gnu.org/git/guix.git")
         (commit
-          "ba0dc1dbc150a95746ffb89596862533e533c2c9"))
+          "591c930337556f1a242fc8f7a891a4409d18da84"))
       (channel
         (name 'guix-wigust)
         (url "https://github.com/kitnil/guix-wigust")
         (commit
-          "676f5211cf9e69776265fda8df946ceabc51ef77"))
+          "151bf1232a6ff53f4f180b50283283ebd0c043ae"))
       (channel
         (name 'nonguix)
         (url "https://gitlab.com/nonguix/nonguix")
         (commit
-          "1e57ef8dc4e1130e40f6d8e17218ca82c8512d9e")))
+          "a8c9d24a296e8b9c5eb283c69c3f56ab50ff2833")))
