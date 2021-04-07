@@ -28,7 +28,11 @@
   (term-shell-command "racket" :scrollbar t :title "repl-racket"))
 
 (defcommand repl-nix () ()
-  (term-shell-command "nix repl '<nixpkgs>'" :scrollbar t :title "repl-nix"))
+  (term-shell-command "nix repl '<nixpkgs>'" :scrollbar t :title "repl-nix")
+  (sb-thread:make-thread
+   (lambda ()
+     (sleep 0.1)
+     (window-send-string (uiop:read-file-string "/home/oleg/.config/nix/repl.nix")))))
 
 (defcommand repl-nix-20-03 () ()
   (term-shell-command "nix repl /home/oleg/.nix-defexpr/channels/nixos-20-03"
