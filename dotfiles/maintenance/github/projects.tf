@@ -228,3 +228,9 @@ resource "github_repository" "nix-ipmiview" {
   description    = "Nix expression to build IPMIView to run via steam-run"
   default_branch = "master"
 }
+
+resource "github_repository" "filestash" {
+  name           = "filestash"
+  description    = "Fork https://github.com/mickael-kerjean/filestash"
+  default_branch = "master"
+}
