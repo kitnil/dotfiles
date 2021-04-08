@@ -21,6 +21,9 @@ matches:
   - trigger: "coco"
     replace: "https://avatars.githubusercontent.com/u/9960400?v=4"
 
+  - trigger: "пальма"
+    replace: "https://static.pepper.ru/comments/content/dY6Ro/4102774.jpg"
+
   # Simple text replacement
   - trigger: ":espanso"
     replace: "Hi there!"
