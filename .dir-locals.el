@@ -2,6 +2,7 @@
 
 ((nil
   . ((projectile-project-test-cmd . "make check")
+     (projectile-project-install-cmd . "make install")
      (eval . (setq-local geiser-guile-load-path
                          (list (concat (projectile-project-root)
                                        "dotfiles/guixsd/modules")))))))
