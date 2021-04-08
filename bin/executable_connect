@@ -493,7 +493,7 @@ mycli --password "$(pass show majordomo/public/web/mysql/root)" -d "${2%.intr}"
         done
         ;;
     php)
-        parallel --will-cite -k 'printf "domain: %s\n" {2}-{3}; curl --max-time 10 -L -s -o /dev/null -w "ip-address: %{remote_ip}\nstatus_code: %{http_code}" http://{1}/apache2/{2}/{3}/phpinfo.php; printf "\n\n"' ::: \
+        parallel --will-cite -k 'printf "domain: %s\n" {2}-{3}; curl --max-time 10 -L -s -o /dev/null -w "ip_address: %{remote_ip}\nstatus_code: %{http_code}" http://{1}/apache2/{2}/{3}/phpinfo.php; printf "\n\n"' ::: \
                  "$2" ::: \
                  "php44" "php52" "php53" "php54" "php55" "php56" "php70" "php71" "php72" "php73" "php74" "php80" ::: \
                  "default" "unsafe" "hardened" "hardened_nochmod"
