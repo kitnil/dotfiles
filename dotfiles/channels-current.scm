@@ -1,9 +1,4 @@
 (list (channel
-        (name 'guix)
-        (url "https://git.savannah.gnu.org/git/guix.git")
-        (commit
-          "591c930337556f1a242fc8f7a891a4409d18da84"))
-      (channel
         (name 'guix-wigust)
         (url "https://github.com/kitnil/guix-wigust")
         (commit
@@ -12,4 +7,9 @@
         (name 'nonguix)
         (url "https://gitlab.com/nonguix/nonguix")
         (commit
-          "a8c9d24a296e8b9c5eb283c69c3f56ab50ff2833")))
+          "0a5cd133a3097b192702c8b806f2a6f54182118d"))
+      (channel
+        (name 'guix)
+        (url "https://git.savannah.gnu.org/git/guix.git")
+        (commit
+          "2ffd92abf23e3fb3b3bac3c3efd43630ba616f4b")))
