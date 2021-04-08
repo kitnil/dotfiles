@@ -44,6 +44,7 @@
 (autoload 'crux-open-with "crux" nil t)
 
 (projectile-global-mode)
+(setq projectile-switch-project-action 'projectile-dired)
 (define-key projectile-mode-map (kbd "C-c g p") 'projectile-command-map)
 (define-key projectile-mode-map (kbd "C-c g p h") 'helm-projectile)
 
