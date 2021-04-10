@@ -182,7 +182,6 @@
           audacity
           obs-studio
           scrcpy
-          onefetch
           oh
           openjdk11
           packer
@@ -334,6 +333,14 @@
         // {
           inherit (import nixpkgs { inherit system; config = { allowUnfree = true; }; })
             google-chrome;
+        } // {
+          onefetch = with pkgs;
+            onefetch.overrideAttrs(old: {
+              patches = [ (pkgs.fetchurl {
+                url = "https://github.com/wigust/onefetch/commit/9c48548d8d1eaafa3e1776905f99a49bc1f2f462.patch";
+                sha256 = "0sr7vs5z4k0bd6spgwnfxqg9d5479y9n5gznjf4nl165d9b87qrf";
+              }) ];
+            });
         };
 
       deploy.nodes.localhost = {
