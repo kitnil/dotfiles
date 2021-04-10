@@ -118,6 +118,7 @@
           dnsperf
           # docker-compose
           docker-ls
+          dogdns
           duf
           espanso
           # ferm
