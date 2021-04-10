@@ -101,6 +101,7 @@
           ansifilter
           bat
           bandwidth
+          bandwhich
 
           # alacritty
           # assh
