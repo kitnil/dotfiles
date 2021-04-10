@@ -1,4 +1,4 @@
-#!/usr/bin/env -S bash -c "nix-shell --run deploy"
+#!/usr/bin/env -S bash -c "nix-shell --run 'deploy . -- -L'"
 
 {
   description = "Nix package manifest";
