@@ -72,6 +72,7 @@
 
 (save-place-mode)            ; Remember position in files
 (setq mouse-yank-at-point t) ; Ignore mouse position on paste
+(setq mouse-autoselect-window t) ; Sloppy mouse
 
 ;; Toggle prettify symbols mode on
 (global-prettify-symbols-mode)
