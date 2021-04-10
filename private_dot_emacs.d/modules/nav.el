@@ -142,3 +142,5 @@
                (wi-find-file-readlink))))
 
 (defalias 'center-mode 'olivetti-mode)
+
+(global-emojify-mode)
