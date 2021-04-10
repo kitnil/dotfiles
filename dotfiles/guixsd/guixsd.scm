@@ -8,7 +8,7 @@
              (srfi srfi-1)
              (srfi srfi-26))
 
-(use-package-modules admin audio android bittorrent networking linux ssh suckless xdisorg xorg)
+(use-package-modules admin audio android bittorrent haskell-apps networking linux ssh suckless xdisorg xorg)
 
 (use-service-modules admin dbus desktop docker dns networking sound
                      xorg ssh web cgit version-control certbot
@@ -347,6 +347,7 @@ location / {
                      (user-group (name "adbusers"))
                      (user-group (name "docker")
                                  (system? #t))
+                     (user-group (name "uinput"))
                      %base-groups))
 
       (users (cons* (user-account
@@ -354,7 +355,7 @@ location / {
                      (uid 1000)
                      (comment "Oleg Pykhalov")
                      (group "users")
-                     (supplementary-groups '("wheel" "adbusers" "audio" "video" "docker" "kvm"))
+                     (supplementary-groups '("wheel" "adbusers" "audio" "video" "docker" "kvm" "input"))
                      (home-directory "/home/oleg"))
                     (user-account
                      (name "majordomo-ssh-tunnel")
@@ -501,7 +502,7 @@ location / {
                        (udev-rules-service 'kvm
                                            (udev-rule
                                             "91-kvm-custom.rules"
-                                            (string-append "KERNEL==\"kvm\", GROUP=\"kvm\", MODE=\"0666\"\n")))
+                                            "KERNEL==\"kvm\", GROUP=\"kvm\", MODE=\"0666\"\n"))
 
                        (udev-rules-service 'wol
                                            (file->udev-rule
@@ -512,6 +513,8 @@ location / {
                                                                       "SUBSYSTEM==\"net\""
                                                                       "NAME==\"enp*\""
                                                                       (format #f "RUN+=\"~a/sbin/ethtool -s $name wol g\"~%" #$ethtool))))))
+
+                       (udev-rules-service 'kmonad kmonad)
 
                        (service singularity-service-type)
 
