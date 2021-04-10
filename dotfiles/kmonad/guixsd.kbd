@@ -1,0 +1,54 @@
+(defcfg
+  input (device-file "/dev/input/by-id/usb-0416_Gaming_Keyboard-event-kbd")
+  output (uinput-sink "KMonad_sm")
+  fallthrough true
+  allow-cmd true)
+
+(defsrc
+    esc  f1   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
+    grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+    tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+    caps a    s    d    f    g    h    j    k    l    ;    '    ret
+    lsft z    x    c    v    b    n    m    ,    .    /    rsft
+    lctl lmet lalt           spc            ralt cmp  rctl
+)
+
+(defalias qwerty (layer-toggle qwerty))
+
+(deflayer qwerty
+    esc  @num   f2   f3   f4   f5   f6   f7   f8   f9   f10  f11  f12
+    grv  1    2    3    4    5    6    7    8    9    0    -    =    bspc
+    tab  q    w    e    r    t    y    u    i    o    p    [    ]    \
+    caps a    s    d    f    g    h    j    k    l    ;    '    ret
+    lsft z    x    c    v    b    n    m    ,    .    /    rsft
+    lctl lmet lalt           spc            ralt cmp  rctl
+)
+
+(deflayer num
+    _  f1   _   _   _   _   _   _   _   _   _  _  _
+    _  _    _    _    _    _    _    7    8    9    0    _    _    _
+    _  _    _    _    _    _    _    4    5    6    p    _    _    _
+    _ _    _    _    _    _    _    1    2    3    _    _    _
+    _ _    _    _    _    _    _    0    ,    .    _    _
+    _ _ _           _            _ _  _
+)
+
+(defalias num (layer-delay 500 num))
+
+;; (defalias
+;; 1 (tap-hold-next-release 110 1 k)
+;; 2 (tap-hold-next-release 110 2 k)
+;; 3 (tap-hold-next-release 110 3 k)
+;; 4 (tap-hold-next-release 110 4 k)
+;; 5 (tap-hold-next-release 110 5 k)
+;; 6 (tap-hold-next-release 110 6 k)
+;; 7 (tap-hold-next-release 110 7 k)
+;; 8 (tap-hold-next-release 110 8 k)
+;; 9 (tap-hold-next-release 110 9 k)
+;; 0 (tap-hold-next-release 110 0 k)
+;; lsft (tap-hold-next-release 110 lsft lsft)
+;; - (tap-hold-next-release 110 - k)
+;; = (cmd-button "date >> /tmp/kmonad_example.txt")
+;; / (tap-hold-next-release 110 / k)
+;; * (tap-hold-next-release 110 * *)
+;; + (tap-hold-next-release 110 + +))
