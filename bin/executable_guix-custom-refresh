@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-trap "git restore guix/upstream.scm" EXIT
+trap "git restore ." EXIT
 
 GIT_AUTHOR="${AUTHOR_EMAIL:-go.wigust@gmail.com}"
 
@@ -123,21 +123,31 @@ upgrade_package()
 
 main()
 {
-    patch_guix_upstream
-    # XXX: Don't call .direnv/aliases/environment -- .direnv/aliases/build
-    .direnv/aliases/environment -- .direnv/aliases/build
-    log_packages_for_upgrade
-    select package in $(awk '/would be upgraded/ { print $2 }' refresh.log)
-    do
-        upgrade_package "$package"
-    done
+    case "$1" in
+        debug)
+            maintainer
+            ;;
+        *)
+            patch_guix_upstream
+            # XXX: Don't call .direnv/aliases/environment -- .direnv/aliases/build
+            .direnv/aliases/environment -- .direnv/aliases/build
+            log_packages_for_upgrade
+            case "$2" in
+                -i|--interactive)
+                    select package in $(awk '/would be upgraded/ { print $2 }' refresh.log)
+                    do
+                        upgrade_package "$package"
+                    done
+                    ;;
+                *)
+                    for package in $(awk '/would be upgraded/ { print $2 }' refresh.log)
+                    do
+                        upgrade_package "$package"
+                    done
+                    ;;
+            esac
+            ;;
+    esac
 }
 
-case "$1" in
-    debug)
-        maintainer
-        ;;
-    *)
-        main
-        ;;
-esac
+main
