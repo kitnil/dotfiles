@@ -2,6 +2,8 @@
 
 trap "git restore guix/upstream.scm" EXIT
 
+GIT_AUTHOR="${AUTHOR_EMAIL:-go.wigust@gmail.com}"
+
 patch_guix_upstream()
 {
     if [[ $(git diff guix/upstream.scm) == "" ]]
@@ -33,12 +35,36 @@ EOF
     fi
 }
 
+maintainer()
+{
+    mapfile -t output < <(git log --grep="gnu: Add" --format=%s --author="$GIT_AUTHOR")
+    for line in "${output[@]}"
+    do
+        package="${line/gnu: Add /}"
+        package="${package::-1}"
+        case "$package" in
+            *Revert*|*service*|premake4|perl-strictures-2|perl-role-tiny-2|emacs-cl-generic|emacs-seq|emacs-emms-player-simple-mpv|php-with-bcmath|shlomif-cmake-modules|go-github-com-muesli-reflow|go-github-com-emirpasic-gods-trees-binaryheap|nginx-socket-cloexec|emacs-kotlin-mode|emacs-dired-hacks|emacs-which-key)
+                printf ""
+                ;;
+            *go-github-com*)
+                printf ""
+                ;;
+            *zabbix-agentd*)
+                printf "zabbix-agentd\nzabbix-server\n"
+                ;;
+            *)
+                echo "$package"
+                ;;
+        esac
+    done
+}
+
 log_packages_for_upgrade()
 {
     if ! [ -e refresh.log ]
     then
         printf "No refresh.log exists, creating...\n"
-        ./pre-inst-env guix refresh "$(./pre-inst-env guix maintainer)" |& tee refresh.log
+        ./pre-inst-env guix refresh $(maintainer) |& tee refresh.log
     fi
 }
 
@@ -91,6 +117,8 @@ upgrade_package()
 main()
 {
     patch_guix_upstream
+    # XXX: Don't call .direnv/aliases/environment -- .direnv/aliases/build
+    .direnv/aliases/environment -- .direnv/aliases/build
     log_packages_for_upgrade
     select package in $(awk '/would be upgraded/ { print $2 }' refresh.log)
     do
@@ -98,4 +126,11 @@ main()
     done
 }
 
-main # Entry point
+case "$1" in
+    debug)
+        maintainer
+        ;;
+    *)
+        main
+        ;;
+esac
