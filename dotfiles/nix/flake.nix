@@ -210,6 +210,8 @@
           adwaita-qt
           quassel
 
+          gping
+
           rls
 
           zeal;
