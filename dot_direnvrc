@@ -134,7 +134,6 @@ use_guix()
     export_function pull
 
     clear
-    git-cal --author='Oleg Pykhalov'
     echo "
 direnv:
   build        build a package or just a project if no argument provided
