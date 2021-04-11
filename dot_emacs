@@ -126,7 +126,8 @@
  '(org-agenda-files '("~/org/inbox.org" "~/org/todo.org" "~/org/web.org"))
  '(python-shell-interpreter "python3" t)
  '(safe-local-variable-values
-   '((eval let
+   '((projectile-project-install-cmd . "make install")
+     (eval let
            ((root-dir-unexpanded
              (concat
               (locate-dominating-file default-directory ".dir-locals.el")
