@@ -239,7 +239,6 @@
           nixfmt
           robo3t;
 
-        inherit (pkgs-20-03.pythonPackages) jenkins-job-builder;
         inherit (pkgs-20-03.python3Packages) yamllint;
 
         inherit (github-com-kitnil-nix-docker-ipmi.packages.${system}) ipmi;
@@ -341,6 +340,24 @@
                 sha256 = "0sr7vs5z4k0bd6spgwnfxqg9d5479y9n5gznjf4nl165d9b87qrf";
               }) ];
             });
+          jenkins-job-builder = pkgs.callPackage ({ stdenv, bash, jenkins-job-builder }:
+            stdenv.mkDerivation {
+              pname = "jenkins-job-builder";
+              version = jenkins-job-builder.version;
+              src = false;
+              dontUnpack = true;
+              buildInputs = [ bash jenkins-job-builder ];
+              buildPhase = ''
+                cat > jenkins-jobs <<'EOF'
+                #!${bash}/bin/bash -e
+                PYTHONPATH="" exec ${jenkins-job-builder}/bin/jenkins-jobs "$@"
+                EOF
+              '';
+              installPhase = ''
+                mkdir -p "$out"/bin
+                install jenkins-jobs "$out"/bin/jenkins-jobs
+              '';
+            }) { inherit (pkgs-20-03.pythonPackages) jenkins-job-builder; };
         };
 
       deploy.nodes.localhost = {
