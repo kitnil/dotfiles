@@ -7,7 +7,7 @@
                      package-management wget xorg
                      wm linux lisp lisp-xyz pulseaudio astronomy ratpoison)
 
-(use-modules (services vnc))
+(use-modules (wigust packages lisp))
 
 (define vm-image-motd (plain-file "motd" "
 \x1b[1;37mThis is the GNU system.  Welcome!\x1b[0m
@@ -62,7 +62,8 @@ exec -a twm /bin/sh --login -c ~a/bin/twm\n" #$twm)))
          (cp (file-append coreutils "/bin/cp"))
          (chown (file-append coreutils "/bin/chown"))
          (chmod (file-append coreutils "/bin/chmod"))
-         (sbcl (file-append sbcl "/bin/sbcl")))
+         (sbcl (file-append sbcl "/bin/sbcl"))
+         (stumpwm-config (local-file "/home/oleg/.local/share/chezmoi/dotfiles/system/.stumpwm.d/init.lisp")))
     (program-file "vm-image-stumpwm-configure"
      (with-imported-modules '((guix build utils))
        #~(begin
@@ -71,8 +72,9 @@ exec -a twm /bin/sh --login -c ~a/bin/twm\n" #$twm)))
            (let ((user (getpw "oleg"))
                  (group (getgr "users")))
              (display "Configure StumpWM...")
-             (copy-recursively (string-append #$dotfiles "/share/dotfiles/dot_stumpwm.d")
-                               (string-append #$home "/.stumpwm.d"))
+             (mkdir (string-append #$home "/.stumpwm.d"))
+             (copy-file #$stumpwm-config
+                        (string-append #$home "/.stumpwm.d/init.lisp"))
              (copy-file (string-append #$dotfiles "/share/dotfiles/dot_Xresources")
                         (string-append #$home "/.Xresources"))
              (with-output-to-file "/tmp/run-stumpwm"
@@ -82,11 +84,12 @@ exec -a twm /bin/sh --login -c ~a/bin/twm\n" #$twm)))
 (require :stumpwm)
 
 (stumpwm:stumpwm)\n")))
-             (with-output-to-file #$xsession
-               (lambda ()
-                 (format #t "exec ~a --load ~a" #$sbcl "/tmp/run-stumpwm")))
-             (chown #$xsession (passwd:uid user) (group:gid group))
-             (chmod #$xsession #o755)))))))
+             ;; (with-output-to-file #$xsession
+             ;;   (lambda ()
+             ;;     (format #t "exec ~a --load ~a" #$sbcl "/tmp/run-stumpwm")))
+             ;; (chown #$xsession (passwd:uid user) (group:gid group))
+             ;; (chmod #$xsession #o755)
+             ))))))
 
 (operating-system
   (host-name "gnu")
@@ -129,13 +132,6 @@ root ALL=(ALL) ALL
 
   (packages (append (list font-bitstream-vera nss-certs nvi wget
                           font-dejavu
-                          stumpwm `(,stumpwm "lib")
-                          sbcl-stumpwm-globalwindows
-                          sbcl-stumpwm-swm-gaps
-                          sbcl-stumpwm-ttf-fonts
-                          sbcl-stumpwm-pass
-                          sbcl-stumpwm-stumptray
-                          sbcl-slime-swank
                           strace
                           ponymix
                           xrandr
@@ -144,17 +140,27 @@ root ALL=(ALL) ALL
                           xkill
                           xhost
                           xdpyinfo
-                          sbcl)
+                          sbcl
+                          
+                          stumpwm-next `(,stumpwm-next "lib")
+                          sbcl-stumpwm-next-ttf-fonts
+                          sbcl-stumpwm-next-globalwindows
+                          sbcl-stumpwm-next-swm-gaps
+                          sbcl-stumpwm-next-stumptray
+                          sbcl-slime-swank
+                          stumpish
+
+                          )
                     %base-packages))
 
   (services
-   (append (list (service vncserver-service-type (vncserver-configuration
-                                                  (display 1)
-                                                  (user "oleg")
-                                                  (group "users")
-                                                  (directory "/home/oleg")
-                                                  (xstartup "/home/oleg/.vnc/xstartup")
-                                                  (host-name "gnu")))
+   (append (list ;; (service vncserver-service-type (vncserver-configuration
+                 ;;                                  (display 1)
+                 ;;                                  (user "oleg")
+                 ;;                                  (group "users")
+                 ;;                                  (directory "/home/oleg")
+                 ;;                                  (xstartup "/home/oleg/.vnc/xstartup")
+                 ;;                                  (host-name "gnu")))
                  ;; (vnc-service 2)
                  ;; (vnc-service 3)
                  ;; TODO: Avoid in (modules vnc) add to requirement vncserver-config
@@ -167,19 +173,6 @@ root ALL=(ALL) ALL
                            (xorg-configuration
                             (xorg-configuration
                              (keyboard-layout keyboard-layout)))))
-
-                 (simple-service 'vncserver-config shepherd-root-service-type
-                                 (list
-                                  (shepherd-service
-                                   (provision '(vncserver-config))
-                                   (documentation "Configure vncserver")
-                                   (requirement '())
-                                   (start #~(make-forkexec-constructor
-                                             (list #$vncserver-configure)
-                                             #:user "oleg"
-                                             #:group "users"))
-                                   (one-shot? #t)
-                                   (stop #~(make-kill-destructor)))))
 
                  (simple-service 'stumpwm-config shepherd-root-service-type
                                  (list

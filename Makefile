@@ -21,7 +21,7 @@ check:
 
 .PHONY: check-system
 check-system:
-	guix system vm -L $(HOME)/.local/share/chezmoi/dotfiles/guixsd/modules --no-offload dotfiles/system/vm-image-stumpwm.tmpl
+	guix system vm -L $HOME/.local/share/chezmoi/dotfiles/guixsd/modules --no-offload dotfiles/system/vm-image-stumpwm.tmpl
 
 .PHONY: graph
 graph:
