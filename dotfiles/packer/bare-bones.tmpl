@@ -1,0 +1,33 @@
+(use-modules (gnu))
+(use-service-modules networking ssh)
+
+(operating-system
+  (host-name "gnu")
+  (timezone "Europe/Moscow")
+  (locale "en_US.utf8")
+  (bootloader (bootloader-configuration
+                (bootloader grub-bootloader)
+                (target "/dev/vda")))
+  (file-systems (cons (file-system
+                        (device (file-system-label "my-root"))
+                        (mount-point "/")
+                        (type "ext4"))
+                      %base-file-systems))
+  (users (append (list (user-account
+                        (name "user")
+                        (comment "Unprivileged user")
+                        (group "users")
+                        (supplementary-groups '("wheel" "audio" "video"))
+                        (password (crypt "password" "$6$abc")))
+                       (user-account (inherit %root-account)
+                                     (password (crypt "password" "$6$abc"))))
+                 %base-user-accounts))
+  (services (append (list (service dhcp-client-service-type)
+                          (service openssh-service-type
+                                   (openssh-configuration
+                                    (permit-root-login #t)
+                                    (password-authentication? #t))))
+                    %base-services))
+  (sudoers-file (plain-file "sudoers" "\
+root ALL=(ALL) ALL
+user ALL=(ALL) NOPASSWD: ALL\n")))
