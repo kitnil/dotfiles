@@ -97,6 +97,12 @@
 (autoload 'get-synonyms "thesaurus" nil t)
 (autoload 'mf/mirror-region-in-multifile "multifiles" nil t)
 
+;; (autoload 'org-notifications-start "org-notifications" nil t)
+;; (setq org-notifications-non-agenda-file
+;;       (list (expand-file-name "~/src/org/agenda.org")))
+;; ;; (setq org-notifications-notify-before-time 5)
+;; (org-notifications-start)
+
 (setq ewmctrl-wmctrl-path "/run/current-system/profile/bin/wmctrl")
 (defalias 'rg 'deadgrep)
 
