@@ -108,9 +108,16 @@ upgrade_package()
         printf '\033[31merror: Nothing to commit.\033[0m\n'
         exit 1
     else
-        git commit --message="$(printf "gnu: %s: Update to $version.\n\n* %s (%s): Update to $version." "$package" "$file" "$package")" "$file"
-        printf '\033[32mCommit the change in "%s" file.\033[0m\n' "$file"
-        git show
+        if ./pre-inst-env guix build "$package"
+        then
+            git commit --message="$(printf "gnu: %s: Update to $version.\n\n* %s (%s): Update to $version." "$package" "$file" "$package")" "$file"
+            printf '\033[32mCommit the change in "%s" file.\033[0m\n' "$file"
+            git show
+            sed --in-place "/$package/d" refresh.log
+        else
+            git restore "$file"
+            printf '\033[31merror: Failed to build "%s" package. Restoring "%s" file.\033[0m\n' "$package" "$file"
+        fi
     fi
 }
 
