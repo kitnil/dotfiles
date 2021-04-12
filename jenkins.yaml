@@ -2,3 +2,66 @@ jenkins:
   systemMessage: "Jenkins configured automatically by Jenkins Configuration as Code plugin\n\n"
   numExecutors: 5
   mode: NORMAL
+  views:
+  - list:
+      columns:
+      - "status"
+      - "weather"
+      - "jobName"
+      - "lastSuccess"
+      - "lastFailure"
+      - "lastDuration"
+      - "buildButton"
+      - "lastBuildConsoleColumn"
+      jobFilters:
+      - "allJobsFilter"
+      - jobStatusFilter:
+          aborted: true
+          disabled: true
+          failed: true
+          includeExcludeTypeString: "excludeUnmatched"
+          stable: true
+          unstable: true
+      name: "Everything"
+      recurse: true
+  - list:
+      columns:
+      - "status"
+      - "weather"
+      - "jobName"
+      - "lastSuccess"
+      - "lastFailure"
+      - "lastDuration"
+      - "buildButton"
+      - "lastBuildConsoleColumn"
+      jobFilters:
+      - jobStatusFilter:
+          aborted: false
+          disabled: false
+          failed: true
+          includeExcludeTypeString: "includeMatched"
+          stable: false
+          unstable: true
+      name: "Failed"
+      recurse: true
+  - list:
+      columns:
+      - "status"
+      - "weather"
+      - "jobName"
+      - "lastSuccess"
+      - "lastFailure"
+      - "lastDuration"
+      - "buildButton"
+      - "lastBuildConsoleColumn"
+      jobFilters:
+      - buildStatusFilter:
+          building: true
+          inBuildQueue: true
+          includeExcludeTypeString: "includeMatched"
+          neverBuilt: false
+      name: "Running"
+      recurse: true
+  - all:
+      name: "all"
+  viewsTabBar: "standard"
