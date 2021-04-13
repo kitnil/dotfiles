@@ -172,20 +172,6 @@
           url: https://cgit.duckdns.org/git/nix/nix-store-gc
 
 - job:
-    name: nix/maintenance
-    project-type: multibranch
-    periodic-folder-trigger: 1d
-    prune-dead-branches: true
-    number-to-keep: '10'
-    days-to-keep: '10'
-    script-path: Jenkinsfile
-    scm:
-      - git:
-          url: https://cgit.duckdns.org/git/nix/nixpkgs
-          shallow-clone: true
-          do-not-fetch-tags: true
-
-- job:
     name: wigust
     project-type: folder
 
