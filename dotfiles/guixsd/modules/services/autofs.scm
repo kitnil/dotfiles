@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2020 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2020, 2021 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -30,7 +30,14 @@
   #:use-module (gnu packages file-systems)
   #:use-module (ice-9 match)
   #:export (autofs-configuration
-            autofs-service-type))
+            autofs-configuration?
+            autofs-service-type
+
+            autofs-mount-configuration
+            autofs-mount-configuration?
+
+            ;; XXX: Don't need to export autofs-configuration-file
+            autofs-configuration-file))
 
 ;;; Commentary:
 ;;;
@@ -47,7 +54,37 @@
   (pid-file autofs-configuration-pid-file
             (default "/var/run/autofs"))
   (config-file autofs-configuration-config-file
-               (default (plain-file "empty" ""))))
+               (default (plain-file "empty" "")))
+  (mounts autofs-configuration-mounts ;list of <autofs-mount-configuration>
+          (default '())))
+
+(define-record-type* <autofs-mount-configuration>
+  autofs-mount-configuration make-autofs-mount-configuration
+  autofs-mount-configuration?
+  (target autofs-mount-configuration-target ;string
+          (default #f))
+  (source autofs-mount-configuration-source ;string
+          (default #f))
+  (fstype autofs-mount-configuration-fstype ;string
+          (default "-fstype=fuse,rw,allow_other")))
+
+(define (autofs-configuration-file config)
+  (define autofs-mounts-configuration-file
+    (plain-file "autofs-mounts.conf"
+                (call-with-output-string
+                  (lambda (port)
+                    (match-record config <autofs-configuration>
+                      (autofs pid-file config-file mounts)
+                      (for-each (lambda (mount)
+                                  (match-record mount <autofs-mount-configuration>
+                                    (target source fstype)
+                                    (display (string-join (list target fstype source))
+                                             port)
+                                    (newline port)))
+                                mounts))))))
+  (mixed-text-file
+   "autofs.conf"
+   "/- " autofs-mounts-configuration-file " --timeout=5"))
 
 (define (autofs-activation config)
   "Return the activation gexp for CONFIG."
@@ -55,18 +92,19 @@
       (use-modules (guix build utils))
       (mkdir-p "/etc/autofs")))
 
-(define autofs-shepherd-service
+(define (autofs-shepherd-service config)
   ;; Return a <shepherd-service> running autofs.
-  (match-lambda
-    (($ <autofs-configuration> autofs pid-file config-file)
-     (list (shepherd-service
-            (provision '(autofs))
-            (documentation "Run autofs daemon.")
-            (requirement '(user-processes loopback))
-            (start #~(make-forkexec-constructor
-                      (list (string-append #$autofs "/sbin/automount")
-                            "-f" "-p" #$pid-file #$config-file)
-                      #:pid-file #$pid-file)))))))
+  (match-record config <autofs-configuration>
+    (autofs pid-file config-file mounts)
+    (list (shepherd-service
+           (provision '(autofs))
+           (documentation "Run autofs daemon.")
+           (requirement '(user-processes loopback))
+           (start #~(make-forkexec-constructor
+                     (list (string-append #$autofs "/sbin/automount")
+                           "-f" "-p" #$pid-file
+                           #$(autofs-configuration-file config))
+                     #:pid-file #$pid-file))))))
 
 (define autofs-service-type
   (service-type

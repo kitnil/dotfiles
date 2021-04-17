@@ -274,6 +274,33 @@ location / {
 
 
 ;;;
+;;; Autofs
+;;;
+
+;; XXX: Maybe generate /etc/autofs.conf with Scheme.
+;; [ autofs ]
+;; timeout = 300
+;; browse_mode = no
+;; [ amd ]
+;; dismount_interval = 300
+
+(define %autofs-mounts
+  (list
+   (autofs-mount-configuration
+    (target "/mnt/ssh/workstation")
+    (source ":sshfs\\#ws1.wugi.info\\:/home/oleg"))
+   (autofs-mount-configuration
+    (target "/mnt/ssh/u226391")
+    (source ":sshfs\\#web30s.majordomo.ru\\:"))
+   (autofs-mount-configuration
+    (target "/mnt/ssh/u7590")
+    (source ":sshfs\\#web33s.majordomo.ru\\:"))
+   (autofs-mount-configuration
+    (target "/mnt/ssh/web30-eng")
+    (source ":sshfs\\#web30.intr\\:"))))
+
+
+;;;
 ;;; Entryp point
 ;;;
 
@@ -581,7 +608,7 @@ EndSection")))))))
 
                        (service autofs-service-type
                                 (autofs-configuration
-                                 (config-file (local-file "/etc/autofs/auto.master"))))
+                                 (mounts %autofs-mounts)))
 
                        (service openssh-service-type
                                 (openssh-configuration
