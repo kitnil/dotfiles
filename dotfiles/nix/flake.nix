@@ -192,7 +192,6 @@
           audacity
           obs-studio
           scrcpy
-          onefetch
           oh
           openjdk11
           packer
@@ -265,6 +264,15 @@
           ];
         }
         );
+
+        onefetch = with pkgs; onefetch.overrideAttrs (old: {
+          patches = [
+            (fetchurl {
+              url = "https://github.com/o2sh/onefetch/commit/ae2cc1b35c876f8b092a1c7eb9fd9021354930a0.patch";
+              sha256 = "0iizi5mbjwkbgy39nm9l9iw3l905zxd6v70n4x6zs5pxf9wwfzbx";
+            })
+          ];
+        });
 
         # TODO: androidenv.androidPkgs_9_0.platform-tools
 
