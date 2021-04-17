@@ -24,6 +24,9 @@ matches:
   - trigger: "пальма"
     replace: "https://static.pepper.ru/comments/content/dY6Ro/4102774.jpg"
 
+  - trigger: ":аромат"
+    replace: "https://static.pepper.ru/comments/full_screen/L2rHM/4196699.jpg"
+
   # Simple text replacement
   - trigger: ":espanso"
     replace: "Hi there!"
