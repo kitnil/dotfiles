@@ -43,6 +43,7 @@ in  ''
 		Guix
 			Update	st -f Monospace:size=12 bash -ic 'guix menu; dialog --yesno "Press any key to close." 0 0'
 		Games
+			Eve Online	eve-online
 			Tales of Maj'Eyal	env DRI_PRIME=1 tome4
 		Images
 			Mypaint	env PYTHONPATH= mypaint

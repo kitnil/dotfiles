@@ -48,6 +48,17 @@
     };
 
     deploy-rs.url = "github:serokell/deploy-rs";
+
+    doom-emacs = {
+      url = "github:hlissner/doom-emacs/develop";
+      flake = false;
+    };
+    utils.url = "github:numtide/flake-utils";
+    naersk.url = "github:nmattia/naersk";
+    override.url = "nixpkgs";
+    nixos.url = "nixpkgs/nixos-unstable";
+    darwin.url = "github:LnL7/nix-darwin";
+    bbuscarino-env.url = "github:wigust/env";
   };
 
   # nixConfig.allowUnfree = true;
@@ -65,6 +76,7 @@
             , github-com-tsoding-boomer
             , majordomo
             , nixpkgs-idea
+            , bbuscarino-env
             , ... }:
     let
       system = "x86_64-linux";
@@ -332,6 +344,12 @@
         // {
           inherit (import nixpkgs { inherit system; config = { allowUnfree = true; }; })
             google-chrome;
+        }
+        // {
+          eve-online = pkgs.writeScriptBin "eve-online" ''
+            #!${pkgs.runtimeShell}
+            DRI_PRIME=1 ${self.packages.${system}.nixGLIntel}/bin/nixGLIntel ${bbuscarino-env.legacyPackages.${system}.eve-online}/bin/eve-online
+          '';
         };
 
       deploy.nodes.localhost = {
