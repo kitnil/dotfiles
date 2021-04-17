@@ -47,7 +47,7 @@
       flake = false;
     };
 
-    deploy-rs.url = "github:serokell/deploy-rs";
+    deploy-rs.url = "github:kitnil/deploy-rs?ref=dry-activate";
 
     doom-emacs = {
       url = "github:hlissner/doom-emacs/develop";
@@ -352,16 +352,26 @@
           '';
         };
 
-      deploy.nodes.localhost = {
-        hostname = "localhost";
-        profiles.profile = {
-          user = "oleg";
-          path = deploy-rs.lib.${system}.activate.noop (pkgs.symlinkJoin {
-            name = "profile";
-            paths = with lib; collect isDerivation self.packages.x86_64-linux;
-          });
+      deploy.nodes.localhost =
+        let
+          dryActivateScript = pkgs.writeScript "deploy-rs-dry-activate" ''
+            #!${pkgs.runtimeShell}
+            echo $PROFILE
+          '';
+        in {
+          hostname = "localhost";
+          profiles.profile = {
+            user = "oleg";
+            autoRollback = false;
+            magicRollback = false;
+            path = (deploy-rs.lib.${system}.activate.custom // { dryActivate = dryActivateScript; })
+              (pkgs.symlinkJoin {
+                name = "profile";
+                paths = with lib; collect isDerivation self.packages.${system};
+              })
+              ":";
+          };
         };
-      };
 
       checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
     };

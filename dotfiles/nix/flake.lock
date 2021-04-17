@@ -141,15 +141,16 @@
         "utils": "utils_2"
       },
       "locked": {
-        "lastModified": 1612864896,
-        "narHash": "sha256-pbsvxe05kAWJzPeC6fs4t0Mk8mTZs6u/WQDMBqoA5tA=",
-        "owner": "serokell",
+        "lastModified": 1618565917,
+        "narHash": "sha256-JaHRqRBXy+o3h2ALgJBgrgSx0evhx64pLhLU4wNUT4Y=",
+        "owner": "kitnil",
         "repo": "deploy-rs",
-        "rev": "fecc7e723db40c7e056371467275186b3bbb9ef3",
+        "rev": "920c9d2ed4034e2200c948868c7bd510e58b1371",
         "type": "github"
       },
       "original": {
-        "owner": "serokell",
+        "owner": "kitnil",
+        "ref": "dry-activate",
         "repo": "deploy-rs",
         "type": "github"
       }
