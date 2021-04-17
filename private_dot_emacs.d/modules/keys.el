@@ -162,6 +162,9 @@ ARGS will be passed to hydra."
 (wi-define-keys "C-c g v t" timemachine
                 ("t" git-timemachine "timemachine"))
 
+(wi-define-keys "C-c g v n" todos
+                ("n" ivy-magit-todos "todos"))
+
 (wi-define-keys "C-c g v m" magit
                 ("c" magit-commit "commit")
                 ("f" magit-file-dispatch "dispatch")
