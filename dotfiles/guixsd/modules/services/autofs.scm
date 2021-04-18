@@ -104,7 +104,8 @@
                      (list (string-append #$autofs "/sbin/automount")
                            "-f" "-p" #$pid-file
                            #$(autofs-configuration-file config))
-                     #:pid-file #$pid-file))))))
+                     #:pid-file #$pid-file))
+           (stop #~(make-kill-destructor))))))
 
 (define autofs-service-type
   (service-type
