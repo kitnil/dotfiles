@@ -42,10 +42,8 @@
   vncserver-configuration?
   (vncserver vncserver-configuration-vncserver  ;<package>
              (default tigervnc-server))
-  (host-name vncserver-configuration-host-name  ;string
-             )
-  (display   vncserver-configuration-display    ;number
-             )
+  (host-name vncserver-configuration-host-name) ;string
+  (display   vncserver-configuration-display)   ;number
   (user      vncserver-configuration-user)      ;string
   (group     vncserver-configuration-group)     ;string
   (directory vncserver-configuration-directory) ;string
@@ -55,34 +53,47 @@
 (define vncserver-shepherd-service
   (match-lambda
     (($ <vncserver-configuration> vncserver host-name display user group directory xstartup)
-     (list
-      (shepherd-service
-       (provision (list (string->symbol (string-append "vncserver" (number->string display)))))
-       (documentation "Run vnc.")
-       (start #~(make-forkexec-constructor
-                 (list (string-append #$vncserver "/bin/vncserver") "-fg" "-xstartup" #$xstartup
-                       (string-append ":" (number->string #$display)))
-                 #:log-file (string-append "/var/log/vncserver" (number->string #$display) ".log")
-                 #:user #$user
-                 #:group #$group
-                 #:supplementary-groups '("users" "docker" "kvm" "audio" "video" "wheel")
-                 #:directory #$directory
-                 #:environment-variables
-                 (list (string-append "PATH=" (getenv "PATH")
-                                      ":" (string-append #$coreutils "/bin")
-                                      ":" (string-append #$xauth "/bin")
-                                      ":" "/run/current-system/profile/bin"
-                                      ":" "/bin")
-                       (string-append "HOME=" #$directory)
-                       "SSL_CERT_DIR=/etc/ssl/certs"
-                       "SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt"
-                       "XAUTHORITY=/home/oleg/.Xauthority.vnc"
-                       "XDG_RUNTIME_DIR=/run/user/1000" ;TODO: Don't hardcode user id
-                       )
-                 #:pid-file (string-append #$directory "/.vnc/" #$host-name ":" #$(number->string display) ".pid")))
-       (requirement '(user-processes host-name udev))
-       (respawn? #f)
-       (stop #~(make-kill-destructor)))))))
+     (let ((xauthority (string-append "/home/" user "/.Xauthority.vnc"))
+           (xdg-runtime-dir (string-append "/run/user/" (number->string (passwd:uid (getpw user)))))
+           (path #~(string-append #$(file-append coreutils "/bin")
+                                  ":" #$(file-append xauth "/bin")
+                                  ":" "/run/current-system/profile/bin"
+                                  ":" "/bin")))
+       (list
+        (shepherd-service
+         (provision (list (string->symbol (string-append "vncserver" (number->string display)))))
+         (documentation "Run vnc.")
+         (start #~(make-forkexec-constructor
+                   (list (string-append #$vncserver "/bin/vncserver") "-fg" "-xstartup" #$xstartup
+                         (string-append ":" (number->string #$display)))
+                   #:log-file (string-append "/var/log/vncserver" (number->string #$display) ".log")
+                   #:user #$user
+                   #:group #$group
+                   #:supplementary-groups '("users" "docker" "kvm" "audio" "video" "wheel")
+                   #:directory #$directory
+                   #:environment-variables
+                   (list (string-append "PATH=" (getenv "PATH") ":" #$path)
+                         (string-append "HOME=" #$directory)
+                         "SSL_CERT_DIR=/etc/ssl/certs"
+                         "SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt"
+                         (string-append "XAUTHORITY=" #$xauthority)
+                         (string-append "XDG_RUNTIME_DIR=" #$xdg-runtime-dir))))
+         (requirement '(user-processes host-name udev))
+         (respawn? #f)
+         (stop #~(lambda _
+                   ;; (invoke "/bin/sh" "-c" (format #f "~s"
+                   ;;                                (string-join (list #$(file-append vncserver "/bin/vncserver")
+                   ;;                                                   "-kill" (string-append ":" (number->string #$display))))))
+                   (invoke #$(program-file "vncserver-stop"
+                                           #~(begin
+                                               (setenv "PATH" (string-append (getenv "PATH") ":" #$path))
+                                               (setenv "HOME=" #$directory)
+                                               (setenv "SSL_CERT_DIR" "/etc/ssl/certs")
+                                               (setenv "SSL_CERT_FILE" "/etc/ssl/certs/ca-certificates.crt")
+                                               (setenv "XAUTHORITY" #$xauthority)
+                                               (setenv "XDG_RUNTIME_DIR" #$xdg-runtime-dir)
+                                               (system* #$(file-append vncserver "/bin/vncserver")
+                                                        "-kill" (string-append ":" (number->string #$display))))))))))))))
 
 (define vncserver-service-type
   (service-type (name 'vncserver)
