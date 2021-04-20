@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 
-trap "git restore guix/upstream.scm" EXIT
+trap "git restore ." EXIT
+
+GIT_AUTHOR="${AUTHOR_EMAIL:-go.wigust@gmail.com}"
 
 patch_guix_upstream()
 {
@@ -33,12 +35,36 @@ EOF
     fi
 }
 
+maintainer()
+{
+    mapfile -t output < <(git log --grep="gnu: Add" --format=%s --author="$GIT_AUTHOR")
+    for line in "${output[@]}"
+    do
+        package="${line/gnu: Add /}"
+        package="${package::-1}"
+        case "$package" in
+            *Revert*|*service*|premake4|perl-strictures-2|perl-role-tiny-2|emacs-cl-generic|emacs-seq|emacs-emms-player-simple-mpv|php-with-bcmath|shlomif-cmake-modules|go-github-com-muesli-reflow|go-github-com-emirpasic-gods-trees-binaryheap|nginx-socket-cloexec|emacs-kotlin-mode|emacs-dired-hacks|emacs-which-key)
+                printf ""
+                ;;
+            *go-github-com*)
+                printf ""
+                ;;
+            *zabbix-agentd*)
+                printf "zabbix-agentd\nzabbix-server\n"
+                ;;
+            *)
+                echo "$package"
+                ;;
+        esac
+    done
+}
+
 log_packages_for_upgrade()
 {
     if ! [ -e refresh.log ]
     then
         printf "No refresh.log exists, creating...\n"
-        ./pre-inst-env guix refresh "$(./pre-inst-env guix maintainer)" |& tee refresh.log
+        ./pre-inst-env guix refresh $(maintainer) |& tee refresh.log
     fi
 }
 
@@ -82,20 +108,46 @@ upgrade_package()
         printf '\033[31merror: Nothing to commit.\033[0m\n'
         exit 1
     else
-        git commit --message="$(printf "gnu: %s: Update to $version.\n\n* %s (%s): Update to $version." "$package" "$file" "$package")" "$file"
-        printf '\033[32mCommit the change in "%s" file.\033[0m\n' "$file"
-        git show
+        if ./pre-inst-env guix build "$package"
+        then
+            git commit --message="$(printf "gnu: %s: Update to $version.\n\n* %s (%s): Update to $version." "$package" "$file" "$package")" "$file"
+            printf '\033[32mCommit the change in "%s" file.\033[0m\n' "$file"
+            git show
+            sed --in-place "/$package/d" refresh.log
+        else
+            git restore "$file"
+            printf '\033[31merror: Failed to build "%s" package. Restoring "%s" file.\033[0m\n' "$package" "$file"
+        fi
     fi
 }
 
 main()
 {
-    patch_guix_upstream
-    log_packages_for_upgrade
-    select package in $(awk '/would be upgraded/ { print $2 }' refresh.log)
-    do
-        upgrade_package "$package"
-    done
+    case "$1" in
+        debug)
+            maintainer
+            ;;
+        *)
+            patch_guix_upstream
+            # XXX: Don't call .direnv/aliases/environment -- .direnv/aliases/build
+            .direnv/aliases/environment -- .direnv/aliases/build
+            log_packages_for_upgrade
+            case "$2" in
+                -i|--interactive)
+                    select package in $(awk '/would be upgraded/ { print $2 }' refresh.log)
+                    do
+                        upgrade_package "$package"
+                    done
+                    ;;
+                *)
+                    for package in $(awk '/would be upgraded/ { print $2 }' refresh.log)
+                    do
+                        upgrade_package "$package"
+                    done
+                    ;;
+            esac
+            ;;
+    esac
 }
 
-main # Entry point
+main

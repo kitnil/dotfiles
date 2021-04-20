@@ -5,7 +5,7 @@
  (guix gexp)
  (guix git-download)
  (guix packages)
- (packages dotfiles))
+ (wigust packages dotfiles))
 
 (define %source-dir "/home/oleg/.local/share/chezmoi")
 

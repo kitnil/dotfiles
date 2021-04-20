@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+"$HOME"/.nix-profile/bin/onefetch
+"$HOME"/.guix-profile/bin/git-cal --author='Oleg Pykhalov'

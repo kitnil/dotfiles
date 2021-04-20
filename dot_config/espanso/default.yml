@@ -27,6 +27,12 @@ matches:
   - trigger: ":аромат"
     replace: "https://static.pepper.ru/comments/full_screen/L2rHM/4196699.jpg"
 
+  - trigger: "трусы"
+    replace: "https://static.pepper.ru/comments/full_screen/OFWY1/4129293.jpg"
+
+  - trigger: ":бан"
+    replace: "https://static.pepper.ru/comments/full_screen/uAVQP/4142000.jpg"
+
   # Simple text replacement
   - trigger: ":espanso"
     replace: "Hi there!"

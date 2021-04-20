@@ -96,14 +96,23 @@ Section \"Device\"
 EndSection\n")
 
 (define %my-system-packages
-  (cons* sbcl stumpwm-checkout `(,stumpwm-checkout "lib")
+  (cons* sbcl
 
+         stumpwm-checkout `(,stumpwm-checkout "lib")
          sbcl-stumpwm-checkout-ttf-fonts
          sbcl-stumpwm-checkout-globalwindows
          sbcl-stumpwm-checkout-swm-gaps
          sbcl-stumpwm-checkout-stumptray
          sbcl-slime-swank
          stumpish
+
+         ;; stumpwm-next `(,stumpwm-next "lib")
+         ;; sbcl-stumpwm-next-ttf-fonts
+         ;; sbcl-stumpwm-next-globalwindows
+         ;; sbcl-stumpwm-next-swm-gaps
+         ;; sbcl-stumpwm-next-stumptray
+         ;; sbcl-slime-swank
+         ;; stumpish
 
          ncurses
 
