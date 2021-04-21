@@ -226,6 +226,7 @@
 
           rls
 
+          bit
 
           zeal;
 
