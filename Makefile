@@ -7,6 +7,9 @@ TESTS =						\
   tests/ssh-mjru.bats				\
   tests/ssh-home.bats
 
+.PHONY: all
+all: guix.wugi.info ws1.wugi.info spb.wugi.info vm1.wugi.info vm2.wugi.info vm3.wugi.info vm4.wugi.info
+
 .PHONY: clean
 clean:
 	rm -rf test-tmp
@@ -94,9 +97,6 @@ vm3.wugi.info:
 .PHONY: vm4.wugi.info
 vm4.wugi.info:
 	sudo --login guix system build -L $(HOME)/.local/share/chezmoi/dotfiles/guixsd/modules $(HOME)/.local/share/chezmoi/dotfiles/guixsd/vm4.wugi.info.scm
-
-.PHONY: dist
-dist: guix.wugi.info ws1.wugi.info spb.wugi.info vm1.wugi.info vm2.wugi.info vm3.wugi.info vm4.wugi.info
 
 .PHONY: add
 add:
