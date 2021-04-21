@@ -10,6 +10,7 @@ TESTS =						\
 .PHONY: clean
 clean:
 	rm -rf test-tmp
+	rm -f dotfiles/nix/result
 
 .PHONY: check
 check:
