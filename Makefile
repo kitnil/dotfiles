@@ -67,12 +67,36 @@ install:
 deploy:
 	guix deploy -L $(HOME)/.local/share/chezmoi/dotfiles/guixsd/modules dotfiles/guixsd/deploy.scm
 
-.PHONY: dist
-dist:
+.PHONY: guix.wugi.info
+guix.wugi.info:
 	sudo --login guix system build -L $(HOME)/.local/share/chezmoi/dotfiles/guixsd/modules $(HOME)/.local/share/chezmoi/dotfiles/guixsd/guixsd.scm
+
+.PHONY: ws1.wugi.info
+ws1.wugi.info:
 	sudo --login guix system build -L $(HOME)/.local/share/chezmoi/dotfiles/guixsd/modules $(HOME)/.local/share/chezmoi/dotfiles/guixsd/ws1.wugi.info.scm
+
+.PHONY: spb.wugi.info
+spb.wugi.info:
 	sudo --login guix system build -L $(HOME)/.local/share/chezmoi/dotfiles/guixsd/modules $(HOME)/.local/share/chezmoi/dotfiles/guixsd/spb.scm
-	sudo --login guix system build -L $(HOME)/.local/share/chezmoi/dotfiles/guixsd/modules $(HOME)/.local/share/chezmoi/dotfiles/guixsd/guix.vm.wugi.info.scm
+
+.PHONY: vm1.wugi.info
+vm1.wugi.info:
+	sudo --login guix system build -L $(HOME)/.local/share/chezmoi/dotfiles/guixsd/modules $(HOME)/.local/share/chezmoi/dotfiles/guixsd/vm1.wugi.info.scm
+
+.PHONY: vm2.wugi.info
+vm2.wugi.info:
+	sudo --login guix system build -L $(HOME)/.local/share/chezmoi/dotfiles/guixsd/modules $(HOME)/.local/share/chezmoi/dotfiles/guixsd/vm2.wugi.info.scm
+
+.PHONY: vm3.wugi.info
+vm3.wugi.info:
+	sudo --login guix system build -L $(HOME)/.local/share/chezmoi/dotfiles/guixsd/modules $(HOME)/.local/share/chezmoi/dotfiles/guixsd/vm3.wugi.info.scm
+
+.PHONY: vm4.wugi.info
+vm4.wugi.info:
+	sudo --login guix system build -L $(HOME)/.local/share/chezmoi/dotfiles/guixsd/modules $(HOME)/.local/share/chezmoi/dotfiles/guixsd/vm4.wugi.info.scm
+
+.PHONY: dist
+dist: guix.wugi.info ws1.wugi.info spb.wugi.info vm1.wugi.info vm2.wugi.info vm3.wugi.info vm4.wugi.info
 
 .PHONY: add
 add:
