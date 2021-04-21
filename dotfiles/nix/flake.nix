@@ -226,7 +226,6 @@
 
           rls
 
-          dogdns
 
           zeal;
 
