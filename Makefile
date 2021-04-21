@@ -23,9 +23,9 @@ check:
 vm:
 	$(shell guix system vm -L $(HOME)/.local/share/chezmoi/dotfiles/guixsd/modules --no-offload dotfiles/system/vm-image-stumpwm.tmpl) -nic user,model=virtio-net-pci,hostfwd=tcp::10022-:22
 
-.PHONY: graph
-graph:
-	guix system -L $(HOME)/.local/share/chezmoi/dotfiles/guixsd/modules shepherd-graph dotfiles/guixsd/guixsd.scm
+.PHONY: shepherd-graph
+shepherd-graph:
+	guix system -L $(HOME)/.local/share/chezmoi/dotfiles/guixsd/modules shepherd-graph dotfiles/guixsd/guixsd.scm | xdot -
 
 .PHONY: configure
 configure:
