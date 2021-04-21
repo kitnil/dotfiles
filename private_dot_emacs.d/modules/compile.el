@@ -49,3 +49,15 @@ situation, you should also set the following option in your
   #'endless/toggle-comint-compilation)
 (define-key compilation-shell-minor-mode-map (kbd "C-c i")
   #'endless/toggle-comint-compilation)
+
+
+;;;
+;;; Colorize
+;;;
+
+(setq compilation-environment '("TERM=xterm-256color"))
+
+(defun my/advice-compilation-filter (f proc string)
+  (funcall f proc (xterm-color-filter string)))
+
+(advice-add 'compilation-filter :around #'my/advice-compilation-filter)

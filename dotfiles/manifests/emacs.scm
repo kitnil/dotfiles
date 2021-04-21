@@ -171,4 +171,6 @@
        emacs-dockerfile-mode
        emacs-docker-compose-mode
 
-       emacs-ssh-config-mode))
+       emacs-ssh-config-mode
+
+       emacs-xterm-color))
