@@ -84,11 +84,11 @@ exec -a twm /bin/sh --login -c ~a/bin/twm\n" #$twm)))
 (require :stumpwm)
 
 (stumpwm:stumpwm)\n")))
-             ;; (with-output-to-file #$xsession
-             ;;   (lambda ()
-             ;;     (format #t "exec ~a --load ~a" #$sbcl "/tmp/run-stumpwm")))
-             ;; (chown #$xsession (passwd:uid user) (group:gid group))
-             ;; (chmod #$xsession #o755)
+             (with-output-to-file #$xsession
+               (lambda ()
+                 (format #t "exec ~a --load ~a" #$sbcl "/tmp/run-stumpwm")))
+             (chown #$xsession (passwd:uid user) (group:gid group))
+             (chmod #$xsession #o755)
              ))))))
 
 (operating-system
