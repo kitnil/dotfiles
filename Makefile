@@ -23,17 +23,26 @@ check:
 	gpg --quiet --decrypt private_dot_ssh/encrypted_private_spb.conf > test-tmp/spb.conf
 	bats $(TESTS)
 
+MODULES = dotfiles/guixsd/modules
+
+QEMU_FLAGS =					\
+  -vnc :22					\
+  -daemonize					\
+  -m 4096					\
+  -smp 2					\
+  -nic user,model=virtio-net-pci,hostfwd=tcp::10022-:22
+
 .PHONY: vm
 vm:
-	$(shell guix system vm -L $(HOME)/.local/share/chezmoi/dotfiles/guixsd/modules --no-offload dotfiles/system/vm-image-stumpwm.tmpl) -nic user,model=virtio-net-pci,hostfwd=tcp::10022-:22
+	$(shell guix system vm -L $(MODULES) --no-offload dotfiles/system/vm-image-stumpwm.tmpl) $(QEMU_FLAGS)
 
 .PHONY: extension-graph
 extension-graph:
-	guix system -L $(HOME)/.local/share/chezmoi/dotfiles/guixsd/modules extension-graph dotfiles/guixsd/guixsd.scm | xdot -
+	guix system -L $(MODULES) extension-graph dotfiles/guixsd/guixsd.scm | xdot -
 
 .PHONY: shepherd-graph
 shepherd-graph:
-	guix system -L $(HOME)/.local/share/chezmoi/dotfiles/guixsd/modules shepherd-graph dotfiles/guixsd/guixsd.scm | xdot -
+	guix system -L $(MODULES) shepherd-graph dotfiles/guixsd/guixsd.scm | xdot -
 
 .PHONY: configure
 configure:
@@ -68,35 +77,35 @@ install:
 
 .PHONY: deploy
 deploy:
-	guix deploy -L $(HOME)/.local/share/chezmoi/dotfiles/guixsd/modules dotfiles/guixsd/deploy.scm
+	guix deploy -L $(MODULES) dotfiles/guixsd/deploy.scm
 
 .PHONY: guix.wugi.info
 guix.wugi.info:
-	sudo --login guix system build -L $(HOME)/.local/share/chezmoi/dotfiles/guixsd/modules $(HOME)/.local/share/chezmoi/dotfiles/guixsd/guixsd.scm
+	guix system build -L $(MODULES) dotfiles/guixsd/guixsd.scm
 
 .PHONY: ws1.wugi.info
 ws1.wugi.info:
-	sudo --login guix system build -L $(HOME)/.local/share/chezmoi/dotfiles/guixsd/modules $(HOME)/.local/share/chezmoi/dotfiles/guixsd/ws1.wugi.info.scm
+	guix system build -L $(MODULES) dotfiles/guixsd/ws1.wugi.info.scm
 
 .PHONY: spb.wugi.info
 spb.wugi.info:
-	sudo --login guix system build -L $(HOME)/.local/share/chezmoi/dotfiles/guixsd/modules $(HOME)/.local/share/chezmoi/dotfiles/guixsd/spb.scm
+	guix system build -L $(MODULES) dotfiles/guixsd/spb.scm
 
 .PHONY: vm1.wugi.info
 vm1.wugi.info:
-	sudo --login guix system build -L $(HOME)/.local/share/chezmoi/dotfiles/guixsd/modules $(HOME)/.local/share/chezmoi/dotfiles/guixsd/vm1.wugi.info.scm
+	guix system build -L $(MODULES) dotfiles/guixsd/vm1.wugi.info.scm
 
 .PHONY: vm2.wugi.info
 vm2.wugi.info:
-	sudo --login guix system build -L $(HOME)/.local/share/chezmoi/dotfiles/guixsd/modules $(HOME)/.local/share/chezmoi/dotfiles/guixsd/vm2.wugi.info.scm
+	guix system build -L $(MODULES) dotfiles/guixsd/vm2.wugi.info.scm
 
 .PHONY: vm3.wugi.info
 vm3.wugi.info:
-	sudo --login guix system build -L $(HOME)/.local/share/chezmoi/dotfiles/guixsd/modules $(HOME)/.local/share/chezmoi/dotfiles/guixsd/vm3.wugi.info.scm
+	guix system build -L $(MODULES) dotfiles/guixsd/vm3.wugi.info.scm
 
 .PHONY: vm4.wugi.info
 vm4.wugi.info:
-	sudo --login guix system build -L $(HOME)/.local/share/chezmoi/dotfiles/guixsd/modules $(HOME)/.local/share/chezmoi/dotfiles/guixsd/vm4.wugi.info.scm
+	guix system build -L $(MODULES) dotfiles/guixsd/vm4.wugi.info.scm
 
 .PHONY: add
 add:
