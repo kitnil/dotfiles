@@ -19,9 +19,9 @@ check:
 	gpg --quiet --decrypt private_dot_ssh/encrypted_private_spb.conf > test-tmp/spb.conf
 	bats $(TESTS)
 
-.PHONY: check-system
-check-system:
-	guix system vm -L $HOME/.local/share/chezmoi/dotfiles/guixsd/modules --no-offload dotfiles/system/vm-image-stumpwm.tmpl
+.PHONY: vm
+vm:
+	$(shell guix system vm -L $(HOME)/.local/share/chezmoi/dotfiles/guixsd/modules --no-offload dotfiles/system/vm-image-stumpwm.tmpl) -nic user,model=virtio-net-pci,hostfwd=tcp::10022-:22
 
 .PHONY: graph
 graph:
