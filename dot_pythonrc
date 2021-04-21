@@ -97,6 +97,13 @@ class MongoHms:
             web_create_socket(service + "-http", ip_address, "http", server, port),
         )
 
+    def task_set_error(self, account_id):
+        """Set all running task on ACCOUNT_ID (e.g. "208112") as processed."""
+        return self.myclient["personmgr"]["processingBusinessOperation"].update_many({
+            "personalAccountId":account_id,
+            "state":"PROCESSING"
+        }, {"$set": {"state":"ERROR"}})
+
     def task_set_processed(self, account_id):
         """Set all running task on ACCOUNT_ID (e.g. "208112") as processed."""
         return self.myclient["personmgr"]["processingBusinessOperation"].update_many({
