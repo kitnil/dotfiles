@@ -140,14 +140,14 @@ main()
                     done
                     ;;
                 *)
-                    for package in $(awk '/would be upgraded/ { print $2 }' refresh.log)
+                    while IFS= read -r package
                     do
                         upgrade_package "$package"
-                    done
+                    done < <(awk '/would be upgraded/ { print $2 }' refresh.log)
                     ;;
             esac
             ;;
     esac
 }
 
-main
+main "$@"
