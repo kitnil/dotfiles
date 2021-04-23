@@ -209,7 +209,7 @@
     script-path: Jenkinsfile
     scm:
       - git:
-          url: https://cgit.duckdns.org/git/wigust/dotfiles
+          url: https://github.com/kitnil/dotfiles
 
 - job:
     name: wigust/org
