@@ -1,3 +1,5 @@
+def lib = library('jenkins-wi-shared-library')
+
 pipeline {
     agent { label "guixsd" }
     options {
@@ -12,8 +14,8 @@ pipeline {
                     nodeLabels: ["guix"],
                     procedure: { nodeLabels ->
                         gitFetch (
-                            url: library('jenkins-wi-shared-library').Constants.gitDotfilesUrl,
-                            dir: library('jenkins-wi-shared-library').Constants.homeDir + "/.local/share/chezmoi"
+                            url: lib.Constants.gitDotfilesUrl,
+                            dir: lib.Constants.homeDir + "/.local/share/chezmoi"
                         )
                     }
                 )
