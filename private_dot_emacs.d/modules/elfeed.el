@@ -72,6 +72,7 @@
 
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCoLGyLwOpcPYQIG1z185GYg" video peripheral) ;игроман
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCD-S-2TMDY4fL-R5iDQn-6Q" video peripheral) ;PRO ДЕВАЙСЫ
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCKzBovyB_YU0oSM1eMcV_ow" video hardware) ;E-Katalog
 
         ("https://toot.aquilenet.fr/@civodul.rss" mastodon) ;Ludovic Courtès
         ("https://functional.cafe/@ioa.rss" mastodon) ;ioanna
