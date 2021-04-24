@@ -43,12 +43,13 @@ situation, you should also set the following option in your
       (elt compilation-arguments 1))
   (recompile))
 
-(define-key compilation-mode-map (kbd "C-c i")
-  #'endless/toggle-comint-compilation)
-(define-key compilation-minor-mode-map (kbd "C-c i")
-  #'endless/toggle-comint-compilation)
-(define-key compilation-shell-minor-mode-map (kbd "C-c i")
-  #'endless/toggle-comint-compilation)
+(with-eval-after-load 'compile
+  (define-key compilation-mode-map (kbd "C-c i")
+    #'endless/toggle-comint-compilation)
+  (define-key compilation-minor-mode-map (kbd "C-c i")
+    #'endless/toggle-comint-compilation)
+  (define-key compilation-shell-minor-mode-map (kbd "C-c i")
+    #'endless/toggle-comint-compilation))
 
 
 ;;;

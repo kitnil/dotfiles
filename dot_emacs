@@ -16,6 +16,20 @@
 ;; You may delete these explanatory comments.
 ;; (package-initialize)
 
+(setq read-process-output-max (* 1024 1024)) ;; 1mb
+(setq gc-cons-threshold 100000000)
+
+;; [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Startup-Summary.html][gnu.org/s/emacs/manual/html_node/elisp/Startup-Summary.html]]
+;;
+;; Uncomment the following:
+;;
+;; (setq initial-buffer-choice 'text-mode)
+(benchmark-init/activate)
+;;
+;; and add to the end of the ~/.emacs file:
+;;
+;; (benchmark-init/show-durations-tabulated)
+
 (autoload 'f-directories "f" nil t)
 (autoload 'string-trim-right "subr-x" nil t)
 (autoload 'flet "cl" nil t)
@@ -43,53 +57,51 @@
 
 (autoload 'debbugs-browse-url "debbugs-browse" nil t)
 
-(load-config-file "ffap.el")
-(load-config-file "keys.el")
-(load-config-file "files.el")
 (load-config-file "utils.el")
+
+(load-config-file "ffap.el")
+(load-config-file "nav.el")
+(load-config-file "keys.el")
+(load-config-file "org.el")
 (load-config-file "lisp.el")
+(load-config-file "files.el")
 (load-config-file "nix.el")
 (load-config-file "scheme.el")
 (load-config-file "guix.el")
-(load-config-file "nav.el")
-
-(when (or (string= (getenv "GTK_THEME") "Adwaita:dark") (string= (getenv "GTK_THEME") "Adwaita:light"))
-  (load-config-file "term.el")
-  (load-config-file "audio.el")
-  (load-config-file "mail.el")
-  (load-config-file "c.el")
-  (load-config-file "version-control-lexical.el")
-  (load-config-file "version-control.el")
-  (load-config-file "erc.el")
-  (load-config-file "org.el")
-  (load-config-file "rfc.el")
-  (load-config-file "web.el")
-  (load-config-file "outline.el")
-  (load-config-file "snippets.el")
-  (load-config-file "copyright.el")
-  (load-config-file "lsp.el")
-  (load-config-file "theme.el")
-  (load-config-file "slack.el")
-  (load-config-file "ci.el")
-  (load-config-file "compile.el")
-  (load-config-file "hooks.el")
-  (load-config-file "debug.el")
-  (load-config-file "elfeed.el")
-  (load-config-file "time.el")
-  (load-config-file "debbugs.el")
-  (load-config-file "text.el")
-  (load-config-file "groovy.el")
-  (load-config-file "haskell.el")
-  (load-config-file "completion.el")
-  (load-config-file "ftp.el")
-  (load-config-file "info.el")
-  (load-config-file "majordomo.el")
-  (load-config-file "blog.el")
-  (load-config-file "po.el")
-  (load-config-file "python.el")
-  (load-config-file "java.el")
-  (load-config-file "perl.el")
-  (load-config-file "rust.el"))
+(load-config-file "term.el")
+(load-config-file "audio.el")
+(load-config-file "mail.el")
+(load-config-file "c.el")
+(load-config-file "version-control-lexical.el")
+(load-config-file "version-control.el")
+(load-config-file "erc.el")
+(load-config-file "rfc.el")
+(load-config-file "web.el")
+(load-config-file "outline.el")
+(load-config-file "snippets.el")
+(load-config-file "copyright.el")
+(load-config-file "lsp.el")
+(add-hook 'emacs-startup-hook (lambda () (load-config-file "theme.el")))
+(load-config-file "ci.el")
+(load-config-file "compile.el")
+(load-config-file "hooks.el")
+(load-config-file "debug.el")
+(load-config-file "elfeed.el")
+(load-config-file "time.el")
+(load-config-file "debbugs.el")
+(load-config-file "text.el")
+(load-config-file "groovy.el")
+(load-config-file "haskell.el")
+(load-config-file "completion.el")
+(load-config-file "ftp.el")
+(load-config-file "info.el")
+(load-config-file "majordomo.el")
+(load-config-file "blog.el")
+(load-config-file "po.el")
+(load-config-file "python.el")
+(load-config-file "java.el")
+(load-config-file "perl.el")
+(load-config-file "rust.el")
 
 ;; (load-config-file "twitch.el")
 ;; (load-config-file "youtube.el")
@@ -120,13 +132,21 @@
                  (company-dabbrev-code company-gtags company-etags company-keywords)
                  company-oddmuse company-dabbrev))
  '(custom-safe-themes
-   '("aa85228e4b6d188c3c0b8553548142c2c75726429614376c26255a51378982f5" "a10ca93d065921865932b9d7afae98362ce3c347f43cb0266d025d70bec57af1" "4ce515d79ef94f3b7651c8e2a7c7d81814b9ca911eb2a16955f45f4555faf524" "ba881f92a04cf56df49740324caea02d25442a327f1c33d1a1946f0b9a846f53" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default))
+   '("d9864caf2fc6cd9bc5bed941c526a4690bf6c27f0d8c1ca28ff7e05806b57204" "aa85228e4b6d188c3c0b8553548142c2c75726429614376c26255a51378982f5" "a10ca93d065921865932b9d7afae98362ce3c347f43cb0266d025d70bec57af1" "4ce515d79ef94f3b7651c8e2a7c7d81814b9ca911eb2a16955f45f4555faf524" "ba881f92a04cf56df49740324caea02d25442a327f1c33d1a1946f0b9a846f53" "3c83b3676d796422704082049fc38b6966bcad960f896669dfc21a7a37a748fa" "a27c00821ccfd5a78b01e4f35dc056706dd9ede09a8b90c6955ae6a390eb1c1e" default))
  '(debug-on-error nil)
  '(indent-tabs-mode nil)
  '(org-agenda-files '("~/org/inbox.org" "~/org/todo.org" "~/org/web.org"))
  '(python-shell-interpreter "python3" t)
  '(safe-local-variable-values
-   '((projectile-project-install-cmd . "make install")
+   '((eval add-hook 'before-save-hook 'time-stamp)
+     (projectile-project-test-cmd . "~/src/guix/pre-inst-env ./test.sh")
+     (projectile-project-compilation-cmd . "~/src/guix/pre-inst-env guix build --with-source=file://$PWD guile-bash")
+     (projectile-project-install-cmd . "~/src/guix/pre-inst-env guix package --with-source=file://$PWD -i guile-bash")
+     (projectile-project-test-cmd . "./test.sh")
+     (projectile-project-compilation-cmd . "guix build --with-source=file://$PWD guile-bash")
+     (projectile-project-install-cmd . "guix package --with-source=file://$PWD -i guile-bash")
+     (projectile-project-configure-cmd . "./configure")
+     (projectile-project-install-cmd . "make install")
      (eval let
            ((root-dir-unexpanded
              (concat
@@ -223,9 +243,10 @@
 
 (setq auto-mode-alist (delete (assoc "\\.drv" auto-mode-alist) auto-mode-alist))
 
-(load (expand-file-name "~/src/emacs-rainbow-fart/rainbow-fart.el") t)
-(setq rainbow-fart-keyword-interval nil)
-(setq rainbow-fart-voice-model "built-in-voice-english")
+;; TODO: Package emacs-rainbow-fart
+;; (load (expand-file-name "~/src/emacs-rainbow-fart/rainbow-fart.el") t)
+;; (setq rainbow-fart-keyword-interval nil)
+;; (setq rainbow-fart-voice-model "built-in-voice-english")
 
 ;;; .emacs ends here
 (custom-set-faces
@@ -234,3 +255,8 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(highlight-indent-guides-character-face ((t (:foreground "gray15")))))
+
+(benchmark-init/show-durations-tabulated)
+(setq initial-buffer-choice '(lambda () (get-buffer "*Benchmark Init Results Tabulated*")))
+(benchmark-init/deactivate)
+

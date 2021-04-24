@@ -1,11 +1,12 @@
 (setq redshift-temp-increment 100)
 
-(setq default-frame-alist
-      (append (list ;; '(width  . 73)
-                    ;; '(height . 41)
-                    ;; '(vertical-scroll-bars . nil)
-                    '(internal-border-width . 12))
-              default-frame-alist))
+;; TODO: Fix default-frame-alist
+;; (setq default-frame-alist
+;;       (append (list ;; '(width  . 73)
+;;                     ;; '(height . 41)
+;;                     ;; '(vertical-scroll-bars . nil)
+;;                     '(internal-border-width . 12))
+;;               default-frame-alist))
 
 (defun wi-manoj-dark ()
   (interactive)
@@ -51,6 +52,15 @@
 
 (defvar current-theme-gtk (getenv "GTK_THEME"))
 
+(defun load-theme-modus-vivendi ()
+  ;; (disable-theme 'smart-mode-line-light)
+  (load-theme 'modus-vivendi)
+  (custom-theme-set-faces
+   'modus-vivendi
+   '(elfeed-search-unread-title-face ((t (:inherit nil :foreground "#ffffff")))))
+  (setq terminal-here-color 'dark)
+  (setq current-theme-gtk t))
+
 (defun wi-toggle-theme ()
   "Toggle between dark and light themes."
   (interactive)
@@ -61,19 +71,15 @@
              ;; (enable-theme 'smart-mode-line-light)
              (setq terminal-here-color 'light)
              (setq current-theme-gtk nil))
-    (progn ;; (disable-theme 'smart-mode-line-light)
-      (load-theme 'modus-vivendi)
-      (custom-theme-set-faces
-       'modus-vivendi
-       '(elfeed-search-unread-title-face ((t (:inherit nil :foreground "#ffffff")))))
-      (setq terminal-here-color 'dark)
-      (setq current-theme-gtk t))))
+    (load-theme-modus-vivendi)))
+
+(load-theme-modus-vivendi)
 
 (setq terminal-here-color 'light)
 
-(set-scroll-bar-mode 'right)
-(scroll-bar-mode -1)
-(blink-cursor-mode)
+;; (set-scroll-bar-mode 'right)
+;; (scroll-bar-mode -1)
+;; (blink-cursor-mode)
 
 (setq hl-sexp-background-color "darkseagreen2")
 

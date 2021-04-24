@@ -23,6 +23,10 @@ check:
 	gpg --quiet --decrypt private_dot_ssh/encrypted_private_spb.conf > test-tmp/spb.conf
 	bats $(TESTS)
 
+.PHONY: benchmark
+benchmark:
+	emacs --eval '(progn (message "hello") (kill-emacs))'
+
 MODULES = dotfiles/guixsd/modules
 
 QEMU_FLAGS =					\

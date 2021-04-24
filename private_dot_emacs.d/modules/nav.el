@@ -21,7 +21,6 @@
 
 ;; Origin <https://github.com/Wilfred/.emacs.d/blob/gh-pages/init.org>.
 (setq enable-recursive-minibuffers t) ; Enable recursive minibuffer.
-(minibuffer-depth-indicate-mode)      ; Show recursion depth.
 
 ;; (with-eval-after-load 'tramp
 ;;   (recentf-mode 1))
@@ -32,9 +31,6 @@
 ;; See <https://www.emacswiki.org/emacs/DoWhatIMean>
 (setq dired-dwim-target t)
 
-(default-text-scale-mode)
-(global-git-gutter-mode)
-
 (add-hook 'diff-mode-hook (lambda () (setq-local truncate-lines t)))
 
 (setq dumb-jump-selector 'ivy)
@@ -42,11 +38,6 @@
 
 (autoload 'crux-transpose-windows "crux" nil t)
 (autoload 'crux-open-with "crux" nil t)
-
-(projectile-global-mode)
-(setq projectile-switch-project-action 'projectile-dired)
-(define-key projectile-mode-map (kbd "C-c g p") 'projectile-command-map)
-(define-key projectile-mode-map (kbd "C-c g p h") 'helm-projectile)
 
 ;; (global-undo-tree-mode)
 ;; (setq undo-tree-auto-save-history t)
@@ -68,24 +59,11 @@
   (interactive)
   (switch-to-buffer "*scratch*"))
 
-(beginend-global-mode)
-
-(save-place-mode)            ; Remember position in files
 (setq mouse-yank-at-point t) ; Ignore mouse position on paste
 (setq mouse-autoselect-window t) ; Sloppy mouse
 
-;; Toggle prettify symbols mode on
-(global-prettify-symbols-mode)
-
  ; Unprettify symbol after the cursor
 (setq prettify-symbols-unprettify-at-point 'right-edge)
-
-;; Undo and redo operations on windows and buffers
-(winner-mode 1)
-(windmove-default-keybindings)
-
-;; Display key bindings help window (after some delay)
-(which-key-mode)
 
 (setq whitespace-style
       '(face tabs
@@ -102,27 +80,9 @@
              ;; newline-mark
              ))
 
-;; Don't use ido
-(setq projectile-completion-system 'ivy)
-
-(add-to-list 'projectile-project-root-files "environment-variables")
-
-;; Toggle show-paren-mode on
-(show-paren-mode)
-
 (add-hook 'prog-mode-hook 'hl-todo-mode)
 ;; (add-hook 'prog-mode-hook 'which-function-mode)
 (add-hook 'prog-mode-hook 'symbol-overlay-mode)
-
-(ivy-posframe-mode 1)
-(setq ivy-posframe-display-functions-alist
-      '(;;(swiper          . ivy-posframe-display-at-point)
-        ;;(complete-symbol . ivy-posframe-display-at-point)
-        (counsel-find-file . ivy-posframe-display-at-frame-center)
-        (counsel-M-x       . ivy-posframe-display-at-frame-center)
-        (wi-project-ivy    . ivy-posframe-display-at-frame-center)
-        ;;(t               . ivy-posframe-display)
-        ))
 
 (setq wi-groups-direcotory "~/majordomo")
 (setq wi-projects-directories '("~/src" "~/archive/src"))
@@ -143,4 +103,39 @@
 
 (defalias 'center-mode 'olivetti-mode)
 
-(global-emojify-mode)
+;; Show recursion depth.
+(progn
+  (minibuffer-depth-indicate-mode)
+
+  (global-git-gutter-mode)
+
+  (default-text-scale-mode)
+
+  (projectile-global-mode)
+
+  ;; Don't use ido
+  (setq projectile-completion-system 'ivy)
+
+  (add-to-list 'projectile-project-root-files "environment-variables")
+
+  (setq projectile-switch-project-action 'projectile-dired)
+  (define-key projectile-mode-map (kbd "C-c g p") 'projectile-command-map)
+  (define-key projectile-mode-map (kbd "C-c g p h") 'helm-projectile)
+
+  (beginend-global-mode)
+  (save-place-mode)            ; Remember position in files
+
+  ;; Toggle prettify symbols mode on
+  (global-prettify-symbols-mode)
+
+  ;; Undo and redo operations on windows and buffers
+  (winner-mode 1)
+  (windmove-default-keybindings)
+
+  ;; Display key bindings help window (after some delay)
+  (which-key-mode)
+
+  ;; Toggle show-paren-mode on
+  (show-paren-mode))
+
+

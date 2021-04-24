@@ -173,4 +173,6 @@
 
        emacs-ssh-config-mode
 
-       emacs-xterm-color))
+       emacs-xterm-color
+
+       emacs-benchmark-init))

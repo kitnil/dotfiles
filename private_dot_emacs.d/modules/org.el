@@ -24,7 +24,12 @@
       '((R . t)
         (emacs-lisp . t)
         (scheme . t)
-        (shell . t))))
+        (shell . t)))
+
+  ;; [[https://www.orgroam.com/manual.html][Org-roam User Manual]]
+  (setq org-roam-directory (expand-file-name "~/src/org"))
+  (setq org-roam-db-gc-threshold most-positive-fixnum)
+  (require 'org-roam-protocol))
 
 (setq org-startup-folded 'showall) ; Show all in `org-mode' at startup
 
@@ -129,27 +134,6 @@
 
 
 ;;;
-;;; Redmine
-;;;
-
-(require 'org-redmine)
-(setq org-redmine-config-default-limit 100)
-(setq org-redmine-limit 100)
-
-
-;;;
-;;; org-tanglesync
-;;;
-
-(setq org-tanglesync-watch-files (list (expand-file-name "~/src/org/networking.org")))
-(setq org-tanglesync-default-diff-action :external)
-(require 'org-tanglesync)
-(add-hook 'org-mode-hook 'org-tanglesync-mode)
-(add-hook 'prog-mode-hook 'org-tanglesync-watch-mode)
-(add-hook 'text-mode-hook 'org-tanglesync-watch-mode)
-
-
-;;;
 ;;; Haunt
 ;;;
 
@@ -165,14 +149,3 @@
 (setq org-appear-autoemphasis t)
 (setq org-appear-autolinks t)
 (setq org-appear-autosubmarkers t)
-
-
-;;;
-;;; org-roam
-;;;
-
-;; [[https://www.orgroam.com/manual.html][Org-roam User Manual]]
-
-(setq org-roam-directory (expand-file-name "~/src/org"))
-(setq org-roam-db-gc-threshold most-positive-fixnum)
-(require 'org-roam-protocol)

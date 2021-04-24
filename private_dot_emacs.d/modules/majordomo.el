@@ -46,9 +46,11 @@
                         "&&" "mv" "tech.html" "/var/www/techinfo.intr/index.html")
                       " ")))
 
-(load (expand-file-name "~/archive/src/vterm-toggle/vterm-toggle.el") t)
-(load (expand-file-name "~/.emacs.d/tramp-auto-auth-secrets.el") t)
-(load (expand-file-name "~/src/emacs-helm-tramp/helm-tramp.el") t)
+;; TODO: Fix vterm-toggle.el tramp-auto-auth-secrets.el helm-tramp.el
+;; (with-eval-after-load 'emacs-startup-hook
+;;   (load (expand-file-name "~/archive/src/vterm-toggle/vterm-toggle.el") t)
+;;   (load (expand-file-name "~/.emacs.d/tramp-auto-auth-secrets.el") t)
+;;   (load (expand-file-name "~/src/emacs-helm-tramp/helm-tramp.el") t))
 
 
 ;;;
