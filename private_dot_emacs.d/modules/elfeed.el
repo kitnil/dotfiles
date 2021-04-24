@@ -70,6 +70,9 @@
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UC-7I1gU1r6PxBSl87o-7YEQ" video hardware retro) ;Druaga1
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCsGdWQMkl4Yv4fLBQ3aCC1Q" video linux) ;FLOSS Weekly
 
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCoLGyLwOpcPYQIG1z185GYg" video peripheral) ;игроман
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UCD-S-2TMDY4fL-R5iDQn-6Q" video peripheral) ;PRO ДЕВАЙСЫ
+
         ("https://toot.aquilenet.fr/@civodul.rss" mastodon) ;Ludovic Courtès
         ("https://functional.cafe/@ioa.rss" mastodon) ;ioanna
 
