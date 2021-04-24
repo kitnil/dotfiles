@@ -33,6 +33,9 @@ matches:
   - trigger: ":бан"
     replace: "https://static.pepper.ru/comments/full_screen/uAVQP/4142000.jpg"
 
+  - trigger: ":botox"
+    replace: "https://static.pepper.ru/comments/content/ptDax/4236493.jpg"
+
   # Simple text replacement
   - trigger: ":espanso"
     replace: "Hi there!"
