@@ -7,13 +7,13 @@ pipeline {
         timeout(time: 1, unit: "HOURS")
     }
     stages {
-        stage("Benchmark") {
+        stage("benchmark") {
             agent { label "guixsd" }
             steps {
                 sh "make benchmark"
             }
         }
-        stage("Deploy") {
+        stage("deploy") {
             agent { label "master" }
             steps {
                 parallelCall (
