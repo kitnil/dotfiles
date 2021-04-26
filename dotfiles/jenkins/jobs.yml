@@ -1,0 +1,348 @@
+#!/usr/bin/env -S PYTHONPATH='' jenkins-jobs --ignore-cache update
+---
+
+- job:
+    name: ansible
+    project-type: folder
+
+- job:
+    name: ansible/ansible-cmdb-majordomo
+    project-type: multibranch
+    periodic-folder-trigger: 1d
+    prune-dead-branches: true
+    number-to-keep: '10'
+    days-to-keep: '10'
+    script-path: Jenkinsfile
+    scm:
+      - git:
+          url: https://cgit.duckdns.org/git/ansible/ansible-cmdb-majordomo
+
+- job:
+    name: ansible/fetch-history
+    project-type: multibranch
+    periodic-folder-trigger: 1d
+    prune-dead-branches: true
+    number-to-keep: '10'
+    days-to-keep: '10'
+    script-path: Jenkinsfile
+    scm:
+      - git:
+          url: https://cgit.duckdns.org/git/ansible/ansible-majordomo-history
+
+- job:
+    name: ansible/ping
+    project-type: multibranch
+    periodic-folder-trigger: 1d
+    prune-dead-branches: true
+    number-to-keep: '10'
+    days-to-keep: '10'
+    script-path: Jenkinsfile
+    scm:
+      - git:
+          url: https://cgit.duckdns.org/git/ansible/ansible-ping
+
+- job:
+    name: containers
+    project-type: folder
+
+- job:
+    name: containers/bitlbee-libpurple
+    project-type: multibranch
+    periodic-folder-trigger: 1d
+    prune-dead-branches: true
+    number-to-keep: '10'
+    days-to-keep: '10'
+    script-path: Jenkinsfile
+    scm:
+      - git:
+          url: https://cgit.duckdns.org/git/containers/bitlbee-libpurple
+
+- job:
+    name: containers/nightmarejs
+    project-type: multibranch
+    periodic-folder-trigger: 1d
+    prune-dead-branches: true
+    number-to-keep: '10'
+    days-to-keep: '10'
+    script-path: Jenkinsfile
+    scm:
+      - git:
+          url: https://cgit.duckdns.org/git/containers/nightmarejs
+
+- job:
+    name: containers/reevefresh
+    project-type: multibranch
+    periodic-folder-trigger: 1d
+    prune-dead-branches: true
+    number-to-keep: '10'
+    days-to-keep: '10'
+    script-path: Jenkinsfile
+    scm:
+      - git:
+          url: https://cgit.duckdns.org/git/containers/reevefresh
+
+- job:
+    name: containers/yeastizzy
+    project-type: multibranch
+    periodic-folder-trigger: 1d
+    prune-dead-branches: true
+    number-to-keep: '10'
+    days-to-keep: '10'
+    script-path: Jenkinsfile
+    scm:
+      - git:
+          url: https://cgit.duckdns.org/git/containers/yeastizzy
+
+- job:
+    name: guile
+    project-type: folder
+
+- job:
+    name: guile/guile-feed
+    project-type: multibranch
+    script-path: Jenkinsfile
+    scm:
+      - git:
+          url: https://cgit.duckdns.org/git/guile/guile-feed
+
+- job:
+    name: guile/guile-ihs
+    project-type: multibranch
+    script-path: Jenkinsfile
+    scm:
+      - git:
+          url: https://cgit.duckdns.org/git/guile/guile-ihs
+
+- job:
+    name: guix
+    project-type: folder
+
+- job:
+    name: guix/guix-docker
+    project-type: multibranch
+    periodic-folder-trigger: 1d
+    prune-dead-branches: true
+    number-to-keep: '10'
+    days-to-keep: '10'
+    script-path: Jenkinsfile
+    scm:
+      - git:
+          url: https://cgit.duckdns.org/git/guix/guix-docker
+
+- job:
+    name: guix/maintenance
+    project-type: multibranch
+    periodic-folder-trigger: 1d
+    prune-dead-branches: true
+    number-to-keep: '10'
+    days-to-keep: '10'
+    script-path: Jenkinsfile
+    scm:
+      - git:
+          url: https://cgit.duckdns.org/git/guix/guix
+          shallow-clone: true
+          do-not-fetch-tags: true
+
+- job:
+    name: guix/wigust
+    project-type: multibranch
+    periodic-folder-trigger: 1d
+    prune-dead-branches: true
+    number-to-keep: '10'
+    days-to-keep: '10'
+    script-path: Jenkinsfile
+    scm:
+      - git:
+          url: https://cgit.duckdns.org/git/guix/guix-wigust
+
+- job:
+    name: nix
+    project-type: folder
+
+- job:
+    name: nix/gc
+    project-type: multibranch
+    periodic-folder-trigger: 1d
+    prune-dead-branches: true
+    number-to-keep: '10'
+    days-to-keep: '10'
+    script-path: Jenkinsfile
+    scm:
+      - git:
+          url: https://cgit.duckdns.org/git/nix/nix-store-gc
+
+- job:
+    name: wigust
+    project-type: folder
+
+- job:
+    name: wigust/awesome
+    project-type: multibranch
+    periodic-folder-trigger: 1d
+    prune-dead-branches: true
+    number-to-keep: '10'
+    days-to-keep: '10'
+    script-path: Jenkinsfile
+    scm:
+      - git:
+          url: https://cgit.duckdns.org/git/wigust/awesome
+
+- job:
+    name: wigust/backup-restic
+    project-type: multibranch
+    periodic-folder-trigger: 1d
+    prune-dead-branches: true
+    number-to-keep: '10'
+    days-to-keep: '10'
+    script-path: Jenkinsfile
+    scm:
+      - git:
+          url: https://cgit.duckdns.org/git/wigust/backup-restic
+
+- job:
+    name: wigust/dotfiles
+    project-type: multibranch
+    periodic-folder-trigger: 1d
+    prune-dead-branches: true
+    number-to-keep: '10'
+    days-to-keep: '10'
+    script-path: Jenkinsfile
+    scm:
+      - git:
+          url: https://github.com/kitnil/dotfiles
+
+- job:
+    name: wigust/org
+    project-type: multibranch
+    periodic-folder-trigger: 1d
+    prune-dead-branches: true
+    number-to-keep: '10'
+    days-to-keep: '10'
+    script-path: Jenkinsfile
+    scm:
+      - git:
+          url: file:///home/oleg/src/org/.git
+
+- job:
+    name: wigust/dotfiles-ansible
+    project-type: multibranch
+    periodic-folder-trigger: 1d
+    prune-dead-branches: true
+    number-to-keep: '10'
+    days-to-keep: '10'
+    script-path: Jenkinsfile
+    scm:
+      - git:
+          url: https://cgit.duckdns.org/git/wigust/dotfiles-ansible
+
+- job:
+    name: wigust/majordomo-maintenance
+    project-type: multibranch
+    periodic-folder-trigger: 1d
+    prune-dead-branches: true
+    number-to-keep: '10'
+    days-to-keep: '10'
+    script-path: Jenkinsfile
+    scm:
+      - git:
+          url: https://cgit.duckdns.org/git/wigust/majordomo-maintenance
+
+- job:
+    name: wigust/files-maintenance
+    project-type: multibranch
+    periodic-folder-trigger: 1d
+    prune-dead-branches: true
+    number-to-keep: '10'
+    days-to-keep: '10'
+    script-path: Jenkinsfile
+    scm:
+      - git:
+          url: https://cgit.duckdns.org/git/wigust/files-maintenance
+
+- job:
+    name: wigust/ssh
+    project-type: multibranch
+    periodic-folder-trigger: 1d
+    prune-dead-branches: true
+    number-to-keep: '10'
+    days-to-keep: '10'
+    script-path: Jenkinsfile
+    scm:
+      - git:
+          url: https://cgit.duckdns.org/git/wigust/ssh
+
+- job:
+    name: mikrotik
+    project-type: folder
+
+- job:
+    name: mikrotik/pxe
+    project-type: multibranch
+    periodic-folder-trigger: 1d
+    prune-dead-branches: true
+    number-to-keep: '10'
+    days-to-keep: '10'
+    script-path: Jenkinsfile
+    scm:
+      - git:
+          url: https://cgit.duckdns.org/git/mikrotik/pxe
+
+- job:
+    name: games
+    project-type: folder
+
+- job:
+    name: games/door-kickers
+    project-type: multibranch
+    periodic-folder-trigger: 1d
+    prune-dead-branches: true
+    number-to-keep: '10'
+    days-to-keep: '10'
+    script-path: Jenkinsfile
+    scm:
+      - git:
+          url: https://cgit.duckdns.org/git/games/door-kickers
+
+- job:
+    name: games/darkness-looming-the-dawn
+    project-type: multibranch
+    periodic-folder-trigger: 1d
+    prune-dead-branches: true
+    number-to-keep: '10'
+    days-to-keep: '10'
+    script-path: Jenkinsfile
+    scm:
+      - git:
+          url: https://cgit.duckdns.org/git/games/darkness-looming-the-dawn
+
+- job:
+    name: iso
+    project-type: folder
+
+- job:
+    name: iso/multicd
+    project-type: multibranch
+    periodic-folder-trigger: 1d
+    prune-dead-branches: true
+    number-to-keep: '10'
+    days-to-keep: '10'
+    script-path: Jenkinsfile
+    scm:
+      - git:
+          url: https://cgit.duckdns.org/git/iso/multicd
+
+- job:
+    name: github
+    project-type: folder
+
+- job:
+    name: github/githunt
+    project-type: multibranch
+    periodic-folder-trigger: 1d
+    prune-dead-branches: true
+    number-to-keep: '10'
+    days-to-keep: '10'
+    script-path: Jenkinsfile
+    scm:
+      - git:
+          url: https://cgit.duckdns.org/git/github/githunt
