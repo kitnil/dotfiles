@@ -15,6 +15,10 @@ pipeline {
         }
         stage("deploy") {
             agent { label "master" }
+            when {
+                branch "master"
+                beforeAgent true
+            }
             steps {
                 parallelCall (
                     nodeLabels: ["guix"],
