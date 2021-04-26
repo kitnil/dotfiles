@@ -25,11 +25,11 @@ Inbox ~/Maildir/INBOX
 SubFolders Verbatim
 
 Channel gmail
-Master :gmail-remote:
-Slave :gmail-local:
+Far :gmail-remote:
+Near :gmail-local:
 Patterns INBOX # Sync only INBOX
 MaxMessages 2000
-Expunge slave
+Expunge near
 Sync Pull
 
 Group gmail-all
@@ -55,7 +55,7 @@ Inbox ~/Maildir/majordomo
 SubFolders Verbatim
 
 Channel majordomo
-Master :majordomo-remote:
-Slave :majordomo-local:
+Far :majordomo-remote:
+Near :majordomo-local:
 Patterns "INBOX" # Sync only INBOX
 Sync Pull
