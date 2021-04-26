@@ -65,6 +65,19 @@ for COMMIT, defaulting to the commit hash at point."
                            (wi-buffer-major-mode buffer)))
            (buffer-list)))
 
-
+(defun wi-prettify-mjru-network ()
+  (interactive)
+  (message
+   (mapconcat 'identity
+              (mapcar (lambda (host)
+                        (mapconcat 'identity
+                                   (mapcar 'char-to-string
+                                           (delete '(Br . Bl)
+                                                   (cdr host)))
+                                   ""))
+                      (-filter (lambda (net)
+                                 (string= (car net) (thing-at-point 'filename)))
+                               mjru-prettify-hosts))
+              "\n")))
 
 
