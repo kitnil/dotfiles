@@ -25,7 +25,7 @@ check:
 
 .PHONY: benchmark
 benchmark:
-	emacs --eval '(progn (message "hello") (kill-emacs))'
+	emacs --eval "(progn (with-current-buffer (get-buffer \"*Benchmark Init Results Tabulated*\") (princ (buffer-substring-no-properties (point-min) (point-max)) #'external-debugging-output)) (kill-emacs))"
 
 MODULES = dotfiles/guixsd/modules
 
