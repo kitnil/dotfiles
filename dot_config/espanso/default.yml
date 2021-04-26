@@ -97,3 +97,57 @@ matches:
 
   - trigger: ":repquota"
     replace: "repquota --verbose --all --no-names --group --project --human-readable"
+
+  - trigger: ":tcpdump-ssh"
+    replace: "tcpdump 'tcp[(tcp[12]>>2):4] = 0x5353482D'"
+
+  - trigger: ":tcpdump-dns"
+    replace: "tcpdump -vvAs0 port 53"
+
+  - trigger: ":tcpdump-ftp"
+    replace: "tcpdump -vvAs0 port ftp or ftp-data"
+
+  - trigger: ":tcpdump-ntp"
+    replace: "tcpdump -vvAs0 port 123"
+
+  - trigger: ":tcpdump-pass"
+    replace: "tcpdump port http or port ftp or port smtp or port imap or port pop3 or port telnet -lA | egrep -i -B5 'pass=|pwd=|log=|login=|user=|username=|pw=|passw=|passwd= |password=|pass:|user:|username:|password:|login:|pass |user '"
+
+  - trigger: ":tcpdump-evil"
+    replace: "tcpdump 'ip[6] & 128 != 0'"
+
+  - trigger: ":tcpdump-http-cook"
+    replace: "tcpdump -vvAls0 | grep 'Set-Cookie|Host:|Cookie:'"
+
+  - trigger: ":tcpdump-http-head"
+    replace: "tcpdump -vvAls0 | grep 'Host:'"
+
+  - trigger: ":tcpdump-http-get"
+    replace: "tcpdump -vvAls0 | grep 'GET'"
+
+  - trigger: ":tcpdump-http-user"
+    replace: "tcpdump -vvAls0 | grep 'User-Agent:'"
+
+  - trigger: ":tcpdump-syn"
+    replace: "tcpdump 'tcp[13] = 6'"
+
+  - trigger: ":tcpdump-fin"
+    replace: "tcpdump 'tcp[tcpflags] == tcp-fin' # tcpdump 'tcp[13] & 1!=0'"
+
+  - trigger: ":tcpdump-psh"
+    replace: "tcpdump 'tcp[tcpflags] == tcp-push' # tcpdump 'tcp[13] & 8!=0'"
+
+  - trigger: ":tcpdump-ack"
+    replace: "tcpdump 'tcp[tcpflags] == tcp-ack' # tcpdump 'tcp[13] & 16!=0'"
+
+  - trigger: ":tcpdump-urg"
+    replace: " tcpdump 'tcp[tcpflags] == tcp-urg' # tcpdump 'tcp[13] & 32!=0'"
+
+  - trigger: ":tcpdump-synack"
+    replace: "tcpdump 'tcp[13]=18'"
+
+  - trigger: ":tcpdump-syn"
+    replace: "tcpdump 'tcp[tcpflags] == tcp-syn' # tcpdump 'tcp[13] & 2!=0'"
+
+  - trigger: ":tcpdump-rst"
+    replace: " tcpdump 'tcp[tcpflags] == tcp-rst' # tcpdump 'tcp[13] & 4!=0'"
