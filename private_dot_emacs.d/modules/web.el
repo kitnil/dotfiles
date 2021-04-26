@@ -10,7 +10,6 @@
 
 (setq shr-width 80)
 (setq-default shr-use-fonts nil)
-(setq shr-external-browser 'browse-url-firefox)
 
 ;; Not white background in dark themes.
 ;; Origin <https://emacs.stackexchange.com/a/3523>
