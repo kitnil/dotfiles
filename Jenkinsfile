@@ -7,6 +7,12 @@ pipeline {
         timeout(time: 1, unit: "HOURS")
     }
     stages {
+        stage("Benchmark") {
+            agent { label "guixsd" }
+            steps {
+                sh "make benchmark"
+            }
+        }
         stage("Deploy") {
             agent { label "master" }
             steps {
