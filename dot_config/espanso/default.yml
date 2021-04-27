@@ -150,7 +150,7 @@ matches:
     replace: "tcpdump 'tcp[tcpflags] == tcp-syn' # tcpdump 'tcp[13] & 2!=0'"
 
   - trigger: ":tcpdump-rst"
-    replace: " tcpdump 'tcp[tcpflags] == tcp-rst' # tcpdump 'tcp[13] & 4!=0'"
+    replace: "tcpdump 'tcp[tcpflags] == tcp-rst' # tcpdump 'tcp[13] & 4!=0'"
 
   - trigger: "goaccess..."
     replace: "goaccess --log-format=COMBINED"
