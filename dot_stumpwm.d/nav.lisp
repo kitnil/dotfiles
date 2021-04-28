@@ -6,6 +6,8 @@
 
 (setf *window-format* "%m%n%s %c %50t")
 
+(setf *maximum-completions* 25)
+
 
 ;;;
 ;;; Mouse
