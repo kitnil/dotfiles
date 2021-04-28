@@ -17,13 +17,19 @@
   (setf *screen-mode-line-format*
         `("%g"
           ,(make-string 4 :initial-element #\space)
-          ,'(:eval (let* ((window (current-window))
-                          (wn (window-name window)))
-                     (format nil "~a:[~a]"
-                             (window-number window)
-                             (if (> (length wn) 10)
-                                 (concat (subseq wn 0 10) "...")
-                                 wn))))
+          ,'(:eval (let* ((group (current-group))
+                          (frame (tile-group-current-frame group))
+                          (windows (frame-sort-windows group frame)))
+                     (format nil "(~a)"
+                             (join
+                              (mapcar (lambda (window)
+                                        (let ((wn (window-name window)))
+                                          (format nil "~a:[~a]"
+                                                  (window-number window)
+                                                  (if (> (length wn) 10)
+                                                      (concat (subseq wn 0 10) "...")
+                                                      wn))))
+                                      windows)))))
 
           ,(make-string 4 :initial-element #\space)
           "^>"
