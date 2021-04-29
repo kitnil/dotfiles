@@ -18,9 +18,7 @@ clean:
 .PHONY: check
 check:
 	mkdir test-tmp
-	gpg --quiet --decrypt dhall/ssh/ssh.dhall.gpg | dhall text > test-tmp/mjru.conf
-	gpg --quiet --decrypt private_dot_ssh/encrypted_private_config > test-tmp/config
-	gpg --quiet --decrypt private_dot_ssh/encrypted_private_spb.conf > test-tmp/spb.conf
+	gpg --quiet --decrypt dhall/ssh/ssh.dhall.gpg | dhall text > test-tmp/config
 	bats $(TESTS)
 
 .PHONY: benchmark
@@ -77,7 +75,7 @@ install:
 	install --mode=755 dotfiles/scripts/sshrc $(HOME)/bin
 	sudo install -m644 dotfiles/guixsd/machines.scm /etc/guix
 	gpg --decrypt dotfiles/emacs/mjru-network.gpg > $(HOME)/.emacs.d/modules/mjru-network.el
-	gpg --quiet --decrypt dhall/ssh/ssh.dhall.gpg | dhall text > $(HOME)/.ssh/mjru.conf
+	gpg --quiet --decrypt dhall/ssh/ssh.dhall.gpg | dhall text > $(HOME)/.ssh/config
 
 .PHONY: deploy
 deploy:
