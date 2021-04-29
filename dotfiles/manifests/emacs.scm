@@ -161,6 +161,7 @@
        emacs-yasnippet-snippets ; Collection of snippets
        emacs-deadgrep
        emacs-vterm
+       emacs-vterm-toggle
        emacs-wgrep
        emacs-znc
 
