@@ -121,3 +121,8 @@
   (vterm)
   (vterm-send-string "connect br1-mr14.intr")
   (vterm-send-return))
+
+(defun mjru-find-file-kubernetes ()
+  (mapc (lambda (host)
+          (find-file (concat "/ssh:root@" host ":")))
+        '("78.108.87.50" "178.250.246.69" "178.250.245.80" "178.250.247.88")))
