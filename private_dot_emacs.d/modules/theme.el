@@ -75,7 +75,7 @@
 
 (load-theme-modus-vivendi)
 
-(setq terminal-here-color 'light)
+(setq terminal-here-color 'dark)
 
 ;; (set-scroll-bar-mode 'right)
 ;; (scroll-bar-mode -1)
