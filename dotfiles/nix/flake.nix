@@ -356,7 +356,7 @@
         // jenkins-plugins
         // {
           inherit (import nixpkgs { inherit system; config = { allowUnfree = true; }; })
-            google-chrome;
+            discord google-chrome;
         }
         // {
           eve-online = pkgs.writeScriptBin "eve-online" ''
