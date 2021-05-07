@@ -116,7 +116,10 @@
           bandwhich
 
           # alacritty
+
           # assh
+          ssh-tools
+
           # browserpass
           brave
           buku
