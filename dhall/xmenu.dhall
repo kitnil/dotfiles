@@ -142,6 +142,7 @@ in  ''
 		Cocalc	chromium --app=https://cocalc.com/
 		LaTeX	chromium --app=http://www.overleaf.com/
 		Habitica	chromium --app=https://habitica.com/
+		HTTP Requests	chromium --app=https://www.hurlit.com/
 		Mastodon	chromium --app=https://mastodon.xyz/
 		Repl	chromium --app=https://repl.it/
 		Sketch	chromium --app=https://excalidraw.com/
