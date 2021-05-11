@@ -47,7 +47,7 @@
       flake = false;
     };
 
-    deploy-rs.url = "github:kitnil/deploy-rs?ref=dry-activate";
+    deploy-rs.url = "github:serokell/deploy-rs";
 
     doom-emacs = {
       url = "github:hlissner/doom-emacs/develop";
