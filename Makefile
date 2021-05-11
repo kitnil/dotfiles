@@ -50,8 +50,12 @@ shepherd-graph:
 configure:
 	./configure
 
+.PHONY: install-ssh
+install-ssh:
+	gpg --quiet --decrypt dhall/ssh/ssh.dhall.gpg | dhall text > $(HOME)/.ssh/config
+
 .PHONY: install
-install:
+install: install-ssh
 	bin/executable_gpg-unlock
 	chezmoi apply
 	update-desktop-database ~/.local/share/applications
@@ -75,7 +79,6 @@ install:
 	install --mode=755 dotfiles/scripts/sshrc $(HOME)/bin
 	sudo install -m644 dotfiles/guixsd/machines.scm /etc/guix
 	gpg --decrypt dotfiles/emacs/mjru-network.gpg > $(HOME)/.emacs.d/modules/mjru-network.el
-	gpg --quiet --decrypt dhall/ssh/ssh.dhall.gpg | dhall text > $(HOME)/.ssh/config
 
 .PHONY: deploy
 deploy:
