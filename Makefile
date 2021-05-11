@@ -109,6 +109,10 @@ vm3.wugi.info:
 vm4.wugi.info:
 	guix system build -L $(MODULES) dotfiles/guixsd/vm4.wugi.info.scm
 
+.PHONY: vm5.wugi.info
+vm5.wugi.info:
+	guix system build -L $(MODULES) dotfiles/guixsd/vm5.wugi.info.scm
+
 .PHONY: add
 add:
 	chezmoi add --encrypt $(HOME)/.ssh/known_hosts
