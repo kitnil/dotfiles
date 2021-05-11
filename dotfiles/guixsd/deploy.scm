@@ -35,6 +35,15 @@
                        (host-key "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJ/LXhRvCkY5f3ZlawDmtnoqtbd9MaNdNIGLMXevbPgR root@(none)")
                        (identity "/home/oleg/.ssh/id_rsa"))))
       (machine
+       (operating-system (load "vm5.wugi.info.scm"))
+       (environment managed-host-environment-type)
+       (configuration (machine-ssh-configuration
+                       (host-name "178.250.247.231")
+                       (system "x86_64-linux")
+                       (user "oleg")
+                       (host-key "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJzqatAyN7HlMxif4hhZoClNqQAmJpa7nA6y4TZ2ae3M root@(none)")
+                       (identity "/home/oleg/.ssh/id_rsa"))))
+      (machine
        (operating-system (load "ws1.wugi.info.scm"))
        (environment managed-host-environment-type)
        (configuration (machine-ssh-configuration

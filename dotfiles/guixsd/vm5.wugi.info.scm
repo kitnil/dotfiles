@@ -2,8 +2,10 @@
 ;; for a "bare bones" setup, with no X11 display server.
 
 (use-modules (gnu))
-(use-service-modules networking ssh)
+(use-service-modules networking monitoring ssh)
 (use-package-modules screen ssh)
+
+(use-modules (config))
 
 (operating-system
   (host-name "vm5.wugi.info")
@@ -21,6 +23,11 @@
                         (mount-point "/")
                         (type "ext4"))
                       %base-file-systems))
+
+  (sudoers-file (plain-file "sudoers" "\
+root ALL=(ALL) ALL
+%wheel ALL=(ALL) ALL
+oleg ALL=(ALL) NOPASSWD:ALL\n"))
 
   ;; This is where user accounts are specified.  The "root"
   ;; account is implicit, and is initially created with the
@@ -51,5 +58,6 @@
                      (service openssh-service-type
                               (openssh-configuration
                                (openssh openssh-sans-x)
-                               (port-number 22))))
+                               (port-number 22)))
+                     (service zabbix-agent-service-type %vm-zabbix-agent-configuration))
                     %base-services)))
