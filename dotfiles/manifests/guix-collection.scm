@@ -11,11 +11,11 @@ guile-xyz haskell haskell-apps haskell-xyz imagemagick image-viewers inkscape
 irc kde kodi libreoffice license linux lisp logging lsof lxde lxqt m4 mail man
 maths messaging mp3 ncdu ncurses networking node package-management parallel
 password-utils patchutils pdf perl perl-web php pretty-print photo pulseaudio
-pv python python-web python-xyz qt ratpoison rdesktop readline rsync rust-apps
-samba scheme screen shells shellutils sqlite ssh statistics suckless syncthing
-synergy terminals tex texinfo text-editors textutils tls tmux tor valgrind
-version-control video virtualization vnc vpn w3m web wget wm xdisorg xfce xml
-xorg)
+pv python python-web python-xyz qt ratpoison rdesktop readline racket rsync
+rust-apps samba scheme screen shells shellutils sqlite ssh statistics suckless
+syncthing synergy terminals tex texinfo text-editors textutils tls tmux tor
+valgrind version-control video virtualization vnc vpn w3m web wget wm xdisorg
+xfce xml xorg)
 
 (define guix-collection-packages-multiout
   `((,glib "bin")
