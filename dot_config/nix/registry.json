@@ -1,0 +1,265 @@
+{
+  "version": 2,
+  "flakes": [
+    {
+      "from": {
+        "type": "indirect",
+        "id": "apps-bitrix-start"
+      },
+      "to": {
+        "type": "git",
+        "url": "https://gitlab.intr/apps/bitrix-start"
+      }
+    },
+    {
+      "from": {
+        "type": "indirect",
+        "id": "ci-nixops-flake"
+      },
+      "to": {
+        "type": "git",
+        "url": "https://gitlab.intr/ci/nixops-flake"
+      }
+    },
+    {
+      "from": {
+        "type": "indirect",
+        "id": "ci-nixpkgs-common-updater-scripts"
+      },
+      "to": {
+        "type": "git",
+        "url": "https://gitlab.intr/ci/nixpkgs-common-updater-scripts"
+      }
+    },
+    {
+      "from": {
+        "type": "indirect",
+        "id": "ci-nixpkgs-update-script"
+      },
+      "to": {
+        "type": "git",
+        "url": "https://gitlab.intr/ci/nixpkgs-update-script"
+      }
+    },
+    {
+      "from": {
+        "type": "indirect",
+        "id": "ci-nixops-future-kvm"
+      },
+      "to": {
+        "type": "git",
+        "url": "https://gitlab.intr/ci/nixops-future-kvm"
+      }
+    },
+    {
+      "from": {
+        "type": "indirect",
+        "id": "ci-maintenance-gitlab-intr"
+      },
+      "to": {
+        "type": "git",
+        "url": "https://gitlab.intr/ci/maintenance-gitlab-intr"
+      }
+    },
+    {
+      "from": {
+        "type": "indirect",
+        "id": "ci-vault"
+      },
+      "to": {
+        "type": "git",
+        "url": "https://gitlab.intr/ci/vault"
+      }
+    },
+    {
+      "from": {
+        "type": "indirect",
+        "id": "ci-nixpkgs-master"
+      },
+      "to": {
+        "type": "git",
+        "url": "https://gitlab.intr/ci/nixpkgs-master"
+      }
+    },
+    {
+      "from": {
+        "type": "indirect",
+        "id": "ci-nixpkgs"
+      },
+      "to": {
+        "type": "git",
+        "url": "https://gitlab.intr/ci/nixpkgs"
+      }
+    },
+    {
+      "from": {
+        "type": "indirect",
+        "id": "ci-deploy-rs"
+      },
+      "to": {
+        "type": "git",
+        "url": "https://gitlab.intr/ci/deploy-rs"
+      }
+    },
+    {
+      "from": {
+        "type": "indirect",
+        "id": "kvm-templates-packer-jsonnet"
+      },
+      "to": {
+        "type": "git",
+        "url": "https://gitlab.intr/kvm-templates/packer-jsonnet"
+      }
+    },
+    {
+      "from": {
+        "type": "indirect",
+        "id": "kvm-templates-packer"
+      },
+      "to": {
+        "type": "git",
+        "url": "https://gitlab.intr/kvm-templates/packer"
+      }
+    },
+    {
+      "from": {
+        "type": "indirect",
+        "id": "kvm-templates-ubuntu-20-04"
+      },
+      "to": {
+        "type": "git",
+        "url": "https://gitlab.intr/kvm-templates/ubuntu-20-04"
+      }
+    },
+    {
+      "from": {
+        "type": "indirect",
+        "id": "net-pxe"
+      },
+      "to": {
+        "type": "git",
+        "url": "https://gitlab.intr/net/pxe"
+      }
+    },
+    {
+      "from": {
+        "type": "indirect",
+        "id": "office-ssl-certificates"
+      },
+      "to": {
+        "type": "git",
+        "url": "https://gitlab.intr/office/ssl-certificates"
+      }
+    },
+    {
+      "from": {
+        "type": "indirect",
+        "id": "security-vault"
+      },
+      "to": {
+        "type": "git",
+        "url": "https://gitlab.intr/security/vault"
+      }
+    },
+    {
+      "from": {
+        "type": "indirect",
+        "id": "utils-ipmi"
+      },
+      "to": {
+        "type": "git",
+        "url": "https://gitlab.intr/utils/ipmi"
+      }
+    },
+    {
+      "from": {
+        "type": "indirect",
+        "id": "webservices-apache2-php72"
+      },
+      "to": {
+        "type": "git",
+        "url": "https://gitlab.intr/webservices/apache2-php72"
+      }
+    },
+    {
+      "from": {
+        "type": "indirect",
+        "id": "webservices-apache2-php74"
+      },
+      "to": {
+        "type": "git",
+        "url": "https://gitlab.intr/webservices/apache2-php74"
+      }
+    },
+    {
+      "from": {
+        "type": "indirect",
+        "id": "webservices-apache2-perl518"
+      },
+      "to": {
+        "type": "git",
+        "url": "https://gitlab.intr/webservices/apache2-perl518"
+      }
+    },
+    {
+      "from": {
+        "type": "indirect",
+        "id": "webservices-apache2-php73"
+      },
+      "to": {
+        "type": "git",
+        "url": "https://gitlab.intr/webservices/apache2-php73"
+      }
+    },
+    {
+      "from": {
+        "type": "indirect",
+        "id": "webservices-apache2-php71"
+      },
+      "to": {
+        "type": "git",
+        "url": "https://gitlab.intr/webservices/apache2-php71"
+      }
+    },
+    {
+      "from": {
+        "type": "indirect",
+        "id": "webservices-apache2-php70"
+      },
+      "to": {
+        "type": "git",
+        "url": "https://gitlab.intr/webservices/apache2-php70"
+      }
+    },
+    {
+      "from": {
+        "type": "indirect",
+        "id": "webservices-apache2-php74-personal"
+      },
+      "to": {
+        "type": "git",
+        "url": "https://gitlab.intr/webservices/apache2-php74-personal"
+      }
+    },
+    {
+      "from": {
+        "type": "indirect",
+        "id": "webservices-apache2-php56"
+      },
+      "to": {
+        "type": "git",
+        "url": "https://gitlab.intr/webservices/apache2-php56"
+      }
+    },
+    {
+      "from": {
+        "type": "indirect",
+        "id": "majordomo-nixops"
+      },
+      "to": {
+        "type": "git",
+        "url": "git://git@gitlab.intr/_ci/nixops"
+      }
+    }
+  ]
+}
