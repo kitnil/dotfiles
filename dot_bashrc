@@ -2033,7 +2033,10 @@ then
     if [ -e $HOME/.guix-profile/lib/bash/libguile-bash.so ]
     then
         enable -f "$HOME"/.guix-profile/lib/bash/libguile-bash.so scm
-        GUILE_AUTO_COMPILE=0 GUILE_LOAD_COMPILED_PATH="$HOME"/.guix-profile/lib/guile/2.0/site-ccache GUILE_LOAD_PATH="$HOME"/.guix-profile/share/guile/site/2.0 builtin scm "$HOME"/.bash.d/bash.scm
+        if [ -e "$HOME"/.bash.d/bash.scm ]
+        then
+            GUILE_AUTO_COMPILE=0 GUILE_LOAD_COMPILED_PATH="$HOME"/.guix-profile/lib/guile/2.0/site-ccache GUILE_LOAD_PATH="$HOME"/.guix-profile/share/guile/site/2.0 builtin scm "$HOME"/.bash.d/bash.scm
+        fi
     fi
 fi
 
