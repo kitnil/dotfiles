@@ -61,6 +61,7 @@ maintainer()
 
 log_packages_for_upgrade()
 {
+    # shellcheck disable=SC2046
     if ! [ -e refresh.log ]
     then
         printf "No refresh.log exists, creating...\n"
