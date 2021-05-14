@@ -1,0 +1,19 @@
+{
+    "host": "imap.majordomo.ru",
+    "hostCmd": "",
+    "port": 993,
+    "tls": true,
+    "tlsOptions": {
+        "rejectUnauthorized": true
+    },
+    "username": "pyhalov@majordomo.ru",
+    "usernameCmd": "",
+    "password": "{{ pass "majordomo/private/newmail.majordomo.ru/pyhalov@majordomo.ru" }}",
+    "passwordCmd": "",
+    "xoauth2": false,
+    "onNewMail": "/home/oleg/.guix-profile/bin/mbsync -a majordomo && /home/oleg/.guix-profile/bin/notify-send 'New mail.'",
+    "onNewMailPost": "",
+    "boxes": [
+        "INBOX"
+    ]
+}
