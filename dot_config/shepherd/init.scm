@@ -142,6 +142,18 @@
     (make-kill-destructor)
     #:respawn? #f))
 
+(define goimapnotify-service
+  (make <service>
+    #:docstring '("goimapnotify")
+    #:provides '(goimapnotify)
+    #:start (make-forkexec-constructor
+             (list (string-append %bin-directory "goimapnotify")
+                   "-conf" "/home/oleg/.config/imapnotify.conf")
+             #:log-file "/home/oleg/.config/shepherd/goimapnotify.log")
+    #:stop
+    (make-kill-destructor)
+    #:respawn? #f))
+
 (register-services emacs-service)
 
 (for-each start '(emacs))
