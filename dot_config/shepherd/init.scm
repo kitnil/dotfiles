@@ -154,8 +154,8 @@
     (make-kill-destructor)
     #:respawn? #f))
 
-(register-services emacs-service)
+(register-services goimapnotify-service)
 
-(for-each start '(emacs))
+(for-each start '(goimapnotify))
 
 (action 'shepherd 'daemonize)
