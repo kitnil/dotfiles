@@ -142,20 +142,33 @@
     (make-kill-destructor)
     #:respawn? #f))
 
-(define goimapnotify-service
+(define goimapnotify-majordomo-service
   (make <service>
-    #:docstring '("goimapnotify")
-    #:provides '(goimapnotify)
+    #:docstring '("goimapnotify-majordomo")
+    #:provides '(goimapnotify-majordomo)
     #:start (make-forkexec-constructor
              (list (string-append %bin-directory "goimapnotify")
-                   "-conf" "/home/oleg/.config/imapnotify.conf")
-             #:log-file "/home/oleg/.config/shepherd/goimapnotify.log")
+                   "-conf" "/home/oleg/.config/imapnotify/majordomo.conf")
+             #:log-file "/home/oleg/.config/shepherd/goimapnotify-majordomo.log")
     #:stop
     (make-kill-destructor)
     #:respawn? #f))
 
-(register-services goimapnotify-service)
+(define goimapnotify-gmail-service
+  (make <service>
+    #:docstring '("goimapnotify-gmail")
+    #:provides '(goimapnotify-gmail)
+    #:start (make-forkexec-constructor
+             (list (string-append %bin-directory "goimapnotify")
+                   "-conf" "/home/oleg/.config/imapnotify/gmail.conf")
+             #:log-file "/home/oleg/.config/shepherd/goimapnotify-gmail.log")
+    #:stop
+    (make-kill-destructor)
+    #:respawn? #f))
 
-(for-each start '(goimapnotify))
+(register-services goimapnotify-gmail-service
+                   goimapnotify-majordomo-service)
+
+(for-each start '(goimapnotify-gmail goimapnotify-majordomo))
 
 (action 'shepherd 'daemonize)
