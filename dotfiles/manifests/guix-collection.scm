@@ -134,6 +134,8 @@ xfce xml xorg)
 
                ;; Mail
                isync msmtp notmuch neomutt swaks
+               ;; IMAP
+               go-gitlab.com-shackra-goimapnotify
 
                gnupg pinentry
 
