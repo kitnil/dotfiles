@@ -736,6 +736,8 @@ EOF
                 vm1.wugi.info
                 vm2.wugi.info
                 vm3.wugi.info
+                vm4.wugi.info
+                vm5.wugi.info
                 ws1.wugi.info
                 localhost
             )
