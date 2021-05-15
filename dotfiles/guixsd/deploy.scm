@@ -38,17 +38,8 @@
        (operating-system (load "vm5.wugi.info.scm"))
        (environment managed-host-environment-type)
        (configuration (machine-ssh-configuration
-                       (host-name "178.250.247.231")
+                       (host-name "vm5.wugi.info")
                        (system "x86_64-linux")
                        (user "oleg")
                        (host-key "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJzqatAyN7HlMxif4hhZoClNqQAmJpa7nA6y4TZ2ae3M root@(none)")
-                       (identity "/home/oleg/.ssh/id_rsa"))))
-      (machine
-       (operating-system (load "ws1.wugi.info.scm"))
-       (environment managed-host-environment-type)
-       (configuration (machine-ssh-configuration
-                       (host-name "ws1.wugi.info")
-                       (system "x86_64-linux")
-                       (user "oleg")
-                       (host-key "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIA66f0IXG9Od7RImafwGjXP/RfAXssiOIwiAilC3KG4H root@workstation")
                        (identity "/home/oleg/.ssh/id_rsa")))))
