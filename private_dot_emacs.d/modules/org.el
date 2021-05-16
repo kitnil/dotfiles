@@ -5,6 +5,9 @@
 ;; Origin <https://changelog.complete.org/archives/9865-emacs-2-introducing-org-mode>.
 (setq org-ellipsis "…")
 
+;; Origin <https://old.reddit.com/r/emacs/comments/mt51h4/strike_through_orgdone_tasks_in_agenda_to/>.
+(set-face-attribute 'org-headline-done nil :strike-through t)
+
 (setq plain-org-wiki-directory (expand-file-name "~/src/org/"))
 
 ;; (with-eval-after-load 'org
