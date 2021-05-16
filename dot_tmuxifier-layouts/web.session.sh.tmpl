@@ -1,0 +1,13 @@
+# Create session with specified name if it does not already exist. If no
+# argument is given, session name will be based on layout file name.
+initialize_session "$TMUXIFIER_SESSION"
+
+# Create a new window inline within session layout definition.
+# new_window "misc"
+for number in $(seq 15 37 | grep -v 24); do
+    new_window "$number"
+    run_cmd "autossh -M0 -i ~/.ssh/id_rsa_majordomo_eng -F /dev/null -t eng@web$number.intr -- /bin/sh -c \"set +o history; sudo --stdin --validate --prompt='' <<< {{ pass "majordomo/private/ssh/eng" }}; exec -a sudo sudo -i\""
+done
+
+# Finalize session creation and switch/attach to it.
+finalize_and_go_to_session
