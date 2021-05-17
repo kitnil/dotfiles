@@ -139,7 +139,7 @@
                :frame-1-command (lambda ()
                                   (run-commands "mjru-office-shedule-sup"))))
 
-(define-frame-preference "1" (1 NIL NIL :CLASS "mpv"))
+;; (define-frame-preference "1" (1 NIL NIL :CLASS "mpv"))
 
 (add-hook *new-window-hook* (lambda (window)
                               (when (string= (window-class window) "mpv")
