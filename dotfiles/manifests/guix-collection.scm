@@ -235,7 +235,7 @@ xfce xml xorg)
 
                lvm2 cdrkit-libre samba ubridge
 
-               python-pyqt-without-qtwebkit ;; python-pymongo
+               python-pyqt-without-qtwebkit python-pymongo
                python-evdev
 
                mariadb redis
