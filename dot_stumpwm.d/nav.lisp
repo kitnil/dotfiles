@@ -2,7 +2,7 @@
 
 (require :globalwindows)
 
-;; (setf *new-frame-action* :empty)
+(setf *new-frame-action* :empty)
 
 (setf *window-format* "%m%n%s %c %50t")
 
