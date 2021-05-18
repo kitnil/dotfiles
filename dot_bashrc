@@ -1025,11 +1025,6 @@ ssh-guix-build-log-file()
     ssh "$host" -- guix build --log-file "$file" | xargs ssh "$host" -- bzcat
 }
 
-web()
-{
-    tmux at -t web
-}
-
 alerta-top()
 {
     ssh -t work -- 'while true; do .local/bin/alerta top; done'
