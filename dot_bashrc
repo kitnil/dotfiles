@@ -1155,14 +1155,6 @@ tmuxifier-webs-user()
         tmuxifier s ssh
 }
 
-tmuxifier-web()
-{
-    web="$1"
-    TMUXIFIER_USER=root TMUXIFIER_HOST="web$web" tmuxifier w ssh-sudo
-}
-
-alias web=tmuxifier-web
-
 tmuxifier-connect-host()
 {
     host="$1"
