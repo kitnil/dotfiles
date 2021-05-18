@@ -7,7 +7,8 @@
   (newline))
 
 (define-bash-function (mjru-web)
-  (format #t "~{~a~%~}" (stream->list (stream-range 0 10))))
+  (format #t "~{web~a.intr~%~}"
+          (delete 24 (stream->list (stream-range 15 38)))))
 
 (define %home
   (and=> (getenv "HOME")
