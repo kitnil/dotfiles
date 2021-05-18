@@ -6,7 +6,7 @@
   (display "hello")
   (newline))
 
-(define-bash-function (mjru-web)
+(define-bash-function (web)
   (format #t "~{web~a.intr~%~}"
           (delete 24 (stream->list (stream-range 15 38)))))
 
