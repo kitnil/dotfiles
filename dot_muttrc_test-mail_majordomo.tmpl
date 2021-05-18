@@ -1,0 +1,13 @@
+set realname = "Mail Test"
+set from = mail-test@majordomo.ru
+set use_from = yes
+set imap_user = mail-test@majordomo.ru
+set imap_pass = {{ pass "majordomo/public/mail/majordomo.ru/mail-test" }}
+set smtp_url = smtp://router.majordomo.ru:465/
+set smtp_pass = {{ pass "majordomo/public/mail/majordomo.ru/mail-test" }}
+set smtp_authenticators = 'login'
+set ssl_starttls = yes
+set ssl_force_tls = yes
+set folder = imaps://imap.majordomo.ru:993
+set spoolfile = +INBOX
+set record = =Отправленные
