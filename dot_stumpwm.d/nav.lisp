@@ -8,8 +8,6 @@
 
 (setf *maximum-completions* 25)
 
-(setq *deny-raise-request* '(:class "Nightly"))
-
 
 ;;;
 ;;; Mouse
