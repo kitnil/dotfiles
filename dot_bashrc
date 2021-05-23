@@ -710,6 +710,7 @@ EOF
                 set -ex
                 command guix package --delete-generations=1m
                 command guix pull --delete-generations=1m
+                command guix gc --list-failures | xargs guix gc --clear-failures
                 sudo --login command guix system delete-generations 1m
                 sudo --login command guix pull --delete-generations=1m
             )
