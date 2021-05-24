@@ -47,7 +47,10 @@ XTerm.vt100.scrollBar: true
 XTerm.vt100.cursorBlink: false
 
 ! https://github.com/eudoxia0/dotfiles/blob/master/sextant/xresources.txt
-XTerm.vt100.internalBorder: 10
+!
+! Don't use internalBorder, because this could lead to corrupted fonts.
+!
+! XTerm.vt100.internalBorder: 10
 
 *.rightScrollBar: true
 
