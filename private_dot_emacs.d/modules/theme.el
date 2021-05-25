@@ -1,5 +1,9 @@
 (setq redshift-temp-increment 100)
 
+(scroll-bar-mode -1)
+(menu-bar-mode -1)
+(tool-bar-mode -1)
+
 ;; TODO: Fix default-frame-alist
 ;; (setq default-frame-alist
 ;;       (append (list ;; '(width  . 73)
