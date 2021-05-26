@@ -11,6 +11,7 @@ ASSIGNEE_USER="${GITLAB_ASSIGNEE_USER:-rezvov}"
 SQUASH="${GITLAB_SQUASH:-false}"
 BROWSE="${GITLAB_BROWSE:-true}"
 BRANCH="${GITLAB_BRANCH:-$(git branch --show-current)}"
+TITLE="${GITLAB_TITLE:-$(git log -1 --format=%s)}"
 
 assignee_id()
 {
@@ -22,7 +23,7 @@ assignee_id()
 
 merge_request()
 {
-    curl --verbose --request POST --header 'Content-Type: application/json' --header "PRIVATE-TOKEN: $PRIVATE_TOKEN" "https://gitlab.intr/api/v4/projects/$PROJECT_ID/merge_requests" --data "{\"source_branch\": \"${BRANCH}\", \"target_branch\": \"${GITLAB_TARGET_BRANCH:-master}\", \"title\": \"$(git log -1 --format=%s)\", \"assignee_id\": \"$ASSIGNEE_ID\", \"remove_source_branch\": \"true\", \"squash\": \"$SQUASH\"}"
+    curl --verbose --request POST --header 'Content-Type: application/json' --header "PRIVATE-TOKEN: $PRIVATE_TOKEN" "https://gitlab.intr/api/v4/projects/$PROJECT_ID/merge_requests" --data "{\"source_branch\": \"${BRANCH}\", \"target_branch\": \"${GITLAB_TARGET_BRANCH:-master}\", \"title\": \"$TITLE\", \"assignee_id\": \"$ASSIGNEE_ID\", \"remove_source_branch\": \"true\", \"squash\": \"$SQUASH\"}"
 }
 
 case "$1" in
