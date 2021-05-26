@@ -620,6 +620,7 @@ guix()
             sudo --login GUIX_PACKAGE_PATH="/home/oleg/src/guix-majordomo:/home/oleg/src/guix-wigust-services/guix:/home/oleg/src/guix-wigust/guix:/home/oleg/src/nonguix"    \
                  $guix_command system reconfigure                               \
                  --load-path="$guix_modules" --fallback "$HOME/.local/share/chezmoi/dotfiles/guixsd/guixsd.scm" \
+                 --no-grafts \
                  "${@:2}"
             ;;
         # repl)
