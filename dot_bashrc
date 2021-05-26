@@ -2034,6 +2034,9 @@ then
     fi
 fi
 
-eval "$(chezmoi completion bash)"
+if [[ -e $HOME/.guix-profile/bin/chezmoi ]]
+then
+    eval "$(chezmoi completion bash)"
+fi
 
 export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
