@@ -80,6 +80,10 @@ install: install-ssh
 	sudo install -m644 dotfiles/guixsd/machines.scm /etc/guix
 	gpg --decrypt dotfiles/emacs/mjru-network.gpg > $(HOME)/.emacs.d/modules/mjru-network.el
 
+.PHONY: guile-ihs
+guile-ihs:
+	guix environment --manifest=dotfiles/manifests/majordomo.scm -- sh -c 'type -p ihs'
+
 .PHONY: deploy
 deploy:
 	guix deploy -L $(MODULES) dotfiles/guixsd/deploy.scm
