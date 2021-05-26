@@ -615,6 +615,14 @@ guix()
         distribute)
             ansible-playbook "$HOME/.local/share/chezmoi/dotfiles/ansible/guix.yml"
             ;;
+        prebuild)
+            guix_command="$HOME/src/guix/pre-inst-env guix"
+            sudo --login GUIX_PACKAGE_PATH="/home/oleg/src/guix-majordomo:/home/oleg/src/guix-wigust-services/guix:/home/oleg/src/guix-wigust/guix:/home/oleg/src/nonguix"    \
+                 $guix_command system build                               \
+                 --load-path="$guix_modules" --fallback "$HOME/.local/share/chezmoi/dotfiles/guixsd/guixsd.scm" \
+                 --no-grafts \
+                 "${@:2}"
+            ;;
         prereconfigure)
             guix_command="$HOME/src/guix/pre-inst-env guix"
             sudo --login GUIX_PACKAGE_PATH="/home/oleg/src/guix-majordomo:/home/oleg/src/guix-wigust-services/guix:/home/oleg/src/guix-wigust/guix:/home/oleg/src/nonguix"    \
