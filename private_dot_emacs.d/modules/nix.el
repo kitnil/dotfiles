@@ -26,3 +26,7 @@
   (with-temp-file ".dumbjump" (insert "+/home/oleg/src/nixpkgs")))
 
 (add-hook 'nix-mode-hook 'goto-address-mode)
+
+(define-auto-insert
+  "shell.nix"
+  ["nix/shell.nix" yas-expand-current-buffer])
