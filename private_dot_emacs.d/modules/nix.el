@@ -30,3 +30,7 @@
 (define-auto-insert
   "shell.nix"
   ["nix/shell.nix" yas-expand-current-buffer])
+
+(define-auto-insert
+  "flake.nix"
+  ["nix/flake.nix" yas-expand-current-buffer])
