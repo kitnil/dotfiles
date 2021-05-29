@@ -65,6 +65,9 @@
          (documentation "Run vnc.")
          (start #~(make-forkexec-constructor
                    (list (string-append #$vncserver "/bin/vncserver") "-fg" "-xstartup" #$xstartup
+                         "-X509Key" (string-append #$directory "/.vnc/key.pem")
+                         "-X509Cert" (string-append #$directory "/.vnc/x509_ca.pem")
+                         "-SecurityTypes" "X509Vnc"
                          (string-append ":" (number->string #$display)))
                    #:log-file (string-append "/var/log/vncserver" (number->string #$display) ".log")
                    #:user #$user
