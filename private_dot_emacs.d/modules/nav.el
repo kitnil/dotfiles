@@ -138,4 +138,9 @@
   ;; Toggle show-paren-mode on
   (show-paren-mode))
 
-
+;; Emacs redraw issue in X.org on VMWare and VirtualBox | fujii.github.io
+;; <https://fujii.github.io/2016/09/06/emacs-redisplay-issue-on-vmware/>
+(when (eq window-system 'x)
+  (add-hook 'window-scroll-functions
+            (lambda (&rest x)
+              (run-with-idle-timer 0.5 nil 'redraw-display))))
