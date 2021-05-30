@@ -323,7 +323,7 @@ location / {
     (operating-system
       (inherit base-system)
       (initrd microcode-initrd)
-      (kernel linux-5.10)
+      (kernel linux-5.12)
       (firmware (cons* amdgpu-firmware linux-firmware %base-firmware))
       ;; (initrd-modules (append '("vfio_pci" "vfio" "vfio_iommu_type1" "vfio_virqfd")
       ;;                         %base-initrd-modules))
