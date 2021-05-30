@@ -32,6 +32,8 @@ set $menu dmenu_path | dmenu | xargs swaymsg exec
 
 output DP-1 disable
 
+output * bg #000000 solid_color
+
 ### Idle configuration
 #
 # Example configuration:
@@ -219,8 +221,11 @@ bar {
 
     colors {
         statusline #ffffff
-        background #323232
-        inactive_workspace #32323200 #32323200 #5c5c5c
+        background #000000
+        focused_workspace  #66cdaa  #2e8b57      #ffffff
+        # active_workspace   #333333  #333333      #888888
+        inactive_workspace #000000  #000000      #ffffff
+        urgent_workspace   #eb709b  #eb709b      #ffffff
     }
 }
 
@@ -230,9 +235,9 @@ input * {
 }
 
 # class                 border  backgr. text    indicator child_border
-client.focused          #4c7899 #285577 #ffffff #2e9ef4   #285577
+client.focused          #66cdaa #2e8b57 #ffffff #00ff00   #2e8b57
 client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
-client.unfocused        #333333 #222222 #888888 #292d2e   #222222
+client.unfocused        #262626 #000000 #888888 #292d2e   #222222
 client.urgent           #2f343a #900000 #ffffff #900000   #900000
 client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
 
