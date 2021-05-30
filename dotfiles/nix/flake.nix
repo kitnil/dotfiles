@@ -195,7 +195,6 @@
           ioping
 
           audacity
-          obs-studio
           scrcpy
           oh
           openjdk11
