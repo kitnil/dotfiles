@@ -79,6 +79,7 @@ install: install-ssh
 	install --mode=755 dotfiles/scripts/sshrc $(HOME)/bin
 	sudo install -m644 dotfiles/guixsd/machines.scm /etc/guix
 	gpg --decrypt dotfiles/emacs/mjru-network.gpg > $(HOME)/.emacs.d/modules/mjru-network.el
+	ln -sf $(HOME)/.Xresources $(HOME)/.Xdefaults
 
 .PHONY: guile-ihs
 guile-ihs:
