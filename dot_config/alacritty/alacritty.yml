@@ -1,0 +1,8 @@
+import:
+  - /home/oleg/.config/alacritty/themes/xterm.yml
+font:
+  size: 13
+window:
+  padding:
+    x: 5
+    y: 5
