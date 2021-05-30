@@ -74,14 +74,16 @@
                                   (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/vm1.wugi.info.pub")
                                   (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/vm2.wugi.info.pub")
                                   (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/vm3.wugi.info.pub")
-                                  (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/spb.pub"))
+                                  (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/spb.pub")
+                                  (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/mirror.brielmaier.net.pub"))
                             %default-authorized-guix-keys))))
 
 (define %guix-daemon-config-with-substitute-urls
   (guix-configuration
    (inherit %guix-daemon-config)
    (substitute-urls '("https://ci.guix.gnu.org"
-                      "https://guix.wugi.info"))))
+                      "https://guix.wugi.info"
+                      "https://mirror.brielmaier.net"))))
 
 (define 20-intel.conf "\
 # Fix tearing for Intel graphics card.
