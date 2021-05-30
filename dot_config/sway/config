@@ -82,6 +82,8 @@ output * bg #000000 solid_color
     # mouse button for dragging.
     floating_modifier $mod normal
 
+    bindsym button3 kill
+
     # reload the configuration file
     bindsym $mod+Shift+c reload
 
@@ -217,7 +219,7 @@ bar {
 
     # When the status_command prints a new line to stdout, swaybar updates.
     # The default just shows the current date and time.
-    status_command while date +'%Y-%m-%d %l:%M:%S %p'; do sleep 1; done
+    status_command while date +'%Y-%m-%d %H:%M:%S'; do sleep 1; done
 
     colors {
         statusline #ffffff
