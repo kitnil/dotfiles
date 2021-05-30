@@ -223,3 +223,8 @@ bar {
         inactive_workspace #32323200 #32323200 #5c5c5c
     }
 }
+
+input * {
+    xkb_layout us,ru
+    xkb_options grp:win_space_toggle
+}
