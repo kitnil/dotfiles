@@ -115,6 +115,8 @@
           bandwidth
           bandwhich
 
+          wayvnc
+
           # alacritty
 
           # assh
