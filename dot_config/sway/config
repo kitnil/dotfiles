@@ -34,6 +34,8 @@ output DP-1 disable
 
 output * bg #000000 solid_color
 
+output HEADLESS-1 resolution 2560x1080
+
 ### Idle configuration
 #
 # Example configuration:
