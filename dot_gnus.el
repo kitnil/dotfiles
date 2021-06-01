@@ -1,4 +1,4 @@
-;; Copyright © 2018, 2019, 2020 Oleg Pykhalov <go.wigust@gmail.com>
+;; Copyright © 2018, 2019, 2020, 2021 Oleg Pykhalov <go.wigust@gmail.com>
 ;; Released under the GNU GPLv3 or any later version.
 
 (require 'mailcap)
@@ -25,8 +25,6 @@
 
 (add-hook 'message-sent-hook #'gnus-score-followup-thread)
 (add-hook 'gnus-article-mode-hook 'goto-address-mode)
-
-(add-hook 'gnus-exit-group-hook #'stumpwm-imap-update-recent-count)
 
 ;; Code from: https://github.com/jwiegley/dot-emacs
 (defun switch-to-gnus (&optional arg)

@@ -53,16 +53,6 @@
 
 
 ;;;
-;;; StumpWM
-;;;
-
-(defun stumpwm-imap-update-recent-count ()
-  "Call imap-update-recent-count in StumpWM."
-  (interactive)
-  (call-process "sh" nil nil nil "-c" "echo '(imap-update-recent-count)' | stumpish -e eval"))
-
-
-;;;
 ;;; Guix
 ;;;
 
