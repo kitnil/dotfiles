@@ -11,7 +11,7 @@
 (module-set! (resolve-module '(gnu packages emacs-xyz)) 'emacs-slime emacs-slime-2.24)
 
 (packages->manifest
- (list emacs
+ (list emacs-next-pgtk
        emacs-academic-phrases
        emacs-ace-window
        emacs-add-hooks
