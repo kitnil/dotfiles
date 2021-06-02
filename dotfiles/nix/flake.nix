@@ -115,7 +115,7 @@
           bandwidth
           bandwhich
 
-          wayvnc
+          clipman wayvnc
 
           # alacritty
 
