@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+# https://wiki.gentoo.org/wiki/Elogind
+
+echo "Hint: Set 'WLR_BACKENDS=headless' to launch in headless mode (e.g. for wayvnc)."
+
+dbus-launch --exit-with-session sway "$@"
