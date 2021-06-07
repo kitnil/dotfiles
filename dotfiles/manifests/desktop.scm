@@ -1,4 +1,5 @@
-(use-modules (gnu packages suckless)
+(use-modules (guix profiles)
+             (gnu packages suckless)
              (gnu packages terminals)
              (gnu packages wm)
              (gnu packages xdisorg))
@@ -18,4 +19,4 @@
 (define clipboard
   (list wl-clipboard))
 
-(append clipboard menus terminals wm sway-utils)
+(packages->manifest (append clipboard menus terminals wm sway-utils))
