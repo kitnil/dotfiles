@@ -247,10 +247,10 @@ bar {
     }
 }
 
-input * {
-    xkb_layout us,ru
-    xkb_options grp:win_space_toggle
-}
+# input * {
+#     xkb_layout us,ru
+#     xkb_options grp:win_space_toggle
+# }
 
 # class                 border  backgr. text    indicator child_border
 client.focused          #66cdaa #2e8b57 #ffffff #00ff00   #2e8b57
