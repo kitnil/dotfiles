@@ -124,3 +124,4 @@ vm5.wugi.info:
 .PHONY: add
 add:
 	chezmoi add --encrypt $(HOME)/.ssh/known_hosts
+	chezmoi add --encrypt $(HOME)/.ssh/authorized_keys
