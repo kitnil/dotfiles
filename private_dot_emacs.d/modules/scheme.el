@@ -1,3 +1,5 @@
+(add-to-list 'auto-mode-alist `("\\.tmpl" . scheme-mode))
+
 (defun projectile-run-guile (&optional pure)
   "Invoke ‘run-guile’ in the project’s root.
 
