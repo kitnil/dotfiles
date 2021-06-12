@@ -3,4 +3,4 @@
 
 echo "Hint: Set 'WLR_BACKENDS=headless' to launch in headless mode (e.g. for wayvnc)."
 
-dbus-launch --exit-with-session sway "$@"
+exec -a sway dbus-launch --exit-with-session sway "$@"
