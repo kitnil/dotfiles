@@ -322,6 +322,12 @@ location / {
   (let ((base-system (load %hardware-file)))
     (operating-system
       (inherit base-system)
+      ;; TODO:
+      ;; (bootloader (bootloader-configuration
+      ;;              (inherit (operating-system-bootloader base-system))
+      ;;              (menu-entries (list (menu-entry
+      ;;                                   (label "netboot.xyz")
+      ;;                                   (linux netboot.xyz))))))
       (initrd microcode-initrd)
       (kernel linux-5.12)
       (firmware (cons* amdgpu-firmware linux-firmware %base-firmware))
