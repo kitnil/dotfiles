@@ -33,5 +33,5 @@
         "emacs.scm"
         "guix-collection.scm"
         "majordomo.scm"
-        "nongnu.scm"
+        ;; "nongnu.scm"
         "wigust.scm")))
