@@ -88,6 +88,10 @@
             :args (list "-c" "alacritty")
             :wait nil))
 
+(defcommand run-or-raise-alacritty () ()
+  "Start or focus Alacritty."
+  (run-or-raise "alacritty" '(:class "Alacritty")))
+
 
 ;;;
 ;;; St
