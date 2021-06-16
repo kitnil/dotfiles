@@ -73,6 +73,8 @@
                  wi-vterm--prettify-symbols-alist)))
 
 (add-hook 'vterm-mode-hook 'goto-address-mode)
+(add-hook 'vterm-mode-hook 'guix-prettify-mode)
+(add-hook 'vterm-mode-hook 'emojify-mode)
 
 (setq vterm-max-scrollback 100000)
 
