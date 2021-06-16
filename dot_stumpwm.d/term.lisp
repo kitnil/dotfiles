@@ -82,6 +82,12 @@
   (run-shell-command
    (concat *xterm-big-command* " -e screen")))
 
+(defcommand run-alacritty () ()
+  "Start or focus Alacritty."
+  (run-prog *shell-program*
+            :args (list "-c" "alacritty")
+            :wait nil))
+
 
 ;;;
 ;;; St
