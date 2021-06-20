@@ -78,8 +78,8 @@
       (one-or-more (or alphanumeric "_" "-" "/"))
       "/commit/" (one-or-more (or alphanumeric ".")) line-end))
 
-(setq browse-url-browser-function
-      (add-to-list 'browse-url-browser-function
+(setq browse-url-handlers
+      (add-to-list 'browse-url-handlers
                    (cons majordomo-url-gitlab-commit-regexp
                          'browse-url-majordomo-ci-nixpkgs-git-commit)))
 

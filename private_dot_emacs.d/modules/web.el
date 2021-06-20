@@ -473,7 +473,7 @@ WARNING:  hooktube.com requries non-free JavaScript."
 
 (setq browse-url-firefox-program "firefox")
 
-(setq browse-url-browser-function
+(setq browse-url-handlers
       `(("^ftp://.*" . browse-ftp-tramp)
         (,(format "^%s\\(%s\\)?\\([[:digit:]]+\\)$"
 	  "https?://\\(debbugs\\|bugs\\)\\.gnu\\.org/"
