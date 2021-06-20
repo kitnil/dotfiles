@@ -2045,3 +2045,16 @@ if [ -n $WAYLAND_DISPLAY ]
 then
     alias feh=imv
 fi
+
+ssh-pass()
+{
+    sshpass -p"$1" \
+            ssh \
+            -o UserKnownHostsFile=/dev/null \
+            -o StrictHostKeyChecking=no \
+            -q \
+            -t \
+            "$3" \
+            -l "$2" \
+            -- "set +o history; sudo --stdin --validate --prompt='' <<< \"$1\"; exec -a sudo sudo -i"
+}
