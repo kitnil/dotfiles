@@ -2058,3 +2058,12 @@ ssh-sudo()
             -l "$2" \
             -- "set +o history; sudo --stdin --validate --prompt='' <<< \"$1\"; exec -a sudo sudo -i"
 }
+
+,s()
+{
+    sshpass -p"$1" \
+            ssh \
+            -o UserKnownHostsFile=/dev/null \
+            -o StrictHostKeyChecking=no \
+            "${@:2}"
+}
