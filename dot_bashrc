@@ -2046,7 +2046,7 @@ then
     alias feh=imv
 fi
 
-ssh-pass()
+ssh-sudo()
 {
     sshpass -p"$1" \
             ssh \
