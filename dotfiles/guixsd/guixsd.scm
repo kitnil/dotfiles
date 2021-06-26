@@ -628,6 +628,9 @@ EndSection")))))))
                                  (password-authentication? #f)
                                  (extra-content "\
 Match Address 127.0.0.1
+PasswordAuthentication yes
+
+Match Address 192.168.0.144
 PasswordAuthentication yes")))
 
                        (service certbot-service-type
