@@ -31,6 +31,7 @@ COMMAND must be one of the sub-commands listed below:
 
    a
    cname godaddy add cname githunt guix.duckdns.org
+   mx
 
 Report bugs to: go.wigust@gmail.com."
 }
@@ -48,6 +49,16 @@ help_add_cname()
 {
     echo "\
 Usage: godaddy add cname subdomain.example.com target.domain.com
+Run COMMANDS with ARGS
+
+Report bugs to: go.wigust@gmail.com."
+}
+
+help_add_mx()
+{
+    echo "\
+Usage: godaddy add mx vm12345 vm12345.wugi.info 10
+   or: godaddy add mx vm12345
 Run COMMANDS with ARGS
 
 Report bugs to: go.wigust@gmail.com."
@@ -95,6 +106,7 @@ COMMAND must be one of the sub-commands listed below:
 
    a
    cname
+   mx
    ns
 
 Report bugs to: go.wigust@gmail.com."
@@ -124,6 +136,14 @@ case "$1" in
                     exit 1
                 fi
                 $GODADDY_COMMAND create --auth-key "$GODADDY_KEY" --auth-secret "$GODADDY_SECRET" "$GODADDY_DOMAIN_NAME" CNAME --name "$3" --content "$4"
+                ;;
+            mx)
+                if [[ -z "$3" ]]
+                then
+                    help_add_mx
+                    exit 1
+                fi
+                $GODADDY_COMMAND create --auth-key "$GODADDY_KEY" --auth-secret "$GODADDY_SECRET" "$GODADDY_DOMAIN_NAME" MX --name "$3" --content "${4:-$3.wugi.info}" --priority "${5:-10}"
                 ;;
             *)
                 help_add
@@ -169,6 +189,9 @@ case "$1" in
                 ;;
             ns)
                 $GODADDY_COMMAND list --auth-key "$GODADDY_KEY" --auth-secret "$GODADDY_SECRET" "$GODADDY_DOMAIN_NAME" NS "${@:3}"
+                ;;
+            mx)
+                $GODADDY_COMMAND list --auth-key "$GODADDY_KEY" --auth-secret "$GODADDY_SECRET" "$GODADDY_DOMAIN_NAME" MX "${@:3}"
                 ;;
             *)
                 help_list
