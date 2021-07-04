@@ -203,7 +203,9 @@
              '("Chromium-browser" "Xfce4-terminal"))
        (send-fake-key window (kbd "C-+")))
       ((string= (window-class window) "XTerm")
-       (send-fake-key window (kbd "S-KP_Add"))))))
+       (send-fake-key window (kbd "S-KP_Add")))
+      ((string= (window-class window) "Alacritty")
+       (send-fake-key window (kbd "C-="))))))
 
 (defcommand keybinding-s-- () ()
   (let ((window (current-window)))
@@ -218,7 +220,9 @@
              '("Chromium-browser" "Xfce4-terminal"))
        (send-fake-key window (kbd "C--")))
       ((string= (window-class window) "XTerm")
-       (send-fake-key window (kbd "S-KP_Subtract"))))))
+       (send-fake-key window (kbd "S-KP_Subtract")))
+      ((string= (window-class window) "Alacritty")
+       (send-fake-key window (kbd "C--"))))))
 
 (defcommand keybinding-s-x () ()
   (let ((clipboard (get-x-selection)))
