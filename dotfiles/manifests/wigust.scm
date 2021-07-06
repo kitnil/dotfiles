@@ -95,6 +95,6 @@
 
   qemu-windows10
 
-  telegram-without-materialdecoration
+  ;; telegram-without-materialdecoration
 
   guix-wigust-packages-emacs))
