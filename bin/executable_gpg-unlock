@@ -15,5 +15,5 @@ then
     gpg --decrypt                                               \
         --pinentry-mode loopback                                \
         --passphrase "$(pass show majordomo/private/eng/old)"   \
-        "$HOME/.password-store/majordomo/public/gitlab.intr/tokens/terraform.gpg"
+        "$HOME/.password-store/majordomo/public/router4/root.gpg"
 fi
