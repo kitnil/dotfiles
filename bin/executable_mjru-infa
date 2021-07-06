@@ -61,7 +61,7 @@ EOF
         mysql -s -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -h"$MYSQL_SERVER" billing <<EOF | sort --numeric-sort
 SELECT vds_accounts.vds_account_id AS host, equip_ip_addresses.address AS ip
 FROM equip_ip_addresses, vds_accounts
-WHERE vds_accounts.client_id = 17959 AND equip_ip_addresses.equip_ip_address_id = vds_accounts.equip_ip_address_id;
+WHERE vds_accounts.client_id = ${2:-17959} AND equip_ip_addresses.equip_ip_address_id = vds_accounts.equip_ip_address_id;
 EOF
         ;;
     *)
