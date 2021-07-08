@@ -173,7 +173,6 @@
           mycli
           dbeaver # SQL client
           mypaint
-          nix
           nix-bash-completions
           nix-generate-from-cpan
           nix-prefetch-docker
@@ -186,7 +185,7 @@
 
           logstalgia
 
-          nixUnstable
+          nixFlakes
           nixos-rebuild
           nixpkgs-lint
           # nodePackages_12_x.node2nix
