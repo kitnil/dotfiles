@@ -71,6 +71,9 @@ export RIPGREP_CONFIG_PATH
 SSHRC_BECOME=yes
 export SSHRC_BECOME
 
+QEMU_WINDOWS10_DISK=/dev/disk/by-id/wwn-0x5e83a97ad8a4b20a
+export QEMU_WINDOWS10_DISK
+
 emacs()
 {
     case "$1" in
