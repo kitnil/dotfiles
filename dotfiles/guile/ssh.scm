@@ -1,0 +1,36 @@
+(use-modules (srfi srfi-1)
+             (srfi srfi-41)
+             (srfi srfi-26)
+             (ice-9 format)
+             (ice-9 match)
+             (ice-9 popen)
+             (ice-9 rdelim))
+
+
+(define %ssh-user "eng")
+(define %ssh-keys '("~/.ssh/id_rsa_majordomo_eng"
+                    "~/.ssh/id_rsa_majordomo_jenkins"
+                    "~/.ssh/id_rsa_majordomo_jenkins"))
+
+(define (domains->ip procedure)
+  (let ((webs (delete 24 (stream->list (stream-range 15 38)))))
+    (map (lambda (domain)
+           (let* ((port   (open-pipe* OPEN_READ "dig" "+short" "a" domain))
+                  (output (read-string port)))
+             (close-port port)
+             (cons (string-delete #\s (first (string-split domain #\.)))
+                   (string-trim-right output #\newline))))
+         (map procedure webs))))
+
+(let ((webs (domains->ip (cut format #f "web~a.intr" <>))))
+  (for-each (match-lambda ((domain . ip)
+                           (let ((port (current-output-port)))
+                             (format port "Host ~a~%" ip)
+                             (format port "Hostname ~a~%" (assoc-ref webs domain))
+                             (format port "User ~a~%" %ssh-user)
+                             (for-each (lambda (file)
+                                         (format port "IdentityFile ~a~%" file))
+                                       %ssh-keys)
+                             (newline))))
+            (append (domains->ip (cut format #f "web~a.majordomo.ru" <>))
+                    (domains->ip (cut format #f "web~as.majordomo.ru" <>)))))

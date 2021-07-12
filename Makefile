@@ -50,7 +50,10 @@ shepherd-graph:
 configure:
 	./configure
 
-.PHONY: install-ssh
+dotfiles/guile/ssh.txt: dotfiles/guile/ssh.scm
+	guile dotfiles/guile/ssh.scm > dotfiles/guile/ssh.txt
+
+.PHONY:
 install-ssh:
 	gpg --quiet --decrypt dhall/ssh/ssh.dhall.gpg | dhall text > $(HOME)/.ssh/config
 
