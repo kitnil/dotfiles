@@ -1651,6 +1651,9 @@ nix()
                 command nix flake "${@:2}"
             fi
             ;;
+        repl)
+            nix-repl "${@:2}"
+            ;;
         *)
             command nix "$@"
             ;;
