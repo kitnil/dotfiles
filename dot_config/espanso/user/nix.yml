@@ -4,3 +4,102 @@ parent: default
 matches:
   - trigger: :nix-unstable
     replace: NIX_PATH=nixpkgs=$HOME/.nix-defexpr/channels/nixos-unstable
+
+  - trigger: nix-owo-transparent
+    replace: https://raw.githubusercontent.com/gytis-ivaskevicius/high-quality-nix-content/master/emoji/nix-owo-transparent.png
+
+  - trigger: nix-owo-white
+    replace: https://raw.githubusercontent.com/gytis-ivaskevicius/high-quality-nix-content/master/emoji/nix-owo-white.png
+
+  - trigger: nix-snowflake-cute
+    replace: https://raw.githubusercontent.com/gytis-ivaskevicius/high-quality-nix-content/master/emoji/nix-snowflake-cute.png
+
+  - trigger: nix-angry
+    replace: https://raw.githubusercontent.com/gytis-ivaskevicius/high-quality-nix-content/master/emoji/angry-nix.gif
+
+  - trigger: nix-angry-png
+    replace: https://raw.githubusercontent.com/gytis-ivaskevicius/high-quality-nix-content/master/emoji/angry-nix.png
+
+  - trigger: nix-chad
+    replace: https://raw.githubusercontent.com/gytis-ivaskevicius/high-quality-nix-content/master/emoji/nix-chad.gif
+
+  - trigger: nix-shooting
+    replace: https://raw.githubusercontent.com/gytis-ivaskevicius/high-quality-nix-content/master/emoji/nix-shooting.png
+
+  - trigger: nix-confetti
+    replace: https://raw.githubusercontent.com/gytis-ivaskevicius/high-quality-nix-content/master/emoji/nixos-confetti.png
+
+  - trigger: nix-pleading
+    replace: https://raw.githubusercontent.com/gytis-ivaskevicius/high-quality-nix-content/master/emoji/nixos-pleading.png
+
+  - trigger: nix-pure-by-design
+    replace: https://raw.githubusercontent.com/gytis-ivaskevicius/high-quality-nix-content/master/emoji/nixos-pure-by-design.png
+
+  - trigger: nix-thumbsup
+    replace: https://raw.githubusercontent.com/gytis-ivaskevicius/high-quality-nix-content/master/emoji/nixos-thumbsup.png
+
+  - trigger: nix-pet-hot
+    replace: https://raw.githubusercontent.com/gytis-ivaskevicius/high-quality-nix-content/master/emoji/pet-hot-nix.gif
+
+  - trigger: nix-pet
+    replace: https://raw.githubusercontent.com/gytis-ivaskevicius/high-quality-nix-content/master/emoji/pet-nix.gif
+
+  - trigger: nix-think
+    replace: https://raw.githubusercontent.com/gytis-ivaskevicius/high-quality-nix-content/master/emoji/think-nixos.png
+
+  - trigger: nix-parrot
+    replace: https://raw.githubusercontent.com/gytis-ivaskevicius/high-quality-nix-content/master/emoji/parrot-nix.gif
+
+  - trigger: nix-roo
+    replace: https://raw.githubusercontent.com/gytis-ivaskevicius/high-quality-nix-content/master/emoji/roo-nix.webp
+
+  - trigger: nix-hard-to-swallow-pills
+    replace: https://raw.githubusercontent.com/gytis-ivaskevicius/high-quality-nix-content/master/memes/hard-to-swallow-pills.png
+
+  - trigger: nix-learning-curve
+    replace: https://raw.githubusercontent.com/gytis-ivaskevicius/high-quality-nix-content/master/memes/nix-learning-curve.png
+
+  - trigger: nix-vs-gentoo
+    replace: https://raw.githubusercontent.com/gytis-ivaskevicius/high-quality-nix-content/master/memes/nix-vs-gentoo.png
+
+  - trigger: nix-random-repos
+    replace: https://raw.githubusercontent.com/gytis-ivaskevicius/high-quality-nix-content/master/memes/random-repos.png
+
+  - trigger: nix-dominos
+    replace: https://raw.githubusercontent.com/gytis-ivaskevicius/high-quality-nix-content/master/memes/nixos-dominos.png
+
+  - trigger: nix-path-supports-urls
+    replace: https://raw.githubusercontent.com/gytis-ivaskevicius/high-quality-nix-content/master/memes/nix-path-supports-urls.jpg
+
+  - trigger: nix-virtualbox-starts-compiling
+    replace: https://raw.githubusercontent.com/gytis-ivaskevicius/high-quality-nix-content/master/memes/virtualbox-starts-compiling.jpg
+
+  - trigger: nix-eelco-nixpill
+    replace: https://raw.githubusercontent.com/gytis-ivaskevicius/high-quality-nix-content/master/memes/eelco-nixpill.png
+
+  - trigger: nix-nixos-shilling
+    replace: https://raw.githubusercontent.com/gytis-ivaskevicius/high-quality-nix-content/master/memes/nixos-shilling.png
+
+  - trigger: nix-techy-kid
+    replace: https://raw.githubusercontent.com/gytis-ivaskevicius/high-quality-nix-content/master/memes/techy-kid.png
+
+  - trigger: nix-superiority-complex
+    replace: https://raw.githubusercontent.com/gytis-ivaskevicius/high-quality-nix-content/master/memes/superiority-complex.png
+
+  - trigger: nix-programming-socks
+    replace: https://raw.githubusercontent.com/gytis-ivaskevicius/high-quality-nix-content/master/memes/nix-programming-socks.png
+
+  - trigger: nix-pinnacle-of-system-configuration
+    replace: https://raw.githubusercontent.com/gytis-ivaskevicius/high-quality-nix-content/master/memes/pinnacle-of-system-configuration.png
+
+  - trigger: nix-virgin-arch-vs-chad-nixos
+    replace: https://raw.githubusercontent.com/gytis-ivaskevicius/high-quality-nix-content/master/memes/virgin-arch-vs-chad-nixos.png
+
+  - trigger: nix-nagatoro-pervert
+    replace: https://raw.githubusercontent.com/gytis-ivaskevicius/high-quality-nix-content/master/memes/nagatoro-nix-pervert.png
+
+  - trigger: nix-20min-adventure
+    replace: https://raw.githubusercontent.com/gytis-ivaskevicius/high-quality-nix-content/master/memes/nix-20min-adventure.png
+
+  - trigger: nixenv-vs-nixshell
+    replace: https://raw.githubusercontent.com/gytis-ivaskevicius/high-quality-nix-content/master/memes/nixenv-vs-nixshell.png
