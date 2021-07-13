@@ -4,3 +4,9 @@ import:
   - /home/oleg/.config/alacritty/themes/xterm.yml
 font:
   size: 13
+mouse:
+  url: # Change to hints on update
+    launcher:
+      program: xdg-open
+      args: []
+    modifiers: "Control"
