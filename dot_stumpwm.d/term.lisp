@@ -145,7 +145,7 @@
 ;;;
 
 (defun term-shell-command (command &key
-                                     (terminal 'xterm)
+                                     (terminal 'alacritty)
                                      (color (if dark-theme "dark" "light"))
                                      (font nil)
                                      (title nil)
@@ -153,6 +153,11 @@
   (run-shell-command
    (let ((terminal-name (string-downcase (symbol-name terminal))))
      (case terminal
+       ((alacritty)
+        (join `(,terminal-name
+                :l /home/oleg/.nix-defexpr/channels/nixpkgs/lib
+                ,@(if title (list "--title" title) '())
+                "--command" ,command)))
        ((xterm)
         (xterm-command :color color :command command :font font :title title :scrollbar scrollbar))
        ((st)
