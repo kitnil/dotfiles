@@ -65,3 +65,11 @@ jenkins:
   - all:
       name: "all"
   viewsTabBar: "standard"
+unclassified:
+  buildDiscarders:
+    configuredBuildDiscarders:
+    - "jobBuildDiscarder"
+    - simpleBuildDiscarder:
+        discarder:
+          logRotator:
+            numToKeepStr: "30"
