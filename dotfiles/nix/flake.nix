@@ -231,6 +231,8 @@
 
           bit
 
+          yarn
+
           zeal;
 
         # TODO: Flake inherit (pkgs.callPackage github-com-emilazy-mpv-notify-send) mpv-notify-send;
