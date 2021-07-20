@@ -283,7 +283,7 @@
               let
                 overlay = final: prev: self.packages.${system};
                 pkgs = import nixpkgs {
-                  overlays = [ nur.overlay ];
+                  overlays = [ nur.overlay overlay ];
                   inherit system;
                 };
               in rec
