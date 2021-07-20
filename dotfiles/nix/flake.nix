@@ -18,6 +18,9 @@
     };
     nixpkgs-idea.url = "github:wigust/nixpkgs/a98b0d1e6d7bed029844576e8637ce9807600ad2";
 
+    home-manager.url = "github:nix-community/home-manager?ref=release-21.05";
+    nur.url = "github:nix-community/NUR";
+
     majordomo.url = "git+https://gitlab.intr/_ci/nixpkgs";
 
     github-com-guibou-nixGL = {
@@ -68,6 +71,8 @@
             , nixpkgs-20-03
             , nixpkgs-20-03-firefox
             , deploy-rs
+            , home-manager
+            , nur
             , github-com-norfairking-dnscheck
             , github-com-guibou-nixGL
             , github-com-emilazy-mpv-notify-send
@@ -406,16 +411,39 @@
           '';
         in {
           hostname = "localhost";
-          profiles.profile = {
-            user = "oleg";
-            autoRollback = false;
-            magicRollback = false;
-            path = (deploy-rs.lib.${system}.activate.custom // { dryActivate = dryActivateScript; })
-              (pkgs.symlinkJoin {
-                name = "profile";
-                paths = with lib; collect isDerivation self.packages.${system};
-              })
-              ":";
+          profiles = {
+            # profile = {
+            #   user = "oleg";
+            #   autoRollback = false;
+            #   magicRollback = false;
+            #   path = (deploy-rs.lib.${system}.activate.custom // { dryActivate = dryActivateScript; })
+            #     (pkgs.symlinkJoin {
+            #       name = "profile";
+            #       paths = with lib; collect isDerivation self.packages.${system};
+            #     })
+            #     ":";
+            # };
+            home-manager =
+              let
+                overlay = final: prev: self.packages.${system};
+                pkgs = import nixpkgs {
+                  overlays = [ nur.overlay ];
+                  inherit system;
+                };
+              in rec
+                {
+                  user = "oleg";
+                  profilePath = "/nix/var/nix/profiles/per-user/${user}/home-manager";
+                  autoRollback = false;
+                  magicRollback = false;
+                  path = deploy-rs.lib.${system}.activate.home-manager (home-manager.lib.homeManagerConfiguration {
+                    inherit pkgs system;
+                    extraSpecialArgs = { inherit pkgs; };
+                    homeDirectory = "/home/${user}";
+                    username = user;
+                    configuration = ./home-manager.nix;
+                  });
+                };
           };
         };
 
