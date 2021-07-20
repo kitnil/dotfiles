@@ -1,1 +1,0 @@
-exec /home/oleg/.nix-profile/bin/firefox -P test &
