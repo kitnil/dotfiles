@@ -8,6 +8,7 @@
   programs.firefox = {
     enable = true;
     extensions = with pkgs.nur.repos.rycee.firefox-addons; [
+      gesturefy
       ublock-origin
     ];
     profiles = {
