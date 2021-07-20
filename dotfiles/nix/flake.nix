@@ -222,7 +222,6 @@
                   nim_1_0 = pkgs.callPackage (boomer-repo + "/nim_1_0.nix") {};
                   boomer = pkgs.callPackage (boomer-repo + "/boomer.nix") { inherit nim_1_0; };
                 })
-        // jenkins-plugins
         // {
           inherit (import nixpkgs { inherit system; config = { allowUnfree = true; }; })
             discord google-chrome;
