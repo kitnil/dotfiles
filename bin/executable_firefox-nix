@@ -1,0 +1,3 @@
+#!/bin/sh
+
+exec -a "$0" "${HOME}/.nix-profile/bin/firefox" -P nix "$@"
