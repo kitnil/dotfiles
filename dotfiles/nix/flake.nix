@@ -281,7 +281,10 @@
             # };
             home-manager =
               let
-                overlay = final: prev: self.packages.${system};
+                overlay = final: prev:
+                  self.packages.${system} // {
+                    inherit (deploy-rs.outputs.packages.${system}) deploy-rs;
+                  };
                 pkgs = import nixpkgs {
                   overlays = [ nur.overlay overlay ];
                   inherit system;

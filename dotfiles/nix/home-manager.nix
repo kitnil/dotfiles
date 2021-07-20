@@ -149,6 +149,7 @@
 
     alerta
     boomer
+    deploy-rs
     discord
     dnscheck
     elktail
