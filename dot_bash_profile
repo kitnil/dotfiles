@@ -24,7 +24,20 @@ if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then
     . "$HOME/.nix-profile/etc/profile.d/nix.sh";
 fi
 
-export PATH=$HOME/bin:$HOME/.local/bin:$HOME/go/bin:$HOME/.npm-global/bin:/opt/gradle/bin:$PATH
+if [ -d "$HOME"/.nix-profile ]
+then
+    PATH="$PATH":"$HOME"/.nix-profile/bin
+fi
+
+# TODO: Add java to "$HOME"/.nix-profile/bin and remove the following.
+if [ -d "$HOME"/.nix-profile/lib/openjdk/bin ]
+then
+    PATH="$PATH":"$HOME"/.nix-profile/lib/openjdk/bin
+fi
+
+PATH="${HOME}/perl5/bin${PATH:+:${PATH}}"
+
+PATH="$(. /etc/profile; printf "$PATH")":"${HOME}/bin":"${HOME}/.local/bin":"${HOME}/go/bin":"${HOME}/.npm-global/bin":/opt/gradle/bin:"$PATH"
 
 export GUILE_WARN_DEPRECATED=no
 

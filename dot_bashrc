@@ -198,22 +198,9 @@ ihs()
     command ihs "$@"
 }
 
-if [ -d "$HOME"/.nix-profile ]
-then
-    PATH="$PATH":"$HOME"/.nix-profile/bin
-    export PATH
-fi
-
-# TODO: Add java to "$HOME"/.nix-profile/bin and remove the following.
-if [ -d "$HOME"/.nix-profile/lib/openjdk/bin ]
-then
-    PATH="$PATH":"$HOME"/.nix-profile/lib/openjdk/bin
-    export PATH
-fi
-
 if [ -d "/run/current-system" ]
 then
-    true
+    :
 else
     . "$HOME/.guix-profile/etc/profile"
 
@@ -1999,7 +1986,6 @@ mediatomb()
     esac
 }
 
-PATH="/home/oleg/perl5/bin${PATH:+:${PATH}}"; export PATH;
 PERL5LIB="/home/oleg/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
 PERL_LOCAL_LIB_ROOT="/home/oleg/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
 PERL_MB_OPT="--install_base \"/home/oleg/perl5\""; export PERL_MB_OPT;
