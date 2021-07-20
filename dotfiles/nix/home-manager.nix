@@ -2,7 +2,150 @@
 
 {
   home.packages = with pkgs; [
+    ansifilter
+    bat
+    bandwidth
+    bandwhich
+
+    clipman wayvnc wtype
+
+    # alacritty
+
+    # assh
+    ssh-tools
+
+    # browserpass
+    brave
+    buku
+    # cabal-install
+    cached-nix-shell
+    catimg
+    chromium
+    ctop
+    diskus
+    dive
+    # dmg2img
+    dnsperf
+    # docker-compose
+    docker-ls
+    dogdns
+    duf
+    espanso
+    # ferm
+    filezilla
+    # firefox
+    fzf
+    goldendict
+    # geckodriver
+    bfg-repo-cleaner
+    git-secrets
+    fac
+    # glibc-locales
+    go2nix
+    glow
+    groovy
+    hexyl
+    httpie
+    mitmproxy
+    hy
+    hyperfine
+    knot-resolver
+    lexicon
+    ldns
+    litecli
+    navi
+    lnav
+    pastel
+    procs
+    zenith
+    tokei
+    lua
+    luarocks
+    mediatomb
+    mycli
+    dbeaver # SQL client
+    mypaint
+    nix-bash-completions
+    nix-generate-from-cpan
+    nix-prefetch-docker
+    nix-serve
+    noti
+    clang-tools # for clangd in lsp-mode
+
+    rnix-lsp
+    yaml-language-server
+
+    logstalgia
+
     nixFlakes
+    nixos-rebuild
+    nixpkgs-lint
+    # nodePackages_12_x.node2nix
+
+    gron
+    pup # HTML parsing
+
+    ioping
+
+    audacity
+    scrcpy
+    oh
+    openjdk11
+    packer
+    passff-host
+    pgcli
+    prettyping
+    sampler
+    screenkey
+    skopeo
+    # slack
+    # slack-term
+    tdesktop
+    terraform
+    thc-hydra
+    thunderbird
+    tldr
+    ttyd
+    ttyplot
+    visidata
+    webhook
+    wrk
+    wtf
+    yq
+    vmtouch
+
+    adwaita-qt
+    quassel
+
+    gping
+
+    rls
+
+    bit
+
+    yarn
+
+    # TODO: Add xcolor after nixpkgs update.
+
+    zeal
+
+    gitAndTools.delta
+    gitAndTools.git-extras
+    gitAndTools.git-open
+    gitAndTools.git-recent
+    gitAndTools.grv
+    gitAndTools.pre-commit
+
+    terraform-providers.docker
+    terraform-providers.github
+    terraform-providers.gitlab
+
+    haskellPackages.greenclip
+
+    libsForQt5.qtstyleplugins
+    libsForQt5.kde-gtk-config
+
+    lxqt.qterminal
   ];
 
   programs.firefox = {
