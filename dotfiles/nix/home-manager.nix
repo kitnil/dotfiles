@@ -146,6 +146,28 @@
     libsForQt5.kde-gtk-config
 
     lxqt.qterminal
+
+    alerta
+    boomer
+    discord
+    dnscheck
+    elktail
+    eve-online
+    firefox-52-wrapper
+    google-chrome
+    idea-ultimate
+    ipmi
+    ipmiview-wrapper
+    jenkins
+    jenkins-job-builder
+    nim_1_0
+    nixGLIntel
+    nixfmt
+    node2nix
+    onefetch
+    pycharm-professional
+    robo3t
+    yamllint
   ];
 
   programs.firefox = {
