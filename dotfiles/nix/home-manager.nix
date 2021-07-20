@@ -22,6 +22,9 @@
       nix = {
         name = "nix";
         id = 1;
+        settings = {
+          "browser.startup.homepage" = "about:addons";
+        };
       };
     };
   };
