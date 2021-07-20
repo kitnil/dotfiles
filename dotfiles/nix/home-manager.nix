@@ -27,6 +27,7 @@
           "browser.search.region" = "GB";
           "distribution.searchplugins.defaultLocale" = "en-GB";
           "general.useragent.locale" = "en-GB";
+          "browser.search.defaultenginename" = "Google";
         };
       };
     };
