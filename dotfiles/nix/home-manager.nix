@@ -82,6 +82,8 @@
     nixpkgs-lint
     # nodePackages_12_x.node2nix
 
+    cachix
+
     gron
     pup # HTML parsing
 
