@@ -84,6 +84,8 @@
 
     cachix
 
+    mongodb
+
     gron
     pup # HTML parsing
 
