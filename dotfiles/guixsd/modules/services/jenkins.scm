@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2019, 2020 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2019, 2020, 2021 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -22,6 +22,8 @@
   #:use-module (gnu services)
   #:use-module (guix gexp)
   #:use-module (gnu packages version-control)
+  #:use-module (gnu packages java)
+  #:use-module (wigust packages jenkins)
   #:export (jenkins-service))
 
 (define jenkins-service
@@ -29,14 +31,36 @@
                   (list
                    (shepherd-service
                     (provision '(jenkins))
-                    (documentation "Run jenkins.")
+                    (documentation "Run Jenkins continuous integration tool.")
                     (requirement '(user-processes loopback))
                     (start #~(make-forkexec-constructor
-                              (list "/home/oleg/.nix-profile/bin/jenkins"
+                              (list (string-append #$openjdk11 "/bin/java")
+                                    "-Xmx512m"
+                                    "-jar" (string-append #$jenkins "/webapps/jenkins.war")
                                     "--httpListenAddress=127.0.0.1"
                                     "--httpPort=8090"
                                     "--ajp13Port=-1"
-                                    "-Djava.awt.headless=true")
+                                    ;; "-Djava.awt.headless=true"
+                                    ;; "-Djenkins.install.runSetupWizard=false"
+                                    ;; "-Dorg.jenkinsci.plugins.durabletask.BourneShellScript.LAUNCH_DIAGNOSTICS=true"
+                                    ;; "-Dorg.jenkinsci.plugins.durabletask.BourneShellScript.HEARTBEAT_CHECK_INTERVAL=86400"
+
+                                    ;; https://www.jenkins.io/doc/book/security/configuring-content-security-policy/
+                                    ;; "-Dhudson.model.DirectoryBrowserSupport.CSP="
+
+                                    ;; Managing Security
+                                    ;; <https://www.jenkins.io/doc/book/managing/security/#disable-csrf-checking>
+                                    ;;
+                                    ;; Upgrading to Jenkins LTS 2.176.x
+                                    ;; <https://www.jenkins.io/doc/upgrade-guide/2.176/#SECURITY-626>
+                                    ;;
+                                    ;; Upgrading to Jenkins LTS 2.222.x
+                                    ;; <https://www.jenkins.io/doc/upgrade-guide/2.222/#always-enabled-csrf-protection>
+
+                                    ;; Managing Security
+                                    ;; <https://www.jenkins.io/doc/book/managing/security/#caveats>
+                                    ;; "-Dhudson.security.csrf.GlobalCrumbIssuerConfiguration.DISABLE_CSRF_PROTECTION=true"
+                                    )
                               #:user "oleg"
                               #:group "users"
                               #:supplementary-groups '("docker")
