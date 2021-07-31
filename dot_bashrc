@@ -286,9 +286,9 @@ then
     . "$HOME/.nix-profile/share/bash-completion/completions/ipmi"
 fi
 
-if [[ -e "$HOME/.nix-profile/share/bash-completion/completions/nix" ]]
+if [[ -e "${HOME}/.bash.d/nix.bash" ]]
 then
-    . "$HOME/.nix-profile/share/bash-completion/completions/nix"
+    . "${HOME}/.bash.d/nix.bash"
 fi
 
 rg()

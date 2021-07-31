@@ -175,6 +175,14 @@
     yamllint
   ];
 
+  home.file = {
+    ".bash.d/nix.bash" = {
+      text = ''
+        . ${pkgs.nixFlakes}/share/bash-completion/completions/nix
+      '';
+    };
+  };
+
   programs.firefox = {
     enable = true;
     extensions = with pkgs.nur.repos.rycee.firefox-addons; [
