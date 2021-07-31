@@ -1,12 +1,12 @@
 #!/run/current-system/profile/bin/guile \
---no-auto-compile -e (guix-system-latest) -s
+--no-auto-compile -e (guix-latest) -s
 !#
 
-;;;; guix-system-latest --- Build Guix system with latest channels.
+;;;; guix-latest --- Build Guix system with latest channels.
 ;;;; Copyright © 2021 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;; Released under the GNU GPLv3 or any later version.
 
-(define-module (guix-system-latest)
+(define-module (guix-latest)
   #:use-module (gnu system)
   #:use-module (guix channels)
   #:use-module (guix ci)
@@ -26,7 +26,7 @@
 ;;; Commentary:
 ;;;
 ;;; Example:
-;;; guix-system-latest --channels-file-to-update="/home/alice/channels-current.scm" "/home/alice/src/guix/gnu/system/examples/bare-bones.tmpl"
+;;; guix-latest --channels=/home/alice/channels-current.scm /home/alice/src/guix/gnu/system/examples/bare-bones.tmpl
 ;;;
 ;;; Code:
 
@@ -35,7 +35,7 @@
                                  (lambda (opt name arg loads)
                                    (display msg) (quit)))))
     (list (option '(#\v "version") #f #f
-                  (display-and-exit-proc "guix-system-latest version 0.0.1\n"))
+                  (display-and-exit-proc "guix-latest version 0.0.1\n"))
           (option '(#\C "channels") #t #f
                   (lambda (opt name arg result)
                     (alist-cons 'channel-file arg result)))
@@ -47,7 +47,7 @@
                     (alist-cons 'load-path arg loads)))
           (option '(#\h "help") #f #f
                   (display-and-exit-proc
-                   "Usage: guix-system-latest ...")))))
+                   "Usage: guix-latest ...")))))
 
 (define %default-options
   '())
@@ -136,4 +136,4 @@
              (lambda ()
                (display-channels))))))))
 
-;;; guix-system-latest ends here
+;;; guix-latest ends here
