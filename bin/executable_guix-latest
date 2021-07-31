@@ -102,38 +102,46 @@
   (define inferior
     (open-inferior cached))
 
-  (define output
+  (define (file->store-path file)
     (inferior-eval
      `(begin
         (define %store (open-connection))
         (let ((load-path ,(assoc-ref opts 'load-path)))
           (when load-path
             (add-to-load-path load-path)))
-        (define os-derivation
+        (define file-derivation
           (run-with-store %store
-            (let ((definition (load ,(first opts))))
+            (let ((definition (load ,file)))
               (cond ((operating-system? definition)
                      (operating-system-derivation definition))
                     (((@@ (guix profiles) manifest?) definition)
                      (profile-derivation definition #:allow-collisions? #t))
                     (else #f)))))
-        (if (build-derivations %store (list os-derivation))
-            `(list ,(derivation->output-path os-derivation)
+        (if (build-derivations %store (list file-derivation))
+            `(list ,(derivation->output-path file-derivation)
                    ,@(map (@@ (gnu services) channel->code)
-                          ((@@ (guix describe) current-channels))))
+                          (sort ((@@ (guix describe) current-channels))
+                                (lambda (c1 c2)
+                                  (string< (symbol->string ((@ (guix channels) channel-name) c1))
+                                           (symbol->string ((@ (guix channels) channel-name) c2)))))))
             #f))
      inferior))
 
-  (match output
-    ((list drv channels ...)
-     (display drv)
-     (newline)
-     (let ((display-channels (lambda ()
-                               (pretty-print `(list ,@channels)))))
-       (if (assoc-ref opts 'dry-run?)
-           (display-channels)
-           (with-output-to-file (assoc-ref opts 'channel-file)
-             (lambda ()
-               (display-channels))))))))
+  (define outputs
+    (map file->store-path (filter string? opts)))
+
+  (for-each
+   (match-lambda
+     ((list drv channels ...)
+      (display drv)
+      (newline)
+      (let ((display-channels (lambda ()
+                                (pretty-print `(list ,@channels)))))
+        (if (assoc-ref opts 'dry-run?)
+            (display-channels)
+            (with-output-to-file (assoc-ref opts 'channel-file)
+              (lambda ()
+                (display-channels)))))))
+   outputs))
 
 ;;; guix-latest ends here
