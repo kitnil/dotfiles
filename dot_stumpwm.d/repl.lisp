@@ -3,6 +3,9 @@
 (defcommand repl-groovy () ()
   (term-shell-command "groovysh" :scrollbar t))
 
+(defcommand repl-kotlin () ()
+  (term-shell-command "nix-shell -p kotlin --run 'kotlinc-jvm'" :scrollbar t))
+
 (defcommand repl-guile () ()
   (term-shell-command "guile" :scrollbar t))
 
