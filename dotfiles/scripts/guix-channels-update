@@ -72,6 +72,6 @@ newspace."
   (with-output-to-file (string-append %source-dir "/channels.scm")
     (lambda ()
       (pretty-print
-       `(list ,@(map (@@ (guix scripts describe) channel->sexp) (channels)))))))
+       `(list ,@(map (@@ (gnu services) channel->code) (channels)))))))
 
 ;;; guix-channels-update ends here
