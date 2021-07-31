@@ -329,7 +329,7 @@ location / {
       ;;                                   (label "netboot.xyz")
       ;;                                   (linux netboot.xyz))))))
       (initrd microcode-initrd)
-      (kernel linux-5.12)
+      (kernel linux-5.13)
       (firmware (cons* amdgpu-firmware linux-firmware %base-firmware))
       ;; (initrd-modules (append '("vfio_pci" "vfio" "vfio_iommu_type1" "vfio_virqfd")
       ;;                         %base-initrd-modules))
