@@ -1,0 +1,135 @@
+#!/run/current-system/profile/bin/guile \
+--no-auto-compile -e (guix-system-latest) -s
+!#
+
+;;;; guix-system-latest --- Build Guix system with latest channels.
+;;;; Copyright © 2021 Oleg Pykhalov <go.wigust@gmail.com>
+;;;; Released under the GNU GPLv3 or any later version.
+
+(define-module (guix-system-latest)
+  #:use-module (gnu system)
+  #:use-module (guix channels)
+  #:use-module (guix ci)
+  #:use-module (guix inferior)
+  #:use-module (guix profiles)
+  #:use-module (guix records)
+  #:use-module (guix scripts pull)
+  #:use-module (guix store)
+  #:use-module (guix ui)
+  #:use-module (ice-9 match)
+  #:use-module (ice-9 pretty-print)
+  #:use-module (srfi srfi-1)
+  #:use-module (srfi srfi-37)
+  #:autoload   (guix openpgp) (openpgp-format-fingerprint)
+  #:export (main))
+
+;;; Commentary:
+;;;
+;;; Example:
+;;; guix-system-latest --channels-file-to-update="/home/alice/channels-current.scm" "/home/alice/src/guix/gnu/system/examples/bare-bones.tmpl"
+;;;
+;;; Code:
+
+(define %options
+  (let ((display-and-exit-proc (lambda (msg)
+                                 (lambda (opt name arg loads)
+                                   (display msg) (quit)))))
+    (list (option '(#\v "version") #f #f
+                  (display-and-exit-proc "guix-system-latest version 0.0.1\n"))
+          (option '(#\C "channels") #t #f
+                  (lambda (opt name arg result)
+                    (alist-cons 'channel-file arg result)))
+          (option '(#\n "dry-run") #f #f
+                  (lambda (opt name arg result)
+                    (alist-cons 'dry-run? #t result)))
+          (option '(#\L "load-path") #f #t
+                  (lambda (opt name arg loads)
+                    (alist-cons 'load-path arg loads)))
+          (option '(#\h "help") #f #f
+                  (display-and-exit-proc
+                   "Usage: guix-system-latest ...")))))
+
+(define %default-options
+  '())
+
+(define (main args)
+
+  (define (load-channels file)
+    (let ((result (load* file (make-user-module '((guix channels))))))
+      (if (and (list? result) (every channel? result))
+          result
+          (leave (G_ "'~a' did not return a list of channels~%") file))))
+
+
+  (define opts
+    (args-fold (cdr (program-arguments))
+               %options
+               (lambda (opt name arg loads)
+                 (error "Unrecognized option `~A'" name))
+               (lambda (op loads)
+                 (cons op loads))
+               %default-options))
+
+  (define channels
+    (cons (channel-with-substitutes-available
+           %default-guix-channel
+           "https://ci.guix.gnu.org")
+          (map (lambda (channel)
+                 (match-record channel (@@ (guix channels) <channel>)
+                   (name url introduction)
+                   (if introduction
+                       ((@ (guix channels) channel)
+                        (name name)
+                        (url url)
+                        (introduction introduction))
+                       ((@ (guix channels) channel)
+                        (name name)
+                        (url url)))))
+               (filter (lambda (channel)
+                         (not (string= (symbol->string (channel-name channel)) "guix")))
+                       (channel-list opts)))))
+
+  (define store
+    (open-connection))
+
+  (define cached
+    (cached-channel-instance store
+                             channels
+                             #:authenticate? #t
+                             #:cache-directory (%inferior-cache-directory)
+                             #:ttl (* 3600 24 30)))
+
+  (define inferior
+    (open-inferior cached))
+
+  (define output
+    (inferior-eval
+     `(begin
+        (define %store (open-connection))
+        (let ((load-path ,(assoc-ref opts 'load-path)))
+          (when load-path
+            (add-to-load-path load-path)))
+        (define os-derivation
+          (run-with-store %store
+            (operating-system-derivation
+             (load ,(first opts)))))
+        (if (build-derivations %store (list os-derivation))
+            `(list ,(derivation->output-path os-derivation)
+                   ,@(map (@@ (gnu services) channel->code)
+                          ((@@ (guix describe) current-channels))))
+            #f))
+     inferior))
+
+  (match output
+    ((list drv channels ...)
+     (display drv)
+     (newline)
+     (let ((display-channels (lambda ()
+                               (pretty-print `(list ,@channels)))))
+       (if (assoc-ref opts 'dry-run?)
+           (display-channels)
+           (with-output-to-file (assoc-ref opts 'channel-file)
+             (lambda ()
+               (display-channels))))))))
+
+;;; guix-system-latest ends here
