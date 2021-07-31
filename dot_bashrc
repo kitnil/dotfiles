@@ -264,7 +264,8 @@ else
     export CURL_CA_BUNDLE
 fi
 
-if [ -f "$HOME/.nix-profile/share/bash-completion/completions/nix" ]; then
+if [ -e "$HOME/.nix-profile/lib/locale" ]
+then
     LOCALE_ARCHIVE="$(readlink "$HOME/.nix-profile/lib/locale")/locale-archive"
     export LOCALE_ARCHIVE
 fi
