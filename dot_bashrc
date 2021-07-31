@@ -591,7 +591,7 @@ guix()
             guix_command=(
                 "command"
                 "guix" "pull"
-                "--channels=/home/oleg/.local/share/chezmoi/dotfiles/channels.scm"
+                "--channels=${HOME}/.local/share/chezmoi/dotfiles/channels-current.scm"
             )
             if [[ -n $commit ]]
             then
