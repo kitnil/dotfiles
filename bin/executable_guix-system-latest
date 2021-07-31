@@ -111,8 +111,12 @@
             (add-to-load-path load-path)))
         (define os-derivation
           (run-with-store %store
-            (operating-system-derivation
-             (load ,(first opts)))))
+            (let ((definition (load ,(first opts))))
+              (cond ((operating-system? definition)
+                     (operating-system-derivation definition))
+                    (((@@ (guix profiles) manifest?) definition)
+                     (profile-derivation definition #:allow-collisions? #t))
+                    (else #f)))))
         (if (build-derivations %store (list os-derivation))
             `(list ,(derivation->output-path os-derivation)
                    ,@(map (@@ (gnu services) channel->code)
