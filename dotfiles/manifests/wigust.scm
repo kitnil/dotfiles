@@ -13,6 +13,7 @@
              (wigust packages ruby)
              (wigust packages virtualization)
              (wigust packages video)
+             (wigust packages vnc)
              (wigust packages telegram)
              (wigust packages xdisorg)
              (wigust packages xorg))
@@ -94,6 +95,9 @@
   dotfiles
 
   qemu-windows10
+
+  tigervnc-client-1.10.1
+  tigervnc-server-1.10.1
 
   ;; telegram-without-materialdecoration
 

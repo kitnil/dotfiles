@@ -275,9 +275,6 @@ xfce xml xorg)
                pwgen
                syncthing
 
-               tigervnc-server
-               tigervnc-client
-
                xfce4-screenshooter
                xfce4-terminal
 
