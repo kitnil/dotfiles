@@ -47,7 +47,7 @@
   (define-key *top-map* (kbd "s-RET") "run-alacritty")
   (define-key *top-map* (kbd "s-e") "emacsclient")
   (define-key *top-map* (kbd "s-E") "emacsclient-new")
-  (define-key *top-map* (kbd "s-m") "mpv")
+  (define-key *top-map* (kbd "s-m") "mode-line")
   (define-key *top-map* (kbd "s-M") "music-mpv")
   (define-key *top-map* (kbd "s-N") "next-in-frame-custom")
   (define-key *top-map* (kbd "s-P") "prev-in-frame-custom")
