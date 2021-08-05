@@ -1,0 +1,46 @@
+#!/usr/bin/env python-selenium
+
+import argparse
+
+from selenium import webdriver
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+from selenium.webdriver.firefox.options import Options
+
+options = Options()
+options.headless = True
+
+driver = webdriver.Firefox(options=options)
+driver.set_window_size(1280, 1024)
+
+
+def print_domain(domain):
+    if "." in domain:
+        print(domain)
+
+
+def main(args):
+    driver.get(
+        f"https://grafana.intr/d/ogvzsY3mb/web-performance-panelized?orgId=1&refresh=30s&viewPanel=6&var-server={args.host}"
+    )
+    WebDriverWait(driver, 5).until(
+        EC.presence_of_all_elements_located((By.CSS_SELECTOR, "table"))
+    )
+    [
+        print_domain(x.split(" ")[0])
+        for x in [x.text for x in driver.find_elements(By.XPATH, "//table")][0].split(
+            "\n"
+        )[1:]
+    ]
+    driver.quit()
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Get data from Grafana.")
+    parser.add_argument(
+        "--host",
+        required=True,
+        help="Hostname.",
+    )
+    main(parser.parse_args())
