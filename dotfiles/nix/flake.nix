@@ -12,6 +12,10 @@
       url = "github:nixos/nixpkgs/cc3b6aa322f307580d48c975a3b86b4462b645d8";
       flake = false;
     };
+    nixpkgs-phantomjs = {
+      url = "github:NixOS/nixpkgs/ce9f1aaa39ee2a5b76a9c9580c859a74de65ead5";
+      flake = false;
+    };
     flake-compat = {
       url = "github:edolstra/flake-compat";
       flake = false;
@@ -70,6 +74,7 @@
             , nixpkgs
             , nixpkgs-20-03
             , nixpkgs-20-03-firefox
+            , nixpkgs-phantomjs
             , deploy-rs
             , home-manager
             , nur
@@ -257,6 +262,17 @@
                 install jenkins-jobs "$out"/bin/jenkins-jobs
               '';
             }) { inherit (pkgs-20-03.pythonPackages) jenkins-job-builder; };
+          python-selenium =
+            with import nixpkgs-phantomjs { inherit system; };
+            let
+              python3WithSelenium = python3.withPackages
+                (python-packages: with python-packages; [ selenium ]);
+            in writeScriptBin "python-selenium" ''
+              #!${runtimeShell}
+              PATH=${geckodriver}/bin:${firefox}/bin:"$PATH"
+              export PATH
+              exec -a "$0" ${python3WithSelenium}/bin/python "$@"
+            '';
         };
 
       deploy.nodes.localhost =

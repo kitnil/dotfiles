@@ -914,6 +914,23 @@
         "type": "github"
       }
     },
+    "nixpkgs-phantomjs": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1582831361,
+        "narHash": "sha256-8T7/LAcOfX7SaDdSf+lxpFcrVnuPFXr3U7Eqf3dOS+g=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "ce9f1aaa39ee2a5b76a9c9580c859a74de65ead5",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "ce9f1aaa39ee2a5b76a9c9580c859a74de65ead5",
+        "type": "github"
+      }
+    },
     "nixpkgs-stable": {
       "locked": {
         "lastModified": 1606789930,
@@ -1289,6 +1306,7 @@
         "nixpkgs-20-03": "nixpkgs-20-03",
         "nixpkgs-20-03-firefox": "nixpkgs-20-03-firefox",
         "nixpkgs-idea": "nixpkgs-idea",
+        "nixpkgs-phantomjs": "nixpkgs-phantomjs",
         "nur": "nur_2",
         "override": "override_2",
         "utils": "utils_3"

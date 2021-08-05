@@ -131,6 +131,8 @@
 
     # TODO: Add xcolor after nixpkgs update.
 
+    python-selenium
+
     zeal
 
     gitAndTools.delta
