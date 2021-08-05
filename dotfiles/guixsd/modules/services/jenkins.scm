@@ -64,6 +64,7 @@
                               #:user "oleg"
                               #:group "users"
                               #:supplementary-groups '("docker")
+                              #:log-file "/var/log/jenkins.log"
                               #:environment-variables
                               (append (list (string-append "PATH="
                                                            (string-append #$git "/bin")
