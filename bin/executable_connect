@@ -453,7 +453,11 @@ mycli --password "$(pass show majordomo/public/web/mysql/root)" -d "${2%.intr}"
         fi
     ;;
     protected)
-        curl -i -XPUT "$2"/protected/"$3"?ttl=3600
+        for domain in $(grafana --host "$2")
+        do
+            echo curl --include --request PUT "$2"/protected/"$domain"
+            echo curl --include --request PUT "$2"/protected/"www.${domain}"
+        done
         ;;
     te)
         ssh_expect "$2" tail --lines="${3:-1000}" /var/log/taskexecutor.log \
