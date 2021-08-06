@@ -7,7 +7,7 @@
 ;;;; Released under the GNU GPLv3 or any later version.
 
 ;; M-x compile
-;; (set -ex; sudo -i /home/oleg/ssl.scm githunt.wugi.info; ssh vm1.wugi.info -- sudo ls -l /etc/letsencrypt/archive/githunt.wugi.info/privkey2.pem)
+;; (set -ex; sudo ./ssl.scm githunt.wugi.info; ssh vm1.wugi.info -- sudo ls -l /etc/letsencrypt/archive/githunt.wugi.info/privkey2.pem)
 
 (define-module (ssl)
   #:export (main))
