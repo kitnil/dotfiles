@@ -2,7 +2,7 @@
 ;; for a "bare bones" setup, with no X11 display server.
 
 (use-modules (gnu))
-(use-service-modules certbot networking monitoring ssh sysctl web)
+(use-service-modules certbot networking mail monitoring ssh sysctl web)
 (use-package-modules certs screen ssh)
 
 (use-modules (config)
@@ -140,7 +140,11 @@ push \"route 10.0.0.0 255.255.255.0\"
                                                          (known-hosts '("\
 127.0.0.1 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBHVSCVdQEHUaTnBqA2nKQXRmo/74DgnyCyWiOI/f5G7qYUMfDiJqYHqh7YngyxIG9iakEUOaNtr6ljHyBXhlaPQ="
                                                                         "\
-localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBHVSCVdQEHUaTnBqA2nKQXRmo/74DgnyCyWiOI/f5G7qYUMfDiJqYHqh7YngyxIG9iakEUOaNtr6ljHyBXhlaPQ=")))))
+localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBHVSCVdQEHUaTnBqA2nKQXRmo/74DgnyCyWiOI/f5G7qYUMfDiJqYHqh7YngyxIG9iakEUOaNtr6ljHyBXhlaPQ="))))
+
+                          (service exim-service-type
+                                   (exim-configuration
+                                    (config-file (local-file "exim.conf")))))
                     (modify-services %base-services
                       (guix-service-type _ => %guix-daemon-config-with-substitute-urls)
                       (sysctl-service-type _ =>
