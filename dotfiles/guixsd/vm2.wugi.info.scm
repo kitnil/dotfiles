@@ -3,7 +3,7 @@
 
 (use-modules (gnu))
 (use-service-modules certbot networking mail monitoring ssh sysctl web)
-(use-package-modules certs screen ssh)
+(use-package-modules certs mail screen ssh)
 
 (use-modules (config)
              (services homer)
@@ -44,13 +44,22 @@
                                         "audio" "video")))
                %base-user-accounts))
 
+  (hosts-file
+   (plain-file
+    "hosts"
+    (string-join
+     `(,(string-join '("127.0.0.1 guixsd localhost wugi.info"))
+       "::1 guixsd localhost"
+       "")
+     "\n")))
+
   (sudoers-file (plain-file "sudoers" "\
 root ALL=(ALL) ALL
 %wheel ALL=(ALL) ALL
 oleg ALL=(ALL) NOPASSWD:ALL\n"))
 
   ;; Globally-installed packages.
-  (packages (cons* screen nss-certs %base-packages))
+  (packages (cons* screen nss-certs swaks %base-packages))
 
   ;; Add services to the baseline: a DHCP client and
   ;; an SSH server.
@@ -142,6 +151,7 @@ push \"route 10.0.0.0 255.255.255.0\"
                                                                         "\
 localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBHVSCVdQEHUaTnBqA2nKQXRmo/74DgnyCyWiOI/f5G7qYUMfDiJqYHqh7YngyxIG9iakEUOaNtr6ljHyBXhlaPQ="))))
 
+                          (service mail-aliases-service-type '())
                           (service exim-service-type
                                    (exim-configuration
                                     (config-file (local-file "exim.conf")))))
