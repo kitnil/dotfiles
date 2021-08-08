@@ -15,7 +15,7 @@ matches:
   - trigger: "smha"
     replace: "SMOrc HahaShrugRight"
 
-  - trigger: "poo"
+  - trigger: ":poo"
     replace: "Poooound"
 
   - trigger: "omg"
