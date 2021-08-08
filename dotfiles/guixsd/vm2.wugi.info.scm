@@ -59,7 +59,7 @@ root ALL=(ALL) ALL
 oleg ALL=(ALL) NOPASSWD:ALL\n"))
 
   ;; Globally-installed packages.
-  (packages (cons* screen nss-certs swaks %base-packages))
+  (packages (cons* dovecot screen nss-certs swaks %base-packages))
 
   ;; Add services to the baseline: a DHCP client and
   ;; an SSH server.
@@ -154,7 +154,18 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                           (service mail-aliases-service-type '())
                           (service exim-service-type
                                    (exim-configuration
-                                    (config-file (local-file "exim.conf")))))
+                                    (config-file (local-file "exim.conf"))))
+                          (dovecot-service
+                           #:config (dovecot-configuration
+                                     (listen '("127.0.0.1"))
+                                     (disable-plaintext-auth? #f)
+                                     (protocols
+                                      (list (protocol-configuration (name "imap"))
+                                            (protocol-configuration (name "lmtp"))))
+                                     (mail-location
+                                      (string-append "maildir:~/Maildir"
+                                                     ":INBOX=~/Maildir/INBOX"
+                                                     ":LAYOUT=fs")))))
                     (modify-services %base-services
                       (guix-service-type _ => %guix-daemon-config-with-substitute-urls)
                       (sysctl-service-type _ =>
