@@ -3,9 +3,10 @@
 
 (use-modules (gnu))
 (use-service-modules certbot networking mail monitoring ssh sysctl web)
-(use-package-modules certs mail screen ssh)
+(use-package-modules certs mail screen ssh linux)
 
 (use-modules (config)
+             (packages mail)
              (services homer)
              (services keepalived)
              (services networking)
@@ -154,6 +155,7 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                           (service mail-aliases-service-type '())
                           (service exim-service-type
                                    (exim-configuration
+                                    (package exim-lmtp)
                                     (config-file (local-file "exim.conf"))))
                           (dovecot-service
                            #:config (dovecot-configuration
@@ -162,6 +164,7 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                                      (protocols
                                       (list (protocol-configuration (name "imap"))
                                             (protocol-configuration (name "lmtp"))))
+                                     (auth-username-format "%n")
                                      (mail-location
                                       (string-append "maildir:~/Maildir"
                                                      ":INBOX=~/Maildir/INBOX"
