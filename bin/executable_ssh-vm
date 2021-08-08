@@ -2,4 +2,4 @@
 
 cd "${HOME}/majordomo/nixos/vm" || return 1
 hostname="$(nix-instantiate --eval -E "(builtins.head (builtins.getFlake (toString ./.)).nixosConfigurations.${1}.config.networking.interfaces.ens3.ipv4.addresses).address")"
-eval command ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -l sup -i "${HOME}/.ssh/id_rsa_sup" "$hostname"
+eval command ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no -l sup -i "${HOME}/.ssh/id_rsa_sup" "$hostname" "${@:2}"
