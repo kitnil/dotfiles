@@ -153,6 +153,8 @@
 
     lxqt.qterminal
 
+    vault
+
     alerta
     boomer
     deploy-rs
@@ -181,6 +183,7 @@
     ".bash.d/nix.bash" = {
       text = ''
         . ${pkgs.nixFlakes}/share/bash-completion/completions/nix
+        . ${pkgs.vault}/share/bash-completion/completions/vault.bash
       '';
     };
   };
