@@ -144,15 +144,6 @@
         }
         );
 
-        onefetch = with pkgs; onefetch.overrideAttrs (old: {
-          patches = [
-            (fetchurl {
-              url = "https://github.com/o2sh/onefetch/commit/ae2cc1b35c876f8b092a1c7eb9fd9021354930a0.patch";
-              sha256 = "0iizi5mbjwkbgy39nm9l9iw3l905zxd6v70n4x6zs5pxf9wwfzbx";
-            })
-          ];
-        });
-
         # TODO: androidenv.androidPkgs_9_0.platform-tools
 
         firefox-52-wrapper = with pkgs-20-03-firefox; callPackage ({ stdenv, firefox-esr-52 }:
@@ -237,13 +228,6 @@
             DRI_PRIME=1 ${self.packages.${system}.nixGLIntel}/bin/nixGLIntel ${bbuscarino-env.legacyPackages.${system}.eve-online}/bin/eve-online
           '';
         } // {
-          onefetch = with pkgs;
-            onefetch.overrideAttrs(old: {
-              patches = [ (pkgs.fetchurl {
-                url = "https://github.com/wigust/onefetch/commit/9c48548d8d1eaafa3e1776905f99a49bc1f2f462.patch";
-                sha256 = "0sr7vs5z4k0bd6spgwnfxqg9d5479y9n5gznjf4nl165d9b87qrf";
-              }) ];
-            });
           jenkins-job-builder = pkgs.callPackage ({ stdenv, bash, jenkins-job-builder }:
             stdenv.mkDerivation {
               pname = "jenkins-job-builder";

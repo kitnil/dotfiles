@@ -50,7 +50,7 @@
     hy
     hyperfine
     knot-resolver
-    lexicon
+    # lexicon
     ldns
     litecli
     navi
@@ -156,7 +156,7 @@
     vault
 
     alerta
-    boomer
+    # boomer
     deploy-rs
     discord
     dnscheck
