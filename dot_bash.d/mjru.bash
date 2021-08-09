@@ -338,3 +338,8 @@ mjru-network()
 	~/majordomo/net/dns-intr/intr-miran.zone ~/majordomo/net/dns-intr/intr-datahouse.zone \
 	 | sed 's/" /"/g; s@ /@/@g; s/ ")/")/g; s/ "\./" ./; s/ \.intr/.intr/; s/\"\;/"/'
 }
+
+vault()
+{
+    VAULT_TOKEN="$(pass show majordomo/public/vault/root)" VAULT_ADDR=https://vault.intr command vault "$@"
+}
