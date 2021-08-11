@@ -153,7 +153,7 @@
 
     lxqt.qterminal
 
-    vault
+    vault-bin
 
     alerta
     # boomer
@@ -183,7 +183,12 @@
     ".bash.d/nix.bash" = {
       text = ''
         . ${pkgs.nixFlakes}/share/bash-completion/completions/nix
-        . ${pkgs.vault}/share/bash-completion/completions/vault.bash
+
+        . ${pkgs.vault-bin}/share/bash-completion/completions/vault
+        complete -C ${pkgs.vault-bin}/bin/vault vault1
+        complete -C ${pkgs.vault-bin}/bin/vault vault2
+        complete -C ${pkgs.vault-bin}/bin/vault vault3
+        complete -C ${pkgs.vault-bin}/bin/vault vault4
       '';
     };
   };

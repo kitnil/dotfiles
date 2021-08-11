@@ -27,6 +27,8 @@
 
     majordomo.url = "git+https://gitlab.intr/_ci/nixpkgs";
 
+    majordomo-vault.url = "git+ssh://gitlab.intr/security/vault";
+
     github-com-guibou-nixGL = {
       url = "github:guibou/nixGL";
       flake = false;
@@ -85,6 +87,7 @@
             , github-com-kitnil-nix-ipmiview
             , github-com-tsoding-boomer
             , majordomo
+            , majordomo-vault
             , nixpkgs-idea
             , bbuscarino-env
             , ... }:
@@ -284,6 +287,7 @@
                 overlay = final: prev:
                   self.packages.${system} // {
                     inherit (deploy-rs.outputs.packages.${system}) deploy-rs;
+                    inherit (majordomo-vault.inputs.nixpkgs.legacyPackages.${system}) vault-bin;
                   };
                 pkgs = import nixpkgs {
                   overlays = [ nur.overlay overlay ];
