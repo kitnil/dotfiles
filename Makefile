@@ -94,7 +94,7 @@ deploy:
 
 .PHONY: dotfiles/channels-current.scm
 dotfiles/channels-current.scm:
-	bin/executable_guix-latest -L guixsd/modules --channels=dotfiles/channels-current.scm dotfiles/manifests/guixsd.scm dotfiles/guixsd/guixsd.scm
+	GUILE_AUTOCOMPILE=0 bin/executable_guix-latest -L dotfiles/guixsd/modules --channels=dotfiles/channels-current.scm dotfiles/manifests/guixsd.scm dotfiles/guixsd/guixsd.scm
 
 .PHONY: guix.wugi.info
 guix.wugi.info:
