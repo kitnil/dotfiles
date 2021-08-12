@@ -3,7 +3,7 @@
         (url "https://git.savannah.gnu.org/git/guix.git")
         (branch "master")
         (commit
-          "3832d66cfd25b29d0adac22f6029f96475a7d5f2")
+          "8221cf834946ed65a12b88f2faf7b26a2d57db3a")
         (introduction
           (make-channel-introduction
             "9edb3f66fd807b096b48283debdcddccfea34bad"
@@ -20,7 +20,7 @@
         (url "https://gitlab.com/nonguix/nonguix")
         (branch "master")
         (commit
-          "f69a09d7c52c8ab01069272bbc11ce517f434ced")
+          "07ed99804675b253293847951a13aaf50b50c438")
         (introduction
           (make-channel-introduction
             "897c1a470da759236cc11798f4e0a5f7d4d59fbc"
