@@ -92,9 +92,9 @@ guile-ihs:
 deploy:
 	guix deploy -L $(MODULES) dotfiles/guixsd/deploy.scm
 
-.PHONY: latest
-latest:
-	guix-latest -L dotfiles/guixsd/modules --channels=dotfiles/channels-current.scm dotfiles/manifests/guixsd.scm dotfiles/guixsd/guixsd.scm
+.PHONY: dotfiles/channels-current.scm
+dotfiles/channels-current.scm:
+	bin/executable_guix-latest -L guixsd/modules --channels=dotfiles/channels-current.scm dotfiles/manifests/guixsd.scm dotfiles/guixsd/guixsd.scm
 
 .PHONY: guix.wugi.info
 guix.wugi.info:
