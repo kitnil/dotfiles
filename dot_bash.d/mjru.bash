@@ -363,3 +363,8 @@ vault4()
 {
     VAULT_TOKEN="$(pass show majordomo/public/vault-unseal/root)" VAULT_ADDR=http://dh4-mr.intr:8240 command vault "$@"
 }
+
+vault-ci()
+{
+    VAULT_TOKEN="$(pass show majordomo/public/vault-dev/root)" VAULT_ADDR=http://ci.intr:8210 command vault "$@"
+}

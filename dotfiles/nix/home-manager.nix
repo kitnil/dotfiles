@@ -189,6 +189,7 @@
         complete -C ${pkgs.vault-bin}/bin/vault vault2
         complete -C ${pkgs.vault-bin}/bin/vault vault3
         complete -C ${pkgs.vault-bin}/bin/vault vault4
+        complete -C ${pkgs.vault-bin}/bin/vault vault-ci
       '';
     };
   };
