@@ -91,6 +91,8 @@
 
     ioping
 
+    black
+
     audacity
     scrcpy
     oh
