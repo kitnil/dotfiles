@@ -60,7 +60,7 @@ root ALL=(ALL) ALL
 oleg ALL=(ALL) NOPASSWD:ALL\n"))
 
   ;; Globally-installed packages.
-  (packages (cons* dovecot screen nss-certs swaks %base-packages))
+  (packages (cons* dovecot screen nss-certs swaks strace binutils %base-packages))
 
   ;; Add services to the baseline: a DHCP client and
   ;; an SSH server.
