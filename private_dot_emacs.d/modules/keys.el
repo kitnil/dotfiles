@@ -431,7 +431,8 @@ ARGS will be passed to hydra."
     (define-key map (kbd "<f8>") 'symbol-overlay-remove-all)
     (define-key map (kbd "M-i") 'symbol-overlay-put)
     (define-key map (kbd "M-n") 'symbol-overlay-switch-forward)
-    (define-key map (kbd "M-p") 'symbol-overlay-switch-backward)))
+    (define-key map (kbd "M-p") 'symbol-overlay-switch-backward)
+    (define-key map (kbd "S-<return>") 'vc-next-action)))
 
 (with-eval-after-load 'perl-mode
   (let ((map perl-mode-map))
