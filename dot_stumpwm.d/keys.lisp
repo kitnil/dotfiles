@@ -137,7 +137,7 @@
   (define-key *top-map* (kbd "s-a") "mjru-pass-gitlab-ssh")
   (define-key *top-map* (kbd "s-A") "mjru-pass-eng")
   (define-key *top-map* (kbd "C-s-a") "kbd-C-s-a")
-  (define-key *top-map* (kbd "s-u") "mjru-alerta")
+  (define-key *top-map* (kbd "s-u") "place-existing-windows")
   (define-key *top-map* (kbd "s-U") "mjru-cerb")
   (define-key *top-map* (kbd "M-s-u") "mjru-grafana-upstream-interfaces")
   (define-key *top-map* (kbd "C-s-u") "mjru-grafana-netflow")
