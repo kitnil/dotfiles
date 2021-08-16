@@ -549,7 +549,7 @@ location / {
 
                        (udev-rules-service 'kmonad kmonad)
 
-                       (service singularity-service-type)
+                       ;; (service singularity-service-type)
 
                        (service ladspa-service-type
                                 (ladspa-configuration (plugins (list swh-plugins))))
