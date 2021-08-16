@@ -9,13 +9,13 @@
 (defvar *fontconfig-file*
   "FONTCONFIG_FILE=/run/current-system/profile/etc/fonts/fonts.conf")
 
-(defcommand quassel () ()
-            (run-shell-command (join (list *fontconfig-file* "/home/oleg/.nix-profile/bin/quassel"))))
-
 (defun load-config-file (file)
   (load (concat (getenv "HOME") "/.stumpwm.d/" file)))
 
 (load-config-file "utils.lisp")
+
+(defcommand quassel () ()
+            (run-shell-command (join (list *fontconfig-file* "/home/oleg/.nix-profile/bin/quassel"))))
 
 ;; Tuesday January 3 2005 23:05:25
 (setq *time-format-string-default* "%A %B %e %Y %k:%M:%S")
