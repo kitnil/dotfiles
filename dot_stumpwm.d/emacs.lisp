@@ -37,7 +37,15 @@
 
 (defcommand emacsclient () ()
   "Start emacs unless it is already running, in which case focus it."
-  (run-or-raise "emacsclient -c" '(:class "Emacs")))
+  (if (uiop:file-exists-p "/run/user/1000/emacs/server")
+      (run-or-raise "emacsclient -c" '(:class "Emacs"))
+      (sb-thread:make-thread
+       (lambda ()
+         (run-shell-command "emacs --daemon")
+         (message "Running Emacs daemon.")
+         (loop while (not (uiop:file-exists-p "/run/user/1000/emacs/server"))
+               do (sleep 3))
+         (run-or-raise "emacsclient -c" '(:class "Emacs"))))))
 
 (defcommand emacsclient-new () ()
   (run-shell-command "emacsclient -c"))
