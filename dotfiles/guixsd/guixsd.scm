@@ -559,7 +559,7 @@ location / {
                                 (slim-configuration
                                  ;; (auto-login? #t)
                                  (default-user "oleg")
-                                 ;; (gnupg? #t) ;XXX: Merge pam-gnupg in Guix repository to upstream
+                                 (gnupg? #t) ;XXX: Merge pam-gnupg in Guix repository to upstream
 				 ;; (theme %slim-theme) TODO: Fix the theme.
                                  (xorg-configuration
                                   (xorg-configuration
