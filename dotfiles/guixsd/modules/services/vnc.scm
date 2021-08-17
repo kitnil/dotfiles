@@ -91,7 +91,7 @@
                    (invoke #$(program-file "vncserver-stop"
                                            #~(begin
                                                (setenv "PATH" (string-append (getenv "PATH") ":" #$path))
-                                               (setenv "HOME=" #$directory)
+                                               (setenv "HOME" #$directory)
                                                (setenv "SSL_CERT_DIR" "/etc/ssl/certs")
                                                (setenv "SSL_CERT_FILE" "/etc/ssl/certs/ca-certificates.crt")
                                                (setenv "XAUTHORITY" #$xauthority)
