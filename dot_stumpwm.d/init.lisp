@@ -1,4 +1,4 @@
-;; Copyright © 2018, 2019, 2020 Oleg Pykhalov <go.wigust@gmail.com>
+;; Copyright © 2018, 2019, 2020, 2021 Oleg Pykhalov <go.wigust@gmail.com>
 ;; Released under the GNU GPLv3 or any later version.
 
 (in-package :stumpwm)
@@ -24,7 +24,7 @@
            (string= (getenv "DISPLAY") ":1")
            (string= (getenv "DISPLAY") ":2")
            (string= (getenv "DISPLAY") ":3"))
-       (redirect-all-output (concat (getenv "HOME") "/.stumpwm.d/debug-output.txt"))
+       (redirect-all-output (concat (getenv "HOME") "/.stumpwm.d/debug-output" (getenv "DISPLAY") ".txt"))
 
        (load-config-file "keys.lisp")
        (load-config-file "nav.lisp")
