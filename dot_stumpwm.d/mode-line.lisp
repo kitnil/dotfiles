@@ -133,15 +133,15 @@
               ;;        :name "mjru-hms-current-stack-update"))
 
               (lambda ()
-                (sb-thread:make-thread
-                 (lambda ()
-                   (loop while t do
-                        (progn (if (gpg-key-opened? (concat (getenv "HOME")
-                                                              "/.password-store/localhost/imap/oleg.gpg"))
-                                   (imap-update-recent-count)
-                                   (setq *imap-recent* nil))
-                               (sleep 60))))
-                 :name "imap-update-recent-count")
+                ;; (sb-thread:make-thread ||#
+                ;;  (lambda () ||#
+                ;;    (loop while t do ||#
+                ;;         (progn (if (gpg-key-opened? (concat (getenv "HOME") ||#
+                ;;                                               "/.password-store/localhost/imap/oleg.gpg")) ||#
+                ;;                    (imap-update-recent-count) ||#
+                ;;                    (setq *imap-recent* nil)) ||#
+                ;;                (sleep 60)))) ||#
+                ;;  :name "imap-update-recent-count") ||#
 
                 (sb-thread:make-thread
                  (lambda ()
