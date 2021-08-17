@@ -502,14 +502,14 @@ location / {
                        ;;                                  (directory "/home/oleg")
                        ;;                                  (xstartup "/home/oleg/.vnc/xstartup-firefox")
                        ;;                                  (host-name "guixsd")))
-                       ;; (service vncserver-service-type (vncserver-configuration
-                       ;;                                  (vncserver tigervnc-server-1.10.1)
-                       ;;                                  (display 2)
-                       ;;                                  (user "oleg")
-                       ;;                                  (group "users")
-                       ;;                                  (directory "/home/oleg")
-                       ;;                                  (xstartup "/home/oleg/.vnc/xstartup-stumpwm")
-                       ;;                                  (host-name "guixsd")))
+                       (service vncserver-service-type (vncserver-configuration
+                                                        (vncserver tigervnc-server-1.10.1)
+                                                        (display 2)
+                                                        (user "oleg")
+                                                        (group "users")
+                                                        (directory "/home/oleg")
+                                                        (xstartup "/home/oleg/.vnc/xstartup-stumpwm")
+                                                        (host-name "guixsd")))
                        ;; (service vncserver-service-type (vncserver-configuration
                        ;;                                  (vncserver tigervnc-server-1.10.1)
                        ;;                                  (display 10)
