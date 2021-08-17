@@ -10,8 +10,7 @@
 ;;;
 
 (defcommand cursor-theme () ()
-  (run-shell-command "xsetroot -cursor_name left_ptr")
-  (run-shell-command "xsetroot -display :0.1 -cursor_name left_ptr"))
+  (run-shell-command "xsetroot -cursor_name left_ptr"))
 
 (defcommand xrdb () ()
   (run-shell-command (format nil "xrdb ~a/.Xresources" (getenv "HOME"))))
