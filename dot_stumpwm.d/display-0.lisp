@@ -18,11 +18,10 @@
 (add-group (current-screen) "0" :background t :type 'float-group)
 (run-commands "gselect 1")
 
-(restore-from-file "/home/oleg/.stumpwm.d/group-1.lisp")
-
 (define-frame-preference "1" (0 NIL T :CLASS "Nightly" :TITLE "YouTube"))
 
 (when (string-equal (screen-display-string (current-screen)) "DISPLAY=:0.0")
+  (restore-from-file "/home/oleg/.stumpwm.d/group-1.lisp")
   (mode-line)
   (setf *mouse-focus-policy* :sloppy))
 
