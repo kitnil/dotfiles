@@ -53,7 +53,7 @@
 (define vncserver-shepherd-service
   (match-lambda
     (($ <vncserver-configuration> vncserver host-name display user group directory xstartup)
-     (let ((xauthority (string-append "/home/" user "/.Xauthority.vnc"))
+     (let ((xauthority (string-append "/home/" user "/.Xauthority.vncserver"))
            (xdg-runtime-dir (string-append "/run/user/" (number->string (passwd:uid (getpw user)))))
            (path #~(string-append #$(file-append coreutils "/bin")
                                   ":" #$(file-append xauth "/bin")
@@ -80,7 +80,7 @@
                          (string-append "HOME=" #$directory)
                          "SSL_CERT_DIR=/etc/ssl/certs"
                          "SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt"
-                         (string-append "XAUTHORITY=" #$xauthority)
+                         (string-append "XAUTHORITY=" #$xauthority (number->string #$display))
                          (string-append "XDG_RUNTIME_DIR=" #$xdg-runtime-dir))))
          (requirement '(user-processes host-name udev))
          (respawn? #f)
