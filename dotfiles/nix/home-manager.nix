@@ -156,6 +156,7 @@
     lxqt.qterminal
 
     vault-bin
+    vaultenv
 
     alerta
     # boomer
