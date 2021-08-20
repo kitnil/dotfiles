@@ -158,6 +158,11 @@
     vault-bin
     vaultenv
 
+    dhall
+    dhall-nix
+    dhall-json
+    (haskell.lib.justStaticExecutables haskellPackages.dhall-yaml)
+
     alerta
     # boomer
     deploy-rs
