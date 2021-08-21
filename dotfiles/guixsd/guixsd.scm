@@ -5,6 +5,7 @@
              (guix gexp)
              (guix inferior)
              (ice-9 format)
+             (json)
              (srfi srfi-1)
              (srfi srfi-26))
 
@@ -26,6 +27,7 @@
              (services autossh)
              (services kresd)
              (services jenkins)
+             (services monitoring)
              (services tftp)
              (services openvpn)
              (services syncthing)
@@ -618,6 +620,26 @@ EndSection")))))))
                        (service autofs-service-type
                                 (autofs-configuration
                                  (mounts %autofs-mounts)))
+
+                       (service prometheus-service-type
+                                (let ((listen-address "127.0.0.1:9090"))
+                                  (prometheus-configuration
+                                   (listen-address listen-address)
+                                   (prometheus "/home/oleg/.nix-profile/bin/prometheus")
+                                   (config-file
+                                    (plain-file "prometheus.json"
+                                                (scm->json-string
+                                                 `((scrape_configs
+                                                    .
+                                                    #(((static_configs
+                                                        .
+                                                        #(((targets . #(,listen-address)))))
+                                                       (scrape_interval . "5s")
+                                                       (job_name . "prometheus"))))
+                                                   (global
+                                                    (scrape_interval . "15s")
+                                                    (external_labels
+                                                     (monitor . "codelab-monitor"))))))))))
 
                        (service openssh-service-type
                                 (openssh-configuration
