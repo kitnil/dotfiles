@@ -158,6 +158,8 @@
     vault-bin
     vaultenv
 
+    prometheus
+
     dhall
     dhall-nix
     dhall-json
