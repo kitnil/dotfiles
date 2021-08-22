@@ -159,6 +159,7 @@
     vaultenv
 
     prometheus
+    prometheus-pushgateway
 
     dhall
     dhall-nix
