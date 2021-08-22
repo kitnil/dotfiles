@@ -9,7 +9,7 @@ diffoscope dns dunst elf entr file games gettext gcc gdb ghostscript gimp gl
 glib gnome gnu-doc gnupg gnuzilla golang graphics graphviz gstreamer gtk guile
 guile-xyz haskell haskell-apps haskell-xyz imagemagick image-viewers inkscape
 irc kde kodi libreoffice license linux lisp logging lsof lxde lxqt m4 mail man
-maths messaging mp3 ncdu ncurses networking node package-management parallel
+maths messaging minetest mp3 ncdu ncurses networking node package-management parallel
 password-utils patchutils pdf perl perl-web php pretty-print photo pulseaudio
 pv python python-web python-xyz qt ratpoison rdesktop readline racket rsync
 rust-apps samba scheme screen shells shellutils sqlite ssh statistics suckless
