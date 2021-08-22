@@ -22,6 +22,7 @@
              (wigust packages web)
              (services autofs)
              (services bittorrent)
+             (services docker)
              (services homer)
              (services nix)
              (services autossh)
@@ -749,6 +750,7 @@ host	all	all	172.16.0.0/12   trust"))
                                 (syncthing-configuration (user "oleg")))
 
                        (service docker-service-type)
+                       docker-service
 
                        (dovecot-service
                         #:config (dovecot-configuration
