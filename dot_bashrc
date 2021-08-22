@@ -4,28 +4,28 @@
 if [ -f "/etc/skel/.bashrc" ]
 then
     # Load the skel profile's settings.
-    . "/etc/skel/.bashrc"
+    source "/etc/skel/.bashrc"
 fi
 
 if [ -f "$HOME/.bash_vterm" ] && [[ $INSIDE_EMACS == vterm ]]
 then
-    . "$HOME/.bash_vterm"
+    source "$HOME/.bash_vterm"
 fi
 
 if [ -f "$HOME/.bash_aliases" ]
 then
     # Load the Bash aliases and functions.
-    . "$HOME/.bash_aliases"
+    source "$HOME/.bash_aliases"
 fi
 
 if [ -f "$HOME/.bash_guix" ]
 then
-    . "$HOME/.bash_guix"
+    source "$HOME/.bash_guix"
 fi
 
 if [[ -n "$SSH_CLIENT" ]]
 then
-    . "${HOME}/.bash_profile"
+    source "${HOME}/.bash_profile"
 fi
 
 alias ,c='command'
@@ -150,7 +150,7 @@ export TMUXIFIER_LAYOUT_PATH
 
 if [ -f "$HOME/.guix-profile/etc/profile.d/autojump.sh" ]
 then
-    . "$HOME/.guix-profile/etc/profile.d/autojump.sh"
+    source "$HOME/.guix-profile/etc/profile.d/autojump.sh"
 fi
 
 # http://puzan.info/linux/2014-05-14-direnv.html
@@ -207,10 +207,10 @@ if [ -d "/run/current-system" ]
 then
     :
 else
-    . "$HOME/.guix-profile/etc/profile"
+    source "$HOME/.guix-profile/etc/profile"
 
     if [[ -f "$GUIX_PROFILE/etc/profile" ]]; then
-        . "$GUIX_PROFILE/etc/profile"
+        source "$GUIX_PROFILE/etc/profile"
     fi
 
     BROWSER='firefox'
@@ -278,17 +278,17 @@ fi
 
 if [[ -f "$HOME/.nix-profile/share/bash-completion/completions/gita" ]]
 then
-    . "$HOME/.nix-profile/share/bash-completion/completions/gita"
+    source "$HOME/.nix-profile/share/bash-completion/completions/gita"
 fi
 
 if [[ -f "$HOME/.nix-profile/share/bash-completion/completions/ipmi" ]]
 then
-    . "$HOME/.nix-profile/share/bash-completion/completions/ipmi"
+    source "$HOME/.nix-profile/share/bash-completion/completions/ipmi"
 fi
 
 if [[ -e "${HOME}/.bash.d/nix.bash" ]]
 then
-    . "${HOME}/.bash.d/nix.bash"
+    source "${HOME}/.bash.d/nix.bash"
 fi
 
 rg()
@@ -426,12 +426,12 @@ alias ls='ls -B -p --color=auto'
 
 if [ -f "$HOME/.nix-profile/share/bash-completion/completions/docker" ]
 then
-    . "$HOME/.nix-profile/share/bash-completion/completions/docker"
+    source "$HOME/.nix-profile/share/bash-completion/completions/docker"
 fi
 
 if [ -f "$HOME/.bash_tmp" ]
 then
-    . "$HOME/.bash_tmp"
+    source "$HOME/.bash_tmp"
 fi
 
 alias bridge='bridge -color=always'
@@ -1325,7 +1325,7 @@ container()
     esac
 }
 if [ -f /run/current-system/profile/etc/bash_completion.d/docker ]; then
-    . /run/current-system/profile/etc/bash_completion.d/docker
+    source /run/current-system/profile/etc/bash_completion.d/docker
     complete -F _docker container
 fi
 
@@ -1371,7 +1371,7 @@ function password()
     fi
 }
 if [ -f "$HOME/.guix-profile/etc/bash_completion.d/pass" ]; then
-    . "$HOME/.guix-profile/etc/bash_completion.d/pass"
+    source "$HOME/.guix-profile/etc/bash_completion.d/pass"
     complete -o filenames -F _pass password
 fi
 alias password='EDITOR=zile password'
@@ -1703,12 +1703,12 @@ alias nix='EDITOR=less VISUAL="emacsclient -cn" nix'
 
 alias dotfiles='EDITOR=zile dotfiles'
 if [ -f "$HOME/.nix-profile/share/bash-completion/completions/chezmoi.bash" ]; then
-    . "$HOME/.nix-profile/share/bash-completion/completions/chezmoi.bash"
+    source "$HOME/.nix-profile/share/bash-completion/completions/chezmoi.bash"
     complete -o default -F __start_chezmoi dotfiles
 fi
 
 if [ -f "$HOME/.guix-profile/etc/bash_completion.d/restic" ]; then
-    . "$HOME/.guix-profile/etc/bash_completion.d/restic"
+    source "$HOME/.guix-profile/etc/bash_completion.d/restic"
     complete -o default -F __start_restic backup
 fi
 
@@ -1761,13 +1761,13 @@ rg()
 if [ -f "$HOME/.bash.d/slack.bash" ]
 then
     # shellcheck source=.bash.d/mjru.bash
-    . "$HOME/.bash.d/slack.bash"
+    source "$HOME/.bash.d/slack.bash"
 fi
 
 if [ -f "$HOME/.bash.d/mjru.bash" ]
 then
     # shellcheck source=.bash.d/mjru.bash
-    . "$HOME/.bash.d/mjru.bash"
+    source "$HOME/.bash.d/mjru.bash"
 fi
 
 chezmoi()
@@ -1787,12 +1787,12 @@ chezmoi()
 
 if [ -f "$HOME/.bash_completion.d/mail" ]
 then
-    . "$HOME/.bash_completion.d/mail"
+    source "$HOME/.bash_completion.d/mail"
 fi
 
 if [ -f "$HOME/.bash_completion.d/connect" ]
 then
-    . "$HOME/.bash_completion.d/connect"
+    source "$HOME/.bash_completion.d/connect"
 fi
 
 slack()
