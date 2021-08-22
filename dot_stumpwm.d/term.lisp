@@ -155,7 +155,6 @@
      (case terminal
        ((alacritty)
         (join `(,terminal-name
-                :l /home/oleg/.nix-defexpr/channels/nixpkgs/lib
                 ,@(if title (list "--title" title) '())
                 "--command" ,command)))
        ((xterm)
