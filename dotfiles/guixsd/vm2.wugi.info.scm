@@ -168,7 +168,18 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                                      (mail-location
                                       (string-append "maildir:~/Maildir"
                                                      ":INBOX=~/Maildir/INBOX"
-                                                     ":LAYOUT=fs")))))
+                                                     ":LAYOUT=fs"))
+                                     (services
+                                      (list
+                                       (service-configuration
+                                        (kind "auth")
+                                        (listeners
+                                         (list
+                                          (unix-listener-configuration
+                                           (group "exim")
+                                           (mode "0660")
+                                           (path "auth-client"))))
+                                        (process-limit 1)))))))
                     (modify-services %base-services
                       (guix-service-type _ => %guix-daemon-config-with-substitute-urls)
                       (sysctl-service-type _ =>
