@@ -151,7 +151,6 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                                     (config-file (local-file "exim.conf"))))
                           (dovecot-service
                            #:config (dovecot-configuration
-                                     (listen '("127.0.0.1"))
                                      (disable-plaintext-auth? #f)
                                      (protocols
                                       (list (protocol-configuration (name "imap"))
@@ -171,7 +170,14 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                                            (group "exim")
                                            (mode "0660")
                                            (path "auth-client"))))
-                                        (process-limit 1))))))
+                                        (process-limit 1))
+                                       (service-configuration
+                                        (kind "auth")
+                                        (service-count 0)
+                                        (client-limit 10)
+                                        (process-limit 1)
+                                        (listeners
+                                         (list (unix-listener-configuration (path "auth-userdb")))))))))
                           (service certbot-service-type
                                    (certbot-configuration
                                     (email "admin@wugi.info")
