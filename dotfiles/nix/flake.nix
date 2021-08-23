@@ -129,8 +129,7 @@
         }) nixGLIntel;
 
         inherit (pkgs-20-03)
-          nixfmt
-          robo3t;
+          nixfmt;
 
         inherit (pkgs-20-03.python3Packages) yamllint;
 
