@@ -112,15 +112,6 @@ max-clients 100
 status /var/run/openvpn/status
 push \"route 10.0.0.0 255.255.255.0\"
 "))))
-                          (service certbot-service-type
-                          (certbot-configuration
-                           (email "go.wigust@gmail.com")
-                           (certificates
-                            `(,@(map (lambda (host)
-                                       (certificate-configuration
-                                        (domains (list host))
-                                        (deploy-hook %nginx-deploy-hook)))
-                                     (list "vm2.wugi.info"))))))
 
                           (service nginx-service-type
                                    (nginx-configuration
@@ -180,7 +171,19 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                                            (group "exim")
                                            (mode "0660")
                                            (path "auth-client"))))
-                                        (process-limit 1)))))))
+                                        (process-limit 1))))))
+                          (service certbot-service-type
+                                   (certbot-configuration
+                                    (email "admin@wugi.info")
+                                    (certificates
+                                     (list
+                                      (certificate-configuration
+                                       ;; TODO:
+                                       ;; mkdir /etc/exim
+                                       ;; cp /etc/letsencrypt/archive/smtp.wugi.info/fullchain1.pem /etc/exim/exim.crt
+                                       ;; cp /etc/letsencrypt/archive/smtp.wugi.info/privkey1.pem /etc/exim/exim.pem
+                                       ;; chown exim: -R /etc/exim
+                                       (domains '("smtp.wugi.info"))))))))
                     (modify-services %base-services
                       (guix-service-type _ => %guix-daemon-config-with-substitute-urls)
                       (sysctl-service-type _ =>
