@@ -455,8 +455,8 @@ mycli --password "$(pass show majordomo/public/web/mysql/root)" -d "${2%.intr}"
     protected)
         for domain in $(grafana --host "$2")
         do
-            echo curl --include --request PUT "$2"/protected/"$domain"
-            echo curl --include --request PUT "$2"/protected/"www.${domain}"
+            echo curl --include --request PUT "${2}/protected/${domain}"
+            echo curl --include --request PUT "${2}/protected/www.${domain}"
         done
         ;;
     te)
