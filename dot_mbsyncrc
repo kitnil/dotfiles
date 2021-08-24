@@ -59,3 +59,28 @@ Far :majordomo-remote:
 Near :majordomo-local:
 Patterns "INBOX" # Sync only INBOX
 Sync Pull
+
+# smtp.wugi.info
+
+IMAPAccount wugi
+Host smtp.wugi.info
+User oleg@smtp.wugi.info
+PassCmd "gpg -q --for-your-eyes-only --no-tty -d ~/.password-store/localhost/imap/oleg.gpg"
+AuthMechs LOGIN
+SSLType IMAPS
+CertificateFile /etc/ssl/certs/ca-certificates.crt
+PipelineDepth 50
+
+IMAPStore wugi-remote
+Account wugi
+
+MaildirStore wugi-local
+Path ~/Maildir/
+Inbox ~/Maildir/wugi.info
+SubFolders Verbatim
+
+Channel wugi
+Far :wugi-remote:
+Near :wugi-local:
+Patterns "INBOX" # Sync only INBOX
+Expunge Both
