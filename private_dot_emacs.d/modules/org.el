@@ -32,7 +32,10 @@
   ;; [[https://www.orgroam.com/manual.html][Org-roam User Manual]]
   (setq org-roam-directory (expand-file-name "~/src/org"))
   (setq org-roam-db-gc-threshold most-positive-fixnum)
-  (require 'org-roam-protocol))
+
+  ;; XXX: Fix File is missing: Cannot open load file, No such file or directory, org-roam-protocol
+  ;; (require 'org-roam-protocol)
+  )
 
 (setq org-startup-folded 'showall) ; Show all in `org-mode' at startup
 
