@@ -9,7 +9,7 @@
              (srfi srfi-1)
              (srfi srfi-26))
 
-(use-package-modules admin audio android bittorrent haskell-apps networking linux ssh suckless xdisorg xorg)
+(use-package-modules admin audio android bash bittorrent haskell-apps networking linux ssh suckless xdisorg xorg)
 
 (use-service-modules admin dbus desktop docker dns networking sound
                      xorg ssh web cgit version-control certbot
@@ -384,6 +384,12 @@ location / {
                      (user-group (name "docker")
                                  (system? #t))
                      (user-group (name "uinput"))
+                     (user-group (name "postfix")
+                                 (id 13)
+                                 (system? #t))
+                     (user-group (name "postdrop")
+                                 (id 118)
+                                 (system? #t))
                      %base-groups))
 
       (users (cons* (user-account
@@ -428,6 +434,15 @@ location / {
                      (group "users")
                      (comment "SSH forwarding privilege separation user")
                      (home-directory "/home/spb"))
+                    (user-account
+                     (name "postfix")
+                     (uid 13)
+                     (group "postfix")
+                     (supplementary-groups '("postdrop"))
+                     (comment "Postfix privilege separation user")
+                     (home-directory "/opt/postfix")
+                     (shell "/run/current-system/profile/sbin/nologin")
+                     (system? #t))
                     (append ((lambda* (count #:key
                                         (group "nixbld")
                                         (first-uid 30101)
@@ -530,6 +545,11 @@ location / {
                                            (file-append sshfs "/bin/sshfs"))
                        (extra-special-file "/bin/ssh"
                                            (file-append openssh "/bin/ssh"))
+
+                       ;; for taskexecutor
+                       (extra-special-file "/bin/bash"
+                                           (file-append bash "/bin/bash"))
+                       ;; (extra-special-file "/bin/setquota")
 
                        ;; “adb” and “fastboot” without root privileges
                        (udev-rules-service 'android android-udev-rules
