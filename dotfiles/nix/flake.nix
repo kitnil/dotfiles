@@ -37,7 +37,7 @@
       url = "github:kitnil/nix-docker-ipmi?ref=flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    github-com-kitnil-nix-ipmiview.url = "github:kitnil/nix-ipmiview";
+    github-com-kitnil-nix-ipmiview.url = "git+ssh://gitlab.intr/utils/ipmiview?ref=flake";
     # github-com-xzfc-cached-nix-shell.url = "github:xzfc/cached-nix-shell";
     github-com-9999years-nix-config = {
       url = "github:9999years/nix-config";

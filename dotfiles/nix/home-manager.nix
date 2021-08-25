@@ -40,7 +40,9 @@
     bfg-repo-cleaner
     git-secrets
     fac
-    # glibc-locales
+
+    buildPackages.glibcLocales
+
     go2nix
     glow
     groovy
