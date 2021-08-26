@@ -66,3 +66,14 @@ Invoke (use-modules (gnu packages MODULE))"
              (module-use! (current-module) module)))
           (else
            (display "Missing module.\n\n")))))
+
+(define (ssh-node host)
+  (use-modules (ssh session)
+               (ssh auth)
+               (ssh dist)
+               (ssh dist node))
+  (define session
+    (make-session #:host host))
+  (connect! session)
+  (userauth-public-key/auto! session)
+  (make-node session))
