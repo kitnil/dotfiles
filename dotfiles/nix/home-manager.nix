@@ -92,6 +92,7 @@
     pup # HTML parsing
 
     ioping
+    iotop-c
 
     black
 
