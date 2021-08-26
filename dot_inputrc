@@ -1,3 +1,15 @@
 set visible-stats on
 set page-completions off
 set completion-ignore-case On
+
+# Prepare to type a quoted word --
+# insert open and close double quotes
+# and move to just after the open quote
+"\"": "\C-v\"\C-v\"\C-b"
+"\'": "\C-v\'\C-v\'\C-b"
+
+# https://stackoverflow.com/a/11661658
+#
+# You can prefix each key with Control-v to type "plain" quotes and left
+# parentheses without triggering the auto-close behavior.
+"(": "\C-v()\C-b"
