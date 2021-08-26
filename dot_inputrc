@@ -13,3 +13,11 @@ set completion-ignore-case On
 # You can prefix each key with Control-v to type "plain" quotes and left
 # parentheses without triggering the auto-close behavior.
 "(": "\C-v()\C-b"
+
+# Macros that are convenient for shell interaction
+$if Bash
+
+# Edit the path
+"\C-xp": "PATH=${PATH}\e\C-e\C-a\ef\C-f"
+
+$endif
