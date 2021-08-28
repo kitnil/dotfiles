@@ -3,7 +3,7 @@
 
 (use-modules (gnu))
 (use-service-modules networking monitoring ssh)
-(use-package-modules screen ssh)
+(use-package-modules certs ssh)
 
 (use-modules (config))
 
@@ -46,7 +46,7 @@ oleg ALL=(ALL) NOPASSWD:ALL\n"))
                %base-user-accounts))
 
   ;; Globally-installed packages.
-  ;; (packages (cons screen %base-packages))
+  (packages (cons nss-certs %base-packages))
 
   ;; Add services to the baseline: a DHCP client and
   ;; an SSH server.
