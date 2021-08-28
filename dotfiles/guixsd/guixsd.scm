@@ -512,320 +512,315 @@ location / {
            "")
          "\n")))
 
-      (services (cons* ;; (service vncserver-service-type (vncserver-configuration
-                       ;;                                  (vncserver tigervnc-server-1.10.1)
-                       ;;                                  (display 1)
-                       ;;                                  (user "oleg")
-                       ;;                                  (group "users")
-                       ;;                                  (directory "/home/oleg")
-                       ;;                                  (xstartup "/home/oleg/.vnc/xstartup-firefox")
-                       ;;                                  (host-name "guixsd")))
-                       (service vncserver-service-type (vncserver-configuration
-                                                        (vncserver tigervnc-server-1.10.1)
-                                                        (display 2)
-                                                        (user "oleg")
-                                                        (group "users")
-                                                        (directory "/home/oleg")
-                                                        (xstartup "/home/oleg/.vnc/xstartup-stumpwm")
-                                                        (host-name "guixsd")))
-                       ;; (service vncserver-service-type (vncserver-configuration
-                       ;;                                  (vncserver tigervnc-server-1.10.1)
-                       ;;                                  (display 10)
-                       ;;                                  (user "oleg")
-                       ;;                                  (group "users")
-                       ;;                                  (directory "/home/oleg")
-                       ;;                                  (xstartup "/home/oleg/.vnc/xstartup-quassel")
-                       ;;                                  (host-name "guixsd")))
+      (services (append (list
 
-                       (extra-special-file "/usr/bin/env"
-                                           (file-append coreutils "/bin/env"))
+                         ;; (service vncserver-service-type (vncserver-configuration
+                         ;;                                  (vncserver tigervnc-server-1.10.1)
+                         ;;                                  (display 1)
+                         ;;                                  (user "oleg")
+                         ;;                                  (group "users")
+                         ;;                                  (directory "/home/oleg")
+                         ;;                                  (xstartup "/home/oleg/.vnc/xstartup-firefox")
+                         ;;                                  (host-name "guixsd")))
 
-                       ;; mount -t fuse and autofs
-                       (extra-special-file "/bin/sshfs"
-                                           (file-append sshfs "/bin/sshfs"))
-                       (extra-special-file "/bin/ssh"
-                                           (file-append openssh "/bin/ssh"))
+                         (service vncserver-service-type (vncserver-configuration
+                                                          (vncserver tigervnc-server-1.10.1)
+                                                          (display 2)
+                                                          (user "oleg")
+                                                          (group "users")
+                                                          (directory "/home/oleg")
+                                                          (xstartup "/home/oleg/.vnc/xstartup-stumpwm")
+                                                          (host-name "guixsd")))
 
-                       ;; for taskexecutor
-                       (extra-special-file "/bin/bash"
-                                           (file-append bash "/bin/bash"))
-                       ;; (extra-special-file "/bin/setquota")
+                         ;; (service vncserver-service-type (vncserver-configuration
+                         ;;                                  (vncserver tigervnc-server-1.10.1)
+                         ;;                                  (display 10)
+                         ;;                                  (user "oleg")
+                         ;;                                  (group "users")
+                         ;;                                  (directory "/home/oleg")
+                         ;;                                  (xstartup "/home/oleg/.vnc/xstartup-quassel")
+                         ;;                                  (host-name "guixsd")))
 
-                       ;; “adb” and “fastboot” without root privileges
-                       (udev-rules-service 'android android-udev-rules
-                                           #:groups '("adbusers"))
+                         (extra-special-file "/usr/bin/env"
+                                             (file-append coreutils "/bin/env"))
 
-                       (udev-rules-service 'kvm
-                                           (udev-rule
-                                            "91-kvm-custom.rules"
-                                            "KERNEL==\"kvm\", GROUP=\"kvm\", MODE=\"0666\"\n"))
+                         ;; mount -t fuse and autofs
+                         (extra-special-file "/bin/sshfs"
+                                             (file-append sshfs "/bin/sshfs"))
+                         (extra-special-file "/bin/ssh"
+                                             (file-append openssh "/bin/ssh"))
 
-                       (udev-rules-service 'wol
-                                           (file->udev-rule
-                                            "91-wol.rules"
-                                            (mixed-text-file "91-wol.rules" ;https://wiki.archlinux.org/index.php/Wake-on-LAN
-                                                             #~(string-join
-                                                                (list "ACTION==\"add\""
-                                                                      "SUBSYSTEM==\"net\""
-                                                                      "NAME==\"enp*\""
-                                                                      (format #f "RUN+=\"~a/sbin/ethtool -s $name wol g\"~%" #$ethtool))))))
+                         ;; for taskexecutor
+                         (extra-special-file "/bin/bash"
+                                             (file-append bash "/bin/bash"))
+                         ;; (extra-special-file "/bin/setquota")
 
-                       (udev-rules-service 'kmonad kmonad)
+                         ;; “adb” and “fastboot” without root privileges
+                         (udev-rules-service 'android android-udev-rules
+                                             #:groups '("adbusers"))
 
-                       ;; (service singularity-service-type)
+                         (udev-rules-service 'kvm
+                                             (udev-rule
+                                              "91-kvm-custom.rules"
+                                              "KERNEL==\"kvm\", GROUP=\"kvm\", MODE=\"0666\"\n"))
 
-                       (service ladspa-service-type
-                                (ladspa-configuration (plugins (list swh-plugins))))
+                         (udev-rules-service 'wol
+                                             (file->udev-rule
+                                              "91-wol.rules"
+                                              (mixed-text-file "91-wol.rules" ;https://wiki.archlinux.org/index.php/Wake-on-LAN
+                                                               #~(string-join
+                                                                  (list "ACTION==\"add\""
+                                                                        "SUBSYSTEM==\"net\""
+                                                                        "NAME==\"enp*\""
+                                                                        (format #f "RUN+=\"~a/sbin/ethtool -s $name wol g\"~%" #$ethtool))))))
 
-                       ;; Desktop services
-                       (service slim-service-type
-                                (slim-configuration
-                                 ;; (auto-login? #t)
-                                 (default-user "oleg")
-                                 (gnupg? #t) ;XXX: Merge pam-gnupg in Guix repository to upstream
-				 ;; (theme %slim-theme) TODO: Fix the theme.
-                                 (xorg-configuration
-                                  (xorg-configuration
-                                   (modules (delete xf86-video-ati (delete xf86-video-nouveau (delete xf86-video-intel %default-xorg-modules))))
-                                   (extra-config (list (amdgpu+amdgpu.conf)))))))
-                       #;(service slim-service-type
-                                (slim-configuration
-                                 (display ":1")
-                                 (vt "vt8")
-                                 (xorg-configuration
-                                  (xorg-configuration
-                                   (extra-config (list (intel+amdgpu.conf "\
-Section \"ServerLayout\"
-    Identifier  \"Default Layout\"
-    Screen  0   \"Screen 2\"
-    Screen  1   \"Screen 1\" LeftOf \"Screen 2\"
-EndSection")))))))
-                       (screen-locker-service slock)
-                       (screen-locker-service xlockmore "xlock")
-                       (udisks-service)
-                       (service upower-service-type)
-                       (service accountsservice-service-type)
-                       (service colord-service-type)
-                       (geoclue-service)
-                       (service polkit-service-type)
-                       (elogind-service)
-                       (dbus-service)
-                       (service ntp-service-type)
-                       x11-socket-directory-service
-                       (service alsa-service-type)
+                         (udev-rules-service 'kmonad kmonad)
 
-                       nix-service
-                       (kresd-service (local-file "kresd.conf"))
+                         ;; (service singularity-service-type)
 
-                       (service openvpn-service-type %openvpn-configuration-majordomo.ru)
-                       (service openvpn-service-type %openvpn-configuration-wugi.info)
+                         (service ladspa-service-type
+                                  (ladspa-configuration (plugins (list swh-plugins))))
 
-                       (service homer-service-type)
+                         ;; Desktop services
+                         (service slim-service-type
+                                  (slim-configuration
+                                   ;; (auto-login? #t)
+                                   (default-user "oleg")
+                                   (gnupg? #t) ;XXX: Merge pam-gnupg in Guix repository to upstream
+				   ;; (theme %slim-theme) TODO: Fix the theme.
+                                   (xorg-configuration
+                                    (xorg-configuration
+                                     (modules (delete xf86-video-ati (delete xf86-video-nouveau (delete xf86-video-intel %default-xorg-modules))))
+                                     (extra-config (list (amdgpu+amdgpu.conf)))))))
+                         #;(service slim-service-type
+                         (slim-configuration
+                         (display ":1")
+                         (vt "vt8")
+                         (xorg-configuration
+                         (xorg-configuration
+                         (extra-config (list (intel+amdgpu.conf "\
+                         Section \"ServerLayout\"
+                         Identifier  \"Default Layout\"
+                         Screen  0   \"Screen 2\"
+                         Screen  1   \"Screen 1\" LeftOf \"Screen 2\"
+                         EndSection")))))))
 
-                       ;; TODO:
-                       ;; (openvpn-client-service
-                       ;;  #:config (openvpn-client-configuration
-                       ;;            ;; (dev 'tapvpn)
-                       ;;            (auth-user-pass "/etc/openvpn/login.conf")
-                       ;;            (remote (list
-                       ;;                     ;; 78.108.80.230
-                       ;;                     (openvpn-remote-configuration
-                       ;;                      (name "vpn-miran.majordomo.ru"))
-                       ;;                     ;; 78.108.91.250
-                       ;;                     (openvpn-remote-configuration
-                       ;;                      (name "vpn-dh.majordomo.ru"))
-                       ;;                     ;; 81.95.28.29
-                       ;;                     (openvpn-remote-configuration
-                       ;;                      (name "vpn-office.majordomo.ru"))))))
+                         (service alsa-service-type)
 
-                       (service autofs-service-type
-                                (autofs-configuration
-                                 (mounts %autofs-mounts)))
+                         nix-service
+                         (kresd-service (local-file "kresd.conf"))
 
-                       (service prometheus-service-type
-                                (let ((listen-address "127.0.0.1:9090"))
-                                  (prometheus-configuration
-                                   (listen-address listen-address)
-                                   (prometheus "/home/oleg/.nix-profile/bin/prometheus")
-                                   (config-file
-                                    (plain-file "prometheus.json"
-                                                (scm->json-string
-                                                 `((scrape_configs
-                                                    .
-                                                    #(((static_configs
-                                                        .
-                                                        #(((targets . #(,listen-address)))))
-                                                       (scrape_interval . "5s")
-                                                       (job_name . "prometheus"))))
-                                                   (global
-                                                    (scrape_interval . "15s")
-                                                    (external_labels
-                                                     (monitor . "codelab-monitor"))))))))))
+                         (service openvpn-service-type %openvpn-configuration-majordomo.ru)
+                         (service openvpn-service-type %openvpn-configuration-wugi.info)
 
-                       (service openssh-service-type
-                                (openssh-configuration
-                                 (authorized-keys
-                                  `(("vm1-ssh-tunnel" ,(local-file "ssh/id_rsa_vm1.wugi.info.pub"))))
-                                 (x11-forwarding? #t)
-                                 (gateway-ports? 'client)
-                                 (password-authentication? #f)
-                                 (extra-content "\
+                         (service homer-service-type)
+
+                         ;; TODO:
+                         ;; (openvpn-client-service
+                         ;;  #:config (openvpn-client-configuration
+                         ;;            ;; (dev 'tapvpn)
+                         ;;            (auth-user-pass "/etc/openvpn/login.conf")
+                         ;;            (remote (list
+                         ;;                     ;; 78.108.80.230
+                         ;;                     (openvpn-remote-configuration
+                         ;;                      (name "vpn-miran.majordomo.ru"))
+                         ;;                     ;; 78.108.91.250
+                         ;;                     (openvpn-remote-configuration
+                         ;;                      (name "vpn-dh.majordomo.ru"))
+                         ;;                     ;; 81.95.28.29
+                         ;;                     (openvpn-remote-configuration
+                         ;;                      (name "vpn-office.majordomo.ru"))))))
+
+                         (service autofs-service-type
+                                  (autofs-configuration
+                                   (mounts %autofs-mounts)))
+
+                         (service prometheus-service-type
+                                  (let ((listen-address "127.0.0.1:9090"))
+                                    (prometheus-configuration
+                                     (listen-address listen-address)
+                                     (prometheus "/home/oleg/.nix-profile/bin/prometheus")
+                                     (config-file
+                                      (plain-file "prometheus.json"
+                                                  (scm->json-string
+                                                   `((scrape_configs
+                                                      .
+                                                      #(((static_configs
+                                                          .
+                                                          #(((targets . #(,listen-address)))))
+                                                         (scrape_interval . "5s")
+                                                         (job_name . "prometheus"))))
+                                                     (global
+                                                      (scrape_interval . "15s")
+                                                      (external_labels
+                                                       (monitor . "codelab-monitor"))))))))))
+
+                         (service openssh-service-type
+                                  (openssh-configuration
+                                   (authorized-keys
+                                    `(("vm1-ssh-tunnel" ,(local-file "ssh/id_rsa_vm1.wugi.info.pub"))))
+                                   (x11-forwarding? #t)
+                                   (gateway-ports? 'client)
+                                   (password-authentication? #f)
+                                   (extra-content "\
 Match Address 127.0.0.1
 PasswordAuthentication yes
 
 Match Address 192.168.0.144
 PasswordAuthentication yes")))
 
-                       (service certbot-service-type
-                                (certbot-configuration
-                                 (email "go.wigust@gmail.com")
-                                 (certificates
-                                  `(,@(map (lambda (host)
-                                             (certificate-configuration
-                                              (domains (list host))
-                                              (deploy-hook %nginx-deploy-hook)))
-                                           %certbot-hosts)))))
+                         (service certbot-service-type
+                                  (certbot-configuration
+                                   (email "go.wigust@gmail.com")
+                                   (certificates
+                                    `(,@(map (lambda (host)
+                                               (certificate-configuration
+                                                (domains (list host))
+                                                (deploy-hook %nginx-deploy-hook)))
+                                             %certbot-hosts)))))
 
-                       (service nginx-service-type
-                                (nginx-configuration
-                                 (modules %nginx-modules)
-                                 (lua-package-path %nginx-lua-package-path)
-                                 (lua-package-cpath %nginx-lua-package-cpath)
-                                 (server-blocks %nginx-server-blocks)))
+                         (service nginx-service-type
+                                  (nginx-configuration
+                                   (modules %nginx-modules)
+                                   (lua-package-path %nginx-lua-package-path)
+                                   (lua-package-cpath %nginx-lua-package-cpath)
+                                   (server-blocks %nginx-server-blocks)))
 
-                       (service gitolite-service-type
-                                (gitolite-configuration
-                                 (admin-pubkey (local-file "/home/oleg/.ssh/id_rsa.pub"))))
+                         (service gitolite-service-type
+                                  (gitolite-configuration
+                                   (admin-pubkey (local-file "/home/oleg/.ssh/id_rsa.pub"))))
 
-                       (service cgit-service-type
-                                (cgit-configuration
-                                 (branch-sort "age")
-                                 (enable-commit-graph? #t)
-                                 (enable-follow-links? #t)
-                                 (enable-index-links? #t)
-                                 (enable-log-filecount? #t)
-                                 (enable-log-linecount? #t)
-                                 (enable-remote-branches? #t)
-                                 (enable-subject-links? #t)
-                                 (remove-suffix? #t)
-                                 (enable-index-owner? #f)
-                                 (root-title "Personal Cgit")
-                                 (snapshots (list "tar.gz"))
-                                 (clone-prefix (list ;; "git://magnolia.local/~natsu"
-                                                "https://cgit.duckdns.org/git"))
-                                 (nginx (list (nginx-server-configuration
-                                               (inherit %cgit-configuration-nginx)
-                                               (server-name '("cgit.duckdns.org" "git.tld"))
-                                               (locations
-                                                (append (nginx-server-configuration-locations %cgit-configuration-nginx)
-                                                        (list (git-http-nginx-location-configuration
-                                                               (git-http-configuration
-                                                                (export-all? #t)))
-                                                              (nginx-location-configuration
-                                                               (uri "/.well-known")
-                                                               (body '("root /var/www;"))))))
-                                               (listen '("80" "443 ssl"))
-                                               (ssl-certificate (letsencrypt-certificate "cgit.duckdns.org"))
-                                               (ssl-certificate-key (letsencrypt-key "cgit.duckdns.org")))))))
+                         (service cgit-service-type
+                                  (cgit-configuration
+                                   (branch-sort "age")
+                                   (enable-commit-graph? #t)
+                                   (enable-follow-links? #t)
+                                   (enable-index-links? #t)
+                                   (enable-log-filecount? #t)
+                                   (enable-log-linecount? #t)
+                                   (enable-remote-branches? #t)
+                                   (enable-subject-links? #t)
+                                   (remove-suffix? #t)
+                                   (enable-index-owner? #f)
+                                   (root-title "Personal Cgit")
+                                   (snapshots (list "tar.gz"))
+                                   (clone-prefix (list ;; "git://magnolia.local/~natsu"
+                                                  "https://cgit.duckdns.org/git"))
+                                   (nginx (list (nginx-server-configuration
+                                                 (inherit %cgit-configuration-nginx)
+                                                 (server-name '("cgit.duckdns.org" "git.tld"))
+                                                 (locations
+                                                  (append (nginx-server-configuration-locations %cgit-configuration-nginx)
+                                                          (list (git-http-nginx-location-configuration
+                                                                 (git-http-configuration
+                                                                  (export-all? #t)))
+                                                                (nginx-location-configuration
+                                                                 (uri "/.well-known")
+                                                                 (body '("root /var/www;"))))))
+                                                 (listen '("80" "443 ssl"))
+                                                 (ssl-certificate (letsencrypt-certificate "cgit.duckdns.org"))
+                                                 (ssl-certificate-key (letsencrypt-key "cgit.duckdns.org")))))))
 
-                       (service tor-service-type
-                                (tor-configuration
-                                 (config-file (local-file "torrc"))))
+                         (service tor-service-type
+                                  (tor-configuration
+                                   (config-file (local-file "torrc"))))
 
-                       (service ddclient-service-type)
+                         (service ddclient-service-type)
 
-		       ;; TODO: Move those services.
+		         ;; TODO: Move those services.
 
-                       #;(postgresql-service #:config-file (postgresql-config-file
-                                                          (hba-file
-                                                           (plain-file "pg_hba.conf"
-                                                                       "
-local	all	all			trust
-host	all	all	127.0.0.1/32    trust
-host	all	all	::1/128         trust
-host	all	all	172.16.0.0/12   trust"))
-                                                          (extra-config '(("listen_addresses" "'0.0.0.0'")))))
+                         #;(postgresql-service #:config-file (postgresql-config-file
+                         (hba-file
+                         (plain-file "pg_hba.conf"
+                         "
+                         local	all	all			trust
+                         host	all	all	127.0.0.1/32    trust
+                         host	all	all	::1/128         trust
+                         host	all	all	172.16.0.0/12   trust"))
+                         (extra-config '(("listen_addresses" "'0.0.0.0'")))))
 
-                       ;; (service mongodb-service-type)
+                         ;; (service mongodb-service-type)
 
-                        (service php-fpm-service-type
-                                (php-fpm-configuration
-                                 (timezone "Europe/Moscow")))
+                         (service php-fpm-service-type
+                                  (php-fpm-configuration
+                                   (timezone "Europe/Moscow")))
 
-                       (service zabbix-agent-service-type
-                                (zabbix-agent-configuration
-                                 (server '("zabbix.wugi.info"))
-                                 (server-active '("zabbix.wugi.info"))
-                                 (extra-options (string-join
-                                                 (list ""
-                                                       "UserParameter=ssl_cert_check_valid[*], /etc/zabbix/externalscripts/ssl_cert_check.sh valid \"$1\" \"$2\" \"$3\""
-                                                       "UserParameter=ssl_cert_check_expire[*], /etc/zabbix/externalscripts/ssl_cert_check.sh expire \"$1\" \"$2\" \"$3\""
-                                                       (string-join (cons "UserParameter=ssl_cert_hosts[*], /etc/zabbix/externalscripts/ssl_cert_hosts.sh"
-                                                                          %certbot-hosts)))
-                                                 "\n"))))
+                         (service zabbix-agent-service-type
+                                  (zabbix-agent-configuration
+                                   (server '("zabbix.wugi.info"))
+                                   (server-active '("zabbix.wugi.info"))
+                                   (extra-options (string-join
+                                                   (list ""
+                                                         "UserParameter=ssl_cert_check_valid[*], /etc/zabbix/externalscripts/ssl_cert_check.sh valid \"$1\" \"$2\" \"$3\""
+                                                         "UserParameter=ssl_cert_check_expire[*], /etc/zabbix/externalscripts/ssl_cert_check.sh expire \"$1\" \"$2\" \"$3\""
+                                                         (string-join (cons "UserParameter=ssl_cert_hosts[*], /etc/zabbix/externalscripts/ssl_cert_hosts.sh"
+                                                                            %certbot-hosts)))
+                                                   "\n"))))
 
-                       jenkins-service
+                         jenkins-service
 
-                       (service syncthing-service-type
-                                (syncthing-configuration (user "oleg")))
+                         (service syncthing-service-type
+                                  (syncthing-configuration (user "oleg")))
 
-                       (service docker-service-type)
-                       docker-service
+                         (service docker-service-type)
+                         docker-service
 
-                       (dovecot-service
-                        #:config (dovecot-configuration
-                                  (listen '("127.0.0.1"))
-                                  (disable-plaintext-auth? #f)
-                                  (mail-location
-                                   (string-append "maildir:~/Maildir"
-                                                  ":INBOX=~/Maildir/INBOX"
-                                                  ":LAYOUT=fs"))))
+                         (dovecot-service
+                          #:config (dovecot-configuration
+                                    (listen '("127.0.0.1"))
+                                    (disable-plaintext-auth? #f)
+                                    (mail-location
+                                     (string-append "maildir:~/Maildir"
+                                                    ":INBOX=~/Maildir/INBOX"
+                                                    ":LAYOUT=fs"))))
 
-                       tftp-service
+                         tftp-service
 
-                       (service guix-publish-service-type
-                                (guix-publish-configuration
-                                 (host "0.0.0.0")
-                                 (port 5556)
-                                 (ttl (* 90 24 3600))))
+                         (service guix-publish-service-type
+                                  (guix-publish-configuration
+                                   (host "0.0.0.0")
+                                   (port 5556)
+                                   (ttl (* 90 24 3600))))
 
-                       (service (@ (services autossh) autossh-service-type)
-                                ((@ (services autossh) autossh-configuration)
-                                 (autossh-client-config
-                                  (autossh-client-configuration
-                                   (hosts (list (autossh-client-host-configuration
-                                                 (host "znc.wugi.info")
-                                                 (identity-file "/etc/autossh/id_rsa_oracle")
-                                                 (strict-host-key-checking? #f)
-                                                 (user "opc")
-                                                 (user-known-hosts-file "/dev/null")
-                                                 (extra-options
-                                                  "
+                         (service (@ (services autossh) autossh-service-type)
+                                  ((@ (services autossh) autossh-configuration)
+                                   (autossh-client-config
+                                    (autossh-client-configuration
+                                     (hosts (list (autossh-client-host-configuration
+                                                   (host "znc.wugi.info")
+                                                   (identity-file "/etc/autossh/id_rsa_oracle")
+                                                   (strict-host-key-checking? #f)
+                                                   (user "opc")
+                                                   (user-known-hosts-file "/dev/null")
+                                                   (extra-options
+                                                    "
 LocalForward 0.0.0.0:8060 127.0.0.1:8060
 LocalForward 0.0.0.0:6667 127.0.0.1:6667
 Compression yes
 ExitOnForwardFailure yes
 ServerAliveInterval 30
 ServerAliveCountMax 3"))))))
-                                 (host "znc.wugi.info")))
+                                   (host "znc.wugi.info")))
 
-                       transmission-service
+                         transmission-service
 
-                       (service webssh-service-type
-                                (webssh-configuration (address "127.0.0.1")
-                                                      (port 8888)
-                                                      (policy 'reject)
-                                                      (known-hosts '("\
+                         (service webssh-service-type
+                                  (webssh-configuration (address "127.0.0.1")
+                                                        (port 8888)
+                                                        (policy 'reject)
+                                                        (known-hosts '("\
 localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOnaDeOzwmrcrq1D8slYaeFozXZ0cpqNU0EvGmgnO29aiKkSD1ehbIV4vSxk3IDXz9ClMVPc1bTUTrYhEVHdCks="
-                                                                     "\
+                                                                       "\
 127.0.0.1 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOnaDeOzwmrcrq1D8slYaeFozXZ0cpqNU0EvGmgnO29aiKkSD1ehbIV4vSxk3IDXz9ClMVPc1bTUTrYhEVHdCks="))))
 
-                       (bluetooth-service #:auto-enable? #t)
+                         (bluetooth-service #:auto-enable? #t))
 
-                       (modify-services (operating-system-user-services base-system)
-                         (guix-service-type config => (guix-configuration
-                                                       (inherit %guix-daemon-config)
-                                                       (extra-options '("--cache-failures")))))))
+                        (load "desktop.scm")
+
+                        (modify-services (operating-system-user-services base-system)
+                          (guix-service-type config => (guix-configuration
+                                                        (inherit %guix-daemon-config)
+                                                        (extra-options '("--cache-failures")))))))
 
       (essential-services
        (modify-services (operating-system-default-essential-services this-operating-system)

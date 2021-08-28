@@ -200,7 +200,9 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                            (ip-address-remote "78.108.87.161")
                            (ip-address "10.0.0.3/24")
                            (interface-name "gre1")
-                           (routes '("add 10.8.0.0/24 via 10.0.0.2")))))
+                           (routes '("add 10.8.0.0/24 via 10.0.0.2"))))
+
+                 (service slim-service-type))
            (load "desktop.scm")
            (modify-services %base-services
              (guix-service-type _ => %guix-daemon-config-with-substitute-urls)
