@@ -133,7 +133,7 @@ push \"route 10.0.0.0 255.255.255.0\"
                                                          %githunt-nginx-configuration
                                                          %homer-nginx-configuration))))
 
-                          (service homer-service-type)
+                          (service homer-service-type %homer-config)
                           (service webssh-service-type
                                    (webssh-configuration (address "127.0.0.1")
                                                          (port 8888)

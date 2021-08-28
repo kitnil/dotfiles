@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2020 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2020, 2021 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -21,6 +21,7 @@
   #:use-module (gnu services)
   #:use-module (guix gexp)
   #:use-module (srfi srfi-1)
+  #:use-module (json)
   #:export (homer-service-type))
 
 ;;; Commentary:
@@ -29,13 +30,15 @@
 ;;;
 ;;; Code:
 
-(define (homer-service-etc _)
+(define (homer-service-etc config)
   "Return a @file{/etc} entry for an @file{homer/config.yml}."
   `(("homer/config.yml"
      ,(computed-file
        "config.yml"
        #~(begin
-           (copy-file #$(local-file "../../../homer/config.yml") #$output))))))
+           (with-output-to-file #$output
+             (lambda ()
+               (display #$(scm->json-string config)))))))))
 
 (define homer-service-type
   ;; The /etc/homer service.
