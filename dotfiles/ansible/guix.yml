@@ -20,7 +20,7 @@
     - name: Apply Guix manifest
       guix_package:
         profile: /home/oleg/.guix-profile
-        manifest: '/home/oleg/.local/share/chezmoi/dotfiles/manifests/{{ ansible_fqdn }}.scm'
+        manifest: '/home/oleg/.local/share/chezmoi/dotfiles/manifests/{{ ansible_nodename }}.scm'
         load_path: /home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules
 
 - hosts:
