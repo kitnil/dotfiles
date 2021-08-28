@@ -137,6 +137,7 @@
 	(insert (format "#+BEGIN_SRC emacs-lisp :results output silent\n  (with-temp-file %S\n    (insert (base64-decode-string\n      %S)))\n#+END_SRC" filename base64-string))))
 
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
+(add-hook 'org-mode-hook 'company-mode)
 
 
 ;;;
@@ -155,3 +156,18 @@
 (setq org-appear-autoemphasis t)
 (setq org-appear-autolinks t)
 (setq org-appear-autosubmarkers t)
+
+
+;;;
+;;; Block
+;;;
+
+(with-eval-after-load 'org
+  (require 'company-org-block)
+
+  (setq company-org-block-edit-style 'auto) ;; 'auto, 'prompt, or 'inline
+
+  (add-hook 'org-mode-hook
+            (lambda ()
+              (add-to-list (make-local-variable 'company-backends)
+                           'company-org-block))))
