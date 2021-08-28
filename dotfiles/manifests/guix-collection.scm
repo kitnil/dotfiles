@@ -207,7 +207,10 @@ xfce xml xorg)
                xdot
                html-xml-utils
                licensecheck ; Licence checker for source files
+
                lsof
+               lsofgraph
+
                ncdu            ; TUI `du'
                sysstat
                netcat-openbsd
