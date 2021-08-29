@@ -80,6 +80,7 @@
        emacs-helm-make          ; Front end to `make'
        emacs-helm-mode-manager
        emacs-helm-shell-history
+       emacs-hideshowvis
        emacs-highlight-defined
        emacs-highlight-sexp
        emacs-highlight-stages   ; Highlight code stages

@@ -83,6 +83,7 @@
 (add-hook 'prog-mode-hook 'hl-todo-mode)
 ;; (add-hook 'prog-mode-hook 'which-function-mode)
 (add-hook 'prog-mode-hook 'symbol-overlay-mode)
+(add-hook 'prog-mode-hook 'hideshowvis-minor-mode)
 
 (setq wi-groups-direcotory "~/majordomo")
 (setq wi-projects-directories '("~/src" "~/archive/src"))
