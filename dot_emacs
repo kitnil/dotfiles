@@ -128,7 +128,7 @@
  ;; If there is more than one, they won't work right.
  '(build-farm-build-arguments '("jobset=guix-master" "system=x86_64-linux"))
  '(company-backends
-   '(company-lsp company-abbrev company-bbdb company-eclim company-semantic company-xcode company-cmake company-capf company-files
+   '(company-abbrev company-bbdb company-eclim company-semantic company-xcode company-cmake company-capf company-files
                  (company-dabbrev-code company-gtags company-etags company-keywords)
                  company-oddmuse company-dabbrev))
  '(custom-safe-themes
