@@ -115,6 +115,7 @@ in  ''
 		Shared
 			${hms-account { server = "web15", name = "AC_222914", tarif = "Хостинг приложений" }}
 			${hms-account { server = "web15", name = "AC_221357", tarif = "Старт" }}
+			${hms-account { server = "web15", name = "AC_230157", tarif = "Безлимитный" }}
 			${hms-account { server = "web16", name = "AC_228919", tarif = "Безлимитный+" }}
 			${hms-account { server = "web19", name = "AC_224973", tarif = "Безлимитный+" }}
 			${hms-account { server = "web20", name = "AC_226927", tarif = "Безлимитный+" }}
