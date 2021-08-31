@@ -21,4 +21,4 @@ auth ()
 curl --request POST https://api.majordomo.ru/account/"$account"/transfer \
      --header "Authorization: Bearer $(auth)" \
      --header 'Content-Type: application/json' \
-     --data-binary '{"operationIdentity":null,"params":{"serverId":"web_server_'"$host"'" }}'
+     --data-binary '{"operationIdentity":null,"params":{"serverId":"'"$host"'" }}'
