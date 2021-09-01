@@ -1,0 +1,7 @@
+name: systemd
+parent: default
+
+matches:
+  # Simple text replacement
+  - trigger: ":journalctl"
+    replace: "journalctl --priority=emerg..crit --reverse"
