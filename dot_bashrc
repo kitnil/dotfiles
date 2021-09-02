@@ -616,7 +616,7 @@ guix()
                  "${@:2}"
             ;;
         # repl)
-        #     GUILE_AUTOCOMPILE=0 command guix repl -L "$guix_modules" "${@:3}"
+        #     GUILE_AUTO_COMPILE=0 command guix repl -L "$guix_modules" "${@:3}"
         #     ;;
         remote)
             case "$2" in
