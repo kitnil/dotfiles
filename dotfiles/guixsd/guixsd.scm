@@ -649,7 +649,12 @@ location / {
                                                           .
                                                           #(((targets . #(,listen-address)))))
                                                          (scrape_interval . "5s")
-                                                         (job_name . "prometheus"))))
+                                                         (job_name . "prometheus"))
+                                                        ((static_configs
+                                                          .
+                                                          #(((targets . #("127.0.0.1:9100")))))
+                                                         (scrape_interval . "5s")
+                                                         (job_name . "node"))))
                                                      (global
                                                       (scrape_interval . "15s")
                                                       (external_labels
