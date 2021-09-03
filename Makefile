@@ -132,3 +132,4 @@ vm5.wugi.info:
 add:
 	chezmoi add --encrypt $(HOME)/.ssh/known_hosts
 	chezmoi add --encrypt $(HOME)/.ssh/authorized_keys
+	chezmoi add $(HOME)/.emacs
