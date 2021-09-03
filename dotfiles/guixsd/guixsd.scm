@@ -655,6 +655,10 @@ location / {
                                                       (external_labels
                                                        (monitor . "codelab-monitor"))))))))))
 
+                         (service prometheus-node-exporter-service-type
+                                  (prometheus-node-exporter-configuration
+                                   (web-listen-address "127.0.0.1:9100")))
+
                          (service openssh-service-type
                                   (openssh-configuration
                                    (authorized-keys
