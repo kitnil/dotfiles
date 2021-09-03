@@ -286,10 +286,10 @@ then
     source "$HOME/.nix-profile/share/bash-completion/completions/ipmi"
 fi
 
-# if [[ -e "${HOME}/.bash.d/nix.bash" ]]
-# then
-#     source "${HOME}/.bash.d/nix.bash"
-# fi
+if [[ -e "${HOME}/.bash.d/nix.bash" ]]
+then
+    source "${HOME}/.bash.d/nix.bash"
+fi
 
 rg()
 {
@@ -1269,6 +1269,745 @@ docker_run_ansible()
             --rm -it quay.io/ansible/molecule:2.22 sh
 }
 
+
+alias bash-pure='env -i "$(command -v bash)" --login --noprofile --norc'
+
+alias root-shedule="sudo herd schedule mcron 10"
+alias tmux-reload="tmux source-file ~/.tmux.conf"
+
+less_color()
+{
+    LESSOPEN="| ~/.guix-profile/bin/src-hilite-lesspipe.sh %s"
+    export LESSOPEN
+
+    LESS=' -R '
+    export LESS
+}
+
+container()
+{
+    case "$1" in
+        lint)
+            docker run --rm --interactive hadolint/hadolint:v1.17.2-8-g65736cb-debian < Dockerfile
+            ;;
+        ip)
+            docker ps --format='{{.ID}}' \
+                | xargs docker inspect \
+                | jq -r '.[] | [.NetworkSettings.Networks.bridge.IPAddress, .Config.Image] | @tsv'
+            ;;
+        intr-list)
+            mjru-docker-list-intr
+            ;;
+        intr-pull)
+            group="$1" # For example: “mail”.
+            for repo in $docker_list_intr; do
+                docker pull "docker-registry.intr/$repo"
+            done
+            ;;
+        intr-ps)
+            ANSIBLE_NOCOLOR=1 ansible swarm -m shell -a 'docker ps --no-trunc' --become --ask-become-pass
+            ;;
+        *)
+            docker "$@"
+            ;;
+    esac
+}
+if [ -f /run/current-system/profile/etc/bash_completion.d/docker ]; then
+    source /run/current-system/profile/etc/bash_completion.d/docker
+    complete -F _docker container
+fi
+
+ip_to_decimal()
+{
+    ip="$1" # e.g. 127.0.0.1
+    perl -le "print unpack(\"N\", $ip)"
+}
+
+alias random-pass="perl -le 'print map { (a..z)[rand 26] } 1..8'"
+
+urlescape ()
+{
+    perl -MURI::Escape -lne 'print uri_escape($_)' <<< "$1"
+}
+
+urlunescape ()
+{
+    perl -MURI::Escape -lne 'print uri_unescape($_)' <<< "$1"
+}
+
+build_farm()
+{
+    emacsclient -e "(wi-build-farm \"$1\")"
+}
+
+find_touch_go()
+{
+    find . -name '*.go' -exec touch {} +
+}
+
+function password()
+{
+    if [ "$#" -ne 2 ]
+    then
+        (
+            cd "$HOME/.password-store" || exit
+            pass show "$(find . -not -path './.gitattributes' -not -path './.git/*' -type f | sed 's@\./@@' | sed 's@\.gpg@@' | fzf)" \
+                | xclip -i -sel p -f | xclip -i -sel c
+        )
+    else
+        pass "$@"
+    fi
+}
+if [ -f "$HOME/.guix-profile/etc/bash_completion.d/pass" ]; then
+    source "$HOME/.guix-profile/etc/bash_completion.d/pass"
+    complete -o filenames -F _pass password
+fi
+alias password='EDITOR=zile password'
+
+genpass()
+{
+    tr -dc 'a-zA-Z0-9_#@.-' < /dev/urandom | head -c "${1:-14}"
+}
+
+pass_list_all()
+{
+    (
+        cd ~/.password-store || exit
+        for password in $(find . -not -path './.gitattributes' -not -path './.git/*' -type f | sed 's@\./@@' | sed 's@\.gpg@@'); do
+            pass show "$password" | tr -d '\n'
+            echo
+        done
+    )
+}
+
+gmail_mail()
+{
+    # Source: https://www.commandlinefu.com/commands/view/3380/check-your-unread-gmail-from-the-command-line
+    curl -u "go.wigust:$(pass show email/gmail/go.wigust)" \
+            --silent "https://mail.google.com/mail/feed/atom" \
+        | tr -d '\n' \
+        | awk -F '<entry>' '{for (i=2; i<=NF; i++) {print $i}}' \
+        | sed -n "s/<title>\(.*\)<\/title.*name>\(.*\)<\/name>.*/\2 - \1/p"
+
+    # Alternative variant:
+    # Checks your unread Gmail from the command line
+    # curl -u username --silent "https://mail.google.com/mail/feed/atom" | perl -ne 'print "\t" if /<name>/; print "$2\n" if /<(title|name)>(.*)<\/\1>/;
+
+}
+
+gmail_send()
+{
+    rcpt="$1"
+
+    # Send email with curl and gmail
+    curl -n --ssl-reqd --mail-from "<go.wigust@gmail.com>" --mail-rcpt "$rcpt" --url smtps://smtp.gmail.com:465 -T file.txt
+}
+
+cmdfu()
+{
+    curl -L "http://www.commandlinefu.com/commands/matching/$*/$(echo -n "$@" | openssl base64)/plaintext";
+}
+
+clfavs()
+{
+    #  backup all your commandlinefu.com favourites to a plaintext file 
+
+    URL="http://www.commandlinefu.com"
+    wget -O - --save-cookies c --post-data "username=$1&password=$2&submit=Let+me+in" $URL/users/signin
+    for i in $(seq 0 25 "$3"); do
+        wget -O - --load-cookies c "$URL/commands/favourites/plaintext/$i" >> "$4"
+    done
+    rm -f c
+}
+
+gnuplot_bash_history()
+{
+    HISTTIMEFORMAT='' history \
+        | awk '{a[$2]++}END{for(i in a){print a[i] " " i}}' \
+        | sort -rn \
+        | head > /tmp/cmds ; gnuplot -persist <<<'plot "/tmp/cmds" using 1:xticlabels(2) with boxes'
+}
+
+kill_xterm_on_display()
+{
+    display="$1"
+    for pid in $(pidof xterm); do
+        if [[ $1 = $(tr '\000' '\n' < "/proc/$pid/environ" | grep "$display" | cut -d= -f 2) ]]; then
+            kill "$pid"
+        fi
+    done
+}
+
+docker_top_strace()
+{
+    container="$1"
+    docker top "$container" \
+        | awk '{ print $2 }' \
+        | tail -n +2 \
+        | sed 's/^/-p/' \
+        | xargs strace -s 10000 -f -o /tmp/docker.strace
+}
+
+active_hms()
+{
+    curl -s --user jenkins:"$(pass show majordomo/private/jenkins/jenkins)" nginx{1,2}-mr:8080/hms | jq -r .active | uniq
+}
+
+jenkins_build_project_branch()
+{
+    dir="$1"
+    project="$2"
+    branch="$3"
+    url="$JENKINS_URL/job/$dir/job/$project/job/$branch"
+
+    curl -X POST                                        \
+         -u "admin:$(pass show jenkins/admin-api-key)"  \
+         "$url/build"
+
+    echo "$url/lastBuild/console"
+}
+
+# Create a new directory and enter it
+mkd()
+{
+	mkdir -p "$@"
+	cd "$@" || exit
+}
+
+# Make a temporary directory and enter it
+tmpd()
+{
+	local dir
+	if [ $# -eq 0 ]; then
+		dir=$(mktemp -d)
+	else
+		dir=$(mktemp -d -t "${1}.XXXXXXXXXX")
+	fi
+	cd "$dir" || exit
+}
+
+# Run `dig` and display the most useful info
+digga()
+{
+	dig +nocmd "$1" any +multiline +noall +answer
+}
+
+alias feh-bg="feh --borderless --image-bg black --auto-zoom --draw-filename"
+
+lsp_mode()
+{
+    docker run --tty --interactive --rm                                                 \
+            --volume "$PWD:/mnt/workspace"                                              \
+            --volume /etc/localtime:/etc/localtime:ro                                   \
+            --volume "$HOME/.gnupg:${HOME}/.gnupg"                                      \
+            --volume /var/run/dbus/system_bus_socket:/var/run/dbus/system_bus_socket    \
+            --volume /tmp/.X11-unix:/tmp/.X11-unix                                      \
+            --volume /etc/machine-id:/etc/machine-id:ro                                 \
+            --volume /home/oleg/majordomo/hms:/src                                      \
+            --volume "$PWD/emacs.d/:/home/lsp/.emacs.d"                                 \
+            --user 1000:1000                                                            \
+            --env DISPLAY="$DISPLAY"                                                    \
+            --network=host                                                              \
+            "${1:-yyoncho/lsp-emacs-docker}" emacs
+}
+
+git_all_history()
+{
+    git log --oneline | awk '{ print $1 }' | xargs git show
+}
+
+git_grep_removed()
+{
+    git log --full-diff  -G '\*\*REMOVED\*\*'
+}
+
+git_prune()
+{
+    git reflog expire --expire=now --all && git gc --prune=now --aggressive
+}
+
+bfg()
+{
+    case "$1" in
+        pass)
+            command bfg --replace-text <(git-pass-secrets)
+            ;;
+    esac
+}
+
+atoi()
+{
+    #Returns the integer representation of an IP arg, passed in ascii dotted-decimal notation (x.x.x.x)
+    IP=$1; IPNUM=0
+    for (( i=0 ; i<4 ; ++i )); do
+        ((IPNUM+=${IP%%.*}*$((256**$((3-i))))))
+        IP=${IP#*.}
+    done
+    echo $IPNUM
+}
+
+itoa()
+{
+    #returns the dotted-decimal ascii form of an IP arg passed in integer format
+    echo -n $(($(($(($((${1}/256))/256))/256))%256)).
+    echo -n $(($(($((${1}/256))/256))%256)).
+    echo -n $(($((${1}/256))%256)).
+    echo $((${1}%256))
+}
+
+pactl_ladspa()
+{
+    # TODO: LADSPA_PATH=/gnu/store/…-swh-plugins/lib/ladspa
+    # https://github.com/gotbletu/shownotes/blob/master/pulseaudio-dynamic-range-compression.md
+    pactl load-module module-ladspa-sink master=0 sink_name=compressor-stereo plugin=sc4_1882 label=sc4 control=1,1.5,401,-30,20,5,12
+    pactl load-module module-ladspa-sink master=1 sink_name=compressor-stereo plugin=sc4_1882 label=sc4 control=1,1.5,401,-30,20,5,12
+}
+
+docker_openresty()
+{
+    docker run                                  \
+            --entrypoint ''                     \
+            --interactive                       \
+            --name openresty                    \
+            --network=host                      \
+            --tty                               \
+            openresty/openresty:bionic bash
+}
+
+nix_python_with_pkgs()
+{
+    nix-shell -p python "python.withPackages (python-packages: with python-packages; [ $* ])"
+}
+
+bpython()
+{
+    nix-shell -p python3 "python3.withPackages (python-packages: with python-packages; [ bpython ])" --run bpython
+}
+
+http_prompt()
+{
+    nix-shell -I "$HOME/.nix-defexpr/channels/nixos-unstable"   \
+              -p http-prompt                                    \
+              --run "http-prompt $@"
+}
+
+nix_python2_with_pkgs()
+{
+    nix-shell -p python2 "python2.withPackages (python-packages: with python-packages; [ $* ])"
+}
+
+nix_env_clean()
+{
+    awk '/#/ { print $2 }' "$HOME/manifest.nix" | xargs nix-env -e
+}
+
+nix()
+{
+    case "$1" in
+        config)
+            nano "$HOME"/.config/nix/nix.conf
+            ;;
+        manifest)
+            NIXPKGS_CONFIG="$HOME/.local/share/chezmoi/dotfiles/nix/config.nix" \
+            NIX_PATH=nixpkgs="$HOME/.nix-defexpr/channels/nixos-unstable" \
+            nix-env --install '.*' -f "$HOME/.local/share/chezmoi/dotfiles/nix/manifest.nix" "${@:2}"
+            ;;
+        flake)
+            if [[ $2 == init ]]
+            then
+                case "$3" in
+                    majordomo) # TODO Don't use local file-system in "nix flake init majordomo".
+                        (
+                            current_directory="$PWD" || exit 1
+                            cd "$HOME"/majordomo/_ci/nixops-future-kvm
+                            nix-shell --run "bash -c 'cd $current_directory; nix flake init -t $HOME/majordomo/nix/templates#flakeViaNixShell'"
+                        )
+                        ;;
+                    *)
+                        command nix flake init "${@:3}"
+                        ;;
+                esac
+
+            else
+                command nix flake "${@:2}"
+            fi
+            ;;
+        repl)
+            nix-repl "${@:2}"
+            ;;
+        *)
+            command nix "$@"
+            ;;
+    esac
+}
+
+firefox()
+{
+    case "$1" in
+        kill)
+            pgrep -fa firefox-wrapped | grep -v 'test' | cut -d ' ' -f 1 | xargs kill
+            ;;
+        sync)
+            rsync --archive --progress "$HOME/.mozilla/firefox/j56dvo43.default-1520714705340" vm1.wugi.info:.mozilla/firefox/
+            ;;
+        *)
+            command firefox "$@"
+    esac
+}
+
+firefox_esr_debian()
+{
+    xhost +local:
+
+    docker run                                  \
+      --tty                                     \
+      --interactive                             \
+      --rm                                      \
+      --name                                    \
+      firefox-java                              \
+      --env                                     \
+      DISPLAY="$DISPLAY"                        \
+      --volume                                  \
+      /tmp/.X11-unix:/tmp/.X11-unix             \
+      cmaohuang/firefox-java                    \
+      /usr/bin/firefox                          \
+      --new-instance
+}
+
+mitmproxy()
+{
+    PYTHONPATH='' command mitmproxy --set ssl_insecure=true "$@"
+}
+
+alias ssh-clean='find ~/.ssh -type s -delete'
+
+alias pass='EDITOR=zile pass'
+alias ansible-vault='EDITOR=zile ansible-vault'
+
+alias sw1-dh507='connect sw1-dh507'
+alias sw1-mr11="connect sw1-mr11"
+
+alias nix='EDITOR=less VISUAL="emacsclient -cn" nix'
+
+alias dotfiles='EDITOR=zile dotfiles'
+if [ -f "$HOME/.nix-profile/share/bash-completion/completions/chezmoi.bash" ]; then
+    source "$HOME/.nix-profile/share/bash-completion/completions/chezmoi.bash"
+    complete -o default -F __start_chezmoi dotfiles
+fi
+
+if [ -f "$HOME/.guix-profile/etc/bash_completion.d/restic" ]; then
+    source "$HOME/.guix-profile/etc/bash_completion.d/restic"
+    complete -o default -F __start_restic backup
+fi
+
+fd()
+{
+    if [ "$#" -ne 2 ]
+    then
+        command fd . "$1"
+    else
+        command fd "$@"
+    fi
+}
+
+mycut()
+{
+    command cut --characters="-$(tput cols)" "$@"
+}
+
+src_clean()
+{
+    for directory in src archive/src; do
+        command src-clean --directory=$directory --author=go.wigust@gmail.com --ignore=src/dotfiles,src/rofi-themes,src/rfc,src/guix-videos,src/guile,src/fdroiddata,src/emacs-tramp-auto-auth,src/docker-nextcloud,archive/src/sendnotify,archive/src/php,archive/src/my-guix,archive/src/malware-scanner,archive/src/linux-panic,archive/src/linux,archive/src/guile-shepherd,archive/src/groovy,archive/src/gentoo,archive/src/freebsd,archive/src/cpython,archive/src/bash,archive/src/arch-packages,archive/src/arch-community
+    done
+}
+
+transmission_remote()
+{
+    case "$1" in
+        clean)
+            command transmission-remote --list | awk '$2 == "100%" { system("transmission-remote --torrent " $1 " --remove") }'
+            ;;
+        *)
+            command transmission-remote "$@"
+            ;;
+    esac
+}
+
+rg()
+{
+    case "$1" in
+        dist)
+            command rg "${@:2}" "$HOME"/{src/nixpkgs-master,src/guix,archive/src/{gentoo,freebsd,openbsd-ports,arch-{community,packages}}}
+            ;;
+        *)
+            command rg --no-heading "$@"
+            ;;
+    esac
+}
+
+if [ -f "$HOME/.bash.d/slack.bash" ]
+then
+    # shellcheck source=.bash.d/mjru.bash
+    source "$HOME/.bash.d/slack.bash"
+fi
+
+if [ -f "$HOME/.bash.d/mjru.bash" ]
+then
+    # shellcheck source=.bash.d/mjru.bash
+    source "$HOME/.bash.d/mjru.bash"
+fi
+
+chezmoi()
+{
+    case "$1" in
+        add-all)
+            for file in $(command chezmoi diff | awk '/a\/home/ { print $NF }' | sed 's/^a//'); do
+                command chezmoi add "$file"
+            done
+            ;;
+        *)
+            command chezmoi "$@"
+            ;;
+    esac
+
+}
+
+if [ -f "$HOME/.bash_completion.d/mail" ]
+then
+    source "$HOME/.bash_completion.d/mail"
+fi
+
+if [ -f "$HOME/.bash_completion.d/connect" ]
+then
+    source "$HOME/.bash_completion.d/connect"
+fi
+
+slack()
+{
+    curl --request POST                                                                                 \
+            --header 'Content-type: application/json'                                                   \
+            --data "{\"channel\":\"${SLACK_CHANNEL:-ci}\", \"attachments\":[{\"color\":\"#${SLACK_COLOR:-ff0000}\",\"text\":\"$@\"}]}"                            \
+            https://hooks.slack.com/services/"$(pass show slack.com/home-s2x8742.slack.com/webhook/ci)"
+}
+
+gitlab()
+{
+    GITLAB_API_PRIVATE_TOKEN="$(pass show majordomo/private/gitlab.intr/tokens/terraform)"
+    GITLAB_API_ENDPOINT="https://gitlab.intr/api/v4"
+    GITLAB_API_HTTPARTY_OPTIONS="{verify: false}"
+
+    case "$1" in
+        create_project)
+            group="$2"
+            name="$3"
+            command gitlab create_project "$name" "{visibility: public, namespace_id: $group}"
+            echo "https://gitlab.intr/$group/$name"
+            echo "git@gitlab.wugi.info:$group/$name.git"
+            ;;
+        *)
+            command gitlab "$@"
+    esac
+}
+
+youtube_dl_to_org()
+{
+    jq --join-output '.entries[] | "- [ ] [[https://www.youtube.com/watch?v=", .id, "]", "[", .title, "]]\n"' "$@"
+}
+
+gita()
+{
+    case "$1" in
+        week)
+            PAGER='' command gita super log --format="%ai %H %s" --date=relative --since="${2:-1} weeks ago" "${@:3}"
+            ;;
+        *)
+            command gita "$@"
+            ;;
+    esac
+}
+
+alias godaddy="GODADDY_DOMAIN_NAME=wugi.info godaddy"
+wugi.info()
+{
+    case "$1" in
+        a)
+            godaddy list a
+            ;;
+        cname)
+            godaddy list cname
+            ;;
+        ns)
+            godaddy list ns
+            ;;
+    esac
+}
+
+stumpwm_refcard()
+{
+    (
+        cd "$HOME/src/guix-maintenance/doc/refcard" || exit 1
+        # convert -density 200 -rotate 90 "$(guix build -f build.scm)"/stumpwm-refcard.pdf - | zathura -
+        case "$1" in
+            wallpaper)
+                convert -trim -quality 100 -negate -density 130 -rotate 90 "$(guix build -f build.scm)"/stumpwm-refcard.pdf /tmp/out.png; feh --bg-center /tmp/out.png
+                ;;
+            *)
+                zathura "$(guix build -f build.scm)"/stumpwm-refcard.pdf
+        esac
+    )
+}
+
+ci()
+{
+    "$BROWSER" "$CI"
+}
+
+elktail()
+{
+    case "$1" in
+        --help|-h)
+            command elktail --help
+            echo "\
+
+  general commands
+    nginx         show nginx logs
+    hms           show log messages from hms index
+    trace         trace OPERATION_IDENTITY in hms index
+"
+            ;;
+        nginx)
+            command elktail -url 'http://es:9200' -i 'nginx-*' -n 10000 -l -f '%remote_addr %hostname %path %method %code %http_host'
+            ;;
+        hms)
+            # log_level:DEBUG
+            # log_level:ERROR
+            # stack:"$(curl --silent --user "jenkins:$(pass show majordomo/private/jenkins/jenkins)" -X GET http://nginx1.intr:8080/hms | jq --raw-output .active)"
+            command elktail \
+                    -url 'http://es:9200' \
+                    -i 'hms-*' \
+                    -n 10000 \
+                    -l \
+                    -f '%@timestamp %log_level %stack %sleuth_trace %log_message' \
+                    -a "$(printf "%s" "$(date --utc '+%FT%H:%M:00.000Z' --date '4 hours ago')")" \
+                    "${@:3}" \
+                | grep --invert-match "ftp-user not found by" \
+                | grep --invert-match "org.apache.catalina.connector.RequestFacade" \
+                | grep --invert-match "Running the evict task with compensationTime" \
+                | grep --invert-match "Resolving eureka endpoints via configuration" \
+                | grep --invert-match "quotaUsed: " \
+                | grep --invert-match "unixAccounts quotaReport for host"
+            ;;
+        trace)
+            (
+                set -x
+                command elktail \
+                        -url 'http://es:9200' \
+                        -i 'hms-*' \
+                        -n 10000 \
+                        -l \
+                        -f '%@timestamp %log_level %stack %sleuth_trace %log_message' \
+                        -a "$(printf "%s" "$(date --utc '+%FT%H:%M:00.000Z' --date '5 hours ago')")" \
+                        sleuth_trace:"$2"
+            )
+            ;;
+        *)
+            command elktail "$@"
+            ;;
+    esac
+}
+
+domain()
+{
+    (
+        cd $HOME/bin || exit 0
+        ./domain.yml
+    )
+}
+
+brute()
+{
+    sudo grep 'Connection closed' /var/log/messages \
+        | grep --perl-regexp '(?:[0-9]{1,3}\.){3}[0-9]{1,3}' --only-matching \
+        | grep --invert-match 127.0.0.1 \
+        | uniq \
+        | fzf \
+        | xargs sudo ipset add brute
+}
+
+docker()
+{
+    case "$1" in
+        deploy)
+            command docker rm -f novnc
+            command docker rm -f monitoror
+            monitoror run
+            vnc client novnc
+            ;;
+        *)
+            command docker "$@"
+    esac
+}
+
+lsgpu()
+{
+    printf "Memory: %s\n" "$(glxinfo | grep -i -o 'device|memory\|[0-9]\{1,12\} MB' | head -n 1)"
+}
+
+ipmi()
+{
+    IPMI_PASSWORD="$(pass show majordomo/public/majordomo/ipmi/ADMIN)" command ipmi "$@"
+}
+
+efi()
+{
+    if [ -d /sys/firmware/efi ]
+    then
+        echo UEFI
+    else
+        echo BIOS
+    fi
+}
+
+mediatomb()
+{
+    case "$1" in
+        start)
+            command mediatomb -e enp34s0 -f Videos/.mediatomb "${@:2}"
+            ;;
+        *)
+            command mediatomb "$@"
+    esac
+}
+
+PERL5LIB="/home/oleg/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
+PERL_LOCAL_LIB_ROOT="/home/oleg/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
+PERL_MB_OPT="--install_base \"/home/oleg/perl5\""; export PERL_MB_OPT;
+PERL_MM_OPT="INSTALL_BASE=/home/oleg/perl5"; export PERL_MM_OPT;
+
+if [ -z $IN_NIX_SHELL ]
+then
+    if [ -e $HOME/.guix-profile/lib/bash/libguile-bash.so ]
+    then
+        enable -f "$HOME"/.guix-profile/lib/bash/libguile-bash.so scm
+        if [ -e "$HOME"/.bash.d/bash.scm ]
+        then
+            GUILE_AUTO_COMPILE=0 scm "$HOME"/.bash.d/bash.scm
+        fi
+    fi
+fi
+
+if [[ -e $HOME/.guix-profile/bin/chezmoi ]]
+then
+    eval "$(chezmoi completion bash)"
+fi
+
+export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+
+if [ -n $WAYLAND_DISPLAY ]
+then
+    alias feh=imv
+fi
 
 ssh_sudo()
 {

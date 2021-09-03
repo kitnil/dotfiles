@@ -10,10 +10,5 @@ then
     . "${HOME}/.bash_profile"
 fi
 
-if [ -e "${HOME}/.bashrc" ]
-then
-    . "${HOME}/.bashrc"
-fi
-
 "$HOME/.guix-profile/bin/xclickroot" -r xmenu.sh &
 exec -a stumpwm /bin/sh --login -c '/run/current-system/profile/bin/sbcl --load /home/oleg/bin/my-stumpwm'
