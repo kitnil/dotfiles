@@ -678,7 +678,7 @@ location / {
                                                           (job_name . "node"))
                                                          ((static_configs
                                                            .
-                                                           #(((targets . #("127.0.0.1.9095")))))
+                                                           #(((targets . #("127.0.0.1:9095")))))
                                                           (honor_labels . #t)
                                                           (job_name . "pushgateway"))))
                                                       (rule_files . #(,prometheus-alertmanager-node))
