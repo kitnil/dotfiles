@@ -2,7 +2,11 @@
   #:use-module (guix build utils)
   #:use-module (guix ui)
   #:use-module (ice-9 format)
-  #:export (run-vm-guix))
+  #:use-module (ice-9 pretty-print)
+  #:use-module (ice-9 rdelim)
+  #:use-module (json)
+  #:export (json-to-scm
+            run-vm-guix))
 
 (define %home
   (and=> (getenv "HOME")
@@ -25,3 +29,9 @@
                                "-p" "10022"
                                "localhost")))
   (display-hint (string-join '("vnc" "client" "5906"))))
+
+(define (json-to-scm)
+  (pretty-print
+   (json-string->scm
+    (with-input-from-port (current-input-port)
+      read-string))))

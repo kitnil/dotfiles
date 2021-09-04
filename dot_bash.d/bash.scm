@@ -20,3 +20,6 @@
 
 (define-bash-function (run-vm-guix)
   ((@ (bash) run-vm-guix)))
+
+(define-bash-function (json-to-scm)
+  ((@ (bash) json-to-scm)))
