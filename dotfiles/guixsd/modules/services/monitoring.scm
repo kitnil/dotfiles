@@ -28,13 +28,21 @@
   #:use-module (srfi srfi-1)
   #:export (monitoring-service
             prometheus-configuration
-            prometheus-service-type))
+            prometheus-service-type
+
+            prometheus-alertmanager-configuration
+            prometheus-alertmanager-service-type))
 
 ;;; Commentary:
 ;;;
 ;;; This module provides a service definition for the monitoring service.
 ;;;
 ;;; Code:
+
+
+;;;
+;;; Prometheus
+;;;
 
 (define-record-type* <prometheus-configuration>
   prometheus-configuration make-prometheus-configuration
@@ -114,5 +122,96 @@
    (default-value (prometheus-configuration))
    (description
     "Run the prometheus.")))
+
+
+;;;
+;;; Prometheus Alertmanager
+;;;
+
+(define-record-type* <prometheus-alertmanager-configuration>
+  prometheus-alertmanager-configuration make-prometheus-alertmanager-configuration
+  prometheus-alertmanager-configuration?
+  (user           prometheus-alertmanager-configuration-user           ;string
+                  (default "prometheus-alertmanager"))
+  (group          prometheus-alertmanager-configuration-group          ;string
+                  (default "prometheus-alertmanager"))
+  (prometheus-alertmanager   prometheus-alertmanager-configuration-prometheus-alertmanager   ;string
+                  (default ""))
+  (listen-address prometheus-alertmanager-configuration-listen-address ;string
+                  (default "0.0.0.0:9093"))
+  (config-file    prometheus-alertmanager-configuration-config-file    ;string
+                  (default ""))
+  (data-path      prometheus-alertmanager-configuration-data-path      ;string
+                  (default "/var/lib/prometheus-alertmanager")))
+
+(define (prometheus-alertmanager-account configuration)
+  ;; Return the user accounts and user groups for CONFIG.
+  (let ((prometheus-alertmanager-user
+         (prometheus-alertmanager-configuration-user configuration))
+        (prometheus-alertmanager-group
+         (prometheus-alertmanager-configuration-group configuration)))
+    (list (user-group
+           (name prometheus-alertmanager-user)
+           (system? #t))
+          (user-account
+           (name prometheus-alertmanager-user)
+           (group prometheus-alertmanager-group)
+           (system? #t)
+           (comment "prometheus-alertmanager privilege separation user")
+           (home-directory
+            (string-append "/var/run/" prometheus-alertmanager-user))
+           (shell #~(string-append #$shadow "/sbin/nologin"))))))
+
+(define (prometheus-alertmanager-activation config)
+  "Return the activation GEXP for CONFIG."
+  (with-imported-modules '((guix build utils))
+    #~(begin
+        (let ((data-path
+               #$(prometheus-alertmanager-configuration-data-path config))
+              (user
+               (getpw #$(prometheus-alertmanager-configuration-user config)))
+              (group
+               (getpw #$(prometheus-alertmanager-configuration-group config))))
+          (and=> data-path mkdir-p)
+          (chown data-path
+                 (passwd:uid user)
+                 (group:gid group))))))
+
+(define prometheus-alertmanager-shepherd-service
+  (match-lambda
+    (($ <prometheus-alertmanager-configuration>
+        user group prometheus-alertmanager listen-address config-file data-path)
+     (list
+      (shepherd-service
+       (provision '(prometheus-alertmanager))
+       (documentation "Run prometheus-alertmanager.")
+       (requirement '())
+       (start #~(make-forkexec-constructor
+                 (list #$prometheus-alertmanager
+                       (string-append "--web.listen-address=" #$listen-address)
+                       (string-append "--config.file=" #$config-file)
+                       (string-append "--storage.path=" #$data-path))
+                 #:user #$user
+                 #:group #$group
+                 #:log-file "/var/log/prometheus-alertmanager.log"
+                 #:environment-variables
+                 '("SSL_CERT_DIR=/run/current-system/profile/etc/ssl/certs"
+                   "SSL_CERT_FILE=/run/current-system/profile/etc/ssl/certs/ca-certificates.crt")))
+       (respawn? #f)
+       (stop #~(make-kill-destructor)))))))
+
+(define prometheus-alertmanager-service-type
+  (service-type
+   (name 'prometheus-alertmanager)
+   (extensions
+    (list (service-extension shepherd-root-service-type
+                             prometheus-alertmanager-shepherd-service)
+          (service-extension account-service-type
+                             prometheus-alertmanager-account)
+          (service-extension activation-service-type
+                             prometheus-alertmanager-activation)))
+   (default-value (prometheus-alertmanager-configuration))
+   (description
+    "Run the Prometheus Alertmanager.")))
 
 ;;; monitoring.scm ends here
