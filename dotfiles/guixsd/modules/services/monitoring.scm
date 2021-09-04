@@ -61,7 +61,9 @@
   (config-file    prometheus-configuration-config-file    ;string
                   (default ""))
   (data-path      prometheus-configuration-data-path      ;string
-                  (default "/var/lib/prometheus")))
+                  (default "/var/lib/prometheus"))
+  (arguments      prometheus-configuration-arguments      ;list of strings
+                  (default '())))
 
 (define (prometheus-account configuration)
   ;; Return the user accounts and user groups for CONFIG.
@@ -92,7 +94,7 @@
 
 (define prometheus-shepherd-service
   (match-lambda
-    (($ <prometheus-configuration> user group prometheus listen-address config-file data-path)
+    (($ <prometheus-configuration> user group prometheus listen-address config-file data-path arguments)
      (list
       (shepherd-service
        (provision '(prometheus))
@@ -102,7 +104,8 @@
                  (list #$prometheus
                        (string-append "--web.listen-address=" #$listen-address)
                        (string-append "--config.file=" #$config-file)
-                       (string-append "--storage.tsdb.path=" #$data-path))
+                       (string-append "--storage.tsdb.path=" #$data-path)
+                       #$@arguments)
                  #:user #$user
                  #:group #$group
                  #:log-file "/var/log/prometheus.log"
