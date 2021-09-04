@@ -148,7 +148,9 @@
   (config-file    prometheus-alertmanager-configuration-config-file    ;string
                   (default ""))
   (data-path      prometheus-alertmanager-configuration-data-path      ;string
-                  (default "/var/lib/prometheus-alertmanager")))
+                  (default "/var/lib/prometheus-alertmanager"))
+  (arguments      prometheus-alertmanager-configuration-arguments      ;list of strings
+                  (default '())))
 
 (define (prometheus-alertmanager-account configuration)
   ;; Return the user accounts and user groups for CONFIG.
@@ -186,7 +188,7 @@
 (define prometheus-alertmanager-shepherd-service
   (match-lambda
     (($ <prometheus-alertmanager-configuration>
-        user group prometheus-alertmanager listen-address config-file data-path)
+        user group prometheus-alertmanager listen-address config-file data-path arguments)
      (list
       (shepherd-service
        (provision '(prometheus-alertmanager))
@@ -196,7 +198,8 @@
                  (list #$prometheus-alertmanager
                        (string-append "--web.listen-address=" #$listen-address)
                        (string-append "--config.file=" #$config-file)
-                       (string-append "--storage.path=" #$data-path))
+                       (string-append "--storage.path=" #$data-path)
+                       #$@arguments)
                  #:user #$user
                  #:group #$group
                  #:log-file "/var/log/prometheus-alertmanager.log"
