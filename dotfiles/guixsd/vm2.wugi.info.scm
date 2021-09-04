@@ -3,7 +3,7 @@
 
 (use-modules (gnu))
 (use-service-modules certbot networking mail monitoring ssh sysctl web)
-(use-package-modules certs mail screen ssh linux)
+(use-package-modules admin certs mail screen ssh linux)
 
 (use-modules (config)
              (packages mail)
@@ -29,21 +29,33 @@
                         (type "ext4"))
                       %base-file-systems))
 
+  (groups (append (list (user-group
+                         (name "alertmanager")
+                         (system? #t)))
+                  %base-groups))
+
   ;; This is where user accounts are specified.  The "root"
   ;; account is implicit, and is initially created with the
   ;; empty password.
-  (users (cons (user-account
-                (name "oleg")
-                (comment "Oleg Pykhalov")
-                (group "users")
+  (users (append (list (user-account
+                        (name "oleg")
+                        (comment "Oleg Pykhalov")
+                        (group "users")
 
-                ;; Adding the account to the "wheel" group
-                ;; makes it a sudoer.  Adding it to "audio"
-                ;; and "video" allows the user to play sound
-                ;; and access the webcam.
-                (supplementary-groups '("wheel"
-                                        "audio" "video")))
-               %base-user-accounts))
+                        ;; Adding the account to the "wheel" group
+                        ;; makes it a sudoer.  Adding it to "audio"
+                        ;; and "video" allows the user to play sound
+                        ;; and access the webcam.
+                        (supplementary-groups '("wheel"
+                                                "audio" "video")))
+
+                       (user-account
+                        (name "alertmanager")
+                        (group "alertmanager")
+                        (system? #t)
+                        (comment "prometheus-alertmanager privilege separation user")
+                        (shell #~(string-append #$shadow "/sbin/nologin"))))
+                 %base-user-accounts))
 
   (hosts-file
    (plain-file
