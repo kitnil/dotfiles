@@ -144,7 +144,8 @@ push \"route 10.0.0.0 255.255.255.0\"
 localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBHVSCVdQEHUaTnBqA2nKQXRmo/74DgnyCyWiOI/f5G7qYUMfDiJqYHqh7YngyxIG9iakEUOaNtr6ljHyBXhlaPQ="))))
 
                           (service mail-aliases-service-type '(("wigust" "oleg")
-                                                               ("admin" "oleg")))
+                                                               ("admin" "oleg")
+                                                               ("alertmanager" "oleg")))
                           (service exim-service-type
                                    (exim-configuration
                                     (package exim-lmtp)
