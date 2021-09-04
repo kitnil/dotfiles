@@ -726,8 +726,7 @@ location / {
                                                      .
                                                      #((("name" . "smtp")
                                                         ("email_configs" .
-                                                         #((("to" . "alertmanager@wugi.info")
-                                                            ("text" . "test-message"))))))))
+                                                         #((("to" . "alertmanager@wugi.info"))))))))
                                                   #:pretty #t))))))))))
 
                          (service prometheus-pushgateway-service-type
