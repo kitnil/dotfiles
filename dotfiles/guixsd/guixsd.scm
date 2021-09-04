@@ -6,6 +6,7 @@
              (guix modules)
              (guix inferior)
              (ice-9 format)
+             (ice-9 rdelim)
              (json)
              (srfi srfi-1)
              (srfi srfi-26))
@@ -701,15 +702,23 @@ location / {
                                      (with-extensions (list guile-json-4)
                                        (with-imported-modules (source-module-closure '((json builder)))
                                          #~(begin
-                                             (use-modules (json builder))
+                                             (use-modules (json builder)
+                                                          (ice-9 rdelim))
+                                             (define password
+                                               (string-trim-right
+                                                #$(if (file-exists? "/etc/prometheus-alertmanager/secrets")
+                                                      (with-input-from-file "/etc/prometheus-alertmanager/secrets"
+                                                        read-string)
+                                                      (begin (display "`/etc/prometheus-alertmanager/secrets' is missing.\n")
+                                                             "missing /etc/prometheus-alertmanager/secrets"))))
                                              (with-output-to-file #$output
                                                (lambda ()
                                                  (scm->json
                                                   `(("global"
-                                                     ("smtp_smarthost" . "smtp.wugi.info:25")
+                                                     ("smtp_smarthost" . "smtp.wugi.info:587")
                                                      ("smtp_from" . "alertmanager@wugi.info")
                                                      ("smtp_auth_username" . "alertmanager@wugi.info")
-                                                     ("smtp_auth_password" . "nosuchuser"))
+                                                     ("smtp_auth_password" . ,password))
                                                     ("route"
                                                      ("receiver" . "smtp")
                                                      ("group_by" . #("alertname" "datacenter" "app")))
