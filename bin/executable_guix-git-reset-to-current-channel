@@ -1,0 +1,37 @@
+#!/run/current-system/profile/bin/guile \
+--no-auto-compile -e (guix-git-reset-to-current-channel) -s
+!#
+
+(define-module (guix-git-reset-to-current-channel)
+  #:use-module (srfi srfi-1)
+  #:use-module (guix scripts describe)
+  #:use-module (guix channels)
+  #:use-module (ice-9 popen)
+  #:use-module (ice-9 rdelim)
+  #:export (guix-git-reset-to-current-channel
+            main))
+
+(define %home
+  (and=> (getenv "HOME")
+         (lambda (home)
+           home)))
+
+(define (guix-git-reset-to-current-channel)
+  (define profile (string-append %home "/.config/guix/current"))
+  (let ((current-guix-channel-commit
+         (channel-commit
+          (first
+           (filter (lambda (channel)
+                     (eq? (channel-name channel) 'guix))
+                   (profile-channels profile)))))
+        (password
+         (let* ((port   (open-pipe* OPEN_READ "pass" "show" "localhost/ssh/id_rsa_savannah"))
+                (output (read-string port)))
+           (close-port port)
+           (string-trim-right output #\newline))))
+    (system* "sshpass" "-Ppassphrase" (format #f "-p~a" password)
+             "git" "fetch" "origin")
+    (system* "git" "reset" "--hard" current-guix-channel-commit)))
+
+(define (main args)
+  (guix-git-reset-to-current-channel))
