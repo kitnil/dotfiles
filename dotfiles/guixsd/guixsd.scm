@@ -684,23 +684,30 @@ location / {
                                    (listen-address "127.0.0.1:9093")
                                    (prometheus-alertmanager "/home/oleg/.nix-profile/bin/alertmanager")
                                    (config-file
-                                    (plain-file "prometheus-alertmanager.json"
-                                                (scm->json-string
-                                                 `(("global"
-                                                    ("smtp_smarthost" . "smtp.wugi.info:25")
-                                                    ("smtp_from" . "alertmanager@wugi.info")
-                                                    ("smtp_auth_username" . "alertmanager@wugi.info")
-                                                    ("smtp_auth_password" . "nosuchuser"))
-                                                   ("route"
-                                                    ("receiver" . "smtp")
-                                                    ("group_by" . #("alertname" "datacenter" "app")))
-                                                   ;; ("templates" . #("/etc/alertmanager/templates/*.tmpl"))
-                                                   ("receivers"
-                                                    .
-                                                    #((("name" . "smtp")
-                                                       ("email_configs" .
-                                                        #((("to" . "alertmanager@wugi.info")
-                                                           ("text" . "test-message")))))))))))))
+                                    (computed-file
+                                     "prometheus-alertmanager.json"
+                                     (with-extensions (list guile-json-4)
+                                       (with-imported-modules (source-module-closure '((json builder)))
+                                         #~(begin
+                                             (use-modules (json builder))
+                                             (with-output-to-file #$output
+                                               (lambda ()
+                                                 (scm->json
+                                                  `(("global"
+                                                     ("smtp_smarthost" . "smtp.wugi.info:25")
+                                                     ("smtp_from" . "alertmanager@wugi.info")
+                                                     ("smtp_auth_username" . "alertmanager@wugi.info")
+                                                     ("smtp_auth_password" . "nosuchuser"))
+                                                    ("route"
+                                                     ("receiver" . "smtp")
+                                                     ("group_by" . #("alertname" "datacenter" "app")))
+                                                    ("receivers"
+                                                     .
+                                                     #((("name" . "smtp")
+                                                        ("email_configs" .
+                                                         #((("to" . "alertmanager@wugi.info")
+                                                            ("text" . "test-message"))))))))
+                                                  #:pretty #t))))))))))
 
                          (service openssh-service-type
                                   (openssh-configuration
