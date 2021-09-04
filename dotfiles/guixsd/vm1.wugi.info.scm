@@ -120,6 +120,7 @@ ServerAliveCountMax 3"))))))
                           (zabbix-agent-configuration
                            (server '("zabbix.wugi.info"))
                            (server-active '("zabbix.wugi.info"))))
+                 (service prometheus-node-exporter-service-type)
 
                  (service openvpn-service-type
                           (openvpn-configuration

@@ -77,6 +77,7 @@ oleg ALL=(ALL) NOPASSWD:ALL\n"))
                                                  (domains (list host))
                                                  (deploy-hook %nginx-deploy-hook)))
                                               (list "file.wugi.info"))))))
-                          (service zabbix-agent-service-type %vm-zabbix-agent-configuration))
+                          (service zabbix-agent-service-type %vm-zabbix-agent-configuration)
+                          (service prometheus-node-exporter-service-type))
                     (modify-services %base-services
                       (guix-service-type config => %guix-daemon-config-with-substitute-urls)))))

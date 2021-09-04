@@ -59,6 +59,7 @@ oleg ALL=(ALL) NOPASSWD:ALL\n"))
                               (openssh-configuration
                                (openssh openssh-sans-x)
                                (port-number 22)))
-                     (service zabbix-agent-service-type %vm-zabbix-agent-configuration))
+                     (service zabbix-agent-service-type %vm-zabbix-agent-configuration)
+                     (service prometheus-node-exporter-service-type))
                     (modify-services %base-services
                       (guix-service-type config => %guix-daemon-config-with-substitute-urls)))))

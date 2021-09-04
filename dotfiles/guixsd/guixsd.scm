@@ -665,7 +665,12 @@ location / {
                                                           (job_name . "prometheus"))
                                                          ((static_configs
                                                            .
-                                                           #(((targets . #("127.0.0.1:9100")))))
+                                                           #(((targets . #("127.0.0.1:9100"
+                                                                           "vm1.wugi.info"
+                                                                           "vm2.wugi.info"
+                                                                           "vm3.wugi.info"
+                                                                           "vm4.wugi.info"
+                                                                           "vm5.wugi.info")))))
                                                           (scrape_interval . "5s")
                                                           (job_name . "node"))
                                                          ((static_configs
