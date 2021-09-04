@@ -31,7 +31,10 @@
             prometheus-service-type
 
             prometheus-alertmanager-configuration
-            prometheus-alertmanager-service-type))
+            prometheus-alertmanager-service-type
+
+            prometheus-pushgateway-configuration
+            prometheus-pushgateway-service-type))
 
 ;;; Commentary:
 ;;;
@@ -213,5 +216,95 @@
    (default-value (prometheus-alertmanager-configuration))
    (description
     "Run the Prometheus Alertmanager.")))
+
+
+;;;
+;;; Prometheus Pushgateway
+;;;
+
+(define-record-type* <prometheus-pushgateway-configuration>
+  prometheus-pushgateway-configuration make-prometheus-pushgateway-configuration
+  prometheus-pushgateway-configuration?
+  (user           prometheus-pushgateway-configuration-user           ;string
+                  (default "prometheus-pushgateway"))
+  (group          prometheus-pushgateway-configuration-group          ;string
+                  (default "prometheus-pushgateway"))
+  (prometheus-pushgateway   prometheus-pushgateway-configuration-prometheus-pushgateway   ;string
+                  (default ""))
+  (listen-address prometheus-pushgateway-configuration-listen-address ;string
+                  (default "0.0.0.0:9091"))
+  (config-file    prometheus-pushgateway-configuration-config-file    ;string
+                  (default ""))
+  (data-path      prometheus-pushgateway-configuration-data-path      ;string
+                  (default "/var/lib/prometheus-pushgateway")))
+
+(define (prometheus-pushgateway-account configuration)
+  ;; Return the user accounts and user groups for CONFIG.
+  (let ((prometheus-pushgateway-user
+         (prometheus-pushgateway-configuration-user configuration))
+        (prometheus-pushgateway-group
+         (prometheus-pushgateway-configuration-group configuration)))
+    (list (user-group
+           (name prometheus-pushgateway-user)
+           (system? #t))
+          (user-account
+           (name prometheus-pushgateway-user)
+           (group prometheus-pushgateway-group)
+           (system? #t)
+           (comment "prometheus-pushgateway privilege separation user")
+           (home-directory
+            (string-append "/var/run/" prometheus-pushgateway-user))
+           (shell #~(string-append #$shadow "/sbin/nologin"))))))
+
+(define (prometheus-pushgateway-activation config)
+  "Return the activation GEXP for CONFIG."
+  (with-imported-modules '((guix build utils))
+    #~(begin
+        (let ((data-path
+               #$(prometheus-pushgateway-configuration-data-path config))
+              (user
+               (getpw #$(prometheus-pushgateway-configuration-user config)))
+              (group
+               (getpw #$(prometheus-pushgateway-configuration-group config))))
+          (and=> data-path mkdir-p)
+          (chown data-path
+                 (passwd:uid user)
+                 (group:gid group))))))
+
+(define prometheus-pushgateway-shepherd-service
+  (match-lambda
+    (($ <prometheus-pushgateway-configuration>
+        user group prometheus-pushgateway listen-address config-file data-path)
+     (list
+      (shepherd-service
+       (provision '(prometheus-pushgateway))
+       (documentation "Run prometheus-pushgateway.")
+       (requirement '())
+       (start #~(make-forkexec-constructor
+                 (list #$prometheus-pushgateway
+                       (string-append "--web.listen-address=" #$listen-address)
+                       (string-append "--persistence.file=" #$data-path "/metrics"))
+                 #:user #$user
+                 #:group #$group
+                 #:log-file "/var/log/prometheus-pushgateway.log"
+                 #:environment-variables
+                 '("SSL_CERT_DIR=/run/current-system/profile/etc/ssl/certs"
+                   "SSL_CERT_FILE=/run/current-system/profile/etc/ssl/certs/ca-certificates.crt")))
+       (respawn? #f)
+       (stop #~(make-kill-destructor)))))))
+
+(define prometheus-pushgateway-service-type
+  (service-type
+   (name 'prometheus-pushgateway)
+   (extensions
+    (list (service-extension shepherd-root-service-type
+                             prometheus-pushgateway-shepherd-service)
+          (service-extension account-service-type
+                             prometheus-pushgateway-account)
+          (service-extension activation-service-type
+                             prometheus-pushgateway-activation)))
+   (default-value (prometheus-pushgateway-configuration))
+   (description
+    "Run the Prometheus Pushgateway.")))
 
 ;;; monitoring.scm ends here
