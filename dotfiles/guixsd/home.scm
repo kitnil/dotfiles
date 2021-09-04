@@ -1,13 +1,15 @@
 (use-modules (gnu home)
-	     (gnu home-services)
-	     ;; (gnu home-services ssh)
-	     (gnu home-services shells)
-	     ;; (gnu home-services files)
-	     (gnu services)
-	     (gnu packages admin)
+             (gnu home-services)
+             ;; (gnu home-services files)
+             (gnu home-services shells)
+             ;; (gnu home-services ssh)
+             (gnu packages admin)
+             (gnu packages guile)
+             (gnu services)
              (guix gexp)
-
-             (ice-9 rdelim))
+             (guix modules)
+             (ice-9 rdelim)
+             (json))
 
 (define %home
   (and=> (getenv "HOME")
@@ -27,22 +29,34 @@
  (services
   (list
 
-   (service home-bash-service-type
-            (home-bash-configuration
-             (guix-defaults? #t)
-             (bashrc
-              (list
-               (with-input-from-file .bashrc read-string)))
-             (bash-profile
-              (list
-               (with-input-from-file .bash_profile read-string)))))
+   ;; (service home-bash-service-type
+   ;;          (home-bash-configuration
+   ;;           (guix-defaults? #t)
+   ;;           (bashrc
+   ;;            (list
+   ;;             (with-input-from-file .bashrc read-string)))
+   ;;           (bash-profile
+   ;;            (list
+   ;;             (with-input-from-file .bash_profile read-string)))))
 
-   ;; XXX: missing home-files-service-type
-   ;; (simple-service 'test-config
-   ;;                 home-files-service-type
-   ;;                 (list `("config/test.conf"
-   ;;                         ,(plain-file "tmp-file.txt"
-   ;;                                      "the content of ~/.config/test.conf"))))
+   (simple-service 'amtool-config
+                   home-files-service-type
+                   (list `("config/amtool/config.yml"
+                           ,(computed-file
+                             "amtool-config.json"
+                             (with-extensions (list guile-json-4)
+                               (with-imported-modules (source-module-closure '((json builder)))
+                                 #~(begin
+                                     (use-modules (json builder))
+                                     (with-output-to-file #$output
+                                       (lambda ()
+                                         (scm->json
+                                          '(("output" . "extended")
+                                            ;; ("receiver" . "team-X-pager")
+                                            ;; ("comment_required" . #t)
+                                            ;; ("author" . "user@example.org")
+                                            ("alertmanager.url" . "http://localhost:9093"))
+                                          #:pretty #t))))))))))
    
    ;; XXX: missing home-ssh-configuration
    ;; (service home-ssh-service-type
