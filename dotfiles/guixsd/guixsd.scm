@@ -667,7 +667,12 @@ location / {
                                                            .
                                                            #(((targets . #("127.0.0.1:9100")))))
                                                           (scrape_interval . "5s")
-                                                          (job_name . "node"))))
+                                                          (job_name . "node"))
+                                                         ((static_configs
+                                                           .
+                                                           #(((targets . #("127.0.0.1.9095")))))
+                                                          (honor_labels . #t)
+                                                          (job_name . "pushgateway"))))
                                                       (rule_files . #(,prometheus-alertmanager-node))
                                                       (global
                                                        (scrape_interval . "15s")
@@ -708,6 +713,11 @@ location / {
                                                          #((("to" . "alertmanager@wugi.info")
                                                             ("text" . "test-message"))))))))
                                                   #:pretty #t))))))))))
+
+                         (service prometheus-pushgateway-service-type
+                                  (prometheus-pushgateway-configuration
+                                   (listen-address "127.0.0.1:9095")
+                                   (prometheus-pushgateway "/home/oleg/.nix-profile/bin/pushgateway")))
 
                          (service openssh-service-type
                                   (openssh-configuration
