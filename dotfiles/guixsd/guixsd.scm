@@ -667,11 +667,11 @@ location / {
                                                          ((static_configs
                                                            .
                                                            #(((targets . #("127.0.0.1:9100"
-                                                                           "vm1.wugi.info"
-                                                                           "vm2.wugi.info"
-                                                                           "vm3.wugi.info"
-                                                                           "vm4.wugi.info"
-                                                                           "vm5.wugi.info")))))
+                                                                           "vm1.wugi.info:9100"
+                                                                           "vm2.wugi.info:9100"
+                                                                           "vm3.wugi.info:9100"
+                                                                           "vm4.wugi.info:9100"
+                                                                           "vm5.wugi.info:9100")))))
                                                           (scrape_interval . "5s")
                                                           (job_name . "node"))
                                                          ((static_configs
