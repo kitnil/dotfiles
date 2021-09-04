@@ -163,6 +163,7 @@
 
     prometheus
     prometheus-pushgateway
+    prometheus-alertmanager
 
     dhall
     dhall-nix
