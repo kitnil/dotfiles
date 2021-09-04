@@ -641,6 +641,7 @@ location / {
                                     (prometheus-configuration
                                      (listen-address listen-address)
                                      (prometheus "/home/oleg/.nix-profile/bin/prometheus")
+                                     (arguments '("--log.level=debug"))
                                      (config-file
                                       (computed-file
                                        "prometheus.json"
