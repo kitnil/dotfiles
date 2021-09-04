@@ -696,6 +696,7 @@ location / {
                                   (prometheus-alertmanager-configuration
                                    (listen-address "127.0.0.1:9093")
                                    (prometheus-alertmanager "/home/oleg/.nix-profile/bin/alertmanager")
+                                   ;; (arguments '("--log.level=debug"))
                                    (config-file
                                     (computed-file
                                      "prometheus-alertmanager.json"
