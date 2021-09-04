@@ -664,6 +664,29 @@ location / {
                                   (prometheus-node-exporter-configuration
                                    (web-listen-address "127.0.0.1:9100")))
 
+                         (service prometheus-alertmanager-service-type
+                                  (prometheus-alertmanager-configuration
+                                   (listen-address "127.0.0.1:9093")
+                                   (prometheus-alertmanager "/home/oleg/.nix-profile/bin/alertmanager")
+                                   (config-file
+                                    (plain-file "prometheus-alertmanager.json"
+                                                (scm->json-string
+                                                 `(("global"
+                                                    ("smtp_smarthost" . "smtp.wugi.info:25")
+                                                    ("smtp_from" . "alertmanager@wugi.info")
+                                                    ("smtp_auth_username" . "alertmanager@wugi.info")
+                                                    ("smtp_auth_password" . "nosuchuser"))
+                                                   ("route"
+                                                    ("receiver" . "smtp")
+                                                    ("group_by" . #("alertname" "datacenter" "app")))
+                                                   ;; ("templates" . #("/etc/alertmanager/templates/*.tmpl"))
+                                                   ("receivers"
+                                                    .
+                                                    #((("name" . "smtp")
+                                                       ("email_configs" .
+                                                        #((("to" . "alertmanager@wugi.info")
+                                                           ("text" . "test-message")))))))))))))
+
                          (service openssh-service-type
                                   (openssh-configuration
                                    (authorized-keys
