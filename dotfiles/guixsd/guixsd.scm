@@ -3,13 +3,14 @@
              (gnu services)
              (guix channels)
              (guix gexp)
+             (guix modules)
              (guix inferior)
              (ice-9 format)
              (json)
              (srfi srfi-1)
              (srfi srfi-26))
 
-(use-package-modules admin audio android bash bittorrent haskell-apps networking linux ssh suckless xdisorg xorg)
+(use-package-modules admin audio android bash bittorrent guile haskell-apps networking linux ssh suckless xdisorg xorg)
 
 (use-service-modules admin dbus desktop docker dns networking sound
                      xorg ssh web cgit version-control certbot
@@ -641,24 +642,38 @@ location / {
                                      (listen-address listen-address)
                                      (prometheus "/home/oleg/.nix-profile/bin/prometheus")
                                      (config-file
-                                      (plain-file "prometheus.json"
-                                                  (scm->json-string
-                                                   `((scrape_configs
-                                                      .
-                                                      #(((static_configs
-                                                          .
-                                                          #(((targets . #(,listen-address)))))
-                                                         (scrape_interval . "5s")
-                                                         (job_name . "prometheus"))
-                                                        ((static_configs
-                                                          .
-                                                          #(((targets . #("127.0.0.1:9100")))))
-                                                         (scrape_interval . "5s")
-                                                         (job_name . "node"))))
-                                                     (global
-                                                      (scrape_interval . "15s")
-                                                      (external_labels
-                                                       (monitor . "codelab-monitor"))))))))))
+                                      (computed-file
+                                       "prometheus.json"
+                                       (with-extensions (list guile-json-4)
+                                         (with-imported-modules (source-module-closure '((json builder)))
+                                           #~(begin
+                                               (use-modules (json builder))
+                                               (define listen-address
+                                                 #$listen-address)
+                                               (define prometheus-alertmanager-node
+                                                 #$(plain-file "prometheus-alertmanager-node.json"
+                                                               (scm->json-string (load "node.scm"))))
+                                               (with-output-to-file #$output
+                                                 (lambda ()
+                                                   (scm->json
+                                                    `((scrape_configs
+                                                       .
+                                                       #(((static_configs
+                                                           .
+                                                           #(((targets . #(,listen-address)))))
+                                                          (scrape_interval . "5s")
+                                                          (job_name . "prometheus"))
+                                                         ((static_configs
+                                                           .
+                                                           #(((targets . #("127.0.0.1:9100")))))
+                                                          (scrape_interval . "5s")
+                                                          (job_name . "node"))))
+                                                      (rule_files . #(,prometheus-alertmanager-node))
+                                                      (global
+                                                       (scrape_interval . "15s")
+                                                       (external_labels
+                                                        (monitor . "codelab-monitor"))))
+                                                    #:pretty #t)))))))))))
 
                          (service prometheus-node-exporter-service-type
                                   (prometheus-node-exporter-configuration
