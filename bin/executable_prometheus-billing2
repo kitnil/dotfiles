@@ -1,0 +1,103 @@
+#!/usr/bin/env -S guile --no-auto-compile -e main -s
+!#
+
+(use-modules (mjru config)
+             (guile mariadb)
+             (guix records)
+             (json)
+             (ice-9 match)
+             (ice-9 popen)
+             (ice-9 pretty-print)
+             (ice-9 rdelim)
+             (srfi srfi-1)
+             (srfi srfi-26)
+             (srfi srfi-37))
+
+(define %options
+  (let ((display-and-exit-proc (lambda (msg)
+                                 (lambda (opt name arg loads)
+                                   (display msg) (quit)))))
+    (list (option '(#\v "version") #f #f
+                  (display-and-exit-proc "prometheus-billing2 version 0.0.1\n"))
+          (option '(#\h "help") #f #f
+                  (display-and-exit-proc
+                   "Usage: prometheus-billing2 ...\n"))
+          (option '(#\d "debug") #f #f
+                  (lambda (opt name arg result . rest)
+                    (apply values
+                           (alist-cons 'debug? #t
+                                       (alist-delete 'debug? result eq?))
+                           rest))))))
+
+(define %default-options
+  '())
+
+(define-json-mapping <vds> make-vds vds?
+  json->vds
+  (id vds-id "vds_id")
+  (ip-address vds-ip-address "ip_address"))
+
+(define %excluded-accounts
+  (append (list (match %billing2-account ((email account-id) account-id)))
+          (match %billing2-support (((email account-id) ...) account-id))))
+
+(define (main args)
+  (define opts
+    (args-fold (cdr (program-arguments))
+               %options
+               (lambda (opt name arg loads)
+                 (error "Unrecognized option `~A'" name))
+               (lambda (op loads)
+                 (cons op loads))
+               %default-options))
+  (define debug? (assoc-ref opts 'debug?))
+  (define connection
+    (mariadb-connection
+     (inherit mariadb-connection-billing2)
+     (statement (let ((tables '("equip_ip_addresses" "vds_accounts")))
+                  (string-join `("SELECT"
+                                 "JSON_OBJECT ('vds_id', vds_account_id, 'ip_address', equip_ip_addresses.address)"
+                                 "FROM"
+                                 ,(string-join tables ",")
+                                 "WHERE"
+                                 ,(string-join (map (lambda (account)
+                                                      (string-join (list "vds_accounts.client_id" "!=" account)))
+                                                    (map number->string %excluded-accounts))
+                                               " AND ")
+                                 "AND" "equip_ip_addresses.equip_ip_address_id" "=" "vds_accounts.equip_ip_address_id"
+                                 "AND" "(vds_accounts.vds_plan_id = 40 OR vds_accounts.vds_plan_id = 41 OR vds_accounts.vds_plan_id = 42)"))))))
+  (when debug?
+    (format #t "Executing statement: ~s.~%"
+            (mariadb-connection-statement connection)))
+  (match-record connection <mariadb-connection>
+    (user password host database statement arguments)
+    (let* ((command `("--silent"
+                      ,@(if user
+                            (list (string-append "--user=" user))
+                            '())
+                      ,@(if password
+                            (list (string-append "--password=" password))
+                            '())
+                      ,@(if host
+                            (list (string-append "--host=" host))
+                            '())
+                      ,@(if database
+                            (list (string-append "--database=" database))
+                            '())
+                      ,@(if statement
+                            (list (string-append "--execute=" statement))
+                            '())
+                      ,@arguments))
+           (port (apply open-pipe* OPEN_READ "mysql" command))
+           (output (read-string port)))
+      (close-port port)
+      (format #t
+              "{hostname=~~~s}~%"
+              (string-join
+               (map (compose (lambda (vds)
+                               (string-append "vm" (number->string (vds-id vds)) "." %vm-domain))
+                             json->vds)
+                    (string-split (string-trim-right output
+                                                     #\newline)
+                                  #\newline))
+               "|")))))
