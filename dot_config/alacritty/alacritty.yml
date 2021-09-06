@@ -5,7 +5,7 @@ import:
 font:
   size: 13
 mouse:
-  url: # Change to hints on update
+  hints:
     launcher:
       program: xdg-open
       args: []
