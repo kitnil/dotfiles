@@ -170,6 +170,8 @@
     dhall-json
     (haskell.lib.justStaticExecutables haskellPackages.dhall-yaml)
 
+    json2hcl
+
     alerta
     # boomer
     deploy-rs
