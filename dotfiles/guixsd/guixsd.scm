@@ -738,7 +738,8 @@ location / {
                          (service openssh-service-type
                                   (openssh-configuration
                                    (authorized-keys
-                                    `(("vm1-ssh-tunnel" ,(local-file "ssh/id_rsa_vm1.wugi.info.pub"))))
+                                    `(("vm1-ssh-tunnel" ,(local-file "ssh/id_rsa_vm1.wugi.info.pub"))
+                                      ("jenkins" ,(local-file "ssh/id_rsa_jenkins.wugi.info.pub"))))
                                    (x11-forwarding? #t)
                                    (gateway-ports? 'client)
                                    (password-authentication? #f)
