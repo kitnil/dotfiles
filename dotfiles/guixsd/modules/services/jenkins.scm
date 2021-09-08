@@ -17,69 +17,121 @@
 ;;; along with GNU Guix.  If not, see <http://www.gnu.org/licenses/>.
 
 (define-module (services jenkins)
+  #:use-module (gnu packages java)
+  #:use-module (gnu packages version-control)
+  #:use-module (gnu services)
   #:use-module (gnu services base)
   #:use-module (gnu services shepherd)
-  #:use-module (gnu services)
+  #:use-module (gnu system shadow)
   #:use-module (guix gexp)
-  #:use-module (gnu packages version-control)
-  #:use-module (gnu packages java)
-  #:use-module (wigust packages jenkins)
-  #:export (jenkins-service))
+  #:use-module (guix modules)
+  #:use-module (guix records)
+  #:use-module (packages jenkins)
+  #:export (jenkins-configuration
+            jenkins-service-type))
 
-(define jenkins-service
-  (simple-service 'jenkins shepherd-root-service-type
-                  (list
-                   (shepherd-service
-                    (provision '(jenkins))
-                    (documentation "Run Jenkins continuous integration tool.")
-                    (requirement '(user-processes loopback))
-                    (start #~(make-forkexec-constructor
-                              (list (string-append #$openjdk11 "/bin/java")
-                                    "-Xmx512m"
-                                    "-jar" (string-append #$jenkins "/webapps/jenkins.war")
-                                    "--httpListenAddress=127.0.0.1"
-                                    "--httpPort=8090"
-                                    "--ajp13Port=-1"
-                                    ;; "-Djava.awt.headless=true"
-                                    ;; "-Djenkins.install.runSetupWizard=false"
-                                    ;; "-Dorg.jenkinsci.plugins.durabletask.BourneShellScript.LAUNCH_DIAGNOSTICS=true"
-                                    ;; "-Dorg.jenkinsci.plugins.durabletask.BourneShellScript.HEARTBEAT_CHECK_INTERVAL=86400"
+(define-record-type* <jenkins-configuration>
+  jenkins-configuration make-jenkins-configuration
+  jenkins-configuration?
+  (jenkins               jenkins-configuration-jenkins               ;<package>
+                         (default jenkins))
+  (arguments             jenkins-configuration-arguments             ;list of strings
+                         (default '()))
+  (java-arguments        jenkins-configuration-java-arguments        ;list of strings
+                         (default '()))
+  (plugins               jenkins-configuration-plugins               ;list of <package>
+                         (default '()))
+  (supplementary-groups  jenkins-configuration-supplementary-groups  ;list of strings
+                         (default '()))
+  (java                  jenkins-configuration-java                  ;<package>
+                         (default openjdk11))
+  (environment-variables jenkins-configuration-environment-variables ;list of strings
+                         (default '())))
 
-                                    ;; https://www.jenkins.io/doc/book/security/configuring-content-security-policy/
-                                    ;; "-Dhudson.model.DirectoryBrowserSupport.CSP="
+(define (jenkins-account config)
+  (list (user-account
+         (name "jenkins")
+         (group "jenkins")
+         (system? #t)
+         (comment "Jenkins CI daemon user")
+         (home-directory "/var/lib/jenkins"))
+        (user-group
+         (name "jenkins")
+         (system? #t))))
 
-                                    ;; Managing Security
-                                    ;; <https://www.jenkins.io/doc/book/managing/security/#disable-csrf-checking>
-                                    ;;
-                                    ;; Upgrading to Jenkins LTS 2.176.x
-                                    ;; <https://www.jenkins.io/doc/upgrade-guide/2.176/#SECURITY-626>
-                                    ;;
-                                    ;; Upgrading to Jenkins LTS 2.222.x
-                                    ;; <https://www.jenkins.io/doc/upgrade-guide/2.222/#always-enabled-csrf-protection>
+(define (jenkins-activation config)
+  (define fake-gcrypt-hash
+    ;; Fake (gcrypt hash) module; see below.
+    (scheme-file "hash.scm"
+                 #~(define-module (gcrypt hash)
+                     #:export (sha1 sha256))))
 
-                                    ;; Managing Security
-                                    ;; <https://www.jenkins.io/doc/book/managing/security/#caveats>
-                                    ;; "-Dhudson.security.csrf.GlobalCrumbIssuerConfiguration.DISABLE_CSRF_PROTECTION=true"
-                                    )
-                              #:user "oleg"
-                              #:group "users"
-                              #:supplementary-groups '("docker")
-                              #:log-file "/var/log/jenkins.log"
-                              #:environment-variables
-                              (append (list (string-append "PATH="
-                                                           (string-append #$git "/bin")
-                                                           ":" "/run/setuid-programs"
-                                                           ":" "/run/current-system/profile/bin")
-                                            "HOME=/home/oleg"
-                                            "SSL_CERT_DIR=/run/current-system/profile/etc/ssl/certs"
-                                            "SSL_CERT_FILE=/run/current-system/profile/etc/ssl/certs/ca-certificates.crt"
-                                            "GIT_SSL_CAINFO=/run/current-system/profile/etc/ssl/certs/ca-certificates.crt")
-                                      (remove (lambda (str)
-                                                (or (string-prefix? "PATH=" str)
-                                                    (string-prefix? "HOME=" str)
-                                                    (string-prefix? "SSL_CERT_DIR=" str)
-                                                    (string-prefix? "SSL_CERT_FILE=" str)
-                                                    (string-prefix? "GIT_SSL_CAINFO=" str)))
-                                              (environ)))))
-                    (respawn? #f)
-                    (stop #~(make-kill-destructor))))))
+  (with-imported-modules `(;; To avoid relying on 'with-extensions', which was
+                           ;; introduced in 0.15.0, provide a fake (gcrypt
+                           ;; hash) just so that we can build modules, and
+                           ;; adjust %LOAD-PATH later on.
+                           ((gcrypt hash) => ,fake-gcrypt-hash)
+
+                           ,@(source-module-closure `((guix store))))
+    #~(begin
+        (use-modules (srfi srfi-26)
+                     (guix store))
+        (let* ((user (getpw "jenkins"))
+               (home (passwd:dir user))
+               (uid (passwd:uid user))
+               (group (getgrnam "jenkins"))
+               (gid (group:gid group))
+               (plugins-dir (string-append home "/plugins")))
+          (mkdir-p plugins-dir)
+          (chown plugins-dir uid gid)
+          (for-each (lambda (file)
+                      (copy-file file
+                                 (string-append plugins-dir "/"
+                                                (store-path-package-name file))))
+                    '#$(jenkins-configuration-plugins config))))))
+
+(define (jenkins-shepherd-service config)
+  (list
+   (shepherd-service
+    (provision '(jenkins))
+    (documentation "Run Jenkins continuous integration tool.")
+    (requirement '(user-processes loopback))
+    (start #~(make-forkexec-constructor
+              (list (string-append #$(jenkins-configuration-java config)
+                                   "/bin/java")
+                    #$@(jenkins-configuration-java-arguments config)
+                    "-jar" (string-append #$(jenkins-configuration-jenkins config)
+                                          "/webapps/jenkins.war")
+                    #$@(jenkins-configuration-arguments config))
+              #:user "jenkins"
+              #:group "jenkins"
+              #:log-file "/var/log/jenkins.log"
+              #:environment-variables
+              (append (list (string-append "PATH="
+                                           (string-append #$git "/bin")
+                                           ":" "/run/setuid-programs"
+                                           ":" "/run/current-system/profile/bin")
+                            "JENKINS_HOME=/var/lib/jenkins"
+                            "SSL_CERT_DIR=/run/current-system/profile/etc/ssl/certs"
+                            "SSL_CERT_FILE=/run/current-system/profile/etc/ssl/certs/ca-certificates.crt"
+                            "GIT_SSL_CAINFO=/run/current-system/profile/etc/ssl/certs/ca-certificates.crt"
+                            #$@(jenkins-configuration-environment-variables config))
+                      (remove (lambda (str)
+                                (or (string-prefix? "PATH=" str)
+                                    (string-prefix? "HOME=" str)
+                                    (string-prefix? "SSL_CERT_DIR=" str)
+                                    (string-prefix? "SSL_CERT_FILE=" str)
+                                    (string-prefix? "GIT_SSL_CAINFO=" str)))
+                              (environ)))))
+    (respawn? #f)
+    (stop #~(make-kill-destructor)))))
+
+(define jenkins-service-type
+  (service-type (name 'syncthing)
+                (extensions (list (service-extension shepherd-root-service-type
+                                                     jenkins-shepherd-service)
+                                  (service-extension account-service-type
+                                                     jenkins-account)
+                                  (service-extension activation-service-type
+                                                     jenkins-activation)))
+                (description "Run Jenkins CI.")))
