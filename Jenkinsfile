@@ -1,5 +1,3 @@
-def lib = library('jenkins-wi-shared-library')
-
 pipeline {
     agent { label "guixsd" }
     options {
@@ -7,34 +5,11 @@ pipeline {
         timeout(time: 1, unit: "HOURS")
     }
     stages {
-        stage("benchmark") {
+        stage("build") {
             agent { label "guixsd" }
             steps {
-                sh "make benchmark"
+                sh ":"
             }
-        }
-        stage("deploy") {
-            agent { label "master" }
-            when {
-                branch "master"
-                beforeAgent true
-            }
-            steps {
-                parallelCall (
-                    nodeLabels: ["guix"],
-                    procedure: { nodeLabels ->
-                        gitFetch (
-                            url: lib.Constants.gitDotfilesUrl,
-                            dir: lib.Constants.homeDir + "/.local/share/chezmoi"
-                        )
-                    }
-                )
-            }
-        }
-    }
-    post {
-        always {
-            sendNotifications currentBuild.result
         }
     }
 }
