@@ -5,6 +5,7 @@
   #:use-module (gnu packages cryptsetup)
   #:use-module (gnu packages docker)
   #:use-module (gnu packages file)
+  #:use-module (gnu packages guile)
   #:use-module (gnu packages linux)
   #:use-module (gnu packages lisp)
   #:use-module (gnu packages lua)
@@ -39,8 +40,10 @@
   #:use-module (packages majordomo)
   #:use-module (gnu system)
   #:use-module (guix gexp)
+  #:use-module (guix modules)
   #:use-module (srfi srfi-26)
   #:use-module (ice-9 format)
+  #:use-module (services jenkins)
   #:use-module (services openvpn)
   #:export (%guix-daemon-config
             %guix-daemon-config-with-substitute-urls
@@ -68,7 +71,9 @@
             %openvpn-configuration-wugi.info
             %openvpn-configuration-majordomo.ru
 
-            %homer-config))
+            %homer-config
+
+            %jenkins-config))
 
 (define %guix-daemon-config
   (guix-configuration
@@ -523,3 +528,135 @@ remote-random
       ("card-shadow" . "rgba(0, 0, 0, 0.4)")
       ("card-background" . "#2b2b2b")
       ("background" . "#131313")))))
+
+
+;;;
+;;; Jenkins
+;;;
+
+(define %jenkins-config
+  (jenkins-configuration
+   (java "/home/oleg/.nix-profile")
+   (plugins (load "/home/oleg/.local/share/chezmoi/dotfiles/jenkins/plugins.scm"))
+   (arguments
+    '("--httpListenAddress=127.0.0.1"
+      "--httpPort=8090"
+      "--ajp13Port=-1"))
+   (java-arguments
+    '(;; "-Djava.awt.headless=true"
+      "-Xmx512m"
+      "-Djenkins.install.runSetupWizard=false"
+
+      ;; "-Djavax.net.debug=all"
+      "-Djavax.net.ssl.trustStore=/home/oleg/.nix-profile/lib/openjdk/lib/security/cacerts"
+
+      ;; "-Dorg.jenkinsci.plugins.durabletask.BourneShellScript.LAUNCH_DIAGNOSTICS=true"
+      ;; "-Dorg.jenkinsci.plugins.durabletask.BourneShellScript.HEARTBEAT_CHECK_INTERVAL=86400"
+
+      ;; https://www.jenkins.io/doc/book/security/configuring-content-security-policy/
+      "-Dhudson.model.DirectoryBrowserSupport.CSP="
+
+      ;; Managing Security
+      ;; <https://www.jenkins.io/doc/book/managing/security/#disable-csrf-checking>
+      ;;
+      ;; Upgrading to Jenkins LTS 2.176.x
+      ;; <https://www.jenkins.io/doc/upgrade-guide/2.176/#SECURITY-626>
+      ;;
+      ;; Upgrading to Jenkins LTS 2.222.x
+      ;; <https://www.jenkins.io/doc/upgrade-guide/2.222/#always-enabled-csrf-protection>
+
+      ;; Managing Security
+      ;; <https://www.jenkins.io/doc/book/managing/security/#caveats>
+      "-Dhudson.security.csrf.GlobalCrumbIssuerConfiguration.DISABLE_CSRF_PROTECTION=true"))
+   (environment-variables
+    (append (list #~(string-append "CASC_JENKINS_CONFIG="
+                                   #$(computed-file
+                                      "jenkins.json"
+                                      (with-extensions (list guile-json-4)
+                                        (with-imported-modules (source-module-closure '((json builder)))
+                                          #~(begin
+                                              (use-modules (json builder))
+                                              (define jenkins-jobs
+                                                #$(local-file "../../jenkins/jobs.groovy"))
+                                              (with-output-to-file #$output
+                                                (lambda ()
+                                                  (scm->json
+                                                   `(("credentials"
+                                                      ("system"
+                                                       ("domainCredentials"
+                                                        .
+                                                        #((("credentials"
+                                                            .
+                                                            #((("basicSSHUserPrivateKey"
+                                                                ("username" . "jenkins")
+                                                                ("scope" . "GLOBAL")
+                                                                ("privateKeySource"
+                                                                 ("directEntry"
+                                                                  ("privateKey"
+                                                                   .
+                                                                   "${readFile:/var/lib/jenkins/.ssh/id_rsa}")))
+                                                                ("id" . "jenkins-ssh-deploy")
+                                                                ("description" . "jenkins-ssh-deploy"))))))))))
+                                                     ("unclassified"
+                                                      ("pollSCM"
+                                                       ("pollingThreadCount" . 10))
+                                                      ("location"
+                                                       ("url" . "https://jenkins.wugi.info/")
+                                                       ("adminAddress" . "admin@wugi.info"))
+                                                      ("globalLibraries"
+                                                       ("libraries" .
+                                                        #((("retriever"
+                                                            ("modernSCM"
+                                                             ("scm"
+                                                              ("git"
+                                                               ("traits" .
+                                                                #("gitBranchDiscovery"))
+                                                               ("remote" . "https://gitlab.com/wigust/jenkins-shared-library")))))
+                                                           ("name" . "jenkins-wi-shared-library")
+                                                           ("implicit" . #t)
+                                                           ("defaultVersion" . "master")))))
+                                                      ("defaultFolderConfiguration"
+                                                       ("healthMetrics" .
+                                                        #((("worstChildHealthMetric"
+                                                            ("recursive" . #t)))))))
+                                                     ("security"
+                                                      ("sSHD"
+                                                       ("port" . -1))
+                                                      ("globalJobDslSecurityConfiguration"
+                                                       ("useScriptSecurity" . #t))
+                                                      ("apiToken"
+                                                       ("usageStatisticsEnabled" . #t)
+                                                       ("tokenGenerationOnCreationEnabled" . #f)
+                                                       ("creationOfLegacyTokenEnabled" . #f)))
+                                                     ("jenkins"
+                                                      ("nodes" .
+                                                       #((("permanent"
+                                                           ("retentionStrategy"
+                                                            ("demand"
+                                                             ("inDemandDelay" . 0)
+                                                             ("idleDelay" . 30)))
+                                                           ("remoteFS" . "/var/lib/jenkins")
+                                                           ("numExecutors" . 15)
+                                                           ("nodeDescription" . "Guix system")
+                                                           ("name" . "guixsd")
+                                                           ("launcher"
+                                                            ("ssh"
+                                                             ("sshHostKeyVerificationStrategy" . "nonVerifyingKeyVerificationStrategy")
+                                                             ("port" . 22)
+                                                             ("javaPath" . "/home/oleg/.nix-profile/bin/java")
+                                                             ("host" . "localhost")
+                                                             ("credentialsId" . "jenkins-ssh-deploy")))))))
+                                                      ("securityRealm"
+                                                       ("local"
+                                                        ("users" . #((("id" . "${DATA_VAULTPASS_WUGI.INFO_JENKINS.WUGI.INFO_USERNAME}")
+                                                                      ("password" . "${DATA_VAULTPASS_WUGI.INFO_JENKINS.WUGI.INFO_PASSWORD}"))))
+                                                        ("allowsSignup" . #f))))
+                                                     ("jobs" . #((("file" . ,jenkins-jobs)))))
+                                                   #:pretty #t))))))))
+                  "SECRETS_FILE=/etc/jenkins/jenkins.properties")
+            (string-split
+             (string-delete #\"
+                            (string-trim-right
+                             (with-input-from-file "/etc/jenkins/jenkins.properties"
+                               (@ (ice-9 rdelim) read-string))))
+             #\newline)))))

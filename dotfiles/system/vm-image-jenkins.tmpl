@@ -1,7 +1,14 @@
 ;; eval ""$(sed 's,-nic user[^ ]* ,,' "$(make check-system)" | tail -1 | sed 's/\sexec\s//')" -m 4096  -smp 2 -nic user,model=virtio-net-pci,hostfwd=tcp::10022-:22"
 ;; ssh -fL 5901:localhost:5901 -F /dev/null localhost -p 10022
 
-(use-modules (gnu) (guix) (guix build utils) (ice-9 match) (srfi srfi-1))
+(use-modules (gnu)
+             (guix)
+             (guix build utils)
+             (ice-9 match)
+             (srfi srfi-1)
+
+             (services jenkins)
+             (config))
 (use-service-modules desktop networking ssh xorg shepherd)
 (use-package-modules bootloaders certs fonts nvi
                      package-management wget xorg
@@ -69,6 +76,8 @@ root ALL=(ALL) ALL
                           (openssh-configuration
                            (authorized-keys
                             `(("oleg" ,(local-file "/home/oleg/.ssh/id_rsa.pub"))))))
+
+                 (service jenkins-service-type %jenkins-config)
 
                  ;; Use the DHCP client service rather than NetworkManager.
                  (service dhcp-client-service-type))
