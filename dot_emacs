@@ -136,9 +136,15 @@
  '(debug-on-error nil)
  '(indent-tabs-mode nil)
  '(org-agenda-files '("~/org/inbox.org" "~/org/todo.org" "~/org/web.org"))
- '(python-shell-interpreter "python3")
+ '(python-shell-interpreter "python3" t)
  '(safe-local-variable-values
-   '((eval c-set-offset 'arglist-cont-nonempty
+   '((eval progn
+           (let
+               ((top
+                 (locate-dominating-file default-directory ".dir-locals.el")))
+             (add-to-list 'geiser-guile-load-path top)))
+     (geiser-active-implementations guile)
+     (eval c-set-offset 'arglist-cont-nonempty
            '(c-lineup-gcc-asm-reg c-lineup-arglist))
      (eval c-set-offset 'arglist-close 0)
      (eval c-set-offset 'arglist-intro '++)
