@@ -34,6 +34,10 @@ QEMU_FLAGS =					\
   -smp 2					\
   -nic user,model=virtio-net-pci,hostfwd=tcp::10022-:22
 
+.PHONY: dotfiles/system/vm-image-jenkins.tmpl
+dotfiles/system/vm-image-jenkins.tmpl:
+	$(shell guix system vm -L $(MODULES) --no-offload dotfiles/system/vm-image-jenkins.tmpl) $(QEMU_FLAGS)
+
 .PHONY: dotfiles/system/vm-image-stumpwm.tmpl
 dotfiles/system/vm-image-stumpwm.tmpl:
 	$(shell guix system vm -L $(MODULES) --no-offload dotfiles/system/vm-image-stumpwm.tmpl) $(QEMU_FLAGS)
