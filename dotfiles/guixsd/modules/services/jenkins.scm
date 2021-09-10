@@ -60,35 +60,21 @@
          (system? #t))))
 
 (define (jenkins-activation config)
-  (define fake-gcrypt-hash
-    ;; Fake (gcrypt hash) module; see below.
-    (scheme-file "hash.scm"
-                 #~(define-module (gcrypt hash)
-                     #:export (sha1 sha256))))
-
-  (with-imported-modules `(;; To avoid relying on 'with-extensions', which was
-                           ;; introduced in 0.15.0, provide a fake (gcrypt
-                           ;; hash) just so that we can build modules, and
-                           ;; adjust %LOAD-PATH later on.
-                           ((gcrypt hash) => ,fake-gcrypt-hash)
-
-                           ,@(source-module-closure `((guix store))))
-    #~(begin
-        (use-modules (srfi srfi-26)
-                     (guix store))
-        (let* ((user (getpw "jenkins"))
-               (home (passwd:dir user))
-               (uid (passwd:uid user))
-               (group (getgrnam "jenkins"))
-               (gid (group:gid group))
-               (plugins-dir (string-append home "/plugins")))
-          (mkdir-p plugins-dir)
-          (chown plugins-dir uid gid)
-          (for-each (lambda (file)
-                      (copy-file file
-                                 (string-append plugins-dir "/"
-                                                (store-path-package-name file))))
-                    '#$(jenkins-configuration-plugins config))))))
+  #~(begin
+      (let* ((user (getpw "jenkins"))
+             (home (passwd:dir user))
+             (uid (passwd:uid user))
+             (group (getgrnam "jenkins"))
+             (gid (group:gid group))
+             (plugins-dir (string-append home "/plugins")))
+        (mkdir-p plugins-dir)
+        (chown plugins-dir uid gid)
+        (for-each (lambda (file)
+                    (copy-file file
+                               (string-append plugins-dir "/"
+                                              (string-drop file
+                                                           (string-length "/gnu/store/zznahyxhfkb8ikbg0v92ghv9lx2gpi3s-")))))
+                  '#$(jenkins-configuration-plugins config)))))
 
 (define (jenkins-shepherd-service config)
   (list
