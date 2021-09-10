@@ -11,9 +11,9 @@
              (srfi srfi-1)
              (srfi srfi-26))
 
-(use-package-modules admin audio android bash bittorrent guile haskell-apps networking linux ssh suckless xdisorg xorg)
+(use-package-modules admin audio android backup bash bittorrent guile haskell-apps networking linux ssh suckless xdisorg xorg)
 
-(use-service-modules admin dbus desktop docker dns networking sound
+(use-service-modules admin dbus desktop docker dns mcron networking sound
                      xorg ssh web cgit version-control certbot
                      monitoring databases mail vpn)
 
@@ -303,6 +303,63 @@ location / {
    (autofs-mount-configuration
     (target "/mnt/ssh/web30-eng")
     (source ":sshfs\\#web30.intr\\:"))))
+
+
+;;;
+;;; Backup
+;;;
+
+(define %root-directories
+  '("/root/.cache"
+    "/root/.guix-profile"
+    "/root/.nix-profile"))
+
+(define %user-directories
+  '(".cache"
+    ".guix-profile"
+    ".nix-profile"
+    "Downloads"
+    "GNS3"
+    "Videos"
+    "majordomo"
+    "vm"))
+
+(define (restic-command)
+  (program-file
+   "restic-command"
+   #~(begin
+       (use-modules (srfi srfi-1)
+                    (srfi srfi-26))
+
+       (setenv "RESTIC_PASSWORD"
+               #$(with-input-from-file "/etc/guix/secrets/restic" read-string))
+
+       (define %user-home
+         (passwd:dir (getpw "oleg")))
+
+       (define %exclude-directories
+         (append '#$%root-directories
+                 (map (lambda (directory)
+                        (string-append %user-home "/" directory))
+                      '#$%user-directories)))
+
+       (define %backup-directories
+         (list %user-home "/etc" "/root"))
+
+       (apply system*
+              (append (list (string-append #$restic "/bin/restic")
+                            "--repo" "/srv/backup/guixsd")
+                      (fold (lambda (directory directories)
+                              (append (list "--exclude" directory) directories))
+                            '() %exclude-directories)
+                      (list "backup")
+                      %backup-directories)))))
+
+(define backup-job
+  ;; Run 'updatedb' at 20:00 every day.  Here we write the
+  ;; job's action as a Scheme procedure.
+  #~(job '(next-hour '(20))
+         #$(restic-command)))
 
 
 ;;;
@@ -839,6 +896,10 @@ PasswordAuthentication yes")))
                                                    "\n"))))
 
                          (service jenkins-service-type %jenkins-config)
+
+                         (simple-service 'my-cron-jobs
+                                         mcron-service-type
+                                         (list backup-job))
 
                          (service syncthing-service-type
                                   (syncthing-configuration (user "oleg")))
