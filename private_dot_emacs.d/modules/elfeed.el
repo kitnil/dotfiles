@@ -86,6 +86,8 @@
         ("https://ci.guix.gnu.org/events/rss/" ci guix)
 
         ("https://lk.sknt.ru/rss.php" internet)
+
+        ("https://git.ispconfig.org/ispconfig/ispconfig3/-/issues.atom?state=opened" ispconfig)
         ))
 
 (defun elfeed-config ()
