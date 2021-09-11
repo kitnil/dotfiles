@@ -738,7 +738,11 @@ location / {
                                                            .
                                                            #(((targets . #("127.0.0.1:9095")))))
                                                           (honor_labels . #t)
-                                                          (job_name . "pushgateway"))))
+                                                          (job_name . "pushgateway"))
+                                                         ((static_configs
+                                                           .
+                                                           #(((targets . #("127.0.0.1:6050")))))
+                                                          (job_name . "restic-rest"))))
                                                       (rule_files . #(,prometheus-alertmanager-node))
                                                       (global
                                                        (scrape_interval . "15s")
