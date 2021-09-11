@@ -216,10 +216,23 @@
           idea-ultimate pycharm-professional;
 
         } // ( {inherit (pkgs.nodePackages) node2nix; } )
-        // (let boomer-repo = (github-com-tsoding-boomer.outPath + "/overlay"); in rec {
-                  nim_1_0 = pkgs.callPackage (boomer-repo + "/nim_1_0.nix") {};
-                  boomer = pkgs.callPackage (boomer-repo + "/boomer.nix") { inherit nim_1_0; };
-                })
+
+        # XXX: Failed to build boomer.
+        #
+        # error: attribute 'lib' missing
+        #
+        #        at /nix/store/ny73wh68zm5gkgxz0pf7v2sf4cw3657x-source/overlay/boomer.nix:31:40:
+        #
+        #            30|   installPhase = "install -Dt $out/bin src/boomer";
+        #            31|   fixupPhase = "patchelf --set-rpath ${stdenv.lib.makeLibraryPath [stdenv.cc.cc libX11 libXrandr libGL]} $out/bin/boomer";
+        #              |                                        ^
+        #            32| }
+        #
+        # // (let boomer-repo = (github-com-tsoding-boomer.outPath + "/overlay"); in rec {
+        #           nim_1_0 = pkgs.callPackage (boomer-repo + "/nim_1_0.nix") {};
+        #           boomer = pkgs.callPackage (boomer-repo + "/boomer.nix") { inherit nim_1_0; };
+        #         })
+
         // {
           inherit (import nixpkgs { inherit system; config = { allowUnfree = true; }; })
             discord google-chrome;

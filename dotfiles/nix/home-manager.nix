@@ -186,7 +186,9 @@
     ipmiview-wrapper
     jenkins
     jenkins-job-builder
-    nim_1_0
+
+    # nim_1_0
+
     nixGLIntel
     nixfmt
     node2nix
