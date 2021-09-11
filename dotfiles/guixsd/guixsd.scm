@@ -23,6 +23,7 @@
              (wigust packages vnc)
              (wigust packages web)
              (services autofs)
+             (services backup)
              (services bittorrent)
              (services docker)
              (services homer)
@@ -896,6 +897,14 @@ PasswordAuthentication yes")))
                                                    "\n"))))
 
                          (service jenkins-service-type %jenkins-config)
+
+                         (service restic-rest-service-type
+                                  (restic-rest-configuration
+                                   (restic-rest "/home/oleg/.nix-profile/bin/rest-server")
+                                   (listen-address "127.0.0.1:6050")
+                                   (data-path "/srv/restic")
+                                   (authentication? #f)
+                                   (prometheus? #t)))
 
                          (simple-service 'my-cron-jobs
                                          mcron-service-type
