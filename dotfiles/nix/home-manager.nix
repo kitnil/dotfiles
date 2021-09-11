@@ -196,6 +196,8 @@
     pycharm-professional
     robo3t
     yamllint
+
+    restic-rest-server
   ];
 
   home.file = {
