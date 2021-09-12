@@ -747,7 +747,15 @@ location / {
                                                       (global
                                                        (scrape_interval . "15s")
                                                        (external_labels
-                                                        (monitor . "codelab-monitor"))))
+                                                        (monitor . "codelab-monitor")))
+                                                      ("alerting"
+                                                       ("alertmanagers"
+                                                        .
+                                                        #((("static_configs"
+                                                            .
+                                                            #((("targets"
+                                                                .
+                                                                #("127.0.0.1:9093"))))))))))
                                                     #:pretty #t)))))))))))
 
                          (service prometheus-node-exporter-service-type
