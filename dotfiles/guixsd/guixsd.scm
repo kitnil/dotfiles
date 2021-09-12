@@ -11,7 +11,7 @@
              (srfi srfi-1)
              (srfi srfi-26))
 
-(use-package-modules admin audio android backup bash bittorrent guile haskell-apps networking linux ssh suckless xdisorg xorg)
+(use-package-modules admin audio android backup bash bittorrent curl guile haskell-apps networking linux ssh suckless xdisorg xorg)
 
 (use-service-modules admin dbus desktop docker dns mcron networking sound
                      xorg ssh web cgit version-control certbot
@@ -330,10 +330,13 @@ location / {
    "restic-command"
    #~(begin
        (use-modules (srfi srfi-1)
-                    (srfi srfi-26))
+                    (srfi srfi-26)
+                    (ice-9 rdelim))
 
        (setenv "RESTIC_PASSWORD"
-               #$(with-input-from-file "/etc/guix/secrets/restic" read-string))
+               (string-trim-right
+                (with-input-from-file "/etc/guix/secrets/restic"
+                  read-string)))
 
        (define %user-home
          (passwd:dir (getpw "oleg")))
@@ -347,14 +350,22 @@ location / {
        (define %backup-directories
          (list %user-home "/etc" "/root"))
 
-       (apply system*
-              (append (list (string-append #$restic "/bin/restic")
-                            "--repo" "/srv/backup/guixsd")
-                      (fold (lambda (directory directories)
-                              (append (list "--exclude" directory) directories))
-                            '() %exclude-directories)
-                      (list "backup")
-                      %backup-directories)))))
+       (when (zero?
+              (apply system*
+                     (append (list (string-append #$restic "/bin/restic")
+                                   "--repo" "/srv/backup/guixsd")
+                             (fold (lambda (directory directories)
+                                     (append (list "--exclude" directory) directories))
+                                   '() %exclude-directories)
+                             (list "backup")
+                             %backup-directories)))
+         (system* (string-append #$curl "/bin/curl")
+                  "--max-time" "10"
+                  "--retry" "5"
+                  (string-append "https://hc-ping.com/"
+                                 (string-trim-right
+                                  (with-input-from-file "/etc/guix/secrets/hc-ping-backup-guix.wugi.info"
+                                    read-string))))))))
 
 (define backup-job
   ;; Run 'updatedb' at 20:00 every day.  Here we write the
