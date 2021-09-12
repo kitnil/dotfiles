@@ -26,6 +26,7 @@
   #:use-module (guix records)
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-1)
+  #:use-module (packages monitoring)
   #:export (monitoring-service
             prometheus-configuration
             prometheus-service-type
@@ -34,7 +35,10 @@
             prometheus-alertmanager-service-type
 
             prometheus-pushgateway-configuration
-            prometheus-pushgateway-service-type))
+            prometheus-pushgateway-service-type
+            
+            karma-configuration
+            karma-service-type))
 
 ;;; Commentary:
 ;;;
@@ -312,5 +316,68 @@
    (default-value (prometheus-pushgateway-configuration))
    (description
     "Run the Prometheus Pushgateway.")))
+
+
+;;;
+;;; Karma
+;;;
+
+(define-record-type* <karma-configuration>
+  karma-configuration make-karma-configuration
+  karma-configuration?
+  (karma       karma-configuration-karma        ;string
+               (default karma))
+  (config-file karma-configuration-config-file  ;string
+               (default #f))
+  (arguments   karma-configuration-arguments    ;list of strings
+               (default '()))
+  (user        karma-configuration-user         ;string
+               (default "karma"))
+  (group       karma-configuration-group        ;string
+               (default "karma")))
+
+(define (karma-account configuration)
+  ;; Return the user accounts and user groups for CONFIG.
+  (let ((karma-user (karma-configuration-user configuration))
+        (karma-group (karma-configuration-group configuration)))
+    (list (user-group
+           (name karma-user)
+           (system? #t))
+          (user-account
+           (name karma-user)
+           (group karma-group)
+           (system? #t)
+           (comment "karma privilege separation user")
+           (home-directory (string-append "/var/run/" karma-user))
+           (shell #~(string-append #$shadow "/sbin/nologin"))))))
+
+(define (karma-shepherd-service config)
+  (list
+   (shepherd-service
+    (provision '(karma))
+    (documentation "Run karma.")
+    (requirement '())
+    (start #~(make-forkexec-constructor
+              (list (string-append #$(karma-configuration-karma config)
+                                   "/bin/karma-linux-amd64")
+                    (string-append "--config.file=" #$(karma-configuration-config-file config))
+                    #$@(karma-configuration-arguments config))
+              #:user #$(karma-configuration-user config)
+              #:group #$(karma-configuration-group config)
+              #:log-file "/var/log/karma.log"))
+    (respawn? #f)
+    (stop #~(make-kill-destructor)))))
+
+(define karma-service-type
+  (service-type
+   (name 'karma)
+   (extensions
+    (list (service-extension shepherd-root-service-type
+                             karma-shepherd-service)
+          (service-extension account-service-type
+                             karma-account)))
+   (default-value (karma-configuration))
+   (description
+    "Run the karma.")))
 
 ;;; monitoring.scm ends here
