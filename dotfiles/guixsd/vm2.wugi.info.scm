@@ -50,6 +50,12 @@
                                                 "audio" "video")))
 
                        (user-account
+                        (name "wigust")
+                        (comment "Oleg Pykhalov")
+                        (group "users")
+                        (supplementary-groups '("audio" "video")))
+
+                       (user-account
                         (name "alertmanager")
                         (group "alertmanager")
                         (system? #t)
