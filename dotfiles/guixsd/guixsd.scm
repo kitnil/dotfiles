@@ -752,7 +752,8 @@ location / {
 
                          (service prometheus-node-exporter-service-type
                                   (prometheus-node-exporter-configuration
-                                   (web-listen-address "127.0.0.1:9100")))
+                                   (web-listen-address "127.0.0.1:9100")
+                                   (textfile-directory "/var/lib/prometheus-node-exporter")))
 
                          (service prometheus-alertmanager-service-type
                                   (prometheus-alertmanager-configuration
