@@ -7,6 +7,8 @@
 
 (use-modules (config))
 
+(use-modules (services bird))
+
 (operating-system
   (host-name "vm4.wugi.info")
   (timezone "Europe/Moscow")
@@ -24,11 +26,6 @@
                         (type "ext4"))
                       %base-file-systems))
 
-  (groups (append (list (user-group
-                         (name "docker")
-                         (system? #t)))
-                  %base-groups))
-
   ;; This is where user accounts are specified.  The "root"
   ;; account is implicit, and is initially created with the
   ;; empty password.
@@ -41,7 +38,7 @@
                 ;; makes it a sudoer.  Adding it to "audio"
                 ;; and "video" allows the user to play sound
                 ;; and access the webcam.
-                (supplementary-groups '("wheel" "audio" "video" "docker")))
+                (supplementary-groups '("wheel" "audio" "video")))
                %base-user-accounts))
 
   (sudoers-file (plain-file "sudoers" "\
@@ -64,19 +61,9 @@ oleg ALL=(ALL) NOPASSWD:ALL\n"))
                                     (use-pam? #f)))
                           (dbus-service)
                           (elogind-service)
-                          (service docker-service-type)
-                          (service nginx-service-type
-                                   (nginx-configuration
-                                    (server-blocks (list (proxy "file.wugi.info" 5091 #:ssl? #t #:ssl-key? #t)))))
-                          (service certbot-service-type
-                                   (certbot-configuration
-                                    (email "go.wigust@gmail.com")
-                                    (certificates
-                                     `(,@(map (lambda (host)
-                                                (certificate-configuration
-                                                 (domains (list host))
-                                                 (deploy-hook %nginx-deploy-hook)))
-                                              (list "file.wugi.info"))))))
+                          (service bird-service-type
+                                   (bird-configuration
+                                    (config-file (local-file "bird.conf"))))
                           (service zabbix-agent-service-type %vm-zabbix-agent-configuration)
                           (service prometheus-node-exporter-service-type))
                     (modify-services %base-services
