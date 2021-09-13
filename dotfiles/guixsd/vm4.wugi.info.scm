@@ -2,7 +2,7 @@
 ;; for a "bare bones" setup, with no X11 display server.
 
 (use-modules (gnu))
-(use-service-modules certbot databases dbus desktop docker monitoring networking ssh web vpn)
+(use-service-modules certbot databases dbus desktop docker monitoring networking ssh sysctl web vpn)
 (use-package-modules admin curl certs networking linux screen ssh tmux)
 
 (use-modules (config))
@@ -83,4 +83,10 @@ oleg ALL=(ALL) NOPASSWD:ALL\n"))
                           (service zabbix-agent-service-type %vm-zabbix-agent-configuration)
                           (service prometheus-node-exporter-service-type))
                     (modify-services %base-services
-                      (guix-service-type config => %guix-daemon-config-with-substitute-urls)))))
+                      (guix-service-type config => %guix-daemon-config-with-substitute-urls)
+                      (sysctl-service-type _ =>
+                                           (sysctl-configuration
+                                            (settings (append '(("net.ipv4.ip_forward" . "1")
+                                                                ("net.ipv4.conf.all.rp_filter" . "0")
+                                                                ("net.ipv4.conf.default.rp_filter" . "0"))
+                                                              %default-sysctl-settings))))))))
