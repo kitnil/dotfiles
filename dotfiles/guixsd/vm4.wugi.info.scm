@@ -2,7 +2,7 @@
 ;; for a "bare bones" setup, with no X11 display server.
 
 (use-modules (gnu))
-(use-service-modules certbot databases dbus desktop docker monitoring networking ssh web)
+(use-service-modules certbot databases dbus desktop docker monitoring networking ssh web vpn)
 (use-package-modules curl certs screen ssh)
 
 (use-modules (config))
@@ -59,6 +59,22 @@ oleg ALL=(ALL) NOPASSWD:ALL\n"))
                                    (openssh-configuration
                                     (password-authentication? #t)
                                     (use-pam? #f)))
+                          (service wireguard-service-type
+                                   (wireguard-configuration
+                                    (interface "de2.g-load.eu")
+                                    (addresses
+                                     '("192.168.219.77/32"))
+                                    (peers
+                                     (list
+                                      (wireguard-peer
+                                       (name "de2.g-load.eu")
+                                       (endpoint "de2.g-load.eu:22496")
+                                       (public-key "B1xSG/XTJRLd+GrWDsB06BqnIq8Xud93YVh/LYYYtUY=")
+                                       (allowed-ips '("172.16.0.0/12"
+                                                      "192.168.0.0/16"
+                                                      ;; "172.20.53.97/32"
+                                                      ;; "192.168.219.77/32"
+                                                      )))))))
                           (dbus-service)
                           (elogind-service)
                           (service bird-service-type
