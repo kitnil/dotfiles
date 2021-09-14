@@ -88,9 +88,12 @@
 
 (define (autofs-activation config)
   "Return the activation gexp for CONFIG."
-  #~(begin
-      (use-modules (guix build utils))
-      (mkdir-p "/etc/autofs")))
+  (let ((targets (map autofs-mount-configuration-target
+                      (autofs-configuration-mounts config))))
+    #~(begin
+        (use-modules (guix build utils))
+        (mkdir-p "/etc/autofs")
+        (for-each mkdir-p '#$targets))))
 
 (define (autofs-shepherd-service config)
   ;; Return a <shepherd-service> running autofs.
