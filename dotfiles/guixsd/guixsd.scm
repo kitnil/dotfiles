@@ -303,7 +303,10 @@ location / {
     (source ":sshfs\\#web33s.majordomo.ru\\:"))
    (autofs-mount-configuration
     (target "/mnt/ssh/web30-eng")
-    (source ":sshfs\\#web30.intr\\:"))))
+    (source ":sshfs\\#web30.intr\\:"))
+   (autofs-mount-configuration
+    (target "/mnt/ssh/fedora24")
+    (source ":sshfs\\#78.108.86.195\\:"))))
 
 
 ;;;
