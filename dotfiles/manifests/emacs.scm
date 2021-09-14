@@ -152,6 +152,7 @@
        emacs-terraform-mode
        emacs-transmission       ; Front end to transmission-daemon
        emacs-transpose-frame    ; M-x transpose-frame
+       emacs-tuareg             ; ocaml
        emacs-undo-tree          ; Undo visualisation
        emacs-use-package        ; Lazy configuration
        emacs-validate

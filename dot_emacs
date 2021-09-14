@@ -102,6 +102,7 @@
 (load-config-file "java.el")
 (load-config-file "perl.el")
 (load-config-file "rust.el")
+(load-config-file "ml.el")
 
 ;; (load-config-file "twitch.el")
 ;; (load-config-file "youtube.el")
