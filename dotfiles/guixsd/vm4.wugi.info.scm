@@ -47,7 +47,7 @@ root ALL=(ALL) ALL
 oleg ALL=(ALL) NOPASSWD:ALL\n"))
 
   ;; Globally-installed packages.
-  (packages (cons* curl nss-certs screen strace tmux mtr tcpdump net-tools iftop %base-packages))
+  (packages (cons* curl nss-certs iptables screen strace tmux mtr tcpdump net-tools iftop %base-packages))
 
   ;; Add services to the baseline: a DHCP client and
   ;; an SSH server.
