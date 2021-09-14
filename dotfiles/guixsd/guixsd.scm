@@ -306,7 +306,10 @@ location / {
     (source ":sshfs\\#web30.intr\\:"))
    (autofs-mount-configuration
     (target "/mnt/ssh/fedora24")
-    (source ":sshfs\\#78.108.86.195\\:"))))
+    (source ":sshfs\\#78.108.86.195\\:"))
+   (autofs-mount-configuration
+    (target "/mnt/ssh/debian11")
+    (source ":sshfs\\#78.108.92.69\\:"))))
 
 
 ;;;
