@@ -10,8 +10,12 @@ TESTS =						\
 .PHONY: all
 all: guix.wugi.info ws1.wugi.info spb.wugi.info vm1.wugi.info vm2.wugi.info vm3.wugi.info vm4.wugi.info
 
+.PHONY: clean-guile
+clean-guile:
+	rm -rf $(HOME)/.cache/guile/ccache
+
 .PHONY: clean
-clean:
+clean: clean-guile
 	rm -rf test-tmp
 	rm -f dotfiles/nix/result
 
@@ -97,7 +101,7 @@ deploy:
 	guix deploy -L $(MODULES) dotfiles/guixsd/deploy.scm
 
 .PHONY: dotfiles/channels-current.scm
-dotfiles/channels-current.scm:
+dotfiles/channels-current.scm: clean-guile
 	GUILE_AUTO_COMPILE=0 bin/executable_guix-latest -L dotfiles/guixsd/modules --channels=dotfiles/channels-current.scm dotfiles/manifests/guixsd.scm dotfiles/guixsd/guixsd.scm
 
 .PHONY: guix.wugi.info
