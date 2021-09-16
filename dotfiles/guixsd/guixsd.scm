@@ -795,11 +795,10 @@ location / {
                                                           (ice-9 rdelim))
                                              (define password
                                                (string-trim-right
-                                                #$(if (file-exists? "/etc/prometheus-alertmanager/secrets")
+                                                #$(if (= (getuid) 0)
                                                       (with-input-from-file "/etc/prometheus-alertmanager/secrets"
                                                         read-string)
-                                                      (begin (display "`/etc/prometheus-alertmanager/secrets' is missing.\n")
-                                                             "missing /etc/prometheus-alertmanager/secrets"))))
+                                                      "skipping /etc/prometheus-alertmanager/secrets")))
                                              (with-output-to-file #$output
                                                (lambda ()
                                                  (scm->json
