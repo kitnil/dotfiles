@@ -164,6 +164,7 @@
     prometheus
     prometheus-pushgateway
     prometheus-alertmanager
+    prometheus-json-exporter
 
     dhall
     dhall-nix
