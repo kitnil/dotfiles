@@ -86,6 +86,7 @@ oleg ALL=(ALL) NOPASSWD:ALL\n"))
                                                      #:netmask "255.255.254.0"
                                                      #:gateway "78.108.87.254"
                                                      #:name-servers '("8.8.8.8" "8.8.4.4"))
+                          (service ntp-service-type)
                           (service zabbix-agent-service-type %vm-zabbix-agent-configuration)
                           (service prometheus-node-exporter-service-type)
                           (service openssh-service-type

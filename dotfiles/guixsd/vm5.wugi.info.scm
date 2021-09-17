@@ -55,6 +55,7 @@ oleg ALL=(ALL) NOPASSWD:ALL\n"))
                                                 #:netmask "255.255.254.0"
                                                 #:gateway "178.250.247.254"
                                                 #:name-servers '("8.8.8.8" "8.8.4.4"))
+                     (service ntp-service-type)
                      (service openssh-service-type
                               (openssh-configuration
                                (openssh openssh-sans-x)
