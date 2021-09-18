@@ -11,17 +11,18 @@
              (srfi srfi-1)
              (srfi srfi-26))
 
-(use-package-modules admin audio android backup bash bittorrent curl guile haskell-apps networking linux ssh suckless xdisorg xorg)
+(use-package-modules admin audio android backup bash bittorrent curl firmware guile haskell-apps networking linux ssh suckless xdisorg xorg)
 
 (use-service-modules admin dbus desktop docker dns mcron networking sound
                      xorg ssh web cgit version-control certbot
-                     monitoring databases mail vpn)
+                     monitoring databases mail vpn virtualization)
 
 ;; Third-party modules
 (use-modules (config)
              (wigust packages admin)
              (wigust packages vnc)
              (wigust packages web)
+             (wigust packages linux)
              (services autofs)
              (services backup)
              (services bittorrent)
@@ -408,6 +409,8 @@ location / {
       ;;              (menu-entries (list (menu-entry
       ;;                                   (label "netboot.xyz")
       ;;                                   (linux netboot.xyz))))))
+
+      (kernel-loadable-modules (list vendor-reset-linux-module))
       (initrd microcode-initrd)
       (kernel linux-5.13)
       (firmware (cons* amdgpu-firmware linux-firmware %base-firmware))
@@ -416,11 +419,15 @@ location / {
       (kernel-arguments '("modprobe.blacklist=pcspkr,snd_pcsp"
 
                           ;; "amd_iommu=on"
-                          ;; "iommu=pt" ;<https://wiki.archlinux.org/index.php/PCI_passthrough_via_OVMF#Setting_up_IOMMU>
+                          "iommu=pt" ;<https://wiki.archlinux.org/index.php/PCI_passthrough_via_OVMF#Setting_up_IOMMU>
                           ;; "kvm_amd.npt=1"
                           ;; "kvm_amd.avic=1"
                           ;; "pci=realloc"
                           ;; "vfio-pci.ids=1002:7340,1002:ab38"
+                          ;; video=efifb:off
+
+                          "kvm.ignore_msrs=1"
+                          "vfio-pci.ids=1002:1478,1002:1479,1002:7340,1002:ab38"
 
                           ;; Arch Linux Forums
                           ;; Random freezes with AMD Ryzen on Linux 5.0 / Kernel & Hardware
@@ -453,7 +460,7 @@ location / {
                           ;; "amdgpu.dc=0"
                           ;; "amdgpu.gpu_recovery=1"
                           ))
-      (packages %my-system-packages)
+      (packages (cons ovmf %my-system-packages))
 
       (groups (cons* (user-group (name "nixbld")
                                  (id 30100))
@@ -474,7 +481,7 @@ location / {
                      (uid 1000)
                      (comment "Oleg Pykhalov")
                      (group "users")
-                     (supplementary-groups '("wheel" "adbusers" "audio" "video" "docker" "kvm" "input"))
+                     (supplementary-groups '("wheel" "adbusers" "audio" "video" "docker" "kvm" "input" "libvirt"))
                      (home-directory "/home/oleg"))
                     (user-account
                      (name "majordomo-ssh-tunnel")
@@ -631,6 +638,10 @@ location / {
                          (extra-special-file "/bin/bash"
                                              (file-append bash "/bin/bash"))
                          ;; (extra-special-file "/bin/setquota")
+
+                         ;; TODO: Add vendor-reset at boot
+                         ;; (service kernel-module-loader-service-type
+                         ;;          '("vendor-reset" "ddcci_backlight"))
 
                          ;; “adb” and “fastboot” without root privileges
                          (udev-rules-service 'android android-udev-rules
@@ -1042,6 +1053,12 @@ ServerAliveCountMax 3"))))))
 localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOnaDeOzwmrcrq1D8slYaeFozXZ0cpqNU0EvGmgnO29aiKkSD1ehbIV4vSxk3IDXz9ClMVPc1bTUTrYhEVHdCks="
                                                                        "\
 127.0.0.1 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOnaDeOzwmrcrq1D8slYaeFozXZ0cpqNU0EvGmgnO29aiKkSD1ehbIV4vSxk3IDXz9ClMVPc1bTUTrYhEVHdCks="))))
+
+                         (service libvirt-service-type)
+
+                         (service virtlog-service-type
+                                  (virtlog-configuration
+                                   (max-clients 1000)))
 
                          (bluetooth-service #:auto-enable? #t))
 
