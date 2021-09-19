@@ -1055,6 +1055,17 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
 127.0.0.1 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOnaDeOzwmrcrq1D8slYaeFozXZ0cpqNU0EvGmgnO29aiKkSD1ehbIV4vSxk3IDXz9ClMVPc1bTUTrYhEVHdCks="))))
 
                          (service libvirt-service-type)
+                         (simple-service 'libvirt-qemu-config etc-service-type
+                                         (list `("libvirt/qemu.conf"
+                                                 ,(plain-file "qemu.conf" "\
+user = \"oleg\"
+
+nvram = [
+  \"/home/oleg/.nix-profile/FV/OVMF_CODE.fd:/home/oleg/.nix-profile/FV/OVMF_VARS.fd\"
+]
+
+namespaces = [ ]
+"))))
 
                          (service virtlog-service-type
                                   (virtlog-configuration

@@ -166,6 +166,8 @@
     prometheus-alertmanager
     prometheus-json-exporter
 
+    OVMF.fd # UEFI for virtual machines in libvirt
+
     dhall
     dhall-nix
     dhall-json
