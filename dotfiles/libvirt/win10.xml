@@ -1,4 +1,4 @@
-<domain type='kvm'>
+<domain type='kvm' id='3'>
   <name>win10</name>
   <uuid>32ba10e9-3ec6-46e6-bcfa-a0ab8344bb76</uuid>
   <metadata>
@@ -9,6 +9,9 @@
   <memory unit='KiB'>16777216</memory>
   <currentMemory unit='KiB'>16777216</currentMemory>
   <vcpu placement='static'>6</vcpu>
+  <resource>
+    <partition>/machine</partition>
+  </resource>
   <os>
     <type arch='x86_64' machine='pc-q35-6.0'>hvm</type>
     <loader readonly='yes' type='pflash'>/nix/store/gdg9fcmkmq4xlzwiyay1f5gq0r5sr3bk-OVMF-202102-fd/FV/OVMF_CODE.fd</loader>
@@ -28,8 +31,32 @@
     </kvm>
     <vmport state='off'/>
   </features>
-  <cpu mode='host-model' check='partial'>
+  <cpu mode='custom' match='exact' check='full'>
+    <model fallback='forbid'>EPYC-Rome</model>
+    <vendor>AMD</vendor>
     <topology sockets='1' dies='1' cores='6' threads='1'/>
+    <feature policy='require' name='x2apic'/>
+    <feature policy='require' name='tsc-deadline'/>
+    <feature policy='require' name='hypervisor'/>
+    <feature policy='require' name='tsc_adjust'/>
+    <feature policy='require' name='spec-ctrl'/>
+    <feature policy='require' name='stibp'/>
+    <feature policy='require' name='arch-capabilities'/>
+    <feature policy='require' name='ssbd'/>
+    <feature policy='require' name='xsaves'/>
+    <feature policy='require' name='cmp_legacy'/>
+    <feature policy='require' name='ibrs'/>
+    <feature policy='require' name='amd-ssbd'/>
+    <feature policy='require' name='virt-ssbd'/>
+    <feature policy='disable' name='svme-addr-chk'/>
+    <feature policy='require' name='rdctl-no'/>
+    <feature policy='require' name='skip-l1dfl-vmentry'/>
+    <feature policy='require' name='mds-no'/>
+    <feature policy='require' name='pschange-mc-no'/>
+    <feature policy='disable' name='svm'/>
+    <feature policy='require' name='topoext'/>
+    <feature policy='disable' name='npt'/>
+    <feature policy='disable' name='nrip-save'/>
   </cpu>
   <clock offset='localtime'>
     <timer name='rtc' tickpolicy='catchup'/>
@@ -48,117 +75,159 @@
     <emulator>/run/current-system/profile/bin/qemu-system-x86_64</emulator>
     <disk type='file' device='disk'>
       <driver name='qemu' type='qcow2'/>
-      <source file='/var/lib/libvirt/images/win10.qcow2'/>
+      <source file='/var/lib/libvirt/images/win10.qcow2' index='2'/>
+      <backingStore/>
       <target dev='sda' bus='sata'/>
       <boot order='1'/>
+      <alias name='sata0-0-0'/>
       <address type='drive' controller='0' bus='0' target='0' unit='0'/>
     </disk>
     <disk type='file' device='cdrom'>
       <driver name='qemu' type='raw'/>
-      <source file='/srv/lib/Win710Sim_21.9.15/Win10Sim_21.9.15.iso'/>
+      <source file='/srv/lib/Win710Sim_21.9.15/Win10Sim_21.9.15.iso' index='1'/>
+      <backingStore/>
       <target dev='sdb' bus='sata'/>
       <readonly/>
+      <alias name='sata0-0-1'/>
       <address type='drive' controller='0' bus='0' target='0' unit='1'/>
     </disk>
     <controller type='usb' index='0' model='qemu-xhci' ports='15'>
+      <alias name='usb'/>
       <address type='pci' domain='0x0000' bus='0x02' slot='0x00' function='0x0'/>
     </controller>
     <controller type='sata' index='0'>
+      <alias name='ide'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x1f' function='0x2'/>
     </controller>
-    <controller type='pci' index='0' model='pcie-root'/>
+    <controller type='pci' index='0' model='pcie-root'>
+      <alias name='pcie.0'/>
+    </controller>
     <controller type='pci' index='1' model='pcie-root-port'>
       <model name='pcie-root-port'/>
       <target chassis='1' port='0x10'/>
+      <alias name='pci.1'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x02' function='0x0' multifunction='on'/>
     </controller>
     <controller type='pci' index='2' model='pcie-root-port'>
       <model name='pcie-root-port'/>
       <target chassis='2' port='0x11'/>
+      <alias name='pci.2'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x02' function='0x1'/>
     </controller>
     <controller type='pci' index='3' model='pcie-root-port'>
       <model name='pcie-root-port'/>
       <target chassis='3' port='0x12'/>
+      <alias name='pci.3'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x02' function='0x2'/>
     </controller>
     <controller type='pci' index='4' model='pcie-root-port'>
       <model name='pcie-root-port'/>
       <target chassis='4' port='0x13'/>
+      <alias name='pci.4'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x02' function='0x3'/>
     </controller>
     <controller type='pci' index='5' model='pcie-root-port'>
       <model name='pcie-root-port'/>
       <target chassis='5' port='0x14'/>
+      <alias name='pci.5'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x02' function='0x4'/>
     </controller>
     <controller type='pci' index='6' model='pcie-root-port'>
       <model name='pcie-root-port'/>
       <target chassis='6' port='0x15'/>
+      <alias name='pci.6'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x02' function='0x5'/>
     </controller>
+    <controller type='pci' index='7' model='pcie-root-port'>
+      <model name='pcie-root-port'/>
+      <target chassis='7' port='0x8'/>
+      <alias name='pci.7'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x01' function='0x0'/>
+    </controller>
+    <controller type='pci' index='8' model='pcie-to-pci-bridge'>
+      <model name='pcie-pci-bridge'/>
+      <alias name='pci.8'/>
+      <address type='pci' domain='0x0000' bus='0x07' slot='0x00' function='0x0'/>
+    </controller>
     <controller type='virtio-serial' index='0'>
+      <alias name='virtio-serial0'/>
       <address type='pci' domain='0x0000' bus='0x03' slot='0x00' function='0x0'/>
     </controller>
     <interface type='bridge'>
       <mac address='52:54:00:23:17:bd'/>
       <source bridge='br0'/>
+      <virtualport type='openvswitch'>
+        <parameters interfaceid='7c2d76d7-7c4b-4227-a117-4759b8ff994b'/>
+      </virtualport>
+      <target dev='vnet2'/>
       <model type='e1000e'/>
+      <alias name='net0'/>
       <address type='pci' domain='0x0000' bus='0x01' slot='0x00' function='0x0'/>
     </interface>
     <serial type='pty'>
+      <source path='/dev/pts/6'/>
       <target type='isa-serial' port='0'>
         <model name='isa-serial'/>
       </target>
+      <alias name='serial0'/>
     </serial>
-    <console type='pty'>
+    <console type='pty' tty='/dev/pts/6'>
+      <source path='/dev/pts/6'/>
       <target type='serial' port='0'/>
+      <alias name='serial0'/>
     </console>
-    <input type='mouse' bus='ps2'/>
-    <input type='keyboard' bus='ps2'/>
-    <graphics type='spice' autoport='yes'>
-      <listen type='address'/>
+    <input type='mouse' bus='ps2'>
+      <alias name='input0'/>
+    </input>
+    <input type='keyboard' bus='ps2'>
+      <alias name='input1'/>
+    </input>
+    <graphics type='spice' port='5900' autoport='yes' listen='127.0.0.1'>
+      <listen type='address' address='127.0.0.1'/>
       <image compression='off'/>
       <gl enable='no'/>
     </graphics>
     <sound model='ich9'>
       <codec type='micro'/>
       <audio id='1'/>
+      <alias name='sound0'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x1b' function='0x0'/>
     </sound>
     <audio id='1' type='pulseaudio' serverName='/run/user/1000/pulse/native'/>
     <video>
       <model type='none'/>
+      <alias name='video0'/>
     </video>
     <hostdev mode='subsystem' type='pci' managed='yes'>
+      <driver name='vfio'/>
       <source>
         <address domain='0x0000' bus='0x12' slot='0x00' function='0x0'/>
       </source>
+      <alias name='hostdev0'/>
       <address type='pci' domain='0x0000' bus='0x05' slot='0x00' function='0x0'/>
     </hostdev>
     <hostdev mode='subsystem' type='pci' managed='yes'>
+      <driver name='vfio'/>
       <source>
         <address domain='0x0000' bus='0x12' slot='0x00' function='0x1'/>
       </source>
+      <alias name='hostdev1'/>
       <address type='pci' domain='0x0000' bus='0x06' slot='0x00' function='0x0'/>
     </hostdev>
-    <hostdev mode='subsystem' type='usb' managed='yes'>
-      <source>
-        <vendor id='0x0951'/>
-        <product id='0x16e4'/>
-      </source>
-      <address type='usb' bus='0' port='3'/>
-    </hostdev>
-    <hostdev mode='subsystem' type='usb' managed='yes'>
-      <source>
-        <vendor id='0x0416'/>
-        <product id='0xb23c'/>
-      </source>
-      <address type='usb' bus='0' port='1'/>
-    </hostdev>
     <memballoon model='virtio'>
+      <alias name='balloon0'/>
       <address type='pci' domain='0x0000' bus='0x04' slot='0x00' function='0x0'/>
     </memballoon>
+    <shmem name='looking-glass'>
+      <model type='ivshmem-plain'/>
+      <size unit='M'>64</size>
+      <alias name='shmem0'/>
+      <address type='pci' domain='0x0000' bus='0x08' slot='0x01' function='0x0'/>
+    </shmem>
   </devices>
+  <seclabel type='dynamic' model='dac' relabel='yes'>
+    <label>+1000:+984</label>
+    <imagelabel>+1000:+984</imagelabel>
+  </seclabel>
 </domain>
 
