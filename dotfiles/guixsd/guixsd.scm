@@ -15,7 +15,7 @@
 
 (use-service-modules admin dbus desktop docker dns mcron networking sound
                      xorg ssh web cgit version-control certbot
-                     monitoring databases mail vpn virtualization linux)
+                     monitoring databases mail vpn virtualization linux sysctl)
 
 ;; Third-party modules
 (use-modules (config)
@@ -1092,7 +1092,11 @@ namespaces = [ ]
        (modify-services (operating-system-default-essential-services this-operating-system)
          (shepherd-root-service-type config => (shepherd-configuration
 					        (inherit config)
-					        (shepherd shepherd-patched)))))
+					        (shepherd shepherd-patched)))
+         (sysctl-service-type _ =>
+                              (sysctl-configuration
+                               (settings (append '(("net.bridge.bridge-nf-call-iptables" . "0"))
+                                                 %default-sysctl-settings))))))
 
       (setuid-programs %my-setuid-programs)
 
