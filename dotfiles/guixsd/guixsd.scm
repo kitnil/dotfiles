@@ -382,6 +382,65 @@ location / {
 
 
 ;;;
+;;; Networking
+;;;
+
+;; Running a Ganeti cluster on Guix — 2020 — Blog — GNU Guix
+;; https://guix.gnu.org/de/blog/2020/running-a-ganeti-cluster-on-guix/
+
+(define (start-interface if)
+  #~(let ((ip #$(file-append iproute "/sbin/ip")))
+      (invoke/quiet ip "link" "set" #$if "up")))
+
+(define (stop-interface if)
+  #~(let ((ip #$(file-append iproute "/sbin/ip")))
+      (invoke/quiet ip "link" "set" #$if "down")))
+
+;; This service is necessary to ensure interface is in the "up" state on boot
+;; since it is otherwise unmanaged from Guix PoV.
+(define (ifup-service if)
+  (let ((name (string-append "ifup-" if)))
+    (simple-service name shepherd-root-service-type
+                    (list (shepherd-service
+                           (provision (list (string->symbol name)))
+                           (start #~(lambda ()
+                                      #$(start-interface if)))
+                           (stop #~(lambda (_)
+                                     #$(stop-interface if)))
+                           (respawn? #f))))))
+
+;; Note: Remove vlan_mode to use tagged VLANs.
+(define (create-openvswitch-bridge bridge uplink)
+  #~(let ((ovs-vsctl (lambda (cmd)
+                       (apply invoke/quiet
+                              #$(file-append openvswitch "/bin/ovs-vsctl")
+                              (string-tokenize cmd)))))
+      (and (ovs-vsctl (string-append "--may-exist add-br " #$bridge))
+           (ovs-vsctl (string-append "--may-exist add-port " #$bridge " "
+                                     #$uplink
+                                     " vlan_mode=native-untagged")))))
+
+(define (create-openvswitch-internal-port bridge port)
+  #~(invoke/quiet #$(file-append openvswitch "/bin/ovs-vsctl")
+                  "--may-exist" "add-port" #$bridge #$port
+                  "vlan_mode=native-untagged"
+                  "--" "set" "Interface" #$port "type=internal"))
+
+(define %openvswitch-configuration-service
+  (simple-service 'openvswitch-configuration shepherd-root-service-type
+                  (list (shepherd-service
+                         (provision '(openvswitch-configuration))
+                         (requirement '(vswitchd))
+                         (start #~(lambda ()
+                                    #$(create-openvswitch-bridge
+                                       "br0" "enp34s0")
+                                    ;; #$(create-openvswitch-internal-port
+                                    ;;    "br0" "gnt0")
+                                    ))
+                         (respawn? #f)))))
+
+
+;;;
 ;;; Entryp point
 ;;;
 
@@ -1058,6 +1117,17 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                                   '("vfio-pci" ;GPU passthrough
                                     "vendor-reset" ;reset NAVI10 (5500XT)
                                     ))
+
+                         (service openvswitch-service-type)
+                         %openvswitch-configuration-service
+                         (ifup-service "enp34s0")
+                         (static-networking-service "br0" "192.168.0.144"
+					            #:netmask "255.255.255.0"
+					            #:gateway "192.168.0.1"
+					            #:name-servers '("192.168.0.144\nsearch intr majordomo.ru"
+                                                                     "172.17.0.1"
+                                                                     "8.8.8.8"
+                                                                     "8.8.4.4"))
 
                          (service libvirt-service-type)
                          (simple-service 'libvirt-qemu-config activation-service-type
