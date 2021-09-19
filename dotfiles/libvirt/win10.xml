@@ -1,4 +1,4 @@
-<domain type='kvm' id='1'>
+<domain type='kvm' id='3'>
   <name>win10</name>
   <uuid>32ba10e9-3ec6-46e6-bcfa-a0ab8344bb76</uuid>
   <metadata>
@@ -144,20 +144,20 @@
     <interface type='bridge'>
       <mac address='52:54:00:23:17:bd'/>
       <source bridge='br0'/>
-      <target dev='vnet0'/>
+      <target dev='vnet2'/>
       <model type='e1000e'/>
       <alias name='net0'/>
       <address type='pci' domain='0x0000' bus='0x01' slot='0x00' function='0x0'/>
     </interface>
     <serial type='pty'>
-      <source path='/dev/pts/0'/>
+      <source path='/dev/pts/2'/>
       <target type='isa-serial' port='0'>
         <model name='isa-serial'/>
       </target>
       <alias name='serial0'/>
     </serial>
-    <console type='pty' tty='/dev/pts/0'>
-      <source path='/dev/pts/0'/>
+    <console type='pty' tty='/dev/pts/2'>
+      <source path='/dev/pts/2'/>
       <target type='serial' port='0'/>
       <alias name='serial0'/>
     </console>
@@ -186,21 +186,21 @@
     </hostdev>
     <hostdev mode='subsystem' type='usb' managed='yes'>
       <source>
-        <vendor id='0x0518'/>
-        <product id='0x0001'/>
-        <address bus='5' device='2'/>
+        <vendor id='0x0951'/>
+        <product id='0x16e4'/>
+        <address bus='1' device='9'/>
       </source>
       <alias name='hostdev2'/>
-      <address type='usb' bus='0' port='1'/>
+      <address type='usb' bus='0' port='3'/>
     </hostdev>
     <hostdev mode='subsystem' type='usb' managed='yes'>
       <source>
-        <vendor id='0x093a'/>
-        <product id='0x2510'/>
-        <address bus='3' device='2'/>
+        <vendor id='0x0416'/>
+        <product id='0xb23c'/>
+        <address bus='1' device='8'/>
       </source>
       <alias name='hostdev3'/>
-      <address type='usb' bus='0' port='2'/>
+      <address type='usb' bus='0' port='1'/>
     </hostdev>
     <memballoon model='virtio'>
       <alias name='balloon0'/>
