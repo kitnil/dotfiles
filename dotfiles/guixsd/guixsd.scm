@@ -1060,9 +1060,12 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                                     ))
 
                          (service libvirt-service-type)
-                         (simple-service 'libvirt-qemu-config etc-service-type
-                                         (list `("libvirt/qemu.conf"
-                                                 ,(plain-file "qemu.conf" "\
+                         (simple-service 'libvirt-qemu-config activation-service-type
+                                         #~(begin
+                                             (when (file-exists? "/etc/libvirt")
+                                               (with-output-to-file "/etc/libvirt/qemu.conf"
+                                                 (lambda ()
+                                                   (display "\
 user = \"oleg\"
 
 nvram = [
@@ -1070,7 +1073,7 @@ nvram = [
 ]
 
 namespaces = [ ]
-"))))
+"))))))
 
                          (service virtlog-service-type
                                   (virtlog-configuration
