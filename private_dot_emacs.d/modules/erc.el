@@ -149,21 +149,21 @@
 
 (setq erc-autojoin-channels-alist
       (quote
-       (("freenode.net"
-         ;; "#icecat" "#emacs" "#grub" "#conkeror" "#erc"
-         ;; "#clojure" "##math"
-         ;; "##c" "#gdb" "#bash" "#SDL" "#chicken"
-         ;; "#fedora" "#fedora-admin" "#fedora-devel"
-         ;; "#fedora-noc" "#fedora-meeting" "#fedora-qa"
-         ;; "#gnu" "#fsf" "#gnus"
-         "#guile" "#guix" "#lisp" "#scheme"
-         "#stumpwm" "#bootstrappable"
-         ;; "#replicant"
-         ;; "##linux" "#linuxdistrocommunity"
-         ;; "#nixos" "#haskell" "#xmonad"
-         ;; "#filmsbykris" "##japanese" "#latex"
-         ;; "#python" "#scipy" "#sagemath"
-         )
+       (;; ("freenode.net"
+        ;;  ;; "#icecat" "#emacs" "#grub" "#conkeror" "#erc"
+        ;;  ;; "#clojure" "##math"
+        ;;  ;; "##c" "#gdb" "#bash" "#SDL" "#chicken"
+        ;;  ;; "#fedora" "#fedora-admin" "#fedora-devel"
+        ;;  ;; "#fedora-noc" "#fedora-meeting" "#fedora-qa"
+        ;;  ;; "#gnu" "#fsf" "#gnus"
+        ;;  "#guile" "#guix" "#lisp" "#scheme"
+        ;;  "#stumpwm" "#bootstrappable"
+        ;;  ;; "#replicant"
+        ;;  ;; "##linux" "#linuxdistrocommunity"
+        ;;  ;; "#nixos" "#haskell" "#xmonad"
+        ;;  ;; "#filmsbykris" "##japanese" "#latex"
+        ;;  ;; "#python" "#scipy" "#sagemath"
+        ;;  )
         ;; ("indymedia.org" "#riseup")
         ;; ("gitter.im")
         ;; ("oftc.net" "#debian" "#debian-next")
