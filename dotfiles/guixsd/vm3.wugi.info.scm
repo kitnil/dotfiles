@@ -3,7 +3,7 @@
 
 (use-modules (gnu))
 (use-service-modules certbot databases monitoring networking ssh web vpn)
-(use-package-modules certs curl databases screen ssh)
+(use-package-modules certs curl databases screen ssh tmux)
 
 (use-modules (config)
              (services openvpn))
@@ -77,7 +77,7 @@ root ALL=(ALL) ALL
 oleg ALL=(ALL) NOPASSWD:ALL\n"))
 
   ;; Globally-installed packages.
-  (packages (cons* screen nss-certs curl %base-packages))
+  (packages (cons* screen nss-certs curl tmux %base-packages))
 
   ;; Add services to the baseline: a DHCP client and
   ;; an SSH server.
