@@ -41,6 +41,9 @@ case "$1" in
             printf "'%s' is not a HTTP URL.\n" "$web_url"
         fi
         ;;
+    repository)
+        chromium "https://gitlab.intr/${PROJECT_GROUP}/${PROJECT_NAME}/-/settings/repository"
+        ;;
     *)
         "${BROWSER:-firefox}" https://gitlab.intr/"$(basename "$(dirname "$PWD")")"/"$(basename "$PWD")"
         ;;
