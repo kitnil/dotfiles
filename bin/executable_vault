@@ -1,11 +1,11 @@
 #!/usr/bin/env -S guile --no-auto-compile -e main -s
 !#
 
-(use-modules (guile pass))
+(use-modules (guile config)
+             (guile pass))
 
 (define (main args)
   (setenv "VAULT_ADDR" "https://vault.intr")
   (setenv "VAULT_TOKEN"
           (pass "show" "majordomo/public/vault/root"))
-  (apply system* "/home/oleg/.nix-profile/bin/vault"
-         (cdr args)))
+  (apply system* %vault (cdr args)))
