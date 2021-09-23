@@ -339,11 +339,6 @@ mjru-network()
 	 | sed 's/" /"/g; s@ /@/@g; s/ ")/")/g; s/ "\./" ./; s/ \.intr/.intr/; s/\"\;/"/'
 }
 
-vault()
-{
-    VAULT_TOKEN="$(pass show majordomo/public/vault/root)" VAULT_ADDR=https://vault.intr command vault "$@"
-}
-
 vault1()
 {
     VAULT_TOKEN="$(pass show majordomo/public/vault/root)" VAULT_ADDR=http://dh1-mr.intr:8210 command vault "$@"
