@@ -1,0 +1,10 @@
+(define-module (guile pass)
+  #:use-module (ice-9 rdelim)
+  #:use-module (ice-9 popen)
+  #:export (pass))
+
+(define (pass . args)
+  (let* ((port   (apply open-pipe* OPEN_READ "pass" args))
+         (output (read-string port)))
+    (close-port port)
+    (string-trim-right output #\newline)))

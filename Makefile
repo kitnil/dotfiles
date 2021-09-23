@@ -91,6 +91,7 @@ install: install-ssh
 	sudo install -m644 dotfiles/guixsd/machines.scm /etc/guix
 	gpg --decrypt dotfiles/emacs/mjru-network.gpg > $(HOME)/.emacs.d/modules/mjru-network.el
 	ln -sf $(HOME)/.Xresources $(HOME)/.Xdefaults
+	install --mode=644 dotfiles/guile/pass.scm $(HOME)/.config/guile/pass.scm
 
 .PHONY: guile-ihs
 guile-ihs:
