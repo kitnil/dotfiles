@@ -92,6 +92,7 @@ install: install-ssh
 	gpg --decrypt dotfiles/emacs/mjru-network.gpg > $(HOME)/.emacs.d/modules/mjru-network.el
 	ln -sf $(HOME)/.Xresources $(HOME)/.Xdefaults
 	install --mode=644 dotfiles/guile/pass.scm $(HOME)/.config/guile/pass.scm
+	install --mode=644 dotfiles/guile/config.scm $(HOME)/.config/guile/config.scm
 
 .PHONY: guile-ihs
 guile-ihs:
