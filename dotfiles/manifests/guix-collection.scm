@@ -42,7 +42,7 @@ xfce xml xorg)
                feh sxiv    ; Image viewers
                perl-image-exiftool
 
-               libvirt
+               virt-manager
 
                qemu
 
