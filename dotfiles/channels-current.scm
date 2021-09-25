@@ -3,7 +3,7 @@
         (url "https://git.savannah.gnu.org/git/guix.git")
         (branch "master")
         (commit
-          "9f4bb5f1893ba52a67b221c17fe23d69684418aa")
+          "69f37702dfcda776a190d5c40fad8518469ce3c4")
         (introduction
           (make-channel-introduction
             "9edb3f66fd807b096b48283debdcddccfea34bad"
@@ -14,13 +14,13 @@
         (url "https://github.com/kitnil/guix-wigust")
         (branch "master")
         (commit
-          "b339549dee1d9041c6c1203527f5db6df42fa9f4"))
+          "95718ec6458c16d4ad52fb583ab55df2979b8729"))
       (channel
         (name 'nonguix)
         (url "https://gitlab.com/nonguix/nonguix")
         (branch "master")
         (commit
-          "90635824ccd4d0a1b17e2f4a0e890c83cdb831b4")
+          "daa5894b98051fab75277f3bad180866047a6c78")
         (introduction
           (make-channel-introduction
             "897c1a470da759236cc11798f4e0a5f7d4d59fbc"
