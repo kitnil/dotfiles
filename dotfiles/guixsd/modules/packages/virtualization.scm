@@ -42,10 +42,14 @@
        ("gmp" ,gmp)
        ("guile" ,guile-3.0) ; for the wrapper script
        ("nettle" ,nettle)
+       ("libx11" ,libx11)
+       ("libXfixes" ,libxfixes)
+       ("libxss" ,libxscrnsaver)
+       ("libxinerama" ,libxinerama)
        ,@(package-inputs looking-glass-client)))
     (arguments
      `(#:validate-runpath? #f
-       #:configure-flags '("-DENABLE_X11=OFF") ;failed to build with X11
+       ;; #:configure-flags '("-DENABLE_X11=OFF") ;failed to build with X11
        ,@(substitute-keyword-arguments (package-arguments looking-glass-client)
            ((#:phases phases)
             `(modify-phases ,phases
@@ -65,5 +69,9 @@
                                "mesa"
                                "wayland"
                                "fontconfig"
-                               "freetype"))))
+                               "freetype"
+                               "libx11"
+                               "libXfixes"
+                               "libxss"
+                               "libxinerama"))))
                    #t)))))))))
