@@ -73,7 +73,8 @@ EndSection
         "monitor.wugi.info"
         "syncthing.wugi.info"
         "torrent.wugi.info"
-        "webssh.wugi.info"))
+        "webssh.wugi.info"
+        "kiwiirc.wugi.info"))
 
 
 ;;;
@@ -225,6 +226,7 @@ location / {
         %githunt-nginx-configuration
         (proxy "monitor.wugi.info" 8080)
         (proxy "guix.duckdns.org" 5556 #:ssl? #t)
+        (proxy "kiwiirc.wugi.info" 8194 #:ssl? #t #:ssl-key? #t #:mtls? #t)
         (proxy "guix.wugi.info" 5556 #:locations %nginx-lua-guix #:ssl? #t #:ssl-key? #t)
         (proxy "pykhaloff.ddns.net" 443
                #:target "192.168.100.5"
@@ -620,6 +622,7 @@ location / {
                            "texinfo.tld"
                            "jenkins.wugi.info"
                            "torrent.wugi.info"
+                           "kiwiirc.wugi.info"
                            "syncthing.wugi.info"
                            "iso.wugi.info"
                            "cgit.duckdns.org"
@@ -1064,6 +1067,7 @@ PasswordAuthentication yes")))
 
                          (service docker-service-type)
                          docker-service
+                         docker-kiwiirc-service
 
                          (dovecot-service
                           #:config (dovecot-configuration
