@@ -21,7 +21,9 @@
   #:use-module (gnu services)
   #:use-module (guix gexp)
   #:use-module (srfi srfi-1)
-  #:export (docker-service))
+  #:use-module (gnu packages docker)
+  #:export (docker-service
+            docker-kiwiirc-service))
 
 ;;; Commentary:
 ;;;
@@ -53,5 +55,33 @@
                               (list #$docker-start)))
                     (respawn? #f)
                     (stop #~(make-kill-destructor))))))
+
+
+;;;
+;;; kiwiirc
+;;;
+
+(define docker-kiwiirc-service
+  (simple-service 'docker shepherd-root-service-type
+                  (list
+                   (shepherd-service
+                    (provision '(kiwiirc))
+                    (documentation "Run kiwiirc Docker container.")
+                    (requirement '())
+                    (start #~(make-forkexec-constructor
+                              (list (string-append #$docker-cli "/bin/docker")
+                                    "run"
+                                    "--rm"
+                                    "--name" "kiwiirc"
+                                    "--network=host"
+                                    "--volume" "/var/lib/kiwiirc:/kiwiirc-data"
+                                    "crashbuggy/kiwiirc:gitasof-21.06.13.1")
+                              #:log-file "/var/log/kiwiirc.log"))
+                    (respawn? #f)
+                    (stop #~(lambda _
+                              (invoke #$(program-file "docker-stop-kiwiirc"
+                                                      #~(begin
+                                                          (system* #$(file-append docker-cli "/bin/docker")
+                                                                   "stop" "kiwiirc"))))))))))
 
 ;;; docker.scm ends here
