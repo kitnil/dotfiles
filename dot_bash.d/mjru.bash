@@ -341,25 +341,25 @@ mjru-network()
 
 vault1()
 {
-    VAULT_TOKEN="$(pass show majordomo/public/vault/root)" VAULT_ADDR=http://dh1-mr.intr:8210 command vault "$@"
+    VAULT_TOKEN="$(pass show majordomo/public/vault/root)" VAULT_ADDR=http://dh1-mr.intr:8210 "${HOME}/.nix-profile/bin/vault" "$@"
 }
 
 vault2()
 {
-    VAULT_TOKEN="$(pass show majordomo/public/vault/root)" VAULT_ADDR=http://dh2-mr.intr:8220 command vault "$@"
+    VAULT_TOKEN="$(pass show majordomo/public/vault/root)" VAULT_ADDR=http://dh2-mr.intr:8220 "${HOME}/.nix-profile/bin/vault" "$@"
 }
 
 vault3()
 {
-    VAULT_TOKEN="$(pass show majordomo/public/vault/root)" VAULT_ADDR=http://dh3-mr.intr:8230 command vault "$@"
+    VAULT_TOKEN="$(pass show majordomo/public/vault/root)" VAULT_ADDR=http://dh3-mr.intr:8230 "${HOME}/.nix-profile/bin/vault" "$@"
 }
 
 vault4()
 {
-    VAULT_TOKEN="$(pass show majordomo/public/vault-unseal/root)" VAULT_ADDR=http://dh4-mr.intr:8240 command vault "$@"
+    VAULT_TOKEN="$(pass show majordomo/public/vault-unseal/root)" VAULT_ADDR=http://dh4-mr.intr:8240 "${HOME}/.nix-profile/bin/vault" "$@"
 }
 
 vault-ci()
 {
-    VAULT_TOKEN="$(pass show majordomo/public/vault-dev/root)" VAULT_ADDR=http://ci.intr:8210 command vault "$@"
+    VAULT_TOKEN="$(pass show majordomo/public/vault-dev/root)" VAULT_ADDR=http://ci.intr:8210 "${HOME}/.nix-profile/bin/vault" "$@"
 }
