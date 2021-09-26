@@ -359,6 +359,8 @@ location / {
        (define %backup-directories
          (list %user-home "/etc" "/root"))
 
+       (display "Creating new Restic snapshot\n")
+
        (when (zero?
               (apply system*
                      (append (list (string-append #$restic "/bin/restic")
