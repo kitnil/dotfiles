@@ -347,6 +347,9 @@ location / {
                 (with-input-from-file "/etc/guix/secrets/restic"
                   read-string)))
 
+       (setenv "SSL_CERT_DIR" "/run/current-system/profile/etc/ssl/certs")
+       (setenv "SSL_CERT_FILE" "/run/current-system/profile/etc/ssl/certs/ca-certificates.crt")
+
        (define %user-home
          (passwd:dir (getpw "oleg")))
 
