@@ -184,6 +184,15 @@ below otherwise."
                       (mail-header-message-id header)
                       (mail-header-subject header)))))
 
+;; (setq nnmail-expiry-wait 'immediate)
+;;
+;; Alternative:
+;;
+;; in a *Group* buffer
+;; G p
+;; (expiry-wait . immediate) ; instead of 7 days
+;; (auto-expire . t)         ; kill, read, etc article will auto-expire
+
 ;; (gnus-add-configuration
 ;;    '(article
 ;;     (horizontal 1.0
