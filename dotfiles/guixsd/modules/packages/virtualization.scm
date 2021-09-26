@@ -5,6 +5,7 @@
   #:use-module (gnu packages gl)
   #:use-module (gnu packages guile)
   #:use-module (gnu packages freedesktop)
+  #:use-module (gnu packages fontutils)
   #:use-module (gnu packages multiprecision)
   #:use-module (gnu packages nettle)
   #:use-module (gnu packages virtualization)
@@ -12,26 +13,35 @@
   #:use-module (guix download)
   #:use-module (guix git-download)
   #:use-module (guix packages)
-  #:use-module (guix utils))
+  #:use-module (guix utils)
+  #:use-module (ice-9 popen)
+  #:use-module (ice-9 rdelim)
+  #:use-module (guix gexp))
+
+(define %source-dir "/home/oleg/archive/src/looking-glass")
+
+(define (git-output . args)
+  "Execute 'git ARGS ...' command and return its output without trailing
+newspace."
+  (with-directory-excursion %source-dir
+    (let* ((port   (apply open-pipe* OPEN_READ "git" args))
+           (output (read-string port)))
+      (close-pipe port)
+      (string-trim-right output #\newline))))
+
+(define (current-commit)
+  (git-output "log" "-n" "1" "--pretty=format:%H"))
 
 (define-public looking-glass-client-next
   (package
     (inherit looking-glass-client)
     (name "looking-glass-client-next")
     (version "B4")
-    (source
-     (origin
-       (method git-fetch)
-       (uri (git-reference (url "https://github.com/gnif/LookingGlass")
-                           (commit version)
-                           (recursive? #t)))
-       (file-name (git-file-name name version))
-       (sha256
-        (base32
-         "0fwmz0l1dcfwklgvxmv0galgj2q3nss90kc3jwgf6n80x27rsnhf"))))
+    (source (local-file %source-dir
+                        #:recursive? #t
+                        #:select? (git-predicate %source-dir)))
     (inputs
-     `(("binutils" ,binutils) ;for libbfd
-       ("libiberty" ,libiberty)
+     `(("libiberty" ,libiberty)
        ("zlib" ,zlib)
        ("zlib:static" ,zlib "static")
        ("wayland-protocols" ,wayland-protocols)
@@ -46,11 +56,10 @@
        ("libXfixes" ,libxfixes)
        ("libxss" ,libxscrnsaver)
        ("libxinerama" ,libxinerama)
+       ("freetype" ,freetype)
        ,@(package-inputs looking-glass-client)))
     (arguments
-     `(#:validate-runpath? #f
-       ;; #:configure-flags '("-DENABLE_X11=OFF") ;failed to build with X11
-       ,@(substitute-keyword-arguments (package-arguments looking-glass-client)
+     `(,@(substitute-keyword-arguments (package-arguments looking-glass-client)
            ((#:phases phases)
             `(modify-phases ,phases
                (delete 'add-missing-include)
