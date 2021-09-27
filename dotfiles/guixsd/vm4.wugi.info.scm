@@ -64,7 +64,11 @@ oleg ALL=(ALL) NOPASSWD:ALL\n"))
                                    (wireguard-configuration
                                     (interface "de2.g-load.eu")
                                     (addresses
-                                     '("192.168.219.77/32"))
+                                     '("192.168.219.77/32"
+                                       "172.22.144.97/27"
+
+                                       ;; dummy address for BGP peering
+                                       "172.20.53.98/27"))
                                     (peers
                                      (list
                                       (wireguard-peer
