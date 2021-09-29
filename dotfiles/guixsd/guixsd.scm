@@ -23,6 +23,7 @@
              (wigust packages vnc)
              (wigust packages web)
              (wigust packages linux)
+             (packages certs)
              (services autofs)
              (services backup)
              (services bittorrent)
@@ -527,7 +528,8 @@ location / {
                           ;; "amdgpu.dc=0"
                           ;; "amdgpu.gpu_recovery=1"
                           ))
-      (packages (cons ovmf %my-system-packages))
+      (packages (append (list dn42-ca ovmf)
+                        %my-system-packages))
 
       (groups (cons* (user-group (name "nixbld")
                                  (id 30100))
