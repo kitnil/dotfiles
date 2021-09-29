@@ -16,7 +16,7 @@
 ;;; You should have received a copy of the GNU General Public License
 ;;; along with GNU Guix.  If not, see <http://www.gnu.org/licenses/>.
 
-(define-module (packages majordomo)
+(define-module (packages certs)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (gnu packages autotools)
   #:use-module (gnu packages bash)
@@ -65,4 +65,24 @@
     (home-page "https://www.majordomo.ru/")
     (synopsis "Majordomo CA")
     (description "This package provides a Majordomo CA")
+    (license license:gpl3+)))
+
+(define-public dn42-ca
+  (package
+    (name "dn42-ca")
+    (version "0.0.1")
+    (source (local-file "../../etc/ssl/certs/dn42-root-ca.crt"))
+    (arguments
+     `(#:modules ((guix build utils))
+       #:builder
+       (begin
+         (use-modules (guix build utils))
+         (mkdir-p (string-append %output "/etc/ssl/certs"))
+         (copy-file (assoc-ref %build-inputs "source")
+                    (string-append %output "/etc/ssl/certs/DN42_ROOT_CA.pem"))
+         #t)))
+    (build-system trivial-build-system)
+    (home-page "https://www.dn42.ru/")
+    (synopsis "DN42 CA")
+    (description "This package provides a DN42 CA.")
     (license license:gpl3+)))

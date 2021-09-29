@@ -37,7 +37,7 @@
   #:use-module (wigust packages lisp)
   #:use-module (wigust packages python)
   #:use-module (wigust packages web)
-  #:use-module (packages majordomo)
+  #:use-module (packages certs)
   #:use-module (gnu system)
   #:use-module (guix gexp)
   #:use-module (guix modules)
