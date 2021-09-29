@@ -7,7 +7,8 @@
 
 (use-modules (config))
 
-(use-modules (services bird))
+(use-modules (packages certs)
+             (services bird))
 
 (operating-system
   (host-name "vm4.wugi.info")
@@ -47,7 +48,9 @@ root ALL=(ALL) ALL
 oleg ALL=(ALL) NOPASSWD:ALL\n"))
 
   ;; Globally-installed packages.
-  (packages (cons* curl nss-certs iptables screen strace tmux mtr tcpdump net-tools iftop %base-packages))
+  (packages (cons* curl nmap iptables mtr tcpdump net-tools iftop
+                   nss-certs dn42-ca
+                   strace tmux %base-packages))
 
   ;; Add services to the baseline: a DHCP client and
   ;; an SSH server.
