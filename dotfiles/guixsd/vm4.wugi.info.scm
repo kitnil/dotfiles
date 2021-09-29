@@ -2,8 +2,8 @@
 ;; for a "bare bones" setup, with no X11 display server.
 
 (use-modules (gnu))
-(use-service-modules certbot databases dbus desktop docker monitoring networking ssh sysctl web vpn)
-(use-package-modules admin curl certs networking linux screen ssh tmux)
+(use-service-modules certbot databases dbus desktop docker dns monitoring networking ssh sysctl web vpn)
+(use-package-modules admin curl certs networking linux ssh tmux)
 
 (use-modules (config))
 
@@ -57,7 +57,9 @@ oleg ALL=(ALL) NOPASSWD:ALL\n"))
   (services (append (list (static-networking-service "eth0" "78.108.82.44"
                                                      #:netmask "255.255.254.0"
                                                      #:gateway "78.108.83.254"
-                                                     #:name-servers '("8.8.8.8" "8.8.4.4"))
+                                                     #:name-servers '("127.0.0.1"
+                                                                      "8.8.8.8"
+                                                                      "8.8.4.4"))
                           (service ntp-service-type)
                           (service openssh-service-type
                                    (openssh-configuration
@@ -83,6 +85,21 @@ oleg ALL=(ALL) NOPASSWD:ALL\n"))
                                                       ;; "172.20.53.97/32"
                                                       ;; "192.168.219.77/32"
                                                       )))))))
+                          (service knot-resolver-service-type
+                                   (knot-resolver-configuration
+                                    (kresd-config-file (plain-file "kresd.conf" "\
+net.listen('127.0.0.1')
+net.ipv6 = false
+
+modules = { 'policy' }
+policy.add(policy.suffix(policy.STUB(\"172.20.0.53\"), {todname('dn42')}))
+
+-- Forward all queries (complete stub mode)
+policy.add(policy.all(policy.STUB('8.8.8.8')))
+
+-- Smaller cache size
+cache.size = 10 * MB
+"))))
                           (dbus-service)
                           (elogind-service)
                           (service bird-service-type
