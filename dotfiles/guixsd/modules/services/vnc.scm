@@ -40,19 +40,21 @@
 (define-record-type* <vncserver-configuration>
   vncserver-configuration make-vncserver-configuration
   vncserver-configuration?
-  (vncserver vncserver-configuration-vncserver  ;<package>
-             (default tigervnc-server))
-  (host-name vncserver-configuration-host-name) ;string
-  (display   vncserver-configuration-display)   ;number
-  (user      vncserver-configuration-user)      ;string
-  (group     vncserver-configuration-group)     ;string
-  (directory vncserver-configuration-directory) ;string
-  (xstartup  vncserver-configuration-xstartup   ;file-like
-             (default #f)))
+  (vncserver            vncserver-configuration-vncserver             ;<package>
+                        (default tigervnc-server))
+  (host-name            vncserver-configuration-host-name)            ;string
+  (display              vncserver-configuration-display)              ;number
+  (user                 vncserver-configuration-user)                 ;string
+  (group                vncserver-configuration-group)                ;string
+  (directory            vncserver-configuration-directory)            ;string
+  (xstartup             vncserver-configuration-xstartup              ;file-like
+                        (default #f))
+  (supplementary-groups vncserver-configuration-supplementary-groups  ;list of strings
+                        (default '("users"))))
 
 (define vncserver-shepherd-service
   (match-lambda
-    (($ <vncserver-configuration> vncserver host-name display user group directory xstartup)
+    (($ <vncserver-configuration> vncserver host-name display user group directory xstartup supplementary-groups)
      (let ((xauthority (string-append "/home/" user "/.Xauthority.vncserver"))
            (xdg-runtime-dir (string-append "/run/user/" (number->string (passwd:uid (getpw user)))))
            (path #~(string-append #$(file-append coreutils "/bin")
@@ -73,7 +75,7 @@
                    #:log-file (string-append "/var/log/vncserver" (number->string #$display) ".log")
                    #:user #$user
                    #:group #$group
-                   #:supplementary-groups '("users" "docker" "kvm" "audio" "video" "wheel")
+                   #:supplementary-groups '#$supplementary-groups
                    #:directory #$directory
                    #:environment-variables
                    (list (string-append "PATH=" (getenv "PATH") ":" #$path)
