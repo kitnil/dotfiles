@@ -684,7 +684,9 @@ location / {
                                                           (group "users")
                                                           (directory "/home/oleg")
                                                           (xstartup "/home/oleg/.vnc/xstartup-stumpwm")
-                                                          (host-name "guixsd")))
+                                                          (host-name "guixsd")
+                                                          (supplementary-groups
+                                                           '("docker" "kvm" "libvirt" "audio" "video" "wheel" "users"))))
 
                          ;; (service vncserver-service-type (vncserver-configuration
                          ;;                                  (vncserver tigervnc-server-1.10.1)
