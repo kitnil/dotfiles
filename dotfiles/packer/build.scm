@@ -37,8 +37,8 @@
                      ("shutdown_command" . "shutdown")
                      ("memory" . 2048)
                      ;; TODO: Find non-compressed Guix ISO or fix Packer cache ignore in case ISO is compressed
-                     ("iso_url" . "/home/oleg/Downloads/guix-system-install-1.2.0.x86_64-linux.iso")
-                     ("iso_checksum" . "sha256:423fa3a6b877a597e90d95c388714e4996dbfae8339f718bb57cce3954955dc7")
+                     ("iso_url" . "https://ftp.gnu.org/gnu/guix/guix-system-install-1.3.0.x86_64-linux.iso")
+                     ("iso_checksum" . "sha256:f2b30458fa1736eeee3b82f34aab1d72f3964bef0477329bb75281d2b7bb6d4b")
                      ("headless" . #f)
                      ("boot_keygroup_interval" . "2s")
                      ("boot_wait" . "40s")
@@ -63,8 +63,11 @@
 (file-union "packer"
             `(("configuration.scm" ,(local-file "bare-bones.tmpl"))
               ("bin/packer-build-guix" ,(program-file "packer-build"
-                                                      #~(begin
-                                                          (mkdir "packer-build")
-                                                          (chdir "packer-build")
-                                                          (copy-file #$(local-file "bare-bones.tmpl") "bare-bones.tmpl")
-                                                          (system* #$%packer "build" #$guix.json))))))
+                                                      (with-imported-modules '((guix build utils))
+                                                        #~(begin
+                                                            (use-modules (guix build utils))
+                                                            (mkdir-p "packer-build")
+                                                            (chdir "packer-build")
+                                                            (copy-file #$(local-file "bare-bones.tmpl") "bare-bones.tmpl")
+                                                            (chmod "packer-build/bare-bones.tmpl" #o644)
+                                                            (system* #$%packer "build" #$guix.json)))))))
