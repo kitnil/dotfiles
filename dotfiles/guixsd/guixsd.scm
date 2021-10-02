@@ -1077,7 +1077,7 @@ PasswordAuthentication yes")))
 
                          (service docker-service-type)
                          docker-service
-                         docker-kiwiirc-service
+                         ;; docker-kiwiirc-service
 
                          (dovecot-service
                           #:config (dovecot-configuration
