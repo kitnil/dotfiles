@@ -133,6 +133,13 @@ use_guix()
     }
     export_function pull
 
+    guix_pull()
+    {
+        mkdir -p current
+        guix pull --profile="${PWD}/current/guix" --url="file://${PWD}" --disable-authentication "$@"
+    }
+    export_function guix_pull
+
     clear
     echo "
 direnv:
@@ -142,6 +149,8 @@ direnv:
   push         push to upstream Git repository
   pull         pull changes from upstream Git repository
   repl         run guix repl
+
+  guix_pull    guix pull current directory
 "
 
     export XDG_RUNTIME_DIR="/run/user/$UID"
