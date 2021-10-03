@@ -23,7 +23,6 @@
         ("https://news-web.php.net/group.php?group=php.announce&format=rss" php)
         ("https://www.bennee.com/~alex/blog/feed/" emacs)
         ("https://libraries.io/search.atom?order=desc&platforms=Emacs&sort=created_at" emacs)
-        ;; ("https://melpa.org/updates.rss" emacs elpa)
         ("https://stable.melpa.org/updates.rss" emacs elpa)
         ("https://cestlaz.github.io/rss.xml" emacs)
         ("https://sachachua.com/blog/feed/" emacs)
