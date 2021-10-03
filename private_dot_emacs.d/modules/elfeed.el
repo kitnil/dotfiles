@@ -88,6 +88,8 @@
         ("https://lk.sknt.ru/rss.php" internet)
 
         ("https://git.ispconfig.org/ispconfig/ispconfig3/-/issues.atom?state=opened" ispconfig)
+
+        ("https://tg.i-c-a.su/rss/ru_nixos" telegram nixos) ;Telegram NixOS
         ))
 
 (defun elfeed-config ()
