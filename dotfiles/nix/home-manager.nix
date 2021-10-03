@@ -109,7 +109,7 @@
     skopeo
     # slack
     # slack-term
-    tdesktop
+    # tdesktop
     terraform
     thc-hydra
     thunderbird
