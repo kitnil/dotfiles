@@ -138,7 +138,7 @@
   ;; (setq elfeed-search-title-max-width 120)
   (add-hook 'elfeed-show-mode-hook 'visual-line-mode)
 
-  (setq elfeed-search-filter "@1-weeks-ago +unread")
+  (setq elfeed-search-filter "@1-weeks-ago +unread -ci -vc -elpa -shopping")
 
   ;; score
   (setq elfeed-search-print-entry-function #'elfeed-score-print-entry)
