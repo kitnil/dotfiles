@@ -479,8 +479,8 @@ WARNING:  hooktube.com requries non-free JavaScript."
 	  "https?://\\(debbugs\\|bugs\\)\\.gnu\\.org/"
 	  (regexp-quote "cgi/bugreport.cgi?bug="))
          . debbugs-browse-url)
-        (,youtube-url-video-regexp . browse-url-mpv)
-        (,youtube-short-url-video-regexp . browse-url-mpv)
+        ;; (,youtube-url-video-regexp . browse-url-mpv)
+        ;; (,youtube-short-url-video-regexp . browse-url-mpv)
         (,wi-twitch-video-url-regexp . browse-url-mpv)
         (,wi-twitch-url-regexp . browse-url-streamlink)
         (,wi-url-hydra-regexp . browse-url-firefox)
