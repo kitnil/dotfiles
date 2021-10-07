@@ -9,7 +9,9 @@
              (guix gexp)
              (guix modules)
              (ice-9 rdelim)
-             (json))
+             (json)
+
+             (gnu packages haskell-apps))
 
 (define %home
   (and=> (getenv "HOME")
@@ -57,6 +59,23 @@
                                             ;; ("author" . "user@example.org")
                                             ("alertmanager.url" . "http://localhost:9093"))
                                           #:pretty #t))))))))))
+
+   (simple-service 'chromium-wrapper
+                   home-files-service-type
+                   (map (lambda (program)
+                          `(,(string-append "local/bin/" program)
+                            ,(computed-file
+                              program
+                              #~(begin
+                                  (with-output-to-file #$output
+                                    (lambda ()
+                                      (format #t "\
+#!/bin/sh
+# https://github.com/stumpwm/stumpwm/issues/894
+exec -a \"$0\" /home/oleg/.nix-profile/bin/~a --disable-features=SendMouseLeaveEvents \"$@\"\n"
+                                              #$program)))
+                                  (chmod #$output #o555)))))
+                        '("google-chrome-stable" "chromium")))
    
    ;; XXX: missing home-ssh-configuration
    ;; (service home-ssh-service-type
