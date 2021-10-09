@@ -76,6 +76,20 @@ exec -a \"$0\" /home/oleg/.nix-profile/bin/~a --disable-features=SendMouseLeaveE
                                               #$program)))
                                   (chmod #$output #o555)))))
                         '("google-chrome-stable" "chromium")))
+
+   (simple-service 'shellcheck-wrapper
+                   home-files-service-type
+                   (list `("local/bin/shellcheck"
+                           ,(computed-file
+                             "shellcheck-wrapper"
+                             #~(begin
+                                 (with-output-to-file #$output
+                                   (lambda ()
+                                     (format #t "\
+#!/bin/sh
+exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
+                                             #$shellcheck)))
+                                 (chmod #$output #o555))))))
    
    ;; XXX: missing home-ssh-configuration
    ;; (service home-ssh-service-type
