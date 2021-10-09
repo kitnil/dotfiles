@@ -34,6 +34,8 @@
     # ferm
     filezilla
     # firefox
+    adoptopenjdk-icedtea-web
+
     fzf
     goldendict
     # geckodriver
