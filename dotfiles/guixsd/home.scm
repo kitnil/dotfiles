@@ -1,5 +1,5 @@
 (use-modules (gnu home)
-             (gnu home-services)
+             (gnu home services)
              ;; (gnu home services files)
              (gnu home services shells)
              ;; (gnu home services ssh)
@@ -11,7 +11,9 @@
              (ice-9 rdelim)
              (json)
 
-             (gnu packages haskell-apps))
+             (gnu packages haskell-apps)
+
+             (home services mail))
 
 (define %home
   (and=> (getenv "HOME")
@@ -30,6 +32,8 @@
 
  (services
   (list
+
+   (service home-goimapnotify-service-type)
 
    (service home-bash-service-type
             (home-bash-configuration
