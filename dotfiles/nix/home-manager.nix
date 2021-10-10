@@ -205,6 +205,8 @@
     restic-rest-server
 
     eiskaltdcpp
+
+    sourcetrail
   ];
 
   home.file = {
