@@ -203,6 +203,8 @@
     yamllint
 
     restic-rest-server
+
+    eiskaltdcpp
   ];
 
   home.file = {
