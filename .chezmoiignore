@@ -28,6 +28,8 @@ todo.org
 .muttrc_i18n.wugi_yandex
 .netrc
 .pythonrc
+.bashrc
+.bash_profile
 {{- end }}
 {{- if ne .chezmoi.hostname "ws1.wugi.info" }}
 .alerta.conf

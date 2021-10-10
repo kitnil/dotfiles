@@ -31,15 +31,15 @@
  (services
   (list
 
-   ;; (service home-bash-service-type
-   ;;          (home-bash-configuration
-   ;;           (guix-defaults? #t)
-   ;;           (bashrc
-   ;;            (list
-   ;;             (with-input-from-file .bashrc read-string)))
-   ;;           (bash-profile
-   ;;            (list
-   ;;             (with-input-from-file .bash_profile read-string)))))
+   (service home-bash-service-type
+            (home-bash-configuration
+             (guix-defaults? #t)
+             (bashrc
+              (list
+               (local-file .bashrc)))
+             (bash-profile
+              (list
+               (local-file .bash_profile)))))
 
    (simple-service 'amtool-config
                    home-files-service-type

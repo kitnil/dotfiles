@@ -23,11 +23,6 @@ then
     source "$HOME/.bash_guix"
 fi
 
-if [[ -n "$SSH_CLIENT" ]]
-then
-    source "${HOME}/.bash_profile"
-fi
-
 alias ,c='command'
 
 alias rm="rm -i"
