@@ -13,7 +13,9 @@
 
              (gnu packages haskell-apps)
 
-             (home services mail))
+             (home services mail)
+             (gnu packages mail)
+             (guile pass))
 
 (define %home
   (and=> (getenv "HOME")
@@ -33,7 +35,59 @@
  (services
   (list
 
-   (service home-goimapnotify-service-type)
+   (service home-goimapnotify-service-type
+            (goimapnotify-configuration
+             (config-file
+              (computed-file
+               "isync-gmail-config"
+               (with-extensions (list guile-json-4)
+                 (with-imported-modules (source-module-closure '((json builder)))
+                   #~(begin
+                       (use-modules (json builder))
+                       (define isync
+                         #$(file-append isync "/bin/mbsync"))
+                       (define password
+                         #$(pass "show" "email/gmail/go.wigust"))
+                       (with-output-to-file #$output
+                         (lambda ()
+                           (scm->json
+                            `(("boxes" . #("INBOX"))
+                              ("onNewMail" . ,(string-join (list isync "gmail")))
+                              ("xoauth2" . #f)
+                              ("password" . ,password)
+                              ("username" . "go.wigust@gmail.com")
+                              ("tlsOptions" ("rejectUnauthorized" . #t))
+                              ("tls" . #t)
+                              ("port" . 993)
+                              ("host" . "imap.gmail.com"))
+                            #:pretty #t))))))))))
+
+   (service home-goimapnotify-service-type
+            (goimapnotify-configuration
+             (config-file
+              (computed-file
+               "isync-majordomo-config"
+               (with-extensions (list guile-json-4)
+                 (with-imported-modules (source-module-closure '((json builder)))
+                   #~(begin
+                       (use-modules (json builder))
+                       (define isync
+                         #$(file-append isync "/bin/mbsync"))
+                       (define password
+                         #$(pass "show" "majordomo/private/newmail.majordomo.ru/pyhalov@majordomo.ru"))
+                       (with-output-to-file #$output
+                         (lambda ()
+                           (scm->json
+                            `(("boxes" . #("INBOX"))
+                              ("onNewMail" . ,(string-join (list isync "majordomo")))
+                              ("xoauth2" . #f)
+                              ("password" . ,password)
+                              ("username" . "pyhalov@majordomo.ru")
+                              ("tlsOptions" ("rejectUnauthorized" . #t))
+                              ("tls" . #t)
+                              ("port" . 993)
+                              ("host" . "imap.majordomo.ru"))
+                            #:pretty #t))))))))))
 
    (service home-bash-service-type
             (home-bash-configuration
