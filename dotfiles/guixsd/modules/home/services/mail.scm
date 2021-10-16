@@ -15,6 +15,15 @@
   (config-file   goimapnotify-configuration-config-file        ;<file-like>
                  (default #f)))
 
+(define (home-goimapnotify-activation config)
+  #~(begin
+      (mkdir-p (string-append (or (getenv "XDG_LOG_HOME")
+                                  (format #f "~a/.local/var/log"
+                                          (getenv "HOME")))
+                              (string-append "/goimapnotify/"
+                                             #$(computed-file-name config-file)
+                                             ".log")))))
+
 (define (home-goimapnotify-shepherd-service config)
   (let ((goimapnotify (goimapnotify-configuration-goimapnotify config))
         (config-file (goimapnotify-configuration-config-file config)))
@@ -39,7 +48,10 @@
                 (extensions
                  (list (service-extension
                         home-shepherd-service-type
-                        home-goimapnotify-shepherd-service)))
+                        home-goimapnotify-shepherd-service)
+                       (service-extension
+                        home-activation-service-type
+                        home-goimapnotify-activation)))
                 (default-value '())
                 (description
                  "Install and configure the goimapnotify.")))
