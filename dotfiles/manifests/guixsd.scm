@@ -30,6 +30,7 @@
 (combined-manifest-from-files
  (map (cut string-append %source-dir "/" <>)
       '("desktop.scm"
+        "dotfiles.scm"
         "emacs.scm"
         "guix-collection.scm"
         "majordomo.scm"
