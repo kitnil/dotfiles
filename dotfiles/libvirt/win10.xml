@@ -1,4 +1,4 @@
-<domain type='kvm'>
+<domain type='kvm' xmlns:qemu='http://libvirt.org/schemas/domain/qemu/1.0'>
   <name>win10</name>
   <uuid>32ba10e9-3ec6-46e6-bcfa-a0ab8344bb76</uuid>
   <metadata>
@@ -155,6 +155,13 @@
       </source>
       <address type='pci' domain='0x0000' bus='0x06' slot='0x00' function='0x0'/>
     </hostdev>
+    <hostdev mode='subsystem' type='usb' managed='yes'>
+      <source>
+        <vendor id='0x8087'/>
+        <product id='0x0aa7'/>
+      </source>
+      <address type='usb' bus='0' port='1'/>
+    </hostdev>
     <memballoon model='virtio'>
       <address type='pci' domain='0x0000' bus='0x04' slot='0x00' function='0x0'/>
     </memballoon>
@@ -164,5 +171,7 @@
       <address type='pci' domain='0x0000' bus='0x08' slot='0x01' function='0x0'/>
     </shmem>
   </devices>
+  <qemu:capabilities>
+    <qemu:del capability='usb-host.hostdevice'/>
+  </qemu:capabilities>
 </domain>
-
