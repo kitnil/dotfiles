@@ -127,8 +127,20 @@
     <console type='pty'>
       <target type='serial' port='0'/>
     </console>
+    <input type='mouse' bus='virtio'>
+      <address type='pci' domain='0x0000' bus='0x09' slot='0x00' function='0x0'/>
+    </input>
+    <input type='keyboard' bus='virtio'>
+      <address type='pci' domain='0x0000' bus='0x0a' slot='0x00' function='0x0'/>
+    </input>
     <input type='mouse' bus='ps2'/>
     <input type='keyboard' bus='ps2'/>
+    <input type='evdev'>
+      <source dev='/dev/input/by-id/usb-Kingston_HyperX_Pulsefire_Raid-event-mouse'/>
+    </input>
+    <input type='evdev'>
+      <source dev='/dev/input/by-id/usb-0416_Gaming_Keyboard-event-kbd' grab='all' repeat='on'/>
+    </input>
     <graphics type='spice' autoport='yes'>
       <listen type='address'/>
       <image compression='off'/>
