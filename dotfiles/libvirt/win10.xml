@@ -100,11 +100,21 @@
     <controller type='pci' index='7' model='pcie-root-port'>
       <model name='pcie-root-port'/>
       <target chassis='7' port='0x8'/>
-      <address type='pci' domain='0x0000' bus='0x00' slot='0x01' function='0x0'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x01' function='0x0' multifunction='on'/>
     </controller>
     <controller type='pci' index='8' model='pcie-to-pci-bridge'>
       <model name='pcie-pci-bridge'/>
       <address type='pci' domain='0x0000' bus='0x07' slot='0x00' function='0x0'/>
+    </controller>
+    <controller type='pci' index='9' model='pcie-root-port'>
+      <model name='pcie-root-port'/>
+      <target chassis='9' port='0x9'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x01' function='0x1'/>
+    </controller>
+    <controller type='pci' index='10' model='pcie-root-port'>
+      <model name='pcie-root-port'/>
+      <target chassis='10' port='0xa'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x01' function='0x2'/>
     </controller>
     <controller type='virtio-serial' index='0'>
       <address type='pci' domain='0x0000' bus='0x03' slot='0x00' function='0x0'/>
