@@ -16,7 +16,8 @@
   #:use-module (guix utils)
   #:use-module (ice-9 popen)
   #:use-module (ice-9 rdelim)
-  #:use-module (guix gexp))
+  #:use-module (guix gexp)
+  #:use-module (gnu packages))
 
 (define %source-dir "/home/oleg/archive/src/looking-glass")
 
@@ -84,3 +85,16 @@ newspace."
                                "libxss"
                                "libxinerama"))))
                    #t)))))))))
+
+(define-public libvirt-1.6.0
+  (package
+    (inherit libvirt)
+    (version "7.6.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append "https://libvirt.org/sources/libvirt-"
+                           version ".tar.xz"))
+       (sha256
+        (base32 "0hb1fq0yx41n36c3n1a54b5p37n0m7abs917d76v7aqas03735lg"))
+       (patches (search-patches "libvirt-add-install-prefix.patch"))))))
