@@ -24,6 +24,7 @@
              (wigust packages web)
              (wigust packages linux)
              (packages certs)
+             (packages virtualization)
              (services autofs)
              (services backup)
              (services bittorrent)
@@ -1143,7 +1144,9 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                                                                      "8.8.8.8"
                                                                      "8.8.4.4"))
 
-                         (service libvirt-service-type)
+                         (service libvirt-service-type
+                                  (libvirt-configuration
+                                   (libvirt libvirt-1.6.0)))
                          (simple-service 'libvirt-qemu-config activation-service-type
                                          #~(begin
                                              (when (file-exists? "/etc/libvirt")
