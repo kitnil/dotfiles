@@ -155,6 +155,10 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
    (service nix-delete-generations-service-type
             (nix-delete-generations-configuration
              (schedule '(next-hour '(21)))))
+   (service guix-delete-generations-service-type
+            (guix-delete-generations-configuration
+             (schedule '(next-hour '(21)))
+             (period "1m")))
    
    ;; XXX: missing home-ssh-configuration
    ;; (service home-ssh-service-type
