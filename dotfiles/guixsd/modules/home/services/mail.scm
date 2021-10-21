@@ -21,7 +21,8 @@
                                   (format #f "~a/.local/var/log"
                                           (getenv "HOME")))
                               (string-append "/goimapnotify/"
-                                             #$(computed-file-name config-file)
+                                             #$(computed-file-name
+                                                (goimapnotify-configuration-config-file config))
                                              ".log")))))
 
 (define (home-goimapnotify-shepherd-service config)
