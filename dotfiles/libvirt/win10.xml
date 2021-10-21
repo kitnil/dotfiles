@@ -145,12 +145,6 @@
     </input>
     <input type='mouse' bus='ps2'/>
     <input type='keyboard' bus='ps2'/>
-    <input type='evdev'>
-      <source dev='/dev/input/by-id/usb-Kingston_HyperX_Pulsefire_Raid-event-mouse'/>
-    </input>
-    <input type='evdev'>
-      <source dev='/dev/input/by-id/usb-0416_Gaming_Keyboard-event-kbd' grab='all' repeat='on'/>
-    </input>
     <graphics type='spice' autoport='yes'>
       <listen type='address'/>
       <image compression='off'/>
@@ -183,6 +177,20 @@
         <product id='0x0aa7'/>
       </source>
       <address type='usb' bus='0' port='1'/>
+    </hostdev>
+    <hostdev mode='subsystem' type='usb' managed='yes'>
+      <source>
+        <vendor id='0x0416'/>
+        <product id='0xb23c'/>
+      </source>
+      <address type='usb' bus='0' port='2'/>
+    </hostdev>
+    <hostdev mode='subsystem' type='usb' managed='yes'>
+      <source>
+        <vendor id='0x0951'/>
+        <product id='0x16e4'/>
+      </source>
+      <address type='usb' bus='0' port='3'/>
     </hostdev>
     <memballoon model='virtio'>
       <address type='pci' domain='0x0000' bus='0x04' slot='0x00' function='0x0'/>
