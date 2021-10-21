@@ -15,6 +15,7 @@
              (gnu packages haskell-apps)
 
              (home services mail)
+             (home services package-management)
              (gnu packages mail)
              (guile pass))
 
@@ -151,6 +152,9 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                                  (chmod #$output #o555))))))
 
    (service home-mcron-service-type)
+   (service nix-delete-generations-service-type
+            (nix-delete-generations-configuration
+             (schedule '(next-hour '(21)))))
    
    ;; XXX: missing home-ssh-configuration
    ;; (service home-ssh-service-type

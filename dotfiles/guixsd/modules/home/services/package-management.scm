@@ -8,6 +8,11 @@
   #:export (nix-delete-generations-service-type
             nix-delete-generations-configuration))
 
+
+;;;
+;;; Nix
+;;;
+
 (define-record-type* <nix-delete-generations-configuration>
   nix-delete-generations-configuration make-nix-delete-generations-configuration
   nix-delete-generations-configuration?
