@@ -65,6 +65,10 @@ dotfiles/guile/ssh.txt: dotfiles/guile/ssh.scm
 install-ssh:
 	gpg --quiet --decrypt dhall/ssh/ssh.dhall.gpg | dhall text > $(HOME)/.ssh/config
 
+.PHONY: dotfiles/guixsd/home.scm
+dotfiles/guixsd/home.scm:
+	guix home -L dotfiles/guixsd/modules build dotfiles/guixsd/home.scm
+
 .PHONY: install
 install: install-ssh
 	bin/executable_gpg-unlock
