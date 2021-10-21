@@ -93,6 +93,7 @@ install: install-ssh
 	ln -sf $(HOME)/.Xresources $(HOME)/.Xdefaults
 	install --mode=644 dotfiles/guile/pass.scm $(HOME)/.config/guile/pass.scm
 	install --mode=644 dotfiles/guile/config.scm $(HOME)/.config/guile/config.scm
+	guix home -L dotfiles/guixsd/modules reconfigure dotfiles/guixsd/home.scm
 
 .PHONY: guile-ihs
 guile-ihs:
