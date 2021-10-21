@@ -1,6 +1,7 @@
 (use-modules (gnu home)
              (gnu home services)
              ;; (gnu home services files)
+             (gnu home services mcron)
              (gnu home services shells)
              ;; (gnu home services ssh)
              (gnu packages admin)
@@ -148,6 +149,8 @@ exec -a \"$0\" /home/oleg/.nix-profile/bin/~a --disable-features=SendMouseLeaveE
 exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                                              #$shellcheck)))
                                  (chmod #$output #o555))))))
+
+   (service home-mcron-service-type)
    
    ;; XXX: missing home-ssh-configuration
    ;; (service home-ssh-service-type
