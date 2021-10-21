@@ -65,15 +65,6 @@ httping()
     esac
 }
 
-RIPGREP_CONFIG_PATH="$HOME/.config/ripgrep/ripgreprc"
-export RIPGREP_CONFIG_PATH
-
-SSHRC_BECOME=yes
-export SSHRC_BECOME
-
-QEMU_WINDOWS10_DISK=/dev/disk/by-id/wwn-0x5e83a97ad8a4b20a
-export QEMU_WINDOWS10_DISK
-
 emacs()
 {
     case "$1" in
@@ -131,18 +122,6 @@ lsd()
     fi
 }
 
-GRADLE_HOME=/opt/gradle
-export GRADLE_HOME
-
-PYTHONSTARTUP=$HOME/.pythonrc
-export PYTHONSTARTUP
-
-GUIX_BUILD_OPTIONS="--no-grafts"
-export GUIX_BUILD_OPTIONS
-
-TMUXIFIER_LAYOUT_PATH="$HOME/.tmuxifier-layouts"
-export TMUXIFIER_LAYOUT_PATH
-
 if [ -f "$HOME/.guix-profile/etc/profile.d/autojump.sh" ]
 then
     source "$HOME/.guix-profile/etc/profile.d/autojump.sh"
@@ -198,79 +177,6 @@ ihs()
     command ihs "$@"
 }
 
-if [ -d "/run/current-system" ]
-then
-    :
-else
-    source "$HOME/.guix-profile/etc/profile"
-
-    if [[ -f "$GUIX_PROFILE/etc/profile" ]]; then
-        source "$GUIX_PROFILE/etc/profile"
-    fi
-
-    BROWSER='firefox'
-    export BROWSER
-
-    GUILE_WARN_DEPRECATED=no
-    export GUILE_WARN_DEPRECATED
-
-    GUIX_LOCPATH=$HOME/.guix-profile/lib/locale
-    export GUIX_LOCPATH
-
-    GUIX_PROFILE="$HOME/.guix-profile"
-    export GUIX_PROFILE
-
-    PATH="$HOME/.config/guix/current/bin${PATH:+:}$PATH"
-    export PATH
-
-    PATH=$HOME/bin:$HOME/.npm-global/bin:$PATH
-    export PATH
-
-    INFOPATH="$HOME/src/guix/doc${INFOPATH:+:}$INFOPATH"
-    export INFOPATH
-
-    # Fix mouse wheel in gtk3
-    # https://github.com/stumpwm/stumpwm/wiki/FAQ
-    export GDK_CORE_DEVICE_EVENTS=1
-
-    XDG_CONFIG_DIRS=/etc/xdg/xdg-cinnamon:/etc/xdg
-    #XDG_CURRENT_DESKTOP=X-Cinnamon
-    XDG_DATA_DIRS=/usr/share/cinnamon:/usr/share/gnome:/usr/local/share/:/usr/share/
-    #XDG_GREETER_DATA_DIR=/var/lib/lightdm-data/oleg
-    #XDG_RUNTIME_DIR=/run/user/1001
-    #XDG_SEAT=seat0
-    #XDG_SEAT_PATH=/org/freedesktop/DisplayManager/Seat0
-    #XDG_SESSION_DESKTOP=cinnamon
-    #XDG_SESSION_ID=c18
-    #XDG_SESSION_PATH=/org/freedesktop/DisplayManager/Session8
-    #XDG_SESSION_TYPE=x11
-    #XDG_VTNR=7
-
-    SSL_CERT_DIR="$HOME/.guix-profile/etc/ssl/certs"
-    export SSL_CERT_DIR
-
-    SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/ca-certificates.crt"
-    export SSL_CERT_FILE
-
-    GIT_SSL_CAINFO="$SSL_CERT_FILE"
-    export GIT_SSL_CAINFO
-
-    CURL_CA_BUNDLE="$HOME/.guix-profile/etc/ssl/certs/ca-certificates.crt"
-    export CURL_CA_BUNDLE
-fi
-
-if [ -e "$HOME/.nix-profile/lib/locale" ]
-then
-    LOCALE_ARCHIVE="$(readlink "$HOME/.nix-profile/lib/locale")/locale-archive"
-    export LOCALE_ARCHIVE
-fi
-
-if [ -d "$HOME/.nix-profile/share/man" ]
-then
-    MANPATH="$MANPATH:$HOME/.nix-profile/share/man"
-    export MANPATH
-fi
-
 if [[ -f "$HOME/.nix-profile/share/bash-completion/completions/gita" ]]
 then
     source "$HOME/.nix-profile/share/bash-completion/completions/gita"
@@ -303,12 +209,6 @@ rg()
             command rg "$@"
     esac
 }
-
-EDITOR='emacsclient -nw -c'
-export EDITOR
-
-MANWIDTH=80
-export MANWIDTH
 
 # TODO: readlink could fail to enter `guix environment`
 # alias wi-pure-bash="env -i $(readlink $(which bash)) --noprofile --norc"
@@ -1970,11 +1870,6 @@ mediatomb()
     esac
 }
 
-PERL5LIB="/home/oleg/perl5/lib/perl5${PERL5LIB:+:${PERL5LIB}}"; export PERL5LIB;
-PERL_LOCAL_LIB_ROOT="/home/oleg/perl5${PERL_LOCAL_LIB_ROOT:+:${PERL_LOCAL_LIB_ROOT}}"; export PERL_LOCAL_LIB_ROOT;
-PERL_MB_OPT="--install_base \"/home/oleg/perl5\""; export PERL_MB_OPT;
-PERL_MM_OPT="INSTALL_BASE=/home/oleg/perl5"; export PERL_MM_OPT;
-
 if [ -z $IN_NIX_SHELL ]
 then
     if [ -e $HOME/.guix-profile/lib/bash/libguile-bash.so ]
@@ -1992,7 +1887,8 @@ then
     eval "$(chezmoi completion bash)"
 fi
 
-export SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+SSH_AUTH_SOCK="$(gpgconf --list-dirs agent-ssh-socket)"
+export SSH_AUTH_SOCK
 
 if [ -n $WAYLAND_DISPLAY ]
 then
