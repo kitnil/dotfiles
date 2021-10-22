@@ -334,9 +334,9 @@ redmine()
             redmine:4.0.4
 }
 
-znd()
+znc()
 {
-    docker run --name znc --restart=unless-stopped -d -p 6697:6697 -v /var/lib/znc:/znc-data:Z znc:1.7.4-slim
+    docker run --name znc --restart=unless-stopped -d -p 8060:8060 -v /var/lib/znc:/znc-data:Z znc:1.8.2-slim
 }
 
 # alias firefox_java='xhost + ; docker run -ti --rm --name firefox-java -e DISPLAY=$DISPLAY -v /tmp/.X11-unix:/tmp/.X11-unix cmaohuang/firefox-java'
