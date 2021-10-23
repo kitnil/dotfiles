@@ -759,7 +759,7 @@ terraform_init_with_nix()
 
 terraform_init()
 {
-    terraform-init-with-nix -plugin-dir ~/go/src/gitlab.intr/majordomo/terraform-provider-majordomo
+    terraform_init_with_nix -plugin-dir ~/go/src/gitlab.intr/majordomo/terraform-provider-majordomo
 }
 
 alias tsw='tmuxifier s web'
