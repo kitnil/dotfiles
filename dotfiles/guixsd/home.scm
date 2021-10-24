@@ -91,6 +91,33 @@
                               ("host" . "imap.majordomo.ru"))
                             #:pretty #t))))))))))
 
+   (service home-goimapnotify-service-type
+            (goimapnotify-configuration
+             (config-file
+              (computed-file
+               "isync-wugi-config"
+               (with-extensions (list guile-json-4)
+                 (with-imported-modules (source-module-closure '((json builder)))
+                   #~(begin
+                       (use-modules (json builder))
+                       (define isync
+                         #$(file-append isync "/bin/mbsync"))
+                       (define password
+                         #$(pass "show" "localhost/imap/oleg"))
+                       (with-output-to-file #$output
+                         (lambda ()
+                           (scm->json
+                            `(("boxes" . #("INBOX"))
+                              ("onNewMail" . ,(string-join (list isync "wugi")))
+                              ("xoauth2" . #f)
+                              ("password" . ,password)
+                              ("username" . "oleg@wugi.info")
+                              ("tlsOptions" ("rejectUnauthorized" . #t))
+                              ("tls" . #t)
+                              ("port" . 993)
+                              ("host" . "smtp.wugi.info"))
+                            #:pretty #t))))))))))
+
    (service home-bash-service-type
             (home-bash-configuration
              (guix-defaults? #t)
