@@ -11,6 +11,13 @@ resource "github_repository" "notes" {
   default_branch = "master"
 }
 
+resource "github_repository_deploy_key" "deploy-key-notes" {
+  title      = "gitlab.com"
+  repository = "notes"
+  key        = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC80Rg7NwH5FWZZ9BbritO3xWG/E413UjfXowBgIhspYVC7vKguzA2ifhXJuUgPI6/8oP1ESfIrd6gUNkA0lJOkbco+CAHJFaFmHUyMxF9d6+KNDQFmiRM8+X0RgoD1GeNgGARHYutAkhhUcwFmHzW8ZrAk/pNYc/2+1dVlUV7jLx5WuYClOr14VZ7yOW+cWcmSbXdzwSW3jqUOTABKmqZMm2dfH8OtD6M8RB7bh/h41Gat5HwyyzVNPXDvuTt8+gUDrGU/xYS0/c2Inia11m+/HsEToDgk0Vxz+kj6TnN9Zs+JhzOH4dqnEvlYbRffACF4x6t09Mb+G0G/oBqYbeU2kTr6RrCn0+DoFqvDC63hMVq8F18/FTLTiuyN5Wqr278xGYKssIFivKe/pbLOiKob1wtKyrDkozOaA4Bpw3ndUddGNNo5K+j5kMDzXoVvEdj89gxW2RhYl9lw8zO+sD3d9Bbfh7S9Ipv9hyuZEoaggHAyx4o6vSfGg9Kci/ugCXKECO6iP6kwNZAtaGemm6cwQnK0GcUtMNyEbo010/lj89zNsMRAUkSzyDeq89rjgTp+OuOSfBdGYUcsHRX7u6ab4wjHZOPwdatFjRieVECnRIArYkEacVMAbX5kbKEMpSvRUeoVot7Ky8+Y7bHBIt37A3ZfyxQGENtj769wE1U4Qw== git@gitlab.com"
+  read_only  = "false"
+}
+
 resource "github_repository" "guix" {
   name           = "guix"
   description    = "Fork https://git.savannah.gnu.org/cgit/guix.git"
