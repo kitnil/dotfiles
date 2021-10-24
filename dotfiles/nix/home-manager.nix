@@ -112,7 +112,7 @@
     # slack
     # slack-term
     # tdesktop
-    terraform
+    terraform-wrapper
     thc-hydra
     thunderbird
     tldr
@@ -148,10 +148,6 @@
     gitAndTools.git-recent
     gitAndTools.grv
     gitAndTools.pre-commit
-
-    terraform-providers.docker
-    terraform-providers.github
-    terraform-providers.gitlab
 
     haskellPackages.greenclip
 

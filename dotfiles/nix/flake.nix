@@ -193,6 +193,25 @@
               '';
             }) {};
 
+        terraform-wrapper = with pkgs;
+          let
+            terraform = terraform_0_12;
+          in writeScriptBin "terraform" ''
+            #!${runtimeShell} -e
+            case "$1" in
+                init)
+                    exec -a "$0" ${terraform}/bin/terraform init \
+                      -plugin-dir ${terraform-providers.docker}/bin \
+                      -plugin-dir ${terraform-providers.github}/bin \
+                      -plugin-dir ${terraform-providers.gitlab}/bin \
+                      "''${@:2}"
+                    ;;
+                *)
+                    exec -a "$0" ${terraform}/bin/terraform "$@"
+                    ;;
+            esac
+          '';
+
         # TODO: Flake Add run-headphones.
         # operating-system = nixos { config = { services.headphones.enable = true; }; };
         # (stdenv.mkDerivation {
