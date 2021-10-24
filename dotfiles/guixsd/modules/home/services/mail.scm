@@ -20,10 +20,7 @@
       (mkdir-p (string-append (or (getenv "XDG_LOG_HOME")
                                   (format #f "~a/.local/var/log"
                                           (getenv "HOME")))
-                              (string-append "/goimapnotify/"
-                                             #$(computed-file-name
-                                                (goimapnotify-configuration-config-file config))
-                                             ".log")))))
+                              "/goimapnotify"))))
 
 (define (home-goimapnotify-shepherd-service config)
   (let ((goimapnotify (goimapnotify-configuration-goimapnotify config))
