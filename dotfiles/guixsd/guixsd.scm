@@ -13,7 +13,7 @@
 
 (use-package-modules admin audio android backup bash bittorrent curl firmware guile haskell-apps networking linux ssh suckless xdisorg xorg)
 
-(use-service-modules admin dbus desktop docker dns mcron networking sound
+(use-service-modules admin dbus desktop docker dns mcron networking nix sound
                      xorg ssh web cgit version-control certbot
                      monitoring databases mail vpn virtualization linux sysctl)
 
@@ -767,7 +767,9 @@ location / {
 
                          (service alsa-service-type)
 
-                         nix-service
+                         (service nix-service-type
+                                  (nix-configuration
+                                   (extra-config '("trusted-users = oleg "))))
                          (kresd-service (local-file "kresd.conf"))
 
                          (service openvpn-service-type %openvpn-configuration-majordomo.ru)
