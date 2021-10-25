@@ -9,6 +9,7 @@
              (gnu services)
              (guix gexp)
              (guix modules)
+             (guix profiles)
              (ice-9 rdelim)
              (json)
 
@@ -32,7 +33,9 @@
 
 (home-environment
 
- ;; (packages (list htop))
+ (packages (map manifest-entry-item
+                (manifest-entries
+                 (load "../manifests/guixsd.scm"))))
 
  (services
   (list
