@@ -18,7 +18,8 @@
              (home services mail)
              (home services package-management)
              (gnu packages mail)
-             (guile pass))
+             (guile pass)
+             (packages virtualization))
 
 (define %home
   (and=> (getenv "HOME")
@@ -166,6 +167,17 @@ exec -a \"$0\" /home/oleg/.nix-profile/bin/~a --disable-features=SendMouseLeaveE
                                               #$program)))
                                   (chmod #$output #o555)))))
                         '("google-chrome-stable" "chromium")))
+
+   (simple-service 'looking-glass-wrapper
+                   home-files-service-type
+                   (list `("local/bin/looking-glass-wrapper"
+                           ,(program-file "looking-glass-wrapper"
+                                          #~(system* #$(file-append looking-glass-client-next "/bin/looking-glass-client")
+                                                     "-F"
+                                                     "spice:enable" "no"
+                                                     "wayland:warpSupport" "no"
+                                                     "input:grabKeyboard" "no"
+                                                     "win:dontUpscale" "yes")))))
 
    (simple-service 'shellcheck-wrapper
                    home-files-service-type
