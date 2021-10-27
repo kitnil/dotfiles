@@ -12,6 +12,27 @@
              (services networking)
              (services openvpn))
 
+(define %exim-deploy-hook
+  (program-file
+   "exim-deploy-hook"
+   ;; XXX: Send SIGHUP to exim.
+   #~(begin
+       (unless (file-exists? "/etc/exim")
+         (mkdir "/etc/exim"))
+       (let* ((cert-directory (getenv "RENEWED_LINEAGE"))
+              (user (getpw "exim"))
+              (uid (passwd:uid user))
+              (gid (passwd:gid user)))
+         (copy-file (string-append cert-directory "/"
+                                   (readlink (string-append cert-directory "/fullchain.pem")))
+                    "/etc/exim/exim.crt")
+         (copy-file (string-append cert-directory "/"
+                                   (readlink (string-append cert-directory "/privkey.pem")))
+                    "/etc/exim/exim.pem")
+         (chown "/etc/exim/exim" uid gid)
+         (chown "/etc/exim/exim.crt" uid gid)
+         (chown "/etc/exim/exim.pem" uid gid)))))
+
 (operating-system
   (host-name "vm2.wugi.info")
   (timezone "Europe/Moscow")
@@ -210,7 +231,8 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                                        ;; cp /etc/letsencrypt/archive/smtp.wugi.info/fullchain1.pem /etc/exim/exim.crt
                                        ;; cp /etc/letsencrypt/archive/smtp.wugi.info/privkey1.pem /etc/exim/exim.pem
                                        ;; chown exim: -R /etc/exim
-                                       (domains '("smtp.wugi.info"))))))))
+                                       (domains '("smtp.wugi.info"))
+                                       (deploy-hook %exim-deploy-hook)))))))
                     (modify-services %base-services
                       (guix-service-type _ => %guix-daemon-config-with-substitute-urls)
                       (sysctl-service-type _ =>
