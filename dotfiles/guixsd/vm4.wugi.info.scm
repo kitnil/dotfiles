@@ -9,7 +9,8 @@
 
 (use-modules (packages certs)
              (services bird)
-             (services mail))
+             (services mail)
+             (services ssh))
 
 (operating-system
   (host-name "vm4.wugi.info")
@@ -42,6 +43,7 @@
                         ;; and access the webcam.
                         (supplementary-groups '("wheel" "audio" "video"))))
                  %mail-users
+                 %ssh-users
                  %base-user-accounts))
 
   (hosts-file
@@ -49,7 +51,8 @@
     "hosts"
     (string-join
      (list (string-join (append '("127.0.0.1" "vm4.wugi.info" "localhost")
-                                %mail-hosts-file-hosts))
+                                %mail-hosts-file-hosts
+                                %ssh-hosts-file-hosts))
            (string-join '("::1" "vm4.wugi.info" "localhost")))
      "\n")))
 
