@@ -150,7 +150,8 @@ host	all	all	172.16.0.0/12   trust"))
                                                  (deploy-hook %nginx-deploy-hook)))
                                               (list "zabbix.wugi.info"
                                                     "file.wugi.info"
-                                                    "homer.wugi.info"))))))
+                                                    "homer.wugi.info"
+                                                    "githunt.wugi.info"))))))
 
                           (service zabbix-server-service-type
                                    (zabbix-server-configuration
