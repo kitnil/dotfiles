@@ -70,15 +70,6 @@ oleg ALL=(ALL) NOPASSWD:ALL\n"))
 
                           (service openvpn-service-type %openvpn-configuration-wugi.info)
 
-                          (service certbot-service-type
-                                   (certbot-configuration
-                                    (email "go.wigust@gmail.com")
-                                    (certificates
-                                     `(,@(map (lambda (host)
-                                                (certificate-configuration
-                                                 (domains (list host))
-                                                 (deploy-hook %nginx-deploy-hook)))
-                                              (list "zabbix.wugi.info"))))))
                           (service zabbix-server-service-type
                                    (zabbix-server-configuration
                                     (include-files '("/etc/zabbix/zabbix-server.secret"))

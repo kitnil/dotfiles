@@ -137,7 +137,17 @@ host	all	all	172.16.0.0/12   trust"))
                                       (extra-config '(("listen_addresses" "127.0.0.1")))))
                                     (postgresql postgresql-10)))
 
-                          (service prometheus-node-exporter-service-type))
+                          (service prometheus-node-exporter-service-type)
+
+                          (service certbot-service-type
+                                   (certbot-configuration
+                                    (email "go.wigust@gmail.com")
+                                    (certificates
+                                     `(,@(map (lambda (host)
+                                                (certificate-configuration
+                                                 (domains (list host))
+                                                 (deploy-hook %nginx-deploy-hook)))
+                                              (list "zabbix.wugi.info")))))))
 
                     %mail-services
 
