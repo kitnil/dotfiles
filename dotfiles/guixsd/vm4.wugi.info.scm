@@ -10,7 +10,8 @@
 (use-modules (packages certs)
              (services bird)
              (services mail)
-             (services ssh))
+             (services ssh)
+             (services web))
 
 (operating-system
   (host-name "vm4.wugi.info")
@@ -148,7 +149,8 @@ host	all	all	172.16.0.0/12   trust"))
                                                  (domains (list host))
                                                  (deploy-hook %nginx-deploy-hook)))
                                               (list "zabbix.wugi.info"
-                                                    "file.wugi.info"))))))
+                                                    "file.wugi.info"
+                                                    "homer.wugi.info"))))))
 
                           (service zabbix-server-service-type
                                    (zabbix-server-configuration
@@ -167,7 +169,12 @@ FpingLocation=/run/setuid-programs/fping
                                    (nginx-configuration
                                     (server-blocks (list (proxy "file.wugi.info" 5091 #:ssl? #t #:ssl-key? #t)))))
 
-                          (service docker-service-type))
+                          (service docker-service-type)
+
+                          (service homer-service-type
+                                   (homer-configuration
+                                    (config-file %homer-config)
+                                    (nginx (list %homer-nginx-configuration)))))
 
                     %mail-services
 

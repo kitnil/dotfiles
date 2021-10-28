@@ -27,8 +27,6 @@
              (services autofs)
              (services backup)
              (services bittorrent)
-             (services docker)
-             (services homer)
              (services nix)
              (services autossh)
              (services kresd)
@@ -38,6 +36,7 @@
              (services openvpn)
              (services syncthing)
              (services vnc)
+             (services web)
              (nongnu packages linux)
              (nongnu system linux-initrd))
 

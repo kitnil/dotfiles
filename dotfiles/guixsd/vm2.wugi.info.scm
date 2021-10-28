@@ -7,10 +7,10 @@
 
 (use-modules (config)
              (packages mail)
-             (services homer)
              (services keepalived)
              (services networking)
-             (services openvpn))
+             (services openvpn)
+             (services web))
 
 (operating-system
   (host-name "vm2.wugi.info")
@@ -137,10 +137,8 @@ push \"route 10.0.0.0 255.255.255.0\"
                                                                           (uri "/.well-known")
                                                                           (body '("root /var/www;")))
                                                                          (nginx-server-configuration-locations %webssh-configuration-nginx)))))
-                                                         %githunt-nginx-configuration
-                                                         %homer-nginx-configuration))))
+                                                         %githunt-nginx-configuration))))
 
-                          (service homer-service-type %homer-config)
                           (service webssh-service-type
                                    (webssh-configuration (address "127.0.0.1")
                                                          (port 8888)

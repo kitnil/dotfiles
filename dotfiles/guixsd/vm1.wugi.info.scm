@@ -10,11 +10,11 @@
 ;; Third-party modules
 (use-modules (config)
              (services autossh)
-             (services homer)
              (services kresd)
              (services keepalived)
              (services networking)
-             (services openvpn))
+             (services openvpn)
+             (services web))
 
 (operating-system
   (host-name "vm1.wugi.info")
