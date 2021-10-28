@@ -80,8 +80,19 @@ oleg ALL=(ALL) NOPASSWD:ALL\n"))
                           (service ntp-service-type)
                           (service openssh-service-type
                                    (openssh-configuration
-                                    (password-authentication? #t)
-                                    (use-pam? #f)))
+                                    (password-authentication? #f)
+                                    (gateway-ports? 'client)
+                                    (extra-content "\
+Match Address 127.0.0.1
+PasswordAuthentication yes")))
+                          (service webssh-service-type
+                                   (webssh-configuration (address "127.0.0.1")
+                                                         (port 8888)
+                                                         (policy 'reject)
+                                                         (known-hosts '("\
+127.0.0.1 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBIshCEWdx+lCTFsWrGbSa0hASfXXfRaqod/fVBMpbJwhrcj05ud68Ht3Zo0eGzCVBXoNnSZr02catpnjReBrOq8="
+                                                                        "\
+localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBIshCEWdx+lCTFsWrGbSa0hASfXXfRaqod/fVBMpbJwhrcj05ud68Ht3Zo0eGzCVBXoNnSZr02catpnjReBrOq8="))))
                           (service wireguard-service-type
                                    (wireguard-configuration
                                     (interface "de2.g-load.eu")
@@ -151,7 +162,8 @@ host	all	all	172.16.0.0/12   trust"))
                                               (list "zabbix.wugi.info"
                                                     "file.wugi.info"
                                                     "homer.wugi.info"
-                                                    "githunt.wugi.info"))))))
+                                                    "githunt.wugi.info"
+                                                    "vm4.wugi.info"))))))
 
                           (service zabbix-server-service-type
                                    (zabbix-server-configuration
@@ -169,7 +181,18 @@ FpingLocation=/run/setuid-programs/fping
                           (service nginx-service-type
                                    (nginx-configuration
                                     (server-blocks (list (proxy "file.wugi.info" 5091 #:ssl? #t #:ssl-key? #t)
-                                                         %githunt-nginx-configuration))))
+                                                         %githunt-nginx-configuration
+                                                         (nginx-server-configuration
+                                                          (inherit %webssh-configuration-nginx)
+                                                          (server-name '("vm4.wugi.info"))
+                                                          (listen '("443 ssl"))
+                                                          (ssl-certificate (letsencrypt-certificate "vm4.wugi.info"))
+                                                          (ssl-certificate-key (letsencrypt-key "vm4.wugi.info"))
+                                                          (locations
+                                                           (append (list (nginx-location-configuration
+                                                                          (uri "/.well-known")
+                                                                          (body '("root /var/www;"))))
+                                                                   (nginx-server-configuration-locations %webssh-configuration-nginx))))))))
 
                           (service docker-service-type)
 

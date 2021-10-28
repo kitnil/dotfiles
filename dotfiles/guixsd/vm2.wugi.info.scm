@@ -118,34 +118,7 @@ keepalive 5 10
 max-clients 100
 status /var/run/openvpn/status
 push \"route 10.0.0.0 255.255.255.0\"
-"))))
-
-                          (service nginx-service-type
-                                   (nginx-configuration
-                                    (modules %nginx-modules)
-                                    (lua-package-path %nginx-lua-package-path)
-                                    (lua-package-cpath %nginx-lua-package-cpath)
-                                    (server-blocks (list (nginx-server-configuration
-                                                          (inherit %webssh-configuration-nginx)
-                                                          (server-name '("vm2.wugi.info"))
-                                                          (listen '("443 ssl"))
-                                                          (ssl-certificate (letsencrypt-certificate "vm2.wugi.info"))
-                                                          (ssl-certificate-key (letsencrypt-key "vm2.wugi.info"))
-                                                          (locations
-                                                           (append %nginx-lua-guix
-                                                                   (cons (nginx-location-configuration
-                                                                          (uri "/.well-known")
-                                                                          (body '("root /var/www;")))
-                                                                         (nginx-server-configuration-locations %webssh-configuration-nginx)))))))))
-
-                          (service webssh-service-type
-                                   (webssh-configuration (address "127.0.0.1")
-                                                         (port 8888)
-                                                         (policy 'reject)
-                                                         (known-hosts '("\
-127.0.0.1 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBHVSCVdQEHUaTnBqA2nKQXRmo/74DgnyCyWiOI/f5G7qYUMfDiJqYHqh7YngyxIG9iakEUOaNtr6ljHyBXhlaPQ="
-                                                                        "\
-localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBHVSCVdQEHUaTnBqA2nKQXRmo/74DgnyCyWiOI/f5G7qYUMfDiJqYHqh7YngyxIG9iakEUOaNtr6ljHyBXhlaPQ=")))))
+")))))
                     (modify-services %base-services
                       (guix-service-type _ => %guix-daemon-config-with-substitute-urls)
                       (sysctl-service-type _ =>
