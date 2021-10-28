@@ -168,7 +168,8 @@ FpingLocation=/run/setuid-programs/fping
 
                           (service nginx-service-type
                                    (nginx-configuration
-                                    (server-blocks (list (proxy "file.wugi.info" 5091 #:ssl? #t #:ssl-key? #t)))))
+                                    (server-blocks (list (proxy "file.wugi.info" 5091 #:ssl? #t #:ssl-key? #t)
+                                                         %githunt-nginx-configuration))))
 
                           (service docker-service-type)
 

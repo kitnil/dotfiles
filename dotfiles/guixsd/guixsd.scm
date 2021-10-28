@@ -27,6 +27,7 @@
              (services autofs)
              (services backup)
              (services bittorrent)
+             (services docker)
              (services nix)
              (services autossh)
              (services kresd)
