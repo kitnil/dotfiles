@@ -68,19 +68,6 @@ oleg ALL=(ALL) NOPASSWD:ALL\n"))
                           ;;                                           (name "vm2.wugi.info"))))
                           ;;                                   (verify-key-usage? #f)))
 
-                          (service openvpn-service-type %openvpn-configuration-wugi.info)
-
-                          (service zabbix-server-service-type
-                                   (zabbix-server-configuration
-                                    (include-files '("/etc/zabbix/zabbix-server.secret"))
-                                    (extra-options "
-AlertScriptsPath=/etc/zabbix/alertscripts
-ExternalScripts=/etc/zabbix/externalscripts
-FpingLocation=/run/setuid-programs/fping
-")))
-                          (service zabbix-front-end-service-type
-                                (zabbix-front-end-configuration
-                                 (db-secret-file "/etc/zabbix/zabbix.secret")
-                                 (nginx %zabbix-nginx-configuration))))
+                          (service openvpn-service-type %openvpn-configuration-wugi.info))
                     (modify-services %base-services
                       (guix-service-type config => %guix-daemon-config-with-substitute-urls)))))

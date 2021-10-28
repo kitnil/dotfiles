@@ -147,7 +147,20 @@ host	all	all	172.16.0.0/12   trust"))
                                                 (certificate-configuration
                                                  (domains (list host))
                                                  (deploy-hook %nginx-deploy-hook)))
-                                              (list "zabbix.wugi.info")))))))
+                                              (list "zabbix.wugi.info"))))))
+
+                          (service zabbix-server-service-type
+                                   (zabbix-server-configuration
+                                    (include-files '("/etc/zabbix/zabbix-server.secret"))
+                                    (extra-options "
+AlertScriptsPath=/etc/zabbix/alertscripts
+ExternalScripts=/etc/zabbix/externalscripts
+FpingLocation=/run/setuid-programs/fping
+")))
+                          (service zabbix-front-end-service-type
+                                   (zabbix-front-end-configuration
+                                    (db-secret-file "/etc/zabbix/zabbix.secret")
+                                    (nginx %zabbix-nginx-configuration))))
 
                     %mail-services
 
