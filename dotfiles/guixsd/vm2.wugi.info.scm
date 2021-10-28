@@ -12,27 +12,6 @@
              (services networking)
              (services openvpn))
 
-(define %exim-deploy-hook
-  (program-file
-   "exim-deploy-hook"
-   ;; XXX: Send SIGHUP to exim.
-   #~(begin
-       (unless (file-exists? "/etc/exim")
-         (mkdir "/etc/exim"))
-       (let* ((cert-directory (getenv "RENEWED_LINEAGE"))
-              (user (getpw "exim"))
-              (uid (passwd:uid user))
-              (gid (passwd:gid user)))
-         (copy-file (string-append cert-directory "/"
-                                   (readlink (string-append cert-directory "/fullchain.pem")))
-                    "/etc/exim/exim.crt")
-         (copy-file (string-append cert-directory "/"
-                                   (readlink (string-append cert-directory "/privkey.pem")))
-                    "/etc/exim/exim.pem")
-         (chown "/etc/exim/exim" uid gid)
-         (chown "/etc/exim/exim.crt" uid gid)
-         (chown "/etc/exim/exim.pem" uid gid)))))
-
 (operating-system
   (host-name "vm2.wugi.info")
   (timezone "Europe/Moscow")
@@ -68,20 +47,7 @@
                         ;; and "video" allows the user to play sound
                         ;; and access the webcam.
                         (supplementary-groups '("wheel"
-                                                "audio" "video")))
-
-                       (user-account
-                        (name "wigust")
-                        (comment "Oleg Pykhalov")
-                        (group "users")
-                        (supplementary-groups '("audio" "video")))
-
-                       (user-account
-                        (name "alertmanager")
-                        (group "alertmanager")
-                        (system? #t)
-                        (comment "prometheus-alertmanager privilege separation user")
-                        (shell #~(string-append #$shadow "/sbin/nologin"))))
+                                                "audio" "video"))))
                  %base-user-accounts))
 
   (hosts-file
@@ -182,57 +148,7 @@ push \"route 10.0.0.0 255.255.255.0\"
                                                          (known-hosts '("\
 127.0.0.1 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBHVSCVdQEHUaTnBqA2nKQXRmo/74DgnyCyWiOI/f5G7qYUMfDiJqYHqh7YngyxIG9iakEUOaNtr6ljHyBXhlaPQ="
                                                                         "\
-localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBHVSCVdQEHUaTnBqA2nKQXRmo/74DgnyCyWiOI/f5G7qYUMfDiJqYHqh7YngyxIG9iakEUOaNtr6ljHyBXhlaPQ="))))
-
-                          (service mail-aliases-service-type '(("wigust" "oleg")
-                                                               ("admin" "oleg")
-                                                               ("alertmanager" "oleg")))
-                          (service exim-service-type
-                                   (exim-configuration
-                                    (package exim-lmtp)
-                                    (config-file (local-file "exim.conf"))))
-                          (dovecot-service
-                           #:config (dovecot-configuration
-                                     (disable-plaintext-auth? #f)
-                                     (protocols
-                                      (list (protocol-configuration (name "imap"))
-                                            (protocol-configuration (name "lmtp"))))
-                                     (auth-username-format "%n")
-                                     (mail-location
-                                      (string-append "maildir:~/Maildir"
-                                                     ":INBOX=~/Maildir/INBOX"
-                                                     ":LAYOUT=fs"))
-                                     (services
-                                      (list
-                                       (service-configuration
-                                        (kind "auth")
-                                        (listeners
-                                         (list
-                                          (unix-listener-configuration
-                                           (group "exim")
-                                           (mode "0660")
-                                           (path "auth-client"))))
-                                        (process-limit 1))
-                                       (service-configuration
-                                        (kind "auth")
-                                        (service-count 0)
-                                        (client-limit 10)
-                                        (process-limit 1)
-                                        (listeners
-                                         (list (unix-listener-configuration (path "auth-userdb")))))))))
-                          (service certbot-service-type
-                                   (certbot-configuration
-                                    (email "admin@wugi.info")
-                                    (certificates
-                                     (list
-                                      (certificate-configuration
-                                       ;; TODO:
-                                       ;; mkdir /etc/exim
-                                       ;; cp /etc/letsencrypt/archive/smtp.wugi.info/fullchain1.pem /etc/exim/exim.crt
-                                       ;; cp /etc/letsencrypt/archive/smtp.wugi.info/privkey1.pem /etc/exim/exim.pem
-                                       ;; chown exim: -R /etc/exim
-                                       (domains '("smtp.wugi.info"))
-                                       (deploy-hook %exim-deploy-hook)))))))
+localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBHVSCVdQEHUaTnBqA2nKQXRmo/74DgnyCyWiOI/f5G7qYUMfDiJqYHqh7YngyxIG9iakEUOaNtr6ljHyBXhlaPQ=")))))
                     (modify-services %base-services
                       (guix-service-type _ => %guix-daemon-config-with-substitute-urls)
                       (sysctl-service-type _ =>

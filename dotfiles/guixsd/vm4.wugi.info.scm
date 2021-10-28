@@ -8,7 +8,8 @@
 (use-modules (config))
 
 (use-modules (packages certs)
-             (services bird))
+             (services bird)
+             (services mail))
 
 (operating-system
   (host-name "vm4.wugi.info")
@@ -30,17 +31,27 @@
   ;; This is where user accounts are specified.  The "root"
   ;; account is implicit, and is initially created with the
   ;; empty password.
-  (users (cons (user-account
-                (name "oleg")
-                (comment "Oleg Pykhalov")
-                (group "users")
+  (users (append (list (user-account
+                        (name "oleg")
+                        (comment "Oleg Pykhalov")
+                        (group "users")
 
-                ;; Adding the account to the "wheel" group
-                ;; makes it a sudoer.  Adding it to "audio"
-                ;; and "video" allows the user to play sound
-                ;; and access the webcam.
-                (supplementary-groups '("wheel" "audio" "video")))
-               %base-user-accounts))
+                        ;; Adding the account to the "wheel" group
+                        ;; makes it a sudoer.  Adding it to "audio"
+                        ;; and "video" allows the user to play sound
+                        ;; and access the webcam.
+                        (supplementary-groups '("wheel" "audio" "video"))))
+                 %mail-users
+                 %base-user-accounts))
+
+  (hosts-file
+   (plain-file
+    "hosts"
+    (string-join
+     (list (string-join (append '("127.0.0.1" "vm4.wugi.info" "localhost")
+                                %mail-hosts-file-hosts))
+           (string-join '("::1" "vm4.wugi.info" "localhost")))
+     "\n")))
 
   (sudoers-file (plain-file "sudoers" "\
 root ALL=(ALL) ALL
@@ -48,9 +59,11 @@ root ALL=(ALL) ALL
 oleg ALL=(ALL) NOPASSWD:ALL\n"))
 
   ;; Globally-installed packages.
-  (packages (cons* curl nmap iptables mtr tcpdump net-tools iftop
-                   nss-certs dn42-ca
-                   strace tmux %base-packages))
+  (packages (append (list curl nmap iptables mtr tcpdump net-tools iftop
+                          nss-certs dn42-ca
+                          strace tmux)
+                    %mail-packages
+                    %base-packages))
 
   ;; Add services to the baseline: a DHCP client and
   ;; an SSH server.
@@ -107,6 +120,9 @@ cache.size = 10 * MB
                                     (config-file (local-file "bird.conf"))))
                           (service zabbix-agent-service-type %vm-zabbix-agent-configuration)
                           (service prometheus-node-exporter-service-type))
+
+                    %mail-services
+
                     (modify-services %base-services
                       (guix-service-type config => %guix-daemon-config-with-substitute-urls)
                       (sysctl-service-type _ =>
