@@ -18,6 +18,7 @@
 
 (define-module (services monitoring)
   #:use-module (gnu packages admin)
+  #:use-module (gnu packages linux)
   #:use-module (gnu services)
   #:use-module (gnu services base)
   #:use-module (gnu services shepherd)
@@ -37,7 +38,10 @@
             prometheus-pushgateway-service-type
             
             karma-configuration
-            karma-service-type))
+            karma-service-type
+
+            prometheus-blackbox-exporter-configuration
+            prometheus-blackbox-exporter-service-type))
 
 ;;; Commentary:
 ;;;
@@ -378,5 +382,98 @@
    (default-value (karma-configuration))
    (description
     "Run the karma.")))
+
+
+;;;
+;;; prometheus-blackbox-exporter
+;;;
+
+(define-record-type* <prometheus-blackbox-exporter-configuration>
+  prometheus-blackbox-exporter-configuration make-prometheus-blackbox-exporter-configuration
+  prometheus-blackbox-exporter-configuration?
+  (prometheus-blackbox-exporter prometheus-blackbox-exporter-configuration-prometheus-blackbox-exporter  ;string
+                                (default prometheus-blackbox-exporter))
+  (config-file prometheus-blackbox-exporter-configuration-config-file                                    ;string
+               (default #f))
+  (arguments   prometheus-blackbox-exporter-configuration-arguments                                      ;list of strings
+               (default '()))
+  (user        prometheus-blackbox-exporter-configuration-user                                           ;string
+               (default "prometheus-blackbox-exporter"))
+  (group       prometheus-blackbox-exporter-configuration-group                                          ;string
+               (default "prometheus-blackbox-exporter"))
+  (listen-address prometheus-blackbox-exporter-configuration-listen-address ;string
+                  (default "0.0.0.0:9115"))
+  (log-level   prometheus-blackbox-exporter-configuration-log-level ;string
+               (default "")))
+
+(define (prometheus-blackbox-exporter-activation configuration)
+  "Return the activation GEXP for CONFIG."
+  (with-imported-modules '((guix build utils))
+    #~(begin
+        (use-modules (guix build utils))
+        (mkdir-p "/run/capability-programs")
+        (unless (file-exists? "/run/capability-programs/blackbox_exporter")
+          (install-file (string-append #$(prometheus-blackbox-exporter-configuration-prometheus-blackbox-exporter configuration)
+                                       "/bin/blackbox_exporter")
+                        "/run/capability-programs")
+          (invoke #$(file-append libcap "/sbin/setcap") "cap_net_raw+ep")))))
+
+(define (prometheus-blackbox-exporter-account configuration)
+  ;; Return the user accounts and user groups for CONFIG.
+  (let ((prometheus-blackbox-exporter-user
+         (prometheus-blackbox-exporter-configuration-user configuration))
+        (prometheus-blackbox-exporter-group
+         (prometheus-blackbox-exporter-configuration-group configuration)))
+    (list (user-group
+           (name prometheus-blackbox-exporter-user)
+           (system? #t))
+          (user-account
+           (name prometheus-blackbox-exporter-user)
+           (group prometheus-blackbox-exporter-group)
+           (system? #t)
+           (comment "prometheus-blackbox-exporter privilege separation user")
+           (home-directory
+            (string-append "/var/run/" prometheus-blackbox-exporter-user))
+           (shell #~(string-append #$shadow "/sbin/nologin"))))))
+
+(define (prometheus-blackbox-exporter-shepherd-service config)
+  (list
+   (shepherd-service
+    (provision '(prometheus-blackbox-exporter))
+    (documentation "Run prometheus-blackbox-exporter.")
+    (requirement '())
+    (start #~(make-forkexec-constructor
+              `("/run/capability-programs/blackbox_exporter"
+                ,(string-append
+                  "--config.file="
+                  #$(prometheus-blackbox-exporter-configuration-config-file config))
+                ,(string-append
+                  "--web.listen-address="
+                  #$(prometheus-blackbox-exporter-configuration-listen-address config))
+                ,@(let ((log-level
+                         #$(prometheus-blackbox-exporter-configuration-log-level config)))
+                    (if (string-null? log-level)
+                        '()
+                        (list (string-append "--log.level=" log-level))))
+                ,#$@(prometheus-blackbox-exporter-configuration-arguments config))
+              #:user #$(prometheus-blackbox-exporter-configuration-user config)
+              #:group #$(prometheus-blackbox-exporter-configuration-group config)
+              #:log-file "/var/log/prometheus-blackbox-exporter.log"))
+    (respawn? #f)
+    (stop #~(make-kill-destructor)))))
+
+(define prometheus-blackbox-exporter-service-type
+  (service-type
+   (name 'prometheus-blackbox-exporter)
+   (extensions
+    (list (service-extension shepherd-root-service-type
+                             prometheus-blackbox-exporter-shepherd-service)
+          (service-extension account-service-type
+                             prometheus-blackbox-exporter-account)
+          (service-extension activation-service-type
+                             prometheus-blackbox-exporter-activation)))
+   (default-value (prometheus-blackbox-exporter-configuration))
+   (description
+    "Run the prometheus-blackbox-exporter.")))
 
 ;;; monitoring.scm ends here
