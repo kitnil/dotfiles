@@ -1192,18 +1192,6 @@ PasswordAuthentication yes")))
                                   (php-fpm-configuration
                                    (timezone "Europe/Moscow")))
 
-                         (service zabbix-agent-service-type
-                                  (zabbix-agent-configuration
-                                   (server '("zabbix.wugi.info"))
-                                   (server-active '("zabbix.wugi.info"))
-                                   (extra-options (string-join
-                                                   (list ""
-                                                         "UserParameter=ssl_cert_check_valid[*], /etc/zabbix/externalscripts/ssl_cert_check.sh valid \"$1\" \"$2\" \"$3\""
-                                                         "UserParameter=ssl_cert_check_expire[*], /etc/zabbix/externalscripts/ssl_cert_check.sh expire \"$1\" \"$2\" \"$3\""
-                                                         (string-join (cons "UserParameter=ssl_cert_hosts[*], /etc/zabbix/externalscripts/ssl_cert_hosts.sh"
-                                                                            %certbot-hosts)))
-                                                   "\n"))))
-
                          (service jenkins-service-type %jenkins-config)
 
                          (service restic-rest-service-type
