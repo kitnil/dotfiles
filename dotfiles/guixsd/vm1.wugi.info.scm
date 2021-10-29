@@ -133,7 +133,6 @@ cache.size = 10 * MB
                           (service bird-service-type
                                    (bird-configuration
                                     (config-file (local-file "bird.conf"))))
-                          (service zabbix-agent-service-type %vm-zabbix-agent-configuration)
 
                           (service postgresql-service-type
                                    (postgresql-configuration
@@ -159,24 +158,10 @@ host	all	all	172.16.0.0/12   trust"))
                                                 (certificate-configuration
                                                  (domains (list host))
                                                  (deploy-hook %nginx-deploy-hook)))
-                                              (list "zabbix.wugi.info"
-                                                    "file.wugi.info"
+                                              (list "file.wugi.info"
                                                     "homer.wugi.info"
                                                     "githunt.wugi.info"
                                                     "vm1.wugi.info"))))))
-
-                          (service zabbix-server-service-type
-                                   (zabbix-server-configuration
-                                    (include-files '("/etc/zabbix/zabbix-server.secret"))
-                                    (extra-options "
-AlertScriptsPath=/etc/zabbix/alertscripts
-ExternalScripts=/etc/zabbix/externalscripts
-FpingLocation=/run/setuid-programs/fping
-")))
-                          (service zabbix-front-end-service-type
-                                   (zabbix-front-end-configuration
-                                    (db-secret-file "/etc/zabbix/zabbix.secret")
-                                    (nginx %zabbix-nginx-configuration)))
 
                           (service nginx-service-type
                                    (nginx-configuration
