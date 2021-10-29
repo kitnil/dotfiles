@@ -67,7 +67,6 @@ EndSection
 (define %certbot-hosts
   (list "cgit.duckdns.org"
         "githunt.wugi.info"
-        "homer.wugi.info"
         "guix.duckdns.org"
         "guix.wugi.info"
         "jenkins.wugi.info"
@@ -104,7 +103,6 @@ EndSection
          (server-name '("iso.wugi.info"))
          (listen '("80"))
          (root "/srv/iso"))
-        %homer-nginx-configuration
         (nginx-server-configuration
          (server-name '("texinfo.tld"))
          (listen '("80"))
@@ -224,7 +222,6 @@ location / {
         (proxy "syncthing.wugi.info" 8384 #:ssl? #t #:ssl-key? #t #:mtls? #t
                ;; https://docs.syncthing.net/users/faq.html#why-do-i-get-host-check-error-in-the-gui-api
                #:proxy-set-header-host "localhost")
-        %githunt-nginx-configuration
         (proxy "monitor.wugi.info" 8080)
         (proxy "guix.duckdns.org" 5556 #:ssl? #t)
         (proxy "kiwiirc.wugi.info" 8194 #:ssl? #t #:ssl-key? #t #:mtls? #t)
@@ -644,8 +641,6 @@ location / {
                            ))
            "::1 guixsd localhost"
 
-           "10.0.0.4 githunt.wugi.info homer.wugi.info"
-
            "172.16.100.60 workstation.intr"
 
            "78.108.82.157 mjru"
@@ -774,8 +769,6 @@ location / {
 
                          (service openvpn-service-type %openvpn-configuration-majordomo.ru)
                          (service openvpn-service-type %openvpn-configuration-wugi.info)
-
-                         (service homer-service-type)
 
                          ;; TODO:
                          ;; (openvpn-client-service
