@@ -854,7 +854,13 @@ location / {
                                                           (job_name . "blackbox-http"))
                                                          ((static_configs
                                                            .
-                                                           #(((targets . #("192.168.0.1")))))
+                                                           #(((targets . #("192.168.0.1" ;TP-Link Archer C6
+                                                                           "81.95.28.29" ;vpn-office.majordomo.ru router4.intr
+                                                                           "81.95.28.27" ;vpn-office.majordomo.ru router{1,2}.intr
+                                                                           "78.108.80.230" ;vpn-miran.majordomo.ru dynamic
+                                                                           "78.108.87.250" ;vpn-miran.majordomo.ru static
+                                                                           "78.108.91.250" ;vpn-dh.majordomo.ru
+                                                                           )))))
                                                           (scrape_interval . "30s")
                                                           (metrics_path . "/probe")
                                                           (params . ((module . #("icmp"))))
