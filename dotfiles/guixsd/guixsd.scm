@@ -980,6 +980,7 @@ location / {
                          (service prometheus-blackbox-exporter-service-type
                                   (prometheus-blackbox-exporter-configuration
                                    (listen-address "127.0.0.1:9115")
+                                   (log-level "debug")
                                    (config-file
                                     (computed-file
                                      "prometheus-blackbox-exporter.json"
