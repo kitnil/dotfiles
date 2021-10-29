@@ -27,8 +27,7 @@
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-1)
   #:use-module (packages monitoring)
-  #:export (monitoring-service
-            prometheus-configuration
+  #:export (prometheus-configuration
             prometheus-service-type
 
             prometheus-alertmanager-configuration
