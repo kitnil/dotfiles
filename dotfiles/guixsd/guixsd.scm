@@ -872,7 +872,37 @@ location / {
                                                               (target_label . "instance"))
                                                              ((replacement . "127.0.0.1:9115")
                                                               (target_label . "__address__"))))
-                                                          (job_name . "blackbox-icmp"))))
+                                                          (job_name . "blackbox-icmp"))
+                                                         ((static_configs
+                                                           .
+                                                           #(((targets . #("smtp.wugi.info:25")))))
+                                                          (scrape_interval . "30s")
+                                                          (metrics_path . "/probe")
+                                                          (params . ((module . #("smtp_starttls"))))
+                                                          (relabel_configs
+                                                           .
+                                                           #(((source_labels . #("__address__"))
+                                                              (target_label . "__param_target"))
+                                                             ((source_labels . #("__param_target"))
+                                                              (target_label . "instance"))
+                                                             ((replacement . "127.0.0.1:9115")
+                                                              (target_label . "__address__"))))
+                                                          (job_name . "blackbox-smtp-starttls"))
+                                                         ((static_configs
+                                                           .
+                                                           #(((targets . #("smtp.wugi.info:143")))))
+                                                          (scrape_interval . "30s")
+                                                          (metrics_path . "/probe")
+                                                          (params . ((module . #("imap_starttls"))))
+                                                          (relabel_configs
+                                                           .
+                                                           #(((source_labels . #("__address__"))
+                                                              (target_label . "__param_target"))
+                                                             ((source_labels . #("__param_target"))
+                                                              (target_label . "instance"))
+                                                             ((replacement . "127.0.0.1:9115")
+                                                              (target_label . "__address__"))))
+                                                          (job_name . "blackbox-imap-starttls"))))
                                                       (rule_files . #(,prometheus-alertmanager-node
                                                                       ,prometheus-alertmanager-blackbox))
                                                       (global
@@ -958,7 +988,34 @@ location / {
                                                       ("timeout" . "5s")
                                                       ("prober" . "icmp")
                                                       ("icmp"
-                                                       ("preferred_ip_protocol" . "ip4")))))
+                                                       ("preferred_ip_protocol" . "ip4")))
+                                                     ("smtp_starttls"
+                                                      ("timeout" . "5s")
+                                                      ("tcp"
+                                                       ("query_response"
+                                                        .
+                                                        #((("expect" . "^220 ([^ ]+) ESMTP (.+)$"))
+                                                          (("send" . "EHLO prober\r"))
+                                                          (("expect" . "^250-STARTTLS"))
+                                                          (("send" . "STARTTLS\r"))
+                                                          (("expect" . "^220"))
+                                                          (("starttls" . #t))
+                                                          (("send" . "EHLO prober\r"))
+                                                          (("expect" . "^250-AUTH"))
+                                                          (("send" . "QUIT\r")))))
+                                                      ("prober" . "tcp"))
+                                                     ("imap_starttls"
+                                                      ("timeout" . "5s")
+                                                      ("tcp"
+                                                       ("query_response"
+                                                        .
+                                                        #((("expect" . "OK.*STARTTLS"))
+                                                          (("send" . ". STARTTLS"))
+                                                          (("expect" . "OK"))
+                                                          (("starttls" . #t))
+                                                          (("send" . ". capability"))
+                                                          (("expect" . "CAPABILITY IMAP4rev1")))))
+                                                      ("prober" . "tcp"))))
                                                   #:pretty #t))))))))))
 
                          (service karma-service-type
