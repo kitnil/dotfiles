@@ -134,20 +134,6 @@ cache.size = 10 * MB
                                    (bird-configuration
                                     (config-file (local-file "bird.conf"))))
 
-                          (service postgresql-service-type
-                                   (postgresql-configuration
-                                    (config-file
-                                     (postgresql-config-file
-                                      (hba-file
-                                       (plain-file "pg_hba.conf"
-                                                   "
-local	all	all			trust
-host	all	all	127.0.0.1/32    trust
-host	all	all	::1/128         trust
-host	all	all	172.16.0.0/12   trust"))
-                                      (extra-config '(("listen_addresses" "127.0.0.1")))))
-                                    (postgresql postgresql-10)))
-
                           (service prometheus-node-exporter-service-type)
 
                           (service certbot-service-type
