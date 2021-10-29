@@ -837,7 +837,22 @@ location / {
                                                          ((static_configs
                                                            .
                                                            #(((targets . #("127.0.0.1:6050")))))
-                                                          (job_name . "restic-rest"))))
+                                                          (job_name . "restic-rest"))
+                                                         ((static_configs
+                                                           .
+                                                           #(((targets . #("https://guix.wugi.info/")))))
+                                                          (scrape_interval . "5m")
+                                                          (metrics_path . "/probe")
+                                                          (params . ((module . #("http_2xx"))))
+                                                          (relabel_configs
+                                                           .
+                                                           #(((source_labels . #("__address__"))
+                                                              (target_label . "__param_target"))
+                                                             ((source_labels . #("__param_target"))
+                                                              (target_label . "instance"))
+                                                             ((replacement . "127.0.0.1:9115")
+                                                              (target_label . "__address__"))))
+                                                          (job_name . "blackbox"))))
                                                       (rule_files . #(,prometheus-alertmanager-node))
                                                       (global
                                                        (scrape_interval . "15s")
@@ -893,6 +908,31 @@ location / {
                                                      #((("name" . "smtp")
                                                         ("email_configs" .
                                                          #((("to" . "alertmanager@wugi.info"))))))))
+                                                  #:pretty #t))))))))))
+
+                         (service prometheus-blackbox-exporter-service-type
+                                  (prometheus-blackbox-exporter-configuration
+                                   (listen-address "127.0.0.1:9115")
+                                   (config-file
+                                    (computed-file
+                                     "prometheus-blackbox-exporter.json"
+                                     (with-extensions (list guile-json-4)
+                                       (with-imported-modules (source-module-closure '((json builder)))
+                                         #~(begin
+                                             (use-modules (json builder)
+                                                          (ice-9 rdelim))
+                                             (with-output-to-file #$output
+                                               (lambda ()
+                                                 (scm->json
+                                                  '(("modules"
+                                                     ("http_2xx"
+                                                      ("timeout" . "5s")
+                                                      ("prober" . "http")
+                                                      ("http"
+                                                       ("valid_status_codes" . #())
+                                                       ("valid_http_versions" . #("HTTP/1.1" "HTTP/2"))
+                                                       ("preferred_ip_protocol" . "ip4")
+                                                       ("no_follow_redirects" . #f)))))
                                                   #:pretty #t))))))))))
 
                          (service karma-service-type

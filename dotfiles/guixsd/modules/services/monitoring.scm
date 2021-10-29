@@ -393,18 +393,20 @@
   prometheus-blackbox-exporter-configuration?
   (prometheus-blackbox-exporter prometheus-blackbox-exporter-configuration-prometheus-blackbox-exporter  ;string
                                 (default prometheus-blackbox-exporter))
-  (config-file prometheus-blackbox-exporter-configuration-config-file                                    ;string
-               (default #f))
-  (arguments   prometheus-blackbox-exporter-configuration-arguments                                      ;list of strings
-               (default '()))
-  (user        prometheus-blackbox-exporter-configuration-user                                           ;string
-               (default "prometheus-blackbox-exporter"))
-  (group       prometheus-blackbox-exporter-configuration-group                                          ;string
-               (default "prometheus-blackbox-exporter"))
-  (listen-address prometheus-blackbox-exporter-configuration-listen-address ;string
-                  (default "0.0.0.0:9115"))
-  (log-level   prometheus-blackbox-exporter-configuration-log-level ;string
-               (default "")))
+  (config-file           prometheus-blackbox-exporter-configuration-config-file                          ;string
+                         (default #f))
+  (arguments             prometheus-blackbox-exporter-configuration-arguments                            ;list of strings
+                         (default '()))
+  (user                  prometheus-blackbox-exporter-configuration-user                                 ;string
+                         (default "prometheus-blackbox-exporter"))
+  (group                 prometheus-blackbox-exporter-configuration-group                                ;string
+                         (default "prometheus-blackbox-exporter"))
+  (listen-address        prometheus-blackbox-exporter-configuration-listen-address                       ;string
+                         (default "0.0.0.0:9115"))
+  (log-level             prometheus-blackbox-exporter-configuration-log-level                            ;string
+                         (default ""))
+  (environment-variables prometheus-blackbox-exporter-configuration-environment-variables                ;list of strings
+                         (default '())))
 
 (define (prometheus-blackbox-exporter-activation configuration)
   "Return the activation GEXP for CONFIG."
@@ -458,7 +460,19 @@
                 ,#$@(prometheus-blackbox-exporter-configuration-arguments config))
               #:user #$(prometheus-blackbox-exporter-configuration-user config)
               #:group #$(prometheus-blackbox-exporter-configuration-group config)
-              #:log-file "/var/log/prometheus-blackbox-exporter.log"))
+              #:log-file "/var/log/prometheus-blackbox-exporter.log"
+              #:environment-variables
+              (append (list (string-append "PATH="
+                                           "/run/setuid-programs"
+                                           ":" "/run/current-system/profile/bin")
+                            "SSL_CERT_DIR=/run/current-system/profile/etc/ssl/certs"
+                            "SSL_CERT_FILE=/run/current-system/profile/etc/ssl/certs/ca-certificates.crt"
+                            #$@(prometheus-blackbox-exporter-configuration-environment-variables config))
+                      (remove (lambda (str)
+                                (or (string-prefix? "PATH=" str)
+                                    (string-prefix? "SSL_CERT_DIR=" str)
+                                    (string-prefix? "SSL_CERT_FILE=" str)))
+                              (environ)))))
     (respawn? #f)
     (stop #~(make-kill-destructor)))))
 
