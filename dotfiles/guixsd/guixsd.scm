@@ -902,7 +902,23 @@ location / {
                                                               (target_label . "instance"))
                                                              ((replacement . "127.0.0.1:9115")
                                                               (target_label . "__address__"))))
-                                                          (job_name . "blackbox-imap-starttls"))))
+                                                          (job_name . "blackbox-imap-starttls"))
+                                                         ((static_configs
+                                                           .
+                                                           #(((targets . #("8.8.8.8"
+                                                                           "8.8.4.4")))))
+                                                          (scrape_interval . "30s")
+                                                          (metrics_path . "/probe")
+                                                          (params . ((module . #("dns_udp_mjru_wugi_info"))))
+                                                          (relabel_configs
+                                                           .
+                                                           #(((source_labels . #("__address__"))
+                                                              (target_label . "__param_target"))
+                                                             ((source_labels . #("__param_target"))
+                                                              (target_label . "instance"))
+                                                             ((replacement . "127.0.0.1:9115")
+                                                              (target_label . "__address__"))))
+                                                          (job_name . "blackbox-dns-udp-mjru-wugi-info"))))
                                                       (rule_files . #(,prometheus-alertmanager-node
                                                                       ,prometheus-alertmanager-blackbox))
                                                       (global
@@ -1015,7 +1031,18 @@ location / {
                                                           (("starttls" . #t))
                                                           (("send" . ". capability"))
                                                           (("expect" . "CAPABILITY IMAP4rev1")))))
-                                                      ("prober" . "tcp"))))
+                                                      ("prober" . "tcp"))
+                                                     ("dns_udp_mjru_wugi_info"
+                                                      ("timeout" . "5s")
+                                                      ("prober" . "dns")
+                                                      ("dns"
+                                                       ("validate_answer_rrs"
+                                                        ("fail_if_not_matches_regexp"
+                                                         .
+                                                         #("mjru.wugi.info.\t.*\tIN\tNS\tns[1-3]*.majordomo.ru.")))
+                                                       ("valid_rcodes" . #("NOERROR"))
+                                                       ("query_type" . "NS")
+                                                       ("query_name" . "mjru.wugi.info")))))
                                                   #:pretty #t))))))))))
 
                          (service karma-service-type
