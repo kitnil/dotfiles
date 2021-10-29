@@ -1,19 +1,16 @@
-(use-modules (gnu)
-             (guix)
-             (srfi srfi-1)
-             (srfi srfi-26))
+;; This is an operating system configuration template
+;; for a "bare bones" setup, with no X11 display server.
 
-(use-service-modules certbot desktop networking monitoring ssh sysctl vpn xorg web)
+(use-modules (gnu))
+(use-service-modules certbot databases dbus desktop docker dns monitoring networking ssh sysctl web vpn)
+(use-package-modules admin curl certs databases networking linux ssh tmux)
 
-(use-package-modules admin base bootloaders certs package-management wget xorg zile)
+(use-modules (config))
 
-;; Third-party modules
-(use-modules (config)
-             (services autossh)
-             (services kresd)
-             (services keepalived)
-             (services networking)
-             (services openvpn)
+(use-modules (packages certs)
+             (services bird)
+             (services mail)
+             (services ssh)
              (services web))
 
 (operating-system
@@ -21,196 +18,196 @@
   (timezone "Europe/Moscow")
   (locale "en_US.utf8")
 
-  ;; Below we assume /dev/vda is the VM's hard disk.
-  ;; Adjust as needed.
+  ;; Boot in "legacy" BIOS mode, assuming /dev/sdX is the
+  ;; target hard disk, and "my-root" is the label of the target
+  ;; root file system.
   (bootloader (bootloader-configuration
-               (bootloader grub-bootloader)
-               (target "/dev/vda")
-               (terminal-outputs '(console))))
+                (bootloader grub-bootloader)
+                (target "/dev/vda")))
   (file-systems (cons (file-system
+                        (device (file-system-label "guix-root"))
                         (mount-point "/")
-                        (device "/dev/vda1")
                         (type "ext4"))
                       %base-file-systems))
 
-  (groups (cons* (user-group (name "nixbld")
-                             (id 30100))
-                 %base-groups))
+  ;; This is where user accounts are specified.  The "root"
+  ;; account is implicit, and is initially created with the
+  ;; empty password.
+  (users (append (list (user-account
+                        (name "oleg")
+                        (comment "Oleg Pykhalov")
+                        (group "users")
 
-  (users (cons* (user-account
-                 (name "oleg")
-                 (comment "Oleg Pykhalov")
-                 (uid 1000)
-                 (group "users")
-                 (supplementary-groups '("wheel" "netdev"
-                                         "audio" "video")))
-                (append ((lambda* (count #:key
-                                    (group "nixbld")
-                                    (first-uid 30101)
-                                    (shadow shadow))
-                           (unfold (cut > <> count)
-                                   (lambda (n)
-                                     (user-account
-                                      (name (format #f "nixbld~a" n))
-                                      (system? #t)
-                                      (uid (+ first-uid n -1))
-                                      (group group)
+                        ;; Adding the account to the "wheel" group
+                        ;; makes it a sudoer.  Adding it to "audio"
+                        ;; and "video" allows the user to play sound
+                        ;; and access the webcam.
+                        (supplementary-groups '("wheel" "audio" "video"))))
+                 %mail-users
+                 %ssh-users
+                 %base-user-accounts))
 
-                                      ;; guix-daemon expects GROUP to be listed as a
-                                      ;; supplementary group too:
-                                      ;; <http://lists.gnu.org/archive/html/bug-guix/2013-01/msg00239.html>.
-                                      (supplementary-groups (list group "kvm"))
-
-                                      (comment (format #f "Nix Build User ~a" n))
-                                      (home-directory "/var/empty")
-                                      (shell (file-append shadow "/sbin/nologin"))))
-                                   1+
-                                   1))
-                         9)
-                        %base-user-accounts)))
+  (hosts-file
+   (plain-file
+    "hosts"
+    (string-join
+     (list (string-join (append '("127.0.0.1" "vm1.wugi.info" "localhost")
+                                %mail-hosts-file-hosts
+                                %ssh-hosts-file-hosts))
+           (string-join '("::1" "vm1.wugi.info" "localhost")))
+     "\n")))
 
   (sudoers-file (plain-file "sudoers" "\
 root ALL=(ALL) ALL
 %wheel ALL=(ALL) ALL
 oleg ALL=(ALL) NOPASSWD:ALL\n"))
 
-  (packages %my-system-packages)
+  ;; Globally-installed packages.
+  (packages (append (list curl nmap iptables mtr tcpdump net-tools iftop
+                          nss-certs dn42-ca
+                          strace tmux)
+                    %mail-packages
+                    %base-packages))
 
-  (services
-   (append (list (service openssh-service-type
-                          (openssh-configuration
-                           (x11-forwarding? #t)
-                           (gateway-ports? 'client)
-                           (password-authentication? #f)
-                           (extra-content "\
+  ;; Add services to the baseline: a DHCP client and
+  ;; an SSH server.
+  (services (append (list (static-networking-service "eth0" "78.108.82.44"
+                                                     #:netmask "255.255.254.0"
+                                                     #:gateway "78.108.83.254"
+                                                     #:name-servers '("127.0.0.1"
+                                                                      "8.8.8.8"
+                                                                      "8.8.4.4"))
+                          (service ntp-service-type)
+                          (service openssh-service-type
+                                   (openssh-configuration
+                                    (password-authentication? #f)
+                                    (gateway-ports? 'client)
+                                    (extra-content "\
 Match Address 127.0.0.1
 PasswordAuthentication yes")))
-                 (static-networking-service "eth0" "78.108.82.157"
-                                            #:netmask "255.255.254.0"
-                                            #:gateway "78.108.83.254"
-                                            #:name-servers '("78.108.82.157\nsearch intr majordomo.ru"
-                                                             "172.17.0.1"
-                                                             "8.8.8.8"
-                                                             "8.8.4.4"))
+                          (service webssh-service-type
+                                   (webssh-configuration (address "127.0.0.1")
+                                                         (port 8888)
+                                                         (policy 'reject)
+                                                         (known-hosts '("\
+127.0.0.1 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBIshCEWdx+lCTFsWrGbSa0hASfXXfRaqod/fVBMpbJwhrcj05ud68Ht3Zo0eGzCVBXoNnSZr02catpnjReBrOq8="
+                                                                        "\
+localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBIshCEWdx+lCTFsWrGbSa0hASfXXfRaqod/fVBMpbJwhrcj05ud68Ht3Zo0eGzCVBXoNnSZr02catpnjReBrOq8="))))
+                          (service wireguard-service-type
+                                   (wireguard-configuration
+                                    (interface "de2.g-load.eu")
+                                    (addresses
+                                     '("192.168.219.77/32"
+                                       "172.22.144.97/27"
 
-                 (service (@ (services autossh) autossh-service-type)
-                          ((@ (services autossh) autossh-configuration)
-                             (autossh-client-config
-                              (autossh-client-configuration
-                               (hosts (list (autossh-client-host-configuration
-                                             (host "back.wugi.info")
-                                             (identity-file "/etc/autossh/id_rsa")
-                                             (strict-host-key-checking? #f)
-                                             (user "vm1-ssh-tunnel")
-                                             (user-known-hosts-file "/dev/null")
-                                             (extra-options
-                                              "
-RemoteForward 0.0.0.0:17022 127.0.0.1:22
-RemoteForward 0.0.0.0:17050 127.0.0.1:10050
-Compression yes
-ExitOnForwardFailure yes
-ServerAliveInterval 30
-ServerAliveCountMax 3"))))))
-                             (host "back.wugi.info")))
+                                       ;; dummy address for BGP peering
+                                       "172.20.53.98/27"))
+                                    (peers
+                                     (list
+                                      (wireguard-peer
+                                       (name "de2.g-load.eu")
+                                       (endpoint "de2.g-load.eu:22496")
+                                       (public-key "B1xSG/XTJRLd+GrWDsB06BqnIq8Xud93YVh/LYYYtUY=")
+                                       (allowed-ips '("172.16.0.0/12"
+                                                      "192.168.0.0/16"
+                                                      ;; "172.20.53.97/32"
+                                                      ;; "192.168.219.77/32"
+                                                      )))))))
+                          (service knot-resolver-service-type
+                                   (knot-resolver-configuration
+                                    (kresd-config-file (plain-file "kresd.conf" "\
+net.listen('127.0.0.1')
+net.ipv6 = false
 
-                 (extra-special-file "/usr/bin/env"
-                                     (file-append coreutils "/bin/env"))
-                 (kresd-service (local-file "kresd.conf"))
-                 (service zabbix-agent-service-type
-                          (zabbix-agent-configuration
-                           (server '("zabbix.wugi.info"))
-                           (server-active '("zabbix.wugi.info"))))
-                 (service prometheus-node-exporter-service-type)
+modules = { 'policy' }
+policy.add(policy.suffix(policy.STUB(\"172.20.0.53\"), {todname('dn42')}))
 
-                 (service openvpn-service-type
-                          (openvpn-configuration
-                           (name "majordomo.ru")
-                           (config "/etc/openvpn/openvpn.conf")))
+-- Forward all queries (complete stub mode)
+policy.add(policy.all(policy.STUB('8.8.8.8')))
 
-                 (service openvpn-service-type
-                          (openvpn-configuration
-                           (name "wugi.info")
-                           (config (plain-file "openvpn.conf"
-                                               "\
-proto udp
-dev tun
-ca /etc/openvpn/ca.crt
-cert /etc/openvpn/client.crt
-key /etc/openvpn/client.key
-duplicate-cn
-comp-lzo
-persist-key
-persist-tun
-verb 3
-port 1195
-server 10.9.0.0 255.255.255.0
-dh /etc/openvpn/dh2048.pem
-ifconfig-pool-persist /etc/openvpn/ipp.txt
-client-to-client
-keepalive 5 10
-max-clients 100
-status /var/run/openvpn/status
-push \"route 10.0.0.0 255.255.255.0\"
+-- Smaller cache size
+cache.size = 10 * MB
 "))))
+                          (dbus-service)
+                          (elogind-service)
+                          (service bird-service-type
+                                   (bird-configuration
+                                    (config-file (local-file "bird.conf"))))
+                          (service zabbix-agent-service-type %vm-zabbix-agent-configuration)
 
-                 (service certbot-service-type
-                          (certbot-configuration
-                           (email "go.wigust@gmail.com")
-                           (certificates
-                            `(,@(map (lambda (host)
-                                       (certificate-configuration
-                                        (domains (list host))
-                                        (deploy-hook %nginx-deploy-hook)))
-                                     (list "vm1.wugi.info"))))))
+                          (service postgresql-service-type
+                                   (postgresql-configuration
+                                    (config-file
+                                     (postgresql-config-file
+                                      (hba-file
+                                       (plain-file "pg_hba.conf"
+                                                   "
+local	all	all			trust
+host	all	all	127.0.0.1/32    trust
+host	all	all	::1/128         trust
+host	all	all	172.16.0.0/12   trust"))
+                                      (extra-config '(("listen_addresses" "127.0.0.1")))))
+                                    (postgresql postgresql-10)))
 
-                 (service nginx-service-type
-                          (nginx-configuration
-                           (modules %nginx-modules)
-                           (lua-package-path %nginx-lua-package-path)
-                           (lua-package-cpath %nginx-lua-package-cpath)
-                           (server-blocks (list (nginx-server-configuration
-                                                 (inherit %webssh-configuration-nginx)
-                                                 (server-name '("vm1.wugi.info"))
-                                                 (listen '("443 ssl"))
-                                                 (ssl-certificate (letsencrypt-certificate "vm1.wugi.info"))
-                                                 (ssl-certificate-key (letsencrypt-key "vm1.wugi.info"))
-                                                 (locations
-                                                  (append %nginx-lua-guix
-                                                          (cons (nginx-location-configuration
-                                                                 (uri "/.well-known")
-                                                                 (body '("root /var/www;")))
-                                                                (nginx-server-configuration-locations %webssh-configuration-nginx)))))
-                                                %githunt-nginx-configuration
-                                                %homer-nginx-configuration))))
+                          (service prometheus-node-exporter-service-type)
 
-                 (service homer-service-type %homer-config)
-                 (service webssh-service-type
-                          (webssh-configuration (address "127.0.0.1")
-                                                (port 8888)
-                                                (policy 'reject)
-                                                (known-hosts '("\
-127.0.0.1 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBJItpECN9IUeYtH+kaIjrZ//yXmggmebwhg+qBegHwd0kniwYMIrXBGlNKd2uWw6ErhWL/3IMt7FvslBtgwuQ10="
-                                                               "\
-localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBJItpECN9IUeYtH+kaIjrZ//yXmggmebwhg+qBegHwd0kniwYMIrXBGlNKd2uWw6ErhWL/3IMt7FvslBtgwuQ10="))))
-                 (service keepalived-service-type
-                          (keepalived-configuration
-                           (config-file (local-file "etc/keepalived/vm1.wugi.info.conf"))))
-                 (service gre-service-type
-                          (gre-configuration
-                           (ip-address-local "78.108.82.157")
-                           (ip-address-remote "78.108.87.161")
-                           (ip-address "10.0.0.3/24")
-                           (interface-name "gre1")
-                           (routes '("add 10.8.0.0/24 via 10.0.0.2"))))
+                          (service certbot-service-type
+                                   (certbot-configuration
+                                    (email "go.wigust@gmail.com")
+                                    (certificates
+                                     `(,@(map (lambda (host)
+                                                (certificate-configuration
+                                                 (domains (list host))
+                                                 (deploy-hook %nginx-deploy-hook)))
+                                              (list "zabbix.wugi.info"
+                                                    "file.wugi.info"
+                                                    "homer.wugi.info"
+                                                    "githunt.wugi.info"
+                                                    "vm1.wugi.info"))))))
 
-                 (service slim-service-type))
-           (load "desktop.scm")
-           (modify-services %base-services
-             (guix-service-type _ => %guix-daemon-config-with-substitute-urls)
-             (sysctl-service-type _ =>
-                                  (sysctl-configuration
-                                   (settings (append '(("net.ipv4.ip_forward" . "1"))
-                                                     %default-sysctl-settings)))))))
+                          (service zabbix-server-service-type
+                                   (zabbix-server-configuration
+                                    (include-files '("/etc/zabbix/zabbix-server.secret"))
+                                    (extra-options "
+AlertScriptsPath=/etc/zabbix/alertscripts
+ExternalScripts=/etc/zabbix/externalscripts
+FpingLocation=/run/setuid-programs/fping
+")))
+                          (service zabbix-front-end-service-type
+                                   (zabbix-front-end-configuration
+                                    (db-secret-file "/etc/zabbix/zabbix.secret")
+                                    (nginx %zabbix-nginx-configuration)))
 
-  ;; Allow resolution of '.local' host names with mDNS.
-  (name-service-switch %mdns-host-lookup-nss))
+                          (service nginx-service-type
+                                   (nginx-configuration
+                                    (server-blocks (list (proxy "file.wugi.info" 5091 #:ssl? #t #:ssl-key? #t)
+                                                         %githunt-nginx-configuration
+                                                         (nginx-server-configuration
+                                                          (inherit %webssh-configuration-nginx)
+                                                          (server-name '("vm1.wugi.info"))
+                                                          (listen '("443 ssl"))
+                                                          (ssl-certificate (letsencrypt-certificate "vm1.wugi.info"))
+                                                          (ssl-certificate-key (letsencrypt-key "vm1.wugi.info"))
+                                                          (locations
+                                                           (append (list (nginx-location-configuration
+                                                                          (uri "/.well-known")
+                                                                          (body '("root /var/www;"))))
+                                                                   (nginx-server-configuration-locations %webssh-configuration-nginx))))))))
+
+                          (service docker-service-type)
+
+                          (service homer-service-type
+                                   (homer-configuration
+                                    (config-file %homer-config)
+                                    (nginx (list %homer-nginx-configuration)))))
+
+                    %mail-services
+
+                    (modify-services %base-services
+                      (guix-service-type config => %guix-daemon-config-with-substitute-urls)
+                      (sysctl-service-type _ =>
+                                           (sysctl-configuration
+                                            (settings (append '(("net.ipv4.ip_forward" . "1")
+                                                                ("net.ipv4.conf.all.rp_filter" . "0")
+                                                                ("net.ipv4.conf.default.rp_filter" . "0"))
+                                                              %default-sysctl-settings))))))))

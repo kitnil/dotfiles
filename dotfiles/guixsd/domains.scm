@@ -23,7 +23,7 @@
 
      (("type" . "a")
       ("ip" . "78.108.82.44")
-      ("domain" . "vm4.wugi.info"))
+      ("domain" . "vm1.wugi.info"))
 
      (("type" . "a")
       ("ip" . "178.250.247.231")
