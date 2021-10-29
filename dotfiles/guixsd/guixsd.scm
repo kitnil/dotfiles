@@ -851,7 +851,22 @@ location / {
                                                               (target_label . "instance"))
                                                              ((replacement . "127.0.0.1:9115")
                                                               (target_label . "__address__"))))
-                                                          (job_name . "blackbox"))))
+                                                          (job_name . "blackbox-http"))
+                                                         ((static_configs
+                                                           .
+                                                           #(((targets . #("192.168.0.1")))))
+                                                          (scrape_interval . "30s")
+                                                          (metrics_path . "/probe")
+                                                          (params . ((module . #("icmp"))))
+                                                          (relabel_configs
+                                                           .
+                                                           #(((source_labels . #("__address__"))
+                                                              (target_label . "__param_target"))
+                                                             ((source_labels . #("__param_target"))
+                                                              (target_label . "instance"))
+                                                             ((replacement . "127.0.0.1:9115")
+                                                              (target_label . "__address__"))))
+                                                          (job_name . "blackbox-icmp"))))
                                                       (rule_files . #(,prometheus-alertmanager-node
                                                                       ,prometheus-alertmanager-blackbox))
                                                       (global
@@ -932,7 +947,12 @@ location / {
                                                        ("valid_status_codes" . #())
                                                        ("valid_http_versions" . #("HTTP/1.1" "HTTP/2"))
                                                        ("preferred_ip_protocol" . "ip4")
-                                                       ("no_follow_redirects" . #f)))))
+                                                       ("no_follow_redirects" . #f)))
+                                                     ("icmp"
+                                                      ("timeout" . "5s")
+                                                      ("prober" . "icmp")
+                                                      ("icmp"
+                                                       ("preferred_ip_protocol" . "ip4")))))
                                                   #:pretty #t))))))))))
 
                          (service karma-service-type
