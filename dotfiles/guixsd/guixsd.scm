@@ -809,6 +809,9 @@ location / {
                                                (define prometheus-alertmanager-node
                                                  #$(plain-file "prometheus-alertmanager-node.json"
                                                                (scm->json-string (load "node.scm"))))
+                                               (define prometheus-alertmanager-blackbox
+                                                 #$(plain-file "prometheus-alertmanager-blackbox.json"
+                                                               (scm->json-string (load "blackbox.scm"))))
                                                (with-output-to-file #$output
                                                  (lambda ()
                                                    (scm->json
@@ -853,7 +856,8 @@ location / {
                                                              ((replacement . "127.0.0.1:9115")
                                                               (target_label . "__address__"))))
                                                           (job_name . "blackbox"))))
-                                                      (rule_files . #(,prometheus-alertmanager-node))
+                                                      (rule_files . #(,prometheus-alertmanager-node
+                                                                      ,prometheus-alertmanager-blackbox))
                                                       (global
                                                        (scrape_interval . "15s")
                                                        (external_labels
