@@ -365,7 +365,7 @@
           ("for" . "0m")
           ("expr"
            .
-           "(rate(node_context_switches_total[5m])) / (count without(cpu, mode) (node_cpu_seconds_total{mode=\"idle\"})) > 1000")
+           "(rate(node_context_switches_total{instance!=\"127.0.0.1:9100\"}[5m])) / (count without(cpu, mode) (node_cpu_seconds_total{mode=\"idle\"})) > 1000")
           ("annotations"
            ("summary"
             .
