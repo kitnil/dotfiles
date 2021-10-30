@@ -5,7 +5,14 @@
           ("for" . "1h")
           ("expr"
            .
-           "(\n  node_filesystem_avail_bytes{job=\"node\",fstype!=\"\"} / node_filesystem_size_bytes{job=\"node\",fstype!=\"\"} * 100 < 40\nand\n  predict_linear(node_filesystem_avail_bytes{job=\"node\",fstype!=\"\"}[6h], 24*60*60) < 0\nand\n  node_filesystem_readonly{job=\"node\",fstype!=\"\"} == 0\n)\n")
+           "(
+  node_filesystem_avail_bytes{job=\"node\",fstype!=\"\"} / node_filesystem_size_bytes{job=\"node\",fstype!=\"\"} * 100 < 40
+and
+  predict_linear(node_filesystem_avail_bytes{job=\"node\",fstype!=\"\"}[6h], 24*60*60) < 0
+and
+  node_filesystem_readonly{job=\"node\",fstype!=\"\"} == 0
+)
+")
           ("annotations"
            ("summary"
             .
@@ -18,7 +25,14 @@
           ("for" . "1h")
           ("expr"
            .
-           "(\n  node_filesystem_avail_bytes{job=\"node\",fstype!=\"\"} / node_filesystem_size_bytes{job=\"node\",fstype!=\"\"} * 100 < 20\nand\n  predict_linear(node_filesystem_avail_bytes{job=\"node\",fstype!=\"\"}[6h], 4*60*60) < 0\nand\n  node_filesystem_readonly{job=\"node\",fstype!=\"\"} == 0\n)\n")
+           "(
+  node_filesystem_avail_bytes{job=\"node\",fstype!=\"\"} / node_filesystem_size_bytes{job=\"node\",fstype!=\"\"} * 100 < 20
+and
+  predict_linear(node_filesystem_avail_bytes{job=\"node\",fstype!=\"\"}[6h], 4*60*60) < 0
+and
+  node_filesystem_readonly{job=\"node\",fstype!=\"\"} == 0
+)
+")
           ("annotations"
            ("summary"
             .
@@ -31,7 +45,12 @@
           ("for" . "1h")
           ("expr"
            .
-           "(\n  node_filesystem_avail_bytes{job=\"node\",fstype!=\"\"} / node_filesystem_size_bytes{job=\"node\",fstype!=\"\"} * 100 < 5\nand\n  node_filesystem_readonly{job=\"node\",fstype!=\"\"} == 0\n)\n")
+           "(
+  node_filesystem_avail_bytes{job=\"node\",fstype!=\"\"} / node_filesystem_size_bytes{job=\"node\",fstype!=\"\"} * 100 < 5
+and
+  node_filesystem_readonly{job=\"node\",fstype!=\"\"} == 0
+)
+")
           ("annotations"
            ("summary"
             .
@@ -44,7 +63,12 @@
           ("for" . "1h")
           ("expr"
            .
-           "(\n  node_filesystem_avail_bytes{job=\"node\",fstype!=\"\"} / node_filesystem_size_bytes{job=\"node\",fstype!=\"\"} * 100 < 3\nand\n  node_filesystem_readonly{job=\"node\",fstype!=\"\"} == 0\n)\n")
+           "(
+  node_filesystem_avail_bytes{job=\"node\",fstype!=\"\"} / node_filesystem_size_bytes{job=\"node\",fstype!=\"\"} * 100 < 3
+and
+  node_filesystem_readonly{job=\"node\",fstype!=\"\"} == 0
+)
+")
           ("annotations"
            ("summary"
             .
@@ -57,7 +81,14 @@
           ("for" . "1h")
           ("expr"
            .
-           "(\n  node_filesystem_files_free{job=\"node\",fstype!=\"\"} / node_filesystem_files{job=\"node\",fstype!=\"\"} * 100 < 40\nand\n  predict_linear(node_filesystem_files_free{job=\"node\",fstype!=\"\"}[6h], 24*60*60) < 0\nand\n  node_filesystem_readonly{job=\"node\",fstype!=\"\"} == 0\n)\n")
+           "(
+  node_filesystem_files_free{job=\"node\",fstype!=\"\"} / node_filesystem_files{job=\"node\",fstype!=\"\"} * 100 < 40
+and
+  predict_linear(node_filesystem_files_free{job=\"node\",fstype!=\"\"}[6h], 24*60*60) < 0
+and
+  node_filesystem_readonly{job=\"node\",fstype!=\"\"} == 0
+)
+")
           ("annotations"
            ("summary"
             .
@@ -70,7 +101,14 @@
           ("for" . "1h")
           ("expr"
            .
-           "(\n  node_filesystem_files_free{job=\"node\",fstype!=\"\"} / node_filesystem_files{job=\"node\",fstype!=\"\"} * 100 < 20\nand\n  predict_linear(node_filesystem_files_free{job=\"node\",fstype!=\"\"}[6h], 4*60*60) < 0\nand\n  node_filesystem_readonly{job=\"node\",fstype!=\"\"} == 0\n)\n")
+           "(
+  node_filesystem_files_free{job=\"node\",fstype!=\"\"} / node_filesystem_files{job=\"node\",fstype!=\"\"} * 100 < 20
+and
+  predict_linear(node_filesystem_files_free{job=\"node\",fstype!=\"\"}[6h], 4*60*60) < 0
+and
+  node_filesystem_readonly{job=\"node\",fstype!=\"\"} == 0
+)
+")
           ("annotations"
            ("summary"
             .
@@ -83,7 +121,12 @@
           ("for" . "1h")
           ("expr"
            .
-           "(\n  node_filesystem_files_free{job=\"node\",fstype!=\"\"} / node_filesystem_files{job=\"node\",fstype!=\"\"} * 100 < 5\nand\n  node_filesystem_readonly{job=\"node\",fstype!=\"\"} == 0\n)\n")
+           "(
+  node_filesystem_files_free{job=\"node\",fstype!=\"\"} / node_filesystem_files{job=\"node\",fstype!=\"\"} * 100 < 5
+and
+  node_filesystem_readonly{job=\"node\",fstype!=\"\"} == 0
+)
+")
           ("annotations"
            ("summary"
             .
@@ -96,7 +139,12 @@
           ("for" . "1h")
           ("expr"
            .
-           "(\n  node_filesystem_files_free{job=\"node\",fstype!=\"\"} / node_filesystem_files{job=\"node\",fstype!=\"\"} * 100 < 3\nand\n  node_filesystem_readonly{job=\"node\",fstype!=\"\"} == 0\n)\n")
+           "(
+  node_filesystem_files_free{job=\"node\",fstype!=\"\"} / node_filesystem_files{job=\"node\",fstype!=\"\"} * 100 < 3
+and
+  node_filesystem_readonly{job=\"node\",fstype!=\"\"} == 0
+)
+")
           ("annotations"
            ("summary"
             .
@@ -109,7 +157,8 @@
           ("for" . "1h")
           ("expr"
            .
-           "rate(node_network_receive_errs_total[2m]) / rate(node_network_receive_packets_total[2m]) > 0.01\n")
+           "rate(node_network_receive_errs_total[2m]) / rate(node_network_receive_packets_total[2m]) > 0.01
+")
           ("annotations"
            ("summary"
             .
@@ -122,7 +171,8 @@
           ("for" . "1h")
           ("expr"
            .
-           "rate(node_network_transmit_errs_total[2m]) / rate(node_network_transmit_packets_total[2m]) > 0.01\n")
+           "rate(node_network_transmit_errs_total[2m]) / rate(node_network_transmit_packets_total[2m]) > 0.01
+")
           ("annotations"
            ("summary"
             .
@@ -135,7 +185,8 @@
           ("for" . null)
           ("expr"
            .
-           "(node_nf_conntrack_entries / node_nf_conntrack_entries_limit) > 0.75\n")
+           "(node_nf_conntrack_entries / node_nf_conntrack_entries_limit) > 0.75
+")
           ("annotations"
            ("summary"
             .
@@ -148,7 +199,8 @@
           ("for" . null)
           ("expr"
            .
-           "node_textfile_scrape_error{job=\"node\"} == 1\n")
+           "node_textfile_scrape_error{job=\"node\"} == 1
+")
           ("annotations"
            ("summary"
             .
@@ -161,7 +213,18 @@
           ("for" . "10m")
           ("expr"
            .
-           "(\n  node_timex_offset_seconds > 0.05\nand\n  deriv(node_timex_offset_seconds[5m]) >= 0\n)\nor\n(\n  node_timex_offset_seconds < -0.05\nand\n  deriv(node_timex_offset_seconds[5m]) <= 0\n)\n")
+           "(
+  node_timex_offset_seconds > 0.05
+and
+  deriv(node_timex_offset_seconds[5m]) >= 0
+)
+or
+(
+  node_timex_offset_seconds < -0.05
+and
+  deriv(node_timex_offset_seconds[5m]) <= 0
+)
+")
           ("annotations"
            ("summary" . "Clock skew detected.")
            ("description"
@@ -172,7 +235,10 @@
           ("for" . "10m")
           ("expr"
            .
-           "min_over_time(node_timex_sync_status[5m]) == 0\nand\nnode_timex_maxerror_seconds >= 16\n")
+           "min_over_time(node_timex_sync_status[5m]) == 0
+and
+node_timex_maxerror_seconds >= 16
+")
           ("annotations"
            ("summary" . "Clock not synchronising.")
            ("description"
@@ -190,7 +256,9 @@
             "Host out of memory (instance {{ $labels.instance }})")
            ("description"
             .
-            "Node memory is filling up (< 10% left)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"))
+            "Node memory is filling up (< 10% left)
+  VALUE = {{ $value }}
+  LABELS = {{ $labels }}"))
           ("alert" . "HostOutOfMemory"))
          (("labels" ("severity" . "warning"))
           ("for" . "2m")
@@ -203,7 +271,9 @@
             "Host memory under memory pressure (instance {{ $labels.instance }})")
            ("description"
             .
-            "The node is under heavy memory pressure. High rate of major page faults\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"))
+            "The node is under heavy memory pressure. High rate of major page faults
+  VALUE = {{ $value }}
+  LABELS = {{ $labels }}"))
           ("alert" . "HostMemoryUnderMemoryPressure"))
          (("labels" ("severity" . "warning"))
           ("for" . "5m")
@@ -216,7 +286,9 @@
             "Host unusual network throughput in (instance {{ $labels.instance }})")
            ("description"
             .
-            "Host network interfaces are probably receiving too much data (> 100 MB/s)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"))
+            "Host network interfaces are probably receiving too much data (> 100 MB/s)
+  VALUE = {{ $value }}
+  LABELS = {{ $labels }}"))
           ("alert" . "HostUnusualNetworkThroughputIn"))
          (("labels" ("severity" . "warning"))
           ("for" . "5m")
@@ -229,7 +301,9 @@
             "Host unusual network throughput out (instance {{ $labels.instance }})")
            ("description"
             .
-            "Host network interfaces are probably sending too much data (> 100 MB/s)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"))
+            "Host network interfaces are probably sending too much data (> 100 MB/s)
+  VALUE = {{ $value }}
+  LABELS = {{ $labels }}"))
           ("alert" . "HostUnusualNetworkThroughputOut"))
          (("labels" ("severity" . "warning"))
           ("for" . "5m")
@@ -242,7 +316,9 @@
             "Host unusual disk read rate (instance {{ $labels.instance }})")
            ("description"
             .
-            "Disk is probably reading too much data (> 50 MB/s)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"))
+            "Disk is probably reading too much data (> 50 MB/s)
+  VALUE = {{ $value }}
+  LABELS = {{ $labels }}"))
           ("alert" . "HostUnusualDiskReadRate"))
          (("labels" ("severity" . "warning"))
           ("for" . "2m")
@@ -255,7 +331,9 @@
             "Host unusual disk write rate (instance {{ $labels.instance }})")
            ("description"
             .
-            "Disk is probably writing too much data (> 50 MB/s)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"))
+            "Disk is probably writing too much data (> 50 MB/s)
+  VALUE = {{ $value }}
+  LABELS = {{ $labels }}"))
           ("alert" . "HostUnusualDiskWriteRate"))
          (("labels" ("severity" . "warning"))
           ("for" . "2m")
@@ -268,7 +346,9 @@
             "Host out of disk space (instance {{ $labels.instance }})")
            ("description"
             .
-            "Disk is almost full (< 10% left)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"))
+            "Disk is almost full (< 10% left)
+  VALUE = {{ $value }}
+  LABELS = {{ $labels }}"))
           ("alert" . "HostOutOfDiskSpace"))
          (("labels" ("severity" . "warning"))
           ("for" . "2m")
@@ -281,7 +361,9 @@
             "Host disk will fill in 24 hours (instance {{ $labels.instance }})")
            ("description"
             .
-            "Filesystem is predicted to run out of space within the next 24 hours at current write rate\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"))
+            "Filesystem is predicted to run out of space within the next 24 hours at current write rate
+  VALUE = {{ $value }}
+  LABELS = {{ $labels }}"))
           ("alert" . "HostDiskWillFillIn24Hours"))
          (("labels" ("severity" . "warning"))
           ("for" . "2m")
@@ -294,7 +376,9 @@
             "Host out of inodes (instance {{ $labels.instance }})")
            ("description"
             .
-            "Disk is almost running out of available inodes (< 10% left)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"))
+            "Disk is almost running out of available inodes (< 10% left)
+  VALUE = {{ $value }}
+  LABELS = {{ $labels }}"))
           ("alert" . "HostOutOfInodes"))
          (("labels" ("severity" . "warning"))
           ("for" . "2m")
@@ -307,7 +391,9 @@
             "Host inodes will fill in 24 hours (instance {{ $labels.instance }})")
            ("description"
             .
-            "Filesystem is predicted to run out of inodes within the next 24 hours at current write rate\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"))
+            "Filesystem is predicted to run out of inodes within the next 24 hours at current write rate
+  VALUE = {{ $value }}
+  LABELS = {{ $labels }}"))
           ("alert" . "HostInodesWillFillIn24Hours"))
          (("labels" ("severity" . "warning"))
           ("for" . "2m")
@@ -320,7 +406,9 @@
             "Host unusual disk read latency (instance {{ $labels.instance }})")
            ("description"
             .
-            "Disk latency is growing (read operations > 100ms)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"))
+            "Disk latency is growing (read operations > 100ms)
+  VALUE = {{ $value }}
+  LABELS = {{ $labels }}"))
           ("alert" . "HostUnusualDiskReadLatency"))
          (("labels" ("severity" . "warning"))
           ("for" . "2m")
@@ -333,7 +421,9 @@
             "Host unusual disk write latency (instance {{ $labels.instance }})")
            ("description"
             .
-            "Disk latency is growing (write operations > 100ms)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"))
+            "Disk latency is growing (write operations > 100ms)
+  VALUE = {{ $value }}
+  LABELS = {{ $labels }}"))
           ("alert" . "HostUnusualDiskWriteLatency"))
          (("labels" ("severity" . "warning"))
           ("for" . "0m")
@@ -346,7 +436,9 @@
             "Host high CPU load (instance {{ $labels.instance }})")
            ("description"
             .
-            "CPU load is > 80%\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"))
+            "CPU load is > 80%
+  VALUE = {{ $value }}
+  LABELS = {{ $labels }}"))
           ("alert" . "HostHighCpuLoad"))
          (("labels" ("severity" . "warning"))
           ("for" . "0m")
@@ -359,7 +451,9 @@
             "Host CPU steal noisy neighbor (instance {{ $labels.instance }})")
            ("description"
             .
-            "CPU steal is > 10%. A noisy neighbor is killing VM performances or a spot instance may be out of credit.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"))
+            "CPU steal is > 10%. A noisy neighbor is killing VM performances or a spot instance may be out of credit.
+  VALUE = {{ $value }}
+  LABELS = {{ $labels }}"))
           ("alert" . "HostCpuStealNoisyNeighbor"))
          (("labels" ("severity" . "warning"))
           ("for" . "0m")
@@ -372,7 +466,9 @@
             "Host context switching (instance {{ $labels.instance }})")
            ("description"
             .
-            "Context switching is growing on node (> 1000 / s)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"))
+            "Context switching is growing on node (> 1000 / s)
+  VALUE = {{ $value }}
+  LABELS = {{ $labels }}"))
           ("alert" . "HostContextSwitching"))
          (("labels" ("severity" . "warning"))
           ("for" . "2m")
@@ -385,7 +481,9 @@
             "Host swap is filling up (instance {{ $labels.instance }})")
            ("description"
             .
-            "Swap is filling up (>80%)\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"))
+            "Swap is filling up (>80%)
+  VALUE = {{ $value }}
+  LABELS = {{ $labels }}"))
           ("alert" . "HostSwapIsFillingUp"))
          (("labels" ("severity" . "warning"))
           ("for" . "0m")
@@ -398,7 +496,9 @@
             "Host systemd service crashed (instance {{ $labels.instance }})")
            ("description"
             .
-            "systemd service crashed\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"))
+            "systemd service crashed
+  VALUE = {{ $value }}
+  LABELS = {{ $labels }}"))
           ("alert" . "HostSystemdServiceCrashed"))
          (("labels" ("severity" . "warning"))
           ("for" . "5m")
@@ -409,7 +509,9 @@
             "Host physical component too hot (instance {{ $labels.instance }})")
            ("description"
             .
-            "Physical hardware component too hot\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"))
+            "Physical hardware component too hot
+  VALUE = {{ $value }}
+  LABELS = {{ $labels }}"))
           ("alert" . "HostPhysicalComponentTooHot"))
          (("labels" ("severity" . "critical"))
           ("for" . "0m")
@@ -422,7 +524,9 @@
             "Host node overtemperature alarm (instance {{ $labels.instance }})")
            ("description"
             .
-            "Physical node temperature alarm triggered\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"))
+            "Physical node temperature alarm triggered
+  VALUE = {{ $value }}
+  LABELS = {{ $labels }}"))
           ("alert" . "HostNodeOvertemperatureAlarm"))
          (("labels" ("severity" . "critical"))
           ("for" . "0m")
@@ -435,7 +539,9 @@
             "Host RAID array got inactive (instance {{ $labels.instance }})")
            ("description"
             .
-            "RAID array {{ $labels.device }} is in degraded state due to one or more disks failures. Number of spare drives is insufficient to fix issue automatically.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"))
+            "RAID array {{ $labels.device }} is in degraded state due to one or more disks failures. Number of spare drives is insufficient to fix issue automatically.
+  VALUE = {{ $value }}
+  LABELS = {{ $labels }}"))
           ("alert" . "HostRaidArrayGotInactive"))
          (("labels" ("severity" . "warning"))
           ("for" . "2m")
@@ -446,7 +552,9 @@
             "Host RAID disk failure (instance {{ $labels.instance }})")
            ("description"
             .
-            "At least one device in RAID array on {{ $labels.instance }} failed. Array {{ $labels.md_device }} needs attention and possibly a disk swap\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"))
+            "At least one device in RAID array on {{ $labels.instance }} failed. Array {{ $labels.md_device }} needs attention and possibly a disk swap
+  VALUE = {{ $value }}
+  LABELS = {{ $labels }}"))
           ("alert" . "HostRaidDiskFailure"))
          (("labels" ("severity" . "warning"))
           ("for" . "6h")
@@ -459,7 +567,9 @@
             "Host kernel version deviations (instance {{ $labels.instance }})")
            ("description"
             .
-            "Different kernel versions are running\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"))
+            "Different kernel versions are running
+  VALUE = {{ $value }}
+  LABELS = {{ $labels }}"))
           ("alert" . "HostKernelVersionDeviations"))
          (("labels" ("severity" . "warning"))
           ("for" . "0m")
@@ -472,7 +582,9 @@
             "Host OOM kill detected (instance {{ $labels.instance }})")
            ("description"
             .
-            "OOM kill detected\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"))
+            "OOM kill detected
+  VALUE = {{ $value }}
+  LABELS = {{ $labels }}"))
           ("alert" . "HostOomKillDetected"))
          (("labels" ("severity" . "info"))
           ("for" . "0m")
@@ -485,7 +597,9 @@
             "Host EDAC Correctable Errors detected (instance {{ $labels.instance }})")
            ("description"
             .
-            "Host {{ $labels.instance }} has had {{ printf \"%.0f\" $value }} correctable memory errors reported by EDAC in the last 5 minutes.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"))
+            "Host {{ $labels.instance }} has had {{ printf \"%.0f\" $value }} correctable memory errors reported by EDAC in the last 5 minutes.
+  VALUE = {{ $value }}
+  LABELS = {{ $labels }}"))
           ("alert" . "HostEdacCorrectableErrorsDetected"))
          (("labels" ("severity" . "warning"))
           ("for" . "0m")
@@ -498,7 +612,9 @@
             "Host EDAC Uncorrectable Errors detected (instance {{ $labels.instance }})")
            ("description"
             .
-            "Host {{ $labels.instance }} has had {{ printf \"%.0f\" $value }} uncorrectable memory errors reported by EDAC in the last 5 minutes.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"))
+            "Host {{ $labels.instance }} has had {{ printf \"%.0f\" $value }} uncorrectable memory errors reported by EDAC in the last 5 minutes.
+  VALUE = {{ $value }}
+  LABELS = {{ $labels }}"))
           ("alert" . "HostEdacUncorrectableErrorsDetected"))
          (("labels" ("severity" . "warning"))
           ("for" . "2m")
@@ -511,7 +627,9 @@
             "Host Network Receive Errors (instance {{ $labels.instance }})")
            ("description"
             .
-            "Host {{ $labels.instance }} interface {{ $labels.device }} has encountered {{ printf \"%.0f\" $value }} receive errors in the last five minutes.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"))
+            "Host {{ $labels.instance }} interface {{ $labels.device }} has encountered {{ printf \"%.0f\" $value }} receive errors in the last five minutes.
+  VALUE = {{ $value }}
+  LABELS = {{ $labels }}"))
           ("alert" . "HostNetworkReceiveErrors"))
          (("labels" ("severity" . "warning"))
           ("for" . "2m")
@@ -524,7 +642,9 @@
             "Host Network Transmit Errors (instance {{ $labels.instance }})")
            ("description"
             .
-            "Host {{ $labels.instance }} interface {{ $labels.device }} has encountered {{ printf \"%.0f\" $value }} transmit errors in the last five minutes.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"))
+            "Host {{ $labels.instance }} interface {{ $labels.device }} has encountered {{ printf \"%.0f\" $value }} transmit errors in the last five minutes.
+  VALUE = {{ $value }}
+  LABELS = {{ $labels }}"))
           ("alert" . "HostNetworkTransmitErrors"))
          (("labels" ("severity" . "warning"))
           ("for" . "1m")
@@ -537,7 +657,9 @@
             "Host Network Interface Saturated (instance {{ $labels.instance }})")
            ("description"
             .
-            "The network interface \"{{ $labels.device }}\" on \"{{ $labels.instance }}\" is getting overloaded.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"))
+            "The network interface \"{{ $labels.device }}\" on \"{{ $labels.instance }}\" is getting overloaded.
+  VALUE = {{ $value }}
+  LABELS = {{ $labels }}"))
           ("alert" . "HostNetworkInterfaceSaturated"))
          (("labels" ("severity" . "warning"))
           ("for" . "5m")
@@ -550,7 +672,9 @@
             "Host conntrack limit (instance {{ $labels.instance }})")
            ("description"
             .
-            "The number of conntrack is approching limit\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"))
+            "The number of conntrack is approching limit
+  VALUE = {{ $value }}
+  LABELS = {{ $labels }}"))
           ("alert" . "HostConntrackLimit"))
          (("labels" ("severity" . "warning"))
           ("for" . "2m")
@@ -563,7 +687,9 @@
             "Host clock skew (instance {{ $labels.instance }})")
            ("description"
             .
-            "Clock skew detected. Clock is out of sync.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"))
+            "Clock skew detected. Clock is out of sync.
+  VALUE = {{ $value }}
+  LABELS = {{ $labels }}"))
           ("alert" . "HostClockSkew"))
          (("labels" ("severity" . "warning"))
           ("for" . "2m")
@@ -576,6 +702,8 @@
             "Host clock not synchronising (instance {{ $labels.instance }})")
            ("description"
             .
-            "Clock not synchronising.\n  VALUE = {{ $value }}\n  LABELS = {{ $labels }}"))
+            "Clock not synchronising.
+  VALUE = {{ $value }}
+  LABELS = {{ $labels }}"))
           ("alert" . "HostClockNotSynchronising"))))
       ("name" . "node-exporter")))))
