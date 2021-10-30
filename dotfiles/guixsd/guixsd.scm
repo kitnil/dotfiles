@@ -1062,7 +1062,7 @@ location / {
                                                   `(("ui"
                                                      ("refresh" . "30s")
                                                      ("minimalGroupWidth" . 420)
-                                                     ("hideFiltersWhenIdle" . #t)
+                                                     ("hideFiltersWhenIdle" . #f)
                                                      ("colorTitlebar" . #f)
                                                      ("collapseGroups" . "collapsedOnMobile")
                                                      ("alertsPerGroup" . 5))
