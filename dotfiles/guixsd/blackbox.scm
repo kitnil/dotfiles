@@ -16,7 +16,7 @@
           ("for" . "1m")
           ("expr"
            .
-           "avg_over_time(probe_duration_seconds[1m]) > 1")
+           "avg_over_time(probe_duration_seconds[1m]) > 10")
           ("annotations"
            ("summary"
             .
