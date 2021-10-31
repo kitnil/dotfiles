@@ -12,25 +12,27 @@
         "https://twitchrss.appspot.com/vod/carolinhr"
         "https://opensource.com/feed"
         ("https://news.ycombinator.com/rss" news)
-        ("http://government.ru/all/rss/" gov ru)
-        ("https://git.savannah.gnu.org/cgit/emacs.git/atom/?h=master" vc emacs)
-        ("https://git.savannah.gnu.org/cgit/guix.git/atom/?h=master" vc scheme guix)
+        ;; ("http://government.ru/all/rss/" gov ru)
+        ;; ("https://git.savannah.gnu.org/cgit/emacs.git/atom/?h=master" vc emacs)
+        ;; ("https://git.savannah.gnu.org/cgit/guix.git/atom/?h=master" vc scheme guix)
         ("https://github.com/stumpwm/stumpwm-contrib/commits/master.atom" vc lisp stumpwm)
         ("https://github.com/stumpwm/stumpwm/commits/master.atom" vc lisp stumpwm)
-        ("https://github.com/alebcay/awesome-shell/commits/master.atom" vc bash awesome)
         ("https://github.com/adelin-b/yawhich-key/commits/master.atom" vc bash)
-        ("https://github.com/sindresorhus/awesome/commits/main.atom" vc awesome)
         ("https://news-web.php.net/group.php?group=php.announce&format=rss" php)
         ("https://www.bennee.com/~alex/blog/feed/" emacs)
         ("https://libraries.io/search.atom?order=desc&platforms=Emacs&sort=created_at" emacs)
-        ("https://stable.melpa.org/updates.rss" emacs elpa)
+        ;; ("https://stable.melpa.org/updates.rss" emacs elpa)
         ("https://cestlaz.github.io/rss.xml" emacs)
         ("https://sachachua.com/blog/feed/" emacs)
         ("https://www.reddit.com/r/freegames/.rss" game)
         ("https://www.reddit.com/r/selfhosted/.rss" reddit selfhosted)
-        ("https://github.com/awesome-selfhosted/awesome-selfhosted/commits/master.atom" vc awesome selfhosted)
-        ("https://github.com/sindresorhus/awesome/commits/main.atom" vc awesome)
-        ("https://github.com/CodyReichert/awesome-cl/commits/master.atom" vc awesome lisp)
+
+        ;; ("https://github.com/alebcay/awesome-shell/commits/master.atom" vc bash awesome)
+        ;; ("https://github.com/awesome-selfhosted/awesome-selfhosted/commits/master.atom" vc awesome selfhosted)
+        ;; ("https://github.com/CodyReichert/awesome-cl/commits/master.atom" vc awesome lisp)
+        ;; ("https://github.com/sindresorhus/awesome/commits/main.atom" vc awesome)
+        ("https://www.trackawesomelist.com/rss.xml" awesome)
+
         ("https://archlinux.org/feeds/planet" planet)
         ("https://weekly.nixos.org/feeds/all.rss.xml" planet)
         ("http://www.scheme.dk/planet/atom.xml" planet)
@@ -78,17 +80,17 @@
 
         ("https://video.hardlimit.com/feeds/videos.xml?videoChannelId=39" video) ;The GNU Guy
 
-        ("https://www.pepper.ru/rss/%D0%92%D1%81%D0%B5" shopping)
+        ;; ("https://www.pepper.ru/rss/%D0%92%D1%81%D0%B5" shopping)
 
         ("https://www.opennet.ru/opennews/opennews_all.rss" news)
 
-        ("https://ci.guix.gnu.org/events/rss/" ci guix)
+        ;; ("https://ci.guix.gnu.org/events/rss/" ci guix)
 
         ("https://lk.sknt.ru/rss.php" internet)
 
         ("https://git.ispconfig.org/ispconfig/ispconfig3/-/issues.atom?state=opened" ispconfig)
 
-        ("https://tg.i-c-a.su/rss/ru_nixos" telegram nixos) ;Telegram NixOS
+        ;; ("https://tg.i-c-a.su/rss/ru_nixos" telegram nixos) ;Telegram NixOS
         ))
 
 (defun elfeed-config ()
