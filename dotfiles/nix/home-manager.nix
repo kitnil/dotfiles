@@ -159,6 +159,8 @@
     vault-bin
     vaultenv
 
+    vagrant
+
     prometheus
     prometheus-pushgateway
     prometheus-alertmanager
