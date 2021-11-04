@@ -10,6 +10,7 @@
 (use-modules (packages certs)
              (services bird)
              (services mail)
+             (services monitoring)
              (services ssh)
              (services web))
 
@@ -140,6 +141,10 @@ cache.size = 10 * MB
                                     (config-file (local-file "bird.conf"))))
 
                           (service prometheus-node-exporter-service-type)
+                          (service prometheus-bird-exporter-service-type
+                                   (prometheus-bird-exporter-configuration
+                                    (arguments '("-format.new=true"
+                                                 "-bird.ipv6=false"))))
 
                           (service certbot-service-type
                                    (certbot-configuration
