@@ -830,6 +830,11 @@ location / {
                                                           (job_name . "node"))
                                                          ((static_configs
                                                            .
+                                                           #(((targets . #("vm1.wugi.info:9324")))))
+                                                          (scrape_interval . "1m")
+                                                          (job_name . "bird"))
+                                                         ((static_configs
+                                                           .
                                                            #(((targets . #("127.0.0.1:9095")))))
                                                           (honor_labels . #t)
                                                           (job_name . "pushgateway"))
