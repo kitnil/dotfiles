@@ -41,7 +41,10 @@
             karma-service-type
 
             prometheus-blackbox-exporter-configuration
-            prometheus-blackbox-exporter-service-type))
+            prometheus-blackbox-exporter-service-type
+
+            prometheus-bird-exporter-configuration
+            prometheus-bird-exporter-service-type))
 
 ;;; Commentary:
 ;;;
@@ -489,5 +492,42 @@
    (default-value (prometheus-blackbox-exporter-configuration))
    (description
     "Run the prometheus-blackbox-exporter.")))
+
+
+;;;
+;;; prometheus-bird-exporter
+;;;
+
+(define-record-type* <prometheus-bird-exporter-configuration>
+  prometheus-bird-exporter-configuration make-prometheus-bird-exporter-configuration
+  prometheus-bird-exporter-configuration?
+  (prometheus-bird-exporter prometheus-bird-exporter-configuration-prometheus-bird-exporter  ;string
+                            (default prometheus-bird-exporter))
+  (arguments                prometheus-bird-exporter-configuration-arguments                 ;list of strings
+                            (default '())))
+
+(define (prometheus-bird-exporter-shepherd-service config)
+  (list
+   (shepherd-service
+    (provision '(prometheus-bird-exporter))
+    (documentation "Run prometheus-bird-exporter.")
+    (requirement '())
+    (start #~(make-forkexec-constructor
+              `(,(string-append #$(prometheus-bird-exporter-configuration-prometheus-bird-exporter config)
+                                "/bin/bird_exporter")
+                ,#$@(prometheus-bird-exporter-configuration-arguments config))
+              #:log-file "/var/log/prometheus-bird-exporter.log"))
+    (respawn? #f)
+    (stop #~(make-kill-destructor)))))
+
+(define prometheus-bird-exporter-service-type
+  (service-type
+   (name 'prometheus-bird-exporter)
+   (extensions
+    (list (service-extension shepherd-root-service-type
+                             prometheus-bird-exporter-shepherd-service)))
+   (default-value (prometheus-bird-exporter-configuration))
+   (description
+    "Run the prometheus-bird-exporter.")))
 
 ;;; monitoring.scm ends here
