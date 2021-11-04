@@ -99,7 +99,6 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                                     (interface "de2.g-load.eu")
                                     (addresses
                                      '("192.168.219.77/32"
-                                       "172.22.144.97/27"
 
                                        ;; dummy address for BGP peering
                                        "172.20.53.98/27"))
@@ -111,14 +110,8 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                                        (public-key "B1xSG/XTJRLd+GrWDsB06BqnIq8Xud93YVh/LYYYtUY=")
                                        (allowed-ips '("172.16.0.0/12"
                                                       "192.168.0.0/16"
-
-                                                      ;; wireguard: de2.g-load.eu: Packet has unallowed src IP (fe80::ade0)
-                                                      ;; from peer 1 (116.203.141.239:22496)
-                                                      "116.203.141.239/32"
-
-                                                      ;; "172.20.53.97/32"
-                                                      ;; "192.168.219.77/32"
-                                                      )))))))
+                                                      "172.22.144.97/27"
+                                                      "fe80::/10")))))))
                           (service knot-resolver-service-type
                                    (knot-resolver-configuration
                                     (kresd-config-file (plain-file "kresd.conf" "\
