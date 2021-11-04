@@ -79,3 +79,38 @@ Querying of endpoints happens via HTTP GET queries, by specifying the target
 name and what kind of probing to execute. Results from the probe are returned
 as a set of Prometheus metrics.")
     (license license:expat)))
+
+(define-public prometheus-bird-exporter
+  (package
+    (name "prometheus-bird-exporter")
+    (version "1.2.6")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append
+             "https://github.com/czerwonk/bird_exporter/releases/download/"
+             version "/bird_exporter_" version "_linux_amd64.tar.gz"))
+       (sha256
+        (base32
+         "1d29gk0705966m7x2dch1pw41dnnskx29z90fzn53kry1i8fw1wq"))))
+    (build-system trivial-build-system)
+    (native-inputs
+     `(("gzip" ,gzip)
+       ("tar" ,tar)))
+    (arguments
+     `(#:modules ((guix build utils))
+       #:builder
+       (begin
+         (use-modules (guix build utils))
+         (mkdir-p (string-append %output "/bin"))
+         (setenv "PATH" (string-append
+                         (assoc-ref %build-inputs "tar") "/bin" ":"
+                         (assoc-ref %build-inputs "gzip") "/bin"))
+         (invoke "tar" "-xf" (assoc-ref %build-inputs "source"))
+         (install-file "bird_exporter"
+                       (string-append %output "/bin")))))
+    (home-page "https://github.com/czerwonk/bird_exporter/")
+    (synopsis "Bird protocol state exporter for bird routing daemon")
+    (description "Metric exporter for bird routing daemon to use with
+Prometheus.")
+    (license license:expat)))
