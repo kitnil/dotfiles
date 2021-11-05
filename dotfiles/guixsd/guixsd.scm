@@ -815,6 +815,9 @@ location / {
                                                (define prometheus-alertmanager-bird
                                                  #$(plain-file "prometheus-alertmanager-bird.json"
                                                                (scm->json-string (load "bird.scm"))))
+                                               (define prometheus-alertmanager-smartctl
+                                                 #$(plain-file "prometheus-alertmanager-smartctl.json"
+                                                               (scm->json-string (load "smartctl.scm"))))
                                                (with-output-to-file #$output
                                                  (lambda ()
                                                    (scm->json
@@ -934,7 +937,8 @@ location / {
                                                           (job_name . "blackbox-dns-udp-mjru-wugi-info"))))
                                                       (rule_files . #(,prometheus-alertmanager-node
                                                                       ,prometheus-alertmanager-blackbox
-                                                                      ,prometheus-alertmanager-bird))
+                                                                      ,prometheus-alertmanager-bird
+                                                                      ,prometheus-alertmanager-smartctl))
                                                       (global
                                                        (scrape_interval . "15s")
                                                        (external_labels
