@@ -833,6 +833,11 @@ location / {
                                                           (job_name . "node"))
                                                          ((static_configs
                                                            .
+                                                           #(((targets . #("127.0.0.1:9633")))))
+                                                          (scrape_interval . "10m")
+                                                          (job_name . "smartctl"))
+                                                         ((static_configs
+                                                           .
                                                            #(((targets . #("vm1.wugi.info:9324")))))
                                                           (scrape_interval . "1m")
                                                           (job_name . "bird"))
@@ -1130,7 +1135,7 @@ location / {
                                                                     "/dev/sdb"
                                                                     "/dev/sdc"))
                                                      ("collect_not_more_than_period" . "120s")
-                                                     ("bind_to" . "[::1]:9633")))
+                                                     ("bind_to" . "127.0.0.1:9633")))
                                                   #:pretty #t))))))))))
 
                          (service prometheus-pushgateway-service-type
