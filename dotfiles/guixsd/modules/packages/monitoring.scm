@@ -4,6 +4,7 @@
   #:use-module (guix packages)
   #:use-module (gnu packages base)
   #:use-module (gnu packages compression)
+  #:use-module (gnu packages elf)
   #:use-module ((guix licenses) #:prefix license:))
 
 (define-public karma
@@ -113,4 +114,46 @@ as a set of Prometheus metrics.")
     (synopsis "Bird protocol state exporter for bird routing daemon")
     (description "Metric exporter for bird routing daemon to use with
 Prometheus.")
+    (license license:expat)))
+
+(define-public prometheus-smartctl-exporter
+  (package
+    (name "prometheus-smartctl-exporter")
+    (version "0.6")
+    (source
+     (origin
+       (method url-fetch)
+       (uri
+        (string-append
+         "https://github.com/prometheus-community/smartctl_exporter/releases/download/smartctl_exporter_"
+         version "/smartctl_exporter"))
+       (sha256
+        (base32
+         "11qr4p7dwps6la9rv09gdmmri7ziap69agaggr8w787dapi08g50"))))
+    (build-system trivial-build-system)
+    (inputs
+     `(("glibc" ,glibc)
+       ("patchelf" ,patchelf)))
+    (arguments
+     `(#:modules ((guix build utils))
+       #:builder
+       (begin
+         (use-modules (guix build utils))
+         (mkdir-p (string-append %output "/bin"))
+         (setenv "PATH"
+                 (string-append
+                  (assoc-ref %build-inputs "patchelf") "/bin"))
+         (copy-file (assoc-ref %build-inputs "source") "smartctl_exporter")
+         (chmod "smartctl_exporter" #o755)
+         (invoke "patchelf" "--set-interpreter"
+                 (string-append (assoc-ref %build-inputs "glibc")
+                                "/lib/ld-linux-x86-64.so.2")
+                 "smartctl_exporter")
+         (chmod "smartctl_exporter" #o555)
+         (let ((bin (string-append %output "/bin")))
+           (mkdir-p bin)
+           (install-file "smartctl_exporter" bin)))))
+    (home-page "https://github.com/prometheus-community/smartctl_exporter")
+    (synopsis "Export smartctl statistics to Prometheus")
+    (description "This package provides a smartctl exporter for Prometheus.")
     (license license:expat)))
