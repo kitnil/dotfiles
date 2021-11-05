@@ -44,7 +44,10 @@
             prometheus-blackbox-exporter-service-type
 
             prometheus-bird-exporter-configuration
-            prometheus-bird-exporter-service-type))
+            prometheus-bird-exporter-service-type
+
+            prometheus-smartctl-exporter-configuration
+            prometheus-smartctl-exporter-service-type))
 
 ;;; Commentary:
 ;;;
@@ -529,5 +532,45 @@
    (default-value (prometheus-bird-exporter-configuration))
    (description
     "Run the prometheus-bird-exporter.")))
+
+
+;;;
+;;; prometheus-smartctl-exporter
+;;;
+
+(define-record-type* <prometheus-smartctl-exporter-configuration>
+  prometheus-smartctl-exporter-configuration make-prometheus-smartctl-exporter-configuration
+  prometheus-smartctl-exporter-configuration?
+  (prometheus-smartctl-exporter prometheus-smartctl-exporter-configuration-prometheus-smartctl-exporter  ;string
+                                (default prometheus-smartctl-exporter))
+  (config-file                  prometheus-smartctl-exporter-configuration-config-file                   ;string
+                                (default #f))
+  (arguments                    prometheus-smartctl-exporter-configuration-arguments                     ;list of strings
+                                (default '())))
+
+(define (prometheus-smartctl-exporter-shepherd-service config)
+  (list
+   (shepherd-service
+    (provision '(prometheus-smartctl-exporter))
+    (documentation "Run prometheus-smartctl-exporter.")
+    (requirement '())
+    (start #~(make-forkexec-constructor
+              `(,(string-append #$(prometheus-smartctl-exporter-configuration-prometheus-smartctl-exporter config)
+                                "/bin/smartctl_exporter")
+                "-config" #$(prometheus-smartctl-exporter-configuration-config-file config)
+                ,#$@(prometheus-smartctl-exporter-configuration-arguments config))
+              #:log-file "/var/log/prometheus-smartctl-exporter.log"))
+    (respawn? #f)
+    (stop #~(make-kill-destructor)))))
+
+(define prometheus-smartctl-exporter-service-type
+  (service-type
+   (name 'prometheus-smartctl-exporter)
+   (extensions
+    (list (service-extension shepherd-root-service-type
+                             prometheus-smartctl-exporter-shepherd-service)))
+   (default-value (prometheus-smartctl-exporter-configuration))
+   (description
+    "Run the prometheus-smartctl-exporter.")))
 
 ;;; monitoring.scm ends here
