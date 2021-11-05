@@ -1107,6 +1107,32 @@ location / {
                                                      ("interval" . "60s")))
                                                   #:pretty #t))))))))))
 
+                         (service prometheus-smartctl-exporter-service-type
+                                  (prometheus-smartctl-exporter-configuration
+                                   (config-file
+                                    (computed-file
+                                     "smartctl-exporter.json"
+                                     (with-extensions (list guile-json-4)
+                                       (with-imported-modules (source-module-closure '((json builder)))
+                                         #~(begin
+                                             (use-modules (json builder)
+                                                          (ice-9 rdelim))
+                                             (define smartctl
+                                               #$(file-append smartmontools "/sbin/smartctl"))
+                                             (with-output-to-file #$output
+                                               (lambda ()
+                                                 (scm->json
+                                                  `(("smartctl_exporter"
+                                                     ("url_path" . "/metrics")
+                                                     ("smartctl_location" . ,smartctl)
+                                                     ("fake_json" . "no")
+                                                     ("devices" . #("/dev/sda"
+                                                                    "/dev/sdb"
+                                                                    "/dev/sdc"))
+                                                     ("collect_not_more_than_period" . "120s")
+                                                     ("bind_to" . "[::1]:9633")))
+                                                  #:pretty #t))))))))))
+
                          (service prometheus-pushgateway-service-type
                                   (prometheus-pushgateway-configuration
                                    (listen-address "127.0.0.1:9095")
