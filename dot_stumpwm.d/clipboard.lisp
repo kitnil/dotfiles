@@ -9,13 +9,7 @@
 (defcommand greenclip () ()
   (run-shell-command
    (join `("rofi"
-           ,@(if (or dark-theme dark) '("-theme DarkBlue") '())
-           ,(format nil "-modi ~s -show" "clipboard:greenclip print")))))
-
-(defcommand greenclip-daemon () ()
-  (run-shell-command
-   (join (list (concat (getenv "HOME") "/.nix-profile/bin/greenclip")
-               "daemon"))))
+           ,(format nil "-modi ~s -show clipboard -run-command '{cmd}'" "clipboard:greenclip print")))))
 
 (defcommand espanso-daemon () ()
   (run-shell-command

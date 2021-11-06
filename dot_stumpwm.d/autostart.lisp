@@ -5,7 +5,6 @@
         (list (lambda () (kdeconnect-indicator))
               (lambda () (dunst))
               (lambda ()
-                (greenclip-daemon)
                 (espanso-daemon)
                 (picom)
                 (idesk)

@@ -15,6 +15,7 @@
 
              (gnu packages haskell-apps)
 
+             (home services desktop)
              (home services mail)
              (home services package-management)
              (gnu packages mail)
@@ -209,5 +210,7 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
    ;;            (list
    ;;             (ssh-host "savannah"
    ;;      		 '((compression . #f)))))))
+
+   (service home-greenclip-service-type)
 
    )))

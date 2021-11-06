@@ -149,8 +149,6 @@
     gitAndTools.grv
     gitAndTools.pre-commit
 
-    haskellPackages.greenclip
-
     libsForQt5.qtstyleplugins
     libsForQt5.kde-gtk-config
 
