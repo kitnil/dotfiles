@@ -1,7 +1,14 @@
 '(("groups" .
    #((("rules"
        .
-       #((("labels"
+       #((("labels" ("severity" . "critical"))
+          ("expr" . "absent(sum by (instance,import_filter,proto) (bird_protocol_prefix_import_count{proto=\"BGP\"}))")
+          ("for" . "1m")
+          ("annotations"
+           ("summary" . "Absent bird imports")
+           ("description" . "Absent bird imports."))
+          ("alert" . "BirdAbsent"))
+         (("labels"
            ("severity" . "critical"))
           ("expr"
            .

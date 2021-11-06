@@ -1,7 +1,14 @@
 '(("groups" .
    #((("rules"
        .
-       #((("labels" ("severity" . "warning"))
+       #((("labels" ("severity" . "critical"))
+          ("expr" . "absent(exim_queue)")
+          ("for" . "1m")
+          ("annotations"
+           ("summary" . "Absent exim queue")
+           ("description" . "Absent exim queue."))
+          ("alert" . "EximAbsent"))
+         (("labels" ("severity" . "warning"))
           ("expr" . "exim_queue != 0")
           ("for" . "1h")
           ("annotations"
