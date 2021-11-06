@@ -892,7 +892,7 @@ location / {
                                                          ((static_configs
                                                            .
                                                            #(((targets . #("smtp.wugi.info:25")))))
-                                                          (scrape_interval . "30s")
+                                                          (scrape_interval . "1m")
                                                           (metrics_path . "/probe")
                                                           (params . ((module . #("smtp_starttls"))))
                                                           (relabel_configs
@@ -907,7 +907,7 @@ location / {
                                                          ((static_configs
                                                            .
                                                            #(((targets . #("smtp.wugi.info:143")))))
-                                                          (scrape_interval . "30s")
+                                                          (scrape_interval . "1m")
                                                           (metrics_path . "/probe")
                                                           (params . ((module . #("imap_starttls"))))
                                                           (relabel_configs
@@ -923,7 +923,7 @@ location / {
                                                            .
                                                            #(((targets . #("8.8.8.8"
                                                                            "8.8.4.4")))))
-                                                          (scrape_interval . "30s")
+                                                          (scrape_interval . "1m")
                                                           (metrics_path . "/probe")
                                                           (params . ((module . #("dns_udp_mjru_wugi_info"))))
                                                           (relabel_configs
