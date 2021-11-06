@@ -28,7 +28,7 @@ vnc vpn w3m web wget wm xdisorg xfce xml xorg)
     (,isc-bind "utils")))
 
 (define %large-packages
-  (list ;; libreoffice
+  (list libreoffice
         python-pyqt-without-qtwebkit))
 
 (define %spelling-packages
