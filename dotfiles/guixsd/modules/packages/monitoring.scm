@@ -157,3 +157,45 @@ Prometheus.")
     (synopsis "Export smartctl statistics to Prometheus")
     (description "This package provides a smartctl exporter for Prometheus.")
     (license license:expat)))
+
+(define-public prometheus-exim-exporter
+  (package
+    (name "prometheus-exim-exporter")
+    (version "1.3.1")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append
+             "https://github.com/gvengel/exim_exporter/releases/download/v"
+             version "/exim_exporter"))
+       (sha256
+        (base32
+         "0q9pczzb7sayhfa66a2vf72fbzgnn3j1ygwd06b059xfx1y3aadx"))))
+    (build-system trivial-build-system)
+    (inputs
+     `(("glibc" ,glibc)
+       ("patchelf" ,patchelf)))
+    (arguments
+     `(#:modules ((guix build utils))
+       #:builder
+       (begin
+         (use-modules (guix build utils))
+         (mkdir-p (string-append %output "/bin"))
+         (setenv "PATH"
+                 (string-append
+                  (assoc-ref %build-inputs "patchelf") "/bin"))
+         (copy-file (assoc-ref %build-inputs "source") "exim_exporter")
+         (chmod "exim_exporter" #o755)
+         (invoke "patchelf" "--set-interpreter"
+                 (string-append (assoc-ref %build-inputs "glibc")
+                                "/lib/ld-linux-x86-64.so.2")
+                 "exim_exporter")
+         (chmod "exim_exporter" #o555)
+         (let ((bin (string-append %output "/bin")))
+           (mkdir-p bin)
+           (install-file "exim_exporter" bin)))))
+    (home-page "https://github.com/gvengel/exim_exporter")
+    (synopsis "Exim metrics exporter for Prometheus")
+    (description "Exports metrics from the exim mail server for consumption by
+Prometheus.")
+    (license license:expat)))
