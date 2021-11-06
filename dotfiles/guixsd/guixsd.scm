@@ -929,8 +929,7 @@ location / {
                                                           (job_name . "blackbox-imap-starttls"))
                                                          ((static_configs
                                                            .
-                                                           #(((targets . #("8.8.8.8"
-                                                                           "8.8.4.4")))))
+                                                           #(((targets . #("8.8.8.8")))))
                                                           (scrape_interval . "1m")
                                                           (metrics_path . "/probe")
                                                           (params . ((module . #("dns_udp_mjru_wugi_info"))))
