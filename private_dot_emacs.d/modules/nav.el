@@ -39,6 +39,8 @@
 (autoload 'crux-transpose-windows "crux" nil t)
 (autoload 'crux-open-with "crux" nil t)
 
+(autoload 'stupid-indent-mode "stupid-indent-mode" nil t)
+
 ;; (global-undo-tree-mode)
 ;; (setq undo-tree-auto-save-history t)
 ;; (setq undo-tree-history-directory-alist '(("." . "~/.emacs.d/undo")))
