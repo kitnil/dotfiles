@@ -69,6 +69,10 @@ install-ssh:
 dotfiles/guixsd/home.scm:
 	guix home -L dotfiles/guixsd/modules build dotfiles/guixsd/home.scm
 
+.PHONY: dotfiles/nix/flake.nix
+dotfiles/nix/flake.nix:
+	sh -c 'set -e; cd dotfiles/nix || exit 1; ./flake.nix'
+
 .PHONY: install
 install: install-ssh
 	bin/executable_gpg-unlock
