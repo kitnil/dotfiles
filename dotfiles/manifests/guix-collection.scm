@@ -15,7 +15,7 @@ pulseaudio pv python python-web python-xyz qt ratpoison rdesktop readline
 racket rsync rust-apps samba scheme screen shells shellutils sqlite ssh
 statistics suckless syncthing synergy terminals tex texinfo text-editors
 telegram textutils tls tmux tor valgrind version-control video virtualization
-vnc vpn w3m web wget wm xdisorg xfce xml xorg)
+vnc vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
 
 (define guix-collection-packages-multiout
   `((,glib "bin")
@@ -29,6 +29,7 @@ vnc vpn w3m web wget wm xdisorg xfce xml xorg)
 
 (define %large-packages
   (list libreoffice
+        nyxt
         python-pyqt-without-qtwebkit))
 
 (define %spelling-packages
