@@ -818,6 +818,9 @@ location / {
                                                (define prometheus-alertmanager-smartctl
                                                  #$(plain-file "prometheus-alertmanager-smartctl.json"
                                                                (scm->json-string (load "smartctl.scm"))))
+                                               (define prometheus-alertmanager-exim
+                                                 #$(plain-file "prometheus-alertmanager-exim.json"
+                                                               (scm->json-string (load "exim.scm"))))
                                                (with-output-to-file #$output
                                                  (lambda ()
                                                    (scm->json
@@ -943,7 +946,8 @@ location / {
                                                       (rule_files . #(,prometheus-alertmanager-node
                                                                       ,prometheus-alertmanager-blackbox
                                                                       ,prometheus-alertmanager-bird
-                                                                      ,prometheus-alertmanager-smartctl))
+                                                                      ,prometheus-alertmanager-smartctl
+                                                                      ,prometheus-alertmanager-exim))
                                                       (global
                                                        (scrape_interval . "15s")
                                                        (external_labels
