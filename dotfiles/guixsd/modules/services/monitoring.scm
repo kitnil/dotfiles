@@ -47,7 +47,10 @@
             prometheus-bird-exporter-service-type
 
             prometheus-smartctl-exporter-configuration
-            prometheus-smartctl-exporter-service-type))
+            prometheus-smartctl-exporter-service-type
+
+            prometheus-exim-exporter-configuration
+            prometheus-exim-exporter-service-type))
 
 ;;; Commentary:
 ;;;
@@ -572,5 +575,42 @@
    (default-value (prometheus-smartctl-exporter-configuration))
    (description
     "Run the prometheus-smartctl-exporter.")))
+
+
+;;;
+;;; prometheus-exim-exporter
+;;;
+
+(define-record-type* <prometheus-exim-exporter-configuration>
+  prometheus-exim-exporter-configuration make-prometheus-exim-exporter-configuration
+  prometheus-exim-exporter-configuration?
+  (prometheus-exim-exporter prometheus-exim-exporter-configuration-prometheus-exim-exporter  ;string
+                            (default prometheus-exim-exporter))
+  (arguments                prometheus-exim-exporter-configuration-arguments                 ;list of strings
+                            (default '())))
+
+(define (prometheus-exim-exporter-shepherd-service config)
+  (list
+   (shepherd-service
+    (provision '(prometheus-exim-exporter))
+    (documentation "Run prometheus-exim-exporter.")
+    (requirement '())
+    (start #~(make-forkexec-constructor
+              `(,(string-append #$(prometheus-exim-exporter-configuration-prometheus-exim-exporter config)
+                                "/bin/exim_exporter")
+                ,#$@(prometheus-exim-exporter-configuration-arguments config))
+              #:log-file "/var/log/prometheus-exim-exporter.log"))
+    (respawn? #f)
+    (stop #~(make-kill-destructor)))))
+
+(define prometheus-exim-exporter-service-type
+  (service-type
+   (name 'prometheus-exim-exporter)
+   (extensions
+    (list (service-extension shepherd-root-service-type
+                             prometheus-exim-exporter-shepherd-service)))
+   (default-value (prometheus-exim-exporter-configuration))
+   (description
+    "Run the prometheus-exim-exporter.")))
 
 ;;; monitoring.scm ends here
