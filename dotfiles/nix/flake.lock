@@ -628,11 +628,11 @@
         "nixpkgs-unstable": "nixpkgs-unstable"
       },
       "locked": {
-        "lastModified": 1614784383,
-        "narHash": "sha256-o/aZKqxb8bwYD55q4c/pfI3W2iVomxzZedo5tLj0J9g=",
+        "lastModified": 1636317963,
+        "narHash": "sha256-Gs0u30MfeXiUm3iX8FtiMWXcXJQP64zHQYswC4yJoDc=",
         "owner": "kitnil",
         "repo": "nix-docker-ipmi",
-        "rev": "106a0bfe3fdac175a16bf436a83e7d97d3653eec",
+        "rev": "87eb66ab77b53dc29c9f63b908fc57081917ac1d",
         "type": "github"
       },
       "original": {
