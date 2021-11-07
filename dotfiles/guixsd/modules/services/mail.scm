@@ -18,10 +18,13 @@
 
 (define-module (services mail)
   #:use-module (gnu)
+  #:use-module (guix packages)
+  #:use-module (guix build-system trivial)
   #:use-module (gnu packages admin)
   #:use-module (gnu packages mail)
   #:use-module (gnu services certbot)
   #:use-module (gnu services mail)
+  #:use-module (gnu services shepherd)
   #:use-module (guix gexp)
   #:use-module (packages mail)
   #:export (%mail-hosts-file-hosts
@@ -56,15 +59,66 @@
          (chown "/etc/exim/exim.crt" uid gid)
          (chown "/etc/exim/exim.pem" uid gid)))))
 
+(define %exim-configuration
+  (exim-configuration
+   (package exim-lmtp)
+   (config-file (local-file "../../exim.conf"))))
+
+(define (exim-wrapper config)
+  (let ((wrapper
+         (program-file
+          "exim-wrapper"
+          (with-imported-modules '((guix build utils))
+            #~(begin
+                (use-modules (guix build utils))
+                (apply invoke
+                       (append (list (string-append #$((@@ (gnu services mail) exim-configuration-package) %exim-configuration)
+                                                    "/bin/exim")
+                                     "-C"
+                                     #$((@@ (gnu services mail) exim-computed-config-file)
+                                        ((@@ (gnu services mail) exim-configuration-package)
+                                         %exim-configuration)
+                                        ((@@ (gnu services mail) exim-configuration-config-file)
+                                         %exim-configuration)))
+                               (cdr (command-line)))))))))
+    (package
+      (inherit exim)
+      (name "exim-wrapper")
+      (source #f)
+      (build-system trivial-build-system)
+      (arguments
+       `(#:builder
+         (begin
+           (mkdir %output)
+           (mkdir (string-append %output "/bin"))
+           (copy-file (assoc-ref %build-inputs "wrapper")
+                      (string-append %output "/bin/exim"))
+           (chmod (string-append %output "/bin/exim") #o555)
+           #t)))
+      (inputs `(("wrapper" ,wrapper)))
+      (synopsis "")
+      (description "")
+      (license #f))))
+
+(define exim-wrapper-profile
+  (compose list exim-wrapper))
+
+(define exim-service-type
+  (service-type
+   (name 'exim)
+   (extensions
+    (list (service-extension shepherd-root-service-type (@@ (gnu services mail) exim-shepherd-service))
+          (service-extension account-service-type (const (@@ (gnu services mail) %exim-accounts)))
+          (service-extension activation-service-type (@@ (gnu services mail) exim-activation))
+          (service-extension profile-service-type exim-wrapper-profile)
+          (service-extension mail-aliases-service-type (const '()))))))
+
 (define %mail-services
  (list
   (service mail-aliases-service-type '(("wigust" "oleg")
                                        ("admin" "oleg")
                                        ("alertmanager" "oleg")))
-  (service exim-service-type
-           (exim-configuration
-            (package exim-lmtp)
-            (config-file (local-file "../../exim.conf"))))
+  (service exim-service-type %exim-configuration)
   (dovecot-service
    #:config (dovecot-configuration
              (disable-plaintext-auth? #f)
