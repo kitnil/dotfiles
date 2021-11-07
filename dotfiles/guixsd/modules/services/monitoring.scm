@@ -599,7 +599,12 @@
               `(,(string-append #$(prometheus-exim-exporter-configuration-prometheus-exim-exporter config)
                                 "/bin/exim_exporter")
                 ,#$@(prometheus-exim-exporter-configuration-arguments config))
-              #:log-file "/var/log/prometheus-exim-exporter.log"))
+              #:log-file "/var/log/prometheus-exim-exporter.log"
+              #:environment-variables
+              (append (list "PATH=/run/current-system/profile/bin") ;for exim binary.
+                      (remove (lambda (str)
+                                (string-prefix? "PATH=" str))
+                              (environ)))))
     (respawn? #f)
     (stop #~(make-kill-destructor)))))
 
