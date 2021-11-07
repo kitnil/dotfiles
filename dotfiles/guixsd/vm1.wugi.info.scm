@@ -140,9 +140,8 @@ cache.size = 10 * MB
                                                  "-bird.ipv6=false"))))
                           (service prometheus-exim-exporter-service-type
                                    (prometheus-exim-exporter-configuration
-                                    (arguments '("--exim.mainlog=/var/spool/exim/log/mainlog"
-                                                 "--exim.rejectlog=/var/spool/exim/log/rejectlog"
-                                                 "--exim.paniclog=/var/spool/exim/log/paniclog"))))
+                                    (arguments '("--exim.log-path=/var/log/exim"
+                                                 "--exim.input-path=/var/spool/exim/input"))))
 
                           (service certbot-service-type
                                    (certbot-configuration
