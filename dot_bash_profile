@@ -17,24 +17,8 @@ export MANWIDTH=80
 
 export INFOPATH="$HOME/src/guix/doc${INFOPATH:+:}$INFOPATH"
 
-if [ -e "$HOME/.nix-profile/etc/profile.d/nix.sh" ]; then
-    source "$HOME/.nix-profile/etc/profile.d/nix.sh";
-fi
-
-if [ -d "$HOME"/.nix-profile ]
-then
-    PATH="$PATH":"$HOME"/.nix-profile/bin
-fi
-
-# TODO: Add java to "$HOME"/.nix-profile/bin and remove the following.
-if [ -d "$HOME"/.nix-profile/lib/openjdk/bin ]
-then
-    PATH="$PATH":"$HOME"/.nix-profile/lib/openjdk/bin
-fi
-
-PATH="${HOME}/perl5/bin${PATH:+:${PATH}}"
-
-PATH="$(source /etc/profile; printf "$PATH")":"${HOME}/bin":"${HOME}/.local/bin":"${HOME}/go/bin":"${HOME}/.npm-global/bin":/opt/gradle/bin:"$PATH"
+PATH="${HOME}/bin":"${HOME}/.local/bin":"$(env --ignore-environment bash --norc --noprofile -c 'unset PATH; export HOME=/home/oleg; export USER=oleg; source /etc/profile; printf "$PATH"')":"${HOME}/go/bin":"${HOME}/.npm-global/bin":/opt/gradle/bin:"${HOME}/perl5/bin":"${HOME}/.nix-profile/lib/openjdk/bin":"${HOME}/.nix-profile/bin"
+export PATH
 
 export GUILE_WARN_DEPRECATED=no
 
