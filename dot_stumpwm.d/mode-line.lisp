@@ -208,7 +208,7 @@
               (case button
                 ((1) (mode-line-start-programs))
                 ((2) (volume-toggle))
-                ((3) (run-shell-command "xmenu.sh"))
+                ((3) (delete-window))
                 ((4) (cond ((> x (- (screen-width (group-screen (current-group))) 30))
                             (volume-increase))
                            ((> x 200)
