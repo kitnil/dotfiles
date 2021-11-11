@@ -33,7 +33,7 @@ case "$1" in
             | expand -t1 | column -t
 SELECT equip_datacenters.name AS dc, equip_racks.name AS rack, equip_servers.name AS name, equip_servers.dcid AS dcid, equip_servers.datacenter_number AS dcnum, equip_servers.equip_server_id AS bil
 FROM equip_servers, equip_racks, equip_datacenters
-WHERE equip_servers.equip_rack_id = equip_racks.equip_rack_id AND equip_racks.equip_datacenter_id = equip_datacenters.equip_datacenter_id AND equip_servers.name NOT LIKE 'mj%' AND equip_servers.name NOT LIKE 'nh%'
+WHERE equip_servers.equip_rack_id = equip_racks.equip_rack_id AND equip_racks.equip_datacenter_id = equip_datacenters.equip_datacenter_id
 ORDER BY equip_racks.name;
 EOF
         ;;
