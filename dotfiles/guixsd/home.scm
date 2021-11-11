@@ -7,6 +7,7 @@
              (gnu packages admin)
              (gnu packages guile)
              (gnu services)
+             (gnu services configuration)
              (guix gexp)
              (guix modules)
              (guix profiles)
@@ -32,6 +33,75 @@
 
 (define .bashrc
   (string-append %home "/.local/share/chezmoi/dot_bashrc"))
+
+(define mbsync-gmail
+  (mbsync-config-file
+   (imap-account "gmail")
+   (host "imap.gmail.com")
+   (user "go.wigust@gmail.com")
+   (pass-cmd "gpg -q --for-your-eyes-only --no-tty -d ~/.password-store/email/gmail/go.wigust.gpg")
+   (auth-mechs "LOGIN")
+   (ssl-type "IMAPS")
+   (certificate-file "/etc/ssl/certs/ca-certificates.crt")
+   (pipeline-depth "50")
+   (imap-store "gmail-remote")
+   (account "gmail")
+   (maildir-store "gmail-local")
+   (path "~/Maildir/")
+   (inbox "~/Maildir/INBOX")
+   (sub-folders "Verbatim")
+   (group "gmail-all")
+   (channel "gmail")
+   (far ":gmail-remote:")
+   (near ":gmail-local:")
+   (patterns "INBOX") ;Sync only "INBOX"
+   (max-messages "2000")
+   (expunge "near")
+   (sync "Pull")))
+
+(define mbsync-majordomo
+  (mbsync-config-file
+   (imap-account "majordomo")
+   (host "router.majordomo.ru")
+   (user "pyhalov@majordomo.ru")
+   (pass-cmd "pass show majordomo/private/newmail.majordomo.ru/pyhalov@majordomo.ru")
+   (auth-mechs "LOGIN")
+   (ssl-type "None")
+   (certificate-file "/etc/ssl/certs/ca-certificates.crt")
+   (pipeline-depth "50")
+   (imap-store "majordomo-remote")
+   (account "majordomo")
+   (maildir-store "majordomo-local")
+   (path "~/Maildir/")
+   (inbox "~/Maildir/majordomo")
+   (sub-folders "Verbatim")
+   (channel "majordomo")
+   (far ":majordomo-remote:")
+   (near ":majordomo-local:")
+   (patterns "INBOX") ;Sync only "INBOX"
+   (sync "Pull")))
+
+(define mbsync-wugi
+  (mbsync-config-file
+   (imap-account "wugi")
+   (host "smtp.wugi.info")
+   (user "oleg@smtp.wugi.info")
+   (pass-cmd "gpg -q --for-your-eyes-only --no-tty -d ~/.password-store/localhost/imap/oleg.gpg")
+   (auth-mechs "LOGIN")
+   (ssl-type "IMAPS")
+   (certificate-file "/etc/ssl/certs/ca-certificates.crt")
+   (pipeline-depth "50")
+   (imap-store "wugi-remote")
+   (account "wugi")
+   (maildir-store "wugi-local")
+   (path "~/Maildir/")
+   (inbox "~/Maildir/wugi.info")
+   (sub-folders "Verbatim")
+   (channel "wugi")
+   (far ":wugi-remote:")
+   (near ":wugi-local:")
+   (patterns "INBOX") ;Sync only "INBOX"
+   (sync "Pull")))
 
 (home-environment
 
@@ -151,6 +221,19 @@
                                             ;; ("author" . "user@example.org")
                                             ("alertmanager.url" . "http://localhost:9093"))
                                           #:pretty #t))))))))))
+
+   (simple-service 'home-mbsync-config
+                   home-files-service-type
+                   (list `("mbsyncrc"
+                           ,(computed-file "mbsyncrc"
+                                           #~(begin
+                                               (with-output-to-file #$output
+                                                 (lambda ()
+                                                   (display #$(serialize-text-config
+                                                               #f
+                                                               (list mbsync-gmail
+                                                                     mbsync-majordomo
+                                                                     mbsync-wugi))))))))))
 
    (simple-service 'chromium-wrapper
                    home-files-service-type
