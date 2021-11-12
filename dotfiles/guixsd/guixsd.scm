@@ -652,6 +652,7 @@ location / {
            "178.250.247.125 gitlab.mjtest jenkins.mjtest"
            "130.61.95.6 oracle"
            "172.16.100.65 zdetovetskiy.intr"
+           "172.16.100.61 lyashenko.intr"
            "127.0.0.1 example.com"
 
            "78.108.86.20 r1"
