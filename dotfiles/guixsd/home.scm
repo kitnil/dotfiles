@@ -16,6 +16,7 @@
 
              (gnu packages haskell-apps)
 
+             (home services ansible)
              (home services desktop)
              (home services mail)
              (home services package-management)
@@ -308,6 +309,7 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
             (guix-delete-generations-configuration
              (schedule '(next-hour '(21)))
              (period "1m")))
+   (service ansible-playbook-service-type)
    
    ;; XXX: missing home-ssh-configuration
    ;; (service home-ssh-service-type
