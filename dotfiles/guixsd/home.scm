@@ -81,6 +81,28 @@
    (patterns "INBOX") ;Sync only "INBOX"
    (sync "Pull")))
 
+(define mbsync-majordomo-sidorov
+  (mbsync-config-file
+   (imap-account "majordomo-sidorov")
+   (host "router.majordomo.ru")
+   (user "sidorov@majordomo.ru")
+   (pass-cmd "pass show majordomo/private/router.majordomo.ru/sidorov@majordomo.ru")
+   (auth-mechs "LOGIN")
+   (ssl-type "None")
+   (certificate-file "/etc/ssl/certs/ca-certificates.crt")
+   (pipeline-depth "50")
+   (imap-store "majordomo-sidorov-remote")
+   (account "majordomo-sidorov")
+   (maildir-store "majordomo-sidorov-local")
+   (path "~/Maildir/")
+   (inbox "~/Maildir/majordomo-sidorov")
+   (sub-folders "Verbatim")
+   (channel "majordomo-sidorov")
+   (far ":majordomo-sidorov-remote:")
+   (near ":majordomo-sidorov-local:")
+   (patterns "INBOX") ;Sync only "INBOX"
+   (sync "Pull")))
+
 (define mbsync-wugi
   (mbsync-config-file
    (imap-account "wugi")
@@ -233,6 +255,7 @@
                                                                #f
                                                                (list mbsync-gmail
                                                                      mbsync-majordomo
+                                                                     mbsync-majordomo-sidorov
                                                                      mbsync-wugi))))))))))
 
    (simple-service 'chromium-wrapper
