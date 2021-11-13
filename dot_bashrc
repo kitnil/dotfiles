@@ -492,7 +492,7 @@ guix()
             (set -ex; "${guix_command[@]}" "${@:2}"; sudo --login "${guix_command[@]}" "${@:2}")
             ;;
         distribute)
-            ansible-playbook "$HOME/.local/share/chezmoi/dotfiles/ansible/guix.yml"
+            "$(guix build --file="$HOME/.local/share/chezmoi/dotfiles/ansible/guix.yml")"
             ;;
         prebuild)
             guix_command="$HOME/src/guix/pre-inst-env guix"
