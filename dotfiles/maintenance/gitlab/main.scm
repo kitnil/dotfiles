@@ -93,10 +93,7 @@
 (define %gitlab-projects
   (list (home-gitlab-project-configuration
          (name "notes")
-         (description "My notes"))
-        (home-gitlab-project-configuration
-         (name "ansible-majordomo-history")
-         (description "Jenkins pipeline which runs Ansible to fetch various information from servers"))))
+         (description "My notes"))))
 
 (define (terraform-gitlab)
   (mlet* %store-monad ((main.tf.json (text-file* "main.tf.json"
