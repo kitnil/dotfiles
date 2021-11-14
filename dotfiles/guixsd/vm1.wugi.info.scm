@@ -154,7 +154,8 @@ cache.size = 10 * MB
                                               (list "file.wugi.info"
                                                     "homer.wugi.info"
                                                     "githunt.wugi.info"
-                                                    "vm1.wugi.info"))))))
+                                                    "vm1.wugi.info"
+                                                    "wugi.info"))))))
 
                           (service nginx-service-type
                                    (nginx-configuration
@@ -176,8 +177,8 @@ cache.size = 10 * MB
 
                           (service homer-service-type
                                    (homer-configuration
-                                    (config-file %homer-config)
-                                    (nginx (list %homer-nginx-configuration)))))
+                                    (config-file %homer-wugi.info-config)
+                                    (nginx (list %homer-wugi.info-nginx-configuration))))
 
                     %mail-services
 

@@ -74,6 +74,9 @@
             %homer-nginx-configuration
             %homer-config
 
+            %homer-wugi.info-config
+            %homer-wugi.info-nginx-configuration
+
             %jenkins-config))
 
 (define %guix-daemon-config
@@ -317,6 +320,25 @@ EndSection\n")
    (ssl-certificate-key (letsencrypt-key "homer.wugi.info"))
    (raw-content %mtls)))
 
+(define %homer-wugi.info-nginx-configuration
+  (nginx-server-configuration
+   (inherit %homer-nginx-configuration-nginx)
+   (server-name '("wugi.info"))
+   (listen '("80 default_server"
+             "443 ssl default_server"))
+   (locations
+    (list (nginx-location-configuration
+           (uri "/.well-known")
+           (body '("root /var/www;")))
+          (nginx-location-configuration
+           (uri "/assets/config.yml")
+           (body '("etag off;"
+                   "if_modified_since off;"
+                   ;; "add_header Last-Modified $date_gmt;"
+                   "add_header Last-Modified \"\";")))))
+   (ssl-certificate (letsencrypt-certificate "wugi.info"))
+   (ssl-certificate-key (letsencrypt-key "wugi.info"))))
+
 (define %zabbix-nginx-configuration
   (list
    (nginx-server-configuration
@@ -386,74 +408,54 @@ remote-random
                    ("tag" . "git")
                    ("subtitle" . "Git front-end")
                    ("name" . "Cgit")
-                   ("logo"
-                    .
-                    "https://cgit.duckdns.org/share/cgit/cgit.png"))
+                   ("logo" . "https://cgit.duckdns.org/share/cgit/cgit.png"))
                   (("url" . "https://githunt.wugi.info/")
                    ("tag" . "projects")
                    ("subtitle"
                     .
                     "Hunt the most starred projects on GitHub")
                    ("name" . "GitHunt")
-                   ("logo"
-                    .
-                    "https://camo.githubusercontent.com/b7243ef0327a743e1c6081bddf604f421b73810d/68747470733a2f2f7261772e6769746875622e636f6d2f6b616d72616e61686d656473652f67697468756e742f6d61737465722f7075626c69632f696d672f6c6f676f2e7376673f73616e6974697a653d74727565"))
+                   ("logo" . "https://camo.githubusercontent.com/b7243ef0327a743e1c6081bddf604f421b73810d/68747470733a2f2f7261772e6769746875622e636f6d2f6b616d72616e61686d656473652f67697468756e742f6d61737465722f7075626c69632f696d672f6c6f676f2e7376673f73616e6974697a653d74727565"))
                   (("url" . "https://guix.duckdns.org/")
                    ("tag" . "guix")
                    ("subtitle" . "guix publish")
                    ("name" . "Guix Substitute Server")
-                   ("logo"
-                    .
-                    "https://guix.gnu.org/static/base/img/icon.png"))
+                   ("logo" . "https://guix.gnu.org/static/base/img/icon.png"))
                   (("url" . "https://jenkins.wugi.info/")
                    ("tag" . "devops")
                    ("subtitle" . "CI/CD")
                    ("name" . "Jenkins")
-                   ("logo"
-                    .
-                    "https://jenkins.wugi.info/static/cfd19297/images/jenkins.svg"))
+                   ("logo" . "https://jenkins.wugi.info/static/cfd19297/images/jenkins.svg"))
                   (("url" . "https://home-s2x8742.slack.com/")
                    ("tag" . "chat")
                    ("subtitle" . "Chat")
                    ("name" . "Slack")
-                   ("logo"
-                    .
-                    "https://image.flaticon.com/icons/svg/2111/2111615.svg"))
+                   ("logo" . "https://image.flaticon.com/icons/svg/2111/2111615.svg"))
                   (("url" . "https://zabbix.wugi.info/")
                    ("tag" . "monitoring")
                    ("subtitle" . "Monitoring")
                    ("name" . "Zabbix")
-                   ("logo"
-                    .
-                    "https://upload.wikimedia.org/wikipedia/commons/6/6f/Zabbix_logo.svg"))
+                   ("logo" . "https://upload.wikimedia.org/wikipedia/commons/6/6f/Zabbix_logo.svg"))
                   (("url" . "https://syncthing.wugi.info/")
                    ("tag" . "syncthing")
                    ("subtitle" . "Syncthing")
                    ("name" . "Syncthing")
-                   ("logo"
-                    .
-                    "https://syncthing.wugi.info/assets/img/logo-horizontal.svg"))
+                   ("logo" . "https://syncthing.wugi.info/assets/img/logo-horizontal.svg"))
                   (("url" . "https://torrent.wugi.info/")
                    ("tag" . "torrent")
                    ("subtitle" . "Torrent client")
                    ("name" . "Transmission")
-                   ("logo"
-                    .
-                    "https://chocolatey.org/content/packageimages/transmission.3.00.svg"))
+                   ("logo" . "https://chocolatey.org/content/packageimages/transmission.3.00.svg"))
                   (("url" . "http://localhost:8060/")
                    ("tag" . "irc")
                    ("subtitle" . "IRC gateway")
                    ("name" . "ZNC")
-                   ("logo"
-                    .
-                    "https://kotabatu.net/wp-content/uploads/2012/04/spoof-identd-znc.svg"))
+                   ("logo" . "https://kotabatu.net/wp-content/uploads/2012/04/spoof-identd-znc.svg"))
                   (("url" . "https://webssh.wugi.info/")
                    ("tag" . "ssh")
                    ("subtitle" . "SSH web-client")
                    ("name" . "WebSSH")
-                   ("logo"
-                    .
-                    "https://webssh.wugi.info/static/img/favicon.png"))))
+                   ("logo" . "https://webssh.wugi.info/static/img/favicon.png"))))
                ("icon" . "fas fa-home"))
               (("name" . "Third-Party hosting")
                ("items"
@@ -462,34 +464,22 @@ remote-random
                    ("tag" . "blog")
                    ("subtitle" . "My blog")
                    ("name" . "Blog")
-                   ("logo"
-                    .
-                    "https://d29fhpw069ctt2.cloudfront.net/icon/image/84747/preview.svg"))
+                   ("logo" . "https://d29fhpw069ctt2.cloudfront.net/icon/image/84747/preview.svg"))
                   (("url" . "https://192.168.125.14/ui/#/login")
                    ("tag" . "vps")
                    ("subtitle" . "Guix machine on VMware")
                    ("name" . "VMware ESXI")
-                   ("logo"
-                    .
-                    "https://www.leaseweb.com/sites/default/files/Images/09_Products/vmware-vsphere.svg"))
-                  (("url"
-                    .
-                    "https://console.eu-frankfurt-1.oraclecloud.com/?tenant=wigust&provider=OracleIdentityCloudService")
+                   ("logo" . "https://www.leaseweb.com/sites/default/files/Images/09_Products/vmware-vsphere.svg"))
+                  (("url" . "https://console.eu-frankfurt-1.oraclecloud.com/?tenant=wigust&provider=OracleIdentityCloudService")
                    ("tag" . "vps")
                    ("subtitle" . "Oracle Linux machines")
                    ("name" . "Oracle Cloud")
-                   ("logo"
-                    .
-                    "https://www.oracle.com/ocom/groups/public/@otn/documents/digitalasset/5303705.png"))
-                  (("url"
-                    .
-                    "https://dcc.godaddy.com/manage/dns?domainName=wugi.info")
+                   ("logo" . "https://www.oracle.com/ocom/groups/public/@otn/documents/digitalasset/5303705.png"))
+                  (("url" . "https://dcc.godaddy.com/manage/dns?domainName=wugi.info")
                    ("tag" . "dns")
                    ("subtitle" . "wugi.info zone")
                    ("name" . "DNS")
-                   ("logo"
-                    .
-                    "https://upload.wikimedia.org/wikipedia/commons/e/ef/Oxygen480-categories-applications-internet.svg"))))
+                   ("logo" . "https://upload.wikimedia.org/wikipedia/commons/e/ef/Oxygen480-categories-applications-internet.svg"))))
                ("icon" . "fas fa-cloud"))))
            ("logo" . "logo.png")
            ("links"
@@ -502,9 +492,7 @@ remote-random
                ("name" . "Wiki")
                ("icon" . "fas fa-book"))))
            ("header" . #t)
-           ("footer"
-            .
-            "<p>Created with <span class=\"has-text-danger\">❤️</span> with <a href=\"https://bulma.io/\">bulma</a>, <a href=\"https://vuejs.org/\">vuejs</a> & <a href=\"https://fontawesome.com/\">font awesome</a> // Fork me on <a href=\"https://github.com/bastienwirtz/homer\"><i class=\"fab fa-github-alt\"></i></a></p>")
+           ("footer" . "<p>Created with <span class=\"has-text-danger\">❤️</span> with <a href=\"https://bulma.io/\">bulma</a>, <a href=\"https://vuejs.org/\">vuejs</a> & <a href=\"https://fontawesome.com/\">font awesome</a> // Fork me on <a href=\"https://github.com/bastienwirtz/homer\"><i class=\"fab fa-github-alt\"></i></a></p>")
            ("colors"
             ("light"
              ("text-title" . "#303030")
@@ -539,6 +527,96 @@ remote-random
              (with-output-to-file #$output
                (lambda ()
                  (display (scm->json '#$config #:pretty #t))))))))))
+
+(define %homer-wugi.info-config
+  (let ((config
+         `(("title" . "Home page")
+           ("subtitle" . "wugi.info")
+           ("message"
+            ("style" . "is-warning")
+            ("title" . "Hello!")
+            ("icon" . "fas fa-hand-paper")
+            ("content" . "I'm Oleg Pykhalov, also known as WiGust. This is my homepage."))
+           ("theme" . "default")
+           ("services" . #((("name" . "Writing")
+                            ("items" . #((("url" . "https://blog.wugi.info/")
+                                          ("tag" . "web")
+                                          ("subtitle" . "Articles")
+                                          ("name" . "Blog")
+                                          ("logo" . "https://upload.wikimedia.org/wikipedia/commons/0/08/EmacsIcon.svg"))))
+                            ("icon" . "fas fa-pen-nib"))
+                           (("name" . "Programming")
+                            ("items" . #((("url" . "https://gitlab.com/wigust/")
+                                          ("tag" . "version-control")
+                                          ("subtitle" . "Source code")
+                                          ("name" . "GitLab")
+                                          ("logo" . "https://about.gitlab.com/images/press/logo/svg/gitlab-icon-rgb.svg"))))
+                            ("icon" . "fas fa-file-code"))
+                           (("name" . "Networking")
+                            ("items" . #((("url" . "https://dn42.eu/")
+                                          ("tag" . "networking")
+                                          ("name" . "dn42")
+                                          ("subtitle" . "AS4242422496")
+                                          ("logo" . "https://dn42.eu/dn42.svg"))))
+                            ("icon" . "fas fa-network-wired"))
+                           (("name" . "Contact me")
+                            ("items" . #((("url" . "mailto:go.wigust@gmail.com")
+                                          ("tag" . "mail")
+                                          ("name" . "Mail")
+                                          ("subtitle" . "go.wigust@gmail.com")
+                                          ;; ("icon" . "fab fa-envelope")
+                                          ("logo" . "https://upload.wikimedia.org/wikipedia/commons/7/7e/Gmail_icon_%282020%29.svg"))
+                                         (("url" . "https://matrix.to/#/@wigust:matrix.org")
+                                          ("tag" . "messaging")
+                                          ("name" . "Matrix")
+                                          ("subtitle" . "@wigust:matrix.org")
+                                          ("logo" . "https://element.io/images/logo-mark-primary.svg"))
+                                         (("url" . "https://mastodon.xyz/@wigust")
+                                          ("tag" . "messaging")
+                                          ("name" . "Mastodon")
+                                          ("subtitle" . "mastodon.xyz/@wigust")
+                                          ("logo" . "https://upload.wikimedia.org/wikipedia/commons/4/48/Mastodon_Logotype_%28Simple%29.svg"))))
+                            ("icon" . "fas fa-user-circle"))))
+           ("logo" . "logo.png")
+           ;; ("links" . #((("url" . "mailto:go.wigust@gmail.com")
+           ;;               ("name" . "Email")
+           ;;               ("icon" . "fab fa-envelope"))))
+           ("header" . #t)
+           ("footer" . "<p>Powered by <a href=\"https://github.com/bastienwirtz/homer\">Homer</a>.")
+           ("colors"
+            ("light"
+             ("text-title" . "#303030")
+             ("text-subtitle" . "#424242")
+             ("text-header" . "#ffffff")
+             ("text" . "#363636")
+             ("link-hover" . "#363636")
+             ("highlight-secondary" . "#4285f4")
+             ("highlight-primary" . "#3367d6")
+             ("highlight-hover" . "#5a95f5")
+             ("card-shadow" . "rgba(0, 0, 0, 0.1)")
+             ("card-background" . "#ffffff")
+             ("background" . "#f5f5f5"))
+            ("dark"
+             ("text-title" . "#fafafa")
+             ("text-subtitle" . "#f5f5f5")
+             ("text-header" . "#ffffff")
+             ("text" . "#eaeaea")
+             ("link-hover" . "#ffdd57")
+             ("highlight-secondary" . "#4285f4")
+             ("highlight-primary" . "#3367d6")
+             ("highlight-hover" . "#5a95f5")
+             ("card-shadow" . "rgba(0, 0, 0, 0.4)")
+             ("card-background" . "#2b2b2b")
+             ("background" . "#131313"))))))
+    (computed-file
+     "config.json"
+     (with-extensions (list guile-json-4)
+       (with-imported-modules (source-module-closure '((json builder)))
+         #~(begin
+             (use-modules (json builder))
+             (with-output-to-file #$output
+               (lambda ()
+                 (scm->json '#$config)))))))))
 
 
 ;;;
