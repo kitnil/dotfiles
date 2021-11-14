@@ -8,7 +8,9 @@
              (guix store)
              (ice-9 match)
              (json builder)
-             (srfi srfi-1))
+             (srfi srfi-1)
+             (gnu)
+             (gnu machine))
 
 (define %dotfiles-directory
   (and=> (getenv "HOME")
