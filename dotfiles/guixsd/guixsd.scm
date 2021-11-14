@@ -632,7 +632,6 @@ location / {
                            "iso.wugi.info"
                            "cgit.duckdns.org"
                            "spb"
-                           "blog.wugi.info"
                            "netmap.intr"
                            ;; Majordomo
                            ;; "hms-dev.intr"
@@ -864,7 +863,8 @@ location / {
                                                           (job_name . "restic-rest"))
                                                          ((static_configs
                                                            .
-                                                           #(((targets . #("https://guix.wugi.info/")))))
+                                                           #(((targets . #("https://guix.wugi.info/"
+                                                                           "https://blog.wugi.info/")))))
                                                           (scrape_interval . "5m")
                                                           (metrics_path . "/probe")
                                                           (params . ((module . #("http_2xx"))))
