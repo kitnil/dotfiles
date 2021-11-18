@@ -104,6 +104,28 @@
    (patterns "INBOX") ;Sync only "INBOX"
    (sync "Pull")))
 
+(define mbsync-majordomo-healthchecks
+  (mbsync-config-file
+   (imap-account "majordomo-healthchecks")
+   (host "router.majordomo.ru")
+   (user "healthchecks@majordomo.ru")
+   (pass-cmd "pass show majordomo/private/router.majordomo.ru/healthchecks@majordomo.ru")
+   (auth-mechs "LOGIN")
+   (ssl-type "None")
+   (certificate-file "/etc/ssl/certs/ca-certificates.crt")
+   (pipeline-depth "50")
+   (imap-store "majordomo-healthchecks-remote")
+   (account "majordomo-healthchecks")
+   (maildir-store "majordomo-healthchecks-local")
+   (path "~/Maildir/")
+   (inbox "~/Maildir/majordomo-healthchecks")
+   (sub-folders "Verbatim")
+   (channel "majordomo-healthchecks")
+   (far ":majordomo-healthchecks-remote:")
+   (near ":majordomo-healthchecks-local:")
+   (patterns "INBOX") ;Sync only "INBOX"
+   (sync "Pull")))
+
 (define mbsync-wugi
   (mbsync-config-file
    (imap-account "wugi")
@@ -257,6 +279,7 @@
                                                                (list mbsync-gmail
                                                                      mbsync-majordomo
                                                                      mbsync-majordomo-sidorov
+                                                                     mbsync-majordomo-healthchecks
                                                                      mbsync-wugi))))))))))
 
    (simple-service 'chromium-wrapper
