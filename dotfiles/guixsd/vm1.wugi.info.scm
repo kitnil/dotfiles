@@ -2,7 +2,7 @@
 ;; for a "bare bones" setup, with no X11 display server.
 
 (use-modules (gnu))
-(use-service-modules certbot databases dbus desktop docker dns monitoring networking ssh sysctl web vpn)
+(use-service-modules certbot databases dbus desktop docker dns messaging monitoring networking ssh sysctl web vpn)
 (use-package-modules admin curl certs databases networking linux ssh tmux)
 
 (use-modules (config))
@@ -155,7 +155,8 @@ cache.size = 10 * MB
                                                     "homer.wugi.info"
                                                     "githunt.wugi.info"
                                                     "vm1.wugi.info"
-                                                    "wugi.info"))))))
+                                                    "wugi.info"
+                                                    "xmpp.wugi.info"))))))
 
                           (service nginx-service-type
                                    (nginx-configuration
@@ -179,6 +180,17 @@ cache.size = 10 * MB
                                    (homer-configuration
                                     (config-file %homer-wugi.info-config)
                                     (nginx (list %homer-wugi.info-nginx-configuration))))
+
+                          (service prosody-service-type
+                                   (prosody-configuration
+                                    (virtualhosts
+                                     (list
+                                      (virtualhost-configuration
+                                       (domain "xmpp.wugi.info"))))
+                                    (ssl
+                                     (ssl-configuration
+                                      (key "/etc/prosody/certs/xmpp.wugi.info.key")
+                                      (certificate "/etc/prosody/certs/xmpp.wugi.info.pem"))))))
 
                     %mail-services
 
