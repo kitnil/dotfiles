@@ -96,6 +96,16 @@
                 (list '(:eval (format nil "VPN: ~a" *tapvpn-ip*))))
 
           ,(make-string 4 :initial-element #\space)
+          "kvm5->kvm25"
+
+          ,@(if *kvm-disk-free-root-counter*
+                (list (make-string 4 :initial-element #\space))
+                '())
+          ,@(if *kvm-disk-free-root-counter*
+                (list '(:eval (format nil "kvm25: /kvm: ~a" *kvm-disk-free-root-counter*)))
+                '())
+
+          ,(make-string 4 :initial-element #\space)
           ,'(:eval (format nil "VOL: ~a" *volume-current*))
 
           ,(make-string 4 :initial-element #\space)
