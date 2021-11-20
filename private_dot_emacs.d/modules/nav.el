@@ -104,6 +104,9 @@
              (when (string-match (rx (and any ".guix-profile")) (buffer-file-name))
                (wi-find-file-readlink))))
 
+(setq auto-insert-directory
+      (expand-file-name "~/.emacs.d/insert"))
+
 (defalias 'center-mode 'olivetti-mode)
 
 ;; Show recursion depth.

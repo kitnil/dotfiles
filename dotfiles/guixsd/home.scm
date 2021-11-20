@@ -585,7 +585,18 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                                   "snippets/message-mode/melpa"
                                   "snippets/message-mode/cgit-guix"
                                   "snippets/message-mode/push"
-                                  "snippets/message-mode/proprietary"))))
+                                  "snippets/message-mode/proprietary"))
+                           (map (lambda (file-name)
+                                  `(,(string-append "emacs.d/" file-name) ,(local-file (string-append "private_dot_emacs.d/" file-name))))
+                                '("insert/guix/gnu/services/service"
+                                  "insert/guix/gnu/packages/package"
+                                  "insert/guix/gnu/tests/test"
+                                  "insert/guix/gnu/system/examples/vm-inherit-image"
+                                  "insert/groovy/Jenkinsfile"
+                                  "insert/guile/script"
+                                  "insert/dotfiles/modules/services/service"
+                                  "insert/nix/shell.nix"
+                                  "insert/nix/flake.nix"))))
 
    (simple-service 'groovy-config
                    home-files-service-type
