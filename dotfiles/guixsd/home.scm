@@ -968,7 +968,7 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
 
    (simple-service 'dunst-config
                    home-files-service-type
-                   (list `("config/dunst/dunstrc.tmpl" ,(local-file "../../dot_config/dunst/dunstrc.tmpl"))))
+                   (list `("config/dunst/dunstrc" ,(local-file "../../dot_config/dunst/dunstrc"))))
 
 
    ;; TODO: Add those
