@@ -399,6 +399,10 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                    home-files-service-type
                    (list `("gdbinit" ,(local-file "../../dot_gdbinit"))))
 
+   (simple-service 'ghci-config
+                   home-files-service-type
+                   (list `("ghci" ,(local-file "../../dot_ghci"))))
+
    (simple-service 'emacs-config
                    home-files-service-type
                    (append (list `("emacs" ,(local-file "../../dot_emacs"))
