@@ -617,6 +617,68 @@ account default : gmail
 "
                                    (pass "email/gmail/go.wigust"))))))
 
+   (simple-service 'netrc-config
+                   home-activation-service-type
+                   (let ((file
+                          (scheme-file
+                           "netrc.scm"
+                           #~(begin
+                               (let ((%home
+                                      (and=> (getenv "HOME")
+                                             (lambda (home)
+                                               home))))
+                                 (add-to-load-path (string-append %home "/.local/share/chezmoi/dotfiles"))
+                                 (use-modules (ice-9 format)
+                                              (ice-9 match)
+                                              (guile pass))
+                                 (call-with-output-file (string-append %home "/.netrc")
+                                   (lambda (port)
+                                     (for-each
+                                      (match-lambda
+                                        ((net (machine m)
+                                              (login l)
+                                              (password p))
+                                         (format port "~%machine ~a~%" m)
+                                         (format port "login ~a~%" l)
+                                         (format port "password ~a~%" (pass p))))
+                                      '((net
+                                         (machine "api.github.com")
+                                         (login "wigust")
+                                         (password "github/tokens/api/wigust"))
+                                        (net
+                                         (machine "uploads.github.com")
+                                         (login "wigust")
+                                         (password "github/tokens/api/wigust"))
+                                        (net
+                                         (machine "imap.yandex.ru")
+                                         (login "houdinihar")
+                                         (password "email/yandex.ru/houdinihar"))
+                                        (net
+                                         (machine "imap.rambler.ru")
+                                         (login "houdinihar")
+                                         (password "email/rambler/houdinihar"))
+                                        (net
+                                         (machine "imap.majordomo.ru")
+                                         (login "pyhalov")
+                                         (password "majordomo/private/newmail.majordomo.ru/pyhalov@majordomo.ru"))
+                                        (net
+                                         (machine "localhost")
+                                         (login "oleg")
+                                         (password "localhost/imap/oleg"))
+                                        (net
+                                         (machine "bareos.intr")
+                                         (login "netcfg")
+                                         (password "majordomo/public/172.16.103.111/netcfg"))
+                                        (net
+                                         (machine "pop3.hoster24.ru")
+                                         (login "pop3")
+                                         (password "majordomo/public/hoster24.ru/pop3"))
+                                        (net
+                                         (machine "172.16.103.111")
+                                         (login "netcfg")
+                                         (password "majordomo/public/172.16.103.111/netcfg")))))))))))
+                     #~(begin (primitive-load #$file))))
+
    (service home-mcron-service-type)
    (service nix-delete-generations-service-type
             (nix-delete-generations-configuration
