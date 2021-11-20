@@ -11,10 +11,8 @@
 (defcommand rofi-ssh () ()
   "Open Rofi ssh list."
   (run-rofi
-   (format nil "-ssh-command '{terminal} -fg ~s -bg ~s -title \"ssh@{host}\" -e {ssh-client} {host}' -width 20 -terminal '~a' -modi ssh -show ssh"
-           (if dark-theme "#ffffff" "#000000")
-           (if dark-theme "#000000" "#f0fff0")
-           (xterm-command))))
+   (format nil "-ssh-command '{terminal} --title \"ssh@{host}\" --command {ssh-client} {host}' -width 20 -terminal '~a' -modi ssh -show ssh"
+           "alacritty")))
 
 (defcommand rofi-mycli () ()
   "Open Rofi mycli."
