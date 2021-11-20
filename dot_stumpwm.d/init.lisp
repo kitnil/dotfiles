@@ -24,7 +24,7 @@
            (string= (getenv "DISPLAY") ":1")
            (string= (getenv "DISPLAY") ":2")
            (string= (getenv "DISPLAY") ":3"))
-       (redirect-all-output (concat (getenv "HOME") "/.stumpwm.d/debug-output" (getenv "DISPLAY") ".txt"))
+       ;; (redirect-all-output (concat (getenv "HOME") "/.stumpwm.d/debug-output" (getenv "DISPLAY") ".txt")) ||#
 
        (load-config-file "keys.lisp")
        (load-config-file "nav.lisp")
