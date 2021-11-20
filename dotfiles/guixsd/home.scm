@@ -637,6 +637,10 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                    home-files-service-type
                    (list `("sbcl_completions" ,(local-file "../../dot_sbcl_completions"))))
 
+   (simple-service 'screen-config
+                   home-files-service-type
+                   (list `("screenrc" ,(local-file "../../dot_screenrc"))))
+
    (simple-service 'parallel-config
                    home-activation-service-type
                    #~(begin
