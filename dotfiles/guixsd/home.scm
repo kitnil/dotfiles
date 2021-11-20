@@ -1003,6 +1003,12 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                          (gpg->file #$(local-file "../../private_dot_ssh/encrypted_private_authorized_keys")
                                     (string-append ssh "/authorized_keys")))))
 
+   (simple-service 'sshrc-config
+                   home-files-service-type
+                   (list `("sshrc" ,(local-file "../../dot_sshrc"))
+                         `("sshrc.d/.bashrc" ,(local-file "../../dot_sshrc.d/dot_bashrc"))
+                         `("sshrc.d/.tmux.conf" ,(local-file "../../dot_sshrc.d/dot_tmux.conf"))))
+
    (simple-service 'xsession-config
                    home-files-service-type
                    (list
