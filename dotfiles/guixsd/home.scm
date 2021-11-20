@@ -392,6 +392,15 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                                 '("bash.scm"
                                   "mjru.bash"))))
 
+   (simple-service 'applications
+                   home-files-service-type
+                   (list `("local/share/applications/mupdf.desktop" ,(local-file "../../dot_local/share/applications/mupdf.desktop"))
+                         `("local/share/applications/gnus.desktop" ,(local-file "../../dot_local/share/applications/gnus.desktop"))
+                         `("local/share/applications/org-protocol.desktop" ,(local-file "../../dot_local/share/applications/org-protocol.desktop"))
+                         `("local/share/applications/mimeapps.list" ,(local-file "../../dot_local/share/applications/mimeapps.list"))
+                         `("local/share/applications/guix-log.desktop" ,(local-file "../../dot_local/share/applications/guix-log.desktop"))
+                         `("local/share/applications/feh.desktop" ,(local-file "../../dot_local/share/applications/feh.desktop"))))
+
    (simple-service 'direnv-config
                    home-files-service-type
                    (list `("direnvrc" ,(local-file "../../dot_direnvrc"))))
