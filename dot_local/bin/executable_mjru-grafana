@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+set -o nounset -o errexit -o pipefail -o xtrace
+
+GRAFANA_USERNAME="${USERNAME:-sup}"
+GRAFANA_PASSWORD="${PASSWORD:-$(pass show majordomo/public/grafana.intr/sup)}"
+GRAFANA_HOSTNAME="${GRAFANA_HOSTNAME:-grafana.intr}"
+
+GRAFANA_API="${GRAFANA_API:-https://${GRAFANA_USERNAME}:${GRAFANA_PASSWORD}@${GRAFANA_HOSTNAME}}"
+
+case "$1" in
+    search)
+        curl --silent "${GRAFANA_API}/api/search"
+        ;;
+    render)
+        curl --verbose --verbose "${GRAFANA_API}/render/ogvzsY3mb/web-performance-panelized?orgId=1&refresh=30s&viewPanel=6&width=1000&height=500"
+        ;;
+esac
