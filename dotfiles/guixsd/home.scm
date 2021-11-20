@@ -590,6 +590,10 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                                   "snippets/message-mode/push"
                                   "snippets/message-mode/proprietary"))))
 
+   (simple-service 'groovy-config
+                   home-files-service-type
+                   (list `("groovy/groovysh.rc" ,(local-file "../../dot_groovy/groovysh.rc"))))
+
    (simple-service 'gnupg-config
                    home-files-service-type
                    (map (lambda (file-name)

@@ -18,6 +18,7 @@ dot_gnus.el
 dot_gdbinit
 dot_ghci
 dot_gitconfig
+dot_groovy
 private_dot_emacs.d
 private_dot_gnupg
 dot_ansible
