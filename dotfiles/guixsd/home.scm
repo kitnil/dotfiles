@@ -364,7 +364,6 @@ exec -a \"$0\" /home/oleg/.nix-profile/bin/~a --disable-features=SendMouseLeaveE
                            "gita-src"
                            "git-changelog-symlink-init.sh"
                            "git-gitlab"
-                           "git-group-clone.sh"
                            "github-create-repository"
                            "gitlab-runner-service"
                            "git-mirror"
