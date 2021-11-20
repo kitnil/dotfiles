@@ -601,6 +601,10 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                         '("gpg-agent.conf"
                           "gpg.conf")))
 
+   (simple-service 'guile-config
+                   home-files-service-type
+                   (list `("guile" ,(local-file "../../dot_guile"))))
+
    (simple-service 'msmtp-config
                    home-activation-service-type
                    #~(begin
