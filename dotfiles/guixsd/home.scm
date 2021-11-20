@@ -613,6 +613,10 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                    home-files-service-type
                    (list `("keynavrc" ,(local-file "../../dot_keynavrc"))))
 
+   (simple-service 'kodi-config
+                   home-files-service-type
+                   (list `("kodirc" ,(local-file "../../dot_kodirc"))))
+
    (simple-service 'msmtp-config
                    home-activation-service-type
                    #~(begin
