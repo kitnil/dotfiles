@@ -381,6 +381,16 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                           "xorg.lisp"
                           "youtube-dl.lisp")))
 
+   (simple-service 'bash-config
+                   home-files-service-type
+                   (append (list `("bash_completion" ,(local-file "../../dot_bash_completion"))
+                                 `("bash_guix" ,(local-file "../../dot_bash_guix"))
+                                 `("bash_vterm" ,(local-file "../../dot_bash_vterm")))
+                           (map (lambda (file-name)
+                                  `(,(string-append "bash.d/" file-name) ,(local-file (string-append "dot_bash.d/" file-name))))
+                                '("bash.scm"
+                                  "mjru.bash"))))
+
    (service home-mcron-service-type)
    (service nix-delete-generations-service-type
             (nix-delete-generations-configuration

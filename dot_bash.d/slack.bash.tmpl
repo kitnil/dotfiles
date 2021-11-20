@@ -1,9 +1,0 @@
-#!/usr/bin/env bash
-
-noti-slack()
-{
-    NOTI_SLACK_TOKEN="$(pass show slack.com/home-s2x8742.slack.com/tokens/deprecated)"  \
-    NOTI_SLACK_CHANNEL="${NOTI_SLACK_CHANNEL:-#ci}"                                     \
-    NOTI_SLACK_USERNAME='{{ .chezmoi.fullHostname }}'                                   \
-    noti --slack "$@"
-}

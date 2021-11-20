@@ -8,6 +8,10 @@ tests
 README.md
 dotfiles
 dot_stumpwm.d
+dot_bash_completion
+dot_bash_guix
+dot_bash_vterm
+dot_bash.d
 bin/dotfiles
 todo.org
 {{- if eq .chezmoi.hostname "guixsd" }}
