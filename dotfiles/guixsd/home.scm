@@ -641,6 +641,10 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                    home-files-service-type
                    (list `("screenrc" ,(local-file "../../dot_screenrc"))))
 
+   (simple-service 'tmux-config
+                   home-files-service-type
+                   (list `("tmux.conf" ,(local-file "../../dot_tmux.conf"))))
+
    (simple-service 'parallel-config
                    home-activation-service-type
                    #~(begin

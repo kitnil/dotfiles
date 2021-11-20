@@ -30,6 +30,7 @@ dot_nanorc
 dot_pythonrc
 dot_sbcl_completions
 dot_screenrc
+dot_tmux.conf
 private_dot_emacs.d
 private_dot_gnupg
 dot_ansible
