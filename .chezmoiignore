@@ -15,6 +15,7 @@ dot_bash.d
 dot_direnvrc
 dot_emacs
 private_dot_emacs.d
+private_dot_gnupg
 dot_ansible
 bin/dotfiles
 todo.org

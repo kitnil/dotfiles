@@ -577,6 +577,13 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                                   "snippets/message-mode/push"
                                   "snippets/message-mode/proprietary"))))
 
+   (simple-service 'gnupg-config
+                   home-files-service-type
+                   (map (lambda (file-name)
+                          `(,(string-append "gnupg/" file-name) ,(local-file (string-append "private_dot_gnupg/" file-name))))
+                        '("gpg-agent.conf"
+                          "gpg.conf")))
+
    (service home-mcron-service-type)
    (service nix-delete-generations-service-type
             (nix-delete-generations-configuration
