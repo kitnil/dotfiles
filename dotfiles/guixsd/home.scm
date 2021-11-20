@@ -584,6 +584,39 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                         '("gpg-agent.conf"
                           "gpg.conf")))
 
+   (simple-service 'msmtp-config
+                   home-activation-service-type
+                   #~(begin
+                       (define %home
+                         (and=> (getenv "HOME")
+                                (lambda (home)
+                                  home)))
+                       (add-to-load-path (string-append %home "/.local/share/chezmoi/dotfiles"))
+                       (use-modules (ice-9 format)
+                                    (guile pass))
+                       (call-with-output-file (string-append %home "/.msmtprc")
+                         (lambda (port)
+                           (format port "\
+# Set default values for all following accounts.
+defaults
+auth           on
+tls            on
+tls_trust_file /etc/ssl/certs/ca-certificates.crt
+logfile        ~/.msmtp.log
+
+# Gmail
+account        gmail
+host           smtp.gmail.com
+port           587
+from           go.wigust@gmail.com
+user           go.wigust
+password       ~a
+
+# Set a default account
+account default : gmail
+"
+                                   (pass "email/gmail/go.wigust"))))))
+
    (service home-mcron-service-type)
    (service nix-delete-generations-service-type
             (nix-delete-generations-configuration
