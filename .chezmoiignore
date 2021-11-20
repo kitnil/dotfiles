@@ -32,6 +32,7 @@ dot_sbcl_completions
 dot_screenrc
 dot_tmux.conf
 dot_toprc
+dot_Xmodmap
 private_dot_emacs.d
 private_dot_gnupg
 dot_ansible

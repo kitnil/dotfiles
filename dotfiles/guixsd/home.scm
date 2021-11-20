@@ -649,6 +649,10 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                    home-files-service-type
                    (list `("toprc" ,(local-file "../../dot_toprc"))))
 
+   (simple-service 'xmodmap-config
+                   home-files-service-type
+                   (list `("Xmodmap" ,(local-file "../../dot_Xmodmap"))))
+
    (simple-service 'parallel-config
                    home-activation-service-type
                    #~(begin
