@@ -669,6 +669,124 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                    home-files-service-type
                    (list `("Xresources" ,(local-file "../../dot_Xresources"))))
 
+   (simple-service 'git-config
+                   home-files-service-type
+                   (list `("config/git/gitk" ,(local-file "../../dot_config/git/gitk"))
+                         `("config/git/ignore" ,(local-file "../../dot_config/git/ignore"))))
+
+   (simple-service 'qterminal-config
+                   home-files-service-type
+                   (list `("config/qterminal.org/qterminal.ini" ,(local-file "../../dot_config/qterminal.org/qterminal.ini"))
+                         `("config/qterminal.org/qterminal_bookmarks.xml" ,(local-file "../../dot_config/qterminal.org/qterminal_bookmarks.xml"))))
+
+   (simple-service 'zathura-config
+                   home-files-service-type
+                   (list `("config/zathura/zathurarc" ,(local-file "../../dot_config/zathura/zathurarc"))))
+
+   (simple-service 'ripgrep-config
+                   home-files-service-type
+                   (list `("config/ripgrep/ripgreprc" ,(local-file "../../dot_config/ripgrep/ripgreprc"))))
+
+   (simple-service 'gtk-config
+                   home-files-service-type
+                   (list `("config/gtk-3.0/gtk.css" ,(local-file "../../dot_config/gtk-3.0/gtk.css"))
+                         `("config/gtk-3.0/settings.ini" ,(local-file "../../dot_config/gtk-3.0/settings.ini"))))
+
+   (simple-service 'greenclip-config
+                   home-files-service-type
+                   (list `("config/greenclip.cfg" ,(local-file "../../dot_config/greenclip.cfg"))))
+
+   (simple-service 'alacritty-config
+                   home-files-service-type
+                   (list `("config/alacritty/themes/xterm.yml" ,(local-file "../../dot_config/alacritty/themes/xterm.yml"))
+                         `("config/alacritty/alacritty.yml" ,(local-file "../../dot_config/alacritty/alacritty.yml"))))
+
+   (simple-service 'feh-config
+                   home-files-service-type
+                   (list `("config/feh/buttons" ,(local-file "../../dot_config/feh/buttons"))))
+
+   (simple-service 'sway-config
+                   home-files-service-type
+                   (list `("config/sway/config" ,(local-file "../../dot_config/sway/config"))))
+
+   (simple-service 'polybar-config
+                   home-files-service-type
+                   (list `("config/polybar/config" ,(local-file "../../dot_config/polybar/config"))))
+
+   (simple-service 'htop-config
+                   home-files-service-type
+                   (list `("config/htop/htoprc" ,(local-file "../../dot_config/htop/htoprc"))))
+
+   (simple-service 'transmission-config
+                   home-files-service-type
+                   (list `("config/transmission/settings.json" ,(local-file "../../dot_config/transmission/settings.json"))))
+
+   (simple-service 'kitty-config
+                   home-files-service-type
+                   (list `("config/kitty/kitty.conf" ,(local-file "../../dot_config/kitty/kitty.conf"))))
+
+   (simple-service 'gita-config
+                   home-files-service-type
+                   (list `("config/gita/cmds.yml" ,(local-file "../../dot_config/gita/cmds.yml"))))
+
+   (simple-service 'youtube-dl-config
+                   home-files-service-type
+                   (list `("config/youtube-dl/config" ,(local-file "../../dot_config/youtube-dl/config"))))
+
+   (simple-service 'postgresql-config
+                   home-files-service-type
+                   (list `("config/autopostgresqlbackup.conf" ,(local-file "../../dot_config/autopostgresqlbackup.conf"))))
+
+   (simple-service 'cava-config
+                   home-files-service-type
+                   (list `("config/cava/config" ,(local-file "../../dot_config/cava/config"))))
+
+   (simple-service 'termonad-config
+                   home-files-service-type
+                   (list `("config/termonad/termonad.hs" ,(local-file "../../dot_config/termonad/termonad.hs"))))
+
+   (simple-service 'nix-config
+                   home-files-service-type
+                   (list `("config/nix/repl.nix" ,(local-file "../../dot_config/nix/repl.nix"))
+                         `("config/nix/nix.conf" ,(local-file "../../dot_config/nix/nix.conf"))
+                         `("config/nix/registry.json" ,(local-file "../../dot_config/nix/registry.json"))
+                         `("config/nixpkgs/config.nix" ,(local-file "../../dot_config/nixpkgs/config.nix"))))
+
+   (simple-service 'mpv-config
+                   home-files-service-type
+                   (list `("config/mpv/input.conf" ,(local-file "../../dot_config/mpv/input.conf"))
+                         `("config/mpv/mpv.conf" ,(local-file "../../dot_config/mpv/mpv.conf"))))
+
+   (simple-service 'cagebreak-config
+                   home-files-service-type
+                   (list `("config/cagebreak/config" ,(local-file "../../dot_config/cagebreak/config"))))
+
+   (simple-service 'vis-config
+                   home-files-service-type
+                   (list `("config/vis/config" ,(local-file "../../dot_config/vis/config"))))
+
+   (simple-service 'dunst-config
+                   home-files-service-type
+                   (list `("config/dunst/dunstrc.tmpl" ,(local-file "../../dot_config/dunst/dunstrc.tmpl"))))
+
+
+   ;; TODO: Add those
+   ;; dot_config/guile/mariadb.scm
+   ;; dot_config/mjru/encrypted_config.scm
+   ;; dot_config/mjru/encrypted_firefox.scm
+
+   (simple-service 'espanso-config
+                   home-files-service-type
+                   (list `("config/espanso/default.yml" ,(local-file "../../dot_config/espanso/default.yml"))
+                         ;; TODO: Add `("config/espanso/user/home.yml.tmpl" ,(local-file "../../dot_config/espanso/user/home.yml.tmpl"))
+                         `("config/espanso/user/systemd.yml" ,(local-file "../../dot_config/espanso/user/systemd.yml"))
+                         `("config/espanso/user/juniper.yml" ,(local-file "../../dot_config/espanso/user/juniper.yml"))
+                         `("config/espanso/user/mysql.yml" ,(local-file "../../dot_config/espanso/user/mysql.yml"))
+                         `("config/espanso/user/nix.yml" ,(local-file "../../dot_config/espanso/user/nix.yml"))
+                         ;; TODO: Add dot_config/espanso/user/mjru.yml.tmpl
+                         ))
+
+
    (simple-service 'xsession-config
                    home-files-service-type
                    (list
@@ -855,7 +973,7 @@ gtk-xft-rgba=\"rgb\"
                                 '("guix_package.py"
                                   "guix_pull.py"))))
 
-   
+
    ;; XXX: missing home-ssh-configuration
    ;; (service home-ssh-service-type
    ;;          (home-ssh-configuration
