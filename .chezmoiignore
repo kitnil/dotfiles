@@ -12,6 +12,7 @@ dot_bash_completion
 dot_bash_guix
 dot_bash_vterm
 dot_bash.d
+dot_ansible
 bin/dotfiles
 todo.org
 {{- if eq .chezmoi.hostname "guixsd" }}

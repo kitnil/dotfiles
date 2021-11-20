@@ -399,7 +399,16 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
             (guix-delete-generations-configuration
              (schedule '(next-hour '(21)))
              (period "1m")))
+
    (service ansible-playbook-service-type)
+   (simple-service 'ansible-config
+                   home-files-service-type
+                   (append (list `(,"ansible.cfg" ,(local-file "../../dot_ansible.cfg")))
+                           (map (lambda (file-name)
+                                  `(,(string-append "ansible/plugins/modules/" file-name) ,(local-file (string-append "dot_ansible/plugins/modules/" file-name))))
+                                '("guix_package.py"
+                                  "guix_pull.py"))))
+
    
    ;; XXX: missing home-ssh-configuration
    ;; (service home-ssh-service-type
