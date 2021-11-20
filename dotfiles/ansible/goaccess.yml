@@ -1,0 +1,17 @@
+# Example:
+# ansible-playbook goaccess.yml -l localhost --extra-vars "home=/home/u7590 site=test.wugi.info host=web33s"
+
+- name: Generate goaccess report
+  gather_facts: True
+  hosts: '{{ host }}'
+  become: yes
+  tasks:
+    - name: list logs on server
+      shell: find '{{ home }}/logs' -name 'www.{{ site }}-access.log*' -type f
+      register: files
+      changed_when: False
+
+    - name: generate goaccess wrapper script
+      shell: |
+        cd "{{ home }}/logs"
+        zcat {{ files.stdout_lines | join(' ') }} | goaccess -o "/home/eng/{{ site }}.html" --log-format=COMBINED "www.{{ site }}-access.log" -
