@@ -1,6 +1,6 @@
 -- -*- eval: (setq-local indent-tabs-mode t); -*-
 
-let config = /home/oleg/.config/dhall/config.dhall
+let config = "saint-petersburg"
 
 let guix-profile = "/home/oleg/.guix-profile"
 

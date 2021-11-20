@@ -11,6 +11,3 @@ dhall text <<< './dhall/mail/majordomo.dhall { name = "Олег Пыхалов",
 
 dhall text <<< './dhall/mail/majordomo.dhall { name = "Александр Великин", from = "asfjsdf@mail.ru", password = "mail.ru/asfjsdf"}' > dot_muttrc_asfjsdf_mail.tmpl
 dhall text <<< './dhall/mail/majordomo.dhall { name = "rxaetbed rxaetbed", from = "rxaetbed@mail.ru", password = "mail.ru/rxaetbed@mail.ru"}' > dot_muttrc_rxaetbed_mail.tmpl
-
-dhall text --file dhall/xmenu.dhall > bin/executable_xmenu.sh
-chmod 755 bin/executable_xmenu.sh
