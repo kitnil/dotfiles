@@ -2,9 +2,7 @@
 
 (defun run-rofi (command &optional dark)
   (run-shell-command
-   (join `("rofi"
-           ,@(if (or dark-theme dark) '("-theme DarkBlue") '())
-           ,command))))
+   (join `("rofi" ,command))))
 
 (defcommand rofi-drun () ()
   "Open Rofi to launch `.desktop' file."
