@@ -150,10 +150,6 @@
 
 (home-environment
 
- (packages (map manifest-entry-item
-                (manifest-entries
-                 (load "../manifests/guixsd.scm"))))
-
  (services
   (list
 
