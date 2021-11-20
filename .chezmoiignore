@@ -28,6 +28,7 @@ dot_mongorc.js
 dot_myclirc
 dot_nanorc
 dot_pythonrc
+dot_sbcl_completions
 private_dot_emacs.d
 private_dot_gnupg
 dot_ansible
