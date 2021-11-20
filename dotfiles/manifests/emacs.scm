@@ -156,7 +156,7 @@
        emacs-undo-tree          ; Undo visualisation
        emacs-use-package        ; Lazy configuration
        emacs-validate
-       emacs-modus-vivendi-theme
+       emacs-modus-themes
        emacs-w3m                ; Front end to w3m command line web browser
        emacs-which-key          ; Key bindings help
        emacs-yaml-mode          ; YAML files
