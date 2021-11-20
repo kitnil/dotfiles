@@ -609,6 +609,10 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                    home-files-service-type
                    (list `("guile" ,(local-file "../../dot_guile"))))
 
+   (simple-service 'keynav-config
+                   home-files-service-type
+                   (list `("keynavrc" ,(local-file "../../dot_keynavrc"))))
+
    (simple-service 'msmtp-config
                    home-activation-service-type
                    #~(begin

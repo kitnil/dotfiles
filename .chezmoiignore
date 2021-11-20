@@ -21,6 +21,7 @@ dot_gitconfig
 dot_groovy
 dot_guile
 dot_inputrc
+dot_keynavrc
 private_dot_emacs.d
 private_dot_gnupg
 dot_ansible
