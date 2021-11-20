@@ -324,6 +324,63 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                                              #$shellcheck)))
                                  (chmod #$output #o555))))))
 
+   (simple-service 'stumpwm-config
+                   home-files-service-type
+                   (map (lambda (file-name)
+                          `(,(string-append "stumpwm.d/" file-name) ,(local-file (string-append "dot_stumpwm.d/" file-name))))
+                        '("admin.lisp"
+                          "android.lisp"
+                          "audio.lisp"
+                          "autostart.lisp"
+                          "backup.lisp"
+                          "chat.lisp"
+                          "clipboard.lisp"
+                          "covid19.lisp"
+                          "cpu.lisp"
+                          "desktop-0.lisp"
+                          "disk.lisp"
+                          "display-0.lisp"
+                          "display-1.lisp"
+                          "docker.lisp"
+                          "documentation.lisp"
+                          "emacs.lisp"
+                          "gaps.lisp"
+                          "gpg.lisp"
+                          "group-1.lisp"
+                          "hardware.lisp"
+                          "imap.lisp"
+                          "init.lisp"
+                          "keys.lisp"
+                          "kodi.lisp"
+                          "kvm.lisp"
+                          "mail.lisp"
+                          "mem.lisp"
+                          "mjru.lisp"
+                          "mode-line.lisp"
+                          "mpv.lisp"
+                          "nav.lisp"
+                          "notify.lisp"
+                          "password.lisp"
+                          "repl.lisp"
+                          "rest.lisp"
+                          "rofi.lisp"
+                          "screenshoot.lisp"
+                          "spb.lisp"
+                          "streamlink.lisp"
+                          "swank.lisp"
+                          "term.lisp"
+                          "text-editors.lisp"
+                          "theme.lisp"
+                          "time.lisp"
+                          "torrent.lisp"
+                          "trans.lisp"
+                          "utils.lisp"
+                          "vm.lisp"
+                          "vnc.lisp"
+                          "web.lisp"
+                          "xorg.lisp"
+                          "youtube-dl.lisp")))
+
    (service home-mcron-service-type)
    (service nix-delete-generations-service-type
             (nix-delete-generations-configuration
