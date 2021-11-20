@@ -14,6 +14,7 @@ dot_bash_vterm
 dot_bash.d
 dot_direnvrc
 dot_emacs
+dot_gdbinit
 private_dot_emacs.d
 private_dot_gnupg
 dot_ansible
