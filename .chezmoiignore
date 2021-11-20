@@ -13,6 +13,8 @@ dot_bash_guix
 dot_bash_vterm
 dot_bash.d
 dot_direnvrc
+dot_emacs
+private_dot_emacs.d
 dot_ansible
 bin/dotfiles
 todo.org
