@@ -653,6 +653,10 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                    home-files-service-type
                    (list `("Xmodmap" ,(local-file "../../dot_Xmodmap"))))
 
+   (simple-service 'xresources-config
+                   home-files-service-type
+                   (list `("Xresources" ,(local-file "../../dot_Xresources"))))
+
    (simple-service 'parallel-config
                    home-activation-service-type
                    #~(begin

@@ -33,6 +33,7 @@ dot_screenrc
 dot_tmux.conf
 dot_toprc
 dot_Xmodmap
+dot_Xresources
 private_dot_emacs.d
 private_dot_gnupg
 dot_ansible
