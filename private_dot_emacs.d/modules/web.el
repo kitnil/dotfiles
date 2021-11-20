@@ -328,8 +328,6 @@ in the variable `browse-url-streamlink-arguments' to mpv."
   (message "MPV for headphones is %s"
 	   (if browse-url-mpv-headphones "enabled" "disabled")))
 
-(setq browse-url-mpv-remote-program "~/bin/mpv-remote")
-
 (defun browse-url-mpv (url &optional new-window)
   "Ask the mpv video player to load URL.
 Defaults to the URL around or before point.  Passes the strings
