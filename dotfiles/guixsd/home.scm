@@ -629,6 +629,10 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                    home-files-service-type
                    (list `("nanorc" ,(local-file "../../dot_nanorc"))))
 
+   (simple-service 'python-config
+                   home-files-service-type
+                   (list `("pythonrc" ,(local-file "../../dot_pythonrc"))))
+
    (simple-service 'parallel-config
                    home-activation-service-type
                    #~(begin
