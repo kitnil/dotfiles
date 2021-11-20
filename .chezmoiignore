@@ -14,6 +14,7 @@ dot_bash_vterm
 dot_bash.d
 dot_direnvrc
 dot_emacs
+dot_gnus.el
 dot_gdbinit
 dot_ghci
 dot_gitconfig

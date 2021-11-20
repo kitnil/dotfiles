@@ -410,7 +410,8 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
    (simple-service 'emacs-config
                    home-files-service-type
                    (append (list `("emacs" ,(local-file "../../dot_emacs"))
-                                 `("emacs.d/.mc-lists.el" ,(local-file "../../private_dot_emacs.d/dot_mc-lists.el")))
+                                 `("emacs.d/.mc-lists.el" ,(local-file "../../private_dot_emacs.d/dot_mc-lists.el"))
+                                 `("gnus.el" ,(local-file "../../dot_gnus.el")))
                            (map (lambda (file-name)
                                   `(,(string-append "emacs.d/" file-name) ,(local-file (string-append "private_dot_emacs.d/" file-name))))
                                 '("abbrev_defs"
