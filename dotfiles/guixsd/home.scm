@@ -990,24 +990,11 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
    (simple-service 'ssh-config
                    home-activation-service-type
                    #~(begin
+                       (add-to-load-path (string-append #$%home "/.local/share/chezmoi/dotfiles"))
                        (use-modules (ice-9 rdelim)
-                                    (ice-9 popen))
-                       (let* ((%home
-                               (and=> (getenv "HOME")
-                                      (lambda (home)
-                                        home)))
-                              (ssh (string-append %home "/.ssh"))
-                              (gpg->file
-                               (lambda (gpg file)
-                                 (call-with-output-file file
-                                   (lambda (file-port)
-                                     (let* ((port (open-pipe* OPEN_READ
-                                                              "gpg" "--quiet" "--for-your-eyes-only" "--no-tty"
-                                                              "--decrypt" gpg))
-                                            (output (read-string port)))
-                                       (close-port port)
-                                       (display (string-trim-right output #\newline) file-port)
-                                       (newline file-port)))))))
+                                    (ice-9 popen)
+                                    (guile gpg))
+                       (let ((ssh (string-append #$%home "/.ssh")))
                          (unless (file-exists? ssh)
                            (mkdir ssh))
                          (chmod ssh #o700)
