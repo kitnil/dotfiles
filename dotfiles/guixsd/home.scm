@@ -634,6 +634,37 @@ account default : gmail
 "
                                    (pass "email/gmail/go.wigust"))))))
 
+   (simple-service 'gtkrc-config
+                   home-activation-service-type
+                   #~(begin
+                       (let ((%home (and=> (getenv "HOME")
+                                           (lambda (home)
+                                             home))))
+                         (call-with-output-file (string-append %home "/.gtkrc-2.0")
+                           (lambda (port)
+                             (format port "\
+# DO NOT EDIT! This file will be overwritten by LXAppearance.
+# Any customization should be done in ~/.gtkrc-2.0.mine instead.
+
+include \"~a/.gtkrc-2.0.mine\"
+gtk-theme-name=\"Adwaita-dark\"
+gtk-icon-theme-name=\"Adwaita\"
+gtk-font-name=\"DejaVu Sans 11\"
+gtk-cursor-theme-name=\"Adwaita\"
+gtk-cursor-theme-size=0
+gtk-toolbar-style=GTK_TOOLBAR_BOTH
+gtk-toolbar-icon-size=GTK_ICON_SIZE_SMALL_TOOLBAR
+gtk-button-images=1
+gtk-menu-images=1
+gtk-enable-event-sounds=1
+gtk-enable-input-feedback-sounds=1
+gtk-xft-antialias=1
+gtk-xft-hinting=1
+gtk-xft-hintstyle=\"hintfull\"
+gtk-xft-rgba=\"rgb\"
+"
+                                     %home))))))
+
    (simple-service 'netrc-config
                    home-activation-service-type
                    (let ((file
