@@ -403,6 +403,10 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                    home-files-service-type
                    (list `("ghci" ,(local-file "../../dot_ghci"))))
 
+   (simple-service 'gitconfig-config
+                   home-files-service-type
+                   (list `("gitconfig" ,(local-file "../../dot_gitconfig"))))
+
    (simple-service 'emacs-config
                    home-files-service-type
                    (append (list `("emacs" ,(local-file "../../dot_emacs"))
