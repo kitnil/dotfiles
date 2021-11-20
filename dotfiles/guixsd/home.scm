@@ -382,7 +382,11 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                    home-files-service-type
                    (append (list `("bash_completion" ,(local-file "../../dot_bash_completion"))
                                  `("bash_guix" ,(local-file "../../dot_bash_guix"))
-                                 `("bash_vterm" ,(local-file "../../dot_bash_vterm")))
+                                 `("bash_vterm" ,(local-file "../../dot_bash_vterm"))
+                                 `("local/share/bash-completion/completions/lexicon" ,(local-file "../../dot_local/share/bash-completion/completions/lexicon"))
+                                 `("local/share/bash-completion/completions/herd" ,(local-file "../../dot_local/share/bash-completion/completions/herd"))
+                                 `("local/share/bash-completion/completions/mail" ,(local-file "../../dot_local/share/bash-completion/completions/mail"))
+                                 `("local/share/bash-completion/completions/connect" ,(local-file "../../dot_local/share/bash-completion/completions/connect")))
                            (map (lambda (file-name)
                                   `(,(string-append "bash.d/" file-name) ,(local-file (string-append "dot_bash.d/" file-name))))
                                 '("bash.scm"
