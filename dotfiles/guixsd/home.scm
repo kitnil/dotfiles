@@ -975,6 +975,34 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                          ;; TODO: Add dot_config/espanso/user/mjru.yml.tmpl
                          ))
 
+   (simple-service 'ssh-config
+                   home-activation-service-type
+                   #~(begin
+                       (use-modules (ice-9 rdelim)
+                                    (ice-9 popen))
+                       (let* ((%home
+                               (and=> (getenv "HOME")
+                                      (lambda (home)
+                                        home)))
+                              (ssh (string-append %home "/.ssh"))
+                              (gpg->file
+                               (lambda (gpg file)
+                                 (call-with-output-file file
+                                   (lambda (file-port)
+                                     (let* ((port (open-pipe* OPEN_READ
+                                                              "gpg" "--quiet" "--for-your-eyes-only" "--no-tty"
+                                                              "--decrypt" gpg))
+                                            (output (read-string port)))
+                                       (close-port port)
+                                       (display (string-trim-right output #\newline) file-port)
+                                       (newline file-port)))))))
+                         (unless (file-exists? ssh)
+                           (mkdir ssh))
+                         (chmod ssh #o700)
+                         (gpg->file #$(local-file "../../private_dot_ssh/encrypted_private_known_hosts")
+                                    (string-append ssh "/known_hosts"))
+                         (gpg->file #$(local-file "../../private_dot_ssh/encrypted_private_authorized_keys")
+                                    (string-append ssh "/authorized_keys")))))
 
    (simple-service 'xsession-config
                    home-files-service-type
