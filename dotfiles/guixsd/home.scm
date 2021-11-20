@@ -629,6 +629,20 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                    home-files-service-type
                    (list `("nanorc" ,(local-file "../../dot_nanorc"))))
 
+   (simple-service 'parallel-config
+                   home-activation-service-type
+                   #~(begin
+                       (let* ((%home
+                               (and=> (getenv "HOME")
+                                      (lambda (home)
+                                        home)))
+                              (parallel (string-append %home "/.parallel")))
+                         (unless (file-exists? parallel)
+                           (mkdir parallel))
+                         (call-with-output-file (string-append parallel "/runs-without-willing-to-cite")
+                           (lambda (port)
+                             (display "6\n" port))))))
+
    (simple-service 'msmtp-config
                    home-activation-service-type
                    #~(begin
