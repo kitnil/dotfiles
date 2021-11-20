@@ -15,6 +15,7 @@
              (json)
 
              (gnu packages haskell-apps)
+             (gnu packages wm)
 
              (home services ansible)
              (home services desktop)
@@ -656,6 +657,34 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
    (simple-service 'xresources-config
                    home-files-service-type
                    (list `("Xresources" ,(local-file "../../dot_Xresources"))))
+
+   (simple-service 'xsession-config
+                   home-files-service-type
+                   (list
+                    `("xsession"
+                      ,(let ((stumpwp-load-file
+                              (plain-file
+                               "stumpwp-load-file"
+                               (with-output-to-string
+                                 (lambda ()
+                                   (display '(require :asdf))
+                                   (newline)
+                                   (display '(require :stumpwm))
+                                   (newline)
+                                   (display '(stumpwm:stumpwm))
+                                   (newline))))))
+                         (computed-file
+                          "xsession"
+                          #~(begin
+                              (call-with-output-file #$output
+                                (lambda (port)
+                                  (display "#!/bin/sh\n" port)
+                                  (format port "~a -r ~a &~%"
+                                          #$(file-append xclickroot "/bin/xclickroot")
+                                          #$(local-file "../../bin/executable_xmenu.sh"))
+                                  (format port "exec -a stumpwm /run/current-system/profile/bin/sbcl --load ~a~%"
+                                          #$stumpwp-load-file)))
+                              (chmod #$output #o555)))))))
 
    (simple-service 'parallel-config
                    home-activation-service-type

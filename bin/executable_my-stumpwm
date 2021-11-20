@@ -1,8 +1,0 @@
-;; -*-lisp-*-
-
-;; https://github.com/stumpwm/stumpwm/wiki/SetUp
-
-(require :asdf)
-(require :stumpwm)
-
-(stumpwm:stumpwm)
