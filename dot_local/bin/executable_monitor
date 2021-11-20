@@ -1,0 +1,43 @@
+#!/usr/bin/env bash
+# This script allows controll monitor 34WN650-W
+# DDC/CI monitor control on Linux https://blog.tcharles.fr/ddc-ci-screen-control-on-linux/
+
+if [[ $UID != 0 ]]
+then
+    echo "ddcutil requires root privileges."
+    exit 1
+fi
+
+case "$1" in
+    brightness)
+        ddcutil setvcp --bus=11 10 "${1:-100}"
+        ;;
+    input)
+        case "$2" in
+            1)
+                # Config 1: Main PC
+                OUT=("0x0f" "0x20")
+                ;;
+            2|hdmi2|HDMI2)
+                # Config 2: Virtual machine
+                OUT=("0x11" "0x21")
+                ;;
+            *)
+                echo "Unknown input '$1'"
+                exit 1
+                ;;
+        esac
+        ddcutil --bus=7 setvcp 60 ${OUT[0]}
+        ddcutil --bus=11 setvcp 60 ${OUT[1]}
+        ;;
+    capabilities)
+        (
+            set -x
+            ddcutil capabilities --bus=7
+            ddcutil capabilities --bus=11
+        )
+        ;;
+    *)
+        ddcutil detect
+        ;;
+esac
