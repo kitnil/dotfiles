@@ -1189,6 +1189,316 @@ gtk-xft-rgba=\"rgb\"
                                 '("guix_package.py"
                                   "guix_pull.py"))))
 
+   (simple-service 'ansible-hosts-config
+                   home-activation-service-type
+                   (with-extensions (list guile-json-4)
+                     (with-imported-modules (source-module-closure '((json builder)))
+                       #~(begin
+                           (add-to-load-path (string-append #$%home "/.local/share/chezmoi/dotfiles"))
+                           (use-modules (ice-9 rdelim)
+                                        (ice-9 popen)
+                                        (guile pass)
+                                        (json builder))
+                           (define password-router
+                             (pass "majordomo/public/router4/root"))
+                           (call-with-output-file #$(string-append %home "/.ansible-hosts")
+                             (lambda (port)
+                               (scm->json
+                                `(("vps"
+                                   ("vars"
+                                    ("ansible_ssh_user" . "opc")
+                                    ("ansible_ssh_private_key_file"
+                                     .
+                                     "~/.ssh/id_rsa_oracle"))
+                                   ("hosts" ("oracle" . null)))
+                                  ("vm"
+                                   ("vars"
+                                    ("ansible_ssh_user" . "root")
+                                    ("ansible_python_interpreter"
+                                     .
+                                     "/usr/bin/python3"))
+                                   ("children"
+                                    ("mjru"
+                                     ("hosts"
+                                      ("78.108.87.99" . null)
+                                      ("78.108.87.50" . null)
+                                      ("78.108.86.20" . null)
+                                      ("78.108.86.111" . null)
+                                      ("78.108.82.130" . null)
+                                      ("178.250.247.88" . null)
+                                      ("178.250.247.60" . null)
+                                      ("178.250.246.69" . null)
+                                      ("178.250.246.123" . null)
+                                      ("178.250.245.80" . null)
+                                      ("178.250.244.239" . null)))
+                                    ("kubernetes_installer"
+                                     ("hosts" ("178.250.247.88" . null)))
+                                    ("kubernetes"
+                                     ("hosts"
+                                      ("78.108.87.50" . null)
+                                      ("178.250.246.69" . null)
+                                      ("178.250.245.80" . null)))
+                                    ("glpi" ("hosts" ("178.250.244.239" . null)))
+                                    ("docker"
+                                     ("hosts"
+                                      ("78.108.87.99" . null)
+                                      ("78.108.86.20" . null)
+                                      ("178.250.246.123" . null)))))
+                                  ("majordomo"
+                                   ("hosts"
+                                    ("zabbix.intr" . null)
+                                    ("ci.intr" . null)
+                                    ("bareos.intr" . null)
+                                    ("archive.intr" . null))
+                                   ("children"
+                                    ("web"
+                                     ("hosts"
+                                      ("web37.intr" . null)
+                                      ("web36.intr" . null)
+                                      ("web35.intr" . null)
+                                      ("web34.intr" . null)
+                                      ("web33.intr" . null)
+                                      ("web32.intr" . null)
+                                      ("web31.intr" . null)
+                                      ("web30.intr" . null)
+                                      ("web29.intr" . null)
+                                      ("web28.intr" . null)
+                                      ("web27.intr" . null)
+                                      ("web26.intr" . null)
+                                      ("web25.intr" . null)
+                                      ;; ("web24.intr" . null)
+                                      ("web23.intr" . null)
+                                      ("web22.intr" . null)
+                                      ("web21.intr" . null)
+                                      ("web20.intr" . null)
+                                      ("web19.intr" . null)
+                                      ("web18.intr" . null)
+                                      ("web17.intr" . null)
+                                      ("web16.intr" . null)
+                                      ("web15.intr" . null)))
+                                    ("vpn"
+                                     ("hosts"
+                                      ("router4.intr" . null)
+                                      ("ns1-dh.intr" . null)
+                                      ("galera-backup.intr" . null)))
+                                    ("swarm"
+                                     ("hosts"
+                                      ("dh5-mr.intr" . null)
+                                      ("dh4-mr.intr" . null)
+                                      ("dh3-mr.intr" . null)
+                                      ("dh2-mr.intr" . null)
+                                      ("dh1-mr.intr" . null)))
+                                    ("router"
+                                     ("children"
+                                      ("routers"
+                                       ("vars" ("ansible_ssh_pass" . ,password-router))
+                                       ("hosts" ("router4.intr" . null)))
+                                      ("office"
+                                       ("hosts"
+                                        ("router2.intr" . null)
+                                        ("router1.intr" . null)))
+                                      ("freebsd"
+                                       ("vars"
+                                        ("ansible_python_interpreter"
+                                         .
+                                         "/usr/local/bin/python2"))
+                                       ("hosts" ("router-miran1.intr" . null)))))
+                                    ("redis"
+                                     ("hosts"
+                                      ("hms02-mr.intr" . null)
+                                      ("hms01-mr.intr" . null)))
+                                    ("ns"
+                                     ("hosts"
+                                      ("ns2-mr.intr" . null)
+                                      ("ns2-dh.intr" . null)
+                                      ("ns1-mr.intr" . null)
+                                      ("ns1-dh.intr" . null)))
+                                    ("nginx"
+                                     ("hosts"
+                                      ("nginx3.intr" . null)
+                                      ("nginx2.intr" . null)
+                                      ("nginx1.intr" . null)))
+                                    ("mongo"
+                                     ("hosts"
+                                      ("hms03-mr.intr" . null)
+                                      ("hms02-mr.intr" . null)
+                                      ("hms01-mr.intr" . null)))
+                                    ("miran"
+                                     ("children"
+                                      ("rack4"
+                                       ("hosts"
+                                        ("zabbix.intr" . null)
+                                        ("web18.intr" . null)
+                                        ("web15.intr" . null)
+                                        ("staff.intr" . null)
+                                        ("router-miran1.intr" . null)
+                                        ("mail-checker2.intr" . null)
+                                        ("kvm14.intr" . null)
+                                        ("galera3.intr" . null)
+                                        ("galera2.intr" . null)
+                                        ("galera1.intr" . null)
+                                        ("dh2.intr" . null)
+                                        ("bareos.intr" . null)))
+                                      ("rack3"
+                                       ("hosts"
+                                        ("web37.intr" . null)
+                                        ("web34.intr" . null)
+                                        ("web33.intr" . null)
+                                        ("web32.intr" . null)
+                                        ("web31.intr" . null)
+                                        ("web30.intr" . null)
+                                        ("web29.intr" . null)
+                                        ("web28.intr" . null)
+                                        ("web27.intr" . null)
+                                        ("web26.intr" . null)
+                                        ("web25.intr" . null)
+                                        ;; ("web24.intr" . null)
+                                        ("web23.intr" . null)
+                                        ("web22.intr" . null)
+                                        ("web20.intr" . null)
+                                        ("web19.intr" . null)
+                                        ("web17.intr" . null)
+                                        ("web16.intr" . null)
+                                        ("ns2-mr.intr" . null)
+                                        ("kvm2.intr" . null)
+                                        ("kvm15.intr" . null)
+                                        ("jenkins.intr" . null)))
+                                      ("rack2"
+                                       ("hosts"
+                                        ("webmail2.intr" . null)
+                                        ("webmail1.intr" . null)
+                                        ("web36.intr" . null)
+                                        ("web35.intr" . null)
+                                        ("web21.intr" . null)
+                                        ("smtp-staff.intr" . null)
+                                        ("ns1-mr.intr" . null)
+                                        ("nginx2.intr" . null)
+                                        ("nginx1.intr" . null)
+                                        ("kvm37.intr" . null)
+                                        ("hms02-mr.intr" . null)
+                                        ("galera-backup.intr" . null)
+                                        ("dh4.intr" . null)
+                                        ("dh1.intr" . null)
+                                        ("chef-server.intr" . null)
+                                        ("buka2-new.intr" . null)
+                                        ("archive.intr" . null)))
+                                      ("rack1"
+                                       ("hosts"
+                                        ("pop5.intr" . null)
+                                        ("mx1.intr" . null)
+                                        ("hms01-mr.intr" . null)
+                                        ("fluentd.intr" . null)
+                                        ("dh3.intr" . null)))))
+                                    ("mail"
+                                     ("children"
+                                      ("spam"
+                                       ("hosts"
+                                        ("mail-checker2.intr" . null)
+                                        ("mail-checker1.intr" . null)))
+                                      ("smtp"
+                                       ("hosts"
+                                        ("webmail2.intr" . null)
+                                        ("webmail1.intr" . null)))
+                                      ("pop"
+                                       ("hosts"
+                                        ("pop5.intr" . null)
+                                        ("pop1.intr" . null)))
+                                      ("mx"
+                                       ("hosts"
+                                        ("nginx2.intr" . null)
+                                        ("nginx1.intr" . null)))))
+                                    ("kvm"
+                                     ("hosts"
+                                      ("kvm9.intr" . null)
+                                      ("kvm6.intr" . null)
+                                      ("kvm5.intr" . null)
+                                      ("kvm37.intr" . null)
+                                      ("kvm35.intr" . null)
+                                      ("kvm34.intr" . null)
+                                      ("kvm33.intr" . null)
+                                      ("kvm32.intr" . null)
+                                      ("kvm31.intr" . null)
+                                      ("kvm30.intr" . null)
+                                      ("kvm29.intr" . null)
+                                      ("kvm28.intr" . null)
+                                      ("kvm27.intr" . null)
+                                      ("kvm26.intr" . null)
+                                      ("kvm25.intr" . null)
+                                      ("kvm24.intr" . null)
+                                      ("kvm23.intr" . null)
+                                      ("kvm22.intr" . null)
+                                      ("kvm21.intr" . null)
+                                      ("kvm20.intr" . null)
+                                      ("kvm2.intr" . null)
+                                      ("kvm19.intr" . null)
+                                      ("kvm17.intr" . null)
+                                      ("kvm16.intr" . null)
+                                      ("kvm15.intr" . null)
+                                      ("kvm14.intr" . null)
+                                      ("kvm13.intr" . null)
+                                      ("kvm12.intr" . null)
+                                      ("kvm10.intr" . null)
+                                      ("kvm1.intr" . null)))
+                                    ("jenkins" ("hosts" ("jenkins.intr" . null)))
+                                    ("galera"
+                                     ("hosts"
+                                      ("galera1.intr" . null)
+                                      ("galera2.intr" . null)
+                                      ("galera3.intr" . null)))
+                                    ("elk"
+                                     ("hosts"
+                                      ("pop5.intr" . null)
+                                      ("fluentd.intr" . null)
+                                      ("chef-server.intr" . null)))
+                                    ("datahouse"
+                                     ("hosts"
+                                      ("kvm1.intr" . null)
+                                      ("kvm2.intr" . null)
+                                      ("kvm5.intr" . null)
+                                      ("kvm6.intr" . null)
+                                      ("kvm7.intr" . null)
+                                      ("kvm9.intr" . null)
+                                      ("kvm10.intr" . null)
+                                      ("kvm11.intr" . null)
+                                      ("kvm12.intr" . null)
+                                      ("kvm13.intr" . null)
+                                      ("kvm14.intr" . null)
+                                      ("kvm15.intr" . null)
+                                      ("kvm16.intr" . null)
+                                      ("kvm17.intr" . null)
+                                      ("kvm18.intr" . null)
+                                      ("kvm19.intr" . null)
+                                      ("kvm20.intr" . null)
+                                      ("kvm21.intr" . null)
+                                      ("kvm22.intr" . null)
+                                      ("kvm23.intr" . null)
+                                      ("kvm24.intr" . null)
+                                      ("kvm25.intr" . null)
+                                      ("kvm26.intr" . null)
+                                      ("kvm27.intr" . null)
+                                      ("kvm28.intr" . null)
+                                      ("kvm29.intr" . null)
+                                      ("kvm34.intr" . null)
+                                      ("kvm33.intr" . null)
+                                      ("kvm32.intr" . null)
+                                      ("kvm31.intr" . null)
+                                      ("kvm30.intr" . null)
+                                      ("kvm35.intr" . null)
+                                      ("kvm37.intr" . null)))))
+                                  ("guix"
+                                   ("vars"
+                                    ("ansible_python_interpreter"
+                                     .
+                                     "/home/oleg/.guix-profile/bin/python3"))
+                                   ("children"
+                                    ("local"
+                                     ("vars" ("ansible_connection" . "local"))
+                                     ("hosts" ("localhost" . null)))
+                                    ("guix_work" ("hosts" ("ws1.wugi.info" . null)))
+                                    ("guix_vm"
+                                     ("hosts"
+                                      ("vm1.wugi.info" . null))))))
+                                port)))))))
 
    ;; XXX: missing home-ssh-configuration
    ;; (service home-ssh-service-type
