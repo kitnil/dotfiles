@@ -391,6 +391,10 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                                 '("bash.scm"
                                   "mjru.bash"))))
 
+   (simple-service 'direnv-config
+                   home-files-service-type
+                   (list `("direnvrc" ,(local-file "../../dot_direnvrc"))))
+
    (service home-mcron-service-type)
    (service nix-delete-generations-service-type
             (nix-delete-generations-configuration
