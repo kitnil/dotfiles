@@ -36,6 +36,7 @@ dot_Xmodmap
 dot_Xresources
 insert
 dot_config
+dot_local
 private_dot_emacs.d
 private_dot_gnupg
 dot_ansible
