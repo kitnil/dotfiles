@@ -617,6 +617,10 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                    home-files-service-type
                    (list `("mailcap" ,(local-file "../../dot_mailcap"))))
 
+   (simple-service 'mongo-config
+                   home-files-service-type
+                   (list `("mongorc.js" ,(local-file "../../dot_mongorc.js"))))
+
    (simple-service 'msmtp-config
                    home-activation-service-type
                    #~(begin
