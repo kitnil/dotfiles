@@ -1009,6 +1009,16 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                          `("sshrc.d/.bashrc" ,(local-file "../../dot_sshrc.d/dot_bashrc"))
                          `("sshrc.d/.tmux.conf" ,(local-file "../../dot_sshrc.d/dot_tmux.conf"))))
 
+   (simple-service 'vnc-config
+                   home-files-service-type
+                   (list `("vnc/default.tigervnc" ,(local-file "../../private_dot_vnc/default.tigervnc"))
+                         `("vnc/xstartup" ,(local-file "../../private_dot_vnc/executable_xstartup" #:recursive? #t))
+                         `("vnc/xstartup-firefox" ,(local-file "../../private_dot_vnc/executable_xstartup-firefox" #:recursive? #t))
+                         `("vnc/xstartup-quassel" ,(local-file "../../private_dot_vnc/executable_xstartup-quassel" #:recursive? #t))
+                         `("vnc/xstartup-ratpoison" ,(local-file "../../private_dot_vnc/executable_xstartup-ratpoison" #:recursive? #t))
+                         `("vnc/xstartup-stumpwm" ,(local-file "../../private_dot_vnc/executable_xstartup-stumpwm" #:recursive? #t))
+                         `("vnc/xstartup-twm" ,(local-file "../../private_dot_vnc/executable_xstartup-twm" #:recursive? #t))))
+
    (simple-service 'xsession-config
                    home-files-service-type
                    (list
