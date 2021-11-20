@@ -26,6 +26,7 @@ dot_kodirc
 dot_mailcap
 dot_mongorc.js
 dot_myclirc
+dot_nanorc
 private_dot_emacs.d
 private_dot_gnupg
 dot_ansible
