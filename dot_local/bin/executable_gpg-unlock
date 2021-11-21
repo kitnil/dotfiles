@@ -4,7 +4,7 @@ set -eu
 
 if [ -f "$HOME/.password-store/www.majordomo.ru/gpg/master.gpg" ]
 then
-    gpg --decrypt                                               \
+    gpg --decrypt --quiet --for-your-eyes-only --no-tty         \
         --pinentry-mode loopback                                \
         --passphrase "$(pass show www.majordomo.ru/gpg/master)" \
         "$HOME/.password-store/majordomo/private/eng/old.gpg"
@@ -12,7 +12,7 @@ fi
 
 if [ -f "$HOME/.password-store/majordomo/private/eng/old.gpg" ]
 then
-    gpg --decrypt                                               \
+    gpg --decrypt --quiet --for-your-eyes-only --no-tty         \
         --pinentry-mode loopback                                \
         --passphrase "$(pass show majordomo/private/eng/old)"   \
         "$HOME/.password-store/majordomo/public/router4/root.gpg"

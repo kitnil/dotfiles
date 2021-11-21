@@ -75,7 +75,7 @@ dotfiles/nix/flake.nix:
 
 .PHONY: install
 install: install-ssh
-	dot_local/bin/executable_gpg-unlock
+	dot_local/bin/executable_gpg-unlock > /dev/null
 	update-desktop-database $(HOME)/.local/share/applications
 	open-with-linux install
 	mkdir -p $(HOME)/.config/mpv/scripts
