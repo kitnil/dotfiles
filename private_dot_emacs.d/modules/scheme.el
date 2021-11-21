@@ -50,6 +50,10 @@ Non-interactively, this uses the optional second argument PURE."
         (set (make-local-variable 'prettify-symbols-alist)
              wi-scheme--prettify-symbols-alist)))))
 
+(setq geiser-debug-show-debug-p nil)
+;; (setq geiser-debug-jump-to-debug-p nil)
+;; (setq geiser-debug-always-display-sexp-after-p nil)
+
 (autoload 'scheme-smart-complete "scheme-complete" nil t)
 ;; (eval-after-load 'scheme
 ;;    '(define-key scheme-mode-map "\e\t" 'scheme-smart-complete))
