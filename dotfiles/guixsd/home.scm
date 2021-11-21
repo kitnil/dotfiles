@@ -77,7 +77,7 @@
    (expunge "near")
    (sync "Pull")))
 
-(define mbsync-majordomo
+(define mbsync-majordomo-pyhalov
   (mbsync-config-file
    (imap-account "majordomo")
    (host "router.majordomo.ru")
@@ -290,7 +290,7 @@
                                                    (display #$(serialize-text-config
                                                                #f
                                                                (list mbsync-gmail
-                                                                     mbsync-majordomo
+                                                                     mbsync-majordomo-pyhalov
                                                                      mbsync-majordomo-sidorov
                                                                      mbsync-majordomo-healthchecks
                                                                      mbsync-wugi))))))))))
