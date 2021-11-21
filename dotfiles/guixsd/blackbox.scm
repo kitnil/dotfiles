@@ -2,7 +2,7 @@
    #((("rules"
        .
        #((("labels" ("severity" . "critical"))
-          ("for" . "0m")
+          ("for" . "1m")
           ("expr" . "probe_success == 0")
           ("annotations"
            ("summary"
@@ -30,7 +30,7 @@
   LABELS = {{ $labels }}"))
           ("alert" . "BlackboxSlowProbe"))
          (("labels" ("severity" . "critical"))
-          ("for" . "0m")
+          ("for" . "1m")
           ("expr"
            .
            "probe_http_status_code <= 199 OR probe_http_status_code >= 400")

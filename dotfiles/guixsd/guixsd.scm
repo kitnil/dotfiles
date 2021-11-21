@@ -865,7 +865,7 @@ location / {
                                                            .
                                                            #(((targets . #("https://guix.wugi.info/"
                                                                            "https://blog.wugi.info/")))))
-                                                          (scrape_interval . "5m")
+                                                          (scrape_interval . "30s")
                                                           (metrics_path . "/probe")
                                                           (params . ((module . #("http_2xx"))))
                                                           (relabel_configs
