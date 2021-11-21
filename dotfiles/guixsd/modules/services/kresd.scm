@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2019, 2020 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2019, 2020, 2021 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -31,7 +31,7 @@
                     (requirement '(user-processes loopback))
                     (documentation "Run kresd-daemon.")
                     (start #~(make-forkexec-constructor
-                              (list "/home/oleg/bin/run-kresd"
+                              (list "/home/oleg/.nix-profile/bin/kresd"
                                     "--config" #$config
                                     "--quiet" "-f" "1")
                               #:log-file "/var/log/kresd.log"))
