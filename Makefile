@@ -76,7 +76,6 @@ dotfiles/nix/flake.nix:
 .PHONY: install
 install: install-ssh
 	bin/executable_gpg-unlock
-	chezmoi apply
 	update-desktop-database $(HOME)/.local/share/applications
 	open-with-linux install
 	mkdir -p $(HOME)/.config/mpv/scripts
