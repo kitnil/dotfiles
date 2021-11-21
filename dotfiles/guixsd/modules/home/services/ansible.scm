@@ -147,7 +147,8 @@
                                        (delete-file-recursively instance-dir)
                                        (with-directory-excursion #$%state-directory
                                          (invoke "git" "add" "--all")
-                                         (invoke "git" "commit" "--message=Update.")))))))
+                                         (invoke "git" "commit" "--message=Update.")
+                                         (invoke "git" "push")))))))
     (gexp->derivation "ansible-program" #~(symlink #$program #$output))))
 
 (define (ansible-playbook-mcron-jobs config)
