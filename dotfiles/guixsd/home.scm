@@ -1292,9 +1292,26 @@ gtk-xft-rgba=\"rgb\"
                             (use-modules (ice-9 rdelim)
                                          (ice-9 popen)
                                          (guile pass)
-                                         (json builder))
+                                         (json builder)
+                                         (ice-9 match))
                             (define password-router
                               (pass "majordomo/public/router4/root"))
+
+                            (define majordomo-office
+                              '(;; ("Admin-1" "192.168.1.21" "18:c0:4d:f9:c0:b6" "Home segment" "Wired" "100 Mbit/s" "Port 1")
+                                ;; ("Admin-2" "192.168.1.22" "18:c0:4d:f9:c1:9a" "Offline")
+                                ;; ("Admin-3" "192.168.1.23" "18:c0:4d:f9:c0:bb" "Home segment" "Wired" "100 Mbit/s" "Port 1")
+                                ;; ("dev-1" "192.168.1.11" "18:c0:4d:f9:c1:99" "Home segment" "Wired" "100 Mbit/s" "Port 1")
+                                ;; ("dev-2" "192.168.1.12" "18:c0:4d:f9:c1:9b" "Home segment" "Wired" "100 Mbit/s" "Port 1")
+                                ;; ("Info-1" "192.168.1.31" "18:c0:4d:f9:b3:63" "Home segment" "Wired" "100 Mbit/s" "Port 1")
+                                ;; ("Info-2" "192.168.1.32" "18:c0:4d:f9:c0:fe" "Home segment" "Wired" "100 Mbit/s" "Port 1")
+                                ;; ("iPhone-Gennadiy via Keenetic Air (KN-1611)" "192.168.1.143" "ce:97:72:a9:1f:d6" "Home segment" "5 GHz Wi-Fi" " 130 Mbit/s WPA2" "ac/k/v 2x2 20 MHz")
+                                ;; ("SPA122" "192.168.1.8" "88:75:56:07:73:92" "Home segment" "Wired" "0 Mbit/s" "Port 1")
+                                ("sup1" "192.168.1.41" "18:c0:4d:f9:c0:b8" "Home segment" "Wired" "100 Mbit/s" "Port 1")
+                                ("sup2" "192.168.1.42" "18:c0:4d:f9:c0:bc" "Home segment" "Wired" "100 Mbit/s" "Port 1")
+                                ("sup3" "192.168.1.43" "18:c0:4d:f9:c0:f9" "Home segment" "Wired" "100 Mbit/s" "Port 1")
+                                ("sup4" "192.168.1.44" "18:c0:4d:f9:c0:83" "Home segment" "Wired" "100 Mbit/s" "Port 1")))
+
                             (call-with-output-file #$(string-append %home "/.ansible-hosts")
                               (lambda (port)
                                 (scm->json
@@ -1312,6 +1329,12 @@ gtk-xft-rgba=\"rgb\"
                                       .
                                       "/usr/bin/python3"))
                                     ("children"
+                                     ("majordomo_office"
+                                      ("hosts"
+                                       ,@(map ((@@ (ice-9 match) match-lambda)
+                                               ((name ip mac etc ...)
+                                                (cons ip 'null)))
+                                              majordomo-office)))
                                      ("mjru"
                                       ("hosts"
                                        ("78.108.87.99" . null)
@@ -1337,7 +1360,8 @@ gtk-xft-rgba=\"rgb\"
                                       ("hosts"
                                        ("78.108.87.99" . null)
                                        ("78.108.86.20" . null)
-                                       ("178.250.246.123" . null)))))
+                                       ("178.250.246.123" . null))))
+                                    )
                                    ("majordomo"
                                     ("hosts"
                                      ("zabbix.intr" . null)
