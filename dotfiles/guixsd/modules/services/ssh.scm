@@ -57,7 +57,13 @@
          (uid 30022)
          (group "users")
          (comment "SSH forwarding privilege separation user")
-         (home-directory "/home/vm1-ssh-tunnel"))))
+         (home-directory "/home/vm1-ssh-tunnel"))
+        (user-account
+         (name "tipanova-34-1-ssh-tunnel")
+         (uid 30023)
+         (group "users")
+         (comment "SSH forwarding privilege separation user")
+         (home-directory "/home/tipanova-34-1-ssh-tunnel"))))
 
 (define %ssh-hosts-file-hosts
   '("back.wugi.info"))
