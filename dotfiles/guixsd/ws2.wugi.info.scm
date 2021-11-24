@@ -2,7 +2,9 @@
 ;; for a "desktop" setup without full-blown desktop
 ;; environments.
 
-(use-modules (gnu) (gnu system nss))
+(use-modules (gnu)
+             (gnu system nss)
+             (services autossh))
 (use-service-modules desktop xorg ssh)
 (use-package-modules bootloaders certs emacs emacs-xyz ratpoison suckless wm
                      xorg)
@@ -55,9 +57,39 @@
   ;; Use the "desktop" services, which include the X11
   ;; log-in service, networking with NetworkManager, and more.
   (services (append (list (service openssh-service-type)
-                          (service slim-service-type))
-                    (modify-services %desktop-services
-                      (delete gdm-service-type))))
+                          (service slim-service-type)
+                          (service (@ (services autossh) autossh-service-type)
+                                   ((@ (services autossh) autossh-configuration)
+                                    (autossh-client-config
+                                     (autossh-client-configuration
+                                      (hosts (list (autossh-client-host-configuration
+                                                    (host "back.wugi.info")
+                                                    (identity-file "/etc/autossh/id_rsa")
+                                                    (strict-host-key-checking? #f)
+                                                    (user "tipanova-34-1-ssh-tunnel")
+                                                    (user-known-hosts-file "/dev/null")
+                                                    (extra-options
+                                                     "
+RemoteForward 0.0.0.0:10022 127.0.0.1:22
+Compression yes
+ExitOnForwardFailure yes
+ServerAliveInterval 30
+ServerAliveCountMax 3"))))))
+                                    (host "back.wugi.info"))))
+                    (modify-services (modify-services %desktop-services
+                                       (delete gdm-service-type))
+                      (guix-service-type config =>
+                                         (guix-configuration
+                                          (inherit config)
+                                          (authorized-keys
+                                           (append (list (local-file "./key.pub"))
+                                                   %default-authorized-guix-keys)))))))
 
   ;; Allow resolution of '.local' host names with mDNS.
-  (name-service-switch %mdns-host-lookup-nss))
+  (name-service-switch %mdns-host-lookup-nss)
+
+  (sudoers-file (plain-file "sudoers"
+                            (string-join `("root ALL=(ALL) ALL"
+                                           "%wheel ALL=(ALL) ALL"
+                                           "oleg ALL=(ALL) NOPASSWD:ALL")
+                                         "\n"))))
