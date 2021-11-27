@@ -4,7 +4,8 @@
 
 (use-modules (gnu)
              (gnu system nss)
-             (services autossh))
+             (services autossh)
+             (services tftp))
 (use-service-modules desktop xorg ssh)
 (use-package-modules bootloaders certs emacs emacs-xyz ratpoison suckless wm
                      xorg)
@@ -58,6 +59,7 @@
   ;; log-in service, networking with NetworkManager, and more.
   (services (append (list (service openssh-service-type)
                           (service slim-service-type)
+                          tftp-service
                           (service (@ (services autossh) autossh-service-type)
                                    ((@ (services autossh) autossh-configuration)
                                     (autossh-client-config
