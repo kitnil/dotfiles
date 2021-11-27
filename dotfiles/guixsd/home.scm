@@ -264,7 +264,7 @@
                           (lambda ()
                             (scm->json
                              `(("boxes" . #("INBOX"))
-                               ("onNewMail" . ,(string-join (list isync "wugi")))
+                               ("onNewMail" . ,(string-join (list isync "wugi-oleg")))
                                ("xoauth2" . #f)
                                ("password" . ,password)
                                ("username" . "oleg@wugi.info")
