@@ -600,6 +600,10 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                           `("local/share/applications/guix-log.desktop" ,(local-file "../../dot_local/share/applications/guix-log.desktop"))
                           `("local/share/applications/feh.desktop" ,(local-file "../../dot_local/share/applications/feh.desktop"))))
 
+    (simple-service 'dig-config
+                    home-files-service-type
+                    (list `("digrc" ,(local-file "../../dot_digrc"))))
+
     (simple-service 'direnv-config
                     home-files-service-type
                     (list `("direnvrc" ,(local-file "../../dot_direnvrc"))))
