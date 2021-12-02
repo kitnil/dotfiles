@@ -54,6 +54,13 @@
          (chmod #$output #o555)))))
 
 (define (majordomo-mbsync-goimapnotify-services name)
+  (define (pass-private-or-public name)
+    (if (file-exists? (string-append %home "/.password-store/majordomo/private/router.majordomo.ru/" name "@majordomo.ru.gpg"))
+        (string-append "majordomo/private/router.majordomo.ru/"
+                       name "@majordomo.ru")
+        (string-append "majordomo/public/router.majordomo.ru/"
+                       name "@majordomo.ru")))
+
   (define majordomo-mbsync-imap-account-configuration
     (mbsync-imap-account-configuration
      (host "router.majordomo.ru")
@@ -88,8 +95,10 @@
                        (inherit majordomo-mbsync-imap-account-configuration)
                        (imap-account (string-append "majordomo-" name))
                        (user (string-append name "@majordomo.ru"))
-                       (pass-cmd (string-append "pass show majordomo/private/router.majordomo.ru/"
-                                                name "@majordomo.ru")))))
+                       (pass-cmd
+                        (string-join
+                         (list "pass" "show"
+                               (pass-private-or-public name)))))))
                     (imap-stores
                      (list
                       (mbsync-imap-store-configuration
@@ -121,9 +130,7 @@
                        (define isync
                          #$(file-append isync "/bin/mbsync"))
                        (define password
-                         #$(pass "show"
-                                 (string-append "majordomo/private/router.majordomo.ru/"
-                                                name "@majordomo.ru")))
+                         #$(pass "show" (pass-private-or-public name)))
                        (define username #$name)
                        (with-output-to-file #$output
                          (lambda ()
@@ -147,7 +154,17 @@
   (append
    (majordomo-mbsync-goimapnotify-services "pyhalov")
    (majordomo-mbsync-goimapnotify-services "sidorov")
+
+   (majordomo-mbsync-goimapnotify-services "alertmanager")
+   (majordomo-mbsync-goimapnotify-services "git-commits")
+   (majordomo-mbsync-goimapnotify-services "grafana")
    (majordomo-mbsync-goimapnotify-services "healthchecks")
+   (majordomo-mbsync-goimapnotify-services "issues")
+   (majordomo-mbsync-goimapnotify-services "prometheus")
+   (majordomo-mbsync-goimapnotify-services "security")
+   (majordomo-mbsync-goimapnotify-services "smartmontools")
+   (majordomo-mbsync-goimapnotify-services "tracker")
+
    (list
     (simple-service 'home-mbsync-wugi-oleg
                     home-mbsync-service-type
