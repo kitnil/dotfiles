@@ -184,6 +184,16 @@ below otherwise."
                       (mail-header-message-id header)
                       (mail-header-subject header)))))
 
+(setq gnus-posting-styles
+      '((".*" ; Matches all groups of messages
+         (address "Oleg Pykhalov <go.wigust@gmail.com>"))
+        ("majordomo-sidorov" ; Matches Gnus group called "work"
+         (name "Олег Пыхалов")
+         (address "pyhalov@majordomo.ru")
+         (organization "Majordomo")
+         ;; (signature-file "~/.signature-work")
+         ("X-Message-SMTP-Method" "smtp router.majordomo.ru 465 pyhalov@majordomo.ru"))))
+
 ;; (setq nnmail-expiry-wait 'immediate)
 ;;
 ;; Alternative:
