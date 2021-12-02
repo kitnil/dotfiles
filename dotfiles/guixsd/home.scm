@@ -19,6 +19,7 @@
 
              (home services ansible)
              (home services desktop)
+             (home services juniper)
              (home services mail)
              (home services package-management)
              (gnu packages mail)
@@ -1279,6 +1280,7 @@ gtk-xft-rgba=\"rgb\"
               (period "1m")))
 
     (service ansible-playbook-service-type)
+    (service juniper-service-type)
     (simple-service 'ansible-config
                     home-files-service-type
                     (append (list `(,"ansible.cfg" ,(local-file "../../dot_ansible.cfg")))
