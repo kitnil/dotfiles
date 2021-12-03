@@ -16,7 +16,7 @@
 
 (defcommand rofi-mycli () ()
   "Open Rofi mycli."
-  (run-rofi (concat "-modi mycli:" (getenv "HOME") "/bin/rofi-mycli -show mycli")))
+  (run-rofi (concat "-modi mycli:" (getenv "HOME") "/.local/bin/rofi-mycli -show mycli")))
 
 (defcommand rofi-window () ()
   "Open Rofi window list."
@@ -28,4 +28,4 @@
 
 (defcommand rofi-mytop () ()
   "Open Rofi mytop."
-  (run-rofi "-modi mycli:/home/oleg/bin/rofi-mycli -show mycli"))
+  (run-rofi "-modi mycli:/home/oleg/.local/bin/rofi-mycli -show mycli"))

@@ -443,6 +443,7 @@ exec -a \"$0\" /home/oleg/.nix-profile/bin/~a --disable-features=SendMouseLeaveE
                             "record-window"
                             "record-window-gif.sh"
                             "reevefresh"
+                            "rofi-mycli"
                             "rofi-stumpwm"
                             "rofi-xterm"
                             "rss"

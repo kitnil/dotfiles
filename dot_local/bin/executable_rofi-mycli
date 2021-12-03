@@ -1,0 +1,35 @@
+#!/bin/sh
+
+if [ -z $@ ]
+then
+    awk '/mysql:/{ print $1 }' "$HOME/.myclirc"
+else
+    if [ "$(echo '(current-frame-smallp)' | stumpish -e eval )" == "0" ]; then
+        size=10
+    else
+        size=8
+    fi
+    case "$@" in
+        web*)
+            coproc (xterm -title "mycli@$@" -bg '#fff0f5' -fg '#000000' -fa Monospace -fs "$size" -e env PAGER='pspg -s 14 -X --force-uniborder --quit-if-one-screen -s 16' mycli --password "$(pass show majordomo/public/web/mysql/root)" -d $@ &>/dev/null &)
+            ;;
+        maxscale*)
+            coproc (xterm -title "mycli@$@" -bg '#fff0f5' -fg '#000000' -fa Monospace -fs "$size" -e env PAGER='pspg -s 14 -X --force-uniborder --quit-if-one-screen -s 16' mycli --password "$(pass show majordomo/public/majordomo/maxscale.intr/root)" -d $@ &>/dev/null &)
+            ;;
+        galera*)
+            coproc (xterm -title "mycli@$@" -bg '#fff0f5' -fg '#000000' -fa Monospace -fs "$size" -e env PAGER='pspg -s 14 -X --force-uniborder --quit-if-one-screen -s 16' mycli --password "$(pass show majordomo/public/majordomo/mysql.intr/galera1.intr/root)" -d $@ &>/dev/null &)
+            ;;
+        billing-dev*)
+            coproc (xterm -title "mycli@$@" -bg '#fff0f5' -fg '#000000' -fa Monospace -fs "$size" -e env PAGER='pspg -s 14 -X --force-uniborder --quit-if-one-screen -s 16' mycli --ssh-host workstation.intr --password "$(pass show majordomo/public/majordomo/dev.majordomo.ru/billing/xmlrpc)" -d $@ &>/dev/null &)
+            ;;
+        localhost*)
+            coproc (xterm -title "mycli@$@" -bg '#fff0f5' -fg '#000000' -fa Monospace -fs "$size" -e env PAGER='pspg -s 14 -X --force-uniborder --quit-if-one-screen -s 16' mycli -h localhost -u root -p $@ &>/dev/null; read &)
+            ;;
+        malscan*)
+            coproc (xterm -title "mycli@$@" -bg '#fff0f5' -fg '#000000' -fa Monospace -fs "$size" -e env PAGER='pspg -s 14 -X --force-uniborder --quit-if-one-screen -s 16' mycli --password "$(pass show malscan.intr/mysql/malscan)" -d $@ &>/dev/null &)
+            ;;
+        *)
+            coproc (xterm -title "mycli@$@" -bg '#fff0f5' -fg '#000000' -fa Monospace -fs "$size" -e env PAGER='pspg -s 14 -X --force-uniborder --quit-if-one-screen -s 16' mycli -d $@ &>/dev/null &)
+            ;;
+    esac
+fi
