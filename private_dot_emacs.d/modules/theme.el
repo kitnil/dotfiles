@@ -58,7 +58,7 @@
 
 (defun load-theme-modus-vivendi ()
   ;; (disable-theme 'smart-mode-line-light)
-  (load-theme 'modus-vivendi)
+  (load-theme 'modus-vivendi t)
   (custom-theme-set-faces
    'modus-vivendi
    '(elfeed-search-unread-title-face ((t (:inherit nil :foreground "#ffffff")))))
