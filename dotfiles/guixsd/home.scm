@@ -526,6 +526,20 @@ exec -a \"$0\" /home/oleg/.nix-profile/bin/~a --disable-features=SendMouseLeaveE
                                                       "input:grabKeyboard" "no"
                                                       "win:dontUpscale" "yes")))))
 
+    (simple-service 'idea-ultimate-wrapper
+                    home-files-service-type
+                    (list `("local/bin/idea-ultimate"
+                            ,(computed-file
+                              "idea-ultimate-wrapper"
+                              #~(begin
+                                  (with-output-to-file #$output
+                                    (lambda ()
+                                      (format #t "\
+#!/bin/sh
+PYTHONPATH='' exec -a \"$0\" ~a/bin/idea-ultimate \"$@\"\n"
+                                              #$(string-append %home "/.nix-profile"))))
+                                  (chmod #$output #o555))))))
+
     (simple-service 'shellcheck-wrapper
                     home-files-service-type
                     (list `("local/bin/shellcheck"
