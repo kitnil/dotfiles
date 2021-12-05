@@ -642,6 +642,8 @@ location / {
 
            "172.16.100.60 workstation.intr"
 
+           "192.168.0.121 windows.local"
+
            "78.108.82.157 mjru"
 
            "192.168.100.1 r1.tld"
