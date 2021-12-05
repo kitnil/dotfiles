@@ -906,7 +906,7 @@ herd_kill_services_via_awk()
 docker_strace()
 {
     container="$1"
-    docker top "$container" | tail -n +2 | awk '{ print $2 }' | sed 's/^/-p/' | xargs strace -o "$HOME/$container.strace" -f -s 4096
+    docker top "$container" | tail -n +2 | awk '{ print $2 }' | sed 's/^/-p/' | xargs sudo strace -o "$HOME/$container.strace" -f -s 4096
 }
 
 docker_strace_pids()
