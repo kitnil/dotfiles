@@ -637,6 +637,7 @@ location / {
                            ;; "hms-dev.intr"
                            ;; "api-dev.intr"
                            ;; "hms-billing-dev.intr"
+                           "web99.ru"
                            ))
            "::1 guixsd localhost"
 
