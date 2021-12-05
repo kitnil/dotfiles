@@ -1027,7 +1027,7 @@ location / {
                                                       ("prober" . "http")
                                                       ("http"
                                                        ("valid_status_codes" . #())
-                                                       ("valid_http_versions" . #("HTTP/1.1" "HTTP/2"))
+                                                       ("valid_http_versions" . #("HTTP/1.1" "HTTP/2" "HTTP/2.0"))
                                                        ("preferred_ip_protocol" . "ip4")
                                                        ("no_follow_redirects" . #f)))
                                                      ("icmp"
