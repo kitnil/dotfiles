@@ -160,6 +160,7 @@
    (majordomo-mbsync-goimapnotify-services "grafana")
    (majordomo-mbsync-goimapnotify-services "healthchecks")
    (majordomo-mbsync-goimapnotify-services "issues")
+   (majordomo-mbsync-goimapnotify-services "jenkins")
    (majordomo-mbsync-goimapnotify-services "prometheus")
    (majordomo-mbsync-goimapnotify-services "security")
    (majordomo-mbsync-goimapnotify-services "smartmontools")
