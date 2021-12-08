@@ -34,18 +34,18 @@ class MongoHms:
 
     def web_socket_id(self, socket_name, server):
         """Return socket_id by SOCKET_NAME on SERVER."""
-        return str(web_find_socket(socket_name, server)[0]["_id"])
+        return str(self.web_find_socket(socket_name, server)[0]["_id"])
 
     def web_create_socket(self, socket_name, ip_address, protocol, server, port):
         """Create socket with specified SOCKET_NAME, IP_ADDRESS, PROTOCOL on SERVER PORT."""
-        if not web_find_socket(socket_name, server):
+        if not self.web_find_socket(socket_name, server):
             self.socket.insert_one({"protocol": protocol,
-                                    "address": ip_address_to_int(ip_address),
+                                    "address": self.ip_address_to_int(ip_address),
                                     "port": port,
                                     "name": socket_name + "@" + server,
                                     "switchedOn": True,
                                     "_class" : "NetworkSocket"}).inserted_id
-        return web_socket_id(socket_name, server)
+        return self.web_socket_id(socket_name, server)
 
     def web_service_name_to_server_id(self, service_name, server):
         """Return server id from SERVICE_NAME on SERVER."""
@@ -57,11 +57,11 @@ class MongoHms:
 
     def web_service_id(self, service_name, server):
         """Return service id from SERVICE_NAME on SERVER."""
-        return str(web_find_service(service_name, server)[0]["_id"])
+        return str(self.web_find_service(service_name, server)[0]["_id"])
 
     def web_create_service(self, service_name, template_id, server, server_id, socket):
         """Create service with specified SERVICE_NAME, TEMPLATE_ID on SERVER with SERVER_ID on SOCKET."""
-        if not web_find_service(service_name, server):
+        if not self.web_find_service(service_name, server):
             self.service.insert_one({
                 "serverId": server_id,
                 "templateId": template_id,
@@ -73,28 +73,28 @@ class MongoHms:
                 "switchedOn": True,
                 "_class": "ru.majordomo.hms.rc.staff.resources.Service"
         })
-        return web_service_id(service_name, server)
+        return self.web_service_id(service_name, server)
 
     def web_create_ssh_service(self, server, ip_address):
         """Create ssh service on SERVER with IP_ADDRESS."""
-        return web_create_service(
+        return self.web_create_service(
             "ssh-guest-room",
             "5d6693a6f7619300012fbbd5",
             "5d8a2a2e708301660013776d",
             server,
-            web_service_name_to_server_id('nginx', server),
-            web_create_socket("ssh-guest-room-ssh", ip_address, "ssh", server, "1022")
+            self.web_service_name_to_server_id('nginx', server),
+            self.web_create_socket("ssh-guest-room-ssh", ip_address, "ssh", server, "1022")
         )
 
     def web_create_php_service(self, template_id, version, server, ip_address, port):
         """Create php service with specified TEMPLATE_ID with php VERSION on SERVER with IP_ADDRESS on PORT."""
         service = "apache2-php" + version + "-default"
-        return web_create_service(
+        return self.web_create_service(
             service,
             template_id,
             server,
-            web_service_name_to_server_id("nginx", server),
-            web_create_socket(service + "-http", ip_address, "http", server, port),
+            self.web_service_name_to_server_id("nginx", server),
+            self.web_create_socket(service + "-http", ip_address, "http", server, port),
         )
 
     def task_set_error(self, account_id):
