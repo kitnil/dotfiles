@@ -1595,7 +1595,8 @@ gtk-xft-rgba=\"rgb\"
                                        ("kvm13.intr" . null)
                                        ("kvm12.intr" . null)
                                        ("kvm10.intr" . null)
-                                       ("kvm1.intr" . null)))
+                                       ("kvm1.intr" . null)
+                                       ("c-11122.intr" . null)))
                                      ("jenkins" ("hosts" ("jenkins.intr" . null)))
                                      ("galera"
                                       ("hosts"
