@@ -643,6 +643,9 @@ location / {
 
            "172.16.100.60 workstation.intr"
 
+           ;; ci.intr
+           "172.16.103.82 ns1test.majordomo.ru RC-USER 33e27a01eeb1"
+
            "192.168.0.121 windows.local"
 
            "78.108.82.157 mjru"
