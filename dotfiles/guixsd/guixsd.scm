@@ -28,6 +28,7 @@
              (services backup)
              (services bittorrent)
              (services docker)
+             (services virtualization)
              (services nix)
              (services autossh)
              (services kresd)
@@ -724,6 +725,8 @@ location / {
                                              (udev-rule
                                               "91-kvm-custom.rules"
                                               "KERNEL==\"kvm\", GROUP=\"kvm\", MODE=\"0666\"\n"))
+
+                         amdgpu-passthrough-service
 
                          (udev-rules-service 'wol
                                              (file->udev-rule
