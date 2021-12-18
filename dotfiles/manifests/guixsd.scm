@@ -34,5 +34,5 @@
         "emacs.scm"
         "guix-collection.scm"
         "majordomo.scm"
-        "nongnu.scm"
+        "deprecated.scm"
         "wigust.scm")))

@@ -26,4 +26,5 @@
 (define inferior
   (open-inferior cached))
 
-(packages->manifest (list (first (lookup-inferior-packages inferior "firefox"))))
+(packages->manifest (list (first (lookup-inferior-packages inferior "firefox"))
+                          (first (lookup-inferior-packages inferior "openssh"))))
