@@ -654,11 +654,30 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                     home-files-service-type
                     (list `("gitconfig" ,(local-file "../../dot_gitconfig"))))
 
+    (simple-service 'emacs-state
+                    home-activation-service-type
+                    #~(invoke
+                       #$(program-file
+                          "emacs-state"
+                          (with-imported-modules '((ice-9 match))
+                            #~(begin
+                                (use-modules (ice-9 match))
+                                (for-each
+                                 (match-lambda
+                                   ((destination source)
+                                    (let ((destination-full-path
+                                           (string-append
+                                            #$%home "/." destination)))
+                                      (copy-file source destination-full-path)
+                                      (chmod destination-full-path #o644))))
+                                 `(("emacs"
+                                    ,#$(local-file "../../dot_emacs"))
+                                   ("emacs.d/.mc-lists.el"
+                                    ,#$(local-file "../../private_dot_emacs.d/dot_mc-lists.el")))))))))
+
     (simple-service 'emacs-config
                     home-files-service-type
-                    (append (list `("emacs" ,(local-file "../../dot_emacs"))
-                                  `("emacs.d/.mc-lists.el" ,(local-file "../../private_dot_emacs.d/dot_mc-lists.el"))
-                                  `("gnus.el" ,(local-file "../../dot_gnus.el")))
+                    (append (list `("gnus.el" ,(local-file "../../dot_gnus.el")))
                             (map (lambda (file-name)
                                    `(,(string-append "emacs.d/" file-name) ,(local-file (string-append "private_dot_emacs.d/" file-name))))
                                  '("abbrev_defs"
