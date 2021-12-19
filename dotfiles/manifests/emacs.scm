@@ -114,6 +114,7 @@
        emacs-multiple-cursors   ; Multi cursor
        emacs-nginx-mode
        emacs-nix-mode           ; Nix language mode
+       emacs-notmuch
        emacs-olivetti
        emacs-org-appear
        emacs-org-bullets
