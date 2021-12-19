@@ -60,7 +60,7 @@
 
   ruby-gitlab
 
-  python-starred ; Fetch a list of stars from GitHub user
+  ;; XXX: Failed to build python-starred ; Fetch a list of stars from GitHub user
 
   ok-sh
   git-quick-stats
@@ -96,8 +96,8 @@
 
   qemu-windows10
 
-  tigervnc-client-1.10.1
-  tigervnc-server-1.10.1
+  ;; XXX: Fails to build tigervnc-client-1.10.1
+  ;; XXX: Fails to build tigervnc-server-1.10.1
 
   ;; telegram-without-materialdecoration
 

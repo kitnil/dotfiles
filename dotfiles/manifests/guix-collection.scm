@@ -173,7 +173,7 @@ vnc vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
                mlt mpv vlc mpg123 sox
 
                ;; PDF
-               zathura zathura-djvu zathura-pdf-mupdf poppler
+               ;; zathura zathura-djvu zathura-pdf-mupdf poppler
 
                ;; X11
                keynav rofi st xauth xev scrot xsel xclickroot xmenu idesk
@@ -209,7 +209,8 @@ vnc vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
                graphviz ;produce `dot' files graphs
                xdot
                html-xml-utils
-               licensecheck ; Licence checker for source files
+
+               ;; XXX: Fails to compile licensecheck ; Licence checker for source files
 
                lsof
                lsofgraph

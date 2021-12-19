@@ -34,7 +34,6 @@
              (services kresd)
              (services jenkins)
              (services monitoring)
-             (services tftp)
              (services openvpn)
              (services syncthing)
              (services vnc)
@@ -1286,8 +1285,6 @@ PasswordAuthentication yes")))
                                                     ":INBOX=~/Maildir/INBOX"
                                                     ":LAYOUT=fs"))))
 
-                         tftp-service
-
                          (service guix-publish-service-type
                                   (guix-publish-configuration
                                    (host "0.0.0.0")
@@ -1333,13 +1330,20 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                          (service openvswitch-service-type)
                          %openvswitch-configuration-service
                          (ifup-service "enp34s0")
-                         (static-networking-service "br0" "192.168.0.144"
-					            #:netmask "255.255.255.0"
-					            #:gateway "192.168.0.1"
-					            #:name-servers '("192.168.0.144\nsearch intr majordomo.ru"
-                                                                     "172.17.0.1"
-                                                                     "8.8.8.8"
-                                                                     "8.8.4.4"))
+                         (service static-networking-service-type
+                                  (list (static-networking
+                                         (addresses
+                                          (list (network-address
+                                                 (device "br0")
+                                                 (value "192.168.0.144/24"))))
+                                         (routes
+                                          (list (network-route
+                                                 (destination "default")
+                                                 (gateway "192.168.0.1"))))
+                                         (name-servers '("192.168.0.144"
+                                                         "172.17.0.1"
+                                                         "8.8.8.8"
+                                                         "8.8.4.4")))))
 
                          (service libvirt-service-type)
                          (simple-service 'libvirt-qemu-config activation-service-type
