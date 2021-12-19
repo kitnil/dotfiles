@@ -316,4 +316,4 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
   (setq magit-todos-keywords-list
         (add-to-list 'magit-todos-keywords-list "XXX")))
 
-;; (magit-todos-mode) ;NOTE: Use ivy-magit-todos instead of magit-todos-mode
+(magit-todos-mode) ;NOTE: Use ivy-magit-todos instead of magit-todos-mode
