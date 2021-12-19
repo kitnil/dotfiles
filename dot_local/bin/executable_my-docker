@@ -345,3 +345,13 @@ tome4()
 {
     docker-xorg -v /srv/share/tome4:/install --network=host --rm -u0: -w /opt/tome4 --hostname tome4 --name tome4 -e DISPLAY=:0 -v /opt/tome4:/opt/tome4  -v /opt/tome4/rootfs/home/user:/root -v /home/oleg/.t-engine:/root/.t-engine tome4:latest bash
 }
+
+paws()
+{
+    docker run --volume "${HOME}/Maildir/slack-ihc-default:/home/user/Maildir/slack-ihc-default" --volume "${HOME}/Maildir/slack-ihc-bounce:/home/user/Maildir/slack-ihc-bounce" --volume "${HOME}/.paws:/home/user/.paws" --name paws --network=host paws paws-receive
+}
+
+paws-majordomo()
+{
+    docker run --volume "${HOME}/Maildir/slack-majordomo-default:/home/user/Maildir/slack-majordomo-default" --volume "${HOME}/Maildir/slack-majordomo-bounce:/home/user/Maildir/slack-majordomo-bounce" --volume "${HOME}/.paws-majordomo/config:/home/user/.paws/config" --name paws-majordomo --network=host paws
+}
