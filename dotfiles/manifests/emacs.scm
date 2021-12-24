@@ -1,7 +1,7 @@
 (use-modules (gnu)
              (guix profiles))
 
-(use-package-modules admin cmake databases emacs emacs-xyz ocaml package-management)
+(use-package-modules admin cmake databases emacs emacs-xyz mail ocaml package-management)
 
 (use-modules (wigust packages emacs))
 
