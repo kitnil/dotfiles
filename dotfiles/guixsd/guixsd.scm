@@ -390,30 +390,6 @@ location / {
 ;;; Networking
 ;;;
 
-;; Running a Ganeti cluster on Guix — 2020 — Blog — GNU Guix
-;; https://guix.gnu.org/de/blog/2020/running-a-ganeti-cluster-on-guix/
-
-(define (start-interface if)
-  #~(let ((ip #$(file-append iproute "/sbin/ip")))
-      (invoke/quiet ip "link" "set" #$if "up")))
-
-(define (stop-interface if)
-  #~(let ((ip #$(file-append iproute "/sbin/ip")))
-      (invoke/quiet ip "link" "set" #$if "down")))
-
-;; This service is necessary to ensure interface is in the "up" state on boot
-;; since it is otherwise unmanaged from Guix PoV.
-(define (ifup-service if)
-  (let ((name (string-append "ifup-" if)))
-    (simple-service name shepherd-root-service-type
-                    (list (shepherd-service
-                           (provision (list (string->symbol name)))
-                           (start #~(lambda ()
-                                      #$(start-interface if)))
-                           (stop #~(lambda (_)
-                                     #$(stop-interface if)))
-                           (respawn? #f))))))
-
 ;; Note: Remove vlan_mode to use tagged VLANs.
 (define (create-openvswitch-bridge bridge uplink)
   #~(let ((ovs-vsctl (lambda (cmd)
@@ -1329,13 +1305,15 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
 
                          (service openvswitch-service-type)
                          %openvswitch-configuration-service
-                         (ifup-service "enp34s0")
                          (service static-networking-service-type
                                   (list (static-networking
                                          (addresses
                                           (list (network-address
                                                  (device "br0")
-                                                 (value "192.168.0.144/24"))))
+                                                 (value "192.168.0.144/24"))
+                                                (network-address
+                                                 (device "enp34s0")
+                                                 (value "127.0.0.2/8"))))
                                          (routes
                                           (list (network-route
                                                  (destination "default")
@@ -1343,7 +1321,8 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                                          (name-servers '("192.168.0.144"
                                                          "172.17.0.1"
                                                          "8.8.8.8"
-                                                         "8.8.4.4")))))
+                                                         "8.8.4.4"))
+                                         (requirement '(openvswitch-configuration)))))
 
                          (service libvirt-service-type)
                          (simple-service 'libvirt-qemu-config activation-service-type
