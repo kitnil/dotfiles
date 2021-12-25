@@ -595,7 +595,7 @@ EOF
             ;;
         clean)
             (
-                set -ex
+                set -x
                 command guix package --delete-generations=1m
                 command guix pull --delete-generations=1m
                 command guix gc --list-failures | xargs guix gc --clear-failures
