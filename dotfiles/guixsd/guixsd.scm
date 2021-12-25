@@ -24,7 +24,6 @@
              (wigust packages web)
              (wigust packages linux)
              (packages certs)
-             (packages linux)
              (services autofs)
              (services backup)
              (services bittorrent)
@@ -453,7 +452,7 @@ location / {
 
       (kernel-loadable-modules (list vendor-reset-linux-module))
       (initrd microcode-initrd)
-      (kernel linux-5.15-with-patched-bluetooth)
+      (kernel linux-5.15)
       (firmware (cons* ;; amdgpu-firmware
                        linux-firmware %base-firmware))
       ;; (initrd-modules (append '("vfio_pci" "vfio" "vfio_iommu_type1" "vfio_virqfd")
