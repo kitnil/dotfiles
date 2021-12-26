@@ -1131,7 +1131,9 @@ location / {
                                                      ("devices" . #("/dev/sda"
                                                                     "/dev/sdb"
                                                                     "/dev/sdc"))
-                                                     ("collect_not_more_than_period" . "120s")
+                                                     ;; TODO: Set collect_not_more_than_period to 120s after bug will be fixed.
+                                                     ;; https://github.com/prometheus-community/smartctl_exporter/issues/19
+                                                     ("collect_not_more_than_period" . "0s")
                                                      ("bind_to" . "127.0.0.1:9633")))
                                                   #:pretty #t))))))))))
 
