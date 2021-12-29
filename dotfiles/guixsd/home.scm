@@ -32,6 +32,9 @@
          (lambda (home)
            home)))
 
+(add-to-load-path (string-append %home "/.local/bin"))
+(use-modules (mjru-github-projects))
+
 (define .bash_profile
   (string-append %home "/.local/share/chezmoi/dot_bash_profile"))
 
@@ -1687,4 +1690,25 @@ gtk-xft-rgba=\"rgb\"
 
     (service home-greenclip-service-type)
 
-    ))))
+    (service nix-build-service-type
+             (nix-build-configurations
+              (configurations
+               (append
+                   (map
+                    (lambda (hostname)
+                      (nix-build-configuration
+                       (name hostname)
+                       (git-project git-project-nixos-pop)))
+                    '("pop1" "pop5"))
+                   (map
+                    (lambda (hostname)
+                      (nix-build-configuration
+                       (name hostname)
+                       (git-project git-project-nixos-monitoring)))
+                    '("staff"))
+                   (map
+                    (lambda (hostname)
+                      (nix-build-configuration
+                       (name hostname)
+                       (git-project git-project-nixos-ns)))
+                    '("ns1-mr" "ns2-mr" "ns1-dh" "ns2-dh"))))))))))
