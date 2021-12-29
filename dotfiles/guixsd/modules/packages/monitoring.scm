@@ -199,3 +199,41 @@ Prometheus.")
     (description "Exports metrics from the exim mail server for consumption by
 Prometheus.")
     (license license:expat)))
+
+(define-public prometheus-ssh-exporter
+  (package
+    (name "prometheus-ssh-exporter")
+    (version "1.3.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append
+             "https://github.com/treydock/ssh_exporter/releases/download/v"
+             version "/ssh_exporter-" version ".linux-amd64.tar.gz"))
+       (sha256
+        (base32
+         "1cba96a08bv3phsvp5ngrl8pkqgjx7mjpr1xjvs5aicdigzbbly7"))))
+    (build-system trivial-build-system)
+    (inputs
+     `(("gzip" ,gzip)
+       ("tar" ,tar)))
+    (arguments
+     `(#:modules ((guix build utils))
+       #:builder
+       (begin
+         (use-modules (guix build utils))
+         (mkdir-p (string-append %output "/bin"))
+         (setenv "PATH"
+                 (string-append
+                  (assoc-ref %build-inputs "gzip") "/bin"
+                  ":" (assoc-ref %build-inputs "tar") "/bin"))
+         (invoke "tar" "--strip-components=1" "-xf"
+                 (assoc-ref %build-inputs "source"))
+         (let ((bin (string-append %output "/bin")))
+           (mkdir-p bin)
+           (install-file "ssh_exporter" bin)))))
+    (home-page "https://github.com/gvengel/ssh_exporter")
+    (synopsis "Ssh metrics exporter for Prometheus")
+    (description "Exports metrics from the SSH for consumption by
+Prometheus.")
+    (license license:expat)))
