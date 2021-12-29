@@ -5,11 +5,16 @@
   #:use-module (guix records)
   #:use-module (gnu packages package-management)
   #:use-module (gnu home services mcron)
+  #:use-module (ice-9 match)
   #:export (nix-delete-generations-service-type
             nix-delete-generations-configuration
 
             guix-delete-generations-service-type
-            guix-delete-generations-configuration))
+            guix-delete-generations-configuration
+
+            nix-build-service-type
+            nix-build-configurations
+            nix-build-configuration))
 
 
 ;;;
@@ -88,3 +93,72 @@
    (description
     "Periodically run nix-env --delete-generations.")
    (default-value (nix-delete-generations-configuration))))
+
+(define %home
+  (and=> (getenv "HOME")
+         (lambda (home)
+           home)))
+
+(add-to-load-path (string-append %home "/.local/bin"))
+(use-modules (mjru-github-projects))
+
+(define-record-type* <nix-build-configurations>
+  nix-build-configurations make-nix-build-configurations
+  nix-build-configurations?
+  (configurations nix-build-configurations-configurations ;<nix-build-configuration>
+                  (default '()))
+  (schedule       nix-build-configurations-shedule        ;mcron specification
+                  (default '(next-hour '(21))))
+  (nix            nix-build-configuration-nix             ;<package>
+                  (default nix)))
+
+(define-record-type* <nix-build-configuration>
+  nix-build-configuration make-nix-build-configuration
+  nix-build-configuration?
+  (name         nix-build-configuration-name        ;string
+                (default #f))
+  (git-project  nix-build-configuration-git-project ;<git-project>
+                (default #f)))
+
+(add-to-load-path (string-append %home "/.local/bin"))
+(use-modules (mjru-github-projects))
+
+(define (nix-build-mcron-jobs config)
+  (list
+   #~(job
+      '#$(nix-build-configurations-shedule config)
+      #$(program-file
+         "nix-build"
+         (with-imported-modules '((ice-9 format)
+                                  (ice-9 match)
+                                  (guix build utils))
+           #~(begin
+               (use-modules (ice-9 match)
+                            (guix build utils))
+
+               (add-to-load-path #$(string-append %home "/.local/bin"))
+               (use-modules (mjru-github-projects))
+
+               #$@(map
+                   (match-lambda
+                     (($ <nix-build-configuration> name git-project)
+                      (match git-project
+                        (($ (@@ (mjru-github-projects) <git-project>) _ _ output)
+                         #~(with-directory-excursion #$output
+                             (let ((command (list (string-append #$(@@ (gnu packages package-management) nix) "/bin/nix-shell")
+                                                  "--run"
+                                                  #$(string-append "nix build --no-link --builders 'ssh://nixos.intr x86_64-linux' .#nixosConfigurations."
+                                                                   name
+                                                                   ".config.system.build.toplevel"))))
+                               (format #t "Running `~a'.~%" (string-join command))
+                               (apply system* command)))))))
+                   (nix-build-configurations-configurations config))))))))
+
+(define nix-build-service-type
+  (service-type
+   (name 'nix-build)
+   (extensions
+    (list (service-extension home-mcron-service-type
+                             nix-build-mcron-jobs)))
+   (description "Periodically run nix build.")
+   (default-value '())))
