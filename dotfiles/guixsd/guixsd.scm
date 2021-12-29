@@ -805,6 +805,9 @@ location / {
                                                (define prometheus-alertmanager-exim
                                                  #$(plain-file "prometheus-alertmanager-exim.json"
                                                                (scm->json-string (load "exim.scm"))))
+                                               (define prometheus-alertmanager-ssh-exporter
+                                                 #$(plain-file "prometheus-alertmanager-ssh-exporter.json"
+                                                               (scm->json-string (load "ssh-exporter.scm"))))
                                                (with-output-to-file #$output
                                                  (lambda ()
                                                    (scm->json
@@ -958,7 +961,8 @@ location / {
                                                                       ,prometheus-alertmanager-blackbox
                                                                       ,prometheus-alertmanager-bird
                                                                       ,prometheus-alertmanager-smartctl
-                                                                      ,prometheus-alertmanager-exim))
+                                                                      ,prometheus-alertmanager-exim
+                                                                      ,prometheus-alertmanager-ssh-exporter))
                                                       (global
                                                        (scrape_interval . "15s")
                                                        (external_labels
