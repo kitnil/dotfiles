@@ -16,15 +16,20 @@
 (define %connect-program
   (string-append %home "/.local/bin/connect"))
 
-(define (juniper-show-configuration host)
+(define (juniper-command host command)
   #~(begin
       (use-modules (ice-9 rdelim)
                    (ice-9 popen))
-      (let* ((port (open-pipe* OPEN_READ #$%connect-program #$host
-                               "cli" "show" "configuration"))
+      (let* ((port (open-pipe* OPEN_READ #$%connect-program #$host #$@command))
              (output (read-string port)))
         (close-port port)
         output)))
+
+(define (juniper-show-configuration host)
+  (juniper-command host '("cli" "show" "configuration")))
+
+(define (juniper-show-dhcp host)
+  (juniper-command host '("cli" "show" "system" "services" "dhcp" "binding")))
 
 (define (juniper-configuration->file host)
   (program-file
@@ -38,7 +43,10 @@
            (mkdir-p directory)
            (call-with-output-file (string-append directory "/juniper.conf")
              (lambda (port)
-               (display #$(juniper-show-configuration host) port))))))))
+               (display #$(juniper-show-configuration host) port)))
+           (call-with-output-file (string-append directory "/dhcp.txt")
+             (lambda (port)
+               (display #$(juniper-show-dhcp host) port))))))))
 
 (define (juniper-configuration->vc host)
   (program-file
@@ -50,7 +58,8 @@
          (with-directory-excursion #$%state-directory
            (invoke "git" "add" "--all")
            (invoke "git" "commit" "--message=Update.")
-           (invoke "git" "push"))))))
+           ;; (invoke "git" "push")
+           )))))
 
 (define (juniper-mcron-jobs config)
   (list
