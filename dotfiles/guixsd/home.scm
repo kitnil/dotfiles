@@ -1735,5 +1735,23 @@ gtk-xft-rgba=\"rgb\"
                                  ("private_key" . ,(string-append %home "/.ssh/id"))
                                  ("known_hosts" . ,(string-append %home "/.ssh/known_hosts"))
                                  ("host_key_algorithms" . #("ssh-ed25519"))
+                                 ("command" . "uptime"))
+                                ("id_rsa"
+                                 ("user" . "oleg")
+                                 ("timeout" . 5)
+                                 ("private_key" . ,(string-append %home "/.ssh/id_rsa"))
+                                 ("known_hosts" . ,(string-append %home "/.ssh/known_hosts"))
+                                 ("command" . "uptime"))
+                                ("majordomo-eng"
+                                 ("user" . "eng")
+                                 ("timeout" . 5)
+                                 ("private_key" . ,(string-append %home "/.ssh/id_rsa_majordomo_eng"))
+                                 ("known_hosts" . ,(string-append %home "/.ssh/known_hosts"))
+                                 ("command" . "uptime"))
+                                ("majordomo-net"
+                                 ("user" . "root")
+                                 ("timeout" . 5)
+                                 ("private_key" . ,(string-append %home "/.ssh/id_rsa_majordomo_eng"))
+                                 ("known_hosts" . ,(string-append %home "/.ssh/known_hosts"))
                                  ("command" . "uptime"))))
                              #:pretty #t))))))))))))))
