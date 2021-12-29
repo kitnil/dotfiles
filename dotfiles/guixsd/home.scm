@@ -21,6 +21,7 @@
              (home services desktop)
              (home services juniper)
              (home services mail)
+             (home services monitoring)
              (home services package-management)
              (gnu packages mail)
              (gnu packages dhall)
@@ -1711,4 +1712,28 @@ gtk-xft-rgba=\"rgb\"
                       (nix-build-configuration
                        (name hostname)
                        (git-project git-project-nixos-ns)))
-                    '("ns1-mr" "ns2-mr" "ns1-dh" "ns2-dh"))))))))))
+                    '("ns1-mr" "ns2-mr" "ns1-dh" "ns2-dh"))))))
+
+    (service home-prometheus-ssh-exporter-service-type
+             (prometheus-ssh-exporter-configuration
+              (config-file
+               (computed-file
+                "ssh-exporter.json"
+                (with-extensions (list guile-json-4)
+                  (with-imported-modules (source-module-closure '((json builder)))
+                    #~(begin
+                        (use-modules (json builder)
+                                     (ice-9 rdelim))
+                        (define %home #$%home)
+                        (with-output-to-file #$output
+                          (lambda ()
+                            (scm->json
+                             `(("modules"
+                                ("default"
+                                 ("user" . "oleg")
+                                 ("timeout" . 5)
+                                 ("private_key" . ,(string-append %home "/.ssh/id"))
+                                 ("known_hosts" . ,(string-append %home "/.ssh/known_hosts"))
+                                 ("host_key_algorithms" . #("ssh-ed25519"))
+                                 ("command" . "uptime"))))
+                             #:pretty #t))))))))))))))
