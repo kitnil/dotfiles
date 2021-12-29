@@ -926,7 +926,34 @@ location / {
                                                               (target_label . "instance"))
                                                              ((replacement . "127.0.0.1:9115")
                                                               (target_label . "__address__"))))
-                                                          (job_name . "blackbox-dns-udp-mjru-wugi-info"))))
+                                                          (job_name . "blackbox-dns-udp-mjru-wugi-info"))
+                                                         (("static_configs"
+                                                           .
+                                                           #((("targets"
+                                                               .
+                                                               #("vm1.wugi.info:22"))
+                                                              ("labels" ("module" . "default")))))
+                                                          ("relabel_configs"
+                                                           .
+                                                           #((("target_label" . "__param_target")
+                                                              ("source_labels" . #("__address__")))
+                                                             (("target_label" . "instance")
+                                                              ("source_labels" . #("__param_target")))
+                                                             (("target_label" . "__address__")
+                                                              ("replacement" . "127.0.0.1:9312"))
+                                                             (("target_label" . "__param_module")
+                                                              ("source_labels" . #("module")))))
+                                                          ("metrics_path" . "/ssh")
+                                                          ("metric_relabel_configs"
+                                                           .
+                                                           #((("regex" . "^(module)$")
+                                                              ("action" . "labeldrop"))))
+                                                          ("job_name" . "ssh"))
+                                                         (("static_configs"
+                                                           .
+                                                           #((("targets" . #("localhost:9312")))))
+                                                          ("metrics_path" . "/metrics")
+                                                          ("job_name" . "ssh-metrics"))))
                                                       (rule_files . #(,prometheus-alertmanager-node
                                                                       ,prometheus-alertmanager-blackbox
                                                                       ,prometheus-alertmanager-bird
