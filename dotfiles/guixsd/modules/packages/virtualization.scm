@@ -18,28 +18,22 @@
   #:use-module (ice-9 rdelim)
   #:use-module (guix gexp))
 
-(define %source-dir "/home/oleg/archive/src/looking-glass")
-
-(define (git-output . args)
-  "Execute 'git ARGS ...' command and return its output without trailing
-newspace."
-  (with-directory-excursion %source-dir
-    (let* ((port   (apply open-pipe* OPEN_READ "git" args))
-           (output (read-string port)))
-      (close-pipe port)
-      (string-trim-right output #\newline))))
-
-(define (current-commit)
-  (git-output "log" "-n" "1" "--pretty=format:%H"))
-
 (define-public looking-glass-client-next
   (package
     (inherit looking-glass-client)
     (name "looking-glass-client-next")
     (version "B4")
-    (source (local-file %source-dir
-                        #:recursive? #t
-                        #:select? (git-predicate %source-dir)))
+    (source
+     (origin
+       (method git-fetch)
+       (uri (git-reference
+             (url "https://github.com/gnif/LookingGlass")
+             (commit version)
+             (recursive? #t)))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32
+         "0fwmz0l1dcfwklgvxmv0galgj2q3nss90kc3jwgf6n80x27rsnhf"))))
     (inputs
      `(("libiberty" ,libiberty)
        ("zlib" ,zlib)
