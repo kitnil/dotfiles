@@ -37,6 +37,13 @@ WHERE equip_servers.equip_rack_id = equip_racks.equip_rack_id AND equip_racks.eq
 ORDER BY equip_racks.name;
 EOF
         ;;
+    client)
+        mysql -s -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -h"$MYSQL_SERVER" billing <<EOF
+SELECT equip_servers.name,clients.email
+FROM colo_accounts, equip_servers, clients
+WHERE colo_accounts.equip_server_id = equip_servers.equip_server_id AND clients.client_id = colo_accounts.client_id AND equip_servers.name LIKE "mj%";
+EOF
+        ;;
     switch)
         mysql -s -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -h"$MYSQL_SERVER" billing <<EOF \
             | awk '{$NF = "https://billing2.intr/switch/edit/"$NF; print}' \
