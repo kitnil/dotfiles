@@ -1,8 +1,9 @@
-(use-modules (guix channels)
-             (guix inferior)
-             (guix profiles)
-             (guix store)
-             (srfi srfi-1))
+(define-module (deprecated)
+  #:use-module (guix channels)
+  #:use-module (guix inferior)
+  #:use-module (guix profiles)
+  #:use-module (guix store)
+  #:use-module (srfi srfi-1))
 
 (define channels
   (list (channel
@@ -31,6 +32,11 @@
 (define inferior
   (open-inferior cached))
 
-(packages->manifest (list (first (lookup-inferior-packages inferior "firefox"))
-                          (first (lookup-inferior-packages inferior "openssh"))
-                          (last (lookup-inferior-packages inferior "tigervnc-client"))))
+(define-public firefox
+  (first (lookup-inferior-packages inferior "firefox")))
+
+(define-public openssh
+  (first (lookup-inferior-packages inferior "openssh")))
+
+(define-public tigervnc-client
+  (last (lookup-inferior-packages inferior "tigervnc-client")))

@@ -7,6 +7,9 @@
              ((guix ui) #:select (make-user-module))
              (guix profiles))
 
+(add-to-load-path "/home/oleg/.local/share/chezmoi/dotfiles/manifests")
+(use-modules (deprecated))
+
 ;; The composite module that combines everything from the public modules.
 ;; Origin <https://lists.gnu.org/archive/html/help-guix/2018-10/msg00040.html>.
 
@@ -24,7 +27,7 @@
   (fold (lambda (file combined)
           (manifest-add combined
                         (manifest-entries (load-manifest file))))
-        (manifest '())
+        (packages->manifest (list firefox openssh tigervnc-client))
         files))
 
 (combined-manifest-from-files
@@ -34,5 +37,4 @@
         "emacs.scm"
         "guix-collection.scm"
         "majordomo.scm"
-        "deprecated.scm"
         "wigust.scm")))
