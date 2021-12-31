@@ -1167,6 +1167,9 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                                  (display "Configure keymap\n")
                                  (system* #$xmodmap-script)
 
+                                 (system* #$(file-append setxkbmap "/bin/setxkbmap")
+                                          "-layout" "us,ru" "-option" "grp:win_space_toggle")
+
                                  (display "Start window manager\n")
                                  (execl "/run/current-system/profile/bin/sbcl" "sbcl" "--load" #$stumpwp-load-file)))))
                       #~(begin
