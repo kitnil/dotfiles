@@ -8,12 +8,12 @@
                 (espanso-daemon)
                 (picom)
                 (idesk)
-                (run-shell-command "/home/oleg/bin/wallpaper"))
+                (run-shell-command "/home/oleg/.local/bin/wallpaper"))
               (lambda () (keynav))
               (lambda () (keyboard-layout))
               (lambda () (xmodmap))
               (lambda () (run-commands "volume-decrease")) ;start pulseaudio
-              (lambda () (run-shell-command "/home/oleg/bin/xmodmap.sh"))
+              (lambda () (run-shell-command "/home/oleg/.local/bin/xmodmap.sh"))
               ;; (lambda () (sb-thread:make-thread
               ;;        (lambda ()
               ;;          (run-shell-command
