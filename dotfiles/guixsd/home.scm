@@ -1146,61 +1146,6 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                                            #$stumpwp-load-file)))
                                (chmod #$output #o555)))))))
 
-    (simple-service 'idesk-config
-                    home-activation-service-type
-                    (let ((file (scheme-file "idesktop.scm"
-                                             #~(begin
-                                                 (use-modules (ice-9 match))
-                                                 (let* ((%home
-                                                         (and=> (getenv "HOME")
-                                                                (lambda (home)
-                                                                  home)))
-                                                        (idesktop (string-append %home "/.idesktop")))
-                                                   (unless (file-exists? idesktop)
-                                                     (mkdir idesktop))
-                                                   (define x
-                                                     (make-parameter 39))
-                                                   (define y
-                                                     (make-parameter 29))
-                                                   (for-each (match-lambda ((file caption command icon)
-                                                                            (call-with-output-file (string-append idesktop "/" file)
-                                                                              (lambda (port)
-                                                                                (display "table Icon\n" port)
-                                                                                (format port "  Caption: ~a~%" caption)
-                                                                                (format port "  Command: ~a~%" command)
-                                                                                (format port "  Icon: ~a~%" icon)
-                                                                                (display "  Width: 48\n" port)
-                                                                                (display "  Height: 48\n" port)
-                                                                                (format port "  X: ~a~%" (x))
-                                                                                (format port "  Y: ~a~%" (y (+ (y) 100)))
-                                                                                (display "end\n" port)))))
-                                                             `(("dotfiles.lnk"
-                                                                "Dotfiles"
-                                                                "/home/oleg/.guix-profile/bin/xterm +sb -bg black -fg white -e tmuxifier s dotfiles"
-                                                                "/home/oleg/.guix-profile/share/icons/gnome/48x48/apps/gnome-terminal.png")
-                                                               ("guix.lnk"
-                                                                "Guix"
-                                                                "/home/oleg/.guix-profile/bin/xterm +sb -bg black -fg white -e tmuxifier s guix"
-                                                                "/home/oleg/.guix-profile/share/icons/gnome/48x48/apps/gnome-terminal.png")
-                                                               ("xterm.lnk"
-                                                                "XTerm"
-                                                                "/home/oleg/.guix-profile/bin/xterm +sb -bg black -fg white"
-                                                                "/home/oleg/.guix-profile/share/icons/gnome/48x48/apps/gnome-terminal.png")
-                                                               ("guix.vm.wugi.info.lnk"
-                                                                "VNC guix.vm"
-                                                                "vnc vm"
-                                                                "/home/oleg/.guix-profile/share/icons/hicolor/48x48/apps/tigervnc.png")
-                                                               ("vm1.wugi.info.lnk"
-                                                                "VNC vm1"
-                                                                "vnc client vm1.wugi.info"
-                                                                "/home/oleg/.guix-profile/share/icons/hicolor/48x48/apps/tigervnc.png")
-                                                               ("workstation.lnk"
-                                                                "VNC work"
-                                                                "vnc mjru"
-                                                                "/home/oleg/.guix-profile/share/icons/hicolor/48x48/apps/tigervnc.png"))))))))
-                      #~(begin
-                          (primitive-load #$file))))
-
     (simple-service 'parallel-config
                     home-activation-service-type
                     #~(begin

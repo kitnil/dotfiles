@@ -7,7 +7,6 @@
               (lambda ()
                 (espanso-daemon)
                 (picom)
-                (idesk)
                 (run-shell-command "/home/oleg/.local/bin/wallpaper"))
               (lambda () (keynav))
               (lambda () (keyboard-layout))
