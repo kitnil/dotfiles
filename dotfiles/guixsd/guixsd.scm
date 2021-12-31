@@ -1187,6 +1187,7 @@ location / {
                                    (x11-forwarding? #t)
                                    (gateway-ports? 'client)
                                    (password-authentication? #f)
+                                   (use-pam? #f)
                                    (extra-content "\
 Match Address 127.0.0.1
 PasswordAuthentication yes
