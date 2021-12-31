@@ -1158,26 +1158,28 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                                  (lambda (port)
                                    (display "#!/bin/sh\n" port)
 
-                                   (display "Set background.")
+                                   ;; Set background
                                    (format port "~a -solid black~%"
                                            #$(file-append xsetroot "/bin/xsetroot"))
 
-                                   (display "Set cursor theme")
+                                   ;; Set cursor theme
                                    (format port "~a -cursor_name left_ptr~%"
                                            #$(file-append xsetroot "/bin/xsetroot"))
 
-                                   (display "Disable speaker")
+                                   ;; Disable speaker
                                    (format port "~a -b~%"
                                            #$(file-append xset "/bin/xset"))
 
-                                   (display "Start xclickroot")
+                                   ;; Start xclickroot
                                    (format port "~a -r ~a &~%"
                                            #$(file-append xclickroot "/bin/xclickroot")
                                            #$xmenu)
 
+                                   ;; Configure keymap
                                    (display #$xmodmap-script port)
                                    (newline port)
 
+                                   ;; Start window manager
                                    (format port "exec -a stumpwm /run/current-system/profile/bin/sbcl --load ~a~%"
                                            #$stumpwp-load-file)))
                                (chmod #$output #o555)))))))
