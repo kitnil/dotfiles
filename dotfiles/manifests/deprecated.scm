@@ -40,3 +40,6 @@
 
 (define-public tigervnc-client
   (last (lookup-inferior-packages inferior "tigervnc-client")))
+
+(define-public tigervnc-server
+  (last (lookup-inferior-packages inferior "tigervnc-server")))

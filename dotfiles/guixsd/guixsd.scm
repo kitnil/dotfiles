@@ -20,7 +20,6 @@
 ;; Third-party modules
 (use-modules (config)
              (wigust packages admin)
-             (wigust packages vnc)
              (wigust packages web)
              (wigust packages linux)
              (packages certs)
@@ -40,6 +39,9 @@
              (services web)
              (nongnu packages linux)
              (nongnu system linux-initrd))
+
+(add-to-load-path "/home/oleg/.local/share/chezmoi/dotfiles/manifests")
+(use-modules (deprecated))
 
 (define (amdgpu+amdgpu.conf)
   (string-append "\
@@ -646,7 +648,7 @@ location / {
       (services (append (list
 
                          ;; (service vncserver-service-type (vncserver-configuration
-                         ;;                                  (vncserver tigervnc-server-1.10.1)
+                         ;;                                  (vncserver tigervnc-server)
                          ;;                                  (display 1)
                          ;;                                  (user "oleg")
                          ;;                                  (group "users")
@@ -654,16 +656,16 @@ location / {
                          ;;                                  (xstartup "/home/oleg/.vnc/xstartup-firefox")
                          ;;                                  (host-name "guixsd")))
 
-                         ;; (service vncserver-service-type (vncserver-configuration
-                         ;;                                  (vncserver tigervnc-server-1.10.1)
-                         ;;                                  (display 2)
-                         ;;                                  (user "oleg")
-                         ;;                                  (group "users")
-                         ;;                                  (directory "/home/oleg")
-                         ;;                                  (xstartup "/home/oleg/.vnc/xstartup-stumpwm")
-                         ;;                                  (host-name "guixsd")
-                         ;;                                  (supplementary-groups
-                         ;;                                   '("docker" "kvm" "libvirt" "audio" "video" "wheel" "users"))))
+                         (service vncserver-service-type (vncserver-configuration
+                                                          (vncserver tigervnc-server)
+                                                          (display 2)
+                                                          (user "oleg")
+                                                          (group "users")
+                                                          (directory "/home/oleg")
+                                                          (xstartup "/home/oleg/.xsession")
+                                                          (host-name "guixsd")
+                                                          (supplementary-groups
+                                                           '("docker" "kvm" "libvirt" "audio" "video" "wheel" "users"))))
 
                          ;; (service vncserver-service-type (vncserver-configuration
                          ;;                                  (vncserver tigervnc-server-1.10.1)

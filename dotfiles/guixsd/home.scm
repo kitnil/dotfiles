@@ -15,6 +15,7 @@
              (ice-9 rdelim)
              (json)
 
+             (gnu packages base)
              (gnu packages haskell-apps)
              (gnu packages wm)
 
@@ -1153,6 +1154,21 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                             (program-file
                              "xsession"
                              #~(begin
+                                 (use-modules (srfi srfi-1)
+                                              (ice-9 popen)
+                                              (ice-9 rdelim)
+                                              (ice-9 format))
+
+                                 (define %display
+                                   (and=> (getenv "DISPLAY")
+                                          (lambda (display)
+                                            display)))
+
+                                 (define %home
+                                   (and=> (getenv "HOME")
+                                          (lambda (home)
+                                            home)))
+
                                  (display "Set background\n")
                                  (system* #$(file-append xsetroot "/bin/xsetroot")
                                           "-solid" "black")
@@ -1170,8 +1186,20 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                                  (system* #$(file-append setxkbmap "/bin/setxkbmap")
                                           "-layout" "us,ru" "-option" "grp:win_space_toggle")
 
+                                 ;; Prepare environment for VNC sessions
                                  (display "Start window manager\n")
-                                 (execl "/run/current-system/profile/bin/sbcl" "sbcl" "--load" #$stumpwp-load-file)))))
+                                 (if (string= %display ":0.0")
+                                     (execl "/run/current-system/profile/bin/sbcl" "sbcl" "--load" #$stumpwp-load-file)
+                                     (begin
+                                       (unsetenv "SESSION_MANAGER")
+                                       (unsetenv "DBUS_SESSION_BUS_ADDRESS")
+                                       (system* #$(file-append xhost "/bin/xhost") "+local:")
+                                       (let* ((pw    (getpw (getuid)))
+                                              (shell (passwd:shell pw)))
+                                         ;; The '--login' option is supported at least by Bash and zsh.
+                                         (execl shell "sbcl" "--login" "-c"
+                                                (format #f ". /home/oleg/.bash_profile; /run/current-system/profile/bin/sbcl --load ~a"
+                                                        #$stumpwp-load-file)))))))))
                       #~(begin
                           (let ((file #$(string-append %home "/.xsession")))
                             (copy-file #$xsession-file file)
