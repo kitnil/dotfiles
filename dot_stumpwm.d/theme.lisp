@@ -21,8 +21,6 @@
 (defcommand refcard-stumpwm () ()
   (run-shell-command "bash -ic 'stumpwm-refcard wallpaper'"))
 
-(set-background-dark)
-
 
 ;;;
 ;;; Wrappers
@@ -47,7 +45,6 @@
              (set-unfocus-color "#000000")
              (set-fg-color "#000000")
              (set-bg-color "#d3d3d3")
-             (run-shell-command "xsetroot -solid '#d3d3d3'")
              (set-focus-color "#66cdaa")
              (set-border-color "#66cdaa")
              (set-float-focus-color "#66cdaa")
@@ -60,7 +57,6 @@
              (set-unfocus-color "#000000")
              (set-fg-color "#ffffff")
              (set-bg-color "#000000")
-             (run-shell-command "xsetroot -solid black")
              (set-focus-color "#0a420a")
              (set-border-color "#0a420a")
              (set-float-focus-color "#0a420a")

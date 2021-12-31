@@ -9,7 +9,6 @@
                 (picom)
                 (idesk)
                 (run-shell-command "/home/oleg/bin/wallpaper"))
-              (lambda () (cursor-theme))
               (lambda () (keynav))
               (lambda () (keyboard-layout))
               (lambda () (xmodmap))

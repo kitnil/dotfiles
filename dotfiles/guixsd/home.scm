@@ -6,6 +6,7 @@
              ;; (gnu home services ssh)
              (gnu packages admin)
              (gnu packages guile)
+             (gnu packages xorg)
              (gnu services)
              (gnu services configuration)
              (guix gexp)
@@ -1124,6 +1125,20 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                                (call-with-output-file #$output
                                  (lambda (port)
                                    (display "#!/bin/sh\n" port)
+
+                                   (display "Set background.")
+                                   (format port "~a -solid black~%"
+                                           #$(file-append xsetroot "/bin/xsetroot"))
+
+                                   (display "Set cursor theme")
+                                   (format port "~a -cursor_name left_ptr~%"
+                                           #$(file-append xsetroot "/bin/xsetroot"))
+
+                                   (display "Disable speaker")
+                                   (format port "~a -b~%"
+                                           #$(file-append xset "/bin/xset"))
+
+                                   (display "Start xclickroot")
                                    (format port "~a -r ~a &~%"
                                            #$(file-append xclickroot "/bin/xclickroot")
                                            #$xmenu)
