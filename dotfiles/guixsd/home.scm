@@ -1712,7 +1712,13 @@ gtk-xft-rgba=\"rgb\"
                       (nix-build-configuration
                        (name hostname)
                        (git-project git-project-nixos-ns)))
-                    '("ns1-mr" "ns2-mr" "ns1-dh" "ns2-dh"))))))
+                    '("ns1-mr" "ns2-mr" "ns1-dh" "ns2-dh"))
+                   (map
+                    (lambda (hostname)
+                      (nix-build-configuration
+                       (name hostname)
+                       (git-project git-project-nixos-web)))
+                    '("web30"))))))
 
     (service home-prometheus-ssh-exporter-service-type
              (prometheus-ssh-exporter-configuration
