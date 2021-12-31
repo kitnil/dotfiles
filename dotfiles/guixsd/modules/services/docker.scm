@@ -35,14 +35,16 @@
   (program-file "docker-start"
                 #~(begin
                     (use-modules (ice-9 popen))
+                    (define count (make-parameter 0))
                     (let loop ()
                       (let* ((port   (apply open-pipe* OPEN_READ "/run/current-system/profile/bin/docker"
                                             '("ps"))))
-                        (if (= (status:exit-val (close-pipe port)) 0)
+                        (if (or (< 5 (count))
+                                (= (status:exit-val (close-pipe port)) 0))
                             #t
-                            (system* "/run/current-system/profile/bin/herd" "start" "dockerd")))
-                      (sleep 5)
-                      (loop)))))
+                            (begin (system* "/run/current-system/profile/bin/herd" "start" "dockerd")
+                                   (sleep 5)
+                                   (loop))))))))
 
 (define docker-service
   (simple-service 'docker shepherd-root-service-type
