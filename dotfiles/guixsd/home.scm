@@ -1137,52 +1137,42 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                           `("vnc/xstartup-twm" ,(local-file "../../private_dot_vnc/executable_xstartup-twm" #:recursive? #t))))
 
     (simple-service 'xsession-config
-                    home-files-service-type
-                    (list
-                     `("xsession"
-                       ,(let ((stumpwp-load-file
-                               (plain-file
-                                "stumpwp-load-file"
-                                (with-output-to-string
-                                  (lambda ()
-                                    (display '(require :asdf))
-                                    (newline)
-                                    (display '(require :stumpwm))
-                                    (newline)
-                                    (display '(stumpwm:stumpwm))
-                                    (newline))))))
-                          (computed-file
-                           "xsession"
-                           #~(begin
-                               (call-with-output-file #$output
-                                 (lambda (port)
-                                   (display "#!/bin/sh\n" port)
+                    home-activation-service-type
+                    (let* ((stumpwp-load-file
+                            (plain-file
+                             "stumpwp-load-file"
+                             (with-output-to-string
+                               (lambda ()
+                                 (display '(require :asdf))
+                                 (newline)
+                                 (display '(require :stumpwm))
+                                 (newline)
+                                 (display '(stumpwm:stumpwm))
+                                 (newline)))))
+                           (xsession-file
+                            (program-file
+                             "xsession"
+                             #~(begin
+                                 (display "Set background\n")
+                                 (system* #$(file-append xsetroot "/bin/xsetroot")
+                                          "-solid" "black")
 
-                                   ;; Set background
-                                   (format port "~a -solid black~%"
-                                           #$(file-append xsetroot "/bin/xsetroot"))
+                                 (display "Set cursor theme\n")
+                                 (system* #$(file-append xsetroot "/bin/xsetroot")
+                                          "-cursor_name" "left_ptr")
 
-                                   ;; Set cursor theme
-                                   (format port "~a -cursor_name left_ptr~%"
-                                           #$(file-append xsetroot "/bin/xsetroot"))
+                                 (display "Disable speaker\n")
+                                 (system* #$(file-append xset "/bin/xset") "-b")
 
-                                   ;; Disable speaker
-                                   (format port "~a -b~%"
-                                           #$(file-append xset "/bin/xset"))
+                                 (display "Configure keymap\n")
+                                 (system* #$xmodmap-script)
 
-                                   ;; Start xclickroot
-                                   (format port "~a -r ~a &~%"
-                                           #$(file-append xclickroot "/bin/xclickroot")
-                                           #$xmenu)
-
-                                   ;; Configure keymap
-                                   (display #$xmodmap-script port)
-                                   (newline port)
-
-                                   ;; Start window manager
-                                   (format port "exec -a stumpwm /run/current-system/profile/bin/sbcl --load ~a~%"
-                                           #$stumpwp-load-file)))
-                               (chmod #$output #o555)))))))
+                                 (display "Start window manager\n")
+                                 (execl "/run/current-system/profile/bin/sbcl" "sbcl" "--load" #$stumpwp-load-file)))))
+                      #~(begin
+                          (let ((file #$(string-append %home "/.xsession")))
+                            (copy-file #$xsession-file file)
+                            (chmod file #o700)))))
 
     (simple-service 'parallel-config
                     home-activation-service-type

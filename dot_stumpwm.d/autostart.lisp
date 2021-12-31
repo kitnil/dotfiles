@@ -12,6 +12,10 @@
               (lambda () (keyboard-layout))
               (lambda () (xmodmap))
               (lambda () (run-commands "volume-decrease")) ;start pulseaudio
+              (lambda () (sb-thread:make-thread
+                     (lambda ()
+                       (run-shell-command "/home/oleg/.guix-profile/bin/xclickroot -r /home/oleg/.local/bin/xmenu.sh"))
+                     :name "xclickroot"))
               ;; (lambda () (sb-thread:make-thread
               ;;        (lambda ()
               ;;          (run-shell-command
