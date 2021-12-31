@@ -1,4 +1,7 @@
 (define-module (packages virtualization)
+  #:use-module (gnu packages autotools)
+  #:use-module (gnu packages pkg-config)
+  #:use-module (gnu packages m4)
   #:use-module (gnu packages base)
   #:use-module (gnu packages compression)
   #:use-module (gnu packages gcc)
@@ -9,6 +12,7 @@
   #:use-module (gnu packages multiprecision)
   #:use-module (gnu packages nettle)
   #:use-module (gnu packages virtualization)
+  #:use-module (gnu packages xdisorg)
   #:use-module (gnu packages xorg)
   #:use-module (guix download)
   #:use-module (guix git-download)
@@ -16,13 +20,34 @@
   #:use-module (guix utils)
   #:use-module (ice-9 popen)
   #:use-module (ice-9 rdelim)
-  #:use-module (guix gexp))
+  #:use-module (guix build-system gnu)
+  #:use-module (guix gexp)
+  #:use-module ((guix licenses) #:prefix license:))
+
+(define-public libxpresent
+  (package
+    (name "libxpresent")
+    (version "1.0.0")
+    (source (origin
+              (method url-fetch)
+              (uri "mirror://xorg/individual/lib/libXpresent-1.0.0.tar.bz2")
+              (sha256
+               (base32
+                "12kvvar3ihf6sw49h6ywfdiwmb8i1gh8wasg1zhzp6hs2hay06n1"))))
+    (inputs
+     (list libx11 xorgproto pkg-config libxext libxfixes libxrandr))
+    (build-system gnu-build-system)
+    (home-page "https://gitlab.freedesktop.org/xorg/lib/libxpresent")
+    (synopsis "Xlib-compatible API for the Present extension")
+    (description "This package provides a Xlib-based library for the X Present
+Extension.")
+    (license license:x11)))
 
 (define-public looking-glass-client-next
   (package
     (inherit looking-glass-client)
     (name "looking-glass-client-next")
-    (version "B4")
+    (version "B5")
     (source
      (origin
        (method git-fetch)
@@ -33,7 +58,7 @@
        (file-name (git-file-name name version))
        (sha256
         (base32
-         "0fwmz0l1dcfwklgvxmv0galgj2q3nss90kc3jwgf6n80x27rsnhf"))))
+         "09mn544x5hg1z31l92ksk7fi7yj9r8xdk0dcl9fk56ivcr452ylm"))))
     (inputs
      `(("libiberty" ,libiberty)
        ("zlib" ,zlib)
@@ -51,6 +76,10 @@
        ("libxss" ,libxscrnsaver)
        ("libxinerama" ,libxinerama)
        ("freetype" ,freetype)
+       ("libxkbcommon" ,libxkbcommon)
+       ("libxcursor" ,libxcursor)
+       ("libxpresent" ,libxpresent)
+       ("libxrandr" ,libxrandr)
        ,@(package-inputs looking-glass-client)))
     (arguments
      `(,@(substitute-keyword-arguments (package-arguments looking-glass-client)
