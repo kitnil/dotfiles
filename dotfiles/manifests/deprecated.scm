@@ -13,7 +13,12 @@
         (channel
          (name 'nonguix)
          (url "https://gitlab.com/nonguix/nonguix")
-         (commit "7d824b5780558288881602a7a3cf8b0f56ebc08c"))))
+         (commit "7d824b5780558288881602a7a3cf8b0f56ebc08c"))
+        (channel
+         (name 'guix-wigust)
+         (url "https://github.com/kitnil/guix-wigust")
+         (branch "master")
+         (commit "68340baa8cdc1af1b8a8982c2607ff1dda195ee7"))))
 
 (define cached
   (with-store store
@@ -27,4 +32,5 @@
   (open-inferior cached))
 
 (packages->manifest (list (first (lookup-inferior-packages inferior "firefox"))
-                          (first (lookup-inferior-packages inferior "openssh"))))
+                          (first (lookup-inferior-packages inferior "openssh"))
+                          (last (lookup-inferior-packages inferior "tigervnc-client"))))

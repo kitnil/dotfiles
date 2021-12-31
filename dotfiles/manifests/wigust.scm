@@ -96,9 +96,6 @@
 
   qemu-windows10
 
-  ;; XXX: Fails to build tigervnc-client-1.10.1
-  ;; XXX: Fails to build tigervnc-server-1.10.1
-
   ;; telegram-without-materialdecoration
 
   guix-wigust-packages-emacs))
