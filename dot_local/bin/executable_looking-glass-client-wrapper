@@ -1,0 +1,11 @@
+#!/run/current-system/profile/bin/guile \
+-e main -s
+!#
+
+(define (main args)
+  (apply system* (append '("looking-glass-client"
+                           "spice:enable" "no"
+                           "wayland:warpSupport" "no"
+                           "input:grabKeyboard" "no"
+                           "win:dontUpscale" "yes")
+                     (cdr args))))

@@ -556,14 +556,9 @@ exec -a \"$0\" /home/oleg/.nix-profile/bin/~a --disable-features=SendMouseLeaveE
 
     (simple-service 'looking-glass-wrapper
                     home-files-service-type
-                    (list `("local/bin/looking-glass-wrapper"
-                            ,(program-file "looking-glass-wrapper"
-                                           #~(system* #$(file-append looking-glass-client-next "/bin/looking-glass-client")
-                                                      "-F"
-                                                      "spice:enable" "no"
-                                                      "wayland:warpSupport" "no"
-                                                      "input:grabKeyboard" "no"
-                                                      "win:dontUpscale" "yes")))))
+                    (list `("local/bin/looking-glass-client-wrapper"
+                            ,(local-file "../../dot_local/bin/executable_looking-glass-client-wrapper"
+                                         #:recursive? #t))))
 
     (simple-service 'idea-ultimate-wrapper
                     home-files-service-type
