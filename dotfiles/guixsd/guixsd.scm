@@ -40,7 +40,10 @@
              (nongnu packages linux)
              (nongnu system linux-initrd))
 
-(add-to-load-path "/home/oleg/.local/share/chezmoi/dotfiles/manifests")
+(define %home
+  (passwd:dir (getpw "oleg")))
+
+(add-to-load-path (string-append %home "/.local/share/chezmoi/dotfiles/manifests"))
 (use-modules (deprecated))
 
 (define (amdgpu+amdgpu.conf)
