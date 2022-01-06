@@ -352,37 +352,51 @@ location / {
                     (srfi srfi-26)
                     (ice-9 rdelim))
 
-       (setenv "RESTIC_PASSWORD"
-               (string-trim-right
-                (with-input-from-file "/etc/guix/secrets/restic"
-                  read-string)))
-
        (setenv "SSL_CERT_DIR" "/run/current-system/profile/etc/ssl/certs")
        (setenv "SSL_CERT_FILE" "/run/current-system/profile/etc/ssl/certs/ca-certificates.crt")
 
        (define %user-home
          (passwd:dir (getpw "oleg")))
 
-       (define %exclude-directories
-         (append '#$%root-directories
-                 (map (lambda (directory)
-                        (string-append %user-home "/" directory))
-                      '#$%user-directories)))
-
-       (define %backup-directories
-         (list %user-home "/etc" "/root"))
-
        (display "Creating new Restic snapshot\n")
 
-       (when (zero?
-              (apply system*
-                     (append (list (string-append #$restic "/bin/restic")
-                                   "--repo" "/srv/backup/guixsd")
-                             (fold (lambda (directory directories)
-                                     (append (list "--exclude" directory) directories))
-                                   '() %exclude-directories)
-                             (list "backup")
-                             %backup-directories)))
+       (unless (and (let ((%backup-directories (list %user-home "/etc" "/root"))
+                          (%exclude-directories
+                           (append '#$%root-directories
+                                   (map (lambda (directory)
+                                          (string-append %user-home "/" directory))
+                                        '#$%user-directories))))
+                      (setenv "RESTIC_PASSWORD"
+                              (string-trim-right
+                               (with-input-from-file "/etc/guix/secrets/restic"
+                                 read-string)))
+
+                      (zero?
+                       (apply system*
+                              (append (list (string-append #$restic "/bin/restic")
+                                            "--repo" "/srv/backup/guixsd")
+                                      (fold (lambda (directory directories)
+                                              (append (list "--exclude" directory) directories))
+                                            '() %exclude-directories)
+                                      (list "backup")
+                                      %backup-directories))))
+                    (let ((%backup-directories (list "/mnt/windows/games/games/gothic/Saves"
+                                                     "/mnt/windows/games/games/gothic2/Saves")))
+                      (setenv "RESTIC_PASSWORD"
+                              (string-trim-right
+                               (with-input-from-file "/etc/guix/secrets/windows"
+                                 read-string)))
+                      (if (and (file-exists? "/mnt/windows/games/games/gothic/Saves")
+                               (file-exists? "/mnt/windows/games/games/gothic2/Saves"))
+                          (zero?
+                           (apply system*
+                                  (append (list (string-append #$restic "/bin/restic")
+                                                "--repo" "/srv/backup/windows")
+                                          (list "backup")
+                                          %backup-directories)))
+                          (begin
+                            (display "Not all directories exist, skipping creating a new backup.")
+                            #t))))
          (system* (string-append #$curl "/bin/curl")
                   "--max-time" "10"
                   "--retry" "5"
