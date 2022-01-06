@@ -11,7 +11,7 @@
              (srfi srfi-1)
              (srfi srfi-26))
 
-(use-package-modules admin audio android backup bash bittorrent curl firmware guile haskell-apps networking linux ssh suckless xdisorg xorg)
+(use-package-modules admin audio android backup bash bittorrent curl firmware guile haskell-apps networking linux samba ssh suckless xdisorg xorg)
 
 (use-service-modules admin dbus desktop docker dns mcron networking nix sound
                      xorg ssh web cgit version-control certbot
@@ -312,7 +312,14 @@ location / {
     (source ":sshfs\\#78.108.86.195\\:"))
    (autofs-mount-configuration
     (target "/mnt/ssh/debian11")
-    (source ":sshfs\\#78.108.92.69\\:"))))
+    (source ":sshfs\\#78.108.92.69\\:"))
+   (autofs-mount-configuration
+    (target "/mnt/windows/games")
+    (source "://windows.local/games")
+    (fstype (string-append "-fstype=cifs,ro,user=oleg,pass="
+                           (string-trim-right
+                            (with-input-from-file "/etc/guix/secrets/windows"
+                              read-string)))))))
 
 
 ;;;
@@ -503,7 +510,7 @@ location / {
                           ;; "amdgpu.dc=0"
                           ;; "amdgpu.gpu_recovery=1"
                           ))
-      (packages (append (list dn42-ca ovmf)
+      (packages (append (list dn42-ca ovmf cifs-utils)
                         %my-system-packages))
 
       (groups (cons* (user-group (name "nixbld")
