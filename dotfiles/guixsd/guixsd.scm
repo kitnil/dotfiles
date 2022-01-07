@@ -321,7 +321,9 @@ location / {
     (source "://windows.local/games")
     (fstype (string-append "-fstype=cifs,ro,user=oleg,pass="
                            (string-trim-right
-                            (with-input-from-file "/etc/guix/secrets/windows"
+                            (with-input-from-file (if (string= (getenv "USER") "root")
+                                                      "/etc/guix/secrets/windows"
+                                                      "/dev/null")
                               read-string)))))))
 
 

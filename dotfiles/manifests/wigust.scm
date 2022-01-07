@@ -1,4 +1,5 @@
-(use-modules (gnu packages emacs)
+(use-modules (guix profiles)
+             (gnu packages emacs)
              (wigust packages databases)
              (wigust packages admin)
              (wigust packages documentation)

@@ -6,6 +6,7 @@
              ;; (gnu home services ssh)
              (gnu packages admin)
              (gnu packages guile)
+             (gnu packages virtualization)
              (gnu packages xorg)
              (gnu services)
              (gnu services configuration)
@@ -27,8 +28,7 @@
              (home services package-management)
              (gnu packages mail)
              (gnu packages dhall)
-             (guile pass)
-             (packages virtualization))
+             (guile pass))
 
 (define %home
   (and=> (getenv "HOME")

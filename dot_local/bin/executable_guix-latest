@@ -3,7 +3,7 @@
 !#
 
 ;;;; guix-latest --- Build Guix system with latest channels.
-;;;; Copyright © 2021 Oleg Pykhalov <go.wigust@gmail.com>
+;;;; Copyright © 2021, 2022 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;; Released under the GNU GPLv3 or any later version.
 
 (define-module (guix-latest)
@@ -100,18 +100,21 @@
                              #:ttl (* 3600 24 30)))
 
   (define inferior
-    (open-inferior cached))
+    (open-inferior cached #:error-port (current-error-port)))
 
   (define (file->store-path file)
     (inferior-eval
      `(begin
+        (use-modules (guix profiles)
+                     (guix ui))
         (define %store (open-connection))
+        (format (current-error-port) "Loading `~a'.~%" ,file)
         (let ((load-path ,(assoc-ref opts 'load-path)))
           (when load-path
             (add-to-load-path load-path)))
         (define file-derivation
           (run-with-store %store
-            (let ((definition (load ,file)))
+            (let ((definition (load* ,file (make-user-module '()))))
               (cond ((operating-system? definition)
                      (operating-system-derivation definition))
                     (((@@ (guix profiles) manifest?) definition)
