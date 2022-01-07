@@ -46,6 +46,7 @@ vnc vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
                perl-image-exiftool
 
                virt-manager
+               looking-glass-client
 
                qemu
 
