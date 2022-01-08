@@ -1,4 +1,4 @@
-;; Copyright © 2018, 2019, 2020, 2021 Oleg Pykhalov <go.wigust@gmail.com>
+;; Copyright © 2018, 2019, 2020, 2021, 2022 Oleg Pykhalov <go.wigust@gmail.com>
 ;; Released under the GNU GPLv3 or any later version.
 
 (require 'mailcap)
@@ -20,8 +20,11 @@
 (setq gnus-extra-headers '(To Cc Keywords Gcc Newsgroups X-GM-LABELS List-Id X-Redmine-Issue-Author))
 (setq nnmail-extra-headers gnus-extra-headers)
 
-(setq gnus-parameters '(("^INBOX$" (gnus-thread-sort-functions
-                                    'gnus-thread-sort-by-score))))
+;; TODO: gnus: Sort all IMAP groups by score.
+(setq gnus-parameters (mapcar (lambda (group)
+                                `(,group (gnus-thread-sort-functions
+                                          'gnus-thread-sort-by-score)))
+                              '("^INBOX$" "^majordomo-.*$")))
 
 (add-hook 'message-sent-hook #'gnus-score-followup-thread)
 (add-hook 'gnus-article-mode-hook 'goto-address-mode)
