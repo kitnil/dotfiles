@@ -454,7 +454,7 @@ mycli --password "$(pass show majordomo/public/web/mysql/root)" -d "${2%.intr}"
     ;;
     protected)
         password="$(pass show majordomo/public/web/protected/token)"
-        for domain in $(grafana --host "$2")
+        for domain in $(PYTHONPATH= grafana --host "$2")
         do
             echo curl -H"'Authorization: ${password}'" --include --request PUT "${2}/protected/${domain}?ttl=${TTL:-600}"
             echo curl -H"'Authorization: ${password}'" --include --request PUT "${2}/protected/www.${domain}?ttl=${TTL:-600}"
