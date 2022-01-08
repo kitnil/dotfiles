@@ -456,8 +456,14 @@ mycli --password "$(pass show majordomo/public/web/mysql/root)" -d "${2%.intr}"
         password="$(pass show majordomo/public/web/protected/token)"
         for domain in $(PYTHONPATH= grafana --host "$2")
         do
-            echo curl -H"'Authorization: ${password}'" --include --request PUT "${2}/protected/${domain}?ttl=${TTL:-600}"
-            echo curl -H"'Authorization: ${password}'" --include --request PUT "${2}/protected/www.${domain}?ttl=${TTL:-600}"
+            if [[ -n $TTL ]]
+            then
+                echo curl -H"'Authorization: ${password}'" --include --request PUT "${2}/protected/${domain}?ttl=${TTL}"
+                echo curl -H"'Authorization: ${password}'" --include --request PUT "${2}/protected/www.${domain}?ttl=${TTL}"
+            else
+                echo curl --include --request PUT "${2}/protected/${domain}"
+                echo curl --include --request PUT "${2}/protected/www.${domain}"
+            fi
         done
         ;;
     te)
