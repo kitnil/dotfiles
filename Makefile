@@ -71,6 +71,7 @@ dotfiles/guixsd/home.scm:
 
 .PHONY: dotfiles/nix/flake.nix
 dotfiles/nix/flake.nix:
+	rm -rf $(HOME)/.cache/nix
 	sh -c 'set -e; cd dotfiles/nix || exit 1; ./flake.nix'
 
 .PHONY: install
