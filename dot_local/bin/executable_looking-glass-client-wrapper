@@ -2,7 +2,16 @@
 -e main -s
 !#
 
+(define %display
+  (and=> (getenv "DISPLAY")
+         (lambda (display)
+           display)))
+
 (define (main args)
+  (when %display
+    (display "Disable DPMS and screensaver.\n" (current-error-port))
+    (system* "xset" "-q")
+    (system* "xset" "-dpms"))
   (apply system* (append '("looking-glass-client"
                            "spice:enable" "no"
                            "wayland:warpSupport" "no"
