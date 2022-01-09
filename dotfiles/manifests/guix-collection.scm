@@ -94,7 +94,7 @@ vnc vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
                ;; TODO: Fix artanis
                guile-colorized guile-daemon
                guile-fibers guile-gcrypt guile-git guile-readline
-               guile-redis guile-ssh guile-xosd
+               guile-redis guile-ssh guile-xosd guile-wisp
 
                chicken go m4 racket perl python ;; python-hy
                r sbcl ghc

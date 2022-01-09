@@ -1,4 +1,4 @@
-## Copyright © 2018, 2019, 2020, 2021 Oleg Pykhalov <go.wigust@gmail.com>
+## Copyright © 2018, 2019, 2020, 2021, 2022 Oleg Pykhalov <go.wigust@gmail.com>
 ## Released under the GNU GPLv3 or any later version.
 
 if [ -f "/etc/skel/.bashrc" ]
@@ -92,6 +92,14 @@ guile()
     else
         command guile "$@"
     fi
+    case "$1" in
+        wisp)
+            command guile -x .w --language=wisp "${@:2}"
+            ;;
+        *)
+            command guile "$@"
+            ;;
+    esac
 }
 
 cat()
