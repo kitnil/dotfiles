@@ -5,20 +5,16 @@
              (srfi srfi-1))
 
 (define channels
-  (list (channel
-         (name 'guix)
-         (url "https://git.savannah.gnu.org/git/guix.git")
-         (introduction (@@ (guix channels) %guix-channel-introduction))
-         (commit "5b7a1cb077931a020c0b7e3b12f12a7bda221d96")) ;v1.0.1
-        (channel
-         (name 'guix-majordomo)
-         (url "https://cgit.duckdns.org/git/guix/guix-majordomo"))))
+  (append (load "../channels-current.scm")
+          (list (channel
+                 (name 'guix-majordomo)
+                 (url "https://cgit.duckdns.org/git/guix/guix-majordomo")))))
 
 (define cached
   (with-store store
     (cached-channel-instance store
                              channels
-                             #:authenticate? #f
+                             #:authenticate? #t
                              #:cache-directory (%inferior-cache-directory)
                              #:ttl (* 3600 24 30))))
 
