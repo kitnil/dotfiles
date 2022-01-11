@@ -17,11 +17,11 @@
     flake-utils.lib.eachDefaultSystem (system: {
       devShell = with nixpkgs.legacyPackages."\${system}"; mkShell {
         buildInputs = [
-          nixUnstable
+          nixFlakes
           deploy-rs.outputs.packages.\${system}.deploy-rs
         ];
         shellHook = ''
-          . \${nixUnstable}/share/bash-completion/completions/nix
+          . \${nixFlakes}/share/bash-completion/completions/nix
           export LANG=C
         '';
       };
