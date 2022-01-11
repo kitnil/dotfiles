@@ -42,7 +42,6 @@ for a colorful Guile experience.\n\n"))))
   (use-modules (guix)
                (guix build utils)
                (guix store)
-               (geiser xref)
 
                (system repl command)
 
