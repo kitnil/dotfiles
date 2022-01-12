@@ -140,6 +140,14 @@
   (run-shell-command (format nil "notify-send ~s"
                              (format nil "Open account ~a in Firefox." account))))
 
+(defun mjru-open-billing2-account (account)
+  (let ((url (run-shell-command
+              (format nil "mjru-infa server | awk '/~a/ { print $NF }'" account) t)))
+    (run-shell-command (format nil "firefox ~a" url))
+    (run-shell-command
+     (format nil "notify-send ~a"
+             (format nil "Open account ~a in Firefox." url)))))
+
 (defcommand firefox () ()
   "Start of focus firefox."
   (let ((clipboard (get-x-selection)))
@@ -148,6 +156,11 @@
              (sb-thread:make-thread
               (lambda ()
                 (mjru-open-account clipboard)))))
+          ((uiop/utility:string-prefix-p "mj" clipboard)
+           (when (y-or-n-p (format nil "Open ~a account in firefox? " clipboard))
+             (sb-thread:make-thread
+              (lambda ()
+                (mjru-open-billing2-account clipboard)))))
           ((and (uiop/utility:string-prefix-p "u" clipboard)
                 (handler-case (parse-integer (subseq clipboard 1 (length clipboard))) (t (c) nil)))
            (let ((account (concat "AC_" (subseq clipboard 1 (length clipboard)))))
