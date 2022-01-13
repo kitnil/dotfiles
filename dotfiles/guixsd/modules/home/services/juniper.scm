@@ -25,6 +25,9 @@
         (close-port port)
         output)))
 
+(define (juniper-show-interfaces-detail host)
+  (juniper-command host '("cli" "show" "interfaces" "detail")))
+
 (define (juniper-show-configuration host)
   (juniper-command host '("cli" "show" "configuration")))
 
@@ -46,7 +49,10 @@
                (display #$(juniper-show-configuration host) port)))
            (call-with-output-file (string-append directory "/dhcp.txt")
              (lambda (port)
-               (display #$(juniper-show-dhcp host) port))))))))
+               (display #$(juniper-show-dhcp host) port)))
+           (call-with-output-file (string-append directory "/interfaces.txt")
+             (lambda (port)
+               (display #$(juniper-show-interfaces-detail host) port))))))))
 
 (define (juniper-configuration->vc host)
   (program-file
