@@ -10,7 +10,7 @@
 (define (main args)
   (when %display
     (display "Disable DPMS and screensaver.\n" (current-error-port))
-    (system* "xset" "-q")
+    (system* "xset" "s" "off")
     (system* "xset" "-dpms"))
   (apply system* (append '("looking-glass-client"
                            "spice:enable" "no"
