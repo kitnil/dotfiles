@@ -21,6 +21,7 @@
              (gnu packages wm)
 
              (home services ansible)
+             (home services cisco)
              (home services desktop)
              (home services juniper)
              (home services mail)
@@ -396,8 +397,6 @@ exec -a \"$0\" /home/oleg/.nix-profile/bin/~a --disable-features=SendMouseLeaveE
                             "cerb"
                             "checkssl.sh"
                             "chroot-games.sh"
-                            "cisco"
-                            "cisco-interact"
                             "clone-gitlab.intr.sh"
                             "color-converter"
                             "connect"
@@ -1351,6 +1350,7 @@ gtk-xft-rgba=\"rgb\"
 
     (service ansible-playbook-service-type)
     (service juniper-service-type)
+    (service cisco-service-type)
     (simple-service 'ansible-config
                     home-files-service-type
                     (append (list `(,"ansible.cfg" ,(local-file "../../dot_ansible.cfg")))

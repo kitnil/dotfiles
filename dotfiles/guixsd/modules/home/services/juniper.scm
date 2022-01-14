@@ -3,18 +3,8 @@
   #:use-module (gnu home services mcron)
   #:use-module (guix gexp)
   #:use-module (guix store)
+  #:use-module (home config)
   #:export (juniper-service-type))
-
-(define %home
-  (and=> (getenv "HOME")
-         (lambda (home)
-           home)))
-
-(define %state-directory
-  (string-append %home "/ansible-out/files"))
-
-(define %connect-program
-  (string-append %home "/.local/bin/connect"))
 
 (define (juniper-command host command)
   #~(begin
@@ -41,7 +31,7 @@
      #~(begin
          (use-modules (guix build utils))
          (let* ((directory
-                 (string-append #$%state-directory "/" #$host "/config"))
+                 (string-append #$%ansible-state-directory "/" #$host "/config"))
                 (file (string-append directory "/juniper.conf")))
            (mkdir-p directory)
            (call-with-output-file (string-append directory "/juniper.conf")
@@ -61,7 +51,7 @@
      #~(begin
          (use-modules (guix build utils))
          (invoke #$(juniper-configuration->file host))
-         (with-directory-excursion #$%state-directory
+         (with-directory-excursion #$%ansible-state-directory
            (invoke "git" "add" "--all")
            (invoke "git" "commit" "--message=Update.")
            ;; (invoke "git" "push")

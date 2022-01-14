@@ -1,6 +1,3 @@
-#! /usr/bin/env cached-nix-shell
-#! nix-shell -i python3 -p python python3Packages.pexpect
-
 import os
 import sys
 import pexpect
