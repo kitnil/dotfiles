@@ -30,7 +30,7 @@
                              #:ttl (* 3600 24 30))))
 
 (define inferior
-  (open-inferior cached))
+  (open-inferior cached #:error-port (current-error-port)))
 
 (define-public firefox
   (first (lookup-inferior-packages inferior "firefox")))

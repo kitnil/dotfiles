@@ -36,33 +36,13 @@
              (services openvpn)
              (services syncthing)
              (services vnc)
-             (services web)
-             (nongnu packages linux)
-             (nongnu system linux-initrd))
+             (services web))
 
 (define %home
   (passwd:dir (getpw "oleg")))
 
 (add-to-load-path (string-append %home "/.local/share/chezmoi/dotfiles/manifests"))
 (use-modules (deprecated))
-
-(define (amdgpu+amdgpu.conf)
-  (string-append "\
-
-Section \"Device\"
-        Identifier  \"amd-video-card-displayport-0\"
-        Driver      \"amdgpu\"
-        Option      \"TearFree\" \"true\"
-        Option      \"DRI\" \"3\"
-EndSection
-
-Section \"Screen\"
-   Identifier  \"Screen 1\"
-   Device      \"amd-video-card-displayport-0\"
-   Monitor     \"DisplayPort-0\"
-EndSection
-\n\n"))
-
 
 
 ;;;
@@ -471,6 +451,7 @@ location / {
   (let ((base-system (load %hardware-file)))
     (operating-system
       (inherit base-system)
+
       ;; TODO:
       ;; (bootloader (bootloader-configuration
       ;;              (inherit (operating-system-bootloader base-system))
@@ -478,57 +459,21 @@ location / {
       ;;                                   (label "netboot.xyz")
       ;;                                   (linux netboot.xyz))))))
 
+      (file-systems (append (list
+                             (file-system
+                               (device (file-system-label "magnolia-data"))
+                               (mount-point "/srv")
+                               (type "ext4")))
+                            (operating-system-file-systems base-system)))
+
+      ;; (swap-devices '("/dev/disk/by-label/guixsd-swap"))
+
       (kernel-loadable-modules (list vendor-reset-linux-module))
-      (initrd microcode-initrd)
-      (kernel linux-5.15)
-      (firmware (cons* ;; amdgpu-firmware
-                       linux-firmware %base-firmware))
+
+      ;; XXX: Add hardware/guixsd.scm
       ;; (initrd-modules (append '("vfio_pci" "vfio" "vfio_iommu_type1" "vfio_virqfd")
       ;;                         %base-initrd-modules))
-      (kernel-arguments '("modprobe.blacklist=pcspkr,snd_pcsp"
 
-                          ;; "amd_iommu=on"
-                          "iommu=pt" ;<https://wiki.archlinux.org/index.php/PCI_passthrough_via_OVMF#Setting_up_IOMMU>
-                          ;; "kvm_amd.npt=1"
-                          ;; "kvm_amd.avic=1"
-                          ;; "pci=realloc"
-                          ;; "vfio-pci.ids=1002:7340,1002:ab38"
-                          ;; video=efifb:off
-
-                          "kvm.ignore_msrs=1"
-                          "vfio-pci.ids=1002:1478,1002:1479,1002:7340,1002:ab38"
-
-                          ;; Arch Linux Forums
-                          ;; Random freezes with AMD Ryzen on Linux 5.0 / Kernel & Hardware
-                          ;; <https://bbs.archlinux.org/viewtopic.php?id=245608>
-                          ;;
-                          ;; "processor.max_cstate=5"
-
-                          ;; [5.2/5.3][drm:amdgpu_dm_atomic_commit_tail
-                          ;; [amdgpu]] *ERROR* Waiting for fences timed out or interrupted!
-                          ;; (#934) · Issues · drm / amd · GitLab
-                          ;; <https://gitlab.freedesktop.org/drm/amd/-/issues/934>
-                          ;;
-                          "amdgpu.audio=0"
-                          "amdgpu.gpu_recovery=1"
-                          ;; "amdgpu.lockup_timeout=1000"
-                          "amdgpu.noretry=0"
-                          "amdgpu.ppfeaturemask=0xfffffffb"
-                          ;; "amdgpu.ppfeaturemask=0xffffffff"
-                          ;; "amdgpu.dpm=0"
-
-                          ;; Arch Linux Forums
-                          ;; AMD Vega 64 GPU hang/freezes sporadically under load on recent kernels / Kernel & Hardware
-                          ;; <https://bbs.archlinux.org/viewtopic.php?id=259128>
-                          ;; "amdgpu.dpm=0"
-                          ;; "amdgpu.aspm=0"
-                          ;; "amdgpu.runpm=0"
-                          ;; "amdgpu.bapm=0"
-
-                          ;; "amdgpu.noretry=0"
-                          ;; "amdgpu.dc=0"
-                          ;; "amdgpu.gpu_recovery=1"
-                          ))
       (packages (append (list dn42-ca ovmf cifs-utils)
                         %my-system-packages))
 
@@ -682,16 +627,16 @@ location / {
                          ;;                                  (xstartup "/home/oleg/.vnc/xstartup-firefox")
                          ;;                                  (host-name "guixsd")))
 
-                         (service vncserver-service-type (vncserver-configuration
-                                                          (vncserver tigervnc-server)
-                                                          (display 2)
-                                                          (user "oleg")
-                                                          (group "users")
-                                                          (directory "/home/oleg")
-                                                          (xstartup "/home/oleg/.xsession")
-                                                          (host-name "guixsd")
-                                                          (supplementary-groups
-                                                           '("docker" "kvm" "libvirt" "audio" "video" "wheel" "users"))))
+                         ;; (service vncserver-service-type (vncserver-configuration
+                         ;;                                  (vncserver tigervnc-server)
+                         ;;                                  (display 2)
+                         ;;                                  (user "oleg")
+                         ;;                                  (group "users")
+                         ;;                                  (directory "/home/oleg")
+                         ;;                                  (xstartup "/home/oleg/.xsession")
+                         ;;                                  (host-name "guixsd")
+                         ;;                                  (supplementary-groups
+                         ;;                                   '("docker" "kvm" "libvirt" "audio" "video" "wheel" "users"))))
 
                          ;; (service vncserver-service-type (vncserver-configuration
                          ;;                                  (vncserver tigervnc-server-1.10.1)
@@ -748,17 +693,6 @@ location / {
                          (service ladspa-service-type
                                   (ladspa-configuration (plugins (list swh-plugins))))
 
-                         ;; Desktop services
-                         (service slim-service-type
-                                  (slim-configuration
-                                   ;; (auto-login? #t)
-                                   (default-user "oleg")
-                                   (gnupg? #t) ;XXX: Merge pam-gnupg in Guix repository to upstream
-				   ;; (theme %slim-theme) TODO: Fix the theme.
-                                   (xorg-configuration
-                                    (xorg-configuration
-                                     (modules (delete xf86-video-ati (delete xf86-video-nouveau (delete xf86-video-intel %default-xorg-modules))))
-                                     (extra-config (list (amdgpu+amdgpu.conf)))))))
                          #;(service slim-service-type
                          (slim-configuration
                          (display ":1")
@@ -1297,7 +1231,7 @@ PasswordAuthentication yes")))
                                   (php-fpm-configuration
                                    (timezone "Europe/Moscow")))
 
-                         (service jenkins-service-type %jenkins-config)
+                         ;; (service jenkins-service-type %jenkins-config)
 
                          (service restic-rest-service-type
                                   (restic-rest-configuration
@@ -1429,7 +1363,7 @@ namespaces = [ ]
                                (settings (append '(("net.bridge.bridge-nf-call-iptables" . "0"))
                                                  %default-sysctl-settings))))))
 
-      (setuid-programs %my-setuid-programs)
+      ;; (setuid-programs %my-setuid-programs)
 
       (sudoers-file (plain-file "sudoers"
                                 (string-join `("root ALL=(ALL) ALL"
