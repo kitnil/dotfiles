@@ -17,6 +17,7 @@
 ;;; along with GNU Guix.  If not, see <http://www.gnu.org/licenses/>.
 
 (define-module (services kresd)
+  #:use-module (gnu packages dns)
   #:use-module (gnu services shepherd)
   #:use-module (gnu services)
   #:use-module (guix gexp)
@@ -31,7 +32,7 @@
                     (requirement '(user-processes loopback))
                     (documentation "Run kresd-daemon.")
                     (start #~(make-forkexec-constructor
-                              (list "/home/oleg/.nix-profile/bin/kresd"
+                              (list #$(file-append knot-resolver "/sbin/kresd")
                                     "--config" #$config
                                     "--quiet" "-f" "1")
                               #:log-file "/var/log/kresd.log"))
