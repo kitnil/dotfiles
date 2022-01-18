@@ -46,22 +46,16 @@
            (call-with-output-file (string-append directory "/chassis-hardware.txt")
              (lambda (port)
                (display #$(juniper-command host '("cli" "show" "chassis" "hardware")) port)))
-           (call-with-output-file (string-append directory "/chassis-hardware.txt")
+           (call-with-output-file (string-append directory "/chassis-pic.txt")
              (lambda (port)
-               (display #$(juniper-command host '("cli" "show" "chassis" "pic" "pic-slot" "0" "fpc-slot" "0")) port)))
-           (call-with-output-file (string-append directory "/chassis-hardware.txt")
-             (lambda (port)
-               (display #$(juniper-command host '("cli" "show" "chassis" "pic" "pic-slot" "0" "fpc-slot" "1")) port)))
-           (call-with-output-file (string-append directory "/chassis-hardware.txt")
-             (lambda (port)
-               (display #$(juniper-command host '("cli" "show" "chassis" "pic" "pic-slot" "1" "fpc-slot" "0")) port)))
-           (call-with-output-file (string-append directory "/chassis-hardware.txt")
-             (lambda (port)
+               (display #$(juniper-command host '("cli" "show" "chassis" "pic" "pic-slot" "0" "fpc-slot" "0")) port)
+               (display #$(juniper-command host '("cli" "show" "chassis" "pic" "pic-slot" "0" "fpc-slot" "1")) port)
+               (display #$(juniper-command host '("cli" "show" "chassis" "pic" "pic-slot" "1" "fpc-slot" "0")) port)
                (display #$(juniper-command host '("cli" "show" "chassis" "pic" "pic-slot" "1" "fpc-slot" "1")) port))))))))
 
 (define (juniper-configuration->vc host)
   (program-file
-   "juniper-configuration-to-version-control"
+   (string-append "juniper-configuration-to-version-control-" host)
    (with-imported-modules '((guix build utils))
      #~(begin
          (use-modules (guix build utils))
