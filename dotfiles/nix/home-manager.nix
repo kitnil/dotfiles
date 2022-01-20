@@ -179,7 +179,7 @@
     discord
     dnscheck
     elktail
-    eve-online
+    # eve-online
     firefox-52-wrapper
     google-chrome
     idea-ultimate
