@@ -464,6 +464,16 @@ location / {
                                (device (file-system-label "magnolia-data"))
                                (mount-point "/srv")
                                (type "ext4")))
+                            (map (lambda (subvolume)
+                                   (file-system
+                                     (device (file-system-label "btrfs1"))
+                                     (mount-point (string-append "/home/oleg/" subvolume))
+                                     (options (string-join (list (string-append "subvol=" subvolume)
+                                                                 "compress=zstd:15"
+                                                                 "ssd")
+                                                           ","))
+                                     (type "btrfs")))
+                                 '("archive" "majordomo" "src" "Maildir"))
                             (operating-system-file-systems base-system)))
 
       ;; (swap-devices '("/dev/disk/by-label/guixsd-swap"))
