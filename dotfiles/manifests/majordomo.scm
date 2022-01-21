@@ -8,7 +8,7 @@
   (append (load "../channels-current.scm")
           (list (channel
                  (name 'guix-majordomo)
-                 (url "https://cgit.duckdns.org/git/guix/guix-majordomo")))))
+                 (url "https://github.com/6d6a/package-management-guix-majordomo.git")))))
 
 (define cached
   (with-store store
