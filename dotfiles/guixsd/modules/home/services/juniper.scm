@@ -4,7 +4,11 @@
   #:use-module (guix gexp)
   #:use-module (guix store)
   #:use-module (home config)
-  #:export (juniper-service-type))
+  #:export (juniper-service-type
+
+            juniper-configuration->vc-br1-mr14.intr
+            juniper-configuration->vc-sr1-mr13-14.intr
+            juniper-configuration->vc-sr1-dh507-508.intr))
 
 (define (juniper-command host command)
   #~(begin
@@ -55,23 +59,29 @@
            (invoke "git" "add" "--all")
            (invoke "git" "commit" "--message=Update."))))))
 
+(define juniper-configuration->vc-br1-mr14.intr
+  (juniper-configuration->vc "br1-mr14.intr"))
+
+(define juniper-configuration->vc-sr1-mr13-14.intr
+  (juniper-configuration->vc "sr1-mr13-14.intr"))
+
+(define juniper-configuration->vc-sr1-dh507-508.intr
+  (juniper-configuration->vc "sr1-dh507-508.intr"))
+
 (define (juniper-mcron-jobs config)
   (list
    #~(job
       '(next-hour '(20))
       #$(run-with-store (open-connection)
-          (lower-object
-           (juniper-configuration->vc "br1-mr14.intr"))))
+          (lower-object juniper-configuration->vc-br1-mr14.intr)))
    #~(job
       '(next-hour '(21))
       #$(run-with-store (open-connection)
-          (lower-object
-           (juniper-configuration->vc "sr1-mr13-14.intr"))))
+          (lower-object juniper-configuration->vc-sr1-mr13-14.intr)))
    #~(job
       '(next-hour '(22))
       #$(run-with-store (open-connection)
-          (lower-object
-           (juniper-configuration->vc "sr1-dh507-508.intr"))))))
+          (lower-object juniper-configuration->vc-sr1-dh507-508.intr)))))
 
 (define juniper-service-type
   (service-type
