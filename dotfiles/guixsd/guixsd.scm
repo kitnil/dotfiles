@@ -1373,7 +1373,7 @@ namespaces = [ ]
                                (settings (append '(("net.bridge.bridge-nf-call-iptables" . "0"))
                                                  %default-sysctl-settings))))))
 
-      ;; (setuid-programs %my-setuid-programs)
+      (setuid-programs %my-setuid-programs)
 
       (sudoers-file (plain-file "sudoers"
                                 (string-join `("root ALL=(ALL) ALL"
