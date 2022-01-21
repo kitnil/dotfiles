@@ -15,15 +15,6 @@
         (close-port port)
         output)))
 
-(define (juniper-show-interfaces-detail host)
-  (juniper-command host '("cli" "show" "interfaces" "detail")))
-
-(define (juniper-show-configuration host)
-  (juniper-command host '("cli" "show" "configuration")))
-
-(define (juniper-show-dhcp host)
-  (juniper-command host '("cli" "show" "system" "services" "dhcp" "binding")))
-
 (define (juniper-configuration->file host)
   (program-file
    "juniper-show-configuration-program"
@@ -36,13 +27,13 @@
            (mkdir-p directory)
            (call-with-output-file (string-append directory "/juniper.conf")
              (lambda (port)
-               (display #$(juniper-show-configuration host) port)))
+               (display #$(juniper-command host '("cli" "show" "configuration")) port)))
            (call-with-output-file (string-append directory "/dhcp.txt")
              (lambda (port)
-               (display #$(juniper-show-dhcp host) port)))
+               (display #$(juniper-command host '("cli" "show" "system" "services" "dhcp" "binding")) port)))
            (call-with-output-file (string-append directory "/interfaces.txt")
              (lambda (port)
-               (display #$(juniper-show-interfaces-detail host) port)))
+               (display #$(juniper-command host '("cli" "show" "interfaces" "detail")) port)))
            (call-with-output-file (string-append directory "/chassis-hardware.txt")
              (lambda (port)
                (display #$(juniper-command host '("cli" "show" "chassis" "hardware")) port)))
@@ -62,9 +53,7 @@
          (invoke #$(juniper-configuration->file host))
          (with-directory-excursion #$%ansible-state-directory
            (invoke "git" "add" "--all")
-           (invoke "git" "commit" "--message=Update.")
-           ;; (invoke "git" "push")
-           )))))
+           (invoke "git" "commit" "--message=Update."))))))
 
 (define (juniper-mcron-jobs config)
   (list
