@@ -200,7 +200,7 @@ vnc vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
 
                ansible         ; Configuration management
                dhall
-               chezmoi
+               ;; chezmoi XXX: Fails to compile.
 
                bc
                cpio
