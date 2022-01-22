@@ -42,6 +42,9 @@
           (option '(#\n "dry-run") #f #f
                   (lambda (opt name arg result)
                     (alist-cons 'dry-run? #t result)))
+          (option '(#\N "without-substitutes") #f #f
+                  (lambda (opt name arg result)
+                    (alist-cons 'without-substitutes? #t result)))
           (option '(#\L "load-path") #f #t
                   (lambda (opt name arg loads)
                     (alist-cons 'load-path arg loads)))
@@ -71,9 +74,11 @@
                %default-options))
 
   (define channels
-    (cons (channel-with-substitutes-available
-           %default-guix-channel
-           "https://ci.guix.gnu.org")
+    (cons (if (assoc-ref opts 'without-substitutes?)
+              %default-guix-channel
+              (channel-with-substitutes-available
+               %default-guix-channel
+               "https://ci.guix.gnu.org"))
           (map (lambda (channel)
                  (match-record channel (@@ (guix channels) <channel>)
                    (name url introduction)
