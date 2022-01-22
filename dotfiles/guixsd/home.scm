@@ -374,6 +374,7 @@
                                        (format #t "\
 #!/bin/sh
 # https://github.com/stumpwm/stumpwm/issues/894
+export FONTCONFIG_FILE=/run/current-system/profile/etc/fonts/fonts.conf
 exec -a \"$0\" /home/oleg/.nix-profile/bin/~a --disable-features=SendMouseLeaveEvents \"$@\"\n"
                                                #$program)))
                                    (chmod #$output #o555)))))
