@@ -509,12 +509,6 @@ location / {
                      (supplementary-groups '("wheel" "adbusers" "audio" "video" "docker" "kvm" "input" "libvirt"))
                      (home-directory "/home/oleg"))
                     (user-account
-                     (name "majordomo-ssh-tunnel")
-                     (uid 30011)
-                     (group "users")
-                     (comment "SSH forwarding privilege separation user")
-                     (home-directory "/home/majordomo-ssh-tunnel"))
-                    (user-account
                      (name "tail-ssh-tunnel")
                      (uid 30015)
                      (group "users")
@@ -1153,7 +1147,10 @@ location / {
                                   (openssh-configuration
                                    (authorized-keys
                                     `(("vm1-ssh-tunnel" ,(local-file "ssh/id_rsa_vm1.wugi.info.pub"))
-                                      ("jenkins" ,(local-file "ssh/id_rsa_jenkins.wugi.info.pub"))))
+                                      ("jenkins" ,(local-file "ssh/id_rsa_jenkins.wugi.info.pub"))
+                                      ("oracle-ssh-tunnel" ,(local-file "ssh/id_rsa_oracle.pub"))
+                                      ("spb-zabbix-ssh-tunnel" ,(local-file "ssh/id_rsa_spb-zabbix-ssh-tunnel.pub"))
+                                      ("tail-ssh-tunnel" ,(local-file "ssh/id_rsa_tail-ssh-tunnel.pub"))))
                                    (x11-forwarding? #t)
                                    (gateway-ports? 'client)
                                    (password-authentication? #f)
