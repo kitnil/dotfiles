@@ -148,24 +148,14 @@
 
         # TODO: androidenv.androidPkgs_9_0.platform-tools
 
-        firefox-52-wrapper = with pkgs-20-03-firefox; callPackage ({ stdenv, firefox-esr-52 }:
-          stdenv.mkDerivation {
-            inherit (firefox-esr-52) version;
-            name = "firefox-esr-52";
-            src = false;
-            dontUnpack = true;
-            buildInputs = [ firefox-esr-52 ];
-            buildPhase = ''
-              cat > firefox-esr-52 <<'EOF'
-              #!${bash}/bin/bash -e
-              exec -a firefox-esr-52 ${firefox-esr-52}/bin/firefox "$@"
-              EOF
-            '';
-            installPhase = ''
-              mkdir -p $out/bin
-              install -m555 firefox-esr-52 $out/bin/firefox-esr-52
-            '';
-          }) {};
+        firefox-52-wrapper = with pkgs-20-03-firefox;
+          callPackage ({ stdenv, firefox-esr-52 }:
+            writeScriptBin "firefox-esr-52" ''
+              #!${runtimeShell} -e
+              test_directory="$(mktemp -d)"
+              trap 'chmod -Rf +w "$test_directory"; rm -rf "$test_directory"' EXIT
+              exec -a "$0" ${firefox-esr-52}/bin/firefox --new-instance --profile "$test_directory" --private-window "$@"
+            '') {};
 
         jenkins = with pkgs;
           let
