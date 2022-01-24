@@ -1417,7 +1417,10 @@ gtk-xft-rgba=\"rgb\"
                                        ,@(map ((@@ (ice-9 match) match-lambda)
                                                ((name ip mac etc ...)
                                                 (cons ip 'null)))
-                                              majordomo-office)))
+                                              majordomo-office))
+                                      ("vars"
+                                       ("ansible_ssh_user" . "root")
+                                       ("ansible_python_interpreter" . "/run/current-system/sw/bin/python3")))
                                      ("mjru"
                                       ("hosts"
                                        ("78.108.87.99" . null)
