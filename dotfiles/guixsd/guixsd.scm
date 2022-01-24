@@ -590,9 +590,10 @@ location / {
                            ;; "hms-dev.intr"
                            ;; "api-dev.intr"
                            ;; "hms-billing-dev.intr"
-                           "web99.ru"
                            ))
            "::1 guixsd localhost"
+
+           "172.16.103.225 web99.ru www.web99.ru"
 
            "172.16.100.60 workstation.intr"
 
