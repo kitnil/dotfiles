@@ -384,9 +384,7 @@ exec -a \"$0\" /home/oleg/.nix-profile/bin/~a --disable-features=SendMouseLeaveE
                     home-files-service-type
                     (append
                      (list `("local/bin/xmenu.sh" ,xmenu))
-                     (list `("local/bin/juniper-configuration-vc-br1-mr14.intr"
-                             ,juniper-configuration->vc-br1-mr14.intr)
-                           `("local/bin/juniper-configuration-vc-sr1-mr13-14.intr"
+                     (list `("local/bin/juniper-configuration-vc-sr1-mr13-14.intr"
                              ,juniper-configuration->vc-sr1-mr13-14.intr)
                            `("local/bin/juniper-configuration-vc-sr1-dh507-508.intr"
                              ,juniper-configuration->vc-sr1-dh507-508.intr))

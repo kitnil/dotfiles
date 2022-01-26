@@ -6,7 +6,6 @@
   #:use-module (home config)
   #:export (juniper-service-type
 
-            juniper-configuration->vc-br1-mr14.intr
             juniper-configuration->vc-sr1-mr13-14.intr
             juniper-configuration->vc-sr1-dh507-508.intr))
 
@@ -62,9 +61,6 @@
            (invoke "git" "add" "--all")
            (invoke "git" "commit" "--message=Update."))))))
 
-(define juniper-configuration->vc-br1-mr14.intr
-  (juniper-configuration->vc "br1-mr14.intr"))
-
 (define juniper-configuration->vc-sr1-mr13-14.intr
   (juniper-configuration->vc "sr1-mr13-14.intr"))
 
@@ -73,10 +69,6 @@
 
 (define (juniper-mcron-jobs config)
   (list
-   #~(job
-      '(next-hour '(20))
-      #$(run-with-store (open-connection)
-          (lower-object juniper-configuration->vc-br1-mr14.intr)))
    #~(job
       '(next-hour '(21))
       #$(run-with-store (open-connection)
