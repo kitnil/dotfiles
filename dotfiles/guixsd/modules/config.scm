@@ -384,7 +384,6 @@ ping 5
 ping-restart 10
 resolv-retry infinite
 remote vm1.wugi.info 1195
-remote vm2.wugi.info 1194
 remote-random
 "))))
 
