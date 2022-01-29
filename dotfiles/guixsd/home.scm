@@ -1093,16 +1093,27 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
     ;; dot_config/mjru/encrypted_config.scm
     ;; dot_config/mjru/encrypted_firefox.scm
 
+    ;; Symlinking to store breaks espanso, so use files instead.
     (simple-service 'espanso-config
-                    home-files-service-type
-                    (list `("config/espanso/default.yml" ,(local-file "../../dot_config/espanso/default.yml"))
-                          ;; TODO: Add `("config/espanso/user/home.yml.tmpl" ,(local-file "../../dot_config/espanso/user/home.yml.tmpl"))
-                          `("config/espanso/user/systemd.yml" ,(local-file "../../dot_config/espanso/user/systemd.yml"))
-                          `("config/espanso/user/juniper.yml" ,(local-file "../../dot_config/espanso/user/juniper.yml"))
-                          `("config/espanso/user/mysql.yml" ,(local-file "../../dot_config/espanso/user/mysql.yml"))
-                          `("config/espanso/user/nix.yml" ,(local-file "../../dot_config/espanso/user/nix.yml"))
-                          ;; TODO: Add dot_config/espanso/user/mjru.yml.tmpl
-                          ))
+                    home-activation-service-type
+                    #~(invoke
+                       #$(program-file
+                          "espanso-config"
+                          (with-imported-modules '((ice-9 match))
+                            #~(begin
+                                (use-modules (ice-9 match))
+                                (for-each (match-lambda ((destination source)
+                                                         (let ((destination-full-path (string-append #$%home "/." destination)))
+                                                           (chmod destination-full-path #o644)
+                                                           (copy-file source destination-full-path))))
+                                          (list `("config/espanso/default.yml" ,#$(local-file "../../dot_config/espanso/default.yml"))
+                                                ;; TODO: Add `("config/espanso/user/home.yml.tmpl" ,(local-file "../../dot_config/espanso/user/home.yml.tmpl"))
+                                                `("config/espanso/user/systemd.yml" ,#$(local-file "../../dot_config/espanso/user/systemd.yml"))
+                                                `("config/espanso/user/juniper.yml" ,#$(local-file "../../dot_config/espanso/user/juniper.yml"))
+                                                `("config/espanso/user/mysql.yml" ,#$(local-file "../../dot_config/espanso/user/mysql.yml"))
+                                                `("config/espanso/user/nix.yml" ,#$(local-file "../../dot_config/espanso/user/nix.yml"))
+                                                ;; TODO: Add dot_config/espanso/user/mjru.yml.tmpl
+                                                )))))))
 
     (simple-service 'ssh-config
                     home-activation-service-type
