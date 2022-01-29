@@ -856,7 +856,7 @@ location / {
                                                          ((static_configs
                                                            .
                                                            #(((targets . #("smtp.wugi.info:25")))))
-                                                          (scrape_interval . "10m")
+                                                          (scrape_interval . "30s")
                                                           (metrics_path . "/probe")
                                                           (params . ((module . #("smtp_starttls"))))
                                                           (relabel_configs
@@ -871,7 +871,7 @@ location / {
                                                          ((static_configs
                                                            .
                                                            #(((targets . #("smtp.wugi.info:143")))))
-                                                          (scrape_interval . "10m")
+                                                          (scrape_interval . "30s")
                                                           (metrics_path . "/probe")
                                                           (params . ((module . #("imap_starttls"))))
                                                           (relabel_configs
