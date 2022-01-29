@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2021 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2021, 2022 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -112,6 +112,27 @@
           (service-extension activation-service-type (@@ (gnu services mail) exim-activation))
           (service-extension profile-service-type exim-wrapper-profile)
           (service-extension mail-aliases-service-type (const '()))))))
+
+(define %dovecot-deploy-hook
+  (program-file
+   "dovecot-deploy-hook"
+   ;; XXX: Send SIGHUP to dovecot.
+   #~(begin
+       (unless (file-exists? "/etc/dovecot")
+         (mkdir "/etc/dovecot"))
+       (let* ((cert-directory (getenv "RENEWED_LINEAGE"))
+              (user (getpw "dovecot"))
+              (uid (passwd:uid user))
+              (gid (passwd:gid user)))
+         (copy-file (string-append cert-directory "/"
+                                   (readlink (string-append cert-directory "/fullchain.pem")))
+                    "/etc/dovecot/private/default.pem")
+         (copy-file (string-append cert-directory "/"
+                                   (readlink (string-append cert-directory "/privkey.pem")))
+                    "/etc/dovecot/dovecot.pem")
+         (chown "/etc/dovecot" uid gid)
+         (chown "/etc/dovecot/private/default.pem" uid gid)
+         (chown "/etc/dovecot/dovecot.pem" uid gid)))))
 
 (define %mail-services
  (list
