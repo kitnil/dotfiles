@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2021 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2021, 2022 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -427,7 +427,8 @@
           (install-file (string-append #$(prometheus-blackbox-exporter-configuration-prometheus-blackbox-exporter configuration)
                                        "/bin/blackbox_exporter")
                         "/run/capability-programs")
-          (invoke #$(file-append libcap "/sbin/setcap") "cap_net_raw+ep")))))
+          (invoke #$(file-append libcap "/sbin/setcap") "cap_net_raw+ep"
+                  "/run/capability-programs/blackbox_exporter")))))
 
 (define (prometheus-blackbox-exporter-account configuration)
   ;; Return the user accounts and user groups for CONFIG.
