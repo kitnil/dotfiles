@@ -776,6 +776,9 @@ location / {
                                                (define prometheus-alertmanager-ssh-exporter
                                                  #$(plain-file "prometheus-alertmanager-ssh-exporter.json"
                                                                (scm->json-string (load "ssh-exporter.scm"))))
+                                               (define prometheus-alertmanager-guix
+                                                 #$(plain-file "prometheus-alertmanager-guix.json"
+                                                               (scm->json-string (load "alertmanager/guix.scm"))))
                                                (with-output-to-file #$output
                                                  (lambda ()
                                                    (scm->json
@@ -935,7 +938,8 @@ location / {
                                                                       ,prometheus-alertmanager-bird
                                                                       ,prometheus-alertmanager-smartctl
                                                                       ,prometheus-alertmanager-exim
-                                                                      ,prometheus-alertmanager-ssh-exporter))
+                                                                      ,prometheus-alertmanager-ssh-exporter
+                                                                      ,prometheus-alertmanager-guix))
                                                       (global
                                                        (scrape_interval . "15s")
                                                        (external_labels
