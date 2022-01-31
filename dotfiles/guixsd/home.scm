@@ -387,7 +387,27 @@ exec -a \"$0\" /home/oleg/.nix-profile/bin/~a --disable-features=SendMouseLeaveE
                      (list `("local/bin/juniper-configuration-vc-sr1-mr13-14.intr"
                              ,juniper-configuration->vc-sr1-mr13-14.intr)
                            `("local/bin/juniper-configuration-vc-sr1-dh507-508.intr"
-                             ,juniper-configuration->vc-sr1-dh507-508.intr))
+                             ,juniper-configuration->vc-sr1-dh507-508.intr)
+                           `("local/bin/cisco-configuration-vc-sw1-dh507.intr"
+                             ,cisco-configuration->vc-sw1-dh507.intr)
+                           `("local/bin/cisco-configuration-vc-sw2-dh507.intr"
+                             ,cisco-configuration->vc-sw2-dh507.intr)
+                           `("local/bin/cisco-configuration-vc-sw1-dh508.intr"
+                             ,cisco-configuration->vc-sw1-dh508.intr)
+                           `("local/bin/cisco-configuration-vc-sw2-dh508.intr"
+                             ,cisco-configuration->vc-sw2-dh508.intr)
+                           `("local/bin/cisco-configuration-vc-sw1-mr11.intr"
+                             ,cisco-configuration->vc-sw1-mr11.intr)
+                           `("local/bin/cisco-configuration-vc-sw1-mr12.intr"
+                             ,cisco-configuration->vc-sw1-mr12.intr)
+                           `("local/bin/cisco-configuration-vc-sw2-mr12.intr"
+                             ,cisco-configuration->vc-sw2-mr12.intr)
+                           `("local/bin/cisco-configuration-vc-sw3-mr13.intr"
+                             ,cisco-configuration->vc-sw3-mr13.intr)
+                           `("local/bin/cisco-configuration-vc-sw1-mr14.intr"
+                             ,cisco-configuration->vc-sw1-mr14.intr)
+                           `("local/bin/cisco-configuration-vc-sw2-mr14.intr"
+                             ,cisco-configuration->vc-sw2-mr14.intr))
                      (map (lambda (program)
                             `(,(string-append "local/bin/" program)
                               ,(local-file (string-append "dot_local/bin/executable_" program)

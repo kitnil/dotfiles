@@ -7,7 +7,18 @@
   #:use-module (gnu packages ssh)
   #:use-module (packages networking)
   #:use-module (guile pass)
-  #:export (cisco-service-type))
+  #:export (cisco-service-type
+
+            cisco-configuration->vc-sw1-dh507.intr
+            cisco-configuration->vc-sw2-dh507.intr
+            cisco-configuration->vc-sw1-dh508.intr
+            cisco-configuration->vc-sw2-dh508.intr
+            cisco-configuration->vc-sw1-mr11.intr
+            cisco-configuration->vc-sw1-mr12.intr
+            cisco-configuration->vc-sw2-mr12.intr
+            cisco-configuration->vc-sw3-mr13.intr
+            cisco-configuration->vc-sw1-mr14.intr
+            cisco-configuration->vc-sw2-mr14.intr))
 
 (define* (cisco-command host command #:optional ssh?)
   #~(begin
@@ -54,18 +65,58 @@
            (invoke "git" "add" "--all")
            (invoke "git" "commit" "--message=Update."))))))
 
+(define cisco-configuration->vc-sw1-dh507.intr
+  (cisco-configuration->vc "sw1-dh507.intr"))
+
+(define cisco-configuration->vc-sw2-dh507.intr
+  (cisco-configuration->vc "sw2-dh507.intr" #t))
+
+(define cisco-configuration->vc-sw1-dh508.intr
+  (cisco-configuration->vc "sw1-dh508.intr"))
+
+(define cisco-configuration->vc-sw2-dh508.intr
+  (cisco-configuration->vc "sw2-dh508.intr" #t))
+
+(define cisco-configuration->vc-sw1-mr11.intr
+  (cisco-configuration->vc "sw1-mr11.intr"))
+
+(define cisco-configuration->vc-sw1-mr12.intr
+  (cisco-configuration->vc "sw1-mr12.intr"))
+
+(define cisco-configuration->vc-sw2-mr12.intr
+  (cisco-configuration->vc "sw2-mr12.intr"))
+
+(define cisco-configuration->vc-sw3-mr13.intr
+  (cisco-configuration->vc "sw3-mr13.intr" #t))
+
+(define cisco-configuration->vc-sw1-mr14.intr
+  (cisco-configuration->vc "sw1-mr14.intr"))
+
+(define cisco-configuration->vc-sw2-mr14.intr
+  (cisco-configuration->vc "sw2-mr14.intr" #t))
+
 (define (cisco-mcron-jobs config)
   (list
-   #~(job '(next-hour '(13)) #$(cisco-configuration->vc "sw1-dh507.intr"))
-   #~(job '(next-hour '(14)) #$(cisco-configuration->vc "sw2-dh507.intr" #t))
-   #~(job '(next-hour '(15)) #$(cisco-configuration->vc "sw1-dh508.intr"))
-   #~(job '(next-hour '(16)) #$(cisco-configuration->vc "sw2-dh508.intr" #t))
-   #~(job '(next-hour '(17)) #$(cisco-configuration->vc "sw1-mr11.intr"))
-   #~(job '(next-hour '(18)) #$(cisco-configuration->vc "sw1-mr12.intr"))
-   #~(job '(next-hour '(19)) #$(cisco-configuration->vc "sw2-mr12.intr"))
-   #~(job '(next-hour '(20)) #$(cisco-configuration->vc "sw3-mr13.intr" #t))
-   #~(job '(next-hour '(21)) #$(cisco-configuration->vc "sw1-mr14.intr"))
-   #~(job '(next-hour '(22)) #$(cisco-configuration->vc "sw2-mr14.intr" #t))))
+   #~(job '(next-hour '(13))
+          #$cisco-configuration->vc-sw1-dh507.intr)
+   #~(job '(next-hour '(14))
+          #$cisco-configuration->vc-sw2-dh507.intr)
+   #~(job '(next-hour '(15))
+          #$cisco-configuration->vc-sw1-dh508.intr)
+   #~(job '(next-hour '(16))
+          #$cisco-configuration->vc-sw2-dh508.intr)
+   #~(job '(next-hour '(17))
+          #$cisco-configuration->vc-sw1-mr11.intr)
+   #~(job '(next-hour '(18))
+          #$cisco-configuration->vc-sw1-mr12.intr)
+   #~(job '(next-hour '(19))
+          #$cisco-configuration->vc-sw2-mr12.intr)
+   #~(job '(next-hour '(20))
+          #$cisco-configuration->vc-sw3-mr13.intr)
+   #~(job '(next-hour '(21))
+          #$cisco-configuration->vc-sw1-mr14.intr)
+   #~(job '(next-hour '(22))
+          #$cisco-configuration->vc-sw2-mr14.intr)))
 
 (define cisco-service-type
   (service-type
