@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2019, 2020 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2019, 2020, 2022 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -31,6 +31,6 @@
                     (documentation "Run nix-daemon.")
                     (requirement '(user-processes loopback))
                     (start #~(make-forkexec-constructor
-                              (list "/home/oleg/bin/run-nix-daemon")))
+                              (list "/home/oleg/.local/bin/run-nix-daemon")))
                     (respawn? #f)
                     (stop #~(make-kill-destructor))))))
