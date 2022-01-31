@@ -24,6 +24,7 @@
              (home services cisco)
              (home services desktop)
              (home services juniper)
+             (home services h3c)
              (home services mail)
              (home services monitoring)
              (home services package-management)
@@ -407,7 +408,9 @@ exec -a \"$0\" /home/oleg/.nix-profile/bin/~a --disable-features=SendMouseLeaveE
                            `("local/bin/cisco-configuration-vc-sw1-mr14.intr"
                              ,cisco-configuration->vc-sw1-mr14.intr)
                            `("local/bin/cisco-configuration-vc-sw2-mr14.intr"
-                             ,cisco-configuration->vc-sw2-mr14.intr))
+                             ,cisco-configuration->vc-sw2-mr14.intr)
+                           `("local/bin/h3c-configuration-vc-sw4-mr14.intr"
+                             ,h3c-configuration->vc-sw4-mr14.intr))
                      (map (lambda (program)
                             `(,(string-append "local/bin/" program)
                               ,(local-file (string-append "dot_local/bin/executable_" program)
