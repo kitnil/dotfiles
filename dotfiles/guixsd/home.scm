@@ -1149,8 +1149,8 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                           (unless (file-exists? ssh)
                             (mkdir ssh))
                           (chmod ssh #o700)
-                          (gpg->file #$(local-file "../../private_dot_ssh/encrypted_private_known_hosts")
-                                     (string-append ssh "/known_hosts"))
+                          ;; (gpg->file #$(local-file "../../private_dot_ssh/encrypted_private_known_hosts")
+                          ;;            (string-append ssh "/known_hosts"))
                           (gpg->file #$(local-file "../../private_dot_ssh/encrypted_private_authorized_keys")
                                      (string-append ssh "/authorized_keys")))))
 
