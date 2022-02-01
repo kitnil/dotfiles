@@ -23,7 +23,7 @@
              (output (make-parameter (run-command)))
              (attempt (make-parameter 1))
              (error-port (current-error-port))
-             (max-attempts 10))
+             (max-attempts 20))
         (format error-port "root@~a> ~a~%" #$host (string-join '#$command))
         (let loop ()
           (if (and (> (string-length (output)) 0))
