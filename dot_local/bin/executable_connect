@@ -152,6 +152,17 @@ connect_junos()
             "$1" "${@:2}"
 }
 
+connect_h3c()
+{
+    sshpass -p"$(pass show majordomo/private/h3c/oleg)"       \
+            ssh -F /dev/null                                    \
+            -q                                                  \
+            -o UserKnownHostsFile=/dev/null                     \
+            -o StrictHostKeyChecking=no                         \
+            -l oleg                                             \
+            "$1" "${@:2}"
+}
+
 case "$1" in
     --help)
         help_main
