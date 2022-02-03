@@ -410,7 +410,13 @@ exec -a \"$0\" /home/oleg/.nix-profile/bin/~a --disable-features=SendMouseLeaveE
                            `("local/bin/cisco-configuration-vc-sw2-mr14.intr"
                              ,cisco-configuration->vc-sw2-mr14.intr)
                            `("local/bin/h3c-configuration-vc-sw4-mr14.intr"
-                             ,h3c-configuration->vc-sw4-mr14.intr))
+                             ,h3c-configuration->vc-sw4-mr14.intr)
+                           `("local/bin/h3c-configuration-vc-sw4-mr13.intr"
+                             ,h3c-configuration->vc-sw4-mr13.intr)
+                           `("local/bin/h3c-configuration-vc-sw4-mr12.intr"
+                             ,h3c-configuration->vc-sw4-mr12.intr)
+                           `("local/bin/h3c-configuration-vc-sw4-mr11.intr"
+                             ,h3c-configuration->vc-sw4-mr11.intr))
                      (map (lambda (program)
                             `(,(string-append "local/bin/" program)
                               ,(local-file (string-append "dot_local/bin/executable_" program)
