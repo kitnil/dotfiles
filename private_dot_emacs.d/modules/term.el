@@ -49,7 +49,9 @@
     (define-key map (kbd "C-y") 'vterm-send-C-y)
     (define-key map (kbd "<C-backspace>") 'vterm-send-backspace)
     (define-key map (kbd "<menu>") 'vterm-copy-mode)
-    (define-key map (kbd "M-/") 'vterm-dabbrev-expand))
+    (define-key map (kbd "M-/") 'vterm-dabbrev-expand)
+    (define-key map (kbd "S-<right>") 'multi-vterm-next)
+    (define-key map (kbd "S-<left>") 'multi-vterm-prev))
   (let ((map vterm-copy-mode-map))
     (define-key map (kbd "<menu>") 'vterm-copy-mode))
   (push (list "find-file-below"
