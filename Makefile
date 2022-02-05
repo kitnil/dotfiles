@@ -107,6 +107,10 @@ deploy:
 dotfiles/channels-current.scm: clean-guile
 	GUILE_AUTO_COMPILE=0 dot_local/bin/executable_guix-latest -L dotfiles/guixsd/modules --channels=dotfiles/channels-current.scm dotfiles/manifests/desktop.scm dotfiles/manifests/emacs.scm dotfiles/manifests/guix-collection.scm dotfiles/manifests/wigust.scm dotfiles/guixsd/guixsd.scm
 
+.PHONY: dotfiles/packer/build.scm
+dotfiles/packer/build.scm:
+	sh -c 'cd dotfiles/packer; guix build -f build.scm'
+
 .PHONY: guix.wugi.info
 guix.wugi.info:
 	guix system build -L $(MODULES) dotfiles/guixsd/guixsd.scm
