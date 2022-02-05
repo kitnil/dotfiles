@@ -805,6 +805,19 @@ location / {
                                                           (job_name . "node"))
                                                          ((static_configs
                                                            .
+                                                           #(((targets . #("192.168.0.1")))))
+                                                          (scrape_interval . "10s")
+                                                          (job_name . "tp-link")
+                                                          (relabel_configs
+                                                           .
+                                                           #(((source_labels . #("__address__"))
+                                                              (target_label . "__param_target"))
+                                                             ((source_labels . #("__param_target"))
+                                                              (target_label . "instance"))
+                                                             ((replacement . "127.0.0.1:9101")
+                                                              (target_label . "__address__")))))
+                                                         ((static_configs
+                                                           .
                                                            #(((targets . #("127.0.0.1:9633")))))
                                                           (scrape_interval . "10m")
                                                           (job_name . "smartctl"))
