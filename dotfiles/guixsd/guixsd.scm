@@ -1000,6 +1000,8 @@ location / {
                                              read-string)
                                            "skipping /etc/guix/secrets/prometheus-tp-link-exporter")))))))
 
+                         (service grafana-service-type)
+
                          (service prometheus-alertmanager-service-type
                                   (prometheus-alertmanager-configuration
                                    (listen-address "127.0.0.1:9093")
