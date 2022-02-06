@@ -4,7 +4,10 @@
 (define %gitlab-projects
   (list (home-gitlab-project-configuration
          (name "notes")
-         (description "My notes"))))
+         (description "My notes"))
+        (home-gitlab-project-configuration
+         (name "prometheus-tp-link-exporter")
+         (description "Prometheus TP Link Exporter"))))
 
 (define %terraform-state
   (string-append (getcwd) "/terraform.tfstate"))
