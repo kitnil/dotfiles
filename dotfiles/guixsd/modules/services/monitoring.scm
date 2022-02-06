@@ -641,7 +641,7 @@
   (host                        prometheus-tp-link-exporter-configuration-host                        ;string
                                (default ""))
   (listen-address              prometheus-tp-link-exporter-configuration-listen-address
-                               (default ""))
+                               (default "0.0.0.0:9101"))
   (user                        prometheus-tp-link-exporter-configuration-user                        ;string
                                (default "prometheus-tp-link-exporter"))
   (group                       prometheus-tp-link-exporter-configuration-group                       ;string
@@ -726,7 +726,7 @@ User admin")
                                            ":" #$(file-append sshpass "/bin"))
                             (string-append "PROMETHEUS_TP_LINK_EXPORTER_HOST="
                                            #$(prometheus-tp-link-exporter-configuration-host config))
-                            (string-append "PROMETHEUS_TP_LINK_EXPORTER_LISTEN_PORT="
+                            (string-append "PROMETHEUS_TP_LINK_EXPORTER_LISTEN_ADDRESS="
                                            #$(prometheus-tp-link-exporter-configuration-listen-address config))))))
     (respawn? #f)
     (stop #~(make-kill-destructor)))))
