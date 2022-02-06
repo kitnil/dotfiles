@@ -246,7 +246,7 @@ Prometheus.")
 (define-public prometheus-tp-link-exporter
   (package
     (name "prometheus-tp-link-exporter")
-    (version "1.0.0")
+    (version "1.1.0")
     (source (origin
               (method git-fetch)
               (uri (git-reference
@@ -255,7 +255,7 @@ Prometheus.")
               (file-name (git-file-name name version))
               (sha256
                (base32
-                "1nmdqr2rljxjg1v6xa0p81xzi3r9aw4ql8dzpj6wxcpfjrdfz4m7"))))
+                "1gpy0c67jvk6q015p317s2qnm46328niidlrzac03qkshfwrlih9"))))
     (build-system python-build-system)
     (arguments
      '(#:tests? #f)) ; no tests
