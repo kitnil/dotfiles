@@ -19,6 +19,7 @@
 (define-module (services monitoring)
   #:use-module (gnu packages admin)
   #:use-module (gnu packages linux)
+  #:use-module (gnu packages ssh)
   #:use-module (gnu services)
   #:use-module (gnu services base)
   #:use-module (gnu services shepherd)
@@ -50,7 +51,10 @@
             prometheus-smartctl-exporter-service-type
 
             prometheus-exim-exporter-configuration
-            prometheus-exim-exporter-service-type))
+            prometheus-exim-exporter-service-type
+
+            prometheus-tp-link-exporter-configuration
+            prometheus-tp-link-exporter-service-type))
 
 ;;; Commentary:
 ;;;
@@ -618,5 +622,124 @@
    (default-value (prometheus-exim-exporter-configuration))
    (description
     "Run the prometheus-exim-exporter.")))
+
+
+;;;
+;;; prometheus-tp-link-exporter
+;;;
+
+(define-record-type* <prometheus-tp-link-exporter-configuration>
+  prometheus-tp-link-exporter-configuration make-prometheus-tp-link-exporter-configuration
+  prometheus-tp-link-exporter-configuration?
+  (prometheus-tp-link-exporter prometheus-tp-link-exporter-configuration-prometheus-tp-link-exporter ;string
+                               (default prometheus-tp-link-exporter))
+  (environment-variables       prometheus-tp-link-exporter-configuration-environment-variables       ;list of strings
+                               (default '()))
+  (host                        prometheus-tp-link-exporter-configuration-host                        ;string
+                               (default ""))
+  (listen-address              prometheus-tp-link-exporter-configuration-listen-address
+                               (default ""))
+  (user                        prometheus-tp-link-exporter-configuration-user                        ;string
+                               (default "prometheus-tp-link-exporter"))
+  (group                       prometheus-tp-link-exporter-configuration-group                       ;string
+                               (default "prometheus-tp-link-exporter"))
+  (ssh                         prometheus-tp-link-exporter-configuration-ssh                         ;<package>
+                               (default openssh))
+  (known-hosts                 prometheus-tp-link-exporter-configuration-known-hosts                 ;list of strings
+                               (default '())))
+
+(define (prometheus-tp-link-exporter-account configuration)
+  ;; Return the user accounts and user groups for CONFIG.
+  (let ((prometheus-tp-link-exporter-user
+         (prometheus-tp-link-exporter-configuration-user configuration))
+        (prometheus-tp-link-exporter-group
+         (prometheus-tp-link-exporter-configuration-group configuration)))
+    (list (user-group
+           (name prometheus-tp-link-exporter-user)
+           (system? #t))
+          (user-account
+           (name prometheus-tp-link-exporter-user)
+           (group prometheus-tp-link-exporter-group)
+           (system? #t)
+           (comment "prometheus-tp-link-exporter privilege separation user")
+           (home-directory
+            (string-append "/var/run/" prometheus-tp-link-exporter-user))))))
+
+(define (prometheus-tp-link-exporter-activation config)
+  "Return the activation GEXP for CONFIG."
+  (with-imported-modules '((guix build utils))
+    #~(begin
+        (use-modules (guix build utils))
+        (let* ((user
+                (getpw #$(prometheus-tp-link-exporter-configuration-user config)))
+               (group
+                (getpw #$(prometheus-tp-link-exporter-configuration-group config)))
+               (ssh-directory (string-append (passwd:dir user) "/.ssh"))
+               (ssh-config (string-append ssh-directory "/config"))
+               (ssh-known-hosts (string-append ssh-directory "/known_hosts")))
+          (mkdir-p ssh-directory)
+          (chown ssh-directory
+                 (passwd:uid user)
+                 (group:gid group))
+          (chmod ssh-directory #o700)
+          (when (file-exists? ssh-config)
+            (delete-file ssh-config))
+          (when (file-exists? ssh-known-hosts)
+            (delete-file ssh-known-hosts))
+          (symlink #$(mixed-text-file
+                      "config"
+                      "\
+Host " (prometheus-tp-link-exporter-configuration-host config) "
+KexAlgorithms +diffie-hellman-group1-sha1
+HostKeyAlgorithms +ssh-rsa
+PubkeyAcceptedKeyTypes +ssh-rsa
+User admin")
+                   ssh-config)
+          (symlink #$(plain-file
+                      "known_hosts"
+                      (string-join (prometheus-tp-link-exporter-configuration-known-hosts config)
+                                   "\n"))
+                   ssh-known-hosts)))))
+
+(define (prometheus-tp-link-exporter-shepherd-service config)
+  (list
+   (shepherd-service
+    (provision '(prometheus-tp-link-exporter))
+    (documentation "Run prometheus-tp-link-exporter.")
+    (requirement '())
+    (start #~(make-forkexec-constructor
+              (list (string-append #$(prometheus-tp-link-exporter-configuration-prometheus-tp-link-exporter config)
+                                   "/bin/prometheus-tp-link-exporter"))
+              #:user #$(prometheus-tp-link-exporter-configuration-user config)
+              #:group #$(prometheus-tp-link-exporter-configuration-group config)
+              #:log-file "/var/log/prometheus-tp-link-exporter.log"
+              #:environment-variables
+              (append '#$(prometheus-tp-link-exporter-configuration-environment-variables config)
+                      (remove (lambda (str)
+                                (string-prefix? "PATH=" str))
+                              (environ))
+                      (list (string-append "PATH="
+                                           (string-append #$(prometheus-tp-link-exporter-configuration-ssh config) "/bin")
+                                           ":" #$(file-append sshpass "/bin"))
+                            (string-append "PROMETHEUS_TP_LINK_EXPORTER_HOST="
+                                           #$(prometheus-tp-link-exporter-configuration-host config))
+                            (string-append "PROMETHEUS_TP_LINK_EXPORTER_LISTEN_PORT="
+                                           #$(prometheus-tp-link-exporter-configuration-listen-address config))))))
+    (respawn? #f)
+    (stop #~(make-kill-destructor)))))
+
+(define prometheus-tp-link-exporter-service-type
+  (service-type
+   (name 'prometheus-tp-link-exporter)
+   (extensions
+    (list (service-extension shepherd-root-service-type
+                             prometheus-tp-link-exporter-shepherd-service)
+          (service-extension account-service-type
+                             prometheus-tp-link-exporter-account)
+          (service-extension activation-service-type
+                             prometheus-tp-link-exporter-activation)))
+   (default-value (prometheus-tp-link-exporter-configuration))
+   (description
+    "Run the prometheus-tp-link-exporter.")))
 
 ;;; monitoring.scm ends here
