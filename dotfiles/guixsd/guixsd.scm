@@ -342,7 +342,7 @@ location / {
 
        (display "Creating new Restic snapshot\n")
 
-       (unless (and (let ((%backup-directories (list %user-home "/etc" "/root"))
+       (unless (and (let ((%backup-directories (list %user-home "/etc" "/root" "/var/lib/grafana"))
                           (%exclude-directories
                            (append '#$%root-directories
                                    (map (lambda (directory)
