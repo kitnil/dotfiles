@@ -967,6 +967,26 @@ location / {
                                    (web-listen-address "127.0.0.1:9100")
                                    (textfile-directory "/var/lib/prometheus-node-exporter")))
 
+                         (service prometheus-tp-link-exporter-service-type
+                                  (prometheus-tp-link-exporter-configuration
+                                   ;; XXX: Deprecated SSH client.
+                                   (ssh
+                                    (begin
+                                      (add-to-load-path (string-append %home "/.local/share/chezmoi/dotfiles/manifests"))
+                                      (@ (deprecated) openssh)))
+                                   (host "192.168.0.1")
+                                   (known-hosts '("192.168.0.1 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgwCyKvL9lBa+NEJhMgwWe5Fbc+Kxt8EmS4c2dZUqIPGbWWvYC9LQxrOiKWFSqenEYHyfaCpP6hj4b0s5lCmkj7FhOs2oWQYwtU/AXeWNoEFujKCZLV256tV7eetQeeWl+M4tbdlGdkTVSvxG5S6723g6zQZyc4o/3Jd/Rb5C7GBK57IN"))
+                                   (listen-address "9101")
+                                   (environment-variables
+                                    (list
+                                     (string-append
+                                      "PROMETHEUS_TP_LINK_EXPORTER_PASSWORD="
+                                      (string-trim-right
+                                       (if (= (getuid) 0)
+                                           (with-input-from-file "/etc/guix/secrets/prometheus-tp-link-exporter"
+                                             read-string)
+                                           "skipping /etc/guix/secrets/prometheus-tp-link-exporter")))))))
+
                          (service prometheus-alertmanager-service-type
                                   (prometheus-alertmanager-configuration
                                    (listen-address "127.0.0.1:9093")
