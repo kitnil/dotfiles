@@ -54,7 +54,10 @@
             prometheus-exim-exporter-service-type
 
             prometheus-tp-link-exporter-configuration
-            prometheus-tp-link-exporter-service-type))
+            prometheus-tp-link-exporter-service-type
+
+            grafana-configuration
+            grafana-service-type))
 
 ;;; Commentary:
 ;;;
@@ -741,5 +744,85 @@ User admin")
    (default-value (prometheus-tp-link-exporter-configuration))
    (description
     "Run the prometheus-tp-link-exporter.")))
+
+
+;;;
+;;; Grafana
+;;;
+
+(define-record-type* <grafana-configuration>
+  grafana-configuration make-grafana-configuration
+  grafana-configuration?
+  (grafana               grafana-configuration-grafana               ;string
+                         (default grafana))
+  (environment-variables grafana-configuration-environment-variables ;list of strings
+                         (default '()))
+  (host                  grafana-configuration-host                  ;string
+                         (default ""))
+  (listen-address        grafana-configuration-listen-address
+                         (default ""))
+  (user                  grafana-configuration-user                  ;string
+                         (default "grafana"))
+  (group                 grafana-configuration-group                 ;string
+                         (default "grafana")))
+
+(define (grafana-account configuration)
+  ;; Return the user accounts and user groups for CONFIG.
+  (let ((grafana-user (grafana-configuration-user configuration))
+        (grafana-group (grafana-configuration-group configuration)))
+    (list (user-group
+           (name grafana-user)
+           (system? #t))
+          (user-account
+           (name grafana-user)
+           (group grafana-group)
+           (system? #t)
+           (comment "grafana privilege separation user")
+           (home-directory "/var/lib/grafana")))))
+
+(define (grafana-activation config)
+  "Return the activation GEXP for CONFIG."
+  (with-imported-modules '((guix build utils))
+    #~(begin
+        (use-modules (guix build utils))
+        (let* ((user (getpw #$(grafana-configuration-user config)))
+               (group (getpw #$(grafana-configuration-group config)))
+               (home (passwd:dir user))
+               (public (string-append home "/public")))
+          (when (file-exists? public)
+            (delete-file public))
+          (symlink (string-append #$(grafana-configuration-grafana config)
+                                  "/public")
+                   public)))))
+
+(define (grafana-shepherd-service config)
+  (list
+   (shepherd-service
+    (provision '(grafana))
+    (documentation "Run grafana.")
+    (requirement '())
+    (start #~(make-forkexec-constructor
+              (list (string-append #$(grafana-configuration-grafana config)
+                                   "/bin/grafana-server"))
+              #:directory "/var/lib/grafana"
+              #:user #$(grafana-configuration-user config)
+              #:group #$(grafana-configuration-group config)
+              #:log-file "/var/log/grafana.log"))
+    (respawn? #f)
+    (stop #~(make-kill-destructor)))))
+
+(define grafana-service-type
+  (service-type
+   (name 'grafana)
+   (extensions
+    (list (service-extension shepherd-root-service-type
+                             grafana-shepherd-service)
+          (service-extension account-service-type
+                             grafana-account)
+          (service-extension activation-service-type
+                             grafana-activation)))
+   (default-value (grafana-configuration))
+   (description
+    "Run the grafana.")))
 
 ;;; monitoring.scm ends here
