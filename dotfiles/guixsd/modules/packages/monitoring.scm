@@ -266,3 +266,69 @@ Prometheus.")
     (description
      "This package provides Prometheus TP-Link Exporter.")
     (license license:gpl3+)))
+
+(define-public grafana
+  (package
+    (name "grafana")
+    (version "8.3.4")
+    (source
+     (origin
+       (method url-fetch)
+       (uri
+        (string-append
+         "https://dl.grafana.com/enterprise/release/grafana-enterprise-"
+         version ".linux-amd64.tar.gz"))
+       (sha256
+        (base32
+         "0fap4qp7dgwlhipj2djmi91wrydx1rjf62w70z22lgh8l4ngwkg8"))))
+    (build-system trivial-build-system)
+    (native-inputs
+     `(("gzip" ,gzip)
+       ("tar" ,tar)))
+    (inputs
+     `(("glibc" ,glibc)
+       ("patchelf" ,patchelf)))
+    (arguments
+     `(#:modules ((guix build utils))
+       #:builder
+       (begin
+         (use-modules (guix build utils))
+         (mkdir-p (string-append %output "/bin"))
+         (setenv "PATH" (string-append
+                         (assoc-ref %build-inputs "tar") "/bin" ":"
+                         (assoc-ref %build-inputs "gzip") "/bin" ":"
+                         (assoc-ref %build-inputs "patchelf") "/bin"))
+         (invoke "tar" "--strip-components=1"
+                 "-xf" (assoc-ref %build-inputs "source")
+                 "-C" %output)
+         (chmod (string-append %output "/bin/grafana-server") #o755)
+         (invoke "patchelf" "--set-interpreter"
+                 (string-append (assoc-ref %build-inputs "glibc")
+                                "/lib/ld-linux-x86-64.so.2")
+                 (string-append %output "/bin/grafana-server")))))
+    (home-page "https://grafana.com/")
+    (synopsis "Platform for monitoring and observability")
+    (description "Grafana allows you to query, visualize, alert on and
+understand your metrics no matter where they are stored.  Create, explore, and
+share dashboards with your team and foster a data driven culture:
+
+@itemize
+@item Visualize: Fast and flexible client side graphs with a multitude of
+options.  Panel plugins offer many different ways to visualize metrics and
+logs.
+@item Dynamic Dashboards: Create dynamic & reusable dashboards with template
+variables that appear as dropdowns at the top of the dashboard.
+@item Explore Metrics: Explore your data through ad-hoc queries and dynamic
+drilldown.  Split view and compare different time ranges, queries and data
+sources side by side.
+@item Explore Logs: Experience the magic of switching from metrics to logs
+with preserved label filters.  Quickly search through all your logs or
+streaming them live.
+@item Alerting: Visually define alert rules for your most important metrics.
+Grafana will continuously evaluate and send notifications to systems like
+Slack, PagerDuty, VictorOps, OpsGenie.
+@item Mixed Data Sources: Mix different data sources in the same graph! You
+can specify a data source on a per-query basis.  This works for even custom
+datasources.
+@end itemize")
+    (license license:agpl3)))
