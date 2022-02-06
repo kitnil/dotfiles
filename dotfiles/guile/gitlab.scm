@@ -32,9 +32,9 @@
   (name
    (string (configuration-missing-field 'home-gitlab-project-configuration 'name))
    "Name of the project.")
-  (namespace-id
-   (string (configuration-missing-field 'home-gitlab-project-configuration 'namespace-id))
-   "Namespace ID.")
+  ;; (namespace-id
+  ;;  (string (configuration-missing-field 'home-gitlab-project-configuration 'namespace-id))
+  ;;  "Namespace ID.")
   (default-branch
    (string "master")
    "Default branch for the project.")
@@ -66,7 +66,7 @@
    (boolean #f)
    "Enable pipelines for the project.")
   (pages-access-level
-   (string (configuration-missing-field 'home-gitlab-project-configuration 'pages-access-level))
+   (string "public")
    "Pages access control."))
 
 (define (serialize-gitlab-project-configuration config fields)
