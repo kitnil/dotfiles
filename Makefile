@@ -132,3 +132,7 @@ add:
 	chezmoi add --encrypt $(HOME)/.ssh/known_hosts
 	chezmoi add --encrypt $(HOME)/.ssh/authorized_keys
 	chezmoi add $(HOME)/.emacs
+
+.PHONY: dotfiles/maintenance/gitlab/main.scm
+dotfiles/maintenance/gitlab/main.scm:
+	$(shell cd dotfiles/maintenance/gitlab && guix build -L ../.. -f main.scm)
