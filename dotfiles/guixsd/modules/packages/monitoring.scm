@@ -1,10 +1,15 @@
 (define-module (packages monitoring)
+  #:use-module (guix build-system python)
   #:use-module (guix build-system trivial)
   #:use-module (guix download)
+  #:use-module (guix git-download)
   #:use-module (guix packages)
+  #:use-module (gnu packages admin)
   #:use-module (gnu packages base)
   #:use-module (gnu packages compression)
   #:use-module (gnu packages elf)
+  #:use-module (gnu packages monitoring)
+  #:use-module (guix build-system python)
   #:use-module ((guix licenses) #:prefix license:))
 
 (define-public karma
@@ -237,3 +242,27 @@ Prometheus.")
     (description "Exports metrics from the SSH for consumption by
 Prometheus.")
     (license license:expat)))
+
+(define-public prometheus-tp-link-exporter
+  (package
+    (name "prometheus-tp-link-exporter")
+    (version "1.0.0")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://gitlab.com/wigust/prometheus-tp-link-exporter")
+                    (commit (string-append "v" version))))
+              (file-name (git-file-name name version))
+              (sha256
+               (base32
+                "1nmdqr2rljxjg1v6xa0p81xzi3r9aw4ql8dzpj6wxcpfjrdfz4m7"))))
+    (build-system python-build-system)
+    (arguments
+     '(#:tests? #f)) ; no tests
+    (propagated-inputs
+     (list jc python-prometheus-client))
+    (home-page "https://gitlab.com/wigust/prometheus-tp-link-exporter")
+    (synopsis "Prometheus TP-Link Exporter")
+    (description
+     "This package provides Prometheus TP-Link Exporter.")
+    (license license:gpl3+)))
