@@ -14,9 +14,7 @@
   #~(begin
       (use-modules (ice-9 rdelim)
                    (ice-9 popen))
-      (let* ((port (open-pipe* OPEN_READ "sshpass"
-                               #$(string-append "-p" (pass "show" "majordomo/private/h3c/oleg"))
-                               "ssh" #$host "--" #$@command))
+      (let* ((port (open-pipe* OPEN_READ "ssh" #$host "--" #$@command))
              (output (read-string port)))
         (close-port port)
         output)))
