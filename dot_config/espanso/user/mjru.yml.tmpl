@@ -3,10 +3,6 @@ parent: default
 
 matches:
   # Simple text replacement
-  - trigger: ":mjru-phone"
-    replace: "{{ .work.phone }}"
-  - trigger: ":mjru-email"
-    replace: "{{ .work.email }}"
   - trigger: ":php"
     replace: "apache2-php{44,{52..56},{70..74},80}"
   - trigger: "web..."
