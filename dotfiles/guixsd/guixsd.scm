@@ -500,6 +500,26 @@ location / {
                           "--no-resolv")))
           (respawn? #f)))))
 
+;; TODO: Add libvirtd network configuration.
+;; (use-modules (sxml simple))
+;; (call-with-output-string
+;;   (lambda (port)
+;;     (sxml->xml '(network
+;;                  (portgroup (@ (name "vlan-01") (default "yes")))
+;;                  (portgroup (@ (name "vlan-02"))
+;;                             (vlan (tag (@ (id "2")))))
+;;                  (portgroup (@ (name "vlan-03"))
+;;                             (vlan (tag (@ (id "3")))))
+;;                  (portgroup (@ (name "vlan-all"))
+;;                             (vlan (@ (trunk "yes"))
+;;                                   (tag (@ (id "2")))
+;;                                   (tag (@ (id "3")))))
+;;                  (virtualport (@ (type "openvswitch")))
+;;                  (bridge (@ (name "ovsbr0")))
+;;                  (forward (@ (mode "bridge")))
+;;                  (name "ovs-network"))
+;;                port)))
+
 
 ;;;
 ;;; Entryp point
