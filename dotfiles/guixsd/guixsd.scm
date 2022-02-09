@@ -11,7 +11,7 @@
              (srfi srfi-1)
              (srfi srfi-26))
 
-(use-package-modules admin audio android backup bash bittorrent curl firmware guile haskell-apps networking linux samba ssh suckless xdisorg xorg)
+(use-package-modules admin audio android backup bash bittorrent curl dns firmware guile haskell-apps networking linux samba ssh suckless xdisorg xorg)
 
 (use-service-modules admin dbus desktop docker dns mcron networking nix sound
                      xorg ssh web cgit version-control certbot
@@ -476,6 +476,28 @@ location / {
                                     "-i" "br154.154"
                                     "-o" "br0"
                                     "-j" "ACCEPT")))))))
+          (respawn? #f)))))
+
+(define %dnsmasq-service
+  (simple-service
+   'dnsmasq-configuration shepherd-root-service-type
+   (list (shepherd-service
+          (provision '(dnsmasq-configuration))
+          (requirement '(vswitchd))
+          (start #~(make-forkexec-constructor
+                    (list #$(file-append dnsmasq "/sbin/dnsmasq")
+                          "--keep-in-foreground"
+                          "--pid-file=/run/dnsmasq.pid"
+                          "--local-service"
+                          "--cache-size=150"
+                          "--dhcp-range" "192.168.154.52,192.168.154.148,12h"
+                          "--bind-interfaces"
+                          "--interface=br154.154"
+                          "--dhcp-boot=netboot.xyz.kpxe"
+                          "--tftp-root=/srv/tftp"
+                          "--enable-tftp"
+                          "--server=192.168.0.144"
+                          "--no-resolv")))
           (respawn? #f)))))
 
 
@@ -1436,6 +1458,14 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                                                          "8.8.8.8"
                                                          "8.8.4.4"))
                                          (requirement '(openvswitch-configuration)))))
+
+                         %dnsmasq-service
+                         ;; TODO: Use system service after adding all required flags.
+                         ;; (service dnsmasq-service-type
+                         ;;          (dnsmasq-configuration
+                         ;;           (listen-addresses '("192.168.154.1"))
+                         ;;           ;; TODO: Replace port with --bind-interfaces
+                         ;;           (port 0)))
 
                          (service libvirt-service-type)
                          (simple-service 'libvirt-qemu-config activation-service-type
