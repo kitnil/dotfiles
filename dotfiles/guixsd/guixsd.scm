@@ -398,35 +398,85 @@ location / {
 ;;; Networking
 ;;;
 
-;; Note: Remove vlan_mode to use tagged VLANs.
-(define (create-openvswitch-bridge bridge uplink)
-  #~(let ((ovs-vsctl (lambda (cmd)
-                       (apply invoke/quiet
-                              #$(file-append openvswitch "/bin/ovs-vsctl")
-                              (string-tokenize cmd)))))
-      (and (ovs-vsctl (string-append "--may-exist add-br " #$bridge))
-           (ovs-vsctl (string-append "--may-exist add-port " #$bridge " "
-                                     #$uplink
-                                     " vlan_mode=native-untagged")))))
-
 (define (create-openvswitch-internal-port bridge port)
   #~(invoke/quiet #$(file-append openvswitch "/bin/ovs-vsctl")
                   "--may-exist" "add-port" #$bridge #$port
                   "vlan_mode=native-untagged"
                   "--" "set" "Interface" #$port "type=internal"))
 
+;; Add interface to VLAN 154:
+;;
+;; <interface type='bridge'>
+;;   <mac address='xx:xx:xx:xx:xx:xx'/>
+;;   <source bridge='br154'/>
+;;   <vlan>
+;;     <tag id='154' nativeMode='untagged'/>
+;;   </vlan>
+;;   <virtualport type='openvswitch'>
+;;     <parameters interfaceid='7c2d76d7-7c4b-4227-a117-4759b8ff994d'/>
+;;   </virtualport>
+;;   <target dev='netboot'/>
+;;   <model type='e1000e'/>
+;;   <address type='pci' domain='0x0000' bus='0x01' slot='0x01' function='0x0'/>
+;; </interface>
+
 (define %openvswitch-configuration-service
-  (simple-service 'openvswitch-configuration shepherd-root-service-type
-                  (list (shepherd-service
-                         (provision '(openvswitch-configuration))
-                         (requirement '(vswitchd))
-                         (start #~(lambda ()
-                                    #$(create-openvswitch-bridge
-                                       "br0" "enp34s0")
-                                    ;; #$(create-openvswitch-internal-port
-                                    ;;    "br0" "gnt0")
-                                    ))
-                         (respawn? #f)))))
+  (simple-service
+   'openvswitch-configuration shepherd-root-service-type
+   (list (shepherd-service
+          (provision '(openvswitch-configuration))
+          (requirement '(vswitchd))
+          (start #~(let ((ovs-vsctl (lambda (cmd)
+                                      (apply invoke/quiet
+                                             #$(file-append openvswitch "/bin/ovs-vsctl")
+                                             (string-tokenize cmd))))
+                         (ip (lambda (cmd)
+                               (apply system*
+                                      #$(file-append iproute "/sbin/ip")
+                                      (string-tokenize cmd))))
+                         (iptables (lambda (cmd)
+                               (apply system*
+                                      #$(file-append iptables "/sbin/iptables")
+                                      (string-tokenize cmd)))))
+                     (lambda ()
+                       (and (ovs-vsctl
+                             (string-join
+                              (list "--may-exist" "add-br" "br0")))
+                            ;; XXX: Remove vlan_mode to use tagged VLANs.
+                            (ovs-vsctl
+                             (string-join
+                              (list "--may-exist" "add-port" "br0" "enp34s0"
+                                    "vlan_mode=native-untagged")))
+                            (ovs-vsctl
+                             (string-join
+                              (list "--may-exist" "add-br" "br154")))
+                            (ip
+                             (string-join
+                              (list "link" "add" "link" "br154"
+                                    "name" "br154.154"
+                                    "type" "vlan"
+                                    "id" "154")))
+                            (iptables
+                             (string-join
+                              (list "-t" "nat"
+                                    "-A" "POSTROUTING"
+                                    "-o" "br0"
+                                    "-j" "MASQUERADE")))
+                            (iptables
+                             (string-join
+                              (list "-A" "FORWARD"
+                                    "-i" "br0"
+                                    "-o" "br154.154"
+                                    "-m" "state"
+                                    "--state" "RELATED,ESTABLISHED"
+                                    "-j" "ACCEPT")))
+                            (iptables
+                             (string-join
+                              (list "-A" "FORWARD"
+                                    "-i" "br154.154"
+                                    "-o" "br0"
+                                    "-j" "ACCEPT")))))))
+          (respawn? #f)))))
 
 
 ;;;
@@ -1370,7 +1420,13 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                                                  (value "192.168.0.144/24"))
                                                 (network-address
                                                  (device "enp34s0")
-                                                 (value "127.0.0.2/8"))))
+                                                 (value "127.0.0.2/8"))
+                                                (network-address
+                                                 (device "br154")
+                                                 (value "127.0.0.3/8"))
+                                                (network-address
+                                                 (device "br154.154")
+                                                 (value "192.168.154.1/24"))))
                                          (routes
                                           (list (network-route
                                                  (destination "default")
