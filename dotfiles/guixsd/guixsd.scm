@@ -568,7 +568,7 @@ location / {
                                  '("archive" "majordomo" "src" "Maildir"))
                             (operating-system-file-systems base-system)))
 
-      ;; (swap-devices '("/dev/disk/by-label/guixsd-swap"))
+      (swap-devices '("/dev/disk/by-label/swap"))
 
       (kernel-loadable-modules (list vendor-reset-linux-module))
 
