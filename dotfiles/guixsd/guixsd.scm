@@ -475,6 +475,27 @@ location / {
                               (list "-A" "FORWARD"
                                     "-i" "br154.154"
                                     "-o" "br0"
+                                    "-j" "ACCEPT")))
+                            ;; OpenVPN NAT
+                            (iptables
+                             (string-join
+                              (list "-t" "nat"
+                                    "-A" "POSTROUTING"
+                                    "-o" "tapvpn"
+                                    "-j" "MASQUERADE")))
+                            (iptables
+                             (string-join
+                              (list "-A" "FORWARD"
+                                    "-i" "tapvpn"
+                                    "-o" "br154.154"
+                                    "-m" "state"
+                                    "--state" "RELATED,ESTABLISHED"
+                                    "-j" "ACCEPT")))
+                            (iptables
+                             (string-join
+                              (list "-A" "FORWARD"
+                                    "-i" "br154.154"
+                                    "-o" "tapvpn"
                                     "-j" "ACCEPT")))))))
           (respawn? #f)))))
 
