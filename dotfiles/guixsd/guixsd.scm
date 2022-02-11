@@ -290,6 +290,15 @@ location / {
    (autofs-mount-configuration
     (target "/mnt/autofs/ssh/web30.intr/home/eng")
     (source ":sshfs\\#web30.intr\\:"))
+   (autofs-mount-configuration
+    (target "/mnt/autofs/ssh/web99.intr/root")
+    (source ":sshfs\\#root@web99.intr\\:"))
+   (autofs-mount-configuration
+    (target "/mnt/autofs/ssh/web99.intr/root")
+    (source ":sshfs\\#root@web99.intr\\:"))
+   (autofs-mount-configuration
+    (target "/mnt/autofs/ssh/web99.intr/home/oleg")
+    (source ":sshfs\\#root@web99.intr\\:/home/oleg"))
    ;; TODO: Move autofs mount hierarchally lower after changing restic configuration.
    (autofs-mount-configuration
     (target "/mnt/windows/games")
