@@ -710,7 +710,7 @@ location / {
                            ))
            "::1 guixsd localhost"
 
-           "172.16.103.227 web99.ru www.web99.ru www.web99.intr web99.intr"
+           "192.168.154.129 web99.ru www.web99.ru www.web99.intr web99.intr"
 
            "172.16.100.60 workstation.intr"
 
