@@ -1492,7 +1492,8 @@ gtk-xft-rgba=\"rgb\"
                                      ("zabbix.intr" . null)
                                      ("ci.intr" . null)
                                      ("bareos.intr" . null)
-                                     ("archive.intr" . null))
+                                     ("archive.intr" . null)
+                                     ("backup.intr" . null))
                                     ("children"
                                      ("web"
                                       ("hosts"
