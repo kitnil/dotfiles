@@ -279,23 +279,18 @@ location / {
 (define %autofs-mounts
   (list
    (autofs-mount-configuration
-    (target "/mnt/ssh/workstation")
-    (source ":sshfs\\#ws1.wugi.info\\:/home/oleg"))
+    (target "/mnt/autofs/ssh/ws1.intr/home/oleg")
+    (source ":sshfs\\#ws1.intr\\:/home/oleg"))
    (autofs-mount-configuration
-    (target "/mnt/ssh/u226391")
+    (target "/mnt/autofs/ssh/web30s.intr/home/u226391")
     (source ":sshfs\\#web30s.majordomo.ru\\:"))
    (autofs-mount-configuration
-    (target "/mnt/ssh/u7590")
+    (target "/mnt/autofs/ssh/web33s.intr/home/u7590")
     (source ":sshfs\\#web33s.majordomo.ru\\:"))
    (autofs-mount-configuration
-    (target "/mnt/ssh/web30-eng")
+    (target "/mnt/autofs/ssh/web30.intr/home/eng")
     (source ":sshfs\\#web30.intr\\:"))
-   (autofs-mount-configuration
-    (target "/mnt/ssh/fedora24")
-    (source ":sshfs\\#78.108.86.195\\:"))
-   (autofs-mount-configuration
-    (target "/mnt/ssh/debian11")
-    (source ":sshfs\\#78.108.92.69\\:"))
+   ;; TODO: Move autofs mount hierarchally lower after changing restic configuration.
    (autofs-mount-configuration
     (target "/mnt/windows/games")
     (source "://windows.local/games")
