@@ -79,8 +79,12 @@ dotfiles/nix/nix.conf:
 	sudo mkdir -p /etc/nix
 	sudo install -m644 dotfiles/nix/nix.conf /etc/nix/nix.conf
 
+.PHONY: dotfiles/guixsd/machines.scm
+dotfiles/guixsd/machines.scm:
+	sudo install -m644 dotfiles/guixsd/machines.scm /etc/guix
+
 .PHONY: install
-install: install-ssh
+install: install-ssh dotfiles/guixsd/machines dotfiles/nix/nix.conf
 	dot_local/bin/executable_gpg-unlock > /dev/null
 	update-desktop-database $(HOME)/.local/share/applications
 	open-with-linux install
@@ -93,7 +97,6 @@ install: install-ssh
 	install --mode=755 dotfiles/scripts/maintenance $(HOME)/bin
 	install --mode=755 dotfiles/scripts/rofi-mycli $(HOME)/bin
 	install --mode=755 dotfiles/scripts/sshrc $(HOME)/bin
-	sudo install -m644 dotfiles/guixsd/machines.scm /etc/guix
 	gpg --decrypt dotfiles/emacs/mjru-network.gpg > $(HOME)/.emacs.d/modules/mjru-network.el
 	ln -sf $(HOME)/.Xresources $(HOME)/.Xdefaults
 	install --mode=644 dotfiles/guile/pass.scm $(HOME)/.config/guile/pass.scm
