@@ -705,6 +705,7 @@ location / {
                            "cgit.duckdns.org"
                            "spb"
                            "netmap.intr"
+                           "vault1"
                            ;; Majordomo
                            ;; "hms-dev.intr"
                            ;; "api-dev.intr"
@@ -1479,6 +1480,43 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                                   '("vfio-pci" ;GPU passthrough
                                     "vendor-reset" ;reset NAVI10 (5500XT)
                                     ))
+
+                         (service vault-service-type
+                                  (vault-configuration
+                                   (config-file
+                                    (computed-file
+                                     "vault.json"
+                                     (with-extensions (list guile-json-4)
+                                       (with-imported-modules (source-module-closure '((json builder)))
+                                         #~(begin
+                                             (use-modules (json builder))
+                                             (with-output-to-file #$output
+                                               (lambda ()
+                                                 (scm->json
+                                                  '(("ui" . #t)
+                                                    ("telemetry"
+                                                     .
+                                                     #((("prometheus_retention_time" . "30s")
+                                                        ("disable_hostname" . #t))))
+                                                    ("storage"
+                                                     ("raft"
+                                                      ;; ("retry_join"
+                                                      ;;  .
+                                                      ;;  #((("leader_api_addr" . "http://vault2:8220"))
+                                                      ;;    (("leader_api_addr" . "http://vault3:8230"))))
+                                                      ("path" . "/var/lib/vault/data")
+                                                      ("node_id" . "vault1")))
+                                                    ("listener"
+                                                     ("tcp"
+                                                      ("tls_disable" . #t)
+                                                      ("telemetry"
+                                                       ("unauthenticated_metrics_access" . #t))
+                                                      ("address" . "127.0.0.1:8210")))
+                                                    ("disable_mlock" . #t)
+                                                    ("cluster_addr" . "http://vault1:8211")
+                                                    ("api_addr" . "http://vault1:8210")))))))))
+
+)))
 
                          (service openvswitch-service-type)
                          %openvswitch-configuration-service
