@@ -74,6 +74,11 @@ dotfiles/nix/flake.nix:
 	rm -rf $(HOME)/.cache/nix
 	sh -c 'set -e; cd dotfiles/nix || exit 1; ./flake.nix'
 
+.PHONY: dotfiles/nix/nix.conf
+dotfiles/nix/nix.conf:
+	sudo mkdir -p /etc/nix
+	sudo install -m644 dotfiles/nix/nix.conf /etc/nix/nix.conf
+
 .PHONY: install
 install: install-ssh
 	dot_local/bin/executable_gpg-unlock > /dev/null
