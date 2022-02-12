@@ -516,6 +516,7 @@ location / {
                           "--local-service"
                           "--cache-size=150"
                           "--dhcp-range" "192.168.154.52,192.168.154.148,12h"
+                          "--dhcp-host=52:54:00:f1:75:45,192.168.154.129" ;web99
                           "--bind-interfaces"
                           "--interface=br154.154"
                           "--dhcp-boot=netboot.xyz.kpxe"
