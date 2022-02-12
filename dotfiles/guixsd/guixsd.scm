@@ -517,6 +517,7 @@ location / {
                           "--cache-size=150"
                           "--dhcp-range" "192.168.154.52,192.168.154.148,12h"
                           "--dhcp-host=52:54:00:f1:75:45,192.168.154.129" ;web99
+                          "--dhcp-host=52:54:00:7a:62:8d,192.168.154.130" ;nginx99
                           "--bind-interfaces"
                           "--interface=br154.154"
                           "--dhcp-boot=netboot.xyz.kpxe"
@@ -711,6 +712,7 @@ location / {
                            ))
            "::1 guixsd localhost"
 
+           "192.168.154.130 nginx99.intr"
            "192.168.154.129 web99.ru www.web99.ru www.web99.intr web99.intr"
 
            "172.16.100.60 workstation.intr"
