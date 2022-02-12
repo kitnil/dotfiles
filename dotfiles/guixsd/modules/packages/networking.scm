@@ -5,7 +5,9 @@
   #:use-module (guix packages)
   #:use-module (guix gexp)
   #:use-module (guix git-download)
+  #:use-module (guix download)
   #:use-module (guix build-system python)
+  #:use-module (guix build-system trivial)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (gnu packages python-xyz))
 
@@ -72,3 +74,48 @@ Cisco hardware.")
     (description "This package provides a Python program to connect to Cisco
 hardware and type a password automatically.")
     (license license:gpl3+)))
+
+(define-public plumber
+  (package
+    (name "plumber")
+    (version "1.2.1")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append
+             "https://github.com/batchcorp/plumber/releases/download/v"
+             version "/plumber-linux"))
+       (sha256
+        (base32
+         "0j0n5qvl3xy5wx3k1cgpfnaxgc5x38rw2rmhx7qyhl6p680k4qbs"))))
+    (build-system trivial-build-system)
+    (arguments
+     `(#:modules ((guix build utils))
+       #:builder
+       (begin
+         (use-modules (guix build utils))
+         (mkdir-p (string-append %output "/bin"))
+         (copy-file (assoc-ref %build-inputs "source")
+                    (string-append %output "/bin/plumber"))
+         (chmod (string-append %output "/bin/plumber")
+                #o555))))
+    (home-page "https://github.com/batchcorp/plumber/")
+    (synopsis "AMQP command line client")
+    (description "This package provides a a CLI devtool for inspecting,
+piping, massaging and redirecting data in message systems like Kafka,
+RabbitMQ, GCP PubSub and many more.
+
+The tool enables you to:
+@itemize
+@item Safely view the contents of your data streams
+@item Write plain or encoded data to any system
+@item Route data from one place to another
+@item Decode protobuf/avro/thrift/JSON data in real-time
+@item Relay data to the Batch platform
+@item Ship change data capture events to Batch platform
+@item Replay events into a message system on your local network
+@item And many other features (for a full list: plumber -h)
+@end itemize
+
+It's like curl for messaging systems.")
+    (license license:expat)))
