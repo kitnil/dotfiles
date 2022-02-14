@@ -84,7 +84,7 @@ dotfiles/guixsd/machines.scm:
 	sudo install -m644 dotfiles/guixsd/machines.scm /etc/guix
 
 .PHONY: install
-install: install-ssh dotfiles/guixsd/machines dotfiles/nix/nix.conf
+install: install-ssh dotfiles/guixsd/machines.scm dotfiles/nix/nix.conf
 	dot_local/bin/executable_gpg-unlock > /dev/null
 	update-desktop-database $(HOME)/.local/share/applications
 	open-with-linux install
