@@ -1,6 +1,6 @@
 (list
 
- (build-machine
+ #;(build-machine
   (name "jenkins.intr")
   (systems '("x86_64-linux"))
   (host-key "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIByQ1KiJqh+B2KGmG9xhRhC3LPmZQCbKrcjnSLvf323v root@nixos")
