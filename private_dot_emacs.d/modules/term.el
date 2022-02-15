@@ -62,18 +62,17 @@
                   (message "Failed to open file: %s" path))))
         vterm-eval-cmds))
 
-(defvar wi-vterm--prettify-symbols-alist
-  `(("&&" . ?∧)
-    ("||" . ?∨)
-    ("++" . ?⧺)
-    ("<=" . ?≤)
-    (">=" . ?≥)
-    ("->" . ?→)))
+(defun wi-vterm-prettify-symbols ()
+  (set (make-local-variable 'prettify-symbols-alist)
+       (append `(("&&" . ?∧)
+                 ("||" . ?∨)
+                 ("++" . ?⧺)
+                 ("<=" . ?≤)
+                 (">=" . ?≥)
+                 ("->" . ?→))
+               mjru-prettify-hosts)))
 
-(add-hook 'vterm-mode-hook
-          (lambda ()
-            (set (make-local-variable 'prettify-symbols-alist)
-                 wi-vterm--prettify-symbols-alist)))
+(add-hook 'vterm-mode-hook 'wi-vterm-prettify-symbols)
 
 (add-hook 'vterm-mode-hook 'goto-address-mode)
 (add-hook 'vterm-mode-hook 'guix-prettify-mode)
