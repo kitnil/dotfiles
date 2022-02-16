@@ -36,4 +36,5 @@
         "emacs.scm"
         "guix-collection.scm"
         "majordomo.scm"
-        "wigust.scm")))
+        "wigust.scm"
+        "dotfiles.scm")))
