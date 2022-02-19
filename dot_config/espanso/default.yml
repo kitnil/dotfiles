@@ -157,3 +157,6 @@ matches:
 
   - trigger: "goaccess..."
     replace: "goaccess --log-format=COMBINED"
+
+  - trigger: "reboot..."
+    replace: "sh -c 'sleep 600; echo b > /proc/sysrq-trigger; reboot' &"
