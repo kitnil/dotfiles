@@ -44,6 +44,9 @@
 (add-to-load-path (string-append %home "/.local/share/chezmoi/dotfiles/manifests"))
 (use-modules (deprecated))
 
+(add-to-load-path (string-append %home "/.local/share/chezmoi/dotfiles/guixsd/modules"))
+(use-modules (services networking))
+
 
 ;;;
 ;;; Certbot
@@ -745,6 +748,9 @@ location / {
 
       (services (append (list
 
+                         (service crowdsec-service-type)
+                         (service crowdsec-firewall-bouncer-service-type)
+
                          ;; (service vncserver-service-type (vncserver-configuration
                          ;;                                  (vncserver tigervnc-server)
                          ;;                                  (display 1)
@@ -1044,6 +1050,12 @@ location / {
                                                              ((replacement . "127.0.0.1:9115")
                                                               (target_label . "__address__"))))
                                                           (job_name . "blackbox-dns-udp-mjru-wugi-info"))
+                                                         ((static_configs
+                                                           .
+                                                           #(((targets . #("127.0.0.1:6060"))
+                                                              (labels ("machine" . "guixsd")))))
+                                                          (scrape_interval . "10s")
+                                                          (job_name . "crowdsec_guixsd"))
                                                          (("static_configs"
                                                            .
                                                            #((("targets"

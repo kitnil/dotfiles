@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2020 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2020, 2022 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -20,13 +20,21 @@
   #:use-module (gnu packages linux)
   #:use-module (gnu services)
   #:use-module (gnu services shepherd)
+  #:use-module (gnu system shadow)
   #:use-module (guix gexp)
   #:use-module (guix records)
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-1)
+  #:use-module (packages admin)
   #:export (gre-configuration
             gre-configuration?
-            gre-service-type))
+            gre-service-type
+
+            crowdsec-configuration
+            crowdsec-service-type
+
+            crowdsec-firewall-bouncer-configuration
+            crowdsec-firewall-bouncer-service-type))
 
 ;;; Commentary:
 ;;;
@@ -87,5 +95,149 @@
                                                      gre-shepherd-service)))
                 (description "Run GRE tunnel.")
                 (default-value '())))
+
+
+;;;
+;;; crowdsec
+;;;
+
+(define-record-type* <crowdsec-configuration>
+  crowdsec-configuration make-crowdsec-configuration
+  crowdsec-configuration?
+  (crowdsec              crowdsec-configuration-crowdsec              ;string
+                         (default crowdsec))
+  (environment-variables crowdsec-configuration-environment-variables ;list of strings
+                         (default '()))
+  (listen-address        crowdsec-configuration-listen-address
+                         (default "127.0.0.1:9101"))
+  (user                  crowdsec-configuration-user                  ;string
+                         (default "crowdsec"))
+  (group                 crowdsec-configuration-group                 ;string
+                         (default "root")))
+
+(define (crowdsec-account configuration)
+  ;; Return the user accounts and user groups for CONFIG.
+  (let ((crowdsec-user
+         (crowdsec-configuration-user configuration))
+        (crowdsec-group
+         (crowdsec-configuration-group configuration)))
+    (list (user-group
+           (name crowdsec-user)
+           (system? #t))
+          (user-account
+           (name crowdsec-user)
+           (group crowdsec-group)
+           (system? #t)
+           (comment "crowdsec privilege separation user")
+           (home-directory
+            (string-append "/var/run/" crowdsec-user))))))
+
+(define (crowdsec-activation config)
+  "Return the activation GEXP for CONFIG."
+  (with-imported-modules '((guix build utils))
+    #~(begin
+        (use-modules (guix build utils))
+        (let* ((user
+                (getpw #$(crowdsec-configuration-user config)))
+               (group
+                (getpw #$(crowdsec-configuration-group config))))
+          (for-each (lambda (directory)
+                      (mkdir-p directory)
+                      (chown directory (passwd:uid user) (group:gid group)))
+                    '("/var/lib/crowdsec"
+                      "/var/lib/crowdsec/data"
+                      "/etc/crowdsec/hub"))
+          (for-each (lambda (file)
+                      (unless (file-exists? file)
+                        (call-with-output-file file
+                          (lambda (port)
+                            (newline port)))
+                        (chown file (passwd:uid user) (group:gid group))))
+                    '("/var/log/crowdsec.log"
+                      "/var/log/crowdsec_api.log"))))))
+
+(define (crowdsec-shepherd-service config)
+  (list
+   (shepherd-service
+    (provision '(crowdsec))
+    (documentation "Run crowdsec.")
+    (requirement '())
+    (start #~(make-forkexec-constructor
+              (list (string-append #$(crowdsec-configuration-crowdsec config)
+                                   "/bin/crowdsec"))
+              #:directory "/var/run/crowdsec"
+              #:user #$(crowdsec-configuration-user config)
+              #:group #$(crowdsec-configuration-group config)
+              #:environment-variables
+              (append (list "SSL_CERT_DIR=/run/current-system/profile/etc/ssl/certs"
+                            "SSL_CERT_FILE=/run/current-system/profile/etc/ssl/certs/ca-certificates.crt")
+                      (remove (lambda (str)
+                                (or (string-prefix? "SSL_CERT_DIR=" str)
+                                    (string-prefix? "SSL_CERT_FILE=" str)))
+                              (environ)))))
+    (respawn? #f)
+    (stop #~(make-kill-destructor)))))
+
+(define crowdsec-service-type
+  (service-type
+   (name 'crowdsec)
+   (extensions
+    (list (service-extension shepherd-root-service-type
+                             crowdsec-shepherd-service)
+          (service-extension account-service-type
+                             crowdsec-account)
+          (service-extension activation-service-type
+                             crowdsec-activation)
+          ;; Make sure the 'cscli' command is available.
+          (service-extension profile-service-type
+                             (lambda (config)
+                               (list crowdsec)))))
+   (default-value (crowdsec-configuration))
+   (description
+    "Run the crowdsec.")))
+
+
+;;;
+;;; crowdsec-firewall-bouncer-configuration
+;;;
+
+(define-record-type* <crowdsec-firewall-bouncer-configuration>
+  crowdsec-firewall-bouncer-configuration make-crowdsec-firewall-bouncer-configuration
+  crowdsec-firewall-bouncer-configuration?
+  (crowdsec-firewall-bouncer crowdsec-firewall-bouncer-configuration-crowdsec-firewall-bouncer ;<package>
+                             (default crowdsec-firewall-bouncer)))
+
+(define (crowdsec-firewall-bouncer-shepherd-service config)
+  (list
+   (shepherd-service
+    (provision '(crowdsec-firewall-bouncer))
+    (documentation "Run crowdsec-firewall-bouncer.")
+    (requirement '())
+    (start #~(make-forkexec-constructor
+              (list (string-append #$(crowdsec-firewall-bouncer-configuration-crowdsec-firewall-bouncer config)
+                                   "/bin/crowdsec-firewall-bouncer")
+                    "-c" "/etc/crowdsec/crowdsec-firewall-bouncer.yaml")
+              #:environment-variables
+              (append (list (string-append "PATH=" (string-append #$ipset "/sbin")
+                                           ":" (string-append #$iptables "/sbin"))
+                            "SSL_CERT_DIR=/run/current-system/profile/etc/ssl/certs"
+                            "SSL_CERT_FILE=/run/current-system/profile/etc/ssl/certs/ca-certificates.crt")
+                      (remove (lambda (str)
+                                (or (string-prefix? "PATH=" str)
+                                    (string-prefix? "SSL_CERT_DIR=" str)
+                                    (string-prefix? "SSL_CERT_FILE=" str)))
+                              (environ)))))
+    (respawn? #f)
+    (stop #~(make-kill-destructor)))))
+
+(define crowdsec-firewall-bouncer-service-type
+  (service-type
+   (name 'crowdsec-firewall-bouncer)
+   (extensions
+    (list (service-extension shepherd-root-service-type
+                             crowdsec-firewall-bouncer-shepherd-service)))
+   (default-value (crowdsec-firewall-bouncer-configuration))
+   (description
+    "Run the crowdsec-firewall-bouncer.")))
 
 ;;; networking.scm ends here

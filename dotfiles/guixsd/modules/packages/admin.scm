@@ -1,0 +1,108 @@
+(define-module (packages admin)
+  #:use-module (ice-9 popen)
+  #:use-module (ice-9 rdelim)
+  #:use-module (guix build utils)
+  #:use-module (guix packages)
+  #:use-module (guix gexp)
+  #:use-module (guix git-download)
+  #:use-module (guix download)
+  #:use-module (guix build-system python)
+  #:use-module (guix build-system trivial)
+  #:use-module ((guix licenses) #:prefix license:)
+  #:use-module (gnu packages base)
+  #:use-module (gnu packages compression)
+  #:use-module (gnu packages elf)
+  #:use-module (gnu packages python-xyz))
+
+(define-public crowdsec
+  (package
+    (name "crowdsec")
+    (version "1.3.0")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append "https://github.com/crowdsecurity/crowdsec/releases/download/v"
+                                  version "/crowdsec-release-static.tgz"))
+              (sha256
+               (base32
+                "0cp1x5k7fzsgk794pr5jxfdxsz8fgjpzzr2wfvzf9ndjdz9s6wwb"))))
+    (build-system trivial-build-system)
+    (inputs
+     (list gzip tar glibc patchelf))
+    (arguments
+     `(#:modules ((guix build utils))
+       #:builder
+       (begin
+         (use-modules (guix build utils))
+         (setenv "PATH"
+                 (string-append
+                  (assoc-ref %build-inputs "gzip") "/bin"
+                  ":" (assoc-ref %build-inputs "tar") "/bin"))
+         (invoke "tar" "--strip-components=1" "-xf"
+                 (assoc-ref %build-inputs "source"))
+         (mkdir-p (string-append %output "/bin"))
+         (copy-file "cmd/crowdsec/crowdsec"
+                    (string-append %output "/bin/crowdsec"))
+         (copy-file "cmd/crowdsec-cli/cscli"
+                    (string-append %output "/bin/cscli"))
+         (mkdir-p (string-append %output "/usr/local/lib/crowdsec"))
+         (copy-file "plugins/notifications/email/notification-email"
+                    (string-append %output "/usr/local/lib/crowdsec/notification-email"))
+         (copy-file "plugins/notifications/http/notification-http"
+                    (string-append %output "/usr/local/lib/crowdsec/notification-http"))
+         (copy-file "plugins/notifications/slack/notification-slack"
+                    (string-append %output "/usr/local/lib/crowdsec/notification-slack")))))
+    (home-page "https://crowdsec.net/")
+    (synopsis "Collaborative behavior detection engine")
+    (description "CrowdSec is a free, modern & collaborative behavior
+detection engine, coupled with a global IP reputation network. It stacks on
+fail2ban's philosophy but is IPV6 compatible and 60x faster (Go vs Python),
+uses Grok patterns to parse logs and YAML scenario to identify
+behaviors. CrowdSec is engineered for modern Cloud / Containers / VM based
+infrastructures (by decoupling detection and remediation). Once detected you
+can remedy threats with various bouncers (firewall block, nginx http 403,
+Captchas, etc.) while the aggressive IP can be sent to CrowdSec for curation
+before being shared among all users to further improve everyone's
+security. See FAQ or read below for more.")
+    (license license:expat)))
+
+(define-public crowdsec-firewall-bouncer
+  (package
+    (name "crowdsec-firewall-bouncer")
+    (version "0.0.22")
+    (source
+     (origin
+       (method url-fetch)
+       (uri
+        (string-append
+         "https://github.com/crowdsecurity/cs-firewall-bouncer/releases/download/v"
+         version "/crowdsec-firewall-bouncer.tgz"))
+       (sha256
+        (base32
+         "19vk6l8n6d1x4gd2pkf9617znnq0s2y4x9iq7m07lhabxgknnd70"))))
+    (build-system trivial-build-system)
+    (inputs
+     (list gzip tar glibc patchelf))
+    (arguments
+     `(#:modules ((guix build utils))
+       #:builder
+       (begin
+         (use-modules (guix build utils))
+         (setenv "PATH"
+                 (string-append
+                  (assoc-ref %build-inputs "gzip") "/bin"
+                  ":" (assoc-ref %build-inputs "tar") "/bin"
+                  ":" (assoc-ref %build-inputs "patchelf") "/bin"))
+         (invoke "tar" "--strip-components=1" "-xf"
+                 (assoc-ref %build-inputs "source"))
+         (mkdir-p (string-append %output "/bin"))
+         (copy-file "crowdsec-firewall-bouncer"
+                    (string-append %output "/bin/crowdsec-firewall-bouncer"))
+         (invoke "patchelf" "--set-interpreter"
+                 (string-append (assoc-ref %build-inputs "glibc")
+                                "/lib/ld-linux-x86-64.so.2")
+                 (string-append %output "/bin/crowdsec-firewall-bouncer")))))
+    (home-page "https://doc.crowdsec.net/docs/bouncers/firewall/")
+    (synopsis "Crowdsec bouncer written in golang for firewalls")
+    (description "crowdsec-firewall-bouncer will fetch new and old decisions
+from a CrowdSec API to add them in a blocklist used by supported firewalls.")
+    (license license:expat)))

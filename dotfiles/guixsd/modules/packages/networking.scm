@@ -9,6 +9,9 @@
   #:use-module (guix build-system python)
   #:use-module (guix build-system trivial)
   #:use-module ((guix licenses) #:prefix license:)
+  #:use-module (gnu packages base)
+  #:use-module (gnu packages compression)
+  #:use-module (gnu packages elf)
   #:use-module (gnu packages python-xyz))
 
 (define %home
