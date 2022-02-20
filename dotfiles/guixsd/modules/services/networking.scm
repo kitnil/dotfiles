@@ -166,8 +166,6 @@
               (list (string-append #$(crowdsec-configuration-crowdsec config)
                                    "/bin/crowdsec"))
               #:directory "/var/run/crowdsec"
-              #:user #$(crowdsec-configuration-user config)
-              #:group #$(crowdsec-configuration-group config)
               #:environment-variables
               (append (list "SSL_CERT_DIR=/run/current-system/profile/etc/ssl/certs"
                             "SSL_CERT_FILE=/run/current-system/profile/etc/ssl/certs/ca-certificates.crt")

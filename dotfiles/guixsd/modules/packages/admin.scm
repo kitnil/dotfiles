@@ -10,6 +10,7 @@
   #:use-module (guix build-system trivial)
   #:use-module ((guix licenses) #:prefix license:)
   #:use-module (gnu packages base)
+  #:use-module (gnu packages bash)
   #:use-module (gnu packages compression)
   #:use-module (gnu packages elf)
   #:use-module (gnu packages python-xyz))
@@ -27,7 +28,7 @@
                 "0cp1x5k7fzsgk794pr5jxfdxsz8fgjpzzr2wfvzf9ndjdz9s6wwb"))))
     (build-system trivial-build-system)
     (inputs
-     (list gzip tar glibc patchelf))
+     (list bash-minimal gzip tar glibc-2.31 patchelf))
     (arguments
      `(#:modules ((guix build utils))
        #:builder
@@ -35,22 +36,26 @@
          (use-modules (guix build utils))
          (setenv "PATH"
                  (string-append
-                  (assoc-ref %build-inputs "gzip") "/bin"
+                  (assoc-ref %build-inputs "bash-minimal") "/bin"
+                  ":" (assoc-ref %build-inputs "gzip") "/bin"
                   ":" (assoc-ref %build-inputs "tar") "/bin"))
          (invoke "tar" "--strip-components=1" "-xf"
                  (assoc-ref %build-inputs "source"))
          (mkdir-p (string-append %output "/bin"))
          (copy-file "cmd/crowdsec/crowdsec"
                     (string-append %output "/bin/crowdsec"))
+         (wrap-program (string-append %output "/bin/crowdsec")
+           `("LD_LIBRARY_PATH" ":" prefix (,(string-append (assoc-ref %build-inputs "glibc")
+                                                           "/lib"))))
          (copy-file "cmd/crowdsec-cli/cscli"
                     (string-append %output "/bin/cscli"))
-         (mkdir-p (string-append %output "/usr/local/lib/crowdsec"))
+         (mkdir-p (string-append %output "/share/crowdsec/plugins"))
          (copy-file "plugins/notifications/email/notification-email"
-                    (string-append %output "/usr/local/lib/crowdsec/notification-email"))
+                    (string-append %output "/share/crowdsec/plugins/notification-email"))
          (copy-file "plugins/notifications/http/notification-http"
-                    (string-append %output "/usr/local/lib/crowdsec/notification-http"))
+                    (string-append %output "/share/crowdsec/plugins/notification-http"))
          (copy-file "plugins/notifications/slack/notification-slack"
-                    (string-append %output "/usr/local/lib/crowdsec/notification-slack")))))
+                    (string-append %output "/share/crowdsec/plugins/notification-slack")))))
     (home-page "https://crowdsec.net/")
     (synopsis "Collaborative behavior detection engine")
     (description "CrowdSec is a free, modern & collaborative behavior
