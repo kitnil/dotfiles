@@ -503,6 +503,20 @@ location / {
                               (list "-A" "FORWARD"
                                     "-i" "br154.154"
                                     "-o" "tapvpn"
+                                    "-j" "ACCEPT")))
+                            (iptables
+                             (string-join
+                              (list "-A" "FORWARD"
+                                    "-i" "br0"
+                                    "-o" "tapvpn"
+                                    "-j" "ACCEPT")))
+                            (iptables
+                             (string-join
+                              (list "-A" "FORWARD"
+                                    "-i" "tapvpn"
+                                    "-o" "br0"
+                                    "-m" "state"
+                                    "--state" "RELATED,ESTABLISHED"
                                     "-j" "ACCEPT")))))))
           (respawn? #f)))))
 
