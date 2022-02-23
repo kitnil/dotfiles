@@ -349,7 +349,7 @@ location / {
 
        (display "Creating new Restic snapshot\n")
 
-       (unless (and (let ((%backup-directories (list %user-home "/etc" "/root" "/var/lib/grafana" "/var/lib/crowdsec"))
+       (unless (and (let ((%backup-directories (list %user-home "/etc" "/root" "/var/lib/grafana" "/var/lib/crowdsec" "/var/lib/opensearch"))
                           (%exclude-directories
                            (append '#$%root-directories
                                    (map (lambda (directory)
