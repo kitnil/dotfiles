@@ -1615,7 +1615,9 @@ namespaces = [ ]
 					        (shepherd shepherd-patched)))
          (sysctl-service-type _ =>
                               (sysctl-configuration
-                               (settings (append '(("net.bridge.bridge-nf-call-iptables" . "0"))
+                               (settings (append '(("net.bridge.bridge-nf-call-iptables" . "0")
+                                                   ;; opensearch requirement
+                                                   ("vm.max_map_count" . "262144"))
                                                  %default-sysctl-settings))))))
 
       (setuid-programs %my-setuid-programs)
