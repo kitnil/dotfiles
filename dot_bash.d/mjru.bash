@@ -128,12 +128,30 @@ mjru-nix-fix()
 
 mjru-jenkins-build-php()
 {
+    jobs=(
+        apache2-php44
+        apache2-php52
+        apache2-php53
+        apache2-php54
+        apache2-php55
+        apache2-php56
+        apache2-php70
+        apache2-php71
+        apache2-php72
+        apache2-php73
+        apache2-php74
+        apache2-php80
+        apache2-php81
+    )
     branch="$1"
-    for job in apache2-php52 apache2-php53 apache2-php54 apache2-php55 apache2-php56 apache2-php70 apache2-php71 apache2-php72 apache2-php73 apache2-php74; do
+    for job in "${jobs[@]}"; do
         echo -e "\n@ $job"
-        curl -u "admin:$(pass show majordomo/public/majordomo/jenkins.intr/admin)" -s -k \
-"https://jenkins.intr/job/webservices/job/$job/job/$branch/build?delay=0sec" \
--H 'Content-type: application/x-www-form-urlencoded; charset=UTF-8' --data-urlencode json='{"parameter": [{"name":"DEPLOY", "value":"true"}]}'
+        curl --user "admin:$(pass show majordomo/public/majordomo/jenkins.intr/admin)" \
+             --insecure \
+             --request POST \
+	     "https://jenkins.intr/job/webservices/job/webservices%252F${job}/job/master/build?delay=0sec" \
+             --header 'Content-type: application/x-www-form-urlencoded; charset=UTF-8' \
+             --data-raw ''
         sleep 0.5
     done
 }
