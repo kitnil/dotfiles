@@ -1100,7 +1100,12 @@ location / {
                                                            .
                                                            #((("targets" . #("localhost:9312")))))
                                                           ("metrics_path" . "/metrics")
-                                                          ("job_name" . "ssh-metrics"))))
+                                                          ("job_name" . "ssh-metrics"))
+                                                         ((static_configs
+                                                           .
+                                                           #(((targets . #("windows.local:9182")))))
+                                                          (scrape_interval . "1m")
+                                                          (job_name . "windows"))))
                                                       (rule_files . #(,prometheus-alertmanager-node
                                                                       ,prometheus-alertmanager-blackbox
                                                                       ,prometheus-alertmanager-bird
