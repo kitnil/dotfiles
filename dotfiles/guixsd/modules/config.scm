@@ -370,8 +370,9 @@ EndSection\n")
    (name "wugi.info")
    (config (plain-file "openvpn.conf"
                        "\
-client
+mode server
 proto udp
+port 1195
 dev tun
 ca /etc/openvpn/ca.crt
 cert /etc/openvpn/client.crt
@@ -380,12 +381,11 @@ comp-lzo
 persist-key
 persist-tun
 verb 3
-nobind
 ping 5
+tls-server
+dh /etc/openvpn/dhparams.pem
 ping-restart 10
 resolv-retry infinite
-remote vm1.wugi.info 1195
-remote-random
 "))))
 
 (define %openvpn-configuration-majordomo.ru
