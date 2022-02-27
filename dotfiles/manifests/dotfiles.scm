@@ -1,3 +1,3 @@
-(use-modules (wigust packages networking))
+(use-modules (packages networking))
 
 (packages->manifest (list cisco))
