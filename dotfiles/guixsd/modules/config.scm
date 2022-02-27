@@ -373,7 +373,7 @@ EndSection\n")
 mode server
 proto udp
 port 1195
-dev tun
+dev tapvpn1
 ca /etc/openvpn/ca.crt
 cert /etc/openvpn/client.crt
 key /etc/openvpn/client.key
@@ -386,6 +386,7 @@ tls-server
 dh /etc/openvpn/dhparams.pem
 ping-restart 10
 resolv-retry infinite
+server 192.168.25.0 255.255.255.0
 "))))
 
 (define %openvpn-configuration-majordomo.ru
