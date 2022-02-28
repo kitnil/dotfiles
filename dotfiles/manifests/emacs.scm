@@ -112,6 +112,7 @@
        emacs-move-text
        emacs-multifiles
        emacs-multiple-cursors   ; Multi cursor
+       emacs-multi-vterm
        emacs-nginx-mode
        emacs-nix-mode           ; Nix language mode
        emacs-notmuch
