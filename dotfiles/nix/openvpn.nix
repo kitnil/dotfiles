@@ -20,7 +20,7 @@ let
     remote-random
   '';
 in pkgs.dockerTools.buildLayeredImageWithNixDb rec {
-  name = "localhost:5000/openvpn-client";
+  name = "oracle1.local:5000/openvpn-client";
   tag = "latest";
   contents = with pkgs; [ bash openvpn ];
   config = {
