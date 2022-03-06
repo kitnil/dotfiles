@@ -1133,7 +1133,8 @@ location / {
                          (service prometheus-node-exporter-service-type
                                   (prometheus-node-exporter-configuration
                                    (web-listen-address "127.0.0.1:9100")
-                                   (textfile-directory "/var/lib/prometheus-node-exporter")))
+                                   (textfile-directory "/var/lib/prometheus-node-exporter")
+                                   (extra-options '("--collector.processes"))))
 
                          (service prometheus-tp-link-exporter-service-type
                                   (prometheus-tp-link-exporter-configuration
