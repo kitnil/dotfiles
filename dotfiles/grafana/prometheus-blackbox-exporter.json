@@ -50,7 +50,7 @@
         "hide": true,
         "iconColor": "rgba(0, 211, 255, 1)",
         "name": "Annotations & Alerts",
-        "target": {
+        "instance": {
           "limit": 100,
           "matchAny": false,
           "tags": [
@@ -159,11 +159,11 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "probe_http_status_code{target=~\"$target\"}",
+          "expr": "probe_http_status_code{instance=~\"$instance\"}",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
-          "legendFormat": "{{target}}",
+          "legendFormat": "{{instance}}",
           "refId": "B"
         }
       ],
@@ -257,11 +257,11 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "probe_success{target=~\"$target\"}",
+          "expr": "probe_success{instance=~\"$instance\"}",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
-          "legendFormat": "{{target}}",
+          "legendFormat": "{{instance}}",
           "refId": "A"
         }
       ],
@@ -354,11 +354,11 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "probe_http_status_code{target=~\"$target\"}",
+          "expr": "probe_http_status_code{instance=~\"$instance\"}",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
-          "legendFormat": "{{target}}",
+          "legendFormat": "{{instance}}",
           "refId": "A"
         }
       ],
@@ -433,11 +433,11 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "probe_http_version{target=~\"$target\"}",
+          "expr": "probe_http_version{instance=~\"$instance\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "{{target}}",
+          "legendFormat": "{{instance}}",
           "refId": "A"
         }
       ],
@@ -527,11 +527,11 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "probe_duration_seconds{target=~\"$target\"}",
+          "expr": "probe_duration_seconds{instance=~\"$instance\"}",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
-          "legendFormat": "{{target}}",
+          "legendFormat": "{{instance}}",
           "refId": "A"
         }
       ],
@@ -613,11 +613,11 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "avg(probe_duration_seconds{target=~\"$target\"}) by (target)",
+          "expr": "avg(probe_duration_seconds{instance=~\"$instance\"}) by (instance)",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
-          "legendFormat": "{{target}}",
+          "legendFormat": "{{instance}}",
           "refId": "A"
         }
       ],
@@ -699,11 +699,11 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "avg(probe_dns_lookup_time_seconds{target=~\"$target\"}) by (target)",
+          "expr": "avg(probe_dns_lookup_time_seconds{instance=~\"$instance\"}) by (instance)",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
-          "legendFormat": "{{target}}",
+          "legendFormat": "{{instance}}",
           "refId": "A"
         }
       ],
@@ -778,11 +778,11 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "probe_ip_protocol{target=~\"$target\"}",
+          "expr": "probe_ip_protocol{instance=~\"$instance\"}",
           "format": "time_series",
           "interval": "",
           "intervalFactor": 1,
-          "legendFormat": "{{target}}",
+          "legendFormat": "{{instance}}",
           "refId": "A"
         }
       ],
@@ -866,11 +866,11 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "probe_http_duration_seconds{target=~\"$target\", phase=~\"$phase\"}",
+          "expr": "probe_http_duration_seconds{instance=~\"$instance\", phase=~\"$phase\"}",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
-          "legendFormat": "{{target}} - {{ phase }}",
+          "legendFormat": "{{instance}} - {{ phase }}",
           "refId": "B"
         }
       ],
@@ -965,11 +965,11 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "probe_ssl_earliest_cert_expiry{target=~\"$target\"} - time()",
+          "expr": "probe_ssl_earliest_cert_expiry{instance=~\"$instance\"} - time()",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
-          "legendFormat": "{{target}}",
+          "legendFormat": "{{instance}}",
           "refId": "A"
         }
       ],
@@ -1062,11 +1062,11 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "probe_http_ssl{target=~\"$target\"}",
+          "expr": "probe_http_ssl{instance=~\"$instance\"}",
           "format": "time_series",
           "interval": "$interval",
           "intervalFactor": 1,
-          "legendFormat": "{{target}}",
+          "legendFormat": "{{instance}}",
           "refId": "A"
         }
       ],
@@ -1137,7 +1137,7 @@
       "targets": [
         {
           "exemplar": true,
-          "expr": "probe_tls_version_info{target=~\"$target\"}",
+          "expr": "probe_tls_version_info{instance=~\"$instance\"}",
           "format": "table",
           "instant": true,
           "interval": "",
@@ -1275,17 +1275,17 @@
         "allValue": null,
         "current": {},
         "datasource": "${DS_PROMETHEUS}",
-        "definition": "label_values(probe_success, target)",
+        "definition": "label_values(probe_success, instance)",
         "description": null,
         "error": null,
         "hide": 0,
         "includeAll": true,
         "label": null,
         "multi": true,
-        "name": "target",
+        "name": "instance",
         "options": [],
         "query": {
-          "query": "label_values(probe_success, target)",
+          "query": "label_values(probe_success, instance)",
           "refId": "StandardVariableQuery"
         },
         "refresh": 1,
