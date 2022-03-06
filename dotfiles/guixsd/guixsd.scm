@@ -810,10 +810,6 @@ location / {
                                              (file-append bash "/bin/bash"))
                          ;; (extra-special-file "/bin/setquota")
 
-                         ;; TODO: Add vendor-reset at boot
-                         ;; (service kernel-module-loader-service-type
-                         ;;          '("vendor-reset" "ddcci_backlight"))
-
                          ;; “adb” and “fastboot” without root privileges
                          (udev-rules-service 'android android-udev-rules
                                              #:groups '("adbusers"))
@@ -1514,6 +1510,8 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                          (service kernel-module-loader-service-type
                                   '("vfio-pci" ;GPU passthrough
                                     "vendor-reset" ;reset NAVI10 (5500XT)
+                                    "dm-snapshot"
+                                    ;; "ddcci_backlight"
                                     ))
 
                          (service vault-service-type
