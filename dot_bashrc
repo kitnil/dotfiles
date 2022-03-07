@@ -1,6 +1,12 @@
 ## Copyright © 2018, 2019, 2020, 2021, 2022 Oleg Pykhalov <go.wigust@gmail.com>
 ## Released under the GNU GPLv3 or any later version.
 
+if [ -n "$SSH_CLIENT" ]
+then
+    source "${HOME}/.bash_profile"
+    return
+fi
+
 if [ -f "/etc/skel/.bashrc" ]
 then
     # Load the skel profile's settings.

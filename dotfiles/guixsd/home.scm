@@ -334,16 +334,6 @@
                                ("host" . "smtp.wugi.info"))
                              #:pretty #t))))))))))
 
-    (service home-bash-service-type
-             (home-bash-configuration
-              (guix-defaults? #t)
-              (bashrc
-               (list
-                (local-file .bashrc)))
-              (bash-profile
-               (list
-                (local-file .bash_profile)))))
-
     (simple-service 'amtool-config
                     home-files-service-type
                     (list `("config/amtool/config.yml"
@@ -957,6 +947,11 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                            `(,(string-append "gnupg/" file-name) ,(local-file (string-append "private_dot_gnupg/" file-name))))
                          '("gpg-agent.conf"
                            "gpg.conf")))
+
+    (simple-service 'bash-config
+                    home-files-service-type
+                    (list `("bashrc" ,(local-file "../../dot_bashrc"))
+                          `("bash_profile" ,(local-file "../../dot_bash_profile"))))
 
     (simple-service 'inputrc-config
                     home-files-service-type
