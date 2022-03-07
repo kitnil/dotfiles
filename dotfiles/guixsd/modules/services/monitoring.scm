@@ -37,6 +37,9 @@
 
             prometheus-pushgateway-configuration
             prometheus-pushgateway-service-type
+
+            prometheus-dnsmasq-configuration
+            prometheus-dnsmasq-service-type
             
             karma-configuration
             karma-service-type
@@ -335,6 +338,74 @@
    (default-value (prometheus-pushgateway-configuration))
    (description
     "Run the Prometheus Pushgateway.")))
+
+
+;;;
+;;; Prometheus dnsmasq exporter
+;;;
+
+(define-record-type* <prometheus-dnsmasq-configuration>
+  prometheus-dnsmasq-configuration make-prometheus-dnsmasq-configuration
+  prometheus-dnsmasq-configuration?
+  (user               prometheus-dnsmasq-configuration-user               ;string
+                      (default "prometheus-dnsmasq"))
+  (group              prometheus-dnsmasq-configuration-group              ;string
+                      (default "prometheus-dnsmasq"))
+  (prometheus-dnsmasq prometheus-dnsmasq-configuration-prometheus-dnsmasq ;string
+                      (default ""))
+  (listen-address     prometheus-dnsmasq-configuration-listen-address     ;string
+                      (default "0.0.0.0:9153"))
+  (leases-path        prometheus-dnsmasq-configuration-leases-path        ;string
+                      (default "/var/lib/misc/dnsmasq.leases")))
+
+(define (prometheus-dnsmasq-account configuration)
+  ;; Return the user accounts and user groups for CONFIG.
+  (let ((prometheus-dnsmasq-user
+         (prometheus-dnsmasq-configuration-user configuration))
+        (prometheus-dnsmasq-group
+         (prometheus-dnsmasq-configuration-group configuration)))
+    (list (user-group
+           (name prometheus-dnsmasq-user)
+           (system? #t))
+          (user-account
+           (name prometheus-dnsmasq-user)
+           (group prometheus-dnsmasq-group)
+           (system? #t)
+           (comment "prometheus-dnsmasq privilege separation user")
+           (home-directory
+            (string-append "/var/run/" prometheus-dnsmasq-user))
+           (shell #~(string-append #$shadow "/sbin/nologin"))))))
+
+(define prometheus-dnsmasq-shepherd-service
+  (match-lambda
+    (($ <prometheus-dnsmasq-configuration>
+        user group prometheus-dnsmasq listen-address leases-path)
+     (list
+      (shepherd-service
+       (provision '(prometheus-dnsmasq))
+       (documentation "Run prometheus-dnsmasq.")
+       (requirement '())
+       (start #~(make-forkexec-constructor
+                 (list #$prometheus-dnsmasq
+                       (string-append "-listen=" #$listen-address)
+                       (string-append "-leases_path=" #$leases-path))
+                 #:user #$user
+                 #:group #$group
+                 #:log-file "/var/log/prometheus-dnsmasq.log"))
+       (respawn? #f)
+       (stop #~(make-kill-destructor)))))))
+
+(define prometheus-dnsmasq-service-type
+  (service-type
+   (name 'prometheus-dnsmasq)
+   (extensions
+    (list (service-extension shepherd-root-service-type
+                             prometheus-dnsmasq-shepherd-service)
+          (service-extension account-service-type
+                             prometheus-dnsmasq-account)))
+   (default-value (prometheus-dnsmasq-configuration))
+   (description
+    "Run the Prometheus Dnsmasq.")))
 
 
 ;;;
