@@ -5,9 +5,9 @@ let
     client
     proto udp
     dev tapvpn1
-    ca ${./openvpn/ca.crt}
-    cert ${./openvpn/client.crt}
-    key ${./openvpn/client.key}
+    ca ${./ca.crt}
+    cert ${./client.crt}
+    key ${./client.key}
     comp-lzo
     persist-key
     persist-tun
