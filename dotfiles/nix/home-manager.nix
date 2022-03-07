@@ -162,6 +162,7 @@
     prometheus
     prometheus-pushgateway
     prometheus-alertmanager
+    prometheus-dnsmasq-exporter
     prometheus-json-exporter
 
     OVMF.fd # UEFI for virtual machines in libvirt
