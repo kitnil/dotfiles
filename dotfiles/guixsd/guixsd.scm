@@ -978,6 +978,11 @@ location / {
                                                           (job_name . "pushgateway"))
                                                          ((static_configs
                                                            .
+                                                           #(((targets . #("127.0.0.1:9153")))))
+                                                          (honor_labels . #t)
+                                                          (job_name . "dnsmasq"))
+                                                         ((static_configs
+                                                           .
                                                            #(((targets . #("127.0.0.1:6050")))))
                                                           (job_name . "restic-rest"))
                                                          ((static_configs
