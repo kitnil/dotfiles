@@ -2,6 +2,8 @@
 
 {
   home.packages = with pkgs; [
+    act
+
     ansifilter
     bat
     bandwidth
