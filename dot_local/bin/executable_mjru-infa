@@ -44,6 +44,16 @@ FROM colo_accounts, equip_servers, clients
 WHERE colo_accounts.equip_server_id = equip_servers.equip_server_id AND clients.client_id = colo_accounts.client_id AND equip_servers.name LIKE "mj%";
 EOF
         ;;
+    disks)
+        mysql -s -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -h"$MYSQL_SERVER" billing <<EOF
+SELECT equip_components.install_date,equip_components.capacity,equip_servers.name,equip_components.description
+FROM equip_components,equip_servers
+WHERE equip_servers.equip_server_id=equip_components.equip_server_id
+ AND (equip_components.type='hdd' or equip_components.type='raid')
+ AND (equip_servers.equip_server_type_id='5' or equip_servers.equip_server_type_id='3' OR equip_servers.equip_server_type_id='2')
+ORDER BY equip_components.install_date;
+EOF
+        ;;
     switch)
         mysql -s -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -h"$MYSQL_SERVER" billing <<EOF \
             | awk '{$NF = "https://billing2.intr/switch/edit/"$NF; print}' \
