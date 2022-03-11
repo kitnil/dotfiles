@@ -241,3 +241,7 @@ resource "github_repository" "filestash" {
   description    = "Fork https://github.com/mickael-kerjean/filestash"
   default_branch = "master"
 }
+
+resource "github_repository" "nix-flake-lock-update-plugin" {
+  name           = "nix-flake-lock-update-plugin"
+}
