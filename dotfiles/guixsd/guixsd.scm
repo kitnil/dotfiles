@@ -595,11 +595,16 @@ location / {
       ;;                                   (label "netboot.xyz")
       ;;                                   (linux netboot.xyz))))))
 
-      (file-systems (append (list
-                             (file-system
-                               (device (file-system-label "magnolia-data"))
-                               (mount-point "/srv")
-                               (type "ext4")))
+      (file-systems (append (map (lambda (subvolume)
+                                   (file-system
+                                     (device (file-system-label "data18"))
+                                     (mount-point (string-append "/srv/" subvolume))
+                                     (options (string-join (list (string-append "subvol=" subvolume)
+                                                                 "compress=zstd:15"
+                                                                 "ssd")
+                                                           ","))
+                                     (type "btrfs")))
+                                 '("backup"))
                             (map (lambda (subvolume)
                                    (file-system
                                      (device (file-system-label "btrfs1"))
