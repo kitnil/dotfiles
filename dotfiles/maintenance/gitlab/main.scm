@@ -9,8 +9,8 @@
          (name "prometheus-tp-link-exporter")
          (description "Prometheus TP Link Exporter"))
         (home-gitlab-project-configuration
-         (name "prometheus-ssh-exporter")
-         (description "Prometheus SSH Exporter"))))
+         (name "python-prometheus-ssh-exporter")
+         (description "Prometheus SSH Exporter written in Python"))))
 
 (define %terraform-state
   (string-append (getcwd) "/terraform.tfstate"))
