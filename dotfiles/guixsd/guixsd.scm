@@ -330,7 +330,6 @@ location / {
     "Downloads"
     "GNS3"
     "Videos"
-    "majordomo"
     "vm"))
 
 (define (restic-command)
