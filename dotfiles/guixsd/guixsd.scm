@@ -951,7 +951,7 @@ location / {
                                                            .
                                                            #(((targets . #("192.168.0.1")))))
                                                           (scrape_interval . "10s")
-                                                          (job_name . "tp-link")
+                                                          (job_name . "python-ssh")
                                                           (relabel_configs
                                                            .
                                                            #(((source_labels . #("__address__"))
@@ -1141,8 +1141,8 @@ location / {
                                    (textfile-directory "/var/lib/prometheus-node-exporter")
                                    (extra-options '("--collector.processes"))))
 
-                         (service prometheus-tp-link-exporter-service-type
-                                  (prometheus-tp-link-exporter-configuration
+                         (service python-prometheus-ssh-exporter-service-type
+                                  (python-prometheus-ssh-exporter-configuration
                                    ;; XXX: Deprecated SSH client.
                                    (ssh
                                     (begin
@@ -1150,16 +1150,30 @@ location / {
                                       (@ (deprecated) openssh)))
                                    (host "192.168.0.1")
                                    (known-hosts '("192.168.0.1 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgwCyKvL9lBa+NEJhMgwWe5Fbc+Kxt8EmS4c2dZUqIPGbWWvYC9LQxrOiKWFSqenEYHyfaCpP6hj4b0s5lCmkj7FhOs2oWQYwtU/AXeWNoEFujKCZLV256tV7eetQeeWl+M4tbdlGdkTVSvxG5S6723g6zQZyc4o/3Jd/Rb5C7GBK57IN"))
-                                   (listen-address "127.0.0.1:9101")
-                                   (environment-variables
-                                    (list
-                                     (string-append
-                                      "PROMETHEUS_TP_LINK_EXPORTER_PASSWORD="
-                                      (string-trim-right
-                                       (if (= (getuid) 0)
-                                           (with-input-from-file "/etc/guix/secrets/prometheus-tp-link-exporter"
-                                             read-string)
-                                           "skipping /etc/guix/secrets/prometheus-tp-link-exporter")))))))
+                                   (config-file
+                                    (computed-file
+                                     "python-prometheus-ssh-exporter.json"
+                                     (with-extensions (list guile-json-4)
+                                       (with-imported-modules (source-module-closure '((json builder)))
+                                         #~(begin
+                                             (use-modules (json builder)
+                                                          (ice-9 rdelim))
+                                             (define password
+                                               #$(string-trim-right
+                                                  (if (= (getuid) 0)
+                                                      (with-input-from-file "/etc/guix/secrets/python-prometheus-ssh-exporter"
+                                                        read-string)
+                                                      "skipping /etc/guix/secrets/python-prometheus-ssh-exporter")))
+                                             (with-output-to-file #$output
+                                               (lambda ()
+                                                 (scm->json
+                                                  `(("listen" . "127.0.0.1:9101")
+                                                    ("hosts"
+                                                     ;; tp-link archer c6
+                                                     ("192.168.0.1"
+                                                      ("username" . "admin")
+                                                      ("password" . ,password)
+                                                      ("ifconfig" . "/sbin/ifconfig"))))))))))))))
 
                          (service grafana-service-type)
 

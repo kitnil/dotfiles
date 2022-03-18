@@ -56,8 +56,8 @@
             prometheus-exim-exporter-configuration
             prometheus-exim-exporter-service-type
 
-            prometheus-tp-link-exporter-configuration
-            prometheus-tp-link-exporter-service-type
+            python-prometheus-ssh-exporter-configuration
+            python-prometheus-ssh-exporter-service-type
 
             grafana-configuration
             grafana-service-type))
@@ -699,55 +699,55 @@
 
 
 ;;;
-;;; prometheus-tp-link-exporter
+;;; python-prometheus-ssh-exporter
 ;;;
 
-(define-record-type* <prometheus-tp-link-exporter-configuration>
-  prometheus-tp-link-exporter-configuration make-prometheus-tp-link-exporter-configuration
-  prometheus-tp-link-exporter-configuration?
-  (prometheus-tp-link-exporter prometheus-tp-link-exporter-configuration-prometheus-tp-link-exporter ;string
-                               (default prometheus-tp-link-exporter))
-  (environment-variables       prometheus-tp-link-exporter-configuration-environment-variables       ;list of strings
+(define-record-type* <python-prometheus-ssh-exporter-configuration>
+  python-prometheus-ssh-exporter-configuration make-python-prometheus-ssh-exporter-configuration
+  python-prometheus-ssh-exporter-configuration?
+  (python-prometheus-ssh-exporter python-prometheus-ssh-exporter-configuration-python-prometheus-ssh-exporter ;string
+                               (default python-prometheus-ssh-exporter))
+  (environment-variables       python-prometheus-ssh-exporter-configuration-environment-variables       ;list of strings
                                (default '()))
-  (host                        prometheus-tp-link-exporter-configuration-host                        ;string
+  (host                        python-prometheus-ssh-exporter-configuration-host                        ;string
                                (default ""))
-  (listen-address              prometheus-tp-link-exporter-configuration-listen-address
-                               (default "0.0.0.0:9101"))
-  (user                        prometheus-tp-link-exporter-configuration-user                        ;string
-                               (default "prometheus-tp-link-exporter"))
-  (group                       prometheus-tp-link-exporter-configuration-group                       ;string
-                               (default "prometheus-tp-link-exporter"))
-  (ssh                         prometheus-tp-link-exporter-configuration-ssh                         ;<package>
+  (user                        python-prometheus-ssh-exporter-configuration-user                        ;string
+                               (default "python-prometheus-ssh-exporter"))
+  (group                       python-prometheus-ssh-exporter-configuration-group                       ;string
+                               (default "python-prometheus-ssh-exporter"))
+  (ssh                         python-prometheus-ssh-exporter-configuration-ssh                         ;<package>
                                (default openssh))
-  (known-hosts                 prometheus-tp-link-exporter-configuration-known-hosts                 ;list of strings
-                               (default '())))
+  (known-hosts                 python-prometheus-ssh-exporter-configuration-known-hosts                 ;list of strings
+                               (default '()))
+  (config-file                 python-prometheus-ssh-exporter-configuration-config-file                 ;<file-like>
+                               (default #f)))
 
-(define (prometheus-tp-link-exporter-account configuration)
+(define (python-prometheus-ssh-exporter-account configuration)
   ;; Return the user accounts and user groups for CONFIG.
-  (let ((prometheus-tp-link-exporter-user
-         (prometheus-tp-link-exporter-configuration-user configuration))
-        (prometheus-tp-link-exporter-group
-         (prometheus-tp-link-exporter-configuration-group configuration)))
+  (let ((python-prometheus-ssh-exporter-user
+         (python-prometheus-ssh-exporter-configuration-user configuration))
+        (python-prometheus-ssh-exporter-group
+         (python-prometheus-ssh-exporter-configuration-group configuration)))
     (list (user-group
-           (name prometheus-tp-link-exporter-user)
+           (name python-prometheus-ssh-exporter-user)
            (system? #t))
           (user-account
-           (name prometheus-tp-link-exporter-user)
-           (group prometheus-tp-link-exporter-group)
+           (name python-prometheus-ssh-exporter-user)
+           (group python-prometheus-ssh-exporter-group)
            (system? #t)
-           (comment "prometheus-tp-link-exporter privilege separation user")
+           (comment "python-prometheus-ssh-exporter privilege separation user")
            (home-directory
-            (string-append "/var/run/" prometheus-tp-link-exporter-user))))))
+            (string-append "/var/lib/" python-prometheus-ssh-exporter-user))))))
 
-(define (prometheus-tp-link-exporter-activation config)
+(define (python-prometheus-ssh-exporter-activation config)
   "Return the activation GEXP for CONFIG."
   (with-imported-modules '((guix build utils))
     #~(begin
         (use-modules (guix build utils))
         (let* ((user
-                (getpw #$(prometheus-tp-link-exporter-configuration-user config)))
+                (getpw #$(python-prometheus-ssh-exporter-configuration-user config)))
                (group
-                (getpw #$(prometheus-tp-link-exporter-configuration-group config)))
+                (getpw #$(python-prometheus-ssh-exporter-configuration-group config)))
                (ssh-directory (string-append (passwd:dir user) "/.ssh"))
                (ssh-config (string-append ssh-directory "/config"))
                (ssh-known-hosts (string-append ssh-directory "/known_hosts")))
@@ -763,7 +763,7 @@
           (symlink #$(mixed-text-file
                       "config"
                       "\
-Host " (prometheus-tp-link-exporter-configuration-host config) "
+Host " (python-prometheus-ssh-exporter-configuration-host config) "
 KexAlgorithms +diffie-hellman-group1-sha1
 HostKeyAlgorithms +ssh-rsa
 PubkeyAcceptedKeyTypes +ssh-rsa
@@ -771,50 +771,47 @@ User admin")
                    ssh-config)
           (symlink #$(plain-file
                       "known_hosts"
-                      (string-join (prometheus-tp-link-exporter-configuration-known-hosts config)
+                      (string-join (python-prometheus-ssh-exporter-configuration-known-hosts config)
                                    "\n"))
                    ssh-known-hosts)))))
 
-(define (prometheus-tp-link-exporter-shepherd-service config)
+(define (python-prometheus-ssh-exporter-shepherd-service config)
   (list
    (shepherd-service
-    (provision '(prometheus-tp-link-exporter))
-    (documentation "Run prometheus-tp-link-exporter.")
+    (provision '(python-prometheus-ssh-exporter))
+    (documentation "Run python-prometheus-ssh-exporter.")
     (requirement '())
     (start #~(make-forkexec-constructor
-              (list (string-append #$(prometheus-tp-link-exporter-configuration-prometheus-tp-link-exporter config)
-                                   "/bin/prometheus-tp-link-exporter"))
-              #:user #$(prometheus-tp-link-exporter-configuration-user config)
-              #:group #$(prometheus-tp-link-exporter-configuration-group config)
-              #:log-file "/var/log/prometheus-tp-link-exporter.log"
+              (list (string-append #$(python-prometheus-ssh-exporter-configuration-python-prometheus-ssh-exporter config)
+                                   "/bin/ssh-exporter")
+                    "--config" #$(python-prometheus-ssh-exporter-configuration-config-file config))
+              #:user #$(python-prometheus-ssh-exporter-configuration-user config)
+              #:group #$(python-prometheus-ssh-exporter-configuration-group config)
+              #:log-file "/var/log/python-prometheus-ssh-exporter.log"
               #:environment-variables
-              (append '#$(prometheus-tp-link-exporter-configuration-environment-variables config)
+              (append '#$(python-prometheus-ssh-exporter-configuration-environment-variables config)
                       (remove (lambda (str)
                                 (string-prefix? "PATH=" str))
                               (environ))
                       (list (string-append "PATH="
-                                           (string-append #$(prometheus-tp-link-exporter-configuration-ssh config) "/bin")
-                                           ":" #$(file-append sshpass "/bin"))
-                            (string-append "PROMETHEUS_TP_LINK_EXPORTER_HOST="
-                                           #$(prometheus-tp-link-exporter-configuration-host config))
-                            (string-append "PROMETHEUS_TP_LINK_EXPORTER_LISTEN_ADDRESS="
-                                           #$(prometheus-tp-link-exporter-configuration-listen-address config))))))
+                                           (string-append #$(python-prometheus-ssh-exporter-configuration-ssh config) "/bin")
+                                           ":" #$(file-append sshpass "/bin"))))))
     (respawn? #f)
     (stop #~(make-kill-destructor)))))
 
-(define prometheus-tp-link-exporter-service-type
+(define python-prometheus-ssh-exporter-service-type
   (service-type
-   (name 'prometheus-tp-link-exporter)
+   (name 'python-prometheus-ssh-exporter)
    (extensions
     (list (service-extension shepherd-root-service-type
-                             prometheus-tp-link-exporter-shepherd-service)
+                             python-prometheus-ssh-exporter-shepherd-service)
           (service-extension account-service-type
-                             prometheus-tp-link-exporter-account)
+                             python-prometheus-ssh-exporter-account)
           (service-extension activation-service-type
-                             prometheus-tp-link-exporter-activation)))
-   (default-value (prometheus-tp-link-exporter-configuration))
+                             python-prometheus-ssh-exporter-activation)))
+   (default-value (python-prometheus-ssh-exporter-configuration))
    (description
-    "Run the prometheus-tp-link-exporter.")))
+    "Run the python-prometheus-ssh-exporter.")))
 
 
 ;;;

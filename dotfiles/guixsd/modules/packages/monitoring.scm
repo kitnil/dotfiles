@@ -9,6 +9,7 @@
   #:use-module (gnu packages compression)
   #:use-module (gnu packages elf)
   #:use-module (gnu packages monitoring)
+  #:use-module (gnu packages python-xyz)
   #:use-module (guix build-system python)
   #:use-module ((guix licenses) #:prefix license:))
 
@@ -243,28 +244,28 @@ Prometheus.")
 Prometheus.")
     (license license:expat)))
 
-(define-public prometheus-tp-link-exporter
+(define-public python-prometheus-ssh-exporter
   (package
-    (name "prometheus-tp-link-exporter")
-    (version "1.1.2")
+    (name "python-prometheus-ssh-exporter")
+    (version "2.0.0")
     (source (origin
               (method git-fetch)
               (uri (git-reference
-                    (url "https://gitlab.com/wigust/prometheus-tp-link-exporter")
+                    (url "https://gitlab.com/wigust/python-prometheus-ssh-exporter")
                     (commit (string-append "v" version))))
               (file-name (git-file-name name version))
               (sha256
                (base32
-                "0bb0kmk5yfzjr49pcdi7bsxj3zv53xkm4ghcwafswkn5ac8lwkbj"))))
+                "0nb17dr1v02ckjik3pacbql8dfrpj2b2l8k4rcbccyh1j8b9hpmi"))))
     (build-system python-build-system)
     (arguments
      '(#:tests? #f)) ; no tests
     (propagated-inputs
-     (list jc python-prometheus-client))
-    (home-page "https://gitlab.com/wigust/prometheus-tp-link-exporter")
-    (synopsis "Prometheus TP-Link Exporter")
+     (list jc python-prometheus-client python-pyyaml))
+    (home-page "https://gitlab.com/wigust/python-prometheus-ssh-exporter")
+    (synopsis "Prometheus SSH Exporter")
     (description
-     "This package provides Prometheus TP-Link Exporter.")
+     "This package provides Prometheus SSH Exporter.")
     (license license:gpl3+)))
 
 (define-public grafana
