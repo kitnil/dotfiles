@@ -21,6 +21,7 @@
   #:use-module (gnu packages linux)
   #:use-module (gnu packages ssh)
   #:use-module (gnu services)
+  #:use-module (gnu services admin)
   #:use-module (gnu services base)
   #:use-module (gnu services shepherd)
   #:use-module (gnu system shadow)
@@ -118,6 +119,12 @@
                  (passwd:uid user)
                  (group:gid group))))))
 
+(define %prometheus-log "/var/log/prometheus.log")
+
+(define %prometheus-log-rotations
+  (list (log-rotation
+         (files (list %prometheus-log)))))
+
 (define prometheus-shepherd-service
   (match-lambda
     (($ <prometheus-configuration> user group prometheus listen-address config-file data-path arguments)
@@ -134,7 +141,7 @@
                        #$@arguments)
                  #:user #$user
                  #:group #$group
-                 #:log-file "/var/log/prometheus.log"
+                 #:log-file #$%prometheus-log
                  #:environment-variables
                  '("SSL_CERT_DIR=/run/current-system/profile/etc/ssl/certs"
                    "SSL_CERT_FILE=/run/current-system/profile/etc/ssl/certs/ca-certificates.crt")))
@@ -150,7 +157,9 @@
           (service-extension account-service-type
                              prometheus-account)
           (service-extension activation-service-type
-                             prometheus-activation)))
+                             prometheus-activation)
+          (service-extension rottlog-service-type
+                             (const %prometheus-log-rotations))))
    (default-value (prometheus-configuration))
    (description
     "Run the prometheus.")))
@@ -211,6 +220,12 @@
                  (passwd:uid user)
                  (group:gid group))))))
 
+(define %prometheus-alertmanager-log "/var/log/prometheus-alertmanager.log")
+
+(define %prometheus-alertmanager-log-rotations
+  (list (log-rotation
+         (files (list %prometheus-alertmanager-log)))))
+
 (define prometheus-alertmanager-shepherd-service
   (match-lambda
     (($ <prometheus-alertmanager-configuration>
@@ -228,7 +243,7 @@
                        #$@arguments)
                  #:user #$user
                  #:group #$group
-                 #:log-file "/var/log/prometheus-alertmanager.log"
+                 #:log-file #$%prometheus-alertmanager-log
                  #:environment-variables
                  '("SSL_CERT_DIR=/run/current-system/profile/etc/ssl/certs"
                    "SSL_CERT_FILE=/run/current-system/profile/etc/ssl/certs/ca-certificates.crt")))
@@ -244,7 +259,9 @@
           (service-extension account-service-type
                              prometheus-alertmanager-account)
           (service-extension activation-service-type
-                             prometheus-alertmanager-activation)))
+                             prometheus-alertmanager-activation)
+          (service-extension rottlog-service-type
+                             (const %prometheus-alertmanager-log-rotations))))
    (default-value (prometheus-alertmanager-configuration))
    (description
     "Run the Prometheus Alertmanager.")))
@@ -303,6 +320,12 @@
                  (passwd:uid user)
                  (group:gid group))))))
 
+(define %prometheus-pushgateway-log "/var/log/prometheus-pushgateway.log")
+
+(define %prometheus-pushgateway-log-rotations
+  (list (log-rotation
+         (files (list %prometheus-pushgateway-log)))))
+
 (define prometheus-pushgateway-shepherd-service
   (match-lambda
     (($ <prometheus-pushgateway-configuration>
@@ -318,7 +341,7 @@
                        (string-append "--persistence.file=" #$data-path "/metrics"))
                  #:user #$user
                  #:group #$group
-                 #:log-file "/var/log/prometheus-pushgateway.log"
+                 #:log-file #$%prometheus-pushgateway-log
                  #:environment-variables
                  '("SSL_CERT_DIR=/run/current-system/profile/etc/ssl/certs"
                    "SSL_CERT_FILE=/run/current-system/profile/etc/ssl/certs/ca-certificates.crt")))
@@ -334,7 +357,9 @@
           (service-extension account-service-type
                              prometheus-pushgateway-account)
           (service-extension activation-service-type
-                             prometheus-pushgateway-activation)))
+                             prometheus-pushgateway-activation)
+          (service-extension rottlog-service-type
+                             (const %prometheus-pushgateway-log-rotations))))
    (default-value (prometheus-pushgateway-configuration))
    (description
     "Run the Prometheus Pushgateway.")))
@@ -376,6 +401,12 @@
             (string-append "/var/run/" prometheus-dnsmasq-user))
            (shell #~(string-append #$shadow "/sbin/nologin"))))))
 
+(define %prometheus-dnsmasq-log "/var/log/prometheus-dnsmasq.log")
+
+(define %prometheus-dnsmasq-log-rotations
+  (list (log-rotation
+         (files (list %prometheus-dnsmasq-log)))))
+
 (define prometheus-dnsmasq-shepherd-service
   (match-lambda
     (($ <prometheus-dnsmasq-configuration>
@@ -391,7 +422,7 @@
                        (string-append "-leases_path=" #$leases-path))
                  #:user #$user
                  #:group #$group
-                 #:log-file "/var/log/prometheus-dnsmasq.log"))
+                 #:log-file #$%prometheus-dnsmasq-log))
        (respawn? #f)
        (stop #~(make-kill-destructor)))))))
 
@@ -402,7 +433,9 @@
     (list (service-extension shepherd-root-service-type
                              prometheus-dnsmasq-shepherd-service)
           (service-extension account-service-type
-                             prometheus-dnsmasq-account)))
+                             prometheus-dnsmasq-account)
+          (service-extension rottlog-service-type
+                             (const %prometheus-dnsmasq-log-rotations))))
    (default-value (prometheus-dnsmasq-configuration))
    (description
     "Run the Prometheus Dnsmasq.")))
@@ -441,6 +474,12 @@
            (home-directory (string-append "/var/run/" karma-user))
            (shell #~(string-append #$shadow "/sbin/nologin"))))))
 
+(define %karma-log "/var/log/karma.log")
+
+(define %karma-log-rotations
+  (list (log-rotation
+         (files (list %karma-log)))))
+
 (define (karma-shepherd-service config)
   (list
    (shepherd-service
@@ -454,7 +493,7 @@
                     #$@(karma-configuration-arguments config))
               #:user #$(karma-configuration-user config)
               #:group #$(karma-configuration-group config)
-              #:log-file "/var/log/karma.log"))
+              #:log-file #$%karma-log))
     (respawn? #f)
     (stop #~(make-kill-destructor)))))
 
@@ -465,7 +504,9 @@
     (list (service-extension shepherd-root-service-type
                              karma-shepherd-service)
           (service-extension account-service-type
-                             karma-account)))
+                             karma-account)
+          (service-extension rottlog-service-type
+                             (const %karma-log-rotations))))
    (default-value (karma-configuration))
    (description
     "Run the karma.")))
@@ -526,6 +567,12 @@
             (string-append "/var/run/" prometheus-blackbox-exporter-user))
            (shell #~(string-append #$shadow "/sbin/nologin"))))))
 
+(define %prometheus-blackbox-exporter-log "/var/log/prometheus-blackbox-exporter.log")
+
+(define %prometheus-blackbox-exporter-log-rotations
+  (list (log-rotation
+         (files (list %prometheus-blackbox-exporter-log)))))
+
 (define (prometheus-blackbox-exporter-shepherd-service config)
   (list
    (shepherd-service
@@ -548,7 +595,7 @@
                 ,#$@(prometheus-blackbox-exporter-configuration-arguments config))
               #:user #$(prometheus-blackbox-exporter-configuration-user config)
               #:group #$(prometheus-blackbox-exporter-configuration-group config)
-              #:log-file "/var/log/prometheus-blackbox-exporter.log"
+              #:log-file #$%prometheus-blackbox-exporter-log
               #:environment-variables
               (append (list (string-append "PATH="
                                            "/run/setuid-programs"
@@ -573,7 +620,9 @@
           (service-extension account-service-type
                              prometheus-blackbox-exporter-account)
           (service-extension activation-service-type
-                             prometheus-blackbox-exporter-activation)))
+                             prometheus-blackbox-exporter-activation)
+          (service-extension rottlog-service-type
+                             (const %prometheus-blackbox-exporter-log-rotations))))
    (default-value (prometheus-blackbox-exporter-configuration))
    (description
     "Run the prometheus-blackbox-exporter.")))
@@ -591,6 +640,12 @@
   (arguments                prometheus-bird-exporter-configuration-arguments                 ;list of strings
                             (default '())))
 
+(define %prometheus-bird-exporter-log "/var/log/prometheus-bird-exporter.log")
+
+(define %prometheus-bird-exporter-log-rotations
+  (list (log-rotation
+         (files (list %prometheus-bird-exporter-log)))))
+
 (define (prometheus-bird-exporter-shepherd-service config)
   (list
    (shepherd-service
@@ -601,7 +656,7 @@
               `(,(string-append #$(prometheus-bird-exporter-configuration-prometheus-bird-exporter config)
                                 "/bin/bird_exporter")
                 ,#$@(prometheus-bird-exporter-configuration-arguments config))
-              #:log-file "/var/log/prometheus-bird-exporter.log"))
+              #:log-file #$%prometheus-bird-exporter-log))
     (respawn? #f)
     (stop #~(make-kill-destructor)))))
 
@@ -610,7 +665,9 @@
    (name 'prometheus-bird-exporter)
    (extensions
     (list (service-extension shepherd-root-service-type
-                             prometheus-bird-exporter-shepherd-service)))
+                             prometheus-bird-exporter-shepherd-service)
+          (service-extension rottlog-service-type
+                             (const %prometheus-bird-exporter-log-rotations))))
    (default-value (prometheus-bird-exporter-configuration))
    (description
     "Run the prometheus-bird-exporter.")))
@@ -630,6 +687,12 @@
   (arguments                    prometheus-smartctl-exporter-configuration-arguments                     ;list of strings
                                 (default '())))
 
+(define %prometheus-smartctl-exporter-log "/var/log/prometheus-smartctl-exporter.log")
+
+(define %prometheus-smartctl-exporter-log-rotations
+  (list (log-rotation
+         (files (list %prometheus-smartctl-exporter-log)))))
+
 (define (prometheus-smartctl-exporter-shepherd-service config)
   (list
    (shepherd-service
@@ -641,7 +704,7 @@
                                 "/bin/smartctl_exporter")
                 "-config" #$(prometheus-smartctl-exporter-configuration-config-file config)
                 ,#$@(prometheus-smartctl-exporter-configuration-arguments config))
-              #:log-file "/var/log/prometheus-smartctl-exporter.log"))
+              #:log-file #$%prometheus-smartctl-exporter-log))
     (respawn? #f)
     (stop #~(make-kill-destructor)))))
 
@@ -650,7 +713,9 @@
    (name 'prometheus-smartctl-exporter)
    (extensions
     (list (service-extension shepherd-root-service-type
-                             prometheus-smartctl-exporter-shepherd-service)))
+                             prometheus-smartctl-exporter-shepherd-service)
+          (service-extension rottlog-service-type
+                             (const %prometheus-smartctl-exporter-log-rotations))))
    (default-value (prometheus-smartctl-exporter-configuration))
    (description
     "Run the prometheus-smartctl-exporter.")))
@@ -668,6 +733,12 @@
   (arguments                prometheus-exim-exporter-configuration-arguments                 ;list of strings
                             (default '())))
 
+(define %prometheus-exim-exporter-log "/var/log/prometheus-exim-exporter.log")
+
+(define %prometheus-exim-exporter-log-rotations
+  (list (log-rotation
+         (files (list %prometheus-exim-exporter-log)))))
+
 (define (prometheus-exim-exporter-shepherd-service config)
   (list
    (shepherd-service
@@ -678,7 +749,7 @@
               `(,(string-append #$(prometheus-exim-exporter-configuration-prometheus-exim-exporter config)
                                 "/bin/exim_exporter")
                 ,#$@(prometheus-exim-exporter-configuration-arguments config))
-              #:log-file "/var/log/prometheus-exim-exporter.log"
+              #:log-file #$%prometheus-exim-exporter-log
               #:environment-variables
               (append (list "PATH=/run/current-system/profile/bin") ;for exim binary.
                       (remove (lambda (str)
@@ -692,7 +763,9 @@
    (name 'prometheus-exim-exporter)
    (extensions
     (list (service-extension shepherd-root-service-type
-                             prometheus-exim-exporter-shepherd-service)))
+                             prometheus-exim-exporter-shepherd-service)
+          (service-extension rottlog-service-type
+                             (const %prometheus-exim-exporter-log-rotations))))
    (default-value (prometheus-exim-exporter-configuration))
    (description
     "Run the prometheus-exim-exporter.")))
@@ -775,6 +848,12 @@ User admin")
                                    "\n"))
                    ssh-known-hosts)))))
 
+(define %python-prometheus-ssh-exporter-log "/var/log/python-prometheus-ssh-exporter.log")
+
+(define %python-prometheus-ssh-exporter-log-rotations
+  (list (log-rotation
+         (files (list %python-prometheus-ssh-exporter-log)))))
+
 (define (python-prometheus-ssh-exporter-shepherd-service config)
   (list
    (shepherd-service
@@ -787,7 +866,7 @@ User admin")
                     "--config" #$(python-prometheus-ssh-exporter-configuration-config-file config))
               #:user #$(python-prometheus-ssh-exporter-configuration-user config)
               #:group #$(python-prometheus-ssh-exporter-configuration-group config)
-              #:log-file "/var/log/python-prometheus-ssh-exporter.log"
+              #:log-file #$%python-prometheus-ssh-exporter-log
               #:environment-variables
               (append '#$(python-prometheus-ssh-exporter-configuration-environment-variables config)
                       (remove (lambda (str)
@@ -808,7 +887,9 @@ User admin")
           (service-extension account-service-type
                              python-prometheus-ssh-exporter-account)
           (service-extension activation-service-type
-                             python-prometheus-ssh-exporter-activation)))
+                             python-prometheus-ssh-exporter-activation)
+          (service-extension rottlog-service-type
+                             (const %python-prometheus-ssh-exporter-log-rotations))))
    (default-value (python-prometheus-ssh-exporter-configuration))
    (description
     "Run the python-prometheus-ssh-exporter.")))
@@ -863,6 +944,12 @@ User admin")
                                   "/public")
                    public)))))
 
+(define %grafana-log "/var/log/grafana.log")
+
+(define %grafana-log-rotations
+  (list (log-rotation
+         (files (list %grafana-log)))))
+
 (define (grafana-shepherd-service config)
   (list
    (shepherd-service
@@ -875,7 +962,7 @@ User admin")
               #:directory "/var/lib/grafana"
               #:user #$(grafana-configuration-user config)
               #:group #$(grafana-configuration-group config)
-              #:log-file "/var/log/grafana.log"))
+              #:log-file #$%grafana-log))
     (respawn? #f)
     (stop #~(make-kill-destructor)))))
 
@@ -888,7 +975,9 @@ User admin")
           (service-extension account-service-type
                              grafana-account)
           (service-extension activation-service-type
-                             grafana-activation)))
+                             grafana-activation)
+          (service-extension rottlog-service-type
+                             (const %grafana-log-rotations))))
    (default-value (grafana-configuration))
    (description
     "Run the grafana.")))
