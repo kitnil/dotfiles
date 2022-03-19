@@ -2,8 +2,11 @@
              (gnu services shepherd)
              (gnu services)
              (guix channels)
+             (guix download)
              (guix gexp)
              (guix modules)
+             (guix packages)
+             (guix store)
              (guix inferior)
              (ice-9 format)
              (ice-9 rdelim)
@@ -519,6 +522,20 @@ location / {
                                     "-j" "ACCEPT")))))))
           (respawn? #f)))))
 
+(define tftp-root
+  #~(begin
+      (mkdir #$output)
+      (symlink (string-append #$(let ((version "2.0.56"))
+                                  (origin
+                                    (method url-fetch)
+                                    (uri (string-append
+                                          "https://github.com/netbootxyz/netboot.xyz/releases/download/"
+                                          version "/netboot.xyz.efi"))
+                                    (sha256
+                                     (base32
+                                      "1p6xs5fbyy40h89azqrq4mz7azydpkxisjiivhcz7aaqln5badc7")))))
+               (string-append #$output "/netboot.xyz.efi"))))
+
 (define %dnsmasq-service
   (simple-service
    'dnsmasq-configuration shepherd-root-service-type
@@ -536,8 +553,10 @@ location / {
                           "--dhcp-host=52:54:00:7a:62:8d,192.168.154.130" ;nginx99
                           "--bind-interfaces"
                           "--interface=br154.154"
-                          "--dhcp-boot=netboot.xyz.kpxe"
-                          "--tftp-root=/srv/tftp"
+                          "--dhcp-boot=netboot.xyz.efi"
+                          (string-append "--tftp-root="
+                                         #$(run-with-store (open-connection)
+                                             (gexp->derivation "tftp-root" tftp-root)))
                           "--enable-tftp"
                           "--server=192.168.0.144"
                           "--no-resolv")))
