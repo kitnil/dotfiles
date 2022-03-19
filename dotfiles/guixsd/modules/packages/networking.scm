@@ -6,6 +6,7 @@
   #:use-module (guix gexp)
   #:use-module (guix git-download)
   #:use-module (guix download)
+  #:use-module (guix build-system copy)
   #:use-module (guix build-system python)
   #:use-module (guix build-system trivial)
   #:use-module ((guix licenses) #:prefix license:)
@@ -122,3 +123,29 @@ The tool enables you to:
 
 It's like curl for messaging systems.")
     (license license:expat)))
+
+(define-public netboot-xyz-efi
+  (package
+    (name "netboot-xyz-efi")
+    (version "2.0.56")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append
+             "https://github.com/netbootxyz/netboot.xyz/releases/download/"
+             version "/netboot.xyz.efi"))
+       (sha256
+        (base32
+         "1p6xs5fbyy40h89azqrq4mz7azydpkxisjiivhcz7aaqln5badc7"))))
+    (build-system copy-build-system)
+    (arguments
+     `(#:install-plan
+       `((,(assoc-ref %build-inputs "source")
+          "/share/netboot-xyz/netboot-xyz.efi"))
+       #:phases (modify-phases %standard-phases (delete 'unpack))))
+    (home-page "https://netboot.xyz/")
+    (synopsis
+     "Network-based bootable operating system installer based on iPXE")
+    (description "This package provides a network-based bootable operating
+system installer based on iPXE.")
+    (license license:asl2.0)))
