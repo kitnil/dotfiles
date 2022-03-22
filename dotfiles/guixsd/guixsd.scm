@@ -28,6 +28,7 @@
              (packages certs)
              (services autofs)
              (services backup)
+             (services bird)
              (services bittorrent)
              (services docker)
              (services virtualization)
@@ -1474,6 +1475,10 @@ PasswordAuthentication yes")))
                          (service tor-service-type
                                   (tor-configuration
                                    (config-file (local-file "torrc"))))
+
+                         (service bird-service-type
+                                  (bird-configuration
+                                   (config-file (local-file "bird-wugi.info.conf"))))
 
                          (service ddclient-service-type)
 
