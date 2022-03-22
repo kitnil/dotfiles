@@ -137,9 +137,9 @@ vm1.wugi.info:
 
 .PHONY: add
 add:
-	chezmoi add --encrypt $(HOME)/.ssh/known_hosts
-	chezmoi add --encrypt $(HOME)/.ssh/authorized_keys
-	chezmoi add $(HOME)/.emacs
+	gpg --yes --output private_dot_ssh/encrypted_private_known_hosts --encrypt $(HOME)/.ssh/known_hosts
+	gpg --yes --output private_dot_ssh/encrypted_private_authorized_keys --encrypt $(HOME)/.ssh/authorized_keys
+	cp $(HOME)/.emacs dot_emacs
 
 .PHONY: dotfiles/maintenance/gitlab/main.scm
 dotfiles/maintenance/gitlab/main.scm:
