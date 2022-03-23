@@ -1010,6 +1010,8 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                           `("tmuxifier-layouts/guix-machines.window.sh" ,(local-file "../../dot_tmuxifier-layouts/guix-machines.window.sh"))
                           `("tmuxifier-layouts/guix.session.sh" ,(local-file "../../dot_tmuxifier-layouts/guix.session.sh"))
                           `("tmuxifier-layouts/guix.window.sh" ,(local-file "../../dot_tmuxifier-layouts/guix.window.sh"))
+                          `("tmuxifier-layouts/elk.session.sh" ,(local-file "../../dot_tmuxifier-layouts/elk.session.sh"))
+                          `("tmuxifier-layouts/elk.window.sh" ,(local-file "../../dot_tmuxifier-layouts/elk.window.sh"))
                           ;; TODO: `("web.session.sh.tmpl" ,(local-file "../../dot_tmuxifier-layouts/web.session.sh.tmpl"))
                           ))
 
