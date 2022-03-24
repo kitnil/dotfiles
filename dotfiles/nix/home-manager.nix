@@ -196,6 +196,7 @@
     nixGLIntel
     nixfmt
     alejandra
+    nixpkgs-fmt
     node2nix
     onefetch
     pycharm-professional
