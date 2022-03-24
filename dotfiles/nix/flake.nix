@@ -68,6 +68,8 @@
     nixos.url = "nixpkgs/nixos-unstable";
     darwin.url = "github:LnL7/nix-darwin";
     bbuscarino-env.url = "github:wigust/env";
+
+    kamadorueda-alejandra.url = "github:kamadorueda/alejandra/1.1.0";
   };
 
   # nixConfig.allowUnfree = true;
@@ -90,6 +92,7 @@
             , majordomo-vault
             , nixpkgs-idea
             , bbuscarino-env
+            , kamadorueda-alejandra
             , ... }:
     let
       system = "x86_64-linux";
@@ -309,6 +312,7 @@
                   self.packages.${system} // {
                     inherit (deploy-rs.outputs.packages.${system}) deploy-rs;
                     inherit (majordomo-vault.inputs.nixpkgs.legacyPackages.${system}) vault-bin;
+                    alejandra = (kamadorueda-alejandra.packages.${system}).alejandra-x86_64-unknown-linux-gnu;
                   };
                 pkgs = import nixpkgs {
                   overlays = [ nur.overlay overlay ];
