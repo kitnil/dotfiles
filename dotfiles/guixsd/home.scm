@@ -1153,7 +1153,7 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                                                 `("config/espanso/user/juniper.yml" ,#$(local-file "../../dot_config/espanso/user/juniper.yml"))
                                                 `("config/espanso/user/mysql.yml" ,#$(local-file "../../dot_config/espanso/user/mysql.yml"))
                                                 `("config/espanso/user/nix.yml" ,#$(local-file "../../dot_config/espanso/user/nix.yml"))
-                                                ;; TODO: Add dot_config/espanso/user/mjru.yml.tmpl
+                                                `("config/espanso/user/mjru.yml" ,#$(local-file "../../dot_config/espanso/user/mjru.yml"))
                                                 )))))))
 
     (simple-service 'ssh-config
