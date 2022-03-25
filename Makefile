@@ -83,6 +83,10 @@ dotfiles/nix/nix.conf:
 dotfiles/guixsd/machines.scm:
 	sudo install -m644 dotfiles/guixsd/machines.scm /etc/guix
 
+.PHONY: dot_config/transmission/settings.json.gpg
+dot_config/transmission/settings.json.gpg:
+	gpg --decrypt dot_config/transmission/settings.json.gpg > $(HOME)/.config/transmission-daemon/settings.json
+
 .PHONY: install
 install: install-ssh dotfiles/guixsd/machines.scm dotfiles/nix/nix.conf
 	dot_local/bin/executable_gpg-unlock > /dev/null
