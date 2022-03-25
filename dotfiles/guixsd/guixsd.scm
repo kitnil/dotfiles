@@ -623,7 +623,7 @@ location / {
                                                                  "ssd")
                                                            ","))
                                      (type "btrfs")))
-                                 '("backup"))
+                                 '("backup" "lib"))
                             (map (lambda (subvolume)
                                    (file-system
                                      (device (file-system-label "btrfs1"))
