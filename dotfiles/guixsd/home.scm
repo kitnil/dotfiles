@@ -1075,10 +1075,6 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                     home-files-service-type
                     (list `("config/htop/htoprc" ,(local-file "../../dot_config/htop/htoprc"))))
 
-    (simple-service 'transmission-config
-                    home-files-service-type
-                    (list `("config/transmission/settings.json" ,(local-file "../../dot_config/transmission/settings.json"))))
-
     (simple-service 'kitty-config
                     home-files-service-type
                     (list `("config/kitty/kitty.conf" ,(local-file "../../dot_config/kitty/kitty.conf"))))
