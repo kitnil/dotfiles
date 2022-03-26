@@ -1011,7 +1011,8 @@ location / {
                                                           (job_name . "restic-rest"))
                                                          ((static_configs
                                                            .
-                                                           #(((targets . #("https://guix.wugi.info/"
+                                                           #(((targets . #("https://wugi.info/"
+                                                                           "https://guix.wugi.info/"
                                                                            "https://blog.wugi.info/")))))
                                                           (scrape_interval . "30s")
                                                           (metrics_path . "/probe")
