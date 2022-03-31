@@ -614,16 +614,13 @@ location / {
       ;;                                   (label "netboot.xyz")
       ;;                                   (linux netboot.xyz))))))
 
-      (file-systems (append (map (lambda (subvolume)
-                                   (file-system
-                                     (device (file-system-label "data18"))
-                                     (mount-point (string-append "/srv/" subvolume))
-                                     (options (string-join (list (string-append "subvol=" subvolume)
-                                                                 "compress=zstd:15"
-                                                                 "ssd")
-                                                           ","))
-                                     (type "btrfs")))
-                                 '("backup" "lib"))
+      (file-systems (append (list (file-system
+                                    (device (file-system-label "data18"))
+                                    (mount-point "/srv")
+                                    (options (string-join (list "compress=zstd:15"
+                                                                "nossd")
+                                                          ","))
+                                    (type "btrfs")))
                             (map (lambda (subvolume)
                                    (file-system
                                      (device (file-system-label "btrfs1"))
@@ -1204,22 +1201,22 @@ location / {
                                                       ("ssh_private_key_file" . ,ssh-key)
                                                       ("port" . 2222))))))))))))))
 
-                         ;; (service yggdrasil-service-type
-                         ;;          (yggdrasil-configuration
-                         ;;           (autoconf? #f)
-                         ;;           (json-config
-                         ;;            '(("NodeInfo" . null)
-                         ;;              ("NodeInfoPrivacy" . #f)
-                         ;;              ("IfMTU" . 65535)
-                         ;;              ("IfName" . "auto")
-                         ;;              ("AllowedPublicKeys" . #())
-                         ;;              ("MulticastInterfaces" . #((("Port" . 0)
-                         ;;                                          ("Listen" . #t)
-                         ;;                                          ("Beacon" . #t)
-                         ;;                                          ("Regex" . ".*"))))
-                         ;;              ("AdminListen" . "unix:///var/run/yggdrasil.sock")
-                         ;;              ("Listen" . #())
-                         ;;              ("InterfacePeers" . null)))))
+                         (service yggdrasil-service-type
+                                  (yggdrasil-configuration
+                                   (autoconf? #f)
+                                   (json-config
+                                    '(("NodeInfo" . null)
+                                      ("NodeInfoPrivacy" . #f)
+                                      ("IfMTU" . 65535)
+                                      ("IfName" . "auto")
+                                      ("AllowedPublicKeys" . #())
+                                      ("MulticastInterfaces" . #((("Port" . 0)
+                                                                  ("Listen" . #t)
+                                                                  ("Beacon" . #t)
+                                                                  ("Regex" . ".*"))))
+                                      ("AdminListen" . "unix:///var/run/yggdrasil.sock")
+                                      ("Listen" . #())
+                                      ("InterfacePeers" . null)))))
 
                          (service grafana-service-type)
 
