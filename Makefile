@@ -87,6 +87,10 @@ dotfiles/guixsd/machines.scm:
 dot_config/transmission/settings.json.gpg:
 	gpg --decrypt dot_config/transmission/settings.json.gpg > $(HOME)/.config/transmission-daemon/settings.json
 
+.PHONY: dot_config/espanso/user/censor.yml.gpg
+dot_config/espanso/user/censor.yml.gpg:
+	gpg --decrypt dot_config/espanso/user/censor.yml.gpg > $(HOME)/.config/espanso/user/censor.yml
+
 .PHONY: install
 install: install-ssh dotfiles/guixsd/machines.scm dotfiles/nix/nix.conf
 	dot_local/bin/executable_gpg-unlock > /dev/null
