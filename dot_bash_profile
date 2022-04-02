@@ -153,3 +153,8 @@ export PERL_MB_OPT
 
 PERL_MM_OPT="INSTALL_BASE=/home/oleg/perl5"
 export PERL_MM_OPT
+
+if [ -n $TMUX ]
+then
+    . ~/.bashrc
+fi
