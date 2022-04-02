@@ -115,13 +115,13 @@
       };
       lib = pkgs.lib;
     in {
-      devShell.x86_64-linux = with pkgs; mkShell {
+      devShell.${system} = with pkgs; mkShell {
         buildInputs = [
           nixUnstable
-          deploy-rs.outputs.packages.x86_64-linux.deploy-rs
+          deploy-rs.outputs.packages.${system}.deploy-rs
         ];
       };
-      packages.x86_64-linux =
+      packages.${system} =
         let
           jenkins-plugins = (import ./plugins.nix { inherit (pkgs) fetchurl stdenv; });
         in {
