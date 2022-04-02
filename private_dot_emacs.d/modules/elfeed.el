@@ -12,7 +12,7 @@
         "https://twitchrss.appspot.com/vod/carolinhr"
         "https://opensource.com/feed"
         ("https://news.ycombinator.com/rss" news)
-        ;; ("http://government.ru/all/rss/" gov ru)
+        ("http://government.ru/all/rss/" gov ru)
         ("https://rublacklist.net/feed/" ru censor)
         ;; ("https://git.savannah.gnu.org/cgit/emacs.git/atom/?h=master" vc emacs)
         ;; ("https://git.savannah.gnu.org/cgit/guix.git/atom/?h=master" vc scheme guix)
