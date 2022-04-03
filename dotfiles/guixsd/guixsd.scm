@@ -1487,9 +1487,9 @@ PasswordAuthentication yes")))
                                                  (ssl-certificate (letsencrypt-certificate "cgit.duckdns.org"))
                                                  (ssl-certificate-key (letsencrypt-key "cgit.duckdns.org")))))))
 
-                         (service tor-service-type
-                                  (tor-configuration
-                                   (config-file (local-file "torrc"))))
+                         ;; (service tor-service-type
+                         ;;          (tor-configuration
+                         ;;           (config-file (local-file "torrc"))))
 
                          (service bird-service-type
                                   (bird-configuration
