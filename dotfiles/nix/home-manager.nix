@@ -22,7 +22,6 @@
     # cabal-install
     cached-nix-shell
     catimg
-    chromium
     ctop
     diskus
     dive
@@ -67,9 +66,7 @@
     tokei
     lua
     luarocks
-    mediatomb
     mycli
-    dbeaver # SQL client
     mypaint
     nix-bash-completions
     nix-generate-from-cpan
@@ -77,6 +74,8 @@
     nix-serve
     noti
     clang-tools # for clangd in lsp-mode
+
+    tribler
 
     rnix-lsp
     yaml-language-server
@@ -114,7 +113,6 @@
     # slack
     # slack-term
     # tdesktop
-    terraform-wrapper
     thc-hydra
     thunderbird
     tldr
