@@ -37,6 +37,8 @@
     # firefox
     adoptopenjdk-icedtea-web
 
+    viddy
+
     fzf
     goldendict
     # geckodriver
