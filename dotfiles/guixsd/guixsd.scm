@@ -352,43 +352,43 @@ location / {
 
        (display "Creating new Restic snapshot\n")
 
-       (unless (and (let ((%backup-directories (list %user-home "/etc" "/root" "/var/lib/grafana" "/var/lib/crowdsec" "/var/lib/opensearch"))
-                          (%exclude-directories
-                           (append '#$%root-directories
-                                   (map (lambda (directory)
-                                          (string-append %user-home "/" directory))
-                                        '#$%user-directories))))
-                      (setenv "RESTIC_PASSWORD"
-                              (string-trim-right
-                               (with-input-from-file "/etc/guix/secrets/restic"
-                                 read-string)))
+       (when (and (let ((%backup-directories (list %user-home "/etc" "/root" "/var/lib/grafana" "/var/lib/crowdsec" "/var/lib/opensearch"))
+                        (%exclude-directories
+                         (append '#$%root-directories
+                                 (map (lambda (directory)
+                                        (string-append %user-home "/" directory))
+                                      '#$%user-directories))))
+                    (setenv "RESTIC_PASSWORD"
+                            (string-trim-right
+                             (with-input-from-file "/etc/guix/secrets/restic"
+                               read-string)))
 
-                      (zero?
-                       (apply system*
-                              (append (list (string-append #$restic "/bin/restic")
-                                            "--repo" "/srv/backup/guixsd")
-                                      (fold (lambda (directory directories)
-                                              (append (list "--exclude" directory) directories))
-                                            '() %exclude-directories)
-                                      (list "backup")
-                                      %backup-directories))))
-                    (let ((%backup-directories (list "/mnt/windows/games/games/gothic/Saves"
-                                                     "/mnt/windows/games/games/gothic2/Saves")))
-                      (setenv "RESTIC_PASSWORD"
-                              (string-trim-right
-                               (with-input-from-file "/etc/guix/secrets/windows"
-                                 read-string)))
-                      (if (and (file-exists? "/mnt/windows/games/games/gothic/Saves")
-                               (file-exists? "/mnt/windows/games/games/gothic2/Saves"))
-                          (zero?
-                           (apply system*
-                                  (append (list (string-append #$restic "/bin/restic")
-                                                "--repo" "/srv/backup/windows")
-                                          (list "backup")
-                                          %backup-directories)))
-                          (begin
-                            (display "Not all directories exist, skipping creating a new backup.")
-                            #t))))
+                    (zero?
+                     (apply system*
+                            (append (list (string-append #$restic "/bin/restic")
+                                          "--repo" "/srv/backup/guixsd")
+                                    (fold (lambda (directory directories)
+                                            (append (list "--exclude" directory) directories))
+                                          '() %exclude-directories)
+                                    (list "backup")
+                                    %backup-directories))))
+                  (let ((%backup-directories (list "/mnt/windows/games/games/gothic/Saves"
+                                                   "/mnt/windows/games/games/gothic2/Saves")))
+                    (setenv "RESTIC_PASSWORD"
+                            (string-trim-right
+                             (with-input-from-file "/etc/guix/secrets/windows"
+                               read-string)))
+                    (if (and (file-exists? "/mnt/windows/games/games/gothic/Saves")
+                             (file-exists? "/mnt/windows/games/games/gothic2/Saves"))
+                        (zero?
+                         (apply system*
+                                (append (list (string-append #$restic "/bin/restic")
+                                              "--repo" "/srv/backup/windows")
+                                        (list "backup")
+                                        %backup-directories)))
+                        (begin
+                          (display "Not all directories exist, skipping creating a new backup.")
+                          #t))))
          (system* (string-append #$curl "/bin/curl")
                   "--max-time" "10"
                   "--retry" "5"
