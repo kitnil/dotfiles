@@ -16,7 +16,7 @@
 
 (use-package-modules admin audio android backup bash bittorrent curl dns firmware guile haskell-apps networking linux samba ssh suckless xdisorg xorg)
 
-(use-service-modules admin dbus desktop docker dns mcron networking nix sound
+(use-service-modules admin dbus desktop docker dns mcron networking nix nfs sound
                      xorg ssh web cgit version-control certbot
                      monitoring databases mail vpn virtualization linux sysctl)
 
@@ -1433,6 +1433,12 @@ PasswordAuthentication yes
 
 Match Address 192.168.0.144
 PasswordAuthentication yes")))
+
+                         (service nfs-service-type
+                                  (nfs-configuration
+                                   (exports
+                                    '(("/srv/games"
+                                       "192.168.0.0/24(rw,insecure,no_subtree_check,crossmnt,fsid=0)")))))
 
                          (service certbot-service-type
                                   (certbot-configuration
