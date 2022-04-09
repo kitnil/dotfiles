@@ -336,7 +336,7 @@
 
     (simple-service 'amtool-config
                     home-files-service-type
-                    (list `("config/amtool/config.yml"
+                    (list `(".config/amtool/config.yml"
                             ,(computed-file
                               "amtool-config.json"
                               (with-extensions (list guile-json-4)
@@ -356,7 +356,7 @@
     (simple-service 'chromium-wrapper
                     home-files-service-type
                     (map (lambda (program)
-                           `(,(string-append "local/bin/" program)
+                           `(,(string-append ".local/bin/" program)
                              ,(computed-file
                                program
                                #~(begin
@@ -374,9 +374,9 @@ exec -a \"$0\" /home/oleg/.nix-profile/bin/~a --disable-features=SendMouseLeaveE
     (simple-service 'bin-config
                     home-files-service-type
                     (append
-                     (list `("local/bin/xmenu.sh" ,xmenu))
+                     (list `(".local/bin/xmenu.sh" ,xmenu))
                      (map (lambda (program)
-                            `(,(string-append "local/bin/" program)
+                            `(,(string-append ".local/bin/" program)
                               ,(local-file (string-append "dot_local/bin/executable_" program)
                                            #:recursive? #t)))
                           '("alerta-close"
@@ -544,40 +544,40 @@ exec -a \"$0\" /home/oleg/.nix-profile/bin/~a --disable-features=SendMouseLeaveE
                             "youtube-dl-music-play-url"
                             "youtube-scm"
                             "yt"))
-                     (let ((configurations (list `("local/bin/juniper-configuration-vc-sr1-mr13-14.intr"
+                     (let ((configurations (list `(".local/bin/juniper-configuration-vc-sr1-mr13-14.intr"
                                                    ,juniper-configuration->vc-sr1-mr13-14.intr)
-                                                 `("local/bin/juniper-configuration-vc-sr1-dh507-508.intr"
+                                                 `(".local/bin/juniper-configuration-vc-sr1-dh507-508.intr"
                                                    ,juniper-configuration->vc-sr1-dh507-508.intr)
-                                                 `("local/bin/cisco-configuration-vc-sw1-dh507.intr"
+                                                 `(".local/bin/cisco-configuration-vc-sw1-dh507.intr"
                                                    ,cisco-configuration->vc-sw1-dh507.intr)
-                                                 `("local/bin/cisco-configuration-vc-sw2-dh507.intr"
+                                                 `(".local/bin/cisco-configuration-vc-sw2-dh507.intr"
                                                    ,cisco-configuration->vc-sw2-dh507.intr)
-                                                 `("local/bin/cisco-configuration-vc-sw1-dh508.intr"
+                                                 `(".local/bin/cisco-configuration-vc-sw1-dh508.intr"
                                                    ,cisco-configuration->vc-sw1-dh508.intr)
-                                                 `("local/bin/cisco-configuration-vc-sw2-dh508.intr"
+                                                 `(".local/bin/cisco-configuration-vc-sw2-dh508.intr"
                                                    ,cisco-configuration->vc-sw2-dh508.intr)
-                                                 `("local/bin/cisco-configuration-vc-sw1-mr11.intr"
+                                                 `(".local/bin/cisco-configuration-vc-sw1-mr11.intr"
                                                    ,cisco-configuration->vc-sw1-mr11.intr)
-                                                 `("local/bin/cisco-configuration-vc-sw1-mr12.intr"
+                                                 `(".local/bin/cisco-configuration-vc-sw1-mr12.intr"
                                                    ,cisco-configuration->vc-sw1-mr12.intr)
-                                                 `("local/bin/cisco-configuration-vc-sw2-mr12.intr"
+                                                 `(".local/bin/cisco-configuration-vc-sw2-mr12.intr"
                                                    ,cisco-configuration->vc-sw2-mr12.intr)
-                                                 `("local/bin/cisco-configuration-vc-sw3-mr13.intr"
+                                                 `(".local/bin/cisco-configuration-vc-sw3-mr13.intr"
                                                    ,cisco-configuration->vc-sw3-mr13.intr)
-                                                 `("local/bin/cisco-configuration-vc-sw1-mr14.intr"
+                                                 `(".local/bin/cisco-configuration-vc-sw1-mr14.intr"
                                                    ,cisco-configuration->vc-sw1-mr14.intr)
-                                                 `("local/bin/cisco-configuration-vc-sw2-mr14.intr"
+                                                 `(".local/bin/cisco-configuration-vc-sw2-mr14.intr"
                                                    ,cisco-configuration->vc-sw2-mr14.intr)
-                                                 `("local/bin/h3c-configuration-vc-sw4-mr14.intr"
+                                                 `(".local/bin/h3c-configuration-vc-sw4-mr14.intr"
                                                    ,h3c-configuration->vc-sw4-mr14.intr)
-                                                 `("local/bin/h3c-configuration-vc-sw4-mr13.intr"
+                                                 `(".local/bin/h3c-configuration-vc-sw4-mr13.intr"
                                                    ,h3c-configuration->vc-sw4-mr13.intr)
-                                                 `("local/bin/h3c-configuration-vc-sw4-mr12.intr"
+                                                 `(".local/bin/h3c-configuration-vc-sw4-mr12.intr"
                                                    ,h3c-configuration->vc-sw4-mr12.intr)
-                                                 `("local/bin/h3c-configuration-vc-sw4-mr11.intr"
+                                                 `(".local/bin/h3c-configuration-vc-sw4-mr11.intr"
                                                    ,h3c-configuration->vc-sw4-mr11.intr))))
                        (append
-                        (list `("local/bin/mjru-networking-configuration-vc"
+                        (list `(".local/bin/mjru-networking-configuration-vc"
                                 ,((@ (ice-9 match) match)
                                   configurations
                                   (((name programs) ...)
@@ -593,13 +593,13 @@ exec -a \"$0\" /home/oleg/.nix-profile/bin/~a --disable-features=SendMouseLeaveE
 
     (simple-service 'looking-glass-wrapper
                     home-files-service-type
-                    (list `("local/bin/looking-glass-client-wrapper"
+                    (list `(".local/bin/looking-glass-client-wrapper"
                             ,(local-file "../../dot_local/bin/executable_looking-glass-client-wrapper"
                                          #:recursive? #t))))
 
     (simple-service 'idea-ultimate-wrapper
                     home-files-service-type
-                    (list `("local/bin/idea-ultimate"
+                    (list `(".local/bin/idea-ultimate"
                             ,(computed-file
                               "idea-ultimate-wrapper"
                               #~(begin
@@ -613,7 +613,7 @@ PYTHONPATH='' exec -a \"$0\" ~a/bin/idea-ultimate \"$@\"\n"
 
     (simple-service 'shellcheck-wrapper
                     home-files-service-type
-                    (list `("local/bin/shellcheck"
+                    (list `(".local/bin/shellcheck"
                             ,(computed-file
                               "shellcheck-wrapper"
                               #~(begin
@@ -628,7 +628,7 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
     (simple-service 'stumpwm-config
                     home-files-service-type
                     (map (lambda (file-name)
-                           `(,(string-append "stumpwm.d/" file-name) ,(local-file (string-append "dot_stumpwm.d/" file-name))))
+                           `(,(string-append ".stumpwm.d/" file-name) ,(local-file (string-append "dot_stumpwm.d/" file-name))))
                          '("admin.lisp"
                            "android.lisp"
                            "audio.lisp"
@@ -683,46 +683,46 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
 
     (simple-service 'bash-config
                     home-files-service-type
-                    (append (list `("bash_completion" ,(local-file "../../dot_bash_completion"))
-                                  `("bash_guix" ,(local-file "../../dot_bash_guix"))
-                                  `("bash_vterm" ,(local-file "../../dot_bash_vterm"))
-                                  `("local/share/bash-completion/completions/lexicon" ,(local-file "../../dot_local/share/bash-completion/completions/lexicon"))
-                                  `("local/share/bash-completion/completions/herd" ,(local-file "../../dot_local/share/bash-completion/completions/herd"))
-                                  `("local/share/bash-completion/completions/mail" ,(local-file "../../dot_local/share/bash-completion/completions/mail"))
-                                  `("local/share/bash-completion/completions/connect" ,(local-file "../../dot_local/share/bash-completion/completions/connect")))
+                    (append (list `(".bash_completion" ,(local-file "../../dot_bash_completion"))
+                                  `(".bash_guix" ,(local-file "../../dot_bash_guix"))
+                                  `(".bash_vterm" ,(local-file "../../dot_bash_vterm"))
+                                  `(".local/share/bash-completion/completions/lexicon" ,(local-file "../../dot_local/share/bash-completion/completions/lexicon"))
+                                  `(".local/share/bash-completion/completions/herd" ,(local-file "../../dot_local/share/bash-completion/completions/herd"))
+                                  `(".local/share/bash-completion/completions/mail" ,(local-file "../../dot_local/share/bash-completion/completions/mail"))
+                                  `(".local/share/bash-completion/completions/connect" ,(local-file "../../dot_local/share/bash-completion/completions/connect")))
                             (map (lambda (file-name)
-                                   `(,(string-append "bash.d/" file-name) ,(local-file (string-append "dot_bash.d/" file-name))))
+                                   `(,(string-append ".bash.d/" file-name) ,(local-file (string-append "dot_bash.d/" file-name))))
                                  '("bash.scm"
                                    "mjru.bash"))))
 
     (simple-service 'applications
                     home-files-service-type
-                    (list `("local/share/applications/mupdf.desktop" ,(local-file "../../dot_local/share/applications/mupdf.desktop"))
-                          `("local/share/applications/gnus.desktop" ,(local-file "../../dot_local/share/applications/gnus.desktop"))
-                          `("local/share/applications/org-protocol.desktop" ,(local-file "../../dot_local/share/applications/org-protocol.desktop"))
-                          `("local/share/applications/mimeapps.list" ,(local-file "../../dot_local/share/applications/mimeapps.list"))
-                          `("local/share/applications/guix-log.desktop" ,(local-file "../../dot_local/share/applications/guix-log.desktop"))
-                          `("local/share/applications/feh.desktop" ,(local-file "../../dot_local/share/applications/feh.desktop"))))
+                    (list `(".local/share/applications/mupdf.desktop" ,(local-file "../../dot_local/share/applications/mupdf.desktop"))
+                          `(".local/share/applications/gnus.desktop" ,(local-file "../../dot_local/share/applications/gnus.desktop"))
+                          `(".local/share/applications/org-protocol.desktop" ,(local-file "../../dot_local/share/applications/org-protocol.desktop"))
+                          `(".local/share/applications/mimeapps.list" ,(local-file "../../dot_local/share/applications/mimeapps.list"))
+                          `(".local/share/applications/guix-log.desktop" ,(local-file "../../dot_local/share/applications/guix-log.desktop"))
+                          `(".local/share/applications/feh.desktop" ,(local-file "../../dot_local/share/applications/feh.desktop"))))
 
     (simple-service 'dig-config
                     home-files-service-type
-                    (list `("digrc" ,(local-file "../../dot_digrc"))))
+                    (list `(".digrc" ,(local-file "../../dot_digrc"))))
 
     (simple-service 'direnv-config
                     home-files-service-type
-                    (list `("direnvrc" ,(local-file "../../dot_direnvrc"))))
+                    (list `(".direnvrc" ,(local-file "../../dot_direnvrc"))))
 
     (simple-service 'gdb-config
                     home-files-service-type
-                    (list `("gdbinit" ,(local-file "../../dot_gdbinit"))))
+                    (list `(".gdbinit" ,(local-file "../../dot_gdbinit"))))
 
     (simple-service 'ghci-config
                     home-files-service-type
-                    (list `("ghci" ,(local-file "../../dot_ghci"))))
+                    (list `(".ghci" ,(local-file "../../dot_ghci"))))
 
     (simple-service 'gitconfig-config
                     home-files-service-type
-                    (list `("gitconfig" ,(local-file "../../dot_gitconfig"))))
+                    (list `(".gitconfig" ,(local-file "../../dot_gitconfig"))))
 
     (simple-service 'emacs-state
                     home-activation-service-type
@@ -747,9 +747,9 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
 
     (simple-service 'emacs-config
                     home-files-service-type
-                    (append (list `("gnus.el" ,(local-file "../../dot_gnus.el")))
+                    (append (list `(".gnus.el" ,(local-file "../../dot_gnus.el")))
                             (map (lambda (file-name)
-                                   `(,(string-append "emacs.d/" file-name) ,(local-file (string-append "private_dot_emacs.d/" file-name))))
+                                   `(,(string-append ".emacs.d/" file-name) ,(local-file (string-append "private_dot_emacs.d/" file-name))))
                                  '("abbrev_defs"
                                    "org-generate.org"
                                    "modules/audio.el"
@@ -926,7 +926,7 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                                    "snippets/message-mode/push"
                                    "snippets/message-mode/proprietary"))
                             (map (lambda (file-name)
-                                   `(,(string-append "emacs.d/" file-name) ,(local-file (string-append "private_dot_emacs.d/" file-name))))
+                                   `(,(string-append ".emacs.d/" file-name) ,(local-file (string-append "private_dot_emacs.d/" file-name))))
                                  '("insert/guix/gnu/services/service"
                                    "insert/guix/gnu/packages/package"
                                    "insert/guix/gnu/tests/test"
@@ -939,189 +939,189 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
 
     (simple-service 'groovy-config
                     home-files-service-type
-                    (list `("groovy/groovysh.rc" ,(local-file "../../dot_groovy/groovysh.rc"))))
+                    (list `(".groovy/groovysh.rc" ,(local-file "../../dot_groovy/groovysh.rc"))))
 
     (simple-service 'gnupg-config
                     home-files-service-type
                     (map (lambda (file-name)
-                           `(,(string-append "gnupg/" file-name) ,(local-file (string-append "private_dot_gnupg/" file-name))))
+                           `(,(string-append ".gnupg/" file-name) ,(local-file (string-append "private_dot_gnupg/" file-name))))
                          '("gpg-agent.conf"
                            "gpg.conf")))
 
     (simple-service 'bash-config
                     home-files-service-type
-                    (list `("bashrc" ,(local-file "../../dot_bashrc"))
-                          `("bash_profile" ,(local-file "../../dot_bash_profile"))))
+                    (list `(".bashrc" ,(local-file "../../dot_bashrc"))
+                          `(".bash_profile" ,(local-file "../../dot_bash_profile"))))
 
     (simple-service 'inputrc-config
                     home-files-service-type
-                    (list `("inputrc" ,(local-file "../../dot_inputrc"))))
+                    (list `(".inputrc" ,(local-file "../../dot_inputrc"))))
 
     (simple-service 'guile-config
                     home-files-service-type
-                    (list `("guile" ,(local-file "../../dot_guile"))))
+                    (list `(".guile" ,(local-file "../../dot_guile"))))
 
     (simple-service 'keynav-config
                     home-files-service-type
-                    (list `("keynavrc" ,(local-file "../../dot_keynavrc"))))
+                    (list `(".keynavrc" ,(local-file "../../dot_keynavrc"))))
 
     (simple-service 'kodi-config
                     home-files-service-type
-                    (list `("kodirc" ,(local-file "../../dot_kodirc"))))
+                    (list `(".kodirc" ,(local-file "../../dot_kodirc"))))
 
     (simple-service 'mailcap-config
                     home-files-service-type
-                    (list `("mailcap" ,(local-file "../../dot_mailcap"))))
+                    (list `(".mailcap" ,(local-file "../../dot_mailcap"))))
 
     (simple-service 'mongo-config
                     home-files-service-type
-                    (list `("mongorc.js" ,(local-file "../../dot_mongorc.js"))))
+                    (list `(".mongorc.js" ,(local-file "../../dot_mongorc.js"))))
 
     (simple-service 'mycli-config
                     home-files-service-type
-                    (list `("myclirc" ,(local-file "../../dot_myclirc"))))
+                    (list `(".myclirc" ,(local-file "../../dot_myclirc"))))
 
     (simple-service 'nano-config
                     home-files-service-type
-                    (list `("nanorc" ,(local-file "../../dot_nanorc"))))
+                    (list `(".nanorc" ,(local-file "../../dot_nanorc"))))
 
     (simple-service 'python-config
                     home-files-service-type
-                    (list `("pythonrc" ,(local-file "../../dot_pythonrc"))))
+                    (list `(".pythonrc" ,(local-file "../../dot_pythonrc"))))
 
     (simple-service 'sbcl-config
                     home-files-service-type
-                    (list `("sbcl_completions" ,(local-file "../../dot_sbcl_completions"))))
+                    (list `(".sbcl_completions" ,(local-file "../../dot_sbcl_completions"))))
 
     (simple-service 'screen-config
                     home-files-service-type
-                    (list `("screenrc" ,(local-file "../../dot_screenrc"))))
+                    (list `(".screenrc" ,(local-file "../../dot_screenrc"))))
 
     (simple-service 'tmux-config
                     home-files-service-type
-                    (list `("tmux.conf" ,(local-file "../../dot_tmux.conf"))))
+                    (list `(".tmux.conf" ,(local-file "../../dot_tmux.conf"))))
 
     (simple-service 'tmuxifier-config
                     home-files-service-type
-                    (list `("tmuxifier-layouts/backup.session.sh" ,(local-file "../../dot_tmuxifier-layouts/backup.session.sh"))
-                          `("tmuxifier-layouts/backup.window.sh" ,(local-file "../../dot_tmuxifier-layouts/backup.window.sh"))
-                          `("tmuxifier-layouts/blog.session.sh" ,(local-file "../../dot_tmuxifier-layouts/blog.session.sh"))
-                          `("tmuxifier-layouts/blog.window.sh" ,(local-file "../../dot_tmuxifier-layouts/blog.window.sh"))
-                          `("tmuxifier-layouts/guix-machines.window.sh" ,(local-file "../../dot_tmuxifier-layouts/guix-machines.window.sh"))
-                          `("tmuxifier-layouts/guix.session.sh" ,(local-file "../../dot_tmuxifier-layouts/guix.session.sh"))
-                          `("tmuxifier-layouts/guix.window.sh" ,(local-file "../../dot_tmuxifier-layouts/guix.window.sh"))
-                          `("tmuxifier-layouts/elk.session.sh" ,(local-file "../../dot_tmuxifier-layouts/elk.session.sh"))
-                          `("tmuxifier-layouts/elk.window.sh" ,(local-file "../../dot_tmuxifier-layouts/elk.window.sh"))
+                    (list `(".tmuxifier-layouts/backup.session.sh" ,(local-file "../../dot_tmuxifier-layouts/backup.session.sh"))
+                          `(".tmuxifier-layouts/backup.window.sh" ,(local-file "../../dot_tmuxifier-layouts/backup.window.sh"))
+                          `(".tmuxifier-layouts/blog.session.sh" ,(local-file "../../dot_tmuxifier-layouts/blog.session.sh"))
+                          `(".tmuxifier-layouts/blog.window.sh" ,(local-file "../../dot_tmuxifier-layouts/blog.window.sh"))
+                          `(".tmuxifier-layouts/guix-machines.window.sh" ,(local-file "../../dot_tmuxifier-layouts/guix-machines.window.sh"))
+                          `(".tmuxifier-layouts/guix.session.sh" ,(local-file "../../dot_tmuxifier-layouts/guix.session.sh"))
+                          `(".tmuxifier-layouts/guix.window.sh" ,(local-file "../../dot_tmuxifier-layouts/guix.window.sh"))
+                          `(".tmuxifier-layouts/elk.session.sh" ,(local-file "../../dot_tmuxifier-layouts/elk.session.sh"))
+                          `(".tmuxifier-layouts/elk.window.sh" ,(local-file "../../dot_tmuxifier-layouts/elk.window.sh"))
                           ;; TODO: `("web.session.sh.tmpl" ,(local-file "../../dot_tmuxifier-layouts/web.session.sh.tmpl"))
                           ))
 
     (simple-service 'top-config
                     home-files-service-type
-                    (list `("toprc" ,(local-file "../../dot_toprc"))))
+                    (list `(".toprc" ,(local-file "../../dot_toprc"))))
 
     (simple-service 'xmodmap-config
                     home-files-service-type
-                    (list `("Xmodmap" ,(local-file "../../dot_Xmodmap"))))
+                    (list `(".Xmodmap" ,(local-file "../../dot_Xmodmap"))))
 
     (simple-service 'xresources-config
                     home-files-service-type
-                    (list `("Xresources" ,(local-file "../../dot_Xresources"))))
+                    (list `(".Xresources" ,(local-file "../../dot_Xresources"))))
 
     (simple-service 'git-config
                     home-files-service-type
-                    (list `("config/git/gitk" ,(local-file "../../dot_config/git/gitk"))
-                          `("config/git/ignore" ,(local-file "../../dot_config/git/ignore"))))
+                    (list `(".config/git/gitk" ,(local-file "../../dot_config/git/gitk"))
+                          `(".config/git/ignore" ,(local-file "../../dot_config/git/ignore"))))
 
     (simple-service 'qterminal-config
                     home-files-service-type
-                    (list `("config/qterminal.org/qterminal.ini" ,(local-file "../../dot_config/qterminal.org/qterminal.ini"))
-                          `("config/qterminal.org/qterminal_bookmarks.xml" ,(local-file "../../dot_config/qterminal.org/qterminal_bookmarks.xml"))))
+                    (list `(".config/qterminal.org/qterminal.ini" ,(local-file "../../dot_config/qterminal.org/qterminal.ini"))
+                          `(".config/qterminal.org/qterminal_bookmarks.xml" ,(local-file "../../dot_config/qterminal.org/qterminal_bookmarks.xml"))))
 
     (simple-service 'zathura-config
                     home-files-service-type
-                    (list `("config/zathura/zathurarc" ,(local-file "../../dot_config/zathura/zathurarc"))))
+                    (list `(".config/zathura/zathurarc" ,(local-file "../../dot_config/zathura/zathurarc"))))
 
     (simple-service 'ripgrep-config
                     home-files-service-type
-                    (list `("config/ripgrep/ripgreprc" ,(local-file "../../dot_config/ripgrep/ripgreprc"))))
+                    (list `(".config/ripgrep/ripgreprc" ,(local-file "../../dot_config/ripgrep/ripgreprc"))))
 
     (simple-service 'gtk-config
                     home-files-service-type
-                    (list `("config/gtk-3.0/gtk.css" ,(local-file "../../dot_config/gtk-3.0/gtk.css"))
-                          `("config/gtk-3.0/settings.ini" ,(local-file "../../dot_config/gtk-3.0/settings.ini"))))
+                    (list `(".config/gtk-3.0/gtk.css" ,(local-file "../../dot_config/gtk-3.0/gtk.css"))
+                          `(".config/gtk-3.0/settings.ini" ,(local-file "../../dot_config/gtk-3.0/settings.ini"))))
 
     (simple-service 'greenclip-config
                     home-files-service-type
-                    (list `("config/greenclip.cfg" ,(local-file "../../dot_config/greenclip.cfg"))))
+                    (list `(".config/greenclip.cfg" ,(local-file "../../dot_config/greenclip.cfg"))))
 
     (simple-service 'alacritty-config
                     home-files-service-type
-                    (list `("config/alacritty/themes/xterm.yml" ,(local-file "../../dot_config/alacritty/themes/xterm.yml"))
-                          `("config/alacritty/alacritty.yml" ,(local-file "../../dot_config/alacritty/alacritty.yml"))))
+                    (list `(".config/alacritty/themes/xterm.yml" ,(local-file "../../dot_config/alacritty/themes/xterm.yml"))
+                          `(".config/alacritty/alacritty.yml" ,(local-file "../../dot_config/alacritty/alacritty.yml"))))
 
     (simple-service 'feh-config
                     home-files-service-type
-                    (list `("config/feh/buttons" ,(local-file "../../dot_config/feh/buttons"))))
+                    (list `(".config/feh/buttons" ,(local-file "../../dot_config/feh/buttons"))))
 
     (simple-service 'sway-config
                     home-files-service-type
-                    (list `("config/sway/config" ,(local-file "../../dot_config/sway/config"))))
+                    (list `(".config/sway/config" ,(local-file "../../dot_config/sway/config"))))
 
     (simple-service 'polybar-config
                     home-files-service-type
-                    (list `("config/polybar/config" ,(local-file "../../dot_config/polybar/config"))))
+                    (list `(".config/polybar/config" ,(local-file "../../dot_config/polybar/config"))))
 
     (simple-service 'htop-config
                     home-files-service-type
-                    (list `("config/htop/htoprc" ,(local-file "../../dot_config/htop/htoprc"))))
+                    (list `(".config/htop/htoprc" ,(local-file "../../dot_config/htop/htoprc"))))
 
     (simple-service 'kitty-config
                     home-files-service-type
-                    (list `("config/kitty/kitty.conf" ,(local-file "../../dot_config/kitty/kitty.conf"))))
+                    (list `(".config/kitty/kitty.conf" ,(local-file "../../dot_config/kitty/kitty.conf"))))
 
     (simple-service 'gita-config
                     home-files-service-type
-                    (list `("config/gita/cmds.yml" ,(local-file "../../dot_config/gita/cmds.yml"))))
+                    (list `(".config/gita/cmds.yml" ,(local-file "../../dot_config/gita/cmds.yml"))))
 
     (simple-service 'youtube-dl-config
                     home-files-service-type
-                    (list `("config/youtube-dl/config" ,(local-file "../../dot_config/youtube-dl/config"))))
+                    (list `(".config/youtube-dl/config" ,(local-file "../../dot_config/youtube-dl/config"))))
 
     (simple-service 'postgresql-config
                     home-files-service-type
-                    (list `("config/autopostgresqlbackup.conf" ,(local-file "../../dot_config/autopostgresqlbackup.conf"))))
+                    (list `(".config/autopostgresqlbackup.conf" ,(local-file "../../dot_config/autopostgresqlbackup.conf"))))
 
     (simple-service 'cava-config
                     home-files-service-type
-                    (list `("config/cava/config" ,(local-file "../../dot_config/cava/config"))))
+                    (list `(".config/cava/config" ,(local-file "../../dot_config/cava/config"))))
 
     (simple-service 'termonad-config
                     home-files-service-type
-                    (list `("config/termonad/termonad.hs" ,(local-file "../../dot_config/termonad/termonad.hs"))))
+                    (list `(".config/termonad/termonad.hs" ,(local-file "../../dot_config/termonad/termonad.hs"))))
 
     (simple-service 'nix-config
                     home-files-service-type
-                    (list `("config/nix/repl.nix" ,(local-file "../../dot_config/nix/repl.nix"))
-                          `("config/nix/nix.conf" ,(local-file "../../dot_config/nix/nix.conf"))
-                          `("config/nix/registry.json" ,(local-file "../../dot_config/nix/registry.json"))
-                          `("config/nixpkgs/config.nix" ,(local-file "../../dot_config/nixpkgs/config.nix"))))
+                    (list `(".config/nix/repl.nix" ,(local-file "../../dot_config/nix/repl.nix"))
+                          `(".config/nix/nix.conf" ,(local-file "../../dot_config/nix/nix.conf"))
+                          `(".config/nix/registry.json" ,(local-file "../../dot_config/nix/registry.json"))
+                          `(".config/nixpkgs/config.nix" ,(local-file "../../dot_config/nixpkgs/config.nix"))))
 
     (simple-service 'mpv-config
                     home-files-service-type
-                    (list `("config/mpv/input.conf" ,(local-file "../../dot_config/mpv/input.conf"))
-                          `("config/mpv/mpv.conf" ,(local-file "../../dot_config/mpv/mpv.conf"))))
+                    (list `(".config/mpv/input.conf" ,(local-file "../../dot_config/mpv/input.conf"))
+                          `(".config/mpv/mpv.conf" ,(local-file "../../dot_config/mpv/mpv.conf"))))
 
     (simple-service 'cagebreak-config
                     home-files-service-type
-                    (list `("config/cagebreak/config" ,(local-file "../../dot_config/cagebreak/config"))))
+                    (list `(".config/cagebreak/config" ,(local-file "../../dot_config/cagebreak/config"))))
 
     (simple-service 'vis-config
                     home-files-service-type
-                    (list `("config/vis/config" ,(local-file "../../dot_config/vis/config"))))
+                    (list `(".config/vis/config" ,(local-file "../../dot_config/vis/config"))))
 
     (simple-service 'dunst-config
                     home-files-service-type
-                    (list `("config/dunst/dunstrc" ,(local-file "../../dot_config/dunst/dunstrc"))))
+                    (list `(".config/dunst/dunstrc" ,(local-file "../../dot_config/dunst/dunstrc"))))
 
 
     ;; TODO: Add those
@@ -1170,19 +1170,19 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
 
     (simple-service 'sshrc-config
                     home-files-service-type
-                    (list `("sshrc" ,(local-file "../../dot_sshrc"))
-                          `("sshrc.d/.bashrc" ,(local-file "../../dot_sshrc.d/dot_bashrc"))
-                          `("sshrc.d/.tmux.conf" ,(local-file "../../dot_sshrc.d/dot_tmux.conf"))))
+                    (list `(".sshrc" ,(local-file "../../dot_sshrc"))
+                          `(".sshrc.d/.bashrc" ,(local-file "../../dot_sshrc.d/dot_bashrc"))
+                          `(".sshrc.d/.tmux.conf" ,(local-file "../../dot_sshrc.d/dot_tmux.conf"))))
 
     (simple-service 'vnc-config
                     home-files-service-type
-                    (list `("vnc/default.tigervnc" ,(local-file "../../private_dot_vnc/default.tigervnc"))
-                          `("vnc/xstartup" ,(local-file "../../private_dot_vnc/executable_xstartup" #:recursive? #t))
-                          `("vnc/xstartup-firefox" ,(local-file "../../private_dot_vnc/executable_xstartup-firefox" #:recursive? #t))
-                          `("vnc/xstartup-quassel" ,(local-file "../../private_dot_vnc/executable_xstartup-quassel" #:recursive? #t))
-                          `("vnc/xstartup-ratpoison" ,(local-file "../../private_dot_vnc/executable_xstartup-ratpoison" #:recursive? #t))
-                          `("vnc/xstartup-stumpwm" ,(local-file "../../private_dot_vnc/executable_xstartup-stumpwm" #:recursive? #t))
-                          `("vnc/xstartup-twm" ,(local-file "../../private_dot_vnc/executable_xstartup-twm" #:recursive? #t))))
+                    (list `(".vnc/default.tigervnc" ,(local-file "../../private_dot_vnc/default.tigervnc"))
+                          `(".vnc/xstartup" ,(local-file "../../private_dot_vnc/executable_xstartup" #:recursive? #t))
+                          `(".vnc/xstartup-firefox" ,(local-file "../../private_dot_vnc/executable_xstartup-firefox" #:recursive? #t))
+                          `(".vnc/xstartup-quassel" ,(local-file "../../private_dot_vnc/executable_xstartup-quassel" #:recursive? #t))
+                          `(".vnc/xstartup-ratpoison" ,(local-file "../../private_dot_vnc/executable_xstartup-ratpoison" #:recursive? #t))
+                          `(".vnc/xstartup-stumpwm" ,(local-file "../../private_dot_vnc/executable_xstartup-stumpwm" #:recursive? #t))
+                          `(".vnc/xstartup-twm" ,(local-file "../../private_dot_vnc/executable_xstartup-twm" #:recursive? #t))))
 
     (simple-service 'xsession-config
                     home-activation-service-type
@@ -1406,9 +1406,9 @@ gtk-xft-rgba=\"rgb\"
     (service cisco-service-type)
     (simple-service 'ansible-config
                     home-files-service-type
-                    (append (list `(,"ansible.cfg" ,(local-file "../../dot_ansible.cfg")))
+                    (append (list `(,".ansible.cfg" ,(local-file "../../dot_ansible.cfg")))
                             (map (lambda (file-name)
-                                   `(,(string-append "ansible/plugins/modules/" file-name) ,(local-file (string-append "dot_ansible/plugins/modules/" file-name))))
+                                   `(,(string-append ".ansible/plugins/modules/" file-name) ,(local-file (string-append "dot_ansible/plugins/modules/" file-name))))
                                  '("guix_package.py"
                                    "guix_pull.py"))))
 

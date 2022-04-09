@@ -163,7 +163,7 @@ EndSection\n")
 
          iptables bridge-utils
 
-         docker-cli docker-compose
+         docker-cli ;; docker-compose
 
          singularity
 

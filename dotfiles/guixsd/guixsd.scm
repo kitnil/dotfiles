@@ -217,7 +217,6 @@ location / {
         (proxy "monitor.wugi.info" 8080)
         (proxy "guix.duckdns.org" 5556 #:ssl? #t)
         (proxy "kiwiirc.wugi.info" 8194 #:ssl? #t #:ssl-key? #t #:mtls? #t)
-        (proxy "guix.wugi.info" 5556 #:locations %nginx-lua-guix #:ssl? #t #:ssl-key? #t)
         (proxy "pykhaloff.ddns.net" 443
                #:target "192.168.100.5"
                #:ssl? #t
@@ -1447,9 +1446,6 @@ PasswordAuthentication yes")))
 
                          (service nginx-service-type
                                   (nginx-configuration
-                                   (modules %nginx-modules)
-                                   (lua-package-path %nginx-lua-package-path)
-                                   (lua-package-cpath %nginx-lua-package-cpath)
                                    (server-blocks %nginx-server-blocks)))
 
                          (service gitolite-service-type
@@ -1692,9 +1688,6 @@ namespaces = [ ]
 
       (essential-services
        (modify-services (operating-system-default-essential-services this-operating-system)
-         (shepherd-root-service-type config => (shepherd-configuration
-					        (inherit config)
-					        (shepherd shepherd-patched)))
          (sysctl-service-type _ =>
                               (sysctl-configuration
                                (settings (append '(("net.bridge.bridge-nf-call-iptables" . "0")

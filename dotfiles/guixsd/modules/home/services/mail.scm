@@ -264,7 +264,7 @@ that match the patterns. An example value would be @samp{'(\"INBOX\")}.")
    (serialize-configuration config mbsync-configuration-fields)))
 
 (define (home-mbsync-config-file config)
-  (list `("mbsyncrc"
+  (list `(".mbsyncrc"
           ,(computed-file "mbsyncrc"
                           #~(begin
                               (with-output-to-file #$output

@@ -293,7 +293,8 @@ vnc vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
 
                bluez
 
-               telegram-desktop)
+               ;; telegram-desktop
+               )
 
          guix-collection-packages-multiout
          %large-packages
