@@ -616,9 +616,19 @@ location / {
       (file-systems (append (list (file-system
                                     (device (file-system-label "data18"))
                                     (mount-point "/srv")
-                                    (options (string-join (list "compress=zstd:15"
-                                                                "nossd")
-                                                          ","))
+                                    (options
+                                     (string-join (list "compress=zstd:15"
+                                                        "nossd")
+                                                  ","))
+                                    (type "btrfs"))
+                                  (file-system
+                                    (device (file-system-label "nvme2"))
+                                    (mount-point "/srv/games")
+                                    (options
+                                     (string-join (list "compress=zstd:3"
+                                                        "ssd"
+                                                        "subvol=games")
+                                                  ","))
                                     (type "btrfs")))
                             (map (lambda (subvolume)
                                    (file-system
@@ -1437,8 +1447,10 @@ PasswordAuthentication yes")))
                          (service nfs-service-type
                                   (nfs-configuration
                                    (exports
-                                    '(("/srv/games"
-                                       "192.168.0.0/24(rw,insecure,no_subtree_check,crossmnt,fsid=0)")))))
+                                    '(("/srv"
+                                       "192.168.0.0/24(ro,insecure,no_subtree_check,crossmnt,fsid=0)")
+                                      ("/srv/games"
+                                       "192.168.0.0/24(rw,insecure,no_subtree_check,crossmnt)")))))
 
                          (service certbot-service-type
                                   (certbot-configuration
