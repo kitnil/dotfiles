@@ -783,7 +783,7 @@ location / {
            "172.16.100.61 lyashenko.intr"
            "127.0.0.1 example.com"
 
-           "192.168.25.2 oracle1.local"
+           "192.168.25.2 oracle1.local irc.local"
 
            "78.108.86.20 r1"
            "78.108.87.99 r2"
