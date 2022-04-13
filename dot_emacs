@@ -1,5 +1,5 @@
 ;;; .emacs --- Oleg's Emacs configuration
-;; Copyright © 2017, 2018, 2019, 2020, 2021 Oleg Pykhalov <go.wigust@gmail.com>
+;; Copyright © 2017, 2018, 2019, 2020, 2021, 2022 Oleg Pykhalov <go.wigust@gmail.com>
 ;; Released under the GNU GPLv3 or any later version.
 
 ;; Tip: "M-x e" on `(emacs-init-time)'.
@@ -140,7 +140,11 @@
  '(org-agenda-files '("~/org/inbox.org" "~/org/todo.org" "~/org/web.org"))
  '(python-shell-interpreter "python3" t)
  '(safe-local-variable-values
-   '((eval progn
+   '((magit-todos-depth)
+     (magit-todos-exclude-globs "*.go" "*.info" "*.po")
+     (magit-todos-update)
+     (magit-todos-depth . 1)
+     (eval progn
            (let
                ((top
                  (locate-dominating-file default-directory ".dir-locals.el")))
