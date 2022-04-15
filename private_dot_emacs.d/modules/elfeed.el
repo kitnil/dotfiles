@@ -3,14 +3,14 @@
 (require 'guix-ui-package) ;for guix-show-emacs-package-without-prefix
 
 (setq elfeed-feeds
-      '("https://oremacs.com/atom.xml"
-        "http://nullprogram.com/feed/"
-        "https://h-node.org/rss/modifications/en"
-        "https://lwn.net/headlines/newrss"
-        "https://fedoramagazine.org/feed/"
-        "https://www.youtube.com/feeds/videos.xml?channel_id=UC_ehNByPcItZU3pXL-4skUA"
-        "https://twitchrss.appspot.com/vod/carolinhr"
-        "https://opensource.com/feed"
+      '(("https://oremacs.com/atom.xml" emacs)
+        ("http://nullprogram.com/feed/" emacs)
+        ("https://h-node.org/rss/modifications/en" hardware)
+        ("https://lwn.net/headlines/newrss" linux)
+        ("https://fedoramagazine.org/feed/" linux)
+        ("https://www.youtube.com/feeds/videos.xml?channel_id=UC_ehNByPcItZU3pXL-4skUA" video)
+        ("https://twitchrss.appspot.com/vod/carolinhr" video)
+        ("https://opensource.com/feed" news)
         ("https://news.ycombinator.com/rss" news)
         ("http://government.ru/all/rss/" gov ru)
         ("https://rublacklist.net/feed/" ru censor)
