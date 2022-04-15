@@ -464,6 +464,7 @@ guix()
                 exec 3>&1
                 mapfile -t selection < <(
                     dialog --separate-output --title "Guix" --checklist "Guix Operations" 22 72 3 \
+                           "pull channels" "Update channels" "${STATE:-off}" \
                            pull "Pull new changes" "${STATE:-on}" \
                            "system build" "Build system" "${STATE:-on}" \
                            "manifest build" "Build manifest" "${STATE:-on}" \
@@ -486,24 +487,40 @@ guix()
             )
             ;;
         pull)
-            guix_command=(
-                "command"
-                "guix" "pull"
-                "--channels=${HOME}/.local/share/chezmoi/dotfiles/channels-current.scm"
-            )
-            if [[ -n $commit ]]
-            then
-                guix_command+=("--commit=$commit")
-            fi
-            if [[ -n $allow_downgrades ]]
-            then
-                guix_command+=("--allow-downgrades")
-            fi
-            if [[ -n $fallback ]]
-            then
-                guix_command+=("--fallback")
-            fi
-            (set -ex; "${guix_command[@]}" "${@:2}"; sudo --login "${guix_command[@]}" "${@:2}")
+            case "$2" in
+                channels)
+                    (
+                        set -e
+                        cd "${HOME}/.local/share/chezmoi" || exit 1
+                        make dotfiles/channels-current.scm
+                        if git commit -m "channels-current: Update." dotfiles/channels-current.scm
+                        then
+                            :
+                        else
+                            exit 1
+                        fi
+                    )
+                    ;;
+                *)
+                    guix_command=(
+                        "command"
+                        "guix" "pull"
+                        "--channels=${HOME}/.local/share/chezmoi/dotfiles/channels-current.scm"
+                    )
+                    if [[ -n $commit ]]
+                    then
+                        guix_command+=("--commit=$commit")
+                    fi
+                    if [[ -n $allow_downgrades ]]
+                    then
+                        guix_command+=("--allow-downgrades")
+                    fi
+                    if [[ -n $fallback ]]
+                    then
+                        guix_command+=("--fallback")
+                    fi
+                    (set -ex; "${guix_command[@]}" "${@:2}"; sudo --login "${guix_command[@]}" "${@:2}")
+            esac
             ;;
         distribute)
             "$(guix build --file="$HOME/.local/share/chezmoi/dotfiles/ansible/guix.yml")"
