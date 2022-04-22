@@ -3,6 +3,12 @@
 # Setups home environment profile
 if [ -f ~/.profile ]; then source ~/.profile; fi
 
+if [ -n "$TMUX" ]
+then
+    source "${HOME}/.bashrc"
+    return
+fi
+
 export USER=oleg
 
 export LC_TIME=en_GB.UTF-8
