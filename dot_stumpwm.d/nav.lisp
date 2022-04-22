@@ -115,7 +115,7 @@
   (let ((window (current-window)))
     (cond
       ((and window (string= (window-class window) "Emacs"))
-       (emacsclient-eval "(ivy-switch-buffer)"))
+       (emacsclient-eval "(helm-buffers-list)"))
       (t (globalwindows:global-windowlist)))))
 
 (defcommand next-in-frame-custom () ()
