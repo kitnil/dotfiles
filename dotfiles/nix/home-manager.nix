@@ -9,6 +9,8 @@
     bandwidth
     bandwhich
 
+    btfs
+
     clipman wayvnc wtype
 
     # alacritty
