@@ -1518,7 +1518,7 @@ PasswordAuthentication yes")))
                                   (php-fpm-configuration
                                    (timezone "Europe/Moscow")))
 
-                         ;; (service jenkins-service-type %jenkins-config)
+                         (service jenkins-service-type %jenkins-config)
 
                          (service restic-rest-service-type
                                   (restic-rest-configuration
