@@ -388,20 +388,19 @@ guix()
 {
     guix_modules="$HOME/.local/share/chezmoi/dotfiles/guixsd/modules"
     case "$1" in
-        manifest)
+        home)
             case "$2" in
-                apply)
-                    command guix package \
-                            -L "$HOME/.local/share/chezmoi/dotfiles/guixsd/modules" \
-                            --fallback \
-                            --manifest="$HOME/.local/share/chezmoi/dotfiles/manifests/$HOSTNAME.scm" "${@:3}"
-                    ;;
                 build)
-                    command guix environment \
+                    command guix home build \
                             -L "$HOME/.local/share/chezmoi/dotfiles/guixsd/modules" \
                             --fallback \
-                            --manifest="$HOME/.local/share/chezmoi/dotfiles/manifests/$HOSTNAME.scm" "${@:3}" \
-                            -- sh -c 'exit 0'
+                            "$HOME/.local/share/chezmoi/dotfiles/guixsd/home.scm" "${@:3}"
+                    ;;
+                switch)
+                    command guix home reconfigure \
+                            -L "$HOME/.local/share/chezmoi/dotfiles/guixsd/modules" \
+                            --fallback \
+                            "$HOME/.local/share/chezmoi/dotfiles/guixsd/home.scm" "${@:3}"
                     ;;
             esac
             ;;
@@ -468,10 +467,10 @@ guix()
                            pull "Pull new changes" "${STATE:-on}" \
                            "system build" "Build system" "${STATE:-on}" \
                            "manifest build" "Build manifest" "${STATE:-on}" \
-                           "manifest apply" "Apply manifest" "${STATE:-on}" \
+                           "home switch" "Reconfigure home" "${STATE:-on}" \
                            "system switch" "Reconfigure system" "${STATE:-on}" \
-                           "distribute" "Pull on remote hosts" "${STATE:-on}" \
-                           "system deploy" "Deploy to remote hosts" "${STATE:-on}" \
+                           "distribute" "Pull on remote hosts" "${STATE:-off}" \
+                           "system deploy" "Deploy to remote hosts" "${STATE:-off}" \
                            2>&1 2>&1 1>&3
                 )
                 declare -p selection
