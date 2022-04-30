@@ -466,7 +466,7 @@ guix()
                            "pull channels" "Update channels" "${STATE:-off}" \
                            pull "Pull new changes" "${STATE:-on}" \
                            "system build" "Build system" "${STATE:-on}" \
-                           "manifest build" "Build manifest" "${STATE:-on}" \
+                           "home build" "Build home" "${STATE:-on}" \
                            "home switch" "Reconfigure home" "${STATE:-on}" \
                            "system switch" "Reconfigure system" "${STATE:-on}" \
                            "distribute" "Pull on remote hosts" "${STATE:-off}" \
