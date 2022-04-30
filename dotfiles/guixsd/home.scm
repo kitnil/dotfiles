@@ -515,7 +515,6 @@ exec -a \"$0\" /home/oleg/.nix-profile/bin/~a --disable-features=SendMouseLeaveE
                             "ssh-sudo"
                             "ssh-vm"
                             "ssl"
-                            "system"
                             "toggle-input-method.sh"
                             "tome4-docker"
                             "tranfser-curl"
