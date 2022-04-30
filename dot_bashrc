@@ -391,16 +391,22 @@ guix()
         home)
             case "$2" in
                 build)
-                    command guix home build \
-                            -L "$HOME/.local/share/chezmoi/dotfiles/guixsd/modules" \
-                            --fallback \
-                            "$HOME/.local/share/chezmoi/dotfiles/guixsd/home.scm" "${@:3}"
+                    (
+                        cd "${HOME}/.local/share/chezmoi" || exit 1
+                        command guix home build \
+                                -L "$HOME/.local/share/chezmoi/dotfiles/guixsd/modules" \
+                                --fallback \
+                                "$HOME/.local/share/chezmoi/dotfiles/guixsd/home.scm" "${@:3}"
+                    )
                     ;;
                 switch)
-                    command guix home reconfigure \
-                            -L "$HOME/.local/share/chezmoi/dotfiles/guixsd/modules" \
-                            --fallback \
-                            "$HOME/.local/share/chezmoi/dotfiles/guixsd/home.scm" "${@:3}"
+                    (
+                        cd "${HOME}/.local/share/chezmoi"
+                        command guix home reconfigure \
+                                -L "$HOME/.local/share/chezmoi/dotfiles/guixsd/modules" \
+                                --fallback \
+                                "$HOME/.local/share/chezmoi/dotfiles/guixsd/home.scm" "${@:3}"
+                    )
                     ;;
             esac
             ;;
