@@ -112,6 +112,7 @@ vnc vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
                ;; kodi
                kodi-cli     ; Remote control Kodi
                transmission ; Bittorrent
+               qbittorrent
 
                mps-youtube
                streamlink
