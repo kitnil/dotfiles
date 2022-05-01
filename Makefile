@@ -149,6 +149,6 @@ add:
 	gpg --yes --output private_dot_ssh/encrypted_private_authorized_keys --encrypt $(HOME)/.ssh/authorized_keys
 	cp $(HOME)/.emacs dot_emacs
 
-.PHONY: dotfiles/maintenance/gitlab/main.scm
-dotfiles/maintenance/gitlab/main.scm:
-	$(shell cd dotfiles/maintenance/gitlab && guix build -L ../.. -f main.scm)
+.PHONY: gitlab
+gitlab:
+	make --directory=dotfiles/maintenance/gitlab
