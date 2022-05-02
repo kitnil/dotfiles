@@ -109,7 +109,7 @@ install: install-ssh dotfiles/guixsd/machines.scm dotfiles/nix/nix.conf
 	ln -sf $(HOME)/.Xresources $(HOME)/.Xdefaults
 	install --mode=644 dotfiles/guile/pass.scm $(HOME)/.config/guile/pass.scm
 	install --mode=644 dotfiles/guile/config.scm $(HOME)/.config/guile/config.scm
-	guix home -L dotfiles/guixsd/modules reconfigure dotfiles/guixsd/home.scm
+	guix home --no-offload -L dotfiles/manifests -L dotfiles -L dotfiles/guixsd/modules -L ~/src/engstrand-config-home-service-dwl-guile reconfigure dotfiles/guixsd/home.scm
 
 .PHONY: guile-ihs
 guile-ihs:

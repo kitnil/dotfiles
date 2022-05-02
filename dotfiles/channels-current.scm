@@ -14,7 +14,7 @@
         (url "https://github.com/kitnil/guix-wigust")
         (branch "master")
         (commit
-          "d516f1fcc0466a52b36fb8910e819c89522eb26a"))
+         "d516f1fcc0466a52b36fb8910e819c89522eb26a"))
       (channel
         (name 'nonguix)
         (url "https://gitlab.com/nonguix/nonguix")

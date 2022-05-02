@@ -6,7 +6,10 @@
              ;; (gnu home services ssh)
              (gnu packages admin)
              (gnu packages guile)
+             (gnu packages pulseaudio)
              (gnu packages virtualization)
+             (gnu packages terminals)
+             (gnu packages xdisorg)
              (gnu packages xorg)
              (gnu services)
              (gnu services configuration)
@@ -30,7 +33,10 @@
              (home services package-management)
              (gnu packages mail)
              (gnu packages dhall)
-             (guile pass))
+             (guile pass)
+
+             (dwl-guile home-service)
+             (dwl-guile configuration))
 
 (define %home
   (and=> (getenv "HOME")
@@ -1837,4 +1843,41 @@ gtk-xft-rgba=\"rgb\"
                                  ("private_key" . ,(string-append %home "/.ssh/id_rsa_majordomo_eng"))
                                  ("known_hosts" . ,(string-append %home "/.ssh/known_hosts"))
                                  ("command" . "uptime"))))
-                             #:pretty #t))))))))))))))
+                             #:pretty #t))))))))))
+
+    ;; oleg@guixsd ~/.local/share/chezmoi$ command guix home -L dotfiles/guixsd/modules -L ~/src/engstrand-config-home-service-dwl-guile reconfigure dotfiles/guixsd/home.scm
+    (service home-dwl-guile-service-type
+             (home-dwl-guile-configuration
+              (package-transform? #f)
+              (auto-start? #f)))
+
+    (simple-service 'add-dwl-guile-keybinding home-dwl-guile-service-type
+     (modify-dwl-guile-config
+      (config =>
+              (dwl-config
+               (inherit config)
+               (keys
+                (append
+                 (let ((ponymix (file-append ponymix "/bin/ponymix")))
+                   (list
+                    (dwl-key
+                     (key "s-w")
+                     (action `(dwl:spawn "firefox")))
+                    (dwl-key
+                     (key "<XF86AudioMute>")
+                     (action `(dwl:spawn ,ponymix "toggle")))
+                    (dwl-key
+                     (key "<XF86AudioLowerVolume>")
+                     (action `(dwl:spawn ,ponymix "decrease" "5")))
+                    (dwl-key
+                     (key "<XF86AudioRaiseVolume>")
+                     (action `(dwl:spawn ,ponymix "increase" "5")))
+                    (dwl-key
+                     (key "S-s-=")
+                     (action `(dwl:spawn ,(file-append pavucontrol "/bin/pavucontrol"))))
+                    (dwl-key
+                     (key "s-e")
+                     (action `(dwl:spawn "emacs")))))
+                 (dwl-config-keys config)))
+               (terminal `(,(file-append alacritty "/bin/alacritty")))
+               (menu `(,(file-append bemenu "/bin/bemenu-run")))))))))))
