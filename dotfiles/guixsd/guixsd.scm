@@ -217,6 +217,7 @@ location / {
         (proxy "monitor.wugi.info" 8080)
         (proxy "guix.duckdns.org" 5556 #:ssl? #t)
         (proxy "kiwiirc.wugi.info" 8194 #:ssl? #t #:ssl-key? #t #:mtls? #t)
+        (proxy "guix.wugi.info" 5556 #:ssl? #t #:ssl-key? #t)
         (proxy "pykhaloff.ddns.net" 443
                #:target "192.168.100.5"
                #:ssl? #t
