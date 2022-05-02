@@ -948,6 +948,11 @@ location / {
                                                (define prometheus-alertmanager-guix
                                                  #$(plain-file "prometheus-alertmanager-guix.json"
                                                                (scm->json-string (load "alertmanager/guix.scm"))))
+                                               (define http-targets
+                                                 (append (list "https://wugi.info/"
+                                                               "https://guix.wugi.info/"
+                                                               "https://blog.wugi.info/")
+                                                         '#$%default-substitute-urls))
                                                (with-output-to-file #$output
                                                  (lambda ()
                                                    (scm->json
@@ -1009,9 +1014,7 @@ location / {
                                                           (job_name . "restic-rest"))
                                                          ((static_configs
                                                            .
-                                                           #(((targets . #("https://wugi.info/"
-                                                                           "https://guix.wugi.info/"
-                                                                           "https://blog.wugi.info/")))))
+                                                           #(((targets . #(,@http-targets)))))
                                                           (scrape_interval . "30s")
                                                           (metrics_path . "/probe")
                                                           (params . ((module . #("http_2xx"))))
@@ -1628,7 +1631,7 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                                                     ("cluster_addr" . "http://vault1:8211")
                                                     ("api_addr" . "http://vault1:8210")))))))))
 
-)))
+                                    )))
 
                          (service openvswitch-service-type)
                          %openvswitch-configuration-service
