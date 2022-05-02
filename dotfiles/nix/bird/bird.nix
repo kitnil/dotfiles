@@ -15,7 +15,7 @@ pkgs.dockerTools.buildLayeredImage rec {
     set -x -e
     mkdir -p tmp
     chmod 777 tmp
-    mkdir -p var/run
+    mkdir -p var/{run,log}
     chmod 755 var/run
   '';
 }
