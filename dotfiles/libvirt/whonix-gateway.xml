@@ -1,6 +1,6 @@
-<domain type='kvm' id='8'>
-  <name>whonix-gateway</name>
-  <uuid>7f68cb53-f04c-4f9b-b877-d238e6673a7b</uuid>
+<domain type='kvm' id='20'>
+  <name>whonix-gateway-direct</name>
+  <uuid>bcfb9039-aec6-41a9-9dd2-85890ed8aee9</uuid>
   <genid>34e20f84-5c86-44da-b031-fe4215f3587e</genid>
   <description>Bump up the RAM to 1GB for the desktop to run.</description>
   <memory dumpCore='off' unit='KiB'>262144</memory>
@@ -43,7 +43,7 @@
     <emulator>/run/current-system/profile/bin/qemu-system-x86_64</emulator>
     <disk type='block' device='disk'>
       <driver name='qemu' type='raw' cache='none' io='native'/>
-      <source dev='/dev/lvm1/whonix-gateway' index='1'/>
+      <source dev='/dev/lvm1/whonix-gateway-direct' index='1'/>
       <backingStore/>
       <target dev='vda' bus='virtio'/>
       <boot order='2'/>
@@ -65,19 +65,32 @@
       <alias name='sata0'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x08' function='0x0'/>
     </controller>
-    <interface type='network'>
-      <mac address='52:54:00:75:7f:a1'/>
-      <source network='whonix-external' portid='09d638ae-f879-4c20-b533-98bac895a99f' bridge='virbr1'/>
-      <target dev='vnet7'/>
+    <controller type='ide' index='0'>
+      <alias name='ide'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x01' function='0x1'/>
+    </controller>
+    <interface type='bridge'>
+      <mac address='52:54:00:62:9e:f5'/>
+      <source bridge='br154'/>
+      <vlan>
+        <tag id='154' nativeMode='untagged'/>
+      </vlan>
+      <virtualport type='openvswitch'>
+        <parameters interfaceid='7c2d78d7-7c4b-4227-a117-4759b8ff994e'/>
+      </virtualport>
+      <target dev='whonix-gw-out'/>
       <model type='virtio'/>
       <driver name='qemu'/>
       <alias name='net0'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x0'/>
     </interface>
-    <interface type='network'>
-      <mac address='52:54:00:dd:c4:b4'/>
-      <source network='whonix-internal' portid='4d28a065-5ec1-4413-87fe-8e81e042a62f' bridge='virbr2'/>
-      <target dev='vnet8'/>
+    <interface type='bridge'>
+      <mac address='52:54:00:bb:c3:d6'/>
+      <source bridge='br155-vlan155'/>
+      <virtualport type='openvswitch'>
+        <parameters interfaceid='7c2d76d7-7c4b-4227-a117-5839b8ff894f'/>
+      </virtualport>
+      <target dev='whonix-gw-in'/>
       <model type='virtio'/>
       <driver name='qemu'/>
       <alias name='net1'/>

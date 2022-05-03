@@ -1,6 +1,6 @@
-<domain type='kvm' id='14'>
-  <name>whonix-workstation</name>
-  <uuid>55dc4c6a-44fa-4bdc-ba36-e81100ef0caf</uuid>
+<domain type='kvm'>
+  <name>whonix-workstation-qbittorent</name>
+  <uuid>465c3df2-a63c-4782-84f1-f4a529a5d2f4</uuid>
   <genid>4586ab91-2fda-44ad-ac73-63f36908373c</genid>
   <description>Do not change any settings if you do not understand the consequences! Learn more: https://www.whonix.org/wiki/KVM#XML_Settings</description>
   <memory dumpCore='off' unit='KiB'>1572864</memory>
@@ -11,9 +11,6 @@
     <discard/>
   </memoryBacking>
   <vcpu placement='static' cpuset='1'>1</vcpu>
-  <resource>
-    <partition>/machine</partition>
-  </resource>
   <os>
     <type arch='x86_64' machine='pc-i440fx-6.2'>hvm</type>
   </os>
@@ -43,87 +40,66 @@
     <emulator>/run/current-system/profile/bin/qemu-system-x86_64</emulator>
     <disk type='block' device='disk'>
       <driver name='qemu' type='raw' cache='none' io='native'/>
-      <source dev='/dev/lvm1/whonix-workstation' index='1'/>
-      <backingStore/>
+      <source dev='/dev/lvm1/whonix-workstation-qbittorent'/>
       <target dev='vda' bus='virtio'/>
       <boot order='2'/>
-      <alias name='virtio-disk0'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x06' function='0x0'/>
     </disk>
     <controller type='virtio-serial' index='0'>
-      <alias name='virtio-serial0'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x05' function='0x0'/>
     </controller>
     <controller type='usb' index='0' model='piix3-uhci'>
-      <alias name='usb'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x01' function='0x2'/>
     </controller>
-    <controller type='pci' index='0' model='pci-root'>
-      <alias name='pci.0'/>
-    </controller>
+    <controller type='pci' index='0' model='pci-root'/>
     <controller type='sata' index='0'>
-      <alias name='sata0'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x08' function='0x0'/>
     </controller>
-    <interface type='network'>
-      <mac address='52:54:00:19:01:c8'/>
-      <source network='whonix-internal' portid='db280747-9430-4c74-80c1-1b44061b15cd' bridge='virbr2'/>
-      <target dev='vnet14'/>
+    <interface type='bridge'>
+      <mac address='52:54:00:d1:e7:c3'/>
+      <source bridge='br155-vlan155'/>
+      <virtualport type='openvswitch'>
+        <parameters interfaceid='7c2d76d7-8d3b-4227-a117-4759b8ff994f'/>
+      </virtualport>
+      <target dev='whonix-ws-in'/>
       <model type='virtio'/>
       <driver name='qemu'/>
-      <alias name='net0'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x0'/>
     </interface>
     <serial type='pty'>
-      <source path='/dev/pts/3'/>
       <target type='isa-serial' port='0'>
         <model name='isa-serial'/>
       </target>
-      <alias name='serial0'/>
     </serial>
-    <console type='pty' tty='/dev/pts/3'>
-      <source path='/dev/pts/3'/>
+    <console type='pty'>
       <target type='serial' port='0'/>
-      <alias name='serial0'/>
     </console>
     <channel type='spicevmc'>
-      <target type='virtio' name='com.redhat.spice.0' state='connected'/>
-      <alias name='channel0'/>
+      <target type='virtio' name='com.redhat.spice.0'/>
       <address type='virtio-serial' controller='0' bus='0' port='1'/>
     </channel>
-    <input type='mouse' bus='ps2'>
-      <alias name='input0'/>
-    </input>
-    <input type='keyboard' bus='ps2'>
-      <alias name='input1'/>
-    </input>
-    <graphics type='spice' port='5903' autoport='yes' listen='127.0.0.1'>
-      <listen type='address' address='127.0.0.1'/>
+    <input type='mouse' bus='ps2'/>
+    <input type='keyboard' bus='ps2'/>
+    <graphics type='spice' autoport='yes'>
+      <listen type='address'/>
       <clipboard copypaste='no'/>
       <filetransfer enable='no'/>
       <gl enable='no'/>
     </graphics>
     <sound model='ich6'>
       <codec type='output'/>
-      <alias name='sound0'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x04' function='0x0'/>
     </sound>
     <audio id='1' type='spice'/>
     <video>
       <model type='virtio' heads='1' primary='yes'/>
-      <alias name='video0'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x02' function='0x0'/>
     </video>
     <memballoon model='none'/>
     <rng model='virtio'>
       <backend model='random'>/dev/urandom</backend>
-      <alias name='rng0'/>
       <address type='pci' domain='0x0000' bus='0x00' slot='0x07' function='0x0'/>
     </rng>
   </devices>
-  <seclabel type='dynamic' model='dac' relabel='yes'>
-    <label>+1000:+984</label>
-    <imagelabel>+1000:+984</imagelabel>
-  </seclabel>
 </domain>
 

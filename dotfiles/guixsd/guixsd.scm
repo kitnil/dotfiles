@@ -460,6 +460,9 @@ location / {
                             (ovs-vsctl
                              (string-join
                               (list "--may-exist" "add-br" "br154")))
+                            (ovs-vsctl
+                             (string-join
+                              (list "--may-exist" "add-br" "br154-vlan154" "br154" "154")))
                             (ip
                              (string-join
                               (list "link" "add" "link" "br154"
@@ -520,7 +523,13 @@ location / {
                                     "-o" "br0"
                                     "-m" "state"
                                     "--state" "RELATED,ESTABLISHED"
-                                    "-j" "ACCEPT")))))))
+                                    "-j" "ACCEPT")))
+                            (ovs-vsctl
+                             (string-join
+                              (list "--may-exist" "add-br" "br155")))
+                            (ovs-vsctl
+                             (string-join
+                              (list "--may-exist" "add-br" "br155-vlan155" "br155" "155")))))))
           (respawn? #f)))))
 
 (define tftp-root
