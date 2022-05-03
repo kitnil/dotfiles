@@ -29,7 +29,6 @@
              (services autofs)
              (services backup)
              (services bird)
-             (services bittorrent)
              (services docker)
              (services virtualization)
              (services nix)
@@ -64,7 +63,6 @@
         "jenkins.wugi.info"
         "monitor.wugi.info"
         "syncthing.wugi.info"
-        "torrent.wugi.info"
         "webssh.wugi.info"
         "kiwiirc.wugi.info"))
 
@@ -209,7 +207,6 @@ location / {
 
         (proxy "cups.tld" 631)
         (proxy "blog.wugi.info" 9001)
-        (proxy "torrent.wugi.info" 9091 #:ssl? #t #:ssl-key? #t #:mtls? #t)
         (proxy "jenkins.wugi.info" 8090 #:ssl? #t #:ssl-key? #t #:mtls? #t)
         (proxy "syncthing.wugi.info" 8384 #:ssl? #t #:ssl-key? #t #:mtls? #t
                ;; https://docs.syncthing.net/users/faq.html#why-do-i-get-host-check-error-in-the-gui-api
@@ -746,7 +743,6 @@ location / {
                            "techinfo.intr"
                            "texinfo.tld"
                            "jenkins.wugi.info"
-                           "torrent.wugi.info"
                            "kiwiirc.wugi.info"
                            "syncthing.wugi.info"
                            "iso.wugi.info"
@@ -1586,8 +1582,6 @@ ExitOnForwardFailure yes
 ServerAliveInterval 30
 ServerAliveCountMax 3"))))))
                                    (host "znc.wugi.info")))
-
-                         transmission-service
 
                          (service webssh-service-type
                                   (webssh-configuration (address "127.0.0.1")
