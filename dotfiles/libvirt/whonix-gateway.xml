@@ -1,0 +1,133 @@
+<domain type='kvm' id='8'>
+  <name>whonix-gateway</name>
+  <uuid>7f68cb53-f04c-4f9b-b877-d238e6673a7b</uuid>
+  <genid>34e20f84-5c86-44da-b031-fe4215f3587e</genid>
+  <description>Bump up the RAM to 1GB for the desktop to run.</description>
+  <memory dumpCore='off' unit='KiB'>262144</memory>
+  <currentMemory unit='KiB'>262144</currentMemory>
+  <memoryBacking>
+    <nosharepages/>
+    <allocation mode='ondemand'/>
+    <discard/>
+  </memoryBacking>
+  <vcpu placement='static' cpuset='0'>1</vcpu>
+  <resource>
+    <partition>/machine</partition>
+  </resource>
+  <os>
+    <type arch='x86_64' machine='pc-i440fx-6.2'>hvm</type>
+  </os>
+  <features>
+    <acpi/>
+    <hap state='on'/>
+    <pvspinlock state='on'/>
+    <pmu state='off'/>
+    <vmport state='off'/>
+  </features>
+  <cpu mode='host-passthrough' check='none' migratable='on'/>
+  <clock offset='utc'>
+    <timer name='rtc' tickpolicy='catchup' track='guest'/>
+    <timer name='kvmclock' present='yes'/>
+    <timer name='pit' present='no'/>
+    <timer name='hpet' present='no'/>
+    <timer name='hypervclock' present='no'/>
+  </clock>
+  <on_poweroff>destroy</on_poweroff>
+  <on_reboot>restart</on_reboot>
+  <on_crash>restart</on_crash>
+  <pm>
+    <suspend-to-mem enabled='no'/>
+    <suspend-to-disk enabled='no'/>
+  </pm>
+  <devices>
+    <emulator>/run/current-system/profile/bin/qemu-system-x86_64</emulator>
+    <disk type='block' device='disk'>
+      <driver name='qemu' type='raw' cache='none' io='native'/>
+      <source dev='/dev/lvm1/whonix-gateway' index='1'/>
+      <backingStore/>
+      <target dev='vda' bus='virtio'/>
+      <boot order='2'/>
+      <alias name='virtio-disk0'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x06' function='0x0'/>
+    </disk>
+    <controller type='virtio-serial' index='0'>
+      <alias name='virtio-serial0'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x05' function='0x0'/>
+    </controller>
+    <controller type='usb' index='0' model='piix3-uhci'>
+      <alias name='usb'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x01' function='0x2'/>
+    </controller>
+    <controller type='pci' index='0' model='pci-root'>
+      <alias name='pci.0'/>
+    </controller>
+    <controller type='sata' index='0'>
+      <alias name='sata0'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x08' function='0x0'/>
+    </controller>
+    <interface type='network'>
+      <mac address='52:54:00:75:7f:a1'/>
+      <source network='whonix-external' portid='09d638ae-f879-4c20-b533-98bac895a99f' bridge='virbr1'/>
+      <target dev='vnet7'/>
+      <model type='virtio'/>
+      <driver name='qemu'/>
+      <alias name='net0'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x03' function='0x0'/>
+    </interface>
+    <interface type='network'>
+      <mac address='52:54:00:dd:c4:b4'/>
+      <source network='whonix-internal' portid='4d28a065-5ec1-4413-87fe-8e81e042a62f' bridge='virbr2'/>
+      <target dev='vnet8'/>
+      <model type='virtio'/>
+      <driver name='qemu'/>
+      <alias name='net1'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x04' function='0x0'/>
+    </interface>
+    <serial type='pty'>
+      <source path='/dev/pts/2'/>
+      <target type='isa-serial' port='0'>
+        <model name='isa-serial'/>
+      </target>
+      <alias name='serial0'/>
+    </serial>
+    <console type='pty' tty='/dev/pts/2'>
+      <source path='/dev/pts/2'/>
+      <target type='serial' port='0'/>
+      <alias name='serial0'/>
+    </console>
+    <channel type='spicevmc'>
+      <target type='virtio' name='com.redhat.spice.0' state='disconnected'/>
+      <alias name='channel0'/>
+      <address type='virtio-serial' controller='0' bus='0' port='1'/>
+    </channel>
+    <input type='mouse' bus='ps2'>
+      <alias name='input0'/>
+    </input>
+    <input type='keyboard' bus='ps2'>
+      <alias name='input1'/>
+    </input>
+    <graphics type='spice' port='5901' autoport='yes' listen='127.0.0.1'>
+      <listen type='address' address='127.0.0.1'/>
+      <clipboard copypaste='yes'/>
+      <filetransfer enable='no'/>
+      <gl enable='no'/>
+    </graphics>
+    <audio id='1' type='spice'/>
+    <video>
+      <model type='virtio' heads='1' primary='yes'/>
+      <alias name='video0'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x02' function='0x0'/>
+    </video>
+    <memballoon model='none'/>
+    <rng model='virtio'>
+      <backend model='random'>/dev/urandom</backend>
+      <alias name='rng0'/>
+      <address type='pci' domain='0x0000' bus='0x00' slot='0x07' function='0x0'/>
+    </rng>
+  </devices>
+  <seclabel type='dynamic' model='dac' relabel='yes'>
+    <label>+1000:+984</label>
+    <imagelabel>+1000:+984</imagelabel>
+  </seclabel>
+</domain>
+
