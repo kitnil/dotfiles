@@ -1,4 +1,4 @@
-<domain type='kvm' id='2'>
+<domain type='kvm' id='3'>
   <name>qubes</name>
   <uuid>26a12824-95b2-4e5b-87d6-b9a74ec7778c</uuid>
   <memory unit='KiB'>10485760</memory>
@@ -19,7 +19,6 @@
   </features>
   <cpu mode='host-passthrough' check='full' migratable='on'>
     <topology sockets='1' dies='1' cores='4' threads='1'/>
-    <feature policy='require' name='topoext'/>
   </cpu>
   <clock offset='utc'>
     <timer name='rtc' tickpolicy='catchup'/>
