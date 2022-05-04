@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2021 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2021, 2022 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -20,10 +20,16 @@
   #:use-module (gnu services shepherd)
   #:use-module (gnu services)
   #:use-module (guix gexp)
+  #:use-module (guix records)
+  #:use-module (ice-9 match)
   #:use-module (srfi srfi-1)
   #:use-module (gnu packages docker)
   #:export (docker-service
-            docker-kiwiirc-service))
+            docker-kiwiirc-service
+
+            docker-compose-configuration
+            docker-compose-configuration?
+            docker-compose-service-type))
 
 ;;; Commentary:
 ;;;
@@ -85,5 +91,49 @@
                                                       #~(begin
                                                           (system* #$(file-append docker-cli "/bin/docker")
                                                                    "stop" "kiwiirc"))))))))))
+
+
+;;;
+;;; docker-compose
+;;;
+
+(define-record-type* <docker-compose-configuration>
+  docker-compose-configuration make-docker-compose-configuration
+  docker-compose-configuration?
+  (docker-compose docker-compose-configuration-docker-compose ;<package>
+                  (default docker-compose))
+  (compose-file docker-compose-configuration-compose-file)    ;<file-like> object
+  (project-name docker-compose-configuration-project-name)    ;string
+  )
+
+(define docker-compose-shepherd-service
+  (match-lambda
+    (($ <docker-compose-configuration> docker-compose compose-file project-name)
+     (list
+      (shepherd-service
+       (provision (list (string->symbol (string-append "docker-compose-" project-name))))
+       (documentation "Run docker-compose.")
+       (requirement '(loopback))
+       (start #~(make-forkexec-constructor
+                 (append (list (string-append #$docker-compose "/bin/docker-compose")
+                               "--file" #$compose-file
+                               "--project-name" #$project-name
+                               "up"))
+                 #:environment-variables
+                 (append (list "SSL_CERT_DIR=/etc/ssl/certs"
+                               "SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt")
+                         (remove (lambda (str)
+                                   (or (string-prefix? "HOME=" str)
+                                       (string-prefix? "SSL_CERT_DIR=" str)
+                                       (string-prefix? "SSL_CERT_FILE=" str)))
+                                 (environ)))))
+       (respawn? #f)
+       (stop #~(make-kill-destructor)))))))
+
+(define docker-compose-service-type
+  (service-type (name 'docker-compose)
+                (extensions (list (service-extension shepherd-root-service-type
+                                                     docker-compose-shepherd-service)))
+                (description "Run docker-compose.")))
 
 ;;; docker.scm ends here
