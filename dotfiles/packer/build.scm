@@ -1,4 +1,7 @@
+;; To build the QEMU image run the following commands:
+;;
 ;; guix build -f build.scm
+;; /gnu/store/...-packer/bin/packer-build-guix
 
 (use-modules (gnu packages guile)
              (guix gexp)
