@@ -69,8 +69,12 @@
                                                       (with-imported-modules '((guix build utils))
                                                         #~(begin
                                                             (use-modules (guix build utils))
-                                                            (mkdir-p "packer-build")
-                                                            (chdir "packer-build")
+                                                            (define build-directory
+                                                              (if (getenv "PACKER_CACHE_DIR")
+                                                                  (getenv "PACKER_CACHE_DIR")
+                                                                  "packer-build"))
+                                                            (mkdir-p build-directory)
+                                                            (chdir build-directory)
                                                             (if (file-exists? "bare-bones.tmpl")
                                                                 (delete-file "bare-bones.tmpl"))
                                                             (copy-file #$(local-file "bare-bones.tmpl") "bare-bones.tmpl")
