@@ -30,7 +30,7 @@ EndSection
 
   (bootloader (bootloader-configuration
                (bootloader grub-efi-bootloader)
-               (target "/boot/efi")))
+               (targets '("/boot/efi"))))
 
   (initrd-modules (cons "raid456" %base-initrd-modules))
 
