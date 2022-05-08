@@ -521,6 +521,22 @@ location / {
                                     "-m" "state"
                                     "--state" "RELATED,ESTABLISHED"
                                     "-j" "ACCEPT")))
+
+                            ;; access ci.guix.gnu.org via oracle on 192.168.154.2-154
+                            (iptables
+                             (string-join
+                              (list
+                               "-A" "FORWARD"
+                               "-i" "br154.154"
+                               "-o" "tapvpn1"
+                               "-j" "ACCEPT")))
+                            (iptables
+                             (string-join
+                              (list "-A" "FORWARD"
+                                    "-i" "tapvpn1"
+                                    "-o" "br154.154"
+                                    "-j" "ACCEPT")))
+
                             (ovs-vsctl
                              (string-join
                               (list "--may-exist" "add-br" "br155")))
