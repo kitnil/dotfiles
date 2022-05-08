@@ -1741,16 +1741,13 @@ namespaces = [ ]
                         (modify-services (operating-system-user-services base-system)
                           (guix-service-type config => (guix-configuration
                                                         (inherit %guix-daemon-config)
-                                                        (extra-options '("--cache-failures")))))))
-
-      (essential-services
-       (modify-services (operating-system-default-essential-services this-operating-system)
-         (sysctl-service-type _ =>
-                              (sysctl-configuration
-                               (settings (append '(("net.bridge.bridge-nf-call-iptables" . "0")
-                                                   ;; opensearch requirement
-                                                   ("vm.max_map_count" . "262144"))
-                                                 %default-sysctl-settings))))))
+                                                        (extra-options '("--cache-failures"))))
+                          (sysctl-service-type _ =>
+                                               (sysctl-configuration
+                                                (settings (append '(("net.bridge.bridge-nf-call-iptables" . "0")
+                                                                    ;; opensearch requirement
+                                                                    ("vm.max_map_count" . "262144"))
+                                                                  %default-sysctl-settings)))))))
 
       (setuid-programs %my-setuid-programs)
 
