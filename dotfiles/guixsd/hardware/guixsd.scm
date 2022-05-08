@@ -6,6 +6,9 @@
 
 (use-modules (gnu packages xorg) (gnu packages ratpoison))
 (use-service-modules xorg desktop)
+
+(use-modules (bootloader grub))
+
 (define (amdgpu+amdgpu.conf)
   (string-append "\
 
@@ -29,8 +32,10 @@ EndSection
   (locale "en_US.utf8")
 
   (bootloader (bootloader-configuration
-               (bootloader grub-efi-bootloader)
-               (targets '("/boot/efi"))))
+               (bootloader grub-efi-bootloader-removable)
+               (targets '("/boot1/efi"
+                          "/boot2/efi"
+                          "/boot3/efi"))))
 
   (initrd-modules (cons "raid456" %base-initrd-modules))
 
@@ -46,8 +51,16 @@ EndSection
                          (type "ext4")
                          (dependencies mapped-devices))
                        (file-system
-                         (device (uuid "EC6E-3897" 'fat))
-                         (mount-point "/boot/efi")
+                         (device (file-system-label "boot1"))
+                         (mount-point "/boot1/efi")
+                         (type "vfat"))
+                       (file-system
+                         (device (file-system-label "boot2"))
+                         (mount-point "/boot2/efi")
+                         (type "vfat"))
+                       (file-system
+                         (device (file-system-label "boot3"))
+                         (mount-point "/boot3/efi")
                          (type "vfat"))
                        (file-system
                          (device "tmpfs")
