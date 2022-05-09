@@ -1,5 +1,8 @@
+#!/usr/bin/env -S guile --no-auto-compile -e main -s
+!#
+
 ;;; convert-music --- Convert video clips to audio only
-;;; Copyright © 2019 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2019, 2022 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of convert-music.
 ;;;
@@ -17,30 +20,110 @@
 ;;; along with convert-music.  If not, see <http://www.gnu.org/licenses/>.
 
 
-;; This file contains machinery convert all my video clips to audio
-;; only.  To do that, run:
+;; Convert video clips in /srv/music directory to audio files without a video
+;; part and store them in /srv/audio directory.  To do that, run:
 ;;
-;;  guile -l guile/convert-music.scm -c exit
+;; convert-music /srv/music /srv/audio
 
-(use-modules (ice-9 readline)
+(use-modules (ice-9 format)
+             (ice-9 ftw)
+             (ice-9 match)
+             (ice-9 popen)
+             (ice-9 rdelim)
+             (ice-9 readline)
+             (json)
              (srfi srfi-1)
              (srfi srfi-26)
-             (ice-9 ftw)
-             (ice-9 match))
+             (srfi srfi-37))
 
 (define (list-files dir)
   (filter (match-lambda
-            ((name _) name)
+            ((name #(_ _ _ _ _ _ _ _ _ _ _ _ _ 'regular _ _ _ _)) name)
             (_ #f))
           (file-system-tree dir)))
 
-(for-each (lambda (file) (match file
-                      ((n ... ext)
-                       (system* "ffmpeg"
-                                "-i" (string-append "/src/music/" (string-join file "."))
-                                "-vn"
-                                "-f" "webm"
-                                (string-append "/src/music/webm/" (apply string-append n) "." "webm")))))
-          (map (cut string-split <> #\.)
-               (map (match-lambda ((file _ ...) file))
-                    (list-files (getcwd)))))
+(define %options
+  (let ((display-and-exit-proc (lambda (msg)
+                                 (lambda (opt name arg loads)
+                                   (display msg) (quit)))))
+    (list (option '(#\v "version") #f #f
+                  (display-and-exit-proc "convert-music version 0.0.1\n"))
+          (option '(#\h "help") #f #f
+                  (display-and-exit-proc
+                   "Usage: convert-music /srv/music /srv/audio ...")))))
+
+(define %default-options
+  '())
+
+(define (codec-name->file-extension codec-name)
+  (case codec-name
+    ((opus) ".opus")
+    ((vorbis) ".ogg")
+    ((aac) ".aac")
+    (else #f)))
+
+(define (main . args)
+  (define opts
+    (args-fold (cdr (program-arguments))
+               %options
+               (lambda (opt name arg loads)
+                 (error "Unrecognized option `~A'" name))
+               (lambda (op loads)
+                 (cons op loads))
+               %default-options))
+  (define input-directory
+    (first (reverse opts)))
+  (define output-directory
+    (second (reverse opts)))
+  (for-each (lambda (file)
+              (match file
+                ((n ... ext)
+                 (let* ((input (string-append input-directory "/"
+                                              (string-join file ".")))
+                        (output-file-name
+                         (match (string-split (basename input) #\.)
+                           ((file-name ... file-extension)
+                            (string-join file-name "."))
+                           ((file-name file-extension)
+                            file-name))))
+                   (let* ((port (open-pipe* OPEN_READ "ffprobe"
+                                            "-show_streams"
+                                            "-loglevel" "error"
+                                            "-print_format" "json"
+                                            input))
+                          (output (read-string port)))
+                     (close-port port)
+                     (for-each (lambda (stream)
+                                 (when (string= (assoc-ref stream "codec_type")
+                                                "audio")
+                                   (let ((output
+                                          (string-append
+                                           output-directory "/"
+                                           output-file-name
+                                           (codec-name->file-extension
+                                            (string->symbol
+                                             (assoc-ref stream "codec_name"))))))
+                                     (format #t "input: ~a~%"
+                                             input)
+                                     (format #t "format: ~a~%"
+                                             (assoc-ref stream "codec_name"))
+                                     (format #t "output: ~a~%"
+                                             output)
+                                     (unless (file-exists? output)
+                                       (unless
+                                           (= 0 (system*
+                                                 "ffmpeg"
+                                                 "-loglevel" "quiet"
+                                                 "-i" input
+                                                 "-vn" ;no video
+                                                 "-c:a" "copy" ;copy audio
+                                                 output))
+                                         (exit 1)))
+                                     (newline))))
+                               (array->list
+                                (assoc-ref (json-string->scm
+                                            (string-trim-right output #\newline))
+                                           "streams"))))))))
+            (map (cut string-split <> #\.)
+                 (map (match-lambda ((file _ ...) file))
+                      (list-files input-directory)))))
