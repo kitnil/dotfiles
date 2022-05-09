@@ -167,15 +167,6 @@
                           (sleep 60))))
                  :name "mode-line-df-spb")
 
-                (sb-thread:make-thread
-                 (lambda ()
-                   (loop while t do
-                        (progn
-                          (torrent-seeds-update-counter)
-                          (mode-line-update)
-                          (sleep 60))))
-                 :name "torrent-seeds-update-counter")
-
                 ;; (sb-thread:make-thread
                 ;;  (lambda ()
                 ;;    (loop while t do
