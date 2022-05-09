@@ -29,7 +29,7 @@
   (define-key *top-map* (kbd "s-f") "fullscreen")
   (define-key *top-map* (kbd "s-D") "mjru-docker-pull")
   (define-key *top-map* (kbd "s-H") "glances")
-  (define-key *top-map* (kbd "s-l") "turn-screen-off")
+  (define-key *top-map* (kbd "s-l") "looking-glass-client")
   (define-key *top-map* (kbd "s-t") "top")
   (define-key *top-map* (kbd "s-T") "tometips")
   (define-key *top-map* (kbd "s-h") "htop")
