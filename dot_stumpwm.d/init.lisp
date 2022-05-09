@@ -1,4 +1,4 @@
-;; Copyright © 2018, 2019, 2020, 2021 Oleg Pykhalov <go.wigust@gmail.com>
+;; Copyright © 2018, 2019, 2020, 2021, 2022 Oleg Pykhalov <go.wigust@gmail.com>
 ;; Released under the GNU GPLv3 or any later version.
 
 (in-package :stumpwm)
@@ -60,6 +60,7 @@
        (load-config-file "time.lisp")
        (load-config-file "mjru.lisp")
        (load-config-file "virtualization.lisp")
+       (load-config-file "bittorrent.lisp")
 
        (load-config-file "disk.lisp")
        (load-config-file "torrent.lisp")
