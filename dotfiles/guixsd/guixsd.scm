@@ -26,6 +26,7 @@
              (wigust packages web)
              (wigust packages linux)
              (packages certs)
+             (services admin)
              (services autofs)
              (services backup)
              (services bird)
@@ -930,6 +931,8 @@ location / {
                          (service autofs-service-type
                                   (autofs-configuration
                                    (mounts %autofs-mounts)))
+
+                         (service osquery-service-type)
 
                          (service prometheus-service-type
                                   (let ((listen-address "127.0.0.1:9090"))
