@@ -59,6 +59,7 @@
        (load-config-file "web.lisp")
        (load-config-file "time.lisp")
        (load-config-file "mjru.lisp")
+       (load-config-file "virtualization.lisp")
 
        (load-config-file "disk.lisp")
        (load-config-file "torrent.lisp")
