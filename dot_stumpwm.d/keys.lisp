@@ -108,7 +108,7 @@
   (define-key *top-map* (kbd "C-s-h") "sampler")
   (define-key *top-map* (kbd "C-M-S-s-RET") "xterm-dark-no-scrollbar")
   (define-key *top-map* (kbd "s-SunPrint_Screen") "zoom")
-  (define-key *top-map* (kbd "s-b") "zoom")
+  (define-key *top-map* (kbd "s-b") "qbittorrent")
   (define-key *top-map* (kbd "C-s-Right") "window-resize-by-half-horizontal")
   (define-key *top-map* (kbd "C-s-Left") "window-resize-by-half-vertical")
 
