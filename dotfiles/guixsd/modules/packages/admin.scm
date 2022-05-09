@@ -111,3 +111,53 @@ security. See FAQ or read below for more.")
     (description "crowdsec-firewall-bouncer will fetch new and old decisions
 from a CrowdSec API to add them in a blocklist used by supported firewalls.")
     (license license:expat)))
+
+(define-public osquery
+  (package
+    (name "osquery")
+    (version "5.2.3")
+    (source (origin
+              (method url-fetch)
+              (uri
+               (string-append
+                "https://github.com/osquery/osquery/releases/download/"
+                version "/osquery-" version "_1.linux_x86_64.tar.gz"))
+              (sha256
+               (base32
+                "1x2k93zh04ykhvh3r4vzz90cjxv7p6paw8bpqd63mfdg9gr6axb7"))))
+    (build-system trivial-build-system)
+    (inputs (list gzip tar glibc patchelf zlib))
+    (native-inputs `(("source" ,source)))
+    (outputs '("out" "opt"))
+    (arguments
+     (list
+      #:modules '((guix build utils))
+      #:builder
+      #~(begin
+          (use-modules (guix build utils))
+          (setenv "PATH"
+                  (string-append
+                   #$(this-package-input "gzip") "/bin"
+                   ":" #$(this-package-input "tar") "/bin"
+                   ":" #$(this-package-input "patchelf") "/bin"))
+          (invoke "tar" "-xf" #$(this-package-native-input "source"))
+          (mkdir-p (string-append #$output "/bin"))
+          (copy-file "opt/osquery/bin/osqueryd"
+                     (string-append #$output "/bin/osqueryd"))
+          (invoke "patchelf"
+                  "--set-interpreter"
+                  (string-append #$(this-package-input "glibc")
+                                 "/lib/ld-linux-x86-64.so.2")
+                  "--set-rpath"
+                  (string-append #$(this-package-input "zlib")
+                                 "/lib")
+                  (string-append #$output "/bin/osqueryd"))
+          (delete-file-recursively "opt/osquery/bin")
+          (symlink (string-append #$output "/bin/osqueryd")
+                   (string-append #$output "/bin/osqueryi"))
+          (copy-recursively "opt/osquery" #$output:opt))))
+    (home-page "https://osquery.io/")
+    (synopsis "Expose an operating system as a relational database")
+    (description "osquery is a SQL powered operating system instrumentation,
+monitoring, and analytics.")
+    (license license:expat)))
