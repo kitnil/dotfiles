@@ -91,7 +91,7 @@
   (define-key *top-map* (kbd "S-s-Left") "move-window left")
   (define-key *top-map* (kbd "S-s-Up") "move-window up")
   (define-key *top-map* (kbd "S-s-Down") "move-window down")
-  (define-key *top-map* (kbd "s-v") "youtube-dl-music")
+  (define-key *top-map* (kbd "s-v") "virt-manager")
   (define-key *top-map* (kbd "s-V") "pulsemixer")
   (define-key *top-map* (kbd "s-c") "run-or-raise-alacritty")
   (define-key *top-map* (kbd "s-F") "move-focus right")
