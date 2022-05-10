@@ -65,7 +65,8 @@
         "monitor.wugi.info"
         "syncthing.wugi.info"
         "webssh.wugi.info"
-        "kiwiirc.wugi.info"))
+        "kiwiirc.wugi.info"
+        "peertube.wugi.info"))
 
 
 ;;;
@@ -82,6 +83,17 @@
          (server-name '("www.tld"))
          (listen '("80"))
          (root "/srv/share"))
+        (nginx-server-configuration
+         (listen '("443 ssl"))
+         (ssl-certificate (letsencrypt-certificate "peertube.wugi.info"))
+         (ssl-certificate-key (letsencrypt-key "peertube.wugi.info"))
+         (server-name '("peertube.wugi.info"))
+         (root "/var/www/peertube/storage")
+         (raw-content
+          (list
+           (with-input-from-file (string-append
+                                  %home "/.local/share/chezmoi/dotfiles/guixsd/nginx/peertube")
+             read-string))))
         (nginx-server-configuration
          (server-name '("netmap.intr"))
          (listen '("80"))
@@ -207,7 +219,6 @@ location / {
                 (nginx-server-configuration-locations %webssh-configuration-nginx))))
 
         (proxy "cups.tld" 631)
-        (proxy "blog.wugi.info" 9001)
         (proxy "jenkins.wugi.info" 8090 #:ssl? #t #:ssl-key? #t #:mtls? #t)
         (proxy "syncthing.wugi.info" 8384 #:ssl? #t #:ssl-key? #t #:mtls? #t
                ;; https://docs.syncthing.net/users/faq.html#why-do-i-get-host-check-error-in-the-gui-api
@@ -767,6 +778,7 @@ location / {
                            "spb"
                            "netmap.intr"
                            "vault1"
+                           "peertube.wugi.info"
                            ;; Majordomo
                            ;; "hms-dev.intr"
                            ;; "api-dev.intr"
@@ -1481,7 +1493,12 @@ PasswordAuthentication yes")))
 
                          (service nginx-service-type
                                   (nginx-configuration
-                                   (server-blocks %nginx-server-blocks)))
+                                   (server-blocks %nginx-server-blocks)
+                                   (upstream-blocks
+                                    (list
+                                     (nginx-upstream-configuration
+                                      (name "peertube-backend")
+                                      (servers '("127.0.0.1:9001")))))))
 
                          (service gitolite-service-type
                                   (gitolite-configuration
