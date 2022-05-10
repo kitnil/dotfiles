@@ -1547,7 +1547,7 @@ PasswordAuthentication yes")))
 
 		         ;; TODO: Move those services.
 
-                         (postgresql-service
+                         #;(postgresql-service
                           #:config-file (postgresql-config-file
                                          (hba-file
                                           (plain-file "pg_hba.conf"
