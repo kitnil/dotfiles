@@ -1547,15 +1547,21 @@ PasswordAuthentication yes")))
 
 		         ;; TODO: Move those services.
 
-                         #;(postgresql-service #:config-file (postgresql-config-file
-                         (hba-file
-                         (plain-file "pg_hba.conf"
-                         "
-                         local	all	all			trust
-                         host	all	all	127.0.0.1/32    trust
-                         host	all	all	::1/128         trust
-                         host	all	all	172.16.0.0/12   trust"))
-                         (extra-config '(("listen_addresses" "'0.0.0.0'")))))
+                         (postgresql-service
+                          #:config-file (postgresql-config-file
+                                         (hba-file
+                                          (plain-file "pg_hba.conf"
+                                                      "
+local	all	all			trust
+host	all	all	127.0.0.1/32    trust
+host	all	all	::1/128         trust
+host	all	all	172.16.0.0/12   trust"))
+                                         (extra-config
+                                          `(("listen_addresses"
+                                             ,(string-join '("127.0.0.1"
+                                                             "192.168.0.144"
+                                                             "172.18.0.1")
+                                                           ","))))))
 
                          ;; (service mongodb-service-type)
 
