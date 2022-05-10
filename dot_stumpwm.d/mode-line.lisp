@@ -54,13 +54,6 @@
           ;;           '()
           ;;           (list '(:eval (format nil "stack: ~a" *mjru-hms-current-stack*)))))
 
-          ,@(if (= *torrent-seeds-counter* 0)
-                '()
-                (list (make-string 4 :initial-element #\space)))
-          ,@(if (= *torrent-seeds-counter* 0)
-                '()
-                (list '(:eval (format nil "TOR_SEED: ~a" *torrent-seeds-counter*))))
-
           ,@(if (and *imap-recent* (not (= *imap-recent* 0)))
                 (list (make-string 4 :initial-element #\space))
                 '())

@@ -47,7 +47,6 @@
        (load-config-file "chat.lisp")
        (load-config-file "mail.lisp")
        (load-config-file "docker.lisp")
-       (load-config-file "vm.lisp")
        (load-config-file "vnc.lisp")
        (load-config-file "rofi.lisp")
        (load-config-file "audio.lisp")
@@ -63,7 +62,6 @@
        (load-config-file "bittorrent.lisp")
 
        (load-config-file "disk.lisp")
-       (load-config-file "torrent.lisp")
        (load-config-file "rest.lisp")
        (load-config-file "cpu.lisp")
        (load-config-file "mem.lisp")
