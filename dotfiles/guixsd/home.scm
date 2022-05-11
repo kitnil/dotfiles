@@ -480,6 +480,7 @@ exec -a \"$0\" /home/oleg/.nix-profile/bin/~a --disable-features=SendMouseLeaveE
                             "nix-repl"
                             "oracle"
                             "pers"
+                            "peertube"
                             "prometheus-billing2"
                             "pulseaudio-switch-sink.sh"
                             "qemu-cdrom.sh"
