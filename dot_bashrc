@@ -1705,6 +1705,9 @@ youtube_dl_to_org()
 gita()
 {
     case "$1" in
+        emacs)
+            emacsclient -cn "$(command gita ls "$2")"
+            ;;
         cd)
             cd "$(command gita ls "$2")"
             ;;
