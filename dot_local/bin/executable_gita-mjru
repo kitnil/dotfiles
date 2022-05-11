@@ -6,15 +6,15 @@ config()
 {
     while IFS= read -r -d '' directory
     do
-        echo "$directory,$(basename "$(dirname "$directory")")-$(basename "$directory")"
-    done < <(find "$HOME/majordomo" -maxdepth 2 -type d -print0)
+        echo "${directory},$(basename "$(dirname "$directory")")-$(basename "$directory")"
+    done < <(find "${HOME}/majordomo" -maxdepth 2 -type d -print0)
 }
 
-cat > "$HOME/.config/gita/repo_path" <<EOF
+cat > "${HOME}/.config/gita/repo_path" <<EOF
 $(config)
 EOF
 
-cat > "$HOME/.config/gita/groups.yml" <<EOF
+cat > "${HOME}/.config/gita/groups.yml" <<EOF
 php: [webservices-apache2-php44, webservices-apache2-php52, webservices-apache2-php53,
   webservices-apache2-php54, webservices-apache2-php55, webservices-apache2-php70,
   webservices-apache2-php71, webservices-apache2-php72, webservices-apache2-php73,
