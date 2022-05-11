@@ -6,7 +6,14 @@ config()
 {
     while IFS= read -r -d '' directory
     do
-        echo "${directory},$(basename "$(dirname "$directory")")-$(basename "$directory")"
+        project_name="$(basename "$directory")"
+        group_name="$(basename "$(dirname "$directory")")"
+        if [[ -f $directory/.git ]]
+        then
+            :
+        else
+            echo "${directory},${group_name}-${project_name}"
+        fi
     done < <(find "${HOME}/majordomo" -maxdepth 2 -type d -print0)
 }
 
