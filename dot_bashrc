@@ -1705,6 +1705,9 @@ youtube_dl_to_org()
 gita()
 {
     case "$1" in
+        cd)
+            cd "$(command gita ls "$2")"
+            ;;
         --help)
             command gita --help "$@"
             glow https://github.com/nosarthur/gita
