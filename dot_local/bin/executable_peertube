@@ -83,6 +83,16 @@
          (lambda (peertube-category)
            peertube-category)))
 
+(define %peertube-playlist-id
+  (and=> (getenv "PEERTUBE_PLAYLIST_ID")
+         (lambda (peertube-playlist-id)
+           peertube-playlist-id)))
+
+(define %peertube-privacy
+  (and=> (getenv "PEERTUBE_PRIVACY")
+         (lambda (peertube-privacy)
+           peertube-privacy)))
+
 (define (peertube-client-id)
   (let* ((port   (open-pipe* OPEN_READ "curl"
                              (string-append
@@ -145,7 +155,8 @@
                            ((file-name ... file-extension)
                             (string-join file-name "."))
                            ((file-name file-extension)
-                            file-name))))
+                            file-name)))
+                        (video-upload-output (string-append output-file-name ".json")))
 
                    (if (any (lambda (file)
                               (string= file input))
@@ -163,18 +174,35 @@
                                     #f))
                            (invoke
                             "curl" (string-append %peertube-api-url "/videos/upload")
-                            "--silent"
-                            "--header" (format #f "Authorization: Bearer ~a" access-token)
+                            "--fail"
                             "--max-time" "6000"
+                            "--header" (format #f "Authorization: Bearer ~a" access-token)
                             "--form" (format #f "videofile=@~a" input)
                             "--form" (format #f "name=~a" output-file-name)
                             "--form" (format #f "channelId=~a" %peertube-channel-id)
-                            "--form" "privacy=1"
+                            "--form" (format #f "privacy=~a" %peertube-privacy)
                             "--form" (format #f "category=~a" %peertube-category)
-                            "--form" "waitTranscoding=1"))
+                            "--form" "waitTranscoding=1"
+                            "--output" video-upload-output))
 
                          (display "\nSleep for 30 to wait for API.\n")
                          (sleep 30)
+
+                         (let ((uuid (assoc-ref (assoc-ref (json-string->scm
+                                                            (with-input-from-file video-upload-output
+                                                              read-string))
+                                                           "video")
+                                                "uuid")))
+                           
+                           (guard (c ((invoke-error? c)
+                                      (report-invoke-error c)
+                                      (append-to-file "peertube-playlist-error.log" (string-append "\n" input))
+                                      #f))
+                             (invoke "curl"
+                                     (string-append %peertube-api-url "/video-playlists/" %peertube-playlist-id "/videos")
+                                     "--fail"
+                                     "--header" (format #f "Authorization: Bearer ~a" access-token)
+                                     "--data" (format #f "videoId=~a" uuid))))
 
                          (let loop ()
                            (if (= (system* "pgrep" "--full" "--list-full" "ffmpeg")
