@@ -1602,6 +1602,34 @@ host	all	all	192.168.64.0/20   trust"))
                                          #~(begin
                                              (use-modules (json builder)
                                                           (ice-9 rdelim))
+                                             (define filebeat-config
+                                               #$(plain-file "filebeat.json"
+                                                  (scm->json-string
+                                                   `(("filebeat"
+                                                      ("modules" .
+                                                       #((("module" . "nginx")
+                                                          ("error"
+                                                           ("var.paths" . #("/mnt/log/nginx/error.log"))
+                                                           ("enabled" . #t))
+                                                          ("access"
+                                                           ("var.paths" . #("/mnt/log/nginx/access.log"))
+                                                           ("enabled" . #t)))
+                                                         (("syslog"
+                                                           ("var.paths" . #("/mnt/log/messages"))
+                                                           ("var.convert_timezone" . #t)
+                                                           ("enabled" . #t))
+                                                          ("module" . "system")
+                                                          ("auth"
+                                                           ("var.paths" . #("/mnt/log/secure"))
+                                                           ("enabled" . #t))))))
+                                                     ("output"
+                                                      ("elasticsearch"
+                                                       ("hosts" . #("https://localhost:9200"))
+                                                       ("allow_older_versions" . #t)
+                                                       ("ssl"
+                                                        ("certificate_authorities" . #("/etc/client/ca.pem"))
+                                                        ("certificate" . "/etc/client/cert.pem")
+                                                        ("key" . "/etc/client/cert.key"))))))))
                                              (with-output-to-file #$output
                                                (lambda ()
                                                  (scm->json
@@ -1609,11 +1637,14 @@ host	all	all	192.168.64.0/20   trust"))
                                                     ("services"
                                                      ("opensearch-node1"
                                                       ("volumes" . #("/var/lib/opensearch:/usr/share/opensearch/data"
-                                                                     "/etc/opensearch/pki/root-ca.pem:/usr/share/opensearch/config/root-ca"
-                                                                     "/etc/opensearch/pki/node1.pem:/usr/share/opensearch/config/esnode.pem"
-                                                                     "/etc/opensearch/pki/node1-key.pem:/usr/share/opensearch/config/esnode-key.pem"
-                                                                     "/etc/opensearch/pki/admin.pem:/usr/share/opensearch/config/kirk.pem"
-                                                                     "/etc/opensearch/pki/admin-key.pem:/usr/share/opensearch/config/kirk-key.pem"))
+                                                                     "/etc/opensearch:/usr/share/opensearch/config"
+                                                                     ;; "/etc/opensearch/pki/root-ca.pem:/usr/share/opensearch/config/root-ca.pem:ro"
+                                                                     ;; "/etc/opensearch/pki/node1.pem:/usr/share/opensearch/config/esnode.pem:ro"
+                                                                     ;; "/etc/opensearch/pki/node1-key.pem:/usr/share/opensearch/config/esnode-key.pem:ro"
+                                                                     ;; "/etc/opensearch/pki/admin.pem:/usr/share/opensearch/config/kirk.pem:ro"
+                                                                     ;; "/etc/opensearch/pki/admin-key.pem:/usr/share/opensearch/config/kirk-key.pem:ro"
+                                                                     ;; "/etc/opensearch/pki/opensearch.keystore:/usr/share/opensearch/config/opensearch.keystore:ro"
+                                                                     ))
                                                       ("ulimits"
                                                        ("nofile"
                                                         ("soft" . 65536)
@@ -1629,7 +1660,8 @@ host	all	all	192.168.64.0/20   trust"))
                                                                          "discovery.seed_hosts=opensearch-node1"
                                                                          "cluster.initial_master_nodes=opensearch-node1"
                                                                          "bootstrap.memory_lock=true"
-                                                                         "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m"))
+                                                                         "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m"
+                                                                         "compatibility.override_main_response_version=true"))
                                                       ("container_name" . "opensearch-node1"))
                                                      ("opensearch-dashboards"
                                                       ("ports" . #("127.0.0.1:5601:5601"))
@@ -1637,7 +1669,24 @@ host	all	all	192.168.64.0/20   trust"))
                                                       ("expose" . #("5601"))
                                                       ("environment"
                                                        ("OPENSEARCH_HOSTS" . "[\"https://opensearch-node1:9200\"]"))
-                                                      ("container_name" . "opensearch-dashboards"))))))))))))))
+                                                      ("container_name" . "opensearch-dashboards"))
+                                                     ("filebeat"
+                                                      ("volumes"
+                                                       .
+                                                       ,(vector (string-append filebeat-config ":/usr/share/filebeat/filebeat.yml:ro")
+                                                                "/var/log:/mnt/log:ro"
+                                                                "/etc/localtime:/etc/localtime:ro"
+                                                                "/etc/opensearch/root-ca.pem:/etc/client/ca.pem:ro"
+                                                                "/etc/opensearch/kirk.pem:/etc/client/cert.pem:ro"
+                                                                "/etc/opensearch/kirk-key.pem:/etc/client/cert.key:ro"))
+                                                      ("image" . "oracle1.local:5000/beats/filebeat-oss:7.12.1")
+                                                      ("hostname" . "guixsd")
+                                                      ("network_mode" . "host")
+                                                      ("environment"
+                                                       ("name" . "guixsd"))
+                                                      ("user" . "0:0")
+                                                      ("depends_on" . #("opensearch-node1"))
+                                                      ("command" . "filebeat -e -strict.perms=false"))))))))))))))
 
                          (service docker-compose-service-type
                                   (docker-compose-configuration
