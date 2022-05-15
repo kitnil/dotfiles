@@ -1923,3 +1923,12 @@ ssh_sudo()
             -o StrictHostKeyChecking=no \
             "${@:2}"
 }
+
+psql()
+{
+    case "$1" in
+        *)
+            sudo -u postgres psql "$@"
+            ;;
+    esac
+}
