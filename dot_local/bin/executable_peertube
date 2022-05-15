@@ -34,6 +34,7 @@
              (json)
              (srfi srfi-1)
              (srfi srfi-26)
+             (srfi srfi-34)
              (srfi srfi-37)
 
              (guix build utils))
@@ -63,19 +64,24 @@
            peertube-api-url)))
 
 (define %peertube-username
-  (and=> (getenv "PEERTUBE_API_USERNAME")
-         (lambda (peertube-api-username)
-           peertube-api-username)))
+  (and=> (getenv "PEERTUBE_USERNAME")
+         (lambda (peertube-username)
+           peertube-username)))
 
 (define %peertube-password
-  (and=> (getenv "PEERTUBE_API_PASSWORD")
-         (lambda (peertube-api-password)
-           peertube-api-password)))
+  (and=> (getenv "PEERTUBE_PASSWORD")
+         (lambda (peertube-password)
+           peertube-password)))
 
 (define %peertube-channel-id
-  (and=> (getenv "PEERTUBE_API_CHANNEL_ID")
-         (lambda (peertube-api-channel-id)
-           peertube-api-channel-id)))
+  (and=> (getenv "PEERTUBE_CHANNEL_ID")
+         (lambda (peertube-channel-id)
+           peertube-channel-id)))
+
+(define %peertube-category
+  (and=> (getenv "PEERTUBE_CATEGORY")
+         (lambda (peertube-category)
+           peertube-category)))
 
 (define (peertube-client-id)
   (let* ((port   (open-pipe* OPEN_READ "curl"
@@ -151,15 +157,21 @@
                        (begin
                          (format #t "input: ~a~%" input)
                          (format #t "output: ~a~%" output-file-name)
-                         (invoke
-                          "curl" (string-append %peertube-api-url "/videos/upload")
-                          "--silent"
-                          "--header" (format #f "Authorization: Bearer ~a" access-token)
-                          "--max-time" "6000"
-                          "--form" (format #f "videofile=@~a" input)
-                          "--form" (format #f "name=~a" output-file-name)
-                          "--form" (format #f "channelId=~a" %peertube-channel-id)
-                          "--form" "privacy=1")
+                         (guard (c ((invoke-error? c)
+                                    (report-invoke-error c)
+                                    (append-to-file "peertube-error.log" (string-append "\n" input))
+                                    #f))
+                           (invoke
+                            "curl" (string-append %peertube-api-url "/videos/upload")
+                            "--silent"
+                            "--header" (format #f "Authorization: Bearer ~a" access-token)
+                            "--max-time" "6000"
+                            "--form" (format #f "videofile=@~a" input)
+                            "--form" (format #f "name=~a" output-file-name)
+                            "--form" (format #f "channelId=~a" %peertube-channel-id)
+                            "--form" "privacy=1"
+                            "--form" (format #f "category=~a" %peertube-category)
+                            "--form" "waitTranscoding=1"))
 
                          (display "\nSleep for 30 to wait for API.\n")
                          (sleep 30)
