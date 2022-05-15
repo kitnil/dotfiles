@@ -1608,7 +1608,12 @@ host	all	all	192.168.64.0/20   trust"))
                                                   `(("version" . "3")
                                                     ("services"
                                                      ("opensearch-node1"
-                                                      ("volumes" . #("/var/lib/opensearch:/usr/share/opensearch/data"))
+                                                      ("volumes" . #("/var/lib/opensearch:/usr/share/opensearch/data"
+                                                                     "/etc/opensearch/pki/root-ca.pem:/usr/share/opensearch/config/root-ca"
+                                                                     "/etc/opensearch/pki/node1.pem:/usr/share/opensearch/config/esnode.pem"
+                                                                     "/etc/opensearch/pki/node1-key.pem:/usr/share/opensearch/config/esnode-key.pem"
+                                                                     "/etc/opensearch/pki/admin.pem:/usr/share/opensearch/config/kirk.pem"
+                                                                     "/etc/opensearch/pki/admin-key.pem:/usr/share/opensearch/config/kirk-key.pem"))
                                                       ("ulimits"
                                                        ("nofile"
                                                         ("soft" . 65536)
