@@ -1634,6 +1634,49 @@ host	all	all	192.168.64.0/20   trust"))
                                                        ("OPENSEARCH_HOSTS" . "[\"https://opensearch-node1:9200\"]"))
                                                       ("container_name" . "opensearch-dashboards"))))))))))))))
 
+                         (service docker-compose-service-type
+                                  (docker-compose-configuration
+                                   (project-name "samba")
+                                   (compose-file
+                                    (computed-file
+                                     "docker-compose-samba.json"
+                                     (with-extensions (list guile-json-4)
+                                       (with-imported-modules (source-module-closure '((json builder)))
+                                         #~(begin
+                                             (use-modules (json builder)
+                                                          (ice-9 rdelim))
+                                             (define password
+                                               (string-trim-right
+                                                #$(if (= (getuid) 0)
+                                                      (with-input-from-file "/etc/guix/secrets/windows"
+                                                        read-string)
+                                                      "skipping /etc/guix/secrets/windows")))
+                                             (with-output-to-file #$output
+                                               (lambda ()
+                                                 (scm->json
+                                                  `(("services"
+                                                     ("samba"
+                                                      ("volumes" . #("/srv/lib:/public"))
+                                                      ("restart" . "unless-stopped")
+                                                      ("ports"
+                                                       .
+                                                       #("192.168.154.1:139:139"
+                                                         "192.168.154.1:445:445"))
+                                                      ("image" . "dperson/samba")
+                                                      ("environment"
+                                                       .
+                                                       #("TZ=Europe/Moscow"
+                                                         "WORKGROUP=workgroup"
+                                                         "USERID=1000"
+                                                         "GROUPID=998"))
+                                                      ("container_name" . "samba")
+                                                      ("command"
+                                                       .
+                                                       ,(string-append
+                                                         "-u \"oleg;"
+                                                         password
+                                                         "\" -s \"media;/share;yes;no;no;workgroup\" -s \"public;/public;yes;no;yes\"")))))))))))))))
+
                          (dovecot-service
                           #:config (dovecot-configuration
                                     (listen '("127.0.0.1"))
