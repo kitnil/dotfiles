@@ -85,6 +85,11 @@ vnc vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
 
                dragon-drop
 
+               multipath-tools
+               ;; kpartx
+               ;; [[https://dev.to/c33s/how-to-mount-a-lvm-volume-which-is-inside-a-lvm-volume-jnl]
+               ;;  [How to mount a lvm volume which is inside a lvm volume - DEV Community]]
+
                gnu-gettext
                translate-shell ; Translation in CLI and Emacs
 
