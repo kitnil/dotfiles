@@ -36,6 +36,7 @@
              (services nix)
              (services autossh)
              (services kresd)
+             (services kubernetes)
              (services jenkins)
              (services monitoring)
              (services openvpn)
@@ -1734,6 +1735,13 @@ host	all	all	192.168.64.0/20   trust"))
                                                          password
                                                          "\" -s \"media;/share;yes;no;no;workgroup\" -s \"public;/public;yes;no;yes\"")))))))))))))))
 
+                         (service kubernetes-k3s-service-type
+                          (kubernetes-k3s-configuration
+                           (arguments '("--node-external-ip" "192.168.0.145"
+                                        "--bind-address" "192.168.0.145"
+                                        "--no-deploy" "traefik"))
+                           (kubevirt? #t)))
+
                          (dovecot-service
                           #:config (dovecot-configuration
                                     (listen '("127.0.0.1"))
@@ -1830,6 +1838,9 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                                           (list (network-address
                                                  (device "br0")
                                                  (value "192.168.0.144/24"))
+                                                (network-address
+                                                 (device "br0")
+                                                 (value "192.168.0.145/24"))
                                                 (network-address
                                                  (device "enp34s0")
                                                  (value "127.0.0.2/8"))
