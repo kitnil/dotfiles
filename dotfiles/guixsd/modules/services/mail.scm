@@ -27,6 +27,7 @@
   #:use-module (gnu services shepherd)
   #:use-module (guix gexp)
   #:use-module (packages mail)
+  #:use-module (services certbot)
   #:export (%mail-hosts-file-hosts
             %mail-packages
             %mail-services
@@ -134,7 +135,7 @@
          (chown "/etc/dovecot/private/default.pem" uid gid)
          (chown "/etc/dovecot/dovecot.pem" uid gid)))))
 
-(define %mail-services
+(define (%mail-services listen)
  (list
   (service mail-aliases-service-type '(("wigust" "oleg")
                                        ("admin" "oleg")
@@ -169,7 +170,7 @@
                 (process-limit 1)
                 (listeners
                  (list (unix-listener-configuration (path "auth-userdb")))))))))
-  (service certbot-service-type
+  (service (certbot-service-type-custom-nginx "78.108.82.44")
            (certbot-configuration
             (email "admin@wugi.info")
             (certificates

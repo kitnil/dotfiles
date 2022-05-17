@@ -11,6 +11,7 @@
              (services bird)
              (services mail)
              (services monitoring)
+             (services certbot)
              (services ssh)
              (services web))
 
@@ -144,7 +145,7 @@ cache.size = 10 * MB
                                     (arguments '("--exim.log-path=/var/log/exim"
                                                  "--exim.input-path=/var/spool/exim/input"))))
 
-                          (service certbot-service-type
+                          (service (certbot-service-type-custom-nginx "78.108.82.44")
                                    (certbot-configuration
                                     (email "go.wigust@gmail.com")
                                     (certificates
@@ -161,12 +162,18 @@ cache.size = 10 * MB
 
                           (service nginx-service-type
                                    (nginx-configuration
-                                    (server-blocks (list (proxy "file.wugi.info" 5091 #:ssl? #t #:ssl-key? #t)
-                                                         %githunt-nginx-configuration
+                                    (server-blocks (list (proxy "file.wugi.info" 5091
+                                                                #:ssl? #t
+                                                                #:ssl-key? #t
+                                                                #:listen "78.108.82.44")
+                                                         (nginx-server-configuration
+                                                          (inherit %githunt-nginx-configuration)
+                                                          (listen '("78.108.82.44:80"
+                                                                    "78.108.82.44:443 ssl")))
                                                          (nginx-server-configuration
                                                           (inherit %webssh-configuration-nginx)
                                                           (server-name '("vm1.wugi.info"))
-                                                          (listen '("443 ssl"))
+                                                          (listen '("78.108.82.44:80" "78.108.82.44:443 ssl"))
                                                           (ssl-certificate (letsencrypt-certificate "vm1.wugi.info"))
                                                           (ssl-certificate-key (letsencrypt-key "vm1.wugi.info"))
                                                           (locations
@@ -180,7 +187,12 @@ cache.size = 10 * MB
                           (service homer-service-type
                                    (homer-configuration
                                     (config-file %homer-wugi.info-config)
-                                    (nginx (list %homer-wugi.info-nginx-configuration))))
+                                    (nginx
+                                     (list
+                                      (nginx-server-configuration
+                                       (inherit %homer-wugi.info-nginx-configuration)
+                                       (listen '("78.108.82.44:80 default_server"
+                                                 "78.108.82.44:443 ssl default_server")))))))
 
                           (service prosody-service-type
                                    (prosody-configuration
@@ -193,7 +205,7 @@ cache.size = 10 * MB
                                       (key "/etc/prosody/certs/xmpp.wugi.info.key")
                                       (certificate "/etc/prosody/certs/xmpp.wugi.info.pem"))))))
 
-                    %mail-services
+                    (%mail-services "78.108.82.44")
 
                     (modify-services %base-services
                       (guix-service-type config => %guix-daemon-config-with-substitute-urls)

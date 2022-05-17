@@ -226,7 +226,8 @@ EndSection\n")
                 (sub-domains? #f)
                 (mtls? #f)
                 (locations '())
-                (proxy-set-header-host #f))
+                (proxy-set-header-host #f)
+                (listen "192.168.0.144"))
   (nginx-server-configuration
    (server-name (if sub-domains?
                     (list (string-append sub-domains?
@@ -257,8 +258,8 @@ EndSection\n")
                                           (uri "/.well-known")
                                           (body '("root /var/www;"))))))))
    (listen (if ssl?
-               (list "443 ssl")
-               (list "80")))
+               (list (string-append listen ":443 ssl"))
+               (list (string-append listen ":80"))))
    (ssl-certificate (if ssl-key? (letsencrypt-certificate host) #f))
    (ssl-certificate-key (if ssl-key? (letsencrypt-key host) #f))
    (raw-content (if mtls? %mtls '()))))
@@ -298,7 +299,7 @@ EndSection\n")
 (define %githunt-nginx-configuration
   (nginx-server-configuration
    (server-name '("githunt.wugi.info"))
-   (listen '("443 ssl"))
+   (listen '("80" "443 ssl"))
    (root (file-append (load "/home/oleg/archive/src/githunt/guix.scm") "/share/githunt"))
    (locations
     (list (nginx-location-configuration
@@ -312,7 +313,7 @@ EndSection\n")
   (nginx-server-configuration
    (inherit %homer-nginx-configuration-nginx)
    (server-name '("homer.wugi.info"))
-   (listen '("443 ssl"))
+   (listen '("80" "443 ssl"))
    (locations
     (list (nginx-location-configuration
            (uri "/.well-known")
@@ -360,7 +361,7 @@ EndSection\n")
              (uri "/.well-known")
              (body '("root /var/www;")))
             (nginx-server-configuration-locations %zabbix-front-end-configuration-nginx)))
-    (listen '("443 ssl"))
+    (listen '("80" "443 ssl"))
     (ssl-certificate (letsencrypt-certificate "zabbix.wugi.info"))
     (ssl-certificate-key (letsencrypt-key "zabbix.wugi.info"))
     (raw-content %mtls))))

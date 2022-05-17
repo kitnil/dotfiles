@@ -30,6 +30,7 @@
              (services autofs)
              (services backup)
              (services bird)
+             (services certbot)
              (services docker)
              (services virtualization)
              (services nix)
@@ -81,10 +82,10 @@
 (define %nginx-server-blocks
   (list (nginx-server-configuration
          (server-name '("www.tld"))
-         (listen '("80"))
+         (listen '("192.168.0.144:80"))
          (root "/srv/share"))
         (nginx-server-configuration
-         (listen '("443 ssl"))
+         (listen '("192.168.0.144:443 ssl"))
          (ssl-certificate (letsencrypt-certificate "peertube.wugi.info"))
          (ssl-certificate-key (letsencrypt-key "peertube.wugi.info"))
          (server-name '("peertube.wugi.info"))
@@ -96,19 +97,19 @@
              read-string))))
         (nginx-server-configuration
          (server-name '("netmap.intr"))
-         (listen '("80"))
+         (listen '("192.168.0.144:80"))
          (root "/home/oleg/archive/src/drawthe.net"))
         (nginx-server-configuration
          (server-name '("techinfo.intr"))
-         (listen '("80"))
+         (listen '("192.168.0.144:80"))
          (root "/var/www/techinfo.intr"))
         (nginx-server-configuration
          (server-name '("iso.wugi.info"))
-         (listen '("80"))
+         (listen '("192.168.0.144:80"))
          (root "/srv/iso"))
         (nginx-server-configuration
          (server-name '("texinfo.tld"))
-         (listen '("80"))
+         (listen '("192.168.0.144:80"))
          (root "/var/www/texinfo"))
 
         ;; (proxy "hms.majordomo.ru" 7777 #:ssl? #f)
@@ -118,7 +119,7 @@
         ;; (proxy "hms.majordomo.ru" 7777 #:ssl? #f)
         (nginx-server-configuration
          (server-name '("hms.majordomo.ru" "hms-dev.intr" "www.majordomo.ru" "majordomo.ru"))
-         (listen '("80" "443 ssl"))
+         (listen '("192.168.0.144:80" "192.168.0.144:443 ssl"))
          (ssl-certificate "/etc/tls/hms.majordomo.ru.pem")
          (ssl-certificate-key "/etc/tls/hms.majordomo.ru.key")
          (locations (list (nginx-location-configuration
@@ -137,7 +138,7 @@
                                        ))))))
         (nginx-server-configuration
          (server-name '("hms-billing-dev.intr"))
-         (listen '("80" "443 ssl"))
+         (listen '("192.168.0.144:80" "192.168.0.144:443 ssl"))
          (ssl-certificate "/etc/tls/hms.majordomo.ru.pem")
          (ssl-certificate-key "/etc/tls/hms.majordomo.ru.key")
          ;; (root "/home/oleg/majordomo/hms/staff-frontend-app/public")
@@ -160,7 +161,7 @@
 
 ;;         (nginx-server-configuration
 ;;          (server-name '("hms-dev.intr" "hms.majordomo.ru"))
-;;          (listen '("80"))
+;;          (listen '("192.168.0.144:80"))
 ;;          (root "/home/static/hms-frontend")
 ;;          (raw-content (list "\
 ;; location / {
@@ -173,7 +174,7 @@
 
         (nginx-server-configuration
          (server-name '("api-dev.intr"))
-         (listen '("80"))
+         (listen '("192.168.0.144:80"))
          (raw-content (list "\
 location / {
     proxy_set_header Access-Control-Allow-Origin *;
@@ -190,7 +191,7 @@ location / {
 ")))
         (nginx-server-configuration
          (server-name '("www.example.com" "example.com"))
-         (listen '("80"))
+         (listen '("192.168.0.144:80"))
          (raw-content (list "\
 location / {
     proxy_set_header Access-Control-Allow-Origin *;
@@ -209,7 +210,7 @@ location / {
         (nginx-server-configuration
          (inherit %webssh-configuration-nginx)
          (server-name '("webssh.wugi.info"))
-         (listen '("443 ssl"))
+         (listen '("192.168.0.144:443 ssl"))
          (ssl-certificate (letsencrypt-certificate "webssh.wugi.info"))
          (ssl-certificate-key (letsencrypt-key "webssh.wugi.info"))
          (locations
@@ -270,8 +271,8 @@ location / {
                                                  ;; "proxy_http_version 1.1;"
                                                  ))))))
            (listen (if ssl?
-                       (list "443 ssl")
-                       (list "80")))
+                       (list "192.168.0.144:443 ssl")
+                       (list "192.168.0.144:80")))
            (ssl-certificate (if ssl?
                                 (letsencrypt-certificate host)
                                 #f))
@@ -767,7 +768,10 @@ location / {
        (plain-file
         "hosts"
         (string-join
-         `(,(string-join '("127.0.0.1 guixsd localhost"
+         `(,(string-join '("127.0.0.1 guixsd localhost"))
+           "::1 guixsd localhost"
+
+           ,(string-join '("192.168.0.144"
                            "techinfo.intr"
                            "texinfo.tld"
                            "jenkins.wugi.info"
@@ -784,7 +788,6 @@ location / {
                            ;; "api-dev.intr"
                            ;; "hms-billing-dev.intr"
                            ))
-           "::1 guixsd localhost"
 
            "192.168.154.130 nginx99.intr"
            "192.168.154.129 web99.ru www.web99.ru www.web99.intr web99.intr"
@@ -1481,7 +1484,7 @@ PasswordAuthentication yes")))
                                     '(("/srv"
                                        "192.168.0.0/24(ro,insecure,no_subtree_check,crossmnt,fsid=0)")))))
 
-                         (service certbot-service-type
+                         (service (certbot-service-type-custom-nginx "192.168.0.144")
                                   (certbot-configuration
                                    (email "go.wigust@gmail.com")
                                    (certificates
@@ -1531,7 +1534,7 @@ PasswordAuthentication yes")))
                                                                 (nginx-location-configuration
                                                                  (uri "/.well-known")
                                                                  (body '("root /var/www;"))))))
-                                                 (listen '("80" "443 ssl"))
+                                                 (listen '("192.168.0.144:80" "192.168.0.144:443 ssl"))
                                                  (ssl-certificate (letsencrypt-certificate "cgit.duckdns.org"))
                                                  (ssl-certificate-key (letsencrypt-key "cgit.duckdns.org")))))))
 
