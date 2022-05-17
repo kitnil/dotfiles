@@ -1932,3 +1932,9 @@ psql()
             ;;
     esac
 }
+
+if [ -f /run/current-system/profile/bin/k3s ]
+then
+    alias kubectl='sudo k3s kubectl'
+    source <(kubectl completion bash)
+fi
