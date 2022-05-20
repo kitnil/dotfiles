@@ -140,15 +140,22 @@ use_guix()
     }
     export_function guix_pull
 
+    shell()
+    {
+        guix shell --development guix "$@"
+    }
+    export_function shell
+
     clear
     echo "
 direnv:
   build        build a package or just a project if no argument provided
   configure    run ./configure with predefined parameters
-  environment  run 'guix environment' with presetted arguments
+  environment  WARNING: deprecated: run 'guix environment' with presetted arguments
   push         push to upstream Git repository
   pull         pull changes from upstream Git repository
   repl         run guix repl
+  shell        run 'guix shell' with presetted arguments
 
   guix_pull    guix pull current directory
 "
