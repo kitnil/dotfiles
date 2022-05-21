@@ -1855,9 +1855,14 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                                                  (destination "default")
                                                  (gateway "192.168.0.1"))))
                                          (name-servers '("192.168.0.144"
-                                                         "172.17.0.1"
-                                                         "8.8.8.8"
-                                                         "8.8.4.4"))
+
+                                                         ;; local Docker
+                                                         ;; "172.17.0.1"
+
+                                                         ;; Google
+                                                         ;; "8.8.8.8"
+                                                         ;; "8.8.4.4"
+                                                         ))
                                          (requirement '(openvswitch-configuration)))))
 
                          %dnsmasq-service
