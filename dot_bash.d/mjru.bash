@@ -381,3 +381,19 @@ vault-ci()
 {
     VAULT_TOKEN="$(pass show majordomo/public/vault-dev/root)" VAULT_ADDR=http://ci.intr:8210 "${HOME}/.nix-profile/bin/vault" "$@"
 }
+
+mjru-gitlab()
+{
+    GITLAB_HOST=https://gitlab.intr \
+               GITLAB_TOKEN="$(pass show majordomo/private/gitlab.intr/tokens/pyhalov)" \
+               command glab "$@"
+}
+
+if [ -f "${HOME}/.nix-profile/bin/glab" ]
+then
+    if [[ $(type -t compopt) = "builtin" ]]; then
+        complete -o default -F __start_glab mjru-gitlab
+    else
+        complete -o default -o nospace -F __start_glab mjru-gitlab
+    fi
+fi

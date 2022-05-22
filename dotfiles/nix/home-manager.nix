@@ -46,6 +46,7 @@
     # geckodriver
     bfg-repo-cleaner
     git-secrets
+    glab
     fac
 
     buildPackages.glibcLocales
