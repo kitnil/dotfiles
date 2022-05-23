@@ -44,7 +44,9 @@
   (kubevirt? kubernetes-k3s-configuration-kubevirt? ;boolean
              (default #f))
   (log-file  kubernetes-k3s-configuration-log-file  ;string
-             (default "/var/log/k3s.log")))
+             (default "/var/log/k3s.log"))
+  (runtime   kubernetes-k3s-configuration-runtime   ;symbol
+             (default 'docker)))
 
 (define (kubernetes-k3s-log-rotations config)
   (list (log-rotation
@@ -65,15 +67,18 @@
         ;; containerd startup: rpc error: code = Unavailable desc = connection
         ;; error: desc = \"transport: Error while dialing dial unix
         ;; /run/k3s/containerd/containerd.sock: connect: connection refused\""
-        (when (file-exists? "/run/k3s/containerd")
-          (delete-file-recursively "/run/k3s/containerd")))))
+        ;; (when (file-exists? "/run/k3s/containerd")
+        ;;   (delete-file-recursively "/run/k3s/containerd"))
+        )))
 
 (define (kubernetes-k3s-shepherd-service config)
   (list
    (shepherd-service
     (provision '(kubernetes-k3s))
     (documentation "Run kubernetes-k3s.")
-    (requirement '())
+    (requirement (case (kubernetes-k3s-configuration-runtime config)
+                   ((docker) '(dockerd))
+                   (else '())))
     (start #~(make-forkexec-constructor
               (list #$(file-append (kubernetes-k3s-configuration-k3s config)
                                    "/bin/k3s")

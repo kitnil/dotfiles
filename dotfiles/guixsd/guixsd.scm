@@ -1739,7 +1739,14 @@ host	all	all	192.168.64.0/20   trust"))
                           (kubernetes-k3s-configuration
                            (arguments '("--node-external-ip" "192.168.0.145"
                                         "--bind-address" "192.168.0.145"
-                                        "--no-deploy" "traefik"))
+
+                                        "--no-deploy" "traefik"
+                                        "--disable" "traefik"
+
+                                        "--docker"
+
+                                        ;; "--container-runtime-endpoint" "/run/containerd/containerd.sock"
+                                        ))
                            (kubevirt? #t)))
 
                          (dovecot-service
