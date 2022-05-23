@@ -161,6 +161,8 @@ EndSection\n")
 
          adb
 
+         binutils
+
          iptables bridge-utils
 
          docker-cli ;; docker-compose
