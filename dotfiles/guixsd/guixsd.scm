@@ -1749,6 +1749,8 @@ host	all	all	192.168.64.0/20   trust"))
                                         ))
                            (kubevirt? #t)))
 
+                         kubernetes-k3s-service
+
                          (dovecot-service
                           #:config (dovecot-configuration
                                     (listen '("127.0.0.1"))
