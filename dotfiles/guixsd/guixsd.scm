@@ -1715,7 +1715,6 @@ host	all	all	192.168.64.0/20   trust"))
                                                   `(("services"
                                                      ("samba"
                                                       ("volumes" . #("/srv/lib:/public"))
-                                                      ("restart" . "unless-stopped")
                                                       ("ports"
                                                        .
                                                        #("192.168.154.1:139:139"
