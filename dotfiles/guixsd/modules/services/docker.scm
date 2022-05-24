@@ -113,7 +113,7 @@
       (shepherd-service
        (provision (list (string->symbol (string-append "docker-compose-" project-name))))
        (documentation "Run docker-compose.")
-       (requirement '(loopback))
+       (requirement '(loopback dockerd))
        (start #~(make-forkexec-constructor
                  (append (list (string-append #$docker-compose "/bin/docker-compose")
                                "--file" #$compose-file
