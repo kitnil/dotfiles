@@ -808,6 +808,7 @@ location / {
            "192.168.100.120 cuirass.tld"
            "172.16.100.60 ws1.wugi.info"
            "178.250.247.125 gitlab.mjtest jenkins.mjtest"
+           "172.16.103.238 ci.guix.gnu.org.intr"
            "130.61.95.6 oracle"
            "172.16.100.65 zdetovetskiy.intr"
            "172.16.100.61 lyashenko.intr"
@@ -991,7 +992,10 @@ location / {
                                                (define http-targets
                                                  (append (list "https://wugi.info/"
                                                                "https://guix.wugi.info/"
-                                                               "https://blog.wugi.info/")
+                                                               "https://blog.wugi.info/"
+                                                               ;; This endpoint provides an ‘nginx’ on jenkins.intr which proxies to
+                                                               ;; ‘prixoxy’ which proxies to ‘tor’.
+                                                               "http://ci.guix.gnu.org.intr")
                                                          '#$%default-substitute-urls))
                                                (with-output-to-file #$output
                                                  (lambda ()

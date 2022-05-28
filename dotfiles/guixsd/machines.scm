@@ -1,9 +1,9 @@
 (list
 
- #;(build-machine
+ (build-machine
   (name "jenkins.intr")
   (systems '("x86_64-linux"))
-  (host-key "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIByQ1KiJqh+B2KGmG9xhRhC3LPmZQCbKrcjnSLvf323v root@nixos")
+  (host-key "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGDngvW1IgUSW4Lna7tOoDBsC2sG+IlpDfYCe1wBVMp2")
   (user "eng")
   (private-key "/home/oleg/.ssh/id_rsa_majordomo_eng")
   (speed 2.0))
