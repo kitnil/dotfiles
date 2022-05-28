@@ -1855,6 +1855,14 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                                                 (network-address
                                                  (device "br154")
                                                  (value "127.0.0.3/8"))
+
+                                                ;; assign an ip address to bring interface up at boot, so
+                                                ;; it could be used in a
+                                                ;; docker network
+                                                (network-address
+                                                 (device "br155-vlan155")
+                                                 (value "127.0.0.4/8"))
+
                                                 (network-address
                                                  (device "br154.154")
                                                  (value "192.168.154.1/24"))))
