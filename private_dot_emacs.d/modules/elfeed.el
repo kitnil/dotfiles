@@ -25,7 +25,7 @@
         ;; ("https://stable.melpa.org/updates.rss" emacs elpa)
         ("https://cestlaz.github.io/rss.xml" emacs)
         ("https://sachachua.com/blog/feed/" emacs)
-        ("https://www.reddit.com/r/freegames/.rss" game)
+        ("https://www.reddit.com/r/freegames/.rss" game freegames)
         ("https://www.reddit.com/r/selfhosted/.rss" reddit selfhosted)
 
         ;; ("https://github.com/alebcay/awesome-shell/commits/master.atom" vc bash awesome)
