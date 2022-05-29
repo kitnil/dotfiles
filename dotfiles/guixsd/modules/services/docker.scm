@@ -45,7 +45,7 @@
                     (let loop ()
                       (let* ((port   (apply open-pipe* OPEN_READ "/run/current-system/profile/bin/docker"
                                             '("ps"))))
-                        (if (or (< 5 (count))
+                        (if (or (< 5 (count (1+ (count))))
                                 (= (status:exit-val (close-pipe port)) 0))
                             #t
                             (begin (system* "/run/current-system/profile/bin/herd" "start" "dockerd")
