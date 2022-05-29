@@ -177,7 +177,14 @@
 
 (defcommand firefox-new-window () ()
   "Start Firefox."
-  (run-shell-command "firefox --new-window"))
+  (let ((clipboard (get-x-selection)))
+    (cond ((string-contains "AC_" clipboard)
+           (when (y-or-n-p (format nil "Open ~a account in firefox? " clipboard))
+             (sb-thread:make-thread
+              (lambda ()
+                (mjru-open-account clipboard)
+                (putsel "")))))
+          (t (run-shell-command "firefox --new-window")))))
 
 (defcommand firefox-esr-52 () ()
   "Start of focus Firefox ESR 52."
