@@ -258,7 +258,11 @@
             with import nixpkgs-phantomjs { inherit system; };
             let
               python3WithSelenium = python3.withPackages
-                (python-packages: with python-packages; [ selenium ]);
+                (python-packages: with python-packages; [
+                  selenium
+                  prometheus_client
+                  pyaml
+                ]);
             in writeScriptBin "python-selenium" ''
               #!${runtimeShell}
               PATH=${geckodriver}/bin:${firefox}/bin:"$PATH"
