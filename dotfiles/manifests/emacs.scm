@@ -144,7 +144,7 @@
        emacs-scheme-complete
        emacs-scratch-el
        emacs-slack
-       ;; XXX: Fix build emacs-slime              ; Sbcl repl
+       emacs-slime              ; Sbcl repl
        emacs-ssh-config-mode
        emacs-smart-mode-line
        emacs-smartparens        ; Structured editing
@@ -181,5 +181,4 @@
 
        emacs-xterm-color
 
-       ;; XXX: Failed to build emacs-benchmark-init
-       ))
+       emacs-benchmark-init))
