@@ -402,10 +402,20 @@ guix()
                 switch)
                     (
                         cd "${HOME}/.local/share/chezmoi"
-                        command guix home reconfigure \
-                                -L "$HOME/.local/share/chezmoi/dotfiles/guixsd/modules" \
-                                --fallback \
-                                "$HOME/.local/share/chezmoi/dotfiles/guixsd/home.scm" "${@:3}"
+                        guix_command=(
+                            command guix home reconfigure \
+                                    -L "$HOME/.local/share/chezmoi/dotfiles/guixsd/modules" \
+                                    --fallback \
+                                    "$HOME/.local/share/chezmoi/dotfiles/guixsd/home.scm"
+                        )
+                        if [[ -n $allow_downgrades ]]
+                        then
+                            guix_command+=("--allow-downgrades")
+                        fi
+                        if [[ -n $fallback ]]
+                        then
+                            guix_command+=("--fallback")
+                        fi
                     )
                     ;;
             esac
