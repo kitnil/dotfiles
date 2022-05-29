@@ -1951,7 +1951,7 @@ then
     source <(kubectl completion bash)
 fi
 
-# if [ -f "${HOME}/.nix-profile/bin/glab" ]
-# then
-#     source <(glab completion)
-# fi
+if [ -f "${HOME}/.nix-profile/bin/glab" ]
+then
+    source <(glab completion)
+fi
