@@ -117,9 +117,9 @@
                     (use-modules (ice-9 popen))
                     (define count (make-parameter 0))
                     (let loop ()
-                      (let* ((port   (apply open-pipe* OPEN_READ "/run/current-system/profile/bin/docker"
-                                            '("ps"))))
-                        (if (or (< 5 (count (1+ (count))))
+                      (let ((port (apply open-pipe* OPEN_READ "/run/current-system/profile/bin/k3s"
+                                         '("kubectl" "get" "all"))))
+                        (if (or (< 15 (count (1+ (count))))
                                 (= (status:exit-val (close-pipe port)) 0))
                             #t
                             (begin (system* "/run/current-system/profile/bin/herd" "start" "kubernetes-k3s")
@@ -132,10 +132,11 @@
                    (shepherd-service
                     (provision '(kubernetes-k3s-start))
                     (documentation "Run kubernetes-k3s.")
-                    (requirement '())
+                    (requirement '(dockerd-wait))
                     (start #~(make-forkexec-constructor
                               (list #$kubernetes-k3s-start)))
                     (respawn? #f)
+                    (one-shot? #t)
                     (stop #~(make-kill-destructor))))))
 
 ;;; kubernetes.scm ends here

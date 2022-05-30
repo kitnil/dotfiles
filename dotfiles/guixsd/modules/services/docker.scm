@@ -37,31 +37,34 @@
 ;;;
 ;;; Code:
 
-(define docker-start
-  (program-file "docker-start"
+(define* (dockerd-wait #:optional (start? #f))
+  (program-file "dockerd-wait"
                 #~(begin
                     (use-modules (ice-9 popen))
                     (define count (make-parameter 0))
                     (let loop ()
                       (let* ((port   (apply open-pipe* OPEN_READ "/run/current-system/profile/bin/docker"
                                             '("ps"))))
-                        (if (or (< 5 (count (1+ (count))))
+                        (if (or (< 15 (count (1+ (count))))
                                 (= (status:exit-val (close-pipe port)) 0))
                             #t
-                            (begin (system* "/run/current-system/profile/bin/herd" "start" "dockerd")
-                                   (sleep 5)
-                                   (loop))))))))
+                            (begin
+                              (when #$start?
+                                (system* "/run/current-system/profile/bin/herd" "start" "dockerd"))
+                              (sleep 5)
+                              (loop))))))))
 
 (define docker-service
   (simple-service 'docker shepherd-root-service-type
                   (list
                    (shepherd-service
-                    (provision '(docker-start))
+                    (provision '(dockerd-wait))
                     (documentation "Run docker.")
                     (requirement '())
                     (start #~(make-forkexec-constructor
-                              (list #$docker-start)))
+                              (list #$(dockerd-wait #t))))
                     (respawn? #f)
+                    (one-shot? #t)
                     (stop #~(make-kill-destructor))))))
 
 
@@ -109,26 +112,32 @@
 (define docker-compose-shepherd-service
   (match-lambda
     (($ <docker-compose-configuration> docker-compose compose-file project-name)
-     (list
-      (shepherd-service
-       (provision (list (string->symbol (string-append "docker-compose-" project-name))))
-       (documentation "Run docker-compose.")
-       (requirement '(loopback dockerd))
-       (start #~(make-forkexec-constructor
-                 (append (list (string-append #$docker-compose "/bin/docker-compose")
-                               "--file" #$compose-file
-                               "--project-name" #$project-name
-                               "up"))
-                 #:environment-variables
-                 (append (list "SSL_CERT_DIR=/etc/ssl/certs"
-                               "SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt")
-                         (remove (lambda (str)
-                                   (or (string-prefix? "HOME=" str)
-                                       (string-prefix? "SSL_CERT_DIR=" str)
-                                       (string-prefix? "SSL_CERT_FILE=" str)))
-                                 (environ)))))
-       (respawn? #f)
-       (stop #~(make-kill-destructor)))))))
+     (let* ((service-name (string-append "docker-compose-" project-name))
+            (wrapper (program-file
+                      service-name
+                      #~(begin
+                          (system* #$(dockerd-wait))
+                          (system* (string-append #$docker-compose "/bin/docker-compose")
+                                   "--file" #$compose-file
+                                   "--project-name" #$project-name
+                                   "up")))))
+       (list
+        (shepherd-service
+         (provision (list (string->symbol service-name)))
+         (documentation "Run docker-compose.")
+         (requirement '(loopback dockerd-wait))
+         (start #~(make-forkexec-constructor
+                   (list #$wrapper)
+                   #:environment-variables
+                   (append (list "SSL_CERT_DIR=/etc/ssl/certs"
+                                 "SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt")
+                           (remove (lambda (str)
+                                     (or (string-prefix? "HOME=" str)
+                                         (string-prefix? "SSL_CERT_DIR=" str)
+                                         (string-prefix? "SSL_CERT_FILE=" str)))
+                                   (environ)))))
+         (respawn? #f)
+         (stop #~(make-kill-destructor))))))))
 
 (define docker-compose-service-type
   (service-type (name 'docker-compose)
