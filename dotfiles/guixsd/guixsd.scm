@@ -556,7 +556,20 @@ location / {
                               (list "--may-exist" "add-br" "br155")))
                             (ovs-vsctl
                              (string-join
-                              (list "--may-exist" "add-br" "br155-vlan155" "br155" "155")))))))
+                              (list "--may-exist" "add-br" "br155-vlan155" "br155" "155")))
+                            ;; vlan 156
+                            (ovs-vsctl
+                             (string-join
+                              (list "--may-exist" "add-br" "br156")))
+                            (ovs-vsctl
+                             (string-join
+                              (list "--may-exist" "add-br" "br156-vlan156" "br156" "156")))
+                            (ip
+                             (string-join
+                              (list "link" "add" "link" "br156"
+                                    "name" "br156.156"
+                                    "type" "vlan"
+                                    "id" "156")))))))
           (respawn? #f)))))
 
 (define tftp-root
@@ -597,6 +610,26 @@ location / {
                           "--enable-tftp"
                           "--server=192.168.0.144"
                           "--no-resolv")))
+          (respawn? #f)))))
+
+(define %dnsmasq-vlan156-service
+  (simple-service
+   'dnsmasq-vlan156-configuration shepherd-root-service-type
+   (list (shepherd-service
+          (provision '(dnsmasq-vlan156-configuration))
+          (requirement '(vswitchd))
+          (start #~(make-forkexec-constructor
+                    (list #$(file-append dnsmasq "/sbin/dnsmasq")
+                          "--keep-in-foreground"
+                          "--pid-file=/run/dnsmasq-vlan156.pid"
+                          "--local-service"
+                          "--cache-size=150"
+                          "--dhcp-range" "192.168.156.52,192.168.156.148,12h"
+                          "--bind-interfaces"
+                          "--interface=br156.156"
+                          "--except-interface=lo"
+                          "--no-resolv"
+                          "--server=192.168.156.1")))
           (respawn? #f)))))
 
 ;; TODO: Add libvirtd network configuration.
@@ -1869,7 +1902,15 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
 
                                                 (network-address
                                                  (device "br154.154")
-                                                 (value "192.168.154.1/24"))))
+                                                 (value "192.168.154.1/24"))
+
+                                                ;; dummy ip to bring interface up
+                                                (network-address
+                                                 (device "br156")
+                                                 (value "127.0.0.156/8"))
+                                                (network-address
+                                                 (device "br156.156")
+                                                 (value "192.168.156.1/24"))))
                                          (routes
                                           (list (network-route
                                                  (destination "default")
@@ -1892,6 +1933,8 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                          ;;           (listen-addresses '("192.168.154.1"))
                          ;;           ;; TODO: Replace port with --bind-interfaces
                          ;;           (port 0)))
+
+                         %dnsmasq-vlan156-service
 
                          (service libvirt-service-type)
                          (simple-service 'libvirt-qemu-config activation-service-type
