@@ -5,6 +5,7 @@
              (gnu home services shells)
              ;; (gnu home services ssh)
              (gnu packages admin)
+             (gnu packages bash)
              (gnu packages guile)
              (gnu packages pulseaudio)
              (gnu packages virtualization)
@@ -174,9 +175,12 @@
                (with-extensions (list guile-json-4)
                  (with-imported-modules (source-module-closure '((json builder)))
                    #~(begin
-                       (use-modules (json builder))
+                       (use-modules (json builder)
+                                    (ice-9 format))
                        (define isync
                          #$(file-append isync "/bin/mbsync"))
+                       (define timeout
+                          #$(file-append coreutils "/bin/timeout"))
                        (define password
                          #$(pass "show" (pass-private-or-public name)))
                        (define username #$name)
@@ -184,10 +188,8 @@
                          (lambda ()
                            (scm->json
                             `(("boxes" . #("INBOX"))
-                              ("onNewMail" . ,(string-join
-                                               (list
-                                                isync
-                                                (string-append "majordomo-" username))))
+                              ("onNewMail" . ,(string-join (list timeout (number->string 60) isync
+                                                                 (string-append "majordomo-" username))))
                               ("xoauth2" . #f)
                               ("password" . ,password)
                               ("username" . ,(string-append username "@majordomo.ru"))
@@ -295,7 +297,10 @@
                 (with-extensions (list guile-json-4)
                   (with-imported-modules (source-module-closure '((json builder)))
                     #~(begin
-                        (use-modules (json builder))
+                        (use-modules (json builder)
+                                     (ice-9 format))
+                        (define timeout
+                          #$(file-append coreutils "/bin/timeout"))
                         (define isync
                           #$(file-append isync "/bin/mbsync"))
                         (define password
@@ -304,7 +309,7 @@
                           (lambda ()
                             (scm->json
                              `(("boxes" . #("INBOX"))
-                               ("onNewMail" . ,(string-join (list isync "gmail")))
+                               ("onNewMail" . ,(string-join (list timeout (number->string 60) isync "gmail")))
                                ("xoauth2" . #f)
                                ("password" . ,password)
                                ("username" . "go.wigust@gmail.com")
@@ -322,7 +327,10 @@
                 (with-extensions (list guile-json-4)
                   (with-imported-modules (source-module-closure '((json builder)))
                     #~(begin
-                        (use-modules (json builder))
+                        (use-modules (json builder)
+                                     (ice-9 format))
+                        (define timeout
+                          #$(file-append coreutils "/bin/timeout"))
                         (define isync
                           #$(file-append isync "/bin/mbsync"))
                         (define password
@@ -331,7 +339,7 @@
                           (lambda ()
                             (scm->json
                              `(("boxes" . #("INBOX"))
-                               ("onNewMail" . ,(string-join (list isync "wugi-oleg")))
+                               ("onNewMail" . ,(string-join (list timeout (number->string 60) isync "wugi-oleg")))
                                ("xoauth2" . #f)
                                ("password" . ,password)
                                ("username" . "oleg@wugi.info")
