@@ -5,7 +5,6 @@
         (list (lambda () (kdeconnect-indicator))
               (lambda () (dunst))
               (lambda ()
-                (espanso-daemon)
                 (picom)
                 (run-shell-command "/home/oleg/.local/bin/wallpaper"))
               (lambda () (keynav))

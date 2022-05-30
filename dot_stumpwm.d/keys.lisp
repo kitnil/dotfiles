@@ -87,6 +87,7 @@
   (define-key *top-map* (kbd "s-Tab") "other-in-frame-or-fother")
   (define-key *top-map* (kbd "C-s-Tab") "fother")
   (define-key *top-map* (kbd "s-ISO_Left_Tab") "fother")
+  (define-key *top-map* (kbd "s-ISO_Next_Group") "espanso-daemon")
   (define-key *top-map* (kbd "S-s-Right") "move-window right")
   (define-key *top-map* (kbd "S-s-Left") "move-window left")
   (define-key *top-map* (kbd "S-s-Up") "move-window up")
