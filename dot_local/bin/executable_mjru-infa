@@ -75,8 +75,8 @@ EOF
         curl --silent https://www.majordomo.ru/sitemap.xml | xq --raw-output '.urlset.url[] | .loc' | sort --unique
         ;;
     ip)
-        mysql -s -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -h"$MYSQL_SERVER" billing <<EOF
-SELECT equip_servers.name,equip_ip_addresses.address
+        mysql -s -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -h"$MYSQL_SERVER" billing <<EOF | jq -s | jq 'reduce .[] as $d (null; .[$d.name] += [$d.address])'
+SELECT CONCAT('{ "name": "', equip_servers.name, '", "address": "',equip_ip_addresses.address, '" }')
 FROM equip_servers, equip_servers_ipaddresses, equip_ip_addresses
 WHERE equip_servers.equip_server_id=equip_servers_ipaddresses.equip_server_id
 AND equip_servers_ipaddresses.equip_ip_address_id=equip_ip_addresses.equip_ip_address_id;
