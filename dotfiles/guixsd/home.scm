@@ -1495,6 +1495,17 @@ gtk-xft-rgba=\"rgb\"
                                        ("178.250.246.123" . null)
                                        ("178.250.245.80" . null)
                                        ("178.250.244.239" . null)))
+                                     ("ihc"
+                                      ("vars"
+                                       ("ansible_ssh_user" . "pyhalov")
+                                       ("ansible_ssh_private_key_file" . "~/.ssh/id_rsa_ihc_pyhalov"))
+                                      ("hosts"
+                                       ("kvm-nvme1.majordomo.ru" . null)
+                                       ("kvm-nvme101.majordomo.ru" . null)
+                                       ("kvm-nvme102.majordomo.ru" . null)
+                                       ("kvm-nvme201.majordomo.ru" . null)
+                                       ("kvm-nvme202.majordomo.ru" . null)
+                                       ("kvm-nvme203.majordomo.ru" . null)))
                                      ("kubernetes_installer"
                                       ("hosts" ("178.250.247.88" . null)))
                                      ("kubernetes"
