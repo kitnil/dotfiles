@@ -199,7 +199,7 @@ vnc vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
 
                ;; octave XXX: Fails to compile.
 
-               htop inxi iotop jnettop glances bmon progress
+               atop htop inxi iotop jnettop glances bmon progress
 
                synergy
 
