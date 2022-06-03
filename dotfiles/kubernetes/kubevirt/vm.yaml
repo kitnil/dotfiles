@@ -1,18 +1,21 @@
 apiVersion: kubevirt.io/v1
 kind: VirtualMachine
 metadata:
-  name: testvm
+  name: fedora
 spec:
   running: true
   template:
     metadata:
       labels:
         kubevirt.io/size: small
-        kubevirt.io/domain: testvm
+        kubevirt.io/domain: fedora
     spec:
       domain:
         devices:
           disks:
+            - name: iso
+              cdrom:
+                bus: sata
             - name: containerdisk
               disk:
                 bus: virtio
@@ -23,6 +26,10 @@ spec:
           requests:
             memory: 1024M
       volumes:
+        - name: iso
+          hostDisk:
+            path: "/srv/lib/gparted-live-1.4.0-1-amd64.iso"
+            type: DiskOrCreate
         - name: containerdisk
           containerDisk:
             image: quay.io/kubevirt/fedora-cloud-container-disk-demo
