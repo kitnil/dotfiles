@@ -46,3 +46,35 @@
     (description
      "The certified Kubernetes distribution built for IoT & Edge computing")
     (license license:asl2.0)))
+
+(define-public virtctl
+  (package
+    (name "virtctl")
+    (version "0.53.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri
+        (string-append "https://github.com/kubevirt/kubevirt/releases/download/v"
+                       version "/virtctl-v" version "-linux-amd64"))
+       (sha256
+        (base32
+         "0b8aw3cywrqqq0nhmr4fiwvxb54dpga2h6yj8a4n46anckcffkvb"))))
+    (build-system trivial-build-system)
+    (native-inputs `(("source" ,source)))
+    (arguments
+     (list
+      #:modules '((guix build utils))
+      #:builder
+      #~(begin
+          (use-modules (guix build utils))
+          (let* ((bin (string-append #$output "/bin"))
+                 (virtctl (string-append bin "/virtctl")))
+            (mkdir-p bin)
+            (copy-file #$(this-package-native-input "source") virtctl)
+            (chmod virtctl #o555)))))
+    (home-page "https://virtctl.io/")
+    (synopsis "Kubevirt virtual machines control utility")
+    (description
+     "This package provides a Kubevirt virtual machines control utility.")
+    (license license:asl2.0)))
