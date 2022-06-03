@@ -96,7 +96,10 @@
    (extensions
     (list (service-extension profile-service-type
                              (lambda (config)
-                               (list k3s)))
+                               (append (list k3s)
+                                       (if (kubernetes-k3s-configuration-kubevirt? config)
+                                           (list virtctl)
+                                           '()))))
           (service-extension activation-service-type
                              kubernetes-k3s-activation)
           (service-extension shepherd-root-service-type
