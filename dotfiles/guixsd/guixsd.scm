@@ -1769,7 +1769,8 @@ host	all	all	192.168.64.0/20   trust"))
                                                        ,(string-append
                                                          "-u \"oleg;"
                                                          password
-                                                         "\" -s \"media;/share;yes;no;no;workgroup\" -s \"public;/public;yes;no;yes\"")))))))))))))))
+                                                         "\" -s \"media;/share;yes;no;no;workgroup\" -s \"public;/public;yes;no;yes\""
+                                                         " -g \"acl allow execute always = True\"")))))))))))))))
 
                          (service kubernetes-k3s-service-type
                           (kubernetes-k3s-configuration
