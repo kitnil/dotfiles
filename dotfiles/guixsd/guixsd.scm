@@ -858,6 +858,12 @@ location / {
 
       (services (append (list
 
+                         ;; Raise the maximum number of open file descriptors
+                         ;; that can be used.
+                         (pam-limits-service
+                          (list
+                           (pam-limits-entry "*" 'both 'nofile 100000)))
+
                          (service crowdsec-service-type)
                          (service crowdsec-firewall-bouncer-service-type)
 
