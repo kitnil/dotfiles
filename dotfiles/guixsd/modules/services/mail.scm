@@ -107,6 +107,7 @@
 (define exim-service-type
   (service-type
    (name 'exim)
+   (description "Message Transfer Agent (MTA)")
    (extensions
     (list (service-extension shepherd-root-service-type (@@ (gnu services mail) exim-shepherd-service))
           (service-extension account-service-type (const (@@ (gnu services mail) %exim-accounts)))
