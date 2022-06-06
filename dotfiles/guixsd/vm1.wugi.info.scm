@@ -12,6 +12,7 @@
              (services mail)
              (services monitoring)
              (services certbot)
+             (services networking)
              (services openvpn)
              (services ssh)
              (services web))
@@ -152,6 +153,11 @@ resolv-retry infinite
 remote guix.wugi.info 1195
 remote-random
 "))))
+
+                          (service dante-service-type
+                                   (dante-configuration
+                                    (config-file (local-file "sockd.conf"))))
+
                           (dbus-service)
                           (elogind-service)
                           (service bird-service-type
