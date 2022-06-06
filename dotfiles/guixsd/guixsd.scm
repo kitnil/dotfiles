@@ -711,7 +711,7 @@ location / {
       ;; (initrd-modules (append '("vfio_pci" "vfio" "vfio_iommu_type1" "vfio_virqfd")
       ;;                         %base-initrd-modules))
 
-      (packages (append (list dn42-ca ovmf cifs-utils btrfs-progs lvm2)
+      (packages (append (list dn42-ca ovmf cifs-utils btrfs-progs lvm2 smartmontools)
                         %my-system-packages))
 
       (groups (cons* (user-group (name "nixbld")
