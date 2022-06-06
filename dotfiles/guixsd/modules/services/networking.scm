@@ -18,6 +18,7 @@
 
 (define-module (services networking)
   #:use-module (gnu packages linux)
+  #:use-module (gnu packages networking)
   #:use-module (gnu services)
   #:use-module (gnu services shepherd)
   #:use-module (gnu system shadow)
@@ -34,7 +35,10 @@
             crowdsec-service-type
 
             crowdsec-firewall-bouncer-configuration
-            crowdsec-firewall-bouncer-service-type))
+            crowdsec-firewall-bouncer-service-type
+
+            dante-configuration
+            dante-service-type))
 
 ;;; Commentary:
 ;;;
@@ -237,5 +241,45 @@
    (default-value (crowdsec-firewall-bouncer-configuration))
    (description
     "Run the crowdsec-firewall-bouncer.")))
+
+
+;;;
+;;; dante
+;;;
+
+(define-record-type* <dante-configuration>
+  dante-configuration make-dante-configuration
+  dante-configuration?
+  (dante       dante-configuration-dante       ;<package>
+               (default dante))
+  (config-file dante-configuration-config-file ;<file-like>
+               (default #f)))
+
+(define dante-shepherd-service
+  (match-lambda
+    (($ <dante-configuration> dante config-file)
+     (list
+      (shepherd-service
+       (provision '(dante))
+       (documentation "Run dante.")
+       (requirement '())
+       (start #~(make-forkexec-constructor
+                 (list (string-append #$dante "/sbin/sockd")
+                       "-f" #$config-file)
+                 #:environment-variables
+                 '("SSL_CERT_DIR=/run/current-system/profile/etc/ssl/certs"
+                   "SSL_CERT_FILE=/run/current-system/profile/etc/ssl/certs/ca-certificates.crt")))
+       (respawn? #f)
+       (stop #~(make-kill-destructor)))))))
+
+(define dante-service-type
+  (service-type
+   (name 'dante)
+   (extensions
+    (list (service-extension shepherd-root-service-type
+                             dante-shepherd-service)))
+   (default-value (dante-configuration))
+   (description
+    "Run the dante.")))
 
 ;;; networking.scm ends here
