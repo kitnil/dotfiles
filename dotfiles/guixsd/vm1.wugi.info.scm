@@ -12,6 +12,7 @@
              (services mail)
              (services monitoring)
              (services certbot)
+             (services openvpn)
              (services ssh)
              (services web))
 
@@ -128,6 +129,28 @@ policy.add(policy.all(policy.STUB('8.8.8.8')))
 
 -- Smaller cache size
 cache.size = 10 * MB
+"))))
+                          (service openvpn-service-type
+                                   (openvpn-configuration
+                                    (name "wugi.info")
+                                    (config (plain-file "openvpn.conf"
+                                                        "\
+client
+proto udp
+dev tapvpn1
+ca /etc/openvpn/ca.crt
+cert /etc/openvpn/client.crt
+key /etc/openvpn/client.key
+comp-lzo
+persist-key
+persist-tun
+verb 3
+nobind
+ping 5
+ping-restart 10
+resolv-retry infinite
+remote guix.wugi.info 1195
+remote-random
 "))))
                           (dbus-service)
                           (elogind-service)
