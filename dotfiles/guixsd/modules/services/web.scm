@@ -17,6 +17,7 @@
 ;;; along with GNU Guix.  If not, see <http://www.gnu.org/licenses/>.
 
 (define-module (services web)
+  #:use-module (services docker)
   #:use-module (gnu services)
   #:use-module (gnu services configuration)
   #:use-module (gnu services shepherd)
@@ -163,5 +164,36 @@
    (default-value (vault-configuration))
    (description
     "Run the vault.")))
+
+
+;;;
+;;;
+;;;
+
+(define heimdall-service
+  (service docker-compose-service-type
+           (docker-compose-configuration
+            (project-name "heimdall")
+            (compose-file
+             (computed-file
+              "docker-compose-heimdall.json"
+              (with-extensions (list guile-json-4)
+                (with-imported-modules (source-module-closure '((json builder)))
+                  #~(begin
+                      (use-modules (json builder))
+                      (with-output-to-file #$output
+                        (lambda ()
+                          (scm->json
+                           `(("version" . "2.1")
+                             ("services"
+                              ("heimdall"
+                               ("volumes" . #("/var/lib/heimdall:/config"))
+                               ("ports" . #("127.0.0.1:8050:80"
+                                            "127.0.0.1:8445:443"))
+                               ("image" . "lscr.io/linuxserver/heimdall:latest")
+                               ("environment" . #("PUID=1000"
+                                                  "PGID=998"
+                                                  "TZ=Europe/Moscow"))
+                               ("container_name" . "heimdall")))))))))))))))
 
 ;;; web.scm ends here
