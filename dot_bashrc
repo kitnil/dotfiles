@@ -1324,7 +1324,7 @@ pass_list_all()
 gmail_mail()
 {
     # Source: https://www.commandlinefu.com/commands/view/3380/check-your-unread-gmail-from-the-command-line
-    curl -u "go.wigust:$(pass show email/gmail/go.wigust)" \
+    curl -u "go.wigust:$(pass show myaccount.google.com/apppasswords/go.wigust)" \
             --silent "https://mail.google.com/mail/feed/atom" \
         | tr -d '\n' \
         | awk -F '<entry>' '{for (i=2; i<=NF; i++) {print $i}}' \

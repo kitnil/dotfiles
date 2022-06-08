@@ -261,7 +261,7 @@
                         (imap-account "gmail")
                         (host "imap.gmail.com")
                         (user "go.wigust@gmail.com")
-                        (pass-cmd "gpg -q --for-your-eyes-only --no-tty -d ~/.password-store/email/gmail/go.wigust.gpg")
+                        (pass-cmd "gpg -q --for-your-eyes-only --no-tty -d ~/.password-store/myaccount.google.com/apppasswords/go.wigust.gpg")
                         (auth-mechs '("LOGIN"))
                         (ssl-type "IMAPS")
                         (certificate-file "/etc/ssl/certs/ca-certificates.crt")
@@ -304,7 +304,7 @@
                         (define isync
                           #$(file-append isync "/bin/mbsync"))
                         (define password
-                          #$(pass "show" "email/gmail/go.wigust"))
+                          #$(pass "show" "myaccount.google.com/apppasswords/go.wigust"))
                         (with-output-to-file #$output
                           (lambda ()
                             (scm->json
@@ -1312,7 +1312,7 @@ password       ~a
 # Set a default account
 account default : gmail
 "
-                                    (pass "email/gmail/go.wigust"))))))
+                                    (pass "myaccount.google.com/apppasswords/go.wigust"))))))
 
     (simple-service 'gtkrc-config
                     home-activation-service-type
