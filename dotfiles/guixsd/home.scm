@@ -1323,7 +1323,8 @@ password       ~a
 account default : gmail
 "
                                     (pass "myaccount.google.com/apppasswords/go.wigust")
-                                    (pass "majordomo/private/newmail.majordomo.ru/pyhalov@majordomo.ru"))))))
+                                    (pass "majordomo/private/newmail.majordomo.ru/pyhalov@majordomo.ru"))))
+                        (chmod msmtp-config #o600)))
 
     (simple-service 'gtkrc-config
                     home-activation-service-type
