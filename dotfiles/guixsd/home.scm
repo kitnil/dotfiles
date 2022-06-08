@@ -1291,7 +1291,9 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                         (add-to-load-path (string-append %home "/.local/share/chezmoi/dotfiles"))
                         (use-modules (ice-9 format)
                                      (guile pass))
-                        (call-with-output-file (string-append %home "/.msmtprc")
+                        (define msmtp-config
+                          (string-append %home "/.msmtprc"))
+                        (call-with-output-file msmtp-config
                           (lambda (port)
                             (format port "\
 # Set default values for all following accounts.
@@ -1309,10 +1311,19 @@ from           go.wigust@gmail.com
 user           go.wigust
 password       ~a
 
+# Majordomo
+account        majordomo-pyhalov
+host           smtp.majordomo.ru
+port           587
+from           pyhalov@majordomo.ru
+user           pyhalov@majordomo.ru
+password       ~a
+
 # Set a default account
 account default : gmail
 "
-                                    (pass "myaccount.google.com/apppasswords/go.wigust"))))))
+                                    (pass "myaccount.google.com/apppasswords/go.wigust")
+                                    (pass "majordomo/private/newmail.majordomo.ru/pyhalov@majordomo.ru"))))))
 
     (simple-service 'gtkrc-config
                     home-activation-service-type
