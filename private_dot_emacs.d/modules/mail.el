@@ -25,13 +25,15 @@
       (message-goto-body)
       (insert str))))
 
-;; Simple Mail Transfer Protocol (SMTP)
+;; https://jonathanchu.is/posts/emacs-notmuch-isync-msmtp-setup/
+;; Emacs, Notmuch, isync, and msmtp Setup · jonathanchu.is
 (with-eval-after-load 'sendmail
-  (setq smtpmail-smtp-service 587)
-  (setq smtpmail-stream-type 'starttls)
   (setq smtpmail-debug-info t)
-  (setq send-mail-function #'smtpmail-send-it)
-  (setq smtpmail-smtp-server "smtp.gmail.com"))
+  (setq send-mail-function #'sendmail-send-it)
+  (setq sendmail-program "/home/oleg/.guix-profile/bin/msmtp")
+  (setq mail-specify-envelope-from t)
+  (setq message-sendmail-envelope-from 'header)
+  (setq mail-envelope-from 'header))
 
 (setq smtpmail-queue-mail t) ; Call after typing M-x `smtpmail-send-queued-mail'
 
