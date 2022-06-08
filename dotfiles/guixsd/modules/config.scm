@@ -390,6 +390,7 @@ dh /etc/openvpn/dhparams.pem
 ping-restart 10
 resolv-retry infinite
 server 192.168.25.0 255.255.255.0
+client-config-dir /etc/openvpn/ccd
 "))))
 
 (define %openvpn-configuration-majordomo.ru
