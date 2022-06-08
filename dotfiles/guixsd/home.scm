@@ -1301,7 +1301,7 @@ defaults
 auth           on
 tls            on
 tls_trust_file /etc/ssl/certs/ca-certificates.crt
-logfile        ~/.msmtp.log
+logfile        ~a/.msmtp.log
 
 # Gmail
 account        gmail
@@ -1322,6 +1322,7 @@ password       ~a
 # Set a default account
 account default : gmail
 "
+                                    %home
                                     (pass "myaccount.google.com/apppasswords/go.wigust")
                                     (pass "majordomo/private/newmail.majordomo.ru/pyhalov@majordomo.ru"))))
                         (chmod msmtp-config #o600)))
