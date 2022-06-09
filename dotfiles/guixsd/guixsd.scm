@@ -469,6 +469,9 @@ location / {
                              (string-join
                               (list "--may-exist" "add-port" "br0" "enp34s0"
                                     "vlan_mode=native-untagged")))
+
+                            ;; VLAN 154 provides:
+                            ;; - Network via Whonix
                             (ovs-vsctl
                              (string-join
                               (list "--may-exist" "add-br" "br154")))
@@ -552,6 +555,10 @@ location / {
                                     "-o" "br154.154"
                                     "-j" "ACCEPT")))
 
+                            ;; VLAN 155 provides:
+                            ;; - DHCP with a PXE by netboot.xyz.
+                            ;; - NAT for the Internet.
+                            ;; - NAT for OpenVPN to a work.
                             (ovs-vsctl
                              (string-join
                               (list "--may-exist" "add-br" "br155")))
@@ -565,6 +572,10 @@ location / {
                             (ovs-vsctl
                              (string-join
                               (list "--may-exist" "add-br" "br156-vlan156" "br156" "156")))
+
+                            ;; VLAN 156 provides:
+                            ;; - DHCP with a PXE by netboot.xyz.
+                            ;; - NAT for the Internet.
                             (ip
                              (string-join
                               (list "link" "add" "link" "br156"
