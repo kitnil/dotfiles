@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2020 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2020, 2022 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -17,12 +17,17 @@
 ;;; along with GNU Guix.  If not, see <http://www.gnu.org/licenses/>.
 
 (define-module (services bittorrent)
+  #:use-module (services docker)
   #:use-module (gnu services shepherd)
   #:use-module (gnu services)
   #:use-module (guix gexp)
+  #:use-module (guix modules)
   #:use-module (gnu packages bittorrent)
+  #:use-module (gnu packages guile)
   #:use-module (srfi srfi-1)
-  #:export (transmission-service))
+  #:export (transmission-service
+
+            jackett-service))
 
 ;;; Commentary:
 ;;;
@@ -55,5 +60,39 @@
                                               (environ)))))
                     (respawn? #f)
                     (stop #~(make-kill-destructor))))))
+
+
+;;;
+;;; jackett
+;;;
+
+(define jackett-service
+  (service docker-compose-service-type
+           (docker-compose-configuration
+            (project-name "jackett")
+            (compose-file
+             (computed-file
+              "docker-compose-jackett.json"
+              (with-extensions (list guile-json-4)
+                (with-imported-modules (source-module-closure '((json builder)))
+                  #~(begin
+                      (use-modules (json builder))
+                      (with-output-to-file #$output
+                        (lambda ()
+                          (scm->json
+                           `(("version" . "2.1")
+                             ("services"
+                              ("jackett"
+                               ("volumes"
+                                .
+                                #("/var/lib/jackett/config:/config"
+                                  "/var/lib/jackett/downloads:/downloads"))
+                               ("ports" . #("127.0.0.1:9117:9117"))
+                               ("image" . "lscr.io/linuxserver/jackett:latest")
+                               ("environment" . #("PUID=1000"
+                                                  "PGID=998"
+                                                  "TZ=Europe/Moscow"
+                                                  "AUTO_UPDATE=true"))
+                               ("container_name" . "jackett")))))))))))))))
 
 ;;; bittorrent.scm ends here
