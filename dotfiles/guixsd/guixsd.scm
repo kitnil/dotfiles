@@ -30,6 +30,7 @@
              (services autofs)
              (services backup)
              (services bird)
+             (services bittorrent)
              (services certbot)
              (services docker)
              (services virtualization)
@@ -1596,6 +1597,8 @@ host	all	all	192.168.64.0/20   trust"))
                                    (timezone "Europe/Moscow")))
 
                          (service jenkins-service-type %jenkins-config)
+
+                         jackett-service
 
                          (service restic-rest-service-type
                                   (restic-rest-configuration
