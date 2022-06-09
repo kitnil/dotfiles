@@ -18,12 +18,14 @@
 
 (define-module (services web)
   #:use-module (services docker)
+  #:use-module (gnu packages guile)
   #:use-module (gnu services)
   #:use-module (gnu services configuration)
   #:use-module (gnu services shepherd)
   #:use-module (gnu services web)
   #:use-module (gnu system shadow)
   #:use-module (guix gexp)
+  #:use-module (guix modules)
   #:use-module (guix records)
   #:use-module (json)
   #:use-module (packages password-utils)
@@ -33,7 +35,9 @@
             %homer-nginx-configuration-nginx
 
             vault-configuration
-            vault-service-type))
+            vault-service-type
+
+            radarr-service))
 
 ;;; Commentary:
 ;;;
@@ -195,5 +199,39 @@
                                                   "PGID=998"
                                                   "TZ=Europe/Moscow"))
                                ("container_name" . "heimdall")))))))))))))))
+
+
+;;;
+;;; radarr
+;;;
+
+(define radarr-service
+  (service docker-compose-service-type
+           (docker-compose-configuration
+            (project-name "radarr")
+            (compose-file
+             (computed-file
+              "docker-compose-radarr.json"
+              (with-extensions (list guile-json-4)
+                (with-imported-modules (source-module-closure '((json builder)))
+                  #~(begin
+                      (use-modules (json builder))
+                      (with-output-to-file #$output
+                        (lambda ()
+                          (scm->json
+                           `(("version" . "2.1")
+                             ("services"
+                              ("radarr"
+                               ("volumes"
+                                .
+                                #("/var/lib/radarr/data:/config"
+                                  "/var/lib/radarr/movies:/movies"
+                                  "/var/lib/radarr/downloadclient-downloads:/downloads"))
+                               ("ports" . #("127.0.0.1:7878:7878"))
+                               ("image" . "lscr.io/linuxserver/radarr:latest")
+                               ("environment" . #("PUID=1000"
+                                                  "PGID=998"
+                                                  "TZ=Europe/Moscow"))
+                               ("container_name" . "radarr")))))))))))))))
 
 ;;; web.scm ends here
