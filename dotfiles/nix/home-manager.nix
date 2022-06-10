@@ -9,6 +9,8 @@
     bandwidth
     bandwhich
 
+    binwalk
+
     btfs
 
     clipman wayvnc wtype
