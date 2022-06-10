@@ -818,6 +818,7 @@ location / {
            "::1 guixsd localhost"
 
            ,(string-join '("192.168.0.144"
+                           "guixsd"     ;for iftop hostname
                            "techinfo.intr"
                            "texinfo.tld"
                            "jenkins.wugi.info"
