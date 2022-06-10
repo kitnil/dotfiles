@@ -472,6 +472,7 @@ exec -a \"$0\" /home/oleg/.nix-profile/bin/~a --disable-features=SendMouseLeaveE
                             "Majordomo_LLC_Root_CA.crt.sh"
                             "messages2notify-send"
                             "mj-hosts.sh"
+                            "mjru-auth"
                             "mjru-alerta"
                             "mjru-dns"
                             "mjru-docker"

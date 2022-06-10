@@ -5,20 +5,7 @@ set -eux
 account="$1"
 host="$2"
 
-IHS_USER="${IHS_USER:-pyhalov}"
-IHS_PASS="${IHS_PASSWORD:-$(pass show majordomo/private/hms/pyhalov)}"
-
-auth ()
-{
-    curl --silent \
-         --request POST https://api.majordomo.ru/oauth/token \
-         --header 'content-type: application/x-www-form-urlencoded' \
-         --header 'x-requested-with: XMLHttpRequest' \
-         -d "grant_type=password&username=$IHS_USER&password=$IHS_PASS&client_id=service&client_secret=service_secret" \
-        | jq -r '.access_token'
-}
-
 curl --request POST https://api.majordomo.ru/account/"$account"/transfer \
-     --header "Authorization: Bearer $(auth)" \
+     --header "Authorization: Bearer $(mjru-auth)" \
      --header 'Content-Type: application/json' \
      --data-binary '{"operationIdentity":null,"params":{"serverId":"'"$host"'" }}'
