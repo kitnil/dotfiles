@@ -1,0 +1,39 @@
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  labels:
+    kubevirt.io/vm: vm-alpine-datavolume
+  name: vm-alpine-datavolume
+spec:
+  running: false
+  template:
+    metadata:
+      labels:
+        kubevirt.io/vm: vm-alpine-datavolume
+    spec:
+      domain:
+        devices:
+          disks:
+            - disk:
+                bus: virtio
+              name: datavolumedisk1
+        resources:
+          requests:
+            memory: 64M
+      volumes:
+        - dataVolume: #Note the type is dataVolume
+            name: alpine-dv
+          name: datavolumedisk1
+  dataVolumeTemplates: # Automatically a PVC of size 2Gi is created
+    - metadata:
+        name: alpine-dv
+      spec:
+        pvc:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 2Gi
+        source: #This is the source where the ISO file resides
+          http:
+            url: http://cdi-http-import-server.kubevirt/images/alpine.iso
