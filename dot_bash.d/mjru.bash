@@ -397,3 +397,10 @@ then
         complete -o default -o nospace -F __start_glab mjru-gitlab
     fi
 fi
+
+mjru-curl()
+{
+    curl --header "Authorization: Bearer $(mjru-auth)" \
+         --header 'Content-Type: application/json' \
+         "$@"
+}
