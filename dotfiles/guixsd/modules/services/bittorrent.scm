@@ -27,6 +27,7 @@
   #:use-module (srfi srfi-1)
   #:export (transmission-service
 
+            docker-compose-jackett-service
             jackett-service))
 
 ;;; Commentary:
@@ -66,6 +67,19 @@
 ;;; jackett
 ;;;
 
+(define docker-compose-jackett-service
+  '("jackett"
+    ("volumes"
+     .
+     #("/var/lib/jackett/config:/config"
+       "/var/lib/jackett/downloads:/downloads"))
+    ("ports" . #("127.0.0.1:9117:9117"))
+    ("image" . "lscr.io/linuxserver/jackett:latest")
+    ("environment" . #("PUID=1000"
+                       "PGID=998"
+                       "TZ=Europe/Moscow"
+                       "AUTO_UPDATE=true"))))
+
 (define jackett-service
   (service docker-compose-service-type
            (docker-compose-configuration
@@ -82,17 +96,6 @@
                           (scm->json
                            `(("version" . "2.1")
                              ("services"
-                              ("jackett"
-                               ("volumes"
-                                .
-                                #("/var/lib/jackett/config:/config"
-                                  "/var/lib/jackett/downloads:/downloads"))
-                               ("ports" . #("127.0.0.1:9117:9117"))
-                               ("image" . "lscr.io/linuxserver/jackett:latest")
-                               ("environment" . #("PUID=1000"
-                                                  "PGID=998"
-                                                  "TZ=Europe/Moscow"
-                                                  "AUTO_UPDATE=true"))
-                               ("container_name" . "jackett")))))))))))))))
+                              #$docker-compose-jackett-service)))))))))))))
 
 ;;; bittorrent.scm ends here

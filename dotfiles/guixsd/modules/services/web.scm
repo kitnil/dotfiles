@@ -37,6 +37,7 @@
             vault-configuration
             vault-service-type
 
+            docker-compose-radarr-service
             radarr-service))
 
 ;;; Commentary:
@@ -205,6 +206,19 @@
 ;;; radarr
 ;;;
 
+(define docker-compose-radarr-service
+  '("radarr"
+    ("volumes"
+     .
+     #("/var/lib/radarr/data:/config"
+       "/var/lib/radarr/movies:/movies"
+       "/var/lib/radarr/downloadclient-downloads:/downloads"))
+    ("ports" . #("127.0.0.1:7878:7878"))
+    ("image" . "lscr.io/linuxserver/radarr:latest")
+    ("environment" . #("PUID=1000"
+                       "PGID=998"
+                       "TZ=Europe/Moscow"))))
+
 (define radarr-service
   (service docker-compose-service-type
            (docker-compose-configuration
@@ -221,17 +235,6 @@
                           (scm->json
                            `(("version" . "2.1")
                              ("services"
-                              ("radarr"
-                               ("volumes"
-                                .
-                                #("/var/lib/radarr/data:/config"
-                                  "/var/lib/radarr/movies:/movies"
-                                  "/var/lib/radarr/downloadclient-downloads:/downloads"))
-                               ("ports" . #("127.0.0.1:7878:7878"))
-                               ("image" . "lscr.io/linuxserver/radarr:latest")
-                               ("environment" . #("PUID=1000"
-                                                  "PGID=998"
-                                                  "TZ=Europe/Moscow"))
-                               ("container_name" . "radarr")))))))))))))))
+                              #$docker-compose-radarr-service)))))))))))))
 
 ;;; web.scm ends here
