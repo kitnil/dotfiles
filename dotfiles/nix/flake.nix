@@ -63,6 +63,7 @@
       flake = false;
     };
     utils.url = "github:numtide/flake-utils";
+    flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus";
     naersk.url = "github:nmattia/naersk";
     override.url = "nixpkgs";
     nixos.url = "nixpkgs/nixos-unstable";
@@ -93,6 +94,7 @@
             , nixpkgs-idea
             , bbuscarino-env
             , kamadorueda-alejandra
+            , flake-utils-plus
             , ... }:
     let
       system = "x86_64-linux";
@@ -300,7 +302,11 @@
                     alejandra = (kamadorueda-alejandra.packages.${system}).alejandra-x86_64-unknown-linux-gnu;
                   };
                 pkgs = import nixpkgs {
-                  overlays = [ nur.overlay overlay ];
+                  overlays = [
+                    nur.overlay
+                    flake-utils-plus.overlay
+                    overlay
+                  ];
                   inherit system;
                 };
               in rec

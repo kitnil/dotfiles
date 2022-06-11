@@ -93,6 +93,7 @@
     nixos-rebuild
     nixpkgs-lint
     # nodePackages_12_x.node2nix
+    fup-repl
 
     cachix
 

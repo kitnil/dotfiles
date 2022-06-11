@@ -570,6 +570,39 @@
         "type": "github"
       }
     },
+    "flake-utils-plus": {
+      "inputs": {
+        "flake-utils": "flake-utils_2"
+      },
+      "locked": {
+        "lastModified": 1652704544,
+        "narHash": "sha256-UTKE33tYgCmDszaVyWA33a8mtegM5xfH4fH8w4y6TxA=",
+        "owner": "gytis-ivaskevicius",
+        "repo": "flake-utils-plus",
+        "rev": "f8d6d1f87b6177e3bc674c29f247bdbf897ba274",
+        "type": "github"
+      },
+      "original": {
+        "owner": "gytis-ivaskevicius",
+        "repo": "flake-utils-plus",
+        "type": "github"
+      }
+    },
+    "flake-utils_2": {
+      "locked": {
+        "lastModified": 1644229661,
+        "narHash": "sha256-1YdnJAsNy69bpcjuoKdOYQX0YxZBiCYZo4Twxerqv7k=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "3cecb5b042f7f209c56ffd8371b2711a290ec797",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
     "flakeCompat": {
       "flake": false,
       "locked": {
@@ -2226,6 +2259,7 @@
         "deploy-rs": "deploy-rs",
         "doom-emacs": "doom-emacs_2",
         "flake-compat": "flake-compat_3",
+        "flake-utils-plus": "flake-utils-plus",
         "github-com-9999years-nix-config": "github-com-9999years-nix-config",
         "github-com-emilazy-mpv-notify-send": "github-com-emilazy-mpv-notify-send",
         "github-com-guibou-nixGL": "github-com-guibou-nixGL",
