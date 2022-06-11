@@ -11,8 +11,13 @@ def main():
     child.logfile = sys.stdout.buffer
 
     child.expect(prompt)
-    child.sendline(":l /home/oleg/.nix-defexpr/channels/nixpkgs/lib")
-
+    child.sendline(':a builtins.getFlake "github:nixos/nixpkgs"')
+    child.expect(prompt)
+    child.sendline(':a outputs.lib')
+    child.expect(prompt)
+    child.sendline(':a builtins')
+    child.expect(prompt)
+    child.sendline('pkgs = legacyPackages.x86_64-linux.pkgs')
     child.expect(prompt)
     child.logfile = None
     child.interact()
