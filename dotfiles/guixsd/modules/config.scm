@@ -422,7 +422,7 @@ client-to-client
                     "Hunt the most starred projects on GitHub")
                    ("name" . "GitHunt")
                    ("logo" . "https://camo.githubusercontent.com/b7243ef0327a743e1c6081bddf604f421b73810d/68747470733a2f2f7261772e6769746875622e636f6d2f6b616d72616e61686d656473652f67697468756e742f6d61737465722f7075626c69632f696d672f6c6f676f2e7376673f73616e6974697a653d74727565"))
-                  (("url" . "https://guix.duckdns.org/")
+                  (("url" . "https://guix.wugi.info/")
                    ("tag" . "guix")
                    ("subtitle" . "guix publish")
                    ("name" . "Guix Substitute Server")
