@@ -447,7 +447,7 @@ client-to-client
                    ("tag" . "prometheus")
                    ("subtitle" . "Prometheus")
                    ("name" . "Prometheus")
-                   ;; ("type" . "Prometheus")
+                   ("type" . "Prometheus")
                    ("logo" . "https://raw.githubusercontent.com/prometheus/docs/ca2961b495c3e2a1e4586899c26de692fa5a28e7/static/prometheus_logo_orange_circle.svg"))
                   (("url" . "https://syncthing.wugi.info/")
                    ("tag" . "syncthing")
