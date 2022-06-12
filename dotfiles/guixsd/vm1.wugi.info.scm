@@ -152,6 +152,7 @@ ping-restart 10
 resolv-retry infinite
 remote guix.wugi.info 1195
 remote-random
+route 141.80.181.40 255.255.255.255 192.168.25.2
 "))))
 
                           (service dante-service-type
