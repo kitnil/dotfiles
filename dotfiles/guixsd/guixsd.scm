@@ -899,7 +899,10 @@ location / {
 
       (services (append (list
 
-                         (service earlyoom-service-type)
+                         (service earlyoom-service-type
+                                  (earlyoom-configuration
+                                   (avoid-regexp "(^|/)(guix-daemon|Xorg|ssh)$")
+                                   (prefer-regexp "(^|/)(chrome|firefox)$")))
 
                          ;; Raise the maximum number of open file descriptors
                          ;; that can be used.
