@@ -5,7 +5,6 @@ from ansible.module_utils.basic import AnsibleModule
 def main():
     module = AnsibleModule(
         argument_spec=dict(
-            commit=dict(type="str", required=False),
             channels=dict(type="str", required=True),
         )
     )
@@ -19,7 +18,14 @@ def main():
 
     before = describe()
     result = module.run_command(
-        f"guix pull --allow-downgrades --channels={module.params['channels']} --commit={module.params['commit']}"
+        " ".join(
+            [
+                "guix",
+                "pull",
+                "--allow-downgrades",
+                f"--channels={module.params['channels']}",
+            ]
+        )
     )
     after = describe()
     result = {
