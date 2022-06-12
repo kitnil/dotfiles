@@ -560,7 +560,7 @@ node_timex_maxerror_seconds >= 16
           ("for" . "6h")
           ("expr"
            .
-           "count(sum(label_replace(node_uname_info{instance!=\"127.0.0.1:9100\"}, \"kernel\", \"$1\", \"release\", \"([0-9]+.[0-9]+.[0-9]+).*\")) by (kernel)) > 1")
+           "count(sum(label_replace(node_uname_info{instance!=\"127.0.0.1:9100\",instance!=\"oracle1.local:9100\"}, \"kernel\", \"$1\", \"release\", \"([0-9]+.[0-9]+.[0-9]+).*\")) by (kernel)) > 1")
           ("annotations"
            ("summary"
             .
