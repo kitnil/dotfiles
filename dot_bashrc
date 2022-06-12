@@ -538,7 +538,7 @@ guix()
             esac
             ;;
         distribute)
-            "$(guix build --file="$HOME/.local/share/chezmoi/dotfiles/ansible/guix.scm")"
+            "$(guix build --file="$HOME/.local/share/chezmoi/dotfiles/ansible/guix.scm" "${@:2}")"
             ;;
         prebuild)
             guix_command="$HOME/src/guix/pre-inst-env guix"
