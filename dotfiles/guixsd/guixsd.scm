@@ -1365,7 +1365,7 @@ location / {
                                                       ("icmp"
                                                        ("preferred_ip_protocol" . "ip4")))
                                                      ("smtp_starttls"
-                                                      ("timeout" . "5s")
+                                                      ("timeout" . "10s")
                                                       ("tcp"
                                                        ("query_response"
                                                         .
@@ -1380,7 +1380,7 @@ location / {
                                                           (("send" . "QUIT\r")))))
                                                       ("prober" . "tcp"))
                                                      ("imap_starttls"
-                                                      ("timeout" . "5s")
+                                                      ("timeout" . "10s")
                                                       ("tcp"
                                                        ("query_response"
                                                         .
