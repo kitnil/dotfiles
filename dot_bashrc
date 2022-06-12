@@ -1953,5 +1953,5 @@ fi
 
 if [ -f "${HOME}/.nix-profile/bin/glab" ]
 then
-    source <(glab completion)
+    source <("${HOME}/.nix-profile/bin/glab" completion)
 fi
