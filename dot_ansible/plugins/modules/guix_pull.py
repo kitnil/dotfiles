@@ -5,18 +5,22 @@ from ansible.module_utils.basic import AnsibleModule
 def main():
     module = AnsibleModule(
         argument_spec=dict(
-            commit=dict(type="str", required=True),
-            channels=dict(type="str", required=True)
+            commit=dict(type="str", required=False),
+            channels=dict(type="str", required=True),
         )
     )
+
     def describe():
         result = module.run_command("guix describe --format=json")
         try:
             return json.loads(result[1])
         except json.JSONDecodeError:
             return result[1]
+
     before = describe()
-    result = module.run_command(f"guix pull --allow-downgrades --channels={module.params['channels']} --commit={module.params['commit']}")
+    result = module.run_command(
+        f"guix pull --allow-downgrades --channels={module.params['channels']} --commit={module.params['commit']}"
+    )
     after = describe()
     result = {
         "msg": {"before": before, "after": after},
