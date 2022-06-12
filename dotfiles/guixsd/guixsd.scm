@@ -814,7 +814,7 @@ location / {
        (plain-file
         "hosts"
         (string-join
-         `(,(string-join '("127.0.0.1 guixsd localhost"))
+         `(,(string-join '("127.0.0.1 guixsd localhost home.wugi.info"))
            "::1 guixsd localhost"
 
            ,(string-join '("192.168.0.144"
@@ -1537,6 +1537,26 @@ PasswordAuthentication yes")))
                                      (nginx-upstream-configuration
                                       (name "peertube-backend")
                                       (servers '("127.0.0.1:9001")))))))
+
+                         (service homer-service-type
+                                  (homer-configuration
+                                   (config-file %homer-config)
+                                   (nginx
+                                    (list
+                                     (nginx-server-configuration
+                                      (inherit %homer-nginx-configuration-nginx)
+                                      (server-name '("home.wugi.info"))
+                                      (locations
+                                       (list (nginx-location-configuration
+                                              (uri "/.well-known")
+                                              (body '("root /var/www;")))
+                                             (nginx-location-configuration
+                                              (uri "/assets/config.yml")
+                                              (body '("etag off;"
+                                                      "if_modified_since off;"
+                                                      ;; "add_header Last-Modified $date_gmt;"
+                                                      "add_header Last-Modified \"\";")))))
+                                      (listen '("127.0.0.1:80")))))))
 
                          (service gitolite-service-type
                                   (gitolite-configuration
