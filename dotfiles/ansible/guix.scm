@@ -27,15 +27,9 @@
           ("git"
            ("repo" . "https://github.com/kitnil/dotfiles")
            ("dest" . ,%dotfiles-directory)))
-         (("name" . "Describe current Guix")
-          ("uri"
-           ("url" . "http://guix.wugi.info/guix/describe?channel=guix")
-           ("return_content" . "yes"))
-          ("register" . "channel"))
          (("name" . "Pull Guix")
           ("guix_pull"
-           ("commit" . "{{ channel.json.commit }}")
-           ("channels" . ,(string-append %dotfiles-directory "/dotfiles/channels.scm"))))
+           ("channels" . ,(string-append %dotfiles-directory "/dotfiles/channels-current.scm"))))
          (("name" . "Apply Guix manifest")
           ("guix_package"
            ("profile" . ,%user-profile-directory)
@@ -44,15 +38,9 @@
       ("hosts" . #("guix_vm" "guix_work")))
      (("tasks"
        .
-       #((("uri"
-           ("url" . "http://guix.wugi.info/guix/describe?channel=guix")
-           ("return_content" . "yes"))
-          ("register" . "channel")
-          ("name" . "Describe current Guix"))
-         (("name" . "Pull Guix")
+       #((("name" . "Pull Guix")
           ("guix_pull"
-           ("commit" . "{{ channel.json.commit }}")
-           ("channels" . ,(string-append %dotfiles-directory "/dotfiles/channels.scm"))))))
+           ("channels" . ,(string-append %dotfiles-directory "/dotfiles/channels-current.scm"))))))
       ("hosts" . #("guix_vm" "guix_work"))
       ("become_flags" . "-i")
       ("become" . "yes")))))
