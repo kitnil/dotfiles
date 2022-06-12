@@ -468,7 +468,8 @@ client-to-client
                    ("tag" . "ssh")
                    ("subtitle" . "SSH web-client")
                    ("name" . "WebSSH")
-                   ("logo" . "https://webssh.wugi.info/static/img/favicon.png"))))
+                   ("logo" . "https://webssh.wugi.info/static/img/favicon.png")
+                   ("type" . "Ping"))))
                ("icon" . "fas fa-home"))
               (("name" . "Third-Party hosting")
                ("items"
