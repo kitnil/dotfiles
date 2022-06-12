@@ -110,6 +110,24 @@
          (listen '("192.168.0.144:80"))
          (root "/srv/iso"))
         (nginx-server-configuration
+         (server-name '("gitlab.wugi.info"))
+         (listen '("127.0.0.1:80"))
+         (locations
+          (list
+           (nginx-location-configuration
+            (uri "/")
+            (body (list
+                   "resolver 80.80.80.80 ipv6=off;"
+                   "proxy_pass https://gitlab.com$empty;"
+                   "set $empty \"\";"
+                   "proxy_set_header Host gitlab.com;"
+                   "proxy_ssl_server_name on;"
+                   "client_max_body_size 0;"
+                   "proxy_busy_buffers_size 512k;"
+                   "proxy_buffers 4 512k;"
+                   "proxy_buffer_size 256k;"
+                   "add_header Access-Control-Allow-Origin *;"))))))
+        (nginx-server-configuration
          (server-name '("texinfo.tld"))
          (listen '("192.168.0.144:80"))
          (root "/var/www/texinfo"))
@@ -814,7 +832,7 @@ location / {
        (plain-file
         "hosts"
         (string-join
-         `(,(string-join '("127.0.0.1 guixsd localhost home.wugi.info"))
+         `(,(string-join '("127.0.0.1 guixsd localhost home.wugi.info gitlab.wugi.info"))
            "::1 guixsd localhost"
 
            ,(string-join '("192.168.0.144"
