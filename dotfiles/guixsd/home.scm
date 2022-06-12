@@ -1837,6 +1837,8 @@ gtk-xft-rgba=\"rgb\"
                        (git-project git-project-nixos-jenkins)))
                     '("jenkins"))))))
 
+    ;; XXX: Make sure ~/.ssh/known_hosts provides ssh-rsa host key algorithm,
+    ;; so ssh-exporter works properly.
     (service home-prometheus-ssh-exporter-service-type
              (prometheus-ssh-exporter-configuration
               (config-file
