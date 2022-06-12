@@ -44,23 +44,6 @@
   VALUE = {{ $value }}
   LABELS = {{ $labels }}"))
           ("alert" . "BlackboxProbeHttpFailure"))
-         (("labels" ("severity" . "warning"))
-          ("for" . "0m")
-          ("expr"
-           .
-           "probe_ssl_earliest_cert_expiry - time() < 86400 * 30")
-          ("annotations"
-           ("summary"
-            .
-            "Blackbox SSL certificate will expire soon (instance {{ $labels.instance }})")
-           ("description"
-            .
-            "SSL certificate expires in 30 days
-  VALUE = {{ $value }}
-  LABELS = {{ $labels }}"))
-          ("alert"
-           .
-           "BlackboxSslCertificateWillExpireSoon"))
          (("labels" ("severity" . "critical"))
           ("for" . "0m")
           ("expr"
