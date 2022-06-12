@@ -80,7 +80,7 @@
           ("for" . "1m")
           ("expr"
            .
-           "avg_over_time(probe_http_duration_seconds[1m]) > 1")
+           "avg_over_time(probe_http_duration_seconds[1m]) > 3")
           ("annotations"
            ("summary"
             .
