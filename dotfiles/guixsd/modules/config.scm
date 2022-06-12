@@ -402,7 +402,7 @@ client-to-client
 
 (define %homer-config
   (let ((config
-         '(("title" . "wugi.info dashboard")
+         '(("title" . "home.wugi.info dashboard")
            ("theme" . "default")
            ("subtitle" . "web services")
            ("services"
