@@ -335,10 +335,6 @@ EndSection\n")
            (uri "/.well-known")
            (body '("root /var/www;")))
           (nginx-location-configuration
-           (uri "~ ^/\\.well-known/acme-challenge/([-_a-zA-Z0-9]+)$")
-           (body '("default_type text/plain;"
-                   "return 200 \"YoKfVIvJaMr_-86jpqjqJxHXXxH7ZzKYST2c7zx7r2s\";")))
-          (nginx-location-configuration
            (uri "/assets/config.yml")
            (body '("etag off;"
                    "if_modified_since off;"
