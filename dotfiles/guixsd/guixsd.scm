@@ -899,6 +899,8 @@ location / {
 
       (services (append (list
 
+                         (service earlyoom-service-type)
+
                          ;; Raise the maximum number of open file descriptors
                          ;; that can be used.
                          (pam-limits-service
