@@ -80,7 +80,7 @@
           ("for" . "1m")
           ("expr"
            .
-           "avg_over_time(probe_http_duration_seconds[1m]) > 3")
+           "avg_over_time(probe_http_duration_seconds{instance!=\"http://ci.guix.gnu.org.intr\"}[1m]) > 3")
           ("annotations"
            ("summary"
             .
