@@ -234,10 +234,20 @@ location / {
          (ssl-certificate (letsencrypt-certificate "webssh.wugi.info"))
          (ssl-certificate-key (letsencrypt-key "webssh.wugi.info"))
          (locations
-          (cons (nginx-location-configuration
+          (list (nginx-location-configuration
                  (uri "/.well-known")
                  (body '("root /var/www;")))
-                (nginx-server-configuration-locations %webssh-configuration-nginx))))
+                (nginx-location-configuration
+                 (uri "/")
+                 (body '("proxy_pass http://127.0.0.1:8888;"
+                         "proxy_http_version 1.1;"
+                         "proxy_read_timeout 300;"
+                         "proxy_set_header Upgrade $http_upgrade;"
+                         "proxy_set_header Connection \"upgrade\";"
+                         "proxy_set_header Host $http_host;"
+                         "proxy_set_header X-Real-IP $remote_addr;"
+                         "proxy_set_header X-Real-PORT $remote_port;"
+                         "add_header Access-Control-Allow-Origin *;"))))))
 
         (proxy "cups.tld" 631)
         (proxy "jenkins.wugi.info" 8090 #:ssl? #t #:ssl-key? #t #:mtls? #t)
