@@ -1878,8 +1878,7 @@ gtk-xft-rgba=\"rgb\"
                                  ("timeout" . 5)
                                  ("private_key" . ,(string-append %home "/.ssh/id_rsa_majordomo_eng"))
                                  ("known_hosts" . ,(string-append %home "/.ssh/known_hosts"))
-                                 ("command" . "uptime"))))
-                             #:pretty #t))))))))))
+                                 ("command" . "uptime"))))))))))))))
 
     ;; oleg@guixsd ~/.local/share/chezmoi$ command guix home -L dotfiles/guixsd/modules -L ~/src/engstrand-config-home-service-dwl-guile reconfigure dotfiles/guixsd/home.scm
     ;; (service home-dwl-guile-service-type
