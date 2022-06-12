@@ -1476,7 +1476,7 @@ location / {
                                                      ("smartctl_location" . ,smartctl)
                                                      ("fake_json" . "no")
                                                      ("devices" . #("/dev/sda"
-                                                                    "/dev/sdb"
+                                                                    ;; TODO: "/dev/sdb"
                                                                     "/dev/sdc"))
                                                      ;; TODO: Set collect_not_more_than_period to 120s after bug will be fixed.
                                                      ;; https://github.com/prometheus-community/smartctl_exporter/issues/19
