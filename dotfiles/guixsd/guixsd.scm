@@ -883,7 +883,17 @@ location / {
            "172.16.100.60 ws1.wugi.info"
            "178.250.247.125 gitlab.mjtest jenkins.mjtest"
            "172.16.103.238 ci.guix.gnu.org.intr"
+
            "130.61.95.6 oracle"
+           ,(let ((ip (string-trim-right
+                       (if (= (getuid) 0)
+                           (with-input-from-file "/etc/guix/secrets/oracle"
+                             read-string)
+                           ""))))
+              (if (string-null? ip)
+                  ""
+                  (format #f "~a oracle.ygg" ip)))
+
            "172.16.100.65 zdetovetskiy.intr"
            "172.16.100.61 lyashenko.intr"
            "127.0.0.1 example.com"
