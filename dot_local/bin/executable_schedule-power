@@ -1,0 +1,153 @@
+#!/usr/bin/env -S guile --no-auto-compile -e main -s
+!#
+
+(use-modules (ice-9 match)
+             (ice-9 popen)
+             (ice-9 rdelim)
+             (srfi srfi-1)
+             (srfi srfi-19))
+
+(define %sudo-binary
+  "sudo")
+
+(define %halt-binary
+  "halt")
+
+(define (off-time?)
+  "Return true if off-time, false otherwise."
+  (let ((current-hour (date-hour (current-date))))
+    (or (<= current-hour 10)
+        (>= current-hour 18))))
+
+
+;;;
+;;; Mouse
+;;;
+
+(define %xdotool-binary
+  "xdotool")
+
+(define (mouse-position)
+  "Return current mouse position."
+  (let* ((port   (open-pipe* OPEN_READ %xdotool-binary "getmouselocation"))
+         (output (read-string port)))
+    (close-port port)
+    (map (lambda (str)
+           (match (string-split str #\:)
+             ((key value)
+              (cons (string->symbol key)
+                    (string->number value)))))
+         (string-split (string-trim-right output #\newline)
+                       #\space))))
+
+(define (mouse-idle?)
+  "Return true if mouse if idle, false otherwise."
+  (define %mouse-position-count
+    (or (getenv "AUTO_SHUTDOWN_MOUSE_POSITION")
+        2))
+
+  (define %mouse-position-interval
+    (or (getenv "AUTO_SHUTDOWN_MOUSE_POSITION_INTERVAL")
+        2))
+
+  (define %mouse-attempt
+    (or (getenv "AUTO_SHUTDOWN_MOUSE_ATTEMPT")
+        8))
+
+  (let loop ((attempt 0)
+             (value-parameter '())
+             (value-count 0))
+    (let ((mouse-idle? (>= value-count %mouse-position-count)))
+      (if (or mouse-idle?
+              (>= attempt %mouse-attempt))
+          mouse-idle?
+          (begin
+            (let ((current-value (mouse-position)))
+              (sleep %mouse-position-interval)
+              (loop (1+ attempt)
+                    current-value
+                    (if (equal? value-parameter current-value)
+                        (1+ value-count)
+                        0))))))))
+
+
+;;;
+;;; Monitor
+;;;
+
+(define %xset-binary
+  "xset")
+
+(define (monitor-on?)
+  "Return true if monitor is on, or false if monitor if off."
+  (let* ((port   (open-pipe* OPEN_READ %xset-binary "q"))
+         (output (read-string port)))
+    (close-port port)
+    (match (last
+            (string-split
+             (last
+              (string-split (string-trim-right output #\newline)
+                            #\newline))
+             #\space))
+      ("On" #true)
+      ("Off" #false))))
+
+(define (monitor-idle?)
+  "Return true if monitor if idle, false otherwise."
+  (define %monitor-count
+    (or (getenv "AUTO_SHUTDOWN_MONITOR_COUNT")
+        2))
+
+  (define %monitor-interval
+    (or (getenv "AUTO_SHUTDOWN_MONITOR_INTERVAL")
+        2))
+
+  (define %monitor-attempt
+    (or (getenv "AUTO_SHUTDOWN_MONITOR_ATTEMPT")
+        8))
+
+  (define (monitor-off?)
+    (not (monitor-on?)))
+
+  (let loop ((attempt 0)
+             (value-parameter '())
+             (value-count 0))
+    (let ((monitor-idle? (>= value-count %monitor-count)))
+      (if (or monitor-idle?
+              (>= attempt %monitor-attempt))
+          monitor-idle?
+          (begin
+            (let ((current-value (monitor-off?)))
+              (sleep %monitor-interval)
+              (loop (1+ attempt)
+                    current-value
+                    (if current-value
+                        (1+ value-count)
+                        0))))))))
+
+
+;;;
+;;; Processes
+;;;
+
+(define %pgrep-binary
+  "pgrep")
+
+(define (process-missing? process-name)
+  (with-output-to-port (open-output-file "/dev/null")
+    (lambda ()
+      (= (system* %pgrep-binary "--full" "--list-full" process-name)
+         256))))
+
+
+;;;
+;;; Entry point
+;;;
+
+(define (main . args)
+  (if (and (off-time?)
+           (process-missing? "bin/restic")
+           (monitor-idle?)
+           (mouse-idle?))
+      (system* %sudo-binary %halt-binary)
+      (exit 1)))
