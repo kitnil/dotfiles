@@ -1916,4 +1916,16 @@ gtk-xft-rgba=\"rgb\"
     ;;              (dwl-config-keys config)))
     ;;            (terminal `(,(file-append alacritty "/bin/alacritty")))
     ;;            (menu `(,(file-append bemenu "/bin/bemenu-run")))))))
-    ))))
+
+    (simple-service
+     'auto-shutdown-cron-jobs
+     home-mcron-service-type
+     (list
+      #~(job
+         '(next-hour)
+         #$(program-file
+            "schedule-power"
+            #~(begin
+                (system*
+                 #$(local-file "../../dot_local/bin/executable_schedule-power"
+                               #:recursive? #t)))))))))))
