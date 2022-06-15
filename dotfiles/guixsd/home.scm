@@ -144,6 +144,7 @@
                        (inherit majordomo-mbsync-imap-account-configuration)
                        (imap-account (string-append "majordomo-" name))
                        (user (string-append name "@majordomo.ru"))
+                       (ssl-type "IMAPS")
                        (pass-cmd
                         (string-join
                          (list "pass" "show"
