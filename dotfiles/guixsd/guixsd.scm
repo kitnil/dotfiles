@@ -438,9 +438,9 @@ location / {
                                     read-string))))))))
 
 (define backup-job
-  ;; Run 'updatedb' at 20:00 every day.  Here we write the
+  ;; Run 'updatedb' at 17:00 every day.  Here we write the
   ;; job's action as a Scheme procedure.
-  #~(job '(next-hour '(20))
+  #~(job '(next-hour '(17))
          #$(restic-command)))
 
 
