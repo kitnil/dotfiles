@@ -1,0 +1,24 @@
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  name: guix
+spec:
+  running: true
+  template:
+    metadata:
+      labels:
+        kubevirt.io/domain: guix
+    spec:
+      domain:
+        devices:
+          disks:
+            - disk:
+                bus: virtio
+              name: containerdisk
+        resources:
+          requests:
+            memory: 1024M
+      volumes:
+        - containerDisk: #Note the type is dataVolume
+            image: docker-registry.wugi.info/vmidisks/guix:latest
+          name: containerdisk
