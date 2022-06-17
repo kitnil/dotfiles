@@ -61,14 +61,12 @@
 
 (define %certbot-hosts
   (list "cgit.duckdns.org"
-        "githunt.wugi.info"
         "guix.duckdns.org"
         "guix.wugi.info"
         "jenkins.wugi.info"
         "monitor.wugi.info"
         "syncthing.wugi.info"
         "webssh.wugi.info"
-        "kiwiirc.wugi.info"
         "peertube.wugi.info"))
 
 
