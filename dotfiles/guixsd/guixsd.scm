@@ -67,7 +67,8 @@
         "monitor.wugi.info"
         "syncthing.wugi.info"
         "webssh.wugi.info"
-        "peertube.wugi.info"))
+        "peertube.wugi.info"
+        "docker-registry.wugi.info"))
 
 
 ;;;
@@ -125,6 +126,37 @@
                    "proxy_buffers 4 512k;"
                    "proxy_buffer_size 256k;"
                    "add_header Access-Control-Allow-Origin *;"))))))
+        (nginx-server-configuration
+         (server-name '("docker-registry.wugi.info"))
+         (listen '("192.168.0.144:80" "192.168.0.144:443 ssl"))
+         (ssl-certificate (letsencrypt-certificate "docker-registry.wugi.info"))
+         (ssl-certificate-key (letsencrypt-key "docker-registry.wugi.info"))
+         (locations
+          (list
+           (nginx-location-configuration
+            (uri "/.well-known")
+            (body '("root /var/www;")))
+           (nginx-location-configuration
+            (uri "/v2/")
+            (body (list
+                   ;; Do not allow connections from docker 1.5 and earlier
+                   ;; docker pre-1.6.0 did not properly set the user agent on ping, catch "Go *" user agents
+                   "if ($http_user_agent ~ \"^(docker\\/1\\.(3|4|5(?!\\.[0-9]-dev))|Go ).*$\" ) { return 404; }"
+
+                   ;; from [[https://docs.docker.com/registry/recipes/nginx/][Authenticate proxy with nginx | Docker Documentation]]
+                   "proxy_pass http://docker-registry;"
+                   "proxy_set_header Host $http_host;"
+                   "proxy_set_header X-Real-IP $remote_addr;" ;# pass on real client's IP
+                   "proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;"
+                   "proxy_set_header X-Forwarded-Proto $scheme;"
+                   "proxy_read_timeout 900;"
+
+                   "client_max_body_size 0;"
+                   "proxy_busy_buffers_size 512k;"
+                   "proxy_buffers 4 512k;"
+                   "proxy_buffer_size 256k;"
+                   "add_header Access-Control-Allow-Origin *;"
+                   ))))))
         (nginx-server-configuration
          (server-name '("texinfo.tld"))
          (listen '("192.168.0.144:80"))
@@ -856,6 +888,7 @@ location / {
                            "netmap.intr"
                            "vault1"
                            "peertube.wugi.info"
+                           "docker-registry.wugi.info"
                            ;; Majordomo
                            ;; "hms-dev.intr"
                            ;; "api-dev.intr"
@@ -1578,7 +1611,20 @@ PasswordAuthentication yes")))
                                     (list
                                      (nginx-upstream-configuration
                                       (name "peertube-backend")
-                                      (servers '("127.0.0.1:9001")))))))
+                                      (servers '("127.0.0.1:9001")))
+                                     (nginx-upstream-configuration
+                                      (name "docker-registry")
+                                      (servers '("127.0.0.1:5000")))))
+                                   (extra-content "\
+  ## Set a variable to help us decide if we need to add the
+  ## 'Docker-Distribution-Api-Version' header.
+  ## The registry always sets this header.
+  ## In the case of nginx performing auth, the header is unset
+  ## since nginx is auth-ing before proxying.
+  map $upstream_http_docker_distribution_api_version $docker_distribution_api_version {
+    '' 'registry/2.0';
+  }
+")))
 
                          (service homer-service-type
                                   (homer-configuration
