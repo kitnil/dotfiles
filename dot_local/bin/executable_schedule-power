@@ -110,7 +110,6 @@
     (not (monitor-on?)))
 
   (let loop ((attempt 0)
-             (value-parameter '())
              (value-count 0))
     (let ((monitor-idle? (>= value-count %monitor-count)))
       (if (or monitor-idle?
@@ -120,7 +119,6 @@
             (let ((current-value (monitor-off?)))
               (sleep %monitor-interval)
               (loop (1+ attempt)
-                    current-value
                     (if current-value
                         (1+ value-count)
                         0))))))))
