@@ -125,6 +125,52 @@
 
 
 ;;;
+;;; Audio
+;;;
+
+(define (audio-off?)
+  "Return true if audio is off, false otherwise."
+  (let* ((port (open-pipe "parec --raw --channels=1 --latency=2 2>/dev/null | od -N2 -td2 | head -n1 | cut -d' ' -f2- | tr -d ' '"
+                          OPEN_READ))
+         (output (read-string port)))
+    (close-port port)
+    (= (string->number (string-trim-right output #\newline))
+       0)))
+
+(define (audio-idle?)
+  "Return true if audio if idle, false otherwise."
+  (define %audio-count
+    (or (getenv "AUTO_SHUTDOWN_AUDIO_COUNT")
+        5))
+
+  (define %audio-interval
+    (or (getenv "AUTO_SHUTDOWN_AUDIO_INTERVAL")
+        2))
+
+  (define %audio-attempt
+    (or (getenv "AUTO_SHUTDOWN_AUDIO_ATTEMPT")
+        8))
+
+  (let loop ((attempt 0)
+             (value-parameter '())
+             (value-count 0))
+    (let ((audio-idle? (>= value-count %audio-count)))
+      (if (or audio-idle?
+              (>= attempt %audio-attempt))
+          audio-idle?
+          (begin
+            (let* ((current-value (audio-off?))
+                   (value-parameter (append value-parameter
+                                            (list current-value))))
+              (sleep %audio-interval)
+              (loop (1+ attempt)
+                    value-parameter
+                    (if (every (lambda (value) (eq? value #t)) value-parameter)
+                        (1+ value-count)
+                        0))))))))
+
+
+;;;
 ;;; Processes
 ;;;
 
@@ -145,7 +191,7 @@
 (define (main . args)
   (if (and (off-time?)
            (process-missing? "bin/restic")
-           (monitor-idle?)
+           (and (monitor-idle?) (audio-idle?))
            (mouse-idle?))
       (system* %sudo-binary %halt-binary)
       (exit 1)))
