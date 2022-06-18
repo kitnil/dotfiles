@@ -15,8 +15,10 @@
 
 (define (off-time?)
   "Return true if off-time, false otherwise."
-  (let ((current-hour (date-hour (current-date))))
-    (or (<= current-hour 10)
+  (let* ((current (current-date))
+         (current-hour (date-hour current)))
+    (or (> (date-week-day current) 5)
+        (<= current-hour 10)
         (>= current-hour 18))))
 
 
