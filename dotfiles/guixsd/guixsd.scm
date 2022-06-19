@@ -1693,22 +1693,32 @@ PasswordAuthentication yes")))
 
 		         ;; TODO: Move those services.
 
-                         (postgresql-service
-                          #:config-file (postgresql-config-file
-                                         (hba-file
-                                          (plain-file "pg_hba.conf"
-                                                      "
-local	all	all			trust
-host	all	all	127.0.0.1/32    trust
-host	all	all	::1/128         trust
-host	all	all	172.16.0.0/12   trust
-host	all	all	192.168.64.0/20   trust"))
-                                         (extra-config
-                                          `(("listen_addresses"
-                                             ,(string-join '("127.0.0.1"
-                                                             "192.168.0.144"
-                                                             "172.18.0.1")
-                                                           ","))))))
+                         ;; Jun 19 17:51:38 guixsd postgres[27613]: [1-1]
+                         ;; 2022-06-19 14:51:38.225 GMT [27613] FATAL:
+                         ;; database files are incompatible with server
+                         ;;
+                         ;; Jun 19 17:51:38 guixsd postgres[27613]: [1-2]
+                         ;; 2022-06-19 14:51:38.225 GMT [27613] DETAIL: The
+                         ;; data directory was initialized by PostgreSQL
+                         ;; version 13, which is not compatible with this
+                         ;; version 14.3.
+                         ;;
+                         ;; (postgresql-service
+;;                           #:config-file (postgresql-config-file
+;;                                          (hba-file
+;;                                           (plain-file "pg_hba.conf"
+;;                                                       "
+;; local	all	all			trust
+;; host	all	all	127.0.0.1/32    trust
+;; host	all	all	::1/128         trust
+;; host	all	all	172.16.0.0/12   trust
+;; host	all	all	192.168.64.0/20   trust"))
+;;                                          (extra-config
+;;                                           `(("listen_addresses"
+;;                                              ,(string-join '("127.0.0.1"
+;;                                                              "192.168.0.144"
+;;                                                              "172.18.0.1")
+;;                                                            ","))))))
 
                          ;; (service mongodb-service-type)
 
