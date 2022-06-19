@@ -1963,6 +1963,34 @@ kubectl()
     esac
 }
 
+__lazy_virtctl()
+{
+    local word_count=${#COMP_WORDS[*]}
+    local word_at_point="${COMP_WORDS[$COMP_CWORD]}"
+    case $COMP_CWORD in
+        *)
+            if [[ $(type -t __start_virtctl) != function ]]
+            then
+                if [[ -f /run/current-system/profile/bin/virtctl ]]
+                then
+                    source <(/run/current-system/profile/bin/virtctl completion bash)
+                fi
+            fi
+            ;;
+    esac
+}
+
+complete -F __lazy_virtctl virtctl
+
+virtctl()
+{
+    case "$1" in
+        *)
+            sudo KUBECONFIG=/etc/rancher/k3s/k3s.yaml virtctl "${@:1}"
+            ;;
+    esac
+}
+
 __lazy_glab()
 {
     local word_count=${#COMP_WORDS[*]}
