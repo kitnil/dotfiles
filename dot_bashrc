@@ -1973,7 +1973,30 @@ kubectl()
     esac
 }
 
-if [ -f "${HOME}/.nix-profile/bin/glab" ]
-then
-    source <("${HOME}/.nix-profile/bin/glab" completion)
-fi
+__lazy_glab()
+{
+    local word_count=${#COMP_WORDS[*]}
+    local word_at_point="${COMP_WORDS[$COMP_CWORD]}"
+    case $COMP_CWORD in
+        *)
+            if [[ $(type -t __start_glab) != function ]]
+            then
+                if [[ -f "${HOME}/.nix-profile/bin/glab" ]]
+                then
+                    source <("${HOME}/.nix-profile/bin/glab" completion)
+                fi
+            fi
+            ;;
+    esac
+}
+
+complete -F __lazy_glab glab
+
+glab()
+{
+    case "$1" in
+        *)
+            command glab "${@:1}"
+            ;;
+    esac
+}
