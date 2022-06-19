@@ -1934,6 +1934,55 @@ PasswordAuthentication yes")))
                                                          "\" -s \"media;/share;yes;no;no;workgroup\" -s \"public;/public;yes;no;yes\""
                                                          " -g \"acl allow execute always = True\"")))))))))))))))
 
+                         (service docker-compose-service-type
+                                  (docker-compose-configuration
+                                   (project-name "peertube")
+                                   (compose-file
+                                    (computed-file
+                                     "docker-compose-peertube.json"
+                                     (with-extensions (list guile-json-4)
+                                       (with-imported-modules (source-module-closure '((json builder)))
+                                         #~(begin
+                                             (use-modules (json builder)
+                                                          (ice-9 rdelim))
+                                             (with-output-to-file #$output
+                                               (lambda ()
+                                                 (scm->json
+                                                  `(("volumes")
+                                                    ("version" . "3.3")
+                                                    ("services"
+                                                     ("redis"
+                                                      ("volumes" . #("/var/lib/peertube/redis:/data"))
+                                                      ("restart" . "always")
+                                                      ("image" . "redis:6-alpine"))
+                                                     ("postgres"
+                                                      ("volumes"
+                                                       .
+                                                       #("/var/lib/peertube/db:/var/lib/postgresql/data"))
+                                                      ("restart" . "always")
+                                                      ("image" . "postgres:13-alpine")
+                                                      ("env_file" . #("/home/oleg/src/peertube/support/docker/production/.env")))
+                                                     ("postfix"
+                                                      ("volumes"
+                                                       .
+                                                       #("/var/lib/peertube/opendkim/keys:/etc/opendkim/keys"))
+                                                      ("restart" . "always")
+                                                      ("image" . "mwader/postfix-relay")
+                                                      ("env_file" . #("/home/oleg/src/peertube/support/docker/production/.env")))
+                                                     ("peertube"
+                                                      ("volumes"
+                                                       .
+                                                       #("/var/lib/peertube_assets:/app/client/dist"
+                                                         "/srv/peertube:/data"
+                                                         "/var/lib/peertube/config:/config"))
+                                                      ("restart" . "always")
+                                                      ("ports" . #("1935:1935" "9001:9000"))
+                                                      ("image"
+                                                       .
+                                                       "chocobozzz/peertube:production-bullseye")
+                                                      ("env_file" . #("/home/oleg/src/peertube/support/docker/production/.env"))
+                                                      ("depends_on" . #("postgres" "redis" "postfix")))))))))))))))
+
                          (service kubernetes-k3s-service-type
                           (kubernetes-k3s-configuration
                            (arguments '("--node-external-ip" "192.168.0.145"
