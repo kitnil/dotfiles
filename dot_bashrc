@@ -191,11 +191,6 @@ ihs()
     command ihs "$@"
 }
 
-if [[ -f "$HOME/.nix-profile/share/bash-completion/completions/gita" ]]
-then
-    source "$HOME/.nix-profile/share/bash-completion/completions/gita"
-fi
-
 if [[ -e "${HOME}/.bash.d/nix.bash" ]]
 then
     source "${HOME}/.bash.d/nix.bash"
