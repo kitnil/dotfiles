@@ -14,3 +14,4 @@
 *.tfstate
 *.tfstate.backup
 /dotfiles/guixsd/modules/home/config/openssh.scm
+/dotfiles/nix/yggdrasil/yggdrasil.conf
