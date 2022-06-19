@@ -428,7 +428,9 @@ location / {
                                                    "/var/lib/grafana"
                                                    "/var/lib/crowdsec"
                                                    "/var/lib/opensearch"
-                                                   "/var/lib/docker"))
+                                                   "/var/lib/docker"
+                                                   "/var/lib/peertube"
+                                                   "/var/lib/peertube_assets"))
                         (%exclude-directories
                          (append '#$%root-directories
                                  (map (lambda (directory)
