@@ -1945,11 +1945,33 @@ psql()
     esac
 }
 
-if [ -f /run/current-system/profile/bin/k3s ]
-then
-    alias kubectl='sudo k3s kubectl'
-    source <(sudo /run/current-system/profile/bin/k3s kubectl completion bash)
-fi
+__lazy_kubectl()
+{
+    local word_count=${#COMP_WORDS[*]}
+    local word_at_point="${COMP_WORDS[$COMP_CWORD]}"
+    case $COMP_CWORD in
+        *)
+            if [[ $(type -t __start_kubectl) != function ]]
+            then
+                if [[ -f /run/current-system/profile/bin/k3s ]]
+                then
+                    source <(sudo /run/current-system/profile/bin/k3s kubectl completion bash)
+                fi
+            fi
+            ;;
+    esac
+}
+
+complete -F __lazy_kubectl kubectl
+
+kubectl()
+{
+    case "$1" in
+        *)
+            sudo k3s kubectl "${@:1}"
+            ;;
+    esac
+}
 
 if [ -f "${HOME}/.nix-profile/bin/glab" ]
 then
