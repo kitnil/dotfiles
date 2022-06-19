@@ -15,3 +15,6 @@
 *.tfstate.backup
 /dotfiles/guixsd/modules/home/config/openssh.scm
 /dotfiles/nix/yggdrasil/yggdrasil.conf
+/dotfiles/nix/openvpn/ca.crt
+/dotfiles/nix/openvpn/client.crt
+/dotfiles/nix/openvpn/client.key
