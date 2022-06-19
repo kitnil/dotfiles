@@ -1787,7 +1787,7 @@ gtk-xft-rgba=\"rgb\"
                                      ("local"
                                       ("vars" ("ansible_connection" . "local"))
                                       ("hosts" ("localhost" . null)))
-                                     ("guix_work" ("hosts" ("ws1.wugi.info" . null)))
+                                     ;; ("guix_work" ("hosts" ("ws1.wugi.info" . null)))
                                      ("guix_vm"
                                       ("hosts"
                                        ("vm1.wugi.info" . null))))))
