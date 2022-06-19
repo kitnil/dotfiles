@@ -13,3 +13,4 @@
 /dotfiles/idesk/*.lnk
 *.tfstate
 *.tfstate.backup
+/dotfiles/guixsd/modules/home/config/openssh.scm

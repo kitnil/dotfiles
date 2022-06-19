@@ -3,7 +3,7 @@
              ;; (gnu home services files)
              (gnu home services mcron)
              (gnu home services shells)
-             ;; (gnu home services ssh)
+             (gnu home services ssh)
              (gnu packages admin)
              (gnu packages bash)
              (gnu packages guile)
@@ -24,6 +24,7 @@
              (gnu packages haskell-apps)
              (gnu packages wm)
 
+             (home config openssh)
              (home services ansible)
              (home services cisco)
              (home services desktop)
@@ -1169,22 +1170,6 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                                                 `("config/espanso/user/mjru.yml" ,#$(local-file "../../dot_config/espanso/user/mjru.yml"))
                                                 )))))))
 
-    (simple-service 'ssh-config
-                    home-activation-service-type
-                    #~(begin
-                        (add-to-load-path (string-append #$%home "/.local/share/chezmoi/dotfiles"))
-                        (use-modules (ice-9 rdelim)
-                                     (ice-9 popen)
-                                     (guile gpg))
-                        (let ((ssh (string-append #$%home "/.ssh")))
-                          (unless (file-exists? ssh)
-                            (mkdir ssh))
-                          (chmod ssh #o700)
-                          ;; (gpg->file #$(local-file "../../private_dot_ssh/encrypted_private_known_hosts")
-                          ;;            (string-append ssh "/known_hosts"))
-                          (gpg->file #$(local-file "../../private_dot_ssh/encrypted_private_authorized_keys")
-                                     (string-append ssh "/authorized_keys")))))
-
     (simple-service 'sshrc-config
                     home-files-service-type
                     (list `(".sshrc" ,(local-file "../../dot_sshrc"))
@@ -1792,6 +1777,8 @@ gtk-xft-rgba=\"rgb\"
                                       ("hosts"
                                        ("vm1.wugi.info" . null))))))
                                  port)))))))
+
+    (service home-openssh-service-type %home-openssh-configuration)
 
     ;; XXX: missing home-ssh-configuration
     ;; (service home-ssh-service-type

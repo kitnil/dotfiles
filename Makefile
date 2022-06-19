@@ -63,7 +63,7 @@ dotfiles/guile/ssh.txt: dotfiles/guile/ssh.scm
 
 .PHONY:
 install-ssh:
-	gpg --quiet --decrypt dhall/ssh/ssh.dhall.gpg | dhall text > $(HOME)/.ssh/config
+	gpg --quiet --decrypt dotfiles/guixsd/modules/home/config/openssh.scm.gpg > dotfiles/guixsd/modules/home/config/openssh.scm
 
 .PHONY: dotfiles/guixsd/home.scm
 dotfiles/guixsd/home.scm:
@@ -145,8 +145,6 @@ vm1.wugi.info:
 
 .PHONY: add
 add:
-	gpg --yes --output private_dot_ssh/encrypted_private_known_hosts --encrypt $(HOME)/.ssh/known_hosts
-	gpg --yes --output private_dot_ssh/encrypted_private_authorized_keys --encrypt $(HOME)/.ssh/authorized_keys
 	cp $(HOME)/.emacs dot_emacs
 
 .PHONY: gitlab
