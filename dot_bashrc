@@ -196,11 +196,6 @@ then
     source "$HOME/.nix-profile/share/bash-completion/completions/gita"
 fi
 
-if [[ -f "$HOME/.nix-profile/share/bash-completion/completions/ipmi" ]]
-then
-    source "$HOME/.nix-profile/share/bash-completion/completions/ipmi"
-fi
-
 if [[ -e "${HOME}/.bash.d/nix.bash" ]]
 then
     source "${HOME}/.bash.d/nix.bash"
@@ -1997,6 +1992,35 @@ glab()
     case "$1" in
         *)
             command glab "${@:1}"
+            ;;
+    esac
+}
+
+
+__lazy_ipmi()
+{
+    local word_count=${#COMP_WORDS[*]}
+    local word_at_point="${COMP_WORDS[$COMP_CWORD]}"
+    case $COMP_CWORD in
+        *)
+            if [[ $(type -t __start_ipmi) != function ]]
+            then
+                if [[ -f "$HOME/.nix-profile/share/bash-completion/completions/ipmi" ]]
+                then
+                    source "$HOME/.nix-profile/share/bash-completion/completions/ipmi"
+                fi
+            fi
+            ;;
+    esac
+}
+
+complete -F __lazy_ipmi ipmi
+
+ipmi()
+{
+    case "$1" in
+        *)
+            command ipmi "${@:1}"
             ;;
     esac
 }
