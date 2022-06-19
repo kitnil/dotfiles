@@ -1,3 +1,5 @@
+# virtctl ssh -i ~/.ssh/id_rsa_vm1.wugi.info root@guix
+
 apiVersion: kubevirt.io/v1
 kind: VirtualMachine
 metadata:
