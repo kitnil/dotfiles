@@ -1,0 +1,39 @@
+apiVersion: kubevirt.io/v1alpha3
+kind: VirtualMachine
+metadata:
+  labels:
+    kubevirt.io/vm: vm-guix-datavolume
+  name: vm-guix-datavolume
+spec:
+  running: true
+  template:
+    metadata:
+      labels:
+        kubevirt.io/vm: vm-guix-datavolume
+    spec:
+      domain:
+        devices:
+          disks:
+          - disk:
+              bus: virtio
+            name: datavolumedisk1
+        resources:
+          requests:
+            memory: 1024M
+      volumes:
+      - dataVolume:
+          name: guix-dv
+        name: datavolumedisk1
+  dataVolumeTemplates:
+  - metadata:
+      name: guix-dv
+    spec:
+      pvc:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 9Gi
+      source:
+        http:
+          url: http://iso.wugi.info/guix.qcow2
