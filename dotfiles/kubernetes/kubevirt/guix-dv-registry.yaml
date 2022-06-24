@@ -1,0 +1,39 @@
+apiVersion: kubevirt.io/v1alpha3
+kind: VirtualMachine
+metadata:
+  labels:
+    kubevirt.io/vm: vm-guix-datavolume-registry
+  name: vm-guix-datavolume-registry
+spec:
+  running: true
+  template:
+    metadata:
+      labels:
+        kubevirt.io/vm: vm-guix-datavolume-registry
+    spec:
+      domain:
+        devices:
+          disks:
+          - disk:
+              bus: virtio
+            name: datavolumedisk1
+        resources:
+          requests:
+            memory: 1024M
+      volumes:
+      - dataVolume:
+          name: guix-dv-registry
+        name: datavolumedisk1
+  dataVolumeTemplates:
+  - metadata:
+      name: guix-dv-registry
+    spec:
+      pvc:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 9Gi
+      source:
+        registry:
+          url: docker://docker-registry.wugi.info/vmidisks/guix:latest
