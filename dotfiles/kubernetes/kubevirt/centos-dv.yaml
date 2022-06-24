@@ -1,0 +1,39 @@
+apiVersion: kubevirt.io/v1alpha3
+kind: VirtualMachine
+metadata:
+  labels:
+    kubevirt.io/vm: vm-centos-datavolume
+  name: vm-centos-datavolume
+spec:
+  running: true
+  template:
+    metadata:
+      labels:
+        kubevirt.io/vm: vm-centos-datavolume
+    spec:
+      domain:
+        devices:
+          disks:
+          - disk:
+              bus: virtio
+            name: datavolumedisk1
+        resources:
+          requests:
+            memory: 1024M
+      volumes:
+      - dataVolume:
+          name: centos-dv
+        name: datavolumedisk1
+  dataVolumeTemplates:
+  - metadata:
+      name: centos-dv
+    spec:
+      pvc:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 10Gi
+      source:
+        http:
+          url: https://cloud.centos.org/centos/7/images/CentOS-7-x86_64-GenericCloud.qcow2
