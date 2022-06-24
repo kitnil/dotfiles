@@ -14,13 +14,12 @@ spec:
       domain:
         devices:
           disks:
-            - disk:
-                bus: virtio
-              name: containerdisk
+          - name: guix-vm-pv-disk
+            disk: {}
         resources:
           requests:
             memory: 1024M
       volumes:
-        - containerDisk: #Note the type is dataVolume
-            image: docker-registry.wugi.info/vmidisks/guix:latest
-          name: containerdisk
+        - name: guix-vm-pv-disk
+          persistentVolumeClaim:
+            claimName: guix-vm-pv
