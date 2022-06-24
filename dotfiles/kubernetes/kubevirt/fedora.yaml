@@ -1,34 +1,44 @@
 apiVersion: kubevirt.io/v1
-kind: VirtualMachine
+kind: VirtualMachineInstance
 metadata:
   name: fedora
+  labels:
+    expose: me
 spec:
-  running: true
-  template:
-    metadata:
-      labels:
-        kubevirt.io/size: small
-        kubevirt.io/domain: fedora
-    spec:
-      domain:
-        devices:
-          disks:
-            - name: containerdisk
-              disk:
-                bus: virtio
-            - name: cloudinitdisk
-              disk:
-                bus: virtio
-        resources:
-          requests:
-            memory: 1024M
-      volumes:
+  hostname: "myvmi"
+  subdomain: "mysubdomain"
+  domain:
+    devices:
+      disks:
         - name: containerdisk
-          containerDisk:
-            image: quay.io/kubevirt/fedora-cloud-container-disk-demo
-        - cloudInitNoCloud:
-            userData: |-
-              #cloud-config
-              password: fedora
-              chpasswd: { expire: False }
-          name: cloudinitdisk
+          disk:
+            bus: virtio
+        - name: cloudinitdisk
+          disk:
+            bus: virtio
+    resources:
+      requests:
+        memory: 1024M
+  volumes:
+    - name: containerdisk
+      containerDisk:
+        image: quay.io/kubevirt/fedora-cloud-container-disk-demo
+    - cloudInitNoCloud:
+        userData: |-
+          #cloud-config
+          password: fedora
+          chpasswd: { expire: False }
+      name: cloudinitdisk
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: mysubdomain
+spec:
+  selector:
+    expose: me
+  clusterIP: None
+  ports:
+  - name: foo # Actually, no port is needed.
+    port: 1234
+    targetPort: 1234
