@@ -1,2 +1,2 @@
 : guix system image --no-offload --image-type=qcow2 --image-size=8G minimal.tmpl
-: docker build -t docker-registry.wugi.info/vmidisks/guix .
+: docker build --no-cache -t docker-registry.wugi.info/vmidisks/guix .
