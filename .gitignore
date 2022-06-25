@@ -11,6 +11,7 @@
 /dot_muttrc_pyhalov_majordomo.tmpl
 /dot_muttrc_rxaetbed_mail.tmpl
 /dotfiles/idesk/*.lnk
+*.qcow2
 *.tfstate
 *.tfstate.backup
 /dotfiles/guixsd/modules/home/config/openssh.scm
