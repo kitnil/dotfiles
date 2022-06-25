@@ -1312,6 +1312,11 @@ location / {
                                                           ("job_name" . "ssh-metrics"))
                                                          ((static_configs
                                                            .
+                                                           #(((targets . #("127.0.0.1:9845")))))
+                                                          (scrape_interval . "5s")
+                                                          (job_name . "lvm"))
+                                                         ((static_configs
+                                                           .
                                                            #(((targets . #("windows.local:9182")))))
                                                           (scrape_interval . "1m")
                                                           (job_name . "windows"))))
