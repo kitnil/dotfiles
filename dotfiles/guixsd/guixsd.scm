@@ -2047,6 +2047,7 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                                   '("vfio-pci" ;GPU passthrough
                                     "vendor-reset" ;reset NAVI10 (5500XT)
                                     "dm-snapshot"
+                                    "dm-thin-pool"
                                     ;; "ddcci_backlight"
                                     ))
 
