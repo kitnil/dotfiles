@@ -2048,6 +2048,7 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                                     "vendor-reset" ;reset NAVI10 (5500XT)
                                     "dm-snapshot"
                                     "dm-thin-pool"
+                                    "br_netfilter" ;kube-dns
                                     ;; "ddcci_backlight"
                                     ))
 
