@@ -778,7 +778,7 @@ location / {
                                                                  "ssd")
                                                            ","))
                                      (type "btrfs")))
-                                 '("archive" "majordomo" "src" "Maildir"))
+                                 '("archive" "majordomo" "phone" "src" "Maildir"))
                             (operating-system-file-systems base-system)))
 
       (swap-devices '("/dev/disk/by-label/swap"))
