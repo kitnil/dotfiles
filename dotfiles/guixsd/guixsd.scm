@@ -1975,6 +1975,7 @@ PasswordAuthentication yes")))
                                                        #("/var/lib/peertube_assets:/app/client/dist"
                                                          "/srv/peertube:/data"
                                                          "/var/log/peertube:/data/logs"
+                                                         "/var/lib/peertube/tmp:/data/tmp"
                                                          "/var/lib/peertube/config:/config"))
                                                       ("restart" . "always")
                                                       ("ports" . #("1935:1935" "9001:9000"))
