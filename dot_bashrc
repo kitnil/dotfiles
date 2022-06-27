@@ -378,6 +378,23 @@ guix()
 {
     guix_modules="$HOME/.local/share/chezmoi/dotfiles/guixsd/modules"
     case "$1" in
+        manifest)
+            case "$2" in
+                apply)
+                    command guix package \
+                            -L "$HOME/.local/share/chezmoi/dotfiles/guixsd/modules" \
+                            --fallback \
+                            --manifest="$HOME/.local/share/chezmoi/dotfiles/manifests/$HOSTNAME.scm" "${@:3}"
+                    ;;
+                build)
+                    command guix environment \
+                            -L "$HOME/.local/share/chezmoi/dotfiles/guixsd/modules" \
+                            --fallback \
+                            --manifest="$HOME/.local/share/chezmoi/dotfiles/manifests/$HOSTNAME.scm" "${@:3}" \
+                            -- sh -c 'exit 0'
+                    ;;
+            esac
+            ;;
         home)
             case "$2" in
                 build)
@@ -474,6 +491,7 @@ guix()
                            "system build" "Build system" "${STATE:-on}" \
                            "home build" "Build home" "${STATE:-on}" \
                            "home switch" "Reconfigure home" "${STATE:-on}" \
+                           "manifest apply" "Apply package manifest" "${STATE:-on}" \
                            "system switch" "Reconfigure system" "${STATE:-on}" \
                            "distribute" "Pull on remote hosts" "${STATE:-off}" \
                            "system deploy" "Deploy to remote hosts" "${STATE:-off}" \
