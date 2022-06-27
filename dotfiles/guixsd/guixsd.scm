@@ -1312,7 +1312,7 @@ location / {
                                                           ("job_name" . "ssh-metrics"))
                                                          ((static_configs
                                                            .
-                                                           #(((targets . #("127.0.0.1:9845")))))
+                                                           #(((targets . #("127.0.0.1:9080")))))
                                                           (scrape_interval . "5s")
                                                           (job_name . "lvm"))
                                                          ((static_configs
