@@ -1106,6 +1106,9 @@ location / {
                                                (define prometheus-alertmanager-node
                                                  #$(plain-file "prometheus-alertmanager-node.json"
                                                                (scm->json-string (load "node.scm"))))
+                                               (define prometheus-alertmanager-lvm
+                                                 #$(plain-file "prometheus-alertmanager-lvm.json"
+                                                               (scm->json-string (load "lvm.scm"))))
                                                (define prometheus-alertmanager-blackbox
                                                  #$(plain-file "prometheus-alertmanager-blackbox.json"
                                                                (scm->json-string (load "blackbox.scm"))))
@@ -1321,6 +1324,7 @@ location / {
                                                           (scrape_interval . "1m")
                                                           (job_name . "windows"))))
                                                       (rule_files . #(,prometheus-alertmanager-node
+                                                                      ,prometheus-alertmanager-lvm
                                                                       ,prometheus-alertmanager-blackbox
                                                                       ,prometheus-alertmanager-bird
                                                                       ,prometheus-alertmanager-smartctl
