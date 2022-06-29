@@ -1833,7 +1833,11 @@ PasswordAuthentication yes")))
                                                           ("module" . "system")
                                                           ("auth"
                                                            ("var.paths" . #("/mnt/log/secure"))
-                                                           ("enabled" . #t))))))
+                                                           ("enabled" . #t)))))
+                                                      ("inputs" .
+                                                       #((("type" . "log")
+                                                          ("paths" . #("/home/oleg/.local/var/log/*.log"))
+                                                          ("enabled" . #t)))))
                                                      ("output"
                                                       ("elasticsearch"
                                                        ("hosts" . #("https://localhost:9200"))
@@ -1887,6 +1891,7 @@ PasswordAuthentication yes")))
                                                        .
                                                        ,(vector (string-append filebeat-config ":/usr/share/filebeat/filebeat.yml:ro")
                                                                 "/var/log:/mnt/log:ro"
+                                                                "/home/oleg/.local/var/log:/home/oleg/.local/var/log:ro"
                                                                 "/etc/localtime:/etc/localtime:ro"
                                                                 "/etc/opensearch/root-ca.pem:/etc/client/ca.pem:ro"
                                                                 "/etc/opensearch/kirk.pem:/etc/client/cert.pem:ro"
