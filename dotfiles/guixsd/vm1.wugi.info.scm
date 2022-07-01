@@ -261,7 +261,13 @@ route 141.80.181.40 255.255.255.255 192.168.25.2
                                                                        ("enabled" . #t)))))
                                                                   ("inputs" .
                                                                    #((("type" . "log")
+                                                                      ("paths" . #("/mnt/log/**/*.log"))
+                                                                      ("enabled" . #t))
+                                                                     (("type" . "log")
                                                                       ("paths" . #("/home/oleg/.local/var/log/*.log"))
+                                                                      ("enabled" . #t))
+                                                                     (("type" . "log")
+                                                                      ("paths" . #("/home/oleg/.local/var/log/**/*.log"))
                                                                       ("enabled" . #t)))))
                                                                  ("output"
                                                                   ("elasticsearch"
