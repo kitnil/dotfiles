@@ -1368,6 +1368,20 @@ location / {
 
                          (service prometheus-lvm-exporter-service-type)
 
+                         (service prometheus-restic-exporter-service-type
+                                  (prometheus-restic-exporter-configuration
+                                   (environment-variables
+                                    (list
+                                     (string-append
+                                      "RESTIC_PASSWORD="
+                                      (if (= (getuid) 0)
+                                          (with-input-from-file "/etc/guix/secrets/restic"
+                                            read-string)
+                                          "skipping /etc/guix/secrets/restic"))
+                                     "RESTIC_REPOSITORY=/srv/backup/guixsd"
+                                     "RESTIC_EXPORTER_PORT=8049"
+                                     "RESTIC_EXPORTER_ADDRESS=127.0.0.1"))))
+
                          (service prometheus-tp-link-exporter-service-type
                                   (prometheus-tp-link-exporter-configuration
                                    ;; XXX: Deprecated SSH client.
