@@ -364,3 +364,33 @@ datasources.
     (description "This program gets information about LVM thin pools with lvs
 binary and provides LV's size and LV's free space as a Prometheus metrics.")
     (license license:asl2.0)))
+
+(define-public prometheus-restic-exporter
+  (package
+    (name "prometheus-restic-exporter")
+    (version "0.0.1")
+    (source
+     (origin
+       (method url-fetch)
+       (uri
+        (string-append
+         "https://github.com/kitnil/prometheus-restic-exporter/releases/download/v"
+         version "/restic-exporter"))
+       (sha256
+        (base32
+         "1gj3jajhi2vzcvzqyl6h2smidvkq25mbhrkqmwp1y3qbx73l7nmk"))))
+    (build-system copy-build-system)
+    (arguments
+     `(#:install-plan
+       `((,(assoc-ref %build-inputs "source")
+          ,(string-append "/bin/restic-exporter")))
+       #:phases (modify-phases %standard-phases
+                  (add-after 'install 'chmod-binary
+                    (lambda* (#:key outputs #:allow-other-keys)
+                      (chmod (string-append (assoc-ref outputs "out")
+                                            "/bin/restic-exporter")
+                             #o555))))))
+    (home-page "https://github.com/kitnil/prometheus-restic-exporter")
+    (synopsis "Restic Prometheus exporter")
+    (description "This program gets information about Restic backups.")
+    (license license:asl2.0)))
