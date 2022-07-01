@@ -1858,6 +1858,9 @@ PasswordAuthentication yes")))
                                                       ("inputs" .
                                                        #((("type" . "log")
                                                           ("paths" . #("/home/oleg/.local/var/log/*.log"))
+                                                          ("enabled" . #t))
+                                                         (("type" . "log")
+                                                          ("paths" . #("/home/oleg/.local/share/qBittorrent/logs/qbittorrent.log"))
                                                           ("enabled" . #t)))))
                                                      ("output"
                                                       ("elasticsearch"
@@ -1913,6 +1916,7 @@ PasswordAuthentication yes")))
                                                        ,(vector (string-append filebeat-config ":/usr/share/filebeat/filebeat.yml:ro")
                                                                 "/var/log:/mnt/log:ro"
                                                                 "/home/oleg/.local/var/log:/home/oleg/.local/var/log:ro"
+                                                                "/home/oleg/.local/share/qBittorrent/logs:/home/oleg/.local/share/qBittorrent/logs:ro"
                                                                 "/etc/localtime:/etc/localtime:ro"
                                                                 "/etc/opensearch/root-ca.pem:/etc/client/ca.pem:ro"
                                                                 "/etc/opensearch/kirk.pem:/etc/client/cert.pem:ro"
