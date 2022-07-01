@@ -5,7 +5,7 @@
        #((("labels" ("severity" . "critical"))
           ("expr"
            .
-           "100 - lvm_lv_data_percent{lv_name=\"pool\"} < 10")
+           "100 - lvm_lv_data_percent{lv_name=\"thinpool2\"} < 10")
           ("annotations"
            ("summary"
             .
@@ -18,7 +18,7 @@
           ("for" . "10m")
           ("expr"
            .
-           "absent(lvm_lv_data_percent{lv_name=\"pool\"})")
+           "absent(lvm_lv_data_percent{lv_name=\"thinpool2\"})")
           ("annotations"
            ("summary"
             .
