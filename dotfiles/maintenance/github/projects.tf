@@ -245,3 +245,7 @@ resource "github_repository" "filestash" {
 resource "github_repository" "nix-flake-lock-update-plugin" {
   name           = "nix-flake-lock-update-plugin"
 }
+
+resource "github_repository" "prometheus-lvm-exporter" {
+  name           = "prometheus-lvm-exporter"
+}
