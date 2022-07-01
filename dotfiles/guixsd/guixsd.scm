@@ -911,7 +911,6 @@ location / {
                            "syncthing.wugi.info"
                            "iso.wugi.info"
                            "cgit.duckdns.org"
-                           "spb"
                            "netmap.intr"
                            "vault1"
                            "peertube.wugi.info"

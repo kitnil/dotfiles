@@ -135,10 +135,6 @@ guix.wugi.info:
 ws1.wugi.info:
 	guix system build -L $(MODULES) dotfiles/guixsd/ws1.wugi.info.scm
 
-.PHONY: spb.wugi.info
-spb.wugi.info:
-	guix system build -L $(MODULES) dotfiles/guixsd/spb.scm
-
 .PHONY: vm1.wugi.info
 vm1.wugi.info:
 	guix system build -L $(MODULES) dotfiles/guixsd/vm1.wugi.info.scm
