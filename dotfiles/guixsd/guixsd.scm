@@ -922,6 +922,8 @@ location / {
                            ;; "hms-billing-dev.intr"
                            ))
 
+           "192.168.25.1 node-0.example.com"
+
            "192.168.154.130 nginx99.intr"
            "192.168.154.129 web99.ru www.web99.ru www.web99.intr web99.intr"
 
@@ -1892,7 +1894,7 @@ PasswordAuthentication yes")))
                                                           ("enabled" . #t)))))
                                                      ("output"
                                                       ("elasticsearch"
-                                                       ("hosts" . #("https://localhost:9200"))
+                                                       ("hosts" . #("https://node-0.example.com:9200"))
                                                        ("allow_older_versions" . #t)
                                                        ("ssl"
                                                         ("certificate_authorities" . #("/etc/client/ca.pem"))
@@ -1920,8 +1922,8 @@ PasswordAuthentication yes")))
                                                        ("memlock"
                                                         ("soft" . -1)
                                                         ("hard" . -1)))
-                                                      ("ports" . #("127.0.0.1:9200:9200"
-                                                                   "127.0.0.1:9600:9600"))
+                                                      ("ports" . #("192.168.25.1:9200:9200"
+                                                                   "192.168.25.1:9600:9600"))
                                                       ("image" . "opensearchproject/opensearch:1.2.4")
                                                       ("environment" . #("cluster.name=opensearch-cluster"
                                                                          "node.name=opensearch-node1"
@@ -1948,7 +1950,7 @@ PasswordAuthentication yes")))
                                                                 "/etc/opensearch/root-ca.pem:/etc/client/ca.pem:ro"
                                                                 "/etc/opensearch/kirk.pem:/etc/client/cert.pem:ro"
                                                                 "/etc/opensearch/kirk-key.pem:/etc/client/cert.key:ro"))
-                                                      ("image" . "oracle1.local:5000/beats/filebeat-oss:7.12.1")
+                                                      ("image" . "docker-registry.wugi.info/monitoring/filebeat-oss:7.12.1")
                                                       ("hostname" . "guixsd")
                                                       ("network_mode" . "host")
                                                       ("environment"
