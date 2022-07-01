@@ -954,6 +954,7 @@ location / {
                   ""
                   (format #f "~a oracle.ygg" ip)))
            "192.168.25.2 oracle.ovpn"
+           "192.168.25.3 vm1.ovpn"
 
            "172.16.100.65 zdetovetskiy.intr"
            "172.16.100.61 lyashenko.intr"
