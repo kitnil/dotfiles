@@ -9,6 +9,7 @@
   #:use-module (gnu packages compression)
   #:use-module (gnu packages elf)
   #:use-module (gnu packages monitoring)
+  #:use-module (guix build-system copy)
   #:use-module (guix build-system python)
   #:use-module ((guix licenses) #:prefix license:))
 
@@ -332,3 +333,34 @@ can specify a data source on a per-query basis.  This works for even custom
 datasources.
 @end itemize")
     (license license:agpl3)))
+
+(define-public prometheus-lvm-exporter
+  (package
+    (name "prometheus-lvm-exporter")
+    (version "0.0.1")
+    (source
+     (origin
+       (method url-fetch)
+       (uri
+        (string-append
+         "https://github.com/mjuh/monitoring-prometheus-lvm-exporter/releases/download/v"
+         version "/prometheus-lvm-exporter"))
+       (sha256
+        (base32
+         "0zj6nz9xlz21xbw5pyds1gk8yjh0acxwd2k739qw71gxl7kl6rkg"))))
+    (build-system copy-build-system)
+    (arguments
+     `(#:install-plan
+       `((,(assoc-ref %build-inputs "source")
+          ,(string-append "/bin/prometheus-lvm-exporter")))
+       #:phases (modify-phases %standard-phases
+                  (add-after 'install 'chmod-binary
+                    (lambda* (#:key outputs #:allow-other-keys)
+                      (chmod (string-append (assoc-ref outputs "out")
+                                            "/bin/prometheus-lvm-exporter")
+                             #o555))))))
+    (home-page "https://github.com/mjuh/monitoring-prometheus-lvm-exporter")
+    (synopsis "LVM thin pool Prometheus exporter")
+    (description "This program gets information about LVM thin pools with lvs
+binary and provides LV's size and LV's free space as a Prometheus metrics.")
+    (license license:asl2.0)))
