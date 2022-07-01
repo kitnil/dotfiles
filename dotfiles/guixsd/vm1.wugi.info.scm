@@ -1,14 +1,17 @@
 ;; This is an operating system configuration template
 ;; for a "bare bones" setup, with no X11 display server.
 
-(use-modules (gnu))
+(use-modules (gnu)
+             (guix modules)
+             (json))
 (use-service-modules certbot databases dbus desktop docker dns messaging monitoring networking ssh sysctl web vpn)
-(use-package-modules admin curl certs databases networking linux ssh tmux)
+(use-package-modules admin curl certs databases guile networking linux ssh tmux)
 
 (use-modules (config))
 
 (use-modules (packages certs)
              (services bird)
+             (services docker)
              (services mail)
              (services monitoring)
              (services certbot)
@@ -58,6 +61,7 @@
      (list (string-join (append '("127.0.0.1" "vm1.wugi.info" "localhost")
                                 %mail-hosts-file-hosts
                                 %ssh-hosts-file-hosts))
+           "192.168.25.1 node-0.example.com"
            (string-join '("::1" "vm1.wugi.info" "localhost")))
      "\n")))
 
@@ -222,6 +226,73 @@ route 141.80.181.40 255.255.255.255 192.168.25.2
                                                                    (nginx-server-configuration-locations %webssh-configuration-nginx))))))))
 
                           (service docker-service-type)
+                          docker-service
+
+                          (service docker-compose-service-type
+                                   (docker-compose-configuration
+                                    (project-name "opensearch")
+                                    (compose-file
+                                     (computed-file
+                                      "docker-compose-opensearch.json"
+                                      (with-extensions (list guile-json-4)
+                                        (with-imported-modules (source-module-closure '((json builder)))
+                                          #~(begin
+                                              (use-modules (json builder)
+                                                           (ice-9 rdelim))
+                                              (define filebeat-config
+                                                #$(plain-file "filebeat.json"
+                                                              (scm->json-string
+                                                               `(("filebeat"
+                                                                  ("modules" .
+                                                                   #((("module" . "nginx")
+                                                                      ("error"
+                                                                       ("var.paths" . #("/mnt/log/nginx/error.log"))
+                                                                       ("enabled" . #t))
+                                                                      ("access"
+                                                                       ("var.paths" . #("/mnt/log/nginx/access.log"))
+                                                                       ("enabled" . #t)))
+                                                                     (("syslog"
+                                                                       ("var.paths" . #("/mnt/log/messages"))
+                                                                       ("var.convert_timezone" . #t)
+                                                                       ("enabled" . #t))
+                                                                      ("module" . "system")
+                                                                      ("auth"
+                                                                       ("var.paths" . #("/mnt/log/secure"))
+                                                                       ("enabled" . #t)))))
+                                                                  ("inputs" .
+                                                                   #((("type" . "log")
+                                                                      ("paths" . #("/home/oleg/.local/var/log/*.log"))
+                                                                      ("enabled" . #t)))))
+                                                                 ("output"
+                                                                  ("elasticsearch"
+                                                                   ("hosts" . #("https://node-0.example.com:9200"))
+                                                                   ("allow_older_versions" . #t)
+                                                                   ("ssl"
+                                                                    ("certificate_authorities" . #("/etc/client/ca.pem"))
+                                                                    ("certificate" . "/etc/client/cert.pem")
+                                                                    ("key" . "/etc/client/cert.key"))))))))
+                                              (with-output-to-file #$output
+                                                (lambda ()
+                                                  (scm->json
+                                                   `(("version" . "3")
+                                                     ("services"
+                                                      ("filebeat"
+                                                       ("volumes"
+                                                        .
+                                                        ,(vector (string-append filebeat-config ":/usr/share/filebeat/filebeat.yml:ro")
+                                                                 "/var/log:/mnt/log:ro"
+                                                                 "/home/oleg/.local/var/log:/home/oleg/.local/var/log:ro"
+                                                                 "/etc/localtime:/etc/localtime:ro"
+                                                                 "/etc/opensearch/root-ca.pem:/etc/client/ca.pem:ro"
+                                                                 "/etc/opensearch/kirk.pem:/etc/client/cert.pem:ro"
+                                                                 "/etc/opensearch/kirk-key.pem:/etc/client/cert.key:ro"))
+                                                       ("image" . "docker-registry.wugi.info/monitoring/filebeat-oss:7.12.1")
+                                                       ("hostname" . "vm1.wugi.info")
+                                                       ("network_mode" . "host")
+                                                       ("environment"
+                                                        ("name" . "vm1.wugi.info"))
+                                                       ("user" . "0:0")
+                                                       ("command" . "filebeat -e -strict.perms=false"))))))))))))))
 
                           (service homer-service-type
                                    (homer-configuration
