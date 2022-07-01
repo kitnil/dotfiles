@@ -1331,7 +1331,7 @@ location / {
                                                          ((static_configs
                                                            .
                                                            #(((targets . #("127.0.0.1:9080")))))
-                                                          (scrape_interval . "5s")
+                                                          (scrape_interval . "5m")
                                                           (job_name . "lvm"))
                                                          ((static_configs
                                                            .
