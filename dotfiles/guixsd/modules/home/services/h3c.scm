@@ -57,16 +57,16 @@
   (list
    #~(job
       '(next-hour '(20))
-      #$(h3c-configuration->vc-sw4-mr14.intr))
+      #$h3c-configuration->vc-sw4-mr14.intr)
    #~(job
       '(next-hour '(21))
-      #$(h3c-configuration->vc-sw4-mr13.intr))
+      #$h3c-configuration->vc-sw4-mr13.intr)
    #~(job
       '(next-hour '(22))
-      #$(h3c-configuration->vc-sw4-mr12.intr))
+      #$h3c-configuration->vc-sw4-mr12.intr)
    #~(job
       '(next-hour '(23))
-      #$(h3c-configuration->vc-sw4-mr11.intr))))
+      #$h3c-configuration->vc-sw4-mr11.intr)))
 
 (define h3c-service-type
   (service-type
