@@ -1366,6 +1366,8 @@ location / {
                                    (textfile-directory "/var/lib/prometheus-node-exporter")
                                    (extra-options '("--collector.processes"))))
 
+                         (service prometheus-lvm-exporter-service-type)
+
                          (service prometheus-tp-link-exporter-service-type
                                   (prometheus-tp-link-exporter-configuration
                                    ;; XXX: Deprecated SSH client.
