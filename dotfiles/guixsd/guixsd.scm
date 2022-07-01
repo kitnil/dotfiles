@@ -732,6 +732,25 @@ location / {
 
 
 ;;;
+;;; LVM thin volume
+;;;
+
+;; Provides a workaround service to activate LVM thin volume on boot.
+
+(define %lvm-thin
+  (simple-service
+   'lvm-thin shepherd-root-service-type
+   (list (shepherd-service
+          (provision '(lvm-thin))
+          (requirement '())
+          (start #~(make-forkexec-constructor
+                    (list #$(file-append lvm2 "/sbin/lvchange")
+                          "-ay" "-v" "lvm2/ntfsgames")))
+          (respawn? #f)
+          (one-shot? #t)))))
+
+
+;;;
 ;;; Entryp point
 ;;;
 
@@ -948,6 +967,8 @@ location / {
          "\n")))
 
       (services (append (list
+
+                         %lvm-thin
 
                          (service earlyoom-service-type
                                   (earlyoom-configuration
