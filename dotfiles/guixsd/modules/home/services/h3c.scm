@@ -8,7 +8,9 @@
   #:export (h3c-configuration->vc-sw4-mr14.intr
             h3c-configuration->vc-sw4-mr13.intr
             h3c-configuration->vc-sw4-mr12.intr
-            h3c-configuration->vc-sw4-mr11.intr))
+            h3c-configuration->vc-sw4-mr11.intr
+
+            h3c-service-type))
 
 (define (h3c-command host command)
   #~(begin
