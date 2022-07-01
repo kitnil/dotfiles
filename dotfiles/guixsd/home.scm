@@ -1418,6 +1418,7 @@ gtk-xft-rgba=\"rgb\"
 
     (service ansible-playbook-service-type)
     (service juniper-service-type)
+    (service h3c-service-type)
     (service cisco-service-type)
     (simple-service 'ansible-config
                     home-files-service-type
