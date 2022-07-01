@@ -61,7 +61,10 @@
             prometheus-tp-link-exporter-service-type
 
             grafana-configuration
-            grafana-service-type))
+            grafana-service-type
+
+            prometheus-lvm-exporter-configuration
+            prometheus-lvm-exporter-service-type))
 
 ;;; Commentary:
 ;;;
@@ -976,5 +979,45 @@ User admin")
    (default-value (grafana-configuration))
    (description
     "Run the grafana.")))
+
+
+;;;
+;;; prometheus-lvm-exporter
+;;;
+
+(define-record-type* <prometheus-lvm-exporter-configuration>
+  prometheus-lvm-exporter-configuration make-prometheus-lvm-exporter-configuration
+  prometheus-lvm-exporter-configuration?
+  (prometheus-lvm-exporter prometheus-lvm-exporter-configuration-prometheus-lvm-exporter ;<package>
+                           (default prometheus-lvm-exporter)))
+
+(define (prometheus-lvm-exporter-shepherd-service config)
+  (list
+   (shepherd-service
+    (provision '(prometheus-lvm-exporter))
+    (documentation "Run prometheus-lvm-exporter.")
+    (requirement '())
+    (start #~(make-forkexec-constructor
+              (list (string-append #$(prometheus-lvm-exporter-configuration-prometheus-lvm-exporter config)
+                                   "/bin/prometheus-lvm-exporter"))
+              #:environment-variables
+              (append
+               (remove (lambda (str)
+                         (string-prefix? "PATH=" str))
+                       (environ))
+               (list
+                (string-append "PATH=" (string-append #$lvm2 "/sbin"))))))
+    (respawn? #f)
+    (stop #~(make-kill-destructor)))))
+
+(define prometheus-lvm-exporter-service-type
+  (service-type
+   (name 'prometheus-lvm-exporter)
+   (extensions
+    (list (service-extension shepherd-root-service-type
+                             prometheus-lvm-exporter-shepherd-service)))
+   (default-value (prometheus-lvm-exporter-configuration))
+   (description
+    "Run the prometheus-lvm-exporter.")))
 
 ;;; monitoring.scm ends here
