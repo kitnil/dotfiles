@@ -18,6 +18,7 @@
 
 (define-module (services monitoring)
   #:use-module (gnu packages admin)
+  #:use-module (gnu packages backup)
   #:use-module (gnu packages linux)
   #:use-module (gnu packages ssh)
   #:use-module (gnu services)
@@ -64,7 +65,10 @@
             grafana-service-type
 
             prometheus-lvm-exporter-configuration
-            prometheus-lvm-exporter-service-type))
+            prometheus-lvm-exporter-service-type
+
+            prometheus-restic-exporter-configuration
+            prometheus-restic-exporter-service-type))
 
 ;;; Commentary:
 ;;;
@@ -1019,5 +1023,49 @@ User admin")
    (default-value (prometheus-lvm-exporter-configuration))
    (description
     "Run the prometheus-lvm-exporter.")))
+
+
+;;;
+;;; prometheus-lvm-exporter
+;;;
+
+(define-record-type* <prometheus-restic-exporter-configuration>
+  prometheus-restic-exporter-configuration make-prometheus-restic-exporter-configuration
+  prometheus-restic-exporter-configuration?
+  (prometheus-restic-exporter prometheus-restic-exporter-configuration-prometheus-restic-exporter ;<package>
+                              (default prometheus-restic-exporter))
+  (environment-variables prometheus-restic-exporter-configuration-environment-variables
+                         (default '())))
+
+(define (prometheus-restic-exporter-shepherd-service config)
+  (list
+   (shepherd-service
+    (provision '(prometheus-restic-exporter))
+    (documentation "Run prometheus-restic-exporter.")
+    (requirement '())
+    (start #~(make-forkexec-constructor
+              (list (string-append #$(prometheus-restic-exporter-configuration-prometheus-restic-exporter config)
+                                   "/bin/restic-exporter"))
+              #:environment-variables
+              (append
+               '#$(prometheus-restic-exporter-configuration-environment-variables config)
+               (remove (lambda (str)
+                         (string-prefix? "PATH=" str))
+                       (environ))
+               (list
+                (string-append "RESTIC_EXPORTER_BIN="
+                               (string-append #$restic "/bin/restic"))))))
+    (respawn? #f)
+    (stop #~(make-kill-destructor)))))
+
+(define prometheus-restic-exporter-service-type
+  (service-type
+   (name 'prometheus-restic-exporter)
+   (extensions
+    (list (service-extension shepherd-root-service-type
+                             prometheus-restic-exporter-shepherd-service)))
+   (default-value (prometheus-restic-exporter-configuration))
+   (description
+    "Run the prometheus-restic-exporter.")))
 
 ;;; monitoring.scm ends here
