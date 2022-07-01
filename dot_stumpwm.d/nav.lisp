@@ -276,3 +276,8 @@
   (delete-window window)
   (when (not (current-window))
     (run-commands "fnext")))
+
+(defcommand delete-window-or-remove-split () ()
+  (if (current-window)
+      (run-commands "delete-window")
+      (run-commands "remove")))

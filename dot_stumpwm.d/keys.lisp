@@ -77,7 +77,7 @@
             (7 . #\&) (8 . #\*) (9 . #\()
             (0 . #\))))
   (define-key *top-map* (kbd "s-KP_Enter") "run-or-raise-xterm")
-  (define-key *top-map* (kbd "s-k") "delete-window")
+  (define-key *top-map* (kbd "s-k") "delete-window-or-remove-split")
   (define-key *top-map* (kbd "s-K") "delete-window!")
   (define-key *top-map* (kbd "s-ESC") "keybinding-s-k")
   (define-key *top-map* (kbd "s-Right") "move-focus right")
