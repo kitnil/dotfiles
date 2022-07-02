@@ -253,16 +253,18 @@
   (dante       dante-configuration-dante       ;<package>
                (default dante))
   (config-file dante-configuration-config-file ;<file-like>
-               (default #f)))
+               (default #f))
+  (requirement dante-configuration-requirement ;list of symbols
+               (default '())))
 
 (define dante-shepherd-service
   (match-lambda
-    (($ <dante-configuration> dante config-file)
+    (($ <dante-configuration> dante config-file requirement)
      (list
       (shepherd-service
        (provision '(dante))
        (documentation "Run dante.")
-       (requirement '())
+       (requirement (append '() requirement))
        (start #~(make-forkexec-constructor
                  (list (string-append #$dante "/sbin/sockd")
                        "-f" #$config-file)
