@@ -254,29 +254,38 @@
 (define-record-type* <dante-configuration>
   dante-configuration make-dante-configuration
   dante-configuration?
-  (dante       dante-configuration-dante       ;<package>
-               (default dante))
-  (config-file dante-configuration-config-file ;<file-like>
-               (default #f))
-  (requirement dante-configuration-requirement ;list of symbols
-               (default '())))
+  (dante                       dante-configuration-dante                       ;<package>
+                               (default dante))
+  (config-file                 dante-configuration-config-file                 ;<file-like>
+                               (default #f))
+  (requirement                 dante-configuration-requirement                 ;list of symbols
+                               (default '()))
+  (debug?                      dante-configuration-debug                       ;boolean
+                               (default #f))
+  (socks-directroute-fallback? dante-configuration-socks-directroute-fallback? ;boolean
+                               (default #f)))
 
 (define dante-shepherd-service
   (match-lambda
-    (($ <dante-configuration> dante config-file requirement)
+    (($ <dante-configuration> dante config-file requirement debug
+                              socks-directroute-fallback?)
      (list
       (shepherd-service
        (provision '(dante))
        (documentation "Run dante.")
        (requirement (append '() requirement))
        (start #~(make-forkexec-constructor
-                 (list (string-append #$dante "/sbin/sockd")
-                       "-f" #$config-file
-                       "-d" "9")
+                 (append (list (string-append #$dante "/sbin/sockd")
+                               "-f" #$config-file)
+                         (if #$debug
+                             '("-d" "9")
+                             '()))
                  #:environment-variables
-                 '("SSL_CERT_DIR=/run/current-system/profile/etc/ssl/certs"
-                   "SSL_CERT_FILE=/run/current-system/profile/etc/ssl/certs/ca-certificates.crt"
-                   "SOCKS_DIRECTROUTE_FALLBACK=yes")))
+                 (append '("SSL_CERT_DIR=/run/current-system/profile/etc/ssl/certs"
+                           "SSL_CERT_FILE=/run/current-system/profile/etc/ssl/certs/ca-certificates.crt")
+                         (if #$socks-directroute-fallback?
+                             '("SOCKS_DIRECTROUTE_FALLBACK=yes")
+                             '()))))
        (respawn? #f)
        (stop #~(make-kill-destructor)))))))
 

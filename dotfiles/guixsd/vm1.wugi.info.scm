@@ -171,7 +171,8 @@ route 141.80.181.40 255.255.255.255 192.168.25.2
                           (service dante-service-type
                                    (dante-configuration
                                     (config-file (local-file "sockd.conf"))
-                                    (requirement '(tor))))
+                                    (requirement '(tor))
+                                    (socks-directroute-fallback? #t)))
 
                           (service tinyproxy-service-type
                                    (tinyproxy-configuration
