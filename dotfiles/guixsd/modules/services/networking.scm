@@ -19,6 +19,7 @@
 (define-module (services networking)
   #:use-module (gnu packages linux)
   #:use-module (gnu packages networking)
+  #:use-module (gnu packages web)
   #:use-module (gnu services)
   #:use-module (gnu services shepherd)
   #:use-module (gnu system shadow)
@@ -38,7 +39,10 @@
             crowdsec-firewall-bouncer-service-type
 
             dante-configuration
-            dante-service-type))
+            dante-service-type
+
+            tinyproxy-configuration
+            tinyproxy-service-type))
 
 ;;; Commentary:
 ;;;
@@ -283,5 +287,47 @@
    (default-value (dante-configuration))
    (description
     "Run the dante.")))
+
+
+;;;
+;;; tinyproxy
+;;;
+
+(define-record-type* <tinyproxy-configuration>
+  tinyproxy-configuration make-tinyproxy-configuration
+  tinyproxy-configuration?
+  (tinyproxy       tinyproxy-configuration-tinyproxy       ;<package>
+               (default tinyproxy))
+  (config-file tinyproxy-configuration-config-file ;<file-like>
+               (default #f))
+  (requirement tinyproxy-configuration-requirement ;list of symbols
+               (default '())))
+
+(define tinyproxy-shepherd-service
+  (match-lambda
+    (($ <tinyproxy-configuration> tinyproxy config-file requirement)
+     (list
+      (shepherd-service
+       (provision '(tinyproxy))
+       (documentation "Run tinyproxy.")
+       (requirement (append '() requirement))
+       (start #~(make-forkexec-constructor
+                 (list (string-append #$tinyproxy "/bin/tinyproxy")
+                       "-d" "-c" #$config-file)
+                 #:environment-variables
+                 '("SSL_CERT_DIR=/run/current-system/profile/etc/ssl/certs"
+                   "SSL_CERT_FILE=/run/current-system/profile/etc/ssl/certs/ca-certificates.crt")))
+       (respawn? #f)
+       (stop #~(make-kill-destructor)))))))
+
+(define tinyproxy-service-type
+  (service-type
+   (name 'tinyproxy)
+   (extensions
+    (list (service-extension shepherd-root-service-type
+                             tinyproxy-shepherd-service)))
+   (default-value (tinyproxy-configuration))
+   (description
+    "Run the tinyproxy.")))
 
 ;;; networking.scm ends here
