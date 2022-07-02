@@ -107,37 +107,33 @@
                   (default docker-compose))
   (compose-file docker-compose-configuration-compose-file)    ;<file-like> object
   (project-name docker-compose-configuration-project-name)    ;string
-  )
+  (requirement docker-compose-configuration-requirement     ;list of symbols
+                (default '())))
 
 (define docker-compose-shepherd-service
   (match-lambda
-    (($ <docker-compose-configuration> docker-compose compose-file project-name)
-     (let* ((service-name (string-append "docker-compose-" project-name))
-            (wrapper (program-file
-                      service-name
-                      #~(begin
-                          (system* #$(dockerd-wait))
-                          (system* (string-append #$docker-compose "/bin/docker-compose")
-                                   "--file" #$compose-file
-                                   "--project-name" #$project-name
-                                   "up")))))
-       (list
-        (shepherd-service
-         (provision (list (string->symbol service-name)))
-         (documentation "Run docker-compose.")
-         (requirement '(loopback dockerd-wait))
-         (start #~(make-forkexec-constructor
-                   (list #$wrapper)
-                   #:environment-variables
-                   (append (list "SSL_CERT_DIR=/etc/ssl/certs"
-                                 "SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt")
-                           (remove (lambda (str)
-                                     (or (string-prefix? "HOME=" str)
-                                         (string-prefix? "SSL_CERT_DIR=" str)
-                                         (string-prefix? "SSL_CERT_FILE=" str)))
-                                   (environ)))))
-         (respawn? #f)
-         (stop #~(make-kill-destructor))))))))
+    (($ <docker-compose-configuration> docker-compose compose-file project-name requirement)
+     (list
+      (shepherd-service
+       (provision (list (string->symbol (string-append "docker-compose-" project-name))))
+       (documentation "Run docker-compose.")
+       (requirement (append '(networking containerd dockerd)
+                            requirement))
+       (start #~(make-forkexec-constructor
+                 (list (string-append #$docker-compose "/bin/docker-compose")
+                       "--file" #$compose-file
+                       "--project-name" #$project-name
+                       "up")
+                 #:environment-variables
+                 (append (list "SSL_CERT_DIR=/etc/ssl/certs"
+                               "SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt")
+                         (remove (lambda (str)
+                                   (or (string-prefix? "HOME=" str)
+                                       (string-prefix? "SSL_CERT_DIR=" str)
+                                       (string-prefix? "SSL_CERT_FILE=" str)))
+                                 (environ)))))
+       (respawn? #f)
+       (stop #~(make-kill-destructor)))))))
 
 (define docker-compose-service-type
   (service-type (name 'docker-compose)

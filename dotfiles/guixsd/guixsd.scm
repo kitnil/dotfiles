@@ -1821,12 +1821,13 @@ PasswordAuthentication yes")))
                                   (syncthing-configuration (user "oleg")))
 
                          (service docker-service-type)
-                         docker-service
+                         ;; docker-service
                          ;; docker-kiwiirc-service
 
                          (service docker-compose-service-type
                                   (docker-compose-configuration
                                    (project-name "opensearch")
+                                   (requirement '(openvpn-majordomo.ru))
                                    (compose-file
                                     (computed-file
                                      "docker-compose-opensearch.json"
@@ -2044,7 +2045,7 @@ PasswordAuthentication yes")))
                                         ))
                            (kubevirt? #t)))
 
-                         kubernetes-k3s-service
+                         ;; kubernetes-k3s-service
 
                          (dovecot-service
                           #:config (dovecot-configuration

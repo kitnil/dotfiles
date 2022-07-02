@@ -24,6 +24,7 @@
   #:use-module (guix gexp)
   #:use-module (guix records)
   #:use-module (packages kubernetes)
+  #:use-module (srfi srfi-1)
   #:export (kubernetes-k3s-configuration
             kubernetes-k3s-configuration?
             kubernetes-k3s-service-type
@@ -78,9 +79,10 @@
    (shepherd-service
     (provision '(kubernetes-k3s))
     (documentation "Run kubernetes-k3s.")
-    (requirement (case (kubernetes-k3s-configuration-runtime config)
-                   ((docker) '(dockerd))
-                   (else '())))
+    (requirement (append '(networking containerd)
+                         (case (kubernetes-k3s-configuration-runtime config)
+                           ((docker) '(dockerd))
+                           (else '()))))
     (start #~(make-forkexec-constructor
               (list #$(file-append (kubernetes-k3s-configuration-k3s config)
                                    "/bin/k3s")
@@ -135,7 +137,7 @@
                    (shepherd-service
                     (provision '(kubernetes-k3s-start))
                     (documentation "Run kubernetes-k3s.")
-                    (requirement '(dockerd-wait))
+                    (requirement '())
                     (start #~(make-forkexec-constructor
                               (list #$kubernetes-k3s-start)))
                     (respawn? #f)
