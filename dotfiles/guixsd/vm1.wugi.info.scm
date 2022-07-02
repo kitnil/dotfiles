@@ -173,6 +173,11 @@ route 141.80.181.40 255.255.255.255 192.168.25.2
                                     (config-file (local-file "sockd.conf"))
                                     (requirement '(tor))))
 
+                          (service tinyproxy-service-type
+                                   (tinyproxy-configuration
+                                    (config-file (local-file "tinyproxy.conf"))
+                                    (requirement '(tor))))
+
                          (service tor-service-type
                                   (tor-configuration
                                    (config-file (local-file "torrc"))))
