@@ -24,7 +24,6 @@
 ;; Uncomment the following:
 ;;
 ;; (setq initial-buffer-choice 'text-mode)
-(benchmark-init/activate)
 ;;
 ;; and add to the end of the ~/.emacs file:
 ;;
@@ -284,8 +283,4 @@
  '(default ((t (:family "Liberation Mono" :foundry "1ASC" :slant normal :weight normal :height 136 :width normal))))
  '(highlight-indent-guides-character-face ((t (:foreground "gray15"))))
  '(vterm-color-blue ((t (:background "steel blue" :foreground "steel blue")))))
-
-(benchmark-init/show-durations-tabulated)
-(setq initial-buffer-choice '(lambda () (get-buffer "*Benchmark Init Results Tabulated*")))
-(benchmark-init/deactivate)
 

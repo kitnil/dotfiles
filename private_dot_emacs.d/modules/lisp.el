@@ -24,8 +24,6 @@
 (setq slime-truncate-lines nil)
 (setq sldb-initial-restart-limit 12)
 
-(add-to-list 'slime-contribs 'slime-repl)
-
 
 ;;;
 ;;; hy
