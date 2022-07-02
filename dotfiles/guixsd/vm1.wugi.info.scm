@@ -172,6 +172,10 @@ route 141.80.181.40 255.255.255.255 192.168.25.2
                                    (dante-configuration
                                     (config-file (local-file "sockd.conf"))))
 
+                         (service tor-service-type
+                                  (tor-configuration
+                                   (config-file (local-file "torrc"))))
+
                           (dbus-service)
                           (elogind-service)
                           (service bird-service-type
