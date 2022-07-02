@@ -271,7 +271,8 @@
        (requirement (append '() requirement))
        (start #~(make-forkexec-constructor
                  (list (string-append #$dante "/sbin/sockd")
-                       "-f" #$config-file)
+                       "-f" #$config-file
+                       "-d" "9")
                  #:environment-variables
                  '("SSL_CERT_DIR=/run/current-system/profile/etc/ssl/certs"
                    "SSL_CERT_FILE=/run/current-system/profile/etc/ssl/certs/ca-certificates.crt"
