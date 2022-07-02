@@ -274,7 +274,8 @@
                        "-f" #$config-file)
                  #:environment-variables
                  '("SSL_CERT_DIR=/run/current-system/profile/etc/ssl/certs"
-                   "SSL_CERT_FILE=/run/current-system/profile/etc/ssl/certs/ca-certificates.crt")))
+                   "SSL_CERT_FILE=/run/current-system/profile/etc/ssl/certs/ca-certificates.crt"
+                   "SOCKS_DIRECTROUTE_FALLBACK=yes")))
        (respawn? #f)
        (stop #~(make-kill-destructor)))))))
 
