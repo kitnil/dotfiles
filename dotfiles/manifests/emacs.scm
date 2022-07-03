@@ -143,6 +143,7 @@
        emacs-scheme-complete
        emacs-scratch-el
        emacs-slack
+       emacs-slime
        ;; XXX: Failed to build emacs-slime              ; Sbcl repl
        emacs-ssh-config-mode
        emacs-smart-mode-line
