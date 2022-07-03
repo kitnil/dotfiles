@@ -32,9 +32,6 @@
 (define inferior
   (open-inferior cached #:error-port (current-error-port)))
 
-(define-public firefox
-  (first (lookup-inferior-packages inferior "firefox")))
-
 (define-public openssh
   (first (lookup-inferior-packages inferior "openssh")))
 

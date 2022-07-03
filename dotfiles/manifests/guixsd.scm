@@ -27,7 +27,7 @@
   (fold (lambda (file combined)
           (manifest-add combined
                         (manifest-entries (load-manifest file))))
-        (packages->manifest (list firefox openssh tigervnc-client))
+        (packages->manifest (list openssh tigervnc-client))
         files))
 
 (combined-manifest-from-files
@@ -35,6 +35,7 @@
       '("desktop.scm"
         "emacs.scm"
         "guix-collection.scm"
+        "nonguix.scm"
         "majordomo.scm"
         "wigust.scm"
         "dotfiles.scm")))

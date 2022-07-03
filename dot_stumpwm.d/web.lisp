@@ -1,7 +1,7 @@
 (in-package :stumpwm)
 
 (defvar *browser* "firefox")
-(defvar *browser-name* "Nightly")
+(defvar *browser-name* "firefox-default")
 
 (defvar *jenkins-url*
   "https://jenkins.wugi.info")
@@ -129,11 +129,10 @@
 (defcommand firefox-test () ()
   "Start of focus firefox."
   (run-shell-command (join (list (firefox-command) "-P" "test"))
-                     '(:class "Nightly")))
+                     '(:class "firefox-default")))
 
-;; XXX: `firefox-command' ignores GTK_THEME until SiteDelta fixes fonts
 (defun firefox-command ()
-  (join (list "GTK_THEME=Adwaita:light" *fontconfig-file* "firefox")))
+  (join (list "GTK_THEME=Adwaita:dark" *fontconfig-file* "firefox")))
 
 (defun mjru-open-account (account)
   (run-shell-command (join (list *fontconfig-file* "hms" "web" "open" account)))
@@ -173,7 +172,7 @@
                   (putsel ""))))))
           ;; ((= (length clipboard) 24)
           ;;  (mjru-mongo-development-id-object))
-          (t (run-or-raise (firefox-command) '(:class "Nightly"))))))
+          (t (run-or-raise (firefox-command) '(:class "firefox-default"))))))
 
 (defcommand firefox-new-window () ()
   "Start Firefox."
