@@ -229,6 +229,15 @@
         complete -C ${pkgs.vault-bin}/bin/vault vault-ci
       '';
     };
+    ".mozilla/native-messaging-hosts/passff.json" = {
+      text = builtins.toJSON {
+        allowed_extensions = [ "passff@wugi.info" ];
+        description = "Host for communicating with zx2c4 pass";
+        name = "passff";
+        path = "${pkgs.passff-host}/share/passff-host/passff.py";
+        type = "stdio";
+      };
+    };
   };
 
   programs.firefox = {
