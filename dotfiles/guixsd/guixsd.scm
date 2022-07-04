@@ -802,7 +802,7 @@ location / {
                                  '("archive" "majordomo" "phone" "src" "Maildir"))
                             (operating-system-file-systems base-system)))
 
-      (swap-devices '("/dev/disk/by-label/swap"))
+      (swap-devices '("/dev/disk/by-label/nvme-swap"))
 
       (kernel-loadable-modules (list vendor-reset-linux-module))
 
