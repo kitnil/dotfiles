@@ -19,6 +19,7 @@
 (run-commands "gselect 1")
 
 (define-frame-preference "1" (0 NIL T :CLASS "firefox-default" :TITLE "YouTube"))
+(define-frame-preference "1" (1 NIL T :CLASS "firefox-default" :TITLE "Picture-in-Picture"))
 
 (when (string-equal (screen-display-string (current-screen)) "DISPLAY=:0.0")
   (restore-from-file "/home/oleg/.stumpwm.d/group-1.lisp")
