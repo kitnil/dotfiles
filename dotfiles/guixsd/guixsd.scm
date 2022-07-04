@@ -785,7 +785,8 @@ location / {
                                     (mount-point "/srv")
                                     (options
                                      (string-join (list "compress=zstd:15"
-                                                        "nossd")
+                                                        "nossd"
+                                                        "noatime")
                                                   ","))
                                     (type "btrfs")))
                             (map (lambda (subvolume)
@@ -794,7 +795,8 @@ location / {
                                      (mount-point (string-append "/home/oleg/" subvolume))
                                      (options (string-join (list (string-append "subvol=" subvolume)
                                                                  "compress=zstd:15"
-                                                                 "ssd")
+                                                                 "ssd"
+                                                                 "noatime")
                                                            ","))
                                      (type "btrfs")))
                                  '("archive" "majordomo" "phone" "src" "Maildir"))
