@@ -1088,7 +1088,7 @@ location / {
                                      (listen-address listen-address)
                                      (prometheus "/home/oleg/.nix-profile/bin/prometheus")
                                      (arguments '(;; "--log.level=debug"
-                                                  ;; "--storage.tsdb.retention.time=1h"
+                                                  "--storage.tsdb.retention.time=2y"
                                                   "--web.enable-admin-api"))
                                      (config-file
                                       (computed-file
