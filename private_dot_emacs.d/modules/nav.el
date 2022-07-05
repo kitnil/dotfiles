@@ -136,7 +136,7 @@
 
   ;; Undo and redo operations on windows and buffers
   (winner-mode 1)
-  (windmove-default-keybindings)
+  ;; (windmove-default-keybindings) ;XXX: Breaks vterm-mode-map
 
   ;; Display key bindings help window (after some delay)
   (which-key-mode)
