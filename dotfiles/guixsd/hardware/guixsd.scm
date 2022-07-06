@@ -49,8 +49,7 @@ EndSection
                          (device (file-system-label "guix-root"))
                          (mount-point "/")
                          (type "ext4")
-                         (dependencies mapped-devices)
-                         (options "noatime"))
+                         (dependencies mapped-devices))
                        (file-system
                          (device (file-system-label "boot1"))
                          (mount-point "/boot1/efi")
