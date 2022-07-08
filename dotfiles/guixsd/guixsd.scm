@@ -68,7 +68,8 @@
         "syncthing.wugi.info"
         "webssh.wugi.info"
         "peertube.wugi.info"
-        "docker-registry.wugi.info"))
+        "docker-registry.wugi.info"
+        "iso.wugi.info"))
 
 
 ;;;
