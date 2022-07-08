@@ -2066,6 +2066,34 @@ ipmi()
     esac
 }
 
+__lazy_cscli()
+{
+    local word_count=${#COMP_WORDS[*]}
+    local word_at_point="${COMP_WORDS[$COMP_CWORD]}"
+    case $COMP_CWORD in
+        *)
+            if [[ $(type -t __start_cscli) != function ]]
+            then
+                if [[ -f /run/current-system/profile/bin/cscli ]]
+                then
+                    source <(/run/current-system/profile/bin/cscli completion bash)
+                fi
+            fi
+            ;;
+    esac
+}
+
+complete -F __lazy_cscli cscli
+
+cscli()
+{
+    case "$1" in
+        *)
+            sudo cscli "${@:1}"
+            ;;
+    esac
+}
+
 herd()
 {
     case "$1" in
