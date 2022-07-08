@@ -107,8 +107,13 @@
          (root "/var/www/techinfo.intr"))
         (nginx-server-configuration
          (server-name '("iso.wugi.info"))
-         (listen '("192.168.0.144:80"))
-         (root "/srv/iso"))
+         (listen '("192.168.0.144:80" "192.168.0.144:443 ssl"))
+         (root "/srv/iso")
+         (locations
+          (list
+           (nginx-location-configuration
+            (uri "/.well-known")
+            (body '("root /var/www;"))))))
         (nginx-server-configuration
          (server-name '("gitlab.wugi.info"))
          (listen '("127.0.0.1:80"))
