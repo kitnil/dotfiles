@@ -20,6 +20,7 @@
   #:use-module (gnu packages admin)
   #:use-module (gnu packages backup)
   #:use-module (gnu packages linux)
+  #:use-module (gnu packages monitoring)
   #:use-module (gnu packages ssh)
   #:use-module (gnu services)
   #:use-module (gnu services admin)
@@ -68,7 +69,10 @@
             prometheus-lvm-exporter-service-type
 
             prometheus-restic-exporter-configuration
-            prometheus-restic-exporter-service-type))
+            prometheus-restic-exporter-service-type
+
+            fatrace-service-type
+            fatrace-configuration))
 
 ;;; Commentary:
 ;;;
@@ -1067,5 +1071,64 @@ User admin")
    (default-value (prometheus-restic-exporter-configuration))
    (description
     "Run the prometheus-restic-exporter.")))
+
+
+;;;
+;;; fatrace
+;;;
+
+(define-record-type* <fatrace-configuration>
+  fatrace-configuration make-fatrace-configuration
+  fatrace-configuration?
+  (fatrace   fatrace-configuration-fatrace   ;<package>
+             (default fatrace))
+  (log-file  fatrace-configuration-log-file  ;string
+             (default "/var/log/fatrace.log"))
+  (arguments fatrace-configuration-arguments ;list of strings
+             (default '()))
+  (directory fatrace-configuration-directory ;string
+             (default "/")))
+
+(define (fatrace-activation config)
+  "Return the activation GEXP for CONFIG."
+  (let ((log-file (fatrace-configuration-log-file config)))
+    #~(begin
+        (when (file-exists? #$log-file)
+          (delete-file #$log-file)))))
+
+(define (fatrace-log-rotations config)
+  (list (log-rotation
+         (files (list (fatrace-configuration-log-file config))))))
+
+(define (fatrace-shepherd-service config)
+  (list
+   (shepherd-service
+    (provision '(fatrace))
+    (documentation "Run fatrace.")
+    (requirement '())
+    (start #~(make-forkexec-constructor
+              (list
+               (string-append #$(fatrace-configuration-fatrace config)
+                              "/sbin/fatrace")
+               (string-append "--output="
+                              #$(fatrace-configuration-log-file config))
+               #$@(fatrace-configuration-arguments config))
+              #:directory #$(fatrace-configuration-directory config)))
+    (respawn? #f)
+    (stop #~(make-kill-destructor)))))
+
+(define fatrace-service-type
+  (service-type
+   (name 'fatrace)
+   (extensions
+    (list (service-extension shepherd-root-service-type
+                             fatrace-shepherd-service)
+          (service-extension activation-service-type
+                             fatrace-activation)
+          (service-extension rottlog-service-type
+                             fatrace-log-rotations)))
+   (default-value (fatrace-configuration))
+   (description
+    "Run fatrace.")))
 
 ;;; monitoring.scm ends here
