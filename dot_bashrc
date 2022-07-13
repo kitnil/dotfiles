@@ -92,20 +92,20 @@ emc()
 
 guile()
 {
-    if [ "$INSIDE_EMACS" == "vterm" ]
-    then
-        (unset INSIDE_EMACS; command guile "$@")
-    else
-        command guile "$@"
-    fi
-    case "$1" in
-        wisp)
-            command guile -x .w --language=wisp "${@:2}"
-            ;;
-        *)
-            command guile "$@"
-            ;;
-    esac
+    (
+        if [ "$INSIDE_EMACS" == "vterm" ]
+        then
+            unset INSIDE_EMACS
+        fi
+        case "$1" in
+            wisp)
+                exec -a "$0" guile -x .w --language=wisp "${@:2}"
+                ;;
+            *)
+                exec -a "$0" guile "$@"
+                ;;
+        esac
+    )
 }
 
 cat()
