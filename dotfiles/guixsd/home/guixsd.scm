@@ -24,15 +24,42 @@
              (gnu packages haskell-apps)
              (gnu packages wm)
 
+             (home config)
              (home config openssh)
+             (home services admin)
              (home services ansible)
              (home services cisco)
              (home services desktop)
+             (home services gdb)
+             (home services emacs)
              (home services juniper)
              (home services h3c)
              (home services mail)
              (home services monitoring)
+             (home services nix)
              (home services package-management)
+             (home services shell)
+             (home services version-control)
+             (home services terminals)
+             (home services tmux)
+             (home services linux)
+             (home services haskell-apps)
+             (home services gtk)
+             (home services rust-apps)
+             (home services lisp)
+             (home services python)
+             (home services nano)
+             (home services dns)
+             (home services web)
+             (home services gnupg)
+             (home services groovy)
+             (home services guile)
+             (home services kodi)
+             (home services databases)
+             (home services mime)
+             (home services video)
+             (home services networking)
+
              (gnu packages mail)
              (gnu packages dhall)
              (guile pass)
@@ -54,21 +81,6 @@
 
 (define .bashrc
   (string-append %home "/.local/share/chezmoi/dot_bashrc"))
-
-(define xmenu
-  (computed-file
-   "xmenu.sh"
-   #~(begin
-       (use-modules (ice-9 rdelim)
-                    (ice-9 popen))
-       (let* ((port (open-pipe* OPEN_READ #$(file-append dhall "/bin/dhall")
-                                "text" "--file" #$(local-file "../../dhall/xmenu.dhall")))
-              (output (read-string port)))
-         (close-port port)
-         (call-with-output-file #$output
-           (lambda (port)
-             (display (string-trim-right output #\newline) port)))
-         (chmod #$output #o555)))))
 
 (define xmodmap-script
   (program-file
@@ -370,249 +382,15 @@
                                              ("alertmanager.url" . "http://localhost:9093"))
                                            #:pretty #t))))))))))
 
-    (simple-service 'chromium-wrapper
-                    home-files-service-type
-                    (map (lambda (program)
-                           `(,(string-append ".local/bin/" program)
-                             ,(computed-file
-                               program
-                               #~(begin
-                                   (with-output-to-file #$output
-                                     (lambda ()
-                                       (format #t "\
-#!/bin/sh
-# https://github.com/stumpwm/stumpwm/issues/894
-export FONTCONFIG_FILE=/run/current-system/profile/etc/fonts/fonts.conf
-exec -a \"$0\" /home/oleg/.nix-profile/bin/~a --disable-features=SendMouseLeaveEvents \"$@\"\n"
-                                               #$program)))
-                                   (chmod #$output #o555)))))
-                         '("google-chrome-stable" "chromium")))
+    home-chromium-service
 
-    (simple-service 'bin-config
-                    home-files-service-type
-                    (append
-                     (list `(".local/bin/xmenu.sh" ,xmenu))
-                     (map (lambda (program)
-                            `(,(string-append ".local/bin/" program)
-                              ,(local-file (string-append "dot_local/bin/executable_" program)
-                                           #:recursive? #t)))
-                          '("alerta-close"
-                            "ansible-update-ssh-known-hosts"
-                            "backup"
-                            "bash-notify"
-                            "block-ip"
-                            "blog"
-                            "brctl-start"
-                            "cerb"
-                            "checkssl.sh"
-                            "chroot-games.sh"
-                            "clone-gitlab.intr.sh"
-                            "color-converter"
-                            "connect"
-                            "convert-music"
-                            "covid19"
-                            "debian-chroot.sh"
-                            "debian.sh"
-                            "dns"
-                            "dnscheck"
-                            "domain.yml"
-                            "dotfiles"
-                            "elk-index-youtube"
-                            "elogind-sway"
-                            "emacs-guix-log"
-                            "emacs-org-capture"
-                            "emc"
-                            "eww"
-                            "fedora"
-                            "ff"
-                            "ffmpeg-hwaccel"
-                            "ffmpeg-software"
-                            "ffmpeg-youtube"
-                            "fileshelter"
-                            "firefox-guile"
-                            "firefox-nix"
-                            "firefox-youtube-chat"
-                            "gita-dist"
-                            "gita-kitnil"
-                            "gita-mjru"
-                            "gita-src"
-                            "git-changelog-symlink-init.sh"
-                            "git-gitlab"
-                            "github-create-repository"
-                            "gitlab-runner-service"
-                            "git-mirror"
-                            "git-pass-secrets"
-                            "git-pure"
-                            "git-statistics"
-                            "gnus"
-                            "godaddy"
-                            "gpg-unlock"
-                            "grafana"
-                            "guile-git-list-commiters"
-                            "guix-clean.sh"
-                            "guix-custom-refresh"
-                            "guix-environment.sh"
-                            "guix-git-reset-to-current-channel"
-                            "guix-latest"
-                            "guix-my-services"
-                            "guix-show"
-                            "guix-update.sh"
-                            "guix-weather-x86_64.sh"
-                            "hms"
-                            "import-cert.sh"
-                            "iommu.sh"
-                            "iproute2-bridge"
-                            "jenkins"
-                            "jenkins-active-jobs"
-                            "jenkins-lastbuild"
-                            "jenkins-local"
-                            "jenkins-nix-version"
-                            "lint"
-                            "lists.sh"
-                            "magit"
-                            "mail"
-                            "Majordomo_LLC_Root_CA.crt.sh"
-                            "messages2notify-send"
-                            "mj-hosts.sh"
-                            "mjru-auth"
-                            "mjru-alerta"
-                            "mjru-dns"
-                            "mjru-docker"
-                            "mjru-fetch-history"
-                            "mjru-flake"
-                            "mjru-git-clone.sh"
-                            "mjru-github-projects.scm"
-                            "mjru-grafana"
-                            "mjru-infa"
-                            "mjru-office"
-                            "mjru-vpn.sh"
-                            "monitor"
-                            "monitoror"
-                            "mpvctl"
-                            "mpv-wrapper"
-                            "my-docker"
-                            "my-swank"
-                            "my-xorg"
-                            "nginx-server-name"
-                            "nixos.sh"
-                            "nix-repl"
-                            "oracle"
-                            "pers"
-                            "peertube"
-                            "prometheus-billing2"
-                            "pulseaudio-switch-sink.sh"
-                            "qemu-cdrom.sh"
-                            "qemu-cdrom-vnc.sh"
-                            "qemu-cdrom-win.sh"
-                            "qemu-freebsd.sh"
-                            "qemu-vpn.sh"
-                            "record-video.sh"
-                            "record-window"
-                            "record-window-gif.sh"
-                            "reevefresh"
-                            "rofi-mycli"
-                            "rofi-stumpwm"
-                            "rofi-xterm"
-                            "rss"
-                            "run-docker"
-                            "run-emacs"
-                            "run-in-xterm"
-                            "run-jenkins"
-                            "run-jenkins-agent"
-                            "run-kresd"
-                            "run-nix-daemon"
-                            "run-openvpn"
-                            "run-place-existing-windows"
-                            "run-stumpwm"
-                            "sbcl"
-                            "scan"
-                            "shop"
-                            "shutdown"
-                            "src-clean"
-                            "src-import.scm"
-                            "ssh-aliases"
-                            "ssh-sudo"
-                            "ssh-vm"
-                            "ssl"
-                            "toggle-input-method.sh"
-                            "tome4-docker"
-                            "tranfser-curl"
-                            "twitch.scm"
-                            "ubuntu"
-                            "vault"
-                            "vfio.sh"
-                            "video"
-                            "vnc"
-                            "vncview-5901.sh"
-                            "volume-switch.sh"
-                            "wallhaven"
-                            "wallpaper"
-                            "web-docker-pull"
-                            "wi-emacs-shell.sh"
-                            "wi-emacs-wget"
-                            "wi-image-rotate.sh"
-                            "wi-qemu-epson.sh"
-                            "wi-show-colors"
-                            "xclip-mpv.sh"
-                            "xdg-open"
-                            "xterm-dark"
-                            "yeastizzy"
-                            "youtube-build"
-                            "youtube-dl-json"
-                            "youtube-dl-music-play-url"
-                            "youtube-scm"
-                            "yt"))
-                     (let ((configurations (list `(".local/bin/juniper-configuration-vc-sr1-mr13-14.intr"
-                                                   ,juniper-configuration->vc-sr1-mr13-14.intr)
-                                                 `(".local/bin/juniper-configuration-vc-sr1-dh507-508.intr"
-                                                   ,juniper-configuration->vc-sr1-dh507-508.intr)
-                                                 `(".local/bin/cisco-configuration-vc-sw1-dh507.intr"
-                                                   ,cisco-configuration->vc-sw1-dh507.intr)
-                                                 `(".local/bin/cisco-configuration-vc-sw2-dh507.intr"
-                                                   ,cisco-configuration->vc-sw2-dh507.intr)
-                                                 `(".local/bin/cisco-configuration-vc-sw1-dh508.intr"
-                                                   ,cisco-configuration->vc-sw1-dh508.intr)
-                                                 `(".local/bin/cisco-configuration-vc-sw2-dh508.intr"
-                                                   ,cisco-configuration->vc-sw2-dh508.intr)
-                                                 `(".local/bin/cisco-configuration-vc-sw1-mr11.intr"
-                                                   ,cisco-configuration->vc-sw1-mr11.intr)
-                                                 `(".local/bin/cisco-configuration-vc-sw1-mr12.intr"
-                                                   ,cisco-configuration->vc-sw1-mr12.intr)
-                                                 `(".local/bin/cisco-configuration-vc-sw2-mr12.intr"
-                                                   ,cisco-configuration->vc-sw2-mr12.intr)
-                                                 `(".local/bin/cisco-configuration-vc-sw3-mr13.intr"
-                                                   ,cisco-configuration->vc-sw3-mr13.intr)
-                                                 `(".local/bin/cisco-configuration-vc-sw1-mr14.intr"
-                                                   ,cisco-configuration->vc-sw1-mr14.intr)
-                                                 `(".local/bin/cisco-configuration-vc-sw2-mr14.intr"
-                                                   ,cisco-configuration->vc-sw2-mr14.intr)
-                                                 `(".local/bin/h3c-configuration-vc-sw4-mr14.intr"
-                                                   ,h3c-configuration->vc-sw4-mr14.intr)
-                                                 `(".local/bin/h3c-configuration-vc-sw4-mr13.intr"
-                                                   ,h3c-configuration->vc-sw4-mr13.intr)
-                                                 `(".local/bin/h3c-configuration-vc-sw4-mr12.intr"
-                                                   ,h3c-configuration->vc-sw4-mr12.intr)
-                                                 `(".local/bin/h3c-configuration-vc-sw4-mr11.intr"
-                                                   ,h3c-configuration->vc-sw4-mr11.intr))))
-                       (append
-                        (list `(".local/bin/mjru-networking-configuration-vc"
-                                ,((@ (ice-9 match) match)
-                                  configurations
-                                  (((name programs) ...)
-                                   (program-file
-                                    "mjru-networking-configuration-vc"
-                                    #~(begin
-                                        (use-modules (ice-9 format))
-                                        (for-each (lambda (program)
-                                                    (format #t "Running `~a'...~%" program)
-                                                    (system* program))
-                                                  '#$programs)))))))
-                        configurations))))
+    home-bin-service
+    home-networking-service
 
     (simple-service 'looking-glass-wrapper
                     home-files-service-type
                     (list `(".local/bin/looking-glass-client-wrapper"
-                            ,(local-file "../../dot_local/bin/executable_looking-glass-client-wrapper"
+                            ,(local-file (string-append %project-directory "/dot_local/bin/executable_looking-glass-client-wrapper")
                                          #:recursive? #t))))
 
     (simple-service 'idea-ultimate-wrapper
@@ -629,24 +407,12 @@ PYTHONPATH='' exec -a \"$0\" ~a/bin/idea-ultimate \"$@\"\n"
                                               #$(string-append %home "/.nix-profile"))))
                                   (chmod #$output #o555))))))
 
-    (simple-service 'shellcheck-wrapper
-                    home-files-service-type
-                    (list `(".local/bin/shellcheck"
-                            ,(computed-file
-                              "shellcheck-wrapper"
-                              #~(begin
-                                  (with-output-to-file #$output
-                                    (lambda ()
-                                      (format #t "\
-#!/bin/sh
-exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
-                                              #$shellcheck)))
-                                  (chmod #$output #o555))))))
+    home-shellcheck-service
 
     (simple-service 'stumpwm-config
                     home-files-service-type
                     (map (lambda (file-name)
-                           `(,(string-append ".stumpwm.d/" file-name) ,(local-file (string-append "dot_stumpwm.d/" file-name))))
+                           `(,(string-append ".stumpwm.d/" file-name) ,(local-file (string-append %project-directory "/dot_stumpwm.d/" file-name))))
                          '("admin.lisp"
                            "android.lisp"
                            "audio.lisp"
@@ -699,447 +465,122 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                            "xorg.lisp"
                            "youtube-dl.lisp")))
 
-    (simple-service 'bash-config
-                    home-files-service-type
-                    (append (list `(".bash_completion" ,(local-file "../../dot_bash_completion"))
-                                  `(".bash_guix" ,(local-file "../../dot_bash_guix"))
-                                  `(".bash_vterm" ,(local-file "../../dot_bash_vterm"))
-                                  `(".local/share/bash-completion/completions/lexicon" ,(local-file "../../dot_local/share/bash-completion/completions/lexicon"))
-                                  `(".local/share/bash-completion/completions/herd" ,(local-file "../../dot_local/share/bash-completion/completions/herd"))
-                                  `(".local/share/bash-completion/completions/mail" ,(local-file "../../dot_local/share/bash-completion/completions/mail"))
-                                  `(".local/share/bash-completion/completions/connect" ,(local-file "../../dot_local/share/bash-completion/completions/connect")))
-                            (map (lambda (file-name)
-                                   `(,(string-append ".bash.d/" file-name) ,(local-file (string-append "dot_bash.d/" file-name))))
-                                 '("bash.scm"
-                                   "mjru.bash"))))
+    home-bash-service
 
-    (simple-service 'applications
-                    home-files-service-type
-                    (list `(".local/share/applications/mupdf.desktop" ,(local-file "../../dot_local/share/applications/mupdf.desktop"))
-                          `(".local/share/applications/gnus.desktop" ,(local-file "../../dot_local/share/applications/gnus.desktop"))
-                          `(".local/share/applications/org-protocol.desktop" ,(local-file "../../dot_local/share/applications/org-protocol.desktop"))
-                          `(".local/share/applications/mimeapps.list" ,(local-file "../../dot_local/share/applications/mimeapps.list"))
-                          `(".local/share/applications/guix-log.desktop" ,(local-file "../../dot_local/share/applications/guix-log.desktop"))
-                          `(".local/share/applications/feh.desktop" ,(local-file "../../dot_local/share/applications/feh.desktop"))))
+    home-mime-service
 
-    (simple-service 'dig-config
-                    home-files-service-type
-                    (list `(".digrc" ,(local-file "../../dot_digrc"))))
+    home-bind-utils-service
 
-    (simple-service 'direnv-config
-                    home-files-service-type
-                    (list `(".direnvrc" ,(local-file "../../dot_direnvrc"))))
+    home-direnv-service
 
-    (simple-service 'gdb-config
-                    home-files-service-type
-                    (list `(".gdbinit" ,(local-file "../../dot_gdbinit"))))
+    home-gdb-service
 
-    (simple-service 'ghci-config
-                    home-files-service-type
-                    (list `(".ghci" ,(local-file "../../dot_ghci"))))
+    home-ghci-service
 
-    (simple-service 'gitconfig-config
-                    home-files-service-type
-                    (list `(".gitconfig" ,(local-file "../../dot_gitconfig"))))
+    home-git-service
+    home-gita-service
 
-    (simple-service 'emacs-state
-                    home-activation-service-type
-                    #~(invoke
-                       #$(program-file
-                          "emacs-state"
-                          (with-imported-modules '((ice-9 match))
-                            #~(begin
-                                (use-modules (ice-9 match))
-                                (for-each
-                                 (match-lambda
-                                   ((destination source)
-                                    (let ((destination-full-path
-                                           (string-append
-                                            #$%home "/." destination)))
-                                      (copy-file source destination-full-path)
-                                      (chmod destination-full-path #o644))))
-                                 `(("emacs"
-                                    ,#$(local-file "../../dot_emacs"))
-                                   ("emacs.d/.mc-lists.el"
-                                    ,#$(local-file "../../private_dot_emacs.d/dot_mc-lists.el")))))))))
+    home-emacs-state-service
+    home-emacs-service
 
-    (simple-service 'emacs-config
-                    home-files-service-type
-                    (append (list `(".gnus.el" ,(local-file "../../dot_gnus.el")))
-                            (map (lambda (file-name)
-                                   `(,(string-append ".emacs.d/" file-name) ,(local-file (string-append "private_dot_emacs.d/" file-name))))
-                                 '("abbrev_defs"
-                                   "org-generate.org"
-                                   "modules/audio.el"
-                                   "modules/blog.el"
-                                   "modules/c.el"
-                                   "modules/ci.el"
-                                   "modules/compile.el"
-                                   "modules/completion.el"
-                                   "modules/copyright.el"
-                                   "modules/debbugs.el"
-                                   "modules/debug.el"
-                                   "modules/dired.el"
-                                   "modules/elfeed.el"
-                                   "modules/erc.el"
-                                   "modules/ffap.el"
-                                   "modules/files.el"
-                                   "modules/ftp.el"
-                                   "modules/groovy.el"
-                                   "modules/guix.el"
-                                   "modules/haskell.el"
-                                   "modules/hooks.el"
-                                   "modules/info.el"
-                                   "modules/java.el"
-                                   "modules/keys.el"
-                                   "modules/lisp.el"
-                                   "modules/lsp.el"
-                                   "modules/mail.el"
-                                   "modules/majordomo.el"
-                                   "modules/ml.el"
-                                   "modules/nav.el"
-                                   "modules/nix.el"
-                                   "modules/org.el"
-                                   "modules/outline.el"
-                                   "modules/perl.el"
-                                   "modules/po.el"
-                                   "modules/python.el"
-                                   "modules/rfc.el"
-                                   "modules/rust.el"
-                                   "modules/scheme.el"
-                                   "modules/slack.el"
-                                   "modules/snippets.el"
-                                   "modules/term.el"
-                                   "modules/text.el"
-                                   "modules/theme.el"
-                                   "modules/time.el"
-                                   "modules/tramp.el"
-                                   "modules/twitch.el"
-                                   "modules/utils.el"
-                                   "modules/version-control.el"
-                                   "modules/version-control-lexical.el"
-                                   "modules/web.el"
-                                   "modules/youtube.el"
+    home-groovy-service
 
-                                   "snippets/erc-mode/problem"
-                                   "snippets/markdown-mode/ssl-connect"
-                                   "snippets/markdown-mode/not-available-from-network"
-                                   "snippets/markdown-mode/law-vps-without-admin"
-                                   ;; TODO: "snippets/markdown-mode/support-timeout.tmpl"
-                                   "snippets/markdown-mode/wrong-control-panel"
-                                   "snippets/markdown-mode/additional-request"
-                                   "snippets/markdown-mode/dns-more-time"
-                                   "snippets/markdown-mode/upload"
-                                   "snippets/markdown-mode/archive-extract"
-                                   "snippets/markdown-mode/mail-mail-ru"
-                                   "snippets/geiser-repl-mode/module-set"
-                                   "snippets/apache-mode/vhost"
-                                   "snippets/apache-mode/vhost-bitrix"
-                                   "snippets/shell-mode/guix-search"
-                                   "snippets/shell-mode/guix-system-reconfigure"
-                                   "snippets/shell-mode/guix-environment-guix"
-                                   "snippets/shell-mode/guix-configure"
-                                   "snippets/shell-mode/guix-weather-manifest"
-                                   "snippets/shell-mode/guix-package-manifest"
-                                   "snippets/shell-mode/guix-wigust"
-                                   "snippets/shell-mode/guix-graph"
-                                   "snippets/shell-mode/guix-system-link"
-                                   "snippets/scheme-mode/package-emacs-git"
-                                   "snippets/scheme-mode/service-config-entry"
-                                   "snippets/scheme-mode/pretty-print"
-                                   "snippets/scheme-mode/system-stdout"
-                                   "snippets/scheme-mode/letvar"
-                                   "snippets/scheme-mode/list-comprehension"
-                                   "snippets/scheme-mode/package"
-                                   "snippets/scheme-mode/git-checkout"
-                                   "snippets/scheme-mode/let-pretty-print"
-                                   "snippets/scheme-mode/define-record-type"
-                                   "snippets/terraform-mode/ssh-sup-service"
-                                   "snippets/terraform-mode/ssh-sup-room"
-                                   "snippets/terraform-mode/majordomo-gitlab-user"
-                                   "snippets/nginx-mode/nginx-redirect"
-                                   "snippets/python-mode/ansible-module"
-                                   "snippets/python-mode/click"
-                                   "snippets/lisp-mode/map-top"
-                                   "snippets/lisp-mode/thread"
-                                   "snippets/lisp-mode/command"
-                                   "snippets/nix-mode/mj-overlay"
-                                   "snippets/nix-mode/test"
-                                   "snippets/nix-mode/optional"
-                                   "snippets/nix-mode/vm-xfce"
-                                   "snippets/nix-mode/pp"
-                                   "snippets/snippets/erc-mode/problem"
-                                   "snippets/snippets/groovy-mode/parallel"
-                                   "snippets/snippets/groovy-mode/shared"
-                                   "snippets/snippets/markdown-mode/ssl-connect"
-                                   "snippets/snippets/markdown-mode/not-available-from-network"
-                                   "snippets/snippets/markdown-mode/law-vps-without-admin"
-                                   "snippets/snippets/markdown-mode/wrong-control-panel"
-                                   "snippets/snippets/markdown-mode/additional-request"
-                                   "snippets/snippets/markdown-mode/dns-more-time"
-                                   "snippets/snippets/markdown-mode/upload"
-                                   "snippets/snippets/markdown-mode/archive-extract"
-                                   "snippets/snippets/markdown-mode/mail-mail-ru"
-                                   "snippets/snippets/geiser-repl-mode/module-set"
-                                   "snippets/snippets/apache-mode/vhost"
-                                   "snippets/snippets/apache-mode/vhost-bitrix"
-                                   "snippets/snippets/shell-mode/guix-search"
-                                   "snippets/snippets/shell-mode/guix-system-reconfigure"
-                                   "snippets/snippets/shell-mode/guix-environment-guix"
-                                   "snippets/snippets/shell-mode/guix-configure"
-                                   "snippets/snippets/shell-mode/guix-weather-manifest"
-                                   "snippets/snippets/shell-mode/guix-package-manifest"
-                                   "snippets/snippets/shell-mode/guix-wigust"
-                                   "snippets/snippets/shell-mode/guix-graph"
-                                   "snippets/snippets/shell-mode/guix-system-link"
-                                   "snippets/snippets/scheme-mode/package-emacs-git"
-                                   "snippets/snippets/scheme-mode/service-config-entry"
-                                   "snippets/snippets/scheme-mode/pretty-print"
-                                   "snippets/snippets/scheme-mode/system-stdout"
-                                   "snippets/snippets/scheme-mode/letvar"
-                                   "snippets/snippets/scheme-mode/list-comprehension"
-                                   "snippets/snippets/scheme-mode/package"
-                                   "snippets/snippets/scheme-mode/git-checkout"
-                                   "snippets/snippets/scheme-mode/let-pretty-print"
-                                   "snippets/snippets/scheme-mode/define-record-type"
-                                   "snippets/snippets/terraform-mode/ssh-sup-service"
-                                   "snippets/snippets/terraform-mode/ssh-sup-room"
-                                   "snippets/snippets/terraform-mode/majordomo-gitlab-user"
-                                   "snippets/snippets/nginx-mode/nginx-redirect"
-                                   "snippets/snippets/python-mode/click"
-                                   "snippets/snippets/php-mode/mail"
-                                   "snippets/snippets/lisp-mode/map-top"
-                                   "snippets/snippets/lisp-mode/command"
-                                   "snippets/snippets/nix-mode/mj-overlay"
-                                   "snippets/snippets/nix-mode/test"
-                                   "snippets/snippets/nix-mode/optional"
-                                   "snippets/snippets/nix-mode/vm-xfce"
-                                   "snippets/snippets/nix-mode/pp"
-                                   "snippets/snippets/text-mode/web-control-auth"
-                                   "snippets/snippets/text-mode/init"
-                                   "snippets/snippets/text-mode/dot"
-                                   "snippets/snippets/text-mode/web-is-not-available"
-                                   "snippets/snippets/text-mode/web-ftp-passwd"
-                                   "snippets/snippets/text-mode/subject-account"
-                                   "snippets/snippets/text-mode/ftp-passwd"
-                                   "snippets/snippets/text-mode/start"
-                                   "snippets/snippets/conf-space-mode/mj"
-                                   "snippets/snippets/message-mode/pushed-with-minor-changes"
-                                   "snippets/snippets/message-mode/melpa"
-                                   "snippets/snippets/message-mode/cgit-guix"
-                                   "snippets/snippets/message-mode/push"
-                                   "snippets/text-mode/web-control-auth"
-                                   "snippets/text-mode/init"
-                                   "snippets/text-mode/dot"
-                                   "snippets/text-mode/web-is-not-available"
-                                   "snippets/text-mode/web-ftp-passwd"
-                                   "snippets/text-mode/subject-account"
-                                   "snippets/text-mode/ftp-passwd"
-                                   "snippets/text-mode/start"
-                                   ;; TODO: "snippets/text-mode/hdd.tmpl"
-                                   "snippets/conf-space-mode/mj"
-                                   "snippets/message-mode/pushed-with-minor-changes"
-                                   "snippets/message-mode/melpa"
-                                   "snippets/message-mode/cgit-guix"
-                                   "snippets/message-mode/push"
-                                   "snippets/message-mode/proprietary"))
-                            (map (lambda (file-name)
-                                   `(,(string-append ".emacs.d/" file-name) ,(local-file (string-append "private_dot_emacs.d/" file-name))))
-                                 '("insert/guix/gnu/services/service"
-                                   "insert/guix/gnu/packages/package"
-                                   "insert/guix/gnu/tests/test"
-                                   "insert/guix/gnu/system/examples/vm-inherit-image"
-                                   "insert/groovy/Jenkinsfile"
-                                   "insert/guile/script"
-                                   "insert/dotfiles/modules/services/service"
-                                   "insert/nix/shell.nix"
-                                   "insert/nix/flake.nix"))))
+    home-gnupg-service
 
-    (simple-service 'groovy-config
-                    home-files-service-type
-                    (list `(".groovy/groovysh.rc" ,(local-file "../../dot_groovy/groovysh.rc"))))
+    home-inputrc-service
 
-    (simple-service 'gnupg-config
-                    home-files-service-type
-                    (map (lambda (file-name)
-                           `(,(string-append ".gnupg/" file-name) ,(local-file (string-append "private_dot_gnupg/" file-name))))
-                         '("gpg-agent.conf"
-                           "gpg.conf")))
-
-    (simple-service 'bash-config
-                    home-files-service-type
-                    (list `(".bashrc" ,(local-file "../../dot_bashrc"))
-                          `(".bash_profile" ,(local-file "../../dot_bash_profile"))))
-
-    (simple-service 'inputrc-config
-                    home-files-service-type
-                    (list `(".inputrc" ,(local-file "../../dot_inputrc"))))
-
-    (simple-service 'guile-config
-                    home-files-service-type
-                    (list `(".guile" ,(local-file "../../dot_guile"))))
+    home-guile-service
 
     (simple-service 'keynav-config
                     home-files-service-type
-                    (list `(".keynavrc" ,(local-file "../../dot_keynavrc"))))
+                    (list `(".keynavrc" ,(local-file (string-append %project-directory "/dot_keynavrc")))))
 
-    (simple-service 'kodi-config
-                    home-files-service-type
-                    (list `(".kodirc" ,(local-file "../../dot_kodirc"))))
+    home-kodi-service
 
-    (simple-service 'mailcap-config
-                    home-files-service-type
-                    (list `(".mailcap" ,(local-file "../../dot_mailcap"))))
+    home-mailcap-service
 
-    (simple-service 'mongo-config
-                    home-files-service-type
-                    (list `(".mongorc.js" ,(local-file "../../dot_mongorc.js"))))
+    home-mongo-service
+    home-postgresql-service
 
-    (simple-service 'mycli-config
-                    home-files-service-type
-                    (list `(".myclirc" ,(local-file "../../dot_myclirc"))))
+    home-mycli-service
 
-    (simple-service 'nano-config
-                    home-files-service-type
-                    (list `(".nanorc" ,(local-file "../../dot_nanorc"))))
+    home-nano-service
 
-    (simple-service 'python-config
-                    home-files-service-type
-                    (list `(".pythonrc" ,(local-file "../../dot_pythonrc"))))
+    home-python-service
 
-    (simple-service 'sbcl-config
-                    home-files-service-type
-                    (list `(".sbcl_completions" ,(local-file "../../dot_sbcl_completions"))))
+    home-sbcl-service
 
-    (simple-service 'screen-config
-                    home-files-service-type
-                    (list `(".screenrc" ,(local-file "../../dot_screenrc"))))
+    home-screen-service
 
-    (simple-service 'tmux-config
-                    home-files-service-type
-                    (list `(".tmux.conf" ,(local-file "../../dot_tmux.conf"))))
+    home-tmux-service
 
-    (simple-service 'tmuxifier-config
-                    home-files-service-type
-                    (list `(".tmuxifier-layouts/backup.session.sh" ,(local-file "../../dot_tmuxifier-layouts/backup.session.sh"))
-                          `(".tmuxifier-layouts/backup.window.sh" ,(local-file "../../dot_tmuxifier-layouts/backup.window.sh"))
-                          `(".tmuxifier-layouts/blog.session.sh" ,(local-file "../../dot_tmuxifier-layouts/blog.session.sh"))
-                          `(".tmuxifier-layouts/blog.window.sh" ,(local-file "../../dot_tmuxifier-layouts/blog.window.sh"))
-                          `(".tmuxifier-layouts/guix-machines.window.sh" ,(local-file "../../dot_tmuxifier-layouts/guix-machines.window.sh"))
-                          `(".tmuxifier-layouts/guix.session.sh" ,(local-file "../../dot_tmuxifier-layouts/guix.session.sh"))
-                          `(".tmuxifier-layouts/guix.window.sh" ,(local-file "../../dot_tmuxifier-layouts/guix.window.sh"))
-                          `(".tmuxifier-layouts/elk.session.sh" ,(local-file "../../dot_tmuxifier-layouts/elk.session.sh"))
-                          `(".tmuxifier-layouts/elk.window.sh" ,(local-file "../../dot_tmuxifier-layouts/elk.window.sh"))
-                          ;; TODO: `("web.session.sh.tmpl" ,(local-file "../../dot_tmuxifier-layouts/web.session.sh.tmpl"))
-                          ))
+    tmuxifier-service
 
-    (simple-service 'top-config
-                    home-files-service-type
-                    (list `(".toprc" ,(local-file "../../dot_toprc"))))
+    home-top-service
 
     (simple-service 'xmodmap-config
                     home-files-service-type
-                    (list `(".Xmodmap" ,(local-file "../../dot_Xmodmap"))))
+                    (list `(".Xmodmap" ,(local-file (string-append %project-directory "/dot_Xmodmap")))))
 
     (simple-service 'xresources-config
                     home-files-service-type
-                    (list `(".Xresources" ,(local-file "../../dot_Xresources"))))
+                    (list `(".Xresources" ,(local-file (string-append %project-directory "/dot_Xresources")))))
 
-    (simple-service 'git-config
-                    home-files-service-type
-                    (list `(".config/git/gitk" ,(local-file "../../dot_config/git/gitk"))
-                          `(".config/git/ignore" ,(local-file "../../dot_config/git/ignore"))))
-
-    (simple-service 'qterminal-config
-                    home-files-service-type
-                    (list `(".config/qterminal.org/qterminal.ini" ,(local-file "../../dot_config/qterminal.org/qterminal.ini"))
-                          `(".config/qterminal.org/qterminal_bookmarks.xml" ,(local-file "../../dot_config/qterminal.org/qterminal_bookmarks.xml"))))
+    home-qterminal-service
 
     (simple-service 'zathura-config
                     home-files-service-type
-                    (list `(".config/zathura/zathurarc" ,(local-file "../../dot_config/zathura/zathurarc"))))
+                    (list `(".config/zathura/zathurarc" ,(local-file (string-append %project-directory "/dot_config/zathura/zathurarc")))))
 
-    (simple-service 'ripgrep-config
-                    home-files-service-type
-                    (list `(".config/ripgrep/ripgreprc" ,(local-file "../../dot_config/ripgrep/ripgreprc"))))
+    home-ripgrep-service
 
-    (simple-service 'gtk-config
-                    home-files-service-type
-                    (list `(".config/gtk-3.0/gtk.css" ,(local-file "../../dot_config/gtk-3.0/gtk.css"))
-                          `(".config/gtk-3.0/settings.ini" ,(local-file "../../dot_config/gtk-3.0/settings.ini"))))
+    home-gtk-service
+    home-gtkrc-service
 
-    (simple-service 'greenclip-config
-                    home-files-service-type
-                    (list `(".config/greenclip.cfg" ,(local-file "../../dot_config/greenclip.cfg"))))
+    home-greenclip-service
 
-    (simple-service 'alacritty-config
-                    home-files-service-type
-                    (list `(".config/alacritty/themes/xterm.yml" ,(local-file "../../dot_config/alacritty/themes/xterm.yml"))
-                          `(".config/alacritty/alacritty.yml" ,(local-file "../../dot_config/alacritty/alacritty.yml"))))
+    home-alacritty-service
+    home-kitty-service
 
     (simple-service 'feh-config
                     home-files-service-type
-                    (list `(".config/feh/buttons" ,(local-file "../../dot_config/feh/buttons"))))
+                    (list `(".config/feh/buttons" ,(local-file (string-append %project-directory "/dot_config/feh/buttons")))))
 
     (simple-service 'sway-config
                     home-files-service-type
-                    (list `(".config/sway/config" ,(local-file "../../dot_config/sway/config"))))
+                    (list `(".config/sway/config" ,(local-file (string-append %project-directory "/dot_config/sway/config")))))
 
     (simple-service 'polybar-config
                     home-files-service-type
-                    (list `(".config/polybar/config" ,(local-file "../../dot_config/polybar/config"))))
+                    (list `(".config/polybar/config" ,(local-file (string-append %project-directory "/dot_config/polybar/config")))))
 
-    (simple-service 'htop-config
-                    home-files-service-type
-                    (list `(".config/htop/htoprc" ,(local-file "../../dot_config/htop/htoprc"))))
+    home-htop-service
 
-    (simple-service 'kitty-config
-                    home-files-service-type
-                    (list `(".config/kitty/kitty.conf" ,(local-file "../../dot_config/kitty/kitty.conf"))))
-
-    (simple-service 'gita-config
-                    home-files-service-type
-                    (list `(".config/gita/cmds.yml" ,(local-file "../../dot_config/gita/cmds.yml"))))
-
-    (simple-service 'youtube-dl-config
-                    home-files-service-type
-                    (list `(".config/youtube-dl/config" ,(local-file "../../dot_config/youtube-dl/config"))))
-
-    (simple-service 'postgresql-config
-                    home-files-service-type
-                    (list `(".config/autopostgresqlbackup.conf" ,(local-file "../../dot_config/autopostgresqlbackup.conf"))))
+    home-youtube-dl-service
 
     (simple-service 'cava-config
                     home-files-service-type
-                    (list `(".config/cava/config" ,(local-file "../../dot_config/cava/config"))))
+                    (list `(".config/cava/config" ,(local-file (string-append %project-directory "/dot_config/cava/config")))))
 
     (simple-service 'termonad-config
                     home-files-service-type
-                    (list `(".config/termonad/termonad.hs" ,(local-file "../../dot_config/termonad/termonad.hs"))))
+                    (list `(".config/termonad/termonad.hs" ,(local-file (string-append %project-directory "/dot_config/termonad/termonad.hs")))))
 
-    (simple-service 'nix-config
-                    home-files-service-type
-                    (list `(".config/nix/repl.nix" ,(local-file "../../dot_config/nix/repl.nix"))
-                          `(".config/nix/nix.conf" ,(local-file "../../dot_config/nix/nix.conf"))
-                          `(".config/nix/registry.json" ,(local-file "../../dot_config/nix/registry.json"))
-                          `(".config/nixpkgs/config.nix" ,(local-file "../../dot_config/nixpkgs/config.nix"))))
+    home-nix-service
 
-    (simple-service 'mpv-config
-                    home-files-service-type
-                    (list `(".config/mpv/input.conf" ,(local-file "../../dot_config/mpv/input.conf"))
-                          `(".config/mpv/mpv.conf" ,(local-file "../../dot_config/mpv/mpv.conf"))))
+    home-mpv-service
 
     (simple-service 'cagebreak-config
                     home-files-service-type
-                    (list `(".config/cagebreak/config" ,(local-file "../../dot_config/cagebreak/config"))))
+                    (list `(".config/cagebreak/config" ,(local-file (string-append %project-directory "/dot_config/cagebreak/config")))))
 
     (simple-service 'vis-config
                     home-files-service-type
-                    (list `(".config/vis/config" ,(local-file "../../dot_config/vis/config"))))
+                    (list `(".config/vis/config" ,(local-file (string-append %project-directory "/dot_config/vis/config")))))
 
     (simple-service 'dunst-config
                     home-files-service-type
-                    (list `(".config/dunst/dunstrc" ,(local-file "../../dot_config/dunst/dunstrc"))))
+                    (list `(".config/dunst/dunstrc" ,(local-file (string-append %project-directory "/dot_config/dunst/dunstrc")))))
 
 
     ;; TODO: Add those
@@ -1161,30 +602,29 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                                                            (when (file-exists? destination-full-path)
                                                              (chmod destination-full-path #o644))
                                                            (copy-file source destination-full-path))))
-                                          (list `("config/espanso/default.yml" ,#$(local-file "../../dot_config/espanso/default.yml"))
-                                                ;; TODO: Add `("config/espanso/user/home.yml.tmpl" ,(local-file "../../dot_config/espanso/user/home.yml.tmpl"))
-                                                `("config/espanso/user/systemd.yml" ,#$(local-file "../../dot_config/espanso/user/systemd.yml"))
-                                                `("config/espanso/user/juniper.yml" ,#$(local-file "../../dot_config/espanso/user/juniper.yml"))
-                                                `("config/espanso/user/mysql.yml" ,#$(local-file "../../dot_config/espanso/user/mysql.yml"))
-                                                `("config/espanso/user/nix.yml" ,#$(local-file "../../dot_config/espanso/user/nix.yml"))
-                                                `("config/espanso/user/mjru.yml" ,#$(local-file "../../dot_config/espanso/user/mjru.yml"))
-                                                )))))))
+                                          (list `("config/espanso/default.yml" ,#$(local-file (string-append %project-directory "/dot_config/espanso/default.yml")))
+                                                ;; TODO: Add `("config/espanso/user/home.yml.tmpl" ,(local-file (string-append %project-directory "/dot_config/espanso/user/home.yml.tmpl")))
+                                                `("config/espanso/user/systemd.yml" ,#$(local-file (string-append %project-directory "/dot_config/espanso/user/systemd.yml")))
+                                                `("config/espanso/user/juniper.yml" ,#$(local-file (string-append %project-directory "/dot_config/espanso/user/juniper.yml")))
+                                                `("config/espanso/user/mysql.yml" ,#$(local-file (string-append %project-directory "/dot_config/espanso/user/mysql.yml")))
+                                                `("config/espanso/user/nix.yml" ,#$(local-file (string-append %project-directory "/dot_config/espanso/user/nix.yml")))
+                                                `("config/espanso/user/mjru.yml" ,#$(local-file (string-append %project-directory "/dot_config/espanso/user/mjru.yml"))))))))))
 
     (simple-service 'sshrc-config
                     home-files-service-type
-                    (list `(".sshrc" ,(local-file "../../dot_sshrc"))
-                          `(".sshrc.d/.bashrc" ,(local-file "../../dot_sshrc.d/dot_bashrc"))
-                          `(".sshrc.d/.tmux.conf" ,(local-file "../../dot_sshrc.d/dot_tmux.conf"))))
+                    (list `(".sshrc" ,(local-file (string-append %project-directory "/dot_sshrc")))
+                          `(".sshrc.d/.bashrc" ,(local-file (string-append %project-directory "/dot_sshrc.d/dot_bashrc")))
+                          `(".sshrc.d/.tmux.conf" ,(local-file (string-append %project-directory "/dot_sshrc.d/dot_tmux.conf")))))
 
     (simple-service 'vnc-config
                     home-files-service-type
-                    (list `(".vnc/default.tigervnc" ,(local-file "../../private_dot_vnc/default.tigervnc"))
-                          `(".vnc/xstartup" ,(local-file "../../private_dot_vnc/executable_xstartup" #:recursive? #t))
-                          `(".vnc/xstartup-firefox" ,(local-file "../../private_dot_vnc/executable_xstartup-firefox" #:recursive? #t))
-                          `(".vnc/xstartup-quassel" ,(local-file "../../private_dot_vnc/executable_xstartup-quassel" #:recursive? #t))
-                          `(".vnc/xstartup-ratpoison" ,(local-file "../../private_dot_vnc/executable_xstartup-ratpoison" #:recursive? #t))
-                          `(".vnc/xstartup-stumpwm" ,(local-file "../../private_dot_vnc/executable_xstartup-stumpwm" #:recursive? #t))
-                          `(".vnc/xstartup-twm" ,(local-file "../../private_dot_vnc/executable_xstartup-twm" #:recursive? #t))))
+                    (list `(".vnc/default.tigervnc" ,(local-file (string-append %project-directory "/private_dot_vnc/default.tigervnc")))
+                          `(".vnc/xstartup" ,(local-file (string-append %project-directory "/private_dot_vnc/executable_xstartup") #:recursive? #t))
+                          `(".vnc/xstartup-firefox" ,(local-file (string-append %project-directory "/private_dot_vnc/executable_xstartup-firefox") #:recursive? #t))
+                          `(".vnc/xstartup-quassel" ,(local-file (string-append %project-directory "/private_dot_vnc/executable_xstartup-quassel") #:recursive? #t))
+                          `(".vnc/xstartup-ratpoison" ,(local-file (string-append %project-directory "/private_dot_vnc/executable_xstartup-ratpoison") #:recursive? #t))
+                          `(".vnc/xstartup-stumpwm" ,(local-file (string-append %project-directory "/private_dot_vnc/executable_xstartup-stumpwm") #:recursive? #t))
+                          `(".vnc/xstartup-twm" ,(local-file (string-append %project-directory "/private_dot_vnc/executable_xstartup-twm") #:recursive? #t))))
 
     (simple-service 'xsession-config
                     home-activation-service-type
@@ -1254,19 +694,7 @@ exec -a \"$0\" ~a/bin/shellcheck --shell=bash \"$@\"\n"
                             (copy-file #$xsession-file file)
                             (chmod file #o700)))))
 
-    (simple-service 'parallel-config
-                    home-activation-service-type
-                    #~(begin
-                        (let* ((%home
-                                (and=> (getenv "HOME")
-                                       (lambda (home)
-                                         home)))
-                               (parallel (string-append %home "/.parallel")))
-                          (unless (file-exists? parallel)
-                            (mkdir parallel))
-                          (call-with-output-file (string-append parallel "/runs-without-willing-to-cite")
-                            (lambda (port)
-                              (display "6\n" port))))))
+    home-parallel-service
 
     (simple-service 'msmtp-config
                     home-activation-service-type
@@ -1313,37 +741,6 @@ account default : gmail
                                     (pass "myaccount.google.com/apppasswords/go.wigust")
                                     (pass "majordomo/private/newmail.majordomo.ru/pyhalov@majordomo.ru"))))
                         (chmod msmtp-config #o600)))
-
-    (simple-service 'gtkrc-config
-                    home-activation-service-type
-                    #~(begin
-                        (let ((%home (and=> (getenv "HOME")
-                                            (lambda (home)
-                                              home))))
-                          (call-with-output-file (string-append %home "/.gtkrc-2.0")
-                            (lambda (port)
-                              (format port "\
-# DO NOT EDIT! This file will be overwritten by LXAppearance.
-# Any customization should be done in ~/.gtkrc-2.0.mine instead.
-
-include \"~a/.gtkrc-2.0.mine\"
-gtk-theme-name=\"Adwaita-dark\"
-gtk-icon-theme-name=\"Adwaita\"
-gtk-font-name=\"DejaVu Sans 11\"
-gtk-cursor-theme-name=\"Adwaita\"
-gtk-cursor-theme-size=0
-gtk-toolbar-style=GTK_TOOLBAR_BOTH
-gtk-toolbar-icon-size=GTK_ICON_SIZE_SMALL_TOOLBAR
-gtk-button-images=1
-gtk-menu-images=1
-gtk-enable-event-sounds=1
-gtk-enable-input-feedback-sounds=1
-gtk-xft-antialias=1
-gtk-xft-hinting=1
-gtk-xft-hintstyle=\"hintfull\"
-gtk-xft-rgba=\"rgb\"
-"
-                                      %home))))))
 
     (simple-service 'netrc-config
                     home-activation-service-type
@@ -1420,9 +817,10 @@ gtk-xft-rgba=\"rgb\"
     (service juniper-service-type)
     (service h3c-service-type)
     (service cisco-service-type)
+
     (simple-service 'ansible-config
                     home-files-service-type
-                    (append (list `(,".ansible.cfg" ,(local-file "../../dot_ansible.cfg")))
+                    (append (list `(,".ansible.cfg" ,(local-file (string-append %project-directory "/dot_ansible.cfg"))))
                             (map (lambda (file-name)
                                    `(,(string-append ".ansible/plugins/modules/" file-name) ,(local-file (string-append "dot_ansible/plugins/modules/" file-name))))
                                  '("guix_package.py"
@@ -1916,5 +1314,5 @@ gtk-xft-rgba=\"rgb\"
             "schedule-power"
             #~(begin
                 (system*
-                 #$(local-file "../../dot_local/bin/executable_schedule-power"
+                 #$(local-file (string-append %project-directory "/dot_local/bin/executable_schedule-power")
                                #:recursive? #t)))))))))))

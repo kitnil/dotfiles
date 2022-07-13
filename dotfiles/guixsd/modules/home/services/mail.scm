@@ -8,6 +8,8 @@
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-26)
+  #:use-module (home config)
+  #:use-module (gnu services)
   #:export (home-goimapnotify-service-type
             goimapnotify-configuration
 
@@ -17,7 +19,9 @@
             mbsync-channel-configuration
             mbsync-configuration
             mbsync-config-file
-            home-mbsync-service-type))
+            home-mbsync-service-type
+
+            home-mailcap-service))
 
 (define-record-type* <goimapnotify-configuration>
   goimapnotify-configuration make-goimapnotify-configuration
@@ -294,3 +298,13 @@ that match the patterns. An example value would be @samp{'(\"INBOX\")}.")
                 (extend home-mbsync-extensions)
                 (default-value '())
                 (description "Configure isync.")))
+
+
+;;;
+;;; mailcap
+;;;
+
+(define home-mailcap-service
+  (simple-service 'mailcap-config
+                  home-files-service-type
+                  (list `(".mailcap" ,(local-file (string-append %project-directory "/dot_mailcap"))))))

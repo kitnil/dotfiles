@@ -30,6 +30,7 @@ benchmark:
 	emacs --eval "(progn (with-current-buffer (get-buffer \"*Benchmark Init Results Tabulated*\") (princ (buffer-substring-no-properties (point-min) (point-max)) #'external-debugging-output)) (kill-emacs))"
 
 MODULES = dotfiles/guixsd/modules
+HOSTNAME = $(shell hostname)
 
 QEMU_FLAGS =					\
   -vnc :22					\
@@ -65,9 +66,9 @@ dotfiles/guile/ssh.txt: dotfiles/guile/ssh.scm
 install-ssh:
 	gpg --quiet --decrypt dotfiles/guixsd/modules/home/config/openssh.scm.gpg > dotfiles/guixsd/modules/home/config/openssh.scm
 
-.PHONY: dotfiles/guixsd/home.scm
-dotfiles/guixsd/home.scm:
-	guix home -L dotfiles/guixsd/modules build dotfiles/guixsd/home.scm
+.PHONY: dotfiles/guixsd/home/guixsd.scm
+dotfiles/guixsd/home/guixsd.scm:
+	guix home -L dotfiles/guixsd/modules build dotfiles/guixsd/home/guixsd.scm
 
 .PHONY: dotfiles/nix/flake.nix
 dotfiles/nix/flake.nix:
@@ -109,7 +110,7 @@ install: install-ssh dotfiles/guixsd/machines.scm dotfiles/nix/nix.conf
 	ln -sf $(HOME)/.Xresources $(HOME)/.Xdefaults
 	install --mode=644 dotfiles/guile/pass.scm $(HOME)/.config/guile/pass.scm
 	install --mode=644 dotfiles/guile/config.scm $(HOME)/.config/guile/config.scm
-	guix home -L dotfiles/guixsd/modules reconfigure dotfiles/guixsd/home.scm
+	guix home -L dotfiles/guixsd/modules reconfigure dotfiles/guixsd/home/$(HOSTNAME).scm
 
 .PHONY: guile-ihs
 guile-ihs:

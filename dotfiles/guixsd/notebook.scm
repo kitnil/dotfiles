@@ -160,8 +160,7 @@ route 141.80.181.40 255.255.255.255 192.168.25.2
                                                                    %default-authorized-guix-keys))
                                           (substitute-urls '("https://ci.guix.gnu.org"
                                                              "https://guix.wugi.info"
-                                                             "https://substitutes.nonguix.org"
-                                                             "https://mirror.brielmaier.net"))))
+                                                             "https://substitutes.nonguix.org"))))
                       ;; (sysctl-service-type _ =>
                       ;;                      (sysctl-configuration
                       ;;                       (settings (append '(("net.ipv4.ip_forward" . "1")

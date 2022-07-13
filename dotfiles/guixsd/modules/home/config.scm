@@ -1,7 +1,8 @@
 (define-module (home config)
   #:export (%home
             %ansible-state-directory
-            %connect-program))
+            %connect-program
+            %project-directory))
 
 (define %home
   (and=> (getenv "HOME")
@@ -13,3 +14,6 @@
 
 (define %connect-program
   (string-append %home "/.local/bin/connect"))
+
+(define %project-directory
+  (string-append %home "/.local/share/chezmoi"))
