@@ -108,6 +108,8 @@
         (nginx-server-configuration
          (server-name '("iso.wugi.info"))
          (listen '("192.168.0.144:80" "192.168.0.144:443 ssl"))
+         (ssl-certificate (letsencrypt-certificate "iso.wugi.info"))
+         (ssl-certificate-key (letsencrypt-key "iso.wugi.info"))
          (root "/srv/iso")
          (locations
           (list
