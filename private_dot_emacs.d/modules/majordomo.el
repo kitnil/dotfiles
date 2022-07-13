@@ -112,7 +112,8 @@
 
 
 
-(load (expand-file-name "~/.emacs.d/modules/mjru-network.el"))
+(when (file-exists-p "~/.emacs.d/modules/mjru-network.el")
+  (load (expand-file-name "~/.emacs.d/modules/mjru-network.el")))
 
 (defun mjru-connect-br1-mr14.intr ()
   (interactive)

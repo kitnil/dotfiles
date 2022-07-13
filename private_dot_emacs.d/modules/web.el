@@ -1,5 +1,5 @@
-(require 'request)
-(require 's)
+;; (require 'request)
+;; (require 's)
 
 (setq w3m-fill-column 80)
 
@@ -27,227 +27,228 @@
   (engine/set-keymap-prefix (kbd engine/keybinding-prefix))
   (engine-mode))
 
-(defengine arch-packages
-  "https://www.archlinux.org/packages/?sort=&q=%s")
+(when (macrop #'defengine)
+  (defengine arch-packages
+	     "https://www.archlinux.org/packages/?sort=&q=%s")
 
-(defengine cpan
-  "http://search.cpan.org/search?query=%s&mode=all")
+  (defengine cpan
+	     "http://search.cpan.org/search?query=%s&mode=all")
 
-(defengine cve
-  "https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=%s")
+  (defengine cve
+	     "https://cve.mitre.org/cgi-bin/cvekey.cgi?keyword=%s")
 
-(defengine debfiles
-  "https://packages.debian.org/search?searchon=contents&keywords=%s")
+  (defengine debfiles
+	     "https://packages.debian.org/search?searchon=contents&keywords=%s")
 
-(defengine debcodesearch
-  "https://codesearch.debian.net/search?q=%s")
+  (defengine debcodesearch
+	     "https://codesearch.debian.net/search?q=%s")
 
-(defengine duckduckgo
-  "https://duckduckgo.com/?q=%s"
-  :keybinding "d")
+  (defengine duckduckgo
+	     "https://duckduckgo.com/?q=%s"
+	     :keybinding "d")
 
-(defengine explainshell
-  "https://www.explainshell.com/explain?cmd=%s")
+  (defengine explainshell
+	     "https://www.explainshell.com/explain?cmd=%s")
 
-(defengine debfiles
-  "https://packages.debian.org/search?searchon=contents&keywords=%s")
+  (defengine debfiles
+	     "https://packages.debian.org/search?searchon=contents&keywords=%s")
 
-(defengine fdroid
-  "https://f-droid.org/packages/#q=%s")
+  (defengine fdroid
+	     "https://f-droid.org/packages/#q=%s")
 
-(defengine fedora-cgit
-  "https://fedorapeople.org/cgit/?q=%s")
+  (defengine fedora-cgit
+	     "https://fedorapeople.org/cgit/?q=%s")
 
-(defengine github
-  "https://github.com/search?ref=simplesearch&q=%s"
-  :keybinding "h")
+  (defengine github
+	     "https://github.com/search?ref=simplesearch&q=%s"
+	     :keybinding "h")
 
-(defengine github-gpl
-  (concat "https://github.com/search?ref=simplesearch&q=%s"
-          "+license%%3Agpl"))
+  (defengine github-gpl
+	     (concat "https://github.com/search?ref=simplesearch&q=%s"
+		     "+license%%3Agpl"))
 
-(defengine github-hippie
-  (mapconcat 'identity
-             '("https://github.com/search?ref=simplesearch&q=%s"
-               "objectivec" "java" "javascript" "csharp" "kotlin"
-               "swift" "php" "vue" "autohotkey")
-             "+-language:"))
+  (defengine github-hippie
+	     (mapconcat 'identity
+			'("https://github.com/search?ref=simplesearch&q=%s"
+			  "objectivec" "java" "javascript" "csharp" "kotlin"
+			  "swift" "php" "vue" "autohotkey")
+			"+-language:"))
 
-(defengine github-hippie-gpl
-  (concat (mapconcat 'identity
-                     '("https://github.com/search?ref=simplesearch&q=%s"
-                       "objectivec" "java" "javascript" "csharp"
-                       "kotlin" "swift" "php" "vue" "autohotkey")
-                     "+-language:")
-          "+license%%3Agpl"))
+  (defengine github-hippie-gpl
+	     (concat (mapconcat 'identity
+				'("https://github.com/search?ref=simplesearch&q=%s"
+				  "objectivec" "java" "javascript" "csharp"
+				  "kotlin" "swift" "php" "vue" "autohotkey")
+				"+-language:")
+		     "+license%%3Agpl"))
 
-(defengine google
-  "https://www.google.com/search?ie=utf-8&oe=utf-8&q=%s")
+  (defengine google
+	     "https://www.google.com/search?ie=utf-8&oe=utf-8&q=%s")
 
-(defengine google-instant
-  "https://www.google.com/webhp?#q=%s&btnI=I")
+  (defengine google-instant
+	     "https://www.google.com/webhp?#q=%s&btnI=I")
 
-(defengine google-door-music
-  ;; https://github.com/gotbletu/dotfiles/blob/66b2ce9744564a48717c97163a5c34ad1b56d50e/surfraw/.config/surfraw/elvi/opendir_music
-  (concat "https://www.google.com/search?q=%s"
-          "%%20%%2B(.ogg|.mp3|.wav|.ac3|.flac|.wma|.m4a)"
-          "%%20%%2Bintitle:%%22index%%20of%%22%%20"
-          "-inurl:(jsp|pl|php|html|aspx|htm|cf|shtml)%%20"
-          "-inurl:(listen77|mp3raid|mp3toss|mp3drug|index_of|wallywashis)"))
+  (defengine google-door-music
+	     ;; https://github.com/gotbletu/dotfiles/blob/66b2ce9744564a48717c97163a5c34ad1b56d50e/surfraw/.config/surfraw/elvi/opendir_music
+	     (concat "https://www.google.com/search?q=%s"
+		     "%%20%%2B(.ogg|.mp3|.wav|.ac3|.flac|.wma|.m4a)"
+		     "%%20%%2Bintitle:%%22index%%20of%%22%%20"
+		     "-inurl:(jsp|pl|php|html|aspx|htm|cf|shtml)%%20"
+		     "-inurl:(listen77|mp3raid|mp3toss|mp3drug|index_of|wallywashis)"))
 
-(defengine google-video
-  "https://www.google.com/search?q=%s&tbm=vid")
+  (defengine google-video
+	     "https://www.google.com/search?q=%s&tbm=vid")
 
-(defengine guix-hydra
-  "https://hydra.gnu.org/search?query=%s"
-  :keybinding "c")
+  (defengine guix-hydra
+	     "https://hydra.gnu.org/search?query=%s"
+	     :keybinding "c")
 
-(defengine guix-hydra-job
-  ;; e.g. gource-0.47
-  "https://hydra.gnu.org/job/gnu/master/%s")
+  (defengine guix-hydra-job
+	     ;; e.g. gource-0.47
+	     "https://hydra.gnu.org/job/gnu/master/%s")
 
-(defengine nixos-hydra
-  "https://hydra.nixos.org/search?query=%s")
+  (defengine nixos-hydra
+	     "https://hydra.nixos.org/search?query=%s")
 
-(defengine nixos-hydra-job
-  "https://hydra.nixos.org/job/gnu/master/%s.x86_64-linux")
+  (defengine nixos-hydra-job
+	     "https://hydra.nixos.org/job/gnu/master/%s.x86_64-linux")
 
-(defmacro wi-defengine-ml-gnu (idxname &optional message-id)
-  `(defengine ,(if message-id
-                   (intern (concat (symbol-name idxname) "-message-id"))
-                 idxname)
-     (concat "https://lists.gnu.org/archive/cgi-bin/namazu.cgi?query="
-             (if ,message-id "" "%s")
-             "&submit=Search%%21"
-             (if ,message-id "%%2Bmessage-id%%3A%s" "")
-             "&idxname=" ,(symbol-name idxname)
-             "&max=20"
-             "&result=normal"
-             "&sort=score")))
+  (defmacro wi-defengine-ml-gnu (idxname &optional message-id)
+    `(defengine ,(if message-id
+                     (intern (concat (symbol-name idxname) "-message-id"))
+                   idxname)
+		(concat "https://lists.gnu.org/archive/cgi-bin/namazu.cgi?query="
+			(if ,message-id "" "%s")
+			"&submit=Search%%21"
+			(if ,message-id "%%2Bmessage-id%%3A%s" "")
+			"&idxname=" ,(symbol-name idxname)
+			"&max=20"
+			"&result=normal"
+			"&sort=score")))
 
-(defengine listinfo-gnu "https://lists.gnu.org/mailman/listinfo/%s")
+  (defengine listinfo-gnu "https://lists.gnu.org/mailman/listinfo/%s")
 
-(wi-defengine-ml-gnu info-gnus-english)
-(wi-defengine-ml-gnu emacs-devel t)
-(wi-defengine-ml-gnu emacs-devel)
-(wi-defengine-ml-gnu emacs-orgmode t)
-(wi-defengine-ml-gnu emacs-orgmode)
-(wi-defengine-ml-gnu guix-devel t)
-(wi-defengine-ml-gnu guix-devel)
-(wi-defengine-ml-gnu guix-help t)
-(wi-defengine-ml-gnu guix-help)
-(wi-defengine-ml-gnu help-gnu-emacs t)
-(wi-defengine-ml-gnu help-gnu-emacs)
-(wi-defengine-ml-gnu info-gnus-english-message-id)
+  (wi-defengine-ml-gnu info-gnus-english)
+  (wi-defengine-ml-gnu emacs-devel t)
+  (wi-defengine-ml-gnu emacs-devel)
+  (wi-defengine-ml-gnu emacs-orgmode t)
+  (wi-defengine-ml-gnu emacs-orgmode)
+  (wi-defengine-ml-gnu guix-devel t)
+  (wi-defengine-ml-gnu guix-devel)
+  (wi-defengine-ml-gnu guix-help t)
+  (wi-defengine-ml-gnu guix-help)
+  (wi-defengine-ml-gnu help-gnu-emacs t)
+  (wi-defengine-ml-gnu help-gnu-emacs)
+  (wi-defengine-ml-gnu info-gnus-english-message-id)
 
-(defengine guix-help+devel
-  (concat "https://lists.gnu.org/archive/cgi-bin/namazu.cgi"
-          "?query=%s"
-          "&submit=Search%%21"
-          "&idxname=guix-devel"
-          "&idxname=help-guix"
-          "&max=20"
-          "&result=normal"
-          "&sort=score"))
+  (defengine guix-help+devel
+	     (concat "https://lists.gnu.org/archive/cgi-bin/namazu.cgi"
+		     "?query=%s"
+		     "&submit=Search%%21"
+		     "&idxname=guix-devel"
+		     "&idxname=help-guix"
+		     "&max=20"
+		     "&result=normal"
+		     "&sort=score"))
 
-(defengine guix-all
-  (concat "https://lists.gnu.org/archive/cgi-bin/namazu.cgi"
-          "?query=%s"
-          "&submit=Search%%21"
-          "&idxname=bug-guix"
-          "&idxname=guix-patches"
-          "&idxname=guix-devel"
-          "&idxname=help-guix"
-          "&max=20"
-          "&result=normal"
-          "&sort=score"))
+  (defengine guix-all
+	     (concat "https://lists.gnu.org/archive/cgi-bin/namazu.cgi"
+		     "?query=%s"
+		     "&submit=Search%%21"
+		     "&idxname=bug-guix"
+		     "&idxname=guix-patches"
+		     "&idxname=guix-devel"
+		     "&idxname=help-guix"
+		     "&max=20"
+		     "&result=normal"
+		     "&sort=score"))
 
-(defengine guix-all-date
-  (concat "https://lists.gnu.org/archive/cgi-bin/namazu.cgi"
-          "?query=%s"
-          "&submit=Search%%21"
-          "&idxname=guix-devel"
-          "&idxname=help-guix"
-          "&idxname=bug-guix"
-          "&idxname=guix-patches"
-          "&max=20"
-          "&result=normal"
-          "&sort=date%%3Alate")
-    :keybinding "g")
+  (defengine guix-all-date
+	     (concat "https://lists.gnu.org/archive/cgi-bin/namazu.cgi"
+		     "?query=%s"
+		     "&submit=Search%%21"
+		     "&idxname=guix-devel"
+		     "&idxname=help-guix"
+		     "&idxname=bug-guix"
+		     "&idxname=guix-patches"
+		     "&max=20"
+		     "&result=normal"
+		     "&sort=date%%3Alate")
+	     :keybinding "g")
 
-(defengine mankier
-  "https://www.mankier.com/?q=%s")
+  (defengine mankier
+	     "https://www.mankier.com/?q=%s")
 
-(defengine melpa
-  "https://melpa.org/#/?q=%s"
-  :keybinding "m")
+  (defengine melpa
+	     "https://melpa.org/#/?q=%s"
+	     :keybinding "m")
 
-(defengine openhub
-  "https://www.openhub.net/p?ref=homepage&query=%s")
+  (defengine openhub
+	     "https://www.openhub.net/p?ref=homepage&query=%s")
 
-(defengine reddit-unixporn
-  "https://www.reddit.com/r/unixporn/search?q=%s&restrict_sr=on")
+  (defengine reddit-unixporn
+	     "https://www.reddit.com/r/unixporn/search?q=%s&restrict_sr=on")
 
-(defengine rfcs
-  "http://pretty-rfc.herokuapp.com/search?q=%s")
+  (defengine rfcs
+	     "http://pretty-rfc.herokuapp.com/search?q=%s")
 
-(defengine searx
-  "http://searx.tk/?q=%s")
+  (defengine searx
+	     "http://searx.tk/?q=%s")
 
-(defengine stack-overflow
-  "https://stackoverflow.com/search?q=%s")
+  (defengine stack-overflow
+	     "https://stackoverflow.com/search?q=%s")
 
-(defengine startpage
-  "https://www.startpage.com/do/search?query=%s"
-  :keybinding "s")
+  (defengine startpage
+	     "https://www.startpage.com/do/search?query=%s"
+	     :keybinding "s")
 
-(defengine startpage-hippie
-  (concat "https://www.startpage.com/do/dsearch?query=%s"
-          "+c"
-          "+-c%%2B%%2B"
-          "+-c%%23&cat=web"
-          "&pl=opensearch"
-          "&language=english"))
+  (defengine startpage-hippie
+	     (concat "https://www.startpage.com/do/dsearch?query=%s"
+		     "+c"
+		     "+-c%%2B%%2B"
+		     "+-c%%23&cat=web"
+		     "&pl=opensearch"
+		     "&language=english"))
 
-(defengine tldr
-  "https://tldr.ostera.io/%s")
+  (defengine tldr
+	     "https://tldr.ostera.io/%s")
 
-(defengine wikipedia
-  "http://www.wikipedia.org/search-redirect.php?language=en&go=Go&search=%s")
+  (defengine wikipedia
+	     "http://www.wikipedia.org/search-redirect.php?language=en&go=Go&search=%s")
 
-(defengine wiktionary
-  (concat "https://www.wikipedia.org/search-redirect.php?family=wiktionary"
-          "&language=en" "&go=Go" "&search=%s"))
+  (defengine wiktionary
+	     (concat "https://www.wikipedia.org/search-redirect.php?family=wiktionary"
+		     "&language=en" "&go=Go" "&search=%s"))
 
-(defengine metal-archives
-  "https://www.metal-archives.com/search?searchString=%s&type=band_name")
+  (defengine metal-archives
+	     "https://www.metal-archives.com/search?searchString=%s&type=band_name")
 
-(defengine libgen
-  (concat "http://libgen.io/search.php?req=%s&"
-          "lg_topic=libgen&"
-          "open=0&"
-          "view=simple&"
-          "res=25&"
-          "phrase=1&"
-          "column=def"))
+  (defengine libgen
+	     (concat "http://libgen.io/search.php?req=%s&"
+		     "lg_topic=libgen&"
+		     "open=0&"
+		     "view=simple&"
+		     "res=25&"
+		     "phrase=1&"
+		     "column=def"))
 
-(defengine youtube
-  "https://www.youtube.com/results?aq=f&oq=&search_query=%s")
+  (defengine youtube
+	     "https://www.youtube.com/results?aq=f&oq=&search_query=%s")
 
-(defengine youtube-latest
-  "https://www.youtube.com/results?sp=CAJQFA%%253D%%253D&search_query=%s")
+  (defengine youtube-latest
+	     "https://www.youtube.com/results?sp=CAJQFA%%253D%%253D&search_query=%s")
 
-(defengine youtube-live
-  "https://www.youtube.com/results?sp=EgJAAQ%%253D%%253D&search_query=%s")
+  (defengine youtube-live
+	     "https://www.youtube.com/results?sp=EgJAAQ%%253D%%253D&search_query=%s")
 
-(defengine youtube-rss-channel
-  "https://www.youtube.com/feeds/videos.xml?channel_id=%s")
+  (defengine youtube-rss-channel
+	     "https://www.youtube.com/feeds/videos.xml?channel_id=%s")
 
-(defengine youtube-rss-user
-  "https://www.youtube.com/feeds/videos.xml?user=%s")
+  (defengine youtube-rss-user
+	     "https://www.youtube.com/feeds/videos.xml?user=%s")
 
-(defengine webarchive
-  "https://web.archive.org/web/*/%s")
+  (defengine webarchive
+	     "https://web.archive.org/web/*/%s"))
 
 
 ;;;

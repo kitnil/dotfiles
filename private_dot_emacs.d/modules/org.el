@@ -162,12 +162,12 @@
 ;;; Block
 ;;;
 
-(with-eval-after-load 'org
-  (require 'company-org-block)
+;; (with-eval-after-load 'org
+;;   (require 'company-org-block)
 
-  (setq company-org-block-edit-style 'auto) ;; 'auto, 'prompt, or 'inline
+;;   (setq company-org-block-edit-style 'auto) ;; 'auto, 'prompt, or 'inline
 
-  (add-hook 'org-mode-hook
-            (lambda ()
-              (add-to-list (make-local-variable 'company-backends)
-                           'company-org-block))))
+;;   (add-hook 'org-mode-hook
+;;             (lambda ()
+;;               (add-to-list (make-local-variable 'company-backends)
+;;                            'company-org-block))))

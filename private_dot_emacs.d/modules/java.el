@@ -6,8 +6,9 @@
     ("$$" . ,(string-to-symbols "enhanced")) ;you could this in debug
     ))
 
-(add-hooks
- '(((java-mode-hook)
-    . (lambda ()
-        (set (make-local-variable 'prettify-symbols-alist)
-             wi-java--prettify-symbols-alist)))))
+(when (functionp #'add-hooks)
+  (add-hooks
+   '(((java-mode-hook)
+      . (lambda ()
+          (set (make-local-variable 'prettify-symbols-alist)
+               wi-java--prettify-symbols-alist))))))

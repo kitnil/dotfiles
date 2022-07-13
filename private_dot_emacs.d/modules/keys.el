@@ -14,29 +14,32 @@ Sets the following basend on PREFIX-MAP:
 
 ARGS will be passed to hydra."
   `(progn
-     (bind-keys :prefix ,prefix
-                :prefix-map ,(intern (concat "wi-"
-                                             (symbol-name prefix-map)
-                                             "-map"))
-                ,@(mapcar (lambda (arg)
-                            (let ((key (car arg))
-                                  (func (cadr arg)))
-                              (cons key func)))
-                          args)
-                ("h" . ,(intern (concat "hydra-"
-                                        (symbol-name prefix-map)
-                                        "/body"))))
-     (which-key-add-key-based-replacements ,prefix
-       ,(symbol-name prefix-map))
-     (which-key-add-key-based-replacements ,(concat prefix " h")
-       "hydra")
-     (defhydra ,(intern (concat "hydra-" (symbol-name prefix-map)))
-       (:color pink)
-       ,(mapconcat 'identity
-                   (split-string (symbol-name prefix-map) "-")
-                   " ")
-       ,@args
-       ("q" nil "quit"))))
+     (when (macrop #'bind-keys)
+       (bind-keys :prefix ,prefix
+                  :prefix-map ,(intern (concat "wi-"
+                                               (symbol-name prefix-map)
+                                               "-map"))
+                  ,@(mapcar (lambda (arg)
+                              (let ((key (car arg))
+                                    (func (cadr arg)))
+				(cons key func)))
+                            args)
+                  ("h" . ,(intern (concat "hydra-"
+                                          (symbol-name prefix-map)
+                                          "/body")))))
+     (when (functionp #'which-key-add-key-based-replacements)
+       (which-key-add-key-based-replacements ,prefix
+					     ,(symbol-name prefix-map))
+       (which-key-add-key-based-replacements ,(concat prefix " h")
+					     "hydra"))
+     (when (macrop #'defhydra)
+       (defhydra ,(intern (concat "hydra-" (symbol-name prefix-map)))
+		 (:color pink)
+		 ,(mapconcat 'identity
+			     (split-string (symbol-name prefix-map) "-")
+			     " ")
+		 ,@args
+		 ("q" nil "quit")))))
 
 (defmacro wi-define-switch-to-buffer (name buffer)
   `(defun ,(intern (concat "wi-switch-to-buffer-" (symbol-name name)))
@@ -48,11 +51,29 @@ ARGS will be passed to hydra."
 (wi-define-switch-to-buffer eww "*eww*")
 (wi-define-switch-to-buffer nekrovim "#nekrovim")
 
-(bind-key "<Scroll_Lock>" #'scroll-lock-mode)
-(bind-key "<C-mouse-4>" #'text-scale-increase)
-(bind-key "<C-mouse-5>" #'text-scale-decrease)
+(when (macrop #'bind-key)
+  (bind-key "<Scroll_Lock>" #'scroll-lock-mode)
+  (bind-key "<C-mouse-4>" #'text-scale-increase)
+  (bind-key "<C-mouse-5>" #'text-scale-decrease)
+  (bind-key "<C-down-mouse-1>" 'mc/toggle-cursor-on-click)
+  ;; (bind-key "<f5>" #'aya-create)
+  ;; (bind-key "<f6>" #'aya-expand)
+  ;; (bind-key "<f7>" #'mc/mark-next-like-this)
+  ;; (bind-key "<f8>" #'er/expand-region)
+  ;; (bind-key "<M-f6>" #'god-mode-all)
+  ;; TODO: (bind-key "<C-tab>" #'hs-toggle-hiding scheme-mode-map)
+  (bind-key "M-z" #'zap-up-to-char)
+  (bind-key "C-c g u" #'undo-tree-visualize)
+  (bind-key "C-c g o" #'ace-window))
 
-(which-key-add-key-based-replacements "C-c &" "yasnippet")
+(when (boundp #'which-key-add-key-based-replacements)
+  (which-key-add-key-based-replacements "C-c &" "yasnippet")
+  (which-key-add-key-based-replacements "C-c g k" "engine")
+  (which-key-add-key-based-replacements "C-c g u" "undo")
+  (which-key-add-key-based-replacements "C-c g o" "ace-window")
+  (which-key-add-key-based-replacements "C-c g v" "vc")
+  (which-key-add-key-based-replacements "C-c g p x" "projectile-shell")
+  (which-key-add-key-based-replacements "C-c g p s" "projectile-search"))
 
 (wi-define-keys "C-c g b" buffer
                 ("b" scratch "scratch" :color blue)
@@ -82,8 +103,6 @@ ARGS will be passed to hydra."
                 ("f" buf-move-right "right")
                 ("n" buf-move-down "down")
                 ("p" buf-move-up "up"))
-
-(bind-key "<C-down-mouse-1>" 'mc/toggle-cursor-on-click)
 
 (wi-define-keys "C-c g a" text
                 ("/" wi-dabbrev-expand "expand")
@@ -140,8 +159,6 @@ ARGS will be passed to hydra."
 
 (wi-define-keys "C-c g w" word
                 ("t" show-translation "translate"))
-
-(which-key-add-key-based-replacements "C-c g v" "vc")
 
 (wi-define-keys "C-c g v u" merge-upstream
                 ("C" guix-mu-copy-and-commit "copy and commit")
@@ -295,8 +312,6 @@ ARGS will be passed to hydra."
                 ("u" counsel-unicode-char "char" :color blue)
                 ("v" counsel-describe-variable "variable" :color blue))
 
-(which-key-add-key-based-replacements "C-c g p x" "projectile-shell")
-(which-key-add-key-based-replacements "C-c g p s" "projectile-search")
 (wi-define-keys "C-c g h p" helm-projectile
                 ("b" helm-projectile-switch-to-buffer :color blue)
                 ("f" helm-projectile-find-file-dwim :color blue)
@@ -377,29 +392,15 @@ ARGS will be passed to hydra."
                 ("c" org-capture "capture" :color blue)
                 ("l" org-store-link "link"))
 
-(which-key-add-key-based-replacements "C-c g k" "engine")
-
-;; (bind-key "<f5>" #'aya-create)
-;; (bind-key "<f6>" #'aya-expand)
-;; (bind-key "<f7>" #'mc/mark-next-like-this)
-;; (bind-key "<f8>" #'er/expand-region)
-;; (bind-key "<M-f6>" #'god-mode-all)
-(bind-key "M-z" #'zap-up-to-char)
-(bind-key "C-c g u" #'undo-tree-visualize)
-(which-key-add-key-based-replacements "C-c g u" "undo")
-(bind-key "C-c g o" #'ace-window)
-(which-key-add-key-based-replacements "C-c g o" "ace-window")
-
-; TODO: (bind-key "<C-tab>" #'hs-toggle-hiding scheme-mode-map)
-
-(mapc (-lambda ((hook key proc))
-        (add-hook hook `(lambda ()
-                          (local-set-key (kbd ,key) ',proc))))
-      '((scheme-mode-hook "<C-return>" eir-eval-in-geiser)
-        (sh-mode-hook "C-<return>" eir-eval-in-shell)
-        (lisp-mode-hook "C-<return>" eir-eval-in-slime)
-        (python-mode-hook "C-<return>" eir-eval-in-python)
-        (emacs-lisp-mode-hook "C-<return>" eir-eval-in-ielm)))
+(when (boundp #'-lambda)
+  (mapc (-lambda ((hook key proc))
+          (add-hook hook `(lambda ()
+                            (local-set-key (kbd ,key) ',proc))))
+	'((scheme-mode-hook "<C-return>" eir-eval-in-geiser)
+          (sh-mode-hook "C-<return>" eir-eval-in-shell)
+          (lisp-mode-hook "C-<return>" eir-eval-in-slime)
+          (python-mode-hook "C-<return>" eir-eval-in-python)
+          (emacs-lisp-mode-hook "C-<return>" eir-eval-in-ielm))))
 
 (with-eval-after-load 'guix-ui-package
   (let ((map guix-output-list-mode-map))
@@ -473,14 +474,15 @@ ARGS will be passed to hydra."
   (let ((map Info-mode-map))
     (define-key map (kbd "<f8>") 'wi-info-remote-copy-current-node)))
 
-(defhydra hydra-dabbrev-expand
-  (:color red)
-  "dabbrev-expand"
-  ("/" wi-dabbrev-expand "expand")
-  ("u" undo "undo"))
+(when (macrop #'defhydra)
+  (defhydra hydra-dabbrev-expand
+	    (:color red)
+	    "dabbrev-expand"
+	    ("/" wi-dabbrev-expand "expand")
+	    ("u" undo "undo"))
 
-(defhydra hydra-spelling ()
-  "
+  (defhydra hydra-spelling ()
+	    "
   ^
   ^Spelling^          ^Errors^            ^Checker^
   ^────────^──────────^──────^────────────^───────^───────
@@ -489,13 +491,13 @@ ARGS will be passed to hydra."
   ^^                  _f_ check           _m_ mode
   ^^                  ^^                  ^^
   "
-  ("q" nil)
-  ("<" flyspell-correct-previous :color pink)
-  (">" flyspell-correct-next :color pink)
-  ("c" ispell)
-  ("d" ispell-change-dictionary)
-  ("f" flyspell-buffer)
-  ("m" flyspell-mode))
+	    ("q" nil)
+	    ("<" flyspell-correct-previous :color pink)
+	    (">" flyspell-correct-next :color pink)
+	    ("c" ispell)
+	    ("d" ispell-change-dictionary)
+	    ("f" flyspell-buffer)
+	    ("m" flyspell-mode)))
 
 (dolist (elt '((compile . compilation-mode-map)
                (grep . grep-mode-map)

@@ -44,11 +44,12 @@ Non-interactively, this uses the optional second argument PURE."
   '(("lambda" . ?λ)
     ("lambda*" . (?λ (Br . Bl) ?*))))
 
-(add-hooks
- '(((scheme-mode-hook geiser-repl-mode-hook)
-    . (lambda ()
-        (set (make-local-variable 'prettify-symbols-alist)
-             wi-scheme--prettify-symbols-alist)))))
+(when (functionp #'add-hooks)
+  (add-hooks
+   '(((scheme-mode-hook geiser-repl-mode-hook)
+      . (lambda ()
+          (set (make-local-variable 'prettify-symbols-alist)
+               wi-scheme--prettify-symbols-alist))))))
 
 (setq geiser-debug-show-debug-p nil)
 ;; (setq geiser-debug-jump-to-debug-p nil)

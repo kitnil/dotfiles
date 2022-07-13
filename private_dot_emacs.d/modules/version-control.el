@@ -126,9 +126,11 @@
 ;; (magit-org-todos-autoinsert)
 
 (setq magit-repository-directories
-      (mapcar (lambda (dir)
-                (cons dir 0))
-              (f-directories wi-src)))
+      (if (boundp #'f-directories)
+	  (mapcar (lambda (dir)
+                    (cons dir 0))
+		  (f-directories wi-src))
+	'()))
 (setq magit-repository-directories-depth 0)
 (setq magit-log-arguments '("--graph" "--color" "--decorate" "-n64"))
 (setq magit-log-section-arguments (list "-n256" "--decorate"))
@@ -222,9 +224,10 @@ command was called, go to its unstaged changes section."
                     (error (cl-return (magit-status-goto-initial-section-1))))))))
 
 ;; Origin <https://github.com/alphapapa/unpackaged.el>
-(defhydra unpackaged/smerge-hydra
-  (:color pink :hint nil :post (smerge-auto-leave))
-  "
+(when (macrop #'defhydra)
+  (defhydra unpackaged/smerge-hydra
+	    (:color pink :hint nil :post (smerge-auto-leave))
+	    "
 ^Move^       ^Keep^               ^Diff^                 ^Other^
 ^^-----------^^-------------------^^---------------------^^-------
 _n_ext       _b_ase               _<_: upper/base        _C_ombine
@@ -233,28 +236,28 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 ^^           _a_ll                _R_efine
 ^^           _RET_: current       _E_diff
 "
-  ("n" smerge-next)
-  ("p" smerge-prev)
-  ("b" smerge-keep-base)
-  ("u" smerge-keep-upper)
-  ("l" smerge-keep-lower)
-  ("a" smerge-keep-all)
-  ("RET" smerge-keep-current)
-  ("\C-m" smerge-keep-current)
-  ("<" smerge-diff-base-upper)
-  ("=" smerge-diff-upper-lower)
-  (">" smerge-diff-base-lower)
-  ("R" smerge-refine)
-  ("E" smerge-ediff)
-  ("C" smerge-combine-with-next)
-  ("r" smerge-resolve)
-  ("k" smerge-kill-current)
-  ("ZZ" (lambda ()
-          (interactive)
-          (save-buffer)
-          (bury-buffer))
-   "Save and bury buffer" :color blue)
-  ("q" nil "cancel" :color blue))
+	    ("n" smerge-next)
+	    ("p" smerge-prev)
+	    ("b" smerge-keep-base)
+	    ("u" smerge-keep-upper)
+	    ("l" smerge-keep-lower)
+	    ("a" smerge-keep-all)
+	    ("RET" smerge-keep-current)
+	    ("\C-m" smerge-keep-current)
+	    ("<" smerge-diff-base-upper)
+	    ("=" smerge-diff-upper-lower)
+	    (">" smerge-diff-base-lower)
+	    ("R" smerge-refine)
+	    ("E" smerge-ediff)
+	    ("C" smerge-combine-with-next)
+	    ("r" smerge-resolve)
+	    ("k" smerge-kill-current)
+	    ("ZZ" (lambda ()
+		    (interactive)
+		    (save-buffer)
+		    (bury-buffer))
+	     "Save and bury buffer" :color blue)
+	    ("q" nil "cancel" :color blue)))
 
 (defun wi-magit-init (directory group)
   "Call `magit-init' and create GitLab repository in project DIRECTORY for GROUP."
@@ -316,4 +319,6 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
   (setq magit-todos-keywords-list
         (add-to-list 'magit-todos-keywords-list "XXX")))
 
-(magit-todos-mode) ;NOTE: Use ivy-magit-todos instead of magit-todos-mode
+;; NOTE: Use ivy-magit-todos instead of magit-todos-mode
+(when (boundp #'magit-todos-mode)
+  (magit-todos-mode))

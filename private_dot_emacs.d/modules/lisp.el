@@ -34,8 +34,9 @@
     ("True" . (?# (Br . Bl) ?t))
     ("False" . (?# (Br . Bl) ?f))))
 
-(add-hooks
- '(((hy-mode-hook)
-    . (lambda ()
-        (set (make-local-variable 'prettify-symbols-alist)
-             wi-hy--prettify-symbols-alist)))))
+(when (functionp #'add-hooks)
+  (add-hooks
+   '(((hy-mode-hook)
+      . (lambda ()
+          (set (make-local-variable 'prettify-symbols-alist)
+               wi-hy--prettify-symbols-alist))))))

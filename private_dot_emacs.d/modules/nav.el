@@ -82,10 +82,16 @@
              ;; newline-mark
              ))
 
-(add-hook 'prog-mode-hook 'hl-todo-mode)
+(when (boundp #'hl-todo-mode)
+  (add-hook 'prog-mode-hook 'hl-todo-mode))
+
 ;; (add-hook 'prog-mode-hook 'which-function-mode)
-(add-hook 'prog-mode-hook 'symbol-overlay-mode)
-(add-hook 'prog-mode-hook 'hideshowvis-minor-mode)
+
+(when (functionp #'symbol-overlay-mode)
+  (add-hook 'prog-mode-hook 'symbol-overlay-mode))
+
+(when (functionp #'hideshowvis-minor-mode)
+  (add-hook 'prog-mode-hook 'hideshowvis-minor-mode))
 
 (setq wi-groups-direcotory "~/majordomo")
 (setq wi-projects-directories '("~/src" "~/archive/src"))
@@ -113,22 +119,29 @@
 (progn
   (minibuffer-depth-indicate-mode)
 
-  (global-git-gutter-mode)
+  (when (boundp #'global-git-gutter-mode)
+    (global-git-gutter-mode))
 
-  (default-text-scale-mode)
+  (when (boundp #'default-text-scale-mode)
+    (default-text-scale-mode))
 
-  (projectile-global-mode)
+  (when (boundp #'projectile-mode)
+    (projectile-global-mode))
 
   ;; Don't use ido
   (setq projectile-completion-system 'ivy)
 
-  (add-to-list 'projectile-project-root-files "environment-variables")
+  (when (boundp #'projectile-project-root-files)
+    (add-to-list 'projectile-project-root-files "environment-variables"))
 
   (setq projectile-switch-project-action 'projectile-dired)
-  (define-key projectile-mode-map (kbd "C-c g p") 'projectile-command-map)
-  (define-key projectile-mode-map (kbd "C-c g p h") 'helm-projectile)
 
-  (beginend-global-mode)
+  (when (boundp #'projectile-mode-map)
+    (define-key projectile-mode-map (kbd "C-c g p") 'projectile-command-map)
+    (define-key projectile-mode-map (kbd "C-c g p h") 'helm-projectile))
+
+  (when (boundp #'beginend-global-mode)
+    (beginend-global-mode))
   (save-place-mode)            ; Remember position in files
 
   ;; Toggle prettify symbols mode on
@@ -139,7 +152,8 @@
   ;; (windmove-default-keybindings) ;XXX: Breaks vterm-mode-map
 
   ;; Display key bindings help window (after some delay)
-  (which-key-mode)
+  (when (boundp #'which-key-mode)
+    (which-key-mode))
 
   ;; Toggle show-paren-mode on
   (show-paren-mode))

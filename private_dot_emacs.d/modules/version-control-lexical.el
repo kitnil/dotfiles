@@ -15,7 +15,7 @@
 ;;; Code:
 
 (require 'ffap)
-(require 'magit-diff)
+;; (require 'magit-diff)
 
 ;;;###autoload
 (defun wi-define-browse-url-git-commit (name directory url->commit)

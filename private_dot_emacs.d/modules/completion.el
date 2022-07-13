@@ -17,6 +17,7 @@
 ;;; Ivy
 ;;;
 
-(ivy-rich-mode 1)
+(when (boundp #'ivy-rich-mode)
+  (ivy-rich-mode 1))
 (setq ivy-height 30)
 (setq ivy-format-function #'ivy-format-function-line)
