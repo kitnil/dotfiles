@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2019, 2020 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2019, 2020, 2022 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -30,12 +30,14 @@
 (define-record-type* <openvpn-configuration>
   openvpn-configuration make-openvpn-configuration
   openvpn-configuration?
-  (openvpn openvpn-configuration-openvpn ;<package>
-           (default openvpn))
-  (config  openvpn-configuration-openvpn ;file-like or string
-           (default #f))
-  (name    openvpn-configuration-name    ;string
-           (default #f)))
+  (openvpn     openvpn-configuration-openvpn     ;<package>
+               (default openvpn))
+  (config      openvpn-configuration-openvpn     ;file-like or string
+               (default #f))
+  (name        openvpn-configuration-name        ;string
+               (default #f))
+  (auto-start? openvpn-configuration-auto-start? ;boolean
+               (default #t)))
 
 (define openvpn-activation
   (match-lambda
@@ -48,11 +50,11 @@
 
 (define openvpn-shepherd-service
   (match-lambda
-    (($ <openvpn-configuration> openvpn config name)
+    (($ <openvpn-configuration> openvpn config name auto-start?)
      (list
       (shepherd-service
        (provision (list (string->symbol (string-append "openvpn-" name))))
-       (auto-start? #t)
+       (auto-start? auto-start?)
        (requirement '(user-processes loopback))
        (documentation "Run OpenVPN client.")
        (start #~(make-forkexec-constructor
