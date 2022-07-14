@@ -939,6 +939,7 @@ location / {
            "127.0.0.1 example.com"
 
            "192.168.25.2 oracle1.local irc.local"
+           "192.168.0.137 notebook.wugi.info"
 
            "78.108.86.20 r1"
            "78.108.87.99 r2"
