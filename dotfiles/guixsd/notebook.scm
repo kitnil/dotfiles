@@ -133,6 +133,106 @@ remote guix.wugi.info 1195
 remote-random
 route 141.80.181.40 255.255.255.255 192.168.25.2
 "))))
+
+                     #;(service openvpn-service-type
+                              (openvpn-configuration
+                               (name "majordomo.ru")
+                               (auto-start? #f)
+                               (config
+                                (plain-file "openvpn.conf"
+                                            "\
+client
+port 1194
+proto udp
+dev tapvpn
+verb 2
+
+# ns{1,2}-mr.intr
+remote vpn-miran.majordomo.ru 1194 udp
+cipher AES-256-GCM
+data-ciphers AES-256-GCM
+
+# remote vpn-dh.majordomo.ru
+# remote 78.108.91.250 1194 udp
+
+# ctrl3.ihc-ru.net is an IHC Puppet server
+route 46.254.22.60 255.255.255.255
+
+#<connection>
+#remote 78.108.87.250 1194 udp
+#float
+#</connection>
+
+# remote 78.108.80.230 1194 udp
+
+remote-cert-tls server
+<ca>
+-----BEGIN CERTIFICATE-----
+MIIFIzCCAwugAwIBAgIUDBKyvFnWiPrKYM8PUc/ldQmdhOswDQYJKoZIhvcNAQEL
+BQAwGTEXMBUGA1UEAxMOTWFqb3Jkb21vIFJvb3QwHhcNMjIwNjIyMDkzNDQxWhcN
+MzIwNjE5MDkzNTA1WjAZMRcwFQYDVQQDEw5NYWpvcmRvbW8gUm9vdDCCAiIwDQYJ
+KoZIhvcNAQEBBQADggIPADCCAgoCggIBAJeF5Z5rLLbCIDRuqZuWhQNVADTFmAiO
+14SkhC2w0UvTiAJkyfzXhw4aW3TtT8pit3BEvhQSzKP7iJyOpmJoOmQRS7Q4WXmx
+7HfWMaYtJ1T8MmRWR/b0pxwidIdaLjlk0C5x+VYuSVata2D2D/IU8ljphYxY3eNF
+5eo49X3HqYMsweeYiSQRzdJF9lXn7mTxMXuOmKnHr3QRQz3F+hzEBwunZp09pD0B
+8T9TMkujVUPXQGbNQhsO7bXlGvCqc/VzTxmms14t3gd2BtqNGQtPDS6NDIRPN2XP
+DUvPFcqx7cBYw92qVpEiw98Yjfk3aUOA+jYzMGulmtyB5WdgYQXPyW0l84ll+4vj
+W9HUsMSaCl9uwkNFSoXH2CCPYHctDbiPEi6T4X8dQzMl0cPjemUrFmxvfubI+bvw
+c/FlHxIYMl7q8CLqOohgd2+MBZX5PQpeRRETErgOGHTKKyg0decHuYpa3T22SV//
+/iGsy9+ghsOpDViWPxkDpkuSFPcqIaAU4riV71kH2mQmFyJYlGiI4ZdTA0QrrGhB
+rXnLfPZAIabh0B9UfMwRvJ6wt6K+m/bTFk98XU2ssVjDp9PL0tbbAOeSiy0yquqb
+HFOK1gtV3Mu2t1AwpAbC5Wnn4CATWgvPsAhIBiG6715jja4/Hgp+EzzvzNIjU/Aw
+L1RPZTPWKWhDAgMBAAGjYzBhMA4GA1UdDwEB/wQEAwIBBjAPBgNVHRMBAf8EBTAD
+AQH/MB0GA1UdDgQWBBTgRtctMpFWEHXLwZDYSfp51IYUNDAfBgNVHSMEGDAWgBTg
+RtctMpFWEHXLwZDYSfp51IYUNDANBgkqhkiG9w0BAQsFAAOCAgEAjDH3A++Q1NvN
+WEnYlu8I77nAG1dcHMGvFjCfIyZ2YTPT6IUK2DqBSytNmr7bKWSIZ4sOvJoFvpZG
+KIWDOXvNDb1eSRz+/tMSa6We5jxRUH2GIK7Rocb4gYDY8cWMs8pcNRaQ3xERejZk
+kIpsm365C+jR3kq7dG7O4adPLI247gDmFkQBaOADPxnvatBw05MmMKel2V/d3JAk
+1ZyPgKAg6Nvlbn0MBWU+O2F55a5d/mwoxwbLJp4JE1kbRlTLnFq6ekeSMIMueG3U
+rOQg9sjvrQQaPNbws9uBm8HxeZHyc0hkrTCEsB+Pt86MTcppCPdvGtQ7PyypG/Kc
+H2d4QlJDGlBhnqUNzzh+cxgm5zN7R+jgLL2ogDfyP31G/DMuR+rU99x/Ia10FL+N
+fcK/4hZU/ko/wZqSn/PbYQkrzS2tiy+TWnWv3qkDwv5XNd4XFYg9uwlqufmDEb2t
+GqPWl7ltJogbabTJsx54hmUasBMWxCLBn1DZuX21A4oN/LkdvJntKi9Fd7Bt8U6K
+/IINHsLnng4G7wfBYVJjNxXg3fXBR60KgfNMrE3FvqBpIco512DN4zm+Kw0q79x3
+sWLCFVcsiETRPTMSdzrdb4MJR4up9wQWQFoCW/DgvXCwcpppKaYVfmDKgBrJNLlr
+ZBYq6PjqbFeXvrMBPWwl83Aln0qr33A=
+-----END CERTIFICATE-----
+-----BEGIN CERTIFICATE-----
+MIIEMzCCAhugAwIBAgIUB4f151JlH/9iA5oagMR76PGO63gwDQYJKoZIhvcNAQEL
+BQAwGTEXMBUGA1UEAxMOTWFqb3Jkb21vIFJvb3QwHhcNMjIwNjIyMDkzNzE1WhcN
+MjcwNjIxMDkzNzQ1WjApMScwJQYDVQQDEx5NYWpvcmRvbW8gSW50ZXJtZWRpYXRl
+IE9wZW5WUE4wggEiMA0GCSqGSIb3DQEBAQUAA4IBDwAwggEKAoIBAQDZ1OnWA+QZ
+NO6eXinPgD+niYzknNjWP4ZTyv3abc/ormt/nRfSrjr0FRr3q0sza3xINSrO9bY3
+pNLsp4FuNEfS3zY1LGSKbR1oYf7FytzwCyVuv11LnYYTTtI/dCd2AFP+OU/8NuFu
+XwiD0020mUiefuTf0ahklRncaKxH0wl8q1ON3kABMNopuJ0R4p37w7zCI4RUl9c5
+Nhe7R7N6xTPNBShCLEyIU+o3L0/k2O8neEza9Css7M+Tu04+EMOp61gjZ1zKELvr
+IMlR6/pbyXp4Rz6ydcW5relWEHju5qkg6s0byrXlCGg+vWmeZteWykgwroCafkSb
+OAsIv21K+ocRAgMBAAGjYzBhMA4GA1UdDwEB/wQEAwIBBjAPBgNVHRMBAf8EBTAD
+AQH/MB0GA1UdDgQWBBSAy3/LOiK6VkadQI+2GchgzPWdwjAfBgNVHSMEGDAWgBTg
+RtctMpFWEHXLwZDYSfp51IYUNDANBgkqhkiG9w0BAQsFAAOCAgEABt06s/BQqIvM
+Cz2lmTkcVU58eNJEVBrv4esZs1Uzkz7mnj5wKXVQFtBsbyva22CNZ3eZWJaxKogi
++niUrQ7TBxgfc7kY8/voyEewo0hKSdJMjimwoKaQ2pX17YYYIBJtdYagNodMQKGL
+2WeUAZp3gPfB0DJcDTvx9X90/B4G0IeQxloqhh4F1WnU51ORakcFHSoYSsTI741U
+SjL06w7bV7kVb1kaCB7S27aHe1tV71ME224mvVSWUhH2xGw4yoHy2THACcASJQUs
+8uE2OViVHig0J3N2ILdPr17/8cAPERG6OsLYe/JSRqPFMtHQMd5oUxlgfCp/wDAC
+3O7vi4+6kUv2GxZ4533f5fyrNkQX8uzP64Sb+b6tbQlhMVI5g4OFGfuzrDtgKzTG
+4QL1Snrj9gC+3cZ3enbsx/b4dqyAKdBFYiUU0n4zlomxwYYyEUxrA7FjqKwNH1nk
+a9f4ygSJSeOu6JrmBlAu1RFfqmeBre1n4whd9debkEju6d8it4x1MNVHRT4CwEKk
++SaE2HOidLBl25nh4L/rYngYjIUAGGn02ecuH/SjXVeUhGZG2w822GE0XVV+8GOt
+qvoZwDADOh3d8dyEW4srKjfjE4TMdsBAORbNL2LrBiegOJOm8yKFOcOIXvmzIoL9
++vvpTT74WoGiBcGR9/gtw5+XB9vm+XA=
+-----END CERTIFICATE-----
+</ca>
+auth SHA1
+script-security 3
+auth-nocache
+auth-retry nointeract
+ping 10
+ping-restart 15
+auth-user-pass /etc/openvpn/login.conf
+remote-random
+"))))
+
 		     nix-service)
 
                     (list ;; (screen-locker-service slock)
