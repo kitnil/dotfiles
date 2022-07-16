@@ -877,7 +877,7 @@ terraform_refresh()
 
 terraform_plan()
 {
-    NIX_SSL_CERT_FILE="$HOME/majordomo/office/ssl-certificates/Majordomo_LLC_Root_CA.crt" \
+    NIX_SSL_CERT_FILE="$HOME/src/gitlab.intr/office/ssl-certificates/Majordomo_LLC_Root_CA.crt" \
                      SSL_CERT_DIR="$HOME/.guix-profile/etc/ssl/certs" \
                      SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/ca-certificates.crt" \
             terraform plan -out=plan "$@"
@@ -893,7 +893,7 @@ terraform_import()
 
 terraform_apply()
 {
-    NIX_SSL_CERT_FILE="$HOME/majordomo/office/ssl-certificates/Majordomo_LLC_Root_CA.crt" \
+    NIX_SSL_CERT_FILE="$HOME/src/gitlab.intr/office/ssl-certificates/Majordomo_LLC_Root_CA.crt" \
                      SSL_CERT_DIR="$HOME/.guix-profile/etc/ssl/certs" \
                      SSL_CERT_FILE="$HOME/.guix-profile/etc/ssl/certs/ca-certificates.crt" \
                      terraform apply "plan"
@@ -1452,7 +1452,7 @@ lsp_mode()
             --volume /var/run/dbus/system_bus_socket:/var/run/dbus/system_bus_socket    \
             --volume /tmp/.X11-unix:/tmp/.X11-unix                                      \
             --volume /etc/machine-id:/etc/machine-id:ro                                 \
-            --volume /home/oleg/majordomo/hms:/src                                      \
+            --volume /home/oleg/src/gitlab.intr/hms:/src                                      \
             --volume "$PWD/emacs.d/:/home/lsp/.emacs.d"                                 \
             --user 1000:1000                                                            \
             --env DISPLAY="$DISPLAY"                                                    \

@@ -14,7 +14,7 @@ config()
         else
             echo "${directory},${group_name}-${project_name}"
         fi
-    done < <(find "${HOME}/majordomo" -maxdepth 2 -type d -print0)
+    done < <(find "${HOME}/src/gitlab.intr" -maxdepth 2 -type d -print0)
 }
 
 cat > "${HOME}/.config/gita/repo_path" <<EOF

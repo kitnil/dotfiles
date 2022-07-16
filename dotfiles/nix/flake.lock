@@ -939,11 +939,11 @@
         "lastModified": 1627969343,
         "narHash": "sha256-LMfBSg+SZaC4Wbiocyiuab8292Ldm1beA1ZAtaL+HsQ=",
         "type": "git",
-        "url": "file:///home/oleg/majordomo/_ci/nixpkgs"
+        "url": "file:///home/oleg/src/gitlab.intr/_ci/nixpkgs"
       },
       "original": {
         "type": "git",
-        "url": "file:///home/oleg/majordomo/_ci/nixpkgs"
+        "url": "file:///home/oleg/src/gitlab.intr/_ci/nixpkgs"
       }
     },
     "mobile-nixos": {

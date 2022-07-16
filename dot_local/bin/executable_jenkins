@@ -2,7 +2,7 @@
 
 set -e
 
-if [[ $PWD == $HOME/majordomo/* ]]
+if [[ $PWD == $HOME/src/gitlab.intr/* ]]
 then
     JENKINS_URL="https://jenkins.intr"
     JENKINS_USER="admin"

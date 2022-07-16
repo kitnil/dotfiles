@@ -3,7 +3,7 @@
 !#
 
 ;;;; nixos --- SYNOPSIS
-;;;; Copyright © 2020 Oleg Pykhalov <go.wigust@gmail.com>
+;;;; Copyright © 2020, 2022 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;; Released under the GNU GPLv3 or any later version.
 
 (define-module (jenkins-nix-version)
@@ -77,7 +77,7 @@ with (import (builtins.fetchTarball {
     ~a
   ];
 }); ~a" nix-commit
-        (if (assoc-ref opts 'overlay?) "(import /home/oleg/majordomo/_ci/nixpkgs)" "")
+        (if (assoc-ref opts 'overlay?) "(import /home/oleg/src/gitlab.intr/_ci/nixpkgs)" "")
         (car opts)))
 
   (define nix-command

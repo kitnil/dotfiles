@@ -1,6 +1,6 @@
 (defun deadgrep-kvm (str)
   (interactive "sString to search: ")
-  (let ((default-directory (expand-file-name "~/majordomo/vds/vds-xenial")))
+  (let ((default-directory (expand-file-name "~/src/gitlab.intr/vds/vds-xenial")))
     (deadgrep str)))
 
 
@@ -24,7 +24,7 @@
   (insert
    (prin1-to-string
     '(mapcar (lambda (version)
-               (expand-file-name (format "~/majordomo/webservices/apache2-php%s" (number-to-string version))))
+               (expand-file-name (format "~/src/gitlab.intr/webservices/apache2-php%s" (number-to-string version))))
              '(52 53 54 55 56 70 71 72 73 74)))))
 
 

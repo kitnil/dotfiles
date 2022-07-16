@@ -112,17 +112,17 @@ mjru-nix-fix()
     while IFS= read -r -d '' file
     do
         echo -e "\n@ $file"
-        sed -i 's|https://gitlab.intr/pyhalov/php52-extra.git|file:///home/oleg/majordomo/pyhalov/php52-extra|g' "$file"
-        sed -i 's|git@gitlab.intr:shared/http_errors.git|/home/oleg/majordomo/shared/http_errors|g' "$file"
-        sed -i 's|git@gitlab.intr:|file:///home/oleg/majordomo/|g' "$file"
-        sed -i 's|https://gitlab.intr/|file:///home/oleg/majordomo/|g' "$file"
-    done < <(find ~/majordomo/_ci/nixpkgs* -type f -name '*.nix' -print0)
+        sed -i 's|https://gitlab.intr/pyhalov/php52-extra.git|file:///home/oleg/src/gitlab.intr/pyhalov/php52-extra|g' "$file"
+        sed -i 's|git@gitlab.intr:shared/http_errors.git|/home/oleg/src/gitlab.intr/shared/http_errors|g' "$file"
+        sed -i 's|git@gitlab.intr:|file:///home/oleg/src/gitlab.intr/|g' "$file"
+        sed -i 's|https://gitlab.intr/|file:///home/oleg/src/gitlab.intr/|g' "$file"
+    done < <(find ~/src/gitlab.intr/_ci/nixpkgs* -type f -name '*.nix' -print0)
 
     while IFS= read -r -d '' file
     do
         echo -e "\n@ $file"
-        sed -i 's|(builtins.fetchGit { url = "git@gitlab.intr:_ci/nixpkgs.git"; ref = ".*"; })|/home/oleg/majordomo/_ci/nixpkgs|g' "$file"
-        sed -i 's|(builtins.fetchGit { url = "git@gitlab.intr:_ci/nixpkgs.git"; inherit ref; })|/home/oleg/majordomo/_ci/nixpkgs|g' "$file"
+        sed -i 's|(builtins.fetchGit { url = "git@gitlab.intr:_ci/nixpkgs.git"; ref = ".*"; })|/home/oleg/src/gitlab.intr/_ci/nixpkgs|g' "$file"
+        sed -i 's|(builtins.fetchGit { url = "git@gitlab.intr:_ci/nixpkgs.git"; inherit ref; })|/home/oleg/src/gitlab.intr/_ci/nixpkgs|g' "$file"
     done < <(find . -type f -name '*.nix' -print0)
 }
 
@@ -222,7 +222,7 @@ mjru-nix-build-mj()
     nix-build \
             --option trusted-public-keys 'cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= cache.nixos.intr:6VD7bofl5zZFTEwsIDsUypprsgl7r9I+7OGY4WsubFA=' \
             --substituters 'https://cache.nixos.org/ https://cache.nixos.intr/' \
-            --expr "(import <nixpkgs> {overlays = [(import $HOME/majordomo/_ci/nixpkgs)];}).$1"
+            --expr "(import <nixpkgs> {overlays = [(import $HOME/src/gitlab.intr/_ci/nixpkgs)];}).$1"
 }
 
 mjru-docker-jenkins()
@@ -345,15 +345,15 @@ mjru-python()
 mjru-network()
 {
     awk '/A\t/ || /A / { print "(\"", $NF, "/32\" . ,(string-to-symbols \"", $1, ".intr\"))" }' \
-	~/majordomo/net/dns-intr/intr-miran.zone ~/majordomo/net/dns-intr/intr-datahouse.zone \
+	~/src/gitlab.intr/net/dns-intr/intr-miran.zone ~/src/gitlab.intr/net/dns-intr/intr-datahouse.zone \
 	| sed 's/" /"/g; s@ /@/@g; s/ ")/")/g; s/"\./" ./; s/ \.intr/.intr/; s/\"\;/"/'
 
     awk '/A\t/ || /A / { print "(\"inet" , $NF, "/24\" . ,(string-to-symbols \"", $1, ".intr\"))" }' \
-	~/majordomo/net/dns-intr/intr-miran.zone ~/majordomo/net/dns-intr/intr-datahouse.zone \
+	~/src/gitlab.intr/net/dns-intr/intr-miran.zone ~/src/gitlab.intr/net/dns-intr/intr-datahouse.zone \
 	| sed 's/" /"/g; s@ /@/@g; s/ ")/")/g; s/"\./" ./; s/ \.intr/.intr/; s/\"\;/"/'
 
     awk '/A\t/ || /A / { print "(\"", $NF, "\" . ,(string-to-symbols \"", $1, ".intr\"))" }' \
-	~/majordomo/net/dns-intr/intr-miran.zone ~/majordomo/net/dns-intr/intr-datahouse.zone \
+	~/src/gitlab.intr/net/dns-intr/intr-miran.zone ~/src/gitlab.intr/net/dns-intr/intr-datahouse.zone \
 	 | sed 's/" /"/g; s@ /@/@g; s/ ")/")/g; s/ "\./" ./; s/ \.intr/.intr/; s/\"\;/"/'
 }
 

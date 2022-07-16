@@ -182,7 +182,7 @@
          (ssl-certificate-key "/etc/tls/hms.majordomo.ru.key")
          (locations (list (nginx-location-configuration
                            (uri "/")
-                           (body (list "root /home/oleg/majordomo/hms/frontend-app/public;"
+                           (body (list "root /home/oleg/src/gitlab.intr/hms/frontend-app/public;"
                                        "proxy_set_header Access-Control-Allow-Origin *;"
                                        "index  index.html;"
                                        "try_files $uri $uri/ /index.html;"
@@ -199,12 +199,12 @@
          (listen '("192.168.0.144:80" "192.168.0.144:443 ssl"))
          (ssl-certificate "/etc/tls/hms.majordomo.ru.pem")
          (ssl-certificate-key "/etc/tls/hms.majordomo.ru.key")
-         ;; (root "/home/oleg/majordomo/hms/staff-frontend-app/public")
+         ;; (root "/home/oleg/src/gitlab.intr/hms/staff-frontend-app/public")
          (locations (list (nginx-location-configuration
                            (uri "/")
                            (body (list "proxy_set_header Access-Control-Allow-Origin *;"
                                        ;; "rewrite     ^   https://$server_name$request_uri?;"
-                                       "root   /home/oleg/majordomo/hms/staff-frontend-app/public;"
+                                       "root   /home/oleg/src/gitlab.intr/hms/staff-frontend-app/public;"
                                        "index  index.html;"
                                        "try_files $uri $uri/ /index.html;"
                                        ;; "proxy_pass http://127.0.0.1:3001;"
@@ -805,7 +805,7 @@ location / {
                                                                  "ssd")
                                                            ","))
                                      (type "btrfs")))
-                                 '("archive" "majordomo" "phone" "src" "Maildir"))
+                                 '("archive" "phone" "src" "Maildir"))
                             (operating-system-file-systems base-system)))
 
       (swap-devices '("/dev/disk/by-label/nvme-swap"))

@@ -8,6 +8,6 @@ with import <nixpkgs> {
                                 (s-contains-p "nixpkgs" dir))
                               (seq-filter #'file-directory-p
                                           (cddr ;skip "." and ".."
-                                           (directory-files (expand-file-name "~/majordomo/_ci/") t)))))})
+                                           (directory-files (expand-file-name "~/src/gitlab.intr/_ci/") t)))))})
   ];
 };

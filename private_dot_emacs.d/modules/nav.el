@@ -93,7 +93,7 @@
 (when (functionp #'hideshowvis-minor-mode)
   (add-hook 'prog-mode-hook 'hideshowvis-minor-mode))
 
-(setq wi-groups-direcotory "~/majordomo")
+(setq wi-groups-direcotory "~/src/gitlab.intr")
 (setq wi-projects-directories '("~/src" "~/archive/src"))
 
 (defun wi-find-file-readlink ()

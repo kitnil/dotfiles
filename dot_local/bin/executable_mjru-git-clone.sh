@@ -6,7 +6,7 @@ PATH=/run/current-system/profile/bin:$PATH
 size=$((1024 * 1024 * 100)) # 100 MB
 
 echo "#!/bin/sh"
-for file in /home/oleg/majordomo/*/*
+for file in /home/oleg/src/gitlab.intr/*/*
 do
     if [ -d "$file" ] && [ "$(du -s "$file" | cut -f 1)" -lt "$size" ]
     then
