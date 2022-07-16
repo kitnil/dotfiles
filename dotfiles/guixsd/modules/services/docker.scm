@@ -17,6 +17,7 @@
 ;;; along with GNU Guix.  If not, see <http://www.gnu.org/licenses/>.
 
 (define-module (services docker)
+  #:use-module (gnu services admin)
   #:use-module (gnu services shepherd)
   #:use-module (gnu services)
   #:use-module (guix gexp)
@@ -110,6 +111,21 @@
   (requirement docker-compose-configuration-requirement     ;list of symbols
                 (default '())))
 
+(define (docker-compose-activation config)
+  "Return the activation GEXP for CONFIG."
+  (with-imported-modules '((guix build utils))
+    #~(begin
+        (mkdir-p "/var/log/docker-compose"))))
+
+(define (docker-compose-log-rotations config)
+  (list
+   (log-rotation
+    (files
+     (list
+      (string-append "/var/log/docker-compose/"
+                     (docker-compose-configuration-project-name config)
+                     ".log"))))))
+
 (define docker-compose-shepherd-service
   (match-lambda
     (($ <docker-compose-configuration> docker-compose compose-file project-name requirement)
@@ -124,6 +140,7 @@
                        "--file" #$compose-file
                        "--project-name" #$project-name
                        "up")
+                 #:log-file #$(string-append "/var/log/docker-compose/" project-name ".log")
                  #:environment-variables
                  (append (list "SSL_CERT_DIR=/etc/ssl/certs"
                                "SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt")
@@ -137,8 +154,12 @@
 
 (define docker-compose-service-type
   (service-type (name 'docker-compose)
-                (extensions (list (service-extension shepherd-root-service-type
-                                                     docker-compose-shepherd-service)))
+                (extensions (list (service-extension activation-service-type
+                                                     docker-compose-activation)
+                                  (service-extension shepherd-root-service-type
+                                                     docker-compose-shepherd-service)
+                                  (service-extension rottlog-service-type
+                                                     docker-compose-log-rotations)))
                 (description "Run docker-compose.")))
 
 ;;; docker.scm ends here
