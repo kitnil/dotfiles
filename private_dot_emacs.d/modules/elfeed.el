@@ -8,6 +8,7 @@
         ("https://h-node.org/rss/modifications/en" hardware)
         ("https://lwn.net/headlines/newrss" linux)
         ("https://fedoramagazine.org/feed/" linux)
+        ("https://www.47deg.com/feed.xml" programming)
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UC_ehNByPcItZU3pXL-4skUA" video)
         ("https://twitchrss.appspot.com/vod/carolinhr" video)
         ("https://opensource.com/feed" news)
