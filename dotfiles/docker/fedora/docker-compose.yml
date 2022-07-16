@@ -1,0 +1,12 @@
+version: "3.9"  # optional since v1.27.0
+services:
+  fedora:
+    build: .
+    ports:
+      - "9888:80"
+    tmpfs:
+      - /tmp
+      - /run
+    tty: true
+    volumes:
+      - /sys/fs/cgroup:/sys/fs/cgroup:ro
