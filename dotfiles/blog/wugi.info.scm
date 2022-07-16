@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2020 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2020, 2022 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -31,7 +31,7 @@
 (define %org-dir
   (and=> (getenv "HOME")
          (lambda (home)
-           (string-append home "/src/org"))))
+           (string-append home "/src/gitlab.com/wigust/notes"))))
 
 (define lazyblorg
   (and=> (getenv "HOME")

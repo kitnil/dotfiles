@@ -138,11 +138,11 @@
          (switch-to-emacs)))
 
 (defcommand emacs-todo () ()
-  (progn (run-shell-command (format nil "emacsclient --eval '(find-file ~s)'" "~/src/org/todo.org"))
+  (progn (run-shell-command (format nil "emacsclient --eval '(find-file ~s)'" "~/src/gitlab.com/wigust/notes/todo.org"))
          (switch-to-emacs)))
 
 (defcommand emacs-todo-new-window () ()
-  (run-shell-command (format nil "emacsclient -cn --eval '(find-file ~s)'" "~/src/org/todo.org")))
+  (run-shell-command (format nil "emacsclient -cn --eval '(find-file ~s)'" "~/src/gitlab.com/wigust/notes/todo.org")))
 
 
 ;;;

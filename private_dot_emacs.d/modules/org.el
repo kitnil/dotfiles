@@ -8,7 +8,7 @@
 ;; Origin <https://old.reddit.com/r/emacs/comments/mt51h4/strike_through_orgdone_tasks_in_agenda_to/>.
 (set-face-attribute 'org-headline-done nil :strike-through t)
 
-(setq plain-org-wiki-directory (expand-file-name "~/src/org/"))
+(setq plain-org-wiki-directory (expand-file-name "~/src/gitlab.com/wigust/notes/"))
 
 ;; (with-eval-after-load 'org
 ;;   (setq org-format-latex-options
@@ -30,7 +30,7 @@
         (shell . t)))
 
   ;; [[https://www.orgroam.com/manual.html][Org-roam User Manual]]
-  (setq org-roam-directory (expand-file-name "~/src/org"))
+  (setq org-roam-directory (expand-file-name "~/src/gitlab.com/wigust/notes"))
   (setq org-roam-db-gc-threshold most-positive-fixnum)
 
   ;; XXX: Fix File is missing: Cannot open load file, No such file or directory, org-roam-protocol
@@ -97,7 +97,7 @@
 
 (setq org-publish-project-alist
       '(("org-notes"
-         :base-directory "~/src/org/"
+         :base-directory "~/src/gitlab.com/wigust/notes/"
          :base-extension "org"
          :publishing-directory "/var/www/org"
          :recursive t

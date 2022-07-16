@@ -112,7 +112,7 @@
 
 ;; (autoload 'org-notifications-start "org-notifications" nil t)
 ;; (setq org-notifications-non-agenda-file
-;;       (list (expand-file-name "~/src/org/agenda.org")))
+;;       (list (expand-file-name "~/src/gitlab.com/wigust/notes/agenda.org")))
 ;; ;; (setq org-notifications-notify-before-time 5)
 ;; (org-notifications-start)
 

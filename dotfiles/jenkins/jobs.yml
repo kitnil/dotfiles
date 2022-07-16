@@ -221,7 +221,7 @@
     script-path: Jenkinsfile
     scm:
       - git:
-          url: file:///home/oleg/src/org/.git
+          url: file:///home/oleg/src/gitlab.com/wigust/notes/.git
 
 - job:
     name: wigust/dotfiles-ansible
