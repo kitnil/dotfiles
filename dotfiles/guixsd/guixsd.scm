@@ -2058,9 +2058,11 @@ PasswordAuthentication yes")))
                                         "--no-deploy" "traefik"
                                         "--disable" "traefik"
 
+                                        ;; use dockerd
                                         "--docker"
-
-                                        ;; "--container-runtime-endpoint" "/run/containerd/containerd.sock"
+                                        ;;
+                                        ;; use containerd directly
+                                        ;; "--container-runtime-endpoint" "unix:///run/containerd/containerd.sock"
                                         ))
                            (kubevirt? #t)))
 
