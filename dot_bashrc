@@ -722,7 +722,6 @@ alias ssh='ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
 
 # https://markhneedham.com/blog/2015/11/14/jq-filtering-missing-keys/
 
-alias dockerd='sudo herd start docker'
 alias get-todos='scp work:/home/user/src/jord/doc/todo.org ~/src/todo.org '
 
 # nix-shell -E 'with import <nixpkgs> {}; callPackage ./default.nix {}' -A luaCrypto
