@@ -130,6 +130,7 @@
        emacs-php-mode
        emacs-polymode
        emacs-polymode-ansible
+       emacs-powershell
        emacs-projectile         ; Project functions
        emacs-puppet-mode
        emacs-rainbow-delimiters ; Prettify parentheses
