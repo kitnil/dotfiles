@@ -403,7 +403,7 @@ guix()
                         command guix home build \
                                 -L "$HOME/.local/share/chezmoi/dotfiles/guixsd/modules" \
                                 --fallback \
-                                "$HOME/.local/share/chezmoi/dotfiles/guixsd/home/${HOSTNAME}" "${@:3}"
+                                "$HOME/.local/share/chezmoi/dotfiles/guixsd/home/${HOSTNAME}.scm" "${@:3}"
                     )
                     ;;
                 switch)
@@ -413,7 +413,7 @@ guix()
                             command guix home reconfigure \
                                     -L "$HOME/.local/share/chezmoi/dotfiles/guixsd/modules" \
                                     --fallback \
-                                    "$HOME/.local/share/chezmoi/dotfiles/guixsd/home/${HOSTNAME}"
+                                    "$HOME/.local/share/chezmoi/dotfiles/guixsd/home/${HOSTNAME}.scm"
                         )
                         if [[ -n $allow_downgrades ]]
                         then
