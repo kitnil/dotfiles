@@ -303,7 +303,7 @@ EndSection\n")
   (nginx-server-configuration
    (server-name '("githunt.wugi.info"))
    (listen '("80" "443 ssl"))
-   (root (file-append (load "/home/oleg/archive/src/githunt/guix.scm") "/share/githunt"))
+   (root (file-append (load "/home/oleg/src/github.com/kamranahmedse/githunt/guix.scm") "/share/githunt"))
    (locations
     (list (nginx-location-configuration
            (uri "/.well-known")
