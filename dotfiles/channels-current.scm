@@ -1,9 +1,9 @@
 (list (channel
         (name 'guix)
-        (url "https://git.savannah.gnu.org/git/guix.git")
-        (branch "master")
+        (url "https://github.com/kitnil/guix")
+        (branch "custom")
         (commit
-          "45ed812da502344d58e8128515abd5b8ec6ca7a0")
+          "36f382d34a8f8badd88dc0e3b6ded2517d4061b0")
         (introduction
           (make-channel-introduction
             "9edb3f66fd807b096b48283debdcddccfea34bad"

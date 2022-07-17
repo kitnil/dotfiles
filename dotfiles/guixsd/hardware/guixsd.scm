@@ -1,5 +1,6 @@
 (use-modules (gnu)
 	     (gnu packages certs)
+             (gnu packages linux)
              (nongnu packages linux)
              (nongnu system linux-initrd))
 (use-service-modules networking)
@@ -7,7 +8,8 @@
 (use-modules (gnu packages xorg) (gnu packages ratpoison))
 (use-service-modules xorg desktop)
 
-(use-modules (bootloader grub))
+(use-modules (bootloader grub)
+             (packages linux))
 
 (define (amdgpu+amdgpu.conf)
   (string-append "\
@@ -72,7 +74,7 @@ EndSection
                        %base-file-systems))
 
   (initrd microcode-initrd)
-  (kernel linux-5.15)
+  (kernel linux-5.13)
   (firmware (cons* linux-firmware %base-firmware))
 
   (kernel-arguments '("modprobe.blacklist=pcspkr,snd_pcsp"
