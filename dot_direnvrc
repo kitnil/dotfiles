@@ -165,7 +165,7 @@ direnv:
 
     echo sudo --login "$PWD/pre-inst-env" guix system build \
          --load-path="${HOME}/src/nonguix" \
-         --load-path="${HOME}/src/guix-wigust/guix" \
+         --load-path="/home/oleg/src/cgit.duckdns.org/git/guix/guix-wigust/guix" \
          --load-path="${HOME}/.local/share/chezmoi/dotfiles/guixsd/modules" \
          "${HOME}/.local/share/chezmoi/dotfiles/guixsd/guixsd.scm"
 }

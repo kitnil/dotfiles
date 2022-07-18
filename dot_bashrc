@@ -550,7 +550,7 @@ guix()
             ;;
         prebuild)
             guix_command="$HOME/src/guix/pre-inst-env guix"
-            sudo --login GUIX_PACKAGE_PATH="/home/oleg/src/guix-majordomo:/home/oleg/src/guix-wigust-services/guix:/home/oleg/src/guix-wigust/guix:/home/oleg/src/nonguix"    \
+            sudo --login GUIX_PACKAGE_PATH="/home/oleg/src/guix-majordomo:/home/oleg/src/cgit.duckdns.org/git/guix/guix-wigust-services/guix:/home/oleg/src/cgit.duckdns.org/git/guix/guix-wigust/guix:/home/oleg/src/nonguix"    \
                  $guix_command system build                               \
                  --load-path="$guix_modules" --fallback "$HOME/.local/share/chezmoi/dotfiles/guixsd/guixsd.scm" \
                  --no-grafts \
@@ -558,7 +558,7 @@ guix()
             ;;
         prereconfigure)
             guix_command="$HOME/src/guix/pre-inst-env guix"
-            sudo --login GUIX_PACKAGE_PATH="/home/oleg/src/guix-majordomo:/home/oleg/src/guix-wigust-services/guix:/home/oleg/src/guix-wigust/guix:/home/oleg/src/nonguix"    \
+            sudo --login GUIX_PACKAGE_PATH="/home/oleg/src/guix-majordomo:/home/oleg/src/cgit.duckdns.org/git/guix/guix-wigust-services/guix:/home/oleg/src/cgit.duckdns.org/git/guix/guix-wigust/guix:/home/oleg/src/nonguix"    \
                  $guix_command system reconfigure                               \
                  --load-path="$guix_modules" --fallback "$HOME/.local/share/chezmoi/dotfiles/guixsd/guixsd.scm" \
                  --no-grafts \

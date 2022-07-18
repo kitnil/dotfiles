@@ -2,4 +2,4 @@
 # name: guix-package-manifest
 # key: gpm
 # --
-GUIX_PACKAGE_PATH=$HOME/src/guix-wigust guix package -m $HOME/dotfiles/guix/manifests/desktop.scm
+GUIX_PACKAGE_PATH=/home/oleg/src/cgit.duckdns.org/git/guix/guix-wigust guix package -m $HOME/dotfiles/guix/manifests/desktop.scm

@@ -4,7 +4,7 @@ exec ${GUILE:-$(which guile)} $GUILE_FLAGS -e '(@@ (guix-channels-update) main)'
 !#
 
 ;;;; guix-channels-update --- Update channels.scm.
-;;;; Copyright © 2019 Oleg Pykhalov <go.wigust@gmail.com>
+;;;; Copyright © 2019, 2022 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;; Released under the GNU GPLv3 or any later version.
 
 (define-module (guix-channels-update)
@@ -53,7 +53,7 @@ newspace."
 (define (channels)
   (list (channel
          (name 'guix-wigust)
-         (url "file:///home/oleg/src/guix-wigust")
+         (url "file:///home/oleg/src/cgit.duckdns.org/git/guix/guix-wigust")
          (commit (git-last-commit url)))
         (channel
          (name 'guix)

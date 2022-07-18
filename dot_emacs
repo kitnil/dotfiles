@@ -175,7 +175,7 @@
              "dotfiles/guixsd/modules")
             (concat
              (getenv "HOME")
-             "/src/guix-wigust/guix")))
+             "/src/cgit.duckdns.org/git/guix/guix-wigust/guix")))
      (projectile-project-compilation-cmd . "nix-shell --run 'nix build -L'")
      (eval add-hook 'before-save-hook 'time-stamp)
      (projectile-project-test-cmd . "~/src/guix/pre-inst-env ./test.sh")
