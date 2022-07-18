@@ -2,7 +2,7 @@
 
 # Set window root path. Default is `$session_root`.
 # Must be called before `new_window`.
-# window_root "$HOME/src/guix"
+# window_root "/home/oleg/src/git.savannah.gnu.org/git/guix"
 
 # Create new window. If no argument is given, window name will be based on
 # layout file name.

@@ -164,7 +164,7 @@
 
 (defcommand guix () ()
   (switch-to-emacs)
-  (run-shell-command "magit ~/src/guix"))
+  (run-shell-command "magit /home/oleg/src/git.savannah.gnu.org/git/guix"))
 
 (defcommand guix-wigust () ()
   (progn (run-shell-command "emacsclient --eval '(let ((default-directory (expand-file-name \"/home/oleg/src/cgit.duckdns.org/git/guix/guix-wigust/guix/wigust/packages/\"))) (counsel-find-file))'")

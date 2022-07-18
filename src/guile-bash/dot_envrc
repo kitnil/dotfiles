@@ -9,7 +9,7 @@ done
 
 echo "Install command: 'guix package --with-source=file://$HOME/src/guile-bash -i guile-bash'."
 
-echo '~/src/guix/pre-inst-env guix environment guile-bash --ad-hoc guile2.0-readline'
+echo '/home/oleg/src/git.savannah.gnu.org/git/guix/pre-inst-env guix environment guile-bash --ad-hoc guile2.0-readline'
 echo 'export GUILE_LOAD_COMPILED_PATH=$GUIX_ENVIRONMENT/lib/guile/2.0/ccache'
 echo 'export GUILE_LOAD_PATH=/gnu/store/p6wxadc0ks1zswsjyjhqj1rnidds6ih2-guile2.0-readline-2.0.14/share/guile/site/2.0:$GUIX_ENVIRONMENT/share/guile/2.0'
 echo 'export LD_LIBRARY_PATH=/gnu/store/p6wxadc0ks1zswsjyjhqj1rnidds6ih2-guile2.0-readline-2.0.14/lib'

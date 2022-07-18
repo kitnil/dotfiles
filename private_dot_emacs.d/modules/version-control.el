@@ -284,7 +284,7 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
      (interactive)
      (magit-status ,directory)))
 
-(wi-define-magit-status-repo guix (expand-file-name "~/src/guix"))
+(wi-define-magit-status-repo guix (expand-file-name "/home/oleg/src/git.savannah.gnu.org/git/guix"))
 
 (with-eval-after-load 'forge
   (setq forge-alist
@@ -301,7 +301,7 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 
 (wi-define-browse-url-git-commit
  "guix"
- (expand-file-name "~/src/guix")
+ (expand-file-name "/home/oleg/src/git.savannah.gnu.org/git/guix")
  (lambda (url) (car (last (split-string url "=")))))
 
 (with-eval-after-load 'magit

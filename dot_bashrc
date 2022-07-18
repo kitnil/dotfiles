@@ -549,16 +549,16 @@ guix()
             "$(guix build --file="$HOME/.local/share/chezmoi/dotfiles/ansible/guix.scm" "${@:2}")"
             ;;
         prebuild)
-            guix_command="$HOME/src/guix/pre-inst-env guix"
-            sudo --login GUIX_PACKAGE_PATH="/home/oleg/src/guix-majordomo:/home/oleg/src/cgit.duckdns.org/git/guix/guix-wigust-services/guix:/home/oleg/src/cgit.duckdns.org/git/guix/guix-wigust/guix:/home/oleg/src/nonguix"    \
+            guix_command="/home/oleg/src/git.savannah.gnu.org/git/guix/pre-inst-env guix"
+            sudo --login GUIX_PACKAGE_PATH="/home/oleg/src/github.com/6d6a/package-management-guix-majordomo:/home/oleg/src/cgit.duckdns.org/git/guix/guix-wigust-services/guix:/home/oleg/src/cgit.duckdns.org/git/guix/guix-wigust/guix:/home/oleg/src/gitlab.com/nonguix/nonguix"    \
                  $guix_command system build                               \
                  --load-path="$guix_modules" --fallback "$HOME/.local/share/chezmoi/dotfiles/guixsd/guixsd.scm" \
                  --no-grafts \
                  "${@:2}"
             ;;
         prereconfigure)
-            guix_command="$HOME/src/guix/pre-inst-env guix"
-            sudo --login GUIX_PACKAGE_PATH="/home/oleg/src/guix-majordomo:/home/oleg/src/cgit.duckdns.org/git/guix/guix-wigust-services/guix:/home/oleg/src/cgit.duckdns.org/git/guix/guix-wigust/guix:/home/oleg/src/nonguix"    \
+            guix_command="/home/oleg/src/git.savannah.gnu.org/git/guix/pre-inst-env guix"
+            sudo --login GUIX_PACKAGE_PATH="/home/oleg/src/github.com/6d6a/package-management-guix-majordomo:/home/oleg/src/cgit.duckdns.org/git/guix/guix-wigust-services/guix:/home/oleg/src/cgit.duckdns.org/git/guix/guix-wigust/guix:/home/oleg/src/gitlab.com/nonguix/nonguix"    \
                  $guix_command system reconfigure                               \
                  --load-path="$guix_modules" --fallback "$HOME/.local/share/chezmoi/dotfiles/guixsd/guixsd.scm" \
                  --no-grafts \
@@ -635,7 +635,7 @@ EOF
             )
             ;;
         master-staging)
-            git -C "$HOME/src/guix" shortlog -n upstream/master..upstream/staging
+            git -C "/home/oleg/src/git.savannah.gnu.org/git/guix" shortlog -n upstream/master..upstream/staging
             ;;
         qemu)
             # https://wiki.archlinux.org/index.php/QEMU#Creating_bridge_manually
@@ -1201,7 +1201,7 @@ alias hq='pup'
 guix_graph_chromium()
 {
     package="$1"
-    GUILE_LOAD_PATH=$HOME/src/guix:GUILE_LOAD_PATH guix graph -b d3js \
+    GUILE_LOAD_PATH=/home/oleg/src/git.savannah.gnu.org/git/guix:GUILE_LOAD_PATH guix graph -b d3js \
 "$package" > /tmp/out.html && chromium --app=file:///tmp/out.html
 }
 
@@ -1760,7 +1760,7 @@ wugi.info()
 stumpwm_refcard()
 {
     (
-        cd "$HOME/src/guix-maintenance/doc/refcard" || exit 1
+        cd "/home/oleg/src/git.savannah.gnu.org/git/guix-maintenance/doc/refcard" || exit 1
         # convert -density 200 -rotate 90 "$(guix build -f build.scm)"/stumpwm-refcard.pdf - | zathura -
         case "$1" in
             wallpaper)

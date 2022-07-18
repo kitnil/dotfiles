@@ -10,7 +10,7 @@
                     (string-append home "/.ssh/id_rsa"))
                #f))))
 
-(let ((%install-operating-system (load "/home/oleg/src/guix/gnu/system/install.scm")))
+(let ((%install-operating-system (load "/home/oleg/src/git.savannah.gnu.org/git/guix/gnu/system/install.scm")))
   (operating-system
     (inherit %install-operating-system)
     (services (append (list

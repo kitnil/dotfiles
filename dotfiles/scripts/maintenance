@@ -4,7 +4,7 @@ exec ${GUILE:-$(which guile)} $GUILE_FLAGS -e '(@@ (maintenance) main)' -s "$0" 
 !#
 
 ;;;; guix-maintenance --- Script to get a list of my contributed packages
-;;;; Copyright © 2020 Oleg Pykhalov <go.wigust@gmail.com>
+;;;; Copyright © 2020, 2022 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;; Released under the GNU GPLv3 or any later version.
 
 ;; This file contains machinery to find all my packages.  To do that, run:
@@ -45,7 +45,7 @@ exec ${GUILE:-$(which guile)} $GUILE_FLAGS -e '(@@ (maintenance) main)' -s "$0" 
 (define %source-dir
   (and=> (getenv "HOME")
          (lambda (home)
-           (string-append home "/src/guix"))))
+           (string-append home "/src/git.savannah.gnu.org/git/guix"))))
 
 (define (git-output . args)
   "Execute 'git ARGS ...' command and return its output without trailing

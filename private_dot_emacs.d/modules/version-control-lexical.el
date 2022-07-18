@@ -28,11 +28,11 @@ URL->COMMIT function to parse commit from url.
 The following example defines `browse-url-guix-git-commit'
 function, which opens
 https://git.savannah.gnu.org/cgit/guix.git/commit/?id=df05842332be80e…
-with `magit-show-commit' function in ~/src/guix directory.
+with `magit-show-commit' function in /home/oleg/src/git.savannah.gnu.org/git/guix directory.
 
 \(wi-define-browse-url-git-commit
  \"guix\"
- (expand-file-name \"~/src/guix\")
+ (expand-file-name \"/home/oleg/src/git.savannah.gnu.org/git/guix\")
  (lambda (url) (car (last (split-string url \"=\")))))"
   (defalias (intern (concat "browse-url-" name "-git-commit"))
     (function

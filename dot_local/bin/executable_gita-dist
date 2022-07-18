@@ -9,7 +9,7 @@ $HOME/archive/src/arch-community,arch-community
 $HOME/archive/src/openbsd-ports,openbsd-ports
 $HOME/archive/src/freebsd,freebsd
 $HOME/src/nixpkgs-master,nixpkgs-master
-$HOME/src/guix,guix
+/home/oleg/src/git.savannah.gnu.org/git/guix,guix
 EOF
 
 exec -a "gita" "gita" "$@"

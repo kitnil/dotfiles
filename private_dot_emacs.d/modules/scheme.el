@@ -33,7 +33,7 @@ Non-interactively, this uses the optional second argument PURE."
   (setq geiser-default-implementation 'guile))
 
 (with-eval-after-load 'geiser-guile
-  ;; (add-to-list 'geiser-guile-load-path (expand-file-name "~/src/guix"))
+  ;; (add-to-list 'geiser-guile-load-path (expand-file-name "/home/oleg/src/git.savannah.gnu.org/git/guix"))
   (setq geiser-guile-binary '("guile" "--no-auto-compile"))
 
   ;; Origin <https://gnunet.org/bot/log/guile/2018-02-24>

@@ -1,3 +1,3 @@
 #!/bin/sh
 
-"$HOME/src/guix/pre-inst-env" guix package --show="$1" | recsel -R name,version | xargs printf "%s-%s\\n"
+"/home/oleg/src/git.savannah.gnu.org/git/guix/pre-inst-env" guix package --show="$1" | recsel -R name,version | xargs printf "%s-%s\\n"

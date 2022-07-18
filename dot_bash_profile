@@ -26,7 +26,7 @@ export EDITOR='emacsclient -nw -c'
 export BROWSER='firefox'
 export MANWIDTH=80
 
-export INFOPATH="$HOME/src/guix/doc${INFOPATH:+:}$INFOPATH"
+export INFOPATH="/home/oleg/src/git.savannah.gnu.org/git/guix/doc${INFOPATH:+:}$INFOPATH"
 
 PATH="${HOME}/bin":"${HOME}/.local/bin":"$(env --ignore-environment bash --norc --noprofile -c 'unset PATH; export HOME=/home/oleg; export USER=oleg; source /etc/profile; printf "$PATH"')":"${HOME}/go/bin":"${HOME}/.npm-global/bin":/opt/gradle/bin:"${HOME}/perl5/bin":"${HOME}/.nix-profile/lib/openjdk/bin":"${HOME}/.nix-profile/bin"
 export PATH
@@ -97,7 +97,7 @@ else
     PATH=$HOME/bin:$HOME/.npm-global/bin:$PATH
     export PATH
 
-    INFOPATH="$HOME/src/guix/doc${INFOPATH:+:}$INFOPATH"
+    INFOPATH="/home/oleg/src/git.savannah.gnu.org/git/guix/doc${INFOPATH:+:}$INFOPATH"
     export INFOPATH
 
     # Fix mouse wheel in gtk3
