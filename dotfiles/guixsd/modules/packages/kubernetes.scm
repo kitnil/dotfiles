@@ -78,3 +78,34 @@
     (description
      "This package provides a Kubevirt virtual machines control utility.")
     (license license:asl2.0)))
+
+(define-public k3d
+  (package
+    (name "k3d")
+    (version "5.4.4")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append "https://github.com/k3d-io/k3d/releases/download/v"
+                           version "/k3d-linux-amd64"))
+       (sha256
+        (base32
+         "1gd3693i1jx1l5rqa20yv6hv1chv4j9iapfr9nyi3rbrads52qbq"))))
+    (build-system trivial-build-system)
+    (native-inputs `(("source" ,source)))
+    (arguments
+     (list
+      #:modules '((guix build utils))
+      #:builder
+      #~(begin
+          (use-modules (guix build utils))
+          (let* ((bin (string-append #$output "/bin"))
+                 (k3d (string-append bin "/k3d")))
+            (mkdir-p bin)
+            (copy-file #$(this-package-native-input "source") k3d)
+            (chmod k3d #o555)))))
+    (home-page "https://k3d.io/")
+    (synopsis " Little helper to run CNCF's k3s in Docker")
+    (description "k3d is a lightweight wrapper to run k3s (Rancher Lab’s minimal Kubernetes
+distribution) in docker.")
+    (license license:expat)))
