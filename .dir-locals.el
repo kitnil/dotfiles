@@ -5,7 +5,7 @@
      (projectile-project-test-cmd . "make check")
      (projectile-project-install-cmd . "make install")
      (eval . (setq-local geiser-guile-load-path
-                         (append (list (concat (getenv "HOME") "/src/guix-wigust/guix"))
+                         (append (list (concat (getenv "HOME") "/src/cgit.duckdns.org/git/guix/guix-wigust"))
                                  (if (boundp #'projectile-project-root)
                                      (list (concat (projectile-project-root)
                                                    "dotfiles/guixsd/modules"))
