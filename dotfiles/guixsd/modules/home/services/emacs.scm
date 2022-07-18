@@ -118,7 +118,6 @@
                                  "snippets/scheme-mode/system-stdout"
                                  "snippets/scheme-mode/letvar"
                                  "snippets/scheme-mode/list-comprehension"
-                                 "snippets/scheme-mode/package"
                                  "snippets/scheme-mode/git-checkout"
                                  "snippets/scheme-mode/let-pretty-print"
                                  "snippets/scheme-mode/define-record-type"

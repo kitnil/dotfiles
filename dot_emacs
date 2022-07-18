@@ -139,7 +139,20 @@
  '(org-agenda-files '("~/org/inbox.org" "~/org/todo.org" "~/org/web.org"))
  '(python-shell-interpreter "python3" t)
  '(safe-local-variable-values
-   '((magit-todos-depth)
+   '((eval setq-local geiser-guile-load-path
+           (append
+            (list
+             (concat
+              (getenv "HOME")
+              "/src/cgit.duckdns.org/git/guix/guix-wigust"))
+            (if
+                (boundp #'projectile-project-root)
+                (list
+                 (concat
+                  (projectile-project-root)
+                  "dotfiles/guixsd/modules"))
+              'nil)))
+     (magit-todos-depth)
      (magit-todos-exclude-globs "*.go" "*.info" "*.po")
      (magit-todos-update)
      (magit-todos-depth . 1)
