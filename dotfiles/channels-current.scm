@@ -3,7 +3,7 @@
         (url "https://github.com/kitnil/guix")
         (branch "custom")
         (commit
-          "36f382d34a8f8badd88dc0e3b6ded2517d4061b0")
+          "2d467677c35ff7e2218b358c4f3256fb3ec24f94")
         (introduction
           (make-channel-introduction
             "9edb3f66fd807b096b48283debdcddccfea34bad"

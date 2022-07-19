@@ -71,6 +71,13 @@ EndSection
                          (check? #f)
                          (flags '(no-dev))
                          (options "mode=1777,size=50%"))
+                       (file-system
+                         (device "kubevirt")
+                         (mount-point "/var/run/kubevirt")
+                         (type "tmpfs")
+                         (check? #f)
+                         (flags '(shared))
+                         (create-mount-point? #t))
                        %base-file-systems))
 
   (initrd microcode-initrd)
