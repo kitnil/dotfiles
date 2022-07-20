@@ -3,7 +3,7 @@
 
 (use-modules (gnu))
 (use-service-modules networking ssh)
-(use-package-modules admin curl networking tmux)
+(use-package-modules admin certs curl networking tmux)
 
 (operating-system
   (host-name "kubevirt-guix")
@@ -23,7 +23,7 @@
                       %base-file-systems))
 
   ;; Globally-installed packages.
-  (packages (cons* tmux curl %base-packages))
+  (packages (cons* tmux curl nss-certs %base-packages))
 
   ;; Add services to the baseline: a DHCP client and
   ;; an SSH server.
