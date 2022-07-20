@@ -39,6 +39,7 @@
   #:use-module (wigust packages web)
   #:use-module (packages certs)
   #:use-module (gnu system)
+  #:use-module (gnu system setuid)
   #:use-module (guix gexp)
   #:use-module (guix modules)
   #:use-module (srfi srfi-26)
@@ -190,12 +191,12 @@ EndSection\n")
          %base-packages))
 
 (define %my-setuid-programs
-  (cons* (file-append fping "/sbin/fping")
-         (file-append ubridge "/bin/ubridge")
-         (file-append iputils "/bin/ping")
-         (delete (file-append inetutils "/bin/ping6")
-                 (delete (file-append inetutils "/bin/ping")
-                         %setuid-programs))))
+  (append (list (setuid-program (program (file-append fping "/sbin/fping")))
+                (setuid-program (program (file-append ubridge "/bin/ubridge")))
+                (setuid-program (program (file-append iputils "/bin/ping"))))
+          (delete (setuid-program (program (file-append inetutils "/bin/ping6")))
+                  (delete (setuid-program (program (file-append inetutils "/bin/ping")))
+                          %setuid-programs))))
 
 (define letsencrypt-certificate
   (cut string-append "/etc/letsencrypt/live/" <> "/fullchain.pem"))
