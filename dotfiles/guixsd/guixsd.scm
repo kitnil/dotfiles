@@ -821,9 +821,6 @@ location / {
 
       (groups (cons* (user-group (name "nixbld")
                                  (id 30100))
-                     (user-group (name "adbusers"))
-                     (user-group (name "docker")
-                                 (system? #t))
                      (user-group (name "uinput"))
                      (user-group (name "postfix")
                                  (id 13)
