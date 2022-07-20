@@ -973,7 +973,7 @@ location / {
                          ;;                                  (host-name "guixsd")))
 
                          (service vncserver-service-type (vncserver-configuration
-                                                          (vncserver tigervnc-server)
+                                                          (vncserver (@ (deprecated) tigervnc-server))
                                                           (display 2)
                                                           (user "oleg")
                                                           (group "users")
@@ -1080,6 +1080,7 @@ location / {
 
                          (service autofs-service-type
                                   (autofs-configuration
+                                   (autofs (@ (deprecated) autofs))
                                    (mounts %autofs-mounts)))
 
                          (service osquery-service-type)
@@ -2045,7 +2046,7 @@ PasswordAuthentication yes")))
                                                       ("env_file" . #("/home/oleg/src/peertube/support/docker/production/.env"))
                                                       ("depends_on" . #("postgres" "redis" "postfix")))))))))))))))
 
-                         (service kubernetes-k3s-service-type
+                         #;(service kubernetes-k3s-service-type
                           (kubernetes-k3s-configuration
                            (arguments '("--node-external-ip" "192.168.0.145"
                                         "--bind-address" "192.168.0.145"

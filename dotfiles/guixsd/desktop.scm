@@ -6,7 +6,7 @@
 (list (screen-locker-service slock)
       (screen-locker-service xlockmore "xlock")
       (udisks-service)
-      (service upower-service-type)
+      ;; (service upower-service-type)
       (service accountsservice-service-type)
       (service colord-service-type)
       (geoclue-service)
