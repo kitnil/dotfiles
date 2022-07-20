@@ -142,7 +142,7 @@ use_guix()
 
     shell()
     {
-        guix shell --development guix "$@"
+        guix shell ${ENV_PACKAGES[@]} ${ENV_PACKAGES_MAINTENANCE[@]} --development guix "$@"
     }
     export_function shell
 
