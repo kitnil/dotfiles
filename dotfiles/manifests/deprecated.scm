@@ -9,17 +9,8 @@
   (list (channel
          (name 'guix)
          (url "https://git.savannah.gnu.org/git/guix.git")
-         (introduction (@@ (guix channels) %guix-channel-introduction))
-         (commit "f7e14782025bf87aaef694a21f34010b1a95f7f6")) ;v1.0.1
-        (channel
-         (name 'nonguix)
-         (url "https://gitlab.com/nonguix/nonguix")
-         (commit "7d824b5780558288881602a7a3cf8b0f56ebc08c"))
-        (channel
-         (name 'guix-wigust)
-         (url "https://github.com/kitnil/guix-wigust")
-         (branch "master")
-         (commit "68340baa8cdc1af1b8a8982c2607ff1dda195ee7"))))
+         (commit "f7e14782025bf87aaef694a21f34010b1a95f7f6") ;v1.0.1
+         (introduction (@@ (guix channels) %guix-channel-introduction)))))
 
 (define cached
   (with-store store
@@ -40,3 +31,6 @@
 
 (define-public tigervnc-server
   (last (lookup-inferior-packages inferior "tigervnc-server")))
+
+(define-public autofs
+  (last (lookup-inferior-packages inferior "autofs")))
