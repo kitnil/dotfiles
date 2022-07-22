@@ -2135,3 +2135,8 @@ sudo()
             ;;
     esac
 }
+
+if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]] && [[ $HOSTNAME -eq notebook ]]
+then
+  exec sway
+fi
