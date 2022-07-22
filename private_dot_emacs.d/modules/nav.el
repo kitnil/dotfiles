@@ -91,7 +91,8 @@
   (add-hook 'prog-mode-hook 'symbol-overlay-mode))
 
 (when (functionp #'hideshowvis-minor-mode)
-  (add-hook 'prog-mode-hook 'hideshowvis-minor-mode))
+  (add-hook 'prog-mode-hook 'hideshowvis-minor-mode)
+  (add-hook 'conf-javaprop-mode-hook 'hideshowvis-minor-mode))
 
 (setq wi-groups-direcotories-git t)
 (setq wi-groups-direcotories
