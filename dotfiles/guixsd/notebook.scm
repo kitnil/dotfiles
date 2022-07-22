@@ -9,13 +9,15 @@
 
 	     (services openvpn)
 
+             (ice-9 match)
+
 	     (services nix)
 	     (srfi srfi-1)
 	     (srfi srfi-26))
 
 (use-service-modules desktop networking ssh nix)
 
-(use-package-modules bootloaders certs vpn wm terminals xfce linux package-management admin)
+(use-package-modules bootloaders certs vpn wm terminals xfce linux package-management admin fonts)
 
 (use-service-modules desktop dbus networking xorg)
 
@@ -246,28 +248,53 @@ remote-random
                           (dbus-service)
                           (service ntp-service-type))
 
-                    (modify-services %base-services
-                      (guix-service-type config =>
-                                         (guix-configuration
-                                          (authorized-keys (append (list (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/guix.wugi.info.pub")
-                                                                         (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/vm1.wugi.info.pub")
-                                                                         (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/vm2.wugi.info.pub")
-                                                                         (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/vm3.wugi.info.pub")
-                                                                         (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/jenkins.intr.pub")
-                                                                         (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/spb.pub")
-                                                                         (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/mirror.brielmaier.net.pub")
-                                                                         (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/substitutes.nonguix.org.pub"))
-                                                                   %default-authorized-guix-keys))
-                                          (substitute-urls '("https://ci.guix.gnu.org"
-                                                             "https://guix.wugi.info"
-                                                             "https://substitutes.nonguix.org"))))
-                      ;; (sysctl-service-type _ =>
-                      ;;                      (sysctl-configuration
-                      ;;                       (settings (append '(("net.ipv4.ip_forward" . "1")
-                      ;;                                           ("net.ipv4.conf.all.rp_filter" . "0")
-                      ;;                                           ("net.ipv4.conf.default.rp_filter" . "0"))
-                      ;;                                         %default-sysctl-settings))))
-                      )))
+                    (modify-services
+                     (modify-services %base-services
+                                      (guix-service-type config =>
+                                                         (guix-configuration
+                                                          (authorized-keys (append (list (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/guix.wugi.info.pub")
+                                                                                         (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/vm1.wugi.info.pub")
+                                                                                         (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/vm2.wugi.info.pub")
+                                                                                         (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/vm3.wugi.info.pub")
+                                                                                         (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/jenkins.intr.pub")
+                                                                                         (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/spb.pub")
+                                                                                         (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/mirror.brielmaier.net.pub")
+                                                                                         (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/substitutes.nonguix.org.pub"))
+                                                                                   %default-authorized-guix-keys))
+                                                          (substitute-urls '("https://ci.guix.gnu.org"
+                                                                             "https://guix.wugi.info"
+                                                                             "https://substitutes.nonguix.org"))))
+                                      ;; (sysctl-service-type _ =>
+                                      ;;                      (sysctl-configuration
+                                      ;;                       (settings (append '(("net.ipv4.ip_forward" . "1")
+                                      ;;                                           ("net.ipv4.conf.all.rp_filter" . "0")
+                                      ;;                                           ("net.ipv4.conf.default.rp_filter" . "0"))
+                                      ;;                                         %default-sysctl-settings))))
+                                      )
+                     (console-font-service-type
+                      configuration =>
+                      (map
+                       (match-lambda
+                         (("tty1" . f)
+                          `("tty1" . ,(file-append font-terminus
+                                                   "/share/consolefonts/ter-132n")))
+                         (("tty2" . f)
+                          `("tty2" . ,(file-append font-terminus
+                                                   "/share/consolefonts/ter-132n")))
+                         (("tty3" . f)
+                          `("tty3" . ,(file-append font-terminus
+                                                   "/share/consolefonts/ter-132n")))
+                         (("tty4" . f)
+                          `("tty4" . ,(file-append font-terminus
+                                                   "/share/consolefonts/ter-132n")))
+                         (("tty5" . f)
+                          `("tty5" . ,(file-append font-terminus
+                                                   "/share/consolefonts/ter-132n")))
+                         (("tty6" . f)
+                          `("tty6" . ,(file-append font-terminus
+                                                  "/share/consolefonts/ter-132n")))
+                         ((tty . font) `(,tty . ,font)))
+                       configuration)))))
 
   ;; Allow resolution of '.local' host names with mDNS.
   (name-service-switch %mdns-host-lookup-nss))
