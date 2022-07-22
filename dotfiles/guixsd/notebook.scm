@@ -106,6 +106,12 @@ nss-certs
 nix)
                     %base-packages))
 
+  (sudoers-file (plain-file "sudoers"
+                            (string-join `("root ALL=(ALL) ALL"
+                                           "%wheel ALL=(ALL) ALL"
+                                           "oleg ALL=(ALL) NOPASSWD:ALL")
+                                         "\n")))
+
   ;; Use the "desktop" services, which include the X11
   ;; log-in service, networking with NetworkManager, and more.
   (services (append (list
