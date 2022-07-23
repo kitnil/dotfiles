@@ -1966,9 +1966,9 @@ PasswordAuthentication yes")))
                                              (define password
                                                (string-trim-right
                                                 #$(if (= (getuid) 0)
-                                                      (with-input-from-file "/etc/guix/secrets/windows"
+                                                      (with-input-from-file "/etc/guix/secrets/smb"
                                                         read-string)
-                                                      "skipping /etc/guix/secrets/windows")))
+                                                      "skipping /etc/guix/secrets/smb")))
                                              (with-output-to-file #$output
                                                (lambda ()
                                                  (scm->json
@@ -1990,7 +1990,7 @@ PasswordAuthentication yes")))
                                                       ("command"
                                                        .
                                                        ,(string-append
-                                                         "-u \"oleg;"
+                                                         "-u \"vagrant;"
                                                          password
                                                          "\" -s \"media;/share;yes;no;no;workgroup\" -s \"public;/public;yes;no;yes\""
                                                          " -g \"acl allow execute always = True\"")))))))))))))))
