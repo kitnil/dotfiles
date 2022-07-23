@@ -38,8 +38,6 @@ or other application using the libvirt API.
   </features>
   <cpu mode='host-model' check='partial'>
     <topology sockets='1' dies='1' cores='6' threads='1'/>
-    <feature policy='disable' name='hypervisor'/>
-    <feature policy='require' name='svm'/>
   </cpu>
   <clock offset='utc'>
     <timer name='rtc' tickpolicy='catchup'/>
