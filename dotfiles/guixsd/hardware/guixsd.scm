@@ -82,7 +82,7 @@ EndSection
 
   (initrd microcode-initrd)
   (kernel linux-5.13)
-  (firmware (cons* linux-firmware %base-firmware))
+  (firmware (cons* (@ (packages linux) linux-firmware) %base-firmware))
 
   (kernel-arguments '("modprobe.blacklist=pcspkr,snd_pcsp"
 
