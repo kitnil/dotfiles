@@ -1970,9 +1970,9 @@ __lazy_kubectl()
         *)
             if [[ $(type -t __start_kubectl) != function ]]
             then
-                if [[ -f /run/current-system/profile/bin/k3s ]]
+                if [[ -f /home/oleg/.guix-profile/bin/kubectl ]]
                 then
-                    source <(sudo /run/current-system/profile/bin/k3s kubectl completion bash)
+                    source <(sudo /home/oleg/.guix-profile/bin/kubectl completion bash)
                 fi
             fi
             ;;
@@ -1980,15 +1980,6 @@ __lazy_kubectl()
 }
 
 complete -F __lazy_kubectl kubectl
-
-kubectl()
-{
-    case "$1" in
-        *)
-            sudo k3s kubectl "${@:1}"
-            ;;
-    esac
-}
 
 __lazy_virtctl()
 {
