@@ -1,0 +1,66 @@
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  labels:
+    kubevirt.io/vm: vm-windows-datavolume
+  name: vm-windows-datavolume
+spec:
+  running: true
+  template:
+    metadata:
+      labels:
+        kubevirt.io/vm: vm-windows-datavolume
+    spec:
+      domain:
+        cpu:
+          cores: 4
+          model: host-model
+          sockets: 1
+          threads: 1
+        devices:
+          disks:
+          - disk:
+              bus: virtio
+            name: windows-volume-disk1
+          interfaces:
+          - masquerade: {}
+            model: e1000
+            name: default
+        machine:
+          type: q35
+        resources:
+          requests:
+            memory: 4096M
+        firmware:
+          bootloader:
+            efi:
+              secureBoot: true
+        features:
+          acpi: {}
+          apic: {}
+          hyperv:
+            relaxed: {}
+            spinlocks:
+              spinlocks: 8191
+            vapic: {}
+          smm: {}
+      volumes:
+      - dataVolume:
+          name: windows-dv
+        name: windows-volume-disk1
+      networks:
+      - name: default
+        pod: {}
+  dataVolumeTemplates:
+  - metadata:
+      name: windows-dv
+    spec:
+      pvc:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 17Gi
+      source:
+        http:
+          url: http://iso.wugi.info/windows_10.qcow2
