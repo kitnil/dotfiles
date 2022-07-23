@@ -109,3 +109,32 @@
     (description "k3d is a lightweight wrapper to run k3s (Rancher Lab’s minimal Kubernetes
 distribution) in docker.")
     (license license:expat)))
+
+(define-public kubectl
+  (package
+    (name "kubectl")
+    (version "1.24.0")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append "https://dl.k8s.io/release/v"
+                                  version "/bin/linux/amd64/kubectl"))
+              (sha256
+               (base32
+                "1mwqpghkrb64pmx45cnzmiwnnh5b13wyyax3wdczpxkjcyxqdmll"))))
+    (build-system trivial-build-system)
+    (native-inputs `(("source" ,source)))
+    (arguments
+     (list
+      #:modules '((guix build utils))
+      #:builder
+      #~(begin
+          (use-modules (guix build utils))
+          (let* ((bin (string-append #$output "/bin"))
+                 (kubectl (string-append bin "/kubectl")))
+            (mkdir-p bin)
+            (copy-file #$(this-package-native-input "source") kubectl)
+            (chmod kubectl #o555)))))
+    (home-page "https://kubernetes.io/docs/tasks/tools/install-kubectl-linux/")
+    (synopsis "Kubernetes CLI")
+    (description "This package provides a Kubernetes CLI utility.")
+    (license license:asl2.0)))
