@@ -1,0 +1,97 @@
+<diff>
+  <!-- <add sel="domain" namespace="xmlns" type="@qemu"> -->
+  <!--   http://libvirt.org/schemas/domain/qemu/1.0 -->
+  <!-- </add> -->
+  <replace sel="domain/metadata">
+    <metadata>
+      <libosinfo:libosinfo xmlns:libosinfo="http://libosinfo.org/xmlns/libvirt/domain/1.0">
+        <libosinfo:os id="http://microsoft.com/win/10"/>
+      </libosinfo:libosinfo>
+    </metadata>
+  </replace>
+  <add sel="domain/os">
+    <bootmenu enable='no'/>
+  </add>
+  <add sel="domain/features/hyperv">
+    <vendor_id state='on' value='randomid'/>
+  </add>
+  <add sel="domain/features">
+    <kvm>
+      <hidden state='on'/>
+    </kvm>
+  </add>
+  <replace sel="domain/clock/@offset">utc</replace>
+  <add sel="domain/cpu">
+    <feature policy='disable' name='hypervisor'/>
+    <feature policy='require' name='svm'/>
+  </add>
+  <add sel="domain/devices">
+    <interface type='bridge'>
+      <mac address='52:54:00:23:18:bd'/>
+      <source bridge='br154'/>
+      <vlan>
+        <tag id='154' nativeMode='untagged'/>
+      </vlan>
+      <virtualport type='openvswitch'>
+        <parameters interfaceid='7c2d76d7-7c4b-4227-a117-8759b8ff994b'/>
+      </virtualport>
+      <target dev='win10-4'/>
+      <model type='e1000e'/>
+      <address type='pci' domain='0x0000' bus='0x05' slot='0x00' function='0x0'/>
+    </interface>
+    <channel type='unix'>
+      <source mode='bind' path='/var/lib/libvirt/qemu/win10-4.agent'/>
+      <target type='virtio' name='org.qemu.guest_agent.0'/>
+      <address type='virtio-serial' controller='0' bus='0' port='2'/>
+    </channel>
+    <input type='evdev'>
+      <source dev='/dev/input/by-id/usb-0416_Gaming_Keyboard-event-kbd' grab='all' repeat='on'/>
+    </input>
+    <input type='keyboard' bus='virtio'>
+      <address type='pci' domain='0x0000' bus='0x0a' slot='0x00' function='0x0'/>
+    </input>
+    <input type='evdev'>
+      <source dev='/dev/input/by-id/usb-Kingston_HyperX_Pulsefire_Raid-event-mouse'/>
+    </input>
+    <input type='mouse' bus='virtio'>
+      <address type='pci' domain='0x0000' bus='0x0b' slot='0x00' function='0x0'/>
+    </input>
+    <shmem name='looking-glass'>
+      <model type='ivshmem-plain'/>
+      <size unit='M'>64</size>
+      <address type='pci' domain='0x0000' bus='0x06' slot='0x00' function='0x0'/>
+    </shmem>
+    <hostdev mode='subsystem' type='pci' managed='yes'>
+      <source>
+        <address domain='0x0000' bus='0x12' slot='0x00' function='0x0'/>
+      </source>
+      <address type='pci' domain='0x0000' bus='0x07' slot='0x00' function='0x0'/>
+    </hostdev>
+    <hostdev mode='subsystem' type='pci' managed='yes'>
+      <source>
+        <address domain='0x0000' bus='0x12' slot='0x00' function='0x1'/>
+      </source>
+      <address type='pci' domain='0x0000' bus='0x08' slot='0x00' function='0x0'/>
+    </hostdev>
+  </add>
+  <add sel="domain/devices/graphics">
+    <gl enable='no'/>
+  </add>
+  <add sel="domain/devices/sound">
+    <codec type='micro'/>
+    <audio id='1'/>
+  </add>
+  <replace sel="domain/devices/audio/@type">pulseaudio</replace>
+  <add sel="domain/devices/audio" type="@serverName">/run/user/1000/pulse/native</add>
+  <remove sel="domain/devices/video" />
+  <add sel="domain/devices">
+    <video>
+      <model type='none'/>
+    </video>
+  </add>
+  <!-- <add sel="domain"> -->
+  <!--   <qemu:capabilities> -->
+  <!--     <qemu:del capability='usb-host.hostdevice'/> -->
+  <!--   </qemu:capabilities> -->
+  <!-- </add> -->
+</diff>
