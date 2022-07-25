@@ -138,3 +138,32 @@ distribution) in docker.")
     (synopsis "Kubernetes CLI")
     (description "This package provides a Kubernetes CLI utility.")
     (license license:asl2.0)))
+
+(define-public kompose
+  (package
+    (name "kompose")
+    (version "1.26.1")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append "https://github.com/kubernetes/kompose/releases/download/v"
+                                  version "/kompose-linux-amd64"))
+              (sha256
+               (base32
+                "0vx3af2gy6yqks8rj5b716g04ml5bjqi2jfykdg9hqyw0p1bi1fd"))))
+    (build-system trivial-build-system)
+    (native-inputs `(("source" ,source)))
+    (arguments
+     (list
+      #:modules '((guix build utils))
+      #:builder
+      #~(begin
+          (use-modules (guix build utils))
+          (let* ((bin (string-append #$output "/bin"))
+                 (kompose (string-append bin "/kompose")))
+            (mkdir-p bin)
+            (copy-file #$(this-package-native-input "source") kompose)
+            (chmod kompose #o555)))))
+    (home-page "https://kubernetes.io/docs/tasks/tools/install-kompose-linux/")
+    (synopsis "Kubernetes CLI")
+    (description "This package provides a Kubernetes CLI utility.")
+    (license license:asl2.0)))
