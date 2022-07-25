@@ -1263,7 +1263,7 @@ location / {
                                                           (job_name . "blackbox-smtp-starttls"))
                                                          ((static_configs
                                                            .
-                                                           #(((targets . #("smtp.wugi.info:143")))))
+                                                           #(((targets . #("imap.wugi.info:143")))))
                                                           (scrape_interval . "30s")
                                                           (metrics_path . "/probe")
                                                           (params . ((module . #("imap_starttls"))))

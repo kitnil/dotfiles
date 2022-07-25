@@ -238,8 +238,8 @@
                       (list
                        (mbsync-imap-account-configuration
                         (imap-account "wugi-oleg")
-                        (host "smtp.wugi.info")
-                        (user "oleg@smtp.wugi.info")
+                        (host "imap.wugi.info")
+                        (user "oleg@imap.wugi.info")
                         (pass-cmd "gpg -q --for-your-eyes-only --no-tty -d ~/.password-store/localhost/imap/oleg.gpg")
                         (auth-mechs '("LOGIN"))
                         (ssl-type "IMAPS")
@@ -360,7 +360,7 @@
                                ("tlsOptions" ("rejectUnauthorized" . #t))
                                ("tls" . #t)
                                ("port" . 993)
-                               ("host" . "smtp.wugi.info"))
+                               ("host" . "imap.wugi.info"))
                              #:pretty #t))))))))))
 
     (simple-service 'amtool-config

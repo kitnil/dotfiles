@@ -31,7 +31,9 @@
   #:export (%mail-hosts-file-hosts
             %mail-packages
             %mail-services
-            %mail-users))
+            %mail-users
+            %exim-deploy-hook
+            %dovecot-deploy-hook))
 
 ;;; Commentary:
 ;;;
@@ -125,7 +127,8 @@
        (let* ((cert-directory (getenv "RENEWED_LINEAGE"))
               (user (getpw "dovecot"))
               (uid (passwd:uid user))
-              (gid (passwd:gid user)))
+              (gid (passwd:gid user))
+              (pid (call-with-input-file "/var/run/dovecot/master.pid" read)))
          (copy-file (string-append cert-directory "/"
                                    (readlink (string-append cert-directory "/fullchain.pem")))
                     "/etc/dovecot/private/default.pem")
@@ -134,7 +137,8 @@
                     "/etc/dovecot/dovecot.pem")
          (chown "/etc/dovecot" uid gid)
          (chown "/etc/dovecot/private/default.pem" uid gid)
-         (chown "/etc/dovecot/dovecot.pem" uid gid)))))
+         (chown "/etc/dovecot/dovecot.pem" uid gid)
+         (kill pid SIGHUP)))))
 
 (define (%mail-services listen)
  (list
@@ -170,15 +174,7 @@
                 (client-limit 10)
                 (process-limit 1)
                 (listeners
-                 (list (unix-listener-configuration (path "auth-userdb")))))))))
-  (service (certbot-service-type-custom-nginx "78.108.82.44")
-           (certbot-configuration
-            (email "admin@wugi.info")
-            (certificates
-             (list
-              (certificate-configuration
-               (domains '("smtp.wugi.info"))
-               (deploy-hook %exim-deploy-hook))))))))
+                 (list (unix-listener-configuration (path "auth-userdb")))))))))))
 
 (define %mail-users
   (list
