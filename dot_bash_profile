@@ -3,12 +3,6 @@
 # Setups home environment profile
 if [ -f ~/.profile ]; then source ~/.profile; fi
 
-if [ -n "$TMUX" ]
-then
-    source "${HOME}/.bashrc"
-    return
-fi
-
 export USER=oleg
 
 export LC_TIME=en_GB.UTF-8
@@ -27,9 +21,6 @@ export BROWSER='firefox'
 export MANWIDTH=80
 
 export INFOPATH="/home/oleg/src/git.savannah.gnu.org/git/guix/doc${INFOPATH:+:}$INFOPATH"
-
-PATH="${HOME}/bin":"${HOME}/.local/bin":"$(env --ignore-environment bash --norc --noprofile -c 'unset PATH; export HOME=/home/oleg; export USER=oleg; source /etc/profile; printf "$PATH"')":"${HOME}/go/bin":"${HOME}/.npm-global/bin":/opt/gradle/bin:"${HOME}/perl5/bin":"${HOME}/.nix-profile/lib/openjdk/bin":"${HOME}/.nix-profile/bin"
-export PATH
 
 export GUILE_WARN_DEPRECATED=no
 
@@ -159,3 +150,8 @@ export PERL_MB_OPT
 
 PERL_MM_OPT="INSTALL_BASE=/home/oleg/perl5"
 export PERL_MM_OPT
+
+if [[ -f ${HOME}/.bashrc ]]
+then
+    . "${HOME}/.bashrc"
+fi

@@ -1,4 +1,4 @@
-if [ -n "$SSH_CLIENT" -a "`type -P guile`" ]
-then
-    source /etc/profile
-fi
+# if [ -n "$SSH_CLIENT" -a "`type -P guile`" ]
+# then
+#     source /etc/profile
+# fi

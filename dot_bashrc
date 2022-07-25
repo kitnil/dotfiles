@@ -1,12 +1,6 @@
 ## Copyright © 2018, 2019, 2020, 2021, 2022 Oleg Pykhalov <go.wigust@gmail.com>
 ## Released under the GNU GPLv3 or any later version.
 
-if [ -n "$SSH_CLIENT" ]
-then
-    source "${HOME}/.bash_profile"
-    return
-fi
-
 if [ -f "/etc/skel/.bashrc" ]
 then
     # Load the skel profile's settings.
@@ -2131,3 +2125,6 @@ if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]] && [[ $HOSTNAME -eq notebook ]]
 then
   exec sway
 fi
+
+PATH="${HOME}/bin":"${HOME}/.local/bin":"$(/usr/bin/env --ignore-environment sh --norc --noprofile -c 'unset PATH; export HOME=/home/oleg; export USER=oleg; source /etc/profile; printf "$PATH"')":"${HOME}/go/bin":"${HOME}/.npm-global/bin":/opt/gradle/bin:"${HOME}/perl5/bin":"${HOME}/.nix-profile/lib/openjdk/bin":"${HOME}/.nix-profile/bin"
+export PATH
