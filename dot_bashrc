@@ -1314,7 +1314,7 @@ if [ -f "$HOME/.guix-profile/etc/bash_completion.d/pass" ]; then
     source "$HOME/.guix-profile/etc/bash_completion.d/pass"
     complete -o filenames -F _pass password
 fi
-alias password='EDITOR=zile password'
+alias password='EDITOR=nano password'
 
 genpass()
 {
