@@ -66,7 +66,7 @@
 
              ;; (dwl-guile home-service)
              ;; (dwl-guile configuration)
-	     )
+             )
 
 (define %home
   (and=> (getenv "HOME")
@@ -836,7 +836,8 @@ account default : gmail
                                          (ice-9 popen)
                                          (guile pass)
                                          (json builder)
-                                         (ice-9 match))
+                                         (ice-9 match)
+                                         (srfi srfi-41))
                             (define password-router
                               (pass "majordomo/public/router4/root"))
 
@@ -905,13 +906,14 @@ account default : gmail
                                        ("kvm-nvme201.majordomo.ru" . null)
                                        ("kvm-nvme202.majordomo.ru" . null)
                                        ("kvm-nvme203.majordomo.ru" . null)))
-                                     ("kubernetes_installer"
-                                      ("hosts" ("178.250.247.88" . null)))
                                      ("kubernetes"
                                       ("hosts"
-                                       ("78.108.87.50" . null)
-                                       ("178.250.246.69" . null)
-                                       ("178.250.245.80" . null)))
+                                       ,@(map (lambda (number)
+                                                `(,(string-append "kube" (number->string number) ".intr") . null))
+                                              (stream->list (stream-range 1 7))))
+                                      ("vars"
+                                       ("ansible_ssh_user" . "root")
+                                       ("ansible_python_interpreter" . "/run/current-system/sw/bin/python3")))
                                      ("glpi" ("hosts" ("178.250.244.239" . null)))
                                      ("docker"
                                       ("hosts"
