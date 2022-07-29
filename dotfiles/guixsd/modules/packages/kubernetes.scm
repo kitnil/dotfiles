@@ -167,3 +167,38 @@ distribution) in docker.")
     (synopsis "Kubernetes CLI")
     (description "This package provides a Kubernetes CLI utility.")
     (license license:asl2.0)))
+
+(define-public kubernetes-helm
+  (package
+    (name "kubernetes-helm")
+    (version "3.9.2")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append "https://get.helm.sh/helm-v"
+                                  version "-linux-amd64.tar.gz"))
+              (sha256
+               (base32
+                "0c85qbj16fwzadkl7zcw1l6xjvv5nsrh1kqc8iq9d0m1d20f6nrz"))))
+    (build-system trivial-build-system)
+    (native-inputs
+     `(("source" ,source)
+       ("gzip" ,gzip)
+       ("tar" ,tar)))
+    (arguments
+     (list
+      #:modules '((guix build utils))
+      #:builder
+      #~(begin
+          (use-modules (guix build utils))
+          (let ((bin (string-append #$output "/bin")))
+            (mkdir-p (string-append %output "/bin"))
+            (setenv "PATH" (string-append
+                            (assoc-ref %build-inputs "tar") "/bin" ":"
+                            (assoc-ref %build-inputs "gzip") "/bin"))
+            (invoke "tar" "--strip-components=1"
+                    "-xf" (assoc-ref %build-inputs "source")
+                    "-C" (string-append %output "/bin"))))))
+    (home-page "https://helm.sh/")
+    (synopsis "Package manager for kubernetes")
+    (description "This package provides a package manager for kubernetes.")
+    (license license:asl2.0)))
