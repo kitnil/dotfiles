@@ -1080,10 +1080,10 @@ location / {
                          ;;                     (openvpn-remote-configuration
                          ;;                      (name "vpn-office.majordomo.ru"))))))
 
-                         (service autofs-service-type
-                                  (autofs-configuration
-                                   (autofs (@ (deprecated) autofs))
-                                   (mounts %autofs-mounts)))
+                         ;; (service autofs-service-type
+                         ;;          (autofs-configuration
+                         ;;           (autofs (@ (deprecated) autofs))
+                         ;;           (mounts %autofs-mounts)))
 
                          (service osquery-service-type)
 
