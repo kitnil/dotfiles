@@ -421,3 +421,42 @@ deployment, maintenance, and scaling of applications.")
 applications across multiple hosts.  It provides basic mechanisms for
 deployment, maintenance, and scaling of applications.")
     (license license:asl2.0)))
+
+(define-public etcd
+  (package
+    (name "etcd")
+    (version "3.4.19")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append "https://github.com/etcd-io/etcd/releases/download/v"
+                           version "/etcd-v" version "-linux-amd64.tar.gz"))
+       (sha256
+        (base32
+         "1kcwrng9h0rmkp85d8bwl8ghgn49451l14787mnsy7vsq4khx9wv"))))
+    (build-system trivial-build-system)
+    (native-inputs (list source gzip tar))
+    (arguments
+     (list
+      #:modules '((guix build utils))
+      #:builder
+      #~(begin
+          (use-modules (guix build utils))
+          (let ((bin (string-append #$output "/bin")))
+            (mkdir-p (string-append #$output "/bin"))
+            (setenv "PATH" (string-append
+                            #$(this-package-native-input "tar") "/bin" ":"
+                            #$(this-package-native-input "gzip") "/bin"))
+            (invoke "tar" "--strip-components=1"
+                    "-xf" (assoc-ref %build-inputs "source")
+                    "-C" bin)))))
+    (home-page "https://github.com/etcd-io/etcd")
+    (synopsis "Distributed reliable key-value store")
+    (description "etcd is a distributed reliable key-value store for the most critical data of
+a distributed system, with a focus on being:
+
+@item Simple: well-defined, user-facing API (gRPC)
+@item Secure: automatic TLS with optional client cert authentication
+@item Fast: benchmarked 10,000 writes/sec
+@item Reliable: properly distributed using Raft\n")
+    (license license:asl2.0)))
