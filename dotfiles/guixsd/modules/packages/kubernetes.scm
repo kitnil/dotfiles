@@ -6,13 +6,17 @@
   #:use-module (guix gexp)
   #:use-module (guix git-download)
   #:use-module (guix download)
+  #:use-module (guix build-system go)
   #:use-module (guix build-system python)
   #:use-module (guix build-system trivial)
   #:use-module ((guix licenses) #:prefix license:)
+  #:use-module (guix utils)
   #:use-module (gnu packages base)
   #:use-module (gnu packages bash)
   #:use-module (gnu packages compression)
   #:use-module (gnu packages elf)
+  #:use-module (gnu packages linux)
+  #:use-module (gnu packages rsync)
   #:use-module (gnu packages python-xyz))
 
 (define-public k3s
@@ -201,4 +205,161 @@ distribution) in docker.")
     (home-page "https://helm.sh/")
     (synopsis "Package manager for kubernetes")
     (description "This package provides a package manager for kubernetes.")
+    (license license:asl2.0)))
+
+(define-public crictl
+  (package
+    (name "crictl")
+    (version "1.24.2")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                     (url "https://github.com/kubernetes-sigs/cri-tools.git")
+                     (commit (string-append "v" version))))
+              (file-name (git-file-name name version))
+              (sha256
+               (base32
+                "077zl2l7dplwb13a004p3lp5dhf0scpzfg4b4n12na5y701kkrln"))))
+    (build-system go-build-system)
+    (arguments
+     `(;#:import-path "github.com/kubernetes-sigs/cri-tools"
+       #:install-source? #f
+       #:tests? #f ; tests require 'framwork' from kubernetes
+       #:phases
+       (modify-phases %standard-phases
+         (add-after 'unpack 'change-directory
+           (lambda _
+             (chdir "src") #t))
+         (add-before 'build 'prepare-source
+           (lambda* (#:key outputs #:allow-other-keys)
+             (let ((out (assoc-ref outputs "out")))
+               (substitute* "Makefile"
+                 (("/usr/local") out)
+                 (("^VERSION .*") (string-append "VERSION := " ,version "\n")))
+               #t)))
+         (replace 'build
+           (lambda _
+             (invoke "make")))
+         ;(replace 'check
+         ;  (lambda _
+         ;    (invoke "make" "test-e2e")))
+         (replace 'install
+           (lambda* (#:key outputs #:allow-other-keys)
+             (let ((out (assoc-ref outputs "out")))
+               (setenv "BINDIR" (string-append out "/bin"))
+               (invoke "make" "install"))))
+         (delete 'install-license-files))))
+    (home-page "https://github.com/kubernetes-sigs/cri-tools")
+    (synopsis "CLI and validation tools for Kubelet Container Runtime Interface")
+    (description "Cri-tools aims to provide a series of debugging and validation
+tools for Kubelet CRI.")
+    (license license:asl2.0)))
+
+(define-public kubernetes
+  (package
+    (name "kubernetes")
+    (version "1.24.2")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                     (url "https://github.com/kubernetes/kubernetes.git")
+                     (commit (string-append "v" version))))
+              (file-name (git-file-name name version))
+              (sha256
+               (base32
+                "04lqvhg9xjbg6gxy5fym636nk2941xmz2im8x2wlbx598dn8r0xm"))))
+    (build-system go-build-system)
+    (arguments
+     `(#:import-path "k8s.io/kubernetes"
+       #:install-source? #f
+       #:tests? #f ; Skip tests for now.
+       #:phases
+       (modify-phases %standard-phases
+         (add-before 'build 'prepare-build
+           (lambda* (#:key inputs #:allow-other-keys)
+             (with-directory-excursion "src/k8s.io/kubernetes"
+               (substitute* '("build/root/Makefile"
+                              "build/root/Makefile.generated_files"
+                              "build/pause/Makefile")
+                 (("/bin/bash") (which "bash")))
+               (substitute* "pkg/util/mount/mount.go"
+                 (("defaultMountCommand.*")
+                  (string-append "defaultMountCommand = \""
+                                 (assoc-ref inputs "util-linux")
+                                 "/bin/mount\"\n"))))
+             #t))
+         (add-before 'build 'fix-version-numbers
+           (lambda _
+             (with-directory-excursion "src/k8s.io/kubernetes"
+               (substitute* '("cmd/kubeadm/app/version/base.go"
+                              "staging/src/k8s.io/client-go/pkg/version/base.go"
+                              "staging/src/k8s.io/kubectl/pkg/version/base.go"
+                              "staging/src/k8s.io/component-base/version/base.go"
+                              "staging/src/k8s.io/component-base/metrics/version_parser_test.go"
+                              "pkg/version/base.go"
+                              "vendor/k8s.io/client-go/pkg/version/base.go"
+                              "vendor/k8s.io/kubectl/pkg/version/base.go"
+                              "vendor/k8s.io/component-base/metrics/version_parser_test.go")
+                 (("v0.0.0-master\\+\\$Format:\\%h\\$") (string-append "v" ,version))
+                 (("v0.0.0-master") (string-append "v" ,version))
+                 (("gitMajor string = \"\"")
+                  (string-append "gitMajor string = \"" ,(version-major version) "\""))
+                 (("gitMinor string = \"\"")
+                  (string-append "gitMinor string = \""
+                                 ,(string-drop (version-major+minor version) 2) "\""))))
+             #t))
+         (replace 'build
+           (lambda _
+             (with-directory-excursion "src/k8s.io/kubernetes"
+               ;; Cannot find go-bindata otherwise.
+               (setenv "PATH" (string-append (getcwd) "/_output/bin:"
+                                             (getenv "PATH")))
+               (invoke "make"))))
+         (replace 'install
+           (lambda* (#:key outputs #:allow-other-keys)
+             (let ((out (assoc-ref outputs "out")))
+               (with-directory-excursion "src/k8s.io/kubernetes"
+                 ;; This saves more than 350MiB.
+                 (delete-file "_output/local/go/bin/e2e.test")
+                 (delete-file "_output/local/go/bin/e2e_node.test")
+                 (for-each
+                   (lambda (file)
+                     (install-file file (string-append out "/bin")))
+                   (find-files "_output/local/go/bin" ".*"))
+                 ;(mkdir-p (string-append out "/share/bash-completion/completions"))
+                 ;(call-with-output-file (string-append out "/share/bash-completion/completions/kubectl")
+                 ;  (lambda (port)
+                 ;    (format port (invoke "_output/local/go/bin/kubectl" "completion" "bash"))))
+                 ;(mkdir-p (string-append out "/share/zsh/site-function"))
+                 ;(call-with-output-file (string-append out "/share/zsh/site-functions/_kubectl")
+                 ;  (lambda (port)
+                 ;    (format port (invoke "_output/local/go/bin/kubectl" "completion" "zsh"))))
+                 (install-file "LICENSE"
+                               (string-append out "/share/doc/"
+                                              ,name "-" ,version)))
+               #t)))
+         (add-after 'install 'install-man-pages
+           (lambda* (#:key outputs #:allow-other-keys)
+             (let ((out (assoc-ref outputs "out")))
+               (mkdir-p (string-append out "/share/man/man1"))
+               (with-directory-excursion "src/k8s.io/kubernetes"
+                 (for-each
+                   (lambda (file)
+                     (invoke "_output/local/go/bin/genman"
+                             (string-append out "/share/man/man1") file))
+                   '("kube-apiserver" "kube-controller-manager" "kube-proxy"
+                     "kube-scheduler" "kubelet" "kubectl")))
+               #t))))))
+    (native-inputs
+     `(("which" ,which)))
+    (inputs
+     `(("rsync" ,rsync)
+       ("util-linux" ,util-linux)))
+    (propagated-inputs
+     `(("crictl" ,crictl))) ; Must be the same major+minor version as kubernetes.
+    (home-page "https://kubernetes.io/")
+    (synopsis "Production-Grade Container Scheduling and Management")
+    (description "Kubernetes is an open source system for managing containerized
+applications across multiple hosts.  It provides basic mechanisms for
+deployment, maintenance, and scaling of applications.")
     (license license:asl2.0)))
