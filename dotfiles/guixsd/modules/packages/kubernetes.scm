@@ -363,3 +363,61 @@ tools for Kubelet CRI.")
 applications across multiple hosts.  It provides basic mechanisms for
 deployment, maintenance, and scaling of applications.")
     (license license:asl2.0)))
+
+(define-public kubernetes-binary
+  (package
+    (name "kubernetes-binary")
+    (version "1.24.3")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append "https://dl.k8s.io/v"
+                           version "/kubernetes-server-linux-amd64.tar.gz"))
+       (sha256
+        (base32
+         "1589pb8zq5pglrbhavymhhlgwn5n81sdrxdw2hi0b3k94afnwqmj"))))
+    (build-system trivial-build-system)
+    (native-inputs (list source gzip tar))
+    (inputs (list glibc patchelf))
+    (arguments
+     (list
+      #:modules '((guix build utils))
+      #:builder
+      #~(begin
+          (use-modules (guix build utils))
+          (let ((bin (string-append #$output "/bin")))
+            (mkdir-p (string-append #$output "/bin"))
+            (setenv "PATH" (string-append
+                            #$(this-package-native-input "tar") "/bin" ":"
+                            #$(this-package-native-input "gzip") "/bin" ":"
+                            #$(this-package-input "patchelf") "/bin"))
+            (invoke "tar" "--strip-components=2"
+                    "-xf" (assoc-ref %build-inputs "source"))
+            ;; dynamically linked
+            (for-each (lambda (file)
+                        (invoke "patchelf" "--set-interpreter"
+                                (string-append #$(this-package-input "glibc")
+                                               "/lib/ld-linux-x86-64.so.2")
+                                (string-append "bin/" file))
+                        (install-file (string-append "bin/" file) bin))
+                      '("apiextensions-apiserver"
+                        "kube-aggregator"
+                        "kubectl-convert"
+                        "kubelet"))
+            ;; statically linked
+            (for-each (lambda (file)
+                        (install-file (string-append "bin/" file) bin))
+                      '("mounter"
+                        "kube-apiserver"
+                        "kube-controller-manager"
+                        "kube-proxy"
+                        "kubectl"
+                        "kube-log-runner"
+                        "kubeadm"
+                        "kube-scheduler"))))))
+    (home-page "https://kubernetes.io/")
+    (synopsis "Production-Grade Container Scheduling and Management")
+    (description "Kubernetes is an open source system for managing containerized
+applications across multiple hosts.  It provides basic mechanisms for
+deployment, maintenance, and scaling of applications.")
+    (license license:asl2.0)))
