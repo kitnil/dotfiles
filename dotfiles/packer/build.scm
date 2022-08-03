@@ -53,7 +53,8 @@
                                          "passwd root<enter>password<enter>password<enter>"
                                          "guix package -i openssh<enter><wait1s>"
                                          "herd start ssh-daemon<enter>"))
-                     ("accelerator" . "kvm"))))))
+                     ("accelerator" . "kvm")
+                     ("output_directory" . "/mnt/packer/builds/guix"))))))
 
 (define guix.json
   (mixed-text-file "guix.json"
@@ -69,12 +70,6 @@
                                                       (with-imported-modules '((guix build utils))
                                                         #~(begin
                                                             (use-modules (guix build utils))
-                                                            (define build-directory
-                                                              (if (getenv "PACKER_CACHE_DIR")
-                                                                  (getenv "PACKER_CACHE_DIR")
-                                                                  "packer-build"))
-                                                            (mkdir-p build-directory)
-                                                            (chdir build-directory)
                                                             (if (file-exists? "bare-bones.tmpl")
                                                                 (delete-file "bare-bones.tmpl"))
                                                             (copy-file #$(local-file "bare-bones.tmpl") "bare-bones.tmpl")
