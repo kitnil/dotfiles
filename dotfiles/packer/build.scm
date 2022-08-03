@@ -18,8 +18,11 @@
   `(("provisioners" . #((("type" . "shell")
                          ("inline" . #("set -x"
                                        "parted -s --align=none /dev/vda mklabel msdos mkpart primary ext4 1MiB 100%"
-                                       "mkfs.ext4 -L my-root /dev/vda1"
-                                       "mount LABEL=my-root /mnt"
+                                       "pvcreate /dev/vda1"
+                                       "vgcreate vg0 /dev/vda1"
+                                       "lvcreate -L 8G vg0 -n guix"
+                                       "mkfs.ext4 -L guix /dev/vg0/guix"
+                                       "mount LABEL=guix /mnt"
                                        "herd start cow-store /mnt"
                                        "mkdir /mnt/etc")))
                         (("type" . "file")
@@ -51,7 +54,7 @@
                                          "<enter><wait1s>"
                                          "<enter><wait1s>"
                                          "passwd root<enter>password<enter>password<enter>"
-                                         "guix package -i openssh<enter><wait1s>"
+                                         "guix package -i openssh lvm2<enter><wait1s>"
                                          "herd start ssh-daemon<enter>"))
                      ("accelerator" . "kvm")
                      ("output_directory" . "/mnt/packer/builds/guix"))))))

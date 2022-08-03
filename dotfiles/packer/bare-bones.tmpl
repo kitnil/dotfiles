@@ -8,11 +8,16 @@
   (bootloader (bootloader-configuration
                 (bootloader grub-bootloader)
                 (target "/dev/vda")))
-  (file-systems (cons (file-system
-                        (device (file-system-label "my-root"))
-                        (mount-point "/")
-                        (type "ext4"))
-                      %base-file-systems))
+  (mapped-devices (list (mapped-device
+                         (source "vg0")
+                         (targets '("vg0-guix"))
+                         (type lvm-device-mapping))))
+  (file-systems (append (list (file-system
+                                (device "/dev/mapper/vg0-guix")
+                                (mount-point "/")
+                                (dependencies mapped-devices)
+                                (type "ext4")))
+                        %base-file-systems))
   (users (append (list (user-account
                         (name "user")
                         (comment "Unprivileged user")
