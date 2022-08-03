@@ -41,7 +41,8 @@
                      ("ssh_timeout" . "10m")
                      ("ssh_password" . "password")
                      ("shutdown_command" . "shutdown")
-                     ("memory" . 2048)
+                     ("disk_size" . 32768)
+                     ("memory" . 4096)
                      ;; TODO: Find non-compressed Guix ISO or fix Packer cache ignore in case ISO is compressed
                      ("iso_url" . "https://ftp.gnu.org/gnu/guix/guix-system-install-1.3.0.x86_64-linux.iso")
                      ("iso_checksum" . "sha256:f2b30458fa1736eeee3b82f34aab1d72f3964bef0477329bb75281d2b7bb6d4b")
