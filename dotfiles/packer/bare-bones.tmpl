@@ -1,5 +1,6 @@
 (use-modules (gnu))
 (use-service-modules networking ssh)
+(use-package-modules certs curl tmux)
 
 (operating-system
   (host-name "gnu")
@@ -27,6 +28,8 @@
                        (user-account (inherit %root-account)
                                      (password (crypt "password" "$6$abc"))))
                  %base-user-accounts))
+  (packages (append (list curl nss-certs tmux)
+                    %base-packages))
   (services (append (list (service dhcp-client-service-type)
                           (service openssh-service-type
                                    (openssh-configuration
