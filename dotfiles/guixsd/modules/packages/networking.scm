@@ -82,7 +82,7 @@ hardware and type a password automatically.")
 (define-public plumber
   (package
     (name "plumber")
-    (version "1.2.1")
+    (version "1.10.4")
     (source
      (origin
        (method url-fetch)
@@ -91,7 +91,7 @@ hardware and type a password automatically.")
              version "/plumber-linux"))
        (sha256
         (base32
-         "0j0n5qvl3xy5wx3k1cgpfnaxgc5x38rw2rmhx7qyhl6p680k4qbs"))))
+         "0dn2mp1q5j74ivymp48j0sicfrkiwq5rm9izi377znya6dvlki4j"))))
     (build-system trivial-build-system)
     (arguments
      `(#:modules ((guix build utils))
