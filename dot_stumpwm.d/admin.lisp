@@ -52,11 +52,6 @@
                         (format nil "~f" path))
                       (uiop/filesystem:directory-files (concat (getenv "HOME") "/.ssh") "*.pub"))))))))
 
-(defcommand insert-eng-key () ()
-  (window-send-string
-   (format nil "mkdir ~~/.ssh; cat >> ~~/.ssh/authorized_keys <<'EOF'~%~aEOF"
-           (file-get-contents (concat (getenv "HOME") "/.ssh/id_rsa_majordomo_eng.pub")))))
-
 (defcommand xpanes-guix () ()
   (term-shell-command "xpanes -t -C 1 -c 'ssh -t {}' guixsd workstation.intr spb"
                       :color 'dark))
