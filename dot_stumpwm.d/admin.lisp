@@ -55,5 +55,3 @@
 (defcommand xpanes-guix () ()
   (term-shell-command "xpanes -t -C 1 -c 'ssh -t {}' guixsd workstation.intr spb"
                       :color 'dark))
-
-
