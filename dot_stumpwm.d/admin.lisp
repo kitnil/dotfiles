@@ -44,7 +44,13 @@
 (defcommand insert-ssh-key () ()
   (window-send-string
    (format nil "mkdir ~~/.ssh; cat >> ~~/.ssh/authorized_keys <<'EOF'~%~aEOF"
-           (file-get-contents (concat (getenv "HOME") "/.ssh/id_rsa.pub")))))
+           (file-get-contents
+            (first
+             (select-from-menu
+              (current-screen)
+              (mapcar (lambda (path)
+                        (format nil "~f" path))
+                      (uiop/filesystem:directory-files (concat (getenv "HOME") "/.ssh") "*.pub"))))))))
 
 (defcommand insert-eng-key () ()
   (window-send-string
