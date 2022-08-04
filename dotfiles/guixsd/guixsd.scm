@@ -456,24 +456,7 @@ location / {
                                             (append (list "--exclude" directory) directories))
                                           '() %exclude-directories)
                                     (list "backup")
-                                    %backup-directories))))
-                  (let ((%backup-directories (list "/mnt/windows/games/games/gothic/Saves"
-                                                   "/mnt/windows/games/games/gothic2/Saves")))
-                    (setenv "RESTIC_PASSWORD"
-                            (string-trim-right
-                             (with-input-from-file "/etc/guix/secrets/windows"
-                               read-string)))
-                    (if (and (file-exists? "/mnt/windows/games/games/gothic/Saves")
-                             (file-exists? "/mnt/windows/games/games/gothic2/Saves"))
-                        (zero?
-                         (apply system*
-                                (append (list (string-append #$restic "/bin/restic")
-                                              "--repo" "/srv/backup/windows")
-                                        (list "backup")
-                                        %backup-directories)))
-                        (begin
-                          (display "Not all directories exist, skipping creating a new backup.")
-                          #t))))
+                                    %backup-directories)))))
          (system* (string-append #$curl "/bin/curl")
                   "--max-time" "10"
                   "--retry" "5"
