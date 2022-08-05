@@ -1872,11 +1872,6 @@ lsgpu()
     printf "Memory: %s\n" "$(glxinfo | grep -i -o 'device|memory\|[0-9]\{1,12\} MB' | head -n 1)"
 }
 
-ipmi()
-{
-    IPMI_PASSWORD="$(pass show majordomo/public/majordomo/ipmi/ADMIN)" command ipmi "$@"
-}
-
 efi()
 {
     if [ -d /sys/firmware/efi ]
@@ -2055,7 +2050,7 @@ ipmi()
 {
     case "$1" in
         *)
-            command ipmi "${@:1}"
+            IPMI_PASSWORD="$(pass show majordomo/public/majordomo/ipmi/ADMIN)" command ipmi "${@:1}"
             ;;
     esac
 }
