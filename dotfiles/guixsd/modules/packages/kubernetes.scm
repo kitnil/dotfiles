@@ -460,3 +460,40 @@ a distributed system, with a focus on being:
 @item Fast: benchmarked 10,000 writes/sec
 @item Reliable: properly distributed using Raft\n")
     (license license:asl2.0)))
+
+(define-public k9s
+  (package
+    (name "k9s")
+    (version "0.26.3")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append "https://github.com/derailed/k9s/releases/download/v"
+                           version "/k9s_Linux_x86_64.tar.gz"))
+       (sha256
+        (base32
+         "1kv2q5gvh4d584r5fyvwqc5d9wpp8cfh5jxzn8dfjvx4rwbsqirl"))))
+    (build-system trivial-build-system)
+    (native-inputs (list source gzip tar))
+    (arguments
+     (list
+      #:modules '((guix build utils))
+      #:builder
+      #~(begin
+          (use-modules (guix build utils))
+          (let ((bin (string-append #$output "/bin")))
+            (mkdir-p (string-append #$output "/bin"))
+            (setenv "PATH" (string-append
+                            #$(this-package-native-input "tar") "/bin" ":"
+                            #$(this-package-native-input "gzip") "/bin"))
+            (invoke "tar"
+                    "-xf" (assoc-ref %build-inputs "source")
+                    "-C" bin
+                    "k9s")))))
+    (home-page "https://k9scli.io/")
+    (synopsis "Kubernetes CLI to manage Kubernetes clusters")
+    (description "K9s provides a terminal UI to interact with your Kubernetes clusters. The aim
+of this project is to make it easier to navigate, observe and manage your
+applications in the wild. K9s continually watches Kubernetes for changes and
+offers subsequent commands to interact with your observed resources.")
+    (license license:asl2.0)))
