@@ -20,6 +20,7 @@
   #:use-module (gnu packages base)
   #:use-module (gnu packages backup)
   #:use-module (gnu packages curl)
+  #:use-module (gnu packages linux)
   #:use-module (gnu packages virtualization)
   #:use-module (gnu services)
   #:use-module (gnu services base)
@@ -155,6 +156,12 @@
 (define curl-binary
   (file-append curl "/bin/curl"))
 
+(define lvcreate-binary
+  (file-append lvm2 "/sbin/lvcreate"))
+
+(define lvremove-binary
+  (file-append lvm2 "/sbin/lvremove"))
+
 (define %user-home
   (passwd:dir (getpw "oleg")))
 
@@ -190,26 +197,54 @@
 (define* (restic-lv-backup vg lv
                            #:key (predicate #~(begin #t))
                            restic-repository
-                           restic-password)
+                           restic-password
+                           (lvm2-snapshot-size "32G"))
   "Return a GEXP which defines a logical volume backup steps."
-  #~(if #$(predicate)
-        (begin
-          (let ((device #$(string-append "/dev/" vg "/" lv)))
-            (format #t "Creating new Restic ~a snapshot~%" device)
+  (let* ((device (string-append "/dev/" vg "/" lv))
+         (lvm2-snapshot-name (string-append lv "-snap"))
+         (lvm2-snapshot-device (string-append device "-snap")))
+    #~(if #$(predicate)
+          (begin
+            (format #t "Creating new Restic ~a snapshot~%" #$device)
             (setenv "RESTIC_PASSWORD" #$(restic-password))
             (zero?
              (system
               (string-join
                (append (list #$dd-binary
-                             (string-append "if=" device)
+                             (string-append "if=" #$device)
                              "bs=4M" "status=none")
                        (list "|")
                        (list #$restic-binary "--repo" #$restic-repository
                              "backup" "--stdin" "--stdin-filename"
-                             #$(string-append lv ".img"))))))))
-        (begin
-          (display "win10 is not shut off, skipping creating Restic snapshot\n")
-          #t)))
+                             #$(string-append lv ".img")))))))
+          (every identity
+                 (list
+                  (begin
+                    (format #t "Creating new LVM ~a snapshot~%" #$device)
+                    (system* #$lvcreate-binary
+                             "--size" #$lvm2-snapshot-size
+                             "--name" #$lvm2-snapshot-name
+                             "--snapshot" #$device))
+                  (begin
+                    (format #t "Creating new Restic ~a snapshot~%" #$device)
+                    (setenv "RESTIC_PASSWORD" #$(restic-password))
+                    (zero?
+                     (system
+                      (string-join
+                       (append (list #$dd-binary
+                                     (string-append "if=" #$lvm2-snapshot-device)
+                                     "bs=4M" "status=none")
+                               (list "|")
+                               (list #$restic-binary "--repo" #$restic-repository
+                                     "backup" "--tag" "snapshot"
+                                     "--stdin" "--stdin-filename"
+                                     #$(string-append lv ".img")))))))
+                  (begin
+                    (format #t "Delete LVM snapshot and save changes ~a snapshot~%"
+                            #$lvm2-snapshot-device)
+                    (zero?
+                     (system* #$lvremove-binary "--yes"
+                              #$lvm2-snapshot-device))))))))
 
 (define (hc-ping-notify)
   #~(system* #$curl-binary
