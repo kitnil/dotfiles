@@ -54,7 +54,7 @@ vnc vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
 
                xfce leafpad ratpoison gimp
 
-               kdeconnect
+               ;; kdeconnect
 
                dialog
                entr

@@ -1179,7 +1179,7 @@ account default : gmail
                                        ("vm1.wugi.info" . null))))))
                                  port)))))))
 
-    (service home-openssh-service-type %home-openssh-configuration)
+    ;; (service home-openssh-service-type %home-openssh-configuration)
 
     ;; XXX: missing home-ssh-configuration
     ;; (service home-ssh-service-type

@@ -128,7 +128,7 @@
    (string "")
    "IMAP user.  An example value would be @samp{alice@imap.example.org}.")
   (pass-cmd
-   (maybe-string *unspecified*)
+   (maybe-string 'unset)
    "Shell command to obtain a password.  An example value would be
 @samp{pass show imap.example.org/alice}")
   (auth-mechs
@@ -162,7 +162,7 @@ identities.")
    (string "~/Maildir/")
    "The location of the store in the server's file system.")
   (inbox
-   (maybe-string *unspecified*)
+   (maybe-string 'unset)
    "The location of the INBOX.  An example value would be
 @samp{~/Maildir/alice}.")
   (sub-folders
@@ -182,18 +182,18 @@ example value would be @samp{:alice-remote:}.")
    "Specify the near resp Store to be connected by the Channel.  An example
 value would be @samp{:majordomo-local:}.")
   (patterns
-   (maybe-string-list *unspecified*)
+   (maybe-string-list 'unset)
    "Instead of synchronizing only one mailbox pair, synchronize all mailboxes
 that match the patterns. An example value would be @samp{'(\"INBOX\")}.")
   (sync
-   (maybe-string-list *unspecified*)
+   (maybe-string-list 'unset)
    "Synchronization operation to perform.  An example value would be
 @samp{'(\"Pull\")}.")
   (max-messages
-   (maybe-non-negative-integer *unspecified*)
+   (maybe-non-negative-integer 'unset)
    "Maximum number of messages to keep in each near side mailbox.")
   (expunge
-   (maybe-string *unspecified*)
+   (maybe-string 'unset)
    "Permanently remove all messages marked for deletion."))
 
 (define (serialize-mbsync-imap-account-configuration field-name val)

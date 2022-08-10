@@ -1,9 +1,9 @@
 (list (channel
         (name 'guix)
-        (url "https://github.com/kitnil/guix")
-        (branch "custom")
+        (url "https://git.savannah.gnu.org/git/guix.git")
+        (branch "master")
         (commit
-          "ca48476418ebc1bcb68b5544b4487755a633d42e")
+          "b72459a861d7029d69e9e3ffe3dd411b452e26de")
         (introduction
           (make-channel-introduction
             "9edb3f66fd807b096b48283debdcddccfea34bad"
@@ -20,7 +20,7 @@
         (url "https://gitlab.com/nonguix/nonguix")
         (branch "master")
         (commit
-          "ec7c7b852c024095e4f34523452230406a3b4549")
+          "d2717cb03b30a37c2888596a4d32f1a84a892b2f")
         (introduction
           (make-channel-introduction
             "897c1a470da759236cc11798f4e0a5f7d4d59fbc"
