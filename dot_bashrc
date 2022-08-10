@@ -516,11 +516,14 @@ guix()
                         set -e
                         cd "${HOME}/.local/share/chezmoi" || exit 1
                         make dotfiles/channels-current.scm
-                        if git commit -m "channels-current: Update." dotfiles/channels-current.scm
+                        if [[ $(git diff dotfiles/channels-current.scm) != "" ]]
                         then
-                            :
-                        else
-                            exit 1
+                            if git commit -m "channels-current: Update." dotfiles/channels-current.scm
+                            then
+                                :
+                            else
+                                exit 1
+                            fi
                         fi
                     )
                     ;;
@@ -588,7 +591,7 @@ EOF
         system)
             case "$2" in
                 build)
-                    sudo --login command guix system build \
+                    sudo --login GUILE_LOAD_PATH="${HOME}/.local/share/chezmoi/dotfiles/guixsd/modules:${GUILE_LOAD_PATH}" command guix system build \
                          -L "$guix_modules" \
                          "${@:3}" \
                          "$HOME/.local/share/chezmoi/dotfiles/guixsd/$HOSTNAME.scm"
@@ -601,14 +604,14 @@ EOF
                     )
                     ;;
                 reconfigure)
-                    sudo --login command guix system reconfigure \
+                    sudo --login GUILE_LOAD_PATH="${HOME}/.local/share/chezmoi/dotfiles/guixsd/modules:${GUILE_LOAD_PATH}" command guix system reconfigure \
                          -L "$guix_modules" \
                          --no-bootloader "${@:3}" \
                          "$HOME/.local/share/chezmoi/dotfiles/guixsd/$HOSTNAME.scm"
                     ;;
                 switch)
                     guix_command=(
-                        sudo --login command guix system reconfigure \
+                        sudo --login GUILE_LOAD_PATH="${HOME}/.local/share/chezmoi/dotfiles/guixsd/modules:${GUILE_LOAD_PATH}" command guix system reconfigure \
                              -L "$guix_modules" \
                              "${@:3}" \
                              "$HOME/.local/share/chezmoi/dotfiles/guixsd/$HOSTNAME.scm"
