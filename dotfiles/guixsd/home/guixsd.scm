@@ -822,7 +822,10 @@ account default : gmail
                     home-files-service-type
                     (append (list `(,".ansible.cfg" ,(local-file (string-append %project-directory "/dot_ansible.cfg"))))
                             (map (lambda (file-name)
-                                   `(,(string-append ".ansible/plugins/modules/" file-name) ,(local-file (string-append "dot_ansible/plugins/modules/" file-name))))
+                                   `(,(string-append ".ansible/plugins/modules/" file-name)
+                                     ,(local-file (string-append %project-directory
+                                                                 "/dot_ansible/plugins/modules/"
+                                                                 file-name))))
                                  '("guix_package.py"
                                    "guix_pull.py"))))
 
