@@ -144,6 +144,23 @@
             (list
              (concat
               (getenv "HOME")
+              "/src/cgit.duckdns.org/git/guix/guix-wigust/guix"))
+            (list
+             (concat
+              (getenv "HOME")
+              "/src/gitlab.com/nonguix/nonguix"))
+            (if
+                (boundp #'projectile-project-root)
+                (list
+                 (concat
+                  (projectile-project-root)
+                  "dotfiles/guixsd/modules"))
+              'nil)))
+     (eval setq-local geiser-guile-load-path
+           (append
+            (list
+             (concat
+              (getenv "HOME")
               "/src/cgit.duckdns.org/git/guix/guix-wigust"))
             (if
                 (boundp #'projectile-project-root)
