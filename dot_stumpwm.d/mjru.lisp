@@ -405,3 +405,14 @@
                          `("--name=emacs@br1-mr14.intr" "--eval" "(mjru-connect-br1-mr14.intr)")
                          :input nil
                          :output *standard-output*))))
+
+
+;;;
+;;; Rofi
+;;;
+
+(defcommand rofi-billing2-server () ()
+  "Open Rofi billing2 server."
+  (let ((rofi-script (concat (getenv "HOME") "/.local/bin/rofi-billing2-server")))
+    (run-rofi* (list "-modi" (concat "billing2:" rofi-script)
+                     "-show" "billing2"))))

@@ -186,6 +186,7 @@
                           "rofi-mycli"
                           "rofi-stumpwm"
                           "rofi-xterm"
+                          "rofi-billing2-server"
                           "rss"
                           "run-docker"
                           "run-emacs"

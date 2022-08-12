@@ -1,0 +1,14 @@
+#!/usr/bin/env -S guile --no-auto-compile -e main -s
+!#
+
+(use-modules (srfi srfi-1)
+             (ice-9 match))
+
+(define (main . args)
+  (if (= (length (last args)) 1)
+      (system* "mjru-infa" "server")
+      (match args
+        (((_ args))
+         (match (delete "" (string-split args #\space))
+           ((datacenter rack server-name server-id billing2-id billing2-url)
+            (system* "firefox" billing2-url)))))))
