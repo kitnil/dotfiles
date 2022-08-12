@@ -4,6 +4,10 @@
   (run-shell-command
    (join `("rofi" ,command))))
 
+(defun run-rofi* (command &optional dark)
+  (run-shell-command
+   (join `("rofi" ,@command))))
+
 (defcommand rofi-drun () ()
   "Open Rofi to launch `.desktop' file."
   (run-rofi "-modi run,drun -show drun"))
