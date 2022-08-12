@@ -104,7 +104,6 @@ install: install-ssh dotfiles/guixsd/machines.scm dotfiles/nix/nix.conf
 	install --mode=755 dotfiles/scripts/guix-package-version $(HOME)/bin
 	install --mode=755 dotfiles/scripts/guix-profile-to-manifest $(HOME)/bin
 	install --mode=755 dotfiles/scripts/maintenance $(HOME)/bin
-	install --mode=755 dotfiles/scripts/rofi-mycli $(HOME)/bin
 	install --mode=755 dotfiles/scripts/sshrc $(HOME)/bin
 	gpg --decrypt dotfiles/emacs/mjru-network.gpg > $(HOME)/.emacs.d/modules/mjru-network.el
 	ln -sf $(HOME)/.Xresources $(HOME)/.Xdefaults
