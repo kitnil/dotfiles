@@ -5,17 +5,17 @@
 (use-package-modules admin algebra aspell astronomy audio backup bash
 bittorrent cdrom chicken chromium ci cmake code commencement compression
 compton configuration-management cpio cran curl databases dhall dictionaries
-diffoscope dns dunst elf entr file games gettext gcc gdb ghostscript gimp gl
-glib gnome gnu-doc gnupg gnuzilla golang graphics graphviz gstreamer gtk guile
-guile-xyz haskell haskell-apps haskell-xyz imagemagick image-viewers inkscape
-irc kde kodi libreoffice license linux lisp logging lsof lxde lxqt m4 mail man
-maths messaging minetest mp3 ncdu ncurses networking node package-management
-parallel password-utils patchutils pdf perl perl-web php pretty-print photo
-pulseaudio pv python python-web python-xyz qt ratpoison rdesktop readline
-racket rsync rust-apps samba scheme screen shells shellutils sqlite ssh
-statistics suckless syncthing synergy terminals tex texinfo text-editors
-telegram textutils tls tmux tor valgrind version-control video virtualization
-vnc vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
+diffoscope dns dunst elf entr file freeipmi games gettext gcc gdb ghostscript
+gimp gl glib gnome gnu-doc gnupg gnuzilla golang graphics graphviz gstreamer
+gtk guile guile-xyz haskell haskell-apps haskell-xyz imagemagick image-viewers
+inkscape irc kde kodi libreoffice license linux lisp logging lsof lxde lxqt m4
+mail man maths messaging minetest mp3 ncdu ncurses networking node
+package-management parallel password-utils patchutils pdf perl perl-web php
+pretty-print photo pulseaudio pv python python-web python-xyz qt ratpoison
+rdesktop readline racket rsync rust-apps samba scheme screen shells shellutils
+sqlite ssh statistics suckless syncthing synergy terminals tex texinfo
+text-editors telegram textutils tls tmux tor valgrind version-control video
+virtualization vnc vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
 
 (define guix-collection-packages-multiout
   `((,glib "bin")
@@ -300,7 +300,7 @@ vnc vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
                bluez
 
                ;; telegram-desktop
-               )
+               freeipmi)
 
          guix-collection-packages-multiout
          %large-packages
