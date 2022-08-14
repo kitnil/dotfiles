@@ -497,3 +497,34 @@ of this project is to make it easier to navigate, observe and manage your
 applications in the wild. K9s continually watches Kubernetes for changes and
 offers subsequent commands to interact with your observed resources.")
     (license license:asl2.0)))
+
+(define-public argocd
+  (package
+    (name "argocd")
+    (version "2.4.9")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append "https://github.com/argoproj/argo-cd/releases/download/v"
+                                  version "/argocd-linux-amd64"))
+              (sha256
+               (base32
+                "0504j5xcz1d6w863qb0z968a0k5nj6ls4l2kvcmbk3zvsjv1frvc"))))
+    (build-system trivial-build-system)
+    (native-inputs (list source))
+    (arguments
+     (list
+      #:modules '((guix build utils))
+      #:builder
+      #~(begin
+          (use-modules (guix build utils))
+          (let* ((bin (string-append #$output "/bin"))
+                 (argocd (string-append bin "/argocd")))
+            (mkdir-p (string-append #$output "/bin"))
+            (copy-file (assoc-ref %build-inputs "source")
+                       (string-append #$output "/bin/argocd"))
+            (chmod argocd #o555)))))
+    (home-page "https://argo-cd.readthedocs.io/")
+    (synopsis "Declarative continuous deployment for Kubernetes")
+    (description "Argo CD is a declarative, GitOps continuous delivery tool
+ for Kubernetes.")
+    (license license:asl2.0)))
