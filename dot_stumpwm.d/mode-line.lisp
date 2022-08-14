@@ -77,8 +77,8 @@
                 (list '(:eval (format nil "spb: /: ~a" *spb-disk-free-root-counter*)))
                 '())
 
-          ,(make-string 4 :initial-element #\space)
-          ,'(:eval (fmt-temp-current (temp-current) t))
+          ;; ,(make-string 4 :initial-element #\space)
+          ;; ,'(:eval (fmt-temp-current (temp-current) t))
 
           ,(make-string 4 :initial-element #\space)
           ,'(:eval (fmt-mem-available (mem-usage) t))
