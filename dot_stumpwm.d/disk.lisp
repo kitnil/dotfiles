@@ -23,6 +23,8 @@
                (format nil "~a GB" (delete #\G size)))
               ((uiop/utility:string-suffix-p size "M")
                (format nil "~a MB" (delete #\M size)))
+              ((uiop/utility:string-suffix-p size "T")
+               (format nil "~a TB" (delete #\T size)))
               (t size)))))
 
 (defvar *disk-free-root-counter* 0)
