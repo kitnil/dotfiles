@@ -13,4 +13,5 @@
        kubectl
        kubernetes-helm
        nerdctl
-       virtctl))
+       virtctl
+       argocd))
