@@ -1,31 +1,33 @@
 (in-package :stumpwm)
 
 (defun disk-free (target &key remote (standby ""))
-  (let ((size (fourth (split-string (second (split-string (run-shell-command (if remote
-                                                                                 (format nil "ssh ~a -- df -h ~a" remote target)
-                                                                                 (format nil "df -h ~a" target))
-                                                                             t)
-                                                          '(#\newline)))
-                                    '(#\space))))
-        (standby
-          (if (string= standby "")
-              nil
-              (string= (car
-                        (last (split-string
-                               (string-trim
-                                '(#\Newline)
-                                (run-shell-command (format nil "sudo hdparm -C ~a" standby) t))
-                               '(#\space))))
-                       "standby"))))
-    (if standby
-        "standby"
-        (cond ((uiop/utility:string-suffix-p size "G")
-               (format nil "~a GB" (delete #\G size)))
-              ((uiop/utility:string-suffix-p size "M")
-               (format nil "~a MB" (delete #\M size)))
-              ((uiop/utility:string-suffix-p size "T")
-               (format nil "~a TB" (delete #\T size)))
-              (t size)))))
+  (let* ((standby?
+           (if (string= standby "")
+               nil
+               (string= (car
+                         (last (split-string
+                                (string-trim
+                                 '(#\Newline)
+                                 (run-shell-command (format nil "sudo hdparm -C ~a" standby) t))
+                                '(#\space))))
+                        "standby")))
+         (size (if standby?
+                   "standby"
+                   (fourth (split-string (second (split-string (run-shell-command (if remote
+                                                                                      (format nil "ssh ~a -- df -h ~a" remote target)
+                                                                                      (format nil "df -h ~a" target))
+                                                                                  t)
+                                                               '(#\newline)))
+                                         '(#\space))))))
+    (cond ((uiop/utility:string-suffix-p size "G")
+           (format nil "~a GB" (delete #\G size)))
+          ((uiop/utility:string-suffix-p size "M")
+           (format nil "~a MB" (delete #\M size)))
+          ((uiop/utility:string-suffix-p size "T")
+           (format nil "~a TB" (delete #\T size)))
+          ((string= "standby" size)
+           "standby")
+          (t size))))
 
 (defvar *disk-free-root-counter* 0)
 
