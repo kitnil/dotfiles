@@ -62,6 +62,9 @@
                 '())
 
           ,(make-string 4 :initial-element #\space)
+          ,'(:eval (format nil "kubernetes: ~a" *kubernetes-current-cluster*))
+
+          ,(make-string 4 :initial-element #\space)
           ,'(:eval (format nil "/srv: ~a" *disk-free-srv-counter*))
 
           ,(make-string 4 :initial-element #\space)
@@ -159,6 +162,14 @@
                           (spb-disk-free-root-update-counter)
                           (sleep 60))))
                  :name "mode-line-df-spb")
+
+                (sb-thread:make-thread
+                 (lambda ()
+                   (loop while t do
+                        (progn
+                          (kubernetes-update-current-cluster)
+                          (sleep 60))))
+                 :name "mode-line-kubernetes-current-cluster")
 
                 ;; (sb-thread:make-thread
                 ;;  (lambda ()

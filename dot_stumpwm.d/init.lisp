@@ -63,6 +63,7 @@
        (load-config-file "virtualization.lisp")
        (load-config-file "bittorrent.lisp")
 
+       (load-config-file "kubernetes.lisp")
        (load-config-file "disk.lisp")
        (load-config-file "rest.lisp")
        (load-config-file "cpu.lisp")
