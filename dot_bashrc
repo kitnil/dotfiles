@@ -2053,7 +2053,7 @@ ipmi()
 {
     case "$1" in
         *)
-            IPMI_PASSWORD="$(pass show majordomo/public/majordomo/ipmi/ADMIN)" command ipmi "${@:1}"
+            IPMI_PASSWORD="$(pass show majordomo/public/ipmi/ADMIN)" command ipmi "${@:1}"
             ;;
     esac
 }
