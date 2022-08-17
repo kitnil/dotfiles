@@ -64,3 +64,11 @@
 
 (defcommand mpv-music () ()
   (run-shell-command "mpv https://www.youtube.com/playlist?list=PLmjgicsUWIkvEKkLN01vm85neXAik3yU2"))
+
+(defvar *brown-noise-file*
+  "/srv/video/Smoothed_Brown_Noise.m4a")
+
+(defcommand brown-noise () ()
+  (run-shell-command
+   (format nil "alacritty -e mpv --no-resume-playback ~a"
+           *brown-noise-file*)))
