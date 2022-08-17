@@ -114,6 +114,7 @@
                           "github-create-repository"
                           "gitlab-runner-service"
                           "git-mirror"
+                          "git-diff-date"
                           "git-pass-secrets"
                           "git-pure"
                           "git-statistics"

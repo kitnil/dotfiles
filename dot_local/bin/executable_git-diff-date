@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+
+# $1 is a date, e.g 01.01.2022
+# $2 is a file, e.g. config/juniper.conf
+
+if [[ -z $1 ]]
+then
+    echo "No date and file specified." 1>&2
+    echo "Hint: git diff-date 01.01.2022 config/juniper.conf" 1>&2
+    exit 1
+fi
+
+if [[ -z $2 ]]
+then
+    echo "No file specified." 1>&2
+    echo "Hint: git diff-date ${1} config/juniper.conf" 1>&2
+    exit 1
+fi
+
+git diff "$(git log --format=%H --since="$1" --reverse | head -1)"..HEAD -- "$2"
