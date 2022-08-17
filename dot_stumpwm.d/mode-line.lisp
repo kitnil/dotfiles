@@ -171,6 +171,11 @@
                           (sleep 60))))
                  :name "mode-line-kubernetes-current-cluster")
 
+                (sb-thread:make-thread
+                 (lambda ()
+                   (kubernetes-update-current-cluster-inotify))
+                 :name "mode-line-kubernetes-current-cluster-inotify")
+
                 ;; (sb-thread:make-thread
                 ;;  (lambda ()
                 ;;    (loop while t do
