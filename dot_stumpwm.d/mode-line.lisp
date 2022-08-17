@@ -139,13 +139,13 @@
                 ;;                (sleep 60)))) ||#
                 ;;  :name "imap-update-recent-count") ||#
 
-                ;; (sb-thread:make-thread ||#
-                ;;  (lambda () ||#
-                ;;    (loop while t do ||#
-                ;;         (progn ||#
-                ;;           (disk-free-srv-update-counter) ||#
-                ;;           (sleep 60)))) ||#
-                ;;  :name "disk-free-srv-update-counter") ||#
+                (sb-thread:make-thread
+                 (lambda ()
+                   (loop while t do
+                        (progn
+                          (disk-free-srv-update-counter)
+                          (sleep 60))))
+                 :name "disk-free-srv-update-counter")
 
                 (sb-thread:make-thread
                  (lambda ()
