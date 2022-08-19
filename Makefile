@@ -110,6 +110,7 @@ install: install-ssh dotfiles/guixsd/machines.scm dotfiles/nix/nix.conf
 	install --mode=644 dotfiles/guile/pass.scm $(HOME)/.config/guile/pass.scm
 	install --mode=644 dotfiles/guile/config.scm $(HOME)/.config/guile/config.scm
 	guix home -L dotfiles/guixsd/modules reconfigure dotfiles/guixsd/home/$(HOSTNAME).scm
+	xrdb $(HOME)/.Xresources
 
 .PHONY: guile-ihs
 guile-ihs:
