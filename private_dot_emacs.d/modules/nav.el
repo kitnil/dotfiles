@@ -13,7 +13,7 @@
 
 ;; Open buffer in vertical split by default
 (setq split-height-threshold nil)
-(setq split-width-threshold 160)
+(setq split-width-threshold 140)
 
 ;; Origin <https://github.com/Wilfred/.emacs.d/blob/gh-pages/init.org>.
 (setq scroll-preserve-screen-position 'always) ; Preserve scroll pos.
