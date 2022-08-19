@@ -1973,6 +1973,18 @@ __lazy_kubectl()
 
 complete -F __lazy_kubectl kubectl
 
+kubectl()
+{
+    case "$1" in
+        watch)
+            viddy -n 10 -d 'kubectl get nodes -o wide; echo; kubectl get all -A -o wide; echo; kubectl get all -n kube-system -A -o wide'
+            ;;
+        *)
+            command kubectl "$@"
+            ;;
+    esac
+}
+
 __lazy_virtctl()
 {
     local word_count=${#COMP_WORDS[*]}
