@@ -4,3 +4,5 @@
   (setq tramp-remote-path
 	(append tramp-remote-path
 		'(tramp-own-remote-path))))
+
+(setq proced-show-remote-processes t)
