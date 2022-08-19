@@ -48,7 +48,7 @@ XTerm.vt100.cursorBlink: false
 
 ! https://github.com/eudoxia0/dotfiles/blob/master/sextant/xresources.txt
 !
-! Don't use internalBorder, because this could lead to corrupted fonts.
+! Do not use internalBorder, because this could lead to corrupted fonts.
 !
 ! XTerm.vt100.internalBorder: 10
 
