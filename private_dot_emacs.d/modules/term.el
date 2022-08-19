@@ -93,3 +93,10 @@
       (progn (vterm-send-C-w)
              (vterm-send-string (vterm-dabbrev-expand-wrapper) t))
     (vterm-send-string (vterm-dabbrev-expand-wrapper) t)))
+
+
+;;;
+;;; shell
+;;;
+
+(setq shell-kill-buffer-on-exit t)
