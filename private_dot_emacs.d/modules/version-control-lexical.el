@@ -57,4 +57,14 @@ with `magit-show-commit' function in /home/oleg/src/git.savannah.gnu.org/git/gui
 If no commit hash provides, show a commit from hash at current point."
             name)))
 
+(defun wi-magit-show-commit ()
+  (interactive)
+  (call-interactively #'magit-show-commit)
+  (call-interactively #'crux-transpose-windows)
+  (call-interactively #'other-window))
+
+(with-eval-after-load 'magit
+  (let ((map magit-log-mode-map))
+    (define-key map (kbd "RET") 'wi-magit-show-commit)))
+
 ;;; version-control-lexical.el ends here
