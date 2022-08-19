@@ -40,7 +40,6 @@
        emacs-elfeed-score
        emacs-emamux
        ;; emacs-emms
-       emacs-emojify
        emacs-erc-hl-nicks       ; for ERC
        emacs-epkg
        emacs-eshell-bookmark
