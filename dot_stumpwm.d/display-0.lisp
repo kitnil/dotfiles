@@ -86,8 +86,7 @@
                                   (emacs-todo-new-window))))
 
 (defcommand group-2-start-programs () ()
-  (run-frame 2 :frame-0-command (lambda () (spotify))
-               :frame-1-command (lambda () (notmuch))))
+  (run-frame 2 :frame-0-command (lambda () (spotify))))
 
 (defcommand group-3-start-programs () ()
   (run-frame 3 :frame-0-command (lambda ()
