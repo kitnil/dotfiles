@@ -6,7 +6,11 @@
 (use-modules (gnu packages guile)
              (guix gexp)
              (guix modules)
-             (guix utils))
+             (guix utils)
+             (ice-9 match)
+             (ice-9 ftw)
+             (srfi srfi-1)
+             (srfi srfi-26))
 
 ;; TODO: Use Packer from Guix package collection
 (define %packer
@@ -67,7 +71,17 @@
                                          "guix package -i openssh lvm2<enter><wait1s>"
                                          "herd start ssh-daemon<enter>"))
                      ("accelerator" . "kvm")
-                     ("output_directory" . "/mnt/packer/builds/guix"))))))
+                     ("output_directory" . ,(string-append "/mnt/packer/builds/guix."
+                                                           (number->string
+                                                            (1+ (first
+                                                                 (sort (map string->number
+                                                                            (map (cut string-drop <> (string-length "guix."))
+                                                                                 (map first
+                                                                                      (filter (match-lambda
+                                                                                                ((name a b) (string-prefix? "guix." name))
+                                                                                                (_ #f))
+                                                                                              (file-system-tree "/mnt/packer/builds")))))
+                                                                       >)))))))))))
 
 (define guix.json
   (mixed-text-file "guix.json"
