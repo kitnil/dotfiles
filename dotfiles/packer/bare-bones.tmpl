@@ -1,6 +1,6 @@
 (use-modules (gnu))
-(use-service-modules networking ssh)
-(use-package-modules certs curl tmux)
+(use-service-modules networking linux ssh)
+(use-package-modules certs curl linux tmux)
 
 (operating-system
   (host-name "gnu")
@@ -28,14 +28,28 @@
                        (user-account (inherit %root-account)
                                      (password (crypt "password" "$6$abc"))))
                  %base-user-accounts))
-  (packages (append (list curl nss-certs tmux)
+  (packages (append (list curl nss-certs lvm2 tmux)
                     %base-packages))
   (services (append (list (service dhcp-client-service-type)
                           (service openssh-service-type
                                    (openssh-configuration
                                     (permit-root-login #t)
-                                    (password-authentication? #t))))
-                    %base-services))
+                                    (password-authentication? #t)))
+                          (service kernel-module-loader-service-type
+                                   '("dm-snapshot" "dm-thin-pool")))
+                    (modify-services %base-services
+                      (guix-service-type config => (guix-configuration
+                                                    (substitute-urls '("https://ci.guix.gnu.org"
+                                                                       "https://guix.wugi.info"))
+                                                    (authorized-keys (append (list (plain-file "guix.wugi.info.pub" "\
+(public-key
+ (ecc
+  (curve Ed25519)
+  (q #45BD5CF39730F811FCFDEBB3FA30277DCA7D443430264FB6D48DCEEFE2E23CF5#)
+  )
+ )
+"))
+                                                                             %default-authorized-guix-keys)))))))
   (sudoers-file (plain-file "sudoers" "\
 root ALL=(ALL) ALL
 user ALL=(ALL) NOPASSWD: ALL\n")))
