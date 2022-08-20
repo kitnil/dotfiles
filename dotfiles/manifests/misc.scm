@@ -7,7 +7,7 @@
  emacs-atomic-chrome
  emacs-awk-it
  emacs-debpaste
- emacs-eval-in-repl
+ ;; emacs-eval-in-repl
  emacs-flyspell-correct
  emacs-hydra-timestamp
  emacs-hydra-timestamp

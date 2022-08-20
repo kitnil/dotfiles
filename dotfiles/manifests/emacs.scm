@@ -97,7 +97,7 @@
        emacs-lsp-java
        emacs-lsp-mode
        emacs-lsp-ui
-       emacs-lua-mode
+       ;; emacs-lua-mode
        emacs-macrostep
        emacs-magit
        emacs-magit-org-todos-el

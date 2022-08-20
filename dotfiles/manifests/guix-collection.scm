@@ -28,7 +28,7 @@ virtualization vnc vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
     (,isc-bind "utils")))
 
 (define %large-packages
-  (list libreoffice
+  (list ;; libreoffice
         nyxt
         python-pyqt-without-qtwebkit))
 
