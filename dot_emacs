@@ -139,7 +139,28 @@
  '(org-agenda-files '("~/org/inbox.org" "~/org/todo.org" "~/org/web.org"))
  '(python-shell-interpreter "python3" t)
  '(safe-local-variable-values
-   '((eval setq-local geiser-guile-load-path
+   '((eval progn
+           (require 'lisp-mode)
+           (defun emacs27-lisp-fill-paragraph
+               (&optional justify)
+             (interactive "P")
+             (or
+              (fill-comment-paragraph justify)
+              (let
+                  ((paragraph-start
+                    (concat paragraph-start "\\|\\s-*\\([(;\"]\\|\\s-:\\|`(\\|#'(\\)"))
+                   (paragraph-separate
+                    (concat paragraph-separate "\\|\\s-*\".*[,\\.]$"))
+                   (fill-column
+                    (if
+                        (and
+                         (integerp emacs-lisp-docstring-fill-column)
+                         (derived-mode-p 'emacs-lisp-mode))
+                        emacs-lisp-docstring-fill-column fill-column)))
+                (fill-paragraph justify))
+              t))
+           (setq-local fill-paragraph-function #'emacs27-lisp-fill-paragraph))
+     (eval setq-local geiser-guile-load-path
            (append
             (list
              (concat
