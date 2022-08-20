@@ -5,7 +5,6 @@ convert -font DejaVu-Sans-Mono -pointsize 20 -fill '#37CFA6' -draw 'text 1900,30
   emacs
 
 2 spotify
-  notmuch
 
 3 habitica
   slack
