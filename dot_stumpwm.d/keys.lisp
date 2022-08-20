@@ -32,7 +32,7 @@
   (define-key *top-map* (kbd "s-l") "looking-glass-client")
   (define-key *top-map* (kbd "s-t") "top")
   (define-key *top-map* (kbd "s-T") "tometips")
-  (define-key *top-map* (kbd "s-h") "htop")
+  (define-key *top-map* (kbd "s-h") "monitoring")
   (define-key *top-map* (kbd "C-s-C") "rofi-drun")
   (define-key *top-map* (kbd "S-s-RET") "rofi-ssh")
   (define-key *top-map* (kbd "s-\"") "global-windowlist")

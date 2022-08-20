@@ -27,6 +27,9 @@
 (defcommand htop () ()
   (term-shell-command "htop"))
 
+(defcommand monitoring () ()
+  (term-shell-command "tmuxifier load-session monitoring"))
+
 (defcommand top () ()
   (term-shell-command "top"))
 
