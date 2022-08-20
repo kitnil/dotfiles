@@ -26,7 +26,6 @@
 
              (home config)
              (home config openssh)
-             (home services admin)
              (home services ansible)
              (home services cisco)
              (home services desktop)
@@ -554,8 +553,6 @@ PYTHONPATH='' exec -a \"$0\" ~a/bin/idea-ultimate \"$@\"\n"
     (simple-service 'polybar-config
                     home-files-service-type
                     (list `(".config/polybar/config" ,(local-file (string-append %project-directory "/dot_config/polybar/config")))))
-
-    home-htop-service
 
     home-youtube-dl-service
 

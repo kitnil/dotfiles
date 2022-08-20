@@ -6,8 +6,7 @@
 	     (gnu services)
 	     (guix gexp)
 	     (home config)
-	     (home services admin)
-	     (home services shell)
+             (home services shell)
              (home services mime)
              (home services gdb)
              (home services version-control)
@@ -50,7 +49,6 @@
    home-inputrc-service
    home-tmux-service
    home-top-service
-   home-htop-service
    home-nix-service
    home-alacritty-service
    home-qterminal-service
