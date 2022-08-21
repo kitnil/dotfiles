@@ -55,7 +55,7 @@
                         (("type" . "shell")
                          ("max_retries" . 3)
                          ("inline" . #("set -x"
-                                       "guix pull"
+                                       "guix pull --commit=f31e55d0819064557b9a2af687f05b131f5c4f26"
                                        "hash guix"
                                        "guix system reconfigure /etc/config.scm"
                                        ,@(if %build-local-git-repository
