@@ -42,23 +42,28 @@
                          ("source" . "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/guix.wugi.info.pub")
                          ("destination" . "/root/guix.wugi.info.pub"))
                         (("type" . "shell")
-                         ("inline" . #("guix archive --authorize < /root/guix.wugi.info.pub")))
+                         ("inline" . #("set -x"
+                                       "guix archive --authorize < /root/guix.wugi.info.pub")))
                         (("type" . "shell")
                          ("max_retries" . 3)
-                         ("inline" . #("guix system init --substitute-urls=\"https://guix.wugi.info https://ci.guix.gnu.org\" /mnt/etc/config.scm /mnt")))
+                         ("inline" . #("set -x"
+                                       "guix system init --substitute-urls=\"https://guix.wugi.info https://ci.guix.gnu.org\" /mnt/etc/config.scm /mnt")))
                         (("type" . "shell")
-                         ("inline" . #("reboot"))
+                         ("inline" . #("set -x"
+                                       "reboot"))
                          ("expect_disconnect" . #t))
                         (("type" . "shell")
                          ("max_retries" . 3)
-                         ("inline" . #("guix pull"
+                         ("inline" . #("set -x"
+                                       "guix pull"
                                        "hash guix"
                                        "guix system reconfigure /etc/config.scm"
                                        ,@(if %build-local-git-repository
                                              '("guix time-machine --disable-authentication --url=https://cgit.duckdns.org/git/guix/guix -- system build /etc/config.scm")
                                              '()))))
                         (("type" . "shell")
-                         ("inline" . #("reboot"))
+                         ("inline" . #("set -x"
+                                       "reboot"))
                          ("expect_disconnect" . #t))))
     ("min_packer_version" . "1.4.0")
     ("builders" . #((("vm_name" . "guix")
