@@ -1,6 +1,6 @@
 ;; To build the QEMU image run the following commands:
 ;;
-;; guix build -f build.scm
+;; BUILD_LOCAL_GIT_REPOSITORY=true guix build -f build.scm
 ;; /gnu/store/...-packer/bin/packer-build-guix
 
 (use-modules (gnu packages guile)
@@ -17,6 +17,12 @@
   (and=> (getenv "HOME")
          (lambda (home)
            (string-append home "/.nix-profile/bin/packer"))))
+
+(define %build-local-git-repository
+  (and=> (getenv "BUILD_LOCAL_GIT_REPOSITORY")
+         (lambda (environment)
+           (or (string= environment "true")
+               (string= environment "t")))))
 
 (define %packer-operating-system
   `(("provisioners" . #((("type" . "shell")
@@ -42,7 +48,10 @@
                          ("max_retries" . 3)
                          ("inline" . #("guix pull"
                                        "hash guix"
-                                       "guix system reconfigure /etc/config.scm")))
+                                       "guix system reconfigure /etc/config.scm"
+                                       ,@(if %build-local-git-repository
+                                             '("guix time-machine --disable-authentication --url=https://cgit.duckdns.org/git/guix/guix -- system build /etc/config.scm")
+                                             '()))))
                         (("type" . "shell")
                          ("inline" . #("reboot"))
                          ("expect_disconnect" . #t))))
