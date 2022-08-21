@@ -28,6 +28,8 @@
                        (user-account (inherit %root-account)
                                      (password (crypt "password" "$6$abc"))))
                  %base-user-accounts))
+  (initrd-modules (append (list "dm-thin-pool" "dm-snapshot")
+                          %base-initrd-modules))
   (packages (append (list curl nss-certs lvm2 tmux)
                     %base-packages))
   (services (append (list (service dhcp-client-service-type)
