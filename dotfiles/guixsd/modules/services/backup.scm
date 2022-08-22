@@ -285,6 +285,30 @@
                     #:restic-password win10-password
                     #:predicate win10-shut-off?))
 
+(define (guix-password)
+  #~(begin
+      (use-modules (ice-9 rdelim))
+      (string-trim-right
+       (with-input-from-file "/etc/guix/secrets/guix"
+         read-string))))
+
+(define (guix-shut-off?)
+  #~(begin
+      (use-modules (ice-9 popen)
+                   (ice-9 rdelim))
+      (let* ((port (open-pipe* OPEN_READ #$virsh-binary
+                               "domstate" "guix"))
+             (output (read-string port)))
+        (close-port port)
+        (string= (string-trim-right output #\newline)
+                 "shut off"))))
+
+(define (restic-guix-backup)
+  (restic-lv-backup "lvm2" "guix"
+                    #:restic-repository "/srv/backup/guix"
+                    #:restic-password guix-password
+                    #:predicate guix-shut-off?))
+
 (define (restic-command)
   (program-file
    "restic-command"
@@ -299,6 +323,7 @@
                "/run/current-system/profile/etc/ssl/certs/ca-certificates.crt")
 
        (when (and #$(restic-system-backup)
+                  #$(restic-guix-backup)
                   #$(restic-win10-backup)
                   #$(restic-ntfsgames-backup))
          #$(hc-ping-notify)))))
