@@ -814,9 +814,9 @@ location / {
                            ;; "hms-billing-dev.intr"
                            ))
 
-           "10.1.52.4 ceph1 ceph1.intr"
-           "10.1.52.6 ceph2 ceph2.intr"
-           "10.1.52.7 ceph3 ceph3.intr"
+           "10.1.52.89 ceph1 ceph1.intr"
+           "10.1.52.90 ceph2 ceph2.intr"
+           "10.1.52.91 ceph3 ceph3.intr"
 
            "192.168.25.1 node-0.example.com"
 
