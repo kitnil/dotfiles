@@ -2165,7 +2165,7 @@ namespaces = [ ]
                         (modify-services (operating-system-user-services base-system)
                           (guix-service-type config => (guix-configuration
                                                         (inherit %guix-daemon-config)
-                                                        (substitute-urls '("https://ci.guix.gnu.org"
+                                                        (substitute-urls '("http://ci.guix.gnu.org.intr"
                                                                            "https://substitutes.nonguix.org"))
                                                         (extra-options '("--cache-failures"))))
                           (sysctl-service-type _ =>
