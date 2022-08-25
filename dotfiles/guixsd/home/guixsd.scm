@@ -228,6 +228,7 @@
    (majordomo-mbsync-goimapnotify-services "security")
    (majordomo-mbsync-goimapnotify-services "smartmontools")
    (majordomo-mbsync-goimapnotify-services "tracker")
+   (majordomo-mbsync-goimapnotify-services "ihc-zabbix")
 
    (list
     (simple-service 'home-mbsync-wugi-oleg
