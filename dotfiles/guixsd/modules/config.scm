@@ -38,6 +38,7 @@
   #:use-module (wigust packages python)
   #:use-module (wigust packages web)
   #:use-module (packages certs)
+  #:use-module (packages vpn)
   #:use-module (gnu system)
   #:use-module (gnu system setuid)
   #:use-module (guix gexp)
@@ -71,6 +72,7 @@
 
             %openvpn-configuration-wugi.info
             %openvpn-configuration-majordomo.ru
+            %openvpn-configuration-bq.lan
 
             %homer-nginx-configuration
             %homer-config
@@ -391,6 +393,14 @@ server 192.168.25.0 255.255.255.0
 client-config-dir /etc/openvpn/ccd
 client-to-client
 "))))
+
+(define %openvpn-configuration-bq.lan
+  (openvpn-configuration
+   (name "bq.lan")
+   (config "/etc/openvpn/cvpn.ovpn")
+   (environment-variables '("OPENVPN_OTP_SECRET_FILE=/etc/guix/secrets/bq"
+                            "OPENVPN_CONFIG_FILE=/etc/openvpn/cvpn.ovpn"))
+   (openvpn openvpn-mintotp)))
 
 (define %openvpn-configuration-majordomo.ru
   (openvpn-configuration
