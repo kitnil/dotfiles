@@ -30,18 +30,21 @@
 (define-record-type* <openvpn-configuration>
   openvpn-configuration make-openvpn-configuration
   openvpn-configuration?
-  (openvpn     openvpn-configuration-openvpn     ;<package>
-               (default openvpn))
-  (config      openvpn-configuration-openvpn     ;file-like or string
-               (default #f))
-  (name        openvpn-configuration-name        ;string
-               (default #f))
-  (auto-start? openvpn-configuration-auto-start? ;boolean
-               (default #t)))
+  (openvpn               openvpn-configuration-openvpn     ;<package>
+                         (default openvpn))
+  (config                openvpn-configuration-openvpn     ;file-like or string
+                         (default #f))
+  (name                  openvpn-configuration-name        ;string
+                         (default #f))
+  (auto-start?           openvpn-configuration-auto-start? ;boolean
+                         (default #t))
+  (environment-variables openvpn-configuration-environment-variables ;list of strings
+                         (default '())))
 
 (define openvpn-activation
   (match-lambda
-    (($ <openvpn-configuration> openvpn config name)
+    (($ <openvpn-configuration>
+        openvpn config name auto-start? environment-variables)
      (with-imported-modules '((guix build utils))
        #~(begin
            (mkdir-p "/etc/openvpn")
@@ -50,7 +53,8 @@
 
 (define openvpn-shepherd-service
   (match-lambda
-    (($ <openvpn-configuration> openvpn config name auto-start?)
+    (($ <openvpn-configuration>
+        openvpn config name auto-start? environment-variables)
      (list
       (shepherd-service
        (provision (list (string->symbol (string-append "openvpn-" name))))
@@ -58,8 +62,11 @@
        (requirement '(user-processes loopback))
        (documentation "Run OpenVPN client.")
        (start #~(make-forkexec-constructor
-                 (list (string-append #$openvpn "/sbin/openvpn") "--config" #$config)
-                 #:log-file (string-append "/var/log/openvpn/" #$name ".log")))
+                 (list (string-append #$openvpn "/sbin/openvpn")
+                       "--config" #$config)
+                 #:log-file (string-append "/var/log/openvpn/" #$name ".log")
+                 #:environment-variables
+                 (append '#$environment-variables (environ))))
        (respawn? #t)
        (stop #~(make-kill-destructor)))))))
 
