@@ -96,7 +96,8 @@
 
 (setq wi-groups-direcotories-git t)
 (setq wi-groups-direcotories
-      '("~/src/gitlab.intr"
+      '("~/src/gitlab01.bqtstuff.com"
+        "~/src/gitlab.intr"
         "~/src/anongit.gentoo.org"
         "~/src/ansible-cmdb-majordomo"
         "~/src/ansible-ping"
