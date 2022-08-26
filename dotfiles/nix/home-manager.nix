@@ -191,6 +191,7 @@
     # eve-online
     firefox-52-wrapper
     google-chrome
+    chromium-wrapper # wraps google-chrome as chromium
     idea-ultimate
     ipmi
     ipmiview-wrapper

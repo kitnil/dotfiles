@@ -228,10 +228,25 @@
         #           boomer = pkgs.callPackage (boomer-repo + "/boomer.nix") { inherit nim_1_0; };
         #         })
 
-        // {
-          inherit (import nixpkgs { inherit system; config = { allowUnfree = true; }; })
-            discord google-chrome;
-        }
+        // (let
+              pkgs = import nixpkgs {
+                inherit system;
+                config = { allowUnfree = true; };
+              };
+            in {
+              inherit (pkgs) discord google-chrome;
+              chromium-wrapper = with pkgs;
+                callPackage ({ stdenv, google-chrome }:
+                  stdenv.mkDerivation {
+                    name = "chromium";
+                    src = false;
+                    dontUnpack = true;
+                    installPhase = ''
+                      mkdir -p $out/bin
+                      ln -s ${google-chrome}/bin/google-chrome-stable $out/bin/chromium
+                    '';
+                  }) { };
+            })
         // {
           eve-online = pkgs.writeScriptBin "eve-online" ''
             #!${pkgs.runtimeShell}
