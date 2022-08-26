@@ -142,6 +142,7 @@ in  ''
 		Byte converter	chromium --app=https://whatsabyte.com/P1/byteconverter.htm
 		Chess	chromium --app=https://lichess.org/
 		Cocalc	chromium --app=https://cocalc.com/
+		Diagrams	chromium	--app=https://app.diagrams.net/
 		LaTeX	chromium --app=http://www.overleaf.com/
 		Habitica	chromium --app=https://habitica.com/
 		HTTP Requests	chromium --app=https://www.hurlit.com/
