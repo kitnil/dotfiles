@@ -79,7 +79,7 @@
                           "cerb"
                           "checkssl.sh"
                           "chroot-games.sh"
-                          "clone-gitlab.intr.sh"
+                          "clone-gitlab.intr.scm"
                           "color-converter"
                           "connect"
                           "convert-music"
