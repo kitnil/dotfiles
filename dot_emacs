@@ -139,7 +139,24 @@
  '(org-agenda-files '("~/org/inbox.org" "~/org/todo.org" "~/org/web.org"))
  '(python-shell-interpreter "python3" t)
  '(safe-local-variable-values
-   '((eval progn
+   '((eval setq-local geiser-guile-load-path
+           (append
+            (list
+             (concat
+              (getenv "HOME")
+              "/src/cgit.duckdns.org/guix/guix-wigust/guix"))
+            (list
+             (concat
+              (getenv "HOME")
+              "/src/gitlab.com/nonguix/nonguix"))
+            (if
+                (boundp #'projectile-project-root)
+                (list
+                 (concat
+                  (projectile-project-root)
+                  "dotfiles/guixsd/modules"))
+              'nil)))
+     (eval progn
            (require 'lisp-mode)
            (defun emacs27-lisp-fill-paragraph
                (&optional justify)
