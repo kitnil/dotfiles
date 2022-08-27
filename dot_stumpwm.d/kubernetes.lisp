@@ -2,12 +2,16 @@
 
 (defvar *kubernetes-current-cluster* "")
 
+(defun kubernetes-current-cluster ()
+  (string-trim '(#\Newline)
+               (run-shell-command
+                (join
+                 (list "yq" "--raw-output" "'.\"current-context\"'"
+                       (concat (getenv "HOME") "/.kube/config")))
+                t)))
+
 (defcommand kubernetes-update-current-cluster () ()
-  (setq *kubernetes-current-cluster*
-        (string-trim
-         '(#\Newline)
-         (run-shell-command (join (list "yq" "--raw-output" "'.\"current-context\"'" (concat (getenv "HOME") "/.kube/config")))
-                            t))))
+  (setq *kubernetes-current-cluster* (kubernetes-current-cluster)))
 
 (defcommand kubernetes-update-current-cluster-inotify () ()
   (run-shell-command
