@@ -34,6 +34,7 @@
   #:use-module (guix build-system trivial)
   #:use-module (guix gexp)
   #:use-module (guix download)
+  #:use-module (guix git-download)
   #:use-module (guix packages)
   #:use-module (ice-9 popen)
   #:use-module (ice-9 rdelim))
@@ -63,3 +64,22 @@
     (synopsis "A tool for managing secrets, this binary includes the UI")
     (description "A tool for managing secrets, this binary includes the UI")
     (license license:mpl2.0)))
+
+(define-public mintotp
+  (package
+    (name "mintotp")
+    (version "0.3.0")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://github.com/susam/mintotp")
+                    (commit version)))
+              (file-name (git-file-name name version))
+              (sha256
+               (base32
+                "0xryg3s839r6cg0x0lk3aj9bcwaqya9cfr4v0pp7x2zc60bbb5i7"))))
+    (build-system python-build-system)
+    (home-page "https://github.com/susam/mintotp/")
+    (synopsis "Minimal TOTP generator written in Python")
+    (description "This package provides a minimal TOTP generator written in Python.")
+    (license license:expat)))
