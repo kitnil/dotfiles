@@ -144,6 +144,10 @@ vm1.wugi.info:
 add:
 	cp $(HOME)/.emacs dot_emacs
 
+.PHONY: gitlab01.bqtstuff.com
+gitlab01.bqtstuff.com:
+	make --directory=dotfiles/maintenance/gitlab01.bqtstuff.com
+
 .PHONY: gitlab
 gitlab:
 	make --directory=dotfiles/maintenance/gitlab
