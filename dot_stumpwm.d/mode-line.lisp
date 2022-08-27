@@ -62,7 +62,7 @@
                 '())
 
           ,(make-string 4 :initial-element #\space)
-          ,'(:eval (format nil "kubernetes: ~a" *kubernetes-current-cluster*))
+          ,'(:eval (kubectl-current-context *kubernetes-current-cluster* t))
 
           ,(make-string 4 :initial-element #\space)
           ,'(:eval (format nil "/srv: ~a" *disk-free-srv-counter*))
