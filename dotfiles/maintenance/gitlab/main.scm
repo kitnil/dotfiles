@@ -22,4 +22,6 @@
   (string-append (getcwd) "/terraform.tfstate"))
 
 (run-with-store (open-connection)
-  (terraform-gitlab %gitlab-projects %terraform-state))
+  (terraform-gitlab (terraform-gitlab-configuration
+                     (projects %gitlab-projects)
+                     (state %terraform-state))))

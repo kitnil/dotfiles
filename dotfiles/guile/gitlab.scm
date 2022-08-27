@@ -12,7 +12,8 @@
   #:use-module (json builder)
   #:use-module (srfi srfi-1)
   #:export (home-gitlab-project-configuration
-            terraform-gitlab))
+            terraform-gitlab
+            terraform-gitlab-configuration))
 
 (define (uglify-field-name field-name)
   "Convert symbol FIELD-NAME to a camel case string.
@@ -96,13 +97,19 @@
       (token . "${var.GITLAB_TOKEN}")
       (base_url . "https://gitlab.com/api/v4/")))))
 
-(define (terraform-gitlab projects state)
+(define-record-type* <terraform-gitlab-configuration>
+  terraform-gitlab-configuration make-terraform-gitlab-configuration
+  terraform-gitlab-configuration?
+  (projects terraform-gitlab-configuration-projects)
+  (state terraform-gitlab-configuration-state)
+  (terraform-configuration terraform-gitlab-configuration-terraform-configuration
+                           (default %terraform-configuration)))
+
+(define (terraform-gitlab config)
   (mlet* %store-monad ((main.tf.json (text-file* "main.tf.json"
                                                  (with-output-to-string
                                                    (lambda ()
-                                                     (scm->json
-                                                      %terraform-configuration
-                                                      #:pretty #t)))))
+                                                     (scm->json (terraform-gitlab-configuration-terraform-configuration config))))))
                        (program ->
                                 (program-file
                                  "terraform-gitlab-program"
@@ -120,9 +127,9 @@
                                           (install-file file "."))
                                         '#$(map (lambda (project)
                                                   (serialize-gitlab-project-configuration project home-gitlab-project-configuration-fields))
-                                                projects))
+                                                (terraform-gitlab-configuration-projects config)))
                                        (invoke "terraform" "init")
                                        (invoke "terraform" "apply"
-                                               #$(string-append "-state=" state))
+                                               #$(string-append "-state=" (terraform-gitlab-configuration-state config)))
                                        (delete-file-recursively instance-dir))))))
     (gexp->derivation "terraform-gitlab" #~(symlink #$program #$output))))
