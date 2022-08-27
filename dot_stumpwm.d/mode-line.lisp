@@ -100,16 +100,6 @@
 
           ,(make-string 4 :initial-element #\space))))
 
-(defvar *tapvpn-ip* "")
-(defcommand ip-address-vpn-update () ()
-  (setq *tapvpn-ip*
-        (string-trim '(#\Newline)
-                     (run-shell-command
-                      (join '("ip --json address"
-                              "jq --raw-output '.[] | select(.ifname == \"tapvpn\") | .addr_info[] | select(.\"family\" == \"inet\") | .local'")
-                            #\|)
-                      t))))
-
 (mode-line-update)
 
 (mapcar (lambda (func)
