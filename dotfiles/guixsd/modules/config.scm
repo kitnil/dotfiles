@@ -37,6 +37,7 @@
   #:use-module (wigust packages lisp)
   #:use-module (wigust packages python)
   #:use-module (wigust packages web)
+  #:use-module (jenkins plugins)
   #:use-module (packages certs)
   #:use-module (packages vpn)
   #:use-module (gnu system)
@@ -670,7 +671,7 @@ client-to-client
 (define %jenkins-config
   (jenkins-configuration
    (java "/home/oleg/.nix-profile")
-   (plugins (load "/home/oleg/.local/share/chezmoi/dotfiles/jenkins/plugins.scm"))
+   (plugins %jenkins-base-plugins)
    (arguments
     '("--httpListenAddress=127.0.0.1"
       "--httpPort=8090"
