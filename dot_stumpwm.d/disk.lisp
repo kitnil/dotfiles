@@ -39,3 +39,12 @@
 (defcommand disk-free-srv-update-counter () ()
   (setq *disk-free-srv-counter*
         (disk-free "/srv" :standby "/dev/disk/by-label/data18")))
+
+(defun mountpoint-free? (mountpoint &optional (use-percent 80))
+  (< use-percent
+     (parse-integer
+      (string-trim '(#\Newline)
+                   (run-shell-command
+                    (format nil "df ~a | jc --df | jq '.[] | .use_percent'"
+                            mountpoint)
+                    t)))))

@@ -64,11 +64,19 @@
           ,(make-string 4 :initial-element #\space)
           ,'(:eval (kubectl-current-context *kubernetes-current-cluster* t))
 
-          ,(make-string 4 :initial-element #\space)
-          ,'(:eval (format nil "/srv: ~a" *disk-free-srv-counter*))
+          ,@(if (mountpoint-free? "/srv")
+                (list (make-string 4 :initial-element #\space))
+                '())
+          ,@(if (mountpoint-free? "/srv")
+                (list '(:eval (format nil "/srv: ~a" *disk-free-srv-counter*)))
+                '())
 
-          ,(make-string 4 :initial-element #\space)
-          ,'(:eval (format nil "/: ~a" *disk-free-root-counter*))
+          ,@(if (mountpoint-free? "/")
+                (list (make-string 4 :initial-element #\space))
+                '())
+          ,@(if (mountpoint-free? "/")
+                (list '(:eval (format nil "/: ~a" *disk-free-root-counter*)))
+                '())
 
           ;; ,(make-string 4 :initial-element #\space)
           ;; ,'(:eval (fmt-temp-current (temp-current) t))
