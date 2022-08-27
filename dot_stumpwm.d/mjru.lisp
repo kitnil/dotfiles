@@ -416,3 +416,13 @@
   (let ((rofi-script (concat (getenv "HOME") "/.local/bin/rofi-billing2-server")))
     (run-rofi* (list "-modi" (concat "billing2:" rofi-script)
                      "-show" "billing2"))))
+
+
+;;;
+;;; VPN
+;;;
+
+(defvar *mjru-tapvpn-ip* "")
+
+(defcommand mjru-ip-address-vpn-update () ()
+  (setq *mjru-tapvpn-ip* (network-address "tapvpn")))
