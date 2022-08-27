@@ -13,8 +13,6 @@
 
 (define (main args)
   (let ((arg (last args)))
-    (define xdg-open-command
-      (format #f "~a ~s" xdg-open arg))
     (if (string-prefix? "http" arg)
         (let* ((uri (string->uri arg))
                (host (uri-host uri)))
@@ -32,5 +30,5 @@
                 (string-contains host "youtube.com"))
             (notify (format #f "Open in mpv ~a" arg))
             (system (format #f "mpv ~s" arg)))
-           (else (system xdg-open-command))))
-        (system (format #f "~a ~a" xdg-open-command arg)))))
+           (else (execl "/run/current-system/profile/bin/xdg-open" "xdg-open" arg))))
+        (execl "/run/current-system/profile/bin/xdg-open" "xdg-open" arg))))
