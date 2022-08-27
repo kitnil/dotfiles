@@ -107,6 +107,7 @@
                           "firefox-youtube-chat"
                           "gita-dist"
                           "gita-kitnil"
+                          "gita-bq"
                           "gita-mjru"
                           "gita-src"
                           "git-changelog-symlink-init.sh"
