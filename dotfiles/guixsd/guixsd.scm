@@ -984,6 +984,7 @@ location / {
 
                          (service openvpn-service-type %openvpn-configuration-majordomo.ru)
                          (service openvpn-service-type %openvpn-configuration-wugi.info)
+                         (service openvpn-service-type %openvpn-configuration-bq.lan)
 
                          ;; TODO:
                          ;; (openvpn-client-service
