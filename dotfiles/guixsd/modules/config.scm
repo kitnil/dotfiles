@@ -160,6 +160,7 @@ EndSection\n")
          xhost
 
          nss-certs ;SSL certificates
+         bq-ca
          majordomo-ca
 
          fping
