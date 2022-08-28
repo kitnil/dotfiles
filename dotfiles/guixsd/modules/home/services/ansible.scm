@@ -19,7 +19,7 @@
   #:use-module (srfi srfi-1)
   #:export (ansible-playbook-service-type))
 
-(define %ansible-playbook-main
+(define %ansible-playbook-mjru-main
   #((("tasks"
       .
       #((("include_vars" ("file" . "passwords.yml")))
@@ -41,7 +41,7 @@
      ("gather_facts" . "no")
      ("become" . "yes"))))
 
-(define %ansible-playbook-raid
+(define %ansible-playbook-mjru-raid
   #((("vars"
       ("ansible_become_pass"
        .
@@ -74,56 +74,61 @@
           "copy content='{{ smartctl_result.stdout }}' dest='/home/oleg/ansible-out/files/{{ ansible_hostname }}.intr/smartctl.log'"))))
      ("hosts" . #("kvm" "web")))))
 
-(define %ansible-playbook-router4.intr
+(define %ansible-playbook-mjru-router4.intr
   #((("tasks"
-    .
-    #((("include_vars" ("file" . "passwords.yml")))
-      (("vars"
-        ("ansible_ssh_pass"
-         .
-         "{{ router4_ansible_become_pass }}"))
-       ("loop" . #("/root/.bash_history"))
-       ("ignore_errors" . "yes")
-       ("fetch"
-        ("src" . "{{ item }}")
-        ("dest" . "/home/oleg/ansible-out/files")))))
-   ("hosts" . "router4.intr")
-   ("gather_facts" . "no")
-   ("become" . "yes"))))
+      .
+      #((("include_vars" ("file" . "passwords.yml")))
+        (("vars"
+          ("ansible_ssh_pass"
+           .
+           "{{ router4_ansible_become_pass }}"))
+         ("loop" . #("/root/.bash_history"))
+         ("ignore_errors" . "yes")
+         ("fetch"
+          ("src" . "{{ item }}")
+          ("dest" . "/home/oleg/ansible-out/files")))))
+     ("hosts" . "router4.intr")
+     ("gather_facts" . "no")
+     ("become" . "yes"))))
 
-(define %ansible-playbook-deprecated
+(define %ansible-playbook-mjru-deprecated
   #((("tasks"
-    .
-    #((("include_vars" ("file" . "passwords.yml")))
-      (("vars"
-        ("ansible_become_pass"
-         .
-         "{{ eng_ansible_become_pass }}"))
-       ("register" . "output")
-       ("raw" . "cat /root/.bash_history")
-       ("become" . "yes"))
-      (("set_fact"
-        .
-        "remote_host=\"{{ ansible_host }}\""))
-      (("local_action"
-        .
-        "file path=\"/home/oleg/ansible-out/files/{{ remote_host }}/root\" state=directory"))
-      (("local_action"
-        .
-        "copy content=\"{{ output.stdout }}\" dest=\"/home/oleg/ansible-out/files/{{ remote_host }}/root/.bash_history\""))))
-   ("hosts" . "deprecated")
-   ("gather_facts" . "no"))))
+      .
+      #((("include_vars" ("file" . "passwords.yml")))
+        (("vars"
+          ("ansible_become_pass"
+           .
+           "{{ eng_ansible_become_pass }}"))
+         ("register" . "output")
+         ("raw" . "cat /root/.bash_history")
+         ("become" . "yes"))
+        (("set_fact"
+          .
+          "remote_host=\"{{ ansible_host }}\""))
+        (("local_action"
+          .
+          "file path=\"/home/oleg/ansible-out/files/{{ remote_host }}/root\" state=directory"))
+        (("local_action"
+          .
+          "copy content=\"{{ output.stdout }}\" dest=\"/home/oleg/ansible-out/files/{{ remote_host }}/root/.bash_history\""))))
+     ("hosts" . "deprecated")
+     ("gather_facts" . "no"))))
 
-(define %state-directory
-  (and=> (getenv "HOME")
-         (lambda (home)
-           (string-append home "/ansible-out/files"))))
+(define-record-type* <ansible-playbook-configuration>
+  ansible-playbook-configuration make-ansible-playbook-configuration
+  ansible-playbook-configuration?
+  (playbook            ansible-playbook-configuration-playbook)        ;scm
+  (state-directory     ansible-playbook-configuration-state-directory) ;string
+  (pre-hook            ansible-playbook-configuration-pre-hook         ;gexp
+                       (default #~(begin #t)))
+  (command             ansible-playbook-configuration-command          ;gexp
+                       (default #~(invoke "ansible-playbook" "main.json"))))
 
-(define (ansible-playbook playbook)
+(define (ansible-playbook config)
   (mlet* %store-monad ((main.json (text-file* "main.json"
                                               (with-output-to-string
                                                 (lambda ()
-                                                  (scm->json playbook #:pretty #t)))))
+                                                  (scm->json (ansible-playbook-configuration-playbook config))))))
                        (program ->
                                 (program-file
                                  "ansible-program"
@@ -137,15 +142,12 @@
                                          (mkdtemp! "/tmp/ansible.XXXXXX"))
                                        (with-directory-excursion instance-dir
                                          (copy-file #$main.json "main.json")
-                                         (copy-file #$(local-file "passwords.yml") "passwords.yml")
-                                         (with-output-to-file ".pass"
-                                           (lambda ()
-                                             (display #$(pass "show" "majordomo/public/majordomo/ansible-majordomo-history/passwords"))))
+                                         #$(ansible-playbook-configuration-pre-hook config)
                                          (guard (c ((invoke-error? c)
                                                     (report-invoke-error c)))
-                                           (invoke "ansible-playbook" "--vault-password-file=.pass" "-e@passwords.yml" "main.json")))
+                                           #$(ansible-playbook-configuration-command config)))
                                        (delete-file-recursively instance-dir)
-                                       (with-directory-excursion #$%state-directory
+                                       (with-directory-excursion #$(ansible-playbook-configuration-state-directory config)
                                          (invoke "git" "add" "--all")
                                          (invoke "git" "commit" "--message=Update.")
                                          (invoke "git" "push")))))))
@@ -156,19 +158,75 @@
    #~(job
       '(next-hour '(16))
       #$(run-with-store (open-connection)
-          (ansible-playbook %ansible-playbook-main)))
+          (ansible-playbook
+           (ansible-playbook-configuration
+            (playbook %ansible-playbook-mjru-main)
+            (state-directory
+             (and=> (getenv "HOME")
+                    (lambda (home)
+                      (string-append home "/ansible-out/files"))))
+            (pre-hook
+             #~(begin
+                 (copy-file #$(local-file "passwords.yml") "passwords.yml")
+                 (with-output-to-file ".pass"
+                   (lambda ()
+                     (display #$(pass "show" "majordomo/public/majordomo/ansible-majordomo-history/passwords"))))))
+            (command
+             #~(invoke "ansible-playbook" "--vault-password-file=.pass" "-e@passwords.yml" "main.json"))))))
    #~(job
       '(next-hour '(17))
       #$(run-with-store (open-connection)
-          (ansible-playbook %ansible-playbook-raid)))
+          (ansible-playbook
+           (ansible-playbook-configuration
+            (playbook %ansible-playbook-mjru-raid)
+            (state-directory
+             (and=> (getenv "HOME")
+                    (lambda (home)
+                      (string-append home "/ansible-out/files"))))
+            (pre-hook
+             #~(begin
+                 (copy-file #$(local-file "passwords.yml") "passwords.yml")
+                 (with-output-to-file ".pass"
+                   (lambda ()
+                     (display #$(pass "show" "majordomo/public/majordomo/ansible-majordomo-history/passwords"))))))
+            (command
+             #~(invoke "ansible-playbook" "--vault-password-file=.pass" "-e@passwords.yml" "main.json"))))))
    #~(job
       '(next-hour '(18))
       #$(run-with-store (open-connection)
-          (ansible-playbook %ansible-playbook-router4.intr)))
+          (ansible-playbook
+           (ansible-playbook-configuration
+            (playbook %ansible-playbook-mjru-router4.intr)
+            (state-directory
+             (and=> (getenv "HOME")
+                    (lambda (home)
+                      (string-append home "/ansible-out/files"))))
+            (pre-hook
+             #~(begin
+                 (copy-file #$(local-file "passwords.yml") "passwords.yml")
+                 (with-output-to-file ".pass"
+                   (lambda ()
+                     (display #$(pass "show" "majordomo/public/majordomo/ansible-majordomo-history/passwords"))))))
+            (command
+             #~(invoke "ansible-playbook" "--vault-password-file=.pass" "-e@passwords.yml" "main.json"))))))
    #~(job
       '(next-hour '(19))
       #$(run-with-store (open-connection)
-          (ansible-playbook %ansible-playbook-deprecated)))))
+          (ansible-playbook
+           (ansible-playbook-configuration
+            (playbook %ansible-playbook-mjru-deprecated)
+            (state-directory
+             (and=> (getenv "HOME")
+                    (lambda (home)
+                      (string-append home "/ansible-out/files"))))
+            (pre-hook
+             #~(begin
+                 (copy-file #$(local-file "passwords.yml") "passwords.yml")
+                 (with-output-to-file ".pass"
+                   (lambda ()
+                     (display #$(pass "show" "majordomo/public/majordomo/ansible-majordomo-history/passwords"))))))
+            (command
+             #~(invoke "ansible-playbook" "--vault-password-file=.pass" "-e@passwords.yml" "main.json"))))))))
 
 (define ansible-playbook-service-type
   (service-type
