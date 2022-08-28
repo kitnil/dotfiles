@@ -25,6 +25,7 @@
     (define-key map (kbd "<f8>") 'crux-open-with)
     (define-key map (kbd "<home>") 'beginning-of-buffer)
     (define-key map (kbd "<end>") 'end-of-buffer)
-    (define-key map (kbd "C-j") 'dired-find-file))
+    (define-key map (kbd "C-j") 'dired-find-file)
+    (define-key map (kbd "<mouse-2>") 'crux-open-with))
 
   (add-hook 'dired-mode-hook 'dired-omit-mode))
