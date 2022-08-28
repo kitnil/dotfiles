@@ -27,6 +27,7 @@
              (home config)
              (home config openssh)
              (home services ansible)
+             (home services bq)
              (home services cisco)
              (home services desktop)
              (home services gdb)
@@ -302,6 +303,8 @@
                         (sync '("Pull"))
                         (max-messages 2000)
                         (expunge "near"))))))
+
+    %bq-mbsync
 
     (service home-goimapnotify-service-type
              (goimapnotify-configuration

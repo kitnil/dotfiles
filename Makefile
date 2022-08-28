@@ -63,8 +63,9 @@ dotfiles/guile/ssh.txt: dotfiles/guile/ssh.scm
 	guile dotfiles/guile/ssh.scm > dotfiles/guile/ssh.txt
 
 .PHONY:
-install-ssh:
+decrypt:
 	gpg --quiet --decrypt dotfiles/guixsd/modules/home/config/openssh.scm.gpg > dotfiles/guixsd/modules/home/config/openssh.scm
+	gpg --quiet --decrypt dotfiles/guixsd/modules/home/services/bq.scm.gpg > dotfiles/guixsd/modules/home/services/bq.scm
 
 .PHONY: dotfiles/guixsd/home/guixsd.scm
 dotfiles/guixsd/home/guixsd.scm:
@@ -93,7 +94,7 @@ dot_config/espanso/user/censor.yml.gpg:
 	gpg --decrypt dot_config/espanso/user/censor.yml.gpg > $(HOME)/.config/espanso/user/censor.yml
 
 .PHONY: install
-install: install-ssh dotfiles/guixsd/machines.scm dotfiles/nix/nix.conf
+install: decrypt dotfiles/guixsd/machines.scm dotfiles/nix/nix.conf
 	dot_local/bin/executable_gpg-unlock > /dev/null
 	update-desktop-database $(HOME)/.local/share/applications
 	open-with-linux install
