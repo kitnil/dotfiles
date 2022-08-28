@@ -1600,7 +1600,7 @@ alias sw1-mr11="connect sw1-mr11"
 
 alias nix='EDITOR=less VISUAL="emacsclient -cn" nix'
 
-alias dotfiles='EDITOR=zile dotfiles'
+alias dotfiles='EDITOR=nano dotfiles'
 if [ -f "$HOME/.nix-profile/share/bash-completion/completions/chezmoi.bash" ]; then
     source "$HOME/.nix-profile/share/bash-completion/completions/chezmoi.bash"
     complete -o default -F __start_chezmoi dotfiles
