@@ -1593,7 +1593,7 @@ mitmproxy()
 alias ssh-clean='find ~/.ssh -type s -delete'
 
 alias pass='EDITOR=nano pass'
-alias ansible-vault='EDITOR=zile ansible-vault'
+alias ansible-vault='EDITOR=nano ansible-vault'
 
 alias sw1-dh507='connect sw1-dh507'
 alias sw1-mr11="connect sw1-mr11"
