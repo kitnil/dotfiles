@@ -9,7 +9,8 @@
         ("github.com" . "github")
         ("gitlab.com" . "gitlab")
         ("git.savannah.gnu.org" . "gnu")
-        ("git.net-core.org" . "gitlab")))
+        ("git.net-core.org" . "gitlab")
+        ("gitlab01.bqtstuff.com" . "gitlab")))
 
 ;;;
 ;;; Git patch
