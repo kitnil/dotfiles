@@ -114,6 +114,17 @@
      ("hosts" . "deprecated")
      ("gather_facts" . "no"))))
 
+(define %ansible-playbook-bq-main
+  #((("tasks"
+      .
+      #((("loop" . #("/root/.bash_history"))
+         ("ignore_errors" . "yes")
+         ("fetch"
+          ("src" . "{{ item }}")
+          ("dest" . "/home/oleg/src/gitlab01.bqtstuff.com/devops/state")))))
+     ("hosts" . "bq")
+     ("gather_facts" . "no"))))
+
 (define-record-type* <ansible-playbook-configuration>
   ansible-playbook-configuration make-ansible-playbook-configuration
   ansible-playbook-configuration?
@@ -226,7 +237,17 @@
                    (lambda ()
                      (display #$(pass "show" "majordomo/public/majordomo/ansible-majordomo-history/passwords"))))))
             (command
-             #~(invoke "ansible-playbook" "--vault-password-file=.pass" "-e@passwords.yml" "main.json"))))))))
+             #~(invoke "ansible-playbook" "--vault-password-file=.pass" "-e@passwords.yml" "main.json"))))))
+   #~(job
+      '(next-hour '(20))
+      #$(run-with-store (open-connection)
+          (ansible-playbook
+           (ansible-playbook-configuration
+            (playbook %ansible-playbook-bq-main)
+            (state-directory
+             (and=> (getenv "HOME")
+                    (lambda (home)
+                      (string-append home "/src/gitlab01.bqtstuff.com/devops/state"))))))))))
 
 (define ansible-playbook-service-type
   (service-type
