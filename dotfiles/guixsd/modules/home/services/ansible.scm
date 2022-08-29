@@ -247,7 +247,8 @@
             (state-directory
              (and=> (getenv "HOME")
                     (lambda (home)
-                      (string-append home "/src/gitlab01.bqtstuff.com/devops/state"))))))))))
+                      (string-append home "/src/gitlab01.bqtstuff.com/devops/state"))))
+            (command #~(invoke "ansible-playbook" "--timeout=5" "main.json"))))))))
 
 (define ansible-playbook-service-type
   (service-type
