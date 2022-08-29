@@ -306,6 +306,8 @@
 
     %bq-mbsync
 
+    %bq-goimapnotify
+
     (service home-goimapnotify-service-type
              (goimapnotify-configuration
               (config-file
