@@ -1184,7 +1184,8 @@ account default : gmail
                                       ("hosts"
                                        ("vm1.wugi.info" . null)))))
                                    #$%ansible-bq-group)
-                                 port)))))))
+                                 port
+                                 #:pretty #t)))))))
 
     (service home-openssh-service-type %home-openssh-configuration)
 
