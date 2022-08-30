@@ -90,6 +90,7 @@
     logstalgia
 
     nixFlakes
+    nixos-install-tools
     nixos-rebuild
     nixpkgs-lint
     # nodePackages_12_x.node2nix
