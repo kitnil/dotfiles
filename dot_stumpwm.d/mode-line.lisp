@@ -90,7 +90,7 @@
 
           ,@(if (string-equal *mjru-tapvpn-ip* "")
                 '()
-                (list '(:eval (format nil "VPN (MJRU): ~a" *mjru-tapvpn-ip*))))
+                (list '(:eval (format nil "VPN 1: ~a" *mjru-tapvpn-ip*))))
 
           ,@(if (string-equal *bq-tun1-ip* "")
                 '()
@@ -98,7 +98,7 @@
 
           ,@(if (string-equal *bq-tun1-ip* "")
                 '()
-                (list '(:eval (format nil "VPN (BQ): ~a" *bq-tun1-ip*))))
+                (list '(:eval (format nil "VPN 2: ~a" *bq-tun1-ip*))))
 
           ,(make-string 4 :initial-element #\space)
           ,'(:eval (format nil "VOL: ~a" *volume-current*))
