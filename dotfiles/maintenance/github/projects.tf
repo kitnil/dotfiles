@@ -249,3 +249,7 @@ resource "github_repository" "nix-flake-lock-update-plugin" {
 resource "github_repository" "prometheus-lvm-exporter" {
   name           = "prometheus-lvm-exporter"
 }
+
+resource "github_repository" "openvpn-mintotp" {
+  name           = "openvpn-mintotp"
+}
