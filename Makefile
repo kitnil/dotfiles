@@ -156,3 +156,9 @@ github:
 .PHONY: gitlab
 gitlab:
 	make --directory=dotfiles/maintenance/gitlab
+
+.PHONY: home
+home:
+	herd stop root
+	rm -f /run/user/1000/shepherd/socket
+	make install
