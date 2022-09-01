@@ -149,6 +149,10 @@ add:
 gitlab01.bqtstuff.com:
 	make --directory=dotfiles/maintenance/gitlab01.bqtstuff.com
 
+.PHONY: github
+github:
+	make --directory=dotfiles/maintenance/github
+
 .PHONY: gitlab
 gitlab:
 	make --directory=dotfiles/maintenance/gitlab
