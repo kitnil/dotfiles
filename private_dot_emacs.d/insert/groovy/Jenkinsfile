@@ -1,14 +1,14 @@
 pipeline {
-    agent { label "master" }
+    agent { label "jenkins" }
+    options  {
+        buildDiscarder(logRotator(numToKeepStr: "10",
+                                  artifactNumToKeepStr: "10"))
+        disableConcurrentBuilds()
+    }
     stages {
         stage("$1") {
             steps {
             }
-        }
-    }
-    post {
-        always {
-            sendNotifications currentBuild.result
         }
     }
 }
