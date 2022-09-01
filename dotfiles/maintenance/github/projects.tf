@@ -252,4 +252,5 @@ resource "github_repository" "prometheus-lvm-exporter" {
 
 resource "github_repository" "openvpn-mintotp" {
   name           = "openvpn-mintotp"
+  description    = "Connect to OpenVPN with automatic typing OTP code"
 }

@@ -16,7 +16,10 @@
          (description "Hunt the most starred projects on any date on GitHub.  Fork of https://github.com/kamranahmedse/githunt"))
         (home-gitlab-project-configuration
          (name "kubernetes-helm")
-         (description "Kubernetes Helm repository"))))
+         (description "Kubernetes Helm repository"))
+        (home-gitlab-project-configuration
+         (name "openvpn-mintotp")
+         (description "OpenVPN with automatic OTP verification"))))
 
 (define %terraform-state
   (string-append (getcwd) "/terraform.tfstate"))
