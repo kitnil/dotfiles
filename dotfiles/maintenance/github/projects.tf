@@ -244,3 +244,10 @@ resource "github_repository" "openvpn-mintotp" {
   name           = "openvpn-mintotp"
   description    = "Connect to OpenVPN with automatic typing OTP code"
 }
+
+resource "github_repository_deploy_key" "deploy-key-openvpn-mintotp" {
+  title      = "gitlab.com"
+  repository = "openvpn-mintotp"
+  key        = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDD2mu8ht1OeAPx9DtLws/9VOry5XlMZW09MSQmOAj2uNN+SBsuXJ4QFOPcqFRAQxGX0vC6BDMAoyPa46YLbWlmxsGbragkdcd9RObF+/210sDEa8VM0Le9wF+nvGINJQVQd5pa3PaUwLHdDM2yPWj5KqtrSG6b4N35KRcpLBjIn1mGrauEnvASb1c2jB3ngtA1thX/AoIoDB8p95iz7cj71MEbK8nY7kPci3PiZ7XcH2MJcI9/BVlkmQq1SvOnAO8vUqYAY9I1GBZxE6Ckgs436MlacL68G3yWkSUSj+aiDfA/X7at9JP479EsUPiSayIXZbSdpIS239xev2k37AqbAtyCQ1JeKz6e7KfFlqVLqzJo5vJ+9HObkRB20ZA0iQ5H4YAksX3P9cGxlg0ch82vkwZaJkUlXJmZg5hdYMWHosZ4tJuHrxiVo6uCHk4W6tV0m2j5MuaTP8jGwGoNactLE3HZu/2f5Lt09Q+RC84GiZ/jlqM55H+SsibnNIBg0AjCRZx1y+eUkbdxDcga5Sy/eHJiLUuuYDi4h7uc9li6KpmOfwWPl84cHxdN07JM9YxdAze6mc1fu4omfTVkeelt648+rvabnzqAJls1HcOwCWNRQlZX41fpNL3+Bs4bteh/W1pcC/9yciDfdqRpnA/s0LACy4BqoFKxpTkxYz8vdQ== git@gitlab.com"
+  read_only  = "false"
+}
