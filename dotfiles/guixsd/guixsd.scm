@@ -216,6 +216,14 @@
                                        ;; "proxy_set_header Access-Control-Allow-Origin *;"
                                        ))))))
 
+        (nginx-server-configuration
+         (server-name '("ci.guix.gnu.org.wugi.info"))
+         (listen '("192.168.0.144:80"))
+         (locations (list (nginx-location-configuration
+                           (uri "/")
+                           (body (list "proxy_pass https://socat-ci-guix-gnu-onion;"
+                                       "proxy_ssl_verify off;"))))))
+
 ;;         (nginx-server-configuration
 ;;          (server-name '("hms-dev.intr" "hms.majordomo.ru"))
 ;;          (listen '("192.168.0.144:80"))
@@ -808,6 +816,7 @@ location / {
                            "vault1"
                            "peertube.wugi.info"
                            "docker-registry.wugi.info"
+                           "ci.guix.gnu.org.wugi.info"
                            ;; Majordomo
                            ;; "hms-dev.intr"
                            ;; "api-dev.intr"
@@ -1056,7 +1065,9 @@ location / {
                                                                "https://blog.wugi.info/"
                                                                ;; This endpoint provides an ‘nginx’ on jenkins.intr which proxies to
                                                                ;; ‘prixoxy’ which proxies to ‘tor’.
-                                                               "http://ci.guix.gnu.org.intr")
+                                                               "http://ci.guix.gnu.org.intr"
+                                                               ;; Same but local.
+                                                               "http://ci.guix.gnu.org.wugi.info")
                                                          '#$%default-substitute-urls))
                                                (with-output-to-file #$output
                                                  (lambda ()
@@ -1582,7 +1593,10 @@ PasswordAuthentication yes")))
                                       (servers '("127.0.0.1:9001")))
                                      (nginx-upstream-configuration
                                       (name "docker-registry")
-                                      (servers '("127.0.0.1:5000")))))
+                                      (servers '("127.0.0.1:5000")))
+                                     (nginx-upstream-configuration
+                                      (name "socat-ci-guix-gnu-onion")
+                                      (servers '("127.0.0.1:81")))))
                                    (extra-content "\
   ## Set a variable to help us decide if we need to add the
   ## 'Docker-Distribution-Api-Version' header.
@@ -1649,9 +1663,9 @@ PasswordAuthentication yes")))
                                                  (ssl-certificate (letsencrypt-certificate "cgit.duckdns.org"))
                                                  (ssl-certificate-key (letsencrypt-key "cgit.duckdns.org")))))))
 
-                         ;; (service tor-service-type
-                         ;;          (tor-configuration
-                         ;;           (config-file (local-file "torrc"))))
+                         (service tor-service-type
+                                  (tor-configuration
+                                   (config-file (local-file "torrc"))))
 
                          (service bird-service-type
                                   (bird-configuration
@@ -1746,6 +1760,17 @@ PasswordAuthentication yes")))
                          (simple-service 'my-cron-jobs
                                          mcron-service-type
                                          (list backup-job))
+
+                         (simple-service
+                          'socat-ci-guix-gnu-org shepherd-root-service-type
+                          (list (shepherd-service
+                                 (provision '(socat-ci-guix-gnu-org))
+                                 (requirement '())
+                                 (start #~(make-forkexec-constructor
+                                           (list #$(file-append socat "/bin/socat")
+                                                 "tcp4-LISTEN:81,reuseaddr,fork,keepalive,bind=127.0.0.1"
+                                                 "SOCKS4A:127.0.0.1:4zwzi66wwdaalbhgnix55ea3ab4pvvw66ll2ow53kjub6se4q2bclcyd.onion:443,socksport=9050")))
+                                 (respawn? #f))))
 
                          (service syncthing-service-type
                                   (syncthing-configuration (user "oleg")))
@@ -2166,7 +2191,7 @@ namespaces = [ ]
                         (modify-services (operating-system-user-services base-system)
                           (guix-service-type config => (guix-configuration
                                                         (inherit %guix-daemon-config)
-                                                        (substitute-urls '("http://ci.guix.gnu.org.intr"
+                                                        (substitute-urls '("http://ci.guix.gnu.org.wugi.info"
                                                                            "https://substitutes.nonguix.org"))
                                                         (extra-options '("--cache-failures"))))
                           (sysctl-service-type _ =>
