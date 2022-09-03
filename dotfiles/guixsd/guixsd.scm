@@ -827,6 +827,9 @@ location / {
            "10.1.52.90 ceph2 ceph2.intr"
            "10.1.52.91 ceph3 ceph3.intr"
 
+           "10.1.52.104 ipsec1 ipsec1.intr"
+           "10.1.52.105 ipsec2 ipsec2.intr"
+
            "192.168.25.1 node-0.example.com"
 
            "192.168.154.130 nginx99.intr"
