@@ -121,9 +121,15 @@
          ("ignore_errors" . "yes")
          ("fetch"
           ("src" . "{{ item }}")
-          ("dest" . "/home/oleg/src/gitlab01.bqtstuff.com/devops/state")))))
+          ("dest" . "/home/oleg/src/gitlab01.bqtstuff.com/devops/state")))
+        (("shell" . "ip -json address")
+         ("register" . "shell_result")
+         ("ignore_errors" . "yes"))
+        (("local_action"
+          .
+          "copy content='{{ shell_result.stdout | from_json | to_nice_json(indent=2) }}' dest='/home/oleg/src/gitlab01.bqtstuff.com/devops/state/{{ inventory_hostname }}/ip-address.json'"))))
      ("hosts" . "bq")
-     ("gather_facts" . "no"))))
+     ("gather_facts" . "yes"))))
 
 (define-record-type* <ansible-playbook-configuration>
   ansible-playbook-configuration make-ansible-playbook-configuration
