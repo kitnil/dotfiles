@@ -50,6 +50,7 @@
    emacs-thesaurus
    emacs-plain-org-wiki
    emacs-wi-utils
+   emacs-yaml-pro
    ))
 
 (packages->manifest
