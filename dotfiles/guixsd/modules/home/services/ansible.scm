@@ -121,23 +121,47 @@
            (string-append home "/src/gitlab01.bqtstuff.com/devops/state"))))
 
 (define %ansible-playbook-bq-main
-  (list->vector
-   `((("tasks"
-       .
-       #((("loop" . #("/root/.bash_history"))
-          ("ignore_errors" . "yes")
-          ("fetch"
-           ("src" . "{{ item }}")
-           ("dest" . "/home/oleg/src/gitlab01.bqtstuff.com/devops/state")))
-         (("shell" . "ip -json address")
-          ("register" . "shell_result")
-          ("ignore_errors" . "yes"))
-         (("local_action"
-           .
-           ,(format #f "copy content='{{ shell_result.stdout | from_json | to_nice_json(indent=2) }}' dest='~a'"
-                    (string-append %bq-state-directory "/{{ inventory_hostname }}/ip-address.json"))))))
-      ("hosts" . "bq")
-      ("gather_facts" . "yes")))))
+  (let ((shell-result->file
+         (lambda* (file #:key json)
+           (format #f "copy content='~a' dest='~a'"
+                   (if json
+                       "{{ shell_result.stdout | from_json | to_nice_json(indent=2) }}"
+                       "{{ shell_result.stdout }}")
+                   (string-join (list %bq-state-directory "{{ inventory_hostname }}" file)
+                                "/")))))
+    (list->vector
+     `((("tasks"
+         .
+         #((("name" . "Fetch files")
+            ("loop" . #("/root/.bash_history"))
+            ("ignore_errors" . "yes")
+            ("fetch"
+             ("src" . "{{ item }}")
+             ("dest" . "/home/oleg/src/gitlab01.bqtstuff.com/devops/state")))
+           (("name" . "Invoke ip -json address")
+            ("shell" . "ip -json address")
+            ("register" . "shell_result")
+            ("ignore_errors" . "yes"))
+           (("name" . "Save ip -json address output")
+            ("local_action" . ,(shell-result->file "ip-address.json" #:json #t)))
+           (("name" . "Invoke ip -json route")
+            ("shell" . "ip -json route")
+            ("register" . "shell_result")
+            ("ignore_errors" . "yes")
+            ("when" . "ip_route_without_json == no"))
+           (("name" . "Save ip -json route output")
+            ("local_action" . ,(shell-result->file "ip-route.json" #:json #t))
+            ("when" . "ip_route_without_json == no"))
+           (("name" . "Invoke ip -json route")
+            ("shell" . "ip -json route")
+            ("register" . "shell_result")
+            ("ignore_errors" . "yes")
+            ("when" . "ip_route_without_json == yes"))
+           (("name" . "Save ip -json route output")
+            ("local_action" . ,(shell-result->file "ip-route.json" #:json #f))
+            ("when" . "ip_route_without_json == yes"))))
+        ("hosts" . "bq")
+        ("gather_facts" . "yes"))))))
 
 (define-record-type* <ansible-playbook-configuration>
   ansible-playbook-configuration make-ansible-playbook-configuration
