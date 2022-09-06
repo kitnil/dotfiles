@@ -15,6 +15,7 @@
   #:use-module (guix records)
   #:use-module (guix store)
   #:use-module (ice-9 match)
+  #:use-module (ice-9 format)
   #:use-module (json builder)
   #:use-module (srfi srfi-1)
   #:export (ansible-playbook-service-type))
@@ -114,22 +115,29 @@
      ("hosts" . "deprecated")
      ("gather_facts" . "no"))))
 
+(define %bq-state-directory
+  (and=> (getenv "HOME")
+         (lambda (home)
+           (string-append home "/src/gitlab01.bqtstuff.com/devops/state"))))
+
 (define %ansible-playbook-bq-main
-  #((("tasks"
-      .
-      #((("loop" . #("/root/.bash_history"))
-         ("ignore_errors" . "yes")
-         ("fetch"
-          ("src" . "{{ item }}")
-          ("dest" . "/home/oleg/src/gitlab01.bqtstuff.com/devops/state")))
-        (("shell" . "ip -json address")
-         ("register" . "shell_result")
-         ("ignore_errors" . "yes"))
-        (("local_action"
-          .
-          "copy content='{{ shell_result.stdout | from_json | to_nice_json(indent=2) }}' dest='/home/oleg/src/gitlab01.bqtstuff.com/devops/state/{{ inventory_hostname }}/ip-address.json'"))))
-     ("hosts" . "bq")
-     ("gather_facts" . "yes"))))
+  (list->vector
+   `((("tasks"
+       .
+       #((("loop" . #("/root/.bash_history"))
+          ("ignore_errors" . "yes")
+          ("fetch"
+           ("src" . "{{ item }}")
+           ("dest" . "/home/oleg/src/gitlab01.bqtstuff.com/devops/state")))
+         (("shell" . "ip -json address")
+          ("register" . "shell_result")
+          ("ignore_errors" . "yes"))
+         (("local_action"
+           .
+           ,(format #f "copy content='{{ shell_result.stdout | from_json | to_nice_json(indent=2) }}' dest='~a'"
+                    (string-append %bq-state-directory "/{{ inventory_hostname }}/ip-address.json"))))))
+      ("hosts" . "bq")
+      ("gather_facts" . "yes")))))
 
 (define-record-type* <ansible-playbook-configuration>
   ansible-playbook-configuration make-ansible-playbook-configuration
