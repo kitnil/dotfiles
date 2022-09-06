@@ -198,6 +198,7 @@
     ipmiview-wrapper
     jenkins
     jenkins-job-builder
+    logstash
 
     # nim_1_0
 
