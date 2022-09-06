@@ -138,6 +138,8 @@
   (state-directory     ansible-playbook-configuration-state-directory) ;string
   (pre-hook            ansible-playbook-configuration-pre-hook         ;gexp
                        (default #~(begin #t)))
+  (post-hook           ansible-playbook-configuration-post-hook        ;gexp
+                       (default #~(begin #t)))
   (command             ansible-playbook-configuration-command          ;gexp
                        (default #~(invoke "ansible-playbook" "main.json"))))
 
@@ -164,10 +166,7 @@
                                                     (report-invoke-error c)))
                                            #$(ansible-playbook-configuration-command config)))
                                        (delete-file-recursively instance-dir)
-                                       (with-directory-excursion #$(ansible-playbook-configuration-state-directory config)
-                                         (invoke "git" "add" "--all")
-                                         (invoke "git" "commit" "--message=Update.")
-                                         (invoke "git" "push")))))))
+                                       #$(ansible-playbook-configuration-post-hook config))))))
     (gexp->derivation "ansible-program" #~(symlink #$program #$output))))
 
 (define (ansible-playbook-mcron-jobs config)
@@ -189,7 +188,12 @@
                    (lambda ()
                      (display #$(pass "show" "majordomo/public/majordomo/ansible-majordomo-history/passwords"))))))
             (command
-             #~(invoke "ansible-playbook" "--vault-password-file=.pass" "-e@passwords.yml" "main.json"))))))
+             #~(invoke "ansible-playbook" "--vault-password-file=.pass" "-e@passwords.yml" "main.json"))
+            (post-hook
+             #~(with-directory-excursion #$state-directory
+                 (invoke "git" "add" "--all")
+                 (invoke "git" "commit" "--message=Update.")
+                 (invoke "git" "push")))))))
    #~(job
       '(next-hour '(17))
       #$(run-with-store (open-connection)
@@ -207,7 +211,12 @@
                    (lambda ()
                      (display #$(pass "show" "majordomo/public/majordomo/ansible-majordomo-history/passwords"))))))
             (command
-             #~(invoke "ansible-playbook" "--vault-password-file=.pass" "-e@passwords.yml" "main.json"))))))
+             #~(invoke "ansible-playbook" "--vault-password-file=.pass" "-e@passwords.yml" "main.json"))
+            (post-hook
+             #~(with-directory-excursion #$state-directory
+                 (invoke "git" "add" "--all")
+                 (invoke "git" "commit" "--message=Update.")
+                 (invoke "git" "push")))))))
    #~(job
       '(next-hour '(18))
       #$(run-with-store (open-connection)
@@ -225,7 +234,12 @@
                    (lambda ()
                      (display #$(pass "show" "majordomo/public/majordomo/ansible-majordomo-history/passwords"))))))
             (command
-             #~(invoke "ansible-playbook" "--vault-password-file=.pass" "-e@passwords.yml" "main.json"))))))
+             #~(invoke "ansible-playbook" "--vault-password-file=.pass" "-e@passwords.yml" "main.json"))
+            (post-hook
+             #~(with-directory-excursion #$state-directory
+                 (invoke "git" "add" "--all")
+                 (invoke "git" "commit" "--message=Update.")
+                 (invoke "git" "push")))))))
    #~(job
       '(next-hour '(19))
       #$(run-with-store (open-connection)
@@ -243,18 +257,24 @@
                    (lambda ()
                      (display #$(pass "show" "majordomo/public/majordomo/ansible-majordomo-history/passwords"))))))
             (command
-             #~(invoke "ansible-playbook" "--vault-password-file=.pass" "-e@passwords.yml" "main.json"))))))
+             #~(invoke "ansible-playbook" "--vault-password-file=.pass" "-e@passwords.yml" "main.json"))
+            (post-hook
+             #~(with-directory-excursion #$state-directory
+                 (invoke "git" "add" "--all")
+                 (invoke "git" "commit" "--message=Update.")
+                 (invoke "git" "push")))))))
    #~(job
       '(next-hour '(20))
       #$(run-with-store (open-connection)
           (ansible-playbook
            (ansible-playbook-configuration
             (playbook %ansible-playbook-bq-main)
-            (state-directory
-             (and=> (getenv "HOME")
-                    (lambda (home)
-                      (string-append home "/src/gitlab01.bqtstuff.com/devops/state"))))
-            (command #~(invoke "ansible-playbook" "--timeout=5" "main.json"))))))))
+            (state-directory %bq-state-directory)
+            (command #~(invoke "ansible-playbook" "--timeout=5" "main.json"))
+            (post-hook
+             #~(with-directory-excursion #$state-directory
+                 (invoke "git" "add" "--all")
+                 (invoke "git" "commit" "--message=Update.")))))))))
 
 (define ansible-playbook-service-type
   (service-type
