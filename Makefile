@@ -93,8 +93,12 @@ dot_config/transmission/settings.json.gpg:
 dot_config/espanso/user/censor.yml.gpg:
 	gpg --decrypt dot_config/espanso/user/censor.yml.gpg > $(HOME)/.config/espanso/user/censor.yml
 
+.PHONY: dotfiles/mjru/intr.nix
+dotfiles/mjru/intr.nix:
+	dotfiles/mjru/intr.nix > dotfiles/mjru/intr.json
+
 .PHONY: install
-install: decrypt dotfiles/guixsd/machines.scm dotfiles/nix/nix.conf
+install: decrypt dotfiles/guixsd/machines.scm dotfiles/nix/nix.conf dotfiles/mjru/intr.nix
 	dot_local/bin/executable_gpg-unlock > /dev/null
 	update-desktop-database $(HOME)/.local/share/applications
 	open-with-linux install
