@@ -14,9 +14,9 @@
 (define-record-type* <juniper-configuration>
   juniper-configuration make-juniper-configuration
   juniper-configuration?
-  (host     juniper-configuration-host)    ;string
-  (commands juniper-configuration-commands ;gexp
-            (default #~(begin #t))))
+  (host      juniper-configuration-host)    ;string
+  (post-hook juniper-configuration-post-hook ;gexp
+             (default #~(begin #t))))
 
 (define (juniper-command host command)
   #~(begin
@@ -74,11 +74,6 @@
                (display #$(juniper-command (juniper-configuration-host config)
                                            '("cli" "show" "interfaces" "detail"))
                         port)))
-           (call-with-output-file (string-append directory "/bgp-summary.txt")
-             (lambda (port)
-               (display #$(juniper-command (juniper-configuration-host config)
-                                           '("cli" "show" "bgp" "summary")) 
-                        port)))
            (call-with-output-file (string-append directory "/chassis-hardware.txt")
              (lambda (port)
                (display #$(juniper-command (juniper-configuration-host config)
@@ -89,77 +84,12 @@
                (display #$(juniper-command (juniper-configuration-host config)
                                            '("cli" "show" "chassis" "routing-engine")) 
                         port)))
-           (call-with-output-file (string-append directory "/chassis-pic.txt")
-             (lambda (port)
-               (display #$(juniper-command (juniper-configuration-host config)
-                                           '("cli" "show" "chassis" "pic" "pic-slot" "0" "fpc-slot" "0"))
-                        port)
-               (display #$(juniper-command (juniper-configuration-host config)
-                                           '("cli" "show" "chassis" "pic" "pic-slot" "0" "fpc-slot" "1"))
-                        port)
-               (display #$(juniper-command (juniper-configuration-host config)
-                                           '("cli" "show" "chassis" "pic" "pic-slot" "1" "fpc-slot" "0"))
-                        port)
-               (display #$(juniper-command (juniper-configuration-host config)
-                                           '("cli" "show" "chassis" "pic" "pic-slot" "1" "fpc-slot" "1")) 
-                        port)))
-           (call-with-output-file (string-append directory "/bgp-neighbors.txt")
-             (lambda (port)
-               (display "group WEBA\n" port)
-               (display #$(juniper-command (juniper-configuration-host config)
-                                           '("cli" "show" "bgp" "neighbor" "10.102.0.1"))
-                        port)
-               (display "group PROMETEY\n" port)
-               (display #$(juniper-command (juniper-configuration-host config)
-                                           '("cli" "show" "bgp" "neighbor" "85.235.192.226"))
-                        port)
-               (display #$(juniper-command (juniper-configuration-host config)
-                                           '("cli" "show" "bgp" "neighbor" "85.235.198.236"))
-                        port)
-               (display "group DATAIX\n" port)
-               (display #$(juniper-command (juniper-configuration-host config)
-                                           '("cli" "show" "bgp" "neighbor" "178.18.224.100"))
-                        port)
-               (display #$(juniper-command (juniper-configuration-host config)
-                                           '("cli" "show" "bgp" "neighbor" "178.18.227.100"))
-                        port)
-               (display "group SERVICE-PIPE\n" port)
-               (display #$(juniper-command (juniper-configuration-host config)
-                                           '("cli" "show" "bgp" "neighbor" "10.70.0.21"))
-                        port)
-               (display #$(juniper-command (juniper-configuration-host config)
-                                           '("cli" "show" "bgp" "neighbor" "10.70.0.25"))
-                        port)
-               (display "group IBGP-OF\n" port)
-               (display #$(juniper-command (juniper-configuration-host config)
-                                           '("cli" "show" "bgp" "neighbor" "10.10.3.100"))
-                        port)
-               (display "group IBGP-DH-BACKUP\n" port)
-               (display #$(juniper-command (juniper-configuration-host config)
-                                           '("cli" "show" "bgp" "neighbor" "10.10.1.102"))
-                        port)
-               (display "group IBGP-DH\n" port)
-               (display #$(juniper-command (juniper-configuration-host config)
-                                           '("cli" "show" "bgp" "neighbor" "10.10.0.3"))
-                        port)
-               (display "group IBGP-BORDER\n" port)
-               (display #$(juniper-command (juniper-configuration-host config)
-                                           '("cli" "show" "bgp" "neighbor" "10.10.0.1"))
-                        port)))
            (call-with-output-file (string-append directory "/route.txt")
              (lambda (port)
                (display #$(juniper-command (juniper-configuration-host config)
                                            '("cli" "show" "route" "0.0.0.0/0" "detail"))
                         port)))
-           (call-with-output-file (string-append directory "/route-advertising-protocol.txt")
-             (lambda (port)
-               (display "group PROMETEY\n" port)
-               (display #$(juniper-command (juniper-configuration-host config)
-                                           '("cli" "show" "route" "advertising-protocol" "bgp" "85.235.192.226"))
-                        port)
-               (display #$(juniper-command (juniper-configuration-host config)
-                                           '("cli" "show" "route" "advertising-protocol" "bgp" "85.235.198.236"))
-                        port))))))))
+           #$(juniper-configuration-post-hook config))))))
 
 (define (juniper-configuration->vc config)
   (program-file
@@ -173,15 +103,92 @@
            (invoke "git" "add" "--all")
            (invoke "git" "commit" "--message=Update."))))))
 
+(define (juniper-bgp-commands host)
+  #~(begin
+      (call-with-output-file (string-append directory "/bgp-summary.txt")
+        (lambda (port)
+          (display #$(juniper-command host
+                                      '("cli" "show" "bgp" "summary"))
+                   port)))
+      (call-with-output-file (string-append directory "/chassis-pic.txt")
+        (lambda (port)
+          (display #$(juniper-command host
+                                      '("cli" "show" "chassis" "pic" "pic-slot" "0" "fpc-slot" "0"))
+                   port)
+          (display #$(juniper-command host
+                                      '("cli" "show" "chassis" "pic" "pic-slot" "0" "fpc-slot" "1"))
+                   port)
+          (display #$(juniper-command host
+                                      '("cli" "show" "chassis" "pic" "pic-slot" "1" "fpc-slot" "0"))
+                   port)
+          (display #$(juniper-command host
+                                      '("cli" "show" "chassis" "pic" "pic-slot" "1" "fpc-slot" "1"))
+                   port)))
+      (call-with-output-file (string-append directory "/bgp-neighbors.txt")
+        (lambda (port)
+          (display "group WEBA\n" port)
+          (display #$(juniper-command host
+                                      '("cli" "show" "bgp" "neighbor" "10.102.0.1"))
+                   port)
+          (display "group PROMETEY\n" port)
+          (display #$(juniper-command host
+                                      '("cli" "show" "bgp" "neighbor" "85.235.192.226"))
+                   port)
+          (display #$(juniper-command host
+                                      '("cli" "show" "bgp" "neighbor" "85.235.198.236"))
+                   port)
+          (display "group DATAIX\n" port)
+          (display #$(juniper-command host
+                                      '("cli" "show" "bgp" "neighbor" "178.18.224.100"))
+                   port)
+          (display #$(juniper-command host
+                                      '("cli" "show" "bgp" "neighbor" "178.18.227.100"))
+                   port)
+          (display "group SERVICE-PIPE\n" port)
+          (display #$(juniper-command host
+                                      '("cli" "show" "bgp" "neighbor" "10.70.0.21"))
+                   port)
+          (display #$(juniper-command host
+                                      '("cli" "show" "bgp" "neighbor" "10.70.0.25"))
+                   port)
+          (display "group IBGP-OF\n" port)
+          (display #$(juniper-command host
+                                      '("cli" "show" "bgp" "neighbor" "10.10.3.100"))
+                   port)
+          (display "group IBGP-DH-BACKUP\n" port)
+          (display #$(juniper-command host
+                                      '("cli" "show" "bgp" "neighbor" "10.10.1.102"))
+                   port)
+          (display "group IBGP-DH\n" port)
+          (display #$(juniper-command host
+                                      '("cli" "show" "bgp" "neighbor" "10.10.0.3"))
+                   port)
+          (display "group IBGP-BORDER\n" port)
+          (display #$(juniper-command host
+                                      '("cli" "show" "bgp" "neighbor" "10.10.0.1"))
+                   port)))
+
+      (call-with-output-file (string-append directory "/route-advertising-protocol.txt")
+        (lambda (port)
+          (display "group PROMETEY\n" port)
+          (display #$(juniper-command host
+                                      '("cli" "show" "route" "advertising-protocol" "bgp" "85.235.192.226"))
+                   port)
+          (display #$(juniper-command host
+                                      '("cli" "show" "route" "advertising-protocol" "bgp" "85.235.198.236"))
+                   port)))))
+
 (define juniper-configuration->vc-sr1-mr13-14.intr
   (juniper-configuration->vc
    (juniper-configuration
-    (host "sr1-mr13-14.intr"))))
+    (host "sr1-mr13-14.intr")
+    (post-hook (juniper-bgp-commands host)))))
 
 (define juniper-configuration->vc-sr1-dh507-508.intr
   (juniper-configuration->vc
    (juniper-configuration
-    (host "sr1-dh507-508.intr"))))
+    (host "sr1-dh507-508.intr")
+    (post-hook (juniper-bgp-commands host)))))
 
 (define juniper-configuration->vc-sw2-mr13.intr
   (juniper-configuration->vc
