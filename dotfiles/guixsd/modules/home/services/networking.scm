@@ -18,6 +18,8 @@
                                                  ,juniper-configuration->vc-sr1-mr13-14.intr)
                                                `(".local/bin/juniper-configuration-vc-sr1-dh507-508.intr"
                                                  ,juniper-configuration->vc-sr1-dh507-508.intr)
+                                               `(".local/bin/juniper-configuration-vc-sw2-mr13.intr"
+                                                 ,juniper-configuration->vc-sw2-mr13.intr)
                                                `(".local/bin/cisco-configuration-vc-sw1-dh507.intr"
                                                  ,cisco-configuration->vc-sw1-dh507.intr)
                                                `(".local/bin/cisco-configuration-vc-sw2-dh507.intr"

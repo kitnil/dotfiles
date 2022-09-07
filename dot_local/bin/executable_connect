@@ -168,7 +168,7 @@ case "$1" in
         help_main
         exit 0
         ;;
-    br1-mr14.intr|sr1-mr13-14.intr|sr1-dh507-508.intr)
+    br1-mr14.intr|sr1-mr13-14.intr|sr1-dh507-508.intr|sw2-mr13.intr)
         case "$2" in
             bgp)
                 connect_junos "$1" cli 'show bgp summary'

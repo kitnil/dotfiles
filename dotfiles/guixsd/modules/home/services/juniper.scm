@@ -7,7 +7,8 @@
   #:export (juniper-service-type
 
             juniper-configuration->vc-sr1-mr13-14.intr
-            juniper-configuration->vc-sr1-dh507-508.intr))
+            juniper-configuration->vc-sr1-dh507-508.intr
+            juniper-configuration->vc-sw2-mr13.intr))
 
 (define (juniper-command host command)
   #~(begin
@@ -137,6 +138,9 @@
 (define juniper-configuration->vc-sr1-dh507-508.intr
   (juniper-configuration->vc "sr1-dh507-508.intr"))
 
+(define juniper-configuration->vc-sw2-mr13.intr
+  (juniper-configuration->vc "sw2-mr13.intr"))
+
 (define (juniper-mcron-jobs config)
   (list
    #~(job
@@ -146,7 +150,11 @@
    #~(job
       '(next-hour '(22))
       #$(run-with-store (open-connection)
-          (lower-object juniper-configuration->vc-sr1-dh507-508.intr)))))
+          (lower-object juniper-configuration->vc-sr1-dh507-508.intr)))
+   #~(job
+      '(next-hour '(23))
+      #$(run-with-store (open-connection)
+          (lower-object juniper-configuration->vc-sw2-mr13.intr)))))
 
 (define juniper-service-type
   (service-type
