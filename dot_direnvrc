@@ -163,11 +163,15 @@ direnv:
     export XDG_RUNTIME_DIR="/run/user/$UID"
     export EDITOR="$HOME/.guix-profile/bin/emacsclient -nc"
 
-    echo sudo --login "$PWD/pre-inst-env" guix system build \
-         --load-path="${HOME}/src/nonguix" \
-         --load-path="/home/oleg/src/cgit.duckdns.org/git/guix/guix-wigust/guix" \
-         --load-path="${HOME}/.local/share/chezmoi/dotfiles/guixsd/modules" \
-         "${HOME}/.local/share/chezmoi/dotfiles/guixsd/guixsd.scm"
+    cat <<'EOF'
+sudo --login \
+GUILE_LOAD_PATH="${HOME}/.local/share/chezmoi/dotfiles/guixsd/modules:${GUILE_LOAD_PATH}" \
+"${PWD}/pre-inst-env" guix system build \
+--load-path="${HOME}/src/gitlab.com/nonguix/nonguix" \
+--load-path="${HOME}/src/cgit.duckdns.org/guix/guix-wigust/guix" \
+--load-path="${HOME}/.local/share/chezmoi/dotfiles/guixsd/modules" \
+"${HOME}/.local/share/chezmoi/dotfiles/guixsd/guixsd.scm"
+EOF
 }
 
 use_emacs-guix()
