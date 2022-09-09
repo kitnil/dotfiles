@@ -2167,7 +2167,11 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
 
                          %dnsmasq-vlan156-service
 
-                         (service libvirt-service-type)
+                         (service libvirt-service-type
+                                  (libvirt-configuration
+                                   (listen-addr "192.168.0.145")
+                                   (listen-tcp? #t)
+                                   (auth-tcp "none")))
                          (simple-service 'libvirt-qemu-config activation-service-type
                                          #~(begin
                                              (when (file-exists? "/etc/libvirt")
