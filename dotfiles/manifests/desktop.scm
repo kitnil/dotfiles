@@ -2,10 +2,11 @@
              (gnu packages suckless)
              (gnu packages terminals)
              (gnu packages wm)
-             (gnu packages xdisorg))
+             (gnu packages xdisorg)
+             (deprecated))
 
 (define terminals
-  (list alacritty))
+  (list (@ (deprecated) alacritty)))
 
 (define menus
   (list dmenu wofi))

@@ -39,3 +39,6 @@
 
 (define-public autofs
   (last (lookup-inferior-packages inferior "autofs")))
+
+(define-public alacritty
+  (last (lookup-inferior-packages inferior "alacritty")))
