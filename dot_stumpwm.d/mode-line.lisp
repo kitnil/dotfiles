@@ -19,17 +19,19 @@
           ,(make-string 4 :initial-element #\space)
           ,'(:eval (let* ((group (current-group))
                           (frame (tile-group-current-frame group))
-                          (windows (frame-sort-windows group frame)))
-                     (format nil "(~a)"
-                             (join
-                              (mapcar (lambda (window)
-                                        (let ((wn (window-name window)))
-                                          (format nil "~a:[~a]"
-                                                  (window-number window)
-                                                  (if (> (length wn) 10)
-                                                      (concat (subseq wn 0 10) "...")
-                                                      wn))))
-                                      windows)))))
+                          (windows (frame-sort-windows group frame))
+                          (windows-names
+                            (mapcar (lambda (window)
+                                      (let ((wn (window-name window)))
+                                        (format nil "~a:[~a]"
+                                                (window-number window)
+                                                (if (> (length wn) 10)
+                                                    (concat (subseq wn 0 10) "...")
+                                                    wn))))
+                                    windows)))
+                     (if (> (length windows-names) 5)
+                         (format nil "(~a ...)" (join (take 5 windows-names)))
+                         (format nil "(~a)" (join windows-names)))))
 
           ,(make-string 4 :initial-element #\space)
           "^>"
