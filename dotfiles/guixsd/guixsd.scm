@@ -842,6 +842,7 @@ location / {
 
            "192.168.154.53 windows.local"
            "192.168.0.187 ubuntu.local"
+           "192.168.154.110 almalinux.local"
 
            "78.108.82.157 mjru"
 
