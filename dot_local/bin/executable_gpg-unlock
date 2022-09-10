@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+exec > /dev/null
+
 set -eu
 
 if [ -f "$HOME/.password-store/www.majordomo.ru/gpg/master.gpg" ]
