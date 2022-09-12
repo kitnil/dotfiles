@@ -37,7 +37,14 @@
          ("ignore_errors" . "yes")
          ("fetch"
           ("src" . "{{ item }}")
-          ("dest" . "/home/oleg/ansible-out/files")))))
+          ("dest" . "/home/oleg/ansible-out/files")))
+        (("shell" . "dmidecode")
+         ("register" . "shell_result")
+         ("ignore_errors" . "yes")
+         ("become" . "yes"))
+        (("local_action"
+          .
+          "copy content='{{ shell_result.stdout }}' dest='/home/oleg/ansible-out/files/{{ ansible_hostname }}.intr/dmidecode.txt'"))))
      ("hosts" . "majordomo")
      ("gather_facts" . "no")
      ("become" . "yes"))))
