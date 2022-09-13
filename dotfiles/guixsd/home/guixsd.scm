@@ -962,6 +962,9 @@ account default : gmail
                                        ("web17.intr" . null)
                                        ("web16.intr" . null)
                                        ("web15.intr" . null)))
+                                     ("deprecated_web"
+                                      ("hosts"
+                                       #$@%ansible-majordomo-deprecated-webs))
                                      ("vpn"
                                       ("hosts"
                                        ("router4.intr" . null)
