@@ -28,7 +28,8 @@
   #:use-module (guix records)
   #:use-module (packages jenkins)
   #:export (jenkins-configuration
-            jenkins-service-type))
+            jenkins-service-type
+            jenkins-builder-service-type))
 
 (define-record-type* <jenkins-configuration>
   jenkins-configuration make-jenkins-configuration
@@ -121,3 +122,10 @@
                                   (service-extension activation-service-type
                                                      jenkins-activation)))
                 (description "Run Jenkins CI.")))
+
+(define jenkins-builder-service-type
+  (service-type (name 'jenkins-builder)
+                (extensions (list (service-extension account-service-type
+                                                     jenkins-account)))
+                (default-value '())
+                (description "Configure Jenkins CI builder.")))
