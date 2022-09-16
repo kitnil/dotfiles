@@ -42,3 +42,6 @@
 
 (define-public alacritty
   (last (lookup-inferior-packages inferior "alacritty")))
+
+(define-public libreoffice
+  (last (lookup-inferior-packages inferior "libreoffice")))

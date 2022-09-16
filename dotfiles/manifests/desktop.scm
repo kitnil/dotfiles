@@ -5,6 +5,9 @@
              (gnu packages xdisorg)
              (deprecated))
 
+(define office
+  (list (@ (deprecated) libreoffice)))
+
 (define terminals
   (list (@ (deprecated) alacritty)))
 
@@ -20,4 +23,4 @@
 (define clipboard
   (list wl-clipboard))
 
-(packages->manifest (append clipboard menus terminals wm sway-utils))
+(packages->manifest (append clipboard menus office terminals wm sway-utils))
