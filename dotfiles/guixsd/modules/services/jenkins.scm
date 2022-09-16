@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2019, 2020, 2021 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2019, 2020, 2021, 2022 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -113,7 +113,7 @@
     (stop #~(make-kill-destructor)))))
 
 (define jenkins-service-type
-  (service-type (name 'syncthing)
+  (service-type (name 'jenkins)
                 (extensions (list (service-extension shepherd-root-service-type
                                                      jenkins-shepherd-service)
                                   (service-extension account-service-type
