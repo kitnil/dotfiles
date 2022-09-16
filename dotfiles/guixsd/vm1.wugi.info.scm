@@ -16,6 +16,7 @@
              (services monitoring)
              (services certbot)
              (services networking)
+             (services jenkins)
              (services openvpn)
              (services ssh)
              (services web))
@@ -97,6 +98,8 @@ oleg ALL=(ALL) NOPASSWD:ALL\n"))
                                        (options '("iburst")))))))
                           (service openssh-service-type
                                    (openssh-configuration
+                                    (authorized-keys
+                                    `(("jenkins" ,(local-file "ssh/id_rsa_jenkins.wugi.info.pub"))))
                                     (password-authentication? #f)
                                     (gateway-ports? 'client)
                                     (use-pam? #f)
@@ -182,6 +185,8 @@ route 141.80.181.40 255.255.255.255 192.168.25.2
                          (service tor-service-type
                                   (tor-configuration
                                    (config-file (local-file "torrc"))))
+
+                         (service jenkins-builder-service-type)
 
                           (dbus-service)
                           (elogind-service)
