@@ -56,7 +56,7 @@
 (packages->manifest
  (cons*
 
-  ;; virt-manager-fullscreen
+  virt-manager-fullscreen
 
   y2rss
 
