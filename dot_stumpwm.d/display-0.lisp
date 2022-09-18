@@ -148,3 +148,14 @@
 ;;                               (when (string= (window-class window) "mpv") ||#
 ;;                                 (update-fullscreen window 2) ||#
 ;;                                 (run-commands "move-focus left")))) ||#
+
+(add-hook *new-window-hook*
+          (lambda (window)
+            (when (string= (window-role window) "PictureInPicture")
+              (let* ((screen (current-screen))
+                     (head (current-head))
+                     (ml (head-mode-line head)))
+                (setf (mode-line-mode ml) :hidden)
+                (xlib:unmap-window (mode-line-window ml))
+                (dolist (group (screen-groups screen))
+                  (group-sync-head group head))))))
