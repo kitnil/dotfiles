@@ -1894,10 +1894,10 @@ PasswordAuthentication yes")))
                                                       ("depends_on" . #("opensearch-node1"))
                                                       ("command" . "filebeat -e -strict.perms=false"))))))))))))))
 
-                         (service fatrace-service-type
-                                  (fatrace-configuration
-                                   (arguments '("--current-mount"))
-                                   (directory "/srv")))
+                         ;; (service fatrace-service-type
+                         ;;          (fatrace-configuration
+                         ;;           (arguments '("--current-mount"))
+                         ;;           (directory "/srv")))
 
                          (service docker-compose-service-type
                                   (docker-compose-configuration
