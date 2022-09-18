@@ -1160,7 +1160,7 @@ location / {
                                                               (target_label . "instance"))
                                                              ((replacement . "127.0.0.1:9115")
                                                               (target_label . "__address__"))))
-                                                          (job_name . "blackbox-http"))
+                                                          (job_name . "http"))
                                                          ((static_configs
                                                            .
                                                            #(((targets . #("192.168.0.1" ;TP-Link Archer C6
@@ -1182,7 +1182,7 @@ location / {
                                                               (target_label . "instance"))
                                                              ((replacement . "127.0.0.1:9115")
                                                               (target_label . "__address__"))))
-                                                          (job_name . "blackbox-icmp"))
+                                                          (job_name . "icmp"))
                                                          ((static_configs
                                                            .
                                                            #(((targets . #("smtp.wugi.info:25")))))
@@ -1197,7 +1197,7 @@ location / {
                                                               (target_label . "instance"))
                                                              ((replacement . "127.0.0.1:9115")
                                                               (target_label . "__address__"))))
-                                                          (job_name . "blackbox-smtp-starttls"))
+                                                          (job_name . "smtps"))
                                                          ((static_configs
                                                            .
                                                            #(((targets . #("imap.wugi.info:143")))))
@@ -1212,7 +1212,7 @@ location / {
                                                               (target_label . "instance"))
                                                              ((replacement . "127.0.0.1:9115")
                                                               (target_label . "__address__"))))
-                                                          (job_name . "blackbox-imap-starttls"))
+                                                          (job_name . "imaps"))
                                                          ((static_configs
                                                            .
                                                            #(((targets . #("8.8.8.8")))))
@@ -1227,7 +1227,7 @@ location / {
                                                               (target_label . "instance"))
                                                              ((replacement . "127.0.0.1:9115")
                                                               (target_label . "__address__"))))
-                                                          (job_name . "blackbox-dns-udp-mjru-wugi-info"))
+                                                          (job_name . "dns"))
                                                          ((static_configs
                                                            .
                                                            #(((targets . #("127.0.0.1:6060"))
@@ -1283,10 +1283,6 @@ location / {
                                                                       ,prometheus-alertmanager-exim
                                                                       ,prometheus-alertmanager-ssh-exporter
                                                                       ,prometheus-alertmanager-guix))
-                                                      (global
-                                                       (scrape_interval . "15s")
-                                                       (external_labels
-                                                        (monitor . "codelab-monitor")))
                                                       ("alerting"
                                                        ("alertmanagers"
                                                         .
