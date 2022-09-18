@@ -1172,7 +1172,7 @@ location / {
                                                                            "78.108.87.250" ;vpn-miran.majordomo.ru static
                                                                            "78.108.91.250" ;vpn-dh.majordomo.ru
                                                                            "172.16.103.1" ;majordomo openvpn gateway
-                                                                           )))))
+                                                                           "ci.guix.gnu.org")))))
                                                           (scrape_interval . "30s")
                                                           (metrics_path . "/probe")
                                                           (params . ((module . #("icmp"))))
