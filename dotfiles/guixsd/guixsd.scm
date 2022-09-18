@@ -302,6 +302,7 @@ location / {
         (proxy "monitor.wugi.info" 8080)
         (proxy "guix.duckdns.org" 5556 #:ssl? #t)
         (proxy "kiwiirc.wugi.info" 8194 #:ssl? #t #:ssl-key? #t #:mtls? #t)
+        (proxy "prometheus.wugi.info" 9090 #:listen "192.168.0.145")
         (proxy "guix.wugi.info" 5556 #:ssl? #t #:ssl-key? #t)
         ((lambda* (host #:key
                   (ssl? #f)
@@ -817,6 +818,8 @@ location / {
                            ;; "api-dev.intr"
                            ;; "hms-billing-dev.intr"
                            ))
+
+           "192.168.0.145 prometheus.wugi.info"
 
            "10.1.52.89 ceph1 ceph1.intr"
            "10.1.52.90 ceph2 ceph2.intr"
