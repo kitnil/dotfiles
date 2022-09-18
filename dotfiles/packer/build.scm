@@ -59,7 +59,8 @@
                                        "hash guix"
                                        "guix system reconfigure /etc/config.scm"
                                        ,@(if %build-local-git-repository
-                                             '("guix time-machine --disable-authentication --url=https://cgit.duckdns.org/git/guix/guix -- system build /etc/config.scm")
+                                             '("guix pull --disable-authentication --url=https://cgit.duckdns.org/git/guix/guix"
+                                               "guix system build /etc/config.scm")
                                              '()))))
                         (("type" . "shell")
                          ("inline" . #("set -x"
