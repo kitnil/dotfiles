@@ -2097,9 +2097,7 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                                                       ("address" . "127.0.0.1:8210")))
                                                     ("disable_mlock" . #t)
                                                     ("cluster_addr" . "http://vault1:8211")
-                                                    ("api_addr" . "http://vault1:8210")))))))))
-
-                                    )))
+                                                    ("api_addr" . "http://vault1:8210"))))))))))))
 
                          (service openvswitch-service-type)
                          %openvswitch-configuration-service
