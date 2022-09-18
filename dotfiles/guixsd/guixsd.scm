@@ -1027,7 +1027,8 @@ location / {
                                      (prometheus "/home/oleg/.nix-profile/bin/prometheus")
                                      (arguments '(;; "--log.level=debug"
                                                   "--storage.tsdb.retention.time=2y"
-                                                  "--web.enable-admin-api"))
+                                                  "--web.enable-admin-api"
+                                                  "--web.external-url=http://prometheus.wugi.info"))
                                      (config-file
                                       (computed-file
                                        "prometheus.json"
