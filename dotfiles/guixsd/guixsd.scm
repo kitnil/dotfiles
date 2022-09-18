@@ -2007,8 +2007,7 @@ PasswordAuthentication yes")))
                                         ;;
                                         ;; use containerd directly
                                         ;; "--container-runtime-endpoint" "unix:///run/containerd/containerd.sock"
-                                        ))
-                           (kubevirt? #t)))
+                                        ))))
 
                          ;; kubernetes-k3s-service
 

@@ -55,25 +55,6 @@
   (list (log-rotation
          (files (list (kubernetes-k3s-configuration-log-file config))))))
 
-(define (kubernetes-k3s-activation config)
-  "Return the activation GEXP for CONFIG."
-  (with-imported-modules '((guix build utils))
-    #~(begin
-        (use-modules (guix build utils))
-        (when #$(kubernetes-k3s-configuration-kubevirt? config)
-          (invoke (string-append #$util-linux "/bin/mount")
-                  "--make-shared" "/"))
-
-        ;; XXX: Fix connection to `/run/k3s/containerd/containerd.sock'.
-        ;;
-        ;; time="2022-05-21T14:03:02+03:00" level=info msg="Waiting for
-        ;; containerd startup: rpc error: code = Unavailable desc = connection
-        ;; error: desc = \"transport: Error while dialing dial unix
-        ;; /run/k3s/containerd/containerd.sock: connect: connection refused\""
-        ;; (when (file-exists? "/run/k3s/containerd")
-        ;;   (delete-file-recursively "/run/k3s/containerd"))
-        )))
-
 (define (kubernetes-k3s-shepherd-service config)
   (list
    (shepherd-service
@@ -102,8 +83,6 @@
                                        (if (kubernetes-k3s-configuration-kubevirt? config)
                                            (list virtctl)
                                            '()))))
-          (service-extension activation-service-type
-                             kubernetes-k3s-activation)
           (service-extension shepherd-root-service-type
                              kubernetes-k3s-shepherd-service)
           (service-extension rottlog-service-type
