@@ -614,7 +614,7 @@ location / {
                                          #$(run-with-store (open-connection)
                                              (gexp->derivation "tftp-root" tftp-root)))
                           "--enable-tftp"
-                          "--server=192.168.0.144"
+                          "--server=192.168.0.145"
                           "--no-resolv")))
           (respawn? #f)))))
 
@@ -2139,7 +2139,7 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                                           (list (network-route
                                                  (destination "default")
                                                  (gateway "192.168.0.1"))))
-                                         (name-servers '("192.168.0.144"
+                                         (name-servers '("192.168.0.145"
 
                                                          ;; local Docker
                                                          ;; "172.17.0.1"
