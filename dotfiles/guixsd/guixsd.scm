@@ -2009,8 +2009,6 @@ PasswordAuthentication yes")))
                                         ;; "--container-runtime-endpoint" "unix:///run/containerd/containerd.sock"
                                         ))))
 
-                         ;; kubernetes-k3s-service
-
                          (dovecot-service
                           #:config (dovecot-configuration
                                     (listen '("127.0.0.1"))
