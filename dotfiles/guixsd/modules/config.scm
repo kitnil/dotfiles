@@ -73,7 +73,6 @@
 
             %openvpn-configuration-wugi.info
             %openvpn-configuration-majordomo.ru
-            %openvpn-configuration-bq.lan
 
             %homer-nginx-configuration
             %homer-config
@@ -160,7 +159,6 @@ EndSection\n")
          xhost
 
          nss-certs ;SSL certificates
-         bq-ca
          majordomo-ca
 
          fping
@@ -395,14 +393,6 @@ server 192.168.25.0 255.255.255.0
 client-config-dir /etc/openvpn/ccd
 client-to-client
 "))))
-
-(define %openvpn-configuration-bq.lan
-  (openvpn-configuration
-   (name "bq.lan")
-   (config "/etc/openvpn/cvpn.ovpn")
-   (environment-variables '("OPENVPN_OTP_SECRET_FILE=/etc/guix/secrets/bq"
-                            "OPENVPN_CONFIG_FILE=/etc/openvpn/cvpn.ovpn"))
-   (openvpn openvpn-mintotp)))
 
 (define %openvpn-configuration-majordomo.ru
   (openvpn-configuration

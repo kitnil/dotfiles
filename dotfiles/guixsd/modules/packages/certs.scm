@@ -86,31 +86,3 @@
     (synopsis "DN42 CA")
     (description "This package provides a DN42 CA.")
     (license license:gpl3+)))
-
-(define-public bq-ca
-  (package
-    (name "bq-ca")
-    (version "0.0.1")
-    (source (origin
-              (method url-fetch)
-              (uri (string-append
-                    "https://cgit.duckdns.org"
-                    "/bq/certs"
-                    "/plain/ca.pem"))
-              (sha256
-               (base32
-                "18j0qlyl2jh86kclnmxc4c1wy1xqp51kppclzxd7xsvjrlpgi929"))))
-    (arguments
-     `(#:modules ((guix build utils))
-       #:builder
-       (begin
-         (use-modules (guix build utils))
-         (mkdir-p (string-append %output "/etc/ssl/certs"))
-         (copy-file (assoc-ref %build-inputs "source")
-                    (string-append %output "/etc/ssl/certs/bq.pem"))
-         #t)))
-    (build-system trivial-build-system)
-    (home-page "https://cgit.duckdns.org")
-    (synopsis "BQ CA")
-    (description "This package provides a BQ CA")
-    (license license:gpl3+)))

@@ -23,10 +23,6 @@
 (defun kubectl-current-context (cluster &optional color)
   "Returns a string representing the current kubectl context."
   (if color
-      (cond ((string= cluster "bq-k8s-stag")
-             (format nil "kubernetes: ^[^B^3*~a^]" cluster))
-            ((string= cluster "bq-k8s-prod")
-             (format nil "kubernetes: ^[^B^1*~a^]" cluster))
-            (t
+      (cond (t
              (format nil "kubernetes: ~a" cluster)))
       (format nil "kubernetes: ~a" cluster)))

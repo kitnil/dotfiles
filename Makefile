@@ -65,7 +65,6 @@ dotfiles/guile/ssh.txt: dotfiles/guile/ssh.scm
 .PHONY:
 decrypt:
 	gpg --quiet --decrypt dotfiles/guixsd/modules/home/config/openssh.scm.gpg > dotfiles/guixsd/modules/home/config/openssh.scm
-	gpg --quiet --decrypt dotfiles/guixsd/modules/home/services/bq.scm.gpg > dotfiles/guixsd/modules/home/services/bq.scm
 
 .PHONY: dotfiles/guixsd/home/guixsd.scm
 dotfiles/guixsd/home/guixsd.scm:
@@ -111,7 +110,6 @@ install: decrypt dotfiles/guixsd/machines.scm dotfiles/nix/nix.conf dotfiles/mjr
 	install --mode=755 dotfiles/scripts/maintenance $(HOME)/bin
 	install --mode=755 dotfiles/scripts/sshrc $(HOME)/bin
 	gpg --decrypt dotfiles/emacs/mjru-network.gpg > $(HOME)/.emacs.d/modules/mjru-network.el
-	gpg --decrypt dotfiles/emacs/bq-network.gpg > $(HOME)/.emacs.d/modules/bq-network.el
 	ln -sf $(HOME)/.Xresources $(HOME)/.Xdefaults
 	install --mode=644 dotfiles/guile/pass.scm $(HOME)/.config/guile/pass.scm
 	install --mode=644 dotfiles/guile/config.scm $(HOME)/.config/guile/config.scm
@@ -149,10 +147,6 @@ vm1.wugi.info:
 .PHONY: add
 add:
 	cp $(HOME)/.emacs dot_emacs
-
-.PHONY: gitlab01.bqtstuff.com
-gitlab01.bqtstuff.com:
-	make --directory=dotfiles/maintenance/gitlab01.bqtstuff.com
 
 .PHONY: github
 github:

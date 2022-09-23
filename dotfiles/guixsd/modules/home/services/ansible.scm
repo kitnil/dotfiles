@@ -122,87 +122,6 @@
      ("hosts" . "deprecated")
      ("gather_facts" . "no"))))
 
-(define %bq-state-directory
-  (and=> (getenv "HOME")
-         (lambda (home)
-           (string-append home "/src/gitlab01.bqtstuff.com/devops/state"))))
-
-(define %ansible-playbook-bq-main
-  (let ((shell-result->file
-         (lambda* (file #:key json)
-           (format #f "copy content='~a' dest='~a'"
-                   (if json
-                       "{{ shell_result.stdout | from_json | to_nice_json(indent=2) }}"
-                       "{{ shell_result.stdout }}")
-                   (string-join (list %bq-state-directory "{{ inventory_hostname }}" file)
-                                "/")))))
-    (list->vector
-     `((("tasks"
-         .
-         #((("name" . "Fetch files")
-            ("loop" . #("/root/.bash_history"))
-            ("ignore_errors" . "yes")
-            ("fetch"
-             ("src" . "{{ item }}")
-             ("dest" . "/home/oleg/src/gitlab01.bqtstuff.com/devops/state")))
-           (("name" . "Invoke ip -json address")
-            ("shell" . "ip -json address")
-            ("register" . "shell_result")
-            ("ignore_errors" . "yes"))
-           (("name" . "Save ip -json address output")
-            ("local_action" . ,(shell-result->file "ip-address.json" #:json #t)))
-           (("name" . "Invoke ip -json route")
-            ("shell" . "ip -json route")
-            ("register" . "shell_result")
-            ("ignore_errors" . "yes")
-            ("when" . "ip_route_without_json == \"no\""))
-           (("name" . "Save ip -json route output")
-            ("local_action" . ,(shell-result->file "ip-route.json" #:json #t))
-            ("when" . "ip_route_without_json == \"no\""))
-           (("name" . "Invoke ip -json route")
-            ("shell" . "ip -json route")
-            ("register" . "shell_result")
-            ("ignore_errors" . "yes")
-            ("when" . "ip_route_without_json == \"yes\""))
-           (("name" . "Save ip -json route output")
-            ("local_action" . ,(shell-result->file "ip-route.txt" #:json #f))
-            ("when" . "ip_route_without_json == \"yes\""))
-           (("name" . "Fetch /etc from remote")
-            ("ansible.posix.synchronize"
-             ("src" . "/etc")
-             ("dest" . ,(string-join (list %bq-state-directory
-                                           "{{ inventory_hostname }}")
-                                     "/"))
-             ("mode" . "pull")
-             ("rsync_opts" . #("--exclude=elastic")))
-            ("ignore_errors" . "yes"))
-           (("name" . "Invoke df")
-            ("shell" . "df")
-            ("register" . "shell_result")
-            ("ignore_errors" . "yes"))
-           (("name" . "Save df output")
-            ("local_action" . ,(shell-result->file "df.txt" #:json #f)))
-           (("name" . "Invoke free")
-            ("shell" . "free")
-            ("register" . "shell_result")
-            ("ignore_errors" . "yes"))
-           (("name" . "Save free output")
-            ("local_action" . ,(shell-result->file "free.txt" #:json #f)))
-           (("name" . "Invoke ps")
-            ("shell" . "ps axjf")
-            ("register" . "shell_result")
-            ("ignore_errors" . "yes"))
-           (("name" . "Save ps output")
-            ("local_action" . ,(shell-result->file "ps.txt" #:json #f)))
-           (("name" . "iptables")
-            ("shell" . "iptables-save")
-            ("register" . "shell_result")
-            ("ignore_errors" . "yes"))
-           (("name" . "Save iptables-save output")
-            ("local_action" . ,(shell-result->file "iptables.txt" #:json #f)))))
-        ("hosts" . "bq")
-        ("gather_facts" . "yes"))))))
-
 (define-record-type* <ansible-playbook-configuration>
   ansible-playbook-configuration make-ansible-playbook-configuration
   ansible-playbook-configuration?
@@ -334,19 +253,7 @@
              #~(with-directory-excursion #$state-directory
                  (invoke "git" "add" "--all")
                  (invoke "git" "commit" "--message=Update.")
-                 (invoke "git" "push")))))))
-   #~(job
-      '(next-hour '(20))
-      #$(run-with-store (open-connection)
-          (ansible-playbook
-           (ansible-playbook-configuration
-            (playbook %ansible-playbook-bq-main)
-            (state-directory %bq-state-directory)
-            (command #~(invoke "ansible-playbook" "--timeout=5" "main.json"))
-            (post-hook
-             #~(with-directory-excursion #$state-directory
-                 (invoke "git" "add" "--all")
-                 (invoke "git" "commit" "--message=Update.")))))))))
+                 (invoke "git" "push")))))))))
 
 (define ansible-playbook-service-type
   (service-type

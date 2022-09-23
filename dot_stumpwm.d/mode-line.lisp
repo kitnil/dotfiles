@@ -94,14 +94,6 @@
                 '()
                 (list '(:eval (format nil "VPN 1: ~a" *mjru-tapvpn-ip*))))
 
-          ,@(if (string-equal *bq-tun1-ip* "")
-                '()
-                (list (make-string 4 :initial-element #\space)))
-
-          ,@(if (string-equal *bq-tun1-ip* "")
-                '()
-                (list '(:eval (format nil "VPN 2: ~a" *bq-tun1-ip*))))
-
           ,(make-string 4 :initial-element #\space)
           ,'(:eval (format nil "VOL: ~a" *volume-current*))
 
@@ -121,14 +113,6 @@
                    (loop while t do
                         (progn (mjru-ip-address-vpn-update) (sleep 10))))
                  :name "mjru-ip-address-vpn-update"))
-
-              (lambda ()
-                ;; Get VPN IP address and set it to *bq-tapvpn-ip* variable.
-                (sb-thread:make-thread
-                 (lambda ()
-                   (loop while t do
-                        (progn (bq-ip-address-vpn-update) (sleep 10))))
-                 :name "bq-ip-address-vpn-update"))
 
 	      ;; TODO: Move to mjru.lisp
               ;; (lambda () (sb-thread:make-thread

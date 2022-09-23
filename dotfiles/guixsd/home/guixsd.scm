@@ -27,7 +27,6 @@
              (home config)
              (home config openssh)
              (home services ansible)
-             (home services bq)
              (home services cisco)
              (home services desktop)
              (home services gdb)
@@ -304,10 +303,6 @@
                         (max-messages 2000)
                         (expunge "near"))))))
 
-    %bq-mbsync
-
-    %bq-goimapnotify
-
     (service home-goimapnotify-service-type
              (goimapnotify-configuration
               (config-file
@@ -446,7 +441,6 @@ PYTHONPATH='' exec -a \"$0\" ~a/bin/idea-ultimate \"$@\"\n"
                            "kodi.lisp"
                            "mail.lisp"
                            "mem.lisp"
-                           "bq.lisp"
                            "mjru.lisp"
                            "mode-line.lisp"
                            "mpv.lisp"
@@ -1187,8 +1181,7 @@ account default : gmail
                                      ;; ("guix_work" ("hosts" ("ws1.wugi.info" . null)))
                                      ("guix_vm"
                                       ("hosts"
-                                       ("vm1.wugi.info" . null)))))
-                                   #$%ansible-bq-group)
+                                       ("vm1.wugi.info" . null))))))
                                  port
                                  #:pretty #t)))))))
 
