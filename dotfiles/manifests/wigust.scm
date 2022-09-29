@@ -27,6 +27,7 @@
    emacs-awk-it
    emacs-dorg
    emacs-ytel
+   emacs-logstash
    emacs-copy-as-format
    emacs-stupid-indent-mode
    ;; emacs-dashboard-with-agenda-reverse
