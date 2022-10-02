@@ -140,7 +140,17 @@
  '(org-agenda-files '("~/org/inbox.org" "~/org/todo.org" "~/org/web.org"))
  '(python-shell-interpreter "python3" t)
  '(safe-local-variable-values
-   '((eval setq-local geiser-guile-load-path
+   '((eval with-eval-after-load 'yasnippet
+           (let
+               ((guix-yasnippets
+                 (expand-file-name "etc/snippets/yas"
+                                   (locate-dominating-file default-directory ".dir-locals.el"))))
+             (unless
+                 (member guix-yasnippets yas-snippet-dirs)
+               (add-to-list 'yas-snippet-dirs guix-yasnippets)
+               (yas-reload-all))))
+     (eval add-to-list 'completion-ignored-extensions ".go")
+     (eval setq-local geiser-guile-load-path
            (append
             (list
              (concat
@@ -332,7 +342,8 @@
      (eval modify-syntax-entry 36 "'")
      (eval modify-syntax-entry 126 "'")
      (bug-reference-bug-regexp . "<https?://\\(debbugs\\|bugs\\)\\.gnu\\.org/\\([0-9]+\\)>")))
- '(tramp-default-method "ssh"))
+ '(tramp-default-method "ssh")
+ '(warning-suppress-types '((comp))))
 
 (put 'list-timers 'disabled nil)
 
