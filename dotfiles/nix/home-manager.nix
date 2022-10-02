@@ -187,7 +187,6 @@
     # boomer
     deploy-rs
     discord
-    dnscheck
     elktail
     # eve-online
     firefox-52-wrapper

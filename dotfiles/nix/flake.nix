@@ -47,10 +47,6 @@
       url = "github:emilazy/mpv-notify-send";
       flake = false;
     };
-    github-com-norfairking-dnscheck = {
-      url = "github:kitnil/dnscheck/nix-pkgs-provide-system";
-      flake = false;
-    };
     github-com-tsoding-boomer = {
       url = "github:tsoding/boomer";
       flake = false;
@@ -83,7 +79,6 @@
             , deploy-rs
             , home-manager
             , nur
-            , github-com-norfairking-dnscheck
             , github-com-guibou-nixGL
             , github-com-emilazy-mpv-notify-send
             , github-com-kitnil-nix-docker-ipmi
@@ -204,8 +199,6 @@
         # });
 
         inherit (majordomo.packages.${system}) elktail;
-
-        inherit (import github-com-norfairking-dnscheck) dnscheck;
 
         inherit ((import nixpkgs-idea { inherit system; config = { allowUnfree = true; }; }).idea)
           idea-ultimate pycharm-professional;

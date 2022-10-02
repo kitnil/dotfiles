@@ -1860,14 +1860,6 @@ elktail()
     esac
 }
 
-domain()
-{
-    (
-        cd $HOME/bin || exit 0
-        ./domain.yml
-    )
-}
-
 brute()
 {
     sudo grep 'Connection closed' /var/log/messages \

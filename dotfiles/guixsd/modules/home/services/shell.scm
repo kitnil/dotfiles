@@ -88,7 +88,6 @@
                           "debian.sh"
                           "dns"
                           "dnscheck"
-                          "domain.yml"
                           "dotfiles"
                           "elk-index-youtube"
                           "elogind-sway"
