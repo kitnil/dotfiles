@@ -436,25 +436,43 @@ location / {
 ;;   <address type='pci' domain='0x0000' bus='0x01' slot='0x01' function='0x0'/>
 ;; </interface>
 
+(define vxlan0
+  (with-imported-modules '((guix build utils))
+    (program-file
+     "vxlan0"
+     #~(begin
+         (use-modules (guix build utils))
+
+         (define (ip . args)
+           (apply invoke/quiet #$(file-append iproute "/sbin/ip") args))
+
+         (ip "link" "add" "vxlan0" "type" "vxlan" "id" "1"
+             "remote" "185.105.108.96" "dstport" "4789"
+             "dev" "br0")
+         (ip "link" "set" "vxlan0" "up")
+         (ip "addr" "add" "10.0.0.107/24" "dev" "vxlan0")
+         (ip "route" "add" "141.80.181.40/32" "via" "10.0.0.1")))))
+
 (define %openvswitch-configuration-service
   (simple-service
    'openvswitch-configuration shepherd-root-service-type
    (list (shepherd-service
           (provision '(openvswitch-configuration))
           (requirement '(vswitchd))
-          (start #~(let ((ovs-vsctl (lambda (cmd)
-                                      (apply invoke/quiet
-                                             #$(file-append openvswitch "/bin/ovs-vsctl")
-                                             (string-tokenize cmd))))
-                         (ip (lambda (cmd)
-                               (apply system*
-                                      #$(file-append iproute "/sbin/ip")
-                                      (string-tokenize cmd))))
-                         (iptables (lambda (cmd)
-                               (apply system*
-                                      #$(file-append iptables "/sbin/iptables")
-                                      (string-tokenize cmd)))))
+          (start #~(begin
                      (lambda ()
+                       (define (ovs-vsctl cmd)
+                         (apply invoke/quiet
+                                #$(file-append openvswitch "/bin/ovs-vsctl")
+                                (string-tokenize cmd)))
+                       (define (ip cmd)
+                         (apply system*
+                                #$(file-append iproute "/sbin/ip")
+                                (string-tokenize cmd)))
+                       (define (iptables cmd)
+                         (apply system*
+                                #$(file-append iptables "/sbin/iptables")
+                                (string-tokenize cmd)))
                        (and (ovs-vsctl
                              (string-join
                               (list "--may-exist" "add-br" "br0")))
@@ -463,6 +481,7 @@ location / {
                              (string-join
                               (list "--may-exist" "add-port" "br0" "enp34s0"
                                     "vlan_mode=native-untagged")))
+                            (system* #$vxlan0)
 
                             ;; VLAN 154 provides:
                             ;; - Network via Whonix
