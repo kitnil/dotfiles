@@ -70,6 +70,10 @@ decrypt:
 dotfiles/guixsd/home/guixsd.scm:
 	guix home -L dotfiles/guixsd/modules build dotfiles/guixsd/home/guixsd.scm
 
+.PHONY: dotfiles/nix/flake.lock
+dotfiles/nix/flake.lock:
+	sh -c 'set -e; cd dotfiles/nix || exit 1; nix flake lock --update-input nixpkgs'
+
 .PHONY: dotfiles/nix/flake.nix
 dotfiles/nix/flake.nix:
 	rm -rf $(HOME)/.cache/nix
