@@ -89,7 +89,7 @@
 
     logstalgia
 
-    nixFlakes
+    nix
     nixos-install-tools
     nixos-rebuild
     nixpkgs-lint
@@ -139,7 +139,7 @@
 
     gping
 
-    rls
+    rust-analyzer
 
     bit
 
@@ -155,7 +155,6 @@
     gitAndTools.git-extras
     gitAndTools.git-open
     gitAndTools.git-recent
-    gitAndTools.grv
     gitAndTools.pre-commit
 
     libsForQt5.qtstyleplugins
@@ -197,7 +196,7 @@
     ipmiview-wrapper
     jenkins
     jenkins-job-builder
-    logstash
+    # logstash
 
     # nim_1_0
 
@@ -214,14 +213,12 @@
     restic-rest-server
 
     eiskaltdcpp
-
-    sourcetrail
   ];
 
   home.file = {
     ".bash.d/nix.bash" = {
       text = ''
-        . ${pkgs.nixFlakes}/share/bash-completion/completions/nix
+        . ${pkgs.nix}/share/bash-completion/completions/nix
 
         . ${pkgs.vault-bin}/share/bash-completion/completions/vault
         complete -C ${pkgs.vault-bin}/bin/vault vault1

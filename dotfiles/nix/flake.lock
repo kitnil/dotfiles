@@ -714,23 +714,6 @@
         "url": "ssh://gitlab.intr/utils/ipmiview"
       }
     },
-    "github-com-norfairking-dnscheck": {
-      "flake": false,
-      "locked": {
-        "lastModified": 1614814428,
-        "narHash": "sha256-iWl8Z7q2mS2suNh//lPXKYY9ycFueDjpU7nui+7WkeY=",
-        "owner": "kitnil",
-        "repo": "dnscheck",
-        "rev": "cffbc6c6dccaa6335d84851b95fb5fb60781156b",
-        "type": "github"
-      },
-      "original": {
-        "owner": "kitnil",
-        "ref": "nix-pkgs-provide-system",
-        "repo": "dnscheck",
-        "type": "github"
-      }
-    },
     "github-com-tsoding-boomer": {
       "flake": false,
       "locked": {
@@ -1944,11 +1927,11 @@
     },
     "nixpkgs_22": {
       "locked": {
-        "lastModified": 1648219316,
-        "narHash": "sha256-Ctij+dOi0ZZIfX5eMhgwugfvB+WZSrvVNAyAuANOsnQ=",
+        "lastModified": 1664645775,
+        "narHash": "sha256-+s3H2v8z4E6KNJl1JGAvcoBxlz25/Q+R//fElE0T6Ac=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "30d3d79b7d3607d56546dd2a6b49e156ba0ec634",
+        "rev": "14c5d226877aa90f656895ab7ab2badc4af03268",
         "type": "github"
       },
       "original": {
@@ -2265,7 +2248,6 @@
         "github-com-guibou-nixGL": "github-com-guibou-nixGL",
         "github-com-kitnil-nix-docker-ipmi": "github-com-kitnil-nix-docker-ipmi",
         "github-com-kitnil-nix-ipmiview": "github-com-kitnil-nix-ipmiview",
-        "github-com-norfairking-dnscheck": "github-com-norfairking-dnscheck",
         "github-com-tsoding-boomer": "github-com-tsoding-boomer",
         "home-manager": "home-manager",
         "kamadorueda-alejandra": "kamadorueda-alejandra",
