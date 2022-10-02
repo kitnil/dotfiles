@@ -708,6 +708,28 @@ EOF
     esac
 }
 
+maintenance()
+{
+    case "$1" in
+        upgrade)
+            (
+                set -xe
+                cd "${HOME}/.local/share/chezmoi" || exit 1
+                make dotfiles/nix/flake.lock
+                if make dotfiles/nix/flake.nix
+                then
+                    :
+                else
+                    git restore dotfiles/nix/flake.lock
+                fi
+            )
+            ;;
+        *)
+            command nix "$@"
+            ;;
+    esac
+}
+
 listen_ports()
 {
     ss -tulpn | awk '{ print $5 }' | cut -d: -f 2 | sort -un | xargs echo
