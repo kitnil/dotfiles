@@ -86,15 +86,13 @@ oleg ALL=(ALL) NOPASSWD:ALL\n"))
                                                      #:name-servers '("127.0.0.1"
                                                                       "8.8.8.8"
                                                                       "8.8.4.4"))
-                          ;; TODO: Use GRE tunnel, because OpenVPN depends on
-                          ;; SSL which depends on NTP.
                           (service ntp-service-type
                                    (ntp-configuration
                                     (servers
                                      (list
                                       (ntp-server
                                        (type 'pool)
-                                       (address "192.168.25.1")
+                                       (address "78.108.83.254")
                                        (options '("iburst")))))))
                           (service openssh-service-type
                                    (openssh-configuration
