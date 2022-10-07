@@ -1883,7 +1883,7 @@ PasswordAuthentication yes")))
                                                                          "discovery.seed_hosts=opensearch-node1"
                                                                          "cluster.initial_master_nodes=opensearch-node1"
                                                                          "bootstrap.memory_lock=true"
-                                                                         "OPENSEARCH_JAVA_OPTS=-Xms512m -Xmx512m"
+                                                                         "OPENSEARCH_JAVA_OPTS=-Xms2048m -Xmx2048m"
                                                                          "compatibility.override_main_response_version=true"))
                                                       ("container_name" . "opensearch-node1"))
                                                      ("opensearch-dashboards"
