@@ -109,7 +109,9 @@
   (compose-file docker-compose-configuration-compose-file)    ;<file-like> object
   (project-name docker-compose-configuration-project-name)    ;string
   (requirement docker-compose-configuration-requirement     ;list of symbols
-                (default '())))
+               (default '()))
+  (respawn? docker-compose-configuration-respawn? ;boolean
+            (default #f)))
 
 (define (docker-compose-activation config)
   "Return the activation GEXP for CONFIG."
@@ -128,7 +130,7 @@
 
 (define docker-compose-shepherd-service
   (match-lambda
-    (($ <docker-compose-configuration> docker-compose compose-file project-name requirement)
+    (($ <docker-compose-configuration> docker-compose compose-file project-name requirement respawn?)
      (list
       (shepherd-service
        (provision (list (string->symbol (string-append "docker-compose-" project-name))))
@@ -149,7 +151,7 @@
                                        (string-prefix? "SSL_CERT_DIR=" str)
                                        (string-prefix? "SSL_CERT_FILE=" str)))
                                  (environ)))))
-       (respawn? #f)
+       (respawn? respawn?)
        (stop #~(make-kill-destructor)))))))
 
 (define docker-compose-service-type
