@@ -1800,6 +1800,7 @@ PasswordAuthentication yes")))
                                   (docker-compose-configuration
                                    (project-name "opensearch")
                                    (requirement '(openvpn-majordomo.ru))
+                                   (respawn? #t) ;TODO: Fix OpenVPN race condition.
                                    (compose-file
                                     (computed-file
                                      "docker-compose-opensearch.json"
