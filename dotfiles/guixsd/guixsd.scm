@@ -1981,20 +1981,17 @@ PasswordAuthentication yes")))
                                                     ("services"
                                                      ("redis"
                                                       ("volumes" . #("/var/lib/peertube/redis:/data"))
-                                                      ("restart" . "always")
                                                       ("image" . "redis:6-alpine"))
                                                      ("postgres"
                                                       ("volumes"
                                                        .
                                                        #("/var/lib/peertube/db:/var/lib/postgresql/data"))
-                                                      ("restart" . "always")
                                                       ("image" . "postgres:13-alpine")
                                                       ("env_file" . #("/home/oleg/src/github.com/Chocobozzz/PeerTube/support/docker/production/.env")))
                                                      ("postfix"
                                                       ("volumes"
                                                        .
                                                        #("/var/lib/peertube/opendkim/keys:/etc/opendkim/keys"))
-                                                      ("restart" . "always")
                                                       ("image" . "mwader/postfix-relay")
                                                       ("env_file" . #("/home/oleg/src/github.com/Chocobozzz/PeerTube/support/docker/production/.env")))
                                                      ("peertube"
@@ -2005,7 +2002,6 @@ PasswordAuthentication yes")))
                                                          "/var/log/peertube:/data/logs"
                                                          "/var/lib/peertube/tmp:/data/tmp"
                                                          "/var/lib/peertube/config:/config"))
-                                                      ("restart" . "always")
                                                       ("ports" . #("1935:1935" "9001:9000"))
                                                       ("image"
                                                        .
