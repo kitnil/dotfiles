@@ -1989,14 +1989,14 @@ PasswordAuthentication yes")))
                                                        #("/var/lib/peertube/db:/var/lib/postgresql/data"))
                                                       ("restart" . "always")
                                                       ("image" . "postgres:13-alpine")
-                                                      ("env_file" . #("/home/oleg/src/peertube/support/docker/production/.env")))
+                                                      ("env_file" . #("/home/oleg/src/github.com/Chocobozzz/PeerTube/support/docker/production/.env")))
                                                      ("postfix"
                                                       ("volumes"
                                                        .
                                                        #("/var/lib/peertube/opendkim/keys:/etc/opendkim/keys"))
                                                       ("restart" . "always")
                                                       ("image" . "mwader/postfix-relay")
-                                                      ("env_file" . #("/home/oleg/src/peertube/support/docker/production/.env")))
+                                                      ("env_file" . #("/home/oleg/src/github.com/Chocobozzz/PeerTube/support/docker/production/.env")))
                                                      ("peertube"
                                                       ("volumes"
                                                        .
@@ -2010,7 +2010,7 @@ PasswordAuthentication yes")))
                                                       ("image"
                                                        .
                                                        "chocobozzz/peertube:production-bullseye")
-                                                      ("env_file" . #("/home/oleg/src/peertube/support/docker/production/.env"))
+                                                      ("env_file" . #("/home/oleg/src/github.com/Chocobozzz/PeerTube/support/docker/production/.env"))
                                                       ("depends_on" . #("postgres" "redis" "postfix")))))))))))))))
 
                          #;(service kubernetes-k3s-service-type
