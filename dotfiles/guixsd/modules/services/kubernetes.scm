@@ -70,7 +70,7 @@
                     "server"
                     #$@(kubernetes-k3s-configuration-arguments config)
                     "--log" #$(kubernetes-k3s-configuration-log-file config))))
-    (respawn? #f)
+    (respawn? #t) ;XXX: Fix race condition with Docker
     (stop #~(make-kill-destructor)))))
 
 (define kubernetes-k3s-service-type
