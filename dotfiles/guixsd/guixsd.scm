@@ -26,6 +26,7 @@
              (wigust packages web)
              (wigust packages linux)
              (packages certs)
+             (packages monitoring)
              (services admin)
              (services autofs)
              (services backup)
@@ -1042,7 +1043,7 @@ location / {
                                   (let ((listen-address "127.0.0.1:9090"))
                                     (prometheus-configuration
                                      (listen-address listen-address)
-                                     (prometheus "/home/oleg/.nix-profile/bin/prometheus")
+                                     (prometheus (file-append prometheus "/bin/prometheus"))
                                      (arguments '(;; "--log.level=debug"
                                                   "--storage.tsdb.retention.time=2y"
                                                   "--web.enable-admin-api"
