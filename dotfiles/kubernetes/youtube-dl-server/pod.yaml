@@ -6,14 +6,14 @@ metadata:
     name: youtube-dl-server
 spec:
   containers:
-  - image: kmb32123/youtube-dl-server
+  - image: alexta69/metube
     name: youtube-dl-server
     volumeMounts:
-    - mountPath: /youtube-dl
+    - mountPath: /downloads
       name: youtube-dl
     ports:
       - name: youtube-dl
-        containerPort: 8080
+        containerPort: 8081
   volumes:
   - name: youtube-dl
     emptyDir: {}
