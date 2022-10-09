@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: youtube-dl-server
+  labels:
+    name: youtube-dl-server
+spec:
+  containers:
+  - image: kmb32123/youtube-dl-server
+    name: youtube-dl-server
+    volumeMounts:
+    - mountPath: /youtube-dl
+      name: youtube-dl
+    ports:
+      - name: youtube-dl
+        containerPort: 8080
+  volumes:
+  - name: youtube-dl
+    emptyDir: {}

@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: youtube-dl-server
+spec:
+  selector:
+    name: youtube-dl-server
+  type: NodePort
+  ports:
+  - name: youtube-dl-server
+    port: 8080
+    nodePort: 30080
