@@ -16,8 +16,8 @@
 
 (use-package-modules admin audio android backup bash bittorrent curl dns firmware guile haskell-apps networking linux samba ssh suckless xdisorg xorg)
 
-(use-service-modules admin dbus desktop docker dns mcron networking nix nfs sound
-                     xorg ssh web cgit version-control certbot
+(use-service-modules admin avahi dbus desktop docker dns mcron networking nix
+                     nfs sound xorg ssh web cgit version-control certbot
                      monitoring databases mail vpn virtualization linux sysctl)
 
 ;; Third-party modules
@@ -2178,6 +2178,8 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
 
                          %dnsmasq-vlan156-service
 
+                         (service avahi-service-type)
+
                          (service libvirt-service-type
                                   (libvirt-configuration
                                    (listen-addr "192.168.0.145")
@@ -2230,6 +2232,9 @@ namespaces = [ ]
                                                         (string-join '("/run/current-system/profile/bin/herd * vncserver2"
                                                                        "/run/current-system/profile/bin/herd * vncserver10")
                                                                      ",")))
-                                             "\n"))))))
+                                             "\n")))
+
+      ;; Allow resolution of '.local' host names with mDNS.
+      (name-service-switch %mdns-host-lookup-nss))))
 
 %system-guixsd

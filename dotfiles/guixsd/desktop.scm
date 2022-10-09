@@ -1,7 +1,7 @@
 (use-modules (gnu))
 
 (use-service-modules desktop dbus networking xorg)
-(use-package-modules suckless xdisorg)
+(use-package-modules avahi suckless xdisorg)
 
 (list (screen-locker-service slock)
       (screen-locker-service xlockmore "xlock")
@@ -11,7 +11,7 @@
       (service colord-service-type)
       (geoclue-service)
       (service polkit-service-type)
+      (dbus-service #:services (list avahi))
       (elogind-service)
-      (dbus-service)
       (service ntp-service-type)
       x11-socket-directory-service)
