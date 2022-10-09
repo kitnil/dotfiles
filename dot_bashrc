@@ -2133,8 +2133,17 @@ herd()
 {
     case "$1" in
         start)
-            command herd enable "${@:2}"
-            command herd start "${@:2}"
+            case "$2" in
+                fzf)
+                    service="$(sudo command herd status | awk '/ - / { print $NF }' | fzf)"
+                    sudo command herd enable "$service"
+                    sudo command herd start "$service"
+                    ;;
+                *)
+                    command herd enable "${@:2}"
+                    command herd start "${@:2}"
+                    ;;
+            esac
             ;;
         *)
             command herd "$@"
