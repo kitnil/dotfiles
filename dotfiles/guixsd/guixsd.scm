@@ -1982,7 +1982,11 @@ PasswordAuthentication yes")))
                                                     ("services"
                                                      ("redis"
                                                       ("volumes" . #("/var/lib/peertube/redis:/data"))
-                                                      ("image" . "redis:6-alpine"))
+                                                      ("image" . "redis:6-alpine")
+                                                      ("ulimits"
+                                                       ("nofile"
+                                                        ("soft" . 65536)
+                                                        ("hard" . 65536))))
                                                      ("postgres"
                                                       ("volumes"
                                                        .
