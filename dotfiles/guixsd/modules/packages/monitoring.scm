@@ -13,6 +13,49 @@
   #:use-module (guix build-system python)
   #:use-module ((guix licenses) #:prefix license:))
 
+(define-public prometheus
+  (package
+    (name "prometheus")
+    (version "2.39.1")
+    (source
+     (origin
+       (method url-fetch)
+       (uri
+        (string-append
+         "https://github.com/prometheus/prometheus/releases/download/v"
+         version "/prometheus-" version ".linux-amd64.tar.gz"))
+       (sha256
+        (base32
+         "1ik3gbr8dr3r6gif5szw4nj0a4lsawrx5rcmll9z42mi95psmggk"))))
+    (build-system trivial-build-system)
+    (native-inputs
+     `(("gzip" ,gzip)
+       ("tar" ,tar)))
+    (arguments
+     `(#:modules ((guix build utils))
+       #:builder
+       (begin
+         (use-modules (guix build utils))
+         (let ((etc (string-append %output "/etc")))
+           (mkdir-p (string-append %output "/bin"))
+           (setenv "PATH" (string-append
+                           (assoc-ref %build-inputs "tar") "/bin" ":"
+                           (assoc-ref %build-inputs "gzip") "/bin"))
+           (invoke "tar" "xf" (assoc-ref %build-inputs "source")
+                   "--strip-components=1")
+           (for-each (lambda (file)
+                       (install-file file
+                                     (string-append %output "/bin")))
+                     '("prometheus" "promtool"))
+           (mkdir-p etc)
+           (copy-recursively "consoles" etc)
+           (copy-recursively "console_libraries" etc)))))
+    (home-page "https://github.com/prymitive/")
+    (synopsis "Service monitoring system and time series database")
+    (description "This package provides a Prometheus service monitoring system
+ and time series database.")
+    (license license:expat)))
+
 (define-public karma
   (package
     (name "karma")
