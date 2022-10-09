@@ -322,10 +322,11 @@
        (setenv "SSL_CERT_FILE"
                "/run/current-system/profile/etc/ssl/certs/ca-certificates.crt")
 
-       (when (and #$(restic-system-backup)
-                  #$(restic-guix-backup)
-                  #$(restic-win10-backup)
-                  #$(restic-ntfsgames-backup))
+       (when (every identity
+                    (list #$(restic-system-backup)
+                          #$(restic-guix-backup)
+                          #$(restic-win10-backup)
+                          #$(restic-ntfsgames-backup)))
          #$(hc-ping-notify)))))
 
 ;;; backup.scm ends here
