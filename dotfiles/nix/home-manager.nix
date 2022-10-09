@@ -189,6 +189,7 @@
     elktail
     # eve-online
     firefox-52-wrapper
+    fx_cast_bridge
     google-chrome
     chromium-wrapper # wraps google-chrome as chromium
     idea-ultimate
