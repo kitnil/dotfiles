@@ -14,8 +14,9 @@
       devShell.${system} = with pkgs; mkShell {
         buildInputs = [ nixFlakes ];
       };
-      packages.${system} = {
+      packages.${system} = rec {
         container-bird = pkgs.callPackage ./bird.nix {};
+        default = container-bird;
       };
     };
 }
