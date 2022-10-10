@@ -1,4 +1,39 @@
 apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: script
+immutable: true
+data:
+  script.sh: |
+    #!/bin/sh
+    set -x
+    urls=(
+        https://www.twitch.tv/videos/1609937559
+    )
+    for url in "${urls[@]}"
+    do
+        youtube-dl "$url"
+    done
+    rsync --daemon --no-detach
+    while true
+    do
+        sleep 60
+    done
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rsync-configuration
+immutable: true
+data:
+  rsyncd.conf: |
+    uid = 0
+    gid = 0
+    [downloads]
+    read only = no
+    path = /downloads
+---
+apiVersion: v1
 kind: Pod
 metadata:
   name: youtube-dl-server
@@ -6,14 +41,48 @@ metadata:
     name: youtube-dl-server
 spec:
   containers:
-  - image: alexta69/metube
+  - image: nixery.dev/shell/rsync/youtube-dl
     name: youtube-dl-server
     volumeMounts:
     - mountPath: /downloads
       name: youtube-dl
+    - mountPath: /usr/local/bin
+      name: script
+    - mountPath: /etc/rsyncd.conf
+      subPath: rsyncd.conf
+      name: rsync-configuration
+    command: ["/bin/sh"]
+    args: ["/usr/local/bin/script.sh"]
+    workingDir: /downloads
+    resources:
+      requests:
+        ephemeral-storage: "90Gi"
+      limits:
+        ephemeral-storage: "90Gi"
     ports:
-      - name: youtube-dl
-        containerPort: 8081
+    - name: rsync
+      containerPort: 873
   volumes:
   - name: youtube-dl
     emptyDir: {}
+  - name: script
+    configMap:
+      name: script
+  - name: rsync-configuration
+    configMap:
+      name: rsync-configuration
+  nodeSelector:
+    kubernetes.io/hostname: "kube8"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: rsync
+spec:
+  selector:
+    name: youtube-dl-server
+  type: NodePort
+  ports:
+  - name: rsync
+    port: 873
+    nodePort: 30873
