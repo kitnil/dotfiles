@@ -38,7 +38,7 @@
              (lambda (port)
                (display #$(h3c-command host '("show" "interface")) port))))
          (with-directory-excursion #$%ansible-state-directory
-           (invoke "git" "add" "--all")
+           (invoke "git" "add" #$host)
            (invoke "git" "commit" "--message=Update."))))))
 
 (define h3c-configuration->vc-sw4-mr11.intr

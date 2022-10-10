@@ -100,7 +100,7 @@
          (use-modules (guix build utils))
          (invoke #$(juniper-configuration->file config))
          (with-directory-excursion #$%ansible-state-directory
-           (invoke "git" "add" "--all")
+           (invoke "git" "add" #$(juniper-configuration-host config))
            (invoke "git" "commit" "--message=Update."))))))
 
 (define (juniper-bgp-commands host)

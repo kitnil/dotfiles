@@ -62,7 +62,7 @@
              (lambda (port)
                (display #$(cisco-command host '("show" "interfaces") ssh?) port))))
          (with-directory-excursion #$%ansible-state-directory
-           (invoke "git" "add" "--all")
+           (invoke "git" "add" #$host)
            (invoke "git" "commit" "--message=Update."))))))
 
 (define cisco-configuration->vc-sw1-dh507.intr
