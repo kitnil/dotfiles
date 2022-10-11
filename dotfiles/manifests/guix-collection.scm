@@ -243,6 +243,7 @@ virtualization vnc vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
                sshfs
                sqlite unzip zip p7zip
                curl wget
+               iputils
 
                texinfo
 
