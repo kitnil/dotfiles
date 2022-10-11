@@ -140,7 +140,31 @@
  '(org-agenda-files '("~/org/inbox.org" "~/org/todo.org" "~/org/web.org"))
  '(python-shell-interpreter "python3" t)
  '(safe-local-variable-values
-   '((eval with-eval-after-load 'yasnippet
+   '((eval progn
+           (when
+               (boundp #'projectile-project-root)
+             (setenv "GUIX_PACKAGE_PATH"
+                     (concat
+                      (projectile-project-root)
+                      "dotfiles/guixsd/modules")))
+           (setq-local geiser-guile-load-path
+                       (append
+                        (list
+                         (concat
+                          (getenv "HOME")
+                          "/src/cgit.duckdns.org/guix/guix-wigust/guix"))
+                        (list
+                         (concat
+                          (getenv "HOME")
+                          "/src/gitlab.com/nonguix/nonguix"))
+                        (if
+                            (boundp #'projectile-project-root)
+                            (list
+                             (concat
+                              (projectile-project-root)
+                              "dotfiles/guixsd/modules"))
+                          'nil))))
+     (eval with-eval-after-load 'yasnippet
            (let
                ((guix-yasnippets
                  (expand-file-name "etc/snippets/yas"
