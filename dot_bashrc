@@ -2005,9 +2005,9 @@ kubectl()
         watch)
             if [[ -z "$2" ]]
             then
-                viddy -n 10 -d "kubectl get nodes -o wide; echo; kubectl get all -A -o wide; echo; kubectl get all -n kube-system -A -o wide"
+                viddy -n 10 -d "kubectl get nodes -o wide; echo; kubectl get all -A -o wide; echo; kubectl get ingress -o wide; echo; kubectl get all -n kube-system -A -o wide"
             else
-                viddy -n 10 -d "kubectl get nodes -o wide; echo; kubectl get all --namespace ${2} -o wide"
+                viddy -n 10 -d "kubectl get nodes -o wide; echo; kubectl get all --namespace ${2} -o wide; echo; kubectl get ingress --namespace ${2} -o wide"
             fi
             ;;
         *)
