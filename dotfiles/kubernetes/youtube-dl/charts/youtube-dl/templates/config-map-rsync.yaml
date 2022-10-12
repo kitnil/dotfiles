@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: rsync-configuration
+immutable: true
+data:
+  rsyncd.conf: |
+    uid = 0
+    gid = 0
+    [downloads]
+    read only = no
+    path = /downloads

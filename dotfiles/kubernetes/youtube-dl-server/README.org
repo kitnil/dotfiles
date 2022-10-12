@@ -1,2 +1,0 @@
-Python server with PUT support from
-[[https://gist.github.com/darkr4y/761d7536100d2124f5d0db36d4890109][python simple http server with upload & download]]

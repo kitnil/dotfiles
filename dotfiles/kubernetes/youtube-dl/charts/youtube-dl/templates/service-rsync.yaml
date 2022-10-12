@@ -1,15 +1,15 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: {{ include "youtube-dl.fullname" . }}
+  name: {{ include "youtube-dl.fullname" . }}-rsync
   labels:
     {{- include "youtube-dl.labels" . | nindent 4 }}
 spec:
-  type: {{ .Values.service.type }}
+  type: {{ .Values.serviceRsync.type }}
   ports:
-    - port: {{ .Values.service.port }}
-      targetPort: http
+    - port: 30873
+      nodePort: {{ .Values.serviceRsync.port }}
       protocol: TCP
-      name: http
+      name: rsync
   selector:
     {{- include "youtube-dl.selectorLabels" . | nindent 4 }}

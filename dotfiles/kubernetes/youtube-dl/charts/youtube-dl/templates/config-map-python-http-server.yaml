@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: python-http-server
+immutable: true
+data:
+  python-http-server.py: |
+    {{ .Files.Get "files/httpsrv.py" | nindent 4 }}

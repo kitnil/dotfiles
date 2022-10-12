@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: script
+immutable: true
+data:
+  script.sh: |
+    #!/bin/sh
+    set -e
+    download()
+    {
+        while [ ! -e /downloads/youtube-dl.txt ]
+        do
+            sleep 15
+        done
+        entr -r /downloads/youtube-dl.txt | youtube-dl --batch-file /downloads/youtube-dl.txt
+        rm /downloads/youtube-dl.txt
+    }
+    download

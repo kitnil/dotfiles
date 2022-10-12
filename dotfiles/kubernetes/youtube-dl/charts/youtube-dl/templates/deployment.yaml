@@ -1,0 +1,117 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ include "youtube-dl.fullname" . }}
+  labels:
+    {{- include "youtube-dl.labels" . | nindent 4 }}
+spec:
+  {{- if not .Values.autoscaling.enabled }}
+  replicas: {{ .Values.replicaCount }}
+  {{- end }}
+  selector:
+    matchLabels:
+      {{- include "youtube-dl.selectorLabels" . | nindent 6 }}
+  template:
+    metadata:
+      {{- with .Values.podAnnotations }}
+      annotations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      labels:
+        {{- include "youtube-dl.selectorLabels" . | nindent 8 }}
+    spec:
+      {{- with .Values.imagePullSecrets }}
+      imagePullSecrets:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      serviceAccountName: {{ include "youtube-dl.serviceAccountName" . }}
+      securityContext:
+        {{- toYaml .Values.podSecurityContext | nindent 8 }}
+      containers:
+        - name: {{ .Chart.Name }}
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag | default .Chart.AppVersion }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - mountPath: /downloads
+              name: youtube-dl
+            - mountPath: /usr/local/bin
+              name: script
+          command: ["/bin/sh"]
+          args: ["/usr/local/bin/script.sh"]
+          workingDir: /downloads
+        - name: "{{ .Chart.Name }}-rsync"
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: "nixery.dev/shell/rsync"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: rsync
+              containerPort: 30873
+              protocol: TCP
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - mountPath: /downloads
+              name: youtube-dl
+            - mountPath: /etc/rsyncd.conf
+              subPath: rsyncd.conf
+              name: rsync-configuration
+          command: ["rsync"]
+          args: ["--port=30873", "--daemon", "--no-detach"]
+          workingDir: /downloads
+        - name: "{{ .Chart.Name }}-python-http-server"
+          securityContext:
+            {{- toYaml .Values.securityContext | nindent 12 }}
+          image: nixery.dev/python3
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - name: http
+              containerPort: 8000
+              protocol: TCP
+          # TODO: Fix HTTP 404 and provide 200
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: 8000
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: 8000
+          resources:
+            {{- toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - mountPath: /downloads
+              name: youtube-dl
+            - mountPath: /usr/local/bin
+              name: python-http-server
+          command: ["/bin/python3"]
+          args: ["/usr/local/bin/python-http-server.py"]
+          workingDir: /downloads
+      volumes:
+        - name: youtube-dl
+          emptyDir: {}
+        - name: script
+          configMap:
+            name: script
+        - name: rsync-configuration
+          configMap:
+            name: rsync-configuration
+        - name: python-http-server
+          configMap:
+            name: python-http-server
+      {{- with .Values.nodeSelector }}
+      nodeSelector:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.affinity }}
+      affinity:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
+      {{- with .Values.tolerations }}
+      tolerations:
+        {{- toYaml . | nindent 8 }}
+      {{- end }}
