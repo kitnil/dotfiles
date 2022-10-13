@@ -841,9 +841,9 @@ location / {
 
            "192.168.0.145 prometheus.wugi.info"
 
-           "10.1.52.89 ceph1 ceph1.intr"
-           "10.1.52.90 ceph2 ceph2.intr"
-           "10.1.52.91 ceph3 ceph3.intr"
+           "10.1.52.178 ceph1 ceph1.intr"
+           "10.1.52.177 ceph2 ceph2.intr"
+           "10.1.52.180 ceph3 ceph3.intr"
 
            "10.1.52.104 ipsec1 ipsec1.intr"
            "10.1.52.105 ipsec2 ipsec2.intr"
