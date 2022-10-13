@@ -44,13 +44,11 @@ spec:
           args: ["/usr/local/bin/script.sh"]
           workingDir: /downloads
         - name: "{{ .Chart.Name }}-rsync"
-          securityContext:
-            {{- toYaml .Values.securityContext | nindent 12 }}
           image: "nixery.dev/shell/rsync"
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: rsync
-              containerPort: 30873
+              containerPort: 873
               protocol: TCP
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
@@ -61,7 +59,7 @@ spec:
               subPath: rsyncd.conf
               name: rsync-configuration
           command: ["rsync"]
-          args: ["--port=30873", "--daemon", "--no-detach"]
+          args: ["--daemon", "--no-detach"]
           workingDir: /downloads
         - name: "{{ .Chart.Name }}-python-http-server"
           securityContext:

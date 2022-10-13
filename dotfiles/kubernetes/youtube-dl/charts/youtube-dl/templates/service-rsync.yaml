@@ -7,8 +7,8 @@ metadata:
 spec:
   type: {{ .Values.serviceRsync.type }}
   ports:
-    - port: 30873
-      nodePort: {{ .Values.serviceRsync.port }}
+    - port: {{ .Values.serviceRsync.port }}
+      targetPort: 873
       protocol: TCP
       name: rsync
   selector:
