@@ -40,6 +40,9 @@ spec:
               name: youtube-dl
             - mountPath: /usr/local/bin
               name: script
+            - mountPath: /etc/youtube-dl.conf
+              subPath: youtube-dl.conf
+              name: youtube-dl-configuration
           command: ["/bin/sh"]
           args: ["/usr/local/bin/script.sh"]
           workingDir: /downloads
@@ -95,6 +98,9 @@ spec:
         - name: script
           configMap:
             name: script
+        - name: youtube-dl-configuration
+          configMap:
+            name: youtube-dl-configuration
         - name: rsync-configuration
           configMap:
             name: rsync-configuration
