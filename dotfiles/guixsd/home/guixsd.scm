@@ -58,6 +58,7 @@
              (home services mime)
              (home services video)
              (home services networking)
+             (home services kubernetes)
 
              (gnu packages mail)
              (gnu packages dhall)
@@ -816,6 +817,7 @@ account default : gmail
     (service juniper-service-type)
     (service h3c-service-type)
     (service cisco-service-type)
+    (service kubernetes-service-type)
 
     (simple-service 'ansible-config
                     home-files-service-type
