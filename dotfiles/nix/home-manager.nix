@@ -82,6 +82,8 @@
     noti
     clang-tools # for clangd in lsp-mode
 
+    tmpmail
+
     tribler
 
     rnix-lsp
