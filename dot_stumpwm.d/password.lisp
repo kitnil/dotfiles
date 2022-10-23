@@ -6,7 +6,7 @@
      t))
 
 (defcommand passmenu () ()
-  (run-shell-command "passmenu -c -l 30"))
+  (run-shell-command "passmenu -l 30"))
 
 (defcommand random-password (length) ((:string "Password length: "))
   (window-send-string (run-shell-command (format nil "bash -i -c 'random-password ~a'" length) t)))

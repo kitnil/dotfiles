@@ -95,8 +95,6 @@
 
   git-splits
 
-  password-store-custom-dmenu ; Password management
-
   dotfiles
 
   qemu-windows10

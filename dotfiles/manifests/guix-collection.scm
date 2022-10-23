@@ -300,6 +300,8 @@ virtualization vnc vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
 
                bluez
 
+               password-store ; Password management
+
                ;; telegram-desktop
                freeipmi)
 
