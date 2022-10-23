@@ -1990,7 +1990,7 @@ __lazy_kubectl()
             then
                 if [[ -f /home/oleg/.guix-profile/bin/kubectl ]]
                 then
-                    source <(sudo /home/oleg/.guix-profile/bin/kubectl completion bash)
+                    source <(/home/oleg/.guix-profile/bin/kubectl completion bash)
                 fi
             fi
             ;;
