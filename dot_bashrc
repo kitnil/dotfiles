@@ -1999,6 +1999,25 @@ __lazy_kubectl()
 
 complete -F __lazy_kubectl kubectl
 
+__lazy_helm()
+{
+    local word_count=${#COMP_WORDS[*]}
+    local word_at_point="${COMP_WORDS[$COMP_CWORD]}"
+    case $COMP_CWORD in
+        *)
+            if [[ $(type -t __start_helm) != function ]]
+            then
+                if [[ -f /home/oleg/.guix-profile/bin/helm ]]
+                then
+                    source <(/home/oleg/.guix-profile/bin/helm completion bash)
+                fi
+            fi
+            ;;
+    esac
+}
+
+complete -F __lazy_helm helm
+
 kubectl()
 {
     case "$1" in
