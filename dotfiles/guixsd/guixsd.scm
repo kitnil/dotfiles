@@ -635,7 +635,8 @@ location / {
                                              (gexp->derivation "tftp-root" tftp-root)))
                           "--enable-tftp"
                           "--server=192.168.0.145"
-                          "--no-resolv")))
+                          "--no-resolv"
+                          "--dhcp-option=option:domain-search,intr")))
           (respawn? #f)))))
 
 (define %dnsmasq-vlan156-service
