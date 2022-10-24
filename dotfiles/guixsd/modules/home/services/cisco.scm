@@ -60,7 +60,10 @@
                (display #$(cisco-command host '("show" "vlan") ssh?) port)))
            (call-with-output-file (string-append directory "/vlan.txt")
              (lambda (port)
-               (display #$(cisco-command host '("show" "interfaces") ssh?) port))))
+               (display #$(cisco-command host '("show" "interfaces") ssh?) port)))
+           (call-with-output-file (string-append directory "/mac.txt")
+             (lambda (port)
+               (display #$(cisco-command host '("show" "mac-address-table") ssh?) port))))
          (with-directory-excursion #$%ansible-state-directory
            (invoke "git" "add" #$host)
            (invoke "git" "commit" "--message=Update."))))))
