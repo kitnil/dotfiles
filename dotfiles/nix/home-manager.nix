@@ -197,6 +197,7 @@
     idea-ultimate
     ipmi
     ipmiview-wrapper
+    ipmitool
     jenkins
     jenkins-job-builder
     # logstash
