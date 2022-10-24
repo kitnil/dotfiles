@@ -89,6 +89,11 @@
                (display #$(juniper-command (juniper-configuration-host config)
                                            '("cli" "show" "route" "0.0.0.0/0" "detail"))
                         port)))
+           (call-with-output-file (string-append directory "/mac.txt")
+             (lambda (port)
+               (display #$(juniper-command (juniper-configuration-host config)
+                                           '("cli" "show" "ethernet-switching" "table" "brief"))
+                        port)))
            #$(juniper-configuration-post-hook config))))))
 
 (define (juniper-configuration->vc config)
