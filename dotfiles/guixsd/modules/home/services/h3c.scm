@@ -36,7 +36,10 @@
                (display #$(h3c-command host '("show" "current-configuration")) port)))
            (call-with-output-file (string-append directory "/interface.txt")
              (lambda (port)
-               (display #$(h3c-command host '("show" "interface")) port))))
+               (display #$(h3c-command host '("show" "interface")) port)))
+           (call-with-output-file (string-append directory "/mac.txt")
+             (lambda (port)
+               (display #$(h3c-command host '("show" "mac-address")) port))))
          (with-directory-excursion #$%ansible-state-directory
            (invoke "git" "add" #$host)
            (invoke "git" "commit" "--message=Update."))))))
