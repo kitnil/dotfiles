@@ -59,6 +59,7 @@
              (home services video)
              (home services networking)
              (home services kubernetes)
+             (home services majordomo billing2)
 
              (gnu packages mail)
              (gnu packages dhall)
@@ -818,6 +819,7 @@ account default : gmail
     (service h3c-service-type)
     (service cisco-service-type)
     (service kubernetes-service-type)
+    (service billing2-service-type)
 
     (simple-service 'ansible-config
                     home-files-service-type
