@@ -1,0 +1,80 @@
+(define-module (home services majordomo billing2)
+  #:use-module (gnu home services)
+  #:use-module (gnu home services mcron)
+  #:use-module (guix gexp)
+  #:use-module (guix store)
+  #:use-module (home config)
+  #:use-module (guile pass)
+  #:export (billing2-service-type))
+
+(define (billing2-configuration->vc)
+  (program-file
+   "billing2-configuration-to-version-control"
+   (with-imported-modules '((guix build utils)
+                            (ice-9 rdelim)
+                            (ice-9 popen))
+     #~(begin
+         (use-modules (ice-9 rdelim)
+                      (ice-9 popen)
+                      (guix build utils))
+         (let* ((billing2-directory "billing2.intr")
+                (%home (and=> (getenv "HOME")
+                              (lambda (home)
+                                home)))
+                (directory (string-append #$%ansible-state-directory "/"
+                                          billing2-directory)))
+           (mkdir-p directory)
+           (let* ((port (open-pipe* OPEN_READ "mjru-infa" "server"))
+                  (output (read-string port)))
+             (close-port port)
+             (with-output-to-file (string-append directory "/servers.txt")
+               (lambda ()
+                 (display (string-trim-right output #\newline))
+                 (newline))))
+           (let* ((port (open-pipe* OPEN_READ "mjru-infa" "user"))
+                  (output (read-string port)))
+             (close-port port)
+             (with-output-to-file (string-append directory "/user-servers.txt")
+               (lambda ()
+                 (display (string-trim-right output #\newline))
+                 (newline))))
+           (let* ((port (open-pipe* OPEN_READ "mjru-infa" "disks"))
+                  (output (read-string port)))
+             (close-port port)
+             (with-output-to-file (string-append directory "/disks.txt")
+               (lambda ()
+                 (display (string-trim-right output #\newline))
+                 (newline))))
+           (let* ((port (open-pipe* OPEN_READ "mjru-infa" "ip"))
+                  (output (read-string port)))
+             (close-port port)
+             (with-output-to-file (string-append directory "/ip.json")
+               (lambda ()
+                 (display (string-trim-right output #\newline))
+                 (newline))))
+           (let* ((port (open-pipe* OPEN_READ "mjru-infa" "switch"))
+                  (output (read-string port)))
+             (close-port port)
+             (with-output-to-file (string-append directory "/switch.txt")
+               (lambda ()
+                 (display (string-trim-right output #\newline))
+                 (newline))))
+           (with-directory-excursion #$%ansible-state-directory
+             (invoke "git" "add" billing2-directory)
+             (invoke "git" "commit" "--message=Update.")))))))
+
+(define (billing2-mcron-jobs config)
+  (list
+   #~(job
+      '(next-hour '(14))
+      #$(billing2-configuration->vc))))
+
+(define billing2-service-type
+  (service-type
+   (name 'billing2)
+   (extensions
+    (list (service-extension home-mcron-service-type
+                             billing2-mcron-jobs)))
+   (description
+    "Periodically run Billing2 configuration dump.")
+   (default-value '())))
