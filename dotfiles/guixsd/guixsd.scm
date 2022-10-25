@@ -388,6 +388,9 @@ location / {
    (autofs-mount-configuration
     (target "/mnt/autofs/ssh/web99.intr/home/oleg")
     (source ":sshfs\\#root@web99.intr\\:/home/oleg"))
+   (autofs-mount-configuration
+    (target "/mnt/autofs/ssh/ubuntu.local/home/oleg")
+    (source ":sshfs\\#oleg@ubuntu.local\\:/home/oleg"))
    ;; TODO: Move autofs mount hierarchally lower after changing restic configuration.
    (autofs-mount-configuration
     (target "/mnt/windows/games")
@@ -627,6 +630,7 @@ location / {
                           "--dhcp-range" "192.168.154.52,192.168.154.148,12h"
                           "--dhcp-host=52:54:00:f1:75:45,192.168.154.129" ;web99
                           "--dhcp-host=52:54:00:7a:62:8d,192.168.154.130" ;nginx99
+                          "--dhcp-host=52:54:00:23:17:ff,192.168.154.119" ;ubuntu
                           "--bind-interfaces"
                           "--interface=br154.154"
                           "--dhcp-boot=netboot.xyz.efi"
@@ -841,6 +845,8 @@ location / {
                            ))
 
            "192.168.0.145 prometheus.wugi.info"
+
+           "192.168.154.119 ubuntu.local"
 
            "172.16.103.177 ceph0 ceph0.intr"
            "172.16.103.178 ceph1 ceph1.intr"
