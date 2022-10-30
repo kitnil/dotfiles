@@ -19,6 +19,9 @@
 (setq read-process-output-max (* 1024 1024)) ;; 1mb
 (setq gc-cons-threshold 100000000)
 
+;; [[https://github.com/skeeto/elfeed/issues/95][End of file during parsing · Issue #95 · skeeto/elfeed]]
+(setq write-region-inhibit-fsync t)
+
 ;; [[https://www.gnu.org/software/emacs/manual/html_node/elisp/Startup-Summary.html][gnu.org/s/emacs/manual/html_node/elisp/Startup-Summary.html]]
 ;;
 ;; Uncomment the following:
