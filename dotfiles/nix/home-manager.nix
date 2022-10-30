@@ -202,6 +202,8 @@
     jenkins-job-builder
     # logstash
 
+    jc
+
     # nim_1_0
 
     nixGLIntel

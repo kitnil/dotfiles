@@ -65,7 +65,7 @@ virtualization vnc vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
                ;; grip ; TODO: Fix conflicting entries for python-cryptography
 
                autojump
-               jq jo jc jtbl
+               jq jo jtbl
                nmap hosts hss
 
                dmidecode
