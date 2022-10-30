@@ -29,7 +29,7 @@ alias rm="rm -i"
 alias cp="cp -i"
 alias mv="mv -i"
 
-alias mtr="sudo mtr"
+alias mtr="sudo mtr --show-ips --aslookup"
 
 alias xclipp='xclip -selection secondary'
 alias svg=xdot
