@@ -4,7 +4,7 @@
 (use-modules (gnu)
              (guix modules)
              (json))
-(use-service-modules certbot databases dbus desktop docker dns messaging monitoring networking ssh sysctl web vpn)
+(use-service-modules certbot databases dbus desktop docker dns messaging monitoring networking linux ssh sysctl web vpn)
 (use-package-modules admin curl certs databases guile networking linux ssh tmux)
 
 (use-modules (config))
@@ -340,7 +340,11 @@ remote-random
                                     (ssl
                                      (ssl-configuration
                                       (key "/etc/prosody/certs/xmpp.wugi.info.key")
-                                      (certificate "/etc/prosody/certs/xmpp.wugi.info.pem"))))))
+                                      (certificate "/etc/prosody/certs/xmpp.wugi.info.pem")))))
+
+                          (service zram-device-service-type
+                                   (zram-device-configuration
+                                    (size "8G"))))
 
                     (%mail-services "78.108.82.44")
 
