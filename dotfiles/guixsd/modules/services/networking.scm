@@ -42,7 +42,10 @@
             dante-service-type
 
             tinyproxy-configuration
-            tinyproxy-service-type))
+            tinyproxy-service-type
+
+            socat-configuration
+            socat-service-type))
 
 ;;; Commentary:
 ;;;
@@ -298,6 +301,48 @@
    (default-value (dante-configuration))
    (description
     "Run the dante.")))
+
+
+;;;
+;;; socat
+;;;
+
+(define-record-type* <socat-configuration>
+  socat-configuration make-socat-configuration
+  socat-configuration?
+  (socat socat-configuration-socat ;<package>
+         (default socat))
+  (name socat-configuration-name ;string
+        (default #f))
+  (arguments socat-configuration-arguments ;list of strings
+             (default '())))
+
+(define (socat-shepherd-service config)
+  (list
+   (shepherd-service
+    (provision
+     (list (string->symbol (string-append "socat-" (socat-name config)))))
+    (documentation "Run socat.")
+    (requirement (append '() requirement))
+    (start #~(make-forkexec-constructor
+              `(,(string-append #$(socat-configuration-socat config)
+                                "/bin/socat")
+                ,#$@(socat-configuration-arguments config))
+              #:environment-variables
+              '("SSL_CERT_DIR=/run/current-system/profile/etc/ssl/certs"
+                "SSL_CERT_FILE=/run/current-system/profile/etc/ssl/certs/ca-certificates.crt")))
+    (respawn? #f)
+    (stop #~(make-kill-destructor)))))
+
+(define socat-service-type
+  (service-type
+   (name 'socat)
+   (extensions
+    (list (service-extension shepherd-root-service-type
+                             socat-shepherd-service)))
+   (default-value (socat-configuration))
+   (description
+    "Run socat.")))
 
 
 ;;;
