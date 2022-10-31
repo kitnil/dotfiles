@@ -1060,9 +1060,11 @@ location / {
                                       (computed-file
                                        "prometheus.json"
                                        (with-extensions (list guile-json-4)
-                                         (with-imported-modules (source-module-closure '((json builder)))
+                                         (with-imported-modules (append (source-module-closure '((json builder)))
+                                                                        '((ice-9 match)))
                                            #~(begin
-                                               (use-modules (json builder))
+                                               (use-modules (json builder)
+                                                            (ice-9 match))
                                                (define listen-address
                                                  #$listen-address)
                                                (define prometheus-alertmanager-node
@@ -1160,21 +1162,27 @@ location / {
                                                            .
                                                            #(((targets . #("127.0.0.1:6050")))))
                                                           (job_name . "restic-rest"))
-                                                         ((static_configs
-                                                           .
-                                                           #(((targets . #("guixsd")))))
-                                                          (scrape_interval . "8h")
-                                                          (scrape_timeout . "9m")
-                                                          (job_name . "restic")
-                                                          (metrics_path . "/probe")
-                                                          (relabel_configs
-                                                           .
-                                                           #(((source_labels . #("__address__"))
-                                                              (target_label . "__param_target"))
-                                                             ((source_labels . #("__param_target"))
-                                                              (target_label . "target"))
-                                                             ((replacement . "127.0.0.1:8049")
-                                                              (target_label . "__address__")))))
+                                                         ,@(map (match-lambda
+                                                                  ((job-name . port)
+                                                                   `((static_configs
+                                                                      .
+                                                                      #(((targets . #("guixsd")))))
+                                                                     (scrape_interval . "8h")
+                                                                     (scrape_timeout . "9m")
+                                                                     (job_name . ,job-name)
+                                                                     (metrics_path . "/probe")
+                                                                     (relabel_configs
+                                                                      .
+                                                                      #(((source_labels . #("__address__"))
+                                                                         (target_label . "__param_target"))
+                                                                        ((source_labels . #("__param_target"))
+                                                                         (target_label . "target"))
+                                                                        ((replacement . ,(string-append "127.0.0.1:" (number->string port)))
+                                                                         (target_label . "__address__")))))))
+                                                                '(("srv-backup-guixsd" . 8049)
+                                                                  ("srv-backup-ubuntu" . 8050)
+                                                                  ("srv-backup-win10" . 8051)
+                                                                  ("srv-backup-ntfsgames" . 8052)))
                                                          ((static_configs
                                                            .
                                                            #(((targets . #(,@http-targets)))))
@@ -1332,6 +1340,7 @@ location / {
 
                          (service prometheus-restic-exporter-service-type
                                   (prometheus-restic-exporter-configuration
+                                   (name "srv-backup-guixsd")
                                    (environment-variables
                                     (list
                                      (string-append
@@ -1342,6 +1351,51 @@ location / {
                                           "skipping /etc/guix/secrets/restic"))
                                      "RESTIC_REPOSITORY=/srv/backup/guixsd"
                                      "RESTIC_EXPORTER_PORT=8049"
+                                     "RESTIC_EXPORTER_ADDRESS=127.0.0.1"))))
+
+                         (service prometheus-restic-exporter-service-type
+                                  (prometheus-restic-exporter-configuration
+                                   (name "srv-backup-ubuntu")
+                                   (environment-variables
+                                    (list
+                                     (string-append
+                                      "RESTIC_PASSWORD="
+                                      (if (= (getuid) 0)
+                                          (with-input-from-file "/etc/guix/secrets/restic"
+                                            read-string)
+                                          "skipping /etc/guix/secrets/restic"))
+                                     "RESTIC_REPOSITORY=/srv/backup/ubuntu"
+                                     "RESTIC_EXPORTER_PORT=8050"
+                                     "RESTIC_EXPORTER_ADDRESS=127.0.0.1"))))
+
+                         (service prometheus-restic-exporter-service-type
+                                  (prometheus-restic-exporter-configuration
+                                   (name "srv-backup-win10")
+                                   (environment-variables
+                                    (list
+                                     (string-append
+                                      "RESTIC_PASSWORD="
+                                      (if (= (getuid) 0)
+                                          (with-input-from-file "/etc/guix/secrets/windows"
+                                            read-string)
+                                          "skipping /etc/guix/secrets/windows"))
+                                     "RESTIC_REPOSITORY=/srv/backup/win10"
+                                     "RESTIC_EXPORTER_PORT=8051"
+                                     "RESTIC_EXPORTER_ADDRESS=127.0.0.1"))))
+
+                         (service prometheus-restic-exporter-service-type
+                                  (prometheus-restic-exporter-configuration
+                                   (name "srv-backup-ntfsgames")
+                                   (environment-variables
+                                    (list
+                                     (string-append
+                                      "RESTIC_PASSWORD="
+                                      (if (= (getuid) 0)
+                                          (with-input-from-file "/etc/guix/secrets/windows"
+                                            read-string)
+                                          "skipping /etc/guix/secrets/windows"))
+                                     "RESTIC_REPOSITORY=/srv/backup/ntfsgames"
+                                     "RESTIC_EXPORTER_PORT=8052"
                                      "RESTIC_EXPORTER_ADDRESS=127.0.0.1"))))
 
                          (service prometheus-tp-link-exporter-service-type

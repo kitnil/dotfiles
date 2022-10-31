@@ -1036,6 +1036,8 @@ User admin")
 (define-record-type* <prometheus-restic-exporter-configuration>
   prometheus-restic-exporter-configuration make-prometheus-restic-exporter-configuration
   prometheus-restic-exporter-configuration?
+  (name prometheus-restic-exporter-name ;string
+        (default #f))
   (prometheus-restic-exporter prometheus-restic-exporter-configuration-prometheus-restic-exporter ;<package>
                               (default prometheus-restic-exporter))
   (environment-variables prometheus-restic-exporter-configuration-environment-variables
@@ -1044,7 +1046,11 @@ User admin")
 (define (prometheus-restic-exporter-shepherd-service config)
   (list
    (shepherd-service
-    (provision '(prometheus-restic-exporter))
+    (provision
+     (list
+      (string->symbol
+       (string-append "prometheus-restic-exporter-"
+                      (prometheus-restic-exporter-name config)))))
     (documentation "Run prometheus-restic-exporter.")
     (requirement '())
     (start #~(make-forkexec-constructor
