@@ -2164,6 +2164,19 @@ herd()
                     ;;
             esac
             ;;
+        restart)
+            case "$2" in
+                mail)
+                    for service in $(herd status | awk '/isync/ { print $NF }')
+                    do
+                        herd start "$service"
+                    done
+                    ;;
+                *)
+                    command herd restart "${@:2}"
+                    ;;
+            esac
+            ;;
         *)
             command herd "$@"
             ;;
