@@ -1110,6 +1110,9 @@ location / {
                                                (define prometheus-alertmanager-guix
                                                  #$(plain-file "prometheus-alertmanager-guix.json"
                                                                (scm->json-string (load "alertmanager/guix.scm"))))
+                                               (define prometheus-alertmanager-windows
+                                                 #$(plain-file "prometheus-alertmanager-windows.json"
+                                                               (scm->json-string (load "alertmanager/windows.scm"))))
                                                (define http-targets
                                                  (append (list "https://wugi.info/"
                                                                "https://guix.wugi.info/"
@@ -1338,6 +1341,7 @@ location / {
                                                                       ,prometheus-alertmanager-smartctl
                                                                       ,prometheus-alertmanager-exim
                                                                       ,prometheus-alertmanager-ssh-exporter
+                                                                      ,prometheus-alertmanager-windows
                                                                       ,prometheus-alertmanager-guix))
                                                       ("alerting"
                                                        ("alertmanagers"
