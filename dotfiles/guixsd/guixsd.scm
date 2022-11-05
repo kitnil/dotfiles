@@ -97,6 +97,22 @@
                                   %home "/.local/share/chezmoi/dotfiles/guixsd/nginx/peertube")
              read-string))))
         (nginx-server-configuration
+         (server-name '("opensearch.home"))
+         (listen '("192.168.154.1:80"))
+         (raw-content (list "client_max_body_size 200M;"))
+         (locations
+          (list
+           (nginx-location-configuration
+            (uri "/")
+            (body
+             (list
+              "resolver 80.80.80.80 ipv6=off;"
+              "proxy_pass https://node-0.example.com:9200;"
+              "proxy_ssl_certificate /etc/opensearch/kirk.pem;"
+              "proxy_ssl_certificate_key /etc/opensearch/kirk-key.pem;"
+              "proxy_ssl_trusted_certificate /etc/opensearch/root-ca.pem;"
+              "add_header Access-Control-Allow-Origin *;"))))))
+        (nginx-server-configuration
          (server-name '("netmap.intr"))
          (listen '("192.168.0.144:80"))
          (root "/home/oleg/archive/src/drawthe.net"))
@@ -846,6 +862,8 @@ location / {
            "192.168.0.145 prometheus.wugi.info"
 
            "192.168.154.119 ubuntu.local"
+
+           "192.168.154.1 opensearch.home"
 
            "172.16.103.177 ceph0 ceph0.intr"
            "172.16.103.178 ceph1 ceph1.intr"
