@@ -36,7 +36,6 @@
              (services docker)
              (services nix)
              (services autossh)
-             (services kresd)
              (services kubernetes)
              (services jenkins)
              (services monitoring)
@@ -1019,7 +1018,9 @@ location / {
 
                          nix-service
 
-                         (kresd-service (local-file "kresd.conf"))
+                         (service knot-resolver-service-type
+                                  (knot-resolver-configuration
+                                   (kresd-config-file (local-file "kresd.conf"))))
 
                          (service openvpn-service-type %openvpn-configuration-majordomo.ru)
                          (service openvpn-service-type %openvpn-configuration-wugi.info)
