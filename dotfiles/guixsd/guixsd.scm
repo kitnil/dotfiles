@@ -1599,7 +1599,9 @@ location / {
                                                      ("multiGridSortReverse" . #f))
                                                     ("silenceForm" ("strip" ("labels" . #("job"))))
                                                     ("receivers" ("strip" . #()) ("keep" . #()))
-                                                    ("log" ("level" . "debug") ("config" . #f))
+                                                    ("log"
+                                                     ("level" . "error")
+                                                     ("config" . #f))
                                                     ("listen"
                                                      ("prefix" . "/")
                                                      ("port" . 18578)
@@ -1611,7 +1613,7 @@ location / {
                                                       ("unique" . #("cluster" "instance" "@receiver"))
                                                       ("static" . #("job"))))
                                                     ("karma" ("name" . "karma-prod"))
-                                                    ("debug" . #t)
+                                                    ("debug" . #f)
                                                     ("annotations"
                                                      ("visible" . #())
                                                      ("hidden" . #("help"))
