@@ -12,7 +12,7 @@
            ("severity" . "critical"))
           ("expr"
            .
-           "smartctl_device_attribute{attribute_id=\"5\", attribute_value_type=\"raw\"} != 0")
+           "deriv(smartctl_device_attribute{attribute_id=\"5\",attribute_value_type=\"raw\"}[15m]) > 0")
           ("annotations"
            ("summary" . "Reallocated sectors detected.")
            ("description" . "Disk {{ $labels.model_name }} has {{ $value }} reallocated sectors."))
