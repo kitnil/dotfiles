@@ -168,36 +168,32 @@ Prometheus.")
 (define-public prometheus-smartctl-exporter
   (package
     (name "prometheus-smartctl-exporter")
-    (version "0.6")
+    (version "0.9.0")
     (source
      (origin
        (method url-fetch)
        (uri
         (string-append
-         "https://github.com/prometheus-community/smartctl_exporter/releases/download/smartctl_exporter_"
-         version "/smartctl_exporter"))
+         "https://github.com/prometheus-community/smartctl_exporter/releases/download/v"
+         version "/smartctl_exporter-" version ".linux-amd64.tar.gz"))
        (sha256
         (base32
-         "11qr4p7dwps6la9rv09gdmmri7ziap69agaggr8w787dapi08g50"))))
+         "0p9fl3zq7hi7610636r96ba2bx1m40s8k6g789bdagb09kps1zgp"))))
     (build-system trivial-build-system)
     (inputs
-     `(("glibc" ,glibc)
-       ("patchelf" ,patchelf)))
+     `(("gzip" ,gzip)
+       ("tar" ,tar)))
     (arguments
      `(#:modules ((guix build utils))
        #:builder
        (begin
          (use-modules (guix build utils))
-         (mkdir-p (string-append %output "/bin"))
          (setenv "PATH"
                  (string-append
-                  (assoc-ref %build-inputs "patchelf") "/bin"))
-         (copy-file (assoc-ref %build-inputs "source") "smartctl_exporter")
-         (chmod "smartctl_exporter" #o755)
-         (invoke "patchelf" "--set-interpreter"
-                 (string-append (assoc-ref %build-inputs "glibc")
-                                "/lib/ld-linux-x86-64.so.2")
-                 "smartctl_exporter")
+                  (assoc-ref %build-inputs "gzip") "/bin"
+                  ":" (assoc-ref %build-inputs "tar") "/bin"))
+         (invoke "tar" "--strip-components=1" "-xf"
+                 (assoc-ref %build-inputs "source"))
          (chmod "smartctl_exporter" #o555)
          (let ((bin (string-append %output "/bin")))
            (mkdir-p bin)

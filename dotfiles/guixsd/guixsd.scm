@@ -1629,31 +1629,14 @@ location / {
 
                          (service prometheus-smartctl-exporter-service-type
                                   (prometheus-smartctl-exporter-configuration
-                                   (config-file
-                                    (computed-file
-                                     "smartctl-exporter.json"
-                                     (with-extensions (list guile-json-4)
-                                       (with-imported-modules (source-module-closure '((json builder)))
-                                         #~(begin
-                                             (use-modules (json builder)
-                                                          (ice-9 rdelim))
-                                             (define smartctl
-                                               #$(file-append smartmontools "/sbin/smartctl"))
-                                             (with-output-to-file #$output
-                                               (lambda ()
-                                                 (scm->json
-                                                  `(("smartctl_exporter"
-                                                     ("url_path" . "/metrics")
-                                                     ("smartctl_location" . ,smartctl)
-                                                     ("fake_json" . "no")
-                                                     ("devices" . #("/dev/sda"
-                                                                    ;; TODO: "/dev/sdb"
-                                                                    "/dev/sdc"))
-                                                     ;; TODO: Set collect_not_more_than_period to 120s after bug will be fixed.
-                                                     ;; https://github.com/prometheus-community/smartctl_exporter/issues/19
-                                                     ("collect_not_more_than_period" . "0s")
-                                                     ("bind_to" . "127.0.0.1:9633")))
-                                                  #:pretty #t))))))))))
+                                   (arguments
+                                    '("--web.listen-address=127.0.0.1:9633"
+                                      "--smartctl.path=/run/current-system/profile/sbin/smartctl"
+                                      "--smartctl.device=/dev/sda"
+                                      "--smartctl.device=/dev/sdb"
+                                      "--smartctl.device=/dev/sdc"
+                                      "--smartctl.device=/dev/sdd"
+                                      "--smartctl.device=/dev/nvme0"))))
 
                          (service prometheus-pushgateway-service-type
                                   (prometheus-pushgateway-configuration

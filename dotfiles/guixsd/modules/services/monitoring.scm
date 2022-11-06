@@ -693,8 +693,6 @@
   prometheus-smartctl-exporter-configuration?
   (prometheus-smartctl-exporter prometheus-smartctl-exporter-configuration-prometheus-smartctl-exporter  ;string
                                 (default prometheus-smartctl-exporter))
-  (config-file                  prometheus-smartctl-exporter-configuration-config-file                   ;string
-                                (default #f))
   (arguments                    prometheus-smartctl-exporter-configuration-arguments                     ;list of strings
                                 (default '())))
 
@@ -713,7 +711,6 @@
     (start #~(make-forkexec-constructor
               `(,(string-append #$(prometheus-smartctl-exporter-configuration-prometheus-smartctl-exporter config)
                                 "/bin/smartctl_exporter")
-                "-config" #$(prometheus-smartctl-exporter-configuration-config-file config)
                 ,#$@(prometheus-smartctl-exporter-configuration-arguments config))
               #:log-file #$%prometheus-smartctl-exporter-log))
     (respawn? #f)
