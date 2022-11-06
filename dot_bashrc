@@ -2183,6 +2183,15 @@ herd()
     esac
 }
 
+opensearch()
+{
+    case "$1" in
+        index)
+            viddy --differences --interval 10 "bash -c 'curl ${2:-opensearch.home}/_cat/indices?pretty | sort -k 3'"
+            ;;
+    esac
+}
+
 sudo()
 {
     case "$1" in
