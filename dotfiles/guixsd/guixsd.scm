@@ -1926,6 +1926,8 @@ PasswordAuthentication yes")))
                                                          (("type" . "log")
                                                           ("paths" . #("/var/lib/docker/containers/**/*.log"))
                                                           ("enabled" . #t)))))
+                                                     ("logging"
+                                                      ("level" . "error"))
                                                      ("output"
                                                       ("elasticsearch"
                                                        ("hosts" . #("https://node-0.example.com:9200"))
