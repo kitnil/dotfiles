@@ -72,7 +72,9 @@
             prometheus-restic-exporter-service-type
 
             fatrace-service-type
-            fatrace-configuration))
+            fatrace-configuration
+
+            prometheus-shepherd-exporter-service-type))
 
 ;;; Commentary:
 ;;;
@@ -1133,5 +1135,34 @@ User admin")
    (default-value (fatrace-configuration))
    (description
     "Run fatrace.")))
+
+
+;;;
+;;;
+;;;
+
+(add-to-load-path "/home/oleg/src/gitlab.com/wigust/prometheus-shepherd-exporter")
+(use-modules (prometheus-shepherd-exporter))
+
+(define (prometheus-shepherd-exporter-shepherd-service config)
+  (list
+   (shepherd-service
+    (provision '(prometheus-shepherd-exporter))
+    (documentation "Run prometheus-shepherd-exporter.")
+    (requirement '())
+    (start #~(make-forkexec-constructor
+              (list #$prometheus-shepherd-exporter)))
+    (respawn? #f)
+    (stop #~(make-kill-destructor)))))
+
+(define prometheus-shepherd-exporter-service-type
+  (service-type
+   (name 'prometheus-shepherd-exporter)
+   (extensions
+    (list (service-extension shepherd-root-service-type
+                             prometheus-shepherd-exporter-shepherd-service)))
+   (default-value '())
+   (description
+    "Run the prometheus-shepherd-exporter.")))
 
 ;;; monitoring.scm ends here

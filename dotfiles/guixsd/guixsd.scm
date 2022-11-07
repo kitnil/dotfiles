@@ -1116,6 +1116,9 @@ location / {
                                                (define prometheus-alertmanager-ohmgraphite
                                                  #$(plain-file "prometheus-alertmanager-ohmgraphite.json"
                                                                (scm->json-string (load "alertmanager/ohmgraphite.scm"))))
+                                               (define prometheus-alertmanager-shepherd
+                                                 #$(plain-file "prometheus-alertmanager-shepherd.json"
+                                                               (scm->json-string (load "alertmanager/shepherd.scm"))))
                                                (define http-targets
                                                  (append (list "https://wugi.info/"
                                                                "https://guix.wugi.info/"
@@ -1163,6 +1166,11 @@ location / {
                                                            #(((targets . #("127.0.0.1:9633")))))
                                                           (scrape_interval . "10m")
                                                           (job_name . "smartctl"))
+                                                         ((static_configs
+                                                           .
+                                                           #(((targets . #("127.0.0.1:9180")))))
+                                                          (scrape_interval . "1m")
+                                                          (job_name . "shepherd"))
                                                          ((static_configs
                                                            .
                                                            #(((targets . #("vm1.wugi.info:9324")))))
@@ -1351,6 +1359,7 @@ location / {
                                                                       ,prometheus-alertmanager-ssh-exporter
                                                                       ,prometheus-alertmanager-windows
                                                                       ,prometheus-alertmanager-ohmgraphite
+                                                                      ,prometheus-alertmanager-shepherd
                                                                       ,prometheus-alertmanager-guix))
                                                       ("alerting"
                                                        ("alertmanagers"
@@ -1639,6 +1648,8 @@ location / {
                                       "--smartctl.device=/dev/sdc"
                                       "--smartctl.device=/dev/sdd"
                                       "--smartctl.device=/dev/nvme0"))))
+
+                         (service prometheus-shepherd-exporter-service-type)
 
                          (service prometheus-pushgateway-service-type
                                   (prometheus-pushgateway-configuration
