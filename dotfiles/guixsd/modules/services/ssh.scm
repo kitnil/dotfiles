@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2021 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2021, 2022 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -57,13 +57,7 @@
          (uid 30022)
          (group "users")
          (comment "SSH forwarding privilege separation user")
-         (home-directory "/home/vm1-ssh-tunnel"))
-        (user-account
-         (name "tipanova-34-1-ssh-tunnel")
-         (uid 30023)
-         (group "users")
-         (comment "SSH forwarding privilege separation user")
-         (home-directory "/home/tipanova-34-1-ssh-tunnel"))))
+         (home-directory "/home/vm1-ssh-tunnel"))))
 
 (define %ssh-hosts-file-hosts
   '("back.wugi.info"))
