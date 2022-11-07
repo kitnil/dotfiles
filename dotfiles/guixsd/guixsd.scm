@@ -1168,7 +1168,8 @@ location / {
                                                           (job_name . "smartctl"))
                                                          ((static_configs
                                                            .
-                                                           #(((targets . #("127.0.0.1:9180")))))
+                                                           #(((targets . #("127.0.0.1:9180"
+                                                                           "vm1.corp:80")))))
                                                           (scrape_interval . "1m")
                                                           (job_name . "shepherd"))
                                                          ((static_configs

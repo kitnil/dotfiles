@@ -200,6 +200,7 @@ remote-random
                                    (prometheus-exim-exporter-configuration
                                     (arguments '("--exim.log-path=/var/log/exim"
                                                  "--exim.input-path=/var/spool/exim/input"))))
+                          (service prometheus-shepherd-exporter-service-type)
 
                           (service (certbot-service-type-custom-nginx "78.108.82.44")
                                    (certbot-configuration
@@ -244,7 +245,20 @@ remote-random
                                                            (append (list (nginx-location-configuration
                                                                           (uri "/.well-known")
                                                                           (body '("root /var/www;"))))
-                                                                   (nginx-server-configuration-locations %webssh-configuration-nginx))))))))
+                                                                   (nginx-server-configuration-locations %webssh-configuration-nginx))))
+                                                         (nginx-server-configuration
+                                                          (server-name '("vm1.corp"))
+                                                          (listen '("192.168.25.3:80"))
+                                                          (locations
+                                                           (list
+                                                            (nginx-location-configuration
+                                                             (uri "/")
+                                                             (body
+                                                              (list
+                                                               "allow 192.168.25.0/24;"
+                                                               "resolver 80.80.80.80 ipv6=off;"
+                                                               "proxy_pass http://127.0.0.1:9180;"
+                                                               "add_header Access-Control-Allow-Origin *;"))))))))))
 
                           (service docker-service-type)
                           docker-service
