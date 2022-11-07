@@ -905,7 +905,7 @@ location / {
               (if (string-null? ip)
                   ""
                   (format #f "~a oracle.ygg" ip)))
-           "192.168.25.2 oracle.ovpn"
+           "192.168.25.2 windows.home"
            "192.168.25.3 vm1.ovpn"
 
            "172.16.100.65 zdetovetskiy.intr"
