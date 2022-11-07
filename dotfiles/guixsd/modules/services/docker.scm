@@ -25,48 +25,11 @@
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-1)
   #:use-module (gnu packages docker)
-  #:export (docker-service
-            docker-kiwiirc-service
+  #:export (docker-kiwiirc-service
 
             docker-compose-configuration
             docker-compose-configuration?
             docker-compose-service-type))
-
-;;; Commentary:
-;;;
-;;; This module provides a service definition for the docker service.
-;;;
-;;; Code:
-
-(define* (dockerd-wait #:optional (start? #f))
-  (program-file "dockerd-wait"
-                #~(begin
-                    (use-modules (ice-9 popen))
-                    (define count (make-parameter 0))
-                    (let loop ()
-                      (let* ((port   (apply open-pipe* OPEN_READ "/run/current-system/profile/bin/docker"
-                                            '("ps"))))
-                        (if (or (< 15 (count (1+ (count))))
-                                (= (status:exit-val (close-pipe port)) 0))
-                            #t
-                            (begin
-                              (when #$start?
-                                (system* "/run/current-system/profile/bin/herd" "start" "dockerd"))
-                              (sleep 5)
-                              (loop))))))))
-
-(define docker-service
-  (simple-service 'docker shepherd-root-service-type
-                  (list
-                   (shepherd-service
-                    (provision '(dockerd-wait))
-                    (documentation "Run docker.")
-                    (requirement '())
-                    (start #~(make-forkexec-constructor
-                              (list #$(dockerd-wait #t))))
-                    (respawn? #f)
-                    (one-shot? #t)
-                    (stop #~(make-kill-destructor))))))
 
 
 ;;;

@@ -261,7 +261,6 @@ remote-random
                                                                "add_header Access-Control-Allow-Origin *;"))))))))))
 
                           (service docker-service-type)
-                          docker-service
 
                           (service docker-compose-service-type
                                    (docker-compose-configuration
