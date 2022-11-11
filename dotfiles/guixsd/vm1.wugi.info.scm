@@ -3,7 +3,8 @@
 
 (use-modules (gnu)
              (guix modules)
-             (json))
+             (json)
+             (guix gexp))
 (use-service-modules certbot databases dbus desktop docker dns messaging monitoring networking linux ssh sysctl web vpn)
 (use-package-modules admin curl certs databases guile networking linux ssh tmux)
 
@@ -11,6 +12,7 @@
 
 (use-modules (packages certs)
              (services bird)
+             (services dns)
              (services docker)
              (services mail)
              (services monitoring)
@@ -20,6 +22,11 @@
              (services openvpn)
              (services ssh)
              (services web))
+
+
+;;;
+;;; operating-system
+;;;
 
 (operating-system
   (host-name "vm1.wugi.info")
@@ -130,6 +137,40 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                                                       "192.168.0.0/16"
                                                       "172.22.144.97/27"
                                                       "fe80::/10")))))))
+                          (service knot-dns-service-type
+                                   (knot-dns-configuration
+                                    (config-file
+                                     (computed-file
+                                      "knot.json"
+                                      (with-extensions (list guile-json-4)
+                                        (with-imported-modules (append (source-module-closure '((json builder)))
+                                                                       '((ice-9 match)))
+                                          #~(begin
+                                              (use-modules (json builder)
+                                                           (ice-9 match))
+                                              (with-output-to-file #$output
+                                                (lambda ()
+                                                  (display "\
+server:
+  listen: 78.108.82.44@53
+  rundir: /var/run/knot
+  user: knot
+zone:
+  - domain: wugi.info
+    file: wugi.info.zone
+    storage: /var/lib/knot/zones/
+")
+                                                  ;; TODO: Generate YAML from JSON for Knot.
+                                                  ;; (scm->json
+                                                  ;;  `(("server"
+                                                  ;;     ("user" . "knot")
+                                                  ;;     ("rundir" . "/var/run/knot")
+                                                  ;;     ("listen" . "78.108.82.44@53"))
+                                                  ;;    ("zone" . #((("domain" . "wugi.info")
+                                                  ;;                 ("storage" . "/var/lib/knot/zones/")
+                                                  ;;                 ("file" . "wugi.info.zone"))))))
+                                                  )))))))))
+
                           (service knot-resolver-service-type
                                    (knot-resolver-configuration
                                     (kresd-config-file (plain-file "kresd.conf" "\
