@@ -766,8 +766,6 @@ nix_untar_docker()
         | xargs -n1 -I{} tar xvf {}
 }
 
-complete -C "$HOME/.nix-profile/bin/terraform" terraform
-
 tmux_renumber_windows()
 {
     tmux movew -r
