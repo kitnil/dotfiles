@@ -140,36 +140,7 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                           (service knot-dns-service-type
                                    (knot-dns-configuration
                                     (config-file
-                                     (computed-file
-                                      "knot.json"
-                                      (with-extensions (list guile-json-4)
-                                        (with-imported-modules (append (source-module-closure '((json builder)))
-                                                                       '((ice-9 match)))
-                                          #~(begin
-                                              (use-modules (json builder)
-                                                           (ice-9 match))
-                                              (with-output-to-file #$output
-                                                (lambda ()
-                                                  (display "\
-server:
-  listen: 78.108.82.44@53
-  rundir: /var/run/knot
-  user: knot
-zone:
-  - domain: wugi.info
-    file: wugi.info.zone
-    storage: /var/lib/knot/zones/
-")
-                                                  ;; TODO: Generate YAML from JSON for Knot.
-                                                  ;; (scm->json
-                                                  ;;  `(("server"
-                                                  ;;     ("user" . "knot")
-                                                  ;;     ("rundir" . "/var/run/knot")
-                                                  ;;     ("listen" . "78.108.82.44@53"))
-                                                  ;;    ("zone" . #((("domain" . "wugi.info")
-                                                  ;;                 ("storage" . "/var/lib/knot/zones/")
-                                                  ;;                 ("file" . "wugi.info.zone"))))))
-                                                  )))))))))
+                                     (knot-config "78.108.82.44"))))
 
                           (service knot-resolver-service-type
                                    (knot-resolver-configuration

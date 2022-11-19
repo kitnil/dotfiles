@@ -5,7 +5,8 @@
 (use-service-modules networking ssh)
 (use-package-modules certs screen ssh)
 
-(use-modules (config))
+(use-modules (config)
+             (services dns))
 
 (operating-system
   (host-name "vm2.wugi.info")
@@ -50,6 +51,18 @@
                                                      #:name-servers '("127.0.0.1"
                                                                       "8.8.8.8"
                                                                       "8.8.4.4"))
+                          (service ntp-service-type
+                                   (ntp-configuration
+                                    (servers
+                                     (list
+                                      (ntp-server
+                                       (type 'pool)
+                                       (address "78.108.93.254")
+                                       (options '("iburst")))))))
+                          (service knot-dns-service-type
+                                   (knot-dns-configuration
+                                    (config-file
+                                     (knot-config "78.108.92.69"))))
                           (service openssh-service-type))
                     (modify-services %base-services
                       (guix-service-type config => %guix-daemon-config-with-substitute-urls))))

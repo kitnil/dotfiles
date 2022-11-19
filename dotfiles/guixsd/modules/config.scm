@@ -80,7 +80,9 @@
             %homer-wugi.info-config
             %homer-wugi.info-nginx-configuration
 
-            %jenkins-config))
+            %jenkins-config
+
+            knot-config))
 
 (define %guix-daemon-config
   (guix-configuration
@@ -785,3 +787,31 @@ client-to-client
                              (with-input-from-file "/etc/jenkins/jenkins.properties"
                                (@ (ice-9 rdelim) read-string))))
              #\newline)))))
+
+
+;;;
+;;; knot
+;;;
+
+(define (knot-config ip-address)
+  (computed-file
+   "knot.json"
+   (with-extensions (list guile-json-4)
+     (with-imported-modules (append (source-module-closure '((json builder)))
+                                    '((ice-9 match)))
+       #~(begin
+           (use-modules (json builder)
+                        (ice-9 match)
+                        (ice-9 format))
+           (with-output-to-file #$output
+             (lambda ()
+               (format #t "\
+server:
+  listen: ~a@53
+  rundir: /var/run/knot
+  user: knot
+zone:
+  - domain: wugi.info
+    file: wugi.info.zone
+    storage: /var/lib/knot/zones/
+" #$ip-address))))))))
