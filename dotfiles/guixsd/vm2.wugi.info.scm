@@ -2,7 +2,7 @@
 ;; for a "bare bones" setup, with no X11 display server.
 
 (use-modules (gnu))
-(use-service-modules networking ssh)
+(use-service-modules networking linux ssh)
 (use-package-modules certs screen ssh)
 
 (use-modules (config)
@@ -63,7 +63,10 @@
                                    (knot-dns-configuration
                                     (config-file
                                      (knot-config "78.108.92.69"))))
-                          (service openssh-service-type))
+                          (service openssh-service-type)
+                          (service zram-device-service-type
+                                   (zram-device-configuration
+                                    (size "8G"))))
                     (modify-services %base-services
                       (guix-service-type config => %guix-daemon-config-with-substitute-urls))))
 
