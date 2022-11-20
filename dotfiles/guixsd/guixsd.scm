@@ -2102,6 +2102,7 @@ PasswordAuthentication yes")))
 
                          (service kubernetes-k3s-service-type
                                   (kubernetes-k3s-configuration
+                                   (server? #t)
                                    (arguments '("--node-external-ip" "192.168.0.145"
                                                 "--bind-address" "192.168.0.145"
 

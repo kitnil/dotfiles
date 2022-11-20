@@ -49,7 +49,9 @@
   (log-file  kubernetes-k3s-configuration-log-file  ;string
              (default "/var/log/k3s.log"))
   (runtime   kubernetes-k3s-configuration-runtime   ;symbol
-             (default 'docker)))
+             (default 'docker))
+  (server?   kubernetes-k3s-configuration-server?   ;boolean
+             (default #f)))
 
 (define (kubernetes-k3s-log-rotations config)
   (list (log-rotation
@@ -67,7 +69,9 @@
     (start #~(make-forkexec-constructor
               (list #$(file-append (kubernetes-k3s-configuration-k3s config)
                                    "/bin/k3s")
-                    "server"
+                    (if #$(kubernetes-k3s-configuration-server? config)
+                        "server"
+                        "agent")
                     #$@(kubernetes-k3s-configuration-arguments config)
                     "--log" #$(kubernetes-k3s-configuration-log-file config))))
     (respawn? #t) ;XXX: Fix race condition with Docker
