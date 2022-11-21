@@ -2025,6 +2025,9 @@ kubectl()
                 kubectl uncordon "$2"
             )
             ;;
+        cilium)
+            command kubectl --namespace kube-system get pods --selector=k8s-app=cilium
+            ;;
         *)
             command kubectl "$@"
             ;;
