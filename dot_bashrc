@@ -2017,6 +2017,14 @@ kubectl()
                 viddy -n 10 -d "kubectl get nodes -o wide; echo; kubectl get all --namespace ${2} -o wide; echo; kubectl get ingress --namespace ${2} -o wide; echo; kubectl get secrets --namespace ${2} -o wide"
             fi
             ;;
+        reboot)
+            (
+                set -ex
+                kubectl drain "$2" --ignore-daemonsets --delete-emptydir-data
+                ansible "${2}.intr" -m reboot -a 'search_paths=/run/current-system/sw/bin'
+                kubectl uncordon "$2"
+            )
+            ;;
         *)
             command kubectl "$@"
             ;;
