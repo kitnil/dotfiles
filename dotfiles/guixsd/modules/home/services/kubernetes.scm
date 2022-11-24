@@ -36,7 +36,7 @@
                        "--tty"
                        "--interactive"
                        "--rm"
-                       "--volume" (string-append %home "/.kube:/.kube")
+                       "--volume" (string-append %home "/.kube-view:/.kube")
                        "--volume" (string-append directory ":/dump")
                        "woozymasta/kube-dump:latest"
                        "dump-namespaces"
