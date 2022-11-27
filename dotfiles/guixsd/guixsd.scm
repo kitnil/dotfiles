@@ -2071,7 +2071,8 @@ PasswordAuthentication yes")))
                                                       ("ulimits"
                                                        ("nofile"
                                                         ("soft" . 65536)
-                                                        ("hard" . 65536))))
+                                                        ("hard" . 65536)))
+                                                      ("command" . "--loglevel debug"))
                                                      ("postgres"
                                                       ("volumes"
                                                        .
