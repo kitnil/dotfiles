@@ -116,7 +116,7 @@
                  (sleep 3)
                  (loop))))))))
 
-(define (majordomo-mbsync-goimapnotify-services name)
+(define* (majordomo-mbsync-goimapnotify-services name #:key (max-messages 0))
   (define (pass-private-or-public name)
     (if (file-exists? (string-append %home "/.password-store/majordomo/private/router.majordomo.ru/" name "@majordomo.ru.gpg"))
         (string-append "majordomo/private/router.majordomo.ru/"
@@ -145,7 +145,10 @@
   (define majordomo-mbsync-channel-configuration
     (mbsync-channel-configuration
      (patterns '("INBOX"))
-     (sync '("Pull"))))
+     (sync '("Pull"))
+     (max-messages max-messages)
+     (expunge "near")
+     (expire-unread "yes")))
 
   (list
    (simple-service (symbol-append 'home-mbsync-majordomo-
@@ -220,7 +223,8 @@
    (majordomo-mbsync-goimapnotify-services "pyhalov")
    (majordomo-mbsync-goimapnotify-services "sidorov")
 
-   (majordomo-mbsync-goimapnotify-services "alertmanager")
+   (majordomo-mbsync-goimapnotify-services "alertmanager"
+                                           #:max-messages 1000)
    (majordomo-mbsync-goimapnotify-services "git-commits")
    (majordomo-mbsync-goimapnotify-services "grafana")
    (majordomo-mbsync-goimapnotify-services "healthchecks")
@@ -409,7 +413,7 @@ PYTHONPATH='' exec -a \"$0\" ~a/bin/idea-ultimate \"$@\"\n"
                                               #$(string-append %home "/.nix-profile"))))
                                   (chmod #$output #o555))))))
 
-    home-shellcheck-service
+    ;; home-shellcheck-service
 
     (simple-service 'stumpwm-config
                     home-files-service-type

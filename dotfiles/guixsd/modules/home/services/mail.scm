@@ -194,7 +194,10 @@ that match the patterns. An example value would be @samp{'(\"INBOX\")}.")
    "Maximum number of messages to keep in each near side mailbox.")
   (expunge
    (maybe-string %unset-value)
-   "Permanently remove all messages marked for deletion."))
+   "Permanently remove all messages marked for deletion.")
+  (expire-unread
+   (maybe-string %unset-value)
+   "Selects whether unread messages should be affected by MaxMessages."))
 
 (define (serialize-mbsync-imap-account-configuration field-name val)
   (serialize-configuration val mbsync-imap-account-configuration-fields))
