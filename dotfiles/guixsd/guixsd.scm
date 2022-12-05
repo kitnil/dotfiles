@@ -1081,6 +1081,9 @@ location / {
                                                             (ice-9 match))
                                                (define listen-address
                                                  #$listen-address)
+                                               (define prometheus-alertmanager-prometheus
+                                                 #$(plain-file "prometheus-alertmanager-prometheus.json"
+                                                               (scm->json-string (load "prometheus.scm"))))
                                                (define prometheus-alertmanager-node
                                                  #$(plain-file "prometheus-alertmanager-node.json"
                                                                (scm->json-string (load "node.scm"))))
@@ -1345,7 +1348,8 @@ location / {
                                                            #(((targets . #("windows.local:4445")))))
                                                           (scrape_interval . "1m")
                                                           (job_name . "ohmgraphite"))))
-                                                      (rule_files . #(,prometheus-alertmanager-node
+                                                      (rule_files . #(,prometheus-alertmanager-prometheus
+                                                                      ,prometheus-alertmanager-node
                                                                       ,prometheus-alertmanager-lvm
                                                                       ,prometheus-alertmanager-blackbox
                                                                       ,prometheus-alertmanager-bird
