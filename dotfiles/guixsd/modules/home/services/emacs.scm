@@ -60,6 +60,7 @@
                                  "modules/info.el"
                                  "modules/java.el"
                                  "modules/keys.el"
+                                 "modules/kubernetes.el"
                                  "modules/lisp.el"
                                  "modules/lsp.el"
                                  "modules/mail.el"
@@ -220,4 +221,6 @@
                                  "insert/guile/script"
                                  "insert/dotfiles/modules/services/service"
                                  "insert/nix/shell.nix"
-                                 "insert/nix/flake.nix")))))
+                                 "insert/nix/flake.nix"
+                                 "insert/kubernetes/kustomization.yaml"
+                                 "insert/kubernetes/namespace.yaml")))))

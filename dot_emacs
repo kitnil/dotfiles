@@ -71,6 +71,7 @@
 (load-config-file "nix.el")
 (load-config-file "scheme.el")
 (load-config-file "guix.el")
+(load-config-file "kubernetes.el")
 (load-config-file "term.el")
 (load-config-file "audio.el")
 (load-config-file "mail.el")
