@@ -53,6 +53,8 @@ alias markdown-github=grip
 
 alias iostat='iostat -xm 2'
 
+alias dhall-to-yaml='dhall-to-yaml --omit-empty'
+
 httping()
 {
     case "$1" in
