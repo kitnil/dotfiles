@@ -97,6 +97,17 @@ case "$1" in
                 ;;
         esac
         ;;
+    password)
+        # vnc password PASSWORD_TEXT kvm12.intr:12345
+        vnc_directory="$(mktemp -d -t "vnc.XXXXXXXXXX")"
+        (
+            set -x
+            trap 'rm -rf "$vnc_directory"' EXIT
+            cd "$vnc_directory"
+            echo "$2" | guix shell tigervnc-server -- vncpasswd -f > passwd
+            command vncviewer -passwd passwd "$3"
+        )
+        ;;
     *)
         help_main
         ;;
