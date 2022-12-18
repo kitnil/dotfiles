@@ -2032,6 +2032,11 @@ kubectl()
             ;;
         tmuxifier)
             case "$2" in
+                cluster1)
+                    TMUXIFIER_TMUX_OPTS="-L kubernetes-cluster1" \
+                                       KUBECONFIG="${HOME}/.kube/config" \
+                                       tmuxifier s kubernetes
+                    ;;
                 cluster2)
                     TMUXIFIER_TMUX_OPTS="-L kubernetes-cluster2" \
                                        KUBECONFIG="${HOME}/.kube/config2" \
