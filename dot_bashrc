@@ -2030,6 +2030,18 @@ kubectl()
         cilium)
             command kubectl --namespace kube-system get pods --selector=k8s-app=cilium
             ;;
+        tmuxifier)
+            case "$2" in
+                cluster2)
+                    TMUXIFIER_TMUX_OPTS="-L kubernetes-cluster2" \
+                                       KUBECONFIG="${HOME}/.kube/config2" \
+                                       tmuxifier s kubernetes
+                    ;;
+                *)
+                    tmuxifier s kubernetes
+                    ;;
+            esac
+            ;;
         *)
             command kubectl "$@"
             ;;
