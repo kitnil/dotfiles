@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+nix run "git+https://gitlab.intr/utils/nix-docker-firefox-esr?ref=flake#firefox" -- "$@"
