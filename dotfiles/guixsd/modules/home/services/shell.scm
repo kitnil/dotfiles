@@ -103,6 +103,7 @@
                           "fileshelter"
                           "firefox-guile"
                           "firefox-nix"
+                          "firefox-temp-profile"
                           "firefox-youtube-chat"
                           "gita-dist"
                           "gita-kitnil"

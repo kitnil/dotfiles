@@ -1,0 +1,9 @@
+#!/usr/bin/env bash
+
+set -o nounset -o errexit -o pipefail
+
+profile="$(mktemp -d -t "firefox.XXXXXXXXXX")"
+
+trap 'rm -rf "$profile"' EXIT
+
+firefox --new-instance --profile "$profile" "$@"
