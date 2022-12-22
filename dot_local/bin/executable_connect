@@ -250,6 +250,20 @@ case "$1" in
         ip="$(connect ssh "$2" -- docker logs --tail 1000 nginx | awk '{print $1}' | sort | uniq -c | sort -nr | fzf | awk '{print $2}')"
         curl --silent --head --request DELETE "$2/ip-filter/$ip?ttl=7200&action=setCookie"
         ;;
+    kvm)
+        racks=(
+            5-08
+            5-07
+        )
+        for rack in "${racks[@]}"
+        do
+            for host in $(fping -a $(printf "%s.intr\n" $(mjru-infa server | grep Датахаус | grep kvm | grep -v nvme | awk "/$rack/ { print \$3 }") | xargs echo))
+            do
+                echo -e "\n\n@ $host"
+                ssh -q "$host" 'free -h; df -h /kvm'
+            done
+        done
+        ;;
     ssh)
         host="$2"
         if [[ "$host" != *.intr ]] && [[ "$host" != *sw* ]]
