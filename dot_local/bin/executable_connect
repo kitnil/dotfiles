@@ -257,11 +257,14 @@ case "$1" in
         )
         for rack in "${racks[@]}"
         do
-            for host in $(fping -a $(printf "%s.intr\n" $(mjru-infa server | grep Датахаус | grep kvm | grep -v nvme | awk "/$rack/ { print \$3 }") | xargs echo))
-            do
-                echo -e "\n\n@ ${host}@${rack}"
-                ssh -q "$host" 'free -h; df -h /kvm'
-            done
+            (
+                set +e
+                for host in $(fping -a $(printf "%s.intr\n" $(mjru-infa server | grep Датахаус | grep kvm | grep -v nvme | awk "/$rack/ { print \$3 }") | xargs echo))
+                do
+                    echo -e "\n\n@ ${host}@${rack}"
+                    ssh -q "$host" 'free -h; df -h /kvm'
+                done
+            )
         done
         ;;
     ssh)
