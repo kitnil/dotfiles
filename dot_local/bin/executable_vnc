@@ -56,6 +56,16 @@ case "$1" in
             novnc)
                 docker run --restart unless-stopped --detach --name novnc --network=host geek1011/easy-novnc:latest --addr 127.0.0.1:5911 --port 5910 --novnc-params "resize=remote"
                 ;;
+            guix)
+                vnc_directory="$(mktemp -d -t "vnc.XXXXXXXXXX")"
+                trap 'rm -rf "$vnc_directory"' EXIT
+                (
+                    cd "$vnc_directory" || exit 1
+                    pass show localhost/vncserver \
+                        | guix shell tigervnc-server -- vncpasswd -f > passwd
+                    X509CA="${HOME}/.vnc/x509_ca.pem" vncviewer -passwd passwd "guix.wugi.info:${3:-5902}"
+                )
+                ;;
             *)
                 vncviewer -AutoSelect=0 -PreferredEncoding=Raw -FullColor=1 -NoJPEG=1 -CompressLevel=0 -passwd "$HOME/.vnc/passwd" 127.0.0.1:"$2"
                 ;;
