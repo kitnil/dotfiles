@@ -1,0 +1,5 @@
+- [[https://github.com/emoacht/Monitorian][emoacht/Monitorian: A Windows desktop tool to adjust the brightness of multiple monitors with ease]]
+  : winget install Monitorian
+- [[https://github.com/adnanh/webhook/releases/download/2.8.0/webhook-windows-amd64.tar.gz][webhook-windows-amd64.tar.gz]]
+- [[https://github.com/adnanh/webhook/blob/e329b6d9fffd54ec0926c143467fc459b398a4f1/docs/Hook-Definition.md#L17][webhook/Hook-Definition.md at e329b6d9fffd54ec0926c143467fc459b398a4f1 · adnanh/webhook]]
+- [[https://github.com/adnanh/webhook/blob/e329b6d9fffd54ec0926c143467fc459b398a4f1/docs/Referencing-Request-Values.md][webhook/Referencing-Request-Values.md at e329b6d9fffd54ec0926c143467fc459b398a4f1 · adnanh/webhook]]

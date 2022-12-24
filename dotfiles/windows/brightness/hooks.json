@@ -1,0 +1,21 @@
+[
+    {
+	"id": "brightness",
+	"execute-command": "c:/Users/oleg/bin/brightness.bat",
+	"pass-arguments-to-command": [
+	    {
+		"source": "string",
+		"name": "/set"
+	    },
+	    {
+		"source": "string",
+		"name": "all"
+	    },
+	    {
+		"source": "url",
+		"name": "set"
+	    }
+	],
+	"command-working-directory": "c:/Users/oleg",
+    }
+]
