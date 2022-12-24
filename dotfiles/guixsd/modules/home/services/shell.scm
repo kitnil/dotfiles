@@ -76,6 +76,7 @@
                           "block-ip"
                           "blog"
                           "brctl-start"
+                          "brightness"
                           "cerb"
                           "checkssl.sh"
                           "chroot-games.sh"

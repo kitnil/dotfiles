@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+curl "http://windows.local:9000/hooks/brightness?set=${1}"
