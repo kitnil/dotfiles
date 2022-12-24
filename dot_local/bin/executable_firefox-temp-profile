@@ -4,6 +4,14 @@ set -o nounset -o errexit -o pipefail
 
 profile="$(mktemp -d -t "firefox.XXXXXXXXXX")"
 
+FIREFOX_DEFAULT_PROFILE="j56dvo43.default-1520714705340"
+
+case "$FIREFOX_TEMP_PROFILE" in
+    "default")
+        rsync --archive "${HOME}/.mozilla/firefox/${FIREFOX_DEFAULT_PROFILE}/" "${profile}/"
+        ;;
+esac
+
 trap 'rm -rf "$profile"' EXIT
 
 firefox --new-instance --profile "$profile" "$@"
