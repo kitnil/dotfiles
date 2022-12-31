@@ -15,9 +15,9 @@
 	     (srfi srfi-1)
 	     (srfi srfi-26))
 
-(use-service-modules desktop networking ssh nix)
+(use-service-modules desktop networking ssh nfs nix)
 
-(use-package-modules bootloaders certs vpn wm terminals xfce linux package-management admin fonts)
+(use-package-modules bootloaders certs vpn wm terminals xfce linux package-management admin fonts nfs)
 
 (use-service-modules desktop dbus networking xorg)
 
@@ -96,14 +96,15 @@
                      ;;sway dmenu
                      ;; terminal emulator
                      ;; for HTTPS access
-lvm2
+                     lvm2
 		     openvpn
-sway
-alacritty
-;ratpoison
-;xfce4-terminal
-nss-certs
-nix)
+                     sway
+                     alacritty
+                                        ;ratpoison
+                                        ;xfce4-terminal
+                     nss-certs
+                     nix
+                     nfs-utils)
                     %base-packages))
 
   (sudoers-file (plain-file "sudoers"
@@ -117,6 +118,8 @@ nix)
   (services (append (list
                      (service wpa-supplicant-service-type)    ;needed by NetworkManager
                      (service network-manager-service-type)
+                     (service nfs-service-type
+                              (nfs-configuration))
                      (service openssh-service-type)
 		     (service openvpn-service-type
 			      (openvpn-configuration
