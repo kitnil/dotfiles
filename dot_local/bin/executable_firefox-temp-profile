@@ -1,12 +1,12 @@
 #!/usr/bin/env bash
 
-set -o nounset -o errexit -o pipefail
+set -o errexit -o pipefail
 
 profile="$(mktemp -d -t "firefox.XXXXXXXXXX")"
 
 FIREFOX_DEFAULT_PROFILE="j56dvo43.default-1520714705340"
 
-case "$FIREFOX_TEMP_PROFILE" in
+case "$1" in
     "default")
         rsync --archive "${HOME}/.mozilla/firefox/${FIREFOX_DEFAULT_PROFILE}/" "${profile}/"
         ;;
