@@ -646,6 +646,7 @@ location / {
                           "--dhcp-host=52:54:00:f1:75:45,192.168.154.129" ;web99
                           "--dhcp-host=52:54:00:7a:62:8d,192.168.154.130" ;nginx99
                           "--dhcp-host=52:54:00:23:17:ff,192.168.154.119" ;ubuntu
+                          "--dhcp-host=52:54:00:51:3e:ad,192.168.154.131" ;kube1
                           "--bind-interfaces"
                           "--interface=br154.154"
                           "--dhcp-boot=netboot.xyz.efi"
@@ -872,6 +873,9 @@ location / {
 
            "192.168.154.130 nginx99.intr"
            "192.168.154.129 web99.ru www.web99.ru www.web99.intr web99.intr"
+
+           "192.168.25.11 kube1.home"
+           "192.168.154.131 kube1.lan"
 
            "172.16.100.60 workstation.intr"
 
