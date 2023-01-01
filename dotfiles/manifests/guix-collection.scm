@@ -236,7 +236,7 @@ virtualization vnc vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
                sshuttle
 
                reptyr
-               shellcheck
+               ;; shellcheck
                ipcalc
                socat
                sshpass
