@@ -55,6 +55,7 @@
             20-intel.conf
             %my-system-packages
             %my-setuid-programs
+            %notebook-packages
             %nginx-deploy-hook
             letsencrypt-certificate
             letsencrypt-key
@@ -115,84 +116,96 @@ Section \"Device\"
    Option      \"TearFree\" \"true\"
 EndSection\n")
 
+(define %stumpwm-packages
+  (list sbcl
+
+        stumpwm-checkout `(,stumpwm-checkout "lib")
+        sbcl-stumpwm-checkout-ttf-fonts
+        sbcl-stumpwm-checkout-globalwindows
+        sbcl-stumpwm-checkout-swm-gaps
+        sbcl-stumpwm-checkout-stumptray
+        sbcl-slime-swank
+        stumpish))
+
+(define %font-packages
+  (list fontconfig font-awesome font-dejavu font-liberation
+        ;; font-google-noto ;emoji in chromium
+        font-misc-misc font-wqy-zenhei))
+
+(define %admin-packages
+  (list binutils
+        iptables
+        bridge-utils
+        fping
+        libcgroup
+        openssh ;autofs
+        sshfs ;autofs
+        fuse ;mount -t fuse and autofs
+        file
+        iftop
+        net-tools
+        tcpdump
+        ipset
+        mtr
+        cryptsetup
+        ncurses))
+
+(define %xorg-packages
+  (list desktop-file-utils xrdb xset xsetroot xkill
+        ;; gvfs depends on webkitgtk
+
+        setxkbmap   ;keyboard layout
+        wmctrl      ;`ewmctrl'
+        xclip       ;X clipboard CLI
+        xdg-utils   ;finds a program to open file
+        xdotool     ;mouse and keyboard automation
+        xorg-server ;`xephyr' for x11 testing
+        xrandr      ;change screen resolution
+        xterm       ;$TERM terminal
+        xwininfo    ;X window information
+        ;; For helm-stumpwm-commands and stumpish
+        rlwrap
+        xprop
+        xhost))
+
+(define %theme-packages
+  (list gnome-themes-standard adwaita-icon-theme hicolor-icon-theme
+        lxappearance))
+
+(define %audio-packages
+  (list pulseaudio))
+
+(define %cert-packages
+  (list nss-certs majordomo-ca))
+
+(define %android-packages
+  (list adb))
+
+(define %container-packages
+  (list docker-cli ;; docker-compose
+        singularity))
+
 (define %my-system-packages
-  (cons* sbcl
+  (append %container-packages
+          %android-packages
+          %admin-packages
+          %cert-packages
+          %audio-packages
+          %font-packages
+          %stumpwm-packages
+          %theme-packages
+          %xorg-packages
+          %base-packages))
 
-         stumpwm-checkout `(,stumpwm-checkout "lib")
-         sbcl-stumpwm-checkout-ttf-fonts
-         sbcl-stumpwm-checkout-globalwindows
-         sbcl-stumpwm-checkout-swm-gaps
-         sbcl-stumpwm-checkout-stumptray
-         sbcl-slime-swank
-         stumpish
-
-         ;; stumpwm-next `(,stumpwm-next "lib")
-         ;; sbcl-stumpwm-next-ttf-fonts
-         ;; sbcl-stumpwm-next-globalwindows
-         ;; sbcl-stumpwm-next-swm-gaps
-         ;; sbcl-stumpwm-next-stumptray
-         ;; sbcl-slime-swank
-         ;; stumpish
-
-         ncurses
-
-         fontconfig font-awesome font-dejavu font-liberation
-         font-misc-misc font-wqy-zenhei
-         font-google-noto ;emoji in chromium
-
-         gnome-themes-standard adwaita-icon-theme hicolor-icon-theme
-         lxappearance
-
-         desktop-file-utils xrdb xset xsetroot xkill
-         ;; gvfs depends on webkitgtk
-
-         setxkbmap   ;keyboard layout
-         wmctrl      ;`ewmctrl'
-         xclip       ;X clipboard CLI
-         xdg-utils   ;finds a program to open file
-         xdotool     ;mouse and keyboard automation
-         xorg-server ;`xephyr' for x11 testing
-         xrandr      ;change screen resolution
-         xterm       ;$TERM terminal
-         xwininfo    ;X window information
-         ;; For helm-stumpwm-commands and stumpish
-         rlwrap
-         xprop
-         xhost
-
-         nss-certs ;SSL certificates
-         majordomo-ca
-
-         fping
-
-         adb
-
-         binutils
-
-         iptables bridge-utils
-
-         docker-cli ;; docker-compose
-
-         singularity
-
-         cryptsetup
-
-         pulseaudio
-
-         libcgroup
-
-         openssh ;autofs
-         sshfs ;autofs
-         fuse ;mount -t fuse and autofs
-
-         file
-         iftop
-         net-tools
-         tcpdump
-         ipset
-         mtr
-
-         %base-packages))
+(define %notebook-packages
+  (append %admin-packages
+          %cert-packages
+          %audio-packages
+          %font-packages
+          %stumpwm-packages
+          %theme-packages
+          %xorg-packages
+          %base-packages))
 
 (define %my-setuid-programs
   (append (list (setuid-program (program (file-append fping "/sbin/fping")))

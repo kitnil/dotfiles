@@ -13,11 +13,13 @@
 
 	     (services nix)
 	     (srfi srfi-1)
-	     (srfi srfi-26))
+	     (srfi srfi-26)
+
+             (config))
 
 (use-service-modules desktop networking ssh nfs nix)
 
-(use-package-modules bootloaders certs vpn wm terminals xfce linux package-management admin fonts nfs)
+(use-package-modules bootloaders certs vpn wm terminals xfce linux package-management admin fonts nfs xorg)
 
 (use-service-modules desktop dbus networking xorg)
 
@@ -105,6 +107,7 @@
                      nss-certs
                      nix
                      nfs-utils)
+                    %notebook-packages
                     %base-packages))
 
   (sudoers-file (plain-file "sudoers"
@@ -254,7 +257,18 @@ remote-random
                           (service polkit-service-type)
                           (elogind-service)
                           (dbus-service)
-                          (service ntp-service-type))
+                          (service ntp-service-type)
+                          (service slim-service-type
+                                   (slim-configuration
+                                    ;; (auto-login? #t)
+                                    (default-user "oleg")
+                                    (gnupg? #t) ;XXX: Merge pam-gnupg in Guix repository to upstream
+				    ;; (theme %slim-theme) TODO: Fix the theme.
+                                    (xorg-configuration
+                                     (xorg-configuration
+                                      (modules (delete xf86-video-ati
+                                                       (delete xf86-video-nouveau
+                                                               (delete xf86-video-intel %default-xorg-modules)))))))))
 
                     (modify-services
                      (modify-services %base-services
