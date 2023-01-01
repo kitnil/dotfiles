@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+
+case "$1" in
+    volume)
+        ssh windows.local -- 'C:\users\oleg\bin\SetVol.exe' "$2"
+        ;;
+esac

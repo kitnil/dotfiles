@@ -239,7 +239,8 @@
                           "youtube-dl-json"
                           "youtube-dl-music-play-url"
                           "youtube-scm"
-                          "yt")))))
+                          "yt"
+                          "windows")))))
 
 (define home-parallel-service
   (simple-service 'parallel-config
