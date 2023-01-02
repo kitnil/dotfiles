@@ -3,7 +3,6 @@ kind: Kustomization
 namespace: kube-system
 resources:
   - release.yaml
-  - bgp.yaml
 configMapGenerator:
   - name: cilium-values
     files:
