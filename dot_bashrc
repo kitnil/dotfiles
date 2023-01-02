@@ -1,4 +1,4 @@
-## Copyright © 2018, 2019, 2020, 2021, 2022 Oleg Pykhalov <go.wigust@gmail.com>
+## Copyright © 2018, 2019, 2020, 2021, 2022, 2023 Oleg Pykhalov <go.wigust@gmail.com>
 ## Released under the GNU GPLv3 or any later version.
 
 if [ -f "/etc/skel/.bashrc" ]
@@ -2040,6 +2040,11 @@ kubectl()
                 cluster2)
                     TMUXIFIER_TMUX_OPTS="-L kubernetes-cluster2" \
                                        KUBECONFIG="${HOME}/.kube/config2" \
+                                       tmuxifier s kubernetes
+                    ;;
+                home)
+                    TMUXIFIER_TMUX_OPTS="-L kubernetes-home-k8s" \
+                                       KUBECONFIG="${HOME}/.kube/config-home-k8s" \
                                        tmuxifier s kubernetes
                     ;;
                 *)
