@@ -1,0 +1,77 @@
+# -- Roll out cilium agent pods automatically when configmap is updated.
+rollOutCiliumPods: true
+
+cni:
+  # https://github.com/cilium/cilium/pull/14192/files
+  # make Cilium's CNI conf the only one available by aanm · Pull Request
+  # #14192 · cilium/cilium
+  #
+  # Make Cilium take ownership over the `/etc/cni/net.d` directory on the
+  # node, renaming all non-Cilium CNI configurations to
+  # `*.cilium_bak`. This ensures no Pods can be scheduled using other CNI
+  # plugins during Cilium agent downtime.
+  #
+  # Do not rename 00-multus.conf to 00-multus.conf.cilium_bak file in
+  # /etc/cni/net.d directory.
+  exclusive: false
+  #
+  # Enable debug logging
+  debug:
+    enabled: true
+
+prometheus:
+  enabled: true
+
+operator:
+  replicas: 1
+  rollOutPods: true
+  prometheus:
+    enabled: true
+
+# -- Configure the kube-proxy replacement in Cilium BPF datapath
+# Valid options are "disabled", "probe", "partial", "strict".
+# ref: https://docs.cilium.io/en/stable/gettingstarted/kubeproxy-free/
+kubeProxyReplacement: "strict"
+
+k8sServiceHost: "192.168.25.10"
+k8sServicePort: "6443"
+
+bpf:
+  masquerade: true
+
+# -- Configure BGP
+bgp:
+  # -- Enable BGP support inside Cilium; embeds a new ConfigMap for BGP inside
+  # cilium-agent and cilium-operator
+  enabled: false
+  announce:
+    # -- Enable allocation and announcement of service LoadBalancer IPs
+    loadbalancerIP: true
+
+ipam:
+  mode: "kubernetes"
+
+# -- This feature set enables virtual BGP routers to be created via
+# CiliumBGPPeeringPolicy CRDs.
+bgpControlPlane:
+  # -- Enables the BGP control plane.
+  enabled: false
+
+ingressController:
+  enabled: true
+
+hubble:
+  relay:
+    rollOutPods: true
+    enabled: true
+  ui:
+    rollOutPods: true
+    enabled: true
+
+bandwidthManager:
+  enabled: true
+  bbr: false # Linux kernel of 5.18
+
+cluster:
+  name: "cluster1"
+  id: 1
