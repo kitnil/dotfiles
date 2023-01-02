@@ -131,11 +131,14 @@
   (run-shell-command (join (list (firefox-command) "-P" "test"))
                      '(:class "firefox-default")))
 
+(defun firefox-temp-profile (&optional profile)
+  (join `("GTK_THEME=Adwaita:dark" ,*fontconfig-file* "firefox-temp-profile"
+                                   ,(if profile profile '()))))
+
 (defun firefox-command ()
   (if (string-equal (screen-display-string (current-screen)) "DISPLAY=:0.0")
       (join (list "GTK_THEME=Adwaita:dark" *fontconfig-file* "firefox"))
-      (join (list "GTK_THEME=Adwaita:dark" *fontconfig-file* "firefox-temp-profile"
-                  "default"))))
+      (firefox-temp-profile "default")))
 
 (defun mjru-open-account (account)
   (run-shell-command (join (list *fontconfig-file* "hms" "web" "open" account)))
@@ -187,6 +190,9 @@
                 (mjru-open-account clipboard)
                 (putsel "")))))
           (t (run-shell-command "firefox --new-window")))))
+
+(defcommand firefox-temp-profile-new-window () ()
+  (run-shell-command (firefox-temp-profile)))
 
 (defcommand firefox-esr-52 () ()
   "Start of focus Firefox ESR 52."

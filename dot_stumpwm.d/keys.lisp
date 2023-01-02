@@ -53,6 +53,7 @@
   (define-key *top-map* (kbd "s-P") "prev-in-frame-custom")
   (define-key *top-map* (kbd "s-w") "firefox")
   (define-key *top-map* (kbd "s-W") "firefox-new-window")
+  (define-key *top-map* (kbd "M-s-w") "firefox-temp-profile-new-window")
   (define-key *top-map* (kbd "s-q") "delete-window!")
   (define-key *top-map* (kbd "s-Q") "remove")
   (define-key *top-map* (kbd "s-quoteleft") "emacs-vterm")
@@ -129,7 +130,6 @@
 
   (define-key *top-map* (kbd "M-s-d") "repology-guix-outdated")
 
-  (define-key *top-map* (kbd "M-s-w") "ci-wigust")
   (define-key *top-map* (kbd "M-s-g") "ci-guix")
 
   (define-key *top-map* (kbd "SunPrint_Screen") "xfce-screenshooter")
