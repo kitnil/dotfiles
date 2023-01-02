@@ -874,6 +874,7 @@ location / {
            "192.168.154.130 nginx99.intr"
            "192.168.154.129 web99.ru www.web99.ru www.web99.intr web99.intr"
 
+           "192.168.25.10 kubernetes.home"
            "192.168.25.11 kube1.home"
            "192.168.154.131 kube1.lan"
 
