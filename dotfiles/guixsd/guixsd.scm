@@ -877,6 +877,7 @@ location / {
            "192.168.25.10 kubernetes.home"
            "192.168.25.11 kube1.home"
            "192.168.154.131 kube1.lan"
+           "192.168.25.1 kube4.home"
 
            "172.16.100.60 workstation.intr"
 
