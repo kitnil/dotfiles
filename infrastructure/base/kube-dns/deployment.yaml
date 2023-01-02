@@ -1,0 +1,82 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    addonmanager.kubernetes.io/mode: Reconcile
+    k8s-app: kube-dns
+    kubernetes.io/cluster-service: 'true'
+    kubernetes.io/name: CoreDNS
+  name: coredns
+  namespace: kube-system
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      k8s-app: kube-dns
+  strategy:
+    rollingUpdate:
+      maxUnavailable: 1
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        k8s-app: kube-dns
+    spec:
+      containers:
+        - args:
+            - "-conf"
+            - /etc/coredns/Corefile
+          image: coredns/coredns:1.7.1
+          imagePullPolicy: Never
+          livenessProbe:
+            failureThreshold: 5
+            httpGet:
+              path: /health
+              port: 10054
+              scheme: HTTP
+            initialDelaySeconds: 60
+            successThreshold: 1
+            timeoutSeconds: 5
+          name: coredns
+          ports:
+            - containerPort: 10053
+              name: dns
+              protocol: UDP
+            - containerPort: 10053
+              name: dns-tcp
+              protocol: TCP
+            - containerPort: 10055
+              name: metrics
+              protocol: TCP
+          resources:
+            limits:
+              memory: "170Mi"
+            requests:
+              cpu: "100m"
+              memory: "70Mi"
+          securityContext:
+            allowPrivilegeEscalation: false
+            capabilities:
+              drop:
+                - all
+            readOnlyRootFilesystem: true
+          volumeMounts:
+            - mountPath: /etc/coredns
+              name: config-volume
+              readOnly: true
+      dnsPolicy: Default
+      nodeSelector:
+        kubernetes.io/os: linux
+      serviceAccountName: coredns
+      tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/master
+        - key: CriticalAddonsOnly
+          operator: Exists
+      volumes:
+        - configMap:
+            items:
+              - key: Corefile
+                path: Corefile
+            name: coredns
+          name: config-volume
