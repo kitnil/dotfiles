@@ -2110,21 +2110,21 @@ PasswordAuthentication yes")))
                                                       ("env_file" . #("/home/oleg/src/github.com/Chocobozzz/PeerTube/support/docker/production/.env"))
                                                       ("depends_on" . #("postgres" "redis" "postfix")))))))))))))))
 
-                         (service kubernetes-k3s-service-type
-                                  (kubernetes-k3s-configuration
-                                   (server? #t)
-                                   (arguments '("--node-external-ip" "192.168.0.145"
-                                                "--bind-address" "192.168.0.145"
+                         ;; (service kubernetes-k3s-service-type
+                         ;;          (kubernetes-k3s-configuration
+                         ;;           (server? #t)
+                         ;;           (arguments '("--node-external-ip" "192.168.0.145"
+                         ;;                        "--bind-address" "192.168.0.145"
 
-                                                "--no-deploy" "traefik"
-                                                "--disable" "traefik"
+                         ;;                        "--no-deploy" "traefik"
+                         ;;                        "--disable" "traefik"
 
-                                                ;; use dockerd
-                                                "--docker"
-                                                ;;
-                                                ;; use containerd directly
-                                                ;; "--container-runtime-endpoint" "unix:///run/containerd/containerd.sock"
-                                                ))))
+                         ;;                        ;; use dockerd
+                         ;;                        "--docker"
+                         ;;                        ;;
+                         ;;                        ;; use containerd directly
+                         ;;                        ;; "--container-runtime-endpoint" "unix:///run/containerd/containerd.sock"
+                         ;;                        ))))
 
                          (dovecot-service
                           #:config (dovecot-configuration
