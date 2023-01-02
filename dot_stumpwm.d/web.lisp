@@ -132,7 +132,10 @@
                      '(:class "firefox-default")))
 
 (defun firefox-command ()
-  (join (list "GTK_THEME=Adwaita:dark" *fontconfig-file* "firefox")))
+  (if (string-equal (screen-display-string (current-screen)) "DISPLAY=:0.0")
+      (join (list "GTK_THEME=Adwaita:dark" *fontconfig-file* "firefox"))
+      (join (list "GTK_THEME=Adwaita:dark" *fontconfig-file* "firefox-temp-profile"
+                  "default"))))
 
 (defun mjru-open-account (account)
   (run-shell-command (join (list *fontconfig-file* "hms" "web" "open" account)))
