@@ -232,14 +232,35 @@ mjru-docker-jenkins()
 
 mjru-hms-current-stack()
 {
-    (
-        set -x
-        curl -u "jenkins:$(pass show majordomo/private/jenkins/jenkins)" -X GET http://nginx1.intr:8080/hms
-        curl -u "jenkins:$(pass show majordomo/private/jenkins/jenkins)" -X GET http://nginx2.intr:8080/hms
-    )
-    echo "Switch stack example:"
-    echo curl -H "Content-Type: application/json" --data '{"available":["hms2","hms1"],"setActive":"hms1"}' -u "jenkins:$(pass show majordomo/private/jenkins/jenkins)" -X POST http://nginx1.intr:8080/hms
-    echo curl -H "Content-Type: application/json" --data '{"available":["hms2","hms1"],"setActive":"hms1"}' -u "jenkins:$(pass show majordomo/private/jenkins/jenkins)" -X POST http://nginx2.intr:8080/hms
+    nginx1="$(curl --silent -u "jenkins:$(pass show majordomo/private/jenkins/jenkins)" -X GET http://nginx1.intr:8080/hms)"
+    nginx2="$(curl --silent -u "jenkins:$(pass show majordomo/private/jenkins/jenkins)" -X GET http://nginx2.intr:8080/hms)"
+    nginx1_active="$(echo "$nginx1" | jq --raw-output .active)"
+    nginx2_active="$(echo "$nginx2" | jq --raw-output .active)"
+    if [[ $nginx1_active == $nginx2_active ]]
+    then
+        echo "Current stack: ${nginx1_active}"
+        if [[ $nginx1_active == "hms1" ]]
+        then
+            target="hms2"
+        else
+            target="hms1"
+        fi
+        cat <<EOF
+
+Switch stack example:
+
+    curl -H "Content-Type: application/json" --data '{"available":["hms2","hms1"],"setActive":"$target"}' -u "jenkins:$(pass show majordomo/private/jenkins/jenkins)" -X POST "http://nginx1.intr:8080/hms"
+    curl -H "Content-Type: application/json" --data '{"available":["hms2","hms1"],"setActive":"$target"}' -u "jenkins:$(pass show majordomo/private/jenkins/jenkins)" -X POST "http://nginx2.intr:8080/hms"
+EOF
+    else
+        echo "WARNING: Stacks mismatches"
+        cat <<EOF
+Switch stack example:
+
+    curl -H "Content-Type: application/json" --data '{"available":["hms2","hms1"],"setActive":"hms1"}' -u "jenkins:$(pass show majordomo/private/jenkins/jenkins)" -X POST "http://nginx1.intr:8080/hms"
+    curl -H "Content-Type: application/json" --data '{"available":["hms2","hms1"],"setActive":"hms1"}' -u "jenkins:$(pass show majordomo/private/jenkins/jenkins)" -X POST "http://nginx2.intr:8080/hms"
+EOF
+    fi
 }
 
 mjru-hms-auth ()
