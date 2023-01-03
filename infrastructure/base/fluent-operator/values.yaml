@@ -1,0 +1,29 @@
+#Set this to containerd or crio if you want to collect CRI format logs
+containerRuntime: containerd
+Kubernetes: true
+
+operator:
+  resources:
+    limits:
+      memory: 60Mi
+
+fluentbit:
+  output:
+    opensearch:
+      enable: true
+      host: 192.168.25.1
+      port: 9200
+      httpUser:
+        valueFrom:
+          secretKeyRef:
+            name: opensearch-http-authentication
+            key: username
+      httpPassword:
+        valueFrom:
+          secretKeyRef:
+            name: opensearch-http-authentication
+            key: password
+      tls:
+        verify: false
+      suppressTypeName: true
+      logstashFormat: true
