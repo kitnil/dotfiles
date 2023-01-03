@@ -1,0 +1,3 @@
+nfs:
+  server: nfs.home
+  path: /srv/kubernetes
