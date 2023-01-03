@@ -1,6 +1,7 @@
 (use-modules (gnu)
              (gnu services shepherd)
              (gnu services)
+             (gnu system setuid)
              (guix channels)
              (guix download)
              (guix gexp)
@@ -14,7 +15,7 @@
              (srfi srfi-1)
              (srfi srfi-26))
 
-(use-package-modules admin audio android backup bash bittorrent curl dns firmware guile haskell-apps networking linux samba ssh suckless xdisorg xorg)
+(use-package-modules admin audio android backup bash bittorrent curl dns firmware guile haskell-apps networking nfs linux samba ssh suckless xdisorg xorg)
 
 (use-service-modules admin avahi dbus desktop docker dns mcron networking nix
                      nfs sound xorg ssh web cgit version-control certbot
@@ -929,6 +930,15 @@ location / {
       (services (append (list
 
                          %lvm-thin
+
+
+                         ;; Allow desktop users to also mount NTFS and NFS file systems
+                         ;; without root.
+                         (simple-service 'mount-setuid-helpers setuid-program-service-type
+                                         (map (lambda (program)
+                                                (setuid-program
+                                                 (program program)))
+                                              (list (file-append nfs-utils "/sbin/mount.nfs"))))
 
                          (service earlyoom-service-type
                                   (earlyoom-configuration
