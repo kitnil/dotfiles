@@ -31,7 +31,6 @@
        emacs-debbugs ; <https://debbugs.gnu.org/> interface
        emacs-debpaste           ; Front end to <https://paste.debian.net/>
        emacs-default-text-scale ; Scale text in all buffers
-       emacs-dhall-mode
        emacs-dumb-jump
        emacs-ebuild-mode
        emacs-edit-indirect

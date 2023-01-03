@@ -44,6 +44,7 @@
              (home services linux)
              (home services haskell-apps)
              (home services gtk)
+             (home services stumpwm)
              (home services rust-apps)
              (home services lisp)
              (home services python)
@@ -472,6 +473,8 @@ PYTHONPATH='' exec -a \"$0\" ~a/bin/idea-ultimate \"$@\"\n"
                            "web.lisp"
                            "xorg.lisp"
                            "youtube-dl.lisp")))
+
+    home-stumpwm-service
 
     home-bash-service
 

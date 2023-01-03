@@ -101,10 +101,9 @@ dotfiles/mjru/intr.nix:
 	dotfiles/mjru/intr.nix > dotfiles/mjru/intr.json
 
 .PHONY: install
-install: decrypt dotfiles/guixsd/machines.scm dotfiles/nix/nix.conf dotfiles/mjru/intr.nix
+install: decrypt dotfiles/guixsd/machines.scm dotfiles/nix/nix.conf
 	dot_local/bin/executable_gpg-unlock > /dev/null
 	update-desktop-database $(HOME)/.local/share/applications
-	open-with-linux install
 	mkdir -p $(HOME)/.config/mpv/scripts
 	ln -sf $(HOME)/.nix-profile/share/mpv/scripts/notify-send.lua $(HOME)/.config/mpv/scripts/notify-send.lua
 	install --mode=755 dotfiles/scripts/guix-channels-update $(HOME)/bin
@@ -115,10 +114,9 @@ install: decrypt dotfiles/guixsd/machines.scm dotfiles/nix/nix.conf dotfiles/mjr
 	install --mode=755 dotfiles/scripts/sshrc $(HOME)/bin
 	gpg --decrypt dotfiles/emacs/mjru-network.gpg > $(HOME)/.emacs.d/modules/mjru-network.el
 	ln -sf $(HOME)/.Xresources $(HOME)/.Xdefaults
-	install --mode=644 dotfiles/guile/pass.scm $(HOME)/.config/guile/pass.scm
-	install --mode=644 dotfiles/guile/config.scm $(HOME)/.config/guile/config.scm
+	install -Dm644 dotfiles/guile/pass.scm $(HOME)/.config/guile/pass.scm
+	install -Dm644 dotfiles/guile/config.scm $(HOME)/.config/guile/config.scm
 	guix home --load-path=$(PWD)/dotfiles/guixsd/modules reconfigure --no-substitutes dotfiles/guixsd/home/$(HOSTNAME).scm
-	xrdb $(HOME)/.Xresources
 
 .PHONY: guile-ihs
 guile-ihs:

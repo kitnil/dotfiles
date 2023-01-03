@@ -204,7 +204,6 @@ virtualization vnc vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
                synergy
 
                ansible         ; Configuration management
-               dhall
                ;; chezmoi XXX: Fails to compile.
 
                bc

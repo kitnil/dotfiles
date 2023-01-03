@@ -29,7 +29,8 @@
              (home services kodi)
              (home services mail)
              (home services databases)
-             (home services video))
+             (home services video)
+             (home services stumpwm))
 
 (home-environment
  (services
@@ -60,7 +61,7 @@
    home-sbcl-service
    home-python-service
    home-bind-utils-service
-   home-shellcheck-service
+   ;; home-shellcheck-service
    home-bin-service
    home-chromium-service
    home-gnupg-service
@@ -74,4 +75,5 @@
    home-mycli-service
    home-parallel-service
    home-youtube-dl-service
-   home-mpv-service)))
+   home-mpv-service
+   home-stumpwm-service)))
