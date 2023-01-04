@@ -3,10 +3,6 @@ kind: Task
 metadata:
   name: example-task-name
 spec:
-  resources:
-    inputs:
-      - name: workspace
-        type: git
   steps:
     - name: debian-example
       image: debian:11
