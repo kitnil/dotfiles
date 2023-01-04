@@ -4,3 +4,4 @@ namespace: guix
 resources:
   - namespace.yaml
   - task.yaml
+  - taskrun.yaml
