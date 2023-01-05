@@ -6,6 +6,9 @@ spec:
   steps:
     - name: build
       image: docker-registry.intr/nixos/nix
+      securityContext:
+        capabilities:
+          add: ["SYS_ADMIN", "SYS_CHROOT"]
       script: |
         #!/bin/bash
         nix build --extra-experimental-features 'nix-command flakes' git+https://gitlab.intr/nixos/kubernetes#cilium
