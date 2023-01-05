@@ -8,6 +8,4 @@ spec:
       image: docker-registry.intr/nixos/nix
       script: |
         #!/bin/bash
-        nix-daemon &
-        sleep 5
-        nix build --extra-experimental-features 'nix-command flakes' git+https://gitlab.intr/nixos/kubernetes#velero
+        nix build --extra-experimental-features 'nix-command flakes' git+https://gitlab.intr/nixos/kubernetes#cilium
