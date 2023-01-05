@@ -1,0 +1,13 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: build-velero
+spec:
+  steps:
+    - name: build
+      image: docker-registry.intr/nixos/nix
+      script: |
+        #!/bin/bash
+        nix-daemon &
+        sleep 5
+        nix build --extra-experimental-features 'nix-command flakes' git+https://gitlab.intr/nixos/kubernetes#velero
