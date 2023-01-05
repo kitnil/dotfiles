@@ -2,6 +2,8 @@
   #:use-module (gnu packages)
   #:use-module (gnu packages base)
   #:use-module (gnu packages compression)
+  #:use-module (gnu packages curl)
+  #:use-module (gnu packages version-control)
   #:use-module (guix licenses)
   #:use-module (guix packages)
   #:use-module (guix utils)
@@ -11,6 +13,7 @@
   #:use-module (guix build-system gnu)
   #:use-module (guix build-system linux-module)
   #:use-module (guix build-system trivial)
+  #:use-module (guix gexp)
   #:use-module (ice-9 match)
   #:use-module (nonguix licenses)
   #:use-module (nongnu packages linux))
@@ -107,3 +110,52 @@ if your hardware is supported by one of the smaller firmware packages.")
      (nonfree
       (string-append "https://git.kernel.org/pub/scm/linux/kernel/git/"
                      "firmware/linux-firmware.git/plain/WHENCE")))))
+
+(define-public drbd9
+  (package
+    (name "drbd9")
+    (version "9.1.7")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append "https://pkg.linbit.com/downloads/drbd/9/drbd-"
+                           version ".tar.gz"))
+       (file-name (git-file-name name version))
+       (sha256
+        (base32 "1iak07vpynimbyh4lhpf8xpn6vhgxnn3jmckm28r09m3a5adyrj1"))))
+    (build-system linux-module-build-system)
+    (native-inputs
+     `(("source" ,source)
+       ("gzip" ,gzip)
+       ("tar" ,tar)))
+    (inputs
+     `(("curl" ,curl)))
+    (arguments
+     (list
+      #:tests? #f                  ; no tests
+      #:make-flags #~(let ((shell (search-input-file %build-inputs "/bin/bash")))
+                       (list (string-append "CONFIG_SHELL=" shell)
+                             (string-append "SHELL=" shell)))
+      #:phases
+      `(modify-phases %standard-phases
+         (replace 'unpack
+           (lambda args
+             (setenv "PATH" (string-append
+                             (assoc-ref %build-inputs "tar") "/bin"
+                             ":" (assoc-ref %build-inputs "gzip") "/bin"
+                             ":" (getenv "PATH")))
+             (invoke "tar"
+                     "-xf" (assoc-ref %build-inputs "source")
+                     (string-append "drbd-" ,version)
+                     "--strip-components=1")))
+         (replace 'build
+           (lambda args
+             (for-each
+              (lambda (module)
+                (with-directory-excursion module
+                  (apply (assoc-ref %standard-phases 'build) args)))
+              '("drbd")))))))
+    (home-page "https://gitlab.com/drbd9/drbd9")
+    (synopsis "")
+    (description "")
+    (license #f)))
