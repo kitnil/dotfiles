@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: TaskRun
 metadata:
-  name: build-velero
+  name: build-cilium
 spec:
   taskRef:
-    name: build-velero
+    name: build-cilium
