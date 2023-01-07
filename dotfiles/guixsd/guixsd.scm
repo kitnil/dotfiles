@@ -1128,9 +1128,6 @@ location / {
                                                (define prometheus-alertmanager-windows
                                                  #$(plain-file "prometheus-alertmanager-windows.json"
                                                                (scm->json-string (load "alertmanager/windows.scm"))))
-                                               (define prometheus-alertmanager-ohmgraphite
-                                                 #$(plain-file "prometheus-alertmanager-ohmgraphite.json"
-                                                               (scm->json-string (load "alertmanager/ohmgraphite.scm"))))
                                                (define prometheus-alertmanager-shepherd
                                                  #$(plain-file "prometheus-alertmanager-shepherd.json"
                                                                (scm->json-string (load "alertmanager/shepherd.scm"))))
@@ -1359,12 +1356,7 @@ location / {
                                                            .
                                                            #(((targets . #("windows.local:9182")))))
                                                           (scrape_interval . "1m")
-                                                          (job_name . "windows"))
-                                                         ((static_configs
-                                                           .
-                                                           #(((targets . #("windows.local:4445")))))
-                                                          (scrape_interval . "1m")
-                                                          (job_name . "ohmgraphite"))))
+                                                          (job_name . "windows"))))
                                                       (rule_files . #(,prometheus-alertmanager-prometheus
                                                                       ,prometheus-alertmanager-node
                                                                       ,prometheus-alertmanager-lvm
@@ -1374,7 +1366,6 @@ location / {
                                                                       ,prometheus-alertmanager-exim
                                                                       ,prometheus-alertmanager-ssh-exporter
                                                                       ,prometheus-alertmanager-windows
-                                                                      ,prometheus-alertmanager-ohmgraphite
                                                                       ,prometheus-alertmanager-shepherd
                                                                       ,prometheus-alertmanager-guix))
                                                       ("alerting"
