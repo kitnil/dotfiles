@@ -1,0 +1,28 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: kubevirt
+resources:
+  - kubevirt-cr.yaml
+  - kubevirt-operator.yaml
+patches:
+  - target:
+      kind: KubeVirt
+      name: kubevirt
+      namespace: kubevirt
+    patch: |-
+      apiVersion: kubevirt.io/v1
+      kind: KubeVirt
+      metadata:
+        name: kubevirt
+        namespace: kubevirt
+      spec:
+        configuration:
+          developerConfiguration:
+            featureGates:
+              - HardDisk
+              - DataVolumes
+              - LiveMigration
+        workloads:
+          nodePlacement:
+            nodeSelector:
+              kubevirt: "true"
