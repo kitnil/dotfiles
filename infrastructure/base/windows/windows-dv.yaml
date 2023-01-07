@@ -60,7 +60,8 @@ spec:
         - ReadWriteOnce
         resources:
           requests:
-            storage: 17Gi
+            storage: 40Gi
+        storageClassName: hostpath-csi
       source:
         http:
           url: http://iso.wugi.info/windows_10.qcow2
