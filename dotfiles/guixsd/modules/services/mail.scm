@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2021, 2022 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2021, 2022, 2023 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -131,10 +131,10 @@
               (pid (call-with-input-file "/var/run/dovecot/master.pid" read)))
          (copy-file (string-append cert-directory "/"
                                    (readlink (string-append cert-directory "/fullchain.pem")))
-                    "/etc/dovecot/private/default.pem")
+                    "/etc/dovecot/dovecot.pem")
          (copy-file (string-append cert-directory "/"
                                    (readlink (string-append cert-directory "/privkey.pem")))
-                    "/etc/dovecot/dovecot.pem")
+                    "/etc/dovecot/private/default.pem")
          (chown "/etc/dovecot" uid gid)
          (chown "/etc/dovecot/private/default.pem" uid gid)
          (chown "/etc/dovecot/dovecot.pem" uid gid)
