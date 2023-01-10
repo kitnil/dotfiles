@@ -35,6 +35,8 @@ if initialize_session "$session"; then
 
   load_window "kubernetes-piraeus"
 
+  load_window "kubernetes-opensearch"
+
   # Select the default active window on session creation.
   select_window 0
 

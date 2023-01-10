@@ -48,5 +48,7 @@
                           ,(local-file (string-append %project-directory "/dot_tmuxifier-layouts/kubernetes-kube-system.window.sh")))
                         `(".tmuxifier-layouts/kubernetes-piraeus.window.sh"
                           ,(local-file (string-append %project-directory "/dot_tmuxifier-layouts/kubernetes-piraeus.window.sh")))
+                        `(".tmuxifier-layouts/kubernetes-opensearch.window.sh"
+                          ,(local-file (string-append %project-directory "/dot_tmuxifier-layouts/kubernetes-opensearch.window.sh")))
                         `(".tmuxifier-layouts/kubernetes.session.sh"
                           ,(local-file (string-append %project-directory "/dot_tmuxifier-layouts/kubernetes.session.sh"))))))
