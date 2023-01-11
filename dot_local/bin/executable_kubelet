@@ -2,11 +2,15 @@
 
 case "$1" in
     --help)
-        /nix/store/a7gvj343m05j2s32xcnwr35v31ynlypr-coreutils-9.1/bin/cat "/nix/store/1crdy15nv25jpbvknrzyhg6khv9ikhl9-docker-image-coredns-coredns-1.7.1.tar" | /nix/store/v5jal2qqy3vq0y15bwx2m6hl6ag7a7q3-containerd-1.6.9/bin/ctr -n k8s.io image import --all-platforms -
-        /nix/store/p3m1ndl1lapwrlh698bnb5lvvxh67378-gzip-1.12/bin/zcat "/nix/store/xjlwhyqjhx0j2sc41wfpsw1zvhn98vh5-docker-image-pause.tar.gz" | /nix/store/v5jal2qqy3vq0y15bwx2m6hl6ag7a7q3-containerd-1.6.9/bin/ctr -n k8s.io image import --all-platforms -
-        mount -o rw,nosuid,nodev,noexec,relatime,mode=700 -t bpf none /sys/fs/bpf
-        mount --make-shared /sys/fs/bpf
-        mount --make-shared /run/cilium/cgroupv2
+        cat <<'EOF'
+/nix/store/a7gvj343m05j2s32xcnwr35v31ynlypr-coreutils-9.1/bin/cat "/nix/store/1crdy15nv25jpbvknrzyhg6khv9ikhl9-docker-image-coredns-coredns-1.7.1.tar" | /nix/store/v5jal2qqy3vq0y15bwx2m6hl6ag7a7q3-containerd-1.6.9/bin/ctr -n k8s.io image import --all-platforms -
+/nix/store/p3m1ndl1lapwrlh698bnb5lvvxh67378-gzip-1.12/bin/zcat "/nix/store/xjlwhyqjhx0j2sc41wfpsw1zvhn98vh5-docker-image-pause.tar.gz" | /nix/store/v5jal2qqy3vq0y15bwx2m6hl6ag7a7q3-containerd-1.6.9/bin/ctr -n k8s.io image import --all-platforms -
+mount -o rw,nosuid,nodev,noexec,relatime,mode=700 -t bpf none /sys/fs/bpf
+mount --make-shared /sys/fs/bpf
+
+mount --bind /var/hpvolumes /var/hpvolumes
+mount --make-shared /var/hpvolumes
+EOF
         ;;
     *)
         exec -a "$0"
@@ -34,5 +38,9 @@ case "$1" in
             --container-runtime-endpoint=unix:///run/containerd/containerd.sock \
             --fail-swap-on=false \
             --v=4
+        cat <<'EOF'
+Also run:
+    mount --make-shared /run/cilium/cgroupv2
+EOF
         ;;
 esac
