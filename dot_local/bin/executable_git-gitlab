@@ -13,6 +13,10 @@ BROWSE="${GITLAB_BROWSE:-true}"
 BRANCH="${GITLAB_BRANCH:-$(git branch --show-current)}"
 TITLE="${GITLAB_TITLE:-$(git log -1 --format=%s)}"
 
+NOTIFY_SLACK_ENABLE="${GITLAB_NOTIFY_SLACK_ENABLE:-false}"
+NOTIFY_SLACK_USERNAME="${GITLAB_NOTIFY_SLACK_USERNAME:-here}"
+NOTIFY_SLACK_CHANNEL="${GITLAB_NOTIFY_SLACK_CHANNEL:-#mjd_eng}"
+
 assignee_id()
 {
     curl --verbose --header "Content-Type: application/json" \
@@ -36,6 +40,21 @@ case "$1" in
             if [[ $BROWSE == true ]]
             then
                 "${BROWSER:-firefox}" "$web_url"
+            fi
+            if [[ $NOTIFY_SLACK_ENABLE == true ]]
+            then
+                ansible-playbook -i localhost, -c local /dev/stdin <<EOF
+- hosts: localhost
+  tasks:
+  - name: Send notification message via Slack
+    slack:
+      channel: '${NOTIFY_SLACK_CHANNEL}'
+      username: "Олег Пыхалов"
+      icon_url: "https://ca.slack-edge.com/T2NPT97BM-U02GLBYEFG8-bbeb9604d056-192"
+      token: '$(pass show majordomo/private/slack.com/token/hr)'
+      msg: @${NOTIFY_SLACK_USERNAME} ${web_url}
+    delegate_to: localhost
+EOF
             fi
         else
             printf "'%s' is not a HTTP URL.\n" "$web_url"
