@@ -5,3 +5,7 @@
 (define-auto-insert
   "namespace.yaml"
   ["kubernetes/namespace.yaml" yas-expand-current-buffer])
+
+(define-auto-insert
+  "release.yaml"
+  ["kubernetes/release.yaml" yas-expand-current-buffer])
