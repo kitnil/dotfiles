@@ -39,6 +39,8 @@ if initialize_session "$session"; then
 
   load_window "kubernetes-pdns"
 
+  load_window "kubernetes-harbor"
+
   # Select the default active window on session creation.
   select_window 0
 

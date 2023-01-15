@@ -52,5 +52,7 @@
                           ,(local-file (string-append %project-directory "/dot_tmuxifier-layouts/kubernetes-opensearch.window.sh")))
                         `(".tmuxifier-layouts/kubernetes-pdns.window.sh"
                           ,(local-file (string-append %project-directory "/dot_tmuxifier-layouts/kubernetes-pdns.window.sh")))
+                        `(".tmuxifier-layouts/kubernetes-harbor.window.sh"
+                          ,(local-file (string-append %project-directory "/dot_tmuxifier-layouts/kubernetes-harbor.window.sh")))
                         `(".tmuxifier-layouts/kubernetes.session.sh"
                           ,(local-file (string-append %project-directory "/dot_tmuxifier-layouts/kubernetes.session.sh"))))))
