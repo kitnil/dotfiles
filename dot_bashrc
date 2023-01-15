@@ -2091,17 +2091,6 @@ __lazy_virtctl()
     esac
 }
 
-complete -F __lazy_virtctl virtctl
-
-virtctl()
-{
-    case "$1" in
-        *)
-            sudo KUBECONFIG=/etc/rancher/k3s/k3s.yaml virtctl "${@:1}"
-            ;;
-    esac
-}
-
 __lazy_glab()
 {
     local word_count=${#COMP_WORDS[*]}
