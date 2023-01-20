@@ -169,6 +169,7 @@
                           "my-docker"
                           "my-swank"
                           "my-xorg"
+                          "kubelet"
                           "nginx-server-name"
                           "nixos.sh"
                           "nix-repl"
