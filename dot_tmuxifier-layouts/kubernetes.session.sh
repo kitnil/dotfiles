@@ -22,24 +22,24 @@ if initialize_session "$session"; then
   new_window "main"
   run_cmd "nix-shell"
 
-  # Load a defined window layout.
-  load_window "kubernetes-kube-system"
-
-  load_window "kubernetes-flux"
-
-  load_window "kubernetes-flux-logs"
-
-  load_window "kubernetes-cilium"
-
-  load_window "kubernetes-cert-manager-logs"
-
-  load_window "kubernetes-piraeus"
-
-  load_window "kubernetes-opensearch"
-
-  load_window "kubernetes-pdns"
-
-  load_window "kubernetes-harbor"
+  if [[ $TMUXIFIER_KUBERNETES_NAMESPACE ]]
+  then
+      load_window "kubernetes-kube-system"
+      load_window "kubernetes-flux"
+      new_window "$TMUXIFIER_KUBERNETES_NAMESPACE"
+      run_cmd "kubectl watch ${TMUXIFIER_KUBERNETES_NAMESPACE}"
+  else
+      # Load a defined window layout.
+      load_window "kubernetes-kube-system"
+      load_window "kubernetes-flux"
+      load_window "kubernetes-flux-logs"
+      load_window "kubernetes-cilium"
+      load_window "kubernetes-cert-manager-logs"
+      load_window "kubernetes-piraeus"
+      load_window "kubernetes-opensearch"
+      load_window "kubernetes-pdns"
+      load_window "kubernetes-harbor"
+  fi
 
   # Select the default active window on session creation.
   select_window 0
