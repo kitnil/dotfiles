@@ -6,15 +6,9 @@
 # layout file name.
 new_window "flux"
 
-run_cmd "kubectl watch flux-system"
-split_v 50
-
-run_cmd "viddy --differences --interval 5 kubectl get --all-namespaces gitrepositories.source.toolkit.fluxcd.io"
-
-split_v 50
 run_cmd "viddy --differences --interval 5 kubectl get --all-namespaces kustomizations.kustomize.toolkit.fluxcd.io"
 
-split_h 50
+split_v 50
 run_cmd "viddy --differences --interval 5 kubectl get --all-namespaces helmreleases.helm.toolkit.fluxcd.io"
 
 # Split window into panes.
