@@ -2043,6 +2043,9 @@ EOF
             ;;
         tmuxifier)
             case "$2" in
+                --help)
+                    echo TMUXIFIER_KUBERNETES_NAMESPACE=cert-manager kubectl tmuxifier mjru-cluster2
+                    ;;
                 mjru-cluster1)
                     TMUXIFIER_TMUX_OPTS="-L kubernetes-cluster1" \
                                        KUBECONFIG="${HOME}/.kube/config-mjru-cluster1" \
