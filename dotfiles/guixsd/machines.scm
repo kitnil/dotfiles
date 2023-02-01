@@ -1,12 +1,12 @@
 (list
 
- (build-machine
-  (name "jenkins.intr")
-  (systems '("x86_64-linux"))
-  (host-key "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGDngvW1IgUSW4Lna7tOoDBsC2sG+IlpDfYCe1wBVMp2")
-  (user "eng")
-  (private-key "/home/oleg/.ssh/id_rsa_majordomo_eng")
-  (speed 2.0))
+ ;; (build-machine
+ ;;  (name "jenkins.intr")
+ ;;  (systems '("x86_64-linux"))
+ ;;  (host-key "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGDngvW1IgUSW4Lna7tOoDBsC2sG+IlpDfYCe1wBVMp2")
+ ;;  (user "eng")
+ ;;  (private-key "/home/oleg/.ssh/id_rsa_majordomo_eng")
+ ;;  (speed 2.0))
 
  #;(build-machine
   (name "vm1.wugi.info")
