@@ -130,6 +130,13 @@
          (locations
           (list
            (nginx-location-configuration
+            (uri "/windows")
+            (body
+             '("allow 192.168.0.0/16;"
+               "allow 10.0.0.0/8;"
+               "allow 88.201.161.72/32;"
+               "deny all;")))
+           (nginx-location-configuration
             (uri "/.well-known")
             (body '("root /var/www;"))))))
         (nginx-server-configuration
