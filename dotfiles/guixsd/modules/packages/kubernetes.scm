@@ -54,7 +54,7 @@
 (define-public virtctl
   (package
     (name "virtctl")
-    (version "0.55.0")
+    (version "0.58.0")
     (source
      (origin
        (method url-fetch)
@@ -63,7 +63,7 @@
                        version "/virtctl-v" version "-linux-amd64"))
        (sha256
         (base32
-         "05l4y3mp41pl4x8lv5wmwc1klrq0q8rc95gkf67xsb3ps9fp1pzr"))))
+         "1vv11525ggdwrc14lap6vmz0c2bch2bgjlx8zpygbsyzxsl6zpap"))))
     (build-system trivial-build-system)
     (native-inputs `(("source" ,source)))
     (arguments
