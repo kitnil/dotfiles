@@ -168,6 +168,13 @@
               (lambda ()
                 (mjru-open-billing2-account clipboard)
                 (putsel "")))))
+          ((uiop/utility:string-prefix-p "deprecated-web" clipboard)
+           (when (y-or-n-p (format nil "Open ~a account in firefox? " clipboard))
+             (sb-thread:make-thread
+              (lambda ()
+                (mjru-open-billing2-account
+                 (last (split-string clipboard "-")))
+                (putsel "")))))
           ((and (uiop/utility:string-prefix-p "u" clipboard)
                 (handler-case (parse-integer (subseq clipboard 1 (length clipboard))) (t (c) nil)))
            (let ((account (concat "AC_" (subseq clipboard 1 (length clipboard)))))
