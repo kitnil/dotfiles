@@ -1,46 +1,72 @@
 #!/usr/bin/env bash
 
-case "$1" in
-    --help)
-        cat <<'EOF'
-/nix/store/a7gvj343m05j2s32xcnwr35v31ynlypr-coreutils-9.1/bin/cat "/nix/store/1crdy15nv25jpbvknrzyhg6khv9ikhl9-docker-image-coredns-coredns-1.7.1.tar" | /nix/store/v5jal2qqy3vq0y15bwx2m6hl6ag7a7q3-containerd-1.6.9/bin/ctr -n k8s.io image import --all-platforms -
-/nix/store/p3m1ndl1lapwrlh698bnb5lvvxh67378-gzip-1.12/bin/zcat "/nix/store/xjlwhyqjhx0j2sc41wfpsw1zvhn98vh5-docker-image-pause.tar.gz" | /nix/store/v5jal2qqy3vq0y15bwx2m6hl6ag7a7q3-containerd-1.6.9/bin/ctr -n k8s.io image import --all-platforms -
-mount -o rw,nosuid,nodev,noexec,relatime,mode=700 -t bpf none /sys/fs/bpf
-mount --make-shared /sys/fs/bpf
+set -o nounset -o errexit -o pipefail
 
-mount --bind /var/hpvolumes /var/hpvolumes
-mount --make-shared /var/hpvolumes
-EOF
-        ;;
-    *)
-        exec -a "$0"
-        /nix/store/lp8ch8l5dn4bcp056cpr1gfyb9i8zi54-kubernetes-1.25.4/bin/kubelet \
-            --address=192.168.25.1 \
-            --authentication-token-webhook \
-            --authentication-token-webhook-cache-ttl=10s \
-            --authorization-mode=Webhook \
-            --client-ca-file=/nix/store/p52r1ccnvkchmybdayf5cv8xgw4m3a9c-ca.pem \
-            --cluster-dns=10.8.255.254 \
-            --cluster-domain=cluster.local \
-            --hairpin-mode=hairpin-veth \
-            --healthz-bind-address=127.0.0.1 \
-            --healthz-port=10248 \
-            --hostname-override=kube4 \
-            --kubeconfig=/nix/store/hn4s3q43x9m7l4i1gvalabzvzw88ja8g-kubelet-kubeconfig \
-            --pod-infra-container-image=pause \
-            --port=10250 \
-            --register-node=true \
-            --register-with-taints=unschedulable=true:NoSchedule \
-            --root-dir=/var/lib/kubelet \
-            --tls-cert-file=/nix/store/4ygd15kdyidrcd0588dm3q0jayk1mcch-kubelet-client-kube4.pem \
-            --tls-private-key-file=/nix/store/r2b19vzxj74zlnw9a2pf1gj3cbwy7nk0-kubelet-client-kube4-key.pem \
-            --container-runtime=remote \
-            --container-runtime-endpoint=unix:///run/containerd/containerd.sock \
-            --fail-swap-on=false \
-            --v=4
-        cat <<'EOF'
-Also run:
-    mount --make-shared /run/cilium/cgroupv2
-EOF
-        ;;
-esac
+if [[ $(/gnu/store/5sd80lyxq6gfqpqk07df3zpjji8gpji3-containerd-1.6.6/bin/ctr --namespace k8s.io images list) == *docker.io/coredns/coredns:1.7.1* ]]
+then
+    :
+else
+    cat "/nix/store/1crdy15nv25jpbvknrzyhg6khv9ikhl9-docker-image-coredns-coredns-1.7.1.tar" | /nix/store/v5jal2qqy3vq0y15bwx2m6hl6ag7a7q3-containerd-1.6.9/bin/ctr -n k8s.io image import --all-platforms -
+fi
+
+if [[ $(/gnu/store/5sd80lyxq6gfqpqk07df3zpjji8gpji3-containerd-1.6.6/bin/ctr --namespace k8s.io images list) == *docker.io/library/pause:latest* ]]
+then
+    :
+else
+    zcat "/nix/store/xjlwhyqjhx0j2sc41wfpsw1zvhn98vh5-docker-image-pause.tar.gz" | /nix/store/v5jal2qqy3vq0y15bwx2m6hl6ag7a7q3-containerd-1.6.9/bin/ctr -n k8s.io image import --all-platforms -
+fi
+
+if mountpoint --quiet /sys/fs/bpf
+then
+    :
+else
+    mount -o rw,nosuid,nodev,noexec,relatime,mode=700 -t bpf none /sys/fs/bpf
+    mount --make-shared /sys/fs/bpf
+fi
+
+if mountpoint --quiet /var/hpvolumes
+then
+    :
+else
+    mount --bind /var/hpvolumes /var/hpvolumes
+    mount --make-shared /var/hpvolumes
+fi
+
+(
+    until mountpoint --quiet /run/cilium/cgroupv2
+    do
+        sleep 5
+    done
+
+    if grep --quiet 'cilium.*shared' /proc/$$/mountinfo
+    then
+        :
+    else
+        mount --make-shared /run/cilium/cgroupv2
+    fi
+) &
+
+/nix/store/lp8ch8l5dn4bcp056cpr1gfyb9i8zi54-kubernetes-1.25.4/bin/kubelet \
+    --address=192.168.25.1 \
+    --authentication-token-webhook \
+    --authentication-token-webhook-cache-ttl=10s \
+    --authorization-mode=Webhook \
+    --client-ca-file=/nix/store/p52r1ccnvkchmybdayf5cv8xgw4m3a9c-ca.pem \
+    --cluster-dns=10.8.255.254 \
+    --cluster-domain=cluster.local \
+    --hairpin-mode=hairpin-veth \
+    --healthz-bind-address=127.0.0.1 \
+    --healthz-port=10248 \
+    --hostname-override=kube4 \
+    --kubeconfig=/nix/store/hn4s3q43x9m7l4i1gvalabzvzw88ja8g-kubelet-kubeconfig \
+    --pod-infra-container-image=pause \
+    --port=10250 \
+    --register-node=true \
+    --register-with-taints=unschedulable=true:NoSchedule \
+    --root-dir=/var/lib/kubelet \
+    --tls-cert-file=/nix/store/4ygd15kdyidrcd0588dm3q0jayk1mcch-kubelet-client-kube4.pem \
+    --tls-private-key-file=/nix/store/r2b19vzxj74zlnw9a2pf1gj3cbwy7nk0-kubelet-client-kube4-key.pem \
+    --container-runtime=remote \
+    --container-runtime-endpoint=unix:///run/containerd/containerd.sock \
+    --fail-swap-on=false \
+    --v=4
