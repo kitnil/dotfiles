@@ -28,6 +28,7 @@
              (wigust packages linux)
              (packages certs)
              (packages monitoring)
+             (packages netboot)
              (services admin)
              (services autofs)
              (services backup)
@@ -627,15 +628,8 @@ location / {
 (define tftp-root
   #~(begin
       (mkdir #$output)
-      (symlink (string-append #$(let ((version "2.0.56"))
-                                  (origin
-                                    (method url-fetch)
-                                    (uri (string-append
-                                          "https://github.com/netbootxyz/netboot.xyz/releases/download/"
-                                          version "/netboot.xyz.efi"))
-                                    (sha256
-                                     (base32
-                                      "1p6xs5fbyy40h89azqrq4mz7azydpkxisjiivhcz7aaqln5badc7")))))
+      (symlink (string-append #$netboot-xyz-efi
+                              "/share/netboot-xyz/netboot-xyz.efi")
                (string-append #$output "/netboot.xyz.efi"))))
 
 (define %dnsmasq-service
