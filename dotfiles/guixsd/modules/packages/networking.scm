@@ -127,7 +127,7 @@ It's like curl for messaging systems.")
 (define-public netboot-xyz-efi
   (package
     (name "netboot-xyz-efi")
-    (version "2.0.56")
+    (version "2.0.66")
     (source
      (origin
        (method url-fetch)
@@ -136,7 +136,7 @@ It's like curl for messaging systems.")
              version "/netboot.xyz.efi"))
        (sha256
         (base32
-         "1p6xs5fbyy40h89azqrq4mz7azydpkxisjiivhcz7aaqln5badc7"))))
+         "0m30gil2kpxw5vrdfi0vymfd7x1ybrihrqq7dkkxh168y36ngqxw"))))
     (build-system copy-build-system)
     (arguments
      `(#:install-plan
