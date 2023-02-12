@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+docker run \
+       --interactive \
+       --env OPENAI_ACCESS_TOKEN="${OPENAI_ACCESS_TOKEN:-$(pass show platform.openai.com/account/api-keys/13-02-2023)}" \
+       --rm \
+       --network br155_net \
+       openai_pipe "$@"

@@ -174,6 +174,7 @@
                           "nixos.sh"
                           "nix-repl"
                           "oracle"
+                          "openai"
                           "pers"
                           "peertube"
                           "prometheus-billing2"
