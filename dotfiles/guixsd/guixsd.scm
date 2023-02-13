@@ -1683,7 +1683,9 @@ PasswordAuthentication yes")))
                                     '(("/srv"
                                        "192.168.0.0/16(ro,insecure,no_subtree_check,crossmnt,fsid=0)")
                                       ("/srv/kubernetes"
-                                       "192.168.25.0/24(rw,insecure,no_subtree_check,crossmnt,fsid=0,anonuid=0,anongid=0)")))))
+                                       "192.168.25.0/24(rw,insecure,no_subtree_check,crossmnt,fsid=1,anonuid=0,anongid=0)")
+                                      ("/home/oleg/src"
+                                       "192.168.0.0/16(rw,insecure,no_subtree_check,crossmnt,fsid=2)")))))
 
                          (service (certbot-service-type-custom-nginx "192.168.0.144")
                                   (certbot-configuration
