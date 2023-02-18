@@ -545,6 +545,27 @@ location / {
                                     "-i" "br154.154"
                                     "-o" "br0"
                                     "-j" "ACCEPT")))
+                            ;; NAT 192.168.0.0/24 -> 192.168.154.0/24
+                            (iptables
+                             (string-join
+                              (list "-t" "nat"
+                                    "-A" "POSTROUTING"
+                                    "-o" "br154.154"
+                                    "-j" "MASQUERADE")))
+                            (iptables
+                             (string-join
+                              (list "-A" "FORWARD"
+                                    "-i" "br154.154"
+                                    "-o" "br0"
+                                    "-m" "state"
+                                    "--state" "RELATED,ESTABLISHED"
+                                    "-j" "ACCEPT")))
+                            (iptables
+                             (string-join
+                              (list "-A" "FORWARD"
+                                    "-i" "br0"
+                                    "-o" "br154.154"
+                                    "-j" "ACCEPT")))
                             ;; OpenVPN NAT
                             (iptables
                              (string-join
