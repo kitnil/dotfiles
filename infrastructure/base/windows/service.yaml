@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: windows
+spec:
+  ports:
+  - port: 3389
+    protocol: TCP
+    targetPort: 3389
+    name: rdp
+  selector:
+    kubevirt.io/vm: vm-windows-datavolume
+  type: LoadBalancer

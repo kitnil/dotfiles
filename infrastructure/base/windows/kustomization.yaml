@@ -4,3 +4,4 @@ namespace: windows
 resources:
   - namespace.yaml
   - windows-dv.yaml
+  - service.yaml
