@@ -222,6 +222,7 @@
                           "vault"
                           "vfio.sh"
                           "video"
+                          "virsh"
                           "vnc"
                           "vncview-5901.sh"
                           "volume-switch.sh"
