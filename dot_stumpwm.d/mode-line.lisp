@@ -187,6 +187,8 @@
                                    (string-contains (write-to-string (group-number (current-group))) str))
                                  (all-start-programs))))))
 
+(defvar *brightness* 20)
+
 ;; See events.lisp in StumpWM source.
 (setq *mode-line-click-hook*
       (list (lambda (mode-line button x y)
@@ -198,12 +200,20 @@
                             (volume-increase))
                            ((> x 200)
                             (prev-in-frame))
+                           ((> x 180)
+                            (let ((percentage (+ *brightness* 5)))
+                              (brightness percentage)
+                              (setq *brightness* percentage)))
                            (t
                             (gprev))))
                 ((5) (cond ((> x (- (screen-width (group-screen (current-group))) 30))
                             (volume-decrease))
                            ((> x 200)
                             (next-in-frame))
+                           ((> x 180)
+                            (let ((percentage (- *brightness* 5)))
+                              (brightness percentage)
+                              (setq *brightness* percentage)))
                            (t
                             (gnext))))
                 ((8) (volume-decrease))
