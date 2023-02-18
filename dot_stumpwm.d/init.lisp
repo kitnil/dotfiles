@@ -1,4 +1,4 @@
-;; Copyright © 2018, 2019, 2020, 2021, 2022 Oleg Pykhalov <go.wigust@gmail.com>
+;; Copyright © 2018, 2019, 2020, 2021, 2022, 2023 Oleg Pykhalov <go.wigust@gmail.com>
 ;; Released under the GNU GPLv3 or any later version.
 
 (in-package :stumpwm)
@@ -74,6 +74,7 @@
        (load-config-file "vpn.lisp")
        (load-config-file "mode-line.lisp")
        (load-config-file "display-0.lisp")
+       (load-config-file "display.lisp")
 
        (setf *startup-message* nil)
        (setf *message-window-gravity* :center)
