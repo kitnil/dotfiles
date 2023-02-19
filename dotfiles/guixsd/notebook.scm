@@ -21,7 +21,9 @@
 
 (use-package-modules bootloaders certs vpn wm terminals xfce linux package-management admin fonts nfs xorg)
 
-(use-service-modules desktop dbus networking xorg)
+(use-service-modules desktop dbus networking monitoring xorg)
+
+(use-modules (services monitoring))
 
 (operating-system
   (host-name "notebook")
