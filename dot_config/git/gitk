@@ -1,3 +1,6 @@
+set mainfont {{DejaVu Sans} 10}
+set textfont {{DejaVu Sans Mono} 10}
+set uifont {{DejaVu Sans} 10}
 set uicolor #44475a
 set want_ttk 0
 set bgcolor #282a36
