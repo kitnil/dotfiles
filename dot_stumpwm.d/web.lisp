@@ -131,9 +131,10 @@
   (run-shell-command (join (list (firefox-command) "-P" "test"))
                      '(:class "firefox-default")))
 
-(defun firefox-temp-profile (&optional profile)
+(defun firefox-temp-profile (&optional profile url)
   (join `("GTK_THEME=Adwaita:dark" ,*fontconfig-file* "firefox-temp-profile"
-                                   ,(if profile profile '()))))
+                                   ,(if profile profile '())
+                                   ,(if url url '()))))
 
 (defun firefox-command ()
   (if (string-equal (screen-display-string (current-screen)) "DISPLAY=:0.0")

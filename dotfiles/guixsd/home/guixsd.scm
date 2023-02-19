@@ -217,6 +217,73 @@
                               ("port" . 993)
                               ("host" . "imap.majordomo.ru"))))))))))))))
 
+(define xsession-config-file
+  (let* ((stumpwp-load-file
+          (plain-file
+           "stumpwp-load-file"
+           (with-output-to-string
+             (lambda ()
+               (display '(require :asdf))
+               (newline)
+               (display '(require :stumpwm))
+               (newline)
+               (display '(stumpwm:stumpwm))
+               (newline)))))
+         (xsession-file
+          (program-file
+           "xsession"
+           #~(begin
+               (use-modules (srfi srfi-1)
+                            (ice-9 popen)
+                            (ice-9 rdelim)
+                            (ice-9 format))
+
+               (define %display
+                 (and=> (getenv "DISPLAY")
+                        (lambda (display)
+                          display)))
+
+               (define %home
+                 (and=> (getenv "HOME")
+                        (lambda (home)
+                          home)))
+
+               (display "Set background\n")
+               (system* #$(file-append xsetroot "/bin/xsetroot")
+                        "-solid" "black")
+
+               (display "Set cursor theme\n")
+               (system* #$(file-append xsetroot "/bin/xsetroot")
+                        "-cursor_name" "left_ptr")
+
+               (display "Disable speaker\n")
+               (system* #$(file-append xset "/bin/xset") "-b")
+
+               (display "Configure keymap\n")
+               (system* #$xmodmap-script)
+
+               (system* #$(file-append setxkbmap "/bin/setxkbmap")
+                        "-layout" "us,ru" "-option" "grp:win_space_toggle")
+
+               ;; Prepare environment for VNC sessions
+               (display "Start window manager\n")
+               (if (string= %display ":0.0")
+                   (execl "/run/current-system/profile/bin/sbcl" "sbcl" "--load" #$stumpwp-load-file)
+                   (begin
+                     (unsetenv "SESSION_MANAGER")
+                     (unsetenv "DBUS_SESSION_BUS_ADDRESS")
+                     (system* #$(file-append xhost "/bin/xhost") "+local:")
+                     (let* ((pw    (getpw (getuid)))
+                            (shell (passwd:shell pw)))
+                       ;; The '--login' option is supported at least by Bash and zsh.
+                       (execl shell "sbcl" "--login" "-c"
+                              (format #f ". /home/oleg/.bash_profile; /run/current-system/profile/bin/sbcl --load ~a"
+                                      #$stumpwp-load-file)))))))))
+    #~(begin
+        (let ((file #$(string-append %home "/.xsession")))
+          (copy-file #$xsession-file file)
+          (chmod file #o700)))))
+
 (home-environment
 
  (services
@@ -416,65 +483,86 @@ PYTHONPATH='' exec -a \"$0\" ~a/bin/idea-ultimate \"$@\"\n"
 
     ;; home-shellcheck-service
 
-    (simple-service 'stumpwm-config
-                    home-files-service-type
-                    (map (lambda (file-name)
-                           `(,(string-append ".stumpwm.d/" file-name) ,(local-file (string-append %project-directory "/dot_stumpwm.d/" file-name))))
-                         '("admin.lisp"
-                           "android.lisp"
-                           "audio.lisp"
-                           "autostart.lisp"
-                           "backup.lisp"
-                           "chat.lisp"
-                           "clipboard.lisp"
-                           "covid19.lisp"
-                           "cpu.lisp"
-                           "desktop-0.lisp"
-                           "disk.lisp"
-                           "display.lisp"
-                           "display-0.lisp"
-                           "display-1.lisp"
-                           "docker.lisp"
-                           "documentation.lisp"
-                           "emacs.lisp"
-                           "gaps.lisp"
-                           "gpg.lisp"
-                           "vpn.lisp"
-                           "group-1.lisp"
-                           "hardware.lisp"
-                           "imap.lisp"
-                           "init.lisp"
-                           "keys.lisp"
-                           "kubernetes.lisp"
-                           "kodi.lisp"
-                           "mail.lisp"
-                           "mem.lisp"
-                           "mjru.lisp"
-                           "mode-line.lisp"
-                           "mpv.lisp"
-                           "nav.lisp"
-                           "notify.lisp"
-                           "password.lisp"
-                           "bittorrent.lisp"
-                           "repl.lisp"
-                           "rest.lisp"
-                           "rofi.lisp"
-                           "screenshoot.lisp"
-                           "streamlink.lisp"
-                           "swank.lisp"
-                           "term.lisp"
-                           "text-editors.lisp"
-                           "theme.lisp"
-                           "time.lisp"
-                           "trans.lisp"
-                           "utils.lisp"
-                           "virtualization.lisp"
-                           "vnc.lisp"
-                           "web.lisp"
-                           "xorg.lisp"
-                           "youtube-dl.lisp")))
+    (service stumpwm-service-type
+             (let ((config-files
+                    '("utils.lisp"
+                      "keys.lisp"
+                      "nav.lisp"
+                      "theme.lisp"
+                      "xorg.lisp"
+                      "term.lisp"
+                      "text-editors.lisp"
+                      "repl.lisp"
+                      "notify.lisp"
+                      "hardware.lisp"
+                      "admin.lisp"
+                      "clipboard.lisp"
+                      "screenshoot.lisp"
+                      "password.lisp"
+                      "trans.lisp"
+                      "backup.lisp"
+                      "documentation.lisp"
+                      "emacs.lisp"
+                      "chat.lisp"
+                      "mail.lisp"
+                      "docker.lisp"
+                      "vnc.lisp"
+                      "rofi.lisp"
+                      "audio.lisp"
+                      "mpv.lisp"
+                      "streamlink.lisp"
+                      "youtube-dl.lisp"
+                      "android.lisp"
+                      "kodi.lisp"
+                      "web.lisp"
+                      "time.lisp"
+                      "mjru.lisp"
+                      "virtualization.lisp"
+                      "bittorrent.lisp"
+                      "kubernetes.lisp"
+                      "disk.lisp"
+                      "rest.lisp"
+                      "cpu.lisp"
+                      "mem.lisp"
+                      "imap.lisp"
+                      "covid19.lisp"
+                      "gpg.lisp"
+                      "vpn.lisp"
+                      "mode-line.lisp"
+                      "display-0.lisp"
+                      "display.lisp"
+                      "autostart.lisp"
+                      "swank.lisp"
+                      "gaps.lisp")))
+               (stumpwm-configuration
+                (init-config
+                 `((in-package :stumpwm)
 
-    home-stumpwm-service
+                   (require "asdf")
+
+                   ;; https://discourse.nixos.org/t/fonts-in-nix-installed-packages-on-a-non-nixos-system/5871/9
+                   (defvar *fontconfig-file*
+                     "FONTCONFIG_FILE=/run/current-system/profile/etc/fonts/fonts.conf")
+
+                   (redirect-all-output
+                    (concat
+                     (getenv "HOME") "/.local/var/log/stumpwm/" (getenv "DISPLAY") ".log"))
+
+                   ;; (defcommand quassel () ()
+                   ;;   (run-shell-command (join (list *fontconfig-file* "/home/oleg/.nix-profile/bin/quassel"))))
+
+                   ;; Tuesday January 3 2005 23:05:25
+                   (setq *time-format-string-default* "%A %B %e %Y %k:%M:%S")
+
+                   (setf *startup-message* nil)
+                   (setf *message-window-gravity* :center)
+                   (setf *input-window-gravity* :center)
+                   ,@(map (lambda (config-file)
+                            `(load ,(string-append "/home/oleg/.stumpwm.d/" config-file)))
+                          config-files)
+                   ;; (restore-from-file ,(local-file "/home/oleg/.local/share/chezmoi/dot_stumpwm.d/group-1.lisp"))
+                   ))
+                (config-files config-files))))
 
     home-bash-service
 
@@ -637,71 +725,7 @@ PYTHONPATH='' exec -a \"$0\" ~a/bin/idea-ultimate \"$@\"\n"
 
     (simple-service 'xsession-config
                     home-activation-service-type
-                    (let* ((stumpwp-load-file
-                            (plain-file
-                             "stumpwp-load-file"
-                             (with-output-to-string
-                               (lambda ()
-                                 (display '(require :asdf))
-                                 (newline)
-                                 (display '(require :stumpwm))
-                                 (newline)
-                                 (display '(stumpwm:stumpwm))
-                                 (newline)))))
-                           (xsession-file
-                            (program-file
-                             "xsession"
-                             #~(begin
-                                 (use-modules (srfi srfi-1)
-                                              (ice-9 popen)
-                                              (ice-9 rdelim)
-                                              (ice-9 format))
-
-                                 (define %display
-                                   (and=> (getenv "DISPLAY")
-                                          (lambda (display)
-                                            display)))
-
-                                 (define %home
-                                   (and=> (getenv "HOME")
-                                          (lambda (home)
-                                            home)))
-
-                                 (display "Set background\n")
-                                 (system* #$(file-append xsetroot "/bin/xsetroot")
-                                          "-solid" "black")
-
-                                 (display "Set cursor theme\n")
-                                 (system* #$(file-append xsetroot "/bin/xsetroot")
-                                          "-cursor_name" "left_ptr")
-
-                                 (display "Disable speaker\n")
-                                 (system* #$(file-append xset "/bin/xset") "-b")
-
-                                 (display "Configure keymap\n")
-                                 (system* #$xmodmap-script)
-
-                                 (system* #$(file-append setxkbmap "/bin/setxkbmap")
-                                          "-layout" "us,ru" "-option" "grp:win_space_toggle")
-
-                                 ;; Prepare environment for VNC sessions
-                                 (display "Start window manager\n")
-                                 (if (string= %display ":0.0")
-                                     (execl "/run/current-system/profile/bin/sbcl" "sbcl" "--load" #$stumpwp-load-file)
-                                     (begin
-                                       (unsetenv "SESSION_MANAGER")
-                                       (unsetenv "DBUS_SESSION_BUS_ADDRESS")
-                                       (system* #$(file-append xhost "/bin/xhost") "+local:")
-                                       (let* ((pw    (getpw (getuid)))
-                                              (shell (passwd:shell pw)))
-                                         ;; The '--login' option is supported at least by Bash and zsh.
-                                         (execl shell "sbcl" "--login" "-c"
-                                                (format #f ". /home/oleg/.bash_profile; /run/current-system/profile/bin/sbcl --load ~a"
-                                                        #$stumpwp-load-file)))))))))
-                      #~(begin
-                          (let ((file #$(string-append %home "/.xsession")))
-                            (copy-file #$xsession-file file)
-                            (chmod file #o700)))))
+                    xsession-config-file)
 
     home-parallel-service
 

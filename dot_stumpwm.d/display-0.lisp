@@ -22,7 +22,6 @@
 (define-frame-preference "1" (1 NIL T :CLASS "firefox-default" :TITLE "Picture-in-Picture"))
 
 (when (string-equal (screen-display-string (current-screen)) "DISPLAY=:0.0")
-  (restore-from-file (concat (getenv "HOME") "/.stumpwm.d/group-1.lisp"))
   (mode-line)
   (setf *mouse-focus-policy* :sloppy))
 
@@ -86,26 +85,23 @@
                                   (emacs-todo-new-window))))
 
 (defcommand group-2-start-programs () ()
-  (run-frame 2 :frame-0-command (lambda () (spotify))))
+  (run-frame 2
+             :frame-0-command
+             (lambda ()
+               (run-shell-command "vnc client guix"))))
 
 (defcommand group-3-start-programs () ()
   (run-frame 3 :frame-0-command (lambda ()
-                                  (run-shell-command "chromium --app=https://habitica.com/"))
-               :frame-1-command (lambda ()
-                                  (run-shell-command
-                                   (if (free-time?)
-                                       "chromium --new-window https://home-s2x8742.slack.com/"
-                                       "chromium --new-window https://mjru.slack.com/")))))
+                                  (run-shell-command "chromium --app=https://habitica.com/"))))
+
+(defvar *windows-novnc*
+  "http://novnc.windows.home.wugi.info")
 
 (defcommand group-4-start-programs () ()
-  (run-frame 4 :frame-0-command (lambda ()
-                                  (if (free-time?)
-                                      (run-commands "zabbix")
-                                      (run-commands "mjru-grafana-netflow")))
-               :frame-1-command (lambda ()
-                                  (if (free-time?)
-                                      (run-commands "guix-ci")
-                                      (run-commands "mjru-grafana-upstream-interfaces")))))
+  (run-frame 4
+             :frame-0-command
+             (lambda ()
+               (firefox-temp-profile nil *windows-novnc*))))
 
 (defcommand group-5-start-programs () ()
   (run-frame 5 :frame-0-command (lambda ()

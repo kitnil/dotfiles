@@ -24,62 +24,94 @@
   #:use-module (gnu services)
   #:use-module (home config)
   #:use-module (gnu packages wm)
-  #:export (home-stumpwm-service))
+  #:export (stumpwm-configuration
+            stumpwm-service-type))
 
-(define home-stumpwm-service
-  (simple-service 'stumpwm-config
-                  home-files-service-type
-                  (map (lambda (file-name)
-                         `(,(string-append ".stumpwm.d/" file-name) ,(local-file (string-append %project-directory "/dot_stumpwm.d/" file-name))))
-                       '("admin.lisp"
-                         "android.lisp"
-                         "audio.lisp"
-                         "autostart.lisp"
-                         "backup.lisp"
-                         "chat.lisp"
-                         "clipboard.lisp"
-                         "covid19.lisp"
-                         "cpu.lisp"
-                         "desktop-0.lisp"
-                         "disk.lisp"
-                         "display-0.lisp"
-                         "display-1.lisp"
-                         "docker.lisp"
-                         "documentation.lisp"
-                         "emacs.lisp"
-                         "gaps.lisp"
-                         "gpg.lisp"
-                         "vpn.lisp"
-                         "group-1.lisp"
-                         "hardware.lisp"
-                         "imap.lisp"
-                         "init.lisp"
-                         "keys.lisp"
-                         "kubernetes.lisp"
-                         "kodi.lisp"
-                         "mail.lisp"
-                         "mem.lisp"
-                         "mjru.lisp"
-                         "mode-line.lisp"
-                         "mpv.lisp"
-                         "nav.lisp"
-                         "notify.lisp"
-                         "password.lisp"
-                         "bittorrent.lisp"
-                         "repl.lisp"
-                         "rest.lisp"
-                         "rofi.lisp"
-                         "screenshoot.lisp"
-                         "streamlink.lisp"
-                         "swank.lisp"
-                         "term.lisp"
-                         "text-editors.lisp"
-                         "theme.lisp"
-                         "time.lisp"
-                         "trans.lisp"
-                         "utils.lisp"
-                         "virtualization.lisp"
-                         "vnc.lisp"
-                         "web.lisp"
-                         "xorg.lisp"
-                         "youtube-dl.lisp"))))
+(define-record-type* <stumpwm-configuration>
+  stumpwm-configuration make-stumpwm-configuration
+  stumpwm-configuration?
+  (config-files stumpwm-configuration-config-files ;list of files
+                '())
+  (init-config stumpwm-configuration-init-config
+               #f))
+
+(define guix.wugi.info
+  '("admin.lisp"
+    "android.lisp"
+    "audio.lisp"
+    "autostart.lisp"
+    "backup.lisp"
+    "chat.lisp"
+    "clipboard.lisp"
+    "covid19.lisp"
+    "cpu.lisp"
+    "desktop-0.lisp"
+    "disk.lisp"
+    "display-0.lisp"
+    "display-1.lisp"
+    "docker.lisp"
+    "documentation.lisp"
+    "emacs.lisp"
+    "gaps.lisp"
+    "gpg.lisp"
+    "vpn.lisp"
+    "group-1.lisp"
+    "hardware.lisp"
+    "imap.lisp"
+    "keys.lisp"
+    "kubernetes.lisp"
+    "kodi.lisp"
+    "mail.lisp"
+    "mem.lisp"
+    "mjru.lisp"
+    "mode-line.lisp"
+    "mpv.lisp"
+    "nav.lisp"
+    "notify.lisp"
+    "password.lisp"
+    "bittorrent.lisp"
+    "repl.lisp"
+    "rest.lisp"
+    "rofi.lisp"
+    "screenshoot.lisp"
+    "streamlink.lisp"
+    "swank.lisp"
+    "term.lisp"
+    "text-editors.lisp"
+    "theme.lisp"
+    "time.lisp"
+    "trans.lisp"
+    "utils.lisp"
+    "virtualization.lisp"
+    "vnc.lisp"
+    "web.lisp"
+    "xorg.lisp"
+    "youtube-dl.lisp"))
+
+(define (stumpwm-config config)
+  (append `((".stumpwm.d/init.lisp"
+             ,(computed-file
+               "init.lisp"
+               #~(begin
+                   (call-with-output-file #$output
+                     (lambda (port)
+                       (for-each (lambda (line)
+                                   (write line port)
+                                   (newline port))
+                                 '#$(stumpwm-configuration-init-config config))))))))
+          (map (lambda (file-name)
+                 (list (string-append ".stumpwm.d/" file-name)
+                       (local-file (string-append %project-directory
+                                                  "/dot_stumpwm.d/"
+                                                  file-name))))
+               (stumpwm-configuration-config-files config))))
+
+(define stumpwm-service-type
+  (service-type
+   (name 'stumpwm)
+   (extensions
+    (list (service-extension home-files-service-type
+                              stumpwm-config)))
+   (description
+    "Configure StumpWM window manager.")
+   (default-value '())))
