@@ -223,6 +223,7 @@
                                  "insert/dotfiles/modules/services/service"
                                  "insert/nix/shell.nix"
                                  "insert/nix/flake.nix"
+                                 "insert/kubernetes/deployment.yaml"
                                  "insert/kubernetes/kustomization.yaml"
                                  "insert/kubernetes/namespace.yaml"
                                  "insert/kubernetes/release.yaml"

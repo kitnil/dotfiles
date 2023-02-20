@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: $1
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: $1
+      app.kubernetes.io/part-of: $2
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: $1
+        app.kubernetes.io/part-of: $2
+    spec:
+      containers:
+      - image: docker-registry.intr/${3:group}/$1:master
+        name: $1
+        # ports:
+        # - containerPort: 6080
+        #   name: http
+        #   protocol: TCP
+        # env:
+        # - name: $1
+        #   value: "$2:5900"
+        resources:
+          limits:
+            cpu: 2000m
+            memory: 1024Mi
+          requests:
+            cpu: 1000m
+            memory: 512Mi

@@ -1,4 +1,8 @@
 (define-auto-insert
+  "deployment.yaml"
+  ["kubernetes/deployment.yaml" yas-expand-current-buffer])
+
+(define-auto-insert
   "kustomization.yaml"
   ["kubernetes/kustomization.yaml" yas-expand-current-buffer])
 
