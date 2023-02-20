@@ -1,0 +1,27 @@
+#!/usr/bin/env -S guile --no-auto-compile -e main -s
+!#
+
+(use-modules (json)
+             (srfi srfi-1))
+
+(define (main args)
+  (apply system*
+         `("kubectl"
+           "run"
+           "--rm=true"
+           "--stdin=true"
+           "--tty=true"
+           ,@(if (> (length args) 1)
+                 (list
+                  (string-concatenate
+                   (list
+                    "--overrides="
+                    (scm->json-string
+                     `(("spec"
+                        ("nodeSelector"
+                         ("kubernetes.io/hostname" . ,(last args))))
+                       ("apiVersion" . "v1"))))))
+                 '())
+           "netshoot"
+           "--image=nicolaka/netshoot"
+           "/bin/bash")))

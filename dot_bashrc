@@ -2072,11 +2072,6 @@ EOF
     esac
 }
 
-netshoot()
-{
-    kubectl run --rm -it netshoot --image=nicolaka/netshoot /bin/bash
-}
-
 __lazy_virtctl()
 {
     local word_count=${#COMP_WORDS[*]}
