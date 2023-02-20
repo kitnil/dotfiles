@@ -49,7 +49,7 @@
                        "--rm"
                        "--volume" (string-append %home "/.kube:/.kube")
                        "--volume" (string-append directory ":/dump")
-                       "woozymasta/kube-dump:latest"
+                       "docker-registry.intr/utils/kube-dump:master"
                        "dump-namespaces"
                        "-d" "/dump"
                        "--kube-config"
