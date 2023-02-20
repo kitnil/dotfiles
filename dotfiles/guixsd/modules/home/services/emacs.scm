@@ -88,6 +88,7 @@
                                  "modules/version-control.el"
                                  "modules/version-control-lexical.el"
                                  "modules/web.el"
+                                 "modules/yaml.el"
                                  "modules/youtube.el"
 
                                  "snippets/erc-mode/problem"
