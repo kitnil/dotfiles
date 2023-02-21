@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: powerdns-create-zone
+spec:
+  template:
+    spec:
+      containers:
+      - name: powerdns-create-zone
+        env:
+        - name: POWERDNS_ZONE_NAME
+          value: home.wugi.info.
+        - name: POWERDNS_ZONE_NS1
+          value: ns1.home.wugi.info.
+        - name: POWERDNS_ZONE_NS2
+          value: ns2.home.wugi.info.
