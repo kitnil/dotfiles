@@ -7,7 +7,7 @@ metadata:
 spec:
   ingressClassName: nginx
   rules:
-  - host: novnc.windows.home1.wugi.info
+  - host: novnc.windows.home.wugi.info
     http:
       paths:
       - path: /
