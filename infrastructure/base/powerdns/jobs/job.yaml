@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: powerdns-create-zone
+spec:
+  template:
+    spec:
+      containers:
+      - name: powerdns-create-zone
+        image: nixery.dev/shell/curl/jq
+        command: ["/bin/bash"]
+        args: ["/usr/local/bin/script.sh"]
+        volumeMounts:
+        - mountPath: /usr/local/bin
+          name: scripts
+      volumes:
+      - name: scripts
+        configMap:
+          name: powerdns-scripts
+      restartPolicy: Never
+  backoffLimit: 0

@@ -1,0 +1,19 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: powerdns
+spec:
+  chart:
+    spec:
+      chart: powerdns
+      reconcileStrategy: ChartVersion
+      version: 0.1.3
+      sourceRef:
+        kind: HelmRepository
+        name: powerdns
+        namespace: flux-system
+  interval: 1m0s
+  valuesFrom:
+    - kind: ConfigMap
+      name: powerdns-values

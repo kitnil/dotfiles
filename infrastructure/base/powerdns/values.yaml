@@ -1,0 +1,7 @@
+powerdns-admin:
+  enabled: false
+  image:
+    tag: v0.3.0
+
+phpmyadmin:
+  enabled: false

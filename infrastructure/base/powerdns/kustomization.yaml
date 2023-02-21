@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: pdns
+resources:
+  - namespace.yaml
+  - release.yaml
+configMapGenerator:
+  - name: powerdns-values
+    files:
+      - values.yaml=values.yaml
+  - name: powerdns-scripts
+    files:
+      - script.sh=script.sh
+configurations:
+  - kustomizeconfig.yaml
