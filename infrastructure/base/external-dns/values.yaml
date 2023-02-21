@@ -1,0 +1,6 @@
+logLevel: debug
+provider: pdns
+pdns:
+  apiUrl: http://powerdns.pdns
+  apiPort: 8081
+  apiKey: PowerDNSAPI
