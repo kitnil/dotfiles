@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: powerdns-dns-udp-ns1
+  annotations:
+    metallb.universe.tf/allow-shared-ip: key-to-share-powerdns-dns-tcp-ns1
+spec:
+  loadBalancerIP: powerdns-dns-tcp-ns1
+  ports:
+  - name: dns-udp
+    port: 53
+    protocol: UDP
+    targetPort: dns-udp
+  selector:
+    app.kubernetes.io/instance: powerdns
+    app.kubernetes.io/name: powerdns
+  type: LoadBalancer

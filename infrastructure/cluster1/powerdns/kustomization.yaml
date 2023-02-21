@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: pdns
+resources:
+  - ../../base/powerdns
+  - jobs/home.wugi.info
+  - service-dns-tcp-ns1.yaml
+  - service-dns-tcp-ns2.yaml
+  - service-dns-udp-ns1.yaml
+  - service-dns-udp-ns2.yaml
