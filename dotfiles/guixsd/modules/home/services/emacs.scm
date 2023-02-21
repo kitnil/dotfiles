@@ -225,6 +225,7 @@
                                  "insert/nix/flake.nix"
                                  "insert/kubernetes/deployment.yaml"
                                  "insert/kubernetes/kustomization.yaml"
+                                 "insert/kubernetes/ingress.yaml"
                                  "insert/kubernetes/namespace.yaml"
                                  "insert/kubernetes/release.yaml"
                                  "insert/kubernetes/kustomizeconfig.yaml")))))
