@@ -3,9 +3,10 @@ kind: Service
 metadata:
   name: powerdns-dns-tcp-ns1
   annotations:
-    metallb.universe.tf/allow-shared-ip: "key-to-share-powerdns-dns-tcp-ns1"
+    metallb.universe.tf/allow-shared-ip: key-to-share-powerdns-dns-tcp-ns1
     external-dns.alpha.kubernetes.io/hostname: ns1.home.wugi.info
 spec:
+  loadBalancerIP: 192.168.25.21
   ports:
   - name: dns-tcp
     port: 53

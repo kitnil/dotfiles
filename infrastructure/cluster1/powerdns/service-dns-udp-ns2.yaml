@@ -3,9 +3,9 @@ kind: Service
 metadata:
   name: powerdns-dns-udp-ns2
   annotations:
-    metallb.universe.tf/allow-shared-ip: "key-to-share-powerdns-dns-tcp-ns2"
+    metallb.universe.tf/allow-shared-ip: key-to-share-powerdns-dns-tcp-ns2
 spec:
-  loadBalancerIP: powerdns-dns-tcp-ns2
+  loadBalancerIP: 192.168.25.22
   ports:
   - name: dns-udp
     port: 53
