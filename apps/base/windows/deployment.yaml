@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: novnc
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: novnc
+      app.kubernetes.io/part-of: windows
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: novnc
+        app.kubernetes.io/part-of: windows
+    spec:
+      containers:
+      - image: docker-registry.intr/utils/novnc:master
+        name: novnc
+        ports:
+        - containerPort: 6080
+          name: http
+          protocol: TCP
+        env:
+        - name: NOVNC_VNC
+          value: "windows.local:5900"
+        resources:
+          limits:
+            cpu: 2000m
+            memory: 1024Mi
+          requests:
+            cpu: 1000m
+            memory: 512Mi

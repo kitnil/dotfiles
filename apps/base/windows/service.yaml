@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: novnc
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 6080
+    name: http
+  selector:
+    app.kubernetes.io/name: novnc
+    app.kubernetes.io/part-of: windows
+  type: ClusterIP
