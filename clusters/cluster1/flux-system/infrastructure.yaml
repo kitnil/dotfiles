@@ -174,3 +174,16 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: ingress-nginx
+  namespace: flux-system
+spec:
+  interval: 1m0s
+  path: ./infrastructure/base/ingress-nginx
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
