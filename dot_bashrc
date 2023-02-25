@@ -2224,8 +2224,26 @@ sudo()
         herd)
             case "$2" in
                 start)
-                    command sudo herd enable "${@:3}"
-                    command sudo herd start "${@:3}"
+                    case "$3" in
+                        xorg-server)
+                            if [[ -e /var/run/slim-vt7.auth ]]
+                            then
+                                echo "Removing '/var/run/slim-vt7.auth' file."
+                                command sudo rm /var/run/slim-vt7.auth
+                            fi
+                            if [[ -e /var/run/slim-vt7.lock ]]
+                            then
+                                echo "Removing '/var/run/slim-vt7.lock' file."
+                                command sudo rm /var/run/slim-vt7.lock
+                            fi
+                            command sudo herd enable xorg-server
+                            command sudo herd start xorg-server
+                            ;;
+                        *)
+                            command sudo herd enable "${@:3}"
+                            command sudo herd start "${@:3}"
+                            ;;
+                    esac
                     ;;
                 *)
                     command sudo herd "${@:2}"
