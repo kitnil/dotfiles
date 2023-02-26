@@ -84,6 +84,19 @@
 
 (define %nginx-server-blocks
   (list (nginx-server-configuration
+         (listen '("192.168.0.144:80 default_server"))
+         (locations
+          (list
+           (nginx-location-configuration
+            (uri "/")
+            (body
+             (list
+              "proxy_pass http://192.168.25.18;" ;Proxy to Kubernetes
+              "proxy_set_header Host $http_host;"
+              "proxy_set_header X-Real-IP $remote_addr;" ;# pass on real client's IP
+              "proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;"
+              "proxy_set_header X-Forwarded-Proto $scheme;"))))))
+        (nginx-server-configuration
          (server-name '("www.tld"))
          (listen '("192.168.0.144:80"))
          (root "/srv/share"))
