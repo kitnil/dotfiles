@@ -101,5 +101,14 @@ rec {
       };
     };
     www = { inherit A; };
+    home = {
+      subdomains = {
+        windows = {
+          subdomains = {
+            novnc = guix;
+          };
+        };
+      };
+    };
   };
 }
