@@ -3,9 +3,14 @@ kind: Ingress
 metadata:
   name: novnc
   annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
     nginx.ingress.kubernetes.io/whitelist-source-range: "10.0.0.0/8,192.168.0.0/16"
 spec:
   ingressClassName: nginx
+  tls:
+  - hosts:
+    - novnc.windows.home.wugi.info
+    secretName: novnc-windows-ingress-certs
   rules:
   - host: novnc.windows.home.wugi.info
     http:
