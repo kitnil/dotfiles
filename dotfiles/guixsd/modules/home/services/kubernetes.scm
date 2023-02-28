@@ -44,8 +44,6 @@
                             kubernetes-cluster-name)
                (invoke "docker" "run"
                        "--network" "host"
-                       "--tty"
-                       "--interactive"
                        "--rm"
                        "--volume" (string-append %home "/.kube:/.kube")
                        "--volume" (string-append directory ":/dump")
