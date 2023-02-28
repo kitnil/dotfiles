@@ -21,3 +21,7 @@
 (define-auto-insert
   "kustomizeconfig.yaml"
   ["kubernetes/kustomizeconfig.yaml" yas-expand-current-buffer])
+
+(define-auto-insert
+  "virtualmachine.yaml"
+  ["kubernetes/virtualmachine.yaml" yas-expand-current-buffer])

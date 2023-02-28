@@ -1,0 +1,74 @@
+apiVersion: kubevirt.io/v1alpha3
+kind: VirtualMachine
+metadata:
+  labels:
+    kubevirt.io/vm: vm-$1-datavolume
+  name: vm-$1-datavolume
+spec:
+  dataVolumeTemplates:
+  - metadata:
+      name: vm-$1-datavolume-data-volume
+    spec:
+      pvc:
+        accessModes:
+        - ReadWriteMany
+        resources:
+          requests:
+            storage: 80Gi
+        volumeMode: Block
+        storageClassName: linstor-kubevirt-storage0
+      source:
+        http:
+          url: https://jenkins.corp1.majordomo.ru/job/nixos/job/nixos%252Fkubevirt/job/master/lastSuccessfulBuild/artifact/nixos.qcow2
+  running: true
+  template:
+    metadata:
+      labels:
+        kubevirt.io/vm: vm-$1-datavolume
+    spec:
+      domain:
+        cpu:
+          cores: 4
+          sockets: 1
+          threads: 1
+        devices:
+          interfaces:
+          - masquerade: {}
+            model: virtio
+            name: default
+          disks:
+          - disk:
+              bus: virtio
+            name: vm-$1-datavolume-data-volume-disk
+          - disk:
+              bus: virtio
+            name: serviceaccountdisk
+        resources:
+          overcommitGuestOverhead: true
+          requests:
+            cpu: 2000m
+            memory: 2048M
+          limits:
+            cpu: 4000m
+            memory: 8G
+        firmware:
+          bootloader:
+            efi:
+              secureBoot: false
+        memory:
+          guest: 8G
+      volumes:
+      - name: vm-$1-datavolume-data-volume-disk
+        dataVolume:
+          name: vm-$1-datavolume-data-volume
+      - name: serviceaccountdisk
+        serviceAccount:
+          serviceAccountName: default
+      networks:
+      - name: default
+        pod: {}
+      # livenessProbe:
+      #   tcpSocket:
+      #     port: 22
+      #     # 3 minutes for boot
+      #   initialDelaySeconds: 300
