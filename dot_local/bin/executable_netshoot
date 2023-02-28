@@ -2,16 +2,55 @@
 !#
 
 (use-modules (json)
-             (srfi srfi-1))
+             (srfi srfi-1)
+             (srfi srfi-37)
+             (guix scripts))
+
+(define %labels
+  '(("app.kubernetes.io/name" . "netshoot")))
+
+(define %options
+  (list
+   (option '(#\d "dry-run") #f #f
+           (lambda (opt name arg result)
+             (values (alist-cons 'dry-run? #t result)
+                     #f)))
+   (option '(#\n "namespace") #t #f
+           (lambda (opt name arg result)
+             (alist-cons 'namespace arg result)))
+   (option '(#\H "host") #t #f
+           (lambda (opt name arg result)
+             (alist-cons 'host arg result)))))
+
+(define %default-options
+  '(()))
 
 (define (main args)
+  (define opts
+    (parse-command-line args %options
+                        (list %default-options)))
+  (define dry-run? (assoc-ref opts 'dry-run?))
+  (define namespace (assoc-ref opts 'namespace))
+  (define host (assoc-ref opts 'host))
   (apply system*
-         `("kubectl"
+         `(,@(if dry-run? '("echo") '())
+           "kubectl"
            "run"
            "--rm=true"
            "--stdin=true"
            "--tty=true"
-           ,@(if (> (length args) 1)
+           ,@(if namespace
+                 (list (string-append "--namespace=" namespace))
+                 '())
+           ,(string-append "--labels="
+                           (string-join
+                            (map (lambda (label)
+                                   (string-append (first label)
+                                                  "="
+                                                  (cdr label)))
+                                 %labels)
+                            ","))
+           ,@(if host
                  (list
                   (string-concatenate
                    (list
@@ -19,7 +58,7 @@
                     (scm->json-string
                      `(("spec"
                         ("nodeSelector"
-                         ("kubernetes.io/hostname" . ,(last args))))
+                         ("kubernetes.io/hostname" . ,host)))
                        ("apiVersion" . "v1"))))))
                  '())
            "netshoot"
