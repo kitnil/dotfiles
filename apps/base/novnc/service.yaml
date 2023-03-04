@@ -10,5 +10,4 @@ spec:
     name: http
   selector:
     app.kubernetes.io/name: novnc
-    app.kubernetes.io/part-of: windows
   type: ClusterIP

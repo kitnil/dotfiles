@@ -4,6 +4,9 @@ namespace: windows
 resources:
 - ../../base/novnc
 - ingress.yaml
+patchesStrategicMerge:
+- deployment.yaml
+- service.yaml
 images:
 - name: docker-registry.intr/utils/novnc
   newTag: 4de3373a
