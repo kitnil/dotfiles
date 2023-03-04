@@ -15,4 +15,4 @@ spec:
       - name: novnc
         env:
         - name: NOVNC_VNC
-          value: "guix.local:5900"
+          value: "guix.local:5960"
