@@ -64,4 +64,4 @@ spec:
         storageClassName: hostpath-csi
       source:
         http:
-          url: http://iso.wugi.info/windows_10.qcow2
+          url: http://iso.wugi.info/windows/windows_10.qcow2
