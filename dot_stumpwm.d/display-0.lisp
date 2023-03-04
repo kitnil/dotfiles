@@ -96,7 +96,7 @@
                (run-shell-command "vnc client windows"))))
 
 (defvar *windows-novnc*
-  "http://novnc.windows.home.wugi.info")
+  "http://novnc.windows.home.wugi.info/vnc.html")
 
 (defcommand group-4-start-programs () ()
   (run-frame 4
