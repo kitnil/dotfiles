@@ -338,6 +338,11 @@
                     inherit (deploy-rs.outputs.packages.${system}) deploy-rs;
                     inherit (majordomo-vault.inputs.nixpkgs.legacyPackages.${system}) vault-bin;
                     alejandra = (kamadorueda-alejandra.packages.${system}).alejandra-x86_64-unknown-linux-gnu;
+                    viddy = prev.viddy.overrideAttrs (old: {
+                      patches = [
+                        ./patches/viddy-add-maxhistory-argument.patch
+                      ];
+                    });
                   };
                 pkgs = import nixpkgs {
                   overlays = [

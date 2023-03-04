@@ -1,0 +1,148 @@
+From cfced5a0e2a45c5786af102659926549a87bc038 Mon Sep 17 00:00:00 2001
+From: Takumasa Sakao <tsakao@zlab.co.jp>
+Date: Tue, 15 Feb 2022 23:53:22 +0900
+Subject: [PATCH 1/4] Add --max-history option
+
+---
+ config.go | 14 +++++++++++---
+ main.go   |  1 +
+ viddy.go  | 13 +++++++++++++
+ 3 files changed, 25 insertions(+), 3 deletions(-)
+
+diff --git a/config.go b/config.go
+index 1f4f89a..c0f185d 100644
+--- a/config.go
++++ b/config.go
+@@ -45,6 +45,7 @@ type general struct {
+ 	noTitle      bool
+ 	pty          bool
+ 	unfold       bool
++	maxHistory   int
+ }
+ 
+ type theme struct {
+@@ -86,6 +87,7 @@ func newConfig(v *viper.Viper, args []string) (*config, error) {
+ 	flagSet.String("shell", "", "shell (default \"sh\")")
+ 	flagSet.String("shell-options", "", "additional shell options")
+ 	flagSet.Bool("unfold", false, "unfold")
++	flagSet.Int("max-history", 1000, "maximum history length (experimental)")
+ 	flagSet.Bool("pty", false, "run on pty (experimental)")
+ 
+ 	flagSet.SetInterspersed(false)
+@@ -151,14 +153,20 @@ func newConfig(v *viper.Viper, args []string) (*config, error) {
+ 		return nil, err
+ 	}
+ 
++	if err := v.BindPFlag("general.max_history", flagSet.Lookup("max-history")); err != nil {
++		return nil, err
++	}
++
++
+ 	conf.general.debug = v.GetBool("general.debug")
+ 	conf.general.shell = v.GetString("general.shell")
+ 	conf.general.shellOptions = v.GetString("general.shell_options")
+-	conf.general.bell, _ = flagSet.GetBool("bell")
+-	conf.general.differences, _ = flagSet.GetBool("differences")
+-	conf.general.noTitle, _ = flagSet.GetBool("no-title")
++	conf.general.bell = v.GetBool("general.bell")
++	conf.general.differences = v.GetBool("general.differences")
++	conf.general.noTitle = v.GetBool("general.no_title")
+ 	conf.general.unfold = v.GetBool("general.unfold")
+ 	conf.general.pty = v.GetBool("general.pty")
++	conf.general.maxHistory = v.GetInt("general.max_history")
+ 
+ 	v.SetDefault("color.border", "gray")
+ 	v.SetDefault("color.title", "gray")
+diff --git a/main.go b/main.go
+index 3f4eeba..de5f23b 100644
+--- a/main.go
++++ b/main.go
+@@ -82,6 +82,7 @@ Options:
+   --shell-options            additional shell options
+   --unfold                   unfold command result
+   --pty                      run on pty (experimental, not for Windows)
++  --max-history              max history length, 0 is infinite (experimental, default "1000")
+ 
+  -h, --help     display this help and exit
+  -v, --version  output version information and exit`)
+diff --git a/viddy.go b/viddy.go
+index e197f85..2d64928 100644
+--- a/viddy.go
++++ b/viddy.go
+@@ -72,6 +72,7 @@ type Viddy struct {
+ 	isEditQuery      bool
+ 	unfold           bool
+ 	pty              bool
++	maxHistory       int
+ 
+ 	query string
+ 
+@@ -124,6 +125,7 @@ func NewViddy(conf *config) *Viddy {
+ 		finishedQueue: make(chan int64),
+ 		diffQueue:     make(chan int64, 100),
+ 
++		maxHistory: conf.general.maxHistory,
+ 		isRingBell: conf.general.bell,
+ 		isShowDiff: conf.general.differences,
+ 		isNoTitle:  conf.general.noTitle,
+@@ -276,6 +278,17 @@ func (v *Viddy) queueHandler() {
+ 
+ 				v.Lock()
+ 				v.idList = append(v.idList, id)
++				rc := v.historyView.GetRowCount()
++				if !v.isTimeMachine && v.maxHistory > 0 && rc > v.maxHistory {
++					count := rc - v.maxHistory
++					ids := v.idList[:count]
++					for i, id := range ids {
++						v.snapshots.Delete(id)
++						delete(v.historyRows, id)
++						v.historyView.RemoveRow(rc - 1 - i)
++					}
++				}
++
+ 				v.Unlock()
+ 
+ 				if !v.isTimeMachine {
+
+From 3c912e00518bcd8186121e93fecab1c6144920be Mon Sep 17 00:00:00 2001
+From: Takumasa Sakao <tsakao@zlab.co.jp>
+Date: Wed, 16 Feb 2022 00:22:27 +0900
+Subject: [PATCH 2/4] Fix test
+
+---
+ config_test.go | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/config_test.go b/config_test.go
+index a7cdb51..23f7bfa 100644
+--- a/config_test.go
++++ b/config_test.go
+@@ -29,6 +29,7 @@ func Test_newConfig(t *testing.T) {
+ 			differences:  false,
+ 			noTitle:      false,
+ 			debug:        false,
++			maxHistory:   1000,
+ 		},
+ 		theme: theme{
+ 			Theme: tview.Theme{
+
+From 67dbe7665e30fe1a3ad64ec286b50ac725ca2bce Mon Sep 17 00:00:00 2001
+From: Takumasa Sakao <tsakao@zlab.co.jp>
+Date: Wed, 16 Feb 2022 00:30:17 +0900
+Subject: [PATCH 3/4] Run make fmt
+
+---
+ config.go      | 1 -
+ run.go         | 1 +
+ run_windows.go | 1 +
+ 3 files changed, 2 insertions(+), 1 deletion(-)
+
+From 2c687dfb70b5a22e055460b2deacebe9f4feaad6 Mon Sep 17 00:00:00 2001
+From: Takumasa Sakao <tsakao@zlab.co.jp>
+Date: Wed, 16 Feb 2022 00:34:21 +0900
+Subject: [PATCH 4/4] Fix for lint
+
+---
+ viddy.go | 2 ++
+ 1 file changed, 2 insertions(+)
+
