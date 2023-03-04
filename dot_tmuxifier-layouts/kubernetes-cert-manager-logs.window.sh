@@ -8,7 +8,7 @@ new_window "logs-cert-manager"
 
 mapfile -t pod_names < <(kubectl get --no-headers=true -n cert-manager -o custom-columns='NAME:metadata.name' pods)
 
-run_cmd "viddy --interval 10s --differences kubectl get certificates --all-namespaces=true"
+run_cmd "viddy --no-title --interval 10s --differences kubectl get certificates --all-namespaces=true"
 split_v 50
 
 run_cmd "kubectl -n cert-manager logs --follow=true --tail=20 --all-containers=true ${pod_names[0]}"

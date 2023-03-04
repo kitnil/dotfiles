@@ -6,10 +6,10 @@
 # layout file name.
 new_window "flux"
 
-run_cmd "viddy --differences --interval 5 kubectl get --all-namespaces kustomizations.kustomize.toolkit.fluxcd.io"
+run_cmd "viddy --no-title --differences --interval 5 kubectl get --all-namespaces kustomizations.kustomize.toolkit.fluxcd.io"
 
 split_v 50
-run_cmd "viddy --differences --interval 5 kubectl get --all-namespaces helmreleases.helm.toolkit.fluxcd.io"
+run_cmd "viddy --no-title --differences --interval 5 kubectl get --all-namespaces helmreleases.helm.toolkit.fluxcd.io"
 
 # Split window into panes.
 #split_v 20
