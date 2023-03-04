@@ -1002,7 +1002,7 @@ vnc_server_zero()
     sudo chmod 666 /var/run/slim-vt7.auth
     xauth merge /var/run/slim-vt7.auth
     while true; do
-        x0vncserver -PasswordFile "$HOME/.vnc/passwd" -display :0 -rfbport 5960
+        guix shell tigervnc-server -- x0vncserver -PasswordFile "$HOME/.vnc/passwd" -display :0 -rfbport 5960
         sleep 5
     done
 }
