@@ -91,8 +91,9 @@
                (run-shell-command "vnc client guix"))))
 
 (defcommand group-3-start-programs () ()
-  (run-frame 3 :frame-0-command (lambda ()
-                                  (run-shell-command "chromium --app=https://habitica.com/"))))
+  (run-frame 3 :frame-0-command
+             (lambda ()
+               (run-shell-command "vnc client windows"))))
 
 (defvar *windows-novnc*
   "http://novnc.windows.home.wugi.info")
