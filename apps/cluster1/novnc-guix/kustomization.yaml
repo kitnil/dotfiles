@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: novnc-guix
 resources:
 - ../../base/novnc
+- namespace.yaml
 - ingress.yaml
 patchesStrategicMerge:
 - deployment.yaml
