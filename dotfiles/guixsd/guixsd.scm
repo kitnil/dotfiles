@@ -890,6 +890,7 @@ location / {
                            "peertube.wugi.info"
                            "docker-registry.wugi.info"
                            "ci.guix.gnu.org.wugi.info"
+                           "guix.local"
                            ;; Majordomo
                            ;; "hms-dev.intr"
                            ;; "api-dev.intr"
