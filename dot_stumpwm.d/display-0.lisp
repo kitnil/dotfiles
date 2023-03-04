@@ -105,11 +105,22 @@
                (run-shell-command (firefox-temp-profile nil *windows-novnc*)))))
 
 (defcommand group-5-start-programs () ()
-  (run-frame 5 :frame-0-command (lambda ()
-                                  (run-shell-command
-                                   (if (free-time?) "kodi" (majodomo-xpanes-dh-ssh))))
-               :frame-1-command (lambda ()
-                                  (run-commands "xpanes-ssh-nginx"))))
+  (run-frame 5 :frame-0-command
+             (lambda ()
+               (let (;; (window (current-window))
+                     )
+                 (run-shell-command
+                  (join
+                   (list
+                    "xfreerdp"
+                    (concat "/w:" "1920" ;; (window-width window)
+                            )
+                    (concat "/h:" "1052" ;; (window-height window)
+                            )
+                    (concat "/u:" "oleg")
+                    (concat "/p:" (string-trim '(#\Newline)
+                                               (password-store-show "windows.local/oleg")))
+                    "/v:windows.local")))))))
 
 (defcommand group-6-start-programs () ()
   (run-frame 6 :frame-0-command (lambda ()
