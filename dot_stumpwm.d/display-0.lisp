@@ -102,7 +102,7 @@
   (run-frame 4
              :frame-0-command
              (lambda ()
-               (firefox-temp-profile nil *windows-novnc*))))
+               (run-shell-command (firefox-temp-profile nil *windows-novnc*)))))
 
 (defcommand group-5-start-programs () ()
   (run-frame 5 :frame-0-command (lambda ()
