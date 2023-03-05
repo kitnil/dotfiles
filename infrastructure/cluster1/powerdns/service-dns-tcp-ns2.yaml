@@ -6,7 +6,7 @@ metadata:
     metallb.universe.tf/allow-shared-ip: key-to-share-powerdns-dns-tcp-ns2
     external-dns.alpha.kubernetes.io/hostname: ns2.home.wugi.info
 spec:
-  loadBalancerIP: 192.168.25.22
+  loadBalancerIP: 192.168.154.226
   ports:
   - name: dns-tcp
     port: 53

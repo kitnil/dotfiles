@@ -5,7 +5,7 @@ metadata:
   annotations:
     metallb.universe.tf/allow-shared-ip: key-to-share-powerdns-dns-tcp-ns1
 spec:
-  loadBalancerIP: 192.168.25.21
+  loadBalancerIP: 192.168.154.225
   ports:
   - name: dns-udp
     port: 53
