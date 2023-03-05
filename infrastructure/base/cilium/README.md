@@ -3,7 +3,7 @@
 For the new cluster you should install Cilium by hands:
 
 ``` shell
-helm install --namespace kube-system --values values.yaml --repo https://helm.cilium.io/ cilium  cilium
+helm install --version 1.12.4 --namespace kube-system --values values.yaml --repo https://helm.cilium.io/ cilium  cilium
 ```
 
 # Troubleshooting
