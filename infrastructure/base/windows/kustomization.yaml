@@ -5,3 +5,4 @@ resources:
   - namespace.yaml
   - windows-dv.yaml
   - service.yaml
+  - firefox
