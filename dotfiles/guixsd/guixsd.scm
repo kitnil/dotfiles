@@ -1408,12 +1408,6 @@ location / {
                                                                 #("127.0.0.1:9093"))))))))))
                                                     #:pretty #t)))))))))))
 
-                         (service prometheus-node-exporter-service-type
-                                  (prometheus-node-exporter-configuration
-                                   (web-listen-address "127.0.0.1:9100")
-                                   (textfile-directory "/var/lib/prometheus-node-exporter")
-                                   (extra-options '("--collector.processes"))))
-
                          (service prometheus-lvm-exporter-service-type)
 
                          (service prometheus-restic-exporter-service-type
@@ -2155,6 +2149,12 @@ PasswordAuthentication yes")))
                          (service kubelet-service-type
                                   (kubelet-configuration
                                    (kubelet "/home/oleg/.local/share/chezmoi/dot_local/bin/executable_kubelet")))
+
+                         ;; (service prometheus-node-exporter-service-type
+                         ;;          (prometheus-node-exporter-configuration
+                         ;;           (web-listen-address "127.0.0.1:9100")
+                         ;;           (textfile-directory "/var/lib/prometheus-node-exporter")
+                         ;;           (extra-options '("--collector.processes"))))
 
                          ;; (service kubernetes-k3s-service-type
                          ;;          (kubernetes-k3s-configuration
