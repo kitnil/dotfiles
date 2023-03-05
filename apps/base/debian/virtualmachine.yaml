@@ -63,7 +63,8 @@ spec:
       - name: serviceaccountdisk
         serviceAccount:
           serviceAccountName: default
-      - cloudInitNoCloud:
+      - name: cloudinitdisk
+        cloudInitNoCloud:
           userData: |-
             ssh_pwauth: true
             password: debian
