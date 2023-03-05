@@ -1,0 +1,66 @@
+apiVersion: kubevirt.io/v1alpha3
+kind: VirtualMachine
+metadata:
+  labels:
+    kubevirt.io/vm: vm-debian-datavolume
+  name: vm-debian-datavolume
+spec:
+  dataVolumeTemplates:
+  - metadata:
+      name: vm-debian-datavolume-data-volume
+    spec:
+      pvc:
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 16Gi
+        volumeMode: Block
+        storageClassName: hostpath-csi
+      source:
+        http:
+          url: https://cloud.debian.org/images/cloud/bullseye/20230124-1270/debian-11-generic-amd64-20230124-1270.qcow2
+  running: true
+  template:
+    metadata:
+      labels:
+        kubevirt.io/vm: vm-debian-datavolume
+    spec:
+      domain:
+        cpu:
+          cores: 4
+          sockets: 1
+          threads: 1
+          model: host-model
+        devices:
+          interfaces:
+          - masquerade: {}
+            model: virtio
+            name: default
+          disks:
+          - disk:
+              bus: virtio
+            name: vm-debian-datavolume-data-volume-disk
+          - disk:
+              bus: virtio
+            name: serviceaccountdisk
+        resources:
+          overcommitGuestOverhead: true
+          requests:
+            cpu: 1000m
+            memory: 1G
+          limits:
+            cpu: 4000m
+            memory: 4G
+        memory:
+          guest: 4G
+      volumes:
+      - name: vm-debian-datavolume-data-volume-disk
+        dataVolume:
+          name: vm-debian-datavolume-data-volume
+      - name: serviceaccountdisk
+        serviceAccount:
+          serviceAccountName: default
+      networks:
+      - name: default
+        pod: {}
