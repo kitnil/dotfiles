@@ -43,6 +43,9 @@ spec:
           - disk:
               bus: virtio
             name: serviceaccountdisk
+          - name: cloudinitdisk
+            disk:
+              bus: virtio
         resources:
           overcommitGuestOverhead: true
           requests:
@@ -60,6 +63,10 @@ spec:
       - name: serviceaccountdisk
         serviceAccount:
           serviceAccountName: default
+      - cloudInitNoCloud:
+          userData: |-
+            ssh_pwauth: true
+            password: debian
       networks:
       - name: default
         pod: {}
