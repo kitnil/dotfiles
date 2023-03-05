@@ -3,8 +3,6 @@ kind: Kustomization
 resources:
 - ../../../../apps/base/firefox
 - ingress.yaml
-patchesStrategicMerge:
-- deployment.yaml
 images:
 - name: docker-registry.intr/utils/firefox
   newTag: 26d6039e
