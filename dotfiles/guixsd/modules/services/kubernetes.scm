@@ -32,7 +32,11 @@
 
             kubernetes-k3s-service
 
-            containerd-service-type))
+            containerd-service-type
+
+            kubelet-configuration
+            kubelet-configuration?
+            kubelet-service-type))
 
 ;;; Commentary:
 ;;;
@@ -97,6 +101,14 @@
    (default-value '())
    (description "Run the kubernetes-k3s.")))
 
+
+;;;
+;;; containerd
+;;;
+
+;; Same as containerd from gnu/services/docker.scm in Guix official repository
+;; but does not require Docker.
+
 (define (containerd-shepherd-service config)
   (let ((containerd containerd))
     (list
@@ -121,5 +133,44 @@
                              containerd-shepherd-service)))
    (default-value '())
    (description "Run containerd service.")))
+
+
+;;;
+;;; kubelet
+;;;
+
+(define-record-type* <kubelet-configuration>
+  kubelet-configuration make-kubelet-configuration
+  kubelet-configuration?
+  (kubelet kubelet-configuration-kubelet ;string
+           (default #f))
+  (log-file kubelet-configuration-log-file ;string
+            (default "/var/log/kubelet.log")))
+
+(define (kubelet-log-rotations config)
+  (list (log-rotation
+         (files (list (kubelet-configuration-log-file config))))))
+
+(define (kubelet-shepherd-service config)
+  (list
+   (shepherd-service
+    (documentation "kubelet daemon.")
+    (provision '(kubelet))
+    (requirement '(networking containerd))
+    (start #~(make-forkexec-constructor
+              (list #$(kubelet-configuration-kubelet config))
+              #:log-file #$(kubelet-configuration-log-file config)))
+    (stop #~(make-kill-destructor)))))
+
+(define kubelet-service-type
+  (service-type
+   (name 'kubelet)
+   (extensions
+    (list (service-extension shepherd-root-service-type
+                             kubelet-shepherd-service)
+          (service-extension rottlog-service-type
+                             kubelet-log-rotations)))
+   (default-value '())
+   (description "Run the kubelet.")))
 
 ;;; kubernetes.scm ends here
