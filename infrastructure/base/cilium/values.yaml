@@ -34,8 +34,6 @@ operator:
 # ref: https://docs.cilium.io/en/stable/gettingstarted/kubeproxy-free/
 kubeProxyReplacement: "strict"
 
-installIptablesRules: false
-
 bpf:
   # -- Enable native IP masquerade support in eBPF
   masquerade: true
