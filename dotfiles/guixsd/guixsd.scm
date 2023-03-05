@@ -92,7 +92,7 @@
             (uri "/")
             (body
              (list
-              "proxy_pass http://192.168.25.18;" ;Proxy to Kubernetes
+              "proxy_pass http://192.168.154.227;" ;Proxy to Kubernetes
               "proxy_set_header Host $http_host;"
               "proxy_set_header X-Real-IP $remote_addr;" ;# pass on real client's IP
               "proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;"
