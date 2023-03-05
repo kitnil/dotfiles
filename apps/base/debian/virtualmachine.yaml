@@ -66,6 +66,7 @@ spec:
       - name: cloudinitdisk
         cloudInitNoCloud:
           userData: |-
+            #cloud-config
             users:
             - name: oleg
               shell: /bin/bash
