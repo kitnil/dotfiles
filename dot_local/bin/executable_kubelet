@@ -68,5 +68,4 @@ fi
     --tls-private-key-file=/home/oleg/src/ssl/kubernetes/kubelet-client-kube4-key.pem \
     --container-runtime=remote \
     --container-runtime-endpoint=unix:///run/containerd/containerd.sock \
-    --fail-swap-on=false \
-    --v=4
+    --fail-swap-on=false
