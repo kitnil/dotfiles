@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: echo
+spec:
+  selector:
+    app: echo
+  type: ClusterIP
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5678
