@@ -1,0 +1,42 @@
+prometheus:
+  # https://kubernetes.github.io/ingress-nginx/user-guide/monitoring/
+  #
+  # Since Prometheus is running in a different namespace and not in the
+  # ingress-nginx namespace, it would not be able to discover ServiceMonitors
+  # in other namespaces when installed. Reconfigure your kube-prometheus-stack
+  # Helm installation to set serviceMonitorSelectorNilUsesHelmValues flag to
+  # false. By default, Prometheus only discovers PodMonitors within its own
+  # namespace. This should be disabled by setting
+  # podMonitorSelectorNilUsesHelmValues to false
+  prometheusSpec:
+    ## If true, a nil or {} value for prometheus.prometheusSpec.podMonitorSelector will cause the
+    ## prometheus resource to be created with selectors based on values in the helm deployment,
+    ## which will also match the podmonitors created
+    ##
+    podMonitorSelectorNilUsesHelmValues: false
+
+    ## If true, a nil or {} value for prometheus.prometheusSpec.serviceMonitorSelector will cause the
+    ## prometheus resource to be created with selectors based on values in the helm deployment,
+    ## which will also match the servicemonitors created
+    ##
+    serviceMonitorSelectorNilUsesHelmValues: false
+
+nodeExporter:
+  service:
+    listenOnAllInterfaces: false
+
+coreDns:
+  enabled: false
+
+kubeDns:
+  enabled: true
+
+grafana:
+  grafana.ini:
+    auth.anonymous:
+      # enable anonymous access
+      enabled: true
+      # specify organization name that should be used for unauthenticated users
+      org_name: "Main Org."
+      # specify role for unauthenticated users
+      org_role: Viewer
