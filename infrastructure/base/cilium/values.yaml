@@ -39,6 +39,16 @@ k8sServicePort: "6443"
 bpf:
   masquerade: true
 
+  # -- Configure explicitly allowed VLAN id's for bpf logic bypass.
+  # [0] will allow all VLAN id's without any filtering.
+  vlanBypass: [0]
+
+  # -- Allow cluster external access to ClusterIP services.
+  #
+  # Required for access to Kubernetes ClusterIP services from Kubevirt virtual
+  # machines with interface type masquerade.
+  lbExternalClusterIP: true
+
 # -- Configure BGP
 bgp:
   # -- Enable BGP support inside Cilium; embeds a new ConfigMap for BGP inside
@@ -68,6 +78,9 @@ hubble:
     rollOutPods: true
     enabled: true
 
+# Optimize TCP and UDP workloads and enable rate-limiting traffic from
+# individual Pods with EDT (Earliest Departure Time) through the
+# "kubernetes.io/egress-bandwidth" Pod annotation.
 bandwidthManager:
   enabled: true
   bbr: false # Linux kernel of 5.18
@@ -75,3 +88,31 @@ bandwidthManager:
 cluster:
   name: "cluster1"
   id: 1
+
+# -- Configure external workloads support
+externalWorkloads:
+  # -- Enable support for external workloads, such as VMs (false by default).
+  #
+  # Required for cluster-mesh.
+  enabled: true
+
+# Kubernetes Without kube-proxy — Cilium 1.9.18 documentation
+# https://docs.cilium.io/en/v1.9/gettingstarted/kubeproxy-free/#hybrid-mode
+#
+# Cilium also supports a hybrid DSR and SNAT mode, that is, DSR is performed
+# for TCP and SNAT for UDP connections. This has the advantage that it removes
+# the need for manual MTU changes in the network while still benefiting from
+# the latency improvements through the removed extra hop for replies, in
+# particular, when TCP is the main transport for workloads.
+#
+# The mode setting `loadBalancer.mode` allows to control the behavior through
+# the options `dsr`, `snat` and `hybrid`. By default the `snat` mode is used
+# in the agent.
+loadBalancer:
+  mode: hybrid
+
+tunnel: "disabled" # required for loadBalancer.mode=hybrid
+
+# -- Enable installation of PodCIDR routes between worker
+# nodes if worker nodes share a common L2 network segment.
+autoDirectNodeRoutes: true
