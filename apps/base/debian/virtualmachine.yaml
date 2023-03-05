@@ -66,8 +66,12 @@ spec:
       - name: cloudinitdisk
         cloudInitNoCloud:
           userData: |-
-            ssh_pwauth: true
-            password: debian
+            users:
+            - name: oleg
+              shell: /bin/bash
+              sudo: true
+              ssh_authorized_keys:
+              - ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDEmkOCBXHo6e3IixgJNflxxLDPaLakMWZRGq6qFuqIXPMyr1abLezPrr2Fk8+j8uZr5DyW/vbSs4uTZTuYJ2FXD0s8nZqLnO3eel7YN3YiHD4BxGR7KFSvQVVM7eJ9/RINDp1qZ6uFtGH//vhjqK/rzsysxQFL6sW88mL6sQZd46LQ7Grm1IPkiZALD7/Z3EYpHrcRjf0pN3dkpOjCgLrl0+AuMN6mqffqlJ/hha7xiEJ0w3gSGDJAor/huYZf331cUoQOZOyNfhL8ux5GQGLPMh+371Ilh5UFFksY5hs46jkt16SegHwj6MmGoiBFM9TBqapPzGKkBRUVaGeqg+dtsI/k/XwH1HYd9nF4lZri5GAGRGxpFV/gv6oex/8q7CUlm5zKY7nH7GV2gLaVMCvXqezzqrQJz//IeKPOCcL6MLIbJfRz1eXsNnywUV8Vn6zQo4y6D0VyqwMHzV0JQU74wn2LIPjguIq5iw1GrnMUGpwfm6rAx1/fLWl4uGGssNIJd+JiH8Fo9VLulYLQNgbE5rlbPAvhuOQEIz+T9Gnv9NI5TG7LoywlDjAOSuiOQgdUIr9XlKviRIAeeIkFNkdCLF/xpqkDyRM3DidrNkZno964gxQFe7UlCR/icGUvLyNxzeWfSmrYPwIHK/ntVRkvDGYlKOqAhROesL/X3gUbMQ==
       networks:
       - name: default
         pod: {}
