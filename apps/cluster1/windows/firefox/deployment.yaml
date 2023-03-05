@@ -1,0 +1,9 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: firefox
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: firefox
+      app.kubernetes.io/part-of: windows
