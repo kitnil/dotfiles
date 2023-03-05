@@ -102,12 +102,8 @@ rec {
     };
     www = { inherit A; };
     home = {
-      subdomains = {
-        windows = {
-          subdomains = {
-            novnc = guix;
-          };
-        };
+      subdomains."*" = {
+        inherit (guix) A;
       };
     };
   };
