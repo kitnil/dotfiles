@@ -62,6 +62,7 @@
 
 (define %certbot-hosts
   (list "cgit.duckdns.org"
+        "cgit.wugi.info"
         "guix.duckdns.org"
         "guix.wugi.info"
         "jenkins.wugi.info"
@@ -1803,7 +1804,9 @@ PasswordAuthentication yes")))
                                                   "https://cgit.duckdns.org/git"))
                                    (nginx (list (nginx-server-configuration
                                                  (inherit %cgit-configuration-nginx)
-                                                 (server-name '("cgit.duckdns.org" "git.tld"))
+                                                 (server-name '("cgit.wugi.info"
+                                                                "cgit.duckdns.org"
+                                                                "git.tld"))
                                                  (locations
                                                   (append (nginx-server-configuration-locations %cgit-configuration-nginx)
                                                           (list (git-http-nginx-location-configuration
@@ -1813,8 +1816,8 @@ PasswordAuthentication yes")))
                                                                  (uri "/.well-known")
                                                                  (body '("root /var/www;"))))))
                                                  (listen '("192.168.0.144:80" "192.168.0.144:443 ssl"))
-                                                 (ssl-certificate (letsencrypt-certificate "cgit.duckdns.org"))
-                                                 (ssl-certificate-key (letsencrypt-key "cgit.duckdns.org")))))))
+                                                 (ssl-certificate (letsencrypt-certificate "cgit.wugi.info"))
+                                                 (ssl-certificate-key (letsencrypt-key "cgit.wugi.info")))))))
 
                          (service tor-service-type
                                   (tor-configuration
