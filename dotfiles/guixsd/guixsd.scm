@@ -2152,6 +2152,10 @@ PasswordAuthentication yes")))
                                                       ("env_file" . #("/home/oleg/src/github.com/Chocobozzz/PeerTube/support/docker/production/.env"))
                                                       ("depends_on" . #("postgres" "redis" "postfix")))))))))))))))
 
+                         (service kubelet-service-type
+                                  (kubelet-configuration
+                                   (kubelet "/home/oleg/.local/share/chezmoi/dot_local/bin/executable_kubelet")))
+
                          ;; (service kubernetes-k3s-service-type
                          ;;          (kubernetes-k3s-configuration
                          ;;           (server? #t)
