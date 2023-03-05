@@ -57,6 +57,12 @@
                     "--overrides="
                     (scm->json-string
                      `(("spec"
+                        ("tolerations"
+                         .
+                         #((("effect" . "NoSchedule")
+                            ("value" . "true")
+                            ("operator" . "Equal")
+                            ("key" . "unschedulable"))))
                         ("nodeSelector"
                          ("kubernetes.io/hostname" . ,host)))
                        ("apiVersion" . "v1"))))))
