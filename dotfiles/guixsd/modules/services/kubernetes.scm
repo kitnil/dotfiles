@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2022 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2022, 2023 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -17,6 +17,7 @@
 ;;; along with GNU Guix.  If not, see <http://www.gnu.org/licenses/>.
 
 (define-module (services kubernetes)
+  #:use-module (gnu packages docker)
   #:use-module (gnu packages linux)
   #:use-module (gnu services)
   #:use-module (gnu services admin)
@@ -29,7 +30,9 @@
             kubernetes-k3s-configuration?
             kubernetes-k3s-service-type
 
-            kubernetes-k3s-service))
+            kubernetes-k3s-service
+
+            containerd-service-type))
 
 ;;; Commentary:
 ;;;
@@ -93,5 +96,30 @@
                              kubernetes-k3s-log-rotations)))
    (default-value '())
    (description "Run the kubernetes-k3s.")))
+
+(define (containerd-shepherd-service config)
+  (let ((containerd containerd))
+    (list
+     (shepherd-service
+      (documentation "containerd daemon.")
+      (provision '(containerd))
+      (start #~(make-forkexec-constructor
+                (list (string-append #$containerd "/bin/containerd"))
+                ;; For finding containerd-shim binary.
+                #:environment-variables
+                (list (string-append "PATH=" #$containerd "/bin"))
+                #:pid-file "/run/containerd/containerd.pid"
+                #:pid-file-timeout 300
+                #:log-file "/var/log/containerd.log"))
+      (stop #~(make-kill-destructor))))))
+
+(define containerd-service-type
+  (service-type
+   (name 'containerd)
+   (extensions
+    (list (service-extension shepherd-root-service-type
+                             containerd-shepherd-service)))
+   (default-value '())
+   (description "Run containerd service.")))
 
 ;;; kubernetes.scm ends here
