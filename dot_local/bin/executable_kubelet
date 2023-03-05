@@ -47,7 +47,7 @@ fi
 ) &
 
 /nix/store/lp8ch8l5dn4bcp056cpr1gfyb9i8zi54-kubernetes-1.25.4/bin/kubelet \
-    --address=192.168.25.1 \
+    --address=192.168.154.1 \
     --authentication-token-webhook \
     --authentication-token-webhook-cache-ttl=10s \
     --authorization-mode=Webhook \
@@ -58,14 +58,14 @@ fi
     --healthz-bind-address=127.0.0.1 \
     --healthz-port=10248 \
     --hostname-override=kube4 \
-    --kubeconfig=/nix/store/hn4s3q43x9m7l4i1gvalabzvzw88ja8g-kubelet-kubeconfig \
+    --kubeconfig=/home/oleg/.local/share/chezmoi/dotfiles/kubernetes/kubeconfig \
     --pod-infra-container-image=pause \
     --port=10250 \
     --register-node=true \
     --register-with-taints=unschedulable=true:NoSchedule \
     --root-dir=/var/lib/kubelet \
-    --tls-cert-file=/nix/store/4ygd15kdyidrcd0588dm3q0jayk1mcch-kubelet-client-kube4.pem \
-    --tls-private-key-file=/nix/store/r2b19vzxj74zlnw9a2pf1gj3cbwy7nk0-kubelet-client-kube4-key.pem \
+    --tls-cert-file=/home/oleg/src/ssl/kubernetes/kubelet-client-kube4.pem \
+    --tls-private-key-file=/home/oleg/src/ssl/kubernetes/kubelet-client-kube4-key.pem \
     --container-runtime=remote \
     --container-runtime-endpoint=unix:///run/containerd/containerd.sock \
     --fail-swap-on=false \
