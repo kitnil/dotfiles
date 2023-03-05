@@ -7,8 +7,8 @@ kind: Secret
 type: Opaque
 metadata:
   name: vnc
-  namespace: firefox
+  namespace: windows
 data:
-  passwd: $(pass show kubernetes/firefox/vnc/passwd | guix shell tigervnc-server -- vncpasswd -f > passwd; base64 < passwd)
+  passwd: $(pass show kubernetes/firefox/vnc/passwd | vncpasswd -f > passwd; base64 < passwd)
 EOF
 ```
