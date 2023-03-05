@@ -1,0 +1,44 @@
+prometheus:
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    annotations:
+      acme.cert-manager.io/http01-ingress-class: nginx
+      cert-manager.io/cluster-issuer: letsencrypt
+      nginx.ingress.kubernetes.io/whitelist-source-range: "10.0.0.0/8,192.168.0.0/16"
+    tls:
+    - secretName: prometheus-general-tls
+      hosts:
+      - prometheus.kubernetes.home.wugi.info
+    hosts:
+    - prometheus.kubernetes.home.wugi.info
+
+alertmanager:
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    annotations:
+      acme.cert-manager.io/http01-ingress-class: nginx
+      cert-manager.io/cluster-issuer: letsencrypt
+      nginx.ingress.kubernetes.io/whitelist-source-range: "10.0.0.0/8,192.168.0.0/16"
+    tls:
+    - secretName: alertmanager-general-tls
+      hosts:
+      - alertmanager.kubernetes.home.wugi.info
+    hosts:
+    - alertmanager.kubernetes.home.wugi.info
+
+grafana:
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    annotations:
+      acme.cert-manager.io/http01-ingress-class: nginx
+      cert-manager.io/cluster-issuer: letsencrypt
+      nginx.ingress.kubernetes.io/whitelist-source-range: "10.0.0.0/8,192.168.0.0/16"
+    tls:
+    - secretName: grafana-general-tls
+      hosts:
+      - grafana.kubernetes.home.wugi.info
+    hosts:
+    - grafana.kubernetes.home.wugi.info
