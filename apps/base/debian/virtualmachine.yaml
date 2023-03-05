@@ -18,7 +18,7 @@ spec:
         storageClassName: hostpath-csi
       source:
         http:
-          url: https://cloud.debian.org/images/cloud/bullseye/20230124-1270/debian-11-generic-amd64-20230124-1270.qcow2
+          url: https://iso.wugi.info/debian-11-generic-amd64-20230124-1270.qcow2
   running: true
   template:
     metadata:
