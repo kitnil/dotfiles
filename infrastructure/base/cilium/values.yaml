@@ -19,6 +19,7 @@ cni:
   debug:
     enabled: true
 
+# -- Configure prometheus metrics on the configured port at /metrics
 prometheus:
   enabled: true
 
@@ -34,6 +35,7 @@ operator:
 kubeProxyReplacement: "strict"
 
 bpf:
+  # -- Enable native IP masquerade support in eBPF
   masquerade: true
 
   # -- Configure explicitly allowed VLAN id's for bpf logic bypass.
@@ -64,13 +66,12 @@ bgpControlPlane:
   # -- Enables the BGP control plane.
   enabled: true
 
-ingressController:
-  enabled: true
-
 hubble:
   relay:
     rollOutPods: true
     enabled: true
+    prometheus:
+      enabled: true
   ui:
     rollOutPods: true
     enabled: true
@@ -80,7 +81,7 @@ hubble:
 # "kubernetes.io/egress-bandwidth" Pod annotation.
 bandwidthManager:
   enabled: true
-  bbr: false # Linux kernel of 5.18
+  bbr: false # 'enable' requires Linux kernel of 5.18
 
 # -- Configure external workloads support
 externalWorkloads:
@@ -109,3 +110,22 @@ tunnel: "disabled" # required for loadBalancer.mode=hybrid
 # -- Enable installation of PodCIDR routes between worker
 # nodes if worker nodes share a common L2 network segment.
 autoDirectNodeRoutes: true
+
+# -- Enable Layer 7 network policy.
+# Egress gateway partially incompatible with L7 policies · Issue #19642
+# https://github.com/cilium/cilium/issues/19642
+l7Proxy: false
+
+# -- Enables egress gateway to redirect and SNAT the traffic that leaves the
+# cluster.
+egressGateway:
+  enabled: true
+  # -- Install egress gateway IP rules and routes in order to properly steer
+  # egress gateway traffic to the correct ENI interface
+  installRoutes: true
+
+# Ingress + egress + l7proxy=false results in panic: invalid memory address or
+# nil pointer dereference · Issue #21354 · cilium/cilium
+# https://github.com/cilium/cilium/issues/21354
+ingressController:
+  enabled: false
