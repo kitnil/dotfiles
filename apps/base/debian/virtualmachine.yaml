@@ -15,7 +15,6 @@ spec:
         resources:
           requests:
             storage: 16Gi
-        volumeMode: Block
         storageClassName: hostpath-csi
       source:
         http:
