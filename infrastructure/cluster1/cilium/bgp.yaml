@@ -5,6 +5,11 @@
 apiVersion: v1
 data:
   config.yaml: |
+    address-pools:
+      - addresses:
+        - "192.168.154.224/27"
+        name: default
+        protocol: bgp
     peers:
       - my-asn: 64512
         peer-address: '192.168.154.1'
