@@ -7,7 +7,7 @@ spec:
     spec:
       chart: ${2:chart}
       reconcileStrategy: ChartVersion
-      version: 1.7.0
+      version: $5
       sourceRef:
         kind: ${3:$$(yas-choose-value "GitRepository" "HelmRepository")}
         name: ${4:source}
