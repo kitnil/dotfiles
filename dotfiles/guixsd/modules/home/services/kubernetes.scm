@@ -36,25 +36,19 @@
                 (directory (string-append #$%ansible-state-directory "/"
                                           kubernetes-directory)))
            (mkdir-p directory)
-           (let* ((port (open-pipe* OPEN_READ "kubectl"
-                                    "config" "current-context"))
-                  (output (read-string port)))
-             (close-port port)
-             (when (string= (string-trim-right output #\newline)
-                            kubernetes-cluster-name)
-               (invoke "docker" "run"
-                       "--network" "host"
-                       "--rm"
-                       "--volume" (string-append %home "/.kube:/.kube")
-                       "--volume" (string-append directory ":/dump")
-                       "docker-registry.intr/utils/kube-dump:master"
-                       "dump-namespaces"
-                       "-d" "/dump"
-                       "--kube-config"
-                       #$(string-append "/.kube/" (kubernetes-cluster-configuration-config-file config)))
-               (with-directory-excursion #$%ansible-state-directory
-                 (invoke "git" "add" kubernetes-directory)
-                 (invoke "git" "commit" "--message=Update.")))))))))
+           (invoke "docker" "run"
+                   "--network" "host"
+                   "--rm"
+                   "--volume" (string-append %home "/.kube:/.kube")
+                   "--volume" (string-append directory ":/dump")
+                   "docker-registry.intr/utils/kube-dump:master"
+                   "dump-namespaces"
+                   "-d" "/dump"
+                   "--kube-config"
+                   #$(string-append "/.kube/" (kubernetes-cluster-configuration-config-file config)))
+           (with-directory-excursion #$%ansible-state-directory
+             (invoke "git" "add" kubernetes-directory)
+             (invoke "git" "commit" "--message=Update.")))))))
 
 (define (kubernetes-mcron-jobs config)
   (list
@@ -63,13 +57,13 @@
       #$(kubernetes-configuration->vc
          (kubernetes-cluster-configuration
           (name "cluster1")
-          (config-file "config"))))
+          (config-file "config-mjru-cluster1"))))
    #~(job
       '(next-hour '(16))
       #$(kubernetes-configuration->vc
          (kubernetes-cluster-configuration
           (name "cluster2")
-          (config-file "config2"))))))
+          (config-file "config-mjru-cluster2"))))))
 
 (define kubernetes-service-type
   (service-type
