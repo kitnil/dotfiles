@@ -14,5 +14,5 @@ spec:
         namespace: flux-system
   interval: 1m0s
   valuesFrom:
-    - kind: ConfigMap
-      name: ${1:name}-values
+  - kind: ConfigMap
+    name: ${1:name}-values
