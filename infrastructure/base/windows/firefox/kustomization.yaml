@@ -5,6 +5,6 @@ resources:
 - ingress.yaml
 images:
 - name: docker-registry.intr/utils/firefox
-  newTag: 26d6039e
+  newTag: 8e07fb79
 - name: docker-registry.intr/utils/novnc
   newTag: 4de3373a
