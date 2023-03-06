@@ -1,8 +1,15 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
+namespace: firefox
 resources:
 - ../../../../apps/base/firefox
 - ingress.yaml
+configMapGenerator:
+- name: nix-home-configuration
+  files:
+  - home.nix=home.nix
+patchesStrategicMerge:
+- deployment.yaml
 images:
 - name: docker-registry.intr/utils/firefox
   newTag: 8e07fb79
