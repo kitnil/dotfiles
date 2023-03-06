@@ -35,7 +35,7 @@
           "general.useragent.locale" = "en-GB";
           "browser.search.defaultenginename" = "Google";
           "network.proxy.type" = 1;
-          "network.proxy.socks" = "windows";
+          "network.proxy.socks" = "windows.windows";
           "network.proxy.socks_port" = 1080;
           "network.proxy.socks_remote_dns" = true;
         };
