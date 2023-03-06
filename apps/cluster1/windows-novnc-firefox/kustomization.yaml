@@ -1,7 +1,8 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: firefox
+namespace: windows-novnc-firefox
 resources:
+- namespace.yaml
 - ../../../apps/base/firefox
 - ingress.yaml
 configMapGenerator:
