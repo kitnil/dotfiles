@@ -8,6 +8,10 @@ spec:
     protocol: TCP
     targetPort: 3389
     name: rdp
+  - port: 1080
+    protocol: TCP
+    targetPort: 1080
+    name: socks5
   selector:
     kubevirt.io/vm: vm-windows-datavolume
   type: LoadBalancer
