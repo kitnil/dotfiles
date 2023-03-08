@@ -49,5 +49,5 @@ case "$1" in
         esac
         ;;
     *)
-        exec /run/current-system/profile/bin/virsh "${@:2}"
+        exec /run/current-system/profile/bin/virsh "${@:1}"
 esac
