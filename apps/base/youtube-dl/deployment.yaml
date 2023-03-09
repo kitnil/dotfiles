@@ -1,0 +1,120 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: youtube-dl
+  labels:
+    app.kubernetes.io/name: youtube-dl
+    app.kubernetes.io/part-of: youtube-dl
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: youtube-dl
+      app.kubernetes.io/part-of: youtube-dl
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: youtube-dl
+        app.kubernetes.io/part-of: youtube-dl
+    spec:
+      serviceAccountName: youtube-dl
+      securityContext:
+        {}
+      containers:
+        - name: youtube-dl
+          securityContext:
+            capabilities:
+              drop:
+              - ALL
+          image: "nixery.dev/shell/entr/youtube-dl"
+          resources:
+            limits:
+              cpu: 100m
+              memory: 128Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          volumeMounts:
+            - mountPath: /downloads
+              name: youtube-dl
+            - mountPath: /usr/local/bin
+              name: script
+            - mountPath: /etc/youtube-dl.conf
+              subPath: youtube-dl.conf
+              name: youtube-dl-configuration
+          command: ["/bin/sh"]
+          args: ["/usr/local/bin/script.sh"]
+          workingDir: /downloads
+        - name: "youtube-dl-rsync"
+          image: "nixery.dev/shell/rsync"
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: rsync
+              containerPort: 873
+              protocol: TCP
+          resources:
+            limits:
+              cpu: 100m
+              memory: 128Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          volumeMounts:
+            - mountPath: /downloads
+              name: youtube-dl
+            - mountPath: /etc/rsyncd.conf
+              subPath: rsyncd.conf
+              name: rsync-configuration
+          command: ["rsync"]
+          args: ["--daemon", "--no-detach"]
+          workingDir: /downloads
+        - name: "youtube-dl-python-http-server"
+          securityContext:
+            capabilities:
+              drop:
+              - ALL
+          image: nixery.dev/python3
+          imagePullPolicy: IfNotPresent
+          ports:
+            - name: http
+              containerPort: 8000
+              protocol: TCP
+          # TODO: Fix HTTP 404 and provide 200
+          # livenessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: 8000
+          # readinessProbe:
+          #   httpGet:
+          #     path: /
+          #     port: 8000
+          resources:
+            limits:
+              cpu: 100m
+              memory: 128Mi
+            requests:
+              cpu: 100m
+              memory: 128Mi
+          volumeMounts:
+            - mountPath: /downloads
+              name: youtube-dl
+            - mountPath: /usr/local/bin
+              name: python-http-server
+          command: ["/bin/python3"]
+          args: ["/usr/local/bin/python-http-server.py"]
+          workingDir: /downloads
+      volumes:
+        - name: youtube-dl
+          emptyDir: {}
+        - name: script
+          configMap:
+            name: script
+        - name: youtube-dl-configuration
+          configMap:
+            name: youtube-dl-configuration
+        - name: rsync-configuration
+          configMap:
+            name: rsync-configuration
+        - name: python-http-server
+          configMap:
+            name: python-http-server
