@@ -150,7 +150,24 @@
  '(org-agenda-files '("~/org/inbox.org" "~/org/todo.org" "~/org/web.org"))
  '(python-shell-interpreter "python3")
  '(safe-local-variable-values
-   '((eval progn
+   '((eval let
+           ((root-dir-unexpanded
+             (locate-dominating-file default-directory ".dir-locals.el")))
+           (when root-dir-unexpanded
+             (let*
+                 ((root-dir
+                   (file-local-name
+                    (expand-file-name root-dir-unexpanded)))
+                  (root-dir*
+                   (directory-file-name root-dir)))
+               (unless
+                   (boundp 'geiser-guile-load-path)
+                 (defvar geiser-guile-load-path 'nil))
+               (make-local-variable 'geiser-guile-load-path)
+               (require 'cl-lib)
+               (cl-pushnew root-dir* geiser-guile-load-path :test #'string-equal))))
+     (projectile-project-compilation-cmd . ".direnv/aliases/shell -- .direnv/aliases/build")
+     (eval progn
            (when
                (boundp #'projectile-project-root)
              (setenv "GUIX_PACKAGE_PATH"
