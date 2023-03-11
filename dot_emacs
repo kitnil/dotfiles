@@ -396,5 +396,6 @@
  ;; If there is more than one, they won't work right.
  '(default ((t (:family "Liberation Mono" :foundry "1ASC" :slant normal :weight normal :height 136 :width normal))))
  '(highlight-indent-guides-character-face ((t (:foreground "gray15"))))
+ '(vterm-color-black ((t (:background "gray15" :foreground "gray15"))))
  '(vterm-color-blue ((t (:background "steel blue" :foreground "steel blue")))))
 
