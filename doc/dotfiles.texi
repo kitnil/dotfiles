@@ -1,0 +1,85 @@
+\input texinfo   @c -*-texinfo-*-
+@c %**start of header
+@setfilename dotfiles.info
+@settitle dotfiles
+@c %**end of header
+@copying
+dotfiles documentation.
+
+Copyright @copyright{} 2023  Oleg Pykhalov
+
+@quotation
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the GNU Free Documentation License, Version 1.3
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover Texts.
+A copy of the license is included in the section entitled ``GNU
+Free Documentation License''.
+
+A copy of the license is also available from the Free Software
+Foundation Web site at @url{https://www.gnu.org/licenses/fdl.html}.
+
+@end quotation
+
+The document was typeset with
+@uref{https://www.gnu.org/software/texinfo/, GNU Texinfo}.
+
+@end copying
+
+@titlepage
+@title dotfiles
+@subtitle dotfiles documentation
+@author Oleg Pykhalov <go.wigust@gmail.com>
+@page
+@vskip 0pt plus 1filll
+@insertcopying
+@end titlepage
+
+@c Output the table of the contents at the beginning.
+@contents
+
+@ifnottex
+@node Top
+@top dotfiles
+
+@insertcopying
+@end ifnottex
+
+@c Generate the nodes for this menu with `C-c C-u C-m'.
+@menu
+@end menu
+
+@c Update all node entries with `C-c C-u C-n'.
+@c Insert new nodes with `C-c C-c n'.
+@node Chapter One
+@chapter Chapter One
+
+Tmuxifier running Kubernetes tools could be run as:
+
+@example
+TMUXIFIER_KUBERNETES_NAMESPACE=pdns kubectl tmuxifier mjru-cluster1
+@end example
+
+configured cluster on guix.wugi.info are:
+@itemize
+@item mjru-cluster1
+@item mjru-cluster2
+@item home
+@end itemize
+
+@node Copying This Manual
+@appendix Copying This Manual
+
+@menu
+* GNU Free Documentation License::  License for copying this manual.
+@end menu
+
+@c Get fdl.texi from https://www.gnu.org/licenses/fdl.html
+@include fdl.texi
+
+@node Index
+@unnumbered Index
+
+@printindex cp
+
+@bye
