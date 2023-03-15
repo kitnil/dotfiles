@@ -64,6 +64,7 @@
   (simple-service 'bin-config
                   home-files-service-type
                   (append
+                   `((".local/bin/xmenu.sh" ,xmenu.sh))
                    (map (lambda (program)
                           `(,(string-append ".local/bin/" program)
                             ,(local-file (string-append %project-directory "/dot_local/bin/executable_" program)
