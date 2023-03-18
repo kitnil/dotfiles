@@ -58,7 +58,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m0s
-  path: ./apps/cluster1/peertube
+  path: ./apps/base/peertube
   prune: true
   sourceRef:
     kind: GitRepository
