@@ -6,8 +6,11 @@ resources:
 - peertube-deployment.yaml
 - peertube-service.yaml
 - postfix-deployment.yaml
+- postfix-service.yaml
 - postgres-deployment.yaml
+- postgres-service.yaml
 - redis-deployment.yaml
+- redis-service.yaml
 images:
 - name: chocobozzz/peertube
   newTag: v4.3.1-bullseye
