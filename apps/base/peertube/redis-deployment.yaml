@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redis
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: redis
+      app.kubernetes.io/part-of: peertube
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: redis
+        app.kubernetes.io/part-of: peertube
+    spec:
+      containers:
+        - image: redis:6-alpine
+          name: redis
+          resources: {}
+          volumeMounts:
+            - mountPath: /data
+              name: redis-claim0
+          ports:
+            - name: default
+              containerPort: 6379
+              protocol: TCP
+      volumes:
+        - name: redis-claim0
+          hostPath:
+            path: /var/lib/peertube/redis
+            type: Directory

@@ -2094,58 +2094,6 @@ PasswordAuthentication yes")))
                                                          "\" -s \"media;/share;yes;no;no;workgroup\" -s \"public;/public;yes;no;yes\""
                                                          " -g \"acl allow execute always = True\"")))))))))))))))
 
-                         (service docker-compose-service-type
-                                  (docker-compose-configuration
-                                   (project-name "peertube")
-                                   (compose-file
-                                    (computed-file
-                                     "docker-compose-peertube.json"
-                                     (with-extensions (list guile-json-4)
-                                       (with-imported-modules (source-module-closure '((json builder)))
-                                         #~(begin
-                                             (use-modules (json builder)
-                                                          (ice-9 rdelim))
-                                             (with-output-to-file #$output
-                                               (lambda ()
-                                                 (scm->json
-                                                  `(("volumes")
-                                                    ("version" . "3.3")
-                                                    ("services"
-                                                     ("redis"
-                                                      ("volumes" . #("/var/lib/peertube/redis:/data"))
-                                                      ("image" . "redis:6-alpine")
-                                                      ("ulimits"
-                                                       ("nofile"
-                                                        ("soft" . 65536)
-                                                        ("hard" . 65536)))
-                                                      ("command" . "--loglevel debug"))
-                                                     ("postgres"
-                                                      ("volumes"
-                                                       .
-                                                       #("/var/lib/peertube/db:/var/lib/postgresql/data"))
-                                                      ("image" . "postgres:13-alpine")
-                                                      ("env_file" . #("/home/oleg/src/github.com/Chocobozzz/PeerTube/support/docker/production/.env")))
-                                                     ("postfix"
-                                                      ("volumes"
-                                                       .
-                                                       #("/var/lib/peertube/opendkim/keys:/etc/opendkim/keys"))
-                                                      ("image" . "mwader/postfix-relay")
-                                                      ("env_file" . #("/home/oleg/src/github.com/Chocobozzz/PeerTube/support/docker/production/.env")))
-                                                     ("peertube"
-                                                      ("volumes"
-                                                       .
-                                                       #("/var/lib/peertube_assets:/app/client/dist"
-                                                         "/srv/peertube:/data"
-                                                         "/var/log/peertube:/data/logs"
-                                                         "/var/lib/peertube/tmp:/data/tmp"
-                                                         "/var/lib/peertube/config:/config"))
-                                                      ("ports" . #("1935:1935" "9001:9000"))
-                                                      ("image"
-                                                       .
-                                                       "chocobozzz/peertube:production-bullseye")
-                                                      ("env_file" . #("/home/oleg/src/github.com/Chocobozzz/PeerTube/support/docker/production/.env"))
-                                                      ("depends_on" . #("postgres" "redis" "postfix")))))))))))))))
-
                          (service kubelet-service-type
                                   (kubelet-configuration
                                    (kubelet "/home/oleg/.local/share/chezmoi/dot_local/bin/executable_kubelet")))

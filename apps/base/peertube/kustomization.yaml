@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: peertube
+resources:
+- namespace.yaml
+- peertube-deployment.yaml
+- peertube-service.yaml
+- postfix-deployment.yaml
+- postgres-deployment.yaml
+- redis-deployment.yaml
+images:
+- name: chocobozzz/peertube
+  newTag: v4.3.1-bullseye
