@@ -102,17 +102,6 @@
          (listen '("192.168.0.144:80"))
          (root "/srv/share"))
         (nginx-server-configuration
-         (listen '("192.168.0.144:443 ssl"))
-         (ssl-certificate (letsencrypt-certificate "peertube.wugi.info"))
-         (ssl-certificate-key (letsencrypt-key "peertube.wugi.info"))
-         (server-name '("peertube.wugi.info"))
-         (root "/var/www/peertube/storage")
-         (raw-content
-          (list
-           (with-input-from-file (string-append
-                                  %home "/.local/share/chezmoi/dotfiles/guixsd/nginx/peertube")
-             read-string))))
-        (nginx-server-configuration
          (server-name '("opensearch.home"))
          (listen '("192.168.154.1:80"))
          (raw-content (list "client_max_body_size 200M;"))
@@ -888,7 +877,6 @@ location / {
                            "cgit.duckdns.org"
                            "netmap.intr"
                            "vault1"
-                           "peertube.wugi.info"
                            "docker-registry.wugi.info"
                            "ci.guix.gnu.org.wugi.info"
                            "guix.local"
@@ -1736,9 +1724,6 @@ PasswordAuthentication yes")))
                                    (server-blocks %nginx-server-blocks)
                                    (upstream-blocks
                                     (list
-                                     (nginx-upstream-configuration
-                                      (name "peertube-backend")
-                                      (servers '("127.0.0.1:9001")))
                                      (nginx-upstream-configuration
                                       (name "docker-registry")
                                       (servers '("127.0.0.1:5000")))
