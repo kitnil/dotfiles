@@ -11,6 +11,7 @@ resources:
 - postgres-service.yaml
 - redis-deployment.yaml
 - redis-service.yaml
+- ingress.yaml
 images:
 - name: chocobozzz/peertube
   newTag: v4.3.1-bullseye
