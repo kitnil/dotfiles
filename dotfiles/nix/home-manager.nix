@@ -15,6 +15,8 @@
 
     clipman wayvnc wtype
 
+    difftastic
+
     # alacritty
 
     # assh
