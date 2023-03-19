@@ -1152,7 +1152,7 @@ location / {
                                                  (append (list "https://wugi.info/"
                                                                "https://guix.wugi.info/"
                                                                "https://blog.wugi.info/"
-                                                               "https://peertube.wugi.info/"
+                                                               "https://peertube.home.wugi.info/"
                                                                ;; This endpoint provides an ‘nginx’ on jenkins.intr which proxies to
                                                                ;; ‘prixoxy’ which proxies to ‘tor’.
                                                                "http://ci.guix.gnu.org.intr"
