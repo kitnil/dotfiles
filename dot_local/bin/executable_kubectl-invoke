@@ -1,0 +1,233 @@
+#!/usr/bin/env -S guile --no-auto-compile -e main -s
+!#
+
+(use-modules (json)
+             (srfi srfi-1)
+             (srfi srfi-37)
+             (guix scripts))
+
+(define %options
+  (list
+   (option '(#\d "dry-run") #f #f
+           (lambda (opt name arg result)
+             (values (alist-cons 'dry-run? #t result)
+                     #f)))
+   (option '(#\n "namespace") #t #f
+           (lambda (opt name arg result)
+             (alist-cons 'namespace arg result)))
+   (option '(#\H "host") #t #f
+           (lambda (opt name arg result)
+             (alist-cons 'host arg result)))
+   (option '(#\f "format") #t #f
+           (lambda (opt name arg result)
+             (alist-cons 'format arg result)))
+   (option '(#\u "uid") #t #f
+           (lambda (opt name arg result)
+             (alist-cons 'uid arg result)))
+   (option '(#\g "gid") #t #f
+           (lambda (opt name arg result)
+             (alist-cons 'gid arg result)))
+   (option '(#\m "machinectl") #t #f
+           (lambda (opt name arg result)
+             (alist-cons 'machinectl arg result)))
+   (option '(#\s "sudo") #t #f
+           (lambda (opt name arg result)
+             (alist-cons 'sudo arg result)))
+   (option '(#\C "cpu") #t #f
+           (lambda (opt name arg result)
+             (alist-cons 'cpu arg result)))
+   (option '(#\M "memory") #t #f
+           (lambda (opt name arg result)
+             (alist-cons 'memory arg result)))
+   (option '(#\i "image") #t #f
+           (lambda (opt name arg result)
+             (alist-cons 'image arg result)))))
+
+(define %default-options
+  '(()))
+
+(define (main args)
+  (define opts
+    (parse-command-line args %options
+                        (list %default-options)))
+  (define dry-run? (assoc-ref opts 'dry-run?))
+  (define namespace (assoc-ref opts 'namespace))
+  (define host (assoc-ref opts 'host))
+  (define format (assoc-ref opts 'format))
+  (define uid (assoc-ref opts 'uid))
+  (define gid (assoc-ref opts 'gid))
+  (define machinectl (assoc-ref opts 'machinectl))
+  (define sudo (assoc-ref opts 'sudo))
+  (define cpu (assoc-ref opts 'cpu))
+  (define memory (assoc-ref opts 'memory))
+  (define image (assoc-ref opts 'image))
+  (case (string->symbol format)
+    ((nixery)
+     (let ((labels '(("app.kubernetes.io/name" . "nixery"))))
+       (apply system*
+              `(,@(if dry-run? '("echo") '())
+                "kubectl"
+                "run"
+                "--rm=true"
+                "--stdin=true"
+                "--tty=true"
+                ,@(if namespace
+                      (list (string-append "--namespace=" namespace))
+                      '())
+                ,(string-append "--labels="
+                                (string-join
+                                 (map (lambda (label)
+                                        (string-append (first label)
+                                                       "="
+                                                       (cdr label)))
+                                      labels)
+                                 ","))
+                ,@(if host
+                      (list
+                       (string-concatenate
+                        (list
+                         "--overrides="
+                         (scm->json-string
+                          `(("spec"
+                             ("tolerations"
+                              .
+                              #((("effect" . "NoSchedule")
+                                 ("value" . "true")
+                                 ("operator" . "Equal")
+                                 ("key" . "unschedulable"))))
+                             ("nodeSelector"
+                              ("kubernetes.io/hostname" . ,host)))
+                            ("apiVersion" . "v1"))))))
+                      '())
+                "nixery"
+                ,(string-append "--image=" (if image image "nixery.dev/shell"))
+                "/bin/bash"))))
+    ((netshoot)
+     (let ((labels '(("app.kubernetes.io/name" . "netshoot"))))
+       (apply system*
+              `(,@(if dry-run? '("echo") '())
+                "kubectl"
+                "run"
+                "--rm=true"
+                "--stdin=true"
+                "--tty=true"
+                ,@(if namespace
+                      (list (string-append "--namespace=" namespace))
+                      '())
+                ,(string-append "--labels="
+                                (string-join
+                                 (map (lambda (label)
+                                        (string-append (first label)
+                                                       "="
+                                                       (cdr label)))
+                                      labels)
+                                 ","))
+                ,@(if host
+                      (list
+                       (string-concatenate
+                        (list
+                         "--overrides="
+                         (scm->json-string
+                          `(("spec"
+                             ("tolerations"
+                              .
+                              #((("effect" . "NoSchedule")
+                                 ("value" . "true")
+                                 ("operator" . "Equal")
+                                 ("key" . "unschedulable"))))
+                             ("nodeSelector"
+                              ("kubernetes.io/hostname" . ,host)))
+                            ("apiVersion" . "v1"))))))
+                      '())
+                "netshoot"
+                "--image=nicolaka/netshoot"
+                "/bin/bash"))))
+    ((shell)
+     (let ((labels '(("app.kubernetes.io/name" . "nsenter"))))
+       (apply system*
+              `(,@(if dry-run? '("echo") '())
+                "kubectl"
+                "run"
+                "--rm=true"
+                "--stdin=true"
+                "--tty=true"
+                ,@(if namespace
+                      (list (string-append "--namespace=" namespace))
+                      '())
+                ,(string-append "--labels="
+                                (string-join
+                                 (map (lambda (label)
+                                        (string-append (first label)
+                                                       "="
+                                                       (cdr label)))
+                                      labels)
+                                 ","))
+                ,@(if host
+                      (list
+                       (string-concatenate
+                        (list
+                         "--overrides="
+                         (scm->json-string
+                          `(("spec"
+                             ("tolerations"
+                              .
+                              #((("operator" . "Exists")
+                                 ("key" . "CriticalAddonsOnly"))
+                                (("operator" . "Exists")
+                                 ("effect" . "NoExecute"))))
+                             ("containers"
+                              .
+                              #((("resources"
+                                  ("requests"
+                                   ,@(if memory
+                                         (list (cons "memory" memory))
+                                         (list (cons "memory" "256Mi")))
+                                   ,@(if cpu
+                                         (list (cons "cpu" cpu))
+                                         (list (cons "cpu" "100m"))))
+                                  ("limits"
+                                   ,@(if memory
+                                         (list (cons "memory" memory))
+                                         (list (cons "memory" "256Mi")))
+                                   ,@(if cpu
+                                         (list (cons "cpu" cpu))
+                                         (list (cons "cpu" "100m")))))
+                                 ("command"
+                                  .
+                                  #("nsenter"
+                                    "--target"
+                                    "1"
+                                    "--mount"
+                                    "--uts"
+                                    "--ipc"
+                                    "--net"
+                                    "--pid"
+                                    "--no-fork"
+                                    ,@(if uid
+                                          (list "-S" uid)
+                                          '())
+                                    ,@(if gid
+                                          (list "-G" gid)
+                                          '())
+                                    ,@(cond
+                                       (machinectl
+                                        (list "sh" "-l" "-c"
+                                              (string-join (list "machinectl" "shell"
+                                                                 (string-append machinectl "@")))))
+                                       (sudo
+                                        (list "sh" "-l" "-c"
+                                              (string-join (list "sudo" "-u" sudo "-i"))))
+                                       (else
+                                        '("/bin/sh" "-l")))))
+                                 ("tty" . #t)
+                                 ("stdinOnce" . #t)
+                                 ("stdin" . #t)
+                                 ("name" . "nsenter")
+                                 ("image" . "docker.io/library/alpine")
+                                 ("securityContext" ("privileged" . #t)))))
+                             ("hostNetwork" . #t)
+                             ("hostPID" . #t)
+                             ("nodeName" . ,host)))))))
+                      '())
+                "--image=docker.io/library/alpine"
+                "shell"))))))

@@ -171,6 +171,7 @@
                           "my-xorg"
                           "netshoot"
                           "kubelet"
+                          "kubectl-invoke"
                           "nginx-server-name"
                           "nixos.sh"
                           "nix-repl"
