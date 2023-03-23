@@ -36,6 +36,8 @@
                 (directory (string-append #$%ansible-state-directory "/"
                                           kubernetes-directory)))
            (mkdir-p directory)
+           (with-directory-excursion directory
+             (invoke "git" "rm" "-rf" "."))
            (invoke "docker" "run"
                    "--network" "host"
                    "--rm"
