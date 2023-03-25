@@ -1,0 +1,17 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: karma
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: karma.home.wugi.info
+    http:
+      paths:
+      - path: /
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: karma
+            port:
+              number: 80
