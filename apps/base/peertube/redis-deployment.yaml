@@ -19,7 +19,13 @@ spec:
       containers:
         - image: redis:6-alpine
           name: redis
-          resources: {}
+          resources:
+            limits:
+              cpu: 60m
+              memory: 30Mi
+            requests:
+              cpu: 10m
+              memory: 15Mi
           volumeMounts:
             - mountPath: /data
               name: redis-claim0
