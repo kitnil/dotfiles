@@ -113,7 +113,13 @@ spec:
           ports:
             - containerPort: 1935
             - containerPort: 9000
-          resources: {}
+          resources:
+            limits:
+              cpu: 250m
+              memory: 400Mi
+            requests:
+              cpu: 50m
+              memory: 200Mi
           volumeMounts:
             - mountPath: /app/client/dist
               name: peertube-claim0
