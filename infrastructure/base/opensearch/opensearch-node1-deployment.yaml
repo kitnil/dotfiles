@@ -1,0 +1,55 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: opensearch-node1
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: opensearch-node1
+      app.kubernetes.io/part-of: opensearch
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: opensearch-node1
+        app.kubernetes.io/part-of: opensearch
+    spec:
+      hostNetwork: true
+      containers:
+      - env:
+        # - name: OPENSEARCH_JAVA_OPTS
+        #   value: -Xms2048m -Xmx2048m
+        - name: bootstrap.memory_lock
+          value: "true"
+        - name: cluster.initial_master_nodes
+          value: opensearch-node1
+        - name: cluster.name
+          value: opensearch-cluster
+        - name: compatibility.override_main_response_version
+          value: "true"
+        - name: discovery.seed_hosts
+          value: opensearch-node1
+        - name: node.name
+          value: opensearch-node1
+        image: opensearchproject/opensearch:1.2.4
+        name: opensearch-node1
+        ports:
+        - containerPort: 9200
+        - containerPort: 9600
+        resources: {}
+        volumeMounts:
+        - mountPath: /usr/share/opensearch/data
+          name: opensearch-node1-claim0
+        - mountPath: /usr/share/opensearch/config
+          name: opensearch-node1-claim1
+      volumes:
+      - name: opensearch-node1-claim0
+        hostPath:
+          path: /usr/share/opensearch/data
+          type: Directory
+      - name: opensearch-node1-claim1
+        hostPath:
+          path: /etc/opensearch
+          type: Directory

@@ -1,0 +1,103 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: filebeat
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: filebeat
+      app.kubernetes.io/part-of: opensearch
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: filebeat
+        app.kubernetes.io/part-of: opensearch
+    spec:
+      containers:
+      - image: docker-registry.wugi.info/monitoring/filebeat-oss:7.12.1
+        name: filebeat
+        args:
+        - filebeat
+        - -e
+        - -strict.perms=false
+        env:
+        - name: name
+          value: guixsd
+        volumeMounts:
+        - mountPath: /usr/share/filebeat/filebeat.yml
+          name: filebeat-claim0
+          readOnly: true
+        - mountPath: /mnt/log
+          name: filebeat-claim1
+          readOnly: true
+        - mountPath: /home/oleg/.local/var/log
+          name: filebeat-claim2
+          readOnly: true
+        - mountPath: /home/oleg/.local/share/qBittorrent/logs
+          name: filebeat-claim3
+          readOnly: true
+        - mountPath: /var/lib/docker/containers
+          name: filebeat-claim4
+          readOnly: true
+        - mountPath: /etc/localtime
+          name: filebeat-claim5
+          readOnly: true
+        - mountPath: /etc/client/ca.pem
+          name: filebeat-claim6
+          readOnly: true
+        - mountPath: /etc/client/cert.pem
+          name: filebeat-claim7
+          readOnly: true
+        - mountPath: /etc/client/cert.key
+          name: filebeat-claim8
+          readOnly: true
+      hostname: guixsd
+      volumes:
+      - name: filebeat-claim0
+        hostPath:
+          path: /usr/share/filebeat/filebeat.yml
+          readOnly: true
+          type: File
+      - name: filebeat-claim1
+        hostPath:
+          path: /mnt/log
+          readOnly: true
+          type: Directory
+      - name: filebeat-claim2
+        hostPath:
+          path: /home/oleg/.local/var/log
+          readOnly: true
+          type: Directory
+      - name: filebeat-claim3
+        hostPath:
+          path: /home/oleg/.local/share/qBittorrent/logs
+          readOnly: true
+          type: Directory
+      - name: filebeat-claim4
+        hostPath:
+          path: /var/lib/docker/containers
+          readOnly: true
+          type: Directory
+      - name: filebeat-claim5
+        hostPath:
+          path: /etc/localtime
+          readOnly: true
+          type: File
+      - name: filebeat-claim6
+        hostPath:
+          path: /etc/client/ca.pem
+          readOnly: true
+          type: File
+      - name: filebeat-claim7
+        hostPath:
+          path: /etc/client/cert.pem
+          readOnly: true
+          type: File
+      - name: filebeat-claim8
+        hostPath:
+          path: /etc/client/cert.key
+          readOnly: true
+          type: File

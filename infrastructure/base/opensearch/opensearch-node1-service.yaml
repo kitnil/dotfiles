@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: opensearch-node1
+spec:
+  ports:
+  - name: "9200"
+    port: 9200
+    targetPort: 9200
+  - name: "9600"
+    port: 9600
+    targetPort: 9600
+  selector:
+    app.kubernetes.io/name: opensearch-node1
+    app.kubernetes.io/part-of: opensearch

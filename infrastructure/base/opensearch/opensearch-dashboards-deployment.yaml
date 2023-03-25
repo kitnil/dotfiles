@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: opensearch-dashboards
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: opensearch-dashboards
+      app.kubernetes.io/part-of: opensearch
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: opensearch-dashboards
+        app.kubernetes.io/part-of: opensearch
+    spec:
+      containers:
+      - env:
+        - name: OPENSEARCH_HOSTS
+          value: '["https://opensearch-node1:9200"]'
+        image: opensearchproject/opensearch-dashboards:1.2.0
+        name: opensearch-dashboards
+        ports:
+        - containerPort: 5601
