@@ -114,7 +114,13 @@ spec:
             - name: default
               containerPort: 5432
               protocol: TCP
-          resources: {}
+          resources:
+            limits:
+              cpu: 15m
+              memory: 30Mi
+            requests:
+              cpu: 5m
+              memory: 20Mi
           volumeMounts:
             - mountPath: /var/lib/postgresql/data
               name: postgres-claim0
