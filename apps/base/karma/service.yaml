@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: karma
+spec:
+  type: ClusterIP
+  ports:
+  - { port: 80, targetPort: 18578, protocol: TCP, name: http }
+  selector:
+    app.kubernetes.io/name: karma
+    app.kubernetes.io/part-of: monitoring

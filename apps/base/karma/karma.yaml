@@ -1,0 +1,44 @@
+alertmanager:
+  interval: "60s"
+  servers:
+    - name: kube-prometheus-stack-alertmanager
+      proxy: false
+      readonly: true
+      timeout: "10s"
+      uri: http://kube-prometheus-stack-alertmanager.monitoring:9093
+annotations:
+  default:
+    hidden: false
+  hidden:
+    - help
+debug: true
+karma:
+  name: karma
+labels:
+  color:
+    static:
+      - job
+    unique:
+      - cluster
+      - instance
+      - "@receiver"
+listen:
+  address: '0.0.0.0'
+  port: 18578
+  prefix: /
+log:
+  config: false
+  level: debug
+silenceForm:
+  strip:
+    labels:
+      - job
+ui:
+  alertsPerGroup: 5
+  collapseGroups: collapsedOnMobile
+  colorTitlebar: false
+  hideFiltersWhenIdle: true
+  minimalGroupWidth: 420
+  multiGridLabel: severity
+  multiGridSortReverse: false
+  refresh: "30s"

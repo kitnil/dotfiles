@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: karma
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: karma
+      app.kubernetes.io/part-of: monitoring
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: karma
+        app.kubernetes.io/part-of: monitoring
+    spec:
+      containers:
+      - image: ghcr.io/prymitive/karma:latest
+        name: karma
+        ports:
+        - containerPort: 18578
+          name: http
+          protocol: TCP
+        env:
+        - name: CONFIG_FILE
+          value: /etc/karma.yaml
+        resources:
+          limits:
+            cpu: 100m
+            memory: 300Mi
+          requests:
+            cpu: 10m
+            memory: 100Mi
+        volumeMounts:
+        - mountPath: /etc/karma.yaml
+          subPath: karma.yaml
+          name: karma-configuration
+        livenessProbe:
+          httpGet:
+            port: 18578
+        readinessProbe:
+          httpGet:
+            port: 18578
+      volumes:
+      - name: karma-configuration
+        configMap:
+          name: karma-configuration
