@@ -114,7 +114,13 @@ spec:
             - name: smtp
               containerPort: 25
               protocol: TCP
-          resources: {}
+          resources:
+            limits:
+              cpu: 50m
+              memory: 25Mi
+            requests:
+              cpu: 25m
+              memory: 15Mi
           volumeMounts:
             - mountPath: /etc/opendkim/keys
               name: postfix-claim0
