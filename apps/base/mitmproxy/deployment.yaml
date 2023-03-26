@@ -1,0 +1,32 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mitmproxy
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: mitmproxy
+      app.kubernetes.io/part-of: mitmproxy
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: mitmproxy
+        app.kubernetes.io/part-of: mitmproxy
+    spec:
+      containers:
+      - image: mitmproxy/mitmproxy:9.0.1
+        name: mitmproxy
+        ports:
+        - containerPort: 8080
+          name: http-proxy
+          protocol: TCP
+        - containerPort: 8081
+          name: mitmweb
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 50m
+            memory: 512Mi
+          requests:
+            cpu: 10m
+            memory: 32Mi
