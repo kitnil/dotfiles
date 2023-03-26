@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: metube
+spec:
+  template:
+    spec:
+      containers:
+      - name: metube
+        volumeMounts:
+          - mountPath: /downloads
+            name: downloads
+        env:
+        - name: OUTPUT_TEMPLATE
+          value: "%(title)s.%(ext)s"
+        - name: YTDL_OPTIONS
+          value: '{ "restrict-filenames": true }'
+      volumes:
+        - name: downloads
+          hostPath:
+            path: /srv/video/metube
+            type: Directory
