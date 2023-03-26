@@ -8,15 +8,15 @@ spec:
       containers:
       - name: metube
         volumeMounts:
-          - mountPath: /downloads
-            name: downloads
+        - mountPath: /downloads
+          name: downloads
         env:
         - name: OUTPUT_TEMPLATE
           value: "%(title)s.%(ext)s"
         - name: YTDL_OPTIONS
           value: '{ "restrict-filenames": true }'
       volumes:
-        - name: downloads
-          hostPath:
-            path: /srv/video/metube
-            type: Directory
+      - name: downloads
+        hostPath:
+          path: /srv/video/metube
+          type: Directory
