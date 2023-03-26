@@ -17,7 +17,7 @@ spec:
       - image: mitmproxy/mitmproxy:9.0.1
         name: mitmproxy
         command: ["mitmweb"]
-        args: ["--web-host", "0.0.0.0"]
+        args: ["--web-host", "0.0.0.0", "--mode", "wireguard"]
         ports:
         - containerPort: 8080
           name: http-proxy
@@ -25,6 +25,9 @@ spec:
         - containerPort: 8081
           name: mitmweb
           protocol: TCP
+        - containerPort: 51820
+          name: wireguard
+          protocol: UDP
         resources:
           limits:
             cpu: 50m
