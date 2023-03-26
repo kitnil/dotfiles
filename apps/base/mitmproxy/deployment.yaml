@@ -17,7 +17,7 @@ spec:
       - image: mitmproxy/mitmproxy:9.0.1
         name: mitmproxy
         command: ["mitmweb"]
-        args: ["--web-host", "0.0.0.0", "--mode", "wireguard"]
+        args: ["--web-host", "0.0.0.0", "--mode", "wireguard:wg-keys-1.conf"]
         ports:
         - containerPort: 8080
           name: http-proxy
