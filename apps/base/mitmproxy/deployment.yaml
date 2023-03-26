@@ -16,6 +16,7 @@ spec:
       containers:
       - image: mitmproxy/mitmproxy:9.0.1
         name: mitmproxy
+        tty: true
         ports:
         - containerPort: 8080
           name: http-proxy
