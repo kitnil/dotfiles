@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: metube
 resources:
 - ../../base/metube
+- ingress.yaml
 patchesStrategicMerge:
 - deployment.yaml
 images:
