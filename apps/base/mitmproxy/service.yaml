@@ -7,6 +7,7 @@ spec:
   ports:
   - { port: 8080, targetPort: 8080, protocol: TCP, name: http-proxy }
   - { port: 8081, targetPort: 8081, protocol: TCP, name: mitmweb }
+  - { port: 51820, targetPort: 51820, protocol: UDP, name: wireguard }
   selector:
     app.kubernetes.io/name: mitmproxy
     app.kubernetes.io/part-of: mitmproxy
