@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: metube
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: metube
+      app.kubernetes.io/part-of: metube
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: metube
+        app.kubernetes.io/part-of: metube
+    spec:
+      containers:
+      - image: ghcr.io/alexta69/metube:latest
+        name: metube
+        ports:
+        - containerPort: 8081
+          name: http
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 100m
+            memory: 1024Mi
+          requests:
+            cpu: 10m
+            memory: 100Mi
