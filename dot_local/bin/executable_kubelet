@@ -44,6 +44,14 @@ fi
     else
         mount --make-shared /run/cilium/cgroupv2
     fi
+
+    # Required for node-exporter in a "monitoring" namespace.
+    if grep --quiet '/ / ' /proc/$$/mountinfo
+    then
+        :
+    else
+        mount --make-shared /
+    fi
 ) &
 
 /nix/store/lp8ch8l5dn4bcp056cpr1gfyb9i8zi54-kubernetes-1.25.4/bin/kubelet \
