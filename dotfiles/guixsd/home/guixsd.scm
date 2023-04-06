@@ -303,6 +303,8 @@
    (majordomo-mbsync-goimapnotify-services "smartmontools")
    (majordomo-mbsync-goimapnotify-services "tracker")
    (majordomo-mbsync-goimapnotify-services "ihc-zabbix")
+   (majordomo-mbsync-goimapnotify-services "web-script"
+                                           #:max-messages 1000)
 
    (list
     (simple-service 'home-mbsync-wugi-oleg
