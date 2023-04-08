@@ -1,0 +1,23 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: freerdp
+spec:
+  template:
+    spec:
+      containers:
+      - name: freerdp
+        env:
+        - name: FREERDP_PASSWORD_FILE
+          value: /etc/freerdp/passwd
+        - name: FREERDP_ARGS
+          value: "/u:vagrant /w:1366 /h:768 /v:windows.windows /cert:ignore"
+        volumeMounts:
+        - mountPath: /etc/freerdp/passwd
+          subPath: passwd
+          readOnly: true
+          name: freerdp
+      volumes:
+      - name: freerdp
+        secret:
+          secretName: freerdp
