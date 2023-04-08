@@ -1,0 +1,70 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: freerdp
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: freerdp
+      app.kubernetes.io/part-of: freerdp
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: freerdp
+        app.kubernetes.io/part-of: freerdp
+    spec:
+      containers:
+      - image: docker-registry.intr/utils/freerdp:master
+        name: freerdp
+        ports:
+        - name: vnc
+          containerPort: 5900
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 2000m
+            memory: 2048Mi
+          requests:
+            cpu: 500m
+            memory: 512Mi
+        env:
+        - name: DISPLAY
+          value: ":0"
+        - name: VNC_PASSWD
+          value: /etc/tigervnc/passwd
+        livenessProbe:
+          tcpSocket:
+            port: vnc
+        readinessProbe:
+          tcpSocket:
+            port: vnc
+        securityContext:
+          capabilities:
+            add:
+            - SYS_ADMIN
+            - SYS_CHROOT
+        volumeMounts:
+        - mountPath: /etc/tigervnc/passwd
+          subPath: passwd
+          readOnly: true
+          name: vnc
+        - mountPath: /run
+          name: run
+        - mountPath: /tmp
+          name: tmp
+        - mountPath: /var/run/user01/.ratpoisonrc
+          name: ratpoison-configuration
+          subPath: .ratpoisonrc
+      volumes:
+      - name: vnc
+        secret:
+          secretName: vnc
+      - name: run
+        emptyDir:
+          sizeLimit: 10M
+      - name: tmp
+        emptyDir:
+          sizeLimit: 100M
+      - name: ratpoison-configuration
+        configMap:
+          name: ratpoison-configuration
