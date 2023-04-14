@@ -1,0 +1,33 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: slack-cleaner2
+spec:
+  schedule: "* */4 * * *" # every 4 hours
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          nodeSelector:
+            kubernetes.io/hostname: kube4
+          containers:
+          - image: docker-registry.wugi.info/messaging/slack-cleaner2
+            name: slack-cleaner2
+            command: ["/usr/local/bin/python3"]
+            args: ["/workdir/script.py"]
+            workingDir: /workdir
+            resources:
+              limits:
+                cpu: 50m
+                memory: 512Mi
+              requests:
+                cpu: 10m
+                memory: 128Mi
+            volumeMounts:
+            - mountPath: /workdir
+              name: workdir
+          volumes:
+          - name: workdir
+            hostPath:
+              path: /home/oleg/slack_cleaner2
+              type: Directory
