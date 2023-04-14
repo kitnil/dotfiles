@@ -26,6 +26,7 @@ spec:
             volumeMounts:
             - mountPath: /workdir
               name: workdir
+          restartPolicy: Never
           volumes:
           - name: workdir
             hostPath:
