@@ -84,7 +84,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m0s
-  path: ./apps/cluster1/slack-cleaner2
+  path: ./apps/base/slack-cleaner2
   prune: true
   sourceRef:
     kind: GitRepository
