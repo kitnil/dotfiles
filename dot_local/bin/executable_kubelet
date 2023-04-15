@@ -54,6 +54,12 @@ fi
     fi
 ) &
 
+# Add rlimits to service file by crosbymichael · Pull Request #1846
+# https://github.com/containerd/containerd/pull/1846
+containerd_pid="$(cat /run/containerd/containerd.pid)"
+prlimit --pid "$containerd_pid" --nofile=1048576:1048576
+prlimit --pid "$containerd_pid" --nproc=unlimited
+
 /nix/store/lp8ch8l5dn4bcp056cpr1gfyb9i8zi54-kubernetes-1.25.4/bin/kubelet \
     --address=192.168.154.1 \
     --authentication-token-webhook \
