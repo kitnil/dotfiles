@@ -19,6 +19,10 @@
   ["kubernetes/release.yaml" yas-expand-current-buffer])
 
 (define-auto-insert
+  "service.yaml"
+  ["kubernetes/service.yaml" yas-expand-current-buffer])
+
+(define-auto-insert
   "kustomizeconfig.yaml"
   ["kubernetes/kustomizeconfig.yaml" yas-expand-current-buffer])
 

@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: $3
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+    name: http
+  selector:
+    app.kubernetes.io/name: $1
+    app.kubernetes.io/part-of: $2
+  type: ${3:$$(yas-choose-value "ClusterIP" "LoadBalancer")}

@@ -229,4 +229,5 @@
                                  "insert/kubernetes/namespace.yaml"
                                  "insert/kubernetes/release.yaml"
                                  "insert/kubernetes/kustomizeconfig.yaml"
+                                 "insert/kubernetes/service.yaml"
                                  "insert/kubernetes/virtualmachine.yaml")))))
