@@ -138,9 +138,10 @@
           ,@(if profile (list profile) '())
           ,@(if url (list url) '()))))
 
-(defun firefox-command ()
+(defun firefox-command (&optional args)
   (if (string-equal (screen-display-string (current-screen)) "DISPLAY=:0.0")
-      (join (list "GTK_THEME=Adwaita:dark" *fontconfig-file* "firefox"))
+      (join (append (list "GTK_THEME=Adwaita:dark" *fontconfig-file* "firefox")
+                    args))
       (firefox-temp-profile "default")))
 
 (defun mjru-open-account (account)
@@ -199,7 +200,8 @@
               (lambda ()
                 (mjru-open-account clipboard)
                 (putsel "")))))
-          (t (run-shell-command "firefox --new-window")))))
+          (t (run-shell-command
+              (firefox-command '("--new-window")))))))
 
 (defcommand firefox-temp-profile-new-window () ()
   (run-shell-command (firefox-temp-profile)))
