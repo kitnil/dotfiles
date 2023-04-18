@@ -2225,6 +2225,38 @@ opensearch()
     esac
 }
 
+curl()
+{
+    new_args=()
+    for var in "$@"
+    do
+        if [[ "$var" == *"https://api.majordomo.ru/"* ]]
+        then
+            json=true
+            new_args+=(
+                --header "Authorization: Bearer $(mjru-auth)"
+                --header 'Content-Type: application/json'
+                "$var"
+            )
+        elif [[ "$var" == *"https://api-dev.intr/"* ]]
+        then
+            json=true
+            new_args+=(
+                --header "Authorization: Bearer $(IHS_ENDPOINT=https://api-dev.intr mjru-auth)"
+                --header 'Content-Type: application/json'
+                "$var"
+            )
+        else
+	    new_args+=($var)
+        fi
+    done
+    command curl "${new_args[@]}"
+    if [[ $json == true ]]
+    then
+        echo
+    fi
+}
+
 sudo()
 {
     case "$1" in

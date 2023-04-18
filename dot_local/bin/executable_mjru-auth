@@ -2,9 +2,10 @@
 
 IHS_USER="${IHS_USER:-pyhalov}"
 IHS_PASS="${IHS_PASSWORD:-$(pass show majordomo/private/hms/pyhalov)}"
+IHS_ENDPOINT="${IHC_ENDPOINT:-https://api.majordomo.ru}"
 
 curl --silent \
-     --request POST https://api.majordomo.ru/oauth/token \
+     --request POST "${IHS_ENDPOINT}/oauth/token" \
      --header 'content-type: application/x-www-form-urlencoded' \
      --header 'x-requested-with: XMLHttpRequest' \
      -d "grant_type=password&username=$IHS_USER&password=$IHS_PASS&client_id=service&client_secret=service_secret" \
