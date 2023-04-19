@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Service
 metadata:
-  name: $3
+  name: $4
 spec:
   ports:
   - port: 80
