@@ -5,6 +5,7 @@
 
 (setq browse-at-remote-remote-type-domains
       '(("gitlab.intr" . "gitlab")
+        ("gitlab.corp1.majordomo.ru" . "gitlab")
         ("bitbucket.org" . "bitbucket")
         ("github.com" . "github")
         ("gitlab.com" . "gitlab")
