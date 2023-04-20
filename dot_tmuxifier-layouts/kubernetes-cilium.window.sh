@@ -29,17 +29,17 @@ for pod_name in "$pod_names"
 do
     if [[ $pod_name == cilium-????? ]]
     then
-        # run_cmd "viddy --no-title --interval 10s --differences kubectl -n kube-system exec ${pod_name} -- cilium status"
-        run_cmd "nix-shell --run 'viddy --no-title --interval 10s --differences cilium status --context ${context}'"
+        # run_cmd "viddy --no-title --interval 10s kubectl -n kube-system exec ${pod_name} -- cilium status"
+        run_cmd "nix-shell --run 'viddy --no-title --interval 10s cilium status --context ${context}'"
         split_h 50
-        run_cmd "viddy --no-title --interval 10s --differences kubectl -n kube-system exec ${pod_name} -- cilium service list"
+        run_cmd "viddy --no-title --interval 10s kubectl -n kube-system exec ${pod_name} -- cilium service list"
         split_v 50
-        run_cmd "viddy --no-title --interval 10s --differences kubectl -n kube-system exec ${pod_name} -- cilium endpoint list"
+        run_cmd "viddy --no-title --interval 10s kubectl -n kube-system exec ${pod_name} -- cilium endpoint list"
         select_pane 0
         split_v 50
-        run_cmd "viddy --no-title --interval 10s --differences kubectl -n kube-system exec ${pod_name} -- cilium bpf lb list"
+        run_cmd "viddy --no-title --interval 10s kubectl -n kube-system exec ${pod_name} -- cilium bpf lb list"
         split_v 50
-        run_cmd "nix-shell --run 'viddy --no-title --interval 10s --differences cilium clustermesh status'"
+        run_cmd "nix-shell --run 'viddy --no-title --interval 10s cilium clustermesh status'"
     fi
 done
 
