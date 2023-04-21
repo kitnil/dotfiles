@@ -2037,6 +2037,12 @@ EOF
                 viddy -n "${KUBECTL_WATCH_INTERVAL:-10}" "kubectl get nodes -o wide; echo; kubectl get all --namespace ${2} -o wide; echo; kubectl get ingress --namespace ${2} -o wide; echo; kubectl get --namespace ${2} certificates -o wide; echo; kubectl get secrets --namespace ${2} -o wide; echo; kubectl get --namespace ${2} serviceaccounts; echo; kubectl get pvc --namespace ${2} -o wide; echo; kubectl get networkpolicies --namespace ${2} -o wide; echo; kubectl get events --namespace ${2} -o wide"
             fi
             ;;
+        prometheus)
+            command kubectl -n monitoring get secret prometheus-kube-prometheus-stack-prometheus -o json \
+                | jq -r '.data["prometheus.yaml.gz"]' \
+                | base64 -d \
+                | gunzip
+            ;;
         reboot)
             (
                 set -ex
