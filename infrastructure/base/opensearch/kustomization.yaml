@@ -8,3 +8,7 @@ resources:
 - opensearch-dashboards-service.yaml
 - opensearch-node1-deployment.yaml
 - opensearch-node1-service.yaml
+configMapGenerator:
+- name: filebeat
+  files:
+  - filebeat.yaml=filebeat.yaml

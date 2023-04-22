@@ -1,0 +1,52 @@
+filebeat:
+  inputs:
+    - enabled: true
+      paths:
+        - "/mnt/log/**/*.log"
+      type: log
+    - enabled: true
+      paths:
+        - "/home/oleg/.local/var/log/*.log"
+      type: log
+    - enabled: true
+      paths:
+        - "/home/oleg/.local/var/log/**/*.log"
+      type: log
+    - enabled: true
+      paths:
+        - /home/oleg/.local/share/qBittorrent/logs/qbittorrent.log
+      type: log
+    - enabled: true
+      paths:
+        - "/var/lib/docker/containers/**/*.log"
+      type: log
+  modules:
+    - access:
+        enabled: true
+        var.paths:
+          - /mnt/log/nginx/access.log
+      error:
+        enabled: true
+        var.paths:
+          - /mnt/log/nginx/error.log
+      module: nginx
+    - auth:
+        enabled: true
+        var.paths:
+          - /mnt/log/secure
+      module: system
+      syslog:
+        enabled: true
+        var.convert_timezone: true
+        var.paths:
+          - /mnt/log/messages
+output:
+  elasticsearch:
+    allow_older_versions: true
+    hosts:
+      - https://node-0.example.com:9200
+    ssl:
+      certificate: /etc/client/cert.pem
+      certificate_authorities:
+        - /etc/client/ca.pem
+      key: /etc/client/cert.key

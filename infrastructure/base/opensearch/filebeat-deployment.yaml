@@ -57,10 +57,8 @@ spec:
       hostname: guixsd
       volumes:
       - name: filebeat-claim0
-        hostPath:
-          path: /usr/share/filebeat/filebeat.yml
-          readOnly: true
-          type: File
+        configMap:
+          name: filebeat
       - name: filebeat-claim1
         hostPath:
           path: /mnt/log
