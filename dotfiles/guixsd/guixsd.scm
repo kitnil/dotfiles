@@ -1868,23 +1868,23 @@ PasswordAuthentication yes")))
                                                       ("image" . "registry:2")
                                                       ("container_name" . "registry"))))))))))))))
 
-                         (service docker-compose-service-type
-                                  (docker-compose-configuration
-                                   (project-name "bittorrent")
-                                   (compose-file
-                                    (computed-file
-                                     "docker-compose-bittorrent.json"
-                                     (with-extensions (list guile-json-4)
-                                       (with-imported-modules (source-module-closure '((json builder)))
-                                         #~(begin
-                                             (use-modules (json builder))
-                                             (with-output-to-file #$output
-                                               (lambda ()
-                                                 (scm->json
-                                                  `(("version" . "2.1")
-                                                    ("services"
-                                                     #$docker-compose-radarr-service
-                                                     #$docker-compose-jackett-service))))))))))))
+                         ;; (service docker-compose-service-type
+                         ;;          (docker-compose-configuration
+                         ;;           (project-name "bittorrent")
+                         ;;           (compose-file
+                         ;;            (computed-file
+                         ;;             "docker-compose-bittorrent.json"
+                         ;;             (with-extensions (list guile-json-4)
+                         ;;               (with-imported-modules (source-module-closure '((json builder)))
+                         ;;                 #~(begin
+                         ;;                     (use-modules (json builder))
+                         ;;                     (with-output-to-file #$output
+                         ;;                       (lambda ()
+                         ;;                         (scm->json
+                         ;;                          `(("version" . "2.1")
+                         ;;                            ("services"
+                         ;;                             #$docker-compose-radarr-service
+                         ;;                             #$docker-compose-jackett-service))))))))))))
 
                          (service restic-rest-service-type
                                   (restic-rest-configuration
