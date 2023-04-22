@@ -9,10 +9,10 @@ spec:
   ingressClassName: nginx
   tls:
   - hosts:
-    - opensearch-dashboards
+    - dashboards.opensearch.home.wugi.info
     secretName: opensearch-dashboards-ingress-certs
   rules:
-  - host: opensearch-dashboards
+  - host: dashboards.opensearch.home.wugi.info
     http:
       paths:
       - path: /
