@@ -1467,7 +1467,7 @@ location / {
                                       (add-to-load-path (string-append %home "/.local/share/chezmoi/dotfiles/manifests"))
                                       (@ (deprecated) openssh)))
                                    (host "192.168.0.1")
-                                   (known-hosts '("192.168.0.1 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgwC3AVbmd5TUCDlD22HCV9yFjp9r1Ku32v6vbeeItbPLKE/74ojoLEOdjFEb9zuQSt8dP5WopLYVZdTXma9W0xEgHj6uaZ7WSr3jr7MXTQpJnHcpn66Tg1M6Zc9tNLdY67DzXTqlAm5sFH3Sdmk7/Ujz4E36qIDMufZfPnZ1qiq9TLeF"))
+                                   (known-hosts '("192.168.0.1 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgwCIsWQesJcJ2SxXY1av/cxIZ5u61/h7aQdaCpRnR8WqFOcckBudARpbcwDD3BbdORJ2aYGqtonRQJrY/swG9b+oWp9qUPwXRlkSrgb3PdLn63P3pfVscEXnwRe9ZeekSpZxU5xwJqC6UA5ZdnmeWE+51FUh31c9qmQRu3PNK4PnKmWf"))
                                    (listen-address "127.0.0.1:9101")
                                    (environment-variables
                                     (list
