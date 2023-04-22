@@ -11,4 +11,4 @@ resources:
 configMapGenerator:
 - name: filebeat
   files:
-  - filebeat.yaml=filebeat.yaml
+  - filebeat.yml=filebeat.yaml
