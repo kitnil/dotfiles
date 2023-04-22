@@ -61,7 +61,7 @@ spec:
           name: filebeat
       - name: filebeat-claim1
         hostPath:
-          path: /mnt/log
+          path: /var/log
           readOnly: true
           type: Directory
       - name: filebeat-claim2
