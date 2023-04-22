@@ -3,3 +3,4 @@ kind: Kustomization
 namespace: opensearch
 resources:
 - ../../base/opensearch
+- ingress.yaml
