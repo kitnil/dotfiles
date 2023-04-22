@@ -1914,123 +1914,123 @@ PasswordAuthentication yes")))
                          (service docker-service-type)
                          ;; docker-kiwiirc-service
 
-                         (service docker-compose-service-type
-                                  (docker-compose-configuration
-                                   (project-name "opensearch")
-                                   (requirement '(openvpn-majordomo.ru))
-                                   (respawn? #t) ;TODO: Fix OpenVPN race condition.
-                                   (compose-file
-                                    (computed-file
-                                     "docker-compose-opensearch.json"
-                                     (with-extensions (list guile-json-4)
-                                       (with-imported-modules (source-module-closure '((json builder)))
-                                         #~(begin
-                                             (use-modules (json builder)
-                                                          (ice-9 rdelim))
-                                             (define filebeat-config
-                                               #$(plain-file "filebeat.json"
-                                                  (scm->json-string
-                                                   `(("filebeat"
-                                                      ("modules" .
-                                                       #((("module" . "nginx")
-                                                          ("error"
-                                                           ("var.paths" . #("/mnt/log/nginx/error.log"))
-                                                           ("enabled" . #t))
-                                                          ("access"
-                                                           ("var.paths" . #("/mnt/log/nginx/access.log"))
-                                                           ("enabled" . #t)))
-                                                         (("syslog"
-                                                           ("var.paths" . #("/mnt/log/messages"))
-                                                           ("var.convert_timezone" . #t)
-                                                           ("enabled" . #t))
-                                                          ("module" . "system")
-                                                          ("auth"
-                                                           ("var.paths" . #("/mnt/log/secure"))
-                                                           ("enabled" . #t)))))
-                                                      ("inputs" .
-                                                       #((("type" . "log")
-                                                          ("paths" . #("/mnt/log/**/*.log"))
-                                                          ("enabled" . #t))
-                                                         (("type" . "log")
-                                                          ("paths" . #("/home/oleg/.local/var/log/*.log"))
-                                                          ("enabled" . #t))
-                                                         (("type" . "log")
-                                                          ("paths" . #("/home/oleg/.local/var/log/**/*.log"))
-                                                          ("enabled" . #t))
-                                                         (("type" . "log")
-                                                          ("paths" . #("/home/oleg/.local/share/qBittorrent/logs/qbittorrent.log"))
-                                                          ("enabled" . #t))
-                                                         (("type" . "log")
-                                                          ("paths" . #("/var/lib/docker/containers/**/*.log"))
-                                                          ("enabled" . #t)))))
-                                                     ("output"
-                                                      ("elasticsearch"
-                                                       ("hosts" . #("https://node-0.example.com:9200"))
-                                                       ("allow_older_versions" . #t)
-                                                       ("ssl"
-                                                        ("certificate_authorities" . #("/etc/client/ca.pem"))
-                                                        ("certificate" . "/etc/client/cert.pem")
-                                                        ("key" . "/etc/client/cert.key"))))))))
-                                             (with-output-to-file #$output
-                                               (lambda ()
-                                                 (scm->json
-                                                  `(("version" . "3")
-                                                    ("services"
-                                                     ("opensearch-node1"
-                                                      ("volumes" . #("/var/lib/opensearch:/usr/share/opensearch/data"
-                                                                     "/etc/opensearch:/usr/share/opensearch/config"
-                                                                     ;; "/etc/opensearch/pki/root-ca.pem:/usr/share/opensearch/config/root-ca.pem:ro"
-                                                                     ;; "/etc/opensearch/pki/node1.pem:/usr/share/opensearch/config/esnode.pem:ro"
-                                                                     ;; "/etc/opensearch/pki/node1-key.pem:/usr/share/opensearch/config/esnode-key.pem:ro"
-                                                                     ;; "/etc/opensearch/pki/admin.pem:/usr/share/opensearch/config/kirk.pem:ro"
-                                                                     ;; "/etc/opensearch/pki/admin-key.pem:/usr/share/opensearch/config/kirk-key.pem:ro"
-                                                                     ;; "/etc/opensearch/pki/opensearch.keystore:/usr/share/opensearch/config/opensearch.keystore:ro"
-                                                                     ))
-                                                      ("ulimits"
-                                                       ("nofile"
-                                                        ("soft" . 65536)
-                                                        ("hard" . 65536))
-                                                       ("memlock"
-                                                        ("soft" . -1)
-                                                        ("hard" . -1)))
-                                                      ("ports" . #("192.168.25.1:9200:9200"
-                                                                   "192.168.25.1:9600:9600"))
-                                                      ("image" . "opensearchproject/opensearch:1.2.4")
-                                                      ("environment" . #("cluster.name=opensearch-cluster"
-                                                                         "node.name=opensearch-node1"
-                                                                         "discovery.seed_hosts=opensearch-node1"
-                                                                         "cluster.initial_master_nodes=opensearch-node1"
-                                                                         "bootstrap.memory_lock=true"
-                                                                         "OPENSEARCH_JAVA_OPTS=-Xms2048m -Xmx2048m"
-                                                                         "compatibility.override_main_response_version=true"))
-                                                      ("container_name" . "opensearch-node1"))
-                                                     ("opensearch-dashboards"
-                                                      ("ports" . #("127.0.0.1:5601:5601"))
-                                                      ("image" . "opensearchproject/opensearch-dashboards:1.2.0")
-                                                      ("expose" . #("5601"))
-                                                      ("environment"
-                                                       ("OPENSEARCH_HOSTS" . "[\"https://opensearch-node1:9200\"]"))
-                                                      ("container_name" . "opensearch-dashboards"))
-                                                     ("filebeat"
-                                                      ("volumes"
-                                                       .
-                                                       ,(vector (string-append filebeat-config ":/usr/share/filebeat/filebeat.yml:ro")
-                                                                "/var/log:/mnt/log:ro"
-                                                                "/home/oleg/.local/var/log:/home/oleg/.local/var/log:ro"
-                                                                "/home/oleg/.local/share/qBittorrent/logs:/home/oleg/.local/share/qBittorrent/logs:ro"
-                                                                "/var/lib/docker/containers:/var/lib/docker/containers:ro"
-                                                                "/etc/localtime:/etc/localtime:ro"
-                                                                "/etc/opensearch/root-ca.pem:/etc/client/ca.pem:ro"
-                                                                "/etc/opensearch/kirk.pem:/etc/client/cert.pem:ro"
-                                                                "/etc/opensearch/kirk-key.pem:/etc/client/cert.key:ro"))
-                                                      ("image" . "docker-registry.wugi.info/monitoring/filebeat-oss:7.12.1")
-                                                      ("hostname" . "guixsd")
-                                                      ("network_mode" . "host")
-                                                      ("environment"
-                                                       ("name" . "guixsd"))
-                                                      ("user" . "0:0")
-                                                      ("depends_on" . #("opensearch-node1"))
-                                                      ("command" . "filebeat -e -strict.perms=false"))))))))))))))
+                         ;; (service docker-compose-service-type
+                         ;;          (docker-compose-configuration
+                         ;;           (project-name "opensearch")
+                         ;;           (requirement '(openvpn-majordomo.ru))
+                         ;;           (respawn? #t) ;TODO: Fix OpenVPN race condition.
+                         ;;           (compose-file
+                         ;;            (computed-file
+                         ;;             "docker-compose-opensearch.json"
+                         ;;             (with-extensions (list guile-json-4)
+                         ;;               (with-imported-modules (source-module-closure '((json builder)))
+                         ;;                 #~(begin
+                         ;;                     (use-modules (json builder)
+                         ;;                                  (ice-9 rdelim))
+                         ;;                     (define filebeat-config
+                         ;;                       #$(plain-file "filebeat.json"
+                         ;;                          (scm->json-string
+                         ;;                           `(("filebeat"
+                         ;;                              ("modules" .
+                         ;;                               #((("module" . "nginx")
+                         ;;                                  ("error"
+                         ;;                                   ("var.paths" . #("/mnt/log/nginx/error.log"))
+                         ;;                                   ("enabled" . #t))
+                         ;;                                  ("access"
+                         ;;                                   ("var.paths" . #("/mnt/log/nginx/access.log"))
+                         ;;                                   ("enabled" . #t)))
+                         ;;                                 (("syslog"
+                         ;;                                   ("var.paths" . #("/mnt/log/messages"))
+                         ;;                                   ("var.convert_timezone" . #t)
+                         ;;                                   ("enabled" . #t))
+                         ;;                                  ("module" . "system")
+                         ;;                                  ("auth"
+                         ;;                                   ("var.paths" . #("/mnt/log/secure"))
+                         ;;                                   ("enabled" . #t)))))
+                         ;;                              ("inputs" .
+                         ;;                               #((("type" . "log")
+                         ;;                                  ("paths" . #("/mnt/log/**/*.log"))
+                         ;;                                  ("enabled" . #t))
+                         ;;                                 (("type" . "log")
+                         ;;                                  ("paths" . #("/home/oleg/.local/var/log/*.log"))
+                         ;;                                  ("enabled" . #t))
+                         ;;                                 (("type" . "log")
+                         ;;                                  ("paths" . #("/home/oleg/.local/var/log/**/*.log"))
+                         ;;                                  ("enabled" . #t))
+                         ;;                                 (("type" . "log")
+                         ;;                                  ("paths" . #("/home/oleg/.local/share/qBittorrent/logs/qbittorrent.log"))
+                         ;;                                  ("enabled" . #t))
+                         ;;                                 (("type" . "log")
+                         ;;                                  ("paths" . #("/var/lib/docker/containers/**/*.log"))
+                         ;;                                  ("enabled" . #t)))))
+                         ;;                             ("output"
+                         ;;                              ("elasticsearch"
+                         ;;                               ("hosts" . #("https://node-0.example.com:9200"))
+                         ;;                               ("allow_older_versions" . #t)
+                         ;;                               ("ssl"
+                         ;;                                ("certificate_authorities" . #("/etc/client/ca.pem"))
+                         ;;                                ("certificate" . "/etc/client/cert.pem")
+                         ;;                                ("key" . "/etc/client/cert.key"))))))))
+                         ;;                     (with-output-to-file #$output
+                         ;;                       (lambda ()
+                         ;;                         (scm->json
+                         ;;                          `(("version" . "3")
+                         ;;                            ("services"
+                         ;;                             ("opensearch-node1"
+                         ;;                              ("volumes" . #("/var/lib/opensearch:/usr/share/opensearch/data"
+                         ;;                                             "/etc/opensearch:/usr/share/opensearch/config"
+                         ;;                                             ;; "/etc/opensearch/pki/root-ca.pem:/usr/share/opensearch/config/root-ca.pem:ro"
+                         ;;                                             ;; "/etc/opensearch/pki/node1.pem:/usr/share/opensearch/config/esnode.pem:ro"
+                         ;;                                             ;; "/etc/opensearch/pki/node1-key.pem:/usr/share/opensearch/config/esnode-key.pem:ro"
+                         ;;                                             ;; "/etc/opensearch/pki/admin.pem:/usr/share/opensearch/config/kirk.pem:ro"
+                         ;;                                             ;; "/etc/opensearch/pki/admin-key.pem:/usr/share/opensearch/config/kirk-key.pem:ro"
+                         ;;                                             ;; "/etc/opensearch/pki/opensearch.keystore:/usr/share/opensearch/config/opensearch.keystore:ro"
+                         ;;                                             ))
+                         ;;                              ("ulimits"
+                         ;;                               ("nofile"
+                         ;;                                ("soft" . 65536)
+                         ;;                                ("hard" . 65536))
+                         ;;                               ("memlock"
+                         ;;                                ("soft" . -1)
+                         ;;                                ("hard" . -1)))
+                         ;;                              ("ports" . #("192.168.25.1:9200:9200"
+                         ;;                                           "192.168.25.1:9600:9600"))
+                         ;;                              ("image" . "opensearchproject/opensearch:1.2.4")
+                         ;;                              ("environment" . #("cluster.name=opensearch-cluster"
+                         ;;                                                 "node.name=opensearch-node1"
+                         ;;                                                 "discovery.seed_hosts=opensearch-node1"
+                         ;;                                                 "cluster.initial_master_nodes=opensearch-node1"
+                         ;;                                                 "bootstrap.memory_lock=true"
+                         ;;                                                 "OPENSEARCH_JAVA_OPTS=-Xms2048m -Xmx2048m"
+                         ;;                                                 "compatibility.override_main_response_version=true"))
+                         ;;                              ("container_name" . "opensearch-node1"))
+                         ;;                             ("opensearch-dashboards"
+                         ;;                              ("ports" . #("127.0.0.1:5601:5601"))
+                         ;;                              ("image" . "opensearchproject/opensearch-dashboards:1.2.0")
+                         ;;                              ("expose" . #("5601"))
+                         ;;                              ("environment"
+                         ;;                               ("OPENSEARCH_HOSTS" . "[\"https://opensearch-node1:9200\"]"))
+                         ;;                              ("container_name" . "opensearch-dashboards"))
+                         ;;                             ("filebeat"
+                         ;;                              ("volumes"
+                         ;;                               .
+                         ;;                               ,(vector (string-append filebeat-config ":/usr/share/filebeat/filebeat.yml:ro")
+                         ;;                                        "/var/log:/mnt/log:ro"
+                         ;;                                        "/home/oleg/.local/var/log:/home/oleg/.local/var/log:ro"
+                         ;;                                        "/home/oleg/.local/share/qBittorrent/logs:/home/oleg/.local/share/qBittorrent/logs:ro"
+                         ;;                                        "/var/lib/docker/containers:/var/lib/docker/containers:ro"
+                         ;;                                        "/etc/localtime:/etc/localtime:ro"
+                         ;;                                        "/etc/opensearch/root-ca.pem:/etc/client/ca.pem:ro"
+                         ;;                                        "/etc/opensearch/kirk.pem:/etc/client/cert.pem:ro"
+                         ;;                                        "/etc/opensearch/kirk-key.pem:/etc/client/cert.key:ro"))
+                         ;;                              ("image" . "docker-registry.wugi.info/monitoring/filebeat-oss:7.12.1")
+                         ;;                              ("hostname" . "guixsd")
+                         ;;                              ("network_mode" . "host")
+                         ;;                              ("environment"
+                         ;;                               ("name" . "guixsd"))
+                         ;;                              ("user" . "0:0")
+                         ;;                              ("depends_on" . #("opensearch-node1"))
+                         ;;                              ("command" . "filebeat -e -strict.perms=false"))))))))))))))
 
                          ;; (service fatrace-service-type
                          ;;          (fatrace-configuration
