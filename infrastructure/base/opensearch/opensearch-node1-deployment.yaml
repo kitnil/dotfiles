@@ -38,7 +38,13 @@ spec:
         ports:
         - containerPort: 9200
         - containerPort: 9600
-        resources: {}
+        resources:
+          limits:
+            cpu: 4
+            memory: 2Gi
+          requests:
+            cpu: 2
+            memory: 2Gi
         volumeMounts:
         - mountPath: /usr/share/opensearch/data
           name: opensearch-node1-claim0
