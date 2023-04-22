@@ -19,8 +19,8 @@ spec:
       hostNetwork: true
       containers:
       - env:
-        # - name: OPENSEARCH_JAVA_OPTS
-        #   value: -Xms2048m -Xmx2048m
+        - name: OPENSEARCH_JAVA_OPTS
+          value: "-Xms2048m -Xmx2048m"
         - name: bootstrap.memory_lock
           value: "true"
         - name: cluster.initial_master_nodes
