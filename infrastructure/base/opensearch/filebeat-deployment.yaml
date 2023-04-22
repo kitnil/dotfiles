@@ -86,16 +86,16 @@ spec:
           type: File
       - name: filebeat-claim6
         hostPath:
-          path: /etc/client/ca.pem
+          path: /etc/opensearch/root-ca.pem
           readOnly: true
           type: File
       - name: filebeat-claim7
         hostPath:
-          path: /etc/client/cert.pem
+          path: /etc/opensearch/kirk.pem
           readOnly: true
           type: File
       - name: filebeat-claim8
         hostPath:
-          path: /etc/client/cert.key
+          path: /etc/opensearch/kirk-key.pem
           readOnly: true
           type: File
