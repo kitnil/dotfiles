@@ -2,6 +2,8 @@
 
 set -o errexit -o pipefail
 
+VIRSH_DAEMON="${VIRSH_DAEMON:-false}"
+
 case "$1" in
     start)
         case "$2" in
@@ -33,15 +35,80 @@ case "$1" in
                 exec /run/current-system/profile/bin/virsh start vm-cilium1
                 ;;
             win10)
-                echo "virsh: Resetting GPU." 1>&2
-                if [[ -e /sys/kernel/debug/dri/0/amdgpu_gpu_recover ]]
+                if [[ -e /var/lib/vm-windows10/3 ]]
                 then
-                    cat /sys/kernel/debug/dri/0/amdgpu_gpu_recover
-                elif [[ -e /sys/kernel/debug/dri/2/amdgpu_gpu_recover ]]
-                then
-                    cat /sys/kernel/debug/dri/2/amdgpu_gpu_recover
+                    echo "vm-windows10: 3rd attempt exist, exiting." 1>&2
+                    exit 1
                 fi
-                exec /run/current-system/profile/bin/virsh start win10
+                mkdir -p /var/lib/vm-windows10
+                for file in {1..3}
+                do
+                    if [[ -e /var/lib/vm-windows10/${file} ]]
+                    then
+                        :
+                    else
+                        touch /var/lib/vm-windows10/${file}
+                        break
+                    fi
+                done
+                echo "vm-windows10: Resetting GPU." 1>&2
+                attempt=0
+                max_attempt=15
+                until [[ -S /var/run/libvirt/libvirt-sock ]]
+                do
+                    if ((attempt > max_attempt))
+                    then
+                        exit 1
+                    else
+                        echo "vm-windows10 [${attempt}/${max_attempt}]: Socket '/var/run/libvirt/libvirt-sock' does not exist. Sleeping 5 seconds." 1>&2
+                        /run/current-system/profile/bin/sleep 5
+                        ((++attempt))
+                    fi
+                done
+                if [[ -e /var/lib/vm-windows10/1 ]]
+                then
+                    echo "vm-windows10: '/var/lib/vm-windows10/1' file exist. Skipping GPU reset." 1>&2
+                    :
+                else
+                    if [[ -e /sys/kernel/debug/dri/0/amdgpu_gpu_recover ]]
+                    then
+                        /run/current-system/profile/bin/cat /sys/kernel/debug/dri/0/amdgpu_gpu_recover
+                    elif [[ -e /sys/kernel/debug/dri/2/amdgpu_gpu_recover ]]
+                    then
+                        /run/current-system/profile/bin/cat /sys/kernel/debug/dri/2/amdgpu_gpu_recover
+                    fi
+                fi
+                if [[ -e /dev/lvm1/win10 ]]
+                then
+                    echo "vm-windows10: File '/dev/lvm1/win10' file exist." 1>&2
+                else
+                    /home/oleg/.guix-profile/sbin/lvchange -ay /dev/lvm1/win10
+                fi
+                attempt=0
+                max_attempt=3
+                until [[ -e /var/run/libvirt/qemu/win10.pid ]]
+                do
+                    if ((attempt > max_attempt))
+                    then
+                        exit 1
+                    else
+                        echo "vm-windows10: Start virtual machine." 1>&2
+                        if /run/current-system/profile/bin/virsh start win10
+                        then
+                            echo "vm-windows10: Started." 1>&2
+                            break
+                        else
+                            echo "vm-windows10 [${attempt}/${max_attempt}]: Start win10." 1>&2
+                            /run/current-system/profile/bin/sleep 5
+                            ((++attempt))
+                        fi
+                    fi
+                done
+                if [[ $VIRSH_DAEMON == true ]]
+                then
+                    echo "vm-windows10: Started. Sleeping infinity." 1>&2
+                    exec /run/current-system/profile/bin/sleep infinity
+                fi
                 ;;
             *)
                 exec /run/current-system/profile/bin/virsh start "${@:3}"
