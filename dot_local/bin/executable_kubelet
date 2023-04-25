@@ -46,7 +46,7 @@ fi
     fi
 
     # Required for node-exporter in a "monitoring" namespace.
-    if grep --quiet '/ / ' /proc/$$/mountinfo
+    if grep --quiet '/ / .*shared' /proc/$$/mountinfo
     then
         :
     else
