@@ -43,6 +43,7 @@
              (services monitoring)
              (services openvpn)
              (services syncthing)
+             (services virtualization)
              (services vnc)
              (services web))
 
@@ -2281,6 +2282,8 @@ namespaces = [ ]
                          (service virtlog-service-type
                                   (virtlog-configuration
                                    (max-clients 1000)))
+
+                         (service vm-windows10-service-type)
 
                          (bluetooth-service #:auto-enable? #t))
 

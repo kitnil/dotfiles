@@ -1,8 +1,10 @@
-#!/usr/bin/env bash
+#!/run/current-system/profile/bin/bash
 
 set -o errexit -o pipefail
 
 VIRSH_DAEMON="${VIRSH_DAEMON:-false}"
+
+exec &> >(/run/current-system/profile/bin/tee /var/log/virsh-vm-windows10.log)
 
 case "$1" in
     start)
@@ -35,19 +37,28 @@ case "$1" in
                 exec /run/current-system/profile/bin/virsh start vm-cilium1
                 ;;
             win10)
+                if [[ $(/run/current-system/profile/bin/virsh domstate win10) == running ]]
+                then
+                    echo "vm-windows10: Virtual machine already running.  Sleeping infinity." 1>&2
+                    if [[ $VIRSH_DAEMON == true ]]
+                    then
+                        exec /run/current-system/profile/bin/sleep infinity
+                    fi
+                    exec /run/current-system/profile/bin/sleep infinity
+                fi
                 if [[ -e /var/lib/vm-windows10/3 ]]
                 then
                     echo "vm-windows10: 3rd attempt exist, exiting." 1>&2
                     exit 1
                 fi
-                mkdir -p /var/lib/vm-windows10
+                /run/current-system/profile/bin/mkdir -p /var/lib/vm-windows10
                 for file in {1..3}
                 do
                     if [[ -e /var/lib/vm-windows10/${file} ]]
                     then
                         :
                     else
-                        touch /var/lib/vm-windows10/${file}
+                        /run/current-system/profile/bin/touch /var/lib/vm-windows10/${file}
                         break
                     fi
                 done
