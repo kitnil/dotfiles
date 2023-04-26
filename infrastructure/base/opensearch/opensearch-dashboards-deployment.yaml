@@ -22,3 +22,10 @@ spec:
         name: opensearch-dashboards
         ports:
         - containerPort: 5601
+        resources:
+          limits:
+            cpu: 30m
+            memory: 256Mi
+          requests:
+            cpu: 5m
+            memory: 150Mi
