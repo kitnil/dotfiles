@@ -16,7 +16,7 @@ case "$1" in
             overlay_rw_directory="$(TMPDIR="${HOME}/.local/tmp" mktemp -d -t "overlay.XXXXXXXXXX")"
             upper_directory="${overlay_rw_directory}/upper"
             workdir_directory="${overlay_rw_directory}/work"
-            trap 'set +e; sudo umount "$profile"; rmdir "$profile"; sudo rm -rf "$overlay_rw_directory"' EXIT
+            trap "set +e; sudo umount '$profile'; rmdir '$profile'; sudo rm -rf '$overlay_rw_directory'" EXIT
             mkdir -p "$upper_directory"
             mkdir -p "$workdir_directory"
             sudo mount -t overlay overlay -o "lowerdir=${profile_source_directory},upperdir=${upper_directory},workdir=${workdir_directory}" "$profile"
