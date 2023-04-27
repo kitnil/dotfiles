@@ -13,7 +13,7 @@ spec:
     spec:
       domain:
         cpu:
-          cores: 4
+          cores: 1
           model: host-model
           sockets: 1
           threads: 1
@@ -30,7 +30,7 @@ spec:
           type: q35
         resources:
           requests:
-            memory: 4096M
+            memory: 2048M
         firmware:
           bootloader:
             efi:
