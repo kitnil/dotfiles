@@ -535,7 +535,8 @@ PYTHONPATH='' exec -a \"$0\" ~a/bin/idea-ultimate \"$@\"\n"
                       "display.lisp"
                       "autostart.lisp"
                       "swank.lisp"
-                      "gaps.lisp")))
+                      "gaps.lisp"
+                      "windows.lisp")))
                (stumpwm-configuration
                 (init-config
                  `((in-package :stumpwm)

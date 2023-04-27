@@ -85,6 +85,7 @@
     "virtualization.lisp"
     "vnc.lisp"
     "web.lisp"
+    "windows.lisp"
     "xorg.lisp"
     "youtube-dl.lisp"))
 
