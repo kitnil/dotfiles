@@ -23,7 +23,7 @@ spec:
         - name: bootstrap.memory_lock
           value: "false"
         - name: OPENSEARCH_JAVA_OPTS
-          value: "-Xms512m -Xmx512m"
+          value: "-Xms2g -Xmx2g"
         - name: cluster.initial_master_nodes
           value: opensearch-node1
         - name: cluster.name
@@ -41,11 +41,11 @@ spec:
         - containerPort: 9600
         resources:
           limits:
-            cpu: 1000m
-            memory: 1Gi
+            cpu: 2000m
+            memory: 2Gi
           requests:
             cpu: 40m
-            memory: 512Mi
+            memory: 2Gi
         volumeMounts:
         - mountPath: /usr/share/opensearch/data
           name: opensearch-node1-claim0
