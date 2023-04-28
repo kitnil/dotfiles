@@ -29,3 +29,7 @@ spec:
           requests:
             cpu: 5m
             memory: 150Mi
+        hostAliases:
+        - ip: "192.168.25.1"
+          hostnames:
+          - "node-0.example.com"
