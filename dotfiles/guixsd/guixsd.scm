@@ -894,6 +894,8 @@ location / {
 
            "192.168.154.1 opensearch.home"
 
+           "192.168.25.1 opensearch-node1"
+
            "10.1.52.104 ipsec1 ipsec1.intr"
            "10.1.52.105 ipsec2 ipsec2.intr"
 
