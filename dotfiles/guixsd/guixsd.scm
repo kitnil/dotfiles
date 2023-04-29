@@ -1101,6 +1101,7 @@ location / {
                                   (let ((listen-address "127.0.0.1:9090"))
                                     (prometheus-configuration
                                      (listen-address listen-address)
+                                     (data-path "/srv/var/lib/prometheus")
                                      (prometheus (file-append prometheus "/bin/prometheus"))
                                      (arguments '(;; "--log.level=debug"
                                                   "--storage.tsdb.retention.time=2y"
