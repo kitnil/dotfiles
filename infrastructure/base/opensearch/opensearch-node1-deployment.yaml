@@ -54,7 +54,7 @@ spec:
       volumes:
       - name: opensearch-node1-claim0
         hostPath:
-          path: /var/lib/opensearch
+          path: /srv/var/lib/opensearch
           type: Directory
       - name: opensearch-node1-claim1
         hostPath:
