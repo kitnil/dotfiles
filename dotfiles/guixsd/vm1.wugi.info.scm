@@ -5,7 +5,7 @@
              (guix modules)
              (json)
              (guix gexp))
-(use-service-modules certbot databases dbus desktop docker dns messaging monitoring networking linux ssh sysctl web vpn)
+(use-service-modules certbot databases dbus desktop docker dns messaging monitoring networking nix linux ssh sysctl web vpn)
 (use-package-modules admin curl certs databases guile networking linux ssh tmux)
 
 (use-modules (config))
@@ -196,6 +196,10 @@ remote-random
                                    (config-file (local-file "torrc"))))
 
                          (service jenkins-builder-service-type)
+
+                         (service nix-service-type
+                                  (nix-configuration
+                                   (extra-config '("trusted-users = oleg root"))))
 
                           (dbus-service)
                           (elogind-service)
