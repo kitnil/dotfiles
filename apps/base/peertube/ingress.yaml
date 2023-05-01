@@ -2,8 +2,14 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: peertube
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
 spec:
   ingressClassName: nginx
+  tls:
+  - hosts:
+    - peertube.home.wugi.info
+    secretName: peertube-home-wugi-info-ingress-certs
   rules:
   - host: peertube.home.wugi.info
     http:
