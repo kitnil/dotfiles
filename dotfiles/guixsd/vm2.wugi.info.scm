@@ -2,7 +2,7 @@
 ;; for a "bare bones" setup, with no X11 display server.
 
 (use-modules (gnu))
-(use-service-modules networking linux ssh)
+(use-service-modules networking linux nix ssh)
 (use-package-modules certs screen ssh)
 
 (use-modules (config)
@@ -66,7 +66,10 @@
                           (service openssh-service-type)
                           (service zram-device-service-type
                                    (zram-device-configuration
-                                    (size "8G"))))
+                                    (size "8G")))
+                          (service nix-service-type
+                                   (nix-configuration
+                                    (extra-config '("trusted-users = oleg root")))))
                     (modify-services %base-services
                       (guix-service-type config => %guix-daemon-config-with-substitute-urls))))
 
