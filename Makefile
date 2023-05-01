@@ -79,6 +79,10 @@ dotfiles/nix/flake.nix:
 	rm -rf $(HOME)/.cache/nix
 	sh -c 'set -e; cd dotfiles/nix || exit 1; ./flake.nix'
 
+.PHONY: dotfiles/dns/flake.nix
+dotfiles/dns/flake.nix:
+	sh -c 'set -e; cd dotfiles/dns || exit 1; ./flake.nix'
+
 .PHONY: dotfiles/nix/nix.conf
 dotfiles/nix/nix.conf:
 	sudo mkdir -p /etc/nix
