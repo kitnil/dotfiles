@@ -142,6 +142,45 @@
                 "netshoot"
                 "--image=nicolaka/netshoot"
                 "/bin/bash"))))
+    ((nanoserver)
+     (let ((labels '(("app.kubernetes.io/name" . "nanoserver"))))
+       (apply system*
+              `(,@(if dry-run? '("echo") '())
+                "kubectl"
+                "run"
+                "--rm=true"
+                "--stdin=true"
+                "--tty=true"
+                ,@(if namespace
+                      (list (string-append "--namespace=" namespace))
+                      '())
+                ,(string-append "--labels="
+                                (string-join
+                                 (map (lambda (label)
+                                        (string-append (first label)
+                                                       "="
+                                                       (cdr label)))
+                                      labels)
+                                 ","))
+                ,@(if host
+                      (list
+                       (string-concatenate
+                        (list
+                         "--overrides="
+                         (scm->json-string
+                          `(("spec"
+                             ("tolerations"
+                              .
+                              #((("effect" . "NoSchedule")
+                                 ("value" . "true")
+                                 ("operator" . "Equal")
+                                 ("key" . "unschedulable"))))
+                             ("nodeSelector"
+                              ("kubernetes.io/hostname" . ,host)))
+                            ("apiVersion" . "v1"))))))
+                      '())
+                "nanoserver"
+                "--image=mcr.microsoft.com/windows/nanoserver:ltsc2022"))))
     ((shell)
      (let ((labels '(("app.kubernetes.io/name" . "nsenter"))))
        (apply system*
