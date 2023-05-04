@@ -2025,7 +2025,7 @@ EOF
         noschedule)
             case "$2" in
                 list)
-                    kubectl get nodes -o go-template='{{range $item := .items}}{{with $nodename := $item.metadata.name}}{{range $taint := $item.spec.taints}}{{if and (eq $taint.effect "NoSchedule")}}{{printf "%s\n" $nodename}}{{end}}{{end}}{{end}}{{end}}' \
+                    command kubectl get nodes -o go-template='{{range $item := .items}}{{with $nodename := $item.metadata.name}}{{range $taint := $item.spec.taints}}{{if and (eq $taint.effect "NoSchedule")}}{{printf "%s\n" $nodename}}{{end}}{{end}}{{end}}{{end}}' \
                         | sort --version-sort
                     ;;
             esac
@@ -2035,7 +2035,106 @@ EOF
             then
                 viddy -n "${KUBECTL_WATCH_INTERVAL:-10}" "kubectl get nodes -o wide; echo; kubectl get all -A -o wide; echo; kubectl get ingress -o wide; echo; kubectl get secrets -o wide; echo; kubectl get all -n kube-system -A -o wide"
             else
-                viddy -n "${KUBECTL_WATCH_INTERVAL:-10}" "kubectl get nodes -o wide; echo; kubectl get all --namespace ${2} -o wide; echo; kubectl get ingress --namespace ${2} -o wide; echo; kubectl get --namespace ${2} certificates -o wide; echo; kubectl get secrets --namespace ${2} -o wide; echo; kubectl get --namespace ${2} serviceaccounts; echo; kubectl get pvc --namespace ${2} -o wide; echo; kubectl get networkpolicies --namespace ${2} -o wide; echo; kubectl get events --namespace ${2} -o wide"
+                namespace="$2"
+                export namespace
+                viddy_command()
+                {
+                    case "$namespace" in
+                        pdns)
+                            kustomization="powerdns"
+                            ;;
+                        kube-system)
+                            kustomization="cilium"
+                            ;;
+                        *)
+                            kustomization="$namespace"
+                            ;;
+                    esac
+                    if [[ $KUBECONFIG == *"config-mjru-"* ]]
+                    then
+                        cat <<EOF
+$ git ls-remote https://gitlab.corp1.majordomo.ru/cd/fluxcd.git master
+$(git ls-remote https://gitlab.corp1.majordomo.ru/cd/fluxcd.git master)
+
+EOF
+                    fi
+                    cat <<EOF
+$ kubectl get -n flux-system gitrepositories.source.toolkit.fluxcd.io flux-system
+$(kubectl get -n flux-system gitrepositories.source.toolkit.fluxcd.io flux-system)
+
+EOF
+                    if kubectl get -n flux-system kustomizations.kustomize.toolkit.fluxcd.io "$kustomization" &> /dev/null
+                    then
+                        cat <<EOF
+$ kubectl get -n flux-system kustomizations.kustomize.toolkit.fluxcd.io "$kustomization"
+$(kubectl get -n flux-system kustomizations.kustomize.toolkit.fluxcd.io "$kustomization")
+
+EOF
+                    fi
+                    mapfile -t helmreleases < <(kubectl -n "$namespace" get helmreleases.helm.toolkit.fluxcd.io --no-headers=true --output=custom-columns='NAME:metadata.name')
+                    for helmrelease in "${helmreleases[@]}"
+                    do
+                        if kubectl -n "$namespace" get helmreleases.helm.toolkit.fluxcd.io "$helmrelease" &> /dev/null
+                        then
+                            cat <<EOF
+$ kubectl -n "$namespace" get helmreleases.helm.toolkit.fluxcd.io "$helmrelease"
+$(kubectl -n "$namespace" get helmreleases.helm.toolkit.fluxcd.io "$helmrelease")
+
+EOF
+                        fi
+                    done
+                    if [[ $namespace == "kube-system" ]]
+                    then
+                        mapfile -t nodes_with_noschedule_taint < <(kubectl get nodes -o go-template='{{range $item := .items}}{{with $nodename := $item.metadata.name}}{{range $taint := $item.spec.taints}}{{if and (eq $taint.effect "NoSchedule")}}{{printf "%s\n" $nodename}}{{end}}{{end}}{{end}}{{end}}' | sort --version-sort)
+                        nodes_with_noschedule()
+                        {
+                            for node in "${nodes_with_noschedule_taint[@]}"
+                            do
+                                echo -n "${node}: "
+                                kubectl get node -o json "$node" \
+                                    | jq --monochrome-output --compact-output '.metadata.labels | with_entries(select(.key | test("^.*cluster.local.*$"))) | with_entries(select(.value == "false")) | keys'
+                            done
+                        }
+                        cat <<EOF
+$ kubectl get nodes -o wide
+$(kubectl get node -o wide | awk 'NR<3{print $0;next}{print $0| "sort --version-sort"}')
+
+$ kubectl get nodes ... # with NoSchedule taint
+$(nodes_with_noschedule)
+
+$ kubectl top node
+$(kubectl top node | awk 'NR<3{print $0;next}{print $0| "sort --version-sort"}')
+
+EOF
+                    fi
+                    cat <<EOF
+$ kubectl get all --namespace "$namespace" -o wide
+$(kubectl get all --namespace "$namespace" -o wide)
+
+$ kubectl get ingress --namespace "$namespace" -o wide
+$(kubectl get ingress --namespace "$namespace" -o wide)
+
+$ kubectl get --namespace "$namespace" certificates -o wide
+$(kubectl get --namespace "$namespace" certificates -o wide)
+
+$ kubectl get secrets --namespace "$namespace" -o wide
+$(kubectl get secrets --namespace "$namespace" -o wide)
+
+$ kubectl get --namespace "$namespace" serviceaccounts
+$(kubectl get --namespace "$namespace" serviceaccounts)
+
+$ kubectl get pvc --namespace "$namespace" -o wide
+$(kubectl get pvc --namespace "$namespace" -o wide)
+
+$ kubectl get networkpolicies --namespace "$namespace" -o wide
+$(kubectl get networkpolicies --namespace "$namespace" -o wide)
+
+$ kubectl get events --namespace "$namespace" -o wide
+$(kubectl get events --namespace "$namespace" -o wide)
+EOF
+                }
+                export -f viddy_command
+                viddy --no-title --interval "${KUBECTL_WATCH_INTERVAL:-10}" viddy_command
             fi
             ;;
         prometheus)
