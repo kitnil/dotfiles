@@ -55,6 +55,8 @@ alias iostat='iostat -xm 2'
 
 alias dhall-to-yaml='dhall-to-yaml --omit-empty'
 
+alias noise-brown="mpv --no-resume-playback --loop '/srv/video/metube/Smoothed Brown Noise.webm'"
+
 httping()
 {
     case "$1" in
