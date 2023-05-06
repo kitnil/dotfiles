@@ -123,6 +123,13 @@
                      (service network-manager-service-type)
                      (service nfs-service-type
                               (nfs-configuration))
+
+                     (service prometheus-node-exporter-service-type
+                              (prometheus-node-exporter-configuration
+                               (web-listen-address "0.0.0.0:9100")
+                               (textfile-directory "/var/lib/prometheus-node-exporter")
+                               (extra-options '("--collector.processes"))))
+
                      (service openssh-service-type)
 		     (service openvpn-service-type
 			      (openvpn-configuration
