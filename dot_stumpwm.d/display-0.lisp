@@ -130,9 +130,7 @@
 
 (defcommand group-7-start-programs () ()
   (run-frame 7 :frame-0-command (lambda ()
-                                  (run-commands "mjru-alerta"))
-               :frame-1-command (lambda ()
-                                  (run-commands "mjru-zabbix"))))
+                                  (run-commands "looking-glass-client"))))
 
 (defcommand group-8-start-programs () ()
   (run-frame 8 :frame-0-command (lambda ()
