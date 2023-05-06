@@ -36,7 +36,8 @@
                #f))
 
 (define guix.wugi.info
-  '("admin.lisp"
+  '("adb.lisp"
+    "admin.lisp"
     "android.lisp"
     "audio.lisp"
     "autostart.lisp"
