@@ -941,7 +941,6 @@ location / {
            "192.168.25.2 windows.home"
            "192.168.25.3 vm1.corp"
 
-           "172.16.100.65 zdetovetskiy.intr"
            "172.16.100.61 lyashenko.intr"
            "127.0.0.1 example.com"
 
