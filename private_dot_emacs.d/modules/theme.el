@@ -57,7 +57,7 @@
 (defvar current-theme-gtk (getenv "GTK_THEME"))
 
 (defun load-theme-modus-vivendi ()
-  ;; (disable-theme 'smart-mode-line-light)
+  (disable-theme 'smart-mode-line-light)
   (load-theme 'modus-vivendi t)
   (custom-theme-set-faces
    'modus-vivendi
@@ -72,7 +72,7 @@
       (progn (mapc (lambda (theme)
                      (disable-theme theme))
                    '(modus-vivendi smart-mode-line-dark))
-             ;; (enable-theme 'smart-mode-line-light)
+             (enable-theme 'smart-mode-line-light)
              (setq terminal-here-color 'light)
              (setq current-theme-gtk nil))
     (load-theme-modus-vivendi)))
@@ -95,11 +95,11 @@
 ;;; Smart mode-line
 ;;;
 
-;; (setq sml/no-confirm-load-theme t)
-;; (when (daemonp) (setq sml/theme 'light))
-;; (sml/setup)
+(setq sml/no-confirm-load-theme t)
+(when (daemonp) (setq sml/theme 'light))
+(sml/setup)
 
-;; (custom-theme-set-faces
-;;  'smart-mode-line-light
-;;  '(mode-line-inactive ((t :foreground "grey20" :background "#ffffff" :inverse-video nil))))
+(custom-theme-set-faces
+ 'smart-mode-line-light
+ '(mode-line-inactive ((t :foreground "grey20" :background "#ffffff" :inverse-video nil))))
 
