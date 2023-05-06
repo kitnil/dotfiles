@@ -96,7 +96,7 @@
 ;;;
 
 (setq sml/no-confirm-load-theme t)
-(when (daemonp) (setq sml/theme 'light))
+(when (daemonp) (setq sml/theme 'dark))
 (sml/setup)
 
 (custom-theme-set-faces
