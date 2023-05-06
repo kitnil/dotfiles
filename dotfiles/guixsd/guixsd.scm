@@ -916,7 +916,7 @@ location / {
            ;; ci.intr
            "172.16.103.82 ns1test.majordomo.ru RC-USER 33e27a01eeb1"
 
-           "192.168.154.53 windows.local"
+           "192.168.154.99 windows.local"
            "192.168.0.187 ubuntu.local"
            "192.168.154.110 almalinux.local"
 
