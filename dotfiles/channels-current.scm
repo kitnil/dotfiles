@@ -16,6 +16,12 @@
         (commit
           "416882513017c139918fb42548634d07d565cc74"))
       (channel
+       (name 'prometheus-shepherd-exporter)
+       (url "https://gitlab.com/wigust/prometheus-shepherd-exporter")
+       (branch "master")
+       (commit
+         "542ec52c4955c854e770f615148ced99de5e9fec"))
+      (channel
         (name 'nonguix)
         (url "https://gitlab.com/nonguix/nonguix")
         (branch "master")

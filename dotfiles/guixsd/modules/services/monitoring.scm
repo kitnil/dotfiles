@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2021, 2022 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2021, 2022, 2023 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -1141,7 +1141,6 @@ User admin")
 ;;;
 ;;;
 
-(add-to-load-path "/home/oleg/src/gitlab.com/wigust/prometheus-shepherd-exporter")
 (use-modules (prometheus-shepherd-exporter))
 
 (define (prometheus-shepherd-exporter-shepherd-service config)
