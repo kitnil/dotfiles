@@ -12,6 +12,9 @@
          (name "python-prometheus-ssh-exporter")
          (description "Prometheus SSH Exporter written in Python"))
         (home-gitlab-project-configuration
+         (name "prometheus-shepherd-exporter")
+         (description "Prometheus Shepherd Exporter"))
+        (home-gitlab-project-configuration
          (name "githunt")
          (description "Hunt the most starred projects on any date on GitHub.  Fork of https://github.com/kamranahmedse/githunt"))
         (home-gitlab-project-configuration
