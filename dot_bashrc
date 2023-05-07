@@ -57,6 +57,14 @@ alias dhall-to-yaml='dhall-to-yaml --omit-empty'
 
 alias noise-brown="mpv --no-resume-playback --loop '/srv/video/metube/Smoothed Brown Noise.webm'"
 
+mem()
+{
+    cat <<EOF
+The top 5 applications using most RAM:
+$(ps -eo pid,%mem,cmd --sort=-%mem | head -n 6)
+EOF
+}
+
 httping()
 {
     case "$1" in
