@@ -3,9 +3,14 @@ kind: Ingress
 metadata:
   name: novnc-firefox-esr
   annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
     nginx.ingress.kubernetes.io/whitelist-source-range: "10.0.0.0/8,192.168.0.0/16"
 spec:
   ingressClassName: nginx
+  tls:
+  - hosts:
+    - novnc.firefox-softethervpn.home.wugi.info
+    secretName: novnc-firefox-softethervpn-home-wugi-info-ingress-certs
   rules:
   - host: novnc.firefox-softethervpn.home.wugi.info
     http:
