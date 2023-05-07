@@ -100,6 +100,8 @@
     # nodePackages_12_x.node2nix
     fup-repl
 
+    nodejs
+
     cachix
 
     mongodb

@@ -137,7 +137,7 @@ virtualization vnc vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
                ;; icecat
                ;; broken: ungoogled-chromium
 
-               node ;Packages in <~/.npm-global/bin/>.
+               ;; node ;Packages in <~/.npm-global/bin/>.
 
                tor torsocks
 
