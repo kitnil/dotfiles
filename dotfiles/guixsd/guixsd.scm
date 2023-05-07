@@ -1346,11 +1346,7 @@ location / {
                                                            #((("targets"
                                                                .
                                                                #("vm1.wugi.info:22"))
-                                                              ("labels" ("module" . "default")))
-                                                             (("targets"
-                                                               .
-                                                               #("web33.intr:22"))
-                                                              ("labels" ("module" . "majordomo-eng")))))
+                                                              ("labels" ("module" . "default")))))
                                                           ("relabel_configs"
                                                            .
                                                            #((("target_label" . "__param_target")
