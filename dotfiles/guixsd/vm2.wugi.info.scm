@@ -2,7 +2,7 @@
 ;; for a "bare bones" setup, with no X11 display server.
 
 (use-modules (gnu))
-(use-service-modules networking linux nix ssh)
+(use-service-modules networking linux nix monitoring ssh)
 (use-package-modules certs screen ssh)
 
 (use-modules (config)
@@ -67,6 +67,7 @@
                           (service zram-device-service-type
                                    (zram-device-configuration
                                     (size "8G")))
+                          (service prometheus-node-exporter-service-type)
                           (service nix-service-type
                                    (nix-configuration
                                     (extra-config '("trusted-users = oleg root")))))
