@@ -1,0 +1,32 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: windows-hostprocess
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - name: test
+        image: mcr.microsoft.com/windows/servercore:ltsc2022
+        command: [powershell, -File, C:\scripts\main.ps1]
+        volumeMounts:
+        - mountPath: C:\scripts
+          name: scripts
+      securityContext:
+        windowsOptions:
+          hostProcess: true
+          runAsUserName: "NT AUTHORITY\\SYSTEM"
+      hostNetwork: true
+      tolerations:
+      - key: "unschedulable"
+        operator: "Equal"
+        value: "true"
+        effect: "NoSchedule"
+      nodeSelector:
+        "kubernetes.io/os": windows
+      volumes:
+      - name: scripts
+        configMap:
+          name: scripts
