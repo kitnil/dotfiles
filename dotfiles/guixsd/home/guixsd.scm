@@ -1221,7 +1221,8 @@ account default : gmail
                                      ;; ("guix_work" ("hosts" ("ws1.wugi.info" . null)))
                                      ("guix_vm"
                                       ("hosts"
-                                       ("vm1.wugi.info" . null))))))
+                                       ("vm1.wugi.info" . null)
+                                       ("vm2.wugi.info" . null))))))
                                  port
                                  #:pretty #t)))))))
 
