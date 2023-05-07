@@ -1180,6 +1180,7 @@ location / {
                                                            .
                                                            #(((targets . #("127.0.0.1:9100"
                                                                            "vm1.wugi.info:9100"
+                                                                           "vm2.wugi.info:9100"
                                                                            "notebook.wugi.info:9100")))))
                                                           (scrape_interval . "5s")
                                                           (job_name . "node"))
