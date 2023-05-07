@@ -910,6 +910,7 @@ location / {
            "192.168.154.1 kube4 kube4.home"
            "192.168.154.146 kube5 kube5.home"
            "192.168.154.1 nfs.home"
+           "192.168.154.1 samba.home"
 
            "172.16.100.60 workstation.intr"
 
