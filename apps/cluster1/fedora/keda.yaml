@@ -12,6 +12,7 @@ spec:
   cooldownPeriod: 5 # Optional. Default: 300 seconds
   scaleTargetRef:
     name: fedora
+    apiVersion: kubevirt.io/v1
     kind: VirtualMachineInstanceReplicaSet
   triggers:
   - type: cron
