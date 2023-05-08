@@ -71,7 +71,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m0s
-  path: ./apps/base/podinfo
+  path: ./apps/cluster1/podinfo
   prune: true
   sourceRef:
     kind: GitRepository
