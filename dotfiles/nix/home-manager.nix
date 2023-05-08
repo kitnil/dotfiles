@@ -223,6 +223,8 @@
     restic-rest-server
 
     eiskaltdcpp
+
+    moonlight-qt
   ];
 
   home.file = {
