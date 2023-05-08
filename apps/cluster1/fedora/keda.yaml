@@ -12,6 +12,7 @@ spec:
     name: fedora
     apiVersion: kubevirt.io/v1
     kind: VirtualMachineInstanceReplicaSet
+    envSourceContainerName: compute
   triggers:
   - type: prometheus
     metadata:
