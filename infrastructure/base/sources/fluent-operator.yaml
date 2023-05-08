@@ -7,5 +7,5 @@ metadata:
 spec:
   interval: 60m0s
   ref:
-    commit: 017088bfafb3d988823d8bf0866059f14674d6f0
+    commit: 1e907c611b6c5b9b2cfc24f73e2ea24d5b74e84e
   url: https://github.com/wigust/fluent-operator
