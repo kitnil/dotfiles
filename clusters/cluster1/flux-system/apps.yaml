@@ -84,7 +84,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m0s
-  path: ./apps/base/fedora
+  path: ./apps/cluster1/fedora
   prune: true
   sourceRef:
     kind: GitRepository
