@@ -15,10 +15,9 @@ spec:
     apiVersion: kubevirt.io/v1
     kind: VirtualMachineInstanceReplicaSet
   triggers:
-  - type: cron
+  - type: prometheus
     metadata:
-      # Required
-      timezone: Europe/Moscow # The acceptable values would be a value from the IANA Time Zone Database.
-      start: "*/2 * * * *" # Every hour on the 30th minute
-      end: "*/10 * * * *" # Every hour on the 45th minute
-      desiredReplicas: "1"
+      serverAddress: http://kube-prometheus-stack-prometheus.monitoring:9090
+      metricName: nginx_ingress_controller_request_duration_seconds_count
+      threshold: "0.5"
+      query: max(irate(nginx_ingress_controller_request_duration_seconds_count{host="podinfo.home.wugi.info"}[5m]))
