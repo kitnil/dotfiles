@@ -42,3 +42,14 @@ grafana:
       - grafana.kubernetes.home.wugi.info
     hosts:
     - grafana.kubernetes.home.wugi.info
+
+prometheus-node-exporter:
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: prometheus-node-exporter.cluster.local/schedulable
+            operator: NotIn
+            values:
+            - "false"
