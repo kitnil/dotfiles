@@ -9,7 +9,7 @@ spec:
   pollingInterval: 3 # Optional. Default: 30 seconds
   cooldownPeriod: 1800 # Optional. Default: 300 seconds
   scaleTargetRef:
-    name: windows
+    name: vm-windows-datavolume
     apiVersion: kubevirt.io/v1
     kind: VirtualMachineInstanceReplicaSet
     envSourceContainerName: compute
