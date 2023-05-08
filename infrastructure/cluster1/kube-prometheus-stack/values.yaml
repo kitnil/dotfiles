@@ -53,3 +53,7 @@ prometheus-node-exporter:
             operator: NotIn
             values:
             - "false"
+          - key: kubernetes.io/os
+            operator: NotIn
+            values:
+            - "windows"
