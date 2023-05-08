@@ -17,5 +17,5 @@ spec:
     metadata:
       serverAddress: http://kube-prometheus-stack-prometheus.monitoring:9090
       metricName: nginx_ingress_controller_request_duration_seconds_count
-      threshold: 0.5
+      threshold: "0.5"
       query: max(irate(nginx_ingress_controller_request_duration_seconds_count{host="podinfo.home.wugi.info"}[5m]))
