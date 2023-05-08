@@ -2060,14 +2060,22 @@ EOF
                             kustomization="$namespace"
                             ;;
                     esac
-                    if [[ $KUBECONFIG == *"config-mjru-"* ]]
-                    then
-                        cat <<EOF
+                    case "$KUBECONFIG" in
+                        *config-mjru-*)
+                            cat <<EOF
 $ git ls-remote https://gitlab.corp1.majordomo.ru/cd/fluxcd.git master
 $(git ls-remote https://gitlab.corp1.majordomo.ru/cd/fluxcd.git master)
 
 EOF
-                    fi
+                            ;;
+                        *config-home-*)
+                            cat <<EOF
+$ git ls-remote https://gitlab.com/wigust/dotfiles.git master
+$(git ls-remote https://gitlab.com/wigust/dotfiles.git master)
+
+EOF
+                            ;;
+                    esac
                     cat <<EOF
 $ kubectl get -n flux-system gitrepositories.source.toolkit.fluxcd.io flux-system
 $(kubectl get -n flux-system gitrepositories.source.toolkit.fluxcd.io flux-system)
