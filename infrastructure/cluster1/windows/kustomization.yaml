@@ -4,3 +4,4 @@ namespace: windows
 resources:
 - ../../base/windows
 - virtualmachineinstancereplicaset.yaml
+- keda.yaml

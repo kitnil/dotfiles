@@ -1,0 +1,22 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: windows-scaledobject
+  namespace: windows
+spec:
+  maxReplicaCount: 1
+  minReplicaCount: 0
+  pollingInterval: 3 # Optional. Default: 30 seconds
+  cooldownPeriod: 1800 # Optional. Default: 300 seconds
+  scaleTargetRef:
+    name: windows
+    apiVersion: kubevirt.io/v1
+    kind: VirtualMachineInstanceReplicaSet
+    envSourceContainerName: compute
+  triggers:
+  - type: prometheus
+    metadata:
+      serverAddress: http://kube-prometheus-stack-prometheus.monitoring:9090
+      metricName: nginx_ingress_controller_request_duration_seconds_count
+      threshold: "0.5"
+      query: max(irate(nginx_ingress_controller_request_duration_seconds_count{host="novnc.windows.softethervpn.home.wugi.info"}[5m]))
