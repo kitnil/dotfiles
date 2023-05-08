@@ -3,7 +3,6 @@ kind: VirtualMachineInstanceReplicaSet
 metadata:
   name: fedora
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: fedora
