@@ -2144,7 +2144,16 @@ $(kubectl get events --namespace "$namespace" -o wide)
 EOF
                 }
                 export -f viddy_command
-                viddy --no-title --interval "${KUBECTL_WATCH_INTERVAL:-10}" viddy_command
+                viddy_args=(
+                    --no-title
+                    --interval "${KUBECTL_WATCH_INTERVAL:-10}"
+                )
+                # Upstream viddy does not have max-history flag.
+                if [[ $(viddy --help) == *max-history* ]]
+                then
+                    viddy_args+=("--max-history=${KUBECTL_WATCH_HISTORY:-10}")
+                fi
+                viddy "${viddy_args[@]}" viddy_command
             fi
             ;;
         prometheus)
