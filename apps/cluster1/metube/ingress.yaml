@@ -3,9 +3,14 @@ kind: Ingress
 metadata:
   name: metube
   annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
     nginx.ingress.kubernetes.io/whitelist-source-range: "10.0.0.0/8,192.168.0.0/16"
 spec:
   ingressClassName: nginx
+  tls:
+  - hosts:
+    - metube.home.wugi.info
+    secretName: metube-home-wugi-info-ingress-certs
   rules:
   - host: metube.home.wugi.info
     http:
