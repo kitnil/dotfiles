@@ -2074,6 +2074,24 @@ $ git ls-remote https://gitlab.com/wigust/dotfiles.git master
 $(git ls-remote https://gitlab.com/wigust/dotfiles.git master)
 
 EOF
+                            PROMETHEUS_URL=https://prometheus.kubernetes.home.wugi.info
+                            if kubectl get -n "$namespace" scaledobjects &> /dev/null
+                            then
+                                cat <<EOF
+$ kubectl get -n "$namespace" scaledobjects
+$(kubectl get -n "$namespace" scaledobjects)
+
+EOF
+                                mapfile -t queries < <(kubectl get -n "$namespace" scaledobjects "${namespace}-scaledobject" -o json | jq --raw-output '.spec.triggers[] | .metadata.query')
+                                for query in "${queries[@]}"
+                                do
+                                    cat <<EOF
+query: ${query}
+$(echo "$query" | curl --silent --get "${PROMETHEUS_URL}/api/v1/query" --data-urlencode query@-)
+
+EOF
+                                done
+                            fi
                             ;;
                     esac
                     cat <<EOF
