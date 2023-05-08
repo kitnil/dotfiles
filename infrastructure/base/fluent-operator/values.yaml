@@ -27,3 +27,14 @@ fluentbit:
         verify: false
       suppressTypeName: true
       logstashFormat: true
+  affinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: node-role.kubernetes.io/edge
+            operator: DoesNotExist
+          - key: fluentbit.cluster.local/schedulable
+            operator: NotIn
+            values:
+            - "false"
