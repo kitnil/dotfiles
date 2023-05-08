@@ -13,44 +13,44 @@ spec:
       name: windows
       labels:
         kubevirt.io/vm: vm-windows-datavolume
-  spec:
-    domain:
-      cpu:
-        cores: 1
-        model: host-model
-        sockets: 1
-        threads: 1
-      devices:
-        disks:
-        - disk:
-            bus: virtio
-          name: windows-volume-disk1
-        interfaces:
-        - masquerade: {}
-          model: e1000
-          name: default
-      machine:
-        type: q35
-      resources:
-        requests:
-          memory: 2048M
-      firmware:
-        bootloader:
-          efi:
-            secureBoot: true
-      features:
-        acpi: {}
-        apic: {}
-        hyperv:
-          relaxed: {}
-          spinlocks:
-            spinlocks: 8191
-          vapic: {}
-        smm: {}
-    volumes:
-    - dataVolume:
-        name: windows-dv
-      name: windows-volume-disk1
-    networks:
-    - name: default
-      pod: {}
+    spec:
+      domain:
+        cpu:
+          cores: 1
+          model: host-model
+          sockets: 1
+          threads: 1
+        devices:
+          disks:
+          - disk:
+              bus: virtio
+            name: windows-volume-disk1
+          interfaces:
+          - masquerade: {}
+            model: e1000
+            name: default
+        machine:
+          type: q35
+        resources:
+          requests:
+            memory: 2048M
+        firmware:
+          bootloader:
+            efi:
+              secureBoot: true
+        features:
+          acpi: {}
+          apic: {}
+          hyperv:
+            relaxed: {}
+            spinlocks:
+              spinlocks: 8191
+            vapic: {}
+          smm: {}
+      volumes:
+      - dataVolume:
+          name: windows-dv
+        name: windows-volume-disk1
+      networks:
+      - name: default
+        pod: {}
