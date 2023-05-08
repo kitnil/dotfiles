@@ -313,7 +313,13 @@ spec:
                     description: MediatedDevicesConfiguration holds information about
                       MDEV types to be defined, if available
                     properties:
+                      mediatedDeviceTypes:
+                        items:
+                          type: string
+                        type: array
+                        x-kubernetes-list-type: atomic
                       mediatedDevicesTypes:
+                        description: Deprecated. Use mediatedDeviceTypes instead.
                         items:
                           type: string
                         type: array
@@ -324,7 +330,13 @@ spec:
                             about MDEV types to be defined in a specifc node that
                             matches the NodeSelector field.
                           properties:
+                            mediatedDeviceTypes:
+                              items:
+                                type: string
+                              type: array
+                              x-kubernetes-list-type: atomic
                             mediatedDevicesTypes:
+                              description: Deprecated. Use mediatedDeviceTypes instead.
                               items:
                                 type: string
                               type: array
@@ -338,7 +350,6 @@ spec:
                                 on that node. More info: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/'
                               type: object
                           required:
-                          - mediatedDevicesTypes
                           - nodeSelector
                           type: object
                         type: array
@@ -491,6 +502,25 @@ spec:
                         type: array
                         x-kubernetes-list-type: atomic
                     type: object
+                  seccompConfiguration:
+                    description: SeccompConfiguration holds Seccomp configuration
+                      for Kubevirt components
+                    properties:
+                      virtualMachineInstanceProfile:
+                        description: VirtualMachineInstanceProfile defines what profile
+                          should be used with virt-launcher. Defaults to none
+                        properties:
+                          customProfile:
+                            description: CustomProfile allows to request arbitrary
+                              profile for virt-launcher
+                            properties:
+                              localhostProfile:
+                                type: string
+                              runtimeDefaultProfile:
+                                type: boolean
+                            type: object
+                        type: object
+                    type: object
                   selinuxLauncherType:
                     type: string
                   smbios:
@@ -611,6 +641,20 @@ spec:
               imagePullPolicy:
                 description: The ImagePullPolicy to use.
                 type: string
+              imagePullSecrets:
+                description: The imagePullSecrets to pull the container images from
+                  Defaults to none
+                items:
+                  description: LocalObjectReference contains enough information to
+                    let you locate the referenced object inside the same namespace.
+                  properties:
+                    name:
+                      description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                        TODO: Add other useful fields. apiVersion, kind, uid?'
+                      type: string
+                  type: object
+                type: array
+                x-kubernetes-list-type: atomic
               imageRegistry:
                 description: The image registry to pull the container images from
                   Defaults to the same registry the operator's container image is
@@ -3021,7 +3065,13 @@ spec:
                     description: MediatedDevicesConfiguration holds information about
                       MDEV types to be defined, if available
                     properties:
+                      mediatedDeviceTypes:
+                        items:
+                          type: string
+                        type: array
+                        x-kubernetes-list-type: atomic
                       mediatedDevicesTypes:
+                        description: Deprecated. Use mediatedDeviceTypes instead.
                         items:
                           type: string
                         type: array
@@ -3032,7 +3082,13 @@ spec:
                             about MDEV types to be defined in a specifc node that
                             matches the NodeSelector field.
                           properties:
+                            mediatedDeviceTypes:
+                              items:
+                                type: string
+                              type: array
+                              x-kubernetes-list-type: atomic
                             mediatedDevicesTypes:
+                              description: Deprecated. Use mediatedDeviceTypes instead.
                               items:
                                 type: string
                               type: array
@@ -3046,7 +3102,6 @@ spec:
                                 on that node. More info: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/'
                               type: object
                           required:
-                          - mediatedDevicesTypes
                           - nodeSelector
                           type: object
                         type: array
@@ -3199,6 +3254,25 @@ spec:
                         type: array
                         x-kubernetes-list-type: atomic
                     type: object
+                  seccompConfiguration:
+                    description: SeccompConfiguration holds Seccomp configuration
+                      for Kubevirt components
+                    properties:
+                      virtualMachineInstanceProfile:
+                        description: VirtualMachineInstanceProfile defines what profile
+                          should be used with virt-launcher. Defaults to none
+                        properties:
+                          customProfile:
+                            description: CustomProfile allows to request arbitrary
+                              profile for virt-launcher
+                            properties:
+                              localhostProfile:
+                                type: string
+                              runtimeDefaultProfile:
+                                type: boolean
+                            type: object
+                        type: object
+                    type: object
                   selinuxLauncherType:
                     type: string
                   smbios:
@@ -3319,6 +3393,20 @@ spec:
               imagePullPolicy:
                 description: The ImagePullPolicy to use.
                 type: string
+              imagePullSecrets:
+                description: The imagePullSecrets to pull the container images from
+                  Defaults to none
+                items:
+                  description: LocalObjectReference contains enough information to
+                    let you locate the referenced object inside the same namespace.
+                  properties:
+                    name:
+                      description: 'Name of the referent. More info: https://kubernetes.io/docs/concepts/overview/working-with-objects/names/#names
+                        TODO: Add other useful fields. apiVersion, kind, uid?'
+                      type: string
+                  type: object
+                type: array
+                x-kubernetes-list-type: atomic
               imageRegistry:
                 description: The image registry to pull the container images from
                   Defaults to the same registry the operator's container image is
@@ -5825,6 +5913,7 @@ rules:
   resources:
   - virtualmachinesnapshots
   - virtualmachinerestores
+  - virtualmachinesnapshotcontents
   verbs:
   - get
   - list
@@ -5833,6 +5922,7 @@ rules:
   - cdi.kubevirt.io
   resources:
   - datasources
+  - datavolumes
   verbs:
   - get
   - list
@@ -5965,6 +6055,7 @@ rules:
   - create
   - delete
   - get
+  - update
 - apiGroups:
   - ""
   resources:
@@ -5994,6 +6085,8 @@ rules:
   resources:
   - virtualmachinepools
   - virtualmachinepools/finalizers
+  - virtualmachinepools/status
+  - virtualmachinepools/scale
   verbs:
   - watch
   - list
@@ -6238,6 +6331,7 @@ rules:
   - virtualmachineinstances/console
   - virtualmachineinstances/vnc
   - virtualmachineinstances/vnc/screenshot
+  - virtualmachineinstances/portforward
   - virtualmachineinstances/guestosinfo
   - virtualmachineinstances/filesystemlist
   - virtualmachineinstances/userlist
@@ -6253,9 +6347,15 @@ rules:
   - virtualmachineinstances/freeze
   - virtualmachineinstances/unfreeze
   - virtualmachineinstances/softreboot
-  - virtualmachineinstances/portforward
   verbs:
   - update
+- apiGroups:
+  - subresources.kubevirt.io
+  resources:
+  - virtualmachines/expand-spec
+  - virtualmachines/portforward
+  verbs:
+  - get
 - apiGroups:
   - subresources.kubevirt.io
   resources:
@@ -6266,6 +6366,12 @@ rules:
   - virtualmachines/removevolume
   - virtualmachines/migrate
   - virtualmachines/memorydump
+  verbs:
+  - update
+- apiGroups:
+  - subresources.kubevirt.io
+  resources:
+  - expand-vm-spec
   verbs:
   - update
 - apiGroups:
@@ -6343,6 +6449,7 @@ rules:
   - virtualmachineinstances/console
   - virtualmachineinstances/vnc
   - virtualmachineinstances/vnc/screenshot
+  - virtualmachineinstances/portforward
   - virtualmachineinstances/guestosinfo
   - virtualmachineinstances/filesystemlist
   - virtualmachineinstances/userlist
@@ -6358,9 +6465,15 @@ rules:
   - virtualmachineinstances/freeze
   - virtualmachineinstances/unfreeze
   - virtualmachineinstances/softreboot
-  - virtualmachineinstances/portforward
   verbs:
   - update
+- apiGroups:
+  - subresources.kubevirt.io
+  resources:
+  - virtualmachines/expand-spec
+  - virtualmachines/portforward
+  verbs:
+  - get
 - apiGroups:
   - subresources.kubevirt.io
   resources:
@@ -6371,6 +6484,12 @@ rules:
   - virtualmachines/removevolume
   - virtualmachines/migrate
   - virtualmachines/memorydump
+  verbs:
+  - update
+- apiGroups:
+  - subresources.kubevirt.io
+  resources:
+  - expand-vm-spec
   verbs:
   - update
 - apiGroups:
@@ -6448,11 +6567,18 @@ rules:
 - apiGroups:
   - subresources.kubevirt.io
   resources:
+  - virtualmachines/expand-spec
   - virtualmachineinstances/guestosinfo
   - virtualmachineinstances/filesystemlist
   - virtualmachineinstances/userlist
   verbs:
   - get
+- apiGroups:
+  - subresources.kubevirt.io
+  resources:
+  - expand-vm-spec
+  verbs:
+  - update
 - apiGroups:
   - kubevirt.io
   resources:
@@ -6574,13 +6700,15 @@ spec:
         command:
         - virt-operator
         env:
-        - name: OPERATOR_IMAGE
-          value: quay.io/kubevirt/virt-operator:v0.58.0
+        - name: VIRT_OPERATOR_IMAGE
+          value: quay.io/kubevirt/virt-operator:v0.59.0
         - name: WATCH_NAMESPACE
           valueFrom:
             fieldRef:
               fieldPath: metadata.annotations['olm.targetNamespaces']
-        image: quay.io/kubevirt/virt-operator:v0.58.0
+        - name: KUBEVIRT_VERSION
+          value: v0.59.0
+        image: quay.io/kubevirt/virt-operator:v0.59.0
         imagePullPolicy: IfNotPresent
         name: virt-operator
         ports:
@@ -6600,7 +6728,7 @@ spec:
         resources:
           requests:
             cpu: 10m
-            memory: 250Mi
+            memory: 400Mi
         securityContext:
           allowPrivilegeEscalation: false
           capabilities:
