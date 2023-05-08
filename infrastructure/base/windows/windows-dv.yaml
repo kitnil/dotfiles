@@ -5,7 +5,7 @@ metadata:
     kubevirt.io/vm: vm-windows-datavolume
   name: vm-windows-datavolume
 spec:
-  running: true
+  running: false
   template:
     metadata:
       labels:
