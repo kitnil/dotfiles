@@ -7,7 +7,7 @@ spec:
   maxReplicaCount: 1
   minReplicaCount: 0
   pollingInterval: 3 # Optional. Default: 30 seconds
-  cooldownPeriod: 1800 # Optional. Default: 300 seconds
+  cooldownPeriod: 300 # Optional. Default: 300 seconds
   scaleTargetRef:
     name: vm-windows-datavolume
     apiVersion: kubevirt.io/v1
