@@ -3,3 +3,4 @@ kind: Kustomization
 namespace: windows
 resources:
 - ../../base/windows
+- virtualmachineinstancereplicaset.yaml
