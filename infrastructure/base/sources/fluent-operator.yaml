@@ -7,5 +7,5 @@ metadata:
 spec:
   interval: 60m0s
   ref:
-    tag: v1.7.0
-  url: https://github.com/fluent/fluent-operator
+    commit: 017088bfafb3d988823d8bf0866059f14674d6f0
+  url: https://github.com/wigust/fluent-operator
