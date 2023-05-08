@@ -182,7 +182,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m0s
-  path: ./infrastructure/base/windows
+  path: ./infrastructure/cluster1/windows
   prune: true
   sourceRef:
     kind: GitRepository
