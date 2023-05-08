@@ -3,8 +3,6 @@ kind: ScaledObject
 metadata:
   name: fedora-scaledobject
   namespace: fedora
-  labels:
-    deploymentName: fedora
 spec:
   maxReplicaCount: 1
   minReplicaCount: 0
