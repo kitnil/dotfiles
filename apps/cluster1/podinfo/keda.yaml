@@ -1,0 +1,22 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: podinfo-scaledobject
+  namespace: podinfo
+  labels:
+    deploymentName: podinfo
+spec:
+  maxReplicaCount: 2
+  minReplicaCount: 0
+  pollingInterval: 3 # Optional. Default: 30 seconds
+  cooldownPeriod: 5 # Optional. Default: 300 seconds
+  scaleTargetRef:
+    name: podinfo
+  triggers:
+  - type: cron
+    metadata:
+      # Required
+      timezone: Europe/Moscow # The acceptable values would be a value from the IANA Time Zone Database.
+      start: "*/3 * * * *" # Every hour on the 30th minute
+      end: "*/5 * * * *" # Every hour on the 45th minute
+      desiredReplicas: "2"
