@@ -1,0 +1,23 @@
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: fedora-scaledobject
+  namespace: fedora
+  labels:
+    deploymentName: fedora
+spec:
+  maxReplicaCount: 1
+  minReplicaCount: 0
+  pollingInterval: 3 # Optional. Default: 30 seconds
+  cooldownPeriod: 5 # Optional. Default: 300 seconds
+  scaleTargetRef:
+    name: fedora
+    kind: VirtualMachineInstanceReplicaSet
+  triggers:
+  - type: cron
+    metadata:
+      # Required
+      timezone: Europe/Moscow # The acceptable values would be a value from the IANA Time Zone Database.
+      start: "*/2 * * * *" # Every hour on the 30th minute
+      end: "*/10 * * * *" # Every hour on the 45th minute
+      desiredReplicas: "1"

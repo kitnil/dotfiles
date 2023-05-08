@@ -3,3 +3,4 @@ kind: Kustomization
 namespace: fedora
 resources:
 - ../../base/fedora
+- keda.yaml
