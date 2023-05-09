@@ -1,11 +1,11 @@
 kind: HTTPScaledObject
 apiVersion: http.keda.sh/v1alpha1
 metadata:
-  name: firefox
+  name: novnc
 spec:
   host: novnc.firefox-softethervpn.home.wugi.info
   scaleTargetRef:
-    deployment: firefox
+    deployment: novnc
     service: novnc
     port: 80
   replicas:
