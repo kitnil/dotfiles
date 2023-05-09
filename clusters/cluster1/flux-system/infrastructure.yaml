@@ -260,7 +260,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m0s
-  path: ./infrastructure/base/keda
+  path: ./infrastructure/cluster1/keda
   prune: false
   sourceRef:
     kind: GitRepository
