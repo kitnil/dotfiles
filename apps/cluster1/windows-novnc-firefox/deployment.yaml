@@ -5,6 +5,10 @@ metadata:
 spec:
   template:
     spec:
+      initContainers:
+      - name: wait-proxy
+        image: busybox
+        command: ["sh", "-c", "nc -z windows.windows 1080"]
       containers:
       - name: firefox
         volumeMounts:

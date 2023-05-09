@@ -11,6 +11,7 @@ configMapGenerator:
   - home.nix=home.nix
 patchesStrategicMerge:
 - deployment.yaml
+- novnc/deployment.yaml
 images:
 - name: docker-registry.intr/utils/firefox
   newTag: 8e07fb79
