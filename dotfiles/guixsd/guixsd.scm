@@ -908,7 +908,7 @@ location / {
            "192.168.154.131 kube1 kube1.home"
            "192.168.154.131 kube1.lan"
            "192.168.154.1 kube4 kube4.home"
-           "192.168.154.146 kube5 kube5.home"
+           "192.168.154.99 kube5 kube5.home"
            "192.168.154.1 nfs.home"
            "192.168.154.1 samba.home"
 
