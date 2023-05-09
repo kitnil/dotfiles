@@ -1,24 +1,13 @@
-apiVersion: keda.sh/v1alpha1
-kind: ScaledObject
+kind: HTTPScaledObject
+apiVersion: http.keda.sh/v1alpha1
 metadata:
-  name: firefox-scaledobject
+  name: firefox
 spec:
-  maxReplicaCount: 1
-  minReplicaCount: 0
-  pollingInterval: 3 # Optional. Default: 30 seconds
-  cooldownPeriod: 300 # Optional. Default: 300 seconds
+  host: novnc.firefox-softethervpn.home.wugi.info
   scaleTargetRef:
-    name: firefox
-  triggers:
-  - type: prometheus
-    metadata:
-      serverAddress: http://kube-prometheus-stack-prometheus.monitoring:9090
-      metricName: nginx_ingress_controller_request_duration_seconds_count
-      threshold: "0.5"
-      query: max(irate(nginx_ingress_controller_request_duration_seconds_count{host="novnc.windows.softethervpn.home.wugi.info"}[5m]))
-  - type: prometheus
-    metadata:
-      serverAddress: http://kube-prometheus-stack-prometheus.monitoring:9090
-      metricName: nginx_ingress_controller_request_duration_seconds_count
-      threshold: "0.5"
-      query: max(irate(nginx_ingress_controller_request_duration_seconds_count{host="novnc.firefox-softethervpn.home.wugi.info"}[5m]))
+    deployment: firefox
+    service: novnc
+    port: 80
+  replicas:
+    min: 0
+    max: 1
