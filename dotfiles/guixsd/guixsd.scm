@@ -905,8 +905,7 @@ location / {
            "192.168.154.129 web99.ru www.web99.ru www.web99.intr web99.intr"
 
            "192.168.154.130 kubernetes.home"
-           "192.168.154.131 kube1 kube1.home"
-           "192.168.154.131 kube1.lan"
+           "192.168.154.131 kube1 kube1.home kube1.lan"
            "192.168.154.1 kube4 kube4.home"
            "192.168.154.99 kube5 kube5.home"
            "192.168.154.1 nfs.home"
