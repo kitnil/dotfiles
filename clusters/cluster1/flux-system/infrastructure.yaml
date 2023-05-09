@@ -261,7 +261,7 @@ metadata:
 spec:
   interval: 1m0s
   path: ./infrastructure/cluster1/keda
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
