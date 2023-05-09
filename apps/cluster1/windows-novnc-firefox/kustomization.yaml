@@ -5,6 +5,7 @@ resources:
 - namespace.yaml
 - ../../../apps/base/firefox
 - keda.yaml
+- scaledobject.yaml
 configMapGenerator:
 - name: nix-home-configuration
   files:
