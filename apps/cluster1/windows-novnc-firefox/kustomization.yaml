@@ -4,7 +4,6 @@ namespace: windows-novnc-firefox
 resources:
 - namespace.yaml
 - ../../../apps/base/firefox
-- ingress.yaml
 - keda.yaml
 configMapGenerator:
 - name: nix-home-configuration
