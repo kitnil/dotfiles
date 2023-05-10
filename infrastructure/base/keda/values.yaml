@@ -1,0 +1,7 @@
+logging:
+  operator:
+    level: debug
+  metricServer:
+    level: 4 # debug
+  webhooks:
+    level: debug
