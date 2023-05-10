@@ -4,6 +4,9 @@ metadata:
   name: novnc
 spec:
   host: novnc.firefox-softethervpn.home.wugi.info
+  # Optional. Default: 300 seconds.
+  # Should be smaller than firefox-scaledobject.
+  scaledownPeriod: 150
   scaleTargetRef:
     deployment: novnc
     service: novnc
