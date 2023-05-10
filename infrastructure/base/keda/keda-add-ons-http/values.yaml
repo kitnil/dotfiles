@@ -1,0 +1,7 @@
+interceptor:
+  replicas:
+    # after the interceptor receives a request,
+    # this is the maximum amount of time it will
+    # wait for the backing deployment to reach 1
+    # or more replicas
+    waitTimeout: 900s
