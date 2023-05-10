@@ -28,12 +28,12 @@ volumes:
       mountPath: /custom/ca
       readOnly: true
 
-  webhooks:
-    extraVolumes:
-    - name: cluster-local-certs
-      secret:
-        secretName: cluster-local-certs
-    extraVolumeMounts:
-    - name: cluster-local-certs
-      mountPath: /custom/ca
-      readOnly: true
+  # webhooks:
+  #   extraVolumes:
+  #   - name: cluster-local-certs
+  #     secret:
+  #       secretName: cluster-local-certs
+  #   extraVolumeMounts:
+  #   - name: cluster-local-certs
+  #     mountPath: /custom/ca
+  #     readOnly: true
