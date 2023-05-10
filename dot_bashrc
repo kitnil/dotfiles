@@ -2060,6 +2060,14 @@ EOF
                             kustomization="$namespace"
                             ;;
                     esac
+if kubectl get -n "$namespace" scaledobjects &> /dev/null
+then
+                                cat <<EOF
+$ kubectl get -n "$namespace" scaledobjects
+$(kubectl get -n "$namespace" scaledobjects)
+
+EOF
+fi
                     case "$KUBECONFIG" in
                         *config-mjru-*)
                             cat <<EOF
@@ -2077,11 +2085,6 @@ EOF
                             PROMETHEUS_URL=https://prometheus.kubernetes.home.wugi.info
                             if kubectl get -n "$namespace" scaledobjects &> /dev/null
                             then
-                                cat <<EOF
-$ kubectl get -n "$namespace" scaledobjects
-$(kubectl get -n "$namespace" scaledobjects)
-
-EOF
                                 mapfile -t queries < <(kubectl get -n "$namespace" scaledobjects "${namespace}-scaledobject" -o json | jq --raw-output '.spec.triggers[] | .metadata.query')
                                 for query in "${queries[@]}"
                                 do
