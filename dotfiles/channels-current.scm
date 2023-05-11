@@ -14,7 +14,7 @@
         (url "https://github.com/kitnil/guix-wigust")
         (branch "master")
         (commit
-          "416882513017c139918fb42548634d07d565cc74"))
+          "b8a2457217a0bb457204d680797570541cb775cc"))
       (channel
        (name 'prometheus-shepherd-exporter)
        (url "https://gitlab.com/wigust/prometheus-shepherd-exporter")
