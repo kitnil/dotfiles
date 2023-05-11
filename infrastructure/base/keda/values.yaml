@@ -21,5 +21,6 @@ prometheus:
       enabled: true
   webhooks:
     enabled: true
+    serviceMonitor:
       # Enables ServiceMonitor creation for the Prometheus webhooks
       enabled: true
