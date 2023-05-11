@@ -19,3 +19,7 @@ prometheus:
     serviceMonitor:
       # Enables ServiceMonitor creation for the Prometheus Operator
       enabled: true
+  webhooks:
+    enabled: true
+      # Enables ServiceMonitor creation for the Prometheus webhooks
+      enabled: true
