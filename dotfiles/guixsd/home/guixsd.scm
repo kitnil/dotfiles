@@ -61,6 +61,7 @@
              (home services networking)
              (home services kubernetes)
              (home services majordomo billing2)
+             (home services audio)
 
              (gnu packages mail)
              (gnu packages dhall)
@@ -1364,4 +1365,8 @@ account default : gmail
             #~(begin
                 (system*
                  #$(local-file (string-append %project-directory "/dot_local/bin/executable_schedule-power")
-                               #:recursive? #t)))))))))))
+                               #:recursive? #t)))))))
+
+    (service home-scream-service-type
+             (scream-configuration
+              (interface "br154.154")))))))
