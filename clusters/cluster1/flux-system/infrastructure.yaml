@@ -248,7 +248,7 @@ metadata:
 spec:
   interval: 1m0s
   path: ./infrastructure/base/metrics-server
-  prune: false
+  prune: true
   sourceRef:
     kind: GitRepository
     name: flux-system
