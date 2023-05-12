@@ -172,6 +172,8 @@
                           "netshoot"
                           "kubelet"
                           "kubectl-invoke"
+                          "kubectl_complete-watch"
+                          "kubectl-watch"
                           "nginx-server-name"
                           "nixos.sh"
                           "nix-repl"
