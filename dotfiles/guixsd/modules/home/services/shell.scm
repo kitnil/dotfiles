@@ -65,7 +65,10 @@
                   home-files-service-type
                   (append
                    `((".local/bin/xmenu.sh" ,xmenu.sh))
-                   `((,(string-append ".local/bin/kubectl_complete-watch")
+                   `((,(string-append ".local/bin/kubectl_complete-all")
+                      ,(local-file (string-append %project-directory "/dot_local/bin/executable_kubectl_complete-namespace")
+                                   #:recursive? #t))
+                     (,(string-append ".local/bin/kubectl_complete-watch")
                       ,(local-file (string-append %project-directory "/dot_local/bin/executable_kubectl_complete-namespace")
                                    #:recursive? #t)))
                    (map (lambda (program)
