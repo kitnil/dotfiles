@@ -65,6 +65,9 @@
                   home-files-service-type
                   (append
                    `((".local/bin/xmenu.sh" ,xmenu.sh))
+                   `((,(string-append ".local/bin/kubectl_complete-watch")
+                      ,(local-file (string-append %project-directory "/dot_local/bin/executable_kubectl_complete-namespace")
+                                   #:recursive? #t)))
                    (map (lambda (program)
                           `(,(string-append ".local/bin/" program)
                             ,(local-file (string-append %project-directory "/dot_local/bin/executable_" program)
@@ -171,8 +174,8 @@
                           "my-xorg"
                           "netshoot"
                           "kubelet"
+                          "kubectl-all"
                           "kubectl-invoke"
-                          "kubectl_complete-watch"
                           "kubectl-watch"
                           "nginx-server-name"
                           "nixos.sh"
