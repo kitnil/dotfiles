@@ -117,14 +117,14 @@ distribution) in docker.")
 (define-public kubectl
   (package
     (name "kubectl")
-    (version "1.24.0")
+    (version "1.26.1")
     (source (origin
               (method url-fetch)
               (uri (string-append "https://dl.k8s.io/release/v"
                                   version "/bin/linux/amd64/kubectl"))
               (sha256
                (base32
-                "1mwqpghkrb64pmx45cnzmiwnnh5b13wyyax3wdczpxkjcyxqdmll"))))
+                "0pbfgkbg5xih73lnrirnif7qfqypaf4gr32kzdy45xr5z8nf4yym"))))
     (build-system trivial-build-system)
     (native-inputs `(("source" ,source)))
     (arguments
