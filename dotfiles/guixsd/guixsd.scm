@@ -800,7 +800,8 @@ location / {
       (swap-devices (list (swap-space
                            (target "/dev/disk/by-label/nvme-swap"))))
 
-      (kernel-loadable-modules (list vendor-reset-linux-module))
+      (kernel-loadable-modules (list vendor-reset-linux-module
+                                     drbd-module))
 
       ;; XXX: Add hardware/guixsd.scm
       ;; (initrd-modules (append '("vfio_pci" "vfio" "vfio_iommu_type1" "vfio_virqfd")
@@ -2159,6 +2160,7 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                                     "dm-snapshot"
                                     "dm-thin-pool"
                                     "br_netfilter" ;kube-dns
+                                    ;; "drbd9"
                                     ;; "ddcci_backlight"
                                     ))
 

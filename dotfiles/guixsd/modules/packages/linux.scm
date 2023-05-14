@@ -1,6 +1,7 @@
 (define-module (packages linux)
   #:use-module (gnu packages)
   #:use-module (gnu packages base)
+  #:use-module (gnu packages bash)
   #:use-module (gnu packages compression)
   #:use-module (gnu packages curl)
   #:use-module (gnu packages version-control)
@@ -111,51 +112,55 @@ if your hardware is supported by one of the smaller firmware packages.")
       (string-append "https://git.kernel.org/pub/scm/linux/kernel/git/"
                      "firmware/linux-firmware.git/plain/WHENCE")))))
 
-(define-public drbd9
+(define-public drbd-module
   (package
-    (name "drbd9")
+    (name "drbd-module")
     (version "9.1.7")
     (source
      (origin
        (method url-fetch)
        (uri (string-append "https://pkg.linbit.com/downloads/drbd/9/drbd-"
                            version ".tar.gz"))
-       (file-name (git-file-name name version))
        (sha256
-        (base32 "1iak07vpynimbyh4lhpf8xpn6vhgxnn3jmckm28r09m3a5adyrj1"))))
+        (base32
+         "1iak07vpynimbyh4lhpf8xpn6vhgxnn3jmckm28r09m3a5adyrj1"))))
     (build-system linux-module-build-system)
-    (native-inputs
-     `(("source" ,source)
-       ("gzip" ,gzip)
-       ("tar" ,tar)))
     (inputs
-     `(("curl" ,curl)))
+     `(("bash" ,bash)))
     (arguments
      (list
-      #:tests? #f                  ; no tests
-      #:make-flags #~(let ((shell (search-input-file %build-inputs "/bin/bash")))
-                       (list (string-append "CONFIG_SHELL=" shell)
-                             (string-append "SHELL=" shell)))
+      #:tests? #f ;there are none.
+      #:source-directory "drbd"
       #:phases
-      `(modify-phases %standard-phases
-         (replace 'unpack
-           (lambda args
-             (setenv "PATH" (string-append
-                             (assoc-ref %build-inputs "tar") "/bin"
-                             ":" (assoc-ref %build-inputs "gzip") "/bin"
-                             ":" (getenv "PATH")))
-             (invoke "tar"
-                     "-xf" (assoc-ref %build-inputs "source")
-                     (string-append "drbd-" ,version)
-                     "--strip-components=1")))
-         (replace 'build
-           (lambda args
-             (for-each
-              (lambda (module)
-                (with-directory-excursion module
-                  (apply (assoc-ref %standard-phases 'build) args)))
-              '("drbd")))))))
-    (home-page "https://gitlab.com/drbd9/drbd9")
-    (synopsis "")
-    (description "")
+      #~(modify-phases %standard-phases
+          (add-after 'unpack 'patch-kbuild
+            (lambda _
+              ;; Patch files to refer to executables in the store or $PATH.
+              (substitute* "drbd/Kbuild"
+                (("/bin/bash") (which "bash")))
+              #t))
+          (add-after 'install 'rename-kernel-module
+            (lambda _
+              (use-modules (guix build utils)
+                           (ice-9 string-fun))
+              ;; Rename drbd to drbd9 because of modprobe loads drbd module
+              ;; provided by the kernel instead of the current package.
+              (for-each (lambda (file)
+                          (rename-file file
+                                       (string-replace-substring (string-replace-substring file
+                                                                                           "drbd.ko.gz"
+                                                                                           "drbd9.ko.gz")
+                                                                 "drbd_transport_tcp.ko.gz"
+                                                                 "drbd9_transport_tcp.ko.gz")))
+                        (find-files #$output))
+              #t)))))
+    (home-page "https://github.com/linux-thinkpad/tp_smapi")
+    (synopsis
+     "Linux Kernel module exposing features of ThinkPad hardware")
+    (description
+     "This package provides a Linux Kernel module that controls
+battery charging of specific ThinkPad laptops.  It also includes an improved
+version of the HDAPS driver.  The underlying hardware interfaces are
+@acronym{SMAPI, System Management Application Program Interface} and direct
+access to the embedded controller.")
     (license #f)))
