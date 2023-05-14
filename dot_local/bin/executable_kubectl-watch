@@ -141,5 +141,6 @@ EOF
     then
         viddy_args+=("--max-history=${KUBECTL_WATCH_HISTORY:-10}")
     fi
+    tmux rename-window "$namespace"
     viddy "${viddy_args[@]}" viddy_command
 fi
