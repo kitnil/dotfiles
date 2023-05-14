@@ -11,7 +11,11 @@ configMapGenerator:
 - name: kube-prometheus-stack-grafana-dashboards-nginx
   files:
   - nginx.json=grafana/dashboards/nginx/nginx.json
+- name: kube-prometheus-stack-grafana-dashboards-linstor
+  files:
+  - linstor-drbd.json=grafana/dashboards/linstor/linstor_drbd.json
 patchesStrategicMerge:
 - grafana/dashboards/nginx/configmap.yaml
+- grafana/dashboards/linstor/configmap.yaml
 configurations:
 - kustomizeconfig.yaml
