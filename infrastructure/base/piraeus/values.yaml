@@ -6,7 +6,6 @@ operator:
   controller:
     logLevel: trace
     dbConnectionURL: k8s
-    luksSecret: piraeus-op-passphrase
     additionalProperties:
       DrbdOptions/AutoEvictAllowEviction: "false"
   satelliteSet:
