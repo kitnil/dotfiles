@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2021, 2022 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2021, 2022, 2023 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -279,6 +279,36 @@
                     #:restic-password win10-password
                     #:predicate win10-shut-off?))
 
+(define (win2022-password)
+  #~(begin
+      (use-modules (ice-9 rdelim))
+      (string-trim-right
+       (with-input-from-file "/etc/guix/secrets/windows"
+         read-string))))
+
+(define (restic-win2022-backup)
+  (restic-lv-backup "lvm2" "win2022"
+                    #:restic-repository "/srv/backup/win2022"
+                    #:restic-password win2022-password
+                    #:predicate win2022-shut-off?))
+
+(define (win2022-shut-off?)
+  #~(begin
+      (use-modules (ice-9 popen)
+                   (ice-9 rdelim))
+      (let* ((port (open-pipe* OPEN_READ #$virsh-binary
+                               "domstate" "win2022"))
+             (output (read-string port)))
+        (close-port port)
+        (string= (string-trim-right output #\newline)
+                 "shut off"))))
+
+(define (restic-win2022-backup)
+  (restic-lv-backup "lvm2" "win2022"
+                    #:restic-repository "/srv/backup/win2022"
+                    #:restic-password win2022-password
+                    #:predicate win2022-shut-off?))
+
 (define (restic-ntfsgames-backup)
   (restic-lv-backup "lvm2" "ntfsgames"
                     #:restic-repository "/srv/backup/ntfsgames"
@@ -326,6 +356,7 @@
                     (list #$(restic-system-backup)
                           #$(restic-guix-backup)
                           #$(restic-win10-backup)
+                          #$(restic-win2022-backup)
                           #$(restic-ntfsgames-backup)))
          #$(hc-ping-notify)))))
 
