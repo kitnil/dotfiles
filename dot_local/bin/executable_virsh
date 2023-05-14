@@ -16,7 +16,24 @@ case "$1" in
                 else
                     lvchange -ay /dev/lvm2/kube1
                 fi
-                exec /run/current-system/profile/bin/virsh start kube1
+                until [[ -e /var/run/libvirt/qemu/kube1.pid ]]
+                do
+                    if ((attempt > max_attempt))
+                    then
+                        exit 1
+                    else
+                        echo "vm-kube1: Start virtual machine." 1>&2
+                        if /run/current-system/profile/bin/virsh start kube1
+                        then
+                            echo "vm-kube1: Started." 1>&2
+                            break
+                        else
+                            echo "vm-kube1 [${attempt}/${max_attempt}]: Start kube1." 1>&2
+                            /run/current-system/profile/bin/sleep 5
+                            ((++attempt))
+                        fi
+                    fi
+                done
                 ;;
             cilium)
                 if [[ -e /dev/lvm2/cilium ]]
