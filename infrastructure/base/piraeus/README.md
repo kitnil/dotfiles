@@ -1,28 +1,3 @@
-# Pools
-
-## pool0
-
-Very bad storage.  Do not use it for production workload if losing data is not
-an option.
-
-1. Old Linux kernel 4.4.
-2. Deprecated Adaptec RAID controller.  A disk from this controller bypassed
-   to a virtualmachine.
-
-## pool1
-
-Good storage.  Use for any workload which does not require much data.
-
-1. Newest Linux kernel.
-2. Software RAID 1 on each node.
-
-## pool2
-
-Better than pool0.  Primary used for customers Kubevirt workload.
-
-1. New Linux kernel.
-2. Deprecated Adaptec RAID controller.  Direct access from operating system.
-
 # Installation
 
 [piraeus-operator/security.md at master · piraeusdatastore/piraeus-operator](https://github.com/piraeusdatastore/piraeus-operator/blob/master/doc/security.md)
@@ -60,30 +35,17 @@ lvcreate -l 100%FREE -Zn --type thin-pool --thinpool pool0 vg0
 
 Run nix-shell to get `kubectl linstor`.
 
-``` shell
-$ kubectl linstor storage-pool create lvmthin kube5005 pool0 vg0/pool0
+```
+$ kubectl linstor storage-pool create lvmthin kube4 pool0 lvm2/thinpool2
 SUCCESS:
     Successfully set property key(s): StorDriver/StorPoolName
 SUCCESS:
 Description:
-    New storage pool 'pool0' on node 'kube5005' registered.
+    New storage pool 'pool0' on node 'kube4' registered.
 Details:
-    Storage pool 'pool0' on node 'kube5005' UUID is: 8138f579-d57d-4e12-90a5-1df840e5fab9
+    Storage pool 'pool0' on node 'kube4' UUID is: aa0b3c74-fe6b-42ff-83f5-08a00aa28ef2
 SUCCESS:
-    (kube5005) Changes applied to storage pool 'pool0'
-```
-
-```
-$ kubectl linstor storage-pool create lvmthin kube5006 pool0 vg0/pool0
-SUCCESS:
-    Successfully set property key(s): StorDriver/StorPoolName
-SUCCESS:
-Description:
-    New storage pool 'pool0' on node 'kube5006' registered.
-Details:
-    Storage pool 'pool0' on node 'kube5006' UUID is: 656511d4-7965-4ba0-9f3d-4a0ee8dae397
-SUCCESS:
-    (kube5006) Changes applied to storage pool 'pool0'
+    (kube4) Changes applied to storage pool 'pool0'
 ```
 
 # Test
@@ -164,6 +126,3 @@ Also make sure there are no:
       $ linstor controller list-properties
         DrbdOptions/AutoEvictAllowEviction false
       ```
-- [ ] Remove resource pvc-6a376a8e-1f55-437a-95c9-770a9bd1917c_00000.
-
-- [ ] Remove resource pvc-39fd13a3-c95a-4fb0-baf4-5ac79854f787.
