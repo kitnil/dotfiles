@@ -76,11 +76,12 @@ case "$1" in
                         ((++attempt))
                     fi
                 done
-                if [[ -e /var/lib/vm-win2022/1 ]]
+                if [[ -e /var/lib/vm-win2022/0 ]]
                 then
-                    echo "vm-win2022: '/var/lib/vm-win2022/1' file exist. Skipping GPU reset." 1>&2
+                    echo "vm-win2022: '/var/lib/vm-win2022/0' file exist. Skipping GPU reset." 1>&2
                     :
                 else
+                    /run/current-system/profile/bin/touch /var/lib/vm-win2022/0
                     if [[ -e /sys/kernel/debug/dri/0/amdgpu_gpu_recover ]]
                     then
                         if [[ -e /sys/bus/pci/devices/0000:12:00.1/remove ]]
