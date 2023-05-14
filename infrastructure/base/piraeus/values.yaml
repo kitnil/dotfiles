@@ -1,0 +1,40 @@
+linstorSslMethod: "cert-manager"
+linstorHttpsMethod: "cert-manager"
+etcd:
+  enabled: false
+operator:
+  controller:
+    logLevel: trace
+    dbConnectionURL: k8s
+    luksSecret: piraeus-op-passphrase
+    additionalProperties:
+      DrbdOptions/AutoEvictAllowEviction: "false"
+  satelliteSet:
+    logLevel: trace
+    kernelModuleInjectionMode: "None"
+    # Do not mount /usr/src directory.
+    kernelModuleInjectionAdditionalSourceDirectory: "none"
+    tolerations:
+    - operator: Exists
+    affinity:
+      nodeAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+          nodeSelectorTerms:
+          - matchExpressions:
+            - key: piraeus.cluster.local/schedulable
+              operator: NotIn
+              values:
+              - "false"
+csi:
+  logLevel: trace
+  nodeTolerations:
+  - operator: Exists
+  nodeAffinity:
+    nodeAffinity:
+      requiredDuringSchedulingIgnoredDuringExecution:
+        nodeSelectorTerms:
+        - matchExpressions:
+          - key: piraeus.cluster.local/schedulable
+            operator: NotIn
+            values:
+            - "false"
