@@ -10,8 +10,8 @@ configMapGenerator:
   - values.yaml=values.yaml
 - name: kube-prometheus-stack-grafana-dashboards-nginx
   files:
-  - nginx.json=grafana/dashboards/nginx.json
+  - nginx.json=grafana/dashboards/nginx/nginx.json
 patchesStrategicMerge:
-- grafana/dashboards/configmap.yaml
+- grafana/dashboards/nginx/configmap.yaml
 configurations:
 - kustomizeconfig.yaml
