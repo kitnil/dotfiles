@@ -38,7 +38,7 @@ spec:
       name: guix-dv
     spec:
       pvc:
-        storageClassName: hostpath-csi
+        storageClassName: linstor-pool0
         accessModes:
         - ReadWriteOnce
         resources:
