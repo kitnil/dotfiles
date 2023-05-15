@@ -3,3 +3,4 @@ kind: Kustomization
 namespace: piraeus
 resources:
 - ../../base/piraeus
+- linstor-pool0.yaml

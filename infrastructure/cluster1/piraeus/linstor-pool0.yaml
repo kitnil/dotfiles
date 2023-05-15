@@ -1,0 +1,9 @@
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: linstor-pool0
+parameters:
+  autoPlace: "1"
+  storagePool: pool0
+provisioner: linstor.csi.linbit.com
+allowVolumeExpansion: true
