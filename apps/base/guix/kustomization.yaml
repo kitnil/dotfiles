@@ -3,4 +3,4 @@ kind: Kustomization
 namespace: guix
 resources:
 - namespace.yaml
-- virtualmachineinstancereplicaset.yaml
+- virtualmachine.yaml
