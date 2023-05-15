@@ -71,7 +71,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m0s
-  path: ./infrastructure/base/piraeus
+  path: ./infrastructure/cluster1/piraeus
   prune: false
   dependsOn:
   - name: cert-manager
