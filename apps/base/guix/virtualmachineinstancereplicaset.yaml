@@ -1,0 +1,49 @@
+apiVersion: kubevirt.io/v1alpha3
+kind: VirtualMachineInstanceReplicaSet
+metadata:
+  labels:
+    kubevirt.io/vm: vm-guix-datavolume
+  name: vm-guix-datavolume
+spec:
+  running: true
+  template:
+    metadata:
+      labels:
+        kubevirt.io/vm: vm-guix-datavolume
+    spec:
+      domain:
+        cpu:
+          cores: 8
+          model: host-model
+          sockets: 1
+          threads: 1
+        devices:
+          disks:
+          - disk:
+              bus: virtio
+            name: datavolumedisk1
+        resources:
+          overcommitGuestOverhead: true
+          limits:
+            memory: 4G
+            cpu: 8
+        memory:
+          guest: 4G
+      volumes:
+      - dataVolume:
+          name: guix-dv
+        name: datavolumedisk1
+  dataVolumeTemplates:
+  - metadata:
+      name: guix-dv
+    spec:
+      pvc:
+        storageClassName: linstor-pool0
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 64Gi
+      source:
+        http:
+          url: http://iso.wugi.info/guix.qcow2
