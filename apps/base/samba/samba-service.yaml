@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: samba
+spec:
+  ports:
+  - name: "139"
+    port: 139
+    targetPort: 139
+  - name: "445"
+    port: 445
+    targetPort: 445
+  selector:
+    app.kubernetes.io/name: samba
+    app.kubernetes.io/part-of: samba
+  type: LoadBalancer
