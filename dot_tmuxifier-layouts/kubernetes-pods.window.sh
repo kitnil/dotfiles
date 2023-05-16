@@ -6,4 +6,4 @@
 # layout file name.
 new_window "pods"
 
-run_cmd "viddy --interval 10 kubectl get pods --field-selector status.phase=Pending --all-namespaces -o wide"
+run_cmd "kubectl scheduler"
