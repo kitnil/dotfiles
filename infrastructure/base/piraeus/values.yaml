@@ -24,10 +24,10 @@ operator:
               operator: NotIn
               values:
               - "false"
-          - key: kubernetes.io/os
-            operator: NotIn
-            values:
-            - "windows"
+            - key: kubernetes.io/os
+              operator: NotIn
+              values:
+              - "windows"
 csi:
   logLevel: trace
   nodeTolerations:
