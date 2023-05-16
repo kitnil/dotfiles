@@ -10,7 +10,7 @@ case "$KUBECONFIG" in
         session="cluster2"
         ;;
     *)
-        session="kubernetes"
+        session="home"
         ;;
 esac
 
