@@ -54,5 +54,6 @@ spec:
           name: samba-claim0
       volumes:
       - name: samba-claim0
-        persistentVolumeClaim:
-          claimName: samba-claim0
+        hostPath:
+          path: /srv/lib
+          type: Directory
