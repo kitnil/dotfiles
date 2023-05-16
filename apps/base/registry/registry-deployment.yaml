@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app.kubernetes.io/name: registry
+    app.kubernetes.io/part-of: registry
+  name: registry
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: registry
+      app.kubernetes.io/part-of: registry
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: registry
+        app.kubernetes.io/part-of: registry
+    spec:
+      hostNetwork: true
+      containers:
+      - image: registry:2
+        name: registry
+        resources:
+          limits:
+            cpu: 100m
+            memory: 300Mi
+          requests:
+            cpu: 10m
+            memory: 100Mi
+        volumeMounts:
+        - mountPath: /var/lib/registry
+          name: registry-claim0
+      volumes:
+      - name: registry-claim0
+        hostPath:
+          path: /srv/lib/docker/registry
+          type: Directory
