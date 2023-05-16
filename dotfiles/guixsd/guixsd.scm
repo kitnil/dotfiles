@@ -1849,26 +1849,26 @@ PasswordAuthentication yes")))
 
                          ;; (service jenkins-service-type %jenkins-config)
 
-                         (service docker-compose-service-type
-                                  (docker-compose-configuration
-                                   (project-name "registry")
-                                   (compose-file
-                                    (computed-file
-                                     "docker-compose-registry.json"
-                                     (with-extensions (list guile-json-4)
-                                       (with-imported-modules (source-module-closure '((json builder)))
-                                         #~(begin
-                                             (use-modules (json builder))
-                                             (with-output-to-file #$output
-                                               (lambda ()
-                                                 (scm->json
-                                                  `(("version" . "2.1")
-                                                    ("services"
-                                                     ("registry"
-                                                      ("volumes" . #("/srv/lib/docker/registry:/var/lib/registry"))
-                                                      ("network_mode" . "host")
-                                                      ("image" . "registry:2")
-                                                      ("container_name" . "registry"))))))))))))))
+                         ;; (service docker-compose-service-type
+                         ;;          (docker-compose-configuration
+                         ;;           (project-name "registry")
+                         ;;           (compose-file
+                         ;;            (computed-file
+                         ;;             "docker-compose-registry.json"
+                         ;;             (with-extensions (list guile-json-4)
+                         ;;               (with-imported-modules (source-module-closure '((json builder)))
+                         ;;                 #~(begin
+                         ;;                     (use-modules (json builder))
+                         ;;                     (with-output-to-file #$output
+                         ;;                       (lambda ()
+                         ;;                         (scm->json
+                         ;;                          `(("version" . "2.1")
+                         ;;                            ("services"
+                         ;;                             ("registry"
+                         ;;                              ("volumes" . #("/srv/lib/docker/registry:/var/lib/registry"))
+                         ;;                              ("network_mode" . "host")
+                         ;;                              ("image" . "registry:2")
+                         ;;                              ("container_name" . "registry"))))))))))))))
 
                          ;; (service docker-compose-service-type
                          ;;          (docker-compose-configuration
