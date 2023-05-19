@@ -34,8 +34,10 @@
                         `(".tmuxifier-layouts/elk.session.sh"
                           ,(local-file (string-append %project-directory "/dot_tmuxifier-layouts/elk.session.sh")))
                         ;; TODO: `("web.session.sh.tmpl" ,(local-file "../../dot_tmuxifier-layouts/web.session.sh.tmpl"))
-                        `(".tmuxifier-layouts/elk.window.sh"
-                          ,(local-file (string-append %project-directory "/dot_tmuxifier-layouts/elk.window.sh")))
+                        `(".tmuxifier-layouts/elk-health.window.sh"
+                          ,(local-file (string-append %project-directory "/dot_tmuxifier-layouts/elk-health.window.sh")))
+                        `(".tmuxifier-layouts/elk-logs.window.sh"
+                          ,(local-file (string-append %project-directory "/dot_tmuxifier-layouts/elk-logs.window.sh")))
                         `(".tmuxifier-layouts/kubernetes-cert-manager-logs.window.sh"
                           ,(local-file (string-append %project-directory "/dot_tmuxifier-layouts/kubernetes-cert-manager-logs.window.sh")))
                         `(".tmuxifier-layouts/kubernetes-cilium.window.sh"
