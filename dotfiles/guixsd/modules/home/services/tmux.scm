@@ -38,6 +38,8 @@
                           ,(local-file (string-append %project-directory "/dot_tmuxifier-layouts/elk-health.window.sh")))
                         `(".tmuxifier-layouts/elk-logs.window.sh"
                           ,(local-file (string-append %project-directory "/dot_tmuxifier-layouts/elk-logs.window.sh")))
+                        `(".tmuxifier-layouts/elk-curator.window.sh"
+                          ,(local-file (string-append %project-directory "/dot_tmuxifier-layouts/elk-curator.window.sh")))
                         `(".tmuxifier-layouts/elk-shards.window.sh"
                           ,(local-file (string-append %project-directory "/dot_tmuxifier-layouts/elk-shards.window.sh")))
                         `(".tmuxifier-layouts/kubernetes-cert-manager-logs.window.sh"
