@@ -14,6 +14,7 @@ if initialize_session "elk"; then
   # Load a defined window layout.
   load_window "elk-health"
   load_window "elk-logs"
+  load_window "elk-shards"
 
   # Select the default active window on session creation.
   #select_window 1
