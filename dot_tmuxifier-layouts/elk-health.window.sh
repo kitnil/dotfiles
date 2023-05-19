@@ -9,7 +9,7 @@ window_root "$HOME"
 new_window "health"
 
 # Run commands.
-run_cmd 'watch -d curl -XGET http://172.16.103.101:9200/_cluster/health?pretty -s'
+run_cmd 'viddy --max-history 50 --differences curl -XGET http://172.16.103.101:9200/_cluster/health?pretty -s'
 
 split_v 50
-run_cmd "curl -XGET 'http://es.intr:9200/_cat/allocation?v'"
+run_cmd "viddy --max-history 50 curl -XGET 'http://es.intr:9200/_cat/allocation?v'"
