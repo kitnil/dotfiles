@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+ELASTICSEARCH_ENDPOINT="http://es.intr:9200"
+
+case "$1" in
+    shards)
+        command curl "${ELASTICSEARCH_ENDPOINT}/_cat/shards" \
+            | sort --version-sort
+        ;;
+esac

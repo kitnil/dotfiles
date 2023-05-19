@@ -96,6 +96,7 @@
                           "dns"
                           "dnscheck"
                           "dotfiles"
+                          "elasticsearch"
                           "elk-index-youtube"
                           "elogind-sway"
                           "emacs-guix-log"

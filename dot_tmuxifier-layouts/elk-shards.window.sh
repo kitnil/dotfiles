@@ -9,4 +9,4 @@ window_root "$HOME"
 new_window "shards"
 
 # Run commands.
-run_cmd "viddy --no-title --interval 10m --max-history 10 curl http://es.intr:9200/_cat/shards"
+run_cmd "viddy --no-title --interval 10m --max-history 10 elasticsearch shards"
