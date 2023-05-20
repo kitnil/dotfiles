@@ -25,3 +25,26 @@
                     *windows-volume-increment*)))
       (run-shell-command (format nil "windows volume ~a" value))
       (windows-volume-current-update value))))
+
+
+(defvar *windows-username*
+  "vagrant")
+
+(defun windows-password ()
+  (string-trim '(#\Newline)
+               (password-store-show "windows.local/vagrant")))
+
+(defcommand windows-xfreerdp () ()
+  (run-shell-command
+   (join
+    (append (list "xfreerdp"
+                  "/v:windows.local"
+                  (concat "/u:" *windows-username*)
+                  (concat "/p:" (windows-password)))
+            (if (current-window)
+                (split-string (format-expand '((#\h window-height)
+                                               (#\w window-width))
+                                             "/w:%w /h:%h"
+                                             (current-window))
+                              " ")
+                '())))))
