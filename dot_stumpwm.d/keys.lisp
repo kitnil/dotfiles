@@ -204,3 +204,8 @@
        ;; ("C-M-f" . "M-Right")
        ;; ("C-k"   . ("C-S-End" "C-x"))
        )))
+
+(defcommand toggle-bind-delete-window-or-remove-split () ()
+  (if (lookup-key-sequence *top-map* (list (kbd "s-k")))
+      (define-key *top-map* (kbd "s-k") nil)
+      (define-key *top-map* (kbd "s-k") "delete-window-or-remove-split")))
