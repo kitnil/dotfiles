@@ -209,3 +209,13 @@
   (if (lookup-key-sequence *top-map* (list (kbd "s-k")))
       (define-key *top-map* (kbd "s-k") nil)
       (define-key *top-map* (kbd "s-k") "delete-window-or-remove-split")))
+
+(defcommand toggle-bind-gnext () ()
+  (if (lookup-key-sequence *top-map* (list (kbd "C-s-n")))
+      (define-key *top-map* (kbd "C-s-n") nil)
+      (define-key *top-map* (kbd "C-s-n") "gnext")))
+
+(defcommand toggle-bind-gprev () ()
+  (if (lookup-key-sequence *top-map* (list (kbd "C-s-p")))
+      (define-key *top-map* (kbd "C-s-p") nil)
+      (define-key *top-map* (kbd "C-s-p") "gprev")))
