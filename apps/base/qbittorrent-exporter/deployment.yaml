@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qbittorrent-exporter
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: qbittorrent-exporter
+      app.kubernetes.io/part-of: qbittorrent
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: qbittorrent-exporter
+        app.kubernetes.io/part-of: qbittorrent
+    spec:
+      containers:
+      - image: caseyscarborough/qbittorrent-exporter:latest
+        name: qbittorrent-exporter
+        ports:
+        - containerPort: 17871
+          name: http
+          protocol: TCP
+        env:
+        - name: QBITTORRENT_USERNAME
+          valueFrom:
+            configMapKeyRef:
+              key: QBITTORRENT_USERNAME
+              name: env
+        - name: QBITTORRENT_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              key: QBITTORRENT_PASSWORD
+              name: env
+        - name: QBITTORRENT_BASE_URL
+          valueFrom:
+            configMapKeyRef:
+              key: QBITTORRENT_BASE_URL
+              name: env
+        resources:
+          limits:
+            cpu: 1
+            memory: 256Mi
+          requests:
+            cpu: 10m
+            memory: 128Mi
