@@ -166,33 +166,38 @@
   (passwd:dir (getpw "oleg")))
 
 (define (restic-system-backup)
-  #~(let ((%backup-directories (list #$%user-home
-                                     "/etc"
-                                     "/root"
-                                     "/var/lib/grafana"
-                                     "/var/lib/crowdsec"
-                                     "/var/lib/opensearch"
-                                     "/var/lib/docker"
-                                     "/var/lib/peertube"
-                                     "/var/lib/peertube_assets"))
-          (%exclude-directories
-           (append '#$%root-directories
-                   (map (lambda (directory)
-                          (string-append #$%user-home "/" directory))
-                        '#$%user-directories))))
-      (setenv "RESTIC_PASSWORD"
-              (string-trim-right
-               (with-input-from-file "/etc/guix/secrets/restic"
-                 read-string)))
-      (display "Creating new Restic system snapshot\n")
-      (zero?
-       (apply system*
-              (append (list #$restic-binary "--repo" "/srv/backup/guixsd")
-                      (fold (lambda (directory directories)
-                              (append (list "--exclude" directory) directories))
-                            '() %exclude-directories)
-                      (list "backup")
-                      %backup-directories)))))
+  (program-file
+   "restic-backup-system"
+   #~(begin
+       (use-modules (ice-9 rdelim)
+                    (srfi srfi-1))
+       (let ((%backup-directories (list #$%user-home
+                                        "/etc"
+                                        "/root"
+                                        "/var/lib/grafana"
+                                        "/var/lib/crowdsec"
+                                        "/var/lib/opensearch"
+                                        "/var/lib/docker"
+                                        "/var/lib/peertube"
+                                        "/var/lib/peertube_assets"))
+             (%exclude-directories
+              (append '#$%root-directories
+                      (map (lambda (directory)
+                             (string-append #$%user-home "/" directory))
+                           '#$%user-directories))))
+         (setenv "RESTIC_PASSWORD"
+                 (string-trim-right
+                  (with-input-from-file "/etc/guix/secrets/restic"
+                    read-string)))
+         (display "Creating new Restic system snapshot\n")
+         (zero?
+          (apply system*
+                 (append (list #$restic-binary "--repo" "/srv/backup/guixsd")
+                         (fold (lambda (directory directories)
+                                 (append (list "--exclude" directory) directories))
+                               '() %exclude-directories)
+                         (list "backup")
+                         %backup-directories)))))))
 
 (define* (restic-lv-backup vg lv
                            #:key (predicate #~(begin #t))
@@ -203,57 +208,50 @@
   (let* ((device (string-append "/dev/" vg "/" lv))
          (lvm2-snapshot-name (string-append lv "-snap"))
          (lvm2-snapshot-device (string-append device "-snap")))
-    #~(if #$(predicate)
-          (begin
-            (format #t "Creating new Restic ~a snapshot~%" #$device)
-            (setenv "RESTIC_PASSWORD" #$(restic-password))
-            (zero?
-             (system
-              (string-join
-               (append (list #$dd-binary
-                             (string-append "if=" #$device)
-                             "bs=4M" "status=none")
-                       (list "|")
-                       (list #$restic-binary "--repo" #$restic-repository
-                             "backup" "--stdin" "--stdin-filename"
-                             #$(string-append lv ".img")))))))
-          (every identity
-                 (list
-                  (begin
-                    (format #t "Creating new LVM ~a snapshot~%" #$device)
-                    (system* #$lvcreate-binary
-                             "--size" #$lvm2-snapshot-size
-                             "--name" #$lvm2-snapshot-name
-                             "--snapshot" #$device))
-                  (begin
-                    (format #t "Creating new Restic ~a snapshot~%" #$device)
-                    (setenv "RESTIC_PASSWORD" #$(restic-password))
-                    (zero?
-                     (system
-                      (string-join
-                       (append (list #$dd-binary
-                                     (string-append "if=" #$lvm2-snapshot-device)
-                                     "bs=4M" "status=none")
-                               (list "|")
-                               (list #$restic-binary "--repo" #$restic-repository
-                                     "backup" "--tag" "snapshot"
-                                     "--stdin" "--stdin-filename"
-                                     #$(string-append lv ".img")))))))
-                  (begin
-                    (format #t "Delete LVM snapshot and save changes ~a snapshot~%"
-                            #$lvm2-snapshot-device)
-                    (zero?
-                     (system* #$lvremove-binary "--yes"
-                              #$lvm2-snapshot-device))))))))
-
-(define (hc-ping-notify)
-  #~(system* #$curl-binary
-             "--max-time" "10"
-             "--retry" "5"
-             (string-append "https://hc-ping.com/"
-                            (string-trim-right
-                             (with-input-from-file "/etc/guix/secrets/hc-ping-backup-guix.wugi.info"
-                               read-string)))))
+    (program-file
+     (string-append "restic-backup-" vg "-" lv)
+     #~(if #$(predicate)
+           (begin
+             (format #t "Creating new Restic ~a snapshot~%" #$device)
+             (setenv "RESTIC_PASSWORD" #$(restic-password))
+             (zero?
+              (system
+               (string-join
+                (append (list #$dd-binary
+                              (string-append "if=" #$device)
+                              "bs=4M" "status=none")
+                        (list "|")
+                        (list #$restic-binary "--repo" #$restic-repository
+                              "backup" "--stdin" "--stdin-filename"
+                              #$(string-append lv ".img")))))))
+           (every identity
+                  (list
+                   (begin
+                     (format #t "Creating new LVM ~a snapshot~%" #$device)
+                     (system* #$lvcreate-binary
+                              "--size" #$lvm2-snapshot-size
+                              "--name" #$lvm2-snapshot-name
+                              "--snapshot" #$device))
+                   (begin
+                     (format #t "Creating new Restic ~a snapshot~%" #$device)
+                     (setenv "RESTIC_PASSWORD" #$(restic-password))
+                     (zero?
+                      (system
+                       (string-join
+                        (append (list #$dd-binary
+                                      (string-append "if=" #$lvm2-snapshot-device)
+                                      "bs=4M" "status=none")
+                                (list "|")
+                                (list #$restic-binary "--repo" #$restic-repository
+                                      "backup" "--tag" "snapshot"
+                                      "--stdin" "--stdin-filename"
+                                      #$(string-append lv ".img")))))))
+                   (begin
+                     (format #t "Delete LVM snapshot and save changes ~a snapshot~%"
+                             #$lvm2-snapshot-device)
+                     (zero?
+                      (system* #$lvremove-binary "--yes"
+                               #$lvm2-snapshot-device)))))))))
 
 (define (win10-shut-off?)
   #~(begin
@@ -341,23 +339,13 @@
 
 (define (restic-command)
   (program-file
-   "restic-command"
-   #~(begin
-       (use-modules (srfi srfi-1)
-                    (srfi srfi-26)
-                    (ice-9 rdelim))
-
-       (setenv "SSL_CERT_DIR"
-               "/run/current-system/profile/etc/ssl/certs")
-       (setenv "SSL_CERT_FILE"
-               "/run/current-system/profile/etc/ssl/certs/ca-certificates.crt")
-
-       (when (every identity
-                    (list #$(restic-system-backup)
-                          #$(restic-guix-backup)
-                          #$(restic-win10-backup)
-                          #$(restic-win2022-backup)
-                          #$(restic-ntfsgames-backup)))
-         #$(hc-ping-notify)))))
+   "restic-commands"
+   #~(map (lambda (program)
+            (zero? (system* program)))
+          (list #$(restic-system-backup)
+                #$(restic-guix-backup)
+                #$(restic-win10-backup)
+                #$(restic-win2022-backup)
+                #$(restic-ntfsgames-backup)))))
 
 ;;; backup.scm ends here
