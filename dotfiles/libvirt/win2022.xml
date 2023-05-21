@@ -1,4 +1,4 @@
-<domain type='kvm' id='15'>
+<domain type='kvm' id='12' xmlns:qemu='http://libvirt.org/schemas/domain/qemu/1.0'>
   <name>win2022</name>
   <uuid>5ed6d54e-d8d9-463f-b9cb-a0687d1c4ea2</uuid>
   <metadata>
@@ -198,14 +198,14 @@
       <address type='pci' domain='0x0000' bus='0x01' slot='0x00' function='0x0'/>
     </interface>
     <serial type='pty'>
-      <source path='/dev/pts/23'/>
+      <source path='/dev/pts/11'/>
       <target type='isa-serial' port='0'>
         <model name='isa-serial'/>
       </target>
       <alias name='serial0'/>
     </serial>
-    <console type='pty' tty='/dev/pts/23'>
-      <source path='/dev/pts/23'/>
+    <console type='pty' tty='/dev/pts/11'>
+      <source path='/dev/pts/11'/>
       <target type='serial' port='0'/>
       <alias name='serial0'/>
     </console>
@@ -246,7 +246,7 @@
       <alias name='input6'/>
       <address type='pci' domain='0x0000' bus='0x0b' slot='0x00' function='0x0'/>
     </input>
-    <graphics type='spice' port='5901' autoport='yes' listen='127.0.0.1'>
+    <graphics type='spice' port='5900' autoport='yes' listen='127.0.0.1'>
       <listen type='address' address='127.0.0.1'/>
       <image compression='off'/>
       <gl enable='no'/>
@@ -281,6 +281,24 @@
       <alias name='hostdev1'/>
       <address type='pci' domain='0x0000' bus='0x08' slot='0x00' function='0x0'/>
     </hostdev>
+    <hostdev mode='subsystem' type='usb' managed='yes'>
+      <source>
+        <vendor id='0x8087'/>
+        <product id='0x0aa7'/>
+        <address bus='1' device='3'/>
+      </source>
+      <alias name='hostdev2'/>
+      <address type='usb' bus='0' port='4'/>
+    </hostdev>
+    <hostdev mode='subsystem' type='usb' managed='yes'>
+      <source>
+        <vendor id='0x045e'/>
+        <product id='0x028e'/>
+        <address bus='1' device='13'/>
+      </source>
+      <alias name='hostdev3'/>
+      <address type='usb' bus='0' port='5'/>
+    </hostdev>
     <redirdev bus='usb' type='spicevmc'>
       <alias name='redir0'/>
       <address type='usb' bus='0' port='2'/>
@@ -305,5 +323,8 @@
     <label>+1000:+984</label>
     <imagelabel>+1000:+984</imagelabel>
   </seclabel>
+  <qemu:capabilities>
+    <qemu:del capability='usb-host.hostdevice'/>
+  </qemu:capabilities>
 </domain>
 
