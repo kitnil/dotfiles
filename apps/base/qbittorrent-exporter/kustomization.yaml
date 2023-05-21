@@ -4,3 +4,5 @@ namespace: qbittorrent-exporter
 resources:
 - namespace.yaml
 - deployment.yaml
+- service.yaml
+- servicemonitor.yaml

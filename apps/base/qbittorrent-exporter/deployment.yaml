@@ -20,7 +20,7 @@ spec:
         name: qbittorrent-exporter
         ports:
         - containerPort: 17871
-          name: http
+          name: metrics
           protocol: TCP
         env:
         - name: QBITTORRENT_USERNAME
