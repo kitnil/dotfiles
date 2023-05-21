@@ -356,13 +356,11 @@
       "targets": [
         {
           "expr": "qbittorrent_global_download_speed_bytes",
-          "interval": "",
           "legendFormat": "Download",
           "refId": "A"
         },
         {
           "expr": "qbittorrent_global_upload_speed_bytes",
-          "interval": "",
           "legendFormat": "Upload",
           "refId": "B"
         }
@@ -455,7 +453,6 @@
         {
           "exemplar": true,
           "expr": "qbittorrent_global_ratio  ",
-          "interval": "",
           "legendFormat": "",
           "refId": "A"
         }
@@ -1135,7 +1132,6 @@
         "y": 16
       },
       "id": 24,
-      "interval": "",
       "options": {
         "showHeader": true,
         "sortBy": [
@@ -1152,7 +1148,6 @@
           "expr": "qbittorrent_torrent_info",
           "format": "table",
           "instant": true,
-          "interval": "",
           "intervalFactor": 1,
           "legendFormat": "",
           "refId": "A"
