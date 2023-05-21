@@ -14,8 +14,12 @@ configMapGenerator:
 - name: kube-prometheus-stack-grafana-dashboards-linstor
   files:
   - linstor-drbd.json=grafana/dashboards/linstor/linstor_drbd.json
+- name: kube-prometheus-stack-grafana-dashboards-qbittorrent
+  files:
+  - qbittorrent-drbd.json=grafana/dashboards/qbittorrent/qbittorrent-dashboard_rev4.json
 patchesStrategicMerge:
 - grafana/dashboards/nginx/configmap.yaml
 - grafana/dashboards/linstor/configmap.yaml
+- grafana/dashboards/qbittorrent/configmap.yaml
 configurations:
 - kustomizeconfig.yaml
