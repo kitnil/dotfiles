@@ -356,10 +356,12 @@
       "targets": [
         {
           "expr": "qbittorrent_global_download_speed_bytes",
+          "legendFormat": "Download",
           "refId": "A"
         },
         {
           "expr": "qbittorrent_global_upload_speed_bytes",
+          "legendFormat": "Upload",
           "refId": "B"
         }
       ],
@@ -451,6 +453,7 @@
         {
           "exemplar": true,
           "expr": "qbittorrent_global_ratio  ",
+          "legendFormat": "",
           "refId": "A"
         }
       ],
@@ -671,6 +674,7 @@
           "expr": "qbittorrent_app_version",
           "format": "table",
           "instant": true,
+          "legendFormat": "{{version}}",
           "refId": "A"
         }
       ],
@@ -1145,6 +1149,7 @@
           "format": "table",
           "instant": true,
           "intervalFactor": 1,
+          "legendFormat": "",
           "refId": "A"
         }
       ],
@@ -1485,6 +1490,7 @@
         {
           "expr": "qbittorrent_torrent_states",
           "instant": true,
+          "legendFormat": "{{name}}",
           "refId": "A"
         }
       ],
@@ -1610,6 +1616,7 @@
           "expr": "qbittorrent_torrent_amount_left_bytes",
           "instant": true,
           "intervalFactor": 1,
+          "legendFormat": "{{name}}",
           "refId": "A"
         }
       ],
@@ -1690,6 +1697,7 @@
         {
           "expr": "qbittorrent_torrent_progress < 1.0",
           "instant": true,
+          "legendFormat": "{{name}}",
           "refId": "A"
         }
       ],
@@ -1750,6 +1758,7 @@
       "targets": [
         {
           "expr": "qbittorrent_torrent_download_speed_bytes",
+          "legendFormat": "{{name}}",
           "refId": "A"
         }
       ],
@@ -1846,6 +1855,7 @@
       "targets": [
         {
           "expr": "qbittorrent_torrent_upload_speed_bytes",
+          "legendFormat": "{{name}}",
           "refId": "A"
         }
       ],
