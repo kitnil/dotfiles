@@ -19,7 +19,7 @@ else
                 kustomization="$namespace"
                 ;;
         esac
-        if kubectl get -n "$namespace" scaledobjects &> /dev/null
+        if [[ $(kubectl get -n "$namespace" scaledobjects) != *"No resources found"* ]]
         then
             cat <<EOF
 $ kubectl get -n "$namespace" scaledobjects
