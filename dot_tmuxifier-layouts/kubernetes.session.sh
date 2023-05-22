@@ -25,7 +25,7 @@ if initialize_session "$session"; then
   if [[ $TMUXIFIER_KUBERNETES_NAMESPACE ]]
   then
       load_window "kubernetes-kube-system"
-      load_window "kubernetes-flux"
+      load_window "kubernetes-flux-system"
       load_window "kubernetes-pods"
       new_window "$TMUXIFIER_KUBERNETES_NAMESPACE"
       run_cmd "kubectl watch ${TMUXIFIER_KUBERNETES_NAMESPACE}"

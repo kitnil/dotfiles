@@ -48,8 +48,8 @@
                           ,(local-file (string-append %project-directory "/dot_tmuxifier-layouts/kubernetes-cilium.window.sh")))
                         `(".tmuxifier-layouts/kubernetes-flux-logs.window.sh"
                           ,(local-file (string-append %project-directory "/dot_tmuxifier-layouts/kubernetes-flux-logs.window.sh")))
-                        `(".tmuxifier-layouts/kubernetes-flux.window.sh"
-                          ,(local-file (string-append %project-directory "/dot_tmuxifier-layouts/kubernetes-flux.window.sh")))
+                        `(".tmuxifier-layouts/kubernetes-flux-system.window.sh"
+                          ,(local-file (string-append %project-directory "/dot_tmuxifier-layouts/kubernetes-flux-system.window.sh")))
                         `(".tmuxifier-layouts/kubernetes-kube-system.window.sh"
                           ,(local-file (string-append %project-directory "/dot_tmuxifier-layouts/kubernetes-kube-system.window.sh")))
                         `(".tmuxifier-layouts/kubernetes-piraeus.window.sh"
