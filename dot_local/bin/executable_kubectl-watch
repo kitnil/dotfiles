@@ -151,6 +151,20 @@ $(kubectl get networkpolicies --namespace "$namespace" -o wide)
 $ kubectl get events --namespace "$namespace" -o wide
 $(kubectl get events --namespace "$namespace" -o wide)
 EOF
+
+        if [[ $namespace == "opensearch" ]]
+        then
+            OPENSEARCH_ENDPOINT="https://opensearch.corp1.majordomo.ru:9200"
+            OPENSEARCH_PASSWORD="$(pass show majordomo/public/opensearch-dashboards/admin)"
+            cat <<EOF
+
+$ curl --insecure --silent --user "admin:PASSWORD" "${OPENSEARCH_ENDPOINT}/_cat/indices?v&pretty"
+$(curl --insecure --silent --user "admin:${OPENSEARCH_PASSWORD}" "${OPENSEARCH_ENDPOINT}/_cat/indices?v&pretty" | awk 'NR<3{print $0;next}{print $0| "sort --key=2 --version-sort"}')
+
+$ curl --insecure --silent --user "admin:PASSWORD" "${OPENSEARCH_ENDPOINT}/_cat/shards?pretty"
+$(curl --insecure --silent --user "admin:${OPENSEARCH_PASSWORD}" "${OPENSEARCH_ENDPOINT}/_cat/shards?pretty" | awk 'NR<3{print $0;next}{print $0| "sort --version-sort"}')
+EOF
+        fi
     }
     export -f viddy_command
     viddy_args=(
