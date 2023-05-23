@@ -46,10 +46,14 @@ grafana:
     datasources.yaml:
       apiVersion: 1
       datasources:
-      - name: PrometheusDeprecated
+      - name: Prometheus Deprecated
         type: prometheus
+        uid: prometheus-deprecated
         url: http://prometheus.wugi.info
+        access: proxy
         isDefault: false
+        jsonData:
+          timeInterval: 30s
 
 prometheus-node-exporter:
   affinity:
