@@ -42,6 +42,14 @@ grafana:
       - grafana.kubernetes.home.wugi.info
     hosts:
     - grafana.kubernetes.home.wugi.info
+  datasources:
+    datasources.yaml:
+      apiVersion: 1
+      datasources:
+      - name: PrometheusDeprecated
+        type: prometheus
+        url: http://prometheus.wugi.info
+        isDefault: false
 
 prometheus-node-exporter:
   affinity:
