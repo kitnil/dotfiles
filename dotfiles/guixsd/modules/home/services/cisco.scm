@@ -27,14 +27,14 @@
       #$(if ssh?
             #~(let* ((port (open-pipe* OPEN_READ
                                        #$(file-append sshpass "/bin/sshpass")
-                                       "-p" #$(pass "show" "majordomo/public/ssh/router")
+                                       "-p" #$(pass "show" "majordomo/private/ssh/router")
                                        "ssh" #$host #$@command))
                      (output (read-string port)))
                 (close-port port)
                 output)
             #~(with-environment-variables
                   '(("TELNET_PASSWORD" #$(pass "show" "majordomo/public/ssh/switch"))
-                    ("ENABLE_PASSWORD" #$(pass "show" "majordomo/public/ssh/router")))
+                    ("ENABLE_PASSWORD" #$(pass "show" "majordomo/private/ssh/router")))
                 (let* ((port (open-pipe* OPEN_READ
                                          #$(file-append cisco "/bin/cisco")
                                          #$host #$@command))

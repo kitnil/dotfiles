@@ -1,22 +1,22 @@
 @test "invoke logout command over ssh on sw2-dh507.intr" {
     skip
-    run timeout 30 sshpass -p"$(pass show majordomo/public/ssh/router)" ssh -F test-tmp/config -o ControlPath=none sw2-dh507.intr -- logout
+    run timeout 30 sshpass -p"$(pass show majordomo/private/ssh/router)" ssh -F test-tmp/config -o ControlPath=none sw2-dh507.intr -- logout
     [ "$status" -eq 0 ]
 }
 
 @test "invoke logout command over ssh on sw2-dh508.intr" {
-    run timeout 30 sshpass -p"$(pass show majordomo/public/ssh/router)" ssh -F test-tmp/config -o ControlPath=none sw2-dh508.intr -- logout
+    run timeout 30 sshpass -p"$(pass show majordomo/private/ssh/router)" ssh -F test-tmp/config -o ControlPath=none sw2-dh508.intr -- logout
     [ "$status" -eq 0 ]
 }
 
 @test "invoke id command over ssh on br1-mr14.intr" {
-    run timeout 30 sshpass -p"$(pass show majordomo/public/ssh/router)" ssh -F test-tmp/config -o ControlPath=none br1-mr14.intr -- id
+    run timeout 30 sshpass -p"$(pass show majordomo/private/ssh/router)" ssh -F test-tmp/config -o ControlPath=none br1-mr14.intr -- id
     [ "$status" -eq 0 ]
     [[ "$output" == *uid=0* ]]
 }
 
 @test "invoke id command over ssh on sr1-dh507-508.intr" {
-    run timeout 30 sshpass -p"$(pass show majordomo/public/ssh/router)" ssh -F test-tmp/config -o ControlPath=none sr1-dh507-508.intr -- id
+    run timeout 30 sshpass -p"$(pass show majordomo/private/ssh/router)" ssh -F test-tmp/config -o ControlPath=none sr1-dh507-508.intr -- id
     [ "$status" -eq 0 ]
     [[ "$output" == *uid=0* ]]
 }
