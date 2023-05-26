@@ -90,7 +90,7 @@
    (extensions
     (list (service-extension profile-service-type
                              (lambda (config)
-                               (append (list k3s)
+                               (append (list k3s kubectl)
                                        (if (kubernetes-k3s-configuration-kubevirt? config)
                                            (list virtctl)
                                            '()))))
