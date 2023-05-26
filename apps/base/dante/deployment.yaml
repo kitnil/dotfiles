@@ -17,6 +17,7 @@ spec:
       containers:
       - image: docker-registry.wugi.info/networking/dante:latest
         name: dante
+        command: ["/sbin/sockd"]
         resources:
           limits:
             cpu: 2000m
