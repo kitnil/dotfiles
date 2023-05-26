@@ -17,7 +17,6 @@ spec:
       containers:
       - image: docker-registry.wugi.info/networking/dante:latest
         name: dante
-        ports:
         resources:
           limits:
             cpu: 2000m
