@@ -373,7 +373,24 @@ remote-random
 
                           (service zram-device-service-type
                                    (zram-device-configuration
-                                    (size "8G"))))
+                                    (size "8G")))
+
+                          (service yggdrasil-service-type
+                                   (yggdrasil-configuration
+                                    (autoconf? #f)
+                                    (json-config
+                                     '(("NodeInfo" . null)
+                                       ("NodeInfoPrivacy" . #f)
+                                       ("IfMTU" . 65535)
+                                       ("IfName" . "auto")
+                                       ("AllowedPublicKeys" . #())
+                                       ("MulticastInterfaces" . #((("Port" . 0)
+                                                                   ("Listen" . #t)
+                                                                   ("Beacon" . #t)
+                                                                   ("Regex" . ".*"))))
+                                       ("AdminListen" . "unix:///var/run/yggdrasil.sock")
+                                       ("Listen" . #())
+                                       ("InterfacePeers" . null))))))
 
                     (%mail-services "78.108.82.44")
 
