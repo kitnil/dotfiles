@@ -9,6 +9,9 @@ case "$KUBECONFIG" in
     $HOME/.kube/config-mjru-cluster2)
         session="cluster2"
         ;;
+    $HOME/.kube/config-host1-k3s)
+        session="host1"
+        ;;
     *)
         session="home"
         ;;

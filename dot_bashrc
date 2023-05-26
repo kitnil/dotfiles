@@ -2099,6 +2099,11 @@ EOF
                                        KUBECONFIG="${HOME}/.kube/config-mjru-cluster2" \
                                        tmuxifier s kubernetes
                     ;;
+                host1)
+                    TMUXIFIER_TMUX_OPTS="-L config-host1-k3s" \
+                                       KUBECONFIG="${HOME}/.kube/config-host1-k3s" \
+                                       tmuxifier s kubernetes
+                    ;;
                 home)
                     TMUXIFIER_TMUX_OPTS="-L kubernetes-home-k8s" \
                                        KUBECONFIG="${HOME}/.kube/config-home-k8s" \
