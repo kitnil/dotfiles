@@ -10,4 +10,4 @@ patchesStrategicMerge:
 - service.yaml
 images:
 - name: docker-registry.intr/utils/novnc
-  newTag: 4de3373a
+  newTag: 6c00345e
