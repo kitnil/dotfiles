@@ -1,11 +1,9 @@
 (use-modules (gnu))
 
-(use-service-modules desktop dbus networking xorg)
-(use-package-modules avahi suckless xdisorg)
+(use-service-modules desktop dbus networking)
+(use-package-modules avahi suckless)
 
-(list (screen-locker-service slock)
-      (screen-locker-service xlockmore "xlock")
-      (udisks-service)
+(list (udisks-service)
       ;; (service upower-service-type)
       (service accountsservice-service-type)
       (service colord-service-type)
@@ -13,5 +11,4 @@
       (service polkit-service-type)
       (dbus-service #:services (list avahi))
       (elogind-service)
-      (service ntp-service-type)
-      x11-socket-directory-service)
+      (service ntp-service-type))

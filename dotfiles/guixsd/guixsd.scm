@@ -751,13 +751,6 @@ location / {
 ;;; Entryp point
 ;;;
 
-(define %slim-theme
-  (or (and=> (current-filename)
-             (lambda (file)
-               (string-append (dirname (dirname file))
-                              "/fiore/modules/slim-artwork.scm")))
-      "/home/oleg/src/dotfiles/fiore/modules/slim-artwork.scm"))
-
 ;; TODO: Get rid of full path
 (define %hardware-file
   (or (and=> (current-filename)
@@ -1047,19 +1040,6 @@ location / {
 
                          (service ladspa-service-type
                                   (ladspa-configuration (plugins (list swh-plugins))))
-
-                         #;(service slim-service-type
-                         (slim-configuration
-                         (display ":1")
-                         (vt "vt8")
-                         (xorg-configuration
-                         (xorg-configuration
-                         (extra-config (list (intel+amdgpu.conf "\
-                         Section \"ServerLayout\"
-                         Identifier  \"Default Layout\"
-                         Screen  0   \"Screen 2\"
-                         Screen  1   \"Screen 1\" LeftOf \"Screen 2\"
-                         EndSection")))))))
 
                          (service alsa-service-type)
 

@@ -117,18 +117,4 @@ EndSection
                                                                      ",")))
                                              "\n")))
  (packages (cons* ratpoison nss-certs %base-packages))
-
-
-  
-  (services (append (list                          ;; Desktop services
-                         (service slim-service-type
-                                  (slim-configuration
-                                   ;; (auto-login? #t)
-                                   (default-user "oleg")
-                                   (gnupg? #t) ;XXX: Merge pam-gnupg in Guix repository to upstream
-				   ;; (theme %slim-theme) TODO: Fix the theme.
-                                   (xorg-configuration
-                                    (xorg-configuration
-                                     (modules (delete xf86-video-ati (delete xf86-video-nouveau (delete xf86-video-intel %default-xorg-modules))))
-                                     (extra-config (list (amdgpu+amdgpu.conf)))))))
-) %base-services)))
+ (services %base-services))
