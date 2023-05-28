@@ -8,3 +8,4 @@ configMapGenerator:
 - name: dante-configuration
   files:
   - sockd.conf=rootfs/etc/sockd.conf
+  - passwd=rootfs/etc/passwd

@@ -28,6 +28,9 @@ spec:
             cpu: 1000m
             memory: 512Mi
         volumeMounts:
+        - mountPath: /etc/passwd
+          subPath: passwd
+          name: dante-configuration
         - mountPath: /etc/sockd.conf
           subPath: sockd.conf
           name: dante-configuration
