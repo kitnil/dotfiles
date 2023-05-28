@@ -7,4 +7,4 @@ resources:
 configMapGenerator:
 - name: dante-configuration
   files:
-  - sockd.conf=sockd.conf
+  - sockd.conf=rootfs/etc/sockd.conf
