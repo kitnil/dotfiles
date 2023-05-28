@@ -90,6 +90,8 @@ bindsym $mod+y exec clipman pick -t wofi
     # start a web browser
     bindsym $mod+Shift+w exec $browser
 
+    bindsym $mod+Shift+m exec looking-glass-client-wrapper
+
     # kill focused window
     bindsym $mod+Shift+q kill
 
