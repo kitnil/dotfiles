@@ -53,33 +53,34 @@ case "$1" in
                 fi
                 exec /run/current-system/profile/bin/virsh start vm-cilium1
                 ;;
-            win2022)
-                if [[ $(/run/current-system/profile/bin/virsh domstate win2022) == running ]]
+            win*)
+                domain="$2"
+                if [[ $(/run/current-system/profile/bin/virsh domstate $domain) == running ]]
                 then
-                    echo "vm-win2022: Virtual machine already running.  Sleeping infinity." 1>&2
+                    echo "vm-${domain}: Virtual machine already running.  Sleeping infinity." 1>&2
                     if [[ $VIRSH_DAEMON == true ]]
                     then
                         exec /run/current-system/profile/bin/sleep infinity
                     fi
                     exec /run/current-system/profile/bin/sleep infinity
                 fi
-                if [[ -e /var/lib/vm-win2022/3 ]]
+                if [[ -e /var/lib/vm-${domain}/3 ]]
                 then
-                    echo "vm-win2022: 3rd attempt exist, exiting." 1>&2
+                    echo "vm-${domain}: 3rd attempt exist, exiting." 1>&2
                     exit 1
                 fi
-                /run/current-system/profile/bin/mkdir -p /var/lib/vm-win2022
+                /run/current-system/profile/bin/mkdir -p /var/lib/vm-${domain}
                 for file in {1..3}
                 do
-                    if [[ -e /var/lib/vm-win2022/${file} ]]
+                    if [[ -e /var/lib/vm-${domain}/${file} ]]
                     then
                         :
                     else
-                        /run/current-system/profile/bin/touch /var/lib/vm-win2022/${file}
+                        /run/current-system/profile/bin/touch /var/lib/vm-${domain}/${file}
                         break
                     fi
                 done
-                echo "vm-win2022: Resetting GPU." 1>&2
+                echo "vm-${domain}: Resetting GPU." 1>&2
                 attempt=0
                 max_attempt=15
                 until [[ -S /var/run/libvirt/libvirt-sock ]]
@@ -88,17 +89,17 @@ case "$1" in
                     then
                         exit 1
                     else
-                        echo "vm-win2022 [${attempt}/${max_attempt}]: Socket '/var/run/libvirt/libvirt-sock' does not exist. Sleeping 5 seconds." 1>&2
+                        echo "vm-${domain} [${attempt}/${max_attempt}]: Socket '/var/run/libvirt/libvirt-sock' does not exist. Sleeping 5 seconds." 1>&2
                         /run/current-system/profile/bin/sleep 5
                         ((++attempt))
                     fi
                 done
-                if [[ -e /var/lib/vm-win2022/0 ]]
+                if [[ -e /var/lib/vm-${domain}/0 ]]
                 then
-                    echo "vm-win2022: '/var/lib/vm-win2022/0' file exist. Skipping GPU reset." 1>&2
+                    echo "vm-${domain}: '/var/lib/vm-${domain}/0' file exist. Skipping GPU reset." 1>&2
                     :
                 else
-                    /run/current-system/profile/bin/touch /var/lib/vm-win2022/0
+                    /run/current-system/profile/bin/touch /var/lib/vm-${domain}/0
                     if [[ -e /sys/kernel/debug/dri/0/amdgpu_gpu_recover ]]
                     then
                         if [[ -e /sys/bus/pci/devices/0000:12:00.1/remove ]]
@@ -119,27 +120,27 @@ case "$1" in
                         /run/current-system/profile/bin/cat /sys/kernel/debug/dri/2/amdgpu_gpu_recover
                     fi
                 fi
-                if [[ -e /dev/lvm2/win2022 ]]
+                if [[ -e /dev/lvm2/${domain} ]]
                 then
-                    echo "vm-win2022: File '/dev/lvm2/win2022' file exist." 1>&2
+                    echo "vm-${domain}: File '/dev/lvm2/${domain}' file exist." 1>&2
                 else
-                    /home/oleg/.guix-profile/sbin/lvchange -ay /dev/lvm2/win2022
+                    /home/oleg/.guix-profile/sbin/lvchange -ay /dev/lvm2/${domain}
                 fi
                 attempt=0
                 max_attempt=3
-                until [[ -e /var/run/libvirt/qemu/win2022.pid ]]
+                until [[ -e /var/run/libvirt/qemu/${domain}.pid ]]
                 do
                     if ((attempt > max_attempt))
                     then
                         exit 1
                     else
-                        echo "vm-win2022: Start virtual machine." 1>&2
-                        if /run/current-system/profile/bin/virsh start win2022
+                        echo "vm-${domain}: Start virtual machine." 1>&2
+                        if /run/current-system/profile/bin/virsh start "$domain"
                         then
-                            echo "vm-win2022: Started." 1>&2
+                            echo "vm-${domain}: Started." 1>&2
                             break
                         else
-                            echo "vm-win2022 [${attempt}/${max_attempt}]: Start win2022." 1>&2
+                            echo "vm-${domain} [${attempt}/${max_attempt}]: Start ${domain}." 1>&2
                             /run/current-system/profile/bin/sleep 5
                             ((++attempt))
                         fi
@@ -147,7 +148,7 @@ case "$1" in
                 done
                 if [[ $VIRSH_DAEMON == true ]]
                 then
-                    echo "vm-win2022: Started. Sleeping infinity." 1>&2
+                    echo "vm-${domain}: Started. Sleeping infinity." 1>&2
                     exec /run/current-system/profile/bin/sleep infinity
                 fi
                 ;;
