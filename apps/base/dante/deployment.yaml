@@ -29,12 +29,7 @@ spec:
         - mountPath: /etc/sockd.conf
           subPath: sockd.conf
           name: dante-configuration
-        - mountPath: /var/log
-          name: log
       volumes:
       - name: dante-configuration
         configMap:
           name: dante-configuration
-      - name: log
-        emptyDir:
-          sizeLimit: 10M
