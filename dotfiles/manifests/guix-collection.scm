@@ -271,6 +271,7 @@ virtualization vnc vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
                valgrind      ;Memory debug.
 
                obs
+               obs-wlrobs
 
                mesa mesa-utils
 
