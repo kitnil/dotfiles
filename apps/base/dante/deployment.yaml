@@ -20,6 +20,7 @@ spec:
       - image: docker-registry.wugi.info/networking/dante:latest
         name: dante
         command: ["/sbin/sockd"]
+        args: ["-d", "9"] # verbosity 9
         resources:
           limits:
             cpu: 2000m
