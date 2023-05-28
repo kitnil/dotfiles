@@ -2,6 +2,13 @@
 
 set -o nounset -o errexit -o pipefail
 
+if [[ -e /proc/drbd ]]
+then
+    :
+else
+    modprobe drbd9
+fi
+
 if [[ $(/gnu/store/5sd80lyxq6gfqpqk07df3zpjji8gpji3-containerd-1.6.6/bin/ctr --namespace k8s.io images list) == *docker.io/coredns/coredns:1.7.1* ]]
 then
     :
