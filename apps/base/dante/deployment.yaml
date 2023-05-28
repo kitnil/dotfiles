@@ -27,6 +27,12 @@ spec:
           requests:
             cpu: 1000m
             memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            add:
+            # Used for setsockopt
+            - NET_ADMIN
         volumeMounts:
         - mountPath: /etc/passwd
           subPath: passwd
