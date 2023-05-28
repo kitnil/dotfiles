@@ -181,6 +181,12 @@ remote guix.wugi.info 1195
 remote-random
 "))))
 
+                          (service dante-service-type
+                                   (dante-configuration
+                                    (config-file (local-file "sockd.conf"))
+                                    (requirement '(tor))
+                                    (socks-directroute-fallback? #t)))
+
                           (service tinyproxy-service-type
                                    (tinyproxy-configuration
                                     (config-file (local-file "tinyproxy.conf"))
