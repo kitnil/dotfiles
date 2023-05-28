@@ -264,5 +264,5 @@ client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
 
 client.background       #ffffff
 
-# for_window [app_id="Alacritty"] border none
-# for_window [app_id="Alacritty"] resize set width 30 ppt
+for_window [app_id="looking-glass-client"] border none
+for_window [app_id="looking-glass-client"] resize set width 1920 px
