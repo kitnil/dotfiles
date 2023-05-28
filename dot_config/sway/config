@@ -91,6 +91,7 @@ bindsym $mod+y exec clipman pick -t wofi
     bindsym $mod+Shift+w exec $browser
 
     bindsym $mod+Shift+m exec looking-glass-client-wrapper
+    bindsym $mod+Shift+s exec passmenu
     bindsym $mod+Shift+v exec virt-manager
 
     # kill focused window
