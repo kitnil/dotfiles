@@ -256,7 +256,7 @@ bar {
 }
 
 input * {
-    xkb_layout us,ru
+    xkb_layout custom,ru
     xkb_options grp:win_space_toggle
 }
 

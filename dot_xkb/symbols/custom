@@ -1,0 +1,10 @@
+# verify with xmodmap
+xkb_symbols "basic" {
+  include "pc+us"
+
+  replace key <CAPS> {
+    [ Hyper_L, Hyper_L ]
+  };
+
+  modifier_map Mod3 { Hyper_L };
+};

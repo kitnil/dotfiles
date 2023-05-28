@@ -72,6 +72,7 @@
    (simple-service 'sway-config
                    home-files-service-type
                    (list `(".config/sway/config" ,(local-file (string-append %project-directory "/dot_config/sway/notebook.config")))
+                         `(".xkb/symbols/custom" ,(local-file (string-append %project-directory "/dot_xkb/symbols/custom")))
 			 `(".config/sway/status.sh" ,(local-file (string-append %project-directory "/dot_config/sway/status.sh") #:recursive? #t))))
    (service stumpwm-service-type
             (let ((config-files

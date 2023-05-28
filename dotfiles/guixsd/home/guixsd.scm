@@ -653,7 +653,8 @@ PYTHONPATH='' exec -a \"$0\" ~a/bin/idea-ultimate \"$@\"\n"
 
     (simple-service 'sway-config
                     home-files-service-type
-                    (list `(".config/sway/config" ,(local-file (string-append %project-directory "/dot_config/sway/config")))))
+                    (list `(".config/sway/config" ,(local-file (string-append %project-directory "/dot_config/sway/config")))
+                          `(".xkb/symbols/custom" ,(local-file (string-append %project-directory "/dot_xkb/symbols/custom")))))
 
     (simple-service 'polybar-config
                     home-files-service-type
