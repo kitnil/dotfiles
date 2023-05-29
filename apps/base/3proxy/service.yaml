@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: proxy
+  annotations:
+    metallb.universe.tf/address-pool: default
+spec:
+  ports:
+  - port: 1080
+    protocol: TCP
+    targetPort: 1080
+    name: socks5
+  selector:
+    app.kubernetes.io/name: 3proxy
+    app.kubernetes.io/part-of: 3proxy
+  type: LoadBalancer
