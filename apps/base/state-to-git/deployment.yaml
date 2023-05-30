@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: state-h3c
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: state-h3c
+      app.kubernetes.io/part-of: state
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: state-h3c
+        app.kubernetes.io/part-of: state
+    spec:
+      containers:
+      - image: docker-registry.wugi.info/monitoring/state-h3c:latest
+        name: state-h3c
+        resources:
+          limits:
+            memory: 512Mi
+          requests:
+            memory: 512Mi
+        volumeMounts:
+        - mountPath: /home/oleg/.ssh/config
+          subPath: config
+          readOnly: true
+          name: ssh-configuration
+        - mountPath: /home/oleg/.ssh/known_hosts
+          subPath: known_hosts
+          readOnly: true
+          name: ssh-configuration
+        - mountPath: /home/oleg/.gitconfig
+          subPath: .gitconfig
+          readOnly: true
+          name: git-configuration
+        - mountPath: /etc/guix/secrets/h3c
+          subPath: h3c
+          readOnly: true
+          name: ssh-password
+        - mountPath: /home/oleg/ansible-out
+          name: output
+      volumes:
+      - name: git-configuration
+        configMap:
+          name: git-configuration
+      - name: ssh-configuration
+        configMap:
+          name: ssh-configuration
+      - name: ssh-password
+        secret:
+          secretName: ssh-password
+      - name: output
+        hostPath:
+          path: /home/oleg/ansible-out
