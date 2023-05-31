@@ -44,6 +44,14 @@ spec:
           subPath: juniper
           readOnly: true
           name: ssh-password
+        - mountPath: /etc/guix/secrets/cisco
+          subPath: cisco
+          readOnly: true
+          name: ssh-password
+        - mountPath: /etc/guix/secrets/support
+          subPath: support
+          readOnly: true
+          name: ssh-password
         - mountPath: /home/oleg/ansible-out
           name: output
       volumes:

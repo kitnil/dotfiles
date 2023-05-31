@@ -2,9 +2,12 @@
   #:use-module (gnu home services)
   #:use-module (gnu home services mcron)
   #:use-module (guix gexp)
+  #:use-module (guix modules)
   #:use-module (guix store)
   #:use-module (home config)
   #:use-module (gnu packages ssh)
+  #:use-module (gnu packages version-control)
+  #:use-module (gnu services mcron)
   #:use-module (packages networking)
   #:use-module (guile pass)
   #:export (cisco-service-type
@@ -27,14 +30,25 @@
       #$(if ssh?
             #~(let* ((port (open-pipe* OPEN_READ
                                        #$(file-append sshpass "/bin/sshpass")
-                                       "-p" #$(pass "show" "majordomo/private/ssh/router")
-                                       "ssh" #$host #$@command))
+                                       (string-append
+                                        "-p"
+                                        (string-trim-right
+                                         (with-input-from-file "/etc/guix/secrets/cisco"
+                                           read-string)))
+                                       #$(file-append openssh "/bin/ssh") "--"
+                                       #$host #$@command))
                      (output (read-string port)))
                 (close-port port)
                 output)
             #~(with-environment-variables
-                  '(("TELNET_PASSWORD" #$(pass "show" "majordomo/public/ssh/switch"))
-                    ("ENABLE_PASSWORD" #$(pass "show" "majordomo/private/ssh/router")))
+                  `(("TELNET_PASSWORD"
+                     ,(string-trim-right
+                       (with-input-from-file "/etc/guix/secrets/support"
+                         read-string)))
+                    ("ENABLE_PASSWORD"
+                     ,(string-trim-right
+                       (with-input-from-file "/etc/guix/secrets/cisco"
+                         read-string))))
                 (let* ((port (open-pipe* OPEN_READ
                                          #$(file-append cisco "/bin/cisco")
                                          #$host #$@command))
@@ -45,12 +59,19 @@
 (define* (cisco-configuration->vc host #:optional ssh?)
   (program-file
    (string-append "cisco-configuration-to-version-control-" host)
-   (with-imported-modules '((guix build utils))
+   (with-imported-modules (append (source-module-closure '((guix utils)))
+                                  '((guix build utils)))
      #~(begin
          (use-modules (guix build utils)
                       (guix utils))
          (let* ((directory (string-append #$%ansible-state-directory "/" #$host "/config"))
-                (file (string-append directory "/cisco.conf")))
+                (file (string-append directory "/cisco.conf"))
+                (git #$(file-append git "/bin/git"))
+                (pw (getpwnam "oleg")))
+           (setgroups '#())
+           (setgid (passwd:gid pw))
+           (setuid (passwd:uid pw))
+           (setenv "HOME" "/home/oleg") ;do not hardcode
            (mkdir-p directory)
            (call-with-output-file (string-append directory "/cisco.conf")
              (lambda (port)
@@ -63,10 +84,10 @@
                (display #$(cisco-command host '("show" "interfaces") ssh?) port)))
            (call-with-output-file (string-append directory "/mac.txt")
              (lambda (port)
-               (display #$(cisco-command host '("show" "mac-address-table") ssh?) port))))
-         (with-directory-excursion #$%ansible-state-directory
-           (invoke "git" "add" #$host)
-           (invoke "git" "commit" "--message=Update."))))))
+               (display #$(cisco-command host '("show" "mac-address-table") ssh?) port)))
+           (with-directory-excursion #$%ansible-state-directory
+             (invoke git "add" #$host)
+             (invoke git "commit" "--message=Update.")))))))
 
 (define cisco-configuration->vc-sw1-dh507.intr
   (cisco-configuration->vc "sw1-dh507.intr"))
@@ -125,7 +146,7 @@
   (service-type
    (name 'cisco)
    (extensions
-    (list (service-extension home-mcron-service-type
+    (list (service-extension mcron-service-type
                              cisco-mcron-jobs)))
    (description
     "Periodically run Cisco configuration dump.")
