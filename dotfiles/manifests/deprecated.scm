@@ -40,6 +40,9 @@
 (define-public autofs
   (last (lookup-inferior-packages inferior "autofs")))
 
+;; XXX: manually installed Guix package with "guix build" and "guix install"
+;; /gnu/store/sy4v75yrn1fks0b0i6y9k70rmw5xh7rp-alacritty-0.12.0.drv because of
+;; broken clipboard on wayland.
 (define-public alacritty
   (last (lookup-inferior-packages inferior "alacritty")))
 
