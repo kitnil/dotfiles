@@ -25,17 +25,11 @@
 (program-file "run.scm"
               #~(begin
                   (use-modules (ice-9 popen)
-                               (ice-9 rdelim)
-                               (ice-9 pretty-print))
+                               (ice-9 rdelim))
                   (let* ((port (open-pipe* OPEN_READ
                                            "nix" "eval" "--raw"
                                            "--file" #$nix-expression-file))
                          (output (read-string port)))
                     (close-port port)
-                    (pretty-print
-                     (map
-                      (lambda (public-key)
-                        `(plain-file "ssh-public-key" ,public-key))
-                      (string-split (string-trim-right output #\newline)
-                                    #\newline))))))
+                    (display (string-trim-right output #\newline)))))
 
