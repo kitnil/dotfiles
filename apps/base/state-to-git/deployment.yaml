@@ -32,6 +32,12 @@ spec:
           subPath: known_hosts
           readOnly: true
           name: ssh-configuration
+        - mountPath: /home/oleg/.ssh/id_rsa_majordomo_eng
+          readOnly: true
+          name: ssh-private-key-0
+        - mountPath: /home/oleg/.ssh/id_rsa
+          readOnly: true
+          name: ssh-private-key-1
         - mountPath: /home/oleg/.gitconfig
           subPath: .gitconfig
           readOnly: true
@@ -48,12 +54,23 @@ spec:
           subPath: cisco
           readOnly: true
           name: ssh-password
+        - mountPath: /etc/guix/secrets/ansible
+          subPath: ansible
+          readOnly: true
+          name: ssh-password
+        - mountPath: /home/oleg/.ansible-hosts
+          readOnly: true
+          name: ansible-hosts
         - mountPath: /etc/guix/secrets/support
           subPath: support
           readOnly: true
           name: ssh-password
         - mountPath: /home/oleg/ansible-out
           name: output
+        - mountPath: /home/oleg/.ansible
+          name: ansible-state
+        - mountPath: /home/oleg/.ansible.cfg
+          name: ansible-configuration-file
       volumes:
       - name: git-configuration
         configMap:
@@ -67,3 +84,18 @@ spec:
       - name: output
         hostPath:
           path: /home/oleg/ansible-out
+      - name: ansible-hosts
+        hostPath:
+          path: /home/oleg/.ansible-hosts
+      - name: ansible-state
+        hostPath:
+          path: /home/oleg/.ansible
+      - name: ansible-configuration-file
+        hostPath:
+          path: /home/oleg/.ansible.cfg
+      - name: ssh-private-key-0
+        hostPath:
+          path: /home/oleg/.ssh/id_rsa_majordomo_eng
+      - name: ssh-private-key-1
+        hostPath:
+          path: /home/oleg/.ssh/id_rsa

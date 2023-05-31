@@ -851,7 +851,6 @@ account default : gmail
               (schedule '(next-hour '(21)))
               (period "1m")))
 
-    (service ansible-playbook-service-type)
     (service kubernetes-service-type)
     (service billing2-service-type)
 

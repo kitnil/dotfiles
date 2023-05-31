@@ -1,10 +1,13 @@
 (define-module (home services ansible)
   #:use-module (gnu home services)
   #:use-module (gnu home services shepherd)
+  #:use-module (gnu packages admin)
   #:use-module (gnu packages bash)
   #:use-module (gnu packages guile)
   #:use-module (gnu packages mail)
+  #:use-module (gnu packages version-control)
   #:use-module (gnu services configuration)
+  #:use-module (gnu services mcron)
   #:use-module (gnu home services mcron)
   #:use-module (guile pass)
   #:use-module (guix build utils)
@@ -19,6 +22,12 @@
   #:use-module (json builder)
   #:use-module (srfi srfi-1)
   #:export (ansible-playbook-service-type))
+
+(define git-binary
+  (file-append git "/bin/git"))
+
+(define ansible-playbook-binary
+  (file-append ansible-core "/bin/ansible-playbook"))
 
 (define %ansible-playbook-mjru-main
   #((("tasks"
@@ -132,7 +141,7 @@
   (post-hook           ansible-playbook-configuration-post-hook        ;gexp
                        (default #~(begin #t)))
   (command             ansible-playbook-configuration-command          ;gexp
-                       (default #~(invoke "ansible-playbook" "main.json"))))
+                       (default #~(invoke #$ansible-playbook-binary "main.json"))))
 
 (define (ansible-playbook config)
   (mlet* %store-monad ((main.json (text-file* "main.json"
@@ -148,6 +157,16 @@
                                        (use-modules (guix build syscalls)
                                                     (guix build utils)
                                                     (srfi srfi-34))
+                                       (setgroups '#())
+                                       (let ((pw (getpwnam "oleg")))
+                                         (setgid (passwd:gid pw))
+                                         (setuid (passwd:uid pw)))
+                                       (setenv "HOME" "/home/oleg") ;do not hardcode
+
+                                       ;; XXX: LANG environment fixes ansible-playbook.
+                                       ;; ERROR: Ansible requires the locale encoding to be UTF-8; Detected None.
+                                       (setenv "LANG" "en_US.UTF-8")
+
                                        (define instance-dir
                                          (mkdtemp! "/tmp/ansible.XXXXXX"))
                                        (with-directory-excursion instance-dir
@@ -175,16 +194,14 @@
             (pre-hook
              #~(begin
                  (copy-file #$(local-file "passwords.yml") "passwords.yml")
-                 (with-output-to-file ".pass"
-                   (lambda ()
-                     (display #$(pass "show" "majordomo/public/majordomo/ansible-majordomo-history/passwords"))))))
+                 (copy-file "/etc/guix/secrets/ansible" ".pass")))
             (command
-             #~(invoke "ansible-playbook" "--vault-password-file=.pass" "-e@passwords.yml" "main.json"))
+             #~(invoke #$ansible-playbook-binary "--vault-password-file=.pass" "-e@passwords.yml" "main.json"))
             (post-hook
              #~(with-directory-excursion #$state-directory
-                 (invoke "git" "add" "--all")
-                 (invoke "git" "commit" "--message=Update.")
-                 (invoke "git" "push")))))))
+                 (invoke #$git-binary "add" "--all")
+                 (invoke #$git-binary "commit" "--message=Update.")
+                 (invoke #$git-binary "push")))))))
    #~(job
       '(next-hour '(17))
       #$(run-with-store (open-connection)
@@ -198,16 +215,14 @@
             (pre-hook
              #~(begin
                  (copy-file #$(local-file "passwords.yml") "passwords.yml")
-                 (with-output-to-file ".pass"
-                   (lambda ()
-                     (display #$(pass "show" "majordomo/public/majordomo/ansible-majordomo-history/passwords"))))))
+                 (copy-file "/etc/guix/secrets/ansible" ".pass")))
             (command
-             #~(invoke "ansible-playbook" "--vault-password-file=.pass" "-e@passwords.yml" "main.json"))
+             #~(invoke #$ansible-playbook-binary "--vault-password-file=.pass" "-e@passwords.yml" "main.json"))
             (post-hook
              #~(with-directory-excursion #$state-directory
-                 (invoke "git" "add" "--all")
-                 (invoke "git" "commit" "--message=Update.")
-                 (invoke "git" "push")))))))
+                 (invoke #$git-binary "add" "--all")
+                 (invoke #$git-binary "commit" "--message=Update.")
+                 (invoke #$git-binary "push")))))))
    #~(job
       '(next-hour '(18))
       #$(run-with-store (open-connection)
@@ -221,16 +236,14 @@
             (pre-hook
              #~(begin
                  (copy-file #$(local-file "passwords.yml") "passwords.yml")
-                 (with-output-to-file ".pass"
-                   (lambda ()
-                     (display #$(pass "show" "majordomo/public/majordomo/ansible-majordomo-history/passwords"))))))
+                 (copy-file "/etc/guix/secrets/ansible" ".pass")))
             (command
-             #~(invoke "ansible-playbook" "--vault-password-file=.pass" "-e@passwords.yml" "main.json"))
+             #~(invoke #$ansible-playbook-binary "--vault-password-file=.pass" "-e@passwords.yml" "main.json"))
             (post-hook
              #~(with-directory-excursion #$state-directory
-                 (invoke "git" "add" "--all")
-                 (invoke "git" "commit" "--message=Update.")
-                 (invoke "git" "push")))))))
+                 (invoke #$git-binary "add" "--all")
+                 (invoke #$git-binary "commit" "--message=Update.")
+                 (invoke #$git-binary "push")))))))
    #~(job
       '(next-hour '(19))
       #$(run-with-store (open-connection)
@@ -244,22 +257,20 @@
             (pre-hook
              #~(begin
                  (copy-file #$(local-file "passwords.yml") "passwords.yml")
-                 (with-output-to-file ".pass"
-                   (lambda ()
-                     (display #$(pass "show" "majordomo/public/majordomo/ansible-majordomo-history/passwords"))))))
+                 (copy-file "/etc/guix/secrets/ansible" ".pass")))
             (command
-             #~(invoke "ansible-playbook" "--vault-password-file=.pass" "-e@passwords.yml" "main.json"))
+             #~(invoke #$ansible-playbook-binary "--vault-password-file=.pass" "-e@passwords.yml" "main.json"))
             (post-hook
              #~(with-directory-excursion #$state-directory
-                 (invoke "git" "add" "--all")
-                 (invoke "git" "commit" "--message=Update.")
-                 (invoke "git" "push")))))))))
+                 (invoke #$git-binary "add" "--all")
+                 (invoke #$git-binary "commit" "--message=Update.")
+                 (invoke #$git-binary "push")))))))))
 
 (define ansible-playbook-service-type
   (service-type
    (name 'ansible-playbook)
    (extensions
-    (list (service-extension home-mcron-service-type
+    (list (service-extension mcron-service-type
                              ansible-playbook-mcron-jobs)))
    (description
     "Periodically run ansible-playbook.")
