@@ -9,6 +9,7 @@ configMapGenerator:
   files:
   - config=rootfs/root/.ssh/config
   - known_hosts=rootfs/root/.ssh/known_hosts
+  - known_hosts2=rootfs/root/.ssh/known_hosts2
 - name: git-configuration
   files:
   - .gitconfig=rootfs/root/.gitconfig

@@ -32,6 +32,10 @@ spec:
           subPath: known_hosts
           readOnly: true
           name: ssh-configuration
+        - mountPath: /home/oleg/.ssh/known_hosts2
+          subPath: known_hosts2
+          readOnly: true
+          name: ssh-configuration
         - mountPath: /home/oleg/.ssh/id_rsa_majordomo_eng
           readOnly: true
           name: ssh-private-key-0
