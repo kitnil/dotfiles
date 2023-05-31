@@ -200,8 +200,7 @@
             (post-hook
              #~(with-directory-excursion #$state-directory
                  (invoke #$git-binary "add" "--all")
-                 (invoke #$git-binary "commit" "--message=Update.")
-                 (invoke #$git-binary "push")))))))
+                 (invoke #$git-binary "commit" "--message=Update.")))))))
    #~(job
       '(next-hour '(17))
       #$(run-with-store (open-connection)
@@ -221,8 +220,7 @@
             (post-hook
              #~(with-directory-excursion #$state-directory
                  (invoke #$git-binary "add" "--all")
-                 (invoke #$git-binary "commit" "--message=Update.")
-                 (invoke #$git-binary "push")))))))
+                 (invoke #$git-binary "commit" "--message=Update.")))))))
    #~(job
       '(next-hour '(18))
       #$(run-with-store (open-connection)
@@ -242,8 +240,7 @@
             (post-hook
              #~(with-directory-excursion #$state-directory
                  (invoke #$git-binary "add" "--all")
-                 (invoke #$git-binary "commit" "--message=Update.")
-                 (invoke #$git-binary "push")))))))
+                 (invoke #$git-binary "commit" "--message=Update.")))))))
    #~(job
       '(next-hour '(19))
       #$(run-with-store (open-connection)
@@ -263,8 +260,7 @@
             (post-hook
              #~(with-directory-excursion #$state-directory
                  (invoke #$git-binary "add" "--all")
-                 (invoke #$git-binary "commit" "--message=Update.")
-                 (invoke #$git-binary "push")))))))))
+                 (invoke #$git-binary "commit" "--message=Update.")))))))))
 
 (define ansible-playbook-service-type
   (service-type
