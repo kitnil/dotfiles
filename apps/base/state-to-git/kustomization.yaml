@@ -4,6 +4,7 @@ namespace: state-to-git
 resources:
 - namespace.yaml
 - deployment.yaml
+- job.yaml
 configMapGenerator:
 - name: ssh-configuration
   files:
@@ -13,3 +14,6 @@ configMapGenerator:
 - name: git-configuration
   files:
   - .gitconfig=rootfs/root/.gitconfig
+- name: rootfs
+  files:
+  - passwd=rootfs/etc/passwd

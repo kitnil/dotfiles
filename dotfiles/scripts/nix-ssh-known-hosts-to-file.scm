@@ -5,7 +5,10 @@
 ;; $ /gnu/store/...-run.scm
 
 (use-modules (guix gexp)
-             (ice-9 format))
+             (ice-9 format)
+             (gnu packages)
+             (guix packages)
+             (guix build-system trivial))
 
 (define flake
   "git+https://gitlab.corp1.majordomo.ru/nixos/jenkins")
@@ -22,14 +25,39 @@
        (display "nixosConfigurations.jenkins.config.environment.etc.\"ssh/ssh_known_hosts\".text" port)
        (newline port)))))
 
-(program-file "run.scm"
-              #~(begin
-                  (use-modules (ice-9 popen)
-                               (ice-9 rdelim))
-                  (let* ((port (open-pipe* OPEN_READ
-                                           "nix" "eval" "--raw"
-                                           "--file" #$nix-expression-file))
-                         (output (read-string port)))
-                    (close-port port)
-                    (display (string-trim-right output #\newline)))))
+(define (package-from-program-file foo)
+  (package
+    (name (program-file-name foo))
+    (version "0.0.1")
+    (source #f)
+    (build-system trivial-build-system)
+    (arguments
+     (list
+      #:builder
+      #~(begin
+          (mkdir %output)
+          (mkdir (string-append %output "/bin"))
+          (copy-file #$foo
+                     (string-append %output "/bin/" #$(program-file-name foo)))
+          (chmod (string-append %output "/bin/" #$(program-file-name foo))
+                 #o555)
+          #t)))
+    (home-page "")
+    (synopsis "")
+    (description "")
+    (license #f)))
+
+(define my-program
+  (program-file "run.scm"
+                #~(begin
+                    (use-modules (ice-9 popen)
+                                 (ice-9 rdelim))
+                    (let* ((port (open-pipe* OPEN_READ
+                                             "nix" "eval" "--raw"
+                                             "--file" #$nix-expression-file))
+                           (output (read-string port)))
+                      (close-port port)
+                      (display (string-trim-right output #\newline))))))
+
+(package-from-program-file my-program)
 
