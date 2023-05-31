@@ -1,4 +1,6 @@
 (define-module (home config)
+  #:use-module (guix build utils)
+  #:use-module (guix gexp)
   #:export (%home
             %ansible-state-directory
             %connect-program
@@ -13,7 +15,8 @@
   (string-append %home "/ansible-out/files"))
 
 (define %connect-program
-  (string-append %home "/.local/bin/connect"))
+  (local-file "connect"
+              (string-append %home "/.local/share/chezmoi/dot_local/bin/executable_connect")))
 
 (define %project-directory
   (string-append %home "/.local/share/chezmoi"))
