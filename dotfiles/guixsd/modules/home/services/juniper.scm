@@ -1,10 +1,13 @@
 (define-module (home services juniper)
   #:use-module (gnu home services)
   #:use-module (gnu home services mcron)
+  #:use-module (gnu packages ssh)
+  #:use-module (gnu packages version-control)
   #:use-module (guix gexp)
   #:use-module (guix records)
   #:use-module (guix store)
   #:use-module (home config)
+  #:use-module (gnu services mcron)
   #:export (juniper-service-type
 
             juniper-configuration->vc-sr1-mr13-14.intr
@@ -25,7 +28,15 @@
                    (ice-9 popen))
       (let* ((run-command
               (lambda ()
-                (let* ((port (open-pipe* OPEN_READ #$%connect-program #$host #$@command))
+                (let* ((port (open-pipe* OPEN_READ
+                                         #$(file-append sshpass "/bin/sshpass")
+                                         (string-append
+                                          "-p"
+                                          (string-trim-right
+                                           (with-input-from-file "/etc/guix/secrets/juniper"
+                                             read-string)))
+                                         #$(file-append openssh "/bin/ssh")
+                                         #$host "--" #$@command))
                        (output-string (read-string port)))
                   (close-port port)
                   output-string)))
@@ -128,10 +139,16 @@
    (with-imported-modules '((guix build utils))
      #~(begin
          (use-modules (guix build utils))
-         (invoke #$(juniper-configuration->file config))
-         (with-directory-excursion #$%ansible-state-directory
-           (invoke "git" "add" #$(juniper-configuration-host config))
-           (invoke "git" "commit" "--message=Update."))))))
+         (let ((git #$(file-append git "/bin/git"))
+               (pw (getpwnam "oleg")))
+           (setgroups '#())
+           (setgid (passwd:gid pw))
+           (setuid (passwd:uid pw))
+           (setenv "HOME" "/home/oleg") ;do not hardcode
+           (invoke #$(juniper-configuration->file config))
+           (with-directory-excursion #$%ansible-state-directory
+             (invoke git "add" #$(juniper-configuration-host config))
+             (invoke git "commit" "--message=Update.")))))))
 
 (define (juniper-bgp-commands host)
   #~(begin
@@ -244,7 +261,7 @@
   (service-type
    (name 'juniper)
    (extensions
-    (list (service-extension home-mcron-service-type
+    (list (service-extension mcron-service-type
                              juniper-mcron-jobs)))
    (description
     "Periodically run Juniper configuration dump.")

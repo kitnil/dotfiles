@@ -40,6 +40,10 @@ spec:
           subPath: h3c
           readOnly: true
           name: ssh-password
+        - mountPath: /etc/guix/secrets/juniper
+          subPath: juniper
+          readOnly: true
+          name: ssh-password
         - mountPath: /home/oleg/ansible-out
           name: output
       volumes:

@@ -31,7 +31,6 @@
              (home services desktop)
              (home services gdb)
              (home services emacs)
-             (home services juniper)
              (home services mail)
              (home services monitoring)
              (home services nix)
@@ -853,7 +852,6 @@ account default : gmail
               (period "1m")))
 
     (service ansible-playbook-service-type)
-    (service juniper-service-type)
     (service cisco-service-type)
     (service kubernetes-service-type)
     (service billing2-service-type)
