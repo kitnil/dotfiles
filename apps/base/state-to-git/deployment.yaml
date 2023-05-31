@@ -25,9 +25,8 @@ spec:
             memory: 512Mi
         volumeMounts:
         - mountPath: /home/oleg/.ssh/config
-          subPath: config
           readOnly: true
-          name: ssh-configuration
+          name: ssh-config-file
         - mountPath: /home/oleg/.ssh/known_hosts
           subPath: known_hosts
           readOnly: true
@@ -108,3 +107,6 @@ spec:
       - name: cache
         emptyDir:
           sizeLimit: 100M
+      - name: ssh-config-file
+        hostPath:
+          path: /home/oleg/.ssh/config
