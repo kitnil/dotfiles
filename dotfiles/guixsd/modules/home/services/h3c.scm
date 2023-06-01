@@ -2,7 +2,10 @@
   #:use-module (gnu home services)
   #:use-module (gnu home services mcron)
   #:use-module (gnu packages ssh)
+  #:use-module (gnu packages version-control)
+  #:use-module (gnu services mcron)
   #:use-module (guix gexp)
+  #:use-module (guix modules)
   #:use-module (guix store)
   #:use-module (home config)
   #:use-module (guile pass)
@@ -32,12 +35,19 @@
 (define* (h3c-configuration->vc host #:optional ssh?)
   (program-file
    (string-append "h3c-configuration-to-version-control-" host)
-   (with-imported-modules '((guix build utils))
+   (with-imported-modules (append (source-module-closure '((guix utils)))
+                                  '((guix build utils)))
      #~(begin
          (use-modules (guix build utils)
                       (guix utils))
          (let* ((directory (string-append #$%ansible-state-directory "/" #$host "/config"))
-                (file (string-append directory "/h3c.conf")))
+                (file (string-append directory "/h3c.conf"))
+                (git #$(file-append git "/bin/git"))
+                (pw (getpwnam "oleg")))
+           (setgroups '#())
+           (setgid (passwd:gid pw))
+           (setuid (passwd:uid pw))
+           (setenv "HOME" "/home/oleg") ;do not hardcode
            (mkdir-p directory)
            (call-with-output-file (string-append directory "/current-configuration.txt")
              (lambda (port)
@@ -47,10 +57,10 @@
                (display #$(h3c-command host '("show" "interface")) port)))
            (call-with-output-file (string-append directory "/mac.txt")
              (lambda (port)
-               (display #$(h3c-command host '("show" "mac-address")) port))))
-         (with-directory-excursion #$%ansible-state-directory
-           (invoke "git" "add" #$host)
-           (invoke "git" "commit" "--message=Update."))))))
+               (display #$(h3c-command host '("show" "mac-address")) port)))
+           (with-directory-excursion #$%ansible-state-directory
+             (invoke git "add" #$host)
+             (invoke git "commit" "--message=Update.")))))))
 
 (define h3c-configuration->vc-sw4-mr11.intr
   (h3c-configuration->vc "sw4-mr11.intr"))
@@ -83,7 +93,7 @@
   (service-type
    (name 'h3c)
    (extensions
-    (list (service-extension home-mcron-service-type
+    (list (service-extension mcron-service-type
                              h3c-mcron-jobs)))
    (description
     "Periodically run h3c configuration dump.")
