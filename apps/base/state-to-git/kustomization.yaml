@@ -3,7 +3,6 @@ kind: Kustomization
 namespace: state-to-git
 resources:
 - namespace.yaml
-- deployment.yaml
 - job.yaml
 configMapGenerator:
 - name: ssh-configuration
