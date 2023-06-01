@@ -1,6 +1,7 @@
 (define-module (home services h3c)
   #:use-module (gnu home services)
   #:use-module (gnu home services mcron)
+  #:use-module (gnu packages ssh)
   #:use-module (guix gexp)
   #:use-module (guix store)
   #:use-module (home config)
@@ -16,7 +17,12 @@
   #~(begin
       (use-modules (ice-9 rdelim)
                    (ice-9 popen))
-      (let* ((port (open-pipe* OPEN_READ "ssh" #$host "--" #$@command))
+      (let* ((port (open-pipe* OPEN_READ
+                               #$(file-append sshpass "/bin/sshpass")
+                               (string-append "-p"
+                                              #$(pass "show" "majordomo/private/ssh/router"))
+                               #$(file-append openssh "/bin/ssh")
+                               #$host "--" #$@command))
              (output (read-string port)))
         (close-port port)
         output)))
