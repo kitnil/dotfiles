@@ -30,6 +30,17 @@
         (close-port port)
         output)))
 
+(define (git-diff directory)
+  "Return true if differences exist, false otherwise."
+  #~(begin
+      (use-modules (ice-9 rdelim)
+                   (ice-9 popen))
+      (let* ((port (open-pipe* OPEN_READ #$(file-append git "/bin/git")
+                               "diff" directory))
+             (output (read-string port)))
+        (close-port port)
+        (= (string-length output) 0))))
+
 (define* (h3c-configuration->vc host #:optional ssh?)
   (program-file
    (string-append "h3c-configuration-to-version-control-" host)
@@ -57,8 +68,9 @@
              (lambda (port)
                (display #$(h3c-command host '("show" "mac-address")) port)))
            (with-directory-excursion #$%ansible-state-directory
-             (invoke git "add" #$host)
-             (invoke git "commit" "--message=Update.")))))))
+             (when (not #$(git-diff host))
+               (invoke git "add" #$host)
+               (invoke git "commit" "--message=Update."))))))))
 
 (define h3c-configuration->vc-sw4-mr11.intr
   (h3c-configuration->vc "sw4-mr11.intr"))
