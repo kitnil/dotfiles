@@ -167,3 +167,25 @@ home:
 	herd stop root
 	rm -f /run/user/1000/shepherd/socket
 	make install
+
+guix_repository=$(HOME)/src/git.savannah.gnu.org/git/guix
+
+sw4-mr11-container = $(shell set -e; cd $(guix_repository); ./pre-inst-env  guix pack -f docker-layered -S /bin=bin -L "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules" -e '(@ (packages h3c) state-to-vc-sw4-mr11)')
+.PHONY: sw4-mr11
+sw4-mr11:
+	skopeo copy --insecure-policy docker-archive\:$(sw4-mr11-container) docker://docker-registry.wugi.info/monitoring/sw4-mr11
+
+sw4-mr12-container = $(shell set -e; cd $(guix_repository); ./pre-inst-env  guix pack -f docker-layered -S /bin=bin -L "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules" -e '(@ (packages h3c) state-to-vc-sw4-mr12)')
+.PHONY: sw4-mr12
+sw4-mr12:
+	skopeo copy --insecure-policy docker-archive\:$(sw4-mr12-container) docker://docker-registry.wugi.info/monitoring/sw4-mr12
+
+sw4-mr13-container = $(shell set -e; cd $(guix_repository); ./pre-inst-env  guix pack -f docker-layered -S /bin=bin -L "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules" -e '(@ (packages h3c) state-to-vc-sw4-mr13)')
+.PHONY: sw4-mr13
+sw4-mr13:
+	skopeo copy --insecure-policy docker-archive\:$(sw4-mr13-container) docker://docker-registry.wugi.info/monitoring/sw4-mr13
+
+sw4-mr14-container = $(shell set -e; cd $(guix_repository); ./pre-inst-env  guix pack -f docker-layered -S /bin=bin -L "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules" -e '(@ (packages h3c) state-to-vc-sw4-mr14)')
+.PHONY: sw4-mr14
+sw4-mr14:
+	skopeo copy --insecure-policy docker-archive\:$(sw4-mr14-container) docker://docker-registry.wugi.info/monitoring/sw4-mr14
