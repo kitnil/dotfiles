@@ -20,7 +20,9 @@
       (let* ((port (open-pipe* OPEN_READ
                                #$(file-append sshpass "/bin/sshpass")
                                (string-append "-p"
-                                              #$(pass "show" "majordomo/private/ssh/router"))
+                                              (string-trim-right
+                                               (with-input-from-file "/etc/guix/secrets/h3c"
+                                                 read-string)))
                                #$(file-append openssh "/bin/ssh")
                                #$host "--" #$@command))
              (output (read-string port)))
