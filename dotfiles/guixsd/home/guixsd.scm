@@ -877,8 +877,6 @@ account default : gmail
                                          (json builder)
                                          (ice-9 match)
                                          (srfi srfi-41))
-                            (define password-router
-                              (pass "majordomo/public/router4/root"))
 
                             (define majordomo-office
                               '(;; ("Admin-1" "172.16.107.21" "18:c0:4d:f9:c0:b6" "Home segment" "Wired" "100 Mbit/s" "Port 1")
@@ -998,7 +996,6 @@ account default : gmail
                                        #$@%ansible-majordomo-deprecated-webs))
                                      ("vpn"
                                       ("hosts"
-                                       ("router4.intr" . null)
                                        ("ns1-dh.intr" . null)
                                        ("galera-backup.intr" . null)))
                                      ("swarm"
@@ -1010,9 +1007,6 @@ account default : gmail
                                        ("dh1-mr.intr" . null)))
                                      ("router"
                                       ("children"
-                                       ("routers"
-                                        ("vars" ("ansible_ssh_pass" . ,password-router))
-                                        ("hosts" ("router4.intr" . null)))
                                        ("office"
                                         ("hosts"
                                          ("router2.intr" . null)

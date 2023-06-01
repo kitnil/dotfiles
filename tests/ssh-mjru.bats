@@ -27,12 +27,6 @@
     [[ "$output" == *uid=1000* ]]
 }
 
-@test "invoke id command over ssh on router4.intr" {
-    run timeout 30 sshpass -p"$(pass show majordomo/public/router4/root)" ssh -F test-tmp/config -o ControlPath=none router4.intr id
-    [ "$status" -eq 0 ]
-    [[ "$output" == *uid=* ]]
-}
-
 @test "invoke id command over ssh on galera-backup.intr" {
     run timeout 30 ssh -F test-tmp/config -o ControlPath=none galera-backup.intr id
     [ "$status" -eq 0 ]

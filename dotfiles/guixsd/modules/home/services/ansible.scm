@@ -91,23 +91,6 @@
           "copy content='{{ smartctl_result.stdout }}' dest='/home/oleg/ansible-out/files/{{ ansible_hostname }}.intr/smartctl.log'"))))
      ("hosts" . #("kvm" "web")))))
 
-(define %ansible-playbook-mjru-router4.intr
-  #((("tasks"
-      .
-      #((("include_vars" ("file" . "passwords.yml")))
-        (("vars"
-          ("ansible_ssh_pass"
-           .
-           "{{ router4_ansible_become_pass }}"))
-         ("loop" . #("/root/.bash_history"))
-         ("ignore_errors" . "yes")
-         ("fetch"
-          ("src" . "{{ item }}")
-          ("dest" . "/home/oleg/ansible-out/files")))))
-     ("hosts" . "router4.intr")
-     ("gather_facts" . "no")
-     ("become" . "yes"))))
-
 (define %ansible-playbook-mjru-deprecated
   #((("tasks"
       .
@@ -207,26 +190,6 @@
           (ansible-playbook
            (ansible-playbook-configuration
             (playbook %ansible-playbook-mjru-raid)
-            (state-directory
-             (and=> (getenv "HOME")
-                    (lambda (home)
-                      (string-append home "/ansible-out/files"))))
-            (pre-hook
-             #~(begin
-                 (copy-file #$(local-file "passwords.yml") "passwords.yml")
-                 (copy-file "/etc/guix/secrets/ansible" ".pass")))
-            (command
-             #~(invoke #$ansible-playbook-binary "--vault-password-file=.pass" "-e@passwords.yml" "main.json"))
-            (post-hook
-             #~(with-directory-excursion #$state-directory
-                 (invoke #$git-binary "add" "--all")
-                 (invoke #$git-binary "commit" "--message=Update.")))))))
-   #~(job
-      '(next-hour '(18))
-      #$(run-with-store (open-connection)
-          (ansible-playbook
-           (ansible-playbook-configuration
-            (playbook %ansible-playbook-mjru-router4.intr)
             (state-directory
              (and=> (getenv "HOME")
                     (lambda (home)
