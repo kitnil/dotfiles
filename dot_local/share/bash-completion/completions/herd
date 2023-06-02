@@ -1,14 +1,44 @@
-_herd_complete_service(){
+_herd_complete_subcommand()
+{
     local command="${COMP_WORDS[1]}"
-    local services="$(sudo herd status | awk '/*/ || /^ +/ || /^ -/ { print $NF }' | sort -u)"
-    COMPREPLY=($(compgen -W "$services" -- "${COMP_WORDS[$COMP_CWORD]}"))
+    case "$command" in
+        discover)
+            complitions="guix-daemon"
+            COMPREPLY=($(compgen -W "$complitions" -- "${COMP_WORDS[$COMP_CWORD]}"))
+            ;;
+        schedule)
+            complitions="mcron"
+            COMPREPLY=($(compgen -W "$complitions" -- "${COMP_WORDS[$COMP_CWORD]}"))
+            ;;
+        set-http-proxy)
+            complitions="guix-daemon"
+            COMPREPLY=($(compgen -W "$complitions" -- "${COMP_WORDS[$COMP_CWORD]}"))
+            ;;
+        *)
+            local services="$(herd status | grep '^ +\|^ -\| \*' | cut -d ' ' -f3)"
+            COMPREPLY=($(compgen -W "$services" -- "${COMP_WORDS[$COMP_CWORD]}"))
+            ;;
+    esac
+}
+
+_herd_complete_3()
+{
+    local command="${COMP_WORDS[2]}"
+    case "$command" in
+        guix-daemon)
+            complitions="on off"
+            COMPREPLY=($(compgen -W "$complitions" -- "${COMP_WORDS[$COMP_CWORD]}"))
+            ;;
+        *)
+            ;;
+    esac
 }
 
 _herd_is_command ()
 {
     local word
     local result="false"
-    for word in ${COMP_WORDS[*]}t
+    for word in ${COMP_WORDS[*]}
     do
 	if [ "$word" = "$1" ]
 	then
@@ -28,13 +58,24 @@ _herd_complete()
 	    if [ -z "$_herd_subcommands" ]
 	    then
 		# Cache the list of subcommands to speed things up.
-		_herd_subcommands="enable disable start status stop"
+                _herd_subcommands=(
+                    disable
+                    discover
+                    enable
+                    schedule
+                    set-http-proxy
+                    start
+                    status
+                    stop
+                )
+		_herd_subcommands="${_herd_subcommands[@]}"
 	    fi
             COMPREPLY=($(compgen -W "$_herd_subcommands" -- "${COMP_WORDS[$COMP_CWORD]}"))
             ;;
         *)
             case $COMP_CWORD in
-		2) _herd_complete_service;;
+		2) _herd_complete_subcommand;;
+		3) _herd_complete_3;;
 	    esac
             ;;
     esac
