@@ -211,6 +211,16 @@ bindsym $mod+y exec clipman pick -t wofi
     bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 
 #
+# Screenshots:
+#
+
+    # capture all screens
+    bindsym Print exec grim -t png
+
+    # capture the specified screen area
+    bindsym Ctrl+Print exec grim -g "$(slurp -d)" -t png
+
+#
 # Resizing containers:
 #
 mode "resize" {
