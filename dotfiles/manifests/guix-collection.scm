@@ -29,8 +29,7 @@ virtualization vnc vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
 
 (define %large-packages
   (list ;; libreoffice
-        nyxt
-        python-pyqt-without-qtwebkit))
+        nyxt))
 
 (define %spelling-packages
   (list aspell aspell-dict-en aspell-dict-ru))
@@ -66,7 +65,9 @@ virtualization vnc vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
 
                autojump
                jq jo jtbl
-               nmap hosts hss
+               nmap
+               ;; hosts ;TODO: Fix build failure.
+               hss
 
                dmidecode
                lm-sensors
@@ -116,8 +117,8 @@ virtualization vnc vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
                aria2        ; Download utility
                ;; kodi
                kodi-cli     ; Remote control Kodi
-               transmission ; Bittorrent
-               qbittorrent
+               ;; transmission ; Bittorrent
+               ;; qbittorrent
 
                mps-youtube
                streamlink
@@ -248,7 +249,7 @@ virtualization vnc vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
 
                lvm2 cdrkit-libre samba ubridge
 
-               python-pyqt-without-qtwebkit python-pymongo
+               python-pymongo
                python-evdev
 
                mariadb redis

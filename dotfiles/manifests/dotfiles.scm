@@ -3,9 +3,7 @@
              (packages networking))
 
 (packages->manifest
- (list cisco
-
-       plumber
+ (list plumber
 
        k3d
        k9s
@@ -13,4 +11,5 @@
        kubectl
        kubernetes-helm
        nerdctl
-       virtctl))
+       ;; virtctl ;TODO: Failed to build.
+       ))

@@ -16,7 +16,7 @@
  emacs-perl-live
  emacs-psysh
  emacs-redshift
- ruby-gitlab
+ ;; ruby-gitlab
  dynamips ;gns3 requirement
  ungoogled-chromium
 

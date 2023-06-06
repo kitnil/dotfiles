@@ -116,16 +116,20 @@ Section \"Device\"
    Option      \"TearFree\" \"true\"
 EndSection\n")
 
+(define stumpwm
+  (@ (gnu packages wm) stumpwm))
+
 (define %stumpwm-packages
   (list sbcl
 
-        stumpwm-checkout `(,stumpwm-checkout "lib")
-        sbcl-stumpwm-checkout-ttf-fonts
-        sbcl-stumpwm-checkout-globalwindows
-        sbcl-stumpwm-checkout-swm-gaps
-        sbcl-stumpwm-checkout-stumptray
+        stumpwm `(,stumpwm "lib")
+        sbcl-stumpwm-ttf-fonts
+        sbcl-stumpwm-globalwindows
+        sbcl-stumpwm-swm-gaps
+        sbcl-stumpwm-stumptray
         sbcl-slime-swank
-        stumpish))
+        stumpish
+        ))
 
 (define %font-packages
   (list fontconfig font-awesome font-dejavu font-liberation

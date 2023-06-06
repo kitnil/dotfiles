@@ -29,7 +29,7 @@
                 "0cp1x5k7fzsgk794pr5jxfdxsz8fgjpzzr2wfvzf9ndjdz9s6wwb"))))
     (build-system trivial-build-system)
     (inputs
-     (list bash-minimal gzip tar glibc-2.31 patchelf))
+     (list bash-minimal gzip tar glibc patchelf))
     (arguments
      `(#:modules ((guix build utils))
        #:builder

@@ -16,8 +16,7 @@
   #:use-module (guix build-system trivial)
   #:use-module (guix gexp)
   #:use-module (ice-9 match)
-  #:use-module (nonguix licenses)
-  #:use-module (nongnu packages linux))
+  #:use-module (nonguix licenses))
 
 (define linux-libre-deblob-scripts
   (@@ (gnu packages linux) linux-libre-deblob-scripts))
@@ -77,6 +76,26 @@
                      linux-libre-5.13-source
                      '("x86_64-linux" "i686-linux" "armhf-linux" "aarch64-linux" "riscv64-linux")
                      #:configuration-file kernel-config))
+
+(define (linux-urls version)
+  "Return a list of URLS for Linux VERSION."
+  (list (string-append "https://www.kernel.org/pub/linux/kernel/v"
+                       (version-major version) ".x/linux-" version ".tar.xz")))
+
+(define* (corrupt-linux freedo version hash #:key (name "linux"))
+  (package
+    (inherit freedo)
+    (name name)
+    (version version)
+    (source (origin
+              (method url-fetch)
+              (uri (linux-urls version))
+              (sha256 (base32 hash))))
+    (home-page "https://www.kernel.org/")
+    (synopsis "Linux kernel with nonfree binary blobs included")
+    (description
+     "The unmodified Linux kernel, including nonfree blobs, for running Guix
+System on hardware which requires nonfree software to function.")))
 
 (define-public linux-5.13
   (corrupt-linux linux-libre-5.13 "5.13.16"

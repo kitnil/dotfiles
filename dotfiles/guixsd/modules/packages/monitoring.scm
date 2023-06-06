@@ -442,7 +442,7 @@ binary and provides LV's size and LV's free space as a Prometheus metrics.")
 (define-public prometheus-restic-exporter
   (package
     (name "prometheus-restic-exporter")
-    (version "0.0.1")
+    (version "1.0.0")
     (source
      (origin
        (method url-fetch)

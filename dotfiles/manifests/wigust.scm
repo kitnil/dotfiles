@@ -7,7 +7,6 @@
              (wigust packages emacs)
              (wigust packages games)
              (wigust packages guix)
-             (wigust packages password-utils)
              (wigust packages pspg)
              (wigust packages pulseaudio)
              (wigust packages python)
@@ -59,11 +58,11 @@
 
   virt-manager-fullscreen
 
-  y2rss
+  ;; y2rss
 
   ;; TODO: Fix pulsemixer-emacs-keybindings
 
-  ruby-gitlab
+  ;; ruby-gitlab
 
   ;; XXX: Failed to build python-starred ; Fetch a list of stars from GitHub user
 
