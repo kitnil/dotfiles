@@ -11,6 +11,7 @@ certificates:
 prometheus:
   metricServer:
     enabled: true
+    level: 4 # debug
     serviceMonitor:
       # Enables ServiceMonitor creation for the Prometheus Operator
       enabled: true
