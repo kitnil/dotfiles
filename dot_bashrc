@@ -2089,6 +2089,13 @@ EOF
                 --help)
                     echo TMUXIFIER_KUBERNETES_NAMESPACE=cert-manager kubectl tmuxifier mjru-cluster2
                     ;;
+                mjru-cluster1-view)
+                    flake="git+https://gitlab.intr/nixos/kubernetes#kubeconfig-view"
+                    nix build --no-link "$flake"
+                    TMUXIFIER_TMUX_OPTS="-L kubernetes-cluster1-view" \
+                                       KUBECONFIG="$(nix path-info "$flake")/.kube/config" \
+                                       tmuxifier s kubernetes
+                    ;;
                 mjru-cluster1)
                     TMUXIFIER_TMUX_OPTS="-L kubernetes-cluster1" \
                                        KUBECONFIG="${HOME}/.kube/config-mjru-cluster1" \

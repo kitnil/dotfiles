@@ -3,6 +3,9 @@
 session_root "~/src/gitlab.intr/nixos/kubernetes"
 
 case "$KUBECONFIG" in
+    /nix/store/*-config/.kube/config)
+        session="cluster1-view"
+        ;;
     $HOME/.kube/config-mjru-cluster1)
         session="cluster1"
         ;;
