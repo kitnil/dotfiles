@@ -6,10 +6,9 @@ spec:
   chart:
     spec:
       chart: keda
-      reconcileStrategy: ChartVersion
-      version: 2.10.2
+      reconcileStrategy: Revision
       sourceRef:
-        kind: HelmRepository
+        kind: GitRepository
         name: kedacore
         namespace: flux-system
   interval: 1m0s

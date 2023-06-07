@@ -1,9 +1,11 @@
 ---
 apiVersion: source.toolkit.fluxcd.io/v1beta2
-kind: HelmRepository
+kind: GitRepository
 metadata:
   name: kedacore
   namespace: flux-system
 spec:
   interval: 60m0s
-  url: https://kedacore.github.io/charts
+  ref:
+    commit: 502980f426a585d0e2725250c0b9eaecc3d98c2e
+  url: https://github.com/kedacore/charts
