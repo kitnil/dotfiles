@@ -28,6 +28,17 @@ $(kubectl get -n "$namespace" scaledobjects)
 EOF
         fi
         case "$KUBECONFIG" in
+            *config-mjru-cluster1)
+                PROMETHEUS_URL=https://prometheus.kubernetes.corp1.majordomo.ru
+                ;;
+            *config-mjru-cluster2)
+                PROMETHEUS_URL=https://prometheus.kubernetes.corp2.majordomo.ru
+                ;;
+            *config-home-k8s)
+                PROMETHEUS_URL=https://prometheus.kubernetes.home.wugi.info
+                ;;
+        esac
+        case "$KUBECONFIG" in
             *config-mjru-*)
                 cat <<EOF
 $ git ls-remote https://gitlab.corp1.majordomo.ru/cd/fluxcd.git master
@@ -41,21 +52,20 @@ $ git ls-remote https://gitlab.com/wigust/dotfiles.git master
 $(git ls-remote https://gitlab.com/wigust/dotfiles.git master)
 
 EOF
-                PROMETHEUS_URL=https://prometheus.kubernetes.home.wugi.info
-                if kubectl get -n "$namespace" scaledobjects &> /dev/null
-                then
-                    mapfile -t queries < <(kubectl get -n "$namespace" scaledobjects "${namespace}-scaledobject" -o json | jq --raw-output '.spec.triggers[] | .metadata.query')
-                    for query in "${queries[@]}"
-                    do
-                        cat <<EOF
+                ;;
+        esac
+        if kubectl get -n "$namespace" scaledobjects &> /dev/null
+        then
+            mapfile -t queries < <(kubectl get -n "$namespace" scaledobjects "${namespace}-scaledobject" -o json | jq --raw-output '.spec.triggers[] | .metadata.query')
+            for query in "${queries[@]}"
+            do
+                cat <<EOF
 query: ${query}
 $(echo "$query" | curl --silent --get "${PROMETHEUS_URL}/api/v1/query" --data-urlencode query@-)
 
 EOF
-                    done
-                fi
-                ;;
-        esac
+            done
+        fi
         cat <<EOF
 $ kubectl get -n flux-system gitrepositories.source.toolkit.fluxcd.io flux-system
 $(kubectl get -n flux-system gitrepositories.source.toolkit.fluxcd.io flux-system)
