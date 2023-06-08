@@ -13,7 +13,8 @@
   kubernetes-cluster-configuration?
   (name kubernetes-cluster-configuration-name) ;string
   (config-file kubernetes-cluster-configuration-config-file) ;string
-  )
+  (output-directory kubernetes-cluster-configuration-output-directory ;string
+                    ))
 
 (define (kubernetes-configuration->vc config)
   (program-file
@@ -33,7 +34,7 @@
                 (%home (and=> (getenv "HOME")
                               (lambda (home)
                                 home)))
-                (directory (string-append #$%ansible-state-directory "/"
+                (directory (string-append #$(kubernetes-cluster-configuration-output-directory config) "/"
                                           kubernetes-directory)))
            (mkdir-p directory)
            (with-directory-excursion directory
@@ -48,7 +49,7 @@
                    "-d" "/dump"
                    "--kube-config"
                    #$(string-append "/.kube/" (kubernetes-cluster-configuration-config-file config)))
-           (with-directory-excursion #$%ansible-state-directory
+           (with-directory-excursion #$(kubernetes-cluster-configuration-output-directory config)
              (invoke "git" "add" kubernetes-directory)
              (invoke "git" "commit" "--message=Update.")))))))
 
@@ -59,13 +60,22 @@
       #$(kubernetes-configuration->vc
          (kubernetes-cluster-configuration
           (name "cluster1")
-          (config-file "config-mjru-cluster1"))))
+          (config-file "config-mjru-cluster1")
+          (output-directory %ansible-state-directory))))
    #~(job
       '(next-hour '(16))
       #$(kubernetes-configuration->vc
          (kubernetes-cluster-configuration
           (name "cluster2")
-          (config-file "config-mjru-cluster2"))))))
+          (config-file "config-mjru-cluster2")
+          (output-directory %ansible-state-directory))))
+   #~(job
+      '(next-hour '(17))
+      #$(kubernetes-configuration->vc
+         (kubernetes-cluster-configuration
+          (name "home")
+          (config-file "config-home-k8s")
+          (output-directory "/home/oleg/src/cgit.duckdns.org/wigust/state-kubernetes-home"))))))
 
 (define kubernetes-service-type
   (service-type
