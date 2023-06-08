@@ -143,6 +143,21 @@ $(kubectl get endpoints --namespace "$namespace" -o wide)
 $ kubectl get ingress --namespace "$namespace" -o wide
 $(kubectl get ingress --namespace "$namespace" -o wide)
 
+EOF
+        if kubectl get -n "$namespace" ingress &> /dev/null
+        then
+            mapfile -t hosts < <(kubectl -n "$namespace" get ingress -o json | jq --raw-output '.items[] | .spec.rules[] | .host' | sort -u)
+            for host in "${hosts[@]}"
+            do
+                query="probe_http_status_code{instance=\"https://${host}/\"}"
+                cat <<EOF
+query: ${query}
+$(echo "$query" | curl --silent --get "${PROMETHEUS_URL}/api/v1/query" --data-urlencode query@-)
+
+EOF
+            done
+        fi
+        cat <<EOF
 $ kubectl get --namespace "$namespace" certificates -o wide
 $(kubectl get --namespace "$namespace" certificates -o wide)
 
