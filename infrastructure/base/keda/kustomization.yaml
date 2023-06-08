@@ -5,6 +5,7 @@ resources:
 - namespace.yaml
 - release.yaml
 - keda-add-ons-http
+- clusterrolebinding.yaml
 configMapGenerator:
 - name: keda-values
   files:
