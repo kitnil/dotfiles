@@ -40,7 +40,6 @@ if initialize_session "$session"; then
       load_window "kubernetes-kube-system"
       load_window "kubernetes-flux-system"
       load_window "kubernetes-pods"
-      load_window "kubernetes-flux-logs"
       load_window "kubernetes-cilium"
       load_window "kubernetes-cert-manager-logs"
       load_window "kubernetes-piraeus"
