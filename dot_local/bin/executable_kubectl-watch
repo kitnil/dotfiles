@@ -30,12 +30,18 @@ EOF
         case "$KUBECONFIG" in
             *config-mjru-cluster1)
                 PROMETHEUS_URL=https://prometheus.kubernetes.corp1.majordomo.ru
+                OPENSEARCH_ENDPOINT="https://opensearch.corp1.majordomo.ru:9200"
+                OPENSEARCH_PASSWORD="$(pass show majordomo/public/opensearch-dashboards/admin)"
                 ;;
             *config-mjru-cluster2)
                 PROMETHEUS_URL=https://prometheus.kubernetes.corp2.majordomo.ru
+                OPENSEARCH_ENDPOINT="https://opensearch.corp2.majordomo.ru:9200"
+                OPENSEARCH_PASSWORD="$(pass show majordomo/public/opensearch-dashboards/admin)"
                 ;;
             *config-home-k8s)
                 PROMETHEUS_URL=https://prometheus.kubernetes.home.wugi.info
+                OPENSEARCH_ENDPOINT="https://node-0.example.com:9200"
+                OPENSEARCH_PASSWORD="$(pass show localhost/opensearch-dashboards/admin)"
                 ;;
         esac
         case "$KUBECONFIG" in
@@ -179,15 +185,16 @@ EOF
 
         if [[ $namespace == "opensearch" ]]
         then
-            OPENSEARCH_ENDPOINT="https://opensearch.corp1.majordomo.ru:9200"
-            OPENSEARCH_PASSWORD="$(pass show majordomo/public/opensearch-dashboards/admin)"
             cat <<EOF
 
 $ curl --insecure --silent --user "admin:PASSWORD" "${OPENSEARCH_ENDPOINT}/_cat/indices?v&pretty"
-$(curl --insecure --silent --user "admin:${OPENSEARCH_PASSWORD}" "${OPENSEARCH_ENDPOINT}/_cat/indices?v&pretty" | awk 'NR<3{print $0;next}{print $0| "sort --key=2 --version-sort"}')
+$(command curl --insecure --silent --user "admin:${OPENSEARCH_PASSWORD}" "${OPENSEARCH_ENDPOINT}/_cat/indices?v&pretty" | awk 'NR<3{print $0;next}{print $0| "sort --key=2 --version-sort"}')
 
 $ curl --insecure --silent --user "admin:PASSWORD" "${OPENSEARCH_ENDPOINT}/_cat/shards?pretty"
-$(curl --insecure --silent --user "admin:${OPENSEARCH_PASSWORD}" "${OPENSEARCH_ENDPOINT}/_cat/shards?pretty" | awk 'NR<3{print $0;next}{print $0| "sort --version-sort"}')
+$(command curl --insecure --silent --user "admin:${OPENSEARCH_PASSWORD}" "${OPENSEARCH_ENDPOINT}/_cat/shards?pretty" | awk 'NR<3{print $0;next}{print $0| "sort --version-sort"}')
+
+$ curl --header 'Content-Type: application/json' --insecure --silent --user "admin:PASSWORD" --data '{"query": {"match_all": {}}}' "${OPENSEARCH_ENDPOINT}/logstash-*/_search?pretty" | jq --raw-output '.hits.hits[] | ._source.log'
+$(command curl --header 'Content-Type: application/json' --insecure --silent --user "admin:${OPENSEARCH_PASSWORD}" --data '{"query": {"match_all": {}}}' "${OPENSEARCH_ENDPOINT}/logstash-*/_search?pretty" | jq --raw-output '.hits.hits[] | ._source.log')
 EOF
         fi
     }
