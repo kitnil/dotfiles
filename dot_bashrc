@@ -2305,6 +2305,51 @@ curl()
     fi
 }
 
+dig()
+{
+    for var in "$@"
+    do
+        case "$var" in
+            *majordomo.ru|*.intr|172.16.*|*pwhost.ru|*fast-name.ru|*host-support.ru|*litename.ru|*vipname.su)
+                name_servers=(
+                    ns1-mr.intr
+                    ns2-mr.intr
+                    ns1-dh.intr
+                    ns2-dh.intr
+                    ns.majordomo.ru
+                    ns2.majordomo.ru
+                    ns3.majordomo.ru
+                    ns4.majordomo.ru
+                    ns1.corp1.majordomo.ru
+                    ns2.corp2.majordomo.ru
+                    ns1.svc1.majordomo.ru
+                    ns2.svc2.majordomo.ru
+                    ns1.corp2.majordomo.ru
+                    ns2.corp2.majordomo.ru
+                    ns1.svc2.majordomo.ru
+                    ns2.svc2.majordomo.ru
+                    8.8.8.8
+                    8.8.4.4
+                )
+                (
+                    set -x
+                    command dig "$@"
+                )
+                for name_server in "${name_servers[@]}"
+                do
+                    (
+                        set -x
+                        command dig "$@" "@${name_server}"
+                    )
+                done
+                ;;
+            *)
+                command dig "$@"
+                ;;
+        esac
+    done
+}
+
 scream()
 {
     case "$1" in
