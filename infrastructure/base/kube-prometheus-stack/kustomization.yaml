@@ -41,6 +41,9 @@ configMapGenerator:
 - name: kube-prometheus-stack-grafana-dashboards-restic
   files:
   - restic.json=grafana/dashboards/restic/restic-dashboard.json
+- name: kube-prometheus-stack-grafana-dashboards-windows-exporter
+  files:
+  - windows-exporter.json=grafana/dashboards/windows-exporter/windows-exporter-dashboard.json
 patchesStrategicMerge:
 - grafana/dashboards/nginx/configmap.yaml
 - grafana/dashboards/linstor/configmap.yaml
@@ -53,5 +56,6 @@ patchesStrategicMerge:
 - grafana/dashboards/network-interfaces/configmap.yaml
 - grafana/dashboards/lvm/configmap.yaml
 - grafana/dashboards/restic/configmap.yaml
+- grafana/dashboards/windows-exporter/configmap.yaml
 configurations:
 - kustomizeconfig.yaml
