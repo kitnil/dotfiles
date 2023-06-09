@@ -35,6 +35,9 @@ configMapGenerator:
 - name: kube-prometheus-stack-grafana-dashboards-network-interfaces
   files:
   - network-interfaces-dashboard.json=grafana/dashboards/network-interfaces/network-interfaces-dashboard.json
+- name: kube-prometheus-stack-grafana-dashboards-lvm
+  files:
+  - lvm.json=grafana/dashboards/lvm/lvm-dashboard.json
 patchesStrategicMerge:
 - grafana/dashboards/nginx/configmap.yaml
 - grafana/dashboards/linstor/configmap.yaml
@@ -45,5 +48,6 @@ patchesStrategicMerge:
 - grafana/dashboards/node-exporter/configmap.yaml
 - grafana/dashboards/keda/configmap.yaml
 - grafana/dashboards/network-interfaces/configmap.yaml
+- grafana/dashboards/lvm/configmap.yaml
 configurations:
 - kustomizeconfig.yaml
