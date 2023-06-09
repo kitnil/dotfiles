@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: opensearch-configure
+spec:
+  template:
+    spec:
+      containers:
+      - name: opensearch-configure
+        image: nixery.dev/shell/curl/jq
+        command: ["/bin/bash"]
+        args: ["/usr/local/bin/script.sh"]
+        volumeMounts:
+        - mountPath: /usr/local/bin
+          name: scripts
+      volumes:
+      - name: scripts
+        configMap:
+          name: opensearch-scripts
+      restartPolicy: Never
+  backoffLimit: 0
