@@ -2362,6 +2362,17 @@ EOF
     esac
 }
 
+kresd()
+{
+    case "$1" in
+        clear)
+            sudo socat - "UNIX-CONNECT:/var/cache/knot-resolver/control/$(pidof kresd)" <<< 'cache.clear()'
+            ;;
+        *)
+            command kresd "$@"
+    esac
+}
+
 sudo()
 {
     case "$1" in
