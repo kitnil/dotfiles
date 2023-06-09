@@ -201,6 +201,18 @@ EOF
     then
         viddy_args+=("--max-history=${KUBECTL_WATCH_HISTORY:-10}")
     fi
-    tmux rename-window "$namespace"
+    tmux_window_name="$(tmux display-message -p '#W')"
+    if [[ $tmux_window_name == bash ]]
+    then
+        tmux rename-window "$namespace"
+    fi
     viddy "${viddy_args[@]}" viddy_command
+    # XXX: Dirty hack and has issue that requires to run twice because of
+    # racing with tmuxifier.
+    if [[ $(tmux display-message -p '#W') == main ]]
+    then
+        tmux rename-window "bash"
+    else
+        tmux rename-window "$tmux_window_name"
+    fi
 fi
