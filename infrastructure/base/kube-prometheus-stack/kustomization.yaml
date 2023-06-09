@@ -38,6 +38,9 @@ configMapGenerator:
 - name: kube-prometheus-stack-grafana-dashboards-lvm
   files:
   - lvm.json=grafana/dashboards/lvm/lvm-dashboard.json
+- name: kube-prometheus-stack-grafana-dashboards-restic
+  files:
+  - restic.json=grafana/dashboards/restic/restic-dashboard.json
 patchesStrategicMerge:
 - grafana/dashboards/nginx/configmap.yaml
 - grafana/dashboards/linstor/configmap.yaml
@@ -49,5 +52,6 @@ patchesStrategicMerge:
 - grafana/dashboards/keda/configmap.yaml
 - grafana/dashboards/network-interfaces/configmap.yaml
 - grafana/dashboards/lvm/configmap.yaml
+- grafana/dashboards/restic/configmap.yaml
 configurations:
 - kustomizeconfig.yaml
