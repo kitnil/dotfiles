@@ -24,6 +24,8 @@ esac
 # argument is given, session name will be based on layout file name.
 if initialize_session "$session"; then
 
+  run_cmd "tmux set-option mouse on"
+
   # Create a new window inline within session layout definition.
   new_window "main"
   run_cmd "nix-shell"
