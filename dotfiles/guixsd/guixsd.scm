@@ -1480,8 +1480,6 @@ location / {
                                       ("Listen" . #())
                                       ("InterfacePeers" . null)))))
 
-                         (service grafana-service-type)
-
                          (service prometheus-alertmanager-service-type
                                   (prometheus-alertmanager-configuration
                                    (listen-address "127.0.0.1:9093")
