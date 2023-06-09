@@ -17,6 +17,9 @@ configMapGenerator:
 - name: kube-prometheus-stack-grafana-dashboards-qbittorrent
   files:
   - qbittorrent-drbd.json=grafana/dashboards/qbittorrent/qbittorrent-dashboard_rev4.json
+- name: kube-prometheus-stack-grafana-dashboards-node-exporter
+  files:
+  - node-exporter-full.json=grafana/dashboards/node-exporter/node-exporter-full.json
 - name: kube-prometheus-stack-grafana-dashboards-keda
   files:
   - keda-dashboard.json=grafana/dashboards/keda/keda-dashboard.json
@@ -24,6 +27,7 @@ patchesStrategicMerge:
 - grafana/dashboards/nginx/configmap.yaml
 - grafana/dashboards/linstor/configmap.yaml
 - grafana/dashboards/qbittorrent/configmap.yaml
+- grafana/dashboards/node-exporter/configmap.yaml
 - grafana/dashboards/keda/configmap.yaml
 configurations:
 - kustomizeconfig.yaml
