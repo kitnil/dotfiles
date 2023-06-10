@@ -394,7 +394,10 @@
      (eval modify-syntax-entry 126 "'")
      (bug-reference-bug-regexp . "<https?://\\(debbugs\\|bugs\\)\\.gnu\\.org/\\([0-9]+\\)>")))
  '(tramp-default-method "ssh")
- '(warning-suppress-types '((comp))))
+ '(warning-suppress-types
+   '(((defvaralias losing-value geiser-debug-show-debug-p))
+     (emacs)
+     (comp))))
 
 (put 'list-timers 'disabled nil)
 
