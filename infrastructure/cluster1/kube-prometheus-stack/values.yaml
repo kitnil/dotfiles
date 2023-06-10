@@ -69,3 +69,13 @@ prometheus-node-exporter:
             operator: NotIn
             values:
             - "windows"
+
+kubeScheduler:
+  endpoints:
+  - 192.168.154.131
+  service:
+    port: 10251
+    targetPort: 10251
+  serviceMonitor:
+    https: 'true'
+    insecureSkipVerify: 'true'
