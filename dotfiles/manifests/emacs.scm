@@ -15,6 +15,7 @@
        emacs-add-hooks
        emacs-ag
        emacs-aggressive-indent  ; Auto indent minor mode
+       emacs-all-the-icons
        emacs-ansible-doc
        emacs-auto-yasnippet
        emacs-bbdb
