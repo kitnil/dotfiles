@@ -39,10 +39,10 @@ nodeExporter:
     listenOnAllInterfaces: false
 
 coreDns:
-  enabled: false
-
-kubeDns:
   enabled: true
+  service:
+    port: 10055
+    targetPort: 10055
 
 grafana:
   grafana.ini:
