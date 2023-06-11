@@ -52,6 +52,8 @@
                           ,(local-file (string-append %project-directory "/dot_tmuxifier-layouts/kubernetes-flux-system.window.sh")))
                         `(".tmuxifier-layouts/kubernetes-kube-system.window.sh"
                           ,(local-file (string-append %project-directory "/dot_tmuxifier-layouts/kubernetes-kube-system.window.sh")))
+                        `(".tmuxifier-layouts/kubernetes-monitoring.window.sh"
+                          ,(local-file (string-append %project-directory "/dot_tmuxifier-layouts/kubernetes-monitoring.window.sh")))
                         `(".tmuxifier-layouts/kubernetes-piraeus.window.sh"
                           ,(local-file (string-append %project-directory "/dot_tmuxifier-layouts/kubernetes-piraeus.window.sh")))
                         `(".tmuxifier-layouts/kubernetes-pods.window.sh"
