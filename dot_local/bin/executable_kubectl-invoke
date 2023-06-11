@@ -46,6 +46,9 @@
 (define %default-options
   '(()))
 
+(define (random-string)
+  (fold string-append "" (map number->string (map random (cdr (iota 19))))))
+
 (define (main args)
   (define opts
     (parse-command-line args %options
@@ -99,7 +102,7 @@
                               ("kubernetes.io/hostname" . ,host)))
                             ("apiVersion" . "v1"))))))
                       '())
-                "busybox"
+                ,(string-append "busybox-" (random-string))
                 "--image=busybox"
                 "/bin/sh"))))
     ((nixery)
@@ -139,7 +142,7 @@
                               ("kubernetes.io/hostname" . ,host)))
                             ("apiVersion" . "v1"))))))
                       '())
-                "nixery"
+                ,(string-append "nixery-" (random-string))
                 ,(string-append "--image=" (if image image "nixery.dev/shell"))
                 "/bin/bash"))))
     ((netshoot)
@@ -179,7 +182,7 @@
                               ("kubernetes.io/hostname" . ,host)))
                             ("apiVersion" . "v1"))))))
                       '())
-                "netshoot"
+                ,(string-append "netshoot-" (random-string))
                 "--image=nicolaka/netshoot"
                 "/bin/bash"))))
     ((nanoserver)
@@ -219,7 +222,7 @@
                               ("kubernetes.io/hostname" . ,host)))
                             ("apiVersion" . "v1"))))))
                       '())
-                "nanoserver"
+                ,(string-append "nanoserver-" (random-string))
                 "--image=mcr.microsoft.com/windows/nanoserver:ltsc2022"))))
     ((shell)
      (let ((labels '(("app.kubernetes.io/name" . "nsenter"))))
@@ -309,4 +312,4 @@
                              ("nodeName" . ,host)))))))
                       '())
                 "--image=docker.io/library/alpine"
-                "shell"))))))
+                ,(string-append "shell-" (random-string))))))))
