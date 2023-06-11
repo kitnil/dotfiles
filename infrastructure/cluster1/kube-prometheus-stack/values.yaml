@@ -89,3 +89,7 @@ kubeScheduler:
   serviceMonitor:
     https: 'true'
     insecureSkipVerify: 'true'
+
+kubeEtcd:
+  endpoints:
+  - 192.168.154.131
