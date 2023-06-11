@@ -196,6 +196,26 @@ $ kubectl get events --namespace "$namespace" -o wide
 $(kubectl get events --namespace "$namespace" -o wide)
 EOF
 
+        if [[ $namespace == "elasticsearch" ]]
+        then
+            cat <<EOF
+$ curl --silent -XGET http://172.16.103.101:9200/_cluster/health?pretty
+$(curl --silent -XGET http://172.16.103.101:9200/_cluster/health?pretty)
+
+$ curl --silent -XGET 'http://es.intr:9200/_cat/allocation?v'
+$(curl --silent -XGET 'http://es.intr:9200/_cat/allocation?v')
+
+$ elasticsearch shards
+$(elasticsearch shards)
+
+# logs
+ssh -q fluentd.intr sudo tail -f /home/jenkins/es-curator/curator.log
+ssh -q kvm15.intr journalctl -u elasticsearch.service -f | grep -vF '[max_concurrent_shard_requests] is not supported in the metadata section and will be rejected in 7.x'
+ssh -q fluentd.intr sudo docker logs --tail 10 -f elk_elasticsearch_1 | grep -vF '[max_concurrent_shard_requests] is not supported in the metadata section and will be rejected in 7.x'
+ssh -q staff.intr journalctl -u elasticsearch.service -f | grep -vF '[max_concurrent_shard_requests] is not supported in the metadata section and will be rejected in 7.x'
+EOF
+        fi
+
         if [[ $namespace == "opensearch" ]]
         then
             cat <<EOF
