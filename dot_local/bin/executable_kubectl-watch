@@ -139,6 +139,16 @@ $(kubectl get --all-namespaces helmreleases.helm.toolkit.fluxcd.io)
 
 EOF
         fi
+
+        if [[ $namespace == "hms-vm-"* ]]
+        then
+            mongo_id="$(echo ${namespace/hms-vm-/})"
+            cat <<EOF
+$ curl "https://api.majordomo.ru/virtual-private-server/debug-kubernetes/${mongo_id}"
+$(bash -ic "curl 'https://api.majordomo.ru/virtual-private-server/debug-kubernetes/${mongo_id}'")
+EOF
+        fi
+
         cat <<EOF
 $ kubectl get all --namespace "$namespace" -o wide
 $(kubectl get all --namespace "$namespace" -o wide)
