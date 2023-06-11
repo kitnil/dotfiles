@@ -230,6 +230,47 @@ $ curl --header 'Content-Type: application/json' --insecure --silent --user "adm
 $(command curl --header 'Content-Type: application/json' --insecure --silent --user "admin:${OPENSEARCH_PASSWORD}" --data '{"query": {"match_all": {}}}' "${OPENSEARCH_ENDPOINT}/logstash-*/_search?pretty" | jq --raw-output '.hits.hits[] | ._source.log')
 EOF
         fi
+
+        if [[ $namespace == "redis" ]]
+        then
+            cat <<EOF
+$ dig redis.intr
+$(bash -ic "dig redis.intr 2>&1")
+
+Listing All Databases
+
+In the first place, the number of databases in Redis is fixed. Therefore, we
+can extract this information from the configuration file with a simple grep
+command:
+
+$ redis-cli -h redis.intr CONFIG GET databases
+$(redis-cli -h redis.intr CONFIG GET databases)
+
+Listing All Databases With Entries
+
+Sometimes we'll want to get more information about the databases that contain
+keys. In order to do that, we can take advantage of the Redis INFO command,
+used to get information and statistics about the server. Here, we specifically
+want to focus our attention in the keyspace section, which contains
+database-related data:
+
+$ redis-cli -h redis.intr INFO keyspace
+$(redis-cli -h redis.intr INFO keyspace)
+
+The output lists the databases containing at least one key, along with a few
+statistics:
+
+- number of keys contained
+- number of keys with expiration
+- keys' average time-to-live
+
+$ redis-cli -h redis.intr INFO
+$(redis-cli -h redis.intr INFO)
+
+$ redis-cli -h redis.intr CLIENT LIST
+$(redis-cli -h redis.intr CLIENT LIST)
+EOF
+        fi
     }
     export -f viddy_command
     viddy_args=(
