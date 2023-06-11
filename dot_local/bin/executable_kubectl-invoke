@@ -62,6 +62,46 @@
   (define memory (assoc-ref opts 'memory))
   (define image (assoc-ref opts 'image))
   (case (string->symbol format)
+    ((busybox)
+     (let ((labels '(("app.kubernetes.io/name" . "busybox"))))
+       (apply system*
+              `(,@(if dry-run? '("echo") '())
+                "kubectl"
+                "run"
+                "--rm=true"
+                "--stdin=true"
+                "--tty=true"
+                ,@(if namespace
+                      (list (string-append "--namespace=" namespace))
+                      '())
+                ,(string-append "--labels="
+                                (string-join
+                                 (map (lambda (label)
+                                        (string-append (first label)
+                                                       "="
+                                                       (cdr label)))
+                                      labels)
+                                 ","))
+                ,@(if host
+                      (list
+                       (string-concatenate
+                        (list
+                         "--overrides="
+                         (scm->json-string
+                          `(("spec"
+                             ("tolerations"
+                              .
+                              #((("effect" . "NoSchedule")
+                                 ("value" . "true")
+                                 ("operator" . "Equal")
+                                 ("key" . "unschedulable"))))
+                             ("nodeSelector"
+                              ("kubernetes.io/hostname" . ,host)))
+                            ("apiVersion" . "v1"))))))
+                      '())
+                "busybox"
+                "--image=busybox"
+                "/bin/sh"))))
     ((nixery)
      (let ((labels '(("app.kubernetes.io/name" . "nixery"))))
        (apply system*
