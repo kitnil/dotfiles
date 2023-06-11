@@ -23,6 +23,7 @@ then
     source "$HOME/.bash_guix"
 fi
 
+alias ,h="${BROWSER} ~/.guix-profile/share/doc/concise-gnu-bash/concise-gnu-bash.pdf"
 alias ,c='command'
 
 alias rm="rm -i"
