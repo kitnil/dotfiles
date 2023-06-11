@@ -150,6 +150,9 @@ EOF
         fi
 
         cat <<EOF
+$ kubectl top --namespace "$namespace" pod
+$(kubectl top --namespace "$namespace" pod)
+
 $ kubectl get all --namespace "$namespace" -o wide
 $(kubectl get all --namespace "$namespace" -o wide)
 
