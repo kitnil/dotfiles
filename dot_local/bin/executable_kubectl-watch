@@ -119,6 +119,9 @@ $(nodes_with_noschedule)
 $ kubectl top node
 $(kubectl top node | awk 'NR<3{print $0;next}{print $0| "sort --version-sort"}')
 
+$ kubectl get --raw='/readyz?verbose'
+$(kubectl get --raw='/readyz?verbose')
+
 EOF
         fi
         if [[ $namespace == "flux-system" ]]
