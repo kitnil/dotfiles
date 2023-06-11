@@ -750,8 +750,6 @@ listen_ports()
 
 alias vnc-server-android="vncserver -AcceptSetDesktopSize=no -geometry 1280x720"
 
-alias ssh='ssh -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no'
-
 # jenkins_log()
 # {
 #     for project in $(curl -s -k "https://admin:$(pass show majordomo/public/jenkins.intr/admin)@jenkins.intr/api/json?pretty=true" | jq -r '.jobs[] | .name'); do
