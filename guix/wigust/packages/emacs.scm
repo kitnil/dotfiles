@@ -1887,3 +1887,119 @@ YAML (even if it's written in JSON style), and swap subtrees.")
       (description "Org-roam-ui provides a web interface for navigating around
 notes created within Org-roam.")
       (license license:gpl3+))))
+
+(define* (%emacs-lsp-treemacs-upstream-source #:key commit version hash)
+  (origin
+    (method git-fetch)
+    (uri (git-reference
+          (url "https://github.com/emacs-lsp/lsp-treemacs")
+          (commit commit)))
+    (file-name (git-file-name "emacs-lsp-treemacs" version))
+    (hash hash)))
+
+(define-public emacs-lsp-treemacs
+  (package
+    (name "emacs-lsp-treemacs")
+    (version "0.4")
+    (source
+     (origin
+       (method (@@ (guix packages) computed-origin-method))
+       (file-name (string-append name "-" version ".tar.gz"))
+       (sha256 #f)
+       (uri
+        (delay
+          (with-imported-modules '((guix build emacs-utils)
+                                   (guix build utils))
+            #~(begin
+                (use-modules (guix build utils)
+                             (guix build emacs-utils))
+                (let* ((dir (string-append "emacs-lsp-treemacs-" #$version)))
+
+                  (set-path-environment-variable
+                   "PATH" '("bin")
+                   (list #+emacs-minimal
+                         #+(canonical-package bash)
+                         #+(canonical-package coreutils)
+                         #+(canonical-package gzip)
+                         #+(canonical-package tar)))
+
+                  ;; Copy the upstream source
+                  (copy-recursively
+                   #+(%emacs-lsp-treemacs-upstream-source
+                      #:commit version #:version version
+                      #:hash
+                      (content-hash
+                       "05ivqa5900139jzjhwc3nggwznhm8564dz4ydcxym2ddd63571k0"))
+                   dir)
+
+                  (with-directory-excursion dir
+                    ;; The icons are unclearly licensed and possibly non-free,
+                    ;; see <https://github.com/emacs-lsp/lsp-treemacs/issues/123>
+                    (with-directory-excursion "icons"
+                      (for-each delete-file-recursively
+                                '("eclipse" "idea" "netbeans")))
+
+                    ;; Also remove any mentions in the source code.
+                    (make-file-writable "lsp-treemacs-themes.el")
+                    (emacs-batch-edit-file "lsp-treemacs-themes.el"
+                      '(progn
+                        (while (search-forward-regexp
+                                "(treemacs-create-theme \"\\([^\"]*\\)\""
+                                nil t)
+                          (pcase (match-string 1)
+                                 ("Iconless" nil)
+                                 (_ (beginning-of-line)
+                                    (kill-sexp)))
+                          (basic-save-buffer)))))
+
+                  (invoke "tar" "cvfa" #$output
+                          "--mtime=@0"
+                          "--owner=root:0"
+                          "--group=root:0"
+                          "--sort=name"
+                          "--hard-dereference"
+                          dir))))))))
+    (build-system emacs-build-system)
+    (arguments
+     (list #:include #~(cons "^icons\\/" %default-include)))
+    (propagated-inputs
+     (list emacs-lsp-mode emacs-treemacs))
+    (home-page "https://github.com/emacs-lsp/lsp-treemacs")
+    (synopsis "Integration between LSP mode and treemacs")
+    (description
+     "This package provides integration between LSP mode and treemacs,
+and implementation of treeview controls using treemacs as a tree renderer.")
+    (license (list license:gpl3+
+                   license:cc-by4.0  ; microsoft/vscode-icons
+                   license:expat))))
+
+(define-public emacs-lsp-java
+  (package
+    (name "emacs-lsp-java")
+    (version "3.1")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://github.com/emacs-lsp/lsp-java")
+                    (commit version)))
+              (file-name (git-file-name name version))
+              (sha256
+               (base32
+                "1h0hqgjpk5mbylma1fkva0vx45achf0k7ab2c5y8a2449niww90h"))))
+    (build-system emacs-build-system)
+    (propagated-inputs
+     (list emacs-dap-mode
+           emacs-lsp-mode
+           emacs-markdown-mode
+           emacs-dash
+           emacs-f
+           emacs-ht
+           emacs-request
+           emacs-treemacs))
+    (arguments
+     (list
+      #:include #~(cons* "icons/" %default-include)))
+    (home-page "https://github.com/emacs-lsp/lsp-java/")
+    (synopsis "Java support for lsp-mode")
+    (description "Emacs Java IDE using Eclipse JDT Language Server.")
+    (license license:gpl3+)))
