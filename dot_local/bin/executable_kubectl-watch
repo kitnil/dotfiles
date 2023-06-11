@@ -271,6 +271,33 @@ $ redis-cli -h redis.intr CLIENT LIST
 $(redis-cli -h redis.intr CLIENT LIST)
 EOF
         fi
+
+        if [[ $namespace == "nfs" ]]
+        then
+            cat <<EOF
+$ dig nfs.intr
+$(bash -ic "dig nfs.intr 2>&1")
+
+$ ssh root@kube6.intr showmount -e
+$(ssh root@kube6.intr showmount -e)
+
+$ ssh root@kube6.intr showmount
+$(ssh root@kube6.intr showmount)
+
+$ ssh root@kube6.intr rpcinfo
+$(ssh root@kube6.intr rpcinfo)
+
+$ ssh root@kube6.intr rpcinfo -p
+$(ssh root@kube6.intr rpcinfo -p)
+
+$ ssh root@kube6.intr nfsstat
+$(ssh root@kube6.intr nfsstat)
+
+$ ssh root@kube6.intr nfsstat -m
+$(ssh root@kube6.intr nfsstat -m)
+
+EOF
+        fi
     }
     export -f viddy_command
     viddy_args=(
