@@ -43,7 +43,7 @@ if initialize_session "$session"; then
       load_window "kubernetes-flux-system"
       load_window "kubernetes-pods"
       load_window "kubernetes-cilium"
-      load_window "kubernetes-cert-manager-logs"
+      load_window "kubernetes-monitoring"
       load_window "kubernetes-piraeus"
       load_window "kubernetes-opensearch"
       load_window "kubernetes-pdns"
