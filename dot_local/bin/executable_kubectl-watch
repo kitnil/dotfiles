@@ -32,16 +32,19 @@ EOF
                 PROMETHEUS_URL=https://prometheus.kubernetes.corp1.majordomo.ru
                 OPENSEARCH_ENDPOINT="https://opensearch.corp1.majordomo.ru:9200"
                 OPENSEARCH_PASSWORD="$(pass show majordomo/public/opensearch-dashboards/admin)"
+                ALERTMANAGER_URL="https://alertmanager.corp1.majordomo.ru"
                 ;;
             *config-mjru-cluster2)
                 PROMETHEUS_URL=https://prometheus.kubernetes.corp2.majordomo.ru
                 OPENSEARCH_ENDPOINT="https://opensearch.corp2.majordomo.ru:9200"
                 OPENSEARCH_PASSWORD="$(pass show majordomo/public/opensearch-dashboards/admin)"
+                ALERTMANAGER_URL="https://alertmanager.corp2.majordomo.ru"
                 ;;
             *config-home-k8s)
                 PROMETHEUS_URL=https://prometheus.kubernetes.home.wugi.info
                 OPENSEARCH_ENDPOINT="https://node-0.example.com:9200"
                 OPENSEARCH_PASSWORD="$(pass show localhost/opensearch-dashboards/admin)"
+                ALERTMANAGER_URL="https://alertmanager.home.wugi.info"
                 ;;
         esac
         case "$KUBECONFIG" in
@@ -183,6 +186,9 @@ EOF
             done
         fi
         cat <<EOF
+$ amtool --alertmanager.url="$ALERTMANAGER_URL" alert query --output=simple namespace="$namespace"
+$(amtool --alertmanager.url="$ALERTMANAGER_URL" alert query --output=simple namespace="$namespace")
+
 $ kubectl get --namespace "$namespace" certificates -o wide
 $(kubectl get --namespace "$namespace" certificates -o wide)
 
