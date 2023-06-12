@@ -41,7 +41,7 @@ EOF
                 ALERTMANAGER_URL="https://alertmanager.corp2.majordomo.ru"
                 ;;
             *config-home-k8s)
-                PROMETHEUS_URL=https://prometheus.kubernetes.home.wugi.info
+                PROMETHEUS_URL=https://prometheus.home.wugi.info
                 OPENSEARCH_ENDPOINT="https://node-0.example.com:9200"
                 OPENSEARCH_PASSWORD="$(pass show localhost/opensearch-dashboards/admin)"
                 ALERTMANAGER_URL="https://alertmanager.home.wugi.info"
