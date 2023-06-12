@@ -35,7 +35,7 @@ EOF
                 ALERTMANAGER_URL="https://alertmanager.corp1.majordomo.ru"
                 ;;
             *config-mjru-cluster2)
-                PROMETHEUS_URL=https://prometheus.kubernetes.corp2.majordomo.ru
+                PROMETHEUS_URL=https://prometheus.corp2.majordomo.ru
                 OPENSEARCH_ENDPOINT="https://opensearch.corp2.majordomo.ru:9200"
                 OPENSEARCH_PASSWORD="$(pass show majordomo/public/opensearch-dashboards/admin)"
                 ALERTMANAGER_URL="https://alertmanager.corp2.majordomo.ru"
