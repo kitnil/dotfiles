@@ -29,7 +29,7 @@ EOF
         fi
         case "$KUBECONFIG" in
             *config-mjru-cluster1)
-                PROMETHEUS_URL=https://prometheus.kubernetes.corp1.majordomo.ru
+                PROMETHEUS_URL=https://prometheus.corp1.majordomo.ru
                 OPENSEARCH_ENDPOINT="https://opensearch.corp1.majordomo.ru:9200"
                 OPENSEARCH_PASSWORD="$(pass show majordomo/public/opensearch-dashboards/admin)"
                 ALERTMANAGER_URL="https://alertmanager.corp1.majordomo.ru"
