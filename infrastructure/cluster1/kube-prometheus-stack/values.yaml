@@ -9,9 +9,9 @@ prometheus:
     tls:
     - secretName: prometheus-general-tls
       hosts:
-      - prometheus.kubernetes.home.wugi.info
+      - prometheus.home.wugi.info
     hosts:
-    - prometheus.kubernetes.home.wugi.info
+    - prometheus.home.wugi.info
 
 alertmanager:
   ingress:
@@ -24,9 +24,9 @@ alertmanager:
     tls:
     - secretName: alertmanager-general-tls
       hosts:
-      - alertmanager.kubernetes.home.wugi.info
+      - alertmanager.home.wugi.info
     hosts:
-    - alertmanager.kubernetes.home.wugi.info
+    - alertmanager.home.wugi.info
 
 grafana:
   ingress:
@@ -39,9 +39,9 @@ grafana:
     tls:
     - secretName: grafana-general-tls
       hosts:
-      - grafana.kubernetes.home.wugi.info
+      - grafana.home.wugi.info
     hosts:
-    - grafana.kubernetes.home.wugi.info
+    - grafana.home.wugi.info
   datasources:
     datasources.yaml:
       apiVersion: 1
