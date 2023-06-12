@@ -705,5 +705,33 @@ node_timex_maxerror_seconds >= 16
             "Clock not synchronising.
   VALUE = {{ $value }}
   LABELS = {{ $labels }}"))
-          ("alert" . "HostClockNotSynchronising"))))
+          ("alert" . "HostClockNotSynchronising"))
+         (("labels" ("severity" . "warning"))
+          ("expr"
+           .
+           "node_power_supply_capacity < 20 and on() node_power_supply_online == 0")
+          ("annotations"
+           ("summary"
+            .
+            "Node power supply capacity is less than 20")
+           ("description"
+            .
+            "Node power supply is out of a capacity
+  VALUE = {{ $value }}
+  LABELS = {{ $labels }}"))
+          ("alert" . "NodePowerSupplyCapacityLow"))
+         (("labels" ("severity" . "warning"))
+          ("expr"
+           .
+           "node_power_supply_capacity > 80 and on() node_power_supply_online == 1")
+          ("annotations"
+           ("summary"
+            .
+            "Node power supply capacity is more than 80")
+           ("description"
+            .
+            "Node power supply is more than 80
+  VALUE = {{ $value }}
+  LABELS = {{ $labels }}"))
+          ("alert" . "NodePowerSupplyCapacityHigh"))))
       ("name" . "node-exporter")))))
