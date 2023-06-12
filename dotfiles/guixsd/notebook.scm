@@ -132,8 +132,7 @@
                                (package prometheus-node-exporter)
                                (web-listen-address "0.0.0.0:9100")
                                (textfile-directory "/var/lib/prometheus-node-exporter")
-                               (extra-options '("--collector.processes"
-                                                "--collector.powersupplyclass"))))
+                               (extra-options '("--collector.powersupplyclass"))))
 
                      (service openssh-service-type)
 		     (service openvpn-service-type
