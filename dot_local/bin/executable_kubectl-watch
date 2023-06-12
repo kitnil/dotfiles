@@ -201,6 +201,13 @@ $(kubectl get --namespace "$namespace" serviceaccounts)
 $ kubectl get pvc --namespace "$namespace" -o wide
 $(kubectl get pvc --namespace "$namespace" -o wide)
 
+EOF
+
+        query="kubelet_volume_stats_available_bytes{job=\"kubelet\", metrics_path=\"/metrics\", namespace=\"$namespace\"}"
+        cat <<EOF
+query: ${query}
+$(echo "$query" | curl --silent --get "${PROMETHEUS_URL}/api/v1/query" --data-urlencode query@- | jq --raw-output '.data.result[] | .value[1]' | numfmt --to=iec-i --suffix=B | xargs echo)
+
 $ kubectl get networkpolicies --namespace "$namespace" -o wide
 $(kubectl get networkpolicies --namespace "$namespace" -o wide)
 
