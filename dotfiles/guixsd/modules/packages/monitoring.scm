@@ -165,6 +165,41 @@ as a set of Prometheus metrics.")
 Prometheus.")
     (license license:expat)))
 
+(define-public prometheus-node-exporter
+  (package
+    (name "prometheus-node-exporter")
+    (version "1.6.0")
+    (source
+     (origin
+       (method url-fetch)
+       (uri (string-append
+             "https://github.com/prometheus/node_exporter/releases/download/v"
+             version "/node_exporter-" version ".linux-amd64.tar.gz"))
+       (sha256
+        (base32
+         "05g5h726vjw6flnfd4sbgpsn7i5p7s6b53pngmc5ynyblzw76d8b"))))
+    (build-system trivial-build-system)
+    (native-inputs
+     `(("gzip" ,gzip)
+       ("tar" ,tar)))
+    (arguments
+     `(#:modules ((guix build utils))
+       #:builder
+       (begin
+         (use-modules (guix build utils))
+         (mkdir-p (string-append %output "/bin"))
+         (setenv "PATH" (string-append
+                         (assoc-ref %build-inputs "tar") "/bin" ":"
+                         (assoc-ref %build-inputs "gzip") "/bin"))
+         (invoke "tar" "-xf" (assoc-ref %build-inputs "source"))
+         (install-file ,(string-append "node_exporter-" version
+                                       ".linux-amd64/node_exporter")
+                       (string-append %output "/bin")))))
+    (home-page "https://github.com/czerwonk/node_exporter/")
+    (synopsis "Prometheus Node Exporter")
+    (description "Metric exporter for Linux nodes use with Prometheus.")
+    (license license:expat)))
+
 (define-public prometheus-smartctl-exporter
   (package
     (name "prometheus-smartctl-exporter")
