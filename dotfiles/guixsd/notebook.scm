@@ -23,7 +23,8 @@
 
 (use-service-modules desktop dbus networking monitoring xorg)
 
-(use-modules (services monitoring))
+(use-modules (packages monitoring)
+             (services monitoring))
 
 (operating-system
   (host-name "notebook")
@@ -128,9 +129,11 @@
 
                      (service prometheus-node-exporter-service-type
                               (prometheus-node-exporter-configuration
+                               (package prometheus-node-exporter)
                                (web-listen-address "0.0.0.0:9100")
                                (textfile-directory "/var/lib/prometheus-node-exporter")
-                               (extra-options '("--collector.processes"))))
+                               (extra-options '("--collector.processes"
+                                                "--collector.powersupplyclass"))))
 
                      (service openssh-service-type)
 		     (service openvpn-service-type
