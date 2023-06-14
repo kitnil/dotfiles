@@ -285,3 +285,6 @@ client.background       #ffffff
 
 for_window [app_id="looking-glass-client"] border none
 for_window [app_id="looking-glass-client"] resize set width 1920 px
+
+for_window [title="Picture-in-Picture"] border none
+for_window [title="Picture-in-Picture"] resize set height 360 px
