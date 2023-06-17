@@ -13,6 +13,7 @@
   #:use-module (gnu packages bash)
   #:use-module (gnu packages compression)
   #:use-module (gnu packages elf)
+  #:use-module (gnu packages gcc)
   #:use-module (gnu packages python-xyz))
 
 (define-public crowdsec
@@ -161,3 +162,44 @@ from a CrowdSec API to add them in a blocklist used by supported firewalls.")
     (description "osquery is a SQL powered operating system instrumentation,
 monitoring, and analytics.")
     (license license:expat)))
+
+(define-public spacer
+  (package
+    (name "spacer")
+    (version "0.1.6")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append "https://github.com/samwho/spacer/releases/download/v"
+                                  version "/spacer-x86_64-unknown-linux-gnu.tar.gz"))
+              (sha256
+               (base32
+                "064m1v1lm4iknyfbnqs6g3n7y4fd7iadx8fzdf16r69016ah8b0z"))))
+    (build-system trivial-build-system)
+    (inputs (list gzip tar glibc patchelf `(,gcc "lib")))
+    (native-inputs `(("source" ,source)))
+    (arguments
+     (list
+      #:modules '((guix build utils))
+      #:builder
+      #~(begin
+          (use-modules (guix build utils))
+          (setenv "PATH"
+                  (string-append
+                   #$(this-package-input "gzip") "/bin"
+                   ":" #$(this-package-input "tar") "/bin"
+                   ":" #$(this-package-input "patchelf") "/bin"))
+          (invoke "tar" "-xf" #$(this-package-native-input "source"))
+          (mkdir-p (string-append #$output "/bin"))
+          (copy-file "spacer"
+                     (string-append #$output "/bin/spacer"))
+          (invoke "patchelf"
+                  "--set-interpreter"
+                  (string-append #$(this-package-input "glibc")
+                                 "/lib/ld-linux-x86-64.so.2")
+                  "--set-rpath"
+                  (dirname (search-input-file %build-inputs "/lib/libgcc_s.so.1"))
+                  (string-append #$output "/bin/spacer")))))
+    (home-page "")
+    (synopsis "")
+    (description "")
+    (license #f)))
