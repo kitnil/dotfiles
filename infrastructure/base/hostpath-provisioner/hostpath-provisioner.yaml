@@ -10,4 +10,4 @@ spec:
   workload:
     nodeSelector:
       kubernetes.io/os: linux
-      kubevirt: "true"
+      kubevirt.cluster.local/schedulable: "true"
