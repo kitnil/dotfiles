@@ -24,3 +24,6 @@ prometheus:
     serviceMonitor:
       # Enables ServiceMonitor creation for the Prometheus webhooks
       enabled: true
+
+service:
+  portHttpsTarget: 16443
