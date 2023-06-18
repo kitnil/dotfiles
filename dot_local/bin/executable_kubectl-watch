@@ -215,6 +215,7 @@ $(kubectl get networkpolicies --namespace "$namespace" -o wide)
 
 $ kubectl get events --namespace "$namespace" -o wide
 $(kubectl get events --namespace "$namespace" -o wide)
+
 EOF
 
         if [[ $namespace == "elasticsearch" ]]
