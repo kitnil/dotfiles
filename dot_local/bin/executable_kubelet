@@ -42,12 +42,15 @@ else
     mount --make-shared /sys/fs/bpf
 fi
 
-if mountpoint --quiet /var/hpvolumes
+if [[ -d /var/hpvolumes ]]
 then
-    :
-else
-    mount --bind /var/hpvolumes /var/hpvolumes
-    mount --make-shared /var/hpvolumes
+    if mountpoint --quiet /var/hpvolumes
+    then
+        :
+    else
+        mount --bind /var/hpvolumes /var/hpvolumes
+        mount --make-shared /var/hpvolumes
+    fi
 fi
 
 (
