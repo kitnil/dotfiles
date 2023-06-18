@@ -391,32 +391,7 @@ remote-random
                                                                    ("Regex" . ".*"))))
                                        ("AdminListen" . "unix:///var/run/yggdrasil.sock")
                                        ("Listen" . #())
-                                       ("InterfacePeers" . null)))))
-
-                          (service kubernetes-k3s-service-type
-                                   (kubernetes-k3s-configuration
-                                    (server? #t)
-                                    (arguments '(;; "--node-external-ip" "201:c18b:10f7:a21:ac2c:cc10:f3e:64e6"
-
-                                                 "--no-deploy" "traefik"
-                                                 "--disable" "traefik"
-
-                                                 "--disable-network-policy"
-                                                 "--disable" "servicelb"
-                                                 "--disable-kube-proxy"
-                                                 "--disable-helm-controller"
-
-                                                 "--disable" "coredns"
-                                                 "--flannel-backend" "none" ;Disable Flannel entirely.
-
-                                                 ;; use dockerd
-                                                 ;; "--docker"
-                                                 ;;
-                                                 ;; use containerd directly
-                                                 "--container-runtime-endpoint" "unix:///run/containerd/containerd.sock"
-                                                 ))))
-
-                          )
+                                       ("InterfacePeers" . null))))))
 
                     (%mail-services "78.108.82.44")
 
