@@ -11,6 +11,7 @@
 (use-modules (config))
 
 (use-modules (packages certs)
+             (packages containers)
              (services bird)
              (services dns)
              (services docker)
@@ -82,7 +83,7 @@ oleg ALL=(ALL) NOPASSWD:ALL\n"))
   ;; Globally-installed packages.
   (packages (append (list curl nmap iptables mtr tcpdump net-tools iftop
                           nss-certs dn42-ca
-                          strace tmux)
+                          strace tmux crictl)
                     %mail-packages
                     %base-packages))
 
