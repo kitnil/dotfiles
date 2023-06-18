@@ -72,21 +72,22 @@ prlimit --pid "$containerd_pid" --nproc=unlimited
     --authentication-token-webhook \
     --authentication-token-webhook-cache-ttl=10s \
     --authorization-mode=Webhook \
-    --client-ca-file=/nix/store/p52r1ccnvkchmybdayf5cv8xgw4m3a9c-ca.pem \
+    --client-ca-file=/etc/kubernetes/pki/ca.pem \
     --cluster-dns=10.8.255.254 \
     --cluster-domain=cluster.local \
     --hairpin-mode=hairpin-veth \
     --healthz-bind-address=127.0.0.1 \
     --healthz-port=10248 \
-    --hostname-override=kube4 \
+    --hostname-override=kube1 \
     --kubeconfig=/home/oleg/.local/share/chezmoi/dotfiles/kubernetes/kubeconfig \
     --pod-infra-container-image=pause \
     --port=10250 \
     --register-node=true \
     --register-with-taints=unschedulable=true:NoSchedule \
     --root-dir=/var/lib/kubelet \
-    --tls-cert-file=/home/oleg/src/ssl/kubernetes/kubelet-client-kube4.pem \
-    --tls-private-key-file=/home/oleg/src/ssl/kubernetes/kubelet-client-kube4-key.pem \
+    --tls-cert-file=/etc/kubernetes/pki/kubelet-client-kube1.pem \
+    --tls-private-key-file=/etc/kubernetes/pki/kubelet-client-kube1-key.pem \
     --container-runtime=remote \
     --container-runtime-endpoint=unix:///run/containerd/containerd.sock \
-    --fail-swap-on=false
+    --fail-swap-on=false \
+    --pod-manifest-path=/etc/kubernetes/manifests
