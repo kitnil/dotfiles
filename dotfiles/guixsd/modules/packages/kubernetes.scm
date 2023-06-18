@@ -528,3 +528,53 @@ offers subsequent commands to interact with your observed resources.")
     (description "Argo CD is a declarative, GitOps continuous delivery tool
  for Kubernetes.")
     (license license:asl2.0)))
+
+(define-public kubelet
+  (package
+    (name "kubelet")
+    (version "1.25.4")
+    (source
+     (origin
+       (method url-fetch)
+       (uri
+        (string-append "https://dl.k8s.io/v"
+                       version "/kubernetes-node-linux-amd64.tar.gz"))
+       (sha256
+        (base32
+         "1fhpj6wmcrfn4hgzswpaxg2bpwkmf9k3yyfwnhp6q7kpyb8w1fna"))))
+    (build-system trivial-build-system)
+    (native-inputs (list source gzip tar))
+    (arguments
+     (list
+      #:modules '((guix build utils))
+      #:builder
+      #~(begin
+          (use-modules (guix build utils)
+                       (ice-9 popen)
+                       (ice-9 rdelim))
+          (let ((bin (string-append #$output "/bin")))
+            (mkdir-p (string-append #$output "/bin"))
+            (setenv "PATH" (string-append
+                            #$(this-package-native-input "tar") "/bin" ":"
+                            #$(this-package-native-input "gzip") "/bin"))
+            (invoke "tar"
+                    "-xf" (assoc-ref %build-inputs "source")
+                    "-C" bin
+                    "--strip-components=3"
+                    "kubernetes/node/bin/kubelet")
+            ;; Install shell completion.
+            (let ((bash (string-append #$output "/etc/bash_completion.d")))
+              (mkdir-p bash)
+              (call-with-output-file (string-append bash "/kubelet")
+                (lambda (port)
+                  (display
+                   (let* ((port (open-pipe* OPEN_READ (string-append #$output "/bin/kubelet")
+                                            "completion" "bash"))
+                          (output (read-string port)))
+                     (close-port port)
+                     (string-trim-right output #\newline))
+                   port))))))))
+    (home-page "")
+    (synopsis "")
+    (description "")
+    (license #f)))
