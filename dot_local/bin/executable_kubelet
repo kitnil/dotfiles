@@ -2,9 +2,6 @@
 
 set -o nounset -o errexit -o pipefail
 
-PATH="/gnu/store/5sd80lyxq6gfqpqk07df3zpjji8gpji3-containerd-1.6.6/bin:/nix/store/lp8ch8l5dn4bcp056cpr1gfyb9i8zi54-kubernetes-1.25.4/bin:${PATH}"
-export PATH
-
 coredns_image="{KUBELET_COREDNS_IMAGE:-/nix/store/1crdy15nv25jpbvknrzyhg6khv9ikhl9-docker-image-coredns-coredns-1.7.1.tar}"
 pause_image="${KUBELET_PAUSE_IMAGE:-/nix/store/xjlwhyqjhx0j2sc41wfpsw1zvhn98vh5-docker-image-pause.tar.gz}"
 
