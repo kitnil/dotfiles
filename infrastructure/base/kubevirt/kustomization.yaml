@@ -25,4 +25,4 @@ patches:
         workloads:
           nodePlacement:
             nodeSelector:
-              kubevirt: "true"
+              kubevirt.cluster.local/schedulable: "true"

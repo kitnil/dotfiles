@@ -8,11 +8,11 @@ spec:
   infra:
     nodeSelector:
       kubernetes.io/os: linux
-      kubevirt: "true"
+      kubevirt.cluster.local/schedulable: "true"
     tolerations:
     - key: CriticalAddonsOnly
       operator: Exists
   workload:
     nodeSelector:
       kubernetes.io/os: linux
-      kubevirt: "true"
+      kubevirt.cluster.local/schedulable: "true"
