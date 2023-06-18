@@ -2051,10 +2051,21 @@ $(kubectl get pods --field-selector status.phase=Pending --all-namespaces -o wid
 $ kubectl get pods --field-selector status.phase=Failed --all-namespaces -o wide
 $(kubectl get pods --field-selector status.phase=Failed --all-namespaces -o wide)
 
+EOF
+                if [[ $(tput cols) -gt 255 ]]
+                then
+                    cat <<EOF
+$ kubectl get pod -o wide -A | grep '(.*m.* ago)'
+$(kubectl get pod -o wide -A | grep '(.*[ms].* ago)')
+
+EOF
+                else
+                    cat <<EOF
 $ kubectl get pod -A | grep '(.*m.* ago)'
 $(kubectl get pod -A | grep '(.*[ms].* ago)')
 
 EOF
+                fi
             }
             export -f viddy_command
             viddy_args=(
