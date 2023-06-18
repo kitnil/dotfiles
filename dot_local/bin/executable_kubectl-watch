@@ -320,6 +320,15 @@ $(ssh root@kube6.intr nfsstat -m)
 EOF
         fi
 
+        if [[ $namespace == "keda" ]]
+        then
+            cat <<EOF
+$ kubectl get --raw /apis/external.metrics.k8s.io
+$(kubectl get --raw /apis/external.metrics.k8s.io)
+
+EOF
+        fi
+
         if [[ $namespace == "vault" ]]
         then
             vault_addrs=(
