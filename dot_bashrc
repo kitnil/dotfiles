@@ -2426,10 +2426,10 @@ sudo()
 PASSWORD_STORE_ENABLE_EXTENSIONS="true"
 export PASSWORD_STORE_ENABLE_EXTENSIONS
 
+PATH="${HOME}/bin":"${HOME}/.local/bin":"$(/usr/bin/env --ignore-environment sh --norc --noprofile -c 'unset PATH; export HOME=/home/oleg; export USER=oleg; source /etc/profile; printf "$PATH"')":"${HOME}/go/bin":"${HOME}/.npm-global/bin":/opt/gradle/bin:"${HOME}/perl5/bin":"${HOME}/.nix-profile/lib/openjdk/bin":"${HOME}/.nix-profile/bin":"$PATH"
+export PATH
+
 if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]
 then
     exec sway
 fi
-
-PATH="${HOME}/bin":"${HOME}/.local/bin":"$(/usr/bin/env --ignore-environment sh --norc --noprofile -c 'unset PATH; export HOME=/home/oleg; export USER=oleg; source /etc/profile; printf "$PATH"')":"${HOME}/go/bin":"${HOME}/.npm-global/bin":/opt/gradle/bin:"${HOME}/perl5/bin":"${HOME}/.nix-profile/lib/openjdk/bin":"${HOME}/.nix-profile/bin":"$PATH"
-export PATH
