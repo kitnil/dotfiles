@@ -4,9 +4,14 @@ set -o nounset -o errexit -o pipefail
 
 if [[ -e /proc/drbd ]]
 then
-    :
+    printf "DEBUG: '/proc/drbd' file already exist.\n" 2>&1
 else
-    LINUX_MODULE_DIRECTORY=/run/booted-system/kernel/lib/modules modprobe drbd9
+    if [[ -e /run/booted-system/kernel/lib/modules/*/extra/drbd9.ko.gz ]]
+    then
+        LINUX_MODULE_DIRECTORY=/run/booted-system/kernel/lib/modules modprobe drbd9
+    else
+        printf "DEBUG: 'drbd9.ko.gz' file not found.\n" 2>&1
+    fi
 fi
 
 if [[ $(/gnu/store/5sd80lyxq6gfqpqk07df3zpjji8gpji3-containerd-1.6.6/bin/ctr --namespace k8s.io images list) == *docker.io/coredns/coredns:1.7.1* ]]
