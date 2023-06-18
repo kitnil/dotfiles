@@ -185,6 +185,8 @@ bindsym $mod+y exec clipman pick -t wofi
     # Toggle the current focus between tiling and floating mode
     bindsym $mod+Shift+space floating toggle
 
+    bindsym $mod+Shift+a sticky toggle
+
     # Swap focus between the tiling area and the floating area
     bindsym $mod+space focus mode_toggle
 
