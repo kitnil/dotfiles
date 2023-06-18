@@ -9,7 +9,7 @@ spec:
       template:
         spec:
           nodeSelector:
-            kubernetes.io/hostname: kube4
+            kubernetes.io/hostname: kube1
           containers:
           - image: docker-registry.wugi.info/messaging/slack-cleaner2
             name: slack-cleaner2
