@@ -2415,7 +2415,7 @@ sudo()
 PASSWORD_STORE_ENABLE_EXTENSIONS="true"
 export PASSWORD_STORE_ENABLE_EXTENSIONS
 
-if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]] && [[ $HOSTNAME -eq notebook ]]
+if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty1 ]]
 then
     exec sway
 fi
