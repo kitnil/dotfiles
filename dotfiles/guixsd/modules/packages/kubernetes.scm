@@ -367,7 +367,7 @@ deployment, maintenance, and scaling of applications.")
 (define-public kubernetes-binary
   (package
     (name "kubernetes-binary")
-    (version "1.24.3")
+    (version "1.25.4")
     (source
      (origin
        (method url-fetch)
@@ -375,7 +375,7 @@ deployment, maintenance, and scaling of applications.")
                            version "/kubernetes-server-linux-amd64.tar.gz"))
        (sha256
         (base32
-         "1589pb8zq5pglrbhavymhhlgwn5n81sdrxdw2hi0b3k94afnwqmj"))))
+         "0vr5ky6gycrbdlimmzd7gd3d9a5msvx08fi85h7rdbqlnrm9sgg3"))))
     (build-system trivial-build-system)
     (native-inputs (list source gzip tar))
     (inputs (list glibc patchelf))
@@ -543,7 +543,7 @@ offers subsequent commands to interact with your observed resources.")
         (base32
          "1fhpj6wmcrfn4hgzswpaxg2bpwkmf9k3yyfwnhp6q7kpyb8w1fna"))))
     (build-system trivial-build-system)
-    (native-inputs (list source gzip tar))
+    (native-inputs (list source gzip tar glibc patchelf))
     (arguments
      (list
       #:modules '((guix build utils))
@@ -556,12 +556,16 @@ offers subsequent commands to interact with your observed resources.")
             (mkdir-p (string-append #$output "/bin"))
             (setenv "PATH" (string-append
                             #$(this-package-native-input "tar") "/bin" ":"
-                            #$(this-package-native-input "gzip") "/bin"))
+                            #$(this-package-native-input "gzip") "/bin" ":"
+                            #$(this-package-input "patchelf") "/bin"))
             (invoke "tar"
                     "-xf" (assoc-ref %build-inputs "source")
-                    "-C" bin
                     "--strip-components=3"
                     "kubernetes/node/bin/kubelet")
+            (invoke "patchelf" "--set-interpreter"
+                                (string-append #$(this-package-input "glibc")
+                                               "/lib/ld-linux-x86-64.so.2")
+                                (string-append "bin/" file))
             ;; Install shell completion.
             (let ((bash (string-append #$output "/etc/bash_completion.d")))
               (mkdir-p bash)
