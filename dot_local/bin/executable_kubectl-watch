@@ -151,6 +151,22 @@ $(kubectl get --all-namespaces helmreleases.helm.toolkit.fluxcd.io)
 EOF
         fi
 
+        for namespace_suffix in mda kvm
+        do
+            if [[ $namespace == "backup-${namespace_suffix}" ]]
+            then
+                for metrics in performed errors
+                do
+                    query="backup_${namespace_suffix}_${metrics}_total{namespace=\"$namespace\"}"
+                    cat <<EOF
+query: ${query}
+$(echo "$query" | curl --silent --get "${PROMETHEUS_URL}/api/v1/query" --data-urlencode query@- | jq --raw-output '.data.result[] | .value[1]' | xargs echo)
+
+EOF
+                done
+            fi
+        done
+
         if [[ $namespace == "hms-vm-"* ]]
         then
             mongo_id="$(echo ${namespace/hms-vm-/})"
