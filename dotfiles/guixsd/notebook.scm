@@ -268,18 +268,7 @@ remote-random
                           (service polkit-service-type)
                           (elogind-service)
                           (dbus-service)
-                          (service ntp-service-type)
-                          (service slim-service-type
-                                   (slim-configuration
-                                    ;; (auto-login? #t)
-                                    (default-user "oleg")
-                                    (gnupg? #t) ;XXX: Merge pam-gnupg in Guix repository to upstream
-				    ;; (theme %slim-theme) TODO: Fix the theme.
-                                    (xorg-configuration
-                                     (xorg-configuration
-                                      (modules (delete xf86-video-ati
-                                                       (delete xf86-video-nouveau
-                                                               (delete xf86-video-intel %default-xorg-modules)))))))))
+                          (service ntp-service-type))
 
                     (modify-services
                      (modify-services %base-services
