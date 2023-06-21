@@ -516,6 +516,40 @@ location / {
                                     "vlan_mode=native-untagged")))
                             (system* #$vxlan0)
 
+                            ;; # notebook->guixsd->ci.guix.gnu.org
+                            (iptables
+                             (string-join
+                              '("-t" "nat"
+                                "-A" "POSTROUTING"
+                                "-o" "vxlan0"
+                                "-j" "MASQUERADE")))
+                            (iptables
+                             (string-join
+                              '("-A" "FORWARD"
+                                "-i" "tapvpn1"
+                                "-o" "vxlan0"
+                                "-m" "state" "--state" "RELATED,ESTABLISHED"
+                                "-j" "ACCEPT")))
+                            (iptables
+                             (string-join
+                              '("-A" "FORWARD"
+                                "-i" "vxlan0"
+                                "-o" "tapvpn1"
+                                "-j" "ACCEPT")))
+                            (iptables
+                             (string-join
+                              '("-A" "FORWARD"
+                                "-i" "vxlan0"
+                                "-o" "tapvpn1"
+                                "-m" "state" "--state" "RELATED,ESTABLISHED"
+                                "-j" "ACCEPT")))
+                            (iptables
+                             (string-join
+                              '("-A" "FORWARD"
+                                "-i" "tapvpn1"
+                                "-o" "vxlan0"
+                                "-j" "ACCEPT")))
+
                             ;; VLAN 154 provides:
                             ;; - Network via Whonix
                             (ovs-vsctl
