@@ -18,7 +18,7 @@ opensearch.requestHeadersWhitelist: [authorization, securitytenant]
 
 # Set the value of this setting to false to suppress search usage telemetry
 # for reducing the load of OpenSearch cluster.
-data.search.usageTelemetry.enabled: false
+# data.search.usageTelemetry.enabled: false
 
 # The maximum payload size in bytes for incoming server requests.
 server.maxPayloadBytes: 10485760
