@@ -16,3 +16,6 @@ configMapGenerator:
 - name: opensearch-scripts
   files:
   - script.sh=scripts/script.sh
+- name: opensearch-dashboards
+  files:
+  - opensearch_dashboards.yml=opensearch_dashboards.yml

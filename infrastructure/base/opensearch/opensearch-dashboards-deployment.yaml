@@ -33,3 +33,12 @@ spec:
           requests:
             cpu: 5m
             memory: 150Mi
+        volumeMounts:
+        - mountPath: /usr/share/opensearch-dashboards/config/opensearch_dashboards.yml
+          subPath: opensearch_dashboards.yml
+          name: configuration
+          readOnly: true
+      volumes:
+      - name: configuration
+        configMap:
+          name: opensearch-dashboards
