@@ -11,6 +11,9 @@ opensearch.ssl.verificationMode: none
 opensearch.username: kibanaserver
 opensearch.password: kibanaserver
 opensearch.requestHeadersWhitelist: [authorization, securitytenant]
+# https://github.com/openstack/kolla-ansible/blob/1e9f19aa6b2278fe4cd6399a33dff130a48586de/ansible/roles/opensearch/templates/opensearch_dashboards.yml.j2
+opensearch.requestTimeout: 0
+opensearch.shardTimeout: 0
 
 opensearch_security.multitenancy.enabled: true
 opensearch_security.multitenancy.tenants.preferred: [Private, Global]
