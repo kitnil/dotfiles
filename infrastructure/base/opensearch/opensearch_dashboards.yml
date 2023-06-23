@@ -34,7 +34,6 @@ opensearch.requestTimeout: 600000
 # Time in milliseconds for OpenSearch to wait for responses from shards. Set to 0 to disable.
 opensearch.shardTimeout: 0
 
-http.keepaliveTimeout: 600000
 server.keepaliveTimeout: 600000
 
 # Logs queries sent to OpenSearch. Requires logging.verbose set to true.
