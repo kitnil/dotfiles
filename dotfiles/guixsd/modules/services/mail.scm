@@ -131,13 +131,13 @@
               (pid (call-with-input-file "/var/run/dovecot/master.pid" read)))
          (copy-file (string-append cert-directory "/"
                                    (readlink (string-append cert-directory "/fullchain.pem")))
-                    "/etc/dovecot/dovecot.pem")
+                    "/etc/dovecot/default.pem")
          (copy-file (string-append cert-directory "/"
                                    (readlink (string-append cert-directory "/privkey.pem")))
                     "/etc/dovecot/private/default.pem")
          (chown "/etc/dovecot" uid gid)
          (chown "/etc/dovecot/private/default.pem" uid gid)
-         (chown "/etc/dovecot/dovecot.pem" uid gid)
+         (chown "/etc/dovecot/default.pem" uid gid)
          (kill pid SIGHUP)))))
 
 (define (%mail-services listen)
