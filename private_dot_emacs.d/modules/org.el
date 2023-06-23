@@ -138,6 +138,7 @@
 
 (add-hook 'org-mode-hook (lambda () (org-bullets-mode 1)))
 (add-hook 'org-mode-hook 'company-mode)
+(add-hook 'org-mode-hook 'emojify-mode)
 
 
 ;;;
