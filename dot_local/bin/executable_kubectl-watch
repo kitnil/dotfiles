@@ -32,6 +32,9 @@ EOF
                 PROMETHEUS_URL=https://prometheus.corp1.majordomo.ru
                 OPENSEARCH_ENDPOINT="https://opensearch.corp1.majordomo.ru:9200"
                 OPENSEARCH_PASSWORD="$(pass show majordomo/public/opensearch-dashboards/admin)"
+                OPENSEARCH_ARGS=(
+                    --user "admin:${OPENSEARCH_PASSWORD}"
+                )
                 ALERTMANAGER_URL="https://alertmanager.corp1.majordomo.ru"
                 VAULT_TOKEN="$(pass show majordomo/public/vault/root)"
                 VAULT_ADDR="https://vault.intr"
@@ -40,12 +43,18 @@ EOF
                 PROMETHEUS_URL=https://prometheus.corp2.majordomo.ru
                 OPENSEARCH_ENDPOINT="https://opensearch.corp2.majordomo.ru:9200"
                 OPENSEARCH_PASSWORD="$(pass show majordomo/public/opensearch-dashboards/admin)"
+                OPENSEARCH_ARGS=(
+                    --user "admin:${OPENSEARCH_PASSWORD}"
+                )
                 ALERTMANAGER_URL="https://alertmanager.corp2.majordomo.ru"
                 ;;
             *config-home-k8s)
                 PROMETHEUS_URL=https://prometheus.home.wugi.info
                 OPENSEARCH_ENDPOINT="https://node-0.example.com:9200"
                 OPENSEARCH_PASSWORD="$(pass show localhost/opensearch-dashboards/admin)"
+                OPENSEARCH_ARGS=(
+                    --user "admin:${OPENSEARCH_PASSWORD}"
+                )
                 ALERTMANAGER_URL="https://alertmanager.home.wugi.info"
                 ;;
         esac
@@ -227,15 +236,8 @@ EOF
 
         if [[ $namespace == "elasticsearch" ]]
         then
+            OPENSEARCH_ENDPOINT="http://es.intr:9200"
             cat <<EOF
-$ curl --silent -XGET http://172.16.103.101:9200/_cluster/health?pretty
-$(curl --silent -XGET http://172.16.103.101:9200/_cluster/health?pretty)
-
-$ curl --silent -XGET 'http://es.intr:9200/_cat/allocation?v'
-$(curl --silent -XGET 'http://es.intr:9200/_cat/allocation?v')
-
-$ elasticsearch shards
-$(elasticsearch shards)
 
 # logs
 ssh -q fluentd.intr sudo tail -f /home/jenkins/es-curator/curator.log
@@ -245,18 +247,24 @@ ssh -q staff.intr journalctl -u elasticsearch.service -f | grep -vF '[max_concur
 EOF
         fi
 
-        if [[ $namespace == "opensearch" ]]
+        if [[ $namespace == "elasticsearch" ]] || [[ $namespace == "opensearch" ]]
         then
             cat <<EOF
 
-$ curl --insecure --silent --user "admin:PASSWORD" "${OPENSEARCH_ENDPOINT}/_cat/indices?v&pretty"
-$(command curl --insecure --silent --user "admin:${OPENSEARCH_PASSWORD}" "${OPENSEARCH_ENDPOINT}/_cat/indices?v&pretty" | awk 'NR<3{print $0;next}{print $0| "sort --key=2 --version-sort"}')
+$ curl --insecure --silent -XGET "${OPENSEARCH_ENDPOINT}/_cat/allocation?v"
+$(curl --insecure --silent "${OPENSEARCH_ARGS[@]}" -XGET "${OPENSEARCH_ENDPOINT}/_cat/allocation?v")
 
-$ curl --insecure --silent --user "admin:PASSWORD" "${OPENSEARCH_ENDPOINT}/_cat/shards?pretty"
-$(command curl --insecure --silent --user "admin:${OPENSEARCH_PASSWORD}" "${OPENSEARCH_ENDPOINT}/_cat/shards?pretty" | awk 'NR<3{print $0;next}{print $0| "sort --version-sort"}')
+$ curl --insecure --silent -XGET "${OPENSEARCH_ENDPOINT}/_cluster/health?pretty"
+$(curl --insecure --silent "${OPENSEARCH_ARGS[@]}" -XGET "${OPENSEARCH_ENDPOINT}/_cluster/health?pretty")
 
-$ curl --header 'Content-Type: application/json' --insecure --silent --user "admin:PASSWORD" --data '{"query": {"match_all": {}}}' "${OPENSEARCH_ENDPOINT}/logstash-*/_search?pretty" | jq --raw-output '.hits.hits[] | ._source.log'
-$(command curl --header 'Content-Type: application/json' --insecure --silent --user "admin:${OPENSEARCH_PASSWORD}" --data '{"query": {"match_all": {}}}' "${OPENSEARCH_ENDPOINT}/logstash-*/_search?pretty" | jq --raw-output '.hits.hits[] | ._source.log')
+$ curl --insecure --silent "${OPENSEARCH_ENDPOINT}/_cat/indices?v&pretty"
+$(command curl --insecure --silent "${OPENSEARCH_ARGS[@]}" "${OPENSEARCH_ENDPOINT}/_cat/indices?v&pretty" | awk 'NR<3{print $0;next}{print $0| "sort --key=2 --version-sort"}')
+
+$ curl --insecure --silent "${OPENSEARCH_ENDPOINT}/_cat/shards?pretty"
+$(command curl --insecure --silent "${OPENSEARCH_ARGS[@]}" "${OPENSEARCH_ENDPOINT}/_cat/shards?pretty" | awk 'NR<3{print $0;next}{print $0| "sort --version-sort"}')
+
+$ curl --header 'Content-Type: application/json' --insecure --silent --data '{"query": {"match_all": {}}}' "${OPENSEARCH_ENDPOINT}/logstash-*/_search?pretty" | jq --raw-output '.hits.hits[] | ._source.log'
+$(command curl --header 'Content-Type: application/json' --insecure --silent "${OPENSEARCH_ARGS[@]}" --data '{"query": {"match_all": {}}}' "${OPENSEARCH_ENDPOINT}/logstash-*/_search?pretty" | jq --raw-output '.hits.hits[] | ._source.log')
 EOF
         fi
 
