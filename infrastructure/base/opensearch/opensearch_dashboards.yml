@@ -35,6 +35,7 @@ opensearch.requestTimeout: 600000
 opensearch.shardTimeout: 0
 
 server.keepaliveTimeout: 600000
+server.socketTimeout: 600000
 
 # Logs queries sent to OpenSearch. Requires logging.verbose set to true.
 opensearch.logQueries: true
