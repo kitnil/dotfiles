@@ -27,6 +27,14 @@ $(kubectl get -n "$namespace" scaledobjects)
 
 EOF
         fi
+        if [[ $(kubectl get -n "$namespace" scaledjobs -o json | jq '.items | length') -gt 0 ]]
+        then
+            cat <<EOF
+$ kubectl get -n "$namespace" scaledjobs
+$(kubectl get -n "$namespace" scaledjobs)
+
+EOF
+        fi
         case "$KUBECONFIG" in
             *config-mjru-cluster1)
                 PROMETHEUS_URL=https://prometheus.corp1.majordomo.ru
@@ -77,6 +85,18 @@ EOF
         if kubectl get -n "$namespace" scaledobjects &> /dev/null
         then
             mapfile -t queries < <(kubectl get -n "$namespace" scaledobjects "${namespace}-scaledobject" -o json | jq --raw-output '.spec.triggers[] | .metadata.query')
+            for query in "${queries[@]}"
+            do
+                cat <<EOF
+query: ${query}
+$(echo "$query" | curl --silent --get "${PROMETHEUS_URL}/api/v1/query" --data-urlencode query@-)
+
+EOF
+            done
+        fi
+        if kubectl get -n "$namespace" scaledjobs &> /dev/null
+        then
+            mapfile -t queries < <(kubectl get -n "$namespace" scaledjobs "${namespace}-scaledobject" -o json | jq --raw-output '.spec.triggers[] | .metadata.query')
             for query in "${queries[@]}"
             do
                 cat <<EOF
