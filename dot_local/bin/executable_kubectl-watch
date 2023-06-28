@@ -300,6 +300,20 @@ $(echo "$query" | curl --silent --get "${PROMETHEUS_URL}/api/v1/query" --data-ur
 EOF
         fi
 
+        if [[ $namespace == "smtp" ]]
+        then
+            mapfile -t smtp_hosts < <(getent hosts smtpout1.majordomo.ru smtpout2.majordomo.ru | cut -f 1 -d ' ')
+            smtp_hosts+=(78.108.86.12) # on smtp-staff.intr server.
+            cat <<EOF
+
+mxtoolbox.com:
+EOF
+            for host in "${smtp_hosts[@]}"
+            do
+                echo "https://mxtoolbox.com/SuperTool.aspx?action=blacklist%3a${host}&run=toolpage" 
+            done
+        fi
+
         if [[ $namespace == "redis" ]]
         then
             cat <<EOF
