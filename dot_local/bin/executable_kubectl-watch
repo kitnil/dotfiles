@@ -288,6 +288,18 @@ $(command curl --header 'Content-Type: application/json' --insecure --silent "${
 EOF
         fi
 
+        if [[ $namespace == "mda" ]]
+        then
+            query='
+node_filesystem_free_bytes{instance="172.16.103.230:9100", fstype!="tmpfs", fstype!="ramfs", mountpoint!="/", mountpoint!="/nix/store", mountpoint!="/boot"}
+or node_filesystem_free_bytes{instance="172.16.103.47:9100", fstype!="tmpfs", fstype!="ramfs", mountpoint!="/", mountpoint!="/nix/store", mountpoint!="/boot"}
+'
+            cat <<EOF
+query: ${query}
+$(echo "$query" | curl --silent --get "${PROMETHEUS_URL}/api/v1/query" --data-urlencode query@- | jq --raw-output '.data.result[] | .value[1]' | numfmt --to=iec-i --suffix=B | xargs echo)
+EOF
+        fi
+
         if [[ $namespace == "redis" ]]
         then
             cat <<EOF
