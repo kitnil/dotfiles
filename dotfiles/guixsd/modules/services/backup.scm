@@ -210,48 +210,51 @@
          (lvm2-snapshot-device (string-append device "-snap")))
     (program-file
      (string-append "restic-backup-" vg "-" lv)
-     #~(if #$(predicate)
-           (begin
-             (format #t "Creating new Restic ~a snapshot~%" #$device)
-             (setenv "RESTIC_PASSWORD" #$(restic-password))
-             (zero?
-              (system
-               (string-join
-                (append (list #$dd-binary
-                              (string-append "if=" #$device)
-                              "bs=4M" "status=none")
-                        (list "|")
-                        (list #$restic-binary "--repo" #$restic-repository
-                              "backup" "--stdin" "--stdin-filename"
-                              #$(string-append lv ".img")))))))
-           (every identity
-                  (list
-                   (begin
-                     (format #t "Creating new LVM ~a snapshot~%" #$device)
-                     (system* #$lvcreate-binary
-                              "--size" #$lvm2-snapshot-size
-                              "--name" #$lvm2-snapshot-name
-                              "--snapshot" #$device))
-                   (begin
-                     (format #t "Creating new Restic ~a snapshot~%" #$device)
-                     (setenv "RESTIC_PASSWORD" #$(restic-password))
-                     (zero?
-                      (system
-                       (string-join
-                        (append (list #$dd-binary
-                                      (string-append "if=" #$lvm2-snapshot-device)
-                                      "bs=4M" "status=none")
-                                (list "|")
-                                (list #$restic-binary "--repo" #$restic-repository
-                                      "backup" "--tag" "snapshot"
-                                      "--stdin" "--stdin-filename"
-                                      #$(string-append lv ".img")))))))
-                   (begin
-                     (format #t "Delete LVM snapshot and save changes ~a snapshot~%"
-                             #$lvm2-snapshot-device)
-                     (zero?
-                      (system* #$lvremove-binary "--yes"
-                               #$lvm2-snapshot-device)))))))))
+     #~(begin
+         (use-modules (ice-9 rdelim)
+                      (srfi srfi-1))
+         (if #$(predicate)
+             (begin
+               (format #t "Creating new Restic ~a snapshot~%" #$device)
+               (setenv "RESTIC_PASSWORD" #$(restic-password))
+               (zero?
+                (system
+                 (string-join
+                  (append (list #$dd-binary
+                                (string-append "if=" #$device)
+                                "bs=4M" "status=none")
+                          (list "|")
+                          (list #$restic-binary "--repo" #$restic-repository
+                                "backup" "--stdin" "--stdin-filename"
+                                #$(string-append lv ".img")))))))
+             (every identity
+                    (list
+                     (begin
+                       (format #t "Creating new LVM ~a snapshot~%" #$device)
+                       (system* #$lvcreate-binary
+                                "--size" #$lvm2-snapshot-size
+                                "--name" #$lvm2-snapshot-name
+                                "--snapshot" #$device))
+                     (begin
+                       (format #t "Creating new Restic ~a snapshot~%" #$device)
+                       (setenv "RESTIC_PASSWORD" #$(restic-password))
+                       (zero?
+                        (system
+                         (string-join
+                          (append (list #$dd-binary
+                                        (string-append "if=" #$lvm2-snapshot-device)
+                                        "bs=4M" "status=none")
+                                  (list "|")
+                                  (list #$restic-binary "--repo" #$restic-repository
+                                        "backup" "--tag" "snapshot"
+                                        "--stdin" "--stdin-filename"
+                                        #$(string-append lv ".img")))))))
+                     (begin
+                       (format #t "Delete LVM snapshot and save changes ~a snapshot~%"
+                               #$lvm2-snapshot-device)
+                       (zero?
+                        (system* #$lvremove-binary "--yes"
+                                 #$lvm2-snapshot-device))))))))))
 
 (define (win10-shut-off?)
   #~(begin
