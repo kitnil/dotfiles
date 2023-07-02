@@ -79,7 +79,7 @@
 (add-hook 'vterm-mode-hook 'emojify-mode)
 
 (setq vterm-max-scrollback 100000)
-(setq vterm-min-window-width 160)
+(setq vterm-min-window-width 110)
 
 (defun vterm-dabbrev-expand-wrapper ()
   (save-current-buffer
