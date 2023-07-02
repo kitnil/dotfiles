@@ -43,6 +43,7 @@
         ("https://planet.emacslife.com/atom.xml" planet)
         ("https://twitchrss.appspot.com/vod/artgameslp" game video)
         ("https://habr.com/ru/users/Gim6626/rss/posts/?fl=ru" news) ;FOSS News - дайджест новостей и других материалов о свободном и открытом ПО
+        ("https://habr.com/rss/flows/admin/all" habr admin)
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCRb4fTtfgVtXbvjlqGDocDg" lisp video) ;Andrew Kravchuk - Darkness Looming: The Dawn
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA" video) ;Mental Outlaw
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCq2QwnKW79w4a55ZQqOBReg" video) ;Irishluck Linux
