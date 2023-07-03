@@ -49,6 +49,7 @@
         ("https://habr.com/rss/hub/network_hardware/all" habr networking hardware)
         ("https://habr.com/rss/hub/hardware/all" habr hardware)
         ("https://habr.com/rss/hub/open_source/all" habr programming)
+        ("https://habr.com/rss/hub/linux_dev/all" habr programming linux)
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCRb4fTtfgVtXbvjlqGDocDg" lisp video) ;Andrew Kravchuk - Darkness Looming: The Dawn
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UC7YOGHUfC1Tb6E4pudI9STA" video) ;Mental Outlaw
         ("https://www.youtube.com/feeds/videos.xml?channel_id=UCq2QwnKW79w4a55ZQqOBReg" video) ;Irishluck Linux
