@@ -271,6 +271,9 @@ EOF
         then
             cat <<EOF
 
+$ curl --insecure --silent -XGET "${OPENSEARCH_ENDPOINT}/_cluster/state/nodes?pretty"
+$(curl --insecure --silent "${OPENSEARCH_ARGS[@]}" -XGET "${OPENSEARCH_ENDPOINT}/_cluster/state/nodes?pretty")
+
 $ curl --insecure --silent -XGET "${OPENSEARCH_ENDPOINT}/_cat/allocation?v"
 $(curl --insecure --silent "${OPENSEARCH_ARGS[@]}" -XGET "${OPENSEARCH_ENDPOINT}/_cat/allocation?v")
 
