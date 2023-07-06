@@ -1,4 +1,4 @@
-<domain type='kvm' id='5' xmlns:qemu='http://libvirt.org/schemas/domain/qemu/1.0'>
+<domain type='kvm' id='6' xmlns:qemu='http://libvirt.org/schemas/domain/qemu/1.0'>
   <name>win10</name>
   <uuid>32ba10e9-3ec6-46e6-bcfa-a0ab8344bb76</uuid>
   <metadata>
@@ -39,18 +39,7 @@
       <relaxed state='on'/>
       <vapic state='on'/>
       <spinlocks state='on' retries='8191'/>
-      <vpindex state='on'/>
-      <synic state='on'/>
-      <stimer state='on'>
-        <direct state='on'/>
-      </stimer>
-      <reset state='on'/>
       <vendor_id state='on' value='quantum5.ca'/>
-      <frequencies state='on'/>
-      <reenlightenment state='on'/>
-      <tlbflush state='on'/>
-      <ipi state='on'/>
-      <evmcs state='off'/>
     </hyperv>
     <kvm>
       <hidden state='on'/>
