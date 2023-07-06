@@ -291,6 +291,20 @@ $(command curl --header 'Content-Type: application/json' --insecure --silent "${
 EOF
         fi
 
+        if [[ $namespace == "harbor" ]]
+        then
+            cat <<EOF
+$ git ls-remote https://gitlab.corp1.majordomo.ru/cd/tf-harbor.git master
+$(git ls-remote https://gitlab.corp1.majordomo.ru/cd/tf-harbor.git master)
+
+$ kubectl get -n flux-system gitrepositories.source.toolkit.fluxcd.io tf-harbor
+$(kubectl get -n flux-system gitrepositories.source.toolkit.fluxcd.io tf-harbor)
+
+$ kubectl describe -n flux-system terraforms.infra.contrib.fluxcd.io tf-harbor
+$(kubectl describe -n flux-system terraforms.infra.contrib.fluxcd.io tf-harbor)
+EOF
+        fi
+
         if [[ $namespace == "mda" ]]
         then
             query='
