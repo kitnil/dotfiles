@@ -16,6 +16,7 @@
 
       vosk-overlay = (final: prev:
         {
+          # Model only, used as input for vosk package
           vosk-model-small-en-us = prev.stdenv.mkDerivation rec {
             version = "0.15";
             pname = "vosk-model-small-en-us";
@@ -34,7 +35,7 @@
           };
           
           vosk = with prev.python3.pkgs;
-            buildPythonPackage rec {
+            buildPythonApplication rec {
               pname = "Vosk";
               version = "0.3.45";
               format = "wheel";
