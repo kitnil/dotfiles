@@ -48,15 +48,10 @@
                 homepage = "https://pypi.org/project/vosk/";
                 description = "Offline open source speech recognition API based on Kaldi and Vosk";
               };
-              # TODO: Use absolute path for vosk-transcriber
-              voskScript = prev.writeShellScript "vosk" ''
-              vosk-transcriber \
-                --model ${final.vosk-model-small-en-us}/share/vosk/models/vosk-model-small-en-us \
-                $@
-              '';
+              nativeBuildInputs = [final.makeWrapper];
               postInstall = ''
-              mkdir -p $out/bin
-              cp ${voskScript} $out/bin/vosk
+              makeWrapper $out/bin/vosk-transcriber $out/bin/vosk \
+                --add-flags "--model ${final.vosk-model-small-en-us}/share/vosk/models/vosk-model-small-en-us"
               '';
             };
         }
