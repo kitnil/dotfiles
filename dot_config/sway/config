@@ -223,6 +223,13 @@ bindsym $mod+y exec clipman pick -t wofi
     bindsym Ctrl+Print exec grim -g "$(slurp -d)" -t png
 
 #
+# Notifications
+#
+
+    bindsym $mod+n exec makoctl dismiss
+    bindsym $mod+Shift+n exec makoctl dismiss --all
+
+#
 # Resizing containers:
 #
 mode "resize" {
