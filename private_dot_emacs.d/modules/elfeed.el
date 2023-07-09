@@ -28,6 +28,7 @@
         ("https://sachachua.com/blog/feed/" emacs)
         ("https://www.reddit.com/r/freegames/.rss" game freegames)
         ("https://www.reddit.com/r/selfhosted/.rss" reddit selfhosted)
+        ("https://www.reddit.com/r/homelab/.rss" reddit homelab)
 
         ;; ("https://github.com/alebcay/awesome-shell/commits/master.atom" vc bash awesome)
         ;; ("https://github.com/awesome-selfhosted/awesome-selfhosted/commits/master.atom" vc awesome selfhosted)
