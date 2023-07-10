@@ -22,7 +22,8 @@
   #:use-module (gnu services)
   #:use-module (guix gexp)
   #:use-module (srfi srfi-1)
-  #:export (vm-win2022-service-type))
+  #:export (vm-win10-service-type
+            vm-win2022-service-type))
 
 ;;; Commentary:
 ;;;
@@ -61,5 +62,42 @@
                              vm-win2022-log-rotations)))
    (default-value '())
    (description "Run the vm-win2022.")))
+
+
+;;;
+;;; Windows 10
+;;;
+
+(define %vm-win10-log
+  "/var/log/vm-win10.log")
+
+(define (vm-win10-log-rotations config)
+  (list (log-rotation
+         (files (list %vm-win10-log)))))
+
+(define (vm-win10-shepherd-service config)
+  (list
+   (shepherd-service
+    (provision '(vm-win10))
+    (documentation "Run Windows 10 virtual machine.")
+    (requirement '())
+    (start #~(make-forkexec-constructor
+              (list "/home/oleg/.local/share/chezmoi/dot_local/bin/executable_virsh"
+                    "start" "win10")
+              #:environment-variables '("VIRSH_DAEMON=true")
+              #:log-file #$%vm-win10-log))
+    (respawn? #t) ;XXX: Fix race condition with Docker
+    (stop #~(make-kill-destructor)))))
+
+(define vm-win10-service-type
+  (service-type
+   (name 'vm-win10)
+   (extensions
+    (list (service-extension shepherd-root-service-type
+                             vm-win10-shepherd-service)
+          (service-extension rottlog-service-type
+                             vm-win10-log-rotations)))
+   (default-value '())
+   (description "Run the vm-win10.")))
 
 ;;; virtualization.scm ends here
