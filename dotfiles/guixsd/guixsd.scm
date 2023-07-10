@@ -2298,7 +2298,7 @@ namespaces = [ ]
                                   (virtlog-configuration
                                    (max-clients 1000)))
 
-                         (service vm-win2022-service-type)
+                         (service vm-win10-service-type)
 
                          (bluetooth-service #:auto-enable? #t))
 
