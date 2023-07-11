@@ -274,20 +274,20 @@ EOF
 $ curl --max-time 2 --insecure --silent -XGET "${OPENSEARCH_ENDPOINT}/_cluster/state/nodes?pretty"
 $(curl --max-time 2 --insecure --silent "${OPENSEARCH_ARGS[@]}" -XGET "${OPENSEARCH_ENDPOINT}/_cluster/state/nodes?pretty")
 
-$ curl --max-time 2 --insecure --silent -XGET "${OPENSEARCH_ENDPOINT}/_cat/allocation?v"
-$(curl --max-time 2 --insecure --silent "${OPENSEARCH_ARGS[@]}" -XGET "${OPENSEARCH_ENDPOINT}/_cat/allocation?v")
+$ curl --max-time 2 --insecure --silent -XGET "${OPENSEARCH_ENDPOINT}/_cat/allocation?v&pretty"
+$(curl --max-time 2 --insecure --silent "${OPENSEARCH_ARGS[@]}" -XGET "${OPENSEARCH_ENDPOINT}/_cat/allocation?v&pretty" | awk '{ print $9, $0 | "column --table" }' | awk '{ print $10="", $0 | "column --table" }' | awk 'NR<2{print $0;next}{print $0| "sort --version-sort"}')
 
 $ curl --max-time 2 --insecure --silent -XGET "${OPENSEARCH_ENDPOINT}/_cluster/health?pretty"
 $(curl --max-time 2 --insecure --silent "${OPENSEARCH_ARGS[@]}" -XGET "${OPENSEARCH_ENDPOINT}/_cluster/health?pretty")
 
 $ curl --max-time 2 --insecure --silent "${OPENSEARCH_ENDPOINT}/_cat/indices?v&pretty"
-$(command curl --max-time 2 --insecure --silent "${OPENSEARCH_ARGS[@]}" "${OPENSEARCH_ENDPOINT}/_cat/indices?v&pretty" | awk 'NR<3{print $0;next}{print $0| "sort --key=2 --version-sort"}')
+$(command curl --max-time 2 --insecure --silent "${OPENSEARCH_ARGS[@]}" "${OPENSEARCH_ENDPOINT}/_cat/indices?v&pretty" | awk '{ print $3, $0 | "column --table" }' | awk '{ print $4="", $0 | "column --table" }' | awk 'NR<2{print $0;next}{print $0| "sort --version-sort"}')
 
-$ curl --max-time 2 --insecure --silent "${OPENSEARCH_ENDPOINT}/_cat/shards?pretty"
-$(command curl --max-time 2 --insecure --silent "${OPENSEARCH_ARGS[@]}" "${OPENSEARCH_ENDPOINT}/_cat/shards?pretty" | awk 'NR<3{print $0;next}{print $0| "sort --version-sort"}')
+$ curl --max-time 2 --insecure --silent "${OPENSEARCH_ENDPOINT}/_cat/shards?v&pretty"
+$(command curl --max-time 2 --insecure --silent "${OPENSEARCH_ARGS[@]}" "${OPENSEARCH_ENDPOINT}/_cat/shards?v&pretty" | awk '{ print $1 "@" $NF, $0 | "column --table" }' | awk '{ print $2="", $NF="", $0 | "column --table" }' | awk 'NR<2{print $0;next}{print $0| "sort --version-sort"}')
 
-$ curl --max-time 2 --header 'Content-Type: application/json' --insecure --silent --data '{"query": {"match_all": {}}}' "${OPENSEARCH_ENDPOINT}/logstash-*/_search?pretty" | jq --raw-output '.hits.hits[] | ._source.log'
-$(command curl --max-time 2 --header 'Content-Type: application/json' --insecure --silent "${OPENSEARCH_ARGS[@]}" --data '{"query": {"match_all": {}}}' "${OPENSEARCH_ENDPOINT}/logstash-*/_search?pretty" | jq --raw-output '.hits.hits[] | ._source.log')
+$ curl --max-time 2 --header 'Content-Type: application/json' --insecure --silent --data '{"query": {"match_all": {}}}' "${OPENSEARCH_ENDPOINT}/logstash-*/_search" | jq --raw-output '.hits.hits[] | ._source.log'
+$(command curl --max-time 2 --header 'Content-Type: application/json' --insecure --silent "${OPENSEARCH_ARGS[@]}" --data '{"query": {"match_all": {}}}' "${OPENSEARCH_ENDPOINT}/logstash-*/_search" | jq --raw-output '.hits.hits[] | ._source.log')
 EOF
         fi
 
