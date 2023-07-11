@@ -2021,6 +2021,20 @@ complete -F __lazy_helm helm
 
 kubectl()
 {
+    new_args=()
+    for var in "$@"
+    do
+        if [[ $var == delete ]]
+        then
+            read -r -p "kubectl: delete? " kubectl_delete_agree
+            if [[ $kubectl_delete_agree == "yes" ]]
+            then
+                :
+            else
+                return 1
+            fi
+        fi
+    done
     case "$1" in
         drain)
             if [[ -z "$2" ]]
