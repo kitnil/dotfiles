@@ -89,7 +89,7 @@ EOF
             do
                 cat <<EOF
 query: ${query}
-$(echo "$query" | curl --silent --get "${PROMETHEUS_URL}/api/v1/query" --data-urlencode query@-)
+$(echo "$query" | curl --max-time 2 --silent --get "${PROMETHEUS_URL}/api/v1/query" --data-urlencode query@-)
 
 EOF
             done
@@ -101,7 +101,7 @@ EOF
             do
                 cat <<EOF
 query: ${query}
-$(echo "$query" | curl --silent --get "${PROMETHEUS_URL}/api/v1/query" --data-urlencode query@-)
+$(echo "$query" | curl --max-time 2 --silent --get "${PROMETHEUS_URL}/api/v1/query" --data-urlencode query@-)
 
 EOF
             done
@@ -189,7 +189,7 @@ EOF
                     query="backup_${namespace_suffix}_${metrics}_total{namespace=\"$namespace\"}"
                     cat <<EOF
 query: ${query}
-$(echo "$query" | curl --silent --get "${PROMETHEUS_URL}/api/v1/query" --data-urlencode query@- | jq --raw-output '.data.result[] | .value[1]' | xargs echo)
+$(echo "$query" | curl --max-time 2 --silent --get "${PROMETHEUS_URL}/api/v1/query" --data-urlencode query@- | jq --raw-output '.data.result[] | .value[1]' | xargs echo)
 
 EOF
                 done
@@ -218,7 +218,7 @@ EOF
                 query="probe_http_status_code{instance=\"https://${host}/\"}"
                 cat <<EOF
 query: ${query}
-$(echo "$query" | curl --silent --get "${PROMETHEUS_URL}/api/v1/query" --data-urlencode query@-)
+$(echo "$query" | curl --max-time 2 --silent --get "${PROMETHEUS_URL}/api/v1/query" --data-urlencode query@-)
 
 EOF
             done
@@ -244,7 +244,7 @@ EOF
         query="kubelet_volume_stats_available_bytes{job=\"kubelet\", metrics_path=\"/metrics\", namespace=\"$namespace\"}"
         cat <<EOF
 query: ${query}
-$(echo "$query" | curl --silent --get "${PROMETHEUS_URL}/api/v1/query" --data-urlencode query@- | jq --raw-output '.data.result[] | .value[1]' | numfmt --to=iec-i --suffix=B | xargs echo)
+$(echo "$query" | curl --max-time 2 --silent --get "${PROMETHEUS_URL}/api/v1/query" --data-urlencode query@- | jq --raw-output '.data.result[] | .value[1]' | numfmt --to=iec-i --suffix=B | xargs echo)
 
 $ kubectl get networkpolicies --namespace "$namespace" -o wide
 $(kubectl get networkpolicies --namespace "$namespace" -o wide)
@@ -271,23 +271,23 @@ EOF
         then
             cat <<EOF
 
-$ curl --insecure --silent -XGET "${OPENSEARCH_ENDPOINT}/_cluster/state/nodes?pretty"
-$(curl --insecure --silent "${OPENSEARCH_ARGS[@]}" -XGET "${OPENSEARCH_ENDPOINT}/_cluster/state/nodes?pretty")
+$ curl --max-time 2 --insecure --silent -XGET "${OPENSEARCH_ENDPOINT}/_cluster/state/nodes?pretty"
+$(curl --max-time 2 --insecure --silent "${OPENSEARCH_ARGS[@]}" -XGET "${OPENSEARCH_ENDPOINT}/_cluster/state/nodes?pretty")
 
-$ curl --insecure --silent -XGET "${OPENSEARCH_ENDPOINT}/_cat/allocation?v"
-$(curl --insecure --silent "${OPENSEARCH_ARGS[@]}" -XGET "${OPENSEARCH_ENDPOINT}/_cat/allocation?v")
+$ curl --max-time 2 --insecure --silent -XGET "${OPENSEARCH_ENDPOINT}/_cat/allocation?v"
+$(curl --max-time 2 --insecure --silent "${OPENSEARCH_ARGS[@]}" -XGET "${OPENSEARCH_ENDPOINT}/_cat/allocation?v")
 
-$ curl --insecure --silent -XGET "${OPENSEARCH_ENDPOINT}/_cluster/health?pretty"
-$(curl --insecure --silent "${OPENSEARCH_ARGS[@]}" -XGET "${OPENSEARCH_ENDPOINT}/_cluster/health?pretty")
+$ curl --max-time 2 --insecure --silent -XGET "${OPENSEARCH_ENDPOINT}/_cluster/health?pretty"
+$(curl --max-time 2 --insecure --silent "${OPENSEARCH_ARGS[@]}" -XGET "${OPENSEARCH_ENDPOINT}/_cluster/health?pretty")
 
-$ curl --insecure --silent "${OPENSEARCH_ENDPOINT}/_cat/indices?v&pretty"
-$(command curl --insecure --silent "${OPENSEARCH_ARGS[@]}" "${OPENSEARCH_ENDPOINT}/_cat/indices?v&pretty" | awk 'NR<3{print $0;next}{print $0| "sort --key=2 --version-sort"}')
+$ curl --max-time 2 --insecure --silent "${OPENSEARCH_ENDPOINT}/_cat/indices?v&pretty"
+$(command curl --max-time 2 --insecure --silent "${OPENSEARCH_ARGS[@]}" "${OPENSEARCH_ENDPOINT}/_cat/indices?v&pretty" | awk 'NR<3{print $0;next}{print $0| "sort --key=2 --version-sort"}')
 
-$ curl --insecure --silent "${OPENSEARCH_ENDPOINT}/_cat/shards?pretty"
-$(command curl --insecure --silent "${OPENSEARCH_ARGS[@]}" "${OPENSEARCH_ENDPOINT}/_cat/shards?pretty" | awk 'NR<3{print $0;next}{print $0| "sort --version-sort"}')
+$ curl --max-time 2 --insecure --silent "${OPENSEARCH_ENDPOINT}/_cat/shards?pretty"
+$(command curl --max-time 2 --insecure --silent "${OPENSEARCH_ARGS[@]}" "${OPENSEARCH_ENDPOINT}/_cat/shards?pretty" | awk 'NR<3{print $0;next}{print $0| "sort --version-sort"}')
 
-$ curl --header 'Content-Type: application/json' --insecure --silent --data '{"query": {"match_all": {}}}' "${OPENSEARCH_ENDPOINT}/logstash-*/_search?pretty" | jq --raw-output '.hits.hits[] | ._source.log'
-$(command curl --header 'Content-Type: application/json' --insecure --silent "${OPENSEARCH_ARGS[@]}" --data '{"query": {"match_all": {}}}' "${OPENSEARCH_ENDPOINT}/logstash-*/_search?pretty" | jq --raw-output '.hits.hits[] | ._source.log')
+$ curl --max-time 2 --header 'Content-Type: application/json' --insecure --silent --data '{"query": {"match_all": {}}}' "${OPENSEARCH_ENDPOINT}/logstash-*/_search?pretty" | jq --raw-output '.hits.hits[] | ._source.log'
+$(command curl --max-time 2 --header 'Content-Type: application/json' --insecure --silent "${OPENSEARCH_ARGS[@]}" --data '{"query": {"match_all": {}}}' "${OPENSEARCH_ENDPOINT}/logstash-*/_search?pretty" | jq --raw-output '.hits.hits[] | ._source.log')
 EOF
         fi
 
@@ -313,7 +313,7 @@ or node_filesystem_free_bytes{instance="172.16.103.47:9100", fstype!="tmpfs", fs
 '
             cat <<EOF
 query: ${query}
-$(echo "$query" | curl --silent --get "${PROMETHEUS_URL}/api/v1/query" --data-urlencode query@- | jq --raw-output '.data.result[] | .value[1]' | numfmt --to=iec-i --suffix=B | xargs echo)
+$(echo "$query" | curl --max-time 2 --silent --get "${PROMETHEUS_URL}/api/v1/query" --data-urlencode query@- | jq --raw-output '.data.result[] | .value[1]' | numfmt --to=iec-i --suffix=B | xargs echo)
 EOF
         fi
 
