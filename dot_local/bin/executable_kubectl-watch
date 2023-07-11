@@ -38,7 +38,7 @@ EOF
         case "$KUBECONFIG" in
             *config-mjru-cluster1)
                 PROMETHEUS_URL=https://prometheus.corp1.majordomo.ru
-                OPENSEARCH_ENDPOINT="https://opensearch.corp1.majordomo.ru:9200"
+                OPENSEARCH_ENDPOINT="https://opensearch.corp1.majordomo.ru"
                 OPENSEARCH_PASSWORD="$(pass show majordomo/public/opensearch-dashboards/admin)"
                 OPENSEARCH_ARGS=(
                     --user "admin:${OPENSEARCH_PASSWORD}"
