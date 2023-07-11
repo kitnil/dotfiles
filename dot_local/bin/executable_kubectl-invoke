@@ -41,7 +41,10 @@
              (alist-cons 'memory arg result)))
    (option '(#\i "image") #t #f
            (lambda (opt name arg result)
-             (alist-cons 'image arg result)))))
+             (alist-cons 'image arg result)))
+   (option '(#\S "spec") #t #f
+           (lambda (opt name arg result)
+             (alist-cons 'spec arg result)))))
 
 (define %default-options
   '(()))
@@ -64,6 +67,11 @@
   (define cpu (assoc-ref opts 'cpu))
   (define memory (assoc-ref opts 'memory))
   (define image (assoc-ref opts 'image))
+  (define spec
+    (let ((spec (assoc-ref opts 'spec)))
+      (if spec
+          (json-string->scm spec)
+          '())))
   (case (string->symbol format)
     ((busybox)
      (let ((labels '(("app.kubernetes.io/name" . "busybox"))))
@@ -139,7 +147,8 @@
                                  ("operator" . "Equal")
                                  ("key" . "unschedulable"))))
                              ("nodeSelector"
-                              ("kubernetes.io/hostname" . ,host)))
+                              ("kubernetes.io/hostname" . ,host))
+                             ,@spec)
                             ("apiVersion" . "v1"))))))
                       '())
                 ,(string-append "nixery-" (random-string))
