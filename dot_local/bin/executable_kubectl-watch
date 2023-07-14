@@ -128,6 +128,9 @@ EOF
 $ kubectl -n "$namespace" get helmreleases.helm.toolkit.fluxcd.io "$helmrelease"
 $(kubectl -n "$namespace" get helmreleases.helm.toolkit.fluxcd.io "$helmrelease")
 
+$ kubectl -n "$namespace" get -o json helmreleases.helm.toolkit.fluxcd.io "$helmrelease" | yq -y .status
+$(kubectl -n "$namespace" get -o json helmreleases.helm.toolkit.fluxcd.io "$helmrelease" | yq -y .status)
+
 EOF
             fi
         done
