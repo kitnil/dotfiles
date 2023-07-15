@@ -6,6 +6,89 @@ then
 else
     namespace="$1"
     export namespace
+    opensearch_query()
+    {
+            cat <<EOF
+{
+  "version": true,
+  "size": 1000,
+  "sort": [
+    {
+      "@timestamp": {
+        "order": "desc",
+        "unmapped_type": "boolean"
+      }
+    }
+  ],
+  "aggs": {
+    "2": {
+      "date_histogram": {
+        "field": "@timestamp",
+        "calendar_interval": "1m",
+        "time_zone": "Europe/Moscow",
+        "min_doc_count": 1
+      }
+    }
+  },
+  "stored_fields": [
+    "*"
+  ],
+  "script_fields": {},
+  "docvalue_fields": [
+    {
+      "field": "@timestamp",
+      "format": "date_time"
+    },
+    {
+      "field": "time",
+      "format": "date_time"
+    }
+  ],
+  "_source": {
+    "excludes": []
+  },
+  "query": {
+    "bool": {
+      "must": [],
+      "filter": [
+        {
+          "match_all": {}
+        },
+        {
+          "match_phrase": {
+            "kubernetes.namespace_name.keyword": "$namespace"
+          }
+        },
+        {
+          "range": {
+            "@timestamp": {
+              "gte": "$(date -u -d "-60 minutes" +"%Y-%m-%dT%H:%M:%S.%3NZ")",
+              "lte": "$(date -u +"%Y-%m-%dT%H:%M:%S.%3NZ")",
+              "format": "strict_date_optional_time"
+            }
+          }
+        }
+      ],
+      "should": [],
+      "must_not": []
+    }
+  },
+  "highlight": {
+    "pre_tags": [
+      "@opensearch-dashboards-highlighted-field@"
+    ],
+    "post_tags": [
+      "@/opensearch-dashboards-highlighted-field@"
+    ],
+    "fields": {
+      "*": {}
+    },
+    "fragment_size": 2147483647
+  }
+}
+EOF
+    }
+    export -f opensearch_query
     viddy_command()
     {
         case "$namespace" in
@@ -464,6 +547,12 @@ $(VAULT_ADDR="$vault_addr" "${HOME}/.nix-profile/bin/vault" status)
 EOF
             done
         fi
+
+        echo -e "\n$ curl --max-time 5 --insecure --silent ${OPENSEARCH_ENDPOINT}/logstash-*/_search"
+        echo "$(opensearch_query)" \
+            | curl --max-time 5 --insecure --silent "${OPENSEARCH_ARGS[@]}" --header 'Content-Type: application/json' --data @- "${OPENSEARCH_ENDPOINT}/logstash-*/_search" \
+            | jq --raw-output '.hits.hits | group_by(._source.kubernetes.pod_name)[][] | [._source.kubernetes.pod_name, ._source.log] | @tsv' \
+            | sort --version-sort
     }
     export -f viddy_command
     viddy_args=(
