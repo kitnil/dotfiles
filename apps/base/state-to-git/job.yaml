@@ -1,69 +1,66 @@
 apiVersion: batch/v1
-kind: CronJob
+kind: Job
 metadata:
   name: h3c-configuration-to-version-control
 spec:
-  schedule: "0 * * * *" # every hour
-  jobTemplate:
+  template:
     spec:
-      template:
-        spec:
-          containers:
-          - name: state-to-git
-            image: docker-registry.wugi.info/monitoring/sw4-mr11:latest
-            command: ["/bin/h3c-configuration-to-version-control-sw4-mr11.intr"]
-            resources:
-              limits:
-                memory: 512Mi
-              requests:
-                memory: 512Mi
-            volumeMounts:
-            - mountPath: /home/oleg/.ssh/config
-              readOnly: true
-              name: ssh-config-file
-            - mountPath: /home/oleg/.ssh/known_hosts
-              subPath: known_hosts
-              readOnly: true
-              name: ssh-configuration
-            - mountPath: /home/oleg/.ssh/known_hosts2
-              subPath: known_hosts2
-              readOnly: true
-              name: ssh-configuration
-            - mountPath: /home/oleg/.gitconfig
-              subPath: .gitconfig
-              readOnly: true
-              name: git-configuration
-            - mountPath: /etc/passwd
-              subPath: passwd
-              readOnly: true
-              name: rootfs
-            - mountPath: /etc/guix/secrets/h3c
-              subPath: h3c
-              readOnly: true
-              name: ssh-password
-            - mountPath: /home/oleg/ansible-out
-              name: output
-          volumes:
-          - name: rootfs
-            configMap:
-              name: rootfs
-          - name: git-configuration
-            configMap:
-              name: git-configuration
-          - name: ssh-configuration
-            configMap:
-              name: ssh-configuration
-          - name: ssh-password
-            secret:
-              secretName: ssh-password
-          - name: output
-            hostPath:
-              path: /home/oleg/ansible-out
-          - name: ssh-private-key-0
-            hostPath:
-              path: /home/oleg/.ssh/id_rsa_majordomo_eng
-          - name: ssh-config-file
-            hostPath:
-              path: /home/oleg/.ssh/config
-          restartPolicy: Never
-      backoffLimit: 0
+      containers:
+      - name: state-to-git
+        image: docker-registry.wugi.info/monitoring/sw4-mr11:latest
+        command: ["/bin/h3c-configuration-to-version-control-sw4-mr11.intr"]
+        resources:
+          limits:
+            memory: 512Mi
+          requests:
+            memory: 512Mi
+        volumeMounts:
+        - mountPath: /home/oleg/.ssh/config
+          readOnly: true
+          name: ssh-config-file
+        - mountPath: /home/oleg/.ssh/known_hosts
+          subPath: known_hosts
+          readOnly: true
+          name: ssh-configuration
+        - mountPath: /home/oleg/.ssh/known_hosts2
+          subPath: known_hosts2
+          readOnly: true
+          name: ssh-configuration
+        - mountPath: /home/oleg/.gitconfig
+          subPath: .gitconfig
+          readOnly: true
+          name: git-configuration
+        - mountPath: /etc/passwd
+          subPath: passwd
+          readOnly: true
+          name: rootfs
+        - mountPath: /etc/guix/secrets/h3c
+          subPath: h3c
+          readOnly: true
+          name: ssh-password
+        - mountPath: /home/oleg/ansible-out
+          name: output
+      volumes:
+      - name: rootfs
+        configMap:
+          name: rootfs
+      - name: git-configuration
+        configMap:
+          name: git-configuration
+      - name: ssh-configuration
+        configMap:
+          name: ssh-configuration
+      - name: ssh-password
+        secret:
+          secretName: ssh-password
+      - name: output
+        hostPath:
+          path: /home/oleg/ansible-out
+      - name: ssh-private-key-0
+        hostPath:
+          path: /home/oleg/.ssh/id_rsa_majordomo_eng
+      - name: ssh-config-file
+        hostPath:
+          path: /home/oleg/.ssh/config
+      restartPolicy: Never
+  backoffLimit: 0

@@ -1,13 +1,11 @@
 apiVersion: batch/v1
-kind: CronJob
+kind: Job
 metadata:
   name: h3c-configuration-to-version-control
 spec:
-  jobTemplate:
+  template:
     spec:
-      template:
-        spec:
-          containers:
-          - name: state-to-git
-            image: docker-registry.wugi.info/monitoring/sw4-mr11:latest
-            command: ["/bin/h3c-configuration-to-version-control-sw4-mr11.intr"]
+      containers:
+      - name: state-to-git
+        image: docker-registry.wugi.info/monitoring/sw4-mr11:latest
+        command: ["/bin/h3c-configuration-to-version-control-sw4-mr11.intr"]
