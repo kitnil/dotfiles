@@ -516,6 +516,17 @@ location / {
                                     "vlan_mode=native-untagged")))
                             (system* #$vxlan0)
 
+                            (iptables
+                             (string-join
+                              '("-t" "nat"
+                                "-A" "OUTPUT"
+                                "-s" "192.168.0.0/24"
+                                "-d" "141.80.181.40/32"
+                                "-p" "tcp"
+                                "--syn"
+                                "-j" "REDIRECT"
+                                "--to-ports" "9040")))
+
                             ;; # notebook->guixsd->ci.guix.gnu.org
                             (iptables
                              (string-join
