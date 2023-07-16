@@ -9,3 +9,12 @@ spec:
       - name: state-to-git
         image: docker-registry.wugi.info/monitoring/sr1-mr13-14:latest
         command: ["/bin/juniper-configuration-to-version-control-sr1-mr13-14.intr"]
+        volumeMounts:
+        - mountPath: /home/oleg/.ssh/config
+          subPath: config
+          readOnly: true
+          name: ssh-configuration
+        - mountPath: /home/oleg/.ssh/known_hosts
+          subPath: known_hosts
+          readOnly: true
+          name: ssh-configuration

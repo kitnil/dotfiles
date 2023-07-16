@@ -5,8 +5,3 @@ resources:
 - ../state-to-git
 patchesStrategicMerge:
 - job.yaml
-configMapGenerator:
-- name: ssh-configuration
-  files:
-  - config=rootfs/root/.ssh/config
-  - known_hosts=rootfs/root/.ssh/known_hosts
