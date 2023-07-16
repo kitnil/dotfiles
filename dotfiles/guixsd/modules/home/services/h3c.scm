@@ -27,7 +27,7 @@
                                #$(file-append openssh "/bin/ssh")
                                #$host "--" #$@command))
              (output (read-string port)))
-        (close-port port)
+        (close-pipe port)
         output)))
 
 (define (git-diff directory)
@@ -38,7 +38,7 @@
       (let* ((port (open-pipe* OPEN_READ #$(file-append git "/bin/git")
                                "diff" directory))
              (output (read-string port)))
-        (close-port port)
+        (close-pipe port)
         (= (string-length output) 0))))
 
 (define* (h3c-configuration->vc host #:optional ssh?)
