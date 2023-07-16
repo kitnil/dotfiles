@@ -5,4 +5,4 @@ nameSuffix: -sw4-mr12.intr
 resources:
 - ../state-to-git
 patchesStrategicMerge:
-- cronjob.yaml
+- job.yaml
