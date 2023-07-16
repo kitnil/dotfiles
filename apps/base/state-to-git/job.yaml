@@ -18,6 +18,14 @@ spec:
           name: rootfs
         - mountPath: /home/oleg/ansible-out
           name: output
+        securityContext:
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          runAsUser: 1000
+          runAsGroup: 998
       volumes:
       - name: rootfs
         configMap:
