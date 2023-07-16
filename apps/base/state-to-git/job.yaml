@@ -7,6 +7,9 @@ spec:
     spec:
       containers:
       - name: state-to-git
+        env:
+        - name: HOME
+          value: /home/oleg
         volumeMounts:
         - mountPath: /home/oleg/.gitconfig
           subPath: .gitconfig

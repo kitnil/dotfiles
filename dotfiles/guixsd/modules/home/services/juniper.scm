@@ -139,12 +139,7 @@
    (with-imported-modules '((guix build utils))
      #~(begin
          (use-modules (guix build utils))
-         (let ((git #$(file-append git "/bin/git"))
-               (pw (getpwnam "oleg")))
-           (setgroups '#())
-           (setgid (passwd:gid pw))
-           (setuid (passwd:uid pw))
-           (setenv "HOME" "/home/oleg") ;do not hardcode
+         (let ((git #$(file-append git "/bin/git")))
            (invoke #$(juniper-configuration->file config))
            (with-directory-excursion #$%ansible-state-directory
              (invoke git "add" #$(juniper-configuration-host config))

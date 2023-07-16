@@ -66,12 +66,7 @@
                       (guix utils))
          (let* ((directory (string-append #$%ansible-state-directory "/" #$host "/config"))
                 (file (string-append directory "/cisco.conf"))
-                (git #$(file-append git "/bin/git"))
-                (pw (getpwnam "oleg")))
-           (setgroups '#())
-           (setgid (passwd:gid pw))
-           (setuid (passwd:uid pw))
-           (setenv "HOME" "/home/oleg") ;do not hardcode
+                (git #$(file-append git "/bin/git")))
            (mkdir-p directory)
            (call-with-output-file (string-append directory "/cisco.conf")
              (lambda (port)
