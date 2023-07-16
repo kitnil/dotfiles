@@ -7,6 +7,7 @@ def main():
     enable_password = os.environ['ENABLE_PASSWORD']
 
     host = sys.argv[1]
+    port = 23
     command = " ".join(sys.argv[2:])
 
     if host == "sw1-dh507.intr" or host == "sw1-dh508.intr":
@@ -16,7 +17,7 @@ def main():
         prompt = host + ">"
         enable_prompt = host + "#"
 
-    child = pexpect.spawn("telnet " + host)
+    child = pexpect.spawn(f"telnet {host} {port}")
     child.logfile = None
 
     child.expect("Password:")
