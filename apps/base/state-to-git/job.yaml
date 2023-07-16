@@ -7,13 +7,6 @@ spec:
     spec:
       containers:
       - name: state-to-git
-        image: docker-registry.wugi.info/monitoring/sw4-mr11:latest
-        command: ["/bin/h3c-configuration-to-version-control-sw4-mr11.intr"]
-        resources:
-          limits:
-            memory: 512Mi
-          requests:
-            memory: 512Mi
         volumeMounts:
         - mountPath: /home/oleg/.ssh/config
           readOnly: true
@@ -34,10 +27,6 @@ spec:
           subPath: passwd
           readOnly: true
           name: rootfs
-        - mountPath: /etc/guix/secrets/h3c
-          subPath: h3c
-          readOnly: true
-          name: ssh-password
         - mountPath: /home/oleg/ansible-out
           name: output
       volumes:
