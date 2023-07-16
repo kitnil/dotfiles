@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: configuration-to-version-control
+spec:
+  template:
+    spec:
+      containers:
+      - name: state-to-git
+        image: docker-registry.wugi.info/monitoring/sw1-dh508:latest
+        command: ["/bin/cisco-configuration-to-version-control-sw1-dh508.intr"]
+        env:
+        - name: TELNET_PASSWORD_FILE
+          value: /etc/guix/secrets/support
+        volumeMounts:
+        - mountPath: /etc/guix/secrets/support
+          subPath: support
+          readOnly: true
+          name: ssh-password
