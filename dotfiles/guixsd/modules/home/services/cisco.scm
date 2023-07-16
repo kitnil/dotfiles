@@ -6,6 +6,7 @@
   #:use-module (guix store)
   #:use-module (home config)
   #:use-module (gnu packages ssh)
+  #:use-module (gnu packages admin)
   #:use-module (gnu packages version-control)
   #:use-module (gnu services mcron)
   #:use-module (packages networking)
@@ -75,6 +76,9 @@
          (let* ((directory (string-append #$%ansible-state-directory "/" #$host "/config"))
                 (file (string-append directory "/cisco.conf"))
                 (git #$(file-append git "/bin/git")))
+           (setenv "PATH"
+                   (string-append #$(file-append inetutils "/bin")
+                                  ":" (getenv "PATH")))
            (mkdir-p directory)
            (call-with-output-file (string-append directory "/cisco.conf")
              (lambda (port)
