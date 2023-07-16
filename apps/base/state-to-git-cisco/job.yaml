@@ -1,0 +1,22 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: configuration-to-version-control
+spec:
+  template:
+    spec:
+      containers:
+      - name: state-to-git
+        resources:
+          limits:
+            memory: 512Mi
+          requests:
+            memory: 512Mi
+        env:
+        - name: SSH_PASSWORD_FILE
+          value: /etc/guix/secrets/cisco
+        volumeMounts:
+        - mountPath: /etc/guix/secrets/cisco
+          subPath: cisco
+          readOnly: true
+          name: ssh-password
