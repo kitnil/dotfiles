@@ -189,3 +189,18 @@ sw4-mr14-container = $(shell set -e; cd $(guix_repository); ./pre-inst-env  guix
 .PHONY: sw4-mr14
 sw4-mr14:
 	skopeo copy --insecure-policy docker-archive\:$(sw4-mr14-container) docker://docker-registry.wugi.info/monitoring/sw4-mr14
+
+sr1-mr13-14-container = $(shell set -e; cd $(guix_repository); ./pre-inst-env  guix pack -f docker-layered -S /bin=bin -L "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules" -e '(@ (packages juniper) state-to-vc-sr1-mr13-14)')
+.PHONY: sr1-mr13-14
+sr1-mr13-14:
+	skopeo copy --insecure-policy docker-archive\:$(sr1-mr13-14-container) docker://docker-registry.wugi.info/monitoring/sr1-mr13-14
+
+sr1-dh507-508-container = $(shell set -e; cd $(guix_repository); ./pre-inst-env  guix pack -f docker-layered -S /bin=bin -L "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules" -e '(@ (packages juniper) state-to-vc-sr1-dh507-508)')
+.PHONY: sr1-dh507-508
+sr1-dh507-508:
+	skopeo copy --insecure-policy docker-archive\:$(sr1-dh507-508-container) docker://docker-registry.wugi.info/monitoring/sr1-dh507-508
+
+sw2-mr13-container = $(shell set -e; cd $(guix_repository); ./pre-inst-env  guix pack -f docker-layered -S /bin=bin -L "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules" -e '(@ (packages juniper) state-to-vc-sw2-mr13)')
+.PHONY: sw2-mr13
+sw2-mr13:
+	skopeo copy --insecure-policy docker-archive\:$(sw2-mr13-container) docker://docker-registry.wugi.info/monitoring/sw2-mr13
