@@ -3,6 +3,6 @@ kind: Kustomization
 namespace: state-to-git
 nameSuffix: -sw4-mr12.intr
 resources:
-- ../state-to-git
+- ../state-to-git-h3c
 patchesStrategicMerge:
 - job.yaml
