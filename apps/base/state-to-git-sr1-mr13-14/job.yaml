@@ -1,0 +1,11 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: configuration-to-version-control
+spec:
+  template:
+    spec:
+      containers:
+      - name: state-to-git
+        image: docker-registry.wugi.info/monitoring/sr1-mr13-14:latest
+        command: ["/bin/juniper-configuration-to-version-control-sr1-mr13-14.intr"]
