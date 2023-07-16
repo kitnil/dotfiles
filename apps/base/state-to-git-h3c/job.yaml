@@ -19,11 +19,3 @@ spec:
           subPath: h3c
           readOnly: true
           name: ssh-password
-        - mountPath: /home/oleg/.ssh/config
-          subPath: config
-          readOnly: true
-          name: ssh-configuration
-        - mountPath: /home/oleg/.ssh/known_hosts
-          subPath: known_hosts
-          readOnly: true
-          name: ssh-configuration

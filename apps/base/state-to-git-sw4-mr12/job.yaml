@@ -9,3 +9,12 @@ spec:
       - name: state-to-git
         image: docker-registry.wugi.info/monitoring/sw4-mr12:latest
         command: ["/bin/h3c-configuration-to-version-control-sw4-mr12.intr"]
+        volumeMounts:
+        - mountPath: /home/oleg/.ssh/config
+          subPath: config
+          readOnly: true
+          name: ssh-configuration
+        - mountPath: /home/oleg/.ssh/known_hosts
+          subPath: known_hosts
+          readOnly: true
+          name: ssh-configuration
