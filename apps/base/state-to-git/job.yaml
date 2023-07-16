@@ -8,10 +8,6 @@ spec:
       containers:
       - name: state-to-git
         volumeMounts:
-        - mountPath: /home/oleg/.ssh/known_hosts
-          subPath: known_hosts
-          readOnly: true
-          name: ssh-configuration
         - mountPath: /home/oleg/.gitconfig
           subPath: .gitconfig
           readOnly: true
