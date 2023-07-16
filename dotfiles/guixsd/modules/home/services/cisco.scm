@@ -38,7 +38,7 @@
                                        #$(file-append openssh "/bin/ssh") "--"
                                        #$host #$@command))
                      (output (read-string port)))
-                (close-port port)
+                (close-pipe port)
                 output)
             #~(with-environment-variables
                   `(("TELNET_PASSWORD"
@@ -53,7 +53,7 @@
                                          #$(file-append cisco "/bin/cisco")
                                          #$host #$@command))
                        (output (read-string port)))
-                  (close-port port)
+                  (close-pipe port)
                   output)))))
 
 (define* (cisco-configuration->vc host #:optional ssh?)
