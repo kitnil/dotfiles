@@ -38,7 +38,7 @@
                                          #$(file-append openssh "/bin/ssh")
                                          #$host "--" #$@command))
                        (output-string (read-string port)))
-                  (close-port port)
+                  (close-pipe port)
                   output-string)))
              (output (make-parameter (run-command)))
              (attempt (make-parameter 1))
