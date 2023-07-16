@@ -15,10 +15,6 @@ spec:
           subPath: known_hosts
           readOnly: true
           name: ssh-configuration
-        - mountPath: /home/oleg/.ssh/known_hosts2
-          subPath: known_hosts2
-          readOnly: true
-          name: ssh-configuration
         - mountPath: /home/oleg/.gitconfig
           subPath: .gitconfig
           readOnly: true
@@ -45,9 +41,6 @@ spec:
       - name: output
         hostPath:
           path: /home/oleg/ansible-out
-      - name: ssh-private-key-0
-        hostPath:
-          path: /home/oleg/.ssh/id_rsa_majordomo_eng
       - name: ssh-config-file
         hostPath:
           path: /home/oleg/.ssh/config
