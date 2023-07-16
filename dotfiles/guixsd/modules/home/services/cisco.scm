@@ -27,34 +27,42 @@
   #~(begin
       (use-modules (ice-9 rdelim)
                    (ice-9 popen))
-      #$(if ssh?
-            #~(let* ((port (open-pipe* OPEN_READ
-                                       #$(file-append sshpass "/bin/sshpass")
-                                       (string-append
-                                        "-p"
-                                        (string-trim-right
-                                         (with-input-from-file "/etc/guix/secrets/cisco"
-                                           read-string)))
-                                       #$(file-append openssh "/bin/ssh") "--"
-                                       #$host #$@command))
-                     (output (read-string port)))
-                (close-pipe port)
-                output)
-            #~(with-environment-variables
-                  `(("TELNET_PASSWORD"
-                     ,(string-trim-right
-                       (with-input-from-file "/etc/guix/secrets/support"
-                         read-string)))
-                    ("ENABLE_PASSWORD"
-                     ,(string-trim-right
-                       (with-input-from-file "/etc/guix/secrets/cisco"
-                         read-string))))
-                (let* ((port (open-pipe* OPEN_READ
-                                         #$(file-append cisco "/bin/cisco")
+      (let ((ssh-password-file
+             (and=> (getenv "SSH_PASSWORD_FILE")
+                    (lambda (file)
+                      file)))
+            (telnet-password-file
+             (and=> (getenv "TELNET_PASSWORD_FILE")
+                    (lambda (file)
+                      file))))
+        #$(if ssh?
+              #~(let* ((port (open-pipe* OPEN_READ
+                                         #$(file-append sshpass "/bin/sshpass")
+                                         (string-append
+                                          "-p"
+                                          (string-trim-right
+                                           (with-input-from-file ssh-password-file
+                                             read-string)))
+                                         #$(file-append openssh "/bin/ssh") "--"
                                          #$host #$@command))
                        (output (read-string port)))
                   (close-pipe port)
-                  output)))))
+                  output)
+              #~(with-environment-variables
+                 `(("TELNET_PASSWORD"
+                    ,(string-trim-right
+                      (with-input-from-file telnet-password-file
+                        read-string)))
+                   ("ENABLE_PASSWORD"
+                    ,(string-trim-right
+                      (with-input-from-file ssh-password-file
+                        read-string))))
+                 (let* ((port (open-pipe* OPEN_READ
+                                          #$(file-append cisco "/bin/cisco")
+                                          #$host #$@command))
+                        (output (read-string port)))
+                   (close-pipe port)
+                   output))))))
 
 (define* (cisco-configuration->vc host #:optional ssh?)
   (program-file

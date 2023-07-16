@@ -14,6 +14,9 @@ spec:
             memory: 512Mi
           requests:
             memory: 512Mi
+        env:
+        - name: SSH_PASSWORD_FILE
+          value: /etc/guix/secrets/h3c
         volumeMounts:
         - mountPath: /etc/guix/secrets/h3c
           subPath: h3c

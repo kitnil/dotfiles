@@ -18,11 +18,15 @@
   #~(begin
       (use-modules (ice-9 rdelim)
                    (ice-9 popen))
-      (let* ((port (open-pipe* OPEN_READ
+      (let* ((ssh-password-file
+              (and=> (getenv "SSH_PASSWORD_FILE")
+                     (lambda (file)
+                       file)))
+             (port (open-pipe* OPEN_READ
                                #$(file-append sshpass "/bin/sshpass")
                                (string-append "-p"
                                               (string-trim-right
-                                               (with-input-from-file "/etc/guix/secrets/h3c"
+                                               (with-input-from-file ssh-password-file
                                                  read-string)))
                                #$(file-append openssh "/bin/ssh")
                                #$host "--" #$@command))

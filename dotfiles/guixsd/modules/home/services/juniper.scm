@@ -26,14 +26,18 @@
       (use-modules (ice-9 format)
                    (ice-9 rdelim)
                    (ice-9 popen))
-      (let* ((run-command
+      (let* ((ssh-password-file
+              (and=> (getenv "SSH_PASSWORD_FILE")
+                     (lambda (file)
+                       file)))
+             (run-command
               (lambda ()
                 (let* ((port (open-pipe* OPEN_READ
                                          #$(file-append sshpass "/bin/sshpass")
                                          (string-append
                                           "-p"
                                           (string-trim-right
-                                           (with-input-from-file "/etc/guix/secrets/juniper"
+                                           (with-input-from-file ssh-password-file
                                              read-string)))
                                          #$(file-append openssh "/bin/ssh")
                                          #$host "--" #$@command))

@@ -12,6 +12,9 @@ spec:
             memory: 512Mi
           requests:
             memory: 512Mi
+        env:
+        - name: SSH_PASSWORD_FILE
+          value: /etc/guix/secrets/juniper
         volumeMounts:
         - mountPath: /etc/guix/secrets/juniper
           subPath: juniper
