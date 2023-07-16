@@ -204,3 +204,53 @@ sw2-mr13-container = $(shell set -e; cd $(guix_repository); ./pre-inst-env  guix
 .PHONY: sw2-mr13
 sw2-mr13:
 	skopeo copy --insecure-policy docker-archive\:$(sw2-mr13-container) docker://docker-registry.wugi.info/monitoring/sw2-mr13
+
+sw1-dh507-container = $(shell set -e; cd $(guix_repository); ./pre-inst-env  guix pack -f docker-layered -S /bin=bin -L "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules" -e '(@ (packages cisco) state-to-vc-sw1-dh507)')
+.PHONY: sw1-dh507
+sw1-dh507:
+	skopeo copy --insecure-policy docker-archive\:$(sw1-dh507-container) docker://docker-registry.wugi.info/monitoring/sw1-dh507
+
+sw2-dh507-container = $(shell set -e; cd $(guix_repository); ./pre-inst-env  guix pack -f docker-layered -S /bin=bin -L "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules" -e '(@ (packages cisco) state-to-vc-sw2-dh507)')
+.PHONY: sw2-dh507
+sw2-dh507:
+	skopeo copy --insecure-policy docker-archive\:$(sw2-dh507-container) docker://docker-registry.wugi.info/monitoring/sw2-dh507
+
+sw1-dh508-container = $(shell set -e; cd $(guix_repository); ./pre-inst-env  guix pack -f docker-layered -S /bin=bin -L "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules" -e '(@ (packages cisco) state-to-vc-sw1-dh508)')
+.PHONY: sw1-dh508
+sw1-dh508:
+	skopeo copy --insecure-policy docker-archive\:$(sw1-dh508-container) docker://docker-registry.wugi.info/monitoring/sw1-dh508
+
+sw2-dh508-container = $(shell set -e; cd $(guix_repository); ./pre-inst-env  guix pack -f docker-layered -S /bin=bin -L "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules" -e '(@ (packages cisco) state-to-vc-sw2-dh508)')
+.PHONY: sw2-dh508
+sw2-dh508:
+	skopeo copy --insecure-policy docker-archive\:$(sw2-dh508-container) docker://docker-registry.wugi.info/monitoring/sw2-dh508
+
+sw1-mr11-container = $(shell set -e; cd $(guix_repository); ./pre-inst-env  guix pack -f docker-layered -S /bin=bin -L "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules" -e '(@ (packages cisco) state-to-vc-sw1-mr11)')
+.PHONY: sw1-mr11
+sw1-mr11:
+	skopeo copy --insecure-policy docker-archive\:$(sw1-mr11-container) docker://docker-registry.wugi.info/monitoring/sw1-mr11
+
+sw1-mr12-container = $(shell set -e; cd $(guix_repository); ./pre-inst-env  guix pack -f docker-layered -S /bin=bin -L "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules" -e '(@ (packages cisco) state-to-vc-sw1-mr12)')
+.PHONY: sw1-mr12
+sw1-mr12:
+	skopeo copy --insecure-policy docker-archive\:$(sw1-mr12-container) docker://docker-registry.wugi.info/monitoring/sw1-mr12
+
+sw2-mr12-container = $(shell set -e; cd $(guix_repository); ./pre-inst-env  guix pack -f docker-layered -S /bin=bin -L "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules" -e '(@ (packages cisco) state-to-vc-sw2-mr12)')
+.PHONY: sw2-mr12
+sw2-mr12:
+	skopeo copy --insecure-policy docker-archive\:$(sw2-mr12-container) docker://docker-registry.wugi.info/monitoring/sw2-mr12
+
+sw3-mr13-container = $(shell set -e; cd $(guix_repository); ./pre-inst-env  guix pack -f docker-layered -S /bin=bin -L "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules" -e '(@ (packages cisco) state-to-vc-sw3-mr13)')
+.PHONY: sw3-mr13
+sw3-mr13:
+	skopeo copy --insecure-policy docker-archive\:$(sw3-mr13-container) docker://docker-registry.wugi.info/monitoring/sw3-mr13
+
+sw1-mr14-container = $(shell set -e; cd $(guix_repository); ./pre-inst-env  guix pack -f docker-layered -S /bin=bin -L "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules" -e '(@ (packages cisco) state-to-vc-sw1-mr14)')
+.PHONY: sw1-mr14
+sw1-mr14:
+	skopeo copy --insecure-policy docker-archive\:$(sw1-mr14-container) docker://docker-registry.wugi.info/monitoring/sw1-mr14
+
+sw2-mr14-container = $(shell set -e; cd $(guix_repository); ./pre-inst-env  guix pack -f docker-layered -S /bin=bin -L "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules" -e '(@ (packages cisco) state-to-vc-sw2-mr14)')
+.PHONY: sw2-mr14
+sw2-mr14:
+	skopeo copy --insecure-policy docker-archive\:$(sw2-mr14-container) docker://docker-registry.wugi.info/monitoring/sw2-mr14
