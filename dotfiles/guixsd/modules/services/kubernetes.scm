@@ -145,7 +145,9 @@
   (kubelet kubelet-configuration-kubelet ;string
            (default #f))
   (log-file kubelet-configuration-log-file ;string
-            (default "/var/log/kubelet.log")))
+            (default "/var/log/kubelet.log"))
+  (arguments kubelet-configuration-arguments ;list of strings
+             (default '())))
 
 (define (kubelet-log-rotations config)
   (list (log-rotation
@@ -158,7 +160,8 @@
     (provision '(kubelet))
     (requirement '(networking containerd))
     (start #~(make-forkexec-constructor
-              (list #$(kubelet-configuration-kubelet config))
+              (list #$(kubelet-configuration-kubelet config)
+                    #$@(kubelet-configuration-arguments config))
               #:log-file #$(kubelet-configuration-log-file config)))
     (stop #~(make-kill-destructor)))))
 
