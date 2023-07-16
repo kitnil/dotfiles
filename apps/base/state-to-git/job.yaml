@@ -8,9 +8,6 @@ spec:
       containers:
       - name: state-to-git
         volumeMounts:
-        - mountPath: /home/oleg/.ssh/config
-          readOnly: true
-          name: ssh-config-file
         - mountPath: /home/oleg/.ssh/known_hosts
           subPath: known_hosts
           readOnly: true
@@ -41,8 +38,5 @@ spec:
       - name: output
         hostPath:
           path: /home/oleg/ansible-out
-      - name: ssh-config-file
-        hostPath:
-          path: /home/oleg/.ssh/config
       restartPolicy: Never
   backoffLimit: 0
