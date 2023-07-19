@@ -26,6 +26,9 @@ spec:
         env:
         - name: name
           value: guixsd
+        securityContext:
+          runAsUser: 0
+          runAsGroup: 0
         volumeMounts:
         - mountPath: /usr/share/filebeat/filebeat.yml
           subPath: filebeat.yml
