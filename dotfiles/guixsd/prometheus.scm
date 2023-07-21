@@ -3,7 +3,8 @@
    #((("rules"
        .
        #((("labels" ("severity" . "critical"))
-          ("expr" . "up != 1")
+          ;; The notebook could be shutdowned.
+          ("expr" . "up{instance!=\"notebook.wugi.info:9100\"} != 1")
           ("annotations"
            ("summary"
             .
