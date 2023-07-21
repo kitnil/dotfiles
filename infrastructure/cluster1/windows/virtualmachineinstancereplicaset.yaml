@@ -54,17 +54,3 @@ spec:
       networks:
       - name: default
         pod: {}
-  dataVolumeTemplates:
-  - metadata:
-      name: windows-dv
-    spec:
-      pvc:
-        accessModes:
-        - ReadWriteOnce
-        resources:
-          requests:
-            storage: 40Gi
-        storageClassName: hostpath-csi
-      source:
-        http:
-          url: http://iso.wugi.info/windows/windows_10.qcow2
