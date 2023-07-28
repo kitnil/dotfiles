@@ -290,6 +290,7 @@
    (majordomo-mbsync-goimapnotify-services "pyhalov")
    (majordomo-mbsync-goimapnotify-services "sidorov")
    (majordomo-mbsync-goimapnotify-services "fired")
+   (majordomo-mbsync-goimapnotify-services "pr")
 
    (majordomo-mbsync-goimapnotify-services "alertmanager"
                                            #:max-messages 1000)
