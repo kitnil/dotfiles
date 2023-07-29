@@ -171,29 +171,45 @@
          (locations
           (list
            (nginx-location-configuration
+            (uri "/")
+            (body
+             '("allow 192.168.0.0/16;"
+               "allow 10.0.0.0/8;"
+               "allow 172.16.103.0/24;"
+               "allow 78.108.80.212/32;" ;Majordomo NAT
+               "allow 88.201.161.72/32;"
+               "deny all;")))
+           (nginx-location-configuration
             (uri "/.well-known")
             (body '("root /var/www;")))
            (nginx-location-configuration
             (uri "/v2/")
-            (body (list
-                   ;; Do not allow connections from docker 1.5 and earlier
-                   ;; docker pre-1.6.0 did not properly set the user agent on ping, catch "Go *" user agents
-                   "if ($http_user_agent ~ \"^(docker\\/1\\.(3|4|5(?!\\.[0-9]-dev))|Go ).*$\" ) { return 404; }"
+            (body (append
+                   '("allow 192.168.0.0/16;"
+                     "allow 10.0.0.0/8;"
+                     "allow 172.16.103.0/24;"
+                     "allow 78.108.80.212/32;" ;Majordomo NAT
+                     "allow 88.201.161.72/32;"
+                     "deny all;")
+                   (list
+                    ;; Do not allow connections from docker 1.5 and earlier
+                    ;; docker pre-1.6.0 did not properly set the user agent on ping, catch "Go *" user agents
+                    "if ($http_user_agent ~ \"^(docker\\/1\\.(3|4|5(?!\\.[0-9]-dev))|Go ).*$\" ) { return 404; }"
 
-                   ;; from [[https://docs.docker.com/registry/recipes/nginx/][Authenticate proxy with nginx | Docker Documentation]]
-                   "proxy_pass http://docker-registry;"
-                   "proxy_set_header Host $http_host;"
-                   "proxy_set_header X-Real-IP $remote_addr;" ;# pass on real client's IP
-                   "proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;"
-                   "proxy_set_header X-Forwarded-Proto $scheme;"
-                   "proxy_read_timeout 900;"
+                    ;; from [[https://docs.docker.com/registry/recipes/nginx/][Authenticate proxy with nginx | Docker Documentation]]
+                    "proxy_pass http://docker-registry;"
+                    "proxy_set_header Host $http_host;"
+                    "proxy_set_header X-Real-IP $remote_addr;" ;# pass on real client's IP
+                    "proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;"
+                    "proxy_set_header X-Forwarded-Proto $scheme;"
+                    "proxy_read_timeout 900;"
 
-                   "client_max_body_size 0;"
-                   "proxy_busy_buffers_size 512k;"
-                   "proxy_buffers 4 512k;"
-                   "proxy_buffer_size 256k;"
-                   "add_header Access-Control-Allow-Origin *;"
-                   ))))))
+                    "client_max_body_size 0;"
+                    "proxy_busy_buffers_size 512k;"
+                    "proxy_buffers 4 512k;"
+                    "proxy_buffer_size 256k;"
+                    "add_header Access-Control-Allow-Origin *;"
+                    )))))))
         (nginx-server-configuration
          (server-name '("texinfo.tld"))
          (listen '("192.168.0.144:80"))
