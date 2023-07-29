@@ -82,4 +82,3 @@
 
 (define h3c-configuration->vc-sw4-mr14.intr
   (h3c-configuration->vc "sw4-mr14.intr"))
-
