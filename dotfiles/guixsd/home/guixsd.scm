@@ -1345,18 +1345,20 @@ account default : gmail
     ;;            (terminal `(,(file-append alacritty "/bin/alacritty")))
     ;;            (menu `(,(file-append bemenu "/bin/bemenu-run")))))))
 
-    (simple-service
-     'auto-shutdown-cron-jobs
-     home-mcron-service-type
-     (list
-      #~(job
-         '(next-hour)
-         #$(program-file
-            "schedule-power"
-            #~(begin
-                (system*
-                 #$(local-file (string-append %project-directory "/dot_local/bin/executable_schedule-power")
-                               #:recursive? #t)))))))
+    ;; TODO: Requires for a reimplementation after switching to Wayland.
+    ;;
+    ;; (simple-service
+    ;;  'auto-shutdown-cron-jobs
+    ;;  home-mcron-service-type
+    ;;  (list
+    ;;   #~(job
+    ;;      '(next-hour)
+    ;;      #$(program-file
+    ;;         "schedule-power"
+    ;;         #~(begin
+    ;;             (system*
+    ;;              #$(local-file (string-append %project-directory "/dot_local/bin/executable_schedule-power")
+    ;;                            #:recursive? #t)))))))
 
     (service home-scream-service-type
              (scream-configuration
