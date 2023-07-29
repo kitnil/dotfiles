@@ -560,6 +560,11 @@ $ vault secrets list
 $(vault secrets list)
 EOF
             fi
+            cat <<EOF
+
+$ vault kv list secret/vaultPass/majordomo
+$(vault kv list secret/vaultPass/majordomo)
+EOF
         fi
 
         echo -e "\n$ curl --max-time 5 --insecure --silent ${OPENSEARCH_ENDPOINT}/logstash-*/_search"
