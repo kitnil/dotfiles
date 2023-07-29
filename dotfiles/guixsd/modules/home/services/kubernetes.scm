@@ -56,20 +56,6 @@
 (define (kubernetes-mcron-jobs config)
   (list
    #~(job
-      '(next-hour '(15))
-      #$(kubernetes-configuration->vc
-         (kubernetes-cluster-configuration
-          (name "cluster1")
-          (config-file "config-mjru-cluster1")
-          (output-directory %ansible-state-directory))))
-   #~(job
-      '(next-hour '(16))
-      #$(kubernetes-configuration->vc
-         (kubernetes-cluster-configuration
-          (name "cluster2")
-          (config-file "config-mjru-cluster2")
-          (output-directory %ansible-state-directory))))
-   #~(job
       '(next-hour '(17))
       #$(kubernetes-configuration->vc
          (kubernetes-cluster-configuration
