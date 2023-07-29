@@ -45,7 +45,7 @@
         (close-pipe port)
         (= (string-length output) 0))))
 
-(define* (h3c-configuration->vc host #:optional ssh?)
+(define* (h3c-configuration->vc host)
   (program-file
    (string-append "h3c-configuration-to-version-control-" host)
    (with-imported-modules (append (source-module-closure '((guix utils)))
