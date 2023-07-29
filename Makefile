@@ -126,6 +126,12 @@ install: decrypt dotfiles/guixsd/machines.scm dotfiles/nix/nix.conf
 	install -Dm644 dotfiles/guile/config.scm $(HOME)/.config/guile/config.scm
 	guix home --load-path=$(PWD)/dotfiles/guixsd/modules reconfigure --no-substitutes dotfiles/guixsd/home/$(HOSTNAME).scm
 
+.PHONY: shepherd-restart
+shepherd-restart:
+	$(shell set +e; herd stop root)
+	rm -f /run/user/$(UID)/shepherd/socket
+	make install
+
 .PHONY: guile-ihs
 guile-ihs:
 	guix environment --manifest=dotfiles/manifests/majordomo.scm -- sh -c 'type -p ihs'
