@@ -2124,7 +2124,8 @@ PasswordAuthentication yes")))
 
                          (service kubelet-service-type
                                   (kubelet-configuration
-                                   (kubelet "/home/oleg/.local/share/chezmoi/dot_local/bin/executable_kubelet")))
+                                   (kubelet (file-append (load "/home/oleg/.local/share/chezmoi/kubelet.scm")
+                                                         "/bin/kubelet.sh"))))
 
                          ;; (service prometheus-node-exporter-service-type
                          ;;          (prometheus-node-exporter-configuration
