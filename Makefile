@@ -66,6 +66,10 @@ dotfiles/guile/ssh.txt: dotfiles/guile/ssh.scm
 decrypt:
 	gpg --quiet --decrypt dotfiles/guixsd/modules/home/config/openssh.scm.gpg > dotfiles/guixsd/modules/home/config/openssh.scm
 
+.PHONY: dotfiles/scripts/nix-ssh-known-hosts-to-file.scm
+dotfiles/scripts/nix-ssh-known-hosts-to-file.scm:
+	$(shell guix build -f dotfiles/scripts/nix-ssh-known-hosts-to-file.scm)/bin/run.scm > $(HOME)/.ssh/known_hosts2
+
 .PHONY: dotfiles/guixsd/home/guixsd.scm
 dotfiles/guixsd/home/guixsd.scm:
 	guix home -L dotfiles/guixsd/modules build dotfiles/guixsd/home/guixsd.scm
