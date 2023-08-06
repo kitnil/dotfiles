@@ -62,7 +62,7 @@
 ;; Multibyte characters broken in titles, fixed by running
 ;; `toggle-enable-multibyte-characters` twice · Issue #437 ·
 ;; skeeto/elfeed
-(set-language-environment "utf-8")
+;; (set-language-environment "utf-8")
 
 (autoload 'debbugs-browse-url "debbugs-browse" nil t)
 
