@@ -292,6 +292,10 @@ client.placeholder      #000000 #0c0c0c #ffffff #000000   #0c0c0c
 
 client.background       #ffffff
 
+# List windows properties:
+#
+#     $ swaymsg -t get_tree
+
 for_window [app_id="looking-glass-client"] border none
 for_window [app_id="looking-glass-client"] resize set width 1920 px
 
