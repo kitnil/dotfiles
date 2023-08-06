@@ -270,7 +270,7 @@ virtualization vnc vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
                global        ;Source tagging.
                valgrind      ;Memory debug.
 
-               obs
+               obs ;Installed manyally from 514b9f42 commit in guix channel.
                obs-wlrobs
 
                mesa mesa-utils
