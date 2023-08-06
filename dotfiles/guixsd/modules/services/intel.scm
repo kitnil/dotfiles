@@ -54,8 +54,6 @@
             (string-trim-right
              (system->string* %nix-build %nix-channel
                               "--no-out-link" "-A" "vaapiIntel")))
-          (if (file-exists? "/run/opengl-driver")
-              (delete-file "/run/opengl-driver"))
           (symlink vaapi-intel %opengl-driver)))))
 
 (define intel-vaapi-service
