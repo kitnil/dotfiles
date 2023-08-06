@@ -299,3 +299,6 @@ for_window [title="xterm"] resize set width 1920 px
 
 for_window [title="Picture-in-Picture"] border none
 for_window [title="Picture-in-Picture"] resize set height 360 px
+
+for_window [instance="vncviewer"] border none
+for_window [instance="vncviewer"] resize set width 1920 px
