@@ -47,7 +47,7 @@
           (define %nix-build
             "/home/oleg/.nix-profile/bin/nix-build")
           (define %nix-channel
-            "/home/oleg/.nix-defexpr/channels/nixos-unstable")
+            "/home/oleg/.nix-defexpr/channels/nixpkgs")
           (define %opengl-driver
             "/run/opengl-driver")
           (define vaapi-intel
