@@ -74,6 +74,16 @@ EOF
     site)
         curl --silent https://www.majordomo.ru/sitemap.xml | xq --raw-output '.urlset.url[] | .loc' | sort --unique
         ;;
+    ip-addresses)
+        while read line
+        do
+            echo $line
+        done < <(
+            mysql -N -s -q -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -h"$MYSQL_SERVER" billing <<EOF
+SELECT address,mask FROM equip_ip_networks WHERE public=1 AND address!='78.108.81.0' AND address!='78.108.84.0';
+EOF
+            )
+        ;;
     ip)
         mysql -s -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -h"$MYSQL_SERVER" billing <<EOF | jq -s | jq 'reduce .[] as $d (null; .[$d.name] += [$d.address])'
 SELECT CONCAT('{ "name": "', equip_servers.name, '", "address": "',equip_ip_addresses.address, '" }')
