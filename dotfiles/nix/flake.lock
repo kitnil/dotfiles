@@ -603,6 +603,21 @@
         "type": "github"
       }
     },
+    "flake-utils_3": {
+      "locked": {
+        "lastModified": 1649676176,
+        "narHash": "sha256-OWKJratjt2RW151VUlJPRALb7OU2S5s+f0vLj4o1bHM=",
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "rev": "a4b154ebbdc88c8498a5c7b01589addc9e9cb678",
+        "type": "github"
+      },
+      "original": {
+        "owner": "numtide",
+        "repo": "flake-utils",
+        "type": "github"
+      }
+    },
     "flakeCompat": {
       "flake": false,
       "locked": {
@@ -812,7 +827,7 @@
     "majordomo-vault": {
       "inputs": {
         "majordomo": "majordomo_6",
-        "nixpkgs": "nixpkgs_20"
+        "nixpkgs": "nixpkgs_21"
       },
       "locked": {
         "lastModified": 1628759429,
@@ -893,15 +908,17 @@
         "flake-compat": "flake-compat_13",
         "nixpkgs": "nixpkgs_18",
         "nixpkgs-deprecated": "nixpkgs-deprecated_5",
+        "nixpkgs-php81": "nixpkgs-php81",
         "nixpkgs-stable": "nixpkgs-stable_5",
-        "nixpkgs-unstable": "nixpkgs-unstable_11"
+        "nixpkgs-unstable": "nixpkgs-unstable_11",
+        "shared-http-errors": "shared-http-errors"
       },
       "locked": {
-        "lastModified": 1629481600,
-        "narHash": "sha256-z/jD3rFPdi2DAghI9diEmJQO3Bx9+pkvPeiatxIq/Jc=",
-        "ref": "master",
-        "rev": "d120af01f1745df4a2c7bec4e6298fa18d89fafd",
-        "revCount": 881,
+        "lastModified": 1690880872,
+        "narHash": "sha256-orwafo41wRAMCir5rsbBd4lgLYp65cV5FHjHFBI/Aao=",
+        "ref": "refs/heads/master",
+        "rev": "95dcf1812fce3159cc50c9442fc944cbf5205225",
+        "revCount": 963,
         "type": "git",
         "url": "https://gitlab.intr/_ci/nixpkgs"
       },
@@ -913,7 +930,7 @@
     "majordomo_6": {
       "inputs": {
         "flake-compat": "flake-compat_14",
-        "nixpkgs": "nixpkgs_19",
+        "nixpkgs": "nixpkgs_20",
         "nixpkgs-deprecated": "nixpkgs-deprecated_6",
         "nixpkgs-stable": "nixpkgs-stable_6",
         "nixpkgs-unstable": "nixpkgs-unstable_12"
@@ -988,7 +1005,7 @@
     },
     "naersk_3": {
       "inputs": {
-        "nixpkgs": "nixpkgs_21"
+        "nixpkgs": "nixpkgs_22"
       },
       "locked": {
         "lastModified": 1629707199,
@@ -1434,6 +1451,21 @@
         "type": "github"
       }
     },
+    "nixpkgs-php81": {
+      "locked": {
+        "lastModified": 1638397275,
+        "narHash": "sha256-2Jos1CJFTMO9IbulbM4PTKn24nISIDQCAG/AqYQ8rmg=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "391f93a83c3a486475d60eb4a569bb6afbf306ad",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixpkgs-unstable",
+        "type": "indirect"
+      }
+    },
     "nixpkgs-stable": {
       "locked": {
         "lastModified": 1606789930,
@@ -1556,11 +1588,11 @@
     },
     "nixpkgs-unstable_11": {
       "locked": {
-        "lastModified": 1625512941,
-        "narHash": "sha256-P2POZzfG+Hp8ktIWwkOs/OMB8jSsQvIPQaLO0swpgZo=",
+        "lastModified": 1648219316,
+        "narHash": "sha256-Ctij+dOi0ZZIfX5eMhgwugfvB+WZSrvVNAyAuANOsnQ=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "3e0ce8c5d478d06b37a4faa7a4cc8642c6bb97de",
+        "rev": "30d3d79b7d3607d56546dd2a6b49e156ba0ec634",
         "type": "github"
       },
       "original": {
@@ -1865,20 +1897,17 @@
       }
     },
     "nixpkgs_19": {
-      "flake": false,
       "locked": {
-        "lastModified": 1570630026,
-        "narHash": "sha256-IjHyx3uz9jYBh5R9v6lea5Hd/F6iYTBcyHkXHwSGGFY=",
+        "lastModified": 1658850041,
+        "narHash": "sha256-HA4koSVBPEERWSrH0LVBy28y2FGJnOeUmGDEyeQPmDY=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "d5291756487d70bc336e33512a9baf9fa1788faf",
+        "rev": "3bbb296d9a0088c314ce83038b896753bbe33acb",
         "type": "github"
       },
       "original": {
-        "owner": "NixOS",
-        "ref": "19.09",
-        "repo": "nixpkgs",
-        "type": "github"
+        "id": "nixpkgs",
+        "type": "indirect"
       }
     },
     "nixpkgs_2": {
@@ -1898,6 +1927,23 @@
       }
     },
     "nixpkgs_20": {
+      "flake": false,
+      "locked": {
+        "lastModified": 1570630026,
+        "narHash": "sha256-IjHyx3uz9jYBh5R9v6lea5Hd/F6iYTBcyHkXHwSGGFY=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "d5291756487d70bc336e33512a9baf9fa1788faf",
+        "type": "github"
+      },
+      "original": {
+        "owner": "NixOS",
+        "ref": "19.09",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs_21": {
       "locked": {
         "lastModified": 1628196176,
         "narHash": "sha256-9MpY1AlNQoCx2zr2s5ByyGVpzvBBqwnQ4EgpgZJwmdY=",
@@ -1911,7 +1957,7 @@
         "type": "indirect"
       }
     },
-    "nixpkgs_21": {
+    "nixpkgs_22": {
       "locked": {
         "lastModified": 1629925853,
         "narHash": "sha256-gK2Q0o3Ov5/xT7XhCPbtfoFQ0Ty1Mu2aeWcNX6+XzjQ=",
@@ -1925,7 +1971,7 @@
         "type": "indirect"
       }
     },
-    "nixpkgs_22": {
+    "nixpkgs_23": {
       "locked": {
         "lastModified": 1664645775,
         "narHash": "sha256-+s3H2v8z4E6KNJl1JGAvcoBxlz25/Q+R//fElE0T6Ac=",
@@ -2255,7 +2301,7 @@
         "majordomo-vault": "majordomo-vault",
         "naersk": "naersk_3",
         "nixos": "nixos_2",
-        "nixpkgs": "nixpkgs_22",
+        "nixpkgs": "nixpkgs_23",
         "nixpkgs-20-03": "nixpkgs-20-03_2",
         "nixpkgs-20-03-firefox": "nixpkgs-20-03-firefox",
         "nixpkgs-idea": "nixpkgs-idea",
@@ -2279,6 +2325,25 @@
         "owner": "debug-ito",
         "repo": "rotate-text.el",
         "type": "github"
+      }
+    },
+    "shared-http-errors": {
+      "inputs": {
+        "flake-utils": "flake-utils_3",
+        "nixpkgs": "nixpkgs_19"
+      },
+      "locked": {
+        "lastModified": 1650417385,
+        "narHash": "sha256-5bjOybohmVic3or6heD75NTlJ+PkXxZKxrz0UcaDpno=",
+        "ref": "master",
+        "rev": "3e353d0400138563e62dfca946b013706277a843",
+        "revCount": 15,
+        "type": "git",
+        "url": "https://gitlab.intr/shared/http_errors.git"
+      },
+      "original": {
+        "type": "git",
+        "url": "https://gitlab.intr/shared/http_errors.git"
       }
     },
     "sops-nix": {
