@@ -84,6 +84,15 @@ SELECT address,mask FROM equip_ip_networks WHERE public=1 AND address!='78.108.8
 EOF
             )
         ;;
+    ip-assigned)
+        mysql -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -h"$MYSQL_SERVER" billing <<EOF
+SELECT vds_accounts_ipaddresses.vds_account_id,equip_ip_addresses.address
+FROM vds_accounts, vds_accounts_ipaddresses, equip_ip_addresses
+WHERE vds_accounts_ipaddresses.equip_ip_address_id=equip_ip_addresses.equip_ip_address_id
+GROUP BY vds_accounts_ipaddresses.equip_ip_address_id
+LIMIT 350;
+EOF
+        ;;
     ip)
         mysql -s -u"$MYSQL_USER" -p"$MYSQL_PASSWORD" -h"$MYSQL_SERVER" billing <<EOF | jq -s | jq 'reduce .[] as $d (null; .[$d.name] += [$d.address])'
 SELECT CONCAT('{ "name": "', equip_servers.name, '", "address": "',equip_ip_addresses.address, '" }')
