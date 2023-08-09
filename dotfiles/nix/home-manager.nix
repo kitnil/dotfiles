@@ -75,6 +75,7 @@
     tokei
     lua
     luarocks
+    sumneko-lua-language-server # renamed to lua-language-server
     mycli
     mypaint
     nix-bash-completions

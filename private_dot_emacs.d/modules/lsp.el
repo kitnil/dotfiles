@@ -30,3 +30,19 @@
 
 (setq lsp-pyls-plugins-flake8-max-line-length 110)
 (setq lsp-pyls-plugins-pycodestyle-max-line-length 110)
+
+
+;;;
+;;; Lua
+;;;
+
+(setq lsp-clients-lua-language-server-install-dir
+      "/nix/store/g4jmyxpsdlwyfddsbchyvfim1n6a7868-sumneko-lua-language-server-3.5.6/share/lua-language-server")
+
+(setq lsp-clients-lua-language-server-bin
+      "/nix/store/g4jmyxpsdlwyfddsbchyvfim1n6a7868-sumneko-lua-language-server-3.5.6/bin/lua-language-server")
+
+(setq lsp-clients-lua-language-server-main-location
+      "/nix/store/g4jmyxpsdlwyfddsbchyvfim1n6a7868-sumneko-lua-language-server-3.5.6/share/lua-language-server/main.lua")
+
+(add-hook 'lua-mode-hook 'lsp)
