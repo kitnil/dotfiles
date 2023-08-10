@@ -268,3 +268,6 @@ sw2-mr14-container = $(shell set -e; cd $(guix_repository); ./pre-inst-env  guix
 .PHONY: sw2-mr14
 sw2-mr14:
 	skopeo copy --insecure-policy docker-archive\:$(sw2-mr14-container) docker://$(container_registry)/monitoring/sw2-mr14:$(commit_8)
+
+.PHONY: containers
+containers: sw4-mr11 sw4-mr12 sw4-mr13 sw4-mr14 sr1-mr13-14 sr1-dh507-508 sw2-mr13 sw1-dh507 sw2-dh507 sw1-dh508 sw2-dh508 sw1-mr11 sw1-mr12 sw2-mr12 sw3-mr13 sw1-mr14 sw2-mr14
