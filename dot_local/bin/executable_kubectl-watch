@@ -564,6 +564,9 @@ EOF
 
 $ vault kv list secret/vaultPass/majordomo
 $(vault kv list secret/vaultPass/majordomo)
+
+To add a new key value secret run:
+$ vault kv put secret/vaultPass/majordomo/HOSTNAME password=SECRET
 EOF
         fi
 
