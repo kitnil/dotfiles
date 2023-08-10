@@ -147,7 +147,8 @@
            (invoke #$(juniper-configuration->file config))
            (with-directory-excursion #$%ansible-state-directory
              (invoke git "add" #$(juniper-configuration-host config))
-             (invoke git "commit" "--message=Update.")))))))
+             (invoke git "commit" "--message=Update.")
+             (invoke git "push" "origin")))))))
 
 (define (juniper-bgp-commands host)
   #~(begin

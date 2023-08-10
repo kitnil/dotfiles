@@ -69,7 +69,8 @@
            (with-directory-excursion #$%ansible-state-directory
              (when (not #$(git-diff host))
                (invoke git "add" #$host)
-               (invoke git "commit" "--message=Update."))))))))
+               (invoke git "commit" "--message=Update.")
+               (invoke git "push" "origin"))))))))
 
 (define h3c-configuration->vc-sw4-mr11.intr
   (h3c-configuration->vc "sw4-mr11.intr"))

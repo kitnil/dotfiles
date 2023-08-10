@@ -94,7 +94,8 @@
                (display #$(cisco-command host '("show" "mac-address-table") ssh?) port)))
            (with-directory-excursion #$%ansible-state-directory
              (invoke git "add" #$host)
-             (invoke git "commit" "--message=Update.")))))))
+             (invoke git "commit" "--message=Update.")
+             (invoke git "push" "origin")))))))
 
 (define cisco-configuration->vc-sw1-dh507.intr
   (cisco-configuration->vc "sw1-dh507.intr"))
