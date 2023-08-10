@@ -180,7 +180,7 @@ home:
 
 guix_repository=$(HOME)/src/git.savannah.gnu.org/git/guix
 
-container_registry=docker-registry.wugi.info
+container_registry=harbor.corp1.majordomo.ru
 
 commit_8=$(shell git rev-parse HEAD | cut -c -8)
 
