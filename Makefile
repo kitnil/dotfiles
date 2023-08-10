@@ -182,87 +182,89 @@ guix_repository=$(HOME)/src/git.savannah.gnu.org/git/guix
 
 container_registry=docker-registry.wugi.info
 
+commit_8=$(shell git rev-parse HEAD | cut -c -8)
+
 sw4-mr11-container = $(shell set -e; cd $(guix_repository); ./pre-inst-env  guix pack -f docker-layered -S /bin=bin -L "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules" -e '(@ (packages h3c) state-to-vc-sw4-mr11)')
 .PHONY: sw4-mr11
 sw4-mr11:
-	skopeo copy --insecure-policy docker-archive\:$(sw4-mr11-container) docker://$(container_registry)/monitoring/sw4-mr11
+	skopeo copy --insecure-policy docker-archive\:$(sw4-mr11-container) docker://$(container_registry)/monitoring/sw4-mr11:$(commit_8)
 
 sw4-mr12-container = $(shell set -e; cd $(guix_repository); ./pre-inst-env  guix pack -f docker-layered -S /bin=bin -L "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules" -e '(@ (packages h3c) state-to-vc-sw4-mr12)')
 .PHONY: sw4-mr12
 sw4-mr12:
-	skopeo copy --insecure-policy docker-archive\:$(sw4-mr12-container) docker://$(container_registry)/monitoring/sw4-mr12
+	skopeo copy --insecure-policy docker-archive\:$(sw4-mr12-container) docker://$(container_registry)/monitoring/sw4-mr12:$(commit_8)
 
 sw4-mr13-container = $(shell set -e; cd $(guix_repository); ./pre-inst-env  guix pack -f docker-layered -S /bin=bin -L "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules" -e '(@ (packages h3c) state-to-vc-sw4-mr13)')
 .PHONY: sw4-mr13
 sw4-mr13:
-	skopeo copy --insecure-policy docker-archive\:$(sw4-mr13-container) docker://$(container_registry)/monitoring/sw4-mr13
+	skopeo copy --insecure-policy docker-archive\:$(sw4-mr13-container) docker://$(container_registry)/monitoring/sw4-mr13:$(commit_8)
 
 sw4-mr14-container = $(shell set -e; cd $(guix_repository); ./pre-inst-env  guix pack -f docker-layered -S /bin=bin -L "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules" -e '(@ (packages h3c) state-to-vc-sw4-mr14)')
 .PHONY: sw4-mr14
 sw4-mr14:
-	skopeo copy --insecure-policy docker-archive\:$(sw4-mr14-container) docker://$(container_registry)/monitoring/sw4-mr14
+	skopeo copy --insecure-policy docker-archive\:$(sw4-mr14-container) docker://$(container_registry)/monitoring/sw4-mr14:$(commit_8)
 
 sr1-mr13-14-container = $(shell set -e; cd $(guix_repository); ./pre-inst-env  guix pack -f docker-layered -S /bin=bin -L "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules" -e '(@ (packages juniper) state-to-vc-sr1-mr13-14)')
 .PHONY: sr1-mr13-14
 sr1-mr13-14:
-	skopeo copy --insecure-policy docker-archive\:$(sr1-mr13-14-container) docker://$(container_registry)/monitoring/sr1-mr13-14
+	skopeo copy --insecure-policy docker-archive\:$(sr1-mr13-14-container) docker://$(container_registry)/monitoring/sr1-mr13-14:$(commit_8)
 
 sr1-dh507-508-container = $(shell set -e; cd $(guix_repository); ./pre-inst-env  guix pack -f docker-layered -S /bin=bin -L "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules" -e '(@ (packages juniper) state-to-vc-sr1-dh507-508)')
 .PHONY: sr1-dh507-508
 sr1-dh507-508:
-	skopeo copy --insecure-policy docker-archive\:$(sr1-dh507-508-container) docker://$(container_registry)/monitoring/sr1-dh507-508
+	skopeo copy --insecure-policy docker-archive\:$(sr1-dh507-508-container) docker://$(container_registry)/monitoring/sr1-dh507-508:$(commit_8)
 
 sw2-mr13-container = $(shell set -e; cd $(guix_repository); ./pre-inst-env  guix pack -f docker-layered -S /bin=bin -L "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules" -e '(@ (packages juniper) state-to-vc-sw2-mr13)')
 .PHONY: sw2-mr13
 sw2-mr13:
-	skopeo copy --insecure-policy docker-archive\:$(sw2-mr13-container) docker://$(container_registry)/monitoring/sw2-mr13
+	skopeo copy --insecure-policy docker-archive\:$(sw2-mr13-container) docker://$(container_registry)/monitoring/sw2-mr13:$(commit_8)
 
 sw1-dh507-container = $(shell set -e; cd $(guix_repository); ./pre-inst-env  guix pack -f docker-layered -S /bin=bin -L "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules" -e '(@ (packages cisco) state-to-vc-sw1-dh507)')
 .PHONY: sw1-dh507
 sw1-dh507:
-	skopeo copy --insecure-policy docker-archive\:$(sw1-dh507-container) docker://$(container_registry)/monitoring/sw1-dh507
+	skopeo copy --insecure-policy docker-archive\:$(sw1-dh507-container) docker://$(container_registry)/monitoring/sw1-dh507:$(commit_8)
 
 sw2-dh507-container = $(shell set -e; cd $(guix_repository); ./pre-inst-env  guix pack -f docker-layered -S /bin=bin -L "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules" -e '(@ (packages cisco) state-to-vc-sw2-dh507)')
 .PHONY: sw2-dh507
 sw2-dh507:
-	skopeo copy --insecure-policy docker-archive\:$(sw2-dh507-container) docker://$(container_registry)/monitoring/sw2-dh507
+	skopeo copy --insecure-policy docker-archive\:$(sw2-dh507-container) docker://$(container_registry)/monitoring/sw2-dh507:$(commit_8)
 
 sw1-dh508-container = $(shell set -e; cd $(guix_repository); ./pre-inst-env  guix pack -f docker-layered -S /bin=bin -L "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules" -e '(@ (packages cisco) state-to-vc-sw1-dh508)')
 .PHONY: sw1-dh508
 sw1-dh508:
-	skopeo copy --insecure-policy docker-archive\:$(sw1-dh508-container) docker://$(container_registry)/monitoring/sw1-dh508
+	skopeo copy --insecure-policy docker-archive\:$(sw1-dh508-container) docker://$(container_registry)/monitoring/sw1-dh508:$(commit_8)
 
 sw2-dh508-container = $(shell set -e; cd $(guix_repository); ./pre-inst-env  guix pack -f docker-layered -S /bin=bin -L "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules" -e '(@ (packages cisco) state-to-vc-sw2-dh508)')
 .PHONY: sw2-dh508
 sw2-dh508:
-	skopeo copy --insecure-policy docker-archive\:$(sw2-dh508-container) docker://$(container_registry)/monitoring/sw2-dh508
+	skopeo copy --insecure-policy docker-archive\:$(sw2-dh508-container) docker://$(container_registry)/monitoring/sw2-dh508:$(commit_8)
 
 sw1-mr11-container = $(shell set -e; cd $(guix_repository); ./pre-inst-env  guix pack -f docker-layered -S /bin=bin -L "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules" -e '(@ (packages cisco) state-to-vc-sw1-mr11)')
 .PHONY: sw1-mr11
 sw1-mr11:
-	skopeo copy --insecure-policy docker-archive\:$(sw1-mr11-container) docker://$(container_registry)/monitoring/sw1-mr11
+	skopeo copy --insecure-policy docker-archive\:$(sw1-mr11-container) docker://$(container_registry)/monitoring/sw1-mr11:$(commit_8)
 
 sw1-mr12-container = $(shell set -e; cd $(guix_repository); ./pre-inst-env  guix pack -f docker-layered -S /bin=bin -L "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules" -e '(@ (packages cisco) state-to-vc-sw1-mr12)')
 .PHONY: sw1-mr12
 sw1-mr12:
-	skopeo copy --insecure-policy docker-archive\:$(sw1-mr12-container) docker://$(container_registry)/monitoring/sw1-mr12
+	skopeo copy --insecure-policy docker-archive\:$(sw1-mr12-container) docker://$(container_registry)/monitoring/sw1-mr12:$(commit_8)
 
 sw2-mr12-container = $(shell set -e; cd $(guix_repository); ./pre-inst-env  guix pack -f docker-layered -S /bin=bin -L "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules" -e '(@ (packages cisco) state-to-vc-sw2-mr12)')
 .PHONY: sw2-mr12
 sw2-mr12:
-	skopeo copy --insecure-policy docker-archive\:$(sw2-mr12-container) docker://$(container_registry)/monitoring/sw2-mr12
+	skopeo copy --insecure-policy docker-archive\:$(sw2-mr12-container) docker://$(container_registry)/monitoring/sw2-mr12:$(commit_8)
 
 sw3-mr13-container = $(shell set -e; cd $(guix_repository); ./pre-inst-env  guix pack -f docker-layered -S /bin=bin -L "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules" -e '(@ (packages cisco) state-to-vc-sw3-mr13)')
 .PHONY: sw3-mr13
 sw3-mr13:
-	skopeo copy --insecure-policy docker-archive\:$(sw3-mr13-container) docker://$(container_registry)/monitoring/sw3-mr13
+	skopeo copy --insecure-policy docker-archive\:$(sw3-mr13-container) docker://$(container_registry)/monitoring/sw3-mr13:$(commit_8)
 
 sw1-mr14-container = $(shell set -e; cd $(guix_repository); ./pre-inst-env  guix pack -f docker-layered -S /bin=bin -L "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules" -e '(@ (packages cisco) state-to-vc-sw1-mr14)')
 .PHONY: sw1-mr14
 sw1-mr14:
-	skopeo copy --insecure-policy docker-archive\:$(sw1-mr14-container) docker://$(container_registry)/monitoring/sw1-mr14
+	skopeo copy --insecure-policy docker-archive\:$(sw1-mr14-container) docker://$(container_registry)/monitoring/sw1-mr14:$(commit_8)
 
 sw2-mr14-container = $(shell set -e; cd $(guix_repository); ./pre-inst-env  guix pack -f docker-layered -S /bin=bin -L "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules" -e '(@ (packages cisco) state-to-vc-sw2-mr14)')
 .PHONY: sw2-mr14
 sw2-mr14:
-	skopeo copy --insecure-policy docker-archive\:$(sw2-mr14-container) docker://$(container_registry)/monitoring/sw2-mr14
+	skopeo copy --insecure-policy docker-archive\:$(sw2-mr14-container) docker://$(container_registry)/monitoring/sw2-mr14:$(commit_8)
