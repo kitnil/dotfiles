@@ -1,6 +1,5 @@
 /.direnv
 /build-env
-/todo.org
 /.dumbjump
 /**/.envrc
 /.gradle
@@ -8,3 +7,4 @@
 /**/*.log
 /**/*.tar.gz
 /**/result
+todo.org
