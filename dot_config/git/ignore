@@ -2,6 +2,7 @@
 /build-env
 /.dumbjump
 /**/.envrc
+/.gitignore
 /.gradle
 /**/*~
 /**/*.log
