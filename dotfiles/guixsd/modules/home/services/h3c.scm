@@ -73,7 +73,9 @@
              (when (not #$(git-diff host))
                (invoke git "add" #$host)
                (invoke git "commit" "--message=Update.")
-               (invoke git "push" "origin"))))))))
+               (invoke git "push" "origin"
+                       (string-append "HEAD:" (or (getenv "GIT_BRANCH")
+                                                  "master"))))))))))
 
 (define h3c-configuration->vc-sw4-mr11.intr
   (h3c-configuration->vc "sw4-mr11.intr"))
