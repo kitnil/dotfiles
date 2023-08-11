@@ -144,6 +144,9 @@
      #~(begin
          (use-modules (guix build utils))
          (let ((git #$(file-append git "/bin/git")))
+           (setenv "PATH"
+                   (string-append (getenv "PATH")
+                                  ":" #$(file-append openssh "/bin")))
            (invoke #$(juniper-configuration->file config))
            (with-directory-excursion #$%ansible-state-directory
              (invoke git "add" #$(juniper-configuration-host config))
