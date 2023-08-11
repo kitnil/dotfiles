@@ -56,6 +56,9 @@
          (let* ((directory (string-append #$%ansible-state-directory "/" #$host "/config"))
                 (file (string-append directory "/h3c.conf"))
                 (git #$(file-append git "/bin/git")))
+           (setenv "PATH"
+                   (string-append (getenv "PATH")
+                                  ":" #$(file-append openssh "/bin")))
            (mkdir-p directory)
            (call-with-output-file (string-append directory "/current-configuration.txt")
              (lambda (port)
