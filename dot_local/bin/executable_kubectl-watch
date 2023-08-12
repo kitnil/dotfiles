@@ -360,6 +360,9 @@ EOF
 $ curl --max-time 2 --insecure --silent -XGET "${OPENSEARCH_ENDPOINT}/_cluster/state/nodes?pretty"
 $(curl --max-time 2 --insecure --silent "${OPENSEARCH_ARGS[@]}" -XGET "${OPENSEARCH_ENDPOINT}/_cluster/state/nodes?pretty")
 
+$ curl --max-time 2 --insecure --silent -XGET "${OPENSEARCH_ENDPOINT}/_cat/nodes?h=name,ram.percent,cpu,load_1m,disk.used_percent&v"
+$(curl --max-time 2 --insecure --silent "${OPENSEARCH_ARGS[@]}" -XGET "${OPENSEARCH_ENDPOINT}/_cat/nodes?h=name,ram.percent,cpu,load_1m,disk.used_percent&v" | sort --version-sort)
+
 $ curl --max-time 2 --insecure --silent -XGET "${OPENSEARCH_ENDPOINT}/_cat/allocation?v&pretty"
 $(curl --max-time 2 --insecure --silent "${OPENSEARCH_ARGS[@]}" -XGET "${OPENSEARCH_ENDPOINT}/_cat/allocation?v&pretty" | awk '{ print $9, $0 | "column --table" }' | awk '{ print $10="", $0 | "column --table" }' | awk 'NR<2{print $0;next}{print $0| "sort --version-sort"}')
 
