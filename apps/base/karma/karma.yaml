@@ -11,7 +11,7 @@ annotations:
     hidden: false
   hidden:
     - help
-debug: true
+debug: false
 karma:
   name: karma
 labels:
@@ -28,7 +28,7 @@ listen:
   prefix: /
 log:
   config: false
-  level: debug
+  level: info
 silenceForm:
   strip:
     labels:
