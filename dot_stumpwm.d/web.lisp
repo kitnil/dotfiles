@@ -159,37 +159,39 @@
 
 (defcommand firefox () ()
   "Start of focus firefox."
-  (let ((clipboard (get-x-selection)))
-    (cond ((string-contains "AC_" clipboard)
-           (when (y-or-n-p (format nil "Open ~a account in firefox? " clipboard))
-             (sb-thread:make-thread
-              (lambda ()
-                (mjru-open-account clipboard)
-                (putsel "")))))
-          ((uiop/utility:string-prefix-p "mj" clipboard)
-           (when (y-or-n-p (format nil "Open ~a account in firefox? " clipboard))
-             (sb-thread:make-thread
-              (lambda ()
-                (mjru-open-billing2-account clipboard)
-                (putsel "")))))
-          ((uiop/utility:string-prefix-p "deprecated-web" clipboard)
-           (when (y-or-n-p (format nil "Open ~a account in firefox? " clipboard))
-             (sb-thread:make-thread
-              (lambda ()
-                (mjru-open-billing2-account
-                 (last (split-string clipboard "-")))
-                (putsel "")))))
-          ((and (uiop/utility:string-prefix-p "u" clipboard)
-                (handler-case (parse-integer (subseq clipboard 1 (length clipboard))) (t (c) nil)))
-           (let ((account (concat "AC_" (subseq clipboard 1 (length clipboard)))))
-             (when (y-or-n-p (format nil "Open ~a account in firefox? " account))
-               (sb-thread:make-thread
-                (lambda ()
-                  (mjru-open-account account)
-                  (putsel ""))))))
-          ;; ((= (length clipboard) 24)
-          ;;  (mjru-mongo-development-id-object))
-          (t (run-or-raise (firefox-command) '(:class "firefox-default"))))))
+  (run-or-raise (firefox-command) '(:class "firefox-default"))
+  ;; (let ((clipboard (get-x-selection)))
+  ;;   (cond ((string-contains "AC_" clipboard)
+  ;;          (when (y-or-n-p (format nil "Open ~a account in firefox? " clipboard))
+  ;;            (sb-thread:make-thread
+  ;;             (lambda ()
+  ;;               (mjru-open-account clipboard)
+  ;;               (putsel "")))))
+  ;;         ((uiop/utility:string-prefix-p "mj" clipboard)
+  ;;          (when (y-or-n-p (format nil "Open ~a account in firefox? " clipboard))
+  ;;            (sb-thread:make-thread
+  ;;             (lambda ()
+  ;;               (mjru-open-billing2-account clipboard)
+  ;;               (putsel "")))))
+  ;;         ((uiop/utility:string-prefix-p "deprecated-web" clipboard)
+  ;;          (when (y-or-n-p (format nil "Open ~a account in firefox? " clipboard))
+  ;;            (sb-thread:make-thread
+  ;;             (lambda ()
+  ;;               (mjru-open-billing2-account
+  ;;                (last (split-string clipboard "-")))
+  ;;               (putsel "")))))
+  ;;         ((and (uiop/utility:string-prefix-p "u" clipboard)
+  ;;               (handler-case (parse-integer (subseq clipboard 1 (length clipboard))) (t (c) nil)))
+  ;;          (let ((account (concat "AC_" (subseq clipboard 1 (length clipboard)))))
+  ;;            (when (y-or-n-p (format nil "Open ~a account in firefox? " account))
+  ;;              (sb-thread:make-thread
+  ;;               (lambda ()
+  ;;                 (mjru-open-account account)
+  ;;                 (putsel ""))))))
+  ;;         ;; ((= (length clipboard) 24)
+  ;;         ;;  (mjru-mongo-development-id-object))
+  ;;         (t (run-or-raise (firefox-command) '(:class "firefox-default")))))
+  )
 
 (defcommand firefox-new-window () ()
   "Start Firefox."
