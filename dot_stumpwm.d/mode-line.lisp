@@ -95,7 +95,9 @@
                 (list '(:eval (format nil "VPN 1: ~a" *mjru-tapvpn-ip*))))
 
           ,(make-string 4 :initial-element #\space)
-          ,'(:eval (format nil "VOL: ~a" *volume-current*))
+          ,'(:eval (if (= *pulseaudio-current-sink* 2)
+                       (format nil "VOL LADSPA: ~a" *volume-current*)
+                       (format nil "VOL: ~a" *volume-current*)))
 
           ,(make-string 4 :initial-element #\space)
           "%d"
@@ -195,7 +197,10 @@
               (case button
                 ((1) (mode-line-start-programs))
                 ((2) (volume-toggle))
-                ((3) (delete-window))
+                ((3) (cond ((> x (- (screen-width (group-screen (current-group))) 30))
+                            (pulseaudio-toggle-ladspa))
+                           (t
+                            (delete-window))))
                 ((4) (cond ((> x (- (screen-width (group-screen (current-group))) 30))
                             (volume-increase))
                            ((> x (- (screen-width (group-screen (current-group))) 120))
