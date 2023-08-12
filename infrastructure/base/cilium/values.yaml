@@ -17,7 +17,7 @@ cni:
   #
   # Enable debug logging
   debug:
-    enabled: true
+    enabled: false
 
 # -- Configure prometheus metrics on the configured port at /metrics
 prometheus:
