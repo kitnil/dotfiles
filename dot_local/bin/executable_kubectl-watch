@@ -374,6 +374,10 @@ $(command curl --max-time 2 --insecure --silent "${OPENSEARCH_ARGS[@]}" "${OPENS
 
 $ curl --max-time 2 --header 'Content-Type: application/json' --insecure --silent --data '{"query": {"match_all": {}}}' "${OPENSEARCH_ENDPOINT}/logstash-*/_search" | jq --raw-output '.hits.hits[] | ._source.log'
 $(command curl --max-time 2 --header 'Content-Type: application/json' --insecure --silent "${OPENSEARCH_ARGS[@]}" --data '{"query": {"match_all": {}}}' "${OPENSEARCH_ENDPOINT}/logstash-*/_search" | jq --raw-output '.hits.hits[] | ._source.log')
+
+# Show recovery operations in OpenSearch.
+$ curl --max-time 2 --header 'Content-Type: application/json' --insecure --silent "${OPENSEARCH_ENDPOINT}/_cat/recovery?active_only=true&v=true"
+$(command curl --max-time 2 --header 'Content-Type: application/json' --insecure --silent "${OPENSEARCH_ARGS[@]}" "${OPENSEARCH_ENDPOINT}/_cat/recovery?active_only=true&v=true")
 EOF
         fi
 
