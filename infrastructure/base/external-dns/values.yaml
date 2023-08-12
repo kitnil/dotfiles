@@ -1,4 +1,4 @@
-logLevel: debug
+logLevel: info
 provider: pdns
 pdns:
   apiUrl: http://powerdns.pdns
