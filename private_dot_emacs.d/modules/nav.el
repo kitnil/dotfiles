@@ -252,8 +252,12 @@
   (when (boundp #'global-git-gutter-mode)
     (global-git-gutter-mode))
 
-  (when (boundp #'default-text-scale-mode)
-    (default-text-scale-mode))
+  (when (< emacs-major-version 29)
+    (when (macrop #'bind-key)
+      (bind-key "<C-mouse-4>" #'text-scale-increase)
+      (bind-key "<C-mouse-5>" #'text-scale-decrease))
+    (when (boundp #'default-text-scale-mode)
+      (default-text-scale-mode)))
 
   (when (boundp #'projectile-mode)
     (projectile-global-mode))

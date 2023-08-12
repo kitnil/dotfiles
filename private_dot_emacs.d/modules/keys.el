@@ -53,8 +53,6 @@ ARGS will be passed to hydra."
 
 (when (macrop #'bind-key)
   (bind-key "<Scroll_Lock>" #'scroll-lock-mode)
-  (bind-key "<C-mouse-4>" #'text-scale-increase)
-  (bind-key "<C-mouse-5>" #'text-scale-decrease)
   (bind-key "<C-down-mouse-1>" 'mc/toggle-cursor-on-click)
   ;; (bind-key "<f5>" #'aya-create)
   ;; (bind-key "<f6>" #'aya-expand)
