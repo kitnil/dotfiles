@@ -25,18 +25,18 @@ index_pattern()
 
 for user_and_password in "${users_and_passwors[@]}"
 do
-    if index_pattern 'logstash-*'
+    if index_pattern 'logstash*'
     then
-        echo "index-pattern 'logstash-*' exists, skipping creation." >&2
+        echo "index-pattern 'logstash*' exists, skipping creation." >&2
     else
         curl --user "$user_and_password" \
              --silent \
              --verbose \
              --request POST \
-             "http://${hostname}:${port}/api/saved_objects/index-pattern/logstash-*" \
+             "http://${hostname}:${port}/api/saved_objects/index-pattern/logstash*" \
              --header "osd-xsrf:true" \
              --header "content-type:application/json" \
-             --data '{"attributes": {"title": "logstash-*", "timeFieldName": "@timestamp"}}'
+             --data '{"attributes": {"title": "logstash*", "timeFieldName": "@timestamp"}}'
     fi
     # sampleSize
     # The number of rows to show in the table
