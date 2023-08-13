@@ -9,6 +9,7 @@ resources:
 - opensearch-node1-deployment.yaml
 - opensearch-node1-service.yaml
 - jobs
+- pvc.yaml
 configMapGenerator:
 - name: filebeat
   files:
