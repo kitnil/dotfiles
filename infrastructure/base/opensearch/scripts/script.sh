@@ -108,8 +108,11 @@ else
     "ism_template": [
       {
         "index_patterns": [
-          "logstash-*"
-        ],
+          "filebeat-*",
+          "logstash-*",
+          "security-auditlog-*",
+          "winlogbeat-*"
+         ],
         "priority": 1
       }
     ]
