@@ -45,7 +45,11 @@ EndSection
                          (source
                           (list "/dev/sda2" "/dev/sdc2" "/dev/sdd2"))
                          (target "/dev/md0")
-                         (type raid-device-mapping))))
+                         (type raid-device-mapping))
+                        (mapped-device
+                         (source "lvm1")
+                         (targets '("lvm1-hpvolumes"))
+                         (type lvm-device-mapping))))
 
   (file-systems (cons* (file-system
                          (device (file-system-label "guix-root"))
@@ -72,6 +76,11 @@ EndSection
                          (check? #f)
                          (flags '(no-dev))
                          (options "mode=1777,size=50%"))
+                       (file-system
+                         (device "/dev/mapper/lvm1-hpvolumes")
+                         (mount-point "/var/hpvolumes")
+                         (dependencies mapped-devices)
+                         (type "ext4"))
                        (file-system
                          (device "kubevirt")
                          (mount-point "/var/run/kubevirt")
