@@ -73,7 +73,7 @@ else
     curl --user "${username}:${password}" \
          --silent \
          --verbose \
-         --header "osd-version: 2.4.0" \
+         --header "osd-version: 1.2.0" \
          "http://${hostname}:${port}/api/ism/policies/delete_old_indexes" \
          --request PUT \
          --header 'Content-Type: application/json' \
