@@ -6,6 +6,7 @@
   #:use-module (guix store)
   #:use-module (home config)
   #:use-module (gnu packages ssh)
+  #:use-module (packages ssh)
   #:use-module (gnu packages admin)
   #:use-module (gnu packages version-control)
   #:use-module (gnu services mcron)
@@ -44,7 +45,7 @@
                                           (string-trim-right
                                            (with-input-from-file ssh-password-file
                                              read-string)))
-                                         #$(file-append openssh "/bin/ssh") "--"
+                                         #$(file-append openssh-8.6p1 "/bin/ssh") "--"
                                          #$host #$@command))
                        (output (read-string port)))
                   (close-pipe port)
@@ -78,7 +79,7 @@
                 (git #$(file-append git "/bin/git")))
            (setenv "PATH"
                    (string-append #$(file-append inetutils "/bin")
-                                  ":" #$(file-append openssh "/bin")
+                                  ":" #$(file-append openssh-8.6p1 "/bin")
                                   ":" (getenv "PATH")))
            (mkdir-p directory)
            (call-with-output-file (string-append directory "/cisco.conf")
