@@ -52,7 +52,7 @@
         (let loop ()
           (if (and (> (string-length (output)) 0))
               (begin
-                (display (string-take (output) (* 72 4)) error-port)
+                (display (output) error-port)
                 (newline error-port)
                 (display "..." error-port)
                 #t)
