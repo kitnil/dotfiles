@@ -78,6 +78,7 @@
                 (git #$(file-append git "/bin/git")))
            (setenv "PATH"
                    (string-append #$(file-append inetutils "/bin")
+                                  ":" #$(file-append openssh "/bin")
                                   ":" (getenv "PATH")))
            (mkdir-p directory)
            (call-with-output-file (string-append directory "/cisco.conf")
