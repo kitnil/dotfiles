@@ -96,7 +96,9 @@
            (with-directory-excursion #$%ansible-state-directory
              (invoke git "add" #$host)
              (invoke git "commit" "--message=Update.")
-             (invoke git "push" "origin")))))))
+             (invoke git "push" "origin"
+                     (string-append "HEAD:" (or (getenv "GIT_BRANCH")
+                                                "master")))))))))
 
 (define cisco-configuration->vc-sw1-dh507.intr
   (cisco-configuration->vc "sw1-dh507.intr"))
