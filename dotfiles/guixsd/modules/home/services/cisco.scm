@@ -10,7 +10,7 @@
   #:use-module (gnu packages admin)
   #:use-module (gnu packages version-control)
   #:use-module (gnu services mcron)
-  #:use-module (packages networking)
+  #:use-module (packages cisco)
   #:use-module (guile pass)
   #:export (cisco-service-type
 

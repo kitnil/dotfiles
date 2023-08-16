@@ -13,71 +13,11 @@
   #:use-module (gnu packages base)
   #:use-module (gnu packages compression)
   #:use-module (gnu packages elf)
-  #:use-module (gnu packages python-xyz))
-
-(define %home
-  (and=> (getenv "HOME")
-         (lambda (home)
-           home)))
-
-(define %source-dir
-  (string-append %home "/.local/share/chezmoi"))
-
-(define (git-output . args)
-  "Execute 'git ARGS ...' command and return its output without trailing
-newspace."
-  (with-directory-excursion %source-dir
-    (let* ((port   (apply open-pipe* OPEN_READ "git" args))
-           (output (read-string port)))
-      (close-pipe port)
-      (string-trim-right output #\newline))))
-
-(define (current-commit)
-  (git-output "log" "-n" "1" "--pretty=format:%H"))
-
-(define-public cisco
-  (package
-    (name "cisco")
-    (version "1.0.0")
-    (source (local-file %source-dir
-                        #:recursive? #t
-                        #:select? (git-predicate %source-dir)))
-    (build-system python-build-system)
-    (propagated-inputs
-     (list python-pexpect))
-    (arguments
-     `(#:phases
-       (modify-phases %standard-phases
-         (add-after 'unpack 'chdir
-           (lambda _
-             (chdir "src/python-cisco"))))))
-    (home-page "https://wugi.info")
-    (synopsis "Run commands on Cisco hardware")
-    (description "This package provides a Python program to run commands on
-Cisco hardware.")
-    (license license:gpl3+)))
-
-(define-public cisco-interact
-  (package
-    (name "cisco-interact")
-    (version "1.0.0")
-    (source (local-file %source-dir
-                        #:recursive? #t
-                        #:select? (git-predicate %source-dir)))
-    (build-system python-build-system)
-    (propagated-inputs
-     (list python-pexpect))
-    (arguments
-     `(#:phases
-       (modify-phases %standard-phases
-         (add-after 'unpack 'chdir
-           (lambda _
-             (chdir "src/python-cisco-interact"))))))
-    (home-page "https://wugi.info")
-    (synopsis "Connect to Cisco hardware and type a password")
-    (description "This package provides a Python program to connect to Cisco
-hardware and type a password automatically.")
-    (license license:gpl3+)))
+  #:use-module (gnu packages python-xyz)
+  #:use-module (home services cisco)
+  #:use-module (home services h3c)
+  #:use-module (home services juniper)
+  #:use-module (utils package))
 
 (define-public plumber
   (package
@@ -123,3 +63,54 @@ The tool enables you to:
 
 It's like curl for messaging systems.")
     (license license:expat)))
+
+(define-public state-to-vc-sw4-mr11
+  (package-from-program-file h3c-configuration->vc-sw4-mr11.intr))
+
+(define-public state-to-vc-sw4-mr12
+  (package-from-program-file h3c-configuration->vc-sw4-mr12.intr))
+
+(define-public state-to-vc-sw4-mr13
+  (package-from-program-file h3c-configuration->vc-sw4-mr13.intr))
+
+(define-public state-to-vc-sw4-mr14
+  (package-from-program-file h3c-configuration->vc-sw4-mr14.intr))
+
+(define-public state-to-vc-sw1-dh507
+  (package-from-program-file cisco-configuration->vc-sw1-dh507.intr))
+
+(define-public state-to-vc-sw2-dh507
+  (package-from-program-file cisco-configuration->vc-sw2-dh507.intr))
+
+(define-public state-to-vc-sw1-dh508
+  (package-from-program-file cisco-configuration->vc-sw1-dh508.intr))
+
+(define-public state-to-vc-sw2-dh508
+  (package-from-program-file cisco-configuration->vc-sw2-dh508.intr))
+
+(define-public state-to-vc-sw1-mr11
+  (package-from-program-file cisco-configuration->vc-sw1-mr11.intr))
+
+(define-public state-to-vc-sw1-mr12
+  (package-from-program-file cisco-configuration->vc-sw1-mr12.intr))
+
+(define-public state-to-vc-sw2-mr12
+  (package-from-program-file cisco-configuration->vc-sw2-mr12.intr))
+
+(define-public state-to-vc-sw3-mr13
+  (package-from-program-file cisco-configuration->vc-sw3-mr13.intr))
+
+(define-public state-to-vc-sw1-mr14
+  (package-from-program-file cisco-configuration->vc-sw1-mr14.intr))
+
+(define-public state-to-vc-sw2-mr14
+  (package-from-program-file cisco-configuration->vc-sw2-mr14.intr))
+
+(define-public state-to-vc-sr1-mr13-14
+  (package-from-program-file juniper-configuration->vc-sr1-mr13-14.intr))
+
+(define-public state-to-vc-sr1-dh507-508
+  (package-from-program-file juniper-configuration->vc-sr1-dh507-508.intr))
+
+(define-public state-to-vc-sw2-mr13
+  (package-from-program-file juniper-configuration->vc-sw2-mr13.intr))
