@@ -191,7 +191,6 @@ state-to-vc-hostnames =			\
   sw2-mr12					\
   sw2-mr13					\
   sw2-mr14					\
-  sw3-mr13					\
   sw4-mr11					\
   sw4-mr12					\
   sw4-mr13					\
