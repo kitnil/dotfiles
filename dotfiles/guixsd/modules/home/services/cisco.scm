@@ -73,7 +73,8 @@
                                   '((guix build utils)))
      #~(begin
          (use-modules (guix build utils)
-                      (guix utils))
+                      (guix utils)
+                      (srfi srfi-34))
          (let* ((directory (string-append #$%ansible-state-directory "/" #$host "/config"))
                 (file (string-append directory "/cisco.conf"))
                 (git #$(file-append git "/bin/git")))
@@ -97,9 +98,19 @@
            (with-directory-excursion #$%ansible-state-directory
              (invoke git "add" #$host)
              (invoke git "commit" "--message=Update.")
-             (invoke git "push" "origin"
-                     (string-append "HEAD:" (or (getenv "GIT_BRANCH")
-                                                "master")))))))))
+             (let loop ()
+               (if (guard (c ((invoke-error? c)
+                              (report-invoke-error c)
+                              #f))
+                     (invoke git "push" "origin"
+                             (string-append "HEAD:" (or (getenv "GIT_BRANCH")
+                                                        "master"))))
+                   #t
+                   (begin
+                     (guard (c ((invoke-error? c)
+                                (report-invoke-error c)))
+                       (invoke git "pull" "--rebase" "origin" "master"))
+                     (loop))))))))))
 
 (define cisco-configuration->vc-sw1-dh507.intr
   (cisco-configuration->vc "sw1-dh507.intr"))
