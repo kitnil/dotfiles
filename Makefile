@@ -204,6 +204,7 @@ $(state-to-vc-hostnames):
 	commit_8=$$(git rev-parse HEAD | cut -c -8)
 	container=$$($(guix_repository)/pre-inst-env guix pack -f docker-layered -S /bin=bin -L "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules" -e '(@ (packages networking) state-to-vc-$@)')
 	skopeo copy --insecure-policy docker-archive\:$$container docker://$(container_registry)/monitoring/$@:$$commit_8
+	guix gc --delete $$container
 	cd $(HOME)/src/gitlab.intr/cd/state-to-git/apps/*/state-to-git-$@
 	nix develop git+https://gitlab.intr/nixos/kubernetes --command kustomize edit set image $(container_registry)/monitoring/$@:$$commit_8
 	git commit --message="apps: $$(basename $$(dirname $$(pwd))): state-to-git-$@: Update image to $$commit_8." kustomization.yaml
