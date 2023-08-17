@@ -1849,8 +1849,6 @@ PasswordAuthentication yes")))
                                   (bird-configuration
                                    (config-file (local-file "bird-wugi.info.conf"))))
 
-                         (service ddclient-service-type)
-
 		         ;; TODO: Move those services.
 
                          ;; Jun 19 17:51:38 guixsd postgres[27613]: [1-1]
