@@ -1,10 +1,23 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kresd-tcp
+spec:
+  ports:
+  - name: kresd
+    protocol: TCP
+    port: 53
+    targetPort: 53
+  selector: {}
+---
 apiVersion: v1
 kind: Service
 metadata:
   name: kresd
 spec:
   ports:
-  - name: kresd
+  - name: kresd-udp
     protocol: UDP
     port: 53
     targetPort: 53
