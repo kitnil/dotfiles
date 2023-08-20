@@ -5,7 +5,7 @@ metadata:
   name: kresd-tcp
 spec:
   ports:
-  - name: kresd-tcp
+  - name: kresd
     protocol: TCP
     port: 53
     targetPort: 53
@@ -17,7 +17,7 @@ metadata:
   name: kresd-udp
 spec:
   ports:
-  - name: kresd-udp
+  - name: kresd
     protocol: UDP
     port: 53
     targetPort: 53
