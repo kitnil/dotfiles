@@ -6,3 +6,6 @@ controller:
       enabled: true
       additionalLabels:
         release: "prometheus"
+# Expose the kubernetes service in the port 443 using the port 6443.
+tcp:
+  6443: "default/kubernetes:443"
