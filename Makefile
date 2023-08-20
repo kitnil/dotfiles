@@ -7,9 +7,6 @@ TESTS =						\
   tests/ssh-mjru.bats				\
   tests/ssh-home.bats
 
-.PHONY: all
-all: guix.wugi.info ws1.wugi.info spb.wugi.info vm1.wugi.info vm2.wugi.info vm3.wugi.info vm4.wugi.info
-
 .PHONY: clean-guile
 clean-guile:
 	rm -rf $(HOME)/.cache/guile/ccache
@@ -39,13 +36,26 @@ QEMU_FLAGS =					\
   -smp 2					\
   -nic user,model=virtio-net-pci,hostfwd=tcp::10022-:22
 
-.PHONY: dotfiles/system/vm-image-jenkins.tmpl
-dotfiles/system/vm-image-jenkins.tmpl:
-	$(shell guix system vm -L $(MODULES) --no-offload dotfiles/system/vm-image-jenkins.tmpl) $(QEMU_FLAGS)
+define guix-time-machine-arguments
+guix time-machine -C dotfiles/channels-current.scm
+endef
 
-.PHONY: dotfiles/system/vm-image-stumpwm.tmpl
-dotfiles/system/vm-image-stumpwm.tmpl:
-	$(shell guix system vm -L $(MODULES) --no-offload dotfiles/system/vm-image-stumpwm.tmpl) $(QEMU_FLAGS)
+define guix-system-vm-arguments
+system vm -L $(MODULES) --no-offload dotfiles/system/$(1)
+endef
+
+guix-system-vm-configurations =			\
+  guixsd					\
+  jenkins					\
+  stumpwm
+
+guix-system-vm-configuration-prefix := guix-system-vm-configuration-
+$(foreach configuration,$(guix-system-vm-configurations),$(guix-system-vm-configuration-prefix)-$(configuration)):
+	guix $(call guix-system-vm-arguments,$(guix-system-vm-configuration-prefix),$@)
+
+time-machine-guix-system-vm-configuration-prefix = time-machine-guix-system-vm-configuration-
+$(foreach configuration,$(guix-system-vm-configurations),$(time-machine-guix-system-vm-configuration-prefix)$(configuration)):
+	$(call guix-time-machine-arguments) -- $(call guix-system-vm-arguments,$(subst $(time-machine-guix-system-vm-configuration-prefix),vm-image-,$@).tmpl)
 
 .PHONY: extension-graph
 extension-graph:
@@ -148,17 +158,35 @@ dotfiles/channels-current.scm: clean-guile
 dotfiles/packer/build.scm:
 	sh -c 'cd dotfiles/packer; guix build -f build.scm'
 
-.PHONY: guix.wugi.info
-guix.wugi.info:
-	guix system build -L $(MODULES) dotfiles/guixsd/guixsd.scm
+guix-system-configurations =			\
+  guixsd					\
+  vm1.wugi.info					\
+  vm2.wugi.info					\
+  ws1.wugi.info
 
-.PHONY: ws1.wugi.info
-ws1.wugi.info:
-	guix system build -L $(MODULES) dotfiles/guixsd/ws1.wugi.info.scm
+define guix-system-arguments
+system build -L $(MODULES) dotfiles/guixsd/$(subst $(1),,$(2)).scm
+endef
 
-.PHONY: vm1.wugi.info
-vm1.wugi.info:
-	guix system build -L $(MODULES) dotfiles/guixsd/vm1.wugi.info.scm
+define guix-package-manifest-arguments
+shell -L $(MODULES) --manifest=dotfiles/manifests/$(subst $(1),,$(2)).scm -- exit 0
+endef
+
+prefix := guix-system-configuration-
+$(foreach configuration,$(guix-system-configurations),guix-system-configuration-$(configuration)):
+	guix $(call guix-system-arguments,$(prefix),$@)
+
+prefix := time-machine-guix-system-configuration-
+$(foreach configuration,$(guix-system-configurations),time-machine-guix-system-configuration-$(configuration)):
+	$(call guix-time-machine-arguments) -- $(call guix-system-arguments,$(prefix),$@)
+
+prefix := guix-package-manifest-
+$(foreach configuration,$(guix-system-configurations),guix-package-manifest-$(configuration)):
+	$(call guix-package-manifest-arguments,$(prefix),$@)
+
+prefix := time-machine-guix-package-manifest-
+$(foreach configuration,$(guix-system-configurations),time-machine-guix-package-manifest-$(configuration)):
+	$(call guix-time-machine-arguments) -- $(call guix-package-manifest-arguments,$(prefix),$@)
 
 .PHONY: add
 add:
