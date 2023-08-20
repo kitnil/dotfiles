@@ -8,3 +8,4 @@ subsets:
   ports:
   - port: 53
     name: kresd
+    protocol: UDP

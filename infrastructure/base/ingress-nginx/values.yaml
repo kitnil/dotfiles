@@ -9,8 +9,6 @@ controller:
 tcp:
   # Expose the kubernetes service in the port 443 using the port 6443.
   6443: "default/kubernetes:443"
-  # Expose the kresd service in the port 53 using the port 53.
-  53: "kresd/kresd-tcp:53"
 udp:
   # Expose the kresd service in the port 53 using the port 53.
-  53: "kresd/kresd-udp:53"
+  53: "kresd/kresd:53"
