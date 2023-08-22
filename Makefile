@@ -134,7 +134,7 @@ install: decrypt dotfiles/guixsd/machines.scm dotfiles/nix/nix.conf
 	ln -sf $(HOME)/.Xresources $(HOME)/.Xdefaults
 	install -Dm644 dotfiles/guile/pass.scm $(HOME)/.config/guile/pass.scm
 	install -Dm644 dotfiles/guile/config.scm $(HOME)/.config/guile/config.scm
-	guix home --load-path=$(PWD)/dotfiles/guixsd/modules reconfigure --no-substitutes dotfiles/guixsd/home/$(HOSTNAME).scm
+	guix home --load-path=dotfiles/guixsd/modules reconfigure --no-substitutes dotfiles/guixsd/home/$(HOSTNAME).scm
 
 .PHONY: shepherd-restart
 shepherd-restart:
@@ -230,7 +230,7 @@ container_registry=harbor.corp1.majordomo.ru
 .ONESHELL:
 $(state-to-vc-hostnames):
 	commit_8=$$(git rev-parse HEAD | cut -c -8)
-	container=$$($(guix_repository)/pre-inst-env guix pack -f docker-layered -S /bin=bin -L "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules" -e '(@ (packages networking) state-to-vc-$@)')
+	container=$$($(guix_repository)/pre-inst-env guix pack -f docker-layered -S /bin=bin -L dotfiles/guixsd/modules -e '(@ (packages networking) state-to-vc-$@)')
 	skopeo copy --insecure-policy docker-archive\:$$container docker://$(container_registry)/monitoring/$@:$$commit_8
 	guix gc --delete $$container
 	cd $(HOME)/src/gitlab.intr/cd/state-to-git/apps/*/state-to-git-$@
