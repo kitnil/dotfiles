@@ -83,20 +83,23 @@
                  (lambda* (#:key git message output)
                    (with-directory-excursion output
                      (invoke git "add" ".")
-                     (invoke git "commit" (string-append "--message=" message))
-                     (let loop ()
-                       (if (guard (c ((invoke-error? c)
+                     (when (guard (c ((invoke-error? c)
                                       (report-invoke-error c)
                                       #f))
-                             (invoke git "push" "origin"
-                                     (string-append "HEAD:" (or (getenv "GIT_BRANCH")
-                                                                "master"))))
-                           #t
-                           (begin
-                             (guard (c ((invoke-error? c)
-                                        (report-invoke-error c)))
-                               (invoke git "pull" "--rebase" "origin" "master"))
-                             (loop)))))))
+                             (invoke git "commit" (string-append "--message=" message)))
+                       (let loop ()
+                         (if (guard (c ((invoke-error? c)
+                                        (report-invoke-error c)
+                                        #f))
+                               (invoke git "push" "origin"
+                                       (string-append "HEAD:" (or (getenv "GIT_BRANCH")
+                                                                  "master"))))
+                             #t
+                             (begin
+                               (guard (c ((invoke-error? c)
+                                          (report-invoke-error c)))
+                                 (invoke git "pull" "--rebase" "origin" "master"))
+                               (loop))))))))
                 (hostname #$(juniper-configuration-host config))
                 (message (string-append hostname ": Update."))
                 (directory
