@@ -76,6 +76,7 @@
    (with-imported-modules '((guix build utils))
      #~(begin
          (use-modules (guix build utils)
+                      (ice-9 format)
                       (srfi srfi-34))
          (let* ((git #$(file-append git "/bin/git"))
                 (git-commit
@@ -98,15 +99,15 @@
                              (loop)))))))
                 (hostname #$(juniper-configuration-host config))
                 (message (string-append hostname ": Update."))
-                (state-directory #$%ansible-state-directory)
                 (directory
-                 (string-append hostname "/config"))
+                 (string-append #$%ansible-state-directory "/" hostname "/config"))
                 (file (string-append directory "/juniper.conf")))
            (setenv "PATH"
                    (string-append (getenv "PATH")
                                   ":" #$(file-append openssh "/bin")))
+           (format #t "directory: ~s.~%" directory)
            (mkdir-p directory)
-           (with-directory-excursion state-directory
+           (with-directory-excursion directory
              (call-with-output-file (string-append directory "/juniper.conf")
                (lambda (port)
                  (display #$(juniper-command (juniper-configuration-host config)
