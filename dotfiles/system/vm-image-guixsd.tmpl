@@ -1,0 +1,227 @@
+;; eval ""$(sed 's,-nic user[^ ]* ,,' "$(make check-system)" | tail -1 | sed 's/\sexec\s//')" -m 4096  -smp 2 -nic user,model=virtio-net-pci,hostfwd=tcp::10022-:22"
+;; ssh -fL 5901:localhost:5901 -F /dev/null localhost -p 10022
+
+(use-modules (gnu)
+             (guix build utils)
+             (guix)
+             (ice-9 match)
+             (packages linux)
+             (nongnu system linux-initrd)
+             (srfi srfi-1))
+
+(use-service-modules desktop networking ssh xorg shepherd)
+
+(use-package-modules bootloaders certs fonts nvi package-management wget xorg
+                     wm linux lisp lisp-xyz pulseaudio astronomy ratpoison)
+
+(use-modules (wigust packages lisp))
+
+(define vm-image-motd (plain-file "motd" "
+\x1b[1;37mThis is the GNU system.  Welcome!\x1b[0m
+
+This instance of Guix is a template for virtualized environments.
+You can reconfigure the whole system by adjusting /etc/config.scm
+and running:
+
+  guix system reconfigure /etc/config.scm
+
+Run '\x1b[1;37minfo guix\x1b[0m' to browse documentation.
+
+\x1b[1;33mConsider setting a password for the 'root' and 'oleg' \
+accounts.\x1b[0m
+"))
+
+(define vncserver-configure
+  (let* ((home "/home/oleg")
+         (xstartup (string-append home "/.vnc/xstartup"))
+         (passwd (local-file "/home/oleg/.vnc/passwd"))
+         (cp (file-append coreutils "/bin/cp"))
+         (chown (file-append coreutils "/bin/chown"))
+         (chmod (file-append coreutils "/bin/chmod")))
+    (program-file
+     "vm-image-vncserver-configure"
+     (with-imported-modules '((guix build utils))
+       #~(begin
+           (use-modules (ice-9 format)
+                        (guix build utils))
+           (let ((user (getpw "oleg"))
+                 (group (getgr "users")))
+             (display "Configure vncserver...")
+             (mkdir-p (string-append #$home "/.vnc"))
+             (copy-file #$passwd (string-append #$home "/.vnc/passwd"))
+             (copy-file #$(local-file "/home/oleg/.vnc/config") "/home/oleg/.vnc/config")
+             (chmod (string-append #$home "/.vnc/passwd") #o600))
+           (with-output-to-file #$xstartup
+             (lambda ()
+               (format #t "\
+#!/bin/sh
+unset DBUS_SESSION_BUS_ADDRESS
+unset SESSION_MANAGER
+exec -a twm /bin/sh --login -c ~a/bin/twm\n" #$twm)))
+           (chmod #$xstartup #o755)
+           (chown #$xstartup (passwd:uid user) (group:gid group))
+           #t)))))
+
+(define stumpwm-configure
+  (let* ((dotfiles (load "/home/oleg/.local/share/chezmoi/guix.scm"))
+         (home "/home/oleg")
+         (xsession (string-append home "/.xsession"))
+         (cp (file-append coreutils "/bin/cp"))
+         (chown (file-append coreutils "/bin/chown"))
+         (chmod (file-append coreutils "/bin/chmod"))
+         (sbcl (file-append sbcl "/bin/sbcl"))
+         (stumpwm-config (local-file "/home/oleg/.local/share/chezmoi/dotfiles/system/.stumpwm.d/init.lisp")))
+    (program-file "vm-image-stumpwm-configure"
+     (with-imported-modules '((guix build utils))
+       #~(begin
+           (use-modules (ice-9 format)
+                        (guix build utils))
+           (let ((user (getpw "oleg"))
+                 (group (getgr "users")))
+             (display "Configure StumpWM...")
+             (mkdir (string-append #$home "/.stumpwm.d"))
+             (copy-file #$stumpwm-config
+                        (string-append #$home "/.stumpwm.d/init.lisp"))
+             (copy-file (string-append #$dotfiles "/share/dotfiles/dot_Xresources")
+                        (string-append #$home "/.Xresources"))
+             (with-output-to-file "/tmp/run-stumpwm"
+               (lambda ()
+                 (display "\
+(require :asdf)
+(require :stumpwm)
+
+(stumpwm:stumpwm)\n")))
+             (with-output-to-file #$xsession
+               (lambda ()
+                 (format #t "exec ~a --load ~a" #$sbcl "/tmp/run-stumpwm")))
+             (chown #$xsession (passwd:uid user) (group:gid group))
+             (chmod #$xsession #o755)
+             ))))))
+
+(operating-system
+  (host-name "gnu")
+  (timezone "Etc/UTC")
+  (locale "en_US.utf8")
+  (keyboard-layout (keyboard-layout "us" "altgr-intl"))
+
+  ;; Label for the GRUB boot menu.
+  (label (string-append "GNU Guix " (package-version guix)))
+
+  (kernel linux-5.13)
+  (firmware (cons* (@ (packages linux) linux-firmware) %base-firmware))
+
+  ;; Below we assume /dev/vda is the VM's hard disk.
+  ;; Adjust as needed.
+  (bootloader (bootloader-configuration
+               (bootloader grub-bootloader)
+               (target "/dev/vda")
+               (terminal-outputs '(console))))
+  (file-systems (cons (file-system
+                        (mount-point "/")
+                        (device "/dev/vda1")
+                        (type "ext4"))
+                      %base-file-systems))
+
+  (users (cons (user-account
+                (name "oleg")
+                (comment "GNU Guix Live")
+                (password (crypt "oleg" "$6$abc"))
+                (group "users")
+                (uid 1000)
+                (supplementary-groups '("wheel" "netdev"
+                                        "audio" "video")))
+               %base-user-accounts))
+
+  ;; Our /etc/sudoers file.  Since 'oleg' initially has an empty password,
+  ;; allow for password-less sudo.
+  (sudoers-file (plain-file "sudoers" "\
+root ALL=(ALL) ALL
+%wheel ALL=NOPASSWD: ALL\n"))
+
+  (packages (append (list font-bitstream-vera nss-certs nvi wget
+                          font-dejavu
+                          strace
+                          ponymix
+                          xrandr
+                          xrdb
+                          xplanet
+                          xkill
+                          xhost
+                          xdpyinfo
+                          sbcl
+                          
+                          stumpwm
+                          `(,stumpwm "lib")
+                          sbcl-stumpwm-ttf-fonts
+                          sbcl-stumpwm-globalwindows
+                          sbcl-stumpwm-swm-gaps
+                          sbcl-stumpwm-stumptray
+                          sbcl-slime-swank
+                          stumpish
+                          xterm
+
+                          )
+                    %base-packages))
+
+  (services
+   (append (list ;; (service vncserver-service-type (vncserver-configuration
+                 ;;                                  (display 1)
+                 ;;                                  (user "oleg")
+                 ;;                                  (group "users")
+                 ;;                                  (directory "/home/oleg")
+                 ;;                                  (xstartup "/home/oleg/.vnc/xstartup")
+                 ;;                                  (host-name "gnu")))
+                 ;; (vnc-service 2)
+                 ;; (vnc-service 3)
+                 ;; TODO: Avoid in (modules vnc) add to requirement vncserver-config
+
+                 ;; Choose SLiM, which is lighter than the default GDM.
+                 (service slim-service-type
+                          (slim-configuration
+                           (auto-login? #t)
+                           (default-user "oleg")
+                           (xorg-configuration
+                            (xorg-configuration
+                             (keyboard-layout keyboard-layout)))))
+
+                 ;; (simple-service 'stumpwm-config shepherd-root-service-type
+                 ;;                 (list
+                 ;;                  (shepherd-service
+                 ;;                   (provision '(stumpwm-config))
+                 ;;                   (documentation "Configure StumpWM")
+                 ;;                   (requirement '())
+                 ;;                   (start #~(make-forkexec-constructor
+                 ;;                               (list #$stumpwm-configure)
+                 ;;                               #:user "oleg"
+                 ;;                               #:group "users"))
+                 ;;                   (one-shot? #t)
+                 ;;                   (stop #~(make-kill-destructor)))))
+
+                 (service openssh-service-type
+                          (openssh-configuration
+                           (authorized-keys
+                            `(("oleg" ,(local-file "/home/oleg/.ssh/id_rsa.pub"))))))
+
+                 ;; Use the DHCP client service rather than NetworkManager.
+                 (service dhcp-client-service-type))
+
+           ;; Remove GDM, ModemManager, NetworkManager, and wpa-supplicant,
+           ;; which don't make sense in a VM.
+           (remove (lambda (service)
+                     (let ((type (service-kind service)))
+                       (or (memq type
+                                 (list gdm-service-type
+                                       wpa-supplicant-service-type
+                                       cups-pk-helper-service-type
+                                       network-manager-service-type
+                                       modem-manager-service-type))
+                           (eq? 'network-manager-applet
+                                (service-type-name type)))))
+                   (modify-services %desktop-services
+                     (login-service-type config =>
+                                         (login-configuration
+                                          (inherit config)
+                                          (motd vm-image-motd)))))))
+
+  ;; Allow resolution of '.local' host names with mDNS.
+  (name-service-switch %mdns-host-lookup-nss))
