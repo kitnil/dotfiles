@@ -4,19 +4,20 @@ ssh_binary="$HOME/.guix-profile/bin/ssh"
 
 main()
 {
-    case "$1" in
-        vm[0-9]*)
-            exec "$ssh_binary" \
-                 -o UserKnownHostsFile=/dev/null \
-                 -o StrictHostKeyChecking=no \
-                 -i ~/.ssh/id_rsa_majordomo_sup \
-                 "sup@$(ihs vm ip $1 | recsel -Pip_address)" \
-                 "$@"
-            ;;
-        *)
-            exec "$ssh_binary" -o UserKnownHostsFile=/dev/null -o StrictHostKeyChecking=no "$@"
-            ;;
-    esac
+    if [[ $1 == vm[0-9]* ]] && [[ $1 != *.wugi.info ]]
+    then
+        exec "$ssh_binary" \
+             -o UserKnownHostsFile=/dev/null \
+             -o StrictHostKeyChecking=no \
+             -i ~/.ssh/id_rsa_majordomo_sup \
+             "sup@$(ihs vm ip $1 | recsel -Pip_address)" \
+             "$@"
+    else
+        exec "$ssh_binary" \
+             -o UserKnownHostsFile=/dev/null \
+             -o StrictHostKeyChecking=no \
+             "$@"
+    fi
 }
 
 main "$@"
