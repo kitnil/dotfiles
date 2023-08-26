@@ -190,6 +190,7 @@
                      "allow 172.16.103.0/24;"
                      "allow 78.108.80.212/32;" ;Majordomo NAT
                      "allow 88.201.161.72/32;"
+                     "allow 78.108.82.44/32;" ;vm1.wugi.info
                      "deny all;")
                    (list
                     ;; Do not allow connections from docker 1.5 and earlier
