@@ -1,0 +1,50 @@
+;; guix build -f kubernetes-ssl_vm1.wugi.info
+
+(use-modules (guix gexp)
+             (ice-9 format)
+             (gnu packages)
+             (guix packages)
+             (guix build-system trivial))
+
+(define flake
+  "git+file:///home/oleg/src/gitlab.intr/nixos/kubernetes-kube1-home#kubernetes-generate-certificates")
+
+(define (package-from-program-file foo)
+  (package
+    (name (program-file-name foo))
+    (version "0.0.1")
+    (source #f)
+    (build-system trivial-build-system)
+    (arguments
+     (list
+      #:builder
+      #~(begin
+          (mkdir %output)
+          (mkdir (string-append %output "/bin"))
+          (copy-file #$foo
+                     (string-append %output "/bin/" #$(program-file-name foo)))
+          (chmod (string-append %output "/bin/" #$(program-file-name foo))
+                 #o555)
+          #t)))
+    (home-page "")
+    (synopsis "")
+    (description "")
+    (license #f)))
+
+(define my-program
+  (program-file "run.scm"
+                #~(begin
+                    (use-modules (ice-9 popen)
+                                 (ice-9 rdelim))
+                    (let* ((port (open-pipe* OPEN_READ
+                                             "nix" "build"
+                                             "--no-link"
+                                             "--print-build-logs"
+                                             "--print-out-paths"
+                                             #$flake))
+                           (output (read-string port)))
+                      (close-port port)
+                      (display (string-trim-right output #\newline))
+                      (newline)))))
+
+(package-from-program-file my-program)
