@@ -87,7 +87,7 @@
             "Blackbox probe slow HTTP (instance {{ $labels.instance }})")
            ("description"
             .
-            "HTTP request took more than 1s
+            "HTTP request took more than 3s
   VALUE = {{ $value }}
   LABELS = {{ $labels }}"))
           ("alert" . "BlackboxProbeSlowHttp"))
