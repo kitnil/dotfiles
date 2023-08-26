@@ -25,7 +25,7 @@
             "Blackbox slow probe (instance {{ $labels.instance }})")
            ("description"
             .
-            "Blackbox probe took more than 1s to complete
+            "Blackbox probe took more than 10s to complete
   VALUE = {{ $value }}
   LABELS = {{ $labels }}"))
           ("alert" . "BlackboxSlowProbe"))
