@@ -188,11 +188,6 @@ remote-random
                                     (requirement '(tor))
                                     (socks-directroute-fallback? #t)))
 
-                          (service kubelet-service-type
-                                  (kubelet-configuration
-                                   (kubelet (file-append (load "/home/oleg/.local/share/chezmoi/kubelet.scm")
-                                                         "/bin/kubelet.sh"))))
-
                           (service tinyproxy-service-type
                                    (tinyproxy-configuration
                                     (config-file (local-file "tinyproxy.conf"))
