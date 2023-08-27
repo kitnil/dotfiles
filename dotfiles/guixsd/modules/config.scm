@@ -684,7 +684,7 @@ client-to-client
       "--ajp13Port=-1"))
    (java-arguments
     '(;; "-Djava.awt.headless=true"
-      "-Xmx512m"
+      "-Xmx256m"
       "-Djenkins.install.runSetupWizard=false"
 
       ;; "-Djavax.net.debug=all"
