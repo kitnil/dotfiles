@@ -102,7 +102,7 @@
             "type": "prometheus",
             "uid": "${datasource}"
           },
-          "expr": "windows_os_time{instance=~\"$server\"} - on () windows_process_start_time{creating_process_id=\"0\",instance=\"$server\",process=\"Idle\",process_id=\"0\"}",
+          "expr": "windows_os_time{instance=~\"$server\"}",
           "format": "time_series",
           "hide": false,
           "instant": true,
