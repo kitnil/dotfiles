@@ -52,7 +52,8 @@
                                   '((guix build utils)))
      #~(begin
          (use-modules (guix build utils)
-                      (guix utils))
+                      (guix utils)
+                      (srfi srfi-34))
          (let* ((directory (string-append #$%ansible-state-directory "/" #$host "/config"))
                 (file (string-append directory "/h3c.conf"))
                 (git #$(file-append git "/bin/git")))
