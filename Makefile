@@ -236,6 +236,9 @@ $(state-to-vc-hostnames):
 	guix gc --delete $$container
 	cd $(HOME)/src/gitlab.intr/cd/state-to-git/apps/*/state-to-git-$@
 	nix develop git+https://gitlab.intr/nixos/kubernetes --command kustomize edit set image $(container_registry)/monitoring/$@:$$commit_8
-	git commit --message="apps: $$(basename $$(dirname $$(pwd))): state-to-git-$@: Update image to $$commit_8." kustomization.yaml
+	if ! git commit --message="apps: $$(basename $$(dirname $$(pwd))): state-to-git-$@: Update image to $$commit_8." kustomization.yaml
+	then
+	    :
+	fi
 
 state-to-vc-containers: $(state-to-vc-hostnames)
