@@ -178,7 +178,10 @@
                           port)))
              (git-commit #:git git #:message message #:output directory)
              #$(juniper-configuration-post-hook config)
-             (git-commit #:git git #:message message #:output directory)))))))
+             (git-commit #:git git #:message message #:output directory)
+             (and=> (getenv "SLEEP_SECONDS")
+                    (lambda (seconds)
+                      (sleep (string->number seconds))))))))))
 
 (define (juniper-bgp-commands host)
   #~(begin

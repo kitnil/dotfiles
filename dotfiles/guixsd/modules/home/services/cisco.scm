@@ -110,7 +110,10 @@
                      (guard (c ((invoke-error? c)
                                 (report-invoke-error c)))
                        (invoke git "pull" "--rebase" "origin" "master"))
-                     (loop))))))))))
+                     (loop))))
+             (and=> (getenv "SLEEP_SECONDS")
+                    (lambda (seconds)
+                      (sleep (string->number seconds))))))))))
 
 (define cisco-configuration->vc-sw1-dh507.intr
   (cisco-configuration->vc "sw1-dh507.intr"))
