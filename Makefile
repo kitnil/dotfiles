@@ -229,6 +229,7 @@ container_registry=harbor.corp1.majordomo.ru
 
 .ONESHELL:
 $(state-to-vc-hostnames):
+	set -o nounset -o errexit -o pipefail
 	commit_8=$$(git rev-parse HEAD | cut -c -8)
 	container=$$($(guix_repository)/pre-inst-env guix pack -f docker-layered -S /bin=bin -L dotfiles/guixsd/modules -e '(@ (packages networking) state-to-vc-$@)')
 	skopeo copy --insecure-policy docker-archive\:$$container docker://$(container_registry)/monitoring/$@:$$commit_8
