@@ -43,7 +43,6 @@
              (method url-fetch)
              (uri (string-append "mirror://openbsd/OpenSSH/portable/"
                                  "openssh-" version ".tar.gz"))
-             (patches (search-patches "openssh-hurd.patch"))
              (sha256
               (base32
                "1bnpivgk98h2f9afpp88jv6g9ps83vnpxd031n2jqxi12vdf9rn3"))))
