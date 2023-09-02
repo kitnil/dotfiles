@@ -47,6 +47,9 @@ spec:
           limits:
             cpu: 2000m
             memory: 2048Mi
+        env:
+        - name: HOME
+          value: /tmp
         securityContext:
           runAsUser: 1000
           runAsGroup: 998
