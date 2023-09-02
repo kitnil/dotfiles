@@ -27,6 +27,9 @@ spec:
         volumeMounts:
         - mountPath: /dev/shm
           name: shm
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 998
       volumes:
       - name: shm
         emptyDir:
