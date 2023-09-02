@@ -15,6 +15,29 @@ spec:
         app.kubernetes.io/name: firefox
         app.kubernetes.io/part-of: firefox
     spec:
+      initContainers:
+      - name: chmod-tmp
+        image: nixery.dev/shell/coreutils
+        command:
+        - chmod
+        - 1777
+        - /tmp
+        volumeMounts:
+        - mountPath: /tmp
+          subPath: tmp
+          name: tmp
+        resources:
+          limits:
+            cpu: 10m
+            memory: 10Mi
+          requests:
+            cpu: 10m
+            memory: 10Mi
+        securityContext:
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
       containers:
       - image: nixery.dev/firefox
         name: firefox
@@ -24,14 +47,23 @@ spec:
           limits:
             cpu: 2000m
             memory: 2048Mi
-        volumeMounts:
-        - mountPath: /dev/shm
-          name: shm
         securityContext:
           runAsUser: 1000
           runAsGroup: 998
+        volumeMounts:
+        - mountPath: /dev/shm
+          name: shm
+        - mountPath: /run
+          name: tmp
+          subPath: run
+        - mountPath: /tmp
+          name: tmp
+          subPath: tmp
       volumes:
       - name: shm
         emptyDir:
           medium: Memory
           sizeLimit: 512Mi
+      - name: tmp
+        emptyDir:
+          sizeLimit: 100M
