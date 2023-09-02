@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: alacritty
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: alacritty
+      app.kubernetes.io/part-of: alacritty
+  template:
+    metadata:
+      annotations:
+        wavy.squat.ai/enable: "true"
+      labels:
+        app.kubernetes.io/name: alacritty
+        app.kubernetes.io/part-of: alacritty
+    spec:
+      containers:
+      - image: nixery.dev/shell/coreutils/alacritty
+        name: alacritty
+        command:
+        - alacritty
+        resources:
+          limits:
+            cpu: 2000m
+            memory: 2048Mi
+          requests:
+            cpu: 10m
+            memory: 16Mi
+        env:
+        - name: HOME
+          value: /tmp
+        securityContext:
+          runAsUser: 1000
+          runAsGroup: 998
