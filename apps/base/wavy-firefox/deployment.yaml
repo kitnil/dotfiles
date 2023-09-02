@@ -16,7 +16,7 @@ spec:
         app.kubernetes.io/part-of: firefox
     spec:
       containers:
-      - image: kasmweb/firefox:1.13.0
+      - image: nixery.dev/firefox
         name: firefox
         command:
         - firefox
