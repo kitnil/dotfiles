@@ -39,7 +39,7 @@ spec:
             - ALL
           readOnlyRootFilesystem: true
       containers:
-      - image: nixery.dev/firefox
+      - image: nixery.dev/firefox/fontconfig
         name: firefox
         command:
         - firefox
