@@ -20,7 +20,7 @@ spec:
         image: nixery.dev/shell/coreutils
         command:
         - chmod
-        - 1777
+        - "1777"
         - /tmp
         volumeMounts:
         - mountPath: /tmp
