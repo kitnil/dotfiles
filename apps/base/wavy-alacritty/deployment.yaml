@@ -1,25 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: alacritty
+  name: xterm
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/name: alacritty
-      app.kubernetes.io/part-of: alacritty
+      app.kubernetes.io/name: xterm
+      app.kubernetes.io/part-of: xterm
   template:
     metadata:
       annotations:
         wavy.squat.ai/enable: "true"
       labels:
-        app.kubernetes.io/name: alacritty
-        app.kubernetes.io/part-of: alacritty
+        app.kubernetes.io/name: xterm
+        app.kubernetes.io/part-of: xterm
     spec:
       containers:
-      - image: nixery.dev/shell/coreutils/alacritty
-        name: alacritty
+      - image: nixery.dev/shell/coreutils/xterm
+        name: xterm
         command:
-        - alacritty
+        - xterm
         resources:
           limits:
             cpu: 2000m
