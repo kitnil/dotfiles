@@ -48,9 +48,7 @@ then
     then
         :
     else
-        # Uncomment if '/var/hpvolumes' directory is on a '/' file-system.
-        # mount --bind /var/hpvolumes /var/hpvolumes
-
+        mount --bind /var/hpvolumes /var/hpvolumes
         mount --make-shared /var/hpvolumes
     fi
 fi
