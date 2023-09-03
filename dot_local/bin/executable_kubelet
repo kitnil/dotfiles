@@ -5,9 +5,6 @@ set -o nounset -o errexit -o pipefail
 coredns_image="{KUBELET_COREDNS_IMAGE:-/nix/store/1crdy15nv25jpbvknrzyhg6khv9ikhl9-docker-image-coredns-coredns-1.7.1.tar}"
 pause_image="${KUBELET_PAUSE_IMAGE:-/nix/store/xjlwhyqjhx0j2sc41wfpsw1zvhn98vh5-docker-image-pause.tar.gz}"
 
-LINUX_MODULE_DIRECTORY=/run/booted-system/kernel/lib/modules
-export LINUX_MODULE_DIRECTORY
-
 if [[ -e /var/lib/kubelet/.maintenance ]]
 then
     echo "File '/var/lib/kubelet/.maintenance' exists."
@@ -24,12 +21,7 @@ if [[ -e /proc/drbd ]]
 then
     printf "DEBUG: '/proc/drbd' file already exist.\n" 2>&1
 else
-    if [[ -e "${LINUX_MODULE_DIRECTORY}/*/extra/drbd9.ko.gz" ]]
-    then
-        modprobe drbd9
-    else
-        printf "DEBUG: 'drbd9.ko.gz' file not found.\n" 2>&1
-    fi
+    modprobe drbd9
 fi
 
 if [[ $(ctr --namespace k8s.io images list) == *docker.io/coredns/coredns:1.7.1* ]]
