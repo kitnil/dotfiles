@@ -8,6 +8,18 @@ pause_image="${KUBELET_PAUSE_IMAGE:-/nix/store/xjlwhyqjhx0j2sc41wfpsw1zvhn98vh5-
 LINUX_MODULE_DIRECTORY=/run/booted-system/kernel/lib/modules
 export LINUX_MODULE_DIRECTORY
 
+if [[ -e /var/lib/kubelet/.maintenance ]]
+then
+    echo "File '/var/lib/kubelet/.maintenance' exists."
+    exit 1
+else
+    echo "Creating '/var/lib/kubelet/.maintenance' file, user required to remove it in case of usual reboot."
+    cat > /var/lib/kubelet/.maintenance <<'EOF'
+# Remove this file and restart the 'kubelet' service.
+# The 'kubelet' service automatically recreates this file and proseed.
+EOF
+fi
+
 if [[ -e /proc/drbd ]]
 then
     printf "DEBUG: '/proc/drbd' file already exist.\n" 2>&1
