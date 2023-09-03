@@ -4,7 +4,10 @@ set -o errexit -o pipefail
 
 VIRSH_DAEMON="${VIRSH_DAEMON:-false}"
 
-exec &> >(/run/current-system/profile/bin/tee /var/log/virsh-vm-win2022.log)
+gpu_reset()
+{
+    /home/oleg/.local/share/chezmoi/dot_local/bin/executable_gpu_reset.sh
+}
 
 case "$1" in
     start)
@@ -100,31 +103,23 @@ case "$1" in
                     :
                 else
                     /run/current-system/profile/bin/touch /var/lib/vm-${domain}/0
-                    if [[ -e /sys/kernel/debug/dri/0/amdgpu_gpu_recover ]]
-                    then
-                        if [[ -e /sys/bus/pci/devices/0000:12:00.1/remove ]]
-                        then
-                            echo 1 > /sys/bus/pci/devices/0000:12:00.1/remove
-                            /run/current-system/profile/bin/cat /sys/kernel/debug/dri/0/amdgpu_gpu_recover
-                            echo 1 > /sys/bus/pci/rescan
-                        fi
-                        /run/current-system/profile/bin/cat /sys/kernel/debug/dri/0/amdgpu_gpu_recover
-                    elif [[ -e /sys/kernel/debug/dri/2/amdgpu_gpu_recover ]]
-                    then
-                        if [[ -e /sys/bus/pci/devices/0000:12:00.1/remove ]]
-                        then
-                            echo 1 > /sys/bus/pci/devices/0000:12:00.1/remove
-                            /run/current-system/profile/bin/cat /sys/kernel/debug/dri/2/amdgpu_gpu_recover
-                            echo 1 > /sys/bus/pci/rescan
-                        fi
-                        /run/current-system/profile/bin/cat /sys/kernel/debug/dri/2/amdgpu_gpu_recover
-                    fi
+                    gpu_reset
                 fi
                 if [[ -e /dev/lvm2/${domain} ]]
                 then
                     echo "vm-${domain}: File '/dev/lvm2/${domain}' file exist." 1>&2
                 else
                     /home/oleg/.guix-profile/sbin/lvchange -ay /dev/lvm2/${domain}
+                fi
+                # /sys/bus/pci/devices/0000:12:00.1/hdaudioC0D0
+                # msi_irqs
+                # sound
+                if [[ -e /sys/bus/pci/devices/0000:12:00.1/msi_irqs ]]
+                then
+                    :
+                else
+                    echo "vm-${domain}: Missing '/sys/bus/pci/devices/0000:12:00.1/msi_irqs' file." 1>&2
+                    exit 1
                 fi
                 attempt=0
                 max_attempt=3
@@ -149,7 +144,27 @@ case "$1" in
                 if [[ $VIRSH_DAEMON == true ]]
                 then
                     echo "vm-${domain}: Started. Sleeping infinity." 1>&2
-                    exec /run/current-system/profile/bin/sleep infinity
+                    # trap clean EXIT
+                    # # [ShellCheck: SC2317 – Command appears to be unreachable. Check usage (or ignore if invoked indirectly).]
+                    # # (https://www.shellcheck.net/wiki/SC2317)
+                    # #
+                    # # > ### Exceptions:
+                    # # >
+                    # # > ShellCheck may incorrectly believe that code is unreachable if
+                    # # > it's invoked by variable name or in a trap. In such a case, please
+                    # # > [Ignore](https://www.shellcheck.net/wiki/Ignore) the message.
+                    # #
+                    # # shellcheck disable=SC2317 # Don't warn about unreachable commands in this function
+                    # clean()
+                    # {
+                    #     if [[ $(/run/current-system/profile/bin/virsh domstate "$domain") == "shut off" ]]
+                    #     then
+                    #         echo "vm-${domain}: Resetting GPU on trap clean." 1>&2
+                    #         gpu_reset
+                    #     fi
+                    # }
+                    # /run/current-system/profile/bin/sleep infinity
+                    /run/current-system/profile/bin/sleep infinity
                 fi
                 ;;
             *)

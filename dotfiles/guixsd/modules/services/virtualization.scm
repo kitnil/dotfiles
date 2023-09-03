@@ -17,6 +17,7 @@
 ;;; along with GNU Guix.  If not, see <http://www.gnu.org/licenses/>.
 
 (define-module (services virtualization)
+  #:use-module (gnu packages virtualization)
   #:use-module (gnu services admin)
   #:use-module (gnu services shepherd)
   #:use-module (gnu services)
@@ -84,10 +85,27 @@
     (start #~(make-forkexec-constructor
               (list "/home/oleg/.local/share/chezmoi/dot_local/bin/executable_virsh"
                     "start" "win10")
+              ;; #:pid-file "/var/run/libvirt/qemu/win10.pid"
               #:environment-variables '("VIRSH_DAEMON=true")
               #:log-file #$%vm-win10-log))
-    (respawn? #t) ;XXX: Fix race condition with Docker
-    (stop #~(make-kill-destructor)))))
+    (respawn? #f)
+    (stop #~(lambda _
+              (begin
+                (define (wait-for-missing-file file)
+                  ;; Wait until FILE shows up.
+                  (let loop ((i 120))
+                    (cond ((not (file-exists? file))
+                           #t)
+                          ((zero? i)
+                           (error "file still exists" file))
+                          (else
+                           (pk 'wait-for-missing-file file)
+                           (sleep 1)
+                           (loop (- i 1))))))
+                (invoke #$(file-append libvirt "/bin/virsh")
+                        "shutdown" "win10")
+                (wait-for-missing-file "/var/run/libvirt/qemu/win10.pid")
+                (invoke "/home/oleg/.local/share/chezmoi/dot_local/bin/executable_gpu_reset.sh")))))))
 
 (define vm-win10-service-type
   (service-type
