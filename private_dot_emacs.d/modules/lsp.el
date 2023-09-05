@@ -25,6 +25,13 @@
 
 
 ;;;
+;;; JavaScript
+;;;
+
+(add-hook 'js-mode-hook 'lsp)
+
+
+;;;
 ;;; Python
 ;;;
 
