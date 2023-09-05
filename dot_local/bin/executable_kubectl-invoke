@@ -12,6 +12,10 @@
            (lambda (opt name arg result)
              (values (alist-cons 'dry-run? #t result)
                      #f)))
+   (option '(#\N "host-network") #f #f
+           (lambda (opt name arg result)
+             (values (alist-cons 'host-network? #t result)
+                     #f)))
    (option '(#\n "namespace") #t #f
            (lambda (opt name arg result)
              (alist-cons 'namespace arg result)))
@@ -57,6 +61,7 @@
     (parse-command-line args %options
                         (list %default-options)))
   (define dry-run? (assoc-ref opts 'dry-run?))
+  (define host-network? (assoc-ref opts 'host-network?))
   (define namespace (assoc-ref opts 'namespace))
   (define host (assoc-ref opts 'host))
   (define format (assoc-ref opts 'format))
@@ -116,7 +121,7 @@
     ((nixery)
      (let ((labels '(("app.kubernetes.io/name" . "nixery"))))
        (apply system*
-              `(,@(if dry-run? '("echo") '())
+              `("echo"
                 "kubectl"
                 "run"
                 "--rm=true"
@@ -140,6 +145,7 @@
                          "--overrides="
                          (scm->json-string
                           `(("spec"
+                             ("hostNetwork" . ,host-network?)
                              ("tolerations"
                               .
                               #((("effect" . "NoSchedule")
