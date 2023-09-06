@@ -13,10 +13,7 @@ main()
              "sup@$(ihs vm ip $1 | recsel -Pip_address)" \
              "$@"
     else
-        exec "$ssh_binary" \
-             -o UserKnownHostsFile=/dev/null \
-             -o StrictHostKeyChecking=no \
-             "$@"
+        exec "$ssh_binary" "$@"
     fi
 }
 
