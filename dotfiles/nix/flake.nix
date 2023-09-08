@@ -21,6 +21,7 @@
       flake = false;
     };
     nixpkgs-idea.url = "github:wigust/nixpkgs/a98b0d1e6d7bed029844576e8637ce9807600ad2";
+    nixpkgs-phpactor.url = "nixpkgs/nixpkgs-unstable";
 
     home-manager.url = "github:nix-community/home-manager?ref=release-21.05";
     nur.url = "github:nix-community/NUR";
@@ -88,6 +89,7 @@
     , majordomo
     , majordomo-vault
     , nixpkgs-idea
+    , nixpkgs-phpactor
     , bbuscarino-env
     , kamadorueda-alejandra
     , flake-utils-plus
@@ -220,6 +222,8 @@
               inherit ((import nixpkgs-idea { inherit system; config = { allowUnfree = true; }; }).idea)
                 idea-ultimate pycharm-professional;
 
+              inherit (nixpkgs-phpactor.legacyPackages.${system})
+                phpactor;
             }
 
             ({ inherit (pkgs.nodePackages) node2nix; })

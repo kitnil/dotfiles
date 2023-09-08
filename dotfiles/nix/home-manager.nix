@@ -115,6 +115,8 @@
 
     black
 
+    phpactor
+
     audacity
     scrcpy
     oh

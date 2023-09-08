@@ -1466,6 +1466,21 @@
         "type": "indirect"
       }
     },
+    "nixpkgs-phpactor": {
+      "locked": {
+        "lastModified": 1694062546,
+        "narHash": "sha256-PiGI4f2BGnZcedP6slLjCLGLRLXPa9+ogGGgVPfGxys=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "b200e0df08f80c32974a6108ce431d8a8a5e6547",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixpkgs-unstable",
+        "type": "indirect"
+      }
+    },
     "nixpkgs-stable": {
       "locked": {
         "lastModified": 1606789930,
@@ -2306,6 +2321,7 @@
         "nixpkgs-20-03-firefox": "nixpkgs-20-03-firefox",
         "nixpkgs-idea": "nixpkgs-idea",
         "nixpkgs-phantomjs": "nixpkgs-phantomjs",
+        "nixpkgs-phpactor": "nixpkgs-phpactor",
         "nur": "nur_2",
         "override": "override_2",
         "utils": "utils_3"

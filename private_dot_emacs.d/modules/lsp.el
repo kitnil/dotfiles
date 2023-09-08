@@ -53,3 +53,11 @@
       "/nix/store/g4jmyxpsdlwyfddsbchyvfim1n6a7868-sumneko-lua-language-server-3.5.6/share/lua-language-server/main.lua")
 
 (add-hook 'lua-mode-hook 'lsp)
+
+
+;;;
+;;; PHP
+;;;
+
+(setq lsp-phpactor-path "/home/oleg/.nix-profile/bin/phpactor")
+(add-hook 'php-mode-hook 'lsp)
