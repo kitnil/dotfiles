@@ -115,6 +115,7 @@
 
     black
 
+    nodePackages.vscode-json-languageserver-bin
     phpactor
 
     audacity
