@@ -2053,12 +2053,18 @@ EOF
                 if [[ $(tput cols) -gt 255 ]]
                 then
                     cat <<EOF
+$ kubectl get pod -A -o wide | awk '$3 ~ "0/.*" && $4 != "Completed" { print $0 }'
+$(kubectl get pod -A -o wide | awk '$3 ~ "0/.*" && $4 != "Completed" { print $0 }')
+
 $ kubectl get pod -o wide -A | grep '(.*m.* ago)'
 $(kubectl get pod -o wide -A | grep '(.*[ms].* ago)')
 
 EOF
                 else
                     cat <<EOF
+$ kubectl get pod -A | awk '$3 ~ "0/.*" && $4 != "Completed" { print $0 }'
+$(kubectl get pod -A | awk '$3 ~ "0/.*" && $4 != "Completed" { print $0 }')
+
 $ kubectl get pod -A | grep '(.*m.* ago)'
 $(kubectl get pod -A | grep '(.*[ms].* ago)')
 
