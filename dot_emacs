@@ -155,9 +155,11 @@
  '(debug-on-error nil)
  '(indent-tabs-mode nil)
  '(org-agenda-files '("~/org/inbox.org" "~/org/todo.org" "~/org/web.org"))
- '(python-shell-interpreter "python3" t)
+ '(python-shell-interpreter "python3")
  '(safe-local-variable-values
-   '((eval let
+   '((eval progn
+           (setq-local create-lockfiles nil))
+     (eval let
            ((root-dir-unexpanded
              (locate-dominating-file default-directory ".dir-locals.el")))
            (when root-dir-unexpanded
