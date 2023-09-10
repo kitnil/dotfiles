@@ -167,9 +167,6 @@ EOF
                 PROMETHEUS_URL=https://prometheus.corp1.majordomo.ru
                 OPENSEARCH_ENDPOINT="https://opensearch.corp1.majordomo.ru"
                 OPENSEARCH_PASSWORD="$(pass show majordomo/public/opensearch-dashboards/admin)"
-                OPENSEARCH_ARGS=(
-                    --user "admin:${OPENSEARCH_PASSWORD}"
-                )
                 ALERTMANAGER_URL="https://alertmanager.corp1.majordomo.ru"
                 VAULT_TOKEN="$(pass show majordomo/public/vault/root)"
                 VAULT_ADDR="https://vault.intr"
@@ -178,18 +175,12 @@ EOF
                 PROMETHEUS_URL=https://prometheus.corp2.majordomo.ru
                 OPENSEARCH_ENDPOINT="https://opensearch.corp2.majordomo.ru:9200"
                 OPENSEARCH_PASSWORD="$(pass show majordomo/public/opensearch-dashboards/admin)"
-                OPENSEARCH_ARGS=(
-                    --user "admin:${OPENSEARCH_PASSWORD}"
-                )
                 ALERTMANAGER_URL="https://alertmanager.corp2.majordomo.ru"
                 ;;
             *config-home-k8s)
                 PROMETHEUS_URL=https://prometheus.home.wugi.info
                 OPENSEARCH_ENDPOINT="https://node-0.example.com:9200"
                 OPENSEARCH_PASSWORD="$(pass show localhost/opensearch-dashboards/admin)"
-                OPENSEARCH_ARGS=(
-                    --user "admin:${OPENSEARCH_PASSWORD}"
-                )
                 ALERTMANAGER_URL="https://alertmanager.home.wugi.info"
                 ;;
         esac
@@ -397,6 +388,9 @@ ssh -q staff.intr journalctl -u elasticsearch.service -f | grep -vF '[max_concur
 EOF
         fi
 
+        OPENSEARCH_ARGS=(
+            --user "admin:${OPENSEARCH_PASSWORD}"
+        )
         if [[ $namespace == "elasticsearch" ]] || [[ $namespace == "opensearch" ]]
         then
             cat <<EOF
