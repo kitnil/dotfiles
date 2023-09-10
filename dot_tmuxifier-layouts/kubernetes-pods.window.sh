@@ -6,4 +6,4 @@
 # layout file name.
 new_window "pods"
 
-run_cmd "kubectl scheduler"
+run_cmd "kubectl watch scheduler"
