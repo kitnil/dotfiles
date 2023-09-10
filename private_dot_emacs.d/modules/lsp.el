@@ -61,3 +61,10 @@
 
 (setq lsp-phpactor-path "/home/oleg/.nix-profile/bin/phpactor")
 (add-hook 'php-mode-hook 'lsp)
+
+
+;;;
+;;; Nix
+;;;
+
+(add-hook 'nix-mode-hook 'lsp)
