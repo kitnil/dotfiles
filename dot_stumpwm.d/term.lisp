@@ -92,6 +92,18 @@
   "Start or focus Alacritty."
   (run-or-raise "alacritty" '(:class "Alacritty")))
 
+(defcommand run-terminal () ()
+  "Start terminal emulator."
+  (if (string-equal (screen-display-string (current-screen)) "DISPLAY=:2.0")
+      (run-xterm)
+      (run-alacritty)))
+
+(defcommand run-or-raise-terminal () ()
+  "Start of focus terminal emulator."
+  (if (string-equal (screen-display-string (current-screen)) "DISPLAY=:2.0")
+      (run-or-raise-xterm)
+      (run-or-raise-alacritty)))
+
 
 ;;;
 ;;; St
