@@ -2258,6 +2258,14 @@ curl()
                 --header 'Content-Type: application/json'
                 "$var"
             )
+        elif [[ "$var" == *"https://api.hms.development.corp1.majordomo.ru/"* ]] || [[ "$var" == *"http://api.hms.development.corp1.majordomo.ru/"* ]]
+        then
+            json=true
+            new_args+=(
+                --header "Authorization: Bearer $(IHS_ENDPOINT=http://api.hms.development.corp1.majordomo.ru mjru-auth)"
+                --header 'Content-Type: application/json'
+                "$var"
+            )
         elif [[ "$var" == *"https://api-dev.intr/"* ]]
         then
             json=true
