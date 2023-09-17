@@ -95,11 +95,6 @@
                 (list '(:eval (format nil "VPN 1: ~a" *mjru-tapvpn-ip*))))
 
           ,(make-string 4 :initial-element #\space)
-          ,'(:eval (if (= *pulseaudio-current-sink* 2)
-                       (format nil "VOL LADSPA: ~a" *volume-current*)
-                       (format nil "VOL: ~a" *volume-current*)))
-
-          ,(make-string 4 :initial-element #\space)
           "%d"
 
           ,(make-string 4 :initial-element #\space))))

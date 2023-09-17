@@ -60,16 +60,10 @@
 (defcommand pulsemixer () ()
   (term-shell-command "pulsemixer" :terminal 'st :font "Monospace:size=8"))
 
-(defvar *pulseaudio-current-sink* 1)
-
 (defcommand pulseaudio-toggle-ladspa () ()
-  (if (= *pulseaudio-current-sink* 1)
-      (progn
-        (run-shell-command "pacmd set-default-sink 2")
-        (setq *pulseaudio-current-sink* 2))
-      (progn
-        (run-shell-command "pacmd set-default-sink 1")
-        (setq *pulseaudio-current-sink* 1))))
+  (run-shell-command
+   (concat (getenv "HOME")
+           "/.local/share/chezmoi/src/python/pulseaudio/sink.py")))
 
 (defcommand alsamixer () ()
   "Download video."
