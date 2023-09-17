@@ -15,20 +15,20 @@ EOF
         if [[ $(tput cols) -gt 200 ]]
         then
             cat <<EOF
-$ kubectl get pod -A -o wide | awk '$3 ~ "0/.*" && $4 != "Completed" { print $0 }'
-$(kubectl get pod -A -o wide | awk '$3 ~ "0/.*" && $4 != "Completed" { print $0 }')
+$ kubectl get pod -A -o wide | awk '/NAME/ || ($3 ~ "0/.*" && $4 != "Completed") { print $0 }'
+$(kubectl get pod -A -o wide | awk '/NAME/ || ($3 ~ "0/.*" && $4 != "Completed") { print $0 }')
 
-$ kubectl get pod -o wide -A | grep '(.*m.* ago)'
-$(kubectl get pod -o wide -A | grep '(.*[ms].* ago)')
+$ kubectl get pod -o wide -A | grep 'NAME\|(.*m.* ago)'
+$(kubectl get pod -o wide -A | grep 'NAME\|(.*[ms].* ago)')
 
 EOF
         else
             cat <<EOF
-$ kubectl get pod -A | awk '$3 ~ "0/.*" && $4 != "Completed" { print $0 }'
-$(kubectl get pod -A | awk '$3 ~ "0/.*" && $4 != "Completed" { print $0 }')
+$ kubectl get pod -A | awk '/NAME/ || ($3 ~ "0/.*" && $4 != "Completed") { print $0 }'
+$(kubectl get pod -A | awk '/NAME/ || ($3 ~ "0/.*" && $4 != "Completed") { print $0 }')
 
-$ kubectl get pod -A | grep '(.*m.* ago)'
-$(kubectl get pod -A | grep '(.*[ms].* ago)')
+$ kubectl get pod -A | grep 'NAME\|(.*m.* ago)'
+$(kubectl get pod -A | grep 'NAME\|(.*[ms].* ago)')
 
 EOF
         fi
