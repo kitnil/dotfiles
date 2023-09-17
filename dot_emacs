@@ -157,7 +157,8 @@
  '(org-agenda-files '("~/org/inbox.org" "~/org/todo.org" "~/org/web.org"))
  '(python-shell-interpreter "python3")
  '(safe-local-variable-values
-   '((eval progn
+   '((geiser-repl-per-project-p . t)
+     (eval progn
            (setq-local create-lockfiles nil))
      (eval let
            ((root-dir-unexpanded
