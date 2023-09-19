@@ -22,9 +22,10 @@
   #:use-module (gnu services shepherd)
   #:use-module (gnu services)
   #:use-module (guix gexp)
+  #:use-module (guix records)
   #:use-module (srfi srfi-1)
-  #:export (vm-win10-service-type
-            vm-win2022-service-type))
+  #:export (virtual-machine
+            virtual-machine-service-type))
 
 ;;; Commentary:
 ;;;
@@ -32,63 +33,39 @@
 ;;;
 ;;; Code:
 
-(define %vm-win2022-log
-  "/var/log/vm-win2022.log")
+(define-record-type* <virtual-machine>
+  virtual-machine make-virtual-machine
+  virtual-machine?
+  (name        virtual-machine-name)       ;string
+  (auto-start? virtual-machine-auto-start? ;boolean
+               (default #f)))
 
-(define (vm-win2022-log-rotations config)
-  (list (log-rotation
-         (files (list %vm-win2022-log)))))
+(define (virtual-machine-log-rotations config)
+  (list
+   (log-rotation
+    (files
+     (list
+      (string-append "/var/log/virtual-machine-" (virtual-machine-name config) ".log"))))))
 
-(define (vm-win2022-shepherd-service config)
+(define (virtual-machine-shepherd-service config)
   (list
    (shepherd-service
-    (provision '(vm-win2022))
-    (documentation "Run Windows 2022 virtual machine.")
+    (provision
+     (list
+      (string->symbol
+       (string-append "virtual-machine-" (virtual-machine-name config)))))
+    (documentation "Run virtual machine.")
     (requirement '())
-    (start #~(make-forkexec-constructor
-              (list "/home/oleg/.local/share/chezmoi/dot_local/bin/executable_virsh"
-                    "start" "win2022")
-              #:environment-variables '("VIRSH_DAEMON=true")
-              #:log-file #$%vm-win2022-log))
-    (respawn? #t) ;XXX: Fix race condition with Docker
-    (stop #~(make-kill-destructor)))))
-
-(define vm-win2022-service-type
-  (service-type
-   (name 'vm-win2022)
-   (extensions
-    (list (service-extension shepherd-root-service-type
-                             vm-win2022-shepherd-service)
-          (service-extension rottlog-service-type
-                             vm-win2022-log-rotations)))
-   (default-value '())
-   (description "Run the vm-win2022.")))
-
-
-;;;
-;;; Windows 10
-;;;
-
-(define %vm-win10-log
-  "/var/log/vm-win10.log")
-
-(define (vm-win10-log-rotations config)
-  (list (log-rotation
-         (files (list %vm-win10-log)))))
-
-(define (vm-win10-shepherd-service config)
-  (list
-   (shepherd-service
-    (provision '(vm-win10))
-    (documentation "Run Windows 10 virtual machine.")
-    (requirement '())
-    (start #~(make-forkexec-constructor
-              (list #$(local-file "/home/oleg/.local/share/chezmoi/dot_local/bin/executable_virsh")
-                    "start" "win10")
-              ;; #:pid-file "/var/run/libvirt/qemu/win10.pid"
-              #:environment-variables '("VIRSH_DAEMON=true")
-              #:log-file #$%vm-win10-log))
+    (start
+     #~(make-forkexec-constructor
+        (list #$(local-file "/home/oleg/.local/share/chezmoi/dot_local/bin/executable_virsh"
+                            #:recursive? #t)
+              "start" #$(virtual-machine-name config))
+        #:environment-variables '("VIRSH_DAEMON=true")
+        #:log-file
+        #$(string-append "/var/log/virtual-machine-" (virtual-machine-name config) ".log")))
     (respawn? #f)
+    (auto-start? (virtual-machine-auto-start? config))
     (stop #~(lambda _
               (begin
                 (define (wait-for-missing-file file)
@@ -103,19 +80,23 @@
                            (sleep 1)
                            (loop (- i 1))))))
                 (invoke #$(file-append libvirt "/bin/virsh")
-                        "shutdown" "win10")
-                (wait-for-missing-file "/var/run/libvirt/qemu/win10.pid")
-                (invoke "/home/oleg/.local/share/chezmoi/dot_local/bin/executable_gpu_reset.sh")))))))
+                        "shutdown" #$(virtual-machine-name config))
+                (wait-for-missing-file
+                 #$(string-append "/var/run/libvirt/qemu/"
+                                  (virtual-machine-name config) ".pid"))
+                (invoke
+                 #$(local-file "/home/oleg/.local/share/chezmoi/dot_local/bin/executable_gpu_reset.sh"
+                               #:recursive? #t))))))))
 
-(define vm-win10-service-type
+(define virtual-machine-service-type
   (service-type
-   (name 'vm-win10)
+   (name 'virtual-machine)
    (extensions
     (list (service-extension shepherd-root-service-type
-                             vm-win10-shepherd-service)
+                             virtual-machine-shepherd-service)
           (service-extension rottlog-service-type
-                             vm-win10-log-rotations)))
+                             virtual-machine-log-rotations)))
    (default-value '())
-   (description "Run the vm-win10.")))
+   (description "Run virtual machine.")))
 
 ;;; virtualization.scm ends here
