@@ -83,7 +83,7 @@
     (documentation "Run Windows 10 virtual machine.")
     (requirement '())
     (start #~(make-forkexec-constructor
-              (list "/home/oleg/.local/share/chezmoi/dot_local/bin/executable_virsh"
+              (list #$(local-file "/home/oleg/.local/share/chezmoi/dot_local/bin/executable_virsh")
                     "start" "win10")
               ;; #:pid-file "/var/run/libvirt/qemu/win10.pid"
               #:environment-variables '("VIRSH_DAEMON=true")
