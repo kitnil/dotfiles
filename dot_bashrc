@@ -2020,6 +2020,16 @@ complete -F __lazy_helm helm
 kubectl()
 {
     case "$1" in
+        cluster*)
+            KUBECONFIG="/home/oleg/.kube/config-mjru-${1}" \
+                kubectl \
+                exec \
+                --stdin=true \
+                --tty=true \
+                --namespace=kubernetes-tmuxifier \
+                tmuxifier-0 \
+                -- tmux at
+            ;;
         drain)
             if [[ -z "$2" ]]
             then
