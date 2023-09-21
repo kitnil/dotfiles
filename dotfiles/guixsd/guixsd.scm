@@ -454,8 +454,6 @@ location / {
 ;;;
 
 (define backup-job
-  ;; Run 'updatedb' at 17:00 every day.  Here we write the
-  ;; job's action as a Scheme procedure.
   #~(job '(next-hour '(3))
          #$(restic-command)))
 
