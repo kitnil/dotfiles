@@ -26,6 +26,7 @@
     nixpkgs-home-manager.url = "nixpkgs/nixpkgs-unstable";
     home-manager.url = "github:nix-community/home-manager?ref=release-23.05";
     nur.url = "github:nix-community/NUR";
+    rycee-nur-expressions.url = "git+https://gitlab.com/rycee/nur-expressions?dir=pkgs/firefox-addons";
 
     majordomo.url = "git+https://gitlab.intr/_ci/nixpkgs";
 
@@ -83,6 +84,7 @@
     , nixpkgs-home-manager
     , home-manager
     , nur
+    , rycee-nur-expressions
     , github-com-guibou-nixGL
     , github-com-emilazy-mpv-notify-send
     , github-com-kitnil-nix-docker-ipmi
@@ -349,6 +351,20 @@
                         ./patches/viddy-add-maxhistory-argument.patch
                       ];
                     });
+                    "7tv" = rycee-nur-expressions.lib.${system}.buildFirefoxXpiAddon rec {
+                      pname = "7tv";
+                      version = "3.0.15";
+                      addonId = "moz-addon-prod@7tv.app";
+                      url = "https://github.com/SevenTV/Extension/releases/download/v${version}/7tv-webextension-ext.xpi";
+                      sha256 = "1y0can0x2dp0dhzp1c2dyscrjaz51gsvimxll7kbg3aymr898w31";
+                      meta = with lib; {
+                        homepage = "https://extension.7tv.gg/";
+                        description = "Improve your viewing experience on Twitch & YouTube with new features, emotes, vanity and performance.";
+                        license = licenses.mit;
+                        mozPermissions = [ "scripting" "storage" "activeTab" "*://*.twitch.tv/*" ];
+                        platforms = platforms.all;
+                      };
+                    };
                   };
                 pkgs = import nixpkgs {
                   overlays = [
@@ -372,7 +388,9 @@
                 magicRollback = false;
                 path = deploy-rs.lib.${system}.activate.home-manager (home-manager.lib.homeManagerConfiguration {
                   pkgs = nixpkgs-home-manager.legacyPackages.${system};
-                  extraSpecialArgs = { packages = pkgs; };
+                  extraSpecialArgs = {
+                    packages = pkgs;
+                  };
                   modules = [
                     ./home-manager.nix
                   ];

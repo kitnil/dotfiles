@@ -289,6 +289,7 @@
         id = 2;
         extensions = with packages.nur.repos.rycee.firefox-addons; [
           ublock-origin
+          packages."7tv"
         ];
         settings = {
           "browser.startup.homepage" = "about:addons";
