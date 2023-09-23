@@ -470,6 +470,12 @@
                             ,(local-file (string-append %project-directory "/dot_local/bin/executable_looking-glass-client-wrapper")
                                          #:recursive? #t))))
 
+    (simple-service 'home-firefox-wrapper-twitch
+                    home-files-service-type
+                    (list `(".local/bin/firefox-twitch"
+                            ,(local-file (string-append %project-directory "/dot_local/bin/executable_firefox-twitch")
+                                         #:recursive? #t))))
+
     (simple-service 'idea-ultimate-wrapper
                     home-files-service-type
                     (list `(".local/bin/idea-ultimate"
