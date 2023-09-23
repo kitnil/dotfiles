@@ -290,6 +290,7 @@
         extensions = with packages.nur.repos.rycee.firefox-addons; [
           ublock-origin
           packages."7tv"
+          packages."twitch-points-autoclicker"
         ];
         settings = {
           "browser.startup.homepage" = "about:addons";

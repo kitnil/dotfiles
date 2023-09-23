@@ -342,30 +342,54 @@
             home-manager =
               let
                 overlay = final: prev:
-                  self.packages.${system} // {
-                    inherit (deploy-rs.outputs.packages.${system}) deploy-rs;
-                    inherit (majordomo-vault.inputs.nixpkgs.legacyPackages.${system}) vault-bin;
-                    alejandra = (kamadorueda-alejandra.packages.${system}).alejandra-x86_64-unknown-linux-gnu;
-                    viddy = prev.viddy.overrideAttrs (old: {
-                      patches = [
-                        ./patches/viddy-add-maxhistory-argument.patch
-                      ];
-                    });
-                    "7tv" = rycee-nur-expressions.lib.${system}.buildFirefoxXpiAddon rec {
-                      pname = "7tv";
-                      version = "2.2.4";
-                      addonId = "{7ef0f00c-2ebe-4626-8ed7-3185847fcfad}";
-                      url = "https://iso.wugi.info/7tv-2.2.4.xpi";
-                      sha256 = "1c6p8ig2gfawik5bhb1ng4jn24235w88d5pas5a8rsx14n6qpwvp";
-                      meta = with lib; {
-                        homepage = "https://extension.7tv.gg/";
-                        description = "7TV is an emote service and extension for Twitch and YouTube";
-                        license = licenses.mit;
-                        mozPermissions = [ "*://*.twitch.tv/*" "storage" ];
-                        platforms = platforms.all;
+                  self.packages.${system} // (
+                    let
+                      inherit (rycee-nur-expressions.lib.${system}) buildFirefoxXpiAddon;
+                    in {
+                      inherit (deploy-rs.outputs.packages.${system}) deploy-rs;
+                      inherit (majordomo-vault.inputs.nixpkgs.legacyPackages.${system}) vault-bin;
+                      alejandra = (kamadorueda-alejandra.packages.${system}).alejandra-x86_64-unknown-linux-gnu;
+                      viddy = prev.viddy.overrideAttrs (old: {
+                        patches = [
+                          ./patches/viddy-add-maxhistory-argument.patch
+                        ];
+                      });
+                      "twitch-points-autoclicker" = buildFirefoxXpiAddon rec {
+                        pname = "twitch-points-autoclicker";
+                        version = "1.6.1";
+                        addonId = "{3c9b993f-29b9-44c2-a913-def7b93a70b1}";
+                        url = "https://addons.mozilla.org/firefox/downloads/file/3708581/twitch_points_autoclicker-${version}.xpi";
+                        sha256 = "1bpm11h6xia7flp608581l1mrnpy35gw9g8pfgakl2pfyanccbvd";
+                        meta = with lib; {
+                          homepage = "https://xinitrc.ca/autoclicker-permissions/";
+                          description = "Automatically claims 'Channel Points' on Twitch";
+                          license = licenses.mit;
+                          mozPermissions = [
+                            "*://*.twitch.tv/*"
+	                          "tabs"
+	                          "storage"
+	                          "notifications"
+                            "webNavigation"
+                          ];
+                          platforms = platforms.all;
+                        };
                       };
-                    };
-                  };
+                      "7tv" = buildFirefoxXpiAddon rec {
+                        pname = "7tv";
+                        version = "2.2.4";
+                        addonId = "{7ef0f00c-2ebe-4626-8ed7-3185847fcfad}";
+                        url = "https://iso.wugi.info/7tv-2.2.4.xpi";
+                        sha256 = "1c6p8ig2gfawik5bhb1ng4jn24235w88d5pas5a8rsx14n6qpwvp";
+                        meta = with lib; {
+                          homepage = "https://extension.7tv.gg/";
+                          description = "7TV is an emote service and extension for Twitch and YouTube";
+                          license = licenses.mit;
+                          mozPermissions = [ "*://*.twitch.tv/*" "storage" ];
+                          platforms = platforms.all;
+                        };
+                      };
+                    }
+                  );
                 pkgs = import nixpkgs {
                   overlays = [
                     nur.overlay
