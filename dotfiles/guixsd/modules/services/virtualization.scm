@@ -65,9 +65,10 @@
         #:log-file
         #$(string-append "/var/log/virtual-machine-" (virtual-machine-name config) ".log")))
     (respawn? #f)
-    (auto-start? (virtual-machine-auto-start? config))
+    (auto-start? #f)
     (stop #~(lambda _
               (begin
+                (use-modules (ice-9 format))
                 (define (wait-for-missing-file file)
                   ;; Wait until FILE shows up.
                   (let loop ((i 120))
@@ -76,7 +77,8 @@
                           ((zero? i)
                            (error "file still exists" file))
                           (else
-                           (pk 'wait-for-missing-file file)
+                           (pk 'wait-for-missing-file
+                               (format #f "[~a/120]: ~a~%" file))
                            (sleep 1)
                            (loop (- i 1))))))
                 (invoke #$(file-append libvirt "/bin/virsh")
