@@ -353,15 +353,15 @@
                     });
                     "7tv" = rycee-nur-expressions.lib.${system}.buildFirefoxXpiAddon rec {
                       pname = "7tv";
-                      version = "3.0.9";
-                      addonId = "moz-addon-prod@7tv.app";
-                      url = "https://github.com/SevenTV/Extension/releases/download/v${version}/7tv-webextension-ext.xpi";
-                      sha256 = "06zr5ld2zx3b859dmw6vb9x3l4qgf80j7nkyvadyk6n1fhxr04p7";
+                      version = "2.2.4";
+                      addonId = "{7ef0f00c-2ebe-4626-8ed7-3185847fcfad}";
+                      url = "https://iso.wugi.info/7tv-2.2.4.xpi";
+                      sha256 = "1c6p8ig2gfawik5bhb1ng4jn24235w88d5pas5a8rsx14n6qpwvp";
                       meta = with lib; {
                         homepage = "https://extension.7tv.gg/";
-                        description = "Improve your viewing experience on Twitch & YouTube with new features, emotes, vanity and performance.";
+                        description = "7TV is an emote service and extension for Twitch and YouTube";
                         license = licenses.mit;
-                        mozPermissions = [ "scripting" "storage" "activeTab" "*://*.twitch.tv/*" ];
+                        mozPermissions = [ "*://*.twitch.tv/*" "storage" ];
                         platforms = platforms.all;
                       };
                     };
