@@ -19,7 +19,7 @@ set $term alacritty
 set $browser firefox
 # Your preferred application launcher
 # Note: it's recommended that you pass the final command to sway
-set $menu dmenu_path | dmenu | xargs swaymsg exec
+set $menu dmenu_path | bemenu-run --fb '#000000' --ab '#000000' --tb '#000000' --nb '#000000' --tf '#ffffff' --hf '#ffffff' --hb '#2e8b57' --border 1 --bdr '#333333' --line-height 25 --hp 10 --fn 'DejaVu Sans Mono 10' --list 20 --center --no-spacing | xargs swaymsg exec
 
 ### Output configuration
 #
