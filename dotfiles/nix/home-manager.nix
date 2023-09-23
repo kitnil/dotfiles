@@ -280,6 +280,17 @@
           "browser.search.defaultenginename" = "Google";
         };
       };
+      twitch = {
+        name = "twitch";
+        id = 2;
+        settings = {
+          "browser.startup.homepage" = "about:addons";
+          "browser.search.region" = "GB";
+          "distribution.searchplugins.defaultLocale" = "en-GB";
+          "general.useragent.locale" = "en-GB";
+          "browser.search.defaultenginename" = "Google";
+        };
+      };
     };
   };
 }
