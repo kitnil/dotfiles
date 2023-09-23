@@ -23,6 +23,24 @@ then
     source "$HOME/.bash_guix"
 fi
 
+function dmesg()
+{
+    if [[ -z ${@:1} ]] && [[ -e "${HOME}/.guix-profile/bin/spacer" ]]
+    then
+        sudo /run/current-system/profile/bin/dmesg \
+             --reltime \
+             --human \
+             --nopager \
+             --decode \
+             --ctime \
+             --follow \
+             --color=always \
+            | "${HOME}/.guix-profile/bin/spacer"
+    else
+        sudo /run/current-system/profile/bin/dmesg
+    fi
+}
+
 alias ,h="${BROWSER} ~/.guix-profile/share/doc/concise-gnu-bash/concise-gnu-bash.pdf"
 alias ,c='command'
 
@@ -44,8 +62,6 @@ alias goaccess='goaccess --log-format=COMBINED'
 alias catj=gron
 alias sqlite-visualize=sqleton
 
-# https://github.com/andresgongora/synth-shell
-alias dmesg="sudo dmesg --color=auto --reltime --human --nopager --decode"
 alias tree="tree --dirsfirst -C"
 alias free="free -mht"
 alias psc='ps xawf -eo pid,user,cgroup,args'
