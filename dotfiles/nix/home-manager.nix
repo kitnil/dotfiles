@@ -1,7 +1,11 @@
-{ pkgs, lib, ... }:
+{ pkgs, packages, lib, ... }:
 
 {
-  home.packages = with pkgs; [
+  home.username = "oleg";
+  home.homeDirectory = "/home/oleg";
+  manual.manpages.enable = false;
+
+  home.packages = with packages; [
     act
 
     ansifilter
@@ -234,14 +238,14 @@
   home.file = {
     ".bash.d/nix.bash" = {
       text = ''
-        . ${pkgs.nix}/share/bash-completion/completions/nix
+        . ${packages.nix}/share/bash-completion/completions/nix
 
-        . ${pkgs.vault-bin}/share/bash-completion/completions/vault
-        complete -C ${pkgs.vault-bin}/bin/vault vault1
-        complete -C ${pkgs.vault-bin}/bin/vault vault2
-        complete -C ${pkgs.vault-bin}/bin/vault vault3
-        complete -C ${pkgs.vault-bin}/bin/vault vault4
-        complete -C ${pkgs.vault-bin}/bin/vault vault-ci
+        . ${packages.vault-bin}/share/bash-completion/completions/vault
+        complete -C ${packages.vault-bin}/bin/vault vault1
+        complete -C ${packages.vault-bin}/bin/vault vault2
+        complete -C ${packages.vault-bin}/bin/vault vault3
+        complete -C ${packages.vault-bin}/bin/vault vault4
+        complete -C ${packages.vault-bin}/bin/vault vault-ci
       '';
     };
     ".mozilla/native-messaging-hosts/passff.json" = {
@@ -249,7 +253,7 @@
         allowed_extensions = [ "passff@wugi.info" ];
         description = "Host for communicating with zx2c4 pass";
         name = "passff";
-        path = "${pkgs.passff-host}/share/passff-host/passff.py";
+        path = "${packages.passff-host}/share/passff-host/passff.py";
         type = "stdio";
       };
     };
@@ -257,10 +261,6 @@
 
   programs.firefox = {
     enable = true;
-    extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-      gesturefy
-      ublock-origin
-    ];
     profiles = {
       default = {
         # This profile not managed by Nix.
@@ -272,6 +272,10 @@
       nix = {
         name = "nix";
         id = 1;
+        extensions = with packages.nur.repos.rycee.firefox-addons; [
+          ublock-origin
+          gesturefy
+        ];
         settings = {
           "browser.startup.homepage" = "about:addons";
           "browser.search.region" = "GB";
@@ -283,6 +287,9 @@
       twitch = {
         name = "twitch";
         id = 2;
+        extensions = with packages.nur.repos.rycee.firefox-addons; [
+          ublock-origin
+        ];
         settings = {
           "browser.startup.homepage" = "about:addons";
           "browser.search.region" = "GB";
@@ -293,4 +300,10 @@
       };
     };
   };
+
+  # The home.stateVersion option no longer has a default value. It used to
+  # default to “18.09”, which was the Home Manager version that introduced the
+  # option. If your configuration does not explicitly set this option then you
+  # need to add
+  home.stateVersion = "23.05";
 }

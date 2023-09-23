@@ -23,7 +23,8 @@
     nixpkgs-idea.url = "github:wigust/nixpkgs/a98b0d1e6d7bed029844576e8637ce9807600ad2";
     nixpkgs-phpactor.url = "nixpkgs/nixpkgs-unstable";
 
-    home-manager.url = "github:nix-community/home-manager?ref=release-21.05";
+    nixpkgs-home-manager.url = "nixpkgs/nixpkgs-unstable";
+    home-manager.url = "github:nix-community/home-manager?ref=release-23.05";
     nur.url = "github:nix-community/NUR";
 
     majordomo.url = "git+https://gitlab.intr/_ci/nixpkgs";
@@ -79,6 +80,7 @@
     , nixpkgs-20-03-firefox
     , nixpkgs-phantomjs
     , deploy-rs
+    , nixpkgs-home-manager
     , home-manager
     , nur
     , github-com-guibou-nixGL
@@ -355,6 +357,11 @@
                     overlay
                   ];
                   inherit system;
+                  config = {
+                    permittedInsecurePackages = [
+                      "qtwebkit-5.212.0-alpha4"
+                    ];
+                  };
                 };
               in
               rec
@@ -364,11 +371,11 @@
                 autoRollback = false;
                 magicRollback = false;
                 path = deploy-rs.lib.${system}.activate.home-manager (home-manager.lib.homeManagerConfiguration {
-                  inherit pkgs system;
-                  extraSpecialArgs = { inherit pkgs; };
-                  homeDirectory = "/home/${user}";
-                  username = user;
-                  configuration = ./home-manager.nix;
+                  pkgs = nixpkgs-home-manager.legacyPackages.${system};
+                  extraSpecialArgs = { packages = pkgs; };
+                  modules = [
+                    ./home-manager.nix
+                  ];
                 });
               };
           };
