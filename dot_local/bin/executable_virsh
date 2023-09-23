@@ -111,16 +111,6 @@ case "$1" in
                 else
                     /home/oleg/.guix-profile/sbin/lvchange -ay /dev/lvm2/${domain}
                 fi
-                # /sys/bus/pci/devices/0000:12:00.1/hdaudioC0D0
-                # msi_irqs
-                # sound
-                if [[ -e /sys/bus/pci/devices/0000:12:00.1/msi_irqs ]]
-                then
-                    :
-                else
-                    echo "vm-${domain}: Missing '/sys/bus/pci/devices/0000:12:00.1/msi_irqs' file." 1>&2
-                    exit 1
-                fi
                 attempt=0
                 max_attempt=3
                 until [[ -e /var/run/libvirt/qemu/${domain}.pid ]]
