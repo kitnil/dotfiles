@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: maloja
 resources:
 - ../../base/maloja
+- service.yaml
 patchesStrategicMerge:
 - deployment.yaml
 images:
