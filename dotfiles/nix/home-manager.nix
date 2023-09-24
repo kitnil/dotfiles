@@ -329,6 +329,7 @@
             tab-reloader
             tab-slideshow-we
             temporary-containers
+            view-image
             view-page-archive
             visited-link-enabler
             ublacklist
