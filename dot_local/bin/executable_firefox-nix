@@ -1,3 +1,5 @@
-#!/bin/sh
+#!/usr/bin/env bash
 
-exec -a "$0" "${HOME}/.nix-profile/bin/firefox" -P nix "$@"
+set -o errexit -o pipefail
+
+exec firefox --new-instance -P nix "$@"
