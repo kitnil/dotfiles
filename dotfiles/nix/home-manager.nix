@@ -278,6 +278,7 @@
           clearurls
           container-proxy
           darkreader
+          forget_me_not
           gesturefy
           sponsorblock
           ublock-origin
