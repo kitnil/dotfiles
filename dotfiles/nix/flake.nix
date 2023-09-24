@@ -348,6 +348,8 @@
                     in {
                       inherit (deploy-rs.outputs.packages.${system}) deploy-rs;
                       inherit (majordomo-vault.inputs.nixpkgs.legacyPackages.${system}) vault-bin;
+                      inherit (import (rycee-nur-expressions.outPath + "/default.nix") { pkgs = prev; })
+                        mozilla-addons-to-nix;
                       alejandra = (kamadorueda-alejandra.packages.${system}).alejandra-x86_64-unknown-linux-gnu;
                       viddy = prev.viddy.overrideAttrs (old: {
                         patches = [
