@@ -120,6 +120,35 @@
         platforms = platforms.all;
         };
       };
+    "view-page-archive" = buildFirefoxXpiAddon {
+      pname = "view-page-archive";
+      version = "4.1.0";
+      addonId = "{d07ccf11-c0cd-4938-a265-2a4d6ad01189}";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4139299/view_page_archive-4.1.0.xpi";
+      sha256 = "8c5d42c863981044b999b4c10cbb7e87cc86da569e158707d70c4eec946d8edc";
+      meta = with lib;
+      {
+        homepage = "https://github.com/dessant/web-archives#readme";
+        description = "View archived and cached versions of web pages on 10+ search engines, such as the Wayback Machine, Archive․is, Google, Bing and Yandex";
+        license = licenses.gpl3;
+        mozPermissions = [
+          "alarms"
+          "contextMenus"
+          "storage"
+          "unlimitedStorage"
+          "tabs"
+          "activeTab"
+          "notifications"
+          "webRequest"
+          "webRequestBlocking"
+          "<all_urls>"
+          "http://*/*"
+          "https://*/*"
+          "file:///*"
+          ];
+        platforms = platforms.all;
+        };
+      };
     "visited-link-enabler" = buildFirefoxXpiAddon {
       pname = "visited-link-enabler";
       version = "0.3.0";

@@ -298,6 +298,7 @@
             tab-reloader
             tab-slideshow-we
             temporary-containers
+            view-page-archive
             visited-link-enabler
             ultrawidify
           ];

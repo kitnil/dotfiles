@@ -358,6 +358,7 @@
                         scroll_anywhere
                         snaplinksplus
                         tab-slideshow-we
+                        view-page-archive
                         visited-link-enabler
                         ultrawidify;
                       inherit (rycee-nur-expressions.packages.${system})
