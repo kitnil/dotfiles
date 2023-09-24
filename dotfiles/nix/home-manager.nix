@@ -301,8 +301,13 @@
         id = 2;
         extensions = with packages.nur.repos.rycee.firefox-addons; [
           ublock-origin
-          packages."7tv"
-          packages."twitch-points-autoclicker"
+          (betterttv.overrideAttrs (old: {
+            version = "7.5.7";
+            src = pkgs.fetchurl {
+              url = "https://addons.mozilla.org/firefox/downloads/file/4167416/betterttv-7.5.7.xpi";
+              sha256 = "ba9ed004c328f3dacb78537eceed9fc206d4e3a136bb80a1ed786dc9fb57b9d7";
+            };
+          }))
         ];
         settings = {
           "browser.startup.homepage" = "about:addons";
