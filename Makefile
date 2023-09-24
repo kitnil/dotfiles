@@ -102,6 +102,10 @@ dotfiles/nix/nix.conf:
 	sudo mkdir -p /etc/nix
 	sudo install -m644 dotfiles/nix/nix.conf /etc/nix/nix.conf
 
+.PHONY: dotfiles/nix/firefox/generated-firefox-addons.nix
+dotfiles/nix/firefox/generated-firefox-addons.nix:
+	mozilla-addons-to-nix dotfiles/nix/firefox/addons.json dotfiles/nix/firefox/generated-firefox-addons.nix
+
 .PHONY: dotfiles/guixsd/machines.scm
 dotfiles/guixsd/machines.scm:
 	sudo install -m644 dotfiles/guixsd/machines.scm /etc/guix
