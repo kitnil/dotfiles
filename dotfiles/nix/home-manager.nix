@@ -281,6 +281,7 @@
             clearurls
             container-proxy
             copy-link-text
+            copy-selection-as-markdown
             darkreader
             forget_me_not
             foxscroller

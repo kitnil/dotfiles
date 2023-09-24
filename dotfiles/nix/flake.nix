@@ -367,6 +367,7 @@
                       inherit (rycee-nur-expressions.packages.${system})
                         container-proxy
                         copy-link-text
+                        copy-selection-as-markdown
                         forget_me_not
                         link-gopher
                         lovely-forks
