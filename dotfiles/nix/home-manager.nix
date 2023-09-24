@@ -294,6 +294,7 @@
             packages.access-control-allow-origin
             packages.snaplinksplus
             packages.prometheus-formatter
+            tab-reloader
             temporary-containers
             visited-link-enabler
           ];

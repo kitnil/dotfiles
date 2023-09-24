@@ -362,7 +362,8 @@
                         container-proxy
                         copy-link-text
                         forget_me_not
-                        redirector;
+                        redirector
+                        tab-reloader;
                       alejandra = (kamadorueda-alejandra.packages.${system}).alejandra-x86_64-unknown-linux-gnu;
                       viddy = prev.viddy.overrideAttrs (old: {
                         patches = [
