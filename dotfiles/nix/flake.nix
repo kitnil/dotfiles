@@ -365,6 +365,7 @@
                         scroll_anywhere
                         snaplinksplus
                         tab-slideshow-we
+                        twitch-error-autorefresher
                         view-page-archive
                         visited-link-enabler
                         ultrawidify;

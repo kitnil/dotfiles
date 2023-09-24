@@ -241,6 +241,20 @@
         platforms = platforms.all;
         };
       };
+    "twitch-error-autorefresher" = buildFirefoxXpiAddon {
+      pname = "twitch-error-autorefresher";
+      version = "4";
+      addonId = "{e7f57420-5fd4-4196-9a11-ad7fc8fc921d}";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4122986/twitch_autorefresher_error2000-4.xpi";
+      sha256 = "cb08d1eec86d7a7b9e4bc285d82527e6b23142b25f86f58dddc13a08bd328f0d";
+      meta = with lib;
+      {
+        description = "This extension will automatically refresh twitch stream whenever any error occurs.";
+        license = licenses.gpl3;
+        mozPermissions = [ "*://www.twitch.tv/*" ];
+        platforms = platforms.all;
+        };
+      };
     "ultrawidify" = buildFirefoxXpiAddon {
       pname = "ultrawidify";
       version = "5.1.6";
