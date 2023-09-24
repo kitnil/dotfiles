@@ -368,6 +368,7 @@
                         forget_me_not
                         link-gopher
                         lovely-forks
+                        passff
                         redirector
                         tab-reloader;
                       alejandra = (kamadorueda-alejandra.packages.${system}).alejandra-x86_64-unknown-linux-gnu;

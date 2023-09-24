@@ -295,6 +295,7 @@
             }))
             lovely-forks
             old-reddit-redirect
+            passff
             metube-downloader
             new-window-without-toolbar
             redirector
