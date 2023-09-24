@@ -300,6 +300,7 @@
               };
             }))
             lovely-forks
+            i-dont-care-about-cookies
             old-reddit-redirect
             passff
             metube-downloader
