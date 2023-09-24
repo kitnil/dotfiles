@@ -375,7 +375,6 @@
                         ghosttext
                         link-gopher
                         lovely-forks
-                        passff
                         redirector
                         single-file
                         tab-reloader;
