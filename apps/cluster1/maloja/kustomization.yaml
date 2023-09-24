@@ -4,6 +4,7 @@ namespace: maloja
 resources:
 - ../../base/maloja
 - service.yaml
+- ingress.yaml
 patchesStrategicMerge:
 - deployment.yaml
 images:
