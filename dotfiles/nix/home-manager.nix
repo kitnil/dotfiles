@@ -285,6 +285,7 @@
             gesturefy
             greasemonkey
             old-reddit-redirect
+            redirector
             sponsorblock
             ublock-origin
             packages.highlightall
