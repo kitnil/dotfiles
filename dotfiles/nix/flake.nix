@@ -378,7 +378,8 @@
                         redirector
                         single-file
                         tab-reloader
-                        return-youtube-dislikes;
+                        return-youtube-dislikes
+                        ublacklist;
                       firefox-addon-libredirect = rycee-nur-expressions.packages.${system}.libredirect;
                       alejandra = (kamadorueda-alejandra.packages.${system}).alejandra-x86_64-unknown-linux-gnu;
                       viddy = prev.viddy.overrideAttrs (old: {

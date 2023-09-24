@@ -331,6 +331,7 @@
             temporary-containers
             view-page-archive
             visited-link-enabler
+            ublacklist
             ultrawidify
           ];
         settings = {
