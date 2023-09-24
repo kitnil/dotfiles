@@ -354,6 +354,7 @@
           with packages;
           with packages.nur.repos.rycee.firefox-addons;
           [
+            return-youtube-dislikes
             sponsorblock
             ublock-origin
             (betterttv.overrideAttrs (old: {
