@@ -289,6 +289,7 @@
             foxscroller
             foxyproxy-standard
             gesturefy
+            google-container
             greasemonkey
             libredirect
             hello-goodbye

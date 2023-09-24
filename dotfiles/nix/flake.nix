@@ -356,6 +356,7 @@
                         cookie-quick-manager
                         copy-all-tab-urls-we
                         foxscroller
+                        google-container
                         highlightall
                         metube-downloader
                         hello-goodbye
