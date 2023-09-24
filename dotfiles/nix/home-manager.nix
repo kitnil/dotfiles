@@ -305,6 +305,7 @@
             metube-downloader
             new-window-without-toolbar
             redirector
+            right-click-search
             scroll_anywhere
             sponsorblock
             ublock-origin

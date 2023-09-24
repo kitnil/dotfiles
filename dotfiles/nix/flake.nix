@@ -360,6 +360,7 @@
                         metube-downloader
                         hello-goodbye
                         prometheus-formatter
+                        right-click-search
                         scroll_anywhere
                         snaplinksplus
                         tab-slideshow-we

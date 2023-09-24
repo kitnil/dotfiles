@@ -154,6 +154,20 @@
         platforms = platforms.all;
         };
       };
+    "right-click-search" = buildFirefoxXpiAddon {
+      pname = "right-click-search";
+      version = "1.1.0";
+      addonId = "{bbbb88d7-7da7-47e6-8836-d7d329e92dd9}";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3809250/right_click_search-1.1.0.xpi";
+      sha256 = "952c1163fa4cae9cca96307cbd88e6a13d6b79fb68dd33d1c0530b4017a57b54";
+      meta = with lib;
+      {
+        description = "Use the context menu to search using the engines in the Firefox search settings.\n\nThis add-on requires Firefox version 63 or later.";
+        license = licenses.mit;
+        mozPermissions = [ "search" "contextMenus" ];
+        platforms = platforms.all;
+        };
+      };
     "scroll_anywhere" = buildFirefoxXpiAddon {
       pname = "scroll_anywhere";
       version = "9.2";
