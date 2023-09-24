@@ -21,6 +21,29 @@
         platforms = platforms.all;
         };
       };
+    "cookie-quick-manager" = buildFirefoxXpiAddon {
+      pname = "cookie-quick-manager";
+      version = "0.5rc2";
+      addonId = "{60f82f00-9ad5-4de5-b31c-b16a47c51558}";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3343599/cookie_quick_manager-0.5rc2.xpi";
+      sha256 = "b826e443438c880b3998e42e099d0e1949ff51489c788b50193b92ef80426c6e";
+      meta = with lib;
+      {
+        homepage = "https://github.com/ysard/cookie-quick-manager";
+        description = "An addon to manage cookies (view, search, create, edit, remove, backup, restore, protect from deletion and much more). Firefox 57+ is supported.";
+        license = licenses.gpl3;
+        mozPermissions = [
+          "cookies"
+          "<all_urls>"
+          "activeTab"
+          "storage"
+          "browsingData"
+          "contextualIdentities"
+          "privacy"
+          ];
+        platforms = platforms.all;
+        };
+      };
     "copy-all-tab-urls-we" = buildFirefoxXpiAddon {
       pname = "copy-all-tab-urls-we";
       version = "2.2.0";

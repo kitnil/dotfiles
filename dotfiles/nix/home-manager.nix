@@ -283,6 +283,7 @@
             copy-all-tab-urls-we
             copy-link-text
             copy-selection-as-markdown
+            cookie-quick-manager
             darkreader
             forget_me_not
             foxscroller
