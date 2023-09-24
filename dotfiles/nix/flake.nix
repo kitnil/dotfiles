@@ -357,7 +357,8 @@
                         prometheus-formatter
                         scroll_anywhere
                         snaplinksplus
-                        visited-link-enabler;
+                        visited-link-enabler
+                        ultrawidify;
                       inherit (rycee-nur-expressions.packages.${system})
                         container-proxy
                         copy-link-text

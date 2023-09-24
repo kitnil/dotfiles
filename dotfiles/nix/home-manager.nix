@@ -298,6 +298,7 @@
             tab-reloader
             temporary-containers
             visited-link-enabler
+            ultrawidify
           ];
         settings = {
           "browser.search.defaultenginename" = "Google";

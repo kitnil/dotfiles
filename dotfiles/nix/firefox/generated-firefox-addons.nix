@@ -92,6 +92,20 @@
         platforms = platforms.all;
         };
       };
+    "ultrawidify" = buildFirefoxXpiAddon {
+      pname = "ultrawidify";
+      version = "5.1.6";
+      addonId = "{cf02b1a7-a01a-4e37-a609-516a283f1ed3}";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4060162/ultrawidify-5.1.6.xpi";
+      sha256 = "57d26809e38af6612e2666ad50512329a94f4ece18dec57077be80f076c24437";
+      meta = with lib;
+      {
+        homepage = "https://github.com/xternal7/ultrawidify";
+        description = "Aspect ratio fixer for Youtube. Allows improperly encoded videos to properly fit ultrawide and superwide displays (e.g. 21:9) — and it attempts to do so automatically.";
+        mozPermissions = [ "storage" "activeTab" "<all_urls>" "*://*/*" ];
+        platforms = platforms.all;
+        };
+      };
     "visited-link-enabler" = buildFirefoxXpiAddon {
       pname = "visited-link-enabler";
       version = "0.3.0";
