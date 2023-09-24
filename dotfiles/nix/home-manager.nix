@@ -280,6 +280,7 @@
           darkreader
           forget_me_not
           gesturefy
+          greasemonkey
           sponsorblock
           ublock-origin
           packages.highlightall
