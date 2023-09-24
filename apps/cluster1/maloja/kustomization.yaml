@@ -3,6 +3,8 @@ kind: Kustomization
 namespace: maloja
 resources:
 - ../../base/maloja
+patchesStrategicMerge:
+- deployment.yaml
 images:
 - name: krateng/maloja
   newTag: 3.1.5
