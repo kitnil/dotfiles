@@ -340,6 +340,7 @@
           "browser.startup.homepage" = "about:newtab";
           "browser.startup.page" = 3;
           "distribution.searchplugins.defaultLocale" = "en-GB";
+          "extensions.pocket.enabled" = false;
           "general.useragent.locale" = "en-GB";
           "general.warnOnAboutConfig" = false;
           "startup.homepage_welcome_url" = "about:newtab";
