@@ -285,6 +285,7 @@
             forget_me_not
             gesturefy
             greasemonkey
+            libredirect
             (link-gopher.overrideAttrs (old: {
               version = "2.0.1";
               src = pkgs.fetchurl {
