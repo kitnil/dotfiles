@@ -42,6 +42,21 @@
         platforms = platforms.all;
         };
       };
+    "prometheus-formatter" = buildFirefoxXpiAddon {
+      pname = "prometheus-formatter";
+      version = "2.2.0";
+      addonId = "prometheus-formatter@frederic-hemberger.de";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3785090/prometheus_formatter-2.2.0.xpi";
+      sha256 = "0wbg8x2w3qf5id9fbi8kh809zyppc0srnf7ggw6vkhdax0gn58p9";
+      meta = with lib;
+      {
+        homepage = "https://github.com/fhemberger/prometheus-formatter";
+        description = "Makes plain Prometheus/OpenMetrics endpoints easier to read.";
+        license = licenses.mit;
+        mozPermissions = [ "storage" "http://*/*" "https://*/*" ];
+        platforms = platforms.all;
+        };
+      };
     "snaplinksplus" = buildFirefoxXpiAddon {
       pname = "snaplinksplus";
       version = "3.1.11";

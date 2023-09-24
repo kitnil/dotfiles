@@ -6,6 +6,9 @@
         "slug": "highlightall"
     },
     {
+        "slug": "prometheus-formatter"
+    },
+    {
         "slug": "snaplinksplus"
     }
 ]

@@ -290,6 +290,7 @@
             packages.highlightall
             packages.access-control-allow-origin
             packages.snaplinksplus
+            packages.prometheus-formatter
             temporary-containers
           ];
         settings = {

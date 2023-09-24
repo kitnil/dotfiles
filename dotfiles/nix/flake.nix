@@ -354,6 +354,7 @@
                       inherit (callPackage ./firefox/generated-firefox-addons.nix { inherit buildFirefoxXpiAddon; })
                         access-control-allow-origin
                         highlightall
+                        prometheus-formatter
                         snaplinksplus;
                       inherit (rycee-nur-expressions.packages.${system})
                         container-proxy
