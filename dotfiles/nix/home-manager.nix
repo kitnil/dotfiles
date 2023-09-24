@@ -280,6 +280,7 @@
             auto-tab-discard
             clearurls
             container-proxy
+            copy-all-tab-urls-we
             copy-link-text
             copy-selection-as-markdown
             darkreader

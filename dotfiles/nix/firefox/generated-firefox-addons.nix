@@ -21,6 +21,26 @@
         platforms = platforms.all;
         };
       };
+    "copy-all-tab-urls-we" = buildFirefoxXpiAddon {
+      pname = "copy-all-tab-urls-we";
+      version = "2.2.0";
+      addonId = "{0507f777-2480-4d48-baf1-3b9c8feeb2b4}";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3988710/copy_all_tab_urls_we-2.2.0.xpi";
+      sha256 = "ac819a1fc0edb5293be0781a3308a99a70b64e9690a38b5a4feb71e53ac5d51c";
+      meta = with lib;
+      {
+        description = "Copy All Tab Urls";
+        license = licenses.mpl20;
+        mozPermissions = [
+          "tabs"
+          "clipboardWrite"
+          "storage"
+          "notifications"
+          "contextMenus"
+          ];
+        platforms = platforms.all;
+        };
+      };
     "foxscroller" = buildFirefoxXpiAddon {
       pname = "foxscroller";
       version = "1.8";
