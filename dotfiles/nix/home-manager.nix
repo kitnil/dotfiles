@@ -350,19 +350,26 @@
       twitch = {
         name = "twitch";
         id = 2;
-        extensions = with packages.nur.repos.rycee.firefox-addons; [
-          ublock-origin
-          (betterttv.overrideAttrs (old: {
-            version = "7.5.7";
-            src = pkgs.fetchurl {
-              url = "https://addons.mozilla.org/firefox/downloads/file/4167416/betterttv-7.5.7.xpi";
-              sha256 = "ba9ed004c328f3dacb78537eceed9fc206d4e3a136bb80a1ed786dc9fb57b9d7";
-            };
-          }))
-        ];
+        extensions =
+          with packages;
+          with packages.nur.repos.rycee.firefox-addons;
+          [
+            sponsorblock
+            ublock-origin
+            (betterttv.overrideAttrs (old: {
+              version = "7.5.7";
+              src = pkgs.fetchurl {
+                url = "https://addons.mozilla.org/firefox/downloads/file/4167416/betterttv-7.5.7.xpi";
+                sha256 = "ba9ed004c328f3dacb78537eceed9fc206d4e3a136bb80a1ed786dc9fb57b9d7";
+              };
+            }))
+            visited-link-enabler
+            ultrawidify
+          ];
         settings = {
           "browser.startup.homepage" = "about:addons";
           "browser.search.region" = "GB";
+          "extensions.pocket.enabled" = false;
           "distribution.searchplugins.defaultLocale" = "en-GB";
           "general.useragent.locale" = "en-GB";
           "browser.search.defaultenginename" = "Google";
