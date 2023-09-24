@@ -286,6 +286,7 @@
             darkreader
             forget_me_not
             foxscroller
+            foxyproxy-standard
             gesturefy
             greasemonkey
             libredirect
