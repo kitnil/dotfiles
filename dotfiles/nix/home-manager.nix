@@ -291,6 +291,7 @@
             foxscroller
             foxyproxy-standard
             gesturefy
+            ghosttext
             google-container
             greasemonkey
             (libredirect.overrideAttrs (old: {

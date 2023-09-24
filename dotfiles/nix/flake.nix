@@ -372,6 +372,7 @@
                         container-proxy
                         copy-link-text
                         copy-selection-as-markdown
+                        ghosttext
                         link-gopher
                         lovely-forks
                         passff
