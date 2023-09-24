@@ -92,4 +92,24 @@
         platforms = platforms.all;
         };
       };
+    "visited-link-enabler" = buildFirefoxXpiAddon {
+      pname = "visited-link-enabler";
+      version = "0.3.0";
+      addonId = "jid1-yDnsmkBoiRtgNA@jetpack";
+      url = "https://addons.mozilla.org/firefox/downloads/file/803426/visited_link_enabler-0.3.0.xpi";
+      sha256 = "7b1ab99b45c6015e48af73b27b937f32d32fb3ea32a9dac4d99bc6dc0133fa9f";
+      meta = with lib;
+      {
+        description = "enables visited link colors on almost every website for easier browsing";
+        license = licenses.mpl20;
+        mozPermissions = [
+          "<all_urls>"
+          "storage"
+          "activeTab"
+          "tabs"
+          "contextMenus"
+          ];
+        platforms = platforms.all;
+        };
+      };
     }

@@ -295,6 +295,7 @@
             packages.snaplinksplus
             packages.prometheus-formatter
             temporary-containers
+            visited-link-enabler
           ];
         settings = {
           "browser.search.defaultenginename" = "Google";
