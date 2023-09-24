@@ -281,3 +281,12 @@
   (if (current-window)
       (run-commands "delete-window")
       (run-commands "remove")))
+
+
+;;;
+;;; Menu
+;;;
+
+(defcommand bemenu-run () ()
+  (run-shell-command
+   "bemenu-run --fb '#000000' --ab '#000000' --tb '#000000' --nb '#000000' --tf '#ffffff' --hf '#ffffff' --hb '#2e8b57' --border 1 --bdr '#333333' --line-height 25 --hp 10 --fn 'DejaVu Sans Mono 10' --list 20 --center --no-spacing"))
