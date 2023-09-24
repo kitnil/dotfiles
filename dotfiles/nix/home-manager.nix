@@ -277,6 +277,7 @@
           auto-tab-discard
           darkreader
           gesturefy
+          sponsorblock
           ublock-origin
           packages.highlightall
           packages.access-control-allow-origin
