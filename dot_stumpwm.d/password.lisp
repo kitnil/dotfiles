@@ -6,7 +6,7 @@
      t))
 
 (defcommand passmenu () ()
-  (run-shell-command "passmenu -l 30"))
+  (run-shell-command "/home/oleg/.local/share/chezmoi/dot_local/bin/executable_passmenu"))
 
 (defcommand random-password (length) ((:string "Password length: "))
   (window-send-string (run-shell-command (format nil "bash -i -c 'random-password ~a'" length) t)))
