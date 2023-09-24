@@ -273,22 +273,25 @@
       nix = {
         name = "nix";
         id = 1;
-        extensions = with packages.nur.repos.rycee.firefox-addons; [
-          auto-tab-discard
-          clearurls
-          container-proxy
-          darkreader
-          forget_me_not
-          gesturefy
-          greasemonkey
-          old-reddit-redirect
-          sponsorblock
-          ublock-origin
-          packages.highlightall
-          packages.access-control-allow-origin
-          packages.snaplinksplus
-          temporary-containers
-        ];
+        extensions =
+          with packages;
+          with packages.nur.repos.rycee.firefox-addons;
+          [
+            auto-tab-discard
+            clearurls
+            container-proxy
+            darkreader
+            forget_me_not
+            gesturefy
+            greasemonkey
+            old-reddit-redirect
+            sponsorblock
+            ublock-origin
+            packages.highlightall
+            packages.access-control-allow-origin
+            packages.snaplinksplus
+            temporary-containers
+          ];
         settings = {
           "browser.search.defaultenginename" = "Google";
           "browser.search.region" = "GB";

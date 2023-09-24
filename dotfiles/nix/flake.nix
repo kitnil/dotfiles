@@ -355,6 +355,9 @@
                         access-control-allow-origin
                         highlightall
                         snaplinksplus;
+                      inherit (rycee-nur-expressions.packages.${system})
+                        container-proxy
+                        forget_me_not;
                       alejandra = (kamadorueda-alejandra.packages.${system}).alejandra-x86_64-unknown-linux-gnu;
                       viddy = prev.viddy.overrideAttrs (old: {
                         patches = [
