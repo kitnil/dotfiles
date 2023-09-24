@@ -274,8 +274,10 @@
         name = "nix";
         id = 1;
         extensions = with packages.nur.repos.rycee.firefox-addons; [
-          ublock-origin
+          auto-tab-discard
+          darkreader
           gesturefy
+          ublock-origin
         ];
         settings = {
           "browser.startup.homepage" = "about:addons";
