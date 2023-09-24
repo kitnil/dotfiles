@@ -278,6 +278,7 @@
           darkreader
           gesturefy
           ublock-origin
+          packages.highlightall
         ];
         settings = {
           "browser.startup.homepage" = "about:addons";
