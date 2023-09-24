@@ -368,6 +368,7 @@
             }))
             visited-link-enabler
             ultrawidify
+            web-scrobbler
           ];
         settings = {
           "browser.startup.homepage" = "about:addons";
