@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: maloja
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: maloja
+      app.kubernetes.io/part-of: maloja
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: maloja
+        app.kubernetes.io/part-of: maloja
+    spec:
+      containers:
+      - image: krateng/maloja
+        name: maloja
+        ports:
+        - containerPort: 42010
+          name: http
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 4000m
+            memory: 1024Mi
+          requests:
+            cpu: 20m
+            memory: 512Mi
