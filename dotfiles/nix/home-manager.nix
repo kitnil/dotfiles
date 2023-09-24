@@ -267,7 +267,7 @@
         # This profile not managed by Nix.
         name = "default";
         path = "j56dvo43.default-1520714705340";
-        isDefault = true;
+        isDefault = false;
         id = 0;
       };
       nix = {
@@ -276,6 +276,7 @@
         # TODO: Import ~/src/ssl/cert.p12 file with Nix.
         name = "nix";
         id = 1;
+        isDefault = true;
         extensions =
           with packages;
           with packages.nur.repos.rycee.firefox-addons;
