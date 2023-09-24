@@ -283,6 +283,7 @@
             copy-link-text
             darkreader
             forget_me_not
+            foxscroller
             gesturefy
             greasemonkey
             libredirect

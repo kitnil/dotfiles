@@ -21,6 +21,26 @@
         platforms = platforms.all;
         };
       };
+    "foxscroller" = buildFirefoxXpiAddon {
+      pname = "foxscroller";
+      version = "1.8";
+      addonId = "{56b215f4-29b6-4898-bf2a-152d8bc189ed}";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3935307/foxscroller-1.8.xpi";
+      sha256 = "76e3df60531c6d7ab947afffeb3c3148d5f8baa37dc6ccadfbea508867aa02e4";
+      meta = with lib;
+      {
+        description = "Auto scroll web pages with fully adjustable speed.";
+        license = licenses.gpl3;
+        mozPermissions = [
+          "activeTab"
+          "contextMenus"
+          "storage"
+          "webNavigation"
+          "<all_urls>"
+          ];
+        platforms = platforms.all;
+        };
+      };
     "hello-goodbye" = buildFirefoxXpiAddon {
       pname = "hello-goodbye";
       version = "1.7.0";

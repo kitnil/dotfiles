@@ -353,6 +353,7 @@
                         mozilla-addons-to-nix;
                       inherit (callPackage ./firefox/generated-firefox-addons.nix { inherit buildFirefoxXpiAddon; })
                         access-control-allow-origin
+                        foxscroller
                         highlightall
                         metube-downloader
                         hello-goodbye
