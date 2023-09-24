@@ -139,10 +139,8 @@
           ,@(if url (list url) '()))))
 
 (defun firefox-command (&optional args)
-  (if (string-equal (screen-display-string (current-screen)) "DISPLAY=:0.0")
-      (join (append (list "GTK_THEME=Adwaita:dark" *fontconfig-file* "firefox")
-                    args))
-      (firefox-temp-profile "default")))
+  (join (append (list "GTK_THEME=Adwaita:dark" *fontconfig-file* "firefox")
+                args)))
 
 (defun mjru-open-account (account)
   (run-shell-command (join (list *fontconfig-file* "hms" "web" "open" account)))
