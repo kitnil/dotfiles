@@ -276,6 +276,7 @@
         extensions = with packages.nur.repos.rycee.firefox-addons; [
           auto-tab-discard
           clearurls
+          container-proxy
           darkreader
           gesturefy
           sponsorblock
