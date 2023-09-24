@@ -285,6 +285,13 @@
             forget_me_not
             gesturefy
             greasemonkey
+            (link-gopher.overrideAttrs (old: {
+              version = "2.0.1";
+              src = pkgs.fetchurl {
+                url = "https://addons.mozilla.org/firefox/downloads/file/3834730/link_gopher-2.0.1.xpi";
+                sha256 = "0kn5jl9nj6sp48ra0s75cla39w05rs40smvfsark3zdxankkmzry";
+              };
+            }))
             lovely-forks
             old-reddit-redirect
             new-window-without-toolbar

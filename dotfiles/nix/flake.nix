@@ -365,6 +365,7 @@
                         container-proxy
                         copy-link-text
                         forget_me_not
+                        link-gopher
                         lovely-forks
                         redirector
                         tab-reloader;
