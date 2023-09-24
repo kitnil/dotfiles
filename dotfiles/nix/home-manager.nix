@@ -288,7 +288,6 @@
             copy-selection-as-markdown
             cookie-quick-manager
             darkreader
-            forget_me_not
             foxscroller
             foxyproxy-standard
             gesturefy
