@@ -310,6 +310,7 @@
             packages.snaplinksplus
             packages.prometheus-formatter
             single-file
+            stylus
             tab-reloader
             tab-slideshow-we
             temporary-containers
