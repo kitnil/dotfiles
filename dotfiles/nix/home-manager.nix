@@ -285,6 +285,7 @@
             forget_me_not
             gesturefy
             greasemonkey
+            lovely-forks
             old-reddit-redirect
             new-window-without-toolbar
             redirector
