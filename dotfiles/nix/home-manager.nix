@@ -279,6 +279,7 @@
           gesturefy
           ublock-origin
           packages.highlightall
+          packages.access-control-allow-origin
         ];
         settings = {
           "browser.startup.homepage" = "about:addons";

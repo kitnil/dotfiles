@@ -1,5 +1,26 @@
 { buildFirefoxXpiAddon, fetchurl, lib, stdenv }:
   {
+    "access-control-allow-origin" = buildFirefoxXpiAddon {
+      pname = "access-control-allow-origin";
+      version = "0.1.7";
+      addonId = "{c5f935cf-9b17-4b85-bed8-9277861b4116}";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3974756/access_control_allow_origin-0.1.7.xpi";
+      sha256 = "eb600f22afdb4834acb2032bf685bbb6449daef2e3c725765d9d22935e329bf3";
+      meta = with lib;
+      {
+        homepage = "https://mybrowseraddon.com/access-control-allow-origin.html";
+        description = "Easily add (Access-Control-Allow-Origin: *) rule to the response header.";
+        license = licenses.mpl20;
+        mozPermissions = [
+          "storage"
+          "activeTab"
+          "<all_urls>"
+          "webRequest"
+          "webRequestBlocking"
+          ];
+        platforms = platforms.all;
+        };
+      };
     "highlightall" = buildFirefoxXpiAddon {
       pname = "highlightall";
       version = "2.3";

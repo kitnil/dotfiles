@@ -352,6 +352,7 @@
                       inherit (import (rycee-nur-expressions.outPath + "/default.nix") { pkgs = prev; })
                         mozilla-addons-to-nix;
                       inherit (callPackage ./firefox/generated-firefox-addons.nix { inherit buildFirefoxXpiAddon; })
+                        access-control-allow-origin
                         highlightall;
                       alejandra = (kamadorueda-alejandra.packages.${system}).alejandra-x86_64-unknown-linux-gnu;
                       viddy = prev.viddy.overrideAttrs (old: {
