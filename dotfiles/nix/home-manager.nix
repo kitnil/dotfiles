@@ -280,6 +280,7 @@
           ublock-origin
           packages.highlightall
           packages.access-control-allow-origin
+          packages.snaplinksplus
         ];
         settings = {
           "browser.search.defaultenginename" = "Google";

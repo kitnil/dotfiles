@@ -42,4 +42,25 @@
         platforms = platforms.all;
         };
       };
+    "snaplinksplus" = buildFirefoxXpiAddon {
+      pname = "snaplinksplus";
+      version = "3.1.11";
+      addonId = "snaplinks@snaplinks.mozdev.org";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3838174/snaplinksplus-3.1.11.xpi";
+      sha256 = "5e7077ae5619d7da64f48af193d965f997db93e9c694ac38e3baf6854d25aa19";
+      meta = with lib;
+      {
+        homepage = "http://cpriest.github.io/SnapLinksPlus/";
+        description = "Select a number of links with a rectangle and open them in new tabs.  You can also lasso checkboxes to quickly check or uncheck them.  Works with radio buttons as well.";
+        license = licenses.mit;
+        mozPermissions = [
+          "cookies"
+          "storage"
+          "notifications"
+          "clipboardWrite"
+          "<all_urls>"
+          ];
+        platforms = platforms.all;
+        };
+      };
     }
