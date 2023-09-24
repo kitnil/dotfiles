@@ -284,6 +284,7 @@
           packages.highlightall
           packages.access-control-allow-origin
           packages.snaplinksplus
+          temporary-containers
         ];
         settings = {
           "browser.search.defaultenginename" = "Google";
