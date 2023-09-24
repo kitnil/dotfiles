@@ -294,7 +294,7 @@
             ghosttext
             google-container
             greasemonkey
-            (libredirect.overrideAttrs (old: {
+            (firefox-addon-libredirect.overrideAttrs (old: {
               version = "2.1.0";
               src = pkgs.fetchurl {
                 url = "https://addons.mozilla.org/firefox/downloads/file/3960568/libredirect-2.1.0.xpi";
