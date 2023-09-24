@@ -92,6 +92,20 @@
         platforms = platforms.all;
         };
       };
+    "tab-slideshow-we" = buildFirefoxXpiAddon {
+      pname = "tab-slideshow-we";
+      version = "0.7.1";
+      addonId = "{ff4c3ef4-7337-4e7f-aa99-77ed911ef8b1}";
+      url = "https://addons.mozilla.org/firefox/downloads/file/2983447/tab_slideshow_we-0.7.1.xpi";
+      sha256 = "74788e3b88ba912f26304ef8b10b9bea46fafaaa044a4ff4cb1ff01ea33fb65a";
+      meta = with lib;
+      {
+        description = "Slideshow at tabs.";
+        license = licenses.mpl20;
+        mozPermissions = [ "storage" ];
+        platforms = platforms.all;
+        };
+      };
     "ultrawidify" = buildFirefoxXpiAddon {
       pname = "ultrawidify";
       version = "5.1.6";

@@ -357,6 +357,7 @@
                         prometheus-formatter
                         scroll_anywhere
                         snaplinksplus
+                        tab-slideshow-we
                         visited-link-enabler
                         ultrawidify;
                       inherit (rycee-nur-expressions.packages.${system})

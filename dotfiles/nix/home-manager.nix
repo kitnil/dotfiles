@@ -296,6 +296,7 @@
             packages.snaplinksplus
             packages.prometheus-formatter
             tab-reloader
+            tab-slideshow-we
             temporary-containers
             visited-link-enabler
             ultrawidify
