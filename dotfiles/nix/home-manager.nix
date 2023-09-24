@@ -293,7 +293,13 @@
             gesturefy
             google-container
             greasemonkey
-            libredirect
+            (libredirect.overrideAttrs (old: {
+              version = "2.1.0";
+              src = pkgs.fetchurl {
+                url = "https://addons.mozilla.org/firefox/downloads/file/3960568/libredirect-2.1.0.xpi";
+                sha256 = "01zz4j85mlvsw41iwycw7zbyllx6q9j0i2l85sd47k0c8cf9jc14";
+              };
+            }))
             hello-goodbye
             (link-gopher.overrideAttrs (old: {
               version = "2.0.1";
