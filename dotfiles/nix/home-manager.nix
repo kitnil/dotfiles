@@ -203,6 +203,7 @@
     elktail
     # eve-online
     firefox-52-wrapper
+    mozilla-addons-to-nix
     fx_cast_bridge
     google-chrome
     chromium-wrapper # wraps google-chrome as chromium
