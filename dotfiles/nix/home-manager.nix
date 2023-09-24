@@ -286,6 +286,7 @@
             gesturefy
             greasemonkey
             old-reddit-redirect
+            new-window-without-toolbar
             redirector
             scroll_anywhere
             sponsorblock
