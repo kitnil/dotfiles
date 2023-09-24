@@ -281,6 +281,7 @@
           forget_me_not
           gesturefy
           greasemonkey
+          old-reddit-redirect
           sponsorblock
           ublock-origin
           packages.highlightall
