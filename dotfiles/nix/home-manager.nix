@@ -306,6 +306,7 @@
             packages.access-control-allow-origin
             packages.snaplinksplus
             packages.prometheus-formatter
+            single-file
             tab-reloader
             tab-slideshow-we
             temporary-containers

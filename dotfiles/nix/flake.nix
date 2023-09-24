@@ -370,6 +370,7 @@
                         lovely-forks
                         passff
                         redirector
+                        single-file
                         tab-reloader;
                       alejandra = (kamadorueda-alejandra.packages.${system}).alejandra-x86_64-unknown-linux-gnu;
                       viddy = prev.viddy.overrideAttrs (old: {
