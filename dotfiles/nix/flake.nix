@@ -354,6 +354,7 @@
                       inherit (callPackage ./firefox/generated-firefox-addons.nix { inherit buildFirefoxXpiAddon; })
                         access-control-allow-origin
                         highlightall
+                        metube-downloader
                         prometheus-formatter
                         scroll_anywhere
                         snaplinksplus

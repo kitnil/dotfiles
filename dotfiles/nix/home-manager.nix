@@ -295,6 +295,7 @@
             }))
             lovely-forks
             old-reddit-redirect
+            metube-downloader
             new-window-without-toolbar
             redirector
             scroll_anywhere

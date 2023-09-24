@@ -42,6 +42,20 @@
         platforms = platforms.all;
         };
       };
+    "metube-downloader" = buildFirefoxXpiAddon {
+      pname = "metube-downloader";
+      version = "1.3.4";
+      addonId = "{6c6751df-7510-4e27-9637-9ae354c86f8c}";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4085631/metube_downloader-1.3.4.xpi";
+      sha256 = "e8f5573d4b944a45068838ec5302be07c94e6f19ab1d7bd52ddadee58114d52d";
+      meta = with lib;
+      {
+        description = "Queue download to your MeTube instance by context menu or top bar button.";
+        license = licenses.gpl3;
+        mozPermissions = [ "activeTab" "menus" "storage" ];
+        platforms = platforms.all;
+        };
+      };
     "prometheus-formatter" = buildFirefoxXpiAddon {
       pname = "prometheus-formatter";
       version = "3.1.0";
