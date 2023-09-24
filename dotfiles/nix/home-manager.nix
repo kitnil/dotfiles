@@ -286,6 +286,7 @@
             greasemonkey
             old-reddit-redirect
             redirector
+            scroll_anywhere
             sponsorblock
             ublock-origin
             packages.highlightall

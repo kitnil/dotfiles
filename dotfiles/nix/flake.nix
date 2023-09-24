@@ -355,6 +355,7 @@
                         access-control-allow-origin
                         highlightall
                         prometheus-formatter
+                        scroll_anywhere
                         snaplinksplus;
                       inherit (rycee-nur-expressions.packages.${system})
                         container-proxy

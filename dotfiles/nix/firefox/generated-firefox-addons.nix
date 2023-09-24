@@ -44,16 +44,30 @@
       };
     "prometheus-formatter" = buildFirefoxXpiAddon {
       pname = "prometheus-formatter";
-      version = "2.2.0";
+      version = "3.1.0";
       addonId = "prometheus-formatter@frederic-hemberger.de";
-      url = "https://addons.mozilla.org/firefox/downloads/file/3785090/prometheus_formatter-2.2.0.xpi";
-      sha256 = "0wbg8x2w3qf5id9fbi8kh809zyppc0srnf7ggw6vkhdax0gn58p9";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4166150/prometheus_formatter-3.1.0.xpi";
+      sha256 = "2796e4a48ee6f813859ea252fe50dd0ab895bb570da4cb3caa3702d2f3413b22";
       meta = with lib;
       {
         homepage = "https://github.com/fhemberger/prometheus-formatter";
         description = "Makes plain Prometheus/OpenMetrics endpoints easier to read.";
         license = licenses.mit;
         mozPermissions = [ "storage" "http://*/*" "https://*/*" ];
+        platforms = platforms.all;
+        };
+      };
+    "scroll_anywhere" = buildFirefoxXpiAddon {
+      pname = "scroll_anywhere";
+      version = "9.2";
+      addonId = "juraj.masiar@gmail.com_ScrollAnywhere";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3938344/scroll_anywhere-9.2.xpi";
+      sha256 = "614a7a13baad91a4015347ede83b66ae3e182679932cfc4ccd8fa5604ab38e91";
+      meta = with lib;
+      {
+        homepage = "https://fastaddons.com/";
+        description = "Scroll page without touching scroll-bar! \nPress Middle (Right / Left) mouse button anywhere on the page to scroll just like with scrollbar.\n\nFeatures also:\n- \"grab and drag\" scrolling\n- customizable scrollbars!\n- the Momentum auto-scroll";
+        mozPermissions = [ "alarms" "storage" "activeTab" "<all_urls>" ];
         platforms = platforms.all;
         };
       };
