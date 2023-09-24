@@ -21,6 +21,26 @@
         platforms = platforms.all;
         };
       };
+    "hello-goodbye" = buildFirefoxXpiAddon {
+      pname = "hello-goodbye";
+      version = "1.7.0";
+      addonId = "{ddb52f85-5859-49b1-b54e-ee7709b1eb5d}";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4101286/hello_goodbye-1.7.0.xpi";
+      sha256 = "6853a778fee464a77920ccfece2779be9f4d6eb465384daea05b543f6440091f";
+      meta = with lib;
+      {
+        homepage = "https://hellogoodbye.app";
+        description = "Hello, Goodbye blocks annoying chat widgets and cookie banners to make your internet a little bit better.";
+        license = licenses.mit;
+        mozPermissions = [
+          "storage"
+          "webRequest"
+          "webRequestBlocking"
+          "*://*/*"
+          ];
+        platforms = platforms.all;
+        };
+      };
     "highlightall" = buildFirefoxXpiAddon {
       pname = "highlightall";
       version = "2.3";

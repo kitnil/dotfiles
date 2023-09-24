@@ -286,6 +286,7 @@
             gesturefy
             greasemonkey
             libredirect
+            hello-goodbye
             (link-gopher.overrideAttrs (old: {
               version = "2.0.1";
               src = pkgs.fetchurl {

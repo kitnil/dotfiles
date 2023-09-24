@@ -355,6 +355,7 @@
                         access-control-allow-origin
                         highlightall
                         metube-downloader
+                        hello-goodbye
                         prometheus-formatter
                         scroll_anywhere
                         snaplinksplus
