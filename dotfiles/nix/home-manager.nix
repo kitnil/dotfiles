@@ -280,6 +280,7 @@
             auto-tab-discard
             clearurls
             container-proxy
+            copy-link-text
             darkreader
             forget_me_not
             gesturefy
