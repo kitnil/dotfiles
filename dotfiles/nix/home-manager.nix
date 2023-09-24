@@ -271,6 +271,9 @@
         id = 0;
       };
       nix = {
+        # TODO: Manage ~/.mozilla/firefox/nix/containers.json file with Nix.
+        # TODO: Manage ~/.mozilla/firefox/nix/cookies.sqlite somehow.
+        # TODO: Import ~/src/ssl/cert.p12 file with Nix.
         name = "nix";
         id = 1;
         extensions =
