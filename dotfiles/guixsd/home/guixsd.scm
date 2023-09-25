@@ -476,6 +476,12 @@
                             ,(local-file (string-append %project-directory "/dot_local/bin/executable_firefox-twitch")
                                          #:recursive? #t))))
 
+    (simple-service 'home-firefox-wrapper-react
+                    home-files-service-type
+                    (list `(".local/bin/firefox-react"
+                            ,(local-file (string-append %project-directory "/dot_local/bin/executable_firefox-react")
+                                         #:recursive? #t))))
+
     (simple-service 'idea-ultimate-wrapper
                     home-files-service-type
                     (list `(".local/bin/idea-ultimate"

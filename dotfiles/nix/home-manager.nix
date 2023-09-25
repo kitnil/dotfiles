@@ -381,6 +381,29 @@
           "browser.search.defaultenginename" = "Google";
         };
       };
+      react = {
+        name = "react";
+        id = 3;
+        extensions =
+          with packages;
+          with packages.nur.repos.rycee.firefox-addons;
+          [
+            react-devtools
+          ];
+        settings = {
+          "browser.search.defaultenginename" = "Google";
+          "browser.search.region" = "GB";
+          "browser.shell.checkDefaultBrowser" = false;
+          "browser.startup.homepage" = "about:newtab";
+          "browser.startup.page" = 3;
+          "distribution.searchplugins.defaultLocale" = "en-GB";
+          "extensions.pocket.enabled" = false;
+          "general.useragent.locale" = "en-GB";
+          "general.warnOnAboutConfig" = false;
+          "startup.homepage_welcome_url" = "about:newtab";
+          "toolkit.telemetry.reportingpolicy.firstRun" = false;
+        };
+      };
     };
   };
 
