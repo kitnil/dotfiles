@@ -288,6 +288,7 @@
             copy-link-text
             copy-selection-as-markdown
             cookie-quick-manager
+            copy-as-org-mode
             darkreader
             foxscroller
             foxyproxy-standard

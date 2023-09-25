@@ -355,6 +355,7 @@
                         access-control-allow-origin
                         cookie-quick-manager
                         copy-all-tab-urls-we
+                        copy-as-org-mode
                         foxscroller
                         google-container
                         highlightall

@@ -64,6 +64,27 @@
         platforms = platforms.all;
         };
       };
+    "copy-as-org-mode" = buildFirefoxXpiAddon {
+      pname = "copy-as-org-mode";
+      version = "0.2.0";
+      addonId = "{59e590fc-6635-45fe-89c7-af637eb4b9c0}";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3939068/copy_as_org_mode-0.2.0.xpi";
+      sha256 = "dcd02dbd1a753928b82e772055a0532421f94bb40ae23b0606e6e91117909cce";
+      meta = with lib;
+      {
+        homepage = "https://github.com/kuanyui/copy-as-org-mode";
+        description = "Copy selection or link of current page as Org-mode format text!";
+        license = licenses.mpl20;
+        mozPermissions = [
+          "activeTab"
+          "clipboardWrite"
+          "menus"
+          "storage"
+          "notifications"
+          ];
+        platforms = platforms.all;
+        };
+      };
     "foxscroller" = buildFirefoxXpiAddon {
       pname = "foxscroller";
       version = "1.8";
