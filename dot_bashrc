@@ -2051,7 +2051,19 @@ kubectl()
             then
                 cat <<'EOF'
 drain example:
-    kubectl drain NODE --ignore-daemonsets --delete-emptydir-data
+    kubectl drain --ignore-daemonsets --delete-emptydir-data NODE
+EOF
+            else
+                command kubectl drain "${@:2}"
+            fi
+            ;;
+        taint)
+            if [[ -z "$2" ]]
+            then
+                cat <<'EOF'
+drain example:
+    kubectl taint node unschedulable=true:NoSchedule kube3
+    kubectl taint node unschedulable- kube3
 EOF
             else
                 command kubectl drain "${@:2}"
