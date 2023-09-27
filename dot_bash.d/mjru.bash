@@ -425,3 +425,23 @@ mjru-curl()
          --header 'Content-Type: application/json' \
          "$@"
 }
+
+mongo()
+{
+    case "$1" in
+        cluster1)
+            command mongo "mongodb://admin:$(pass show majordomo/public/mongo/ci.intr/admin)@mongodb.hms.development.corp1.majordomo.ru:27017/admin" \
+                    "${@:2}"
+            ;;
+        ci)
+            command mongo "mongodb://admin:$(pass show majordomo/public/mongo/ci.intr/admin)@ci.intr:27017/admin" \
+                    "${@:2}"
+            ;;
+        production)
+            command mongo "mongodb://admin:$(pass show majordomo/public/mongo/ci.intr/admin)@hms01-mr.intr:27017,hms02-mr.intr:27017,hms03-mr.intr:27017/admin?replicaSet=hms-rs0" \
+                    "${@:2}"
+            ;;
+        *)
+            command mongo "$@"
+    esac
+}
