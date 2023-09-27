@@ -478,6 +478,37 @@ mongodump()
     esac
 }
 
+mongoexport()
+{
+    case "$1" in
+        cluster1)
+            command mongoexport \
+                    --authenticationDatabase=admin \
+                    --username=admin \
+                    --password="$(pass show majordomo/public/mongo/ci.intr/admin)" \
+                    --uri="mongodb://mongodb.hms.development.corp1.majordomo.ru:27017/" \
+                    "${@:2}"
+            ;;
+        ci)
+            command mongoexport \
+                    --authenticationDatabase=admin \
+                    --username=admin \
+                    --password="$(pass show majordomo/public/mongo/ci.intr/admin)" \
+                    --uri="mongodb://ci.intr:27017/" \
+                    "${@:2}"
+            ;;
+        production)
+            command mongoexport --authenticationDatabase=admin \
+                    --username=admin \
+                    --password="$(pass show majordomo/public/mongo/ci.intr/admin)" \
+                    --uri="mongodb://hms01-mr.intr:27017,hms02-mr.intr:27017,hms03-mr.intr:27017/?replicaSet=hms-rs0" \
+                    "${@:2}"
+            ;;
+        *)
+            command mongoexport "$@"
+    esac
+}
+
 mongoimport()
 {
     case "$1" in
