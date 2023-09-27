@@ -110,6 +110,7 @@
     cachix
 
     mongodb
+    mongodb-tools
 
     gron
     pup # HTML parsing
