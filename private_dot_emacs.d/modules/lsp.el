@@ -29,6 +29,10 @@
 ;;;
 
 (add-hook 'js-mode-hook 'lsp)
+(when (macrop #'bind-key)
+  (add-hook 'js-mode-hook
+            `(lambda ()
+               (define-key js-mode-map [(meta ?.)] #'lsp-find-definition))))
 
 
 ;;;
