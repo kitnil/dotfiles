@@ -59,6 +59,7 @@
                                  "modules/hooks.el"
                                  "modules/info.el"
                                  "modules/java.el"
+                                 "modules/js.el"
                                  "modules/keys.el"
                                  "modules/kubernetes.el"
                                  "modules/lisp.el"

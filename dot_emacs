@@ -112,6 +112,7 @@
 (load-config-file "po.el")
 (load-config-file "python.el")
 (load-config-file "java.el")
+(load-config-file "js.el")
 (load-config-file "perl.el")
 (load-config-file "rust.el")
 (load-config-file "ml.el")
