@@ -45,7 +45,7 @@
     (define-key map (kbd "M-.") 'dumb-jump-go)))
 
 (with-eval-after-load 'cc-vars
-  (setq-default c-cleanup-list '(space-before-funcall scope-operator)))
+  (setq-default c-cleanup-list '(scope-operator)))
 
 (with-eval-after-load 'semantic
   (global-semantic-decoration-mode t))

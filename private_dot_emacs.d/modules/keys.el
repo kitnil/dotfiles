@@ -236,7 +236,7 @@ ARGS will be passed to hydra."
                 ("A" auto-save-mode "autosave")
                 ("F" flymake-mode "flymake")
                 ("P" projectile-global-mode "projectile")
-                ("W" fci-mode "fci")
+                ("W" display-fill-column-indicator-mode "fill-column")
                 ("a" abbrev-mode "abbrev")
                 ("b" guix-build-log-minor-mode "guix")
                 ("c" company-mode "company")

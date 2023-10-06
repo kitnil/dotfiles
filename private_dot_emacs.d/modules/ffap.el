@@ -38,10 +38,6 @@ Optional argument FILENAME removes the file instead."
                "/issues/" (number-to-string issue)))
     (error "No issue number at point `%s'" issue)))
 
-(autoload 'fci-mode "fill-column-indicator"
-  "Indicate the location of the fill column by drawing a thin
-line at fill column." t)
-
 (defun ffap-info-p (filename)
   "If FILENAME is Info page, return it."
   (when (string-match-p (rx-to-string `(and ".info"

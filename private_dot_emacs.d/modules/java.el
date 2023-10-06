@@ -13,6 +13,8 @@
           (set (make-local-variable 'prettify-symbols-alist)
                wi-java--prettify-symbols-alist))))))
 
+(add-hook 'java-mode-hook 'display-fill-column-indicator-mode)
+
 ;; Copied and modified from:
 ;; https://github.com/emacs-lsp/lsp-java/issues/26
 ;;

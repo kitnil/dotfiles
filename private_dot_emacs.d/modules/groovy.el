@@ -2,7 +2,7 @@
   "Jenkinsfile"
   ["groovy/Jenkinsfile" yas-expand-current-buffer])
 
-(add-hook 'groovy-mode-hook 'fci-mode)
+(add-hook 'groovy-mode-hook 'display-fill-column-indicator-mode)
 
 ;; (with-eval-after-load 'groovy-mode
 ;;   (let ((map groovy-mode-map))

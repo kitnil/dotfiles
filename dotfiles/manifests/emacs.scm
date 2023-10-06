@@ -52,7 +52,6 @@
        emacs-fd
        emacs-fancy-narrow
        emacs-ffap-rfc-space
-       emacs-fill-column-indicator
        emacs-flycheck                 ; Syntax checker
        emacs-jenkinsfile-mode
        emacs-jsonnet-mode
