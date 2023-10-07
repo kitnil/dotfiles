@@ -323,7 +323,6 @@
             scroll_anywhere
             sponsorblock
             ublock-origin
-            packages.highlightall
             packages.access-control-allow-origin
             packages.snaplinksplus
             packages.prometheus-formatter

@@ -359,7 +359,6 @@
                         copy-as-org-mode
                         foxscroller
                         google-container
-                        highlightall
                         metube-downloader
                         hello-goodbye
                         prometheus-formatter
