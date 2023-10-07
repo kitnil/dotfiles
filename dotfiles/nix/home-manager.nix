@@ -320,6 +320,7 @@
             new-window-without-toolbar
             redirector
             right-click-search
+            rocker_gestures
             scroll_anywhere
             sponsorblock
             ublock-origin
