@@ -21,6 +21,27 @@
         platforms = platforms.all;
         };
       };
+    "auto_highlight" = buildFirefoxXpiAddon {
+      pname = "auto_highlight";
+      version = "5.1";
+      addonId = "admin@fastaddons.com_AutoHighlight";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4130006/auto_highlight-5.1.xpi";
+      sha256 = "377b4f4141c39a9c4ffd9ed66a7af60ac714d451e17661c64925a2c144ca24d9";
+      meta = with lib;
+      {
+        homepage = "https://fastaddons.com/";
+        description = "🟨 Auto Highlight will help you see what's important on the web! ✅\n⚡ Supports RegExp search and many style and highlight options ⭕";
+        mozPermissions = [
+          "contextMenus"
+          "storage"
+          "scripting"
+          "alarms"
+          "activeTab"
+          "<all_urls>"
+          ];
+        platforms = platforms.all;
+        };
+      };
     "cookie-quick-manager" = buildFirefoxXpiAddon {
       pname = "cookie-quick-manager";
       version = "0.5rc2";

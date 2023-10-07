@@ -282,6 +282,7 @@
           with packages;
           with packages.nur.repos.rycee.firefox-addons;
           [
+            auto_highlight
             auto-tab-discard
             clearurls
             container-proxy
