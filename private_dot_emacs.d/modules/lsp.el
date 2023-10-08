@@ -71,4 +71,7 @@
 ;;; Nix
 ;;;
 
+(with-eval-after-load 'lsp
+  (load-config-file "lsp-nixd.el"))
+
 (add-hook 'nix-mode-hook 'lsp)

@@ -23,6 +23,8 @@
     nixpkgs-idea.url = "github:wigust/nixpkgs/a98b0d1e6d7bed029844576e8637ce9807600ad2";
     nixpkgs-phpactor.url = "nixpkgs/nixpkgs-unstable";
 
+    nixpkgs-nixd.url = "nixpkgs/nixpkgs-unstable";
+
     nixpkgs-home-manager.url = "nixpkgs/nixpkgs-unstable";
     home-manager.url = "github:nix-community/home-manager?ref=release-23.05";
     nur.url = "github:nix-community/NUR";
@@ -93,6 +95,7 @@
     , majordomo
     , majordomo-vault
     , nixpkgs-idea
+    , nixpkgs-nixd
     , nixpkgs-phpactor
     , bbuscarino-env
     , kamadorueda-alejandra
@@ -351,6 +354,7 @@
                       inherit (majordomo-vault.inputs.nixpkgs.legacyPackages.${system}) vault-bin;
                       inherit (import (rycee-nur-expressions.outPath + "/default.nix") { pkgs = prev; })
                         mozilla-addons-to-nix;
+                      inherit (nixpkgs-nixd.legacyPackages.${system}) nixd;
                       inherit (callPackage ./firefox/generated-firefox-addons.nix { inherit buildFirefoxXpiAddon; })
                         access-control-allow-origin
                         auto_highlight

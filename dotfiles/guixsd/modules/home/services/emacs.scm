@@ -64,6 +64,7 @@
                                  "modules/kubernetes.el"
                                  "modules/lisp.el"
                                  "modules/lsp.el"
+                                 "modules/lsp-nixd.el"
                                  "modules/mail.el"
                                  "modules/majordomo.el"
                                  "modules/ml.el"

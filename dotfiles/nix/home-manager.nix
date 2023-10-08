@@ -93,7 +93,7 @@
 
     tribler
 
-    rnix-lsp
+    nixd
     yaml-language-server
 
     logstalgia
