@@ -1,0 +1,12 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: samba
+spec:
+  template:
+    spec:
+      tolerations:
+      - key: "unschedulable"
+        operator: "Equal"
+        value: "true"
+        effect: "NoSchedule"

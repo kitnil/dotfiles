@@ -97,7 +97,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m0s
-  path: ./apps/base/samba
+  path: ./apps/cluster1/samba
   prune: true
   sourceRef:
     kind: GitRepository
