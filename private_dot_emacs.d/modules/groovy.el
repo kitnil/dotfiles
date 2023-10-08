@@ -10,3 +10,7 @@
 
 (add-hook 'jenkinsfile-mode-hook
           #'(lambda () (setq-local page-delimiter "^\s*stage\(")))
+
+
+;; XXX: Automatically build and install groovy-language-server-all.jar
+;; ~/src/github.com/GroovyLanguageServer/groovy-language-server$ cp build/libs/groovy-language-server-all.jar /home/oleg/.emacs.d/.cache/lsp/groovy-language-server-all.jar
