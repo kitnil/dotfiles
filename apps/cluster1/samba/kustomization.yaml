@@ -3,5 +3,5 @@ kind: Kustomization
 namespace: name
 resources:
 - ../../base/samba
-patches:
+patchesStrategicMerge:
 - deployment.yaml
