@@ -78,7 +78,7 @@
                            (error "file still exists" file))
                           (else
                            (pk 'wait-for-missing-file
-                               (format #f "[~a/120]: ~a~%" file))
+                               (format #f "[~a/120]: ~a~%" i file))
                            (sleep 1)
                            (loop (- i 1))))))
                 (invoke #$(file-append libvirt "/bin/virsh")
