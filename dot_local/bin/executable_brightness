@@ -1,3 +1,12 @@
 #!/usr/bin/env bash
 
-curl "http://windows.local:9000/hooks/brightness?set=${1}"
+case "$1" in
+    increase)
+        sudo ddcutil setvcp 10 $(("$(sudo ddcutil getvcp --brief 10 | awk '{ print $4 }')" + "$2"))
+        ;;
+    decrease)
+        sudo ddcutil setvcp 10 $(("$(sudo ddcutil getvcp --brief 10 | awk '{ print $4 }')" - "$2"))
+        ;;
+    *)
+        sudo ddcutil setvcp 10 "${@:1}"
+esac
