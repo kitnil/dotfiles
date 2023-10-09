@@ -213,6 +213,14 @@ bindsym $mod+y exec clipman pick -t wofi
     bindsym XF86AudioMute exec pactl set-sink-mute @DEFAULT_SINK@ toggle
 
 #
+# Brightness:
+#
+
+    bindsym XF86Calculator exec brightness increase 5
+    bindsym XF86HomePage exec brightness decrease 5
+    bindsym XF86Mail exec brightness 0
+
+#
 # Screenshots:
 #
 
