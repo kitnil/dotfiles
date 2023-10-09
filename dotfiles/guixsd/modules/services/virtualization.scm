@@ -70,7 +70,7 @@
               (begin
                 (use-modules (ice-9 format))
                 (define (wait-for-missing-file file)
-                  ;; Wait until FILE shows up.
+                  ;; Wait until FILE disappears.
                   (let loop ((i 120))
                     (cond ((not (file-exists? file))
                            #t)
