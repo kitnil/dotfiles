@@ -265,13 +265,13 @@ EOF
                 done
             }
             cat <<EOF
-$ kubectl get nodes -o wide
+$ kubectl get node -o wide | awk 'NR<3{print $0;next}{print $0| "sort --version-sort"}'
 $(kubectl get node -o wide | awk 'NR<3{print $0;next}{print $0| "sort --version-sort"}')
 
 $ kubectl get nodes ... # with NoSchedule taint
 $(nodes_with_noschedule)
 
-$ kubectl top node
+$ kubectl top node | awk 'NR<3{print $0;next}{print $0| "sort --version-sort"}'
 $(kubectl top node | awk 'NR<3{print $0;next}{print $0| "sort --version-sort"}')
 
 $ kubectl cluster-info
