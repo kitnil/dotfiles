@@ -2,14 +2,14 @@
 
 case "$1" in
     increase)
-        command curl -d '{"value": 5}' -XPOST 127.0.0.1:8080/increase
+        command curl -d '{"value": 5}' -XPOST 127.0.0.1:49281/increase
         ;;
     decrease)
-        command curl -d '{"value": 5}' -XPOST 127.0.0.1:8080/decrease
+        command curl -d '{"value": 5}' -XPOST 127.0.0.1:49281/decrease
         ;;
     toggle)
-        command curl -XPOST 127.0.0.1:8080/toggle
+        command curl -XPOST 127.0.0.1:49281/toggle
         ;;
     *)
-        command curl -d "{\"value\": $1}" -XPOST 127.0.0.1:8080/set
+        command curl -d "{\"value\": $1}" -XPOST 127.0.0.1:49281/set
 esac
