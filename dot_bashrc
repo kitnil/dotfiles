@@ -2359,6 +2359,18 @@ dig()
                         set -x
                         command dig "$@" "@${name_server}"
                     )
+                    mapfile -t ip_addresses < <(command dig "$@" "@${name_server}" \
+                                                    | jc --dig \
+                                                    | jq --raw-output .[].answer[].data)
+                    (
+                        for ip_address in "${ip_addresses[@]}"
+                        do
+                            (
+                                set -x
+                                command dig -x "$ip_address" "@${name_server}"
+                            )
+                        done
+                    ) | sort --version-sort
                 done
                 ;;
             *)
