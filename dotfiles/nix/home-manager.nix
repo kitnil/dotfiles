@@ -263,150 +263,158 @@
 
   programs.firefox = {
     enable = true;
-    profiles = {
-      default = {
-        # This profile not managed by Nix.
-        name = "default";
-        path = "j56dvo43.default-1520714705340";
-        isDefault = false;
-        id = 0;
-      };
-      nix = {
-        # TODO: Manage ~/.mozilla/firefox/nix/containers.json file with Nix.
-        # TODO: Manage ~/.mozilla/firefox/nix/cookies.sqlite somehow.
-        # TODO: Import ~/src/ssl/cert.p12 file with Nix.
-        name = "nix";
-        id = 1;
-        isDefault = true;
-        extensions =
-          with packages;
-          with packages.nur.repos.rycee.firefox-addons;
-          [
-            auto_highlight
-            auto-tab-discard
-            clearurls
-            container-proxy
-            copy-all-tab-urls-we
-            copy-link-text
-            copy-selection-as-markdown
-            cookie-quick-manager
-            copy-as-org-mode
-            darkreader
-            foxscroller
-            foxyproxy-standard
-            gesturefy
-            ghosttext
-            google-container
-            greasemonkey
-            (firefox-addon-libredirect.overrideAttrs (old: {
-              version = "2.1.0";
-              src = pkgs.fetchurl {
-                url = "https://addons.mozilla.org/firefox/downloads/file/3960568/libredirect-2.1.0.xpi";
-                sha256 = "01zz4j85mlvsw41iwycw7zbyllx6q9j0i2l85sd47k0c8cf9jc14";
-              };
-            }))
-            hello-goodbye
-            (link-gopher.overrideAttrs (old: {
-              version = "2.0.1";
-              src = pkgs.fetchurl {
-                url = "https://addons.mozilla.org/firefox/downloads/file/3834730/link_gopher-2.0.1.xpi";
-                sha256 = "0kn5jl9nj6sp48ra0s75cla39w05rs40smvfsark3zdxankkmzry";
-              };
-            }))
-            lovely-forks
-            i-dont-care-about-cookies
-            old-reddit-redirect
-            metube-downloader
-            new-window-without-toolbar
-            redirector
-            right-click-search
-            rocker_gestures
-            scroll_anywhere
-            sponsorblock
-            ublock-origin
-            packages.access-control-allow-origin
-            packages.snaplinksplus
-            packages.prometheus-formatter
-            single-file
-            stylus
-            tab-reloader
-            tab-slideshow-we
-            temporary-containers
-            view-image
-            view-page-archive
-            visited-link-enabler
-            ublacklist
-            ultrawidify
-          ];
-        settings = {
-          "browser.search.defaultenginename" = "Google";
-          "browser.search.region" = "GB";
-          "browser.shell.checkDefaultBrowser" = false;
-          "browser.startup.homepage" = "about:newtab";
-          "browser.startup.page" = 3;
-          "distribution.searchplugins.defaultLocale" = "en-GB";
-          "extensions.pocket.enabled" = false;
-          "general.useragent.locale" = "en-GB";
-          "general.warnOnAboutConfig" = false;
-          "startup.homepage_welcome_url" = "about:newtab";
-          "toolkit.telemetry.reportingpolicy.firstRun" = false;
+    profiles =
+      let
+        nix = {
+          # TODO: Manage ~/.mozilla/firefox/nix/containers.json file with Nix.
+          # TODO: Manage ~/.mozilla/firefox/nix/cookies.sqlite somehow.
+          # TODO: Import ~/src/ssl/cert.p12 file with Nix.
+          extensions =
+            with packages;
+            with packages.nur.repos.rycee.firefox-addons;
+            [
+              auto_highlight
+              auto-tab-discard
+              clearurls
+              container-proxy
+              copy-all-tab-urls-we
+              copy-link-text
+              copy-selection-as-markdown
+              cookie-quick-manager
+              copy-as-org-mode
+              darkreader
+              foxscroller
+              foxyproxy-standard
+              gesturefy
+              ghosttext
+              google-container
+              greasemonkey
+              (firefox-addon-libredirect.overrideAttrs (old: {
+                version = "2.1.0";
+                src = pkgs.fetchurl {
+                  url = "https://addons.mozilla.org/firefox/downloads/file/3960568/libredirect-2.1.0.xpi";
+                  sha256 = "01zz4j85mlvsw41iwycw7zbyllx6q9j0i2l85sd47k0c8cf9jc14";
+                };
+              }))
+              hello-goodbye
+              (link-gopher.overrideAttrs (old: {
+                version = "2.0.1";
+                src = pkgs.fetchurl {
+                  url = "https://addons.mozilla.org/firefox/downloads/file/3834730/link_gopher-2.0.1.xpi";
+                  sha256 = "0kn5jl9nj6sp48ra0s75cla39w05rs40smvfsark3zdxankkmzry";
+                };
+              }))
+              lovely-forks
+              i-dont-care-about-cookies
+              old-reddit-redirect
+              metube-downloader
+              new-window-without-toolbar
+              redirector
+              right-click-search
+              rocker_gestures
+              scroll_anywhere
+              sponsorblock
+              ublock-origin
+              packages.access-control-allow-origin
+              packages.snaplinksplus
+              packages.prometheus-formatter
+              single-file
+              stylus
+              tab-reloader
+              tab-slideshow-we
+              temporary-containers
+              view-image
+              view-page-archive
+              visited-link-enabler
+              ublacklist
+              ultrawidify
+            ];
+          settings = {
+            "browser.search.defaultenginename" = "Google";
+            "browser.search.region" = "GB";
+            "browser.shell.checkDefaultBrowser" = false;
+            "browser.startup.homepage" = "about:newtab";
+            "browser.startup.page" = 3;
+            "distribution.searchplugins.defaultLocale" = "en-GB";
+            "extensions.pocket.enabled" = false;
+            "general.useragent.locale" = "en-GB";
+            "general.warnOnAboutConfig" = false;
+            "startup.homepage_welcome_url" = "about:newtab";
+            "toolkit.telemetry.reportingpolicy.firstRun" = false;
+          };
+        };
+      in {
+        default = {
+          # This profile not managed by Nix.
+          name = "default";
+          path = "j56dvo43.default-1520714705340";
+          isDefault = false;
+          id = 0;
+        };
+        nix = nix // {
+          name = "nix";
+          id = 1;
+          isDefault = true;
+        };
+        twitch = {
+          name = "twitch";
+          id = 2;
+          extensions =
+            with packages;
+            with packages.nur.repos.rycee.firefox-addons;
+            [
+              return-youtube-dislikes
+              sponsorblock
+              ublock-origin
+              (betterttv.overrideAttrs (old: {
+                version = "7.5.7";
+                src = pkgs.fetchurl {
+                  url = "https://addons.mozilla.org/firefox/downloads/file/4167416/betterttv-7.5.7.xpi";
+                  sha256 = "ba9ed004c328f3dacb78537eceed9fc206d4e3a136bb80a1ed786dc9fb57b9d7";
+                };
+              }))
+              twitch-error-autorefresher
+              visited-link-enabler
+              ultrawidify
+              web-scrobbler
+            ];
+          settings = {
+            "browser.startup.homepage" = "about:addons";
+            "browser.search.region" = "GB";
+            "extensions.pocket.enabled" = false;
+            "distribution.searchplugins.defaultLocale" = "en-GB";
+            "general.useragent.locale" = "en-GB";
+            "browser.search.defaultenginename" = "Google";
+          };
+        };
+        react = {
+          name = "react";
+          id = 3;
+          extensions =
+            with packages;
+            with packages.nur.repos.rycee.firefox-addons;
+            [
+              react-devtools
+            ];
+          settings = {
+            "browser.search.defaultenginename" = "Google";
+            "browser.search.region" = "GB";
+            "browser.shell.checkDefaultBrowser" = false;
+            "browser.startup.homepage" = "about:newtab";
+            "browser.startup.page" = 3;
+            "distribution.searchplugins.defaultLocale" = "en-GB";
+            "extensions.pocket.enabled" = false;
+            "general.useragent.locale" = "en-GB";
+            "general.warnOnAboutConfig" = false;
+            "startup.homepage_welcome_url" = "about:newtab";
+            "toolkit.telemetry.reportingpolicy.firstRun" = false;
+          };
+        };
+        vnc = nix // {
+          name = "vnc";
+          id = 4;
         };
       };
-      twitch = {
-        name = "twitch";
-        id = 2;
-        extensions =
-          with packages;
-          with packages.nur.repos.rycee.firefox-addons;
-          [
-            return-youtube-dislikes
-            sponsorblock
-            ublock-origin
-            (betterttv.overrideAttrs (old: {
-              version = "7.5.7";
-              src = pkgs.fetchurl {
-                url = "https://addons.mozilla.org/firefox/downloads/file/4167416/betterttv-7.5.7.xpi";
-                sha256 = "ba9ed004c328f3dacb78537eceed9fc206d4e3a136bb80a1ed786dc9fb57b9d7";
-              };
-            }))
-            twitch-error-autorefresher
-            visited-link-enabler
-            ultrawidify
-            web-scrobbler
-          ];
-        settings = {
-          "browser.startup.homepage" = "about:addons";
-          "browser.search.region" = "GB";
-          "extensions.pocket.enabled" = false;
-          "distribution.searchplugins.defaultLocale" = "en-GB";
-          "general.useragent.locale" = "en-GB";
-          "browser.search.defaultenginename" = "Google";
-        };
-      };
-      react = {
-        name = "react";
-        id = 3;
-        extensions =
-          with packages;
-          with packages.nur.repos.rycee.firefox-addons;
-          [
-            react-devtools
-          ];
-        settings = {
-          "browser.search.defaultenginename" = "Google";
-          "browser.search.region" = "GB";
-          "browser.shell.checkDefaultBrowser" = false;
-          "browser.startup.homepage" = "about:newtab";
-          "browser.startup.page" = 3;
-          "distribution.searchplugins.defaultLocale" = "en-GB";
-          "extensions.pocket.enabled" = false;
-          "general.useragent.locale" = "en-GB";
-          "general.warnOnAboutConfig" = false;
-          "startup.homepage_welcome_url" = "about:newtab";
-          "toolkit.telemetry.reportingpolicy.firstRun" = false;
-        };
-      };
-    };
   };
 
   # The home.stateVersion option no longer has a default value. It used to
