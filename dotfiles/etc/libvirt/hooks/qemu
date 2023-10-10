@@ -1,0 +1,70 @@
+#!/usr/bin/env bash
+
+set -o nounset -o errexit -o pipefail
+
+exec 1>&2
+
+PATH="${PATH}:/run/current-system/profile/bin:/home/oleg/.guix-profile/sbin"
+export PATH
+
+# States:
+#
+# ubuntu prepare begin -
+# ubuntu start begin -
+# ubuntu started begin -
+# ubuntu stopped end -
+# ubuntu release end -
+case "$1" in
+    win2022)
+        case "$2" in
+            prepare)
+                echo "Running '${1}' is disabled by '/etc/libvirt/hooks/qemu' file."
+                exit 1
+                ;;
+        esac
+        ;;
+    win10)
+        case "$2" in
+            prepare)
+                if [[ -e /var/run/maintenance/libvirt-win10 ]]
+                then
+                    echo "Failed to start '${1}' domain '${2}' phase, '/var/run/maintenance/libvirt-win10' file exists."
+                    exit 1
+                fi
+                if [[ ! -e /dev/lvm2/${1} ]]
+                then
+                    lvchange -ay "/dev/lvm2/${1}"
+                fi
+                ;;
+            release)
+                trap maintenance ERR
+                maintenance()
+                {
+                    mkdir -p /var/run/maintenance
+                    touch /var/run/maintenance/libvirt-win10
+                }
+                echo "Resetting GPU after '${1}' domain '${2}' phase."
+                if [[ -e /sys/kernel/debug/dri/0/amdgpu_gpu_recover ]]
+                then
+                    if [[ -e /sys/bus/pci/devices/0000:12:00.1/remove ]]
+                    then
+                        echo 1 > /sys/bus/pci/devices/0000:12:00.1/remove
+                        cat /sys/kernel/debug/dri/0/amdgpu_gpu_recover
+                        echo 1 > /sys/bus/pci/rescan
+                    fi
+                    cat /sys/kernel/debug/dri/0/amdgpu_gpu_recover
+                elif [[ -e /sys/kernel/debug/dri/2/amdgpu_gpu_recover ]]
+                then
+                    if [[ -e /sys/bus/pci/devices/0000:12:00.1/remove ]]
+                    then
+                        echo 1 > /sys/bus/pci/devices/0000:12:00.1/remove
+                        cat /sys/kernel/debug/dri/2/amdgpu_gpu_recover
+                        echo 1 > /sys/bus/pci/rescan
+                    fi
+                    cat /sys/kernel/debug/dri/2/amdgpu_gpu_recover
+                fi
+                ;;
+        esac
+        ;;
+esac
+
