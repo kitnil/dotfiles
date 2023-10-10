@@ -216,7 +216,7 @@ bindsym $mod+y exec clipman pick -t wofi
 
     bindsym XF86Calculator exec brightness increase 5
     bindsym XF86HomePage exec brightness decrease 5
-    bindsym XF86Mail exec brightness 0
+    bindsym XF86Mail exec brightness toggle
 
 #
 # Screenshots:
