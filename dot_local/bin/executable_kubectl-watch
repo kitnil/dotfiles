@@ -281,6 +281,35 @@ $ kubectl get --raw='/readyz?verbose'
 $(kubectl get --raw='/readyz?verbose')
 
 EOF
+            if ihs --help &> /dev/null
+            then
+                echo "hypervisor hosts:"
+                (
+                    mapfile -t masters < <(kubectl master)
+                    for master in "${masters[@]}"
+                    do
+                        mapfile -t ip_addresses < <(command dig "${master}.intr" \
+                                                        | jc --dig \
+                                                        | jq --raw-output .[].answer[].data)
+                        for ip_address in "${ip_addresses[@]}"
+                        do
+                            master_hypervisor()
+                            {
+                                command dig -x "$ip_address" \
+                                    | jc --dig \
+                                    | jq --raw-output '[.[].answer[].data][] | select(. | startswith("vm"))'
+                            }
+                            master_hypervisor_name="$(master_hypervisor)"
+                            printf "%s %s %s %s.intr\n" \
+                                   "$master" \
+                                   "$ip_address" \
+                                   "${master_hypervisor_name/%.intr./}" \
+                                   "$(ihs vm dump "$master_hypervisor_name" | recsel -Pname | grep ^kvm)"
+                        done
+                    done
+                )
+                printf "\n"
+            fi
         fi
         if [[ $namespace == "flux-system" ]]
         then
