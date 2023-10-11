@@ -2036,6 +2036,10 @@ complete -F __lazy_helm helm
 kubectl()
 {
     case "$1" in
+        master)
+            command kubectl get node --output=json \
+                | jq --raw-output '.items[] | select(.metadata.labels["node-role.kubernetes.io/master"] == "true") | .metadata.name'
+            ;;
         cluster*)
             KUBECONFIG="/home/oleg/.kube/config-mjru-${1}" \
                 kubectl \
