@@ -2316,6 +2316,14 @@ curl()
                 --header 'Content-Type: application/json'
                 "$var"
             )
+        elif [[ "$var" == *"https://kubernetes.intr"* ]] || [[ "$var" == *"https://kubernetes-cluster2.intr"* ]]
+        then
+            new_args+=(
+                --cacert "${HOME}/src/gitlab.intr/office/ssl-certificates/kubernetes/ca.pem"
+                --cert "${HOME}/src/gitlab.intr/office/ssl-certificates/kubernetes/admin.pem"
+                --key "${HOME}/src/gitlab.intr/office/ssl-certificates/kubernetes/admin-key.pem"
+                "$var"
+            )
         else
 	    new_args+=($var)
         fi
