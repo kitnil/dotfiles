@@ -23,6 +23,10 @@ spec:
         env:
         - name: TZ
           value: "Europe/Moscow"
+        - name: HBOX_LOG_LEVEL
+          value: debug
+        - name: HBOX_LOG_FORMAT
+          value: json
         resources:
           limits:
             cpu: 2000m
