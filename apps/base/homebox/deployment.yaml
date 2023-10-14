@@ -21,8 +21,6 @@ spec:
           name: http
           protocol: TCP
         env:
-        - name: TZ
-          value: "Europe/Moscow"
         - name: HBOX_LOG_LEVEL
           value: debug
         - name: HBOX_LOG_FORMAT

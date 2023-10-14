@@ -7,6 +7,9 @@ spec:
     spec:
       containers:
       - name: homebox
+        env:
+        - name: TZ
+          value: "Europe/Moscow"
         volumeMounts:
         - mountPath: /data
           name: data
