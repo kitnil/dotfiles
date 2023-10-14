@@ -3,5 +3,6 @@ kind: Kustomization
 namespace: homebox
 resources:
 - ../../base/homebox
+- ingress.yaml
 patchesStrategicMerge:
 - deployment.yaml
