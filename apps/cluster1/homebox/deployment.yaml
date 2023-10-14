@@ -10,6 +10,8 @@ spec:
         env:
         - name: TZ
           value: "Europe/Moscow"
+        - name: HBOX_OPTIONS_ALLOW_REGISTRATION
+          value: "false"
         volumeMounts:
         - mountPath: /data
           name: data
