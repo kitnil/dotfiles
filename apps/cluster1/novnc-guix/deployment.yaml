@@ -15,4 +15,4 @@ spec:
       - name: novnc
         env:
         - name: NOVNC_VNC
-          value: "guix.local:5960"
+          value: "192.168.0.145:5900"
