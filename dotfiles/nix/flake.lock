@@ -1813,6 +1813,21 @@
         "type": "github"
       }
     },
+    "nixpkgs-wayvnc": {
+      "locked": {
+        "lastModified": 1697379843,
+        "narHash": "sha256-RcnGuJgC2K/UpTy+d32piEoBXq2M+nVFzM3ah/ZdJzg=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "12bdeb01ff9e2d3917e6a44037ed7df6e6c3df9d",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixpkgs-unstable",
+        "type": "indirect"
+      }
+    },
     "nixpkgs_10": {
       "flake": false,
       "locked": {
@@ -2387,6 +2402,7 @@
         "nixpkgs-nixd": "nixpkgs-nixd",
         "nixpkgs-phantomjs": "nixpkgs-phantomjs",
         "nixpkgs-phpactor": "nixpkgs-phpactor",
+        "nixpkgs-wayvnc": "nixpkgs-wayvnc",
         "nur": "nur_2",
         "override": "override_2",
         "rycee-nur-expressions": "rycee-nur-expressions",

@@ -25,6 +25,8 @@
 
     nixpkgs-nixd.url = "nixpkgs/nixpkgs-unstable";
 
+    nixpkgs-wayvnc.url = "nixpkgs/nixpkgs-unstable";
+
     nixpkgs-home-manager.url = "nixpkgs/nixpkgs-unstable";
     home-manager.url = "github:nix-community/home-manager?ref=release-23.05";
     nur.url = "github:nix-community/NUR";
@@ -96,6 +98,7 @@
     , majordomo-vault
     , nixpkgs-idea
     , nixpkgs-nixd
+    , nixpkgs-wayvnc
     , nixpkgs-phpactor
     , bbuscarino-env
     , kamadorueda-alejandra
@@ -355,6 +358,7 @@
                       inherit (import (rycee-nur-expressions.outPath + "/default.nix") { pkgs = prev; })
                         mozilla-addons-to-nix;
                       inherit (nixpkgs-nixd.legacyPackages.${system}) nixd;
+                      inherit (nixpkgs-wayvnc.legacyPackages.${system}) wayvnc;
                       inherit (callPackage ./firefox/generated-firefox-addons.nix { inherit buildFirefoxXpiAddon; })
                         access-control-allow-origin
                         auto_highlight
