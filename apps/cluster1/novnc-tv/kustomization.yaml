@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: novnc-tv
+resources:
+- ../../base/novnc
+- namespace.yaml
+- ingress.yaml
+patchesStrategicMerge:
+- deployment.yaml
+- service.yaml
+images:
+- name: docker-registry.intr/utils/novnc
+  newTag: 4de3373a
