@@ -504,7 +504,7 @@
                                     (lambda ()
                                       (format #t "\
 #!/bin/sh
-PYTHONPATH='' exec -a \"$0\" ~a/bin/idea-ultimate \"$@\"\n"
+_JAVA_AWT_WM_NONREPARENTING=1 PYTHONPATH='' exec -a \"$0\" ~a/bin/idea-ultimate \"$@\"\n"
                                               #$(string-append %home "/.nix-profile"))))
                                   (chmod #$output #o555))))))
 
