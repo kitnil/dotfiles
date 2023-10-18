@@ -205,6 +205,21 @@
         platforms = platforms.all;
         };
       };
+    "night-video-tuner" = buildFirefoxXpiAddon {
+      pname = "night-video-tuner";
+      version = "1.2.6";
+      addonId = "{2792fabf-b5c7-4d6f-8a76-01506885f2ce}";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4081824/night_video_tuner-1.2.6.xpi";
+      sha256 = "3afd28f11a1d17feb98c55387c6160b912ab533953f7be0dd327566c1f34e10a";
+      meta = with lib;
+      {
+        homepage = "https://github.com/PyvesB/night-video-tuner";
+        description = "Protect your eyes and improve your sleeping cycles by adjusting video temperature and many other properties!";
+        license = licenses.gpl3;
+        mozPermissions = [ "storage" "tabs" "http://*/*" "https://*/*" ];
+        platforms = platforms.all;
+        };
+      };
     "prometheus-formatter" = buildFirefoxXpiAddon {
       pname = "prometheus-formatter";
       version = "3.1.0";

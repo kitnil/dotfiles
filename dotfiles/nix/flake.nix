@@ -368,6 +368,7 @@
                         foxscroller
                         google-container
                         metube-downloader
+                        night-video-tuner
                         hello-goodbye
                         prometheus-formatter
                         right-click-search
