@@ -121,7 +121,7 @@
     ((nixery)
      (let ((labels '(("app.kubernetes.io/name" . "nixery"))))
        (apply system*
-              `("echo"
+              `(,@(if dry-run? '("echo") '())
                 "kubectl"
                 "run"
                 "--rm=true"
