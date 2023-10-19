@@ -1,0 +1,38 @@
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: kubernetes-dashboard-web-scaledobject
+spec:
+  maxReplicaCount: 1
+  minReplicaCount: 0
+  pollingInterval: 3 # Optional. Default: 30 seconds
+  cooldownPeriod: 300 # Optional. Default: 300 seconds
+  scaleTargetRef:
+    name: kubernetes-dashboard-web
+  triggers:
+  - type: prometheus
+    metadata:
+      serverAddress: http://kube-prometheus-stack-prometheus.monitoring:9090
+      metricName: nginx_ingress_controller_request_duration_seconds_count
+      threshold: "0.5"
+      query: max(irate(nginx_ingress_controller_request_duration_seconds_count{host="kubernetes-dashboard.home.wugi.info"}[5m]))
+---
+apiVersion: keda.sh/v1alpha1
+kind: ScaledObject
+metadata:
+  name: kubernetes-dashboard-api-scaledobject
+spec:
+  maxReplicaCount: 1
+  minReplicaCount: 0
+  pollingInterval: 3 # Optional. Default: 30 seconds
+  cooldownPeriod: 300 # Optional. Default: 300 seconds
+  scaleTargetRef:
+    name: kubernetes-dashboard-api
+  triggers:
+  - type: prometheus
+    metadata:
+      serverAddress: http://kube-prometheus-stack-prometheus.monitoring:9090
+      metricName: nginx_ingress_controller_request_duration_seconds_count
+      threshold: "0.5"
+      query: max(irate(nginx_ingress_controller_request_duration_seconds_count{host="kubernetes-dashboard.home.wugi.info"}[5m]))

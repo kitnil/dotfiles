@@ -3,6 +3,8 @@ kind: Kustomization
 namespace: kubernetes-dashboard
 resources:
 - ../../base/kubernetes-dashboard
+- scaledobject.yaml
+- httpscaledobject.yaml
 patchesStrategicMerge:
 - release.yaml
 configMapGenerator:

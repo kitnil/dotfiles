@@ -1,6 +1,8 @@
 # General configuration shared across resources
 app:
   ingress:
+    labels:
+      keda.cluster.local/scale-to-zero: "true"
     hosts:
     - kubernetes-dashboard.home.wugi.info
   settings:
