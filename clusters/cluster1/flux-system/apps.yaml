@@ -180,3 +180,16 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: kubernetes-dashboard
+  namespace: flux-system
+spec:
+  interval: 10m0s
+  path: ./apps/cluster1/kubernetes-dashboard
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
