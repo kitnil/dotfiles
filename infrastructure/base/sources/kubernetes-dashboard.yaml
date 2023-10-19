@@ -1,0 +1,11 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: kubernetes-dashboard
+  namespace: flux-system
+spec:
+  interval: 60m0s
+  ref:
+    commit: 5d81c6fedad69f00db285bee3b0dd35a8b232f6d
+  url: https://github.com/kubernetes/dashboard
