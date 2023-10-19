@@ -1,0 +1,17 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: kubernetes-dashboard
+spec:
+  chart:
+    spec:
+      chart: charts/helm-chart/kubernetes-dashboard
+      reconcileStrategy: Revision
+      sourceRef:
+        kind: GitRepository
+        name: kubernetes-dashboard
+        namespace: flux-system
+  interval: 1m0s
+  valuesFrom:
+  - kind: ConfigMap
+    name: kubernetes-dashboard-values

@@ -1,0 +1,57 @@
+# General configuration shared across resources
+app:
+  ingress:
+    enabled: true
+    ingressClassName: nginx
+    annotations:
+      nginx.ingress.kubernetes.io/whitelist-source-range: "10.0.0.0/8,192.168.0.0/16"
+    issuer:
+      scope: cluster
+      name: letsencrypt
+  settings:
+    ## Global dashboard settings
+    ## Note: Use all or none. Dashboard does not support default value merging currently.
+    global:
+     # Hide all access denied warnings in the notification panel
+     disableAccessDeniedNotifications: false
+
+# API deployment configuration
+api:
+  containers:
+    args: ["--enable-skip-login"]
+
+## Extra configurations:
+## - manifests
+## - predefined roles
+## - prometheus
+## - etc...
+extras:
+  # Start in ReadOnly mode.
+  # Specifies whether cluster-wide RBAC resources (ClusterRole, ClusterRolebinding) with read only permissions to all resources listed inside the cluster should be created
+  # Only dashboard-related Secrets and ConfigMaps will still be available for writing.
+  #
+  # The basic idea of the clusterReadOnlyRole
+  # is not to hide all the secrets and sensitive data but more
+  # to avoid accidental changes in the cluster outside the standard CI/CD.
+  #
+  # It is NOT RECOMMENDED to use this version in production.
+  # Instead, you should review the role and remove all potentially sensitive parts such as
+  # access to persistentvolumes, pods/log etc.
+  clusterReadOnlyRole: true
+
+### Metrics Scraper
+### Container to scrape, store, and retrieve a window of time from the Metrics Server.
+### refs: https://github.com/kubernetes-sigs/dashboard-metrics-scraper
+metricsScraper:
+  enabled: false
+
+## Optional Nginx Ingress sub-chart configuration
+## Enable this if you don't already have nginx-ingress enabled on your cluster.
+nginx:
+  enabled: false
+
+cert-manager:
+  enabled: false
+
+metrics-server:
+  enabled: false
