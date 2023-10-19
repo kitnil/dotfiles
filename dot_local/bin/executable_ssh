@@ -12,6 +12,9 @@ main()
              -i ~/.ssh/id_rsa_majordomo_sup \
              "sup@$(ihs vm ip $1 | recsel -Pip_address)" \
              "$@"
+    elif [[ $1 == kube[0-9]* ]] && [[ $1 != *".intr" ]]
+    then
+        exec kubectl invoke --format=shell "--host=${1}"
     else
         exec "$ssh_binary" "$@"
     fi
