@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2020, 2021 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2020, 2021, 2023 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -50,11 +50,13 @@
   (xstartup             vncserver-configuration-xstartup              ;file-like
                         (default #f))
   (supplementary-groups vncserver-configuration-supplementary-groups  ;list of strings
-                        (default '("users"))))
+                        (default '("users")))
+  (dpi                  vncserver-configuration-dpi                   ;number
+                        (default #f)))
 
 (define vncserver-shepherd-service
   (match-lambda
-    (($ <vncserver-configuration> vncserver host-name display user group directory xstartup supplementary-groups)
+    (($ <vncserver-configuration> vncserver host-name display user group directory xstartup supplementary-groups dpi)
      (let ((xauthority (string-append "/home/" user "/.Xauthority.vncserver"))
            (xdg-runtime-dir (string-append "/run/user/" (number->string (passwd:uid (getpw user)))))
            (path #~(string-append #$(file-append coreutils "/bin")
@@ -66,12 +68,13 @@
          (provision (list (string->symbol (string-append "vncserver" (number->string display)))))
          (documentation "Run vnc.")
          (start #~(make-forkexec-constructor
-                   (list (string-append #$vncserver "/bin/vncserver")
-                         (string-append ":" (number->string #$display))
-                         "-fg" "-xstartup" #$xstartup
-                         "-X509Key" (string-append #$directory "/.vnc/key.pem")
-                         "-X509Cert" (string-append #$directory "/.vnc/x509_ca.pem")
-                         "-SecurityTypes" "X509Vnc")
+                   `(,(string-append #$vncserver "/bin/vncserver")
+                     ,(string-append ":" (number->string #$display))
+                     "-fg" "-xstartup" #$xstartup
+                     "-X509Key" ,(string-append #$directory "/.vnc/key.pem")
+                     "-X509Cert" ,(string-append #$directory "/.vnc/x509_ca.pem")
+                     "-SecurityTypes" "X509Vnc"
+                     ,@(if #$dpi '("-dpi" #$dpi) '()))
                    #:log-file (string-append "/var/log/vncserver" (number->string #$display) ".log")
                    #:user #$user
                    #:group #$group
