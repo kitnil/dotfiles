@@ -47,6 +47,7 @@
         ("https://habr.com/ru/users/Gim6626/rss/posts/?fl=ru" news) ;FOSS News - дайджест новостей и других материалов о свободном и открытом ПО
         ("https://habr.com/rss/flows/admin/all" habr admin)
         ("https://habr.com/rss/hub/kubernetes/all" habr kubernetes)
+        ("https://fluxcd.io/blog/index.xml" kubernetes fluxcd)
         ("https://habr.com/rss/flows/develop/all" habr programming)
         ("https://habr.com/rss/hub/network_hardware/all" habr networking hardware)
         ("https://habr.com/rss/hub/hardware/all" habr hardware)
