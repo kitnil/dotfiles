@@ -4,6 +4,7 @@ namespace: monitoring
 resources:
 - namespace.yaml
 - release.yaml
+- podmonitor/flux.yaml
 configMapGenerator:
 - name: kube-prometheus-stack-values
   files:
@@ -50,6 +51,11 @@ configMapGenerator:
 - name: kube-prometheus-stack-grafana-dashboards-obs
   files:
   - obs.json=grafana/dashboards/obs/obs-dashboard.json
+- name: kube-prometheus-stack-grafana-dashboards-flux
+  files:
+  - cluster.json=grafana/dashboards/flux/cluster.json
+  - control-plane.json=grafana/dashboards/flux/control-plane.json
+  - logs.json=grafana/dashboards/flux/logs.json
 patchesStrategicMerge:
 - grafana/dashboards/nginx/configmap.yaml
 - grafana/dashboards/linstor/configmap.yaml
@@ -65,5 +71,6 @@ patchesStrategicMerge:
 - grafana/dashboards/windows-exporter/configmap.yaml
 - grafana/dashboards/blackbox/configmap.yaml
 - grafana/dashboards/obs/configmap.yaml
+- grafana/dashboards/flux/configmap.yaml
 configurations:
 - kustomizeconfig.yaml
