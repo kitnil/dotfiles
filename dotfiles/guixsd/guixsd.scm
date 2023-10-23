@@ -960,7 +960,6 @@ location / {
 
            "192.168.154.1 kubernetes.home"
            "192.168.154.1 kube1 kube1.home kube1.lan"
-           "192.168.154.1 kube4 kube4.home"
            "192.168.154.99 kube5 kube5.home"
            "192.168.154.1 nfs.home"
            "192.168.154.1 qbittorrent.home"
