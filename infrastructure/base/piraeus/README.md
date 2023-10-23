@@ -36,16 +36,16 @@ lvcreate -l 100%FREE -Zn --type thin-pool --thinpool pool0 vg0
 Run nix-shell to get `kubectl linstor`.
 
 ```
-$ kubectl linstor storage-pool create lvmthin kube4 pool0 lvm2/thinpool2
+$ kubectl linstor storage-pool create lvmthin kube1 pool0 lvm2/thinpool2
 SUCCESS:
     Successfully set property key(s): StorDriver/StorPoolName
 SUCCESS:
 Description:
-    New storage pool 'pool0' on node 'kube4' registered.
+    New storage pool 'pool0' on node 'kube1' registered.
 Details:
-    Storage pool 'pool0' on node 'kube4' UUID is: aa0b3c74-fe6b-42ff-83f5-08a00aa28ef2
+    Storage pool 'pool0' on node 'kube1' UUID is: 6a41ba9f-a9bb-41bd-89dd-67ef5b39e7e2
 SUCCESS:
-    (kube4) Changes applied to storage pool 'pool0'
+    (kube1) Changes applied to storage pool 'pool0'
 ```
 
 # Test
