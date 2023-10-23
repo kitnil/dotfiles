@@ -41,4 +41,4 @@ spec:
             storage: 64Gi
       source:
         http:
-          url: http://iso.wugi.info/guix.qcow2
+          url: https://iso.wugi.info/guix.qcow2
