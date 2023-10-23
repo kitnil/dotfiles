@@ -22,11 +22,6 @@ spec:
           - disk:
               bus: virtio
             name: datavolumedisk1
-        resources:
-          overcommitGuestOverhead: true
-          limits:
-            memory: 4G
-            cpu: 8
         memory:
           guest: 4G
       volumes:
