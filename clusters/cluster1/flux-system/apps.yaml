@@ -202,7 +202,7 @@ metadata:
 spec:
   interval: 10m0s
   path: ./apps/cluster1/guix
-  prune: true
+  prune: false
   sourceRef:
     kind: GitRepository
     name: flux-system
