@@ -94,5 +94,4 @@
             (xrdb)
             (speaker-disable)
             (pointer-keys)
-            (keyboard-layout)
             (xmodmap)))

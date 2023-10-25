@@ -1,5 +1,11 @@
 #!/bin/sh
 
+# https://www.linux.org.ru/forum/general/12531593?cid=13244080
+# x11vnc пропадают русские буквы
+setxkbmap -layout us -print \
+    | sed -e 's,\+inet[^+"]*,,' \
+    | xkbcomp - "$DISPLAY"
+
 unset SESSION_MANAGER
 unset DBUS_SESSION_BUS_ADDRESS
 
