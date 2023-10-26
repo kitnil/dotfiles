@@ -497,6 +497,14 @@ mongorestore()
                     --uri="mongodb://ci.intr:27017/" \
                     "${@:2}"
             ;;
+        alerta)
+            command mongorestore \
+                    --authenticationDatabase=admin \
+                    --username=root \
+                    --password="$(pass show majordomo/public/alerta/mongodb/root)" \
+                    --uri="mongodb://localhost:27017/" \
+                    "${@:2}"
+            ;;
         production)
             command mongorestore \
                     --authenticationDatabase=admin \
