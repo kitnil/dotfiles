@@ -10,9 +10,10 @@ spec:
         image: nixery.dev/youtube-dl
         command: ["/bin/youtube-dl"]
         args:
-        - --write-info-json
         - --skip-download
         - --ignore-errors
+        - --flat-playlist
+        - --dump-json
         - 'https://www.youtube.com/playlist?list=PLmjgicsUWIkvEKkLN01vm85neXAik3yU2'
         workingDir: /workdir
         volumeMounts:
