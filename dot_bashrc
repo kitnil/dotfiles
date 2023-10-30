@@ -44,6 +44,12 @@ function dmesg()
 alias ,h="${BROWSER} ~/.guix-profile/share/doc/concise-gnu-bash/concise-gnu-bash.pdf"
 alias ,c='command'
 
+# Count number of code lines
+alias ,l='tokei'
+
+# Show Git repository statics
+alias ,g='onefetch'
+
 alias rm="rm -i"
 alias cp="cp -i"
 alias mv="mv -i"
