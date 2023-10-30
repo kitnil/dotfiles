@@ -52,11 +52,13 @@
   (supplementary-groups vncserver-configuration-supplementary-groups  ;list of strings
                         (default '("users")))
   (dpi                  vncserver-configuration-dpi                   ;number
+                        (default #f))
+  (interface            vncserver-configuration-interface             ;string
                         (default #f)))
 
 (define vncserver-shepherd-service
   (match-lambda
-    (($ <vncserver-configuration> vncserver host-name display user group directory xstartup supplementary-groups dpi)
+    (($ <vncserver-configuration> vncserver host-name display user group directory xstartup supplementary-groups dpi interface)
      (let ((xauthority (string-append "/home/" user "/.Xauthority.vncserver"))
            (xdg-runtime-dir (string-append "/run/user/" (number->string (passwd:uid (getpw user)))))
            (path #~(string-append #$(file-append coreutils "/bin")
@@ -74,6 +76,7 @@
                      "-X509Key" ,(string-append #$directory "/.vnc/key.pem")
                      "-X509Cert" ,(string-append #$directory "/.vnc/x509_ca.pem")
                      "-SecurityTypes" "X509Vnc"
+                     ,@(if #$interface '("-interface" #$interface) '())
                      ,@(if #$dpi '("-dpi" #$dpi) '()))
                    #:log-file (string-append "/var/log/vncserver" (number->string #$display) ".log")
                    #:user #$user
