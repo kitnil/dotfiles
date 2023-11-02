@@ -264,6 +264,20 @@
         platforms = platforms.all;
         };
       };
+    "russian-ru-language-pack" = buildFirefoxXpiAddon {
+      pname = "russian-ru-language-pack";
+      version = "120.0.20231101.92803";
+      addonId = "langpack-ru@firefox.mozilla.org";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4188862/russian_ru_language_pack-120.0.20231101.92803.xpi";
+      sha256 = "09c7a2c4d6c6d2dff12f60f9359d588581965b490f8678636db6011d07f04a5a";
+      meta = with lib;
+      {
+        description = "Firefox Language Pack for Русский (ru) – Russian";
+        license = licenses.mpl20;
+        mozPermissions = [];
+        platforms = platforms.all;
+        };
+      };
     "scroll_anywhere" = buildFirefoxXpiAddon {
       pname = "scroll_anywhere";
       version = "9.2";

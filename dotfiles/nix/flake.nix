@@ -373,6 +373,7 @@
                         prometheus-formatter
                         right-click-search
                         rocker_gestures
+                        russian-ru-language-pack
                         scroll_anywhere
                         snaplinksplus
                         tab-slideshow-we
