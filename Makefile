@@ -11,8 +11,12 @@ TESTS =						\
 clean-guile:
 	rm -rf $(HOME)/.cache/guile/ccache
 
+.PHONY: clean-nix
+clean-nix:
+	rm -rf $(HOME)/.cache/nix
+
 .PHONY: clean
-clean: clean-guile
+clean: clean-guile clean-nix
 	rm -rf test-tmp
 	rm -f dotfiles/nix/result
 
@@ -90,7 +94,6 @@ dotfiles/nix/flake.lock:
 
 .PHONY: dotfiles/nix/flake.nix
 dotfiles/nix/flake.nix:
-	rm -rf $(HOME)/.cache/nix
 	sh -c 'set -e; cd dotfiles/nix || exit 1; ./flake.nix'
 
 .PHONY: dotfiles/dns/flake.nix
