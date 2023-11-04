@@ -63,8 +63,8 @@
                 (list '(:eval (format nil "INBOX: ~a" *imap-recent*)))
                 '())
 
-          ,(make-string 4 :initial-element #\space)
-          ,'(:eval (kubectl-current-context *kubernetes-current-cluster* t))
+          ;; ,(make-string 4 :initial-element #\space)
+          ;; ,'(:eval (kubectl-current-context *kubernetes-current-cluster* t))
 
           ,@(if (mountpoint-free? "/srv")
                 (list (make-string 4 :initial-element #\space))
@@ -145,18 +145,18 @@
                           (sleep 60))))
                  :name "disk-free-root-update-counter")
 
-                (sb-thread:make-thread
-                 (lambda ()
-                   (loop while t do
-                        (progn
-                          (kubernetes-update-current-cluster)
-                          (sleep 60))))
-                 :name "mode-line-kubernetes-current-cluster")
+                ;; (sb-thread:make-thread
+                ;;  (lambda ()
+                ;;    (loop while t do
+                ;;         (progn
+                ;;           (kubernetes-update-current-cluster)
+                ;;           (sleep 60))))
+                ;;  :name "mode-line-kubernetes-current-cluster")
 
-                (sb-thread:make-thread
-                 (lambda ()
-                   (kubernetes-update-current-cluster-inotify))
-                 :name "mode-line-kubernetes-current-cluster-inotify")
+                ;; (sb-thread:make-thread
+                ;;  (lambda ()
+                ;;    (kubernetes-update-current-cluster-inotify))
+                ;;  :name "mode-line-kubernetes-current-cluster-inotify")
 
                 ;; (sb-thread:make-thread
                 ;;  (lambda ()
