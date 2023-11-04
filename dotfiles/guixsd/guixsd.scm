@@ -1169,7 +1169,7 @@ location / {
                          ;;           (autofs (@ (deprecated) autofs))
                          ;;           (mounts %autofs-mounts)))
 
-                         (service osquery-service-type)
+                         ;; (service osquery-service-type)
 
                          (service prometheus-service-type
                                   (let ((listen-address "127.0.0.1:9090"))
