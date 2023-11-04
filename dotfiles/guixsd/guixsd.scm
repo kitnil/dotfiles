@@ -542,6 +542,33 @@ location / {
                                 "-j" "REDIRECT"
                                 "--to-ports" "9040")))
 
+                            ;; Forward connections from 192.168.0.145:6443 to
+                            ;; 192.168.154.1:6443 for Kubernetes API on
+                            ;; Kubenav (Android application).
+                            ;;
+                            ;; https://serverfault.com/questions/586486/how-to-do-the-port-forwarding-from-one-ip-to-another-ip-in-same-network
+                            ;; linux - How to do the port forwarding from one
+                            ;; ip to another ip in same network? - Server
+                            ;; Fault
+                            (iptables
+                             (string-join
+                              '("-t" "nat"
+                                "-A" "PREROUTING"
+                                "-p" "tcp"
+                                "--destination 192.168.0.145"
+                                "--dport" "6443"
+                                "-j" "DNAT"
+                                "--to-destination" "192.168.154.1:6443")))
+                            (iptables
+                             (string-join
+                              '("-t" "nat"
+                                "-A" "POSTROUTING"
+                                "-p" "tcp"
+                                "-d" "192.168.154.1"
+                                "--dport" "6443"
+                                "-j" "SNAT"
+                                "--to-source" "192.168.0.145")))
+
                             ;; # notebook->guixsd->ci.guix.gnu.org
                             (iptables
                              (string-join
@@ -964,6 +991,7 @@ location / {
            "192.168.154.1 nfs.home"
            "192.168.154.1 qbittorrent.home"
            "192.168.154.230 samba.home"
+           "192.168.0.145 kubernetes.home.wugi.info"
 
            "172.16.100.60 workstation.intr"
 
