@@ -101,6 +101,13 @@ rec {
       };
     };
     www = { inherit A; };
+    lan = {
+      subdomains = {
+        ns1 = {
+          A = [ "192.168.0.145" ];
+        };
+      };
+    };
     home = {
       subdomains."*" = {
         inherit (guix) A;
