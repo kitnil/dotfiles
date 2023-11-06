@@ -356,7 +356,7 @@
                         (auth-mechs '("LOGIN"))
                         (ssl-type "IMAPS")
                         (certificate-file "/etc/ssl/certs/ca-certificates.crt")
-                        (pipeline-depth 50))))
+                        (pipeline-depth 1))))
                      (imap-stores
                       (list
                        (mbsync-imap-store-configuration
@@ -377,7 +377,6 @@
                         (near ":gmail-local:")
                         (patterns '("INBOX"))
                         (sync '("Pull"))
-                        (max-messages 2000)
                         (expunge "near"))))))
 
     (service home-goimapnotify-service-type
