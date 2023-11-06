@@ -147,7 +147,7 @@
      (patterns '("INBOX"))
      (sync '("Pull"))
      (max-messages max-messages)
-     (expunge "near")
+     (expunge "None")
      (expire-unread "yes")))
 
   (list
@@ -377,7 +377,7 @@
                         (near ":gmail-local:")
                         (patterns '("INBOX"))
                         (sync '("Pull"))
-                        (expunge "near"))))))
+                        (expunge "None"))))))
 
     (service home-goimapnotify-service-type
              (goimapnotify-configuration
