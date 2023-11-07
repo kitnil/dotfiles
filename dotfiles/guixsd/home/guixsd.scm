@@ -183,38 +183,7 @@
                        (inherit majordomo-mbsync-channel-configuration)
                        (channel (string-append "majordomo-" name))
                        (far (string-append ":majordomo-" name "-remote:"))
-                       (near (string-append ":majordomo-" name "-local:")))))))
-
-   (service home-goimapnotify-service-type
-            (goimapnotify-configuration
-             (config-file
-              (computed-file
-               (string-append "isync-majordomo-" name "-config")
-               (with-extensions (list guile-json-4)
-                 (with-imported-modules (source-module-closure '((json builder)))
-                   #~(begin
-                       (use-modules (json builder)
-                                    (ice-9 format))
-                       (define isync
-                         #$(file-append isync "/bin/mbsync"))
-                       (define timeout
-                          #$(file-append coreutils "/bin/timeout"))
-                       (define password
-                         #$(pass "show" (pass-private-or-public name)))
-                       (define username #$name)
-                       (with-output-to-file #$output
-                         (lambda ()
-                           (scm->json
-                            `(("boxes" . #("INBOX"))
-                              ("onNewMail" . ,(string-join (list timeout (number->string 60) isync
-                                                                 (string-append "majordomo-" username))))
-                              ("xoauth2" . #f)
-                              ("password" . ,password)
-                              ("username" . ,(string-append username "@majordomo.ru"))
-                              ("tlsOptions" ("rejectUnauthorized" . #t))
-                              ("tls" . #t)
-                              ("port" . 993)
-                              ("host" . "imap.majordomo.ru"))))))))))))))
+                       (near (string-append ":majordomo-" name "-local:")))))))))
 
 (define xsession-config-file
   (let* ((stumpwp-load-file
@@ -357,66 +326,6 @@
                        (patterns '("INBOX"))
                        (sync '("Pull"))
                        (expunge "None"))))))
-
-   (service home-goimapnotify-service-type
-            (goimapnotify-configuration
-             (config-file
-              (computed-file
-               "isync-gmail-config"
-               (with-extensions (list guile-json-4)
-                 (with-imported-modules (source-module-closure '((json builder)))
-                   #~(begin
-                       (use-modules (json builder)
-                                    (ice-9 format))
-                       (define timeout
-                         #$(file-append coreutils "/bin/timeout"))
-                       (define isync
-                         #$(file-append isync "/bin/mbsync"))
-                       (define password
-                         #$(pass "show" "myaccount.google.com/apppasswords/go.wigust"))
-                       (with-output-to-file #$output
-                         (lambda ()
-                           (scm->json
-                            `(("boxes" . #("INBOX"))
-                              ("onNewMail" . ,(string-join (list timeout (number->string 60) isync "gmail")))
-                              ("xoauth2" . #f)
-                              ("password" . ,password)
-                              ("username" . "go.wigust@gmail.com")
-                              ("tlsOptions" ("rejectUnauthorized" . #t))
-                              ("tls" . #t)
-                              ("port" . 993)
-                              ("host" . "imap.gmail.com"))
-                            #:pretty #t))))))))))
-
-   (service home-goimapnotify-service-type
-            (goimapnotify-configuration
-             (config-file
-              (computed-file
-               "isync-wugi-config"
-               (with-extensions (list guile-json-4)
-                 (with-imported-modules (source-module-closure '((json builder)))
-                   #~(begin
-                       (use-modules (json builder)
-                                    (ice-9 format))
-                       (define timeout
-                         #$(file-append coreutils "/bin/timeout"))
-                       (define isync
-                         #$(file-append isync "/bin/mbsync"))
-                       (define password
-                         #$(pass "show" "localhost/imap/oleg"))
-                       (with-output-to-file #$output
-                         (lambda ()
-                           (scm->json
-                            `(("boxes" . #("INBOX"))
-                              ("onNewMail" . ,(string-join (list timeout (number->string 60) isync "wugi-oleg")))
-                              ("xoauth2" . #f)
-                              ("password" . ,password)
-                              ("username" . "oleg@wugi.info")
-                              ("tlsOptions" ("rejectUnauthorized" . #t))
-                              ("tls" . #t)
-                              ("port" . 993)
-                              ("host" . "imap.wugi.info"))
-                            #:pretty #t))))))))))
 
    (simple-service 'amtool-config
                    home-files-service-type
