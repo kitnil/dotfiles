@@ -100,3 +100,11 @@ l7Proxy: false
 # https://github.com/cilium/cilium/issues/21354
 ingressController:
   enabled: false
+
+# -- Configure socket LB
+socketLB:
+  # -- Enable socket LB
+  enabled: true
+
+  # -- Disable socket lb for non-root ns. This is used to enable Istio routing rules.
+  hostNamespaceOnly: true
