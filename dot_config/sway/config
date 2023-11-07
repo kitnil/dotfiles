@@ -257,6 +257,8 @@ mode "resize" {
     # return to default mode
     bindsym Return mode "default"
     bindsym Escape mode "default"
+
+    bindsym y resize set width 1920 px
 }
 bindsym $mod+r mode "resize"
 
