@@ -18,6 +18,10 @@ spec:
           sockets: 1
           threads: 1
         devices:
+          interfaces:
+          - masquerade: {}
+            model: virtio
+            name: default
           disks:
           - disk:
               bus: virtio
