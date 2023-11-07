@@ -2062,6 +2062,7 @@ kubectl()
                 cat <<'EOF'
 drain example:
     kubectl drain --ignore-daemonsets --delete-emptydir-data NODE
+    kubectl delete pods --all-namespaces --field-selector 'spec.nodeName=NODE,metadata.namespace!=default'
 EOF
             else
                 command kubectl drain "${@:2}"
