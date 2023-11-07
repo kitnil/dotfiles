@@ -32,6 +32,9 @@ spec:
       - dataVolume:
           name: guix-dv
         name: datavolumedisk1
+      networks:
+      - name: default
+        pod: {}
   dataVolumeTemplates:
   - metadata:
       name: guix-dv
