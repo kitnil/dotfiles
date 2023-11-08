@@ -6,6 +6,7 @@
 (setf *transient-border-width* 0)
 (setq *suppress-frame-indicator* nil)
 (setf *float-window-border* 0)
+(setf *float-window-title-height* 0)
 (bind-super)
 
 (rename-group *default-group-name* "1")
