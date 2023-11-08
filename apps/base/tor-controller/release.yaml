@@ -1,0 +1,18 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: tor-controller
+spec:
+  chart:
+    spec:
+      chart: tor-controller
+      reconcileStrategy: ChartVersion
+      version: 0.1.14
+      sourceRef:
+        kind: HelmRelease
+        name: bugfest
+        namespace: flux-system
+  interval: 1m0s
+  valuesFrom:
+  - kind: ConfigMap
+    name: tor-controller-values
