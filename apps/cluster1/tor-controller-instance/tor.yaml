@@ -2,3 +2,12 @@ apiVersion: tor.k8s.torproject.org/v1alpha2
 kind: Tor
 metadata:
   name: example-tor-instance
+spec:
+  template:
+    spec:
+      volumeMounts:
+      - name: run-tor-service
+        mountPath: /run/tor/service
+      volumes:
+      - name: run-tor-service
+        emptyDir: {}
