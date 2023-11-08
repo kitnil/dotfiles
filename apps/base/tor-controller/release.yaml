@@ -9,7 +9,7 @@ spec:
       reconcileStrategy: ChartVersion
       version: 0.1.14
       sourceRef:
-        kind: HelmRelease
+        kind: HelmRepository
         name: bugfest
         namespace: flux-system
   interval: 1m0s
