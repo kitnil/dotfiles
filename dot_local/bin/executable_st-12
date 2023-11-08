@@ -1,0 +1,3 @@
+#!/bin/sh
+
+exec -a st /home/oleg/.guix-profile/bin/st -f "Liberation Mono:size=12" "$@"

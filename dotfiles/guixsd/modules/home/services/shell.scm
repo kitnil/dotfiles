@@ -225,6 +225,7 @@
                           "ssh-sudo"
                           "ssh-vm"
                           "ssl"
+                          "st-12"
                           "toggle-input-method.sh"
                           "tome4-docker"
                           "tranfser-curl"
