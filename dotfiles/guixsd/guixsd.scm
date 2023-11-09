@@ -1868,10 +1868,6 @@ PasswordAuthentication yes")))
                                                  (ssl-certificate (letsencrypt-certificate "cgit.wugi.info"))
                                                  (ssl-certificate-key (letsencrypt-key "cgit.wugi.info")))))))
 
-                         (service tor-service-type
-                                  (tor-configuration
-                                   (config-file (local-file "torrc"))))
-
                          (service bird-service-type
                                   (bird-configuration
                                    (config-file (local-file "bird-wugi.info.conf"))))
