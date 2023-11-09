@@ -13,6 +13,7 @@ COMMAND must be one of the sub-commands listed below:
 
    inbox
    neomutt
+   pull
 
 Report bugs to: go.wigust@gmail.com."
 }
@@ -51,6 +52,10 @@ mail_addresses=(pyhalov@majordomo.ru
                 localhost)
 
 case "$1" in
+    pull)
+        mbsync -a
+        notmuch new
+        ;;
     --help)
         help_main
         ;;
