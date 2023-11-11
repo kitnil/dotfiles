@@ -98,7 +98,39 @@ EndSection
                       "amdgpu.audio=0"
                       "amdgpu.gpu_recovery=1"
                       "amdgpu.noretry=0"
-                      "amdgpu.ppfeaturemask=0xfffffffb"))
+                      "amdgpu.ppfeaturemask=0xfffffffb"
+
+                      ;; https://gitlab.freedesktop.org/drm/amd/-/issues/2220
+                      ;; [amdgpu]] *ERROR* ring sdma0 timeout
+                      ;;
+                      ;;
+                      ;; https://wiki.archlinux.org/title/AMDGPU
+                      ;;
+                      ;; Freezes with "[drm] IP block:gmc_v8_0 is hung!" kernel error
+                      ;;
+                      ;; If you experience freezes and kernel crashes during a
+                      ;; GPU intensive task with the kernel error " [drm] IP
+                      ;; block:gmc_v8_0 is hung!" [6], a workaround is to set
+                      ;; amdgpu.vm_update_mode=3 as kernel parameters to force
+                      ;; the GPUVM page tables update to be done using the
+                      ;; CPU. Downsides are listed here [7].
+                      ;;
+                      ;;
+                      ;; [7]: https://gitlab.freedesktop.org/drm/amd/-/issues/226#note_308665
+                      ;;
+                      ;; I think it just means systems with large VRAM so it
+                      ;; will require large BAR for mapping. But I am not sure
+                      ;; on that point.
+                      ;;
+                      ;; vm_update_mode=3 means GPUVM page tables update is
+                      ;; done using CPU. By default we do it using DMA engine
+                      ;; on the ASIC. The log showed a hang in this engine so
+                      ;; I assumed there is something wrong with SDMA commands
+                      ;; we submit.
+                      ;;
+                      ;; I assume more CPU utilization as a side effect and
+                      ;; maybe slower rendering.
+                      "amdgpu.vm_update_mode=3"))
 (users (cons* (user-account
                      (name "oleg")
                      (uid 1000)
