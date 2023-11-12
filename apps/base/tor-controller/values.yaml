@@ -1,0 +1,14 @@
+image:
+  tag: latest
+
+daemon:
+  image:
+    tag: latest
+
+manager:
+  image:
+    tag: latest
+
+onionbalance:
+  image:
+    tag: latest
