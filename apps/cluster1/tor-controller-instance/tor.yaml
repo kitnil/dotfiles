@@ -7,6 +7,5 @@ spec:
     ExitNodes {nl},{fr},{de}
     UseBridges 1
     ClientTransportPlugin obfs4 exec /usr/local/bin/obfs4proxy
-    Bridge obfs4 89.88.170.161:5294
-    2296F7864D6016706764352622D9FA48E667C0AC cert=AkiPIcUV8apdi1noyt5v0jmHhwA/N+iM1xpjwiCsUvs7FMQMQ9hx9VhtA9n1ckDDEwuFNQ iat-mode=0
+    Bridge obfs4 89.88.170.161:5294 2296F7864D6016706764352622D9FA48E667C0AC cert=AkiPIcUV8apdi1noyt5v0jmHhwA/N+iM1xpjwiCsUvs7FMQMQ9hx9VhtA9n1ckDDEwuFNQ iat-mode=0
     Bridge obfs4 193.70.1.41:45696 974E5CC54AD486D1C13B9FBE33491D53E85168A1 cert=pTM2iHcRpQm8BptkHvqzWNEWjnZ0H4L5L0dBr5/M1a/0MsIVbIAOuSxUS2mxjtTnFfUobQ iat-mode=0
