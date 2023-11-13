@@ -35,6 +35,7 @@
              (services bird)
              (services bittorrent)
              (services certbot)
+             (services ddc)
              (services docker)
              (services nix)
              (services autossh)
@@ -1149,6 +1150,8 @@ location / {
 
                          (service openvpn-service-type %openvpn-configuration-majordomo.ru)
                          (service openvpn-service-type %openvpn-configuration-wugi.info)
+
+                         ddcutil-daemon-service
 
                          ;; TODO:
                          ;; (openvpn-client-service
