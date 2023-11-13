@@ -969,6 +969,8 @@ location / {
                            ;; "hms-billing-dev.intr"
                            ))
 
+           "10.8.26.35 tor.home" ;Kubernetes ClusterIP service
+
            "192.168.0.145 prometheus.wugi.info"
 
            "192.168.154.119 ubuntu.local"
