@@ -2,6 +2,9 @@
 
 set -o nounset -o errexit -o pipefail
 
+. /etc/environment
+export LINUX_MODULE_DIRECTORY
+
 coredns_image="${KUBELET_COREDNS_IMAGE:-/nix/store/1crdy15nv25jpbvknrzyhg6khv9ikhl9-docker-image-coredns-coredns-1.7.1.tar}"
 pause_image="${KUBELET_PAUSE_IMAGE:-/nix/store/xjlwhyqjhx0j2sc41wfpsw1zvhn98vh5-docker-image-pause.tar.gz}"
 
