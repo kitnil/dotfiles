@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+set -o errexit -o pipefail
+
+PULSE_SERVER="${PULSE_SERVER:-192.168.0.137}"
+
+if [[ -n $VNCDESKTOP ]]
+then
+    if [[ $(ss --no-header --options state connected --options sport 5902) == *"$PULSE_SERVER"* ]]
+    then
+        export PULSE_SERVER
+    fi    
+fi
+
+exec -a "$0" "${HOME}/.guix-profile/bin/firefox" "$@"
