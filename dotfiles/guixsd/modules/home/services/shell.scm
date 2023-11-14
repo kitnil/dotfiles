@@ -187,6 +187,7 @@
                           "nix-repl"
                           "oracle"
                           "openai"
+                          "opensearch"
                           "pers"
                           "peertube"
                           "prometheus-billing2"
