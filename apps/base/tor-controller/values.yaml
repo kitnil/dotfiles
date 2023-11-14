@@ -1,0 +1,14 @@
+image:
+  tag: 0.10.0-rc.2
+
+daemon:
+  image:
+    tag: 0.10.0-rc.2
+
+manager:
+  image:
+    tag: 0.10.0-rc.2
+
+onionbalance:
+  image:
+    tag: 0.10.0-rc.2
