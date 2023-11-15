@@ -881,7 +881,7 @@ location / {
       (swap-devices (list (swap-space
                            (target "/dev/disk/by-label/nvme-swap"))))
 
-      (kernel-loadable-modules (list vendor-reset-linux-module
+      (kernel-loadable-modules (list ;vendor-reset-linux-module
                                      drbd-module))
 
       ;; XXX: Add hardware/guixsd.scm
@@ -2221,7 +2221,7 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
 
                          (service kernel-module-loader-service-type
                                   '("vfio-pci" ;GPU passthrough
-                                    "vendor-reset" ;reset NAVI10 (5500XT)
+                                    ;"vendor-reset" ;reset NAVI10 (5500XT)
                                     "dm-snapshot"
                                     "dm-thin-pool"
                                     "br_netfilter" ;kube-dns
