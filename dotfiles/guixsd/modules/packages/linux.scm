@@ -79,17 +79,8 @@
                      #:configuration-file kernel-config))
 
 (define-public linux-5.13
-  (let ((corrupt (corrupt-linux linux-libre-5.13 "5.13.16"
-                            "1ljigvcg4q6ckr8kna3q5iyjsy7x5mrf1ycqfy0ibbhn9hbqjna9")))
-    (package
-      (inherit corrupt)
-      (source
-       (origin
-         (inherit (package-source corrupt))
-         (patches (append
-                   ;; https://gitlab.com/Queuecumber/linux-acs-override/-/blob/master/workspaces/5.6.12/acso.patch?ref_type=heads
-                   (search-patches "acso.patch")
-                   (origin-patches (package-source corrupt)))))))))
+  (corrupt-linux linux-libre-5.13 "5.13.16"
+                 "1ljigvcg4q6ckr8kna3q5iyjsy7x5mrf1ycqfy0ibbhn9hbqjna9"))
 
 (define-public linux-firmware
   (package

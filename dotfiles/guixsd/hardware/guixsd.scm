@@ -85,17 +85,13 @@ EndSection
   (kernel linux-5.13)
   (firmware (cons* (@ (packages linux) linux-firmware) %base-firmware))
 
-  (kernel-arguments '("modprobe.blacklist=pcspkr,snd_pcsp,amdgpu"
+  (kernel-arguments '("modprobe.blacklist=pcspkr,snd_pcsp"
 
                       ;; <https://wiki.archlinux.org/index.php/PCI_passthrough_via_OVMF#Setting_up_IOMMU>
                       "iommu=pt"
 
-                      "video=efifb:off"
-                      "initcall_blacklist=sysfb_init"
-                      "pcie_acs_override=downstream,multifunction"
-
                       "kvm.ignore_msrs=1"
-                      "vfio-pci.ids=1002:1478,1002:1479,1002:7340,1002:ab38,1022:1448,1022:1449,1022:144a,1022:144b,1022:144c,1022:144d,1022:144e,1022:144f,"
+                      "vfio-pci.ids=1002:1478,1002:1479,1002:7340,1002:ab38"
 
                       ;; (#934) · Issues · drm / amd · GitLab
                       ;; <https://gitlab.freedesktop.org/drm/amd/-/issues/934>
