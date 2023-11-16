@@ -1,3 +1,6 @@
+;; center buffer content
+(add-hook 'gnus-article-mode-hook 'olivetti-mode)
+
 ;; only sign
 (add-hook 'gnus-message-setup-hook 'mml-secure-message-sign-pgpmime)
 (add-hook 'message-setup-hook 'mml-secure-message-sign-pgpmime)
