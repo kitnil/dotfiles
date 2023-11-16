@@ -603,6 +603,20 @@ location / {
                                 "-i" "tapvpn1"
                                 "-o" "vxlan0"
                                 "-j" "ACCEPT")))
+                            (iptables
+                             (string-join
+                              '("-A" "FORWARD"
+                                "-i" "br0"
+                                "-o" "vxlan0"
+                                "-j" "ACCEPT")))
+                            (iptables
+                             (string-join
+                              '("-A" "FORWARD"
+                                "-i" "vxlan0"
+                                "-o" "br0"
+                                "-m" "state"
+                                "--state" "RELATED,ESTABLISHED"
+                                "-j" "ACCEPT")))
 
                             ;; VLAN 154 provides:
                             ;; - Network via Whonix
