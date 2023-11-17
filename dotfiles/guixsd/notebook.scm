@@ -105,7 +105,7 @@
                      lvm2
 		     openvpn
                      sway
-                     alacritty
+                     ;; alacritty
                                         ;ratpoison
                                         ;xfce4-terminal
                      nss-certs
