@@ -625,12 +625,6 @@ EOF
             ;;
         system)
             case "$2" in
-                build)
-                    sudo --login GUILE_LOAD_PATH="${HOME}/.local/share/chezmoi/dotfiles/guixsd/modules:${GUILE_LOAD_PATH}" command guix system build \
-                         -L "$guix_modules" \
-                         "${@:3}" \
-                         "$HOME/.local/share/chezmoi/dotfiles/guixsd/$HOSTNAME.scm"
-                    ;;
                 deploy)
                     (
                         set -ex

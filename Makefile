@@ -249,3 +249,12 @@ $(state-to-vc-hostnames):
 	fi
 
 state-to-vc-containers: $(state-to-vc-hostnames)
+
+.PHONY: guix-system-build-channels-current
+guix-system-build-channels-current:
+	sudo --login GUILE_LOAD_PATH="$(PWD)/dotfiles/guixsd/modules:$(GUILE_LOAD_PATH)" \
+            guix time-machine \
+            --channels="$(PWD)/dotfiles/channels-current.scm" \
+            -- system build \
+                --load-path="$(PWD)/dotfiles/guixsd/modules:$(GUILE_LOAD_PATH)" \
+                "$(PWD)/dotfiles/guixsd/$(HOSTNAME).scm"
