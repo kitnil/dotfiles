@@ -23,7 +23,8 @@
 
 (use-service-modules desktop dbus networking monitoring xorg)
 
-(use-modules (packages monitoring)
+(use-modules (bootloader grub)
+             (packages monitoring)
              (services monitoring))
 
 (operating-system
@@ -38,7 +39,7 @@
   ;; Use the UEFI variant of GRUB with the EFI System
   ;; Partition mounted on /boot/efi.
   (bootloader (bootloader-configuration
-                (bootloader grub-efi-bootloader)
+               (bootloader grub-efi-bootloader-removable)
                 (targets '("/boot/efi"))))
 
     (mapped-devices (list (mapped-device
