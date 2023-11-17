@@ -892,8 +892,8 @@ location / {
                                  '("archive" "phone" "src" "Maildir"))
                             (operating-system-file-systems base-system)))
 
-      (swap-devices (list (swap-space
-                           (target "/dev/disk/by-label/nvme-swap"))))
+      ;; (swap-devices (list (swap-space
+      ;;                      (target "/dev/disk/by-label/nvme-swap"))))
 
       (kernel-loadable-modules (list vendor-reset-linux-module
                                      drbd-module))
