@@ -1975,9 +1975,9 @@ PasswordAuthentication yes")))
                                    (authentication? #f)
                                    (prometheus? #t)))
 
-                         (simple-service 'my-cron-jobs
-                                         mcron-service-type
-                                         (list backup-job))
+                         ;; (simple-service 'my-cron-jobs
+                         ;;                 mcron-service-type
+                         ;;                 (list backup-job))
 
                          (simple-service
                           'socat-ci-guix-gnu-org shepherd-root-service-type
