@@ -123,6 +123,7 @@
   ;; Use the "desktop" services, which include the X11
   ;; log-in service, networking with NetworkManager, and more.
   (services (append (list
+                     (bluetooth-service #:auto-enable? #t)
                      (service wpa-supplicant-service-type)    ;needed by NetworkManager
                      (service network-manager-service-type)
                      (service nfs-service-type
