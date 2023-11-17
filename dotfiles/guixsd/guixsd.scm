@@ -2234,8 +2234,9 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
 127.0.0.1 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOnaDeOzwmrcrq1D8slYaeFozXZ0cpqNU0EvGmgnO29aiKkSD1ehbIV4vSxk3IDXz9ClMVPc1bTUTrYhEVHdCks="))))
 
                          (service kernel-module-loader-service-type
-                                  '("vfio-pci" ;GPU passthrough
-                                    "vendor-reset" ;reset NAVI10 (5500XT)
+                                  '("vendor-reset" ;reset NAVI10 (5500XT)
+                                    "amdgpu"
+                                    "vfio-pci" ;GPU passthrough
                                     "dm-snapshot"
                                     "dm-thin-pool"
                                     "br_netfilter" ;kube-dns
