@@ -1929,18 +1929,6 @@ mediatomb()
     esac
 }
 
-if [ -z $IN_NIX_SHELL ]
-then
-    if [ -e $HOME/.guix-profile/lib/bash/libguile-bash.so ]
-    then
-        enable -f "$HOME"/.guix-profile/lib/bash/libguile-bash.so scm
-        if [ -e "$HOME"/.bash.d/bash.scm ]
-        then
-            GUILE_AUTO_COMPILE=0 scm "$HOME"/.bash.d/bash.scm
-        fi
-    fi
-fi
-
 if [[ -e $HOME/.guix-profile/bin/chezmoi ]]
 then
     eval "$(chezmoi completion bash)"
