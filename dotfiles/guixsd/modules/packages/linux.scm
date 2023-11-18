@@ -167,10 +167,10 @@ if your hardware is supported by one of the smaller firmware packages.")
               (for-each (lambda (file)
                           (rename-file file
                                        (string-replace-substring (string-replace-substring file
-                                                                                           "drbd.ko.gz"
-                                                                                           "drbd9.ko.gz")
-                                                                 "drbd_transport_tcp.ko.gz"
-                                                                 "drbd9_transport_tcp.ko.gz")))
+                                                                                           "drbd.ko"
+                                                                                           "drbd9.ko")
+                                                                 "drbd_transport_tcp.ko"
+                                                                 "drbd9_transport_tcp.ko")))
                         (find-files #$output))
               #t)))))
     (home-page "https://github.com/linux-thinkpad/tp_smapi")
