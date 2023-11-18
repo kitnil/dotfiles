@@ -196,7 +196,6 @@ EndSection\n")
           %cert-packages
           %audio-packages
           %font-packages
-          %stumpwm-packages
           %theme-packages
           %xorg-packages
           %base-packages))
