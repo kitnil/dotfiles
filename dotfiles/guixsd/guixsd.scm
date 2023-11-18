@@ -2388,6 +2388,8 @@ namespaces = [ ]
                           (sysctl-service-type _ =>
                                                (sysctl-configuration
                                                 (settings (append '(("net.bridge.bridge-nf-call-iptables" . "0")
+                                                                    ;; Allow to forward ingress traffic from public to 127.0.0.0/8 via DNAT.
+                                                                    ("net.ipv4.conf.all.route_localnet" . "1")
                                                                     ;; opensearch requirement
                                                                     ("vm.max_map_count" . "262144"))
                                                                   %default-sysctl-settings)))))))
