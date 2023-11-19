@@ -2,14 +2,7 @@
              (gnu packages suckless)
              (gnu packages terminals)
              (gnu packages wm)
-             (gnu packages xdisorg)
-             (deprecated))
-
-(define office
-  (list (@ (deprecated) libreoffice)))
-
-(define terminals
-  (list (@ (deprecated) alacritty)))
+             (gnu packages xdisorg))
 
 (define menus
   (list dmenu wofi))
@@ -23,4 +16,4 @@
 (define clipboard
   (list wl-clipboard))
 
-(packages->manifest (append clipboard menus office terminals wm sway-utils))
+(packages->manifest (append clipboard menus wm sway-utils))

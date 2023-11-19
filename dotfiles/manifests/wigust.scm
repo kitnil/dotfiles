@@ -44,7 +44,6 @@
    emacs-perl-live
    emacs-psysh
    emacs-redshift
-   emacs-slack-patched
    emacs-strace-mode-special ; Colorize `strace' logs
    emacs-terminal-here-checkout
    emacs-thesaurus

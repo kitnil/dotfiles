@@ -20,7 +20,7 @@
  dynamips ;gns3 requirement
  ungoogled-chromium
 
- chicken go m4 racket perl python python-hy r
+ chicken go m4 perl python python-hy r
 
  mercurial gource
  
