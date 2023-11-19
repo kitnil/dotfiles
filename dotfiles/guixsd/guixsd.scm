@@ -1588,6 +1588,7 @@ location / {
 
                          (service prometheus-alertmanager-service-type
                                   (prometheus-alertmanager-configuration
+                                   (requirement '(networking))
                                    (listen-address "127.0.0.1:9093")
                                    (prometheus-alertmanager "/home/oleg/.nix-profile/bin/alertmanager")
                                    ;; (arguments '("--log.level=debug"))
