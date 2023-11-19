@@ -45,26 +45,10 @@
                   home-files-service-type
                   (list `(".direnvrc" ,(local-file (string-append %project-directory "/dot_direnvrc"))))))
 
-(define xmenu.sh
-  (computed-file
-   "xmenu.sh"
-   #~(begin
-       (use-modules (ice-9 rdelim)
-                    (ice-9 popen))
-       (let* ((port (open-pipe* OPEN_READ #$(file-append dhall "/bin/dhall")
-                                "text" "--file" #$(local-file (string-append %project-directory "/dhall/xmenu.dhall"))))
-              (output (read-string port)))
-         (close-port port)
-         (call-with-output-file #$output
-           (lambda (port)
-             (display (string-trim-right output #\newline) port)))
-         (chmod #$output #o555)))))
-
 (define home-bin-service
   (simple-service 'bin-config
                   home-files-service-type
                   (append
-                   `((".local/bin/xmenu.sh" ,xmenu.sh))
                    `((,(string-append ".local/bin/kubectl_complete-all")
                       ,(local-file (string-append %project-directory "/dot_local/bin/executable_kubectl_complete-namespace")
                                    #:recursive? #t))

@@ -4,7 +4,7 @@
 
 (use-package-modules admin algebra aspell astronomy audio backup bash
 bittorrent cdrom chicken chromium ci cmake code commencement compression
-compton configuration-management cpio cran curl databases dhall dictionaries
+compton configuration-management cpio cran curl databases dictionaries
 diffoscope disk dns elf entr file freeipmi games gettext gcc gdb ghostscript
 gimp gl glib gnome gnu-doc gnupg gnuzilla golang graphics graphviz gstreamer
 gtk guile guile-xyz haskell haskell-apps haskell-xyz imagemagick image-viewers

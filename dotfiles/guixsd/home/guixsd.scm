@@ -62,7 +62,6 @@
              (home services audio)
 
              (gnu packages mail)
-             (gnu packages dhall)
              (guile pass)
 
              ;; (dwl-guile home-service)
