@@ -90,7 +90,7 @@
                          "SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt"
                          (string-append "XAUTHORITY=" #$xauthority (number->string #$display))
                          (string-append "XDG_RUNTIME_DIR=" #$xdg-runtime-dir))))
-         (requirement '(user-processes host-name udev))
+         (requirement '(user-processes networking host-name udev))
          (respawn? #f)
          (stop #~(lambda _
                    ;; (invoke "/bin/sh" "-c" (format #f "~s"
