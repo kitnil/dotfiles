@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2020, 2022 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2020, 2022, 2023 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -172,7 +172,7 @@
    (shepherd-service
     (provision '(crowdsec))
     (documentation "Run crowdsec.")
-    (requirement '())
+    (requirement '(networking))
     (start #~(make-forkexec-constructor
               (list (string-append #$(crowdsec-configuration-crowdsec config)
                                    "/bin/crowdsec"))
