@@ -221,7 +221,7 @@
    (shepherd-service
     (provision '(crowdsec-firewall-bouncer))
     (documentation "Run crowdsec-firewall-bouncer.")
-    (requirement '())
+    (requirement '(networking))
     (start #~(make-forkexec-constructor
               (list (string-append #$(crowdsec-firewall-bouncer-configuration-crowdsec-firewall-bouncer config)
                                    "/bin/crowdsec-firewall-bouncer")
