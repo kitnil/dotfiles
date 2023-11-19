@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2021, 2022 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2021, 2022, 2023 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -50,7 +50,7 @@
    (shepherd-service
     (provision '(bird))
     (documentation "Run Bird Internet Routing Daemon")
-    (requirement '(user-processes loopback))
+    (requirement '(user-processes networking))
     (start #~(make-forkexec-constructor
               (list (string-append #$(bird-configuration-bird config)
                                    "/sbin/bird")
