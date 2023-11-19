@@ -794,7 +794,7 @@ location / {
    'dnsmasq-vlan156-configuration shepherd-root-service-type
    (list (shepherd-service
           (provision '(dnsmasq-vlan156-configuration))
-          (requirement '(vswitchd))
+          (requirement '(networking vswitchd))
           (start #~(make-forkexec-constructor
                     (list #$(file-append dnsmasq "/sbin/dnsmasq")
                           "--keep-in-foreground"
