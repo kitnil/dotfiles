@@ -2394,7 +2394,10 @@ namespaces = [ ]
                                                                     ;; Allow to bind services to sockets while address on a network interface is not available.
                                                                     ("net.ipv4.ip_nonlocal_bind" . "1")
                                                                     ;; opensearch requirement
-                                                                    ("vm.max_map_count" . "262144"))
+                                                                    ("vm.max_map_count" . "262144")
+                                                                    ;; piraeus piraeus-op-ns-node requirement
+                                                                    ("fs.inotify.max_user_watches" . "100000")
+                                                                    ("fs.inotify.max_user_instances" . "100000"))
                                                                   %default-sysctl-settings)))))))
 
       (setuid-programs %my-setuid-programs)
