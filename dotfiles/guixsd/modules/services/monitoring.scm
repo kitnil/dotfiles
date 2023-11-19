@@ -198,6 +198,8 @@
   (data-path      prometheus-alertmanager-configuration-data-path      ;string
                   (default "/var/lib/prometheus-alertmanager"))
   (arguments      prometheus-alertmanager-configuration-arguments      ;list of strings
+                  (default '()))
+  (requirement    prometheus-alertmanager-configuration-requirement    ;list of symbols
                   (default '())))
 
 (define (prometheus-alertmanager-account configuration)
@@ -242,12 +244,12 @@
 (define prometheus-alertmanager-shepherd-service
   (match-lambda
     (($ <prometheus-alertmanager-configuration>
-        user group prometheus-alertmanager listen-address config-file data-path arguments)
+        user group prometheus-alertmanager listen-address config-file data-path arguments requirement)
      (list
       (shepherd-service
        (provision '(prometheus-alertmanager))
        (documentation "Run prometheus-alertmanager.")
-       (requirement '())
+       (requirement requirement)
        (start #~(make-forkexec-constructor
                  (list #$prometheus-alertmanager
                        (string-append "--web.listen-address=" #$listen-address)
