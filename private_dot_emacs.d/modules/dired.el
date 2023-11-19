@@ -14,10 +14,6 @@
         (concat dired-omit-files "\\|^\\..+$"))
   (setq dired-omit-files
         (concat dired-omit-files  "\\|.*\\.~$"))
-  (setq dired-guess-shell-alist-default
-        (cons (list "\\.pdf\\'" "zathura")
-              (delete (assoc "\\.pdf\\'" dired-guess-shell-alist-default)
-                      dired-guess-shell-alist-default)))
   (let ((map dired-mode-map))
     (define-key map (kbd "C-c x") 'crux-open-with)
     (define-key map (kbd "<f8>") 'crux-open-with)
