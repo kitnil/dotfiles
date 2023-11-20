@@ -1,0 +1,9 @@
+<network>
+  <name>br154</name>
+  <forward mode='bridge'/>
+  <bridge name='br154'/>
+  <virtualport type='openvswitch'/>
+  <vlan>
+    <tag id='154' nativeMode='untagged'/>
+  </vlan>
+</network>
