@@ -17,11 +17,12 @@
 ;;; along with GNU Guix.  If not, see <http://www.gnu.org/licenses/>.
 
 (define-module (services ddc)
+  #:use-module (gnu packages hardware)
   #:use-module (gnu services base)
   #:use-module (gnu services shepherd)
   #:use-module (gnu services)
   #:use-module (guix gexp)
-  #:export (ddcutil-daemon-service))
+  #:export (ddcutil-daemon-service-type))
 
 ;;; Commentary:
 ;;;
@@ -29,17 +30,31 @@
 ;;;
 ;;; Code:
 
-(define ddcutil-daemon-service
-  (simple-service 'ddcutil-daemon shepherd-root-service-type
-                  (list
-                   (shepherd-service
-                    (provision '(ddcutil-daemon))
-                    (documentation "Run ddcutil-daemon.")
-                    (requirement '(user-processes loopback))
-                    (start #~(make-forkexec-constructor
-                              (list #$(local-file "/home/oleg/src/gitlab.com/wigust/ddcutil-daemon/run.sh"
-                                                  #:recursive? #t))))
-                    (respawn? #f)
-                    (stop #~(make-kill-destructor))))))
+(define (ddcutil-daemon-shepherd-service config)
+  (list
+   (shepherd-service
+    (provision '(ddcutil-daemon))
+    (documentation "Run ddcutil-daemon.")
+    (requirement '(user-processes loopback))
+    (start #~(make-forkexec-constructor
+              (list #$(local-file "/home/oleg/src/gitlab.com/wigust/ddcutil-daemon/run.sh"
+                                  #:recursive? #t))
+              #:environment-variables
+              (append (list (string-append "PATH="
+                                           (string-append #$ddcutil "/bin")))
+                      (remove (lambda (str)
+                                (string-prefix? "PATH=" str))
+                              (environ)))))
+    (respawn? #f)
+    (stop #~(make-kill-destructor)))))
+
+(define ddcutil-daemon-service-type
+  (service-type
+   (name 'ddcutil-daemon)
+   (extensions
+    (list (service-extension shepherd-root-service-type
+                             ddcutil-daemon-shepherd-service)))
+   (default-value '())
+   (description "Run ddcutil-daemon.")))
 
 ;;; ddc.scm ends here

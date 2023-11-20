@@ -1165,7 +1165,7 @@ location / {
                          (service openvpn-service-type %openvpn-configuration-majordomo.ru)
                          (service openvpn-service-type %openvpn-configuration-wugi.info)
 
-                         ddcutil-daemon-service
+                         (service ddcutil-daemon-service-type)
 
                          ;; TODO:
                          ;; (openvpn-client-service
