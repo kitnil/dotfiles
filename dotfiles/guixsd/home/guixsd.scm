@@ -1,5 +1,6 @@
 (use-modules (gnu home)
              (gnu home services)
+             (gnu home services desktop)
              ;; (gnu home services files)
              (gnu home services mcron)
              (gnu home services shells)
@@ -342,6 +343,8 @@
                         (patterns '("INBOX"))
                         (sync '("Pull"))
                         (expunge "None"))))))
+
+    (service home-x11-service-type)
 
     (simple-service 'amtool-config
                     home-files-service-type
