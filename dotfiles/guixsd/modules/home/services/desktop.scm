@@ -18,6 +18,9 @@
     (list (shepherd-service
            (documentation "User greenclip.")
            (provision '(greenclip))
+           ;; Depend on 'x11-display', which sets 'DISPLAY' if an X11 server is
+           ;; available, and fails to start otherwise.
+           (requirement '(x11-display))
            (start #~(make-forkexec-constructor
                      (list #$(file-append greenclip "/bin/greenclip")
                            "daemon")
