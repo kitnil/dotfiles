@@ -36,6 +36,8 @@
         ;; ("https://github.com/sindresorhus/awesome/commits/main.atom" vc awesome)
         ("https://www.trackawesomelist.com/rss.xml" awesome)
 
+        ("https://forum.level1techs.com/posts.rss" virtualization)
+
         ("https://microservices.io/feed.xml" microservices)
         ("https://archlinux.org/feeds/planet" planet)
         ("https://weekly.nixos.org/feeds/all.rss.xml" planet)
