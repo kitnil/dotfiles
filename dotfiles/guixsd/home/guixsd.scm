@@ -242,9 +242,7 @@
                      (let* ((pw    (getpw (getuid)))
                             (shell (passwd:shell pw)))
                        ;; The '--login' option is supported at least by Bash and zsh.
-                       (execl shell "sbcl" "--login" "-c"
-                              (format #f ". /home/oleg/.bash_profile; /run/current-system/profile/bin/sbcl --load ~a"
-                                      #$stumpwp-load-file)))))))))
+                       (execl shell "ratpoison" "--login" "-c" "exec -a ratpoison /home/oleg/.guix-profile/bin/ratpoison"))))))))
     #~(begin
         (let ((file #$(string-append %home "/.xsession")))
           (copy-file #$xsession-file file)
