@@ -1,0 +1,2 @@
+tcp:
+  9050: "tor-controller-instance/example-tor-instance-tor-svc:9050"
