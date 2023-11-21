@@ -197,7 +197,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m0s
-  path: ./infrastructure/base/ingress-nginx
+  path: ./infrastructure/cluster1/ingress-nginx
   prune: true
   sourceRef:
     kind: GitRepository

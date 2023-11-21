@@ -1,0 +1,11 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ingress-nginx
+spec:
+  valuesFrom:
+  - kind: ConfigMap
+    name: ingress-nginx-values
+  - kind: ConfigMap
+    name: ingress-nginx-values-cluster1
