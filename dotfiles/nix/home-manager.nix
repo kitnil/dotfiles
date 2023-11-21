@@ -17,6 +17,8 @@
 
     btfs
 
+    clipboard-jh
+
     clipman wayvnc wtype
 
     difftastic

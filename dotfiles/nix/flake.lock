@@ -1331,6 +1331,21 @@
         "type": "indirect"
       }
     },
+    "nixpkgs-copyq": {
+      "locked": {
+        "lastModified": 1700444282,
+        "narHash": "sha256-s/+tgT+Iz0LZO+nBvSms+xsMqvHt2LqYniG9r+CYyJc=",
+        "owner": "NixOS",
+        "repo": "nixpkgs",
+        "rev": "3f21a22b5aafefa1845dec6f4a378a8f53d8681c",
+        "type": "github"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "ref": "nixpkgs-unstable",
+        "type": "indirect"
+      }
+    },
     "nixpkgs-deprecated": {
       "flake": false,
       "locked": {
@@ -2397,6 +2412,7 @@
         "nixpkgs": "nixpkgs_23",
         "nixpkgs-20-03": "nixpkgs-20-03_2",
         "nixpkgs-20-03-firefox": "nixpkgs-20-03-firefox",
+        "nixpkgs-copyq": "nixpkgs-copyq",
         "nixpkgs-home-manager": "nixpkgs-home-manager",
         "nixpkgs-idea": "nixpkgs-idea",
         "nixpkgs-nixd": "nixpkgs-nixd",
