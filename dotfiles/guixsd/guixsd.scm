@@ -984,7 +984,8 @@ location / {
                            ;; "hms-billing-dev.intr"
                            ))
 
-           "10.8.26.35 tor.home" ;Kubernetes ClusterIP service
+           ;; Kubernetes Nginx-Ingress -> Tor ClusterIP service
+           "192.168.154.227 tor.home"
 
            "192.168.0.145 prometheus.wugi.info"
 
