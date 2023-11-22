@@ -14,3 +14,5 @@ definekey top s-e exec emacsclient -cn .
 bind k kill
 bind C-k kill
 definekey top s-k kill
+
+definekey top s-s exec /home/oleg/.local/share/chezmoi/dot_local/bin/executable_passmenu
