@@ -485,23 +485,6 @@ location / {
 ;;   <address type='pci' domain='0x0000' bus='0x01' slot='0x01' function='0x0'/>
 ;; </interface>
 
-(define vxlan0
-  (with-imported-modules '((guix build utils))
-    (program-file
-     "vxlan0"
-     #~(begin
-         (use-modules (guix build utils))
-
-         (define (ip . args)
-           (apply invoke/quiet #$(file-append iproute "/sbin/ip") args))
-
-         (ip "link" "add" "vxlan0" "type" "vxlan" "id" "1"
-             "remote" "185.105.108.96" "dstport" "4789"
-             "dev" "br0")
-         (ip "link" "set" "vxlan0" "up")
-         (ip "addr" "add" "10.0.0.107/24" "dev" "vxlan0")
-         (ip "route" "add" "141.80.181.40/32" "via" "10.0.0.1")))))
-
 (define %openvswitch-configuration-service
   (simple-service
    'openvswitch-configuration shepherd-root-service-type
@@ -530,18 +513,17 @@ location / {
                              (string-join
                               (list "--may-exist" "add-port" "br0" "enp34s0"
                                     "vlan_mode=native-untagged")))
-                            (system* #$vxlan0)
 
+                            ;; Transparent proxy connections to
+                            ;; ci.guix.gnu.org via Tor network.
                             (iptables
                              (string-join
                               '("-t" "nat"
-                                "-A" "OUTPUT"
-                                "-s" "192.168.0.0/24"
+                                "-I" "OUTPUT"
                                 "-d" "141.80.181.40/32"
                                 "-p" "tcp"
-                                "--syn"
                                 "-j" "REDIRECT"
-                                "--to-ports" "9040")))
+                                "--to-ports" "888")))
 
                             ;; Forward connections from 192.168.0.145:6443 to
                             ;; 192.168.154.1:6443 for Kubernetes API on
@@ -569,54 +551,6 @@ location / {
                                 "--dport" "6443"
                                 "-j" "SNAT"
                                 "--to-source" "192.168.0.145")))
-
-                            ;; # notebook->guixsd->ci.guix.gnu.org
-                            (iptables
-                             (string-join
-                              '("-t" "nat"
-                                "-A" "POSTROUTING"
-                                "-o" "vxlan0"
-                                "-j" "MASQUERADE")))
-                            (iptables
-                             (string-join
-                              '("-A" "FORWARD"
-                                "-i" "tapvpn1"
-                                "-o" "vxlan0"
-                                "-m" "state" "--state" "RELATED,ESTABLISHED"
-                                "-j" "ACCEPT")))
-                            (iptables
-                             (string-join
-                              '("-A" "FORWARD"
-                                "-i" "vxlan0"
-                                "-o" "tapvpn1"
-                                "-j" "ACCEPT")))
-                            (iptables
-                             (string-join
-                              '("-A" "FORWARD"
-                                "-i" "vxlan0"
-                                "-o" "tapvpn1"
-                                "-m" "state" "--state" "RELATED,ESTABLISHED"
-                                "-j" "ACCEPT")))
-                            (iptables
-                             (string-join
-                              '("-A" "FORWARD"
-                                "-i" "tapvpn1"
-                                "-o" "vxlan0"
-                                "-j" "ACCEPT")))
-                            (iptables
-                             (string-join
-                              '("-A" "FORWARD"
-                                "-i" "br0"
-                                "-o" "vxlan0"
-                                "-j" "ACCEPT")))
-                            (iptables
-                             (string-join
-                              '("-A" "FORWARD"
-                                "-i" "vxlan0"
-                                "-o" "br0"
-                                "-m" "state"
-                                "--state" "RELATED,ESTABLISHED"
-                                "-j" "ACCEPT")))
 
                             ;; VLAN 154 provides:
                             ;; - Network via Whonix
