@@ -82,7 +82,8 @@ decrypt:
 
 .PHONY: dotfiles/scripts/nix-ssh-known-hosts-to-file.scm
 dotfiles/scripts/nix-ssh-known-hosts-to-file.scm:
-	$(shell guix build -f dotfiles/scripts/nix-ssh-known-hosts-to-file.scm)/bin/run.scm > $(HOME)/.ssh/known_hosts2
+	mkdir -p private_dot_ssh
+	$(shell guix build -f dotfiles/scripts/nix-ssh-known-hosts-to-file.scm)/bin/run.scm > private_dot_ssh/known_hosts2
 
 .PHONY: dotfiles/guixsd/home/guixsd.scm
 dotfiles/guixsd/home/guixsd.scm:
@@ -142,6 +143,7 @@ install: decrypt dotfiles/guixsd/machines.scm dotfiles/nix/nix.conf
 	install -Dm644 dotfiles/guile/pass.scm $(HOME)/.config/guile/pass.scm
 	install -Dm644 dotfiles/guile/config.scm $(HOME)/.config/guile/config.scm
 	guix home --load-path=dotfiles/guixsd/modules reconfigure --no-substitutes dotfiles/guixsd/home/$(HOSTNAME).scm
+	install -Dm644 private_dot_ssh/known_hosts2 $(HOME)/.ssh/known_hosts2
 
 .PHONY: shepherd-restart
 shepherd-restart:
