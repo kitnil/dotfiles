@@ -260,3 +260,6 @@ guix-system-build-channels-current:
             -- system build \
                 --load-path="$(PWD)/dotfiles/guixsd/modules:$(GUILE_LOAD_PATH)" \
                 "$(PWD)/dotfiles/guixsd/$(HOSTNAME).scm"
+
+.PHONY: all
+all: dotfiles/scripts/nix-ssh-known-hosts-to-file.scm
