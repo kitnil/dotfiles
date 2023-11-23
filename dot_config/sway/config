@@ -288,7 +288,7 @@ bar {
 
 input * {
     xkb_layout custom,ru
-    xkb_options grp:shift_toggle,grp_led:scroll
+    xkb_options grp:win_space_toggle,grp_led:scroll
 }
 
 # class                 border  backgr. text    indicator child_border
