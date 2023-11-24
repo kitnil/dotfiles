@@ -44,25 +44,19 @@ case "$1" in
                     touch /var/run/maintenance/libvirt-win10
                 }
                 echo "Resetting GPU after '${1}' domain '${2}' phase."
-                if [[ -e /sys/kernel/debug/dri/0/amdgpu_gpu_recover ]]
-                then
-                    if [[ -e /sys/bus/pci/devices/0000:12:00.1/remove ]]
+                for device in /sys/kernel/debug/dri/*
+                do
+                    if grep 0000:12:00.0 "${device}/name"
                     then
-                        echo 1 > /sys/bus/pci/devices/0000:12:00.1/remove
-                        cat /sys/kernel/debug/dri/0/amdgpu_gpu_recover
+                        if [[ -e /sys/bus/pci/devices/0000:12:00.1/remove ]]
+                        then
+                            echo 1 > /sys/bus/pci/devices/0000:12:00.1/remove
+                        fi
+                        cat "${device}/amdgpu_gpu_recover"
                         echo 1 > /sys/bus/pci/rescan
+                        break
                     fi
-                    cat /sys/kernel/debug/dri/0/amdgpu_gpu_recover
-                elif [[ -e /sys/kernel/debug/dri/2/amdgpu_gpu_recover ]]
-                then
-                    if [[ -e /sys/bus/pci/devices/0000:12:00.1/remove ]]
-                    then
-                        echo 1 > /sys/bus/pci/devices/0000:12:00.1/remove
-                        cat /sys/kernel/debug/dri/2/amdgpu_gpu_recover
-                        echo 1 > /sys/bus/pci/rescan
-                    fi
-                    cat /sys/kernel/debug/dri/2/amdgpu_gpu_recover
-                fi
+                done
                 ;;
         esac
         ;;
