@@ -1424,65 +1424,65 @@ location / {
 
                          (service prometheus-lvm-exporter-service-type)
 
-                         (service prometheus-restic-exporter-service-type
-                                  (prometheus-restic-exporter-configuration
-                                   (name "srv-backup-guixsd")
-                                   (environment-variables
-                                    (list
-                                     (string-append
-                                      "RESTIC_PASSWORD="
-                                      (if (= (getuid) 0)
-                                          (with-input-from-file "/etc/guix/secrets/restic"
-                                            read-string)
-                                          "skipping /etc/guix/secrets/restic"))
-                                     "RESTIC_REPOSITORY=/srv/backup/guixsd"
-                                     "RESTIC_EXPORTER_PORT=8049"
-                                     "RESTIC_EXPORTER_ADDRESS=127.0.0.1"))))
+                         ;; (service prometheus-restic-exporter-service-type
+                         ;;          (prometheus-restic-exporter-configuration
+                         ;;           (name "srv-backup-guixsd")
+                         ;;           (environment-variables
+                         ;;            (list
+                         ;;             (string-append
+                         ;;              "RESTIC_PASSWORD="
+                         ;;              (if (= (getuid) 0)
+                         ;;                  (with-input-from-file "/etc/guix/secrets/restic"
+                         ;;                    read-string)
+                         ;;                  "skipping /etc/guix/secrets/restic"))
+                         ;;             "RESTIC_REPOSITORY=/srv/backup/guixsd"
+                         ;;             "RESTIC_EXPORTER_PORT=8049"
+                         ;;             "RESTIC_EXPORTER_ADDRESS=127.0.0.1"))))
 
-                         (service prometheus-restic-exporter-service-type
-                                  (prometheus-restic-exporter-configuration
-                                   (name "srv-backup-ubuntu")
-                                   (environment-variables
-                                    (list
-                                     (string-append
-                                      "RESTIC_PASSWORD="
-                                      (if (= (getuid) 0)
-                                          (with-input-from-file "/etc/guix/secrets/restic"
-                                            read-string)
-                                          "skipping /etc/guix/secrets/restic"))
-                                     "RESTIC_REPOSITORY=/srv/backup/ubuntu"
-                                     "RESTIC_EXPORTER_PORT=8050"
-                                     "RESTIC_EXPORTER_ADDRESS=127.0.0.1"))))
+                         ;; (service prometheus-restic-exporter-service-type
+                         ;;          (prometheus-restic-exporter-configuration
+                         ;;           (name "srv-backup-ubuntu")
+                         ;;           (environment-variables
+                         ;;            (list
+                         ;;             (string-append
+                         ;;              "RESTIC_PASSWORD="
+                         ;;              (if (= (getuid) 0)
+                         ;;                  (with-input-from-file "/etc/guix/secrets/restic"
+                         ;;                    read-string)
+                         ;;                  "skipping /etc/guix/secrets/restic"))
+                         ;;             "RESTIC_REPOSITORY=/srv/backup/ubuntu"
+                         ;;             "RESTIC_EXPORTER_PORT=8050"
+                         ;;             "RESTIC_EXPORTER_ADDRESS=127.0.0.1"))))
 
-                         (service prometheus-restic-exporter-service-type
-                                  (prometheus-restic-exporter-configuration
-                                   (name "srv-backup-win10")
-                                   (environment-variables
-                                    (list
-                                     (string-append
-                                      "RESTIC_PASSWORD="
-                                      (if (= (getuid) 0)
-                                          (with-input-from-file "/etc/guix/secrets/windows"
-                                            read-string)
-                                          "skipping /etc/guix/secrets/windows"))
-                                     "RESTIC_REPOSITORY=/srv/backup/win10"
-                                     "RESTIC_EXPORTER_PORT=8051"
-                                     "RESTIC_EXPORTER_ADDRESS=127.0.0.1"))))
+                         ;; (service prometheus-restic-exporter-service-type
+                         ;;          (prometheus-restic-exporter-configuration
+                         ;;           (name "srv-backup-win10")
+                         ;;           (environment-variables
+                         ;;            (list
+                         ;;             (string-append
+                         ;;              "RESTIC_PASSWORD="
+                         ;;              (if (= (getuid) 0)
+                         ;;                  (with-input-from-file "/etc/guix/secrets/windows"
+                         ;;                    read-string)
+                         ;;                  "skipping /etc/guix/secrets/windows"))
+                         ;;             "RESTIC_REPOSITORY=/srv/backup/win10"
+                         ;;             "RESTIC_EXPORTER_PORT=8051"
+                         ;;             "RESTIC_EXPORTER_ADDRESS=127.0.0.1"))))
 
-                         (service prometheus-restic-exporter-service-type
-                                  (prometheus-restic-exporter-configuration
-                                   (name "srv-backup-ntfsgames")
-                                   (environment-variables
-                                    (list
-                                     (string-append
-                                      "RESTIC_PASSWORD="
-                                      (if (= (getuid) 0)
-                                          (with-input-from-file "/etc/guix/secrets/windows"
-                                            read-string)
-                                          "skipping /etc/guix/secrets/windows"))
-                                     "RESTIC_REPOSITORY=/srv/backup/ntfsgames"
-                                     "RESTIC_EXPORTER_PORT=8052"
-                                     "RESTIC_EXPORTER_ADDRESS=127.0.0.1"))))
+                         ;; (service prometheus-restic-exporter-service-type
+                         ;;          (prometheus-restic-exporter-configuration
+                         ;;           (name "srv-backup-ntfsgames")
+                         ;;           (environment-variables
+                         ;;            (list
+                         ;;             (string-append
+                         ;;              "RESTIC_PASSWORD="
+                         ;;              (if (= (getuid) 0)
+                         ;;                  (with-input-from-file "/etc/guix/secrets/windows"
+                         ;;                    read-string)
+                         ;;                  "skipping /etc/guix/secrets/windows"))
+                         ;;             "RESTIC_REPOSITORY=/srv/backup/ntfsgames"
+                         ;;             "RESTIC_EXPORTER_PORT=8052"
+                         ;;             "RESTIC_EXPORTER_ADDRESS=127.0.0.1"))))
 
                          (service prometheus-tp-link-exporter-service-type
                                   (prometheus-tp-link-exporter-configuration
@@ -1903,13 +1903,13 @@ PasswordAuthentication yes")))
                          ;;                             #$docker-compose-radarr-service
                          ;;                             #$docker-compose-jackett-service))))))))))))
 
-                         (service restic-rest-service-type
-                                  (restic-rest-configuration
-                                   (restic-rest "/home/oleg/.nix-profile/bin/rest-server")
-                                   (listen-address "127.0.0.1:6050")
-                                   (data-path "/srv/restic")
-                                   (authentication? #f)
-                                   (prometheus? #t)))
+                         ;; (service restic-rest-service-type
+                         ;;          (restic-rest-configuration
+                         ;;           (restic-rest "/home/oleg/.nix-profile/bin/rest-server")
+                         ;;           (listen-address "127.0.0.1:6050")
+                         ;;           (data-path "/srv/restic")
+                         ;;           (authentication? #f)
+                         ;;           (prometheus? #t)))
 
                          ;; (simple-service 'my-cron-jobs
                          ;;                 mcron-service-type
