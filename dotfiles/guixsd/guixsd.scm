@@ -98,10 +98,10 @@
               "proxy_set_header X-Real-IP $remote_addr;" ;# pass on real client's IP
               "proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;"
               "proxy_set_header X-Forwarded-Proto $scheme;"))))))
-        ;; (nginx-server-configuration
-        ;;  (server-name '("www.tld"))
-        ;;  (listen '("192.168.0.144:80"))
-        ;;  (root "/srv/share"))
+        (nginx-server-configuration
+         (server-name '("www.tld"))
+         (listen '("192.168.0.144:80"))
+         (root "/srv/share"))
         (nginx-server-configuration
          (server-name '("opensearch.home"))
          (listen '("192.168.154.1:80"))
@@ -126,26 +126,26 @@
          (server-name '("techinfo.intr"))
          (listen '("192.168.0.144:80"))
          (root "/var/www/techinfo.intr"))
-        ;; (nginx-server-configuration
-        ;;  (server-name '("iso.wugi.info"))
-        ;;  (listen '("192.168.0.144:80" "192.168.0.144:443 ssl"))
-        ;;  (ssl-certificate (letsencrypt-certificate "iso.wugi.info"))
-        ;;  (ssl-certificate-key (letsencrypt-key "iso.wugi.info"))
-        ;;  (root "/srv/iso")
-        ;;  (locations
-        ;;   (list
-        ;;    (nginx-location-configuration
-        ;;     (uri "/windows")
-        ;;     (body
-        ;;      '("allow 192.168.0.0/16;"
-        ;;        "allow 10.0.0.0/8;"
-        ;;        "allow 172.16.103.0/24;"
-        ;;        "allow 78.108.80.212/32;" ;Majordomo NAT
-        ;;        "allow 88.201.161.72/32;"
-        ;;        "deny all;")))
-        ;;    (nginx-location-configuration
-        ;;     (uri "/.well-known")
-        ;;     (body '("root /var/www;"))))))
+        (nginx-server-configuration
+         (server-name '("iso.wugi.info"))
+         (listen '("192.168.0.144:80" "192.168.0.144:443 ssl"))
+         (ssl-certificate (letsencrypt-certificate "iso.wugi.info"))
+         (ssl-certificate-key (letsencrypt-key "iso.wugi.info"))
+         (root "/srv/iso")
+         (locations
+          (list
+           (nginx-location-configuration
+            (uri "/windows")
+            (body
+             '("allow 192.168.0.0/16;"
+               "allow 10.0.0.0/8;"
+               "allow 172.16.103.0/24;"
+               "allow 78.108.80.212/32;" ;Majordomo NAT
+               "allow 88.201.161.72/32;"
+               "deny all;")))
+           (nginx-location-configuration
+            (uri "/.well-known")
+            (body '("root /var/www;"))))))
         (nginx-server-configuration
          (server-name '("gitlab.wugi.info"))
          (listen '("127.0.0.1:80"))
@@ -829,14 +829,14 @@ location / {
       ;;                                   (label "netboot.xyz")
       ;;                                   (linux netboot.xyz))))))
 
-      (file-systems (append ;; (list (file-system
-                            ;;         (device (file-system-label "data18"))
-                            ;;         (mount-point "/srv")
-                            ;;         (options
-                            ;;          (string-join (list "compress=zstd:15"
-                            ;;                             "nossd")
-                            ;;                       ","))
-                            ;;         (type "btrfs")))
+      (file-systems (append (list (file-system
+                                    (device (file-system-label "data18"))
+                                    (mount-point "/srv")
+                                    (options
+                                     (string-join (list "compress=zstd:15"
+                                                        "nossd")
+                                                  ","))
+                                    (type "btrfs")))
                             (map (lambda (subvolume)
                                    (file-system
                                      (device (file-system-label "btrfs1"))
@@ -1746,17 +1746,16 @@ PasswordAuthentication yes")))
                          (service nfs-service-type
                                   (nfs-configuration
                                    (exports
-                                    '(;; ("/srv"
-                                      ;;  "192.168.154.0/24(ro,insecure,no_subtree_check,crossmnt,fsid=0)")
-                                      ;; ("/srv/kubernetes"
-                                      ;;  "192.168.25.0/24(rw,insecure,no_subtree_check,crossmnt,fsid=1,anonuid=0,anongid=0)")
+                                    '(("/srv"
+                                       "192.168.154.0/24(ro,insecure,no_subtree_check,crossmnt,fsid=0)")
+                                      ("/srv/kubernetes"
+                                       "192.168.25.0/24(rw,insecure,no_subtree_check,crossmnt,fsid=1,anonuid=0,anongid=0)")
                                       ("/home/oleg/src"
                                        "192.168.154.0/24(rw,insecure,no_subtree_check,no_root_squash,crossmnt,fsid=2)")
-                                      ;; ("/srv/vagrant"
-                                      ;;  "192.168.154.0/24(rw,insecure,no_subtree_check,no_root_squash,crossmnt,fsid=3)")
-                                      ;; ("/srv/lib/video"
-                                      ;;  "192.168.0.126/24(ro,insecure,no_subtree_check,crossmnt,fsid=4)")
-                                      ))))
+                                      ("/srv/vagrant"
+                                       "192.168.154.0/24(rw,insecure,no_subtree_check,no_root_squash,crossmnt,fsid=3)")
+                                      ("/srv/lib/video"
+                                       "192.168.0.126/24(ro,insecure,no_subtree_check,crossmnt,fsid=4)")))))
 
                          (service (certbot-service-type-custom-nginx "192.168.0.144")
                                   (certbot-configuration
