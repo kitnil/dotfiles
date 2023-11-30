@@ -52,7 +52,7 @@ bpf:
 bgp:
   # -- Enable BGP support inside Cilium; embeds a new ConfigMap for BGP inside
   # cilium-agent and cilium-operator
-  enabled: false
+  enabled: true
   announce:
     # -- Enable allocation and announcement of service LoadBalancer IPs
     loadbalancerIP: true
