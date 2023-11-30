@@ -62,10 +62,6 @@ l2announcements:
   # -- Enable L2 announcements
   enabled: true
 
-externalIPs:
-  # -- Enable ExternalIPs service support.
-  enabled: true
-
 ipam:
   mode: "kubernetes"
 
