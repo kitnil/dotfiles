@@ -516,6 +516,8 @@ location / {
 
                             ;; Transparent proxy connections to
                             ;; ci.guix.gnu.org via Tor network.
+                            ;;
+                            ;; From current machine:
                             (iptables
                              (string-join
                               '("-t" "nat"
@@ -524,6 +526,17 @@ location / {
                                 "-p" "tcp"
                                 "-j" "REDIRECT"
                                 "--to-ports" "888")))
+                            ;;
+                            ;; From other machines:
+                            (iptables
+                             (string-join
+                              '("-t" "nat"
+                                "-I" "PREROUTING"
+                                "-p" "tcp"
+                                "--destination" "141.80.181.40/32"
+                                "--dport" "443"
+                                "-j" "DNAT"
+                                "--to-destination" "127.0.0.1:888")))
 
                             ;; Forward connections from 192.168.0.145:6443 to
                             ;; 192.168.154.1:6443 for Kubernetes API on
