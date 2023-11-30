@@ -5,6 +5,7 @@ metadata:
     kubevirt.io/vm: vm-guix-datavolume
   name: vm-guix-datavolume
 spec:
+  runStrategy: Manual
   template:
     metadata:
       labels:
