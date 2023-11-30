@@ -3,7 +3,6 @@ kind: Deployment
 metadata:
   name: opensearch-node1
 spec:
-  replicas: 1
   selector:
     matchLabels:
       app.kubernetes.io/name: opensearch-node1
