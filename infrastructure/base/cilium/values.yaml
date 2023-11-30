@@ -57,11 +57,6 @@ bgp:
     # -- Enable allocation and announcement of service LoadBalancer IPs
     loadbalancerIP: true
 
-# -- Configure L2 announcements
-l2announcements:
-  # -- Enable L2 announcements
-  enabled: true
-
 ipam:
   mode: "kubernetes"
 
