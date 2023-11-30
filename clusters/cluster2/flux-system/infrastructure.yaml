@@ -21,6 +21,7 @@ spec:
   interval: 1m0s
   path: ./infrastructure/cluster2/cilium
   prune: false
+  suspend: true
   sourceRef:
     kind: GitRepository
     name: flux-system
