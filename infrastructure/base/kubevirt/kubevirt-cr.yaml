@@ -9,7 +9,12 @@ spec:
   configuration:
     developerConfiguration:
       featureGates: []
-  customizeComponents: {}
+  customizeComponents:
+    patches:
+    - resourceType: Deployment
+      resourceName: virt-controller
+      patch: '{"spec":{"replicas":1}}'
+      type: strategic
   imagePullPolicy: IfNotPresent
   workloadUpdateStrategy: {}
   infra:
