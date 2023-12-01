@@ -90,6 +90,27 @@ externalWorkloads:
   # Required for cluster-mesh.
   enabled: true
 
+# Kubernetes Without kube-proxy — Cilium 1.9.18 documentation
+# https://docs.cilium.io/en/v1.9/gettingstarted/kubeproxy-free/#hybrid-mode
+#
+# Cilium also supports a hybrid DSR and SNAT mode, that is, DSR is performed
+# for TCP and SNAT for UDP connections. This has the advantage that it removes
+# the need for manual MTU changes in the network while still benefiting from
+# the latency improvements through the removed extra hop for replies, in
+# particular, when TCP is the main transport for workloads.
+#
+# The mode setting `loadBalancer.mode` allows to control the behavior through
+# the options `dsr`, `snat` and `hybrid`. By default the `snat` mode is used
+# in the agent.
+loadBalancer:
+  mode: hybrid
+
+tunnel: "disabled" # required for loadBalancer.mode=hybrid
+
+# -- Enable installation of PodCIDR routes between worker
+# nodes if worker nodes share a common L2 network segment.
+autoDirectNodeRoutes: true
+
 # -- Enable Layer 7 network policy.
 # Egress gateway partially incompatible with L7 policies · Issue #19642
 # https://github.com/cilium/cilium/issues/19642
