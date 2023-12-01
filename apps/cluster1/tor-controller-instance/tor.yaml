@@ -4,5 +4,5 @@ metadata:
   name: example-tor-instance
 spec:
   configMapKeyRef:
-    name: tor-configuration
+  - name: tor-configuration
     key: torrc
