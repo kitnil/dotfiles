@@ -4,6 +4,8 @@ namespace: kubevirt
 resources:
   - kubevirt-cr.yaml
   - kubevirt-operator.yaml
+patchesStrategicMerge:
+  - virt-operator.yaml
 patches:
   - target:
       kind: KubeVirt
