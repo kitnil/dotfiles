@@ -98,7 +98,10 @@ containerd_pid="$(cat /run/containerd/containerd.pid)"
 prlimit --pid "$containerd_pid" --nofile=1048576:1048576
 prlimit --pid "$containerd_pid" --nproc=unlimited
 
-kubelet \
+/run/current-system/profile/bin/cgcreate -a root -t root -g memory:kubelet
+echo 134217728 > /sys/fs/cgroup/kubelet/memory.max
+
+/run/current-system/profile/bin/cgexec -g memory:kubelet kubelet \
     --address=192.168.154.1 \
     --authentication-token-webhook \
     --authentication-token-webhook-cache-ttl=10s \
