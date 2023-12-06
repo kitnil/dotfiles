@@ -3,5 +3,3 @@ kind: Kustomization
 namespace: guix
 resources:
 - ../../base/guix
-patchesStrategicMerge:
-- virtualmachine.yaml
