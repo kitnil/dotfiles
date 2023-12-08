@@ -34,3 +34,5 @@ spec:
           readOnlyRootFilesystem: true
           allowPrivilegeEscalation: false
           runAsNonRoot: true
+          runAsUser: 9219
+          runAsGroup: 9219
