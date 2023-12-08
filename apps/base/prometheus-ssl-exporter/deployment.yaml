@@ -36,3 +36,4 @@ spec:
           runAsNonRoot: true
           runAsUser: 9219
           runAsGroup: 9219
+      serviceAccountName: ssl-exporter
