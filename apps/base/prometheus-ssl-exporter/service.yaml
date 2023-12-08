@@ -9,7 +9,7 @@ spec:
   ports:
   - port: 9219
     protocol: TCP
-    targetPort: 80
+    targetPort: 9219
     name: http
   selector:
     app.kubernetes.io/name: ssl-exporter

@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: ssl-exporter
+spec:
+  template:
+    spec:
+      containers:
+      - name: ssl-exporter
+        volumeMounts:
+        - mountPath: /etc/kubernetes/pki
+          name: etc-kubernetes-pki
+      volumes:
+      - name: etc-kubernetes-pki
+        hostPath:
+          path: /etc/kubernetes/pki
+          type: Directory
+          readOnly: true
