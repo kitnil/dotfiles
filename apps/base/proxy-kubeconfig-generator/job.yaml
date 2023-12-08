@@ -1,0 +1,21 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  labels:
+    app: proxy-kubeconfig-generator
+  name: proxy-kubeconfig-generator
+spec:
+  template:
+    metadata:
+      labels:
+        app: proxy-kubeconfig-generator
+    spec:
+      serviceAccountName: proxy-kubeconfig-generator
+      containers:
+      - image: ghcr.io/maxgio92/proxy-kubeconfig-generator:0.1.3
+        name: proxy-kubeconfig-generator
+        securityContext:
+          capabilities:
+            drop:
+            - ALL
+      restartPolicy: OnFailure

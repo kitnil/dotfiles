@@ -1,0 +1,35 @@
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: proxy-kubeconfig-generator
+---
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: proxy-kubeconfig-generator
+rules:
+- apiGroups:
+  - ""
+  resources:
+  - serviceaccounts
+  - serviceaccounts/token
+  verbs:
+  - create
+  - delete
+  - get
+  - list
+  - patch
+  - update
+  - watch
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: proxy-kubeconfig-generator
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: proxy-kubeconfig-generator
+subjects:
+- kind: ServiceAccount
+  name: proxy-kubeconfig-generator
