@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: ssl-exporter
+  labels:
+    app.kubernetes.io/name: ssl-exporter
+    app.kubernetes.io/part-of: ssl-exporter
+spec:
+  ports:
+  - port: 9219
+    protocol: TCP
+    targetPort: 80
+    name: http
+  selector:
+    app.kubernetes.io/name: ssl-exporter
+    app.kubernetes.io/part-of: ssl-exporter
+  type: ClusterIP
