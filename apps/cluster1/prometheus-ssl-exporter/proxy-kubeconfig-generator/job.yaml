@@ -11,3 +11,4 @@ spec:
         - --serviceaccount=prometheus-ssl-exporter
         - --namespace=prometheus-ssl-exporter
         - --server=https://kubernetes.default.svc:443
+        - --server-tls-secret-name=kubeconfig
