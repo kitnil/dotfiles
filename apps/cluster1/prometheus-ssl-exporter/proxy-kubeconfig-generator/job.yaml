@@ -1,0 +1,13 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: proxy-kubeconfig-generator
+spec:
+  template:
+    spec:
+      containers:
+      - name: proxy-kubeconfig-generator
+        args:
+        - --serviceaccount=prometheus-ssl-exporter
+        - --namespace=prometheus-ssl-exporter
+        - --server=https://kubernetes.default.svc:443
