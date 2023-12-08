@@ -15,6 +15,8 @@ spec:
     spec:
       containers:
       - image: ribbybibby/ssl-exporter:2.4.2
+        args:
+        - --config.file=/config/config.yaml
         name: ssl-exporter
         ports:
         - containerPort: 9219
@@ -36,4 +38,11 @@ spec:
           runAsNonRoot: true
           runAsUser: 9219
           runAsGroup: 9219
+        volumeMounts:
+        - name: config
+          mountPath: /config
       serviceAccountName: ssl-exporter
+      volumes:
+      - name: config
+        configMap:
+          name: ssl-exporter
