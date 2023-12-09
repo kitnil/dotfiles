@@ -186,7 +186,7 @@ bindsym $mod+y exec clipman pick -t wofi
     bindsym $mod+Shift+a sticky toggle
 
     # Swap focus between the tiling area and the floating area
-    bindsym $mod+space focus mode_toggle
+    # bindsym $mod+space focus mode_toggle
 
     # move focus to the parent container
     bindsym $mod+a focus parent
