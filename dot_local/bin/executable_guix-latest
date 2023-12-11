@@ -3,7 +3,7 @@
 !#
 
 ;;;; guix-latest --- Build Guix system with latest channels.
-;;;; Copyright © 2021, 2022 Oleg Pykhalov <go.wigust@gmail.com>
+;;;; Copyright © 2021, 2022, 2023 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;; Released under the GNU GPLv3 or any later version.
 
 (define-module (guix-latest)
@@ -78,7 +78,7 @@
               %default-guix-channel
               (channel-with-substitutes-available
                %default-guix-channel
-               "https://ci.guix.gnu.org"))
+               "http://ci.guix.gnu.org.wugi.info"))
           (map (lambda (channel)
                  (match-record channel (@@ (guix channels) <channel>)
                    (name url introduction)
