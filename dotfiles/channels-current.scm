@@ -3,7 +3,7 @@
         (url "https://git.savannah.gnu.org/git/guix.git")
         (branch "master")
         (commit
-          "fc6bdaad57bf91609849623c5f485403c030cb49")
+          "5df4084ecdd5f33a8083bc05850f85c5e3eaae44")
         (introduction
           (make-channel-introduction
             "9edb3f66fd807b096b48283debdcddccfea34bad"
@@ -16,19 +16,19 @@
         (commit
           "1cb2b18e4b7e83c396dcdde75ed6b532440d627a"))
       (channel
-       (name 'prometheus-shepherd-exporter)
-       (url "https://gitlab.com/wigust/prometheus-shepherd-exporter")
-       (branch "master")
-       (commit
-         "542ec52c4955c854e770f615148ced99de5e9fec"))
-      (channel
         (name 'nonguix)
         (url "https://gitlab.com/nonguix/nonguix")
         (branch "master")
         (commit
-          "16e9c0d69b7e786f3c86ab5f6f7a20e1f28603ce")
+          "e721ad7dfd050aaca55c839dbf5ca1ba3345567c")
         (introduction
           (make-channel-introduction
             "897c1a470da759236cc11798f4e0a5f7d4d59fbc"
             (openpgp-fingerprint
-              "2A39 3FFF 68F4 EF7A 3D29  12AF 6F51 20A0 22FB B2D5")))))
+              "2A39 3FFF 68F4 EF7A 3D29  12AF 6F51 20A0 22FB B2D5"))))
+      (channel
+        (name 'prometheus-shepherd-exporter)
+        (url "https://gitlab.com/wigust/prometheus-shepherd-exporter")
+        (branch "master")
+        (commit
+          "542ec52c4955c854e770f615148ced99de5e9fec")))
