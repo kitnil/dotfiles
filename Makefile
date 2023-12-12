@@ -127,7 +127,7 @@ dotfiles/mjru/intr.nix:
 	dotfiles/mjru/intr.nix > dotfiles/mjru/intr.json
 
 .PHONY: install
-install: decrypt dotfiles/guixsd/machines.scm dotfiles/nix/nix.conf
+install: decrypt dotfiles/guixsd/machines.scm dotfiles/nix/nix.conf dotfiles/scripts/nix-ssh-known-hosts-to-file.scm
 	dot_local/bin/executable_gpg-unlock > /dev/null
 	update-desktop-database $(HOME)/.local/share/applications
 	mkdir -p $(HOME)/.config/mpv/scripts
