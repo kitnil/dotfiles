@@ -19,14 +19,14 @@
 (define-public crowdsec
   (package
     (name "crowdsec")
-    (version "1.3.0")
+    (version "1.5.0")
     (source (origin
               (method url-fetch)
               (uri (string-append "https://github.com/crowdsecurity/crowdsec/releases/download/v"
-                                  version "/crowdsec-release-static.tgz"))
+                                  version "/crowdsec-release.tgz"))
               (sha256
                (base32
-                "0cp1x5k7fzsgk794pr5jxfdxsz8fgjpzzr2wfvzf9ndjdz9s6wwb"))))
+                "02lapak173y9c96jwghwq9fm6yzjmzcqzil4b5hrr8v46044rl2l"))))
     (build-system trivial-build-system)
     (inputs
      (list bash-minimal gzip tar glibc patchelf))
@@ -51,11 +51,11 @@
          (copy-file "cmd/crowdsec-cli/cscli"
                     (string-append %output "/bin/cscli"))
          (mkdir-p (string-append %output "/share/crowdsec/plugins"))
-         (copy-file "plugins/notifications/email/notification-email"
+         (copy-file "cmd/notification-email/notification-email"
                     (string-append %output "/share/crowdsec/plugins/notification-email"))
-         (copy-file "plugins/notifications/http/notification-http"
+         (copy-file "cmd/notification-http/notification-http"
                     (string-append %output "/share/crowdsec/plugins/notification-http"))
-         (copy-file "plugins/notifications/slack/notification-slack"
+         (copy-file "cmd/notification-slack/notification-slack"
                     (string-append %output "/share/crowdsec/plugins/notification-slack")))))
     (home-page "https://crowdsec.net/")
     (synopsis "Collaborative behavior detection engine")
