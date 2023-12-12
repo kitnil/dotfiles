@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+set -o nounset -o errexit -o pipefail -o xtrace
+
+cat /sys/kernel/mm/ksm/use_zero_pages
+echo 1 | tee /sys/kernel/mm/ksm/use_zero_pages
+
+cat /sys/kernel/mm/ksm/pages_to_scan
+echo 6285 | tee /sys/kernel/mm/ksm/pages_to_scan
+
+cat /sys/kernel/mm/ksm/sleep_millisecs
+echo 200 | tee /sys/kernel/mm/ksm/sleep_millisecs
+
+cat /sys/kernel/mm/ksm/run
+echo 1 | tee /sys/kernel/mm/ksm/run
+

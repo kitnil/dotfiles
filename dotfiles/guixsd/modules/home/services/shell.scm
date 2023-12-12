@@ -162,6 +162,7 @@
                           "my-swank"
                           "my-xorg"
                           "netshoot"
+                          "ksm"
                           "kubelet"
                           "kubectl-all"
                           "kubectl-invoke"
