@@ -61,6 +61,8 @@
 
     buildPackages.glibcLocales
 
+    ghidra-bin
+
     go2nix
     glow
     groovy
