@@ -1,0 +1,10 @@
+#!/bin/sh
+
+set -o nounset -o errexit -o pipefail
+
+until nc -z localhost 54738
+do
+    sleep 2
+done
+
+exec -a "$0" crowdsec-firewall-bouncer "$@"

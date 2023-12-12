@@ -17,6 +17,8 @@
 ;;; along with GNU Guix.  If not, see <http://www.gnu.org/licenses/>.
 
 (define-module (services networking)
+  #:use-module (gnu packages admin)
+  #:use-module (gnu packages base)
   #:use-module (gnu packages linux)
   #:use-module (gnu packages networking)
   #:use-module (gnu packages web)
@@ -223,12 +225,16 @@
     (documentation "Run crowdsec-firewall-bouncer.")
     (requirement '(networking crowdsec))
     (start #~(make-forkexec-constructor
-              (list (string-append #$(crowdsec-firewall-bouncer-configuration-crowdsec-firewall-bouncer config)
-                                   "/bin/crowdsec-firewall-bouncer")
+              (list #$(local-file "/home/oleg/.local/share/chezmoi/dot_local/bin/executable_crowdsec-firewall-bouncer"
+                                  #:recursive? #t)
                     "-c" "/etc/crowdsec/crowdsec-firewall-bouncer.yaml")
               #:environment-variables
               (append (list (string-append "PATH=" (string-append #$ipset "/sbin")
-                                           ":" (string-append #$iptables "/sbin"))
+                                           ":" (string-append #$netcat-openbsd "/bin")
+                                           ":" (string-append #$iptables "/sbin")
+                                           ":" (string-append #$coreutils "/bin")
+                                           ":" (string-append #$(crowdsec-firewall-bouncer-configuration-crowdsec-firewall-bouncer config)
+                                                              "/bin"))
                             "SSL_CERT_DIR=/run/current-system/profile/etc/ssl/certs"
                             "SSL_CERT_FILE=/run/current-system/profile/etc/ssl/certs/ca-certificates.crt")
                       (remove (lambda (str)
