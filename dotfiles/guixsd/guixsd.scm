@@ -1936,7 +1936,7 @@ PasswordAuthentication yes")))
                                  (start #~(make-forkexec-constructor
                                            (list #$(file-append socat "/bin/socat")
                                                  "tcp4-LISTEN:81,reuseaddr,fork,keepalive,bind=127.0.0.1"
-                                                 "SOCKS4A:192.168.0.145:4zwzi66wwdaalbhgnix55ea3ab4pvvw66ll2ow53kjub6se4q2bclcyd.onion:443,socksport=9050")))
+                                                 "SOCKS4A:tor.home:4zwzi66wwdaalbhgnix55ea3ab4pvvw66ll2ow53kjub6se4q2bclcyd.onion:443,socksport=9050")))
                                  (respawn? #f))))
 
                          (service syncthing-service-type
