@@ -514,6 +514,29 @@ location / {
                               (list "--may-exist" "add-port" "br0" "enp34s0"
                                     "vlan_mode=native-untagged")))
 
+                            ;; Deny all ingress connections.
+                            (iptables
+                             (string-join
+                              '("-A" "INPUT"
+                                "-i" "br0"
+                                "-j" "DROP")))
+                            (iptables
+                             (string-join
+                              '("-I" "INPUT"
+                                "-m" "state"
+                                "--state" "RELATED,ESTABLISHED"
+                                "-j" "ACCEPT")))
+                            (iptables
+                             (string-join
+                              '("-I" "INPUT"
+                                "-s" "192.168.0.0/24"
+                                "-j" "ACCEPT")))
+                            (iptables
+                             (string-join
+                              '("-I" "INPUT"
+                                "-s" "127.0.0.0/8"
+                                "-j" "ACCEPT")))
+
                             ;; Transparent proxy connections to
                             ;; ci.guix.gnu.org via Tor network.
                             ;;
