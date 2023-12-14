@@ -519,13 +519,77 @@ location / {
                              (string-join
                               '("-A" "INPUT"
                                 "-i" "br0"
+                                "-d" "192.168.0.144/32"
                                 "-j" "DROP")))
+                            ;; Accept HTTP traffic.
+                            (iptables
+                             (string-join
+                              '("-I" "INPUT"
+                                "-i" "br0"
+                                "-d" "192.168.0.144/32"
+                                "-p" "tcp"
+                                "--dport" "80"
+                                "-j" "ACCEPT")))
+                            ;; Accept HTTPS traffic.
+                            (iptables
+                             (string-join
+                              '("-I" "INPUT"
+                                "-i" "br0"
+                                "-d" "192.168.0.144/32"
+                                "-p" "tcp"
+                                "--dport" "443"
+                                "-j" "ACCEPT")))
+                            ;; Accept SSH traffic.
+                            (iptables
+                             (string-join
+                              '("-I" "INPUT"
+                                "-i" "br0"
+                                "-d" "192.168.0.144/32"
+                                "-p" "tcp"
+                                "--dport" "22"
+                                "-j" "ACCEPT")))
+                            ;; Accept VNC traffic.
+                            (iptables
+                             (string-join
+                              '("-I" "INPUT"
+                                "-i" "br0"
+                                "-d" "192.168.0.144/32"
+                                "-p" "tcp"
+                                "--dport" "5900"
+                                "-j" "ACCEPT")))
+                            (iptables
+                             (string-join
+                              '("-I" "INPUT"
+                                "-i" "br0"
+                                "-d" "192.168.0.144/32"
+                                "-p" "tcp"
+                                "--dport" "5901"
+                                "-j" "ACCEPT")))
+                            (iptables
+                             (string-join
+                              '("-I" "INPUT"
+                                "-i" "br0"
+                                "-d" "192.168.0.144/32"
+                                "-p" "tcp"
+                                "--dport" "5902"
+                                "-j" "ACCEPT")))
+                            ;; Accept OpenVPN traffic.
+                            (iptables
+                             (string-join
+                              '("-I" "INPUT"
+                                "-i" "br0"
+                                "-d" "192.168.0.144/32"
+                                "-p" "udp"
+                                "--dport" "1195"
+                                "-j" "ACCEPT")))
+                            ;; Accept traffic which originated from current computer.
                             (iptables
                              (string-join
                               '("-I" "INPUT"
                                 "-m" "state"
                                 "--state" "RELATED,ESTABLISHED"
                                 "-j" "ACCEPT")))
+                            ;; Accept everything from specific networks.
                             (iptables
                              (string-join
                               '("-I" "INPUT"
