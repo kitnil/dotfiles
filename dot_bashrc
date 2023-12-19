@@ -438,11 +438,29 @@ guix()
                 switch)
                     (
                         cd "${HOME}/.local/share/chezmoi"
-                        guix_command=(
-                            command guix home reconfigure \
-                                    -L "$HOME/.local/share/chezmoi/dotfiles/guixsd/modules" \
-                                    --fallback \
-                                    "$HOME/.local/share/chezmoi/dotfiles/guixsd/home/${HOSTNAME}.scm"
+                        guix_command=()
+                        guix_extra_modules=(
+                            "${HOME}/src/github.com/6d6a/package-management-guix-majordomo"
+                            "${HOME}/src/cgit.duckdns.org/guix/guix-wigust-services/guix"
+                            "${HOME}/src/cgit.duckdns.org/guix/guix-wigust/guix"
+                            "${HOME}/src/gitlab.com/nonguix/nonguix"
+                        )
+                        if [[ "${PRE_INST_ENV:-FALSE}" == TRUE ]]
+                        then
+                            guix_command+=("${HOME}/src/git.savannah.gnu.org/git/guix/pre-inst-env")
+                        else
+                            guix_command+=("command")
+                        fi
+                        guix_command+=(
+                            guix home reconfigure
+                        )
+                        for module in "${guix_extra_modules[@]}"
+                        do
+                            guix_command+=("--load-path=${module}")
+                        done
+                        guix_command+=(
+                            --load-path="$guix_modules"
+                            --fallback
                         )
                         if [[ -n $allow_downgrades ]]
                         then
@@ -452,6 +470,10 @@ guix()
                         then
                             guix_command+=("--fallback")
                         fi
+                        guix_command+=(
+                            "$HOME/.local/share/chezmoi/dotfiles/guixsd/home/${HOSTNAME}.scm"
+                        )
+                        echo "${guix_command[@]}"
                     )
                     ;;
             esac
