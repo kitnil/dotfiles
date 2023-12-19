@@ -1021,6 +1021,8 @@ location / {
            ;; Kubernetes Nginx-Ingress -> Tor ClusterIP service
            "192.168.154.227 tor.home"
 
+           "185.105.108.96 vm3.wugi.info"
+
            "192.168.0.145 prometheus.wugi.info"
 
            "192.168.154.119 ubuntu.local"
