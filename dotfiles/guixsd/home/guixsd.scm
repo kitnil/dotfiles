@@ -4,6 +4,7 @@
              ;; (gnu home services files)
              (gnu home services mcron)
              (gnu home services shells)
+             (gnu home services sound)
              (gnu home services ssh)
              (gnu packages admin)
              (gnu packages bash)
@@ -1287,6 +1288,10 @@ account default : gmail
     ;;             (system*
     ;;              #$(local-file (string-append %project-directory "/dot_local/bin/executable_schedule-power")
     ;;                            #:recursive? #t)))))))
+
+    (service home-dbus-service-type)
+
+    (service home-pipewire-service-type)
 
     (service home-scream-service-type
              (scream-configuration
