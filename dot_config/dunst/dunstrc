@@ -182,7 +182,7 @@
     dmenu = /home/oleg/.guix-profile/bin/dmenu -p dunst:
 
     # Browser for opening urls in context menu.
-    browser = /home/oleg/.nix-profile/bin/firefox
+    browser = /home/oleg/.guix-profile/bin/firefox
 
     # Always run rule-defined scripts, even if the notification is suppressed
     always_run_script = true
