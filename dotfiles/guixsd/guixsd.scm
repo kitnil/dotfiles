@@ -615,7 +615,7 @@ location / {
                                 "-d" "141.80.181.40/32"
                                 "-p" "tcp"
                                 "-j" "REDIRECT"
-                                "--to-ports" "888")))
+                                "--to-ports" "889")))
                             ;;
                             ;; From other machines:
                             (iptables
@@ -626,7 +626,7 @@ location / {
                                 "--destination" "141.80.181.40/32"
                                 "--dport" "443"
                                 "-j" "DNAT"
-                                "--to-destination" "127.0.0.1:888")))
+                                "--to-destination" "127.0.0.1:889")))
 
                             ;; Forward connections from 192.168.0.145:6443 to
                             ;; 192.168.154.1:6443 for Kubernetes API on
