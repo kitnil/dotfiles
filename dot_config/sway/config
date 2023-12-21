@@ -291,6 +291,11 @@ input * {
     xkb_options grp:win_space_toggle,grp_led:scroll
 }
 
+input "2385:5860:Kingston_HyperX_Pulsefire_Raid" {
+    accel_profile flat
+    pointer_accel -0.5
+}
+
 # class                 border  backgr. text    indicator child_border
 client.focused          #66cdaa #2e8b57 #ffffff #00ff00   #2e8b57
 client.focused_inactive #333333 #5f676a #ffffff #484e50   #5f676a
