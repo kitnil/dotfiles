@@ -181,7 +181,7 @@ bindsym $mod+y exec clipman pick -t wofi
     bindsym $mod+f fullscreen
 
     # Toggle the current focus between tiling and floating mode
-    bindsym $mod+Shift+space floating toggle
+    bindsym $mod+Shift+t floating toggle
 
     bindsym $mod+Shift+a sticky toggle
 
