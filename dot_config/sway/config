@@ -320,3 +320,5 @@ for_window [title="Picture-in-Picture"] floating enable
 
 for_window [instance="vncviewer"] border none
 for_window [instance="vncviewer"] resize set width 1920 px
+
+for_window [title="Windowed Projector"] border none
