@@ -65,7 +65,7 @@ case "$1" in
                         | guix shell tigervnc-server -- vncpasswd -f > passwd
                     if [[ $HOSTNAME == "guixsd" ]]
                     then
-                        X509CA="${HOME}/.vnc/x509_ca.pem" vncviewer -passwd passwd "192.168.0.145:${3:-5902}"
+                        X509CA="${HOME}/.vnc/x509_ca.pem" vncviewer -passwd passwd -Shared "192.168.0.145:${3:-5902}"
                     fi
                 )
                 ;;
