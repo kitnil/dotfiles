@@ -202,6 +202,7 @@
                           "run-stumpwm"
                           "sbcl"
                           "scan"
+                          "sensors.py"
                           "shop"
                           "shutdown"
                           "src-clean"
