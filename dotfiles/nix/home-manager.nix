@@ -17,6 +17,8 @@
 
     btfs
 
+    chatterino2
+
     clipboard-jh
 
     clipman wayvnc wtype

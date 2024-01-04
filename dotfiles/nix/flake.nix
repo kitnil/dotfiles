@@ -29,6 +29,8 @@
 
     nixpkgs-copyq.url = "nixpkgs/nixpkgs-unstable";
 
+    nixpkgs-chatterino2.url = "nixpkgs/nixpkgs-unstable";
+
     nixpkgs-home-manager.url = "nixpkgs/nixpkgs-unstable";
     home-manager.url = "github:nix-community/home-manager?ref=release-23.05";
     nur.url = "github:nix-community/NUR";
@@ -102,6 +104,7 @@
     , nixpkgs-nixd
     , nixpkgs-wayvnc
     , nixpkgs-copyq
+    , nixpkgs-chatterino2
     , nixpkgs-phpactor
     , bbuscarino-env
     , kamadorueda-alejandra
@@ -363,6 +366,7 @@
                       inherit (nixpkgs-nixd.legacyPackages.${system}) nixd;
                       inherit (nixpkgs-wayvnc.legacyPackages.${system}) wayvnc;
                       inherit (nixpkgs-copyq.legacyPackages.${system}) clipboard-jh;
+                      inherit (nixpkgs-chatterino2.legacyPackages.${system}) chatterino2;
                       inherit (callPackage ./firefox/generated-firefox-addons.nix { inherit buildFirefoxXpiAddon; })
                         access-control-allow-origin
                         auto_highlight
