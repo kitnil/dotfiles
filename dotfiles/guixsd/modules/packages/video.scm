@@ -39,6 +39,12 @@
               "-DCEF_ROOT_DIR=../source/cef")
       #:phases
       #~(modify-phases %standard-phases
+          (add-after 'install 'wrap-executable
+             (lambda* _
+               (let ((plugin-path (getenv "QT_PLUGIN_PATH")))
+                 (wrap-program (string-append #$output "/bin/obs")
+                   `("QT_PLUGIN_PATH" ":" prefix (,plugin-path))
+                   `("LD_LIBRARY_PATH" ":" prefix (,(string-append #$(this-package-input vlc) "/lib")))))))
           (add-before 'configure 'add-cef
             (lambda* (#:key inputs #:allow-other-keys)
               (setenv "libcef" #$(this-package-input "chromium-embedded-framework"))
