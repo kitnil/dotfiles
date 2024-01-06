@@ -18,49 +18,66 @@
   #:use-module ((srfi srfi-1) #:hide (zip))
   #:use-module (srfi srfi-26))
 
-(define-public obs-with-ecf
+(define-public obs-with-cef
   (package
     (inherit obs)
     (inputs
      (append (package-inputs obs)
-             `(("chromium-embedded-framework" ,chromium-embedded-framework)
-               ("coreutils" ,coreutils)
-               ("bash" ,bash))))
+             `(("chromium-embedded-framework" ,chromium-embedded-framework))))
     (arguments
-     (list
-      #:modules '((guix build utils)
-                  (guix build cmake-build-system))
-      #:configure-flags
-      #~(list (string-append "-DOBS_VERSION_OVERRIDE=" #$(package-version obs))
-              "-DENABLE_UNIT_TESTS=ON"
-              "-DENABLE_NEW_MPEGTS_OUTPUT=OFF"
-              "-DENABLE_AJA=OFF"
-              "-DBUILD_BROWSER=ON"
-              "-DCEF_ROOT_DIR=../source/cef")
-      #:phases
-      #~(modify-phases %standard-phases
-          (add-after 'install 'wrap-executable
+     (substitute-keyword-arguments (package-arguments obs)
+       ((#:configure-flags flags)
+        #~(append #$flags
+                  '("-DBUILD_BROWSER=ON"
+                    "-DCEF_ROOT_DIR=../source/cef")))
+       ((#:phases phases)
+        #~(modify-phases #$phases
+            (add-before 'configure 'add-cef
+              (lambda* (#:key inputs #:allow-other-keys)
+                (let ((chromium-embedded-framework
+                       #$(this-package-input "chromium-embedded-framework")))
+                  (mkdir-p "cef/Release")
+                  (mkdir-p "cef/Resources")
+                  (for-each (lambda (file)
+                              (symlink file (string-append "cef/Release/"
+                                                           (basename file)))
+                              (symlink file (string-append "cef/Resources/"
+                                                           (basename file))))
+                            (filter
+                             (lambda (file)
+                               (not (string= (basename (dirname file))
+                                             "locales")))
+                             (find-files
+                              (string-append chromium-embedded-framework
+                                             "/share/cef"))))
+                  (symlink (string-append chromium-embedded-framework
+                                          "/lib/libcef.so")
+                           "cef/Release/libcef.so")
+                  (mkdir-p "cef/libcef_dll_wrapper")
+                  (symlink (string-append chromium-embedded-framework
+                                          "/lib/libcef_dll_wrapper.a")
+                           "cef/libcef_dll_wrapper/libcef_dll_wrapper.a")
+                  (symlink (string-append chromium-embedded-framework
+                                          "/include")
+                           "cef/include"))))
+            (add-after 'install 'symlink-obs-browser
+              ;; Required for lib/obs-plugins/obs-browser.so file.
+              (lambda* (#:key outputs #:allow-other-keys)
+                (symlink
+                 (string-append #$output
+                                "/lib/libobs-frontend-api.so.0")
+                 (string-append #$output
+                                "/lib/obs-plugins/libobs-frontend-api.so.0"))
+                (symlink
+                 (string-append #$output
+                                "/lib/libobs.so.0")
+                 (string-append #$output
+                                "/lib/obs-plugins/libobs.so.0"))))
+            (replace 'wrap-executable
              (lambda* _
                (let ((plugin-path (getenv "QT_PLUGIN_PATH")))
                  (wrap-program (string-append #$output "/bin/obs")
                    `("QT_PLUGIN_PATH" ":" prefix (,plugin-path))
-                   `("LD_LIBRARY_PATH" ":" prefix (,(string-append #$(this-package-input vlc) "/lib")))))))
-          (add-before 'configure 'add-cef
-            (lambda* (#:key inputs #:allow-other-keys)
-              (setenv "libcef" #$(this-package-input "chromium-embedded-framework"))
-              (copy-file #$(local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules/packages/run.sh")
-                         "run.sh")
-              (setenv "PATH"
-                      (string-append
-                       #$(this-package-input "coreutils") "/bin"
-                       ":" (getenv "PATH")))
-              (invoke (string-append #$(this-package-input "bash") "/bin/bash")
-                      #$(local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules/packages/run.sh"
-                                    #:recursive? #t))))
-          (add-after 'install 'symlink
-            ;; Required for lib/obs-plugins/obs-browser.so
-            (lambda* (#:key outputs #:allow-other-keys)
-              (symlink (string-append #$output "/lib/libobs-frontend-api.so.0")
-                       (string-append #$output "/lib/obs-plugins/libobs-frontend-api.so.0"))
-              (symlink (string-append #$output "/lib/libobs.so.0")
-                       (string-append #$output "/lib/obs-plugins/libobs.so.0")))))))))
+                   `("LD_LIBRARY_PATH" ":" prefix
+                     (,(string-append #$(this-package-input "vlc")
+                                      "/lib")))))))))))))
