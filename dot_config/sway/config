@@ -263,6 +263,20 @@ mode "resize" {
 bindsym $mod+r mode "resize"
 
 #
+# OBS:
+#
+mode "obs" {
+    # switch to scene
+    bindsym 0 exec /home/oleg/.local/share/chezmoi/dot_local/bin/executable_obs-websocket-http.sh edit scene scene-0
+    bindsym 1 exec /home/oleg/.local/share/chezmoi/dot_local/bin/executable_obs-websocket-http.sh edit scene scene-1
+
+    # return to default mode
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+bindsym $mod+o mode "obs"
+
+#
 # Status Bar:
 #
 # Read `man 5 sway-bar` for more information about this section.
