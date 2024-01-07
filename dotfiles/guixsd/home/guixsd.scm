@@ -570,8 +570,6 @@ _JAVA_AWT_WM_NONREPARENTING=1 PYTHONPATH='' exec -a \"$0\" ~a/bin/idea-ultimate 
     home-gtk-service
     home-gtkrc-service
 
-    home-greenclip-service
-
     home-alacritty-service
     home-kitty-service
 
