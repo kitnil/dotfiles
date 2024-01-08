@@ -269,8 +269,11 @@
          (listen '("192.168.0.144:80"))
          (locations (list (nginx-location-configuration
                            (uri "/")
-                           (body (list "proxy_pass https://socat-ci-guix-gnu-onion;"
-                                       "proxy_ssl_verify off;"))))))
+                           (body (list
+                                  "resolver 80.80.80.80 ipv6=off;"
+                                  "proxy_set_header Host ci.guix.trop.in;"
+                                  "set $ci_guix_trop_in ci.guix.trop.in:80;"
+                                  "proxy_pass http://$ci_guix_trop_in;"))))))
 
 ;;         (nginx-server-configuration
 ;;          (server-name '("hms-dev.intr" "hms.majordomo.ru"))
