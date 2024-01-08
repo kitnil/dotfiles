@@ -930,7 +930,8 @@ location / {
       ;;                      (target "/dev/disk/by-label/nvme-swap"))))
 
       (kernel-loadable-modules (list vendor-reset-linux-module
-                                     drbd-module))
+                                     drbd-module
+                                     v4l2loopback-linux-module))
 
       ;; XXX: Add hardware/guixsd.scm
       ;; (initrd-modules (append '("vfio_pci" "vfio" "vfio_iommu_type1" "vfio_virqfd")
