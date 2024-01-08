@@ -17,6 +17,7 @@
             mbsync-imap-store-configuration
             mbsync-maildir-store-configuration
             mbsync-channel-configuration
+            mbsync-group-configuration
             mbsync-configuration
             mbsync-config-file
             home-mbsync-service-type
@@ -197,7 +198,40 @@ that match the patterns. An example value would be @samp{'(\"INBOX\")}.")
    "Permanently remove all messages marked for deletion.")
   (expire-unread
    (maybe-string %unset-value)
-   "Selects whether unread messages should be affected by MaxMessages."))
+   "Selects whether unread messages should be affected by MaxMessages.")
+  (create
+   (maybe-string)
+   "Automatically create missing mailboxes on the far or near side."))
+
+(define channel-list? list?)
+(define (serialize-channel-list field-name val)
+  #~(begin
+      (use-modules (ice-9 format))
+      (format #f "~{Channel ~a~%~}~%" '#$val)))
+(define-maybe channel-list)
+
+(define-configuration mbsync-group-configuration
+  (group
+   (string "")
+   "Group name.  An example value would be @samp{my-channel}.")
+  (channels
+   (maybe-channel-list %unset-value)
+   "Channels list."))
+
+(define (serialize-mbsync-group-configuration field-name val)
+  (serialize-configuration val mbsync-group-configuration-fields))
+(define (mbsync-group-configuration-list? val)
+  (and (list? val) (and-map mbsync-group-configuration? val)))
+(define (serialize-mbsync-group-configuration-list field-name val)
+  #~(string-append
+     #$@(map (lambda (val)
+               #~(begin
+                   (if (string-null? #$(mbsync-group-configuration-group val))
+                       ""
+                       (string-append
+                        #$(serialize-mbsync-group-configuration field-name val)
+                        "\n"))))
+             val)))
 
 (define (serialize-mbsync-imap-account-configuration field-name val)
   (serialize-configuration val mbsync-imap-account-configuration-fields))
@@ -263,7 +297,11 @@ that match the patterns. An example value would be @samp{'(\"INBOX\")}.")
   (channels
    (mbsync-channel-configuration-list
     (list (mbsync-channel-configuration)))
-   "Channels list."))
+   "Channels list.")
+  (groups
+   (mbsync-group-configuration-list
+    (list (mbsync-group-configuration)))
+   "Group list."))
 
 (define (mbsync-config-file config)
   (mixed-text-file
@@ -290,7 +328,9 @@ that match the patterns. An example value would be @samp{'(\"INBOX\")}.")
    (maildir-stores
     (append-map mbsync-configuration-maildir-stores extension-configs))
    (channels
-    (append-map mbsync-configuration-channels extension-configs))))
+    (append-map mbsync-configuration-channels extension-configs))
+   (groups
+    (append-map mbsync-configuration-groups extension-configs))))
 
 (define home-mbsync-service-type
   (service-type (name 'home-mbsync)
