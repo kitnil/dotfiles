@@ -323,8 +323,8 @@ client.background       #ffffff
 #
 #     $ swaymsg -t get_tree
 
-for_window [app_id="looking-glass-client"] border none
-for_window [app_id="looking-glass-client"] resize set width 1920 px
+for_window [title="Looking Glass"] border none
+for_window [title="Looking Glass"] resize set width 1920 px
 
 for_window [title="xterm"] resize set width 1920 px
 
