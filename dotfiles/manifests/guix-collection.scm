@@ -28,7 +28,7 @@ virtualization vnc vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
     (,isc-bind "utils")))
 
 (define %large-packages
-  (list ;; libreoffice
+  (list libreoffice
         nyxt))
 
 (define %spelling-packages
@@ -118,7 +118,7 @@ virtualization vnc vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
                ;; kodi
                kodi-cli     ; Remote control Kodi
                ;; transmission ; Bittorrent
-               ;; qbittorrent
+               qbittorrent
 
                mps-youtube
                streamlink
@@ -132,7 +132,7 @@ virtualization vnc vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
 
                dbus dunst xmessage libnotify
 
-               alsa-utils cli-visualizer pulsemixer pavucontrol
+               alsa-utils cli-visualizer pulsemixer pavucontrol qpwgraph
 
                ;; WEB
                ;; icecat
@@ -271,8 +271,10 @@ virtualization vnc vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
                global        ;Source tagging.
                valgrind      ;Memory debug.
 
-               obs ;Installed manyally from 514b9f42 commit in guix channel.
+               ;; obs ;Installed manually
                obs-wlrobs
+               obs-looking-glass
+               obs-pipewire-audio-capture
 
                mesa mesa-utils
 
@@ -305,7 +307,7 @@ virtualization vnc vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
 
                dconf ;used by virt-manager as a storage for configuration.
 
-               ;; telegram-desktop
+               telegram-desktop
                freeipmi)
 
          guix-collection-packages-multiout

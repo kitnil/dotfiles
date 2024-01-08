@@ -4,6 +4,9 @@
              (gnu packages wm)
              (gnu packages xdisorg))
 
+(define terminals
+  (list alacritty))
+
 (define menus
   (list dmenu wofi))
 
@@ -11,9 +14,9 @@
   (list sway))
 
 (define sway-utils
-  (list swayidle))
+  (list bemenu swayidle))
 
 (define clipboard
   (list wl-clipboard))
 
-(packages->manifest (append clipboard menus wm sway-utils))
+(packages->manifest (append clipboard menus terminals wm sway-utils))
