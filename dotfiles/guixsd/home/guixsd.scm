@@ -336,12 +336,25 @@
                      (channels
                       (list
                        (mbsync-channel-configuration
-                        (channel "gmail")
+                        (channel "gmail-inbox")
                         (far ":gmail-remote:")
                         (near ":gmail-local:")
                         (patterns '("INBOX"))
                         (sync '("Pull"))
-                        (expunge "None"))))))
+                        (expunge "None"))
+                       (mbsync-channel-configuration
+                        (channel "gmail-spam")
+                        (far ":gmail-remote:\"[Gmail]/Spam\"")
+                        (near ":gmail-local:gmail-spam")
+                        (sync '("Pull"))
+                        (expunge "None")
+                        (create "Near"))))
+                     (groups
+                      (list
+                       (mbsync-group-configuration
+                        (group "gmail")
+                        (channels '("gmail-inbox"
+                                    "gmail-spam")))))))
 
     (service home-x11-service-type)
 
