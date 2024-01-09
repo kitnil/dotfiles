@@ -1,6 +1,7 @@
 (use-modules (packages containers)
              (packages kubernetes)
-             (packages networking))
+             (packages networking)
+             (packages video))
 
 (packages->manifest
  (list plumber
@@ -12,4 +13,5 @@
        kubernetes-helm
        nerdctl
        ;; virtctl ;TODO: Failed to build.
-       ))
+
+       obs-with-cef))
