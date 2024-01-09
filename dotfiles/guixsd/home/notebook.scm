@@ -233,7 +233,6 @@
    home-nix-service
    home-alacritty-service
    home-qterminal-service
-   home-greenclip-service
    home-gtk-service
    home-gtkrc-service
    home-ripgrep-service

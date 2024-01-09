@@ -1168,8 +1168,6 @@ account default : gmail
     ;;             (ssh-host "savannah"
     ;;                   '((compression . #f)))))))
 
-    (service home-greenclip-service-type)
-
     (service nix-build-service-type
              (nix-build-configurations
               (configurations

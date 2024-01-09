@@ -37,8 +37,6 @@ virtualization vnc vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
 (packages->manifest
  (append (list guile-bash
 
-               greenclip
-
                kmonad
 
                feh sxiv    ; Image viewers
