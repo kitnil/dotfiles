@@ -2246,26 +2246,6 @@ PasswordAuthentication yes")))
                                    (port 5556)
                                    (ttl (* 90 24 3600))))
 
-                         (service (@ (services autossh) autossh-service-type)
-                                  ((@ (services autossh) autossh-configuration)
-                                   (autossh-client-config
-                                    (autossh-client-configuration
-                                     (hosts (list (autossh-client-host-configuration
-                                                   (host "znc.wugi.info")
-                                                   (identity-file "/etc/autossh/id_rsa_oracle")
-                                                   (strict-host-key-checking? #f)
-                                                   (user "opc")
-                                                   (user-known-hosts-file "/dev/null")
-                                                   (extra-options
-                                                    "
-LocalForward 0.0.0.0:8060 127.0.0.1:8060
-LocalForward 0.0.0.0:6667 127.0.0.1:6667
-Compression yes
-ExitOnForwardFailure yes
-ServerAliveInterval 30
-ServerAliveCountMax 3"))))))
-                                   (host "znc.wugi.info")))
-
                          (service webssh-service-type
                                   (webssh-configuration (address "127.0.0.1")
                                                         (port 8888)
