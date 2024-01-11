@@ -64,7 +64,9 @@
   (define host-network? (assoc-ref opts 'host-network?))
   (define namespace (assoc-ref opts 'namespace))
   (define host (assoc-ref opts 'host))
-  (define format (assoc-ref opts 'format))
+  (define format
+    (or (assoc-ref opts 'format)
+        "busybox"))
   (define uid (assoc-ref opts 'uid))
   (define gid (assoc-ref opts 'gid))
   (define machinectl (assoc-ref opts 'machinectl))
