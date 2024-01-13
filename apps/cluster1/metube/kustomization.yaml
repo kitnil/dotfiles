@@ -8,4 +8,4 @@ patchesStrategicMerge:
 - deployment.yaml
 images:
 - name: ghcr.io/alexta69/metube
-  newTag: 2023-10-20
+  newTag: 2024-01-05
