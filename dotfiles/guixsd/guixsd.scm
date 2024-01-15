@@ -1497,6 +1497,11 @@ location / {
                                                            #((("targets" . #("localhost:9312")))))
                                                           ("metrics_path" . "/metrics")
                                                           ("job_name" . "ssh-metrics"))
+                                                         (("static_configs"
+                                                           .
+                                                           #((("targets" . #("localhost:9407")))))
+                                                          ("metrics_path" . "/metrics")
+                                                          ("job_name" . "obs"))
                                                          ((static_configs
                                                            .
                                                            #(((targets . #("127.0.0.1:9080")))))
