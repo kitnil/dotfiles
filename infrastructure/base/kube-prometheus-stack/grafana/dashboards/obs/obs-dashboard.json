@@ -103,7 +103,7 @@
         }
       ],
       "title": "Output Activity",
-      "transform": "table",
+      "transform": "timeseries_to_rows",
       "type": "table-old"
     },
     {
@@ -161,9 +161,11 @@
             "type": "prometheus",
             "uid": "${datasource}"
           },
-          "expr": "obs_source_channel_magnitude{source_id=\"pulse_input_capture\"}",
+          "editorMode": "code",
+          "expr": "obs_source_channel_magnitude{source_id=\"pipewire_audio_input_capture\"}",
           "interval": "",
           "legendFormat": "Average: {{source_name}}: channel {{channel_id}}",
+          "range": true,
           "refId": "A"
         },
         {
@@ -171,9 +173,11 @@
             "type": "prometheus",
             "uid": "${datasource}"
           },
-          "expr": "obs_source_channel_peak{source_id=\"pulse_input_capture\"}",
+          "editorMode": "code",
+          "expr": "obs_source_channel_peak{source_id=\"pipewire_audio_input_capture\"}",
           "interval": "",
           "legendFormat": "Peak: {{source_name}}: channel {{channel_id}}",
+          "range": true,
           "refId": "B"
         }
       ],
