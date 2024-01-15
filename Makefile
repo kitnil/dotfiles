@@ -142,7 +142,7 @@ install: decrypt dotfiles/guixsd/machines.scm dotfiles/nix/nix.conf dotfiles/scr
 	ln -sf $(HOME)/.Xresources $(HOME)/.Xdefaults
 	install -Dm644 dotfiles/guile/pass.scm $(HOME)/.config/guile/pass.scm
 	install -Dm644 dotfiles/guile/config.scm $(HOME)/.config/guile/config.scm
-	guix home --load-path=dotfiles/guixsd/modules reconfigure --no-substitutes dotfiles/guixsd/home/$(HOSTNAME).scm
+	guix home --load-path=dotfiles/guixsd/modules reconfigure dotfiles/guixsd/home/$(HOSTNAME).scm
 	install -Dm644 private_dot_ssh/known_hosts2 $(HOME)/.ssh/known_hosts2
 
 .PHONY: shepherd-restart
