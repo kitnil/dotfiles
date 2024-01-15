@@ -5,6 +5,7 @@
   #:use-module (gnu packages video)
   #:use-module (nongnu packages chromium)
   #:use-module (guix build-system cmake)
+  #:use-module (nonguix build-system binary)
   #:use-module (guix download)
   #:use-module (guix gexp)
   #:use-module (guix git-download)
@@ -81,3 +82,24 @@
                    `("LD_LIBRARY_PATH" ":" prefix
                      (,(string-append #$(this-package-input "vlc")
                                       "/lib")))))))))))))
+
+(define-public obs-exporter
+  (let ((commit "ebe35cbe8b963395a39066a83e31355c74f986d2"))
+    (package
+      (name "obs-exporter")
+      (version (git-version "0.0.1" "1" commit))
+      (source (local-file "/home/oleg/src/github.com/lukegb/obs_studio_exporter/obs-studio-exporter.so"))
+      (build-system binary-build-system)
+      (arguments
+       `(#:strip-binaries? #f
+         #:install-plan
+         '(("obs-studio-exporter.so"
+            "lib/obs-plugins/obs-studio-exporter.so"))
+         #:validate-runpath? #f))
+      (home-page "https://github.com/lukegb/obs_studio_exporter")
+      (synopsis
+       "Prometheus exporter for metrics from OBS Studio")
+      (description
+       "Exports metrics from OBS Studio in a Prometheus-compatible format.")
+      (supported-systems '("x86_64-linux"))
+      (license license:asl2.0))))
