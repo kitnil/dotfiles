@@ -47,6 +47,9 @@ configMapGenerator:
 - name: kube-prometheus-stack-grafana-dashboards-blackbox
   files:
   - blackbox.json=grafana/dashboards/blackbox/blackbox-dashboard.json
+- name: kube-prometheus-stack-grafana-dashboards-obs
+  files:
+  - obs.json=grafana/dashboards/obs/obs-dashboard.json
 patchesStrategicMerge:
 - grafana/dashboards/nginx/configmap.yaml
 - grafana/dashboards/linstor/configmap.yaml
@@ -61,5 +64,6 @@ patchesStrategicMerge:
 - grafana/dashboards/restic/configmap.yaml
 - grafana/dashboards/windows-exporter/configmap.yaml
 - grafana/dashboards/blackbox/configmap.yaml
+- grafana/dashboards/obs/configmap.yaml
 configurations:
 - kustomizeconfig.yaml
