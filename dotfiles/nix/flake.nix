@@ -21,6 +21,7 @@
       flake = false;
     };
     nixpkgs-idea.url = "github:wigust/nixpkgs/a98b0d1e6d7bed029844576e8637ce9807600ad2";
+    nixpkgs-idea-community.url = "nixpkgs/nixpkgs-unstable";
     nixpkgs-phpactor.url = "nixpkgs/nixpkgs-unstable";
 
     nixpkgs-nixd.url = "nixpkgs/nixpkgs-unstable";
@@ -101,6 +102,7 @@
     , majordomo
     , majordomo-vault
     , nixpkgs-idea
+    , nixpkgs-idea-community
     , nixpkgs-nixd
     , nixpkgs-wayvnc
     , nixpkgs-copyq
@@ -237,6 +239,9 @@
 
               inherit ((import nixpkgs-idea { inherit system; config = { allowUnfree = true; }; }).idea)
                 idea-ultimate pycharm-professional;
+
+              inherit (nixpkgs-idea-community.legacyPackages.${system}.jetbrains)
+                idea-community;
 
               inherit (nixpkgs-phpactor.legacyPackages.${system})
                 phpactor;
