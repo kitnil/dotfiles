@@ -88,7 +88,13 @@
     (package
       (name "obs-exporter")
       (version (git-version "0.0.1" "1" commit))
-      (source (local-file "/home/oleg/src/github.com/lukegb/obs_studio_exporter/obs-studio-exporter.so"))
+      (source
+       (origin
+         (method url-fetch)
+         (uri "https://iso.wugi.info/obs-studio-exporter.so")
+         (sha256
+          (base32
+           "1mllfrlxryy979k72jdmmz1ri3cgy66p2gchpn37qh5j910zmqrc"))))
       (build-system binary-build-system)
       (arguments
        `(#:strip-binaries? #f
