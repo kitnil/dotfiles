@@ -3,7 +3,7 @@
   #:use-module (gnu packages base)
   #:use-module (gnu packages bash)
   #:use-module (gnu packages video)
-  #:use-module (nongnu packages chromium)
+  #:use-module (packages chromium)
   #:use-module (guix build-system cmake)
   #:use-module (nonguix build-system binary)
   #:use-module (guix download)
@@ -24,7 +24,7 @@
     (inherit obs)
     (inputs
      (append (package-inputs obs)
-             `(("chromium-embedded-framework" ,chromium-embedded-framework))))
+             `(("chromium-embedded-framework" ,chromium-embedded-framework-117))))
     (arguments
      (substitute-keyword-arguments (package-arguments obs)
        ((#:configure-flags flags)
