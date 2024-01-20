@@ -1,8 +1,10 @@
 (use-modules (gnu home)
              (gnu home services)
+             (gnu home services desktop)
              (gnu home services mcron)
              (gnu home services shells)
              (gnu home services ssh)
+             (gnu home services sound)
 	     (gnu services)
              (gnu packages xorg)
 	     (guix gexp)
@@ -69,6 +71,8 @@
 (home-environment
  (services
   (list
+   (service home-dbus-service-type)
+   (service home-pipewire-service-type)
    (simple-service 'sway-config
                    home-files-service-type
                    (list `(".config/sway/config" ,(local-file (string-append %project-directory "/dot_config/sway/notebook.config")))
