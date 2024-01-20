@@ -44,4 +44,5 @@
         "ncdu"
         "lm-sensors"
         "python"
+        "python-psutil"
         "mpv"))
