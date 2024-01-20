@@ -11,4 +11,5 @@
 (combined-manifest-from-files
  (map (cut string-append %source-dir "/" <>)
       '("notebook-packages.scm"
+        "deprecated.scm"
         "desktop.scm")))
