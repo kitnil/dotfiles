@@ -12,4 +12,5 @@
  (map (cut string-append %source-dir "/" <>)
       '("notebook-packages.scm"
         "deprecated.scm"
-        "desktop.scm")))
+        "desktop.scm"
+        "dotfiles.scm")))
