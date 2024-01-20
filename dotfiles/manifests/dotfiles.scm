@@ -1,4 +1,5 @@
-(use-modules (packages containers)
+(use-modules (packages admin)
+             (packages containers)
              (packages kubernetes)
              (packages networking)
              (packages video))
@@ -13,5 +14,7 @@
        kubernetes-helm
        nerdctl
        ;; virtctl ;TODO: Failed to build.
+
+       spacer
 
        obs-with-cef))
