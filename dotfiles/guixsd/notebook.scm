@@ -19,9 +19,9 @@
 
 (use-service-modules desktop networking ssh nfs nix)
 
-(use-package-modules bootloaders certs vpn wm terminals xfce linux package-management admin fonts nfs xorg)
+(use-package-modules audio bootloaders certs vpn wm terminals xfce linux package-management admin fonts nfs xorg)
 
-(use-service-modules desktop dbus networking monitoring xorg)
+(use-service-modules desktop dbus networking monitoring sound xorg)
 
 (use-modules (bootloader grub)
              (packages monitoring)
@@ -128,6 +128,9 @@
                      (service network-manager-service-type)
                      (service nfs-service-type
                               (nfs-configuration))
+
+                     (service ladspa-service-type
+                              (ladspa-configuration (plugins (list swh-plugins))))
 
                      (service prometheus-node-exporter-service-type
                               (prometheus-node-exporter-configuration
