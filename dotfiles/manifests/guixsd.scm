@@ -29,7 +29,8 @@
 
 (combined-manifest-from-files
  (map (cut string-append %source-dir "/" <>)
-      '("desktop.scm"
+      '("deprecated.scm"
+        "desktop.scm"
         "emacs.scm"
         "guix-collection.scm"
         "nonguix.scm"
