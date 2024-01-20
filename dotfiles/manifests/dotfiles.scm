@@ -17,4 +17,5 @@
 
        spacer
 
-       obs-with-cef))
+       obs-with-cef
+       obs-exporter))
