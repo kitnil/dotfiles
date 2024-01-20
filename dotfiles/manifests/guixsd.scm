@@ -33,6 +33,7 @@
         "desktop.scm"
         "emacs.scm"
         "guix-collection.scm"
+        "majordomo.scm"
         "nonguix.scm"
         "wigust.scm"
         "dotfiles.scm")))
