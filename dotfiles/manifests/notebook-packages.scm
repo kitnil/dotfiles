@@ -43,4 +43,5 @@
         "git"
         "ncdu"
         "lm-sensors"
-        "python"))
+        "python"
+        "mpv"))
