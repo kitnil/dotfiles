@@ -28,6 +28,7 @@
                                     "lombok.jar"))
 
   (unless (file-exists-p lombok-library-path)
+    (mkdir (file-name-directory lombok-library-path) t)
     (url-copy-file "https://projectlombok.org/downloads/lombok.jar"
                    lombok-library-path))
 
