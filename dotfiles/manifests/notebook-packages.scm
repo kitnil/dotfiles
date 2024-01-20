@@ -41,4 +41,6 @@
         "dmenu"
         "ripgrep"
         "git"
-        "ncdu"))
+        "ncdu"
+        "lm-sensors"
+        "python"))
