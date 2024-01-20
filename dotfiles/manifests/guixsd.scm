@@ -32,6 +32,6 @@
       '("desktop.scm"
         "emacs.scm"
         "guix-collection.scm"
-        ;; "nonguix.scm"
+        "nonguix.scm"
         "wigust.scm"
         "dotfiles.scm")))
