@@ -241,6 +241,7 @@
 
     eiskaltdcpp
 
+    sunshine
     moonlight-qt
   ];
 

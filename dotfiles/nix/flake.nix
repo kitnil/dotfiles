@@ -243,6 +243,9 @@
               inherit (nixpkgs-idea-community.legacyPackages.${system}.jetbrains)
                 idea-community;
 
+              inherit (nixpkgs-idea-community.legacyPackages.${system})
+                sunshine;
+
               inherit (nixpkgs-phpactor.legacyPackages.${system})
                 phpactor;
             }
