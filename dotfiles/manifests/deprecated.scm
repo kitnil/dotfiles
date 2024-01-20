@@ -40,4 +40,4 @@
 (define-public autofs
   (last (lookup-inferior-packages inferior "autofs")))
 
-(packages->manifest (list openssh tigervnc-client))
+(packages->manifest (list openssh))
