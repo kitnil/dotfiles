@@ -48,4 +48,5 @@
         "mpv"
         "gron"
         "jq"
-        "bluez"))
+        "bluez"
+        "brightnessctl"))
