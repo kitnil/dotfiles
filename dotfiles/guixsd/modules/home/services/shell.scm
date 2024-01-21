@@ -170,6 +170,7 @@
                           "nginx-server-name"
                           "nixos.sh"
                           "nix-repl"
+                          "obs-wrapper"
                           "oracle"
                           "openai"
                           "opensearch"
