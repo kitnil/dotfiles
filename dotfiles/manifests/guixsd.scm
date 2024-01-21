@@ -15,4 +15,5 @@
         "nonguix.scm"
         "wigust.scm"
         "dotfiles.scm"
-        "kubernetes.scm")))
+        "kubernetes.scm"
+        "obs.scm")))

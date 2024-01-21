@@ -275,9 +275,7 @@ virtualization vnc vim vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
                global        ;Source tagging.
                valgrind      ;Memory debug.
 
-               obs-wlrobs
                obs-looking-glass
-               obs-pipewire-audio-capture
 
                mesa mesa-utils
 

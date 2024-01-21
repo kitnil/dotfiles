@@ -13,4 +13,5 @@
       '("notebook-packages.scm"
         "deprecated.scm"
         "desktop.scm"
-        "dotfiles.scm")))
+        "dotfiles.scm"
+        "obs.scm")))
