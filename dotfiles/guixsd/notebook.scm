@@ -47,7 +47,7 @@
                            (targets '("vg0-guixroot"))
                            (type lvm-device-mapping))))
 
-  (kernel-loadable-modules (list xpadneo))
+  (kernel-loadable-modules (list v4l2loopback-linux-module xpadneo))
 
   ;; Assume the target root file system is labelled "my-root",
   ;; and the EFI System Partition has UUID 1234-ABCD.
