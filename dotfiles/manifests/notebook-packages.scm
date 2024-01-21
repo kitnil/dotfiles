@@ -49,4 +49,5 @@
         "gron"
         "jq"
         "bluez"
-        "brightnessctl"))
+        "brightnessctl"
+        "moonlight-qt"))
