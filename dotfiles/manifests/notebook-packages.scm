@@ -50,4 +50,5 @@
         "jq"
         "bluez"
         "brightnessctl"
-        "moonlight-qt"))
+        "moonlight-qt"
+        "v4l-utils"))
