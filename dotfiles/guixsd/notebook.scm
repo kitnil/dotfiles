@@ -47,6 +47,8 @@
                            (targets '("vg0-guixroot"))
                            (type lvm-device-mapping))))
 
+  (kernel-loadable-modules (list xpadneo))
+
   ;; Assume the target root file system is labelled "my-root",
   ;; and the EFI System Partition has UUID 1234-ABCD.
   (file-systems (append
@@ -123,7 +125,26 @@
   ;; Use the "desktop" services, which include the X11
   ;; log-in service, networking with NetworkManager, and more.
   (services (append (list
-                     (bluetooth-service #:auto-enable? #t)
+                     (udev-rules-service 'xpadneo
+                                         (file->udev-rule
+                                          "60-xpadneo.rules"
+                                          (mixed-text-file "60-xpadneo.rules" ;https://github.com/atar-axis/xpadneo/issues/107
+                                                           #~(string-join
+                                                              (list "ACTION==\"add\""
+                                                                    "KERNEL==\"0005:045E:02FD.*|0005:045E:02E0.*\""
+                                                                    "SUBSYSTEM==\"hid\""
+                                                                    "RUN:=\"/bin/sh -c 'echo xpadneo udev: $kernel > /dev/kmsg; modprobe hid_xpadneo && { echo $kernel > /sys/bus/hid/drivers/hid-generic/unbind; echo $kernel > /sys/bus/hid/drivers/microsoft/unbind; echo $kernel > /sys/bus/hid/drivers/xpadneo/bind; }; echo xpadneo udev: ok > /dev/kmsg'\"")))))
+
+                     (service bluetooth-service-type
+                              (bluetooth-configuration
+                               (auto-enable? #t)
+                               (just-works-repairing 'confirm)
+                               (controller-mode 'dual)
+                               (min-connection-interval 7)
+                               (max-connection-interval 9)
+                               (connection-latency 0)
+                               (privacy 'device)))
+
                      (service wpa-supplicant-service-type)    ;needed by NetworkManager
                      (service network-manager-service-type)
                      (service nfs-service-type

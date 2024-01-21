@@ -47,4 +47,5 @@
         "python-psutil"
         "mpv"
         "gron"
-        "jq"))
+        "jq"
+        "bluez"))
