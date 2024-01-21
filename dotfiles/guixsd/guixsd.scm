@@ -1144,6 +1144,18 @@ location / {
                                                           (supplementary-groups
                                                            '("docker" "kvm" "libvirt" "audio" "video" "wheel" "users"))))
 
+                         (service vncserver-service-type (vncserver-configuration
+                                                          (vncserver (@ (deprecated) tigervnc-server))
+                                                          (interface "192.168.0.145")
+                                                          (display 3)
+                                                          (user "oleg")
+                                                          (group "users")
+                                                          (directory "/home/oleg")
+                                                          (xstartup "/home/oleg/.xsession")
+                                                          (host-name "guixsd")
+                                                          (supplementary-groups
+                                                           '("docker" "kvm" "libvirt" "audio" "video" "wheel" "users"))))
+
                          ;; (service vncserver-service-type (vncserver-configuration
                          ;;                                  (vncserver tigervnc-server-1.10.1)
                          ;;                                  (display 10)

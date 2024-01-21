@@ -234,16 +234,22 @@
 
                ;; Prepare environment for VNC sessions
                (display "Start window manager\n")
-               (if (string= %display ":0.0")
-                   (execl "/run/current-system/profile/bin/sbcl" "sbcl" "--load" #$stumpwp-load-file)
-                   (begin
-                     (unsetenv "SESSION_MANAGER")
-                     (unsetenv "DBUS_SESSION_BUS_ADDRESS")
-                     (system* #$(file-append xhost "/bin/xhost") "+local:")
-                     (let* ((pw    (getpw (getuid)))
-                            (shell (passwd:shell pw)))
-                       ;; The '--login' option is supported at least by Bash and zsh.
-                       (execl shell "ratpoison" "--login" "-c" "exec -a ratpoison /home/oleg/.guix-profile/bin/ratpoison"))))))))
+               (unsetenv "SESSION_MANAGER")
+               (unsetenv "DBUS_SESSION_BUS_ADDRESS")
+               (system* #$(file-append xhost "/bin/xhost") "+local:")
+               (let* ((pw    (getpw (getuid)))
+                      (shell (passwd:shell pw)))
+                 (execl shell "stumpwm" "--login" "-c"
+                        (format #f "exec -a stumpwm /run/current-system/profile/bin/sbcl --load ~a"
+                                #$stumpwp-load-file))
+                 ;; (if (or (string= %display ":0.0")
+                 ;;         (string= %display ":3.0"))
+                 ;;     (execl shell "stumpwm" "--login" "-c"
+                 ;;            (format #f "exec -a stumpwm /run/current-system/profile/bin/sbcl --load ~a"
+                 ;;                    #$stumpwp-load-file))
+                 ;;     ;; The '--login' option is supported at least by Bash and zsh.
+                 ;;     (execl shell "ratpoison" "--login" "-c" "exec -a ratpoison /home/oleg/.guix-profile/bin/ratpoison"))
+                 )))))
     #~(begin
         (let ((file #$(string-append %home "/.xsession")))
           (copy-file #$xsession-file file)
@@ -474,13 +480,14 @@ _JAVA_AWT_WM_NONREPARENTING=1 PYTHONPATH='' exec -a \"$0\" ~a/bin/idea-ultimate 
                       "covid19.lisp"
                       "gpg.lisp"
                       "vpn.lisp"
-                      "mode-line.lisp"
+                      ;; "mode-line.lisp"
                       "display-0.lisp"
-                      "display.lisp"
-                      "autostart.lisp"
-                      "swank.lisp"
-                      "gaps.lisp"
-                      "windows.lisp")))
+                      ;; "display.lisp"
+                      ;; "autostart.lisp"
+                      ;; "swank.lisp"
+                      ;; "gaps.lisp"
+                      ;; "windows.lisp"
+                      )))
                (stumpwm-configuration
                 (init-config
                  `((in-package :stumpwm)

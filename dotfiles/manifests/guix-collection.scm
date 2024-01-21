@@ -181,7 +181,7 @@ virtualization vnc vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
                ;; zathura zathura-djvu zathura-pdf-mupdf poppler
 
                ;; X11
-               keynav rofi st xauth xev scrot xsel xmenu
+               keynav rofi st xauth xev scrot xsel xclickroot xmenu
                kitty
 
                ;; polybar

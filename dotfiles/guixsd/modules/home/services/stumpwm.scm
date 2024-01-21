@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2023 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2023, 2024 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -76,7 +76,7 @@
     "rofi.lisp"
     "screenshoot.lisp"
     "streamlink.lisp"
-    "swank.lisp"
+    ;; "swank.lisp"
     "term.lisp"
     "text-editors.lisp"
     "theme.lisp"
