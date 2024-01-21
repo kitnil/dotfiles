@@ -45,4 +45,6 @@
         "lm-sensors"
         "python"
         "python-psutil"
-        "mpv"))
+        "mpv"
+        "gron"
+        "jq"))
