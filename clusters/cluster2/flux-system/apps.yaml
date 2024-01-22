@@ -19,7 +19,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m0s
-  path: ./apps/base/znc
+  path: ./apps/cluster2/znc
   prune: true
   sourceRef:
     kind: GitRepository
