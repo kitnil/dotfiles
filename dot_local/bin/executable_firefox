@@ -6,7 +6,8 @@ PULSE_SERVER="${PULSE_SERVER:-192.168.0.137}"
 
 if [[ -n $VNCDESKTOP ]]
 then
-    if [[ $(ss --no-header --options state connected --options sport 5902) == *"$PULSE_SERVER"* ]]
+    if [[ $(ss --no-header --options state connected --options sport 5902) == *"$PULSE_SERVER"* ]] \
+           || [[ $(ss --no-header --options state connected --options sport 5903) == *"$PULSE_SERVER"* ]]
     then
         export PULSE_SERVER
     fi    
