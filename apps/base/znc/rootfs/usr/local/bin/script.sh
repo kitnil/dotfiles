@@ -6,5 +6,5 @@ if [[ -e /znc-data/configs/znc.conf ]]
 then
     :
 else
-    znc --makeconf
+    sleep infinity
 fi
