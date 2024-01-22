@@ -173,6 +173,19 @@
 
 
 ;;;
+;;; GhostText
+;;;
+
+(add-hook 'atomic-chrome-edit-mode-hook
+          #'(lambda ()
+              (when (or (string= (buffer-name)
+                                 "L0ok_At_Me - Chat - Twitch")
+                        (string= (buffer-name)
+                                 "sol1st - Chat - Twitch"))
+                (activate-input-method "russian-computer"))))
+
+
+;;;
 ;;; Smartparens
 ;;;
 
