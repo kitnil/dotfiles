@@ -14,6 +14,30 @@ spec:
       labels:
         app.kubernetes.io/name: znc
     spec:
+      initContainers:
+      - name: configure
+        image: znc:1.8.2-slim
+        command:
+        - /bin/sh
+        args:
+        - /usr/local/bin/script.sh
+        resources:
+          limits:
+            cpu: 10m
+            memory: 10Mi
+          requests:
+            cpu: 10m
+            memory: 10Mi
+        securityContext:
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+        volumeMounts:
+        - mountPath: /usr/local/bin
+          name: script
+        - mountPath: /znc-data
+          name: data
       containers:
       - name: znc
         image: znc:1.8.2-slim
@@ -31,6 +55,11 @@ spec:
             port: 6697
           failureThreshold: 30
           periodSeconds: 10
+        securityContext:
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
         resources:
           limits:
             cpu: "1"
@@ -38,3 +67,14 @@ spec:
           requests:
             cpu: 20m
             memory: 4Mi
+        volumeMounts:
+        - mountPath: /znc-data
+          name: data
+      volumes:
+      - name: script
+        configMap:
+          name: script
+      - name: data
+        hostPath:
+          path: /var/lib/znc
+          type: Directory

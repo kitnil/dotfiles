@@ -5,3 +5,7 @@ resources:
 - namespace.yaml
 - deployment.yaml
 - service.yaml
+configMapGenerator:
+- name: script
+  files:
+  - script.sh=rootfs/usr/local/bin/script.sh
