@@ -66,6 +66,10 @@ spec:
             drop:
             - ALL
           readOnlyRootFilesystem: true
+          allowPrivilegeEscalation: false
+          runAsNonRoot: true
+          runAsUser: 100
+          runAsGroup: 101
         resources:
           limits:
             cpu: "1"
