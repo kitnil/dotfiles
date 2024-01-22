@@ -1,0 +1,14 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: znc
+spec:
+  ports:
+  - name: http
+    port: 80
+    targetPort: 6697
+  - name: irc
+    port: 6697
+    targetPort: 6697
+  selector:
+    app.kubernetes.io/name: znc

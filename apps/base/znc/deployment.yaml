@@ -1,0 +1,40 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: znc
+  namespace: znc
+  labels:
+    app.kubernetes.io/name: znc
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: znc
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: znc
+    spec:
+      containers:
+      - name: znc
+        image: znc:1.8.2-slim
+        ports:
+        - containerPort: 6697
+          hostPort: 6697
+        livenessProbe:
+          tcpSocket:
+            port: 6697
+        readinessProbe:
+          tcpSocket:
+            port: 6697
+        startupProbe:
+          tcpSocket:
+            port: 6697
+          failureThreshold: 30
+          periodSeconds: 10
+        resources:
+          limits:
+            cpu: "1"
+            memory: 32Mi
+          requests:
+            cpu: 20m
+            memory: 4Mi
