@@ -3,3 +3,6 @@ include /run/current-system/profile/share/nano/*.nanorc
 
 ## Highlight line limiting column.
 set guidestripe 80
+
+## Reduce tab length.
+set tabsize 4
