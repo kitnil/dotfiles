@@ -1,2 +1,5 @@
 # Include all the syntax highlighting modules.
 include /run/current-system/profile/share/nano/*.nanorc
+
+## Highlight line limiting column.
+set guidestripe 80
