@@ -51,4 +51,5 @@
         "bluez"
         "brightnessctl"
         "moonlight-qt"
-        "v4l-utils"))
+        "v4l-utils"
+        "dialog"))
