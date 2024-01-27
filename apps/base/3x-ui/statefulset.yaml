@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: 3x-ui
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: 3x-ui
+      app.kubernetes.io/part-of: 3x-ui
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: 3x-ui
+        app.kubernetes.io/part-of: 3x-ui
+    spec:
+      containers:
+      - image: ghcr.io/mhsanaei/3x-ui:v2.1.2
+        name: 3x-ui
+        env:
+        - name: XRAY_VMESS_AEAD_FORCED
+          value: "false"
+        volumeMounts:
+        - mountPath: /var/lib/3x-ui/data
+          name: data
+        - mountPath: /var/lib/3x-ui/certs
+          name: certificates
+      volumes:
+      - name: data
+        hostPath:
+          path: /var/lib/3x-ui/data
+          type: Directory
+      - name: certificates
+        hostPath:
+          path: /var/lib/3x-ui/certs
+          type: Directory
