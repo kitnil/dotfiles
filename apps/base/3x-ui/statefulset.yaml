@@ -20,9 +20,9 @@ spec:
         - name: XRAY_VMESS_AEAD_FORCED
           value: "false"
         volumeMounts:
-        - mountPath: /var/lib/3x-ui/data
+        - mountPath: /etc/x-ui
           name: data
-        - mountPath: /var/lib/3x-ui/certs
+        - mountPath: /root/cert
           name: certificates
       volumes:
       - name: data
