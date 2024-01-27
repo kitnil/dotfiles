@@ -239,17 +239,14 @@
                (system* #$(file-append xhost "/bin/xhost") "+local:")
                (let* ((pw    (getpw (getuid)))
                       (shell (passwd:shell pw)))
-                 (execl shell "stumpwm" "--login" "-c"
-                        (format #f "exec -a stumpwm /run/current-system/profile/bin/sbcl --load ~a"
-                                #$stumpwp-load-file))
-                 ;; (if (or (string= %display ":0.0")
-                 ;;         (string= %display ":3.0"))
-                 ;;     (execl shell "stumpwm" "--login" "-c"
-                 ;;            (format #f "exec -a stumpwm /run/current-system/profile/bin/sbcl --load ~a"
-                 ;;                    #$stumpwp-load-file))
-                 ;;     ;; The '--login' option is supported at least by Bash and zsh.
-                 ;;     (execl shell "ratpoison" "--login" "-c" "exec -a ratpoison /home/oleg/.guix-profile/bin/ratpoison"))
-                 )))))
+                 (if (or (string= %display ":0.0")
+                         (string= %display ":3.0"))
+                     ;; The '--login' option is supported at least by Bash and zsh.
+                     (execl shell "stumpwm" "--login" "-c"
+                            (format #f "exec -a stumpwm /run/current-system/profile/bin/sbcl --load ~a"
+                                    #$stumpwp-load-file))
+                     ;; The '--login' option is supported at least by Bash and zsh.
+                     (execl shell "ratpoison" "--login" "-c" "exec -a ratpoison /home/oleg/.guix-profile/bin/ratpoison")))))))
     #~(begin
         (let ((file #$(string-append %home "/.xsession")))
           (copy-file #$xsession-file file)
