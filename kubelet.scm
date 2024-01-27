@@ -39,6 +39,6 @@
                              #$(file-append grep "/bin")
                              #$(file-append gzip "/bin")
                              #$(file-append kmod "/bin")
-                             #$(file-append kubernetes-binary "/bin")
+                             "/nix/store/lp8ch8l5dn4bcp056cpr1gfyb9i8zi54-kubernetes-1.25.4/bin"
                              #$(file-append util-linux "/bin")))))))))
 
