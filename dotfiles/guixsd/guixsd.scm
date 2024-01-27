@@ -551,6 +551,40 @@ location / {
                                 "-p" "tcp"
                                 "--dport" "22"
                                 "-j" "ACCEPT")))
+                            ;; Accept DC++ traffic.
+                            (iptables
+                             (string-join
+                              '("-I" "INPUT"
+                                "-i" "br0"
+                                "-d" "192.168.0.144/32"
+                                "-p" "tcp"
+                                "--dport" "3001"
+                                "-j" "ACCEPT")))
+                            (iptables
+                             (string-join
+                              '("-I" "INPUT"
+                                "-i" "br0"
+                                "-d" "192.168.0.144/32"
+                                "-p" "udp"
+                                "--dport" "3001"
+                                "-j" "ACCEPT")))
+                            (iptables
+                             (string-join
+                              '("-I" "INPUT"
+                                "-i" "br0"
+                                "-d" "192.168.0.144/32"
+                                "-p" "tcp"
+                                "--dport" "3002"
+                                "-j" "ACCEPT")))
+                            ;; DC++ DHC.
+                            (iptables
+                             (string-join
+                              '("-I" "INPUT"
+                                "-i" "br0"
+                                "-d" "192.168.0.144/32"
+                                "-p" "udp"
+                                "--dport" "6250"
+                                "-j" "ACCEPT")))
                             ;; Accept VNC traffic.
                             (iptables
                              (string-join
