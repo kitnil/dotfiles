@@ -184,6 +184,13 @@ prometheus:
         - 192.168.0.145:9080
       scrape_interval: 5m
       job_name: lvm
+    - static_configs:
+      - targets:
+        - 192.168.0.145:6060
+        labels:
+          machine: guixsd
+      scrape_interval: 10s
+      job_name: crowdsec_guixsd
   ingress:
     enabled: true
     ingressClassName: nginx
