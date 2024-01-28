@@ -49,6 +49,31 @@ prometheus:
         - 127.0.0.1:9153
       honor_labels: true
       job_name: dnsmasq
+    - static_configs:
+      - targets:
+        - https://wugi.info/
+        - https://guix.wugi.info/
+        - https://blog.wugi.info/
+        - https://peertube.home.wugi.info/
+        - http://ci.guix.gnu.org.intr
+        - http://ci.guix.gnu.org.wugi.info
+        - https://ci.guix.gnu.org
+        - https://bordeaux.guix.gnu.org
+      scrape_interval: 30s
+      metrics_path: /probe
+      params:
+        module:
+        - http_2xx
+      relabel_configs:
+      - source_labels:
+        - __address__
+        target_label: __param_target
+      - source_labels:
+        - __param_target
+        target_label: instance
+      - replacement: 192.168.0.145:9115
+        target_label: __address__
+      job_name: http
   ingress:
     enabled: true
     ingressClassName: nginx
