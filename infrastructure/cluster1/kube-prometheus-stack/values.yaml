@@ -196,6 +196,11 @@ prometheus:
         - 192.168.0.145:9407
       metrics_path: /metrics
       job_name: obs
+    - static_configs:
+      - targets:
+        - windows.local:9182
+      scrape_interval: 1m
+      job_name: windows
   ingress:
     enabled: true
     ingressClassName: nginx
