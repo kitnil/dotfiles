@@ -174,7 +174,7 @@ prometheus:
       - regex: ^(module)$
         action: labeldrop
       job_name: ssh
-   ingress:
+  ingress:
     enabled: true
     ingressClassName: nginx
     annotations:
