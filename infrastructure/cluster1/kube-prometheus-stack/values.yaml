@@ -74,6 +74,30 @@ prometheus:
       - replacement: 192.168.0.145:9115
         target_label: __address__
       job_name: http
+    - static_configs:
+      - targets:
+        - 192.168.0.1
+        - 81.95.28.27
+        - 78.108.80.230
+        - 78.108.87.250
+        - 78.108.91.250
+        - 172.16.103.1
+        - ci.guix.gnu.org
+      scrape_interval: 30s
+      metrics_path: /probe
+      params:
+        module:
+        - icmp
+      relabel_configs:
+      - source_labels:
+        - __address__
+        target_label: __param_target
+      - source_labels:
+        - __param_target
+        target_label: instance
+      - replacement: 127.0.0.1:9115
+        target_label: __address__
+      job_name: icmp
   ingress:
     enabled: true
     ingressClassName: nginx
