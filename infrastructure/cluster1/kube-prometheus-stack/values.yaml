@@ -37,6 +37,13 @@ prometheus:
         - vm1.wugi.info:9636
       scrape_interval: 1m
       job_name: exim
+    - static_configs:
+      - targets:
+        - vm1.wugi.info:9100
+        - vm2.wugi.info:9100
+        - notebook.wugi.info:9100
+      scrape_interval: 5s
+      job_name: node
   ingress:
     enabled: true
     ingressClassName: nginx
