@@ -1489,60 +1489,6 @@ location / {
                                                        ("query_name" . "mjru.wugi.info")))))
                                                   #:pretty #t))))))))))
 
-                         (service karma-service-type
-                                  (karma-configuration
-                                   (config-file
-                                    (computed-file
-                                     "karma.json"
-                                     (with-extensions (list guile-json-4)
-                                       (with-imported-modules (source-module-closure '((json builder)))
-                                         #~(begin
-                                             (use-modules (json builder)
-                                                          (ice-9 rdelim))
-                                             (with-output-to-file #$output
-                                               (lambda ()
-                                                 (scm->json
-                                                  `(("ui"
-                                                     ("refresh" . "30s")
-                                                     ("minimalGroupWidth" . 420)
-                                                     ("hideFiltersWhenIdle" . #f)
-                                                     ("colorTitlebar" . #f)
-                                                     ("collapseGroups" . "collapsedOnMobile")
-                                                     ("alertsPerGroup" . 5)
-                                                     ("multiGridLabel" . "severity")
-                                                     ("multiGridSortReverse" . #f))
-                                                    ("silenceForm" ("strip" ("labels" . #("job"))))
-                                                    ("receivers" ("strip" . #()) ("keep" . #()))
-                                                    ("log"
-                                                     ("level" . "error")
-                                                     ("config" . #f))
-                                                    ("listen"
-                                                     ("prefix" . "/")
-                                                     ("port" . 18578)
-                                                     ("address" . "127.0.0.1"))
-                                                    ("labels"
-                                                     ("strip" . #())
-                                                     ("keep" . #())
-                                                     ("color"
-                                                      ("unique" . #("cluster" "instance" "@receiver"))
-                                                      ("static" . #("job"))))
-                                                    ("karma" ("name" . "karma-prod"))
-                                                    ("debug" . #f)
-                                                    ("annotations"
-                                                     ("visible" . #())
-                                                     ("hidden" . #("help"))
-                                                     ("default" ("hidden" . #f)))
-                                                    ("alertmanager"
-                                                     ("servers"
-                                                      .
-                                                      #((("uri" . "http://127.0.0.1:9093")
-                                                         ("timeout" . "10s")
-                                                         ("readonly" . #f)
-                                                         ("proxy" . #t)
-                                                         ("name" . "guix.wugi.info"))))
-                                                     ("interval" . "60s")))
-                                                  #:pretty #t))))))))))
-
                          (service prometheus-smartctl-exporter-service-type
                                   (prometheus-smartctl-exporter-configuration
                                    (arguments
