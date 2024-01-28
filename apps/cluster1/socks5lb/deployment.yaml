@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: socks5lb
+spec:
+  template:
+    spec:
+      containers:
+      - name: socks5lb
+        volumeMounts:
+        - mountPath: /etc/socks5lb.yml
+          subPath: socks5lb.yml
+          name: socks5lb-configuration
+      volumes:
+      - name: socks5lb-configuration
+        configMap:
+          name: socks5lb-configuration

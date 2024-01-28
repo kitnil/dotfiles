@@ -1,0 +1,14 @@
+server:
+  socks5:
+    addr: ":1080"
+backends:
+- addr: 192.168.25.3:1080
+  check_config:
+    check_url: https://www.google.com/robots.txt
+    initial_alive: true
+    timeout: 5
+- addr: 192.168.154.227:9050
+  check_config:
+    check_url: https://www.google.com/robots.txt
+    initial_alive: true
+    timeout: 30
