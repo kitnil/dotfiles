@@ -32,6 +32,11 @@ prometheus:
         - vm1.wugi.info:9324
       scrape_interval: 1m
       job_name: bird
+    - static_configs:
+      - targets:
+        - vm1.wugi.info:9636
+      scrape_interval: 1m
+      job_name: exim
   ingress:
     enabled: true
     ingressClassName: nginx
