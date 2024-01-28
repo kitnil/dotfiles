@@ -1,36 +1,10 @@
 #!/usr/bin/env bash
 
-# set -o errexit -o pipefail
-
-# exec &> >(tee /home/oleg/sunshine.log)
+set -o errexit -o pipefail
 
 sunshine_directory="${SUNSHINE_DIRECTORY:-${HOME}/.config/sunshine}"
 
-# ghcr.io/lizardbyte/sunshine:9a3553d-fedora-38@sha256:8bfafb75f2d05b50f5d83105ef9c64f41d9fe6744ae54107162aaf7eba49a744
-# ghcr.io/lizardbyte/sunshine:9a3553d-archlinux
-# ghcr.io/lizardbyte/sunshine:9a3553d-ubuntu-22.04
-# ghcr.io/lizardbyte/sunshine:9a3553d-debian-bookworm
 image="ghcr.io/lizardbyte/sunshine:9a3553d-archlinux"
-
-# --group-add input
-# --group-add video
-
-# if [[ $SUNSHINE_DEBUG == *true* ]]
-# then
-#     docker_command_arguments+=(
-#         exec sleep infinity
-#     )
-# else
-#     docker_command_arguments+=(
-#         sudo ln -s /dev/dri/renderD129 /dev/dri/renderD128
-#         ";"
-#         exec /usr/bin/sunshine "${sunshine_directory}/sunshine.conf"
-#     )
-#     docker_arguments+=(
-#         --tty
-#         --interative
-#     )
-# fi
 
 docker_arguments=(
     --device /dev/dri/
