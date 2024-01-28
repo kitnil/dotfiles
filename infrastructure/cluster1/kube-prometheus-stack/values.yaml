@@ -27,6 +27,11 @@ prometheus:
         - 192.168.0.145:9633
       scrape_interval: 10m
       job_name: smartctl
+    - static_configs:
+      - targets:
+        - vm1.wugi.info:9324
+      scrape_interval: 1m
+      job_name: bird
   ingress:
     enabled: true
     ingressClassName: nginx
