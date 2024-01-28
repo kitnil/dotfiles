@@ -7,6 +7,21 @@ prometheus:
       requests:
         cpu: 1
         memory: 256Mi
+    additionalScrapeConfigs:
+    - static_configs:
+      - targets:
+        - 192.168.0.1
+      scrape_interval: 10s
+      job_name: tp-link
+      relabel_configs:
+      - source_labels:
+        - __address__
+        target_label: __param_target
+      - source_labels:
+        - __param_target
+        target_label: instance
+      - replacement: 192.168.0.145:9101
+        target_label: __address__
   ingress:
     enabled: true
     ingressClassName: nginx

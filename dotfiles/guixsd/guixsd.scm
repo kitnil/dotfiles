@@ -1658,7 +1658,6 @@ location / {
                                       (@ (deprecated) openssh)))
                                    (host "192.168.0.1")
                                    (known-hosts '("192.168.0.1 ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAAgwCtcjXU3PrcxuwxQh3zM5gOvA3QonoXTcdBiIQ9YZJ9mJpK/4ASWNnozR8Z1RLR1Z+3fomfdAk0aVmHdly0GxTyuSa69kiaQlQrfbI9hheAylTBk23OMv0hmf5sRkk/I0yNOSkr8o7fi8bvlOETaJ164lZvQ5+4S0UNSADJ2MOQ6B3B"))
-                                   (listen-address "127.0.0.1:9101")
                                    (environment-variables
                                     (list
                                      (string-append
