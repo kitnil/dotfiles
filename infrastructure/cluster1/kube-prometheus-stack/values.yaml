@@ -201,6 +201,11 @@ prometheus:
         - windows.local:9182
       scrape_interval: 1m
       job_name: windows
+    - static_configs:
+      - targets:
+        - 127.0.0.1:9095
+      honor_labels: true
+      job_name: pushgateway
   ingress:
     enabled: true
     ingressClassName: nginx

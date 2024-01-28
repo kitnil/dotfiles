@@ -1860,7 +1860,7 @@ location / {
 
                          (service prometheus-pushgateway-service-type
                                   (prometheus-pushgateway-configuration
-                                   (listen-address "127.0.0.1:9095")
+                                   (listen-address "0.0.0.0:9095")
                                    (prometheus-pushgateway "/home/oleg/.nix-profile/bin/pushgateway")))
 
                          (service prometheus-dnsmasq-service-type
