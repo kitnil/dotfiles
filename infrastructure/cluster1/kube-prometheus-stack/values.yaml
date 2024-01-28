@@ -174,6 +174,11 @@ prometheus:
       - regex: ^(module)$
         action: labeldrop
       job_name: ssh
+    - static_configs:
+      - targets:
+        - 192.168.0.145:9312
+      metrics_path: /metrics
+      job_name: ssh-metrics
   ingress:
     enabled: true
     ingressClassName: nginx
