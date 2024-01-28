@@ -1866,7 +1866,6 @@ location / {
 
                          (service prometheus-dnsmasq-service-type
                                   (prometheus-dnsmasq-configuration
-                                   (listen-address "127.0.0.1:9153")
                                    (prometheus-dnsmasq "/home/oleg/.nix-profile/bin/dnsmasq_exporter")))
 
                          (service openssh-service-type
