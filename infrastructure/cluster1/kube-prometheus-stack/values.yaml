@@ -191,6 +191,11 @@ prometheus:
           machine: guixsd
       scrape_interval: 10s
       job_name: crowdsec_guixsd
+    - static_configs:
+      - targets:
+        - 192.168.0.145:9407
+      metrics_path: /metrics
+      job_name: obs
   ingress:
     enabled: true
     ingressClassName: nginx
