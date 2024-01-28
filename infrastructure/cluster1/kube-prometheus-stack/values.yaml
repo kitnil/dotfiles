@@ -98,7 +98,61 @@ prometheus:
       - replacement: 192.168.0.145:9115
         target_label: __address__
       job_name: icmp
-  ingress:
+    - static_configs:
+      - targets:
+        - smtp.wugi.info:25
+      scrape_interval: 30s
+      metrics_path: /probe
+      params:
+        module:
+        - smtp_starttls
+      relabel_configs:
+      - source_labels:
+        - __address__
+        target_label: __param_target
+      - source_labels:
+        - __param_target
+        target_label: instance
+      - replacement: 192.168.0.145:9115
+        target_label: __address__
+      job_name: smtps
+    - static_configs:
+      - targets:
+        - imap.wugi.info:143
+      scrape_interval: 30s
+      metrics_path: /probe
+      params:
+        module:
+        - imap_starttls
+      relabel_configs:
+      - source_labels:
+        - __address__
+        target_label: __param_target
+      - source_labels:
+        - __param_target
+        target_label: instance
+      - replacement: 192.168.0.145:9115
+        target_label: __address__
+      job_name: imaps
+    - static_configs:
+      - targets:
+        - 8.8.8.8
+      scrape_interval: 10m
+      metrics_path: /probe
+      params:
+        module:
+        - dns_udp_mjru_wugi_info
+      relabel_configs:
+      - source_labels:
+        - __address__
+        target_label: __param_target
+      - source_labels:
+        - __param_target
+        target_label: instance
+      - replacement: 192.168.0.145:9115
+        target_label: __address__
+      job_name: dns
+   ingress:
     enabled: true
     ingressClassName: nginx
     annotations:
