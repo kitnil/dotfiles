@@ -235,6 +235,127 @@ alertmanager:
     hosts:
     - alertmanager.home.wugi.info
 
+## Provide custom recording or alerting rules to be deployed into the cluster.
+##
+additionalPrometheusRulesMap:
+  bird:
+    groups:
+    - rules:
+      - labels:
+          severity: critical
+        expr: absent(sum by (instance,import_filter,proto) (bird_protocol_prefix_import_count{proto="BGP"}))
+        for: 1m
+        annotations:
+          summary: Absent bird imports
+          description: Absent bird imports.
+        alert: BirdAbsent
+      - labels:
+          severity: critical
+        expr: sum by (instance,import_filter,proto) (bird_protocol_prefix_import_count{proto="BGP"})
+          == 0
+        annotations:
+          summary: Bird No Imports
+          details: '{{ $value }} prefixes imported totally'
+          description: All {{ $labels.proto }} sessions are unused! External connectivity
+            affected
+        alert: BirdNoImports
+      name: bird-exporter
+  exim:
+    groups:
+    - rules:
+      - labels:
+          severity: critical
+        expr: absent(exim_queue)
+        for: 1m
+        annotations:
+          summary: Absent exim queue
+          description: Absent exim queue.
+        alert: EximAbsent
+      - labels:
+          severity: warning
+        expr: exim_queue != 0
+        for: 1h
+        annotations:
+          summary: Exim non-empty queue
+          description: '{{ $value }} messages in exim queue.'
+        alert: EximQueue
+      name: exim-exporter
+  ssh:
+    groups:
+    - rules:
+      - labels:
+          severity: warning
+        expr: ssh_success != 1
+        annotations:
+          summary: SSH connection failure
+          description: SSH connection failure.
+        alert: SshFailure
+      name: ssh
+  lvm:
+    groups:
+    - rules:
+      - labels:
+          severity: critical
+        expr: 100 - lvm_lv_data_percent{lv_name="thinpool2"} < 10
+        annotations:
+          summary: Logical Thin Volume has less than 10% space left.
+          description: Logical Thin Volume {{ $labels.lv_name }} at {{ $labels.instance
+            }} has only {{ printf "%.2f" $value }}% available space left.
+        alert: LvmLvDataAlmostOutOfSpace
+      - labels:
+          severity: critical
+        for: 10m
+        expr: absent(lvm_lv_data_percent{lv_name="thinpool2"})
+        annotations:
+          summary: Absent metrics for Logical Thin Volume.
+          description: Absent metrics for Logical Thin Volume at {{ $labels.instance
+            }}.
+        alert: LvmLvDataPercentAbsent
+      name: lvm
+  smartctl:
+    groups:
+    - rules:
+      - labels:
+          severity: critical
+        expr: absent(smartctl_device_attribute{attribute_id="5", attribute_value_type="raw"})
+        for: 20m
+        annotations:
+          summary: Absent smartctl reallocated sectors counts
+          description: Absent smartctl reallocated sectors counts.
+        alert: DiskAbsentReallocatedSectors
+      - labels:
+          severity: critical
+        expr: deriv(smartctl_device_attribute{attribute_id="5",attribute_value_type="raw"}[15m])
+          > 0
+        annotations:
+          summary: Reallocated sectors detected.
+          description: Disk {{ $labels.model_name }} has {{ $value }} reallocated
+            sectors.
+        alert: DiskReallocatedSectors
+      name: smartctl-exporter
+  windows:
+    groups:
+    - rules:
+      - labels:
+          severity: warning
+        for: 1m
+        expr: windows_exporter_collector_success != 1
+        annotations:
+          summary: Windows exporter collector {{ $labels.collector }} failed (instance
+            {{ $labels.instance }})
+        alert: WindowsCollectorFail
+      - labels:
+          severity: warning
+        for: 1h
+        expr: windows_logical_disk_free_bytes / windows_logical_disk_size_bytes *
+          100 < 5
+        annotations:
+          summary: Filesystem has less than 5% space left.
+          description: Filesystem on {{ $labels.volume }} at {{ $labels.instance }}
+            has only {{ printf "%.2f" $value }}% available space left.
+        alert: WindowsFilesystemAlmostOutOfSpace
+      name: windows-exporter
+
 grafana:
   ingress:
     enabled: true
