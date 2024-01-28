@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: socks5lb
+spec:
+  strategy:
+    type: Recreate
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: socks5lb
+      app.kubernetes.io/part-of: socks5lb
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: socks5lb
+        app.kubernetes.io/part-of: socks5lb
+    spec:
+      hostNetwork: true
+      containers:
+      - image: ghcr.io/mingcheng/socks5lb:1.1.0
+        name: socks5lb
+        env:
+        - name: TZ
+          value: "Europe/Moscow"
+        - name: CHECK_TIME_INTERVAL
+          value: "3600"
+        - name: DEBUG
+          value: "true"
