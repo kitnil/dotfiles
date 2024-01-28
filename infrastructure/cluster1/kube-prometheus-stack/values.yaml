@@ -22,6 +22,11 @@ prometheus:
         target_label: instance
       - replacement: 192.168.0.145:9101
         target_label: __address__
+    - static_configs:
+      - targets:
+        - 192.168.0.145:9633
+      scrape_interval: 10m
+      job_name: smartctl
   ingress:
     enabled: true
     ingressClassName: nginx

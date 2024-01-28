@@ -1849,7 +1849,7 @@ location / {
                          (service prometheus-smartctl-exporter-service-type
                                   (prometheus-smartctl-exporter-configuration
                                    (arguments
-                                    '("--web.listen-address=127.0.0.1:9633"
+                                    '("--web.listen-address=0.0.0.0:9633"
                                       "--smartctl.path=/run/current-system/profile/sbin/smartctl"
                                       "--smartctl.device=/dev/sda"
                                       "--smartctl.device=/dev/sdb"
