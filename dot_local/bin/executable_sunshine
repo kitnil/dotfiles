@@ -2,6 +2,11 @@
 
 export LD_LIBRARY_PATH=/gnu/store/z67a7j5shx37lwahczxwj30vbq2hfzl7-mesa-23.3.2/lib/dri:/gnu/store/z67a7j5shx37lwahczxwj30vbq2hfzl7-mesa-23.3.2/lib
 
-sudo ln -s /nix/store/ciyz1wbkjgwj6z5y4lqc13f836ivv1n8-mesa-23.3.3-drivers/lib /run/opengl-driver
+if [[ -e /run/opengl-driver/lib ]]
+then
+    :
+else
+    sudo ln -s /nix/store/ciyz1wbkjgwj6z5y4lqc13f836ivv1n8-mesa-23.3.3-drivers/lib /run/opengl-driver
+fi
 
 exec /home/oleg/.nix-profile/bin/sunshine "$@"
