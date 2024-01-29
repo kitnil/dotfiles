@@ -1,0 +1,9 @@
+#!/bin/sh
+
+export LD_LIBRARY_PATH=/gnu/store/z67a7j5shx37lwahczxwj30vbq2hfzl7-mesa-23.3.2/lib/dri:/gnu/store/z67a7j5shx37lwahczxwj30vbq2hfzl7-mesa-23.3.2/lib
+
+# export LD_LIBRARY_PATH="/nix/store/7pdk872dpa8k8a16s4g8spbp7l7wcb66-mesa-23.3.3-debug/lib:/nix/store/qpqyg1sq87fkjk0fz652v5zls6k04qa1-mesa-23.3.3-dev/lib:/nix/store/ciyz1wbkjgwj6z5y4lqc13f836ivv1n8-mesa-23.3.3-drivers/lib:/nix/store/4xri89rd81qfn54vjcrp7m7qb9i2yj6j-mesa-23.3.3-driversdev/lib:/nix/store/hxigprhy2r2bw782d1f3bph1pc3csxcr-mesa-23.3.3-opencl/lib:/nix/store/gnn3n5dahk5z2jm411mbxc3ni0gd4wb0-mesa-23.3.3-osmesa/lib:/nix/store/pwm1f7g7r57b4a226drs9241aa7i55zh-mesa-23.3.3/lib:/nix/store/yfhxvh7g5nzz6d0gvsi57m1l8dpzphg4-mesa-23.3.3-spirv2dxil/lib:${LD_LIBRARY_PATH}"
+
+sudo ln -s /nix/store/ciyz1wbkjgwj6z5y4lqc13f836ivv1n8-mesa-23.3.3-drivers/lib /run/opengl-driver
+
+exec /home/oleg/.nix-profile/bin/sunshine "$@"
