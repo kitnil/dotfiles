@@ -2333,6 +2333,14 @@ curl()
                 --key "${HOME}/src/gitlab.intr/office/ssl-certificates/kubernetes/admin-key.pem"
                 "$var"
             )
+        elif [[ "$var" == *"https://kubernetes.home:6443"* ]]
+        then
+            new_args+=(
+                --cacert /etc/kubernetes/pki/ca.pem
+                --cert /etc/kubernetes/pki/admin.pem
+                --key /etc/kubernetes/pki/admin-key.pem
+                "$var"
+            )
         else
 	    new_args+=($var)
         fi
