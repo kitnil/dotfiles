@@ -1089,7 +1089,7 @@ location / {
            "192.168.154.1 kube1 kube1.home kube1.lan"
            "192.168.154.99 kube5 kube5.home"
            "192.168.154.1 nfs.home"
-           "192.168.154.1 qbittorrent.home"
+           "192.168.0.145 qbittorrent.home"
            "192.168.154.230 samba.home"
            "192.168.0.145 kubernetes.home.wugi.info"
 
