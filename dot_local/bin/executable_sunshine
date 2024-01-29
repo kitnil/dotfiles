@@ -1,5 +1,4 @@
-#!/bin/sh
-
+#!/usr/bin/env bash
 
 export LD_LIBRARY_PATH=/gnu/store/z67a7j5shx37lwahczxwj30vbq2hfzl7-mesa-23.3.2/lib/dri:/gnu/store/z67a7j5shx37lwahczxwj30vbq2hfzl7-mesa-23.3.2/lib
 
