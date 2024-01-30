@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+exec /run/current-system/profile/bin/docker run \
+     --rm \
+     --network host \
+     --volume "${PWD}:/workdir" \
+     --workdir /workdir \
+     --volume /var/run/docker.sock:/var/run/docker.sock \
+     docker:latest \
+     "$@"
