@@ -189,6 +189,19 @@
                     '')
                   { };
 
+              nekoray =
+                let
+                  inherit (nixpkgs-idea-community.legacyPackages.${system})
+                    callPackage runtimeShell writeScriptBin;
+                  nekoray = callPackage ./pkgs/nekoray {};
+                in
+                  writeScriptBin "nekoray" ''
+                    #!${runtimeShell} -e
+                    FONTCONFIG_FILE=/run/current-system/profile/etc/fonts/fonts.conf
+                    export FONTCONFIG_FILE
+                    exec ${nekoray}/bin/nekoray-bin "$@"
+                  '';
+
               jenkins = with pkgs;
                 let
                   pluginCmds = lib.attrsets.mapAttrsToList

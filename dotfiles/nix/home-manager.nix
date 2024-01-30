@@ -243,6 +243,8 @@
 
     sunshine
     moonlight-qt
+
+    nekoray
   ];
 
   home.file = {
