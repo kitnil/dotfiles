@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+set -o nounset -o errexit -o pipefail
+
+sudo ip link add macvlan0 link tapvpn1 type macvlan mode bridge
+sudo ip link set macvlan0 netns ns0
+sudo ip netns exec ns0 ip link set macvlan0 up
+sudo ip netns exec ns0 ip addr add 192.168.25.12/24 dev macvlan0
+sudo ip netns exec ns0 ping 192.168.25.1
+
+# vm1.wugi.info
+echo iptables -t nat -A POSTROUTING -o eth0 -j MASQUERADE
+echo iptables -A FORWARD -i tapvpn1 -o eth0 -m state --state RELATED,ESTABLISHED -j ACCEPT

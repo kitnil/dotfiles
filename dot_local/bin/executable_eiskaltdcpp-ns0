@@ -1,0 +1,2 @@
+#!/bin/sh
+exec sudo ip netns exec ns0 sudo -u oleg -i eiskaltdcpp-qt
