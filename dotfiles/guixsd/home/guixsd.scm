@@ -260,6 +260,7 @@
    (majordomo-mbsync-services "sidorov")
    (majordomo-mbsync-services "fired")
    (majordomo-mbsync-services "pr")
+   (majordomo-mbsync-services "noc")
 
    (majordomo-mbsync-services "alertmanager")
    (majordomo-mbsync-services "git-commits")
@@ -717,12 +718,21 @@ from           pyhalov@majordomo.ru
 user           pyhalov@majordomo.ru
 password       ~a
 
+# Majordomo NOC
+account        majordomo-noc
+host           smtp.majordomo.ru
+port           587
+from           noc@majordomo.ru
+user           noc@majordomo.ru
+password       ~a
+
 # Set a default account
 account default : gmail
 "
                                     %home
                                     (pass "myaccount.google.com/apppasswords/go.wigust")
-                                    (pass "majordomo/private/newmail.majordomo.ru/pyhalov@majordomo.ru"))))
+                                    (pass "majordomo/private/newmail.majordomo.ru/pyhalov@majordomo.ru")
+                                    (pass "majordomo/private/router.majordomo.ru/noc@majordomo.ru"))))
                         (chmod msmtp-config #o600)))
 
     (simple-service 'netrc-config

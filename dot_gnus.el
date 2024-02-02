@@ -1,4 +1,4 @@
-;; Copyright © 2018, 2019, 2020, 2021, 2022 Oleg Pykhalov <go.wigust@gmail.com>
+;; Copyright © 2018, 2019, 2020, 2021, 2022, 2024 Oleg Pykhalov <go.wigust@gmail.com>
 ;; Released under the GNU GPLv3 or any later version.
 
 (require 'mailcap)
@@ -193,6 +193,10 @@ below otherwise."
         ("majordomo-.*" ; Matches Gnus group called "work"
          (name "Олег Пыхалов")
          (address "pyhalov@majordomo.ru")
+         (organization "Majordomo"))
+        ("majordomo-noc" ; Matches Gnus group called "work"
+         (name "ООО Хостинг")
+         (address "noc@majordomo.ru")
          (organization "Majordomo"))))
 
 ;; (setq nnmail-expiry-wait 'immediate)
