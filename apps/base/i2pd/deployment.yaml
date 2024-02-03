@@ -20,8 +20,14 @@ spec:
         volumeMounts:
         - mountPath: /home/i2pd/data
           name: data
+        - mountPath: /i2pd_certificates
+          name: certs
       volumes:
-      - name: data
-        hostPath:
-          path: /home/i2pd/data
+      - hostPath:
+          path: /var/lib/i2pd/home/i2pd/data
           type: Directory
+        name: data
+      - hostPath:
+          path: /var/lib/i2pd/i2pd_certificates
+          type: Directory
+        name: certs
