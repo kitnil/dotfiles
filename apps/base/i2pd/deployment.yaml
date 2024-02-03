@@ -13,6 +13,7 @@ spec:
         app.kubernetes.io/name: i2pd
         app.kubernetes.io/part-of: ip2d
     spec:
+      hostNetwork: true
       containers:
       - image: ghcr.io/purplei2p/i2pd:release-2.50.2
         name: i2pd
