@@ -18,10 +18,10 @@ spec:
       - image: ghcr.io/purplei2p/i2pd:release-2.50.2
         name: i2pd
         volumeMounts:
-        - mountPath: /home/i2pd
+        - mountPath: /home/i2pd/data
           name: data
       volumes:
       - name: data
         hostPath:
-          path: /home/i2pd
+          path: /home/i2pd/data
           type: Directory
