@@ -82,7 +82,7 @@ oleg ALL=(ALL) NOPASSWD:ALL\n"))
   ;; Globally-installed packages.
   (packages (append (list curl nmap iptables mtr tcpdump net-tools iftop
                           nss-certs dn42-ca
-                          strace tmux)
+                          strace tmux ipset)
                     %mail-packages
                     %base-packages))
 
