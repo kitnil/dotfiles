@@ -94,6 +94,9 @@ oleg ALL=(ALL) NOPASSWD:ALL\n"))
                                                      #:name-servers '("127.0.0.1"
                                                                       "8.8.8.8"
                                                                       "8.8.4.4"))
+                          (service iptables-service-type
+                                   (iptables-configuration
+                                    (ipv4-rules (local-file "etc/iptables/iptables.rules"))))
                           (service ntp-service-type
                                    (ntp-configuration
                                     (servers
