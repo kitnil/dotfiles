@@ -245,41 +245,6 @@ remote-random
                                                  "wugi.info"
                                                  "xmpp.wugi.info"))))))
 
-                          (service nginx-service-type
-                                   (nginx-configuration
-                                    (server-blocks (list (proxy "file.wugi.info" 5091
-                                                                #:ssl? #t
-                                                                #:ssl-key? #t
-                                                                #:listen "78.108.82.44")
-                                                         (nginx-server-configuration
-                                                          (inherit %githunt-nginx-configuration)
-                                                          (listen '("78.108.82.44:80"
-                                                                    "78.108.82.44:443 ssl")))
-                                                         (nginx-server-configuration
-                                                          (inherit %webssh-configuration-nginx)
-                                                          (server-name '("vm1.wugi.info"))
-                                                          (listen '("78.108.82.44:80" "78.108.82.44:443 ssl"))
-                                                          (ssl-certificate (letsencrypt-certificate "vm1.wugi.info"))
-                                                          (ssl-certificate-key (letsencrypt-key "vm1.wugi.info"))
-                                                          (locations
-                                                           (append (list (nginx-location-configuration
-                                                                          (uri "/.well-known")
-                                                                          (body '("root /var/www;"))))
-                                                                   (nginx-server-configuration-locations %webssh-configuration-nginx))))
-                                                         (nginx-server-configuration
-                                                          (server-name '("vm1.corp"))
-                                                          (listen '("192.168.25.3:80"))
-                                                          (locations
-                                                           (list
-                                                            (nginx-location-configuration
-                                                             (uri "/")
-                                                             (body
-                                                              (list
-                                                               "allow 192.168.25.0/24;"
-                                                               "resolver 80.80.80.80 ipv6=off;"
-                                                               "proxy_pass http://127.0.0.1:9180;"
-                                                               "add_header Access-Control-Allow-Origin *;"))))))))))
-
                           (service docker-service-type)
 
                           (service docker-compose-service-type
