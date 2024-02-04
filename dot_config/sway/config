@@ -237,6 +237,13 @@ bindsym $mod+y exec clipman pick -t wofi
     bindsym XF86AudioNext exec sudo /home/oleg/.nix-profile/bin/ddcutil setvcp xF4 x00d0 --i2c-source-addr=x50 --noverify
 
 #
+# Switch DP-1 on and off:
+#
+
+    bindsym XF86Tools exec swaymsg "output DP-4 dpms on"
+    bindsym XF86AudioStop exec swaymsg "output DP-4 dpms off"
+
+#
 # Screenshots:
 #
 
