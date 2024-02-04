@@ -224,6 +224,19 @@ bindsym $mod+y exec clipman pick -t wofi
     bindsym XF86Mail exec brightness toggle
 
 #
+# Inputs:
+#
+
+    # HDMI-1
+    bindsym XF86AudioPrev exec sudo /home/oleg/.nix-profile/bin/ddcutil setvcp xF4 x0090 --i2c-source-addr=x50 --noverify
+
+    # HDMI-2
+    bindsym XF86AudioPlay exec sudo /home/oleg/.nix-profile/bin/ddcutil setvcp xF4 x0091 --i2c-source-addr=x50 --noverify
+
+    # DP-1
+    bindsym XF86AudioNext exec sudo /home/oleg/.nix-profile/bin/ddcutil setvcp xF4 x00d0 --i2c-source-addr=x50 --noverify
+
+#
 # Screenshots:
 #
 

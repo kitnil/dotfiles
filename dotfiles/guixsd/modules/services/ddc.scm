@@ -17,7 +17,6 @@
 ;;; along with GNU Guix.  If not, see <http://www.gnu.org/licenses/>.
 
 (define-module (services ddc)
-  #:use-module (gnu packages hardware)
   #:use-module (gnu services base)
   #:use-module (gnu services shepherd)
   #:use-module (gnu services)
@@ -40,8 +39,7 @@
               (list #$(local-file "/home/oleg/src/gitlab.com/wigust/ddcutil-daemon/run.sh"
                                   #:recursive? #t))
               #:environment-variables
-              (append (list (string-append "PATH="
-                                           (string-append #$ddcutil "/bin")))
+              (append (list "PATH=/home/oleg/.nix-profile/bin")
                       (remove (lambda (str)
                                 (string-prefix? "PATH=" str))
                               (environ)))))

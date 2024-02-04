@@ -32,6 +32,8 @@
 
     nixpkgs-chatterino2.url = "nixpkgs/nixpkgs-unstable";
 
+    nixpkgs-ddcutil.url = "nixpkgs/nixpkgs-unstable";
+
     nixpkgs-home-manager.url = "nixpkgs/nixpkgs-unstable";
     home-manager.url = "github:nix-community/home-manager?ref=release-23.05";
     nur.url = "github:nix-community/NUR";
@@ -103,6 +105,7 @@
     , majordomo-vault
     , nixpkgs-idea
     , nixpkgs-idea-community
+    , nixpkgs-ddcutil
     , nixpkgs-nixd
     , nixpkgs-wayvnc
     , nixpkgs-copyq
@@ -258,6 +261,9 @@
 
               inherit (nixpkgs-idea-community.legacyPackages.${system})
                 sunshine;
+
+              inherit (nixpkgs-ddcutil.legacyPackages.${system})
+                ddcutil;
 
               inherit (nixpkgs-phpactor.legacyPackages.${system})
                 phpactor;

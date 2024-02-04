@@ -245,6 +245,8 @@
     moonlight-qt
 
     nekoray
+
+    ddcutil
   ];
 
   home.file = {
