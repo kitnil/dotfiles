@@ -263,7 +263,7 @@
                 sunshine;
 
               inherit (nixpkgs-ddcutil.legacyPackages.${system})
-                ddcutil;
+                ddcutil tribler;
 
               inherit (nixpkgs-phpactor.legacyPackages.${system})
                 phpactor;
