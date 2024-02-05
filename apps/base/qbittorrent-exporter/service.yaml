@@ -10,7 +10,7 @@ spec:
   ports:
   - port: 80
     protocol: TCP
-    targetPort: 17871
+    targetPort: 8090
     name: metrics
   selector:
     app.kubernetes.io/name: qbittorrent-exporter
