@@ -240,7 +240,6 @@ remote-random
                                               (deploy-hook %nginx-deploy-hook)))
                                            (list "file.wugi.info"
                                                  "homer.wugi.info"
-                                                 "githunt.wugi.info"
                                                  "vm1.wugi.info"
                                                  "wugi.info"
                                                  "xmpp.wugi.info"))))))

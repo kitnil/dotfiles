@@ -73,7 +73,7 @@ rec {
     docker-registry = guix;
     guix.A = [ "88.201.161.72" ];
     file = { inherit A; };
-    githunt = { inherit A; };
+    githunt = guix;
     homer = { inherit A; };
     imap = { inherit A; };
     iso = guix;
