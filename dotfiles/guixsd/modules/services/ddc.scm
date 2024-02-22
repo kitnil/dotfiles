@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2023 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2023, 2024 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -36,8 +36,9 @@
     (documentation "Run ddcutil-daemon.")
     (requirement '(user-processes loopback))
     (start #~(make-forkexec-constructor
-              (list #$(local-file "/home/oleg/src/gitlab.com/wigust/ddcutil-daemon/run.sh"
-                                  #:recursive? #t))
+              (list #$(local-file "/home/oleg/src/gitlab.com/wigust/ddcutil-daemon/result/bin/ddcutil-daemon"
+                                  #:recursive? #t)
+                    #$(local-file "/home/oleg/src/gitlab.com/wigust/ddcutil-daemon/ddcutil-daemon.json"))
               #:environment-variables
               (append (list "PATH=/home/oleg/.nix-profile/bin")
                       (remove (lambda (str)
