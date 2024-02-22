@@ -101,9 +101,9 @@
 (define %guix-daemon-config-with-substitute-urls
   (guix-configuration
    (inherit %guix-daemon-config)
-   (substitute-urls '("https://ci.guix.gnu.org"
+   (substitute-urls '("http://ci.guix.gnu.org.wugi.info"
                       "https://guix.wugi.info"
-                      "https://mirror.brielmaier.net"))))
+                      "https://substitutes.nonguix.org"))))
 
 (define 20-intel.conf "\
 # Fix tearing for Intel graphics card.
