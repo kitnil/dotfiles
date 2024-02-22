@@ -397,7 +397,7 @@ mode server
 proto udp
 port 1195
 dev tapvpn1
-ca /etc/openvpn/ca.crt
+ca /etc/openvpn/wugi-ca.crt
 cert /etc/openvpn/client.crt
 key /etc/openvpn/client.key
 comp-lzo
