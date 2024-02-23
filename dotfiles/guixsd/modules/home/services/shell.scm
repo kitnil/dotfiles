@@ -173,6 +173,7 @@
                           "oracle"
                           "openai"
                           "opensearch"
+                          "pactl-toggle-default-sink"
                           "pers"
                           "peertube"
                           "prometheus-billing2"
