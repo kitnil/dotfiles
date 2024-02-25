@@ -521,6 +521,14 @@ location / {
                               (list "--may-exist" "add-port" "br0" "enp34s0"
                                     "vlan_mode=native-untagged")))
 
+                            ;; Set default chain policies.
+                            (iptables
+                             (string-join
+                              '("-P" "INPUT" "DROP")))
+                            (iptables
+                             (string-join
+                              '("-P" "FORWARD" "DROP")))
+
                             ;; Deny all ingress connections.
                             (iptables
                              (string-join
