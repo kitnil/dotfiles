@@ -1,0 +1,17 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: scan-exporter
+spec:
+  chart:
+    spec:
+      chart: scan-exporter
+      reconcileStrategy: Revision
+      sourceRef:
+        kind: GitRepository
+        name: devops-works
+        namespace: flux-system
+  interval: 1m0s
+  valuesFrom:
+  - kind: ConfigMap
+    name: scan-exporter-values
