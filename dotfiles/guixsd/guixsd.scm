@@ -682,6 +682,14 @@ location / {
                                 "-s" "127.0.0.0/8"
                                 "-j" "ACCEPT")))
 
+                            ;; Accept everything on br154.154 interface, so
+                            ;; DHCP can give addresses to virtual machines.
+                            (iptables
+                             (string-join
+                              '("-I" "INPUT"
+                                "-i" "br154.154"
+                                "-j" "ACCEPT")))
+
                             ;; Transparent proxy connections to
                             ;; ci.guix.gnu.org via Tor network.
                             ;;
