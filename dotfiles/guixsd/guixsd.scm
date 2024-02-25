@@ -512,6 +512,10 @@ location / {
                          (apply system*
                                 #$(file-append iptables "/sbin/iptables")
                                 (string-tokenize cmd)))
+                       (define (ip6tables cmd)
+                         (apply system*
+                                #$(file-append iptables "/sbin/ip6tables")
+                                (string-tokenize cmd)))
                        (and (ovs-vsctl
                              (string-join
                               (list "--may-exist" "add-br" "br0")))
@@ -526,6 +530,12 @@ location / {
                              (string-join
                               '("-P" "INPUT" "DROP")))
                             (iptables
+                             (string-join
+                              '("-P" "FORWARD" "DROP")))
+                            (ip6tables
+                             (string-join
+                              '("-P" "INPUT" "DROP")))
+                            (ip6tables
                              (string-join
                               '("-P" "FORWARD" "DROP")))
 
@@ -633,6 +643,12 @@ location / {
                                 "-j" "ACCEPT")))
                             ;; Accept traffic which originated from current computer.
                             (iptables
+                             (string-join
+                              '("-I" "INPUT"
+                                "-m" "state"
+                                "--state" "RELATED,ESTABLISHED"
+                                "-j" "ACCEPT")))
+                            (ip6tables
                              (string-join
                               '("-I" "INPUT"
                                 "-m" "state"
@@ -1514,7 +1530,7 @@ location / {
                                       "--smartctl.device=/dev/sdd"
                                       "--smartctl.device=/dev/nvme0"))))
 
-                         (service prometheus-shepherd-exporter-service-type)
+                         ;; (service prometheus-shepherd-exporter-service-type)
 
                          (service prometheus-pushgateway-service-type
                                   (prometheus-pushgateway-configuration
@@ -1586,7 +1602,7 @@ PasswordAuthentication yes")))
   }
 ")))
 
-                         (service homer-service-type
+                         #;(service homer-service-type
                                   (homer-configuration
                                    (config-file %homer-config)
                                    (nginx
@@ -1730,10 +1746,6 @@ PasswordAuthentication yes")))
                          ;;           (data-path "/srv/restic")
                          ;;           (authentication? #f)
                          ;;           (prometheus? #t)))
-
-                         (simple-service 'my-cron-jobs
-                                         mcron-service-type
-                                         (list backup-job))
 
                          (simple-service
                           'socat-ci-guix-gnu-org shepherd-root-service-type
