@@ -41,6 +41,7 @@
              (services autossh)
              (services kubernetes)
              (services jenkins)
+             (services ipset)
              (services monitoring)
              (services openvpn)
              (services syncthing)
@@ -2145,6 +2146,8 @@ namespaces = [ ]
                          ;; (service virtual-machine-service-type
                          ;;          (virtual-machine
                          ;;           (name "win2022")))
+
+                         %ipset-service
 
                          (bluetooth-service #:auto-enable? #t))
 
