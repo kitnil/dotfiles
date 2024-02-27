@@ -19,6 +19,7 @@
              (services certbot)
              (services kubernetes)
              (services networking)
+             (services ipset)
              (services jenkins)
              (services openvpn)
              (services ssh)
@@ -384,7 +385,7 @@ remote-random
                                                  "--container-runtime-endpoint" "unix:///run/containerd/containerd.sock"
                                                  ))))
 
-                          )
+                          %ipset-service)
 
                     (%mail-services "78.108.82.44")
 
