@@ -72,7 +72,11 @@
                           (service nix-service-type
                                    (nix-configuration
                                     (extra-config '("trusted-users = oleg root"))))
-                          %ipset-service)
+                          %ipset-service
+                          (service iptables-service-type
+                                   (iptables-configuration
+                                    (ipv4-rules (local-file "etc/iptables/iptables.rules"))
+                                    (ipv6-rules (local-file "etc/iptables/ip6tables.rules")))))
                     (modify-services %base-services
                       (guix-service-type config => %guix-daemon-config-with-substitute-urls))))
 
