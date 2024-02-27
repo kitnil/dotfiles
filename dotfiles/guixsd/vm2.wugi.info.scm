@@ -6,7 +6,8 @@
 (use-package-modules certs screen ssh)
 
 (use-modules (config)
-             (services dns))
+             (services dns)
+             (services ipset))
 
 (operating-system
   (host-name "vm2.wugi.info")
@@ -70,7 +71,8 @@
                           (service prometheus-node-exporter-service-type)
                           (service nix-service-type
                                    (nix-configuration
-                                    (extra-config '("trusted-users = oleg root")))))
+                                    (extra-config '("trusted-users = oleg root"))))
+                          %ipset-service)
                     (modify-services %base-services
                       (guix-service-type config => %guix-daemon-config-with-substitute-urls))))
 
