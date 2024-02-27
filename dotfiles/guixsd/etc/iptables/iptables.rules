@@ -45,6 +45,7 @@ COMMIT
 :DOCKER-USER - [0:0]
 :KUBE-FIREWALL - [0:0]
 :KUBE-KUBELET-CANARY - [0:0]
+-A INPUT -m set --match-set gov-ru src -j DROP
 -A INPUT -m comment --comment "cilium-feeder: CILIUM_INPUT" -j CILIUM_INPUT
 -A INPUT -j KUBE-FIREWALL
 -A FORWARD -m comment --comment "cilium-feeder: CILIUM_FORWARD" -j CILIUM_FORWARD
