@@ -3,7 +3,7 @@
 
 (use-modules (gnu))
 (use-service-modules networking linux nix monitoring ssh)
-(use-package-modules certs screen ssh)
+(use-package-modules certs linux screen ssh)
 
 (use-modules (config)
              (services dns)
@@ -43,7 +43,8 @@
                %base-user-accounts))
 
   ;; Globally-installed packages.
-  (packages (cons* nss-certs screen %base-packages))
+  (packages (append (list nss-certs ipset screen)
+                    %base-packages))
 
   ;; Add services to the baseline.
   (services (append (list (static-networking-service "eth0" "78.108.92.69"
