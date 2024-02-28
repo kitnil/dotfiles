@@ -1,1 +1,3 @@
 ExitNodes {nl},{fr},{de}
+SocksPort 127.0.0.1:9050
+SocksPort 192.168.25.3:9050
