@@ -539,6 +539,22 @@ location / {
                              (string-join
                               '("-P" "FORWARD" "DROP")))
 
+                            ;; Allow connection from kube-apiserver to etcd.
+                            (iptables
+                             (string-join
+                              '("-I" "INPUT"
+                                "-s" "192.168.154.0/24"
+                                "-d" "192.168.154.0/24"
+                                "-j" "ACCEPT")))
+
+                            ;; Accept egress from Kubernetes network,
+                            ;; so flux, cdi and other pods can run.
+                            (iptables
+                             (string-join
+                              '("-I" "INPUT"
+                                "-s" "10.0.0.0/14"
+                                "-j" "ACCEPT")))
+
                             ;; Deny all ingress connections.
                             (iptables
                              (string-join
