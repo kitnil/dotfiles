@@ -7,3 +7,5 @@ cluster:
 
 # -- Configure the underlying network MTU to overwrite auto-detected MTU.
 MTU: 1500
+
+devices: br0
