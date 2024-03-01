@@ -1140,8 +1140,8 @@ location / {
            "192.168.154.1 nginx99.intr"
            "192.168.154.129 web99.ru www.web99.ru www.web99.intr web99.intr"
 
-           "192.168.154.1 kubernetes.home"
-           "192.168.154.1 kube1 kube1.home kube1.lan"
+           "192.168.0.144 kubernetes.home"
+           "192.168.0.144 kube1 kube1.home kube1.lan"
            "192.168.154.99 kube5 kube5.home"
            "192.168.154.1 nfs.home"
            "192.168.0.145 qbittorrent.home"

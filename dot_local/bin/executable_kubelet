@@ -99,7 +99,7 @@ prlimit --pid "$containerd_pid" --nofile=1048576:1048576
 prlimit --pid "$containerd_pid" --nproc=unlimited
 
 kubelet \
-    --address=192.168.154.1 \
+    --address=192.168.0.144 \
     --authentication-token-webhook \
     --authentication-token-webhook-cache-ttl=10s \
     --authorization-mode=Webhook \
