@@ -86,7 +86,7 @@ EndSection
                        %base-file-systems))
 
   (initrd microcode-initrd)
-  (kernel linux-5.13)
+  (kernel linux-5.13-with-bpf)
   (firmware (cons* (@ (packages linux) linux-firmware) %base-firmware))
 
   (kernel-arguments '("modprobe.blacklist=pcspkr,snd_pcsp"
