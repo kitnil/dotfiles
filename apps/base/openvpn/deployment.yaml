@@ -1,0 +1,59 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: openvpn
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: openvpn
+      app.kubernetes.io/part-of: openvpn
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: openvpn
+        app.kubernetes.io/part-of: openvpn
+    spec:
+      hostNetwork: true
+      containers:
+      - image: busybox
+        name: openvpn
+        command:
+        - /gnu/store/38agwkxz139fh9z0y7g3vqwyli1ldrl7-openvpn-2.6.7/sbin/openvpn
+        args:
+        - --config
+        - /etc/openvpn/openvpn.conf
+        resources:
+          limits:
+            cpu: 8000m
+            memory: 1024Mi
+          requests:
+            cpu: 1000m
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            add:
+            # Used for iptables
+            - NET_ADMIN
+            # drop:
+            # - ALL
+        volumeMounts:
+        - mountPath: /dev/net/tun
+          name: dev-net-tun
+        - mountPath: /etc/openvpn
+          name: etc-openvpn
+        - mountPath: /gnu/store
+          name: gnu-store
+      volumes:
+      - name: dev-net-tun
+        hostPath:
+          path: /dev/net/tun
+          type: CharDevice
+      - name: etc-openvpn
+        hostPath:
+          path: /etc/openvpn
+          type: Directory
+      - name: gnu-store
+        hostPath:
+          path: /gnu/store
+          type: Directory
