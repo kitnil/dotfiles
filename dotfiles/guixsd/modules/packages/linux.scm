@@ -3,6 +3,7 @@
   #:use-module (gnu packages base)
   #:use-module (gnu packages bash)
   #:use-module (gnu packages compression)
+  #:use-module (gnu packages cpio)
   #:use-module (gnu packages curl)
   #:use-module (gnu packages version-control)
   #:use-module (guix licenses)
@@ -77,6 +78,33 @@
                      '("x86_64-linux" "i686-linux" "armhf-linux" "aarch64-linux" "riscv64-linux")
                      #:configuration-file kernel-config))
 
+(define %bpf-extra-linux-options
+  (@@ (gnu packages linux) %bpf-extra-linux-options))
+
+(define %default-extra-linux-options
+  (@@ (gnu packages linux) %default-extra-linux-options))
+
+(define-public linux-libre-5.13-with-bpf
+  (let ((base-linux-libre
+         (make-linux-libre*
+          linux-libre-5.13-version
+          linux-libre-5.13-gnu-revision
+          linux-libre-5.13-source
+          '("x86_64-linux" "i686-linux" "armhf-linux"
+            "aarch64-linux" "powerpc64le-linux" "riscv64-linux")
+          #:extra-version "bpf"
+          #:configuration-file kernel-config
+          #:extra-options
+          (append %bpf-extra-linux-options
+                  %default-extra-linux-options))))
+    (package
+      (inherit base-linux-libre)
+      (inputs (modify-inputs (package-inputs base-linux-libre)
+                             (prepend cpio)))
+      (synopsis "Linux-libre with BPF support")
+      (description "This package provides GNU Linux-Libre with support
+for @acronym{BPF, the Berkeley Packet Filter}."))))
+
 (define (linux-urls version)
   "Return a list of URLS for Linux VERSION."
   (list (string-append "https://www.kernel.org/pub/linux/kernel/v"
@@ -99,6 +127,10 @@ System on hardware which requires nonfree software to function.")))
 
 (define-public linux-5.13
   (corrupt-linux linux-libre-5.13 "5.13.16"
+                 "1ljigvcg4q6ckr8kna3q5iyjsy7x5mrf1ycqfy0ibbhn9hbqjna9"))
+
+(define-public linux-5.13-with-bpf
+  (corrupt-linux linux-libre-5.13-with-bpf "5.13.16"
                  "1ljigvcg4q6ckr8kna3q5iyjsy7x5mrf1ycqfy0ibbhn9hbqjna9"))
 
 (define-public linux-firmware
