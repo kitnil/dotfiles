@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: openvpn
+spec:
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: openvpn
+        app.kubernetes.io/part-of: openvpn
+    spec:
+      containers:
+      - name: openvpn
+        command:
+        - /gnu/store/38agwkxz139fh9z0y7g3vqwyli1ldrl7-openvpn-2.6.7/sbin/openvpn
+        args:
+        - --config
+        - /gnu/store/89jfw4apa4qz1wp7r5wqliam58q9cbkc-openvpn.conf
