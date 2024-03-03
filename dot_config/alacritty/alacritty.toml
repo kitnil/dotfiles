@@ -1,0 +1,14 @@
+import = [ "/home/oleg/.config/alacritty/themes/xterm.toml" ]
+
+[env]
+TERM = "xterm-256color"
+
+[font]
+size = 13
+
+[mouse.hints]
+modifiers = "Control"
+
+  [mouse.hints.launcher]
+  program = "xdg-open"
+  args = [ ]

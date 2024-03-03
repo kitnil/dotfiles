@@ -13,8 +13,8 @@
 (define home-alacritty-service
   (simple-service 'alacritty-config
                   home-files-service-type
-                  (list `(".config/alacritty/themes/xterm.yml" ,(local-file (string-append %project-directory "/dot_config/alacritty/themes/xterm.yml")))
-                        `(".config/alacritty/alacritty.yml" ,(local-file (string-append %project-directory "/dot_config/alacritty/alacritty.yml"))))))
+                  (list `(".config/alacritty/themes/xterm.toml" ,(local-file (string-append %project-directory "/dot_config/alacritty/themes/xterm.toml")))
+                        `(".config/alacritty/alacritty.toml" ,(local-file (string-append %project-directory "/dot_config/alacritty/alacritty.toml"))))))
 
 (define home-screen-service
   (simple-service 'screen-config
