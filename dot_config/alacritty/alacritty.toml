@@ -5,10 +5,3 @@ TERM = "xterm-256color"
 
 [font]
 size = 13
-
-[mouse.hints]
-modifiers = "Control"
-
-  [mouse.hints.launcher]
-  program = "xdg-open"
-  args = [ ]
