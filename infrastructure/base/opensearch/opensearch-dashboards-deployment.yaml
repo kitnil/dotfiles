@@ -14,7 +14,7 @@ spec:
         app.kubernetes.io/part-of: opensearch
     spec:
       hostAliases:
-      - ip: "192.168.25.1"
+      - ip: "192.168.25.3"
         hostnames:
         - "node-0.example.com"
       containers:

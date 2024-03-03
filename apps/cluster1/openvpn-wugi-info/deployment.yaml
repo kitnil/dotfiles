@@ -15,4 +15,13 @@ spec:
         - /gnu/store/38agwkxz139fh9z0y7g3vqwyli1ldrl7-openvpn-2.6.7/sbin/openvpn
         args:
         - --config
-        - /gnu/store/89jfw4apa4qz1wp7r5wqliam58q9cbkc-openvpn.conf
+        - /openvpn.conf
+        volumeMounts:
+        - mountPath: /openvpn.conf
+          subPath: openvpn.conf
+          readOnly: true
+          name: config
+      volumes:
+      - name: config
+        configMap:
+          name: openvpn-configuration

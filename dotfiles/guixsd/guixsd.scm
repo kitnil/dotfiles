@@ -1130,12 +1130,12 @@ location / {
 
            "192.168.154.1 opensearch.home"
 
-           "192.168.25.1 opensearch-node1"
+           "192.168.25.3 opensearch-node1"
 
            "10.1.52.104 ipsec1 ipsec1.intr"
            "10.1.52.105 ipsec2 ipsec2.intr"
 
-           "192.168.25.1 node-0.example.com"
+           "192.168.25.3 node-0.example.com"
 
            "192.168.154.1 nginx99.intr"
            "192.168.154.129 web99.ru www.web99.ru www.web99.intr web99.intr"
@@ -1177,7 +1177,7 @@ location / {
                   ""
                   (format #f "~a oracle.ygg" ip)))
            "192.168.25.2 windows.home"
-           "192.168.25.3 vm1.corp retracker.local"
+           "192.168.25.1 vm1.corp retracker.local"
 
            "172.16.100.61 lyashenko.intr"
            "127.0.0.1 example.com"
@@ -1868,8 +1868,8 @@ PasswordAuthentication yes")))
                          ;;                               ("memlock"
                          ;;                                ("soft" . -1)
                          ;;                                ("hard" . -1)))
-                         ;;                              ("ports" . #("192.168.25.1:9200:9200"
-                         ;;                                           "192.168.25.1:9600:9600"))
+                         ;;                              ("ports" . #("192.168.25.3:9200:9200"
+                         ;;                                           "192.168.25.3:9600:9600"))
                          ;;                              ("image" . "opensearchproject/opensearch:1.2.4")
                          ;;                              ("environment" . #("cluster.name=opensearch-cluster"
                          ;;                                                 "node.name=opensearch-node1"

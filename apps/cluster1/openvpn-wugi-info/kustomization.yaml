@@ -5,3 +5,7 @@ resources:
 - ../../base/openvpn
 patchesStrategicMerge:
 - deployment.yaml
+configMapGenerator:
+- name: openvpn-configuration
+  files:
+  - openvpn.conf=openvpn.conf

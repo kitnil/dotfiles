@@ -11,7 +11,7 @@ fluentbit:
   output:
     opensearch:
       enable: true
-      host: 192.168.25.1
+      host: 192.168.25.3
       port: 9200
       httpUser:
         valueFrom:

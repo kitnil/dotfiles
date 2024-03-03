@@ -71,7 +71,7 @@
      (list (string-join (append '("127.0.0.1" "vm1.wugi.info" "localhost")
                                 %mail-hosts-file-hosts
                                 %ssh-hosts-file-hosts))
-           "192.168.25.1 node-0.example.com"
+           "192.168.25.3 node-0.example.com"
            (string-join '("::1" "vm1.wugi.info" "localhost")))
      "\n")))
 
@@ -168,8 +168,9 @@ cache.size = 10 * MB
                                     (name "wugi.info")
                                     (config (plain-file "openvpn.conf"
                                                         "\
-client
+mode server
 proto udp
+port 1195
 dev tapvpn1
 ca /etc/openvpn/ca.crt
 cert /etc/openvpn/client.crt
@@ -178,12 +179,14 @@ comp-lzo
 persist-key
 persist-tun
 verb 3
-nobind
 ping 5
+tls-server
+dh /etc/openvpn/dhparams.pem
 ping-restart 10
 resolv-retry infinite
-remote guix.wugi.info 1195
-remote-random
+server 192.168.25.0 255.255.255.0
+client-config-dir /etc/openvpn/ccd
+client-to-client
 "))))
 
                           (service dante-service-type
