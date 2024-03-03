@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2022, 2023 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2022, 2023, 2024 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -64,6 +64,36 @@
   (list (log-rotation
          (files (list (kubernetes-k3s-configuration-log-file config))))))
 
+(define (k3s-wrapper args)
+  (program-file
+   "k3s-wrapper"
+   (with-imported-modules '((guix build utils))
+     #~(begin
+         (use-modules (guix build utils))
+         (unless (zero? (system* #$(file-append util-linux+udev "/bin/mountpoint")
+                                 "--quiet" "/sys/fs/bpf"))
+           (invoke #$(file-append util-linux+udev "/bin/mount")
+                   "-o" "rw,nosuid,nodev,noexec,relatime,mode=700"
+                   "-t" "bpf"
+                   "none"
+                   "/sys/fs/bpf")
+           (invoke #$(file-append util-linux+udev "/bin/mount")
+                   "--make-shared" "/sys/fs/bpf"))
+         (invoke #$(file-append util-linux+udev "/bin/mount")
+                 "--make-shared" "/sys/fs/cgroup")
+         (invoke #$(file-append util-linux+udev "/bin/mount")
+                 "--make-shared" "/")
+         (for-each (lambda (module)
+                     (system* #$(file-append kmod "/bin/modprobe")
+                              (symbol->string module)))
+                   '(ip_tables
+                     xt_socket
+                     iptable_nat
+                     iptable_mangle
+                     iptable_raw
+                     iptable_filter))
+         #$args))))
+
 (define (kubernetes-k3s-shepherd-service config)
   (list
    (shepherd-service
@@ -73,14 +103,18 @@
                          (case (kubernetes-k3s-configuration-runtime config)
                            ((docker) '(dockerd))
                            (else '()))))
-    (start #~(make-forkexec-constructor
-              (list #$(file-append (kubernetes-k3s-configuration-k3s config)
-                                   "/bin/k3s")
-                    (if #$(kubernetes-k3s-configuration-server? config)
-                        "server"
-                        "agent")
-                    #$@(kubernetes-k3s-configuration-arguments config)
-                    "--log" #$(kubernetes-k3s-configuration-log-file config))))
+    (start
+     #~(make-forkexec-constructor
+        (list
+         #$(k3s-wrapper
+            #~(execl #$(file-append (kubernetes-k3s-configuration-k3s config)
+                                    "/bin/k3s")
+                     "k3s"
+                     #$(if (kubernetes-k3s-configuration-server? config)
+                           "server"
+                           "agent")
+                     "--log" #$(kubernetes-k3s-configuration-log-file config)
+                     #$@(kubernetes-k3s-configuration-arguments config))))))
     (respawn? #t) ;XXX: Fix race condition with Docker
     (stop #~(make-kill-destructor)))))
 
