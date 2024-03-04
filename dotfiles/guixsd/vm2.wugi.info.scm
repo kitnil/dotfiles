@@ -7,7 +7,8 @@
 
 (use-modules (config)
              (services dns)
-             (services ipset))
+             (services ipset)
+             (services networking))
 
 (operating-system
   (host-name "vm2.wugi.info")
@@ -53,6 +54,8 @@
                                                      #:name-servers '("127.0.0.1"
                                                                       "8.8.8.8"
                                                                       "8.8.4.4"))
+                          (service crowdsec-service-type)
+                          (service crowdsec-firewall-bouncer-service-type)
                           (service ntp-service-type
                                    (ntp-configuration
                                     (servers
