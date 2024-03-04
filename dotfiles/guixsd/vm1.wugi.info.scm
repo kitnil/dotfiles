@@ -365,6 +365,8 @@ client-to-client
                                        ("Listen" . #())
                                        ("InterfacePeers" . null)))))
 
+                          (service ipset-service-type)
+
                           (service crowdsec-service-type)
                           (service crowdsec-firewall-bouncer-service-type)
 
@@ -389,9 +391,7 @@ client-to-client
                                                  ;;
                                                  ;; use containerd directly
                                                  "--container-runtime-endpoint" "unix:///run/containerd/containerd.sock"
-                                                 ))))
-
-                          %ipset-service)
+                                                 )))))
 
                     (%mail-services "78.108.82.44")
 

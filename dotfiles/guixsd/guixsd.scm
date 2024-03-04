@@ -2147,7 +2147,7 @@ namespaces = [ ]
                          ;;          (virtual-machine
                          ;;           (name "win2022")))
 
-                         %ipset-service
+                         (service ipset-service-type)
 
                          (bluetooth-service #:auto-enable? #t))
 

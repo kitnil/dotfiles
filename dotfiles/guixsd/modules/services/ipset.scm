@@ -21,9 +21,12 @@
   #:use-module (gnu services)
   #:use-module (gnu services shepherd)
   #:use-module (guix gexp)
+  #:use-module (guix records)
   #:use-module (ice-9 rdelim)
   #:use-module (srfi srfi-1)
-  #:export (%ipset-service))
+  #:export (ipset-configuration
+            ipset-configuration?
+            ipset-service-type))
 
 ;;; Commentary:
 ;;;
@@ -31,11 +34,19 @@
 ;;;
 ;;; Code:
 
-(define ipset-program
+(define-record-type* <ipset-configuration>
+  ipset-configuration make-ipset-configuration
+  ipset-configuration?
+  (ipset     ipset-ipset                ;<package>
+             (default ipset))
+  (iptables? ipset-iptables?            ;boolean
+             (default #f)))
+
+(define (ipset-program config)
   (program-file
    "ipset-commands"
    #~(begin
-       (system* #$(file-append ipset "/sbin/ipset")
+       (system* #$(file-append (ipset-ipset config) "/sbin/ipset")
                 "-exist" "create" "gov-ru" "hash:ip" "hashsize" "1024" "maxelem" "655360")
        (for-each (lambda (network)
                    (system* #$(file-append ipset "/sbin/ipset")
@@ -43,19 +54,36 @@
                  '#$(delete ""
                             (string-split (with-input-from-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/ipset/gov-ru.txt"
                                             read-string)
-                                          #\newline))))))
+                                          #\newline)))
+       (when #$(ipset-iptables? config)
+         (system* #$(file-append iptables "/sbin/iptables")
+                  "-I" "INPUT"
+                  "-m" "set"
+                  "--match-set" "gov-ru" "src"
+                  "-j" "DROP")))))
 
-(define %ipset-service
-  (simple-service 'ipset shepherd-root-service-type
-                  (list
-                   (shepherd-service
-                    (provision '(ipset))
-                    (documentation "Run ipset.")
-                    (requirement '())
-                    (start #~(make-forkexec-constructor
-                              (list #$ipset-program)))
-                    (respawn? #f)
-                    (stop #~(make-kill-destructor))
-                    (one-shot? #t)))))
+(define (ipset-shepherd-service config)
+  (list
+   (shepherd-service
+    (provision '(ipset))
+    (documentation "Run ipset.")
+    (requirement '())
+    (start #~(make-forkexec-constructor
+              (list #$(ipset-program config))))
+    (respawn? #f)
+    (stop #~(make-kill-destructor))
+    (one-shot? #t))))
+
+(define ipset-service-type
+  (service-type
+   (name 'ipset)
+   (extensions
+    (list (service-extension profile-service-type
+                             (lambda (config)
+                               (list ipset)))
+          (service-extension shepherd-root-service-type
+                             ipset-shepherd-service)))
+   (default-value (ipset-configuration))
+   (description "Run the ipset.")))
 
 ;;; ipset.scm ends here

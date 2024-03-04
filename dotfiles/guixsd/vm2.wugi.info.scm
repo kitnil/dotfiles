@@ -76,7 +76,9 @@
                           (service nix-service-type
                                    (nix-configuration
                                     (extra-config '("trusted-users = oleg root"))))
-                          %ipset-service
+                          (service ipset-service-type
+                                   (ipset-configuration
+                                    (iptables? #t)))
                           ;; (service iptables-service-type
                           ;;          (iptables-configuration
                           ;;           (ipv4-rules (local-file "etc/iptables/iptables.rules"))
