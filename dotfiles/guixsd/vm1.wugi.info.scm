@@ -365,6 +365,9 @@ client-to-client
                                        ("Listen" . #())
                                        ("InterfacePeers" . null)))))
 
+                          (service crowdsec-service-type)
+                          (service crowdsec-firewall-bouncer-service-type)
+
                           (service kubernetes-k3s-service-type
                                    (kubernetes-k3s-configuration
                                     (server? #t)
