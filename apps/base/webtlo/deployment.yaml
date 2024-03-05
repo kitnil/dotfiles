@@ -1,0 +1,67 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webtlo
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: webtlo
+      app.kubernetes.io/part-of: webtlo
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: webtlo
+        app.kubernetes.io/part-of: webtlo
+    spec:
+      containers:
+      - image: berkut174/webtlo:2.5.2
+        name: webtlo
+        ports:
+        - containerPort: 80
+          name: http
+          protocol: TCP
+        env:
+        - name: TZ
+          value: "Europe/Moscow"
+        # Стандартный пользователь внутри контейнера
+        - name: WEBTLO_UID
+          value: "1000"
+        - name: WEBTLO_GID
+          value: "998"
+        # Выполняемые внутри контейнера фоновые задачи планировщика
+        # false - чтобы отключить планировщик
+        - name: WEBTLO_CRON
+          value: "true"
+        # Задать расписание для конкретной задачи. false - чтобы выключить
+        - name: CRON_UPDATE
+          value: "15 * * * *"
+        - name: CRON_CONTROL
+          value: "25 * * * *"
+        - name: CRON_KEEPERS
+          value: "0 6 * * *"
+        - name: CRON_REPORTS
+          value: "0 5 * * *"
+        securityContext:
+          allowPrivilegeEscalation: false
+        resources:
+          limits:
+            cpu: 8000m
+            memory: 2048Mi
+          requests:
+            cpu: 10m
+            memory: 512Mi
+        volumeMounts:
+        - name: localtime
+          mountPath: /etc/localtime
+          readOnly: true
+        - name: data
+          mountPath: /data
+      volumes:
+      - name: localtime
+        hostPath:
+          path: /etc/localtime
+          type: File
+      - name: data
+        hostPath:
+          path: /var/lib/webtlo
+          type: Directory

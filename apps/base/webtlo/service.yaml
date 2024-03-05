@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: webtlo
+  labels:
+    app.kubernetes.io/name: webtlo
+    app.kubernetes.io/part-of: webtlo
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 80
+    name: http
+  selector:
+    app.kubernetes.io/name: webtlo
+    app.kubernetes.io/part-of: webtlo
+  type: ClusterIP
