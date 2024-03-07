@@ -247,8 +247,6 @@
     nekoray
 
     ddcutil
-
-    telegram-desktop
   ];
 
   home.file = {
