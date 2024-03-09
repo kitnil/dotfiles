@@ -292,6 +292,27 @@
         platforms = platforms.all;
         };
       };
+    "sitedelta-watch" = buildFirefoxXpiAddon {
+      pname = "sitedelta-watch";
+      version = "0.30.7";
+      addonId = "sitedelta-watch@schierla.de";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4121875/sitedelta_watch-0.30.7.xpi";
+      sha256 = "a64066d7c8c761a936eb31e96c52e63b4087d57a6bd57c107c54d85937d3dfc0";
+      meta = with lib;
+      {
+        homepage = "http://sitedelta.schierla.de/";
+        description = "SiteDelta Watch allows to regularly monitors a website for changes";
+        license = licenses.gpl3;
+        mozPermissions = [
+          "notifications"
+          "activeTab"
+          "storage"
+          "unlimitedStorage"
+          "alarms"
+          ];
+        platforms = platforms.all;
+        };
+      };
     "snaplinksplus" = buildFirefoxXpiAddon {
       pname = "snaplinksplus";
       version = "3.1.11";
