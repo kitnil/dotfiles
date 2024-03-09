@@ -410,6 +410,7 @@
                         rocker_gestures
                         russian-ru-language-pack
                         scroll_anywhere
+                        sitedelta-watch
                         snaplinksplus
                         tab-slideshow-we
                         twitch-error-autorefresher

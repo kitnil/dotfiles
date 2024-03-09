@@ -325,6 +325,7 @@
               right-click-search
               rocker_gestures
               scroll_anywhere
+              sitedelta-watch
               sponsorblock
               ublock-origin
               packages.access-control-allow-origin
