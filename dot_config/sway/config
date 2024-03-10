@@ -364,3 +364,7 @@ for_window [instance="vncviewer"] border none
 for_window [instance="vncviewer"] resize set width 1920 px
 
 for_window [title="Windowed Projector"] border none
+
+exec pactl load-module module-ladspa-sink sink_name=compressor-stereo plugin=sc4_1882 label=sc4 control=1,1.5,401,-30,20,5,30
+exec pactl load-module module-null-sink media.class=Audio/Sink sink_name=obs-microphone channel_map=front-left,front-right
+exec pactl load-module module-ladspa-sink sink_name=compressor-stereo-family-17 plugin=sc4_1882 label=sc4 control=1,1.5,401,-30,20,5
