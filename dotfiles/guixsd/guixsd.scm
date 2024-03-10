@@ -970,6 +970,8 @@ location / {
       ;; (swap-devices (list (swap-space
       ;;                      (target "/dev/disk/by-label/nvme-swap"))))
 
+      (keyboard-layout (keyboard-layout "us" "altgr-intl"))
+
       (kernel-loadable-modules (list vendor-reset-linux-module
                                      drbd-module
                                      v4l2loopback-linux-module))

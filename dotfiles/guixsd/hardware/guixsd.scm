@@ -45,7 +45,11 @@ EndSection
                          (source
                           (list "/dev/sda2" "/dev/sdc2" "/dev/sdd2"))
                          (target "/dev/md0")
-                         (type raid-device-mapping))))
+                         (type raid-device-mapping))
+                        (mapped-device
+                         (source (uuid "0c0175eb-64ae-46f7-9a54-43d4b65b0818"))
+                         (target "guix-root")
+                         (type luks-device-mapping))))
 
   (file-systems (cons* (file-system
                          (device (file-system-label "guix-root"))
@@ -130,7 +134,10 @@ EndSection
                       ;;
                       ;; I assume more CPU utilization as a side effect and
                       ;; maybe slower rendering.
-                      "amdgpu.vm_update_mode=3"))
+                      "amdgpu.vm_update_mode=3"
+
+                      ;; Enable LUKS TRIM/DISCARD pass-through.
+                      "rd.luks.options=discard"))
 (users (cons* (user-account
                      (name "oleg")
                      (uid 1000)
