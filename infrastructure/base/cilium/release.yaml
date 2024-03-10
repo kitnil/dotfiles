@@ -8,7 +8,7 @@ spec:
     spec:
       chart: cilium
       reconcileStrategy: ChartVersion
-      version: 1.14.4
+      version: 1.15.1
       sourceRef:
         kind: HelmRepository
         name: cilium

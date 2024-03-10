@@ -1,5 +1,4 @@
-# -- Roll out cilium agent pods automatically when configmap is updated.
-rollOutCiliumPods: true
+# helm -n kube-system upgrade --version 1.14.7 --values ~/.local/share/chezmoi/infrastructure/base/cilium/values.yaml cilium cilium/cilium
 
 cni:
   # https://github.com/cilium/cilium/pull/14192/files
@@ -14,10 +13,6 @@ cni:
   # Do not rename 00-multus.conf to 00-multus.conf.cilium_bak file in
   # /etc/cni/net.d directory.
   exclusive: false
-  #
-  # Enable debug logging
-  debug:
-    enabled: true
 
 # -- Configure prometheus metrics on the configured port at /metrics
 prometheus:
@@ -29,43 +24,6 @@ operator:
   prometheus:
     enabled: true
 
-# -- Configure the kube-proxy replacement in Cilium BPF datapath
-# Valid options are "disabled", "probe", "partial", "strict".
-# ref: https://docs.cilium.io/en/stable/gettingstarted/kubeproxy-free/
-kubeProxyReplacement: "strict"
-
-bpf:
-  # -- Enable native IP masquerade support in eBPF
-  masquerade: true
-
-  # -- Configure explicitly allowed VLAN id's for bpf logic bypass.
-  # [0] will allow all VLAN id's without any filtering.
-  vlanBypass: [0]
-
-  # -- Allow cluster external access to ClusterIP services.
-  #
-  # Required for access to Kubernetes ClusterIP services from Kubevirt virtual
-  # machines with interface type masquerade.
-  lbExternalClusterIP: true
-
-# -- Configure BGP
-bgp:
-  # -- Enable BGP support inside Cilium; embeds a new ConfigMap for BGP inside
-  # cilium-agent and cilium-operator
-  enabled: true
-  announce:
-    # -- Enable allocation and announcement of service LoadBalancer IPs
-    loadbalancerIP: true
-
-ipam:
-  mode: "kubernetes"
-
-# -- This feature set enables virtual BGP routers to be created via
-# CiliumBGPPeeringPolicy CRDs.
-bgpControlPlane:
-  # -- Enables the BGP control plane.
-  enabled: true
-
 hubble:
   relay:
     rollOutPods: true
@@ -76,30 +34,34 @@ hubble:
     rollOutPods: true
     enabled: true
 
-# Optimize TCP and UDP workloads and enable rate-limiting traffic from
-# individual Pods with EDT (Earliest Departure Time) through the
-# "kubernetes.io/egress-bandwidth" Pod annotation.
-bandwidthManager:
-  enabled: true
-  bbr: false # 'enable' requires Linux kernel of 5.18
+kubeProxyReplacement: "true"
 
-# -- Configure external workloads support
-externalWorkloads:
-  # -- Enable support for external workloads, such as VMs (false by default).
+# localRedirectPolicy: true
+
+bpf:
+  # -- Enable native IP masquerade support in eBPF
+  masquerade: true
+
+  # -- Configure explicitly allowed VLAN id's for bpf logic bypass.
+  # [0] will allow all VLAN id's without any filtering.
+  # vlanBypass: [0]
+
+  # -- Allow cluster external access to ClusterIP services.
   #
-  # Required for cluster-mesh.
-  enabled: true
+  # Required for access to Kubernetes ClusterIP services from Kubevirt virtual
+  # machines with interface type masquerade.
+  lbExternalClusterIP: true
 
-# -- Enable Layer 7 network policy.
-# Egress gateway partially incompatible with L7 policies · Issue #19642
-# https://github.com/cilium/cilium/issues/19642
-l7Proxy: false
+  hostLegacyRouting: false
 
-# Ingress + egress + l7proxy=false results in panic: invalid memory address or
-# nil pointer dereference · Issue #21354 · cilium/cilium
-# https://github.com/cilium/cilium/issues/21354
-ingressController:
-  enabled: false
+# ipv4:
+#   enabled: true
+
+# ipv6:
+#   enabled: true
+
+ipam:
+  mode: "kubernetes"
 
 # -- Configure socket LB
 socketLB:
@@ -107,4 +69,31 @@ socketLB:
   enabled: true
 
   # -- Disable socket lb for non-root ns. This is used to enable Istio routing rules.
-  hostNamespaceOnly: true
+  hostNamespaceOnly: false
+
+loadBalancer:
+  mode: hybrid
+  # serviceTopology: true
+
+ipv4NativeRoutingCIDR: 10.0.0.0/9
+
+tunnel: "disabled"
+tunnelProtocol: ""
+routingMode: native
+autoDirectNodeRoutes: true
+
+k8sClientRateLimit: {}
+
+installNoConntrackIptablesRules: true
+
+cgroup:
+  autoMount:
+    enabled: false
+  hostRoot: /sys/fs/cgroup
+
+# -- Configure external workloads support
+externalWorkloads:
+  # -- Enable support for external workloads, such as VMs (false by default).
+  #
+  # Required for cluster-mesh.
+  enabled: true

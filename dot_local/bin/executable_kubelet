@@ -71,16 +71,16 @@ then
 fi
 
 (
-    until mountpoint --quiet /run/cilium/cgroupv2
+    until mountpoint --quiet /sys/fs/cgroup
     do
         sleep 5
     done
 
-    if grep --quiet 'cilium.*shared' /proc/$$/mountinfo
+    if grep --quiet '/sys/fs/cgroup.*shared' /proc/$$/mountinfo
     then
         :
     else
-        mount --make-shared /run/cilium/cgroupv2
+        mount --make-shared /sys/fs/cgroup
     fi
 
     # Required for node-exporter in a "monitoring" namespace.

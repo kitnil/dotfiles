@@ -1,11 +1,28 @@
-k8sServiceHost: "192.168.154.1"
+k8sServiceHost: "192.168.0.144"
 k8sServicePort: "6443"
+
+devices: "br0 tapvpn1"
+
+l2announcements:
+  enabled: true
+
+l2podAnnouncements:
+  enabled: true
+  interface: "br0"
 
 cluster:
   name: "cluster1"
   id: 1
 
-# -- Configure the underlying network MTU to overwrite auto-detected MTU.
-MTU: 1500
-
-devices: br0
+clustermesh:
+  name: "cluster1"
+  config:
+    enable: true
+    clusters:
+    - name: cluster1
+      address: https://192.168.25.2
+      port: 32379
+    - name: cluster2
+      address: https://192.168.25.1
+      port: 32379
+  useAPIServer: true

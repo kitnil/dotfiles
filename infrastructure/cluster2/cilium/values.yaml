@@ -1,52 +1,13 @@
-# -- Roll out cilium agent pods automatically when configmap is updated.
-rollOutCiliumPods: true
+k8sServiceHost: "201:c18b:10f7:a21:ac2c:cc10:f3e:64e6"
+k8sServicePort: "6443"
 
-cni:
-  # https://github.com/cilium/cilium/pull/14192/files
-  # make Cilium's CNI conf the only one available by aanm · Pull Request
-  # #14192 · cilium/cilium
-  #
-  # Make Cilium take ownership over the `/etc/cni/net.d` directory on the
-  # node, renaming all non-Cilium CNI configurations to
-  # `*.cilium_bak`. This ensures no Pods can be scheduled using other CNI
-  # plugins during Cilium agent downtime.
-  #
-  # Do not rename 00-multus.conf to 00-multus.conf.cilium_bak file in
-  # /etc/cni/net.d directory.
-  exclusive: false
-  #
-  # Enable debug logging
-  debug:
-    enabled: true
+devices: "eth0 tapvpn1"
 
-# -- Configure prometheus metrics on the configured port at /metrics
-prometheus:
+# -- This feature set enables virtual BGP routers to be created via
+# CiliumBGPPeeringPolicy CRDs.
+bgpControlPlane:
+  # -- Enables the BGP control plane.
   enabled: true
-
-operator:
-  replicas: 1
-  rollOutPods: true
-  prometheus:
-    enabled: true
-
-# -- Configure the kube-proxy replacement in Cilium BPF datapath
-# Valid options are "disabled", "probe", "partial", "strict".
-# ref: https://docs.cilium.io/en/stable/gettingstarted/kubeproxy-free/
-kubeProxyReplacement: "strict"
-
-bpf:
-  # -- Enable native IP masquerade support in eBPF
-  masquerade: true
-
-  # -- Configure explicitly allowed VLAN id's for bpf logic bypass.
-  # [0] will allow all VLAN id's without any filtering.
-  vlanBypass: [0]
-
-  # -- Allow cluster external access to ClusterIP services.
-  #
-  # Required for access to Kubernetes ClusterIP services from Kubevirt virtual
-  # machines with interface type masquerade.
-  lbExternalClusterIP: true
 
 # -- Configure BGP
 bgp:
@@ -57,66 +18,19 @@ bgp:
     # -- Enable allocation and announcement of service LoadBalancer IPs
     loadbalancerIP: true
 
-ipam:
-  mode: "kubernetes"
-
-# -- This feature set enables virtual BGP routers to be created via
-# CiliumBGPPeeringPolicy CRDs.
-bgpControlPlane:
-  # -- Enables the BGP control plane.
-  enabled: true
-
-hubble:
-  relay:
-    rollOutPods: true
-    enabled: true
-    prometheus:
-      enabled: true
-  ui:
-    rollOutPods: true
-    enabled: true
-
-# Optimize TCP and UDP workloads and enable rate-limiting traffic from
-# individual Pods with EDT (Earliest Departure Time) through the
-# "kubernetes.io/egress-bandwidth" Pod annotation.
-bandwidthManager:
-  enabled: true
-  bbr: false # 'enable' requires Linux kernel of 5.18
-
-# -- Configure external workloads support
-externalWorkloads:
-  # -- Enable support for external workloads, such as VMs (false by default).
-  #
-  # Required for cluster-mesh.
-  enabled: true
-
-# -- Enable Layer 7 network policy.
-# Egress gateway partially incompatible with L7 policies · Issue #19642
-# https://github.com/cilium/cilium/issues/19642
-l7Proxy: false
-
-# Ingress + egress + l7proxy=false results in panic: invalid memory address or
-# nil pointer dereference · Issue #21354 · cilium/cilium
-# https://github.com/cilium/cilium/issues/21354
-ingressController:
-  enabled: false
-
-# -- Configure socket LB
-socketLB:
-  # -- Enable socket LB
-  enabled: true
-
-  # -- Disable socket lb for non-root ns. This is used to enable Istio routing rules.
-  hostNamespaceOnly: true
-
-k8sServiceHost: "201:c18b:10f7:a21:ac2c:cc10:f3e:64e6"
-k8sServicePort: "6443"
-
 cluster:
   name: "cluster2"
   id: 2
 
-cgroup:
-  autoMount:
-    enabled: false
-  hostRoot: /sys/fs/cgroup
+clustermesh:
+  name: "cluster2"
+  config:
+    enable: true
+    clusters:
+    - name: cluster1
+      address: https://192.168.25.2
+      port: 32379
+    - name: cluster2
+      address: https://192.168.25.1
+      port: 32379
+  useAPIServer: true
