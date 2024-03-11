@@ -28,7 +28,7 @@ do
     then
         :
     else
-        sudo mount -o subvol="$subvol",compress=zstd:15,ssd LABEL=btrfs1 "$location"
+        sudo mount "$location"
     fi
 done
 
@@ -56,7 +56,7 @@ if mountpoint -q /srv
 then
     :
 else
-    sudo mount -o compress=zstd:15,nossd /dev/mapper/crypt-srv /srv
+    sudo mount /srv
 fi
 
 if [[ -e /dev/lvm2/qbittorrent-incomplete ]]
@@ -74,11 +74,16 @@ else
 fi
 
 # for kubelet
-#
-# todo: if lsmod | grep -q ip_tables
-sudo modprobe ip_tables
-sudo modprobe xt_socket
-sudo modprobe iptable_nat
-sudo modprobe iptable_mangle
-sudo modprobe iptable_raw
-sudo modprobe iptable_filter
+if [[ -d /var/hpvolumes ]]
+then
+    if mountpoint --quiet /var/hpvolumes
+    then
+        :
+    else
+        # Uncomment if '/var/hpvolumes' directory is on a '/' file-system.
+        # mount --bind /var/hpvolumes /var/hpvolumes
+        sudo mount /var/hpvolumes
+
+        sudo mount --make-shared /var/hpvolumes
+    fi
+fi

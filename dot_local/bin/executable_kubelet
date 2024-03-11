@@ -48,14 +48,6 @@ else
     zcat "$pause_image" | ctr -n k8s.io image import --all-platforms -
 fi
 
-if mountpoint --quiet /sys/fs/bpf
-then
-    :
-else
-    mount -o rw,nosuid,nodev,noexec,relatime,mode=700 -t bpf none /sys/fs/bpf
-    mount --make-shared /sys/fs/bpf
-fi
-
 if [[ -d /var/hpvolumes ]]
 then
     if mountpoint --quiet /var/hpvolumes
@@ -69,28 +61,6 @@ then
         mount --make-shared /var/hpvolumes
     fi
 fi
-
-(
-    until mountpoint --quiet /sys/fs/cgroup
-    do
-        sleep 5
-    done
-
-    if grep --quiet '/sys/fs/cgroup.*shared' /proc/$$/mountinfo
-    then
-        :
-    else
-        mount --make-shared /sys/fs/cgroup
-    fi
-
-    # Required for node-exporter in a "monitoring" namespace.
-    if grep --quiet '/ / .*shared' /proc/$$/mountinfo
-    then
-        :
-    else
-        mount --make-shared /
-    fi
-) &
 
 # Add rlimits to service file by crosbymichael · Pull Request #1846
 # https://github.com/containerd/containerd/pull/1846

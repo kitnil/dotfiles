@@ -1003,7 +1003,13 @@ location / {
                                      (string-join (list "compress=zstd:15"
                                                         "nossd")
                                                   ","))
-                                    (type "btrfs")))
+                                    (mount? #f) ;requires decryption
+                                    (type "btrfs"))
+                                  (file-system
+                                    (device (file-system-label "hpvolumes"))
+                                    (mount-point "/var/hpvolumes")
+                                    (mount? #f) ;requires decryption
+                                    (type "ext4")))
                             (map (lambda (subvolume)
                                    (file-system
                                      (device (file-system-label "btrfs1"))
@@ -1012,6 +1018,7 @@ location / {
                                                                  "compress=zstd:15"
                                                                  "ssd")
                                                            ","))
+                                     (mount? #f) ;requires decryption
                                      (type "btrfs")))
                                  '("archive" "phone" "src" "Maildir"))
                             (operating-system-file-systems base-system)))

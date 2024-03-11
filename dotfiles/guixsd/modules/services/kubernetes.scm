@@ -64,34 +64,39 @@
   (list (log-rotation
          (files (list (kubernetes-k3s-configuration-log-file config))))))
 
+(define (cilium-requirements)
+  (with-imported-modules '((guix build utils))
+    #~(begin
+        (use-modules (guix build utils))
+        (unless (zero? (system* #$(file-append util-linux+udev "/bin/mountpoint")
+                                "--quiet" "/sys/fs/bpf"))
+          (invoke #$(file-append util-linux+udev "/bin/mount")
+                  "-o" "rw,nosuid,nodev,noexec,relatime,mode=700"
+                  "-t" "bpf"
+                  "none"
+                  "/sys/fs/bpf")
+          (invoke #$(file-append util-linux+udev "/bin/mount")
+                  "--make-shared" "/sys/fs/bpf"))
+        (invoke #$(file-append util-linux+udev "/bin/mount")
+                "--make-shared" "/sys/fs/cgroup")
+        (invoke #$(file-append util-linux+udev "/bin/mount")
+                "--make-shared" "/")
+        (for-each (lambda (module)
+                    (system* #$(file-append kmod "/bin/modprobe")
+                             (symbol->string module)))
+                  '(ip_tables
+                    xt_socket
+                    iptable_nat
+                    iptable_mangle
+                    iptable_raw
+                    iptable_filter)))))
+
 (define (k3s-wrapper args)
   (program-file
    "k3s-wrapper"
    (with-imported-modules '((guix build utils))
      #~(begin
-         (use-modules (guix build utils))
-         (unless (zero? (system* #$(file-append util-linux+udev "/bin/mountpoint")
-                                 "--quiet" "/sys/fs/bpf"))
-           (invoke #$(file-append util-linux+udev "/bin/mount")
-                   "-o" "rw,nosuid,nodev,noexec,relatime,mode=700"
-                   "-t" "bpf"
-                   "none"
-                   "/sys/fs/bpf")
-           (invoke #$(file-append util-linux+udev "/bin/mount")
-                   "--make-shared" "/sys/fs/bpf"))
-         (invoke #$(file-append util-linux+udev "/bin/mount")
-                 "--make-shared" "/sys/fs/cgroup")
-         (invoke #$(file-append util-linux+udev "/bin/mount")
-                 "--make-shared" "/")
-         (for-each (lambda (module)
-                     (system* #$(file-append kmod "/bin/modprobe")
-                              (symbol->string module)))
-                   '(ip_tables
-                     xt_socket
-                     iptable_nat
-                     iptable_mangle
-                     iptable_raw
-                     iptable_filter))
+         #$(cilium-requirements)
          #$args))))
 
 (define (kubernetes-k3s-shepherd-service config)
@@ -187,6 +192,13 @@
   (list (log-rotation
          (files (list (kubelet-configuration-log-file config))))))
 
+(define (kubelet-wrapper args)
+  (program-file
+   "kubelet-wrapper"
+   #~(begin
+       #$(cilium-requirements)
+       #$args)))
+
 (define (kubelet-shepherd-service config)
   (list
    (shepherd-service
@@ -194,8 +206,10 @@
     (provision '(kubelet))
     (requirement '(networking containerd))
     (start #~(make-forkexec-constructor
-              (list #$(kubelet-configuration-kubelet config)
-                    #$@(kubelet-configuration-arguments config))
+              (list #$(kubelet-wrapper
+                       #~(execl #$(kubelet-configuration-kubelet config)
+                                "kubelet"
+                                #$@(kubelet-configuration-arguments config))))
               #:log-file #$(kubelet-configuration-log-file config)))
     (stop #~(make-kill-destructor)))))
 
