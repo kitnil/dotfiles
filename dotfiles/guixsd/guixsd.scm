@@ -658,6 +658,14 @@ location / {
                                 "-p" "udp"
                                 "--dport" "1195"
                                 "-j" "ACCEPT")))
+                            ;; Accept qBittorrent API traffic.
+                            (iptables
+                             (string-join
+                              '("-I" "INPUT"
+                                "-p" "tcp"
+                                "--destination" "192.168.0.145/32"
+                                "--dport" "9091"
+                                "-j" "ACCEPT")))
                             ;; Accept traffic which originated from current computer.
                             (iptables
                              (string-join
