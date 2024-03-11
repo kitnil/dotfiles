@@ -25,7 +25,7 @@ spec:
         - -s
         - media;/share;yes;no;no;workgroup
         - -s
-        - public;/public;yes;no;yes
+        - public;/public;yes;yes;yes
         - -g
         - acl allow execute always = True
         env:
