@@ -12,7 +12,7 @@ spec:
       containers:
       - name: openvpn
         command:
-        - /gnu/store/38agwkxz139fh9z0y7g3vqwyli1ldrl7-openvpn-2.6.7/sbin/openvpn
+        - /gnu/store/bjpmnbx40ldw1bqw51c3g0y9xawg891g-openvpn-2.6.7/sbin/openvpn
         args:
         - --config
         - /openvpn.conf
