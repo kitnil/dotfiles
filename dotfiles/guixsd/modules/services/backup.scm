@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2021, 2022, 2023 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2021, 2022, 2023, 2024 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -31,6 +31,12 @@
   #:use-module (srfi srfi-1)
   #:export (restic-rest-configuration
             restic-rest-service-type
+
+            restic-system-backup
+            restic-guix-backup
+            restic-win10-backup
+            restic-win2022-backup
+            restic-ntfsgames-backup
 
             restic-command))
 

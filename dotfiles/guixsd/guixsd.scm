@@ -47,7 +47,8 @@
              (services syncthing)
              (services virtualization)
              (services vnc)
-             (services web))
+             (services web)
+             (utils package))
 
 (define %home
   (passwd:dir (getpw "oleg")))
@@ -1044,7 +1045,18 @@ location / {
       ;; (initrd-modules (append '("vfio_pci" "vfio" "vfio_iommu_type1" "vfio_virqfd")
       ;;                         %base-initrd-modules))
 
-      (packages (append (list dn42-ca ovmf cifs-utils btrfs-progs lvm2 smartmontools)
+      (packages (append (list dn42-ca
+                              ovmf
+                              cifs-utils
+                              btrfs-progs
+                              lvm2
+                              smartmontools)
+                        (map package-from-program-file
+                             (list (restic-system-backup)
+                                   (restic-guix-backup)
+                                   (restic-win10-backup)
+                                   (restic-win2022-backup)
+                                   (restic-ntfsgames-backup)))
                         %my-system-packages))
 
       (groups (cons* (user-group (name "nixbld")
