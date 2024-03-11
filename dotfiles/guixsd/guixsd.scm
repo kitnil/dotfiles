@@ -1160,7 +1160,7 @@ location / {
            "192.168.154.99 kube5 kube5.home"
            "192.168.154.1 nfs.home"
            "192.168.0.145 qbittorrent.home"
-           "192.168.154.230 samba.home"
+           "192.168.0.145 samba.home"
            "192.168.0.145 kubernetes.home.wugi.info"
 
            "172.16.100.60 workstation.intr"
