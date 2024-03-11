@@ -1184,7 +1184,8 @@ location / {
                   ""
                   (format #f "~a oracle.ygg" ip)))
            "192.168.25.2 windows.home"
-           "192.168.25.1 vm1.corp retracker.local"
+           "192.168.25.1 vm1.corp"
+           "192.168.0.145 retracker.local"
 
            "172.16.100.61 lyashenko.intr"
            "127.0.0.1 example.com"
@@ -1614,6 +1615,10 @@ PasswordAuthentication yes")))
 
                          (service nginx-service-type
                                   (nginx-configuration
+                                   (global-directives
+                                    `((events . ()) ;default-value
+                                      (include . ,(run-with-store (open-connection)
+                                                    (lower-object (local-file "etc/nginx/stream.conf"))))))
                                    (server-blocks %nginx-server-blocks)
                                    (upstream-blocks
                                     (list
