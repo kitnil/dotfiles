@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright 2022 © Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright 2022, 2024 © Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -19,6 +19,7 @@
 ;; guix build --no-offload -L ../../guixsd/modules -f guix.scm
 
 (define-module (packages vpn)
+  #:use-module (gnu packages)
   #:use-module (gnu packages python-xyz)
   #:use-module (gnu packages vpn)
   #:use-module (guix build-system python)
@@ -69,3 +70,13 @@
     (description "This package provides a OpenVPN Minimal TOTP generator
  written in Python.")
     (license license:expat)))
+
+(define-public openvpn-socks
+  (package
+    (inherit openvpn)
+    (source
+     (origin
+       (inherit (package-source openvpn))
+       (patches (append (search-patches "openvpn-socks-timeout.patch")
+                        (origin-patches (package-source openvpn))))))))
+

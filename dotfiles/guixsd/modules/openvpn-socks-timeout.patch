@@ -1,0 +1,43 @@
+From 05c8f613174edeb02e1f7db53b96f59c5d2d0897 Mon Sep 17 00:00:00 2001
+From: Oleg Pykhalov <go.wigust@gmail.com>
+Date: Mon, 11 Mar 2024 16:11:00 +0300
+Subject: [PATCH] Increase OpenVPN socks timeout
+
+---
+ src/openvpn/socks.c | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/src/openvpn/socks.c b/src/openvpn/socks.c
+index a29eb83..147ec52 100644
+--- a/src/openvpn/socks.c
++++ b/src/openvpn/socks.c
+@@ -90,7 +90,7 @@ socks_username_password_auth(struct socks_proxy_info *p,
+     char to_send[516];
+     char buf[2];
+     int len = 0;
+-    const int timeout_sec = 5;
++    const int timeout_sec = 60;
+     struct user_pass creds;
+     ssize_t size;
+     bool ret = false;
+@@ -189,7 +189,7 @@ socks_handshake(struct socks_proxy_info *p,
+ {
+     char buf[2];
+     int len = 0;
+-    const int timeout_sec = 5;
++    const int timeout_sec = 60;
+     ssize_t size;
+ 
+     /* VER = 5, NMETHODS = 1, METHODS = [0 (no auth)] */
+@@ -307,7 +307,7 @@ recv_socks_reply(socket_descriptor_t sd,
+     int alen = 0;
+     int len = 0;
+     char buf[270];              /* 4 + alen(max 256) + 2 */
+-    const int timeout_sec = 5;
++    const int timeout_sec = 60;
+ 
+     if (addr != NULL)
+     {
+-- 
+2.41.0
+
