@@ -1138,6 +1138,7 @@ location / {
            "192.168.0.117 tv.kitchen.home"
 
            "185.105.108.96 vm3.wugi.info"
+           "78.108.82.44 vm1.wugi.info"
 
            "192.168.0.145 prometheus.wugi.info"
 
