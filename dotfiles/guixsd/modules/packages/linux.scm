@@ -81,6 +81,10 @@
 (define %bpf-extra-linux-options
   (@@ (gnu packages linux) %bpf-extra-linux-options))
 
+(define %my-extra-linux-options
+  `(("CONFIG_DEBUG_INFO_BTF" . #t)
+    ("CONFIG_FPROBE" . #t)))
+
 (define %default-extra-linux-options
   (@@ (gnu packages linux) %default-extra-linux-options))
 
@@ -96,6 +100,7 @@
           #:configuration-file kernel-config
           #:extra-options
           (append %bpf-extra-linux-options
+                  %my-extra-linux-options
                   %default-extra-linux-options))))
     (package
       (inherit base-linux-libre)
