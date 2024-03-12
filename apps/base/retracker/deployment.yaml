@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: retracker
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: retracker
+      app.kubernetes.io/part-of: retracker
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: retracker
+        app.kubernetes.io/part-of: retracker
+    spec:
+      containers:
+      - image: docker-registry.wugi.info/net/retracker-python
+        name: retracker
+        ports:
+        - containerPort: 8888
+          name: http
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 2000m
+            memory: 1024Mi
+          requests:
+            cpu: 10m
+            memory: 128Mi
