@@ -1,44 +1,59 @@
-{ appimageTools, lib, libpng, pcre2, double-conversion, fetchurl, makeWrapper
-, libsecret }:
-
-let
-  pname = "nekoray-bin";
+{
+  stdenv,
+  fetchzip,
+  makeDesktopItem,
+  autoPatchelfHook,
+  copyDesktopItems,
+  qtbase,
+  qtsvg,
+  qttools,
+  qtx11extras,
+  wrapQtAppsHook,
+}:
+stdenv.mkDerivation rec {
+  pname = "nekoray";
   version = "3.26";
-  name = "Nekoray-${version}";
+  date = "2023-12-09";
 
-  src = fetchurl {
-    url =
-      "https://github.com/MatsuriDayo/nekoray/releases/download/${version}/nekoray-${version}-2023-12-09-linux-x64.AppImage";
-    sha256 = "sha256-mdRI/XAquX4BlL7ecprC50+6Ylc/S4kBnqEQ4BxBU5Y=";
+  src = fetchzip {
+    url = "https://github.com/MatsuriDayo/nekoray/releases/download/${version}/nekoray-${version}-${date}-linux64.zip";
+    hash = "sha256-Wp97qT3VBlSxK2qAVLxm041NR0c5vi8SSI/4VdwvQTY=";
   };
 
-  appimageContents = appimageTools.extract { inherit name src; };
+  desktopItems = [
+    (makeDesktopItem {
+      name = pname;
+      desktopName = pname;
+      exec = "nekoray";
+      icon = "nekoray";
+      comment = "Qt based cross-platform GUI proxy configuration manager";
+      categories = ["Network" "Utility"];
+    })
+  ];
 
-in appimageTools.wrapType2 {
-  inherit version name src;
+  dontWrapQtApps = true;
 
-  extraInstallCommands = ''
-    mv $out/bin/${name} $out/bin/${pname}
-    install -m 444 -D ${appimageContents}/nekoray.desktop -t $out/share/applications
-    #cp -r ${appimageContents}/usr/share/icons $out/share
+  nativeBuildInputs = [autoPatchelfHook copyDesktopItems wrapQtAppsHook];
+  buildInputs = [
+    qtbase
+    qtsvg
+    qttools
+    qtx11extras
+  ];
+
+  installPhase = ''
+    runHook preInstall
+
+    mkdir -p $out/{share/icons/hicolor/128x128/apps,usr/lib/nekoray,bin}
+    install -Dm755 ./{nekobox_core,nekoray_core,nekoray} $out/usr/lib/nekoray/
+    install -Dm644 ./{geosite.db,geosite.dat,geoip.db,geoip.dat} $out/usr/lib/nekoray/
+    install -Dm644 ./nekoray.png $out/share/icons/hicolor/128x128/apps/
+
+    wrapQtApp $out/usr/lib/nekoray/nekoray \
+      --add-flags "-- -appdata"
+
+    mv $out/usr/lib/nekoray/nekoray $out/bin/nekoray
+
+    runHook postInstall
   '';
-
-  passthru.version = version;
-
-  extraPkgs = pkgs:
-    with pkgs; [
-      libsecret
-      libappindicator-gtk3
-      libpng
-      pcre2
-      double-conversion
-    ];
-
-  meta = with lib; {
-    homepage = "https://matsuridayo.github.io/";
-    description =
-      "Qt based cross-platform GUI proxy configuration manager (backend: v2ray / sing-box) ";
-    platforms = [ "x86_64-linux" ];
-    license = licenses.gpl3;
-  };
 }

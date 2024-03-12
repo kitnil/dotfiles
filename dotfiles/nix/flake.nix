@@ -195,15 +195,9 @@
               nekoray =
                 let
                   inherit (nixpkgs-idea-community.legacyPackages.${system})
-                    callPackage runtimeShell writeScriptBin;
-                  nekoray = callPackage ./pkgs/nekoray {};
+                    libsForQt5;
                 in
-                  writeScriptBin "nekoray" ''
-                    #!${runtimeShell} -e
-                    FONTCONFIG_FILE=/run/current-system/profile/etc/fonts/fonts.conf
-                    export FONTCONFIG_FILE
-                    exec ${nekoray}/bin/nekoray-bin "$@"
-                  '';
+                  libsForQt5.callPackage ./pkgs/nekoray {};
 
               jenkins = with pkgs;
                 let
