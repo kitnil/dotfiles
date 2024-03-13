@@ -97,11 +97,3 @@ externalWorkloads:
   #
   # Required for cluster-mesh.
   enabled: true
-
-clustermesh:
-  apiserver:
-    tls:
-      server:
-        extraIpAddresses:
-        - "88.201.161.72"
-        - "78.108.82.44"
