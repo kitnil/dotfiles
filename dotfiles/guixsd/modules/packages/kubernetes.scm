@@ -617,3 +617,38 @@ offers subsequent commands to interact with your observed resources.")
     (synopsis "")
     (description "")
     (license #f)))
+
+(define-public flux
+  (package
+    (name "flux")
+    (version "2.0.1")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append "https://github.com/fluxcd/flux2/releases/download/v" version "/flux_" version "_linux_amd64.tar.gz"))
+              (sha256
+               (base32
+                "1xvd5k8ck5qqf2rjqr6hfvfqkci0cjyzgl8k1jpfm4d5452abxxz"))))
+    (build-system trivial-build-system)
+    (native-inputs (list source gzip tar))
+    (arguments
+     (list
+      #:modules '((guix build utils))
+      #:builder
+      #~(begin
+          (use-modules (guix build utils))
+          (let* ((bin (string-append #$output "/bin"))
+                 (flux (string-append bin "/flux")))
+            (setenv "PATH" (string-append
+                            #$(this-package-native-input "tar") "/bin" ":"
+                            #$(this-package-native-input "gzip") "/bin" ":"))
+            (invoke "tar"
+                    "-xf" (assoc-ref %build-inputs "source")
+                    "flux")
+            (mkdir-p (string-append #$output "/bin"))
+            (copy-file "flux" (string-append #$output "/bin/flux"))
+            (chmod flux #o555)))))
+    (home-page "")
+    (synopsis "")
+    (description "")
+    (license #f)))
+
