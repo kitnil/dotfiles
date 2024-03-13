@@ -8,5 +8,5 @@ spec:
     matchLabels:
       kubernetes.io/hostname: kube1
   defaults:
-    devices: "br0,tapvpn1"
+    devices: "br0 tapvpn1"
     direct-routing-device: "br0,tapvpn1"
