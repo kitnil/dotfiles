@@ -54,6 +54,8 @@
              (default '()))
   (kubevirt? kubernetes-k3s-configuration-kubevirt? ;boolean
              (default #f))
+  (cilium?   kubernetes-k3s-configuration-cilium?   ;boolean
+             (default #f))
   (log-file  kubernetes-k3s-configuration-log-file  ;string
              (default "/var/log/k3s.log"))
   (runtime   kubernetes-k3s-configuration-runtime   ;symbol
@@ -135,6 +137,9 @@
                                              kubernetes-helm
                                              nerdctl
                                              k9s)
+                                       (if (kubernetes-k3s-configuration-cilium? config)
+                                           (list cilium)
+                                           '())
                                        (if (kubernetes-k3s-configuration-kubevirt? config)
                                            (list virtctl)
                                            '()))))
