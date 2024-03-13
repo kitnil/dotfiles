@@ -380,6 +380,7 @@ client-to-client
                           (service kubernetes-k3s-service-type
                                    (kubernetes-k3s-configuration
                                     (cilium? #t)
+                                    (flux? #t)
                                     (server? #t)
                                     (arguments '(;; "--node-external-ip" "201:c18b:10f7:a21:ac2c:cc10:f3e:64e6"
 
