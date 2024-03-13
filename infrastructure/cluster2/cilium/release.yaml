@@ -8,4 +8,4 @@ spec:
   - kind: ConfigMap
     name: cilium-values
   - kind: ConfigMap
-    name: cilium-values-cluster1
+    name: cilium-values-cluster2
