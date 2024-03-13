@@ -24,6 +24,7 @@
   #:use-module (gnu services shepherd)
   #:use-module (guix gexp)
   #:use-module (guix records)
+  #:use-module (packages containers)
   #:use-module (packages kubernetes)
   #:use-module (srfi srfi-1)
   #:export (kubernetes-k3s-configuration
@@ -129,7 +130,11 @@
    (extensions
     (list (service-extension profile-service-type
                              (lambda (config)
-                               (append (list k3s kubectl)
+                               (append (list k3s
+                                             kubectl
+                                             kubernetes-helm
+                                             nerdctl
+                                             k9s)
                                        (if (kubernetes-k3s-configuration-kubevirt? config)
                                            (list virtctl)
                                            '()))))
