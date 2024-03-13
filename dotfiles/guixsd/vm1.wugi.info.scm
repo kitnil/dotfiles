@@ -48,6 +48,8 @@
                         (type "ext4"))
                       %base-file-systems))
 
+  (kernel linux-libre-with-bpf)
+
   ;; This is where user accounts are specified.  The "root"
   ;; account is implicit, and is initially created with the
   ;; empty password.
