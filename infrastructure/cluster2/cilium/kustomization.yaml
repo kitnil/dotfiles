@@ -4,6 +4,7 @@ namespace: kube-system
 resources:
 - ../../base/cilium
 - bgp.yaml
+- cilium-node-config/kube-vm1.yaml
 patchesStrategicMerge:
 - release.yaml
 configMapGenerator:

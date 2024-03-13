@@ -1,8 +1,6 @@
 k8sServiceHost: "201:c18b:10f7:a21:ac2c:cc10:f3e:64e6"
 k8sServicePort: "6443"
 
-devices: "eth0 tapvpn1"
-
 # -- This feature set enables virtual BGP routers to be created via
 # CiliumBGPPeeringPolicy CRDs.
 bgpControlPlane:
