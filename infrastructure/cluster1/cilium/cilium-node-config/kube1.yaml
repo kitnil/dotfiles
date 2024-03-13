@@ -1,0 +1,11 @@
+apiVersion: cilium.io/v2alpha1
+kind: CiliumNodeConfig
+metadata:
+  namespace: kube-system
+  name: direct-routing-device-kube1
+spec:
+  nodeSelector:
+    matchLabels:
+      kubernetes.io/hostname: kube1
+  defaults:
+    direct-routing-device: "br0,tapvpn1"

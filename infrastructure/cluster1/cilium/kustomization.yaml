@@ -5,6 +5,7 @@ resources:
 - ../../base/cilium
 - bgp.yaml
 - cilium-announce-policy.yaml
+- cilium-node-config/kube1.yaml
 patchesStrategicMerge:
 - release.yaml
 configMapGenerator:

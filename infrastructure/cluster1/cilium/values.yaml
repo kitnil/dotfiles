@@ -1,8 +1,6 @@
 k8sServiceHost: "192.168.0.144"
 k8sServicePort: "6443"
 
-devices: "br0 tapvpn1"
-
 l2announcements:
   enabled: true
 
