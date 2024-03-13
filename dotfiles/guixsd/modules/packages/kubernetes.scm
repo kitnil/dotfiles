@@ -582,3 +582,38 @@ offers subsequent commands to interact with your observed resources.")
     (synopsis "")
     (description "")
     (license #f)))
+
+(define-public cilium
+  (package
+    (name "cilium")
+    (version "0.15.23")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append "https://github.com/cilium/cilium-cli/releases/download/v"
+                                  version "/cilium-linux-amd64.tar.gz"))
+              (sha256
+               (base32
+                "1nl4qdbgh9ffv16abpapnqfaisl774n9xskw18jil6g21b2g38yd"))))
+    (build-system trivial-build-system)
+    (native-inputs (list source gzip tar glibc patchelf))
+    (arguments
+     (list
+      #:modules '((guix build utils))
+      #:builder
+      #~(begin
+          (use-modules (guix build utils))
+          (let* ((bin (string-append #$output "/bin"))
+                 (cilium (string-append bin "/cilium")))
+            (setenv "PATH" (string-append
+                            #$(this-package-native-input "tar") "/bin" ":"
+                            #$(this-package-native-input "gzip") "/bin" ":"))
+            (invoke "tar"
+                    "-xf" (assoc-ref %build-inputs "source")
+                    "cilium")
+            (mkdir-p (string-append #$output "/bin"))
+            (copy-file "cilium" (string-append #$output "/bin/cilium"))
+            (chmod cilium #o555)))))
+    (home-page "")
+    (synopsis "")
+    (description "")
+    (license #f)))
