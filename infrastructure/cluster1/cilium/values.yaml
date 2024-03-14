@@ -11,16 +11,3 @@ l2podAnnouncements:
 cluster:
   name: "cluster1"
   id: 1
-
-clustermesh:
-  name: "cluster1"
-  config:
-    enable: true
-    clusters:
-    - name: cluster1
-      address: https://192.168.25.2
-      port: 32379
-    - name: cluster2
-      address: https://192.168.25.1
-      port: 32379
-  useAPIServer: true

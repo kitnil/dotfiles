@@ -19,16 +19,3 @@ bgp:
 cluster:
   name: "cluster2"
   id: 2
-
-clustermesh:
-  name: "cluster2"
-  config:
-    enable: true
-    clusters:
-    - name: cluster1
-      address: https://192.168.25.2
-      port: 32379
-    - name: cluster2
-      address: https://192.168.25.1
-      port: 32379
-  useAPIServer: true
