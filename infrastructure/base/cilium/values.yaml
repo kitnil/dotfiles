@@ -75,11 +75,8 @@ loadBalancer:
   mode: hybrid
   # serviceTopology: true
 
-ipv4NativeRoutingCIDR: 10.0.0.0/9
-
-tunnelProtocol: ""
-routingMode: native
-autoDirectNodeRoutes: true
+tunnelProtocol: "geneve"
+routingMode: "tunnel"
 
 k8sClientRateLimit: {}
 
