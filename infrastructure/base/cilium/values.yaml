@@ -80,8 +80,6 @@ routingMode: "tunnel"
 
 k8sClientRateLimit: {}
 
-installNoConntrackIptablesRules: true
-
 cgroup:
   autoMount:
     enabled: false
