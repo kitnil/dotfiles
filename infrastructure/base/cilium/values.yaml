@@ -77,7 +77,6 @@ loadBalancer:
 
 ipv4NativeRoutingCIDR: 10.0.0.0/9
 
-tunnel: "disabled"
 tunnelProtocol: ""
 routingMode: native
 autoDirectNodeRoutes: true
