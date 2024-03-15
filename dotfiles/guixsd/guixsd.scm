@@ -2048,7 +2048,14 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                                     "br_netfilter" ;kube-dns
                                     ;; "drbd9"
                                     ;; "ddcci_backlight"
-                                    ))
+
+                                    ;; Required for Cilium CNI.
+                                    "ip_tables"
+                                    "xt_socket"
+                                    "iptable_nat"
+                                    "iptable_mangle"
+                                    "iptable_raw"
+                                    "iptable_filter"))
 
                          ;; (service vault-service-type
                          ;;          (vault-configuration

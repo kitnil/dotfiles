@@ -85,16 +85,7 @@
         (invoke #$(file-append util-linux+udev "/bin/mount")
                 "--make-shared" "/sys/fs/cgroup")
         (invoke #$(file-append util-linux+udev "/bin/mount")
-                "--make-shared" "/")
-        (for-each (lambda (module)
-                    (system* #$(file-append kmod "/bin/modprobe")
-                             (symbol->string module)))
-                  '(ip_tables
-                    xt_socket
-                    iptable_nat
-                    iptable_mangle
-                    iptable_raw
-                    iptable_filter)))))
+                "--make-shared" "/"))))
 
 (define (k3s-wrapper args)
   (program-file

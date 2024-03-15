@@ -404,7 +404,20 @@ client-to-client
                                                  "--container-runtime-endpoint" "unix:///run/containerd/containerd.sock"
                                                  ))))
 
-                          (service openvswitch-service-type))
+                          (service openvswitch-service-type)
+
+                          (service kernel-module-loader-service-type
+                                   '("dm-snapshot"
+                                     "dm-thin-pool"
+                                     "br_netfilter" ;kube-dns
+
+                                     ;; Required for Cilium CNI.
+                                     "ip_tables"
+                                     "xt_socket"
+                                     "iptable_nat"
+                                     "iptable_mangle"
+                                     "iptable_raw"
+                                     "iptable_filter")))
 
                     (%mail-services "78.108.82.44")
 
