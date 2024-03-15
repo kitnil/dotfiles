@@ -402,7 +402,9 @@ client-to-client
                                                  ;;
                                                  ;; use containerd directly
                                                  "--container-runtime-endpoint" "unix:///run/containerd/containerd.sock"
-                                                 )))))
+                                                 ))))
+
+                          (service openvswitch-service-type))
 
                     (%mail-services "78.108.82.44")
 
