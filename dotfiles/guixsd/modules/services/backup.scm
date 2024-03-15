@@ -198,7 +198,8 @@
          (display "Creating new Restic system snapshot\n")
          (zero?
           (apply system*
-                 (append (list #$restic-binary "--repo" "/srv/backup/guixsd")
+                 (append (list #$restic-binary "--no-cache"
+                               "--repo" "/srv/backup/guixsd")
                          (fold (lambda (directory directories)
                                  (append (list "--exclude" directory) directories))
                                '() %exclude-directories)
@@ -230,7 +231,8 @@
                                 (string-append "if=" #$device)
                                 "bs=4M" "status=none")
                           (list "|")
-                          (list #$restic-binary "--repo" #$restic-repository
+                          (list #$restic-binary "--no-cache"
+                                "--repo" #$restic-repository
                                 "backup" "--stdin" "--stdin-filename"
                                 #$(string-append lv ".img")))))))
              (every identity
@@ -251,7 +253,8 @@
                                         (string-append "if=" #$lvm2-snapshot-device)
                                         "bs=4M" "status=none")
                                   (list "|")
-                                  (list #$restic-binary "--repo" #$restic-repository
+                                  (list #$restic-binary "--no-cache"
+                                        "--repo" #$restic-repository
                                         "backup" "--tag" "snapshot"
                                         "--stdin" "--stdin-filename"
                                         #$(string-append lv ".img")))))))
