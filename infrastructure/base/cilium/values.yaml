@@ -74,6 +74,7 @@ socketLB:
 loadBalancer:
   mode: hybrid
   # serviceTopology: true
+  dsrDispatch: "geneve"
 
 tunnelProtocol: "geneve"
 routingMode: "tunnel"
