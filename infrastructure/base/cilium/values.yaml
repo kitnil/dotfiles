@@ -74,10 +74,12 @@ socketLB:
 loadBalancer:
   mode: hybrid
   # serviceTopology: true
-  dsrDispatch: "geneve"
 
-tunnelProtocol: "geneve"
-routingMode: "tunnel"
+ipv4NativeRoutingCIDR: 10.0.0.0/9
+
+tunnelProtocol: ""
+routingMode: native
+autoDirectNodeRoutes: true
 
 k8sClientRateLimit: {}
 

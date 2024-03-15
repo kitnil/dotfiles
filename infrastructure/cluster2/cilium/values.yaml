@@ -19,3 +19,5 @@ bgp:
 cluster:
   name: "cluster2"
   id: 2
+
+ipv4NativeRoutingCIDR: 10.42.0.0/16
