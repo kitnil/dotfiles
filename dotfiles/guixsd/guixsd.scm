@@ -182,6 +182,7 @@
                "allow 172.16.103.0/24;"
                "allow 78.108.80.212/32;" ;Majordomo NAT
                "allow 88.201.161.72/32;"
+               "allow 185.105.108.96/32;" ;vm3.wugi.info has address 185.105.108.96
                "deny all;")))
            (nginx-location-configuration
             (uri "/.well-known")
@@ -195,6 +196,7 @@
                      "allow 78.108.80.212/32;" ;Majordomo NAT
                      "allow 88.201.161.72/32;"
                      "allow 78.108.82.44/32;" ;vm1.wugi.info
+                     "allow 185.105.108.96/32;" ;vm3.wugi.info has address 185.105.108.96
                      "deny all;")
                    (list
                     ;; Do not allow connections from docker 1.5 and earlier
