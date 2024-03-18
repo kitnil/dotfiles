@@ -1,0 +1,45 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dante
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: dante
+      app.kubernetes.io/part-of: dante
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: dante
+        app.kubernetes.io/part-of: dante
+    spec:
+      containers:
+      - image: docker-registry.wugi.info/net/dante
+        name: dante
+        command:
+        - /usr/sbin/danted
+        ports:
+        - containerPort: 1080
+          name: http
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 8000m
+            memory: 2048Mi
+          requests:
+            cpu: 1000m
+            memory: 512Mi
+        volumeMounts:
+        - mountPath: /etc/danted.conf
+          name: configuration
+          subPath: danted.conf
+        - mountPath: /etc/danted.passwd
+          name: configuration
+          subPath: danted.passwd
+        - mountPath: /etc/pam.d/sockd
+          name: configuration
+          subPath: sockd
+      volumes:
+      - name: configuration
+        secret:
+          secretName: dante-configuration
