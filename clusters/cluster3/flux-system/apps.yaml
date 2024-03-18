@@ -6,7 +6,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m0s
-  path: ./apps/base/dante
+  path: ./apps/cluster3/dante
   prune: true
   sourceRef:
     kind: GitRepository
