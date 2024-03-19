@@ -3,5 +3,4 @@ kind: Kustomization
 namespace: dante
 resources:
 - ../../base/dante
-patchesStrategicMerge:
-- deployment.yaml
+- service.yaml
