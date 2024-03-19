@@ -2379,7 +2379,7 @@ dig()
     for var in "$@"
     do
         case "$var" in
-            *majordomo.ru|*.intr|172.16.*|*pwhost.ru|*fast-name.ru|*host-support.ru|*litename.ru|*vipname.su)
+            *majordomo.ru|*.intr|172.16.*|*pwhost.ru|*fast-name.ru|*host-support.ru|*litename.ru|*vipname.su|*hoster24.ru)
                 name_servers=(
                     ns1-mr.intr
                     ns2-mr.intr
