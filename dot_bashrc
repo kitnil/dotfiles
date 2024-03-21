@@ -2025,6 +2025,9 @@ psql()
     esac
 }
 
+KUBECTL_WATCH_CGROUP="viddy"
+export KUBECTL_WATCH_CGROUP
+
 __lazy_kubectl()
 {
     local word_count=${#COMP_WORDS[*]}
