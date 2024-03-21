@@ -7,5 +7,7 @@ spec:
   valuesFrom:
   - kind: ConfigMap
     name: cilium-values
+  - kind: Secret
+    name: cilium-secret-values
   - kind: ConfigMap
     name: cilium-values-cluster2
