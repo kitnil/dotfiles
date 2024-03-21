@@ -902,7 +902,8 @@ account default : gmail
                                                            ("hosts"
                                                             ,@(map (lambda (number)
                                                                      `(,(string-append "kube" (number->string number) ".intr") . null))
-                                                                   (stream->list (stream-range 1 9))))
+                                                                   (append (stream->list (stream-range 1 44))
+                                                                           (stream->list (stream-range 5000 5025)))))
                                                            ("vars"
                                                             ("ansible_ssh_user" . "root")
                                                             ("ansible_python_interpreter" . "/run/current-system/sw/bin/python3")))
