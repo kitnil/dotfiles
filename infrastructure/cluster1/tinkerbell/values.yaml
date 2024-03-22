@@ -1,8 +1,7 @@
 stack:
   loadBalancerIP: &loadBalancerIP 192.168.154.129
   kubevip:
-    enabled: true
-    interface: br154.154
+    enabled: false
 
 smee:
   publicIP: *loadBalancerIP
