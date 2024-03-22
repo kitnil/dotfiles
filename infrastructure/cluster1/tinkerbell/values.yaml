@@ -1,0 +1,5 @@
+stack:
+  loadBalancerIP: &publicIP 192.168.154.129
+  lbClass: io.cilium/bgp-control-plane
+  kubevip:
+    enabled: false
