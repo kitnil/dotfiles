@@ -15,11 +15,11 @@ spec:
         gateway: 192.168.154.1
         netmask: 255.255.255.0
       lease_time: 86400
-      mac: 52:14:00:23:15:ff
+      mac: 52:54:00:0d:45:e4
       name_servers:
       - 1.1.1.1
       - 8.8.8.8
-      uefi: true
+      uefi: false
     netboot:
       allowPXE: true
       allowWorkflow: true
