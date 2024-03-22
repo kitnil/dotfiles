@@ -3,7 +3,7 @@ kind: Workflow
 metadata:
   name: example
 spec:
-  templateRef: ubuntu
+  templateRef: debian
   hardwareRef: machine1
   hardwareMap:
     device_1: 52:14:00:23:15:ff
