@@ -5,6 +5,7 @@ metadata:
   namespace: tink-system
 spec:
   data: |
+    version: "0.1"
     name: ubuntu_workflow
     global_timeout: 9800
     tasks:
