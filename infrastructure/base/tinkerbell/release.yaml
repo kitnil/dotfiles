@@ -6,10 +6,9 @@ spec:
   chart:
     spec:
       chart: stack
-      reconcileStrategy: ChartVersion
-      version: 0.4.3
+      reconcileStrategy: Revision
       sourceRef:
-        kind: OCIRepository
+        kind: GitRepository
         name: tinkerbell
         namespace: flux-system
   interval: 1m0s
