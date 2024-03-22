@@ -5,17 +5,17 @@ metadata:
   namespace: tink-system
 spec:
   disks:
-  - device: /dev/sda
+  - device: /dev/vda
   interfaces:
   - dhcp:
       arch: x86_64
       hostname: machine1
       ip:
-        address: 192.168.2.148
-        gateway: 192.168.2.1
+        address: 192.168.154.11
+        gateway: 192.168.154.1
         netmask: 255.255.255.0
       lease_time: 86400
-      mac: 52:54:00:0f:2e:67
+      mac: 52:14:00:23:15:ff
       name_servers:
       - 1.1.1.1
       - 8.8.8.8
