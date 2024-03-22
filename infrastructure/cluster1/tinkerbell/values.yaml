@@ -3,3 +3,10 @@ stack:
   lbClass: io.cilium/bgp-control-plane
   kubevip:
     enabled: false
+
+smee:
+  publicIP: *publicIP
+  trustedProxies: &trustedProxies 10.0.0.0/24
+
+hegel:
+  trustedProxies: *trustedProxies
