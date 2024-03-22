@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: tinkerbell
 resources:
 - ../../base/tinkerbell
+- hardware
 patchesStrategicMerge:
 - release.yaml
 configMapGenerator:
