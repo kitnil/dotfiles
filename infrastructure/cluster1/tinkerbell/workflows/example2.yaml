@@ -1,0 +1,10 @@
+apiVersion: "tinkerbell.org/v1alpha1"
+kind: Workflow
+metadata:
+  name: example2
+spec:
+  templateRef: debian
+  hardwareRef: machine2
+  hardwareMap:
+    device_1: 52:14:00:23:15:ff
+

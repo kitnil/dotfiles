@@ -3,3 +3,4 @@ kind: Kustomization
 namespace: tink-system
 resources:
 - machine1.yaml
+- machine2.yaml

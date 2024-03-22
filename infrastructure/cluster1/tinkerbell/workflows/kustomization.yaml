@@ -3,3 +3,4 @@ kind: Kustomization
 namespace: tink-system
 resources:
 - example.yaml
+- example2.yaml
