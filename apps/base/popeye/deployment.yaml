@@ -1,0 +1,80 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: popeye
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: popeye
+      app.kubernetes.io/part-of: popeye
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: popeye
+        app.kubernetes.io/part-of: popeye
+    spec:
+      serviceAccountName: popeye
+      initContainers:
+      - name: popeye
+        image: derailed/popeye:latest
+        imagePullPolicy: IfNotPresent
+        command: ["/bin/popeye"]
+        env:
+        - name: POPEYE_REPORT_DIR
+          value: /var/www
+        args:
+        - --force-exit-zero
+        - -o
+        - html
+        - --save
+        - --output-file
+        - index.html
+        resources:
+          limits:
+            cpu: 500m
+            memory: 100Mi
+        volumeMounts:
+        - mountPath: /var/www
+          name: data
+      containers:
+      - image: nixery.dev/shell/busybox
+        name: busybox
+        command: ["/bin/httpd"]
+        args: ["-f", "-p", "0.0.0.0:8080", "-h", "/var/www"]
+        resources:
+          limits:
+            cpu: 10m
+            memory: 15Mi
+          requests:
+            cpu: 1m
+            memory: 10Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - "ALL"
+            add:
+            - "CHOWN"
+            - "DAC_OVERRIDE"
+            - "SETGID"
+            - "SETUID"
+            - "NET_BIND_service"
+            - "SYS_CHROOT"
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          runAsUser: 1000
+          runAsGroup: 1000
+        livenessProbe:
+          httpGet:
+            port: 8080
+        readinessProbe:
+          httpGet:
+            port: 8080
+        volumeMounts:
+        - name: data
+          mountPath: /var/www
+          readOnly: true
+      volumes:
+      - name: data
+        emptyDir:
+          sizeLimit: 10M
