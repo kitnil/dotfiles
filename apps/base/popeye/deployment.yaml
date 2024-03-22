@@ -17,7 +17,6 @@ spec:
       initContainers:
       - name: popeye
         image: derailed/popeye:v0.21.1
-        imagePullPolicy: IfNotPresent
         command: ["/bin/popeye"]
         env:
         - name: POPEYE_REPORT_DIR
