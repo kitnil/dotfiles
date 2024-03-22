@@ -1,4 +1,3 @@
-# Popeye's got your RBAC!
 ---
 # ServiceAccount definition for the CLI.
 apiVersion: v1
@@ -14,73 +13,73 @@ kind: ClusterRole
 metadata:
   name: popeye
 rules:
-  - apiGroups:
-      - policy
-    resources:
-      - poddisruptionbudgets
-      - podsecuritypolicies
-    verbs:
-      - get
-      - list
-  - apiGroups:
-      - autoscaling
-    resources:
-      - horizontalpodautoscalers
-    verbs:
-      - get
-      - list
-  - apiGroups:
-      - networking.k8s.io
-    resources:
-      - ingresses
-      - networkpolicies
-    verbs:
-      - get
-      - list
-  - apiGroups: [""]
-    resources:
-      - configmaps
-      - endpoints
-      - limitranges
-      - namespaces
-      - nodes
-      - persistentvolumes
-      - persistentvolumeclaims
-      - pods
-      - secrets
-      - serviceaccounts
-      - services
-    verbs:
-      - get
-      - list
-  - apiGroups:
-      - apps
-    resources:
-      - daemonsets
-      - deployments
-      - statefulsets
-      - replicasets
-    verbs:
-      - get
-      - list
-  - apiGroups:
-      - rbac.authorization.k8s.io
-    resources:
-      - clusterroles
-      - clusterrolebindings
-      - roles
-      - rolebindings
-    verbs:
-      - get
-      - list
-  - apiGroups:
-      - metrics.k8s.io
-    resources:
-      - pods
-      - nodes
-    verbs:
-      - get
-      - list
+- apiGroups:
+  - policy
+  resources:
+  - poddisruptionbudgets
+  - podsecuritypolicies
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - autoscaling
+  resources:
+  - horizontalpodautoscalers
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - networking.k8s.io
+  resources:
+  - ingresses
+  - networkpolicies
+  verbs:
+  - get
+  - list
+- apiGroups: [""]
+  resources:
+  - configmaps
+  - endpoints
+  - limitranges
+  - namespaces
+  - nodes
+  - persistentvolumes
+  - persistentvolumeclaims
+  - pods
+  - secrets
+  - serviceaccounts
+  - services
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - apps
+  resources:
+  - daemonsets
+  - deployments
+  - statefulsets
+  - replicasets
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - rbac.authorization.k8s.io
+  resources:
+  - clusterroles
+  - clusterrolebindings
+  - roles
+  - rolebindings
+  verbs:
+  - get
+  - list
+- apiGroups:
+  - metrics.k8s.io
+  resources:
+  - pods
+  - nodes
+  verbs:
+  - get
+  - list
 
 ---
 # ClusterRoleBinding to ties Popeye with the cluster
@@ -89,9 +88,9 @@ kind: ClusterRoleBinding
 metadata:
   name: popeye
 subjects:
-  - kind: ServiceAccount
-    name: popeye
-    namespace: popeye
+- kind: ServiceAccount
+  name: popeye
+  namespace: popeye
 roleRef:
   kind: ClusterRole
   name: popeye
