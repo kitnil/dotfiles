@@ -1,0 +1,10 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: OCIRepository
+metadata:
+  name: tinkerbell
+  namespace: flux-system
+spec:
+  interval: 10m0s
+  ref:
+    tag: 0.4.3
+  url: oci://ghcr.io/tinkerbell/charts/stack
