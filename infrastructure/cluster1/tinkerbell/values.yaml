@@ -3,6 +3,8 @@ stack:
   lbClass: io.cilium/l2-announcer
   kubevip:
     enabled: false
+  relay:
+    sourceInterface: br154.br154
 
 smee:
   publicIP: *loadBalancerIP
