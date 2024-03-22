@@ -1,12 +1,12 @@
 stack:
-  loadBalancerIP: &publicIP 192.168.154.129
+  loadBalancerIP: 192.168.154.129
   lbClass: io.cilium/bgp-control-plane
   kubevip:
     enabled: false
 
 smee:
-  publicIP: *publicIP
-  trustedProxies: &trustedProxies 10.0.0.0/24
+  publicIP: 192.168.154.129
+  trustedProxies: 10.0.0.0/24
 
 hegel:
-  trustedProxies: *trustedProxies
+  trustedProxies: 10.0.0.0/24
