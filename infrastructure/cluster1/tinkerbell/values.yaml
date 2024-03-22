@@ -4,7 +4,7 @@ stack:
   kubevip:
     enabled: false
   relay:
-    sourceInterface: br154
+    sourceInterface: br154.154
 
 smee:
   publicIP: *loadBalancerIP
