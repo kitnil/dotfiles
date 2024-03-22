@@ -7,4 +7,4 @@ spec:
   interval: 60m0s
   ref:
     tag: v0.4.3
-  url: https://github.com/tinkerbell/chart.git
+  url: https://github.com/tinkerbell/charts.git
