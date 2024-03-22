@@ -4,6 +4,7 @@ namespace: kube-system
 resources:
 - ../../base/cilium
 - bgp.yaml
+- cilium-load-balancer-ip-pool.yaml
 - cilium-announce-policy.yaml
 - cilium-node-config/kube1.yaml
 patchesStrategicMerge:
