@@ -5,7 +5,7 @@ metadata:
 spec:
   chart:
     spec:
-      chart: stack
+      chart: tinkerbell/stack
       reconcileStrategy: Revision
       sourceRef:
         kind: GitRepository
