@@ -3,6 +3,7 @@ kind: HelmRelease
 metadata:
   name: tinkerbell
 spec:
+  timeout: 5m
   chart:
     spec:
       chart: tinkerbell/stack
