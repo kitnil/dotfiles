@@ -4,6 +4,7 @@ namespace: tink-system
 resources:
 - ../../base/tinkerbell
 - hardware
+- templates
 patchesStrategicMerge:
 - release.yaml
 configMapGenerator:
