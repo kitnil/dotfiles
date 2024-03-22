@@ -8,3 +8,4 @@ spec:
   hardwareMap:
     device_1: 52:14:00:23:15:ff
     artifact_server_ip_port: "cloud-images.ubuntu.com/jammy/current"
+    hegel_ip_port: "192.168.154.129:50061"
