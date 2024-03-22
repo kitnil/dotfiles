@@ -24,7 +24,7 @@ spec:
           value: /var/www
         args:
         - --force-exit-zero
-        - -o
+        - --out
         - html
         - --save
         - --output-file
