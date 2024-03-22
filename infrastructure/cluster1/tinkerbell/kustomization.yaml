@@ -5,6 +5,7 @@ resources:
 - ../../base/tinkerbell
 - hardware
 - templates
+- workflows
 patchesStrategicMerge:
 - release.yaml
 configMapGenerator:
