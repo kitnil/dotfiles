@@ -1,0 +1,10 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: tinkerbell
+spec:
+  valuesFrom:
+  - kind: ConfigMap
+    name: tinkerbell-values
+  - kind: ConfigMap
+    name: tinkerbell-values-cluster1
