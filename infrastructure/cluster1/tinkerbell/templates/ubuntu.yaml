@@ -21,7 +21,7 @@ spec:
             timeout: 9600
             environment:
               DEST_DISK: {{ index .Hardware.Disks 0 }}
-              IMG_URL: "http://{{ .artifact_server_ip_port }}/jammy-server-cloudimg-amd64.raw.gz"
+              IMG_URL: "http://{{ .artifact_server_ip_port }}/jammy-server-cloudimg-amd64.tar.gz"
               COMPRESSED: true
           - name: "add cloud init config"
             image: quay.io/tinkerbell-actions/writefile:v1.0.0
