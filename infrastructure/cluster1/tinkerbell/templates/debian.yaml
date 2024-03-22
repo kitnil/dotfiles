@@ -1,0 +1,32 @@
+apiVersion: tinkerbell.org/v1alpha1
+kind: Template
+metadata:
+  name: debian
+  namespace: tink-system
+spec:
+  data: |
+    version: "0.1"
+    name: debian
+    global_timeout: 1800
+    tasks:
+    - name: "os-installation"
+      worker: "{{.device_1}}"
+      volumes:
+      - /dev:/dev
+      - /dev/console:/dev/console
+      - /lib/firmware:/lib/firmware:ro
+      actions:
+      - name: "stream-debian-image"
+        image: quay.io/tinkerbell-actions/image2disk:v1.0.0
+        timeout: 600
+        environment:
+          DEST_DISK: /dev/vda
+          IMG_URL: "http://cdimage.debian.org/cdimage/openstack/current-10/debian-10-openstack-amd64.raw"
+          COMPRESSED: false
+      - name: "kexec-debian"
+        image: quay.io/tinkerbell-actions/kexec:v1.0.0
+        timeout: 90
+        pid: host
+        environment:
+          BLOCK_DEVICE: /dev/vda1
+          FS_TYPE: ext4
