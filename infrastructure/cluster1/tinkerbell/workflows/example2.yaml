@@ -2,6 +2,7 @@ apiVersion: "tinkerbell.org/v1alpha1"
 kind: Workflow
 metadata:
   name: example2
+  namespace: tink-system
 spec:
   templateRef: debian
   hardwareRef: machine2
