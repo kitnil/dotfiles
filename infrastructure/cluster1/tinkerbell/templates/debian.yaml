@@ -66,6 +66,10 @@ spec:
           DEST_DISK: {{ index .Hardware.Disks 0 }}1
           FS_TYPE: ext4
           DEST_PATH: /etc/netplan/50-dhcp.yaml
+          UID: 0
+          GID: 0
+          MODE: 0644
+          DIRMODE: 0755
           CONTENTS: |
             network:
             version: 2
