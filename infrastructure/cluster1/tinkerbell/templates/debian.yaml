@@ -36,9 +36,10 @@ spec:
           DIRMODE: 0700
           CONTENTS: |
             #cloud-config
-            password: uThuboh4
+            password: root
             chpasswd: { expire: False }
             ssh_pwauth: True
+            disable_root: false
       - name: "reboot"
         image: ghcr.io/jacobweinstock/waitdaemon:0.2.0
         timeout: 90
