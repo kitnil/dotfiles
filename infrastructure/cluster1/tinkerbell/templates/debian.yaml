@@ -23,30 +23,61 @@ spec:
           DEST_DISK: /dev/vda
           IMG_URL: "https://iso.wugi.info/debian-12-genericcloud-amd64-20240211-1654.raw"
           COMPRESSED: false
-      - name: "add-tink-cloud-init-config"
+      - name: "grow-partition"
+        image: quay.io/tinkerbell-actions/cexec:v1.0.0
+        timeout: 90
+        environment:
+          BLOCK_DEVICE: {{ index .Hardware.Disks 0 }}1
+          FS_TYPE: ext4
+          CHROOT: y
+          DEFAULT_INTERPRETER: "/bin/sh -c"
+          CMD_LINE: "growpart {{ index .Hardware.Disks 0 }} 1 && resize2fs {{ index .Hardware.Disks 0 }}1"
+      - name: "create-user"
+        image: quay.io/tinkerbell-actions/cexec:v1.0.0
+        timeout: 90
+        environment:
+          BLOCK_DEVICE: {{ index .Hardware.Disks 0 }}1
+          FS_TYPE: ext4
+          CHROOT: y
+          DEFAULT_INTERPRETER: "/bin/sh -c"
+          CMD_LINE: "useradd -p $(openssl passwd -1 tink) -s /bin/bash -d /home/tink/ -m -G sudo tink"
+      - name: "enable-ssh"
+        image: quay.io/tinkerbell-actions/cexec:v1.0.0
+        timeout: 90
+        environment:
+          BLOCK_DEVICE: {{ index .Hardware.Disks 0 }}1
+          FS_TYPE: ext4
+          CHROOT: y
+          DEFAULT_INTERPRETER: "/bin/sh -c"
+          CMD_LINE: "ssh-keygen -A; systemctl enable ssh.service; echo 'PasswordAuthentication yes' > /etc/ssh/sshd_config.d/60-cloudimg-settings.conf"
+      - name: "add-tink-netplan-config"
         image: quay.io/tinkerbell-actions/writefile:v1.0.0
         timeout: 90
         environment:
           DEST_DISK: /dev/vda1
           FS_TYPE: ext4
-          DEST_PATH: /etc/cloud/cloud.cfg.d/10_tinkerbell.cfg
+          DEST_PATH: /etc/netplan/50-dhcp.yaml
           UID: 0
           GID: 0
-          MODE: 0600
+          MODE: 0644
           DIRMODE: 0700
           CONTENTS: |
-            #cloud-config
-            password: root
-            chpasswd: { expire: False }
-            ssh_pwauth: True
-            disable_root: false
-      - name: "reboot"
-        image: ghcr.io/jacobweinstock/waitdaemon:0.2.0
+            network:
+            version: 2
+            ethernets:
+              all-en:
+                match:
+                  name: "en*"
+                dhcp4: true
+                dhcp6: true
+      - name: "kexec"
+        image: ghcr.io/jacobweinstock/waitdaemon:latest
         timeout: 90
         pid: host
-        command: ["reboot"]
         environment:
-          IMAGE: alpine
+          BLOCK_DEVICE: {{ formatPartition ( index .Hardware.Disks 0 ) 1 }}
+          FS_TYPE: ext4
+          IMAGE: quay.io/tinkerbell-actions/kexec:v1.0.0
           WAIT_SECONDS: 10
         volumes:
         - /var/run/docker.sock:/var/run/docker.sock
