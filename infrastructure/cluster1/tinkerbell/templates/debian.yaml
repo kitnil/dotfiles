@@ -36,10 +36,8 @@ spec:
           DIRMODE: 0700
           CONTENTS: |
             #cloud-config
-            chpasswd:
-              list: |
-                root:root
-              expire: False
+            password: debian
+            chpasswd: { expire: False }
             ssh_pwauth: True
       - name: "reboot"
         image: ghcr.io/jacobweinstock/waitdaemon:0.2.0
