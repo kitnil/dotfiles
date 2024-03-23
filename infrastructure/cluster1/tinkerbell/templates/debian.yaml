@@ -20,7 +20,7 @@ spec:
         image: quay.io/tinkerbell-actions/image2disk:v1.0.0
         timeout: 600
         environment:
-          DEST_DISK: /dev/vda
+          DEST_DISK: {{ index .Hardware.Disks 0 }}
           IMG_URL: "https://iso.wugi.info/debian-12-genericcloud-amd64-20240211-1654.raw"
           COMPRESSED: false
       - name: "grow-partition"
@@ -32,6 +32,15 @@ spec:
           CHROOT: y
           DEFAULT_INTERPRETER: "/bin/sh -c"
           CMD_LINE: "growpart {{ index .Hardware.Disks 0 }} 1 && resize2fs {{ index .Hardware.Disks 0 }}1"
+      - name: "install-openssl"
+        image: quay.io/tinkerbell-actions/cexec:v1.0.0
+        timeout: 90
+        environment:
+          BLOCK_DEVICE: {{ index .Hardware.Disks 0 }}1
+          FS_TYPE: ext4
+          CHROOT: y
+          DEFAULT_INTERPRETER: "/bin/sh -c"
+          CMD_LINE: "apt -y update && apt -y install openssl"
       - name: "create-user"
         image: quay.io/tinkerbell-actions/cexec:v1.0.0
         timeout: 90
@@ -54,13 +63,9 @@ spec:
         image: quay.io/tinkerbell-actions/writefile:v1.0.0
         timeout: 90
         environment:
-          DEST_DISK: /dev/vda1
+          DEST_DISK: {{ index .Hardware.Disks 0 }}1
           FS_TYPE: ext4
           DEST_PATH: /etc/netplan/50-dhcp.yaml
-          UID: 0
-          GID: 0
-          MODE: 0644
-          DIRMODE: 0700
           CONTENTS: |
             network:
             version: 2
