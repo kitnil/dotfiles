@@ -1,0 +1,35 @@
+apiVersion: tinkerbell.org/v1alpha1
+kind: Template
+metadata:
+  name: nixos
+  namespace: tink-system
+spec:
+  data: |
+    version: "0.1"
+    name: nixos
+    global_timeout: 1800
+    tasks:
+    - name: "os-installation"
+      worker: "{{.device_1}}"
+      volumes:
+      - /dev:/dev
+      - /dev/console:/dev/console
+      - /lib/firmware:/lib/firmware:ro
+      actions:
+      - name: "stream-nixos-image"
+        image: quay.io/tinkerbell-actions/image2disk:v1.0.0
+        timeout: 600
+        environment:
+          DEST_DISK: /dev/vda
+          IMG_URL: "https://iso.wugi.info/nixos.raw"
+          COMPRESSED: false
+      - name: "reboot"
+        image: ghcr.io/jacobweinstock/waitdaemon:0.2.0
+        timeout: 90
+        pid: host
+        command: ["reboot"]
+        environment:
+          IMAGE: alpine
+          WAIT_SECONDS: 10
+        volumes:
+          - /var/run/docker.sock:/var/run/docker.sock
