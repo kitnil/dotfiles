@@ -32,4 +32,4 @@ spec:
           IMAGE: alpine
           WAIT_SECONDS: 10
         volumes:
-          - /var/run/docker.sock:/var/run/docker.sock
+        - /var/run/docker.sock:/var/run/docker.sock
