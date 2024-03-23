@@ -21,7 +21,7 @@ spec:
         timeout: 600
         environment:
           DEST_DISK: /dev/vda
-          IMG_URL: "https://iso.wugi.info/debian-11-generic-amd64-20240211-1654.raw"
+          IMG_URL: "https://iso.wugi.info/debian-12-genericcloud-amd64-20240211-1654.raw"
           COMPRESSED: false
       - name: "add-tink-cloud-init-config"
         image: quay.io/tinkerbell-actions/writefile:v1.0.0
