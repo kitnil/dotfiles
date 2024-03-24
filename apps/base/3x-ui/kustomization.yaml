@@ -4,3 +4,4 @@ namespace: 3x-ui
 resources:
 - namespace.yaml
 - statefulset.yaml
+- service.yaml

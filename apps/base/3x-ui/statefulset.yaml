@@ -24,7 +24,6 @@ spec:
           name: data
         - mountPath: /root/cert
           name: certificates
-      hostNetwork: true
       volumes:
       - name: data
         hostPath:
