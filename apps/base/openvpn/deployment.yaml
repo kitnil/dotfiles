@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   name: openvpn
 spec:
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app.kubernetes.io/name: openvpn
