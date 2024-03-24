@@ -21,7 +21,14 @@ spec:
           subPath: openvpn.conf
           readOnly: true
           name: config
+        - mountPath: /secret.key
+          subPath: secret.key
+          readOnly: true
+          name: secret
       volumes:
       - name: config
         configMap:
           name: openvpn-configuration
+      - name: secret
+        secret:
+          secretName: secret
