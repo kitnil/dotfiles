@@ -20,18 +20,15 @@ prometheus:
 
 operator:
   replicas: 1
-  rollOutPods: true
   prometheus:
     enabled: true
 
 hubble:
   relay:
-    rollOutPods: true
     enabled: true
     prometheus:
       enabled: true
   ui:
-    rollOutPods: true
     enabled: true
 
 kubeProxyReplacement: "true"
