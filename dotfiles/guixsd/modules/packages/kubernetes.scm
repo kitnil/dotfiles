@@ -464,15 +464,15 @@ a distributed system, with a focus on being:
 (define-public k9s
   (package
     (name "k9s")
-    (version "0.26.3")
+    (version "0.32.4")
     (source
      (origin
        (method url-fetch)
        (uri (string-append "https://github.com/derailed/k9s/releases/download/v"
-                           version "/k9s_Linux_x86_64.tar.gz"))
+                           version "/k9s_Linux_amd64.tar.gz"))
        (sha256
         (base32
-         "1kv2q5gvh4d584r5fyvwqc5d9wpp8cfh5jxzn8dfjvx4rwbsqirl"))))
+         "01fs8rwgmm1jkqywsi78ifzsr5h1a0hq9sb5ly1bfd9cpvci29nn"))))
     (build-system trivial-build-system)
     (native-inputs (list source gzip tar))
     (arguments
