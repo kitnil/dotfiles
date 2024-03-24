@@ -4,9 +4,6 @@ metadata:
   name: cilium
   namespace: kube-system
 spec:
-  chart:
-    spec:
-      version: 1.16.0-pre.0
   valuesFrom:
   - kind: ConfigMap
     name: cilium-values
