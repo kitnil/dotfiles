@@ -1,0 +1,8 @@
+infrastructure: tinkerbell
+
+cert-manager:
+  enabled: false
+
+configSecret:
+  name: ${CREDENTIALS_SECRET_NAME}
+  namespace: ${CREDENTIALS_SECRET_NAMESPACE}
