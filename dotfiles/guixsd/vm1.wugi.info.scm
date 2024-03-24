@@ -206,7 +206,16 @@ client-to-client
 
                          (service tor-service-type
                                   (tor-configuration
-                                   (config-file (local-file "torrc"))))
+                                   (config-file (local-file "torrc"))
+                                   (hidden-services
+                                    (list
+                                     (tor-onion-service-configuration
+                                      (name "ssh")
+                                      (mapping '((22 "127.0.0.1:22"))))
+                                     ;; (tor-onion-service-configuration
+                                     ;;  (name "guix-publish")
+                                     ;;  (mapping '((3000 "127.0.0.1:3000"))))
+                                     ))))
 
                          (service jenkins-builder-service-type)
 
