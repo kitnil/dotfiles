@@ -1,0 +1,24 @@
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: 3x-ui
+  namespace: 3x-ui
+spec:
+  podSelector:
+    matchLabels:
+      app.kubernetes.io/name: 3x-ui
+  policyTypes:
+  - Ingress
+  ingress:
+  - ports:
+    - protocol: TCP
+      port: 2053
+    from:
+    - ipBlock:
+        cidr: 88.201.161.72/32
+  - ports:
+    - protocol: TCP
+      port: 443
+    from:
+    - ipBlock:
+        cidr: 0.0.0.0/0
