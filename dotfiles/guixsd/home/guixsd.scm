@@ -904,7 +904,7 @@ account default : gmail
                                                              ("hosts"
                                                               ,@(map (lambda (number)
                                                                        `(,(string-append "kube" (number->string number) ".intr") . null))
-                                                                     (stream->list (stream-range 5000 5025)))))
+                                                                     (stream->list (stream-range 1 44)))))
                                                             ("kubernetes_2"
                                                              ("hosts"
                                                               ,@(map (lambda (number)
