@@ -34,6 +34,7 @@ spec:
   interval: 1m0s
   path: ./apps/base/3x-ui
   prune: true
+  suspend: true
   sourceRef:
     kind: GitRepository
     name: flux-system
