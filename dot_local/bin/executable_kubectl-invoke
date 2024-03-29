@@ -56,6 +56,34 @@
 (define (random-string)
   (fold string-append "" (map number->string (map random (cdr (iota 19))))))
 
+(define %tolerations
+  #((("effect" . "NoSchedule")
+     ("value" . "true")
+     ("operator" . "Equal")
+     ("key" . "unschedulable"))
+    (("operator" . "Exists"))
+    (("operator" . "Exists")
+     ("key" . "node.kubernetes.io/not-ready")
+     ("effect" . "NoExecute"))
+    (("operator" . "Exists")
+     ("key" . "node.kubernetes.io/unreachable")
+     ("effect" . "NoExecute"))
+    (("operator" . "Exists")
+     ("key" . "node.kubernetes.io/disk-pressure")
+     ("effect" . "NoSchedule"))
+    (("operator" . "Exists")
+     ("key" . "node.kubernetes.io/memory-pressure")
+     ("effect" . "NoSchedule"))
+    (("operator" . "Exists")
+     ("key" . "node.kubernetes.io/pid-pressure")
+     ("effect" . "NoSchedule"))
+    (("operator" . "Exists")
+     ("key" . "node.kubernetes.io/unschedulable")
+     ("effect" . "NoSchedule"))
+    (("operator" . "Exists")
+     ("key" . "node.kubernetes.io/network-unavailable")
+     ("effect" . "NoSchedule"))))
+
 (define (main args)
   (define opts
     (parse-command-line args %options
@@ -107,12 +135,7 @@
                          "--overrides="
                          (scm->json-string
                           `(("spec"
-                             ("tolerations"
-                              .
-                              #((("effect" . "NoSchedule")
-                                 ("value" . "true")
-                                 ("operator" . "Equal")
-                                 ("key" . "unschedulable"))))
+                             ("tolerations" . ,%tolerations)
                              ("nodeSelector"
                               ("kubernetes.io/hostname" . ,host)))
                             ("apiVersion" . "v1"))))))
@@ -148,12 +171,7 @@
                          (scm->json-string
                           `(("spec"
                              ("hostNetwork" . ,host-network?)
-                             ("tolerations"
-                              .
-                              #((("effect" . "NoSchedule")
-                                 ("value" . "true")
-                                 ("operator" . "Equal")
-                                 ("key" . "unschedulable"))))
+                             ("tolerations" . ,%tolerations)
                              ("nodeSelector"
                               ("kubernetes.io/hostname" . ,host))
                              ,@spec)
@@ -189,12 +207,7 @@
                          "--overrides="
                          (scm->json-string
                           `(("spec"
-                             ("tolerations"
-                              .
-                              #((("effect" . "NoSchedule")
-                                 ("value" . "true")
-                                 ("operator" . "Equal")
-                                 ("key" . "unschedulable"))))
+                             ("tolerations" . ,%tolerations)
                              ("nodeSelector"
                               ("kubernetes.io/hostname" . ,host)))
                             ("apiVersion" . "v1"))))))
@@ -229,12 +242,7 @@
                          "--overrides="
                          (scm->json-string
                           `(("spec"
-                             ("tolerations"
-                              .
-                              #((("effect" . "NoSchedule")
-                                 ("value" . "true")
-                                 ("operator" . "Equal")
-                                 ("key" . "unschedulable"))))
+                             ("tolerations" . ,%tolerations)
                              ("nodeSelector"
                               ("kubernetes.io/hostname" . ,host)))
                             ("apiVersion" . "v1"))))))
@@ -268,12 +276,7 @@
                          "--overrides="
                          (scm->json-string
                           `(("spec"
-                             ("tolerations"
-                              .
-                              #((("operator" . "Exists")
-                                 ("key" . "CriticalAddonsOnly"))
-                                (("operator" . "Exists")
-                                 ("effect" . "NoExecute"))))
+                             ("tolerations" . ,%tolerations)
                              ("containers"
                               .
                               #((("resources"
