@@ -126,6 +126,8 @@ virtualization vnc vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
                redshift  ; Color temperature
                neofetch
 
+               iperf
+
                ;; python-clf ; Interface to <https://commandlinefu.com/>
 
                dbus dunst xmessage libnotify
