@@ -17,7 +17,7 @@
   (list sway))
 
 (define sway-utils
-  (list bemenu slurp swayidle))
+  (list bemenu grim slurp swayidle))
 
 (define clipboard
   (list wl-clipboard))
