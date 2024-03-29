@@ -181,6 +181,8 @@ virtualization vnc vim vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
 
                mlt mpv vlc mpg123 sox
 
+               v4l-utils
+
                ;; PDF
                ;; zathura zathura-djvu zathura-pdf-mupdf poppler
 
