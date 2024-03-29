@@ -36,4 +36,5 @@
         "majordomo.scm"
         "nonguix.scm"
         "wigust.scm"
-        "dotfiles.scm")))
+        "dotfiles.scm"
+        "kubernetes.scm")))
