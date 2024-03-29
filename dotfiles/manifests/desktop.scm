@@ -1,5 +1,6 @@
 (use-modules (guix profiles)
              (gnu packages fonts)
+             (gnu packages image)
              (gnu packages suckless)
              (gnu packages terminals)
              (gnu packages tor-browsers)
@@ -16,7 +17,7 @@
   (list sway))
 
 (define sway-utils
-  (list bemenu swayidle))
+  (list bemenu slurp swayidle))
 
 (define clipboard
   (list wl-clipboard))
