@@ -1,4 +1,5 @@
 (use-modules (guix profiles)
+             (gnu packages fonts)
              (gnu packages suckless)
              (gnu packages terminals)
              (gnu packages wm)
@@ -19,4 +20,13 @@
 (define clipboard
   (list wl-clipboard))
 
-(packages->manifest (append clipboard menus terminals wm sway-utils))
+(define fonts
+  ;; useful for emoji in alacritty
+  (list font-google-noto-emoji))
+
+(packages->manifest (append clipboard
+                            fonts
+                            menus
+                            terminals
+                            wm
+                            sway-utils))
