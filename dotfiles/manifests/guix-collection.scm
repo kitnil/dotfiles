@@ -15,7 +15,7 @@ pretty-print photo pulseaudio pv python python-web python-xyz qt ratpoison
 rdesktop readline rsync rust-apps samba scheme screen shells shellutils
 sqlite ssh statistics suckless syncthing synergy terminals tex texinfo
 text-editors telegram textutils tls tmux tor valgrind version-control video
-virtualization vnc vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
+virtualization vnc vim vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
 
 (define guix-collection-packages-multiout
   `((,glib "bin")
@@ -127,6 +127,8 @@ virtualization vnc vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
                neofetch
 
                iperf
+
+               xxd
 
                ;; python-clf ; Interface to <https://commandlinefu.com/>
 
