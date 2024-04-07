@@ -240,8 +240,8 @@ bindsym $mod+y exec clipman pick -t wofi
 # Switch DP-1 on and off:
 #
 
-    bindsym XF86Tools exec swaymsg "output DP-4 dpms on"
-    bindsym XF86AudioStop exec swaymsg "output DP-4 dpms off"
+    bindsym XF86Tools exec swaymsg "output DP-1 dpms on"
+    bindsym XF86AudioStop exec swaymsg "output DP-1 dpms off"
 
 #
 # Screenshots:
@@ -311,7 +311,7 @@ bar {
 
     position bottom
 
-    output DP-4
+    output DP-1
     output HEADLESS-1
 
     # When the status_command prints a new line to stdout, swaybar updates.
