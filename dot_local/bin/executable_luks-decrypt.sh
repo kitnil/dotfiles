@@ -70,7 +70,7 @@ if mountpoint -q /mnt/qbittorrent-incomplete
 then
     :
 else
-    sudo mount /dev/lvm2/qbittorrent-incomplete /mnt/qbittorrent-incomplete
+    sudo mount -o discard /dev/lvm2/qbittorrent-incomplete /mnt/qbittorrent-incomplete
 fi
 
 # for kubelet
