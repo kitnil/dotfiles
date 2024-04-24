@@ -1,4 +1,4 @@
-<domain type='kvm' id='3' xmlns:qemu='http://libvirt.org/schemas/domain/qemu/1.0'>
+<domain type='kvm' id='6' xmlns:qemu='http://libvirt.org/schemas/domain/qemu/1.0'>
   <name>win10</name>
   <uuid>32ba10e9-3ec6-46e6-bcfa-a0ab8344bb76</uuid>
   <metadata>
@@ -11,23 +11,7 @@
   <memoryBacking>
     <hugepages/>
   </memoryBacking>
-  <vcpu placement='static'>6</vcpu>
-  <vcpus>
-    <vcpu id='0' enabled='yes' hotpluggable='no' order='1'/>
-    <vcpu id='1' enabled='yes' hotpluggable='no' order='2'/>
-    <vcpu id='2' enabled='yes' hotpluggable='no' order='3'/>
-    <vcpu id='3' enabled='yes' hotpluggable='no' order='4'/>
-    <vcpu id='4' enabled='yes' hotpluggable='no' order='5'/>
-    <vcpu id='5' enabled='yes' hotpluggable='no' order='6'/>
-  </vcpus>
-  <cputune>
-    <vcpupin vcpu='0' cpuset='0'/>
-    <vcpupin vcpu='1' cpuset='2'/>
-    <vcpupin vcpu='2' cpuset='4'/>
-    <vcpupin vcpu='3' cpuset='6'/>
-    <vcpupin vcpu='4' cpuset='8'/>
-    <vcpupin vcpu='5' cpuset='10'/>
-  </cputune>
+  <vcpu placement='static'>12</vcpu>
   <resource>
     <partition>/machine</partition>
   </resource>
@@ -63,7 +47,7 @@
     <ioapic driver='kvm'/>
   </features>
   <cpu mode='host-passthrough' check='none' migratable='on'>
-    <topology sockets='1' dies='1' cores='1' threads='6'/>
+    <topology sockets='1' dies='1' cores='6' threads='2'/>
     <cache mode='passthrough'/>
     <feature policy='disable' name='monitor'/>
     <feature policy='require' name='x2apic'/>
