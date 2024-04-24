@@ -246,7 +246,7 @@
                             (format #f "exec -a stumpwm /run/current-system/profile/bin/sbcl --load ~a"
                                     #$stumpwp-load-file))
                      ;; The '--login' option is supported at least by Bash and zsh.
-                     (execl shell "ratpoison" "--login" "-c" "exec -a ratpoison /home/oleg/.guix-profile/bin/ratpoison")))))))
+                     (execl shell "i3" "--login" "-c" "exec -a i3 /home/oleg/.guix-profile/bin/i3")))))))
     #~(begin
         (let ((file #$(string-append %home "/.xsession")))
           (copy-file #$xsession-file file)
