@@ -1256,7 +1256,7 @@ location / {
 
                          (service vncserver-service-type (vncserver-configuration
                                                           (vncserver (@ (deprecated) tigervnc-server))
-                                                          (interface "192.168.0.145")
+                                                          (interface "192.168.0.144")
                                                           (display 2)
                                                           (user "oleg")
                                                           (group "users")
