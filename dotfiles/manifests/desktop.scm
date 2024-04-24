@@ -16,6 +16,9 @@
 (define wm
   (list sway))
 
+(define i3
+  (list i3-wm i3status))
+
 (define sway-utils
   (list bemenu grim slurp swayidle))
 
@@ -35,4 +38,5 @@
                             terminals
                             browsers
                             wm
-                            sway-utils))
+                            sway-utils
+                            i3))
