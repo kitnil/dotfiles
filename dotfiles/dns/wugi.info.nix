@@ -71,7 +71,7 @@ rec {
     back = { inherit A; };
     cgit = guix;
     docker-registry = guix;
-    guix.A = [ "88.201.161.72" ];
+    guix.A = [ "93.100.15.190" ];
     file = { inherit A; };
     githunt = guix;
     homer = { inherit A; };
