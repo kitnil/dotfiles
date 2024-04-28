@@ -2,75 +2,92 @@
 
 set -o nounset -o errexit -o pipefail -o xtrace
 
-if [[ -e /dev/mapper/crypt-nvme0n1 ]]
+if [[ $LUKS_DECRYPT_NVME == FALSE ]]
 then
     :
 else
-    pass show luks2/luks2-header-210582390001289540AC \
-        | sudo cryptsetup open \
-               --allow-discards \
-               --header="${HOME}/crypt/luks2-210582390001289540AC" \
-               /dev/nvme0n1 \
-               crypt-nvme0n1 \
-               -
-fi
-
-subvols=(
-    "archive"
-    "phone"
-    "src"
-    "Maildir"
-)
-for subvol in "${subvols[@]}"
-do
-    location="${HOME}/${subvol}"
-    if mountpoint -q "$location"
+    if [[ -e /dev/mapper/crypt-nvme0n1 ]]
     then
         :
     else
-        sudo mount "$location"
+        pass show luks2/luks2-header-210582390001289540AC \
+            | sudo cryptsetup open \
+                   --allow-discards \
+                   --header="${HOME}/crypt/luks2-210582390001289540AC" \
+                   /dev/nvme0n1 \
+                   crypt-nvme0n1 \
+                   -
     fi
-done
-
-if [[ -e /dev/lvm2/swap ]]
-then
-    :
-else
-    sudo lvchange -ay /dev/lvm2/swap
-    sudo swapon /dev/lvm2/swap
+    if [[ -e /dev/lvm2/swap ]]
+    then
+        :
+    else
+        sudo lvchange -ay /dev/lvm2/swap
+        sudo swapon /dev/lvm2/swap
+    fi
 fi
 
-if [[ -e /dev/mapper/crypt-srv ]]
+if [[ $LUKS_DECRYPT_QBITTORRENT == FALSE ]]
 then
     :
 else
-    pass show luks2/luks2-header-wd-wd181purp-85b6hy0 \
-        | sudo cryptsetup open \
-               --header="${HOME}/crypt/luks2-wd181purp-85b6hy0" \
-               /dev/sdb \
-               crypt-srv \
-               -
+    if [[ -e /dev/lvm2/qbittorrent-incomplete ]]
+    then
+        :
+    else
+        sudo lvchange -ay /dev/lvm2/qbittorrent-incomplete
+    fi
+    if mountpoint -q /mnt/qbittorrent-incomplete
+    then
+        :
+    else
+        sudo mount -o discard /dev/lvm2/qbittorrent-incomplete /mnt/qbittorrent-incomplete
+    fi
 fi
 
-if mountpoint -q /srv
+if [[ $LUKS_DECRYPT_HOME == FALSE ]]
 then
     :
 else
-    sudo mount /srv
+    subvols=(
+        "archive"
+        "phone"
+        "src"
+        "Maildir"
+    )
+    for subvol in "${subvols[@]}"
+    do
+        location="${HOME}/${subvol}"
+        if mountpoint -q "$location"
+        then
+            :
+        else
+            sudo mount "$location"
+        fi
+    done
 fi
 
-if [[ -e /dev/lvm2/qbittorrent-incomplete ]]
+if [[ $LUKS_DECRYPT_SRV == FALSE ]]
 then
     :
 else
-    sudo lvchange -ay /dev/lvm2/qbittorrent-incomplete
-fi
-
-if mountpoint -q /mnt/qbittorrent-incomplete
-then
-    :
-else
-    sudo mount -o discard /dev/lvm2/qbittorrent-incomplete /mnt/qbittorrent-incomplete
+    if [[ -e /dev/mapper/crypt-srv ]]
+    then
+        :
+    else
+        pass show luks2/luks2-header-wd-wd181purp-85b6hy0 \
+            | sudo cryptsetup open \
+                   --header="${HOME}/crypt/luks2-wd181purp-85b6hy0" \
+                   /dev/sdb \
+                   crypt-srv \
+                   -
+    fi
+    if mountpoint -q /srv
+    then
+        :
+    else
+        sudo mount /srv
+    fi
 fi
 
 # for kubelet
