@@ -6,4 +6,4 @@ backends:
   check_config:
     check_url: https://www.google.com/robots.txt
     initial_alive: true
-    timeout: 5
+    timeout: 15
