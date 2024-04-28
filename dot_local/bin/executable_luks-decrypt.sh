@@ -2,6 +2,18 @@
 
 set -o nounset -o errexit -o pipefail -o xtrace
 
+if [[ $LUKS_DECRYPT_WIN10 == FALSE ]]
+then
+    :
+else
+    if [[ -e /dev/lvm1/win10 ]]
+    then
+        :
+    else
+        sudo lvchange -ay /dev/lvm1/win10
+    fi
+fi
+
 if [[ $LUKS_DECRYPT_NVME == FALSE ]]
 then
     :
@@ -25,6 +37,13 @@ else
         sudo lvchange -ay /dev/lvm2/swap
         sudo swapon /dev/lvm2/swap
     fi
+    if [[ -e /dev/lvm2/ntfsgames ]]
+    then
+        :
+    else
+        sudo lvchange -ay /dev/lvm2/ntfsgames
+    fi
+
 fi
 
 if [[ $LUKS_DECRYPT_QBITTORRENT == FALSE ]]
