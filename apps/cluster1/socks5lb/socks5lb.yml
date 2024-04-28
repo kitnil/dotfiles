@@ -3,7 +3,3 @@ server:
     addr: ":1080"
 backends:
 - addr: 98.188.47.132:4145
-  check_config:
-    check_url: https://www.google.com/robots.txt
-    initial_alive: true
-    timeout: 15
