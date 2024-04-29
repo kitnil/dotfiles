@@ -1060,8 +1060,7 @@ location / {
       ;; (initrd-modules (append '("vfio_pci" "vfio" "vfio_iommu_type1" "vfio_virqfd")
       ;;                         %base-initrd-modules))
 
-      (packages (append (list dn42-ca
-                              ovmf
+      (packages (append (list ovmf
                               cifs-utils
                               btrfs-progs
                               lvm2
