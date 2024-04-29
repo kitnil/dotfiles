@@ -257,7 +257,7 @@
                 sunshine;
 
               inherit (nixpkgs-ddcutil.legacyPackages.${system})
-                ddcutil tribler telegram-desktop;
+                ddcutil tribler telegram-desktop fastfetch;
 
               inherit (nixpkgs-phpactor.legacyPackages.${system})
                 phpactor;
