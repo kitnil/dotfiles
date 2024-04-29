@@ -885,7 +885,20 @@ location / {
                               (list "link" "add" "link" "br156"
                                     "name" "br156.156"
                                     "type" "vlan"
-                                    "id" "156")))))))
+                                    "id" "156")))
+
+                            ;; Drop all ingress and egress traffic related to
+                            ;; vm3.wugi.info.
+                            (iptables
+                             (string-join
+                              (list "-I" "INPUT"
+                                    "-s" "185.105.108.96/32"
+                                    "-j" "DROP")))
+                            (iptables
+                             (string-join
+                              (list "-I" "OUTPUT"
+                                    "-d" "185.105.108.96/32"
+                                    "-j" "DROP")))))))
           (respawn? #f)))))
 
 (define tftp-root
