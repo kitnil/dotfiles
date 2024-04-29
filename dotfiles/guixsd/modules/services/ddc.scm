@@ -41,8 +41,9 @@
                     #$(local-file "/home/oleg/src/gitlab.com/wigust/ddcutil-daemon/ddcutil-daemon.json"))
               #:environment-variables
               (append (list "PATH=/home/oleg/.nix-profile/bin")
-                      (remove (lambda (str)
-                                (string-prefix? "PATH=" str))
+                      (filter (negate
+                               (lambda (str)
+                                 (string-prefix? "PATH=" str)))
                               (environ)))))
     (respawn? #f)
     (stop #~(make-kill-destructor)))))

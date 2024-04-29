@@ -618,10 +618,11 @@
                             "SSL_CERT_DIR=/run/current-system/profile/etc/ssl/certs"
                             "SSL_CERT_FILE=/run/current-system/profile/etc/ssl/certs/ca-certificates.crt"
                             #$@(prometheus-blackbox-exporter-configuration-environment-variables config))
-                      (remove (lambda (str)
-                                (or (string-prefix? "PATH=" str)
-                                    (string-prefix? "SSL_CERT_DIR=" str)
-                                    (string-prefix? "SSL_CERT_FILE=" str)))
+                      (filter (negate
+                               (lambda (str)
+                                 (or (string-prefix? "PATH=" str)
+                                     (string-prefix? "SSL_CERT_DIR=" str)
+                                     (string-prefix? "SSL_CERT_FILE=" str))))
                               (environ)))))
     (respawn? #f)
     (stop #~(make-kill-destructor)))))
@@ -764,8 +765,9 @@
               #:log-file #$%prometheus-exim-exporter-log
               #:environment-variables
               (append (list "PATH=/run/current-system/profile/bin") ;for exim binary.
-                      (remove (lambda (str)
-                                (string-prefix? "PATH=" str))
+                      (filter (negate
+                               (lambda (str)
+                                 (string-prefix? "PATH=" str)))
                               (environ)))))
     (respawn? #f)
     (stop #~(make-kill-destructor)))))
@@ -874,8 +876,9 @@ User admin")
               #:log-file "/var/log/prometheus-tp-link-exporter.log"
               #:environment-variables
               (append '#$(prometheus-tp-link-exporter-configuration-environment-variables config)
-                      (remove (lambda (str)
-                                (string-prefix? "PATH=" str))
+                      (filter (negate
+                               (lambda (str)
+                                 (string-prefix? "PATH=" str)))
                               (environ))
                       (list (string-append "PATH="
                                            (string-append #$(prometheus-tp-link-exporter-configuration-ssh config) "/bin")
@@ -1011,8 +1014,9 @@ User admin")
                                    "/bin/prometheus-lvm-exporter"))
               #:environment-variables
               (append
-               (remove (lambda (str)
-                         (string-prefix? "PATH=" str))
+               (filter (negate
+                        (lambda (str)
+                          (string-prefix? "PATH=" str)))
                        (environ))
                (list
                 (string-append "PATH=" (string-append #$lvm2 "/sbin"))))))
@@ -1060,8 +1064,9 @@ User admin")
               #:environment-variables
               (append
                '#$(prometheus-restic-exporter-configuration-environment-variables config)
-               (remove (lambda (str)
-                         (string-prefix? "PATH=" str))
+               (filter (negate
+                        (lambda (str)
+                          (string-prefix? "PATH=" str)))
                        (environ))
                (list
                 (string-append "RESTIC_EXPORTER_BIN="

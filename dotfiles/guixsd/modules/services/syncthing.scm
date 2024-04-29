@@ -70,10 +70,11 @@
                  (append (list (string-append "HOME=" (or #$home (passwd:dir (getpw #$user))))
                                "SSL_CERT_DIR=/etc/ssl/certs"
                                "SSL_CERT_FILE=/etc/ssl/certs/ca-certificates.crt")
-                         (remove (lambda (str)
-                                   (or (string-prefix? "HOME=" str)
-                                       (string-prefix? "SSL_CERT_DIR=" str)
-                                       (string-prefix? "SSL_CERT_FILE=" str)))
+                         (filter (negate
+                                  (lambda (str)
+                                    (or (string-prefix? "HOME=" str)
+                                        (string-prefix? "SSL_CERT_DIR=" str)
+                                        (string-prefix? "SSL_CERT_FILE=" str))))
                                  (environ)))))
        (respawn? #f)
        (stop #~(make-kill-destructor)))))))

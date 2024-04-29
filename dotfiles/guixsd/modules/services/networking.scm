@@ -182,9 +182,10 @@
               #:environment-variables
               (append (list "SSL_CERT_DIR=/run/current-system/profile/etc/ssl/certs"
                             "SSL_CERT_FILE=/run/current-system/profile/etc/ssl/certs/ca-certificates.crt")
-                      (remove (lambda (str)
-                                (or (string-prefix? "SSL_CERT_DIR=" str)
-                                    (string-prefix? "SSL_CERT_FILE=" str)))
+                      (filter (negate
+                               (lambda (str)
+                                 (or (string-prefix? "SSL_CERT_DIR=" str)
+                                     (string-prefix? "SSL_CERT_FILE=" str))))
                               (environ)))))
     (respawn? #f)
     (stop #~(make-kill-destructor)))))
@@ -237,10 +238,11 @@
                                                               "/bin"))
                             "SSL_CERT_DIR=/run/current-system/profile/etc/ssl/certs"
                             "SSL_CERT_FILE=/run/current-system/profile/etc/ssl/certs/ca-certificates.crt")
-                      (remove (lambda (str)
-                                (or (string-prefix? "PATH=" str)
-                                    (string-prefix? "SSL_CERT_DIR=" str)
-                                    (string-prefix? "SSL_CERT_FILE=" str)))
+                      (filter (negate
+                               (lambda (str)
+                                 (or (string-prefix? "PATH=" str)
+                                     (string-prefix? "SSL_CERT_DIR=" str)
+                                     (string-prefix? "SSL_CERT_FILE=" str))))
                               (environ)))))
     (respawn? #f)
     (stop #~(make-kill-destructor)))))

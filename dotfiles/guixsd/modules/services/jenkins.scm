@@ -103,12 +103,13 @@
                             "SSL_CERT_FILE=/run/current-system/profile/etc/ssl/certs/ca-certificates.crt"
                             "GIT_SSL_CAINFO=/run/current-system/profile/etc/ssl/certs/ca-certificates.crt"
                             #$@(jenkins-configuration-environment-variables config))
-                      (remove (lambda (str)
-                                (or (string-prefix? "PATH=" str)
-                                    (string-prefix? "HOME=" str)
-                                    (string-prefix? "SSL_CERT_DIR=" str)
-                                    (string-prefix? "SSL_CERT_FILE=" str)
-                                    (string-prefix? "GIT_SSL_CAINFO=" str)))
+                      (filter (negate
+                               (lambda (str)
+                                 (or (string-prefix? "PATH=" str)
+                                     (string-prefix? "HOME=" str)
+                                     (string-prefix? "SSL_CERT_DIR=" str)
+                                     (string-prefix? "SSL_CERT_FILE=" str)
+                                     (string-prefix? "GIT_SSL_CAINFO=" str))))
                               (environ)))))
     (respawn? #f)
     (stop #~(make-kill-destructor)))))
