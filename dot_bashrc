@@ -721,7 +721,7 @@ EOF
             )
             ;;
         master-staging)
-            git -C "/home/oleg/src/git.savannah.gnu.org/git/guix" shortlog -n upstream/master..upstream/staging
+            git -C "${HOME}/src/git.savannah.gnu.org/git/guix" shortlog -n upstream/master..upstream/staging
             ;;
         qemu)
             # https://wiki.archlinux.org/index.php/QEMU#Creating_bridge_manually
