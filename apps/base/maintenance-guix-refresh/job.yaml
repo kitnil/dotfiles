@@ -1,0 +1,45 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: guix-refresh
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      hostNetwork: true
+      hostPID: true
+      nodeName: kube1
+      restartPolicy: Never
+      containers:
+      - command:
+        - nsenter
+        - --target
+        - "1"
+        - --mount
+        - --uts
+        - --ipc
+        - --net
+        - --pid
+        - --no-fork
+        - sh
+        - -l
+        - -c
+        - sudo --chdir=$GUIX_SOURCE_DIRECTORY --user=oleg --login --preserve-env=GUIX_BUILD_PACKAGE $GUIX_SCRIPT
+        env:
+        - name: GUIX_SOURCE_DIRECTORY
+          value: /home/oleg/src/git.savannah.gnu.org/git/guix
+        - name: GUIX_SCRIPT
+          value: /home/oleg/.local/share/chezmoi/dot_local/bin/executable_guix-refresh.sh
+        - name: NIX_SYSTEM
+          value: x86_64-linux
+        image: docker-registry.wugi.info/library/alpine
+        name: refresh
+        resources:
+          limits:
+            cpu: 4000m
+            memory: 4096Mi
+          requests:
+            cpu: 1000m
+            memory: 512Mi
+        securityContext:
+          privileged: true
