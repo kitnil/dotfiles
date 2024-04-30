@@ -175,7 +175,9 @@ dotfiles/channels-current-local-file.scm: clean-guile
          dotfiles/manifests/emacs.scm									\
          dotfiles/manifests/guix-collection.scm								\
          dotfiles/manifests/wigust.scm									\
-         dotfiles/guixsd/guixsd.scm
+         dotfiles/guixsd/guixsd.scm									\
+         dotfiles/guixsd/vm1.wugi.info.scm								\
+         dotfiles/guixsd/vm2.wugi.info.scm
 
 .PHONY: dotfiles/packer/build.scm
 dotfiles/packer/build.scm:
