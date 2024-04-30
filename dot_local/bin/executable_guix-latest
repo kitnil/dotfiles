@@ -3,7 +3,7 @@
 !#
 
 ;;;; guix-latest --- Build Guix system with latest channels.
-;;;; Copyright © 2021, 2022, 2023 Oleg Pykhalov <go.wigust@gmail.com>
+;;;; Copyright © 2021, 2022, 2023, 2024 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;; Released under the GNU GPLv3 or any later version.
 
 (define-module (guix-latest)
@@ -45,6 +45,9 @@
           (option '(#\N "without-substitutes") #f #f
                   (lambda (opt name arg result)
                     (alist-cons 'without-substitutes? #t result)))
+          (option '(#\F "local-file") #f #f
+                  (lambda (opt name arg result)
+                    (alist-cons 'local-file? #t result)))
           (option '(#\L "load-path") #f #t
                   (lambda (opt name arg loads)
                     (alist-cons 'load-path arg loads)))
@@ -54,6 +57,11 @@
 
 (define %default-options
   '())
+
+(define %home
+  (and=> (getenv "HOME")
+         (lambda (home)
+           home)))
 
 (define (main args)
 
@@ -73,12 +81,21 @@
                  (cons op loads))
                %default-options))
 
+  (define local-file?
+    (assoc-ref opts 'local-file?))
+
   (define channels
-    (cons (if (assoc-ref opts 'without-substitutes?)
-              %default-guix-channel
-              (channel-with-substitutes-available
-               %default-guix-channel
-               "http://ci.guix.gnu.org.wugi.info"))
+    (cons (cond ((assoc-ref opts 'without-substitutes?)
+                 %default-guix-channel)
+                (local-file?
+                 (channel
+                  (inherit %default-guix-channel)
+                  (url
+                   (string-append
+                    "file://" %home "/src/git.savannah.gnu.org/git/guix"))))
+                (else (channel-with-substitutes-available
+                       %default-guix-channel
+                       "http://ci.guix.gnu.org.wugi.info")))
           (map (lambda (channel)
                  (match-record channel (@@ (guix channels) <channel>)
                    (name url introduction)
@@ -100,7 +117,7 @@
   (define cached
     (cached-channel-instance store
                              channels
-                             #:authenticate? #t
+                             #:authenticate? (not local-file?)
                              #:cache-directory (%inferior-cache-directory)
                              #:ttl (* 3600 24 30)))
 
