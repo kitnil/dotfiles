@@ -44,7 +44,7 @@
                %base-user-accounts))
 
   ;; Globally-installed packages.
-  (packages (append (list nss-certs ipset iptables screen)
+  (packages (append (list ipset iptables screen)
                     %base-packages))
 
   ;; Add services to the baseline.
