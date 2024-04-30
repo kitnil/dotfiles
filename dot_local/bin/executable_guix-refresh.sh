@@ -26,6 +26,7 @@ nix_version_output="$(nix_version)"
 if [[ $guix_version_output == "$nix_version_output" ]]
 then
     echo "$guix_version_output"
+    exit 0
 else
     echo "${guix_version_output} does not match ${nix_version_output}"
 fi
