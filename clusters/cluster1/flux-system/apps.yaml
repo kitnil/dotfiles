@@ -262,6 +262,19 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
+  name: maintenance-vm1
+  namespace: flux-system
+spec:
+  interval: 1m0s
+  path: ./apps/base/maintenance-vm1
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
   name: maintenance-guix-bird
   namespace: flux-system
 spec:
