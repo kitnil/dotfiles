@@ -11,3 +11,5 @@ spec:
         env:
         - name: GUIX_BUILD_PACKAGE
           value: firefox-decrypt
+        - name: NIX_BUILD_PACKAGE
+          value: firefox_decrypt
