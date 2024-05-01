@@ -11,7 +11,7 @@ guix_version()
 nix_expr()
 {
     cat <<EOF
-(builtins.getFlake "nixpkgs").legacyPackages.$NIX_SYSTEM.$GUIX_BUILD_PACKAGE.version
+(builtins.getFlake "nixpkgs").legacyPackages.$NIX_SYSTEM.$NIX_BUILD_PACKAGE.version
 EOF
 }
 
