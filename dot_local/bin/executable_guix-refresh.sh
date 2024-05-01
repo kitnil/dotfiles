@@ -23,13 +23,10 @@ nix_version()
 guix_version_output="$(guix_version)"
 nix_version_output="$(nix_version)"
 
-if [[ $guix_version_output == "$nix_version_output" ]]
-then
-    echo "$guix_version_output"
-    exit 0
-else
-    echo "${guix_version_output} does not match ${nix_version_output}"
-fi
+build()
+{
+    ./pre-inst-env guix build --no-grafts "$GUIX_BUILD_PACKAGE"
+}
 
 guix_location()
 {
@@ -39,6 +36,37 @@ guix_location()
 }
 
 guix_location_output="$(guix_location)"
+
+message()
+{
+    cat <<EOF
+gnu: ${GUIX_BUILD_PACKAGE}: Update to ${nix_version_output}.
+
+* ${guix_location_output#"${PWD}/"} (${GUIX_BUILD_PACKAGE}): Update to ${nix_version_output}.
+EOF
+
+}
+
+commit()
+{
+    git add "$guix_location_output"
+    git commit -m "$(message)"
+}
+
+if [[ $guix_version_output == "$nix_version_output" ]]
+then
+    echo "$guix_version_output"
+    if [[ $(git diff) == "" ]]
+    then
+        :
+    else
+        build
+        commit
+    fi
+    exit 0
+else
+    echo "${guix_version_output} does not match ${nix_version_output}"
+fi
 
 sed -i "s@${guix_version_output}@${nix_version_output}@g" "$guix_location_output"
 
@@ -57,17 +85,5 @@ actual_hash="$(echo "$guix_build_output" | awk '/actual hash/ { print $NF }')"
 
 sed -i "s@${expected_hash}@${actual_hash}@" "$guix_location_output"
 
-./pre-inst-env guix build --no-grafts "$GUIX_BUILD_PACKAGE"
-
-message()
-{
-    cat <<EOF
-gnu: ${GUIX_BUILD_PACKAGE}: Update to ${nix_version_output}.
-
-* ${guix_location_output#"${PWD}/"} (${GUIX_BUILD_PACKAGE}): Update to ${nix_version_output}.
-EOF
-
-}
-
-git add "$guix_location_output"
-git commit -m "$(message)"
+build
+commit
