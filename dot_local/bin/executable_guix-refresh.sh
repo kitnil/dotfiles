@@ -25,7 +25,7 @@ nix_version_output="$(nix_version)"
 
 build()
 {
-    ./pre-inst-env guix build --no-grafts "$GUIX_BUILD_PACKAGE"
+    ./pre-inst-env guix build --keep-failed --no-grafts "$GUIX_BUILD_PACKAGE"
 }
 
 guix_location()
