@@ -279,7 +279,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m0s
-  path: ./apps/base/maintenance-guix-bird
+  path: ./apps/base/maintenance-guix-refresh-bird
   prune: true
   sourceRef:
     kind: GitRepository
