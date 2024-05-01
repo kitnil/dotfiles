@@ -2,9 +2,6 @@ apiVersion: batch/v1
 kind: Job
 metadata:
   name: guix-refresh
-  metadata:
-    annotations:
-      kustomize.toolkit.fluxcd.io/force: enabled
 spec:
   backoffLimit: 0
   template:
