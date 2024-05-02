@@ -268,6 +268,7 @@
    (majordomo-mbsync-services "healthchecks")
    (majordomo-mbsync-services "issues")
    (majordomo-mbsync-services "jenkins")
+   (majordomo-mbsync-services "opensearch")
    (majordomo-mbsync-services "prometheus")
    (majordomo-mbsync-services "security")
    (majordomo-mbsync-services "smartmontools")
