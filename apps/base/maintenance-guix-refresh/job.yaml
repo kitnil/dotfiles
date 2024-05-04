@@ -24,7 +24,7 @@ spec:
         - sh
         - -l
         - -c
-        - sudo --chdir=$GUIX_SOURCE_DIRECTORY --user=oleg --login --preserve-env=GUIX_BUILD_PACKAGE,GUIX_VERSION_STRATEGY,NIX_BUILD_PACKAGE,NIX_SYSTEM $GUIX_SCRIPT
+        - sudo --chdir=$GUIX_SOURCE_DIRECTORY --user=oleg --login --preserve-env=GUILE_MODULES,GUIX_BUILD_PACKAGE,GUIX_VERSION_STRATEGY,NIX_BUILD_PACKAGE,NIX_SYSTEM $GUIX_SCRIPT
         env:
         - name: GUIX_SOURCE_DIRECTORY
           value: /home/oleg/src/git.savannah.gnu.org/git/guix
