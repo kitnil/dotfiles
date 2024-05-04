@@ -209,13 +209,22 @@ monitoring, and analytics.")
   (package
     (name "guix-refresh.sh")
     (version "0.0.1")
-    (source (local-file "/home/oleg/.local/share/chezmoi/dot_local/bin/executable_guix-refresh.sh"
+    (source (local-file "/home/oleg/.local/share/chezmoi"
                         #:recursive? #t))
     (build-system copy-build-system)
     (arguments
      `(#:install-plan
-       `((,(assoc-ref %build-inputs "source")
-          ,(string-append "/bin/guix-refresh.sh")))))
+       `((,(string-append (assoc-ref %build-inputs "source")
+                          "/dot_local/bin/executable_guix-refresh.sh")
+          ,(string-append "/bin/guix-refresh.sh"))
+         (,(string-append (assoc-ref %build-inputs "source")
+                          "/dot_local/bin/executable_guix-refresh-entrypoint")
+          ,(string-append "/bin/entrypoint")))
+       #:phases
+       (modify-phases %standard-phases
+         (delete 'patch-source-shebangs)
+         (delete 'patch-generated-file-shebangs)
+         (delete 'patch-shebangs))))
     (home-page "")
     (synopsis "")
     (description "")
