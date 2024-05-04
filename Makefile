@@ -285,6 +285,12 @@ util-linux-with-udev:
 	container=$$(guix pack -f docker -L dotfiles/guixsd/modules --max-layers=100 -S /bin=bin util-linux-with-udev bash coreutils guix-refresh.sh)
 	skopeo copy --insecure-policy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
 	guix gc --delete $$container
+	cd apps/base/maintenance-guix-refresh-gita
+	nix develop git+https://gitlab.intr/nixos/kubernetes --command kustomize edit set image $(container_registry)/library/$@:$$commit_8
+	if ! git commit --message="apps: $$(basename $$(dirname $$(pwd))): maintenance-guix-refresh-gita: Update image to $$commit_8." kustomization.yaml
+	then
+	    :
+	fi
 
 .PHONY: all
 all: dotfiles/scripts/nix-ssh-known-hosts-to-file.scm
