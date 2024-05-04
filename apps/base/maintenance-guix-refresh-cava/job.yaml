@@ -11,3 +11,5 @@ spec:
         env:
         - name: GUIX_BUILD_PACKAGE
           value: cava
+        - name: NIX_BUILD_PACKAGE
+          value: cava
