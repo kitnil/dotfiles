@@ -6,6 +6,7 @@
   #:use-module (guix gexp)
   #:use-module (guix git-download)
   #:use-module (guix download)
+  #:use-module (guix build-system copy)
   #:use-module (guix build-system python)
   #:use-module (guix build-system trivial)
   #:use-module ((guix licenses) #:prefix license:)
@@ -199,6 +200,22 @@ monitoring, and analytics.")
                   "--set-rpath"
                   (dirname (search-input-file %build-inputs "/lib/libgcc_s.so.1"))
                   (string-append #$output "/bin/spacer")))))
+    (home-page "")
+    (synopsis "")
+    (description "")
+    (license #f)))
+
+(define-public guix-refresh.sh
+  (package
+    (name "guix-refresh.sh")
+    (version "0.0.1")
+    (source (local-file "/home/oleg/.local/share/chezmoi/dot_local/bin/executable_guix-refresh.sh"
+                        #:recursive? #t))
+    (build-system copy-build-system)
+    (arguments
+     `(#:install-plan
+       `((,(assoc-ref %build-inputs "source")
+          ,(string-append "/bin/guix-refresh.sh")))))
     (home-page "")
     (synopsis "")
     (description "")
