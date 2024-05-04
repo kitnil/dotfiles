@@ -8,4 +8,4 @@ patchesStrategicMerge:
 - job.yaml
 images:
 - name: docker-registry.wugi.info/library/util-linux-with-udev
-  newTag: d2427510
+  newTag: 2ff1b1a4
