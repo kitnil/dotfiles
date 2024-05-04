@@ -1,0 +1,15 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: guix-refresh
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      containers:
+      - name: refresh
+        env:
+        - name: GUIX_BUILD_PACKAGE
+          value: gita
+        - name: NIX_BUILD_PACKAGE
+          value: gita
