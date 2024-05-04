@@ -32,7 +32,7 @@ spec:
           value: /home/oleg/.local/share/chezmoi/dot_local/bin/executable_guix-refresh.sh
         - name: NIX_SYSTEM
           value: x86_64-linux
-        image: docker-registry.wugi.info/library/alpine
+        image: docker-registry.wugi.info/library/util-linux-with-udev
         name: refresh
         resources:
           limits:
