@@ -277,5 +277,14 @@ guix-system-build-channels-current:
                 --load-path="$(PWD)/dotfiles/guixsd/modules:$(GUILE_LOAD_PATH)" \
                 "$(PWD)/dotfiles/guixsd/$(HOSTNAME).scm"
 
+container_registry=docker-registry.wugi.info
+.ONESHELL:
+util-linux-with-udev:
+	set -o nounset -o errexit -o pipefail
+	commit_8=$$(git rev-parse HEAD | cut -c -8)
+	container=$$(guix pack -f docker --max-layers=100 -S /bin=bin util-linux-with-udev bash)
+	skopeo copy --insecure-policy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
+	guix gc --delete $$container
+
 .PHONY: all
 all: dotfiles/scripts/nix-ssh-known-hosts-to-file.scm
