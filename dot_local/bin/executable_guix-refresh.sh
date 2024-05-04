@@ -1,12 +1,32 @@
 #!/usr/bin/env bash
 
-set -o nounset -o errexit -o pipefail -o xtrace
+set -o errexit -o pipefail -o xtrace
 
-guix_version()
-{
-    ./pre-inst-env guix show "$GUIX_BUILD_PACKAGE" \
-        | recsel -Pversion
-}
+if [[ $GUIX_VERSION_STRATEGY == "guix-expression" ]]
+then
+    guix_version_expression()
+    {
+        cat <<EOF
+(use-modules ${GUILE_MODULES[@]}
+             (guix utils))
+(display "version: ")
+(display (version-major+minor+point (package-version $GUIX_BUILD_PACKAGE)))
+(newline)
+EOF
+    }
+
+    guix_version()
+    {
+        ./pre-inst-env guix repl <<< "$(guix_version_expression)" \
+            | awk '/version: / { print $NF }'
+    }
+else
+    guix_version()
+    {
+        ./pre-inst-env guix show "$GUIX_BUILD_PACKAGE" \
+            | recsel -Pversion
+    }
+fi
 
 nix_expr()
 {
