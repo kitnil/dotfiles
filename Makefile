@@ -280,7 +280,7 @@ guix-system-build-channels-current:
 container_registry=docker-registry.wugi.info
 .ONESHELL:
 util-linux-with-udev:
-	set -o nounset -o errexit -o pipefail
+	set -o nounset -o errexit -o pipefail -o xtrace
 	commit_8=$$(git rev-parse HEAD | cut -c -8)
 	container=$$(guix pack -f docker -L dotfiles/guixsd/modules --max-layers=100 -S /bin=bin util-linux-with-udev bash coreutils guix-refresh.sh)
 	skopeo copy --insecure-policy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
