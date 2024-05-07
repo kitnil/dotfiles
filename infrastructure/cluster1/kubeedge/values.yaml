@@ -1,4 +1,5 @@
 cloudCore:
   modules:
     cloudHub:
-      advertiseAddress: 192.168.0.144
+      advertiseAddress:
+      - 192.168.0.144
