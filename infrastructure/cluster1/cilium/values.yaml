@@ -1,3 +1,20 @@
+# -- Affinity for cilium-agent.
+affinity:
+  podAntiAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+    - topologyKey: kubernetes.io/hostname
+      labelSelector:
+        matchLabels:
+          k8s-app: cilium
+  nodeAffinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: cilium.cluster.local/schedulable
+          operator: NotIn
+          values:
+          - "false"
+
 k8sServiceHost: "192.168.0.144"
 k8sServicePort: "6443"
 
