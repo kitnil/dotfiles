@@ -1,0 +1,17 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: kubeedge
+spec:
+  chart:
+    spec:
+      chart: manifests/charts/cloudcore
+      reconcileStrategy: Revision
+      sourceRef:
+        kind: GitRepository
+        name: kubeedge
+        namespace: flux-system
+  interval: 1m0s
+  valuesFrom:
+  - kind: ConfigMap
+    name: kubeedge-values
