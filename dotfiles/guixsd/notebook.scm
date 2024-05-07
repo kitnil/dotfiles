@@ -21,7 +21,7 @@
 
 (use-package-modules audio bootloaders certs vpn wm terminals xfce linux package-management admin fonts nfs xorg)
 
-(use-service-modules desktop dbus networking monitoring sound xorg)
+(use-service-modules desktop dbus docker networking monitoring sound xorg)
 
 (use-modules (bootloader grub)
              (packages monitoring)
@@ -166,6 +166,8 @@
                                (web-listen-address "0.0.0.0:9100")
                                (textfile-directory "/var/lib/prometheus-node-exporter")
                                (extra-options '("--collector.powersupplyclass"))))
+
+                     (service docker-service-type)
 
                      (service openssh-service-type)
 		     (service openvpn-service-type
