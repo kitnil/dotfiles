@@ -1,0 +1,11 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: GitRepository
+metadata:
+  name: kubeedge
+  namespace: flux-system
+spec:
+  interval: 60m0s
+  ref:
+    commit: 58bf767f8b763f9e77cf237b9488adfcc8b601be
+  url: https://github.com/kubeedge/kubeedge
