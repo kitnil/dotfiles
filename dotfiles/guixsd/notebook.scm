@@ -117,7 +117,6 @@
                      ;; alacritty
                                         ;ratpoison
                                         ;xfce4-terminal
-                     nss-certs
                      nix
                      nfs-utils)
                     %notebook-packages
