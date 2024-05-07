@@ -708,3 +708,59 @@ offers subsequent commands to interact with your observed resources.")
     (description "")
     (license #f)))
 
+(define-public edgecore
+  (package
+    (name "edgecore")
+    (version "1.17.0")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append "https://github.com/kubeedge/kubeedge/releases/download/v"
+                                  version "/kubeedge-v" version "-linux-amd64.tar.gz"))
+              (sha256
+               (base32
+                "1xgsiccr2ww818kz4c1apzcbj0bh84aifvx2glrmxhzdyaar8qh4"))))
+    (build-system trivial-build-system)
+    (native-inputs (list source gzip tar))
+    (inputs (list glibc patchelf))
+    (arguments
+     (list
+      #:modules '((guix build utils))
+      #:builder
+      #~(begin
+          (use-modules (guix build utils)
+                       (ice-9 popen)
+                       (ice-9 rdelim))
+          (let* ((bin (string-append #$output "/bin"))
+                 (edgecore (string-append bin "/edgecore")))
+            (setenv "PATH" (string-append
+                            #$(this-package-native-input "tar") "/bin" ":"
+                            #$(this-package-native-input "gzip") "/bin" ":"
+                            #$(this-package-input "patchelf") "/bin"))
+            (invoke "tar"
+                    "--strip-components=2"
+                    "-xf" (assoc-ref %build-inputs "source")
+                    "kubeedge-v1.17.0-linux-amd64/edge/edgecore")
+            (mkdir-p (string-append #$output "/bin"))
+            (invoke "patchelf" "--set-interpreter"
+                    (string-append #$(this-package-input "glibc")
+                                   "/lib/ld-linux-x86-64.so.2")
+                    "edgecore")
+            (copy-file "edgecore" (string-append #$output "/bin/edgecore"))
+            (chmod edgecore #o555)
+            ;; Install shell completion.
+            (let ((bash (string-append #$output "/etc/bash_completion.d")))
+              (mkdir-p bash)
+              (call-with-output-file (string-append bash "/edgecore")
+                (lambda (port)
+                  (display
+                   (let* ((port (open-pipe* OPEN_READ (string-append #$output "/bin/edgecore")
+                                            "completion" "bash"))
+                          (output (read-string port)))
+                     (close-port port)
+                     (string-trim-right output #\newline))
+                   port))))))))
+    (home-page "")
+    (synopsis "")
+    (description "")
+    (license #f)))
+
