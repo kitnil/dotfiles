@@ -53,4 +53,5 @@
         "brightnessctl"
         "moonlight-qt"
         "v4l-utils"
-        "dialog"))
+        "dialog"
+        "pinentry"))
