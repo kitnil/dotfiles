@@ -135,6 +135,7 @@
                          "--overrides="
                          (scm->json-string
                           `(("spec"
+                             ("hostNetwork" . ,host-network?)
                              ("tolerations" . ,%tolerations)
                              ("nodeSelector"
                               ("kubernetes.io/hostname" . ,host)))
