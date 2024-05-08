@@ -370,7 +370,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 1m0s
-  path: ./apps/cluster2/maintenance-guix-pull-kube2
+  path: ./apps/cluster1/maintenance-guix-pull-kube2
   prune: true
   sourceRef:
     kind: GitRepository
