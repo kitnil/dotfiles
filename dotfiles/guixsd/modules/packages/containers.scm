@@ -13,7 +13,7 @@
 (define-public nerdctl
   (package
     (name "nerdctl")
-    (version "0.22.0")
+    (version "1.7.6")
     (source
      (origin
        (method url-fetch)
@@ -23,7 +23,7 @@
          version "/nerdctl-" version "-linux-amd64.tar.gz"))
        (sha256
         (base32
-         "1qx012zcgvz42sjck9j0xp9qzg8r7aimp6csg638swp42nbg852y"))))
+         "1w700wjv41lxq8fg4300pqyl69r7qv5shylxxl2c3idy5njdc9h3"))))
     (build-system trivial-build-system)
     (native-inputs
      `(("source" ,source)
