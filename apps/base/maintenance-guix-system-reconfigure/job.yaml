@@ -23,7 +23,7 @@ spec:
         - /bin/sh
         - -l
         - -c
-        - sudo --user=oleg --login bash -ic 'exec &> >(tee -a /home/oleg/.local/var/log/containers/guix-system-switch.log) guix system switch'
+        - sudo --user=oleg --login bash -ic 'exec &> >(tee -a /home/oleg/.local/var/log/containers/guix-system-switch.log); guix system switch'
         image: docker-registry.wugi.info/library/util-linux-with-udev
         name: refresh
         resources:
