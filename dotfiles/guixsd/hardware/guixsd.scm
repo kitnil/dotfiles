@@ -155,5 +155,5 @@ EndSection
                                                                        "/run/current-system/profile/bin/herd * vncserver10")
                                                                      ",")))
                                              "\n")))
- (packages (cons* ratpoison nss-certs %base-packages))
+ (packages (cons* ratpoison %base-packages))
  (services %base-services))

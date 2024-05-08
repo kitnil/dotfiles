@@ -49,10 +49,7 @@
                      ratpoison ; nano
                      ;; emacs
                      ;; terminal emulator
-                     xterm
-
-                     ;; for HTTPS access
-                     nss-certs)
+                     xterm)
                     %base-packages))
 
   ;; Use the "desktop" services, which include the X11

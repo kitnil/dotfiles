@@ -19,7 +19,7 @@
 
 (use-service-modules desktop networking ssh nfs nix)
 
-(use-package-modules audio bootloaders certs vpn wm terminals xfce linux package-management admin fonts nfs xorg)
+(use-package-modules audio bootloaders vpn wm terminals xfce linux package-management admin fonts nfs xorg)
 
 (use-service-modules desktop dbus docker networking monitoring sound xorg)
 

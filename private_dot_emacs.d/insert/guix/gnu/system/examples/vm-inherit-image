@@ -34,7 +34,7 @@
                    (operating-system-users os)))
       (services (cons (dhcp-client-service)
                       (operating-system-user-services os)))
-      (packages (cons* curl #;knot nss-certs openssh
+      (packages (cons* curl #;knot openssh
                        ncurses ;for ‘reset’ command in Bash
                        strace tcpdump
                        (operating-system-packages os)))
