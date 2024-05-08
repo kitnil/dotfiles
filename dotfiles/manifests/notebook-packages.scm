@@ -28,6 +28,7 @@
         "lm-sensors"
         "fd"
         "htop"
+        "screen"
         "tmux"
         "gnupg"
         "emacs-use-package"
