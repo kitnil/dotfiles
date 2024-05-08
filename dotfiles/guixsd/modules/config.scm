@@ -209,8 +209,7 @@ EndSection\n")
           %font-packages
           %stumpwm-packages
           %theme-packages
-          %xorg-packages
-          %base-packages))
+          %xorg-packages))
 
 (define %my-setuid-programs
   (append (list (setuid-program (program (file-append fping "/sbin/fping")))
