@@ -40,8 +40,8 @@
   ;; Use the UEFI variant of GRUB with the EFI System
   ;; Partition mounted on /boot/efi.
   (bootloader (bootloader-configuration
-               (bootloader grub-efi-bootloader) ;-removable)
-                (targets '("/boot/efi"))))
+               (bootloader grub-efi-bootloader-removable)
+               (targets '("/boot/efi"))))
 
   (mapped-devices
    (list (mapped-device
