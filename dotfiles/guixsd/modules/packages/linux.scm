@@ -138,6 +138,10 @@ System on hardware which requires nonfree software to function.")))
   (corrupt-linux linux-libre-5.13-with-bpf "5.13.16"
                  "1ljigvcg4q6ckr8kna3q5iyjsy7x5mrf1ycqfy0ibbhn9hbqjna9"))
 
+(define-public linux-5.15-with-bpf
+  ((@ (nongnu packages linux) corrupt-linux)
+   (@ (gnu packages linux) linux-libre-5.15)))
+
 (define-public linux-firmware
   (package
     (name "linux-firmware")
