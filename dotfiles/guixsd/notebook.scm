@@ -64,7 +64,8 @@
                          (device "/dev/mapper/vg0-guixroot")
                          (mount-point "/")
                          (dependencies mapped-devices)
-                         (type "ext4"))
+                         (type "ext4")
+                         (flags '(shared)))
                        (file-system
                          (device (uuid "8AE4-E6A7" 'fat))
                          (mount-point "/boot/efi")
