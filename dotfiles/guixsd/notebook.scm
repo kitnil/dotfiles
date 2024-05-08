@@ -39,15 +39,22 @@
   ;; Use the UEFI variant of GRUB with the EFI System
   ;; Partition mounted on /boot/efi.
   (bootloader (bootloader-configuration
-               (bootloader grub-efi-bootloader-removable)
+               (bootloader grub-efi-bootloader) ;-removable)
                 (targets '("/boot/efi"))))
 
-    (mapped-devices (list (mapped-device
-                           (source "vg0")
-                           (targets '("vg0-guixroot"))
-                           (type lvm-device-mapping))))
+  (mapped-devices
+   (list (mapped-device
+          (source (uuid "35ca63d5-c085-46cf-a8b7-ca5429c97ca2"))
+          (target "crypt-guix")
+          (type luks-device-mapping))
+         (mapped-device
+          (source "vg0")
+          (targets '("vg0-guixroot"))
+          (type lvm-device-mapping))))
 
   (kernel-loadable-modules (list v4l2loopback-linux-module xpadneo))
+
+  (kernel-arguments '("mitigations=off"))
 
   ;; Assume the target root file system is labelled "my-root",
   ;; and the EFI System Partition has UUID 1234-ABCD.
@@ -58,7 +65,7 @@
                          (dependencies mapped-devices)
                          (type "ext4"))
                        (file-system
-                         (device (uuid "0A05-C141" 'fat))
+                         (device (uuid "8AE4-E6A7" 'fat))
                          (mount-point "/boot/efi")
                          (type "vfat")))
                  %base-file-systems))
