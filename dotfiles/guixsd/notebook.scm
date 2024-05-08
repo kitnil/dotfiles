@@ -25,6 +25,7 @@
 
 (use-modules (bootloader grub)
              (packages monitoring)
+             (packages linux)
              (services monitoring))
 
 (operating-system
@@ -33,7 +34,7 @@
   (locale "en_US.utf8")
 
   (initrd microcode-initrd)
-  (kernel linux-5.15)
+  (kernel linux-5.15-with-bpf)
   (firmware (cons* linux-firmware %base-firmware))
 
   ;; Use the UEFI variant of GRUB with the EFI System
