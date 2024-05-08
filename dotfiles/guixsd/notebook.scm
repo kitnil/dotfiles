@@ -159,13 +159,6 @@
                      (service ladspa-service-type
                               (ladspa-configuration (plugins (list swh-plugins))))
 
-                     (service prometheus-node-exporter-service-type
-                              (prometheus-node-exporter-configuration
-                               (package prometheus-node-exporter)
-                               (web-listen-address "0.0.0.0:9100")
-                               (textfile-directory "/var/lib/prometheus-node-exporter")
-                               (extra-options '("--collector.powersupplyclass"))))
-
                      (service docker-service-type)
 
                      (service openssh-service-type)
