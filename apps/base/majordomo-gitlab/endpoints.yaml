@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Endpoints
+metadata:
+  name: gitlab
+subsets:
+- addresses:
+  - ip: 172.16.115.5
+  ports:
+  - port: 80
+    name: http
+  - port: 443
+    name: https
