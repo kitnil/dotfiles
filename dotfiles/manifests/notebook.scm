@@ -14,4 +14,5 @@
         "deprecated.scm"
         "desktop.scm"
         "dotfiles.scm"
+	"emacs.scm"
         "obs.scm")))
