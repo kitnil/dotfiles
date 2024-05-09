@@ -26,6 +26,7 @@
 (use-modules (bootloader grub)
              (packages monitoring)
              (packages linux)
+             (services kubernetes)
              (services monitoring))
 
 (operating-system
@@ -162,6 +163,9 @@
                               (ladspa-configuration (plugins (list swh-plugins))))
 
                      (service docker-service-type)
+
+                     (service edgecore-service-type
+                              (edgecore-configuration))
 
                      (service openssh-service-type)
 		     (service openvpn-service-type
