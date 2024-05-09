@@ -37,7 +37,11 @@
 
             kubelet-configuration
             kubelet-configuration?
-            kubelet-service-type))
+            kubelet-service-type
+
+            edgecore-configuration
+            edgecore-configuration?
+            edgecore-service-type))
 
 ;;; Commentary:
 ;;;
@@ -229,5 +233,56 @@
                              kubelet-log-rotations)))
    (default-value '())
    (description "Run the kubelet.")))
+
+
+;;;
+;;;
+;;;
+
+(define-record-type* <edgecore-configuration>
+  edgecore-configuration make-edgecore-configuration
+  edgecore-configuration?
+  (edgecore edgecore-configuration-edgecore ;string
+            (default (file-append edgecore "/bin/edgecore")))
+  (log-file edgecore-configuration-log-file ;string
+            (default "/var/log/edgecore.log"))
+  (arguments edgecore-configuration-arguments ;list of strings
+             (default '())))
+
+(define (edgecore-log-rotations config)
+  (list (log-rotation
+         (files (list (edgecore-configuration-log-file config))))))
+
+(define (edgecore-wrapper args)
+  (program-file
+   "edgecore-wrapper"
+   #~(begin
+       #$(cilium-requirements)
+       #$args)))
+
+(define (edgecore-shepherd-service config)
+  (list
+   (shepherd-service
+    (documentation "edgecore daemon.")
+    (provision '(edgecore))
+    (requirement '(networking containerd))
+    (start #~(make-forkexec-constructor
+              (list #$(edgecore-wrapper
+                       #~(execl #$(edgecore-configuration-edgecore config)
+                                "edgecore"
+                                #$@(edgecore-configuration-arguments config))))
+              #:log-file #$(edgecore-configuration-log-file config)))
+    (stop #~(make-kill-destructor)))))
+
+(define edgecore-service-type
+  (service-type
+   (name 'edgecore)
+   (extensions
+    (list (service-extension shepherd-root-service-type
+                             edgecore-shepherd-service)
+          (service-extension rottlog-service-type
+                             edgecore-log-rotations)))
+   (default-value '())
+   (description "Run the edgecore.")))
 
 ;;; kubernetes.scm ends here
