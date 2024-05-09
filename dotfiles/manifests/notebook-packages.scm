@@ -18,6 +18,7 @@
         "fd"
         "htop"
         "screen"
+        "iputils"
         "tmux"
         "gnupg"
         "password-store"
