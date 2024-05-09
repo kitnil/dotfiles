@@ -40,4 +40,5 @@
         "moonlight-qt"
         "v4l-utils"
         "dialog"
-        "pinentry"))
+        "pinentry"
+        "sshpass"))
