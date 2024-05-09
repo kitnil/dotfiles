@@ -351,28 +351,9 @@
             }
           ];
 
-      deploy.nodes.localhost =
-        let
-          dryActivateScript = pkgs.writeScript "deploy-rs-dry-activate" ''
-            #!${pkgs.runtimeShell}
-            echo $PROFILE
-          '';
-        in
-        {
-          hostname = "localhost";
-          profiles = {
-            # profile = {
-            #   user = "oleg";
-            #   autoRollback = false;
-            #   magicRollback = false;
-            #   path = (deploy-rs.lib.${system}.activate.custom // { dryActivate = dryActivateScript; })
-            #     (pkgs.symlinkJoin {
-            #       name = "profile";
-            #       paths = with lib; collect isDerivation self.packages.${system};
-            #     })
-            #     ":";
-            # };
-            home-manager =
+      deploy.nodes =
+            let
+              home-manager-profile = home-manager-modules:
               let
                 overlay = final: prev:
                   self.packages.${system} // (
@@ -461,13 +442,42 @@
                   extraSpecialArgs = {
                     packages = pkgs;
                   };
-                  modules = [
-                    ./home-manager.nix
-                  ];
+                  modules = home-manager-modules;
                 });
               };
-          };
-        };
+            in
+              {
+                # guixsd =
+                # let
+                #   dryActivateScript = pkgs.writeScript "deploy-rs-dry-activate" ''
+                #     #!${pkgs.runtimeShell}
+                #     echo $PROFILE
+                #   '';
+                # in
+                # {
+                #   hostname = "guix.wugi.info";
+                #   profiles =
+                #     let
+                #     in {
+                #       home-manager = home-manager-profile [ ./home-manager.nix ];
+                #     };
+                # };
+                notebook =
+                let
+                  dryActivateScript = pkgs.writeScript "deploy-rs-dry-activate" ''
+                    #!${pkgs.runtimeShell}
+                    echo $PROFILE
+                  '';
+                in
+                {
+                  hostname = "notebook.wugi.info";
+                  profiles =
+                    let
+                    in {
+                      home-manager = home-manager-profile [ ./notebook/home-manager.nix ];
+                    };
+                };
+              };
 
       checks = builtins.mapAttrs (system: deployLib: deployLib.deployChecks self.deploy) deploy-rs.lib;
     };
