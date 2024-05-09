@@ -6,6 +6,7 @@
   manual.manpages.enable = false;
 
   home.packages = with pkgs; [
+    nix
     viddy
   ];
 
