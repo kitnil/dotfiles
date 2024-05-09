@@ -19,6 +19,7 @@
         "htop"
         "screen"
         "iputils"
+        "make"
         "tmux"
         "gnupg"
         "password-store"
