@@ -6,6 +6,8 @@ subsets:
 - addresses:
   - ip: 172.16.115.5
   ports:
+  - port: 22
+    name: ssh
   - port: 80
     name: http
   - port: 443
