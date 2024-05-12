@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+set -o errexit -o pipefail
+
+GTK_THEME="Adwaita:dark"
+export GTK_THEME
+
+exec -a "$0" firefox-temp-profile "$@"
