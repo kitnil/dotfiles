@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -o nounset -o errexit -o pipefail -o xtrace
+set -o errexit -o pipefail -o xtrace
 
 if [[ $LUKS_DECRYPT_WIN10 == FALSE ]]
 then
