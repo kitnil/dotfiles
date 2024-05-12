@@ -242,7 +242,6 @@
     eiskaltdcpp
 
     sunshine
-    moonlight-qt
 
     nekoray
 
