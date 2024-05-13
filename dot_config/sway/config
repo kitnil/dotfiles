@@ -41,6 +41,10 @@ output HEADLESS-1 scale 2
 exec swaymsg create_output HEADLESS-2
 output HEADLESS-2 resolution 1366x768
 
+exec swaymsg create_output HEADLESS-3
+output HEADLESS-3 resolution 2880x1800@90Hz
+output HEADLESS-3 scale 2
+
 ### Idle configuration
 #
 # Example configuration:
