@@ -56,6 +56,13 @@
           name = "nix";
           id = 1;
           isDefault = true;
+          extensions =
+            with packages;
+            with packages.nur.repos.rycee.firefox-addons;
+            [
+              copy-all-tab-urls-we
+              ublock-origin
+            ];
         };
         twitch = {
           name = "twitch";
