@@ -1,6 +1,7 @@
 import json, pyaudio
 from vosk import Model, KaldiRecognizer
 import subprocess
+import pathlib
 
 model = Model("small_model")
 rec = KaldiRecognizer(model, 16000)
@@ -37,6 +38,10 @@ def tts(string):
 
 
 def main():
+    vosk_tts_cache_directory = pathlib.Path.home().joinpath(".cache", "vosk-tts")
+    if not vosk_tts_cache_directory.is_dir():
+        os.mkdir(vosk_tts_cache_directory)
+
     for text in listen():
         if "компьютер" in text and "вкл" in text:
             if "корич" in text and "шум" in text:
