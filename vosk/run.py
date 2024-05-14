@@ -199,7 +199,8 @@ def main():
                 ]
             )
 
-        print(text)
+        log.info(text)
+
 
 if __name__ == '__main__':
     main()
