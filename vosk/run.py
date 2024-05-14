@@ -35,12 +35,15 @@ if not vosk_tts_cache_directory.is_dir():
     os.mkdir(vosk_tts_cache_directory)
 
 
-def mpv(cache_file):
-    log.debug(f"cache_file: {cache_file}")
-    subprocess.run(["mpv", "--keep-open=no", cache_file])
+def mpv(cache_file_string, cache_preserve=True):
+    log.debug(f"cache_file: {cache_file_string}")
+    subprocess.run(["mpv", "--keep-open=no", cache_file_string])
+    cache_file = pathlib.Path(cache_file_string)
+    if not cache_preserve:
+        cache_file.unlink(missing_ok=True)
 
 
-def tts(string):
+def tts(string, cache_preserve=True):
     cache_file = vosk_tts_cache_directory.joinpath(hashlib.sha256(string.encode()).hexdigest() + ".wav")
     if not cache_file.is_file():
         subprocess.run(
@@ -54,8 +57,8 @@ def tts(string):
                 cache_file,
             ]
         )
-    cache_file_str = cache_file._str
-    process = Process(target=mpv, args=(cache_file_str,), daemon=True)
+    cache_file_string = cache_file._str
+    process = Process(target=mpv, args=(cache_file_string,cache_preserve,), daemon=True)
     process.start()
 
 
