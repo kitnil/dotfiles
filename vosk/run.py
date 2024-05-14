@@ -3,6 +3,7 @@ from vosk import Model, KaldiRecognizer
 import subprocess
 import pathlib
 import hashlib
+from multiprocessing import Process
 import logging
 import os
 
@@ -34,6 +35,11 @@ if not vosk_tts_cache_directory.is_dir():
     os.mkdir(vosk_tts_cache_directory)
 
 
+def mpv(cache_file):
+    log.debug(f"cache_file: {cache_file}")
+    subprocess.run(["mpv", "--keep-open=no", cache_file])
+
+
 def tts(string):
     cache_file = vosk_tts_cache_directory.joinpath(hashlib.sha256(string.encode()).hexdigest() + ".wav")
     if not cache_file.is_file():
@@ -48,7 +54,9 @@ def tts(string):
                 cache_file,
             ]
         )
-    subprocess.run(["mpv", "--keep-open=no", cache_file])
+    cache_file_str = cache_file._str
+    process = Process(target=mpv, args=(cache_file_str,), daemon=True)
+    process.start()
 
 
 def main():
