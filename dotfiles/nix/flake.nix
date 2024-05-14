@@ -341,12 +341,12 @@
                       prometheus_client
                       pyaml
                     ]);
+                  inherit coreutils;
                 in
                 writeScriptBin "python-selenium" ''
-                  #!${runtimeShell}
+                  #!${runtimeShell} -e
                   PATH=${geckodriver}/bin:${firefox}/bin:"$PATH"
-                  export PATH
-                  exec -a "$0" ${python3WithSelenium}/bin/python "$@"
+                  exec ${coreutils}/bin/env --ignore-environment ${runtimeShell} -c "PATH=$PATH DISPLAY=$DISPLAY exec -a $0 ${python3WithSelenium}/bin/python $*"
                 '';
             }
           ];
