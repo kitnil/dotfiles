@@ -137,6 +137,15 @@ def main():
                 ]
             )
 
+        if "компьютер" in text and "нажми" in text:
+            tts("нажимаю")
+            if "пробел" in text:
+                subprocess.run(
+                    [
+                        "wtype", "-k", "space"
+                    ]
+                )
+
         if "компьютер" in text and "сотри" in text:
             tts("стираю текст")
             subprocess.run(
