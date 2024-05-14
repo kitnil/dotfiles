@@ -206,6 +206,8 @@ virtualization vnc vim vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
 
                atop htop inxi iotop jnettop glances bmon progress
 
+               moonlight-qt
+
                synergy
 
                ansible         ; Configuration management
