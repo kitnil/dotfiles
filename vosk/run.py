@@ -159,7 +159,7 @@ def main():
                 ]
             )
 
-        if "компьютер" in text and "полный" in text and "экран" in text:
+        if "компьютер" in text and "полный" in text and "кран" in text:
             tts("полный экран")
             subprocess.run(
                 [
