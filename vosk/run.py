@@ -3,6 +3,14 @@ from vosk import Model, KaldiRecognizer
 import subprocess
 import pathlib
 import hashlib
+import logging
+import os
+
+logging.basicConfig()
+log = logging.getLogger("vosk")
+log_level = os.getenv("VOSK_LOG_LEVEL", "WARNING")
+log.info(f"{log_level}: log_level")
+log.setLevel(log_level)
 
 model = Model("small_model")
 rec = KaldiRecognizer(model, 16000)
