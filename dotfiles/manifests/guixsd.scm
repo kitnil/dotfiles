@@ -19,4 +19,5 @@
         "wigust.scm"
         "dotfiles.scm"
         "kubernetes.scm"
-        "obs.scm")))
+        "obs.scm"
+        "python.scm")))
