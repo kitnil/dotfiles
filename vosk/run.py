@@ -57,6 +57,7 @@ def main():
                     ]
                 )
             if "монитор":
+                tts("монитор включен")
                 subprocess.run(
                     [
                         "swaymsg", "output DP-1 dpms on"
@@ -64,6 +65,7 @@ def main():
                 )
         if "компьютер" in text and "выкл" in text:
             if "монитор":
+                tts("монитор выключен")
                 subprocess.run(
                     [
                         "swaymsg", "output DP-1 dpms off"
@@ -79,6 +81,7 @@ def main():
             subprocess.run(["firefox", "https://opensearch-dashboards.corp1.majordomo.ru/"])
 
         if "компьютер" in text and "перекл" in text and "звук" in text:
+            tts("звук переключен")
             subprocess.run(
                 [
                     "pactl",
@@ -87,9 +90,9 @@ def main():
                     "toggle",
                 ]
             )
-            tts("звук переключен")
 
         if "компьютер" in text and "тиш" in text and "звук" in text:
+            tts("тише звук")
             subprocess.run(
                 [
                     "pactl",
@@ -100,6 +103,7 @@ def main():
             )
 
         if "компьютер" in text and "гром" in text and "звук" in text:
+            tts("громче звук")
             subprocess.run(
                 [
                     "pactl",
@@ -110,6 +114,7 @@ def main():
             )
 
         if "компьютер" in text and "умен" in text and "яркость" in text:
+            tts("умешить яркость")
             subprocess.run(
                 [
                     "brightness", "decrease", "5"
@@ -117,6 +122,7 @@ def main():
             )
 
         if "компьютер" in text and "увел" in text and "яркость" in text:
+            tts("увеличить яркость")
             subprocess.run(
                 [
                     "brightness", "increase", "5"
@@ -124,6 +130,7 @@ def main():
             )
 
         if "компьютер" in text and "напиш" in text:
+            tts("пишу текст")
             subprocess.run(
                 [
                     "wtype", " ".join(text.split(" ")[2:])
@@ -131,6 +138,7 @@ def main():
             )
 
         if "компьютер" in text and "сотри" in text:
+            tts("стираю текст")
             subprocess.run(
                 [
                     "wtype", "-M", "ctrl", "a", "-m", "ctrl"
@@ -143,6 +151,7 @@ def main():
             )
 
         if "компьютер" in text and "полный" in text and "экран" in text:
+            tts("полный экран")
             subprocess.run(
                 [
                     "wtype", "-M", "win", "f", "-m", "win"
@@ -150,6 +159,7 @@ def main():
             )
 
         if "компьютер" in text and "курсор" in text and "лев" in text:
+            tts("курсор влево")
             subprocess.run(
                 [
                     "wtype", "-M", "win", "h", "-m", "win"
@@ -157,6 +167,7 @@ def main():
             )
 
         if "компьютер" in text and "курсор" in text and "прав" in text:
+            tts("курсор вправо")
             subprocess.run(
                 [
                     "wtype", "-M", "win", "l", "-m", "win"
