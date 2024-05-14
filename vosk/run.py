@@ -2,6 +2,7 @@ import json, pyaudio
 from vosk import Model, KaldiRecognizer
 import subprocess
 import pathlib
+import hashlib
 
 model = Model("small_model")
 rec = KaldiRecognizer(model, 16000)
@@ -20,28 +21,29 @@ def listen():
             if answer["text"]:
                 yield answer["text"]
 
+vosk_tts_cache_directory = pathlib.Path.home().joinpath(".cache", "vosk-tts")
+if not vosk_tts_cache_directory.is_dir():
+    os.mkdir(vosk_tts_cache_directory)
+
 
 def tts(string):
-    subprocess.run(["rm", "-f", "/tmp/vosk-tts.wav"])
-    subprocess.run(
-        [
-            "/nix/store/y73im0yiraa1g3zk6ycks6gjxbqxy5p1-vosk-tts-0.3.54/bin/vosk-tts",
-            "-n",
-            "vosk-model-tts-ru-0.6-multi",
-            "--input",
-            string,
-            "-o",
-            "/tmp/vosk-tts.wav",
-        ]
-    )
-    subprocess.run(["mpv", "--keep-open=no", "/tmp/vosk-tts.wav"])
+    cache_file = vosk_tts_cache_directory.joinpath(hashlib.sha256(string.encode()).hexdigest() + ".wav")
+    if not cache_file.is_file():
+        subprocess.run(
+            [
+                "/nix/store/y73im0yiraa1g3zk6ycks6gjxbqxy5p1-vosk-tts-0.3.54/bin/vosk-tts",
+                "-n",
+                "vosk-model-tts-ru-0.6-multi",
+                "--input",
+                string,
+                "-o",
+                cache_file,
+            ]
+        )
+    subprocess.run(["mpv", "--keep-open=no", cache_file])
 
 
 def main():
-    vosk_tts_cache_directory = pathlib.Path.home().joinpath(".cache", "vosk-tts")
-    if not vosk_tts_cache_directory.is_dir():
-        os.mkdir(vosk_tts_cache_directory)
-
     for text in listen():
         if "компьютер" in text and "вкл" in text:
             if "корич" in text and "шум" in text:
