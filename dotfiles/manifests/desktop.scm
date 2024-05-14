@@ -1,5 +1,6 @@
 (use-modules (guix profiles)
              (gnu packages fonts)
+             (gnu packages freedesktop)
              (gnu packages image)
              (gnu packages suckless)
              (gnu packages terminals)
@@ -32,6 +33,9 @@
 (define browsers
   (list torbrowser))
 
+(define wayland-utils
+  (list wtype))
+
 (packages->manifest (append clipboard
                             fonts
                             menus
@@ -39,4 +43,5 @@
                             browsers
                             wm
                             sway-utils
-                            i3))
+                            i3
+                            wayland-utils))
