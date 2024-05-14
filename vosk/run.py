@@ -183,6 +183,21 @@ def main():
                 ]
             )
 
+        if "компьютер" in text and "кран" in text:
+            tts("переключаю")
+            if "виртуал" in text or "машин" in text:
+                subprocess.run(
+                    [
+                        "sudo", "/home/oleg/.nix-profile/bin/ddcutil", "setvcp", "xF4", "x0091", "--i2c-source-addr=x50", "--noverify"
+                    ]
+                )
+            if "основ" in text:
+                subprocess.run(
+                    [
+                        "sudo", "/home/oleg/.nix-profile/bin/ddcutil", "setvcp", "xF4", "x00d0", "--i2c-source-addr=x50", "--noverify"
+                    ]
+                )
+
         print(text)
 
 if __name__ == '__main__':
