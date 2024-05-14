@@ -447,21 +447,21 @@
               };
             in
               {
-                # guixsd =
-                # let
-                #   dryActivateScript = pkgs.writeScript "deploy-rs-dry-activate" ''
-                #     #!${pkgs.runtimeShell}
-                #     echo $PROFILE
-                #   '';
-                # in
-                # {
-                #   hostname = "guix.wugi.info";
-                #   profiles =
-                #     let
-                #     in {
-                #       home-manager = home-manager-profile [ ./home-manager.nix ];
-                #     };
-                # };
+                guixsd =
+                let
+                  dryActivateScript = pkgs.writeScript "deploy-rs-dry-activate" ''
+                    #!${pkgs.runtimeShell}
+                    echo $PROFILE
+                  '';
+                in
+                {
+                  hostname = "guix.wugi.info";
+                  profiles =
+                    let
+                    in {
+                      home-manager = home-manager-profile [ ./home-manager.nix ];
+                    };
+                };
                 notebook =
                 let
                   dryActivateScript = pkgs.writeScript "deploy-rs-dry-activate" ''
