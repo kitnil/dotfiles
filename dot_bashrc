@@ -589,6 +589,13 @@ guix()
                         "guix" "pull"
                         "--channels=${HOME}/.local/share/chezmoi/dotfiles/channels-current.scm"
                     )
+                    if [[ -n $dry_run ]]
+                    then
+                        guix_command=(
+                            echo
+                            "${guix_command[@]}"
+                        )
+                    fi
                     if [[ -n $commit ]]
                     then
                         guix_command+=("--commit=$commit")
