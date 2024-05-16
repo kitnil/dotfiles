@@ -88,7 +88,7 @@ class Battery:
 
 while True:
     sys.stdout.write(
-        f"Network: up: {Network.get_bytes_up()}KB/s down: {Network.get_bytes_down()}KB/s   CPU: {CPU.freq()} GHz {CPU.coretemp()} C   /: {DISK.disk_used('/')} GB/{DISK.disk_total('/')} GB   /srv: {DISK.disk_used('/srv')} GB/{DISK.disk_total('/srv')} GB   RAM: {RAM.ram_used()} GB/{RAM.ram_total()} GB   SWAP: {RAM.swap_used()} GB/{RAM.swap_total()} GB   Time: {datetime.datetime.now().strftime('%d.%m.%Y %H:%M:%S')} "
+        f"Up: {Network.get_bytes_up()}KB/s Down: {Network.get_bytes_down()}KB/s   CPU: {CPU.freq()} GHz {CPU.coretemp()} C   /: {DISK.disk_used('/')} GB/{DISK.disk_total('/')} GB   RAM: {RAM.ram_used()} GB/{RAM.ram_total()} GB   SWAP: {RAM.swap_used()} GB/{RAM.swap_total()} GB    Battery: {Battery.percent()}%   Time: {datetime.datetime.now().strftime('%d.%m.%Y %H:%M:%S')} "
     )
     sys.stdout.flush()
     sleep(0.75)

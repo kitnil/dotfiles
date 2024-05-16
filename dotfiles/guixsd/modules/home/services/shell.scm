@@ -205,6 +205,7 @@
                           "sbcl"
                           "scan"
                           "sensors.py"
+                          "sensors-notebook.py"
                           "shop"
                           "shutdown"
                           "src-clean"
