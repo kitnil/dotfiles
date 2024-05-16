@@ -12,7 +12,10 @@
   #:use-module (gnu services)
   #:use-module (wigust packages audio)
   #:export (home-scream-service-type
-            scream-configuration))
+            scream-configuration
+
+            home-vosk-service-type
+            vosk-configuration))
 
 (define-record-type* <scream-configuration>
   scream-configuration make-scream-configuration
@@ -41,3 +44,37 @@
                 (default-value '())
                 (description
                  "Install and configure the scream.")))
+
+
+;;;
+;;; vosk
+;;;
+
+(define-record-type* <vosk-configuration>
+  vosk-configuration make-vosk-configuration
+  vosk-configuration?
+  (vosk vosk-configuration-vosk ;string
+        (default #f))
+  (environment-variables vosk-configuration-environment-variables ;list of strings
+                         (default '())))
+
+(define (home-vosk-shepherd-service config)
+  (list (shepherd-service
+         (documentation "Vosk audio service.")
+         (provision (list 'vosk))
+         (start #~(make-forkexec-constructor
+                   (list #$(vosk-configuration-vosk config))
+                   #:environment-variables
+                   (append (list #$@(vosk-configuration-environment-variables config))
+                           (environ))))
+         (stop #~(make-kill-destructor)))))
+
+(define home-vosk-service-type
+  (service-type (name 'home-vosk)
+                (extensions
+                 (list (service-extension
+                        home-shepherd-service-type
+                        home-vosk-shepherd-service)))
+                (default-value '())
+                (description
+                 "Install and configure the vosk.")))
