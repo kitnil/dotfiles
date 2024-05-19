@@ -1346,8 +1346,8 @@ location / {
                                   (nix-configuration
                                    (extra-config '("\
 trusted-users = oleg root
-binary-caches = https://cache.nixos.org/ https://cache.nixos.intr/
-trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= cache.nixos.intr:6VD7bofl5zZFTEwsIDsUypprsgl7r9I+7OGY4WsubFA=
+binary-caches = https://cache.nixos.org/
+trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
 "))))
 
                          ;; nix-service
