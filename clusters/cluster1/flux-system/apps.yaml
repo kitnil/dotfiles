@@ -398,6 +398,9 @@ spec:
   interval: 1m0s
   path: ./apps/cluster1/maintenance-guix-pull-kube1
   prune: true
+  # Setting spec.wait to true makes Flux wait for the Job to complete before
+  # it is considered ready.
+  wait: true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -411,6 +414,13 @@ spec:
   interval: 1m0s
   path: ./apps/cluster1/maintenance-guix-package-manifest-kube1
   prune: true
+  # This means that the maintenance-guix-package-manifest-kube1 Kustomization
+  # will wait until all the Jobs in maintenance-guix-pull-kube1 run to
+  # completion. If the Job fails, the app changes will not be applied by the
+  # app-deploy Kustomization.
+  dependsOn:
+  - name: maintenance-guix-pull-kube1
+  wait: true
   sourceRef:
     kind: GitRepository
     name: flux-system
