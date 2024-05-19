@@ -1073,8 +1073,8 @@ location / {
                                    (restic-ntfsgames-backup)))
                         %my-system-packages))
 
-      (groups (cons* (user-group (name "nixbld")
-                                 (id 30100))
+      (groups (cons* ;; (user-group (name "nixbld")
+                     ;;             (id 30100))
                      (user-group (name "uinput"))
                      (user-group (name "postfix")
                                  (id 13)
@@ -1100,7 +1100,7 @@ location / {
                      (home-directory "/opt/postfix")
                      (shell "/run/current-system/profile/sbin/nologin")
                      (system? #t))
-                    (append ((lambda* (count #:key
+                    (append #;((lambda* (count #:key
                                         (group "nixbld")
                                         (first-uid 30101)
                                         (shadow shadow))
@@ -1342,14 +1342,15 @@ location / {
                          (service alsa-service-type)
 
                          ;; TODO: Fix substituters
-                         ;; (service nix-service-type
-                         ;;          (nix-configuration
-                         ;;           (extra-config '("trusted-users = oleg root"
-                         ;;                           "binary-caches = https://cache.nixos.org/ https://cache.nixos.intr/"
-                         ;;                           "trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= cache.nixos.intr:6VD7bofl5zZFTEwsIDsUypprsgl7r9I+7OGY4WsubFA="
-                         ;;                           "\n"))))
+                         (service nix-service-type
+                                  (nix-configuration
+                                   (extra-config '("\
+trusted-users = oleg root
+binary-caches = https://cache.nixos.org/ https://cache.nixos.intr/
+trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY= cache.nixos.intr:6VD7bofl5zZFTEwsIDsUypprsgl7r9I+7OGY4WsubFA=
+"))))
 
-                         nix-service
+                         ;; nix-service
 
                          (service knot-resolver-service-type
                                   (knot-resolver-configuration
