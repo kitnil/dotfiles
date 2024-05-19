@@ -587,8 +587,17 @@ guix()
                     guix_command=(
                         "command"
                         "guix" "pull"
-                        "--channels=${HOME}/.local/share/chezmoi/dotfiles/channels-current.scm"
                     )
+                    if [[ -n $channels_file ]]
+                    then
+                        guix_command+=(
+                            "--channels=${channels_file}"
+                        )
+                    else
+                        guix_command+=(
+                            "--channels=${HOME}/.local/share/chezmoi/dotfiles/channels-current.scm"
+                        )
+                    fi
                     if [[ -n $dry_run ]]
                     then
                         guix_command=(
