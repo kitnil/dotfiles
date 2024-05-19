@@ -23,7 +23,7 @@ spec:
         - /bin/sh
         - -l
         - -c
-        - sudo --user=oleg --login bash -ic 'guix pull'
+        - sudo --user=oleg --login bash -ic 'channels_file=${HOME}/.local/share/chezmoi/dotfiles/channels-current-local-file.scm guix pull'
         image: docker-registry.wugi.info/library/util-linux-with-udev
         name: refresh
         resources:
