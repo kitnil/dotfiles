@@ -3,7 +3,7 @@
         (url "file:///home/oleg/src/git.savannah.gnu.org/git/guix")
         (branch "master")
         (commit
-          "81a9373767a05d03b13f57f68827b29d2d9fabe1")
+          "274716c3156aa3290666ee3d33a2f1101d02d572")
         (introduction
           (make-channel-introduction
             "9edb3f66fd807b096b48283debdcddccfea34bad"
