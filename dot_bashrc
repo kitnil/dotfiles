@@ -472,7 +472,7 @@ guix()
                         guix_command+=(
                             "$HOME/.local/share/chezmoi/dotfiles/guixsd/home/${HOSTNAME}.scm"
                         )
-                        echo "${guix_command[@]}"
+                        "${guix_command[@]}"
                     )
                     ;;
             esac
