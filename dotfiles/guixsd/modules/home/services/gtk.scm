@@ -28,7 +28,7 @@
 # Any customization should be done in ~/.gtkrc-2.0.mine instead.
 
 include \"~a/.gtkrc-2.0.mine\"
-gtk-theme-name=\"Adwaita-dark\"
+gtk-theme-name=\"Adwaita\"
 gtk-icon-theme-name=\"Adwaita\"
 gtk-font-name=\"DejaVu Sans 11\"
 gtk-cursor-theme-name=\"Adwaita\"
