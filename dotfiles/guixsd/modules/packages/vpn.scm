@@ -74,6 +74,7 @@
 (define-public openvpn-socks
   (package
     (inherit openvpn)
+    (name "openvpn-socks")
     (source
      (origin
        (inherit (package-source openvpn))
