@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   name: webtlo
 spec:
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app.kubernetes.io/name: webtlo
