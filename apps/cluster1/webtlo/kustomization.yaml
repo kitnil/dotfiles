@@ -4,3 +4,5 @@ namespace: webtlo
 resources:
 - ../../base/webtlo
 - ingress.yaml
+patchesStrategicMerge:
+- deployment.yaml

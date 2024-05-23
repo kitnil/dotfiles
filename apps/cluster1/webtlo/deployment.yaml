@@ -1,0 +1,17 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: webtlo
+spec:
+  template:
+    spec:
+      containers:
+      - name: webtlo
+        volumeMounts:
+        - name: localtime
+          mountPath: /tmp
+      volumes:
+      - name: tmp
+        hostPath:
+          path: /home/oleg/.local/tmp/qbittorrent
+          type: Directory
