@@ -23,7 +23,7 @@ spec:
         - /bin/sh
         - -l
         - -c
-        - sudo --user=oleg --login bash -ic 'guix home switch'
+        - sudo --user=oleg --login bash -ic 'guix home switch --allow-downgrades'
         image: docker-registry.wugi.info/library/util-linux-with-udev
         name: refresh
         resources:
