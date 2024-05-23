@@ -182,7 +182,7 @@
                 (let ((commit (string-take (string-trim-right output #\newline)
                                            8)))
                   (system* "yq" "-y" "-i"
-                           (string-append ".metadata.annotations[\"guix-default-channel-commit\"] = \""
+                           (string-append ".spec.template.metadata.annotations[\"guix-default-channel-commit\"] = \""
                                           commit "\"")
                            file)
                   (system* "git" "add" file)))
