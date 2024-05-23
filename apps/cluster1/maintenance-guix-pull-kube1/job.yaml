@@ -3,7 +3,7 @@ kind: Job
 metadata:
   name: guix-pull
   annotations:
-    guix-default-channel-commit: ece71b09
+    guix-default-channel-commit: 3049f9d4
 spec:
   template:
     spec:
