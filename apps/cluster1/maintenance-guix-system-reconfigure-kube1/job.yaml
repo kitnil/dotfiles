@@ -3,7 +3,7 @@ kind: Job
 metadata:
   name: guix-system-reconfigure
   annotations:
-    guix-default-channel-commit: "78662884"
+    guix-default-channel-commit: ece71b09
 spec:
   template:
     spec:
