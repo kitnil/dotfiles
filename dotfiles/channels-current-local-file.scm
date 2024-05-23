@@ -1,9 +1,9 @@
 (list (channel
         (name 'guix)
-        (url "https://cgit.wugi.info/git/guix/guix")
+        (url "file:///home/oleg/src/git.savannah.gnu.org/git/guix")
         (branch "master")
         (commit
-          "274716c3156aa3290666ee3d33a2f1101d02d572")
+          "13d78de1d27742605cf51fc0ed91b832cb5027c9")
         (introduction
           (make-channel-introduction
             "9edb3f66fd807b096b48283debdcddccfea34bad"
