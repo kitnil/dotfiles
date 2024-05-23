@@ -171,25 +171,26 @@
               (let ((channel-file (assoc-ref opts 'channel-file)))
                 (with-output-to-file channel-file
                   (lambda ()
-                    (display-channels)))
-                (system* "git" "add" channel-file)
-                (system* "git" "commit"
-                         (format #f "--message=\"Update ~a.\"" channel-file))
-                (let* ((port (open-pipe* OPEN_READ "git" "rev-parse" "HEAD"))
-                       (output (read-string port)))
-                  (close-port port)
-                  (let ((commit
-                         (string-take (string-trim-right output #\newline)
-                                      8))
-                        (file "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-pull-kube1/job.yaml"))
-                    (system* "yq" "-y" "-i"
-                             (string-append ".metadata.annotations[\"guix-default-channel-commit\"] = \""
-                                            commit "\"")
-                             file)
-                    (system* "git" "add" file)
-                    (system* "git" "commit"
-                             (format #f "--message=\"apps: cluster1: maintenance-guix-pull-kube1: Update to ~a.\""
-                                     commit))))))))))
-   outputs))
+                    (display-channels)))))))))
+   outputs)
+
+  (system* "git" "add" channel-file)
+  (system* "git" "commit"
+           (format #f "--message=\"Update ~a.\"" channel-file))
+  (let* ((port (open-pipe* OPEN_READ "git" "rev-parse" "HEAD"))
+         (output (read-string port)))
+    (close-port port)
+    (let ((commit
+           (string-take (string-trim-right output #\newline)
+                        8))
+          (file "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-pull-kube1/job.yaml"))
+      (system* "yq" "-y" "-i"
+               (string-append ".metadata.annotations[\"guix-default-channel-commit\"] = \""
+                              commit "\"")
+               file)
+      (system* "git" "add" file)
+      (system* "git" "commit"
+               (format #f "--message=\"apps: cluster1: maintenance-guix-pull-kube1: Update to ~a.\""
+                       commit)))))
 
 ;;; guix-latest ends here
