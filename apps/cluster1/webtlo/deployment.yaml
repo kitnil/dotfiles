@@ -8,7 +8,7 @@ spec:
       containers:
       - name: webtlo
         volumeMounts:
-        - name: localtime
+        - name: tmp
           mountPath: /tmp
       volumes:
       - name: tmp
