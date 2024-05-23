@@ -450,6 +450,12 @@ spec:
   interval: 1m0s
   path: ./apps/cluster1/maintenance-guix-system-reconfigure-kube1
   prune: true
+  # This means that the maintenance-guix-home-reconfigure-kube1 Kustomization
+  # will wait until all the Jobs in maintenance-guix-pull-kube1 run to
+  # completion. If the Job fails, the app changes will not be applied by the
+  # app-deploy Kustomization.
+  dependsOn:
+  - name: maintenance-guix-pull-kube1
   sourceRef:
     kind: GitRepository
     name: flux-system
