@@ -24,7 +24,7 @@ spec:
         - sh
         - -l
         - -c
-        - sudo --chdir=$WORKSPACE --user=oleg --login make dotfiles/channels-current-local-file.scm
+        - sudo --chdir=$WORKSPACE --user=oleg --login bash -ic make 'dotfiles/channels-current-local-file.scm'
         env:
         - name: WORKSPACE
           value: /home/oleg/.local/share/chezmoi
