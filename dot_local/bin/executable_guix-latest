@@ -93,9 +93,7 @@
                 (local-file?
                  (channel
                   (inherit %default-guix-channel)
-                  (url
-                   (string-append
-                    "file://" %home "/src/git.savannah.gnu.org/git/guix"))))
+                  (url "https://cgit.wugi.info/git/guix/guix")))
                 (else (channel-with-substitutes-available
                        %default-guix-channel
                        "http://ci.guix.gnu.org.wugi.info")))
