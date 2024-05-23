@@ -176,7 +176,7 @@
 
   (system* "git" "add" channel-file)
   (system* "git" "commit"
-           (format #f "--message=\"Update ~a.\"" channel-file))
+           (format #f "--message=Update ~a." channel-file))
   (let* ((port (open-pipe* OPEN_READ "git" "rev-parse" "HEAD"))
          (output (read-string port)))
     (close-port port)
@@ -190,7 +190,7 @@
                file)
       (system* "git" "add" file)
       (system* "git" "commit"
-               (format #f "--message=\"apps: cluster1: maintenance-guix-pull-kube1: Update to ~a.\""
+               (format #f "--message=apps: cluster1: maintenance-guix-pull-kube1: Update to ~a."
                        commit)))))
 
 ;;; guix-latest ends here
