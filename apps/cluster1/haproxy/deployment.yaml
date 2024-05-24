@@ -1,0 +1,30 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: haproxy
+spec:
+  strategy:
+    type: Recreate
+  template:
+    spec:
+      hostNetwork: true
+      containers:
+      - name: haproxy
+        command:
+        - /sbin/haproxy
+        - -f
+        - /etc/haproxy.cfg
+        volumeMounts:
+        - mountPath: /etc/haproxy.cfg
+          subPath: haproxy.cfg
+          name: haproxy-configuration
+        - mountPath: /run
+          subPath: run
+          name: tmp
+      volumes:
+      - name: haproxy-configuration
+        configMap:
+          name: haproxy-configuration
+      - name: tmp
+        emptyDir:
+          sizeLimit: 10M
