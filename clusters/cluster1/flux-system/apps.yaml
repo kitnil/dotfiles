@@ -412,6 +412,20 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
+  name: nix
+  namespace: flux-system
+spec:
+  interval: 1m0s
+  path: ./apps/base/nix
+  prune: true
+  wait: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
   name: maintenance-guix-latest-local-file
   namespace: flux-system
 spec:
