@@ -1,0 +1,11 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: nix-home-reconfigure
+spec:
+  template:
+    metadata:
+      annotations:
+        guix-default-channel-commit: 3049f9d4
+    spec:
+      nodeName: kube2
