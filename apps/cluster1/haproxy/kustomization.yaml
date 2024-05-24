@@ -9,3 +9,6 @@ configMapGenerator:
 - name: haproxy-configuration
   files:
   - haproxy.cfg=haproxy.cfg
+images:
+- name: docker-registry.wugi.info/library/haproxy
+  newTag: bbb0ca9f
