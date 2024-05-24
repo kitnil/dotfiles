@@ -301,5 +301,13 @@ util-linux-with-udev:
 	    :
 	fi
 
+container_registry=docker-registry.wugi.info
+.ONESHELL:
+haproxy:
+	set -o nounset -o errexit -o pipefail -o xtrace
+	commit_8=$$(git rev-parse HEAD | cut -c -8)
+	container=$$(guix pack -f docker --max-layers=100 -S /sbin=sbin haproxy)
+	skopeo copy --insecure-policy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
+
 .PHONY: all
 all: dotfiles/scripts/nix-ssh-known-hosts-to-file.scm
