@@ -60,6 +60,7 @@
             with packages;
             with packages.nur.repos.rycee.firefox-addons;
             [
+              copy-as-org-mode
               copy-all-tab-urls-we
               ublock-origin
             ];
