@@ -28,7 +28,7 @@ spec:
         - /bin/sh
         - -l
         - -c
-        - sudo --user=oleg --login bash -ic 'exec &> >(tee -a ~/.local/var/log/containers/nix-home-reconfigure.log); cd ~/.local/share/chezmoi/dotfiles/nix || exit 1; nix-shell --run "deploy .#$(HOSTNAME) -- -L"'
+        - sudo --user=oleg --login bash -ic 'exec &> >(tee -a ~/.local/var/log/containers/nix-home-reconfigure.log); cd ~/.local/share/chezmoi/dotfiles/nix || exit 1; make install'
         image: docker-registry.wugi.info/library/util-linux-with-udev
         name: nix-home-reconfigure
         resources:
