@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: haproxy
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: haproxy
+      app.kubernetes.io/part-of: haproxy
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: haproxy
+        app.kubernetes.io/part-of: haproxy
+    spec:
+      containers:
+      - image: docker-registry.wugi.info/library/haproxy
+        name: haproxy
+        resources:
+          limits:
+            cpu: 2000m
+            memory: 512Mi
+          requests:
+            cpu: 1000m
+            memory: 128Mi
