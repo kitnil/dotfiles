@@ -1,9 +1,9 @@
 (list (channel
         (name 'guix)
-        (url "file:///home/oleg/src/git.savannah.gnu.org/git/guix")
+        (url "https://cgit.wugi.info/git/guix/guix")
         (branch "master")
         (commit
-          "13d78de1d27742605cf51fc0ed91b832cb5027c9")
+          "6f72ad465c1e2df965e8d73b209497b4ef456527")
         (introduction
           (make-channel-introduction
             "9edb3f66fd807b096b48283debdcddccfea34bad"
@@ -20,7 +20,7 @@
         (url "https://gitlab.com/nonguix/nonguix")
         (branch "master")
         (commit
-          "34935b49ae20d236b0fc89943f0b1d0d5dea3a33")
+          "9446bf27a40a429baf98248ffa5d1b6942ac7f16")
         (introduction
           (make-channel-introduction
             "897c1a470da759236cc11798f4e0a5f7d4d59fbc"
