@@ -156,6 +156,9 @@
   (define outputs
     (map file->store-path (filter string? opts)))
 
+  (define channel-file
+    (assoc-ref opts 'channel-file))
+
   (for-each
    (match-lambda
      ((list drv channels ...)
@@ -166,26 +169,24 @@
         (if (assoc-ref opts 'dry-run?)
             (display-channels)
             (begin
-              (let ((channel-file (assoc-ref opts 'channel-file)))
-                (with-output-to-file channel-file
-                  (lambda ()
-                    (display-channels)))))))))
+              (with-output-to-file channel-file
+                (lambda ()
+                  (display-channels))))))))
    outputs)
 
   (system* "git" "add" channel-file)
   (system* "git" "commit"
            (format #f "--message=Update ~a." channel-file))
   (let* ((port (open-pipe* OPEN_READ "git" "rev-parse" "HEAD"))
-         (output (read-string port)))
+         (output (read-string port))
+         (commit (string-take (string-trim-right output #\newline) 8)))
     (close-port port)
     (for-each (lambda (file)
-                (let ((commit (string-take (string-trim-right output #\newline)
-                                           8)))
-                  (system* "yq" "-y" "-i"
-                           (string-append ".spec.template.metadata.annotations[\"guix-default-channel-commit\"] = \""
-                                          commit "\"")
-                           file)
-                  (system* "git" "add" file)))
+                (system* "yq" "-y" "-i"
+                         (string-append ".spec.template.metadata.annotations[\"guix-default-channel-commit\"] = \""
+                                        commit "\"")
+                         file)
+                (system* "git" "add" file))
               '("/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-pull-kube1/job.yaml"
                 "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-system-reconfigure-kube1/job.yaml"))
     (system* "git" "commit"
