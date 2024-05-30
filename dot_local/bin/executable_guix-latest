@@ -194,6 +194,10 @@
               '("/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-pull-kube1/job.yaml"
                 "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-system-reconfigure-kube1/job.yaml"
                 "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-package-manifest-kube1/job.yaml"
-                "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-home-reconfigure-kube1/job.yaml"))))
+                "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-home-reconfigure-kube1/job.yaml"
+                "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-pull-kube2/job.yaml"
+                "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-system-reconfigure-kube2/job.yaml"
+                "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-package-manifest-kube2/job.yaml"
+                "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-home-reconfigure-kube2/job.yaml"))))
 
 ;;; guix-latest ends here
