@@ -471,6 +471,7 @@ guix()
                         fi
                         guix_command+=(
                             "$HOME/.local/share/chezmoi/dotfiles/guixsd/home/${HOSTNAME}.scm"
+                            "${@:3}"
                         )
                         "${guix_command[@]}"
                     )
