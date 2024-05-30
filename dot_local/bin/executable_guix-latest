@@ -186,13 +186,14 @@
                          (string-append ".spec.template.metadata.annotations[\"guix-default-channel-commit\"] = \""
                                         commit "\"")
                          file)
-                (system* "git" "add" file))
+                (system* "git" "add" file)
+                (system* "git" "commit"
+                         (format #f "--message=apps: cluster1: guix: ~a: Update to ~a."
+                                 (basename (dirname file))
+                                 commit)))
               '("/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-pull-kube1/job.yaml"
                 "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-system-reconfigure-kube1/job.yaml"
                 "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-package-manifest-kube1/job.yaml"
-                "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-home-reconfigure-kube1/job.yaml"))
-    (system* "git" "commit"
-             (format #f "--message=apps: cluster1: guix: Update to ~a."
-                     commit))))
+                "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-home-reconfigure-kube1/job.yaml"))))
 
 ;;; guix-latest ends here
