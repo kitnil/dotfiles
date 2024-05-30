@@ -4,5 +4,8 @@ metadata:
   name: guix-system-reconfigure
 spec:
   template:
+    metadata:
+      annotations:
+        guix-default-channel-commit: '85455164'
     spec:
       nodeName: kube2
