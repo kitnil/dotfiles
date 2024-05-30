@@ -188,7 +188,9 @@
                          file)
                 (system* "git" "add" file))
               '("/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-pull-kube1/job.yaml"
-                "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-system-reconfigure-kube1/job.yaml"))
+                "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-system-reconfigure-kube1/job.yaml"
+                "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-package-manifest-kube1/job.yaml"
+                "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-home-reconfigure-kube1/job.yaml"))
     (system* "git" "commit"
              (format #f "--message=apps: cluster1: guix: Update to ~a."
                      commit))))
