@@ -1252,7 +1252,7 @@ location / {
                          ;; that can be used.
                          (pam-limits-service
                           (list
-                           (pam-limits-entry "*" 'both 'nofile 100000)))
+                           (pam-limits-entry "*" 'both 'nofile 1073741816)))
 
                          (service crowdsec-service-type)
                          (service crowdsec-firewall-bouncer-service-type)
