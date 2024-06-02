@@ -1,0 +1,10 @@
+apiVersion: source.toolkit.fluxcd.io/v1beta1
+kind: GitRepository
+metadata:
+  name: tf-controller
+  namespace: flux-system
+spec:
+  interval: 1h0s
+  ref:
+    tag: v0.15.1
+  url: https://github.com/weaveworks/tf-controller
