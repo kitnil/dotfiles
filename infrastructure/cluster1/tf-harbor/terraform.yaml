@@ -3,6 +3,7 @@ kind: Terraform
 metadata:
   name: tf-harbor
 spec:
+  approvePlan: plan-master-0657fc5aa1
   varsFrom:
   - kind: Secret
     name: tf-harbor-secrets
