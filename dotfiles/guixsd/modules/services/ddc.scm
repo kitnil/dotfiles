@@ -21,6 +21,7 @@
   #:use-module (gnu services shepherd)
   #:use-module (gnu services)
   #:use-module (guix gexp)
+  #:use-module (packages hardware)
   #:export (ddcutil-daemon-service-type))
 
 ;;; Commentary:
@@ -36,9 +37,8 @@
     (documentation "Run ddcutil-daemon.")
     (requirement '(user-processes loopback))
     (start #~(make-forkexec-constructor
-              (list #$(local-file "/home/oleg/src/gitlab.com/wigust/ddcutil-daemon/result/bin/ddcutil-daemon"
-                                  #:recursive? #t)
-                    #$(local-file "/home/oleg/src/gitlab.com/wigust/ddcutil-daemon/ddcutil-daemon.json"))
+              (list #$(file-append ddcutil-daemon "/bin/ddcutil-daemon")
+                    #$(local-file "/home/oleg/.local/share/chezmoi/dotfiles/ddcutil-daemon/ddcutil-daemon.json"))
               #:environment-variables
               (append (list "PATH=/home/oleg/.nix-profile/bin")
                       (filter (negate
