@@ -1,6 +1,6 @@
 proxy:
-  httpProxy: socks5://127.0.0.1:9160
-  httpsProxy: socks5://127.0.0.1:9160
+  httpProxy: socks5://example-tor-instance-tor-svc.tor-controller-instance:9050
+  httpsProxy: socks5://example-tor-instance-tor-svc.tor-controller-instance:9050
 
 persistence:
   persistentVolumeClaim:
