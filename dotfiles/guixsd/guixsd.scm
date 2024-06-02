@@ -1834,7 +1834,12 @@ PasswordAuthentication yes")))
                          (service syncthing-service-type
                                   (syncthing-configuration (user "oleg")))
 
-                         (service containerd-service-type)
+                         (service containerd-service-type
+                                  (containerd-configuration
+                                   (environment-variables
+                                    ;; torbrowser
+                                    '("HTTP_PROXY=socks5://127.0.0.1:9150"
+                                      "HTTPS_PROXY=socks5://127.0.0.1:9150"))))
                          (service docker-service-type)
                          ;; docker-kiwiirc-service
 
