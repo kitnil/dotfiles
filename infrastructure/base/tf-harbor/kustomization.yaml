@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: flux-system
+resources:
+- terraform.yaml
+configMapGenerator:
+- name: terraform-configuration
+  options:
+    disableNameSuffixHash: true
+  files:
+  - .terraformrc=rootfs/home/runner/.terraformrc

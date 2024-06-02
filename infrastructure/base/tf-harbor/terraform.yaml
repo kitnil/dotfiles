@@ -1,0 +1,23 @@
+apiVersion: infra.contrib.fluxcd.io/v1alpha1
+kind: Terraform
+metadata:
+  name: tf-harbor
+spec:
+  storeReadablePlan: human
+  path: dotfiles/maintenance/harbor
+  interval: 1m
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+    namespace: flux-system
+  runnerPodTemplate:
+    spec:
+      volumes:
+      - name: terraform-configuration
+        configMap:
+          name: terraform-configuration
+      volumeMounts:
+      - name: terraform-configuration
+        mountPath: /home/runner/.terraformrc
+        subPath: .terraformrc
+        readOnly: true
