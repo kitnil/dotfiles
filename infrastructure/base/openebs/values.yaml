@@ -1,0 +1,45 @@
+analytics:
+    enabled: false
+
+apiserver:
+    enabled: false
+
+# featureGates:
+#     enabled: true
+#     GPTBasedUUID:
+#       enabled: true
+
+localprovisioner:
+    enabled: false
+    deviceClass:
+      enabled: true
+    hostpathClass:
+      enabled: true
+
+ndm:
+    enabled: false
+
+ndmOperator:
+    enabled: false
+
+policies:
+    monitoring:
+      enabled: false
+
+provisioner:
+    enabled: false
+
+snapshotOperator:
+    enabled: false
+
+# webhook:
+#     enabled: true
+
+# openebs nfs provisioner configuration goes here
+# ref - https://openebs.github.io/dynamic-nfs-provisioner
+nfs-provisioner:
+  enabled: true
+  nfsProvisioner:
+    # Only single nfsProvisioner replica does not need leader election.
+    # Make shure etcd is able to handle the load if enabled.
+    enableLeaderElection: "false"
