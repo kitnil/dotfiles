@@ -2,3 +2,7 @@ apiVersion: infra.contrib.fluxcd.io/v1alpha1
 kind: Terraform
 metadata:
   name: tf-harbor
+spec:
+  varsFrom:
+  - kind: Secret
+    name: tf-harbor-secrets
