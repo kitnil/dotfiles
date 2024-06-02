@@ -1,0 +1,10 @@
+image:
+  tag: "0.7.0"
+
+rules:
+- name: 'docker.io rewrite rule'
+  # image refs must match at least one of the rules, and not match any excludes
+  matches:
+  - '^docker.io'
+  replace: 'harbor.home.wugi.info/dockerhub'
+  checkUpstream: false

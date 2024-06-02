@@ -1,0 +1,10 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: harbor-container-webhook
+spec:
+  valuesFrom:
+  - kind: ConfigMap
+    name: harbor-container-webhook-values
+  - kind: ConfigMap
+    name: harbor-container-webhook-values-cluster1

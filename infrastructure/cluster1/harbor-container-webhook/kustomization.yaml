@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: harbor-container-webhook
+resources:
+- ../../base/harbor-container-webhook
+patchesStrategicMerge:
+- release.yaml
+configMapGenerator:
+- name: harbor-container-webhook-values-cluster1
+  files:
+  - values.yaml=values.yaml
