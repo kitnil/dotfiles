@@ -1,0 +1,19 @@
+apiVersion: "cilium.io/v2"
+kind: CiliumNetworkPolicy
+description: "Allow HTTP GET /public from env=prod to app=service"
+metadata:
+  name: "rule1"
+spec:
+  endpointSelector:
+    matchLabels:
+      app: service
+  ingress:
+  - fromEndpoints:
+    toPorts:
+    - ports:
+      - port: "443"
+        protocol: TCP
+      rules:
+        http:
+        - method: "GET"
+          path: "/"
