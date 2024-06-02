@@ -1,0 +1,12 @@
+replicaCount: 1
+concurrency: 24
+resources:
+  limits:
+    cpu: 1000m
+    memory: 2Gi
+  requests:
+    cpu: 400m
+    memory: 64Mi
+caCertValidityDuration: 24h
+certRotationCheckFrequency: 30m
+logLevel: debug

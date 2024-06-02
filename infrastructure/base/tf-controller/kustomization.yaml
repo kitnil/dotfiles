@@ -1,0 +1,13 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: flux-system
+resources:
+- release.yaml
+- rbac/rolebinding.yaml
+- rbac/role.yaml
+configMapGenerator:
+- name: tf-controller-values
+  files:
+  - values.yaml=values.yaml
+configurations:
+- kustomizeconfig.yaml
