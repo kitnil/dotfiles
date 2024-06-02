@@ -1834,6 +1834,7 @@ PasswordAuthentication yes")))
                          (service syncthing-service-type
                                   (syncthing-configuration (user "oleg")))
 
+                         (service containerd-service-type)
                          (service docker-service-type)
                          ;; docker-kiwiirc-service
 
