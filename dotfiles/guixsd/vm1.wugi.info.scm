@@ -266,6 +266,7 @@ client-to-client
                                     (file
                                      (local-file "etc/nginx/stream.1.conf"))))
 
+                          (service containerd-service-type)
                           (service docker-service-type)
 
                           (service docker-compose-service-type
