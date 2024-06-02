@@ -3,7 +3,7 @@
         (url "https://cgit.wugi.info/git/guix/guix")
         (branch "master")
         (commit
-          "ff7c68d743927b20a3b43e6202f6e1726552d0e7")
+          "24e1a26fed7e38c30eaa8bac15467bee34108c43")
         (introduction
           (make-channel-introduction
             "9edb3f66fd807b096b48283debdcddccfea34bad"
