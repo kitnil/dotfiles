@@ -1,37 +1,3 @@
-core:
-  image:
-    repository: "harbor.corp1.majordomo.ru/goharbor/harbor-core"
-database:
-  internal:
-    image:
-      repository: "harbor.corp1.majordomo.ru/goharbor/harbor-db"
-exporter:
-  image:
-    repository: "harbor.corp1.majordomo.ru/goharbor/harbor-exporter"
-jobservice:
-  image:
-    repository: "harbor.corp1.majordomo.ru/goharbor/harbor-jobservice"
-nginx:
-  image:
-    repository: "harbor.corp1.majordomo.ru/goharbor/nginx-photon"
-portal:
-  image:
-    repository: "harbor.corp1.majordomo.ru/goharbor/harbor-portal"
-redis:
-  internal:
-    image:
-      repository: "harbor.corp1.majordomo.ru/goharbor/redis-photon"
-registry:
-  controller:
-    image:
-      repository: "harbor.corp1.majordomo.ru/goharbor/harbor-registryctl"
-  registry:
-    image:
-      repository: "harbor.corp1.majordomo.ru/goharbor/registry-photon"
-trivy:
-  image:
-    repository: "harbor.corp1.majordomo.ru/goharbor/trivy-adapter-photon"
-
 proxy:
   httpProxy: socks5://127.0.0.1:9160
   httpsProxy: socks5://127.0.0.1:9160
