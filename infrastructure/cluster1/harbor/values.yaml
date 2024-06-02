@@ -1,0 +1,92 @@
+core:
+  image:
+    repository: "harbor.corp1.majordomo.ru/goharbor/harbor-core"
+database:
+  internal:
+    image:
+      repository: "harbor.corp1.majordomo.ru/goharbor/harbor-db"
+exporter:
+  image:
+    repository: "harbor.corp1.majordomo.ru/goharbor/harbor-exporter"
+jobservice:
+  image:
+    repository: "harbor.corp1.majordomo.ru/goharbor/harbor-jobservice"
+nginx:
+  image:
+    repository: "harbor.corp1.majordomo.ru/goharbor/nginx-photon"
+portal:
+  image:
+    repository: "harbor.corp1.majordomo.ru/goharbor/harbor-portal"
+redis:
+  internal:
+    image:
+      repository: "harbor.corp1.majordomo.ru/goharbor/redis-photon"
+registry:
+  controller:
+    image:
+      repository: "harbor.corp1.majordomo.ru/goharbor/harbor-registryctl"
+  registry:
+    image:
+      repository: "harbor.corp1.majordomo.ru/goharbor/registry-photon"
+trivy:
+  image:
+    repository: "harbor.corp1.majordomo.ru/goharbor/trivy-adapter-photon"
+
+proxy:
+  httpProxy: socks5://127.0.0.1:9160
+  httpsProxy: socks5://127.0.0.1:9160
+
+persistence:
+  persistentVolumeClaim:
+    registry:
+      storageClass: linstor-pool0
+      size: 160Gi
+    jobservice:
+      jobLog:
+        storageClass: openebs-kernel-nfs
+        accessMode: ReadWriteMany
+      scanDataExports:
+        storageClass: openebs-kernel-nfs
+        accessMode: ReadWriteMany
+    database:
+      storageClass: linstor-pool0
+    redis:
+      storageClass: linstor-pool0
+    trivy:
+      storageClass: openebs-kernel-nfs
+
+updateStrategy:
+  type: Recreate
+
+externalURL: https://harbor.home.wugi.info
+
+expose:
+  tls:
+    certSource: secret # generate by cert-manager
+    secret:
+      secretName: harbor-ingress-certs
+  ingress:
+    annotations:
+      cert-manager.io/cluster-issuer: letsencrypt
+    className: nginx
+    hosts:
+      core: harbor.home.wugi.info
+    harbor:
+      labels:
+        # harbor does not return a successful HTTP code for ingress paths.
+        ingress.cluster.local/probe: "false"
+
+chartmuseum:
+  enabled: false
+
+trivy:
+  enabled: false
+
+notary:
+  enabled: false
+
+trace:
+  enabled: false
+
+cache:
+  enabled: false
