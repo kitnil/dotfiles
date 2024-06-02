@@ -162,6 +162,7 @@
                      (service ladspa-service-type
                               (ladspa-configuration (plugins (list swh-plugins))))
 
+                     (service containerd-service-type)
                      (service docker-service-type)
 
                      (service edgecore-service-type
