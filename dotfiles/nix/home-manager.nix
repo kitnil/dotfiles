@@ -259,11 +259,6 @@
         complete -C ${packages.vault-bin}/bin/vault vault3
         complete -C ${packages.vault-bin}/bin/vault vault4
         complete -C ${packages.vault-bin}/bin/vault vault-ci
-
-        if [[ -n $ALACRITTY_WINDOW_ID ]]
-        then
-            ${packages.fastfetch}/bin/fastfetch
-        fi
       '';
     };
     ".mozilla/native-messaging-hosts/passff.json" = {
