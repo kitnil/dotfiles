@@ -2582,21 +2582,4 @@ then
     export MANPAGER
     MANROFFOPT="-c"
     export MANROFFOPT
-
-    _tokei_hook()
-    {
-        if [[ -e .git/config ]]
-        then
-            if [[ $PWD == $_tokei_directory ]]
-            then
-                :
-            else
-                _tokei_directory="$PWD"
-                tokei
-            fi
-        fi
-    }
-    if ! [[ "${PROMPT_COMMAND:-}" =~ _tokei_hook ]]; then
-        PROMPT_COMMAND="_tokei_hook${PROMPT_COMMAND:+;$PROMPT_COMMAND}"
-    fi
 fi
