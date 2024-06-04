@@ -4,13 +4,6 @@ set -o nounset -o errexit -o pipefail
 
 . /etc/environment
 
-if [[ -e /dev/lvm1/hpvolumes ]]
-then
-    echo "Device '/dev/lvm1/hpvolumes' exists." 2>&1
-else
-    /home/oleg/.guix-profile/sbin/lvchange -ay /dev/lvm1/hpvolumes
-fi
-
 if [[ -e /var/lib/kubelet/.maintenance ]]
 then
     echo "File '/var/lib/kubelet/.maintenance' exists."

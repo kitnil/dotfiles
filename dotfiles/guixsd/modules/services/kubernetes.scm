@@ -94,6 +94,17 @@
 (define %drbd-module
   "drbd9")
 
+(define %hpvolumes
+  "/dev/lvm1/hpvolumes")
+
+(define (lvm-requirements)
+  (with-imported-modules '((guix build utils))
+    #~(begin
+        (use-modules (guix build utils))
+        (unless (file-exists? #$%hpvolumes)
+          (invoke (system* #$(file-append lvm2 "/sbin/lvchange")
+                           #$%hpvolumes))))))
+
 (define (drbd-requirements)
   (with-imported-modules '((guix build utils))
     #~(begin
@@ -262,6 +273,7 @@
        #$(kubernetes-images)
        #$(cilium-requirements)
        #$(drbd-requirements)
+       #$(lvm-requirements)
        #$args)))
 
 (define (kubelet-shepherd-service config)
