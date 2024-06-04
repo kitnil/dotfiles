@@ -115,6 +115,18 @@
           (invoke #$(file-append util-linux+udev "/bin/mount")
                   "--make-shared" "/var/hpvolumes")))))
 
+(define (prlimit-requirements)
+  (with-imported-modules '((guix build utils))
+    #~(begin
+        (use-modules (ice-9 rdelim)
+                     (guix build utils))
+        (let ((containerd-pid
+               (string-trim
+                (with-input-from-file "/run/containerd/containerd.pid"
+                  read-string))))
+          (invoke "prlimit" "--pid" containerd-pid "--nofile=1048576:1048576")
+          (invoke "prlimit" "--pid" containerd-pid "--nproc=unlimited")))))
+
 (define (drbd-requirements)
   (with-imported-modules '((guix build utils))
     #~(begin
@@ -284,6 +296,7 @@
        #$(cilium-requirements)
        #$(drbd-requirements)
        #$(hpvolumes-requirements)
+       #$(prlimit-requirements)
        #$args)))
 
 (define (kubelet-shepherd-service config)

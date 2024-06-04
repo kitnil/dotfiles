@@ -16,12 +16,6 @@ else
 EOF
 fi
 
-# Add rlimits to service file by crosbymichael · Pull Request #1846
-# https://github.com/containerd/containerd/pull/1846
-containerd_pid="$(cat /run/containerd/containerd.pid)"
-prlimit --pid "$containerd_pid" --nofile=1048576:1048576
-prlimit --pid "$containerd_pid" --nproc=unlimited
-
 kubelet \
     --address=192.168.0.144 \
     --node-ip=192.168.0.144 \
