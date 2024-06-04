@@ -321,7 +321,7 @@
                            #$(if (kubelet-configuration-drbd? config)
                                  (drbd-requirements)
                                  '())
-                           #$(if (kubelet-configuration-hpvolumes?)
+                           #$(if (kubelet-configuration-hpvolumes? config)
                                  (hpvolumes-requirements)
                                  '())
                            #$(prlimit-requirements)
