@@ -414,6 +414,8 @@ client-to-client
                                                  ;;
                                                  ;; use containerd directly
                                                  "--container-runtime-endpoint" "unix:///run/containerd/containerd.sock"
+
+                                                 "--disable-default-registry-endpoint"
                                                  ))))
 
                           (service openvswitch-service-type)
