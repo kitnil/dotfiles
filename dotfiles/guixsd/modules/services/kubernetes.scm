@@ -169,7 +169,7 @@
           (system
            (format #f
                    "~a ~a | ~a -n k8s.io image import --all-platforms -"
-                   (file-append coreutils "/bin/cat")
+                   #$(file-append coreutils "/bin/cat")
                    #$image-file
                    ctr))))))
 
