@@ -398,7 +398,6 @@ client-to-client
                                                  ;; Required for metrics-server TLS certificate.
                                                  "--node-ip" "192.168.25.1"
 
-                                                 "--no-deploy" "traefik"
                                                  "--disable" "traefik"
 
                                                  "--disable-network-policy"
