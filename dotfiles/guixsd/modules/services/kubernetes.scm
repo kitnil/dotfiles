@@ -304,6 +304,12 @@
          (default #f))
   (hpvolumes? kubelet-configuration-hpvolumes? ;boolean
               (default #f))
+  (kubevirt? kubernetes-kubelet-configuration-kubevirt? ;boolean
+             (default #f))
+  (cilium?   kubernetes-kubelet-configuration-cilium?   ;boolean
+             (default #f))
+  (flux?     kubernetes-kubelet-configuration-flux?     ;boolean
+             (default #f))
   (arguments kubelet-configuration-arguments ;list of strings
              (default '())))
 
@@ -357,7 +363,23 @@
     (list (service-extension shepherd-root-service-type
                              kubelet-shepherd-service)
           (service-extension rottlog-service-type
-                             kubelet-log-rotations)))
+                             kubelet-log-rotations)
+          (service-extension profile-service-type
+                             (lambda (config)
+                               (append (list kubelet
+                                             kubectl
+                                             kubernetes-helm
+                                             nerdctl
+                                             k9s)
+                                       (if (kubernetes-kubelet-configuration-cilium? config)
+                                           (list cilium)
+                                           '())
+                                       (if (kubernetes-kubelet-configuration-flux? config)
+                                           (list flux)
+                                           '())
+                                       (if (kubernetes-kubelet-configuration-kubevirt? config)
+                                           (list virtctl)
+                                           '()))))))
    (default-value (kubelet-configuration))
    (description "Run the kubelet.")))
 
