@@ -52,11 +52,11 @@
          (copy-file "cmd/crowdsec-cli/cscli"
                     (string-append %output "/bin/cscli"))
          (mkdir-p (string-append %output "/share/crowdsec/plugins"))
-         (copy-file "cmd/notification-email/notification-email"
+         (copy-file "plugins/notifications/email/notification-email"
                     (string-append %output "/share/crowdsec/plugins/notification-email"))
-         (copy-file "cmd/notification-http/notification-http"
+         (copy-file "plugins/notifications/http/notification-http"
                     (string-append %output "/share/crowdsec/plugins/notification-http"))
-         (copy-file "cmd/notification-slack/notification-slack"
+         (copy-file "plugins/notifications/slack/notification-slack"
                     (string-append %output "/share/crowdsec/plugins/notification-slack")))))
     (home-page "https://crowdsec.net/")
     (synopsis "Collaborative behavior detection engine")
