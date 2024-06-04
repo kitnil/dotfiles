@@ -76,7 +76,8 @@
                                 %ssh-hosts-file-hosts))
            "192.168.25.3 node-0.example.com"
            "192.168.0.140 retracker.local"
-           (string-join '("::1" "vm1.wugi.info" "localhost")))
+           (string-join '("::1" "vm1.wugi.info" "localhost"))
+           "\n")
      "\n")))
 
   (sudoers-file (plain-file "sudoers" "\
