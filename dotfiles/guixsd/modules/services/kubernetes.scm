@@ -104,6 +104,46 @@
           (invoke (system* #$(file-append kmod "/bin/modprobe")
                            #$%drbd-module))))))
 
+(define %coredns-image
+  "docker.io/coredns/coredns:1.7.1")
+
+(define coredns-image-file
+  "/nix/store/1crdy15nv25jpbvknrzyhg6khv9ikhl9-docker-image-coredns-coredns-1.7.1.tar")
+
+(define %pause-image
+  "docker.io/library/pause:latest")
+
+(define pause-image-file
+  "/nix/store/xjlwhyqjhx0j2sc41wfpsw1zvhn98vh5-docker-image-pause.tar.gz")
+
+(define (containerd-load-image image-name image-file)
+  #~(begin
+      (use-modules (ice-9 format)
+                   (ice-9 popen)
+                   (ice-9 rdelim)
+                   (srfi srfi-1))
+      (let* ((ctr #$(file-append containerd "/bin/ctr"))
+             (port (open-pipe* OPEN_READ
+                               ctr "--namespace" "k8s.io" "images" "list"))
+             (output (read-string port)))
+        (close-port port)
+        (unless (any (lambda (line)
+                       (string-prefix? #$image-name line))
+                     (string-split (string-trim-right output #\newline)
+                                   #\newline))
+          (system
+           (format #f
+                   "~a ~a | ~a -n k8s.io image import --all-platforms -"
+                   (file-append coreutils "/bin/cat")
+                   #$image-file
+                   ctr))))))
+
+(define (kubernetes-images)
+  (with-imported-modules '((guix build utils))
+    #~(begin
+        #$(containerd-load-image %coredns-image coredns-image-file)
+        #$(containerd-load-image %pause-image pause-image-file))))
+
 (define (k3s-wrapper args)
   (program-file
    "k3s-wrapper"
@@ -219,6 +259,7 @@
   (program-file
    "kubelet-wrapper"
    #~(begin
+       #$(kubernetes-images)
        #$(cilium-requirements)
        #$(drbd-requirements)
        #$args)))

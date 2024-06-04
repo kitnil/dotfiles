@@ -4,9 +4,6 @@ set -o nounset -o errexit -o pipefail
 
 . /etc/environment
 
-coredns_image="${KUBELET_COREDNS_IMAGE:-/nix/store/1crdy15nv25jpbvknrzyhg6khv9ikhl9-docker-image-coredns-coredns-1.7.1.tar}"
-pause_image="${KUBELET_PAUSE_IMAGE:-/nix/store/xjlwhyqjhx0j2sc41wfpsw1zvhn98vh5-docker-image-pause.tar.gz}"
-
 if [[ -e /dev/lvm1/hpvolumes ]]
 then
     echo "Device '/dev/lvm1/hpvolumes' exists." 2>&1
@@ -24,20 +21,6 @@ else
 # Remove this file and restart the 'kubelet' service.
 # The 'kubelet' service automatically recreates this file and proseed.
 EOF
-fi
-
-if [[ $(ctr --namespace k8s.io images list) == *docker.io/coredns/coredns:1.7.1* ]]
-then
-    :
-else
-    cat "$coredns_image" | ctr -n k8s.io image import --all-platforms -
-fi
-
-if [[ $(ctr --namespace k8s.io images list) == *docker.io/library/pause:latest* ]]
-then
-    :
-else
-    zcat "$pause_image" | ctr -n k8s.io image import --all-platforms -
 fi
 
 if [[ -d /var/hpvolumes ]]
