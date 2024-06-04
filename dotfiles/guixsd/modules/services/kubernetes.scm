@@ -91,6 +91,19 @@
         (invoke #$(file-append util-linux+udev "/bin/mount")
                 "--make-shared" "/"))))
 
+(define %drbd-module
+  "drbd9")
+
+(define (drbd-requirements)
+  (with-imported-modules '((guix build utils))
+    #~(begin
+        (use-modules (guix build utils))
+        (setenv "LINUX_MODULE_DIRECTORY"
+                "/run/booted-system/kernel/lib/modules")
+        (unless (file-exists? "/proc/drbd")
+          (invoke (system* #$(file-append kmod "/bin/modprobe")
+                           #$%drbd-module))))))
+
 (define (k3s-wrapper args)
   (program-file
    "k3s-wrapper"
@@ -207,6 +220,7 @@
    "kubelet-wrapper"
    #~(begin
        #$(cilium-requirements)
+       #$(drbd-requirements)
        #$args)))
 
 (define (kubelet-shepherd-service config)
