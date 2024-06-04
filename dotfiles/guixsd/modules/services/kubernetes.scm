@@ -97,13 +97,23 @@
 (define %hpvolumes
   "/dev/lvm1/hpvolumes")
 
-(define (lvm-requirements)
+(define %hpvolumes-mount-directory
+  "/var/hpvolumes")
+
+(define (hpvolumes-requirements)
   (with-imported-modules '((guix build utils))
     #~(begin
         (use-modules (guix build utils))
         (unless (file-exists? #$%hpvolumes)
           (invoke (system* #$(file-append lvm2 "/sbin/lvchange")
-                           #$%hpvolumes))))))
+                           #$%hpvolumes)))
+        (unless (zero? (system* #$(file-append util-linux+udev "/bin/mountpoint")
+                                "--quiet"
+                                #$%hpvolumes-mount-directory))
+          (invoke #$(file-append util-linux+udev "/bin/mount")
+                  "/dev/lvm1/hpvolumes" "/var/hpvolumes")
+          (invoke #$(file-append util-linux+udev "/bin/mount")
+                  "--make-shared" "/var/hpvolumes")))))
 
 (define (drbd-requirements)
   (with-imported-modules '((guix build utils))
@@ -273,7 +283,7 @@
        #$(kubernetes-images)
        #$(cilium-requirements)
        #$(drbd-requirements)
-       #$(lvm-requirements)
+       #$(hpvolumes-requirements)
        #$args)))
 
 (define (kubelet-shepherd-service config)

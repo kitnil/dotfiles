@@ -16,20 +16,6 @@ else
 EOF
 fi
 
-if [[ -d /var/hpvolumes ]]
-then
-    if mountpoint --quiet /var/hpvolumes
-    then
-        :
-    else
-        # Uncomment if '/var/hpvolumes' directory is on a '/' file-system.
-        # mount --bind /var/hpvolumes /var/hpvolumes
-        mount /dev/lvm1/hpvolumes /var/hpvolumes
-
-        mount --make-shared /var/hpvolumes
-    fi
-fi
-
 # Add rlimits to service file by crosbymichael · Pull Request #1846
 # https://github.com/containerd/containerd/pull/1846
 containerd_pid="$(cat /run/containerd/containerd.pid)"
