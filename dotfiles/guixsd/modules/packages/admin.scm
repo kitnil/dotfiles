@@ -27,7 +27,7 @@
                                   version "/crowdsec-release.tgz"))
               (sha256
                (base32
-                "02lapak173y9c96jwghwq9fm6yzjmzcqzil4b5hrr8v46044rl2l"))))
+                "035s1kgxi7h3lv10blx7q891wjmz9wm3bslajcj220c2cbs16rmg"))))
     (build-system trivial-build-system)
     (inputs
      (list bash-minimal gzip tar glibc patchelf))
