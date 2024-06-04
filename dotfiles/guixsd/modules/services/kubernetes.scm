@@ -17,6 +17,8 @@
 ;;; along with GNU Guix.  If not, see <http://www.gnu.org/licenses/>.
 
 (define-module (services kubernetes)
+  #:use-module (gnu packages base)
+  #:use-module (gnu packages compression)
   #:use-module (gnu packages docker)
   #:use-module (gnu packages linux)
   #:use-module (gnu services)
@@ -177,6 +179,17 @@
         #$(containerd-load-image %coredns-image coredns-image-file)
         #$(containerd-load-image %pause-image pause-image-file))))
 
+(define (maintenance)
+  (with-imported-modules '((guix build utils))
+    #~(begin
+        (if (file-exists? "/var/lib/kubelet/.maintenance")
+            (begin
+              (display "File /var/lib/kubelet/.maintenance exists.")
+              (invoke #$(file-append coreutils "/bin/sleep")
+                       "infinity"))
+            (invoke #$(file-append coreutils "/bin/touch")
+                    "/var/lib/kubelet/.maintenance")))))
+
 (define (k3s-wrapper args)
   (program-file
    "k3s-wrapper"
@@ -278,7 +291,7 @@
   kubelet-configuration make-kubelet-configuration
   kubelet-configuration?
   (kubelet kubelet-configuration-kubelet ;string
-           (default #f))
+           (default kubernetes))
   (log-file kubelet-configuration-log-file ;string
             (default "/var/log/kubelet.log"))
   (arguments kubelet-configuration-arguments ;list of strings
@@ -292,6 +305,7 @@
   (program-file
    "kubelet-wrapper"
    #~(begin
+       #$(maintenance)
        #$(kubernetes-images)
        #$(cilium-requirements)
        #$(drbd-requirements)
@@ -310,6 +324,18 @@
                        #~(execl #$(kubelet-configuration-kubelet config)
                                 "kubelet"
                                 #$@(kubelet-configuration-arguments config))))
+              #:environment-variables
+              (list
+               (string-append "PATH="
+                              #$(file-append containerd "/bin")
+                              ":" #$(file-append coreutils "/bin")
+                              ":" #$(file-append grep "/bin")
+                              ":" #$(file-append gzip "/bin")
+                              ":" #$(file-append kmod "/bin")
+                              ":" #$(file-append util-linux "/bin")
+                              ":" #$(string-append
+                                     (kubelet-configuration-kubelet config)
+                                     "/bin")))
               #:log-file #$(kubelet-configuration-log-file config)))
     (stop #~(make-kill-destructor)))))
 
@@ -321,7 +347,7 @@
                              kubelet-shepherd-service)
           (service-extension rottlog-service-type
                              kubelet-log-rotations)))
-   (default-value '())
+   (default-value (kubelet-configuration))
    (description "Run the kubelet.")))
 
 

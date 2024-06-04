@@ -2000,8 +2000,35 @@ PasswordAuthentication yes")))
 
                          (service kubelet-service-type
                                   (kubelet-configuration
-                                   (kubelet (file-append (load "/home/oleg/.local/share/chezmoi/kubelet.scm")
-                                                         "/bin/kubelet.sh"))))
+                                   (kubelet "/nix/store/lp8ch8l5dn4bcp056cpr1gfyb9i8zi54-kubernetes-1.25.4/bin/kubelet")
+                                   (arguments
+                                    '("--address=192.168.0.144"
+                                      "--node-ip=192.168.0.144"
+                                      "--authentication-token-webhook"
+                                      "--authentication-token-webhook-cache-ttl=10s"
+                                      "--authorization-mode=Webhook"
+                                      "--client-ca-file=/etc/kubernetes/pki/ca.pem"
+                                      "--cluster-dns=10.8.255.254"
+                                      "--cluster-domain=cluster.local"
+                                      "--hairpin-mode=hairpin-veth"
+                                      "--healthz-bind-address=127.0.0.1"
+                                      "--healthz-port=10248"
+                                      "--hostname-override=kube1"
+                                      "--kubeconfig=/home/oleg/.local/share/chezmoi/dotfiles/kubernetes/kubeconfig"
+                                      "--pod-infra-container-image=pause"
+                                      "--port=10250"
+                                      "--register-node=true"
+                                      "--register-with-taints=unschedulable=true:NoSchedule"
+                                      "--root-dir=/var/lib/kubelet"
+                                      "--tls-cert-file=/etc/kubernetes/pki/kubelet-client-kube1.pem"
+                                      "--tls-private-key-file=/etc/kubernetes/pki/kubelet-client-kube1-key.pem"
+                                      "--container-runtime=remote"
+                                      "--container-runtime-endpoint=unix:///run/containerd/containerd.sock"
+                                      "--fail-swap-on=false"
+                                      "--eviction-hard=nodefs.available<10Gi,nodefs.inodesFree<1000000,imagefs.available<10Gi,imagefs.inodesFree<1000000"
+                                      "--image-gc-high-threshold=95"
+                                      "--image-gc-low-threshold=90"
+                                      "--pod-manifest-path=/etc/kubernetes/manifests"))))
 
                          ;; (service prometheus-node-exporter-service-type
                          ;;          (prometheus-node-exporter-configuration
