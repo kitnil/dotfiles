@@ -2028,7 +2028,9 @@ PasswordAuthentication yes")))
                                       "--eviction-hard=nodefs.available<10Gi,nodefs.inodesFree<1000000,imagefs.available<10Gi,imagefs.inodesFree<1000000"
                                       "--image-gc-high-threshold=95"
                                       "--image-gc-low-threshold=90"
-                                      "--pod-manifest-path=/etc/kubernetes/manifests"))))
+                                      "--pod-manifest-path=/etc/kubernetes/manifests"))
+                                   (drbd? #t)
+                                   (hpvolumes? #t)))
 
                          ;; (service prometheus-node-exporter-service-type
                          ;;          (prometheus-node-exporter-configuration

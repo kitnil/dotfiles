@@ -294,24 +294,16 @@
            (default kubernetes))
   (log-file kubelet-configuration-log-file ;string
             (default "/var/log/kubelet.log"))
+  (drbd? kubelet-configuration-drbd? ;boolean
+         (default #f))
+  (hpvolumes? kubelet-configuration-hpvolumes? ;boolean
+              (default #f))
   (arguments kubelet-configuration-arguments ;list of strings
              (default '())))
 
 (define (kubelet-log-rotations config)
   (list (log-rotation
          (files (list (kubelet-configuration-log-file config))))))
-
-(define (kubelet-wrapper args)
-  (program-file
-   "kubelet-wrapper"
-   #~(begin
-       #$(maintenance)
-       #$(kubernetes-images)
-       #$(cilium-requirements)
-       #$(drbd-requirements)
-       #$(hpvolumes-requirements)
-       #$(prlimit-requirements)
-       #$args)))
 
 (define (kubelet-shepherd-service config)
   (list
@@ -320,10 +312,22 @@
     (provision '(kubelet))
     (requirement '(networking containerd))
     (start #~(make-forkexec-constructor
-              (list #$(kubelet-wrapper
-                       #~(execl #$(kubelet-configuration-kubelet config)
-                                "kubelet"
-                                #$@(kubelet-configuration-arguments config))))
+              (list #$(program-file
+                       "kubelet"
+                       #~(begin
+                           #$(maintenance)
+                           #$(kubernetes-images)
+                           #$(cilium-requirements)
+                           #$(if (kubelet-configuration-drbd? config)
+                                 (drbd-requirements)
+                                 '())
+                           #$(if (kubelet-configuration-hpvolumes?)
+                                 (hpvolumes-requirements)
+                                 '())
+                           #$(prlimit-requirements)
+                           (execl #$(kubelet-configuration-kubelet config)
+                                  "kubelet"
+                                  #$@(kubelet-configuration-arguments config)))))
               #:environment-variables
               (list
                (string-append "PATH="
