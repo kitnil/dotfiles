@@ -388,35 +388,6 @@ client-to-client
                           (service crowdsec-service-type)
                           (service crowdsec-firewall-bouncer-service-type)
 
-                          (service kubernetes-k3s-service-type
-                                   (kubernetes-k3s-configuration
-                                    (cilium? #t)
-                                    (flux? #t)
-                                    (server? #t)
-                                    (arguments '(;; "--node-external-ip" "201:c18b:10f7:a21:ac2c:cc10:f3e:64e6"
-
-                                                 ;; Required for metrics-server TLS certificate.
-                                                 "--node-ip" "192.168.25.1"
-
-                                                 "--disable" "traefik"
-
-                                                 "--disable-network-policy"
-                                                 "--disable" "servicelb"
-                                                 "--disable-kube-proxy"
-                                                 "--disable-helm-controller"
-
-                                                 "--disable" "coredns"
-                                                 "--flannel-backend" "none" ;Disable Flannel entirely.
-
-                                                 ;; use dockerd
-                                                 ;; "--docker"
-                                                 ;;
-                                                 ;; use containerd directly
-                                                 "--container-runtime-endpoint" "unix:///run/containerd/containerd.sock"
-
-                                                 "--disable-default-registry-endpoint"
-                                                 ))))
-
                           (service openvswitch-service-type)
 
                           (service kernel-module-loader-service-type
