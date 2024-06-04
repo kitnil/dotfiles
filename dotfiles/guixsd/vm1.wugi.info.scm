@@ -76,6 +76,7 @@
                                 %ssh-hosts-file-hosts))
            "192.168.25.3 node-0.example.com"
            "192.168.0.140 retracker.local"
+           "192.168.25.1 kube5001"
            "93.100.15.190 ci.guix.gnu.org.wugi.info"
            (string-join '("::1" "vm1.wugi.info" "localhost"))
            "\n")
