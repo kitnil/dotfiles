@@ -182,6 +182,7 @@
 (define (maintenance)
   (with-imported-modules '((guix build utils))
     #~(begin
+        (mkdir-p "/var/lib/kubelet")
         (if (file-exists? "/var/lib/kubelet/.maintenance")
             (begin
               (display "File /var/lib/kubelet/.maintenance exists.")
