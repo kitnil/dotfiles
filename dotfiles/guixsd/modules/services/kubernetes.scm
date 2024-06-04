@@ -136,8 +136,8 @@
         (setenv "LINUX_MODULE_DIRECTORY"
                 "/run/booted-system/kernel/lib/modules")
         (unless (file-exists? "/proc/drbd")
-          (invoke (system* #$(file-append kmod "/bin/modprobe")
-                           #$%drbd-module))))))
+          (invoke #$(file-append kmod "/bin/modprobe")
+                  #$%drbd-module)))))
 
 (define %coredns-image
   "docker.io/coredns/coredns:1.7.1")
