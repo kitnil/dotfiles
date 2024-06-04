@@ -391,6 +391,8 @@ client-to-client
                           (service kubelet-service-type
                                    (kubelet-configuration
                                     (kubelet "/nix/store/lp8ch8l5dn4bcp056cpr1gfyb9i8zi54-kubernetes-1.25.4/bin/kubelet")
+                                    (cilium? #t)
+                                    (flux? #t)
                                     (arguments
                                      '("--address=192.168.25.1"
                                        "--node-ip=192.168.25.1"
