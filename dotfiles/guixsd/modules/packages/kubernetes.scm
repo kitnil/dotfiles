@@ -22,7 +22,7 @@
 (define-public k3s
   (package
     (name "k3s")
-    (version "1.23.6")
+    (version "1.26.13")
     (source
      (origin
        (method url-fetch)
@@ -31,7 +31,7 @@
                        version "%2Bk3s1/k3s"))
        (sha256
         (base32
-         "1i7rv1pj29w1rrbf7q5r9bkxhvv1hphki5x7979z1wps628h63m6"))))
+         "1p43q5b2qgzrr4kybcqd42jccvyg4n322b8q3xmczd25dhr7wdlf"))))
     (build-system trivial-build-system)
     (native-inputs `(("source" ,source)))
     (arguments
