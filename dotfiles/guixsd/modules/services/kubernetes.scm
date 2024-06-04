@@ -191,6 +191,11 @@
             (invoke #$(file-append coreutils "/bin/touch")
                     "/var/lib/kubelet/.maintenance")))))
 
+(define (etcd)
+  (with-imported-modules '((guix build utils))
+    #~(begin
+        (mkdir-p "/var/lib/etcd"))))
+
 (define (k3s-wrapper args)
   (program-file
    "k3s-wrapper"
@@ -317,6 +322,7 @@
                        "kubelet"
                        #~(begin
                            #$(maintenance)
+                           #$(etcd)
                            #$(kubernetes-images)
                            #$(cilium-requirements)
                            '#$(if (kubelet-configuration-drbd? config)
