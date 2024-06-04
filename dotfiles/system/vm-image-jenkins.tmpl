@@ -77,8 +77,6 @@ root ALL=(ALL) ALL
                            (authorized-keys
                             `(("oleg" ,(local-file "/home/oleg/.ssh/id_rsa.pub"))))))
 
-                 (service jenkins-service-type %jenkins-config)
-
                  ;; Use the DHCP client service rather than NetworkManager.
                  (service dhcp-client-service-type))
 

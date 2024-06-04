@@ -349,10 +349,6 @@ location / {
                          "proxy_set_header X-Real-IP $remote_addr;"
                          "proxy_set_header X-Real-PORT $remote_port;"
                          "add_header Access-Control-Allow-Origin *;"))))))
-        (nginx-server-configuration
-         (inherit %githunt-nginx-configuration)
-         (listen '("192.168.0.144:80"
-                   "192.168.0.144:443 ssl")))
         (proxy "cups.tld" 631)
         (proxy "jenkins.wugi.info" 8090 #:ssl? #t #:ssl-key? #t #:mtls? #t)
         (proxy "syncthing.wugi.info" 8384 #:ssl? #t #:ssl-key? #t #:mtls? #t
@@ -1770,8 +1766,6 @@ PasswordAuthentication yes")))
                          (service php-fpm-service-type
                                   (php-fpm-configuration
                                    (timezone "Europe/Moscow")))
-
-                         ;; (service jenkins-service-type %jenkins-config)
 
                          ;; (service docker-compose-service-type
                          ;;          (docker-compose-configuration
