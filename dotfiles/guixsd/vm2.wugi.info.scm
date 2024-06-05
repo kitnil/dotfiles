@@ -43,6 +43,16 @@
                                         "audio" "video")))
                %base-user-accounts))
 
+  (hosts-file
+   (plain-file
+    "hosts"
+    (string-join
+     (list "127.0.0.1 vm2.wugi.info localhost"
+           "93.100.15.190 ci.guix.gnu.org.wugi.info"
+           "::1 vm2.wugi.info localhost"
+           "\n")
+     "\n")))
+
   ;; Globally-installed packages.
   (packages (append (list ipset iptables screen)
                     %base-packages))
