@@ -58,12 +58,22 @@
                     %base-packages))
 
   ;; Add services to the baseline.
-  (services (append (list (static-networking-service "eth0" "78.108.92.69"
-                                                     #:netmask "255.255.254.0"
-                                                     #:gateway "78.108.93.254"
-                                                     #:name-servers '("127.0.0.1"
-                                                                      "8.8.8.8"
-                                                                      "8.8.4.4"))
+  (services (append (list (service static-networking-service-type
+                                  (list (static-networking
+                                         (addresses
+                                          (list (network-address
+                                                 (device "eth0")
+                                                 (value "78.108.92.69"))
+                                                (network-address
+                                                 (device "lo")
+                                                 (value "192.168.26.1"))))
+                                         (routes
+                                          (list (network-route
+                                                 (destination "default")
+                                                 (gateway "78.108.93.254"))))
+                                         (name-servers '("127.0.0.1"
+                                                         "8.8.8.8"
+                                                         "8.8.4.4")))))
                           (service crowdsec-service-type)
                           (service crowdsec-firewall-bouncer-service-type)
                           (service ntp-service-type
