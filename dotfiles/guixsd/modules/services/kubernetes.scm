@@ -151,7 +151,7 @@
 (define pause-image-file
   "/nix/store/xjlwhyqjhx0j2sc41wfpsw1zvhn98vh5-docker-image-pause.tar.gz")
 
-(define (containerd-load-image image-name image-file format)
+(define (containerd-load-image image-name image-file command)
   #~(begin
       (use-modules (ice-9 format)
                    (ice-9 popen)
@@ -169,17 +169,17 @@
           (system
            (format #f
                    "~a ~a | ~a -n k8s.io image import --all-platforms -"
-                   #$(case format
-                       ((gzip) (file-append gzip "/bin/zcat")
-                        (file) (file-append coreutils "/bin/cat")))
+                   #$command
                    #$image-file
                    ctr))))))
 
 (define (kubernetes-images)
   (with-imported-modules '((guix build utils))
     #~(begin
-        #$(containerd-load-image %coredns-image coredns-image-file 'file)
-        #$(containerd-load-image %pause-image pause-image-file 'gzip))))
+        #$(containerd-load-image %coredns-image coredns-image-file
+                                 #$(file-append coreutils "/bin/cat"))
+        #$(containerd-load-image %pause-image pause-image-file
+                                 #$(file-append gzip "/bin/zcat")))))
 
 (define (maintenance)
   (with-imported-modules '((guix build utils))
