@@ -8,7 +8,8 @@
 (use-modules (config)
              (services dns)
              (services ipset)
-             (services networking))
+             (services networking)
+             (services kubernetes))
 
 (operating-system
   (host-name "vm2.wugi.info")
