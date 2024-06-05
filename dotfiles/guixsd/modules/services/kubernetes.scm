@@ -366,8 +366,7 @@
                              kubelet-log-rotations)
           (service-extension profile-service-type
                              (lambda (config)
-                               (append (list kubelet
-                                             kubectl
+                               (append (list kubectl
                                              kubernetes-helm
                                              nerdctl
                                              k9s)
