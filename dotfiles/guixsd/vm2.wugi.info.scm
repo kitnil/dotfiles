@@ -2,7 +2,7 @@
 ;; for a "bare bones" setup, with no X11 display server.
 
 (use-modules (gnu))
-(use-service-modules docker networking linux nix monitoring ssh)
+(use-service-modules dbus docker networking linux nix monitoring ssh)
 (use-package-modules certs linux screen ssh)
 
 (use-modules (config)
@@ -79,6 +79,7 @@
                           (service crowdsec-service-type)
                           (service crowdsec-firewall-bouncer-service-type)
                           (service containerd-service-type)
+                          (dbus-service)
                           (service docker-service-type)
                           (service kubelet-service-type
                                    (kubelet-configuration
