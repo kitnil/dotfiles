@@ -67,7 +67,7 @@
                                                  (device "eth0")
                                                  (value "78.108.92.69/23"))
                                                 (network-address
-                                                 (device "lo")
+                                                 (device "eth0")
                                                  (value "192.168.26.1/24"))))
                                          (routes
                                           (list (network-route
