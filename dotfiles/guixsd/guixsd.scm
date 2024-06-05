@@ -1151,7 +1151,7 @@ location / {
            ;; Kubernetes Nginx-Ingress -> Tor ClusterIP service
            "192.168.154.227 tor.home"
 
-           "192.168.25.12 znc.home"
+           "192.168.25.11 znc.home"
 
            ;; Android Phones
            "192.168.0.177 xiaomi-mi-mix-2s.home"
