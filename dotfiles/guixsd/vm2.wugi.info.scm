@@ -79,6 +79,7 @@
                           (service crowdsec-service-type)
                           (service crowdsec-firewall-bouncer-service-type)
                           (service containerd-service-type)
+                          (service docker-service-type)
                           (service kubelet-service-type
                                    (kubelet-configuration
                                     (kubelet "/nix/store/lp8ch8l5dn4bcp056cpr1gfyb9i8zi54-kubernetes-1.25.4/bin/kubelet")
