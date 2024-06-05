@@ -1,0 +1,23 @@
+k8sServiceHost: "192.168.26.1"
+k8sServicePort: "6443"
+
+# -- This feature set enables virtual BGP routers to be created via
+# CiliumBGPPeeringPolicy CRDs.
+bgpControlPlane:
+  # -- Enables the BGP control plane.
+  enabled: true
+
+# -- Configure BGP
+bgp:
+  # -- Enable BGP support inside Cilium; embeds a new ConfigMap for BGP inside
+  # cilium-agent and cilium-operator
+  enabled: true
+  announce:
+    # -- Enable allocation and announcement of service LoadBalancer IPs
+    loadbalancerIP: true
+
+cluster:
+  name: "cluster3"
+  id: 3
+
+ipv4NativeRoutingCIDR: 10.0.0.0/9

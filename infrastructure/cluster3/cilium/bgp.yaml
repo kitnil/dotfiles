@@ -1,0 +1,20 @@
+apiVersion: v1
+data:
+  config.yaml: |
+    address-pools:
+    - addresses:
+      - "192.168.26.11/32"
+      - "192.168.26.12/32"
+      - "192.168.26.13/32"
+      - "192.168.26.14/32"
+      - "192.168.26.15/32"
+      - "192.168.26.16/32"
+      - "192.168.26.17/32"
+      - "192.168.26.18/32"
+      - "192.168.26.19/32"
+      name: default
+      protocol: bgp
+kind: ConfigMap
+metadata:
+  name: bgp-config
+  namespace: kube-system
