@@ -15,6 +15,7 @@
   #:use-module (gnu packages bash)
   #:use-module (gnu packages compression)
   #:use-module (gnu packages elf)
+  #:use-module (gnu packages ncurses)
   #:use-module (gnu packages linux)
   #:use-module (gnu packages rsync)
   #:use-module (gnu packages python-xyz))
@@ -475,6 +476,7 @@ a distributed system, with a focus on being:
          "01fs8rwgmm1jkqywsi78ifzsr5h1a0hq9sb5ly1bfd9cpvci29nn"))))
     (build-system trivial-build-system)
     (native-inputs (list source gzip tar))
+    (propagated-inputs (list ncurses))
     (arguments
      (list
       #:modules '((guix build utils))
