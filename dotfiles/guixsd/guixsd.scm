@@ -2030,7 +2030,10 @@ PasswordAuthentication yes")))
                                       "--image-gc-low-threshold=90"
                                       "--pod-manifest-path=/etc/kubernetes/manifests"))
                                    (drbd? #t)
-                                   (hpvolumes? #t)))
+                                   (hpvolumes? #t)
+                                   (cilium? #t)
+                                   (flux? #t)
+                                   (kubevirt? #t)))
 
                          ;; (service prometheus-node-exporter-service-type
                          ;;          (prometheus-node-exporter-configuration
