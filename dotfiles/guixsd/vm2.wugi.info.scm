@@ -2,7 +2,7 @@
 ;; for a "bare bones" setup, with no X11 display server.
 
 (use-modules (gnu))
-(use-service-modules networking linux nix monitoring ssh)
+(use-service-modules docker networking linux nix monitoring ssh)
 (use-package-modules certs linux screen ssh)
 
 (use-modules (config)
@@ -77,6 +77,7 @@
                                                          "8.8.4.4")))))
                           (service crowdsec-service-type)
                           (service crowdsec-firewall-bouncer-service-type)
+                          (service containerd-service-type)
                           (service kubelet-service-type
                                    (kubelet-configuration
                                     (kubelet "/nix/store/lp8ch8l5dn4bcp056cpr1gfyb9i8zi54-kubernetes-1.25.4/bin/kubelet")
