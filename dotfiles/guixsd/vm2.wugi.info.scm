@@ -147,6 +147,7 @@
                       (guix-service-type config => %guix-daemon-config-with-substitute-urls))))
 
   (sudoers-file (plain-file "sudoers" "\
+Defaults:root runcwd=*
 root ALL=(ALL) ALL
 %wheel ALL=(ALL) ALL
 oleg ALL=(ALL) NOPASSWD:ALL\n")))
