@@ -50,6 +50,7 @@
     (string-join
      (list "127.0.0.1 vm2.wugi.info localhost"
            "93.100.15.190 ci.guix.gnu.org.wugi.info"
+           "192.168.26.1 kube10001"
            "::1 vm2.wugi.info localhost"
            "\n")
      "\n")))
