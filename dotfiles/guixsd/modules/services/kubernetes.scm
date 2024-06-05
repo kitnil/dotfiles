@@ -177,9 +177,9 @@
   (with-imported-modules '((guix build utils))
     #~(begin
         #$(containerd-load-image %coredns-image coredns-image-file
-                                 #$(file-append coreutils "/bin/cat"))
+                                 (file-append coreutils "/bin/cat"))
         #$(containerd-load-image %pause-image pause-image-file
-                                 #$(file-append gzip "/bin/zcat")))))
+                                 (file-append gzip "/bin/zcat")))))
 
 (define (maintenance)
   (with-imported-modules '((guix build utils))
