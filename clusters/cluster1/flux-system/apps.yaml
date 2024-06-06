@@ -491,6 +491,7 @@ spec:
   # Setting spec.wait to true makes Flux wait for the Job to complete before
   # it is considered ready.
   wait: true
+  suspend: true
   sourceRef:
     kind: GitRepository
     name: flux-system
