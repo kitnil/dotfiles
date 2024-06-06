@@ -86,3 +86,22 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: maintenance-guix-pull-kube5001
+  namespace: flux-system
+spec:
+  interval: 1m0s
+  path: ./apps/cluster2/maintenance-guix-pull-kube5001
+  prune: true
+  # This means that the maintenance-guix-home-reconfigure-kube5001 Kustomization
+  # will wait until all the Jobs in maintenance-git-dotfiles-kube5001 run to
+  # completion. If the Job fails, the app changes will not be applied by the
+  # app-deploy Kustomization.
+  dependsOn:
+  - name: maintenance-git-dotfiles-kube5001
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
