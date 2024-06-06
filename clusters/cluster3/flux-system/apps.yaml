@@ -1,0 +1,16 @@
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: maintenance-git-dotfiles
+  namespace: flux-system
+spec:
+  interval: 1m0s
+  path: ./apps/cluster3/maintenance-git-dotfiles
+  prune: true
+  # Setting spec.wait to true makes Flux wait for the Job to complete before
+  # it is considered ready.
+  wait: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
