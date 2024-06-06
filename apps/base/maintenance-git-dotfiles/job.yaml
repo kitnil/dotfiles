@@ -28,7 +28,7 @@ spec:
         - /bin/sh
         - -l
         - -c
-        - sudo --chdir=$WORKSPACE --user=oleg --login bash -ic 'git pull --rebase origin/master'
+        - sudo --chdir=$WORKSPACE --user=oleg --login bash -ic 'git pull --rebase origin master'
         env:
         - name: WORKSPACE
           value: /home/oleg/.local/share/chezmoi
