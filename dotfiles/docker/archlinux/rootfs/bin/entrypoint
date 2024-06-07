@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+
+set -o nounset -o errexit -o pipefail -o xtrace
+
+sed -i "s|DefaultInstance=tty1|DefaultInstance=${TTY:-tty5}|g;s|ConditionPathExists=/dev/tty0|ConditionPathExists=/dev/${TTY:-tty5}|g" /usr/lib/systemd/system/getty@.service
+mkdir -p /etc/systemd/system/getty.target.wants
+
+rm -vf /usr/lib/systemd/system/systemd-networkd*
+rm -vf /usr/lib/systemd/system/systemd-firstboot.service
+rm -vf /usr/lib/systemd/system/systemd-resolved.service
+
+passwd --delete root
+
+umount /sys/fs/cgroup
+mount -t cgroup2 -o rw,relatime,nsdelegate,memory_recursiveprot cgroup2 /sys/fs/cgroup
+# exec capsh --drop=cap_sys_admin -- -c 'exec /sbin/init'
+exec capsh -- -c 'exec /sbin/init'
