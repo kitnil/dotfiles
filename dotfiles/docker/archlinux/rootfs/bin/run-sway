@@ -1,0 +1,18 @@
+#!/usr/bin/env bash
+
+set -o nounset -o errexit -o pipefail -o xtrace
+
+# MESA_DEBUG=1
+
+XDG_RUNTIME_DIR=/run/user/1000
+export XDG_RUNTIME_DIR
+
+sudo mkdir -p $XDG_RUNTIME_DIR
+sudo chown oleg: $XDG_RUNTIME_DIR
+
+# WLR_LIBINPUT_NO_DEVICES=1
+# export WLR_LIBINPUT_NO_DEVICES
+
+sudo udevadm trigger
+
+exec dbus-run-session -- sway
