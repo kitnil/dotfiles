@@ -23,4 +23,18 @@ COPY rootfs/bin/dot_bashrc /home/oleg/.bashrc
 
 LABEL "run.cluster.local"="docker run --dns 8.8.8.8 --detach --cap-add SYS_ADMIN --cap-add SYS_TTY_CONFIG --cap-add SYS_NICE --cap-add NET_BIND_SERVICE --cap-add SYS_TIME --device /dev/dri --device /dev/tty5 --name archlinux-1 --env container=docker --tmpfs /tmp --tmpfs /run --stop-signal SIGRTMIN+3 --device /dev/input archlinux-systemd"
 
+# Install yay
+RUN pacman --noconfirm -Syu \
+    && pacman --noconfirm -S --needed git base-devel \
+    && git clone https://aur.archlinux.org/yay-bin.git /usr/local/src/yay-bin \
+    && cd /usr/local/src/yay-bin
+RUN chown -R oleg: /usr/local/src/yay-bin
+RUN sudo -u oleg bash -c 'cd /usr/local/src/yay-bin || exit 1; makepkg --noconfirm -si'
+
+# Install idea
+RUN pacman --noconfirm -Syu \
+    && pacman --noconfirm -S libxtst \
+    && yay --noconfirm -S intellij-idea-community-edition
+COPY rootfs/bin/run-idea /bin/run-idea
+
 ENTRYPOINT ["/bin/entrypoint"]
