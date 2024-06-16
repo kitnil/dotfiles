@@ -43,9 +43,14 @@ docker_args=(
     --volume "${pulseaudio_config_file}:/etc/pulse/client.conf:ro"
     --volume /run/user/1000/wayland-1:/tmp/wayland-1
     --volume /tmp/.X11-unix/X0:/tmp/.X11-unix/X0
+    --security-opt apparmor=unconfined
+    --security-opt seccomp=unconfined
+    --device /dev/net/tun
 )
 
 capabilities=(
+    SETUID
+    BLOCK_SUSPEND
     NET_ADMIN
     NET_BIND_SERVICE
     NET_RAW
@@ -62,5 +67,5 @@ done
 docker run "${docker_args[@]}" debian-systemd
 
 cat <<'EOF'
-docker exec -u oleg: debian-1 bash -c 'sudo mkdir -p /run/user/1000/; sudo chown oleg: /run/user/1000/; sudo ln -s /tmp/wayland-1 /run/user/1000/; DISPLAY=:0 WAYLAND_DISPLAY=wayland-1 yandex-browser'
+docker exec -it -u oleg: debian-1 sudo docker run --rm -it busybox
 EOF

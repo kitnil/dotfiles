@@ -21,6 +21,9 @@ RUN apt update \
 RUN apt update \
     && apt install -y pulseaudio
 
+RUN apt update \
+    && apt install -y docker.io
+
 RUN ln -s /usr/sbin/alacritty /usr/sbin/foot \
     && systemctl enable seatd \
     && systemctl enable getty@tty6.service
