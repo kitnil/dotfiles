@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+set -o nounset -o errexit -o pipefail -o xtrace
+
+sed -i "s|DefaultInstance=tty1|DefaultInstance=${TTY:-tty6}|g;s|ConditionPathExists=/dev/tty0|ConditionPathExists=/dev/${TTY:-tty6}|g" /usr/lib/systemd/system/getty@.service
+mkdir -p /etc/systemd/system/getty.target.wants
+
+rm -vf /usr/lib/systemd/system/systemd-networkd*
+rm -vf /usr/lib/systemd/system/systemd-firstboot.service
+rm -vf /usr/lib/systemd/system/systemd-resolved.service
+
+passwd --delete root
+
+# Keyboard and mouse access are essential components for efficient operation
+# within the Sway window manager environment. Running 'udevadm trigger' will
+# grant access to the keyboard and mouse. You can verify their addition by
+# using 'libinput list-devices'."
+mount -o remount,rw /sys
+
+# Sead requires access to /dev/tty0 for proper functionality.
+ln -s /dev/tty6 /dev/tty0
+
+umount /sys/fs/cgroup
+mount -t cgroup2 -o rw,relatime,nsdelegate,memory_recursiveprot cgroup2 /sys/fs/cgroup
+
+exec /sbin/init
