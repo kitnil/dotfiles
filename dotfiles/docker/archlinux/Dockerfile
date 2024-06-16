@@ -37,4 +37,22 @@ RUN pacman --noconfirm -Syu \
     && yay --noconfirm -S intellij-idea-community-edition
 COPY rootfs/bin/run-idea /bin/run-idea
 
+RUN pacman --noconfirm -Syu \
+    && pacman --noconfirm -S bash-completion \
+    && pacman --noconfirm -S fuse-overlayfs \
+    && pacman --noconfirm -S docker
+
+LABEL "run.cluster.local"="docker run --dns 8.8.8.8 --detach --cap-add SYS_ADMIN --cap-add SYS_TTY_CONFIG --cap-add SYS_NICE --cap-add NET_BIND_SERVICE --cap-add SYS_TIME --cap-add NET_RAW --cap-add NET_ADMIN --device /dev/dri --device /dev/tty5 --name archlinux-1 --env container=docker --tmpfs /tmp --tmpfs /run --stop-signal SIGRTMIN+3 --device /dev/input archlinux-systemd"
+
+RUN pacman --noconfirm -Syu \
+    && pacman --noconfirm -S tmux
+
+RUN pacman --noconfirm -Syu \
+    && pacman --noconfirm -S firefox
+
+RUN pacman --noconfirm -Syu \
+    && pacman --noconfirm -S pulseaudio
+
+COPY rootfs/bin/run-pulseaudio /bin/run-pulseaudio
+
 ENTRYPOINT ["/bin/entrypoint"]
