@@ -1,0 +1,17 @@
+#!/bin/sh
+
+set -o nounset -o errexit -o pipefail -o xtrace
+
+PATH="/nix/store/x99ahlm4piib0i517a3x948b8np27xaf-util-linux-minimal-2.37.4-bin/bin:${PATH}"
+export PATH
+
+# Keyboard and mouse access are essential components for efficient operation
+# within the Sway window manager environment. Running 'udevadm trigger' will
+# grant access to the keyboard and mouse. You can verify their addition by
+# using 'libinput list-devices'."
+mount -o remount,rw /sys
+
+umount /sys/fs/cgroup
+mount -t cgroup2 -o rw,relatime,nsdelegate,memory_recursiveprot cgroup2 /sys/fs/cgroup
+
+exec /sbin/init
