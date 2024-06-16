@@ -27,6 +27,7 @@ daemon-binary = /bin/true
 enable-shm = false
 EOF
 
+# --security-opt seccomp=unconfined required for keyctl(2)
 docker_args=(
     --detach
     --dns 8.8.8.8
