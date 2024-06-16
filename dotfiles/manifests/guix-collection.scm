@@ -227,6 +227,7 @@ virtualization vnc vim vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
                lsof
                lsofgraph
 
+               fatrace
                ncdu            ; TUI `du'
                sysstat
                netcat-openbsd
