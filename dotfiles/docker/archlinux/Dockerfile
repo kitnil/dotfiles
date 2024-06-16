@@ -53,6 +53,6 @@ RUN pacman --noconfirm -Syu \
 RUN pacman --noconfirm -Syu \
     && pacman --noconfirm -S pulseaudio
 
-COPY rootfs/bin/run-pulseaudio /bin/run-pulseaudio
+RUN rm -f /home/oleg/.bashrc
 
 ENTRYPOINT ["/bin/entrypoint"]
