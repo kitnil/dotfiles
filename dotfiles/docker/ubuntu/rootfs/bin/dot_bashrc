@@ -1,0 +1,5 @@
+if [[ -z $DISPLAY ]] && [[ $(tty) = /dev/tty5 ]]
+then
+    exec /bin/run-sway
+fi
+
