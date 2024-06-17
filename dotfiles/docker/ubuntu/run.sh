@@ -30,7 +30,6 @@ EOF
 # --security-opt seccomp=unconfined required for keyctl(2)
 docker_args=(
     --detach
-    --dns 8.8.8.8
     --device /dev/dri
     --name ubuntu-1
     --env "container=docker"

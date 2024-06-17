@@ -29,7 +29,6 @@ EOF
 
 docker_args=(
     --detach
-    --dns 8.8.8.8
     --device /dev/dri
     --device /dev/tty4
     --name kali-rolling-1

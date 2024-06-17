@@ -29,7 +29,6 @@ EOF
 
 docker_args=(
     --detach
-    --dns 8.8.8.8
     --device /dev/dri
     --device /dev/tty5
     --name archlinux-1
