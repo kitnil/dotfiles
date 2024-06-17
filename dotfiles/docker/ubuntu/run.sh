@@ -38,6 +38,7 @@ docker_args=(
     --stop-signal SIGRTMIN+3
     --device /dev/input
     --device /dev/fuse
+    # --device /dev/tty8
     --volume "${pulseaudio_socket_file}:/tmp/pulseaudio.socket:ro"
     --volume "${pulseaudio_config_file}:/etc/pulse/client.conf:ro"
     --volume /run/user/1000/wayland-1:/tmp/wayland-1
@@ -45,6 +46,7 @@ docker_args=(
     --security-opt apparmor=unconfined
     --security-opt seccomp=unconfined
     --device /dev/net/tun
+    --volume "${HOME}/src/gitlab.intr/hms/rc-user:${HOME}/src/gitlab.intr/hms/rc-user"
 )
 
 capabilities=(
@@ -67,4 +69,5 @@ docker run "${docker_args[@]}" ubuntu-systemd
 
 cat <<'EOF'
 docker exec -u ubuntu: ubuntu-1 bash -c 'sudo mkdir -p /run/user/1000/; sudo chown ubuntu: /run/user/1000/; sudo ln -s /tmp/wayland-1 /run/user/1000/; DISPLAY=:0 WAYLAND_DISPLAY=wayland-1 XDG_RUNTIME_DIR=/run/user/1000 alacritty'
+docker exec -u ubuntu: ubuntu-1 bash -c 'sudo mkdir -p /run/user/1000/; sudo chown ubuntu: /run/user/1000/; sudo ln -s /tmp/wayland-1 /run/user/1000/; DISPLAY=:0 WAYLAND_DISPLAY=wayland-1 XDG_RUNTIME_DIR=/run/user/1000 MUTTER_DEBUG_DUMMY_MODE_SPECS=1024x768 dbus-run-session -- gnome-shell --nested --wayland'
 EOF

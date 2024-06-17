@@ -18,9 +18,12 @@ ADD https://iso.wugi.info/ideaIC-2024.1.3.tar.gz /tmp
 RUN tar -xzf /tmp/ideaIC-*.tar.gz -C /opt \
     && rm -f /tmp/ideaIC-*.tar.gz
 
+RUN apt update \
+    && apt install -y ubuntu-gnome-desktop
+
 RUN ln -s /usr/sbin/alacritty /usr/sbin/foot \
     && systemctl enable seatd \
-    && systemctl enable getty@tty6.service
+    && systemctl enable getty@tty8.service
 
 RUN passwd --delete ubuntu \
     && gpasswd -a ubuntu render \
