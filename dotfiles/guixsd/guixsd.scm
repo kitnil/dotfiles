@@ -665,6 +665,22 @@ location / {
                                 "--destination" "192.168.0.145/32"
                                 "--dport" "9091"
                                 "-j" "ACCEPT")))
+                            ;; Accept DNS traffic, which is required for
+                            ;; Docker containers.
+                            (iptables
+                             (string-join
+                              '("-I" "INPUT"
+                                "-p" "tcp"
+                                "--destination" "192.168.0.145/32"
+                                "--dport" "53"
+                                "-j" "ACCEPT")))
+                            (iptables
+                             (string-join
+                              '("-I" "INPUT"
+                                "-p" "udp"
+                                "--destination" "192.168.0.145/32"
+                                "--dport" "53"
+                                "-j" "ACCEPT")))
                             ;; Accept traffic which originated from current computer.
                             (iptables
                              (string-join
