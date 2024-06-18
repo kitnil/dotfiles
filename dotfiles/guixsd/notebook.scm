@@ -125,6 +125,15 @@
                     %notebook-packages
                     %base-packages))
 
+  (hosts-file
+   (plain-file
+    "hosts"
+    "\
+127.0.0.1	localhost	notebook
+::1	localhost	notebook
+192.168.0.144	cgit.wugi.info
+"))
+
   (sudoers-file (plain-file "sudoers"
                             (string-join `("root ALL=(ALL) ALL"
                                            "%wheel ALL=(ALL) ALL"
