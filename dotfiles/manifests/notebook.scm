@@ -15,4 +15,5 @@
         "desktop.scm"
         "dotfiles.scm"
 	"emacs.scm"
-        "obs.scm")))
+        "obs.scm"
+        "telegram.scm")))
