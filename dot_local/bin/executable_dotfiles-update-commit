@@ -1,0 +1,51 @@
+#!/run/current-system/profile/bin/guile \
+--no-auto-compile -e (dotfiles-update-commit) -s
+!#
+
+;;;; guix-latest --- Build Guix system with latest channels.
+;;;; Copyright © 2024 Oleg Pykhalov <go.wigust@gmail.com>
+;;;; Released under the GNU GPLv3 or any later version.
+
+(define-module (dotfiles-update-commit)
+  #:use-module (gnu system)
+  #:use-module (guix channels)
+  #:use-module (guix ci)
+  #:use-module (guix inferior)
+  #:use-module (guix profiles)
+  #:use-module (guix records)
+  #:use-module (guix scripts pull)
+  #:use-module (guix store)
+  #:use-module (guix ui)
+  #:use-module (ice-9 format)
+  #:use-module (ice-9 match)
+  #:use-module (ice-9 popen)
+  #:use-module (ice-9 pretty-print)
+  #:use-module (ice-9 rdelim)
+  #:use-module (srfi srfi-1)
+  #:use-module (srfi srfi-37)
+  #:autoload   (guix openpgp) (openpgp-format-fingerprint)
+  #:export (main))
+
+(define (main args)
+  (let* ((port (open-pipe* OPEN_READ "git" "rev-parse" "HEAD"))
+         (output (read-string port))
+         (commit (string-take (string-trim-right output #\newline) 8)))
+    (close-port port)
+    (for-each (lambda (file)
+                (system* "yq" "-i"
+                         (string-append ".spec.template.metadata.annotations[\"guix-default-channel-commit\"] = \""
+                                        commit "\"")
+                         file)
+                (system* "git" "add" file)
+                (system* "git" "commit"
+                         (format #f "--message=apps: cluster1: guix: ~a: Update to ~a."
+                                 (basename (dirname file))
+                                 commit)))
+              '("/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-pull-kube1/job.yaml"
+                "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-system-reconfigure-kube1/job.yaml"
+                "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-package-manifest-kube1/job.yaml"
+                "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-home-reconfigure-kube1/job.yaml"
+                "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-pull-kube2/job.yaml"
+                "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-system-reconfigure-kube2/job.yaml"
+                "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-package-manifest-kube2/job.yaml"
+                "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-home-reconfigure-kube2/job.yaml"))))
