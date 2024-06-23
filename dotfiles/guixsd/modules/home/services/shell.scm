@@ -163,7 +163,6 @@
                           "my-xorg"
                           "netshoot"
                           "ksm"
-                          "kubelet"
                           "kubectl-all"
                           "kubectl-invoke"
                           "kubectl-watch"
