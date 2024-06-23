@@ -2,6 +2,9 @@
 
 set -o errexit -o pipefail
 
+logs_directory="$HOME/.local/var/log/firefox"
+mkdir -p "$logs_directory"
+
 OVERLAY=true
 
 profile="$(TMPDIR="${HOME}/.local/tmp" mktemp -d -t "firefox.XXXXXXXXXX")"
@@ -14,6 +17,7 @@ case "$1" in
         if [[ $OVERLAY == true ]]
         then
             overlay_rw_directory="$(TMPDIR="${HOME}/.local/tmp" mktemp -d -t "overlay.XXXXXXXXXX")"
+            exec &> >(tee -a "${logs_directory}/$(basename overlay_rw_directory).log")
             upper_directory="${overlay_rw_directory}/upper"
             workdir_directory="${overlay_rw_directory}/work"
             trap "set +e; sudo umount '$profile'; rmdir '$profile'; sudo rm -rf '$overlay_rw_directory'" EXIT
