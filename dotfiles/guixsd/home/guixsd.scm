@@ -1326,10 +1326,4 @@ account default : gmail
 
     (service home-scream-service-type
              (scream-configuration
-              (interface "br154.154")))
-
-    (service home-vosk-service-type
-             (vosk-configuration
-              (vosk (local-file "/home/oleg/.local/share/chezmoi/vosk/run.py"
-                                #:recursive? #t))
-              (environment-variables '("VOSK_LOG_LEVEL=DEBUG"))))))))
+              (interface "br154.154")))))))
