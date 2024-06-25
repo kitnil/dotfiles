@@ -8,3 +8,9 @@ resources:
 - service-dns-tcp-ns2.yaml
 - service-dns-udp-ns1.yaml
 - service-dns-udp-ns2.yaml
+patchesStrategicMerge:
+- release.yaml
+configMapGenerator:
+- name: powerdns-values-cluster1
+  files:
+  - values.yaml=values.yaml
