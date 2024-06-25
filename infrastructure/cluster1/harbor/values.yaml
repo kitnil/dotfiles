@@ -7,10 +7,10 @@ database:
       repository: "harbor.corp1.majordomo.ru/goharbor/harbor-db"
     # The timeout used in livenessProbe; 1 to 5 seconds
     livenessProbe:
-      timeoutSeconds: 5
+      timeoutSeconds: 60
     # The timeout used in readinessProbe; 1 to 5 seconds
     readinessProbe:
-      timeoutSeconds: 5
+      timeoutSeconds: 60
 exporter:
   image:
     repository: "harbor.corp1.majordomo.ru/goharbor/harbor-exporter"
