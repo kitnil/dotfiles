@@ -5,7 +5,57 @@ set -o pipefail
 
 case "$1" in
     clean)
-        backup forget --keep-last 10 --prune
+        cat <<'EOF'
+Backups for guix.wugi.info:
+EOF
+        sudo --login                                                            \
+             RESTIC_PASSWORD="$(pass show wugi.info/restic/all)"                \
+             RESTIC_REPOSITORY="${RESTIC_REPOSITORY:-/srv/backup/guixsd}"       \
+             "$HOME/.guix-profile/bin/restic" --json snapshots                  \
+            | jq -c --raw-output '. | reverse.[] | [.time, .tags]'              \
+            | cat -n                                                            \
+            | tac
+        echo sudo --login                                                   \
+             'RESTIC_PASSWORD="$(pass show wugi.info/restic/all)"'          \
+             'RESTIC_REPOSITORY="${RESTIC_REPOSITORY:-/srv/backup/guixsd}"' \
+             "$HOME/.guix-profile/bin/restic"                               \
+             forget --prune --keep-last N
+        cat <<'EOF'
+
+Backups for windows.local:
+EOF
+        sudo --login                                                            \
+             RESTIC_PASSWORD="$(sudo cat /etc/guix/secrets/windows)"            \
+             RESTIC_REPOSITORY="${RESTIC_REPOSITORY:-/srv/backup/win10}"        \
+             "${HOME}/.guix-profile/bin/restic" --json snapshots                \
+            | jq -c --raw-output '. | reverse.[] | [.time, .tags]'              \
+            | cat -n                                                            \
+            | tac                                                               \
+            | grep null                                                         \
+            | tail -5
+        echo sudo --login                                                   \
+             'RESTIC_PASSWORD="$(sudo cat /etc/guix/secrets/windows)"'      \
+             'RESTIC_REPOSITORY="${RESTIC_REPOSITORY:-/srv/backup/win10}"'  \
+             "$HOME/.guix-profile/bin/restic"                               \
+             forget --prune --keep-last N
+        cat <<'EOF'
+
+Backups for ntfsgames:
+EOF
+        sudo --login                                                            \
+             RESTIC_PASSWORD="$(sudo cat /etc/guix/secrets/windows)"            \
+             RESTIC_REPOSITORY="${RESTIC_REPOSITORY:-/srv/backup/ntfsgames}"    \
+             "${HOME}/.guix-profile/bin/restic" --json snapshots                \
+            | jq -c --raw-output '. | reverse.[] | [.time, .tags]'              \
+            | cat -n                                                            \
+            | tac                                                               \
+            | grep null                                                         \
+            | tail -5
+        echo sudo --login                                                       \
+             'RESTIC_PASSWORD="$(sudo cat /etc/guix/secrets/windows)"'          \
+             'RESTIC_REPOSITORY="${RESTIC_REPOSITORY:-/srv/backup/ntfsgames}"'  \
+             "$HOME/.guix-profile/bin/restic"                                   \
+             forget --prune --keep-last N
         ;;
     *)
         sudo --login                                                        \
