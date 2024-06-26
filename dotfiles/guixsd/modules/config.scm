@@ -56,6 +56,7 @@
             %my-system-packages
             %my-setuid-programs
             %notebook-packages
+            %pc0-packages
             %nginx-deploy-hook
             letsencrypt-certificate
             letsencrypt-key
@@ -205,6 +206,13 @@ EndSection\n")
           %audio-packages
           %font-packages
           %stumpwm-packages
+          %theme-packages
+          %xorg-packages))
+
+(define %pc0-packages
+  (append %admin-packages
+          %audio-packages
+          %font-packages
           %theme-packages
           %xorg-packages))
 

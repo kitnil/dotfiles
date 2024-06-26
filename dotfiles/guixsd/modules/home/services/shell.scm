@@ -205,6 +205,7 @@
                           "scan"
                           "sensors.py"
                           "sensors-notebook.py"
+                          "sensors-pc0.py"
                           "shop"
                           "shutdown"
                           "src-clean"
