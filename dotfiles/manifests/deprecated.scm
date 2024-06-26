@@ -8,7 +8,7 @@
 (define channels
   (list (channel
          (name 'guix)
-         (url "https://git.savannah.gnu.org/git/guix.git")
+         (url "https://cgit.wugi.info/git/guix/guix")
          (commit "f7e14782025bf87aaef694a21f34010b1a95f7f6") ;v1.0.1
          (introduction (@@ (guix channels) %guix-channel-introduction)))
         (channel
