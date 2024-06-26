@@ -609,6 +609,28 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
+  name: maintenance-git-dotfiles-kube3
+  namespace: flux-system
+spec:
+  interval: 1m0s
+  path: ./apps/cluster2/maintenance-git-dotfiles-kube3
+  prune: true
+  # This means that the maintenance-guix-home-reconfigure-kube3 Kustomization
+  # will wait until all the Jobs in maintenance-git-dotfiles-kube3 run to
+  # completion. If the Job fails, the app changes will not be applied by the
+  # app-deploy Kustomization.
+  dependsOn:
+  - name: maintenance-git-dotfiles
+  # Setting spec.wait to true makes Flux wait for the Job to complete before
+  # it is considered ready.
+  wait: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
   name: majordomo-gitlab
   namespace: flux-system
 spec:
