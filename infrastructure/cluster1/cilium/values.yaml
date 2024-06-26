@@ -23,7 +23,6 @@ l2announcements:
 
 l2podAnnouncements:
   enabled: true
-  interface: "br154.154"
 
 cluster:
   name: "cluster1"
