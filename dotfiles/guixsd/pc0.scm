@@ -126,6 +126,7 @@ binary-caches = https://cache.nixos.org/
 trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
 "))))
                           (service containerd-service-type)
+                          (service docker-service-type)
                           (service kubelet-service-type
                                    (kubelet-configuration
                                     (kubelet "/nix/store/lp8ch8l5dn4bcp056cpr1gfyb9i8zi54-kubernetes-1.25.4/bin/kubelet")
