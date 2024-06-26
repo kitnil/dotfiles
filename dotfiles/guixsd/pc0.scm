@@ -92,6 +92,15 @@
 192.168.0.192 kube3 kube3.home kube3.lan
 "))
 
+  (sudoers-file
+   (plain-file
+    "sudoers"
+    (string-join '("Defaults:root runcwd=*"
+                   "root ALL=(ALL) ALL"
+                   "%wheel ALL=(ALL) ALL"
+                   "oleg ALL=(ALL) NOPASSWD:ALL")
+                 "\n")))
+
   ;; Add services to the baseline: a DHCP client and an SSH
   ;; server.  You may wish to add an NTP service here.
   (services (append (list (service dhcp-client-service-type)
