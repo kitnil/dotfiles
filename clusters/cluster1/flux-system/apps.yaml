@@ -586,6 +586,7 @@ spec:
   # app-deploy Kustomization.
   dependsOn:
   - name: maintenance-guix
+  - name: maintenance-git-dotfiles-kube3
   sourceRef:
     kind: GitRepository
     name: flux-system
