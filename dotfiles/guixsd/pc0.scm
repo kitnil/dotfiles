@@ -52,6 +52,14 @@
                          (type "vfat")))
                  %base-file-systems))
 
+  (kernel-arguments '("net.ifnames=0"
+                      "biosdevname=0"
+
+                      "modprobe.blacklist=pcspkr,snd_pcsp"
+
+                      ;; Enable LUKS TRIM/DISCARD pass-through.
+                      "rd.luks.options=discard"))
+
   ;; This is where user accounts are specified.  The "root"
   ;; account is implicit, and is initially created with the
   ;; empty password.
