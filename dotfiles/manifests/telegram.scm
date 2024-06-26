@@ -13,9 +13,9 @@
          (introduction (@@ (guix channels) %guix-channel-introduction)))
         (channel
          (name 'johnlepikhin)
-         (url "https://github.com/johnlepikhin/guix-channel")
+         (url "https://cgit.wugi.info/git/guix/johnlepikhin-guix-channel.git")
          (branch "master")
-         (commit "a987b6ba01cf09aacc2f0f6df9b252a141b60691"))))
+         (commit "d254b40b5edb9130629dda43f4b7ae74b26fdc41"))))
 
 (define cached
   (with-store store
