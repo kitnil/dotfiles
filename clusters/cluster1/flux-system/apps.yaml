@@ -5,7 +5,7 @@ metadata:
   name: novnc-guix
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/cluster1/novnc-guix
   prune: true
   sourceRef:
@@ -18,7 +18,7 @@ metadata:
   name: novnc-tv
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/cluster1/novnc-tv
   prune: true
   sourceRef:
@@ -31,7 +31,7 @@ metadata:
   name: windows-gpu-passthrough
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/cluster1/windows-gpu-passthrough
   prune: true
   sourceRef:
@@ -44,7 +44,7 @@ metadata:
   name: windows-novnc-firefox
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/cluster1/windows-novnc-firefox
   prune: true
   sourceRef:
@@ -57,7 +57,7 @@ metadata:
   name: peertube
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/base/peertube
   prune: true
   sourceRef:
@@ -70,7 +70,7 @@ metadata:
   name: metube
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/cluster1/metube
   prune: true
   sourceRef:
@@ -83,7 +83,7 @@ metadata:
   name: podinfo
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/cluster1/podinfo
   prune: true
   sourceRef:
@@ -96,7 +96,7 @@ metadata:
   name: samba
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/cluster1/samba
   prune: true
   sourceRef:
@@ -109,7 +109,7 @@ metadata:
   name: registry
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/base/registry
   prune: true
   sourceRef:
@@ -122,7 +122,7 @@ metadata:
   name: qbittorrent-exporter
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/base/qbittorrent-exporter
   prune: true
   sourceRef:
@@ -135,7 +135,7 @@ metadata:
   name: 3proxy-tor
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/base/3proxy-tor
   prune: true
   sourceRef:
@@ -148,7 +148,7 @@ metadata:
   name: maloja
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/cluster1/maloja
   prune: true
   sourceRef:
@@ -161,7 +161,7 @@ metadata:
   name: homebox
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/cluster1/homebox
   prune: true
   sourceRef:
@@ -213,7 +213,7 @@ metadata:
   name: karma
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/cluster1/karma
   prune: true
   sourceRef:
@@ -226,7 +226,7 @@ metadata:
   name: popeye
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/base/popeye
   prune: true
   sourceRef:
@@ -239,7 +239,7 @@ metadata:
   name: i2pd
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/base/i2pd
   prune: true
   sourceRef:
@@ -252,7 +252,7 @@ metadata:
   name: webtlo
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/cluster1/webtlo
   prune: true
   sourceRef:
@@ -265,7 +265,7 @@ metadata:
   name: maintenance-guix
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/cluster1/maintenance-guix
   prune: true
   # Setting spec.wait to true makes Flux wait for the Job to complete before
@@ -281,7 +281,7 @@ metadata:
   name: maintenance-vm1
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/base/maintenance-vm1
   prune: true
   sourceRef:
@@ -294,7 +294,7 @@ metadata:
   name: maintenance-guix-bird
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/base/maintenance-guix-refresh-bird
   prune: true
   sourceRef:
@@ -307,7 +307,7 @@ metadata:
   name: maintenance-guix-gource
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/base/maintenance-guix-refresh-gource
   prune: true
   sourceRef:
@@ -320,7 +320,7 @@ metadata:
   name: maintenance-guix-jc
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/base/maintenance-guix-refresh-jc
   prune: true
   sourceRef:
@@ -333,7 +333,7 @@ metadata:
   name: maintenance-guix-bats
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/base/maintenance-guix-refresh-bats
   prune: true
   sourceRef:
@@ -346,7 +346,7 @@ metadata:
   name: maintenance-guix-firefox-decrypt
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/base/maintenance-guix-refresh-firefox-decrypt
   prune: true
   sourceRef:
@@ -359,7 +359,7 @@ metadata:
   name: maintenance-guix-cava
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/base/maintenance-guix-refresh-cava
   prune: true
   sourceRef:
@@ -372,7 +372,7 @@ metadata:
   name: maintenance-guix-gita
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/base/maintenance-guix-refresh-gita
   prune: true
   sourceRef:
@@ -385,7 +385,7 @@ metadata:
   name: maintenance-guix-pull-kube2
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/cluster1/maintenance-guix-pull-kube2
   prune: true
   sourceRef:
@@ -398,7 +398,7 @@ metadata:
   name: maintenance-guix-system-reconfigure-kube2
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/cluster1/maintenance-guix-system-reconfigure-kube2
   prune: true
   sourceRef:
@@ -411,7 +411,7 @@ metadata:
   name: maintenance-guix-package-manifest-kube2
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/cluster1/maintenance-guix-package-manifest-kube2
   prune: true
   # This means that the maintenance-guix-package-manifest-kube2 Kustomization
@@ -431,7 +431,7 @@ metadata:
   name: nix
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/base/nix
   prune: true
   wait: true
@@ -445,7 +445,7 @@ metadata:
   name: maintenance-nix-home-reconfigure-kube1
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/cluster1/maintenance-nix-home-reconfigure-kube1
   prune: true
   # This means that the maintenance-guix-package-manifest-kube1 Kustomization
@@ -465,7 +465,7 @@ metadata:
   name: maintenance-nix-home-reconfigure-kube2
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/cluster1/maintenance-nix-home-reconfigure-kube2
   prune: true
   # This means that the maintenance-guix-package-manifest-kube2 Kustomization
@@ -485,7 +485,7 @@ metadata:
   name: maintenance-guix-latest-local-file
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/base/maintenance-guix-latest-local-file
   prune: true
   # Setting spec.wait to true makes Flux wait for the Job to complete before
@@ -501,7 +501,7 @@ metadata:
   name: maintenance-guix-pull-kube1
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/cluster1/maintenance-guix-pull-kube1
   prune: true
   # Setting spec.wait to true makes Flux wait for the Job to complete before
@@ -518,7 +518,7 @@ metadata:
   name: maintenance-guix-system-reconfigure-kube1
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/cluster1/maintenance-guix-system-reconfigure-kube1
   prune: true
   # This means that the maintenance-guix-home-reconfigure-kube1 Kustomization
@@ -537,7 +537,7 @@ metadata:
   name: maintenance-guix-package-manifest-kube1
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/cluster1/maintenance-guix-package-manifest-kube1
   prune: true
   # This means that the maintenance-guix-package-manifest-kube1 Kustomization
@@ -557,7 +557,7 @@ metadata:
   name: maintenance-guix-home-reconfigure-kube1
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/cluster1/maintenance-guix-home-reconfigure-kube1
   prune: true
   # This means that the maintenance-guix-home-reconfigure-kube1 Kustomization
@@ -577,7 +577,7 @@ metadata:
   name: maintenance-guix-pull-kube3
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/cluster1/maintenance-guix-pull-kube3
   prune: true
   # This means that the maintenance-guix-home-reconfigure-kube5001 Kustomization
@@ -597,7 +597,7 @@ metadata:
   name: maintenance-git-dotfiles
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/cluster1/maintenance-git-dotfiles
   prune: true
   # Setting spec.wait to true makes Flux wait for the Job to complete before
@@ -613,7 +613,7 @@ metadata:
   name: maintenance-git-dotfiles-kube3
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/cluster2/maintenance-git-dotfiles-kube3
   prune: true
   # This means that the maintenance-guix-home-reconfigure-kube3 Kustomization
@@ -635,7 +635,7 @@ metadata:
   name: maintenance-git-dotfiles-kube3
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/cluster1/maintenance-git-dotfiles-kube3
   prune: true
   # This means that the maintenance-guix-home-reconfigure-kube3 Kustomization
@@ -657,7 +657,7 @@ metadata:
   name: majordomo-gitlab
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/base/majordomo-gitlab
   prune: true
   sourceRef:
@@ -670,7 +670,7 @@ metadata:
   name: haproxy
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/cluster1/haproxy
   prune: true
   sourceRef:
@@ -683,7 +683,7 @@ metadata:
   name: fio
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/cluster1/fio
   prune: true
   sourceRef:
@@ -696,7 +696,7 @@ metadata:
   name: fio-kube3
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./apps/cluster1/fio-kube3
   prune: true
   dependsOn:

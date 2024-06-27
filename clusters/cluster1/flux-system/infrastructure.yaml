@@ -5,7 +5,7 @@ metadata:
   name: sources
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./infrastructure/base/sources
   prune: true
   sourceRef:
@@ -18,7 +18,7 @@ metadata:
   name: cilium
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./infrastructure/cluster1/cilium
   prune: false
   sourceRef:
@@ -31,7 +31,7 @@ metadata:
   name: kube-dns
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./infrastructure/cluster1/kube-dns
   prune: false
   sourceRef:
@@ -44,7 +44,7 @@ metadata:
   name: fluent-operator
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./infrastructure/base/fluent-operator
   prune: false
   sourceRef:
@@ -57,7 +57,7 @@ metadata:
   name: nfs-provisioner
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./infrastructure/base/nfs-provisioner
   prune: true
   sourceRef:
@@ -70,7 +70,7 @@ metadata:
   name: piraeus
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./infrastructure/cluster1/piraeus
   prune: false
   dependsOn:
@@ -85,7 +85,7 @@ metadata:
   name: echo
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./infrastructure/base/echo
   prune: true
   sourceRef:
@@ -98,7 +98,7 @@ metadata:
   name: tekton
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./infrastructure/base/tekton
   prune: false
   sourceRef:
@@ -111,7 +111,7 @@ metadata:
   name: cert-manager
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./infrastructure/base/cert-manager
   prune: false
   sourceRef:
@@ -129,7 +129,7 @@ metadata:
   name: hostpath-provisioner
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./infrastructure/base/hostpath-provisioner
   prune: false
   dependsOn:
@@ -144,7 +144,7 @@ metadata:
   name: cert-manager-issuer
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./infrastructure/base/cert-manager-issuer
   prune: true
   sourceRef:
@@ -157,7 +157,7 @@ metadata:
   name: kubevirt
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./infrastructure/base/kubevirt
   prune: false
   sourceRef:
@@ -170,7 +170,7 @@ metadata:
   name: containerized-data-importer
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./infrastructure/base/containerized-data-importer
   prune: false
   sourceRef:
@@ -183,7 +183,7 @@ metadata:
   name: windows
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./infrastructure/cluster1/windows
   prune: true
   sourceRef:
@@ -196,7 +196,7 @@ metadata:
   name: ingress-nginx
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./infrastructure/cluster1/ingress-nginx
   prune: true
   sourceRef:
@@ -209,7 +209,7 @@ metadata:
   name: powerdns
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./infrastructure/cluster1/powerdns
   prune: true
   sourceRef:
@@ -222,7 +222,7 @@ metadata:
   name: external-dns
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./infrastructure/cluster1/external-dns
   prune: true
   sourceRef:
@@ -235,7 +235,7 @@ metadata:
   name: kube-prometheus-stack
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./infrastructure/cluster1/kube-prometheus-stack
   prune: true
   sourceRef:
@@ -248,7 +248,7 @@ metadata:
   name: metrics-server
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./infrastructure/base/metrics-server
   prune: true
   sourceRef:
@@ -261,7 +261,7 @@ metadata:
   name: keda
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./infrastructure/cluster1/keda
   prune: true
   sourceRef:
@@ -274,7 +274,7 @@ metadata:
   name: opensearch
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./infrastructure/cluster1/opensearch
   prune: true
   sourceRef:
@@ -287,7 +287,7 @@ metadata:
   name: kresd
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./infrastructure/cluster1/kresd
   prune: true
   sourceRef:
@@ -300,7 +300,7 @@ metadata:
   name: tinkerbell
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./infrastructure/cluster1/tinkerbell
   prune: true
   sourceRef:
@@ -313,7 +313,7 @@ metadata:
   name: tinkerbell-workflows
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./infrastructure/cluster1/tinkerbell/workflows
   prune: true
   dependsOn:
@@ -328,7 +328,7 @@ metadata:
   name: kubeedge
   namespace: flux-system
 spec:
-  interval: 1m0s
+  interval: 30m0s
   path: ./infrastructure/cluster1/kubeedge
   prune: true
   sourceRef:
