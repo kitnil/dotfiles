@@ -51,7 +51,14 @@
                        (file-system
                          (device (uuid "25E3-69CD" 'fat))
                          (mount-point "/boot/efi")
-                         (type "vfat")))
+                         (type "vfat"))
+                       (file-system
+                         (device "tmpfs")
+                         (mount-point "/tmp")
+                         (type "tmpfs")
+                         (check? #f)
+                         (flags '(no-dev))
+                         (options "mode=1777,size=10%")))
                  %base-file-systems))
 
   (kernel-arguments '("net.ifnames=0"
