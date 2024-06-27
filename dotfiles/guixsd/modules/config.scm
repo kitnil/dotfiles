@@ -151,7 +151,9 @@ EndSection\n")
         ipset
         mtr
         cryptsetup
-        ncurses))
+        ncurses
+        lvm2
+        smartmontools))
 
 (define %xorg-packages
   (list desktop-file-utils xrdb xset xsetroot xkill
