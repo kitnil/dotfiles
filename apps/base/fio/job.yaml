@@ -1,0 +1,27 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: fio
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      hostNetwork: true
+      hostPID: true
+      restartPolicy: Never
+      containers:
+      - command:
+        - nsenter
+        - --target
+        - "1"
+        - --mount
+        - --uts
+        - --ipc
+        - --net
+        - --pid
+        - --no-fork
+        - sudo --user=oleg --login /home/oleg/.guix-profile/bin/fio --randrepeat=1 --ioengine=libaio --direct=1 --gtod_reduce=1 --name=test --bs=4k --iodepth=64 --readwrite=randrw --rwmixread=75 --size=100M --filename=/home/oleg/fio.txt
+        image: docker-registry.wugi.info/library/util-linux-with-udev
+        name: fio
+        securityContext:
+          privileged: true
