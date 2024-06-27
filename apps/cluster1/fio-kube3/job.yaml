@@ -1,0 +1,11 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: fio
+spec:
+  template:
+    metadata:
+      annotations:
+        guix-default-channel-commit: e24b690e
+    spec:
+      nodeName: kube3
