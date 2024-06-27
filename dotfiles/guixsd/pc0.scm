@@ -8,8 +8,8 @@
              (bootloader grub)
              (config)
              (services kubernetes))
-(use-service-modules desktop dbus docker networking nix monitoring sound ssh xorg)
-(use-package-modules screen ssh wm)
+(use-service-modules desktop dbus docker networking nix monitoring linux sound ssh xorg)
+(use-package-modules linux screen ssh wm)
 
 (operating-system
   (host-name "pc0")
@@ -26,6 +26,8 @@
   (bootloader (bootloader-configuration
                (bootloader grub-efi-bootloader-removable)
                (targets '("/boot/efi"))))
+
+  (kernel-loadable-modules (list v4l2loopback-linux-module))
 
   (mapped-devices
    (list (mapped-device
@@ -125,6 +127,20 @@ trusted-users = oleg root
 binary-caches = https://cache.nixos.org/
 trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDShjY=
 "))))
+                          (service kernel-module-loader-service-type
+                                   '("dm-snapshot"
+                                     "dm-thin-pool"
+                                     "br_netfilter" ;kube-dns
+                                     ;; "drbd9"
+                                     ;; "ddcci_backlight"
+
+                                     ;; Required for Cilium CNI.
+                                     "ip_tables"
+                                     "xt_socket"
+                                     "iptable_nat"
+                                     "iptable_mangle"
+                                     "iptable_raw"
+                                     "iptable_filter"))
                           (service containerd-service-type)
                           (service docker-service-type)
                           (service kubelet-service-type
