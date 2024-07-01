@@ -9,7 +9,7 @@
              (bootloader grub)
              (config)
              (services kubernetes))
-(use-service-modules desktop dbus docker networking nix monitoring linux sound ssh xorg)
+(use-service-modules desktop dbus docker networking nfs nix monitoring linux sound ssh xorg)
 (use-package-modules nfs linux screen ssh wm)
 
 (operating-system
@@ -195,7 +195,9 @@ trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDS
                                          (map (lambda (program)
                                                 (setuid-program
                                                  (program program)))
-                                              (list (file-append nfs-utils "/sbin/mount.nfs")))))
+                                              (list (file-append nfs-utils "/sbin/mount.nfs"))))
+                         (service nfs-service-type
+                                   (nfs-configuration)))
                     (modify-services
                      (modify-services %base-services
                                       (guix-service-type config =>
