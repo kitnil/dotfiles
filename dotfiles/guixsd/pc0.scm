@@ -3,13 +3,14 @@
 ;; for a "bare bones" setup, with no X11 display server.
 
 (use-modules (gnu)
+             (gnu system setuid)
 	     (nongnu packages linux)
 	     (nongnu system linux-initrd)
              (bootloader grub)
              (config)
              (services kubernetes))
 (use-service-modules desktop dbus docker networking nix monitoring linux sound ssh xorg)
-(use-package-modules linux screen ssh wm)
+(use-package-modules nfs linux screen ssh wm)
 
 (operating-system
   (host-name "pc0")
@@ -186,7 +187,15 @@ trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDS
                                     (hpvolumes? #f)
                                     (cilium? #t)
                                     (flux? #t)
-                                    (kubevirt? #t))))
+                                    (kubevirt? #t)))
+
+                         ;; Allow desktop users to also mount NTFS and NFS file systems
+                         ;; without root.
+                         (simple-service 'mount-setuid-helpers setuid-program-service-type
+                                         (map (lambda (program)
+                                                (setuid-program
+                                                 (program program)))
+                                              (list (file-append nfs-utils "/sbin/mount.nfs")))))
                     (modify-services
                      (modify-services %base-services
                                       (guix-service-type config =>
