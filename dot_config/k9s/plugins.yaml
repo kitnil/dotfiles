@@ -59,6 +59,17 @@ plugins:
     args:
     - -c
     - "flux reconcile kustomization -n $NAMESPACE $NAME --with-source | less"
+  terraform-state:
+    shortCut: Shift-S
+    confirm: false
+    description: Terraform show state
+    scopes:
+    - secrets
+    command: sh
+    background: false
+    args:
+    - -c
+    - "kubectl -n $NAMESPACE get -o json secret $NAME | jq .data.tfstate --raw-output | base64 -d | gzip -d | less"
   getall-ns:
     shortCut: Shift-G
     confirm: false
@@ -70,6 +81,17 @@ plugins:
     args:
     - -c
     - "kubectl get all -n $NAME | less"
+  cert:
+    shortCut: Shift-T
+    confirm: false
+    description: Show certificate in secret
+    scopes:
+    - secrets
+    command: sh
+    background: false
+    args:
+    - -c
+    - kubectl -n $NAMESPACE get -o json secret $NAME | jq '.data["tls.crt"]' --raw-output | base64 -d | openssl x509 -text | less
   # velero-describe:
   #   shortCut: Shift-D
   #   confirm: false
@@ -92,6 +114,18 @@ plugins:
   #   args:
   #   - -c
   #   - "velero backup logs $NAME --colorized true --features=EnableCSI | less"
+
+  # viddy-describe:
+  #   shortCut: Shift-V
+  #   confirm: false
+  #   description: Describe resource with viddy watching
+  #   scopes:
+  #   - all
+  #   command: sh
+  #   background: false
+  #   args:
+  #   - -c
+  #   - "viddy --differences kubectl describe -n $NAMESPACE $NAME"
 
 #   neat-em-all:
 #     shortCut: Shift-N
