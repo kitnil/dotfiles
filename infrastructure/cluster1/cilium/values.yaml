@@ -15,6 +15,16 @@ affinity:
           values:
           - "false"
 
+operator:
+  affinity:
+    requiredDuringSchedulingIgnoredDuringExecution:
+      nodeSelectorTerms:
+      - matchExpressions:
+        - key: cilium-operator.cluster.local/schedulable
+          operator: NotIn
+          values:
+          - "false"
+
 k8sServiceHost: "192.168.0.144"
 k8sServicePort: "6443"
 
