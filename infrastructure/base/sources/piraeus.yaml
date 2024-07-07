@@ -7,5 +7,5 @@ metadata:
 spec:
   interval: 60m0s
   ref:
-    tag: v1.10.0
+    tag: v1.10.9
   url: https://github.com/piraeusdatastore/piraeus-operator
