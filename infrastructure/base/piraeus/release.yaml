@@ -8,8 +8,7 @@ spec:
   chart:
     spec:
       chart: charts/piraeus
-      reconcileStrategy: ChartVersion
-      version: 1.10.0
+      reconcileStrategy: Revision
       sourceRef:
         kind: GitRepository
         name: piraeus
