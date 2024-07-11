@@ -44,7 +44,7 @@
 
   system.extraSystemBuilderCmds =
     let
-      inherit (pkgs) util-linuxMinimal runtimeShell writeScript;
+      inherit (pkgs) bashInteractive util-linuxMinimal runtimeShell writeScript;
       entrypoint = writeScript "entrypoint.sh" ''
         #!${runtimeShell}
         set -o nounset -o errexit -o pipefail -o xtrace
@@ -68,6 +68,7 @@
       '';
     in ''
       ln -s ${entrypoint} $out/entrypoint.sh
+      ln -s ${bashInteractive}/bin/bash $out/bin/bash
     '';
 
   # This value determines the NixOS release from which the default
