@@ -23,3 +23,7 @@ spec:
       containers:
       - name: kube-multus
         image: ghcr.io/k8snetworkplumbingwg/multus-cni:v4.0.2-thick
+      volumes:
+      - name: host-run-netns
+        hostPath:
+          path: /var/run/netns/
