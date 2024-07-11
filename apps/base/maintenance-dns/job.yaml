@@ -31,7 +31,7 @@ spec:
         - sudo --chdir=$WORKSPACE --user=oleg --login bash -ic 'nix-shell --run "deploy . -- -L"'
         env:
         - name: WORKSPACE
-          value: /home/oleg/.local/share/chezmoi
+          value: /home/oleg/.local/share/chezmoi/dotfiles/dns
         image: docker-registry.wugi.info/library/util-linux-with-udev
         name: refresh
         resources:
