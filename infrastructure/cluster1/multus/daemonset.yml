@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: kube-multus-ds
+  namespace: kube-system
+spec:
+  template:
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: node-role.kubernetes.io/edge
+                operator: DoesNotExist
+              - key: multus.cluster.local/schedulable
+                operator: NotIn
+                values:
+                - "false"
+      initContainers:
+      - name: install-multus-binary
+        image: ghcr.io/k8snetworkplumbingwg/multus-cni:v4.0.2-thick
+      containers:
+      - name: kube-multus
+        image: ghcr.io/k8snetworkplumbingwg/multus-cni:v4.0.2-thick
