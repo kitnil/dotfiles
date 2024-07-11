@@ -1,0 +1,45 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: dns
+  annotations:
+    # Setting spec.force to true will make Flux recreate the Job when any
+    # immutable field is changed, forcing the Job to run every time the
+    # container image tag changes.
+    kustomize.toolkit.fluxcd.io/force: enabled
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      hostNetwork: true
+      hostPID: true
+      restartPolicy: Never
+      containers:
+      - command:
+        - nsenter
+        - --target
+        - "1"
+        - --mount
+        - --uts
+        - --ipc
+        - --net
+        - --pid
+        - --no-fork
+        - /bin/sh
+        - -l
+        - -c
+        - sudo --chdir=$WORKSPACE --user=oleg --login bash -ic 'nix-shell --run "deploy . -- -L"'
+        env:
+        - name: WORKSPACE
+          value: /home/oleg/.local/share/chezmoi
+        image: docker-registry.wugi.info/library/util-linux-with-udev
+        name: refresh
+        resources:
+          limits:
+            cpu: 14000m
+            memory: 4096Mi
+          requests:
+            cpu: 1000m
+            memory: 512Mi
+        securityContext:
+          privileged: true
