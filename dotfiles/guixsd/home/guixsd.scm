@@ -617,6 +617,8 @@ _JAVA_AWT_WM_NONREPARENTING=1 PYTHONPATH='' exec -a \"$0\" ~a/bin/idea-ultimate 
 
     home-nix-service
 
+    home-wireplumber-config-service
+
     home-mpv-service
 
     (simple-service 'cagebreak-config
