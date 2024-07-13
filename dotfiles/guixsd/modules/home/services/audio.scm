@@ -15,7 +15,9 @@
             scream-configuration
 
             home-vosk-service-type
-            vosk-configuration))
+            vosk-configuration
+
+            home-wireplumber-config-service))
 
 (define-record-type* <scream-configuration>
   scream-configuration make-scream-configuration
@@ -78,3 +80,19 @@
                 (default-value '())
                 (description
                  "Install and configure the vosk.")))
+
+
+;;;
+;;; Pipewire
+;;;
+
+(define home-wireplumber-config-service
+  (simple-service 'pipewire-config
+                  home-files-service-type
+                  (list `(".config/wireplumber/main.lua.d/50-alsa-config.lua"
+                          ,(local-file (string-append %project-directory
+                                                      "/dot_config/wireplumber/main.lua.d/50-alsa-config.lua")))
+                        `(".config/wireplumber/main.lua.d/51-disable-suspension.lua"
+                          ,(local-file (string-append %project-directory
+                                                      "/dot_config/wireplumber/main.lua.d/51-disable-suspension.lua"))))))
+
