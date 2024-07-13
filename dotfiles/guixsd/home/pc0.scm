@@ -9,6 +9,7 @@
              (gnu packages xorg)
 	     (guix gexp)
 	     (home config)
+             (home services audio)
              (home services shell)
              (home services mime)
              (home services gdb)
@@ -257,4 +258,5 @@
    home-mycli-service
    home-parallel-service
    home-youtube-dl-service
+   home-wireplumber-config-service
    home-mpv-service)))
