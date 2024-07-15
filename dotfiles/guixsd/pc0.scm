@@ -197,7 +197,17 @@ trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDS
                                                  (program program)))
                                               (list (file-append nfs-utils "/sbin/mount.nfs"))))
                          (service nfs-service-type
-                                   (nfs-configuration)))
+                                   (nfs-configuration))
+                         (service bluetooth-service-type
+                                  (bluetooth-configuration
+                                   (auto-enable? #t)
+                                   (just-works-repairing 'confirm)
+                                   (controller-mode 'dual)
+                                   (min-connection-interval 7)
+                                   (max-connection-interval 9)
+                                   (connection-latency 0)
+                                   (privacy 'device)))
+                         udev-rules-service-xbox)
                     (modify-services
                      (modify-services %base-services
                                       (guix-service-type config =>
@@ -205,9 +215,6 @@ trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDS
                                                           (authorized-keys (append (list (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/guix.wugi.info.pub")
                                                                                          (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/vm1.wugi.info.pub")
                                                                                          (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/vm2.wugi.info.pub")
-                                                                                         (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/vm3.wugi.info.pub")
-                                                                                         (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/jenkins.intr.pub")
-                                                                                         (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/spb.pub")
                                                                                          (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/mirror.brielmaier.net.pub")
                                                                                          (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/substitutes.nonguix.org.pub"))
                                                                                    %default-authorized-guix-keys))
