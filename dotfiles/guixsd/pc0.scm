@@ -10,7 +10,7 @@
              (config)
              (services kubernetes))
 (use-service-modules desktop dbus docker networking nfs nix monitoring linux sound ssh xorg)
-(use-package-modules nfs linux screen ssh wm)
+(use-package-modules audio nfs linux screen ssh wm)
 
 (operating-system
   (host-name "pc0")
@@ -207,7 +207,10 @@ trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDS
                                    (max-connection-interval 9)
                                    (connection-latency 0)
                                    (privacy 'device)))
-                         udev-rules-service-xbox)
+                         udev-rules-service-xbox
+
+                         (service ladspa-service-type
+                                  (ladspa-configuration (plugins (list swh-plugins)))))
                     (modify-services
                      (modify-services %base-services
                                       (guix-service-type config =>
