@@ -81,7 +81,9 @@
             %homer-wugi.info-config
             %homer-wugi.info-nginx-configuration
 
-            knot-config))
+            knot-config
+
+            udev-rules-service-xbox))
 
 (define %guix-daemon-config
   (guix-configuration
@@ -691,3 +693,19 @@ zone:
     file: wugi.info.zone
     storage: /var/lib/knot/zones/
 " #$ip-address))))))))
+
+
+;;;
+;;; bluetooth-service
+;;;
+
+(define udev-rules-service-xbox
+  (udev-rules-service 'xpadneo
+                      (file->udev-rule
+                       "60-xpadneo.rules"
+                       (mixed-text-file "60-xpadneo.rules" ;https://github.com/atar-axis/xpadneo/issues/107
+                                        #~(string-join
+                                           (list "ACTION==\"add\""
+                                                 "KERNEL==\"0005:045E:02FD.*|0005:045E:02E0.*\""
+                                                 "SUBSYSTEM==\"hid\""
+                                                 "RUN:=\"/bin/sh -c 'echo xpadneo udev: $kernel > /dev/kmsg; modprobe hid_xpadneo && { echo $kernel > /sys/bus/hid/drivers/hid-generic/unbind; echo $kernel > /sys/bus/hid/drivers/microsoft/unbind; echo $kernel > /sys/bus/hid/drivers/xpadneo/bind; }; echo xpadneo udev: ok > /dev/kmsg'\""))))))
