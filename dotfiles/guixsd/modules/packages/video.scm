@@ -283,6 +283,46 @@ masks.
 transition.")
     (license license:gpl2)))
 
+;; XXX: obs-stroke-glow-shadow does not compile
+(define-public obs-stroke-glow-shadow
+  (let ((commit "b9e6e7c542820cda922c1816af5527413f3d69f8"))
+    (package
+      (name "obs-stroke-glow-shadow")
+      (version (git-version "1.0.2" "1" commit))
+      (source (origin
+                (method git-fetch)
+                (uri (git-reference
+                      (url "https://github.com/FiniteSingularity/obs-stroke-glow-shadow")
+                      (commit commit)))
+                (file-name (git-file-name name version))
+                (sha256
+                 (base32
+                  "06x0i9vpm49i6lyzpmiwlqyk5bvsfqxb3929xj9jlqpqlvcpbx3c"))))
+      (build-system cmake-build-system)
+      (arguments
+       (list
+        #:modules '((guix build cmake-build-system)
+                    (guix build utils))
+        #:tests? #f ;no tests
+        #:configure-flags
+        #~(list (string-append "-DLIBOBS_INCLUDE_DIR="
+                               #$(this-package-input "obs") "/lib")
+                "-DBUILD_OUT_OF_TREE=On"
+                "-Wno-dev"
+                "-DCMAKE_C_FLAGS=-Wno-stringop-overflow")
+        #:phases
+        #~(modify-phases %standard-phases
+            (add-after 'install 'fix-effects
+              (lambda _
+                (mkdir-p (string-append #$output "/share/obs/obs-plugins/obs-stroke-glow-shadow"))
+                (rename-file (string-append #$output "/data/obs-plugins/obs-stroke-glow-shadow/shaders")
+                             (string-append #$output "/share/obs/obs-plugins/obs-stroke-glow-shadow/shaders")))))))
+      (inputs (list obs qtbase-5))
+      (home-page "")
+      (synopsis "")
+      (description "")
+      (license license:gpl2))))
+
 (define-public obs-teleport
   (package
     (name "obs-teleport")
