@@ -871,6 +871,15 @@ location / {
                                     "-o" "br154.154"
                                     "-j" "ACCEPT")))
 
+                            ;; Allow to use current machine as a default
+                            ;; gateway on other machines.
+                            (iptables
+                             (string-join
+                              (list "-A" "FORWARD"
+                                    "-i" "br0"
+                                    "-o" "br0"
+                                    "-j" "ACCEPT")))
+
                             ;; VLAN 155 provides:
                             ;; - DHCP with a PXE by netboot.xyz.
                             ;; - NAT for the Internet.
