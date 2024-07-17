@@ -5,6 +5,7 @@
   #:use-module (gnu packages qt)
   #:use-module (gnu packages video)
   #:use-module (packages chromium)
+  #:use-module (guix build-system copy)
   #:use-module (guix build-system cmake)
   #:use-module (nonguix build-system binary)
   #:use-module (guix download)
@@ -275,3 +276,25 @@ masks.
     (description "Plugin for OBS Studio to move source to a new position during scene
 transition.")
     (license license:gpl2)))
+
+(define-public obs-teleport
+  (package
+    (name "obs-teleport")
+    (version "0.7.2")
+    (source (local-file "/srv/hdd1/Downloads/obs-teleport/linux-x86_64/obs-teleport.so"))
+    (build-system copy-build-system)
+    (arguments
+     `(#:install-plan
+       `((,(assoc-ref %build-inputs "source")
+          ,(string-append "/lib/obs-plugins/obs-teleport.so")))
+       #:phases
+       (modify-phases %standard-phases
+         (delete 'patch-source-shebangs)
+         (delete 'patch-generated-file-shebangs)
+         (delete 'patch-shebangs)
+         ;; (delete 'validate-runpath)
+         )))
+    (home-page "")
+    (synopsis "")
+    (description "")
+    (license #f)))
