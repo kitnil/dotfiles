@@ -96,7 +96,7 @@
          (uri "https://iso.wugi.info/obs-studio-exporter.so")
          (sha256
           (base32
-           "1mllfrlxryy979k72jdmmz1ri3cgy66p2gchpn37qh5j910zmqrc"))))
+           "1rcw3cdsdp5ih24j2l5bln9af9fvp60dgzgi2q52gnb9xqqa4pwn"))))
       (build-system binary-build-system)
       (arguments
        `(#:strip-binaries? #f
