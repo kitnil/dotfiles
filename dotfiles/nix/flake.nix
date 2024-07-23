@@ -401,6 +401,18 @@
             home-manager = home-manager-profile [ ./notebook/home-manager.nix ];
           };
         };
+        pc0 = let
+          dryActivateScript = pkgs.writeScript "deploy-rs-dry-activate" ''
+            #!${pkgs.runtimeShell}
+            echo $PROFILE
+          '';
+        in {
+          hostname = "192.168.0.192";
+          profiles = let
+          in {
+            home-manager = home-manager-profile [ ./pc0/home-manager.nix ];
+          };
+        };
       };
 
       checks = builtins.mapAttrs
