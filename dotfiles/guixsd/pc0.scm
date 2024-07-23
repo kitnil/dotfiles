@@ -9,7 +9,7 @@
              (bootloader grub)
              (config)
              (services kubernetes))
-(use-service-modules desktop dbus docker networking nfs nix monitoring linux sound ssh xorg)
+(use-service-modules desktop dbus docker networking nfs nix monitoring linux sound ssh virtualization xorg)
 (use-package-modules audio nfs linux screen ssh wm)
 
 (operating-system
@@ -210,7 +210,30 @@ trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDS
                          udev-rules-service-xbox
 
                          (service ladspa-service-type
-                                  (ladspa-configuration (plugins (list swh-plugins)))))
+                                  (ladspa-configuration (plugins (list swh-plugins))))
+                         (service libvirt-service-type
+                                  (libvirt-configuration
+                                   (listen-addr "192.168.0.192")
+                                   (listen-tcp? #t)
+                                   (auth-tcp "none")))
+                         (simple-service 'libvirt-qemu-config activation-service-type
+                                         #~(begin
+                                             (when (file-exists? "/etc/libvirt")
+                                               (with-output-to-file "/etc/libvirt/qemu.conf"
+                                                 (lambda ()
+                                                   (display "\
+user = \"oleg\"
+
+nvram = [
+  \"/home/oleg/.nix-profile/FV/OVMF_CODE.fd:/home/oleg/.nix-profile/FV/OVMF_VARS.fd\"
+]
+
+namespaces = [ ]
+"))))))
+
+                         (service virtlog-service-type
+                                  (virtlog-configuration
+                                   (max-clients 1000))))
                     (modify-services
                      (modify-services %base-services
                                       (guix-service-type config =>
