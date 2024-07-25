@@ -15,13 +15,14 @@ spec:
     spec:
       hostNetwork: true
       containers:
-      - image: datarhei/restreamer:2.9.0
+      - image: docker-registry.wugi.info/dockerhub/datarhei/restreamer:2.9.0
+        # datarhei/restreamer:2.9.0
         name: restreamer
         ports:
         - containerPort: 6000
           name: restreamer-0
           protocol: UDP
-        - containerPort: 8080
+        - containerPort: 12080
           name: restreamer-1
           protocol: TCP
         - containerPort: 8181
@@ -33,24 +34,15 @@ spec:
         - containerPort: 1936
           name: restreamer-4
           protocol: TCP
-        - containerPort: 8080
-          name: restreamer-5
-          protocol: UDP
-        - containerPort: 8181
-          name: restreamer-6
-          protocol: UDP
-        - containerPort: 1935
-          name: restreamer-7
-          protocol: UDP
-        - containerPort: 1936
-          name: restreamer-8
-          protocol: UDP
+        env:
+        - name: CORE_ADDRESS
+          value: "192.168.0.145:12080"
         resources:
           limits:
             cpu: 8000m
             memory: 1024Mi
           requests:
-            cpu: 1000m
+            cpu: 100m
             memory: 512Mi
         volumeMounts:
         - mountPath: /core/config
