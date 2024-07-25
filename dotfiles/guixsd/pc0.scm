@@ -83,7 +83,12 @@
                 ;; and "video" allows the user to play sound
                 ;; and access the webcam.
                 (supplementary-groups '("wheel"
-                                        "audio" "video")))
+                                        "audio"
+                                        "video"
+                                        "docker"
+                                        "kvm"
+                                        "input"
+                                        "libvirt")))
                %base-user-accounts))
 
   ;; Globally-installed packages.
