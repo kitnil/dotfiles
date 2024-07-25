@@ -420,7 +420,6 @@ spec:
   # app-deploy Kustomization.
   dependsOn:
   - name: maintenance-guix-pull-kube2
-  wait: true
   sourceRef:
     kind: GitRepository
     name: flux-system
