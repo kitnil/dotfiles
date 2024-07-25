@@ -8,6 +8,8 @@
   home.packages = with packages; [
     nix
     viddy
+
+    OVMF.fd # UEFI for virtual machines in libvirt
   ];
 
   home.file = {
