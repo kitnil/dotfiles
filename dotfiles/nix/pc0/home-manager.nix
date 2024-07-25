@@ -5,7 +5,7 @@
   home.homeDirectory = "/home/oleg";
   manual.manpages.enable = false;
 
-  home.packages = with pkgs; [
+  home.packages = with packages; [
     nix
     viddy
   ];
