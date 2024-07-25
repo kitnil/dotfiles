@@ -454,7 +454,6 @@ spec:
   # app-deploy Kustomization.
   dependsOn:
   - name: nix
-  wait: true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -474,7 +473,6 @@ spec:
   # app-deploy Kustomization.
   dependsOn:
   - name: nix
-  wait: true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -494,7 +492,6 @@ spec:
   # app-deploy Kustomization.
   dependsOn:
   - name: nix
-  wait: true
   sourceRef:
     kind: GitRepository
     name: flux-system
