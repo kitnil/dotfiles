@@ -8,4 +8,4 @@ spec:
       annotations:
         guix-default-channel-commit: e24b690e
     spec:
-      nodeName: kube1
+      nodeName: kube3
