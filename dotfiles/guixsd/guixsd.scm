@@ -269,16 +269,25 @@
                                        ;; "proxy_set_header Access-Control-Allow-Origin *;"
                                        ))))))
 
+        ;; (nginx-server-configuration
+        ;;  (server-name '("ci.guix.gnu.org.wugi.info"))
+        ;;  (listen '("192.168.0.144:80"))
+        ;;  (locations (list (nginx-location-configuration
+        ;;                    (uri "/")
+        ;;                    (body (list
+        ;;                           "resolver 80.80.80.80 ipv6=off;"
+        ;;                           "proxy_set_header Host ci.guix.trop.in;"
+        ;;                           "set $ci_guix_trop_in ci.guix.trop.in:80;"
+        ;;                           "proxy_pass http://$ci_guix_trop_in;"))))))
+
         (nginx-server-configuration
          (server-name '("ci.guix.gnu.org.wugi.info"))
          (listen '("192.168.0.144:80"))
          (locations (list (nginx-location-configuration
                            (uri "/")
-                           (body (list
-                                  "resolver 80.80.80.80 ipv6=off;"
-                                  "proxy_set_header Host ci.guix.trop.in;"
-                                  "set $ci_guix_trop_in ci.guix.trop.in:80;"
-                                  "proxy_pass http://$ci_guix_trop_in;"))))))
+                           (body (list "proxy_pass https://socat-ci-guix-gnu-onion;"
+                                       "proxy_ssl_verify off;"))))))
+
 
 ;;         (nginx-server-configuration
 ;;          (server-name '("hms-dev.intr" "hms.majordomo.ru"))
@@ -1848,7 +1857,7 @@ PasswordAuthentication yes")))
                                  (start #~(make-forkexec-constructor
                                            (list #$(file-append socat "/bin/socat")
                                                  "tcp4-LISTEN:81,reuseaddr,fork,keepalive,bind=127.0.0.1"
-                                                 "SOCKS4A:tor.home:4zwzi66wwdaalbhgnix55ea3ab4pvvw66ll2ow53kjub6se4q2bclcyd.onion:443,socksport=9050")))
+                                                 "SOCKS4A:tor.home:4zwzi66wwdaalbhgnix55ea3ab4pvvw66ll2ow53kjub6se4q2bclcyd.onion:443,socksport=9150")))
                                  (respawn? #f))))
 
                          (service syncthing-service-type
