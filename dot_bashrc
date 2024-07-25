@@ -2575,11 +2575,14 @@ then
 	PS1='\[\033[01;32m\]\u@\h\[\033[01;34m\] \w\$\[\033[00m\] '
     fi
 
-    # bat can be used as a colorizing pager for man, by setting the MANPAGER
-    # environment variable as documented here.
-    # https://github.com/sharkdp/bat#man
-    MANPAGER="sh -c 'col -bx | bat --theme=ansi -l man -p'"
-    export MANPAGER
-    MANROFFOPT="-c"
-    export MANROFFOPT
+    if type -p bat
+    then
+        # bat can be used as a colorizing pager for man, by setting the MANPAGER
+        # environment variable as documented here.
+        # https://github.com/sharkdp/bat#man
+        MANPAGER="sh -c 'col -bx | bat --theme=ansi -l man -p'"
+        export MANPAGER
+        MANROFFOPT="-c"
+        export MANROFFOPT
+    fi
 fi
