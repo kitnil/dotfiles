@@ -74,7 +74,7 @@
                       "iommu=pt"
 
                       "kvm.ignore_msrs=1"
-                      "vfio-pci.ids=1002:1478,1002:1479,1002:7480,1002:ab30"
+                      "vfio-pci.ids=1002:7480,1002:ab30"
 
                       ;; (#934) · Issues · drm / amd · GitLab
                       ;; <https://gitlab.freedesktop.org/drm/amd/-/issues/934>
