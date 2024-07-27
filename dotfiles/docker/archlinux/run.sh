@@ -40,18 +40,9 @@ docker_args=(
     --device /dev/fuse
     --volume "${pulseaudio_socket_file}:/tmp/pulseaudio.socket:ro"
     --volume "${pulseaudio_config_file}:/etc/pulse/client.conf:ro"
-    --volume /run/user/1000/wayland-1:/tmp/wayland-1
+    --volume /run/user/1000/wayland-1:/run/user/1000/wayland-1
     --volume /tmp/.X11-unix/X0:/tmp/.X11-unix/X0
 )
-
-# WAYLAND_DISPLAY=wayland-1 firefox
-# sudo mkdir -p /run/user/1000/
-# sudo chown oleg: /run/user/1000/
-# sudo mv /tmp/wayland-1 /run/user/1000/
-# sudo ln -s /tmp/wayland-1 /run/user/1000/
-# sudo rm /run/user/1000/wayland-1
-# sudo ln -s /tmp/wayland-1 /run/user/1000/
-# WAYLAND_DISPLAY=wayland-1 firefox
 
 capabilities=(
     NET_ADMIN
