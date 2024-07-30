@@ -666,6 +666,15 @@ location / {
                                 "-p" "udp"
                                 "--dport" "1195"
                                 "-j" "ACCEPT")))
+                            ;; Accept Diablo 2 traffic.
+                            (iptables
+                             (string-join
+                              '("-I" "INPUT"
+                                "-i" "br0"
+                                "-d" "192.168.0.144/32"
+                                "-p" "tcp"
+                                "--dport" "4000"
+                                "-j" "ACCEPT")))
                             ;; Accept qBittorrent API traffic.
                             (iptables
                              (string-join
