@@ -314,8 +314,8 @@ remote-random
                                                                                          (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/mirror.brielmaier.net.pub")
                                                                                          (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/substitutes.nonguix.org.pub"))
                                                                                    %default-authorized-guix-keys))
-                                                          (substitute-urls '("http://ci.guix.gnu.org.wugi.info"
-                                                                             "https://guix.wugi.info"
+                                                          (substitute-urls '("https://guix.wugi.info"
+                                                                             "https://bordeaux.guix.gnu.org"
                                                                              "https://substitutes.nonguix.org"))))
                                       ;; (sysctl-service-type _ =>
                                       ;;                      (sysctl-configuration

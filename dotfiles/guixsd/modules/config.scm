@@ -103,8 +103,8 @@
 (define %guix-daemon-config-with-substitute-urls
   (guix-configuration
    (inherit %guix-daemon-config)
-   (substitute-urls '("http://ci.guix.gnu.org.wugi.info"
-                      "https://guix.wugi.info"
+   (substitute-urls '("https://guix.wugi.info"
+                      "https://bordeaux.guix.gnu.org"
                       "https://substitutes.nonguix.org"))))
 
 (define 20-intel.conf "\
