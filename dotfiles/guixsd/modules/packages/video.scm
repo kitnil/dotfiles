@@ -1,4 +1,10 @@
 (define-module (packages video)
+  #:use-module (gnu packages avahi)
+  #:use-module (gnu packages gawk)
+  #:use-module (gnu packages compression)
+  #:use-module (gnu packages elf)
+  #:use-module (gnu packages gcc)
+  #:use-module (guix build-system trivial)
   #:use-module (gnu packages)
   #:use-module (gnu packages base)
   #:use-module (gnu packages bash)
@@ -298,3 +304,100 @@ transition.")
     (synopsis "")
     (description "")
     (license #f)))
+
+(define-public ndi
+  (package
+    (name "ndi")
+    (version "5.6.1") ;NDI SDK for Linux/Version.txt
+    ;; https://downloads.ndi.tv/SDK/NDI_SDK_Linux/Install_NDI_SDK_v5_Linux.tar.gz
+    (source (local-file "/home/oleg/Install_NDI_SDK_v5_Linux.tar.gz"))
+    (build-system trivial-build-system)
+    (inputs (list bash-minimal tar findutils coreutils gawk gzip tar glibc patchelf `(,gcc "lib") avahi))
+    (native-inputs `(("source" ,source)))
+    (arguments
+     (list
+      #:modules '((guix build utils))
+      #:builder
+      #~(begin
+          (use-modules (guix build utils))
+          (setenv "PATH"
+                  (string-append
+                   #$(this-package-input "gzip") "/bin"
+                   ":" #$(this-package-input "tar") "/bin"
+                   ":" #$(this-package-input "avahi") "/bin"
+                   ":" #$(this-package-input "bash-minimal") "/bin"
+                   ":" #$(this-package-input "gawk") "/bin"
+                   ":" #$(this-package-input "findutils") "/bin"
+                   ":" #$(this-package-input "tar") "/bin"
+                   ":" #$(this-package-input "coreutils") "/bin"
+                   ":" #$(this-package-input "patchelf") "/bin"))
+          (invoke "tar" "-xf" #$(this-package-native-input "source"))
+          (system "echo y | bash -x ./Install_NDI_SDK_v5_Linux.sh")
+          ;; Install binaries.
+          (mkdir-p (string-append #$output "/bin"))
+          (for-each (lambda (file)
+                      (invoke "patchelf"
+                              "--set-interpreter"
+                              (string-append #$(this-package-input "glibc")
+                                             "/lib/ld-linux-x86-64.so.2")
+                              (string-append "NDI SDK for Linux/bin/x86_64-linux-gnu/" file))
+                      (copy-file (string-append "NDI SDK for Linux/bin/x86_64-linux-gnu/" file)
+                                 (string-append #$output "/bin/" file)))
+                    '("ndi-benchmark"
+                      "ndi-free-audio"
+                      "ndi-directory-service"))
+          (invoke "patchelf"
+                  "--set-interpreter"
+                  (string-append #$(this-package-input "glibc")
+                                 "/lib/ld-linux-x86-64.so.2")
+                  "--set-rpath" (string-append #$(this-package-input "avahi") "/lib")
+                  (string-append "NDI SDK for Linux/bin/x86_64-linux-gnu/ndi-record"))
+          (copy-file "NDI SDK for Linux/bin/x86_64-linux-gnu/ndi-record"
+                     (string-append #$output "/bin/ndi-record"))
+          ;; Install libraries.
+          (mkdir-p (string-append #$output "/lib"))
+          (for-each (lambda (file)
+                      (invoke "patchelf"
+                              "--set-rpath" (string-append #$(this-package-input "avahi") "/lib")
+                              (string-append "NDI SDK for Linux/lib/x86_64-linux-gnu/" file))
+                      (copy-file (string-append "NDI SDK for Linux/lib/x86_64-linux-gnu/" file)
+                                 (string-append #$output "/lib/" file)))
+                    '("libndi.so.5.6.1"))
+          (with-directory-excursion (string-append #$output "/lib")
+            (for-each (lambda (file)
+                        (symlink "libndi.so.5.6.1" file))
+                      '("libndi.so.5"
+                        "libndi.so")))
+          ;; Install misc.
+          (for-each (lambda (directory)
+                      (mkdir-p (string-append #$output "/" directory))
+                      (copy-recursively (string-append "NDI SDK for Linux/" directory)
+                                        (string-append #$output "/" directory)))
+                    '("include" "examples"))
+          (mkdir-p (string-append #$output "/doc"))
+          (for-each (lambda (directory)
+                      (copy-recursively directory
+                                        (string-append #$output "/doc")))
+                    '("licenses" "logos")))))
+    (home-page "")
+    (synopsis "")
+    (description "")
+    (license #f)))
+
+
+;; (define-public obs-ndi
+;;   (package
+;;     (name "obs-ndi")
+;;     (version "5.5.2")
+;;     (source (origin
+;;               (method url-fetch)
+;;               (uri (string-append ""))
+;;               (sha256
+;;                (base32
+;;                 "0kni1a8zqqbgx5mmaw4k4chswsy0i9qk89zcbg58mvspz9zzv4ia"))))
+;;     (build-system trivial-build-system)
+;;     (home-page "")
+;;     (synopsis "")
+;;     (description "")
+;;     (license #f)))
+
