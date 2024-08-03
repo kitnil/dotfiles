@@ -9,7 +9,7 @@
              (bootloader grub)
              (config)
              (services kubernetes))
-(use-service-modules desktop dbus docker networking nfs nix monitoring linux sound ssh virtualization xorg)
+(use-service-modules avahi desktop dbus docker networking nfs nix monitoring linux sound ssh virtualization xorg)
 (use-package-modules audio nfs linux screen ssh wm)
 
 (operating-system
@@ -163,7 +163,8 @@
 
   ;; Add services to the baseline: a DHCP client and an SSH
   ;; server.  You may wish to add an NTP service here.
-  (services (append (list (service dhcp-client-service-type)
+  (services (append (list (service avahi-service-type)
+                          (service dhcp-client-service-type)
                           (service openssh-service-type
                                    (openssh-configuration
                                     (openssh openssh-sans-x)
