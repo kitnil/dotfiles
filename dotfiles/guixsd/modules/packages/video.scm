@@ -384,20 +384,46 @@ transition.")
     (description "")
     (license #f)))
 
-
-;; (define-public obs-ndi
-;;   (package
-;;     (name "obs-ndi")
-;;     (version "5.5.2")
-;;     (source (origin
-;;               (method url-fetch)
-;;               (uri (string-append ""))
-;;               (sha256
-;;                (base32
-;;                 "0kni1a8zqqbgx5mmaw4k4chswsy0i9qk89zcbg58mvspz9zzv4ia"))))
-;;     (build-system trivial-build-system)
-;;     (home-page "")
-;;     (synopsis "")
-;;     (description "")
-;;     (license #f)))
+(define-public obs-ndi
+  (package
+    (name "obs-ndi")
+    (version "4.10.0")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://github.com/Palakis/obs-ndi")
+                    (commit (string-append "dummy-tag-" version))))
+              (file-name (git-file-name name version))
+              (sha256
+               (base32
+                "1dx1g2gspmf4xngvv2hyg8aviffkd939aslb796j1hr7c11y23vr"))
+              (patches (append (search-patches "hardcode-ndi-path.patch")))))
+    (build-system cmake-build-system)
+    (inputs
+     (list ndi obs qtbase-5))
+    (arguments
+     (list
+      #:tests? #f ;no tests
+      #:phases
+      #~(modify-phases %standard-phases
+          (add-before 'configure 'ndi
+            (lambda* (#:key inputs #:allow-other-keys)
+              (let ((ndi #$(this-package-input "ndi")))
+                (substitute* "src/obs-ndi.cpp"
+                  (("@NDI@") ndi))
+                (delete-file-recursively "lib/ndi")
+                (symlink (string-append ndi "/include")
+                         "lib/ndi"))))
+          (add-after 'install 'obs-plugins
+            (lambda* (#:key outputs #:allow-other-keys)
+              (mkdir-p (string-append #$output "/lib/obs-plugins"))
+              (symlink
+               (string-append #$output
+                              "/obs-plugins/64bit/obs-ndi.so")
+               (string-append #$output
+                              "/lib/obs-plugins/obs-ndi.so")))))))
+    (home-page "")
+    (synopsis "")
+    (description "")
+    (license #f)))
 
