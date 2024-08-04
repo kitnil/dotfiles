@@ -427,3 +427,42 @@ transition.")
     (description "")
     (license #f)))
 
+(define-public obs-multi-rtmp
+  (package
+    (name "obs-multi-rtmp")
+    (version "0.3.0.2-OBS29.1.1")       ;0.2.8.1-OBS29
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://github.com/sorayuki/obs-multi-rtmp")
+                    (commit version)))
+              (file-name (git-file-name name version))
+              (sha256
+               (base32
+                "192zkihn3ahh93fn3mkpbx7apa04lmcxc637hpxwkivdjbq3nbk3"))))
+    (build-system cmake-build-system)
+    (arguments
+     (list
+      #:modules '((guix build cmake-build-system)
+                  (guix build utils))
+      #:tests? #f ;no tests
+      #:configure-flags
+      #~(list (string-append "-DLIBOBS_INCLUDE_DIR="
+                             #$(this-package-input "obs") "/lib")
+              "-DBUILD_OUT_OF_TREE=On"
+              "-Wno-dev")
+      #:phases
+      #~(modify-phases %standard-phases
+          (add-after 'install 'obs-plugins
+            (lambda* (#:key outputs #:allow-other-keys)
+              (mkdir-p (string-append #$output "/lib/obs-plugins"))
+              (symlink
+               (string-append #$output
+                              "/obs-plugins/64bit/obs-multi-rtmp.so")
+               (string-append #$output
+                              "/lib/obs-plugins/obs-multi-rtmp.so")))))))
+    (inputs (list obs qtbase-5))
+    (home-page "")
+    (synopsis "")
+    (description "")
+    (license #f)))
