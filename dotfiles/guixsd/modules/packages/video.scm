@@ -387,16 +387,16 @@ transition.")
 (define-public obs-ndi
   (package
     (name "obs-ndi")
-    (version "4.10.0")
+    (version "4.11.1")
     (source (origin
               (method git-fetch)
               (uri (git-reference
                     (url "https://github.com/Palakis/obs-ndi")
-                    (commit (string-append "dummy-tag-" version))))
+                    (commit version)))
               (file-name (git-file-name name version))
               (sha256
                (base32
-                "1dx1g2gspmf4xngvv2hyg8aviffkd939aslb796j1hr7c11y23vr"))
+                "1wsb1k0jilcn6gqgpq5kq8hjiwnb6mi2w32fsqgb88iicwj1qa3y"))
               (patches (append (search-patches "hardcode-ndi-path.patch")))))
     (build-system cmake-build-system)
     (inputs
