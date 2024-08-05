@@ -62,6 +62,7 @@
             [
               copy-as-org-mode
               copy-all-tab-urls-we
+              redirector
               ublock-origin
             ];
         };
