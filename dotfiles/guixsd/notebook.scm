@@ -21,7 +21,7 @@
 
 (use-package-modules audio bootloaders vpn wm terminals xfce linux package-management admin fonts nfs xorg)
 
-(use-service-modules desktop dbus docker networking monitoring sound xorg)
+(use-service-modules avahi desktop dbus docker networking monitoring sound xorg)
 
 (use-modules (bootloader grub)
              (packages monitoring)
@@ -143,6 +143,7 @@
   ;; Use the "desktop" services, which include the X11
   ;; log-in service, networking with NetworkManager, and more.
   (services (append (list
+                     (service avahi-service-type)
                      (service bluetooth-service-type
                               (bluetooth-configuration
                                (auto-enable? #t)
