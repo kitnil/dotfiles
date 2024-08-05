@@ -17,11 +17,9 @@
 
              (config))
 
-(use-service-modules desktop networking ssh nix)
+(use-service-modules avahi dbus desktop desktop docker monitoring networking networking nix sound ssh xorg)
 
 (use-package-modules audio bootloaders vpn wm terminals xfce linux package-management admin fonts nfs xorg)
-
-(use-service-modules avahi desktop dbus docker networking monitoring sound xorg)
 
 (use-modules (bootloader grub)
              (packages monitoring)
