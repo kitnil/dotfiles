@@ -17,7 +17,7 @@
 
              (config))
 
-(use-service-modules desktop networking ssh nfs nix)
+(use-service-modules desktop networking ssh nix)
 
 (use-package-modules audio bootloaders vpn wm terminals xfce linux package-management admin fonts nfs xorg)
 
@@ -157,8 +157,6 @@
 
                      (service wpa-supplicant-service-type)    ;needed by NetworkManager
                      (service network-manager-service-type)
-                     (service nfs-service-type
-                              (nfs-configuration))
 
                      (service ladspa-service-type
                               (ladspa-configuration (plugins (list swh-plugins))))
