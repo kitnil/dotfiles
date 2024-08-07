@@ -536,3 +536,42 @@ transition.")
     (synopsis "")
     (description "")
     (license #f)))
+
+(define-public obs-shaderfilter
+  (package
+    (name "obs-shaderfilter")
+    (version "2.0.0")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://github.com/exeldro/obs-shaderfilter")
+                    (commit version)))
+              (file-name (git-file-name name version))
+              (sha256
+               (base32
+                "1kqa8323gcnyqjcya4ynhwvd38y0xsxvxndzndpmg18q88svyiq8"))))
+    (build-system cmake-build-system)
+    (arguments
+     (list
+      #:modules '((guix build cmake-build-system)
+                  (guix build utils))
+      #:tests? #f ;no tests
+      #:configure-flags
+      #~(list (string-append "-DLIBOBS_INCLUDE_DIR="
+                             #$(this-package-input "obs") "/lib")
+              "-DBUILD_OUT_OF_TREE=On"
+              "-Wno-dev")
+      #:phases
+      #~(modify-phases %standard-phases
+          (add-after 'install 'fix-effects
+            (lambda _
+              (for-each (lambda (directory)
+                          (mkdir-p (string-append #$output "/share/obs/obs-plugins/obs-shaderfilter"))
+                          (rename-file (string-append #$output "/data/obs-plugins/obs-shaderfilter/" directory)
+                                       (string-append #$output "/share/obs/obs-plugins/obs-shaderfilter/" directory)))
+                        '("examples" "textures")))))))
+    (inputs (list obs qtbase-5))
+    (home-page "")
+    (synopsis "")
+    (description "")
+    (license #f)))
