@@ -45,4 +45,7 @@
         "dialog"
         "pinentry"
         "sshpass"
-        "remmina"))
+        "remmina"
+        "flatpak"
+        "netcat-openbsd"
+        "unzip"))
