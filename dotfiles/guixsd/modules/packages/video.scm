@@ -467,6 +467,82 @@ transition.")
     (description "")
     (license #f)))
 
+(define-public ndi-4
+  (package
+    (name "ndi-4")
+    (version "4") ;NDI SDK for Linux/Version.txt
+    ;; https://downloads.ndi.tv/SDK/NDI_SDK_Linux/Install_NDI_SDK_v5_Linux.tar.gz
+    (source (local-file "/home/oleg/src/git.puscii.nl/puppetexp/puppet-sms/files/InstallNDISDK_v4_Linux.sh"))
+    (build-system trivial-build-system)
+    (inputs (list bash-minimal tar findutils coreutils gawk gzip tar glibc patchelf `(,gcc "lib") avahi))
+    (native-inputs `(("source" ,source)))
+    (arguments
+     (list
+      #:modules '((guix build utils))
+      #:builder
+      #~(begin
+          (use-modules (guix build utils))
+          (setenv "PATH"
+                  (string-append
+                   #$(this-package-input "gzip") "/bin"
+                   ":" #$(this-package-input "tar") "/bin"
+                   ":" #$(this-package-input "avahi") "/bin"
+                   ":" #$(this-package-input "bash-minimal") "/bin"
+                   ":" #$(this-package-input "gawk") "/bin"
+                   ":" #$(this-package-input "findutils") "/bin"
+                   ":" #$(this-package-input "tar") "/bin"
+                   ":" #$(this-package-input "coreutils") "/bin"
+                   ":" #$(this-package-input "patchelf") "/bin"))
+          (system (string-append "echo y | bash -x " #$(this-package-native-input "source")))
+          ;; Install binaries.
+          (mkdir-p (string-append #$output "/bin"))
+          (for-each (lambda (file)
+                      (invoke "patchelf"
+                              "--set-interpreter"
+                              (string-append #$(this-package-input "glibc")
+                                             "/lib/ld-linux-x86-64.so.2")
+                              (string-append "NDI SDK for Linux/bin/x86_64-linux-gnu/" file))
+                      (copy-file (string-append "NDI SDK for Linux/bin/x86_64-linux-gnu/" file)
+                                 (string-append #$output "/bin/" file)))
+                    '("ndi-directory-service"))
+          (invoke "patchelf"
+                  "--set-interpreter"
+                  (string-append #$(this-package-input "glibc")
+                                 "/lib/ld-linux-x86-64.so.2")
+                  "--set-rpath" (string-append #$(this-package-input "avahi") "/lib")
+                  (string-append "NDI SDK for Linux/bin/x86_64-linux-gnu/ndi-record"))
+          (copy-file "NDI SDK for Linux/bin/x86_64-linux-gnu/ndi-record"
+                     (string-append #$output "/bin/ndi-record"))
+          ;; Install libraries.
+          (mkdir-p (string-append #$output "/lib"))
+          (for-each (lambda (file)
+                      (invoke "patchelf"
+                              "--set-rpath" (string-append #$(this-package-input "avahi") "/lib")
+                              (string-append "NDI SDK for Linux/lib/x86_64-linux-gnu/" file))
+                      (copy-file (string-append "NDI SDK for Linux/lib/x86_64-linux-gnu/" file)
+                                 (string-append #$output "/lib/" file)))
+                    '("libndi.so.4.0.1"))
+          (with-directory-excursion (string-append #$output "/lib")
+            (for-each (lambda (file)
+                        (symlink "libndi.so.4.0.1" file))
+                      '("libndi.so.4"
+                        "libndi.so")))
+          ;; Install misc.
+          (for-each (lambda (directory)
+                      (mkdir-p (string-append #$output "/" directory))
+                      (copy-recursively (string-append "NDI SDK for Linux/" directory)
+                                        (string-append #$output "/" directory)))
+                    '("include" "examples"))
+          (mkdir-p (string-append #$output "/doc"))
+          (for-each (lambda (directory)
+                      (copy-recursively directory
+                                        (string-append #$output "/doc")))
+                    '("licenses" "logos")))))
+    (home-page "")
+    (synopsis "")
+    (description "")
+    (license #f)))
+
 (define-public obs-multi-rtmp
   (package
     (name "obs-multi-rtmp")
