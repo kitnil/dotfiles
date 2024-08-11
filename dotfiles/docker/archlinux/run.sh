@@ -56,4 +56,4 @@ do
     docker_args+=("--cap-add" "$capability")
 done
 
-docker run "${docker_args[@]}" archlinux-systemd
+docker run "${docker_args[@]}" "$@" "${docker_image:-harbor.home.wugi.info/library/archlinux-systemd}"
