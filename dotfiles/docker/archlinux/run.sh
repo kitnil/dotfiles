@@ -30,7 +30,6 @@ EOF
 docker_args=(
     --detach
     --device /dev/dri
-    --device /dev/tty5
     --name archlinux-1
     --env "container=docker"
     --tmpfs /tmp
