@@ -23,7 +23,7 @@ spec:
       ip netns exec $network_namespace ip route add default via $TARGET_NETWORK_INTERFACE_GATEWAY dev eth0
       # XXX: Delete ping after fixing network availability without egress traffic from pod.
       ip netns exec $network_namespace ping -c1 $TARGET_NETWORK_INTERFACE_GATEWAY || true
-      exec ip netns exec $network_namespace sleep infinity
+      exec ip netns exec $network_namespace /usr/bin/ciadpi --proto=http,tls --split 3 --auto=none
     env:
     - name: SOURCE_NETWORK_INTERFACE_NAME
       value: br0
@@ -31,7 +31,7 @@ spec:
       value: 192.168.0.146/24
     - name: TARGET_NETWORK_INTERFACE_GATEWAY
       value: 192.168.0.1
-    image: nixery.dev/shell/coreutils/util-linux/iproute2/iputils
+    image: docker pull harbor.home.wugi.info/library/byedpi@sha256:522a77b6f760c436364c80814bd74154a343428c14a45296e279cd486683dfcb
     securityContext:
       capabilities:
         add:
