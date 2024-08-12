@@ -10,7 +10,12 @@ spec:
   containers:
   - name: bydpi
     command:
-    - /usr/bin/ciadpi --port CIADPI_PORT --proto=http,tls --split 3 --auto=none
+    - /usr/bin/ciadpi
+    args:
+    - --port=$CIADPI_PORT
+    - --proto=http,tls
+    - --split 3
+    - --auto=none
     env:
     - name: CIADPI_PORT
       value: "1081"
