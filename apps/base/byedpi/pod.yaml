@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: bydpi
+  name: byedpi
 spec:
   restartPolicy: Never
   hostNetwork: true
