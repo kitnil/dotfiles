@@ -10,32 +10,8 @@ spec:
   containers:
   - name: bydpi
     command:
-    - /bin/sh
-    - -c
-    - |
-      set -o nounset -o errexit -o pipefail -o xtrace
-      network_namespace=$(printf ip-netns-%s $(tr -dc A-Za-z0-9 </dev/urandom | head -c 12))
-      ip netns add $network_namespace
-      network_interface=$(printf macvlan%s $(tr -dc A-Za-z0-9 </dev/urandom | head -c 8))
-      ip link add $network_interface link $SOURCE_NETWORK_INTERFACE_NAME type macvlan mode bridge
-      ip link set $network_interface netns $network_namespace
-      ip netns exec $network_namespace ip link set dev $network_interface name eth0
-      ip netns exec $network_namespace ip link set eth0 up
-      ip netns exec $network_namespace ip addr add $TARGET_NETWORK_INTERFACE_IP_ADDRESS dev eth0
-      ip netns exec $network_namespace ip route add default via $TARGET_NETWORK_INTERFACE_GATEWAY dev eth0
-      # XXX: Delete ping after fixing network availability without egress traffic from pod.
-      ip netns exec $network_namespace ping -c1 $TARGET_NETWORK_INTERFACE_GATEWAY || true
-      exec ip netns exec $network_namespace /usr/bin/ciadpi --proto=http,tls --split 3 --auto=none
+    - /usr/bin/ciadpi --port CIADPI_PORT --proto=http,tls --split 3 --auto=none
     env:
-    - name: SOURCE_NETWORK_INTERFACE_NAME
-      value: br0
-    - name: TARGET_NETWORK_INTERFACE_IP_ADDRESS
-      value: 192.168.0.146/24
-    - name: TARGET_NETWORK_INTERFACE_GATEWAY
-      value: 192.168.0.1
+    - name: CIADPI_PORT
+      value: 1081
     image: harbor.home.wugi.info/library/byedpi@sha256:522a77b6f760c436364c80814bd74154a343428c14a45296e279cd486683dfcb
-    securityContext:
-      capabilities:
-        add:
-        - NET_ADMIN
-        - SYS_ADMIN
