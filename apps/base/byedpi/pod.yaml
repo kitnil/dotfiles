@@ -31,7 +31,7 @@ spec:
       value: 192.168.0.146/24
     - name: TARGET_NETWORK_INTERFACE_GATEWAY
       value: 192.168.0.1
-    image: docker pull harbor.home.wugi.info/library/byedpi@sha256:522a77b6f760c436364c80814bd74154a343428c14a45296e279cd486683dfcb
+    image: harbor.home.wugi.info/library/byedpi@sha256:522a77b6f760c436364c80814bd74154a343428c14a45296e279cd486683dfcb
     securityContext:
       capabilities:
         add:
