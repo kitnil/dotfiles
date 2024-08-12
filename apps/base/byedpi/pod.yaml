@@ -13,5 +13,5 @@ spec:
     - /usr/bin/ciadpi --port CIADPI_PORT --proto=http,tls --split 3 --auto=none
     env:
     - name: CIADPI_PORT
-      value: 1081
+      value: "1081"
     image: harbor.home.wugi.info/library/byedpi@sha256:522a77b6f760c436364c80814bd74154a343428c14a45296e279cd486683dfcb
