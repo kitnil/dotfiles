@@ -2,6 +2,8 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: byedpi
+  annotations:
+    kustomize.toolkit.fluxcd.io/force: enabled
 spec:
   restartPolicy: Never
   hostNetwork: true
