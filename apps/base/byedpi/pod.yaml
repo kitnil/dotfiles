@@ -23,7 +23,7 @@ spec:
       ip netns exec $network_namespace ip route add default via $TARGET_NETWORK_INTERFACE_GATEWAY dev eth0
       # XXX: Delete ping after fixing network availability without egress traffic from pod.
       ip netns exec $network_namespace ping -c1 $TARGET_NETWORK_INTERFACE_GATEWAY || true
-      exec ip netns exec $network_namespace /usr/bin/ciadpi --proto=http,tls --split 3 --auto=none
+      exec /usr/bin/ciadpi --proto=http,tls --split 3 --auto=none
     env:
     - name: SOURCE_NETWORK_INTERFACE_NAME
       value: br0
