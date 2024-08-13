@@ -4,15 +4,20 @@ metadata:
   name: byedpi
   annotations:
     kustomize.toolkit.fluxcd.io/force: enabled
+  labels:
+    app.kubernetes.io/name: byedpi
+    app.kubernetes.io/part-of: byedpi
 spec:
   restartPolicy: Never
-  hostNetwork: true
   containers:
   - name: bydpi
+    ports:
+    - name: socks5
+      containerPort: 1080
+      protocol: tcp
     command:
     - /usr/bin/ciadpi
     args:
-    - --port=1081
     - --disorder=1
     - --auto=torst
     - --tlsrec=1+s
