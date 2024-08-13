@@ -162,7 +162,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/base/byedpi
+  path: ./apps/cluster1/byedpi
   prune: true
   sourceRef:
     kind: GitRepository
