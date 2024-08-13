@@ -14,7 +14,7 @@ spec:
     ports:
     - name: socks5
       containerPort: 1080
-      protocol: tcp
+      protocol: TCP
     command:
     - /usr/bin/ciadpi
     args:
