@@ -12,6 +12,7 @@ spec:
     command:
     - /usr/bin/ciadpi
     args:
+    - --port=1081
     - --disorder=1
     - --auto=torst
     - --tlsrec=1+s
