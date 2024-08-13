@@ -13,8 +13,7 @@ spec:
     - /usr/bin/ciadpi
     args:
     - --port=1081
-    - --proto=http,tls
-    - --split=3
-    - --auto=none
-    - --debug=2
+    - --disorder=1
+    - --auto=torst
+    - --tlsrec=1+s
     image: harbor.home.wugi.info/library/byedpi@sha256:522a77b6f760c436364c80814bd74154a343428c14a45296e279cd486683dfcb
