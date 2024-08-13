@@ -13,14 +13,25 @@ spec:
         app.kubernetes.io/name: redsocks
         app.kubernetes.io/part-of: redsocks
     spec:
+      hostNetwork: true
       containers:
       - image: nixery.dev/shell/coreutils/util-linux/redsocks
         name: redsocks
         command:
-        - /bin/sleep
+        - /bin/redsocks
         args:
-        - infinity
+        - -c
+        - /etc/redsocks.conf
         ports:
-        - containerPort: 1080
+        - containerPort: 1083
           name: socks5
           protocol: TCP
+        volumeMounts:
+        - mountPath: /etc/redsocks.conf
+          subPath: redsocks.conf
+          readOnly: true
+          name: config
+      volumes:
+      - name: config
+        configMap:
+          name: redsocks-configuration

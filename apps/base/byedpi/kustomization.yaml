@@ -4,4 +4,3 @@ namespace: byedpi
 resources:
 - namespace.yaml
 - pod.yaml
-- service.yaml

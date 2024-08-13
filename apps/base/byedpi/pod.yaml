@@ -9,11 +9,12 @@ metadata:
     app.kubernetes.io/part-of: byedpi
 spec:
   restartPolicy: Never
+  hostNetwork: true
   containers:
   - name: bydpi
     ports:
     - name: socks5
-      containerPort: 1080
+      containerPort: 1081
       protocol: TCP
     command:
     - /usr/bin/ciadpi

@@ -4,4 +4,7 @@ namespace: redsocks
 resources:
 - namespace.yaml
 - deployment.yaml
-- service.yaml
+configMapGenerator:
+- name: redsocks-configuration
+  files:
+  - redsocks.conf=rootfs/etc/redsocks.conf
