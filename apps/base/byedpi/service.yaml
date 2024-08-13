@@ -15,4 +15,4 @@ spec:
     app.kubernetes.io/name: byedpi
     app.kubernetes.io/part-of: byedpi
   type: ClusterIP
-  clusterIP: '10.0.0.253'
+  clusterIP: '10.8.0.2'
