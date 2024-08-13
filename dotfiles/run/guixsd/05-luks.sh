@@ -18,10 +18,6 @@ sudo ipset -exist create tor hash:ip hashsize 1024 maxelem 655360
 sudo iptables -t nat -A PREROUTING -p tcp -m set --match-set tor dst -j DNAT --to-destination 127.0.0.1:888
 sudo iptables -t nat -A OUTPUT -p tcp -m set --match-set tor dst -j REDIRECT --to-ports 888
 
-sudo ipset -exist create byedpi hash:ip hashsize 1024 maxelem 655360
-sudo iptables -t nat -A PREROUTING -p tcp -m set --match-set byedpi dst -j DNAT --to-destination 127.0.0.1:890
-sudo iptables -t nat -A OUTPUT -p tcp -m set --match-set byedpi dst -j REDIRECT --to-ports 890
-
 # yt3.ggpht.com
 sudo ipset add tor 64.233.162.198
 
