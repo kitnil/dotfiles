@@ -1,0 +1,26 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: redsocks
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: redsocks
+      app.kubernetes.io/part-of: redsocks
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: redsocks
+        app.kubernetes.io/part-of: redsocks
+    spec:
+      containers:
+      - image: nixery.dev/shell/coreutils/util-linux/redsocks
+        name: redsocks
+        command:
+        - /bin/sleep
+        args:
+        - infinity
+        ports:
+        - containerPort: 1080
+          name: socks5
+          protocol: TCP
