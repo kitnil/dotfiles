@@ -996,6 +996,25 @@ location / {
                           "--server=192.168.156.1")))
           (respawn? #f)))))
 
+(define %dnsmasq-main-service
+  (simple-service
+   'dnsmasq-configuration shepherd-root-service-type
+   (list (shepherd-service
+          (provision '(dnsmasq))
+          (requirement '(networking vswitchd))
+          (start #~(make-forkexec-constructor
+                    (list #$(file-append dnsmasq "/sbin/dnsmasq")
+                          "--no-daemon"
+                          "--local-service"
+                          "--interface=enp34s0"
+                          "--server=8.8.8.8"
+                          "--no-resolv"
+                          "--bind-interfaces"
+                          "--except-interface=lo"
+                          "--except-interface=br154.br154"
+                          "--except-interface=br0")))
+          (respawn? #f)))))
+
 ;; TODO: Add libvirtd network configuration.
 ;; (use-modules (sxml simple))
 ;; (call-with-output-string
@@ -2230,6 +2249,7 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                                                          ))
                                          (requirement '(openvswitch-configuration)))))
 
+                         %dnsmasq-main-service
                          %dnsmasq-service
                          ;; TODO: Use system service after adding all required flags.
                          ;; (service dnsmasq-service-type
