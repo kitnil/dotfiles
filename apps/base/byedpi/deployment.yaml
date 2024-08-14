@@ -13,10 +13,10 @@ spec:
         app.kubernetes.io/name: byedpi
         app.kubernetes.io/part-of: byedpi
     spec:
+      hostNetwork: true
       containers:
       - name: byedpi
         image: harbor.home.wugi.info/library/byedpi@sha256:522a77b6f760c436364c80814bd74154a343428c14a45296e279cd486683dfcb
-        hostNetwork: true
         ports:
         - name: socks5
           containerPort: 1081
