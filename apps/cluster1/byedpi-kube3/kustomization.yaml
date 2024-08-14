@@ -7,4 +7,4 @@ commonLabels:
 resources:
 - ../../base/byedpi
 patchesStrategicMerge:
-- pod.yaml
+- deployment.yaml

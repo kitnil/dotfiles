@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: byedpi
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: byedpi
+      app.kubernetes.io/part-of: byedpi
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: byedpi
+        app.kubernetes.io/part-of: byedpi
+    spec:
+      containers:
+      - image: docker-registry.intr/group/byedpi:master
+        name: byedpi
+        restartPolicy: Never
+        hostNetwork: true
+        containers:
+        - name: bydpi
+          ports:
+          - name: socks5
+            containerPort: 1081
+            protocol: TCP
+          command:
+          - /usr/bin/ciadpi
+          args:
+          - --debug=2
+          - --port=1081
+          - --disorder=1
+          - --auto=torst
+          - --tlsrec=1+s
+          image: harbor.home.wugi.info/library/byedpi@sha256:522a77b6f760c436364c80814bd74154a343428c14a45296e279cd486683dfcb
+        resources:
+          limits:
+            cpu: 2000m
+            memory: 1024Mi
+          requests:
+            cpu: 1000m
+            memory: 512Mi
