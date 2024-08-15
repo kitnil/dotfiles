@@ -651,3 +651,35 @@ transition.")
     (synopsis "")
     (description "")
     (license #f)))
+
+(define-public obs-markdown
+  (package
+    (name "obs-markdown")
+    (version "0.2.2")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://github.com/exeldro/obs-markdown")
+                    (commit version)))
+              (file-name (git-file-name name version))
+              (sha256
+               (base32
+                "04c091b6fi334q0wjkcd27hipd12qir0dwyyqrzyfq2qa1l51k89"))))
+    (build-system cmake-build-system)
+    (arguments
+     (list
+      #:modules '((guix build cmake-build-system)
+                  (guix build utils))
+      #:tests? #f ;no tests
+      #:configure-flags
+      #~(list (string-append "-DLIBOBS_INCLUDE_DIR="
+                             #$(this-package-input "obs") "/lib")
+              "-DBUILD_OUT_OF_TREE=On"
+              "-Wno-dev")))
+    (inputs (list obs qtbase-5))
+    (home-page "https://github.com/exeldro/obs-markdown")
+    (synopsis "Plugin for OBS Studio to add Markdown sources.")
+    (description "This OBS plugin lets you type markdown which is convert to html and displayed
+using a Browser Source.  The style be changed using CSS.")
+    (license license:gpl2)))
+
