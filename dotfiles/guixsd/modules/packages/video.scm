@@ -1,4 +1,6 @@
 (define-module (packages video)
+  #:use-module (gnu packages algebra)
+  #:use-module (gnu packages pkg-config)
   #:use-module (gnu packages avahi)
   #:use-module (gnu packages gawk)
   #:use-module (gnu packages compression)
@@ -712,4 +714,54 @@ using a Browser Source.  The style be changed using CSS.")
     (synopsis "OBS filter plugin that scales a source reactively to sound levels")
     (description "Plugin for OBS Studio that adds a filter which makes a source scale based on
 the audio levels of any audio source you choose.")
+    (license license:gpl2)))
+
+(define-public obs-waveform
+  (package
+    (name "obs-waveform")
+    (version "1.8.1")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://github.com/phandasm/waveform")
+                    (commit (string-append "v" version))
+                    (recursive? #t))) ; for cpu_features git submodule
+              (file-name (git-file-name name version))
+              (sha256
+               (base32
+                "148rm9ljvqvh5h8rsi36k14nrv6mb8innkbi252k69vq4pbnf386"))))
+    (build-system cmake-build-system)
+    (arguments
+     (list
+      #:modules '((guix build cmake-build-system)
+                  (guix build utils))
+      #:tests? #f ;no tests
+      #:configure-flags
+      #~(list (string-append "-DLIBOBS_INCLUDE_DIR="
+                             #$(this-package-input "obs") "/lib")
+              "-DBUILD_OUT_OF_TREE=On"
+              "-Wno-dev"
+              (string-append "-DCMAKE_CXX_FLAGS=-fPIC "
+                             (or (getenv "CXXFLAGS") ""))
+              "-DCMAKE_C_FLAGS=-fPIC")
+      #:phases
+      #~(modify-phases %standard-phases
+          (add-after 'install 'obs-plugins
+            (lambda* (#:key outputs #:allow-other-keys)
+              (mkdir-p (string-append #$output "/lib/obs-plugins"))
+              (symlink
+               (string-append #$output
+                              "/waveform/bin/64bit/waveform.so")
+               (string-append #$output
+                              "/lib/obs-plugins/waveform.so"))
+              (mkdir-p (string-append #$output "/share/obs/obs-plugins/waveform"))
+              (symlink (string-append #$output "/data/locale")
+                       (string-append #$output "/share/obs/obs-plugins/waveform/locale"))
+              (symlink (string-append #$output "/waveform/data/gradient.effect")
+                       (string-append #$output "/share/obs/obs-plugins/waveform/gradient.effect")))))))
+    (inputs (list fftwf obs qtbase-5))
+    (native-inputs (list pkg-config))
+    (home-page "")
+    (synopsis "")
+    (description "")
     (license license:gpl2)))
