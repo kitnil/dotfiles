@@ -683,3 +683,33 @@ transition.")
 using a Browser Source.  The style be changed using CSS.")
     (license license:gpl2)))
 
+(define-public obs-scale-to-sound
+  (package
+    (name "obs-scale-to-sound")
+    (version "1.2.4")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://github.com/dimtpap/obs-scale-to-sound")
+                    (commit version)))
+              (file-name (git-file-name name version))
+              (sha256
+               (base32
+                "0q903g9g84ikp1hqc6myqsd6bxwlf3f406bj3a5nrybqzjwqr8rp"))))
+    (build-system cmake-build-system)
+    (arguments
+     (list
+      #:modules '((guix build cmake-build-system)
+                  (guix build utils))
+      #:tests? #f ;no tests
+      #:configure-flags
+      #~(list (string-append "-DLIBOBS_INCLUDE_DIR="
+                             #$(this-package-input "obs") "/lib")
+              "-DBUILD_OUT_OF_TREE=On"
+              "-Wno-dev")))
+    (inputs (list obs qtbase-5))
+    (home-page "https://github.com/dimtpap/obs-scale-to-sound")
+    (synopsis "OBS filter plugin that scales a source reactively to sound levels")
+    (description "Plugin for OBS Studio that adds a filter which makes a source scale based on
+the audio levels of any audio source you choose.")
+    (license license:gpl2)))
