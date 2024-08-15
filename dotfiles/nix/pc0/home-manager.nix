@@ -13,7 +13,7 @@
 
     robo3t
 
-    chatterino
+    chatterino2
   ];
 
   home.file = {
