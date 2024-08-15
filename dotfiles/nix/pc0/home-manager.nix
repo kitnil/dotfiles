@@ -12,6 +12,8 @@
     OVMF.fd # UEFI for virtual machines in libvirt
 
     robo3t
+
+    chatterino
   ];
 
   home.file = {
