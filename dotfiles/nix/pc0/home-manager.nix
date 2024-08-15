@@ -10,6 +10,8 @@
     viddy
 
     OVMF.fd # UEFI for virtual machines in libvirt
+
+    robo3t
   ];
 
   home.file = {
