@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: git-dotfiles
+spec:
+  template:
+    metadata:
+      annotations:
+        guix-default-channel-commit: 55cf5287
+    spec:
+      nodeName: kube1
+      containers:
+      - name: refresh
+        env:
+        - name: WORKSPACE
+          value: /home/oleg/src/git.savannah.gnu.org/git/guix
