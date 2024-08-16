@@ -1,0 +1,11 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: guix-copy
+spec:
+  template:
+    metadata:
+      annotations:
+        guix-default-channel-commit: c8f5126a
+    spec:
+      nodeName: kube3
