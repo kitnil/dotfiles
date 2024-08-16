@@ -28,7 +28,7 @@ spec:
         - /bin/sh
         - -l
         - -c
-        - sudo --user=oleg --login bash -ic 'guix copy --from=guix.wugi.info /gnu/store/17rgqqf2p72n5kshqkc6hb1pfnd4944s-guile-git-0.7.0'
+        - sudo --user=oleg --login bash -ic 'guix copy --from=guix.wugi.info /gnu/store/17rgqqf2p72n5kshqkc6hb1pfnd4944s-guile-git-0.7.0 /gnu/store/glz755hzjdd7l0r986svp9c7j927hvg1-guix-1.4.0-20.37719d3'
         image: docker-registry.wugi.info/library/util-linux-with-udev
         name: refresh
         resources:
