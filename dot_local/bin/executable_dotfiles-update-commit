@@ -51,4 +51,5 @@
                                            hostnames))
                                    '()
                                    '("kube1" "kube2" "kube3")))
-                      '("/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-git-dotfiles-kube3/job.yaml")))))
+                      '("/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-git-dotfiles-kube3/job.yaml"
+                        "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-copy-kube3/job.yaml")))))
