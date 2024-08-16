@@ -7,6 +7,7 @@
   #:use-module (guix git-download)
   #:use-module (guix download)
   #:use-module (guix build-system copy)
+  #:use-module (guix build-system gnu)
   #:use-module (guix build-system python)
   #:use-module (guix build-system trivial)
   #:use-module ((guix licenses) #:prefix license:)
@@ -114,3 +115,42 @@ It's like curl for messaging systems.")
 
 (define-public state-to-vc-sw2-mr13
   (package-from-program-file juniper-configuration->vc-sw2-mr13.intr))
+
+(define-public byedpi
+  (package
+    (name "byedpi")
+    (version "0.12")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://github.com/hufrea/byedpi")
+                    (commit (string-append "v" version))))
+              (file-name (git-file-name name version))
+              (sha256
+               (base32
+                "1wchx2mbkmmiv84qk4plax70nqw7j58mlami6wnwdcjkdk5h6bid"))))
+    (build-system gnu-build-system)
+    (arguments
+     (list
+      #:tests? #f ;no tests
+      #:phases
+      #~(modify-phases %standard-phases
+          (replace 'configure
+            (lambda _
+              (setenv "CC" "gcc")
+              #t))
+          (replace 'install
+            (lambda _
+              (mkdir-p (string-append #$output "/bin"))
+              (copy-file "ciadpi" (string-append #$output "/bin/ciadpi"))
+              (mkdir-p (string-append #$output "/share/doc/"
+                                      #$name "-" #$version))
+              (copy-file "readme.txt"
+                         (string-append #$output "/share/doc/"
+                                        #$name "-" #$version
+                                        "/readme.txt")))))))
+    (home-page "https://github.com/hufrea/byedpi")
+    (synopsis "Bypass DPI")
+    (description "Implementation of some DPI bypass methods.  The program is a
+ local SOCKS proxy server.")
+    (license license:expat)))
