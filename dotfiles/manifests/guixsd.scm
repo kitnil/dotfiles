@@ -20,5 +20,6 @@
         "dotfiles.scm"
         "kubernetes.scm"
         "obs.scm"
+        "obs-extra.scm"
         "python.scm"
         "telegram.scm")))
