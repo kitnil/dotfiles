@@ -224,6 +224,35 @@ masks.
 @end itemize\n")
     (license license:gpl2)))
 
+(define-public obs-source-copy
+  (package
+    (name "obs-source-copy")
+    (version "0.2.4")
+    (source (origin
+              (method git-fetch)
+              (uri (git-reference
+                    (url "https://github.com/exeldro/obs-source-copy")
+                    (commit version)))
+              (file-name (git-file-name name version))
+              (sha256
+               (base32
+                "1l3ls3j57yh03vkwiah6yj1xnnmq7q2ngjjn1k4h1sqqk0dxn86j"))))
+    (build-system cmake-build-system)
+    (arguments
+     (list
+      #:tests? #f ;no tests
+      #:configure-flags
+      #~(list (string-append "-DLIBOBS_INCLUDE_DIR="
+                             #$(this-package-input "obs") "/lib")
+              "-DBUILD_OUT_OF_TREE=On"
+              "-Wno-dev")))
+    (inputs (list obs qtbase-5))
+    (home-page "https://github.com/exeldro/obs-source-copy")
+    (synopsis "OBS plugin for copy and paste scenes, sources and filters")
+    (description "This package provides an OBS plugin for copy and paste
+scenes, sources and filters.")
+    (license license:gpl2)))
+
 (define-public obs-source-clone
   (package
     (name "obs-source-clone")
