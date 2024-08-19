@@ -78,6 +78,7 @@
     (load-theme-modus-vivendi)))
 
 (load-theme-modus-vivendi)
+(wi-toggle-theme)
 
 (setq terminal-here-color 'dark)
 
