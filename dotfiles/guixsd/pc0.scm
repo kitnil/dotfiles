@@ -9,8 +9,8 @@
              (bootloader grub)
              (config)
              (services kubernetes))
-(use-service-modules avahi desktop dbus docker networking nfs nix monitoring linux sound ssh virtualization xorg)
-(use-package-modules audio nfs linux screen ssh wm)
+(use-service-modules avahi desktop dbus docker networking nix monitoring linux sound ssh virtualization xorg)
+(use-package-modules audio linux screen ssh wm)
 
 (operating-system
   (host-name "pc0")
@@ -243,15 +243,6 @@ trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDS
                                     (flux? #t)
                                     (kubevirt? #t)))
 
-                         ;; Allow desktop users to also mount NTFS and NFS file systems
-                         ;; without root.
-                         (simple-service 'mount-setuid-helpers setuid-program-service-type
-                                         (map (lambda (program)
-                                                (setuid-program
-                                                 (program program)))
-                                              (list (file-append nfs-utils "/sbin/mount.nfs"))))
-                         (service nfs-service-type
-                                   (nfs-configuration))
                          (service bluetooth-service-type
                                   (bluetooth-configuration
                                    (auto-enable? #t)
