@@ -1004,7 +1004,7 @@ location / {
           (requirement '(networking vswitchd))
           (start #~(make-forkexec-constructor
                     (list #$(file-append dnsmasq "/sbin/dnsmasq")
-                          "--no-daemon"
+                          "--keep-in-foreground"
                           "--local-service"
                           "--interface=enp34s0"
                           "--server=8.8.8.8"
