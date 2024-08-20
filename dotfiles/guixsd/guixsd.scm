@@ -1012,7 +1012,9 @@ location / {
                           "--bind-interfaces"
                           "--except-interface=lo"
                           "--except-interface=br154.br154"
-                          "--except-interface=br0")))
+                          "--except-interface=br0"
+                          "--ipset=/youtube.com/googlevideo.com/byedpi"
+                          "--ipset=/play.google.com/tor")))
           (respawn? #f)))))
 
 ;; TODO: Add libvirtd network configuration.
