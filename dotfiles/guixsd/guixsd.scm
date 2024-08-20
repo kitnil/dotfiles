@@ -1015,7 +1015,7 @@ location / {
                           "--except-interface=br154.br154"
                           "--except-interface=br0"
                           "--ipset=/googleapis.com/googlevideo.com/gvt1.com/nhacmp3youtube.com/video.google.com/www.youtube.com/youtu.be/youtube.com/youtubeeducation.com/youtubei.googleapis.com/youtubekids.com/youtube-nocookie.com/youtube-ui.l.google.com/yt3.ggpht.com/yt.be/ytimg.com/byedpi"
-                          "--ipset=/play.google.com/yt3.ggpht.com/tor")
+                          "--ipset=/4pda.to/ntc.party/play.google.com/yt3.ggpht.com/tor")
                     #:pid-file "/var/run/dnsmasq-main.pid"))
           (respawn? #f)))))
 
