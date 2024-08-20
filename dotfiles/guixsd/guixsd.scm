@@ -1013,7 +1013,7 @@ location / {
                           "--except-interface=lo"
                           "--except-interface=br154.br154"
                           "--except-interface=br0"
-                          "--ipset=/youtube.com/youtu.be/googlevideo.com/nhacmp3youtube.com/youtubei.googleapis.com/yt3.ggpht.com/ytimg.com/byedpi")))
+                          "--ipset=/googleapis.com/googlevideo.com/gvt1.com/nhacmp3youtube.com/video.google.com/www.youtube.com/youtu.be/youtube.com/youtubeeducation.com/youtubei.googleapis.com/youtubekids.com/youtube-nocookie.com/youtube-ui.l.google.com/yt3.ggpht.com/yt.be/ytimg.com/byedpi")))
           (respawn? #f)))))
 
 ;; TODO: Add libvirtd network configuration.
