@@ -1,0 +1,11 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: guix-git-build
+spec:
+  template:
+    metadata:
+      annotations:
+        guix-default-channel-commit: 5c51f7d3
+    spec:
+      nodeName: kube1
