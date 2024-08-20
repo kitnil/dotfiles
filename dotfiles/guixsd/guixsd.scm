@@ -1005,6 +1005,7 @@ location / {
           (start #~(make-forkexec-constructor
                     (list #$(file-append dnsmasq "/sbin/dnsmasq")
                           "--keep-in-foreground"
+                          "--pid-file=/var/run/dnsmasq-main.pid"
                           "--local-service"
                           "--interface=enp34s0"
                           "--server=8.8.8.8"
@@ -1014,7 +1015,8 @@ location / {
                           "--except-interface=br154.br154"
                           "--except-interface=br0"
                           "--ipset=/googleapis.com/googlevideo.com/gvt1.com/nhacmp3youtube.com/video.google.com/www.youtube.com/youtu.be/youtube.com/youtubeeducation.com/youtubei.googleapis.com/youtubekids.com/youtube-nocookie.com/youtube-ui.l.google.com/yt3.ggpht.com/yt.be/ytimg.com/byedpi"
-                          "--ipset=/play.google.com/yt3.ggpht.com/ytimg.com/tor")))
+                          "--ipset=/play.google.com/yt3.ggpht.com/ytimg.com/tor")
+                    #:pid-file "/var/run/dnsmasq-main.pid"))
           (respawn? #f)))))
 
 ;; TODO: Add libvirtd network configuration.
