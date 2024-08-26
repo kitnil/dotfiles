@@ -36,6 +36,7 @@
              (services bittorrent)
              (services certbot)
              (services ddc)
+             (services desktop)
              (services docker)
              (services nix)
              (services autossh)
@@ -2300,7 +2301,9 @@ namespaces = [ ]
 
                          (service ipset-service-type)
 
-                         (bluetooth-service #:auto-enable? #t))
+                         (bluetooth-service #:auto-enable? #t)
+
+                         seatd-service)
 
                         (load "desktop.scm")
 
