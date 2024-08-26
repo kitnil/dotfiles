@@ -44,41 +44,6 @@
                 (description
                  "Run greenclip clipboard manager daemon.")))
 
-(define sway-program
-  (program-file
-   "sway-wrapper"
-   (with-imported-modules '((guix build utils))
-     #~(begin
-         (define (wait-for-seatd)
-           ;; Wait until someone's listening on udevd's control
-           ;; socket.
-           (let ((sock (socket AF_UNIX SOCK_SEQPACKET 0)))
-             (let try ()
-               (catch 'system-error
-                 (lambda ()
-                   (connect sock PF_UNIX "/run/seatd.sock")
-                   (close-port sock))
-                 (lambda args
-                   (format #t "waiting for seatd...~%")
-                   (usleep 500000)
-                   (try))))))
-         ;; Wait until seatd is up and running.
-         (wait-for-seatd)
-
-         (setenv "DESKTOP_SESSION"
-                 "sway")
-         (setenv "XDG_CURRENT_DESKTOP"
-                 "sway")
-         (setenv "XDG_SESSION_DESKTOP"
-                 "sway")
-         (setenv "XDG_SESSION_TYPE"
-                 "wayland")
-         (setenv "WLR_BACKENDS"
-                 "headless,libinput")
-
-         (execl #$(file-append sway "/bin/sway")
-                "sway")))))
-
 (define sway-service
   (simple-service 'sway home-shepherd-service-type
                   (list
@@ -87,6 +52,13 @@
                     (documentation "Run sway.")
                     (requirement '())
                     (start #~(make-forkexec-constructor
-                              (list #$sway-program)))
+                              (list #$(file-append sway "/bin/sway"))
+                              #:environment-variables
+                              (append '("DESKTOP_SESSION=sway"
+                                        "XDG_CURRENT_DESKTOP=sway"
+                                        "XDG_SESSION_DESKTOP=sway"
+                                        "XDG_SESSION_TYPE=wayland"
+                                        "WLR_BACKENDS=headless,libinput")
+                                      (environ))))
                     (respawn? #f)
                     (stop #~(make-kill-destructor))))))
