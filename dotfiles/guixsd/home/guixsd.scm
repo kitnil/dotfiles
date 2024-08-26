@@ -1328,4 +1328,6 @@ account default : gmail
 
     (service home-scream-service-type
              (scream-configuration
-              (interface "br154.154")))))))
+              (interface "br154.154")))
+
+    sway-service))))
