@@ -7,6 +7,7 @@
 
   home.packages = with pkgs; [
     nix
+    robo3t
     viddy
   ];
 
