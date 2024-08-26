@@ -9,7 +9,8 @@
   #:use-module (gnu services shepherd)
   #:export (home-greenclip-service-type
             greenclip-configuration
-            sway-service))
+            sway-service
+            wayvnc-service))
 
 (define-record-type* <greenclip-configuration>
   greenclip-configuration make-greenclip-configuration
@@ -59,6 +60,21 @@
                                         "XDG_SESSION_DESKTOP=sway"
                                         "XDG_SESSION_TYPE=wayland"
                                         "WLR_BACKENDS=headless,libinput")
+                                      (environ))))
+                    (respawn? #f)
+                    (stop #~(make-kill-destructor))))))
+
+(define wayvnc-service
+  (simple-service 'wayvnc home-shepherd-service-type
+                  (list
+                   (shepherd-service
+                    (provision '(wayvnc))
+                    (documentation "Run wayvnc.")
+                    (requirement '(sway))
+                    (start #~(make-forkexec-constructor
+                              (list "/home/oleg/bin/wayvnc")
+                              #:environment-variables
+                              (append '("WAYLAND_DISPLAY=wayland-1")
                                       (environ))))
                     (respawn? #f)
                     (stop #~(make-kill-destructor))))))
