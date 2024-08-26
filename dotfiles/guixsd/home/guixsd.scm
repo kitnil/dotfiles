@@ -1330,4 +1330,5 @@ account default : gmail
              (scream-configuration
               (interface "br154.154")))
 
-    sway-service))))
+    sway-service
+    wayvnc-service))))
