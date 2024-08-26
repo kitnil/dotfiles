@@ -219,7 +219,7 @@
                           "st-12"
                           "toggle-input-method.sh"
                           "tome4-docker"
-                          "tranfser-curl"
+                          "mjru-hms-migrate-web-account"
                           "twitch.scm"
                           "ubuntu"
                           "vault"
