@@ -80,7 +80,7 @@
                 "sway")))))
 
 (define sway-service
-  (simple-service 'sway shepherd-root-service-type
+  (simple-service 'sway home-shepherd-service-type
                   (list
                    (shepherd-service
                     (provision '(sway))
