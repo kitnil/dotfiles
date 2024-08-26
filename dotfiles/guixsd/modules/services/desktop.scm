@@ -38,7 +38,9 @@
                     (documentation "Run seatd.")
                     (requirement '())
                     (start #~(make-forkexec-constructor
-                              (list #$(file-append seatd "/bin/seatd"))))
+                              (list #$(file-append seatd "/bin/seatd"))
+                              "-u" "oleg"
+                              "-g" "users"))
                     (respawn? #f)
                     (stop #~(make-kill-destructor))))))
 
