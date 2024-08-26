@@ -5,6 +5,8 @@
   #:use-module (guix records)
   #:use-module (gnu packages haskell-apps)
   #:use-module (gnu packages wm)
+  #:use-module (gnu services)
+  #:use-module (gnu services shepherd)
   #:export (home-greenclip-service-type
             greenclip-configuration
             sway-service))
