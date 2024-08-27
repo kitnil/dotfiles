@@ -3,7 +3,7 @@ kind: Kustomization
 namespace: redsocks
 resources:
 - namespace.yaml
-- deployment.yaml
+- daemonset.yaml
 configMapGenerator:
 - name: redsocks-configuration
   files:
