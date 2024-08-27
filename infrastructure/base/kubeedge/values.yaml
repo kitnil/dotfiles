@@ -1,0 +1,3 @@
+cloudCore:
+  strategy:
+    type: Recreate
