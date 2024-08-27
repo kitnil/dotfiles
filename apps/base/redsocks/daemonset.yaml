@@ -17,6 +17,10 @@ spec:
       - key: "edge.cluster.local/not-schedulable"
         operator: "Equal"
         effect: "NoSchedule"
+      - key: "workstation.cluster.local"
+        operator: "Equal"
+        value: "true"
+        effect: "NoSchedule"
       hostNetwork: true
       containers:
       - image: nixery.dev/shell/coreutils/util-linux/redsocks
