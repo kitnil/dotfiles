@@ -7,5 +7,5 @@ metadata:
 spec:
   interval: 60m0s
   ref:
-    commit: ee41c8ca1847ceabf30bc63f5e3d244d438a6754
+    commit: c49d8a8c6e83e8597fff3faa6cbc568fcd95f382
   url: https://cgit.duckdns.org/git/cilium/cilium
