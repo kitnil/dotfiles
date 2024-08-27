@@ -1,3 +1,6 @@
 cloudCore:
   strategy:
     type: Recreate
+  modules:
+    dynamicController:
+      enable: true
