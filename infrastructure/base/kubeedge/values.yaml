@@ -4,3 +4,5 @@ cloudCore:
   modules:
     dynamicController:
       enable: true
+  image:
+    tag: "v1.16.3"
