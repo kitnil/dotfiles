@@ -7,5 +7,5 @@ metadata:
 spec:
   interval: 60m0s
   ref:
-    commit: 71b97c22f3ee0dc2405b021d5d6c9d6bb9da7c42
-  url: https://cgit.wugi.info/git/kubeedge/kubeedge.git
+    tag: v1.16.3
+  url: https://github.com/kubeedge/kubeedge
