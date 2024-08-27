@@ -3,4 +3,4 @@ kind: Kustomization
 namespace: byedpi
 resources:
 - namespace.yaml
-- deployment.yaml
+- daemonset.yaml

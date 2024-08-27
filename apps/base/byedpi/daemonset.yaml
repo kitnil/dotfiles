@@ -1,5 +1,5 @@
 apiVersion: apps/v1
-kind: Deployment
+kind: DaemonSet
 metadata:
   name: byedpi
 spec:
@@ -13,6 +13,14 @@ spec:
         app.kubernetes.io/name: byedpi
         app.kubernetes.io/part-of: byedpi
     spec:
+      tolerations:
+      - key: "edge.cluster.local/not-schedulable"
+        operator: "Equal"
+        effect: "NoSchedule"
+      - key: "workstation.cluster.local"
+        operator: "Equal"
+        value: "true"
+        effect: "NoSchedule"
       hostNetwork: true
       containers:
       - name: byedpi
