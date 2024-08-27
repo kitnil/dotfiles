@@ -1,0 +1,45 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: clamav
+  annotations:
+    # Setting spec.force to true will make Flux recreate the Job when any
+    # immutable field is changed, forcing the Job to run every time the
+    # container image tag changes.
+    kustomize.toolkit.fluxcd.io/force: enabled
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      hostNetwork: true
+      hostPID: true
+      restartPolicy: Never
+      containers:
+      - command:
+        - nsenter
+        - --target
+        - "1"
+        - --mount
+        - --uts
+        - --ipc
+        - --net
+        - --pid
+        - --no-fork
+        - /bin/sh
+        - -l
+        - -c
+        - sudo --chdir=$WORKSPACE --user=oleg --login bash -ic 'curl -v --proxy socks5://10.8.207.136:9050 --output daily.cvd https://database.clamav.net/daily.cvd; curl -v --proxy socks5://10.8.207.136:9050 --output main.cvd https://database.clamav.net/main.cvd; curl -v --proxy socks5://10.8.207.136:9050 --output bytecode.cvd https://database.clamav.net/bytecode.cvd'
+        env:
+        - name: WORKSPACE
+          value: /home/oleg/src/gitlab.intr/hms/clamav/rootfs/var/lib/clamav
+        image: docker-registry.wugi.info/library/util-linux-with-udev
+        name: refresh
+        resources:
+          limits:
+            cpu: 14000m
+            memory: 4096Mi
+          requests:
+            cpu: 10m
+            memory: 128Mi
+        securityContext:
+          privileged: true
