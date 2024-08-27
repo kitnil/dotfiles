@@ -1,0 +1,11 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: clamav
+spec:
+  template:
+    metadata:
+      annotations:
+        guix-default-channel-commit: 9510df11
+    spec:
+      nodeName: kube1
