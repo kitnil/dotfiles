@@ -6,11 +6,10 @@ metadata:
 spec:
   chart:
     spec:
-      chart: cilium
-      reconcileStrategy: ChartVersion
-      version: 1.15.7
+      chart: install/kubernetes/cilium
+      reconcileStrategy: Revision
       sourceRef:
-        kind: HelmRepository
+        kind: GitRepository
         name: cilium
         namespace: flux-system
   interval: 1m0s

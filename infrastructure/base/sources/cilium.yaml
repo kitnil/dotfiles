@@ -1,9 +1,11 @@
 ---
 apiVersion: source.toolkit.fluxcd.io/v1beta2
-kind: HelmRepository
+kind: GitRepository
 metadata:
   name: cilium
   namespace: flux-system
 spec:
   interval: 60m0s
-  url: https://helm.cilium.io/
+  ref:
+    commit: ee41c8ca1847ceabf30bc63f5e3d244d438a6754
+  url: https://cgit.duckdns.org/git/cilium/cilium
