@@ -8,4 +8,4 @@ spec:
   interval: 60m0s
   ref:
     commit: c49d8a8c6e83e8597fff3faa6cbc568fcd95f382
-  url: https://cgit.duckdns.org/git/cilium/cilium
+  url: https://cgit.wugi.info/git/cilium/cilium
