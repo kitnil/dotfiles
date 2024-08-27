@@ -1,0 +1,13 @@
+apiVersion: cilium.io/v2alpha1
+kind: CiliumNodeConfig
+metadata:
+  namespace: kube-system
+  name: direct-routing-device-kube2
+spec:
+  nodeSelector:
+    matchLabels:
+      kubernetes.io/hostname: kube2
+  defaults:
+    devices: "wlp1s0"
+    direct-routing-device: "wlp1s0"
+    l2-pod-announcements-interface: "wlp1s0"

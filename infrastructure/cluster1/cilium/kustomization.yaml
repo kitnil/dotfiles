@@ -7,6 +7,7 @@ resources:
 - cilium-load-balancer-ip-pool.yaml
 - cilium-announce-policy.yaml
 - cilium-node-config/kube1.yaml
+- cilium-node-config/kube2.yaml
 patchesStrategicMerge:
 - release.yaml
 configMapGenerator:
