@@ -2,6 +2,11 @@
 
 set -o nounset -o errexit -o pipefail -o xtrace
 
+sudo sysctl vm.nr_hugepages=4096
+sudo mount -t hugetlbfs hugetlbfs /hugepages
+sudo herd stop libvirtd
+sudo herd start libvirtd
+
 sudo virsh nodedev-detach pci_0000_12_00_0
 sudo virsh nodedev-detach pci_0000_12_00_1
 sudo virsh start win10
