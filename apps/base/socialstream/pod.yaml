@@ -3,6 +3,7 @@ kind: Pod
 metadata:
   name: socialstream
 spec:
+  restartPolicy: Never
   containers:
   - image: harbor.home.wugi.info/library/socialstream:latest
     name: socialstream
