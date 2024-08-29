@@ -39,7 +39,6 @@ spec:
       - SYS_ADMIN
       - SYS_NICE
       - SYS_TIME
-      - SYS_TTY_CONFIG
     resources:
       limits:
         cpu: 2000m
