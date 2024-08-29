@@ -62,6 +62,8 @@ spec:
       name: run
     - mountPath: /tmp
       name: tmp
+    - mountPath: /tmp/.X11-unix/X0
+      name: x11-unix-socket
   volumes:
   - emptyDir:
       medium: Memory
@@ -71,3 +73,7 @@ spec:
       medium: Memory
       sizeLimit: 2G
     name: tmp
+  - name: x11-unix-socket
+    hostPath:
+      path: /tmp/.X11-unix/X0
+      type: File
