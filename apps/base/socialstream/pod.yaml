@@ -76,4 +76,4 @@ spec:
   - name: x11-unix-socket
     hostPath:
       path: /tmp/.X11-unix/X0
-      type: File
+      type: Socket
