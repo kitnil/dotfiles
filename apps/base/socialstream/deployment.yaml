@@ -13,7 +13,6 @@ spec:
         app.kubernetes.io/name: socialstream
         app.kubernetes.io/part-of: socialstream
     spec:
-      restartPolicy: Never
       containers:
       - image: harbor.home.wugi.info/library/socialstream:latest
         name: socialstream
