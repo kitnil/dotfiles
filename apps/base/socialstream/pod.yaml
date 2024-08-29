@@ -64,6 +64,8 @@ spec:
       name: tmp
     - mountPath: /tmp/.X11-unix/X0
       name: x11-unix-socket
+    - mountPath: /dev/dri
+      name: dev-dri
   volumes:
   - emptyDir:
       medium: Memory
@@ -77,3 +79,7 @@ spec:
     hostPath:
       path: /tmp/.X11-unix/X0
       type: Socket
+  - name: dev-dri
+    hostPath:
+      path: /dev/dri
+      type: Directory
