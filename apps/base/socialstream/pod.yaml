@@ -10,6 +10,9 @@ spec:
     env:
     - name: container
       value: docker
+    command:
+    - /bin/sleep
+    - infinity
     capabilities:
       add:
       - NET_ADMIN
