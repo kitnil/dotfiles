@@ -1,0 +1,61 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: clamav
+  labels:
+    app.kubernetes.io/name: clamav
+    app.kubernetes.io/part-of: clamav
+  annotations:
+    # Setting spec.force to true will make Flux recreate the Pod when any
+    # immutable field is changed, forcing the Job to run every time the
+    # container image tag changes.
+    kustomize.toolkit.fluxcd.io/force: enabled
+spec:
+  automountServiceAccountToken: false
+  containers:
+  - command:
+    - /entrypoint.sh
+    env:
+    - name: container
+      value: docker
+    image: harbor.corp1.majordomo.ru/nixos/container-systemd:25ce5a88
+    livenessProbe:
+      exec:
+        command:
+        - /run/current-system/sw/bin/systemctl
+        - is-system-running
+      failureThreshold: 100
+      periodSeconds: 10
+      timeoutSeconds: 15
+    name: nixos-systemd
+    resources:
+      limits:
+        cpu: 8000m
+        memory: 8Gi
+      requests:
+        cpu: 100m
+        memory: 1Gi
+    securityContext:
+      capabilities:
+        add:
+        - NET_ADMIN
+        - NET_BIND_SERVICE
+        - NET_RAW
+        - SYS_ADMIN
+        - SYS_NICE
+        - SYS_TIME
+    tty: true
+    volumeMounts:
+    - mountPath: /run
+      name: run
+    - mountPath: /tmp
+      name: tmp
+  volumes:
+  - emptyDir:
+      medium: Memory
+      sizeLimit: 512M
+    name: run
+  - emptyDir:
+      medium: Memory
+      sizeLimit: 2G
+    name: tmp
