@@ -39,6 +39,7 @@ spec:
       - NET_RAW
       - SYS_ADMIN
       - SYS_NICE
+      - SYS_RESOURCE
       - SYS_TIME
     resources:
       limits:
