@@ -41,6 +41,7 @@ spec:
       [Install]
       WantedBy=multi-user.target
       EOF
+      systemctl enable socialstream.service
 
       rm -vf /usr/lib/systemd/system/systemd-networkd*
       rm -vf /usr/lib/systemd/system/systemd-firstboot.service
