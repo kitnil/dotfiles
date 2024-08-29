@@ -2,6 +2,11 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: socialstream
+  annotations:
+    # Setting spec.force to true will make Flux recreate the Pod when any
+    # immutable field is changed, forcing the Pod to run every time the
+    # container image tag changes.
+    kustomize.toolkit.fluxcd.io/force: enabled
 spec:
   restartPolicy: Never
   containers:
