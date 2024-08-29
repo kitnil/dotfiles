@@ -1,51 +1,41 @@
-apiVersion: apps/v1
-kind: Deployment
+apiVersion: v1
+kind: Pod
 metadata:
   name: socialstream
 spec:
-  selector:
-    matchLabels:
-      app.kubernetes.io/name: socialstream
-      app.kubernetes.io/part-of: socialstream
-  template:
-    metadata:
-      labels:
-        app.kubernetes.io/name: socialstream
-        app.kubernetes.io/part-of: socialstream
-    spec:
-      containers:
-      - image: harbor.home.wugi.info/library/socialstream:latest
-        name: socialstream
-        env:
-        - name: container
-          value: docker
-        capabilities:
-          add:
-          - NET_ADMIN
-          - NET_BIND_SERVICE
-          - NET_RAW
-          - SYS_ADMIN
-          - SYS_NICE
-          - SYS_TIME
-          - SYS_TTY_CONFIG
-        resources:
-          limits:
-            cpu: 2000m
-            memory: 4096Mi
-          requests:
-            cpu: 100m
-            memory: 512Mi
-        volumeMounts:
-        - mountPath: /run
-          name: run
-        - mountPath: /tmp
-          name: tmp
-      volumes:
-      - emptyDir:
-          medium: Memory
-          sizeLimit: 512M
-        name: run
-      - emptyDir:
-          medium: Memory
-          sizeLimit: 2G
-        name: tmp
+  containers:
+  - image: harbor.home.wugi.info/library/socialstream:latest
+    name: socialstream
+    env:
+    - name: container
+      value: docker
+    capabilities:
+      add:
+      - NET_ADMIN
+      - NET_BIND_SERVICE
+      - NET_RAW
+      - SYS_ADMIN
+      - SYS_NICE
+      - SYS_TIME
+      - SYS_TTY_CONFIG
+    resources:
+      limits:
+        cpu: 2000m
+        memory: 4096Mi
+      requests:
+        cpu: 100m
+        memory: 512Mi
+    volumeMounts:
+    - mountPath: /run
+      name: run
+    - mountPath: /tmp
+      name: tmp
+  volumes:
+  - emptyDir:
+      medium: Memory
+      sizeLimit: 512M
+    name: run
+  - emptyDir:
+      medium: Memory
+      sizeLimit: 2G
+    name: tmp
