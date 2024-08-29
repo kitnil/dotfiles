@@ -32,14 +32,15 @@ spec:
       mount -t cgroup2 -o rw,relatime,nsdelegate,memory_recursiveprot cgroup2 /sys/fs/cgroup
 
       exec /sbin/init
-    capabilities:
-      add:
-      - NET_ADMIN
-      - NET_BIND_SERVICE
-      - NET_RAW
-      - SYS_ADMIN
-      - SYS_NICE
-      - SYS_TIME
+    securityContext:
+      capabilities:
+        add:
+        - NET_ADMIN
+        - NET_BIND_SERVICE
+        - NET_RAW
+        - SYS_ADMIN
+        - SYS_NICE
+        - SYS_TIME
     resources:
       limits:
         cpu: 2000m
