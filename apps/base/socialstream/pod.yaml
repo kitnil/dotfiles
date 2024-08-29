@@ -16,8 +16,21 @@ spec:
     - name: container
       value: docker
     command:
-    - /bin/sleep
-    - infinity
+    - /bin/bash
+    - -c
+    - |
+      set -o nounset -o errexit -o pipefail -o xtrace
+
+      rm -vf /usr/lib/systemd/system/systemd-networkd*
+      rm -vf /usr/lib/systemd/system/systemd-firstboot.service
+      rm -vf /usr/lib/systemd/system/systemd-resolved.service
+
+      passwd --delete root
+
+      umount /sys/fs/cgroup
+      mount -t cgroup2 -o rw,relatime,nsdelegate,memory_recursiveprot cgroup2 /sys/fs/cgroup
+
+      exec /sbin/init
     capabilities:
       add:
       - NET_ADMIN
