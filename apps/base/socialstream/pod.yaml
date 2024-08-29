@@ -9,6 +9,7 @@ metadata:
     kustomize.toolkit.fluxcd.io/force: enabled
 spec:
   restartPolicy: Never
+  automountServiceAccountToken: false
   containers:
   - image: harbor.home.wugi.info/library/socialstream:latest
     name: socialstream
