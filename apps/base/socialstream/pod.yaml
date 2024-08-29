@@ -30,7 +30,7 @@ spec:
       Type=simple
       # Specify the group you'd like to grant access to seatd
       ExecStart=/home/oleg/squashfs-root/AppRun
-      Restart=never
+      Restart=no
       RestartSec=1
       User=oleg
       Group=oleg
