@@ -52,7 +52,7 @@ spec:
       umount /sys/fs/cgroup
       mount -t cgroup2 -o rw,relatime,nsdelegate,memory_recursiveprot cgroup2 /sys/fs/cgroup
 
-      sed -i 's@#TTYPath=/dev/console@TTYPath=/dev/console@' /etc/systemd/journald.conf
+      sed -i 's@#TTYPath=/dev/console@TTYPath=/dev/console@; s@#ForwardToConsole=no@ForwardToConsole=yes@' /etc/systemd/journald.conf
 
       exec /sbin/init
     securityContext:
