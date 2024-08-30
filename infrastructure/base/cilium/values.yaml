@@ -41,21 +41,13 @@ bpf:
 
   # -- Configure explicitly allowed VLAN id's for bpf logic bypass.
   # [0] will allow all VLAN id's without any filtering.
-  # vlanBypass: [0]
+  vlanBypass: [0]
 
   # -- Allow cluster external access to ClusterIP services.
   #
   # Required for access to Kubernetes ClusterIP services from Kubevirt virtual
   # machines with interface type masquerade.
   lbExternalClusterIP: true
-
-  hostLegacyRouting: false
-
-# ipv4:
-#   enabled: true
-
-# ipv6:
-#   enabled: true
 
 ipam:
   mode: "kubernetes"
