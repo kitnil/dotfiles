@@ -2,7 +2,6 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: clamav
-  generateName: clamav-
   labels:
     app.kubernetes.io/name: clamav
     app.kubernetes.io/part-of: clamav
