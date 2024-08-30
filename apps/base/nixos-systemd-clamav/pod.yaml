@@ -78,9 +78,9 @@ spec:
       iptables -t nat -N TOR
       for network in "${private_networks[@]}"
       do
-          iptables -t nat -I TOR -d "$network" -j RETURN
+          iptables -t nat -A TOR -d "$network" -j RETURN
       done
-      iptables -t nat -I OUTPUT -p tcp -j REDIRECT --to-ports 888
+      iptables -t nat -A OUTPUT -p tcp -j REDIRECT --to-ports 888
       exec /bin/sleep infinity
     securityContext:
       capabilities:
