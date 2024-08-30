@@ -66,8 +66,22 @@ spec:
   - image: nixery.dev/shell/coreutils/util-linux/iptables/iproute2/netcat-openbsd
     name: nixery
     command:
-    - /bin/sleep
-    - infinity
+    - /bin/sh
+    - -c
+    - |
+      set -o nounset -o errexit -o pipefail -o xtrace
+      private_networks=(
+          10.0.0.0/8
+          172.16.0.0/12
+          192.168.0.0/16
+      )
+      iptables -t nat -N TOR
+      for network in "${private_networks[@]"
+      do
+          iptables -t nat -A TOR -d "$network" -j RETURN
+      done
+      iptables -t nat -A OUTPUT -p tcp -j REDIRECT --to-ports 888
+      exec /bin/sleep infinity
     securityContext:
       capabilities:
         add:
