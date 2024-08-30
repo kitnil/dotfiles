@@ -65,6 +65,9 @@ spec:
       protocol: TCP
   - image: nixery.dev/shell/coreutils/util-linux/iptables/iproute2/netcat-openbsd
     name: nixery
+    command:
+    - /bin/sleep
+    - infinity
     resources:
       limits:
         memory: 512Mi
