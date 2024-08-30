@@ -4,3 +4,7 @@ namespace: nixos-systemd-clamav
 resources:
 - namespace.yaml
 - pod.yaml
+configMapGenerator:
+- name: 3proxy-configuration
+  files:
+  - 3proxy.cfg=rootfs/etc/3proxy.cfg

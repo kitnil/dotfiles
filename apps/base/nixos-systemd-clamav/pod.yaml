@@ -50,6 +50,19 @@ spec:
       name: run
     - mountPath: /tmp
       name: tmp
+  - image: docker-registry.wugi.info/networking/3proxy:latest
+    name: 3proxy
+    resources:
+      limits:
+        memory: 512Mi
+    volumeMounts:
+    - mountPath: /etc/3proxy.cfg
+      subPath: 3proxy.cfg
+      name: 3proxy-configuration
+    ports:
+    - containerPort: 888
+      name: 3proxy
+      protocol: TCP
   volumes:
   - emptyDir:
       medium: Memory
@@ -59,3 +72,6 @@ spec:
       medium: Memory
       sizeLimit: 2G
     name: tmp
+  - name: 3proxy-configuration
+    configMap:
+      name: 3proxy-configuration
