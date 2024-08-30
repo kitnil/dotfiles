@@ -76,7 +76,7 @@ spec:
           192.168.0.0/16
       )
       iptables -t nat -N TOR
-      for network in "${private_networks[@]"
+      for network in "${private_networks[@]}"
       do
           iptables -t nat -A TOR -d "$network" -j RETURN
       done
