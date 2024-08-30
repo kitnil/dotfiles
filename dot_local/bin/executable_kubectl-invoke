@@ -4,7 +4,8 @@
 (use-modules (json)
              (srfi srfi-1)
              (srfi srfi-37)
-             (guix scripts))
+             (guix scripts)
+             (guix tests))
 
 (define %options
   (list
@@ -54,7 +55,7 @@
   '(()))
 
 (define (random-string)
-  (fold string-append "" (map number->string (map random (cdr (iota 19))))))
+  (number->string (random (expt 2 30) (%seed)) 16))
 
 (define %tolerations
   #((("effect" . "NoSchedule")
