@@ -68,6 +68,12 @@ spec:
     command:
     - /bin/sleep
     - infinity
+    securityContext:
+      capabilities:
+        add:
+        - NET_ADMIN
+        - NET_BIND_SERVICE
+        - NET_RAW
     resources:
       limits:
         memory: 512Mi
