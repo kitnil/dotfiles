@@ -63,6 +63,11 @@ spec:
     - containerPort: 888
       name: 3proxy
       protocol: TCP
+  - image: nixery.dev/shell/coreutils/util-linux/iptables/iproute2/netcat-openbsd
+    name: nixery
+    resources:
+      limits:
+        memory: 512Mi
   volumes:
   - emptyDir:
       medium: Memory
