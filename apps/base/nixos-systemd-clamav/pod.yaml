@@ -81,7 +81,7 @@ spec:
           iptables -t nat -A TOR -d "$network" -j RETURN
       done
       iptables -t nat -A TOR -p tcp -j REDIRECT --to-ports 888
-      iptables -t nat -A OUTPUT -p tcp -j REDSOCKS
+      iptables -t nat -A OUTPUT -p tcp -j TOR
       exec /bin/sleep infinity
     securityContext:
       capabilities:
