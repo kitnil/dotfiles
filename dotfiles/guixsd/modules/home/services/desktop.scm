@@ -3,10 +3,12 @@
   #:use-module (gnu home services shepherd)
   #:use-module (guix gexp)
   #:use-module (guix records)
+  #:use-module (gnu packages bash)
   #:use-module (gnu packages haskell-apps)
   #:use-module (gnu packages wm)
   #:use-module (gnu services)
   #:use-module (gnu services shepherd)
+  #:use-module (ice-9 format)
   #:export (home-greenclip-service-type
             greenclip-configuration
             sway-service
@@ -53,7 +55,9 @@
                     (documentation "Run sway.")
                     (requirement '())
                     (start #~(make-forkexec-constructor
-                              (list #$(file-append sway "/bin/sway"))
+                              (list #$(file-append bash "/bin/bash")
+                                    "-i"
+                                    "-c" (format #f "exec ~a" #$(file-append sway "/bin/sway")))
                               #:environment-variables
                               (append '("DESKTOP_SESSION=sway"
                                         "XDG_CURRENT_DESKTOP=sway"
