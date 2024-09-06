@@ -1739,7 +1739,7 @@ PasswordAuthentication yes")))
                                       (servers '("127.0.0.1:81")))
                                      (nginx-upstream-configuration
                                       (name "socat-mirror-sentries-org")
-                                      (servers '("127.0.0.1:81")))))
+                                      (servers '("127.0.0.1:82")))))
                                    (extra-content "\
   ## Set a variable to help us decide if we need to add the
   ## 'Docker-Distribution-Api-Version' header.
