@@ -289,6 +289,14 @@
                            (body (list "proxy_pass https://socat-ci-guix-gnu-onion;"
                                        "proxy_ssl_verify off;"))))))
 
+        (nginx-server-configuration
+         (server-name '("mirror.sentries.org.wugi.info"))
+         (listen '("192.168.0.144:80"))
+         (locations (list (nginx-location-configuration
+                           (uri "/")
+                           (body (list "proxy_pass https://socat-socat-mirror-sentries-org;"
+                                       "proxy_ssl_verify off;"))))))
+
 
 ;;         (nginx-server-configuration
 ;;          (server-name '("hms-dev.intr" "hms.majordomo.ru"))
@@ -1728,6 +1736,9 @@ PasswordAuthentication yes")))
                                       (servers '("127.0.0.1:5000")))
                                      (nginx-upstream-configuration
                                       (name "socat-ci-guix-gnu-onion")
+                                      (servers '("127.0.0.1:81")))
+                                     (nginx-upstream-configuration
+                                      (name "socat-mirror-sentries-org")
                                       (servers '("127.0.0.1:81")))))
                                    (extra-content "\
   ## Set a variable to help us decide if we need to add the
@@ -1892,6 +1903,17 @@ PasswordAuthentication yes")))
                                            (list #$(file-append socat "/bin/socat")
                                                  "tcp4-LISTEN:81,reuseaddr,fork,keepalive,bind=127.0.0.1"
                                                  "SOCKS4A:tor.home:4zwzi66wwdaalbhgnix55ea3ab4pvvw66ll2ow53kjub6se4q2bclcyd.onion:443,socksport=9150")))
+                                 (respawn? #f))))
+
+                         (simple-service
+                          'socat-mirror-sentries-org shepherd-root-service-type
+                          (list (shepherd-service
+                                 (provision '(socat-mirror-sentries-org))
+                                 (requirement '())
+                                 (start #~(make-forkexec-constructor
+                                           (list #$(file-append socat "/bin/socat")
+                                                 "tcp4-LISTEN:82,reuseaddr,fork,keepalive,bind=127.0.0.1"
+                                                 "SOCKS4A:10.0.0.101:mirror.sentries.org:443,socksport=9050")))
                                  (respawn? #f))))
 
                          (service syncthing-service-type
