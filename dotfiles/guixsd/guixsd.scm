@@ -294,7 +294,8 @@
          (listen '("192.168.0.144:80"))
          (locations (list (nginx-location-configuration
                            (uri "/")
-                           (body (list "proxy_pass https://socat-mirror-sentries-org;"
+                           (body (list "proxy_set_header Host mirror.sentries.org;"
+                                       "proxy_pass https://socat-mirror-sentries-org;"
                                        "proxy_ssl_verify off;"))))))
 
 
