@@ -290,7 +290,7 @@
                                        "proxy_ssl_verify off;"))))))
 
         (nginx-server-configuration
-         (server-name '("mirror.sentries.org.wugi.info"))
+         (server-name '("mirror.sentries.org" "mirror.sentries.org.wugi.info"))
          (listen '("192.168.0.144:80"))
          (locations (list (nginx-location-configuration
                            (uri "/")
