@@ -6,6 +6,6 @@ spec:
   template:
     metadata:
       annotations:
-        guix-default-channel-commit: 6798e40e
+        guix-default-channel-commit: 6d65dc0d
     spec:
       nodeName: kube2
