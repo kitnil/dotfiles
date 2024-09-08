@@ -194,6 +194,7 @@ prometheus:
     - static_configs:
       - targets:
         - 192.168.0.145:9407
+        - 192.168.0.192:9407
       metrics_path: /metrics
       job_name: obs
     - static_configs:
