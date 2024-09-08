@@ -40,3 +40,7 @@ cluster:
   id: 1
 
 ipv4NativeRoutingCIDR: 10.0.0.0/9
+
+# -- Enable installation of PodCIDR routes between worker
+# nodes if worker nodes share a common L2 network segment.
+autoDirectNodeRoutes: true
