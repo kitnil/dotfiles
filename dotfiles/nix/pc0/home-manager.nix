@@ -90,6 +90,7 @@
               }))
               metube-downloader
               night-video-tuner
+              soundfixer
               tab-reloader
               twitch-error-autorefresher
               visited-link-enabler
