@@ -334,6 +334,20 @@
         platforms = platforms.all;
         };
       };
+    "soundfixer" = buildFirefoxXpiAddon {
+      pname = "soundfixer";
+      version = "1.4.1";
+      addonId = "soundfixer@unrelenting.technology";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4205769/soundfixer-1.4.1.xpi";
+      sha256 = "b229c77635e4e89ab586144aea2fcc977a2c5e51509a84ac884fa59e29ee7792";
+      meta = with lib;
+      {
+        homepage = "https://github.com/valpackett/soundfixer";
+        description = "Helps you fix annoying sound problems on sites like YouTube: audio in one channel only, too quiet or too loud.\n\n(Unfortunately, this extension does not work on all websites because of cross-domain issues — but it does work on YouTube!)";
+        mozPermissions = [ "activeTab" "webNavigation" ];
+        platforms = platforms.all;
+        };
+      };
     "tab-slideshow-we" = buildFirefoxXpiAddon {
       pname = "tab-slideshow-we";
       version = "0.7.1";
