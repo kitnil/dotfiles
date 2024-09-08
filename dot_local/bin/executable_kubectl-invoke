@@ -180,7 +180,7 @@
                             ("apiVersion" . "v1"))))))
                       '())
                 ,(string-append "nixery-" (random-string))
-                ,(string-append "--image=" (if image image "nixery.dev/shell"))
+                ,(string-append "--image=" (if image image "nixery.dev/shell/coreutils/util-linux/iptables/iproute2/netcat-openbsd/tcpdump/mtr"))
                 "/bin/bash"))))
     ((netshoot)
      (let ((labels '(("app.kubernetes.io/name" . "netshoot"))))
