@@ -918,7 +918,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 30m0s
-  path: ./apps/base/socialstream
+  path: ./apps/cluster1/socialstream
   prune: true
   sourceRef:
     kind: GitRepository
