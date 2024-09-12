@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: socialstream
+spec:
+  nodeSelector:
+    kubernetes.io/hostname: kube3
