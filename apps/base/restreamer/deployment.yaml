@@ -16,7 +16,6 @@ spec:
       hostNetwork: true
       containers:
       - image: docker-registry.wugi.info/dockerhub/datarhei/restreamer:2.9.0
-        # datarhei/restreamer:2.9.0
         name: restreamer
         ports:
         - containerPort: 6000
