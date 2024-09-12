@@ -3,5 +3,10 @@ kind: Pod
 metadata:
   name: socialstream
 spec:
+  tolerations:
+  - key: "workstation.cluster.local"
+    operator: "Equal"
+    value: "true"
+    effect: "NoSchedule"
   nodeSelector:
     kubernetes.io/hostname: kube3
