@@ -15,9 +15,6 @@ clustermesh:
     tls:
       auto:
         enabled: false # Use pregenerated secrets
-      ca:
-        cert: $(cat ${PKI_PREFIX:-}ca.pem | base64 -w0)
-        key: $(cat ${PKI_PREFIX:-}ca-key.pem | base64 -w0)
       admin:
         cert: $(cat ${PKI_PREFIX:-}clustermesh-apiserver-admin-cert.pem | base64 -w0)
         key: $(cat ${PKI_PREFIX:-}clustermesh-apiserver-admin-cert-key.pem | base64 -w0)
