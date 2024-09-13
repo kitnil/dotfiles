@@ -170,6 +170,20 @@
         platforms = platforms.all;
         };
       };
+    "hide-twitch-chat-users" = buildFirefoxXpiAddon {
+      pname = "hide-twitch-chat-users";
+      version = "2.1.0";
+      addonId = "{6b982795-4e75-4bc0-a1d8-616f4eb39970}";
+      url = "https://addons.mozilla.org/firefox/downloads/file/4103767/hide_twitch_chat_users-2.1.0.xpi";
+      sha256 = "2de4ba085a4c787d52db5ccb488126be9aa96b8dc714bd603313e898df0fab33";
+      meta = with lib;
+      {
+        description = "Enter the names of usernames you would like to hide messages from in <a href=\"https://prod.outgoing.prod.webservices.mozgcp.net/v1/45c441178c2a4b8efed92eca84091cb4171a2c325f054a4351164ea9d10563f8/http%3A//Twitch.tv\" rel=\"nofollow\">Twitch.tv</a> chats (split by whitespace and/or commas).";
+        license = licenses.mit;
+        mozPermissions = [ "storage" "*://*.twitch.tv/*" ];
+        platforms = platforms.all;
+        };
+      };
     "highlightall" = buildFirefoxXpiAddon {
       pname = "highlightall";
       version = "2.3";
