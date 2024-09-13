@@ -88,6 +88,7 @@
                   sha256 = "ba9ed004c328f3dacb78537eceed9fc206d4e3a136bb80a1ed786dc9fb57b9d7";
                 };
               }))
+              hide-twitch-chat-users
               metube-downloader
               night-video-tuner
               soundfixer
