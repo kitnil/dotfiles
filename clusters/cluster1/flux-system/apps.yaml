@@ -539,6 +539,7 @@ spec:
   # app-deploy Kustomization.
   dependsOn:
   - name: nix
+  - name: maintenance-git-dotfiles
   sourceRef:
     kind: GitRepository
     name: flux-system
