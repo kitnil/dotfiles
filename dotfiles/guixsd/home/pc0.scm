@@ -266,6 +266,4 @@
             (scream-configuration
              (interface "eth0")))
 
-   (service home-sway-service-type
-            (sway-configuration
-             (environment-variables '("WAYLAND_DISPLAY=")))))))
+   (service home-sway-service-type))))

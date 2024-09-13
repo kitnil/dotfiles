@@ -69,7 +69,10 @@
                              "XDG_CURRENT_DESKTOP=sway"
                              "XDG_SESSION_DESKTOP=sway"
                              "XDG_SESSION_TYPE=wayland")
-                           (environ))))
+                           (filter (negate
+                                    (lambda (str)
+                                      (or (string-prefix? "WAYLAND_DISPLAY=" str))))
+                                   (environ)))))
          (stop #~(make-kill-destructor)))))
 
 (define home-sway-service-type
