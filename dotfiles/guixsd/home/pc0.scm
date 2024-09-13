@@ -10,6 +10,7 @@
 	     (guix gexp)
 	     (home config)
              (home services audio)
+             (home services desktop)
              (home services shell)
              (home services mime)
              (home services gdb)
@@ -263,4 +264,6 @@
 
    (service home-scream-service-type
             (scream-configuration
-             (interface "eth0"))))))
+             (interface "eth0")))
+
+   (service home-sway-service-type))))
