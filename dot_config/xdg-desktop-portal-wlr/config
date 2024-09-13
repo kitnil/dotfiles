@@ -1,0 +1,5 @@
+[screencast]
+output_name=
+max_fps=60
+chooser_cmd=/home/oleg/.guix-profile/bin/slurp -f %o -or
+chooser_type=simple
