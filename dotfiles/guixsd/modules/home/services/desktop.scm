@@ -50,8 +50,6 @@
 (define-record-type* <sway-configuration>
   sway-configuration make-sway-configuration
   sway-configuration?
-  (sway                  sway-configuration-sway                  ;string
-                         (default #f))
   (environment-variables sway-configuration-environment-variables ;list of strings
                          (default '())))
 
@@ -60,12 +58,12 @@
          (documentation "Run sway.")
          (provision '(sway))
          (start #~(make-forkexec-constructor
-                   (list (list #$(file-append bash "/bin/bash")
-                               "-i"
-                               "-c" (format #f "exec ~a"
-                                            #$(file-append sway "/bin/sway"))))
+                   (list #$(file-append bash "/bin/bash")
+                         "-i"
+                         "-c" (format #f "exec ~a"
+                                      #$(file-append sway "/bin/sway")))
                    #:environment-variables
-                   (append (list #$@(sway-configuration-environment-variables config))
+                   (append '#$@(sway-configuration-environment-variables config)
                            '("DESKTOP_SESSION=sway"
                              "XDG_CURRENT_DESKTOP=sway"
                              "XDG_SESSION_DESKTOP=sway"
@@ -79,7 +77,7 @@
                  (list (service-extension
                         home-shepherd-service-type
                         home-sway-shepherd-service)))
-                (default-value '())
+                (default-value (sway-configuration))
                 (description
                  "Run sway.")))
 
