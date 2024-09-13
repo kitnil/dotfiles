@@ -11,7 +11,7 @@
   #:use-module (ice-9 format)
   #:export (home-greenclip-service-type
             greenclip-configuration
-            sway-service
+            home-sway-service-type
             wayvnc-service))
 
 (define-record-type* <greenclip-configuration>
@@ -47,26 +47,42 @@
                 (description
                  "Run greenclip clipboard manager daemon.")))
 
-(define sway-service
-  (simple-service 'sway home-shepherd-service-type
-                  (list
-                   (shepherd-service
-                    (provision '(sway))
-                    (documentation "Run sway.")
-                    (requirement '())
-                    (start #~(make-forkexec-constructor
-                              (list #$(file-append bash "/bin/bash")
-                                    "-i"
-                                    "-c" (format #f "exec ~a" #$(file-append sway "/bin/sway")))
-                              #:environment-variables
-                              (append '("DESKTOP_SESSION=sway"
-                                        "XDG_CURRENT_DESKTOP=sway"
-                                        "XDG_SESSION_DESKTOP=sway"
-                                        "XDG_SESSION_TYPE=wayland"
-                                        "WLR_BACKENDS=headless,libinput")
-                                      (environ))))
-                    (respawn? #f)
-                    (stop #~(make-kill-destructor))))))
+(define-record-type* <sway-configuration>
+  sway-configuration make-sway-configuration
+  sway-configuration?
+  (sway                  sway-configuration-sway                  ;string
+                         (default #f))
+  (environment-variables sway-configuration-environment-variables ;list of strings
+                         (default '())))
+
+(define (home-sway-shepherd-service config)
+  (list (shepherd-service
+         (documentation "Run sway.")
+         (provision '(sway))
+         (start #~(make-forkexec-constructor
+                   (list (list #$(file-append bash "/bin/bash")
+                               "-i"
+                               "-c" (format #f "exec ~a"
+                                            #$(file-append (sway-configuration-sway config)
+                                                           "/bin/sway"))))
+                   #:environment-variables
+                   (append (list #$@(sway-configuration-environment-variables config))
+                           '("DESKTOP_SESSION=sway"
+                             "XDG_CURRENT_DESKTOP=sway"
+                             "XDG_SESSION_DESKTOP=sway"
+                             "XDG_SESSION_TYPE=wayland")
+                           (environ))))
+         (stop #~(make-kill-destructor)))))
+
+(define home-sway-service-type
+  (service-type (name 'home-sway)
+                (extensions
+                 (list (service-extension
+                        home-shepherd-service-type
+                        home-sway-shepherd-service)))
+                (default-value '())
+                (description
+                 "Run sway.")))
 
 (define wayvnc-service
   (simple-service 'wayvnc home-shepherd-service-type

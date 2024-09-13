@@ -1330,5 +1330,7 @@ account default : gmail
              (scream-configuration
               (interface "br154.154")))
 
-    sway-service
+    (service home-sway-service-type
+             (environment-variables
+              '("WLR_BACKENDS=headless,libinput")))
     wayvnc-service))))
