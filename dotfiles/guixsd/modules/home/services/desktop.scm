@@ -11,6 +11,7 @@
   #:use-module (ice-9 format)
   #:export (home-greenclip-service-type
             greenclip-configuration
+            sway-configuration
             home-sway-service-type
             wayvnc-service))
 
