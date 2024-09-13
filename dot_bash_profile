@@ -1,3 +1,15 @@
+WAYLAND_DISPLAY=wayland-1
+export WAYLAND_DISPLAY
+
+XDG_CURRENT_DESKTOP=sway
+export XDG_CURRENT_DESKTOP
+
+XDG_SESSION_TYPE=wayland
+export XDG_SESSION_TYPE
+
+XDG_SESSION_DESKTOP=sway
+export XDG_SESSION_DESKTOP
+
 # Setups system and user profiles and related variables
 # /etc/profile will be sourced by bash automatically
 # Setups home environment profile
