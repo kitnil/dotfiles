@@ -63,7 +63,7 @@
                          "-c" (format #f "exec ~a"
                                       #$(file-append sway "/bin/sway")))
                    #:environment-variables
-                   (append '#$@(sway-configuration-environment-variables config)
+                   (append (list #$@(sway-configuration-environment-variables config))
                            '("DESKTOP_SESSION=sway"
                              "XDG_CURRENT_DESKTOP=sway"
                              "XDG_SESSION_DESKTOP=sway"
