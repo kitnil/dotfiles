@@ -63,8 +63,7 @@
                    (list (list #$(file-append bash "/bin/bash")
                                "-i"
                                "-c" (format #f "exec ~a"
-                                            #$(file-append (sway-configuration-sway config)
-                                                           "/bin/sway"))))
+                                            #$(file-append sway "/bin/sway"))))
                    #:environment-variables
                    (append (list #$@(sway-configuration-environment-variables config))
                            '("DESKTOP_SESSION=sway"
