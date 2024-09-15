@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2021, 2022, 2023 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2021, 2022, 2023, 2024 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -854,7 +854,9 @@ Host " (prometheus-tp-link-exporter-configuration-host config) "
 KexAlgorithms +diffie-hellman-group1-sha1
 HostKeyAlgorithms +ssh-rsa
 PubkeyAcceptedKeyTypes +ssh-rsa
-User admin")
+User admin
+UserKnownHostsFile /dev/null
+StrictHostKeyChecking no")
                    ssh-config)
           (symlink #$(plain-file
                       "known_hosts"
