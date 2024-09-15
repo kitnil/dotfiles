@@ -319,28 +319,30 @@ Prometheus.")
     (license license:expat)))
 
 (define-public prometheus-tp-link-exporter
-  (package
-    (name "prometheus-tp-link-exporter")
-    (version "1.1.2")
-    (source (origin
-              (method git-fetch)
-              (uri (git-reference
-                    (url "https://gitlab.com/wigust/prometheus-tp-link-exporter")
-                    (commit (string-append "v" version))))
-              (file-name (git-file-name name version))
-              (sha256
-               (base32
-                "0bb0kmk5yfzjr49pcdi7bsxj3zv53xkm4ghcwafswkn5ac8lwkbj"))))
-    (build-system python-build-system)
-    (arguments
-     '(#:tests? #f)) ; no tests
-    (propagated-inputs
-     (list jc python-prometheus-client))
-    (home-page "https://gitlab.com/wigust/prometheus-tp-link-exporter")
-    (synopsis "Prometheus TP-Link Exporter")
-    (description
-     "This package provides Prometheus TP-Link Exporter.")
-    (license license:gpl3+)))
+  (let ((commit "45738b1d0878a7594bd23068add19f4c2c389a93")
+        (revision "1"))
+    (package
+      (name "prometheus-tp-link-exporter")
+      (version (git-version "1.1.2" revision commit))
+      (source (origin
+                (method git-fetch)
+                (uri (git-reference
+                      (url "https://cgit.wugi.info/git/wigust/python-prometheus-ssh-exporter")
+                      (commit commit)))
+                (file-name (git-file-name name version))
+                (sha256
+                 (base32
+                  "0gc8gpgzml7ldhkhs88vh4gf9pvfhp4y5yyxxrxl4di2y9h0dh3g"))))
+      (build-system python-build-system)
+      (arguments
+       '(#:tests? #f)) ; no tests
+      (propagated-inputs
+       (list jc python-prometheus-client))
+      (home-page "https://gitlab.com/wigust/prometheus-tp-link-exporter")
+      (synopsis "Prometheus TP-Link Exporter")
+      (description
+       "This package provides Prometheus TP-Link Exporter.")
+      (license license:gpl3+))))
 
 (define-public grafana
   (package
