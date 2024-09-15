@@ -807,7 +807,9 @@
   (ssh                         prometheus-tp-link-exporter-configuration-ssh                         ;<package>
                                (default openssh))
   (known-hosts                 prometheus-tp-link-exporter-configuration-known-hosts                 ;list of strings
-                               (default '())))
+                               (default '()))
+  (log-file                    prometheus-tp-link-exporter-configuration-log-file                    ;string
+                               (default "/var/log/prometheus-tp-link-exporter.log")))
 
 (define (prometheus-tp-link-exporter-account configuration)
   ;; Return the user accounts and user groups for CONFIG.
@@ -862,7 +864,10 @@ StrictHostKeyChecking no")
                       "known_hosts"
                       (string-join (prometheus-tp-link-exporter-configuration-known-hosts config)
                                    "\n"))
-                   ssh-known-hosts)))))
+                   ssh-known-hosts)
+          (chown #$(prometheus-tp-link-exporter-configuration-log-file config)
+                 (passwd:uid user)
+                 (group:gid group))))))
 
 (define (prometheus-tp-link-exporter-shepherd-service config)
   (list
@@ -875,7 +880,7 @@ StrictHostKeyChecking no")
                                    "/bin/prometheus-tp-link-exporter"))
               #:user #$(prometheus-tp-link-exporter-configuration-user config)
               #:group #$(prometheus-tp-link-exporter-configuration-group config)
-              #:log-file "/var/log/prometheus-tp-link-exporter.log"
+              #:log-file #$(prometheus-tp-link-exporter-configuration-log-file config)
               #:environment-variables
               (append '#$(prometheus-tp-link-exporter-configuration-environment-variables config)
                       (filter (negate
