@@ -1335,6 +1335,7 @@ account default : gmail
               '("WLR_BACKENDS=headless,libinput")))
 
     (service home-wayvnc-service-type
-             (wayvnc "/home/oleg/bin/wayvnc")
-             (environment-variables
-              '("WAYLAND_DISPLAY=wayland-1")))))))
+             (wayvnc-configuration
+              (wayvnc "/home/oleg/bin/wayvnc")
+              (environment-variables
+               '("WAYLAND_DISPLAY=wayland-1"))))))))

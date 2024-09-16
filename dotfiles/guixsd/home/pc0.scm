@@ -269,8 +269,9 @@
    (service home-sway-service-type)
 
    (service home-wayvnc-service-type
-            (wayvnc "/home/oleg/bin/wayvnc")
-            (environment-variables
-             '("WAYLAND_DISPLAY=wayland-1"))
-            (arguments
-             '("--output=HEADLESS-3"))))))
+            (wayvnc-configuration
+             (wayvnc "/home/oleg/bin/wayvnc")
+             (environment-variables
+              '("WAYLAND_DISPLAY=wayland-1"))
+             (arguments
+              '("--output=HEADLESS-3")))))))
