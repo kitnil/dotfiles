@@ -5,6 +5,7 @@
   #:use-module (guix records)
   #:use-module (gnu packages bash)
   #:use-module (gnu packages haskell-apps)
+  #:use-module (gnu packages vnc)
   #:use-module (gnu packages wm)
   #:use-module (gnu services)
   #:use-module (gnu services shepherd)
@@ -13,7 +14,9 @@
             greenclip-configuration
             sway-configuration
             home-sway-service-type
-            wayvnc-service))
+
+            wayvnc-configuration
+            home-wayvnc-service-type))
 
 (define-record-type* <greenclip-configuration>
   greenclip-configuration make-greenclip-configuration
@@ -85,17 +88,44 @@
                 (description
                  "Run sway.")))
 
-(define wayvnc-service
-  (simple-service 'wayvnc home-shepherd-service-type
-                  (list
-                   (shepherd-service
-                    (provision '(wayvnc))
-                    (documentation "Run wayvnc.")
-                    (requirement '(sway))
-                    (start #~(make-forkexec-constructor
-                              (list "/home/oleg/bin/wayvnc")
-                              #:environment-variables
-                              (append '("WAYLAND_DISPLAY=wayland-1")
-                                      (environ))))
-                    (respawn? #f)
-                    (stop #~(make-kill-destructor))))))
+
+;;;
+;;; wayvnc
+;;;
+
+(define-record-type* <wayvnc-configuration>
+  wayvnc-configuration make-wayvnc-configuration
+  wayvnc-configuration?
+  (wayvnc                wayvnc-configuration-wayvnc                ;string
+                         (default #f))
+  (arguments             wayvnc-configuration-arguments             ;list of strings
+                         (default '()))
+  (environment-variables wayvnc-configuration-environment-variables ;list of strings
+                         (default '())))
+
+(define (home-wayvnc-shepherd-service config)
+  (list (shepherd-service
+         (documentation "User wayvnc.")
+         (provision '(wayvnc))
+         (requirement '(sway))
+         (start #~(make-forkexec-constructor
+                   (list #$(wayvnc-configuration-wayvnc config)
+                         #$@(wayvnc-configuration-arguments config))
+                   #:log-file (string-append
+                               (or (getenv "XDG_LOG_HOME")
+                                   (format #f "~a/.local/var/log"
+                                           (getenv "HOME")))
+                               "/wayvnc.log")
+                   #:environment-variables
+                   (append '("WAYLAND_DISPLAY=wayland-1")
+                           (environ))))
+         (stop #~(make-kill-destructor)))))
+
+(define home-wayvnc-service-type
+  (service-type (name 'home-wayvnc)
+                (extensions
+                 (list (service-extension home-shepherd-service-type
+                                          home-wayvnc-shepherd-service)))
+                (default-value (wayvnc-configuration))
+                (description
+                 "Run wayvnc.")))

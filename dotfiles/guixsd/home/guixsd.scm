@@ -1333,4 +1333,8 @@ account default : gmail
     (service home-sway-service-type
              (environment-variables
               '("WLR_BACKENDS=headless,libinput")))
-    wayvnc-service))))
+
+    (service home-wayvnc-service-type
+             (wayvnc "/home/oleg/bin/wayvnc")
+             (environment-variables
+              '("WAYLAND_DISPLAY=wayland-1")))))))
