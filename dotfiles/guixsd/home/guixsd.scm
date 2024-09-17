@@ -1331,8 +1331,9 @@ account default : gmail
               (interface "br154.154")))
 
     (service home-sway-service-type
-             (environment-variables
-              '("WLR_BACKENDS=headless,libinput")))
+             (sway-configuration
+              (environment-variables
+               '("WLR_BACKENDS=headless,libinput"))))
 
     (service home-wayvnc-service-type
              (wayvnc-configuration
