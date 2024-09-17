@@ -9,7 +9,7 @@ spec:
   ports:
   - port: 80
     protocol: TCP
-    targetPort: 80
+    targetPort: 12080
     name: http
   selector:
     app.kubernetes.io/name: restreamer
