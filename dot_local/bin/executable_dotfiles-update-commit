@@ -41,16 +41,16 @@
                          (format #f "--message=apps: cluster1: guix: ~a: Update to ~a."
                                  (basename (dirname file))
                                  commit)))
-              (append (apply append
-                             (fold (lambda (hostname hostnames)
-                                     (cons (list (string-append "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-pull-" hostname "/job.yaml")
-                                                 (string-append "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-system-reconfigure-" hostname "/job.yaml")
-                                                 (string-append "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-package-manifest-" hostname "/job.yaml")
-                                                 (string-append "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-home-reconfigure-" hostname "/job.yaml")
-                                                 (string-append "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-nix-home-reconfigure-" hostname "/job.yaml"))
-                                           hostnames))
-                                   '()
-                                   '("kube1" "kube2" "kube3")))
-                      '("/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-git-dotfiles-kube2/job.yaml")
-                      '("/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-git-dotfiles-kube3/job.yaml"
-                        "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-copy-kube3/job.yaml")))))
+              (reverse (append (apply append
+                                      (fold (lambda (hostname hostnames)
+                                              (cons (list (string-append "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-pull-" hostname "/job.yaml")
+                                                          (string-append "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-system-reconfigure-" hostname "/job.yaml")
+                                                          (string-append "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-package-manifest-" hostname "/job.yaml")
+                                                          (string-append "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-home-reconfigure-" hostname "/job.yaml")
+                                                          (string-append "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-nix-home-reconfigure-" hostname "/job.yaml"))
+                                                    hostnames))
+                                            '()
+                                            '("kube1" "kube2" "kube3")))
+                               '("/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-git-dotfiles-kube2/job.yaml")
+                               '("/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-git-dotfiles-kube3/job.yaml"
+                                 "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-copy-kube3/job.yaml"))))))
