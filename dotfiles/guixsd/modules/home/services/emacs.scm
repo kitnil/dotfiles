@@ -225,6 +225,7 @@
                                  "insert/dotfiles/modules/services/service"
                                  "insert/nix/shell.nix"
                                  "insert/nix/flake.nix"
+                                 "insert/kubernetes/cronjob.yaml"
                                  "insert/kubernetes/deployment.yaml"
                                  "insert/kubernetes/kustomization.yaml"
                                  "insert/kubernetes/ingress.yaml"

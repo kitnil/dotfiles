@@ -1,4 +1,8 @@
 (define-auto-insert
+  "cronjob.yaml"
+  ["kubernetes/cronjob.yaml" yas-expand-current-buffer])
+
+(define-auto-insert
   "deployment.yaml"
   ["kubernetes/deployment.yaml" yas-expand-current-buffer])
 
