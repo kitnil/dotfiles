@@ -6,6 +6,7 @@ spec:
   storeReadablePlan: human
   path: dotfiles/maintenance/harbor
   interval: 10m
+  retryInterval: 10m
   sourceRef:
     kind: GitRepository
     name: flux-system
