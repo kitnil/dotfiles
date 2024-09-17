@@ -11,7 +11,5 @@ spec:
     protocol: TCP
     targetPort: 12080
     name: http
-  selector:
-    app.kubernetes.io/name: restreamer
-    app.kubernetes.io/part-of: restreamer
+  selector: {}
   type: ClusterIP
