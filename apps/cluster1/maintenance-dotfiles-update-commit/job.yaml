@@ -14,7 +14,8 @@ spec:
       annotations:
         guix-default-channel-commit: e24b690e
     spec:
-      nodeName: kube1
+      nodeSelector:
+        kubernetes.io/hostname: kube1
       hostNetwork: true
       hostPID: true
       restartPolicy: Never

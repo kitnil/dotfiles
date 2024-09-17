@@ -8,4 +8,5 @@ spec:
       annotations:
         guix-default-channel-commit: 6d65dc0d
     spec:
-      nodeName: kube2
+      nodeSelector:
+        kubernetes.io/hostname: kube2

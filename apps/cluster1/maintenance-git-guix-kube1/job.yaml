@@ -8,7 +8,8 @@ spec:
       annotations:
         guix-default-channel-commit: 55cf5287
     spec:
-      nodeName: kube1
+      nodeSelector:
+        kubernetes.io/hostname: kube1
       containers:
       - name: refresh
         env:

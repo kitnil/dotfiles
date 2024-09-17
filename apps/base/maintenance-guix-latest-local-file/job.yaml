@@ -13,7 +13,8 @@ spec:
     spec:
       hostNetwork: true
       hostPID: true
-      nodeName: kube1
+      nodeSelector:
+        kubernetes.io/hostname: kube1
       restartPolicy: Never
       containers:
       - command:
