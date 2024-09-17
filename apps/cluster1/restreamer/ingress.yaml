@@ -10,7 +10,7 @@ spec:
   - host: restreamer.home.wugi.info
     http:
       paths:
-      - path: /ui
+      - path: /
         pathType: ImplementationSpecific
         backend:
           service:
