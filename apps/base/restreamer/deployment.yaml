@@ -13,7 +13,6 @@ spec:
         app.kubernetes.io/name: restreamer
         app.kubernetes.io/part-of: restreamer
     spec:
-      hostNetwork: true
       containers:
       - image: datarhei/restreamer:2.11.0
         name: restreamer

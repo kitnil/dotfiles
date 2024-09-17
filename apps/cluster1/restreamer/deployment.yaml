@@ -5,6 +5,7 @@ metadata:
 spec:
   template:
     spec:
+      hostNetwork: true
       containers:
       - name: restreamer
         env:
