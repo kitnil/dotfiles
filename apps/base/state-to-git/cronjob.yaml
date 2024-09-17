@@ -1,0 +1,41 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: state-to-git
+spec:
+  schedule: "0 0 * * *" # every day
+  jobTemplate:
+    spec:
+      backoffLimit: 0
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: state-to-git
+            app.kubernetes.io/part-of: state-to-git
+        spec:
+          restartPolicy: Never
+          containers:
+          - name: state-to-git
+            image: docker-registry.wugi.info/library/util-linux-with-udev
+            command:
+            - nsenter
+            - --target
+            - "1"
+            - --mount
+            - --uts
+            - --ipc
+            - --net
+            - --pid
+            - --no-fork
+            - /bin/sh
+            - -l
+            - -c
+            - sudo --user=oleg --login bash -ic 'git pull --rebase origin master'
+            workingDir: "/home/oleg/ansible-out/files"
+            resources:
+              limits:
+                cpu: 2000m
+                memory: 1024Mi
+              requests:
+                cpu: 50m
+                memory: 64Mi
