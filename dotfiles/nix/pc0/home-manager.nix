@@ -43,6 +43,7 @@
             "browser.startup.homepage" = "about:newtab";
             "browser.startup.page" = 3;
             "distribution.searchplugins.defaultLocale" = "en-GB";
+            "doh-rollout.disable-heuristics" = true; # disable DNS over HTTPS
             "extensions.pocket.enabled" = false;
             "general.useragent.locale" = "en-GB";
             "general.warnOnAboutConfig" = false;
