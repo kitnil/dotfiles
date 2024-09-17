@@ -4,3 +4,5 @@ namespace: restreamer
 resources:
 - namespace.yaml
 - deployment.yaml
+- endpoints.yaml
+- service.yaml
