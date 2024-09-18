@@ -2,8 +2,14 @@ apiVersion: networking.k8s.io/v1
 kind: Ingress
 metadata:
   name: karma
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt
 spec:
   ingressClassName: nginx
+  tls:
+  - hosts:
+    - karma.home.wugi.info
+    secretName: karma-ingress-certs
   rules:
   - host: karma.home.wugi.info
     http:
