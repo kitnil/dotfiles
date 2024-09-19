@@ -1,0 +1,59 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: skopeo-copy
+  annotations:
+    # Setting spec.force to true will make Flux recreate the Job when any
+    # immutable field is changed, forcing the Job to run every time the
+    # container image tag changes.
+    kustomize.toolkit.fluxcd.io/force: enabled
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      restartPolicy: Never
+      containers:
+      - command:
+        - bash
+        - -e
+        - -c
+        - "cat /docker-credentials | skopeo login -u jenkins --password-stdin $SKOPEO_DESTINATION_REGISTRY; if skopeo inspect --config $SKOPEO_DESTINATION_IMAGE; then :; else HTTP_PROXY=$HTTP_PROXY HTTPS_PROXY=$HTTPS_PROXY skopeo copy $SKOPEO_SOURCE_IMAGE $SKOPEO_DESTINATION_IMAGE; fi"
+        image: nixery.dev/shell/skopeo
+        name: skopeo-copy
+        resources:
+          limits:
+            cpu: 8000m
+            memory: 4096Mi
+          requests:
+            cpu: 1000m
+            memory: 512Mi
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+            - ALL
+          readOnlyRootFilesystem: true
+          runAsNonRoot: true
+          runAsUser: 65534 # nobody
+          runAsGroup: 65534 # nobody
+        volumeMounts:
+        - mountPath: /etc/containers/policy.json
+          name: skopeo-configuration
+          subPath: policy.json
+          readOnly: true
+        - mountPath: /docker-credentials
+          name: docker-credentials
+          subPath: password
+          readOnly: true
+        - mountPath: /run
+          name: run
+      volumes:
+      - name: skopeo-configuration
+        configMap:
+          name: skopeo-configuration
+      - name: docker-credentials
+        secret:
+          secretName: docker-credentials
+      - name: run
+        emptyDir:
+          sizeLimit: 1M
