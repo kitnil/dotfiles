@@ -3,6 +3,8 @@ kind: Kustomization
 namespace: openwrt
 resources:
 - ../../base/openwrt
+patchesStrategicMerge:
+- pod.yaml
 images:
 - name: harbor.home.wugi.info/openwrt/rootfs
   newTag: x86_64-v23.05.4
