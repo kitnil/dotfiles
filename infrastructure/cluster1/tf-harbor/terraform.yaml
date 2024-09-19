@@ -3,6 +3,8 @@ kind: Terraform
 metadata:
   name: tf-harbor
 spec:
+  tfstate:
+    forceUnlock: 'yes'
   approvePlan: plan-master-7ffa473e13
   varsFrom:
   - kind: Secret
