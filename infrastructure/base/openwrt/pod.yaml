@@ -14,7 +14,12 @@ spec:
   - image: harbor.home.wugi.info/openwrt/rootfs:latest
     name: openwrt
     command:
-    - /sbin/init
+    - /bin/sh
+    - -c
+    - |
+      set -o nounset -o errexit -o pipefail
+      > /etc/config/network
+      exec /sbin/init
     ports:
     - containerPort: 80
       name: http
