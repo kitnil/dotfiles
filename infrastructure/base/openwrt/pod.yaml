@@ -14,22 +14,7 @@ spec:
   - image: harbor.home.wugi.info/openwrt/rootfs:latest
     name: openwrt
     command:
-    - /bin/sh
-    - -c
-    - |
-      set -o nounset -o errexit -o pipefail
-
-      > /etc/config/network
-      # Do not run 'netifd' by 'procd' init system.
-      rm /etc/rc.d/K90network /etc/rc.d/S20network
-
-      # Do not run 'odhcpd' by 'procd' init system.
-      > /etc/config/dhcp
-      rm /etc/rc.d/S19dnsmasq /etc/rc.d/S35odhcpd /etc/rc.d/K85odhcpd
-
-      > /etc/board.json
-
-      exec /sbin/init
+    - /sbin/init
     ports:
     - containerPort: 80
       name: http
@@ -44,9 +29,7 @@ spec:
     securityContext:
       capabilities:
         add:
-        - NET_ADMIN
         - NET_BIND_SERVICE
-        - NET_RAW
     tty: true
     volumeMounts:
     - mountPath: /run
