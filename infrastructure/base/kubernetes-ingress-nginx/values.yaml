@@ -1,0 +1,24 @@
+controller:
+  ingressClassByName: true
+  # Additional ingress controller is to be installed in a namespace, where
+  # there is/are one/more-than-one ingress-nginx-controller(s) already
+  # installed, then you need to specify a different unique --election-id for
+  # the new instance of the controller
+  electionID: kubernetes-ingress-controller-leader
+  # Ensure the --controller-class= and --ingress-class are set to something
+  # different on each ingress controller.
+  ingressClassResource:
+    name: kubernetes-nginx # default: nginx
+    enabled: true
+    default: false
+    controllerValue: "k8s.io/kubernetes-ingress-nginx" # default: k8s.io/ingress-nginx
+  ingressClass: kubernetes-nginx
+  metrics:
+    enabled: true
+    serviceMonitor:
+      enabled: true
+      additionalLabels:
+        release: "prometheus"
+tcp:
+  # Expose the kubernetes service in the port 443 using the port 6443.
+  6443: "default/kubernetes:443"
