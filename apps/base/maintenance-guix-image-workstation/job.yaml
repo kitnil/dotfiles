@@ -20,8 +20,7 @@ spec:
         - -c
         - |
           nsenter --target "1" --mount --uts --ipc --net --pid --no-fork \
-          /bin/sh -l -c \
-          sudo --user=oleg --login bash <<'EOF'
+          /run/setuid-programs/sudo --user=oleg --login bash <<'EOF'
           image=$(guix system image -t docker --network ~/.local/share/chezmoi/dotfiles/guixsd/guix-image-workstation.scm)
           skopeo copy docker-archive:${image} docker-daemon:guix-image-workstation --insecure-policy
           EOF
