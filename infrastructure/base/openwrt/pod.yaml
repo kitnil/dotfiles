@@ -14,7 +14,29 @@ spec:
   - image: harbor.home.wugi.info/openwrt/rootfs:latest
     name: openwrt
     command:
-    - /sbin/init
+    - /bin/sh
+    - -c
+    - |
+      set -o nounset -o errexit -o pipefail -o xtrace
+      network_namespace=$(printf ip-netns-%s $(tr -dc A-Za-z0-9 </dev/urandom | head -c 12))
+      ip netns add $network_namespace
+      network_interface=$(printf macvlan%s $(tr -dc A-Za-z0-9 </dev/urandom | head -c 8))
+      ip link add $network_interface link $SOURCE_NETWORK_INTERFACE_NAME type macvlan mode bridge
+      ip link set $network_interface netns $network_namespace
+      ip netns exec $network_namespace ip link set dev $network_interface name eth0
+      ip netns exec $network_namespace ip link set eth0 up
+      ip netns exec $network_namespace ip addr add $TARGET_NETWORK_INTERFACE_IP_ADDRESS dev eth0
+      ip netns exec $network_namespace ip route add default via $TARGET_NETWORK_INTERFACE_GATEWAY dev eth0
+      # XXX: Delete ping after fixing network availability without egress traffic from pod.
+      ip netns exec $network_namespace ping -c1 $TARGET_NETWORK_INTERFACE_GATEWAY || true
+      exec ip netns exec $network_namespace /sbin/init
+    env:
+    - name: SOURCE_NETWORK_INTERFACE_NAME
+      value: eth0
+    - name: TARGET_NETWORK_INTERFACE_IP_ADDRESS
+      value: 192.168.0.148/24
+    - name: TARGET_NETWORK_INTERFACE_GATEWAY
+      value: 192.168.0.1
     ports:
     - containerPort: 80
       name: http
@@ -29,7 +51,10 @@ spec:
     securityContext:
       capabilities:
         add:
+        - NET_ADMIN
         - NET_BIND_SERVICE
+        - NET_RAW
+        - SYS_ADMIN
     tty: true
     volumeMounts:
     - mountPath: /run
