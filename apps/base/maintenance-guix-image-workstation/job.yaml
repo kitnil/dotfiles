@@ -28,7 +28,7 @@ spec:
         - /bin/sh
         - -l
         - -c
-        - sudo --user=oleg --login bash -i
+        - sudo --user=oleg --login bash
         - -c
         - |
           image=$(guix system image -t docker --network ~/.local/share/chezmoi/dotfiles/guixsd/guix-image-workstation.scm)
