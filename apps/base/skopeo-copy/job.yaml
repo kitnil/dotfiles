@@ -17,7 +17,7 @@ spec:
         - bash
         - -e
         - -c
-        - "cat /docker-credentials | skopeo login -u jenkins --password-stdin $SKOPEO_DESTINATION_REGISTRY; if skopeo inspect --config $SKOPEO_DESTINATION_IMAGE; then :; else HTTP_PROXY=$HTTP_PROXY HTTPS_PROXY=$HTTPS_PROXY skopeo copy $SKOPEO_SOURCE_IMAGE $SKOPEO_DESTINATION_IMAGE; fi"
+        - "cat /docker-credentials | skopeo login -u kubernetes --password-stdin $SKOPEO_DESTINATION_REGISTRY; if skopeo inspect --config $SKOPEO_DESTINATION_IMAGE; then :; else HTTP_PROXY=$HTTP_PROXY HTTPS_PROXY=$HTTPS_PROXY skopeo copy $SKOPEO_SOURCE_IMAGE $SKOPEO_DESTINATION_IMAGE; fi"
         image: nixery.dev/shell/skopeo
         name: skopeo-copy
         resources:
