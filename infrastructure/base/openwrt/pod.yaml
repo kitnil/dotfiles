@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: openwrt
+  annotations:
+    # Setting spec.force to true will make Flux recreate the Pod when any
+    # immutable field is changed, forcing the Pod to run every time the
+    # container image tag changes.
+    kustomize.toolkit.fluxcd.io/force: enabled
+spec:
+  restartPolicy: Never
+  automountServiceAccountToken: false
+  containers:
+  - image: harbor.home.wugi.info/openwrt/rootfs:latest
+    name: openwrt
+    command:
+    - /bin/sleep
+    args:
+    - infinity
+    securityContext:
+      capabilities:
+        add:
+        - NET_ADMIN
+        - NET_BIND_SERVICE
+        - NET_RAW
+        - SYS_ADMIN
+        - SYS_NICE
+        - SYS_TIME
+    resources:
+      limits:
+        cpu: 2000m
+        memory: 4096Mi
+      requests:
+        cpu: 100m
+        memory: 512Mi
+    tty: true
+    volumeMounts:
+    - mountPath: /run
+      name: run
+    - mountPath: /tmp
+      name: tmp
+  volumes:
+  - emptyDir:
+      medium: Memory
+      sizeLimit: 512M
+    name: run
+  - emptyDir:
+      medium: Memory
+      sizeLimit: 2G
+    name: tmp
