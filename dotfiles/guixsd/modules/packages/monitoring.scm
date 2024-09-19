@@ -319,7 +319,7 @@ Prometheus.")
     (license license:expat)))
 
 (define-public prometheus-tp-link-exporter
-  (let ((commit "45738b1d0878a7594bd23068add19f4c2c389a93")
+  (let ((commit "69b4b901c1356e0c884dec78b5b2f74f651c6600")
         (revision "1"))
     (package
       (name "prometheus-tp-link-exporter")
@@ -332,7 +332,7 @@ Prometheus.")
                 (file-name (git-file-name name version))
                 (sha256
                  (base32
-                  "0gc8gpgzml7ldhkhs88vh4gf9pvfhp4y5yyxxrxl4di2y9h0dh3g"))))
+                  "04g3lb8nma2hjhjrnvjir9c3jkwcqcmm5axslsnw7hpdfl2182v0"))))
       (build-system python-build-system)
       (arguments
        '(#:tests? #f)) ; no tests
