@@ -14,9 +14,7 @@ spec:
   - image: harbor.home.wugi.info/openwrt/rootfs:latest
     name: openwrt
     command:
-    - /bin/sleep
-    args:
-    - infinity
+    - /sbin/init
     securityContext:
       capabilities:
         add:
