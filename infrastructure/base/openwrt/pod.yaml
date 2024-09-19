@@ -18,6 +18,10 @@ spec:
     - -c
     - |
       set -o nounset -o errexit -o pipefail -o xtrace
+      while [ -e /continue ]
+      do
+          sleep 5
+      done
       network_namespace=$(printf ip-netns-%s $(tr -dc A-Za-z0-9 </dev/urandom | head -c 12))
       ip netns add $network_namespace
       network_interface=$(printf macvlan%s $(tr -dc A-Za-z0-9 </dev/urandom | head -c 8))
