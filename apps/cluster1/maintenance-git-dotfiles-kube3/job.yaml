@@ -6,12 +6,12 @@ spec:
   template:
     metadata:
       annotations:
-        guix-default-channel-commit: 8a2228ee
+        guix-default-channel-commit: 5c8d9079
     spec:
       nodeSelector:
         kubernetes.io/hostname: kube3
       tolerations:
-      - key: "workstation.cluster.local"
-        operator: "Equal"
-        value: "true"
-        effect: "NoSchedule"
+        - key: workstation.cluster.local
+          operator: Equal
+          value: 'true'
+          effect: NoSchedule
