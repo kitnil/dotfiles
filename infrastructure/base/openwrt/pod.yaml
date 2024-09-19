@@ -27,6 +27,8 @@ spec:
       > /etc/config/dhcp
       rm /etc/rc.d/S19dnsmasq /etc/rc.d/S35odhcpd /etc/rc.d/K85odhcpd
 
+      > /etc/board.json
+
       exec /sbin/init
     ports:
     - containerPort: 80
