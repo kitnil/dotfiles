@@ -11,3 +11,15 @@ resource "harbor_registry" "dockerhub" {
   name          = "dockerhub"
   endpoint_url  = "https://hub.docker.com"
 }
+
+resource "harbor_project" "openwrt" {
+  name = "openwrt"
+  public = true
+  vulnerability_scanning = false
+}
+
+resource "harbor_project_member_user" "kubernetes_openwrt" {
+  project_id = harbor_project.openwrt.id
+  user_name = "kubernetes"
+  role = "developer"
+}
