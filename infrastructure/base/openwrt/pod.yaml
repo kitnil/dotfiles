@@ -23,6 +23,10 @@ spec:
       # Do not run 'netifd' by 'procd' init system.
       rm /etc/rc.d/K90network /etc/rc.d/S20network
 
+      # Do not run 'odhcpd' by 'procd' init system.
+      > /etc/config/dhcp
+      rm /etc/rc.d/S19dnsmasq /etc/rc.d/S35odhcpd /etc/rc.d/K85odhcpd
+
       exec /sbin/init
     ports:
     - containerPort: 80
