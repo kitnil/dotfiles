@@ -219,6 +219,19 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
+  name: kubernetes-ingress-nginx
+  namespace: flux-system
+spec:
+  interval: 10m0s
+  path: ./infrastructure/cluster1/kubernetes-ingress-nginx
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
   name: powerdns
   namespace: flux-system
 spec:
