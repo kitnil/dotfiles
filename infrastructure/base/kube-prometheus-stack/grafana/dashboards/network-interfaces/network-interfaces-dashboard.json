@@ -350,10 +350,12 @@
             "type": "prometheus",
             "uid": "${datasource}"
           },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by(device, instance) (rate(node_network_receive_bytes_total{instance=\"127.0.0.1:9100\"}[2m])) * 8",
+          "expr": "sum by(device, instance) (rate(node_network_receive_bytes_total{instance=\"192.168.0.144:9100\"}[2m])) * 8",
           "interval": "",
           "legendFormat": "incoming {{device}}",
+          "range": true,
           "refId": "A"
         },
         {
@@ -361,11 +363,13 @@
             "type": "prometheus",
             "uid": "${datasource}"
           },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by(device, instance) (rate(node_network_transmit_bytes_total{instance=\"127.0.0.1:9100\"}[2m])) * 8",
+          "expr": "sum by(device, instance) (rate(node_network_transmit_bytes_total{instance=\"192.168.0.144:9100\"}[2m])) * 8",
           "hide": false,
           "interval": "",
           "legendFormat": "outgoing {{device}}",
+          "range": true,
           "refId": "B"
         }
       ],
@@ -465,10 +469,12 @@
             "type": "prometheus",
             "uid": "${datasource}"
           },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by(device, instance) (rate(node_network_receive_packets_total{instance=\"127.0.0.1:9100\"}[2m])) * 8",
+          "expr": "sum by(device, instance) (rate(node_network_receive_packets_total{instance=\"192.168.0.144:9100\"}[2m])) * 8",
           "interval": "",
           "legendFormat": "incoming {{device}}",
+          "range": true,
           "refId": "A"
         },
         {
@@ -476,11 +482,13 @@
             "type": "prometheus",
             "uid": "${datasource}"
           },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by(device, instance) (rate(node_network_transmit_packets_total{instance=\"127.0.0.1:9100\"}[2m])) * 8",
+          "expr": "sum by(device, instance) (rate(node_network_transmit_packets_total{instance=\"192.168.0.144:9100\"}[2m])) * 8",
           "hide": false,
           "interval": "",
           "legendFormat": "outgoing {{device}}",
+          "range": true,
           "refId": "B"
         }
       ],
@@ -580,10 +588,12 @@
             "type": "prometheus",
             "uid": "${datasource}"
           },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by(device, instance) (rate(windows_net_bytes_received_total{instance=\"windows.local:9182\"}[2m])) * 8",
+          "expr": "sum by(device, instance) (rate(windows_net_bytes_received_total{instance=\"192.168.0.178:9182\"}[2m])) * 8",
           "interval": "",
           "legendFormat": "incoming {{device}}",
+          "range": true,
           "refId": "A"
         },
         {
@@ -591,11 +601,13 @@
             "type": "prometheus",
             "uid": "${datasource}"
           },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by(device, instance) (rate(windows_net_bytes_sent_total{instance=\"windows.local:9182\"}[2m])) * 8",
+          "expr": "sum by(device, instance) (rate(windows_net_bytes_sent_total{instance=\"192.168.0.178:9182\"}[2m])) * 8",
           "hide": false,
           "interval": "",
           "legendFormat": "outgoing {{device}}",
+          "range": true,
           "refId": "B"
         }
       ],
@@ -695,10 +707,12 @@
             "type": "prometheus",
             "uid": "${datasource}"
           },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by(device, instance) (rate(windows_net_packets_received_total{instance=\"windows.local:9182\"}[2m])) * 8",
+          "expr": "sum by(device, instance) (rate(windows_net_packets_received_total{instance=\"192.168.0.178:9182\"}[2m])) * 8",
           "interval": "",
           "legendFormat": "incoming {{device}}",
+          "range": true,
           "refId": "A"
         },
         {
@@ -706,11 +720,13 @@
             "type": "prometheus",
             "uid": "${datasource}"
           },
+          "editorMode": "code",
           "exemplar": true,
-          "expr": "sum by(device, instance) (rate(windows_net_packets_sent_total{instance=\"windows.local:9182\"}[2m])) * 8",
+          "expr": "sum by(device, instance) (rate(windows_net_packets_sent_total{instance=\"192.168.0.178:9182\"}[2m])) * 8",
           "hide": false,
           "interval": "",
           "legendFormat": "outgoing {{device}}",
+          "range": true,
           "refId": "B"
         }
       ],
@@ -1432,7 +1448,7 @@
   },
   "timepicker": {},
   "timezone": "",
-  "title": "interfaces",
+  "title": "Networking Interfaces",
   "uid": "7oinAda7z",
   "version": 1,
   "weekStart": ""
