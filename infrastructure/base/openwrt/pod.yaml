@@ -15,6 +15,10 @@ spec:
     name: openwrt
     command:
     - /sbin/init
+    ports:
+    - containerPort: 80
+      name: http
+      protocol: TCP
     resources:
       limits:
         cpu: 2000m
