@@ -1,0 +1,19 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: skopeo-copy
+spec:
+  template:
+    metadata:
+      annotations:
+        tag: 'x86_64-v23.05.4'
+    spec:
+      containers:
+      - name: skopeo-copy
+        env:
+        - name: SKOPEO_SOURCE_IMAGE
+          value: docker://openwrt/rootfs:x86_64-v23.05.4
+        - name: SKOPEO_DESTINATION_REGISTRY
+          value: harbor.home.wugi.info
+        - name: SKOPEO_DESTINATION_IMAGE
+          value: docker://harbor.home.wugi.info/openwrt/rootfs:x86_64-v23.05.4
