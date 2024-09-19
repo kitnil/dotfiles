@@ -18,7 +18,11 @@ spec:
     - -c
     - |
       set -o nounset -o errexit -o pipefail
+
       > /etc/config/network
+      # Do not run 'netifd' by 'procd' init system.
+      rm /etc/rc.d/K90network /etc/rc.d/S20network
+
       exec /sbin/init
     ports:
     - containerPort: 80
