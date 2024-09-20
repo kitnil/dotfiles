@@ -46,13 +46,21 @@ ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDEmkOCBXHo6e3IixgJNflxxLDPaLakMWZRGq6qFuqI
                                    '("dm-snapshot" "dm-thin-pool")))
                     (modify-services %base-services
                       (guix-service-type config => (guix-configuration
-                                                    (substitute-urls '("https://ci.guix.gnu.org"
+                                                    (substitute-urls '("https://bordeaux.guix.gnu.org"
                                                                        "https://guix.wugi.info"))
                                                     (authorized-keys (append (list (plain-file "guix.wugi.info.pub" "\
 (public-key
  (ecc
   (curve Ed25519)
   (q #45BD5CF39730F811FCFDEBB3FA30277DCA7D443430264FB6D48DCEEFE2E23CF5#)
+  )
+ )
+")
+                                                                                   (plain-file "bordeaux.guix.gnu.org.pub" "\
+(public-key
+ (ecc
+  (curve Ed25519)
+  (q #7D602902D3A2DBB83F8A0FB98602A754C5493B0B778C8D1DD4E0F41DE14DE34F#)
   )
  )
 "))
