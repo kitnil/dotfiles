@@ -15,9 +15,12 @@
              (gnu packages admin)
              (guix gexp))
 
+(use-modules (manifests wm))
+
 (define oleg-home
   (home-environment
-   (packages (list htop))))
+   (packages (append (list htop)
+                     packages-wm))))
 
 (operating-system
   (host-name "workstation")
