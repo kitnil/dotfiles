@@ -104,7 +104,7 @@
                                                                             (map (cut string-drop <> (string-length "guix."))
                                                                                  (map first
                                                                                       (filter (match-lambda
-                                                                                                ((name a b) (string-prefix? "guix." name))
+                                                                                                ((name a ...) (string-prefix? "guix." name))
                                                                                                 (_ #f))
                                                                                               (file-system-tree "/mnt/packer/builds")))))
                                                                        >)))))))))))
