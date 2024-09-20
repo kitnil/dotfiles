@@ -44,10 +44,16 @@
                         (("type" . "shell")
                          ("inline" . #("set -x"
                                        "guix archive --authorize < /root/guix.wugi.info.pub")))
+                        (("type" . "file")
+                         ("source" . "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/bordeaux.guix.gnu.org.pub")
+                         ("destination" . "/root/bordeaux.guix.gnu.org.pub"))
+                        (("type" . "shell")
+                         ("inline" . #("set -x"
+                                       "guix archive --authorize < /root/bordeaux.guix.gnu.org.pub")))
                         (("type" . "shell")
                          ("max_retries" . 3)
                          ("inline" . #("set -x"
-                                       "guix system init --substitute-urls=\"https://guix.wugi.info https://ci.guix.gnu.org\" /mnt/etc/config.scm /mnt")))
+                                       "guix system init --substitute-urls=\"https://guix.wugi.info https://bordeaux.guix.gnu.org\" /mnt/etc/config.scm /mnt")))
                         (("type" . "shell")
                          ("inline" . #("set -x"
                                        "reboot"))
@@ -55,11 +61,11 @@
                         (("type" . "shell")
                          ("max_retries" . 3)
                          ("inline" . #("set -x"
-                                       "guix pull --commit=f31e55d0819064557b9a2af687f05b131f5c4f26"
+                                       "guix pull --commit=32bd53cdb28cf35310f9067d4450e0113071a900"
                                        "hash guix"
                                        "guix system reconfigure /etc/config.scm"
                                        ,@(if %build-local-git-repository
-                                             '("guix pull --disable-authentication --url=https://cgit.duckdns.org/git/guix/guix"
+                                             '("guix pull --disable-authentication --url=https://cgit.wugi.info/git/guix/guix"
                                                "guix system build /etc/config.scm")
                                              '()))))
                         (("type" . "shell")
