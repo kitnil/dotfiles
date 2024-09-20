@@ -3,3 +3,4 @@ kind: Kustomization
 namespace: guix
 resources:
 - ../../base/guix
+- service.yaml
