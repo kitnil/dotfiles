@@ -22,4 +22,5 @@
         "obs.scm"
         "obs-extra.scm"
         "python.scm"
-        "telegram.scm")))
+        "telegram.scm"
+        "wm.scm")))

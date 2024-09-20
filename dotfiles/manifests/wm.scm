@@ -11,17 +11,24 @@
 (define terminals
   (list alacritty))
 
-(define menus
-  (list dmenu wofi))
+(define wm
+  (list sway))
 
-(define fonts
-  ;; useful for emoji in alacritty
-  (list font-google-noto-emoji))
+(define i3
+  (list i3-wm i3status))
 
-(define browsers
-  (list torbrowser))
+(define sway-utils
+  (list bemenu grim slurp swayidle))
 
-(packages->manifest (append fonts
-                            menus
+(define clipboard
+  (list wl-clipboard))
+
+(define wayland-utils
+  (list wtype))
+
+(packages->manifest (append clipboard
                             terminals
-                            browsers))
+                            wm
+                            sway-utils
+                            i3
+                            wayland-utils))

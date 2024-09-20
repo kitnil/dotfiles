@@ -16,4 +16,5 @@
         "dotfiles.scm"
 	"emacs.scm"
         "obs.scm"
-        "telegram.scm")))
+        "telegram.scm"
+        "wm.scm")))

@@ -16,4 +16,5 @@
 	"emacs.scm"
         "obs.scm"
         "deprecated.scm"
-        "telegram.scm")))
+        "telegram.scm"
+        "wm.scm")))
