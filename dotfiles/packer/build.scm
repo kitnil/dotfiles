@@ -83,8 +83,8 @@
                      ("memory" . 4096)
                      ("cpus" . 4)
                      ;; TODO: Find non-compressed Guix ISO or fix Packer cache ignore in case ISO is compressed
-                     ("iso_url" . "https://ftp.gnu.org/gnu/guix/guix-system-install-1.3.0.x86_64-linux.iso")
-                     ("iso_checksum" . "sha256:f2b30458fa1736eeee3b82f34aab1d72f3964bef0477329bb75281d2b7bb6d4b")
+                     ("iso_url" . "https://iso.wugi.info/gnu/guix/guix-system-install-1.4.0.x86_64-linux.iso")
+                     ("iso_checksum" . "sha256:087a97dba2319477185471a28812949cc165e60e58863403e4a606c1baa05f81")
                      ("headless" . #t)
                      ("boot_keygroup_interval" . "2s")
                      ("boot_wait" . "40s")
