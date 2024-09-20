@@ -3,7 +3,7 @@
 (use-package-modules certs curl linux tmux)
 
 (operating-system
-  (host-name "gnu")
+  (host-name "vm-guix-datavolume")
   (timezone "Europe/Moscow")
   (locale "en_US.utf8")
   (bootloader (bootloader-configuration
