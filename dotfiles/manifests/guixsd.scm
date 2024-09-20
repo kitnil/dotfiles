@@ -3,24 +3,26 @@
 ;; Released under the GNU GPLv3 or any later version.
 
 (use-modules (srfi srfi-26)
+
+             (manifests wm)
              (utils))
 
 (define %source-dir
   (dirname (current-filename)))
 
 (combined-manifest-from-files
- (map (cut string-append %source-dir "/" <>)
-      '("deprecated.scm"
-        "desktop.scm"
-        "emacs.scm"
-        "guix-collection.scm"
-        "majordomo.scm"
-        "nonguix.scm"
-        "wigust.scm"
-        "dotfiles.scm"
-        "kubernetes.scm"
-        "obs.scm"
-        "obs-extra.scm"
-        "python.scm"
-        "telegram.scm"
-        "wm.scm")))
+ (append (map (cut string-append %source-dir "/" <>)
+              '("deprecated.scm"
+                "desktop.scm"
+                "emacs.scm"
+                "guix-collection.scm"
+                "majordomo.scm"
+                "nonguix.scm"
+                "wigust.scm"
+                "dotfiles.scm"
+                "kubernetes.scm"
+                "obs.scm"
+                "obs-extra.scm"
+                "python.scm"
+                "telegram.scm"))
+         (list manifest-wm)))

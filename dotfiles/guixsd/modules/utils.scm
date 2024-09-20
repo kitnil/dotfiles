@@ -16,9 +16,12 @@
        (set-current-module module)
        (load (canonicalize-path file))))))
 
-(define (combined-manifest-from-files files)
-  (fold (lambda (file combined)
-          (manifest-add combined
-                        (manifest-entries (load-manifest file))))
+(define* (combined-manifest-from-files manifests)
+  (fold (lambda (manifest combined)
+          (if (manifest? manifest)
+              (manifest-add combined
+                            (manifest-entries manifest))
+              (manifest-add combined
+                            (manifest-entries (load-manifest manifest)))))
         (packages->manifest '())
-        files))
+        manifests))
