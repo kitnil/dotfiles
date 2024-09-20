@@ -6,7 +6,18 @@
 ;; docker run --network=host --security-opt seccomp=unconfined --detach --name tor --network=host example.org:5000/tor
 ;; docker exec --detach tor /gnu/store/…-tor-0.4.6.10/bin/tor -f /gnu/store/…-torrc
 
-(use-modules (gnu))
+(use-modules (gnu)
+             (gnu home)
+             (gnu home services)
+             (gnu home services shells)
+             (gnu services)
+             (gnu services guix)
+             (gnu packages admin)
+             (guix gexp))
+
+(define oleg-home
+  (home-environment
+   (packages (list htop))))
 
 (operating-system
   (host-name "workstation")
@@ -47,5 +58,6 @@
   ;; Globally-installed packages.
   (packages %base-packages)
 
-  (services (list (service guix-service-type)
-                  (syslog-service))))
+  (services (append (list (service guix-home-service-type
+                                   `(("oleg" ,oleg-home))))
+                    %base-services)))
