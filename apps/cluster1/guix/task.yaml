@@ -1,0 +1,19 @@
+apiVersion: tekton.dev/v1beta1
+kind: TaskRun
+metadata:
+  name: execute-in-vm-with-ssh-taskrun-clean
+spec:
+  serviceAccountName: execute-in-vm-task
+  taskRef:
+    kind: ClusterTask
+    name: execute-in-vm
+  params:
+  - name: vmName
+    value: vm-guix-datavolume
+  - name: secretName
+    value: ssh-secret
+  - name: script
+    value: |
+      #!/usr/bin/env bash
+      set -x
+      id

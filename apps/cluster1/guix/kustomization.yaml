@@ -4,3 +4,4 @@ namespace: guix
 resources:
 - ../../base/guix
 - service.yaml
+- task.yaml
