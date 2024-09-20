@@ -22,7 +22,7 @@ spec:
           nsenter --target "1" --mount --uts --ipc --net --pid --no-fork \
           /run/setuid-programs/sudo --user=oleg --login bash <<'EOF'
           set -o nounset -o errexit -o pipefail -o xtrace
-          image=$(guix system image -t docker --network ~/.local/share/chezmoi/dotfiles/guixsd/guix-image-workstation.scm)
+          image=$(guix system image --load-path=/home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules -t docker --network ~/.local/share/chezmoi/dotfiles/guixsd/guix-image-workstation.scm)
           skopeo copy docker-archive:${image} docker-daemon:guix-image-workstation:latest --insecure-policy
           EOF
         image: docker-registry.wugi.info/library/util-linux-with-udev
