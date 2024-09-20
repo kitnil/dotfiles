@@ -6,7 +6,10 @@ spec:
   template:
     spec:
       containers:
-      - name: nsenter
-        env:
-        - name: GUIX_DEPLOY_FILE
-          value: dotfiles/guixsd/deploy-vm-guix-datavolume.scm
+        - name: nsenter
+          env:
+            - name: GUIX_DEPLOY_FILE
+              value: dotfiles/guixsd/deploy-vm-guix-datavolume.scm
+    metadata:
+      annotations:
+        guix-default-channel-commit: 9a6ba6cb
