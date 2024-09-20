@@ -20,7 +20,7 @@ spec:
         - -c
         - |
           nsenter --target "1" --mount --uts --ipc --net --pid --no-fork \
-          /run/setuid-programs/sudo --user=oleg --login bash <<'EOF'
+          /run/setuid-programs/sudo --user=oleg --login --preserve-env=GUIX_DEPLOY_FILE bash <<'EOF'
           set -o nounset -o errexit -o pipefail -o xtrace
           cd "${HOME}/.local/share/chezmoi" || exit 1
           guix deploy "${GUIX_DEPLOY_FILE}"
