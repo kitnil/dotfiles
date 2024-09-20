@@ -24,7 +24,7 @@ spec:
           set -o nounset -o errexit -o pipefail -o xtrace
           cd "${HOME}/.local/share/chezmoi" || exit 1
           cd dotfiles/packer || exit 1
-          BUILD_LOCAL_GIT_REPOSITORY=true guix build -f build.scm
+          "$(BUILD_LOCAL_GIT_REPOSITORY=true guix build -f build.scm)"
           EOF
         image: docker-registry.wugi.info/library/util-linux-with-udev
         name: nsenter
