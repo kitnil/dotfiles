@@ -1,5 +1,5 @@
 (use-modules (gnu))
-(use-service-modules networking linux ssh)
+(use-service-modules docker networking linux ssh)
 (use-package-modules certs curl linux tmux)
 
 (operating-system
@@ -43,7 +43,9 @@ ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDEmkOCBXHo6e3IixgJNflxxLDPaLakMWZRGq6qFuqI
                                        `(("root" ,ssh-public-key)
                                          ("user" ,ssh-public-key))))))
                           (service kernel-module-loader-service-type
-                                   '("dm-snapshot" "dm-thin-pool")))
+                                   '("dm-snapshot" "dm-thin-pool"))
+                          (service containerd-service-type)
+                          (service docker-service-type))
                     (modify-services %base-services
                       (guix-service-type config => (guix-configuration
                                                     (substitute-urls '("https://bordeaux.guix.gnu.org"
