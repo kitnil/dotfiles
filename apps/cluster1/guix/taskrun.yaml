@@ -29,4 +29,4 @@ spec:
       cd "${HOME}/.local/share/chezmoi" || exit 1
       guix pull --channels=dotfiles/channels-current-local-file.scm
       hash guix
-      sudo -i guix system reconfigure "${PWD}/dotfiles/guixsd/vm-guix-datavolume.scm"
+      sudo -i guix system reconfigure --allow-downgrades "${PWD}/dotfiles/guixsd/vm-guix-datavolume.scm"
