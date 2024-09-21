@@ -23,7 +23,7 @@ spec:
           /run/setuid-programs/sudo --user=oleg --login bash <<'EOF'
           set -o nounset -o errexit -o pipefail -o xtrace
           image=$(guix system image --load-path=/home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules -t docker --network ~/.local/share/chezmoi/dotfiles/guixsd/guix-image-workstation.scm)
-          skopeo copy docker-archive:${image} docker-daemon:guix-image-workstation:latest --insecure-policy
+          skopeo copy docker-archive:${image} docker://harbor.home.wugi.info:library/guix-image-workstation:latest
           EOF
         image: docker-registry.wugi.info/library/util-linux-with-udev
         name: refresh
