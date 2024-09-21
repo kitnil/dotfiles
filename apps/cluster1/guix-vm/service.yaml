@@ -1,0 +1,16 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: vm-guix-datavolume
+  labels:
+    app.kubernetes.io/name: vm-guix-datavolume
+    app.kubernetes.io/part-of: guix
+spec:
+  ports:
+  - port: 22
+    protocol: TCP
+    targetPort: 22
+    name: ssh
+  selector:
+    kubevirt.io/vm: vm-guix-datavolume
+  type: ClusterIP
