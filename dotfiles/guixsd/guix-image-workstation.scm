@@ -15,6 +15,8 @@
              (gnu packages admin)
              (guix gexp))
 
+(use-service-modules base)
+
 (use-modules (manifests wm))
 
 (define oleg-home
@@ -63,4 +65,7 @@
 
   (services (append (list (service guix-home-service-type
                                    `(("oleg" ,oleg-home))))
+                    (service mingetty-service-type
+                             (mingetty-configuration (tty "tty2")
+                                                     (login-pause? #t)))
                     %base-services)))
