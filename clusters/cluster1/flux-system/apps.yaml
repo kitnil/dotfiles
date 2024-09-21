@@ -984,7 +984,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./apps/base/maintenance-guix-image-workstation
+  path: ./apps/cluster1/maintenance-guix-image-workstation
   prune: true
   sourceRef:
     kind: GitRepository
