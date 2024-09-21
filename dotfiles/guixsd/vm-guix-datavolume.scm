@@ -1,5 +1,5 @@
 (use-modules (gnu))
-(use-service-modules desktop dbus docker networking linux ssh)
+(use-service-modules base desktop dbus docker networking linux ssh)
 (use-package-modules certs curl linux tmux)
 
 (operating-system
@@ -32,7 +32,11 @@
                           %base-initrd-modules))
   (packages (append (list curl nss-certs lvm2 tmux)
                     %base-packages))
-  (services (append (list (service dhcp-client-service-type)
+  (services (append (list (service mingetty-service-type
+                                   (mingetty-configuration (tty "tty2")
+                                                           ;; (auto-login "root")
+                                                           (login-pause? #t)))
+                          (service dhcp-client-service-type)
                           (service openssh-service-type
                                    (openssh-configuration
                                     (permit-root-login #t)
