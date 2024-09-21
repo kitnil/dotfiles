@@ -17,6 +17,7 @@ spec:
       #!/usr/bin/env bash
       set -o nounset -o errexit -o pipefail -o xtrace
       mkdir -p "${HOME}/.local/share"
+      guix install git
       git clone https://gitlab.com/wigust/dotfiles "${HOME}/.local/share/chezmoi"
       cd "${HOME}/.local/share/chezmoi" || exit 1
       sudo -i guix system reconfigure "${PWD}/dotfiles/guixsd/vm-guix-datavolume.scm"
