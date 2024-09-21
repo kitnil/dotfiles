@@ -58,7 +58,7 @@ socketLB:
   enabled: true
 
   # -- Disable socket lb for non-root ns. This is used to enable Istio routing rules.
-  hostNamespaceOnly: false
+  hostNamespaceOnly: true
 
 loadBalancer:
   mode: hybrid
