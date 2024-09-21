@@ -11,3 +11,8 @@ spec:
     nodeSelector:
       kubernetes.io/os: linux
       kubevirt.cluster.local/schedulable: "true"
+    tolerations:
+      - key: "workstation.cluster.local"
+        operator: "Equal"
+        value: "true"
+        effect: "NoSchedule"
