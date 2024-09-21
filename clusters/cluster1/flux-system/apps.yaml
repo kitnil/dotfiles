@@ -106,6 +106,19 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
+  name: guix-vm
+  namespace: flux-system
+spec:
+  interval: 1m0s
+  path: ./apps/cluster1/guix-vm
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
   name: samba
   namespace: flux-system
 spec:
