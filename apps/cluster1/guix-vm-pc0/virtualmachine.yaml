@@ -1,0 +1,19 @@
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  name: vm-guix-datavolume
+spec:
+  dataVolumeTemplates:
+  - metadata:
+      name: guix-dv
+    spec:
+      pvc:
+        storageClassName: hostpath-csi
+        accessModes:
+        - ReadWriteOnce
+        resources:
+          requests:
+            storage: 64Gi
+      source:
+        http:
+          url: https://iso.wugi.info/guix.4.qcow2
