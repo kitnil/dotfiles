@@ -27,6 +27,5 @@ spec:
           git clone https://gitlab.com/wigust/dotfiles "${HOME}/.local/share/chezmoi"
       fi
       cd "${HOME}/.local/share/chezmoi" || exit 1
-      guix pull --channels=dotfiles/channels-current-local-file.scm
-      hash guix
+      sudo -i guix pull --channels="${PWD}/dotfiles/channels-current-local-file.scm"
       sudo -i guix system reconfigure --allow-downgrades "${PWD}/dotfiles/guixsd/vm-guix-datavolume.scm"
