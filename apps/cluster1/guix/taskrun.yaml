@@ -17,8 +17,6 @@ spec:
       #!/usr/bin/env bash
       set -o nounset -o errexit -o pipefail -o xtrace
       mkdir -p "${HOME}/.local/share"
-      # TODO: Fix not available resolver provided by Kubernetes.
-      echo "nameserver 192.168.0.145" | sudo tee /etc/resolv.conf
       guix install git
       if [[ -e "${HOME}/.local/share/chezmoi" ]]
       then
