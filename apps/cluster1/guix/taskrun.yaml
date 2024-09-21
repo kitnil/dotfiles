@@ -20,6 +20,12 @@ spec:
       # TODO: Fix not available resolver provided by Kubernetes.
       echo "nameserver 192.168.0.145" | sudo tee /etc/resolv.conf
       guix install git
-      git clone https://gitlab.com/wigust/dotfiles "${HOME}/.local/share/chezmoi"
+      if [[ -e "${HOME}/.local/share/chezmoi" ]]
+      then
+          :
+      else
+          git clone https://gitlab.com/wigust/dotfiles "${HOME}/.local/share/chezmoi"
+      fi
       cd "${HOME}/.local/share/chezmoi" || exit 1
+      guix pull --channels=dotfiles/channels-current-local-file.scm
       sudo -i guix system reconfigure "${PWD}/dotfiles/guixsd/vm-guix-datavolume.scm"
