@@ -15,6 +15,7 @@
              (gnu packages admin)
              (guix gexp))
 
+(use-package-modules screen)
 (use-service-modules base desktop dbus shepherd)
 
 (use-modules (manifests wm)
@@ -70,7 +71,8 @@ program.")))
                         (type "does-not-matter"))))
 
   ;; Globally-installed packages.
-  (packages %base-packages)
+  (packages (append (list screen)
+                    %base-packages))
 
   (services (append (list (service guix-home-service-type
                                    `(("oleg" ,oleg-home)))
