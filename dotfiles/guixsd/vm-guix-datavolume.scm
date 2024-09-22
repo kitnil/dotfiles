@@ -51,16 +51,16 @@ ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDEmkOCBXHo6e3IixgJNflxxLDPaLakMWZRGq6qFuqI
                           (elogind-service)
                           (service docker-service-type)
                           (service prometheus-node-exporter-service-type))
-                    (modify-services (filter (lambda (service)
-                                               (let ((value (service-value service)))
-                                                 (not (and (mingetty-configuration? value)
-                                                           (string= (mingetty-configuration-tty value)
-                                                                    "tty2")))))
-                                             %base-services)
-                      (guix-service-type config => (guix-configuration
-                                                    (substitute-urls '("https://bordeaux.guix.gnu.org"
-                                                                       "https://guix.wugi.info"))
-                                                    (authorized-keys (append (list (plain-file "guix.wugi.info.pub" "\
+                    (modify-services (modify-services (filter (lambda (service)
+                                                                (let ((value (service-value service)))
+                                                                  (not (and (mingetty-configuration? value)
+                                                                            (string= (mingetty-configuration-tty value)
+                                                                                     "tty2")))))
+                                                              %base-services)
+                                       (guix-service-type config => (guix-configuration
+                                                                     (substitute-urls '("https://bordeaux.guix.gnu.org"
+                                                                                        "https://guix.wugi.info"))
+                                                                     (authorized-keys (append (list (plain-file "guix.wugi.info.pub" "\
 (public-key
  (ecc
   (curve Ed25519)
@@ -68,7 +68,7 @@ ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDEmkOCBXHo6e3IixgJNflxxLDPaLakMWZRGq6qFuqI
   )
  )
 ")
-                                                                                   (plain-file "bordeaux.guix.gnu.org.pub" "\
+                                                                                                    (plain-file "bordeaux.guix.gnu.org.pub" "\
 (public-key
  (ecc
   (curve Ed25519)
@@ -76,7 +76,8 @@ ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDEmkOCBXHo6e3IixgJNflxxLDPaLakMWZRGq6qFuqI
   )
  )
 "))
-                                                                             %default-authorized-guix-keys)))))))
+                                                                                              %default-authorized-guix-keys)))))
+                      (delete console-font-service-type))))
   (sudoers-file (plain-file "sudoers" "\
 root ALL=(ALL) ALL
 user ALL=(ALL) NOPASSWD: ALL\n")))
