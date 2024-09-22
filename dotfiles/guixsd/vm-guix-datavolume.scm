@@ -1,5 +1,5 @@
 (use-modules (gnu))
-(use-service-modules desktop dbus docker networking linux ssh)
+(use-service-modules desktop dbus docker monitoring networking linux ssh)
 (use-package-modules certs curl linux tmux)
 
 (operating-system
@@ -47,7 +47,8 @@ ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDEmkOCBXHo6e3IixgJNflxxLDPaLakMWZRGq6qFuqI
                           (service containerd-service-type)
                           (dbus-service)
                           (elogind-service)
-                          (service docker-service-type))
+                          (service docker-service-type)
+                          (service prometheus-node-exporter-service-type))
                     (modify-services %base-services
                       (guix-service-type config => (guix-configuration
                                                     (substitute-urls '("https://bordeaux.guix.gnu.org"
