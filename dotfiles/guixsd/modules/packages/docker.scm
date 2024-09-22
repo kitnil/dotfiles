@@ -7,11 +7,22 @@
   #:use-module (ice-9 format)
   #:use-module (srfi srfi-1))
 
+(define %home
+  (and=> (getenv "HOME")
+         (lambda (home)
+           home)))
+
+(define %source-dir
+  (string-append %home "/.local/share/chezmoi"))
+
 (define-public docker-guix-workstation
   (package
     (name "docker-guix-workstation")
     (version "0.0.1")
-    (source (local-file "/home/oleg/.local/share/chezmoi/dotfiles/docker/guix-workstation/run.sh"))
+    (source
+     (local-file
+      (string-append %source-dir
+                     "/dotfiles/docker/guix-workstation/run.sh")))
     (build-system trivial-build-system)
     (native-inputs `(("source" ,source)))
     (arguments
