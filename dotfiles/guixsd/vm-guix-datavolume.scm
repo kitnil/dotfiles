@@ -49,7 +49,12 @@ ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDEmkOCBXHo6e3IixgJNflxxLDPaLakMWZRGq6qFuqI
                           (elogind-service)
                           (service docker-service-type)
                           (service prometheus-node-exporter-service-type))
-                    (modify-services %base-services
+                    (modify-services (filter (lambda (service)
+                                               (let ((value (service-value service)))
+                                                 (not (and (mingetty-configuration? value)
+                                                           (string= (mingetty-configuration-tty value)
+                                                                    "tty2")))))
+                                             %base-services)
                       (guix-service-type config => (guix-configuration
                                                     (substitute-urls '("https://bordeaux.guix.gnu.org"
                                                                        "https://guix.wugi.info"))
