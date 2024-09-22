@@ -11,6 +11,10 @@ spec:
     protocol: TCP
     targetPort: 22
     name: ssh
+  - port: 9100
+    protocol: TCP
+    targetPort: 9100
+    name: node-exporter
   selector:
     kubevirt.io/vm: vm-guix-datavolume
   type: ClusterIP
