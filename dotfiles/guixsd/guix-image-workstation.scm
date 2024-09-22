@@ -20,7 +20,8 @@
 (use-service-modules base desktop dbus shepherd)
 
 (use-modules (manifests wm)
-             (services desktop))
+             (services desktop)
+             (home services desktop))
 
 (use-modules (gnu home)
              (gnu home services)
@@ -44,7 +45,8 @@
                         (list `("test.conf"
                                 ,(plain-file "tmp-file.txt"
                                              "the content of
-                                               ~/.config/test.conf"))))))))
+                                               ~/.config/test.conf"))))
+                   (service home-sway-service-type)))))
 
 (define container-mingetty-service-type
   (service-type (name 'mingetty)
