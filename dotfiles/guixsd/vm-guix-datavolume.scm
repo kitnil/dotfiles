@@ -2,6 +2,8 @@
 (use-service-modules desktop dbus docker monitoring networking linux ssh)
 (use-package-modules certs curl linux tmux)
 
+(use-modules (packages docker))
+
 (operating-system
   (host-name "vm-guix-datavolume")
   (timezone "Europe/Moscow")
@@ -30,7 +32,7 @@
                  %base-user-accounts))
   (initrd-modules (append (list "dm-thin-pool" "dm-snapshot")
                           %base-initrd-modules))
-  (packages (append (list curl nss-certs lvm2 tmux)
+  (packages (append (list curl nss-certs lvm2 tmux docker-guix-workstation)
                     %base-packages))
   (services (append (list (service dhcp-client-service-type)
                           (service openssh-service-type
