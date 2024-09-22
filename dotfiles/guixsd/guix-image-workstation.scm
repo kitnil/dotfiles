@@ -17,7 +17,8 @@
 
 (use-service-modules base desktop dbus shepherd)
 
-(use-modules (manifests wm))
+(use-modules (manifests wm)
+             (services desktop))
 
 (define oleg-home
   (home-environment
@@ -75,6 +76,7 @@ program.")))
                                    `(("oleg" ,oleg-home)))
                           (dbus-service)
                           (elogind-service)
+                          seatd-service
                           (service container-mingetty-service-type
                                    (mingetty-configuration (tty "tty2"))))
                     %base-services)))
