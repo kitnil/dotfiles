@@ -9,6 +9,7 @@
 (use-modules (gnu)
              (gnu home)
              (gnu home services)
+             (gnu home services desktop)
              (gnu home services shells)
              (gnu services)
              (gnu services guix)
@@ -24,7 +25,8 @@
 (define oleg-home
   (home-environment
    (packages (append (list htop)
-                     packages-wm))))
+                     packages-wm))
+   (services (list (service home-dbus-service-type)))))
 
 (define container-mingetty-service-type
   (service-type (name 'mingetty)
