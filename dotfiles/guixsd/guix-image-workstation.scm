@@ -22,11 +22,29 @@
 (use-modules (manifests wm)
              (services desktop))
 
+(use-modules (gnu home)
+             (gnu home services)
+             (gnu home services shells)
+             (gnu services)
+             (gnu packages admin)
+             (guix gexp))
+
 (define oleg-home
   (home-environment
    (packages (append (list htop)
                      packages-wm))
-   (services (list (service home-dbus-service-type)))))
+   (services (list (service home-dbus-service-type)
+                   (service home-bash-service-type
+                            (home-bash-configuration
+                             (guix-defaults? #t)
+                             (bash-profile (list (plain-file "bash-profile" "\
+     export HISTFILE=$XDG_CACHE_HOME/.bash_history")))))
+                   (simple-service 'test-config
+                        home-xdg-configuration-files-service-type
+                        (list `("test.conf"
+                                ,(plain-file "tmp-file.txt"
+                                             "the content of
+                                               ~/.config/test.conf"))))))))
 
 (define container-mingetty-service-type
   (service-type (name 'mingetty)
