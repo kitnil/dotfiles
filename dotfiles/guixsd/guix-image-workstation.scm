@@ -61,13 +61,16 @@ program.")))
 
   ;; This is where user accounts are specified.  The "root" account is
   ;; implicit, and is initially created with the empty password.
-  (users (cons (user-account
-                (name "oleg")
-                (comment "Oleg Pykhalov")
-                (group "users")
-                (supplementary-groups '("wheel"
-                                        "audio" "video")))
-               %base-user-accounts))
+  (users (append (list (user-account
+                        (name "oleg")
+                        (comment "Oleg Pykhalov")
+                        (group "users")
+                        (supplementary-groups '("wheel"
+                                                "audio" "video"))
+                        (password (crypt "oleg" "$6$abc")))
+                       (user-account (inherit %root-account)
+                                     (password (crypt "root" "$6$abc"))))
+                 %base-user-accounts))
 
   ;; Because the system will run in a Docker container, we may omit many
   ;; things that would normally be required in an operating system
