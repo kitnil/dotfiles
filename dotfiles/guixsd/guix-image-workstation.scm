@@ -15,7 +15,7 @@
              (gnu packages admin)
              (guix gexp))
 
-(use-service-modules base)
+(use-service-modules base desktop dbus shepherd)
 
 (use-modules (manifests wm))
 
@@ -23,6 +23,14 @@
   (home-environment
    (packages (append (list htop)
                      packages-wm))))
+
+(define container-mingetty-service-type
+  (service-type (name 'mingetty)
+                (extensions (list (service-extension shepherd-root-service-type
+                                                     (@@ (gnu services base) mingetty-shepherd-service))))
+                (description
+                 "Provide console login using the @command{mingetty}
+program.")))
 
 (operating-system
   (host-name "workstation")
@@ -64,8 +72,9 @@
   (packages %base-packages)
 
   (services (append (list (service guix-home-service-type
-                                   `(("oleg" ,oleg-home))))
-                    (service mingetty-service-type
-                             (mingetty-configuration (tty "tty2")
-                                                     (login-pause? #t)))
+                                   `(("oleg" ,oleg-home)))
+                          (dbus-service)
+                          (elogind-service)
+                          (service container-mingetty-service-type
+                                   (mingetty-configuration (tty "tty2"))))
                     %base-services)))
