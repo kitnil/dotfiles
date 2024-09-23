@@ -1,0 +1,13 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: restreamer
+spec:
+  template:
+    spec:
+      hostNetwork: true
+      containers:
+      - name: restreamer
+        env:
+        - name: CORE_ADDRESS
+          value: "78.108.82.44:12080"
