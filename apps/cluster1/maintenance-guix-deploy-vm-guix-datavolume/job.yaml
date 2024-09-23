@@ -12,4 +12,4 @@ spec:
               value: dotfiles/guixsd/deploy-vm-guix-datavolume.scm
     metadata:
       annotations:
-        guix-default-channel-commit: ff0aa861
+        guix-default-channel-commit: 02b8abf3
