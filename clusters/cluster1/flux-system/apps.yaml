@@ -728,6 +728,7 @@ spec:
   path: ./apps/cluster1/maintenance-guix-home-reconfigure-kube3
   prune: true
   dependsOn:
+  - name: maintenance-git-dotfiles-kube3
   - name: maintenance-guix-pull-kube3
   sourceRef:
     kind: GitRepository
