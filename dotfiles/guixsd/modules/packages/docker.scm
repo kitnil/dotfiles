@@ -21,7 +21,8 @@
     (version "0.0.1")
     (source
      (local-file
-      (string-append %source-dir
+      ;; TODO: Use %source-dir.
+      (string-append "/home/user" "/.local/share/chezmoi"
                      "/dotfiles/docker/guix-workstation/run.sh")))
     (build-system trivial-build-system)
     (native-inputs `(("source" ,source)))
