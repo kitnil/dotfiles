@@ -41,7 +41,7 @@ spec:
   - name: dev-tty2
     hostPath:
       path: /dev/tty2
-      type: File
+      type: CharDevice
   - name: dev-fuse
     hostPath:
       path: /dev/fuse
