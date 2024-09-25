@@ -49,10 +49,10 @@ spec:
       name: dev-dri
     - mountPath: /dev/input
       name: dev-input
-    - mountPath: /dev/tty2
-      name: dev-tty2
+    - mountPath: /dev/tty3
+      name: dev-tty3
     - mountPath: /dev/tty0
-      name: dev-tty2
+      name: dev-tty3
     - mountPath: /dev/fuse
       name: dev-fuse
   volumes:
@@ -64,9 +64,9 @@ spec:
     hostPath:
       path: /dev/input
       type: Directory
-  - name: dev-tty2
+  - name: dev-tty3
     hostPath:
-      path: /dev/tty2
+      path: /dev/tty3
       type: CharDevice
   - name: dev-fuse
     hostPath:
