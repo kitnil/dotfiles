@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: guix-workstation
+  annotations:
+    # Setting spec.force to true will make Flux recreate the Pod when any
+    # immutable field is changed, forcing the Pod to run every time the
+    # container image tag changes.
+    kustomize.toolkit.fluxcd.io/force: enabled
+spec:
+  restartPolicy: Never
+  automountServiceAccountToken: false
+  containers:
+  - image: harbor.home.wugi.info/library/guix-image-workstation:latest
+    name: guix-workstation
+    securityContext:
+      capabilities:
+        add:
+        - SYS_ADMIN
+    tty: true
+    volumeMounts:
+    - mountPath: /dev/dri
+      name: dev-dri
+    - mountPath: /dev/input
+      name: dev-input
+    - mountPath: /dev/tty2
+      name: dev-tty2
+    - mountPath: /dev/tty0
+      name: dev-tty2
+    - mountPath: /dev/fuse
+      name: dev-fuse
+  volumes:
+  - name: dev-dri
+    hostPath:
+      path: /dev/dri
+      type: Directory
+  - name: dev-input
+    hostPath:
+      path: /dev/input
+      type: Directory
+  - name: dev-tty2
+    hostPath:
+      path: /dev/tty2
+      type: CharDevice
+  - name: dev-fuse
+    hostPath:
+      path: /dev/fuse
+      type: CharDevice
