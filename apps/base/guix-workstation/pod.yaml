@@ -17,6 +17,7 @@ spec:
       capabilities:
         add:
         - SYS_ADMIN
+      privileged: true
     tty: true
     volumeMounts:
     - mountPath: /dev/dri
