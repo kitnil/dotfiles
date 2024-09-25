@@ -21,6 +21,7 @@
 
 (use-modules (manifests wm)
              (services desktop)
+             (home config)
              (home services desktop))
 
 (use-modules (gnu home)
@@ -46,6 +47,10 @@
                                 ,(plain-file "tmp-file.txt"
                                              "the content of
                                                ~/.config/test.conf"))))
+                   (simple-service 'sway-config
+                                   home-files-service-type
+                                   (list `(".config/sway/config" ,(local-file (string-append %project-directory "/dot_config/sway/pc0.config")))
+                                         `(".xkb/symbols/custom" ,(local-file (string-append %project-directory "/dot_xkb/symbols/custom")))))
                    (service home-sway-service-type)))))
 
 (define container-mingetty-service-type
