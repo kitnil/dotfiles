@@ -16,6 +16,31 @@ spec:
     securityContext:
       capabilities:
         add:
+        - AUDIT_CONTROL
+        - AUDIT_READ
+        - BLOCK_SUSPEND
+        - BPF
+        - CHECKPOINT_RESTORE
+        - DAC_READ_SEARCH
+        - IPC_LOCK
+        - IPC_OWNER
+        - LEASE
+        - LINUX_IMMUTABLE
+        - MAC_ADMIN
+        - MAC_OVERRIDE
+        - NET_ADMIN
+        - NET_BROADCAST
+        - PERFMON
+        - SYS_BOOT
+        - SYSLOG
+        - SYS_MODULE
+        - SYS_NICE
+        - SYS_PACCT
+        - SYS_PTRACE
+        - SYS_RAWIO
+        - SYS_RESOURCE
+        - SYS_TIME
+        - WAKE_ALARM
         - SYS_ADMIN
     tty: true
     volumeMounts:
