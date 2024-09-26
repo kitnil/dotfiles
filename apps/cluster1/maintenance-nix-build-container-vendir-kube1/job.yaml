@@ -1,0 +1,12 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: maintenance-nix-build-container-vendir
+spec:
+  template:
+    metadata:
+      annotations:
+        guix-default-channel-commit: 'fc9d9c1a'
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: kube1
