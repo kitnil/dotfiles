@@ -1,0 +1,35 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: maintenance-nix-build-container-vendir
+  annotations:
+    # Setting spec.force to true will make Flux recreate the Job when any
+    # immutable field is changed, forcing the Job to run every time the
+    # container image tag changes.
+    kustomize.toolkit.fluxcd.io/force: enabled
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      hostNetwork: true
+      hostPID: true
+      restartPolicy: Never
+      containers:
+      - command:
+        - nsenter --target "1" --mount --uts --ipc --net --pid --no-fork \
+          /run/setuid-programs/sudo --user=oleg --login bash <<'EOF'
+          set -o nounset -o errexit -o pipefail -o xtrace
+          cd "${HOME}/.local/share/chezmoi/dotfiles/nix/vendir" || exit 1
+          nix build -L
+          EOF
+        image: docker-registry.wugi.info/library/util-linux-with-udev
+        name: refresh
+        resources:
+          limits:
+            cpu: 14000m
+            memory: 4096Mi
+          requests:
+            cpu: 1000m
+            memory: 512Mi
+        securityContext:
+          privileged: true
