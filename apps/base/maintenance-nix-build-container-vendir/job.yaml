@@ -19,8 +19,9 @@ spec:
         - nsenter --target "1" --mount --uts --ipc --net --pid --no-fork \
           /run/setuid-programs/sudo --user=oleg --login bash <<'EOF'
           set -o nounset -o errexit -o pipefail -o xtrace
+          cd "${HOME}/.local/share/chezmoi" || exit 1
           env
-          cd "${HOME}/.local/share/chezmoi/dotfiles/nix/vendir" || exit 1
+          cd dotfiles/nix/vendir || exit 1
           nix build -L
           EOF
         image: docker-registry.wugi.info/library/util-linux-with-udev
