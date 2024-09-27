@@ -16,13 +16,15 @@ spec:
       restartPolicy: Never
       containers:
       - command:
-        - nsenter --target "1" --mount --uts --ipc --net --pid --no-fork \
+        - /bin/sh
+        - -c
+        - |
+          nsenter --target "1" --mount --uts --ipc --net --pid --no-fork \
           /run/setuid-programs/sudo --user=oleg --login bash <<'EOF'
           set -o nounset -o errexit -o pipefail -o xtrace
           cd "${HOME}/.local/share/chezmoi" || exit 1
-          env
           cd dotfiles/nix/vendir || exit 1
-          /run/current-system/profile/bin/nix build -L
+          nix build -L
           EOF
         image: docker-registry.wugi.info/library/util-linux-with-udev
         name: refresh
