@@ -19,6 +19,7 @@ spec:
         - nsenter --target "1" --mount --uts --ipc --net --pid --no-fork \
           /run/setuid-programs/sudo --user=oleg --login bash <<'EOF'
           set -o nounset -o errexit -o pipefail -o xtrace
+          env
           cd "${HOME}/.local/share/chezmoi/dotfiles/nix/vendir" || exit 1
           nix build -L
           EOF
