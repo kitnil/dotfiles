@@ -1,0 +1,12 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: guix-package-manifest
+spec:
+  template:
+    metadata:
+      annotations:
+        guix-default-channel-commit: 02b8abf3
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: kube3
