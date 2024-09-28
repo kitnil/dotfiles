@@ -34,7 +34,7 @@
   (list wl-clipboard))
 
 (define wayland-utils
-  (list wtype))
+  (list wl-mirror wtype))
 
 (define packages-wm
   (append clipboard terminals wm sway-utils i3 wayland-utils))
