@@ -17,7 +17,6 @@
                 "dotfiles.scm"
 	        "emacs.scm"
                 "obs.scm"
-                "obs-extra.scm"
                 "deprecated.scm"
                 "telegram.scm"))
          (list manifest-wm)))
