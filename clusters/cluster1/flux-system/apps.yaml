@@ -830,6 +830,25 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
+  name: maintenance-guix-package-manifest-kube3
+  namespace: flux-system
+spec:
+  interval: 30m0s
+  path: ./apps/cluster1/maintenance-guix-package-manifest-kube3
+  prune: true
+  # This means that the maintenance-guix-package-manifest-kube3 Kustomization
+  # will wait until all the Jobs in maintenance-guix-pull-kube3 run to
+  # completion. If the Job fails, the app changes will not be applied by the
+  # app-deploy Kustomization.
+  dependsOn:
+  - name: maintenance-guix-pull-kube3
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
   name: majordomo-gitlab
   namespace: flux-system
 spec:
