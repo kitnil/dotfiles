@@ -8,7 +8,6 @@
   obs-gradient-source
   obs-move-transition
   obs-multi-rtmp
-  obs-ndi
   obs-scale-to-sound
   obs-shaderfilter
   obs-source-clone
