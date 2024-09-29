@@ -468,7 +468,8 @@ transition.")
               (sha256
                (base32
                 "1wsb1k0jilcn6gqgpq5kq8hjiwnb6mi2w32fsqgb88iicwj1qa3y"))
-              (patches (append (search-patches "hardcode-ndi-path.patch")))))
+              (patches (append (search-patches "hardcode-ndi-path.patch")
+                               (search-patches "obs-ndi-add-additional-latency-mode.patch")))))
     (build-system cmake-build-system)
     (inputs
      (list ndi obs qtbase-5))
