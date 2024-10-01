@@ -41,4 +41,6 @@
         "v4l-utils"
         "dialog"
         "pinentry"
-        "sshpass"))
+        "sshpass"
+        "freerdp"
+        "remmina"))
