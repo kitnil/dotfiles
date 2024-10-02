@@ -43,4 +43,6 @@
         "pinentry"
         "sshpass"
         "freerdp"
-        "remmina"))
+        "remmina"
+        "looking-glass-client"
+        "obs-looking-glass"))
