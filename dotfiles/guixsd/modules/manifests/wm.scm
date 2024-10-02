@@ -34,7 +34,11 @@
   (list wl-clipboard))
 
 (define wayland-utils
-  (list wl-mirror wtype))
+  (list wl-mirror
+        wtype
+        xdg-desktop-portal
+        xdg-desktop-portal-gtk
+        xdg-desktop-portal-wlr))
 
 (define packages-wm
   (append clipboard terminals wm sway-utils i3 wayland-utils))
