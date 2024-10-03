@@ -265,10 +265,7 @@ client-to-client
                                                  "wugi.info"
                                                  "xmpp.wugi.info"))))))
 
-                          (service nginx-service-type
-                                   (nginx-configuration
-                                    (file
-                                     (local-file "etc/nginx/stream.1.conf"))))
+                          (service nginx-service-type)
 
                           (service containerd-service-type)
                           (service docker-service-type)
