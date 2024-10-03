@@ -243,27 +243,27 @@ client-to-client
                                                  "--exim.input-path=/var/spool/exim/input"))))
                           (service prometheus-shepherd-exporter-service-type)
 
-                          ;; (service (certbot-service-type-custom-nginx "78.108.82.44")
-                          ;;          (certbot-configuration
-                          ;;           (email "go.wigust@gmail.com")
-                          ;;           (certificates
-                          ;;            (append
-                          ;;             (list
-                          ;;              (certificate-configuration
-                          ;;               (domains '("smtp.wugi.info"))
-                          ;;               (deploy-hook %exim-deploy-hook))
-                          ;;              (certificate-configuration
-                          ;;               (domains '("imap.wugi.info"))
-                          ;;               (deploy-hook %dovecot-deploy-hook)))
-                          ;;             (map (lambda (host)
-                          ;;                    (certificate-configuration
-                          ;;                     (domains (list host))
-                          ;;                     (deploy-hook %nginx-deploy-hook)))
-                          ;;                  (list "file.wugi.info"
-                          ;;                        "homer.wugi.info"
-                          ;;                        "vm1.wugi.info"
-                          ;;                        "wugi.info"
-                          ;;                        "xmpp.wugi.info"))))))
+                          (service (certbot-service-type-custom-nginx "78.108.82.44")
+                                   (certbot-configuration
+                                    (email "go.wigust@gmail.com")
+                                    (certificates
+                                     (append
+                                      (list
+                                       (certificate-configuration
+                                        (domains '("smtp.wugi.info"))
+                                        (deploy-hook %exim-deploy-hook))
+                                       (certificate-configuration
+                                        (domains '("imap.wugi.info"))
+                                        (deploy-hook %dovecot-deploy-hook)))
+                                      (map (lambda (host)
+                                             (certificate-configuration
+                                              (domains (list host))
+                                              (deploy-hook %nginx-deploy-hook)))
+                                           (list "file.wugi.info"
+                                                 "homer.wugi.info"
+                                                 "vm1.wugi.info"
+                                                 "wugi.info"
+                                                 "xmpp.wugi.info"))))))
 
                           (service nginx-service-type
                                    (nginx-configuration
