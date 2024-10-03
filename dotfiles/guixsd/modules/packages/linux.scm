@@ -224,3 +224,31 @@ version of the HDAPS driver.  The underlying hardware interfaces are
 @acronym{SMAPI, System Management Application Program Interface} and direct
 access to the embedded controller.")
     (license #f)))
+
+(define-public kvmfr-linux-module
+  (package
+    (name "kvmfr-linux-module")
+    (version "B6")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append "https://looking-glass.io/artifact/" version
+                                  "/source"))
+              (file-name (string-append name "-" version ".tar.gz"))
+              (sha256
+               (base32
+                "15d7wwbzfw28yqbz451b6n33ixy50vv8acyzi8gig1mq5a8gzdib"))
+              (patches (search-patches "kvmfr-fix.patch"))))
+    (build-system linux-module-build-system)
+    (inputs
+     `(("bash" ,bash)))
+    (arguments
+     (list
+      #:tests? #f ;there are none.
+      #:source-directory "module"))
+    (home-page "https://looking-glass.io/")
+    (synopsis
+     "Linux Kernel module to interface with LookingGlass.")
+    (description
+     "This kernel module implements a basic interface to the IVSHMEM device for
+LookingGlass.")
+    (license gpl2+)))

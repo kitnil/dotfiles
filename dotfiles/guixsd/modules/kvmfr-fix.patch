@@ -1,0 +1,32 @@
+# Copied from
+# https://github.com/gnif/LookingGlass/issues/1075#issuecomment-1546422678
+# with adjustments for current kvmfr source version.
+
+From 16d5b310d246f96413d4aca0e04e772389b347c3 Mon Sep 17 00:00:00 2001
+From: Oleg Pykhalov <go.wigust@gmail.com>
+Date: Thu, 3 Oct 2024 23:31:21 +0300
+Subject: [PATCH] Fix build for Kernel newer than 6.4.0.
+
+---
+ module/kvmfr.c | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/module/kvmfr.c b/module/kvmfr.c
+index 121aae5..2f4c9e1 100644
+--- a/module/kvmfr.c
++++ b/module/kvmfr.c
+@@ -539,7 +539,11 @@ static int __init kvmfr_module_init(void)
+   if (kvmfr->major < 0)
+     goto out_free;
+ 
++#if LINUX_VERSION_CODE < KERNEL_VERSION(6, 4, 0)
+   kvmfr->pClass = class_create(THIS_MODULE, KVMFR_DEV_NAME);
++#else
++  kvmfr->pClass = class_create(KVMFR_DEV_NAME);
++#endif
+   if (IS_ERR(kvmfr->pClass))
+     goto out_unreg;
+ 
+-- 
+2.41.0
+
