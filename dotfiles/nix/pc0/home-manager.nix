@@ -108,6 +108,20 @@
             "browser.search.defaultenginename" = "Google";
           };
         };
+        development = nix // {
+          name = "development";
+          id = 3;
+          isDefault = false;
+          extensions =
+            with packages;
+            with packages.nur.repos.rycee.firefox-addons;
+            [
+              copy-as-org-mode
+              copy-all-tab-urls-we
+              ublock-origin
+              packages.snaplinksplus
+            ];
+        };
       };
   };
 
