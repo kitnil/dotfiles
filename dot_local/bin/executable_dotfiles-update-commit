@@ -55,4 +55,16 @@
                                '("/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-git-dotfiles-kube3/job.yaml"
                                  "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-copy-kube3/job.yaml")
                                '("/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-image-workstation/job.yaml"
-                                 "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-deploy-vm-guix-datavolume/job.yaml"))))))
+                                 "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-deploy-vm-guix-datavolume/job.yaml")
+
+                               (apply append
+                                      (fold (lambda (hostname hostnames)
+                                              (cons (list (string-append "/home/oleg/.local/share/chezmoi/apps/cluster2/maintenance-guix-pull-" hostname "/job.yaml")
+                                                          (string-append "/home/oleg/.local/share/chezmoi/apps/cluster2/maintenance-guix-system-reconfigure-" hostname "/job.yaml")
+                                                          (string-append "/home/oleg/.local/share/chezmoi/apps/cluster2/maintenance-guix-package-manifest-" hostname "/job.yaml")
+                                                          (string-append "/home/oleg/.local/share/chezmoi/apps/cluster2/maintenance-guix-home-reconfigure-" hostname "/job.yaml")
+                                                          (string-append "/home/oleg/.local/share/chezmoi/apps/cluster2/maintenance-nix-home-reconfigure-" hostname "/job.yaml"))
+                                                    hostnames))
+                                            '()
+                                            '("kube5001")))
+                               '("/home/oleg/.local/share/chezmoi/apps/cluster2/maintenance-git-dotfiles-kube5001/job.yaml"))))))
