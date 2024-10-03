@@ -8,7 +8,8 @@
 	     (nongnu system linux-initrd)
              (bootloader grub)
              (config)
-             (services kubernetes))
+             (services kubernetes)
+             (packages linux))
 (use-service-modules avahi desktop dbus docker networking nix monitoring linux sound ssh virtualization xorg)
 (use-package-modules audio linux screen ssh wm)
 
@@ -28,7 +29,8 @@
                (bootloader grub-efi-bootloader-removable)
                (targets '("/boot/efi"))))
 
-  (kernel-loadable-modules (list v4l2loopback-linux-module))
+  (kernel-loadable-modules (list kvmfr-linux-module
+                                 v4l2loopback-linux-module))
 
   (mapped-devices
    (list (mapped-device
