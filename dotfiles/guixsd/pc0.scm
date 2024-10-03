@@ -8,10 +8,12 @@
 	     (nongnu system linux-initrd)
              (bootloader grub)
              (config)
-             (services kubernetes)
-             (packages linux))
+             (services kubernetes))
 (use-service-modules avahi desktop dbus docker networking nix monitoring linux sound ssh virtualization xorg)
 (use-package-modules audio linux screen ssh wm)
+
+(define kvmfr-linux-module
+  (@ (packages linux) kvmfr-linux-module))
 
 (operating-system
   (host-name "pc0")
