@@ -45,4 +45,5 @@
         "freerdp"
         "remmina"
         "looking-glass-client"
-        "obs-looking-glass"))
+        "obs-looking-glass"
+        "ungoogled-chromium"))
