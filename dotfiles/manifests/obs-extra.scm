@@ -10,6 +10,5 @@
   obs-multi-rtmp
   obs-scale-to-sound
   obs-shaderfilter
-  obs-source-copy
   obs-stroke-glow-shadow
   obs-waveform))
