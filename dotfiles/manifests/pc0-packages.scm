@@ -46,4 +46,5 @@
         "remmina"
         "looking-glass-client"
         "obs-looking-glass"
-        "ungoogled-chromium"))
+        "ungoogled-chromium"
+        "icecat"))
