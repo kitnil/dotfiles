@@ -247,7 +247,6 @@
    home-bind-utils-service
    ;; home-shellcheck-service
    home-bin-service
-   home-chromium-service
    home-gnupg-service
    home-ghci-service
    home-groovy-service
