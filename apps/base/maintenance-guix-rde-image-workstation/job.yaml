@@ -1,7 +1,7 @@
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: guix-image-workstation
+  name: guix-rde-image-workstation
   annotations:
     # Setting spec.force to true will make Flux recreate the Job when any
     # immutable field is changed, forcing the Job to run every time the
