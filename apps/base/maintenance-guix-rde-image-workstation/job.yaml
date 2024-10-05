@@ -1,0 +1,39 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: guix-image-workstation
+  annotations:
+    # Setting spec.force to true will make Flux recreate the Job when any
+    # immutable field is changed, forcing the Job to run every time the
+    # container image tag changes.
+    kustomize.toolkit.fluxcd.io/force: enabled
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      hostNetwork: true
+      hostPID: true
+      restartPolicy: Never
+      containers:
+      - command:
+        - /bin/sh
+        - -c
+        - |
+          nsenter --target "1" --mount --uts --ipc --net --pid --no-fork \
+          /run/setuid-programs/sudo --user=oleg --login bash <<'EOF'
+          set -o nounset -o errexit -o pipefail -o xtrace
+          cd /home/oleg/src/github.com/abcdw/rde
+          image=$(make --silent -C examples live/image/container)
+          skopeo copy docker-archive:${image} docker://harbor.home.wugi.info/library/guix-rde-image-workstation:latest
+          EOF
+        image: docker-registry.wugi.info/library/util-linux-with-udev
+        name: refresh
+        resources:
+          limits:
+            cpu: 14000m
+            memory: 4096Mi
+          requests:
+            cpu: 50m
+            memory: 512Mi
+        securityContext:
+          privileged: true
