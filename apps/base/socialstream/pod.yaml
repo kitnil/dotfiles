@@ -70,6 +70,8 @@ spec:
       name: x11-unix-socket
     - mountPath: /dev/dri
       name: dev-dri
+    - mountPath: /dev/fuse
+      name: dev-fuse
   volumes:
   - emptyDir:
       medium: Memory
@@ -87,3 +89,7 @@ spec:
     hostPath:
       path: /dev/dri
       type: Directory
+  - name: dev-fuse
+    hostPath:
+      path: /dev/fuse
+      type: CharDevice
