@@ -11,7 +11,7 @@ spec:
   restartPolicy: Never
   automountServiceAccountToken: false
   containers:
-  - image: harbor.home.wugi.info/library/socialstream:0.1.45
+  - image: harbor.home.wugi.info/library/socialstream:0.1.45-1
     name: socialstream
     env:
     - name: container
