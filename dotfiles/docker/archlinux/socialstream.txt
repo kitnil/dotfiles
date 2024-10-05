@@ -1,3 +1,5 @@
+      pacman -S noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra
+
       cat > /etc/systemd/system/socialstream.service<<'EOF'
       [Unit]
       Description=Socialstream
