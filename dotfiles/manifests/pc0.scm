@@ -18,5 +18,6 @@
 	        "emacs.scm"
                 "obs.scm"
                 "deprecated.scm"
-                "telegram.scm"))
+                "telegram.scm"
+                "nonguix.scm"))
          (list manifest-wm)))
