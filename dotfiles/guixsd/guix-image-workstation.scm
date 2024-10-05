@@ -47,6 +47,7 @@
                                 ,(plain-file "tmp-file.txt"
                                              "the content of
                                                ~/.config/test.conf"))))
+                   (service home-files-service-type)
                    (simple-service 'sway-config
                                    home-files-service-type
                                    (list `(".config/sway/config" ,(local-file (string-append %project-directory "/dot_config/sway/pc0.config")))
