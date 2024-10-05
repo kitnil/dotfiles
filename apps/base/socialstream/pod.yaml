@@ -11,7 +11,7 @@ spec:
   restartPolicy: Never
   automountServiceAccountToken: false
   containers:
-  - image: harbor.home.wugi.info/library/socialstream:latest
+  - image: harbor.home.wugi.info/library/socialstream:0.1.45
     name: socialstream
     env:
     - name: container
@@ -22,25 +22,6 @@ spec:
     - |
       set -o nounset -o errexit -o pipefail -o xtrace
 
-      cat > /etc/systemd/system/socialstream.service<<'EOF'
-      [Unit]
-      Description=Socialstream
-
-      [Service]
-      Type=simple
-      # Specify the group you'd like to grant access to seatd
-      ExecStart=/home/oleg/squashfs-root/AppRun
-      Restart=no
-      RestartSec=1
-      User=oleg
-      Group=oleg
-      Environment="WAYLAND_DISPLAY=wayland-1"
-      Environment="XDG_RUNTIME_DIR=/run/user/1000"
-      Environment="DISPLAY=:0"
-
-      [Install]
-      WantedBy=multi-user.target
-      EOF
       systemctl enable socialstream.service
 
       rm -vf /usr/lib/systemd/system/systemd-networkd*
