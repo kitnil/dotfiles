@@ -31,6 +31,9 @@
              (gnu packages admin)
              (guix gexp))
 
+(add-to-load-path "/home/oleg/src/github.com/abcdw/rde")
+(use-modules (rde home services wm))
+
 (define oleg-home
   (home-environment
    (packages (append (list htop)
@@ -48,10 +51,6 @@
                                              "the content of
                                                ~/.config/test.conf"))))
                    (service home-files-service-type)
-                   (simple-service 'sway-config
-                                   home-files-service-type
-                                   (list `(".config/sway/config" ,(local-file (string-append %project-directory "/dot_config/sway/pc0.config")))
-                                         `(".xkb/symbols/custom" ,(local-file (string-append %project-directory "/dot_xkb/symbols/custom")))))
                    (service home-sway-service-type)))))
 
 (define container-mingetty-service-type
