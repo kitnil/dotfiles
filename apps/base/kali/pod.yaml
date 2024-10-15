@@ -10,6 +10,7 @@ metadata:
 spec:
   restartPolicy: Never
   automountServiceAccountToken: false
+  hostNetwork: true
   containers:
   - image: kalilinux/kali-rolling
     name: kali
