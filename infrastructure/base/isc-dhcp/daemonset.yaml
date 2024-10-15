@@ -23,25 +23,19 @@ spec:
                 values:
                 - "true"
       containers:
-      - image: nixery.dev/shell/coreutils/util-linux/dhcpcd
+      - image: docker-registry.wugi.info/library/isc-dhcp:5362faa6
         name: dhcpd
         command:
-        - /sbin/dhcpcd
+        - /sbin/dhcpd
         args:
-        - --config
+        - -c
         - /etc/dhcpd.conf
         volumeMounts:
         - mountPath: /etc/dhcpd.conf
           subPath: dhcpd.conf
           readOnly: true
           name: config
-        - mountPath: /var/db/dhcpcd
-          name: var-db-dhcpcd
       volumes:
       - name: config
         configMap:
           name: isc-dhcp-configuration
-      - emptyDir:
-          medium: Memory
-          sizeLimit: 8M
-        name: var-db-dhcpcd
