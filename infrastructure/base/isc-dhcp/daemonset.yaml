@@ -24,7 +24,7 @@ spec:
                 - "true"
       hostNetwork: true
       containers:
-      - image: harbor.home.wugi.info/library/isc-dhcp:2c6e6976
+      - image: harbor.home.wugi.info/library/isc-dhcp:0633b40c
         name: guix
         volumeMounts:
         - mountPath: /etc/dhcpd.conf
