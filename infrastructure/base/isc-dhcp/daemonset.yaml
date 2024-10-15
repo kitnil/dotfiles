@@ -22,7 +22,6 @@ spec:
                 operator: In
                 values:
                 - "true"
-      hostNetwork: true
       containers:
       - image: nixery.dev/shell/coreutils/util-linux/dhcpcd
         name: dhcpd
