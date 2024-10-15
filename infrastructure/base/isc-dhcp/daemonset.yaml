@@ -27,9 +27,10 @@ spec:
       - image: nixery.dev/shell/coreutils/util-linux/dhcpcd
         name: dhcpd
         command:
-        - /bin/sleep
+        - /sbin/dhcpd
         args:
-        - infinity
+        - --config
+        - /etc/dhcpd.conf
         volumeMounts:
         - mountPath: /etc/dhcpd.conf
           subPath: dhcpd.conf
