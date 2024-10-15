@@ -35,4 +35,7 @@
   (services (list (syslog-service)
                   (service special-files-service-type
                            `(("/bin/sh" ,(file-append bash "/bin/sh"))
-                             ("/usr/bin/env" ,(file-append coreutils "/bin/env")))))))
+                             ("/usr/bin/env" ,(file-append coreutils "/bin/env"))))
+                  (service dhcpd-service-type
+                           (dhcpd-configuration
+                            (config-file (local-file "etc/dhcpd.conf")))))))
