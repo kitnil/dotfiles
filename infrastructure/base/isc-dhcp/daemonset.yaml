@@ -27,7 +27,7 @@ spec:
       - image: nixery.dev/shell/coreutils/util-linux/dhcpcd
         name: dhcpd
         command:
-        - /bin/dhcpd
+        - /sbin/dhcpd
         args:
         - -c
         - /etc/dhcpd.conf
