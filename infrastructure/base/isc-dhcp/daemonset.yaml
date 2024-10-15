@@ -35,7 +35,13 @@ spec:
           subPath: dhcpd.conf
           readOnly: true
           name: config
+        - mountPath: /var/db/dhcpcd
+          name: var-db-dhcpcd
       volumes:
       - name: config
         configMap:
           name: isc-dhcp-configuration
+      - emptyDir:
+          medium: Memory
+          sizeLimit: 8M
+        name: var-db-dhcpcd
