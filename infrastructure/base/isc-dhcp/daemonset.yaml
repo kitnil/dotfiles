@@ -22,6 +22,7 @@ spec:
                 operator: In
                 values:
                 - "true"
+      hostNetwork: true
       containers:
       - image: harbor.home.wugi.info/library/isc-dhcp:035e45d6
         name: guix
