@@ -23,5 +23,5 @@ spec:
                 values:
                 - "true"
       containers:
-      - image: harbor.home.wugi.info/library/isc-dhcp:c973de4c
+      - image: harbor.home.wugi.info/library/isc-dhcp:35d7a0fd
         name: guix
