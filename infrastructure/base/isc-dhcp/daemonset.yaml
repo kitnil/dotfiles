@@ -23,20 +23,5 @@ spec:
                 values:
                 - "true"
       containers:
-      - image: docker-registry.wugi.info/library/isc-dhcp:5362faa6
-        name: dhcpd
-        command:
-        - /sbin/dhcpd
-        args:
-        - "-4" # version
-        - -cf
-        - /etc/dhcpd.conf
-        volumeMounts:
-        - mountPath: /etc/dhcpd.conf
-          subPath: dhcpd.conf
-          readOnly: true
-          name: config
-      volumes:
-      - name: config
-        configMap:
-          name: isc-dhcp-configuration
+      - image: harbor.home.wugi.info/library/isc-dhcp:7b1725c2
+        name: guix
