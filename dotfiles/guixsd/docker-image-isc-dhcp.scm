@@ -2,6 +2,8 @@
 ;; setup, so it has barely any services at all.
 
 (use-modules (gnu)
+             (gnu packages base)
+             (gnu packages bash)
              (gnu services networking))
 
 (operating-system
@@ -30,4 +32,7 @@
                         (mount-point "/")
                         (type "does-not-matter"))))
 
-  (services (list (syslog-service))))
+  (services (list (syslog-service)
+                  (service special-files-service-type
+                           `(("/bin/sh" ,(file-append bash "/bin/sh"))
+                             ("/usr/bin/env" ,(file-append coreutils "/bin/env")))))))
