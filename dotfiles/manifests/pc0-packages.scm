@@ -46,4 +46,5 @@
         "looking-glass-client"
         "obs-looking-glass"
         "ungoogled-chromium"
-        "icecat"))
+        "icecat"
+        "netcat-openbsd"))
