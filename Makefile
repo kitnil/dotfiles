@@ -309,5 +309,13 @@ haproxy:
 	container=$$(guix pack -f docker --max-layers=100 -S /sbin=sbin haproxy)
 	skopeo copy --insecure-policy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
 
+container_registry=docker-registry.wugi.info
+.ONESHELL:
+isc-dhcp:
+	set -o nounset -o errexit -o pipefail -o xtrace
+	commit_8=$$(git rev-parse HEAD | cut -c -8)
+	container=$$(guix pack -f docker --max-layers=100 -S /sbin=sbin isc-dhcp)
+	skopeo copy --insecure-policy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
+
 .PHONY: all
 all: dotfiles/scripts/nix-ssh-known-hosts-to-file.scm
