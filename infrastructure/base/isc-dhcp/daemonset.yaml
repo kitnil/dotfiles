@@ -25,7 +25,7 @@ spec:
       hostNetwork: true
       containers:
       - image: nixery.dev/shell/coreutils/util-linux/dhcpcd
-        name: redsocks
+        name: dhcpd
         command:
         - /bin/dhcpd
         args:
