@@ -26,3 +26,12 @@ spec:
       containers:
       - image: harbor.home.wugi.info/library/isc-dhcp:035e45d6
         name: guix
+        volumeMounts:
+        - mountPath: /etc/dhcpd.conf
+          subPath: dhcpd.conf
+          readOnly: true
+          name: config
+      volumes:
+      - name: config
+        configMap:
+          name: isc-dhcp-configuration
