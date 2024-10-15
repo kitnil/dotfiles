@@ -28,7 +28,8 @@ spec:
         command:
         - /sbin/dhcpd
         args:
-        - -c
+        - -4 # version
+        - -cf
         - /etc/dhcpd.conf
         volumeMounts:
         - mountPath: /etc/dhcpd.conf
