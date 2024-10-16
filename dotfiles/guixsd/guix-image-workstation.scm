@@ -22,7 +22,8 @@
 (use-modules (manifests wm)
              (services desktop)
              (home config)
-             (home services desktop))
+             (home services desktop)
+             (home services terminals))
 
 (use-modules (gnu home)
              (gnu home services)
@@ -56,7 +57,8 @@
                                    home-files-service-type
                                    (list `(".config/sway/config" ,(local-file (string-append %project-directory "/dot_config/sway/pc0.config")))
                                          `(".xkb/symbols/custom" ,(local-file (string-append %project-directory "/dot_xkb/symbols/custom")))))
-                   (service home-sway-service-type)))))
+                   (service home-sway-service-type)
+                   home-alacritty-service))))
 
 (define container-mingetty-service-type
   (service-type (name 'mingetty)
