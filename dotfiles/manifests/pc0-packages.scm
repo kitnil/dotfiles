@@ -47,4 +47,5 @@
         "remmina"
         "looking-glass-client"
         "obs-looking-glass"
-        "netcat-openbsd"))
+        "netcat-openbsd"
+        "openssh"))
