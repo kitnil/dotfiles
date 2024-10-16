@@ -30,6 +30,10 @@ spec:
       name: dev-tty2
     - mountPath: /dev/fuse
       name: dev-fuse
+    - mountPath: /etc/nsswitch.conf
+      name: nsswitch
+    - mountPath: /etc/services
+      name: services
   volumes:
   - name: dev-dri
     hostPath:
@@ -47,3 +51,11 @@ spec:
     hostPath:
       path: /dev/fuse
       type: CharDevice
+  - name: nsswitch
+    hostPath:
+      path: /etc/nsswitch.conf
+      type: File
+  - name: services
+    hostPath:
+      path: /etc/services
+      type: File
