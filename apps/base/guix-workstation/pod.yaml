@@ -7,6 +7,8 @@ metadata:
     # immutable field is changed, forcing the Pod to run every time the
     # container image tag changes.
     kustomize.toolkit.fluxcd.io/force: enabled
+  labels:
+    app.kubernetes.io/name: guix-workstation
 spec:
   restartPolicy: Never
   automountServiceAccountToken: false
