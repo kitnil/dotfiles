@@ -280,24 +280,28 @@ namespaces = [ ]
                                   (virtlog-configuration
                                    (max-clients 1000))))
                     (modify-services
-                     (modify-services %base-services
-                                      (guix-service-type config =>
-                                                         (guix-configuration
-                                                          (authorized-keys (append (list (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/guix.wugi.info.pub")
-                                                                                         (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/vm1.wugi.info.pub")
-                                                                                         (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/vm2.wugi.info.pub")
-                                                                                         (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/mirror.brielmaier.net.pub")
-                                                                                         (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/substitutes.nonguix.org.pub")
-                                                                                         (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/bordeaux.guix.gnu.org.pub"))
-                                                                                   %default-authorized-guix-keys))
-                                                          (substitute-urls '("https://guix.wugi.info"
-                                                                             "https://bordeaux.guix.gnu.org"
-                                                                             "https://substitutes.nonguix.org"))))
-                                      ;; (sysctl-service-type _ =>
-                                      ;;                      (sysctl-configuration
-                                      ;;                       (settings (append '(("net.ipv4.ip_forward" . "1")
-                                      ;;                                           ("net.ipv4.conf.all.rp_filter" . "0")
-                                      ;;                                           ("net.ipv4.conf.default.rp_filter" . "0"))
-                                      ;;                                         %default-sysctl-settings))))
-                                      )
-))))
+                        (filter (lambda (service)
+                                  (let ((value (service-value service)))
+                                    (not (and (mingetty-configuration? value)
+                                              (string= (mingetty-configuration-tty value)
+                                                       "tty2")))))
+                                (modify-services %base-services
+                                  (guix-service-type config =>
+                                                     (guix-configuration
+                                                      (authorized-keys (append (list (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/guix.wugi.info.pub")
+                                                                                     (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/vm1.wugi.info.pub")
+                                                                                     (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/vm2.wugi.info.pub")
+                                                                                     (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/mirror.brielmaier.net.pub")
+                                                                                     (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/substitutes.nonguix.org.pub")
+                                                                                     (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/bordeaux.guix.gnu.org.pub"))
+                                                                               %default-authorized-guix-keys))
+                                                      (substitute-urls '("https://guix.wugi.info"
+                                                                         "https://bordeaux.guix.gnu.org"
+                                                                         "https://substitutes.nonguix.org"))))
+                                  ;; (sysctl-service-type _ =>
+                                  ;;                      (sysctl-configuration
+                                  ;;                       (settings (append '(("net.ipv4.ip_forward" . "1")
+                                  ;;                                           ("net.ipv4.conf.all.rp_filter" . "0")
+                                  ;;                                           ("net.ipv4.conf.default.rp_filter" . "0"))
+                                  ;;                                         %default-sysctl-settings))))
+                                  ))))))
