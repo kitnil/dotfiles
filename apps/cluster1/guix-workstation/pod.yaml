@@ -10,3 +10,13 @@ spec:
     operator: Equal
     value: 'true'
     effect: NoSchedule
+  containers:
+  - name: guix-workstation
+    volumeMounts:
+    - mountPath: /home/oleg/.ssh
+      name: home-oleg-ssh
+  volumes:
+  - hostPath:
+      path: /home/oleg/.ssh
+      type: Directory
+    name: home-oleg-ssh
