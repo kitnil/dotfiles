@@ -27,6 +27,7 @@
 (use-modules (gnu home)
              (gnu home services)
              (gnu home services shells)
+             (gnu home services sound)
              (gnu services)
              (gnu packages admin)
              (guix gexp))
@@ -38,6 +39,7 @@
    (packages (append (list alacritty firefox htop)
                      packages-wm))
    (services (list (service home-dbus-service-type)
+                   (service home-pipewire-service-type)
                    (service home-bash-service-type
                             (home-bash-configuration
                              (guix-defaults? #t)
