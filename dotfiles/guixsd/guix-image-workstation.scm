@@ -33,11 +33,12 @@
              (gnu packages admin)
              (guix gexp))
 
-(use-modules (nongnu packages mozilla))
+(use-modules (nongnu packages chrome)
+             (nongnu packages mozilla))
 
 (define oleg-home
   (home-environment
-   (packages (append (list alacritty firefox htop openssh pavucontrol)
+   (packages (append (list alacritty google-chrome-stable firefox htop openssh pavucontrol)
                      packages-wm))
    (services (list (service home-dbus-service-type)
                    (service home-pipewire-service-type)
