@@ -16,7 +16,7 @@
              (gnu packages admin)
              (guix gexp))
 
-(use-package-modules screen)
+(use-package-modules screen terminals)
 (use-service-modules base desktop dbus shepherd)
 
 (use-modules (manifests wm)
@@ -35,7 +35,7 @@
 
 (define oleg-home
   (home-environment
-   (packages (append (list firefox htop)
+   (packages (append (list alacritty firefox htop)
                      packages-wm))
    (services (list (service home-dbus-service-type)
                    (service home-bash-service-type
