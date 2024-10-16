@@ -77,6 +77,11 @@ spec:
       name: services
     - mountPath: /dev/shm
       name: shm
+    lifecycle:
+       preStop:
+         exec:
+           command:
+           - halt
   volumes:
   - name: dev-dri
     hostPath:
