@@ -24,7 +24,7 @@
              (srfi srfi-1))
 
 (use-package-modules pulseaudio screen ssh terminals)
-(use-service-modules base desktop dbus shepherd)
+(use-service-modules avahi base desktop dbus shepherd)
 
 (use-modules (services desktop)
              (home config)
@@ -128,7 +128,8 @@ program.")))
                           (elogind-service)
                           seatd-service
                           (service container-mingetty-service-type
-                                   (mingetty-configuration (tty "tty2"))))
+                                   (mingetty-configuration (tty "tty2")))
+                          (service avahi-service-type))
                     (modify-services %base-services
                       (guix-service-type config =>
                                          (guix-configuration
