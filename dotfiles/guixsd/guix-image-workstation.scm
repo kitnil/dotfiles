@@ -28,6 +28,7 @@
 
 (use-modules (services desktop)
              (home config)
+             (home services audio)
              (home services desktop)
              (home services terminals))
 
@@ -69,7 +70,10 @@
                                    (list `(".config/sway/config" ,(local-file (string-append %project-directory "/dot_config/sway/pc0.config")))
                                          `(".xkb/symbols/custom" ,(local-file (string-append %project-directory "/dot_xkb/symbols/custom")))))
                    (service home-sway-service-type)
-                   home-alacritty-service))))
+                   home-alacritty-service
+                   (service home-scream-service-type
+                            (scream-configuration
+                             (interface "eth0")))))))
 
 (define container-mingetty-service-type
   (service-type (name 'mingetty)
