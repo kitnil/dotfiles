@@ -6,40 +6,50 @@
 ;; docker run --network=host --security-opt seccomp=unconfined --detach --name tor --network=host example.org:5000/tor
 ;; docker exec --detach tor /gnu/store/…-tor-0.4.6.10/bin/tor -f /gnu/store/…-torrc
 
-(use-modules (gnu)
-             (gnu home)
-             (gnu home services)
-             (gnu home services desktop)
+(use-modules (gnu home services desktop)
              (gnu home services shells)
-             (gnu services)
-             (gnu services guix)
+             (gnu home services shells)
+             (gnu home services sound)
+             (gnu home services)
+             (gnu home)
              (gnu packages admin)
-             (guix gexp))
+             (gnu packages)
+             (gnu services guix)
+             (gnu services)
+             (gnu)
+             (guix gexp)
+             (guix packages)
+             (guix profiles)
+             (guix ui)
+             (srfi srfi-1))
 
 (use-package-modules pulseaudio screen ssh terminals)
 (use-service-modules base desktop dbus shepherd)
 
-(use-modules (manifests wm)
-             (services desktop)
+(use-modules (services desktop)
              (home config)
              (home services desktop)
              (home services terminals))
 
-(use-modules (gnu home)
-             (gnu home services)
-             (gnu home services shells)
-             (gnu home services sound)
-             (gnu services)
-             (gnu packages admin)
-             (guix gexp))
-
 (use-modules (nongnu packages chrome)
              (nongnu packages mozilla))
 
+(define (manifest->packages manifest)
+  "Return the list of packages in MANIFEST."
+  (filter-map (lambda (entry)
+                (let ((item (manifest-entry-item entry)))
+                  (if (package? item) item #f)))
+              (manifest-entries manifest)))
+
+(define (packages-from-manifest manifest)
+  "Return the list of packages in loaded MANIFEST."
+  (let* ((user-module (make-user-module '((guix profiles) (gnu))))
+         (manifest    (load* manifest user-module)))
+    (manifest->packages manifest)))
+
 (define oleg-home
   (home-environment
-   (packages (append (list alacritty google-chrome-stable firefox htop openssh pavucontrol)
-                     packages-wm))
+   (packages (packages-from-manifest "/home/oleg/.local/share/chezmoi/dotfiles/manifests/pc0.scm"))
    (services (list (service home-dbus-service-type)
                    (service home-pipewire-service-type)
                    (service home-bash-service-type

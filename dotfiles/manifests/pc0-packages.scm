@@ -4,6 +4,8 @@
 ;; capture the channels being used, as returned by "guix describe".
 ;; See the "Replicating Guix" section in the manual.
 
+(use-modules (gnu packages))
+
 (specifications->manifest
   (list "socat"
         "mtr"
@@ -45,6 +47,4 @@
         "remmina"
         "looking-glass-client"
         "obs-looking-glass"
-        "ungoogled-chromium"
-        "icecat"
         "netcat-openbsd"))

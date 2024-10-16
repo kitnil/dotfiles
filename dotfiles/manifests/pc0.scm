@@ -15,7 +15,7 @@
               '("pc0-packages.scm"
                 "desktop.scm"
                 "dotfiles.scm"
-	        "emacs.scm"
+	        ;; "emacs.scm"
                 "obs.scm"
                 "deprecated.scm"
                 "telegram.scm"

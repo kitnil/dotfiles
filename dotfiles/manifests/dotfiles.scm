@@ -1,7 +1,8 @@
 (use-modules (packages admin)
              (packages containers)
              (packages kubernetes)
-             (packages networking))
+             (packages networking)
+             (nongnu packages k8s))
 
 (packages->manifest
  (list plumber
