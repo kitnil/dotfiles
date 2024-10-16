@@ -16,7 +16,7 @@
              (gnu packages admin)
              (guix gexp))
 
-(use-package-modules screen terminals)
+(use-package-modules pulseaudio screen ssh terminals)
 (use-service-modules base desktop dbus shepherd)
 
 (use-modules (manifests wm)
@@ -36,7 +36,7 @@
 
 (define oleg-home
   (home-environment
-   (packages (append (list alacritty firefox htop)
+   (packages (append (list alacritty firefox htop openssh pavucontrol)
                      packages-wm))
    (services (list (service home-dbus-service-type)
                    (service home-pipewire-service-type)
