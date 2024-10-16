@@ -71,9 +71,7 @@
                                          `(".xkb/symbols/custom" ,(local-file (string-append %project-directory "/dot_xkb/symbols/custom")))))
                    (service home-sway-service-type)
                    home-alacritty-service
-                   (service home-scream-service-type
-                            (scream-configuration
-                             (interface "eth0")))))))
+                   (service home-scream-service-type)))))
 
 (define container-mingetty-service-type
   (service-type (name 'mingetty)
