@@ -77,6 +77,9 @@ spec:
       name: services
     - mountPath: /dev/shm
       name: shm
+    - mountPath: /mnt/home/oleg
+      name: home-oleg
+      readOnly: true
     lifecycle:
        preStop:
          exec:
@@ -111,3 +114,7 @@ spec:
     emptyDir:
       medium: Memory
       sizeLimit: 1Gi
+  - hostPath:
+      path: /home/oleg
+      type: Directory
+    name: home-oleg
