@@ -15,8 +15,14 @@ spec:
     volumeMounts:
     - mountPath: /home/oleg/.ssh
       name: home-oleg-ssh
+    - mountPath: /home/oleg/.config/google-chrome
+      name: home-oleg-config-google-chrome
   volumes:
   - hostPath:
       path: /home/oleg/.ssh
       type: Directory
     name: home-oleg-ssh
+  - hostPath:
+      path: /home/oleg/.config/google-chrome
+      type: Directory
+    name: home-oleg-config-google-chrome
