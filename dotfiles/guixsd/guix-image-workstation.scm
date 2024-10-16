@@ -31,9 +31,11 @@
              (gnu packages admin)
              (guix gexp))
 
+(use-modules (nongnu packages mozilla))
+
 (define oleg-home
   (home-environment
-   (packages (append (list htop)
+   (packages (append (list firefox htop)
                      packages-wm))
    (services (list (service home-dbus-service-type)
                    (service home-bash-service-type
