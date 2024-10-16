@@ -58,6 +58,7 @@ spec:
         - BPF
         - CHECKPOINT_RESTORE
       privileged: true
+      procMount: Unmasked
     tty: true
     volumeMounts:
     - mountPath: /dev/dri
