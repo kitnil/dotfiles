@@ -13,6 +13,10 @@ spec:
   containers:
   - image: harbor.home.wugi.info/library/guix-image-workstation:latest
     name: guix-workstation
+    ports:
+    - containerPort: 5353
+      name: avahi
+      protocol: UDP
     securityContext:
       capabilities:
         add:
