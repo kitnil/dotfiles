@@ -12,6 +12,7 @@ metadata:
 spec:
   restartPolicy: Never
   automountServiceAccountToken: false
+  terminationGracePeriodSeconds: 600
   containers:
   - image: harbor.home.wugi.info/library/guix-image-workstation:latest
     name: guix-workstation
@@ -69,7 +70,6 @@ spec:
       privileged: true
       # allowPrivilegeEscalation: true
     tty: true
-    terminationGracePeriodSeconds: 600
     volumeMounts:
     - mountPath: /dev/dri
       name: dev-dri
