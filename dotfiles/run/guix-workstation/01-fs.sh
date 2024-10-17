@@ -24,3 +24,13 @@ mkdir -p /home/oleg/.local/share/remmina
 chown oleg: /home/oleg/.local/share /home/oleg/.local/share/remmina
 mount --bind /mnt/home/oleg/.local/share/remmina /home/oleg/.local/share/remmina
 mount -o rw,remount /home/oleg/.local/share/remmina
+
+mkdir -p /home/oleg/.password-store
+chown oleg: /home/oleg/.local/share /home/oleg/.password-store
+mount --bind /mnt/home/oleg/.password-store /home/oleg/.password-store
+mount -o rw,remount /home/oleg/.password-store
+
+mkdir -p /home/oleg/.gnupg
+chown oleg: /home/oleg/.local/share /home/oleg/.gnupg
+mount --bind /mnt/home/oleg/.gnupg /home/oleg/.gnupg
+mount -o rw,remount /home/oleg/.gnupg
