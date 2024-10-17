@@ -40,7 +40,7 @@
                                           "/bin/scream")
                            #$@(if interface `("-i" ,interface) '())
                            "-u"
-                           #$@(if port `("-p" (number->string port)) '()))))
+                           #$@(if port `("-p" (number->string ,port)) '()))))
            (stop #~(make-kill-destructor))))))
 
 (define home-scream-service-type
