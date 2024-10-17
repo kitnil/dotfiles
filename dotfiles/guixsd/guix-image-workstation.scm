@@ -151,10 +151,13 @@ allow-preset-passphrase"))))
                    (simple-service 'bin-wl-mirror
                                    home-files-service-type
                                    (map (lambda (wayland-output)
-                                          `(,(string-append "bin/" wayland-output)
-                                            ,(program-file wayland-output
-                                                           #~(execl #$(file-append wl-mirror "/bin/wl-mirror")
-                                                                    #$wayland-output))))
+                                          (let ((file-name (string-downcase wayland-output)))
+                                            `(,(string-append "bin/" file-name)
+                                              ,(program-file file-name
+                                                             #~(execl #$(file-append wl-mirror "/bin/wl-mirror")
+                                                                      "wl-mirror"
+                                                                      "--scaling" "exact"
+                                                                      #$wayland-output)))))
                                         '("HEADLESS-1"
                                           "HEADLESS-2"
                                           "HEADLESS-3"
