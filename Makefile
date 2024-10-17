@@ -324,6 +324,7 @@ guix-image-workstation:
 	commit_8=$$(git rev-parse HEAD | cut -c -8)
 	container=$$(~/src/git.savannah.gnu.org/git/guix.32bd53c/pre-inst-env guix system image --load-path=/home/oleg/src/cgit.duckdns.org/guix/guix-wigust/guix --load-path=/home/oleg/src/gitlab.com/nonguix/nonguix --load-path=/home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules --max-layers=100 -t docker --network ~/.local/share/chezmoi/dotfiles/guixsd/guix-image-workstation.scm)
 	skopeo copy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
+	echo docker://$(container_registry)/library/$@:$$commit_8
 
 .PHONY: all
 all: dotfiles/scripts/nix-ssh-known-hosts-to-file.scm
