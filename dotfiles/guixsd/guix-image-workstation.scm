@@ -122,7 +122,15 @@ allow-preset-passphrase"))))
                                                                      (execl #$(file-append firefox "/bin/firefox")
                                                                             "firefox"
                                                                             "--profile"
-                                                                            (string-append home "/.mozilla/firefox/development"))))))))
+                                                                            (string-append home "/.mozilla/firefox/development"))))))
+                                         `("bin/firefox-profile-twitch"
+                                           ,(program-file "firefox-profile-twitch"
+                                                          #~(and=> (getenv "HOME")
+                                                                   (lambda (home)
+                                                                     (execl #$(file-append firefox "/bin/firefox")
+                                                                            "firefox"
+                                                                            "--profile"
+                                                                            (string-append home "/.mozilla/firefox/twitch"))))))))
                    (simple-service 'bin-manual-scripts
                                    home-files-service-type
                                    (list `("bin/manual-scripts-01-fs.sh"
