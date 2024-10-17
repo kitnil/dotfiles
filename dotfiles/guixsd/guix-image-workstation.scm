@@ -23,7 +23,7 @@
              (guix ui)
              (srfi srfi-1))
 
-(use-package-modules pulseaudio ssh terminals)
+(use-package-modules gnupg pulseaudio ssh terminals)
 (use-service-modules avahi base desktop dbus shepherd)
 
 (use-modules (services desktop)
@@ -96,9 +96,9 @@
                                    (list `(".gnupg/gpg.conf"
                                            ,(local-file (string-append %project-directory "/private_dot_gnupg/gpg.conf")))
                                          `(".gnupg/gpg-agent.conf"
-                                           ,(plain-file "gpg-agent.conf" "\
+                                           ,(mixed-text-file "gpg-agent.conf" "\
 no-grab
-pinentry-program /home/oleg/.guix-home/profile/bin/pinentry
+pinentry-program " (file-append pinentry "/bin/pinentry") "
 pinentry-timeout 5
 default-cache-ttl 172800
 default-cache-ttl-ssh 172800
