@@ -169,7 +169,7 @@ allow-preset-passphrase"))))
                                           "HEADLESS-8")))
                    (simple-service 'bin-bemenu-scripts
                                    home-files-service-type
-                                   (list `("bemenu-passmenu"
+                                   (list `("bin/bemenu-passmenu"
                                            ,(local-file (string-append %project-directory "/dot_local/bin/executable_passmenu")
                                                         #:recursive? #t))))
                    home-bash-service
