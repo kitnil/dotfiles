@@ -69,6 +69,7 @@ spec:
       privileged: true
       # allowPrivilegeEscalation: true
     tty: true
+    terminationGracePeriodSeconds: 600
     volumeMounts:
     - mountPath: /dev/dri
       name: dev-dri
