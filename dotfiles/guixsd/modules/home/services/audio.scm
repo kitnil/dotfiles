@@ -24,18 +24,24 @@
   scream-configuration?
   (scream scream-configuration-scream       ;<package>
           (default scream))
-  (interface scream-configuration-interface)) ;string
+  (interface scream-configuration-interface ;string
+             (default #f))
+  (port scream-configuration-port ;string
+        (default #f)))
 
 (define (home-scream-shepherd-service config)
-  (list (shepherd-service
-         (documentation "Scream audio service.")
-         (provision (list 'scream))
-         (start #~(make-forkexec-constructor
-                   (list #$(file-append (scream-configuration-scream config)
-                                        "/bin/scream")
-                         "-i" #$(scream-configuration-interface config)
-                         "-u" "-p" "16400")))
-         (stop #~(make-kill-destructor)))))
+  (let ((interface (scream-configuration-interface config))
+        (port (scream-configuration-port config)))
+    (list (shepherd-service
+           (documentation "Scream audio service.")
+           (provision (list 'scream))
+           (start #~(make-forkexec-constructor
+                     (list #$(file-append (scream-configuration-scream config)
+                                          "/bin/scream")
+                           #$@(if interface `("-i" ,interface) '())
+                           "-u"
+                           #$@(if port `("-p" (number->string port)) '()))))
+           (stop #~(make-kill-destructor))))))
 
 (define home-scream-service-type
   (service-type (name 'home-scream)
