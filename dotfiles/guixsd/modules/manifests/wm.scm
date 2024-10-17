@@ -8,6 +8,7 @@
   #:use-module (gnu packages tor-browsers)
   #:use-module (gnu packages wm)
   #:use-module (gnu packages xdisorg)
+  #:use-module (guix profiles)
   #:export (terminals
             wm
             i3
