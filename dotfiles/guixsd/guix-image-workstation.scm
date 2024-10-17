@@ -91,6 +91,20 @@
                    (service home-scream-service-type
                             (scream-configuration
                              (port 16400)))
+                   (simple-service 'gnupg-config
+                                   home-files-service-type
+                                   (list `(".gnupg/gpg.conf"
+                                           ,(local-file (string-append %project-directory "/private_dot_gnupg/gpg.conf")))
+                                         `(".gnupg/gpg-agent.conf"
+                                           ,(plain-file "gpg-agent.conf" "\
+no-grab
+pinentry-program /home/oleg/.guix-home/profile/bin/pinentry
+pinentry-timeout 5
+default-cache-ttl 172800
+default-cache-ttl-ssh 172800
+max-cache-ttl 172800
+max-cache-ttl-ssh 172800
+allow-preset-passphrase"))))
                    home-bash-service
                    home-mime-service
                    home-direnv-service
@@ -114,7 +128,6 @@
                    home-bind-utils-service
                    ;; home-shellcheck-service
                    home-bin-service
-                   home-gnupg-service
                    home-ghci-service
                    home-groovy-service
                    home-guile-service
