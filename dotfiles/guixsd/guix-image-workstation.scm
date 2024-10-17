@@ -23,7 +23,7 @@
              (guix ui)
              (srfi srfi-1))
 
-(use-package-modules pulseaudio screen ssh terminals)
+(use-package-modules pulseaudio ssh terminals)
 (use-service-modules avahi base desktop dbus shepherd)
 
 (use-modules (services desktop)
@@ -176,7 +176,7 @@ program.")))
                         (type "does-not-matter"))))
 
   ;; Globally-installed packages.
-  (packages (append (list screen)
+  (packages (append (list openssh)
                     %base-packages))
 
   (services (append (list (service guix-home-service-type
