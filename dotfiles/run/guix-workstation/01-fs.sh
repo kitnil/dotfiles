@@ -34,3 +34,8 @@ mkdir -p /home/oleg/.gnupg
 chown oleg: /home/oleg/.local/share /home/oleg/.gnupg
 mount --bind /mnt/home/oleg/.gnupg /home/oleg/.gnupg
 mount -o rw,remount /home/oleg/.gnupg
+
+mkdir -p /home/oleg/.local/share/TelegramDesktop
+chown oleg: /home/oleg/.local/share /home/oleg/.local/share/TelegramDesktop
+mount --bind /mnt/home/oleg/.local/share/TelegramDesktop /home/oleg/.local/share/TelegramDesktop
+mount -o rw,remount /home/oleg/.local/share/TelegramDesktop
