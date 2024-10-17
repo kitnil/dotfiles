@@ -19,6 +19,9 @@ spec:
     - containerPort: 5353
       name: avahi
       protocol: UDP
+    - containerPort: 16400
+      name: scream
+      protocol: UDP
     securityContext:
       capabilities:
         add:
