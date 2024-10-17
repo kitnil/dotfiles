@@ -20,6 +20,7 @@
              (guix gexp)
              (guix packages)
              (guix profiles)
+             (guix inferior)
              (guix ui)
              (srfi srfi-1))
 
@@ -62,7 +63,7 @@
   "Return the list of packages in MANIFEST."
   (filter-map (lambda (entry)
                 (let ((item (manifest-entry-item entry)))
-                  (if (package? item) item #f)))
+                  (if (or (package? item) (inferior-package? item)) item #f)))
               (manifest-entries manifest)))
 
 (define (packages-from-manifest manifest)
