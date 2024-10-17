@@ -93,7 +93,6 @@
                           "ffmpeg-software"
                           "ffmpeg-youtube"
                           "fileshelter"
-                          "firefox"
                           "firefox-guile"
                           "firefox-nix"
                           "firefox-esr"
