@@ -7,4 +7,4 @@ patchesStrategicMerge:
 - pod.yaml
 images:
 - name: harbor.home.wugi.info/library/guix-image-workstation
-  newTag: c738a69a
+  newTag: 606ced5d
