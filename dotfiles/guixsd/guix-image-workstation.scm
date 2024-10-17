@@ -30,6 +30,7 @@
              (home config)
              (home services audio)
              (home services desktop)
+             (home services shell)
              (home services terminals))
 
 (use-modules (nongnu packages chrome)
@@ -53,11 +54,6 @@
    (packages (packages-from-manifest "/home/oleg/.local/share/chezmoi/dotfiles/manifests/pc0.scm"))
    (services (list (service home-dbus-service-type)
                    (service home-pipewire-service-type)
-                   (service home-bash-service-type
-                            (home-bash-configuration
-                             (guix-defaults? #t)
-                             (bash-profile (list (plain-file "bash-profile" "\
-     export HISTFILE=$XDG_CACHE_HOME/.bash_history")))))
                    (simple-service 'test-config
                         home-xdg-configuration-files-service-type
                         (list `("test.conf"
@@ -73,7 +69,8 @@
                    home-alacritty-service
                    (service home-scream-service-type
                             (scream-configuration
-                             (port 16400)))))))
+                             (port 16400)))
+                   home-bash-service))))
 
 (define container-mingetty-service-type
   (service-type (name 'mingetty)
