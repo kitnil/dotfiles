@@ -23,7 +23,7 @@
              (guix ui)
              (srfi srfi-1))
 
-(use-package-modules gnupg pulseaudio ssh terminals)
+(use-package-modules gnupg pulseaudio ssh terminals wm)
 (use-service-modules avahi base desktop dbus shepherd)
 
 (use-modules (services desktop)
@@ -138,6 +138,21 @@ allow-preset-passphrase"))))
                                                           #~(execl "/run/setuid-programs/sudo"
                                                                    "sudo"
                                                                    #$(local-file (string-append %project-directory "/dotfiles/run/guix-workstation/03-firefox-twitch-namespace.sh")))))))
+                   (simple-service 'bin-wl-mirror
+                                   home-files-service-type
+                                   (map (lambda (wayland-output)
+                                          `(,(string-append "bin/" wayland-output)
+                                            ,(program-file wayland-output
+                                                           #~(execl #$(file-append wl-mirror "/bin/wl-mirror")
+                                                                    #$wayland-output))))
+                                        '("HEADLESS-1"
+                                          "HEADLESS-2"
+                                          "HEADLESS-3"
+                                          "HEADLESS-4"
+                                          "HEADLESS-5"
+                                          "HEADLESS-6"
+                                          "HEADLESS-7"
+                                          "HEADLESS-8")))
                    home-bash-service
                    home-mime-service
                    home-direnv-service
