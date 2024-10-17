@@ -129,7 +129,8 @@ allow-preset-passphrase"))))
                                            ,(program-file "manual-scripts-01-fs.sh"
                                                           #~(execl "/run/setuid-programs/sudo"
                                                                    "sudo"
-                                                                   #$(local-file (string-append %project-directory "/dotfiles/run/guix-workstation/01-fs.sh")))))
+                                                                   #$(local-file (string-append %project-directory "/dotfiles/run/guix-workstation/01-fs.sh")
+                                                                                 #:recursive? #t))))
                                          `("bin/manual-scripts-02-ssh.sh"
                                            ,(local-file (string-append %project-directory "/dotfiles/run/guix-workstation/02-ssh.sh")
                                                         #:recursive? #t))
@@ -137,7 +138,8 @@ allow-preset-passphrase"))))
                                            ,(program-file "manual-scripts-03-firefox-twitch-namespace.sh"
                                                           #~(execl "/run/setuid-programs/sudo"
                                                                    "sudo"
-                                                                   #$(local-file (string-append %project-directory "/dotfiles/run/guix-workstation/03-firefox-twitch-namespace.sh")))))))
+                                                                   #$(local-file (string-append %project-directory "/dotfiles/run/guix-workstation/03-firefox-twitch-namespace.sh")
+                                                                                 #:recursive? #t))))))
                    (simple-service 'bin-wl-mirror
                                    home-files-service-type
                                    (map (lambda (wayland-output)
