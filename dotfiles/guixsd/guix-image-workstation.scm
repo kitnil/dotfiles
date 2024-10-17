@@ -105,6 +105,22 @@ default-cache-ttl-ssh 172800
 max-cache-ttl 172800
 max-cache-ttl-ssh 172800
 allow-preset-passphrase"))))
+                   (simple-service 'bin-firefox-profiles
+                                   home-files-service-type
+                                   (list `("bin/firefox-profile-default"
+                                           ,(program-file "firefox-profile-default"
+                                                          #~(and=> (getenv "HOME")
+                                                                 (lambda (home)
+                                                                   (execl #$(file-append firefox "/bin/firefox")
+                                                                          "--profile"
+                                                                          (string-append home "/.mozilla/firefox/pcaaxem9.default"))))))
+                                         `("bin/firefox-profile-development"
+                                           ,(program-file "firefox-profile-development"
+                                                          #~(and=> (getenv "HOME")
+                                                                   (lambda (home)
+                                                                     (execl #$(file-append firefox "/bin/firefox")
+                                                                            "--profile"
+                                                                            (string-append home "/.mozilla/firefox/development"))))))))
                    home-bash-service
                    home-mime-service
                    home-direnv-service
