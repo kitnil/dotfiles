@@ -209,7 +209,6 @@
                           "shutdown"
                           "src-clean"
                           "src-import.scm"
-                          "ssh"
                           "ssh-keyscan.scm"
                           "ssh-aliases"
                           "ssh-sudo"
