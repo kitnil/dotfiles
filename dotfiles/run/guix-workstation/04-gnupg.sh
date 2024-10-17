@@ -2,4 +2,4 @@
 
 set -o nounset -o errexit -o pipefail -o xtrace
 
-cp --no-clobber --recursive /mnt/home/oleg/.gnupg /home/oleg/.gnupg
+rsync --ignore-existing --archive /mnt/home/oleg/.gnupg/ /home/oleg/.gnupg/
