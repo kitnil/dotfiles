@@ -29,9 +29,31 @@
 (use-modules (services desktop)
              (home config)
              (home services audio)
+             (home services databases)
              (home services desktop)
+             (home services dns)
+             (home services emacs)
+             (home services gdb)
+             (home services gnupg)
+             (home services groovy)
+             (home services gtk)
+             (home services guile)
+             (home services haskell-apps)
+             (home services kodi)
+             (home services linux)
+             (home services lisp)
+             (home services mail)
+             (home services mime)
+             (home services nano)
+             (home services nix)
+             (home services python)
+             (home services rust-apps)
              (home services shell)
-             (home services terminals))
+             (home services terminals)
+             (home services tmux)
+             (home services version-control)
+             (home services video)
+             (home services web))
 
 (use-modules (nongnu packages chrome)
              (nongnu packages mozilla))
@@ -66,11 +88,45 @@
                                    (list `(".config/sway/config" ,(local-file (string-append %project-directory "/dot_config/sway/pc0.config")))
                                          `(".xkb/symbols/custom" ,(local-file (string-append %project-directory "/dot_xkb/symbols/custom")))))
                    (service home-sway-service-type)
-                   home-alacritty-service
                    (service home-scream-service-type
                             (scream-configuration
                              (port 16400)))
-                   home-bash-service))))
+                   home-bash-service
+                   home-mime-service
+                   home-direnv-service
+                   home-git-service
+                   home-gita-service
+                   home-gdb-service
+                   home-emacs-service
+                   home-nano-service
+                   home-inputrc-service
+                   home-tmux-service
+                   home-top-service
+                   home-nix-service
+                   home-alacritty-service
+                   home-qterminal-service
+                   home-gtk-service
+                   home-gtkrc-service
+                   home-ripgrep-service
+                   home-screen-service
+                   home-sbcl-service
+                   home-python-service
+                   home-bind-utils-service
+                   ;; home-shellcheck-service
+                   home-bin-service
+                   home-gnupg-service
+                   home-ghci-service
+                   home-groovy-service
+                   home-guile-service
+                   home-kodi-service
+                   home-mailcap-service
+                   home-mongo-service
+                   home-postgresql-service
+                   home-mycli-service
+                   home-parallel-service
+                   home-youtube-dl-service
+                   home-wireplumber-config-service
+                   home-mpv-service))))
 
 (define container-mingetty-service-type
   (service-type (name 'mingetty)
