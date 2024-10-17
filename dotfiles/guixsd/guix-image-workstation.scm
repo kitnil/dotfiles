@@ -112,6 +112,7 @@ allow-preset-passphrase"))))
                                                           #~(and=> (getenv "HOME")
                                                                  (lambda (home)
                                                                    (execl #$(file-append firefox "/bin/firefox")
+                                                                          "firefox"
                                                                           "--profile"
                                                                           (string-append home "/.mozilla/firefox/pcaaxem9.default"))))))
                                          `("bin/firefox-profile-development"
@@ -119,8 +120,24 @@ allow-preset-passphrase"))))
                                                           #~(and=> (getenv "HOME")
                                                                    (lambda (home)
                                                                      (execl #$(file-append firefox "/bin/firefox")
+                                                                            "firefox"
                                                                             "--profile"
                                                                             (string-append home "/.mozilla/firefox/development"))))))))
+                   (simple-service 'bin-manual-scripts
+                                   home-files-service-type
+                                   (list `("bin/manual-scripts-01-fs.sh"
+                                           ,(program-file "manual-scripts-01-fs.sh"
+                                                          #~(execl "/run/setuid-programs/sudo"
+                                                                   "sudo"
+                                                                   #$(local-file (string-append %project-directory "/dotfiles/run/guix-workstation/01-fs.sh")))))
+                                         `("bin/manual-scripts-02-ssh.sh"
+                                           ,(local-file (string-append %project-directory "/dotfiles/run/guix-workstation/02-ssh.sh")
+                                                        #:recursive? #t))
+                                         `("bin/manual-scripts-03-firefox-twitch-namespace.sh"
+                                           ,(program-file "manual-scripts-03-firefox-twitch-namespace.sh"
+                                                          #~(execl "/run/setuid-programs/sudo"
+                                                                   "sudo"
+                                                                   #$(local-file (string-append %project-directory "/dotfiles/run/guix-workstation/03-firefox-twitch-namespace.sh")))))))
                    home-bash-service
                    home-mime-service
                    home-direnv-service
