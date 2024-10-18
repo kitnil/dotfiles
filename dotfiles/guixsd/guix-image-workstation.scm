@@ -152,9 +152,8 @@ allow-preset-passphrase"))))
                                            ,(local-file (string-append %project-directory "/dotfiles/run/guix-workstation/03-net.sh")
                                                         #:recursive? #t))
                                          `("bin/manual-scripts-04-firefox-twitch-namespace.sh"
-                                           ,(program-file "manual-scripts-04-firefox-twitch-namespace.sh"
-                                                          (local-file (string-append %project-directory "/dotfiles/run/guix-workstation/04-firefox-twitch-namespace.sh")
-                                                                      #:recursive? #t)))
+                                           ,(local-file (string-append %project-directory "/dotfiles/run/guix-workstation/04-firefox-twitch-namespace.sh")
+                                                        #:recursive? #t))
                                          `("bin/manual-scripts-05-gnupg.sh"
                                            ,(local-file (string-append %project-directory "/dotfiles/run/guix-workstation/05-gnupg.sh")
                                                         #:recursive? #t))
