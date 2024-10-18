@@ -86,8 +86,16 @@
                    (service home-files-service-type)
                    (simple-service 'sway-config
                                    home-files-service-type
-                                   (list `(".config/sway/config" ,(local-file (string-append %project-directory "/dot_config/sway/pc0.config")))
-                                         `(".xkb/symbols/custom" ,(local-file (string-append %project-directory "/dot_xkb/symbols/custom")))))
+                                   (append (list `(".config/sway/config" ,(local-file (string-append %project-directory "/dot_config/sway/pc0.config")))
+                                                 `(".xkb/symbols/custom" ,(local-file (string-append %project-directory "/dot_xkb/symbols/custom"))))
+                                           (list `("bin/move" ,(program-file "sway-move"
+                                                                             #~(let ((args (cdr (command-line))))
+                                                                                 (execl #$(file-append sway "/bin/swaymsg") "move" "workspace" (string-join args)))))
+                                                 `("bin/workspace" ,(program-file "sway-workspace"
+                                                                                  #~(let ((args (cdr (command-line))))
+                                                                                      (execl #$(file-append sway "/bin/swaymsg") "workspace" (string-join args)))))
+                                                 `("bin/workspaces" ,(local-file (string-append %project-directory "/dot_local/bin/executable_sway-workspaces")
+                                                                                 #:recursive? #t)))))
                    (service home-sway-service-type)
                    (service home-scream-service-type
                             (scream-configuration

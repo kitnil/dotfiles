@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+shopt -s nullglob globstar
+
+stringContain()
+{
+    [ -z "$1" ] || { [ -z "${2##*"$1"*}" ] && [ -n "$2" ];}
+}
+
+menu()
+{
+    bemenu \
+        --fb '#000000' \
+        --ab '#000000' \
+        --tb '#000000' \
+        --nb '#000000' \
+        --tf '#ffffff' \
+        --hf '#ffffff' \
+        --hb '#2e8b57' \
+        --border 1 \
+        --bdr '#333333' \
+        --line-height 25 \
+        --hp 10 \
+        --fn "DejaVu Sans Mono 10" \
+        --list 20 \
+        --center \
+        --no-spacing \
+        --prompt "sway-workspaces"
+}
+
+mapfile -t workspaces < <(swaymsg -t get_tree | jq '.nodes[] | .nodes[] | .num | select(.)' | sort --version-sort)
+
+workspace=$(printf '%s\n' "${workspaces[@]}" | menu "$@")
+
+[[ -n $workspace ]] || exit
+
+workspace "$workspace" 2>/dev/null
