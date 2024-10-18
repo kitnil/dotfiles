@@ -30,11 +30,6 @@ chown oleg: /home/oleg/.local/share /home/oleg/.password-store
 mount --bind /mnt/home/oleg/.password-store /home/oleg/.password-store
 mount -o rw,remount /home/oleg/.password-store
 
-mkdir -p /home/oleg/.gnupg
-chown oleg: /home/oleg/.local/share /home/oleg/.gnupg
-mount --bind /mnt/home/oleg/.gnupg /home/oleg/.gnupg
-mount -o rw,remount /home/oleg/.gnupg
-
 mkdir -p /home/oleg/.local/share/TelegramDesktop
 chown oleg: /home/oleg/.local/share /home/oleg/.local/share/TelegramDesktop
 mount --bind /mnt/home/oleg/.local/share/TelegramDesktop /home/oleg/.local/share/TelegramDesktop
