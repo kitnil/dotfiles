@@ -161,7 +161,8 @@ allow-preset-passphrase"))))
                                            ,(program-file "firefox-profile-twitch-namespace"
                                                           #~(and=> (getenv "HOME")
                                                                    (lambda (home)
-                                                                     (execl #$(file-append iproute "/sbin/ip") "netns" "exec" "ns1"
+                                                                     (execl #$(file-append iproute "/sbin/ip") "ip"
+                                                                            "netns" "exec" "ns1"
                                                                             "/run/setuid-programs/sudo" "-u" "oleg" "-i"
                                                                             #$(file-append firefox "/bin/firefox") "--profile" (string-append home "/.mozilla/firefox/twitch"))))))))
                    (simple-service 'bin-namespace-host
