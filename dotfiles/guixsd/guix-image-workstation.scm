@@ -139,7 +139,15 @@ allow-preset-passphrase"))))
                                                                      (execl #$(file-append firefox "/bin/firefox")
                                                                             "firefox"
                                                                             "--profile"
-                                                                            (string-append home "/.mozilla/firefox/twitch"))))))))
+                                                                            (string-append home "/.mozilla/firefox/twitch"))))))
+                                         `("bin/firefox-profile-twitch-namespace"
+                                           ,(program-file "firefox-profile-twitch-namespace"
+                                                          #~(and=> (getenv "HOME")
+                                                                   (lambda (home)
+                                                                     (execl #$(file-append iproute "/sbin/ip") "ip"
+                                                                            "netns" "exec" "ns1"
+                                                                            "/run/setuid-programs/sudo" "-u" "oleg" "-i"
+                                                                            #$(file-append firefox "/bin/firefox") "--profile" (string-append home "/.mozilla/firefox/twitch"))))))))
                    (simple-service 'bin-manual-scripts
                                    home-files-service-type
                                    (list `("bin/manual-scripts-01-fs.sh"
@@ -156,15 +164,7 @@ allow-preset-passphrase"))))
                                                         #:recursive? #t))
                                          `("bin/manual-scripts-05-gnupg.sh"
                                            ,(local-file (string-append %project-directory "/dotfiles/run/guix-workstation/05-gnupg.sh")
-                                                        #:recursive? #t))
-                                         `("bin/firefox-profile-twitch-namespace"
-                                           ,(program-file "firefox-profile-twitch-namespace"
-                                                          #~(and=> (getenv "HOME")
-                                                                   (lambda (home)
-                                                                     (execl #$(file-append iproute "/sbin/ip") "ip"
-                                                                            "netns" "exec" "ns1"
-                                                                            "/run/setuid-programs/sudo" "-u" "oleg" "-i"
-                                                                            #$(file-append firefox "/bin/firefox") "--profile" (string-append home "/.mozilla/firefox/twitch"))))))))
+                                                        #:recursive? #t))))
                    (simple-service 'bin-namespace-host
                                    home-files-service-type
                                    (list `("bin/namespace-host"
