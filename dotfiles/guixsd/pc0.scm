@@ -260,7 +260,11 @@ trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDS
 
                          (service ladspa-service-type
                                   (ladspa-configuration (plugins (list swh-plugins))))
-                         (service libvirt-service-type)
+                         (service libvirt-service-type
+                                  (libvirt-configuration
+                                   (listen-addr "192.168.0.192")
+                                   (listen-tcp? #t)
+                                   (auth-tcp "none")))
                          (simple-service 'libvirt-qemu-config activation-service-type
                                          #~(begin
                                              (when (file-exists? "/etc/libvirt")
