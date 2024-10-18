@@ -24,7 +24,7 @@
              (guix ui)
              (srfi srfi-1))
 
-(use-package-modules gnupg pulseaudio ssh terminals wm)
+(use-package-modules gnupg linux pulseaudio ssh terminals wm)
 (use-service-modules avahi base desktop dbus shepherd)
 
 (use-modules (services desktop)
@@ -162,7 +162,16 @@ allow-preset-passphrase"))))
                                                                                  #:recursive? #t))))
                                          `("bin/manual-scripts-05-gnupg.sh"
                                            ,(local-file (string-append %project-directory "/dotfiles/run/guix-workstation/05-gnupg.sh")
-                                                        #:recursive? #t))))
+                                                        #:recursive? #t))
+                                         `("bin/firefox-profile-twitch-namespace"
+                                           ,(program-file "firefox-profile-twitch-namespace"
+                                                          #~(and=> (getenv "HOME")
+                                                                   (lambda (home)
+                                                                     (execl "/run/setuid-programs/sudo"
+                                                                            "sudo"
+                                                                            #$(file-append iproute "/bin/ip") "netns" "exec" "ns1"
+                                                                            "/run/setuid-programs/sudo" "-u" "oleg" "-i"
+                                                                            #$(file-append firefox "/bin/firefox") "--profile" (string-append home "/.mozilla/firefox/twitch"))))))))
                    (simple-service 'bin-namespace-host
                                    home-files-service-type
                                    (list `("bin/namespace-host"
