@@ -95,8 +95,6 @@ spec:
     - mountPath: /mnt/nix
       name: nix
       readOnly: true
-    - mountPath: /var/run/libvirt
-      name: var-run-libvirt
     lifecycle:
        preStop:
          exec:
@@ -147,7 +145,3 @@ spec:
       path: /nix
       type: Directory
     name: nix
-  - hostPath:
-      path: /var/run/libvirt
-      type: Directory
-    name: var-run-libvirt
