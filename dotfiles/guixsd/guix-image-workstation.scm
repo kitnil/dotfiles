@@ -159,6 +159,14 @@ allow-preset-passphrase"))))
                                          `("bin/manual-scripts-root-03-firefox-twitch-namespace.sh"
                                            ,(local-file (string-append %project-directory "/dotfiles/run/guix-workstation/04-firefox-twitch-namespace.sh")
                                                         #:recursive? #t))
+                                         `("bin/manual-scripts-root-04-mjru-net"
+                                           ,(program-file "manual-scripts-root-04-mjru-net"
+                                                          #~(let ((gateway "192.168.0.145"))
+                                                              (for-each (lambda (network)
+                                                                          (system* #$(file-append iproute "/sbin/ip") "route" "add" network "via" gateway))
+                                                                        '("172.16.103.0/24"
+                                                                          "78.108.80.0/24"
+                                                                          "78.108.88.0/24")))))
                                          `("bin/manual-scripts-oleg-01-ssh.sh"
                                            ,(local-file (string-append %project-directory "/dotfiles/run/guix-workstation/02-ssh.sh")
                                                         #:recursive? #t))
