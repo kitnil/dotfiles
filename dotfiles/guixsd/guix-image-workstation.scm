@@ -163,6 +163,12 @@ allow-preset-passphrase"))))
                                          `("bin/manual-scripts-05-gnupg.sh"
                                            ,(local-file (string-append %project-directory "/dotfiles/run/guix-workstation/05-gnupg.sh")
                                                         #:recursive? #t))))
+                   (simple-service 'bin-namespace-host
+                                   home-files-service-type
+                                   (list `("bin/namespace-host"
+                                           ,(program-file "namespace-host"
+                                                          #~(execl #$(file-append openssh "/bin/ssh")
+                                                                   "ssh" "-t" "192.168.0.192" "tmux")))))
                    (simple-service 'bin-wl-mirror
                                    home-files-service-type
                                    (map (lambda (wayland-output)
