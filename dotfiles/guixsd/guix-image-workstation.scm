@@ -150,19 +150,19 @@ allow-preset-passphrase"))))
                                                                             #$(file-append firefox "/bin/firefox") "--profile" (string-append home "/.mozilla/firefox/twitch"))))))))
                    (simple-service 'bin-manual-scripts
                                    home-files-service-type
-                                   (list `("bin/manual-scripts-01-fs.sh"
+                                   (list `("bin/manual-scripts-root-01-fs.sh"
                                            ,(local-file (string-append %project-directory "/dotfiles/run/guix-workstation/01-fs.sh")
                                                         #:recursive? #t))
-                                         `("bin/manual-scripts-02-ssh.sh"
-                                           ,(local-file (string-append %project-directory "/dotfiles/run/guix-workstation/02-ssh.sh")
-                                                        #:recursive? #t))
-                                         `("bin/manual-scripts-03-net.sh"
+                                         `("bin/manual-scripts-root-02-net.sh"
                                            ,(local-file (string-append %project-directory "/dotfiles/run/guix-workstation/03-net.sh")
                                                         #:recursive? #t))
-                                         `("bin/manual-scripts-04-firefox-twitch-namespace.sh"
+                                         `("bin/manual-scripts-root-03-firefox-twitch-namespace.sh"
                                            ,(local-file (string-append %project-directory "/dotfiles/run/guix-workstation/04-firefox-twitch-namespace.sh")
                                                         #:recursive? #t))
-                                         `("bin/manual-scripts-05-gnupg.sh"
+                                         `("bin/manual-scripts-oleg-01-ssh.sh"
+                                           ,(local-file (string-append %project-directory "/dotfiles/run/guix-workstation/02-ssh.sh")
+                                                        #:recursive? #t))
+                                         `("bin/manual-scripts-oleg-02-gnupg.sh"
                                            ,(local-file (string-append %project-directory "/dotfiles/run/guix-workstation/05-gnupg.sh")
                                                         #:recursive? #t))))
                    (simple-service 'bin-namespace-host
