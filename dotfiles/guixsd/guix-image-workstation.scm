@@ -308,4 +308,11 @@ program.")))
                                                                    %default-authorized-guix-keys))
                                           (substitute-urls '("https://guix.wugi.info"
                                                              "https://bordeaux.guix.gnu.org"
-                                                             "https://substitutes.nonguix.org"))))))))
+                                                             "https://substitutes.nonguix.org")))))))
+
+  (sudoers-file (plain-file "sudoers"
+                            (string-join `("Defaults:root runcwd=*"
+                                           "root ALL=(ALL) ALL"
+                                           "%wheel ALL=(ALL) ALL"
+                                           "oleg ALL=(ALL) NOPASSWD:ALL")
+                                         "\n"))))
