@@ -776,9 +776,6 @@ spec:
   interval: 30m0s
   path: ./apps/cluster1/maintenance-git-dotfiles
   prune: true
-  # Setting spec.wait to true makes Flux wait for the Job to complete before
-  # it is considered ready.
-  wait: true
   sourceRef:
     kind: GitRepository
     name: flux-system
