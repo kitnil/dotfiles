@@ -156,7 +156,10 @@ allow-preset-passphrase"))))
                                                           #~(execl "/run/setuid-programs/sudo"
                                                                    "sudo"
                                                                    #$(local-file (string-append %project-directory "/dotfiles/run/guix-workstation/03-firefox-twitch-namespace.sh")
-                                                                                 #:recursive? #t))))))
+                                                                                 #:recursive? #t))))
+                                         `("bin/manual-scripts-04-net.sh"
+                                           ,(local-file (string-append %project-directory "/dotfiles/run/guix-workstation/04-net.sh")
+                                                        #:recursive? #t))))
                    (simple-service 'bin-wl-mirror
                                    home-files-service-type
                                    (map (lambda (wayland-output)
