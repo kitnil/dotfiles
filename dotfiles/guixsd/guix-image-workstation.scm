@@ -144,10 +144,8 @@ allow-preset-passphrase"))))
                                    home-files-service-type
                                    (list `("bin/manual-scripts-01-fs.sh"
                                            ,(program-file "manual-scripts-01-fs.sh"
-                                                          #~(execl "/run/setuid-programs/sudo"
-                                                                   "sudo"
-                                                                   #$(local-file (string-append %project-directory "/dotfiles/run/guix-workstation/01-fs.sh")
-                                                                                 #:recursive? #t))))
+                                                          (local-file (string-append %project-directory "/dotfiles/run/guix-workstation/01-fs.sh")
+                                                                      #:recursive? #t)))
                                          `("bin/manual-scripts-02-ssh.sh"
                                            ,(local-file (string-append %project-directory "/dotfiles/run/guix-workstation/02-ssh.sh")
                                                         #:recursive? #t))
@@ -156,10 +154,8 @@ allow-preset-passphrase"))))
                                                         #:recursive? #t))
                                          `("bin/manual-scripts-04-firefox-twitch-namespace.sh"
                                            ,(program-file "manual-scripts-04-firefox-twitch-namespace.sh"
-                                                          #~(execl "/run/setuid-programs/sudo"
-                                                                   "sudo"
-                                                                   #$(local-file (string-append %project-directory "/dotfiles/run/guix-workstation/04-firefox-twitch-namespace.sh")
-                                                                                 #:recursive? #t))))
+                                                          (local-file (string-append %project-directory "/dotfiles/run/guix-workstation/04-firefox-twitch-namespace.sh")
+                                                                      #:recursive? #t)))
                                          `("bin/manual-scripts-05-gnupg.sh"
                                            ,(local-file (string-append %project-directory "/dotfiles/run/guix-workstation/05-gnupg.sh")
                                                         #:recursive? #t))
@@ -167,9 +163,7 @@ allow-preset-passphrase"))))
                                            ,(program-file "firefox-profile-twitch-namespace"
                                                           #~(and=> (getenv "HOME")
                                                                    (lambda (home)
-                                                                     (execl "/run/setuid-programs/sudo"
-                                                                            "sudo"
-                                                                            #$(file-append iproute "/sbin/ip") "netns" "exec" "ns1"
+                                                                     (execl #$(file-append iproute "/sbin/ip") "netns" "exec" "ns1"
                                                                             "/run/setuid-programs/sudo" "-u" "oleg" "-i"
                                                                             #$(file-append firefox "/bin/firefox") "--profile" (string-append home "/.mozilla/firefox/twitch"))))))))
                    (simple-service 'bin-namespace-host
