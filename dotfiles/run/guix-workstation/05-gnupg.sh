@@ -3,3 +3,4 @@
 set -o nounset -o errexit -o pipefail -o xtrace
 
 rsync --ignore-existing --archive /mnt/home/oleg/.gnupg/ /home/oleg/.gnupg/
+chown -R oleg: /home/oleg/.gnupg/
