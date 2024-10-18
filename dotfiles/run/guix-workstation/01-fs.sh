@@ -39,3 +39,8 @@ mkdir -p /home/oleg/.local/share/TelegramDesktop
 chown oleg: /home/oleg/.local/share /home/oleg/.local/share/TelegramDesktop
 mount --bind /mnt/home/oleg/.local/share/TelegramDesktop /home/oleg/.local/share/TelegramDesktop
 mount -o rw,remount /home/oleg/.local/share/TelegramDesktop
+
+mkdir -p /home/oleg/.cache/ihs
+chown oleg: /home/oleg/.local/share /home/oleg/.cache/ihs
+mount --bind /mnt/home/oleg/.cache/ihs /home/oleg/.cache/ihs
+mount -o rw,remount /home/oleg/.cache/ihs
