@@ -169,7 +169,7 @@ allow-preset-passphrase"))))
                                                                    (lambda (home)
                                                                      (execl "/run/setuid-programs/sudo"
                                                                             "sudo"
-                                                                            #$(file-append iproute "/bin/ip") "netns" "exec" "ns1"
+                                                                            #$(file-append iproute "/sbin/ip") "netns" "exec" "ns1"
                                                                             "/run/setuid-programs/sudo" "-u" "oleg" "-i"
                                                                             #$(file-append firefox "/bin/firefox") "--profile" (string-append home "/.mozilla/firefox/twitch"))))))))
                    (simple-service 'bin-namespace-host
