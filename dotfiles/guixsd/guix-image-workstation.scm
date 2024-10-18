@@ -143,9 +143,8 @@ allow-preset-passphrase"))))
                    (simple-service 'bin-manual-scripts
                                    home-files-service-type
                                    (list `("bin/manual-scripts-01-fs.sh"
-                                           ,(program-file "manual-scripts-01-fs.sh"
-                                                          (local-file (string-append %project-directory "/dotfiles/run/guix-workstation/01-fs.sh")
-                                                                      #:recursive? #t)))
+                                           ,(local-file (string-append %project-directory "/dotfiles/run/guix-workstation/01-fs.sh")
+                                                        #:recursive? #t))
                                          `("bin/manual-scripts-02-ssh.sh"
                                            ,(local-file (string-append %project-directory "/dotfiles/run/guix-workstation/02-ssh.sh")
                                                         #:recursive? #t))
