@@ -33,6 +33,7 @@ spec:
           )
           nsenter "${args[@]}" /bin/sh -i <<'EOF'
           set -o nounset -o errexit -o pipefail -o xtrace
+          /usr/bin/env
           cd /home/oleg/.local/share/chezmoi || exit 1
           git pull --rebase origin master
           EOF
