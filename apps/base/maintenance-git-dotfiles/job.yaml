@@ -19,6 +19,7 @@ spec:
         - /bin/sh
         - -c
         - |
+          set -o nounset -o errexit -o pipefail -o xtrace
           args=(
               --target "1"
               --mount
