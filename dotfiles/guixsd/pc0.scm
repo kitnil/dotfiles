@@ -265,6 +265,16 @@ trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDS
                                    (privacy 'device)))
                          udev-rules-service-xbox
 
+                         (udev-rules-service 'kvm
+                                             (udev-rule
+                                              "91-kvm-custom.rules"
+                                              "KERNEL==\"kvm\", GROUP=\"kvm\", MODE=\"0666\"\n"))
+
+                         (udev-rules-service 'kvmfr
+                                             (udev-rule
+                                              "99-kvmfr.rules"
+                                              "SUBSYSTEM==\"kvmfr\", OWNER=\"oleg\", GROUP=\"kvm\", MODE=\"0660\"\n"))
+
                          (service ladspa-service-type
                                   (ladspa-configuration (plugins (list swh-plugins))))
                          (service libvirt-service-type
