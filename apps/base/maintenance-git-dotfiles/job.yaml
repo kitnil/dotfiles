@@ -29,7 +29,7 @@ spec:
               --no-fork
               --setuid 1000
               --setgid 997
-              --wd /home/oleg/.local/share/chezmoi
+              --wd=/home/oleg/.local/share/chezmoi
               git pull --rebase origin master
           )
           nsenter "${args[@]}"
