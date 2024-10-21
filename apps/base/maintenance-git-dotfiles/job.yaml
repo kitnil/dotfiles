@@ -32,7 +32,7 @@ spec:
               --wd /home/oleg/.local/share/chezmoi
               git pull --rebase origin master
           )
-          nsenter "$args[@]"
+          nsenter "${args[@]}"
         image: docker-registry.wugi.info/library/util-linux-with-udev
         name: refresh
         resources:
