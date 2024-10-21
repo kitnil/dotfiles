@@ -30,10 +30,12 @@ spec:
               --no-fork
               --setuid 1000
               --setgid 997
-              --root=/home/oleg/.local/share/chezmoi
-              git pull --rebase origin master
           )
-          nsenter "${args[@]}"
+          nsenter "${args[@]}" /bin/sh <<'EOF'
+          set -o nounset -o errexit -o pipefail -o xtrace
+          cd /home/oleg/.local/share/chezmoi || exit 1
+          git pull --rebase origin master
+          EOF
         image: docker-registry.wugi.info/library/util-linux-with-udev
         name: refresh
         resources:
