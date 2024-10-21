@@ -31,9 +31,8 @@ spec:
               --setuid 1000
               --setgid 997
           )
-          nsenter "${args[@]}" /bin/sh <<'EOF'
+          nsenter "${args[@]}" /bin/sh -i <<'EOF'
           set -o nounset -o errexit -o pipefail -o xtrace
-          /usr/bin/env
           cd /home/oleg/.local/share/chezmoi || exit 1
           git pull --rebase origin master
           EOF
