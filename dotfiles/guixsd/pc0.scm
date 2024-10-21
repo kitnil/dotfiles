@@ -63,6 +63,13 @@
                          (type "tmpfs")
                          (check? #f)
                          (flags '(no-dev))
+                         (options "mode=1777,size=10%"))
+                       (file-system
+                         (device "tmpfs")
+                         (mount-point "/mnt/guix-workstation/tmp")
+                         (type "tmpfs")
+                         (check? #f)
+                         (flags '(no-dev))
                          (options "mode=1777,size=10%")))
                  %base-file-systems))
 
