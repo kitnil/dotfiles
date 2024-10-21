@@ -16,22 +16,23 @@ spec:
       restartPolicy: Never
       containers:
       - command:
-        - nsenter
-        - --target
-        - "1"
-        - --mount
-        - --uts
-        - --ipc
-        - --net
-        - --pid
-        - --no-fork
         - /bin/sh
-        - -l
         - -c
-        - sudo --chdir=$WORKSPACE --user=oleg --login bash -ic 'git pull --rebase origin master'
-        env:
-        - name: WORKSPACE
-          value: /home/oleg/.local/share/chezmoi
+        - |
+          args=(
+              --target "1"
+              --mount
+              --uts
+              --ipc
+              --net
+              --pid
+              --no-fork
+              --setuid 1000
+              --setgid 997
+              --wd /home/oleg/.local/share/chezmoi
+              git pull --rebase origin master
+          )
+          nsenter "$args[@]"
         image: docker-registry.wugi.info/library/util-linux-with-udev
         name: refresh
         resources:
