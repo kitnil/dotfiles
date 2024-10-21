@@ -95,6 +95,8 @@ spec:
     - mountPath: /mnt/nix
       name: nix
       readOnly: true
+    - mountPath: /tmp
+      name: tmp
     lifecycle:
        preStop:
          exec:
@@ -145,3 +147,7 @@ spec:
       path: /nix
       type: Directory
     name: nix
+  - hostPath:
+      path: /tmp
+      type: Directory
+    name: tmp
