@@ -16,27 +16,22 @@ spec:
       restartPolicy: Never
       containers:
       - command:
+        - nsenter
+        - --target
+        - "1"
+        - --mount
+        - --uts
+        - --ipc
+        - --net
+        - --pid
+        - --no-fork
         - /bin/sh
+        - -l
         - -c
-        - |
-          set -o nounset -o errexit -o pipefail -o xtrace
-          args=(
-              --target "1"
-              --mount
-              --uts
-              --ipc
-              --net
-              --pid
-              --no-fork
-              --setuid 1000
-              --setgid 997
-          )
-          nsenter "${args[@]}" /bin/sh -i <<'EOF'
-          set -o nounset -o errexit -o pipefail -o xtrace
-          /usr/bin/env
-          cd /home/oleg/.local/share/chezmoi || exit 1
-          git pull --rebase origin master
-          EOF
+        - sudo --chdir=$WORKSPACE --user=oleg --login bash -ic 'git pull --rebase origin master'
+        env:
+        - name: WORKSPACE
+          value: /home/oleg/.local/share/chezmoi
         image: docker-registry.wugi.info/library/util-linux-with-udev
         name: refresh
         resources:
