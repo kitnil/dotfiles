@@ -13,7 +13,13 @@ export XDG_SESSION_DESKTOP
 # Setups system and user profiles and related variables
 # /etc/profile will be sourced by bash automatically
 # Setups home environment profile
-if [ -f ~/.profile ]; then source ~/.profile; fi
+if [[ -z "$WAYLAND_DISPLAY" ]] && [[ "$XDG_VTNR" ]] && [[ "$XDG_VTNR" -eq 2 ]]
+then
+    if [[ -f ~/.profile ]]
+    then
+        source ~/.profile
+    fi
+fi
 
 export USER=oleg
 
