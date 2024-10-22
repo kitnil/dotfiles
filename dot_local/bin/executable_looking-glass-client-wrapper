@@ -17,4 +17,4 @@
                            "wayland:warpSupport" "no"
                            "input:grabKeyboard" "no"
                            "win:dontUpscale" "yes")
-                     (cdr args))))
+                         (cdr args))))
