@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: guix
+resources:
+- ../../base/guix-builder
+images:
+- name: harbor.home.wugi.info/library/guix-image-workstation
+  newTag: a30a661c
