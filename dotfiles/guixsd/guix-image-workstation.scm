@@ -24,7 +24,7 @@
              (guix ui)
              (srfi srfi-1))
 
-(use-package-modules gnupg linux pulseaudio ssh terminals wm)
+(use-package-modules gnupg linux pulseaudio ssh terminals virtualization wm)
 (use-service-modules avahi base desktop dbus shepherd)
 
 (use-modules (services desktop)
@@ -237,7 +237,22 @@ allow-preset-passphrase"))))
                    home-parallel-service
                    home-youtube-dl-service
                    home-wireplumber-config-service
-                   home-mpv-service))))
+                   home-mpv-service
+
+                   (simple-service 'looking-glass-wrapper
+                                   home-files-service-type
+                                   (list `(".local/bin/looking-glass-client-wrapper"
+                                           ,(program-file "looking-glass-client-wrapper"
+                                                          #~(let ((args (cdr (command-line))))
+                                                              (apply execl
+                                                                     `(#$(file-append looking-glass-client "/bin/looking-glass-client")
+                                                                         "looking-glass-client"
+                                                                         "spice:enable" "no"
+                                                                         "wayland:warpSupport" "no"
+                                                                         "input:grabKeyboard" "no"
+                                                                         "win:dontUpscale" "yes"
+                                                                         ,@(if (file-exists? "/dev/kvmfr0" '("-f" "/dev/kvmfr0") '()))
+                                                                         ,@(cdr args))))))))))))
 
 (define container-mingetty-service-type
   (service-type (name 'mingetty)
