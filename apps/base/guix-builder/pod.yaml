@@ -1,0 +1,98 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: guix-builder
+  annotations:
+    # Setting spec.force to true will make Flux recreate the Pod when any
+    # immutable field is changed, forcing the Pod to run every time the
+    # container image tag changes.
+    kustomize.toolkit.fluxcd.io/force: enabled
+  labels:
+    app.kubernetes.io/name: guix-builder
+spec:
+  restartPolicy: Never
+  automountServiceAccountToken: false
+  terminationGracePeriodSeconds: 600
+  containers:
+  - image: harbor.home.wugi.info/library/guix-image-workstation:latest
+    name: guix-builder
+    securityContext:
+      capabilities:
+        add:
+        # - CHOWN
+        # - DAC_OVERRIDE
+        # - DAC_READ_SEARCH
+        # - FOWNER
+        # - FSETID
+        # - KILL
+        # - SETGID
+        # - SETUID
+        # - SETPCAP
+        # - LINUX_IMMUTABLE
+        # - NET_BIND_SERVICE
+        # - NET_BROADCAST
+        # - NET_ADMIN
+        # - NET_RAW
+        # - IPC_LOCK
+        # - IPC_OWNER
+        # - SYS_MODULE
+        # - SYS_RAWIO
+        # - SYS_CHROOT
+        # - SYS_PTRACE
+        # - SYS_PACCT
+        - SYS_ADMIN
+        # - SYS_BOOT
+        # - SYS_NICE
+        # - SYS_RESOURCE
+        # - SYS_TIME
+        # - SYS_TTY_CONFIG
+        # - MKNOD
+        # - LEASE
+        # - AUDIT_WRITE
+        # - AUDIT_CONTROL
+        # - SETFCAP
+        # - MAC_OVERRIDE
+        # - MAC_ADMIN
+        # - SYSLOG
+        # - WAKE_ALARM
+        # - BLOCK_SUSPEND
+        # - AUDIT_READ
+        # - PERFMON
+        # - BPF
+        # - CHECKPOINT_RESTORE
+      privileged: true
+      # allowPrivilegeEscalation: true
+    tty: true
+    volumeMounts:
+    - mountPath: /dev/fuse
+      name: dev-fuse
+    - mountPath: /etc/nsswitch.conf
+      name: nsswitch
+      readOnly: true
+    - mountPath: /etc/services
+      name: services
+      readOnly: true
+    - mountPath: /dev/shm
+      name: shm
+    lifecycle:
+       preStop:
+         exec:
+           command:
+           - halt
+  volumes:
+  - name: dev-fuse
+    hostPath:
+      path: /dev/fuse
+      type: CharDevice
+  - name: nsswitch
+    hostPath:
+      path: /etc/nsswitch.conf
+      type: File
+  - name: services
+    hostPath:
+      path: /etc/services
+      type: File
+  - name: shm
+    emptyDir:
+      medium: Memory
+      sizeLimit: 1Gi
