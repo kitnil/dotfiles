@@ -8,3 +8,5 @@ patchesStrategicMerge:
 images:
 - name: harbor.home.wugi.info/library/guix-image-workstation
   newTag: a30a661c
+- name: harbor.home.wugi.info/library/nixos-systemd
+  newTag: v0.0.11

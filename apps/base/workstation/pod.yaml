@@ -102,6 +102,33 @@ spec:
          exec:
            command:
            - halt
+  - name: nixos
+    image: harbor.home.wugi.info/library/nixos-systemd:latest
+    command:
+    - /entrypoint.sh
+    env:
+    - name: container
+      value: docker
+    securityContext:
+      capabilities:
+        add:
+        - SETUID
+        - BLOCK_SUSPEND
+        - NET_ADMIN
+        - NET_BIND_SERVICE
+        - NET_RAW
+        - SYS_ADMIN
+        - SYS_CHROOT
+        - SYS_NICE
+        - SYS_PTRACE
+        - SYS_RESOURCE
+        - SYS_TIME
+    tty: true
+    volumeMounts:
+    - mountPath: /run
+      name: run
+    - mountPath: /tmp
+      name: tmp
   volumes:
   - name: dev-dri
     hostPath:
@@ -151,3 +178,7 @@ spec:
       path: /tmp
       type: Directory
     name: tmp
+  - emptyDir:
+      medium: Memory
+      sizeLimit: 512M
+    name: run
