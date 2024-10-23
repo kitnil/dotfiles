@@ -101,7 +101,7 @@ spec:
        preStop:
          exec:
            command:
-           - halt
+           - /run/current-system/profile/sbin/halt
   - name: nixos
     image: harbor.home.wugi.info/library/nixos-systemd:latest
     command:
