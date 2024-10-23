@@ -1,21 +1,21 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  name: guix-workstation
+  name: workstation
   annotations:
     # Setting spec.force to true will make Flux recreate the Pod when any
     # immutable field is changed, forcing the Pod to run every time the
     # container image tag changes.
     kustomize.toolkit.fluxcd.io/force: enabled
   labels:
-    app.kubernetes.io/name: guix-workstation
+    app.kubernetes.io/name: workstation
 spec:
   restartPolicy: Never
   automountServiceAccountToken: false
   terminationGracePeriodSeconds: 600
   containers:
   - image: harbor.home.wugi.info/library/guix-image-workstation:latest
-    name: guix-workstation
+    name: guix
     ports:
     - containerPort: 5353
       name: avahi

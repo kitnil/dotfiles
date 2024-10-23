@@ -1047,11 +1047,11 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: guix-workstation
+  name: workstation
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./apps/cluster1/guix-workstation
+  path: ./apps/cluster1/workstation
   prune: true
   sourceRef:
     kind: GitRepository
