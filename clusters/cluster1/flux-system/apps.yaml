@@ -975,6 +975,7 @@ spec:
   interval: 30m0s
   path: ./apps/cluster1/socialstream
   prune: true
+  suspend: true
   sourceRef:
     kind: GitRepository
     name: flux-system
