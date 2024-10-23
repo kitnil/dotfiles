@@ -123,6 +123,12 @@ spec:
         - SYS_PTRACE
         - SYS_RESOURCE
         - SYS_TIME
+    lifecycle:
+       preStop:
+         exec:
+           command:
+           - /run/current-system/sw/bin/systemctl
+           - poweroff
     tty: true
     volumeMounts:
     - mountPath: /run
