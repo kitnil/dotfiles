@@ -25,7 +25,7 @@ spec:
           cd "${HOME}/.local/share/chezmoi" || exit 1
           cd dotfiles/nix/vendir || exit 1
           out="$(nix build --no-link --print-out-paths --print-build-logs)"
-          skopeo copy "docker-archive:${out}" "docker://harbor.wugi.info/library/vendir:latest"
+          skopeo copy "docker-archive:${out}" "docker://harbor.home.wugi.info/library/vendir:latest"
           EOF
         image: docker-registry.wugi.info/library/util-linux-with-udev
         name: refresh
