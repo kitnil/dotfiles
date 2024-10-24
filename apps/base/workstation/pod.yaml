@@ -216,6 +216,8 @@ spec:
     volumeMounts:
     - mountPath: /run
       name: archlinux-run
+    - mountPath: /mnt/guix/run
+      name: guix-run
     - mountPath: /tmp
       name: tmp
     - mountPath: /dev/dri
