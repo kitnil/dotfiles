@@ -6,6 +6,7 @@
              (gnu services shepherd)
              (gnu services)
              (gnu system setuid)
+             (guix gexp)
 	     (nongnu packages linux)
 	     (nongnu system linux-initrd)
              (bootloader grub)
@@ -16,6 +17,15 @@
 
 (define kvmfr-linux-module
   (@ (packages linux) kvmfr-linux-module))
+
+(define container-guix-program
+  (program-file "container-guix-program"
+                #~(begin
+                    (setenv "PATH"
+                            "/run/setuid-programs:/root/.config/guix/current/bin:/run/current-system/profile/bin:/run/current-system/profile/sbin")
+                    (execl #$(local-file "/home/oleg/.local/share/chezmoi/dotfiles/run/pc0/13-guix-workstation-run.sh"
+                                         #:recursive? #t)
+                           "13-guix-workstation-run.sh"))))
 
 (operating-system
   (host-name "pc0")
@@ -325,8 +335,7 @@ cgroup_device_acl = [
                                            (documentation "Provision Guix container.")
                                            (requirement '())
                                            (start #~(make-forkexec-constructor
-                                                     (list #$(local-file "/home/oleg/.local/share/chezmoi/dotfiles/run/pc0/13-guix-workstation-run.sh"
-                                                                         #:recursive? #t))))
+                                                     (list #$container-guix-program)))
                                            (respawn? #f)))))
                     (modify-services
                         (filter (lambda (service)
