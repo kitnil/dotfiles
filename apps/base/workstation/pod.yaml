@@ -216,12 +216,14 @@ spec:
     volumeMounts:
     - mountPath: /run
       name: archlinux-run
-    - mountPath: /mnt/guix/run
-      name: guix-run
     - mountPath: /tmp
-      name: tmp
+      name: archlinux-tmp
     - mountPath: /dev/dri
       name: dev-dri
+    - mountPath: /mnt/guix/run
+      name: guix-run
+    - mountPath: /mnt/guix/tmp
+      name: tmp
   volumes:
   - name: dev-dri
     hostPath:
@@ -271,6 +273,10 @@ spec:
       medium: Memory
       sizeLimit: 4G
     name: tmp
+  - emptyDir:
+      medium: Memory
+      sizeLimit: 4G
+    name: archlinux-tmp
   - emptyDir:
       medium: Memory
       sizeLimit: 512M
