@@ -179,6 +179,12 @@ spec:
         cpu: 100m
         memory: 512Mi
     tty: true
+    lifecycle:
+       preStop:
+         exec:
+           command:
+           - /bin/systemctl
+           - poweroff
     volumeMounts:
     - mountPath: /run
       name: socialstream-run
