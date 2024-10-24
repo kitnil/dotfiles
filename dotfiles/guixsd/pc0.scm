@@ -313,7 +313,19 @@ cgroup_device_acl = [
                          (service console-font-service-type
                                   (map (lambda (tty)
                                          (cons tty %default-console-font))
-                                       '("tty1" "tty3" "tty4" "tty5" "tty6"))))
+                                       '("tty1" "tty3" "tty4" "tty5" "tty6")))
+                         (simple-service 'container-guix shepherd-root-service-type
+                                         (list
+                                          (shepherd-service
+                                           (provision '(container-guix))
+                                           (auto-start? #f)
+                                           (one-shot? #t)
+                                           (documentation "Provision Guix container.")
+                                           (requirement '())
+                                           (start #~(make-forkexec-constructor
+                                                     (list #$(local-file "/home/oleg/.local/share/chezmoi/dotfiles/run/pc0/13-guix-workstation-run.sh"
+                                                                         #:recursive? #t))))
+                                           (respawn? #f)))))
                     (modify-services
                         (filter (lambda (service)
                                 (let ((value (service-value service)))
