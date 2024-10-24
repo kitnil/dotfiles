@@ -179,6 +179,28 @@ spec:
     tty: true
     volumeMounts:
     - mountPath: /run
+      name: socialstream-run
+    - mountPath: /tmp
+      name: tmp
+    - mountPath: /dev/dri
+      name: dev-dri
+  - image: harbor.home.wugi.info/library/archlinux-systemd:latest
+    name: archlinux
+    env:
+    - name: container
+      value: docker
+    securityContext:
+      capabilities:
+        add:
+        - NET_ADMIN
+        - NET_BIND_SERVICE
+        - NET_RAW
+        - SYS_ADMIN
+        - SYS_NICE
+        - SYS_TIME
+    tty: true
+    volumeMounts:
+    - mountPath: /run
       name: archlinux-run
     - mountPath: /tmp
       name: tmp
@@ -241,3 +263,7 @@ spec:
       medium: Memory
       sizeLimit: 512M
     name: archlinux-run
+  - emptyDir:
+      medium: Memory
+      sizeLimit: 512M
+    name: socialstream-run
