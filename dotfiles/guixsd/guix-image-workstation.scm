@@ -252,7 +252,9 @@ allow-preset-passphrase"))))
                                                                          "wayland:warpSupport" "no"
                                                                          "input:grabKeyboard" "no"
                                                                          "win:dontUpscale" "yes"
-                                                                         ,@(if (file-exists? "/dev/kvmfr0" '("-f" "/dev/kvmfr0") '()))
+                                                                         ,@(if (file-exists? "/dev/kvmfr0")
+                                                                               '("-f" "/dev/kvmfr0")
+                                                                               '())
                                                                          ,@(cdr args))))))))))))
 
 (define container-mingetty-service-type
