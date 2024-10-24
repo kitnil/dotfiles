@@ -99,6 +99,8 @@ spec:
       readOnly: true
     - mountPath: /tmp
       name: tmp
+    - mountPath: /mnt/guix/var/run/shepherd/socket
+      name: var-run-shepherd-socket
     lifecycle:
        preStop:
          exec:
@@ -293,3 +295,7 @@ spec:
       medium: Memory
       sizeLimit: 512M
     name: socialstream-run
+  - name: var-run-shepherd-socket
+    hostPath:
+      path: /var/run/shepherd/socket
+      type: Socket
