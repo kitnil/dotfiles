@@ -3,6 +3,8 @@
 ;; for a "bare bones" setup, with no X11 display server.
 
 (use-modules (gnu)
+             (gnu services shepherd)
+             (gnu services)
              (gnu system setuid)
 	     (nongnu packages linux)
 	     (nongnu system linux-initrd)
