@@ -15,6 +15,7 @@
              (gnu packages admin)
              (gnu packages)
              (gnu services guix)
+             (gnu services shepherd)
              (gnu services)
              (gnu)
              (guix gexp)
@@ -315,7 +316,20 @@ program.")))
                           seatd-service
                           (service container-mingetty-service-type
                                    (mingetty-configuration (tty "tty2")))
-                          (service avahi-service-type))
+                          (service avahi-service-type)
+                          (simple-service 'host-container-guix shepherd-root-service-type
+                                          (list
+                                           (shepherd-service
+                                            (provision '(host-container-guix))
+                                            (auto-start? #t)
+                                            (one-shot? #t)
+                                            (documentation "Provision Guix container.")
+                                            (requirement '())
+                                            (start #~(make-forkexec-constructor
+                                                      (list #$(file-append shepherd "/bin/herd")
+                                                            "--socket=/mnt/guix/var/run/shepherd/socket"
+                                                            "start" "container-guix")))
+                                            (respawn? #f)))))
                     (modify-services %base-services
                       (guix-service-type config =>
                                          (guix-configuration
