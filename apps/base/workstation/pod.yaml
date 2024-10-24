@@ -71,6 +71,8 @@ spec:
       # allowPrivilegeEscalation: true
     tty: true
     volumeMounts:
+    - mountPath: /run
+      name: guix-run
     - mountPath: /dev/dri
       name: dev-dri
     - mountPath: /dev/input
@@ -255,6 +257,10 @@ spec:
       medium: Memory
       sizeLimit: 4G
     name: tmp
+  - emptyDir:
+      medium: Memory
+      sizeLimit: 512M
+    name: guix-run
   - emptyDir:
       medium: Memory
       sizeLimit: 512M
