@@ -39,6 +39,24 @@
 
   users.users.root.password = ""; # Empty password.
 
+  users.users.oleg = {
+    isNormalUser = true;
+    extraGroups = [
+      "wheel" # Enable ‘sudo’ for the user.
+    ];
+    uid = 1000;
+  };
+
+  users.groups.users = {
+    name = "users";
+    members = [ "oleg" ];
+    gid = 998;
+  };
+
+  security.sudo.extraConfig = ''
+    oleg ALL = (root) NOPASSWD:ALL
+  '';
+
   nix = {
     package = pkgs.nixFlakes;
     extraOptions = "experimental-features = nix-command flakes";
