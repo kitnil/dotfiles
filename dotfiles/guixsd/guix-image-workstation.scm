@@ -146,8 +146,9 @@ allow-preset-passphrase"))))
                                                                    (lambda (home)
                                                                      (execl "/run/setuid-programs/sudo"
                                                                             "sudo"
+                                                                            "--preserve-env"
                                                                             #$(file-append iproute "/sbin/ip") "netns" "exec" "ns1"
-                                                                            "/run/setuid-programs/sudo" "-u" "oleg" "-i"
+                                                                            "/run/setuid-programs/sudo" "--user=oleg" "--preserve-env"
                                                                             #$(file-append firefox "/bin/firefox") "--profile" (string-append home "/.mozilla/firefox/twitch"))))))))
                    (simple-service 'bin-manual-scripts
                                    home-files-service-type
