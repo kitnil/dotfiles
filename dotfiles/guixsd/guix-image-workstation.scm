@@ -255,7 +255,7 @@ allow-preset-passphrase"))))
                                                                          ,@(if (file-exists? "/dev/kvmfr0")
                                                                                '("-f" "/dev/kvmfr0")
                                                                                '())
-                                                                         ,@(cdr args))))))))))))
+                                                                         ,@args)))))))))))
 
 (define container-mingetty-service-type
   (service-type (name 'mingetty)
