@@ -201,6 +201,12 @@ spec:
         - SYS_NICE
         - SYS_TIME
     tty: true
+    lifecycle:
+       preStop:
+         exec:
+           command:
+           - /bin/systemctl
+           - poweroff
     volumeMounts:
     - mountPath: /run
       name: archlinux-run
