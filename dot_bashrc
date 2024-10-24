@@ -2375,7 +2375,7 @@ curl()
     new_args=()
     for var in "$@"
     do
-        if [[ "$var" == *"https://api.majordomo.ru/"* ]]
+        if [[ "$var" == *"https://api.majordomo.ru/"* ]] || [[ "$var" == *"https://api.maxhost.ru/"* ]]
         then
             json=true
             new_args+=(
@@ -2391,7 +2391,7 @@ curl()
                 --header 'Content-Type: application/json'
                 "$var"
             )
-        elif [[ "$var" == *"https://api-dev.intr/"* ]]
+        elif [[ "$var" == *"https://api-dev.intr/"* ]] || [[ "$var" == *"https://api-dev.maxhost.ru/"* ]]
         then
             json=true
             new_args+=(
