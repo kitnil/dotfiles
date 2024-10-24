@@ -132,7 +132,7 @@ spec:
     tty: true
     volumeMounts:
     - mountPath: /run
-      name: run
+      name: nixos-run
     - mountPath: /tmp
       name: tmp
   - image: harbor.home.wugi.info/library/socialstream:0.1.45-2
@@ -179,7 +179,7 @@ spec:
     tty: true
     volumeMounts:
     - mountPath: /run
-      name: run
+      name: archlinux-run
     - mountPath: /tmp
       name: tmp
     - mountPath: /dev/dri
@@ -236,4 +236,8 @@ spec:
   - emptyDir:
       medium: Memory
       sizeLimit: 512M
-    name: run
+    name: nixos-run
+  - emptyDir:
+      medium: Memory
+      sizeLimit: 512M
+    name: archlinux-run
