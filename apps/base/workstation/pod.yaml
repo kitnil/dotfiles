@@ -144,7 +144,7 @@ spec:
       mountPath: /home/oleg/.ssh/id_ed25519
     - name: home-oleg-ssh-public-key
       mountPath: /home/oleg/.ssh/id_ed25519.pub
-    - name: home-oleg-ssh-known_hosts
+    - name: home-oleg-ssh-known-hosts
       mountPath: /home/oleg/.ssh/known_hosts
     - name: nix
       mountPath: /nix
@@ -327,7 +327,7 @@ spec:
     hostPath:
       path: /home/oleg/.ssh/id_ed25519.pub
       type: File
-  - name: home-oleg-ssh-known_hosts
+  - name: home-oleg-ssh-known-hosts
     hostPath:
       path: /home/oleg/.ssh/known_hosts
       type: File
