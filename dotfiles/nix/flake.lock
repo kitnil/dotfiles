@@ -736,12 +736,12 @@
         "rev": "1cc52c7b1c6776188507cbf88f53a55fd2b74693",
         "revCount": 9,
         "type": "git",
-        "url": "ssh://gitlab.intr/utils/ipmiview"
+        "url": "ssh://gitlab.corp1.majordomo.ru/utils/ipmiview"
       },
       "original": {
         "ref": "flake",
         "type": "git",
-        "url": "ssh://gitlab.intr/utils/ipmiview"
+        "url": "ssh://gitlab.corp1.majordomo.ru/utils/ipmiview"
       }
     },
     "github-com-tsoding-boomer": {
@@ -832,11 +832,11 @@
         "rev": "dcb7a639403fc9dd85341126e941fa8e98f373ec",
         "revCount": 807,
         "type": "git",
-        "url": "https://gitlab.intr/_ci/nixpkgs"
+        "url": "https://gitlab.corp1.majordomo.ru/_ci/nixpkgs"
       },
       "original": {
         "type": "git",
-        "url": "https://gitlab.intr/_ci/nixpkgs"
+        "url": "https://gitlab.corp1.majordomo.ru/_ci/nixpkgs"
       }
     },
     "majordomo-vault": {
@@ -851,11 +851,11 @@
         "rev": "ad278598ac3962f1452e5ab8557c63715474a588",
         "revCount": 50,
         "type": "git",
-        "url": "ssh://gitlab.intr/security/vault"
+        "url": "ssh://gitlab.corp1.majordomo.ru/security/vault"
       },
       "original": {
         "type": "git",
-        "url": "ssh://gitlab.intr/security/vault"
+        "url": "ssh://gitlab.corp1.majordomo.ru/security/vault"
       }
     },
     "majordomo_2": {
@@ -871,11 +871,11 @@
         "rev": "24bf48709fac4e882cf66105f41c2cfc20ade0d4",
         "revCount": 789,
         "type": "git",
-        "url": "https://gitlab.intr/_ci/nixpkgs"
+        "url": "https://gitlab.corp1.majordomo.ru/_ci/nixpkgs"
       },
       "original": {
         "type": "git",
-        "url": "https://gitlab.intr/_ci/nixpkgs"
+        "url": "https://gitlab.corp1.majordomo.ru/_ci/nixpkgs"
       }
     },
     "majordomo_3": {
@@ -891,11 +891,11 @@
         "rev": "c5ee8b114454ef644f72f1455197459e5c90a779",
         "revCount": 796,
         "type": "git",
-        "url": "https://gitlab.intr/_ci/nixpkgs"
+        "url": "https://gitlab.corp1.majordomo.ru/_ci/nixpkgs"
       },
       "original": {
         "type": "git",
-        "url": "https://gitlab.intr/_ci/nixpkgs"
+        "url": "https://gitlab.corp1.majordomo.ru/_ci/nixpkgs"
       }
     },
     "majordomo_4": {
@@ -911,11 +911,11 @@
         "rev": "135a86868e1d81c3c4fec2600f730515e7e73d6b",
         "revCount": 803,
         "type": "git",
-        "url": "https://gitlab.intr/_ci/nixpkgs"
+        "url": "https://gitlab.corp1.majordomo.ru/_ci/nixpkgs"
       },
       "original": {
         "type": "git",
-        "url": "https://gitlab.intr/_ci/nixpkgs"
+        "url": "https://gitlab.corp1.majordomo.ru/_ci/nixpkgs"
       }
     },
     "majordomo_5": {
@@ -935,11 +935,11 @@
         "rev": "95dcf1812fce3159cc50c9442fc944cbf5205225",
         "revCount": 963,
         "type": "git",
-        "url": "https://gitlab.intr/_ci/nixpkgs"
+        "url": "https://gitlab.corp1.majordomo.ru/_ci/nixpkgs"
       },
       "original": {
         "type": "git",
-        "url": "https://gitlab.intr/_ci/nixpkgs"
+        "url": "https://gitlab.corp1.majordomo.ru/_ci/nixpkgs"
       }
     },
     "majordomo_6": {
@@ -954,11 +954,11 @@
         "lastModified": 1627969343,
         "narHash": "sha256-LMfBSg+SZaC4Wbiocyiuab8292Ldm1beA1ZAtaL+HsQ=",
         "type": "git",
-        "url": "file:///home/oleg/src/gitlab.intr/_ci/nixpkgs"
+        "url": "file:///home/oleg/src/gitlab.corp1.majordomo.ru/_ci/nixpkgs"
       },
       "original": {
         "type": "git",
-        "url": "file:///home/oleg/src/gitlab.intr/_ci/nixpkgs"
+        "url": "file:///home/oleg/src/gitlab.corp1.majordomo.ru/_ci/nixpkgs"
       }
     },
     "mobile-nixos": {
@@ -1045,11 +1045,11 @@
         "rev": "4808a04d273de0358b004f43c7978dea313a1180",
         "revCount": 152,
         "type": "git",
-        "url": "ssh://git@gitlab.intr/net/dns-intr.git"
+        "url": "ssh://git@gitlab.corp1.majordomo.ru/net/dns-intr.git"
       },
       "original": {
         "type": "git",
-        "url": "ssh://git@gitlab.intr/net/dns-intr.git"
+        "url": "ssh://git@gitlab.corp1.majordomo.ru/net/dns-intr.git"
       }
     },
     "net-pxe": {
@@ -1066,11 +1066,11 @@
         "rev": "bfbbab2b91bf68fdc08b47a6d13d715b30d887fc",
         "revCount": 59,
         "type": "git",
-        "url": "ssh://git@gitlab.intr/net/pxe"
+        "url": "ssh://git@gitlab.corp1.majordomo.ru/net/pxe"
       },
       "original": {
         "type": "git",
-        "url": "ssh://git@gitlab.intr/net/pxe"
+        "url": "ssh://git@gitlab.corp1.majordomo.ru/net/pxe"
       }
     },
     "net-vpn-si": {
@@ -1086,11 +1086,11 @@
         "rev": "112815679c04f70f2d225d6f6bb8ff923ca89da5",
         "revCount": 7,
         "type": "git",
-        "url": "ssh://git@gitlab.intr/net/vpn"
+        "url": "ssh://git@gitlab.corp1.majordomo.ru/net/vpn"
       },
       "original": {
         "type": "git",
-        "url": "ssh://git@gitlab.intr/net/vpn"
+        "url": "ssh://git@gitlab.corp1.majordomo.ru/net/vpn"
       }
     },
     "nix-doom-emacs": {
@@ -1152,11 +1152,11 @@
         "rev": "e8fe3ca0051d1cbbb20bc17852057712247a903c",
         "revCount": 1442,
         "type": "git",
-        "url": "ssh://git@gitlab.intr/_ci/nixops"
+        "url": "ssh://git@gitlab.corp1.majordomo.ru/_ci/nixops"
       },
       "original": {
         "type": "git",
-        "url": "ssh://git@gitlab.intr/_ci/nixops"
+        "url": "ssh://git@gitlab.corp1.majordomo.ru/_ci/nixops"
       }
     },
     "nix-straight": {
@@ -2522,11 +2522,11 @@
         "rev": "3e353d0400138563e62dfca946b013706277a843",
         "revCount": 15,
         "type": "git",
-        "url": "https://gitlab.intr/shared/http_errors.git"
+        "url": "https://gitlab.corp1.majordomo.ru/shared/http_errors.git"
       },
       "original": {
         "type": "git",
-        "url": "https://gitlab.intr/shared/http_errors.git"
+        "url": "https://gitlab.corp1.majordomo.ru/shared/http_errors.git"
       }
     },
     "sops-nix": {
@@ -2561,11 +2561,11 @@
         "rev": "69f402bef14952b7b85f99183ec27cfc01c62a53",
         "revCount": 102,
         "type": "git",
-        "url": "ssh://git@gitlab.intr/office/ssl-certificates"
+        "url": "ssh://git@gitlab.corp1.majordomo.ru/office/ssl-certificates"
       },
       "original": {
         "type": "git",
-        "url": "ssh://git@gitlab.intr/office/ssl-certificates"
+        "url": "ssh://git@gitlab.corp1.majordomo.ru/office/ssl-certificates"
       }
     },
     "telegraf": {
@@ -2581,11 +2581,11 @@
         "rev": "7e04ad45a395f2e9c942f8ed7cfc02ff9784715d",
         "revCount": 89,
         "type": "git",
-        "url": "ssh://git@gitlab.intr/monitoring/telegraf-build"
+        "url": "ssh://git@gitlab.corp1.majordomo.ru/monitoring/telegraf-build"
       },
       "original": {
         "type": "git",
-        "url": "ssh://git@gitlab.intr/monitoring/telegraf-build"
+        "url": "ssh://git@gitlab.corp1.majordomo.ru/monitoring/telegraf-build"
       }
     },
     "utils": {
@@ -2646,11 +2646,11 @@
         "rev": "9158ff8eaee45bcf4a4b965df84f409e87c6f8f4",
         "revCount": 30,
         "type": "git",
-        "url": "ssh://git@gitlab.intr/webservices/rsyslog"
+        "url": "ssh://git@gitlab.corp1.majordomo.ru/webservices/rsyslog"
       },
       "original": {
         "type": "git",
-        "url": "ssh://git@gitlab.intr/webservices/rsyslog"
+        "url": "ssh://git@gitlab.corp1.majordomo.ru/webservices/rsyslog"
       }
     },
     "zabbix-agentd-conf": {
@@ -2666,11 +2666,11 @@
         "rev": "33e1238683b16715e502b3d00c31f0d7136609df",
         "revCount": 424,
         "type": "git",
-        "url": "ssh://git@gitlab.intr/chef/service"
+        "url": "ssh://git@gitlab.corp1.majordomo.ru/chef/service"
       },
       "original": {
         "type": "git",
-        "url": "ssh://git@gitlab.intr/chef/service"
+        "url": "ssh://git@gitlab.corp1.majordomo.ru/chef/service"
       }
     },
     "zabbix-scripts": {
@@ -2686,12 +2686,12 @@
         "rev": "53b2473139303261d86dcc7d7400b53ad54a141b",
         "revCount": 120,
         "type": "git",
-        "url": "ssh://git@gitlab.intr/staff/zabbix-scripts"
+        "url": "ssh://git@gitlab.corp1.majordomo.ru/staff/zabbix-scripts"
       },
       "original": {
         "ref": "flake",
         "type": "git",
-        "url": "ssh://git@gitlab.intr/staff/zabbix-scripts"
+        "url": "ssh://git@gitlab.corp1.majordomo.ru/staff/zabbix-scripts"
       }
     }
   },

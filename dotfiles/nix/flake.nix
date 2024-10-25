@@ -41,9 +41,9 @@
     rycee-nur-expressions.url =
       "git+https://gitlab.com/rycee/nur-expressions?dir=pkgs/firefox-addons";
 
-    majordomo.url = "git+https://gitlab.intr/_ci/nixpkgs";
+    majordomo.url = "git+https://gitlab.corp1.majordomo.ru/_ci/nixpkgs";
 
-    majordomo-vault.url = "git+ssh://gitlab.intr/security/vault";
+    majordomo-vault.url = "git+ssh://gitlab.corp1.majordomo.ru/security/vault";
 
     github-com-guibou-nixGL = {
       url = "github:guibou/nixGL";
@@ -54,7 +54,7 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
     github-com-kitnil-nix-ipmiview.url =
-      "git+ssh://gitlab.intr/utils/ipmiview?ref=flake";
+      "git+ssh://gitlab.corp1.majordomo.ru/utils/ipmiview?ref=flake";
     # github-com-xzfc-cached-nix-shell.url = "github:xzfc/cached-nix-shell";
     github-com-9999years-nix-config = {
       url = "github:9999years/nix-config";
@@ -119,6 +119,50 @@
       lib = pkgs.lib;
       inherit (lib) fold;
     in {
+      overlay = final: prev:
+        self.packages.${system} // (let
+          inherit (rycee-nur-expressions.lib.${system})
+            buildFirefoxXpiAddon;
+          inherit (prev) callPackage;
+        in {
+          inherit (deploy-rs.outputs.packages.${system}) deploy-rs;
+          inherit (majordomo-vault.inputs.nixpkgs.legacyPackages.${system})
+            vault-bin;
+          inherit (import
+            (rycee-nur-expressions.outPath + "/default.nix") {
+              pkgs = prev;
+            })
+            mozilla-addons-to-nix;
+          inherit (nixpkgs-nixd.legacyPackages.${system}) nixd;
+          inherit (nixpkgs-wayvnc.legacyPackages.${system}) wayvnc;
+          inherit (nixpkgs-copyq.legacyPackages.${system}) clipboard-jh;
+          inherit (nixpkgs-chatterino2.legacyPackages.${system})
+            chatterino2;
+          inherit (callPackage ./firefox/generated-firefox-addons.nix {
+            inherit buildFirefoxXpiAddon;
+          })
+            access-control-allow-origin auto_highlight
+            cookie-quick-manager copy-all-tab-urls-we copy-as-org-mode
+            foxscroller google-container metube-downloader
+            night-video-tuner hello-goodbye hide-twitch-chat-users
+            prometheus-formatter right-click-search rocker_gestures
+            russian-ru-language-pack scroll_anywhere sitedelta-watch
+            snaplinksplus soundfixer tab-slideshow-we
+            twitch-error-autorefresher view-page-archive
+            visited-link-enabler ultrawidify;
+          inherit (rycee-nur-expressions.packages.${system})
+            container-proxy copy-link-text copy-selection-as-markdown
+            ghosttext link-gopher lovely-forks redirector single-file
+            tab-reloader return-youtube-dislikes ublacklist;
+          firefox-addon-libredirect =
+            rycee-nur-expressions.packages.${system}.libredirect;
+          alejandra =
+            (kamadorueda-alejandra.packages.${system}).alejandra-x86_64-unknown-linux-gnu;
+          viddy = prev.viddy.overrideAttrs (old: {
+            patches = [ ./patches/viddy-add-maxhistory-argument.patch ];
+          });
+        });
+
       devShell.${system} = with pkgs;
         mkShell {
           buildInputs =
@@ -315,51 +359,8 @@
       deploy.nodes = let
         home-manager-profile = home-manager-modules:
           let
-            overlay = final: prev:
-              self.packages.${system} // (let
-                inherit (rycee-nur-expressions.lib.${system})
-                  buildFirefoxXpiAddon;
-                inherit (prev) callPackage;
-              in {
-                inherit (deploy-rs.outputs.packages.${system}) deploy-rs;
-                inherit (majordomo-vault.inputs.nixpkgs.legacyPackages.${system})
-                  vault-bin;
-                inherit (import
-                  (rycee-nur-expressions.outPath + "/default.nix") {
-                    pkgs = prev;
-                  })
-                  mozilla-addons-to-nix;
-                inherit (nixpkgs-nixd.legacyPackages.${system}) nixd;
-                inherit (nixpkgs-wayvnc.legacyPackages.${system}) wayvnc;
-                inherit (nixpkgs-copyq.legacyPackages.${system}) clipboard-jh;
-                inherit (nixpkgs-chatterino2.legacyPackages.${system})
-                  chatterino2;
-                inherit (callPackage ./firefox/generated-firefox-addons.nix {
-                  inherit buildFirefoxXpiAddon;
-                })
-                  access-control-allow-origin auto_highlight
-                  cookie-quick-manager copy-all-tab-urls-we copy-as-org-mode
-                  foxscroller google-container metube-downloader
-                  night-video-tuner hello-goodbye hide-twitch-chat-users
-                  prometheus-formatter right-click-search rocker_gestures
-                  russian-ru-language-pack scroll_anywhere sitedelta-watch
-                  snaplinksplus soundfixer tab-slideshow-we
-                  twitch-error-autorefresher view-page-archive
-                  visited-link-enabler ultrawidify;
-                inherit (rycee-nur-expressions.packages.${system})
-                  container-proxy copy-link-text copy-selection-as-markdown
-                  ghosttext link-gopher lovely-forks redirector single-file
-                  tab-reloader return-youtube-dislikes ublacklist;
-                firefox-addon-libredirect =
-                  rycee-nur-expressions.packages.${system}.libredirect;
-                alejandra =
-                  (kamadorueda-alejandra.packages.${system}).alejandra-x86_64-unknown-linux-gnu;
-                viddy = prev.viddy.overrideAttrs (old: {
-                  patches = [ ./patches/viddy-add-maxhistory-argument.patch ];
-                });
-              });
             pkgs = import nixpkgs {
-              overlays = [ nur.overlay flake-utils-plus.overlay overlay ];
+              overlays = [ nur.overlay flake-utils-plus.overlay self.overlay ];
               inherit system;
               config = {
                 allowUnfreePredicate = pkg:
