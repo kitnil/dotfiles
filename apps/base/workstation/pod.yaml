@@ -93,8 +93,6 @@ spec:
     - mountPath: /mnt/home/oleg
       name: home-oleg
       readOnly: true
-    - mountPath: /mnt/guix-workstation
-      name: guix-workstation
     - mountPath: /mnt/nix
       name: nix
       readOnly: true
@@ -206,14 +204,6 @@ spec:
       path: /home/oleg
       type: Directory
     name: home-oleg
-  - hostPath:
-      path: /mnt/guix-workstation
-      type: Directory
-    name: guix-workstation
-  - hostPath:
-      path: /mnt/guix-workstation
-      type: Directory
-    name: guix-workstation
   - hostPath:
       path: /nix
       type: Directory
