@@ -21,10 +21,6 @@ container_id="$(guix_workstation_id)"
 /home/oleg/.local/share/chezmoi/dotfiles/run/pc0/09-firefox-twitch-namespace.sh
 
 nerdctl -n k8s.io exec "$container_id" /run/current-system/profile/bin/bash -lc '
-if ! mountpoint -q /home/oleg/.config/google-chrome
-then
-    /home/oleg/bin/manual-scripts-root-01-fs.sh
-fi
 export PATH=/home/oleg/.guix-home/profile/bin:$PATH
 if /home/oleg/bin/manual-scripts-root-02-net.sh
 then

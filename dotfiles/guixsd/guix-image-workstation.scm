@@ -153,10 +153,7 @@ allow-preset-passphrase"))))
                                                                             #$(file-append firefox "/bin/firefox") "--profile" (string-append home "/.mozilla/firefox/twitch"))))))))
                    (simple-service 'bin-manual-scripts
                                    home-files-service-type
-                                   (list `("bin/manual-scripts-root-01-fs.sh"
-                                           ,(local-file (string-append %project-directory "/dotfiles/run/guix-workstation/01-fs.sh")
-                                                        #:recursive? #t))
-                                         `("bin/manual-scripts-root-02-net.sh"
+                                   (list `("bin/manual-scripts-root-02-net.sh"
                                            ,(local-file (string-append %project-directory "/dotfiles/run/guix-workstation/03-net.sh")
                                                         #:recursive? #t))
                                          `("bin/manual-scripts-root-03-firefox-twitch-namespace.sh"
