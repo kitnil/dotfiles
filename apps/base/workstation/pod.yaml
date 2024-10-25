@@ -73,6 +73,7 @@ spec:
     volumeMounts:
     - mountPath: /run
       name: guix-run
+      mountPropagation: Bidirectional
     - mountPath: /dev/dri
       name: dev-dri
     - mountPath: /dev/input
@@ -224,6 +225,7 @@ spec:
       name: dev-dri
     - mountPath: /mnt/guix/run
       name: guix-run
+      mountPropagation: HostToContainer
     - mountPath: /mnt/guix/tmp
       name: tmp
   volumes:
