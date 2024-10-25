@@ -31,18 +31,3 @@ fi
 
 /home/oleg/bin/manual-scripts-root-03-firefox-twitch-namespace.sh
 '
-
-nerdctl -n k8s.io exec -u oleg:users "$container_id" /run/current-system/profile/bin/bash -lc '
-if [[ -e /home/oleg/.gnupg/pubring.kbx ]]
-then
-    :
-else
-    /home/oleg/bin/manual-scripts-oleg-02-gnupg.sh
-fi
-if [[ -e /home/oleg/.ssh/id_ed25519 ]]
-then
-    :
-else
-    /home/oleg/bin/manual-scripts-oleg-01-ssh.sh
-fi
-'

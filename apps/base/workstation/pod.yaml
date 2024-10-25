@@ -24,14 +24,20 @@ spec:
 
       chown 1000:998 /home/oleg
 
+      mkdir -p /home/oleg/.cache
+      chown 1000:998 /home/oleg/.cache
+
       mkdir /home/oleg/.config
       chown 1000:998 /home/oleg/.config
+
+      mkdir -p /home/oleg/.local
+      chown 1000:998 /home/oleg/.local
 
       mkdir -p /home/oleg/.local/share
       chown 1000:998 /home/oleg/.local/share
 
-      mkdir -p /home/oleg/.cache
-      chown 1000:998 /home/oleg/.local/share
+      mkdir -p /home/oleg/.ssh
+      chown 1000:998 /home/oleg/.ssh
     volumeMounts:
     - mountPath: /home/oleg
       name: container-home-oleg
@@ -112,12 +118,6 @@ spec:
       name: services
     - mountPath: /dev/shm
       name: shm
-    - mountPath: /mnt/home/oleg
-      name: home-oleg
-      readOnly: true
-    - mountPath: /mnt/nix
-      name: nix
-      readOnly: true
     - mountPath: /tmp
       name: tmp
     - mountPath: /mnt/guix/var/run/shepherd/socket
@@ -134,15 +134,20 @@ spec:
       mountPath: /home/oleg/.config/obs-studio
     - name: home-oleg-dot-local-share-remmina
       mountPath: /home/oleg/.local/share/remmina
-    - name: home-oleg-dot-local-share-TelegramDesktop
+    - name: home-oleg-dot-local-share-telegram
       mountPath: /home/oleg/.local/share/TelegramDesktop
     - name: home-oleg-dot-mozilla
       mountPath: /home/oleg/.mozilla
     - name: home-oleg-dot-password-store
       mountPath: /home/oleg/.password-store
+    - name: home-oleg-ssh-private-key
+      mountPath: /home/oleg/.ssh/id_ed25519
+    - name: home-oleg-ssh-public-key
+      mountPath: /home/oleg/.ssh/id_ed25519.pub
+    - name: home-oleg-ssh-known_hosts
+      mountPath: /home/oleg/.ssh/known_hosts
     - name: nix
       mountPath: /nix
-      readOnly: true
     lifecycle:
        preStop:
          exec:
@@ -298,7 +303,7 @@ spec:
     hostPath:
       path: /home/oleg/.local/share/remmina
       type: Directory
-  - name: home-oleg-dot-local-share-TelegramDesktop
+  - name: home-oleg-dot-local-share-telegram
     hostPath:
       path: /home/oleg/.local/share/TelegramDesktop
       type: Directory
@@ -314,3 +319,15 @@ spec:
     hostPath:
       path: /nix
       type: Directory
+  - name: home-oleg-ssh-private-key
+    hostPath:
+      path: /home/oleg/.ssh/id_ed25519
+      type: File
+  - name: home-oleg-ssh-public-key
+    hostPath:
+      path: /home/oleg/.ssh/id_ed25519.pub
+      type: File
+  - name: home-oleg-ssh-known_hosts
+    hostPath:
+      path: /home/oleg/.ssh/known_hosts
+      type: File
