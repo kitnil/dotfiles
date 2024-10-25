@@ -38,9 +38,13 @@ spec:
 
       mkdir /home/oleg/.ssh
       chown 1000:998 /home/oleg/.ssh
+
+      mkdir /mnt/nixos/rootfs
     volumeMounts:
     - mountPath: /home/oleg
       name: container-home-oleg
+    - mountPath: /mnt/nixos
+      name: nixos-mnt-rootfs
   containers:
   - image: harbor.home.wugi.info/library/guix-image-workstation:latest
     name: guix
@@ -148,6 +152,9 @@ spec:
       mountPath: /home/oleg/.ssh/known_hosts
     - name: nix
       mountPath: /nix
+    - mountPath: /mnt/nixos
+      name: nixos-mnt-rootfs
+      mountPropagation: HostToContainer
     lifecycle:
        preStop:
          exec:
@@ -187,6 +194,9 @@ spec:
       name: nixos-run
     - mountPath: /tmp
       name: tmp
+    - mountPath: /mnt/nixos
+      name: nixos-mnt-rootfs
+      mountPropagation: Bidirectional
   - image: harbor.home.wugi.info/library/archlinux-systemd:latest
     name: archlinux
     env:
@@ -332,3 +342,7 @@ spec:
     hostPath:
       path: /home/oleg/.ssh/known_hosts
       type: File
+  - name: nixos-mnt-rootfs
+    emptyDir:
+      medium: Memory
+      sizeLimit: 8M
