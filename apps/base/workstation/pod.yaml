@@ -24,19 +24,19 @@ spec:
 
       chown 1000:998 /home/oleg
 
-      mkdir -p /home/oleg/.cache
+      mkdir /home/oleg/.cache
       chown 1000:998 /home/oleg/.cache
 
       mkdir /home/oleg/.config
       chown 1000:998 /home/oleg/.config
 
-      mkdir -p /home/oleg/.local
+      mkdir /home/oleg/.local
       chown 1000:998 /home/oleg/.local
 
-      mkdir -p /home/oleg/.local/share
+      mkdir /home/oleg/.local/share
       chown 1000:998 /home/oleg/.local/share
 
-      mkdir -p /home/oleg/.ssh
+      mkdir /home/oleg/.ssh
       chown 1000:998 /home/oleg/.ssh
     volumeMounts:
     - mountPath: /home/oleg
