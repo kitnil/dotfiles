@@ -245,6 +245,8 @@ spec:
       mountPath: /home/oleg/.bash_history
     - name: root-bash-history
       mountPath: /root/.bash_history
+    - name: home-oleg-config-socialstream
+      mountPath: /home/oleg/.config/SocialStream
   volumes:
   - name: dev-dri
     hostPath:
@@ -367,3 +369,7 @@ spec:
     hostPath:
       path: /root/.bash_history
       type: File
+  - name: home-oleg-config-socialstream
+    hostPath:
+      path: /home/oleg/.config/SocialStream
+      type: Directory
