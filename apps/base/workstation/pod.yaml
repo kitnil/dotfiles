@@ -152,6 +152,10 @@ spec:
       mountPath: /nix
     - name: home-oleg-dot-config-google-chrome
       mountPath: /home/oleg/.config/google-chrome
+    - name: home-oleg-bash-history
+      mountPath: /home/oleg/.bash_history
+    - name: root-bash-history
+      mountPath: /root/.bash_history
     lifecycle:
        preStop:
          exec:
@@ -199,6 +203,10 @@ spec:
       name: nixos-home
     - mountPath: /home/oleg/.mozilla/firefox
       name: home-oleg-mozilla-firefox
+    - name: home-oleg-bash-history
+      mountPath: /home/oleg/.bash_history
+    - name: root-bash-history
+      mountPath: /root/.bash_history
   - image: harbor.home.wugi.info/library/archlinux-systemd:latest
     name: archlinux
     env:
@@ -232,6 +240,10 @@ spec:
       mountPropagation: HostToContainer
     - mountPath: /mnt/guix/tmp
       name: guix-tmp
+    - name: home-oleg-bash-history
+      mountPath: /home/oleg/.bash_history
+    - name: root-bash-history
+      mountPath: /root/.bash_history
   volumes:
   - name: dev-dri
     hostPath:
@@ -345,4 +357,12 @@ spec:
   - name: home-oleg-ssh-known-hosts
     hostPath:
       path: /home/oleg/.ssh/known_hosts
+      type: File
+  - name: home-oleg-bash-history
+    hostPath:
+      path: /home/oleg/.bash_history
+      type: File
+  - name: root-bash-history
+    hostPath:
+      path: /root/.bash_history
       type: File
