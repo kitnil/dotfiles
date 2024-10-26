@@ -150,6 +150,8 @@ spec:
       mountPath: /home/oleg/.ssh/known_hosts
     - name: nix
       mountPath: /nix
+    - name: home-oleg-dot-config-google-chrome
+      mountPath: /home/oleg/.config/google-chrome
     lifecycle:
        preStop:
          exec:
@@ -197,8 +199,6 @@ spec:
       name: nixos-home
     - mountPath: /home/oleg/.mozilla/firefox
       name: home-oleg-mozilla-firefox
-    - mountPath: /home/oleg/.config/google-chrome
-      name: home-oleg-dot-config-google-chrome
   - image: harbor.home.wugi.info/library/archlinux-systemd:latest
     name: archlinux
     env:
