@@ -14,6 +14,8 @@
     robo3t
 
     chatterino2
+
+    tmux
   ];
 
   home.file = {
