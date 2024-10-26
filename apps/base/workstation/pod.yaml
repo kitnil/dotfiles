@@ -132,20 +132,14 @@ spec:
       name: var-run-shepherd-socket
     - mountPath: /home/oleg
       name: container-home-oleg
-    - mountPath: /home/oleg/.config/google-chrome
-      name: google-chrome
     - name: home-oleg-dot-cache-ihs
       mountPath: /home/oleg/.cache/ihs
-    - name: home-oleg-dot-config-google-chrome
-      mountPath: /home/oleg/.config/google-chrome
     - name: home-oleg-dot-config-obs-studio
       mountPath: /home/oleg/.config/obs-studio
     - name: home-oleg-dot-local-share-remmina
       mountPath: /home/oleg/.local/share/remmina
     - name: home-oleg-dot-local-share-telegram
       mountPath: /home/oleg/.local/share/TelegramDesktop
-    - name: home-oleg-dot-mozilla
-      mountPath: /home/oleg/.mozilla
     - name: home-oleg-dot-password-store
       mountPath: /home/oleg/.password-store
     - name: home-oleg-ssh-private-key
@@ -203,6 +197,8 @@ spec:
       name: nixos-home
     - mountPath: /home/oleg/.mozilla/firefox
       name: home-oleg-mozilla-firefox
+    - mountPath: /home/oleg/.config/google-chrome
+      name: home-oleg-dot-config-google-chrome
   - image: harbor.home.wugi.info/library/archlinux-systemd:latest
     name: archlinux
     env:
@@ -302,10 +298,6 @@ spec:
   - emptyDir:
       sizeLimit: 4G
     name: container-home-oleg
-  - name: google-chrome
-    hostPath:
-      path: /home/oleg/.config/google-chrome
-      type: Directory
   - name: home-oleg-dot-cache-ihs
     hostPath:
       path: /home/oleg/.cache/ihs
