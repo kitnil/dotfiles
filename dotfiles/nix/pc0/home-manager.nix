@@ -12,7 +12,6 @@
     OVMF.fd # UEFI for virtual machines in libvirt
 
     alacritty
-    google-chrome
     robo3t
 
     chatterino2
