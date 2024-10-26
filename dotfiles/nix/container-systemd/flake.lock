@@ -268,11 +268,11 @@
       },
       "locked": {
         "dir": "dotfiles/nix",
-        "lastModified": 1729888949,
-        "narHash": "sha256-YPu6lKtLFLJOoHXXq9/n16Ume7VoQHjg7Ctd+R4f99E=",
+        "lastModified": 1729932182,
+        "narHash": "sha256-wwzI3P5iRR1kENL7W5mq8qYMuqPTAECZCRCd71TBTxA=",
         "ref": "refs/heads/master",
-        "rev": "5175242acc5107dac7de4c44ee2237405ea23fce",
-        "revCount": 11855,
+        "rev": "8e38a48ae2936dac4095c21afe0917467626b31b",
+        "revCount": 11868,
         "type": "git",
         "url": "file:///home/oleg/.local/share/chezmoi?dir=dotfiles/nix"
       },
@@ -2565,11 +2565,11 @@
       },
       "locked": {
         "dir": "pkgs/firefox-addons",
-        "lastModified": 1729849030,
-        "narHash": "sha256-YrWj3lg45Y05PGYFeLMoDmsrq8toQDNgOAEZJ7wsXxc=",
+        "lastModified": 1729915395,
+        "narHash": "sha256-fD9q0wKTRyem5EYO7pt2FfgDUK/0bkR8Mitq2KaZxA0=",
         "ref": "refs/heads/master",
-        "rev": "d4f806c3042189bc93061207c07e0d8332c4944d",
-        "revCount": 3877,
+        "rev": "f4a24161dbb580dc91bc59dc54b2d81308a71610",
+        "revCount": 3879,
         "type": "git",
         "url": "https://gitlab.com/rycee/nur-expressions?dir=pkgs/firefox-addons"
       },
