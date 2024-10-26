@@ -11,4 +11,4 @@ images:
 - name: harbor.home.wugi.info/library/nixos-systemd
   newTag: 1b244b07
 - name: harbor.home.wugi.info/library/archlinux-systemd
-  newTag: bb3076af
+  newTag: 464e8f91
