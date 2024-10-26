@@ -38,9 +38,17 @@ spec:
 
       mkdir /home/oleg/.ssh
       chown 1000:998 /home/oleg/.ssh
+
+      mkdir /mnt/nixos/home/oleg
+      chown 1000:998 /mnt/nixos/home/oleg
+
+      mkdir -p /mnt/nixos/home/oleg/.mozilla
+      chown 1000:998 /mnt/nixos/home/oleg/.mozilla
     volumeMounts:
     - mountPath: /home/oleg
       name: container-home-oleg
+    - mountPath: /mnt/nixos/home
+      name: nixos-home
   containers:
   - image: harbor.home.wugi.info/library/guix-image-workstation:latest
     name: guix
@@ -191,6 +199,10 @@ spec:
     - mountPath: /mnt/guix/run
       name: guix-run
       mountPropagation: HostToContainer
+    - mountPath: /home
+      name: nixos-home
+    - mountPath: /home/oleg/.mozilla/firefox
+      name: home-oleg-mozilla-firefox
   - image: harbor.home.wugi.info/library/archlinux-systemd:latest
     name: archlinux
     env:
@@ -278,6 +290,8 @@ spec:
       sizeLimit: 512M
     name: nixos-run
   - emptyDir:
+    name: nixos-home
+  - emptyDir:
       medium: Memory
       sizeLimit: 512M
     name: archlinux-run
@@ -319,6 +333,10 @@ spec:
   - name: home-oleg-dot-password-store
     hostPath:
       path: /home/oleg/.password-store
+      type: Directory
+  - name: home-oleg-mozilla-firefox
+    hostPath:
+      path: /home/oleg/.mozilla/firefox
       type: Directory
   - name: nix
     hostPath:
