@@ -117,7 +117,7 @@ spec:
     - mountPath: /etc/services
       name: services
     - mountPath: /dev/shm
-      name: shm
+      name: guix-shm
     - mountPath: /tmp
       name: guix-tmp
     - mountPath: /mnt/guix/var/run/shepherd/socket
@@ -249,7 +249,7 @@ spec:
     hostPath:
       path: /etc/services
       type: File
-  - name: shm
+  - name: guix-shm
     emptyDir:
       medium: Memory
       sizeLimit: 1Gi
