@@ -160,11 +160,7 @@ spec:
        preStop:
          exec:
            command:
-           - /bin/sh
-           - -c
-           - |
-             /run/current-system/profile/sbin/halt
-             exit 0
+           - /run/current-system/profile/sbin/halt
   - name: nixos
     image: harbor.home.wugi.info/library/nixos-systemd:latest
     command:
