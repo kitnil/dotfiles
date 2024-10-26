@@ -174,7 +174,6 @@ spec:
         - SYS_PTRACE
         - SYS_RESOURCE
         - SYS_TIME
-      privileged: true
     lifecycle:
        preStop:
          exec:
