@@ -13,7 +13,7 @@ RUN sed -i 's|# %wheel ALL=(ALL:ALL) NOPASSWD: ALL|%wheel ALL=(ALL:ALL) NOPASSWD
 
 COPY rootfs/bin/entrypoint /bin/entrypoint
 
-ADD https://github.com/steveseguin/social_stream/releases/download/0.1.52/socialstream-linux-AppImage.zip /tmp/socialstream-linux-AppImage.zip
+ADD https://iso.wugi.info/socialstream-0.1.52-linux-AppImage.zip /tmp/socialstream-linux-AppImage.zip
 RUN cd /usr/local/bin \
  && unzip /tmp/socialstream-linux-AppImage.zip \
  && rm /tmp/socialstream-linux-AppImage.zip \
