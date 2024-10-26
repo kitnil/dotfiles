@@ -150,8 +150,6 @@ spec:
       mountPath: /home/oleg/.ssh/known_hosts
     - name: nix
       mountPath: /nix
-    - name: home-oleg-dot-config-google-chrome
-      mountPath: /home/oleg/.config/google-chrome
     - name: home-oleg-bash-history
       mountPath: /home/oleg/.bash_history
     - name: root-bash-history
@@ -205,6 +203,8 @@ spec:
       name: home-oleg-mozilla-firefox
     - name: home-oleg-bash-history
       mountPath: /home/oleg/.bash_history
+    - name: home-oleg-dot-config-google-chrome
+      mountPath: /home/oleg/.config/google-chrome
     - name: root-bash-history
       mountPath: /root/.bash_history
   - image: harbor.home.wugi.info/library/archlinux-systemd:latest
