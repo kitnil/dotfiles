@@ -221,6 +221,7 @@ spec:
         - SYS_ADMIN
         - SYS_NICE
         - SYS_TIME
+      privileged: true
     tty: true
     lifecycle:
        preStop:
