@@ -11,7 +11,9 @@
 
     OVMF.fd # UEFI for virtual machines in libvirt
 
+    nixGLIntel
     alacritty
+
     robo3t
 
     chatterino2
