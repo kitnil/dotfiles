@@ -128,6 +128,11 @@
               packages.snaplinksplus
             ];
         };
+        messaging = {
+          name = "default";
+          isDefault = false;
+          id = 4;
+        };
       };
   };
 
