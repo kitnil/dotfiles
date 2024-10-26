@@ -10,3 +10,5 @@ images:
   newTag: "6677e699"
 - name: harbor.home.wugi.info/library/nixos-systemd
   newTag: 1b244b07
+- name: harbor.home.wugi.info/library/archlinux-systemd
+  newTag: 4672eb0c
