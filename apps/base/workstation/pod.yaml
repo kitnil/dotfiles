@@ -44,6 +44,9 @@ spec:
 
       mkdir -p /mnt/nixos/home/oleg/.mozilla
       chown 1000:998 /mnt/nixos/home/oleg/.mozilla
+
+      mkdir -p /mnt/nixos/home/oleg/.config
+      chown 1000:998 /mnt/nixos/home/oleg/.config
     volumeMounts:
     - mountPath: /home/oleg
       name: container-home-oleg
