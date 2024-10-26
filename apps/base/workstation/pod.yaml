@@ -182,10 +182,15 @@ spec:
            - poweroff
     tty: true
     volumeMounts:
+    - mountPath: /dev/dri
+      name: dev-dri
     - mountPath: /run
       name: nixos-run
-    - mountPath: /tmp
+    - mountPath: /mnt/guix/tmp
       name: guix-tmp
+    - mountPath: /mnt/guix/run
+      name: guix-run
+      mountPropagation: HostToContainer
   - image: harbor.home.wugi.info/library/archlinux-systemd:latest
     name: archlinux
     env:
