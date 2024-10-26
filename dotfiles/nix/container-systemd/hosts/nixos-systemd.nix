@@ -106,7 +106,7 @@
     enableDefaultPackages = true;
     fonts = with pkgs; [
       dejavu_fonts
-      wqy_microhei
+      wqy_zenhei
     ];
   };
 
