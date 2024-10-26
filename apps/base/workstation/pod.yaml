@@ -119,7 +119,7 @@ spec:
     - mountPath: /dev/shm
       name: shm
     - mountPath: /tmp
-      name: tmp
+      name: guix-tmp
     - mountPath: /mnt/guix/var/run/shepherd/socket
       name: var-run-shepherd-socket
     - mountPath: /home/oleg
@@ -185,7 +185,7 @@ spec:
     - mountPath: /run
       name: nixos-run
     - mountPath: /tmp
-      name: tmp
+      name: guix-tmp
   - image: harbor.home.wugi.info/library/archlinux-systemd:latest
     name: archlinux
     env:
@@ -218,7 +218,7 @@ spec:
       name: guix-run
       mountPropagation: HostToContainer
     - mountPath: /mnt/guix/tmp
-      name: tmp
+      name: guix-tmp
   volumes:
   - name: dev-dri
     hostPath:
@@ -259,7 +259,7 @@ spec:
   - emptyDir:
       medium: Memory
       sizeLimit: 4G
-    name: tmp
+    name: guix-tmp
   - emptyDir:
       medium: Memory
       sizeLimit: 4G
