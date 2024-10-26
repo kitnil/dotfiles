@@ -26,6 +26,9 @@
         nixosConfigurations = {
           nixos-systemd = nixpkgs.lib.nixosSystem {
             inherit system;
+            specialArgs = {
+              inherit (inputs.dotfiles-home-manager.inputs) nixpkgs;
+            };
             modules = [
               inputs.dotfiles-home-manager.inputs.home-manager.nixosModules.home-manager
               {
