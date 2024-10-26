@@ -2496,18 +2496,18 @@
       },
       "locked": {
         "dir": "pkgs/firefox-addons",
-        "lastModified": 1695441765,
-        "narHash": "sha256-s6sNoj2bKX9e7eE870o8Osr0lr3jNWUYkgdmIYQPCs8=",
+        "lastModified": 1729915395,
+        "narHash": "sha256-fD9q0wKTRyem5EYO7pt2FfgDUK/0bkR8Mitq2KaZxA0=",
         "ref": "refs/heads/master",
-        "rev": "e1c9234dd58dfd8bfa7662df27d6124cad190f2a",
-        "revCount": 3104,
+        "rev": "f4a24161dbb580dc91bc59dc54b2d81308a71610",
+        "revCount": 3879,
         "type": "git",
-        "url": "https://gitlab.com/rycee/nur-expressions?dir=pkgs%2ffirefox-addons"
+        "url": "https://gitlab.com/rycee/nur-expressions?dir=pkgs/firefox-addons"
       },
       "original": {
         "dir": "pkgs/firefox-addons",
         "type": "git",
-        "url": "https://gitlab.com/rycee/nur-expressions?dir=pkgs%2ffirefox-addons"
+        "url": "https://gitlab.com/rycee/nur-expressions?dir=pkgs/firefox-addons"
       }
     },
     "shared-http-errors": {
