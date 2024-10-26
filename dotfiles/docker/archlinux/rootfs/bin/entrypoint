@@ -2,7 +2,7 @@
 
 set -o nounset -o errexit -o pipefail -o xtrace
 
-sed -i "s|DefaultInstance=tty1|DefaultInstance=${TTY:-tty5}|g;s|ConditionPathExists=/dev/tty0|ConditionPathExists=/dev/${TTY:-tty5}|g" /usr/lib/systemd/system/getty@.service
+rm /usr/lib/systemd/system/getty@.service
 mkdir -p /etc/systemd/system/getty.target.wants
 
 rm -vf /usr/lib/systemd/system/systemd-networkd*
