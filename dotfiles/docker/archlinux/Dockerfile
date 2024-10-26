@@ -1,7 +1,7 @@
 FROM archlinux
 
 RUN pacman --noconfirm -Syu \
- && pacman --noconfirm -S alsa-lib atk bash-completion cups fuse-overlayfs fuse2 gdk-pixbuf2 gtk3 less nss strace sudo tmux unzip wmenu xorg-xwayland
+ && pacman --noconfirm -S alsa-lib atk bash-completion cups fuse-overlayfs fuse2 gdk-pixbuf2 gtk3 less noto-fonts noto-fonts-cjk noto-fonts-emoji noto-fonts-extra nss strace sudo tmux unzip wmenu xorg-xwayland
 
 RUN useradd -m oleg \
  && passwd --delete oleg \
