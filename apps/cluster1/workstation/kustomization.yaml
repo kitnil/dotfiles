@@ -9,6 +9,6 @@ images:
 - name: harbor.home.wugi.info/library/guix-image-workstation
   newTag: "6677e699"
 - name: harbor.home.wugi.info/library/nixos-systemd
-  newTag: 1b244b07
+  newTag: 37ef58a0
 - name: harbor.home.wugi.info/library/archlinux-systemd
   newTag: 7a1dcb6c
