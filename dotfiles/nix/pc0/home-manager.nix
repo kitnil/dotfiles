@@ -129,7 +129,7 @@
             ];
         };
         messaging = {
-          name = "default";
+          name = "messaging";
           isDefault = false;
           id = 4;
         };
