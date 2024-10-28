@@ -7,7 +7,7 @@ patchesStrategicMerge:
 - pod.yaml
 images:
 - name: harbor.home.wugi.info/library/guix-image-workstation
-  newTag: "6677e699"
+  newTag: "9914d11c"
 - name: harbor.home.wugi.info/library/nixos-systemd
   newTag: 37ef58a0
 - name: harbor.home.wugi.info/library/archlinux-systemd
