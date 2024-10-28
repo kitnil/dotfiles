@@ -326,7 +326,7 @@ spec:
       type: Directory
   - name: home-oleg-dot-config-obs-studio
     hostPath:
-      path: /home/oleg/.config/obs-studio
+      path: /home/oleg/.config/obs-studio-4k
       type: Directory
   - name: home-oleg-dot-local-share-remmina
     hostPath:
