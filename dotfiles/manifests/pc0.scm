@@ -19,6 +19,5 @@
                 "obs.scm"
                 "deprecated.scm"
                 "telegram.scm"
-                "nonguix.scm"
                 "majordomo.scm"))
          (list manifest-wm)))
