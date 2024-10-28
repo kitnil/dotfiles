@@ -7,4 +7,4 @@ nixos-systemd:
 	image_id=$$(docker import $$tarball)
 	docker tag $$image_id "$(container_registry)/library/$@:$$commit_8"
 	docker push "$(container_registry)/library/$@:$$commit_8"
-	echo "docker://$(container_registry)/library/$@:$$commit_8"
+	echo "$(container_registry)/library/$@:$$commit_8"
