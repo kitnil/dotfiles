@@ -16,6 +16,7 @@ spec:
   initContainers:
   - name: volume-mount-hack
     image: busybox
+    imagePullPolicy: IfNotPresent
     command:
     - sh
     - -c
