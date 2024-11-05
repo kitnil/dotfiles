@@ -22,6 +22,11 @@ spec:
                 operator: In
                 values:
                 - "true"
+      tolerations:
+      - key: "workstation.cluster.local"
+        operator: "Equal"
+        value: "true"
+        effect: "NoSchedule"
       hostNetwork: true
       containers:
       - image: harbor.home.wugi.info/library/isc-dhcp:0633b40c
