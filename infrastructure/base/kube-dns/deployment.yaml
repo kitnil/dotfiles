@@ -26,8 +26,7 @@ spec:
             - "-conf"
             - /etc/coredns/Corefile
           image: coredns/coredns:1.7.1
-          # XXX: Kubelet wrapper script loads image, but gc will delete it.
-          # imagePullPolicy: Never
+          imagePullPolicy: IfNotPresent
           livenessProbe:
             failureThreshold: 5
             httpGet:
