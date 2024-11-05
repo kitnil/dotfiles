@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: kube-system
 resources:
   - ../../base/kube-dns
+  - poddisruptionbudget.yaml
 patchesStrategicMerge:
   - deployment.yaml
   - service.yaml
