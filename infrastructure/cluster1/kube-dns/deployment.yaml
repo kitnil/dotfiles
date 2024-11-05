@@ -6,7 +6,6 @@ metadata:
 spec:
   template:
     spec:
-      containers:
       tolerations:
       - effect: NoSchedule
         key: node-role.kubernetes.io/master
