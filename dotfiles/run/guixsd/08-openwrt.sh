@@ -2,5 +2,12 @@
 
 set -o nounset -o errexit -o pipefail -o xtrace
 
-sudo virsh net-start --network br0
-sudo virsh start --domain openwrt
+if sudo virsh net-start --network br0
+then
+    :
+fi
+
+until sudo virsh start --domain openwrt
+do
+    sleep 2
+done
