@@ -3,4 +3,5 @@ kind: Kustomization
 namespace: isc-dhcp
 resources:
 - namespace.yaml
-- daemonset.yaml
+- primary-daemonset.yaml
+- secondary-daemonset.yaml

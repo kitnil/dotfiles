@@ -1,16 +1,16 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: isc-dhcp
+  name: isc-dhcp-secondary
 spec:
   selector:
     matchLabels:
-      app.kubernetes.io/name: isc-dhcp
+      app.kubernetes.io/name: isc-dhcp-secondary
       app.kubernetes.io/part-of: isc-dhcp
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: isc-dhcp
+        app.kubernetes.io/name: isc-dhcp-secondary
         app.kubernetes.io/part-of: isc-dhcp
     spec:
       affinity:
@@ -18,7 +18,7 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
             - matchExpressions:
-              - key: isc-dhcp.cluster.local/schedulable
+              - key: isc-dhcp-secondary.cluster.local/schedulable
                 operator: In
                 values:
                 - "true"
@@ -34,4 +34,4 @@ spec:
       volumes:
       - name: config
         configMap:
-          name: isc-dhcp-configuration
+          name: isc-dhcp-secondary-configuration
