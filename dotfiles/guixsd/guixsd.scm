@@ -1124,8 +1124,7 @@ location / {
 
       (keyboard-layout (keyboard-layout "us" "altgr-intl"))
 
-      (kernel-loadable-modules (list vendor-reset-linux-module
-                                     drbd-module
+      (kernel-loadable-modules (list drbd-module
                                      v4l2loopback-linux-module))
 
       ;; XXX: Add hardware/guixsd.scm
@@ -2176,7 +2175,6 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                          (service kernel-module-loader-service-type
                                   '("amdgpu"
                                     "vfio-pci"
-                                    "vendor-reset" ;reset NAVI10 (5500XT)
                                     "dm-snapshot"
                                     "dm-thin-pool"
                                     "br_netfilter" ;kube-dns
