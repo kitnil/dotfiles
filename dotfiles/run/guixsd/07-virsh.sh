@@ -2,7 +2,7 @@
 
 set -o nounset -o errexit -o pipefail -o xtrace
 
-sudo sysctl vm.nr_hugepages=4096
+sudo sysctl vm.nr_hugepages=2048
 sudo mount -t hugetlbfs hugetlbfs /hugepages
 sudo herd stop libvirtd
 sudo herd start libvirtd
