@@ -27,6 +27,15 @@
                                          #:recursive? #t)
                            "13-guix-workstation-run.sh"))))
 
+(define container-guix-sway-autostart-program
+  (program-file "container-guix-sway-autostart-program"
+                #~(begin
+                    (setenv "PATH"
+                            "/run/setuid-programs:/root/.config/guix/current/bin:/run/current-system/profile/bin:/run/current-system/profile/sbin")
+                    (execl #$(local-file "/home/oleg/.local/share/chezmoi/dotfiles/run/pc0/14-sway-run-all.sh"
+                                         #:recursive? #t)
+                           "sway-run-all"))))
+
 (operating-system
   (host-name "pc0")
   (timezone "Europe/Moscow")
@@ -336,6 +345,17 @@ cgroup_device_acl = [
                                            (requirement '())
                                            (start #~(make-forkexec-constructor
                                                      (list #$container-guix-program)))
+                                           (respawn? #f))))
+                         (simple-service 'container-guix-sway-autostart shepherd-root-service-type
+                                         (list
+                                          (shepherd-service
+                                           (provision '(container-guix-sway-autostart))
+                                           (auto-start? #f)
+                                           (one-shot? #t)
+                                           (documentation "Run programs in Sway inside Guix container.")
+                                           (requirement '())
+                                           (start #~(make-forkexec-constructor
+                                                     (list #$container-guix-sway-autostart-program)))
                                            (respawn? #f)))))
                     (modify-services
                         (filter (lambda (service)
