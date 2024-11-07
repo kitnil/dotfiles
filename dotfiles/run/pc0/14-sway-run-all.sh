@@ -72,4 +72,4 @@ sleep 2
 /home/oleg/bin/nerdctl-nixos-exec /bin/sh -lc 'export XDG_RUNTIME_DIR=/mnt/guix/run/user/1000; exec firefox --profile /home/oleg/.mozilla/firefox/pcaaxem9.default' &
 sleep 5
 
-sleep infinity
+exec sleep infinity
