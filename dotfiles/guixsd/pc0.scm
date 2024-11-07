@@ -198,18 +198,7 @@
   (services (append (list (service avahi-service-type)
                           (service dhcp-client-service-type
                                    (dhcp-client-configuration
-                                    (interfaces '("eth0"))
-                                    (config-file
-                                     (text-file "dhclient.conf" "\
-option rfc3442-classless-static-routes code 121 = array of unsigned integer 8;
-
-send host-name = gethostname();
-request subnet-mask, broadcast-address, time-offset, routers,
-        domain-name, domain-name-servers, domain-search, host-name,
-        dhcp6.name-servers, dhcp6.domain-search, dhcp6.fqdn, dhcp6.sntp-servers,
-        netbios-name-servers, netbios-scope, interface-mtu,
-        rfc3442-classless-static-routes, ntp-servers;
-"))))
+                                    (interfaces '("eth0"))))
                           (service openssh-service-type
                                    (openssh-configuration
                                     (openssh openssh-sans-x)
