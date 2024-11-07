@@ -376,6 +376,9 @@ cgroup_device_acl = [
                                                     (substitute-urls '("https://guix.wugi.info"
                                                                        "https://bordeaux.guix.gnu.org"
                                                                        "https://substitutes.nonguix.org"))))
+                                (dhcp-client-service-type config =>
+                                                          (dhcp-client-configuration
+                                                           (interfaces '("eth0"))))
                                 ;; (sysctl-service-type _ =>
                                 ;;                      (sysctl-configuration
                                 ;;                       (settings (append '(("net.ipv4.ip_forward" . "1")
