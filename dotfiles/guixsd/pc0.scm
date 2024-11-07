@@ -351,7 +351,6 @@ cgroup_device_acl = [
                                           (shepherd-service
                                            (provision '(container-guix-sway-autostart))
                                            (auto-start? #f)
-                                           (one-shot? #t)
                                            (documentation "Run programs in Sway inside Guix container.")
                                            (requirement '())
                                            (start #~(make-forkexec-constructor
