@@ -196,7 +196,9 @@
   ;; Add services to the baseline: a DHCP client and an SSH
   ;; server.  You may wish to add an NTP service here.
   (services (append (list (service avahi-service-type)
-                          (service dhcp-client-service-type)
+                          (service dhcp-client-service-type
+                                   (dhcp-client-configuration
+                                    (interfaces '("eth0"))))
                           (service openssh-service-type
                                    (openssh-configuration
                                     (openssh openssh-sans-x)
