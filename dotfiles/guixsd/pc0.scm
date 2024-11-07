@@ -355,7 +355,8 @@ cgroup_device_acl = [
                                            (requirement '())
                                            (start #~(make-forkexec-constructor
                                                      (list #$container-guix-sway-autostart-program)))
-                                           (respawn? #f)))))
+                                           (respawn? #f)
+                                           (stop #~(make-kill-destructor))))))
                     (modify-services
                         (filter (lambda (service)
                                 (let ((value (service-value service)))
