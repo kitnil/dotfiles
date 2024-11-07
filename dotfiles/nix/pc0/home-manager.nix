@@ -20,6 +20,8 @@
     chatterino2
 
     tmux
+
+    wayvnc
   ];
 
   home.file = {
