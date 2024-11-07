@@ -211,6 +211,8 @@ spec:
       mountPath: /home/oleg/.config/google-chrome
     - name: root-bash-history
       mountPath: /root/.bash_history
+    - name: home-oleg-config-wayvnc
+      mountPath: /home/oleg/.config/wayvnc
   - image: harbor.home.wugi.info/library/archlinux-systemd:latest
     name: archlinux
     env:
@@ -376,4 +378,8 @@ spec:
   - name: home-oleg-config-socialstream
     hostPath:
       path: /home/oleg/.config/SocialStream
+      type: Directory
+  - name: home-oleg-config-wayvnc
+    hostPath:
+      path: /home/oleg/.config/wayvnc
       type: Directory
