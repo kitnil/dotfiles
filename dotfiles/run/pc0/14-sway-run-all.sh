@@ -84,4 +84,10 @@ sleep 2
 /home/oleg/bin/nerdctl-guix-exec /bin/sh -lc 'export SWAYSOCK="$(echo /run/user/1000/sway-ipc*sock)"; /home/oleg/.guix-home/profile/bin/swaymsg layout tabbed'
 sleep 2
 
+/home/oleg/bin/nerdctl-guix-exec /bin/sh -lc 'pactl set-default-sink alsa_output.pci-0000_12_00.6.analog-stereo'
+sleep 1
+
+/home/oleg/bin/nerdctl-guix-exec /bin/sh -lc 'pactl set-source-volume alsa_input.usb-FIFINE_Microphones_FIFINE_K670_Microphone_REV1.0-00.analog-stereo 80%'
+sleep 1
+
 exec sleep infinity
