@@ -213,6 +213,8 @@ spec:
       mountPath: /root/.bash_history
     - name: home-oleg-config-wayvnc
       mountPath: /home/oleg/.config/wayvnc
+    - name: home-oleg-dot-local-share-chatterino
+      mountPath: /home/oleg/.local/share/chatterino
   - image: harbor.home.wugi.info/library/archlinux-systemd:latest
     name: archlinux
     env:
@@ -338,6 +340,10 @@ spec:
   - name: home-oleg-dot-local-share-telegram
     hostPath:
       path: /home/oleg/.local/share/TelegramDesktop
+      type: Directory
+  - name: home-oleg-dot-local-share-chatterino
+    hostPath:
+      path: /home/oleg/.local/share/chatterino
       type: Directory
   - name: home-oleg-dot-mozilla
     hostPath:
