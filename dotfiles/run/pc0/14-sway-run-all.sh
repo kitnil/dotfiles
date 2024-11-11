@@ -42,12 +42,12 @@ sway_move_left()
 }
 
 echo "INFO: Select Firefox Twitch window." 1>&2
-sway_focus_sway_move_left
-sway_focus_sway_move_left
-sway_focus_sway_move_left
-sway_focus_sway_move_left
-sway_focus_sway_move_left
-sway_focus_sway_move_left
+sway_focus_left
+sway_focus_left
+sway_focus_left
+sway_focus_left
+sway_focus_left
+sway_focus_left
 
 echo "INFO: Move Firefox Twitch window." 1>&2
 sway_move_right
@@ -57,8 +57,8 @@ sway_move_right
 sway_move_right
 
 echo "INFO: Select Firefox NUUM window." 1>&2
-sway_focus_sway_move_left
-sway_focus_sway_move_left
+sway_focus_left
+sway_focus_left
 
 echo "INFO: Move Firefox NUUM window." 1>&2
 sway_move_left
