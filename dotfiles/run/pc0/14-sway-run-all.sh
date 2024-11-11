@@ -24,6 +24,48 @@ sleep 5
 /home/oleg/bin/nerdctl-nixos-exec /bin/sh -lc 'export XDG_RUNTIME_DIR=/mnt/guix/run/user/1000; export DISPLAY=:0; exec chatterino' &
 sleep 2
 
+echo "INFO: Sort windows." 1>&2
+
+sway_focus_left()
+{
+    /home/oleg/bin/nerdctl-guix-exec /bin/sh -lc 'export SWAYSOCK="$(echo /run/user/1000/sway-ipc*sock)"; /home/oleg/.guix-home/profile/bin/swaymsg focus left'
+}
+
+sway_move_right()
+{
+    /home/oleg/bin/nerdctl-guix-exec /bin/sh -lc 'export SWAYSOCK="$(echo /run/user/1000/sway-ipc*sock)"; /home/oleg/.guix-home/profile/bin/swaymsg move right'
+}
+
+sway_move_left()
+{
+    /home/oleg/bin/nerdctl-guix-exec /bin/sh -lc 'export SWAYSOCK="$(echo /run/user/1000/sway-ipc*sock)"; /home/oleg/.guix-home/profile/bin/swaymsg move sway_move_left'
+}
+
+echo "INFO: Select Firefox Twitch window." 1>&2
+sway_focus_sway_move_left
+sway_focus_sway_move_left
+sway_focus_sway_move_left
+sway_focus_sway_move_left
+sway_focus_sway_move_left
+sway_focus_sway_move_left
+
+echo "INFO: Move Firefox Twitch window." 1>&2
+sway_move_right
+sway_move_right
+sway_move_right
+sway_move_right
+sway_move_right
+
+echo "INFO: Select Firefox NUUM window." 1>&2
+sway_focus_sway_move_left
+sway_focus_sway_move_left
+
+echo "INFO: Move Firefox NUUM window." 1>&2
+sway_move_left
+sway_move_left
+sway_move_left
+sway_move_left
+
 /home/oleg/bin/nerdctl-guix-exec /bin/sh -lc 'export SWAYSOCK="$(echo /run/user/1000/sway-ipc*sock)"; /home/oleg/.guix-home/profile/bin/swaymsg focus up'
 sleep 2
 
