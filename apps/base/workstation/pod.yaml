@@ -140,6 +140,8 @@ spec:
       mountPath: /home/oleg/.cache/ihs
     - name: home-oleg-dot-config-obs-studio
       mountPath: /home/oleg/.config/obs-studio
+    - name: home-oleg-dot-config-remmina
+      mountPath: /home/oleg/.config/remmina
     - name: home-oleg-dot-local-share-remmina
       mountPath: /home/oleg/.local/share/remmina
     - name: home-oleg-dot-local-share-telegram
@@ -332,6 +334,10 @@ spec:
   - name: home-oleg-dot-config-obs-studio
     hostPath:
       path: /home/oleg/.config/obs-studio-4k
+      type: Directory
+  - name: home-oleg-dot-config-remmina
+    hostPath:
+      path: /home/oleg/.config/remmina
       type: Directory
   - name: home-oleg-dot-local-share-remmina
     hostPath:
