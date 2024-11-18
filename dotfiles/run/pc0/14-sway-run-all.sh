@@ -132,4 +132,7 @@ sleep 1
 /home/oleg/bin/nerdctl-guix-exec /bin/sh -lc 'pactl set-source-volume alsa_input.usb-FIFINE_Microphones_FIFINE_K670_Microphone_REV1.0-00.analog-stereo 80%'
 sleep 1
 
+/home/oleg/bin/nerdctl-nixos-exec /bin/sh -lc 'export XDG_RUNTIME_DIR=/mnt/guix/run/user/1000; exec wayvnc --output=HEADLESS-2' &
+sleep 5
+
 exec sleep infinity
