@@ -298,7 +298,9 @@ EndSection\n")
                (list (string-append listen ":80"))))
    (ssl-certificate (if ssl-key? (letsencrypt-certificate host) #f))
    (ssl-certificate-key (if ssl-key? (letsencrypt-key host) #f))
-   (raw-content (if mtls? %mtls '()))))
+   (raw-content (if (and mtls?
+                         (file-exists? "/home/oleg/src/ssl/ca.pem"))
+                    %mtls '()))))
 
 (define %nginx-lua-package-path
   (list lua-resty-core
