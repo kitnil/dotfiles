@@ -2174,8 +2174,7 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
 127.0.0.1 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOnaDeOzwmrcrq1D8slYaeFozXZ0cpqNU0EvGmgnO29aiKkSD1ehbIV4vSxk3IDXz9ClMVPc1bTUTrYhEVHdCks="))))
 
                          (service kernel-module-loader-service-type
-                                  '("amdgpu"
-                                    "vfio-pci"
+                                  '("vfio-pci"
                                     "dm-snapshot"
                                     "dm-thin-pool"
                                     "br_netfilter" ;kube-dns
