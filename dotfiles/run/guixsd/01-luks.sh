@@ -28,5 +28,3 @@ sudo mv /run/setuid-programs/mount.nfs /run/setuid-programs/mount.nfs.1
 
 sudo modprobe drbd9
 sudo modprobe netconsole netconsole=@/br0,6666@192.168.0.192/
-
-sudo herd start vncserver2
