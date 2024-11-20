@@ -1688,6 +1688,7 @@ trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDS
                                     `(("jenkins" ,(local-file "ssh/id_rsa_jenkins.wugi.info.pub"))))
                                    (x11-forwarding? #t)
                                    (gateway-ports? 'client)
+                                   (permit-root-login 'prohibit-password)
                                    (password-authentication? #f)
                                    (use-pam? #f)
                                    (extra-content "\
