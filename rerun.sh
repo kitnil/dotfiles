@@ -26,7 +26,4 @@ do
 done
 
 cd /home/oleg/.local/share/chezmoi/apps/cluster1/workstation || exit 1
-if kubectl create -k .
-then
-    :
-fi
+flux reconcile kustomization workstation
