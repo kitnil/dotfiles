@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-set -o nounset -o errexit -o pipefail
+set -o nounset -o errexit -o pipefail -o xtrace
 
 packages=(
     alsa-lib
