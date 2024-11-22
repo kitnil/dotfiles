@@ -80,9 +80,9 @@ install_idea()
 
 main()
 {
-    base_system
     pacman --noconfirm -Syu
     pacman --noconfirm -S "${packages[@]}"
+    base_system
 
     install_socialstream
     install_yay
