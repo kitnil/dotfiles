@@ -29,6 +29,15 @@ packages+=(
     noto-fonts-extra
 )
 
+packages+=(
+    base-devel
+    git
+)
+
+packages+=(
+    libxtst
+)
+
 base_system()
 {
     groups=(
@@ -57,6 +66,18 @@ install_socialstream()
     chmod 555 socialstream
 }
 
+install_yay()
+{
+    git clone https://aur.archlinux.org/yay-bin.git /usr/local/src/yay-bin
+    chown -R oleg: /usr/local/src/yay-bin
+    sudo -u oleg bash -c 'cd /usr/local/src/yay-bin || exit 1; makepkg --noconfirm -si'
+}
+
+install_idea()
+{
+    yay --noconfirm -S intellij-idea-community-edition
+}
+
 main()
 {
     base_system
@@ -64,6 +85,8 @@ main()
     pacman --noconfirm -S "${packages[@]}"
 
     install_socialstream
+    install_yay
+    install_idea
 }
 
 main "$@"
