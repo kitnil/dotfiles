@@ -1090,7 +1090,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./apps/base/tor-bridges
+  path: ./apps/cluster1/tor-bridges
   prune: true
   sourceRef:
     kind: GitRepository
