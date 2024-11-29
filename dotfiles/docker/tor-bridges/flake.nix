@@ -43,6 +43,7 @@
                 name = "harbor.home.wugi.info/library/tor-bridges";
                 tag = "latest";
                 contents = [
+                  cacert
                   cacert.unbundled
                 ];
                 config = {
