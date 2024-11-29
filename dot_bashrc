@@ -759,6 +759,7 @@ EOF
                 command guix gc --list-failures | xargs guix gc --clear-failures
                 sudo --login command guix system delete-generations 1m
                 sudo --login command guix pull --delete-generations=1m
+                command guix home delete-generations 1m
             )
             ;;
         profiles)
