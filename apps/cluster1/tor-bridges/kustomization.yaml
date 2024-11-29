@@ -5,4 +5,4 @@ resources:
 - ../../base/tor-bridges
 images:
 - name: harbor.home.wugi.info/library/tor-bridges
-  newTag: 2e991c7c
+  newTag: 0b182474
