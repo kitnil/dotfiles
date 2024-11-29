@@ -43,8 +43,7 @@
                 name = "harbor.home.wugi.info/library/tor-bridges";
                 tag = "latest";
                 contents = [
-                  cacert
-                  cacert.unbundled
+                  dockerTools.caCertificates
                 ];
                 config = {
                   Entrypoint = [ "${tor-bridges}/bin/tor-bridges" ];
