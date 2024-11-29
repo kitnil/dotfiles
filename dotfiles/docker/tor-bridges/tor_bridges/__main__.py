@@ -22,6 +22,7 @@ import email
 import json
 import logging
 import os
+import quopri
 import smtplib
 
 
@@ -65,12 +66,12 @@ def mail_read():
             for ct in email_message.walk():
                 payload = ct.get_payload(decode=False)
                 if "Here is your bridge:\r\n" in payload:
-                    lines = payload.splitlines()
+                    lines = quopri.decodestring(payload).decode("utf-8").splitlines()
                     out = []
                     for idx, x in enumerate(lines):
-                        if "obfs4" in x:
+                        if x.startswith("obfs4"):
                             try:
-                                out[:0] = ["".join([x, lines[idx + 1], lines[idx + 2]])]
+                                out[:0] = [x]
                             except:
                                 pass
             return out
