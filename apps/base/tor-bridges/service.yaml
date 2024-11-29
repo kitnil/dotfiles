@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: tor-bridges
+  labels:
+    app.kubernetes.io/name: tor-bridges
+    app.kubernetes.io/part-of: tor
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 8080
+    name: http
+  selector:
+    app.kubernetes.io/name: tor-bridges
+    app.kubernetes.io/part-of: tor
+  type: ClusterIP
