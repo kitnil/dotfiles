@@ -38,10 +38,13 @@
               })
             {};
           container = callPackage
-            ({ dockerTools, tor-bridges }:
+            ({ dockerTools, tor-bridges, cacert }:
               dockerTools.buildLayeredImage {
                 name = "harbor.home.wugi.info/library/tor-bridges";
                 tag = "latest";
+                contents = [
+                  cacert
+                ];
                 config = {
                   Entrypoint = [ "${tor-bridges}/bin/tor-bridges" ];
                 };
