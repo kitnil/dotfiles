@@ -4,7 +4,7 @@ namespace: workstation
 resources:
 - ../../base/workstation
 patchesStrategicMerge:
-- pod.yaml
+- daemonset.yaml
 images:
 - name: harbor.home.wugi.info/library/guix-image-workstation
   newTag: "6677e699"

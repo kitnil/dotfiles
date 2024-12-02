@@ -3,4 +3,4 @@ kind: Kustomization
 namespace: workstation
 resources:
 - namespace.yaml
-- pod.yaml
+- daemonset.yaml
