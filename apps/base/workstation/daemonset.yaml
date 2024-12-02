@@ -13,7 +13,6 @@ spec:
         app.kubernetes.io/name: workstation
         app.kubernetes.io/part-of: workstation
     spec:
-      restartPolicy: Never
       automountServiceAccountToken: false
       terminationGracePeriodSeconds: 600
       initContainers:
