@@ -24,6 +24,7 @@ sleep 1
 sudo /root/run.py
 
 echo "INFO: Waiting Guix workstation container to start for 10 seconds." 1>&2
+sleep 10
 
 bar()
 {
