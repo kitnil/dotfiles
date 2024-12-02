@@ -28,6 +28,7 @@ spec:
           set -o nounset -o errexit -o pipefail
 
           chown 1000:998 /home/oleg
+          chmod 0755 /home/oleg
 
           mkdir /home/oleg/.cache
           chown 1000:998 /home/oleg/.cache
