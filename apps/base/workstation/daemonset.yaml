@@ -3,6 +3,8 @@ kind: DaemonSet
 metadata:
   name: workstation
 spec:
+  updateStrategy:
+    type: OnDelete
   selector:
     matchLabels:
       app.kubernetes.io/name: workstation
