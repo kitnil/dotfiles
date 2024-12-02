@@ -136,8 +136,6 @@ spec:
       name: var-run-shepherd-socket
     - mountPath: /home/oleg
       name: container-home-oleg
-    - name: home-oleg-dot-gnupg
-      mountPath: /home/oleg/.gnupg
     - name: home-oleg-dot-cache-ihs
       mountPath: /home/oleg/.cache/ihs
     - name: home-oleg-dot-config-obs-studio
@@ -325,10 +323,6 @@ spec:
   - emptyDir:
       sizeLimit: 4G
     name: container-home-oleg
-  - name: home-oleg-dot-gnupg
-    hostPath:
-      path: /home/oleg/.gnupg
-      type: Directory
   - name: home-oleg-dot-cache-ihs
     hostPath:
       path: /home/oleg/.cache/ihs
