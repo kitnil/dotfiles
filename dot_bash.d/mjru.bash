@@ -322,7 +322,7 @@ mjru-dns-check()
 
 mjru-jenkins()
 {
-    JENKINS_URL=https://jenkins.intr                                    \
+    JENKINS_URL=https://jenkins.corp1.majordomo.ru                      \
     JENKINS_USER=admin                                                  \
     JENKINS_PASSWORD="$(pass show majordomo/public/jenkins.intr/admin)" \
     jenkins "$@"
