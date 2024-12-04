@@ -169,7 +169,15 @@ spec:
            preStop:
              exec:
                command:
-               - /run/current-system/profile/sbin/halt
+               - /bin/sh
+               - -c
+               - |
+                 if /run/current-system/profile/sbin/halt
+                 then
+                     :
+                 else
+                     exit 0
+                 fi
       - name: nixos
         image: harbor.home.wugi.info/library/nixos-systemd:latest
         command:
@@ -195,8 +203,15 @@ spec:
            preStop:
              exec:
                command:
-               - /run/current-system/sw/bin/systemctl
-               - poweroff
+               - /bin/sh
+               - -c
+               - |
+                 if /run/current-system/sw/bin/systemctl poweroff
+                 then
+                     :
+                 else
+                     exit 0
+                 fi
         tty: true
         volumeMounts:
         - mountPath: /dev/dri
@@ -242,8 +257,15 @@ spec:
            preStop:
              exec:
                command:
-               - /bin/systemctl
-               - poweroff
+               - /bin/sh
+               - -c
+               - |
+                 if /bin/systemctl poweroff
+                 then
+                     :
+                 else
+                     exit 0
+                 fi
         volumeMounts:
         - mountPath: /run
           name: archlinux-run
