@@ -145,13 +145,14 @@ mjru-jenkins-build-php()
     )
     branch="$1"
     for job in "${jobs[@]}"; do
-        echo -e "\n@ $job"
-        curl --user "admin:$(pass show majordomo/public/majordomo/jenkins.intr/admin)" \
-             --insecure \
-             --request POST \
-	     "https://jenkins.intr/job/webservices/job/webservices%252F${job}/job/master/build?delay=0sec" \
-             --header 'Content-type: application/x-www-form-urlencoded; charset=UTF-8' \
-             --data-raw ''
+        echo -e "\n\n@ ${job}"
+        /home/oleg/.guix-profile/bin/curl \
+            --user "admin:$(pass show majordomo/public/majordomo/jenkins.intr/admin)" \
+            --request POST \
+            --header 'Content-type: application/x-www-form-urlencoded; charset=UTF-8' \
+            -o /dev/null \
+            -v \
+	    "https://jenkins.corp1.majordomo.ru/job/webservices/job/${job}/job/master/build?delay=0sec"
         sleep 0.5
     done
 }
