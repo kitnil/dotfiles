@@ -142,6 +142,7 @@ mjru-jenkins-build-php()
         apache2-php74
         apache2-php80
         apache2-php81
+        apache2-php83
     )
     branch="$1"
     for job in "${jobs[@]}"; do
