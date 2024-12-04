@@ -685,6 +685,30 @@ EOF
                     ;;
             esac
             ;;
+        substituters)
+            cat <<'EOF'
+The Guix project runs two official build farms that continuously build binary
+substitutes, so users don't have to build everything at home. When installing
+Guix or Guix System for the first time, you'll be asked whether to trust their
+signatures and download their substitutes by default:
+
+    https://ci.guix.gnu.org (Germany)
+    https://bordeaux.guix.gnu.org (France)
+
+For Guix users outside of Europe, connections to both of these can sometimes
+be slow or censored.  Don't fret just yet: volunteers maintain unofficial
+mirrors of the official servers that may be closer by:
+
+    People's Republic of China
+        https://mirrors.sjtug.sjtu.edu.cn/guix (mirrors ci.guix.gnu.org)
+    Singapore
+        https://bordeaux-singapore-mirror.cbaines.net
+    United States of America
+        https://bordeaux-us-east-mirror.cbaines.net (mirrors bordeaux.guix.gnu.org)
+    Germany
+        https://hydra-guix-129.guix.gnu.org (official mirror of bordeaux.guix.gnu.org in Berlin)
+EOF
+            ;;
         system)
             case "$2" in
                 build)
