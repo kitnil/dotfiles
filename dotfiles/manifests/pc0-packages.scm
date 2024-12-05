@@ -49,5 +49,4 @@
                "obs-looking-glass"
                "netcat-openbsd"
                "openssh"
-               "clipman")
-         (list "virt-manager-fullscreen")))
+               "clipman")))

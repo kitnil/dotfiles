@@ -10,7 +10,6 @@
   (list "socat"
         "mtr"
         "pulsemixer"
-        "virt-manager-fullscreen"
         "wl-clipboard"
         "translate-shell"
         "curl"

@@ -55,8 +55,6 @@
 (packages->manifest
  (cons*
 
-  virt-manager-fullscreen
-
   ;; y2rss
 
   ;; TODO: Fix pulsemixer-emacs-keybindings
