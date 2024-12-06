@@ -1,7 +1,9 @@
-import = [ "/home/oleg/.config/alacritty/themes/xterm.toml" ]
 
 [env]
 TERM = "xterm-256color"
 
 [font]
 size = 13
+
+[general]
+import = [ "/home/oleg/.config/alacritty/themes/xterm.toml" ]
