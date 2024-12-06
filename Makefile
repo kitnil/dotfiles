@@ -322,7 +322,7 @@ container_registry=harbor.home.wugi.info
 guix-image-workstation:
 	set -o nounset -o errexit -o pipefail -o xtrace
 	commit_8=$$(git rev-parse HEAD | cut -c -8)
-	container=$$(~/src/git.savannah.gnu.org/git/guix-bb8a6f0a/pre-inst-env guix system image --substitute-urls='https://bordeaux.guix.gnu.org https://substitutes.nonguix.org http://ci.guix.trop.in' --load-path=/home/oleg/src/cgit.duckdns.org/guix/guix-wigust/guix --load-path=/home/oleg/src/gitlab.com/nonguix/nonguix --load-path=/home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules --max-layers=100 -t docker --network ~/.local/share/chezmoi/dotfiles/guixsd/guix-image-workstation.scm)
+	container=$$(~/src/git.savannah.gnu.org/git/guix.d75d1fe/pre-inst-env guix system image --substitute-urls='https://bordeaux.guix.gnu.org https://substitutes.nonguix.org http://ci.guix.trop.in' --load-path=/home/oleg/src/cgit.duckdns.org/guix/guix-wigust/guix --load-path=/home/oleg/src/gitlab.com/nonguix/nonguix --load-path=/home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules --max-layers=100 -t docker --network ~/.local/share/chezmoi/dotfiles/guixsd/guix-image-workstation.scm)
 	skopeo copy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
 	echo $(container_registry)/library/$@:$$commit_8
 
