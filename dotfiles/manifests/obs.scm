@@ -1,6 +1,7 @@
 (use-modules (gnu packages video)
              (packages video)
-             (guix profiles))
+             (guix profiles)
+             (nongnu packages video))
 
 (packages->manifest
  (list
