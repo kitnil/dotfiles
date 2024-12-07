@@ -27,14 +27,14 @@
         "obs-pipewire-audio-capture"
         "obs-wlrobs"
         "obs-looking-glass"
+        "obs-ndi"
 
         ;; "obs-exporter"
         ;; "obs-source-clone"
         ;; "obs-source-record"
         ))
 
-(packages->manifest (append (map (lambda (package-name)
-                                   (first
-                                    (lookup-inferior-packages inferior package-name)))
-                                 %obs-package-names)
-                            (list obs-ndi)))
+(packages->manifest (map (lambda (package-name)
+                           (first
+                            (lookup-inferior-packages inferior package-name)))
+                         %obs-package-names))
