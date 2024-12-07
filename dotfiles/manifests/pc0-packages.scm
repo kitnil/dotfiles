@@ -46,7 +46,6 @@
                "freerdp"
                "remmina"
                "looking-glass-client"
-               "obs-looking-glass"
                "netcat-openbsd"
                "openssh"
                "clipman")))
