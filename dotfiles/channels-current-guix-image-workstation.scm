@@ -11,10 +11,10 @@
               "BBB0 2DDF 2CEA F6A8 0D1D  E643 A2A0 6DF2 A33A 54FA"))))
       (channel
         (name 'guix-wigust)
-        (url "https://github.com/kitnil/guix-wigust")
+        (url "https://cgit.wugi.info/git/guix/guix-wigust")
         (branch "master")
         (commit
-          "83e86a2891dd57f54fc3568d6a56581fabbb02d2"))
+          "ec542755f860e050f2355c0b305cafc386496abf"))
       (channel
         (name 'nonguix)
         (url "https://gitlab.com/nonguix/nonguix")
