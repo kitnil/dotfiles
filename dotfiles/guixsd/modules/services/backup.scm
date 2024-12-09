@@ -220,7 +220,7 @@
      #~(begin
          (use-modules (ice-9 rdelim)
                       (srfi srfi-1))
-         (if #$(predicate)
+         (if #$predicate
              (begin
                (format #t "Creating new Restic ~a snapshot~%" #$device)
                (setenv "RESTIC_PASSWORD" #$(restic-password))
@@ -265,12 +265,12 @@
                         (system* #$lvremove-binary "--yes"
                                  #$lvm2-snapshot-device))))))))))
 
-(define (win10-shut-off?)
+(define (virtual-machine-shut-off? virtual-machine-name)
   #~(begin
       (use-modules (ice-9 popen)
                    (ice-9 rdelim))
       (let* ((port (open-pipe* OPEN_READ #$virsh-binary
-                               "domstate" "win10"))
+                               "domstate" #$virtual-machine-name))
              (output (read-string port)))
         (close-port port)
         (string= (string-trim-right output #\newline)
@@ -287,7 +287,7 @@
   (restic-lv-backup "lvm1" "win10"
                     #:restic-repository "/srv/backup/win10"
                     #:restic-password win10-password
-                    #:predicate win10-shut-off?))
+                    #:predicate (virtual-machine-shut-off? "win10")))
 
 (define (win2022-password)
   #~(begin
@@ -300,30 +300,13 @@
   (restic-lv-backup "lvm2" "win2022"
                     #:restic-repository "/srv/backup/win2022"
                     #:restic-password win2022-password
-                    #:predicate win2022-shut-off?))
-
-(define (win2022-shut-off?)
-  #~(begin
-      (use-modules (ice-9 popen)
-                   (ice-9 rdelim))
-      (let* ((port (open-pipe* OPEN_READ #$virsh-binary
-                               "domstate" "win2022"))
-             (output (read-string port)))
-        (close-port port)
-        (string= (string-trim-right output #\newline)
-                 "shut off"))))
-
-(define (restic-win2022-backup)
-  (restic-lv-backup "lvm2" "win2022"
-                    #:restic-repository "/srv/backup/win2022"
-                    #:restic-password win2022-password
-                    #:predicate win2022-shut-off?))
+                    #:predicate (virtual-machine-shut-off? "win2022")))
 
 (define (restic-ntfsgames-backup)
   (restic-lv-backup "lvm2" "ntfsgames"
                     #:restic-repository "/srv/backup/ntfsgames"
                     #:restic-password win10-password
-                    #:predicate win10-shut-off?))
+                    #:predicate (virtual-machine-shut-off? "win10")))
 
 (define (guix-password)
   #~(begin
@@ -332,22 +315,11 @@
        (with-input-from-file "/etc/guix/secrets/guix"
          read-string))))
 
-(define (guix-shut-off?)
-  #~(begin
-      (use-modules (ice-9 popen)
-                   (ice-9 rdelim))
-      (let* ((port (open-pipe* OPEN_READ #$virsh-binary
-                               "domstate" "guix"))
-             (output (read-string port)))
-        (close-port port)
-        (string= (string-trim-right output #\newline)
-                 "shut off"))))
-
 (define (restic-guix-backup)
   (restic-lv-backup "lvm2" "guix"
                     #:restic-repository "/srv/backup/guix"
                     #:restic-password guix-password
-                    #:predicate guix-shut-off?))
+                    #:predicate (virtual-machine-shut-off? "guix")))
 
 (define (restic-command)
   (program-file
