@@ -193,7 +193,7 @@
                       (map (lambda (directory)
                              (string-append #$%user-home "/" directory))
                            '#$%user-directories))))
-         (setenv "RESTIC_PASSWORD"
+         (setenv "RESTIC_PASSWORD_FILE"
                  (string-trim-right
                   (with-input-from-file "/etc/guix/secrets/restic"
                     read-string)))
@@ -211,7 +211,7 @@
 (define* (restic-lv-backup vg lv
                            #:key (predicate #~(begin #t))
                            restic-repository
-                           restic-password
+                           restic-password-file
                            (lvm2-snapshot-size "32G"))
   "Return a GEXP which defines a logical volume backup steps."
   (let* ((device (string-append "/dev/" vg "/" lv))
@@ -225,7 +225,7 @@
          (if #$predicate
              (begin
                (format #t "Creating new Restic ~a snapshot~%" #$device)
-               (setenv "RESTIC_PASSWORD" #$(restic-password))
+               (setenv "RESTIC_PASSWORD_FILE" #$restic-password-file)
                (zero?
                 (system
                  (string-join
@@ -247,7 +247,7 @@
                                 "--snapshot" #$device))
                      (begin
                        (format #t "Creating new Restic ~a snapshot~%" #$device)
-                       (setenv "RESTIC_PASSWORD" #$(restic-password))
+                       (setenv "RESTIC_PASSWORD_FILE" #$restic-password-file)
                        (zero?
                         (system
                          (string-join
@@ -278,49 +278,28 @@
         (string= (string-trim-right output #\newline)
                  "shut off"))))
 
-(define (win10-password)
-  #~(begin
-      (use-modules (ice-9 rdelim))
-      (string-trim-right
-       (with-input-from-file "/etc/guix/secrets/windows"
-         read-string))))
-
 (define (restic-win10-backup)
   (restic-lv-backup "lvm1" "win10"
                     #:restic-repository "/srv/backup/win10"
-                    #:restic-password win10-password
+                    #:restic-password-file "/etc/guix/secrets/windows"
                     #:predicate (virtual-machine-shut-off? "win10")))
-
-(define (win2022-password)
-  #~(begin
-      (use-modules (ice-9 rdelim))
-      (string-trim-right
-       (with-input-from-file "/etc/guix/secrets/windows"
-         read-string))))
 
 (define (restic-win2022-backup)
   (restic-lv-backup "lvm2" "win2022"
                     #:restic-repository "/srv/backup/win2022"
-                    #:restic-password win2022-password
+                    #:restic-password-file "/etc/guix/secrets/windows"
                     #:predicate (virtual-machine-shut-off? "win2022")))
 
 (define (restic-ntfsgames-backup)
   (restic-lv-backup "lvm2" "ntfsgames"
                     #:restic-repository "/srv/backup/ntfsgames"
-                    #:restic-password win10-password
+                    #:restic-password-file "/etc/guix/secrets/guix"
                     #:predicate (virtual-machine-shut-off? "win10")))
-
-(define (guix-password)
-  #~(begin
-      (use-modules (ice-9 rdelim))
-      (string-trim-right
-       (with-input-from-file "/etc/guix/secrets/guix"
-         read-string))))
 
 (define (restic-guix-backup)
   (restic-lv-backup "lvm2" "guix"
                     #:restic-repository "/srv/backup/guix"
-                    #:restic-password guix-password
+                    #:restic-password-file "/etc/guix/secrets/guix"
                     #:predicate (virtual-machine-shut-off? "guix")))
 
 (define (restic-repository-init restic-repository-directory restic-password-file)
