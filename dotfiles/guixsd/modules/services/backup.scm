@@ -321,6 +321,24 @@
                     #:restic-password guix-password
                     #:predicate (virtual-machine-shut-off? "guix")))
 
+(define (restic-repository-init restic-repository-directory restic-password-file)
+  (program-file
+   "restic-repository-init"
+   #~(unless (file-exists? #$restic-repository-directory)
+       (use-modules (ice-9 rdelim))
+       (setenv "RESTIC_PASSWORD_FILE" #$restic-password-file)
+       (format #t "Creating new Restic ~a repository~%"
+               #$restic-repository-directory)
+       (zero?
+        (apply system*
+               (append (list #$restic-binary "--no-cache"
+                             "--repo" #$restic-repository-directory)
+                       (list "init")))))))
+
+(define restic-openwrt-init
+  (restic-repository-init "/srv/backup/openwrt"
+                          "/etc/guix/secrets/restic-openwrt"))
+
 (define (restic-command)
   (program-file
    "restic-commands"
