@@ -41,6 +41,9 @@
             restic-openwrt-init
             restic-openwrt-backup
 
+            restic-whonix-gateway-direct-init
+            restic-whonix-gateway-direct-backup
+
             restic-command))
 
 ;;; Commentary:
@@ -309,9 +312,17 @@
                     #:restic-password-file "/etc/guix/secrets/restic-openwrt"
                     #:predicate (virtual-machine-shut-off? "openwrt")))
 
-(define (restic-repository-init restic-repository-directory restic-password-file)
+(define restic-whonix-gateway-direct-backup
+  (restic-lv-backup "lvm1" "whonix-gateway-direct"
+                    #:restic-repository "/srv/backup/whonix-gateway-direct"
+                    #:restic-password-file "/etc/guix/secrets/restic-whonix-gateway-direct"
+                    #:predicate (virtual-machine-shut-off? "whonix-gateway-direct")))
+
+(define (restic-repository-init restic-repository-name
+                                restic-repository-directory
+                                restic-password-file)
   (program-file
-   "restic-repository-init"
+   (string-append "restic-repository-init-" restic-repository-name)
    #~(unless (file-exists? #$restic-repository-directory)
        (use-modules (ice-9 rdelim))
        (setenv "RESTIC_PASSWORD_FILE" #$restic-password-file)
@@ -324,8 +335,14 @@
                        (list "init")))))))
 
 (define restic-openwrt-init
-  (restic-repository-init "/srv/backup/openwrt"
+  (restic-repository-init "openwrt"
+                          "/srv/backup/openwrt"
                           "/etc/guix/secrets/restic-openwrt"))
+
+(define restic-whonix-gateway-direct-init
+  (restic-repository-init "whonix-gateway-direct"
+                          "/srv/backup/whonix-gateway-direct"
+                          "/etc/guix/secrets/restic-whonix-gateway-direct"))
 
 (define (restic-command)
   (program-file
@@ -338,6 +355,8 @@
                 #$restic-win2022-backup
                 #$restic-ntfsgames-backup
                 #$restic-openwrt-init
-                #$restic-openwrt-backup))))
+                #$restic-openwrt-backup
+                #$restic-whonix-gateway-direct-init
+                #$restic-whonix-gateway-direct-backup))))
 
 ;;; backup.scm ends here

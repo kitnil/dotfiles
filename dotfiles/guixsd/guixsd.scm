@@ -1143,7 +1143,9 @@ location / {
                                    restic-win2022-backup
                                    restic-ntfsgames-backup
                                    restic-openwrt-init
-                                   restic-openwrt-backup))
+                                   restic-openwrt-backup
+                                   restic-whonix-gateway-direct-init
+                                   restic-whonix-gateway-direct-backup))
                         %my-system-packages))
 
       (groups (cons* ;; (user-group (name "nixbld")
