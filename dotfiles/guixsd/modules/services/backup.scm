@@ -38,6 +38,8 @@
             restic-win2022-backup
             restic-ntfsgames-backup
 
+            restic-openwrt-init
+
             restic-command))
 
 ;;; Commentary:
@@ -348,6 +350,7 @@
                 #$(restic-guix-backup)
                 #$(restic-win10-backup)
                 #$(restic-win2022-backup)
-                #$(restic-ntfsgames-backup)))))
+                #$(restic-ntfsgames-backup)
+                #$restic-openwrt-init))))
 
 ;;; backup.scm ends here

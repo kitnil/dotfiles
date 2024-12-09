@@ -1141,7 +1141,8 @@ location / {
                                    (restic-guix-backup)
                                    (restic-win10-backup)
                                    (restic-win2022-backup)
-                                   (restic-ntfsgames-backup)))
+                                   (restic-ntfsgames-backup)
+                                   restic-openwrt-init))
                         %my-system-packages))
 
       (groups (cons* ;; (user-group (name "nixbld")
