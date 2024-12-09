@@ -39,6 +39,7 @@
             restic-ntfsgames-backup
 
             restic-openwrt-init
+            restic-openwrt-backup
 
             restic-command))
 
@@ -302,6 +303,12 @@
                     #:restic-password-file "/etc/guix/secrets/guix"
                     #:predicate (virtual-machine-shut-off? "guix")))
 
+(define restic-openwrt-backup
+  (restic-lv-backup "lvm1" "openwrt"
+                    #:restic-repository "/srv/backup/openwrt"
+                    #:restic-password-file "/etc/guix/secrets/restic-openwrt"
+                    #:predicate (virtual-machine-shut-off? "openwrt")))
+
 (define (restic-repository-init restic-repository-directory restic-password-file)
   (program-file
    "restic-repository-init"
@@ -330,6 +337,7 @@
                 #$restic-win10-backup
                 #$restic-win2022-backup
                 #$restic-ntfsgames-backup
-                #$restic-openwrt-init))))
+                #$restic-openwrt-init
+                #$restic-openwrt-backup))))
 
 ;;; backup.scm ends here
