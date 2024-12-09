@@ -1137,11 +1137,11 @@ location / {
                               lvm2
                               smartmontools)
                         (map package-from-program-file
-                             (list (restic-system-backup)
-                                   (restic-guix-backup)
-                                   (restic-win10-backup)
-                                   (restic-win2022-backup)
-                                   (restic-ntfsgames-backup)
+                             (list restic-system-backup
+                                   restic-guix-backup
+                                   restic-win10-backup
+                                   restic-win2022-backup
+                                   restic-ntfsgames-backup
                                    restic-openwrt-init))
                         %my-system-packages))
 
