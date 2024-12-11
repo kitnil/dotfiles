@@ -4,3 +4,6 @@ resources:
 - ../../base/multus
 patchesStrategicMerge:
 - daemonset.yml
+images:
+- name: ghcr.io/k8snetworkplumbingwg/multus-cni:snapshot-thick
+  newTag: v4.1.4-thick
