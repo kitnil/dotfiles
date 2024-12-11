@@ -30,6 +30,9 @@ spec:
         - mountPath: /host/opt/cni/bin
           mountPropagation: Bidirectional
           name: cnibin
+        - mountPath: /var/run/cilium
+          name: cilium-run
+          mountPropagation: Bidirectional
       containers:
       - name: kube-multus
         image: ghcr.io/k8snetworkplumbingwg/multus-cni:v4.0.2-thick
@@ -37,3 +40,6 @@ spec:
       - name: host-run-netns
         hostPath:
           path: /var/run/netns/
+      - name: cilium-run
+        hostPath:
+          path: /var/run/cilium
