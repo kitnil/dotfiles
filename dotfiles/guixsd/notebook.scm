@@ -26,8 +26,10 @@
 (use-modules (bootloader grub)
              (packages monitoring)
              (packages linux)
+             (services backup)
              (services kubernetes)
-             (services monitoring))
+             (services monitoring)
+             (utils package))
 
 (operating-system
   (host-name "notebook")
@@ -122,6 +124,8 @@
                                         ;xfce4-terminal
                      nix
                      nfs-utils)
+                    (map package-from-program-file
+                         (list restic-notebook-backup))
                     %notebook-packages
                     %base-packages))
 

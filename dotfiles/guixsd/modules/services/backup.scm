@@ -45,6 +45,7 @@
             restic-whonix-gateway-direct-backup
 
             restic-notebook-init
+            restic-notebook-backup
 
             restic-command))
 
@@ -319,6 +320,12 @@
                     #:restic-repository "/srv/backup/whonix-gateway-direct"
                     #:restic-password-file "/etc/guix/secrets/restic-whonix-gateway-direct"
                     #:predicate (virtual-machine-shut-off? "whonix-gateway-direct")))
+
+(define restic-notebook-backup
+  (restic-lv-backup "vg0" "guixroot"
+                    #:restic-repository "sftp:root@192.168.0.145:/srv/backup/notebook"
+                    #:restic-password-file "/etc/guix/secrets/restic-notebook"
+                    #:predicate #~(begin #f)))
 
 (define (restic-repository-init restic-repository-name
                                 restic-repository-directory
