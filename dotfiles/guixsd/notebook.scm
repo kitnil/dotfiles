@@ -290,7 +290,10 @@ auth-user-pass /etc/openvpn/login.conf
 remote-random
 "))))
 
-		     nix-service)
+		     nix-service
+
+                     (service kernel-module-loader-service-type
+                              '("dm-snapshot")))
 
                     (list ;; (screen-locker-service slock)
                           (udisks-service)
