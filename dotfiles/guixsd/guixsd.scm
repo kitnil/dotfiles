@@ -1145,7 +1145,8 @@ location / {
                                    restic-openwrt-init
                                    restic-openwrt-backup
                                    restic-whonix-gateway-direct-init
-                                   restic-whonix-gateway-direct-backup))
+                                   restic-whonix-gateway-direct-backup
+                                   restic-notebook-init))
                         %my-system-packages))
 
       (groups (cons* ;; (user-group (name "nixbld")

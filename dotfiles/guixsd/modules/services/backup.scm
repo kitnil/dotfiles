@@ -44,6 +44,8 @@
             restic-whonix-gateway-direct-init
             restic-whonix-gateway-direct-backup
 
+            restic-notebook-init
+
             restic-command))
 
 ;;; Commentary:
@@ -343,6 +345,11 @@
   (restic-repository-init "whonix-gateway-direct"
                           "/srv/backup/whonix-gateway-direct"
                           "/etc/guix/secrets/restic-whonix-gateway-direct"))
+
+(define restic-notebook-init
+  (restic-repository-init "notebook"
+                          "/srv/backup/notebook"
+                          "/etc/guix/secrets/restic-notebook"))
 
 (define (restic-command)
   (program-file
