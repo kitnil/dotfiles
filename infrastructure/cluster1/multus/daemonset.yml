@@ -32,7 +32,6 @@ spec:
           name: cnibin
         - mountPath: /var/run/cilium
           name: cilium-run
-          mountPropagation: Bidirectional
       containers:
       - name: kube-multus
         image: ghcr.io/k8snetworkplumbingwg/multus-cni:v4.0.2-thick
