@@ -47,6 +47,8 @@
             restic-notebook-init
             restic-notebook-backup
 
+            restic-pc0-init
+
             restic-command))
 
 ;;; Commentary:
@@ -357,6 +359,11 @@
   (restic-repository-init "notebook"
                           "/srv/backup/notebook"
                           "/etc/guix/secrets/restic-notebook"))
+
+(define restic-pc0-init
+  (restic-repository-init "pc0"
+                          "/srv/backup/pc0"
+                          "/etc/guix/secrets/restic-pc0"))
 
 (define (restic-command)
   (program-file
