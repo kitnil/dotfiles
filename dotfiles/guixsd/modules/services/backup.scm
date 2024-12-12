@@ -51,6 +51,7 @@
             restic-pc0-backup
 
             restic-pc0-win10-init
+            restic-pc0-win10-backup
 
             restic-command))
 
@@ -336,6 +337,12 @@
   (restic-lv-backup "vg0" "guixroot"
                     #:restic-repository "sftp:root@192.168.0.145:/srv/backup/pc0"
                     #:restic-password-file "/etc/guix/secrets/restic-pc0"
+                    #:predicate #~(begin #f)))
+
+(define restic-pc0-win10-backup
+  (restic-lv-backup "vg0" "win10"
+                    #:restic-repository "sftp:root@192.168.0.145:/srv/backup/pc0-win10"
+                    #:restic-password-file "/etc/guix/secrets/restic-pc0-win10"
                     #:predicate #~(begin #f)))
 
 (define (restic-repository-init restic-repository-name

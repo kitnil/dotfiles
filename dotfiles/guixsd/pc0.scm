@@ -180,7 +180,8 @@
   ;; Globally-installed packages.
   (packages (append (list screen sway)
                     (map package-from-program-file
-                         (list restic-pc0-backup))
+                         (list restic-pc0-backup
+                               restic-pc0-win10-backup))
                     %pc0-packages
                     %base-packages))
 
