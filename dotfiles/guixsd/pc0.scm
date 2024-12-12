@@ -15,6 +15,9 @@
 (use-service-modules avahi desktop dbus docker networking nix monitoring linux sound ssh virtualization xorg)
 (use-package-modules audio linux screen ssh wm)
 
+(use-modules (services backup)
+             (utils package))
+
 (define kvmfr-linux-module
   (@ (packages linux) kvmfr-linux-module))
 
@@ -176,6 +179,8 @@
 
   ;; Globally-installed packages.
   (packages (append (list screen sway)
+                    (map package-from-program-file
+                         (list restic-pc0-backup))
                     %pc0-packages
                     %base-packages))
 
