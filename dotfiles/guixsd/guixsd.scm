@@ -1147,7 +1147,8 @@ location / {
                                    restic-whonix-gateway-direct-init
                                    restic-whonix-gateway-direct-backup
                                    restic-notebook-init
-                                   restic-pc0-init))
+                                   restic-pc0-init
+                                   restic-pc0-win10-init))
                         %my-system-packages))
 
       (groups (cons* ;; (user-group (name "nixbld")

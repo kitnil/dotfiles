@@ -50,6 +50,8 @@
             restic-pc0-init
             restic-pc0-backup
 
+            restic-pc0-win10-init
+
             restic-command))
 
 ;;; Commentary:
@@ -371,6 +373,11 @@
   (restic-repository-init "pc0"
                           "/srv/backup/pc0"
                           "/etc/guix/secrets/restic-pc0"))
+
+(define restic-pc0-win10-init
+  (restic-repository-init "pc0-win10"
+                          "/srv/backup/pc0-win10"
+                          "/etc/guix/secrets/restic-pc0-win10"))
 
 (define (restic-command)
   (program-file
