@@ -286,7 +286,7 @@
                         (imap-account "wugi-oleg")
                         (host "imap.wugi.info")
                         (user "oleg@imap.wugi.info")
-                        (pass-cmd "gpg -q --for-your-eyes-only --no-tty -d ~/.password-store/localhost/imap/oleg.gpg")
+                        (pass-cmd "gpg -q --for-your-eyes-only --no-tty -d ~/.password-store/vm1.wugi.info/oleg.gpg")
                         (auth-mechs '("LOGIN"))
                         (ssl-type "IMAPS")
                         (certificate-file "/etc/ssl/certs/ca-certificates.crt")
