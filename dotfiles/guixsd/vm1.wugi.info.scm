@@ -62,7 +62,14 @@
                         ;; makes it a sudoer.  Adding it to "audio"
                         ;; and "video" allows the user to play sound
                         ;; and access the webcam.
-                        (supplementary-groups '("wheel" "audio" "video"))))
+                        (supplementary-groups '("wheel" "audio" "video")))
+
+                       ;; Use on an untrusted Microsoft Windows operating
+                       ;; system at least for email (dovecot) authorization.
+                       (user-account
+                        (name "oleg-windows")
+                        (comment "Oleg Pykhalov")
+                        (group "users")))
                  %mail-users
                  %ssh-users
                  %base-user-accounts))
