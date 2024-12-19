@@ -49,6 +49,7 @@ mail_addresses=(pyhalov@majordomo.ru
                 jenkins@majordomo.ru
                 i18n.wugi@yandex.ru
                 zabbix.guix@yandex.ru
+                oleg@wugi.info
                 localhost)
 
 case "$1" in
@@ -109,6 +110,13 @@ case "$1" in
                     --request "EXAMINE ${3:-INBOX}"                                     \
                     --user "zabbix.guix:$(pass show email/yandex.ru/zabbix.guix)"       \
                     imaps://imap.yandex.ru:993
+                ;;
+            oleg@wugi.info)
+                exec -a "$0" curl                                       \
+                    --silent                                            \
+                    --request "EXAMINE ${3:-INBOX}"                     \
+                    --user "oleg:$(pass show vm1.wugi.info/oleg)"       \
+                    imaps://imap.wugi.info:993
                 ;;
             localhost)
                 exec -a "$0" curl                               \
