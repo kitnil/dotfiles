@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2021, 2022, 2023 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2021, 2022, 2023, 2024 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -189,6 +189,14 @@
     (group "users")
     (system? #t)
     (comment "prometheus-alertmanager privilege separation user")
+    (shell #~(string-append #$shadow "/sbin/nologin")))
+
+   ;; Use on an untrusted Microsoft Windows operating
+   ;; system at least for email (dovecot) authorization.
+   (user-account
+    (name "oleg-windows")
+    (comment "Oleg Pykhalov on Microsoft Windows privilege separation user")
+    (group "users")
     (shell #~(string-append #$shadow "/sbin/nologin")))))
 
 (define %mail-hosts-file-hosts
