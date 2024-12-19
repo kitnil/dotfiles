@@ -312,6 +312,41 @@
                         (patterns '("INBOX"))
                         (sync '("Pull")))))))
 
+    (simple-service 'home-mbsync-wugi-oleg-windows
+                    home-mbsync-service-type
+                    (mbsync-configuration
+                     (imap-accounts
+                      (list
+                       (mbsync-imap-account-configuration
+                        (imap-account "wugi-oleg-windows")
+                        (host "imap.wugi.info")
+                        (user "oleg-windows@imap.wugi.info")
+                        (pass-cmd "gpg -q --for-your-eyes-only --no-tty -d ~/.password-store/vm1.wugi.info/oleg-windows.gpg")
+                        (auth-mechs '("LOGIN"))
+                        (ssl-type "IMAPS")
+                        (certificate-file "/etc/ssl/certs/ca-certificates.crt")
+                        (pipeline-depth 50))))
+                     (imap-stores
+                      (list
+                       (mbsync-imap-store-configuration
+                        (imap-store "wugi-oleg-windows-remote")
+                        (account "wugi-oleg-windows"))))
+                     (maildir-stores
+                      (list
+                       (mbsync-maildir-store-configuration
+                        (maildir-store "wugi-oleg-windows-local")
+                        (path "~/Maildir/")
+                        (inbox "~/Maildir/wugi-oleg-windows")
+                        (sub-folders "Verbatim"))))
+                     (channels
+                      (list
+                       (mbsync-channel-configuration
+                        (channel "wugi-oleg-windows")
+                        (far ":wugi-oleg-windows-remote:")
+                        (near ":wugi-oleg-windows-local:")
+                        (patterns '("INBOX"))
+                        (sync '("Pull")))))))
+
     (simple-service 'home-mbsync-gmail-wigust
                     home-mbsync-service-type
                     (mbsync-configuration
