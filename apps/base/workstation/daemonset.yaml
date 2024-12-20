@@ -127,9 +127,9 @@ spec:
         - mountPath: /dev/input
           name: dev-input
         - mountPath: /dev/tty0
-          name: dev-tty8
-        - mountPath: /dev/tty8
-          name: dev-tty8
+          name: dev-tty2
+        - mountPath: /dev/tty2
+          name: dev-tty2
         - mountPath: /dev/fuse
           name: dev-fuse
         - mountPath: /etc/nsswitch.conf
@@ -303,9 +303,9 @@ spec:
         hostPath:
           path: /dev/input
           type: Directory
-      - name: dev-tty8
+      - name: dev-tty2
         hostPath:
-          path: /dev/tty8
+          path: /dev/tty2
           type: CharDevice
       - name: dev-tty9
         hostPath:
