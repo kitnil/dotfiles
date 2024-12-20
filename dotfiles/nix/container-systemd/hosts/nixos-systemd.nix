@@ -34,6 +34,8 @@
 
   services.journald.console = "/dev/tty";
 
+  systemd.services."getty@tty9".enable = false;
+
   # Define a user account. Don't forget to set a password with ‘passwd’.
 
   users.users.root.password = ""; # Empty password.
