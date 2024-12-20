@@ -14,6 +14,17 @@ spec:
                 operator: In
                 values:
                 - "true"
+      dnsConfig:
+        nameservers:
+        - 8.8.8.8
+        - 8.8.4.4
+        # searches:
+        # - ns1.svc.cluster-domain.example
+        # - my.dns.search.suffix
+        # options:
+        # - name: ndots
+        #   value: "2"
+        # - name: edns0
       tolerations:
       - key: workstation.cluster.local
         operator: Equal
