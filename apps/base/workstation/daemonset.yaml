@@ -221,7 +221,7 @@ spec:
         volumeMounts:
         - mountPath: /dev/dri
           name: dev-dri
-        - mountPath: /dev/tty0
+        - mountPath: /dev/tty9
           name: dev-tty9
         - mountPath: /run
           name: nixos-run
