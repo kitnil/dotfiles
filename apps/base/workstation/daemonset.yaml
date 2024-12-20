@@ -147,6 +147,8 @@ spec:
           mountPath: /home/oleg/.config/obs-studio
         - name: home-oleg-dot-config-remmina
           mountPath: /home/oleg/.config/remmina
+        - name: home-oleg-dot-config-sway
+          mountPath: /home/oleg/.config/sway
         - name: home-oleg-dot-local-share-remmina
           mountPath: /home/oleg/.local/share/remmina
         - name: home-oleg-dot-local-share-telegram
@@ -365,6 +367,10 @@ spec:
       - name: home-oleg-dot-config-remmina
         hostPath:
           path: /home/oleg/.config/remmina
+          type: Directory
+      - name: home-oleg-dot-config-sway
+        hostPath:
+          path: /home/oleg/.config/sway
           type: Directory
       - name: home-oleg-dot-local-share-remmina
         hostPath:
