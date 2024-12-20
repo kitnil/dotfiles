@@ -30,11 +30,6 @@ in
     systemd.user.services.firefox = {
       Unit = {
         Description = "Firefox web browser";
-        After = [ "network.target" ];
-        Environment = [
-          "XDG_RUNTIME_DIR=/mnt/guix/run/user/1000"
-          "WAYLAND_DISPLAY=wayland-1"
-        ];
       };
       Service = {
         ExecStart = pkgs.writeScript "firefox.sh" ''
