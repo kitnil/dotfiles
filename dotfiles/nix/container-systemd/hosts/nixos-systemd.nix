@@ -46,6 +46,7 @@
       "wheel" # Enable ‘sudo’ for the user.
     ];
     uid = 1000;
+    initialPassword = "oleg";
   };
 
   users.groups.users = {
