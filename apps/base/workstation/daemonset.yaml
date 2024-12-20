@@ -53,6 +53,9 @@ spec:
 
           mkdir -p /mnt/nixos/home/oleg/.config
           chown 1000:998 /mnt/nixos/home/oleg/.config
+
+          mkdir /mnt/nixos/home/oleg/.local
+          chown 1000:998 /mnt/nixos/home/oleg/.local
         volumeMounts:
         - mountPath: /home/oleg
           name: container-home-oleg
