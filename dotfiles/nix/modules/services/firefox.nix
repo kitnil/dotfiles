@@ -42,6 +42,5 @@ in
         Type = "simple";
       };
     };
-    home.packages = [ cfg.package ];
   };
 }
