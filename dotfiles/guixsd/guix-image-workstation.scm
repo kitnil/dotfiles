@@ -87,8 +87,7 @@
                    (service home-files-service-type)
                    (simple-service 'sway-config
                                    home-files-service-type
-                                   (append (list `(".config/sway/config" ,(local-file (string-append %project-directory "/dot_config/sway/pc0.config")))
-                                                 `(".xkb/symbols/custom" ,(local-file (string-append %project-directory "/dot_xkb/symbols/custom"))))
+                                   (append (list `(".xkb/symbols/custom" ,(local-file (string-append %project-directory "/dot_xkb/symbols/custom"))))
                                            (list `("bin/move" ,(program-file "sway-move"
                                                                              #~(let ((args (cdr (command-line))))
                                                                                  (execl #$(file-append sway "/bin/swaymsg") "swaymsg" "move" "workspace" (string-join args)))))
