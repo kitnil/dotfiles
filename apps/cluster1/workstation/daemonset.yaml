@@ -19,3 +19,6 @@ spec:
         operator: Equal
         value: 'true'
         effect: NoSchedule
+      - key: edge.cluster.local/not-schedulable
+        operator: Equal
+        effect: NoSchedule
