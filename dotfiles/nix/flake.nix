@@ -355,6 +355,7 @@
 
       nixosModules = {
         home-manager-firefox = import ./modules/services/firefox.nix;
+        home-manager-foot = import ./modules/services/foot.nix;
       };
 
       deploy.nodes = let
