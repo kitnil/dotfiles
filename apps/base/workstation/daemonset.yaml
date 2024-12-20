@@ -221,6 +221,8 @@ spec:
         volumeMounts:
         - mountPath: /dev/dri
           name: dev-dri
+        - mountPath: /dev/tty9
+          name: dev-tty9
         - mountPath: /run
           name: nixos-run
         - mountPath: /mnt/guix/tmp
@@ -301,6 +303,10 @@ spec:
       - name: dev-tty2
         hostPath:
           path: /dev/tty2
+          type: CharDevice
+      - name: dev-tty9
+        hostPath:
+          path: /dev/tty9
           type: CharDevice
       - name: dev-fuse
         hostPath:
