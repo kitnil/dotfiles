@@ -36,9 +36,6 @@ in
           "WAYLAND_DISPLAY=wayland-1"
         ];
       };
-      Install = {
-        WantedBy = [ "default.target" ];
-      };
       Service = {
         ExecStart = "${cfg.package}/bin/firefox";
         Type = "simple";
