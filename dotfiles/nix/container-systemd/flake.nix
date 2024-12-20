@@ -30,12 +30,14 @@
               inherit (inputs.dotfiles-home-manager.inputs) nixpkgs;
             };
             modules = [
-              inputs.dotfiles-home-manager.nixosModules.home-manager-firefox
               inputs.dotfiles-home-manager.inputs.home-manager.nixosModules.home-manager
               {
                 home-manager.useGlobalPkgs = true;
                 home-manager.useUserPackages = true;
                 home-manager.users.oleg =  inputs.dotfiles-home-manager.outPath + "../../../dotfiles/nix/pc0/home-manager.nix";
+                home-manager.sharedModules = [
+                  inputs.dotfiles-home-manager.nixosModules.home-manager-firefox
+                ];
                 home-manager.extraSpecialArgs = (rec {
                   inherit (self) nixosConfigurations;
                   inherit inputs system;
