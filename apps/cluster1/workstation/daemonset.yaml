@@ -5,8 +5,15 @@ metadata:
 spec:
   template:
     spec:
-      nodeSelector:
-        kubernetes.io/hostname: kube3
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: workstation.cluster.local/schedulable
+                operator: In
+                values:
+                - "true"
       tolerations:
       - key: workstation.cluster.local
         operator: Equal
