@@ -25,6 +25,7 @@ spec:
         # - name: ndots
         #   value: "2"
         # - name: edns0
+      dnsPolicy: None
       tolerations:
       - key: workstation.cluster.local
         operator: Equal
