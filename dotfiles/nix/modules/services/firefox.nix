@@ -37,7 +37,17 @@ in
         ];
       };
       Service = {
-        ExecStart = "${cfg.package}/bin/firefox";
+        ExecStart = pkgs.writeScript "firefox.sh" ''
+          #!${pkgs.runtimeShell}
+
+          XDG_RUNTIME_DIR=/mnt/guix/run/user/1000
+          export XDG_RUNTIME_DIR
+
+          WAYLAND_DISPLAY=wayland-1
+          export WAYLAND_DISPLAY
+
+          exec -a firefox ${pkgs.firefox}/bin/firefox "$@"
+        '';
         Type = "simple";
       };
     };
