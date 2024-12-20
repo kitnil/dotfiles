@@ -16,11 +16,11 @@
         (commit
           "ec542755f860e050f2355c0b305cafc386496abf"))
       (channel
-        (name 'guix-wigust)
+        (name 'wigust-dotfiles)
         (url "https://cgit.wugi.info/git/wigust/dotfiles")
         (branch "master")
         (commit
-          "d9e1777612fad6251720149f61fee9e967163f64"))
+          "985c6c618d0d8727f1ded4577db8117caafe7cca"))
       (channel
         (name 'nonguix)
         (url "https://gitlab.com/nonguix/nonguix")
