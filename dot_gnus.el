@@ -190,6 +190,9 @@ below otherwise."
 (setq gnus-posting-styles
       '((".*" ; Matches all groups of messages
          (address "Oleg Pykhalov <go.wigust@gmail.com>"))
+        ("wugi.info" ; Matches Gnus group called "work"
+         (name "Oleg Pykhalov")
+         (address "oleg@wugi.info"))
         ("majordomo-.*" ; Matches Gnus group called "work"
          (name "Олег Пыхалов")
          (address "pyhalov@majordomo.ru")
