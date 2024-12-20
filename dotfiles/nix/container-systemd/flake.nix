@@ -30,7 +30,7 @@
               inherit (inputs.dotfiles-home-manager.inputs) nixpkgs;
             };
             modules = [
-              inputs.dotfiles-home-manager.inputs.home-manager.nixosModules.home-manager-firefox
+              inputs.dotfiles-home-manager.nixosModules.home-manager-firefox
               inputs.dotfiles-home-manager.inputs.home-manager.nixosModules.home-manager
               {
                 home-manager.useGlobalPkgs = true;
