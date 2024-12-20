@@ -9,7 +9,7 @@ images:
 - name: harbor.home.wugi.info/library/guix-image-workstation
   newTag: "bcf3d656"
 - name: harbor.home.wugi.info/library/nixos-systemd
-  newTag: 4e00ff7b
+  newTag: 6c3b18ee
 - name: harbor.home.wugi.info/library/archlinux-systemd
   newTag: 92b8297b
 - name: busybox
