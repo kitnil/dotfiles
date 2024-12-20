@@ -37,6 +37,7 @@
                 home-manager.users.oleg =  inputs.dotfiles-home-manager.outPath + "../../../dotfiles/nix/pc0/home-manager.nix";
                 home-manager.sharedModules = [
                   inputs.dotfiles-home-manager.nixosModules.home-manager-firefox
+                  inputs.dotfiles-home-manager.nixosModules.home-manager-foot
                 ];
                 home-manager.extraSpecialArgs = (rec {
                   inherit (self) nixosConfigurations;
