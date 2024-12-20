@@ -31,6 +31,9 @@ in
       Unit = {
         Description = "Foot terminal";
       };
+      Install = {
+        WantedBy = [ "default.target" ];
+      };
       Service = {
         ExecStart = pkgs.writeScript "foot.sh" ''
           #!${pkgs.runtimeShell}
