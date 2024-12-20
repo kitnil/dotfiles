@@ -19,5 +19,6 @@
                 "obs.scm"
                 "deprecated.scm"
                 "telegram.scm"
-                "majordomo.scm"))
+                "majordomo.scm"
+                "notebook-packages.scm"))
          (list manifest-wm)))
