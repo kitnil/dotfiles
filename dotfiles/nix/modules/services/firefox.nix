@@ -28,13 +28,11 @@ in
   };
   config = mkIf cfg.enable {
     systemd.user.services.firefox = {
-      Unit = mkMerge [
-        {
-          Description = "Firefox web browser";
-          After = [ "network.target" ];
-        }
-      ];
-      Install = mkIf (!cfg.network.startWhenNeeded) {
+      Unit = {
+        Description = "Firefox web browser";
+        After = [ "network.target" ];
+      };
+      Install = {
         WantedBy = [ "default.target" ];
       };
       Service = {
