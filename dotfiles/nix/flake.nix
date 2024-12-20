@@ -353,6 +353,10 @@
         }
       ];
 
+      nixosModules = {
+        home-manager-firefox = ./modules/services/firefox.nix;
+      };
+
       deploy.nodes = let
         home-manager-profile = home-manager-modules:
           let
