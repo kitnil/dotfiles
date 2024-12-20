@@ -1,0 +1,24 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: workstation
+spec:
+  template:
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: workstation-staging.cluster.local/schedulable
+                operator: In
+                values:
+                - "true"
+      tolerations:
+      - key: workstation.cluster.local
+        operator: Equal
+        value: 'true'
+        effect: NoSchedule
+      - key: edge.cluster.local/not-schedulable
+        operator: Equal
+        effect: NoSchedule

@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: workstation-staging
+resources:
+- ../../base/workstation
+patchesStrategicMerge:
+- daemonset.yaml
+images:
+- name: harbor.home.wugi.info/library/guix-image-workstation
+  newTag: "6d168ed3"
+- name: harbor.home.wugi.info/library/nixos-systemd
+  newTag: 096ce36c
+- name: harbor.home.wugi.info/library/archlinux-systemd
+  newTag: 92b8297b
