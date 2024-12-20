@@ -12,3 +12,5 @@ images:
   newTag: 096ce36c
 - name: harbor.home.wugi.info/library/archlinux-systemd
   newTag: 92b8297b
+- name: harbor.home.wugi.info/dockerhub/library/busybox
+  newName: harbor.home.wugi.info/library/busybox
