@@ -222,6 +222,8 @@ spec:
         volumeMounts:
         - mountPath: /dev/dri
           name: dev-dri
+        - mountPath: /dev/tty0
+          name: dev-tty9
         - mountPath: /dev/tty9
           name: dev-tty9
         - mountPath: /run
