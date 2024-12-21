@@ -1,4 +1,4 @@
-{ pkgs, packages, lib, ... }:
+{ pkgs, packages, lib, config, ... }:
 
 {
   home.username = "oleg";
@@ -136,18 +136,6 @@
           id = 4;
         };
       };
-  };
-
-  services.firefox.enable = true;
-  systemd.user.services."firefox@pcaaxem9.default" = {
-    Unit = {
-      Description = "Firefox web browser default profile";
-    };
-  };
-  systemd.user.services."firefox@twitch" = {
-    Unit = {
-      Description = "Firefox web browser twitch profile";
-    };
   };
 
   services.foot.enable = true;
