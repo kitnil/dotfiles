@@ -34,7 +34,10 @@
 
   services.journald.console = "/dev/tty";
 
-  systemd.services."getty@tty9".enable = true;
+  systemd.services."getty@tty9" = {
+    enable = true;
+    wantedBy = [ "default.target" ];
+  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
 
