@@ -44,6 +44,9 @@ in
           WAYLAND_DISPLAY=wayland-1
           export WAYLAND_DISPLAY
 
+          DISPLAY=:0
+          export DISPLAY
+
           exec -a foot ${cfg.package}/bin/foot "$@"
         '';
         Type = "simple";
