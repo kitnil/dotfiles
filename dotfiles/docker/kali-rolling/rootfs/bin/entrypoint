@@ -5,6 +5,9 @@ set -o nounset -o errexit -o pipefail -o xtrace
 systemctl disable getty@tty1.service
 systemctl enable getty@tty11.service
 
+mkdir -p /home/oleg/.config/systemd/user/default.target.wants
+ln -s /home/oleg/.config/systemd/user/foot.service /home/oleg/.config/systemd/user/default.target.wants/foot.service
+
 rm -vf /usr/lib/systemd/system/systemd-networkd*
 rm -vf /usr/lib/systemd/system/systemd-firstboot.service
 rm -vf /usr/lib/systemd/system/systemd-resolved.service
