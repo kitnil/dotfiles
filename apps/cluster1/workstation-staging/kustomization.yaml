@@ -13,6 +13,6 @@ images:
 - name: harbor.home.wugi.info/library/archlinux-systemd
   newTag: c08a32f8
 - name: harbor.home.wugi.info/library/kali-rolling
-  newTag: 31d43743
+  newTag: d95032ee
 - name: busybox
   newName: harbor.home.wugi.info/library/busybox
