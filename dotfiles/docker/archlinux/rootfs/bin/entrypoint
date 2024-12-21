@@ -2,9 +2,6 @@
 
 set -o nounset -o errexit -o pipefail -o xtrace
 
-rm /usr/lib/systemd/system/getty@.service
-mkdir -p /etc/systemd/system/getty.target.wants
-
 rm -vf /usr/lib/systemd/system/systemd-networkd*
 rm -vf /usr/lib/systemd/system/systemd-firstboot.service
 rm -vf /usr/lib/systemd/system/systemd-resolved.service
