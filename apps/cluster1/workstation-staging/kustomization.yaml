@@ -7,7 +7,7 @@ patchesStrategicMerge:
 - daemonset.yaml
 images:
 - name: harbor.home.wugi.info/library/guix-image-workstation
-  newTag: "bcf3d656"
+  newTag: "744c059f"
 - name: harbor.home.wugi.info/library/nixos-systemd
   newTag: eecfbc52
 - name: harbor.home.wugi.info/library/archlinux-systemd
