@@ -11,6 +11,6 @@ images:
 - name: harbor.home.wugi.info/library/nixos-systemd
   newTag: dadbd32f
 - name: harbor.home.wugi.info/library/archlinux-systemd
-  newTag: 82552013
+  newTag: 66411f7c
 - name: busybox
   newName: harbor.home.wugi.info/library/busybox
