@@ -38,6 +38,10 @@ packages+=(
     libxtst
 )
 
+packages+=(
+    foot
+)
+
 base_system()
 {
     groups=(
