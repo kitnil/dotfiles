@@ -13,4 +13,4 @@ images:
 - name: harbor.home.wugi.info/library/archlinux-systemd
   newTag: 92b8297b
 - name: harbor.home.wugi.info/library/kali-rolling
-  newTag: f073c53a
+  newTag: d95032ee
