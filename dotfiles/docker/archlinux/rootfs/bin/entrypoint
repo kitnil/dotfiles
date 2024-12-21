@@ -3,16 +3,14 @@
 set -o nounset -o errexit -o pipefail -o xtrace
 
 # Mask tty0..tty6 systemd services, so they cannot be started.
-ln -s /dev/null /etc/systemd/system/getty@tty0.service
-ln -s /dev/null /etc/systemd/system/getty@tty1.service
-ln -s /dev/null /etc/systemd/system/getty@tty2.service
-ln -s /dev/null /etc/systemd/system/getty@tty3.service
-ln -s /dev/null /etc/systemd/system/getty@tty4.service
-ln -s /dev/null /etc/systemd/system/getty@tty5.service
-ln -s /dev/null /etc/systemd/system/getty@tty6.service
-
-# Enable tty10 autostart.
-ln -s /usr/lib/systemd/system/getty@.service /etc/systemd/system/getty.target.wants/getty@tty10.service
+systemctl mask getty@tty0.service
+systemctl mask getty@tty1.service
+systemctl mask getty@tty2.service
+systemctl mask getty@tty3.service
+systemctl mask getty@tty4.service
+systemctl mask getty@tty5.service
+systemctl mask getty@tty6.service
+systemctl enable getty@tty10.service
 
 rm -vf /usr/lib/systemd/system/systemd-networkd*
 rm -vf /usr/lib/systemd/system/systemd-firstboot.service
