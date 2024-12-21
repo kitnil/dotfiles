@@ -139,6 +139,17 @@
   };
 
   services.firefox.enable = true;
+  systemd.user.services."firefox@pcaaxem9.default" = {
+    Unit = {
+      Description = "Firefox web browser default profile";
+    };
+  };
+  systemd.user.services."firefox@twitch" = {
+    Unit = {
+      Description = "Firefox web browser twitch profile";
+    };
+  };
+
   services.foot.enable = true;
 
   # The home.stateVersion option no longer has a default value. It used to

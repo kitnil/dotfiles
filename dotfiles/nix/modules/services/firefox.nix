@@ -27,22 +27,25 @@ in
     };
   };
   config = mkIf cfg.enable {
-    systemd.user.services.firefox = {
+    systemd.user.services."firefox@" = {
       Unit = {
         Description = "Firefox web browser";
       };
       Service = {
-        ExecStart = pkgs.writeScript "firefox.sh" ''
-          #!${pkgs.runtimeShell}
+        ExecStart =
+          let
+            script = pkgs.writeScript "firefox.sh" ''
+              #!${pkgs.runtimeShell}
 
-          XDG_RUNTIME_DIR=/mnt/guix/run/user/1000
-          export XDG_RUNTIME_DIR
+              XDG_RUNTIME_DIR=/mnt/guix/run/user/1000
+              export XDG_RUNTIME_DIR
 
-          WAYLAND_DISPLAY=wayland-1
-          export WAYLAND_DISPLAY
+              WAYLAND_DISPLAY=wayland-1
+              export WAYLAND_DISPLAY
 
-          exec -a firefox ${pkgs.firefox}/bin/firefox "$@"
-        '';
+              exec -a firefox ${pkgs.firefox}/bin/firefox -P "$@"
+            '';
+          in "${script} %i";
         Type = "simple";
       };
     };
