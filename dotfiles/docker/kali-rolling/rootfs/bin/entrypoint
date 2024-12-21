@@ -2,7 +2,7 @@
 
 set -o nounset -o errexit -o pipefail -o xtrace
 
-sed -i "s|DefaultInstance=tty1|DefaultInstance=${TTY:-tty4}|g;s|ConditionPathExists=/dev/tty0|ConditionPathExists=/dev/${TTY:-tty4}|g" /usr/lib/systemd/system/getty@.service
+sed -i "s|DefaultInstance=tty1|DefaultInstance=${TTY:-tty11}|g;s|ConditionPathExists=/dev/tty0|ConditionPathExists=/dev/${TTY:-tty11}|g" /usr/lib/systemd/system/getty@.service
 mkdir -p /etc/systemd/system/getty.target.wants
 
 rm -vf /usr/lib/systemd/system/systemd-networkd*
@@ -18,7 +18,7 @@ passwd --delete root
 mount -o remount,rw /sys
 
 # Sead requires access to /dev/tty0 for proper functionality.
-ln -s /dev/tty4 /dev/tty0
+ln -s /dev/tty11 /dev/tty0
 
 umount /sys/fs/cgroup
 mount -t cgroup2 -o rw,relatime,nsdelegate,memory_recursiveprot cgroup2 /sys/fs/cgroup
