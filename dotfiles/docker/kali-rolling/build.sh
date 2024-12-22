@@ -16,6 +16,10 @@ packages=(
     xwayland
 )
 
+packages+=(
+    kali-linux-headless
+)
+
 main()
 {
     apt update
