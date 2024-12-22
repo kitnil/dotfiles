@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: DaemonSet
 metadata:
-  name: workstation
+  name: archlinux-builder
 spec:
   updateStrategy:
     type: OnDelete
   selector:
     matchLabels:
-      app.kubernetes.io/name: workstation
-      app.kubernetes.io/part-of: workstation
+      app.kubernetes.io/name: archlinux-builder
+      app.kubernetes.io/part-of: archlinux-builder
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: workstation
-        app.kubernetes.io/part-of: workstation
+        app.kubernetes.io/name: archlinux-builder
+        app.kubernetes.io/part-of: archlinux-builder
     spec:
       automountServiceAccountToken: false
       terminationGracePeriodSeconds: 600
