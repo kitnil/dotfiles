@@ -82,6 +82,11 @@ install_idea()
     yay --noconfirm -S intellij-idea-community-edition
 }
 
+install_pycharm()
+{
+    yay --noconfirm -S pycharm-community-edition
+}
+
 main()
 {
     pacman --noconfirm -Syu
