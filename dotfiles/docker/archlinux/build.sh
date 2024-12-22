@@ -92,11 +92,6 @@ install_vscode()
     yay --noconfirm -S vscode
 }
 
-install_nekoray()
-{
-    yay --noconfirm -S nekoray
-}
-
 main()
 {
     pacman --noconfirm -Syu
@@ -108,7 +103,6 @@ main()
     install_idea
     install_pycharm
     install_vscode
-    install_nekoray
 }
 
 main "$@"
