@@ -9,7 +9,7 @@ images:
 - name: harbor.home.wugi.info/library/guix-image-workstation
   newTag: "1fae2231"
 - name: harbor.home.wugi.info/library/nixos-systemd
-  newTag: 22d4b9a3
+  newTag: a575c44c
 - name: harbor.home.wugi.info/library/archlinux-systemd
   newTag: 85ca33eb
 - name: harbor.home.wugi.info/library/kali-rolling
