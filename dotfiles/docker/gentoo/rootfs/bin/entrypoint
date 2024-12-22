@@ -11,7 +11,7 @@ systemctl mask getty@tty4.service
 systemctl mask getty@tty5.service
 systemctl mask getty@tty6.service
 systemctl mask autovt@tty2.service
-systemctl enable getty@tty10.service
+systemctl enable getty@tty12.service
 
 rm -vf /usr/lib/systemd/system/systemd-networkd*
 rm -vf /usr/lib/systemd/system/systemd-firstboot.service
