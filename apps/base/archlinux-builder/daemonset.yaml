@@ -52,7 +52,7 @@ spec:
           name: archlinux-run
         - mountPath: /tmp
           name: archlinux-tmp
-        - name: home-oleg-ssh-authorized_keys
+        - name: home-oleg-ssh-authorized-keys
           mountPath: /home/oleg/.ssh/authorized_keys
           readOnly: true
       volumes:
@@ -64,7 +64,7 @@ spec:
           medium: Memory
           sizeLimit: 512M
         name: archlinux-run
-      - name: home-oleg-ssh-authorized_keys
+      - name: home-oleg-ssh-authorized-keys
         hostPath:
           path: /home/oleg/.ssh/authorized_keys
           type: File
