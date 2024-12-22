@@ -339,6 +339,51 @@ spec:
           mountPath: /home/oleg/.bash_history
         - name: root-bash-history
           mountPath: /root/.bash_history
+      - image: harbor.home.wugi.info/library/gentoo:latest
+        name: gentoo
+        env:
+        - name: container
+          value: docker
+        securityContext:
+          capabilities:
+            add:
+            - NET_ADMIN
+            - NET_BIND_SERVICE
+            - NET_RAW
+            - SYS_ADMIN
+            - SYS_NICE
+            - SYS_TIME
+          privileged: true
+        tty: true
+        lifecycle:
+           preStop:
+             exec:
+               command:
+               - /bin/sh
+               - -c
+               - |
+                 if /bin/systemctl poweroff
+                 then
+                     :
+                 else
+                     exit 0
+                 fi
+        volumeMounts:
+        - mountPath: /run
+          name: gentoo-run
+        - mountPath: /tmp
+          name: gentoo-tmp
+        - mountPath: /dev/dri
+          name: dev-dri
+        - mountPath: /mnt/guix/run
+          name: guix-run
+          mountPropagation: HostToContainer
+        - mountPath: /mnt/guix/tmp
+          name: guix-tmp
+        - name: home-oleg-bash-history
+          mountPath: /home/oleg/.bash_history
+        - name: root-bash-history
+          mountPath: /root/.bash_history
       volumes:
       - name: dev-dri
         hostPath:
@@ -493,3 +538,11 @@ spec:
           medium: Memory
           sizeLimit: 512M
         name: kali-rolling-run
+      - emptyDir:
+          medium: Memory
+          sizeLimit: 4G
+        name: gentoo-tmp
+      - emptyDir:
+          medium: Memory
+          sizeLimit: 512M
+        name: gentoo-run
