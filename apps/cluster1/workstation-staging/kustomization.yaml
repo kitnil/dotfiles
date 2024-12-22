@@ -16,3 +16,5 @@ images:
   newTag: 171ebd11
 - name: busybox
   newName: harbor.home.wugi.info/library/busybox
+- name: harbor.home.wugi.info/library/gentoo-systemd
+  newTag: 1228f571
