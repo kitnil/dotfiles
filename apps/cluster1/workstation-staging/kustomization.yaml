@@ -11,7 +11,7 @@ images:
 - name: harbor.home.wugi.info/library/nixos-systemd
   newTag: eecfbc52
 - name: harbor.home.wugi.info/library/archlinux-systemd
-  newTag: 2d8fd942
+  newTag: c08a32f8
 - name: harbor.home.wugi.info/library/kali-rolling
   newTag: bb465650
 - name: busybox
