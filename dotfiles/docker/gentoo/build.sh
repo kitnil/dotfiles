@@ -4,7 +4,7 @@ set -o nounset -o errexit -o pipefail -o xtrace
 
 main()
 {
-    echo "main"
+    emerge gui-apps/foot
 }
 
 main "$@"
