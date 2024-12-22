@@ -48,4 +48,5 @@
                "looking-glass-client"
                "netcat-openbsd"
                "openssh"
-               "clipman")))
+               "clipman"
+               "qbittorrent")))
