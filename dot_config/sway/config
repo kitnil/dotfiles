@@ -34,6 +34,7 @@ set $menu dmenu_path | bemenu-run --fb '#000000' --ab '#000000' --tb '#000000' -
 
 output * bg #000000 solid_color
 
+exec swaymsg create_output HEADLESS-1
 output HEADLESS-1 resolution 1800x950
 
 ### Idle configuration
