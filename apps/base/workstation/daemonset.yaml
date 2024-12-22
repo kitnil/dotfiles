@@ -339,7 +339,7 @@ spec:
           mountPath: /home/oleg/.bash_history
         - name: root-bash-history
           mountPath: /root/.bash_history
-      - image: harbor.home.wugi.info/library/gentoo:latest
+      - image: harbor.home.wugi.info/library/gentoo-systemd:latest
         name: gentoo
         env:
         - name: container
