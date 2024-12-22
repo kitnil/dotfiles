@@ -18,6 +18,7 @@
              (gnu services shepherd)
              (gnu services)
              (gnu)
+             (guix channels)
              (guix gexp)
              (guix packages)
              (guix profiles)
@@ -262,6 +263,9 @@ allow-preset-passphrase"))))
                  "Provide console login using the @command{mingetty}
 program.")))
 
+(define my-channels
+  (include "/home/oleg/.local/share/chezmoi/dotfiles/channels-current-guix-image-workstation.scm"))
+
 (operating-system
   (host-name "workstation")
   (timezone "Europe/Moscow")
@@ -329,6 +333,8 @@ program.")))
                     (modify-services %base-services
                       (guix-service-type config =>
                                          (guix-configuration
+                                          (channels my-channels)
+                                          (guix (guix-for-channels my-channels))
                                           (authorized-keys (append (list (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/guix.wugi.info.pub")
                                                                          (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/vm1.wugi.info.pub")
                                                                          (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/vm2.wugi.info.pub")
