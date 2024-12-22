@@ -96,6 +96,7 @@ main()
     install_socialstream
     install_yay
     install_idea
+    install_pycharm
 }
 
 main "$@"
