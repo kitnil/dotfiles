@@ -7,6 +7,10 @@ packages+=(
     git
 )
 
+packages+=(
+    openssh
+)
+
 base_system()
 {
     groups=(
