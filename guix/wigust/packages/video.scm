@@ -43,6 +43,7 @@
   #:use-module (guix utils)
   #:use-module (ice-9 match)
   #:use-module (nongnu packages chromium)
+  #:use-module (nonguix build-system binary)
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-26))
 
