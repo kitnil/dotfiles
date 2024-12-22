@@ -87,6 +87,11 @@ install_pycharm()
     yay --noconfirm -S pycharm-community-edition
 }
 
+install_vscode()
+{
+    yay --noconfirm -S vscode
+}
+
 main()
 {
     pacman --noconfirm -Syu
@@ -97,6 +102,7 @@ main()
     install_yay
     install_idea
     install_pycharm
+    install_vscode
 }
 
 main "$@"
