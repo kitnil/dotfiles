@@ -14,3 +14,5 @@ images:
   newTag: 92b8297b
 - name: harbor.home.wugi.info/library/kali-rolling
   newTag: bb465650
+- name: harbor.home.wugi.info/library/gentoo-systemd
+  newTag: 1228f571
