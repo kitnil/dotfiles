@@ -29,6 +29,16 @@
         "obs-looking-glass"
         "obs-ndi"
 
+        "obs-advanced-masks"
+        "obs-composite-blur"
+        "obs-gradient-source"
+        "obs-move-transition"
+        "obs-multi-rtmp"
+        "obs-scale-to-sound"
+        "obs-shaderfilter"
+        "obs-stroke-glow-shadow"
+        "obs-waveform"
+
         ;; "obs-exporter"
         ;; "obs-source-clone"
         ;; "obs-source-record"
