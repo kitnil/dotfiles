@@ -6,7 +6,7 @@ spec:
   template:
     metadata:
       annotations:
-        guix-default-channel-commit: 17fa092a
+        guix-default-channel-commit: 91fbefb1
     spec:
       nodeSelector:
         kubernetes.io/hostname: kube3
