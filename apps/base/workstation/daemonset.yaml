@@ -190,6 +190,10 @@ spec:
         env:
         - name: container
           value: docker
+        ports:
+        - containerPort: 5900
+          name: vnc
+          protocol: TCP
         securityContext:
           capabilities:
             add:
