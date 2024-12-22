@@ -14,6 +14,7 @@
              (gnu home)
              (gnu packages admin)
              (gnu packages)
+             (gnu packages package-management)
              (gnu services guix)
              (gnu services shepherd)
              (gnu services)
