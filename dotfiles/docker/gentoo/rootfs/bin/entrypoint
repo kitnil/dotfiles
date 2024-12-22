@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+set -o nounset -o errexit -o pipefail -o xtrace
+
+# Mask tty0..tty6 systemd services, so they cannot be started.
+systemctl mask getty@tty0.service
+systemctl mask getty@tty1.service
+systemctl mask getty@tty2.service
+systemctl mask getty@tty3.service
+systemctl mask getty@tty4.service
+systemctl mask getty@tty5.service
+systemctl mask getty@tty6.service
+systemctl mask autovt@tty2.service
+systemctl enable getty@tty10.service
+
+rm -vf /usr/lib/systemd/system/systemd-networkd*
+rm -vf /usr/lib/systemd/system/systemd-firstboot.service
+rm -vf /usr/lib/systemd/system/systemd-resolved.service
+
+passwd --delete root
+
+# Keyboard and mouse access are essential components for efficient operation
+# within the Sway window manager environment. Running 'udevadm trigger' will
+# grant access to the keyboard and mouse. You can verify their addition by
+# using 'libinput list-devices'."
+mount -o remount,rw /sys
+
+umount /sys/fs/cgroup
+mount -t cgroup2 -o rw,relatime,nsdelegate,memory_recursiveprot cgroup2 /sys/fs/cgroup
+
+exec /sbin/init
