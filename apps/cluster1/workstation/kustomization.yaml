@@ -7,12 +7,14 @@ patchesStrategicMerge:
 - daemonset.yaml
 images:
 - name: harbor.home.wugi.info/library/guix-image-workstation
-  newTag: "6d168ed3"
+  newTag: "1fae2231"
 - name: harbor.home.wugi.info/library/nixos-systemd
-  newTag: 096ce36c
+  newTag: 22d4b9a3
 - name: harbor.home.wugi.info/library/archlinux-systemd
-  newTag: 92b8297b
+  newTag: 85ca33eb
 - name: harbor.home.wugi.info/library/kali-rolling
-  newTag: bb465650
+  newTag: 171ebd11
+- name: busybox
+  newName: harbor.home.wugi.info/library/busybox
 - name: harbor.home.wugi.info/library/gentoo-systemd
-  newTag: 1228f571
+  newTag: 7c7fe76d
