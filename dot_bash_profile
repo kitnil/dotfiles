@@ -13,7 +13,7 @@ export XDG_SESSION_DESKTOP
 # Setups system and user profiles and related variables
 # /etc/profile will be sourced by bash automatically
 # Setups home environment profile
-if [[ $(tty) == "/dev/tty2" ]]
+if [[ $(tty) == "/dev/tty8" ]]
 then
     if [[ -f ~/.profile ]]
     then
