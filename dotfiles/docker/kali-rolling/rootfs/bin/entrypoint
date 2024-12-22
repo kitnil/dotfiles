@@ -20,6 +20,8 @@ systemctl mask getty@tty6.service
 
 systemctl enable getty@tty11.service
 
+systemctl mask autovt@tty2.service
+
 mkdir -p /home/oleg/.config/systemd/user/default.target.wants
 ln -s /home/oleg/.config/systemd/user/foot.service /home/oleg/.config/systemd/user/default.target.wants/foot.service
 
