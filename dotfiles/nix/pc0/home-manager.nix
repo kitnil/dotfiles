@@ -22,6 +22,8 @@
     tmux
 
     wayvnc
+
+    nekoray
   ];
 
   home.file = {
