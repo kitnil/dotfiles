@@ -176,6 +176,8 @@ spec:
           mountPath: /srv
         - name: home-oleg-config-qbittorrent
           mountPath: /home/oleg/.config/qBittorrent
+        - name: home-oleg-dot-local-share-qbittorrent
+          mountPath: /home/oleg/.local/share/qBittorrent
         lifecycle:
            preStop:
              exec:
@@ -539,6 +541,10 @@ spec:
       - name: home-oleg-config-qbittorrent
         hostPath:
           path: /home/oleg/.config/qBittorrent
+          type: Directory
+      - name: home-oleg-dot-local-share-qbittorrent
+        hostPath:
+          path: /home/oleg/.local/share/qBittorrent
           type: Directory
       - name: home-oleg-src
         hostPath:
