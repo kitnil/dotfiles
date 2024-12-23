@@ -178,6 +178,8 @@ spec:
           mountPath: /home/oleg/.config/qBittorrent
         - name: home-oleg-dot-local-share-qbittorrent
           mountPath: /home/oleg/.local/share/qBittorrent
+        - name: home-oleg-dot-emacs-d
+          mountPath: /home/oleg/.emacs.d
         lifecycle:
            preStop:
              exec:
@@ -542,9 +544,9 @@ spec:
         hostPath:
           path: /home/oleg/.config/qBittorrent
           type: Directory
-      - name: home-oleg-dot-local-share-qbittorrent
+      - name: home-oleg-dot-emacs-d
         hostPath:
-          path: /home/oleg/.local/share/qBittorrent
+          path: /home/oleg/.emacs.d
           type: Directory
       - name: home-oleg-src
         hostPath:
