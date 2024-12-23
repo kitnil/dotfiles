@@ -172,6 +172,8 @@ spec:
           mountPath: /root/.bash_history
         - name: home-oleg-src
           mountPath: /home/oleg/src
+        - name: srv
+          mountPath: /srv
         lifecycle:
            preStop:
              exec:
@@ -535,6 +537,10 @@ spec:
       - name: home-oleg-src
         hostPath:
           path: /home/oleg/src
+          type: Directory
+      - name: srv
+        hostPath:
+          path: /srv
           type: Directory
       - name: home-oleg-config-wayvnc
         hostPath:
