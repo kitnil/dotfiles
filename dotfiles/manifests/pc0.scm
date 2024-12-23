@@ -20,5 +20,6 @@
                 "deprecated.scm"
                 "telegram.scm"
                 "majordomo.scm"
-                "notebook-packages.scm"))
+                "notebook-packages.scm"
+                "tor-browsers.scm"))
          (list manifest-wm)))
