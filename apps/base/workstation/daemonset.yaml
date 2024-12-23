@@ -170,6 +170,8 @@ spec:
           mountPath: /home/oleg/.bash_history
         - name: root-bash-history
           mountPath: /root/.bash_history
+        - name: home-oleg-src
+          mountPath: /home/oleg/src
         lifecycle:
            preStop:
              exec:
@@ -529,6 +531,10 @@ spec:
       - name: home-oleg-config-socialstream
         hostPath:
           path: /home/oleg/.config/SocialStream
+          type: Directory
+      - name: home-oleg-src
+        hostPath:
+          path: /home/oleg/src
           type: Directory
       - name: home-oleg-config-wayvnc
         hostPath:
