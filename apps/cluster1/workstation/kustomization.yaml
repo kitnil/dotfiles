@@ -19,4 +19,4 @@ images:
 - name: harbor.home.wugi.info/library/gentoo-systemd
   newTag: 7c7fe76d
 - name: harbor.corp1.majordomo.ru/nixos/web
-  newTag: cc61615b
+  newTag: cd66be46
