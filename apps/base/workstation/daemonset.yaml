@@ -178,6 +178,8 @@ spec:
           mountPath: /home/oleg/.config/qBittorrent
         - name: home-oleg-dot-local-share-qbittorrent
           mountPath: /home/oleg/.local/share/qBittorrent
+        - name: qbittorrent-incomplete
+          mountPath: /mnt/qbittorrent-incomplete
         - name: home-oleg-dot-emacs-d
           mountPath: /home/oleg/.emacs.d
         lifecycle:
@@ -555,6 +557,10 @@ spec:
       - name: srv
         hostPath:
           path: /srv
+          type: Directory
+      - name: qbittorrent-incomplete
+        hostPath:
+          path: /mnt/qbittorrent-incomplete
           type: Directory
       - name: home-oleg-config-wayvnc
         hostPath:
