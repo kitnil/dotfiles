@@ -402,52 +402,6 @@ spec:
           mountPath: /home/oleg/.bash_history
         - name: root-bash-history
           mountPath: /root/.bash_history
-      - name: web99
-        image: harbor.corp1.majordomo.ru/nixos/web:1fbeb904
-        command:
-        - /entrypoint.sh
-        env:
-        - name: container
-          value: docker
-        securityContext:
-          capabilities:
-            add:
-            - SETUID
-            - BLOCK_SUSPEND
-            - NET_ADMIN
-            - NET_BIND_SERVICE
-            - NET_RAW
-            - SYS_ADMIN
-            - SYS_CHROOT
-            - SYS_NICE
-            - SYS_PTRACE
-            - SYS_RESOURCE
-            - SYS_TIME
-          privileged: true
-        lifecycle:
-           preStop:
-             exec:
-               command:
-               - /bin/sh
-               - -c
-               - |
-                 if /run/current-system/sw/bin/systemctl poweroff
-                 then
-                     :
-                 else
-                     exit 0
-                 fi
-        tty: true
-        volumeMounts:
-        - mountPath: /run
-          name: web99-run
-        - mountPath: /mnt/guix/tmp
-          name: guix-tmp
-        - mountPath: /mnt/guix/run
-          name: guix-run
-          mountPropagation: HostToContainer
-        - mountPath: /home
-          name: web99-home
       volumes:
       - name: dev-dri
         hostPath:
@@ -506,13 +460,7 @@ spec:
           sizeLimit: 512M
         name: nixos-run
       - emptyDir:
-          medium: Memory
-          sizeLimit: 512M
-        name: web99-run
-      - emptyDir:
         name: nixos-home
-      - emptyDir:
-        name: web99-home
       - emptyDir:
           medium: Memory
           sizeLimit: 512M
