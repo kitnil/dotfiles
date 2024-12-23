@@ -438,7 +438,7 @@ spec:
         tty: true
         volumeMounts:
         - mountPath: /run
-          name: nixos-run
+          name: web99-run
         - mountPath: /mnt/guix/tmp
           name: guix-tmp
         - mountPath: /mnt/guix/run
@@ -503,6 +503,10 @@ spec:
           medium: Memory
           sizeLimit: 512M
         name: nixos-run
+      - emptyDir:
+          medium: Memory
+          sizeLimit: 512M
+        name: web99-run
       - emptyDir:
         name: nixos-home
       - emptyDir:
