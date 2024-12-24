@@ -39,10 +39,9 @@
         "obs-stroke-glow-shadow"
         "obs-waveform"
 
-        ;; "obs-exporter"
-        ;; "obs-source-clone"
-        ;; "obs-source-record"
-        ))
+        "obs-exporter"
+        "obs-source-clone"
+        "obs-source-record"))
 
 (packages->manifest (map (lambda (package-name)
                            (first
