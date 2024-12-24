@@ -33,9 +33,6 @@ spec:
           mkdir /home/oleg/.cache
           chown 1000:998 /home/oleg/.cache
 
-          mkdir /home/oleg/.gnupg
-          chown 1000:998 /home/oleg/.gnupg
-
           mkdir /home/oleg/.config
           chown 1000:998 /home/oleg/.config
 
@@ -161,8 +158,6 @@ spec:
           mountPath: /home/oleg/.local/share/TelegramDesktop
         - name: home-oleg-dot-password-store
           mountPath: /home/oleg/.password-store
-        - name: home-oleg-dot-gnupg
-          mountPath: /home/oleg/.gnupg
         - name: home-oleg-ssh-private-key
           mountPath: /home/oleg/.ssh/id_ed25519
         - name: home-oleg-ssh-public-key
@@ -566,10 +561,6 @@ spec:
       - name: home-oleg-dot-password-store
         hostPath:
           path: /home/oleg/.password-store
-          type: Directory
-      - name: home-oleg-dot-gnupg
-        hostPath:
-          path: /home/oleg/.gnupg
           type: Directory
       - name: home-oleg-mozilla-firefox
         hostPath:
