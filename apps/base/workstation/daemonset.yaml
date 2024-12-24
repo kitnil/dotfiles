@@ -468,8 +468,6 @@ spec:
           mountPropagation: HostToContainer
         - mountPath: /home
           name: web99-home
-        - name: web99-var-log
-          mountPath: /var/log
         - name: taskexecutor
           mountPath: /home/oleg/src/gitlab.intr/hms/taskexecutor
       volumes:
@@ -679,6 +677,3 @@ spec:
       - emptyDir:
           sizeLimit: 512M
         name: nixos-var-log
-      - emptyDir:
-          sizeLimit: 512M
-        name: web99-var-log
