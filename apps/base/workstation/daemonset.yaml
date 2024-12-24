@@ -468,8 +468,6 @@ spec:
           mountPropagation: HostToContainer
         - mountPath: /home
           name: web99-home
-        - name: web99-var-log
-          mountPath: /var/log
       volumes:
       - name: dev-dri
         hostPath:
@@ -673,6 +671,3 @@ spec:
       - emptyDir:
           sizeLimit: 512M
         name: nixos-var-log
-      - emptyDir:
-          sizeLimit: 512M
-        name: web99-var-log
