@@ -76,6 +76,13 @@ spec:
       containers:
       - image: harbor.home.wugi.info/library/guix-image-workstation:latest
         name: guix
+        command:
+        - /gnu/store/x3mwr9npmxdmdzgql0gif1ry8xdlfmis-bash-5.1.16/bin/sh
+        args:
+        - -c
+        - |
+          /gnu/store/kydxw3b2drfqcnafs2bdkpgs6i0jfkq7-coreutils-9.1/bin/rm /dev/log
+          exec /gnu/store/vl55r8m4h0a2zw0hpfziijybvji21062-guile-3.0.9/bin/guile --no-auto-compile /gnu/store/kmv7ny45x2xirqz0y5pha8jm4v02h0lq-shepherd-1.0.0/bin/shepherd --config /gnu/store/phqd37a0ph4szcmsc5mh9a9r8vl4n6kj-shepherd.conf
         ports:
         - containerPort: 5353
           name: avahi
