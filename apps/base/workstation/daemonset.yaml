@@ -33,6 +33,9 @@ spec:
           mkdir /home/oleg/.cache
           chown 1000:998 /home/oleg/.cache
 
+          mkdir /home/oleg/.gnupg
+          chown 1000:998 /home/oleg/.gnupg
+
           mkdir /home/oleg/.config
           chown 1000:998 /home/oleg/.config
 
