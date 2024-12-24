@@ -470,6 +470,8 @@ spec:
           name: web99-home
         - name: web99-var-log
           mountPath: /var/log
+        - name: taskexecutor
+          mountPath: /home/oleg/src/gitlab.intr/hms/taskexecutor
       volumes:
       - name: dev-dri
         hostPath:
@@ -625,6 +627,10 @@ spec:
       - name: home-oleg-src
         hostPath:
           path: /home/oleg/src
+          type: Directory
+      - name: taskexecutor
+        hostPath:
+          path: /home/oleg/src/gitlab.intr/hms/taskexecutor
           type: Directory
       - name: home-oleg-local-share-chezmoi
         hostPath:
