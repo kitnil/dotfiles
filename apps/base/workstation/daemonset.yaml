@@ -177,6 +177,8 @@ spec:
           mountPath: /root/.bash_history
         - name: home-oleg-src
           mountPath: /home/oleg/src
+        - name: home-oleg-local-share-chezmoi
+          mountPath: /home/oleg/.local/share/chezmoi
         - name: srv
           mountPath: /srv
         - name: home-oleg-config-qbittorrent
@@ -624,6 +626,10 @@ spec:
       - name: home-oleg-src
         hostPath:
           path: /home/oleg/src
+          type: Directory
+      - name: home-oleg-local-share-chezmoi
+        hostPath:
+          path: /home/oleg/.local/share/chezmoi
           type: Directory
       - name: srv
         hostPath:
