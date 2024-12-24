@@ -174,10 +174,10 @@ spec:
           mountPath: /home/oleg/src
         - name: srv
           mountPath: /srv
-        - name: home-oleg-config-qbittorrent
-          mountPath: /home/oleg/.config/qBittorrent
-        - name: home-oleg-dot-local-share-qbittorrent
-          mountPath: /home/oleg/.local/share/qBittorrent
+        # - name: home-oleg-config-qbittorrent
+        #   mountPath: /home/oleg/.config/qBittorrent
+        # - name: home-oleg-dot-local-share-qbittorrent
+        #   mountPath: /home/oleg/.local/share/qBittorrent
         - name: qbittorrent-incomplete
           mountPath: /mnt/qbittorrent-incomplete
         - name: home-oleg-dot-emacs-d
