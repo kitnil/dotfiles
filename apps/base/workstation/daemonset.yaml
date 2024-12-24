@@ -39,6 +39,9 @@ spec:
           mkdir /home/oleg/.config
           chown 1000:998 /home/oleg/.config
 
+          mkdir /home/oleg/.emacs.d
+          chown 1000:998 /home/oleg/.emacs.d
+
           mkdir /home/oleg/.local
           chown 1000:998 /home/oleg/.local
 
