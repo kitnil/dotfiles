@@ -33,9 +33,6 @@ spec:
           mkdir /home/oleg/.cache
           chown 1000:998 /home/oleg/.cache
 
-          mkdir /home/oleg/.gnupg
-          chown 1000:998 /home/oleg/.gnupg
-
           mkdir /home/oleg/.config
           chown 1000:998 /home/oleg/.config
 
@@ -64,6 +61,18 @@ spec:
           name: container-home-oleg
         - mountPath: /mnt/nixos/home
           name: nixos-home
+      - name: clean-gnupg
+        image: busybox
+        imagePullPolicy: IfNotPresent
+        command:
+        - sh
+        - -c
+        - |
+          set -o nounset -o errexit -o pipefail
+          rm -f /home/oleg/.gnupg/gpg-agent.conf /home/oleg/.gnupg/gpg.conf
+        volumeMounts:
+        - name: home-oleg-dot-gnupg
+          mountPath: /home/oleg/.gnupg
       containers:
       - image: harbor.home.wugi.info/library/guix-image-workstation:latest
         name: guix
