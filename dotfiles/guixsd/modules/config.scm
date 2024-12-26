@@ -185,7 +185,7 @@ EndSection\n")
   (list pulseaudio))
 
 (define %cert-packages
-  '())
+  (list majordomo-ca))
 
 (define %android-packages
   (list adb))
