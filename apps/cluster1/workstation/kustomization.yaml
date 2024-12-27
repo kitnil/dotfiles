@@ -18,5 +18,3 @@ images:
   newName: harbor.home.wugi.info/library/busybox
 - name: harbor.home.wugi.info/library/gentoo-systemd
   newTag: 7c7fe76d
-- name: harbor.corp1.majordomo.ru/nixos/web
-  newTag: a18e2552
