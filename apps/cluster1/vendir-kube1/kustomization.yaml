@@ -8,4 +8,4 @@ patchesStrategicMerge:
 - job.yaml
 images:
 - name: harbor.home.wugi.info/library/vendir
-  newTag: "c7eb6697"
+  newTag: "3b281a7d"
