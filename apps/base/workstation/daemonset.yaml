@@ -176,6 +176,10 @@ spec:
           mountPath: /home/oleg/.ssh/id_ed25519
         - name: home-oleg-ssh-public-key
           mountPath: /home/oleg/.ssh/id_ed25519.pub
+        - name: home-oleg-ssh-majordomo-gitlab-private-key
+          mountPath: /home/oleg/.ssh/id_rsa_gitlab_intr_nopass
+        - name: home-oleg-ssh-majordomo-gitlab-public-key
+          mountPath: /home/oleg/.ssh/id_rsa_gitlab_intr_nopass.pub
         - name: home-oleg-ssh-known-hosts
           mountPath: /home/oleg/.ssh/known_hosts
         - name: home-oleg-bash-history
@@ -279,6 +283,10 @@ spec:
           mountPath: /home/oleg/.local/share/chatterino
         - name: nixos-var-log
           mountPath: /var/log
+        - name: home-oleg-ssh-majordomo-gitlab-private-key
+          mountPath: /home/oleg/.ssh/id_rsa_gitlab_intr_nopass
+        - name: home-oleg-ssh-majordomo-gitlab-public-key
+          mountPath: /home/oleg/.ssh/id_rsa_gitlab_intr_nopass.pub
       - image: harbor.home.wugi.info/library/archlinux-systemd:latest
         name: archlinux
         env:
@@ -543,6 +551,14 @@ spec:
       - name: home-oleg-ssh-public-key
         hostPath:
           path: /home/oleg/.ssh/id_ed25519.pub
+          type: File
+      - name: home-oleg-ssh-majordomo-gitlab-private-key
+        hostPath:
+          path: /home/oleg/.ssh/id_rsa_gitlab_intr_nopass
+          type: File
+      - name: home-oleg-ssh-majordomo-gitlab-public-key
+        hostPath:
+          path: /home/oleg/.ssh/id_rsa_gitlab_intr_nopass.pub
           type: File
       - name: home-oleg-ssh-known-hosts
         hostPath:
