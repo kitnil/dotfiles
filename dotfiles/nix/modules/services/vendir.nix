@@ -1,4 +1,4 @@
-{ config, lib, pkgs, home, ... }:
+{ config, lib, pkgs, ... }:
 
 with lib;
 
@@ -26,7 +26,7 @@ in
       };
       vendirDirectory = mkOption {
         type = types.str;
-        default = "${home.homeDirectory}/src";
+        default = "${config.home.homeDirectory}/src";
       };
     };
   };
