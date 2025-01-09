@@ -41,6 +41,14 @@ in
           "${cfg.package}/bin/vendir"
           "sync"
         ];
+        Environment = "PATH=${
+          builtins.concatStringsSep ":" [
+            "/run/wrappers/bin"
+            "/run/current-system/sw/bin"
+            "${config.home.homeDirectory}/.nix-profile/bin"
+            "${pkgs.gitAndTools.git}/bin"
+          ]
+        }";
         Type = "simple";
       };
     };
