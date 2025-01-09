@@ -287,6 +287,8 @@ spec:
           mountPath: /home/oleg/.ssh/id_rsa_gitlab_intr_nopass
         - name: home-oleg-ssh-majordomo-gitlab-public-key
           mountPath: /home/oleg/.ssh/id_rsa_gitlab_intr_nopass.pub
+        - name: home-oleg-src
+          mountPath: /home/oleg/src
       - image: harbor.home.wugi.info/library/archlinux-systemd:latest
         name: archlinux
         env:
