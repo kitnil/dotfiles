@@ -12,6 +12,8 @@ spec:
         kubernetes.io/hostname: kube1
       containers:
       - name: vendir
+        args:
+        - sync
         workingDir: /home/oleg/src
         volumeMounts:
         - name: home-oleg-src
