@@ -1,0 +1,23 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: vendir
+spec:
+  template:
+    metadata:
+      annotations:
+        guix-default-channel-commit: 55cf5287
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: kube1
+      containers:
+      - name: vendir
+        workingDir: /home/oleg/src
+        volumeMounts:
+        - name: home-oleg-src
+          mountPath: /home/oleg/src
+      volumes:
+      - name: home-oleg-src
+        hostPath:
+          path: /tmp/src
+          type: Directory
