@@ -8,7 +8,8 @@ patchesStrategicMerge:
 images:
 - name: harbor.home.wugi.info/library/guix-image-workstation
   newTag: "f5abac96"
-- name: harbor.home.wugi.info/library/nixos-systemd-taskexecutor
+- name: harbor.home.wugi.info/library/nixos-systemd
+  newName: harbor.home.wugi.info/library/nixos-systemd-taskexecutor
   newTag: 78623619
 - name: harbor.home.wugi.info/library/archlinux-systemd
   newTag: 85ca33eb
