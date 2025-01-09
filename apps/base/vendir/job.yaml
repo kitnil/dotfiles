@@ -1,0 +1,25 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: vendir
+  annotations:
+    # Setting spec.force to true will make Flux recreate the Job when any
+    # immutable field is changed, forcing the Job to run every time the
+    # container image tag changes.
+    kustomize.toolkit.fluxcd.io/force: enabled
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      hostNetwork: true
+      restartPolicy: Never
+      containers:
+      - name: vendir
+        image: harbor.home.wugi.info/library/vendir:latest
+        resources:
+          limits:
+            cpu: 14000m
+            memory: 4096Mi
+          requests:
+            cpu: 1000m
+            memory: 512Mi
