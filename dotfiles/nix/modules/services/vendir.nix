@@ -37,7 +37,7 @@ in
       };
       Service = {
         WorkingDirectory = cfg.vendirDirectory;
-        ExecStart = lib.strings.concatStringsSep " " [
+        ExecStart = builtins.concatStringsSep " " [
           "${cfg.package}/bin/vendir"
           "sync"
         ];
