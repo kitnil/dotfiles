@@ -289,6 +289,8 @@ spec:
           mountPath: /home/oleg/.ssh/id_rsa_gitlab_intr_nopass.pub
         - name: home-oleg-src
           mountPath: /home/oleg/src
+        - name: home-oleg-ssh-known-hosts
+          mountPath: /home/oleg/.ssh/known_hosts
       - image: harbor.home.wugi.info/library/archlinux-systemd:latest
         name: archlinux
         env:
