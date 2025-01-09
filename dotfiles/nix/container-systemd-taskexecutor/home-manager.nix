@@ -1,30 +1,13 @@
-{ pkgs, taskexecutor-pkgs, taskexecutor-packages, lib, config, ... }:
+{ pkgs, python-taskexecutor, lib, config, ... }:
 
 {
   home.username = "taskexecutor";
   home.homeDirectory = "/home/taskexecutor";
   manual.manpages.enable = false;
 
-  home.packages = (with taskexecutor-pkgs; [
-    procps
-    coreutils
-    curl
-    findutils
-    ripgrep
-    gitMinimal
-    gitaskpass
-    gnugrep
-    gnutar
-    gnused
-    gzip
-    mariadb.client
-    nss-certs
-    openssh
-    quota
-    restic
-    rsync
-    shadow
-  ]) ++ taskexecutor-packages;
+  home.packages = [
+    python-taskexecutor
+  ];
 
   services.vendir.enable = true;
 

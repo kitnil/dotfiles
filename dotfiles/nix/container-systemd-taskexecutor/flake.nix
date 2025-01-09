@@ -20,14 +20,7 @@
                     taskexecutor = ./home-manager.nix;
                   };
                   extraSpecialArgs = {
-                    taskexecutor-packages = taskexecutor.outputs.devShell.${system}.buildInputs;
-                    taskexecutor-pkgs = import taskexecutor.inputs.nixpkgs-19-09 {
-                      inherit system;
-                      overlays = [
-                        taskexecutor.inputs.majordomo.overlay
-                        taskexecutor.overlay
-                      ];
-                    };
+                    python-taskexecutor = taskexecutor.outputs.packages.${system}.pythonWithTaskexecutor;
                   };
                 };
               }
