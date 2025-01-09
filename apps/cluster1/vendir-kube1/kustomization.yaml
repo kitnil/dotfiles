@@ -6,3 +6,6 @@ resources:
 - ../../base/vendir
 patchesStrategicMerge:
 - job.yaml
+images:
+- name: harbor.home.wugi.info/library/vendir
+  newTag: "c7eb6697"
