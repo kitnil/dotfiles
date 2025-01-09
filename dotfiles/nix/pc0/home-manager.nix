@@ -140,6 +140,15 @@
       };
   };
 
+  programs.ssh = {
+    enable = true;
+    extraConfig = ''
+      Host gitlab.intr
+      User git
+      IdentityFile /home/oleg/.ssh/id_rsa_gitlab_intr_nopass
+    '';
+  };
+
   services.foot.enable = true;
   services.wayvnc.enable = true;
   services.vendir.enable = true;
