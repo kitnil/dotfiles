@@ -46,7 +46,13 @@
                 home-manager.extraSpecialArgs = (rec {
                   inherit (self) nixosConfigurations;
                   inherit inputs system;
-                  pkgs = inputs.dotfiles-home-manager.inputs.nixpkgs-home-manager.legacyPackages.${system};
+                  pkgs = import inputs.dotfiles-home-manager.inputs.nixpkgs-home-manager {
+                    inherit system;
+                      config = {
+                        allowUnfreePredicate = pkg:
+                          builtins.elem (nixpkgs.lib.getName pkg) [ "google-chrome" ];
+                      };
+                  };
                   packages = with inputs.dotfiles-home-manager.inputs;
                     let
                       inherit (dotfiles-home-manager) overlay;
