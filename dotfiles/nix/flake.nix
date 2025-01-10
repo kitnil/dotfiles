@@ -356,7 +356,7 @@
       nixosModules = {
         home-manager-firefox = import ./modules/services/firefox.nix;
         home-manager-foot = import ./modules/services/foot.nix;
-        home-manager-google-chrome-stable = import ./modules/services/google-chrome-stable.nix;
+        home-manager-google-chrome = import ./modules/services/google-chrome.nix;
         home-manager-pycharm-community = import ./modules/services/pycharm-community.nix;
         home-manager-vendir = import ./modules/services/vendir.nix;
         home-manager-wayvnc = import ./modules/services/wayvnc.nix;

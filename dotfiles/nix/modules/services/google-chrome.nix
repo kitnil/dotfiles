@@ -3,12 +3,12 @@
 with lib;
 
 let
-  name = "google-chrome-stable";
-  cfg = config.services.google-chrome-stable;
+  name = "google-chrome";
+  cfg = config.services.google-chrome;
 in
 {
   options = {
-    services.google-chrome-stable = {
+    services.google-chrome = {
       enable = mkOption {
         type = types.bool;
         default = false;
@@ -18,8 +18,8 @@ in
       };
       package = mkOption {
         type = types.package;
-        default = pkgs.google-chrome-stable;
-        defaultText = "pkgs.google-chrome-stable";
+        default = pkgs.google-chrome;
+        defaultText = "pkgs.google-chrome";
         description = ''
           Google Chrome.
         '';
@@ -27,7 +27,7 @@ in
     };
   };
   config = mkIf cfg.enable {
-    systemd.user.services.google-chrome-stable = {
+    systemd.user.services.google-chrome = {
       Unit = {
         Description = "Google Chrome";
       };
@@ -35,7 +35,7 @@ in
         WantedBy = [ "default.target" ];
       };
       Service = {
-        ExecStart = pkgs.writeScript "google-chrome-stable.sh" ''
+        ExecStart = pkgs.writeScript "google-chrome.sh" ''
           #!${pkgs.runtimeShell}
 
           XDG_RUNTIME_DIR=/mnt/guix/run/user/1000
