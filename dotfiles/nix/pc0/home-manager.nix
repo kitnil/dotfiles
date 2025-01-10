@@ -13,7 +13,6 @@
 
     nixGLIntel
     alacritty
-    google-chrome
 
     robo3t
 

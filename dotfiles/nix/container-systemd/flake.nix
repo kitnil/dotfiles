@@ -43,30 +43,39 @@
                   inputs.dotfiles-home-manager.nixosModules.home-manager-vendir
                   inputs.dotfiles-home-manager.nixosModules.home-manager-wayvnc
                 ];
-                home-manager.extraSpecialArgs = (rec {
-                  inherit (self) nixosConfigurations;
-                  inherit inputs system;
-                  pkgs = import inputs.dotfiles-home-manager.inputs.nixpkgs-home-manager {
-                    inherit system;
-                      config = {
-                        allowUnfreePredicate = pkg:
-                          builtins.elem (nixpkgs.lib.getName pkg) [ "google-chrome" ];
+                home-manager.extraSpecialArgs =
+                  let
+                    packages = with inputs.dotfiles-home-manager.inputs;
+                      let
+                        inherit (dotfiles-home-manager) overlay;
+                      in
+                        import inputs.dotfiles-home-manager.inputs.nixpkgs {
+                          overlays = [ nur.overlay flake-utils-plus.overlay overlay ];
+                          inherit system;
+                          config = {
+                            allowUnfreePredicate = pkg:
+                              builtins.elem (nixpkgs.lib.getName pkg) [
+                                "betterttv"
+                                "google-chrome"
+                              ];
+                            permittedInsecurePackages = [ "qtwebkit-5.212.0-alpha4" ];
+                          };
+                        };
+                  in
+                    rec {
+                      inherit (self) nixosConfigurations;
+                      inherit inputs system;
+                      pkgs = import inputs.dotfiles-home-manager.inputs.nixpkgs-home-manager {
+                        inherit system;
+                        config = {
+                          allowUnfreePredicate = pkg:
+                            builtins.elem (nixpkgs.lib.getName pkg) [ "google-chrome" ];
+                        };
+                      } // {
+                        inherit (packages) google-chrome;
                       };
-                  };
-                  packages = with inputs.dotfiles-home-manager.inputs;
-                    let
-                      inherit (dotfiles-home-manager) overlay;
-                    in
-                    import inputs.dotfiles-home-manager.inputs.nixpkgs {
-                      overlays = [ nur.overlay flake-utils-plus.overlay overlay ];
-                      inherit system;
-                      config = {
-                        allowUnfreePredicate = pkg:
-                          builtins.elem (nixpkgs.lib.getName pkg) [ "betterttv" ];
-                        permittedInsecurePackages = [ "qtwebkit-5.212.0-alpha4" ];
-                      };
+                      inherit packages;
                     };
-                });
               }
               ./hosts/nixos-systemd.nix
             ];
