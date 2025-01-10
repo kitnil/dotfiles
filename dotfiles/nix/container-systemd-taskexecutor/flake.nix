@@ -3,7 +3,7 @@
 
   inputs = {
     original.url = "git+file:///home/oleg/.local/share/chezmoi?dir=dotfiles/nix/container-systemd";
-    taskexecutor.url = "git+ssh://gitlab.corp1.majordomo.ru/hms/taskexecutor";
+    taskexecutor.url = "git+ssh://gitlab.corp1.majordomo.ru/hms/taskexecutor?ref=staging";
   };
 
   outputs = { self, original, taskexecutor, ... }:
