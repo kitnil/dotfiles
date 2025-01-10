@@ -6,11 +6,11 @@ spec:
   template:
     metadata:
       annotations:
-        guix-default-channel-commit: 8cc2b98a
+        guix-default-channel-commit: 4a24a838
     spec:
       nodeSelector:
         kubernetes.io/hostname: kube2
       tolerations:
-      - key: "edge.cluster.local/not-schedulable"
-        operator: "Equal"
-        effect: "NoSchedule"
+        - key: edge.cluster.local/not-schedulable
+          operator: Equal
+          effect: NoSchedule
