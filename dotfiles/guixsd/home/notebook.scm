@@ -73,10 +73,22 @@
   (list
    (service home-dbus-service-type)
    (service home-pipewire-service-type)
+   (simple-service 'xcb-config
+                   home-files-service-type
+                   (list `(".xkb/symbols/custom" ,(local-file (string-append %project-directory "/dot_xkb/symbols/custom")))))
+
    (simple-service 'sway-config
                    home-files-service-type
-                   (list `(".config/sway/config" ,(local-file (string-append %project-directory "/dot_config/sway/notebook.config")))
-                         `(".xkb/symbols/custom" ,(local-file (string-append %project-directory "/dot_xkb/symbols/custom")))))
+                   (list `(".config/sway/config"
+                           ,(computed-file
+                             "sway-config"
+                             #~(begin
+                                 (with-output-to-file #$output
+                                   (lambda ()
+                                     (use-modules (ice-9 rdelim))
+                                     (with-input-from-file #$(local-file (string-append %project-directory "/dot_config/sway/notebook.config"))
+                                                           read-string))))))))
+
    (service stumpwm-service-type
             (let ((config-files
                    '("utils.lisp"
