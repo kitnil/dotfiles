@@ -277,11 +277,11 @@
       },
       "locked": {
         "dir": "dotfiles/nix",
-        "lastModified": 1736515863,
-        "narHash": "sha256-RX2TG3/+iuX+0tAVLaouGZ+Zzy5V+IfaGlSPvyljnCc=",
+        "lastModified": 1736524368,
+        "narHash": "sha256-gQ8+o/nq+d7/0E77zs4OX/JPN6UMSFpOX/97be1vf+w=",
         "ref": "refs/heads/master",
-        "rev": "a8245c74b46cac8291701faab7568663d979b119",
-        "revCount": 12428,
+        "rev": "fb43ccf86f844faad79c0efa33a0469e2e6f83d8",
+        "revCount": 12436,
         "type": "git",
         "url": "file:///home/oleg/.local/share/chezmoi?dir=dotfiles/nix"
       },
@@ -2696,11 +2696,8 @@
       },
       "locked": {
         "dir": "dotfiles/nix/container-systemd",
-        "lastModified": 1736515912,
-        "narHash": "sha256-VCBaEhgHLHbYKwrNPsYaPLoMsMtIL6Iql6T3ud27WAo=",
-        "ref": "refs/heads/master",
-        "rev": "12f0fdab50faf9d93dfaa9c78fa9f4e276c68410",
-        "revCount": 12429,
+        "lastModified": 1736524368,
+        "narHash": "sha256-kig8y1hfDm4t7jQ/B/J8BAqP8uxbAEj9GMt5hs+nmmQ=",
         "type": "git",
         "url": "file:///home/oleg/.local/share/chezmoi?dir=dotfiles/nix/container-systemd"
       },
