@@ -150,6 +150,7 @@
   };
 
   services.foot.enable = true;
+  services.google-chrome-stable.enable = true;
   services.pycharm-community.enable = true;
   services.wayvnc.enable = true;
   services.vendir.enable = true;
