@@ -28,6 +28,24 @@
             ];
           };
         };
+        packages.${system} =
+          let
+            pkgs = import original.inputs.nixpkgs { inherit system; };
+            inherit (pkgs) callPackage;
+          in
+            {
+              python-taskexecutor-local = callPackage
+                ({ stdenv }: stdenv.mkDerivation {
+                  name = "python-taskexecutor-local";
+                  src = null;
+                  dontUnpack = true;
+                  installPhase = ''
+                    mkdir -p $out/lib/python3.7/site-packages
+                    ln -s /home/oleg/src/gitlab.intr/hms/taskexecutor/src/python/taskexecutor $out/lib/python3.7/site-packages/taskexecutor
+                  '';
+                })
+                {};
+            };
       };
 }
 
