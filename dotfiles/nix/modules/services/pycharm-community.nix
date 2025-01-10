@@ -31,9 +31,6 @@ in
       Unit = {
         Description = "Pycharm terminal";
       };
-      Install = {
-        WantedBy = [ "default.target" ];
-      };
       Service = {
         ExecStart = pkgs.writeScript "pycharm-community.sh" ''
           #!${pkgs.runtimeShell}
