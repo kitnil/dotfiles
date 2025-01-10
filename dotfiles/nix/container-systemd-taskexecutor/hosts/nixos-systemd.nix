@@ -53,4 +53,6 @@
       -----END CERTIFICATE-----
     ''
   ];
+
+  virtualisation.docker.enable = true;
 }
