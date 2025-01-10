@@ -33,7 +33,7 @@
             pkgs = import original.inputs.nixpkgs { inherit system; };
             inherit (pkgs) callPackage;
           in
-            {
+            rec {
               python-taskexecutor-local = callPackage
                 ({ stdenv }: stdenv.mkDerivation {
                   name = "python-taskexecutor-local";
@@ -45,6 +45,13 @@
                   '';
                 })
                 {};
+              python-with-te = pkgs.symlinkJoin {
+                name = "profile";
+                paths = [
+                  taskexecutor.outputs.packages.${system}.pythonWithTaskexecutor
+                  python-taskexecutor-local
+                ];
+              };
             };
       };
 }
