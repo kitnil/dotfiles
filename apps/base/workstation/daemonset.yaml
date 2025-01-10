@@ -57,6 +57,9 @@ spec:
           mkdir /mnt/nixos/home/oleg/.local
           chown 1000:998 /mnt/nixos/home/oleg/.local
 
+          mkdir /mnt/nixos/home/oleg/.local/share
+          chown 1000:998 /mnt/nixos/home/oleg/.local/share
+
           mkdir /mnt/nixos/home/oleg/.ssh
           chown 1000:998 /mnt/nixos/home/oleg/.ssh
         volumeMounts:
