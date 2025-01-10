@@ -18,7 +18,7 @@ in
       };
       package = mkOption {
         type = types.package;
-        default = pkgs.pycharm-community;
+        default = pkgs.jetbrains.pycharm-community;
         defaultText = "pkgs.pycharm-community";
         description = ''
           Pycharm-Community.
