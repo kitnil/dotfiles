@@ -31,9 +31,6 @@ in
       Unit = {
         Description = "Google Chrome";
       };
-      Install = {
-        WantedBy = [ "default.target" ];
-      };
       Service = {
         ExecStart = pkgs.writeScript "google-chrome.sh" ''
           #!${pkgs.runtimeShell}
