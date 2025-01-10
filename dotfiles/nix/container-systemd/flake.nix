@@ -38,6 +38,7 @@
                 home-manager.sharedModules = [
                   inputs.dotfiles-home-manager.nixosModules.home-manager-firefox
                   inputs.dotfiles-home-manager.nixosModules.home-manager-foot
+                  inputs.dotfiles-home-manager.nixosModules.home-manager-google-chrome-stable
                   inputs.dotfiles-home-manager.nixosModules.home-manager-vendir
                   inputs.dotfiles-home-manager.nixosModules.home-manager-wayvnc
                 ];
