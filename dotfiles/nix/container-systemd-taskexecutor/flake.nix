@@ -20,7 +20,7 @@
                     taskexecutor = ./home-manager.nix;
                   };
                   extraSpecialArgs = {
-                    python-taskexecutor = taskexecutor.outputs.packages.${system}.pythonWithTaskexecutor;
+                    python-taskexecutor = self.outputs.packages.${system}.python-with-te;
                   };
                 };
               }
