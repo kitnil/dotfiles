@@ -5,7 +5,8 @@
   home.homeDirectory = "/home/taskexecutor";
   manual.manpages.enable = false;
 
-  home.packages = [
+  home.packages = with pkgs; [
+    gitAndTools.git
     python-taskexecutor
   ];
 
