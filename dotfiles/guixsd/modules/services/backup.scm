@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2021, 2022, 2023, 2024 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2021, 2022, 2023, 2024, 2025 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -206,10 +206,7 @@
                       (map (lambda (directory)
                              (string-append #$%user-home "/" directory))
                            '#$%user-directories))))
-         (setenv "RESTIC_PASSWORD_FILE"
-                 (string-trim-right
-                  (with-input-from-file "/etc/guix/secrets/restic"
-                    read-string)))
+         (setenv "RESTIC_PASSWORD_FILE" "/etc/guix/secrets/restic")
          (display "Creating new Restic system snapshot\n")
          (zero?
           (apply system*
