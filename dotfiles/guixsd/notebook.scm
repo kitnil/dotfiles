@@ -297,7 +297,11 @@ remote-random
 		     nix-service
 
                      (service kernel-module-loader-service-type
-                              '("dm-snapshot")))
+                              '("dm-snapshot"))
+
+                     ;; Required for topolvm.
+                     (extra-special-file "/sbin/lvm"
+                                         (file-append lvm2 "/sbin/lvm")))
 
                     (list ;; (screen-locker-service slock)
                           (udisks-service)
