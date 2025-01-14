@@ -39,6 +39,9 @@ spec:
           mkdir /home/oleg/.local
           chown 1000:998 /home/oleg/.local
 
+          mkdir /home/oleg/.local/var/log
+          chown 1000:998 /home/oleg/.local/var/log
+
           mkdir /home/oleg/.local/share
           chown 1000:998 /home/oleg/.local/share
 
@@ -206,6 +209,8 @@ spec:
           mountPath: /mnt/qbittorrent-incomplete
         - name: guix-var-log
           mountPath: /var/log
+        - name: guix-home-oleg-local-var-log
+          mountPath: /home/oleg/.local/var/log
         lifecycle:
            preStop:
              exec:
@@ -643,6 +648,9 @@ spec:
       - emptyDir:
           sizeLimit: 512M
         name: guix-var-log
+      - emptyDir:
+          sizeLimit: 512M
+        name: guix-home-oleg-local-var-log
       - emptyDir:
           sizeLimit: 512M
         name: kali-rolling-var-log
