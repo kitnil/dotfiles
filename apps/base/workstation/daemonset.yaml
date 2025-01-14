@@ -39,6 +39,9 @@ spec:
           mkdir /home/oleg/.local
           chown 1000:998 /home/oleg/.local
 
+          mkdir /home/oleg/.local/var
+          chown 1000:998 /home/oleg/.local/var
+
           mkdir /home/oleg/.local/var/log
           chown 1000:998 /home/oleg/.local/var/log
 
