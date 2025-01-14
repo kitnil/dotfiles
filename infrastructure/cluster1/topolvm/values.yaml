@@ -1,3 +1,8 @@
+# CSI controller service
+controller:
+  # controller.replicaCount -- Number of replicas for CSI controller service.
+  replicaCount: 1
+
 # lvmd service
 lvmd:
   # lvmd.deviceClasses -- Specify the device-class settings.
