@@ -1,5 +1,12 @@
 # lvmd service
 lvmd:
+  # lvmd.deviceClasses -- Specify the device-class settings.
+  deviceClasses:
+  - name: vg0
+    volume-group: vg0
+    default: true
+    spare-gb: 10
+
   # lvmd.affinity -- Specify affinity.
   ## ref: https://kubernetes.io/docs/concepts/configuration/assign-pod-node/#affinity-and-anti-affinity
   affinity:
