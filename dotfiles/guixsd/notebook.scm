@@ -304,7 +304,7 @@ remote-random
                      (extra-special-file "/sbin/lvm"
                                          (file-append lvm2 "/sbin/lvm"))
                      (extra-special-file "/sbin/blockdev"
-                                         (file-append util-linux-with-udev "/sbin/blockdev")))
+                                         (file-append util-linux+udev "/sbin/blockdev")))
 
                     (list ;; (screen-locker-service slock)
                           (udisks-service)
