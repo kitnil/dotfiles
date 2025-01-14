@@ -3,6 +3,7 @@ kind: Kustomization
 namespace: topolvm-system
 resources:
 - ../../base/topolvm
+- topolvm-node-edge.yaml
 patchesStrategicMerge:
 - release.yaml
 configMapGenerator:

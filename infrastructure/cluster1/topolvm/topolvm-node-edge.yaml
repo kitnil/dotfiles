@@ -1,0 +1,190 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  labels:
+    app.kubernetes.io/instance: topolvm
+    app.kubernetes.io/name: topolvm
+  name: topolvm-node-edge
+  namespace: topolvm-system
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/component: node
+      app.kubernetes.io/instance: topolvm
+      app.kubernetes.io/name: topolvm
+  template:
+    metadata:
+      annotations:
+        prometheus.io/port: metrics
+      labels:
+        app.kubernetes.io/component: node
+        app.kubernetes.io/instance: topolvm
+        app.kubernetes.io/name: topolvm
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: topolvm-node-edge.cluster.local/schedulable
+                operator: In
+                values:
+                - "true"
+      containers:
+      - command:
+        - /topolvm-node
+        - --csi-socket=/var/lib/kubelet/plugins/topolvm.io/node/csi-topolvm.sock
+        - --lvmd-socket=/run/topolvm/lvmd.sock
+        env:
+        - name: NODE_NAME
+          valueFrom:
+            fieldRef:
+              apiVersion: v1
+              fieldPath: spec.nodeName
+        - name: KUBERNETES_SERVICE_HOST
+          value: 192.168.0.144
+        - name: KUBERNETES_SERVICE_PORT
+          value: "6443"
+        image: ghcr.io/topolvm/topolvm-with-sidecar:0.36.1
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /healthz
+            port: healthz
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 60
+          successThreshold: 1
+          timeoutSeconds: 3
+        name: topolvm-node
+        ports:
+        - containerPort: 9808
+          name: healthz
+          protocol: TCP
+        - containerPort: 8080
+          name: metrics
+          protocol: TCP
+        resources: {}
+        securityContext:
+          privileged: true
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /var/lib/kubelet/plugins/topolvm.io/node/
+          name: node-plugin-dir
+        - mountPath: /run/topolvm
+          name: lvmd-socket-dir
+        - mountPath: /var/lib/kubelet/pods
+          mountPropagation: Bidirectional
+          name: pod-volumes-dir
+        - mountPath: /var/lib/kubelet/plugins/kubernetes.io/csi
+          mountPropagation: Bidirectional
+          name: csi-plugin-dir
+        - mountPath: /dev
+          name: devices-dir
+      - command:
+        - /csi-node-driver-registrar
+        - --csi-address=/var/lib/kubelet/plugins/topolvm.io/node/csi-topolvm.sock
+        - --kubelet-registration-path=/var/lib/kubelet/plugins/topolvm.io/node/csi-topolvm.sock
+        - --http-endpoint=:9809
+        image: ghcr.io/topolvm/topolvm-with-sidecar:0.36.1
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: KUBERNETES_SERVICE_HOST
+          value: 192.168.0.144
+        - name: KUBERNETES_SERVICE_PORT
+          value: "6443"
+        lifecycle:
+          preStop:
+            exec:
+              command:
+              - /bin/sh
+              - -c
+              - rm -rf /registration/topolvm.io /registration/topolvm.io-reg.sock
+        livenessProbe:
+          failureThreshold: 3
+          httpGet:
+            path: /healthz
+            port: healthz
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 60
+          successThreshold: 1
+          timeoutSeconds: 3
+        name: csi-registrar
+        ports:
+        - containerPort: 9809
+          name: healthz
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /var/lib/kubelet/plugins/topolvm.io/node/
+          name: node-plugin-dir
+        - mountPath: /registration
+          name: registration-dir
+      - command:
+        - /livenessprobe
+        - --csi-address=/var/lib/kubelet/plugins/topolvm.io/node/csi-topolvm.sock
+        - --http-endpoint=:9808
+        image: ghcr.io/topolvm/topolvm-with-sidecar:0.36.1
+        imagePullPolicy: IfNotPresent
+        env:
+        - name: KUBERNETES_SERVICE_HOST
+          value: 192.168.0.144
+        - name: KUBERNETES_SERVICE_PORT
+          value: "6443"
+        name: liveness-probe
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        volumeMounts:
+        - mountPath: /var/lib/kubelet/plugins/topolvm.io/node/
+          name: node-plugin-dir
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      serviceAccount: topolvm-node
+      serviceAccountName: topolvm-node
+      terminationGracePeriodSeconds: 30
+      tolerations:
+      - effect: NoSchedule
+        key: workstation.cluster.local
+        operator: Equal
+        value: "true"
+      - effect: NoSchedule
+        key: edge.cluster.local/not-schedulable
+        operator: Equal
+      volumes:
+      - hostPath:
+          path: /dev
+          type: Directory
+        name: devices-dir
+      - hostPath:
+          path: /var/lib/kubelet/plugins_registry/
+          type: Directory
+        name: registration-dir
+      - hostPath:
+          path: /var/lib/kubelet/plugins/topolvm.io/node
+          type: DirectoryOrCreate
+        name: node-plugin-dir
+      - hostPath:
+          path: /var/lib/kubelet/plugins/kubernetes.io/csi
+          type: DirectoryOrCreate
+        name: csi-plugin-dir
+      - hostPath:
+          path: /var/lib/kubelet/pods/
+          type: DirectoryOrCreate
+        name: pod-volumes-dir
+      - hostPath:
+          path: /run/topolvm
+          type: Directory
+        name: lvmd-socket-dir
+  updateStrategy:
+    rollingUpdate:
+      maxSurge: 0
+      maxUnavailable: 1
+    type: RollingUpdate
