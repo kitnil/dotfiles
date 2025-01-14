@@ -139,7 +139,8 @@
 "))
 
   (sudoers-file (plain-file "sudoers"
-                            (string-join `("root ALL=(ALL) ALL"
+                            (string-join `("Defaults:root runcwd=*"
+                                           "root ALL=(ALL) ALL"
                                            "%wheel ALL=(ALL) ALL"
                                            "oleg ALL=(ALL) NOPASSWD:ALL")
                                          "\n")))
