@@ -28,6 +28,9 @@
             ];
           };
         };
+        nixosModules = {
+          taskexecutor-nginx = import ./modules/services/taskexecutor-nginx.nix;
+        };
         packages.${system} =
           let
             pkgs = import original.inputs.nixpkgs { inherit system; };
