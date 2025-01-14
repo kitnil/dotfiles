@@ -31,11 +31,5 @@ in
           ${coreutils}/bin/install -m400 ${tls.key} /opt/nginx/ssl/majordomo.ru.key
         '';
     };
-
-    fileSystems."/var/log/nginx" = {
-      device = "none";
-      fsType = "tmpfs";
-      options = [ "size=3G" "mode=755" ]; # mode=755 so only root can write to those files
-    };
   };
 }
