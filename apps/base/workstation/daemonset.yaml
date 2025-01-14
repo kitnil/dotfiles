@@ -305,6 +305,8 @@ spec:
           mountPath: /home/oleg/src
         - name: home-oleg-ssh-known-hosts
           mountPath: /home/oleg/.ssh/known_hosts
+        - name: home-oleg-robo3t
+          mountPath: /home/oleg/.3T
       - image: harbor.home.wugi.info/library/archlinux-systemd:latest
         name: archlinux
         env:
@@ -557,6 +559,10 @@ spec:
       - name: home-oleg-dot-gnupg
         hostPath:
           path: /home/oleg/.gnupg
+          type: Directory
+      - name: home-oleg-robo3t
+        hostPath:
+          path: /home/oleg/.3T
           type: Directory
       - name: home-oleg-mozilla-firefox
         hostPath:
