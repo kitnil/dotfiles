@@ -55,4 +55,10 @@
   ];
 
   virtualisation.docker.enable = true;
+
+  services = {
+    taskexecutor-nginx = {
+      enable = true;
+    };
+  };
 }
