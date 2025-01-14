@@ -45,6 +45,43 @@
             inherit (pkgs) callPackage;
           in
             rec {
+              python-with-te =
+                let
+                  pkgs = import taskexecutor.inputs.nixpkgs-19-09 {
+                    inherit system;
+                    overlays = [
+                      taskexecutor.inputs.majordomo.overlay
+                      taskexecutor.overlay
+                    ];
+                  };
+                in
+                  with pkgs;
+                  with pkgs.python37mj.pkgs;
+                  symlinkJoin {
+                    name = "pythonWithTaskexecutor";
+                    paths = pkgs.python37mj.withPackages (ps:
+                      (with ps; [
+                        kombu
+                        clamd
+                        PyMySQL
+                        jinja2
+                        schedule
+                        psutil
+                        pyaml
+                        docker
+                        pg8000
+                        requests
+                        alerta
+                        attrs
+                        giturlparse
+
+                        pip
+                        pytest
+                        pyfakefs
+                        gitaskpass
+                        self.packages.${system}.python-taskexecutor-local
+                      ]));
+                  };
               python-taskexecutor-local = callPackage
                 ({ stdenv }: stdenv.mkDerivation {
                   name = "python-taskexecutor-local";
@@ -54,15 +91,7 @@
                     mkdir -p $out/lib/python3.7/site-packages
                     ln -s /home/oleg/src/gitlab.intr/hms/taskexecutor/src/python/taskexecutor $out/lib/python3.7/site-packages/taskexecutor
                   '';
-                })
-                {};
-              python-with-te = pkgs.symlinkJoin {
-                name = "profile";
-                paths = [
-                  taskexecutor.outputs.packages.${system}.pythonWithTaskexecutor
-                  python-taskexecutor-local
-                ];
-              };
+                });
             };
       };
 }
