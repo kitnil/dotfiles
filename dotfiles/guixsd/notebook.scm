@@ -301,7 +301,9 @@ remote-random
 
                      ;; Required for topolvm.
                      (extra-special-file "/sbin/lvm"
-                                         (file-append lvm2 "/sbin/lvm")))
+                                         (file-append lvm2 "/sbin/lvm"))
+                     (extra-special-file "/sbin/blockdev"
+                                         (file-append util-linux-with-udev "/sbin/blockdev")))
 
                     (list ;; (screen-locker-service slock)
                           (udisks-service)
