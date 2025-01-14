@@ -18,6 +18,14 @@ lvmd:
             operator: NotIn
             values:
             - "false"
+  tolerations:
+  - key: workstation.cluster.local
+    operator: Equal
+    value: 'true'
+    effect: NoSchedule
+  - key: edge.cluster.local/not-schedulable
+    operator: Equal
+    effect: NoSchedule
 
 node:
   # lvmd.affinity -- Specify affinity.
@@ -31,3 +39,11 @@ node:
             operator: NotIn
             values:
             - "false"
+  tolerations:
+  - key: workstation.cluster.local
+    operator: Equal
+    value: 'true'
+    effect: NoSchedule
+  - key: edge.cluster.local/not-schedulable
+    operator: Equal
+    effect: NoSchedule
