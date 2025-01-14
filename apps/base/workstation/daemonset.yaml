@@ -669,5 +669,5 @@ spec:
           sizeLimit: 512M
         name: nixos-var-log
       - emptyDir:
-          sizeLimit: 8G
+          sizeLimit: 16G
         name: nixos-var-lib-docker
