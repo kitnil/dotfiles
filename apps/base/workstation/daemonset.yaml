@@ -307,6 +307,8 @@ spec:
           mountPath: /home/oleg/.ssh/known_hosts
         - name: home-oleg-robo3t
           mountPath: /home/oleg/.3T
+        - name: nixos-var-lib-docker
+          mountPath: /var/lib/docker
       - image: harbor.home.wugi.info/library/archlinux-systemd:latest
         name: archlinux
         env:
@@ -666,3 +668,6 @@ spec:
       - emptyDir:
           sizeLimit: 512M
         name: nixos-var-log
+      - emptyDir:
+          sizeLimit: 8G
+        name: nixos-var-lib-docker
