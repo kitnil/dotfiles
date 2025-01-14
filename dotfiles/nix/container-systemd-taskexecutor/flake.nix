@@ -4,9 +4,10 @@
   inputs = {
     original.url = "git+file:///home/oleg/.local/share/chezmoi?dir=dotfiles/nix/container-systemd";
     taskexecutor.url = "git+ssh://gitlab.corp1.majordomo.ru/hms/taskexecutor?ref=staging";
+    ssl-certificates.url = "git+ssh://git@gitlab.intr/office/ssl-certificates";
   };
 
-  outputs = { self, original, taskexecutor, ... }:
+  outputs = { self, original, ssl-certificates, taskexecutor, ... }:
     let
       system = "x86_64-linux";
     in
@@ -24,8 +25,15 @@
                   };
                 };
               }
+              self.nixosModules.taskexecutor-nginx
               ./hosts/nixos-systemd.nix
             ];
+            specialArgs = {
+              majordomo-tls = {
+                certificate = ssl-certificates.outputs.lib.ssl."majordomo.ru.pem";
+                key = ssl-certificates.outputs.lib.ssl."majordomo.ru.key";
+              };
+            };
           };
         };
         nixosModules = {
