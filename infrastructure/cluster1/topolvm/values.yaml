@@ -14,7 +14,7 @@ lvmd:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
         - matchExpressions:
-          - key: topolvm.cluster.local/schedulable
+          - key: topolvm-lvmd.cluster.local/schedulable
             operator: NotIn
             values:
             - "false"
@@ -27,7 +27,7 @@ node:
       requiredDuringSchedulingIgnoredDuringExecution:
         nodeSelectorTerms:
         - matchExpressions:
-          - key: topolvm.cluster.local/schedulable
+          - key: topolvm-node.cluster.local/schedulable
             operator: NotIn
             values:
             - "false"
