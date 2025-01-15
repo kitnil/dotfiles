@@ -74,6 +74,7 @@
                         alerta
                         attrs
                         giturlparse
+                        quota
 
                         pip
                         pytest
