@@ -50,6 +50,10 @@ packages+=(
     nano
 )
 
+packages+=(
+    go
+)
+
 base_system()
 {
     groups=(
