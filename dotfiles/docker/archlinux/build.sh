@@ -46,6 +46,10 @@ packages+=(
     foot
 )
 
+packages+=(
+    nano
+)
+
 base_system()
 {
     groups=(
