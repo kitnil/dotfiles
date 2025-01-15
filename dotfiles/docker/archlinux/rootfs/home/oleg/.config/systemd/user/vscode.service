@@ -2,7 +2,7 @@
 WantedBy=default.target
 
 [Service]
-ExecStart=/bin/sh -c 'DISPLAY=:0 XDG_RUNTIME_DIR=/mnt/guix/run/user/1000 WAYLAND_DISPLAY=wayland-1 exec -a vscode /usr/bin/code'
+ExecStart=/bin/sh -c 'DISPLAY=:0 XDG_RUNTIME_DIR=/mnt/guix/run/user/1000 WAYLAND_DISPLAY=wayland-1 exec -a vscode /usr/bin/code --wait'
 Type=simple
 
 [Unit]
