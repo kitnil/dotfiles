@@ -39,6 +39,7 @@
                   inputs.dotfiles-home-manager.nixosModules.home-manager-firefox
                   inputs.dotfiles-home-manager.nixosModules.home-manager-foot
                   inputs.dotfiles-home-manager.nixosModules.home-manager-google-chrome
+                  inputs.dotfiles-home-manager.nixosModules.home-manager-idea-community
                   inputs.dotfiles-home-manager.nixosModules.home-manager-pycharm-community
                   inputs.dotfiles-home-manager.nixosModules.home-manager-vendir
                   inputs.dotfiles-home-manager.nixosModules.home-manager-wayvnc
