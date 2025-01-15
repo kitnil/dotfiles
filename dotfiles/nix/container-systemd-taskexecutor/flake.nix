@@ -92,7 +92,8 @@
                     mkdir -p $out/lib/python3.7/site-packages
                     ln -s /home/oleg/src/gitlab.intr/hms/taskexecutor/src/python/taskexecutor $out/lib/python3.7/site-packages/taskexecutor
                   '';
-                });
+                })
+                { };
               python-taskexecutor-local-wrapper = callPackage
                 ({ stdenv }:
                   let
