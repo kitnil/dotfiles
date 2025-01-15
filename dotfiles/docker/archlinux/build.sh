@@ -23,6 +23,10 @@ packages=(
 )
 
 packages+=(
+    glibc
+)
+
+packages+=(
     noto-fonts
     noto-fonts-cjk
     noto-fonts-emoji
@@ -57,6 +61,16 @@ base_system()
     done
 
     sed -i 's|# %wheel ALL=(ALL:ALL) NOPASSWD: ALL|%wheel ALL=(ALL:ALL) NOPASSWD: ALL|' /etc/sudoers
+}
+
+configure_locales()
+{
+    cat >> /etc/locale.gen <<'EOF'
+
+ru_RU.KOI8-R KOI8-R
+ru_RU.UTF-8 UTF-8
+ru_RU ISO-8859-5
+EOF
 }
 
 install_socialstream()
@@ -94,9 +108,12 @@ install_vscode()
 
 main()
 {
+    sed -i '/NoExtract/d' /etc/pacman.conf
+    configure_locales
     pacman --noconfirm -Syu
     pacman --noconfirm -S "${packages[@]}"
     base_system
+    locale-gen
 
     install_socialstream
     install_yay
