@@ -93,7 +93,45 @@
                     ln -s /home/oleg/src/gitlab.intr/hms/taskexecutor/src/python/taskexecutor $out/lib/python3.7/site-packages/taskexecutor
                   '';
                 });
+              python-taskexecutor-local-wrapper = callPackage
+                ({ stdenv }:
+                  let
+                    script = pkgs.writeScript "python" ''
+                      #!/bin/sh
+
+                      unset LD_LIBRARY_PATH
+
+                      HOSTNAME=web99
+                      export HOSTNAME
+
+                      CONFIG_PROFILE=staging
+                      export CONFIG_PROFILE
+
+                      APIGW_HOST="api.intr"
+                      export APIGW_HOST
+
+                      TE_AMQP_HOST="rabbit.intr"
+                      export TE_AMQP_HOST
+
+                      LOG_LEVEL="debug"
+                      export LOG_LEVEL
+
+                      APIGW_PASSWORD="''${APIGW_PASSWORD}"
+                      export APIGW_PASSWORD
+
+                      exec /run/wrappers/bin/sudo -E /etc/profiles/per-user/taskexecutor/bin/python3 "$@"
+                    '';
+                  in
+                  stdenv.mkDerivation {
+                    name = "python-taskexecutor-local-wrapper";
+                    src = null;
+                    dontUnpack = true;
+                    installPhase = ''
+                      install -Dm555 ${script} $out/bin/python
+                    '';
+                  })
+                { };
             };
-      };
+   };
 }
 
