@@ -65,6 +65,14 @@ base_system()
     done
 
     sed -i 's|# %wheel ALL=(ALL:ALL) NOPASSWD: ALL|%wheel ALL=(ALL:ALL) NOPASSWD: ALL|' /etc/sudoers
+
+    cat >> /home/oleg/.bashrc <<'EOF'
+
+systemctl()
+{
+    XDG_RUNTIME_DIR="/run/user/${UID}" command systemctl "$@"
+}
+EOF
 }
 
 configure_locales()
