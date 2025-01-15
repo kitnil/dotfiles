@@ -358,6 +358,8 @@ spec:
           mountPath: /home/oleg/.config/SocialStream
         - name: archlinux-var-log
           mountPath: /var/log
+        - name: home-oleg-src
+          mountPath: /home/oleg/src
       - image: harbor.home.wugi.info/library/kali-rolling:latest
         name: kali-rolling
         env:
