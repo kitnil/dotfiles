@@ -2,5 +2,5 @@
 
 set -o nounset -o errexit -o pipefail -o xtrace
 
-lvcreate -L 45G -n web99homeext4 vg0
-mkfs.ext4 -L web99homeext4 /dev/vg0/web99homeext4
+lvcreate -L 45G -n webext4 vg0
+mkfs.ext4 -L webext4 /dev/vg0/webext4
