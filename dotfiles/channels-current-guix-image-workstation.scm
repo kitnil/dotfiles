@@ -3,10 +3,10 @@
         (url "https://cgit.wugi.info/git/guix/guix")
         (branch "master")
         (commit
-          "f64db0be22e90b170072dbb2e2abab6280e9fd47")
+          "9eb32716a99d7010dee9da70b0f8219ef2689a66")
         (introduction
           (make-channel-introduction
-            "9edb3f66fd807b096b48283debdcddccfea34bad"
+            "9eb32716a99d7010dee9da70b0f8219ef2689a66"
             (openpgp-fingerprint
               "BBB0 2DDF 2CEA F6A8 0D1D  E643 A2A0 6DF2 A33A 54FA"))))
       (channel
@@ -20,7 +20,7 @@
         (url "https://gitlab.com/nonguix/nonguix")
         (branch "master")
         (commit
-          "9730e950724041c8409f53760576c2da9d608066")
+          "368701e26bbdd6bf5cdd720a281fe8806852a4c4")
         (introduction
           (make-channel-introduction
             "897c1a470da759236cc11798f4e0a5f7d4d59fbc"
