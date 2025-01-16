@@ -58,9 +58,7 @@ def mail_read():
     with IMAPClient(host="imap.gmail.com") as client:
         client.login(email_username, email_password)
         client.select_folder("INBOX")
-        messages = client.search(["UNSEEN", ["FROM", "bridges@torproject.org"]])
-        if len(messages) == 0:
-            messages = [client.search(["FROM", "bridges@torproject.org"])[0]]
+        messages = [client.search(["FROM", "bridges@torproject.org"])[0]]
         for uid, message_data in client.fetch(messages, "RFC822").items():
             email_message = email.message_from_bytes(message_data[b"RFC822"])
             for ct in email_message.walk():
