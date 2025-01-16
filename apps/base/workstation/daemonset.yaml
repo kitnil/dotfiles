@@ -283,10 +283,10 @@ spec:
           mountPropagation: HostToContainer
         # - name: mnt-web-ext4
         #   mountPath: /home
-        # - name: mnt-web-btrfs
-        #   mountPath: /home
-        - mountPath: /home
-          name: nixos-home
+        - name: mnt-web-btrfs
+          mountPath: /home
+        # - mountPath: /home
+        #   name: nixos-home
         - mountPath: /home/oleg/.mozilla/firefox
           name: home-oleg-mozilla-firefox
         - name: home-oleg-bash-history
