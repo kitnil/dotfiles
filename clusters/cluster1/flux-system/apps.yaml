@@ -476,6 +476,12 @@ metadata:
 spec:
   interval: 30m0s
   path: ./apps/cluster1/maintenance-guix-system-reconfigure-kube2
+  # This means that the maintenance-guix-package-manifest-kube3 Kustomization
+  # will wait until all the Jobs in maintenance-guix-pull-kube3 run to
+  # completion. If the Job fails, the app changes will not be applied by the
+  # app-deploy Kustomization.
+  dependsOn:
+  - name: maintenance-git-dotfiles-kube2
   prune: true
   sourceRef:
     kind: GitRepository
