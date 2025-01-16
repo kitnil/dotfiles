@@ -281,10 +281,6 @@ spec:
         - mountPath: /mnt/guix/run
           name: guix-run
           mountPropagation: HostToContainer
-        # - name: mnt-web-ext4
-        #   mountPath: /home
-        # - name: mnt-web-btrfs
-        #   mountPath: /home
         - mountPath: /home
           name: nixos-home
         - mountPath: /home/oleg/.mozilla/firefox
@@ -639,14 +635,6 @@ spec:
       - name: home-oleg-config-wayvnc
         hostPath:
           path: /home/oleg/.config/wayvnc
-          type: Directory
-      - name: mnt-web-ext4
-        hostPath:
-          path: /mnt/web-ext4
-          type: Directory
-      - name: mnt-web-btrfs
-        hostPath:
-          path: /mnt/web-btrfs
           type: Directory
       - emptyDir:
           medium: Memory
