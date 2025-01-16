@@ -75,6 +75,8 @@
                         attrs
                         giturlparse
                         quota
+                        btrfs-progs
+                        restic
 
                         pip
                         pytest
