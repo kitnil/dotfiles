@@ -2,11 +2,11 @@
 
 set -o nounset -o errexit -o pipefail -o xtrace
 
-lvcreate -L 45G -n web99homebtrfs vg0
-mkfs.btrfs -L web99homebtrfs /dev/vg0/web99homebtrfs
+lvcreate -L 45G -n webbtrfs vg0
+mkfs.btrfs -L webbtrfs /dev/vg0/webbtrfs
 
-mkdir -p /mnt/web99-home-btrfs
-mount -o compress=zstd:3,ssd,noatime,degraded /dev/vg0/web99homebtrfs /mnt/web99-home-btrfs
-btrfs quota enable /mnt/web99-home-btrfs
-btrfs subvolume create /mnt/web99-home-btrfs
-umount /mnt/web99-home-btrfs
+mkdir -p /mnt/web-btrfs
+mount -o compress=zstd:3,ssd,noatime,degraded /dev/vg0/webbtrfs /mnt/web-btrfs
+btrfs quota enable /mnt/web-btrfs
+btrfs subvolume create /mnt/web-btrfs/web99-home
+umount /mnt/web-btrfs
