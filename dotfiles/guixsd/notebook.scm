@@ -116,6 +116,7 @@
                      ;;sway dmenu
                      ;; terminal emulator
                      ;; for HTTPS access
+                     btrfs-progs
                      lvm2
 		     openvpn
                      sway
