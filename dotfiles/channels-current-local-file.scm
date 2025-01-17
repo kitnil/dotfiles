@@ -16,6 +16,17 @@
         (commit
           "0e93a25ee17fc43564290f95d7865a94bddfaf77"))
       (channel
+        (name 'nonguix)
+        (url "https://gitlab.com/nonguix/nonguix")
+        (branch "master")
+        (commit
+          "9446bf27a40a429baf98248ffa5d1b6942ac7f16")
+        (introduction
+          (make-channel-introduction
+            "897c1a470da759236cc11798f4e0a5f7d4d59fbc"
+            (openpgp-fingerprint
+              "2A39 3FFF 68F4 EF7A 3D29  12AF 6F51 20A0 22FB B2D5"))))
+      (channel
         (name 'prometheus-shepherd-exporter)
         (url "https://gitlab.com/wigust/prometheus-shepherd-exporter")
         (branch "master")
