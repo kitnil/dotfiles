@@ -314,10 +314,9 @@ program.")))
                                                                  "https://substitutes.nonguix.org")))))
                       (syslog-service-type config =>
                                            (syslog-configuration
-                                            (extra-options '("--rcfile=/etc/syslog.conf"
-                                                             "--no-forward"
-                                                             "--no-unixaf"
-                                                             "--no-klog")))))))
+                                            (arguments '("--no-forward"
+                                                         "--no-unixaf"
+                                                         "--no-klog")))))))
 
   (sudoers-file (plain-file "sudoers"
                             (string-join `("Defaults:root runcwd=*"
