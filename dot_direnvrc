@@ -200,7 +200,6 @@ use_emacs-guix()
         sshpass
         st
         which
-        xdot
     )
     PACKAGES=(help2man)
 
