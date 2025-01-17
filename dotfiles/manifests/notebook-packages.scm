@@ -27,7 +27,6 @@
         "pavucontrol"
         "strace"
         "rsync"
-        "firefox"
         "dmenu"
         "ripgrep"
         "git"
