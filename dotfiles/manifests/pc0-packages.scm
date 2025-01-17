@@ -49,4 +49,5 @@
                "netcat-openbsd"
                "openssh"
                "clipman"
-               "qbittorrent")))
+               "qbittorrent"
+               "direnv")))
