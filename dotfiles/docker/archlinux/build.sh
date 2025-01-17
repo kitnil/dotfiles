@@ -134,6 +134,7 @@ packages+=(
 install_docker()
 {
     systemctl enable docker.service
+    gpasswd -a oleg docker
 }
 
 main()
