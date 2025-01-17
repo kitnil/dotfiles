@@ -128,6 +128,14 @@ install_kubebuilder()
     chmod +x /usr/local/bin/kubebuilder
 }
 
+packages+=(
+    docker
+)
+install_docker()
+{
+    systemctl enable docker.service
+}
+
 main()
 {
     sed -i '/NoExtract/d' /etc/pacman.conf
@@ -137,6 +145,7 @@ main()
     base_system
     locale-gen
 
+    install_docker
     install_socialstream
     install_yay
     install_idea
