@@ -122,6 +122,12 @@ install_vscode()
     yay --noconfirm -S vscode
 }
 
+install_kubebuilder()
+{
+    curl -L -o /usr/local/bin/kubebuilder "https://go.kubebuilder.io/dl/latest/$(go env GOOS)/$(go env GOARCH)"
+    chmod +x /usr/local/bin/kubebuilder
+}
+
 main()
 {
     sed -i '/NoExtract/d' /etc/pacman.conf
@@ -136,6 +142,7 @@ main()
     install_idea
     install_pycharm
     install_vscode
+    install_kubebuilder
 }
 
 main "$@"
