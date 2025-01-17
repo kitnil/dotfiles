@@ -25,7 +25,7 @@ use_haunt()
     fi
     PACKAGES_MAINTENANCE=(direnv git sshpass password-store less openssh gnupg)
     PACKAGES=(bash coreutils grep findutils which)
-    eval "$(guix environment --search-paths --root="$gcroot" --pure --load=guix.scm --ad-hoc ${PACKAGES[@]} ${PACKAGES_MAINTENANCE[@]} "$@")"
+    eval "$(guix time-machine --channels="${HOME}/.local/share/chezmoi/dotfiles/channels-current-guix-image-workstation.scm" -- environment --search-paths --root="$gcroot" --pure --load=guix.scm --ad-hoc ${PACKAGES[@]} ${PACKAGES_MAINTENANCE[@]} "$@")"
 }
 
 use_guix()
@@ -73,10 +73,10 @@ use_guix()
         set -x
         case "$1" in
             build)
-                guix environment --pure guix --ad-hoc ${ENV_PACKAGES[@]} ${ENV_PACKAGES_MAINTENANCE[@]} -- .direnv/aliases/build
+                guix time-machine --channels="${HOME}/.local/share/chezmoi/dotfiles/channels-current-guix-image-workstation.scm" -- environment --pure guix --ad-hoc ${ENV_PACKAGES[@]} ${ENV_PACKAGES_MAINTENANCE[@]} -- .direnv/aliases/build
                 ;;
             *)
-                guix environment --pure guix --ad-hoc ${ENV_PACKAGES[@]} ${ENV_PACKAGES_MAINTENANCE[@]} "$@"
+                guix time-machine --channels="${HOME}/.local/share/chezmoi/dotfiles/channels-current-guix-image-workstation.scm" -- environment --pure guix --ad-hoc ${ENV_PACKAGES[@]} ${ENV_PACKAGES_MAINTENANCE[@]} "$@"
                 ;;
         esac
 
@@ -142,7 +142,7 @@ use_guix()
 
     shell()
     {
-        guix shell ${ENV_PACKAGES[@]} ${ENV_PACKAGES_MAINTENANCE[@]} --development guix "$@"
+        guix time-machine --channels="${HOME}/.local/share/chezmoi/dotfiles/channels-current-guix-image-workstation.scm" -- shell ${ENV_PACKAGES[@]} ${ENV_PACKAGES_MAINTENANCE[@]} --development guix "$@"
     }
     export_function shell
 
@@ -205,7 +205,7 @@ use_emacs-guix()
     PACKAGES=(help2man)
 
     # https://lists.gnu.org/archive/html/guix-devel/2016-09/msg00859.html
-    eval "$(guix environment --search-paths --root="$gcroot" --pure --load=guix.scm --ad-hoc ${PACKAGES[@]} ${PACKAGES_MAINTENANCE[@]} "$@")"
+    eval "$(guix time-machine --channels="${HOME}/.local/share/chezmoi/dotfiles/channels-current-guix-image-workstation.scm" -- environment --search-paths --root="$gcroot" --pure --load=guix.scm --ad-hoc ${PACKAGES[@]} ${PACKAGES_MAINTENANCE[@]} "$@")"
 
     GUILE_LOAD_PATH=$PWD/scheme:$GUILE_LOAD_PATH
     export GUILE_LOAD_PATH
@@ -252,21 +252,21 @@ use_guile()
     then
         rm -v "$gcroot"
     fi
-    eval "$(guix environment --search-paths --root="$gcroot" --pure guile --ad-hoc ${PACKAGES[@]} ${PACKAGES_MAINTENANCE[@]} "$@")"
+    eval "$(guix time-machine --channels="${HOME}/.local/share/chezmoi/dotfiles/channels-current-guix-image-workstation.scm" -- environment --search-paths --root="$gcroot" --pure guile --ad-hoc ${PACKAGES[@]} ${PACKAGES_MAINTENANCE[@]} "$@")"
 }
 
 use_fasm()
 {
     PACKAGES_MAINTENANCE=(bash binutils coreutils direnv)
     PACKAGES=(fasm)
-    eval "$(guix environment --search-paths --pure --ad-hoc ${PACKAGES[@]} ${PACKAGES_MAINTENANCE[@]} "$@")"
+    eval "$(guix time-machine --channels="${HOME}/.local/share/chezmoi/dotfiles/channels-current-guix-image-workstation.scm" -- environment --search-paths --pure --ad-hoc ${PACKAGES[@]} ${PACKAGES_MAINTENANCE[@]} "$@")"
 }
 
 use_artanis()
 {
     PACKAGES_MAINTENANCE=(bash binutils coreutils direnv)
     PACKAGES=(artanis guile@2)
-    eval "$(guix environment --search-paths --pure --ad-hoc ${PACKAGES[@]} ${PACKAGES_MAINTENANCE[@]} "$@")"
+    eval "$(guix time-machine --channels="${HOME}/.local/share/chezmoi/dotfiles/channels-current-guix-image-workstation.scm" -- environment --search-paths --pure --ad-hoc ${PACKAGES[@]} ${PACKAGES_MAINTENANCE[@]} "$@")"
 }
 
 use_mjru_ci_jenkins()
