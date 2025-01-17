@@ -84,6 +84,7 @@
    home-git-service
    home-gita-service
    home-gdb-service
+   home-emacs-state-service
    home-emacs-service
    home-nano-service
    home-inputrc-service
