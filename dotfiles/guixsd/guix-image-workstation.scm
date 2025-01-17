@@ -116,42 +116,7 @@ default-cache-ttl-ssh 172800
 max-cache-ttl 172800
 max-cache-ttl-ssh 172800
 allow-preset-passphrase"))))
-                   (simple-service 'bin-firefox-profiles
-                                   home-files-service-type
-                                   (list `("bin/firefox-profile-default"
-                                           ,(program-file "firefox-profile-default"
-                                                          #~(and=> (getenv "HOME")
-                                                                 (lambda (home)
-                                                                   (execl #$(file-append firefox "/bin/firefox")
-                                                                          "firefox"
-                                                                          "--profile"
-                                                                          (string-append home "/.mozilla/firefox/pcaaxem9.default"))))))
-                                         `("bin/firefox-profile-development"
-                                           ,(program-file "firefox-profile-development"
-                                                          #~(and=> (getenv "HOME")
-                                                                   (lambda (home)
-                                                                     (execl #$(file-append firefox "/bin/firefox")
-                                                                            "firefox"
-                                                                            "--profile"
-                                                                            (string-append home "/.mozilla/firefox/development"))))))
-                                         `("bin/firefox-profile-twitch"
-                                           ,(program-file "firefox-profile-twitch"
-                                                          #~(and=> (getenv "HOME")
-                                                                   (lambda (home)
-                                                                     (execl #$(file-append firefox "/bin/firefox")
-                                                                            "firefox"
-                                                                            "--profile"
-                                                                            (string-append home "/.mozilla/firefox/twitch"))))))
-                                         `("bin/firefox-profile-twitch-namespace"
-                                           ,(program-file "firefox-profile-twitch-namespace"
-                                                          #~(and=> (getenv "HOME")
-                                                                   (lambda (home)
-                                                                     (execl "/run/setuid-programs/sudo"
-                                                                            "sudo"
-                                                                            "--preserve-env"
-                                                                            #$(file-append iproute "/sbin/ip") "netns" "exec" "ns1"
-                                                                            "/run/setuid-programs/sudo" "--user=oleg" "--preserve-env"
-                                                                            #$(file-append firefox "/bin/firefox") "--profile" (string-append home "/.mozilla/firefox/twitch"))))))))
+
                    (simple-service 'bin-manual-scripts
                                    home-files-service-type
                                    (list `("bin/manual-scripts-root-02-net.sh"
