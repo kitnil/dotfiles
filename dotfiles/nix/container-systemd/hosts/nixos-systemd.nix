@@ -21,6 +21,10 @@
   networking.firewall.enable = false;
   networking.resolvconf.enable = false;
 
+  virtualisation.docker = {
+    enable = true;
+  };
+
   security.sudo = {
     enable = true;
     wheelNeedsPassword = false;
@@ -46,6 +50,7 @@
   users.users.oleg = {
     isNormalUser = true;
     extraGroups = [
+      "docker"
       "wheel" # Enable ‘sudo’ for the user.
     ];
     uid = 1000;
