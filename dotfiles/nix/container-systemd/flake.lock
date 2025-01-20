@@ -2227,12 +2227,10 @@
     },
     "nixpkgs_25": {
       "locked": {
-        "lastModified": 1720368505,
-        "narHash": "sha256-5r0pInVo5d6Enti0YwUSQK4TebITypB42bWy5su3MrQ=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "ab82a9612aa45284d4adf69ee81871a389669a9e",
-        "type": "github"
+        "lastModified": 1,
+        "narHash": "sha256-9PzTiPKTjMNJZFg7UqAYG5Y+T4M3qdyAJSA8mSR/K7M=",
+        "path": "/nix/store/xrm67v53yxan38pf6c6ll20ryrbzq621-nixos-24.11.20240707.ab82a96/nixos",
+        "type": "path"
       },
       "original": {
         "id": "nixpkgs",
