@@ -221,7 +221,6 @@ spec:
         - name: guix-home-oleg-local-var-log
           mountPath: /home/oleg/.local/var/log
         - mountPath: /home/oleg/.docker/config.json
-          subPath: config.json
           readOnly: true
           name: docker-configuration
         lifecycle:
@@ -326,7 +325,6 @@ spec:
         - name: mnt-web-ext4
           mountPath: /mnt/web-ext4
         - mountPath: /home/oleg/.docker/config.json
-          subPath: config.json
           readOnly: true
           name: docker-configuration
       - image: harbor.home.wugi.info/library/archlinux-systemd:latest
@@ -702,5 +700,6 @@ spec:
           path: /mnt/web-ext4
           type: DirectoryOrCreate
       - name: docker-configuration
-        secret:
-          secretName: docker-configuration
+        hostPath:
+          path: /home/oleg/.docker/config.json
+          type: File
