@@ -2809,11 +2809,11 @@
       },
       "locked": {
         "dir": "dotfiles/nix/container-systemd",
-        "lastModified": 1737407502,
-        "narHash": "sha256-w8+/hBOIuTbZbA+5lTjPeP15jnVVg5NMNbRNs0V5x6U=",
+        "lastModified": 1737407552,
+        "narHash": "sha256-54syzNI3nq8dRq6TaaxXihqJim39PxGsQjH28OoDc0Q=",
         "ref": "refs/heads/master",
-        "rev": "aeab2b355d37f1eab30de23b572586b922f55ab6",
-        "revCount": 12556,
+        "rev": "a76f49a78a64f415ac61337e16f77380ae27e3f7",
+        "revCount": 12558,
         "type": "git",
         "url": "file:///home/oleg/.local/share/chezmoi?dir=dotfiles/nix/container-systemd"
       },
