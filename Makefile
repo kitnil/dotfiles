@@ -326,5 +326,8 @@ guix-image-workstation:
 	skopeo copy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
 	echo $(container_registry)/library/$@:$$commit_8
 
+nix-update-inputs:
+	$(MAKE) -C dotfiles/nix/container-systemd dotfiles-home-manager
+
 .PHONY: all
 all: dotfiles/scripts/nix-ssh-known-hosts-to-file.scm
