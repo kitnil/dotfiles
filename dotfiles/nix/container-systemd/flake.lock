@@ -268,11 +268,11 @@
       },
       "locked": {
         "dir": "dotfiles/nix",
-        "lastModified": 1736973838,
-        "narHash": "sha256-Kq3TgaZ37kKARrKZ6QEfLiK3e5YKGgYFnq0DVmx4Dfc=",
+        "lastModified": 1737414206,
+        "narHash": "sha256-Hijj1WpKSNGsm1OcEEttBZM+2eUO3R+IOX6ikozAqYo=",
         "ref": "refs/heads/master",
-        "rev": "ef23a48632d2a0bc1856d2c5520ed67a6ccf3d94",
-        "revCount": 12478,
+        "rev": "ff46b4dd10d07cfe6f26b27e7fe85c1e19135cce",
+        "revCount": 12564,
         "type": "git",
         "url": "file:///home/oleg/.local/share/chezmoi?dir=dotfiles/nix"
       },
