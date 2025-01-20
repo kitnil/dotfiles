@@ -2507,12 +2507,10 @@
     },
     "nixpkgs_25": {
       "locked": {
-        "lastModified": 1720368505,
-        "narHash": "sha256-5r0pInVo5d6Enti0YwUSQK4TebITypB42bWy5su3MrQ=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "ab82a9612aa45284d4adf69ee81871a389669a9e",
-        "type": "github"
+        "lastModified": 1,
+        "narHash": "sha256-Q8pDGPWwuMPRIGD53zwS1k27330finBgJoTQTTIBwac=",
+        "path": "/nix/store/7n01752xvgj3raglngprv854h011ph1c-nixos-24.11.19700101.dirty/nixos",
+        "type": "path"
       },
       "original": {
         "id": "nixpkgs",
@@ -2811,11 +2809,11 @@
       },
       "locked": {
         "dir": "dotfiles/nix/container-systemd",
-        "lastModified": 1736974359,
-        "narHash": "sha256-6utQaqqFwKdnU5Du3p/7y0j8G6bAF5BOUSQ6E6xJ22A=",
+        "lastModified": 1737407502,
+        "narHash": "sha256-w8+/hBOIuTbZbA+5lTjPeP15jnVVg5NMNbRNs0V5x6U=",
         "ref": "refs/heads/master",
-        "rev": "876748c427c26af0360903a33a2e206399b2b184",
-        "revCount": 12479,
+        "rev": "aeab2b355d37f1eab30de23b572586b922f55ab6",
+        "revCount": 12556,
         "type": "git",
         "url": "file:///home/oleg/.local/share/chezmoi?dir=dotfiles/nix/container-systemd"
       },
