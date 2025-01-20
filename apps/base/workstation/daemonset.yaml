@@ -30,6 +30,9 @@ spec:
           chown 1000:998 /home/oleg
           chmod 0755 /home/oleg
 
+          mkdir /home/oleg/.docker
+          chown 1000:998 /home/oleg/.docker
+
           mkdir /home/oleg/.cache
           chown 1000:998 /home/oleg/.cache
 
@@ -53,6 +56,9 @@ spec:
 
           mkdir /mnt/nixos/home/oleg
           chown 1000:998 /mnt/nixos/home/oleg
+
+          mkdir /mnt/nixos/home/oleg/.docker
+          chown 1000:998 /mnt/nixos/home/oleg/.docker
 
           mkdir -p /mnt/nixos/home/oleg/.mozilla
           chown 1000:998 /mnt/nixos/home/oleg/.mozilla
@@ -214,6 +220,10 @@ spec:
           mountPath: /var/log
         - name: guix-home-oleg-local-var-log
           mountPath: /home/oleg/.local/var/log
+        - mountPath: /home/oleg/.docker/config.json
+          subPath: config.json
+          readOnly: true
+          name: docker-configuration
         lifecycle:
            preStop:
              exec:
@@ -315,6 +325,10 @@ spec:
           mountPath: /mnt/web-btrfs/web99-home
         - name: mnt-web-ext4
           mountPath: /mnt/web-ext4
+        - mountPath: /home/oleg/.docker/config.json
+          subPath: config.json
+          readOnly: true
+          name: docker-configuration
       - image: harbor.home.wugi.info/library/archlinux-systemd:latest
         name: archlinux
         env:
@@ -687,3 +701,6 @@ spec:
         hostPath:
           path: /mnt/web-ext4
           type: DirectoryOrCreate
+      - name: docker-configuration
+        secret:
+          secretName: docker-configuration
