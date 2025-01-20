@@ -12,6 +12,25 @@ resource "harbor_registry" "dockerhub" {
   endpoint_url  = "https://hub.docker.com"
 }
 
+resource "harbor_project" "nixos" {
+  name = "nixos"
+  public = true
+  vulnerability_scanning = false
+}
+
+resource "harbor_retention_policy" "nixos" {
+  scope = harbor_project.nixos.id
+  schedule = "Daily"
+  rule {
+    most_recently_pulled = 1
+    repo_matching = "**"
+  }
+  rule {
+    most_recently_pushed = 2
+    repo_matching = "**"
+  }
+}
+
 resource "harbor_project" "openwrt" {
   name = "openwrt"
   public = true
