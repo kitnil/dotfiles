@@ -8,3 +8,7 @@ nixos-systemd-taskexecutor:
 	docker tag $$image_id "$(container_registry)/library/$@:$$commit_8"
 	docker push "$(container_registry)/library/$@:$$commit_8"
 	echo "$(container_registry)/library/$@:$$commit_8"
+
+original:
+	nix flake lock --update-input original
+	git commit -m 'flake.lock: Update original input.' flake.lock
