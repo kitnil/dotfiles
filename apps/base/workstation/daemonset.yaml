@@ -311,6 +311,10 @@ spec:
           mountPath: /var/lib/docker
         - name: home-oleg-local-share-chezmoi
           mountPath: /home/oleg/.local/share/chezmoi
+        - name: mnt-web-btrfs-web99-home
+          mountPath: /mnt/web-btrfs/web99-home
+        - name: mnt-web-ext4
+          mountPath: /mnt/web-ext4
       - image: harbor.home.wugi.info/library/archlinux-systemd:latest
         name: archlinux
         env:
@@ -675,3 +679,11 @@ spec:
       - emptyDir:
           sizeLimit: 16G
         name: nixos-var-lib-docker
+      - name: mnt-web-btrfs-web99-home
+        hostPath:
+          path: /mnt/web-btrfs/web99-home
+          type: DirectoryOrCreate
+      - name: mnt-web-ext4
+        hostPath:
+          path: /mnt/web-ext4
+          type: DirectoryOrCreate
