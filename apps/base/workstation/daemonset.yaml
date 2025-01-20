@@ -309,6 +309,8 @@ spec:
           mountPath: /home/oleg/.3T
         - name: nixos-var-lib-docker
           mountPath: /var/lib/docker
+        - name: home-oleg-local-share-chezmoi
+          mountPath: /home/oleg/.local/share/chezmoi
       - image: harbor.home.wugi.info/library/archlinux-systemd:latest
         name: archlinux
         env:
