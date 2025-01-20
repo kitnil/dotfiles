@@ -50,4 +50,5 @@
                "openssh"
                "clipman"
                "qbittorrent"
-               "direnv")))
+               "direnv"
+               "skopeo")))
