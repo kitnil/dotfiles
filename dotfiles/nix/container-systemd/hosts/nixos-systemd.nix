@@ -82,6 +82,10 @@
     settings.nix-path = lib.mkForce "nixpkgs=/etc/nix/inputs/nixpkgs";
   };
 
+  environment.systemPackages = with pkgs; [
+    gitAndTools.git
+  ];
+
   system.extraSystemBuilderCmds =
     let
       inherit (pkgs) bashInteractive util-linuxMinimal runtimeShell writeScript;

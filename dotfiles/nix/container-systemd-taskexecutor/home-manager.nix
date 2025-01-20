@@ -11,7 +11,6 @@
   manual.manpages.enable = false;
 
   home.packages = with pkgs; [
-    gitAndTools.git
     python-taskexecutor
     python-taskexecutor-wrapper
   ];
