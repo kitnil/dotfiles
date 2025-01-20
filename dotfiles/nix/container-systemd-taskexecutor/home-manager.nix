@@ -1,4 +1,9 @@
-{ pkgs, python-taskexecutor, lib, config, ... }:
+{ pkgs
+, python-taskexecutor
+, python-taskexecutor-wrapper
+, lib
+, config
+, ... }:
 
 {
   home.username = "taskexecutor";
@@ -8,6 +13,7 @@
   home.packages = with pkgs; [
     gitAndTools.git
     python-taskexecutor
+    python-taskexecutor-wrapper
   ];
 
   services.vendir.enable = true;

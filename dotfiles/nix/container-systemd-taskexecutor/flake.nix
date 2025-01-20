@@ -22,6 +22,7 @@
                   };
                   extraSpecialArgs = {
                     python-taskexecutor = self.outputs.packages.${system}.python-with-te;
+                    python-taskexecutor-wrapper = self.outputs.packages.${system}.python-taskexecutor-wrapper;
                   };
                 };
               }
@@ -96,8 +97,8 @@
                   '';
                 })
                 { };
-              python-taskexecutor-local-wrapper = callPackage
-                ({ stdenv }:
+              python-taskexecutor-wrapper = callPackage
+                ({ stdenv, python-with-te }:
                   let
                     script = pkgs.writeScript "python" ''
                       #!/bin/sh
@@ -122,18 +123,18 @@
                       APIGW_PASSWORD="''${APIGW_PASSWORD}"
                       export APIGW_PASSWORD
 
-                      exec /run/wrappers/bin/sudo -E /etc/profiles/per-user/taskexecutor/bin/python3 "$@"
+                      exec /run/wrappers/bin/sudo -E ${python-with-te}/bin/python3 "$@"
                     '';
                   in
                   stdenv.mkDerivation {
-                    name = "python-taskexecutor-local-wrapper";
+                    name = "python-taskexecutor-wrapper";
                     src = null;
                     dontUnpack = true;
                     installPhase = ''
-                      install -Dm555 ${script} $out/bin/python
+                      install -Dm555 ${script} $out/bin/python-taskexecutor-wrapper
                     '';
                   })
-                { };
+                { inherit python-with-te; };
             };
    };
 }
