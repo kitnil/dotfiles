@@ -10,7 +10,7 @@ images:
   newTag: "d0c58144"
 - name: harbor.home.wugi.info/library/nixos-systemd
   newName: harbor.home.wugi.info/library/nixos-systemd-taskexecutor
-  newTag: 868a385b
+  newTag: 776df3ec
 - name: harbor.home.wugi.info/library/archlinux-systemd
   newTag: 865643d7
 - name: harbor.home.wugi.info/library/kali-rolling
