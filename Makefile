@@ -328,6 +328,7 @@ guix-image-workstation:
 
 nix-update-inputs:
 	$(MAKE) -C dotfiles/nix/container-systemd dotfiles-home-manager
+	$(MAKE) -C dotfiles/nix/container-systemd-taskexecutor original
 
 .PHONY: all
 all: dotfiles/scripts/nix-ssh-known-hosts-to-file.scm
