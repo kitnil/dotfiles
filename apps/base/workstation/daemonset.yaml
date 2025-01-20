@@ -198,6 +198,10 @@ spec:
           mountPath: /home/oleg/.ssh/id_rsa_gitlab_intr_nopass
         - name: home-oleg-ssh-majordomo-gitlab-public-key
           mountPath: /home/oleg/.ssh/id_rsa_gitlab_intr_nopass.pub
+        - name: home-oleg-ssh-gitlab-com-private-key
+          mountPath: /home/oleg/.ssh/id_rsa_gitlab
+        - name: home-oleg-ssh-gitlab-com-public-key
+          mountPath: /home/oleg/.ssh/id_rsa_gitlab.pub
         - name: home-oleg-ssh-known-hosts
           mountPath: /home/oleg/.ssh/known_hosts
         - name: home-oleg-bash-history
