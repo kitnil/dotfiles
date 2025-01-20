@@ -8,3 +8,7 @@ nixos-systemd:
 	docker tag $$image_id "$(container_registry)/library/$@:$$commit_8"
 	docker push "$(container_registry)/library/$@:$$commit_8"
 	echo "$(container_registry)/library/$@:$$commit_8"
+
+dotfiles-home-manager:
+	nix flake lock --update-input dotfiles-home-manager
+	git commit -m 'flake.lock: Update dotfiles-home-manager input.' flake.lock
