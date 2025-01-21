@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2020, 2024 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2020, 2024, 2025 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -88,7 +88,13 @@ channel/playlist and returns a link to the corresponding RSS feed.")
     (name "ndi")
     (version "5.6.1") ;NDI SDK for Linux/Version.txt
     ;; https://downloads.ndi.tv/SDK/NDI_SDK_Linux/Install_NDI_SDK_v5_Linux.tar.gz
-    (source (local-file "/home/oleg/Install_NDI_SDK_v5_Linux.tar.gz"))
+    (source
+     (origin
+       (method url-fetch)
+       (uri "https://iso.wugi.info/windows/Install_NDI_SDK_v5_Linux.tar.gz"); Limited access to LAN.
+       (sha256
+        (base32
+         "0wh5bqy9xx08wnfah92pgs4f6xn6mwfyhwdzbhf5ghkbw8pc7z0w"))))
     (build-system trivial-build-system)
     (inputs (list bash-minimal tar findutils coreutils gawk gzip tar glibc patchelf `(,gcc "lib") avahi))
     (native-inputs `(("source" ,source)))
