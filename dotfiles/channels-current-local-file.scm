@@ -14,7 +14,7 @@
         (url "https://cgit.wugi.info/git/guix/guix-wigust")
         (branch "master")
         (commit
-          "0e93a25ee17fc43564290f95d7865a94bddfaf77"))
+          "91a9f9dd8bb9a7c356ddedebf06d20a3f9e84258"))
       (channel
         (name 'nonguix)
         (url "https://gitlab.com/nonguix/nonguix")
