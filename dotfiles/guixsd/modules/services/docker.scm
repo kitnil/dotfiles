@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2021, 2022 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2021, 2022, 2025 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -20,6 +20,7 @@
   #:use-module (gnu services admin)
   #:use-module (gnu services shepherd)
   #:use-module (gnu services)
+  #:use-module (gnu services configuration)
   #:use-module (guix gexp)
   #:use-module (guix records)
   #:use-module (ice-9 match)
@@ -29,7 +30,10 @@
 
             docker-compose-configuration
             docker-compose-configuration?
-            docker-compose-service-type))
+            docker-compose-service-type
+
+            skopeo-service-type
+            skopeo-configuration))
 
 
 ;;;
@@ -127,5 +131,35 @@
                                   (service-extension rottlog-service-type
                                                      docker-compose-log-rotations)))
                 (description "Run docker-compose.")))
+
+
+;;;
+;;; skopeo
+;;;
+
+(define (file-object? val)
+  (or (file-like? val) (file-name? val)))
+(define (serialize-file-object field-name val)
+  (serialize-string field-name val))
+
+(define-configuration skopeo-configuration
+  (policy-file
+   (file-object "policy.json")
+   "Path to a file containing configuration in JSON or YAML format."))
+
+(define (skopeo-service-etc config)
+  "Return a @file{/etc} entry for an @file{containers/policy.json}."
+  `(("containers/policy.json" ,(skopeo-configuration-policy-file config))))
+
+(define skopeo-service-type
+  ;; The /etc/skopeo service.
+  (service-type
+   (name 'skopeo)
+   (extensions
+    (list (service-extension etc-service-type
+                             skopeo-service-etc)))
+   (default-value '())
+   (description
+    "Populate the @file{/etc/containers/policy.json} based on the given file object.")))
 
 ;;; docker.scm ends here
