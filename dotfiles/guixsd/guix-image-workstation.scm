@@ -31,6 +31,7 @@
 (use-service-modules avahi base desktop dbus shepherd)
 
 (use-modules (services desktop)
+             (services docker)
              (home config)
              (home services audio)
              (home services databases)
@@ -296,7 +297,10 @@ program.")))
                                                       (list #$(file-append shepherd "/bin/herd")
                                                             "--socket=/mnt/guix/var/run/shepherd/socket"
                                                             "start" "container-guix")))
-                                            (respawn? #f)))))
+                                            (respawn? #f))))
+                          (service skopeo-service-type
+                                   (skopeo-configuration
+                                    (policy-file (local-file "etc/containers/policy.json")))))
                     (modify-services
                         (modify-services %base-services
                           (guix-service-type config =>
