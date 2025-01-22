@@ -123,6 +123,29 @@
                       APIGW_PASSWORD="''${APIGW_PASSWORD}"
                       export APIGW_PASSWORD
 
+                      . /home/oleg/secrets
+
+                      HOME_FILESYSTEM_TYPE=dummy
+                      export HOME_FILESYSTEM_TYPE
+
+                      TE_CLAMD_HOST="172.16.115.17"
+                      export TE_CLAMD_HOST
+
+                      TE_CLAMD_PORT="3310"
+                      export TE_CLAMD_PORT
+
+                      # Add to Idea
+                      # TE_SCHEDULE_QUOTA-REPORT_UNIX-ACCOUNT_INTERVAL=50
+                      # TE_SCHEDULE_QUOTA-REPORT_UNIX-ACCOUNT_EXEC-TYPE=parallel
+                      # TE_SCHEDULE_MALWARE-REPORT_UNIX-ACCOUNT_INTERVAL=5
+                      # TE_SCHEDULE_BACKUP_UNIX-ACCOUNT_AT=12:00
+                      # TE_SCHEDULE_BACKUP_UNIX-ACCOUNT_EXEC-TYPE=parallel
+                      # TE_SCHEDULE_BACKUP_UNIX-ACCOUNT_DAILY="True"
+
+                      # Run manually
+                      # mount -o bind,rw /nix/store/...-python3-3.7.5-env/lib/python3.7/site-packages /nix/store/...-python3-3.7.5-env/lib/python3.7/site-packages
+                      # ln -s /home/oleg/src/gitlab.intr/hms/taskexecutor/src/python/taskexecutor /nix/store/mxhbaafgn691nklljg7752wsnj2q2lzz-python3-3.7.5-env/lib/python3.7/site-packages/
+
                       exec /run/wrappers/bin/sudo -E ${python-with-te}/bin/python3 "$@"
                     '';
                   in
