@@ -1,13 +1,13 @@
-{
-  lib,
-  fetchurl,
-  buildPythonPackage,
-  makeWrapper,
-  tqdm,
-  srt,
-  requests,
-  websockets,
-  vosk-model-small-en-us,
+{ lib
+, fetchurl
+, buildPythonPackage
+, makeWrapper
+, tqdm
+, srt
+, requests
+, websockets
+, vosk-model-small-en-us
+,
 }:
 buildPythonPackage rec {
   pname = "Vosk";
@@ -24,7 +24,7 @@ buildPythonPackage rec {
   };
   nativeBuildInputs = [ makeWrapper ];
   postInstall = ''
-              makeWrapper $out/bin/vosk-transcriber $out/bin/vosk \
-                --add-flags "--model ${vosk-model-small-en-us}/share/vosk/models/vosk-model-small-en-us"
-              '';
+    makeWrapper $out/bin/vosk-transcriber $out/bin/vosk \
+      --add-flags "--model ${vosk-model-small-en-us}/share/vosk/models/vosk-model-small-en-us"
+  '';
 }

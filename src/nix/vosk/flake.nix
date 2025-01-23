@@ -1,6 +1,6 @@
 {
   description = "Vosk transcription using Python";
-  
+
   outputs = { self, nixpkgs }:
     let
       system = "x86_64-linux";
@@ -11,13 +11,13 @@
       };
       vosk-overlay = (final: prev:
         {
-          vosk-model-small-en-us = final.callPackage ./vosk-model-small-en-us.nix {};
-          vosk = final.python3Packages.callPackage ./vosk.nix {};
+          vosk-model-small-en-us = final.callPackage ./vosk-model-small-en-us.nix { };
+          vosk = final.python3Packages.callPackage ./vosk.nix { };
         }
       );
     in
-      {
-        vosk = pkgs.vosk;
-        vosk-model-small-en-us = pkgs.vosk-model-small-en-us;
-      };
+    {
+      vosk = pkgs.vosk;
+      vosk-model-small-en-us = pkgs.vosk-model-small-en-us;
+    };
 }

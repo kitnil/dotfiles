@@ -1,6 +1,5 @@
-{
-  fetchzip,
-  stdenv
+{ fetchzip
+, stdenv
 }:
 stdenv.mkDerivation rec {
   # Model only, used as input for vosk package
@@ -11,11 +10,11 @@ stdenv.mkDerivation rec {
     sha256 = "sha256-CIoPZ/krX+UW2w7c84W3oc1n4zc9BBS/fc8rVYUthuY=";
   };
   preInstall = ''
-  mkdir -p $out/share/vosk/models/${pname}
+    mkdir -p $out/share/vosk/models/${pname}
   '';
   installPhase = ''
-  runHook preInstall
-  cp -rp  * $out/share/vosk/models/${pname}/
-  runHook postInstall
+    runHook preInstall
+    cp -rp  * $out/share/vosk/models/${pname}/
+    runHook postInstall
   '';
 }
