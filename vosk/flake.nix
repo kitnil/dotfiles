@@ -2,7 +2,7 @@
   description = "Control machine via voice";
 
   inputs = {
-    vosk.url = "git+file:///home/oleg/src/github.com/karthink/vosknix";
+    vosk.url = "git+file:///home/oleg/.local/share/chezmoi?dir=src/nix/vosk";
   };
 
   outputs = { self, nixpkgs, vosk }:

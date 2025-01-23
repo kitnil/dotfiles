@@ -35,16 +35,18 @@
         "nixpkgs": "nixpkgs_2"
       },
       "locked": {
-        "dirtyRev": "b520416d77c052658760447c0cdd0a736aef083a-dirty",
-        "dirtyShortRev": "b520416-dirty",
-        "lastModified": 1737619299,
-        "narHash": "sha256-XqfiLhiuud6QCjeR17eTm8eQPmtc6vTNZ61qbUKmrIc=",
+        "dir": "src/nix/vosk",
+        "dirtyRev": "ea6e06ff40d25188af83f9dec6b0df9b71ab91a3-dirty",
+        "dirtyShortRev": "ea6e06ff4-dirty",
+        "lastModified": 1737620185,
+        "narHash": "sha256-t0V8LHvmZrd4XNstbvdv02JIYZ+bvsJ1yItTZgr76Sc=",
         "type": "git",
-        "url": "file:///home/oleg/src/github.com/karthink/vosknix"
+        "url": "file:///home/oleg/.local/share/chezmoi?dir=src/nix/vosk"
       },
       "original": {
+        "dir": "src/nix/vosk",
         "type": "git",
-        "url": "file:///home/oleg/src/github.com/karthink/vosknix"
+        "url": "file:///home/oleg/.local/share/chezmoi?dir=src/nix/vosk"
       }
     }
   },
