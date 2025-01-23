@@ -1,0 +1,53 @@
+{
+  "nodes": {
+    "nixpkgs": {
+      "locked": {
+        "lastModified": 1,
+        "narHash": "sha256-Q8pDGPWwuMPRIGD53zwS1k27330finBgJoTQTTIBwac=",
+        "path": "/nix/store/5dnlpc13i7dahbc6nhcxggqi9aqpmxmx-nixos-24.11.19700101.dirty/nixos",
+        "type": "path"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1,
+        "narHash": "sha256-Q8pDGPWwuMPRIGD53zwS1k27330finBgJoTQTTIBwac=",
+        "path": "/nix/store/5dnlpc13i7dahbc6nhcxggqi9aqpmxmx-nixos-24.11.19700101.dirty/nixos",
+        "type": "path"
+      },
+      "original": {
+        "id": "nixpkgs",
+        "type": "indirect"
+      }
+    },
+    "root": {
+      "inputs": {
+        "nixpkgs": "nixpkgs",
+        "vosk": "vosk"
+      }
+    },
+    "vosk": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_2"
+      },
+      "locked": {
+        "dirtyRev": "b520416d77c052658760447c0cdd0a736aef083a-dirty",
+        "dirtyShortRev": "b520416-dirty",
+        "lastModified": 1737619299,
+        "narHash": "sha256-XqfiLhiuud6QCjeR17eTm8eQPmtc6vTNZ61qbUKmrIc=",
+        "type": "git",
+        "url": "file:///home/oleg/src/github.com/karthink/vosknix"
+      },
+      "original": {
+        "type": "git",
+        "url": "file:///home/oleg/src/github.com/karthink/vosknix"
+      }
+    }
+  },
+  "root": "root",
+  "version": 7
+}
