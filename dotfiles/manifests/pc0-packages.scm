@@ -44,6 +44,7 @@
                "pinentry"
                "sshpass"
                "freerdp"
+               "adwaita-icon-theme"
                "remmina"
                "looking-glass-client"
                "netcat-openbsd"
