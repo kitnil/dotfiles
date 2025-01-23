@@ -227,19 +227,6 @@ spec:
         - mountPath: /home/oleg/.docker/config.json
           readOnly: true
           name: docker-configuration
-        lifecycle:
-           preStop:
-             exec:
-               command:
-               - /bin/sh
-               - -c
-               - |
-                 if /run/current-system/profile/sbin/halt
-                 then
-                     :
-                 else
-                     exit 0
-                 fi
       - name: nixos
         image: harbor.home.wugi.info/library/nixos-systemd:latest
         command:
