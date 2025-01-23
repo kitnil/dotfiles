@@ -36,10 +36,11 @@
       },
       "locked": {
         "dir": "src/nix/vosk",
-        "dirtyRev": "ea6e06ff40d25188af83f9dec6b0df9b71ab91a3-dirty",
-        "dirtyShortRev": "ea6e06ff4-dirty",
-        "lastModified": 1737620185,
-        "narHash": "sha256-t0V8LHvmZrd4XNstbvdv02JIYZ+bvsJ1yItTZgr76Sc=",
+        "lastModified": 1737620376,
+        "narHash": "sha256-XktUMm+j3LWN0ZwDdCVPy58X00wLS5YwHhipj4GY8Ec=",
+        "ref": "refs/heads/master",
+        "rev": "f0b1fe47deffa28ba477360ba6a7cf88da4ebf95",
+        "revCount": 12594,
         "type": "git",
         "url": "file:///home/oleg/.local/share/chezmoi?dir=src/nix/vosk"
       },
