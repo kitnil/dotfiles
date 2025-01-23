@@ -28,7 +28,7 @@
              (srfi srfi-1))
 
 (use-package-modules gnupg linux pulseaudio ssh terminals virtualization wm)
-(use-service-modules avahi base desktop dbus shepherd)
+(use-service-modules avahi base desktop docker dbus shepherd)
 
 (use-modules (services desktop)
              (services docker)
@@ -300,7 +300,9 @@ program.")))
                                             (respawn? #f))))
                           (service skopeo-service-type
                                    (skopeo-configuration
-                                    (policy-file (local-file "etc/containers/policy.json")))))
+                                    (policy-file (local-file "etc/containers/policy.json"))))
+                          (service containerd-service-type)
+                          (service docker-service-type))
                     (modify-services
                         (modify-services %base-services
                           (guix-service-type config =>
