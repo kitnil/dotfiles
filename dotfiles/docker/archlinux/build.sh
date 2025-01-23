@@ -54,6 +54,10 @@ packages+=(
     go
 )
 
+packages+=(
+    firefox
+)
+
 base_system()
 {
     groups=(
