@@ -1,7 +1,7 @@
 {
   lib,
   fetchurl,
-  buildPythonApplication,
+  buildPythonPackage,
   makeWrapper,
   tqdm,
   srt,
@@ -9,7 +9,7 @@
   websockets,
   vosk-model-small-en-us,
 }:
-buildPythonApplication rec {
+buildPythonPackage rec {
   pname = "Vosk";
   version = "0.3.45";
   format = "wheel";
