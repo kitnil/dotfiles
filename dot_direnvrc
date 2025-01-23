@@ -50,7 +50,6 @@ use_guix()
         openssh
         password-store
         sshpass
-        xdot
         which
     )
     export ENV_PACKAGES_MAINTENANCE="${packages_maintenance[@]}"
