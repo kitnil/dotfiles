@@ -1,5 +1,5 @@
 ;; GuixSD configuration file for the desktop machine.
-;; Copyright © 2024 Oleg Pykhalov <go.wigust@gmail.com>
+;; Copyright © 2024, 2025 Oleg Pykhalov <go.wigust@gmail.com>
 ;; Released under the GNU GPLv3 or any later version.
 
 (use-modules (srfi srfi-26)
@@ -21,5 +21,6 @@
                 "telegram.scm"
                 "majordomo.scm"
                 "notebook-packages.scm"
-                "tor-browsers.scm"))
+                "tor-browsers.scm"
+                "python.scm"))
          (list manifest-wm)))
