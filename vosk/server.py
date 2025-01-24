@@ -30,7 +30,7 @@ async def websocket_handler(request):
     ws = web.WebSocketResponse()
     await ws.prepare(request)
 
-    print("A new client connected.")
+    print("New client with IP address {0} connected.".format(request.remote))
     connected.add(ws)
 
     async for msg in ws:
