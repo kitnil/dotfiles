@@ -30,8 +30,8 @@ import websocket
 # Audio configuration
 FORMAT = pyaudio.paInt16
 CHANNELS = 1
-RATE = 44100
-CHUNK = 1024 * 10
+RATE = 16000
+CHUNK = 8000
 
 # WebSocket
 WS_URL = (
