@@ -80,10 +80,9 @@ def on_message(ws, message):
 
     rec.AcceptWaveform(bytes)
     output = json.loads(rec.Result())
-    log.debug(output)
+    if output['text'] is not "":
+        log.debug(output['text'])
 
-    # if output['text'] is not "":
-    #     log.debug(output['text'])
     # if (rec.AcceptWaveform(data)) and (len(data) > 0):
     #     answer = json.loads(rec.Result())
     #     if answer["text"]:
