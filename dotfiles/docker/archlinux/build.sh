@@ -58,6 +58,10 @@ packages+=(
     firefox
 )
 
+packages+=(
+    kubectl
+)
+
 base_system()
 {
     groups=(
