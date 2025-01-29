@@ -21,6 +21,7 @@ import (
 
 	corev1 "k8s.io/api/core/v1"
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
+	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/types"
@@ -53,7 +54,14 @@ type WorkstationReconciler struct {
 func (r *WorkstationReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	_ = log.FromContext(ctx)
 
+	var HostPathCharDevice corev1.HostPathType = "CharDevice"
 	var HostPathDirectory corev1.HostPathType = "Directory"
+	var HostPathFile corev1.HostPathType = "File"
+	var HostPathSocket corev1.HostPathType = "Socket"
+	var guixShmQuantity resource.Quantity = resource.MustParse("1Gi")
+	var guixTmpQuantity resource.Quantity = resource.MustParse("4Gi")
+	var guixRunQuantity resource.Quantity = resource.MustParse("512M")
+	var nixosVarLibDockerQuantity resource.Quantity = resource.MustParse("16G")
 
 	// TODO(user): your logic here
 	pod := &corev1.Pod{
@@ -81,18 +89,546 @@ func (r *WorkstationReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 					},
 					VolumeMounts: []corev1.VolumeMount{
 						{
-							Name:      "root",
-							MountPath: "/host-rootfs",
+							Name:      "dev-dri",
+							MountPath: "/dev/dri",
 						},
 					},
 				},
 			},
 			Volumes: []corev1.Volume{
 				{
-					Name: "root",
+					Name: "dev-dri",
 					VolumeSource: corev1.VolumeSource{
 						HostPath: &corev1.HostPathVolumeSource{
-							Path: "/",
+							Path: "/dev/dri",
+							Type: &HostPathDirectory,
+						},
+					},
+				},
+				{
+					Name: "dev-input",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/dev/input",
+							Type: &HostPathDirectory,
+						},
+					},
+				},
+				{
+					Name: "dev-tty2",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/dev/tty2",
+							Type: &HostPathCharDevice,
+						},
+					},
+				},
+				{
+					Name: "dev-fuse",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/dev/fuse",
+							Type: &HostPathCharDevice,
+						},
+					},
+				},
+				{
+					Name: "nsswitch",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/etc/nsswitch.conf",
+							Type: &HostPathFile,
+						},
+					},
+				},
+				{
+					Name: "services",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/dev/services",
+							Type: &HostPathFile,
+						},
+					},
+				},
+				{
+					Name: "guix-shm",
+					VolumeSource: corev1.VolumeSource{
+						EmptyDir: &corev1.EmptyDirVolumeSource{
+							Medium:    corev1.StorageMediumMemory,
+							SizeLimit: &guixShmQuantity,
+						},
+					},
+				},
+				{
+					Name: "home-oleg",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/home/oleg",
+							Type: &HostPathDirectory,
+						},
+					},
+				},
+				{
+					Name: "guix-tmp",
+					VolumeSource: corev1.VolumeSource{
+						EmptyDir: &corev1.EmptyDirVolumeSource{
+							Medium:    corev1.StorageMediumMemory,
+							SizeLimit: &guixTmpQuantity,
+						},
+					},
+				},
+				{
+					Name: "archlinux-tmp",
+					VolumeSource: corev1.VolumeSource{
+						EmptyDir: &corev1.EmptyDirVolumeSource{
+							Medium:    corev1.StorageMediumMemory,
+							SizeLimit: &guixTmpQuantity,
+						},
+					},
+				},
+				{
+					Name: "guix-run",
+					VolumeSource: corev1.VolumeSource{
+						EmptyDir: &corev1.EmptyDirVolumeSource{
+							Medium:    corev1.StorageMediumMemory,
+							SizeLimit: &guixRunQuantity,
+						},
+					},
+				},
+				{
+					Name: "nixos-run",
+					VolumeSource: corev1.VolumeSource{
+						EmptyDir: &corev1.EmptyDirVolumeSource{
+							Medium:    corev1.StorageMediumMemory,
+							SizeLimit: &guixRunQuantity,
+						},
+					},
+				},
+				{
+					Name: "nixos-home",
+					VolumeSource: corev1.VolumeSource{
+						EmptyDir: &corev1.EmptyDirVolumeSource{},
+					},
+				},
+				{
+					Name: "archlinux-run",
+					VolumeSource: corev1.VolumeSource{
+						EmptyDir: &corev1.EmptyDirVolumeSource{
+							Medium:    corev1.StorageMediumMemory,
+							SizeLimit: &guixRunQuantity,
+						},
+					},
+				},
+				{
+					Name: "var-run-shepherd-socket",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/var/run/shepherd/socket",
+							Type: &HostPathSocket,
+						},
+					},
+				},
+				{
+					Name: "container-home-oleg",
+					VolumeSource: corev1.VolumeSource{
+						EmptyDir: &corev1.EmptyDirVolumeSource{
+							Medium:    corev1.StorageMediumMemory,
+							SizeLimit: &guixTmpQuantity,
+						},
+					},
+				},
+				{
+					Name: "home-oleg-dot-cache-ihs",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/home/oleg/.cache/ihs",
+							Type: &HostPathDirectory,
+						},
+					},
+				},
+				{
+					Name: "home-oleg-dot-config-google-chrome",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/home/oleg/.config/google-chrome",
+							Type: &HostPathDirectory,
+						},
+					},
+				},
+				{
+					Name: "home-oleg-dot-config-obs-studio",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/home/oleg/.config/obs-studio-4k",
+							Type: &HostPathDirectory,
+						},
+					},
+				},
+				{
+					Name: "home-oleg-dot-config-remmina",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/home/oleg/.config/remmina",
+							Type: &HostPathDirectory,
+						},
+					},
+				},
+				{
+					Name: "home-oleg-dot-config-sway",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/home/oleg/.config/sway",
+							Type: &HostPathDirectory,
+						},
+					},
+				},
+				{
+					Name: "home-oleg-dot-local-share-remmina",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/home/oleg/.local/share/remmina",
+							Type: &HostPathDirectory,
+						},
+					},
+				},
+				{
+					Name: "home-oleg-dot-local-share-telegram",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/home/oleg/.local/share/TelegramDesktop",
+							Type: &HostPathDirectory,
+						},
+					},
+				},
+				{
+					Name: "home-oleg-dot-local-share-chatterino",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/home/oleg/.local/share/chatterino",
+							Type: &HostPathDirectory,
+						},
+					},
+				},
+				{
+					Name: "home-oleg-dot-mozilla",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/home/oleg/.mozilla",
+							Type: &HostPathDirectory,
+						},
+					},
+				},
+				{
+					Name: "home-oleg-dot-password-store",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/home/oleg/.password-store",
+							Type: &HostPathDirectory,
+						},
+					},
+				},
+				{
+					Name: "home-oleg-dot-gnupg",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/home/oleg/.gnupg",
+							Type: &HostPathDirectory,
+						},
+					},
+				},
+				{
+					Name: "home-oleg-robo3t",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/home/oleg/.3T",
+							Type: &HostPathDirectory,
+						},
+					},
+				},
+				{
+					Name: "home-oleg-mozilla-firefox",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/home/oleg/.mozilla/firefox",
+							Type: &HostPathDirectory,
+						},
+					},
+				},
+				{
+					Name: "home-oleg-ssh-private-key",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/home/oleg/.ssh/id_ed25519",
+							Type: &HostPathFile,
+						},
+					},
+				},
+				{
+					Name: "home-oleg-ssh-public-key",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/home/oleg/.ssh/id_ed25519.pub",
+							Type: &HostPathFile,
+						},
+					},
+				},
+				{
+					Name: "home-oleg-ssh-majordomo-gitlab-private-key",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/home/oleg/.ssh/id_rsa_gitlab_intr_nopass",
+							Type: &HostPathFile,
+						},
+					},
+				},
+				{
+					Name: "home-oleg-ssh-majordomo-gitlab-public-key",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/home/oleg/.ssh/id_rsa_gitlab_intr_nopass.pub",
+							Type: &HostPathFile,
+						},
+					},
+				},
+				{
+					Name: "home-oleg-ssh-gitlab-com-private-key",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/home/oleg/.ssh/id_rsa_gitlab",
+							Type: &HostPathFile,
+						},
+					},
+				},
+				{
+					Name: "home-oleg-ssh-gitlab-com-public-key",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/home/oleg/.ssh/id_rsa_gitlab.pub",
+							Type: &HostPathFile,
+						},
+					},
+				},
+				{
+					Name: "home-oleg-ssh-known-hosts",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/home/oleg/.ssh/known_hosts",
+							Type: &HostPathFile,
+						},
+					},
+				},
+				{
+					Name: "root-bash-history",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/root/.bash_history",
+							Type: &HostPathFile,
+						},
+					},
+				},
+				{
+					Name: "home-oleg-config-socialstream",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/home/oleg/.config/SocialStream",
+							Type: &HostPathFile,
+						},
+					},
+				},
+				{
+					Name: "home-oleg-config-qbittorrent",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/home/oleg/.config/qBittorrent",
+							Type: &HostPathFile,
+						},
+					},
+				},
+				{
+					Name: "home-oleg-dot-local-share-qbittorrent",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/home/oleg/.local/share/qBittorrent",
+							Type: &HostPathFile,
+						},
+					},
+				},
+				{
+					Name: "home-oleg-src",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/home/oleg/src",
+							Type: &HostPathDirectory,
+						},
+					},
+				},
+				{
+					Name: "taskexecutor",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/home/oleg/src/gitlab.intr/hms/taskexecutor",
+							Type: &HostPathDirectory,
+						},
+					},
+				},
+				{
+					Name: "home-oleg-local-share-chezmoi",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/home/oleg/.local/share/chezmoi",
+							Type: &HostPathDirectory,
+						},
+					},
+				},
+				{
+					Name: "srv",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/srv",
+							Type: &HostPathDirectory,
+						},
+					},
+				},
+				{
+					Name: "qbittorrent-incomplete",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/mnt/qbittorrent-incomplete",
+							Type: &HostPathFile,
+						},
+					},
+				},
+				{
+					Name: "home-oleg-config-wayvnc",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/home/oleg/.config/wayvnc",
+							Type: &HostPathDirectory,
+						},
+					},
+				},
+				{
+					Name: "kali-rolling-tmp",
+					VolumeSource: corev1.VolumeSource{
+						EmptyDir: &corev1.EmptyDirVolumeSource{
+							Medium:    corev1.StorageMediumMemory,
+							SizeLimit: &guixTmpQuantity,
+						},
+					},
+				},                                
+				{
+					Name: "kali-rolling-run",
+					VolumeSource: corev1.VolumeSource{
+						EmptyDir: &corev1.EmptyDirVolumeSource{
+							Medium:    corev1.StorageMediumMemory,
+							SizeLimit: &guixRunQuantity,
+						},
+					},
+				},                                
+				{
+					Name: "gentoo-rolling-tmp",
+					VolumeSource: corev1.VolumeSource{
+						EmptyDir: &corev1.EmptyDirVolumeSource{
+							Medium:    corev1.StorageMediumMemory,
+							SizeLimit: &guixTmpQuantity,
+						},
+					},
+				},                                
+				{
+					Name: "gentoo-rolling-run",
+					VolumeSource: corev1.VolumeSource{
+						EmptyDir: &corev1.EmptyDirVolumeSource{
+							Medium:    corev1.StorageMediumMemory,
+							SizeLimit: &guixRunQuantity,
+						},
+					},
+				},                                
+				{
+					Name: "archlinux-var-log",
+					VolumeSource: corev1.VolumeSource{
+						EmptyDir: &corev1.EmptyDirVolumeSource{
+							Medium:    corev1.StorageMediumMemory,
+							SizeLimit: &guixRunQuantity,
+						},
+					},
+				},
+				{
+					Name: "gentoo-var-log",
+					VolumeSource: corev1.VolumeSource{
+						EmptyDir: &corev1.EmptyDirVolumeSource{
+							Medium:    corev1.StorageMediumMemory,
+							SizeLimit: &guixRunQuantity,
+						},
+					},
+				},
+				{
+					Name: "guix-var-log",
+					VolumeSource: corev1.VolumeSource{
+						EmptyDir: &corev1.EmptyDirVolumeSource{
+							Medium:    corev1.StorageMediumMemory,
+							SizeLimit: &guixRunQuantity,
+						},
+					},
+				},
+				{
+					Name: "guix-home-oleg-local-var-log",
+					VolumeSource: corev1.VolumeSource{
+						EmptyDir: &corev1.EmptyDirVolumeSource{
+							Medium:    corev1.StorageMediumMemory,
+							SizeLimit: &guixRunQuantity,
+						},
+					},
+				},
+				{
+					Name: "kali-rolling-var-log",
+					VolumeSource: corev1.VolumeSource{
+						EmptyDir: &corev1.EmptyDirVolumeSource{
+							Medium:    corev1.StorageMediumMemory,
+							SizeLimit: &guixRunQuantity,
+						},
+					},
+				},
+				{
+					Name: "nixos-var-log",
+					VolumeSource: corev1.VolumeSource{
+						EmptyDir: &corev1.EmptyDirVolumeSource{
+							Medium:    corev1.StorageMediumMemory,
+							SizeLimit: &guixRunQuantity,
+						},
+					},
+				},
+				{
+					Name: "nixos-var-lib-docker",
+					VolumeSource: corev1.VolumeSource{
+						EmptyDir: &corev1.EmptyDirVolumeSource{
+							Medium:    corev1.StorageMediumMemory,
+							SizeLimit: &nixosVarLibDockerQuantity,
+						},
+					},
+				},
+				{
+					Name: "mnt-web-btrfs-web99-home",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/mnt/web-btrfs/web99-home",
+							Type: &HostPathDirectory,
+						},
+					},
+				},
+				{
+					Name: "mnt-web-ext4",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/mnt/web-ext4",
+							Type: &HostPathDirectory,
+						},
+					},
+				},
+				{
+					Name: "docker-configuration",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/home/oleg/.docker/config.json",
 							Type: &HostPathDirectory,
 						},
 					},
