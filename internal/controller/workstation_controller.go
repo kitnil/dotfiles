@@ -80,6 +80,12 @@ func (r *WorkstationReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 					Args: []string{
 						"infinity",
 					},
+					VolumeMounts: []corev1.VolumeMount{
+						{
+							Name:      "root",
+							MountPath: "/host-rootfs",
+						},
+					},
 				},
 			},
 			Volumes: []corev1.Volume{
