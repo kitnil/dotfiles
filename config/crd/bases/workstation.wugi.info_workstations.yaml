@@ -1,0 +1,54 @@
+---
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.17.0
+  name: workstations.workstation.wugi.info
+spec:
+  group: workstation.wugi.info
+  names:
+    kind: Workstation
+    listKind: WorkstationList
+    plural: workstations
+    singular: workstation
+  scope: Namespaced
+  versions:
+  - name: v1
+    schema:
+      openAPIV3Schema:
+        description: Workstation is the Schema for the workstations API.
+        properties:
+          apiVersion:
+            description: |-
+              APIVersion defines the versioned schema of this representation of an object.
+              Servers should convert recognized schemas to the latest internal value, and
+              may reject unrecognized values.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources
+            type: string
+          kind:
+            description: |-
+              Kind is a string value representing the REST resource this object represents.
+              Servers may infer this from the endpoint the client submits requests to.
+              Cannot be updated.
+              In CamelCase.
+              More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: WorkstationSpec defines the desired state of Workstation.
+            properties:
+              foo:
+                description: Foo is an example field of Workstation. Edit workstation_types.go
+                  to remove/update
+                type: string
+            type: object
+          status:
+            description: WorkstationStatus defines the observed state of Workstation.
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
