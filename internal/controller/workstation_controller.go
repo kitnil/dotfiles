@@ -53,8 +53,7 @@ type WorkstationReconciler struct {
 func (r *WorkstationReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	_ = log.FromContext(ctx)
 
-	var HostPathDirectory corev1.HostPathType
-	HostPathDirectory = "Directory"
+	var HostPathDirectory corev1.HostPathType = "Directory"
 
 	// TODO(user): your logic here
 	pod := &corev1.Pod{
