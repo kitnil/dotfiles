@@ -109,7 +109,7 @@ func (r *WorkstationReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 	if apierrors.IsNotFound(err) {
 		err = r.Create(ctx, pod)
 		if err != nil {
-			println("Failed to create pod\n")
+			log.Log.Error(err, "Failed to create pod")
 		}
 	}
 
