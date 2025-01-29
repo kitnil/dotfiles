@@ -203,7 +203,7 @@ rm -f /home/oleg/.gnupg/gpg-agent.conf /home/oleg/.gnupg/gpg.conf`,
 				{
 					Name:            "guix",
 					ImagePullPolicy: corev1.PullIfNotPresent,
-					Image:           "harbor.home.wugi.info/library/guix-image-workstation:latest",
+					Image:           "harbor.home.wugi.info/library/guix-image-workstation:1b2d17c0",
 					Ports: []corev1.ContainerPort{
 						{
 							ContainerPort: 5353,
@@ -385,7 +385,7 @@ rm -f /home/oleg/.gnupg/gpg-agent.conf /home/oleg/.gnupg/gpg.conf`,
 				{
 					Name:            "nixos",
 					ImagePullPolicy: corev1.PullIfNotPresent,
-					Image:           "harbor.home.wugi.info/library/nixos-systemd:latest",
+					Image:           "harbor.home.wugi.info/library/nixos-systemd-taskexecutor:e9222a59",
 					Command: []string{
 						"/entrypoint.sh",
 					},
@@ -541,7 +541,7 @@ fi
 				{
 					Name:            "archlinux",
 					ImagePullPolicy: corev1.PullIfNotPresent,
-					Image:           "harbor.home.wugi.info/library/archlinux-systemd:latest",
+					Image:           "harbor.home.wugi.info/library/archlinux-systemd:865643d7",
 					Lifecycle: &corev1.Lifecycle{
 						PreStop: &corev1.LifecycleHandler{
 							Exec: &corev1.ExecAction{
@@ -633,7 +633,7 @@ fi
 				{
 					Name:            "kali-rolling",
 					ImagePullPolicy: corev1.PullIfNotPresent,
-					Image:           "harbor.home.wugi.info/library/kali-rolling:latest",
+					Image:           "harbor.home.wugi.info/library/kali-rolling:171ebd11",
 					Lifecycle: &corev1.Lifecycle{
 						PreStop: &corev1.LifecycleHandler{
 							Exec: &corev1.ExecAction{
@@ -710,7 +710,7 @@ fi
 				{
 					Name:            "gentoo",
 					ImagePullPolicy: corev1.PullIfNotPresent,
-					Image:           "harbor.home.wugi.info/library/gentoo:latest",
+					Image:           "harbor.home.wugi.info/library/gentoo-systemd:7c7fe76d",
 					Lifecycle: &corev1.Lifecycle{
 						PreStop: &corev1.LifecycleHandler{
 							Exec: &corev1.ExecAction{
