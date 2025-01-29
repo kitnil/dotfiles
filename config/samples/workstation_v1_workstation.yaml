@@ -1,0 +1,9 @@
+apiVersion: workstation.wugi.info/v1
+kind: Workstation
+metadata:
+  labels:
+    app.kubernetes.io/name: workstation-controller
+    app.kubernetes.io/managed-by: kustomize
+  name: workstation-sample
+spec:
+  # TODO(user): Add fields here
