@@ -136,6 +136,11 @@ install_kubebuilder()
     chmod +x /usr/local/bin/kubebuilder
 }
 
+install_kind()
+{
+    go install sigs.k8s.io/kind@v0.26.0
+}
+
 packages+=(
     docker
 )
@@ -161,6 +166,7 @@ main()
     install_pycharm
     install_vscode
     install_kubebuilder
+    install_kind
 }
 
 main "$@"
