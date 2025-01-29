@@ -801,6 +801,15 @@ fi
 					},
 				},
 				{
+					Name: "dev-tty9",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/dev/tty9",
+							Type: &HostPathCharDevice,
+						},
+					},
+				},
+				{
 					Name: "dev-tty2",
 					VolumeSource: corev1.VolumeSource{
 						HostPath: &corev1.HostPathVolumeSource{
@@ -819,6 +828,15 @@ fi
 					},
 				},
 				{
+					Name: "home-oleg-bash-history",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/home/oleg/.bash_history",
+							Type: &HostPathFile,
+						},
+					},
+				},
+				{
 					Name: "nsswitch",
 					VolumeSource: corev1.VolumeSource{
 						HostPath: &corev1.HostPathVolumeSource{
@@ -831,7 +849,7 @@ fi
 					Name: "services",
 					VolumeSource: corev1.VolumeSource{
 						HostPath: &corev1.HostPathVolumeSource{
-							Path: "/dev/services",
+							Path: "/etc/services",
 							Type: &HostPathFile,
 						},
 					},
@@ -1117,7 +1135,7 @@ fi
 					VolumeSource: corev1.VolumeSource{
 						HostPath: &corev1.HostPathVolumeSource{
 							Path: "/home/oleg/.config/SocialStream",
-							Type: &HostPathFile,
+							Type: &HostPathDirectory,
 						},
 					},
 				},
@@ -1126,7 +1144,7 @@ fi
 					VolumeSource: corev1.VolumeSource{
 						HostPath: &corev1.HostPathVolumeSource{
 							Path: "/home/oleg/.config/qBittorrent",
-							Type: &HostPathFile,
+							Type: &HostPathDirectory,
 						},
 					},
 				},
@@ -1135,7 +1153,7 @@ fi
 					VolumeSource: corev1.VolumeSource{
 						HostPath: &corev1.HostPathVolumeSource{
 							Path: "/home/oleg/.local/share/qBittorrent",
-							Type: &HostPathFile,
+							Type: &HostPathDirectory,
 						},
 					},
 				},
@@ -1180,7 +1198,7 @@ fi
 					VolumeSource: corev1.VolumeSource{
 						HostPath: &corev1.HostPathVolumeSource{
 							Path: "/mnt/qbittorrent-incomplete",
-							Type: &HostPathFile,
+							Type: &HostPathDirectory,
 						},
 					},
 				},
@@ -1194,11 +1212,20 @@ fi
 					},
 				},
 				{
-					Name: "kali-rolling-tmp",
+					Name: "gentoo-tmp",
 					VolumeSource: corev1.VolumeSource{
 						EmptyDir: &corev1.EmptyDirVolumeSource{
 							Medium:    corev1.StorageMediumMemory,
 							SizeLimit: &guixTmpQuantity,
+						},
+					},
+				},
+				{
+					Name: "gentoo-run",
+					VolumeSource: corev1.VolumeSource{
+						EmptyDir: &corev1.EmptyDirVolumeSource{
+							Medium:    corev1.StorageMediumMemory,
+							SizeLimit: &guixRunQuantity,
 						},
 					},
 				},
@@ -1212,20 +1239,11 @@ fi
 					},
 				},
 				{
-					Name: "gentoo-rolling-tmp",
+					Name: "kali-rolling-tmp",
 					VolumeSource: corev1.VolumeSource{
 						EmptyDir: &corev1.EmptyDirVolumeSource{
 							Medium:    corev1.StorageMediumMemory,
 							SizeLimit: &guixTmpQuantity,
-						},
-					},
-				},
-				{
-					Name: "gentoo-rolling-run",
-					VolumeSource: corev1.VolumeSource{
-						EmptyDir: &corev1.EmptyDirVolumeSource{
-							Medium:    corev1.StorageMediumMemory,
-							SizeLimit: &guixRunQuantity,
 						},
 					},
 				},
@@ -1315,7 +1333,7 @@ fi
 					VolumeSource: corev1.VolumeSource{
 						HostPath: &corev1.HostPathVolumeSource{
 							Path: "/home/oleg/.docker/config.json",
-							Type: &HostPathDirectory,
+							Type: &HostPathFile,
 						},
 					},
 				},
