@@ -19,7 +19,11 @@ package controller
 import (
 	"context"
 
+	corev1 "k8s.io/api/core/v1"
+	apierrors "k8s.io/apimachinery/pkg/api/errors"
+	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/apimachinery/pkg/types"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/log"
@@ -50,6 +54,45 @@ func (r *WorkstationReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 	_ = log.FromContext(ctx)
 
 	// TODO(user): your logic here
+	pod := &corev1.Pod{
+		ObjectMeta: metav1.ObjectMeta{
+			Name:      req.NamespacedName.Name,
+			Namespace: req.NamespacedName.Namespace,
+			// OwnerReferences: []metav1.OwnerReference{
+			// 	*metav1.NewControllerRef(&workstationv1.Workstation{}, schema.GroupVersionKind{
+			// 		Group:   workstationv1.GroupVersion.Group,
+			// 		Version: workstationv1.GroupVersion.Version,
+			// 		Kind:    "Workstation",
+			// 	}),
+			// },
+		},
+		Spec: corev1.PodSpec{
+			Containers: []corev1.Container{
+				corev1.Container{
+					Name:  "busybox",
+					Image: "busybox",
+					Command: []string{
+						"/bin/sleep",
+					},
+					Args: []string{
+						"infinity",
+					},
+				},
+			},
+		},
+	}
+
+	err := r.Get(ctx, types.NamespacedName{
+		Name:      req.NamespacedName.Name,
+		Namespace: req.NamespacedName.Namespace,
+	}, pod)
+
+	if apierrors.IsNotFound(err) {
+		err = r.Create(ctx, pod)
+		if err != nil {
+			println("Failed to create pod\n")
+		}
+	}
 
 	return ctrl.Result{}, nil
 }
