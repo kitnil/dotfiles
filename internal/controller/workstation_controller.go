@@ -53,6 +53,9 @@ type WorkstationReconciler struct {
 func (r *WorkstationReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	_ = log.FromContext(ctx)
 
+	var HostPathDirectory corev1.HostPathType
+	HostPathDirectory = "Directory"
+
 	// TODO(user): your logic here
 	pod := &corev1.Pod{
 		ObjectMeta: metav1.ObjectMeta{
@@ -76,6 +79,17 @@ func (r *WorkstationReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 					},
 					Args: []string{
 						"infinity",
+					},
+				},
+			},
+			Volumes: []corev1.Volume{
+				{
+					Name: "root",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/",
+							Type: &HostPathDirectory,
+						},
 					},
 				},
 			},
