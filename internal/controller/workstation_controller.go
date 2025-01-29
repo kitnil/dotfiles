@@ -128,7 +128,7 @@ func (r *WorkstationReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 			// },
 		},
 		Spec: corev1.PodSpec{
-			Containers: []corev1.Container{
+			InitContainers: []corev1.Container{
 				{
 					Name:            "volume-mount-hack",
 					ImagePullPolicy: corev1.PullIfNotPresent,
@@ -148,6 +148,607 @@ func (r *WorkstationReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 						{
 							Name:      "nixos-home",
 							MountPath: "/mnt/nixos/home",
+						},
+					},
+				},
+				{
+					Name:            "clean-gnupg",
+					ImagePullPolicy: corev1.PullIfNotPresent,
+					Image:           "busybox",
+					Command: []string{
+						"/bin/sh",
+					},
+					Args: []string{
+						"-c",
+						`set -o nounset -o errexit -o pipefail
+rm -f /home/oleg/.gnupg/gpg-agent.conf /home/oleg/.gnupg/gpg.conf`,
+					},
+					VolumeMounts: []corev1.VolumeMount{
+						{
+							Name:      "home-oleg-dot-gnupg",
+							MountPath: "/home/oleg/.gnupg",
+						},
+					},
+				},
+			},
+			Containers: []corev1.Container{
+				{
+					Name:            "guix",
+					ImagePullPolicy: corev1.PullIfNotPresent,
+					Image:           "harbor.home.wugi.info/library/guix-image-workstation:latest",
+					Ports: []corev1.ContainerPort{
+						{
+							ContainerPort: 5353,
+							Name:          "avahi",
+							Protocol:      corev1.ProtocolUDP,
+						},
+						{
+							ContainerPort: 16400,
+							Name:          "scream",
+							Protocol:      corev1.ProtocolUDP,
+						},
+					},
+					SecurityContext: &corev1.SecurityContext{
+						Capabilities: &corev1.Capabilities{
+							Add: []corev1.Capability{
+								corev1.Capability("SYS_ADMIN"),
+							},
+						},
+						Privileged: &[]bool{true}[0],
+					},
+					TTY: true,
+					VolumeMounts: []corev1.VolumeMount{
+						{
+							Name:             "guix-run",
+							MountPath:        "/run",
+							MountPropagation: &[]corev1.MountPropagationMode{"Bidirectional"}[0],
+						},
+						{
+							Name:      "dev-dri",
+							MountPath: "/dev/dri",
+						},
+						{
+							Name:      "dev-input",
+							MountPath: "/dev/input",
+						},
+						{
+							Name:      "dev-tty2",
+							MountPath: "/dev/tty0",
+						},
+						{
+							Name:      "dev-tty2",
+							MountPath: "/dev/tty2",
+						},
+						{
+							Name:      "dev-fuse",
+							MountPath: "/dev/fuse",
+						},
+						{
+							Name:      "nsswitch",
+							MountPath: "/etc/nsswitch.conf",
+						},
+						{
+							Name:      "services",
+							MountPath: "/etc/services",
+						},
+						{
+							Name:      "guix-shm",
+							MountPath: "/dev/shm",
+						},
+						{
+							Name:      "guix-tmp",
+							MountPath: "/tmp",
+						},
+						{
+							Name:      "var-run-shepherd-socket",
+							MountPath: "/mnt/guix/var/run/shepherd/socket",
+						},
+						{
+							Name:      "container-home-oleg",
+							MountPath: "/home/oleg",
+						},
+						{
+							Name:      "home-oleg-dot-cache-ihs",
+							MountPath: "/home/oleg/.cache/ihs",
+						},
+						{
+							Name:      "home-oleg-dot-config-obs-studio",
+							MountPath: "/home/oleg/.config/obs-studio",
+						},
+						{
+							Name:      "home-oleg-dot-config-remmina",
+							MountPath: "/home/oleg/.config/remmina",
+						},
+						{
+							Name:      "home-oleg-dot-config-sway",
+							MountPath: "/home/oleg/.config/sway",
+						},
+						{
+							Name:      "home-oleg-dot-local-share-remmina",
+							MountPath: "/home/oleg/.local/share/remmina",
+						},
+						{
+							Name:      "home-oleg-dot-local-share-telegram",
+							MountPath: "/home/oleg/.local/share/TelegramDesktop",
+						},
+						{
+							Name:      "home-oleg-dot-password-store",
+							MountPath: "/home/oleg/.password-store",
+						},
+						{
+							Name:      "home-oleg-dot-gnupg",
+							MountPath: "/home/oleg/.gnupg",
+						},
+						{
+							Name:      "home-oleg-ssh-private-key",
+							MountPath: "/home/oleg/.ssh/id_ed25519",
+						},
+						{
+							Name:      "home-oleg-ssh-public-key",
+							MountPath: "/home/oleg/.ssh/id_ed25519.pub",
+						},
+						{
+							Name:      "home-oleg-ssh-majordomo-gitlab-private-key",
+							MountPath: "/home/oleg/.ssh/id_rsa_gitlab_intr_nopass",
+						},
+						{
+							Name:      "home-oleg-ssh-majordomo-gitlab-public-key",
+							MountPath: "/home/oleg/.ssh/id_rsa_gitlab_intr_nopass.pub",
+						},
+						{
+							Name:      "home-oleg-ssh-gitlab-com-private-key",
+							MountPath: "/home/oleg/.ssh/id_rsa_gitlab",
+						},
+						{
+							Name:      "home-oleg-ssh-gitlab-com-public-key",
+							MountPath: "/home/oleg/.ssh/id_rsa_gitlab.pub",
+						},
+						{
+							Name:      "home-oleg-ssh-known-hosts",
+							MountPath: "/home/oleg/.ssh/known_hosts",
+						},
+						{
+							Name:      "home-oleg-bash-history",
+							MountPath: "/home/oleg/.bash_history",
+						},
+						{
+							Name:      "root-bash-history",
+							MountPath: "/root/.bash_history",
+						},
+						{
+							Name:      "home-oleg-src",
+							MountPath: "/home/oleg/src",
+						},
+						{
+							Name:      "home-oleg-local-share-chezmoi",
+							MountPath: "/home/oleg/.local/share/chezmoi",
+						},
+						{
+							Name:      "srv",
+							MountPath: "/srv",
+						},
+						{
+							Name:      "home-oleg-config-qbittorrent",
+							MountPath: "/home/oleg/.config/qBittorrent",
+						},
+						{
+							Name:      "home-oleg-dot-local-share-qbittorrent",
+							MountPath: "/home/oleg/.local/share/qBittorrent",
+						},
+						{
+							Name:      "qbittorrent-incomplete",
+							MountPath: "/mnt/qbittorrent-incomplete",
+						},
+						{
+							Name:      "guix-var-log",
+							MountPath: "/var/log",
+						},
+						{
+							Name:      "guix-home-oleg-local-var-log",
+							MountPath: "/home/oleg/.local/var/log",
+						},
+						{
+							Name:      "docker-configuration",
+							MountPath: "/home/oleg/.docker/config.json",
+							ReadOnly:  true,
+						},
+					},
+				},
+				{
+					Name:            "nixos",
+					ImagePullPolicy: corev1.PullIfNotPresent,
+					Image:           "harbor.home.wugi.info/library/nixos-systemd:latest",
+					Command: []string{
+						"/entrypoint.sh",
+					},
+					Lifecycle: &corev1.Lifecycle{
+						PreStop: &corev1.LifecycleHandler{
+							Exec: &corev1.ExecAction{
+								Command: []string{
+									"/bin/sh",
+									"-c",
+									`if /run/current-system/sw/bin/systemctl poweroff
+then
+:
+else
+exit 0
+fi
+									`,
+								},
+							},
+						},
+					},
+					Ports: []corev1.ContainerPort{
+						{
+							ContainerPort: 5900,
+							Name:          "vnc",
+							Protocol:      corev1.ProtocolTCP,
+						},
+					},
+					Env: []corev1.EnvVar{
+						{
+							Name:  "container",
+							Value: "docker",
+						},
+					},
+					SecurityContext: &corev1.SecurityContext{
+						Capabilities: &corev1.Capabilities{
+							Add: []corev1.Capability{
+								corev1.Capability("BLOCK_SUSPEND"),
+								corev1.Capability("NET_ADMIN"),
+								corev1.Capability("NET_BIND_SERVICE"),
+								corev1.Capability("NET_RAW"),
+								corev1.Capability("SETUID"),
+								corev1.Capability("SYS_ADMIN"),
+								corev1.Capability("SYS_CHROOT"),
+								corev1.Capability("SYS_NICE"),
+								corev1.Capability("SYS_PTRACE"),
+								corev1.Capability("SYS_RESOURCE"),
+								corev1.Capability("SYS_TIME"),
+							},
+						},
+						Privileged: &[]bool{true}[0],
+					},
+					TTY: true,
+					VolumeMounts: []corev1.VolumeMount{
+						{
+							Name:      "dev-dri",
+							MountPath: "/dev/dri",
+						},
+						{
+							Name:      "dev-tty9",
+							MountPath: "/dev/tty0",
+						},
+						{
+							Name:      "dev-tty9",
+							MountPath: "/dev/tty9",
+						},
+						{
+							Name:      "nixos-run",
+							MountPath: "/run",
+						},
+						{
+							Name:      "guix-tmp",
+							MountPath: "/mnt/guix/tmp",
+						},
+						{
+							Name:             "guix-run",
+							MountPath:        "/mnt/guix/run",
+							MountPropagation: &[]corev1.MountPropagationMode{"HostToContainer"}[0],
+						},
+						{
+							Name:      "nixos-home",
+							MountPath: "/home",
+						},
+						{
+							Name:      "home-oleg-mozilla-firefox",
+							MountPath: "/home/oleg/.mozilla/firefox",
+						},
+						{
+							Name:      "home-oleg-bash-history",
+							MountPath: "/home/oleg/.bash_history",
+						},
+						{
+							Name:      "home-oleg-dot-config-google-chrome",
+							MountPath: "/home/oleg/.config/google-chrome",
+						},
+						{
+							Name:      "root-bash-history",
+							MountPath: "/root/.bash_history",
+						},
+						{
+							Name:      "home-oleg-config-wayvnc",
+							MountPath: "/home/oleg/.config/wayvnc",
+						},
+						{
+							Name:      "home-oleg-dot-local-share-chatterino",
+							MountPath: "/home/oleg/.local/share/chatterino",
+						},
+						{
+							Name:      "nixos-var-log",
+							MountPath: "/var/log",
+						},
+						{
+							Name:      "home-oleg-ssh-majordomo-gitlab-private-key",
+							MountPath: "/home/oleg/.ssh/id_rsa_gitlab_intr_nopass",
+						},
+						{
+							Name:      "home-oleg-ssh-majordomo-gitlab-public-key",
+							MountPath: "/home/oleg/.ssh/id_rsa_gitlab_intr_nopass.pub",
+						},
+						{
+							Name:      "home-oleg-src",
+							MountPath: "/home/oleg/src",
+						},
+						{
+							Name:      "home-oleg-ssh-known-hosts",
+							MountPath: "/home/oleg/.ssh/known_hosts",
+						},
+						{
+							Name:      "home-oleg-robo3t",
+							MountPath: "/home/oleg/.3T",
+						},
+						{
+							Name:      "nixos-var-lib-docker",
+							MountPath: "/var/lib/docker",
+						},
+						{
+							Name:      "home-oleg-local-share-chezmoi",
+							MountPath: "/home/oleg/.local/share/chezmoi",
+						},
+						{
+							Name:      "mnt-web-btrfs-web99-home",
+							MountPath: "/mnt/web-btrfs/web99-home",
+						},
+						{
+							Name:      "mnt-web-ext4",
+							MountPath: "/mnt/web-ext4",
+						},
+						{
+							Name:      "docker-configuration",
+							MountPath: "/home/oleg/.docker/config.json",
+						},
+					},
+				},
+				{
+					Name:            "archlinux",
+					ImagePullPolicy: corev1.PullIfNotPresent,
+					Image:           "harbor.home.wugi.info/library/archlinux-systemd:latest",
+					Lifecycle: &corev1.Lifecycle{
+						PreStop: &corev1.LifecycleHandler{
+							Exec: &corev1.ExecAction{
+								Command: []string{
+									"/bin/sh",
+									"-c",
+									`if /run/current-system/sw/bin/systemctl poweroff
+then
+:
+else
+exit 0
+fi
+									`,
+								},
+							},
+						},
+					},
+					Ports: []corev1.ContainerPort{
+						{
+							ContainerPort: 5900,
+							Name:          "vnc",
+							Protocol:      corev1.ProtocolTCP,
+						},
+					},
+					Env: []corev1.EnvVar{
+						{
+							Name:  "container",
+							Value: "docker",
+						},
+					},
+					SecurityContext: &corev1.SecurityContext{
+						Capabilities: &corev1.Capabilities{
+							Add: []corev1.Capability{
+								corev1.Capability("NET_ADMIN"),
+								corev1.Capability("NET_BIND_SERVICE"),
+								corev1.Capability("NET_RAW"),
+								corev1.Capability("SYS_ADMIN"),
+								corev1.Capability("SYS_NICE"),
+								corev1.Capability("SYS_TIME"),
+							},
+						},
+						Privileged: &[]bool{true}[0],
+					},
+					TTY: true,
+					VolumeMounts: []corev1.VolumeMount{
+						{
+							Name:      "archlinux-run",
+							MountPath: "/run",
+						},
+						{
+							Name:      "archlinux-tmp",
+							MountPath: "/tmp",
+						},
+						{
+							Name:      "dev-dri",
+							MountPath: "/dev/dri",
+						},
+						{
+							Name:             "guix-run",
+							MountPath:        "/mnt/guix/run",
+							MountPropagation: &[]corev1.MountPropagationMode{"HostToContainer"}[0],
+						},
+						{
+							Name:      "guix-tmp",
+							MountPath: "/mnt/guix/tmp",
+						},
+						{
+							Name:      "home-oleg-bash-history",
+							MountPath: "/home/oleg/.bash_history",
+						},
+						{
+							Name:      "root-bash-history",
+							MountPath: "/root/.bash_history",
+						},
+						{
+							Name:      "home-oleg-config-socialstream",
+							MountPath: "/home/oleg/.config/SocialStream",
+						},
+						{
+							Name:      "archlinux-var-log",
+							MountPath: "/var/log",
+						},
+						{
+							Name:      "home-oleg-src",
+							MountPath: "/home/oleg/src",
+						},
+					},
+				},
+				{
+					Name:            "kali-rolling",
+					ImagePullPolicy: corev1.PullIfNotPresent,
+					Image:           "harbor.home.wugi.info/library/kali-rolling:latest",
+					Lifecycle: &corev1.Lifecycle{
+						PreStop: &corev1.LifecycleHandler{
+							Exec: &corev1.ExecAction{
+								Command: []string{
+									"/bin/sh",
+									"-c",
+									`if /bin/systemctl poweroff
+then
+:
+else
+exit 0
+fi
+									`,
+								},
+							},
+						},
+					},
+					Env: []corev1.EnvVar{
+						{
+							Name:  "container",
+							Value: "docker",
+						},
+					},
+					SecurityContext: &corev1.SecurityContext{
+						Capabilities: &corev1.Capabilities{
+							Add: []corev1.Capability{
+								corev1.Capability("NET_ADMIN"),
+								corev1.Capability("NET_BIND_SERVICE"),
+								corev1.Capability("NET_RAW"),
+								corev1.Capability("SYS_ADMIN"),
+								corev1.Capability("SYS_NICE"),
+								corev1.Capability("SYS_TIME"),
+							},
+						},
+						Privileged: &[]bool{true}[0],
+					},
+					TTY: true,
+					VolumeMounts: []corev1.VolumeMount{
+						{
+							Name:      "kali-rolling-run",
+							MountPath: "/run",
+						},
+						{
+							Name:      "kali-rolling-tmp",
+							MountPath: "/tmp",
+						},
+						{
+							Name:      "dev-dri",
+							MountPath: "/dev/dri",
+						},
+						{
+							Name:             "guix-run",
+							MountPath:        "/mnt/guix/run",
+							MountPropagation: &[]corev1.MountPropagationMode{"HostToContainer"}[0],
+						},
+						{
+							Name:      "guix-tmp",
+							MountPath: "/mnt/guix/tmp",
+						},
+						{
+							Name:      "home-oleg-bash-history",
+							MountPath: "/home/oleg/.bash_history",
+						},
+						{
+							Name:      "root-bash-history",
+							MountPath: "/root/.bash_history",
+						},
+						{
+							Name:      "kali-rolling-var-log",
+							MountPath: "/var/log",
+						},
+					},
+				},
+				{
+					Name:            "gentoo",
+					ImagePullPolicy: corev1.PullIfNotPresent,
+					Image:           "harbor.home.wugi.info/library/gentoo:latest",
+					Lifecycle: &corev1.Lifecycle{
+						PreStop: &corev1.LifecycleHandler{
+							Exec: &corev1.ExecAction{
+								Command: []string{
+									"/bin/sh",
+									"-c",
+									`if /bin/systemctl poweroff
+then
+:
+else
+exit 0
+fi
+									`,
+								},
+							},
+						},
+					},
+					Env: []corev1.EnvVar{
+						{
+							Name:  "container",
+							Value: "docker",
+						},
+					},
+					SecurityContext: &corev1.SecurityContext{
+						Capabilities: &corev1.Capabilities{
+							Add: []corev1.Capability{
+								corev1.Capability("NET_ADMIN"),
+								corev1.Capability("NET_BIND_SERVICE"),
+								corev1.Capability("NET_RAW"),
+								corev1.Capability("SYS_ADMIN"),
+								corev1.Capability("SYS_NICE"),
+								corev1.Capability("SYS_TIME"),
+							},
+						},
+						Privileged: &[]bool{true}[0],
+					},
+					TTY: true,
+					VolumeMounts: []corev1.VolumeMount{
+						{
+							Name:      "gentoo-run",
+							MountPath: "/run",
+						},
+						{
+							Name:      "gentoo-tmp",
+							MountPath: "/tmp",
+						},
+						{
+							Name:      "dev-dri",
+							MountPath: "/dev/dri",
+						},
+						{
+							Name:             "guix-run",
+							MountPath:        "/mnt/guix/run",
+							MountPropagation: &[]corev1.MountPropagationMode{"HostToContainer"}[0],
+						},
+						{
+							Name:      "guix-tmp",
+							MountPath: "/home/oleg/.bash_history",
+						},
+						{
+							Name:      "root-bash-history",
+							MountPath: "/root/.bash_history",
+						},
+						{
+							Name:      "gentoo-var-log",
+							MountPath: "/var/log",
 						},
 					},
 				},
