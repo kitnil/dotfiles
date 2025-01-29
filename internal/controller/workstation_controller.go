@@ -38,6 +38,57 @@ type WorkstationReconciler struct {
 	Scheme *runtime.Scheme
 }
 
+var bashCommand string = `set -o nounset -o errexit -o pipefail
+
+chown 1000:998 /home/oleg
+chmod 0755 /home/oleg
+
+mkdir /home/oleg/.docker
+chown 1000:998 /home/oleg/.docker
+
+mkdir /home/oleg/.cache
+chown 1000:998 /home/oleg/.cache
+
+mkdir /home/oleg/.config
+chown 1000:998 /home/oleg/.config
+
+mkdir /home/oleg/.local
+chown 1000:998 /home/oleg/.local
+
+mkdir /home/oleg/.local/var
+chown 1000:998 /home/oleg/.local/var
+
+mkdir /home/oleg/.local/var/log
+chown 1000:998 /home/oleg/.local/var/log
+
+mkdir /home/oleg/.local/share
+chown 1000:998 /home/oleg/.local/share
+
+mkdir /home/oleg/.ssh
+chown 1000:998 /home/oleg/.ssh
+
+mkdir /mnt/nixos/home/oleg
+chown 1000:998 /mnt/nixos/home/oleg
+
+mkdir /mnt/nixos/home/oleg/.docker
+chown 1000:998 /mnt/nixos/home/oleg/.docker
+
+mkdir -p /mnt/nixos/home/oleg/.mozilla
+chown 1000:998 /mnt/nixos/home/oleg/.mozilla
+
+mkdir -p /mnt/nixos/home/oleg/.config
+chown 1000:998 /mnt/nixos/home/oleg/.config
+
+mkdir /mnt/nixos/home/oleg/.local
+chown 1000:998 /mnt/nixos/home/oleg/.local
+
+mkdir /mnt/nixos/home/oleg/.local/share
+chown 1000:998 /mnt/nixos/home/oleg/.local/share
+
+mkdir /mnt/nixos/home/oleg/.ssh
+chown 1000:998 /mnt/nixos/home/oleg/.ssh
+`
+
 // +kubebuilder:rbac:groups=workstation.wugi.info,resources=workstations,verbs=get;list;watch;create;update;patch;delete
 // +kubebuilder:rbac:groups=workstation.wugi.info,resources=workstations/status,verbs=get;update;patch
 // +kubebuilder:rbac:groups=workstation.wugi.info,resources=workstations/finalizers,verbs=update
@@ -79,18 +130,24 @@ func (r *WorkstationReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 		Spec: corev1.PodSpec{
 			Containers: []corev1.Container{
 				{
-					Name:  "busybox",
-					Image: "busybox",
+					Name:            "volume-mount-hack",
+					ImagePullPolicy: corev1.PullIfNotPresent,
+					Image:           "busybox",
 					Command: []string{
-						"/bin/sleep",
+						"/bin/sh",
 					},
 					Args: []string{
-						"infinity",
+						"-c",
+						bashCommand,
 					},
 					VolumeMounts: []corev1.VolumeMount{
 						{
-							Name:      "dev-dri",
-							MountPath: "/dev/dri",
+							Name:      "container-home-oleg",
+							MountPath: "/home/oleg",
+						},
+						{
+							Name:      "nixos-home",
+							MountPath: "/mnt/nixos/home",
 						},
 					},
 				},
@@ -515,7 +572,7 @@ func (r *WorkstationReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 							SizeLimit: &guixTmpQuantity,
 						},
 					},
-				},                                
+				},
 				{
 					Name: "kali-rolling-run",
 					VolumeSource: corev1.VolumeSource{
@@ -524,7 +581,7 @@ func (r *WorkstationReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 							SizeLimit: &guixRunQuantity,
 						},
 					},
-				},                                
+				},
 				{
 					Name: "gentoo-rolling-tmp",
 					VolumeSource: corev1.VolumeSource{
@@ -533,7 +590,7 @@ func (r *WorkstationReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 							SizeLimit: &guixTmpQuantity,
 						},
 					},
-				},                                
+				},
 				{
 					Name: "gentoo-rolling-run",
 					VolumeSource: corev1.VolumeSource{
@@ -542,7 +599,7 @@ func (r *WorkstationReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 							SizeLimit: &guixRunQuantity,
 						},
 					},
-				},                                
+				},
 				{
 					Name: "archlinux-var-log",
 					VolumeSource: corev1.VolumeSource{
