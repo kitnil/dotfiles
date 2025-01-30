@@ -493,7 +493,6 @@ rm -f /home/oleg/.gnupg/gpg-agent.conf /home/oleg/.gnupg/gpg.conf`,
 						},
 					},
 				},
-
 				{
 					Name: "guix-run",
 					VolumeSource: corev1.VolumeSource{
