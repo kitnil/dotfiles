@@ -349,113 +349,9 @@ rm -f /home/oleg/.gnupg/gpg-agent.conf /home/oleg/.gnupg/gpg.conf`,
 						Name:      "container-home-oleg",
 						MountPath: "/home/oleg",
 					},
-					{
-						Name:      "home-oleg-dot-cache-ihs",
-						MountPath: "/home/oleg/.cache/ihs",
-					},
-					{
-						Name:      "home-oleg-dot-config-obs-studio",
-						MountPath: "/home/oleg/.config/obs-studio",
-					},
-					{
-						Name:      "home-oleg-dot-config-remmina",
-						MountPath: "/home/oleg/.config/remmina",
-					},
-					{
-						Name:      "home-oleg-dot-config-sway",
-						MountPath: "/home/oleg/.config/sway",
-					},
-					{
-						Name:      "home-oleg-dot-local-share-remmina",
-						MountPath: "/home/oleg/.local/share/remmina",
-					},
-					{
-						Name:      "home-oleg-dot-local-share-telegram",
-						MountPath: "/home/oleg/.local/share/TelegramDesktop",
-					},
-					{
-						Name:      "home-oleg-dot-password-store",
-						MountPath: "/home/oleg/.password-store",
-					},
-					{
-						Name:      "home-oleg-dot-gnupg",
-						MountPath: "/home/oleg/.gnupg",
-					},
-					{
-						Name:      "home-oleg-ssh-private-key",
-						MountPath: "/home/oleg/.ssh/id_ed25519",
-					},
-					{
-						Name:      "home-oleg-ssh-public-key",
-						MountPath: "/home/oleg/.ssh/id_ed25519.pub",
-					},
-					{
-						Name:      "home-oleg-ssh-majordomo-gitlab-private-key",
-						MountPath: "/home/oleg/.ssh/id_rsa_gitlab_intr_nopass",
-					},
-					{
-						Name:      "home-oleg-ssh-majordomo-gitlab-public-key",
-						MountPath: "/home/oleg/.ssh/id_rsa_gitlab_intr_nopass.pub",
-					},
-					{
-						Name:      "home-oleg-ssh-gitlab-com-private-key",
-						MountPath: "/home/oleg/.ssh/id_rsa_gitlab",
-					},
-					{
-						Name:      "home-oleg-ssh-gitlab-com-public-key",
-						MountPath: "/home/oleg/.ssh/id_rsa_gitlab.pub",
-					},
-					{
-						Name:      "home-oleg-ssh-known-hosts",
-						MountPath: "/home/oleg/.ssh/known_hosts",
-					},
-					{
-						Name:      "home-oleg-bash-history",
-						MountPath: "/home/oleg/.bash_history",
-					},
-					{
-						Name:      "root-bash-history",
-						MountPath: "/root/.bash_history",
-					},
-					{
-						Name:      "home-oleg-src",
-						MountPath: "/home/oleg/src",
-					},
-					{
-						Name:      "home-oleg-local-share-chezmoi",
-						MountPath: "/home/oleg/.local/share/chezmoi",
-					},
-					{
-						Name:      "srv",
-						MountPath: "/srv",
-					},
-					{
-						Name:      "home-oleg-config-qbittorrent",
-						MountPath: "/home/oleg/.config/qBittorrent",
-					},
-					{
-						Name:      "home-oleg-dot-local-share-qbittorrent",
-						MountPath: "/home/oleg/.local/share/qBittorrent",
-					},
-					{
-						Name:      "qbittorrent-incomplete",
-						MountPath: "/mnt/qbittorrent-incomplete",
-					},
-					{
-						Name:      "guix-var-log",
-						MountPath: "/var/log",
-					},
-					{
-						Name:      "guix-home-oleg-local-var-log",
-						MountPath: "/home/oleg/.local/var/log",
-					},
-					{
-						Name:      "docker-configuration",
-						MountPath: "/home/oleg/.docker/config.json",
-						ReadOnly:  true,
-					},
 				},
 			}
+			containerTemplate.VolumeMounts = append(containerTemplate.VolumeMounts, container.VolumeMounts...)
 			var volumes []corev1.Volume = []corev1.Volume{
 				{
 					Name: "nsswitch",
@@ -612,75 +508,16 @@ fi
 						MountPath: "/home",
 					},
 					{
-						Name:      "home-oleg-mozilla-firefox",
-						MountPath: "/home/oleg/.mozilla/firefox",
-					},
-					{
-						Name:      "home-oleg-bash-history",
-						MountPath: "/home/oleg/.bash_history",
-					},
-					{
-						Name:      "home-oleg-dot-config-google-chrome",
-						MountPath: "/home/oleg/.config/google-chrome",
-					},
-					{
-						Name:      "root-bash-history",
-						MountPath: "/root/.bash_history",
-					},
-					{
-						Name:      "home-oleg-config-wayvnc",
-						MountPath: "/home/oleg/.config/wayvnc",
-					},
-					{
-						Name:      "home-oleg-dot-local-share-chatterino",
-						MountPath: "/home/oleg/.local/share/chatterino",
-					},
-					{
 						Name:      "nixos-var-log",
 						MountPath: "/var/log",
-					},
-					{
-						Name:      "home-oleg-ssh-majordomo-gitlab-private-key",
-						MountPath: "/home/oleg/.ssh/id_rsa_gitlab_intr_nopass",
-					},
-					{
-						Name:      "home-oleg-ssh-majordomo-gitlab-public-key",
-						MountPath: "/home/oleg/.ssh/id_rsa_gitlab_intr_nopass.pub",
-					},
-					{
-						Name:      "home-oleg-src",
-						MountPath: "/home/oleg/src",
-					},
-					{
-						Name:      "home-oleg-ssh-known-hosts",
-						MountPath: "/home/oleg/.ssh/known_hosts",
-					},
-					{
-						Name:      "home-oleg-robo3t",
-						MountPath: "/home/oleg/.3T",
 					},
 					{
 						Name:      "nixos-var-lib-docker",
 						MountPath: "/var/lib/docker",
 					},
-					{
-						Name:      "home-oleg-local-share-chezmoi",
-						MountPath: "/home/oleg/.local/share/chezmoi",
-					},
-					{
-						Name:      "mnt-web-btrfs-web99-home",
-						MountPath: "/mnt/web-btrfs/web99-home",
-					},
-					{
-						Name:      "mnt-web-ext4",
-						MountPath: "/mnt/web-ext4",
-					},
-					{
-						Name:      "docker-configuration",
-						MountPath: "/home/oleg/.docker/config.json",
-					},
 				},
 			}
+			containerTemplate.VolumeMounts = append(containerTemplate.VolumeMounts, container.VolumeMounts...)
 			var volumes []corev1.Volume = []corev1.Volume{
 				{
 					Name: "nixos-run",
@@ -791,27 +628,12 @@ fi
 						MountPath: "/mnt/guix/tmp",
 					},
 					{
-						Name:      "home-oleg-bash-history",
-						MountPath: "/home/oleg/.bash_history",
-					},
-					{
-						Name:      "root-bash-history",
-						MountPath: "/root/.bash_history",
-					},
-					{
-						Name:      "home-oleg-config-socialstream",
-						MountPath: "/home/oleg/.config/SocialStream",
-					},
-					{
 						Name:      "archlinux-var-log",
 						MountPath: "/var/log",
 					},
-					{
-						Name:      "home-oleg-src",
-						MountPath: "/home/oleg/src",
-					},
 				},
 			}
+			containerTemplate.VolumeMounts = append(containerTemplate.VolumeMounts, container.VolumeMounts...)
 			var volumes []corev1.Volume = []corev1.Volume{
 				{
 					Name: "archlinux-tmp",
@@ -894,11 +716,7 @@ fi
 					},
 					{
 						Name:      "guix-tmp",
-						MountPath: "/home/oleg/.bash_history",
-					},
-					{
-						Name:      "root-bash-history",
-						MountPath: "/root/.bash_history",
+						MountPath: "/mnt/guix/tmp",
 					},
 					{
 						Name:      "dev-dri",
@@ -1015,19 +833,12 @@ fi
 						MountPath: "/mnt/guix/tmp",
 					},
 					{
-						Name:      "home-oleg-bash-history",
-						MountPath: "/home/oleg/.bash_history",
-					},
-					{
-						Name:      "root-bash-history",
-						MountPath: "/root/.bash_history",
-					},
-					{
 						Name:      "kali-rolling-var-log",
 						MountPath: "/var/log",
 					},
 				},
 			}
+			containerTemplate.VolumeMounts = append(containerTemplate.VolumeMounts, container.VolumeMounts...)
 			var volumes []corev1.Volume = []corev1.Volume{
 				{
 					Name: "kali-rolling-run",
