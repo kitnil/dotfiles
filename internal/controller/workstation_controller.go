@@ -146,25 +146,7 @@ func (r *WorkstationReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 		},
 		Spec: corev1.PodSpec{
 			AutomountServiceAccountToken: &[]bool{false}[0],
-			Affinity: &corev1.Affinity{
-				NodeAffinity: &corev1.NodeAffinity{
-					RequiredDuringSchedulingIgnoredDuringExecution: &corev1.NodeSelector{
-						NodeSelectorTerms: []corev1.NodeSelectorTerm{
-							{
-								MatchFields: []corev1.NodeSelectorRequirement{
-									{
-										Key:      "metadata.name",
-										Operator: corev1.NodeSelectorOperator("In"),
-										Values: []string{
-											"kube4",
-										},
-									},
-								},
-							},
-						},
-					},
-				},
-			},
+			Affinity:                     workstation.Spec.Affinity,
 			Tolerations: []corev1.Toleration{
 				{
 					Effect:   corev1.TaintEffectNoSchedule,
