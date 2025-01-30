@@ -258,25 +258,6 @@ rm -f /home/oleg/.gnupg/gpg-agent.conf /home/oleg/.gnupg/gpg.conf`,
 					},
 				},
 				{
-					Name: "nsswitch",
-					VolumeSource: corev1.VolumeSource{
-						HostPath: &corev1.HostPathVolumeSource{
-							Path: "/etc/nsswitch.conf",
-							Type: &HostPathFile,
-						},
-					},
-				},
-				{
-					Name: "services",
-					VolumeSource: corev1.VolumeSource{
-						HostPath: &corev1.HostPathVolumeSource{
-							Path: "/etc/services",
-							Type: &HostPathFile,
-						},
-					},
-				},
-
-				{
 					Name: "home-oleg",
 					VolumeSource: corev1.VolumeSource{
 						HostPath: &corev1.HostPathVolumeSource{
@@ -789,6 +770,24 @@ rm -f /home/oleg/.gnupg/gpg-agent.conf /home/oleg/.gnupg/gpg.conf`,
 				},
 			}
 			var volumes []corev1.Volume = []corev1.Volume{
+				{
+					Name: "nsswitch",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/etc/nsswitch.conf",
+							Type: &HostPathFile,
+						},
+					},
+				},
+				{
+					Name: "services",
+					VolumeSource: corev1.VolumeSource{
+						HostPath: &corev1.HostPathVolumeSource{
+							Path: "/etc/services",
+							Type: &HostPathFile,
+						},
+					},
+				},
 				{
 					Name: "guix-shm",
 					VolumeSource: corev1.VolumeSource{
