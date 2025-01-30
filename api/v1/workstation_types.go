@@ -32,9 +32,14 @@ type WorkstationSpec struct {
 	// Foo is an example field of Workstation. Edit workstation_types.go to remove/update
 	Foo string `json:"foo,omitempty"`
 
-	// If specified, the pod's scheduling constraints
-	// +optional
-	Affinity *v1.Affinity `json:"affinity,omitempty" protobuf:"bytes,18,opt,name=affinity"`
+	// template is the object that describes the pod that will be created if
+	// insufficient replicas are detected. Each pod stamped out by the StatefulSet
+	// will fulfill this Template, but have a unique identity from the rest
+	// of the StatefulSet. Each pod will be named with the format
+	// <statefulsetname>-<podindex>. For example, a pod in a StatefulSet named
+	// "web" with index number "3" would be named "web-3".
+	// The only allowed template.spec.restartPolicy value is "Always".
+	Template v1.PodTemplateSpec `json:"template" protobuf:"bytes,3,opt,name=template"`
 }
 
 // WorkstationStatus defines the observed state of Workstation.
