@@ -119,6 +119,12 @@ func (r *WorkstationReconciler) GetWorkstation(ctx context.Context, req ctrl.Req
 func (r *WorkstationReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	_ = log.FromContext(ctx)
 
+	r.CreateWorkstationPod(ctx, req)
+
+	return ctrl.Result{}, nil
+}
+
+func (r *WorkstationReconciler) CreateWorkstationPod(ctx context.Context, req ctrl.Request) {
 	var HostPathCharDevice corev1.HostPathType = "CharDevice"
 	var HostPathDirectory corev1.HostPathType = "Directory"
 	var HostPathFile corev1.HostPathType = "File"
@@ -129,7 +135,6 @@ func (r *WorkstationReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 	var nixosVarLibDockerQuantity resource.Quantity = resource.MustParse("16G")
 
 	var workstation workstationv1.Workstation = r.GetWorkstation(ctx, req)
-	log.Log.Info(fmt.Sprintf("%v", workstation))
 
 	// TODO(user): your logic here
 	pod := &corev1.Pod{
@@ -1370,8 +1375,6 @@ fi
 			log.Log.Error(err, "Failed to create pod")
 		}
 	}
-
-	return ctrl.Result{}, nil
 }
 
 // SetupWithManager sets up the controller with the Manager.
