@@ -25,6 +25,7 @@ import (
 	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/types"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
@@ -90,6 +91,18 @@ mkdir /mnt/nixos/home/oleg/.ssh
 chown 1000:998 /mnt/nixos/home/oleg/.ssh
 `
 
+func (r *WorkstationReconciler) GetWorkstation(ctx context.Context, req ctrl.Request) workstationv1.Workstation {
+	var workstation workstationv1.Workstation
+	err := r.Get(ctx, types.NamespacedName{
+		Name:      req.NamespacedName.Name,
+		Namespace: req.NamespacedName.Namespace,
+	}, &workstation)
+	if apierrors.IsNotFound(err) {
+		log.Log.Error(err, "Workstation not found")
+	}
+	return workstation
+}
+
 // +kubebuilder:rbac:groups=workstation.wugi.info,resources=workstations,verbs=get;list;watch;create;update;patch;delete
 // +kubebuilder:rbac:groups=workstation.wugi.info,resources=workstations/status,verbs=get;update;patch
 // +kubebuilder:rbac:groups=workstation.wugi.info,resources=workstations/finalizers,verbs=update
@@ -115,18 +128,21 @@ func (r *WorkstationReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 	var guixRunQuantity resource.Quantity = resource.MustParse("512M")
 	var nixosVarLibDockerQuantity resource.Quantity = resource.MustParse("16G")
 
+	var workstation workstationv1.Workstation = r.GetWorkstation(ctx, req)
+	log.Log.Info(fmt.Sprintf("%v", workstation))
+
 	// TODO(user): your logic here
 	pod := &corev1.Pod{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      req.NamespacedName.Name,
 			Namespace: req.NamespacedName.Namespace,
-			// OwnerReferences: []metav1.OwnerReference{
-			// 	*metav1.NewControllerRef(&workstationv1.Workstation{}, schema.GroupVersionKind{
-			// 		Group:   workstationv1.GroupVersion.Group,
-			// 		Version: workstationv1.GroupVersion.Version,
-			// 		Kind:    "Workstation",
-			// 	}),
-			// },
+			OwnerReferences: []metav1.OwnerReference{
+				*metav1.NewControllerRef(&workstation, schema.GroupVersionKind{
+					Group:   workstationv1.GroupVersion.Group,
+					Version: workstationv1.GroupVersion.Version,
+					Kind:    "Workstation",
+				}),
+			},
 		},
 		Spec: corev1.PodSpec{
 			AutomountServiceAccountToken: &[]bool{false}[0],
@@ -140,7 +156,7 @@ func (r *WorkstationReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 										Key:      "metadata.name",
 										Operator: corev1.NodeSelectorOperator("In"),
 										Values: []string{
-											"kube3",
+											"kube4",
 										},
 									},
 								},
