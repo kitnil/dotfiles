@@ -40,57 +40,6 @@ type WorkstationReconciler struct {
 	Scheme *runtime.Scheme
 }
 
-var bashCommand string = `set -o nounset -o errexit -o pipefail
-
-chown 1000:998 /home/oleg
-chmod 0755 /home/oleg
-
-mkdir /home/oleg/.docker
-chown 1000:998 /home/oleg/.docker
-
-mkdir /home/oleg/.cache
-chown 1000:998 /home/oleg/.cache
-
-mkdir /home/oleg/.config
-chown 1000:998 /home/oleg/.config
-
-mkdir /home/oleg/.local
-chown 1000:998 /home/oleg/.local
-
-mkdir /home/oleg/.local/var
-chown 1000:998 /home/oleg/.local/var
-
-mkdir /home/oleg/.local/var/log
-chown 1000:998 /home/oleg/.local/var/log
-
-mkdir /home/oleg/.local/share
-chown 1000:998 /home/oleg/.local/share
-
-mkdir /home/oleg/.ssh
-chown 1000:998 /home/oleg/.ssh
-
-mkdir /mnt/nixos/home/oleg
-chown 1000:998 /mnt/nixos/home/oleg
-
-mkdir /mnt/nixos/home/oleg/.docker
-chown 1000:998 /mnt/nixos/home/oleg/.docker
-
-mkdir -p /mnt/nixos/home/oleg/.mozilla
-chown 1000:998 /mnt/nixos/home/oleg/.mozilla
-
-mkdir -p /mnt/nixos/home/oleg/.config
-chown 1000:998 /mnt/nixos/home/oleg/.config
-
-mkdir /mnt/nixos/home/oleg/.local
-chown 1000:998 /mnt/nixos/home/oleg/.local
-
-mkdir /mnt/nixos/home/oleg/.local/share
-chown 1000:998 /mnt/nixos/home/oleg/.local/share
-
-mkdir /mnt/nixos/home/oleg/.ssh
-chown 1000:998 /mnt/nixos/home/oleg/.ssh
-`
-
 func (r *WorkstationReconciler) GetWorkstation(ctx context.Context, req ctrl.Request) workstationv1.Workstation {
 	var workstation workstationv1.Workstation
 	err := r.Get(ctx, types.NamespacedName{
@@ -136,6 +85,23 @@ func (r *WorkstationReconciler) CreateWorkstationPod(ctx context.Context, req ct
 	var guixRunQuantity resource.Quantity = resource.MustParse("512M")
 	var nixosVarLibDockerQuantity resource.Quantity = resource.MustParse("16G")
 
+	var bashCommand string
+
+	var volumeMountHackVolumeMounts []corev1.VolumeMount
+	for _, container := range workstation.Spec.Template.Spec.Containers {
+		for _, volume := range workstation.Spec.Template.Spec.Volumes {
+			if *volume.VolumeSource.HostPath.Type == corev1.HostPathDirectory {
+				directory := fmt.Sprintf("/mnt/%s%s\n", container.Name, volume.HostPath.Path)
+				bashCommand = bashCommand + fmt.Sprintf("mkdir %s", directory)
+				bashCommand = bashCommand + fmt.Sprintf("chown 1000:998 %s", directory)
+				volumeMountHackVolumeMounts = append(volumeMountHackVolumeMounts, corev1.VolumeMount{
+					Name:      volume.Name,
+					MountPath: fmt.Sprintf("/mnt/%s%s", container.Name, volume.VolumeSource.HostPath.Path),
+				})
+			}
+		}
+	}
+
 	pod := &corev1.Pod{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      req.NamespacedName.Name,
@@ -168,19 +134,11 @@ func (r *WorkstationReconciler) CreateWorkstationPod(ctx context.Context, req ct
 						"/bin/sh",
 					},
 					Args: []string{
+						"-e",
 						"-c",
 						bashCommand,
 					},
-					VolumeMounts: []corev1.VolumeMount{
-						{
-							Name:      "container-home-oleg",
-							MountPath: "/home/oleg",
-						},
-						{
-							Name:      "nixos-home",
-							MountPath: "/mnt/nixos/home",
-						},
-					},
+					VolumeMounts: volumeMountHackVolumeMounts,
 				},
 				{
 					Name:            "clean-gnupg",
@@ -193,12 +151,6 @@ func (r *WorkstationReconciler) CreateWorkstationPod(ctx context.Context, req ct
 						"-c",
 						`set -o nounset -o errexit -o pipefail
 rm -f /home/oleg/.gnupg/gpg-agent.conf /home/oleg/.gnupg/gpg.conf`,
-					},
-					VolumeMounts: []corev1.VolumeMount{
-						{
-							Name:      "home-oleg-dot-gnupg",
-							MountPath: "/home/oleg/.gnupg",
-						},
 					},
 				},
 			},
@@ -254,15 +206,6 @@ rm -f /home/oleg/.gnupg/gpg-agent.conf /home/oleg/.gnupg/gpg.conf`,
 						HostPath: &corev1.HostPathVolumeSource{
 							Path: "/var/run/shepherd/socket",
 							Type: &HostPathSocket,
-						},
-					},
-				},
-				{
-					Name: "container-home-oleg",
-					VolumeSource: corev1.VolumeSource{
-						EmptyDir: &corev1.EmptyDirVolumeSource{
-							Medium:    corev1.StorageMediumMemory,
-							SizeLimit: &guixTmpQuantity,
 						},
 					},
 				},
@@ -334,6 +277,10 @@ rm -f /home/oleg/.gnupg/gpg-agent.conf /home/oleg/.gnupg/gpg.conf`,
 						MountPath: "/etc/services",
 					},
 					{
+						Name:      "guix-home",
+						MountPath: "/home",
+					},
+					{
 						Name:      "guix-shm",
 						MountPath: "/dev/shm",
 					},
@@ -344,10 +291,6 @@ rm -f /home/oleg/.gnupg/gpg-agent.conf /home/oleg/.gnupg/gpg.conf`,
 					{
 						Name:      "var-run-shepherd-socket",
 						MountPath: "/mnt/guix/var/run/shepherd/socket",
-					},
-					{
-						Name:      "container-home-oleg",
-						MountPath: "/home/oleg",
 					},
 				},
 			}
@@ -405,6 +348,12 @@ rm -f /home/oleg/.gnupg/gpg-agent.conf /home/oleg/.gnupg/gpg.conf`,
 							Medium:    corev1.StorageMediumMemory,
 							SizeLimit: &guixRunQuantity,
 						},
+					},
+				},
+				{
+					Name: "guix-home",
+					VolumeSource: corev1.VolumeSource{
+						EmptyDir: &corev1.EmptyDirVolumeSource{},
 					},
 				},
 				{
