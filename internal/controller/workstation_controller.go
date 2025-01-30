@@ -18,6 +18,7 @@ package controller
 
 import (
 	"context"
+	"fmt"
 
 	corev1 "k8s.io/api/core/v1"
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
@@ -1347,6 +1348,7 @@ fi
 	}, pod)
 
 	if apierrors.IsNotFound(err) {
+		log.Log.Info(fmt.Sprintf("Creating pod %s/%s", req.NamespacedName.Namespace, req.NamespacedName.Name))
 		err = r.Create(ctx, pod)
 		if err != nil {
 			log.Log.Error(err, "Failed to create pod")
