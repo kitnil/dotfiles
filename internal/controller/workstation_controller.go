@@ -119,12 +119,14 @@ func (r *WorkstationReconciler) GetWorkstation(ctx context.Context, req ctrl.Req
 func (r *WorkstationReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	_ = log.FromContext(ctx)
 
-	r.CreateWorkstationPod(ctx, req)
+	var workstation workstationv1.Workstation = r.GetWorkstation(ctx, req)
+	r.CreateWorkstationPod(ctx, req, workstation)
+	r.CreateWorkstationService(ctx, req, workstation)
 
 	return ctrl.Result{}, nil
 }
 
-func (r *WorkstationReconciler) CreateWorkstationPod(ctx context.Context, req ctrl.Request) {
+func (r *WorkstationReconciler) CreateWorkstationPod(ctx context.Context, req ctrl.Request, workstation workstationv1.Workstation) {
 	var HostPathCharDevice corev1.HostPathType = "CharDevice"
 	var HostPathDirectory corev1.HostPathType = "Directory"
 	var HostPathFile corev1.HostPathType = "File"
@@ -134,9 +136,6 @@ func (r *WorkstationReconciler) CreateWorkstationPod(ctx context.Context, req ct
 	var guixRunQuantity resource.Quantity = resource.MustParse("512M")
 	var nixosVarLibDockerQuantity resource.Quantity = resource.MustParse("16G")
 
-	var workstation workstationv1.Workstation = r.GetWorkstation(ctx, req)
-
-	// TODO(user): your logic here
 	pod := &corev1.Pod{
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      req.NamespacedName.Name,
@@ -1373,6 +1372,43 @@ fi
 		err = r.Create(ctx, pod)
 		if err != nil {
 			log.Log.Error(err, "Failed to create pod")
+		}
+	}
+}
+
+func (r *WorkstationReconciler) CreateWorkstationService(ctx context.Context, req ctrl.Request, workstation workstationv1.Workstation) {
+	service := &corev1.Service{
+		ObjectMeta: metav1.ObjectMeta{
+			Name:      req.NamespacedName.Name,
+			Namespace: req.NamespacedName.Namespace,
+			OwnerReferences: []metav1.OwnerReference{
+				*metav1.NewControllerRef(&workstation, schema.GroupVersionKind{
+					Group:   workstationv1.GroupVersion.Group,
+					Version: workstationv1.GroupVersion.Version,
+					Kind:    "Workstation",
+				}),
+			},
+		},
+		Spec: corev1.ServiceSpec{
+			Ports: []corev1.ServicePort{
+				{
+					Name:     "ssh",
+					Protocol: corev1.ProtocolTCP,
+					Port:     22,
+				},
+			},
+		},
+	}
+	err := r.Get(ctx, types.NamespacedName{
+		Name:      req.NamespacedName.Name,
+		Namespace: req.NamespacedName.Namespace,
+	}, service)
+
+	if apierrors.IsNotFound(err) {
+		log.Log.Info(fmt.Sprintf("Creating service %s/%s", req.NamespacedName.Namespace, req.NamespacedName.Name))
+		err = r.Create(ctx, service)
+		if err != nil {
+			log.Log.Error(err, "Failed to create service")
 		}
 	}
 }
