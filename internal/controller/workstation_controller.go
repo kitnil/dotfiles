@@ -19,6 +19,7 @@ package controller
 import (
 	"context"
 	"fmt"
+	"path/filepath"
 
 	corev1 "k8s.io/api/core/v1"
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
@@ -88,19 +89,33 @@ func (r *WorkstationReconciler) CreateWorkstationPod(ctx context.Context, req ct
 	var bashCommand string
 
 	var volumeMountHackVolumeMounts []corev1.VolumeMount
+	volumeMountHackVolumeMounts = append(volumeMountHackVolumeMounts, corev1.VolumeMount{
+		Name:      "guix-home",
+		MountPath: "/mnt/guix/home",
+	})
+
+	volumeMountHackVolumeMounts = append(volumeMountHackVolumeMounts, corev1.VolumeMount{
+		Name:      "nixos-home",
+		MountPath: "/mnt/nixos/home",
+	})
 	for _, container := range workstation.Spec.Template.Spec.Containers {
 		for _, volume := range workstation.Spec.Template.Spec.Volumes {
 			if *volume.VolumeSource.HostPath.Type == corev1.HostPathDirectory {
 				directory := fmt.Sprintf("/mnt/%s%s\n", container.Name, volume.HostPath.Path)
-				bashCommand = bashCommand + fmt.Sprintf("mkdir %s", directory)
-				bashCommand = bashCommand + fmt.Sprintf("chown 1000:998 %s", directory)
-				volumeMountHackVolumeMounts = append(volumeMountHackVolumeMounts, corev1.VolumeMount{
-					Name:      volume.Name,
-					MountPath: fmt.Sprintf("/mnt/%s%s", container.Name, volume.VolumeSource.HostPath.Path),
-				})
+				bashCommand = bashCommand + fmt.Sprintf("mkdir -p %s", directory)
+				// bashCommand = bashCommand + fmt.Sprintf("chown 1000:998 %s", directory)
+				// volumeMountHackVolumeMounts = append(volumeMountHackVolumeMounts, corev1.VolumeMount{
+				// 	Name:      volume.Name,
+				// 	MountPath: fmt.Sprintf("/mnt/%s%s", container.Name, volume.VolumeSource.HostPath.Path),
+				// })
+			}
+			if *volume.VolumeSource.HostPath.Type == corev1.HostPathFile {
+				directory := fmt.Sprintf("/mnt/%s%s\n", container.Name, filepath.Dir(volume.HostPath.Path))
+				bashCommand = bashCommand + fmt.Sprintf("mkdir -p %s", directory)
 			}
 		}
 	}
+	bashCommand = bashCommand + "chown -R 1000:998 /mnt/*/home/oleg\n"
 
 	pod := &corev1.Pod{
 		ObjectMeta: metav1.ObjectMeta{
