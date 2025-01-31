@@ -56,6 +56,8 @@ func (r *WorkstationReconciler) GetWorkstation(ctx context.Context, req ctrl.Req
 // +kubebuilder:rbac:groups=workstation.wugi.info,resources=workstations,verbs=get;list;watch;create;update;patch;delete
 // +kubebuilder:rbac:groups=workstation.wugi.info,resources=workstations/status,verbs=get;update;patch
 // +kubebuilder:rbac:groups=workstation.wugi.info,resources=workstations/finalizers,verbs=update
+// +kubebuilder:rbac:groups=workstation.wugi.info,resources=pods,verbs=get;list;watch;create
+// +kubebuilder:rbac:groups=workstation.wugi.info,resources=services,verbs=get;list;watch;create
 
 // Reconcile is part of the main kubernetes reconciliation loop which aims to
 // move the current state of the cluster closer to the desired state.

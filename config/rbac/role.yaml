@@ -7,6 +7,16 @@ rules:
 - apiGroups:
   - workstation.wugi.info
   resources:
+  - pods
+  - services
+  verbs:
+  - create
+  - get
+  - list
+  - watch
+- apiGroups:
+  - workstation.wugi.info
+  resources:
   - workstations
   verbs:
   - create
