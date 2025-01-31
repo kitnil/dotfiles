@@ -134,14 +134,7 @@ func (r *WorkstationReconciler) CreateWorkstationPod(ctx context.Context, req ct
 		Spec: corev1.PodSpec{
 			AutomountServiceAccountToken: &[]bool{false}[0],
 			Affinity:                     workstation.Spec.Template.Spec.Affinity,
-			Tolerations: []corev1.Toleration{
-				{
-					Effect:   corev1.TaintEffectNoSchedule,
-					Key:      "workstation.cluster.local",
-					Operator: corev1.TolerationOpEqual,
-					Value:    "true",
-				},
-			},
+			Tolerations:                  workstation.Spec.Template.Spec.Tolerations,
 			InitContainers: []corev1.Container{
 				{
 					Name:            "volume-mount-hack",
