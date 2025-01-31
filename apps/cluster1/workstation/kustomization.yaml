@@ -3,6 +3,9 @@ kind: Kustomization
 namespace: workstation
 resources:
 - ../../base/workstation
+- workstation-kube1
+- workstation-kube2
+- workstation-kube3
 patchesStrategicMerge:
 - daemonset.yaml
 images:

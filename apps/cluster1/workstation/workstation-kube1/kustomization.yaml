@@ -1,0 +1,5 @@
+namespace: workstation
+## Append samples of your project ##
+resources:
+- workstation_v1_workstation.yaml
+# +kubebuilder:scaffold:manifestskustomizesamples

@@ -1,0 +1,248 @@
+apiVersion: workstation.wugi.info/v1
+kind: Workstation
+metadata:
+  labels:
+    app.kubernetes.io/name: workstation-controller
+    app.kubernetes.io/managed-by: kustomize
+  name: workstation-kube2
+spec:
+  template:
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchFields:
+              - key: metadata.name
+                operator: In
+                values:
+                - kube2
+      tolerations:
+      - key: edge.cluster.local/not-schedulable
+        operator: Equal
+        effect: NoSchedule
+      containers:
+      - name: guix
+        image: harbor.home.wugi.info/library/guix-image-workstation:1b2d17c0
+        volumeMounts:
+        - mountPath: /home/oleg/.cache/ihs
+          name: home-oleg-dot-cache-ihs
+        - mountPath: /home/oleg/.config/obs-studio
+          name: home-oleg-dot-config-obs-studio
+        - mountPath: /home/oleg/.config/remmina
+          name: home-oleg-dot-config-remmina
+        - mountPath: /home/oleg/.config/sway
+          name: home-oleg-dot-config-sway
+        - mountPath: /home/oleg/.local/share/remmina
+          name: home-oleg-dot-local-share-remmina
+        - mountPath: /home/oleg/.local/share/TelegramDesktop
+          name: home-oleg-dot-local-share-telegram
+        - mountPath: /home/oleg/.password-store
+          name: home-oleg-dot-password-store
+        - mountPath: /home/oleg/.gnupg
+          name: home-oleg-dot-gnupg
+        - mountPath: /home/oleg/.ssh/id_ed25519
+          name: home-oleg-ssh-private-key
+        - mountPath: /home/oleg/.ssh/id_ed25519.pub
+          name: home-oleg-ssh-public-key
+        - mountPath: /home/oleg/.ssh/id_rsa_gitlab_intr_nopass
+          name: home-oleg-ssh-majordomo-gitlab-private-key
+        - mountPath: /home/oleg/.ssh/id_rsa_gitlab_intr_nopass.pub
+          name: home-oleg-ssh-majordomo-gitlab-public-key
+        - mountPath: /home/oleg/.ssh/id_rsa_gitlab
+          name: home-oleg-ssh-gitlab-com-private-key
+        - mountPath: /home/oleg/.ssh/id_rsa_gitlab.pub
+          name: home-oleg-ssh-gitlab-com-public-key
+        - mountPath: /home/oleg/.ssh/known_hosts
+          name: home-oleg-ssh-known-hosts
+        - mountPath: /home/oleg/.bash_history
+          name: home-oleg-bash-history
+        - mountPath: /root/.bash_history
+          name: root-bash-history
+        - mountPath: /home/oleg/src
+          name: home-oleg-src
+        - mountPath: /home/oleg/.local/share/chezmoi
+          name: home-oleg-local-share-chezmoi
+        - mountPath: /srv
+          name: srv
+        - mountPath: /home/oleg/.config/qBittorrent
+          name: home-oleg-config-qbittorrent
+        - mountPath: /home/oleg/.local/share/qBittorrent
+          name: home-oleg-dot-local-share-qbittorrent
+        - mountPath: /mnt/qbittorrent-incomplete
+          name: qbittorrent-incomplete
+        - mountPath: /var/log
+          name: guix-var-log
+        - mountPath: /home/oleg/.local/var/log
+          name: guix-home-oleg-local-var-log
+        - mountPath: /home/oleg/.docker/config.json
+          name: docker-configuration
+          readOnly: true
+
+      - name: nixos
+        image: harbor.home.wugi.info/library/nixos-systemd-taskexecutor:e9222a59
+        volumeMounts:
+        - mountPath: /home/oleg/.mozilla/firefox
+          name: home-oleg-mozilla-firefox
+        - mountPath: /home/oleg/.bash_history
+          name: home-oleg-bash-history
+        - mountPath: /home/oleg/.config/google-chrome
+          name: home-oleg-dot-config-google-chrome
+        - mountPath: /root/.bash_history
+          name: root-bash-history
+        - mountPath: /home/oleg/.config/wayvnc
+          name: home-oleg-config-wayvnc
+        - mountPath: /home/oleg/.local/share/chatterino
+          name: home-oleg-dot-local-share-chatterino
+        - mountPath: /home/oleg/.ssh/id_rsa_gitlab_intr_nopass
+          name: home-oleg-ssh-majordomo-gitlab-private-key
+        - mountPath: /home/oleg/.ssh/id_rsa_gitlab_intr_nopass.pub
+          name: home-oleg-ssh-majordomo-gitlab-public-key
+        - mountPath: /home/oleg/src
+          name: home-oleg-src
+        - mountPath: /home/oleg/.ssh/known_hosts
+          name: home-oleg-ssh-known-hosts
+        - mountPath: /home/oleg/.3T
+          name: home-oleg-robo3t
+        - mountPath: /home/oleg/.local/share/chezmoi
+          name: home-oleg-local-share-chezmoi
+        - mountPath: /home/oleg/.docker/config.json
+          name: docker-configuration
+
+      - name: archlinux
+        image: harbor.home.wugi.info/library/archlinux-systemd:865643d7
+        volumeMounts:
+        - mountPath: /home/oleg/.bash_history
+          name: home-oleg-bash-history
+        - mountPath: /root/.bash_history
+          name: root-bash-history
+        - mountPath: /home/oleg/.config/SocialStream
+          name: home-oleg-config-socialstream
+        - mountPath: /home/oleg/src
+          name: home-oleg-src
+
+      volumes:
+      - hostPath:
+          path: /home/oleg/.cache/ihs
+          type: Directory
+        name: home-oleg-dot-cache-ihs
+      - hostPath:
+          path: /home/oleg/.config/google-chrome
+          type: Directory
+        name: home-oleg-dot-config-google-chrome
+      - hostPath:
+          path: /home/oleg/.config/obs-studio-4k
+          type: Directory
+        name: home-oleg-dot-config-obs-studio
+      - hostPath:
+          path: /home/oleg/.config/remmina
+          type: Directory
+        name: home-oleg-dot-config-remmina
+      - hostPath:
+          path: /home/oleg/.config/sway
+          type: Directory
+        name: home-oleg-dot-config-sway
+      - hostPath:
+          path: /home/oleg/.local/share/remmina
+          type: Directory
+        name: home-oleg-dot-local-share-remmina
+      - hostPath:
+          path: /home/oleg/.local/share/TelegramDesktop
+          type: Directory
+        name: home-oleg-dot-local-share-telegram
+      - hostPath:
+          path: /home/oleg/.local/share/chatterino
+          type: Directory
+        name: home-oleg-dot-local-share-chatterino
+      - hostPath:
+          path: /home/oleg/.mozilla
+          type: Directory
+        name: home-oleg-dot-mozilla
+      - hostPath:
+          path: /home/oleg/.password-store
+          type: Directory
+        name: home-oleg-dot-password-store
+      - hostPath:
+          path: /home/oleg/.gnupg
+          type: Directory
+        name: home-oleg-dot-gnupg
+      - hostPath:
+          path: /home/oleg/.3T
+          type: Directory
+        name: home-oleg-robo3t
+      - hostPath:
+          path: /home/oleg/.mozilla/firefox
+          type: Directory
+        name: home-oleg-mozilla-firefox
+      - hostPath:
+          path: /home/oleg/.ssh/id_ed25519
+          type: File
+        name: home-oleg-ssh-private-key
+      - hostPath:
+          path: /home/oleg/.ssh/id_ed25519.pub
+          type: File
+        name: home-oleg-ssh-public-key
+      - hostPath:
+          path: /home/oleg/.ssh/id_rsa_gitlab_intr_nopass
+          type: File
+        name: home-oleg-ssh-majordomo-gitlab-private-key
+      - hostPath:
+          path: /home/oleg/.ssh/id_rsa_gitlab_intr_nopass.pub
+          type: File
+        name: home-oleg-ssh-majordomo-gitlab-public-key
+      - hostPath:
+          path: /home/oleg/.ssh/id_rsa_gitlab
+          type: File
+        name: home-oleg-ssh-gitlab-com-private-key
+      - hostPath:
+          path: /home/oleg/.ssh/id_rsa_gitlab.pub
+          type: File
+        name: home-oleg-ssh-gitlab-com-public-key
+      - hostPath:
+          path: /home/oleg/.ssh/known_hosts
+          type: File
+        name: home-oleg-ssh-known-hosts
+      - hostPath:
+          path: /root/.bash_history
+          type: File
+        name: root-bash-history
+      - hostPath:
+          path: /home/oleg/.config/SocialStream
+          type: Directory
+        name: home-oleg-config-socialstream
+      - hostPath:
+          path: /home/oleg/.config/qBittorrent
+          type: Directory
+        name: home-oleg-config-qbittorrent
+      - hostPath:
+          path: /home/oleg/.local/share/qBittorrent
+          type: Directory
+        name: home-oleg-dot-local-share-qbittorrent
+      - hostPath:
+          path: /home/oleg/src
+          type: Directory
+        name: home-oleg-src
+      - hostPath:
+          path: /home/oleg/.local/share/chezmoi
+          type: Directory
+        name: home-oleg-local-share-chezmoi
+      - hostPath:
+          path: /srv
+          type: Directory
+        name: srv
+      - hostPath:
+          path: /mnt/qbittorrent-incomplete
+          type: Directory
+        name: qbittorrent-incomplete
+      - hostPath:
+          path: /home/oleg/.config/wayvnc
+          type: Directory
+        name: home-oleg-config-wayvnc
+      - hostPath:
+          path: /home/oleg/.docker/config.json
+          type: File
+        name: docker-configuration
+      - hostPath:
+          path: /home/oleg/.bash_history
+          type: File
+        name: home-oleg-bash-history
