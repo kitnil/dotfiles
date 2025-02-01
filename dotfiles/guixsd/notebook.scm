@@ -53,7 +53,7 @@
           (type luks-device-mapping))
          (mapped-device
           (source "vg0")
-          (targets '("vg0-guixroot" "vg0-webbtrs" "vg0-webext4"))
+          (targets '("vg0-guixroot"))
           (type lvm-device-mapping))))
 
   (kernel-loadable-modules (list v4l2loopback-linux-module xpadneo))
@@ -72,21 +72,7 @@
                        (file-system
                          (device (uuid "8AE4-E6A7" 'fat))
                          (mount-point "/boot/efi")
-                         (type "vfat"))
-                       (file-system
-                         (device (file-system-label "webbtrfs"))
-                         (mount-point "/mnt/web-btrfs")
-                         (dependencies mapped-devices)
-                         (options (string-join '("compress=zstd:3"
-                                                 "ssd"
-                                                 "noatime")
-                                               ","))
-                         (type "btrfs"))
-                       (file-system
-                         (device (file-system-label "webext4"))
-                         (mount-point "/mnt/web-ext4")
-                         (dependencies mapped-devices)
-                         (type "ext4")))
+                         (type "vfat")))
                  %base-file-systems))
 
   (groups (cons* (user-group (name "nixbld")
