@@ -39,6 +39,10 @@ packages+=(
 )
 
 packages+=(
+    git-grab
+)
+
+packages+=(
     libxtst
 )
 
