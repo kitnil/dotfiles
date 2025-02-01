@@ -142,7 +142,7 @@ install_kubebuilder()
 
 install_kind()
 {
-    go install sigs.k8s.io/kind@v0.26.0
+    GOBIN=/usr/local/bin go install sigs.k8s.io/kind@v0.26.0
 }
 
 packages+=(
