@@ -15,7 +15,7 @@ images:
   newName: harbor.home.wugi.info/library/nixos-systemd-taskexecutor
   newTag: e9222a59
 - name: harbor.home.wugi.info/library/archlinux-systemd
-  newTag: 865643d7
+  newTag: 512e7037
 - name: harbor.home.wugi.info/library/kali-rolling
   newTag: 171ebd11
 - name: busybox
