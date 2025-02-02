@@ -134,6 +134,13 @@ install_vscode()
     yay --noconfirm -S vscode
 }
 
+install_vscode_extensions()
+{
+    sudo -u oleg -i <<'EOF'
+code --install-extension golang.go
+EOF
+}
+
 install_kubebuilder()
 {
     curl -L -o /usr/local/bin/kubebuilder "https://go.kubebuilder.io/dl/latest/$(go env GOOS)/$(go env GOARCH)"
@@ -169,6 +176,7 @@ main()
     install_idea
     install_pycharm
     install_vscode
+    install_vscode_extensions
     install_kubebuilder
     install_kind
 }
