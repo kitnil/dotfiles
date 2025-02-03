@@ -302,6 +302,10 @@ rm -f /home/oleg/.gnupg/gpg-agent.conf /home/oleg/.gnupg/gpg.conf`,
 						Name:      "var-run-shepherd-socket",
 						MountPath: "/mnt/guix/var/run/shepherd/socket",
 					},
+					{
+						Name:      "guix-var-lib-docker",
+						MountPath: "/var/lib/docker",
+					},
 				},
 			}
 			containerTemplate.VolumeMounts = append(containerTemplate.VolumeMounts, container.VolumeMounts...)
@@ -372,6 +376,15 @@ rm -f /home/oleg/.gnupg/gpg-agent.conf /home/oleg/.gnupg/gpg.conf`,
 						EmptyDir: &corev1.EmptyDirVolumeSource{
 							Medium:    corev1.StorageMediumMemory,
 							SizeLimit: &guixRunQuantity,
+						},
+					},
+				},
+				{
+					Name: "guix-var-lib-docker",
+					VolumeSource: corev1.VolumeSource{
+						EmptyDir: &corev1.EmptyDirVolumeSource{
+							Medium:    corev1.StorageMediumMemory,
+							SizeLimit: &nixosVarLibDockerQuantity,
 						},
 					},
 				},
