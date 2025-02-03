@@ -138,6 +138,8 @@ spec:
           name: home-oleg-config-socialstream
         - mountPath: /home/oleg/src
           name: home-oleg-src
+        - mountPath: /home/oleg/.local/share/chezmoi
+          name: home-oleg-local-share-chezmoi
 
       volumes:
       - hostPath:
