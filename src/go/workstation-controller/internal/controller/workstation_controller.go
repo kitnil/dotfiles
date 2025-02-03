@@ -228,9 +228,9 @@ rm -f /home/oleg/.gnupg/gpg-agent.conf /home/oleg/.gnupg/gpg.conf`,
 	for _, container := range workstation.Spec.Template.Spec.Containers {
 		if container.Name == "guix" {
 			var containerTemplate corev1.Container = corev1.Container{
-				Name:            "guix",
+				Name:            container.Name,
 				ImagePullPolicy: corev1.PullIfNotPresent,
-				Image:           "harbor.home.wugi.info/library/guix-image-workstation:1b2d17c0",
+				Image:           container.Image,
 				Ports: []corev1.ContainerPort{
 					{
 						ContainerPort: 5353,
