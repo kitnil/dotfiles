@@ -603,6 +603,10 @@ fi
 						Name:      "archlinux-var-log",
 						MountPath: "/var/log",
 					},
+					{
+						Name:      "archlinux-var-lib-docker",
+						MountPath: "/var/lib/docker",
+					},
 				},
 			}
 			containerTemplate.VolumeMounts = append(containerTemplate.VolumeMounts, container.VolumeMounts...)
@@ -631,6 +635,15 @@ fi
 						EmptyDir: &corev1.EmptyDirVolumeSource{
 							Medium:    corev1.StorageMediumMemory,
 							SizeLimit: &guixRunQuantity,
+						},
+					},
+				},
+				{
+					Name: "archlinux-var-lib-docker",
+					VolumeSource: corev1.VolumeSource{
+						EmptyDir: &corev1.EmptyDirVolumeSource{
+							Medium:    corev1.StorageMediumMemory,
+							SizeLimit: &nixosVarLibDockerQuantity,
 						},
 					},
 				},
