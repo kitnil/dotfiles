@@ -17,86 +17,86 @@ spec:
                 operator: In
                 values:
                 - kube3
-    tolerations:
-    - key: workstation.cluster.local
-      operator: Equal
-      value: 'true'
-      effect: NoSchedule
-    - effect: NoExecute
-      key: node.kubernetes.io/not-ready
-      operator: Exists
-    - effect: NoExecute
-      key: node.kubernetes.io/unreachable
-      operator: Exists
-    - effect: NoSchedule
-      key: node.kubernetes.io/disk-pressure
-      operator: Exists
-    - effect: NoSchedule
-      key: node.kubernetes.io/memory-pressure
-      operator: Exists
-    - effect: NoSchedule
-      key: node.kubernetes.io/pid-pressure
-      operator: Exists
-    - effect: NoSchedule
-      key: node.kubernetes.io/unschedulable
-      operator: Exists
-    containers:
-    - name: guix
-      image: harbor.home.wugi.info/library/guix-image-workstation:1b2d17c0
-      volumeMounts:
-      - mountPath: /home/oleg/.cache/ihs
-        name: home-oleg-dot-cache-ihs
-      - mountPath: /home/oleg/.config/obs-studio
-        name: home-oleg-dot-config-obs-studio
-      - mountPath: /home/oleg/.config/remmina
-        name: home-oleg-dot-config-remmina
-      - mountPath: /home/oleg/.config/sway
-        name: home-oleg-dot-config-sway
-      - mountPath: /home/oleg/.local/share/remmina
-        name: home-oleg-dot-local-share-remmina
-      - mountPath: /home/oleg/.local/share/TelegramDesktop
-        name: home-oleg-dot-local-share-telegram
-      - mountPath: /home/oleg/.password-store
-        name: home-oleg-dot-password-store
-      - mountPath: /home/oleg/.gnupg
-        name: home-oleg-dot-gnupg
-      - mountPath: /home/oleg/.ssh/id_ed25519
-        name: home-oleg-ssh-private-key
-      - mountPath: /home/oleg/.ssh/id_ed25519.pub
-        name: home-oleg-ssh-public-key
-      - mountPath: /home/oleg/.ssh/id_rsa_gitlab_intr_nopass
-        name: home-oleg-ssh-majordomo-gitlab-private-key
-      - mountPath: /home/oleg/.ssh/id_rsa_gitlab_intr_nopass.pub
-        name: home-oleg-ssh-majordomo-gitlab-public-key
-      - mountPath: /home/oleg/.ssh/id_rsa_gitlab
-        name: home-oleg-ssh-gitlab-com-private-key
-      - mountPath: /home/oleg/.ssh/id_rsa_gitlab.pub
-        name: home-oleg-ssh-gitlab-com-public-key
-      - mountPath: /home/oleg/.ssh/known_hosts
-        name: home-oleg-ssh-known-hosts
-      - mountPath: /home/oleg/.bash_history
-        name: home-oleg-bash-history
-      - mountPath: /root/.bash_history
-        name: root-bash-history
-      - mountPath: /home/oleg/src
-        name: home-oleg-src
-      - mountPath: /home/oleg/.local/share/chezmoi
-        name: home-oleg-local-share-chezmoi
-      - mountPath: /srv
-        name: srv
-      - mountPath: /home/oleg/.config/qBittorrent
-        name: home-oleg-config-qbittorrent
-      - mountPath: /home/oleg/.local/share/qBittorrent
-        name: home-oleg-dot-local-share-qbittorrent
-      - mountPath: /mnt/qbittorrent-incomplete
-        name: qbittorrent-incomplete
-      - mountPath: /var/log
-        name: guix-var-log
-      - mountPath: /home/oleg/.local/var/log
-        name: guix-home-oleg-local-var-log
-      - mountPath: /home/oleg/.docker/config.json
-        name: docker-configuration
-        readOnly: true
+      tolerations:
+      - key: workstation.cluster.local
+        operator: Equal
+        value: 'true'
+        effect: NoSchedule
+      - effect: NoExecute
+        key: node.kubernetes.io/not-ready
+        operator: Exists
+      - effect: NoExecute
+        key: node.kubernetes.io/unreachable
+        operator: Exists
+      - effect: NoSchedule
+        key: node.kubernetes.io/disk-pressure
+        operator: Exists
+      - effect: NoSchedule
+        key: node.kubernetes.io/memory-pressure
+        operator: Exists
+      - effect: NoSchedule
+        key: node.kubernetes.io/pid-pressure
+        operator: Exists
+      - effect: NoSchedule
+        key: node.kubernetes.io/unschedulable
+        operator: Exists
+      containers:
+      - name: guix
+        image: harbor.home.wugi.info/library/guix-image-workstation:1b2d17c0
+        volumeMounts:
+        - mountPath: /home/oleg/.cache/ihs
+          name: home-oleg-dot-cache-ihs
+        - mountPath: /home/oleg/.config/obs-studio
+          name: home-oleg-dot-config-obs-studio
+        - mountPath: /home/oleg/.config/remmina
+          name: home-oleg-dot-config-remmina
+        - mountPath: /home/oleg/.config/sway
+          name: home-oleg-dot-config-sway
+        - mountPath: /home/oleg/.local/share/remmina
+          name: home-oleg-dot-local-share-remmina
+        - mountPath: /home/oleg/.local/share/TelegramDesktop
+          name: home-oleg-dot-local-share-telegram
+        - mountPath: /home/oleg/.password-store
+          name: home-oleg-dot-password-store
+        - mountPath: /home/oleg/.gnupg
+          name: home-oleg-dot-gnupg
+        - mountPath: /home/oleg/.ssh/id_ed25519
+          name: home-oleg-ssh-private-key
+        - mountPath: /home/oleg/.ssh/id_ed25519.pub
+          name: home-oleg-ssh-public-key
+        - mountPath: /home/oleg/.ssh/id_rsa_gitlab_intr_nopass
+          name: home-oleg-ssh-majordomo-gitlab-private-key
+        - mountPath: /home/oleg/.ssh/id_rsa_gitlab_intr_nopass.pub
+          name: home-oleg-ssh-majordomo-gitlab-public-key
+        - mountPath: /home/oleg/.ssh/id_rsa_gitlab
+          name: home-oleg-ssh-gitlab-com-private-key
+        - mountPath: /home/oleg/.ssh/id_rsa_gitlab.pub
+          name: home-oleg-ssh-gitlab-com-public-key
+        - mountPath: /home/oleg/.ssh/known_hosts
+          name: home-oleg-ssh-known-hosts
+        - mountPath: /home/oleg/.bash_history
+          name: home-oleg-bash-history
+        - mountPath: /root/.bash_history
+          name: root-bash-history
+        - mountPath: /home/oleg/src
+          name: home-oleg-src
+        - mountPath: /home/oleg/.local/share/chezmoi
+          name: home-oleg-local-share-chezmoi
+        - mountPath: /srv
+          name: srv
+        - mountPath: /home/oleg/.config/qBittorrent
+          name: home-oleg-config-qbittorrent
+        - mountPath: /home/oleg/.local/share/qBittorrent
+          name: home-oleg-dot-local-share-qbittorrent
+        - mountPath: /mnt/qbittorrent-incomplete
+          name: qbittorrent-incomplete
+        - mountPath: /var/log
+          name: guix-var-log
+        - mountPath: /home/oleg/.local/var/log
+          name: guix-home-oleg-local-var-log
+        - mountPath: /home/oleg/.docker/config.json
+          name: docker-configuration
+          readOnly: true
 
       - name: nixos
         image: harbor.home.wugi.info/library/nixos-systemd-taskexecutor:e9222a59
