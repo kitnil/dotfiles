@@ -374,7 +374,7 @@ rm -f /home/oleg/.gnupg/gpg-agent.conf /home/oleg/.gnupg/gpg.conf`,
 					Name: "guix-home-oleg-local-var-log",
 					VolumeSource: corev1.VolumeSource{
 						EmptyDir: &corev1.EmptyDirVolumeSource{
-							Medium:    corev1.StorageMediumMemory,
+							Medium:    corev1.StorageMediumDefault,
 							SizeLimit: &guixRunQuantity,
 						},
 					},
@@ -510,7 +510,7 @@ fi
 					Name: "nixos-var-log",
 					VolumeSource: corev1.VolumeSource{
 						EmptyDir: &corev1.EmptyDirVolumeSource{
-							Medium:    corev1.StorageMediumMemory,
+							Medium:    corev1.StorageMediumDefault,
 							SizeLimit: &guixRunQuantity,
 						},
 					},
@@ -633,7 +633,7 @@ fi
 					Name: "archlinux-var-log",
 					VolumeSource: corev1.VolumeSource{
 						EmptyDir: &corev1.EmptyDirVolumeSource{
-							Medium:    corev1.StorageMediumMemory,
+							Medium:    corev1.StorageMediumDefault,
 							SizeLimit: &guixRunQuantity,
 						},
 					},
@@ -744,7 +744,7 @@ fi
 					Name: "gentoo-var-log",
 					VolumeSource: corev1.VolumeSource{
 						EmptyDir: &corev1.EmptyDirVolumeSource{
-							Medium:    corev1.StorageMediumMemory,
+							Medium:    corev1.StorageMediumDefault,
 							SizeLimit: &guixRunQuantity,
 						},
 					},
@@ -847,7 +847,7 @@ fi
 					Name: "kali-rolling-var-log",
 					VolumeSource: corev1.VolumeSource{
 						EmptyDir: &corev1.EmptyDirVolumeSource{
-							Medium:    corev1.StorageMediumMemory,
+							Medium:    corev1.StorageMediumDefault,
 							SizeLimit: &guixRunQuantity,
 						},
 					},
