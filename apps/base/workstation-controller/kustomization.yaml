@@ -3,5 +3,6 @@ kind: Kustomization
 namespace: workstation-controller-system
 resources:
 - crd
+- rbac
 - manager
 
