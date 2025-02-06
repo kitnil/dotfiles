@@ -76,8 +76,7 @@ configure:
 dotfiles/guile/ssh.txt: dotfiles/guile/ssh.scm
 	guile dotfiles/guile/ssh.scm > dotfiles/guile/ssh.txt
 
-.PHONY:
-decrypt:
+dotfiles/guixsd/modules/home/config/openssh.scm.gpg:
 	gpg --quiet --decrypt dotfiles/guixsd/modules/home/config/openssh.scm.gpg > dotfiles/guixsd/modules/home/config/openssh.scm
 
 .PHONY: dotfiles/scripts/nix-ssh-known-hosts-to-file.scm
@@ -127,7 +126,7 @@ dotfiles/mjru/intr.nix:
 	dotfiles/mjru/intr.nix > dotfiles/mjru/intr.json
 
 .PHONY: install
-install: decrypt dotfiles/guixsd/machines.scm dotfiles/nix/nix.conf dotfiles/scripts/nix-ssh-known-hosts-to-file.scm
+install: dotfiles/guixsd/modules/home/config/openssh.scm.gpg dotfiles/guixsd/machines.scm dotfiles/nix/nix.conf dotfiles/scripts/nix-ssh-known-hosts-to-file.scm
 	dot_local/bin/executable_gpg-unlock > /dev/null
 	update-desktop-database $(HOME)/.local/share/applications
 	mkdir -p $(HOME)/.config/mpv/scripts
@@ -319,7 +318,7 @@ isc-dhcp:
 
 container_registry=harbor.home.wugi.info
 .ONESHELL:
-guix-image-workstation: decrypt
+guix-image-workstation: dotfiles/guixsd/modules/home/config/openssh.scm.gpg
 	set -o nounset -o errexit -o pipefail -o xtrace
 	commit_8=$$(git rev-parse HEAD | cut -c -8)
 	container=$$(GUILE_LOAD_PATH="dotfiles/guixsd/modules:${GUILE_LOAD_PATH}" GUIX_PACKAGE_PATH="dotfiles/guixsd/modules:${GUIX_PACKAGE_PATH}" guix time-machine --channels=dotfiles/channels-current-guix-image-workstation.scm -- system image --substitute-urls='https://guix.wugi.info https://bordeaux.guix.gnu.org https://substitutes.nonguix.org http://ci.guix.trop.in' --max-layers=100 -t docker --network ~/.local/share/chezmoi/dotfiles/guixsd/guix-image-workstation.scm)
