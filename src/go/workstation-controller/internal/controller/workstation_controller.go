@@ -383,7 +383,7 @@ rm -f /home/oleg/.gnupg/gpg-agent.conf /home/oleg/.gnupg/gpg.conf`,
 					Name: "guix-var-lib-docker",
 					VolumeSource: corev1.VolumeSource{
 						EmptyDir: &corev1.EmptyDirVolumeSource{
-							Medium:    corev1.StorageMediumMemory,
+							Medium:    corev1.StorageMediumDefault,
 							SizeLimit: &nixosVarLibDockerQuantity,
 						},
 					},
