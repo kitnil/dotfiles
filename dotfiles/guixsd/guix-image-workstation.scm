@@ -10,6 +10,7 @@
              (gnu home services shells)
              (gnu home services shells)
              (gnu home services sound)
+             (gnu home services ssh)
              (gnu home services)
              (gnu home)
              (gnu packages admin)
@@ -33,6 +34,7 @@
 (use-modules (services desktop)
              (services docker)
              (home config)
+             (home config openssh)
              (home services audio)
              (home services databases)
              (home services desktop)
@@ -79,7 +81,9 @@
 (define oleg-home
   (home-environment
    (packages (packages-from-manifest "/home/oleg/.local/share/chezmoi/dotfiles/manifests/pc0.scm"))
-   (services (list (service home-dbus-service-type)
+   (services (list (service home-openssh-service-type
+                            %home-openssh-configuration)
+                   (service home-dbus-service-type)
                    (service home-pipewire-service-type)
                    (simple-service 'test-config
                         home-xdg-configuration-files-service-type
