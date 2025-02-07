@@ -43,12 +43,9 @@
     wantedBy = [ "default.target" ];
     overrideStrategy = "asDropin";
     serviceConfig = {
-      ExecStart = builtins.concatStringsSep " " [
-        "${pkgs.utillinux}/sbin/agetty" "agetty"
-        "--login-program" "${pkgs.shadow}/bin/login"
-        "--autologin" "oleg"
-        "--noclear"
-        "%I" "$TERM"
+      ExecStart = [
+        ""  # override upstream default with an empty ExecStart
+        "@${pkgs.utillinux}/sbin/agetty agetty --login-program ${pkgs.shadow}/bin/login --autologin oleg --noclear %I $TERM"
       ];
     };
   };
