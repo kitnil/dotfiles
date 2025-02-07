@@ -50,6 +50,7 @@ in
           exec -a foot ${cfg.package}/bin/foot "$@"
         '';
         Type = "simple";
+        Restart = "always";
       };
     };
   };
