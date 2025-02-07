@@ -29,7 +29,7 @@
              (srfi srfi-1))
 
 (use-package-modules gnupg linux pulseaudio ssh terminals virtualization wm)
-(use-service-modules avahi base desktop docker dbus shepherd)
+(use-service-modules avahi base desktop docker dbus shepherd ssh)
 
 (use-modules (services desktop)
              (services docker)
@@ -282,7 +282,14 @@ program.")))
   (packages (append (list openssh)
                     %base-packages))
 
-  (services (append (list (service guix-home-service-type
+  (services (append (list (service openssh-service-type
+                                   (openssh-configuration
+                                    (x11-forwarding? #t)
+                                    (gateway-ports? 'client)
+                                    (permit-root-login 'prohibit-password)
+                                    (password-authentication? #f)
+                                    (use-pam? #f)))
+                          (service guix-home-service-type
                                    `(("oleg" ,oleg-home)))
                           (dbus-service)
                           (elogind-service)
