@@ -38,10 +38,16 @@
 
   services.journald.console = "/dev/tty";
 
-  services.getty.autologinUser = "oleg";
   systemd.services."getty@tty9" = {
     enable = true;
     wantedBy = [ "default.target" ];
+    overrideStrategy = "asDropin";
+    serviceConfig = {
+      ExecStart = [
+        ""  # override upstream default with an empty ExecStart
+        "@${pkgs.utillinux}/sbin/agetty agetty --login-program ${pkgs.shadow}/bin/login --autologin oleg --noclear %I $TERM"
+      ];
+    };
   };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
