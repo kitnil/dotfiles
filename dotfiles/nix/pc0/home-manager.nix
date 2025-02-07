@@ -22,6 +22,8 @@
     wayvnc
 
     nekoray
+
+    gnumake
   ];
 
   home.file = {
