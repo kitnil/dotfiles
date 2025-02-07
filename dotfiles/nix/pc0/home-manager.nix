@@ -43,13 +43,15 @@
         gitlab.intr ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIJw9vd+rL+MwVdVKSKW32+k6irAULLUFv5dmRUve2nUW
       '';
     };
+    ".gitconfig" = {
+      text = ''
+        [user]
+          email = go.wigust@gmail.com
+          name = Oleg Pykhalov
+      '';
+    };
   };
 
-  programs.git = {
-    enable = true;
-    userName = "Oleg Pykhalov";
-    userEmail = "go.wigust@gmail.com";
-  };
   programs.home-manager.enable = true;
 
   programs.firefox = {
