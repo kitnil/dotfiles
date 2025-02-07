@@ -8,17 +8,3 @@ resources:
 - workstation-kube3
 patchesStrategicMerge:
 - daemonset.yaml
-images:
-- name: harbor.home.wugi.info/library/guix-image-workstation
-  newTag: "7518682c"
-- name: harbor.home.wugi.info/library/nixos-systemd
-  newName: harbor.home.wugi.info/library/nixos-systemd-taskexecutor
-  newTag: 6bf6b140
-- name: harbor.home.wugi.info/library/archlinux-systemd
-  newTag: 08cf15ae
-- name: harbor.home.wugi.info/library/kali-rolling
-  newTag: 171ebd11
-- name: busybox
-  newName: harbor.home.wugi.info/library/busybox
-- name: harbor.home.wugi.info/library/gentoo-systemd
-  newTag: 7c7fe76d
