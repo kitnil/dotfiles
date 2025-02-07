@@ -371,15 +371,6 @@ rm -f /home/oleg/.gnupg/gpg-agent.conf /home/oleg/.gnupg/gpg.conf`,
 					},
 				},
 				{
-					Name: "guix-home-oleg-local-var-log",
-					VolumeSource: corev1.VolumeSource{
-						EmptyDir: &corev1.EmptyDirVolumeSource{
-							Medium:    corev1.StorageMediumDefault,
-							SizeLimit: &guixRunQuantity,
-						},
-					},
-				},
-				{
 					Name: "guix-var-lib-docker",
 					VolumeSource: corev1.VolumeSource{
 						EmptyDir: &corev1.EmptyDirVolumeSource{
