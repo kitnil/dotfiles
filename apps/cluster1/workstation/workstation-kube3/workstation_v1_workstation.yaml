@@ -95,7 +95,7 @@ spec:
           readOnly: true
 
       - name: nixos
-        image: harbor.home.wugi.info/library/nixos-systemd-taskexecutor:1e2782c6
+        image: harbor.home.wugi.info/library/nixos-systemd-taskexecutor:81743e42
         volumeMounts:
         - mountPath: /home/oleg/.mozilla/firefox
           name: home-oleg-mozilla-firefox
