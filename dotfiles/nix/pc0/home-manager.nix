@@ -38,6 +38,11 @@
     };
   };
 
+  programs.git = {
+    enable = true;
+    userName = "Oleg Pykhalov";
+    userEmail = "go.wigust@gmail.com";
+  };
   programs.home-manager.enable = true;
 
   programs.firefox = {
