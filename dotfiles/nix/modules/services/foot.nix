@@ -30,6 +30,8 @@ in
     systemd.user.services.foot = {
       Unit = {
         Description = "Foot terminal";
+        StartLimitBurst = 5;
+        StartLimitIntervalSec = 10;
       };
       Install = {
         WantedBy = [ "default.target" ];
@@ -51,6 +53,7 @@ in
         '';
         Type = "simple";
         Restart = "always";
+        RestartSec = "2s";
       };
     };
   };
