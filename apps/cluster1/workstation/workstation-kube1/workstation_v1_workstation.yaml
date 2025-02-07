@@ -71,8 +71,6 @@ spec:
           name: home-oleg-ssh-gitlab-com-private-key
         - mountPath: /home/oleg/.ssh/id_rsa_gitlab.pub
           name: home-oleg-ssh-gitlab-com-public-key
-        - mountPath: /home/oleg/.ssh/known_hosts
-          name: home-oleg-ssh-known-hosts
         - mountPath: /home/oleg/.bash_history
           name: home-oleg-bash-history
         - mountPath: /root/.bash_history
@@ -116,8 +114,6 @@ spec:
           name: home-oleg-ssh-majordomo-gitlab-public-key
         - mountPath: /home/oleg/src
           name: home-oleg-src
-        - mountPath: /home/oleg/.ssh/known_hosts
-          name: home-oleg-ssh-known-hosts
         - mountPath: /home/oleg/.3T
           name: home-oleg-robo3t
         - mountPath: /home/oleg/.local/share/chezmoi
@@ -202,10 +198,6 @@ spec:
           path: /home/oleg/.ssh/id_rsa_gitlab.pub
           type: File
         name: home-oleg-ssh-gitlab-com-public-key
-      - hostPath:
-          path: /home/oleg/.ssh/known_hosts
-          type: File
-        name: home-oleg-ssh-known-hosts
       - hostPath:
           path: /root/.bash_history
           type: File
