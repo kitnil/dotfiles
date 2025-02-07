@@ -236,7 +236,7 @@ allow-preset-passphrase"))))
 program.")))
 
 (define my-channels
-  (include "/home/oleg/.local/share/chezmoi/dotfiles/channels-guix-guixsd.scm"))
+  (include "/home/oleg/.local/share/chezmoi/dotfiles/channels-current-guix-image-workstation.scm"))
 
 (operating-system
   (host-name "workstation")
