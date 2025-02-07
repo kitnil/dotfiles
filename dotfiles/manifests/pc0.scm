@@ -22,5 +22,6 @@
                 "majordomo.scm"
                 "notebook-packages.scm"
                 "tor-browsers.scm"
-                "python.scm"))
+                "python.scm"
+                "guile.scm"))
          (list manifest-wm)))
