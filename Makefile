@@ -329,5 +329,8 @@ nix-update-inputs:
 	$(MAKE) -C dotfiles/nix/container-systemd dotfiles-home-manager
 	$(MAKE) -C dotfiles/nix/container-systemd-taskexecutor original
 
+container-systemd-taskexecutor:
+	$(MAKE) -C dotfiles/nix/container-systemd-taskexecutor
+
 .PHONY: all
 all: dotfiles/scripts/nix-ssh-known-hosts-to-file.scm
