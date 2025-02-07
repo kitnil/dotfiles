@@ -48,7 +48,6 @@
                "remmina"
                "looking-glass-client"
                "netcat-openbsd"
-               "openssh"
                "clipman"
                "qbittorrent"
                "direnv"
