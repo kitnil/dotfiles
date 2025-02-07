@@ -38,6 +38,7 @@
 
   services.journald.console = "/dev/tty";
 
+  services.getty.autologinUser = "oleg";
   systemd.services."getty@tty9" = {
     enable = true;
     wantedBy = [ "default.target" ];
