@@ -30,6 +30,8 @@ in
     systemd.user.services.wayvnc = {
       Unit = {
         Description = "Wayvnc terminal";
+        StartLimitBurst = 5;
+        StartLimitIntervalSec = 10;
       };
       Install = {
         WantedBy = [ "default.target" ];
@@ -47,6 +49,8 @@ in
           exec -a wayvnc ${cfg.package}/bin/wayvnc "$@"
         '';
         Type = "simple";
+        Restart = "always";
+        RestartSec = "2s";
       };
     };
   };
