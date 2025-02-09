@@ -84,7 +84,7 @@ func (r *WorkstationReconciler) CreateWorkstationPod(ctx context.Context, req ct
 	var HostPathFile corev1.HostPathType = "File"
 	var HostPathSocket corev1.HostPathType = "Socket"
 	var guixShmQuantity resource.Quantity = resource.MustParse("1Gi")
-	var guixTmpQuantity resource.Quantity = resource.MustParse("4Gi")
+	var guixTmpQuantity resource.Quantity = resource.MustParse("16Gi") // Bootstrap requires a lot of disk space.
 	var guixRunQuantity resource.Quantity = resource.MustParse("512M")
 	var nixosVarLibDockerQuantity resource.Quantity = resource.MustParse("16G")
 
