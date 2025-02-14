@@ -340,5 +340,13 @@ nix-update-inputs:
 container-systemd-taskexecutor:
 	$(MAKE) -C dotfiles/nix/container-systemd-taskexecutor
 
+container_registry=harbor.home.wugi.info
+.ONESHELL:
+workstation-controller:
+	set -o nounset -o errexit -o pipefail -o xtrace
+	commit_8=$$(git rev-parse HEAD | cut -c -8)
+	$(MAKE) -C src/go/workstation-controller docker-build IMG=$(container_registry)/library/$@:$$commit_8
+	$(MAKE) -C src/go/workstation-controller docker-push IMG=$(container_registry)/library/$@:$$commit_8
+
 .PHONY: all
 all: dotfiles/scripts/nix-ssh-known-hosts-to-file.scm
