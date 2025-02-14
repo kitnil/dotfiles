@@ -341,7 +341,7 @@ rm -f /home/oleg/.gnupg/gpg-agent.conf /home/oleg/.gnupg/gpg.conf`,
 					Name: "guix-tmp",
 					VolumeSource: corev1.VolumeSource{
 						EmptyDir: &corev1.EmptyDirVolumeSource{
-							Medium:    corev1.StorageMediumMemory,
+							Medium:    corev1.StorageMediumDefault,
 							SizeLimit: &guixTmpQuantity,
 						},
 					},
@@ -606,7 +606,7 @@ fi
 					Name: "archlinux-tmp",
 					VolumeSource: corev1.VolumeSource{
 						EmptyDir: &corev1.EmptyDirVolumeSource{
-							Medium:    corev1.StorageMediumMemory,
+							Medium:    corev1.StorageMediumDefault,
 							SizeLimit: &guixTmpQuantity,
 						},
 					},
@@ -717,7 +717,7 @@ fi
 					Name: "gentoo-tmp",
 					VolumeSource: corev1.VolumeSource{
 						EmptyDir: &corev1.EmptyDirVolumeSource{
-							Medium:    corev1.StorageMediumMemory,
+							Medium:    corev1.StorageMediumDefault,
 							SizeLimit: &guixTmpQuantity,
 						},
 					},
@@ -829,7 +829,7 @@ fi
 					Name: "kali-rolling-tmp",
 					VolumeSource: corev1.VolumeSource{
 						EmptyDir: &corev1.EmptyDirVolumeSource{
-							Medium:    corev1.StorageMediumMemory,
+							Medium:    corev1.StorageMediumDefault,
 							SizeLimit: &guixTmpQuantity,
 						},
 					},
