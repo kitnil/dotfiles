@@ -318,6 +318,14 @@ isc-dhcp:
 
 container_registry=harbor.home.wugi.info
 .ONESHELL:
+mumble:
+	set -o nounset -o errexit -o pipefail -o xtrace
+	commit_8=$$(git rev-parse HEAD | cut -c -8)
+	container=$$(guix time-machine --channels=dotfiles/channels-guix-mumble.scm -- system image --max-layers=100 -t docker --network dotfiles/guixsd/docker-image-mumble.scm)
+	skopeo copy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
+
+container_registry=harbor.home.wugi.info
+.ONESHELL:
 guix-image-workstation: dotfiles/guixsd/modules/home/config/openssh.scm.gpg
 	set -o nounset -o errexit -o pipefail -o xtrace
 	commit_8=$$(git rev-parse HEAD | cut -c -8)
