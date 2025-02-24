@@ -136,9 +136,14 @@ install_vscode()
 
 install_vscode_extensions()
 {
-    sudo -u oleg -i <<'EOF'
-code --install-extension golang.go
-EOF
+    local extensions=(
+        golang.go
+        sumneko.lua
+    )
+    for extension in "${extensions[@]}"
+    do
+        sudo -u oleg -i code --install-extension "$extension"
+    done
 }
 
 install_kubebuilder()
