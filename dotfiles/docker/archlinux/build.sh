@@ -161,6 +161,14 @@ install_docker()
     gpasswd -a oleg docker
 }
 
+packages+=(
+    lua51-luautf8
+)
+install_pob()
+{
+    yay --noconfirm -S path-of-building-community-git
+}
+
 main()
 {
     sed -i '/NoExtract/d' /etc/pacman.conf
@@ -179,6 +187,7 @@ main()
     install_vscode_extensions
     install_kubebuilder
     install_kind
+    install_pob
 }
 
 main "$@"
