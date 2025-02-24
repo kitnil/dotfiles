@@ -86,7 +86,7 @@ func (r *WorkstationReconciler) CreateWorkstationPod(ctx context.Context, req ct
 	var guixShmQuantity resource.Quantity = resource.MustParse("1Gi")
 	var guixTmpQuantity resource.Quantity = resource.MustParse("32Gi")
 	var guixRunQuantity resource.Quantity = resource.MustParse("512M")
-	var nixosVarLibDockerQuantity resource.Quantity = resource.MustParse("16G")
+	var nixosVarLibDockerQuantity resource.Quantity = resource.MustParse("32G")
 
 	var bashCommand string
 
