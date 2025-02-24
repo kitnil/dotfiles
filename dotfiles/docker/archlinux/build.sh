@@ -116,26 +116,35 @@ install_socialstream()
     chmod 555 socialstream
 }
 
-install_yay()
+install_aura()
 {
-    git clone https://aur.archlinux.org/yay-bin.git /usr/local/src/yay-bin
-    chown -R oleg: /usr/local/src/yay-bin
-    sudo -u oleg bash -c 'cd /usr/local/src/yay-bin || exit 1; makepkg --noconfirm -si'
+    git clone https://aur.archlinux.org/aura-bin.git /usr/local/src/aura-bin
+    chown -R oleg: /usr/local/src/aura-bin
+    sudo -u oleg bash -c 'cd /usr/local/src/aura-bin || exit 1; makepkg --noconfirm -si'
+}
+
+aur()
+{
+    case "$1" in
+        install)
+            aura --noconfirm -A "$2"
+            ;;
+    esac
 }
 
 install_idea()
 {
-    yay --noconfirm -S intellij-idea-community-edition
+    aur install intellij-idea-community-edition
 }
 
 install_pycharm()
 {
-    yay --noconfirm -S pycharm-community-edition
+    aur install pycharm-community-edition
 }
 
 install_vscode()
 {
-    yay --noconfirm -S vscode
+    aur install vscode
 }
 
 install_vscode_extensions()
@@ -175,7 +184,7 @@ packages+=(
 )
 install_pob()
 {
-    yay --noconfirm -S path-of-building-community-git
+    aur install path-of-building-community-git
 }
 
 main()
@@ -189,7 +198,7 @@ main()
 
     install_docker
     install_socialstream
-    install_yay
+    install_aura
     install_idea
     install_pycharm
     install_vscode
