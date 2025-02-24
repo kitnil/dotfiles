@@ -92,17 +92,17 @@ EndSection
   (kernel-arguments '("modprobe.blacklist=pcspkr,snd_pcsp"
 
                       ;; <https://wiki.archlinux.org/index.php/PCI_passthrough_via_OVMF#Setting_up_IOMMU>
-                      "iommu=pt"
+                      ;; "iommu=pt"
 
                       "kvm.ignore_msrs=1"
-                      "vfio-pci.ids=1002:1478,1002:1479,1002:7340,1002:ab38"
+                      ;; "vfio-pci.ids=1002:1478,1002:1479,1002:7340,1002:ab38"
 
                       ;; (#934) · Issues · drm / amd · GitLab
                       ;; <https://gitlab.freedesktop.org/drm/amd/-/issues/934>
-                      "amdgpu.audio=0"
-                      "amdgpu.gpu_recovery=1"
-                      "amdgpu.noretry=0"
-                      "amdgpu.ppfeaturemask=0xfffffffb"
+                      ;; "amdgpu.audio=0"
+                      ;; "amdgpu.gpu_recovery=1"
+                      ;; "amdgpu.noretry=0"
+                      ;; "amdgpu.ppfeaturemask=0xfffffffb"
 
                       ;; https://gitlab.freedesktop.org/drm/amd/-/issues/2220
                       ;; [amdgpu]] *ERROR* ring sdma0 timeout
@@ -134,7 +134,7 @@ EndSection
                       ;;
                       ;; I assume more CPU utilization as a side effect and
                       ;; maybe slower rendering.
-                      "amdgpu.vm_update_mode=3"
+                      ;; "amdgpu.vm_update_mode=3"
 
                       ;; Enable LUKS TRIM/DISCARD pass-through.
                       "rd.luks.options=discard"))
