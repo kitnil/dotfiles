@@ -66,6 +66,10 @@ packages+=(
     kubectl
 )
 
+packages+=(
+    openssh
+)
+
 base_system()
 {
     groups=(
