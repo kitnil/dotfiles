@@ -97,7 +97,7 @@ spec:
           name: var-lib-workstation-guix
 
       - name: nixos
-        image: harbor.home.wugi.info/library/nixos-systemd-taskexecutor:4164d5e5
+        image: harbor.home.wugi.info/library/nixos-systemd-taskexecutor:b24d8cd7
         volumeMounts:
         - mountPath: /home/oleg/.mozilla/firefox
           name: home-oleg-mozilla-firefox
