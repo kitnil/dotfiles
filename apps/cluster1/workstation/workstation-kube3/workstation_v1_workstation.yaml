@@ -265,13 +265,13 @@ spec:
         name: home-oleg-bash-history
       - hostPath:
           path: /var/lib/workstation/guix
-          type: File
+          type: Directory
         name: var-lib-workstation-guix
       - hostPath:
           path: /var/lib/workstation/nixos
-          type: File
+          type: Directory
         name: var-lib-workstation-nixos
       - hostPath:
           path: /var/lib/workstation/archlinux
-          type: File
+          type: Directory
         name: var-lib-workstation-archlinux
