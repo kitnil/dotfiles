@@ -42,7 +42,7 @@ spec:
         operator: Exists
       containers:
       - name: guix
-        image: harbor.home.wugi.info/library/guix-image-workstation:f5e708eb
+        image: harbor.home.wugi.info/library/guix-image-workstation:e5706265
         volumeMounts:
         - mountPath: /home/oleg/.cache/ihs
           name: home-oleg-dot-cache-ihs
@@ -93,11 +93,9 @@ spec:
         - mountPath: /home/oleg/.docker/config.json
           name: docker-configuration
           readOnly: true
-        - mountPath: /mnt/rootfs
-          name: var-lib-workstation-guix
 
       - name: nixos
-        image: harbor.home.wugi.info/library/nixos-systemd-taskexecutor:b24d8cd7
+        image: harbor.home.wugi.info/library/nixos-systemd-taskexecutor:4164d5e5
         volumeMounts:
         - mountPath: /home/oleg/.mozilla/firefox
           name: home-oleg-mozilla-firefox
@@ -123,11 +121,9 @@ spec:
           name: home-oleg-local-share-chezmoi
         - mountPath: /home/oleg/.docker/config.json
           name: docker-configuration
-        - mountPath: /mnt/rootfs
-          name: var-lib-workstation-nixos
 
       - name: archlinux
-        image: harbor.home.wugi.info/library/archlinux-systemd:2d37a844
+        image: harbor.home.wugi.info/library/archlinux-systemd:1801bab3
         volumeMounts:
         - mountPath: /home/oleg/.bash_history
           name: home-oleg-bash-history
@@ -139,8 +135,6 @@ spec:
           name: home-oleg-src
         - mountPath: /home/oleg/.local/share/chezmoi
           name: home-oleg-local-share-chezmoi
-        - mountPath: /mnt/rootfs
-          name: var-lib-workstation-archlinux
 
       volumes:
       - hostPath:
@@ -263,15 +257,3 @@ spec:
           path: /home/oleg/.bash_history
           type: File
         name: home-oleg-bash-history
-      - hostPath:
-          path: /var/lib/workstation/guix
-          type: Directory
-        name: var-lib-workstation-guix
-      - hostPath:
-          path: /var/lib/workstation/nixos
-          type: Directory
-        name: var-lib-workstation-nixos
-      - hostPath:
-          path: /var/lib/workstation/archlinux
-          type: Directory
-        name: var-lib-workstation-archlinux
