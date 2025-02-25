@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+set -o nounset -o errexit -o pipefail -o xtrace
+
+PATH=/gnu/store/*/*bin
+export PATH
+
+# Keyboard and mouse access are essential components for efficient operation
+# within the Sway window manager environment. Running 'udevadm trigger' will
+# grant access to the keyboard and mouse. You can verify their addition by
+# using 'libinput list-devices'."
+mount -o remount,rw /sys
+
+# umount /sys/fs/cgroup
+
+if (shopt -s nullglob; files=(/mnt/rootfs/*); [[ ${#files[@]} -eq 0 ]])
+then
+    rsync --one-file-system --sparse --archive --hard-links --acls --xattrs --numeric-ids / /mnt/rootfs/
+else
+    printf "\n/mnt/rootfs/ is not empty directory, skipping syncing files from '/' to '/mnt/rootfs/'." 1>&2
+fi
+mapfile -t targets < <(tail -n+1 "/proc/$$/mounts" | cut -d ' ' -f 2)
+for target in "${targets[@]}"
+do
+    mount -o X-mount.mkdir --move "$target" "/mnt/rootfs${target}"
+done
+exec -a /sbin/init chroot /mnt/rootfs "$@"
