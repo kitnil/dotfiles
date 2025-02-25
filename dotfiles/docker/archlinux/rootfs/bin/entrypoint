@@ -31,4 +31,20 @@ mount -o remount,rw /sys
 umount /sys/fs/cgroup
 mount -t cgroup2 -o rw,relatime,nsdelegate,memory_recursiveprot cgroup2 /sys/fs/cgroup
 
-exec /sbin/init
+if [[ -e /mnt/rootfs ]]
+then
+    if (shopt -s nullglob; files=(/mnt/rootfs/*); [[ ${#files[@]} -eq 0 ]])
+    then
+        rsync --one-file-system --sparse --archive --hard-links --acls --xattrs --numeric-ids / /mnt/rootfs/
+    else
+        printf "\n/mnt/rootfs/ is not empty directory, skipping syncing files from '/' to '/mnt/rootfs/'." 1>&2
+    fi
+    mapfile -t targets < <(tail -n+1 "/proc/$$/mounts" | cut -d ' ' -f 2)
+    for target in "${targets[@]}"
+    do
+        mount -o X-mount.mkdir --move "$target" "/mnt/rootfs${target}"
+    done
+    exec -a /sbin/init chroot /mnt/rootfs /sbin/init
+else
+    exec /sbin/init
+fi
