@@ -44,7 +44,7 @@ then
         mapfile -t targets < <(tail -n+2 "/proc/$$/mounts" | cut -d ' ' -f 2)
         for target in "${targets[@]}"
         do
-            mount -o X-mount.mkdir --move "$target" "/mnt/rootfs${target}"
+            mount -o X-mount.mkdir --bind "$target" "/mnt/rootfs${target}"
         done
         exec -a /sbin/init chroot /mnt/rootfs /sbin/init
     else
