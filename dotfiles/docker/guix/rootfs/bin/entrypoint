@@ -19,10 +19,9 @@ then
 else
     printf "\n/mnt/rootfs/ is not empty directory, skipping syncing files from '/' to '/mnt/rootfs/'." 1>&2
 fi
-mapfile -t targets < <(tail -n+2 "/proc/$$/mounts" | cut -d ' ' -f 2 | grep -v /dev/pts)
+mapfile -t targets < <(tail -n+2 "/proc/$$/mounts" | cut -d ' ' -f 2 | sort --reverse)
 for target in "${targets[@]}"
 do
     mount -o X-mount.mkdir --move "$target" "/mnt/rootfs${target}"
 done
-mount -o X-mount.mkdir --move /dev/pts "/mnt/rootfs/dev/pts"
 exec -a /sbin/init chroot /mnt/rootfs "$@"
