@@ -5,11 +5,11 @@ set -o nounset -o errexit -o pipefail -o xtrace
 entrypoint()
 {
     docker inspect "$IMG" \
-        | jq --join-output --raw-output '.[0].Config.Entrypoint | .[0], ", ", .[1]'
+        | jq --join-output --raw-output '.[0].Config.Entrypoint | .[0], " ", .[1]'
 }
 
 cat > Dockerfile <<EOF
 FROM $IMG
 COPY rootfs/bin/entrypoint /bin/entrypoint
-ENTRYPOINT [ /bin/entrypoint, $(entrypoint) ]
+ENTRYPOINT [ "/bin/entrypoint $(entrypoint)" ]
 EOF
