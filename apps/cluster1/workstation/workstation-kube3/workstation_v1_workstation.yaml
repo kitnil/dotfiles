@@ -127,7 +127,7 @@ spec:
           name: var-lib-workstation-nixos
 
       - name: archlinux
-        image: harbor.home.wugi.info/library/archlinux-systemd:ccae2855
+        image: harbor.home.wugi.info/library/archlinux-systemd:2d37a844
         volumeMounts:
         - mountPath: /home/oleg/.bash_history
           name: home-oleg-bash-history
