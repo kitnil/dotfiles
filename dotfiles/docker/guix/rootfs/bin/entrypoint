@@ -2,7 +2,7 @@
 
 set -o nounset -o errexit -o pipefail -o xtrace
 
-PATH="$(printf "%s:/bin" /gnu/store/*/*bin)"
+PATH="$(printf "%s:" /gnu/store/*/*bin)/bin"
 export PATH
 
 # Keyboard and mouse access are essential components for efficient operation
