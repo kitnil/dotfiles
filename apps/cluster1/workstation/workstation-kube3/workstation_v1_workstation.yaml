@@ -42,7 +42,7 @@ spec:
         operator: Exists
       containers:
       - name: guix
-        image: harbor.home.wugi.info/library/guix-image-workstation:e5706265
+        image: pause
         volumeMounts:
         - mountPath: /bin
           name: var-lib-workstation-guix-bin
