@@ -93,6 +93,8 @@ spec:
         - mountPath: /home/oleg/.docker/config.json
           name: docker-configuration
           readOnly: true
+        - mountPath: /mnt/rootfs
+          name: var-lib-workstation-guix
 
       - name: nixos
         image: harbor.home.wugi.info/library/nixos-systemd-taskexecutor:4164d5e5
@@ -121,6 +123,8 @@ spec:
           name: home-oleg-local-share-chezmoi
         - mountPath: /home/oleg/.docker/config.json
           name: docker-configuration
+        - mountPath: /mnt/rootfs
+          name: var-lib-workstation-nixos
 
       - name: archlinux
         image: harbor.home.wugi.info/library/archlinux-systemd:1801bab3
@@ -135,6 +139,8 @@ spec:
           name: home-oleg-src
         - mountPath: /home/oleg/.local/share/chezmoi
           name: home-oleg-local-share-chezmoi
+        - mountPath: /mnt/rootfs
+          name: var-lib-workstation-archlinux
 
       volumes:
       - hostPath:
@@ -257,3 +263,15 @@ spec:
           path: /home/oleg/.bash_history
           type: File
         name: home-oleg-bash-history
+      - hostPath:
+          path: /var/lib/workstation/guix
+          type: File
+        name: var-lib-workstation-guix
+      - hostPath:
+          path: /var/lib/workstation/nixos
+          type: File
+        name: var-lib-workstation-nixos
+      - hostPath:
+          path: /var/lib/workstation/archlinux
+          type: File
+        name: var-lib-workstation-archlinux
