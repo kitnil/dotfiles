@@ -41,7 +41,7 @@ then
         else
             printf "\n/mnt/rootfs/ is not empty directory, skipping syncing files from '/' to '/mnt/rootfs/'." 1>&2
         fi
-        mapfile -t targets < <(tail -n+1 "/proc/$$/mounts" | cut -d ' ' -f 2)
+        mapfile -t targets < <(tail -n+2 "/proc/$$/mounts" | cut -d ' ' -f 2)
         for target in "${targets[@]}"
         do
             mount -o X-mount.mkdir --move "$target" "/mnt/rootfs${target}"
