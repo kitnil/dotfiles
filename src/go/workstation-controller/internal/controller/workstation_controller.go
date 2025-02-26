@@ -133,6 +133,7 @@ func (r *WorkstationReconciler) CreateWorkstationPod(ctx context.Context, req ct
 		},
 		Spec: corev1.PodSpec{
 			AutomountServiceAccountToken: &[]bool{false}[0],
+			RestartPolicy:                corev1.RestartPolicyNever,
 			Affinity:                     workstation.Spec.Template.Spec.Affinity,
 			Tolerations:                  workstation.Spec.Template.Spec.Tolerations,
 			InitContainers: []corev1.Container{
