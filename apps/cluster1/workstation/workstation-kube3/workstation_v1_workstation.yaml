@@ -42,18 +42,8 @@ spec:
         operator: Exists
       containers:
       - name: guix
-        image: pause
+        image: harbor.home.wugi.info/library/guix-image-workstation:e5706265
         volumeMounts:
-        - mountPath: /bin
-          name: var-lib-workstation-guix-bin
-        - mountPath: /etc
-          name: var-lib-workstation-guix-etc
-        - mountPath: /gnu
-          name: var-lib-workstation-guix-gnu
-        - mountPath: /usr
-          name: var-lib-workstation-guix-usr
-        - mountPath: /var
-          name: var-lib-workstation-guix-var
         - mountPath: /home/oleg/.cache/ihs
           name: home-oleg-dot-cache-ihs
         - mountPath: /home/oleg/.config/obs-studio
@@ -267,63 +257,3 @@ spec:
           path: /home/oleg/.bash_history
           type: File
         name: home-oleg-bash-history
-      - hostPath:
-          path: /var/lib/workstation/guix/bin
-          type: Directory
-        name: var-lib-workstation-guix-bin
-      - hostPath:
-          path: /var/lib/workstation/guix/dev
-          type: Directory
-        name: var-lib-workstation-guix-dev
-      - hostPath:
-          path: /var/lib/workstation/guix/etc
-          type: Directory
-        name: var-lib-workstation-guix-etc
-      - hostPath:
-          path: /var/lib/workstation/guix/gnu
-          type: Directory
-        name: var-lib-workstation-guix-gnu
-      - hostPath:
-          path: /var/lib/workstation/guix/home
-          type: Directory
-        name: var-lib-workstation-guix-home
-      - hostPath:
-          path: /var/lib/workstation/guix/mnt
-          type: Directory
-        name: var-lib-workstation-guix-mnt
-      - hostPath:
-          path: /var/lib/workstation/guix/opt
-          type: Directory
-        name: var-lib-workstation-guix-opt
-      - hostPath:
-          path: /var/lib/workstation/guix/proc
-          type: Directory
-        name: var-lib-workstation-guix-proc
-      - hostPath:
-          path: /var/lib/workstation/guix/root
-          type: Directory
-        name: var-lib-workstation-guix-root
-      - hostPath:
-          path: /var/lib/workstation/guix/run
-          type: Directory
-        name: var-lib-workstation-guix-run
-      - hostPath:
-          path: /var/lib/workstation/guix/srv
-          type: Directory
-        name: var-lib-workstation-guix-srv
-      - hostPath:
-          path: /var/lib/workstation/guix/sys
-          type: Directory
-        name: var-lib-workstation-guix-sys
-      - hostPath:
-          path: /var/lib/workstation/guix/tmp
-          type: Directory
-        name: var-lib-workstation-guix-tmp
-      - hostPath:
-          path: /var/lib/workstation/guix/usr
-          type: Directory
-        name: var-lib-workstation-guix-usr
-      - hostPath:
-          path: /var/lib/workstation/guix/var
-          type: Directory
-        name: var-lib-workstation-guix-var
