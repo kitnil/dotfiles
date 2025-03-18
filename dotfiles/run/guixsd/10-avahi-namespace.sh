@@ -2,7 +2,7 @@
 
 set -o nounset -o errexit -o pipefail -o xtrace
 
-NAMESPACE="$(./11-guix-workstation-get-namespace.sh)"
+NAMESPACE="$(/home/oleg/.local/share/chezmoi/dotfiles/run/guixsd/11-guix-workstation-get-namespace.sh)"
 
 ip link add macvlan2 link br0 type macvlan mode bridge
 ip link set macvlan2 netns "$NAMESPACE"
