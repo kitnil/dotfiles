@@ -158,7 +158,7 @@
             rycee-nur-expressions.packages.${system}.libredirect;
           alejandra =
             (kamadorueda-alejandra.packages.${system}).alejandra-x86_64-unknown-linux-gnu;
-          inherit (nixpkgs-home-manager.url) robo3t;
+          inherit (nixpkgs-home-manager.legacyPackages.${system}) robo3t;
         });
 
       devShell.${system} = with pkgs;
