@@ -178,8 +178,8 @@
   services.vendir.enable = true;
 
   xresources.properties = {
-    Xcursor.theme = "Adwaita";
-    Xcursor.size = "48";
+    "Xcursor.theme" = "Adwaita";
+    "Xcursor.size" = "48";
   };
 
   programs.alacritty = {
