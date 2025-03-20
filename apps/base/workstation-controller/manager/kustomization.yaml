@@ -5,4 +5,4 @@ kind: Kustomization
 images:
 - name: controller
   newName: harbor.home.wugi.info/library/workstation-controller
-  newTag: "726ce3c0"
+  newTag: "6ef5bad7"
