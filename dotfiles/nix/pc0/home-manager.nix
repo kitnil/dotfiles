@@ -177,10 +177,9 @@
   services.wayvnc.enable = true;
   services.vendir.enable = true;
 
-  home.pointerCursor.x11 = {
-    enable = true;
-    name = "Adwaita";
-    size = 48;
+  xresources.properties = {
+    Xcursor.theme = "Adwaita";
+    Xcursor.size = "48";
   };
 
   programs.alacritty = {
