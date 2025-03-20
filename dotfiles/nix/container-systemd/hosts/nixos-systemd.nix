@@ -37,6 +37,7 @@
   services.openssh.permitRootLogin = "yes";
 
   services.journald.console = "/dev/tty";
+  services.journald.extraConfig = "SystemMaxUse=100M";
 
   systemd.services."getty@tty9" = {
     enable = true;
