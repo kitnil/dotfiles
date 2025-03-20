@@ -23,6 +23,8 @@
     nekoray
 
     gnumake
+
+    strace
   ];
 
   home.file = {
