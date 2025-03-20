@@ -130,6 +130,10 @@ func (r *WorkstationReconciler) CreateWorkstationPod(ctx context.Context, req ct
 					Kind:    "Workstation",
 				}),
 			},
+			Labels: map[string]string{
+				"app.kubernetes.io/name":       req.NamespacedName.Name,
+				"app.kubernetes.io/created-by": req.NamespacedName.Name,
+			},
 		},
 		Spec: corev1.PodSpec{
 			AutomountServiceAccountToken: &[]bool{false}[0],
