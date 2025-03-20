@@ -1,13 +1,14 @@
 apiVersion: rbac.authorization.k8s.io/v1
-kind: ClusterRoleBinding
+kind: RoleBinding
 metadata:
   labels:
     app.kubernetes.io/name: workstation-controller
     app.kubernetes.io/managed-by: kustomize
   name: manager-rolebinding
+  namespace: workstation
 roleRef:
   apiGroup: rbac.authorization.k8s.io
-  kind: ClusterRole
+  kind: Role
   name: manager-role
 subjects:
 - kind: ServiceAccount
