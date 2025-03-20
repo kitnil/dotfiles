@@ -865,6 +865,11 @@ fi
 		if err != nil {
 			log.Log.Error(err, "Failed to create pod")
 		}
+	} else {
+		err = r.Update(ctx, pod)
+		if err != nil {
+			log.Log.Error(err, "Failed to update pod")
+		}
 	}
 }
 
@@ -905,6 +910,11 @@ func (r *WorkstationReconciler) CreateWorkstationService(ctx context.Context, re
 		err = r.Create(ctx, service)
 		if err != nil {
 			log.Log.Error(err, "Failed to create service")
+		}
+	} else {
+		err = r.Update(ctx, service)
+		if err != nil {
+			log.Log.Error(err, "Failed to update service")
 		}
 	}
 }
