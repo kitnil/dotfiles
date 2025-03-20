@@ -156,6 +156,11 @@
           isDefault = false;
           id = 4;
         };
+        tor = nix // {
+          name = "tor";
+          id = 5;
+          isDefault = false;
+        };
       };
   };
 
