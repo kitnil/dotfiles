@@ -3,8 +3,6 @@
 # set -e
 set -x
 
-/home/oleg/bin/nerdctl-guix-exec /bin/sh -lc 'export SWAYSOCK="$(echo /run/user/1000/sway-ipc*sock)"; /home/oleg/.guix-home/profile/bin/swaymsg workspace 2'
-
 /home/oleg/bin/nerdctl-remmina &
 sleep 2
 
