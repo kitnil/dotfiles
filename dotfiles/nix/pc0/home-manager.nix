@@ -182,6 +182,14 @@
     "Xcursor.size" = "48";
   };
 
+  gtk = {
+    enable = true;
+    theme = {
+      package = pkgs.gnome.gnome-themes-extra;
+      name = "Adwaita-dark";
+    };
+  };
+
   programs.alacritty = {
     enable = true;
     settings = {
