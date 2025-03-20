@@ -885,6 +885,10 @@ func (r *WorkstationReconciler) CreateWorkstationService(ctx context.Context, re
 					Port:     22,
 				},
 			},
+			Selector: map[string]string{
+				"app.kubernetes.io/name":       req.NamespacedName.Name,
+				"app.kubernetes.io/created-by": req.NamespacedName.Name,
+			},
 		},
 	}
 	err := r.Get(ctx, types.NamespacedName{
