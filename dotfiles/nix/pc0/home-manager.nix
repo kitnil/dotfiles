@@ -11,7 +11,6 @@
     OVMF.fd # UEFI for virtual machines in libvirt
 
     nixGLIntel
-    alacritty
 
     robo3t
 
@@ -182,6 +181,18 @@
     enable = true;
     name = "Adwaita";
     size = 48;
+  };
+
+  programs.alacritty = {
+    enable = true;
+    settings = {
+      env = {
+        TERM = "xterm-256color";
+      };
+      font = {
+        size = 13;
+      };
+    };
   };
 
   # The home.stateVersion option no longer has a default value. It used to
