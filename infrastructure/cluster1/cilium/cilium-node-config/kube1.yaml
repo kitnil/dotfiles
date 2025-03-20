@@ -8,6 +8,6 @@ spec:
     matchLabels:
       kubernetes.io/hostname: kube1
   defaults:
-    devices: "br0 enp34s0 tapvpn tapvpn1 br154 br154.154"
-    direct-routing-device: "br0,tapvpn,tapvpn1,enp34s0,br154,br154.154"
+    devices: "br0 enp34s0 tapvpn tapvpn1 br154 br154.154 runc0"
+    direct-routing-device: "br0,tapvpn,tapvpn1,enp34s0,br154,br154.154,runc0"
     l2-pod-announcements-interface: "br154.154"
