@@ -79,7 +79,7 @@
   # Make `nix repl '<nixpkgs>'` use the same nixpkgs as the one used by this flake.
   environment.etc."nix/inputs/nixpkgs".source = "${nixpkgs}";
   nix = {
-    package = pkgs.nixFlakes;
+    package = pkgs.nixStable;
     extraOptions = "experimental-features = nix-command flakes";
 
     # make `nix run nixpkgs#nixpkgs` use the same nixpkgs as the one used by this flake.

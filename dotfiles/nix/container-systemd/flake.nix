@@ -10,11 +10,11 @@
     flake-utils.lib.eachDefaultSystem (system: {
       devShell = with nixpkgs.legacyPackages."${system}"; mkShell {
         buildInputs = [
-          nixFlakes
+          nixStable
           nixos-install-tools
         ];
         shellHook = ''
-          . ${nixFlakes}/share/bash-completion/completions/nix
+          . ${nixStable}/share/bash-completion/completions/nix
           export LANG=C
         '';
       };
