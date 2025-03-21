@@ -56,7 +56,6 @@
                           config = {
                             allowUnfreePredicate = pkg:
                               builtins.elem (nixpkgs.lib.getName pkg) [
-                                "betterttv"
                                 "google-chrome"
                               ];
                             permittedInsecurePackages = [ "qtwebkit-5.212.0-alpha4" ];

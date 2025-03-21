@@ -353,8 +353,6 @@
               overlays = [ nur.overlay flake-utils-plus.overlay self.overlay ];
               inherit system;
               config = {
-                allowUnfreePredicate = pkg:
-                  builtins.elem (lib.getName pkg) [ "betterttv" ];
                 permittedInsecurePackages = [ "qtwebkit-5.212.0-alpha4" ];
               };
             };
