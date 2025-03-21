@@ -2,9 +2,15 @@
   description = "";
 
   inputs = {
-    original.url = "git+file:///home/oleg/.local/share/chezmoi?dir=dotfiles/nix/container-systemd";
-    taskexecutor.url = "git+ssh://gitlab.corp1.majordomo.ru/hms/taskexecutor?ref=staging";
-    ssl-certificates.url = "git+ssh://git@gitlab.intr/office/ssl-certificates";
+    original.url = "git+https://cgit.wugi.info/git/wigust/dotfiles?dir=dotfiles/nix/container-systemd";
+    taskexecutor = {
+      url = "git+ssh://gitlab.corp1.majordomo.ru/hms/taskexecutor?ref=staging";
+      inputs.majordomo = {
+        url = "git+https://gitlab.corp1.majordomo.ru/_ci/nixpkgs";
+        inputs.shared-http-errors.url = "git+https://gitlab.corp1.majordomo.ru/shared/http_errors";
+      };
+    };
+    ssl-certificates.url = "git+ssh://git@gitlab.corp1.majordomo.ru/office/ssl-certificates";
   };
 
   outputs = { self, original, ssl-certificates, taskexecutor, ... }:
