@@ -1819,11 +1819,11 @@
       },
       "locked": {
         "dir": "dotfiles/nix/container-systemd",
-        "lastModified": 1742533251,
-        "narHash": "sha256-/HzZ43wTAqiws7ONmS2J6fDy2YC04Vj7Nw0Ow0Flhpo=",
+        "lastModified": 1742533423,
+        "narHash": "sha256-mva4pYWU34jbm5c4iWFctgXdCepmdt0nH7A9iuzRxxs=",
         "ref": "refs/heads/master",
-        "rev": "0d88564b5c679c678ee2a62eba28d55098e8fea4",
-        "revCount": 12873,
+        "rev": "c777891a3bc2765e52d3778536dc4ecbcb8d98e6",
+        "revCount": 12875,
         "type": "git",
         "url": "https://cgit.wugi.info/git/wigust/dotfiles?dir=dotfiles/nix/container-systemd"
       },
