@@ -2,7 +2,7 @@
   description = "";
 
   inputs = {
-    dotfiles-home-manager.url = "git+file:///home/oleg/.local/share/chezmoi?dir=dotfiles/nix";
+    dotfiles-home-manager.url = "git+https://cgit.wugi.info/git/wigust/dotfiles?dir=dotfiles/nix";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
