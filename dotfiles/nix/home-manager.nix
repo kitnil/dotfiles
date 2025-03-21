@@ -183,7 +183,6 @@
 
     lxqt.qterminal
 
-    vault-bin
     vaultenv
 
     vagrant
@@ -216,9 +215,6 @@
     chromium-wrapper # wraps google-chrome as chromium
     idea-ultimate
     idea-community
-    ipmi
-    ipmiview-wrapper
-    ipmitool
     jenkins
     jenkins-job-builder
     # logstash

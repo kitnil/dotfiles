@@ -41,8 +41,6 @@
     rycee-nur-expressions.url =
       "git+https://gitlab.com/rycee/nur-expressions?dir=pkgs/firefox-addons";
 
-    majordomo-vault.url = "git+ssh://gitlab.corp1.majordomo.ru/security/vault";
-
     github-com-guibou-nixGL = {
       url = "github:guibou/nixGL";
       flake = false;
@@ -51,8 +49,6 @@
       url = "github:kitnil/nix-docker-ipmi?ref=flake";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-    github-com-kitnil-nix-ipmiview.url =
-      "git+ssh://gitlab.corp1.majordomo.ru/utils/ipmiview?ref=flake";
     # github-com-xzfc-cached-nix-shell.url = "github:xzfc/cached-nix-shell";
     github-com-9999years-nix-config = {
       url = "github:9999years/nix-config";
@@ -85,9 +81,9 @@
   outputs = { self, nixpkgs, nixpkgs-20-03, nixpkgs-20-03-firefox
     , nixpkgs-phantomjs, deploy-rs, nixpkgs-home-manager, home-manager, nur
     , rycee-nur-expressions, github-com-guibou-nixGL
-    , github-com-emilazy-mpv-notify-send, github-com-kitnil-nix-docker-ipmi
-    , github-com-kitnil-nix-ipmiview, github-com-tsoding-boomer
-    , majordomo-vault, nixpkgs-idea, nixpkgs-idea-community, nixpkgs-ddcutil
+    , github-com-emilazy-mpv-notify-send
+    , github-com-tsoding-boomer
+    , nixpkgs-idea, nixpkgs-idea-community, nixpkgs-ddcutil
     , nixpkgs-nixd, nixpkgs-wayvnc, nixpkgs-copyq, nixpkgs-chatterino2
     , nixpkgs-phpactor, bbuscarino-env, kamadorueda-alejandra, flake-utils-plus
     , ... }:
@@ -120,8 +116,6 @@
           inherit (prev) callPackage;
         in {
           inherit (deploy-rs.outputs.packages.${system}) deploy-rs;
-          inherit (majordomo-vault.inputs.nixpkgs.legacyPackages.${system})
-            vault-bin;
           inherit (import
             (rycee-nur-expressions.outPath + "/default.nix") {
               pkgs = prev;
@@ -172,10 +166,6 @@
           inherit (pkgs-20-03) nixfmt;
 
           inherit (pkgs-20-03.python3Packages) yamllint;
-
-          inherit (github-com-kitnil-nix-docker-ipmi.packages.${system}) ipmi;
-          inherit (github-com-kitnil-nix-ipmiview.packages.${system})
-            ipmiview-wrapper;
 
           alerta = with pkgs-20-03;
             python3Packages.alerta.overrideAttrs (old: {
