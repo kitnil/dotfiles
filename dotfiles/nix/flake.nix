@@ -41,8 +41,6 @@
     rycee-nur-expressions.url =
       "git+https://gitlab.com/rycee/nur-expressions?dir=pkgs/firefox-addons";
 
-    majordomo.url = "git+https://gitlab.corp1.majordomo.ru/_ci/nixpkgs";
-
     majordomo-vault.url = "git+ssh://gitlab.corp1.majordomo.ru/security/vault";
 
     github-com-guibou-nixGL = {
@@ -71,10 +69,6 @@
 
     deploy-rs.url = "github:serokell/deploy-rs";
 
-    doom-emacs = {
-      url = "github:hlissner/doom-emacs/develop";
-      flake = false;
-    };
     utils.url = "github:numtide/flake-utils";
     flake-utils-plus.url = "github:gytis-ivaskevicius/flake-utils-plus";
     naersk.url = "github:nmattia/naersk";
@@ -92,7 +86,7 @@
     , nixpkgs-phantomjs, deploy-rs, nixpkgs-home-manager, home-manager, nur
     , rycee-nur-expressions, github-com-guibou-nixGL
     , github-com-emilazy-mpv-notify-send, github-com-kitnil-nix-docker-ipmi
-    , github-com-kitnil-nix-ipmiview, github-com-tsoding-boomer, majordomo
+    , github-com-kitnil-nix-ipmiview, github-com-tsoding-boomer
     , majordomo-vault, nixpkgs-idea, nixpkgs-idea-community, nixpkgs-ddcutil
     , nixpkgs-nixd, nixpkgs-wayvnc, nixpkgs-copyq, nixpkgs-chatterino2
     , nixpkgs-phpactor, bbuscarino-env, kamadorueda-alejandra, flake-utils-plus
@@ -252,8 +246,6 @@
           #     chmod 555 $out/bin/run-headphones
           #   '');
           # });
-
-          inherit (majordomo.packages.${system}) elktail;
 
           inherit ((import nixpkgs-idea {
             inherit system;
