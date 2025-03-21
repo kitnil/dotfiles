@@ -123,8 +123,6 @@
       ln -s ${bashInteractive}/bin/bash $out/bin/bash
     '';
 
-  environment.noXlibs = false;
-
   fonts = {
     enableDefaultPackages = true;
     fonts = with pkgs; [
