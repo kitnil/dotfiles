@@ -27,13 +27,11 @@ import (
 	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
-	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/types"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
-	"sigs.k8s.io/controller-runtime/pkg/handler"
+	"sigs.k8s.io/controller-runtime/pkg/controller/controllerutil"
 	"sigs.k8s.io/controller-runtime/pkg/log"
-	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 
 	workstationv1 "wugi.info/workstation-controller/api/v1"
 )
@@ -126,13 +124,6 @@ func (r *WorkstationReconciler) CreateWorkstationPod(ctx context.Context, req ct
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      req.NamespacedName.Name,
 			Namespace: req.NamespacedName.Namespace,
-			OwnerReferences: []metav1.OwnerReference{
-				*metav1.NewControllerRef(&workstation, schema.GroupVersionKind{
-					Group:   workstationv1.GroupVersion.Group,
-					Version: workstationv1.GroupVersion.Version,
-					Kind:    "Workstation",
-				}),
-			},
 			Labels: map[string]string{
 				"app.kubernetes.io/name":       req.NamespacedName.Name,
 				"app.kubernetes.io/created-by": req.NamespacedName.Name,
@@ -874,6 +865,7 @@ fi
 			log.Log.Error(err, fmt.Sprintf("Failed to update pod %s/%s", req.NamespacedName.Namespace, req.NamespacedName.Name))
 		}
 	}
+	controllerutil.SetControllerReference(&workstation, pod, r.Scheme)
 }
 
 func (r *WorkstationReconciler) CreateWorkstationService(ctx context.Context, req ctrl.Request, workstation workstationv1.Workstation) {
@@ -881,13 +873,6 @@ func (r *WorkstationReconciler) CreateWorkstationService(ctx context.Context, re
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      req.NamespacedName.Name,
 			Namespace: req.NamespacedName.Namespace,
-			OwnerReferences: []metav1.OwnerReference{
-				*metav1.NewControllerRef(&workstation, schema.GroupVersionKind{
-					Group:   workstationv1.GroupVersion.Group,
-					Version: workstationv1.GroupVersion.Version,
-					Kind:    "Workstation",
-				}),
-			},
 		},
 		Spec: corev1.ServiceSpec{
 			Ports: []corev1.ServicePort{
@@ -920,30 +905,7 @@ func (r *WorkstationReconciler) CreateWorkstationService(ctx context.Context, re
 			log.Log.Error(err, fmt.Sprintf("Failed to update service %s/%s", req.NamespacedName.Namespace, req.NamespacedName.Name))
 		}
 	}
-}
-
-func (r *WorkstationReconciler) handleWorkstationEvent(ctx context.Context, workstation client.Object) []reconcile.Request {
-	// Avoid consuming too much memory
-	var requests []reconcile.Request
-
-	err := r.Get(ctx, types.NamespacedName{
-		Name:      workstation.GetName(),
-		Namespace: workstation.GetNamespace(),
-	}, &corev1.Pod{})
-
-	if apierrors.IsNotFound(err) {
-		log.Log.Error(err, "Failed to get workstation pod")
-		return []reconcile.Request{}
-	} else {
-		requests = append(requests, reconcile.Request{
-			NamespacedName: types.NamespacedName{
-				Name:      workstation.GetName(),
-				Namespace: workstation.GetNamespace(),
-			},
-		})
-	}
-
-	return requests
+	controllerutil.SetControllerReference(&workstation, service, r.Scheme)
 }
 
 // SetupWithManager sets up the controller with the Manager.
@@ -951,9 +913,5 @@ func (r *WorkstationReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	return ctrl.NewControllerManagedBy(mgr).
 		For(&workstationv1.Workstation{}).
 		Named("workstation").
-		Watches(
-			&workstationv1.Workstation{},
-			handler.EnqueueRequestsFromMapFunc(r.handleWorkstationEvent),
-		).
 		Complete(r)
 }
