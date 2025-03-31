@@ -27,6 +27,7 @@ import (
 	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/apimachinery/pkg/runtime"
+	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/types"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
@@ -152,6 +153,13 @@ func (r *WorkstationReconciler) CreateWorkstationPod(ctx context.Context, req ct
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      req.NamespacedName.Name,
 			Namespace: req.NamespacedName.Namespace,
+			OwnerReferences: []metav1.OwnerReference{
+				*metav1.NewControllerRef(&workstation, schema.GroupVersionKind{
+					Group:   workstationv1.GroupVersion.Group,
+					Version: workstationv1.GroupVersion.Version,
+					Kind:    "Workstation",
+				}),
+			},
 			Labels: map[string]string{
 				"app.kubernetes.io/name":       req.NamespacedName.Name,
 				"app.kubernetes.io/created-by": req.NamespacedName.Name,
@@ -901,6 +909,13 @@ func (r *WorkstationReconciler) CreateWorkstationService(ctx context.Context, re
 		ObjectMeta: metav1.ObjectMeta{
 			Name:      req.NamespacedName.Name,
 			Namespace: req.NamespacedName.Namespace,
+			OwnerReferences: []metav1.OwnerReference{
+				*metav1.NewControllerRef(&workstation, schema.GroupVersionKind{
+					Group:   workstationv1.GroupVersion.Group,
+					Version: workstationv1.GroupVersion.Version,
+					Kind:    "Workstation",
+				}),
+			},
 		},
 		Spec: corev1.ServiceSpec{
 			Ports: []corev1.ServicePort{
