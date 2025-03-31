@@ -20,9 +20,11 @@ import (
 	"context"
 	"fmt"
 	"path/filepath"
+	"reflect"
 	"time"
 
 	corev1 "k8s.io/api/core/v1"
+	v1 "k8s.io/api/core/v1"
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
 	"k8s.io/apimachinery/pkg/api/resource"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
@@ -30,8 +32,13 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/types"
 	ctrl "sigs.k8s.io/controller-runtime"
+	"sigs.k8s.io/controller-runtime/pkg/builder"
 	"sigs.k8s.io/controller-runtime/pkg/client"
+	"sigs.k8s.io/controller-runtime/pkg/event"
+	"sigs.k8s.io/controller-runtime/pkg/handler"
 	"sigs.k8s.io/controller-runtime/pkg/log"
+	"sigs.k8s.io/controller-runtime/pkg/predicate"
+	"sigs.k8s.io/controller-runtime/pkg/reconcile"
 
 	workstationv1 "wugi.info/workstation-controller/api/v1"
 )
@@ -920,10 +927,68 @@ func (r *WorkstationReconciler) CreateWorkstationService(ctx context.Context, re
 	}
 }
 
+func namespacePredicate() predicate.Predicate {
+	return predicate.Funcs{
+		CreateFunc: func(e event.CreateEvent) bool {
+			return true
+		},
+		UpdateFunc: func(e event.UpdateEvent) bool {
+			if e.ObjectOld == nil || e.ObjectNew == nil {
+				return false
+			}
+			return !reflect.DeepEqual(e.ObjectOld.GetLabels(), e.ObjectNew.GetLabels())
+		},
+		DeleteFunc: func(deleteEvent event.DeleteEvent) bool {
+			return true
+		},
+	}
+}
+
+func (r *WorkstationReconciler) findObjectsForNamespace(ctx context.Context, namespace client.Object) []reconcile.Request {
+	// Avoid consuming too much memory
+	const limit = 100
+	var requests []reconcile.Request
+	options := &client.ListOptions{Limit: limit}
+
+	for {
+		var workstations workstationv1.WorkstationList
+		if err := r.List(ctx, &workstations, options); err != nil {
+			log.Log.Error(err, "Failed to list workstation objects")
+			return []reconcile.Request{}
+		}
+
+		for i := range workstations.Items {
+			workstation := &workstations.Items[i]
+			requests = append(requests, reconcile.Request{
+				NamespacedName: types.NamespacedName{
+					Name:      workstation.GetName(),
+					Namespace: workstation.GetNamespace(),
+				},
+			})
+		}
+
+		if workstations.Continue == "" {
+			break
+		}
+
+		options = &client.ListOptions{
+			Limit:    limit,
+			Continue: workstations.Continue,
+		}
+	}
+
+	return requests
+}
+
 // SetupWithManager sets up the controller with the Manager.
 func (r *WorkstationReconciler) SetupWithManager(mgr ctrl.Manager) error {
 	return ctrl.NewControllerManagedBy(mgr).
 		For(&workstationv1.Workstation{}).
 		Named("workstation").
+		Watches(
+			&v1.Namespace{},
+			handler.EnqueueRequestsFromMapFunc(r.findObjectsForNamespace),
+			builder.WithPredicates(namespacePredicate()),
+		).
 		Complete(r)
 }
