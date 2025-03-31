@@ -143,7 +143,7 @@
      (requirement '(networking))
      (start #~(make-forkexec-constructor
                (list (string-append #$runc "/bin/runc")
-                     "run" name)
+                     "run" #$name)
                #:directory #$directory
                #:log-file #$(string-append "/var/log/runc/" name ".log")))
      (respawn? #f)
