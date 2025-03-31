@@ -5,4 +5,4 @@ kind: Kustomization
 images:
 - name: controller
   newName: harbor.home.wugi.info/library/workstation-controller
-  newTag: "c720c39b"
+  newTag: "fb39aee0"
