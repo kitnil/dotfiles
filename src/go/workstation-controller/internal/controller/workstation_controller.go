@@ -87,12 +87,12 @@ func (r *WorkstationReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 			log.Log.Info(fmt.Sprintf("Delete service %s/%s", req.NamespacedName.Namespace, req.NamespacedName.Name))
 			r.Delete(ctx, &service)
 		}
+		return ctrl.Result{Requeue: false}, nil
 	} else {
 		r.CreateWorkstationPod(ctx, req, workstation)
 		r.CreateWorkstationService(ctx, req, workstation)
+		return ctrl.Result{RequeueAfter: time.Second * time.Duration(10)}, nil
 	}
-
-	return ctrl.Result{RequeueAfter: time.Second * time.Duration(10)}, nil
 }
 
 func (r *WorkstationReconciler) CreateWorkstationPod(ctx context.Context, req ctrl.Request, workstation workstationv1.Workstation) {
