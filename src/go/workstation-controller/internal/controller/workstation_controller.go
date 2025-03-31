@@ -868,7 +868,7 @@ fi
 	} else {
 		err = r.Update(ctx, pod)
 		if err != nil {
-			log.Log.Error(err, "Failed to update pod")
+			log.Log.Error(err, fmt.Sprintf("Failed to update pod %s/%s", req.NamespacedName.Namespace, req.NamespacedName.Name))
 		}
 	}
 }
@@ -914,7 +914,7 @@ func (r *WorkstationReconciler) CreateWorkstationService(ctx context.Context, re
 	} else {
 		err = r.Update(ctx, service)
 		if err != nil {
-			log.Log.Error(err, "Failed to update service")
+			log.Log.Error(err, fmt.Sprintf("Failed to update service %s/%s", req.NamespacedName.Namespace, req.NamespacedName.Name))
 		}
 	}
 }
