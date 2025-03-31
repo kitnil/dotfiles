@@ -2158,11 +2158,13 @@ PasswordAuthentication yes")))
 
                          (service runc-service-type
                                   (runc-configuration
-                                   (name "guix-builder")))
+                                   (name "guix-builder")
+                                   (directory "/srv/runc/guix-builder")))
 
                          (service runc-service-type
                                   (runc-configuration
-                                   (name "nix-builder")))
+                                   (name "nix-builder")
+                                   (directory "/srv/runc/nix-builder")))
 
                          (dovecot-service
                           #:config (dovecot-configuration
