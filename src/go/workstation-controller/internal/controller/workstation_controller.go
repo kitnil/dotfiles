@@ -74,6 +74,10 @@ func (r *WorkstationReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 				Namespace: req.NamespacedName.Namespace,
 			},
 		}
+		err := r.Get(ctx, types.NamespacedName{
+			Name:      req.NamespacedName.Name,
+			Namespace: req.NamespacedName.Namespace,
+		}, &pod)
 		if !apierrors.IsNotFound(err) {
 			log.Log.Info(fmt.Sprintf("Delete pod %s/%s", req.NamespacedName.Namespace, req.NamespacedName.Name))
 			r.Delete(ctx, &pod, &client.DeleteOptions{})
@@ -85,6 +89,10 @@ func (r *WorkstationReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 				Namespace: req.NamespacedName.Namespace,
 			},
 		}
+		err = r.Get(ctx, types.NamespacedName{
+			Name:      req.NamespacedName.Name,
+			Namespace: req.NamespacedName.Namespace,
+		}, &service)
 		if !apierrors.IsNotFound(err) {
 			log.Log.Info(fmt.Sprintf("Delete service %s/%s", req.NamespacedName.Namespace, req.NamespacedName.Name))
 			r.Delete(ctx, &service, &client.DeleteOptions{})
