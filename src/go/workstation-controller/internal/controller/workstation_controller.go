@@ -20,6 +20,7 @@ import (
 	"context"
 	"fmt"
 	"path/filepath"
+	"time"
 
 	corev1 "k8s.io/api/core/v1"
 	apierrors "k8s.io/apimachinery/pkg/api/errors"
@@ -75,7 +76,7 @@ func (r *WorkstationReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 	r.CreateWorkstationPod(ctx, req, workstation)
 	r.CreateWorkstationService(ctx, req, workstation)
 
-	return ctrl.Result{RequeueAfter: 10}, nil
+	return ctrl.Result{RequeueAfter: time.Second * time.Duration(10)}, nil
 }
 
 func (r *WorkstationReconciler) CreateWorkstationPod(ctx context.Context, req ctrl.Request, workstation workstationv1.Workstation) {
