@@ -2156,6 +2156,10 @@ PasswordAuthentication yes")))
                          ;;                        ;; "--container-runtime-endpoint" "unix:///run/containerd/containerd.sock"
                          ;;                        ))))
 
+                         (service runc-service-type
+                                  (runc-configuration
+                                   (name "guix-builder")))
+
                          (dovecot-service
                           #:config (dovecot-configuration
                                     (listen '("127.0.0.1"))
