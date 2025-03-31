@@ -75,7 +75,7 @@ func (r *WorkstationReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 	r.CreateWorkstationPod(ctx, req, workstation)
 	r.CreateWorkstationService(ctx, req, workstation)
 
-	return ctrl.Result{}, nil
+	return ctrl.Result{RequeueAfter: 10}, nil
 }
 
 func (r *WorkstationReconciler) CreateWorkstationPod(ctx context.Context, req ctrl.Request, workstation workstationv1.Workstation) {
