@@ -986,7 +986,7 @@ func (r *WorkstationReconciler) SetupWithManager(mgr ctrl.Manager) error {
 		For(&workstationv1.Workstation{}).
 		Named("workstation").
 		Watches(
-			&v1.Namespace{},
+			&v1.Event{},
 			handler.EnqueueRequestsFromMapFunc(r.findObjectsForNamespace),
 			builder.WithPredicates(namespacePredicate()),
 		).
