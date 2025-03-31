@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2023 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2023, 2025 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -25,7 +25,11 @@
   #:use-module (guix records)
   #:use-module (srfi srfi-1)
   #:export (virtual-machine
-            virtual-machine-service-type))
+            virtual-machine-service-type
+
+            runc-configuration
+            runc-configuration?
+            runc-service-type))
 
 ;;; Commentary:
 ;;;
@@ -100,5 +104,60 @@
                              virtual-machine-log-rotations)))
    (default-value '())
    (description "Run virtual machine.")))
+
+
+;;;
+;;; runc
+;;;
+
+(define-record-type* <runc-configuration>
+  runc-configuration make-runc-configuration
+  runc-configuration?
+  (runc runc-configuration-runc ;<package>
+        (default runc))
+  (name runc-configuration-name) ;string
+  (directory runc-configuration-directory)) ;string
+
+(define (runc-activation config)
+  "Return the activation GEXP for CONFIG."
+  (with-imported-modules '((guix build utils))
+    #~(begin
+        (mkdir-p "/var/log/runc"))))
+
+(define (runc-log-rotations config)
+  (list
+   (log-rotation
+    (files
+     (list
+      (string-append "/var/log/runc/"
+                     (runc-configuration-name config) ".log"))))))
+
+(define (runc-shepherd-service config)
+  (match-record
+   config <runc-configuration>
+   (runc name directory)
+   (list
+    (shepherd-service
+     (provision (list (string->symbol (string-append "runc-" name))))
+     (documentation "Run container with runc.")
+     (requirement '(networking))
+     (start #~(make-forkexec-constructor
+               (list (string-append #$runc "/bin/runc")
+                     "run" name)
+               #:directory #$directory
+               #:log-file #$(string-append "/var/log/runc/" name ".log")))
+     (respawn? #f)
+     (auto-start? #f)
+     (stop #~(make-kill-destructor))))))
+
+(define runc-service-type
+  (service-type (name 'runc)
+                (extensions (list (service-extension activation-service-type
+                                                     runc-activation)
+                                  (service-extension shepherd-root-service-type
+                                                     runc-shepherd-service)
+                                  (service-extension rottlog-service-type
+                                                     runc-log-rotations)))
+                (description "Run runc.")))
 
 ;;; virtualization.scm ends here
