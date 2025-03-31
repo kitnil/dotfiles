@@ -75,7 +75,7 @@ func (r *WorkstationReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 		}, &pod)
 		if !apierrors.IsNotFound(err) {
 			log.Log.Info(fmt.Sprintf("Delete pod %s/%s", req.NamespacedName.Namespace, req.NamespacedName.Name))
-			r.Delete(ctx, &pod)
+			r.Delete(ctx, &pod, &client.DeleteOptions{})
 		}
 
 		var service corev1.Service
@@ -85,7 +85,7 @@ func (r *WorkstationReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 		}, &service)
 		if !apierrors.IsNotFound(err) {
 			log.Log.Info(fmt.Sprintf("Delete service %s/%s", req.NamespacedName.Namespace, req.NamespacedName.Name))
-			r.Delete(ctx, &service)
+			r.Delete(ctx, &service, &client.DeleteOptions{})
 		}
 		return ctrl.Result{Requeue: false}, nil
 	} else {
