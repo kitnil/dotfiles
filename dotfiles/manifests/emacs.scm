@@ -9,7 +9,7 @@
 ;; (module-set! (resolve-module '(gnu packages emacs-xyz)) 'emacs-geiser emacs-geiser-0.10)
 
 (packages->manifest
- (list emacs
+ (list emacs-pgtk
        emacs-academic-phrases
        emacs-ace-window
        emacs-add-hooks
