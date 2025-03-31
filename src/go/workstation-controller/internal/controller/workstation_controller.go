@@ -68,21 +68,23 @@ func (r *WorkstationReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 	if apierrors.IsNotFound(err) {
 		log.Log.Info(fmt.Sprintf("Workstation not found %s/%s", req.NamespacedName.Namespace, req.NamespacedName.Name))
 
-		var pod corev1.Pod
-		err := r.Get(ctx, types.NamespacedName{
-			Name:      req.NamespacedName.Name,
-			Namespace: req.NamespacedName.Namespace,
-		}, &pod)
+		pod := corev1.Pod{
+			ObjectMeta: metav1.ObjectMeta{
+				Name:      req.NamespacedName.Name,
+				Namespace: req.NamespacedName.Namespace,
+			},
+		}
 		if !apierrors.IsNotFound(err) {
 			log.Log.Info(fmt.Sprintf("Delete pod %s/%s", req.NamespacedName.Namespace, req.NamespacedName.Name))
 			r.Delete(ctx, &pod, &client.DeleteOptions{})
 		}
 
-		var service corev1.Service
-		err = r.Get(ctx, types.NamespacedName{
-			Name:      req.NamespacedName.Name,
-			Namespace: req.NamespacedName.Namespace,
-		}, &service)
+		service := corev1.Service{
+			ObjectMeta: metav1.ObjectMeta{
+				Name:      req.NamespacedName.Name,
+				Namespace: req.NamespacedName.Namespace,
+			},
+		}
 		if !apierrors.IsNotFound(err) {
 			log.Log.Info(fmt.Sprintf("Delete service %s/%s", req.NamespacedName.Namespace, req.NamespacedName.Name))
 			r.Delete(ctx, &service, &client.DeleteOptions{})
