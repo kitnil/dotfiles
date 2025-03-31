@@ -142,7 +142,7 @@
      (documentation "Run container with runc.")
      (requirement '(networking))
      (start #~(make-forkexec-constructor
-               (list (string-append #$runc "/bin/runc")
+               (list (string-append #$runc "/sbin/runc")
                      "run" #$name)
                #:directory #$directory
                #:log-file #$(string-append "/var/log/runc/" name ".log")))
