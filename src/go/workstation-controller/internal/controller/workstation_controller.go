@@ -45,8 +45,8 @@ type WorkstationReconciler struct {
 // +kubebuilder:rbac:groups=workstation.wugi.info,namespace=workstation,resources=workstations,verbs=get;list;watch;create;update;patch;delete
 // +kubebuilder:rbac:groups=workstation.wugi.info,namespace=workstation,resources=workstations/status,verbs=get;update;patch
 // +kubebuilder:rbac:groups=workstation.wugi.info,namespace=workstation,resources=workstations/finalizers,verbs=update
-// +kubebuilder:rbac:groups="",namespace=workstation,resources=pods,verbs=get;list;watch;create;update
-// +kubebuilder:rbac:groups="",namespace=workstation,resources=services,verbs=get;list;watch;create;update
+// +kubebuilder:rbac:groups="",namespace=workstation,resources=pods,verbs=get;list;watch;create;update;delete
+// +kubebuilder:rbac:groups="",namespace=workstation,resources=services,verbs=get;list;watch;create;update;delete
 
 // Reconcile is part of the main kubernetes reconciliation loop which aims to
 // move the current state of the cluster closer to the desired state.
@@ -81,6 +81,7 @@ func (r *WorkstationReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 		if !apierrors.IsNotFound(err) {
 			log.Log.Info(fmt.Sprintf("Delete pod %s/%s", req.NamespacedName.Namespace, req.NamespacedName.Name))
 			r.Delete(ctx, &pod, &client.DeleteOptions{})
+			controllerutil.SetControllerReference(&workstation, &pod, r.Scheme)
 		}
 
 		service := corev1.Service{
@@ -96,6 +97,7 @@ func (r *WorkstationReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 		if !apierrors.IsNotFound(err) {
 			log.Log.Info(fmt.Sprintf("Delete service %s/%s", req.NamespacedName.Namespace, req.NamespacedName.Name))
 			r.Delete(ctx, &service, &client.DeleteOptions{})
+			controllerutil.RemoveControllerReference(&workstation, &service, r.Scheme)
 		}
 		return ctrl.Result{Requeue: false}, nil
 	} else {
