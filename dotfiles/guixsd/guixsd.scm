@@ -2160,6 +2160,10 @@ PasswordAuthentication yes")))
                                   (runc-configuration
                                    (name "guix-builder")))
 
+                         (service runc-service-type
+                                  (runc-configuration
+                                   (name "nix-builder")))
+
                          (dovecot-service
                           #:config (dovecot-configuration
                                     (listen '("127.0.0.1"))
