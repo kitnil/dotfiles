@@ -42,18 +42,6 @@ type WorkstationReconciler struct {
 	Scheme *runtime.Scheme
 }
 
-func (r *WorkstationReconciler) GetWorkstation(ctx context.Context, req ctrl.Request) workstationv1.Workstation {
-	var workstation workstationv1.Workstation
-	err := r.Get(ctx, types.NamespacedName{
-		Name:      req.NamespacedName.Name,
-		Namespace: req.NamespacedName.Namespace,
-	}, &workstation)
-	if apierrors.IsNotFound(err) {
-		log.Log.Error(err, "Workstation not found")
-	}
-	return workstation
-}
-
 // +kubebuilder:rbac:groups=workstation.wugi.info,namespace=workstation,resources=workstations,verbs=get;list;watch;create;update;patch;delete
 // +kubebuilder:rbac:groups=workstation.wugi.info,namespace=workstation,resources=workstations/status,verbs=get;update;patch
 // +kubebuilder:rbac:groups=workstation.wugi.info,namespace=workstation,resources=workstations/finalizers,verbs=update
@@ -72,9 +60,37 @@ func (r *WorkstationReconciler) GetWorkstation(ctx context.Context, req ctrl.Req
 func (r *WorkstationReconciler) Reconcile(ctx context.Context, req ctrl.Request) (ctrl.Result, error) {
 	_ = log.FromContext(ctx)
 
-	var workstation workstationv1.Workstation = r.GetWorkstation(ctx, req)
-	r.CreateWorkstationPod(ctx, req, workstation)
-	r.CreateWorkstationService(ctx, req, workstation)
+	var workstation workstationv1.Workstation
+	err := r.Get(ctx, types.NamespacedName{
+		Name:      req.NamespacedName.Name,
+		Namespace: req.NamespacedName.Namespace,
+	}, &workstation)
+	if apierrors.IsNotFound(err) {
+		log.Log.Info(fmt.Sprintf("Workstation not found %s/%s", req.NamespacedName.Namespace, req.NamespacedName.Name))
+
+		var pod corev1.Pod
+		err := r.Get(ctx, types.NamespacedName{
+			Name:      req.NamespacedName.Name,
+			Namespace: req.NamespacedName.Namespace,
+		}, &pod)
+		if !apierrors.IsNotFound(err) {
+			log.Log.Info(fmt.Sprintf("Delete pod %s/%s", req.NamespacedName.Namespace, req.NamespacedName.Name))
+			r.Delete(ctx, &pod)
+		}
+
+		var service corev1.Service
+		err = r.Get(ctx, types.NamespacedName{
+			Name:      req.NamespacedName.Name,
+			Namespace: req.NamespacedName.Namespace,
+		}, &service)
+		if !apierrors.IsNotFound(err) {
+			log.Log.Info(fmt.Sprintf("Delete service %s/%s", req.NamespacedName.Namespace, req.NamespacedName.Name))
+			r.Delete(ctx, &service)
+		}
+	} else {
+		r.CreateWorkstationPod(ctx, req, workstation)
+		r.CreateWorkstationService(ctx, req, workstation)
+	}
 
 	return ctrl.Result{RequeueAfter: time.Second * time.Duration(10)}, nil
 }
