@@ -29,16 +29,16 @@ spec:
           mountPath: /mnt/workspace/rootfs/bin/entrypoint
           subPath: entrypoint
         - name: dockerfile-storage
-          mountPath: /mnt/workspace/foot.service
+          mountPath: /mnt/workspace/rootfs/home/oleg/.config/systemd/user/foot.service
           subPath: foot.service
         - name: dockerfile-storage
-          mountPath: /mnt/workspace/idea.service
+          mountPath: /mnt/workspace/rootfs/home/oleg/.config/systemd/user/idea.service
           subPath: idea.service
         - name: dockerfile-storage
-          mountPath: /mnt/workspace/pycharm.service
+          mountPath: /mnt/workspace/rootfs/home/oleg/.config/systemd/user/pycharm.service
           subPath: pycharm.service
         - name: dockerfile-storage
-          mountPath: /mnt/workspace/vscode.service
+          mountPath: /mnt/workspace/rootfs/home/oleg/.config/systemd/user/vscode.service
           subPath: vscode.service
         - name: workspace
           mountPath: /workspace
