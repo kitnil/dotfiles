@@ -905,9 +905,15 @@ fi
 			log.Log.Error(err, "Failed to create pod")
 		}
 	} else {
-		err = r.Update(ctx, pod)
-		if err != nil {
-			log.Log.Error(err, fmt.Sprintf("Failed to update pod %s/%s", req.NamespacedName.Namespace, req.NamespacedName.Name))
+		if &oldPod.Spec != &pod.Spec {
+			err = r.Delete(ctx, &oldPod)
+			if err != nil {
+				log.Log.Error(err, fmt.Sprintf("Failed to delete pod %s/%s", req.NamespacedName.Namespace, req.NamespacedName.Name))
+			}
+			err = r.Create(ctx, pod)
+			if err != nil {
+				log.Log.Error(err, fmt.Sprintf("Failed to create pod %s/%s", req.NamespacedName.Namespace, req.NamespacedName.Name))
+			}
 		}
 	}
 	controllerutil.SetControllerReference(&workstation, pod, r.Scheme)
@@ -954,9 +960,11 @@ func (r *WorkstationReconciler) CreateWorkstationService(ctx context.Context, re
 			log.Log.Error(err, "Failed to create service")
 		}
 	} else {
-		err = r.Update(ctx, service)
-		if err != nil {
-			log.Log.Error(err, fmt.Sprintf("Failed to update service %s/%s", req.NamespacedName.Namespace, req.NamespacedName.Name))
+		if &oldService.Spec != &service.Spec {
+			err = r.Update(ctx, service)
+			if err != nil {
+				log.Log.Error(err, fmt.Sprintf("Failed to update service %s/%s", req.NamespacedName.Namespace, req.NamespacedName.Name))
+			}
 		}
 	}
 	controllerutil.SetControllerReference(&workstation, service, r.Scheme)
