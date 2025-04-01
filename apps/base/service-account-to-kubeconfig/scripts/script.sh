@@ -13,3 +13,5 @@ kubectl config use-context cfc
 
 cat "${HOME}/.kube/config"
 cat /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
+
+exec sleep infinity
