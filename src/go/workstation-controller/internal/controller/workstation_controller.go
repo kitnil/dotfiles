@@ -892,10 +892,11 @@ fi
 		}
 	}
 
+	var oldPod corev1.Pod
 	err := r.Get(ctx, types.NamespacedName{
 		Name:      req.NamespacedName.Name,
 		Namespace: req.NamespacedName.Namespace,
-	}, pod)
+	}, &oldPod)
 
 	if apierrors.IsNotFound(err) {
 		log.Log.Info(fmt.Sprintf("Creating pod %s/%s", req.NamespacedName.Namespace, req.NamespacedName.Name))
@@ -939,10 +940,12 @@ func (r *WorkstationReconciler) CreateWorkstationService(ctx context.Context, re
 			},
 		},
 	}
+
+	var oldService corev1.Service
 	err := r.Get(ctx, types.NamespacedName{
 		Name:      req.NamespacedName.Name,
 		Namespace: req.NamespacedName.Namespace,
-	}, service)
+	}, &oldService)
 
 	if apierrors.IsNotFound(err) {
 		log.Log.Info(fmt.Sprintf("Creating service %s/%s", req.NamespacedName.Namespace, req.NamespacedName.Name))
