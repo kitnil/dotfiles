@@ -61,7 +61,7 @@ spec:
         image: busybox
         command: ["/bin/sh"]
         args:
-        - "-x"
+        - "-xc"
         - |
           chmod +x /workspace/build.sh /workspace/entrypoint
         volumeMounts:
