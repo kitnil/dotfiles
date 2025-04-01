@@ -1079,6 +1079,19 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
+  name: kaniko-archlinux
+  namespace: flux-system
+spec:
+  interval: 10m0s
+  path: ./apps/base/kaniko-archlinux
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
   name: guix-builder
   namespace: flux-system
 spec:
