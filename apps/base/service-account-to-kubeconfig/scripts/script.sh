@@ -10,4 +10,6 @@ kubectl config set-credentials user \
         --token="$(cat /var/run/secrets/kubernetes.io/serviceaccount/token)"
 kubectl config set-context cfc --user=user
 kubectl config use-context cfc
+
 cat "${HOME}/.kube/config"
+cat /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
