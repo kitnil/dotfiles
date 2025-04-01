@@ -171,6 +171,7 @@ func (r *WorkstationReconciler) CreateWorkstationPod(ctx context.Context, req ct
 			Labels: map[string]string{
 				"app.kubernetes.io/name":       req.NamespacedName.Name,
 				"app.kubernetes.io/created-by": req.NamespacedName.Name,
+				"controller-revision-hash":     workstation.ObjectMeta.GetName() + "-" + workstation.ObjectMeta.GetResourceVersion(),
 			},
 		},
 		Spec: corev1.PodSpec{
@@ -905,16 +906,16 @@ fi
 			log.Log.Error(err, "Failed to create pod")
 		}
 	} else {
-		if &oldPod.Spec != &pod.Spec {
+		if oldPod.ObjectMeta.Labels["controller-revision-hash"] != workstation.ObjectMeta.GetName()+"-"+workstation.ObjectMeta.GetResourceVersion() {
+			err = r.Delete(ctx, &oldPod)
+			if err != nil {
+				log.Log.Error(err, fmt.Sprintf("Failed to delete pod %s/%s", req.NamespacedName.Namespace, req.NamespacedName.Name))
+			}
 			log.Log.Info(fmt.Sprintf("Updating pod %s/%s", req.NamespacedName.Namespace, req.NamespacedName.Name))
-			// err = r.Delete(ctx, &oldPod)
-			// if err != nil {
-			// 	log.Log.Error(err, fmt.Sprintf("Failed to delete pod %s/%s", req.NamespacedName.Namespace, req.NamespacedName.Name))
-			// }
-			// err = r.Create(ctx, pod)
-			// if err != nil {
-			// 	log.Log.Error(err, fmt.Sprintf("Failed to create pod %s/%s", req.NamespacedName.Namespace, req.NamespacedName.Name))
-			// }
+			err = r.Create(ctx, pod)
+			if err != nil {
+				log.Log.Error(err, fmt.Sprintf("Failed to create pod %s/%s", req.NamespacedName.Namespace, req.NamespacedName.Name))
+			}
 		}
 	}
 	controllerutil.SetControllerReference(&workstation, pod, r.Scheme)
@@ -931,6 +932,9 @@ func (r *WorkstationReconciler) CreateWorkstationService(ctx context.Context, re
 					Version: workstationv1.GroupVersion.Version,
 					Kind:    "Workstation",
 				}),
+			},
+			Labels: map[string]string{
+				"controller-revision-hash": workstation.ObjectMeta.GetName() + "-" + workstation.ObjectMeta.GetResourceVersion(),
 			},
 		},
 		Spec: corev1.ServiceSpec{
@@ -961,12 +965,16 @@ func (r *WorkstationReconciler) CreateWorkstationService(ctx context.Context, re
 			log.Log.Error(err, "Failed to create service")
 		}
 	} else {
-		if &oldService.Spec != &service.Spec {
+		if oldService.ObjectMeta.Labels["controller-revision-hash"] != workstation.ObjectMeta.GetName()+"-"+workstation.ObjectMeta.GetResourceVersion() {
+			err = r.Delete(ctx, &oldService)
+			if err != nil {
+				log.Log.Error(err, fmt.Sprintf("Failed to delete service %s/%s", req.NamespacedName.Namespace, req.NamespacedName.Name))
+			}
 			log.Log.Info(fmt.Sprintf("Updating service %s/%s", req.NamespacedName.Namespace, req.NamespacedName.Name))
-			// err = r.Update(ctx, service)
-			// if err != nil {
-			// 	log.Log.Error(err, fmt.Sprintf("Failed to update service %s/%s", req.NamespacedName.Namespace, req.NamespacedName.Name))
-			// }
+			err = r.Create(ctx, service)
+			if err != nil {
+				log.Log.Error(err, fmt.Sprintf("Failed to create service %s/%s", req.NamespacedName.Namespace, req.NamespacedName.Name))
+			}
 		}
 	}
 	controllerutil.SetControllerReference(&workstation, service, r.Scheme)
