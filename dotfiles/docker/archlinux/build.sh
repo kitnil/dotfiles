@@ -170,6 +170,11 @@ install_kind()
     GOBIN=/usr/local/bin go install sigs.k8s.io/kind@v0.26.0
 }
 
+install_dlv()
+{
+    GOBIN=/usr/local/bin go install github.com/go-delve/delve/cmd/dlv@latest
+}
+
 packages+=(
     docker
 )
@@ -205,6 +210,7 @@ main()
     install_vscode_extensions
     install_kubebuilder
     install_kind
+    install_dlv
     install_pob
 }
 
