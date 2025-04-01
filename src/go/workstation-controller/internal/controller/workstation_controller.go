@@ -81,8 +81,12 @@ func (r *WorkstationReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 		}, &pod)
 		if !apierrors.IsNotFound(err) {
 			log.Log.Info(fmt.Sprintf("Delete pod %s/%s", req.NamespacedName.Namespace, req.NamespacedName.Name))
-			r.Delete(ctx, &pod, &client.DeleteOptions{})
-			controllerutil.SetControllerReference(&workstation, &pod, r.Scheme)
+			err = r.Delete(ctx, &pod, &client.DeleteOptions{})
+			if err != nil {
+				log.Log.Error(err, "Failed to delete pod %s/%s", req.NamespacedName.Namespace, req.NamespacedName.Name)
+			} else {
+				controllerutil.SetControllerReference(&workstation, &pod, r.Scheme)
+			}
 		}
 
 		service := corev1.Service{
@@ -97,8 +101,12 @@ func (r *WorkstationReconciler) Reconcile(ctx context.Context, req ctrl.Request)
 		}, &service)
 		if !apierrors.IsNotFound(err) {
 			log.Log.Info(fmt.Sprintf("Delete service %s/%s", req.NamespacedName.Namespace, req.NamespacedName.Name))
-			r.Delete(ctx, &service, &client.DeleteOptions{})
-			controllerutil.RemoveControllerReference(&workstation, &service, r.Scheme)
+			err = r.Delete(ctx, &service, &client.DeleteOptions{})
+			if err != nil {
+				log.Log.Error(err, "Failed to delete pod %s/%s", req.NamespacedName.Namespace, req.NamespacedName.Name)
+			} else {
+				controllerutil.RemoveControllerReference(&workstation, &service, r.Scheme)
+			}
 		}
 		return ctrl.Result{Requeue: false}, nil
 	} else {
