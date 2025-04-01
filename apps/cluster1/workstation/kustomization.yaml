@@ -6,5 +6,6 @@ resources:
 - workstation-kube1
 - workstation-kube2
 - workstation-kube3
+- service-account-to-kubeconfig
 patchesStrategicMerge:
 - daemonset.yaml
