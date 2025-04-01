@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: kaniko-archlinux
+resources:
+- namespace.yaml
+- job.yaml
+configMapGenerator:
+- name: data
+  files:
+  - build.sh=archlinux/build.sh
+  - Dockerfile=archlinux/Dockerfile
+  - entrypoint=archlinux/rootfs/bin/entrypoint
+  - foot.service=archlinux/rootfs/home/oleg/.config/systemd/user/foot.service
+  - idea.service=archlinux/rootfs/home/oleg/.config/systemd/user/idea.service
+  - pycharm.service=archlinux/rootfs/home/oleg/.config/systemd/user/pycharm.service
+  - vscode.service=archlinux/rootfs/home/oleg/.config/systemd/user/vscode.service
