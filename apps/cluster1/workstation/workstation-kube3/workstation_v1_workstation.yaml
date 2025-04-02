@@ -42,7 +42,7 @@ spec:
         operator: Exists
       containers:
       - name: guix
-        image: harbor.home.wugi.info/library/guix-image-workstation:5a1fa712
+        image: harbor.home.wugi.info/library/guix-image-workstation:11612c24
         volumeMounts:
         - mountPath: /home/oleg/.cache/ihs
           name: home-oleg-dot-cache-ihs
