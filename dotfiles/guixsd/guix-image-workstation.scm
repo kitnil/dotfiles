@@ -288,9 +288,7 @@ program.")))
                           (elogind-service)
                           seatd-service
                           (service container-mingetty-service-type
-                                   (mingetty-configuration (tty "tty8")
-                                                           (auto-login "oleg")
-                                                           (delay 20)))
+                                   (mingetty-configuration (tty "tty8")))
                           (service avahi-service-type)
                           (simple-service 'host-container-guix shepherd-root-service-type
                                           (list
