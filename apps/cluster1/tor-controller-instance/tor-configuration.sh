@@ -1,4 +1,5 @@
-``` shell
+#!/usr/bin/env bash
+
 cat <<EOF | kubectl apply -f -
 apiVersion: v1
 kind: ConfigMap
@@ -13,4 +14,3 @@ data:
     Bridge $(pass show tor/bridge/1)
     Bridge $(pass show tor/bridge/2)
 EOF
-```
