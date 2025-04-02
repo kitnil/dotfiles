@@ -41,7 +41,7 @@ spec:
         operator: Exists
       containers:
       - name: guix
-        image: harbor.home.wugi.info/library/guix-image-workstation:7518682c
+        image: harbor.home.wugi.info/library/guix-image-workstation:11612c24
         volumeMounts:
         - mountPath: /home/oleg/.cache/ihs
           name: home-oleg-dot-cache-ihs
@@ -94,7 +94,7 @@ spec:
           readOnly: true
 
       - name: nixos
-        image: harbor.home.wugi.info/library/nixos-systemd-taskexecutor:1e2782c6
+        image: harbor.home.wugi.info/library/nixos-systemd-taskexecutor:2197a346
         volumeMounts:
         - mountPath: /home/oleg/.mozilla/firefox
           name: home-oleg-mozilla-firefox
@@ -122,7 +122,7 @@ spec:
           name: docker-configuration
 
       - name: archlinux
-        image: harbor.home.wugi.info/library/archlinux-systemd:08cf15ae
+        image: harbor.home.wugi.info/library/archlinux-systemd:46e37b1d
         volumeMounts:
         - mountPath: /home/oleg/.bash_history
           name: home-oleg-bash-history
