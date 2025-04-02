@@ -123,7 +123,7 @@ spec:
           name: docker-configuration
 
       - name: archlinux
-        image: harbor.home.wugi.info/library/archlinux-systemd:46e37b1d
+        image: harbor.home.wugi.info/library/archlinux-systemd:1801bab3
         volumeMounts:
         - mountPath: /home/oleg/.bash_history
           name: home-oleg-bash-history
