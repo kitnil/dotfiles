@@ -141,11 +141,12 @@
      (provision (list (string->symbol (string-append "runc-" name))))
      (documentation "Run container with runc.")
      (requirement '(networking))
-     (start #~(make-forkexec-constructor
-               (list (string-append #$runc "/sbin/runc")
-                     "run" #$name)
-               #:directory #$directory
-               #:log-file #$(string-append "/var/log/runc/" name ".log")))
+     (start #~(let ((runc #$(file-append runc "/sbin/runc")))
+                (system* runc "delete" #$name)
+                (make-forkexec-constructor
+                 (list runc "run" #$name)
+                 #:directory #$directory
+                 #:log-file #$(string-append "/var/log/runc/" name ".log"))))
      (respawn? #f)
      (auto-start? #f)
      (stop #~(make-kill-destructor))))))
