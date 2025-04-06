@@ -97,10 +97,10 @@ EndSection
                       ;; # lspci -Dnn
                       ;; 0000:12:00.0 VGA compatible controller [0300]: Advanced Micro Devices, Inc. [AMD/ATI] Navi 14 [Radeon RX 5500/5500M / Pro 5500M] [1002:7340] (rev c5)
                       ;; 0000:12:00.1 Audio device [0403]: Advanced Micro Devices, Inc. [AMD/ATI] Navi 10 HDMI Audio [1002:ab38]
-                      ;; "pci-stub.ids=1002:7340,1002:ab38"
+                      "pci-stub.ids=1002:7340,1002:ab38"
 
                       "kvm.ignore_msrs=1"
-                      "vfio-pci.ids=1002:1478,1002:1479,1002:7340,1002:ab38"
+                      ;; "vfio-pci.ids=1002:1478,1002:1479,1002:7340,1002:ab38"
 
                       ;; (#934) · Issues · drm / amd · GitLab
                       ;; <https://gitlab.freedesktop.org/drm/amd/-/issues/934>

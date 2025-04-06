@@ -1127,8 +1127,8 @@ location / {
       (kernel-loadable-modules (list drbd-module
                                      v4l2loopback-linux-module))
 
-      (initrd-modules (append '("vfio_pci" "vfio" "vfio_iommu_type1" "vfio_virqfd")
-                              (operating-system-initrd-modules base-system)))
+      ;; (initrd-modules (append '("vfio_pci" "vfio" "vfio_iommu_type1" "vfio_virqfd")
+      ;;                         (operating-system-initrd-modules base-system)))
 
       (packages (append (list ovmf
                               cifs-utils
@@ -2190,7 +2190,8 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
 127.0.0.1 ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAABBBOnaDeOzwmrcrq1D8slYaeFozXZ0cpqNU0EvGmgnO29aiKkSD1ehbIV4vSxk3IDXz9ClMVPc1bTUTrYhEVHdCks="))))
 
                          (service kernel-module-loader-service-type
-                                  '("vfio-pci"
+                                  '(;; "vfio-pci"
+                                    ;; "amdgpu"
                                     "dm-snapshot"
                                     "dm-thin-pool"
                                     "br_netfilter" ;kube-dns
