@@ -1127,9 +1127,8 @@ location / {
       (kernel-loadable-modules (list drbd-module
                                      v4l2loopback-linux-module))
 
-      ;; XXX: Add hardware/guixsd.scm
-      ;; (initrd-modules (append '("vfio_pci" "vfio" "vfio_iommu_type1" "vfio_virqfd")
-      ;;                         %base-initrd-modules))
+      (initrd-modules (append '("vfio_pci" "vfio" "vfio_iommu_type1" "vfio_virqfd")
+                              (operating-system-initrd-modules base-system)))
 
       (packages (append (list ovmf
                               cifs-utils
