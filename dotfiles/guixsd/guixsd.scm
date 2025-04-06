@@ -957,54 +957,54 @@ location / {
                               "/share/netboot-xyz/netboot-xyz.efi")
                (string-append #$output "/netboot.xyz.efi"))))
 
-(define %dnsmasq-service
-  (simple-service
-   'dnsmasq-configuration shepherd-root-service-type
-   (list (shepherd-service
-          (provision '(dnsmasq-configuration))
-          (requirement '(networking vswitchd))
-          (start #~(make-forkexec-constructor
-                    (list #$(file-append dnsmasq "/sbin/dnsmasq")
-                          "--keep-in-foreground"
-                          "--pid-file=/run/dnsmasq.pid"
-                          "--local-service"
-                          "--cache-size=150"
-                          "--dhcp-range" "192.168.154.52,192.168.154.148,12h"
-                          "--dhcp-host=52:54:00:f1:75:45,192.168.154.129" ;web99
-                          "--dhcp-host=52:54:00:7a:62:8d,192.168.154.130" ;nginx99
-                          "--dhcp-host=52:54:00:23:17:ff,192.168.154.119" ;ubuntu
-                          "--dhcp-host=52:54:00:51:3e:ad,192.168.154.131" ;kube1
-                          "--bind-interfaces"
-                          "--interface=br154.154"
-                          "--dhcp-boot=netboot.xyz.efi"
-                          (string-append "--tftp-root="
-                                         #$(run-with-store (open-connection)
-                                             (gexp->derivation "tftp-root" tftp-root)))
-                          "--enable-tftp"
-                          "--server=192.168.0.145"
-                          "--no-resolv"
-                          "--dhcp-option=option:domain-search,intr")))
-          (respawn? #f)))))
+;; (define %dnsmasq-service
+;;   (simple-service
+;;    'dnsmasq-configuration shepherd-root-service-type
+;;    (list (shepherd-service
+;;           (provision '(dnsmasq-configuration))
+;;           (requirement '(networking vswitchd))
+;;           (start #~(make-forkexec-constructor
+;;                     (list #$(file-append dnsmasq "/sbin/dnsmasq")
+;;                           "--keep-in-foreground"
+;;                           "--pid-file=/run/dnsmasq.pid"
+;;                           "--local-service"
+;;                           "--cache-size=150"
+;;                           "--dhcp-range" "192.168.154.52,192.168.154.148,12h"
+;;                           "--dhcp-host=52:54:00:f1:75:45,192.168.154.129" ;web99
+;;                           "--dhcp-host=52:54:00:7a:62:8d,192.168.154.130" ;nginx99
+;;                           "--dhcp-host=52:54:00:23:17:ff,192.168.154.119" ;ubuntu
+;;                           "--dhcp-host=52:54:00:51:3e:ad,192.168.154.131" ;kube1
+;;                           "--bind-interfaces"
+;;                           "--interface=br154.154"
+;;                           "--dhcp-boot=netboot.xyz.efi"
+;;                           (string-append "--tftp-root="
+;;                                          #$(run-with-store (open-connection)
+;;                                              (gexp->derivation "tftp-root" tftp-root)))
+;;                           "--enable-tftp"
+;;                           "--server=192.168.0.145"
+;;                           "--no-resolv"
+;;                           "--dhcp-option=option:domain-search,intr")))
+;;           (respawn? #f)))))
 
-(define %dnsmasq-vlan156-service
-  (simple-service
-   'dnsmasq-vlan156-configuration shepherd-root-service-type
-   (list (shepherd-service
-          (provision '(dnsmasq-vlan156-configuration))
-          (requirement '(networking vswitchd))
-          (start #~(make-forkexec-constructor
-                    (list #$(file-append dnsmasq "/sbin/dnsmasq")
-                          "--keep-in-foreground"
-                          "--pid-file=/run/dnsmasq-vlan156.pid"
-                          "--local-service"
-                          "--cache-size=150"
-                          "--dhcp-range" "192.168.156.52,192.168.156.148,12h"
-                          "--bind-interfaces"
-                          "--interface=br156.156"
-                          "--except-interface=lo"
-                          "--no-resolv"
-                          "--server=192.168.156.1")))
-          (respawn? #f)))))
+;; (define %dnsmasq-vlan156-service
+;;   (simple-service
+;;    'dnsmasq-vlan156-configuration shepherd-root-service-type
+;;    (list (shepherd-service
+;;           (provision '(dnsmasq-vlan156-configuration))
+;;           (requirement '(networking vswitchd))
+;;           (start #~(make-forkexec-constructor
+;;                     (list #$(file-append dnsmasq "/sbin/dnsmasq")
+;;                           "--keep-in-foreground"
+;;                           "--pid-file=/run/dnsmasq-vlan156.pid"
+;;                           "--local-service"
+;;                           "--cache-size=150"
+;;                           "--dhcp-range" "192.168.156.52,192.168.156.148,12h"
+;;                           "--bind-interfaces"
+;;                           "--interface=br156.156"
+;;                           "--except-interface=lo"
+;;                           "--no-resolv"
+;;                           "--server=192.168.156.1")))
+;;           (respawn? #f)))))
 
 (define %dnsmasq-main-service
   (simple-service
@@ -2242,42 +2242,46 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                          ;;                            ("cluster_addr" . "http://vault1:8211")
                          ;;                            ("api_addr" . "http://vault1:8210"))))))))))))
 
-                         (service openvswitch-service-type)
-                         %openvswitch-configuration-service
+                         ;; (service openvswitch-service-type)
+                         ;; %openvswitch-configuration-service
                          (service static-networking-service-type
                                   (list (static-networking
                                          (addresses
-                                          (list (network-address
-                                                 (device "br0")
-                                                 (value "192.168.0.144/24"))
-                                                (network-address
-                                                 (device "br0")
-                                                 (value "192.168.0.145/24"))
+                                          (list ;; (network-address
+                                                ;;  (device "br0")
+                                                ;;  (value "192.168.0.144/24"))
+                                                ;; (network-address
+                                                ;;  (device "br0")
+                                                ;;  (value "192.168.0.145/24"))
                                                 (network-address
                                                  (device "enp34s0")
-                                                 (value "127.0.0.2/8"))
-                                                (network-address
-                                                 (device "br154")
-                                                 (value "127.0.0.3/8"))
+                                                 (value "192.168.0.145/24"))
+                                                ;; (network-address
+                                                ;;  (device "enp34s0")
+                                                ;;  (value "127.0.0.2/8"))
+                                                ;; (network-address
+                                                ;;  (device "br154")
+                                                ;;  (value "127.0.0.3/8"))
 
                                                 ;; assign an ip address to bring interface up at boot, so
                                                 ;; it could be used in a
                                                 ;; docker network
-                                                (network-address
-                                                 (device "br155-vlan155")
-                                                 (value "127.0.0.4/8"))
+                                                ;; (network-address
+                                                ;;  (device "br155-vlan155")
+                                                ;;  (value "127.0.0.4/8"))
 
-                                                (network-address
-                                                 (device "br154.154")
-                                                 (value "192.168.154.1/24"))
+                                                ;; (network-address
+                                                ;;  (device "br154.154")
+                                                ;;  (value "192.168.154.1/24"))
 
                                                 ;; dummy ip to bring interface up
-                                                (network-address
-                                                 (device "br156")
-                                                 (value "127.0.0.156/8"))
-                                                (network-address
-                                                 (device "br156.156")
-                                                 (value "192.168.156.1/24"))))
+                                                ;; (network-address
+                                                ;;  (device "br156")
+                                                ;;  (value "127.0.0.156/8"))
+                                                ;; (network-address
+                                                ;;  (device "br156.156")
+                                                ;;  (value "192.168.156.1/24"))
+                                                ))
                                          (routes
                                           (list (network-route
                                                  (destination "default")
@@ -2291,10 +2295,11 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                                                          ;; "8.8.8.8"
                                                          ;; "8.8.4.4"
                                                          ))
-                                         (requirement '(openvswitch-configuration)))))
+                                         (requirement '(;; openvswitch-configuration
+                                                        )))))
 
-                         %dnsmasq-main-service
-                         %dnsmasq-service
+                         ;; %dnsmasq-main-service
+                         ;; %dnsmasq-service
                          ;; TODO: Use system service after adding all required flags.
                          ;; (service dnsmasq-service-type
                          ;;          (dnsmasq-configuration
@@ -2302,7 +2307,7 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                          ;;           ;; TODO: Replace port with --bind-interfaces
                          ;;           (port 0)))
 
-                         %dnsmasq-vlan156-service
+                         ;; %dnsmasq-vlan156-service
 
                          (service avahi-service-type)
 
