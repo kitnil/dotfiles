@@ -2156,15 +2156,15 @@ PasswordAuthentication yes")))
                          ;;                        ;; "--container-runtime-endpoint" "unix:///run/containerd/containerd.sock"
                          ;;                        ))))
 
-                         (service runc-service-type
-                                  (runc-configuration
-                                   (name "guix-builder")
-                                   (directory "/srv/runc/guix-builder")))
+                         ;; (service runc-service-type
+                         ;;          (runc-configuration
+                         ;;           (name "guix-builder")
+                         ;;           (directory "/srv/runc/guix-builder")))
 
-                         (service runc-service-type
-                                  (runc-configuration
-                                   (name "nix-builder")
-                                   (directory "/srv/runc/nix-builder")))
+                         ;; (service runc-service-type
+                         ;;          (runc-configuration
+                         ;;           (name "nix-builder")
+                         ;;           (directory "/srv/runc/nix-builder")))
 
                          (dovecot-service
                           #:config (dovecot-configuration
