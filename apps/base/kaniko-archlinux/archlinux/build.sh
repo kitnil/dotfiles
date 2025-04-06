@@ -59,6 +59,7 @@ packages+=(
 )
 
 packages+=(
+    chromium
     firefox
 )
 
