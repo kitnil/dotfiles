@@ -27,4 +27,3 @@ sudo ipset add tor 104.21.32.39
 sudo mv /run/setuid-programs/mount.nfs /run/setuid-programs/mount.nfs.1
 
 sudo modprobe drbd9
-sudo modprobe netconsole netconsole=@/enp34s0,6666@192.168.0.194/
