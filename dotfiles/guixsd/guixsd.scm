@@ -539,10 +539,10 @@ location / {
                              (string-join
                               (list "--may-exist" "add-br" "br0")))
                             ;; XXX: Remove vlan_mode to use tagged VLANs.
-                            (ovs-vsctl
-                             (string-join
-                              (list "--may-exist" "add-port" "br0" "enp34s0"
-                                    "vlan_mode=native-untagged")))
+                            ;; (ovs-vsctl
+                            ;;  (string-join
+                            ;;   (list "--may-exist" "add-port" "br0" "enp34s0"
+                            ;;         "vlan_mode=native-untagged")))
 
                             ;; Set default chain policies.
                             (iptables
