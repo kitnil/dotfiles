@@ -2246,37 +2246,38 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                          (service static-networking-service-type
                                   (list (static-networking
                                          (addresses
-                                          (list (network-address
-                                                 (device "br0")
-                                                 (value "192.168.0.144/24"))
-                                                (network-address
-                                                 (device "br0")
-                                                 (value "192.168.0.145/24"))
+                                          (list ;; (network-address
+                                                ;;  (device "br0")
+                                                ;;  (value "192.168.0.144/24"))
                                                 (network-address
                                                  (device "enp34s0")
-                                                 (value "127.0.0.2/8"))
-                                                (network-address
-                                                 (device "br154")
-                                                 (value "127.0.0.3/8"))
+                                                 (value "192.168.0.145/24"))
+                                                ;; (network-address
+                                                ;;  (device "enp34s0")
+                                                ;;  (value "127.0.0.2/8"))
+                                                ;; (network-address
+                                                ;;  (device "br154")
+                                                ;;  (value "127.0.0.3/8"))
 
                                                 ;; assign an ip address to bring interface up at boot, so
                                                 ;; it could be used in a
                                                 ;; docker network
-                                                (network-address
-                                                 (device "br155-vlan155")
-                                                 (value "127.0.0.4/8"))
+                                                ;; (network-address
+                                                ;;  (device "br155-vlan155")
+                                                ;;  (value "127.0.0.4/8"))
 
-                                                (network-address
-                                                 (device "br154.154")
-                                                 (value "192.168.154.1/24"))
+                                                ;; (network-address
+                                                ;;  (device "br154.154")
+                                                ;;  (value "192.168.154.1/24"))
 
                                                 ;; dummy ip to bring interface up
-                                                (network-address
-                                                 (device "br156")
-                                                 (value "127.0.0.156/8"))
-                                                (network-address
-                                                 (device "br156.156")
-                                                 (value "192.168.156.1/24"))))
+                                                ;; (network-address
+                                                ;;  (device "br156")
+                                                ;;  (value "127.0.0.156/8"))
+                                                ;; (network-address
+                                                ;;  (device "br156.156")
+                                                ;;  (value "192.168.156.1/24"))
+                                                ))
                                          (routes
                                           (list (network-route
                                                  (destination "default")
@@ -2290,7 +2291,8 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                                                          ;; "8.8.8.8"
                                                          ;; "8.8.4.4"
                                                          ))
-                                         (requirement '(openvswitch-configuration)))))
+                                         ;; (requirement '(openvswitch-configuration))
+                                         )))
 
                          %dnsmasq-main-service
                          %dnsmasq-service
