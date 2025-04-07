@@ -1113,11 +1113,11 @@ location / {
                               "/share/netboot-xyz/netboot-xyz.efi")
                (string-append #$output "/netboot.xyz.efi"))))
 
-(define %dnsmasq-service
+(define %dnsmasq-br154
   (simple-service
-   'dnsmasq-configuration shepherd-root-service-type
+   'dnsmasq-br154 shepherd-root-service-type
    (list (shepherd-service
-          (provision '(dnsmasq-configuration))
+          (provision '(dnsmasq-br154))
           (requirement '(networking vswitchd))
           (start #~(make-forkexec-constructor
                     (list #$(file-append dnsmasq "/sbin/dnsmasq")
@@ -1132,6 +1132,10 @@ location / {
                           "--dhcp-host=52:54:00:51:3e:ad,192.168.154.131" ;kube1
                           "--bind-interfaces"
                           "--interface=br154.154"
+                          "--except-interface=br0"
+                          "--except-interface=br156.br156"
+                          "--except-interface=enp34s0"
+                          "--except-interface=lo"
                           "--dhcp-boot=netboot.xyz.efi"
                           (string-append "--tftp-root="
                                          #$(run-with-store (open-connection)
@@ -1142,11 +1146,11 @@ location / {
                           "--dhcp-option=option:domain-search,intr")))
           (respawn? #f)))))
 
-(define %dnsmasq-vlan156-service
+(define %dnsmasq-br156
   (simple-service
-   'dnsmasq-vlan156-configuration shepherd-root-service-type
+   'dnsmasq-br156 shepherd-root-service-type
    (list (shepherd-service
-          (provision '(dnsmasq-vlan156-configuration))
+          (provision '(dnsmasq-br156))
           (requirement '(networking vswitchd))
           (start #~(make-forkexec-constructor
                     (list #$(file-append dnsmasq "/sbin/dnsmasq")
@@ -1157,16 +1161,19 @@ location / {
                           "--dhcp-range" "192.168.156.52,192.168.156.148,12h"
                           "--bind-interfaces"
                           "--interface=br156.156"
+                          "--except-interface=br0"
+                          "--except-interface=br154.br154"
+                          "--except-interface=enp34s0"
                           "--except-interface=lo"
                           "--no-resolv"
                           "--server=192.168.156.1")))
           (respawn? #f)))))
 
-(define %dnsmasq-main-service
+(define %dnsmasq-enp34s0
   (simple-service
-   'dnsmasq-configuration shepherd-root-service-type
+   'dnsmasq-enp34s0 shepherd-root-service-type
    (list (shepherd-service
-          (provision '(dnsmasq))
+          (provision '(dnsmasq-enp34s0))
           (requirement '(networking vswitchd))
           (start #~(make-forkexec-constructor
                     (list #$(file-append dnsmasq "/sbin/dnsmasq")
@@ -1177,10 +1184,10 @@ location / {
                           "--server=8.8.8.8"
                           "--no-resolv"
                           "--bind-interfaces"
-                          "--except-interface=lo"
-                          "--except-interface=br154.br154"
                           "--except-interface=br0"
-                          "--except-interface=enp34s0"
+                          "--except-interface=br154.br154"
+                          "--except-interface=br156.br156"
+                          "--except-interface=lo"
                           "--ipset=/googleapis.com/googlevideo.com/gvt1.com/nhacmp3youtube.com/video.google.com/www.youtube.com/youtu.be/youtube.com/youtubeeducation.com/youtubei.googleapis.com/youtubekids.com/youtube-nocookie.com/youtube-ui.l.google.com/yt3.ggpht.com/yt.be/ytimg.com/byedpi"
                           "--ipset=/ntc.party/play.google.com/yt3.ggpht.com/tor")
                     #:pid-file "/var/run/dnsmasq-main.pid"))
@@ -2451,8 +2458,8 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                                          ;; (requirement '(openvswitch-configuration))
                                          )))
 
-                         %dnsmasq-main-service
-                         %dnsmasq-service
+                         %dnsmasq-enp34s0
+                         %dnsmasq-br154
                          ;; TODO: Use system service after adding all required flags.
                          ;; (service dnsmasq-service-type
                          ;;          (dnsmasq-configuration
@@ -2460,7 +2467,7 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                          ;;           ;; TODO: Replace port with --bind-interfaces
                          ;;           (port 0)))
 
-                         %dnsmasq-vlan156-service
+                         %dnsmasq-br156
 
                          (service avahi-service-type)
 
