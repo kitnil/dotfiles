@@ -1,0 +1,11 @@
+---
+apiVersion: source.toolkit.fluxcd.io/v1beta2
+kind: HelmRepository
+metadata:
+  name: amd-gpu
+  namespace: flux-system
+spec:
+  interval: 60m0s
+  secretRef:
+    name: flux-system
+  url: https://rocm.github.io/k8s-device-plugin/
