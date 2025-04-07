@@ -1,0 +1,24 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: open-webui
+spec:
+  releaseName: open-webui
+  chart:
+    spec:
+      chart: open-webui
+      sourceRef:
+        kind: HelmRepository
+        name: open-webui
+        namespace: ollama
+  interval: 15m
+  timeout: 15m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  valuesFrom:
+  - kind: ConfigMap
+    name: open-webui
