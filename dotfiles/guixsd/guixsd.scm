@@ -1169,29 +1169,29 @@ location / {
                           "--server=192.168.156.1")))
           (respawn? #f)))))
 
-(define %dnsmasq-lo
-  (simple-service
-   'dnsmasq-enp34s0 shepherd-root-service-type
-   (list (shepherd-service
-          (provision '(dnsmasq-enp34s0))
-          (requirement '(networking vswitchd))
-          (start #~(make-forkexec-constructor
-                    (list #$(file-append dnsmasq "/sbin/dnsmasq")
-                          "--keep-in-foreground"
-                          "--pid-file=/var/run/dnsmasq-main.pid"
-                          "--local-service"
-                          "--interface=lo"
-                          "--server=8.8.8.8"
-                          "--no-resolv"
-                          "--bind-interfaces"
-                          "--except-interface=enp34s0"
-                          "--except-interface=br0"
-                          "--except-interface=br154.br154"
-                          "--except-interface=br156.br156"
-                          "--ipset=/googleapis.com/googlevideo.com/gvt1.com/nhacmp3youtube.com/video.google.com/www.youtube.com/youtu.be/youtube.com/youtubeeducation.com/youtubei.googleapis.com/youtubekids.com/youtube-nocookie.com/youtube-ui.l.google.com/yt3.ggpht.com/yt.be/ytimg.com/byedpi"
-                          "--ipset=/ntc.party/play.google.com/yt3.ggpht.com/tor")
-                    #:pid-file "/var/run/dnsmasq-main.pid"))
-          (respawn? #f)))))
+;; (define %dnsmasq-lo
+;;   (simple-service
+;;    'dnsmasq-enp34s0 shepherd-root-service-type
+;;    (list (shepherd-service
+;;           (provision '(dnsmasq-enp34s0))
+;;           (requirement '(networking vswitchd))
+;;           (start #~(make-forkexec-constructor
+;;                     (list #$(file-append dnsmasq "/sbin/dnsmasq")
+;;                           "--keep-in-foreground"
+;;                           "--pid-file=/var/run/dnsmasq-main.pid"
+;;                           "--local-service"
+;;                           "--interface=lo"
+;;                           "--server=8.8.8.8"
+;;                           "--no-resolv"
+;;                           "--bind-interfaces"
+;;                           "--except-interface=enp34s0"
+;;                           "--except-interface=br0"
+;;                           "--except-interface=br154.br154"
+;;                           "--except-interface=br156.br156"
+;;                           "--ipset=/googleapis.com/googlevideo.com/gvt1.com/nhacmp3youtube.com/video.google.com/www.youtube.com/youtu.be/youtube.com/youtubeeducation.com/youtubei.googleapis.com/youtubekids.com/youtube-nocookie.com/youtube-ui.l.google.com/yt3.ggpht.com/yt.be/ytimg.com/byedpi"
+;;                           "--ipset=/ntc.party/play.google.com/yt3.ggpht.com/tor")
+;;                     #:pid-file "/var/run/dnsmasq-main.pid"))
+;;           (respawn? #f)))))
 
 ;; TODO: Add libvirtd network configuration.
 ;; (use-modules (sxml simple))
@@ -2458,7 +2458,7 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                                          ;; (requirement '(openvswitch-configuration))
                                          )))
 
-                         %dnsmasq-lo
+                         ;; %dnsmasq-lo
                          %dnsmasq-br154
                          ;; TODO: Use system service after adding all required flags.
                          ;; (service dnsmasq-service-type
