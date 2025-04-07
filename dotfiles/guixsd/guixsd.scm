@@ -1169,7 +1169,7 @@ location / {
                           "--server=192.168.156.1")))
           (respawn? #f)))))
 
-(define %dnsmasq-enp34s0
+(define %dnsmasq-lo
   (simple-service
    'dnsmasq-enp34s0 shepherd-root-service-type
    (list (shepherd-service
@@ -1180,14 +1180,14 @@ location / {
                           "--keep-in-foreground"
                           "--pid-file=/var/run/dnsmasq-main.pid"
                           "--local-service"
-                          "--interface=enp34s0"
+                          "--interface=lo"
                           "--server=8.8.8.8"
                           "--no-resolv"
                           "--bind-interfaces"
+                          "--except-interface=enp34s0"
                           "--except-interface=br0"
                           "--except-interface=br154.br154"
                           "--except-interface=br156.br156"
-                          "--except-interface=lo"
                           "--ipset=/googleapis.com/googlevideo.com/gvt1.com/nhacmp3youtube.com/video.google.com/www.youtube.com/youtu.be/youtube.com/youtubeeducation.com/youtubei.googleapis.com/youtubekids.com/youtube-nocookie.com/youtube-ui.l.google.com/yt3.ggpht.com/yt.be/ytimg.com/byedpi"
                           "--ipset=/ntc.party/play.google.com/yt3.ggpht.com/tor")
                     #:pid-file "/var/run/dnsmasq-main.pid"))
@@ -2458,7 +2458,7 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                                          ;; (requirement '(openvswitch-configuration))
                                          )))
 
-                         %dnsmasq-enp34s0
+                         %dnsmasq-lo
                          %dnsmasq-br154
                          ;; TODO: Use system service after adding all required flags.
                          ;; (service dnsmasq-service-type
