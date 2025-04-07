@@ -1,9 +1,5 @@
 ollama:
   ollama:
-    gpu:
-      enabled: true
-      type: "amd"
-      number: 1
     models:
       pull:
       - llama3
