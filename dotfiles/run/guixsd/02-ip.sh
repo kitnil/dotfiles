@@ -17,6 +17,8 @@ ip address add 192.168.154.1/24 dev br154.154
 
 ip link set br156 up
 ip address add 127.0.0.156/8 dev br156
+
+ip link set br156.156 up
 ip address add 192.168.156.1/24 dev br156.156
 
 modprobe netconsole netconsole=@/enp34s0,6666@192.168.0.194/
