@@ -5,3 +5,7 @@ resources:
 - release.yaml
 configurations:
 - kustomizeconfig.yaml
+configMapGenerator:
+- name: prometheus-operator-crds
+  files:
+  - values.yaml=values.yaml
