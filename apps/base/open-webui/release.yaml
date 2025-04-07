@@ -3,6 +3,7 @@ kind: HelmRelease
 metadata:
   name: open-webui
 spec:
+  releaseName: open-webui
   chart:
     spec:
       chart: open-webui
