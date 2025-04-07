@@ -5,4 +5,5 @@ ollama:
       type: "amd"
       number: 1
     models:
-    - llama3
+      pull:
+      - llama3
