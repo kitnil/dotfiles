@@ -10,7 +10,6 @@ spec:
       sourceRef:
         kind: HelmRepository
         name: open-webui
-        namespace: ollama
   interval: 15m
   timeout: 15m
   install:
