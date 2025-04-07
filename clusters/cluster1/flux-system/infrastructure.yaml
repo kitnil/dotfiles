@@ -271,6 +271,19 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
+  name: prometheus-operator-crds
+  namespace: flux-system
+spec:
+  interval: 30m0s
+  path: ./infrastructure/base/prometheus-operator-crds
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
   name: kube-prometheus-stack
   namespace: flux-system
 spec:
