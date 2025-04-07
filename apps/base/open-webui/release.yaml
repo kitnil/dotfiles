@@ -3,10 +3,11 @@ kind: HelmRelease
 metadata:
   name: open-webui
 spec:
-  releaseName: open-webui
   chart:
     spec:
       chart: open-webui
+      reconcileStrategy: ChartVersion
+      version: 6.1.0
       sourceRef:
         kind: HelmRepository
         name: open-webui
