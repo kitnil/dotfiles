@@ -5,3 +5,4 @@ resources:
 - namespace.yaml
 - endpoints.yaml
 - service.yaml
+- ingress.yaml
