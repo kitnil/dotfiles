@@ -41,10 +41,7 @@ in
           WAYLAND_DISPLAY=wayland-1
           export WAYLAND_DISPLAY
 
-          DISPLAY=:0
-          export DISPLAY
-
-          exec -a google-chrome-stable ${cfg.package}/bin/google-chrome-stable "$@"
+          exec -a google-chrome-stable ${cfg.package}/bin/google-chrome-stable --ozone-platform=wayland "$@"
         '';
         Type = "simple";
       };
