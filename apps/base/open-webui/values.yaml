@@ -1,5 +1,2 @@
 ollama:
-  ollama:
-    models:
-      pull:
-      - llama3
+  enabled: false
