@@ -135,6 +135,8 @@ spec:
           name: home-oleg-src
         - mountPath: /home/oleg/.local/share/chezmoi
           name: home-oleg-local-share-chezmoi
+        - mountPath: /home/oleg/.mozilla
+          name: srv-runc-arch-home-oleg-mozilla
 
       volumes:
       - hostPath:
@@ -257,3 +259,7 @@ spec:
           path: /home/oleg/.bash_history
           type: File
         name: home-oleg-bash-history
+      - hostPath:
+          path: /srv/runc/arch/home/oleg/.mozilla
+          type: File
+        name: srv-runc-arch-home-oleg-mozilla
