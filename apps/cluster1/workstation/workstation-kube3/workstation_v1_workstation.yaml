@@ -261,5 +261,5 @@ spec:
         name: home-oleg-bash-history
       - hostPath:
           path: /srv/runc/arch/home/oleg/.mozilla
-          type: File
+          type: Directory
         name: srv-runc-arch-home-oleg-mozilla
