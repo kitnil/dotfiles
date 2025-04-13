@@ -1,4 +1,4 @@
-<domain type='kvm' id='4' xmlns:qemu='http://libvirt.org/schemas/domain/qemu/1.0'>
+<domain type='kvm' id='5' xmlns:qemu='http://libvirt.org/schemas/domain/qemu/1.0'>
   <name>win10</name>
   <uuid>32ba10e9-3ec6-46e6-bcfa-a0ab8344bb76</uuid>
   <metadata>
@@ -6,8 +6,8 @@
       <libosinfo:os id="http://microsoft.com/win/10"/>
     </libosinfo:libosinfo>
   </metadata>
-  <memory unit='KiB'>16777216</memory>
-  <currentMemory unit='KiB'>16777216</currentMemory>
+  <memory unit='KiB'>33554432</memory>
+  <currentMemory unit='KiB'>33554432</currentMemory>
   <vcpu placement='static'>8</vcpu>
   <resource>
     <partition>/machine</partition>
@@ -38,6 +38,7 @@
     <topology sockets='1' dies='1' cores='8' threads='1'/>
     <cache mode='passthrough'/>
     <feature policy='disable' name='hypervisor'/>
+    <feature policy='disable' name='svm'/>
   </cpu>
   <clock offset='utc'>
     <timer name='rtc' tickpolicy='catchup'/>
@@ -214,20 +215,20 @@
     <interface type='direct'>
       <mac address='52:54:00:3d:a2:2a'/>
       <source dev='eth0' mode='bridge'/>
-      <target dev='macvtap3'/>
+      <target dev='macvtap4'/>
       <model type='virtio'/>
       <alias name='net0'/>
       <address type='pci' domain='0x0000' bus='0x05' slot='0x00' function='0x0'/>
     </interface>
     <serial type='pty'>
-      <source path='/dev/pts/3'/>
+      <source path='/dev/pts/2'/>
       <target type='isa-serial' port='0'>
         <model name='isa-serial'/>
       </target>
       <alias name='serial0'/>
     </serial>
-    <console type='pty' tty='/dev/pts/3'>
-      <source path='/dev/pts/3'/>
+    <console type='pty' tty='/dev/pts/2'>
+      <source path='/dev/pts/2'/>
       <target type='serial' port='0'/>
       <alias name='serial0'/>
     </console>
@@ -244,7 +245,7 @@
       <alias name='input2'/>
     </input>
     <input type='evdev'>
-      <source dev='/dev/input/by-id/usb-0416_Gaming_Keyboard-event-kbd' grab='all' repeat='on'/>
+      <source dev='/dev/input/by-path/pci-0000:12:00.3-usb-0:2:1.0-event-kbd' grab='all' repeat='on'/>
       <alias name='input3'/>
     </input>
     <input type='mouse' bus='ps2'>
@@ -271,31 +272,42 @@
     <hostdev mode='subsystem' type='pci' managed='yes'>
       <driver name='vfio'/>
       <source>
-        <address domain='0x0000' bus='0x03' slot='0x00' function='0x0'/>
+        <address domain='0x0000' bus='0x0f' slot='0x00' function='0x0'/>
       </source>
       <alias name='hostdev0'/>
-      <address type='pci' domain='0x0000' bus='0x01' slot='0x00' function='0x0'/>
+      <rom bar='off'/>
+      <address type='pci' domain='0x0000' bus='0x06' slot='0x00' function='0x0'/>
     </hostdev>
-    <hostdev mode='subsystem' type='pci' managed='yes'>
-      <driver name='vfio'/>
+    <hostdev mode='subsystem' type='usb' managed='yes'>
       <source>
-        <address domain='0x0000' bus='0x03' slot='0x00' function='0x1'/>
+        <vendor id='0x0e8d'/>
+        <product id='0x0616'/>
+        <address bus='1' device='5'/>
       </source>
       <alias name='hostdev1'/>
-      <address type='pci' domain='0x0000' bus='0x04' slot='0x00' function='0x0'/>
+      <address type='usb' bus='0' port='1'/>
+    </hostdev>
+    <hostdev mode='subsystem' type='pci' managed='no'>
+      <driver name='vfio'/>
+      <source>
+        <address domain='0x0000' bus='0x03' slot='0x00' function='0x0'/>
+      </source>
+      <alias name='hostdev2'/>
+      <rom bar='off'/>
+      <address type='pci' domain='0x0000' bus='0x01' slot='0x00' function='0x0'/>
     </hostdev>
     <memballoon model='none'/>
-    <shmem name='looking-glass'>
-      <model type='ivshmem-plain'/>
-      <size unit='M'>64</size>
-      <alias name='shmem0'/>
-      <address type='pci' domain='0x0000' bus='0x08' slot='0x01' function='0x0'/>
-    </shmem>
   </devices>
   <seclabel type='dynamic' model='dac' relabel='yes'>
     <label>+1000:+984</label>
     <imagelabel>+1000:+984</imagelabel>
   </seclabel>
+  <qemu:commandline>
+    <qemu:arg value='-device'/>
+    <qemu:arg value='{&quot;driver&quot;:&quot;ivshmem-plain&quot;,&quot;id&quot;:&quot;shmem0&quot;,&quot;memdev&quot;:&quot;looking-glass&quot;}'/>
+    <qemu:arg value='-object'/>
+    <qemu:arg value='{&quot;qom-type&quot;:&quot;memory-backend-file&quot;,&quot;id&quot;:&quot;looking-glass&quot;,&quot;mem-path&quot;:&quot;/dev/kvmfr0&quot;,&quot;size&quot;:134217728,&quot;share&quot;:true}'/>
+  </qemu:commandline>
   <qemu:capabilities>
     <qemu:del capability='usb-host.hostdevice'/>
   </qemu:capabilities>
