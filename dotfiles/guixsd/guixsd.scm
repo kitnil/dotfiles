@@ -2331,7 +2331,7 @@ PasswordAuthentication yes")))
 
                          (dovecot-service
                           #:config (dovecot-configuration
-                                    (listen '("127.0.0.1"))
+                                    (listen '("127.0.0.1" "192.168.0.145"))
                                     (disable-plaintext-auth? #f)
                                     (mail-location
                                      (string-append "maildir:~/Maildir"
