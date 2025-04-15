@@ -92,6 +92,10 @@ spec:
         - mountPath: /home/oleg/.docker/config.json
           name: docker-configuration
           readOnly: true
+        - mountPath: /home/oleg/.newsrc.eld
+          name: home-oleg-dot-newsrc-dot-eld
+        - mountPath: /home/oleg/News
+          name: home-oleg-news
 
       - name: nixos
         image: harbor.home.wugi.info/library/nixos-systemd-taskexecutor:bc3f5093
@@ -242,3 +246,11 @@ spec:
           path: /home/oleg/.bash_history
           type: File
         name: home-oleg-bash-history
+      - hostPath:
+          path: /home/oleg/.newsrc.eld
+          type: File
+        name: home-oleg-dot-newsrc-dot-eld
+      - hostPath:
+          path: /home/oleg/News
+          type: Directory
+        name: home-oleg-news
