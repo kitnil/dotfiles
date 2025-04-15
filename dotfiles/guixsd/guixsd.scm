@@ -1234,6 +1234,20 @@ location / {
 
 
 ;;;
+;;; Avahi in workstation Pod
+;;;
+
+(define container-guix-networking-avahi-program
+  (program-file "container-guix-networking-avahi-program"
+                #~(begin
+                    (setenv "PATH"
+                            "/run/setuid-programs:/root/.config/guix/current/bin:/run/current-system/profile/bin:/run/current-system/profile/sbin")
+                    (execl #$(local-file "/home/oleg/.local/share/chezmoi/dotfiles/run/guixsd/10-avahi-namespace.sh"
+                                         #:recursive? #t)
+                           "container-guix-networking-avahi-program"))))
+
+
+;;;
 ;;; Entryp point
 ;;;
 
@@ -2507,7 +2521,19 @@ namespaces = [ ]
 
                          (bluetooth-service #:auto-enable? #t)
 
-                         seatd-service)
+                         seatd-service
+
+                         (simple-service 'container-guix-networking-avahi shepherd-root-service-type
+                                         (list
+                                          (shepherd-service
+                                           (provision '(container-guix-networking-avahi))
+                                           (auto-start? #f)
+                                           (documentation "Configure networking for avahi.")
+                                           (requirement '())
+                                           (start #~(make-forkexec-constructor
+                                                     (list #$container-guix-networking-avahi-program)))
+                                           (respawn? #f)
+                                           (stop #~(make-kill-destructor))))))
 
                         (load "desktop.scm")
 
