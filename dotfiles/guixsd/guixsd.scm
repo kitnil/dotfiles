@@ -1248,7 +1248,7 @@ location / {
 
 
 ;;;
-;;; Entryp point
+;;; Entry point
 ;;;
 
 ;; TODO: Get rid of full path
