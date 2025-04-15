@@ -17,7 +17,6 @@ spec:
     spec:
       hostNetwork: true
       hostPID: true
-      restartPolicy: Never
       containers:
       - command:
         - nsenter
