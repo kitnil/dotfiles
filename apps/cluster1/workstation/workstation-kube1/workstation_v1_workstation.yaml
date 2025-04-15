@@ -98,6 +98,8 @@ spec:
           name: home-oleg-dot-newsrc-dot-eld
         - mountPath: /home/oleg/News
           name: home-oleg-news
+        - mountPath: /home/oleg/.kube/config
+          name: home-oleg-dot-kube-config
 
       - name: nixos
         image: harbor.home.wugi.info/library/nixos-systemd-taskexecutor:bc3f5093
@@ -260,3 +262,7 @@ spec:
           path: /home/oleg/News
           type: Directory
         name: home-oleg-news
+      - hostPath:
+          path: /home/oleg/.kube/config
+          type: File
+        name: home-oleg-dot-kube-config
