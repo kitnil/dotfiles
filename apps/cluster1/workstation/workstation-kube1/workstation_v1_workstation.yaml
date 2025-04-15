@@ -92,6 +92,8 @@ spec:
         - mountPath: /home/oleg/.docker/config.json
           name: docker-configuration
           readOnly: true
+        - mountPath: /home/oleg/.authinfo.gpg
+          name: home-oleg-dot-authinfo-dot-gpg
         - mountPath: /home/oleg/.newsrc.eld
           name: home-oleg-dot-newsrc-dot-eld
         - mountPath: /home/oleg/News
@@ -246,6 +248,10 @@ spec:
           path: /home/oleg/.bash_history
           type: File
         name: home-oleg-bash-history
+      - hostPath:
+          path: /home/oleg/.authinfo.gpg
+          type: File
+        name: home-oleg-dot-authinfo-dot-gpg
       - hostPath:
           path: /home/oleg/.newsrc.eld
           type: File
