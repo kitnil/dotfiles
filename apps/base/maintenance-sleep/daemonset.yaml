@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: sleep
+spec:
+  updateStrategy:
+    type: OnDelete
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: sleep
+      app.kubernetes.io/part-of: sleep
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: sleep
+        app.kubernetes.io/part-of: sleep
+    spec:
+      hostNetwork: true
+      hostPID: true
+      restartPolicy: Never
+      containers:
+      - command:
+        - nsenter
+        - --target
+        - "1"
+        - --mount
+        - --uts
+        - --ipc
+        - --net
+        - --pid
+        - --no-fork
+        - /bin/sh
+        - -l
+        - -c
+        - sudo --user=oleg --login bash -ic 'exec &> >(tee -a /home/oleg/.local/var/log/containers/guix-system-switch.log); guix system switch --allow-downgrades'
+        image: docker-registry.wugi.info/library/util-linux-with-udev
+        name: sleep
+        securityContext:
+          privileged: true
