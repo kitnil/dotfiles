@@ -148,6 +148,11 @@ install_vscode()
     aur install vscode
 }
 
+install_wlvncc()
+{
+    aur install wlvncc-git
+}
+
 install_vscode_extensions()
 {
     local extensions=(
@@ -213,6 +218,7 @@ main()
     install_kind
     install_dlv
     install_pob
+    install_wlvncc
 }
 
 main "$@"
