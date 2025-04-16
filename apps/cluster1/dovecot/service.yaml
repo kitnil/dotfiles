@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: dovecot
+  annotations:
+    external-dns.alpha.kubernetes.io/hostname: imap.home.wugi.info
+spec:
+  ports:
+  - name: imap
+    protocol: TCP
+    port: 143
+    targetPort: 143
+  - name: imaps
+    protocol: TCP
+    port: 993
+    targetPort: 993
+  selector: {}
+  type: ClusterIP
