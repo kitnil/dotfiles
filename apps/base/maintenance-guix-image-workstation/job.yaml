@@ -20,7 +20,7 @@ spec:
         - -c
         - |
           nsenter --target "1" --mount --uts --ipc --net --pid --no-fork \
-          /run/setuid-programs/sudo --user=oleg --login bash <<'EOF'
+          /run/setuid-programs/sudo --login bash <<'EOF'
           set -o nounset -o errexit -o pipefail -o xtrace
           cd /srv/runc/guix-builder || exit 1
           /gnu/store/3dwzy5gwagj0g838gr4kg77a0s0v1q0s-runc-1.1.12/sbin/runc exec -u 1000:998 -t guix-builder /bin/sh -lec <<'EOL'
