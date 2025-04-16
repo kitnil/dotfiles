@@ -1,4 +1,4 @@
-;; Copyright © 2018, 2019, 2020, 2021, 2022, 2024 Oleg Pykhalov <go.wigust@gmail.com>
+;; Copyright © 2018, 2019, 2020, 2021, 2022, 2024, 2025 Oleg Pykhalov <go.wigust@gmail.com>
 ;; Released under the GNU GPLv3 or any later version.
 
 (require 'mailcap)
@@ -6,7 +6,7 @@
 (setq gnus-use-full-window nil)
 
 (setq gnus-select-method '(nnimap "USER"
-                                  (nnimap-address "localhost")
+                                  (nnimap-address "imap.home.wugi.info")
                                   (nnimap-server-port "imaps")))
 
 (setq gnus-permanently-visible-groups ".*INBOX")
