@@ -71,6 +71,10 @@ packages+=(
     openssh
 )
 
+packages+=(
+    aichat
+)
+
 base_system()
 {
     groups=(
