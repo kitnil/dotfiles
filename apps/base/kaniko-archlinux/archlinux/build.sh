@@ -68,6 +68,7 @@ packages+=(
 )
 
 packages+=(
+    openbsd-netcat
     openssh
 )
 
