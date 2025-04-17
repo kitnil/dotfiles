@@ -23,7 +23,7 @@ spec:
           /run/setuid-programs/sudo --login bash <<'EOF'
           set -o nounset -o errexit -o pipefail -o xtrace
           cd /srv/runc/nix-builder || exit 1
-          /gnu/store/3dwzy5gwagj0g838gr4kg77a0s0v1q0s-runc-1.1.12/sbin/runc exec --tty -u 1000:998 nix-builder /run/current-system/sw/bin/machinectl shell oleg@ /bin/sh -le <<'EOL'
+          /gnu/store/3dwzy5gwagj0g838gr4kg77a0s0v1q0s-runc-1.1.12/sbin/runc exec nix-builder /run/current-system/sw/bin/machinectl shell oleg@ /bin/sh -le <<'EOL'
           cd "${HOME}/.local/share/chezmoi" || exit 1
           make container-systemd-taskexecutor
           EOL
