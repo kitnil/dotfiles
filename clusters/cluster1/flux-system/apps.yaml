@@ -1242,7 +1242,7 @@ spec:
   path: ./apps/cluster1/maintenance-nix-build-container-systemd-kube1
   prune: true
   dependsOn:
-  - name: maintenance-runc-nix-builder-git-dotfiles
+  - name: maintenance-runc-nix-builder-git-dotfiles-kube1
   sourceRef:
     kind: GitRepository
     name: flux-system
