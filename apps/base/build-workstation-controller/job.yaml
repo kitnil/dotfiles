@@ -22,12 +22,7 @@ spec:
           nsenter --target "1" --mount --uts --ipc --net --pid --no-fork \
           /run/setuid-programs/sudo --user oleg --login bash <<'EOF'
           set -o nounset -o errexit -o pipefail -o xtrace
-          kubectl -n workstation exec --container=archlinux workstation-kube3 -- /usr/bin/env bash -l <<'EOL'
-          cd "${HOME}/.local/share/chezmoi/src/go/workstation-controller"
-          IMG=harbor.home.wugi.info/library/workstation-controller:c0e106e8
-          make docker-build
-          make docker-push
-          EOL
+          kubectl -n workstation exec --container=archlinux workstation-kube3 -- /usr/bin/env bash -xelc 'cd "${HOME}/.local/share/chezmoi/src/go/workstation-controller"; export IMG=harbor.home.wugi.info/library/workstation-controller:c0e106e8; make docker-build; make docker-push'
           EOF
         image: docker-registry.wugi.info/library/util-linux-with-udev
         name: refresh
