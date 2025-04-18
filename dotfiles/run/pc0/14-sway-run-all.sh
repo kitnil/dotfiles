@@ -24,13 +24,6 @@ sleep 5
 /home/oleg/bin/nerdctl-nixos-exec /bin/sh -lc 'export XDG_RUNTIME_DIR=/mnt/guix/run/user/1000; export WAYLAND_DISPLAY=wayland-1; export QT_QPA_PLATFORM=wayland; exec chatterino' &
 sleep 2
 
-echo "INFO: Sort windows." 1>&2
-
-sway_focus_left()
-{
-    /home/oleg/bin/nerdctl-guix-exec /bin/sh -lc 'export SWAYSOCK="$(echo /run/user/1000/sway-ipc*sock)"; /home/oleg/.guix-home/profile/bin/swaymsg focus left'
-}
-
 /home/oleg/bin/nerdctl-guix-exec /bin/sh -lc 'export SWAYSOCK="$(echo /run/user/1000/sway-ipc*sock)"; /home/oleg/.guix-home/profile/bin/swaymsg focus up'
 sleep 2
 
