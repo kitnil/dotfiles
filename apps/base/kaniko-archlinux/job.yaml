@@ -46,6 +46,9 @@ spec:
         - name: dockerfile-storage
           mountPath: /mnt/workspace/rootfs/home/oleg/.config/aichat/config.yaml
           subPath: aichat.yaml
+        - name: dockerfile-storage
+          mountPath: /mnt/workspace/rootfs/etc/systemd/system/getty@tty10.service.d/autologin.conf
+          subPath: autologin.conf
         - name: workspace
           mountPath: /workspace
         resources:

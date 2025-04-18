@@ -16,3 +16,4 @@ configMapGenerator:
   - vscode.service=archlinux/rootfs/home/oleg/.config/systemd/user/vscode.service
   - firefox.service=archlinux/rootfs/home/oleg/.config/systemd/user/firefox.service
   - aichat.yaml=archlinux/rootfs/home/oleg/.config/aichat/config.yaml
+  - autologin.conf=archlinux/rootfs/etc/systemd/system/getty@tty10.service.d/autologin.conf
