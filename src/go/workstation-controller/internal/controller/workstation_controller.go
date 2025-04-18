@@ -946,6 +946,11 @@ func (r *WorkstationReconciler) CreateWorkstationService(ctx context.Context, re
 					Protocol: corev1.ProtocolTCP,
 					Port:     22,
 				},
+				{
+					Name:     "vnc",
+					Protocol: corev1.ProtocolTCP,
+					Port:     5900,
+				},
 			},
 			Selector: map[string]string{
 				"app.kubernetes.io/name":       req.NamespacedName.Name,
