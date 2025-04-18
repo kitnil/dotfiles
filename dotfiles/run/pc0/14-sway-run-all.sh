@@ -31,41 +31,6 @@ sway_focus_left()
     /home/oleg/bin/nerdctl-guix-exec /bin/sh -lc 'export SWAYSOCK="$(echo /run/user/1000/sway-ipc*sock)"; /home/oleg/.guix-home/profile/bin/swaymsg focus left'
 }
 
-sway_move_right()
-{
-    /home/oleg/bin/nerdctl-guix-exec /bin/sh -lc 'export SWAYSOCK="$(echo /run/user/1000/sway-ipc*sock)"; /home/oleg/.guix-home/profile/bin/swaymsg move right'
-}
-
-sway_move_left()
-{
-    /home/oleg/bin/nerdctl-guix-exec /bin/sh -lc 'export SWAYSOCK="$(echo /run/user/1000/sway-ipc*sock)"; /home/oleg/.guix-home/profile/bin/swaymsg move sway_move_left'
-}
-
-echo "INFO: Select Firefox Twitch window." 1>&2
-sway_focus_left
-sway_focus_left
-sway_focus_left
-sway_focus_left
-sway_focus_left
-sway_focus_left
-
-echo "INFO: Move Firefox Twitch window." 1>&2
-sway_move_right
-sway_move_right
-sway_move_right
-sway_move_right
-sway_move_right
-
-echo "INFO: Select Firefox NUUM window." 1>&2
-sway_focus_left
-sway_focus_left
-
-echo "INFO: Move Firefox NUUM window." 1>&2
-sway_move_left
-sway_move_left
-sway_move_left
-sway_move_left
-
 /home/oleg/bin/nerdctl-guix-exec /bin/sh -lc 'export SWAYSOCK="$(echo /run/user/1000/sway-ipc*sock)"; /home/oleg/.guix-home/profile/bin/swaymsg focus up'
 sleep 2
 
