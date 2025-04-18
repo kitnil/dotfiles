@@ -28,7 +28,8 @@ spec:
           id
           cd "/home/oleg/.local/share/chezmoi/src/go/workstation-controller" || exit 0
           id
-          export IMG=harbor.home.wugi.info/library/workstation-controller:c0e106e8
+          commit_8="$(git rev-parse HEAD | cut -c -8)"
+          export IMG="harbor.home.wugi.info/library/workstation-controller:${commit_8}"
           make docker-build
           make docker-push
           EOL
