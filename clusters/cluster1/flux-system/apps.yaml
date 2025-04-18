@@ -1226,7 +1226,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./apps/base/maintenance-runc-nix-builder-git-dotfiles
+  path: ./apps/cluster1/maintenance-runc-nix-builder-git-dotfiles
   prune: true
   sourceRef:
     kind: GitRepository

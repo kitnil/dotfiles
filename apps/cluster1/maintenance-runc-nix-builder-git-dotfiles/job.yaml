@@ -1,0 +1,12 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: runc-nix-builder-git-dotfiles
+spec:
+  template:
+    metadata:
+      annotations:
+        guix-default-channel-commit: 1ed2140a
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: kube1
