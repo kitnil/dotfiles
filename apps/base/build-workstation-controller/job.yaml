@@ -23,7 +23,8 @@ spec:
           /run/setuid-programs/sudo --user oleg --login bash <<'EOF'
           set -o nounset -o errexit -o pipefail -o xtrace
           kubectl -n workstation exec --container=archlinux workstation-kube3 -- /usr/bin/env bash -xelc '
-          sudo -u oleg -i <<EOL
+          sudo -u oleg -i bash <<EOL
+          set -ex
           cd "${HOME}/.local/share/chezmoi/src/go/workstation-controller"
           export IMG=harbor.home.wugi.info/library/workstation-controller:c0e106e8
           make docker-build
