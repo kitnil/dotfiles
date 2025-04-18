@@ -57,6 +57,7 @@
                                '("/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-image-workstation/job.yaml"
                                  "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-deploy-vm-guix-datavolume/job.yaml"
                                  "/home/oleg/.local/share/chezmoi/apps/cluster1/maintenance-guix-rde-image-workstation/job.yaml")
+                               '("/home/oleg/.local/share/chezmoi/apps/cluster1/build-workstation-controller-kube1/job.yaml")
 
                                (apply append
                                       (fold (lambda (hostname hostnames)
