@@ -137,6 +137,8 @@ spec:
           name: home-oleg-local-share-chezmoi
         - mountPath: /home/oleg/.mozilla
           name: srv-runc-arch-home-oleg-mozilla
+        - mountPath: /home/oleg/.docker/config.json
+          name: home-oleg-dot-docker-config-home-dot-wugi-dot-info-dot-json
 
       volumes:
       - hostPath:
@@ -263,3 +265,7 @@ spec:
           path: /srv/runc/arch/home/oleg/.mozilla
           type: Directory
         name: srv-runc-arch-home-oleg-mozilla
+      - hostPath:
+          path: /home/oleg/.docker/config-home.wugi.info.json
+          type: File
+        name: home-oleg-dot-docker-config-home-dot-wugi-dot-info-dot-json
