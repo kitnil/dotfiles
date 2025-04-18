@@ -137,6 +137,8 @@ spec:
           name: home-oleg-local-share-chezmoi
         - mountPath: /home/oleg/.mozilla
           name: srv-runc-arch-home-oleg-mozilla
+        - name: docker-secret
+          mountPath: /home/oleg/.docker
 
       volumes:
       - hostPath:
@@ -263,3 +265,9 @@ spec:
           path: /srv/runc/arch/home/oleg/.mozilla
           type: Directory
         name: srv-runc-arch-home-oleg-mozilla
+      - name: docker-secret
+        secret:
+          secretName: regcred
+          items:
+          - key: .dockerconfigjson
+            path: config.json
