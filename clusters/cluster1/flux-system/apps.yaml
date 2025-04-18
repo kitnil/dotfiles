@@ -1239,7 +1239,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./apps/base/maintenance-nix-build-container-systemd
+  path: ./apps/cluster1/maintenance-nix-build-container-systemd
   prune: true
   dependsOn:
   - name: maintenance-runc-nix-builder-git-dotfiles
