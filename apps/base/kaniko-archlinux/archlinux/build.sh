@@ -158,6 +158,11 @@ install_wlvncc()
     aur install wlvncc-git
 }
 
+install_chatterino()
+{
+    aur install chatterino2
+}
+
 install_vscode_extensions()
 {
     local extensions=(
@@ -224,6 +229,7 @@ main()
     install_dlv
     install_pob
     install_wlvncc
+    install_chatterino
 }
 
 main "$@"
