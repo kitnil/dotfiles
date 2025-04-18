@@ -26,7 +26,8 @@ spec:
           sudo -u oleg -i bash <<EOL
           set -ex
           id
-          cd "~/.local/share/chezmoi/src/go/workstation-controller"
+          cd "/home/oleg/.local/share/chezmoi/src/go/workstation-controller" || exit 0
+          id
           export IMG=harbor.home.wugi.info/library/workstation-controller:c0e106e8
           make docker-build
           make docker-push
