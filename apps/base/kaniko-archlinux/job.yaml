@@ -92,7 +92,7 @@ spec:
       - name: kaniko
         image: gcr.io/kaniko-project/executor:v1.23.2
         args:
-        - "--destination=harbor.home.wugi.info/library/archlinux-systemd:026a69a5" # git rev-parse HEAD | cut -c -8
+        - "--destination=harbor.home.wugi.info/library/archlinux-systemd:257da3db" # git rev-parse HEAD | cut -c -8
         volumeMounts:
         - name: kaniko-secret
           mountPath: /kaniko/.docker
