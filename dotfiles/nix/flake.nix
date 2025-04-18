@@ -152,7 +152,7 @@
       devShell.${system} = with pkgs;
         mkShell {
           buildInputs =
-            [ nixUnstable deploy-rs.outputs.packages.${system}.deploy-rs ];
+            [ nix deploy-rs.outputs.packages.${system}.deploy-rs ];
         };
       packages.${system} = let
         jenkins-plugins =
