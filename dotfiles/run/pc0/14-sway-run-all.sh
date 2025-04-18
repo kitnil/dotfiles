@@ -21,7 +21,7 @@ sleep 2
 /home/oleg/bin/nerdctl-nixos-exec /bin/sh -lc 'export XDG_RUNTIME_DIR=/mnt/guix/run/user/1000; exec firefox --profile /home/oleg/.mozilla/firefox/messaging' &
 sleep 5
 
-/home/oleg/bin/nerdctl-nixos-exec /bin/sh -lc 'export XDG_RUNTIME_DIR=/mnt/guix/run/user/1000; export DISPLAY=:0; exec chatterino' &
+/home/oleg/bin/nerdctl-nixos-exec /bin/sh -lc 'export XDG_RUNTIME_DIR=/mnt/guix/run/user/1000; export WAYLAND_DISPLAY=wayland-1; export QT_QPA_PLATFORM=wayland; exec chatterino' &
 sleep 2
 
 echo "INFO: Sort windows." 1>&2
