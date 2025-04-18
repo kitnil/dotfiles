@@ -8,5 +8,6 @@ COPY --chown=oleg:users rootfs/home/oleg/.config/systemd/user/foot.service /home
 COPY --chown=oleg:users rootfs/home/oleg/.config/systemd/user/idea.service /home/oleg/.config/systemd/user/idea.service
 COPY --chown=oleg:users rootfs/home/oleg/.config/systemd/user/idea.service /home/oleg/.config/systemd/user/pycharm.service
 COPY --chown=oleg:users rootfs/home/oleg/.config/systemd/user/vscode.service /home/oleg/.config/systemd/user/vscode.service
+COPY --chown=oleg:users rootfs/home/oleg/.config/aichat/config.yaml /home/oleg/.config/aichat/config.yaml
 
 ENTRYPOINT ["/bin/entrypoint"]
