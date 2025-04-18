@@ -14,3 +14,4 @@ configMapGenerator:
   - idea.service=archlinux/rootfs/home/oleg/.config/systemd/user/idea.service
   - pycharm.service=archlinux/rootfs/home/oleg/.config/systemd/user/pycharm.service
   - vscode.service=archlinux/rootfs/home/oleg/.config/systemd/user/vscode.service
+  - aichat.yaml=archlinux/rootfs/home/oleg/.config/aichat/config.yaml

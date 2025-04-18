@@ -40,6 +40,9 @@ spec:
         - name: dockerfile-storage
           mountPath: /mnt/workspace/rootfs/home/oleg/.config/systemd/user/vscode.service
           subPath: vscode.service
+        - name: dockerfile-storage
+          mountPath: /mnt/workspace/rootfs/home/oleg/.config/aichat/config.yaml
+          subPath: config.yaml
         - name: workspace
           mountPath: /workspace
         resources:
