@@ -45,7 +45,7 @@ spec:
           subPath: firefox.service
         - name: dockerfile-storage
           mountPath: /mnt/workspace/rootfs/home/oleg/.config/aichat/config.yaml
-          subPath: config.yaml
+          subPath: aichat.yaml
         - name: workspace
           mountPath: /workspace
         resources:
