@@ -1,0 +1,9 @@
+[Install]
+WantedBy=default.target
+
+[Service]
+ExecStart=/bin/sh -c 'MESA_SHADER_CACHE_DIR=/home/oleg/.cache XDG_RUNTIME_DIR=/mnt/guix/run/user/1000 WAYLAND_DISPLAY=wayland-1 _JAVA_AWT_WM_NONREPARENTING=1 exec -a firefox /usr/bin/firefox'
+Type=simple
+
+[Unit]
+Description=Firefox
