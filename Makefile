@@ -357,5 +357,9 @@ workstation-controller:
 	$(MAKE) -C src/go/workstation-controller docker-build IMG=$(container_registry)/library/$@:$$commit_8
 	$(MAKE) -C src/go/workstation-controller docker-push IMG=$(container_registry)/library/$@:$$commit_8
 
+.PHONY: dotfiles-update-commit
+dotfiles-update-commit:
+	guix shell guile guile-git guile-gcrypt guile-json yq -- dot_local/bin/executable_dotfiles-update-commit
+
 .PHONY: all
 all: dotfiles/scripts/nix-ssh-known-hosts-to-file.scm
