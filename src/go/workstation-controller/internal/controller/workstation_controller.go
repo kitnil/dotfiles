@@ -29,7 +29,6 @@ import (
 	"k8s.io/apimachinery/pkg/runtime"
 	"k8s.io/apimachinery/pkg/runtime/schema"
 	"k8s.io/apimachinery/pkg/types"
-	"k8s.io/utils/ptr"
 	ctrl "sigs.k8s.io/controller-runtime"
 	"sigs.k8s.io/controller-runtime/pkg/client"
 	"sigs.k8s.io/controller-runtime/pkg/controller/controllerutil"
@@ -176,11 +175,10 @@ func (r *WorkstationReconciler) CreateWorkstationPod(ctx context.Context, req ct
 			},
 		},
 		Spec: corev1.PodSpec{
-			AutomountServiceAccountToken:  &[]bool{false}[0],
-			RestartPolicy:                 corev1.RestartPolicyNever,
-			TerminationGracePeriodSeconds: ptr.To(int64(300)),
-			Affinity:                      workstation.Spec.Template.Spec.Affinity,
-			Tolerations:                   workstation.Spec.Template.Spec.Tolerations,
+			AutomountServiceAccountToken: &[]bool{false}[0],
+			RestartPolicy:                corev1.RestartPolicyNever,
+			Affinity:                     workstation.Spec.Template.Spec.Affinity,
+			Tolerations:                  workstation.Spec.Template.Spec.Tolerations,
 			InitContainers: []corev1.Container{
 				{
 					Name:            "volume-mount-hack",
