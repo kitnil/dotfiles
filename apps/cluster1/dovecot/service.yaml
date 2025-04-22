@@ -15,4 +15,4 @@ spec:
     port: 993
     targetPort: 993
   selector: {}
-  type: ClusterIP
+  type: LoadBalancer
