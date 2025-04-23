@@ -302,6 +302,15 @@ util-linux-with-udev:
 
 container_registry=docker-registry.wugi.info
 .ONESHELL:
+runc:
+	set -o nounset -o errexit -o pipefail -o xtrace
+	commit_8=$$(git rev-parse HEAD | cut -c -8)
+	container=$$(guix pack -f docker -L dotfiles/guixsd/modules --max-layers=100 -S /sbin=sbin runc)
+	skopeo copy --insecure-policy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
+	guix gc --delete $$container
+
+container_registry=docker-registry.wugi.info
+.ONESHELL:
 haproxy:
 	set -o nounset -o errexit -o pipefail -o xtrace
 	commit_8=$$(git rev-parse HEAD | cut -c -8)
