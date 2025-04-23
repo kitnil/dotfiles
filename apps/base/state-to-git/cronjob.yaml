@@ -39,3 +39,5 @@ spec:
               requests:
                 cpu: 50m
                 memory: 64Mi
+            securityContext:
+              privileged: true
