@@ -42,6 +42,28 @@
         platforms = platforms.all;
         };
       };
+    "certificate-pinner" = buildFirefoxXpiAddon {
+      pname = "certificate-pinner";
+      version = "0.17.10";
+      addonId = "{9550e8a6-7884-43d1-ba9c-2c2928ab0a26}";
+      url = "https://addons.mozilla.org/firefox/downloads/file/3599612/certificate_pinner-0.17.10.xpi";
+      sha256 = "54b77a89a94156ce4cbdf372bfac1df222a13c776698bd91705714a118961e97";
+      meta = with lib;
+        {
+          description = "Pins TLS certificates of configured web pages and interrupts/alerts when a new certificate is presented. Adds a button to the browser's toolbar for pinning and unpinning.";
+          license = licenses.gpl2;
+          mozPermissions = [
+            "notifications"
+            "tabs"
+            "activeTab"
+            "storage"
+            "webRequest"
+            "webRequestBlocking"
+            "<all_urls>"
+          ];
+          platforms = platforms.all;
+        };
+    };
     "cookie-quick-manager" = buildFirefoxXpiAddon {
       pname = "cookie-quick-manager";
       version = "0.5rc2";
