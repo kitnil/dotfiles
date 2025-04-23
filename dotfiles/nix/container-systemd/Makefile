@@ -10,5 +10,5 @@ nixos-systemd:
 	echo "$(container_registry)/library/$@:$$commit_8"
 
 dotfiles-home-manager:
-	nix flake lock --update-input dotfiles-home-manager
+	nix shell nixpkgs#nixVersions.git --command nix flake lock --update-input dotfiles-home-manager
 	git commit -m 'flake.lock: Update dotfiles-home-manager input.' flake.lock

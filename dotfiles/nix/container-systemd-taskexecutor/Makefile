@@ -10,5 +10,5 @@ nixos-systemd-taskexecutor:
 	echo "$(container_registry)/library/$@:$$commit_8"
 
 original:
-	nix flake lock --update-input original
+	nix shell nixpkgs#nixVersions.git --command nix flake lock --update-input original
 	git commit -m 'flake.lock: Update original input.' flake.lock
