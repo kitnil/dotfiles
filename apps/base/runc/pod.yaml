@@ -14,7 +14,7 @@ spec:
   - image: harbor.home.wugi.info/library/runc:c72aa8bb
     name: runc
     securityContext:
-      priveleged: true
+      privileged: true
     volumeMounts:
     - mountPath: /run/runc
       name: run-runc
