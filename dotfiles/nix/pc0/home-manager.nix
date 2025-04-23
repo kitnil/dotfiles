@@ -147,6 +147,11 @@
           name = "tor";
           id = 5;
           isDefault = false;
+          settings = nix.settings // {
+            "network.proxy.socks" = "example-tor-instance-tor-svc.tor-controller-instance";
+            "network.proxy.socks_port" = 9050;
+            "network.proxy.type" = 1;
+          };
         };
       };
   };
