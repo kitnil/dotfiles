@@ -19,7 +19,6 @@ spec:
     volumeMounts:
     - mountPath: /run/runc
       name: run-runc
-  hostNetwork: true
   tolerations:
   - key: edge.cluster.local/not-schedulable
     operator: Equal

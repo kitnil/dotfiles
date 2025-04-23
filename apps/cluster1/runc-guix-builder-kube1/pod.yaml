@@ -16,6 +16,7 @@ spec:
     volumeMounts:
     - mountPath: /srv/runc/guix-builder
       name: runc-guix-builder
+  hostNetwork: true
   volumes:
   - name: runc-guix-builder
     hostPath:
