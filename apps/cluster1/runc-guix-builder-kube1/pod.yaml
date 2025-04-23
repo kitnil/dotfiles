@@ -27,4 +27,4 @@ spec:
   - name: var-run-netns-runc
     hostPath:
       path: /var/run/netns/runc
-      type: Directory
+      type: File
