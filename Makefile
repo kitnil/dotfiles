@@ -305,7 +305,7 @@ container_registry=docker-registry.wugi.info
 runc:
 	set -o nounset -o errexit -o pipefail -o xtrace
 	commit_8=$$(git rev-parse HEAD | cut -c -8)
-	container=$$(guix pack -f docker -L dotfiles/guixsd/modules --max-layers=100 -S /sbin=sbin runc)
+	container=$$(guix pack -f docker -L dotfiles/guixsd/modules --max-layers=100 -S /bin=bin -S /sbin=sbin util-linux-with-udev bash coreutils runc)
 	skopeo copy --insecure-policy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
 	guix gc --delete $$container
 
