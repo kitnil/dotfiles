@@ -13,9 +13,6 @@ spec:
   containers:
   - image: harbor.home.wugi.info/library/runc:a3dcef4d
     name: runc
-    command:
-    - /gnu/store/3dwzy5gwagj0g838gr4kg77a0s0v1q0s-runc-1.1.12/sbin/runc
-    - list
     securityContext:
       priveleged: true
       readOnlyRootFilesystem: true
