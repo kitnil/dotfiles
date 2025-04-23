@@ -18,12 +18,12 @@ spec:
     - list
     securityContext:
       priveleged: true
-    hostPID: true
-    hostNetwork: true
-    readOnlyRootFilesystem: true
+      readOnlyRootFilesystem: true
     volumeMounts:
     - mountPath: /run/runc
       name: run-runc
+  hostPID: true
+  hostNetwork: true
   volumes:
   - name: run-runc
     hostPath:
