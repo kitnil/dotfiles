@@ -10,4 +10,14 @@ spec:
     command:
     - /gnu/store/3dwzy5gwagj0g838gr4kg77a0s0v1q0s-runc-1.1.12/sbin/runc
     - run
+    - --bundle
+    - /srv/runc/guix-builder
     - guix-builder
+    volumeMounts:
+    - mountPath: /srv/runc/guix-builder
+      name: runc-guix-builder
+  volumes:
+  - name: runc-guix-builder
+    hostPath:
+      path: /srv/runc/guix-builder
+      type: Directory
