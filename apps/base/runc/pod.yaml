@@ -22,10 +22,9 @@ spec:
     volumeMounts:
     - mountPath: /run/runc
       name: run-runc
-  hostPID: true
   hostNetwork: true
   volumes:
   - name: run-runc
-    hostPath:
-      path: /run/runc
-      type: Directory
+    emptyDir:
+      medium: Memory
+      sizeLimit: 128M
