@@ -145,11 +145,21 @@
           inherit (nixpkgs-home-manager.legacyPackages.${system}) robo3t;
         });
 
-      devShell.${system} = with pkgs;
-        mkShell {
-          buildInputs =
-            [ nix deploy-rs.outputs.packages.${system}.deploy-rs ];
-        };
+      devShell.${system} =
+        let
+          pkgs = import nixpkgs {
+            overlays = [ nur.overlay flake-utils-plus.overlay self.overlay ];
+            inherit system;
+          };
+          inherit (pkgs) mkShell;
+        in
+          mkShell {
+            buildInputs = with pkgs; [
+              nix
+              mozilla-addons-to-nix
+              deploy-rs.outputs.packages.${system}.deploy-rs
+            ];
+          };
       packages.${system} = let
         jenkins-plugins =
           (import ./plugins.nix { inherit (pkgs) fetchurl stdenv; });
