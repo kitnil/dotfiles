@@ -72,6 +72,7 @@
             "distribution.searchplugins.defaultLocale" = "en-GB";
             "doh-rollout.disable-heuristics" = true; # disable DNS over HTTPS
             "extensions.pocket.enabled" = false;
+            "extensions.update.enabled" = false;
             "general.useragent.locale" = "en-GB";
             "general.warnOnAboutConfig" = false;
             "startup.homepage_welcome_url" = "about:newtab";
