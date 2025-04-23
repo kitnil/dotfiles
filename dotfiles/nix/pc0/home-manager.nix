@@ -64,7 +64,8 @@
           # TODO: Manage ~/.mozilla/firefox/nix/cookies.sqlite somehow.
           # TODO: Import ~/src/ssl/cert.p12 file with Nix.
           settings = {
-            "browser.search.defaultenginename" = "Google";
+            "browser.urlbar.placeholderName" = "DuckDuckGo";
+            "browser.urlbar.placeholderName.private" = "DuckDuckGo";
             "browser.search.region" = "GB";
             "browser.shell.checkDefaultBrowser" = false;
             "browser.startup.homepage" = "about:newtab";
