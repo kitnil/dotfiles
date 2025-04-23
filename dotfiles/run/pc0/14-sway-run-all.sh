@@ -3,6 +3,9 @@
 # set -e
 set -x
 
+/home/oleg/bin/nerdctl-guix-exec /bin/sh -lc 'export SWAYSOCK="$(echo /run/user/1000/sway-ipc*sock)"; export WAYLAND_DISPLAY=wayland-1; /home/oleg/.guix-home/profile/bin/alacritty -e sh -c "sleep 20; exit"' &
+sleep 2
+
 /home/oleg/bin/nerdctl-guix-exec /bin/sh -lc 'export SWAYSOCK="$(echo /run/user/1000/sway-ipc*sock)"; /home/oleg/.guix-home/profile/bin/swaymsg splitv'
 sleep 2
 
