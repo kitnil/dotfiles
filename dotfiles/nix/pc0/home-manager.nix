@@ -103,7 +103,7 @@
               ublock-origin
             ];
         };
-        twitch = {
+        twitch = nix // {
           name = "twitch";
           id = 2;
           extensions =
@@ -123,14 +123,6 @@
               ultrawidify
               web-scrobbler
             ];
-          settings = {
-            "browser.startup.homepage" = "about:addons";
-            "browser.search.region" = "GB";
-            "extensions.pocket.enabled" = false;
-            "distribution.searchplugins.defaultLocale" = "en-GB";
-            "general.useragent.locale" = "en-GB";
-            "browser.search.defaultenginename" = "Google";
-          };
         };
         development = nix // {
           name = "development";
@@ -146,7 +138,7 @@
               packages.snaplinksplus
             ];
         };
-        messaging = {
+        messaging = nix // {
           name = "messaging";
           isDefault = false;
           id = 4;
