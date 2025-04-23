@@ -6,8 +6,6 @@ spec:
   containers:
   - name: runc
     volumeMounts:
-    - mountPath: /var/run/netns/runc
-      name: var-run-netns-runc
     - mountPath: /home/oleg/.local/share/chezmoi
       name: dotfiles
     - mountPath: /home/oleg/src
@@ -16,10 +14,6 @@ spec:
       name: srv
   hostNetwork: true
   volumes:
-  - name: var-run-netns-runc
-    hostPath:
-      path: /var/run/netns/runc
-      type: File
   - name: dotfiles
     hostPath:
       path: /home/oleg/.local/share/chezmoi
