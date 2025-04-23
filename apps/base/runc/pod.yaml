@@ -1,0 +1,31 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: runc
+  annotations:
+    # Setting spec.force to true will make Flux recreate the Pod when any
+    # immutable field is changed, forcing the Pod to run every time the
+    # container image tag changes.
+    kustomize.toolkit.fluxcd.io/force: enabled
+spec:
+  restartPolicy: Never
+  automountServiceAccountToken: false
+  containers:
+  - image: harbor.home.wugi.info/library/runc:a3dcef4d
+    name: runc
+    command:
+    - /gnu/store/3dwzy5gwagj0g838gr4kg77a0s0v1q0s-runc-1.1.12/sbin/runc
+    - list
+    securityContext:
+      priveleged: true
+    hostPID: true
+    hostNetwork: true
+    readOnlyRootFilesystem: true
+    volumeMounts:
+    - mountPath: /run/runc
+      name: run-runc
+  volumes:
+  - name: run-runc
+    hostPath:
+      path: /run/runc
+      type: Directory
