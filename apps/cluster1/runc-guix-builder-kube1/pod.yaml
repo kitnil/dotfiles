@@ -8,11 +8,21 @@ spec:
   containers:
   - name: runc
     command:
-    - /gnu/store/3dwzy5gwagj0g838gr4kg77a0s0v1q0s-runc-1.1.12/sbin/runc
-    - run
-    - --bundle
-    - /srv/runc/guix-builder
-    - guix-builder
+    - /bin/bash
+    - -c
+    - |
+      set -o nounset -o errexit -o pipefail -o xtrace
+
+      # Keyboard and mouse access are essential components for efficient operation
+      # within the Sway window manager environment. Running 'udevadm trigger' will
+      # grant access to the keyboard and mouse. You can verify their addition by
+      # using 'libinput list-devices'."
+      mount -o remount,rw /sys
+
+      umount /sys/fs/cgroup
+      mount -t cgroup2 -o rw,relatime,nsdelegate,memory_recursiveprot cgroup2 /sys/fs/cgroup
+
+      exec /gnu/store/3dwzy5gwagj0g838gr4kg77a0s0v1q0s-runc-1.1.12/sbin/runc run --bundle /srv/runc/guix-builder guix-builder
     volumeMounts:
     - mountPath: /srv/runc/guix-builder
       name: runc-guix-builder
