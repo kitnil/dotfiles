@@ -8,6 +8,18 @@ spec:
   containers:
   - image: harbor.home.wugi.info/library/runc:c72aa8bb
     name: runc
+    command:
+    - /bin/bash
+    - -c
+    - |
+      set -o nounset -o errexit -o pipefail -o xtrace
+
+      mount -o remount,rw /sys
+
+      umount /sys/fs/cgroup
+      mount -t cgroup2 -o rw,relatime,nsdelegate,memory_recursiveprot cgroup2 /sys/fs/cgroup
+
+      exec runc run --bundle "$RUNC_BUNDLE" "$RUNC_CONTAINER_ID"
     securityContext:
       privileged: true
     volumeMounts:

@@ -1,8 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-namespace: guix
-nameSuffix: -guix-builder
+nameSuffix: -kube1
 resources:
-- ../runc-kube1
+- ../../base/runc
 patchesStrategicMerge:
 - pod.yaml

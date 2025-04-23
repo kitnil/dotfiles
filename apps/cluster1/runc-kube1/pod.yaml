@@ -1,0 +1,40 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: runc
+spec:
+  containers:
+  - name: runc
+    volumeMounts:
+    - mountPath: /srv/runc/guix-builder
+      name: runc-guix-builder
+    - mountPath: /var/run/netns/runc
+      name: var-run-netns-runc
+    - mountPath: /home/oleg/.local/share/chezmoi
+      name: dotfiles
+    - mountPath: /home/oleg/src
+      name: src
+    - mountPath: /srv
+      name: srv
+  hostNetwork: true
+  volumes:
+  - name: runc-guix-builder
+    hostPath:
+      path: /srv/runc/guix-builder
+      type: Directory
+  - name: var-run-netns-runc
+    hostPath:
+      path: /var/run/netns/runc
+      type: File
+  - name: dotfiles
+    hostPath:
+      path: /home/oleg/.local/share/chezmoi
+      type: Directory
+  - name: src
+    hostPath:
+      path: /home/oleg/src
+      type: Directory
+  - name: srv
+    hostPath:
+      path: /srv
+      type: Directory

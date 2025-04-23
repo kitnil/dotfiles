@@ -7,52 +7,8 @@ spec:
     kubernetes.io/hostname: kube1
   containers:
   - name: runc
-    command:
-    - /bin/bash
-    - -c
-    - |
-      set -o nounset -o errexit -o pipefail -o xtrace
-
-      # Keyboard and mouse access are essential components for efficient operation
-      # within the Sway window manager environment. Running 'udevadm trigger' will
-      # grant access to the keyboard and mouse. You can verify their addition by
-      # using 'libinput list-devices'."
-      mount -o remount,rw /sys
-
-      umount /sys/fs/cgroup
-      mount -t cgroup2 -o rw,relatime,nsdelegate,memory_recursiveprot cgroup2 /sys/fs/cgroup
-
-      exec runc run --bundle /srv/runc/guix-builder guix-builder
-    volumeMounts:
-    - mountPath: /srv/runc/guix-builder
-      name: runc-guix-builder
-    - mountPath: /var/run/netns/runc
-      name: var-run-netns-runc
-    - mountPath: /home/oleg/.local/share/chezmoi
-      name: dotfiles
-    - mountPath: /home/oleg/src
-      name: src
-    - mountPath: /srv
-      name: srv
-  hostNetwork: true
-  volumes:
-  - name: runc-guix-builder
-    hostPath:
-      path: /srv/runc/guix-builder
-      type: Directory
-  - name: var-run-netns-runc
-    hostPath:
-      path: /var/run/netns/runc
-      type: File
-  - name: dotfiles
-    hostPath:
-      path: /home/oleg/.local/share/chezmoi
-      type: Directory
-  - name: src
-    hostPath:
-      path: /home/oleg/src
-      type: Directory
-  - name: srv
-    hostPath:
-      path: /srv
-      type: Directory
+    env:
+    - name: RUNC_BUNDLE
+      value: /srv/runc/guix-builder
+    - name: RUNC_CONTAINER_ID
+      value: guix-builder
