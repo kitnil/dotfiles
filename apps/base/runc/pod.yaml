@@ -15,7 +15,6 @@ spec:
     name: runc
     securityContext:
       priveleged: true
-      readOnlyRootFilesystem: true
     volumeMounts:
     - mountPath: /run/runc
       name: run-runc
