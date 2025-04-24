@@ -125,14 +125,13 @@
           inherit (callPackage ./firefox/generated-firefox-addons.nix {
             inherit buildFirefoxXpiAddon;
           })
-            access-control-allow-origin auto_highlight
+            access-control-allow-origin auto_highlight certificate-pinner
             cookie-quick-manager copy-all-tab-urls-we copy-as-org-mode
-            foxscroller google-container metube-downloader
-            night-video-tuner hello-goodbye hide-twitch-chat-users
-            prometheus-formatter right-click-search rocker_gestures
-            russian-ru-language-pack scroll_anywhere sitedelta-watch
-            snaplinksplus soundfixer tab-slideshow-we
-            twitch-error-autorefresher view-page-archive
+            foxscroller google-container metube-downloader night-video-tuner
+            hello-goodbye hide-twitch-chat-users prometheus-formatter
+            right-click-search rocker_gestures russian-ru-language-pack
+            scroll_anywhere sitedelta-watch snaplinksplus soundfixer
+            tab-slideshow-we twitch-error-autorefresher view-page-archive
             visited-link-enabler ultrawidify;
           inherit (rycee-nur-expressions.packages.${system})
             container-proxy copy-link-text copy-selection-as-markdown
