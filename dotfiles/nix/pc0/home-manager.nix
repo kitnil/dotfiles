@@ -80,6 +80,9 @@
             "startup.homepage_welcome_url" = "about:newtab";
             "toolkit.telemetry.reportingpolicy.firstRun" = false;
           };
+          search = {
+            default = "DuckDuckGo";
+          };
         };
       in {
         default = {
