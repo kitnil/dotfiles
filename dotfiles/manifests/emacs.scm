@@ -33,6 +33,7 @@
        emacs-debpaste           ; Front end to <https://paste.debian.net/>
        emacs-default-text-scale ; Scale text in all buffers
        emacs-dumb-jump
+       emacs-eat
        emacs-ebuild-mode
        emacs-edit-indirect
        emacs-edit-server ; See <https://github.com/stsquad/emacs_chrome/>.
