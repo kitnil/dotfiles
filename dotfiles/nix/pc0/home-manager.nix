@@ -91,7 +91,6 @@ in {
             [
               certificate-pinner
               container-proxy
-              container-tabs
               copy-all-tab-urls-we
               copy-as-org-mode
               multi-account-containers
