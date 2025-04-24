@@ -116,7 +116,7 @@ in {
           id = 2;
           extensions =
             fold
-              (extension: extensions: extensions ++ extension)
+              (extension: extensions: extensions ++ [extension])
               firefoxBaseProfile.extensions
               (with packages; with packages.nur.repos.rycee.firefox-addons; [
                 return-youtube-dislikes
