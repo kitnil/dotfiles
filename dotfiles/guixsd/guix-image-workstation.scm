@@ -113,21 +113,20 @@ program.")))
                                     (policy-file (local-file "etc/containers/policy.json"))))
                           (service containerd-service-type)
                           (service docker-service-type))
-                    (modify-services
-                        (modify-services %base-services
-                          (guix-service-type config =>
-                                             (guix-configuration
-                                              (channels my-channels)
-                                              (guix (guix-for-channels my-channels))
-                                              (authorized-keys (append (list (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/guix.wugi.info.pub")
-                                                                             (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/vm1.wugi.info.pub")
-                                                                             (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/vm2.wugi.info.pub")
-                                                                             (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/mirror.brielmaier.net.pub")
-                                                                             (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/substitutes.nonguix.org.pub")
-                                                                             (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/bordeaux.guix.gnu.org.pub"))
-                                                                       %default-authorized-guix-keys))
-                                              (substitute-urls '("https://bordeaux.guix.gnu.org"
-                                                                 "https://substitutes.nonguix.org")))))
+                    (modify-services %base-services
+                      (guix-service-type config =>
+                                         (guix-configuration
+                                          (channels my-channels)
+                                          (guix (guix-for-channels my-channels))
+                                          (authorized-keys (append (list (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/guix.wugi.info.pub")
+                                                                         (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/vm1.wugi.info.pub")
+                                                                         (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/vm2.wugi.info.pub")
+                                                                         (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/mirror.brielmaier.net.pub")
+                                                                         (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/substitutes.nonguix.org.pub")
+                                                                         (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/bordeaux.guix.gnu.org.pub"))
+                                                                   %default-authorized-guix-keys))
+                                          (substitute-urls '("https://bordeaux.guix.gnu.org"
+                                                             "https://substitutes.nonguix.org"))))
                       (syslog-service-type config =>
                                            (syslog-configuration
                                             (extra-options '("--rcfile=/etc/syslog.conf"
