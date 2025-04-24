@@ -118,13 +118,19 @@ program.")))
                                          (guix-configuration
                                           (channels my-channels)
                                           (guix (guix-for-channels my-channels))
-                                          (authorized-keys (append (list (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/guix.wugi.info.pub")
-                                                                         (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/vm1.wugi.info.pub")
-                                                                         (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/vm2.wugi.info.pub")
-                                                                         (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/mirror.brielmaier.net.pub")
-                                                                         (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/substitutes.nonguix.org.pub")
-                                                                         (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/bordeaux.guix.gnu.org.pub"))
-                                                                   %default-authorized-guix-keys))
+                                          (authorized-keys
+                                           (append
+                                            (map (lambda (file-name)
+                                                   (local-file
+                                                    (string-append "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/"
+                                                                   file-name)))
+                                                 '("bordeaux.guix.gnu.org.pub"
+                                                   "guix.wugi.info.pub"
+                                                   "mirror.brielmaier.net.pub"
+                                                   "substitutes.nonguix.org.pub"
+                                                   "vm1.wugi.info.pub"
+                                                   "vm2.wugi.info.pub"))
+                                            %default-authorized-guix-keys))
                                           (substitute-urls '("https://bordeaux.guix.gnu.org"
                                                              "https://substitutes.nonguix.org"))))
                       (syslog-service-type config =>
