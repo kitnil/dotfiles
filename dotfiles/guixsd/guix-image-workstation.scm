@@ -126,8 +126,7 @@ program.")))
                                                                              (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/substitutes.nonguix.org.pub")
                                                                              (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/bordeaux.guix.gnu.org.pub"))
                                                                        %default-authorized-guix-keys))
-                                              (substitute-urls '("https://guix.wugi.info"
-                                                                 "https://bordeaux.guix.gnu.org"
+                                              (substitute-urls '("https://bordeaux.guix.gnu.org"
                                                                  "https://substitutes.nonguix.org")))))
                       (syslog-service-type config =>
                                            (syslog-configuration
