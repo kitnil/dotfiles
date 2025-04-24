@@ -64,12 +64,12 @@
           # TODO: Manage ~/.mozilla/firefox/nix/cookies.sqlite somehow.
           # TODO: Import ~/src/ssl/cert.p12 file with Nix.
           settings = {
-            "browser.urlbar.placeholderName" = "DuckDuckGo";
-            "browser.urlbar.placeholderName.private" = "DuckDuckGo";
             "browser.search.region" = "GB";
             "browser.shell.checkDefaultBrowser" = false;
             "browser.startup.homepage" = "about:newtab";
             "browser.startup.page" = 3;
+            "browser.urlbar.placeholderName" = "DuckDuckGo";
+            "browser.urlbar.placeholderName.private" = "DuckDuckGo";
             "distribution.searchplugins.defaultLocale" = "en-GB";
             "doh-rollout.disable-heuristics" = true; # disable DNS over HTTPS
             "extensions.pocket.enabled" = false;
