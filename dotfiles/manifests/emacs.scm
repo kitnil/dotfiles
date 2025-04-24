@@ -68,6 +68,7 @@
        emacs-god-mode           ; Commands without modifier keys
        emacs-grep-context
        emacs-groovy-modes
+       emacs-gptel
        emacs-guix
        emacs-helm               ; Narrowing framework
        emacs-helm-c-yasnippet
