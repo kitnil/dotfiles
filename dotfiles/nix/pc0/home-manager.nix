@@ -1,6 +1,8 @@
 { pkgs, packages, lib, config, ... }:
 
-{
+let
+  inherit (lib) fold;
+in {
   home.username = "oleg";
   home.homeDirectory = "/home/oleg";
   manual.manpages.enable = false;
@@ -59,7 +61,7 @@
     enable = true;
     profiles =
       let
-        nix = {
+        firefoxBaseProfile = {
           # TODO: Manage ~/.mozilla/firefox/nix/containers.json file with Nix.
           # TODO: Manage ~/.mozilla/firefox/nix/cookies.sqlite somehow.
           # TODO: Import ~/src/ssl/cert.p12 file with Nix.
@@ -83,6 +85,19 @@
           search = {
             default = "DuckDuckGo";
           };
+          extensions =
+            with packages;
+            with packages.nur.repos.rycee.firefox-addons;
+            [
+              certificate-pinner
+              container-proxy
+              container-tabs
+              copy-all-tab-urls-we
+              copy-as-org-mode
+              multi-account-containers
+              snaplinksplus
+              ublock-origin
+            ];
         };
       in {
         default = {
@@ -92,67 +107,47 @@
           isDefault = false;
           id = 0;
         };
-        nix = nix // {
+        nix = firefoxBaseProfile // {
           name = "nix";
           id = 1;
           isDefault = true;
-          extensions =
-            with packages;
-            with packages.nur.repos.rycee.firefox-addons;
-            [
-              copy-as-org-mode
-              copy-all-tab-urls-we
-              container-proxy
-              container-tabs
-              multi-account-containers
-              ublock-origin
-            ];
         };
-        twitch = nix // {
+        twitch = firefoxBaseProfile // {
           name = "twitch";
           id = 2;
           extensions =
-            with packages;
-            with packages.nur.repos.rycee.firefox-addons;
-            [
-              return-youtube-dislikes
-              sponsorblock
-              ublock-origin
-              hide-twitch-chat-users
-              metube-downloader
-              night-video-tuner
-              soundfixer
-              tab-reloader
-              twitch-error-autorefresher
-              visited-link-enabler
-              ultrawidify
-              web-scrobbler
-            ];
+            fold
+              (extension: extensions: extensions ++ extension)
+              firefoxBaseProfile.extensions
+              (with packages; with packages.nur.repos.rycee.firefox-addons; [
+                return-youtube-dislikes
+                sponsorblock
+                hide-twitch-chat-users
+                metube-downloader
+                night-video-tuner
+                soundfixer
+                tab-reloader
+                twitch-error-autorefresher
+                visited-link-enabler
+                ultrawidify
+                web-scrobbler
+              ]);
         };
-        development = nix // {
+        development = firefoxBaseProfile // {
           name = "development";
           id = 3;
           isDefault = false;
-          extensions =
-            with packages;
-            with packages.nur.repos.rycee.firefox-addons;
-            [
-              copy-as-org-mode
-              copy-all-tab-urls-we
-              ublock-origin
-              packages.snaplinksplus
-            ];
         };
-        messaging = nix // {
+        messaging = firefoxBaseProfile // {
           name = "messaging";
           isDefault = false;
           id = 4;
         };
-        tor = nix // {
+        tor = firefoxBaseProfile // {
           name = "tor";
           id = 5;
           isDefault = false;
-          settings = nix.settings // {
+          settings = firefoxBaseProfile.settings // {
             "network.proxy.socks" = "example-tor-instance-tor-svc.tor-controller-instance";
             "network.proxy.socks_port" = 9050;
             "network.proxy.type" = 1;
