@@ -263,11 +263,11 @@
       },
       "locked": {
         "dir": "dotfiles/nix",
-        "lastModified": 1745503211,
-        "narHash": "sha256-pdcqPstbeAVZBXa3q6wSMwMsAXt7stzjUKmwifdJAi0=",
+        "lastModified": 1745504671,
+        "narHash": "sha256-Dq4kP1vVq5u2YGxdWCNFvSFnVq5WkfwQbSgdbOF780E=",
         "ref": "refs/heads/master",
-        "rev": "70b69f6376764ce1135cd3bc745359c052a1e73c",
-        "revCount": 13212,
+        "rev": "7c893626447c7bb38e481758a13ccd8e26489113",
+        "revCount": 13215,
         "type": "git",
         "url": "https://cgit.wugi.info/git/wigust/dotfiles?dir=dotfiles/nix"
       },
@@ -1745,11 +1745,11 @@
       },
       "locked": {
         "dir": "dotfiles/nix/container-systemd",
-        "lastModified": 1745503275,
-        "narHash": "sha256-DFfnwWuePsLpi9Vwa6/3ifkDIUenEcsXC0TWx72g12Q=",
+        "lastModified": 1745504699,
+        "narHash": "sha256-79rRQOixdnA2PTApCTAVnLSUAuxyNRQooLCB145xeJc=",
         "ref": "refs/heads/master",
-        "rev": "a4cd067d15dee322838d22b66c3df5c07fa6cf77",
-        "revCount": 13213,
+        "rev": "80755ef07ccab67dc4d141dc7e30445c62b14d7e",
+        "revCount": 13216,
         "type": "git",
         "url": "https://cgit.wugi.info/git/wigust/dotfiles?dir=dotfiles/nix/container-systemd"
       },
