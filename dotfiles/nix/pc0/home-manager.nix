@@ -64,6 +64,7 @@
           # TODO: Manage ~/.mozilla/firefox/nix/cookies.sqlite somehow.
           # TODO: Import ~/src/ssl/cert.p12 file with Nix.
           settings = {
+            "browser.aboutConfig.showWarning" = false;
             "browser.search.region" = "GB";
             "browser.shell.checkDefaultBrowser" = false;
             "browser.startup.homepage" = "about:newtab";
