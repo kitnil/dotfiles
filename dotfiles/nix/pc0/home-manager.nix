@@ -103,6 +103,7 @@
               copy-as-org-mode
               copy-all-tab-urls-we
               container-proxy
+              container-tabs
               multi-account-containers
               ublock-origin
             ];
