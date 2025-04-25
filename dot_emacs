@@ -1,5 +1,5 @@
 ;;; .emacs --- Oleg's Emacs configuration
-;; Copyright © 2017, 2018, 2019, 2020, 2021, 2022, 2023 Oleg Pykhalov <go.wigust@gmail.com>
+;; Copyright © 2017, 2018, 2019, 2020, 2021, 2022, 2023, 2025 Oleg Pykhalov <go.wigust@gmail.com>
 ;; Released under the GNU GPLv3 or any later version.
 
 ;; Tip: "M-x e" on `(emacs-init-time)'.
@@ -117,6 +117,7 @@
 (load-config-file "rust.el")
 (load-config-file "ml.el")
 (load-config-file "tramp.el")
+(load-config-file "llm.el")
 
 ;; (load-config-file "twitch.el")
 ;; (load-config-file "youtube.el")

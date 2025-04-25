@@ -63,6 +63,7 @@
                                  "modules/keys.el"
                                  "modules/kubernetes.el"
                                  "modules/lisp.el"
+                                 "modules/llm.el"
                                  "modules/lsp.el"
                                  "modules/lsp-nixd.el"
                                  "modules/mail.el"
