@@ -1,3 +1,6 @@
+;; Mounted files from a host namespace cannot be renamed.
+(setq backup-by-copying t)
+
 (mapc (lambda (lst)
         (add-to-list 'auto-mode-alist lst))
       '(("PKGBUILD" . shell-script-mode)
