@@ -93,6 +93,8 @@ spec:
         - mountPath: /home/oleg/.docker/config.json
           name: docker-configuration
           readOnly: true
+        - mountPath: /home/oleg/Downloads
+          name: home-oleg-downloads
 
       - name: nixos
         image: harbor.home.wugi.info/library/nixos-systemd-taskexecutor:7a97f32a
@@ -121,6 +123,8 @@ spec:
           name: home-oleg-local-share-chezmoi
         - mountPath: /home/oleg/.docker/config.json
           name: docker-configuration
+        - mountPath: /home/oleg/Downloads
+          name: home-oleg-downloads
 
       - name: archlinux
         image: harbor.home.wugi.info/library/archlinux-systemd:4b81cd6c
@@ -139,6 +143,8 @@ spec:
           name: srv-runc-arch-home-oleg-mozilla
         - mountPath: /home/oleg/.docker/config.json
           name: home-oleg-dot-docker-config-home-dot-wugi-dot-info-dot-json
+        - mountPath: /home/oleg/Downloads
+          name: home-oleg-downloads
 
       volumes:
       - hostPath:
@@ -269,3 +275,7 @@ spec:
           path: /home/oleg/.docker/config-home.wugi.info.json
           type: File
         name: home-oleg-dot-docker-config-home-dot-wugi-dot-info-dot-json
+      - hostPath:
+          path: /home/oleg/Downloads
+          type: Directory
+        name: home-oleg-Downloads
