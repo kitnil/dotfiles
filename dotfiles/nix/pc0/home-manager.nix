@@ -152,6 +152,11 @@ in {
             "network.proxy.type" = 1;
           };
         };
+        work = firefoxBaseProfile // {
+          name = "work";
+          id = 6;
+          isDefault = false;
+        };
       };
   };
 
