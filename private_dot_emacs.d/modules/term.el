@@ -100,3 +100,12 @@
 ;;;
 
 (setq shell-kill-buffer-on-exit t)
+
+
+;;;
+;;; eat
+;;;
+
+;; https://codeberg.org/akib/emacs-eat/issues/145
+;; Workaround for eat scrolling issues; disable recentering.
+(add-hook 'eat-mode-hook (lambda () (setq-local scroll-conservatively 101)))
