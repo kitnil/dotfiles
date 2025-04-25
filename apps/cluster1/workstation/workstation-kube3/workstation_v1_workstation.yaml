@@ -278,4 +278,4 @@ spec:
       - hostPath:
           path: /home/oleg/Downloads
           type: Directory
-        name: home-oleg-Downloads
+        name: home-oleg-downloads
