@@ -18,20 +18,16 @@ spec:
           - name: state-to-git
             image: docker-registry.wugi.info/library/util-linux-with-udev
             command:
-            - nsenter
-            - --target
-            - "1"
-            - --mount
-            - --uts
-            - --ipc
-            - --net
-            - --pid
-            - --no-fork
             - /bin/sh
-            - -l
             - -c
-            - sudo --user=oleg --login bash -ic 'git pull --rebase origin master'
-            workingDir: "/home/oleg/ansible-out/files"
+            - |
+              set -o nounset -o errexit -o pipefail -o xtrace
+              exec nsenter --target "1" --mount --uts --ipc --net --pid --no-fork \
+              /run/setuid-programs/sudo --user=oleg --login bash <<'EOF'
+              set -o nounset -o errexit -o pipefail -o xtrace
+              cd /home/oleg/ansible-out/files || exit 1
+              git pull --rebase origin master
+              EOF
             resources:
               limits:
                 cpu: 2000m
