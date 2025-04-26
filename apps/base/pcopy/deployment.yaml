@@ -16,3 +16,6 @@ spec:
       containers:
       - name: pcopy
         image: binwiederhier/pcopy:v0.6.1
+        command:
+        - sleep
+        - infinity
