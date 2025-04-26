@@ -27,6 +27,7 @@ spec:
           guix shell help2man guile-sqlite3 guile-gcrypt direnv git git:send-email git-cal gnupg guile-colorized guile-readline inetutils less ncurses openssh password-store sshpass xdot which skopeo --development guix <<'EOS'
           set -o nounset -o errexit -o pipefail -o xtrace
           git checkout docker-system
+          git reset --hard HEAD
           ./bootstrap
           ./configure --localstatedir=/var --prefix=
           make -j$(nproc)
