@@ -113,12 +113,12 @@ program.")))
                                     (policy-file (local-file "etc/containers/policy.json"))))
                           (service containerd-service-type)
                           (service docker-service-type)
-                          (syslog-service-type
-                           (syslog-configuration
-                            (extra-options '("--rcfile=/etc/syslog.conf"
-                                             "--no-forward"
-                                             "--no-unixaf"
-                                             "--no-klog")))))
+                          (service syslog-service-type
+                                   (syslog-configuration
+                                    (extra-options '("--rcfile=/etc/syslog.conf"
+                                                     "--no-forward"
+                                                     "--no-unixaf"
+                                                     "--no-klog")))))
                     (modify-services %base-services
                       (guix-service-type config =>
                                          (guix-configuration
