@@ -110,6 +110,36 @@ in {
           name = "nix";
           id = 1;
           isDefault = true;
+          bookmarks = [
+            {
+              name = "home-karma";
+              tags = [ "monitoring" "kubernetes" ];
+              keyword = "karma";
+              url = "https://karma.home.wugi.info";
+            }
+            {
+              name = "home-grafana";
+              tags = [ "monitoring" "kubernetes" ];
+              keyword = "grafana";
+              url = "https://grafana.home.wugi.info";
+            }
+            {
+              name = "home-harbor";
+              tags = [ "containers" "kubernetes" ];
+              keyword = "karma";
+              url = "https://harbor.home.wugi.info";
+            }
+            {
+              name = "nix-homepage";
+              tags = [ "nix" ];
+              url = "https://nixos.org/";
+            }
+            {
+              name = "nix-wiki";
+              tags = [ "wiki" "nix" ];
+              url = "https://wiki.nixos.org/";
+            }
+          ];
         };
         twitch = firefoxBaseProfile // {
           name = "twitch";
