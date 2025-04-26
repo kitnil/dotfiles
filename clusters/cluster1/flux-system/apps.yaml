@@ -1031,7 +1031,7 @@ spec:
   path: ./apps/cluster1/maintenance-guix-image-workstation
   prune: true
   dependsOn:
-  - maintenance-git-dotfiles-kube1
+  - name: maintenance-git-dotfiles-kube1
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -1254,7 +1254,7 @@ spec:
   path: ./apps/cluster1/maintenance-nix-build-container-systemd-kube1
   prune: true
   dependsOn:
-  - maintenance-git-dotfiles-kube1
+  - name: maintenance-git-dotfiles-kube1
   sourceRef:
     kind: GitRepository
     name: flux-system
