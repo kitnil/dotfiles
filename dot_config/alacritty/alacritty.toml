@@ -3,7 +3,7 @@
 TERM = "xterm-256color"
 
 [font]
-size = 13
+size = 10
 
 [general]
 import = [ "/home/oleg/.config/alacritty/themes/xterm.toml" ]
