@@ -951,6 +951,11 @@ func (r *WorkstationReconciler) CreateWorkstationService(ctx context.Context, re
 					Protocol: corev1.ProtocolTCP,
 					Port:     5900,
 				},
+				{
+					Name:     "qbittorrent",
+					Protocol: corev1.ProtocolTCP,
+					Port:     9091,
+				},
 			},
 			Selector: map[string]string{
 				"app.kubernetes.io/name":       req.NamespacedName.Name,
