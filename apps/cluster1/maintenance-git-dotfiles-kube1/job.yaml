@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: git-dotfiles
+spec:
+  template:
+    metadata:
+      annotations:
+        guix-default-channel-commit: 4060bd69
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: kube1
+      tolerations:
+        - key: edge.cluster.local/not-schedulable
+          operator: Equal
+          effect: NoSchedule
