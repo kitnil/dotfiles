@@ -181,6 +181,20 @@ in {
             "network.proxy.socks_port" = 9050;
             "network.proxy.type" = 1;
           };
+          bookmarks = [
+            {
+              name = "onion-search-duckduckgo";
+              tags = [ "onion" "duckduckgo" ];
+              keyword = "duckduckgo";
+              url = "https://duckduckgogg42xjoc72x3sjasowoarfbgcmvfimaftt6twagswzczad.onion";
+            }
+            {
+              name = "onion-search-brave";
+              tags = [ "onion" "brave" ];
+              keyword = "duckduckgo";
+              url = "https://search.brave4u7jddbv7cyviptqjc7jusxh72uik7zt6adtckl5f4nwy2v72qd.onion";
+            }
+          ];
         };
         work = firefoxBaseProfile // {
           name = "work";
