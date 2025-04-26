@@ -112,7 +112,13 @@ program.")))
                                    (skopeo-configuration
                                     (policy-file (local-file "etc/containers/policy.json"))))
                           (service containerd-service-type)
-                          (service docker-service-type))
+                          (service docker-service-type)
+                          (syslog-service-type
+                           (syslog-configuration
+                            (extra-options '("--rcfile=/etc/syslog.conf"
+                                             "--no-forward"
+                                             "--no-unixaf"
+                                             "--no-klog")))))
                     (modify-services %base-services
                       (guix-service-type config =>
                                          (guix-configuration
@@ -133,12 +139,7 @@ program.")))
                                             %default-authorized-guix-keys))
                                           (substitute-urls '("https://bordeaux.guix.gnu.org"
                                                              "https://substitutes.nonguix.org"))))
-                      (syslog-service-type config =>
-                                           (syslog-configuration
-                                            (extra-options '("--rcfile=/etc/syslog.conf"
-                                                             "--no-forward"
-                                                             "--no-unixaf"
-                                                             "--no-klog")))))))
+                      (delete shepherd-system-log-service-type))))
 
   (sudoers-file (plain-file "sudoers"
                             (string-join `("Defaults:root runcwd=*"
