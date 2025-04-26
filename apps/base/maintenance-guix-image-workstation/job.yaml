@@ -28,7 +28,7 @@ spec:
           EOL
           EOF
         image: docker-registry.wugi.info/library/util-linux-with-udev
-        name: refresh
+        name: nsenter
         resources:
           limits:
             cpu: 14000m
