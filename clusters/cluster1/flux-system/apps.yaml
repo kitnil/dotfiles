@@ -1030,6 +1030,8 @@ spec:
   interval: 10m0s
   path: ./apps/cluster1/maintenance-guix-image-workstation
   prune: true
+  dependsOn:
+  - maintenance-git-dotfiles-kube1
   sourceRef:
     kind: GitRepository
     name: flux-system
