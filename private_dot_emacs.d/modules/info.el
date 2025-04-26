@@ -58,5 +58,5 @@
 ;; Alternative: <https://lists.gnu.org/archive/html/help-guix/2017-03/msg00140.html>,
 ;; see <.bashrc>.
 
-
-(add-hook 'Info-selection-hook 'info-colors-fontify-node)
+(when (fboundp 'info-colors-fontify-node)
+  (add-hook 'Info-selection-hook 'info-colors-fontify-node))
