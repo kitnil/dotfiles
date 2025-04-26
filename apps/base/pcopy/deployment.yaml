@@ -1,0 +1,18 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pcopy
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: pcopy
+      app.kubernetes.io/part-of: pcopy
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: pcopy
+        app.kubernetes.io/part-of: pcopy
+    spec:
+      containers:
+      - name: pcopy
+        image: binwiederhier/pcopy:v0.6.1
