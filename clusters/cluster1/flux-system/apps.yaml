@@ -1253,6 +1253,8 @@ spec:
   interval: 10m0s
   path: ./apps/cluster1/maintenance-nix-build-container-systemd-kube1
   prune: true
+  dependsOn:
+  - maintenance-git-dotfiles-kube1
   sourceRef:
     kind: GitRepository
     name: flux-system
