@@ -95,6 +95,7 @@
        emacs-know-your-http-well
        emacs-kotlin-mode
        emacs-lice-el
+       emacs-llm
        emacs-lsp-java
        emacs-lsp-mode
        emacs-lsp-ui
