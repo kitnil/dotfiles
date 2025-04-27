@@ -16,13 +16,15 @@
   (list dmenu wofi))
 
 (define fonts
-  (list fontconfig
-        font-awesome
-        font-dejavu
-        font-liberation
-        font-google-noto ;emoji in chromium
-        font-misc-misc
-        font-wqy-zenhei))
+  (append fontconfig
+          (delete '()
+                  (fold-packages (lambda (x xs)
+                                   (cons (if (string-prefix? "font-"
+                                                             (package-name x))
+                                             x
+                                             '())
+                                         xs))
+                                 '()))))
 
 (packages->manifest (append fonts
                             menus
