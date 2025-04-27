@@ -3,6 +3,7 @@
 set -o nounset -o errexit -o pipefail
 
 /home/oleg/.local/share/chezmoi/dotfiles/run/pc0/12-run-win10.sh
+/home/oleg/.local/share/chezmoi/dotfiles/run/pc0/03-net.sh
 
 rm /var/lib/kubelet/.maintenance
 herd restart kubelet
