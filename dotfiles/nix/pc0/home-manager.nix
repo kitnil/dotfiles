@@ -204,217 +204,217 @@ in {
       };
   };
 
-  programs.k9s = {
-    enable = true;
-    settings = {
-      k9s = {
-        disablePodCounting = false;
-        imageScans = {
-          enable = false;
-          exclusions = { labels = {}; namespaces = []; };
-        };
-        liveViewAutoRefresh = false;
-        logger = {
-          buffer = 5000;
-          showTime = false;
-          sinceSeconds = -1;
-          tail = 100;
-          textWrap = false;
-        };
-        maxConnRetry = 5;
-        noExitOnCtrlC = false;
-        readOnly = false;
-        refreshRate = 2;
-        screenDumpDir = "/home/oleg/.local/state/k9s/screen-dumps";
-        shellPod = {
-          image = "busybox:latest";
-          limits = { cpu = "100m"; memory = "100Mi"; };
-          namespace = "default";
-        };
-        skipLatestRevCheck = false;
-        thresholds = {
-          cpu = { critical = 90; warn = 70; };
-          memory = { critical = 90; warn = 70; };
-        };
-        ui = {
-          crumbsless = false;
-          defaultsToFullScreen = false;
-          enableMouse = false;
-          headless = false;
-          logoless = false;
-          noIcons = false;
-          reactive = false;
-          skin = "everforest-light";
-        };
-      };
-    };
-    plugin = {
-      plugins = {
-        cert = {
-          args = [
-            "-c"
-            "kubectl -n \$NAMESPACE get -o json secret \$NAME | jq '.data[\"tls.crt\"]' --raw-output | base64 -d | openssl x509 -text | less"
-          ];
-          background = false;
-          command = "sh";
-          confirm = false;
-          description = "Show certificate in secret";
-          scopes = [ "secrets" ];
-          shortCut = "Shift-T";
-        };
-        getall-ns = {
-          args = [ "-c" "kubectl get all -n \$NAME | less" ];
-          background = false;
-          command = "sh";
-          confirm = false;
-          description = "Get All Resources in NS";
-          scopes = [ "namespaces" ];
-          shortCut = "Shift-A";
-        };
-        node-ssh = {
-          args = [
-            "-l"
-            "-c"
-            "set -x; /run/current-system/profile/bin/ssh \${NAME}.intr; read"
-          ];
-          background = false;
-          command = "sh";
-          description = "ssh to node";
-          scopes = [ "nodes" ];
-          shortCut = "Shift-S";
-        };
-        reconcile-git = {
-          args = [ "-c" "flux reconcile source git -n \$NAMESPACE \$NAME | less" ];
-          background = false;
-          command = "sh";
-          confirm = false;
-          description = "Flux reconcile";
-          scopes = [ "gitrepositories" ];
-          shortCut = "Shift-R";
-        };
-        reconcile-hr = {
-          args = [
-            "-c"
-            "flux reconcile helmrelease -n \$NAMESPACE \$NAME --with-source | less"
-          ];
-          background = false;
-          command = "sh";
-          confirm = false;
-          description = "Flux reconcile";
-          scopes = [ "helmreleases" ];
-          shortCut = "Shift-R";
-        };
-        reconcile-ks = {
-          args = [
-            "-c"
-            "flux reconcile kustomization -n \$NAMESPACE \$NAME --with-source | less"
-          ];
-          background = false;
-          command = "sh";
-          confirm = false;
-          description = "Flux reconcile";
-          scopes = [ "kustomizations" ];
-          shortCut = "Shift-R";
-        };
-        terraform-plan = {
-          args = [
-            "-c"
-            "kubectl -n \$NAMESPACE get -o json secret \$NAME | jq .data.tfplan --raw-output | base64 -d | gzip -d | gzip -d | less"
-          ];
-          background = false;
-          command = "sh";
-          confirm = false;
-          description = "Terraform show plan";
-          scopes = [ "secrets" ];
-          shortCut = "Shift-P";
-        };
-        terraform-state = {
-          args = [
-            "-c"
-            "kubectl -n \$NAMESPACE get -o json secret \$NAME | jq .data.tfstate --raw-output | base64 -d | gzip -d | less"
-          ];
-          background = false;
-          command = "sh";
-          confirm = false;
-          description = "Terraform show state";
-          scopes = [ "secrets" ];
-          shortCut = "Shift-S";
-        };
-        toggle-helmrelease = {
-          args = [
-            "-c"
-            "flux \$([ \$(kubectl get helmreleases -n \$NAMESPACE \$NAME -o=custom-columns=TYPE:.spec.suspend | tail -1) = \"true\" ] && echo \"resume\" || echo \"suspend\") helmrelease -n \$NAMESPACE \$NAME | less"
-          ];
-          background = false;
-          command = "sh";
-          confirm = true;
-          description = "Toggle to suspend or resume a HelmRelease";
-          scopes = [ "helmreleases" ];
-          shortCut = "Shift-T";
-        };
-        toggle-kustomization = {
-          args = [
-            "-c"
-            "flux \$([ \$(kubectl get kustomizations -n \$NAMESPACE \$NAME -o=custom-columns=TYPE:.spec.suspend | tail -1) = \"true\" ] && echo \"resume\" || echo \"suspend\") kustomization -n \$NAMESPACE \$NAME | less"
-          ];
-          background = false;
-          command = "sh";
-          confirm = true;
-          description = "Toggle to suspend or resume a Kustomization";
-          scopes = [ "kustomizations" ];
-          shortCut = "Shift-T";
-        };
-        user-shell = {
-          args = [
-            "-c"
-            "# set -o nounset -o errexit -o pipefail -o xtrace\nset -o xtrace\nget_container()\n{\n    kubectl \"--namespace=\${NAMESPACE}\" get pod -o json \"\$NAME\" | jq --raw-output '.spec.containers[] | .name' | fzf\n}\ncontainer=\"\$(get_container)\"\ncase \"\$container\" in\n    guix)\n        kubectl exec \"--namespace=\${NAMESPACE}\" --tty=true --stdin=true \"pod/\${NAME}\" \"--container=\${container}\" -- /run/setuid-programs/sudo -u oleg -i sh -l\n        ;;\n    nixos|archlinux|kali-rolling)\n        kubectl exec \"--namespace=\${NAMESPACE}\" --tty=true --stdin=true \"pod/\${NAME}\" \"--container=\${container}\" -- /run/current-system/sw/bin/machinectl shell oleg@\n        ;;\nesac\n"
-          ];
-          background = false;
-          command = "bash";
-          confirm = false;
-          description = "User Shell";
-          scopes = [ "pods" ];
-          shortCut = "Shift-B";
-        };
-      };
-    };
-    skins = {
-      transparent = {
-        k9s = {
-          body = { bgColor = "default"; };
-          dialog = {
-            bgColor = "default";
-            fieldFgColor = "default";
-            labelFgColor = "default";
-          };
-          frame = {
-            crumbs = { bgColor = "default"; };
-            menu = { fgColor = "default"; };
-            title = { bgColor = "default"; counterColor = "default"; };
-          };
-          info = { sectionColor = "default"; };
-          prompt = { bgColor = "default"; };
-          views = {
-            charts = { bgColor = "default"; };
-            logs = {
-              bgColor = "default";
-              indicator = {
-                bgColor = "default";
-                toggleOffColor = "default";
-                toggleOnColor = "default";
-              };
-            };
-            table = {
-              bgColor = "default";
-              header = { bgColor = "default"; fgColor = "default"; };
-            };
-            xray = { bgColor = "default"; };
-            yaml = { colonColor = "default"; valueColor = "default"; };
-          };
-        };
-      };
-    };
-  };
+  # programs.k9s = {
+  #   enable = true;
+  #   settings = {
+  #     k9s = {
+  #       disablePodCounting = false;
+  #       imageScans = {
+  #         enable = false;
+  #         exclusions = { labels = {}; namespaces = []; };
+  #       };
+  #       liveViewAutoRefresh = false;
+  #       logger = {
+  #         buffer = 5000;
+  #         showTime = false;
+  #         sinceSeconds = -1;
+  #         tail = 100;
+  #         textWrap = false;
+  #       };
+  #       maxConnRetry = 5;
+  #       noExitOnCtrlC = false;
+  #       readOnly = false;
+  #       refreshRate = 2;
+  #       screenDumpDir = "/home/oleg/.local/state/k9s/screen-dumps";
+  #       shellPod = {
+  #         image = "busybox:latest";
+  #         limits = { cpu = "100m"; memory = "100Mi"; };
+  #         namespace = "default";
+  #       };
+  #       skipLatestRevCheck = false;
+  #       thresholds = {
+  #         cpu = { critical = 90; warn = 70; };
+  #         memory = { critical = 90; warn = 70; };
+  #       };
+  #       ui = {
+  #         crumbsless = false;
+  #         defaultsToFullScreen = false;
+  #         enableMouse = false;
+  #         headless = false;
+  #         logoless = false;
+  #         noIcons = false;
+  #         reactive = false;
+  #         skin = "everforest-light";
+  #       };
+  #     };
+  #   };
+  #   plugin = {
+  #     plugins = {
+  #       cert = {
+  #         args = [
+  #           "-c"
+  #           "kubectl -n \$NAMESPACE get -o json secret \$NAME | jq '.data[\"tls.crt\"]' --raw-output | base64 -d | openssl x509 -text | less"
+  #         ];
+  #         background = false;
+  #         command = "sh";
+  #         confirm = false;
+  #         description = "Show certificate in secret";
+  #         scopes = [ "secrets" ];
+  #         shortCut = "Shift-T";
+  #       };
+  #       getall-ns = {
+  #         args = [ "-c" "kubectl get all -n \$NAME | less" ];
+  #         background = false;
+  #         command = "sh";
+  #         confirm = false;
+  #         description = "Get All Resources in NS";
+  #         scopes = [ "namespaces" ];
+  #         shortCut = "Shift-A";
+  #       };
+  #       node-ssh = {
+  #         args = [
+  #           "-l"
+  #           "-c"
+  #           "set -x; /run/current-system/profile/bin/ssh \${NAME}.intr; read"
+  #         ];
+  #         background = false;
+  #         command = "sh";
+  #         description = "ssh to node";
+  #         scopes = [ "nodes" ];
+  #         shortCut = "Shift-S";
+  #       };
+  #       reconcile-git = {
+  #         args = [ "-c" "flux reconcile source git -n \$NAMESPACE \$NAME | less" ];
+  #         background = false;
+  #         command = "sh";
+  #         confirm = false;
+  #         description = "Flux reconcile";
+  #         scopes = [ "gitrepositories" ];
+  #         shortCut = "Shift-R";
+  #       };
+  #       reconcile-hr = {
+  #         args = [
+  #           "-c"
+  #           "flux reconcile helmrelease -n \$NAMESPACE \$NAME --with-source | less"
+  #         ];
+  #         background = false;
+  #         command = "sh";
+  #         confirm = false;
+  #         description = "Flux reconcile";
+  #         scopes = [ "helmreleases" ];
+  #         shortCut = "Shift-R";
+  #       };
+  #       reconcile-ks = {
+  #         args = [
+  #           "-c"
+  #           "flux reconcile kustomization -n \$NAMESPACE \$NAME --with-source | less"
+  #         ];
+  #         background = false;
+  #         command = "sh";
+  #         confirm = false;
+  #         description = "Flux reconcile";
+  #         scopes = [ "kustomizations" ];
+  #         shortCut = "Shift-R";
+  #       };
+  #       terraform-plan = {
+  #         args = [
+  #           "-c"
+  #           "kubectl -n \$NAMESPACE get -o json secret \$NAME | jq .data.tfplan --raw-output | base64 -d | gzip -d | gzip -d | less"
+  #         ];
+  #         background = false;
+  #         command = "sh";
+  #         confirm = false;
+  #         description = "Terraform show plan";
+  #         scopes = [ "secrets" ];
+  #         shortCut = "Shift-P";
+  #       };
+  #       terraform-state = {
+  #         args = [
+  #           "-c"
+  #           "kubectl -n \$NAMESPACE get -o json secret \$NAME | jq .data.tfstate --raw-output | base64 -d | gzip -d | less"
+  #         ];
+  #         background = false;
+  #         command = "sh";
+  #         confirm = false;
+  #         description = "Terraform show state";
+  #         scopes = [ "secrets" ];
+  #         shortCut = "Shift-S";
+  #       };
+  #       toggle-helmrelease = {
+  #         args = [
+  #           "-c"
+  #           "flux \$([ \$(kubectl get helmreleases -n \$NAMESPACE \$NAME -o=custom-columns=TYPE:.spec.suspend | tail -1) = \"true\" ] && echo \"resume\" || echo \"suspend\") helmrelease -n \$NAMESPACE \$NAME | less"
+  #         ];
+  #         background = false;
+  #         command = "sh";
+  #         confirm = true;
+  #         description = "Toggle to suspend or resume a HelmRelease";
+  #         scopes = [ "helmreleases" ];
+  #         shortCut = "Shift-T";
+  #       };
+  #       toggle-kustomization = {
+  #         args = [
+  #           "-c"
+  #           "flux \$([ \$(kubectl get kustomizations -n \$NAMESPACE \$NAME -o=custom-columns=TYPE:.spec.suspend | tail -1) = \"true\" ] && echo \"resume\" || echo \"suspend\") kustomization -n \$NAMESPACE \$NAME | less"
+  #         ];
+  #         background = false;
+  #         command = "sh";
+  #         confirm = true;
+  #         description = "Toggle to suspend or resume a Kustomization";
+  #         scopes = [ "kustomizations" ];
+  #         shortCut = "Shift-T";
+  #       };
+  #       user-shell = {
+  #         args = [
+  #           "-c"
+  #           "# set -o nounset -o errexit -o pipefail -o xtrace\nset -o xtrace\nget_container()\n{\n    kubectl \"--namespace=\${NAMESPACE}\" get pod -o json \"\$NAME\" | jq --raw-output '.spec.containers[] | .name' | fzf\n}\ncontainer=\"\$(get_container)\"\ncase \"\$container\" in\n    guix)\n        kubectl exec \"--namespace=\${NAMESPACE}\" --tty=true --stdin=true \"pod/\${NAME}\" \"--container=\${container}\" -- /run/setuid-programs/sudo -u oleg -i sh -l\n        ;;\n    nixos|archlinux|kali-rolling)\n        kubectl exec \"--namespace=\${NAMESPACE}\" --tty=true --stdin=true \"pod/\${NAME}\" \"--container=\${container}\" -- /run/current-system/sw/bin/machinectl shell oleg@\n        ;;\nesac\n"
+  #         ];
+  #         background = false;
+  #         command = "bash";
+  #         confirm = false;
+  #         description = "User Shell";
+  #         scopes = [ "pods" ];
+  #         shortCut = "Shift-B";
+  #       };
+  #     };
+  #   };
+  #   skins = {
+  #     transparent = {
+  #       k9s = {
+  #         body = { bgColor = "default"; };
+  #         dialog = {
+  #           bgColor = "default";
+  #           fieldFgColor = "default";
+  #           labelFgColor = "default";
+  #         };
+  #         frame = {
+  #           crumbs = { bgColor = "default"; };
+  #           menu = { fgColor = "default"; };
+  #           title = { bgColor = "default"; counterColor = "default"; };
+  #         };
+  #         info = { sectionColor = "default"; };
+  #         prompt = { bgColor = "default"; };
+  #         views = {
+  #           charts = { bgColor = "default"; };
+  #           logs = {
+  #             bgColor = "default";
+  #             indicator = {
+  #               bgColor = "default";
+  #               toggleOffColor = "default";
+  #               toggleOnColor = "default";
+  #             };
+  #           };
+  #           table = {
+  #             bgColor = "default";
+  #             header = { bgColor = "default"; fgColor = "default"; };
+  #           };
+  #           xray = { bgColor = "default"; };
+  #           yaml = { colonColor = "default"; valueColor = "default"; };
+  #         };
+  #       };
+  #     };
+  #   };
+  # };
 
   programs.ssh = {
     enable = true;
