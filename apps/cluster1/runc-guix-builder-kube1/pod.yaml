@@ -13,16 +13,9 @@ spec:
     - name: RUNC_CONTAINER_ID
       value: guix-builder
     volumeMounts:
-    - mountPath: /var/run/netns/runc
-      name: var-run-netns-runc
     - mountPath: /srv/runc/guix-builder
       name: runc-guix-builder
-  hostNetwork: true
   volumes:
-  - name: var-run-netns-runc
-    hostPath:
-      path: /var/run/netns/runc
-      type: File
   - name: runc-guix-builder
     hostPath:
       path: /srv/runc/guix-builder
