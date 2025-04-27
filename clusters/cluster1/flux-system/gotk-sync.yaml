@@ -9,9 +9,7 @@ spec:
   interval: 1m0s
   ref:
     branch: master
-  secretRef:
-    name: flux-system
-  url: ssh://git@gitlab.com/wigust/dotfiles.git
+  url: https://cgit.wugi.info/git/wigust/dotfiles
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
