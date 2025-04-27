@@ -155,9 +155,11 @@
  '(dap-ui-many-windows-mode nil)
  '(dap-ui-mode nil nil (dap-ui))
  '(debug-on-error nil)
+ '(display-time-mode nil)
  '(indent-tabs-mode nil)
+ '(menu-bar-mode nil)
  '(org-agenda-files '("~/org/inbox.org" "~/org/todo.org" "~/org/web.org"))
- '(python-shell-interpreter "python3")
+ '(python-shell-interpreter "python3" t)
  '(safe-local-variable-values
    '((geiser-repl-per-project-p . t)
      (eval progn
@@ -405,6 +407,7 @@
      (eval modify-syntax-entry 36 "'")
      (eval modify-syntax-entry 126 "'")
      (bug-reference-bug-regexp . "<https?://\\(debbugs\\|bugs\\)\\.gnu\\.org/\\([0-9]+\\)>")))
+ '(tool-bar-mode nil)
  '(tramp-default-method "ssh")
  '(warning-suppress-types
    '(((defvaralias losing-value geiser-debug-show-debug-p))
