@@ -13,15 +13,9 @@ spec:
     - name: RUNC_CONTAINER_ID
       value: nix-builder
     volumeMounts:
-    - mountPath: /var/run/netns/runc-nix
-      name: var-run-netns-runc-nix
     - mountPath: /srv/runc/nix-builder
       name: runc-nix-builder
   volumes:
-  - name: var-run-netns-runc-nix
-    hostPath:
-      path: /var/run/netns/runc-nix
-      type: File
   - name: runc-nix-builder
     hostPath:
       path: /srv/runc/nix-builder
