@@ -116,6 +116,7 @@
                           "gpg-unlock"
                           "grafana"
                           "guile-git-list-commiters"
+                          "guix-builder"
                           "guix-clean.sh"
                           "guix-custom-refresh"
                           "guix-environment.sh"
