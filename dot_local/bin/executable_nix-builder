@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+exec kubectl -it --namespace=nix exec pod/runc-kube1-nix-builder -- runc exec -e TERM=screen-256color -t nix-builder /run/current-system/sw/bin/machinectl shell oleg@
