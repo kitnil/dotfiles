@@ -8,7 +8,7 @@ metadata:
 spec:
   interval: 1m0s
   ref:
-    branch: master
+    branch: flux-system
   url: https://cgit.wugi.info/git/wigust/dotfiles
 ---
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
