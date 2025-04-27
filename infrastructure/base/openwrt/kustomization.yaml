@@ -3,5 +3,3 @@ kind: Kustomization
 namespace: openwrt
 resources:
 - namespace.yaml
-- pod.yaml
-- service.yaml
