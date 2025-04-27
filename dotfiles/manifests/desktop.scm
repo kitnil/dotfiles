@@ -1,4 +1,6 @@
 (use-modules (guix profiles)
+             (guix packages)
+             (gnu packages)
              (gnu packages fonts)
              (gnu packages fontutils)
              (gnu packages freedesktop)
