@@ -18,7 +18,7 @@
   (list dmenu wofi))
 
 (define fonts
-  (append fontconfig
+  (append (list fontconfig)
           (delete '()
                   (fold-packages (lambda (x xs)
                                    (cons (if (string-prefix? "font-"
