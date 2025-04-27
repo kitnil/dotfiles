@@ -17,6 +17,7 @@ spec:
       name: var-run-netns-runc
     - mountPath: /srv/runc/guix-builder
       name: runc-guix-builder
+  hostNetwork: true
   volumes:
   - name: var-run-netns-runc
     hostPath:

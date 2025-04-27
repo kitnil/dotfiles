@@ -12,7 +12,6 @@ spec:
       name: src
     - mountPath: /srv
       name: srv
-  hostNetwork: true
   volumes:
   - name: dotfiles
     hostPath:
