@@ -97,7 +97,7 @@ spec:
           name: home-oleg-downloads
 
       - name: nixos
-        image: harbor.home.wugi.info/library/nixos-systemd-taskexecutor:7a97f32a
+        image: harbor.home.wugi.info/library/nixos-systemd-taskexecutor:3b5d4e49
         volumeMounts:
         - mountPath: /home/oleg/.mozilla/firefox
           name: home-oleg-mozilla-firefox
