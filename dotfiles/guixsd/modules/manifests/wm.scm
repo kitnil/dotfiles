@@ -29,7 +29,7 @@
   (list i3-wm i3status))
 
 (define sway-utils
-  (list bemenu grim slurp swayidle waybar))
+  (list bemenu grim fnott slurp swayidle waybar))
 
 (define clipboard
   (list wl-clipboard))
