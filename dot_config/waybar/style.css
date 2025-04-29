@@ -169,8 +169,8 @@ label:focus {
 }
 
 #cpu {
-    background-color: #2ecc71;
-    color: #000000;
+    background-color: #008b45;
+    color: #ffffff;
 }
 
 #memory {
@@ -194,8 +194,8 @@ label:focus {
 }
 
 #pulseaudio {
-    background-color: #f1c40f;
-    color: #000000;
+    background-color: #8b7500;
+    color: #ffffff;
 }
 
 #pulseaudio.muted {
@@ -275,7 +275,7 @@ label:focus {
 
 #language {
     background: #00b093;
-    color: #740864;
+    color: #ffffff;
     padding: 0 5px;
     margin: 0 5px;
     min-width: 16px;
