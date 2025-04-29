@@ -37,7 +37,7 @@ llm_request()
 
 main()
 {
-    local prompt="Answer in same language as query in one sentence without new lines and without saying what you are doing."
+    local prompt=${LLM_PROMPT:-"Answer in same language as query in one sentence without new lines and without saying what you are doing."}
     # local prompt="Identify the language in which the following sentence is written. Provide only the name of the language in English."
     # local prompt="Respond in one sentence without new lines, in the same language as the question (English or Russian only), and without explaining what you're doing."
     input="$(cat)"
