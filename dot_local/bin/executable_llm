@@ -1,0 +1,57 @@
+#!/usr/bin/env bash
+
+set -o errexit -o pipefail -o xtrace
+
+PATH="/gnu/store/8s03yp79faafp1vnjp8xggrqsf22xxp9-fyi-1.0.4/bin:${PATH}"
+export PATH
+
+llm_body()
+{
+    local prompt="$1"
+    local content="$2"
+    cat <<EOF
+{
+  "messages": [
+    {
+      "role": "user",
+      "content": "${prompt} ${content}"
+    }
+  ],
+  "temperature": 0.7
+}
+
+EOF
+}
+
+llm_request()
+{
+    local prompt="$1"
+    local content="$2"
+    curl https://lm-studio.home.wugi.info/v1/chat/completions   \
+         --silent                                               \
+         --fail                                                 \
+         --header "Content-Type: application/json"              \
+         --data "$(llm_body "$prompt" "$content")"              \
+        | jq --raw-output '.choices[] | .message.content'
+}
+
+main()
+{
+    local prompt="Answer in same language as query in one sentence without new lines and without saying what you are doing."
+    # local prompt="Identify the language in which the following sentence is written. Provide only the name of the language in English."
+    # local prompt="Respond in one sentence without new lines, in the same language as the question (English or Russian only), and without explaining what you're doing."
+    input="$(cat)"
+    fyi "LLM input" "$input"
+    local content="$(printf "$input" | sed -z 's/\n/\\n/g')"
+    if [[ -n $content ]]
+    then
+        local output="$(llm_request "$prompt" "$content")"
+        fyi "LLM output" "$output"
+    fi
+    if [[ $LLM_COPY == true ]]
+    then
+        wl-copy "$output"
+    fi
+}
+
+main "$@"
