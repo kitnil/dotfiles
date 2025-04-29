@@ -226,6 +226,12 @@ label:focus {
     background-color: #ffa000;
 }
 
+#custom-lm-studio-models {
+    background-color: #2f4f4f;
+    color: #ffffff;
+    padding: 0 5px;
+}
+
 #temperature {
     background-color: #f0932b;
 }
