@@ -18,6 +18,10 @@ main()
     then
         wl-copy "$output"
     fi
+    if [[ $LLM_COPY_PRIMARY == true ]]
+    then
+        wl-copy --primary "$output"
+    fi
 }
 
 main "$@"
