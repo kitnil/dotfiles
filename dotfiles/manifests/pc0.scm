@@ -14,6 +14,7 @@
  (append (map (cut string-append %source-dir "/" <>)
               '("pc0-packages.scm"
                 "desktop.scm"
+                "icons.scm"
                 "dotfiles.scm"
 	        "emacs.scm"
                 "deprecated.scm"
