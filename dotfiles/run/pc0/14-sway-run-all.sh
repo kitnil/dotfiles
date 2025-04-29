@@ -133,9 +133,6 @@ sleep 0.4
 
 swaymsg layout tabbed
 sleep 0.4
-
-swaymsg exec pavucontrol
-sleep 0.4
 EOF
 
 nerdctl_nixos_exec /run/current-system/sw/bin/systemctl --user start firefox@default
