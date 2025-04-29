@@ -49,7 +49,7 @@ in
           DISPLAY=:0
           export DISPLAY
 
-          exec -a foot ${cfg.package}/bin/foot "$@"
+          exec -a foot ${cfg.package}/bin/foot --title="nixos - foot" "$@"
         '';
         Type = "simple";
         Restart = "always";
