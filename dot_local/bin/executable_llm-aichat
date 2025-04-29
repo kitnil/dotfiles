@@ -22,6 +22,10 @@ main()
     then
         wl-copy --primary "$output"
     fi
+    if [[ $LLM_WTYPE == true ]]
+    then
+        wtype "$output"
+    fi
 }
 
 main "$@"
