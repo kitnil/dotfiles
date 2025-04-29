@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+LLM_COPY=true
+export LLM_COPY
+
+exec wl-paste --primary --no-newline --watch ~/.local/share/chezmoi/dot_local/bin/executable_llm-aichat
