@@ -1,0 +1,3 @@
+#!/bin/sh
+
+exec wlvncc --encodings=raw --shortcut-inhibit --use-sw-renderer workstation-kube1.workstation
