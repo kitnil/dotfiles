@@ -6,3 +6,4 @@ set -e
 sudo ./02-ip.sh
 ./04-kubelet.sh
 ./08-openwrt.sh
+./09-piraeus.sh
