@@ -1,6 +1,7 @@
 # see https://github.com/sigoden/aichat/blob/main/config.example.yaml
 
 model: lm-studio:gemma-3-12b-it
+light_theme: true
 clients:
 - type: openai-compatible
   name: lm-studio
