@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+set -o errexit -o pipefail -o xtrace
+
+PATH="/gnu/store/8s03yp79faafp1vnjp8xggrqsf22xxp9-fyi-1.0.4/bin:${PATH}"
+export PATH
+
+main()
+{
+    local prompt=${LLM_PROMPT:-"Answer in same language as query in one sentence without new lines and without saying what you are doing."}
+    local content="$(cat)"
+    if [[ -n $content ]]
+    then
+        local output="$(printf "$content" | /home/oleg/.local/share/chezmoi/dot_local/bin/aichat --prompt "$prompt")"
+        fyi "LLM output" "$output"
+    fi
+    if [[ $LLM_COPY == true ]]
+    then
+        wl-copy "$output"
+    fi
+}
+
+main "$@"
