@@ -10,7 +10,7 @@ ip route add 192.168.0.253/32 dev macvlan0
 
 # ip address add 127.0.0.2/8 dev enp34s0
 ip address add 192.168.0.144/24 dev enp34s0
-ip address add 192.168.0.145/24 dev enp34s0
+# ip address add 192.168.0.145/24 dev enp34s0
 
 ip link set br154 up
 # ip address add 127.0.0.3/8 dev br154
