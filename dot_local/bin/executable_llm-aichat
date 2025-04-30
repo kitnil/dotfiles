@@ -13,9 +13,17 @@ languages=(
 main()
 {
     local content="$(cat)"
+    current_window_name="$(swaymsg -t get_tree | jq -r '.. | select(.focused?) | .name')"
     for language in "${languages[@]}"
     do
-        local prompt=${LLM_PROMPT:-"Respond in ${language}. In one sentence without new lines and without saying what you are doing."}
+        case "$current_window_name" in
+            Alacritty)
+                local prompt="Explain in ${language}. In not more than 5 sentences without new lines and without saying what you are doing."
+                ;;
+            *)
+                local prompt=${LLM_PROMPT:-"Respond in ${language}. In one sentence without new lines and without saying what you are doing."}
+                ;;
+        esac
         if [[ -n $content ]]
         then
             local output="$(printf "$content" | /home/oleg/.local/share/chezmoi/dot_local/bin/aichat --prompt "$prompt")"
