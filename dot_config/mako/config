@@ -1,0 +1,25 @@
+# Set the default timeout to timeout in milliseconds. To disable the timeout, set it to zero.
+default-timeout=5000
+
+# Set width of notification popups. Default: 300
+width=660
+
+# Set font to font, in Pango format. Default: monospace 10
+font=Adwaita Mono 10
+
+# Set background color to color. See COLORS for more information. Default: #285577FF
+background-color=#ffffffee
+
+# Set text color to color. See COLORS for more information. Default: #FFFFFFFF
+text-color=#000000ff
+
+# Set popup border color to color. See COLORS for more information. Default: #4C7899FF
+border-color=#2e8b57ee
+
+# margin=40
+
+# Show notifications at the specified position on the output. Supported values are top-right, top-
+# center, top-left, bottom-right, bottom-center, bottom-left, center-right, center-left and center.
+#
+# Default: top-right
+anchor=bottom-right
