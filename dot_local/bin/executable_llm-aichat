@@ -1,35 +1,37 @@
 #!/usr/bin/env bash
 
-set -o errexit -o pipefail -o xtrace
+set -o errexit -o pipefail
 
 PATH="/gnu/store/8s03yp79faafp1vnjp8xggrqsf22xxp9-fyi-1.0.4/bin:${PATH}"
 export PATH
 
-languages=(
-    English
-    Russian
-)
-
 main()
 {
     local content="$(cat)"
+    printf "%s\n" "$content"
     current_window_name="$(swaymsg -t get_tree | jq -r '.. | select(.focused?) | .name')"
-    for language in "${languages[@]}"
+    case "$current_window_name" in
+        Alacritty)
+            local prompts=(
+                "Explain in English. In not more than 5 sentences without new lines and without saying what you are doing."
+            )
+            ;;
+        *)
+            local prompts=(
+                "Respond in English. In one sentence without new lines and without saying what you are doing."
+                "Respond in Russian. In one sentence without new lines and without saying what you are doing."
+            )
+            ;;
+    esac
+    for prompt in "${prompts[@]}"
     do
-        case "$current_window_name" in
-            Alacritty)
-                local prompt="Explain in ${language}. In not more than 5 sentences without new lines and without saying what you are doing."
-                ;;
-            *)
-                local prompt=${LLM_PROMPT:-"Respond in ${language}. In one sentence without new lines and without saying what you are doing."}
-                ;;
-        esac
         if [[ -n $content ]]
         then
             local output="$(printf "$content" | /home/oleg/.local/share/chezmoi/dot_local/bin/aichat --prompt "$prompt")"
+            echo "$output"
             fyi "LLM output" "$output"
         fi
-        if [[ $language == "${LLM_LANG:-English}" ]]
+        if [[ $LLM_LANG == Russian ]]
         then
             if [[ $LLM_COPY == true ]]
             then
