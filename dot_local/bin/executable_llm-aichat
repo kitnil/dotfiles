@@ -22,6 +22,11 @@ main()
                     "Explain in English. In not more than 5 sentences without new lines and without saying what you are doing."
                 )
                 ;;
+            *Twitch*)
+                local prompts=(
+                    "Respond in Russian. In one sentence without new lines and without saying what you are doing. Maybe include a joke."
+                )
+                ;;
             *)
                 local prompts=(
                     "Respond in English. In one sentence without new lines and without saying what you are doing."
@@ -36,8 +41,8 @@ main()
         then
             local output="$(printf "$content" | /home/oleg/.local/share/chezmoi/dot_local/bin/aichat --prompt "$prompt")"
             echo "$output"
-            if [[ $prompt == "Respond in Russian. In one sentence without new lines and without saying what you are doing." ]]
-            then
+            russian()
+            {
                 fyi "LLM output (copied to primary clipboard)" "$output"
                 if [[ $LLM_COPY == true ]]
                 then
@@ -51,9 +56,18 @@ main()
                 then
                     wtype "$output"
                 fi
-            else
-                fyi "LLM output" "$output"
-            fi
+            }
+            case "$prompt" in
+                "Respond in Russian. In one sentence without new lines and without saying what you are doing.")
+                    russian
+                    ;;
+                "Respond in Russian. In one sentence without new lines and without saying what you are doing. Maybe include a joke.")
+                    russian
+                    ;;
+                *)
+                    fyi "LLM output" "$output"
+                    ;;
+            esac
         fi
     done
 }
