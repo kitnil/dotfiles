@@ -22,7 +22,7 @@ main()
                     "Explain in English. In not more than 5 sentences without new lines and without saying what you are doing."
                 )
                 ;;
-            COMMIT_EDITMSG*)
+            COMMIT_EDITMSG*|magit-diff*)
                 local prompts=(
                     'Generate Git commit message following Changelog style. First commit line should end with a period as a sentence. Each modified file should be described as in example "* /a/b/c.txt: Add something.". Without saying what you are doing. Limit is 200 characters.'
                 )
