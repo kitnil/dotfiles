@@ -7,7 +7,7 @@ export PATH
 
 main()
 {
-    local prompt=${LLM_PROMPT:-"Answer in same language as query in one sentence without new lines and without saying what you are doing."}
+    local prompt=${LLM_PROMPT:-"Respond in ${LLM_LANG:-English}. In one sentence without new lines and without saying what you are doing."}
     local content="$(cat)"
     if [[ -n $content ]]
     then
