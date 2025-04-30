@@ -5,27 +5,38 @@ set -o errexit -o pipefail -o xtrace
 PATH="/gnu/store/8s03yp79faafp1vnjp8xggrqsf22xxp9-fyi-1.0.4/bin:${PATH}"
 export PATH
 
+languages=(
+    English
+    Russian
+)
+
 main()
 {
-    local prompt=${LLM_PROMPT:-"Respond in ${LLM_LANG:-English}. In one sentence without new lines and without saying what you are doing."}
     local content="$(cat)"
-    if [[ -n $content ]]
-    then
-        local output="$(printf "$content" | /home/oleg/.local/share/chezmoi/dot_local/bin/aichat --prompt "$prompt")"
-        fyi "LLM output" "$output"
-    fi
-    if [[ $LLM_COPY == true ]]
-    then
-        wl-copy "$output"
-    fi
-    if [[ $LLM_COPY_PRIMARY == true ]]
-    then
-        wl-copy --primary "$output"
-    fi
-    if [[ $LLM_WTYPE == true ]]
-    then
-        wtype "$output"
-    fi
+    for language in "${languages[@]}"
+    do
+        local prompt=${LLM_PROMPT:-"Respond in ${language}. In one sentence without new lines and without saying what you are doing."}
+        if [[ -n $content ]]
+        then
+            local output="$(printf "$content" | /home/oleg/.local/share/chezmoi/dot_local/bin/aichat --prompt "$prompt")"
+            fyi "LLM output" "$output"
+        fi
+        if [[ $language == "${LLM_LANG:-English}" ]]
+        then
+            if [[ $LLM_COPY == true ]]
+            then
+                wl-copy "$output"
+            fi
+            if [[ $LLM_COPY_PRIMARY == true ]]
+            then
+                wl-copy --primary "$output"
+            fi
+            if [[ $LLM_WTYPE == true ]]
+            then
+                wtype "$output"
+            fi
+        fi
+    done
 }
 
 main "$@"

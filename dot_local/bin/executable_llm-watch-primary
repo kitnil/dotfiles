@@ -3,4 +3,7 @@
 LLM_COPY=true
 export LLM_COPY
 
+LLM_LANG=Russian
+export LLM_LANG
+
 exec wl-paste --primary --no-newline --watch ~/.local/share/chezmoi/dot_local/bin/executable_llm-aichat
