@@ -244,6 +244,7 @@
                           "youtube-dl-music-play-url"
                           "youtube-scm"
                           "yt"
+                          "waybar-1.sh"
                           "windows")))))
 
 (define home-parallel-service
