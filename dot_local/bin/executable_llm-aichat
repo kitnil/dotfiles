@@ -36,10 +36,10 @@ main()
         then
             local output="$(printf "$content" | /home/oleg/.local/share/chezmoi/dot_local/bin/aichat --prompt "$prompt")"
             echo "$output"
-            fyi "LLM output" "$output"
         fi
-        if [[ $LLM_LANG == Russian ]]
+        if [[ $prompt == "Respond in Russian. In one sentence without new lines and without saying what you are doing." ]]
         then
+            fyi "LLM output (copied to primary clipboard)" "$output"
             if [[ $LLM_COPY == true ]]
             then
                 wl-copy "$output"
@@ -52,6 +52,8 @@ main()
             then
                 wtype "$output"
             fi
+        else
+            fyi "LLM output" "$output"
         fi
     done
 }
