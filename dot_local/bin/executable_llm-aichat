@@ -22,6 +22,11 @@ main()
                     "Explain in English. In not more than 5 sentences without new lines and without saying what you are doing."
                 )
                 ;;
+            COMMIT_EDITMSG*)
+                local prompts=(
+                    'Generate Git commit message following Changelog style. First commit line should end with a period as a sentence. Each modified file should be described as in example "* /a/b/c.txt: Add something.". Without saying what you are doing. Limit is 200 characters.'
+                )
+                ;;
             *Twitch*)
                 local prompts=(
                     "Respond in Russian. In one sentence without new lines and without saying what you are doing. Maybe include a joke."
@@ -62,6 +67,9 @@ main()
                     russian
                     ;;
                 "Respond in Russian. In one sentence without new lines and without saying what you are doing. Maybe include a joke.")
+                    russian
+                    ;;
+                'Generate Git commit message following Changelog style. First commit line should end with a period as a sentence. Each modified file should be described as in example "* /a/b/c.txt: Add something.". Without saying what you are doing. Limit is 200 characters.')
                     russian
                     ;;
                 *)
