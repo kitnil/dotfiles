@@ -23,13 +23,13 @@ anchor=top-center
 # notifications are visible.
 #
 # Default: 5
-max-visible=2
+max-visible=5
 
 # Set popup corner radius to px pixels.
 border-radius=5
 
 # Set the default timeout to timeout in milliseconds. To disable the timeout, set it to zero.
-default-timeout=5000
+default-timeout=10000
 
 [mode=away]
 # Set the default timeout to timeout in milliseconds. To disable the timeout, set it to zero.
