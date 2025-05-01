@@ -214,7 +214,7 @@
                           (service openssh-service-type
                                    (openssh-configuration
                                     (openssh openssh-sans-x)
-                                    ))
+                                    (permit-root-login 'prohibit-password)))
 			  (udisks-service)
                           (service upower-service-type)
                           (service accountsservice-service-type)
