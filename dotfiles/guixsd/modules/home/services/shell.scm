@@ -221,6 +221,7 @@
                           "ssh-vm"
                           "ssl"
                           "st-12"
+                          "symlink-to-file.sh"
                           "toggle-input-method.sh"
                           "tome4-docker"
                           "mjru-hms-migrate-web-account"
