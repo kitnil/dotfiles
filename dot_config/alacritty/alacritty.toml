@@ -1,9 +1,12 @@
-
 [env]
 TERM = "xterm-256color"
 
 [font]
 size = 10
+normal.family = "Adwaita Mono"
+bold.family = "Adwaita Mono"
+italic.family = "Adwaita Mono"
+bold_italic.family = "Adwaita Mono"
 
 [general]
 import = [ "/home/oleg/.config/alacritty/themes/xterm.toml" ]
