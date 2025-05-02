@@ -3,3 +3,10 @@ namespace: workstation
 resources:
 - workstation_v1_workstation.yaml
 # +kubebuilder:scaffold:manifestskustomizesamples
+images:
+- name: harbor.home.wugi.info/library/guix-image-workstation
+  newTag: 2584661c
+- name: harbor.home.wugi.info/library/nixos-systemd-taskexecutor
+  newTag: 44ae2647
+- name: harbor.home.wugi.info/library/archlinux-systemd
+  newTag: 4b81cd6c
