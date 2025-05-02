@@ -102,7 +102,7 @@ spec:
           name: home-oleg-dot-kube-config
 
       - name: nixos
-        image: harbor.home.wugi.info/library/nixos-systemd-taskexecutor:702c519c
+        image: harbor.home.wugi.info/library/nixos-systemd-taskexecutor:44ae2647
         volumeMounts:
         - mountPath: /home/oleg/.mozilla/firefox
           name: home-oleg-mozilla-firefox
