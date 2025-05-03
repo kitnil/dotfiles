@@ -6,6 +6,7 @@
   #:use-module (gnu packages suckless)
   #:use-module (gnu packages terminals)
   #:use-module (gnu packages tor-browsers)
+  #:use-module (gnu packages vnc)
   #:use-module (gnu packages wm)
   #:use-module (gnu packages xdisorg)
   #:use-module (guix profiles)
@@ -35,7 +36,8 @@
   (list wl-clipboard))
 
 (define wayland-utils
-  (list wl-mirror
+  (list wayvnc
+        wl-mirror
         wtype
         xdg-desktop-portal
         xdg-desktop-portal-gtk
