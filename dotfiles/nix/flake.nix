@@ -27,8 +27,6 @@
 
     nixpkgs-nixd.url = "nixpkgs/nixpkgs-unstable";
 
-    nixpkgs-wayvnc.url = "nixpkgs/nixpkgs-unstable";
-
     nixpkgs-copyq.url = "nixpkgs/nixpkgs-unstable";
 
     nixpkgs-chatterino2.url = "nixpkgs/nixpkgs-unstable";
@@ -80,7 +78,7 @@
     , github-com-emilazy-mpv-notify-send
     , github-com-tsoding-boomer
     , nixpkgs-idea, nixpkgs-idea-community, nixpkgs-ddcutil
-    , nixpkgs-nixd, nixpkgs-wayvnc, nixpkgs-copyq, nixpkgs-chatterino2
+    , nixpkgs-nixd, nixpkgs-copyq, nixpkgs-chatterino2
     , nixpkgs-phpactor, bbuscarino-env, kamadorueda-alejandra, flake-utils-plus
     , ... }:
     let
@@ -118,7 +116,6 @@
             })
             mozilla-addons-to-nix;
           inherit (nixpkgs-nixd.legacyPackages.${system}) nixd;
-          inherit (nixpkgs-wayvnc.legacyPackages.${system}) wayvnc;
           inherit (nixpkgs-copyq.legacyPackages.${system}) clipboard-jh;
           inherit (nixpkgs-chatterino2.legacyPackages.${system})
             chatterino2;
@@ -356,7 +353,6 @@
         home-manager-idea-community = import ./modules/services/idea-community.nix;
         home-manager-pycharm-community = import ./modules/services/pycharm-community.nix;
         home-manager-vendir = import ./modules/services/vendir.nix;
-        home-manager-wayvnc = import ./modules/services/wayvnc.nix;
       };
 
       deploy.nodes = let

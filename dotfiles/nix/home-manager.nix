@@ -21,7 +21,7 @@
 
     clipboard-jh
 
-    clipman wayvnc wtype
+    clipman wtype
 
     difftastic
 
