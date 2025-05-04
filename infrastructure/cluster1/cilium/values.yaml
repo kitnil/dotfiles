@@ -26,7 +26,7 @@ operator:
             values:
             - "false"
 
-k8sServiceHost: "192.168.0.144"
+k8sServiceHost: "192.168.0.91"
 k8sServicePort: "6443"
 
 l2announcements:
