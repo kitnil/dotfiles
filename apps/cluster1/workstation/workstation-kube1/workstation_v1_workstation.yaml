@@ -41,7 +41,7 @@ spec:
         operator: Exists
       containers:
       - name: guix
-        image: harbor.home.wugi.info/library/guix-image-workstation:2584661c
+        image: harbor.home.wugi.info/library/guix-image-workstation
         volumeMounts:
         - mountPath: /home/oleg/.cache/ihs
           name: home-oleg-dot-cache-ihs
@@ -102,7 +102,7 @@ spec:
           name: home-oleg-dot-kube-config
 
       - name: nixos
-        image: harbor.home.wugi.info/library/nixos-systemd-taskexecutor:44ae2647
+        image: harbor.home.wugi.info/library/nixos-systemd-taskexecutor
         volumeMounts:
         - mountPath: /home/oleg/.mozilla/firefox
           name: home-oleg-mozilla-firefox
