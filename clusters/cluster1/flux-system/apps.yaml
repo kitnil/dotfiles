@@ -1416,3 +1416,18 @@ spec:
   sourceRef:
     kind: GitRepository
     name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: maintenance-mbsync-majordomo-smartmontools-kube1
+  namespace: flux-system
+spec:
+  interval: 30m0s
+  path: ./apps/cluster1/maintenance-mbsync-majordomo-smartmontools-kube1
+  prune: true
+  dependsOn:
+  - name: mbsync
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
