@@ -25,7 +25,10 @@ spec:
         - --net
         - --pid
         - --no-fork
-        - /bin/sh
+        - /run/setuid-programs/sudo
+        - --user oleg
+        - --login
+        - bash
         - -l
         - -c
         - |
@@ -35,10 +38,10 @@ spec:
               guix shell yq -- yq --output-format json . "$FETCH_IMAGES_KUSTOMIZATION_FILE" | guix shell jq -- jq --raw-output '.images[] | [.name, .newTag] | join(":")'
           }
           export -f fetch_images
-          mapfile -t container_images < <(sudo --user oleg --login "$(sudo --user oleg --login fetch_images)")
+          mapfile -t container_images < <(fetch_images)
           for container_image in "${container_images[@]}"
           do
-              nerdctl -n k8s.io pull "$container_image"
+              sudo nerdctl -n k8s.io pull "$container_image"
           done
         image: docker-registry.wugi.info/library/util-linux-with-udev
         name: fetch
