@@ -435,10 +435,11 @@ guix()
                 build)
                     (
                         cd "${HOME}/.local/share/chezmoi" || exit 1
-                        command guix home build \
-                                -L "$HOME/.local/share/chezmoi/dotfiles/guixsd/modules" \
-                                --fallback \
-                                "$HOME/.local/share/chezmoi/dotfiles/guixsd/home/${HOSTNAME}.scm" "${@:3}"
+                        guix time-machine "--channels=dotfiles/channels-${HOSTNAME}.scm" -- \
+                             home build \
+                             -L "$HOME/.local/share/chezmoi/dotfiles/guixsd/modules" \
+                             --fallback \
+                             "$HOME/.local/share/chezmoi/dotfiles/guixsd/home/${HOSTNAME}.scm" "${@:3}"
                     )
                     ;;
                 switch)
