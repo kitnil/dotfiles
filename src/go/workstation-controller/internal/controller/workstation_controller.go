@@ -288,6 +288,11 @@ rm -f /home/oleg/.gnupg/gpg-agent.conf /home/oleg/.gnupg/gpg.conf`,
 						Name:          "scream",
 						Protocol:      corev1.ProtocolUDP,
 					},
+					{
+						ContainerPort: 5900,
+						Name:          "vnc",
+						Protocol:      corev1.ProtocolTCP,
+					},
 				},
 				SecurityContext: &corev1.SecurityContext{
 					Capabilities: &corev1.Capabilities{
@@ -452,13 +457,6 @@ fi
 								`,
 							},
 						},
-					},
-				},
-				Ports: []corev1.ContainerPort{
-					{
-						ContainerPort: 5900,
-						Name:          "vnc",
-						Protocol:      corev1.ProtocolTCP,
 					},
 				},
 				Env: []corev1.EnvVar{
