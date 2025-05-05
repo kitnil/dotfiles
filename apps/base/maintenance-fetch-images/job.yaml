@@ -36,7 +36,7 @@ spec:
           }
           export -f fetch_images
           sudo --user oleg --login "$(sudo --user oleg --login fetch_images)"
-          mapfile container_images < <()
+          mapfile container_images < <(fetch_images)
           for container_image in "${container_images[@]}"
           do
               nerdctl -n k8s.io pull "$container_image"
