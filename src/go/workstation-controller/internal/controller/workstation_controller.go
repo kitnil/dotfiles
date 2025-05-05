@@ -585,13 +585,6 @@ fi
 						},
 					},
 				},
-				Ports: []corev1.ContainerPort{
-					{
-						ContainerPort: 5900,
-						Name:          "vnc",
-						Protocol:      corev1.ProtocolTCP,
-					},
-				},
 				Env: []corev1.EnvVar{
 					{
 						Name:  "container",
