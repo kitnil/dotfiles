@@ -15,3 +15,10 @@ spec:
         env:
         - name: FETCH_IMAGES_KUSTOMIZATION_FILE
           value: /home/oleg/.local/share/chezmoi/apps/cluster1/workstation/workstation-kube3/kustomization.yaml
+      nodeSelector:
+        kubernetes.io/hostname: kube3
+      tolerations:
+        - key: workstation.cluster.local
+          operator: Equal
+          value: 'true'
+          effect: NoSchedule
