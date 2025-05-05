@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: fetch-images
+  annotations:
+    # Setting spec.force to true will make Flux recreate the Job when any
+    # immutable field is changed, forcing the Job to run every time the
+    # container image tag changes.
+    kustomize.toolkit.fluxcd.io/force: enabled
+spec:
+  template:
+    spec:
+      containers:
+      - name: fetch
+        env:
+        - name: FETCH_IMAGES_KUSTOMIZATION_FILE
+          value: /home/oleg/.local/share/chezmoi/apps/cluster1/workstation/workstation-kube3/kustomization.yaml
