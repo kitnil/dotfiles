@@ -1,0 +1,12 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: restic
+spec:
+  template:
+    spec:
+      containers:
+      - name: restic
+        env:
+        - name: RESTIC_SCRIPT
+          value: restic-backup-system

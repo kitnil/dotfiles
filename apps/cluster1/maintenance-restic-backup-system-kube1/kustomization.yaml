@@ -1,0 +1,8 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+namespace: restic
+nameSuffix: -backup-system-kube1
+resources:
+- ../../base/maintenance-restic
+patchesStrategicMerge:
+- job.yaml
