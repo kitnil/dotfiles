@@ -32,7 +32,7 @@ spec:
           set -o errexit -o pipefail
           fetch_images()
           {
-              guix shell yq jq -- yq --output-format json . "$FETCH_IMAGES_KUSTOMIZATION_FILE" | jq --raw-output '.images[] | [.name, .newTag] | join(":")'
+              guix shell yq -- yq --output-format json . "$FETCH_IMAGES_KUSTOMIZATION_FILE" | guix shell jq -- jq --raw-output '.images[] | [.name, .newTag] | join(":")'
           }
           export -f fetch_images
           sudo --user oleg --login "$(sudo --user oleg --login fetch_images)"
