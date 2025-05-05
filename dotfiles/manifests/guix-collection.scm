@@ -19,7 +19,7 @@ virtualization vnc vim vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
 
 (define guix-collection-packages-multiout
   `((,glib "bin")
-    ;; (,bind "utils")
+    (,bind "utils")
     (,git "gui")
     (,git "send-email")
     (,git "svn")
