@@ -301,6 +301,16 @@ util-linux-with-udev:
 	fi
 
 container_registry=docker-registry.wugi.info
+skopeo-umoci:
+.ONESHELL:
+skopeo-umoci:
+	set -o nounset -o errexit -o pipefail -o xtrace
+	commit_8=$$(git rev-parse HEAD | cut -c -8)
+	container=$$(guix pack -f docker -L dotfiles/guixsd/modules --max-layers=100 -S /bin=bin -S /sbin=sbin bash coreutils skopeo umoci)
+	skopeo copy --insecure-policy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
+	guix gc --delete $$container
+
+container_registry=docker-registry.wugi.info
 .ONESHELL:
 runc:
 	set -o nounset -o errexit -o pipefail -o xtrace
