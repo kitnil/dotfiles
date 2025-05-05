@@ -62,7 +62,7 @@ virtualization vnc vim vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
                ;; grip ; TODO: Fix conflicting entries for python-cryptography
 
                autojump
-               jq jo jtbl
+               jc jq jo jtbl
                nmap
                ;; hosts ;TODO: Fix build failure.
                hss
