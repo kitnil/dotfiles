@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: mbsync
+  annotations:
+    # Setting spec.force to true will make Flux recreate the Job when any
+    # immutable field is changed, forcing the Job to run every time the
+    # container image tag changes.
+    kustomize.toolkit.fluxcd.io/force: enabled
+spec:
+  template:
+    spec:
+      containers:
+      - name: mbsync
+        env:
+        - name: MBSYNC_IMAP_ACCOUNT
+          value: majordomo-sidorov
