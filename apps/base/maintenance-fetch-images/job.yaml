@@ -20,7 +20,7 @@ spec:
         - -c
         - |
           nsenter --target "1" --mount --uts --ipc --net --pid --no-fork \
-          /run/setuid-programs/sudo --user=oleg --login bash <<'EOF'
+          /run/setuid-programs/sudo --preserve-env=FETCH_IMAGES_KUSTOMIZATION_FILE --user=oleg --login bash <<'EOF'
           set -o nounset -o errexit -o pipefail -o xtrace
           fetch_images()
           {
