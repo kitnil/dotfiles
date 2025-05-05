@@ -86,6 +86,14 @@
                                                                                     (execl #$(file-append sway "/bin/swaymsg") "swaymsg" "workspace" (string-join args)))))
                                                `("bin/workspaces" ,(local-file (string-append %project-directory "/dot_local/bin/executable_sway-workspaces")
                                                                                #:recursive? #t)))))
+                 (simple-service 'waybar-config
+                                 home-files-service-type
+                                 (list `(".config/waybar/config.jsonc"
+                                         ,(local-file (string-append %project-directory "/dot_config/waybar/config.jsonc")))
+                                       `(".config/waybar/config-1.jsonc"
+                                         ,(local-file (string-append %project-directory "/dot_config/waybar/config-1.jsonc")))
+                                       `(".config/waybar/style.css"
+                                         ,(local-file (string-append %project-directory "/dot_config/waybar/style.css")))))
                  (service home-sway-service-type)
                  (service home-scream-service-type
                           (scream-configuration
