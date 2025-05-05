@@ -94,6 +94,10 @@
                                          ,(local-file (string-append %project-directory "/dot_config/waybar/config-1.jsonc")))
                                        `(".config/waybar/style.css"
                                          ,(local-file (string-append %project-directory "/dot_config/waybar/style.css")))))
+                 (simple-service 'mako-config
+                                 home-files-service-type
+                                 (list `(".config/mako/config"
+                                         ,(local-file (string-append %project-directory "/dot_config/mako/config")))))
                  (service home-sway-service-type)
                  (service home-scream-service-type
                           (scream-configuration
