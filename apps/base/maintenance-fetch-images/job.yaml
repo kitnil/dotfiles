@@ -16,23 +16,12 @@ spec:
       restartPolicy: Never
       containers:
       - command:
-        - nsenter
-        - --target
-        - "1"
-        - --mount
-        - --uts
-        - --ipc
-        - --net
-        - --pid
-        - --no-fork
-        - /run/setuid-programs/sudo
-        - --user=oleg
-        - --login
-        - bash
-        - -l
+        - /bin/sh
         - -c
         - |
-          set -o errexit -o pipefail
+          nsenter --target "1" --mount --uts --ipc --net --pid --no-fork \
+          /run/setuid-programs/sudo --user=oleg --login bash <<'EOF'
+          set -o nounset -o errexit -o pipefail -o xtrace
           fetch_images()
           {
               guix shell yq -- yq --output-format json . "$FETCH_IMAGES_KUSTOMIZATION_FILE" | guix shell jq -- jq --raw-output '.images[] | [.name, .newTag] | join(":")'
@@ -42,6 +31,7 @@ spec:
           do
               sudo nerdctl -n k8s.io pull "$container_image"
           done
+          EOF
         image: docker-registry.wugi.info/library/util-linux-with-udev
         name: fetch
         resources:
