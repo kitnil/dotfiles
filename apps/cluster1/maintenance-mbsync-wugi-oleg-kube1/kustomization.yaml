@@ -4,4 +4,4 @@ nameSuffix: -wugi-oleg-kube1
 resources:
 - ../../base/maintenance-mbsync
 patchesStrategicMerge:
-- job.yaml
+- cronjob.yaml

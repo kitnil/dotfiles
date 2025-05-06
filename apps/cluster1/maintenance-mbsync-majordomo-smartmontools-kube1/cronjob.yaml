@@ -1,5 +1,5 @@
 apiVersion: batch/v1
-kind: Job
+kind: CronJob
 metadata:
   name: mbsync
   annotations:
@@ -8,10 +8,13 @@ metadata:
     # container image tag changes.
     kustomize.toolkit.fluxcd.io/force: enabled
 spec:
-  template:
+  schedule: "30 22 * * *"
+  jobTemplate:
     spec:
-      containers:
-      - name: mbsync
-        env:
-        - name: MBSYNC_IMAP_ACCOUNT
-          value: majordomo-sidorov
+      template:
+        spec:
+          containers:
+          - name: mbsync
+            env:
+            - name: MBSYNC_IMAP_ACCOUNT
+              value: majordomo-smartmontools

@@ -4,4 +4,4 @@ nameSuffix: -majordomo-tracker-kube1
 resources:
 - ../../base/maintenance-mbsync
 patchesStrategicMerge:
-- job.yaml
+- cronjob.yaml
