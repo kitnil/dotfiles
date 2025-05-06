@@ -29,6 +29,7 @@
   #:use-module (gnu packages lxde)
   #:use-module (gnu packages version-control)
   #:use-module (gnu packages lisp-xyz)
+  #:use-module (gnu packages rsync)
   #:use-module (gnu packages web)
   #:use-module (gnu services base)
   #:use-module (gnu services web)
@@ -157,7 +158,8 @@ EndSection\n")
         cryptsetup
         ncurses
         lvm2
-        smartmontools))
+        smartmontools
+        rsync))
 
 (define %xorg-packages
   (list desktop-file-utils xrdb xset xsetroot xkill
