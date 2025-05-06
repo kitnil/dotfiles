@@ -67,6 +67,34 @@
     (description "This package provides a Majordomo CA")
     (license license:gpl3+)))
 
+(define-public kubernetes-home-ca
+  (package
+    (name "home-ca")
+    (version "0.0.1")
+    (source (origin
+              (method url-fetch)
+              (uri (string-append
+                    "https://cgit.duckdns.org"
+                    "/wigust/kubernetes-home-ca"
+                    "/plain/ca.pem"))
+              (sha256
+               (base32
+                "0dv9819w3xa3g98a6nv07yihjqc5kikh8q9azsdaarb8v92jlh8n"))))
+    (arguments
+     `(#:modules ((guix build utils))
+       #:builder
+       (begin
+         (use-modules (guix build utils))
+         (mkdir-p (string-append %output "/etc/ssl/certs"))
+         (copy-file (assoc-ref %build-inputs "source")
+                    (string-append %output "/etc/ssl/certs/kubernetes-home-ca.pem"))
+         #t)))
+    (build-system trivial-build-system)
+    (home-page "https://wugi.info/")
+    (synopsis "Kubernetes Home CA")
+    (description "This package provides a Kubernetes Home CA")
+    (license license:gpl3+)))
+
 (define-public dn42-ca
   (package
     (name "dn42-ca")
