@@ -28,7 +28,7 @@ spec:
           umoci raw unpack --image "${RUNC_BOOTSTRAP_CONTAINER_IMAGE}" rootfs
           umoci raw runtime-config --image "${RUNC_BOOTSTRAP_CONTAINER_IMAGE}" --rootfs rootfs config.json
           EOF
-        image: docker-registry.wugi.info/library/skopeo-umoci
+        image: harbor.home.wugi.info/library/skopeo-umoci:96ab01a9
         name: bootstrap
         resources:
           limits:
