@@ -19,6 +19,9 @@ spec:
     - containerPort: 5556
       name: guix
       protocol: TCP
+    - containerPort: 22
+      name: ssh
+      protocol: TCP
     volumeMounts:
     - mountPath: /srv/runc/guix-builder
       name: runc-guix-builder

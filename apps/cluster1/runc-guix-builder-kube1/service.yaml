@@ -11,6 +11,10 @@ spec:
     protocol: TCP
     targetPort: 5556
     name: guix
+  - port: 22
+    protocol: TCP
+    targetPort: 22
+    name: guix
   selector:
     app.kubernetes.io/name: runc-kube1-guix-builder
     app.kubernetes.io/part-of: guix
