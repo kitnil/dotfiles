@@ -4,5 +4,6 @@ namespace: nix
 nameSuffix: -nix-builder
 resources:
 - ../runc-kube1
+- service.yaml
 patchesStrategicMerge:
 - pod.yaml
