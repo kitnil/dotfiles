@@ -14,7 +14,7 @@ spec:
   - port: 22
     protocol: TCP
     targetPort: 22
-    name: guix
+    name: ssh
   selector:
     app.kubernetes.io/name: runc-kube1-guix-builder
     app.kubernetes.io/part-of: guix
