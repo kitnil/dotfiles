@@ -311,6 +311,8 @@ virtualization vnc vim vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
 
                dconf ;used by virt-manager as a storage for configuration.
 
+               virt-manager
+
                freeipmi)
 
          guix-collection-packages-multiout
