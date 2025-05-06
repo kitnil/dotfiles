@@ -4,5 +4,6 @@ namespace: guix
 nameSuffix: -guix-builder
 resources:
 - ../runc-kube1
+- service.yaml
 patchesStrategicMerge:
 - pod.yaml
