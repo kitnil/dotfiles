@@ -187,7 +187,7 @@ EndSection\n")
   (list pulseaudio))
 
 (define %cert-packages
-  (list majordomo-ca))
+  (list majordomo-ca kubernetes-home-ca))
 
 (define %android-packages
   (list adb))
