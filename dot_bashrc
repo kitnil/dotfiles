@@ -435,7 +435,7 @@ guix()
                 build)
                     (
                         cd "${HOME}/.local/share/chezmoi" || exit 1
-                        guix time-machine "--channels=dotfiles/channels-${HOSTNAME}.scm" -- \
+                        guix time-machine "--channels=${HOME}/.local/share/chezmoi/dotfiles/channels-${HOSTNAME}.scm" -- \
                              home build \
                              -L "$HOME/.local/share/chezmoi/dotfiles/guixsd/modules" \
                              --fallback \
