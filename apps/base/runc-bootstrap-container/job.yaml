@@ -22,6 +22,11 @@ spec:
           nsenter --target "1" --mount --uts --ipc --net --pid --no-fork \
           /run/setuid-programs/sudo --login bash <<'EOF'
           set -o nounset -o errexit -o pipefail -o xtrace
+          if [[ -e "$RUNC_BOOTSTRAP_CONTAINER_DIRECTORY" ]]
+          then
+              echo "runc '${RUNC_BOOTSTRAP_CONTAINER_DIRECTORY}' container directory already exists, exiting."
+              exit 0
+          fi
           mkdir -p "$RUNC_BOOTSTRAP_CONTAINER_DIRECTORY"
           cd "$RUNC_BOOTSTRAP_CONTAINER_DIRECTORY" || exit 1
           skopeo copy "docker://${RUNC_BOOTSTRAP_CONTAINER_IMAGE}" "oci:${RUNC_BOOTSTRAP_CONTAINER_IMAGE}"
