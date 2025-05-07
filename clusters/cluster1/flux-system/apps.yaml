@@ -1663,7 +1663,6 @@ spec:
   interval: 30m0s
   path: ./apps/cluster1/maintenance-guix-checkout-kube3
   prune: true
-  wait: true
   sourceRef:
     kind: GitRepository
     name: flux-system
