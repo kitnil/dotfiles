@@ -255,7 +255,6 @@
         "nixpkgs-nixd": "nixpkgs-nixd",
         "nixpkgs-phantomjs": "nixpkgs-phantomjs",
         "nixpkgs-phpactor": "nixpkgs-phpactor",
-        "nixpkgs-wayvnc": "nixpkgs-wayvnc",
         "nur": "nur_2",
         "override": "override_2",
         "rycee-nur-expressions": "rycee-nur-expressions",
@@ -263,11 +262,11 @@
       },
       "locked": {
         "dir": "dotfiles/nix",
-        "lastModified": 1745816584,
-        "narHash": "sha256-2LY6qGjGEL9MMNr5Rg/v1Nx+oryQ+VEPNf7yq+O4pDw=",
+        "lastModified": 1746633510,
+        "narHash": "sha256-YS6ygJ5gtC2mOL1/WJAMqJvHGai44ZfY6HEkkej4vXc=",
         "ref": "refs/heads/master",
-        "rev": "45bdcfacaa5a7a5ba1b2dad65d86109bae88d0b8",
-        "revCount": 13362,
+        "rev": "b3f821ca16e2b898f6d14637c4e61eb0b9bc66f7",
+        "revCount": 13596,
         "type": "git",
         "url": "https://cgit.wugi.info/git/wigust/dotfiles?dir=dotfiles/nix"
       },
@@ -731,16 +730,15 @@
         "nixpkgs": "nixpkgs_5"
       },
       "locked": {
-        "lastModified": 1716729631,
-        "narHash": "sha256-IerjU5GUeKc0eW9FPOdlPveSGJ2ZrO+lIfuHPUmUF2I=",
+        "lastModified": 1746585355,
+        "narHash": "sha256-p+3fK8HEYC+0q4gPKSE4OSRxqt5H/tWZkB9wF7aaWOY=",
         "owner": "nix-community",
         "repo": "home-manager",
-        "rev": "fc4492181833eaaa7a26a8081c0615d95792d825",
+        "rev": "35535345be0be7dbae2e9b787c6cf790f8c893d5",
         "type": "github"
       },
       "original": {
         "owner": "nix-community",
-        "ref": "release-23.05",
         "repo": "home-manager",
         "type": "github"
       }
@@ -1377,21 +1375,6 @@
         "type": "indirect"
       }
     },
-    "nixpkgs-wayvnc": {
-      "locked": {
-        "lastModified": 1742395137,
-        "narHash": "sha256-WWNNjCSzQCtATpCFEijm81NNG1xqlLMVbIzXAiZysbs=",
-        "owner": "NixOS",
-        "repo": "nixpkgs",
-        "rev": "2a725d40de138714db4872dc7405d86457aa17ad",
-        "type": "github"
-      },
-      "original": {
-        "id": "nixpkgs",
-        "ref": "nixpkgs-unstable",
-        "type": "indirect"
-      }
-    },
     "nixpkgs_10": {
       "locked": {
         "lastModified": 1627814220,
@@ -1565,16 +1548,16 @@
     },
     "nixpkgs_5": {
       "locked": {
-        "lastModified": 1687466461,
-        "narHash": "sha256-oupXI7g7RPzlpGUfAu1xG4KBK53GrZH8/xeKgKDB4+Q=",
-        "owner": "nixos",
+        "lastModified": 1746461020,
+        "narHash": "sha256-7+pG1I9jvxNlmln4YgnlW4o+w0TZX24k688mibiFDUE=",
+        "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "ecb441f22067ba1d6312f4932a7c64efa8d19a7b",
+        "rev": "3730d8a308f94996a9ba7c7138ede69c1b9ac4ae",
         "type": "github"
       },
       "original": {
-        "owner": "nixos",
-        "ref": "nixos-23.05",
+        "owner": "NixOS",
+        "ref": "nixos-unstable",
         "repo": "nixpkgs",
         "type": "github"
       }
@@ -1745,11 +1728,11 @@
       },
       "locked": {
         "dir": "dotfiles/nix/container-systemd",
-        "lastModified": 1745912781,
-        "narHash": "sha256-TrpDro5b3ORgr5crVvO6ztOO3L3u7WwfFRYpVDsJ1Ms=",
+        "lastModified": 1746633538,
+        "narHash": "sha256-6wdQWG7B9pmUBUfvyCERxuMp9xW1OsR+Y4I1AaPdeOo=",
         "ref": "refs/heads/master",
-        "rev": "7722e9aa74f5964508a1fc73afbe23236d5dff9f",
-        "revCount": 13383,
+        "rev": "e556babad38fbf24a54e3162a84473cdaa498da9",
+        "revCount": 13597,
         "type": "git",
         "url": "https://cgit.wugi.info/git/wigust/dotfiles?dir=dotfiles/nix/container-systemd"
       },
