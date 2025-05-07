@@ -20,8 +20,10 @@ spec:
         - -c
         - |
           nsenter --target "1" --mount --uts --ipc --net --pid --no-fork \
-          /run/setuid-programs/sudo --user oleg --login kubectl "--namespace=${POD_NAMESPACE}" exec --container=guix --stdin=true "pod/${POD_NAME}" -- /bin/sh -le <<'EOF'
+          /run/setuid-programs/sudo --user oleg --login /bin/sh -le <<EOF
+          kubectl "--namespace=${POD_NAMESPACE}" exec --container=guix --stdin=true "pod/${POD_NAME}" -- /bin/sh -le <<'EOL'
           id
+          EOL
           EOF
         image: docker-registry.wugi.info/library/util-linux-with-udev
         name: nsenter
