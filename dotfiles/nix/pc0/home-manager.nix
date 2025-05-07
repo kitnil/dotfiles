@@ -83,18 +83,20 @@ in {
           search = {
             default = "ddg";
           };
-          extensions =
-            with packages;
-            with packages.nur.repos.rycee.firefox-addons;
-            [
-              certificate-pinner
-              container-proxy
-              copy-all-tab-urls-we
-              copy-as-org-mode
-              multi-account-containers
-              snaplinksplus
-              ublock-origin
-            ];
+          extensions = {
+            packages =
+              with packages;
+              with packages.nur.repos.rycee.firefox-addons;
+              [
+                certificate-pinner
+                container-proxy
+                copy-all-tab-urls-we
+                copy-as-org-mode
+                multi-account-containers
+                snaplinksplus
+                ublock-origin
+              ];
+          };
         };
       in {
         default = {
@@ -142,23 +144,25 @@ in {
         twitch = firefoxBaseProfile // {
           name = "twitch";
           id = 2;
-          extensions =
-            fold
-              (extension: extensions: extensions ++ [extension])
-              firefoxBaseProfile.extensions
-              (with packages; with packages.nur.repos.rycee.firefox-addons; [
-                return-youtube-dislikes
-                sponsorblock
-                hide-twitch-chat-users
-                metube-downloader
-                night-video-tuner
-                soundfixer
-                tab-reloader
-                twitch-error-autorefresher
-                visited-link-enabler
-                ultrawidify
-                web-scrobbler
-              ]);
+          extensions = {
+            packages =
+              fold
+                (extension: extensions: extensions ++ [extension])
+                firefoxBaseProfile.extensions
+                (with packages; with packages.nur.repos.rycee.firefox-addons; [
+                  return-youtube-dislikes
+                  sponsorblock
+                  hide-twitch-chat-users
+                  metube-downloader
+                  night-video-tuner
+                  soundfixer
+                  tab-reloader
+                  twitch-error-autorefresher
+                  visited-link-enabler
+                  ultrawidify
+                  web-scrobbler
+                ]);
+          };
         };
         development = firefoxBaseProfile // {
           name = "development";
