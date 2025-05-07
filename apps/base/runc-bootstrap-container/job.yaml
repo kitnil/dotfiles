@@ -40,3 +40,12 @@ spec:
             memory: 512Mi
         securityContext:
           privileged: true
+        volumeMounts:
+        - mountPath: /etc/containers/policy.json
+          name: skopeo-configuration
+          subPath: policy.json
+          readOnly: true
+      volumes:
+      - name: skopeo-configuration
+        configMap:
+          name: skopeo-configuration
