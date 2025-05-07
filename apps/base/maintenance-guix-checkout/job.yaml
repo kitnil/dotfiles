@@ -20,8 +20,8 @@ spec:
         - -c
         - |
           nsenter --target "1" --mount --uts --ipc --net --pid --no-fork \
-          /run/setuid-programs/sudo --user oleg --login /bin/sh -le <<EOF
-          kubectl "--namespace=${POD_NAMESPACE}" exec --container=guix --stdin=true "pod/${POD_NAME}" -- /bin/sh -le <<'EOL'
+          /run/setuid-programs/sudo --user oleg --login /bin/sh -le <<'EOF'
+          kubectl "--namespace=workstation" exec --container=guix --stdin=true "pod/workstation-kube3" -- /bin/sh -le <<'EOL'
           set -o nounset -o errexit -o pipefail -o xtrace
           sudo --user oleg --login /bin/sh -le <<'EOD'
           set -o nounset -o errexit -o pipefail -o xtrace
