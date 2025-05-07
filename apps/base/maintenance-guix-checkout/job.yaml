@@ -23,6 +23,7 @@ spec:
           /run/setuid-programs/sudo --user oleg --login /bin/sh -le <<EOF
           kubectl "--namespace=${POD_NAMESPACE}" exec --container=guix --stdin=true "pod/${POD_NAME}" -- /bin/sh -le <<'EOL'
           sudo --user oleg --login /bin/sh -le <<'EOD'
+          env
           cd "${HOME}/src/git.savannah.gnu.org/git/guix" || exit 1
           guix shell git help2man guile-sqlite3 guile-gcrypt gnupg --development guix <<'EOS'
           set -o nounset -o errexit -o pipefail -o xtrace
