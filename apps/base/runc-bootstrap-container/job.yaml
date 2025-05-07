@@ -20,12 +20,11 @@ spec:
         - -c
         - |
           set -o nounset -o errexit -o pipefail -o xtrace
-          if [[ -e "$RUNC_BOOTSTRAP_CONTAINER_DIRECTORY" ]]
+          if [[ -e "${RUNC_BOOTSTRAP_CONTAINER_DIRECTORY}/rootfs" ]]
           then
               echo "runc '${RUNC_BOOTSTRAP_CONTAINER_DIRECTORY}' container directory already exists, exiting."
               exit 0
           fi
-          mkdir -p "$RUNC_BOOTSTRAP_CONTAINER_DIRECTORY"
           cd "$RUNC_BOOTSTRAP_CONTAINER_DIRECTORY" || exit 1
           skopeo copy "docker://${RUNC_BOOTSTRAP_CONTAINER_IMAGE}" "oci:${RUNC_BOOTSTRAP_CONTAINER_IMAGE}"
           umoci raw unpack --image "${RUNC_BOOTSTRAP_CONTAINER_IMAGE}" rootfs
