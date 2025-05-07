@@ -34,7 +34,7 @@ spec:
           umoci raw unpack --image "${RUNC_BOOTSTRAP_CONTAINER_IMAGE}" rootfs
           umoci raw runtime-config --image "${RUNC_BOOTSTRAP_CONTAINER_IMAGE}" --rootfs rootfs config.json
           EOF
-        image: harbor.home.wugi.info/library/skopeo-umoci:96ab01a9
+        image: harbor.home.wugi.info/library/skopeo-umoci:1dbdf211
         name: bootstrap
         resources:
           limits:
