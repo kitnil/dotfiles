@@ -32,7 +32,9 @@
 
   # Enable the OpenSSH daemon.
   services.openssh.enable = false;
-  services.openssh.permitRootLogin = "yes";
+  services.openssh.settings = {
+    PermitRootLogin = "yes";
+  };
 
   services.journald.console = "/dev/tty";
   services.journald.extraConfig = "SystemMaxUse=100M";
