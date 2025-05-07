@@ -151,7 +151,7 @@ in {
             packages =
               fold
                 (extension: extensions: extensions ++ [extension])
-                firefoxBaseProfile.extensions
+                firefoxBaseProfile.extensions.packages
                 (with packages; with packages.nur.repos.rycee.firefox-addons; [
                   return-youtube-dislikes
                   sponsorblock
@@ -164,7 +164,8 @@ in {
                   visited-link-enabler
                   ultrawidify
                   web-scrobbler
-                ]);
+                ])
+            ;
           };
         };
         development = firefoxBaseProfile // {
