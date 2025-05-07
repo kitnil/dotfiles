@@ -3,6 +3,7 @@ kind: CronJob
 metadata:
   name: state-to-git
 spec:
+  schedule: "30 14 * * *" # every day
   jobTemplate:
     spec:
       template:
