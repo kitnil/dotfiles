@@ -30,8 +30,6 @@
     wheelNeedsPassword = false;
   };
 
-  nix.trustedUsers = [ "root" ];
-
   # Enable the OpenSSH daemon.
   services.openssh.enable = false;
   services.openssh.permitRootLogin = "yes";
@@ -86,8 +84,11 @@
     registry.nixpkgs.flake = nixpkgs;
     channel.enable = false; # remove nix-channel related tools & configs, we use flakes instead.
 
-    # https://github.com/NixOS/nix/issues/9574
-    settings.nix-path = lib.mkForce "nixpkgs=/etc/nix/inputs/nixpkgs";
+    settings = {
+      trusted-users = [ "root" ];
+      # https://github.com/NixOS/nix/issues/9574
+      nix-path = lib.mkForce "nixpkgs=/etc/nix/inputs/nixpkgs";
+    };
   };
 
   environment.systemPackages = with pkgs; [
@@ -125,7 +126,7 @@
 
   fonts = {
     enableDefaultPackages = true;
-    fonts = with pkgs; [
+    packages = with pkgs; [
       dejavu_fonts
       wqy_zenhei
     ];
