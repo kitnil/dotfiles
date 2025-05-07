@@ -7,3 +7,13 @@ spec:
     spec:
       nodeSelector:
         kubernetes.io/hostname: kube1
+      containers:
+      - name: bootstrap
+        volumeMounts:
+        - mountPath: /srv/runc/debian
+          name: runc-bootstrap-container-directory
+      volumes:
+      - name: runc-bootstrap-container-directory
+        hostPath:
+          path: /srv/runc/debian
+          type: Directory
