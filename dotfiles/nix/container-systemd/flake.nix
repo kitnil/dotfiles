@@ -50,7 +50,7 @@
                         inherit (dotfiles-home-manager) overlay;
                       in
                         import inputs.dotfiles-home-manager.inputs.nixpkgs {
-                          overlays = [ nur.overlay flake-utils-plus.overlay overlay ];
+                          overlays = [ nur.overlays.default flake-utils-plus.overlay overlay ];
                           inherit system;
                           config = {
                             allowUnfreePredicate = pkg:

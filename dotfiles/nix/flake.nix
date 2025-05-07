@@ -359,7 +359,7 @@
         home-manager-profile = home-manager-modules:
           let
             pkgs = import nixpkgs {
-              overlays = [ nur.overlay flake-utils-plus.overlay self.overlay ];
+              overlays = [ nur.overlays.default flake-utils-plus.overlay self.overlay ];
               inherit system;
               config = {
                 allowUnfreePredicate = pkg:
