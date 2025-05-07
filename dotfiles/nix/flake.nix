@@ -34,7 +34,7 @@
     nixpkgs-ddcutil.url = "nixpkgs/nixpkgs-unstable";
 
     nixpkgs-home-manager.url = "nixpkgs/nixpkgs-unstable";
-    home-manager.url = "github:nix-community/home-manager?ref=release-23.05";
+    home-manager.url = "github:nix-community/home-manager";
     nur.url = "github:nix-community/NUR";
     rycee-nur-expressions.url =
       "git+https://gitlab.com/rycee/nur-expressions?dir=pkgs/firefox-addons";
