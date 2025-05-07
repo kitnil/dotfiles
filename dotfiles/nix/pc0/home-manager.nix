@@ -110,36 +110,39 @@ in {
           name = "nix";
           id = 1;
           isDefault = true;
-          bookmarks = [
-            {
-              name = "home-karma";
-              tags = [ "monitoring" "kubernetes" ];
-              keyword = "karma";
-              url = "https://karma.home.wugi.info";
-            }
-            {
-              name = "home-grafana";
-              tags = [ "monitoring" "kubernetes" ];
-              keyword = "grafana";
-              url = "https://grafana.home.wugi.info";
-            }
-            {
-              name = "home-harbor";
-              tags = [ "containers" "kubernetes" ];
-              keyword = "karma";
-              url = "https://harbor.home.wugi.info";
-            }
-            {
-              name = "nix-homepage";
-              tags = [ "nix" ];
-              url = "https://nixos.org/";
-            }
-            {
-              name = "nix-wiki";
-              tags = [ "wiki" "nix" ];
-              url = "https://wiki.nixos.org/";
-            }
-          ];
+          bookmarks = {
+            force = true;
+            settings = [
+              {
+                name = "home-karma";
+                tags = [ "monitoring" "kubernetes" ];
+                keyword = "karma";
+                url = "https://karma.home.wugi.info";
+              }
+              {
+                name = "home-grafana";
+                tags = [ "monitoring" "kubernetes" ];
+                keyword = "grafana";
+                url = "https://grafana.home.wugi.info";
+              }
+              {
+                name = "home-harbor";
+                tags = [ "containers" "kubernetes" ];
+                keyword = "karma";
+                url = "https://harbor.home.wugi.info";
+              }
+              {
+                name = "nix-homepage";
+                tags = [ "nix" ];
+                url = "https://nixos.org/";
+              }
+              {
+                name = "nix-wiki";
+                tags = [ "wiki" "nix" ];
+                url = "https://wiki.nixos.org/";
+              }
+            ];
+          };
         };
         twitch = firefoxBaseProfile // {
           name = "twitch";
@@ -183,20 +186,23 @@ in {
             "network.proxy.socks_port" = 9050;
             "network.proxy.type" = 1;
           };
-          bookmarks = [
-            {
-              name = "onion-search-duckduckgo";
-              tags = [ "onion" "duckduckgo" ];
-              keyword = "duckduckgo";
-              url = "https://duckduckgogg42xjoc72x3sjasowoarfbgcmvfimaftt6twagswzczad.onion";
-            }
-            {
-              name = "onion-search-brave";
-              tags = [ "onion" "brave" ];
-              keyword = "duckduckgo";
-              url = "https://search.brave4u7jddbv7cyviptqjc7jusxh72uik7zt6adtckl5f4nwy2v72qd.onion";
-            }
-          ];
+          bookmarks = {
+            force = true;
+            settings = [
+              {
+                name = "onion-search-duckduckgo";
+                tags = [ "onion" "duckduckgo" ];
+                keyword = "duckduckgo";
+                url = "https://duckduckgogg42xjoc72x3sjasowoarfbgcmvfimaftt6twagswzczad.onion";
+              }
+              {
+                name = "onion-search-brave";
+                tags = [ "onion" "brave" ];
+                keyword = "duckduckgo";
+                url = "https://search.brave4u7jddbv7cyviptqjc7jusxh72uik7zt6adtckl5f4nwy2v72qd.onion";
+              }
+            ];
+          };
         };
         work = firefoxBaseProfile // {
           name = "work";
