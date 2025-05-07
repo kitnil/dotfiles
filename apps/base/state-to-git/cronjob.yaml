@@ -14,6 +14,7 @@ spec:
             app.kubernetes.io/part-of: state-to-git
         spec:
           hostNetwork: true
+          hostPID: true
           restartPolicy: Never
           containers:
           - name: state-to-git
