@@ -11,6 +11,7 @@
 
   boot.isContainer = true;
   boot.loader.initScript.enable = true;
+  boot.tmpOnTmpfs = true;
 
   time.timeZone = "Europe/Moscow";
 
