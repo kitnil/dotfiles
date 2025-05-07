@@ -5,6 +5,13 @@ metadata:
 spec:
   template:
     spec:
+      containers:
+      - name: nsenter
+        env:
+        - name: POD_NAMESPACE
+          value: workstation
+        - name: POD_NAME
+          value: workstation-kube3
       nodeSelector:
         kubernetes.io/hostname: kube3
       tolerations:
