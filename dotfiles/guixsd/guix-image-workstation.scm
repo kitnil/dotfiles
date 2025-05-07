@@ -135,7 +135,8 @@ program.")))
                                                    "mirror.brielmaier.net.pub"
                                                    "substitutes.nonguix.org.pub"
                                                    "vm1.wugi.info.pub"
-                                                   "vm2.wugi.info.pub"))
+                                                   "vm2.wugi.info.pub"
+                                                   "guix-builder.pub"))
                                             %default-authorized-guix-keys))
                                           (substitute-urls '("https://bordeaux.guix.gnu.org"
                                                              "https://substitutes.nonguix.org"))))
