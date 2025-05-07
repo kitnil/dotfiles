@@ -17,7 +17,7 @@ border-color=#2e8b57ee
 # center, top-left, bottom-right, bottom-center, bottom-left, center-right, center-left and center.
 #
 # Default: top-right
-anchor=top-center
+anchor=bottom-right
 
 # Set maximum number of visible notifications to n. Older notifications will be hidden. If -1, all
 # notifications are visible.
