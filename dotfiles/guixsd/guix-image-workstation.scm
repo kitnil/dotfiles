@@ -138,7 +138,8 @@ program.")))
                                                    "vm2.wugi.info.pub"
                                                    "guix-builder.pub"))
                                             %default-authorized-guix-keys))
-                                          (substitute-urls '("https://bordeaux.guix.gnu.org"
+                                          (substitute-urls '("http://runc-kube1-guix-builder.guix:5556"
+                                                             "https://bordeaux.guix.gnu.org"
                                                              "https://substitutes.nonguix.org"))))
                       (delete shepherd-system-log-service-type))))
 
