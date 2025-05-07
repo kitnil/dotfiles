@@ -17,6 +17,7 @@ spec:
       containers:
       - command:
         - /bin/sh
+        - -l
         - -c
         - |
           nsenter --target "1" --mount --uts --ipc --net --pid --no-fork \
