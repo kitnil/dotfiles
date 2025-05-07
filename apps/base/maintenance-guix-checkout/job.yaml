@@ -21,9 +21,19 @@ spec:
         - |
           nsenter --target "1" --mount --uts --ipc --net --pid --no-fork \
           /run/setuid-programs/sudo --user oleg --login /bin/sh -le <<EOF
-          env
           kubectl "--namespace=${POD_NAMESPACE}" exec --container=guix --stdin=true "pod/${POD_NAME}" -- /bin/sh -le <<'EOL'
-          id
+          sudo --user oleg --login /bin/sh -le <<'EOD'
+          cd "${HOME}/src/git.savannah.gnu.org/git/guix" || exit 1
+          guix shell git help2man guile-sqlite3 guile-gcrypt gnupg --development guix <<'EOS'
+          set -o nounset -o errexit -o pipefail -o xtrace
+          git fetch codeberg
+          git worktree add -b codeberg/master ../guix-latest
+          cd "${HOME}/src/git.savannah.gnu.org/git/guix-latest" || exit 1
+          ./bootstrap
+          ./configure --localstatedir=/var --prefix=
+          make -j$(nproc)
+          EOS
+          EOD
           EOL
           EOF
         image: docker-registry.wugi.info/library/util-linux-with-udev
