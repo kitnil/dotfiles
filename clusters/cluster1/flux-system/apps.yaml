@@ -1694,8 +1694,6 @@ spec:
   path: ./apps/cluster1/runc-bootstrap-container-debian-12-kube1
   prune: true
   wait: true
-  dependsOn:
-  - name: debian
   sourceRef:
     kind: GitRepository
     name: flux-system
