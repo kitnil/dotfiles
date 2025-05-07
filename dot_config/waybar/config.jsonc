@@ -30,7 +30,8 @@
         "backlight",
         "keyboard-state",
         "sway/language",
-        "clock",
+        "clock#utc",
+        "clock#msk",
         "tray"
     ],
     // Modules configuration
@@ -117,8 +118,15 @@
         // "icon-size": 21,
         "spacing": 10
     },
-    "clock": {
-        // "timezone": "America/New_York",
+    "clock#utc": {
+        "timezone": "UTC",
+        "format": "{:%H:%M} UTC",
+        "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
+        "format-alt": "{:%Y-%m-%d}"
+    },
+    "clock#msk": {
+        "timezone": "Europe/Moscow",
+        "format": "{:%H:%M} MSK",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": "{:%Y-%m-%d}"
     },

@@ -116,6 +116,12 @@ button:hover {
 #clock {
     background-color: #64727D;
 }
+#clock.msk {
+    background-color: #4682B4;
+}
+#clock.utc {
+    background-color: #28A828;
+}
 
 #battery {
     background-color: #ffffff;
