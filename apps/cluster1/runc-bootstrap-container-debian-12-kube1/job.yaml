@@ -12,6 +12,9 @@ spec:
         volumeMounts:
         - mountPath: /srv/runc/debian
           name: runc-bootstrap-container-directory
+        env:
+        - name: RUNC_BOOTSTRAP_CONTAINER_DIRECTORY
+          value: /srv/runc/debian
       volumes:
       - name: runc-bootstrap-container-directory
         hostPath:
