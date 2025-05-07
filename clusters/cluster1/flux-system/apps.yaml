@@ -1349,8 +1349,6 @@ spec:
   interval: 30m0s
   path: ./apps/cluster1/maintenance-mbsync-gmail-kube1
   prune: true
-  dependsOn:
-  - name: mbsync
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -1364,8 +1362,6 @@ spec:
   interval: 30m0s
   path: ./apps/cluster1/maintenance-mbsync-wugi-oleg-windows-kube1
   prune: true
-  dependsOn:
-  - name: mbsync
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -1379,8 +1375,6 @@ spec:
   interval: 30m0s
   path: ./apps/cluster1/maintenance-mbsync-wugi-oleg-kube1
   prune: true
-  dependsOn:
-  - name: mbsync
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -1394,8 +1388,6 @@ spec:
   interval: 30m0s
   path: ./apps/cluster1/maintenance-mbsync-majordomo-web-script-kube1
   prune: true
-  dependsOn:
-  - name: mbsync
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -1409,8 +1401,6 @@ spec:
   interval: 30m0s
   path: ./apps/cluster1/maintenance-mbsync-majordomo-ihc-zabbix-kube1
   prune: true
-  dependsOn:
-  - name: mbsync
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -1424,8 +1414,6 @@ spec:
   interval: 30m0s
   path: ./apps/cluster1/maintenance-mbsync-majordomo-tracker-kube1
   prune: true
-  dependsOn:
-  - name: mbsync
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -1439,8 +1427,6 @@ spec:
   interval: 30m0s
   path: ./apps/cluster1/maintenance-mbsync-majordomo-smartmontools-kube1
   prune: true
-  dependsOn:
-  - name: mbsync
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -1454,8 +1440,6 @@ spec:
   interval: 30m0s
   path: ./apps/cluster1/maintenance-mbsync-majordomo-security-kube1
   prune: true
-  dependsOn:
-  - name: mbsync
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -1469,8 +1453,6 @@ spec:
   interval: 30m0s
   path: ./apps/cluster1/maintenance-mbsync-majordomo-prometheus-kube1
   prune: true
-  dependsOn:
-  - name: mbsync
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -1484,8 +1466,6 @@ spec:
   interval: 30m0s
   path: ./apps/cluster1/maintenance-mbsync-majordomo-opensearch-kube1
   prune: true
-  dependsOn:
-  - name: mbsync
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -1499,8 +1479,6 @@ spec:
   interval: 30m0s
   path: ./apps/cluster1/maintenance-mbsync-majordomo-jenkins-kube1
   prune: true
-  dependsOn:
-  - name: mbsync
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -1514,8 +1492,6 @@ spec:
   interval: 30m0s
   path: ./apps/cluster1/maintenance-mbsync-majordomo-issues-kube1
   prune: true
-  dependsOn:
-  - name: mbsync
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -1529,8 +1505,6 @@ spec:
   interval: 30m0s
   path: ./apps/cluster1/maintenance-mbsync-majordomo-healthchecks-kube1
   prune: true
-  dependsOn:
-  - name: mbsync
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -1544,8 +1518,6 @@ spec:
   interval: 30m0s
   path: ./apps/cluster1/maintenance-mbsync-majordomo-grafana-kube1
   prune: true
-  dependsOn:
-  - name: mbsync
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -1559,8 +1531,6 @@ spec:
   interval: 30m0s
   path: ./apps/cluster1/maintenance-mbsync-majordomo-git-commits-kube1
   prune: true
-  dependsOn:
-  - name: mbsync
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -1574,8 +1544,6 @@ spec:
   interval: 30m0s
   path: ./apps/cluster1/maintenance-mbsync-majordomo-alertmanager-kube1
   prune: true
-  dependsOn:
-  - name: mbsync
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -1589,8 +1557,6 @@ spec:
   interval: 30m0s
   path: ./apps/cluster1/maintenance-mbsync-majordomo-noc-kube1
   prune: true
-  dependsOn:
-  - name: mbsync
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -1604,8 +1570,6 @@ spec:
   interval: 30m0s
   path: ./apps/cluster1/maintenance-mbsync-majordomo-pr-kube1
   prune: true
-  dependsOn:
-  - name: mbsync
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -1619,8 +1583,6 @@ spec:
   interval: 30m0s
   path: ./apps/cluster1/maintenance-mbsync-majordomo-fired-kube1
   prune: true
-  dependsOn:
-  - name: mbsync
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -1634,8 +1596,6 @@ spec:
   interval: 30m0s
   path: ./apps/cluster1/maintenance-mbsync-majordomo-sidorov-kube1
   prune: true
-  dependsOn:
-  - name: mbsync
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -1649,8 +1609,6 @@ spec:
   interval: 30m0s
   path: ./apps/cluster1/maintenance-mbsync-majordomo-pyhalov-kube1
   prune: true
-  dependsOn:
-  - name: mbsync
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -1664,8 +1622,6 @@ spec:
   interval: 30m0s
   path: ./apps/cluster1/maintenance-fetch-images-workstation-kube3
   prune: true
-  dependsOn:
-  - name: mbsync
   sourceRef:
     kind: GitRepository
     name: flux-system
