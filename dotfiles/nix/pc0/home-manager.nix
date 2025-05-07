@@ -81,7 +81,7 @@ in {
             "toolkit.telemetry.reportingpolicy.firstRun" = false;
           };
           search = {
-            default = "DuckDuckGo";
+            default = "ddg";
           };
           extensions =
             with packages;
