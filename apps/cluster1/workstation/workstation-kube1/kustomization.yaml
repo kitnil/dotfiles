@@ -5,8 +5,8 @@ resources:
 # +kubebuilder:scaffold:manifestskustomizesamples
 images:
 - name: harbor.home.wugi.info/library/guix-image-workstation
-  newTag: 06db73f2
+  newTag: 1dbdf211
 - name: harbor.home.wugi.info/library/nixos-systemd-taskexecutor
-  newTag: 07104b57
+  newTag: 1b4d1ffd
 - name: harbor.home.wugi.info/library/archlinux-systemd
-  newTag: 4b81cd6c
+  newTag: 4309f8ae
