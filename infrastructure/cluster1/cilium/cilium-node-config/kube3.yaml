@@ -1,0 +1,13 @@
+apiVersion: cilium.io/v2alpha1
+kind: CiliumNodeConfig
+metadata:
+  namespace: kube-system
+  name: direct-routing-device-kube3
+spec:
+  nodeSelector:
+    matchLabels:
+      kubernetes.io/hostname: kube3
+  defaults:
+    devices: "eth0 macvlan0"
+    direct-routing-device: "eth0,macvlan0"
+    l2-pod-announcements-interface: "eth0"
