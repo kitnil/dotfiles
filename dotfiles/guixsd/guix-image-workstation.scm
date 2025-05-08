@@ -140,7 +140,8 @@ program.")))
                                             %default-authorized-guix-keys))
                                           (substitute-urls '("http://runc-kube1-guix-builder.guix:5556"
                                                              "https://bordeaux.guix.gnu.org"
-                                                             "https://substitutes.nonguix.org"))))
+                                                             "https://substitutes.nonguix.org"
+                                                             "http://ci.guix.trop.in"))))
                       (delete shepherd-system-log-service-type))))
 
   (sudoers-file (plain-file "sudoers"
