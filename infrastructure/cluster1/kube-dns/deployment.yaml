@@ -11,7 +11,7 @@ spec:
           requiredDuringSchedulingIgnoredDuringExecution:
             nodeSelectorTerms:
             - matchExpressions:
-              - key: kube-dns.cluster.local/schedulable
+              - key: coredns.cluster.local/schedulable
                 operator: NotIn
                 values:
                 - "false"
