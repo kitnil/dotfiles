@@ -7,6 +7,6 @@ images:
 - name: harbor.home.wugi.info/library/guix-image-workstation
   newTag: 44dc6926
 - name: harbor.home.wugi.info/library/nixos-systemd-taskexecutor
-  newTag: 1b4d1ffd
+  newTag: b04d2edc
 - name: harbor.home.wugi.info/library/archlinux-systemd
   newTag: 4309f8ae
