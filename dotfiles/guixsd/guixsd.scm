@@ -914,8 +914,8 @@ location / {
                           (list
                            (pam-limits-entry "*" 'both 'nofile 100000)))
 
-                         (service crowdsec-service-type)
-                         (service crowdsec-firewall-bouncer-service-type)
+                         ;; (service crowdsec-service-type)
+                         ;; (service crowdsec-firewall-bouncer-service-type)
 
                          (extra-special-file "/usr/bin/env"
                                              (file-append coreutils "/bin/env"))
