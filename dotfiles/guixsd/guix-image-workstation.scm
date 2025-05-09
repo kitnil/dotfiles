@@ -23,8 +23,10 @@
 (use-package-modules gnupg linux pulseaudio ssh terminals virtualization wm)
 (use-service-modules avahi base desktop docker dbus shepherd)
 
-(use-modules (services desktop)
-             (services docker))
+(use-modules (config)
+             (services desktop)
+             (services docker)
+             (services openvpn))
 
 (use-modules (nongnu packages chrome)
              (nongnu packages mozilla))
@@ -118,7 +120,9 @@ program.")))
                                     (extra-options '("--rcfile=/etc/syslog.conf"
                                                      "--no-forward"
                                                      "--no-unixaf"
-                                                     "--no-klog")))))
+                                                     "--no-klog"))))
+                          (service openvpn-service-type %openvpn-configuration-majordomo.ru)
+                          (service openvpn-service-type %openvpn-configuration-wugi.info))
                     (modify-services %base-services
                       (guix-service-type config =>
                                          (guix-configuration
