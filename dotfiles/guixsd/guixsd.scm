@@ -1676,22 +1676,22 @@ trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDS
                                              read-string)
                                            "skipping /etc/guix/secrets/prometheus-tp-link-exporter")))))))
 
-                         (service yggdrasil-service-type
-                                  (yggdrasil-configuration
-                                   (autoconf? #f)
-                                   (json-config
-                                    '(("NodeInfo" . null)
-                                      ("NodeInfoPrivacy" . #f)
-                                      ("IfMTU" . 65535)
-                                      ("IfName" . "auto")
-                                      ("AllowedPublicKeys" . #())
-                                      ("MulticastInterfaces" . #((("Port" . 0)
-                                                                  ("Listen" . #t)
-                                                                  ("Beacon" . #t)
-                                                                  ("Regex" . ".*"))))
-                                      ("AdminListen" . "unix:///var/run/yggdrasil.sock")
-                                      ("Listen" . #())
-                                      ("InterfacePeers" . null)))))
+                         ;; (service yggdrasil-service-type
+                         ;;          (yggdrasil-configuration
+                         ;;           (autoconf? #f)
+                         ;;           (json-config
+                         ;;            '(("NodeInfo" . null)
+                         ;;              ("NodeInfoPrivacy" . #f)
+                         ;;              ("IfMTU" . 65535)
+                         ;;              ("IfName" . "auto")
+                         ;;              ("AllowedPublicKeys" . #())
+                         ;;              ("MulticastInterfaces" . #((("Port" . 0)
+                         ;;                                          ("Listen" . #t)
+                         ;;                                          ("Beacon" . #t)
+                         ;;                                          ("Regex" . ".*"))))
+                         ;;              ("AdminListen" . "unix:///var/run/yggdrasil.sock")
+                         ;;              ("Listen" . #())
+                         ;;              ("InterfacePeers" . null)))))
 
                          (service prometheus-alertmanager-service-type
                                   (prometheus-alertmanager-configuration
