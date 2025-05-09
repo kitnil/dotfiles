@@ -2351,58 +2351,56 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
 
                          (service openvswitch-service-type)
                          %openvswitch-configuration-service
+                         ;; Bring eth0 up and pass it to the networking bridge.
                          (service static-networking-service-type
-                                  (list (static-networking
-                                         (addresses
-                                          (list ;; (network-address
-                                                ;;  (device "br0")
-                                                ;;  (value "192.168.0.144/24"))
-                                                
+                                  (list
+				   (static-networking
+				    (provision '(eth0))
+                                    (addresses (list
                                                 (network-address
-                                                 (device "enp34s0")
-                                                 (value "127.0.0.2/8"))
+                                                 (device "eth0")
+                                                 (value "127.0.0.2/8")))))
+                                   (static-networking
+                                    (provision '(br0-link))
+                                    (links (list
+                                            (network-link
+                                             (name "br0")
+                                             (type 'bridge)
+                                             (arguments '()))))
+                                    (addresses '()))
+                                   (static-networking
+                                    (provision '(br0))
+                                    (requirement '(br0-link))
+                                    (addresses (list
+                                                (network-address
+                                                 (device "br0")
+                                                 (value "192.168.0.144/24"))))
+                                    (routes
+                                     (list (network-route
+                                            (destination "default")
+                                            (gateway "192.168.0.1"))))
+                                    (name-servers '("192.168.0.144"
 
-                                                ;; (network-address
-                                                ;;  (device "br154")
-                                                ;;  (value "127.0.0.3/8"))
+                                                    ;; local Docker
+                                                    ;; "172.17.0.1"
 
-                                                ;; assign an ip address to bring interface up at boot, so
-                                                ;; it could be used in a
-                                                ;; docker network
-                                                ;; (network-address
-                                                ;;  (device "br155-vlan155")
-                                                ;;  (value "127.0.0.4/8"))
-
-                                                ;; (network-address
-                                                ;;  (device "br154.154")
-                                                ;;  (value "192.168.154.1/24"))
-
-                                                ;; dummy ip to bring interface up
-                                                ;; (network-address
-                                                ;;  (device "br156")
-                                                ;;  (value "127.0.0.156/8"))
-                                                ;; (network-address
-                                                ;;  (device "br156.156")
-                                                ;;  (value "192.168.156.1/24"))
-                                                ))
-                                         (routes
-                                          (list (network-route
-                                                 (destination "default")
-                                                 (gateway "192.168.0.1"))))
-                                         (name-servers (list %private-ip-address
-
-                                                             ;; local Docker
-                                                             ;; "172.17.0.1"
-
-                                                             ;; Google
-                                                             ;; "8.8.8.8"
-                                                             ;; "8.8.4.4"
-                                                             ))
-                                         ;; (requirement '(openvswitch-configuration))
-                                         )))
+                                                    ;; Google
+                                                    ;; "8.8.8.8"
+                                                    ;; "8.8.4.4"
+                                                    )))
+                                   (static-networking
+                                    (provision '(networking))
+                                    (requirement '(eth0 br0))
+                                    (links (list
+                                            (network-link
+                                             (name "eth0")
+                                             (arguments '((master . "br0"))))))
+                                    (addresses '()))))
 
                          ;; %dnsmasq-lo
-                         %dnsmasq-br154
+
+                         ;; %dnsmasq-br154
+
                          ;; TODO: Use system service after adding all required flags.
                          ;; (service dnsmasq-service-type
                          ;;          (dnsmasq-configuration
@@ -2410,7 +2408,7 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                          ;;           ;; TODO: Replace port with --bind-interfaces
                          ;;           (port 0)))
 
-                         %dnsmasq-br156
+                         ;; %dnsmasq-br156
 
                          (service avahi-service-type)
 

@@ -89,7 +89,10 @@ EndSection
   (kernel linux-5.13-with-bpf)
   (firmware (cons* (@ (packages linux) linux-firmware) %base-firmware))
 
-  (kernel-arguments '("modprobe.blacklist=pcspkr,snd_pcsp"
+  (kernel-arguments '("net.ifnames=0"
+                      "biosdevname=0"
+
+                      "modprobe.blacklist=pcspkr,snd_pcsp"
 
                       ;; <https://wiki.archlinux.org/index.php/PCI_passthrough_via_OVMF#Setting_up_IOMMU>
                       ;; "iommu=pt"
