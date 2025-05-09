@@ -59,6 +59,9 @@
 (add-to-load-path (string-append %home "/.local/share/chezmoi/dotfiles/guixsd/modules"))
 (use-modules (services networking))
 
+(define %private-ip-address
+  "192.168.0.144")
+
 
 ;;;
 ;;; Certbot
@@ -487,9 +490,6 @@ location / {
 ;;;
 ;;; Networking
 ;;;
-
-(define %private-ip-address
-  "192.168.0.144")
 
 (define (create-openvswitch-internal-port bridge port)
   #~(invoke/quiet #$(file-append openvswitch "/bin/ovs-vsctl")
