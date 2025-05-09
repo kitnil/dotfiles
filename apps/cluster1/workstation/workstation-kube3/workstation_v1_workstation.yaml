@@ -188,7 +188,7 @@ spec:
           type: Directory
         name: home-oleg-dot-password-store
       - hostPath:
-          path: /home/workstation-guix-oleg/.gnupg
+          path: /home/oleg/.local/state/workstation/home/oleg/.gnupg
           type: Directory
         name: home-oleg-dot-gnupg
       - hostPath:
