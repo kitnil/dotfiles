@@ -808,6 +808,7 @@ location / {
                            "docker-registry.wugi.info"
                            "ci.guix.gnu.org.wugi.info"
                            "guix.local"
+                           "cgit.wugi.info"
                            ;; Majordomo
                            ;; "hms-dev.intr"
                            ;; "api-dev.intr"
