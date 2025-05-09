@@ -4,7 +4,7 @@ metadata:
   name: dovecot
 subsets:
 - addresses:
-  - ip: 192.168.0.145
+  - ip: 192.168.0.144
   ports:
   - port: 143
     name: imap
