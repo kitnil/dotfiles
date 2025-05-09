@@ -1337,7 +1337,7 @@ location / {
                      (uid 1000)
                      (comment "Oleg Pykhalov")
                      (group "users")
-                     (supplementary-groups '("wheel" "adbusers" "audio" "video" "docker" "kvm" "input" "libvirt"))
+                     (supplementary-groups '("wheel" "adbusers" "audio" "video" "kvm" "input" "libvirt"))
                      (home-directory "/home/oleg"))
                     (user-account
                      (name "postfix")
@@ -2050,7 +2050,6 @@ PasswordAuthentication yes")))
                                   (syncthing-configuration (user "oleg")))
 
                          (service containerd-service-type)
-                         ;; (service docker-service-type)
                          ;; docker-kiwiirc-service
 
                          ;; (service docker-compose-service-type
