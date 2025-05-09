@@ -1420,8 +1420,6 @@ location / {
            "185.105.108.96 vm3.wugi.info"
            "78.108.82.44 vm1.wugi.info"
 
-           "192.168.0.145 prometheus.wugi.info"
-
            "192.168.154.119 ubuntu.local"
 
            "192.168.154.1 opensearch.home"
@@ -1442,9 +1440,6 @@ location / {
            "192.168.0.192 kube3 kube3.home kube3.lan"
            "192.168.154.99 kube5 kube5.home"
            "192.168.154.1 nfs.home"
-           "192.168.0.145 qbittorrent.home"
-           "192.168.0.145 samba.home"
-           "192.168.0.145 kubernetes.home.wugi.info"
 
            "172.16.100.60 workstation.intr"
 
