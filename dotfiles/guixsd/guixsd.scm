@@ -2274,22 +2274,6 @@ PasswordAuthentication yes")))
                          ;;           (textfile-directory "/var/lib/prometheus-node-exporter")
                          ;;           (extra-options '("--collector.processes"))))
 
-                         ;; (service kubernetes-k3s-service-type
-                         ;;          (kubernetes-k3s-configuration
-                         ;;           (server? #t)
-                         ;;           (arguments '("--node-external-ip" "192.168.0.145"
-                         ;;                        "--bind-address" "192.168.0.145"
-
-                         ;;                        "--no-deploy" "traefik"
-                         ;;                        "--disable" "traefik"
-
-                         ;;                        ;; use dockerd
-                         ;;                        "--docker"
-                         ;;                        ;;
-                         ;;                        ;; use containerd directly
-                         ;;                        ;; "--container-runtime-endpoint" "unix:///run/containerd/containerd.sock"
-                         ;;                        ))))
-
                          ;; (service runc-service-type
                          ;;          (runc-configuration
                          ;;           (name "guix-builder")
