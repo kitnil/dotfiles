@@ -8,6 +8,6 @@ spec:
     matchLabels:
       kubernetes.io/hostname: kube3
   defaults:
-    devices: "eth0 macvlan0 macvtap7 macvtap8 macvtap9 macvtap10"
-    direct-routing-device: "eth0,macvlan0,macvtap7,macvtap8,macvtap9,macvtap10"
-    l2-pod-announcements-interface: "eth0"
+    devices: "br0"
+    direct-routing-device: "br0"
+    l2-pod-announcements-interface: "br0"
