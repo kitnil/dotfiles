@@ -390,11 +390,12 @@ cgroup_device_acl = [
                                                     (substitute-urls '("https://guix.wugi.info"
                                                                        "https://bordeaux.guix.gnu.org"
                                                                        "https://substitutes.nonguix.org"))))
-                                ;; (sysctl-service-type _ =>
-                                ;;                      (sysctl-configuration
-                                ;;                       (settings (append '(("net.ipv4.ip_forward" . "1")
-                                ;;                                           ("net.ipv4.conf.all.rp_filter" . "0")
-                                ;;                                           ("net.ipv4.conf.default.rp_filter" . "0"))
-                                ;;                                         %default-sysctl-settings))))
+                                (sysctl-service-type _ =>
+                                                     (sysctl-configuration
+                                                      (settings (append ;; '(("net.ipv4.ip_forward" . "1")
+                                                                        ;;   ("net.ipv4.conf.all.rp_filter" . "0")
+                                                                        ;;   ("net.ipv4.conf.default.rp_filter" . "0"))
+								        '(("kernel.sysrq" . "1"))
+                                                                        %default-sysctl-settings))))
                                 ))
                       (delete console-font-service-type)))))
