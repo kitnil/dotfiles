@@ -135,7 +135,7 @@ swaymsg layout tabbed
 sleep 0.4
 EOF
 
-nerdctl_nixos_exec /run/current-system/sw/bin/systemctl --user start firefox@default
+nerdctl_nixos_exec /run/current-system/sw/bin/systemctl --user start firefox@pcaaxem9.default
 sleep 0.4
 
 nerdctl_archlinux_exec /bin/sh -lc 'export XDG_RUNTIME_DIR=/mnt/guix/run/user/1000; export DISPLAY=:0; exec socialstream' &
