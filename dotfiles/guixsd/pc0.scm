@@ -12,7 +12,7 @@
              (bootloader grub)
              (config)
              (services kubernetes))
-(use-service-modules avahi desktop dbus docker networking nix monitoring linux sound ssh virtualization xorg)
+(use-service-modules avahi desktop dbus docker networking nix monitoring linux sound ssh sysctl virtualization xorg)
 (use-package-modules audio linux screen ssh wm)
 
 (use-modules (services backup)
@@ -208,9 +208,6 @@
   ;; Add services to the baseline: a DHCP client and an SSH
   ;; server.  You may wish to add an NTP service here.
   (services (append (list (service avahi-service-type)
-                          (service dhcp-client-service-type
-                                   (dhcp-client-configuration
-                                    (interfaces '("eth0"))))
                           (service openssh-service-type
                                    (openssh-configuration
                                     (openssh openssh-sans-x)
@@ -370,7 +367,52 @@ cgroup_device_acl = [
                                            (start #~(make-forkexec-constructor
                                                      (list #$container-guix-sway-autostart-program)))
                                            (respawn? #f)
-                                           (stop #~(make-kill-destructor))))))
+                                           (stop #~(make-kill-destructor)))))
+                         ;; Bring eth0 up and pass it to the networking bridge.
+                         (service static-networking-service-type
+                                  (list
+				   (static-networking
+				    (provision '(eth0))
+                                    (addresses (list
+                                                (network-address
+                                                 (device "eth0")
+                                                 (value "127.0.0.2/8")))))
+                                   (static-networking
+                                    (provision '(br0-link))
+                                    (links (list
+                                            (network-link
+                                             (name "br0")
+                                             (type 'bridge)
+                                             (arguments '()))))
+                                    (addresses '()))
+                                   (static-networking
+                                    (provision '(br0))
+                                    (requirement '(br0-link))
+                                    (addresses (list
+                                                (network-address
+                                                 (device "br0")
+                                                 (value "192.168.0.192/24"))))
+                                    (routes
+                                     (list (network-route
+                                            (destination "default")
+                                            (gateway "192.168.0.1"))))
+                                    (name-servers '("192.168.0.145"
+
+                                                    ;; local Docker
+                                                    ;; "172.17.0.1"
+
+                                                    ;; Google
+                                                    ;; "8.8.8.8"
+                                                    ;; "8.8.4.4"
+                                                    )))
+                                   (static-networking
+                                    (provision '(networking))
+                                    (requirement '(eth0 br0))
+                                    (links (list
+                                            (network-link
+                                             (name "eth0")
+                                             (arguments '((master . "br0"))))))
+                                    (addresses '())))))
                     (modify-services
                         (filter (lambda (service)
                                 (let ((value (service-value service)))
@@ -395,7 +437,8 @@ cgroup_device_acl = [
                                                       (settings (append ;; '(("net.ipv4.ip_forward" . "1")
                                                                         ;;   ("net.ipv4.conf.all.rp_filter" . "0")
                                                                         ;;   ("net.ipv4.conf.default.rp_filter" . "0"))
-								        '(("kernel.sysrq" . "1"))
+								        '(("kernel.sysrq" . "1")
+									  ("net.bridge.bridge-nf-call-iptables" . "0"))
                                                                         %default-sysctl-settings))))
                                 ))
                       (delete console-font-service-type)))))
