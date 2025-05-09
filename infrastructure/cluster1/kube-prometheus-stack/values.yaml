@@ -20,11 +20,11 @@ prometheus:
       - source_labels:
         - __param_target
         target_label: instance
-      - replacement: 192.168.0.145:9101
+      - replacement: 192.168.0.144:9101
         target_label: __address__
     - static_configs:
       - targets:
-        - 192.168.0.145:9633
+        - 192.168.0.144:9633
       scrape_interval: 10m
       job_name: smartctl
     - static_configs:
@@ -48,7 +48,7 @@ prometheus:
       job_name: node
     - static_configs:
       - targets:
-        - 192.168.0.145:9153
+        - 192.168.0.144:9153
       honor_labels: true
       job_name: dnsmasq
     - static_configs:
@@ -73,7 +73,7 @@ prometheus:
       - source_labels:
         - __param_target
         target_label: instance
-      - replacement: 192.168.0.145:9115
+      - replacement: 192.168.0.144:9115
         target_label: __address__
       job_name: http
     - static_configs:
@@ -97,7 +97,7 @@ prometheus:
       - source_labels:
         - __param_target
         target_label: instance
-      - replacement: 192.168.0.145:9115
+      - replacement: 192.168.0.144:9115
         target_label: __address__
       job_name: icmp
     - static_configs:
@@ -115,7 +115,7 @@ prometheus:
       - source_labels:
         - __param_target
         target_label: instance
-      - replacement: 192.168.0.145:9115
+      - replacement: 192.168.0.144:9115
         target_label: __address__
       job_name: smtps
     - static_configs:
@@ -133,7 +133,7 @@ prometheus:
       - source_labels:
         - __param_target
         target_label: instance
-      - replacement: 192.168.0.145:9115
+      - replacement: 192.168.0.144:9115
         target_label: __address__
       job_name: imaps
     - static_configs:
@@ -151,7 +151,7 @@ prometheus:
       - source_labels:
         - __param_target
         target_label: instance
-      - replacement: 192.168.0.145:9115
+      - replacement: 192.168.0.144:9115
         target_label: __address__
       job_name: dns
     - static_configs:
@@ -167,7 +167,7 @@ prometheus:
         source_labels:
         - __param_target
       - target_label: __address__
-        replacement: 192.168.0.145:9312
+        replacement: 192.168.0.144:9312
       - target_label: __param_module
         source_labels:
           - module
@@ -178,24 +178,24 @@ prometheus:
       job_name: ssh
     - static_configs:
       - targets:
-        - 192.168.0.145:9312
+        - 192.168.0.144:9312
       metrics_path: /metrics
       job_name: ssh-metrics
     - static_configs:
       - targets:
-        - 192.168.0.145:9080
+        - 192.168.0.144:9080
       scrape_interval: 5m
       job_name: lvm
     - static_configs:
       - targets:
-        - 192.168.0.145:6060
+        - 192.168.0.144:6060
         labels:
           machine: guixsd
       scrape_interval: 10s
       job_name: crowdsec_guixsd
     - static_configs:
       - targets:
-        - 192.168.0.145:9407
+        - 192.168.0.144:9407
         - 192.168.0.192:9407
       metrics_path: /metrics
       job_name: obs
@@ -207,7 +207,7 @@ prometheus:
       job_name: windows
     - static_configs:
       - targets:
-        - 192.168.0.145:9095
+        - 192.168.0.144:9095
       honor_labels: true
       job_name: pushgateway
   ingress:
