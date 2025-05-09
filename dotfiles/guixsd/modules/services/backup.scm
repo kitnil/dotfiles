@@ -61,7 +61,8 @@
 ;;;
 ;;; Code:
 
-(define %private-ip-address)
+(define %private-ip-address
+  "192.168.0.144")
 
 (define-record-type* <restic-rest-configuration>
   restic-rest-configuration make-restic-rest-configuration
