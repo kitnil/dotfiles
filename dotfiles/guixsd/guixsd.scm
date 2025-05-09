@@ -537,16 +537,7 @@ location / {
                          (apply system*
                                 #$(file-append iptables "/sbin/ip6tables")
                                 (string-tokenize cmd)))
-                       (and (ovs-vsctl
-                             (string-join
-                              (list "--may-exist" "add-br" "br0")))
-                            ;; XXX: Remove vlan_mode to use tagged VLANs.
-                            ;; (ovs-vsctl
-                            ;;  (string-join
-                            ;;   (list "--may-exist" "add-port" "br0" "enp34s0"
-                            ;;         "vlan_mode=native-untagged")))
-
-                            ;; Set default chain policies.
+                       (and ;; Set default chain policies.
                             (iptables
                              (string-join
                               '("-P" "INPUT" "DROP")))
