@@ -410,12 +410,14 @@ ping-restart 10
 resolv-retry infinite
 remote vm1.wugi.info 1195
 remote-random
-"))))
+"))
+   (auto-start? #f)))
 
 (define %openvpn-configuration-majordomo.ru
   (openvpn-configuration
    (name "majordomo.ru")
-   (config "/etc/openvpn/openvpn.conf")))
+   (config "/etc/openvpn/openvpn.conf")
+   (auto-start? #f)))
 
 
 ;;;
