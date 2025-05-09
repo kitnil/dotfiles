@@ -15,7 +15,9 @@
              (srfi srfi-1)
              (srfi srfi-26))
 
-(use-package-modules admin audio android backup bash bittorrent curl dns firmware guile haskell-apps networking nfs linux samba ssh suckless xdisorg xorg)
+(use-package-modules admin audio android backup bash bittorrent curl dns
+                     firmware guile haskell-apps networking nfs linux samba
+                     ssh suckless xdisorg xorg)
 
 (use-service-modules admin avahi dbus desktop docker dns mcron networking nix
                      nfs sound xorg ssh web cgit version-control certbot
