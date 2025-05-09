@@ -1256,15 +1256,15 @@ PasswordAuthentication yes")))
                                       ("/srv/lib/video"
                                        "192.168.0.0/24(ro,insecure,no_subtree_check,crossmnt,fsid=4)")))))
 
-                         (service (certbot-service-type-custom-nginx "192.168.0.144")
-                                  (certbot-configuration
-                                   (email "go.wigust@gmail.com")
-                                   (certificates
-                                    `(,@(map (lambda (host)
-                                               (certificate-configuration
-                                                (domains (list host))
-                                                (deploy-hook %nginx-deploy-hook)))
-                                             %certbot-hosts)))))
+                         ;; (service (certbot-service-type-custom-nginx "192.168.0.144")
+                         ;;          (certbot-configuration
+                         ;;           (email "go.wigust@gmail.com")
+                         ;;           (certificates
+                         ;;            `(,@(map (lambda (host)
+                         ;;                       (certificate-configuration
+                         ;;                        (domains (list host))
+                         ;;                        (deploy-hook %nginx-deploy-hook)))
+                         ;;                     %certbot-hosts)))))
 
                          (service nginx-service-type
                                   (nginx-configuration
