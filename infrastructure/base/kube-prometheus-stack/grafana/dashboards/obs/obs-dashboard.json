@@ -754,8 +754,8 @@
       {
         "current": {
           "selected": true,
-          "text": "192.168.0.145:9407",
-          "value": "192.168.0.145:9407"
+          "text": "192.168.0.144:9407",
+          "value": "192.168.0.144:9407"
         },
         "datasource": {
           "type": "prometheus",
