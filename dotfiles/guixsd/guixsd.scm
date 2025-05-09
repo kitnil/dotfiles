@@ -47,7 +47,6 @@
              (services openvpn)
              (services syncthing)
              (services virtualization)
-             (services vnc)
              (services web)
              (utils package))
 
@@ -1513,48 +1512,6 @@ location / {
 
                          (service crowdsec-service-type)
                          (service crowdsec-firewall-bouncer-service-type)
-
-                         ;; (service vncserver-service-type (vncserver-configuration
-                         ;;                                  (vncserver tigervnc-server)
-                         ;;                                  (display 1)
-                         ;;                                  (user "oleg")
-                         ;;                                  (group "users")
-                         ;;                                  (directory "/home/oleg")
-                         ;;                                  (xstartup "/home/oleg/.vnc/xstartup-firefox")
-                         ;;                                  (host-name "guixsd")))
-
-                         ;; (service vncserver-service-type (vncserver-configuration
-                         ;;                                  (vncserver (@ (deprecated) tigervnc-server))
-                         ;;                                  (interface "192.168.0.144")
-                         ;;                                  (display 2)
-                         ;;                                  (user "oleg")
-                         ;;                                  (group "users")
-                         ;;                                  (directory "/home/oleg")
-                         ;;                                  (xstartup "/home/oleg/.xsession")
-                         ;;                                  (host-name "guixsd")
-                         ;;                                  (supplementary-groups
-                         ;;                                   '("docker" "kvm" "libvirt" "audio" "video" "wheel" "users"))))
-
-                         ;; (service vncserver-service-type (vncserver-configuration
-                         ;;                                  (vncserver (@ (deprecated) tigervnc-server))
-                         ;;                                  (interface "192.168.0.145")
-                         ;;                                  (display 3)
-                         ;;                                  (user "oleg")
-                         ;;                                  (group "users")
-                         ;;                                  (directory "/home/oleg")
-                         ;;                                  (xstartup "/home/oleg/.xsession")
-                         ;;                                  (host-name "guixsd")
-                         ;;                                  (supplementary-groups
-                         ;;                                   '("docker" "kvm" "libvirt" "audio" "video" "wheel" "users"))))
-
-                         ;; (service vncserver-service-type (vncserver-configuration
-                         ;;                                  (vncserver tigervnc-server-1.10.1)
-                         ;;                                  (display 10)
-                         ;;                                  (user "oleg")
-                         ;;                                  (group "users")
-                         ;;                                  (directory "/home/oleg")
-                         ;;                                  (xstartup "/home/oleg/.vnc/xstartup-quassel")
-                         ;;                                  (host-name "guixsd")))
 
                          (extra-special-file "/usr/bin/env"
                                              (file-append coreutils "/bin/env"))
