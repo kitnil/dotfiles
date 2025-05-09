@@ -1,5 +1,5 @@
 ;;; GNU Guix --- Functional package management for GNU
-;;; Copyright © 2019, 2020, 2022, 2025 Oleg Pykhalov <go.wigust@gmail.com>
+;;; Copyright © 2019, 2020, 2022 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;
 ;;; This file is part of GNU Guix.
 ;;;
@@ -68,7 +68,6 @@
                  #:environment-variables
                  (append '#$environment-variables (environ))))
        (respawn? #t)
-       (auto-start? #f)
        (stop #~(make-kill-destructor)))))))
 
 (define openvpn-service-type
