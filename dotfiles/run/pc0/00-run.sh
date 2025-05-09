@@ -7,4 +7,4 @@ set -o nounset -o errexit -o pipefail
 
 rm /var/lib/kubelet/.maintenance
 herd restart kubelet
-/home/oleg/.local/share/chezmoi/dotfiles/run/pc0/13-guix-workstation-run.sh
+# /home/oleg/.local/share/chezmoi/dotfiles/run/pc0/13-guix-workstation-run.sh
