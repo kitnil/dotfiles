@@ -61,6 +61,8 @@
 ;;;
 ;;; Code:
 
+(define %private-ip-address)
+
 (define-record-type* <restic-rest-configuration>
   restic-rest-configuration make-restic-rest-configuration
   restic-rest-configuration?
@@ -326,19 +328,19 @@
 
 (define restic-notebook-backup
   (restic-lv-backup "vg0" "guixroot"
-                    #:restic-repository "sftp:root@192.168.0.145:/srv/backup/notebook"
+                    #:restic-repository (string-append "sftp:root@" %private-ip-address ":/srv/backup/notebook")
                     #:restic-password-file "/etc/guix/secrets/restic-notebook"
                     #:predicate #~(begin #f)))
 
 (define restic-pc0-backup
   (restic-lv-backup "vg0" "guixroot"
-                    #:restic-repository "sftp:root@192.168.0.145:/srv/backup/pc0"
+                    #:restic-repository (string-append "sftp:root@" %private-ip-address ":/srv/backup/pc0")
                     #:restic-password-file "/etc/guix/secrets/restic-pc0"
                     #:predicate #~(begin #f)))
 
 (define restic-pc0-win10-backup
   (restic-lv-backup "vg0" "win10"
-                    #:restic-repository "sftp:root@192.168.0.145:/srv/backup/pc0-win10"
+                    #:restic-repository (string-append "sftp:root@" %private-ip-address ":/srv/backup/pc0-win10")
                     #:restic-password-file "/etc/guix/secrets/restic-pc0-win10"
                     #:predicate #~(begin #f)))
 

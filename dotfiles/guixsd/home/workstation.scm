@@ -127,7 +127,7 @@ allow-preset-passphrase"))))
                                                       #:recursive? #t))
                                        `("bin/manual-scripts-root-04-mjru-net"
                                          ,(program-file "manual-scripts-root-04-mjru-net"
-                                                        #~(let ((gateway "192.168.0.145"))
+                                                        #~(let ((gateway "192.168.0.144"))
                                                             (for-each (lambda (network)
                                                                         (system* #$(file-append iproute "/sbin/ip") "route" "add" network "via" gateway))
                                                                       '("172.16.103.0/24"

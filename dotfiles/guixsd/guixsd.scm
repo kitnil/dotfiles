@@ -375,7 +375,7 @@ location / {
         (proxy "monitor.wugi.info" 8080)
         (proxy "guix.duckdns.org" 5556 #:ssl? #t)
         (proxy "kiwiirc.wugi.info" 8194 #:ssl? #t #:ssl-key? #t #:mtls? #t)
-        (proxy "prometheus.wugi.info" 9090 #:listen "192.168.0.145")
+        (proxy "prometheus.wugi.info" 9090 #:listen %private-ip-address)
         (proxy "guix.wugi.info" 5556 #:ssl? #t #:ssl-key? #t)
         ((lambda* (host #:key
                   (ssl? #f)
@@ -487,6 +487,9 @@ location / {
 ;;;
 ;;; Networking
 ;;;
+
+(define %private-ip-address
+  "192.168.0.144")
 
 (define (create-openvswitch-internal-port bridge port)
   #~(invoke/quiet #$(file-append openvswitch "/bin/ovs-vsctl")
@@ -789,27 +792,27 @@ location / {
                             ;; Accept qBittorrent API traffic.
                             (iptables
                              (string-join
-                              '("-I" "INPUT"
-                                "-p" "tcp"
-                                "--destination" "192.168.0.145/32"
-                                "--dport" "9091"
-                                "-j" "ACCEPT")))
+                              (list "-I" "INPUT"
+                                    "-p" "tcp"
+                                    "--destination" (string-append %private-ip-address "/32")
+                                    "--dport" "9091"
+                                    "-j" "ACCEPT")))
                             ;; Accept DNS traffic, which is required for
                             ;; Docker containers.
                             (iptables
                              (string-join
-                              '("-I" "INPUT"
-                                "-p" "tcp"
-                                "--destination" "192.168.0.145/32"
-                                "--dport" "53"
-                                "-j" "ACCEPT")))
+                              (list "-I" "INPUT"
+                                    "-p" "tcp"
+                                    "--destination" (string-append %private-ip-address "/32")
+                                    "--dport" "53"
+                                    "-j" "ACCEPT")))
                             (iptables
                              (string-join
-                              '("-I" "INPUT"
-                                "-p" "udp"
-                                "--destination" "192.168.0.145/32"
-                                "--dport" "53"
-                                "-j" "ACCEPT")))
+                              (list "-I" "INPUT"
+                                    "-p" "udp"
+                                    "--destination" (string-append %private-ip-address "/32")
+                                    "--dport" "53"
+                                    "-j" "ACCEPT")))
                             ;; Accept traffic which originated from current computer.
                             (iptables
                              (string-join
@@ -867,7 +870,7 @@ location / {
                                 "-j" "DNAT"
                                 "--to-destination" "127.0.0.1:889")))
 
-                            ;; Forward connections from 192.168.0.145:6443 to
+                            ;; Forward connections from %private-ip-address:6443 to
                             ;; 192.168.154.1:6443 for Kubernetes API on
                             ;; Kubenav (Android application).
                             ;;
@@ -877,22 +880,22 @@ location / {
                             ;; Fault
                             (iptables
                              (string-join
-                              '("-t" "nat"
-                                "-A" "PREROUTING"
-                                "-p" "tcp"
-                                "--destination 192.168.0.145"
-                                "--dport" "6443"
-                                "-j" "DNAT"
-                                "--to-destination" "192.168.154.1:6443")))
+                              (list "-t" "nat"
+                                    "-A" "PREROUTING"
+                                    "-p" "tcp"
+                                    (format #f "--destination ~a" %private-ip-address)
+                                    "--dport" "6443"
+                                    "-j" "DNAT"
+                                    "--to-destination" "192.168.154.1:6443")))
                             (iptables
                              (string-join
-                              '("-t" "nat"
-                                "-A" "POSTROUTING"
-                                "-p" "tcp"
-                                "-d" "192.168.154.1"
-                                "--dport" "6443"
-                                "-j" "SNAT"
-                                "--to-source" "192.168.0.145")))
+                              (list "-t" "nat"
+                                    "-A" "POSTROUTING"
+                                    "-p" "tcp"
+                                    "-d" "192.168.154.1"
+                                    "--dport" "6443"
+                                    "-j" "SNAT"
+                                    "--to-source" %private-ip-address)))
 
                             ;; VLAN 154 provides:
                             ;; - Network via Whonix
@@ -1140,7 +1143,7 @@ location / {
                                          #$(run-with-store (open-connection)
                                              (gexp->derivation "tftp-root" tftp-root)))
                           "--enable-tftp"
-                          "--server=192.168.0.145"
+                          #$(string-append "--server=" %private-ip-address)
                           "--no-resolv"
                           "--dhcp-option=option:domain-search,intr")))
           (respawn? #f)))))
@@ -2281,7 +2284,7 @@ PasswordAuthentication yes")))
 
                          (dovecot-service
                           #:config (dovecot-configuration
-                                    (listen '("127.0.0.1" "192.168.0.145"))
+                                    (listen (list "127.0.0.1" %private-ip-address))
                                     (disable-plaintext-auth? #f)
                                     (mail-location
                                      (string-append "maildir:~/Maildir"
@@ -2363,12 +2366,11 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                                           (list ;; (network-address
                                                 ;;  (device "br0")
                                                 ;;  (value "192.168.0.144/24"))
+                                                
                                                 (network-address
                                                  (device "enp34s0")
-                                                 (value "192.168.0.145/24"))
-                                                ;; (network-address
-                                                ;;  (device "enp34s0")
-                                                ;;  (value "127.0.0.2/8"))
+                                                 (value "127.0.0.2/8"))
+
                                                 ;; (network-address
                                                 ;;  (device "br154")
                                                 ;;  (value "127.0.0.3/8"))
@@ -2396,15 +2398,15 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                                           (list (network-route
                                                  (destination "default")
                                                  (gateway "192.168.0.1"))))
-                                         (name-servers '("192.168.0.145"
+                                         (name-servers (list %private-ip-address
 
-                                                         ;; local Docker
-                                                         ;; "172.17.0.1"
+                                                             ;; local Docker
+                                                             ;; "172.17.0.1"
 
-                                                         ;; Google
-                                                         ;; "8.8.8.8"
-                                                         ;; "8.8.4.4"
-                                                         ))
+                                                             ;; Google
+                                                             ;; "8.8.8.8"
+                                                             ;; "8.8.4.4"
+                                                             ))
                                          ;; (requirement '(openvswitch-configuration))
                                          )))
 
@@ -2423,7 +2425,7 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
 
                          (service libvirt-service-type
                                   (libvirt-configuration
-                                   (listen-addr "192.168.0.145")
+                                   (listen-addr %private-ip-address)
                                    (listen-tcp? #t)
                                    (auth-tcp "none")))
                          (simple-service 'libvirt-qemu-config activation-service-type

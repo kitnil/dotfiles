@@ -396,7 +396,7 @@ cgroup_device_acl = [
                                      (list (network-route
                                             (destination "default")
                                             (gateway "192.168.0.1"))))
-                                    (name-servers '("192.168.0.145"
+                                    (name-servers '("192.168.0.144"
 
                                                     ;; local Docker
                                                     ;; "172.17.0.1"
