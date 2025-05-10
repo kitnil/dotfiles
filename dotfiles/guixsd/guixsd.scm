@@ -1153,8 +1153,6 @@ PasswordAuthentication yes")))
                                    (exports
                                     '(("/srv"
                                        "192.168.154.0/24(ro,insecure,no_subtree_check,crossmnt,fsid=0)")
-                                      ("/srv/kubernetes"
-                                       "192.168.25.0/24(rw,insecure,no_subtree_check,crossmnt,fsid=1,anonuid=0,anongid=0)")
                                       ("/home/oleg/src"
                                        "192.168.154.0/24(rw,insecure,no_subtree_check,no_root_squash,crossmnt,fsid=2)")
                                       ("/srv/vagrant"
