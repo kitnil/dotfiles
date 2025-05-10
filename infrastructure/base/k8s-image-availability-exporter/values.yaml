@@ -8,3 +8,7 @@ serviceMonitor:
   enabled: true
   labels:
     release: "prometheus"
+
+prometheusRule:
+  # -- Create [Prometheus Operator](https://github.com/coreos/prometheus-operator) prometheusRule resource
+  enabled: true
