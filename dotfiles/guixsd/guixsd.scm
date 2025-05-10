@@ -817,6 +817,8 @@ location / {
                            ;; "hms-billing-dev.intr"
                            ))
 
+           "192.168.0.192 pc0"
+
            ;; Kubernetes Nginx-Ingress -> Tor ClusterIP service
            "192.168.154.227 tor.home"
 
