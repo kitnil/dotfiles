@@ -81,6 +81,7 @@ in {
             "toolkit.telemetry.reportingpolicy.firstRun" = false;
           };
           search = {
+            force = true;
             default = "ddg";
           };
           extensions = {
