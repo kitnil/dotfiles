@@ -783,7 +783,7 @@ zone:
         "192.168.0.137 kube2 kube2.home kube2.lan"
         "192.168.0.192 kube3 kube3.home kube3.lan"
         "192.168.154.99 kube5 kube5.home"
-        "192.168.154.1 nfs.home"
+        "192.168.0.144 nfs.home"
 
         "172.16.100.60 workstation.intr"
 
