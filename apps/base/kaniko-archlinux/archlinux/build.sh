@@ -76,6 +76,10 @@ packages+=(
     aichat
 )
 
+packages+=(
+    zenity
+)
+
 base_system()
 {
     groups=(
