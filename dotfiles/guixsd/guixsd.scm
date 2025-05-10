@@ -1152,11 +1152,11 @@ PasswordAuthentication yes")))
                                   (nfs-configuration
                                    (exports
                                     '(("/srv"
-                                       "192.168.154.0/24(ro,insecure,no_subtree_check,crossmnt,fsid=0)")
+                                       "192.168.0.0/24(ro,insecure,no_subtree_check,crossmnt,fsid=0)")
                                       ("/home/oleg/src"
-                                       "192.168.154.0/24(rw,insecure,no_subtree_check,no_root_squash,crossmnt,fsid=2)")
+                                       "192.168.0.0/24(rw,insecure,no_subtree_check,no_root_squash,crossmnt,fsid=2)")
                                       ("/srv/vagrant"
-                                       "192.168.154.0/24(rw,insecure,no_subtree_check,no_root_squash,crossmnt,fsid=3)")
+                                       "192.168.0.0/24(rw,insecure,no_subtree_check,no_root_squash,crossmnt,fsid=3)")
                                       ("/srv/lib/video"
                                        "192.168.0.0/24(ro,insecure,no_subtree_check,crossmnt,fsid=4)")))))
 
