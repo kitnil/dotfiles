@@ -6,5 +6,7 @@ rules:
   # image refs must match at least one of the rules, and not match any excludes
   matches:
   - '^docker.io'
+  excludes:
+  - '^docker.io/(goharbor/)?.*$'
   replace: 'harbor.home.wugi.info/dockerhub'
   checkUpstream: false

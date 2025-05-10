@@ -1,7 +1,7 @@
 image:
-  repository: harbor.corp1.majordomo.ru/kubernetes/pdns-mysql
+  repository: harbor.home.wugi.info/library/pdns-mysql
 
 mariadb:
   image:
-    registry: harbor.corp1.majordomo.ru
-    repository: kubernetes/mariadb
+    registry: harbor.home.wugi.info
+    repository: library/mariadb

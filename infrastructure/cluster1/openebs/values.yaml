@@ -1,8 +1,3 @@
 nfs-provisioner:
   nfsStorageClass:
     backendStorageClass: linstor-pool0
-  nfsProvisioner:
-    image:
-      registry: harbor.corp1.majordomo.ru/
-    nfsServerAlpineImage:
-      registry: harbor.corp1.majordomo.ru/
