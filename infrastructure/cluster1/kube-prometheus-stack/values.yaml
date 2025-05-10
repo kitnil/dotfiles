@@ -410,6 +410,9 @@ kubeScheduler:
     https: 'true'
     insecureSkipVerify: 'true'
 
+kubeProxy:
+  enabled: false
+
 kubeEtcd:
   endpoints:
   - 192.168.0.91
