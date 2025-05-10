@@ -84,7 +84,9 @@
 
             knot-config
 
-            udev-rules-service-xbox))
+            udev-rules-service-xbox
+
+            generate-hosts-file))
 
 (define %guix-daemon-config
   (guix-configuration
@@ -717,3 +719,100 @@ zone:
                                                  "KERNEL==\"0005:045E:02FD.*|0005:045E:02E0.*\""
                                                  "SUBSYSTEM==\"hid\""
                                                  "RUN:=\"/bin/sh -c 'echo xpadneo udev: $kernel > /dev/kmsg; modprobe hid_xpadneo && { echo $kernel > /sys/bus/hid/drivers/hid-generic/unbind; echo $kernel > /sys/bus/hid/drivers/microsoft/unbind; echo $kernel > /sys/bus/hid/drivers/xpadneo/bind; }; echo xpadneo udev: ok > /dev/kmsg'\""))))))
+
+
+;;;
+;;; hosts-file
+;;;
+
+(define %hosts-file-list
+  (list (string-join '("192.168.0.144"
+                       "guixsd"     ;for iftop hostname
+                       "techinfo.intr"
+                       "texinfo.tld"
+                       "jenkins.wugi.info"
+                       "kiwiirc.wugi.info"
+                       "syncthing.wugi.info"
+                       "iso.wugi.info"
+                       "cgit.duckdns.org"
+                       "netmap.intr"
+                       "vault1"
+                       "docker-registry.wugi.info"
+                       "ci.guix.gnu.org.wugi.info"
+                       "guix.local"
+                       "cgit.wugi.info"
+                       ;; Majordomo
+                       ;; "hms-dev.intr"
+                       ;; "api-dev.intr"
+                       ;; "hms-billing-dev.intr"
+                       ))
+        "192.168.0.192 pc0"
+
+        ;; Kubernetes Nginx-Ingress -> Tor ClusterIP service
+        "192.168.154.227 tor.home"
+
+        "192.168.25.11 znc.home"
+
+        ;; Android Phones
+        "192.168.0.177 xiaomi-mi-mix-2s.home"
+        "192.168.0.101 infinix-x6710.home"
+
+        "192.168.0.117 tv.kitchen.home"
+
+        "185.105.108.96 vm3.wugi.info"
+        "78.108.82.44 vm1.wugi.info"
+
+        "192.168.154.119 ubuntu.local"
+
+        "192.168.154.1 opensearch.home"
+
+        "192.168.25.3 opensearch-node1"
+
+        "10.1.52.104 ipsec1 ipsec1.intr"
+        "10.1.52.105 ipsec2 ipsec2.intr"
+
+        "192.168.25.3 node-0.example.com"
+
+        "192.168.154.1 nginx99.intr"
+        "192.168.154.129 web99.ru www.web99.ru www.web99.intr web99.intr"
+
+        "192.168.0.91 kubernetes.home"
+        "192.168.0.144 kube1 kube1.home kube1.lan"
+        "192.168.0.137 kube2 kube2.home kube2.lan"
+        "192.168.0.192 kube3 kube3.home kube3.lan"
+        "192.168.154.99 kube5 kube5.home"
+        "192.168.154.1 nfs.home"
+
+        "172.16.100.60 workstation.intr"
+
+        ;; ci.intr
+        "172.16.103.82 ns1test.majordomo.ru RC-USER 33e27a01eeb1"
+
+        "192.168.154.53 windows.local"
+        "192.168.0.187 ubuntu.local"
+        "192.168.154.110 almalinux.local"
+        "192.168.0.126 projector.local"
+
+        "78.108.82.157 mjru"
+
+        "192.168.100.1 r1.tld"
+        "192.168.100.12 r2.tld"
+        "192.168.100.120 cuirass.tld"
+        "172.16.100.60 ws1.wugi.info"
+        "178.250.247.125 gitlab.mjtest jenkins.mjtest"
+        "172.16.103.238 ci.guix.gnu.org.intr"
+
+        "192.168.25.2 windows.home"
+        "192.168.25.1 vm1.corp"
+        "192.168.0.140 retracker.local"
+
+        "172.16.100.61 lyashenko.intr"
+        "127.0.0.1 example.com"
+
+        "192.168.25.2 oracle1.local irc.local"
+        "192.168.0.137 notebook.wugi.info"))
+
+(define* (generate-hosts-file #:key (extra-hosts '()))
+  (plain-file "hosts"
+              (string-join (append %hosts-file-list extra-hosts '(""))
+                           "\n")))

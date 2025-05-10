@@ -186,15 +186,9 @@
                     %base-packages))
 
   (hosts-file
-   (plain-file
-    "hosts"
-    "\
-127.0.0.1	localhost	pc0
-::1	localhost	pc0
-
-192.168.0.144 kube1 kube1.home kube1.lan
-192.168.0.192 kube3 kube3.home kube3.lan
-"))
+   (generate-hosts-file
+    '("127.0.0.1 localhost pc0"
+      "::1 localhost pc0")))
 
   (sudoers-file
    (plain-file
