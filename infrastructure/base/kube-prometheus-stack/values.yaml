@@ -34,6 +34,16 @@ prometheus:
               storage: 50Gi
         selector: {}
 
+    ruleSelector: {}
+    ruleNamespaceSelector: {}
+    ruleSelectorNilUsesHelmValues: false
+    serviceMonitorSelector: {}
+    serviceMonitorNamespaceSelector: {}
+    serviceMonitorSelectorNilUsesHelmValues: false
+    podMonitorSelector: {}
+    podMonitorNamespaceSelector: {}
+    podMonitorSelectorNilUsesHelmValues: false
+
 nodeExporter:
   service:
     listenOnAllInterfaces: false
