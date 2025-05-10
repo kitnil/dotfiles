@@ -1635,7 +1635,6 @@ spec:
   interval: 30m0s
   path: ./apps/base/debian
   prune: true
-  wait: true
   sourceRef:
     kind: GitRepository
     name: flux-system
@@ -1649,7 +1648,6 @@ spec:
   interval: 30m0s
   path: ./apps/cluster1/runc-bootstrap-container-debian-12-kube1
   prune: true
-  wait: true
   sourceRef:
     kind: GitRepository
     name: flux-system
