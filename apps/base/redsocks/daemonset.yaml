@@ -13,6 +13,15 @@ spec:
         app.kubernetes.io/name: redsocks
         app.kubernetes.io/part-of: redsocks
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: redsocks.cluster.local/schedulable
+                operator: In
+                values:
+                - "true"
       tolerations:
       - key: "edge.cluster.local/not-schedulable"
         operator: "Equal"
