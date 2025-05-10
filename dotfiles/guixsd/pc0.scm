@@ -18,6 +18,9 @@
 (use-modules (services backup)
              (utils package))
 
+(define %private-ip-address
+  "192.168.0.192")
+
 (define kvmfr-linux-module
   (@ (packages linux) kvmfr-linux-module))
 
@@ -362,6 +365,12 @@ cgroup_device_acl = [
                                                      (list #$container-guix-sway-autostart-program)))
                                            (respawn? #f)
                                            (stop #~(make-kill-destructor)))))
+
+                         (service knot-resolver-service-type
+                                  (knot-resolver-configuration
+                                   (kresd-config-file
+                                    (generate-kresd-file %private-ip-address))))
+
                          ;; Bring eth0 up and pass it to the networking bridge.
                          (service static-networking-service-type
                                   (list
@@ -390,7 +399,7 @@ cgroup_device_acl = [
                                      (list (network-route
                                             (destination "default")
                                             (gateway "192.168.0.1"))))
-                                    (name-servers '("192.168.0.144"
+                                    (name-servers '("192.168.0.192"
 
                                                     ;; local Docker
                                                     ;; "172.17.0.1"

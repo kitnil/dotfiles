@@ -877,45 +877,7 @@ trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDS
                          (service knot-resolver-service-type
                                   (knot-resolver-configuration
                                    (kresd-config-file
-                                    (mixed-text-file "kresd.conf" "\
--- vim:syntax=lua:set ts=4 sw=4:
--- Refer to manual: https://knot-resolver.readthedocs.io/en/stable/daemon.html#configuration
-
--- Listen on all interfaces (localhost would not work in Docker)
--- private ip-address
-net.listen('" %private-ip-address "')
-
--- To disable DNSSEC validation, uncomment the following line (not recommended)
--- trust_anchors.remove('.')
-
--- Load Useful modules
-modules = {
-        'hints > iterate', -- Allow loading /etc/hosts or custom root hints
-        'policy'
-}
-
--- Load /etc/hosts
-hints.add_hosts()
-
-net.ipv6 = false
-
-policy.add(policy.suffix(policy.STUB(\"172.16.103.2\"), {todname('intr')}))
-policy.add(policy.suffix(policy.STUB(\"172.16.103.131\"), {todname('103.16.172.in-addr.arpa')}))
-policy.add(policy.suffix(policy.STUB(\"172.16.102.35\"), {todname('102.16.172.in-addr.arpa')}))
-
-policy.add(policy.suffix(policy.STUB(\"78.108.80.1\"), {todname('corp1.majordomo.ru')}))
-policy.add(policy.suffix(policy.STUB(\"78.108.88.1\"), {todname('corp2.majordomo.ru')}))
-
-policy.add(policy.suffix(policy.STUB(\"10.8.32.119\"), {todname('home.wugi.info')}))
-
-policy.add(policy.suffix(policy.STUB(\"10.8.255.254\"), {todname('cluster.local')}))
-
--- -- Forward all queries (complete stub mode)
-policy.add(policy.all(policy.STUB('8.8.8.8')))
-
--- Smaller cache size
-cache.size = 10 * MB
-"))))
+                                    (generate-kresd-file %private-ip-address))))
 
                          (service openvpn-service-type %openvpn-configuration-majordomo.ru)
                          (service openvpn-service-type %openvpn-configuration-wugi.info)
