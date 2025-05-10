@@ -56,9 +56,7 @@ program.")))
                         (name "oleg")
                         (comment "Oleg Pykhalov")
                         (group "users")
-                        (supplementary-groups '("wheel"
-                                                "audio" "video"
-                                                "docker"))
+                        (supplementary-groups '("wheel" "audio" "video"))
                         (password (crypt "oleg" "$6$abc")))
                        (user-account (inherit %root-account)
                                      (password (crypt "root" "$6$abc"))))
