@@ -812,7 +812,7 @@ zone:
         "192.168.25.2 oracle1.local irc.local"
         "192.168.0.137 notebook.wugi.info"))
 
-(define* (generate-hosts-file #:key (extra-hosts '()))
+(define* (generate-hosts-file #:optional (extra-hosts '()))
   (plain-file "hosts"
               (string-join (append %hosts-file-list extra-hosts '(""))
                            "\n")))
