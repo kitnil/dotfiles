@@ -1,3 +1,10 @@
 k8sImageAvailabilityExporter:
   # -- Setting this to false will prevent k8s-iae having unconstrained cluster-wide secret access
   useSecretsForPrivateRepositories: false
+
+serviceMonitor:
+  # -- Enable Prometheus ServiceMonitor.
+  # See the [documentation](https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/design.md#servicemonitor) and the [API reference](https://github.com/prometheus-operator/prometheus-operator/blob/main/Documentation/api.md#servicemonitor) for details.
+  enabled: true
+  labels:
+    release: "prometheus"
