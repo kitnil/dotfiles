@@ -29,8 +29,13 @@ spec:
           skopeo copy "docker://${RUNC_BOOTSTRAP_CONTAINER_IMAGE}" "oci:${RUNC_BOOTSTRAP_CONTAINER_IMAGE}"
           umoci raw unpack --image "${RUNC_BOOTSTRAP_CONTAINER_IMAGE}" rootfs
           umoci raw runtime-config --image "${RUNC_BOOTSTRAP_CONTAINER_IMAGE}" --rootfs rootfs config.json
-        image: harbor.home.wugi.info/library/skopeo-umoci:96ab01a9
+        image: harbor.home.wugi.info/library/skopeo-umoci:49152285
         name: bootstrap
+        env:
+        - name: SSL_CERT_DIR
+          value: /etc/ssl/certs
+        - name: SSL_CERT_FILE
+          value: /etc/ssl/certs/ca-certificates.crt
         resources:
           limits:
             cpu: 14000m
