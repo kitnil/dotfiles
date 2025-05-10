@@ -100,6 +100,8 @@ spec:
           name: home-oleg-news
         - mountPath: /home/oleg/.kube/config
           name: home-oleg-dot-kube-config
+        - mountPath: /home/oleg/.config/wayvnc
+          name: home-oleg-config-wayvnc
 
       - name: nixos
         image: harbor.home.wugi.info/library/nixos-systemd-taskexecutor
@@ -112,8 +114,6 @@ spec:
           name: home-oleg-dot-config-google-chrome
         - mountPath: /root/.bash_history
           name: root-bash-history
-        - mountPath: /home/oleg/.config/wayvnc
-          name: home-oleg-config-wayvnc
         - mountPath: /home/oleg/.local/share/chatterino
           name: home-oleg-dot-local-share-chatterino
         - mountPath: /home/oleg/.ssh/id_rsa_gitlab_intr_nopass
