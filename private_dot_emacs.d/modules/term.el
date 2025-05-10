@@ -109,3 +109,19 @@
 ;; https://codeberg.org/akib/emacs-eat/issues/145
 ;; Workaround for eat scrolling issues; disable recentering.
 (add-hook 'eat-mode-hook (lambda () (setq-local scroll-conservatively 101)))
+
+;;; esc always quits
+(with-eval-after-load 'eat
+  (mapcar (lambda (mode-map)
+            (define-key mode-map [escape] 'eat-self-input))
+          (list eat-char-mode-map
+                eat-eshell-char-mode-map
+                eat-eshell-emacs-mode-map
+                eat-eshell-semi-char-mode-map
+                eat-line-mode-map
+                eat-mode-map
+                eat--mouse-click-mode-map
+                eat--mouse-modifier-click-mode-map
+                eat--mouse-movement-mode-map
+                eat-semi-char-mode-map
+                eat-trace-replay-mode-map)))
