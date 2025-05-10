@@ -12,7 +12,7 @@
              (bootloader grub)
              (config)
              (services kubernetes))
-(use-service-modules avahi desktop dbus docker networking nix monitoring linux sound ssh sysctl virtualization xorg)
+(use-service-modules avahi desktop dbus dns docker networking nix monitoring linux sound ssh sysctl virtualization xorg)
 (use-package-modules audio linux screen ssh wm)
 
 (use-modules (services backup)
