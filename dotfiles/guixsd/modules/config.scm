@@ -814,5 +814,5 @@ zone:
 
 (define* (generate-hosts-file #:optional (extra-hosts '()))
   (plain-file "hosts"
-              (string-join (append %hosts-file-list extra-hosts '(""))
+              (string-join (append extra-hosts %hosts-file-list '(""))
                            "\n")))
