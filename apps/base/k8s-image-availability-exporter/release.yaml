@@ -1,0 +1,25 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: k8s-image-availability-exporter-values
+spec:
+  chart:
+    spec:
+      chart: k8s-image-availability-exporter
+      reconcileStrategy: ChartVersion
+      version: 0.17.0
+      sourceRef:
+        kind: HelmRepository
+        name: k8s-image-availability-exporter
+        namespace: flux-system
+  interval: 15m
+  timeout: 15m
+  install:
+    remediation:
+      retries: 3
+  upgrade:
+    remediation:
+      retries: 3
+  valuesFrom:
+  - kind: ConfigMap
+    name: k8s-image-availability-exporter-values
