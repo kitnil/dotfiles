@@ -1784,8 +1784,10 @@ namespaces = [ ]
                         (modify-services (operating-system-user-services base-system)
                           (guix-service-type config => (guix-configuration
                                                         (inherit %guix-daemon-config)
-                                                        (substitute-urls '("https://bordeaux.guix.gnu.org"
-                                                                           "https://substitutes.nonguix.org"))
+                                                        (substitute-urls '("http://10.8.19.125:5556" ;TODO: Replace with domain name.
+                                                                           "https://bordeaux.guix.gnu.org"
+                                                                           "https://substitutes.nonguix.org"
+                                                                           "http://ci.guix.trop.in"))
                                                         (extra-options '("--cache-failures"))))
                           (sysctl-service-type _ =>
                                                (sysctl-configuration
