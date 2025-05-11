@@ -900,7 +900,7 @@ zone:
 
         "192.168.154.119 ubuntu.local"
 
-        "192.168.154.1 opensearch.home"
+        "192.168.0.144 opensearch.home"
 
         "192.168.25.3 opensearch-node1"
 
