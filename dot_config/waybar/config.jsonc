@@ -12,12 +12,13 @@
         "sway/workspaces",
         "sway/mode",
         "sway/scratchpad",
-        "custom/media"
-    ],
-    // "wlr/taskbar"
-    "modules-center": [
+        "custom/media",
         "sway/window"
     ],
+    // "wlr/taskbar"
+    // "modules-center": [
+    //     "sway/window"
+    // ],
     "modules-right": [
         "mpd",
         "idle_inhibitor",
