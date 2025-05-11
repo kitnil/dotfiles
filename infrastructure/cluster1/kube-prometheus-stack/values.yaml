@@ -61,6 +61,9 @@ prometheus:
         - http://ci.guix.gnu.org.wugi.info
         - https://ci.guix.gnu.org
         - https://bordeaux.guix.gnu.org
+        - https://substitutes.nonguix.org
+        - https://cgit.wugi.info
+        - http://ci.guix.trop.in
       scrape_interval: 30s
       metrics_path: /probe
       params:
