@@ -905,7 +905,7 @@ zone:
         "10.1.52.104 ipsec1 ipsec1.intr"
         "10.1.52.105 ipsec2 ipsec2.intr"
 
-        "192.168.25.3 node-0.example.com"
+        "192.168.0.144 node-0.example.com"
 
         "192.168.154.1 nginx99.intr"
         "192.168.154.129 web99.ru www.web99.ru www.web99.intr web99.intr"
