@@ -373,7 +373,7 @@ location / {
                          "proxy_set_header X-Real-PORT $remote_port;"
                          "add_header Access-Control-Allow-Origin *;"))))))
         (proxy "cups.tld" 631)
-        (proxy "jenkins.wugi.info" 8090 #:ssl? #t #:ssl-key? #t #:mtls? #t)
+        (proxy "jenkins.wugi.info" 8090 #:ssl? #t #:ssl-key? #t #:mtls? #f)
         (proxy "syncthing.wugi.info" 8384 #:ssl? #t #:ssl-key? #t #:mtls? #t
                ;; https://docs.syncthing.net/users/faq.html#why-do-i-get-host-check-error-in-the-gui-api
                #:proxy-set-header-host "localhost")
