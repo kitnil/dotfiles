@@ -27,7 +27,7 @@ spec:
               nsenter --target "1" --mount --uts --ipc --net --pid --no-fork \
               /run/setuid-programs/sudo --user oleg --login bash <<'EOF'
               set -o nounset -o errexit -o pipefail -o xtrace
-              cd "${HOME}/ansible-out/files" || exit 1
+              cd "${HOME}/src/gitlab.intr/monitoring/state" || exit 1
               git pull --rebase origin master
               EOF
             resources:
