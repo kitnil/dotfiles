@@ -34,6 +34,8 @@ prometheus:
               storage: 50Gi
         selector: {}
 
+    # Monitor every namespace.
+    # ref: https://github.com/prometheus-operator/prometheus-operator/issues/2890
     ruleSelector: {}
     ruleNamespaceSelector: {}
     ruleSelectorNilUsesHelmValues: false
