@@ -529,13 +529,6 @@ spec:
   interval: 30m0s
   path: ./apps/base/maintenance-dns
   prune: true
-  # This means that the maintenance-guix-package-manifest-kube2 Kustomization
-  # will wait until all the Jobs in maintenance-guix-pull-kube2 run to
-  # completion. If the Job fails, the app changes will not be applied by the
-  # app-deploy Kustomization.
-  dependsOn:
-  - name: nix
-  wait: true
   timeout: 2m
   sourceRef:
     kind: GitRepository
