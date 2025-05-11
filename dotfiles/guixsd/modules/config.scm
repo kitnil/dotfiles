@@ -775,6 +775,9 @@ remote-random
                                                        ("tokenGenerationOnCreationEnabled" . #f)
                                                        ("creationOfLegacyTokenEnabled" . #f)))
                                                      ("jenkins"
+                                                      ("authorizationStrategy"
+                                                       ("loggedInUsersCanDoAnything"
+                                                        ("allowAnonymousRead" . #t)))
                                                       ("nodes" .
                                                        #((("permanent"
                                                            ("retentionStrategy"
