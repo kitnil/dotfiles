@@ -10,7 +10,7 @@
 # ~/src/github.com/opensearch-project/OpenSearch-Dashboards/config/opensearch_dashboards.yml
 
 server.host: '0'
-opensearch.hosts: [https://192.168.0.144:9200]
+opensearch.hosts: [https://localhost:9200]
 opensearch.ssl.verificationMode: none
 opensearch.username: kibanaserver
 opensearch.password: kibanaserver
