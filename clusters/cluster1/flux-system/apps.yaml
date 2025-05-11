@@ -515,7 +515,6 @@ spec:
   interval: 30m0s
   path: ./apps/base/nix
   prune: true
-  wait: true
   timeout: 2m
   sourceRef:
     kind: GitRepository
