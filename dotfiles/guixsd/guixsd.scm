@@ -112,7 +112,7 @@
          (root "/srv/share"))
         (nginx-server-configuration
          (server-name '("opensearch.home"))
-         (listen '("192.168.154.1:80"))
+         (listen '("192.168.0.144:80"))
          (raw-content (list "client_max_body_size 200M;"))
          (locations
           (list
