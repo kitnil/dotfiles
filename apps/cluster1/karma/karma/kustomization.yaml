@@ -6,4 +6,4 @@ resources:
 - ingress.yaml
 images:
 - name: ghcr.io/prymitive/karma
-  newTag: v0.114
+  newTag: v0.121
