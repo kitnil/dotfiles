@@ -803,12 +803,14 @@ remote-random
                                                      ("jobs" . #((("file" . ,jenkins-jobs)))))
                                                    #:pretty #t))))))))
                   "SECRETS_FILE=/etc/jenkins/jenkins.properties")
-            (string-split
-             (string-delete #\"
-                            (string-trim-right
-                             (with-input-from-file "/etc/jenkins/jenkins.properties"
-                               (@ (ice-9 rdelim) read-string))))
-             #\newline)))))
+            (if (file-exists? "/etc/jenkins/jenkins.properties")
+                (string-split
+                 (string-delete #\"
+                                (string-trim-right
+                                 (with-input-from-file "/etc/jenkins/jenkins.properties"
+                                   (@ (ice-9 rdelim) read-string))))
+                 #\newline)
+                "Missing `/etc/jenkins/jenkins.properties' file.")))))
 
 
 ;;;
