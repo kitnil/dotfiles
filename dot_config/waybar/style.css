@@ -50,7 +50,7 @@ button:hover {
 
 /* you can set a style on hover for any module like this */
 #pulseaudio:hover {
-    background-color: #a37800;
+    /* background-color: #a37800; */
 }
 
 #workspaces button {
@@ -114,13 +114,13 @@ button:hover {
 }
 
 #clock {
-    background-color: #64727D;
+    /* background-color: #64727D; */
 }
 #clock.msk {
-    background-color: #4682B4;
+    /* background-color: #4682B4; */
 }
 #clock.utc {
-    background-color: #28A828;
+    /* background-color: #28A828; */
 }
 
 #battery {
@@ -175,12 +175,12 @@ label:focus {
 }
 
 #cpu {
-    background-color: #008b45;
+    /* background-color: #008b45; */
     color: #ffffff;
 }
 
 #memory {
-    background-color: #9b59b6;
+    /* background-color: #9b59b6; */
 }
 
 #disk {
@@ -192,20 +192,20 @@ label:focus {
 }
 
 #network {
-    background-color: #2980b9;
+    /* background-color: #2980b9; */
 }
 
 #network.disconnected {
-    background-color: #f53c3c;
+    /* background-color: #f53c3c; */
 }
 
 #pulseaudio {
-    background-color: #8b7500;
+    /* background-color: #8b7500; */
     color: #ffffff;
 }
 
 #pulseaudio.muted {
-    background-color: #90b1b1;
+    /* background-color: #90b1b1; */
     color: #2a5c45;
 }
 
@@ -233,13 +233,13 @@ label:focus {
 }
 
 #custom-lm-studio-models {
-    background-color: #2f4f4f;
+    /* background-color: #2f4f4f; */
     color: #ffffff;
     padding: 0 5px;
 }
 
 #temperature {
-    background-color: #f0932b;
+    /* background-color: #f0932b; */
 }
 
 #temperature.critical {
@@ -260,12 +260,12 @@ label:focus {
 }
 
 #idle_inhibitor {
-    background-color: #2d3436;
+    /* background-color: #2d3436; */
 }
 
 #idle_inhibitor.activated {
-    background-color: #ecf0f1;
-    color: #2d3436;
+    /* background-color: #ecf0f1; */
+    /* color: #2d3436; */
 }
 
 #mpd {
@@ -286,7 +286,7 @@ label:focus {
 }
 
 #language {
-    background: #00b093;
+    /* background: #00b093; */
     color: #ffffff;
     padding: 0 5px;
     margin: 0 5px;
