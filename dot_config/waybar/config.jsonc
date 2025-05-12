@@ -140,7 +140,7 @@
     },
     "clock#msk": {
         "timezone": "Europe/Moscow",
-        "format": "{:%H:%M} MSK",
+        "format": "{:%H:%M MSK        %Y-%m-%d}",
         "tooltip-format": "<big>{:%Y %B}</big>\n<tt><small>{calendar}</small></tt>",
         "format-alt": "{:%Y-%m-%d}",
         "calendar": {
