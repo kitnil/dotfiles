@@ -24,15 +24,13 @@ table ip filter {
 		ip saddr 192.168.0.0/24 counter packets 0 bytes 0 accept
 		ip saddr 10.0.0.0/8 counter packets 0 bytes 0 accept
 		ip saddr 192.168.25.0/24 tcp dport 16400 counter packets 0 bytes 0 drop
+		ip saddr 192.168.25.0/24 tcp dport 22 counter packets 0 bytes 0 drop
 		ip saddr 192.168.25.0/24 tcp dport 5900 counter packets 0 bytes 0 drop
 		ip saddr 192.168.25.0/24 tcp dport 9091 counter packets 0 bytes 0 drop
 		ip saddr 192.168.25.0/24 udp dport 16400 counter packets 0 bytes 0 drop
+		ip saddr 192.168.25.0/24 udp dport 22 counter packets 0 bytes 0 drop
 		ip saddr 192.168.25.0/24 udp dport 5900 counter packets 0 bytes 0 drop
 		ip saddr 192.168.25.0/24 udp dport 9091 counter packets 0 bytes 0 drop
-		ip saddr 192.168.25.1 tcp dport 22 counter packets 0 bytes 0 drop
-		ip saddr 192.168.25.1 tcp dport 5900 counter packets 0 bytes 0 drop
-		ip saddr 192.168.25.1 udp dport 22 counter packets 0 bytes 0 drop
-		ip saddr 192.168.25.1 udp dport 5900 counter packets 0 bytes 0 drop
 		ip saddr 192.168.25.1 udp dport 58458 counter packets 0 bytes 0 accept
 		ip saddr 192.168.25.1 tcp dport 58458 counter packets 0 bytes 0 accept
 		meta l4proto icmp ip saddr 192.168.25.0/24 counter packets 0 bytes 0 accept
