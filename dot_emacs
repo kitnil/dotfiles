@@ -432,5 +432,7 @@
  '(default ((t (:family "Adwaita Mono" :foundry "UKWN" :slant normal :weight regular :height 98 :width normal))))
  '(highlight-indent-guides-character-face ((t (:foreground "gray15"))))
  '(vterm-color-black ((t (:background "gray15" :foreground "gray15"))))
- '(vterm-color-blue ((t (:background "steel blue" :foreground "steel blue")))))
+ '(vterm-color-blue ((t (:background "steel blue" :foreground "steel blue"))))
+ '(whitespace-indentation ((t (:foreground "firebrick"))))
+ '(whitespace-space ((t (:foreground "lightgray")))))
 
