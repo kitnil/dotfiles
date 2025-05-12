@@ -224,7 +224,8 @@
         "tooltip-format": "{ipaddr}/{cidr} {ifname} via {gwaddr}",
         "format-linked": "{ifname} (No IP)  ",
         "format-disconnected": "DOWN  ",
-        "format-alt": "{ifname}: {ipaddr}/{cidr}"
+        "format-alt": "{ifname}: {ipaddr}/{cidr}",
+        "on-click": "/home/oleg/.local/share/chezmoi/dot_local/bin/executable_herd-toggle-service.sh"
     },
     "network#tapvpn1": {
         "interface": "tapvpn1",
@@ -233,7 +234,8 @@
         "tooltip-format": "{ipaddr}/{cidr} {ifname} via {gwaddr}",
         "format-linked": "{ifname} (No IP)  ",
         "format-disconnected": "DOWN  ",
-        "format-alt": "{ifname}: {ipaddr}/{cidr}"
+        "format-alt": "{ifname}: {ipaddr}/{cidr}",
+        "on-click": "/home/oleg/.local/share/chezmoi/dot_local/bin/executable_herd-toggle-service.sh"
     },
     "pulseaudio": {
         // "scroll-step": 1, // %, can be a float
