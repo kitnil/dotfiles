@@ -17,6 +17,10 @@ cni:
 # -- Configure prometheus metrics on the configured port at /metrics
 prometheus:
   enabled: true
+  serviceMonitor:
+    # -- Enable service monitors.
+    # This requires the prometheus CRDs to be available (see https://github.com/prometheus-operator/prometheus-operator/blob/master/example/prometheus-operator-crd/monitoring.coreos.com_servicemonitors.yaml)
+    enabled: true
 
 operator:
   replicas: 1
