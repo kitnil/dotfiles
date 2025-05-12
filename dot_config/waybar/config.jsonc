@@ -154,7 +154,7 @@
 		"days":       "<span color='#ffffff'><b>{}</b></span>",
 		"weeks":      "<span color='#d3d3d3'><b>W{}</b></span>",
 		"weekdays":   "<span color='#d3d3d3'><b>{}</b></span>",
-		"today":      "<span color='#ff6699'><b><u>{}</u></b></span>"
+		"today":      "<span color='#90ee90'><b><u>{}</u></b></span>"
 	    }
 	},
     },
