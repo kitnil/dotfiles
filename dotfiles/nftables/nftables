@@ -21,6 +21,7 @@ table ip filter {
 		ct state related,established counter packets 0 bytes 0 accept
 		ip saddr 192.168.25.1 tcp sport 1080 counter packets 0 bytes 0 accept
 		ip saddr 192.168.25.1 udp sport 1195 counter packets 0 bytes 0 accept
+		ip saddr 78.108.82.44 udp sport 1195 counter packets 0 bytes 0 accept
 		ip saddr 192.168.0.0/24 counter packets 0 bytes 0 accept
 		ip saddr 10.0.0.0/8 counter packets 0 bytes 0 accept
 		ip saddr 192.168.25.0/24 tcp dport 16400 counter packets 0 bytes 0 drop
@@ -34,6 +35,7 @@ table ip filter {
 		ip saddr 192.168.25.1 udp dport 58458 counter packets 0 bytes 0 accept
 		ip saddr 192.168.25.1 tcp dport 58458 counter packets 0 bytes 0 accept
 		meta l4proto icmp ip saddr 192.168.25.0/24 counter packets 0 bytes 0 accept
+		meta l4proto icmp ip saddr 78.108.82.44/32 counter packets 0 bytes 0 accept
 	}
 
 	chain FORWARD {
