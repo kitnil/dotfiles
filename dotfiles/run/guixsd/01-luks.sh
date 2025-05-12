@@ -8,6 +8,8 @@ sudo swapon /dev/lvm2/swap
 
 sudo -i bash -c 'lvchange -ay /dev/lvm1/win10; lvchange -ay /dev/lvm2/ntfsgames'
 
+sudo modprobe drbd9
+
 echo sudo -i /gnu/store/l2dw3lfb2qxjp6bgrn431fxa428rgs1f-dnsmasq-2.90/sbin/dnsmasq --no-daemon --local-service --interface=enp34s0 --ipset=/play.google.com/tor --ipset=/youtube.com/googlevideo.com/byedpi --server=8.8.8.8 --no-resolv --bind-interfaces --except-interface=lo --except-interface=br154.br154 --except-interface=br0
 
 sudo ip route add 192.168.25.11 via 192.168.25.1 # znc
@@ -25,5 +27,3 @@ sudo ipset add tor 172.67.182.196
 sudo ipset add tor 104.21.32.39
 
 sudo mv /run/setuid-programs/mount.nfs /run/setuid-programs/mount.nfs.1
-
-sudo modprobe drbd9
