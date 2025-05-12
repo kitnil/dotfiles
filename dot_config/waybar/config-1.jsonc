@@ -1,5 +1,5 @@
 // -*- mode: jsonc -*-
 {
     "include": ["/home/oleg/.config/waybar/config.jsonc"],
-    "output": ["HDMI-A-1"],
+    "output": ["HDMI-A-1"]
 }
