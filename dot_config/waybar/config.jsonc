@@ -163,7 +163,7 @@
         "on-click": "alacritty --command ssh -t 192.168.0.192 htop"
     },
     "memory": {
-        "format": "{}%  "
+        "format": "{percentage}%      {swapPercentage}% Swap"
     },
     "temperature": {
         // "thermal-zone": 2,
