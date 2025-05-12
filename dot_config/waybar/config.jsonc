@@ -31,6 +31,7 @@
         "cpu",
         "memory",
         "temperature",
+        "disk#/",
         "backlight",
         "keyboard-state",
         "sway/language",
@@ -251,6 +252,11 @@
             "default": ["", "", ""]
         },
         "on-click": "pavucontrol"
+    },
+    "disk#/": {
+	"interval": 30,
+        "path": "/",
+	"format": "{percentage_used}%  {path}",
     },
     "custom/media": {
         "format": "{icon} {text}",
