@@ -79,7 +79,7 @@
         "return-type": "json",
         "interval": 2,
         "tooltip": true,
-        "format": " {text}"
+        "format": "{text}  "
     },
     "wlr/taskbar": {
         "format": "{icon}",
@@ -90,7 +90,8 @@
         "on-click-middle": "close"
     },
     "sway/language": {
-        "on-click": "swaymsg input type:keyboard xkb_switch_layout next"
+        "on-click": "swaymsg input type:keyboard xkb_switch_layout next",
+        "format": "{short}  "
     },
     "mpd": {
         "format": "{stateIcon} {consumeIcon}{randomIcon}{repeatIcon}{singleIcon}{artist} - {album} - {title} ({elapsedTime:%M:%S}/{totalTime:%M:%S}) ⸨{songPosition}|{queueLength}⸩ {volume}% ",
@@ -156,19 +157,19 @@
 	},
     },
     "cpu": {
-        "format": "{usage}% ",
+        "format": "{usage}%  ",
         "tooltip": false,
         "on-click": "alacritty --command ssh -t 192.168.0.192 htop"
     },
     "memory": {
-        "format": "{}% "
+        "format": "{}%  "
     },
     "temperature": {
         // "thermal-zone": 2,
         "hwmon-path": "/sys/class/hwmon/hwmon1/temp1_input",
         "critical-threshold": 80,
         "format-critical": "{temperatureC}°C {icon}",
-        "format": "{temperatureC}°C {icon}",
+        "format": "{temperatureC} °C {icon}",
         "format-icons": ["", "", ""]
     },
     "backlight": {
@@ -207,35 +208,35 @@
     },
     "network#eth0": {
         // "interface": "wlp2*", // (Optional) To force the use of this interface
-        "format-wifi": "{essid} ({signalStrength}%) ",
-        "format-ethernet": "{ipaddr}/{cidr} ",
-        "tooltip-format": "{ifname} via {gwaddr} ",
-        "format-linked": "{ifname} (No IP) ",
-        "format-disconnected": "Disconnected ⚠",
+        "format-wifi": "{essid} ({signalStrength}%)  ",
+        "format-ethernet": "{ipaddr}/{cidr}  ",
+        "tooltip-format": "{ifname} via {gwaddr}  ",
+        "format-linked": "{ifname} (No IP)  ",
+        "format-disconnected": "DOWN  ⚠",
         "format-alt": "{ifname}: {ipaddr}/{cidr}"
     },
     "network#tapvpn": {
         "interface": "tapvpn",
-        "format-wifi": "{essid} ({signalStrength}%) ",
-        "format-ethernet": "{ipaddr}/{cidr} ",
+        "format-wifi": "{essid} ({signalStrength}%)  ",
+        "format-ethernet": "{ipaddr}/{cidr}  ",
         "tooltip-format": "OpenVPN work",
-        "format-linked": "{ifname} (No IP) ",
-        "format-disconnected": "Disconnected ",
+        "format-linked": "{ifname} (No IP)  ",
+        "format-disconnected": "DOWN  ",
         "format-alt": "{ifname}: {ipaddr}/{cidr}"
     },
     "network#tapvpn1": {
         "interface": "tapvpn1",
-        "format-wifi": "{essid} ({signalStrength}%) ",
-        "format-ethernet": "{ipaddr}/{cidr} ",
+        "format-wifi": "{essid} ({signalStrength}%)  ",
+        "format-ethernet": "{ipaddr}/{cidr}  ",
         "tooltip-format": "OpenVPN home",
-        "format-linked": "{ifname} (No IP) ",
-        "format-disconnected": "Disconnected ",
+        "format-linked": "{ifname} (No IP)  ",
+        "format-disconnected": "DOWN  ",
         "format-alt": "{ifname}: {ipaddr}/{cidr}"
     },
     "pulseaudio": {
         // "scroll-step": 1, // %, can be a float
-        "format": "{volume}% {icon} {format_source}",
-        "format-bluetooth": "{volume}% {icon} {format_source}",
+        "format": "{volume}%  {icon} {format_source}",
+        "format-bluetooth": "{volume}%  {icon} {format_source}",
         "format-bluetooth-muted": " {icon} {format_source}",
         "format-muted": " {format_source}",
         "format-source": "{volume}% ",
