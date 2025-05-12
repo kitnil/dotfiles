@@ -1,1 +1,1 @@
-[qBittorrent Dashboard | Grafana Labs](https://grafana.com/grafana/dashboards/15116-qbittorrent-dashboard/)
+Downloaded from <https://raw.githubusercontent.com/martabal/qbittorrent-exporter/refs/heads/main/grafana/dashboard.json>
