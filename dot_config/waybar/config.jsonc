@@ -29,8 +29,8 @@
         "network#tapvpn1",
         "power-profiles-daemon",
         "cpu",
-        "memory",
         "temperature",
+        "memory",
         "disk#/",
         "backlight",
         "keyboard-state",
@@ -171,7 +171,7 @@
         "hwmon-path": "/sys/class/hwmon/hwmon1/temp1_input",
         "critical-threshold": 80,
         "format-critical": "{temperatureC}°C {icon}",
-        "format": "{temperatureC} °C {icon}",
+        "format": "{temperatureC} °C",
         "format-icons": ["", "", ""]
     },
     "backlight": {
