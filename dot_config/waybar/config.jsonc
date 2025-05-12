@@ -80,7 +80,8 @@
         "return-type": "json",
         "interval": 2,
         "tooltip": true,
-        "format": "{text}  "
+        "format": "{text}  ",
+        "on-click": "alacritty --command /home/oleg/.local/share/chezmoi/dot_local/bin/executable_llm-watch-primary"
     },
     "wlr/taskbar": {
         "format": "{icon}",
