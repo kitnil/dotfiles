@@ -4,6 +4,7 @@ metadata:
   name: cilium
   namespace: kube-system
 spec:
+  suspend: true
   valuesFrom:
   - kind: ConfigMap
     name: cilium-values
