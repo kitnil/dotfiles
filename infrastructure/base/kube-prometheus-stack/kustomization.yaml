@@ -26,7 +26,7 @@ configMapGenerator:
   - hubble-dashboard.json=grafana/dashboards/hubble/hubble-dashboard.json
 - name: kube-prometheus-stack-grafana-dashboards-qbittorrent
   files:
-  - qbittorrent-drbd.json=grafana/dashboards/qbittorrent/qbittorrent-dashboard_rev4.json
+  - qbittorrent-drbd.json=grafana/dashboards/qbittorrent/dashboard.json
 - name: kube-prometheus-stack-grafana-dashboards-node-exporter
   files:
   - node-exporter-full.json=grafana/dashboards/node-exporter/node-exporter-full.json
