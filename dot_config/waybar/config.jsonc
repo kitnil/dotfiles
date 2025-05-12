@@ -78,7 +78,8 @@
         "exec": "/home/oleg/.local/share/chezmoi/dot_local/bin/executable_lm-studio-loaded-models.sh",
         "return-type": "json",
         "interval": 2,
-        "tooltip": true
+        "tooltip": true,
+        "format": " {text}"
     },
     "wlr/taskbar": {
         "format": "{icon}",
@@ -219,7 +220,7 @@
         "format-ethernet": "{ipaddr}/{cidr} ",
         "tooltip-format": "OpenVPN work",
         "format-linked": "{ifname} (No IP) ",
-        "format-disconnected": "DOWN work ⚠",
+        "format-disconnected": "Disconnected ",
         "format-alt": "{ifname}: {ipaddr}/{cidr}"
     },
     "network#tapvpn1": {
@@ -228,7 +229,7 @@
         "format-ethernet": "{ipaddr}/{cidr} ",
         "tooltip-format": "OpenVPN home",
         "format-linked": "{ifname} (No IP) ",
-        "format-disconnected": "DOWN home ⚠",
+        "format-disconnected": "Disconnected ",
         "format-alt": "{ifname}: {ipaddr}/{cidr}"
     },
     "pulseaudio": {
