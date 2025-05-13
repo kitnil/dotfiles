@@ -11,6 +11,7 @@ spec:
   schedule: "0 0 * * *"
   jobTemplate:
     spec:
+      activeDeadlineSeconds: 82800 # 23 hours
       backoffLimit: 0
       template:
         spec:
@@ -28,10 +29,22 @@ spec:
             - --net
             - --pid
             - --no-fork
+            - --setuid=1000
+            - --setgid=998
             - /bin/sh
             - -l
             - -c
-            - exec sudo --user oleg --login mbsync "$MBSYNC_IMAP_ACCOUNT"
+            - |
+              set -o nounset -o errexit -o pipefail -o xtrace
+              # This lists keys along with their keygrip. Then check if the
+              # keygrip exists in the agent cache:
+              #     gpg --with-keygrip -k
+              # If it appears with a 1, it's unlocked.
+              until [[ $(gpg-connect-agent 'keyinfo --list' /bye | awk '/2172063C653BABEFB3FF105A46DE07269E42DE0B/ { print $7 }') == 1 ]]
+              then
+                  echo "Waiting gpg unlocked."
+              fi
+              mbsync "$MBSYNC_IMAP_ACCOUNT"
             image: docker-registry.wugi.info/library/util-linux-with-udev
             name: mbsync
             resources:
