@@ -1,0 +1,56 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: runc
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      automountServiceAccountToken: false
+      containers:
+      - image: harbor.home.wugi.info/library/runc:c72aa8bb
+        name: runc
+        command:
+        - /bin/bash
+        - -c
+        - |
+          set -o nounset -o errexit -o pipefail -o xtrace
+
+          mount -o remount,rw /sys
+
+          umount /sys/fs/cgroup
+          mount -t cgroup2 -o rw,relatime,nsdelegate,memory_recursiveprot cgroup2 /sys/fs/cgroup
+
+          exec runc run --bundle "$RUNC_BUNDLE" "$RUNC_CONTAINER_ID"
+        securityContext:
+          privileged: true
+        volumeMounts:
+        - mountPath: /run/runc
+          name: run-runc
+      tolerations:
+      - key: edge.cluster.local/not-schedulable
+        operator: Equal
+        effect: NoSchedule
+      - effect: NoExecute
+        key: node.kubernetes.io/not-ready
+        operator: Exists
+      - effect: NoExecute
+        key: node.kubernetes.io/unreachable
+        operator: Exists
+      - effect: NoSchedule
+        key: node.kubernetes.io/disk-pressure
+        operator: Exists
+      - effect: NoSchedule
+        key: node.kubernetes.io/memory-pressure
+        operator: Exists
+      - effect: NoSchedule
+        key: node.kubernetes.io/pid-pressure
+        operator: Exists
+      - effect: NoSchedule
+        key: node.kubernetes.io/unschedulable
+        operator: Exists
+      volumes:
+      - name: run-runc
+        emptyDir:
+          medium: Memory
+          sizeLimit: 128M

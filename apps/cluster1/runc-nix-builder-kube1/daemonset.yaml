@@ -1,0 +1,36 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: runc
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: runc-kube1-nix-builder
+      app.kubernetes.io/part-of: nix
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: runc-kube1-nix-builder
+        app.kubernetes.io/part-of: nix
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: kube1
+      containers:
+      - name: runc
+        env:
+        - name: RUNC_BUNDLE
+          value: /srv/runc/nix-builder
+        - name: RUNC_CONTAINER_ID
+          value: nix-builder
+        ports:
+        - containerPort: 22
+          name: ssh
+          protocol: TCP
+        volumeMounts:
+        - mountPath: /srv/runc/nix-builder
+          name: runc-nix-builder
+      volumes:
+      - name: runc-nix-builder
+        hostPath:
+          path: /srv/runc/nix-builder
+          type: Directory

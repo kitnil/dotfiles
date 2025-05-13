@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: DaemonSet
+metadata:
+  name: runc
+spec:
+  template:
+    spec:
+      containers:
+      - name: runc
+        volumeMounts:
+        - mountPath: /home/oleg/.local/share/chezmoi
+          name: dotfiles
+        - mountPath: /home/oleg/src
+          name: src
+        - mountPath: /srv
+          name: srv
+      volumes:
+      - name: dotfiles
+        hostPath:
+          path: /home/oleg/.local/share/chezmoi
+          type: Directory
+      - name: src
+        hostPath:
+          path: /home/oleg/src
+          type: Directory
+      - name: srv
+        hostPath:
+          path: /srv
+          type: Directory
