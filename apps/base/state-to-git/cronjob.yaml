@@ -31,9 +31,9 @@ spec:
               kubectl --namespace=workstation exec --container=guix --stdin=true pod/workstation-kube1 -- /bin/sh -le <<'EOL'
               set -o nounset -o errexit -o pipefail -o xtrace
               cd "${HOME}/src/gitlab.intr/monitoring/state" || exit 1
-              echo "Waiting to gitlab.intr:80 be available."
               until nc -z gitlab.intr 80
               do
+                  echo "Waiting to gitlab.intr:80 be available."
                   sleep 60
               done
               git pull --rebase origin master
