@@ -17,6 +17,7 @@ spec:
             values:
             - kube3
   automountServiceAccountToken: false
+  hostNetwork: true
   containers:
   - image: harbor.home.wugi.info/library/guix-image-workstation:0ab3d9b5
     imagePullPolicy: IfNotPresent
