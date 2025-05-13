@@ -689,8 +689,8 @@ location / {
                             (iptables
                              (string-join
                               '("-I" "INPUT"
-                                "-s" "192.168.154.0/24"
-                                "-d" "192.168.154.0/24"
+                                "-s" "192.168.0.0/24"
+                                "-d" "192.168.0.0/24"
                                 "-j" "ACCEPT")))
 
                             ;; Accept egress from Kubernetes network,
