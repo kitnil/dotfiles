@@ -21,14 +21,22 @@ spec:
           - name: state-to-git
             image: docker-registry.wugi.info/library/util-linux-with-udev
             command:
+            - nsenter
+            - --target="1"
+            - --mount
+            - --uts
+            - --ipc
+            - --net
+            - --pid
+            - --no-fork
+            - --setuid=1000
+            - --setgid=998
             - /bin/sh
             - -l
             - -c
             - |
-              nsenter --target "1" --mount --uts --ipc --net --pid --no-fork \
-              /run/setuid-programs/sudo --user oleg --login bash <<'EOF'
               set -o nounset -o errexit -o pipefail -o xtrace
-              kubectl --namespace=workstation exec --container=guix --stdin=true pod/workstation-kube1 -- /bin/sh -le <<'EOL'
+              kubectl --namespace=workstation exec --container=guix --stdin=true pod/workstation-kube1 -- /run/setuid-programs/sudo --user oleg --login /bin/sh -le <<'EOF'
               set -o nounset -o errexit -o pipefail -o xtrace
               cd "${HOME}/src/gitlab.intr/monitoring/state" || exit 1
               until nc -z gitlab.intr 80
@@ -37,7 +45,6 @@ spec:
                   sleep 60
               done
               git pull --rebase origin master
-              EOL
               EOF
             resources:
               limits:
