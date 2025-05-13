@@ -22,9 +22,9 @@ spec:
         - name: TARGET_FILE
           value: /app/portscanip.nmap
         - name: SCAN_FREQUENCY
-          value: 36000
+          value: "36000"
         - name: EXPORTER_PORT
-          value: 9808
+          value: "9808"
         ports:
         - containerPort: 9808
           name: http
