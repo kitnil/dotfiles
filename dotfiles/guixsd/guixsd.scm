@@ -1000,7 +1000,7 @@ location / {
                               (list "-t" "nat"
                                     "-A" "PREROUTING"
                                     "-p" "tcp"
-                                    (format #f "--destination ~a" %private-ip-address)
+                                    #$(format #f "--destination ~a" %private-ip-address)
                                     "--dport" "6443"
                                     "-j" "DNAT"
                                     "--to-destination" "192.168.154.1:6443")))
@@ -1012,7 +1012,7 @@ location / {
                                     "-d" "192.168.154.1"
                                     "--dport" "6443"
                                     "-j" "SNAT"
-                                    "--to-source" %private-ip-address)))
+                                    "--to-source" #$%private-ip-address)))
 
                             ;; VLAN 154 provides:
                             ;; - Network via Whonix
