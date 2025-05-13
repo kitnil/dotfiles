@@ -28,8 +28,6 @@ spec:
             - --net
             - --pid
             - --no-fork
-            - --setuid=1000
-            - --setgid=998
             - /bin/sh
             - -l
             - -c
