@@ -15,4 +15,5 @@
                                    (if (boundp #'projectile-project-root)
                                        (list (concat (projectile-project-root)
                                                      "dotfiles/guixsd/modules"))
-                                     '()))))))))
+                                     '())))
+               (git-auto-commit-mode))))))
