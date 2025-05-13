@@ -25,12 +25,14 @@ spec:
         - --net
         - --pid
         - --no-fork
+        - --setuid=1000
+        - --setgid=998
         - /bin/sh
         - -l
         - -c
         - |
           set -o errexit -o pipefail
-          sudo --login "${RESTIC_SCRIPT}"
+          "${RESTIC_SCRIPT}"
         image: docker-registry.wugi.info/library/util-linux-with-udev
         name: restic
         resources:
