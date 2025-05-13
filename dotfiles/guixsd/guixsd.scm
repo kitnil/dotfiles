@@ -711,7 +711,7 @@ location / {
                             (iptables
                              (string-join
                               '("-A" "INPUT"
-                                "-i" "enp34s0"
+                                "-i" "eth0"
                                 "-d" "192.168.0.144/32"
                                 "-j" "DROP")))
                             ;; Accept HTTP traffic.
@@ -726,7 +726,7 @@ location / {
                             (iptables
                              (string-join
                               '("-I" "INPUT"
-                                "-i" "enp34s0"
+                                "-i" "eth0"
                                 "-d" "192.168.0.144/32"
                                 "-p" "tcp"
                                 "--dport" "80"
@@ -743,7 +743,7 @@ location / {
                             (iptables
                              (string-join
                               '("-I" "INPUT"
-                                "-i" "enp34s0"
+                                "-i" "eth0"
                                 "-d" "192.168.0.144/32"
                                 "-p" "tcp"
                                 "--dport" "443"
@@ -760,7 +760,7 @@ location / {
                             (iptables
                              (string-join
                               '("-I" "INPUT"
-                                "-i" "enp34s0"
+                                "-i" "eth0"
                                 "-d" "192.168.0.144/32"
                                 "-p" "tcp"
                                 "--dport" "22"
@@ -777,7 +777,7 @@ location / {
                             (iptables
                              (string-join
                               '("-I" "INPUT"
-                                "-i" "enp34s0"
+                                "-i" "eth0"
                                 "-d" "192.168.0.144/32"
                                 "-p" "tcp"
                                 "--dport" "3001"
@@ -793,7 +793,7 @@ location / {
                             (iptables
                              (string-join
                               '("-I" "INPUT"
-                                "-i" "enp34s0"
+                                "-i" "eth0"
                                 "-d" "192.168.0.144/32"
                                 "-p" "udp"
                                 "--dport" "3001"
@@ -809,7 +809,7 @@ location / {
                             (iptables
                              (string-join
                               '("-I" "INPUT"
-                                "-i" "enp34s0"
+                                "-i" "eth0"
                                 "-d" "192.168.0.144/32"
                                 "-p" "tcp"
                                 "--dport" "3002"
@@ -826,7 +826,7 @@ location / {
                             (iptables
                              (string-join
                               '("-I" "INPUT"
-                                "-i" "enp34s0"
+                                "-i" "eth0"
                                 "-d" "192.168.0.144/32"
                                 "-p" "udp"
                                 "--dport" "6250"
@@ -843,7 +843,7 @@ location / {
                             (iptables
                              (string-join
                               '("-I" "INPUT"
-                                "-i" "enp34s0"
+                                "-i" "eth0"
                                 "-d" "192.168.0.144/32"
                                 "-p" "tcp"
                                 "--dport" "5900"
@@ -859,7 +859,7 @@ location / {
                             (iptables
                              (string-join
                               '("-I" "INPUT"
-                                "-i" "enp34s0"
+                                "-i" "eth0"
                                 "-d" "192.168.0.144/32"
                                 "-p" "tcp"
                                 "--dport" "5901"
@@ -875,7 +875,7 @@ location / {
                             (iptables
                              (string-join
                               '("-I" "INPUT"
-                                "-i" "enp34s0"
+                                "-i" "eth0"
                                 "-d" "192.168.0.144/32"
                                 "-p" "tcp"
                                 "--dport" "5902"
@@ -892,7 +892,7 @@ location / {
                             (iptables
                              (string-join
                               '("-I" "INPUT"
-                                "-i" "enp34s0"
+                                "-i" "eth0"
                                 "-d" "192.168.0.144/32"
                                 "-p" "udp"
                                 "--dport" "1195"
@@ -909,7 +909,7 @@ location / {
                             (iptables
                              (string-join
                               '("-I" "INPUT"
-                                "-i" "enp34s0"
+                                "-i" "eth0"
                                 "-d" "192.168.0.144/32"
                                 "-p" "tcp"
                                 "--dport" "4000"
@@ -1046,7 +1046,7 @@ location / {
                              (string-join
                               (list "-t" "nat"
                                     "-A" "POSTROUTING"
-                                    "-o" "enp34s0"
+                                    "-o" "eth0"
                                     "-j" "MASQUERADE")))
                             (iptables
                              (string-join
@@ -1059,7 +1059,7 @@ location / {
                             (iptables
                              (string-join
                               (list "-A" "FORWARD"
-                                    "-i" "enp34s0"
+                                    "-i" "eth0"
                                     "-o" "br154.154"
                                     "-m" "state"
                                     "--state" "RELATED,ESTABLISHED"
@@ -1074,7 +1074,7 @@ location / {
                              (string-join
                               (list "-A" "FORWARD"
                                     "-i" "br154.154"
-                                    "-o" "enp34s0"
+                                    "-o" "eth0"
                                     "-j" "ACCEPT")))
                             ;; NAT 192.168.0.0/24 -> 192.168.154.0/24
                             (iptables
@@ -1095,7 +1095,7 @@ location / {
                              (string-join
                               (list "-A" "FORWARD"
                                     "-i" "br154.154"
-                                    "-o" "enp34s0"
+                                    "-o" "eth0"
                                     "-m" "state"
                                     "--state" "RELATED,ESTABLISHED"
                                     "-j" "ACCEPT")))
@@ -1108,7 +1108,7 @@ location / {
                             (iptables
                              (string-join
                               (list "-A" "FORWARD"
-                                    "-i" "enp34s0"
+                                    "-i" "eth0"
                                     "-o" "br154.154"
                                     "-j" "ACCEPT")))
                             ;; OpenVPN NAT
@@ -1141,7 +1141,7 @@ location / {
                             (iptables
                              (string-join
                               (list "-A" "FORWARD"
-                                    "-i" "enp34s0"
+                                    "-i" "eth0"
                                     "-o" "tapvpn"
                                     "-j" "ACCEPT")))
                             (iptables
@@ -1156,7 +1156,7 @@ location / {
                              (string-join
                               (list "-A" "FORWARD"
                                     "-i" "tapvpn"
-                                    "-o" "enp34s0"
+                                    "-o" "eth0"
                                     "-m" "state"
                                     "--state" "RELATED,ESTABLISHED"
                                     "-j" "ACCEPT")))
@@ -1187,8 +1187,8 @@ location / {
                             (iptables
                              (string-join
                               (list "-A" "FORWARD"
-                                    "-i" "enp34s0"
-                                    "-o" "enp34s0"
+                                    "-i" "eth0"
+                                    "-o" "eth0"
                                     "-j" "ACCEPT")))
 
                             ;; VLAN 155 provides:
