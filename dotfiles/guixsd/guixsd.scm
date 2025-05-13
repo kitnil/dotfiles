@@ -2260,7 +2260,7 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                          ;;                            ("cluster_addr" . "http://vault1:8211")
                          ;;                            ("api_addr" . "http://vault1:8210"))))))))))))
 
-                         %firewall
+                         %firewall-service
 
                          ;; Bring eth0 up and pass it to the networking bridge.
                          (service static-networking-service-type
