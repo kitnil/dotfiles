@@ -7,7 +7,7 @@ bittorrent cdrom chicken chromium ci cmake code commencement compression
 compton configuration-management cpio cran curl databases dictionaries
 diffoscope disk dns elf entr file freeipmi games gettext gcc gdb ghostscript
 gimp gl glib gnome gnu-doc gnupg gnuzilla golang graphics graphviz gstreamer
-gtk guile guile-xyz haskell haskell-apps haskell-xyz imagemagick image-viewers
+gtk guile guile-xyz hardware haskell haskell-apps haskell-xyz imagemagick image-viewers
 inkscape irc kde kodi libreoffice license linux lisp logging lsof lxde lxqt m4
 mail man maths messaging minetest mp3 monitoring ncdu ncurses networking node
 package-management parallel password-utils patchutils pdf perl perl-web php
@@ -166,6 +166,8 @@ virtualization vnc vim vpn w3m web web-browsers wget wm xdisorg xfce xml xorg)
                strace tcpdump multitail wireshark
 
                hdparm
+
+               ddcutil
 
                console-setup ;set font size in TTY
                rlwrap ; read-line wrapper
