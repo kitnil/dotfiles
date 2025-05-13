@@ -347,10 +347,10 @@ container_registry=harbor.home.wugi.info
 .ONESHELL:
 guix-image-workstation: dotfiles/guixsd/modules/home/config/openssh.scm.gpg
 	set -o nounset -o errexit -o pipefail -o xtrace
-	commit_8=$$(git rev-parse HEAD | cut -c -8)
+	IMG=$(container_registry)/library/$@:$$(git rev-parse --abbrev-ref HEAD)-$$(git rev-parse HEAD | cut -c -8)-$$(date +%s)
 	container=$$(GUILE_LOAD_PATH="dotfiles/guixsd/modules:${GUILE_LOAD_PATH}" GUIX_PACKAGE_PATH="dotfiles/guixsd/modules:${GUIX_PACKAGE_PATH}" guix time-machine --channels=dotfiles/channels-current-guix-image-workstation.scm -- system image --substitute-urls='https://bordeaux.guix.gnu.org https://substitutes.nonguix.org http://ci.guix.trop.in' --max-layers=100 -t docker --network ~/.local/share/chezmoi/dotfiles/guixsd/guix-image-workstation.scm)
-	skopeo copy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
-	echo $(container_registry)/library/$@:$$commit_8
+	skopeo copy docker-archive\:$$container docker://$(IMG)
+	echo $(IMG)
 
 container_registry=harbor.home.wugi.info
 .ONESHELL:
