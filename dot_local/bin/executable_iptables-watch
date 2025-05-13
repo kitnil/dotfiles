@@ -1,0 +1,20 @@
+#!/usr/bin/env -S viddy -d -n0.3 sudo /bin/bash
+
+set -o nounset -o errexit -o pipefail -o xtrace
+
+echo iptables: filter nat mangle
+
+for binary in iptables ip6tables
+do
+    echo -e "\n\n\n\n\n\n\n\n"
+    echo $ "$binary" --list --line-numbers -n -v
+    "$binary" --list --line-numbers -n -v
+
+    echo -e "\n\n\n\n\n\n\n\n"
+    echo $ "$binary" -t nat --list --line-numbers -n -v
+    "$binary" -t nat --list --line-numbers -n -v
+
+    echo -e "\n\n\n\n\n\n\n\n"
+    echo $ "$binary" -t mangle --list --line-numbers -n -v
+    "$binary" -t mangle --list --line-numbers -n -v
+done
