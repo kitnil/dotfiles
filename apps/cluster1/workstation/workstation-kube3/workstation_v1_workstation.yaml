@@ -95,6 +95,8 @@ spec:
           readOnly: true
         - mountPath: /home/oleg/Downloads
           name: home-oleg-downloads
+        - mountPath: /etc/openvpn
+          name: etc-openvpn
 
       - name: nixos
         image: harbor.home.wugi.info/library/nixos-systemd-taskexecutor
@@ -279,3 +281,7 @@ spec:
           path: /home/oleg/Downloads
           type: Directory
         name: home-oleg-downloads
+      - hostPath:
+          path: /etc/openvpn
+          type: File
+        name: etc-openvpn

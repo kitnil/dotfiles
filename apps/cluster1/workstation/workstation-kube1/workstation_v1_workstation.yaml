@@ -102,6 +102,8 @@ spec:
           name: home-oleg-dot-kube-config
         - mountPath: /home/oleg/.config/wayvnc
           name: home-oleg-config-wayvnc
+        - mountPath: /etc/openvpn
+          name: etc-openvpn
 
       - name: nixos
         image: harbor.home.wugi.info/library/nixos-systemd-taskexecutor
@@ -266,3 +268,7 @@ spec:
           path: /home/oleg/.kube/config
           type: File
         name: home-oleg-dot-kube-config
+      - hostPath:
+          path: /etc/openvpn
+          type: File
+        name: etc-openvpn
