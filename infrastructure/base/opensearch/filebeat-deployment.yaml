@@ -42,9 +42,6 @@ spec:
         - mountPath: /home/oleg/.local/share/qBittorrent/logs
           name: filebeat-claim3
           readOnly: true
-        - mountPath: /var/lib/docker/containers
-          name: filebeat-claim4
-          readOnly: true
         - mountPath: /etc/localtime
           name: filebeat-claim5
           readOnly: true
@@ -77,12 +74,7 @@ spec:
           path: /home/oleg/.local/share/qBittorrent/logs
           readOnly: true
           type: Directory
-      - name: filebeat-claim4
-        hostPath:
-          path: /var/lib/docker/containers
-          readOnly: true
-          type: Directory
-      - name: filebeat-claim5
+     - name: filebeat-claim5
         hostPath:
           path: /etc/localtime
           readOnly: true
