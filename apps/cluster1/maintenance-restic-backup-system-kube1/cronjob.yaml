@@ -3,7 +3,7 @@ kind: CronJob
 metadata:
   name: restic
 spec:
-  schedule: "10 22 * * *" # every day
+  schedule: "15 22 * * *" # every day
   jobTemplate:
     spec:
       template:
