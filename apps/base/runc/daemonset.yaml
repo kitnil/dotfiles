@@ -5,7 +5,6 @@ metadata:
 spec:
   template:
     spec:
-      restartPolicy: Never
       automountServiceAccountToken: false
       containers:
       - image: harbor.home.wugi.info/library/runc:c72aa8bb
