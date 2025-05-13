@@ -16,7 +16,7 @@
                 "desktop.scm"
                 "icons.scm"
                 "dotfiles.scm"
-	        "emacs.scm"
+                "emacs.scm"
                 "deprecated.scm"
                 "telegram.scm"
                 "majordomo.scm"
