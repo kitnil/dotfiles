@@ -181,6 +181,7 @@ allow-preset-passphrase"))))
                  home-nano-service
                  home-inputrc-service
                  home-tmux-service
+                 tmuxifier-service
                  home-top-service
                  home-nix-service
                  home-alacritty-service
