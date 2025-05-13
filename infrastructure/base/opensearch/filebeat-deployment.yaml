@@ -74,7 +74,7 @@ spec:
           path: /home/oleg/.local/share/qBittorrent/logs
           readOnly: true
           type: Directory
-     - name: filebeat-claim5
+      - name: filebeat-claim5
         hostPath:
           path: /etc/localtime
           readOnly: true
