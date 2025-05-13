@@ -22,5 +22,6 @@
                 "majordomo.scm"
                 "notebook-packages.scm"
                 "guile.scm"
-                "obs.scm"))
+                "obs.scm"
+                "ai.scm"))
          (list manifest-wm)))
