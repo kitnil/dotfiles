@@ -1,0 +1,29 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nmap-prometheus-exporter
+spec:
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: nmap-prometheus-exporter
+      app.kubernetes.io/part-of: nmap-prometheus-exporter
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: nmap-prometheus-exporter
+        app.kubernetes.io/part-of: nmap-prometheus-exporter
+    spec:
+      containers:
+      - image: harbor.home.wugi.info/library/nmap-prometheus-exporter
+        name: nmap-prometheus-exporter
+        ports:
+        - containerPort: 9808
+          name: http
+          protocol: TCP
+        resources:
+          limits:
+            cpu: 2000m
+            memory: 1024Mi
+          requests:
+            cpu: 10m
+            memory: 512Mi
