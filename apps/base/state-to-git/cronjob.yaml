@@ -3,7 +3,6 @@ kind: CronJob
 metadata:
   name: state-to-git
 spec:
-  suspend: true
   schedule: "0 0 * * *" # every day
   jobTemplate:
     spec:
