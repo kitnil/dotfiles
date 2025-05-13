@@ -212,7 +212,7 @@ main()
     install_idea
     install_pycharm
     install_vscode
-    install_vscode_extensions
+    # install_vscode_extensions
     install_kubebuilder
     install_kind
     install_dlv
