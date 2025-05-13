@@ -31,7 +31,6 @@ spec:
             - --no-fork
             - --setuid=1000
             - --setgid=998
-            - --wd=/home/oleg
             - /run/current-system/profile/bin/bash
             - -l
             - -c
