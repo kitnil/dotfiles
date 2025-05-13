@@ -1,5 +1,8 @@
-(use-modules (guix profiles)
-             (nongnu packages ai))
+(define-module (ai)
+  #:use-module (guix channels)
+  #:use-module (guix inferior)
+  #:use-module (guix profiles)
+  #:use-module (guix store))
 
 (define channels
   (list (channel
