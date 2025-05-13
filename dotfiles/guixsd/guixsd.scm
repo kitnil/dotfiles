@@ -919,7 +919,7 @@ location / {
                              (string-join
                               (list "-I" "INPUT"
                                     "-p" "tcp"
-                                    "--destination" (string-append %private-ip-address "/32")
+                                    "--destination" #$(string-append %private-ip-address "/32")
                                     "--dport" "9091"
                                     "-j" "ACCEPT")))
                             ;; Accept DNS traffic, which is required for
@@ -928,14 +928,14 @@ location / {
                              (string-join
                               (list "-I" "INPUT"
                                     "-p" "tcp"
-                                    "--destination" (string-append %private-ip-address "/32")
+                                    "--destination" #$(string-append %private-ip-address "/32")
                                     "--dport" "53"
                                     "-j" "ACCEPT")))
                             (iptables
                              (string-join
                               (list "-I" "INPUT"
                                     "-p" "udp"
-                                    "--destination" (string-append %private-ip-address "/32")
+                                    "--destination" #$(string-append %private-ip-address "/32")
                                     "--dport" "53"
                                     "-j" "ACCEPT")))
                             ;; Accept traffic which originated from current computer.
