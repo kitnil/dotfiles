@@ -161,7 +161,32 @@
  '(org-agenda-files '("~/org/inbox.org" "~/org/todo.org" "~/org/web.org"))
  '(python-shell-interpreter "python3" t)
  '(safe-local-variable-values
-   '((geiser-repl-per-project-p . t)
+   '((eval progn
+           (when
+               (boundp #'projectile-project-root)
+             (setenv "GUIX_PACKAGE_PATH"
+                     (concat
+                      (projectile-project-root)
+                      "dotfiles/guixsd/modules")))
+           (setq-local geiser-guile-load-path
+                       (append
+                        (list
+                         (concat
+                          (getenv "HOME")
+                          "/src/cgit.duckdns.org/guix/guix-wigust/guix"))
+                        (list
+                         (concat
+                          (getenv "HOME")
+                          "/src/gitlab.com/nonguix/nonguix"))
+                        (if
+                            (boundp #'projectile-project-root)
+                            (list
+                             (concat
+                              (projectile-project-root)
+                              "dotfiles/guixsd/modules"))
+                          'nil)))
+           (git-auto-commit-mode))
+     (geiser-repl-per-project-p . t)
      (eval progn
            (setq-local create-lockfiles nil))
      (eval let
@@ -434,5 +459,7 @@
  '(vterm-color-black ((t (:background "gray15" :foreground "gray15"))))
  '(vterm-color-blue ((t (:background "steel blue" :foreground "steel blue"))))
  '(whitespace-indentation ((t (:foreground "firebrick"))))
- '(whitespace-space ((t (:foreground "lightgray")))))
+ '(whitespace-space ((t (:foreground "lightgray"))))
+ '(whitespace-space-before-tab ((t (:foreground "firebrick"))))
+ '(whitespace-tab ((t (:foreground "lightgray")))))
 
