@@ -16,6 +16,9 @@ spec:
       containers:
       - image: harbor.home.wugi.info/library/nmap-prometheus-exporter
         name: nmap-prometheus-exporter
+        command:
+        - /bin/sleep
+        - infinity
         env:
         - name: TARGET_SOURCE
           value: file
