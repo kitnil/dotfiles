@@ -36,6 +36,7 @@ spec:
             - -c
             - |
               set -o nounset -o errexit -o pipefail -o xtrace
+              /usr/bin/env
               # This lists keys along with their keygrip. Then check if the
               # keygrip exists in the agent cache:
               #     gpg --with-keygrip -k
