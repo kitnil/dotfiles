@@ -191,15 +191,6 @@ install_dlv()
 }
 
 packages+=(
-    docker
-)
-install_docker()
-{
-    systemctl enable docker.service
-    gpasswd -a oleg docker
-}
-
-packages+=(
     lua51-luautf8
 )
 install_pob()
@@ -216,7 +207,6 @@ main()
     base_system
     locale-gen
 
-    install_docker
     install_socialstream
     install_aura
     install_idea
