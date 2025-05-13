@@ -24,7 +24,6 @@ spec:
           set -o nounset -o errexit -o pipefail -o xtrace
           kubectl --namespace=nix exec --stdin=true pod/runc-kube1-nix-builder -- runc exec -e TERM=screen-256color -e USER=oleg -u 1000:998 --additional-gids 131 nix-builder /usr/bin/env bash -l <<'EOL'
           cd "${HOME}/.local/share/chezmoi" || exit 1
-          make nix-update-inputs
           nix-shell -p skopeo --command 'make container-systemd-taskexecutor'
           EOL
           EOF
