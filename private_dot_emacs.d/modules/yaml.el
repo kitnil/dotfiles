@@ -10,3 +10,6 @@
          ("xn--e1arhcfp.xn--90a1af.xn--p1ai" . ,(string-to-symbols "хостер.спб.рф")))))
 
 (add-hook 'yaml-mode-hook 'wi-yaml-prettify-symbols)
+(add-hook 'yaml-mode-hook
+          '(lambda ()
+             (set (make-local-variable 'yas-indent-line) 'nil)))
