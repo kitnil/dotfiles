@@ -16,6 +16,15 @@ spec:
       containers:
       - image: harbor.home.wugi.info/library/nmap-prometheus-exporter
         name: nmap-prometheus-exporter
+        env:
+        - name: TARGET_SOURCE
+          value: file
+        - name: TARGET_FILE
+          value: /app/portscanip.nmap
+        - name: SCAN_FREQUENCY
+          value: 36000
+        - name: EXPORTER_PORT
+          value: 9808
         ports:
         - containerPort: 9808
           name: http
@@ -27,3 +36,12 @@ spec:
           requests:
             cpu: 10m
             memory: 512Mi
+        volumeMounts:
+        - mountPath: /app/portscanip.nmap
+          subPath: portscanip.nmap
+          readOnly: true
+          name: configuration
+      volumes:
+      - name: configuration
+        configMap:
+          name: nmap-prometheus-exporter-configuration

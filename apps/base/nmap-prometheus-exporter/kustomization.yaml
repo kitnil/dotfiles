@@ -4,3 +4,7 @@ namespace: nmap-prometheus-exporter
 resources:
 - namespace.yaml
 - deployment.yaml
+configMapGenerator:
+- name: nmap-prometheus-exporter-configuration
+  files:
+  - portscanip.nmap=rootfs/app/portscanip.nmap
