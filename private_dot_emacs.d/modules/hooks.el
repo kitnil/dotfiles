@@ -35,4 +35,6 @@
   (when (functionp 'guix-devel-mode)
     (add-hooks '(((scheme-mode-hook) . guix-devel-mode))))
   (when (functionp 'whitespace-mode)
-    (add-hooks '(((prog-mode-hook) . whitespace-mode))))))
+    (add-hooks '(((prog-mode-hook
+                   yaml-mode-hook)
+                  . whitespace-mode))))))
