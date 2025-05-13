@@ -6,6 +6,7 @@ spec:
   schedule: "0 0 * * *" # every day
   jobTemplate:
     spec:
+      activeDeadlineSeconds: 82800 # 23 hours
       backoffLimit: 0
       template:
         metadata:
