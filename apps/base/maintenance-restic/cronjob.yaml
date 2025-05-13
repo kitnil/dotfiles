@@ -1,0 +1,49 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: restic
+spec:
+  schedule: "0 0 * * *" # every day
+  jobTemplate:
+    spec:
+      activeDeadlineSeconds: 82800 # 23 hours
+      backoffLimit: 0
+      template:
+        metadata:
+          labels:
+            app.kubernetes.io/name: restic
+            app.kubernetes.io/part-of: restic
+        spec:
+          hostNetwork: true
+          hostPID: true
+          restartPolicy: Never
+          containers:
+          - command:
+            - nsenter
+            - --target
+            - "1"
+            - --mount
+            - --uts
+            - --ipc
+            - --net
+            - --pid
+            - --no-fork
+            - --setuid=1000
+            - --setgid=998
+            - /bin/sh
+            - -l
+            - -c
+            - |
+              set -o errexit -o pipefail
+              "${RESTIC_SCRIPT}"
+            image: docker-registry.wugi.info/library/util-linux-with-udev
+            name: restic
+            resources:
+              limits:
+                cpu: 14000m
+                memory: 4096Mi
+              requests:
+                cpu: 1000m
+                memory: 512Mi
+            securityContext:
+              privileged: true

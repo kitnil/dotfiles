@@ -1,0 +1,15 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: restic
+spec:
+  schedule: "10 22 * * *" # every day
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: restic
+            env:
+            - name: RESTIC_SCRIPT
+              value: restic-backup-system

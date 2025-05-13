@@ -5,4 +5,4 @@ nameSuffix: -backup-system-kube1
 resources:
 - ../../base/maintenance-restic
 patchesStrategicMerge:
-- job.yaml
+- cronjob.yaml
