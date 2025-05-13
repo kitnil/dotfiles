@@ -101,6 +101,7 @@
                                  (list `(".config/mako/config"
                                          ,(local-file (string-append %project-directory "/dot_config/mako/config")))))
                  (service home-sway-service-type)
+                 (service home-wayvnc-service-type)
                  (service home-scream-service-type
                           (scream-configuration
                            (port 16400)))
