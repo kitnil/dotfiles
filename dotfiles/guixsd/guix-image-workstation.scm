@@ -57,9 +57,9 @@ program.")))
                         (comment "Oleg Pykhalov")
                         (group "users")
                         (supplementary-groups '("wheel" "audio" "video"))
-                        (password (crypt "38fSACkLsVOfNj0A" "NmhJoj")))
+                        (password (crypt "oleg" "$6$abc")))
                        (user-account (inherit %root-account)
-                                     (password (crypt "lhiweCFUQNDlW3Ij" "uUxBgD"))))
+                                     (password (crypt "root" "$6$abc"))))
                  %base-user-accounts))
 
   ;; Because the system will run in a Docker container, we may omit many
