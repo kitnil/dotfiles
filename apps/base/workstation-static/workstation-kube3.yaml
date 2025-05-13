@@ -1,22 +1,11 @@
 apiVersion: v1
 kind: Pod
 metadata:
-  creationTimestamp: "2025-05-12T19:46:09Z"
   labels:
     app.kubernetes.io/created-by: workstation-kube3
     app.kubernetes.io/name: workstation-kube3
-    controller-revision-hash: workstation-kube3-912550712
   name: workstation-kube3
   namespace: workstation
-  ownerReferences:
-  - apiVersion: workstation.wugi.info/v1
-    blockOwnerDeletion: true
-    controller: true
-    kind: Workstation
-    name: workstation-kube3
-    uid: 1675161e-6c33-4d48-b80e-32263d1c373b
-  resourceVersion: "912564416"
-  uid: 3319ddbd-35fc-41c2-84a1-40da0d48bba3
 spec:
   affinity:
     nodeAffinity:
@@ -645,91 +634,3 @@ spec:
   - emptyDir:
       sizeLimit: 32G
     name: archlinux-var-lib-docker
-status:
-  conditions:
-  - lastProbeTime: null
-    lastTransitionTime: "2025-05-12T19:46:12Z"
-    status: "True"
-    type: Initialized
-  - lastProbeTime: null
-    lastTransitionTime: "2025-05-12T19:56:25Z"
-    status: "True"
-    type: Ready
-  - lastProbeTime: null
-    lastTransitionTime: "2025-05-12T19:56:25Z"
-    status: "True"
-    type: ContainersReady
-  - lastProbeTime: null
-    lastTransitionTime: "2025-05-12T19:46:09Z"
-    status: "True"
-    type: PodScheduled
-  containerStatuses:
-  - containerID: containerd://96b152bd4c430f28f37190dea66330e17ca913f6f3485ee9ba6240b904f507dd
-    image: harbor.home.wugi.info/library/archlinux-systemd:4309f8ae
-    imageID: sha256:47fe744aaaf9c85f33a1495bb346f671ead3de8f67b3d2c797e0dc9f4590c874
-    lastState: {}
-    name: archlinux
-    ready: true
-    restartCount: 0
-    started: true
-    state:
-      running:
-        startedAt: "2025-05-12T19:56:24Z"
-  - containerID: containerd://cdcbacb5198ce17375cad798cbd3a9289d5b0daa1c0881d8dc8b3960fbe3b8c9
-    image: harbor.home.wugi.info/library/guix-image-workstation:0ab3d9b5
-    imageID: harbor.home.wugi.info/library/guix-image-workstation@sha256:ae4b68643d7951de82924dd32f26b48f83625806bd5de1ad8ff038e7e7169ac9
-    lastState: {}
-    name: guix
-    ready: true
-    restartCount: 0
-    started: true
-    state:
-      running:
-        startedAt: "2025-05-12T19:54:33Z"
-  - containerID: containerd://9b9db7ddfa74928cbdc26297ed6d58a6319a8171ce462d680b7c41b38d0aef5f
-    image: harbor.home.wugi.info/library/nixos-systemd-taskexecutor:fc622b88
-    imageID: harbor.home.wugi.info/library/nixos-systemd-taskexecutor@sha256:fb75ed94ce6c3c83e8cfddd543106df1c1e433640101d4828db541dd1897f039
-    lastState: {}
-    name: nixos
-    ready: true
-    restartCount: 0
-    started: true
-    state:
-      running:
-        startedAt: "2025-05-12T19:56:24Z"
-  hostIP: 192.168.0.192
-  initContainerStatuses:
-  - containerID: containerd://0e11b9944aa57032ac8cb35024b858c2c9d15ea9750e90a412670aa77558ba98
-    image: docker.io/library/busybox:latest
-    imageID: docker.io/library/busybox@sha256:37f7b378a29ceb4c551b1b5582e27747b855bbfaa73fa11914fe0df028dc581f
-    lastState: {}
-    name: volume-mount-hack
-    ready: true
-    restartCount: 0
-    state:
-      terminated:
-        containerID: containerd://0e11b9944aa57032ac8cb35024b858c2c9d15ea9750e90a412670aa77558ba98
-        exitCode: 0
-        finishedAt: "2025-05-12T19:46:10Z"
-        reason: Completed
-        startedAt: "2025-05-12T19:46:10Z"
-  - containerID: containerd://d30ef67136097b8edd4431032a014642061f5516a0ed7dc4c7a91407897a3f4f
-    image: docker.io/library/busybox:latest
-    imageID: docker.io/library/busybox@sha256:37f7b378a29ceb4c551b1b5582e27747b855bbfaa73fa11914fe0df028dc581f
-    lastState: {}
-    name: clean-gnupg
-    ready: true
-    restartCount: 0
-    state:
-      terminated:
-        containerID: containerd://d30ef67136097b8edd4431032a014642061f5516a0ed7dc4c7a91407897a3f4f
-        exitCode: 0
-        finishedAt: "2025-05-12T19:46:11Z"
-        reason: Completed
-        startedAt: "2025-05-12T19:46:11Z"
-  phase: Running
-  podIP: 10.0.1.235
-  podIPs:
-  - ip: 10.0.1.235
-  qosClass: BestEffort
-  startTime: "2025-05-12T19:46:09Z"
