@@ -380,5 +380,10 @@ workstation-controller:
 dotfiles-update-commit:
 	guix shell guile guile-git guile-gcrypt guile-json yq -- dot_local/bin/executable_dotfiles-update-commit
 
+container_registry=harbor.home.wugi.info
+.ONESHELL:
+archlinux:
+	$(MAKE) -C apps/base/kaniko-archlinux
+
 .PHONY: all
 all: dotfiles/scripts/nix-ssh-known-hosts-to-file.scm
