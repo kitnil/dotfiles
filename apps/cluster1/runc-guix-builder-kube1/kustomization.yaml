@@ -6,4 +6,4 @@ resources:
 - ../runc-kube1
 - service.yaml
 patchesStrategicMerge:
-- daemonset.yaml
+- pod.yaml

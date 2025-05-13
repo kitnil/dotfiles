@@ -4,4 +4,4 @@ nameSuffix: -kube1
 resources:
 - ../../base/runc
 patchesStrategicMerge:
-- daemonset.yaml
+- pod.yaml
