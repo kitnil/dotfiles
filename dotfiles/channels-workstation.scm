@@ -17,7 +17,7 @@
           "ec542755f860e050f2355c0b305cafc386496abf"))
       (channel
         (name 'nonguix)
-        (url "https://cgit.wugi.info/git/nonguix/nonguix")
+        (url "https://cgit.wugi.info/git/guix/nonguix")
         (branch "aichat")
         (commit
           "7c29f2df877a83c5e860d3a98ff96e1b2caeb05c")
