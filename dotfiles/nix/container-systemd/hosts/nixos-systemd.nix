@@ -33,7 +33,7 @@
   # Enable the OpenSSH daemon.
   services.openssh.enable = false;
   services.openssh.settings = {
-    PermitRootLogin = "yes";
+    PermitRootLogin = "prohibit-password";
   };
 
   services.journald.console = "/dev/tty";
