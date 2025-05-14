@@ -52,13 +52,17 @@
                     (workdir
                      (mkdtemp
                       (string-append
-                       home "/.cache/wigust/checkouts/dotfiles.XXXXXXXXXX"))))
+                       home "/.cache/wigust/checkouts/dotfiles.XXXXXXXXXX")))
+                    (git (lambda (args)
+                           (apply system*
+                                  (append (list guix "shell" "git" "--" "git")
+                                          args)))))
                 (chdir workdir)
                 (and
-                 (zero? (system* guix "shell" "git" "--" "git" "init"))
-                 (zero? (system* guix "shell" "git" "--" "git" "remote" "add" "origin" "https://cgit.wugi.info/git/wigust/dotfiles"))
-                 (zero? (system* guix "shell" "git" "--" "git" "fetch" "--depth" (number->string 1) "origin" commit))
-                 (zero? (system* guix "shell" "git" "--" "git" "checkout" commit))
+                 (zero? (git "init"))
+                 (zero? (git "remote" "add" "origin" "https://cgit.wugi.info/git/wigust/dotfiles"))
+                 (zero? (git "fetch" "--depth" (number->string 1) "origin" commit))
+                 (zero? (git "checkout" commit))
                  ;; TODO: Do not copy openssh.scm from other location.
                  (copy-file (string-append home "/.local/share/chezmoi/dotfiles/guixsd/modules/home/config/openssh.scm")
                             "dotfiles/guixsd/modules/home/config/openssh.scm")
