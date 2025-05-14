@@ -7,7 +7,6 @@
 ;;;; Released under the GNU GPLv3 or any later version.
 
 (define-module (guile-nsenter)
-  #:use-module (ice-9 format)
   #:use-module (srfi srfi-37)
   #:export (main))
 
@@ -41,23 +40,20 @@
 
 (define (runc-code)
   '(begin
-     (use-modules (ice-9 format)
-                  (ice-9 rdelim))
-     (format #t "hostname: ~a~%" (with-input-from-file "/etc/hostname" read-string))
      (and=> (getenv "HOME")
-         (lambda (home)
-           (let ((commit (getenv "GIT_COMMIT"))
-                 (workdir (mkdtemp (string-append home "/.cache/wigust/checkouts/dotfiles.XXXXXXXXXX"))))
-             (chdir workdir)
-             (with-output-to-file "README.md"
-               (lambda ()
-                 (display "Hello from guile-nsenter")
-                 (newline)
-                 (format #t "commit: ~a" commit)))
-             ;; (system* "guix" "shell" "git" "--" "git" "init")
-             ;; (system* "guix" "shell" "git" "--" "git" "fetch" "--depth" (number->string 1) "origin" commit)
-             ;; (system* "guix" "shell" "git" "--" "git" "checkout" commit)
-             )))))
+            (lambda (home)
+              (let ((commit (getenv "GIT_COMMIT"))
+                    (workdir (mkdtemp (string-append home "/.cache/wigust/checkouts/dotfiles.XXXXXXXXXX"))))
+                (chdir workdir)
+                (with-output-to-file "README.md"
+                  (lambda ()
+                    (display "Hello from guile-nsenter")
+                    (newline)
+                    (display (string-append "commit: " commit))))
+                ;; (system* "guix" "shell" "git" "--" "git" "init")
+                ;; (system* "guix" "shell" "git" "--" "git" "fetch" "--depth" (number->string 1) "origin" commit)
+                ;; (system* "guix" "shell" "git" "--" "git" "checkout" commit)
+                )))))
 
 (define (kubectl-program)
   ;; TODO: Do not hardcode Kubernetes namespace.
@@ -70,7 +66,7 @@
               "exec" "--stdin=true" "pod/runc-kube1-guix-builder" "--"
               "runc" "exec"
               "--user" "1000:998"
-              "--env" (getenv "GIT_COMMIT")
+              "--env" (string-append "GIT_COMMIT=" (getenv "GIT_COMMIT"))
               "guix-builder"
               "/run/current-system/profile/bin/guile"
               "-c" ,(with-output-to-string (lambda () (write (runc-code)))))))
@@ -85,7 +81,7 @@
                  (cons op loads))
                %default-options))
   (system* "nsenter"
-           (format #f "--target=~a" (number->string 1))
+           (string-append "--target=" (number->string 1))
            "--mount"
            "--uts"
            "--ipc"
@@ -93,10 +89,10 @@
            "--pid"
            "--no-fork"
            ;; TODO: Do not hardcode uid and gid.
-           (format #f "--setuid=~a" (number->string 1000))
-           (format #f "--setgid=~a" (number->string 998))
+           (string-append "--setuid=" (number->string 1000))
+           (string-append "--setgid=" (number->string 998))
            "/usr/bin/env"
-           (format #f "GIT_COMMIT=" (getenv "GIT_COMMIT"))
+           (string-append "GIT_COMMIT=" (getenv "GIT_COMMIT"))
            "/run/current-system/profile/bin/guile"
            "-c" (with-output-to-string (lambda () (write (kubectl-program))))))
 
