@@ -23,5 +23,6 @@
                 "notebook-packages.scm"
                 "guile.scm"
                 "obs.scm"
-                "ai.scm"))
+                ;; "ai.scm"
+                ))
          (list manifest-wm)))
