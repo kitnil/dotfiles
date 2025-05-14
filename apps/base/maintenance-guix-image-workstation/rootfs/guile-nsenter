@@ -39,9 +39,9 @@
   '())
 
 (define (guile-with-environment expression)
-  `(let ((user (getpw (getuid)))
-         (name (passwd:name user))
-         (shell (passwd:shell user)))
+  `(let* ((user (getpw (getuid)))
+          (name (passwd:name user))
+          (shell (passwd:shell user)))
      (execl shell shell "--login" "-c"
             (with-output-to-string
               (lambda ()
