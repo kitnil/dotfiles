@@ -63,7 +63,7 @@
     (manifest->packages manifest)))
 
 (home-environment
- (packages (packages-from-manifest "/home/oleg/.local/share/chezmoi/dotfiles/manifests/pc0.scm"))
+ (packages (packages-from-manifest "../../manifests/pc0.scm"))
  (services (list (service home-openssh-service-type
                           %home-openssh-configuration)
                  (service home-dbus-service-type)
