@@ -42,13 +42,14 @@
   '(begin
      (and=> (getenv "HOME")
             (lambda (home)
-              (let ((commit (getenv "GIT_COMMIT"))
+              (let ((guix "/run/current-system/profile/bin/guix")
+                    (commit (getenv "GIT_COMMIT"))
                     (workdir (mkdtemp (string-append home "/.cache/wigust/checkouts/dotfiles.XXXXXXXXXX"))))
                 (chdir workdir)
-                (system* "guix" "shell" "git" "--" "git" "init")
-                (system* "guix" "shell" "git" "--" "git" "fetch" "--depth" (number->string 1) "origin" commit)
-                (system* "guix" "shell" "git" "--" "git" "checkout" commit)
-                (system* "guix" "shell" "git" "make" "skopeo" "--" "guix-image-workstation"))))))
+                (system* guix "shell" "git" "--" "git" "init")
+                (system* guix "shell" "git" "--" "git" "fetch" "--depth" (number->string 1) "origin" commit)
+                (system* guix "shell" "git" "--" "git" "checkout" commit)
+                (system* guix "shell" "git" "make" "skopeo" "--" "guix-image-workstation"))))))
 
 (define (kubectl-program)
   ;; TODO: Do not hardcode Kubernetes namespace.
