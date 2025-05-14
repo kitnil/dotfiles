@@ -61,7 +61,7 @@
                  (zero? (git "fetch" "--depth" (number->string 1) "origin" commit))
                  (zero? (git "checkout" commit))
                  ;; TODO: Do not copy openssh.scm from other location.
-                 (copy-file (string-append home "/.local/share/chezmoi/dotfiles/guixsd/modules/home/config/openssh.scm")
+                 (copy-file (string-append home "/openssh.scm")
                             "dotfiles/guixsd/modules/home/config/openssh.scm")
                  (zero? (system* "guix" "shell" "git" "make" "skopeo" "--"
                                  "make" "guix-image-workstation"))))))))
