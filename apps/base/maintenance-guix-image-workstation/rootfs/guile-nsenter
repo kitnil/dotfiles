@@ -44,7 +44,9 @@
          (shell (passwd:shell user)))
      (execl shell shell "--login" "-c"
             "/run/current-system/profile/bin/guile"
-            "-c" ,(with-output-to-string (lambda () (write expression))))))
+            "-c" ,(with-output-to-string
+                    (lambda ()
+                      (write expression))))))
 
 (define (runc-code)
   '(begin
@@ -77,10 +79,7 @@
               "-c" ,(with-output-to-string
                       (lambda ()
                         (write
-                         (guile-with-environment
-                          (with-output-to-string
-                            (lambda ()
-                              (write (runc-code)))))))))))
+                         (guile-with-environment (runc-code))))))))
 
 (define (main args)
   (define opts
