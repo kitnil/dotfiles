@@ -18,7 +18,7 @@ spec:
       - command:
         - /bin/guile
         - /usr/local/bin/guile-script.scm
-        image: docker-registry.wugi.info/library/util-linux-with-udev:44cd2b5c
+        image: harbor.home.wugi.info/library/util-linux-with-udev:44cd2b5c
         name: nsenter
         resources:
           limits:
