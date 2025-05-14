@@ -46,7 +46,7 @@
 program.")))
 
 (define my-channels
-  (include "../channels-workstation.scm"))
+  (include (string-append %source-dir "/channels-workstation.scm")))
 
 (operating-system
   (host-name "workstation")
