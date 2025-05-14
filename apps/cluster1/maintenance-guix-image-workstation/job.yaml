@@ -4,9 +4,11 @@ metadata:
   name: guix-image-workstation
 spec:
   template:
-    metadata:
-      annotations:
-        guix-default-channel-commit: "a78cf246"
     spec:
       nodeSelector:
         kubernetes.io/hostname: kube1
+      containers:
+      - name: nsenter
+        env:
+        - name: GIT_COMMIT
+          value: 59dceb8ffaa9d6bdee8fe94d6255013fac424227
