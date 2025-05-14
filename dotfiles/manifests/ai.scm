@@ -34,7 +34,6 @@
     (cached-channel-instance store
                              channels
                              #:authenticate? #f
-                             #:cache-directory (%inferior-cache-directory)
                              #:ttl (* 3600 24 30))))
 
 (define inferior
