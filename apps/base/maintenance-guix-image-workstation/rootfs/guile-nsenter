@@ -67,7 +67,7 @@
                (lambda (op loads)
                  (cons op loads))
                %default-options))
-  (system* "sudo" "nsenter"
+  (system* "nsenter"
            (format #f "--target=~a" (number->string 1))
            "--mount"
            "--uts"
