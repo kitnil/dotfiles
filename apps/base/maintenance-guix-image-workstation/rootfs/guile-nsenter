@@ -49,7 +49,10 @@
             (lambda (home)
               (let ((guix "/run/current-system/profile/bin/guix")
                     (commit (getenv "GIT_COMMIT"))
-                    (workdir (mkdtemp (string-append home "/.cache/wigust/checkouts/dotfiles.XXXXXXXXXX"))))
+                    (workdir
+                     (mkdtemp
+                      (string-append
+                       home "/.cache/wigust/checkouts/dotfiles.XXXXXXXXXX"))))
                 (chdir workdir)
                 (and
                  (zero? (system* guix "shell" "git" "--" "git" "init"))
