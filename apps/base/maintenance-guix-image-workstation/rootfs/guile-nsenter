@@ -16,15 +16,6 @@
 ;;;
 ;;; Code:
 
-;; (define (bash-code)
-;;   "\
-;; set -o nounset -o errexit -o pipefail -o xtrace
-;; mkdir -p \"${HOME}/.cache/wigust\"
-;; TMPDIR=\"${HOME}/.cache/wigust/checkouts\" mktemp -d -t \"dotfiles.XXXXXXXXXX\"
-;; cd \"$TMPDIR\" || exit 1
-;; guix shell git -- git clone --depth 1 https://cgit.wugi.info/git/wigust/dotfiles \"$TMPDIR\"
-;; guix shell git gnupg skopeo --development guix -- make guix-image-workstation")
-
 (define %options
   (let ((display-and-exit-proc (lambda (msg)
                                  (lambda (opt name arg loads)
