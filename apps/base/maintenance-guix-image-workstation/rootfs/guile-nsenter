@@ -64,7 +64,8 @@
                  ;; TODO: Do not copy openssh.scm from other location.
                  (copy-file (string-append home "/.local/share/chezmoi/dotfiles/guixsd/modules/home/config/openssh.scm")
                             "dotfiles/guixsd/modules/home/config/openssh.scm")
-                 (zero? (system* guix "shell" "git" "make" "skopeo" "--" "make" "guix-image-workstation"))))))))
+                 (zero? (system* %guix "shell" "git" "make" "skopeo" "--"
+                                 "make" "guix-image-workstation"))))))))
 
 (define (kubectl-program)
   ;; TODO: Do not hardcode Kubernetes namespace.
