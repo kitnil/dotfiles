@@ -45,15 +45,10 @@
               (let ((commit (getenv "GIT_COMMIT"))
                     (workdir (mkdtemp (string-append home "/.cache/wigust/checkouts/dotfiles.XXXXXXXXXX"))))
                 (chdir workdir)
-                (with-output-to-file "README.md"
-                  (lambda ()
-                    (display "Hello from guile-nsenter")
-                    (newline)
-                    (display (string-append "commit: " commit))))
-                ;; (system* "guix" "shell" "git" "--" "git" "init")
-                ;; (system* "guix" "shell" "git" "--" "git" "fetch" "--depth" (number->string 1) "origin" commit)
-                ;; (system* "guix" "shell" "git" "--" "git" "checkout" commit)
-                )))))
+                (system* "guix" "shell" "git" "--" "git" "init")
+                (system* "guix" "shell" "git" "--" "git" "fetch" "--depth" (number->string 1) "origin" commit)
+                (system* "guix" "shell" "git" "--" "git" "checkout" commit)
+                (system* "guix" "shell" "git" "make" "skopeo" "--" "guix-image-workstation"))))))
 
 (define (kubectl-program)
   ;; TODO: Do not hardcode Kubernetes namespace.
