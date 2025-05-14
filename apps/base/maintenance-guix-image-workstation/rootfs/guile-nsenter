@@ -21,10 +21,10 @@
                                  (lambda (opt name arg loads)
                                    (display msg) (quit)))))
     (list (option '(#\v "version") #f #f
-                  (display-and-exit-proc "executable_guile-nsenter version 0.0.1\n"))
+                  (display-and-exit-proc "guile-nsenter version 0.0.1\n"))
           (option '(#\h "help") #f #f
                   (display-and-exit-proc
-                   "Usage: executable_guile-nsenter ...")))))
+                   "Usage: guile-nsenter ...")))))
 
 (define %default-options
   '())
@@ -111,4 +111,4 @@
            "/run/current-system/profile/bin/guile" "--no-auto-compile"
            "-c" (with-output-to-string (lambda () (write (kubectl-program))))))
 
-;;; executable_guile-nsenter ends here
+;;; guile-nsenter ends here
