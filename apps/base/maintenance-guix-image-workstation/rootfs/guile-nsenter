@@ -47,6 +47,7 @@
                     (workdir (mkdtemp (string-append home "/.cache/wigust/checkouts/dotfiles.XXXXXXXXXX"))))
                 (chdir workdir)
                 (system* guix "shell" "git" "--" "git" "init")
+                (system* guix "shell" "git" "--" "git" "remote" "add" "origin" "https://cgit.wugi.info/git/wigust/dotfiles")
                 (system* guix "shell" "git" "--" "git" "fetch" "--depth" (number->string 1) "origin" commit)
                 (system* guix "shell" "git" "--" "git" "checkout" commit)
                 (system* guix "shell" "git" "make" "skopeo" "--" "guix-image-workstation"))))))
