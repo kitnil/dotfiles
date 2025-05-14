@@ -2,7 +2,8 @@
   #:use-module (guix channels)
   #:use-module (guix inferior)
   #:use-module (guix profiles)
-  #:use-module (guix store))
+  #:use-module (guix store)
+  #:use-module (srfi srfi-1))
 
 (define channels
   (list (channel
