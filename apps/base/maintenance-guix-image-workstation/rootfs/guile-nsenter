@@ -97,7 +97,7 @@
            (format #f "--setgid=~a" (number->string 998))
            "/usr/bin/env"
            (format #f "GIT_COMMIT=" (getenv "GIT_COMMIT"))
-           "guile"
+           "/run/current-system/profile/bin/guile"
            "-c" (with-output-to-string (lambda () (write (kubectl-program))))))
 
 ;;; executable_guile-nsenter ends here
