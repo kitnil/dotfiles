@@ -129,8 +129,7 @@ program.")))
                                            (append
                                             (map (lambda (file-name)
                                                    (local-file
-                                                    (string-append "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/"
-                                                                   file-name)))
+                                                    (string-append "etc/substitutes/" file-name)))
                                                  '("bordeaux.guix.gnu.org.pub"
                                                    "guix.wugi.info.pub"
                                                    "mirror.brielmaier.net.pub"
