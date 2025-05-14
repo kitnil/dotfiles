@@ -74,7 +74,13 @@
               "--env" (string-append "GIT_COMMIT=" (getenv "GIT_COMMIT"))
               "guix-builder"
               "/run/current-system/profile/bin/guile"
-              "-c" ,(guile-with-environment (with-output-to-string (lambda () (write (runc-code))))))))
+              "-c" ,(with-output-to-string
+                      (lambda ()
+                        (write
+                         (guile-with-environment
+                          (with-output-to-string
+                            (lambda ()
+                              (write (runc-code)))))))))))
 
 (define (main args)
   (define opts
