@@ -45,12 +45,12 @@
 
 (define (runc-code)
   '(begin
+     (define %guix "/run/current-system/profile/bin/guix")
      (define (git . args)
-       (apply system* (append (list guix "shell" "git" "--" "git") args)))
+       (apply system* (append (list %guix "shell" "git" "--" "git") args)))
      (and=> (getenv "HOME")
             (lambda (home)
-              (let ((guix "/run/current-system/profile/bin/guix")
-                    (commit (getenv "GIT_COMMIT"))
+              (let ((commit (getenv "GIT_COMMIT"))
                     (workdir
                      (mkdtemp
                       (string-append
