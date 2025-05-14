@@ -4,8 +4,6 @@
   #:use-module (guix inferior)
   #:use-module (guix profiles)
   #:use-module (guix store)
-  #:use-module (nongnu packages video)
-  #:use-module (wigust packages video)
   #:use-module (srfi srfi-1))
 
 (define channels
