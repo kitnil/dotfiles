@@ -43,11 +43,21 @@
   '(begin
      (use-modules (ice-9 format)
                   (ice-9 rdelim))
-     (if (file-exists? "/usr/bin/env")
-         (system* "/usr/bin/env")
-         (begin
-           (format #t "hostname: ~a~%" (with-input-from-file "/etc/hostname" read-string))
-           (format #t "HOME: ~a~%" (getenv "HOME"))))))
+     (format #t "hostname: ~a~%" (with-input-from-file "/etc/hostname" read-string))
+     (and=> (getenv "HOME")
+         (lambda (home)
+           (let ((commit (getenv "GIT_COMMIT"))
+                 (workdir (mkdtemp (string-append home "/.cache/wigust/checkouts/dotfiles.XXXXXXXXXX"))))
+             (chdir workdir)
+             (with-output-to-file "README.md"
+               (lambda ()
+                 (display "Hello from guile-nsenter")
+                 (newline)
+                 (format #t "commit: ~a" commit)))
+             ;; (system* "guix" "shell" "git" "--" "git" "init")
+             ;; (system* "guix" "shell" "git" "--" "git" "fetch" "--depth" (number->string 1) "origin" commit)
+             ;; (system* "guix" "shell" "git" "--" "git" "checkout" commit)
+             )))))
 
 (define (kubectl-program)
   ;; TODO: Do not hardcode Kubernetes namespace.
@@ -58,7 +68,10 @@
      (setenv "KUBECONFIG" "/home/oleg/.kube/config")
      (system* "/home/oleg/.guix-profile/bin/kubectl" "--namespace=guix"
               "exec" "--stdin=true" "pod/runc-kube1-guix-builder" "--"
-              "runc" "exec" "-u" "1000:998" "guix-builder"
+              "runc" "exec"
+              "--user" "1000:998"
+              "--env" (getenv "GIT_COMMIT")
+              "guix-builder"
               "/run/current-system/profile/bin/guile"
               "-c" ,(with-output-to-string (lambda () (write (runc-code)))))))
 
@@ -82,7 +95,9 @@
            ;; TODO: Do not hardcode uid and gid.
            (format #f "--setuid=~a" (number->string 1000))
            (format #f "--setgid=~a" (number->string 998))
-           "/run/current-system/profile/bin/guile"
+           "/usr/bin/env"
+           (format #f "GIT_COMMIT=" (getenv "GIT_COMMIT"))
+           "guile"
            "-c" (with-output-to-string (lambda () (write (kubectl-program))))))
 
 ;;; executable_guile-nsenter ends here
