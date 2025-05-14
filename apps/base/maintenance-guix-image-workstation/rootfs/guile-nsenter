@@ -38,6 +38,14 @@
 (define %default-options
   '())
 
+(define (guile-with-environment expression)
+  `(let ((user (getpw (getuid)))
+         (name (passwd:name user))
+         (shell (passwd:shell user)))
+     (execl shell shell "--login" "-c"
+            "/run/current-system/profile/bin/guile"
+            "-c" ,(with-output-to-string (lambda () (write expression))))))
+
 (define (runc-code)
   '(begin
      (and=> (getenv "HOME")
@@ -46,9 +54,6 @@
                     (commit (getenv "GIT_COMMIT"))
                     (workdir (mkdtemp (string-append home "/.cache/wigust/checkouts/dotfiles.XXXXXXXXXX"))))
                 (chdir workdir)
-                (setenv "GIT_SSL_CAINFO" "/etc/ssl/certs/ca-certificates.crt")
-                (setenv "SSL_CERT_DIR" "/run/current-system/profile/etc/ssl/certs")
-                (setenv "SSL_CERT_FILE" "/etc/ssl/certs/ca-certificates.crt")
                 (and (zero? (system* guix "shell" "git" "--" "git" "init"))
                      (zero? (system* guix "shell" "git" "--" "git" "remote" "add" "origin" "https://cgit.wugi.info/git/wigust/dotfiles"))
                      (zero? (system* guix "shell" "git" "--" "git" "fetch" "--depth" (number->string 1) "origin" commit))
@@ -69,7 +74,7 @@
               "--env" (string-append "GIT_COMMIT=" (getenv "GIT_COMMIT"))
               "guix-builder"
               "/run/current-system/profile/bin/guile"
-              "-c" ,(with-output-to-string (lambda () (write (runc-code)))))))
+              "-c" ,(guile-with-environment (with-output-to-string (lambda () (write (runc-code))))))))
 
 (define (main args)
   (define opts
