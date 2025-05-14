@@ -31,8 +31,11 @@
 (use-modules (nongnu packages chrome)
              (nongnu packages mozilla))
 
+(define %source-dir
+  (dirname (current-filename)))
+
 (define oleg-home
-  (load "home/workstation.scm"))
+  (load (string-append %source-dir "/home/workstation.scm")))
 
 (define container-mingetty-service-type
   (service-type (name 'mingetty)
@@ -129,7 +132,7 @@ program.")))
                                            (append
                                             (map (lambda (file-name)
                                                    (local-file
-                                                    (string-append "etc/substitutes/" file-name)))
+                                                    (string-append %source-dir "/etc/substitutes/" file-name)))
                                                  '("bordeaux.guix.gnu.org.pub"
                                                    "guix.wugi.info.pub"
                                                    "mirror.brielmaier.net.pub"
