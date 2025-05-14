@@ -16,27 +16,9 @@ spec:
       restartPolicy: Never
       containers:
       - command:
-        - /bin/sh
-        - -c
-        - |
-          nsenter --target "1" --mount --uts --ipc --net --pid --no-fork \
-          /run/setuid-programs/sudo --user oleg --login bash <<END_SUDO
-          kubectl --namespace=guix exec --stdin=true pod/runc-kube1-guix-builder -- runc exec -u 1000:998 guix-builder /bin/sh -l <<END_KUBECTL
-          guix shell bash coreutils git gnupg make skopeo --development guix -- bash -l <<END_GUIX_SHELL
-          set -o nounset -o errexit -o pipefail -o xtrace
-          mkdir -p \${HOME}/.cache/wigust/checkouts
-          dotfiles=\$(TMPDIR=\${HOME}/.cache/wigust/checkouts mktemp -d -t "dotfiles.XXXXXXXXXX")
-          if test -z \$dotfiles
-          then
-              exit 1
-          fi
-          cd \$TMPDIR || exit 1
-          pwd
-          ls
-          END_GUIX_SHELL
-          END_KUBECTL
-          END_SUDO
-        image: docker-registry.wugi.info/library/util-linux-with-udev
+        - /bin/guile
+        - /usr/local/bin/guile-script.scm
+        image: docker-registry.wugi.info/library/util-linux-with-udev:44cd2b5c
         name: nsenter
         resources:
           limits:
@@ -47,3 +29,10 @@ spec:
             memory: 8192Mi
         securityContext:
           privileged: true
+        volumeMounts:
+        - mountPath: /usr/local/bin
+          name: script
+      volumes:
+      - name: script
+        configMap:
+          name: script
