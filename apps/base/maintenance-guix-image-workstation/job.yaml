@@ -31,11 +31,8 @@ spec:
               exit 1
           fi
           cd \$TMPDIR || exit 1
-          git init
-          git remote add origin https://cgit.wugi.info/git/wigust/dotfiles
-          git fetch --depth 1 origin $GIT_COMMIT
-          git checkout $GIT_COMMIT
-          make guix-image-workstation
+          pwd
+          ls
           END_GUIX_SHELL
           END_KUBECTL
           END_SUDO
