@@ -17,6 +17,7 @@ spec:
       containers:
       - command:
         - /bin/guile
+        - --no-auto-compile
         - /usr/local/bin/guile-script.scm
         image: harbor.home.wugi.info/library/util-linux-with-udev:44cd2b5c
         name: nsenter
