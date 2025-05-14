@@ -32,7 +32,7 @@
              (nongnu packages mozilla))
 
 (define oleg-home
-  (load "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/home/workstation.scm"))
+  (load "home/workstation.scm"))
 
 (define container-mingetty-service-type
   (service-type (name 'mingetty)
@@ -43,7 +43,7 @@
 program.")))
 
 (define my-channels
-  (include "/home/oleg/.local/share/chezmoi/dotfiles/channels-workstation.scm"))
+  (include "../channels-workstation.scm"))
 
 (operating-system
   (host-name "workstation")
