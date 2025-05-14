@@ -22,6 +22,7 @@
               (manifest-add combined
                             (manifest-entries manifest))
               (manifest-add combined
-                            (manifest-entries (load-manifest manifest)))))
+                            (manifest-entries
+                             (pk 'manifest (load-manifest manifest))))))
         (packages->manifest '())
         manifests))
