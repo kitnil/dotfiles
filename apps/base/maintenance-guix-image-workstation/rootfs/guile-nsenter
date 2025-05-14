@@ -2,7 +2,7 @@
 --no-auto-compile -e (guile-nsenter) -s
 !#
 
-;;;; guile-nsenter --- SYNOPSIS
+;;;; guile-nsenter --- Run nsenter
 ;;;; Copyright © 2025 Oleg Pykhalov <go.wigust@gmail.com>
 ;;;; Released under the GNU GPLv3 or any later version.
 
