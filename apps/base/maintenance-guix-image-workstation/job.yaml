@@ -22,11 +22,11 @@ spec:
           nsenter --target "1" --mount --uts --ipc --net --pid --no-fork \
           /run/setuid-programs/sudo --user oleg --login bash <<END_SUDO
           kubectl --namespace=guix exec --stdin=true pod/runc-kube1-guix-builder -- runc exec -u 1000:998 guix-builder /bin/sh -l <<END_KUBECTL
-          guix shell bash git gnupg make skopeo --development guix -- bash -l <<END_GUIX_SHELL
+          guix shell bash coreutils git gnupg make skopeo --development guix -- bash -l <<END_GUIX_SHELL
           set -o nounset -o errexit -o pipefail -o xtrace
           mkdir -p \${HOME}/.cache/wigust/checkouts
-          dotfiles=$(TMPDIR=\${HOME}/.cache/wigust/checkouts mktemp -d -t "dotfiles.XXXXXXXXXX")
-          if [[ -z \$dotfiles ]]
+          dotfiles=\$(TMPDIR=\${HOME}/.cache/wigust/checkouts mktemp -d -t "dotfiles.XXXXXXXXXX")
+          if \[\[ -z \$dotfiles ]]
           then
               exit 1
           fi
