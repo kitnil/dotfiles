@@ -18,6 +18,9 @@ spec:
       - command:
         - /bin/guile
         - --no-auto-compile
+        - -e
+        - (guile-nsenter)
+        - -s
         - /usr/local/bin/guile-script.scm
         image: harbor.home.wugi.info/library/util-linux-with-udev:44cd2b5c
         name: nsenter
