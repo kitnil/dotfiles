@@ -66,7 +66,8 @@
 
 (home-environment
   (packages (packages-from-manifest
-             (string-append %source-dir "/../../manifests/pc0.scm")))
+             (string-append (dirname (dirname %source-dir))
+                            "/manifests/pc0.scm")))
   (services (list (service home-openssh-service-type
                            %home-openssh-configuration)
                   (service home-dbus-service-type)
