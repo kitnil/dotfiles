@@ -49,11 +49,11 @@
                 (setenv "GIT_SSL_CAINFO" "/etc/ssl/certs/ca-certificates.crt")
                 (setenv "SSL_CERT_DIR" "/run/current-system/profile/etc/ssl/certs")
                 (setenv "SSL_CERT_FILE" "/etc/ssl/certs/ca-certificates.crt")
-                (system* guix "shell" "git" "--" "git" "init")
-                (system* guix "shell" "git" "--" "git" "remote" "add" "origin" "https://cgit.wugi.info/git/wigust/dotfiles")
-                (system* guix "shell" "git" "--" "git" "fetch" "--depth" (number->string 1) "origin" commit)
-                (system* guix "shell" "git" "--" "git" "checkout" commit)
-                (system* guix "shell" "git" "make" "skopeo" "--" "make" "guix-image-workstation"))))))
+                (and (zero? (system* guix "shell" "git" "--" "git" "init"))
+                     (zero? (system* guix "shell" "git" "--" "git" "remote" "add" "origin" "https://cgit.wugi.info/git/wigust/dotfiles"))
+                     (zero? (system* guix "shell" "git" "--" "git" "fetch" "--depth" (number->string 1) "origin" commit))
+                     (zero? (system* guix "shell" "git" "--" "git" "checkout" commit))
+                     (zero? (system* guix "shell" "git" "make" "skopeo" "--" "make" "guix-image-workstation"))))))))
 
 (define (kubectl-program)
   ;; TODO: Do not hardcode Kubernetes namespace.
