@@ -20,9 +20,9 @@
         (channel
          (name 'nonguix)
          (url "https://cgit.wugi.info/git/guix/nonguix")
-         (branch "master")
+         (branch "aichat")
          (commit
-          "e899121adbaa13cfcaeae7a5c24921bffa645771")
+          "7c29f2df877a83c5e860d3a98ff96e1b2caeb05c")
          (introduction
           (make-channel-introduction
            "897c1a470da759236cc11798f4e0a5f7d4d59fbc"
