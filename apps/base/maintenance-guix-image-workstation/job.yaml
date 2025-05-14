@@ -25,7 +25,11 @@ spec:
           guix shell git gnupg make skopeo --development guix -- /bin/sh -l <<END_GUIX_SHELL
           set -o nounset -o errexit -o pipefail -o xtrace
           mkdir -p \${HOME}/.cache/wigust/checkouts
-          TMPDIR=\${HOME}/.cache/wigust/checkouts mktemp -d -t "dotfiles.XXXXXXXXXX"
+          dotfiles=$(TMPDIR=\${HOME}/.cache/wigust/checkouts mktemp -d -t "dotfiles.XXXXXXXXXX")
+          if [[ -z \$dotfiles ]]
+          then
+              exit 1
+          fi
           cd \$TMPDIR || exit 1
           git init
           git remote add origin https://cgit.wugi.info/git/wigust/dotfiles
