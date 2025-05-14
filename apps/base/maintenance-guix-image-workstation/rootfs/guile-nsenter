@@ -50,9 +50,10 @@
   ;; TODO: Do not hardcode Kubernetes namespace.
   ;; TODO: Do not hardcode uid and gid.
   ;; TODO: Do not hardcode runc container name.
+  ;; TODO: Use Kubernetes HTTP API without kubectl.
   `(begin
      (setenv "KUBECONFIG" "/home/oleg/.kube/config")
-     (system* "kubectl" "--namespace=guix"
+     (system* "/home/oleg/.guix-profile/bin/kubectl" "--namespace=guix"
               "exec" "--stdin=true" "pod/runc-kube1-guix-builder" "--"
               "runc" "exec" "-u" "1000:998" "guix-builder"
               "/run/current-system/profile/bin/guile"
