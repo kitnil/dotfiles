@@ -45,9 +45,8 @@
 
 (define (runc-code)
   '(begin
-     (define %guix "/run/current-system/profile/bin/guix")
      (define (git . args)
-       (apply system* (append (list %guix "shell" "git" "--" "git") args)))
+       (apply system* (append '("guix" "shell" "git" "--" "git") args)))
      (and=> (getenv "HOME")
             (lambda (home)
               (let ((commit (getenv "GIT_COMMIT"))
@@ -64,7 +63,7 @@
                  ;; TODO: Do not copy openssh.scm from other location.
                  (copy-file (string-append home "/.local/share/chezmoi/dotfiles/guixsd/modules/home/config/openssh.scm")
                             "dotfiles/guixsd/modules/home/config/openssh.scm")
-                 (zero? (system* %guix "shell" "git" "make" "skopeo" "--"
+                 (zero? (system* "guix" "shell" "git" "make" "skopeo" "--"
                                  "make" "guix-image-workstation"))))))))
 
 (define (kubectl-program)
