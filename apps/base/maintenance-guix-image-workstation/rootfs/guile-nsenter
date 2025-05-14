@@ -43,10 +43,11 @@
   '(begin
      (use-modules (ice-9 format)
                   (ice-9 rdelim))
-     (format #t "hostname: ~a~%" (with-input-from-file "/etc/hostname" read-string))
-     (format #t "HOME: ~a~%" (getenv "HOME"))
-     (when (file-exists? "/usr/bin/env")
-       (system* "/usr/bin/env"))))
+     (if (file-exists? "/usr/bin/env")
+         (system* "/usr/bin/env")
+         (begin
+           (format #t "hostname: ~a~%" (with-input-from-file "/etc/hostname" read-string))
+           (format #t "HOME: ~a~%" (getenv "HOME"))))))
 
 (define (kubectl-program)
   ;; TODO: Do not hardcode Kubernetes namespace.
