@@ -352,6 +352,11 @@ guix-image-workstation: dotfiles/guixsd/modules/home/config/openssh.scm.gpg
 	skopeo copy docker-archive\:$$container docker://$$IMG
 	echo $$IMG
 
+.ONESHELL:
+pc0-manifest:
+	set -o nounset -o errexit -o pipefail -o xtrace
+	GUILE_LOAD_PATH="dotfiles/guixsd/modules:${GUILE_LOAD_PATH}" GUIX_PACKAGE_PATH="dotfiles/guixsd/modules:${GUIX_PACKAGE_PATH}" guix time-machine --channels=dotfiles/channels-workstation.scm -- build -m dotfiles/manifests/pc0.scm --substitute-urls='https://bordeaux.guix.gnu.org https://substitutes.nonguix.org http://ci.guix.trop.in'
+
 container_registry=harbor.home.wugi.info
 .ONESHELL:
 guix-image-builder: dotfiles/guixsd/modules/home/config/openssh.scm.gpg
