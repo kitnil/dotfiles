@@ -13,35 +13,32 @@
   #:export (%wm-manifest))
 
 (define (%wm-manifest)
-  (define packages-wm
-    (define terminals
-      (list alacritty))
+  (define terminals
+    (list alacritty))
 
-    (define wm
-      (list sway))
+  (define wm
+    (list sway))
 
-    (define i3
-      (list i3-wm i3status))
+  (define i3
+    (list i3-wm i3status))
 
-    (define sway-utils
-      (list bemenu grim fnott slurp swayidle waybar))
+  (define sway-utils
+    (list bemenu grim fnott slurp swayidle waybar))
 
-    (define clipboard
-      (list wl-clipboard))
+  (define clipboard
+    (list wl-clipboard))
 
-    (define wayland-utils
-      (list wayvnc
-            wl-mirror
-            wtype
-            xdg-desktop-portal
-            xdg-desktop-portal-gtk
-            xdg-desktop-portal-wlr))
+  (define wayland-utils
+    (list wayvnc
+          wl-mirror
+          wtype
+          xdg-desktop-portal
+          xdg-desktop-portal-gtk
+          xdg-desktop-portal-wlr))
 
-    (append clipboard
-            terminals
-            wm
-            sway-utils
-            i3
-            wayland-utils))
-
-  (packages->manifest packages-wm))
+  (packages->manifest (append clipboard
+                              terminals
+                              wm
+                              sway-utils
+                              i3
+                              wayland-utils)))
