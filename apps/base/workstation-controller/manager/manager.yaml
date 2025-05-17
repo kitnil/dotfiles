@@ -21,7 +21,6 @@ spec:
     matchLabels:
       control-plane: controller-manager
       app.kubernetes.io/name: workstation-controller
-  replicas: 1
   template:
     metadata:
       annotations:
