@@ -97,7 +97,7 @@
   wayvnc-configuration make-wayvnc-configuration
   wayvnc-configuration?
   (wayvnc                wayvnc-configuration-wayvnc                ;string
-                         (default #f))
+                         (default wayvnc))
   (arguments             wayvnc-configuration-arguments             ;list of strings
                          (default '()))
   (environment-variables wayvnc-configuration-environment-variables ;list of strings
@@ -109,7 +109,8 @@
          (provision '(wayvnc))
          (requirement '(sway))
          (start #~(make-forkexec-constructor
-                   (list #$(wayvnc-configuration-wayvnc config)
+                   (list #$(file-append (wayvnc-configuration-wayvnc config)
+                                        "/bin/wayvnc")
                          #$@(wayvnc-configuration-arguments config))
                    #:log-file (string-append
                                (or (getenv "XDG_LOG_HOME")
