@@ -115,13 +115,11 @@
            "--no-fork"
            ,@(or (and=> (getenv "NSENTER_UID")
                         (lambda (uid)
-                          (list
-                           (string-append "--setuid=" (number->string uid)))))
+                          (list (string-append "--setuid=" uid))))
                  '())
            ,@(or (and=> (getenv "NSENTER_GID")
                         (lambda (gid)
-                          (list
-                           (string-append "--setgid=" (number->string gid)))))
+                          (list (string-append "--setgid=" gid))))
                  '())
            "/usr/bin/env"
            ,(string-append "GIT_COMMIT=" (getenv "GIT_COMMIT"))
