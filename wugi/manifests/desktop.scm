@@ -2,6 +2,7 @@
   #:use-module (guix profiles)
   #:use-module (guix packages)
   #:use-module (gnu packages)
+  #:use-module (gnu packages apl)
   #:use-module (gnu packages fonts)
   #:use-module (gnu packages fontutils)
   #:use-module (gnu packages freedesktop)
@@ -37,6 +38,7 @@
           font-amiri
           font-anonymous-pro
           font-anonymous-pro-minus
+          font-apl2741-unicode
           font-aporetic
           font-arabic-misc
           font-arapey
