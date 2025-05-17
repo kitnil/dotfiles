@@ -104,22 +104,30 @@
                (lambda (op loads)
                  (cons op loads))
                %default-options))
-  (system* "nsenter"
-           (string-append "--target=" (number->string 1))
+  (apply system*
+         `("nsenter"
+           ,(string-append "--target=" (number->string 1))
            "--mount"
            "--uts"
            "--ipc"
            "--net"
            "--pid"
            "--no-fork"
-           ;; TODO: Do not hardcode uid and gid.
-           (string-append "--setuid=" (number->string 1000))
-           (string-append "--setgid=" (number->string 998))
+           ,@(or (and=> (getenv "NSENTER_UID")
+                        (lambda (uid)
+                          (list
+                           (string-append "--setuid=" (number->string uid)))))
+                 '())
+           ,@(or (and=> (getenv "NSENTER_GID")
+                        (lambda (gid)
+                          (list
+                           (string-append "--setgid=" (number->string gid)))))
+                 '())
            "/usr/bin/env"
-           (string-append "GIT_COMMIT=" (getenv "GIT_COMMIT"))
-           (string-append "RUNC_CONTAINER_ID=" (getenv "RUNC_CONTAINER_ID"))
-           (string-append "KUBERNETES_NAMESPACE=" (getenv "KUBERNETES_NAMESPACE"))
+           ,(string-append "GIT_COMMIT=" (getenv "GIT_COMMIT"))
+           ,(string-append "RUNC_CONTAINER_ID=" (getenv "RUNC_CONTAINER_ID"))
+           ,(string-append "KUBERNETES_NAMESPACE=" (getenv "KUBERNETES_NAMESPACE"))
            "/run/current-system/profile/bin/guile" "--no-auto-compile"
-           "-c" (with-output-to-string (lambda () (write (kubectl-program))))))
+           "-c" ,(with-output-to-string (lambda () (write (kubectl-program)))))))
 
 ;;; guile-nsenter ends here
