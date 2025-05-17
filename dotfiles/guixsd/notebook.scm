@@ -23,7 +23,7 @@
 (use-package-modules admin audio bootloaders fonts linux nfs
                      package-management terminals vpn wm xfce xorg)
 
-(use-modules (bootloader grub)
+(use-modules (wugi bootloader grub)
              (packages monitoring)
              (packages linux)
              (services backup)
