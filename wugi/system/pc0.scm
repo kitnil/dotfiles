@@ -3,7 +3,11 @@
 ;; for a "bare bones" setup, with no X11 display server.
 
 (define-module (wugi system pc0)
-  #:use-module (gnu)
+  #:use-module ((gnu services) #:select (service-type
+                                         service-extension
+                                         service
+                                         simple-service
+                                         modify-services))
   #:use-module (gnu packages audio)
   #:use-module (gnu packages linux)
   #:use-module (gnu packages screen)
@@ -31,6 +35,7 @@
   #:use-module (nongnu system linux-initrd)
   #:use-module (wugi bootloader grub)
   #:use-module (wugi config)
+  #:use-module ((wugi packages linux) #:select (kvmfr-linux-module))
   #:use-module (wugi services backup)
   #:use-module (wugi services kubernetes)
   #:use-module (wugi utils package)
@@ -38,9 +43,6 @@
 
 (define %private-ip-address
   "192.168.0.192")
-
-(define kvmfr-linux-module
-  (@ (packages linux) kvmfr-linux-module))
 
 (define container-guix-program
   (program-file "container-guix-program"
