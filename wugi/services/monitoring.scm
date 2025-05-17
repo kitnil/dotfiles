@@ -171,7 +171,7 @@
                              prometheus-account)
           (service-extension activation-service-type
                              prometheus-activation)
-          (service-extension log-rotation-service-type
+          (service-extension rottlog-service-type
                              (const %prometheus-log-rotations))))
    (default-value (prometheus-configuration))
    (description
@@ -275,7 +275,7 @@
                              prometheus-alertmanager-account)
           (service-extension activation-service-type
                              prometheus-alertmanager-activation)
-          (service-extension log-rotation-service-type
+          (service-extension rottlog-service-type
                              (const %prometheus-alertmanager-log-rotations))))
    (default-value (prometheus-alertmanager-configuration))
    (description
@@ -373,7 +373,7 @@
                              prometheus-pushgateway-account)
           (service-extension activation-service-type
                              prometheus-pushgateway-activation)
-          (service-extension log-rotation-service-type
+          (service-extension rottlog-service-type
                              (const %prometheus-pushgateway-log-rotations))))
    (default-value (prometheus-pushgateway-configuration))
    (description
@@ -449,7 +449,7 @@
                              prometheus-dnsmasq-shepherd-service)
           (service-extension account-service-type
                              prometheus-dnsmasq-account)
-          (service-extension log-rotation-service-type
+          (service-extension rottlog-service-type
                              (const %prometheus-dnsmasq-log-rotations))))
    (default-value (prometheus-dnsmasq-configuration))
    (description
@@ -520,7 +520,7 @@
                              karma-shepherd-service)
           (service-extension account-service-type
                              karma-account)
-          (service-extension log-rotation-service-type
+          (service-extension rottlog-service-type
                              (const %karma-log-rotations))))
    (default-value (karma-configuration))
    (description
@@ -637,7 +637,7 @@
                              prometheus-blackbox-exporter-account)
           (service-extension activation-service-type
                              prometheus-blackbox-exporter-activation)
-          (service-extension log-rotation-service-type
+          (service-extension rottlog-service-type
                              (const %prometheus-blackbox-exporter-log-rotations))))
    (default-value (prometheus-blackbox-exporter-configuration))
    (description
@@ -682,7 +682,7 @@
    (extensions
     (list (service-extension shepherd-root-service-type
                              prometheus-bird-exporter-shepherd-service)
-          (service-extension log-rotation-service-type
+          (service-extension rottlog-service-type
                              (const %prometheus-bird-exporter-log-rotations))))
    (default-value (prometheus-bird-exporter-configuration))
    (description
@@ -727,7 +727,7 @@
    (extensions
     (list (service-extension shepherd-root-service-type
                              prometheus-smartctl-exporter-shepherd-service)
-          (service-extension log-rotation-service-type
+          (service-extension rottlog-service-type
                              (const %prometheus-smartctl-exporter-log-rotations))))
    (default-value (prometheus-smartctl-exporter-configuration))
    (description
@@ -778,7 +778,7 @@
    (extensions
     (list (service-extension shepherd-root-service-type
                              prometheus-exim-exporter-shepherd-service)
-          (service-extension log-rotation-service-type
+          (service-extension rottlog-service-type
                              (const %prometheus-exim-exporter-log-rotations))))
    (default-value (prometheus-exim-exporter-configuration))
    (description
@@ -993,7 +993,7 @@ StrictHostKeyChecking no")
                              grafana-account)
           (service-extension activation-service-type
                              grafana-activation)
-          (service-extension log-rotation-service-type
+          (service-extension rottlog-service-type
                              (const %grafana-log-rotations))))
    (default-value (grafana-configuration))
    (description
@@ -1144,7 +1144,7 @@ StrictHostKeyChecking no")
                              fatrace-shepherd-service)
           (service-extension activation-service-type
                              fatrace-activation)
-          (service-extension log-rotation-service-type
+          (service-extension rottlog-service-type
                              fatrace-log-rotations)))
    (default-value (fatrace-configuration))
    (description
