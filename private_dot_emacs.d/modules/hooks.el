@@ -38,4 +38,4 @@
     (add-hooks '(((makefile-mode
                    prog-mode-hook
                    yaml-mode-hook)
-                  . whitespace-mode))))))
+                  . whitespace-mode)))))
