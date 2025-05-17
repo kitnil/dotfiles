@@ -101,7 +101,7 @@
    (extensions
     (list (service-extension shepherd-root-service-type
                              virtual-machine-shepherd-service)
-          (service-extension log-rotation-service-type
+          (service-extension rottlog-service-type
                              virtual-machine-log-rotations)))
    (default-value '())
    (description "Run virtual machine.")))
@@ -158,7 +158,7 @@
                                                      runc-activation)
                                   (service-extension shepherd-root-service-type
                                                      runc-shepherd-service)
-                                  (service-extension log-rotation-service-type
+                                  (service-extension rottlog-service-type
                                                      runc-log-rotations)))
                 (description "Run runc.")))
 
