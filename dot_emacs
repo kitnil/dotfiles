@@ -40,6 +40,7 @@
 (require 'cl-lib)
 
 (defun load-config-file (file)
+  (print file)
   (load (concat (getenv "HOME") "/.emacs.d/modules/" file)))
 
 (setq load-prefer-newer t)
@@ -81,7 +82,6 @@
 (load-config-file "yaml.el")
 (load-config-file "kubernetes.el")
 (load-config-file "term.el")
-(load-config-file "window.el")
 (load-config-file "audio.el")
 (load-config-file "mail.el")
 (load-config-file "c.el")
@@ -163,6 +163,51 @@
  '(python-shell-interpreter "python3" t)
  '(safe-local-variable-values
    '((eval progn
+           (when
+               (boundp #'projectile-project-root)
+             (setenv "GUIX_PACKAGE_PATH"
+                     (concat
+                      (projectile-project-root)
+                      "dotfiles/guixsd/modules")))
+           (setq-local geiser-guile-load-path
+                       (append
+                        (list
+                         (concat
+                          (getenv "HOME")
+                          "/src/cgit.duckdns.org/guix/guix-wigust/guix"))
+                        (list
+                         (concat
+                          (getenv "HOME")
+                          "/src/gitlab.com/nonguix/nonguix"))
+                        (if
+                            (boundp #'projectile-project-root)
+                            (list
+                             (concat
+                              (projectile-project-root)
+                              "dotfiles/guixsd/modules"))
+                          'nil)))
+           (git-auto-commit-mode)
+           (aggressive-indent-mode))
+     (eval progn
+           (setq-local geiser-guile-load-path
+                       (append
+                        (list
+                         (concat
+                          (getenv "HOME")
+                          "/src/cgit.duckdns.org/guix/guix-wigust/guix"))
+                        (list
+                         (concat
+                          (getenv "HOME")
+                          "/src/gitlab.com/nonguix/nonguix"))
+                        (if
+                            (boundp #'projectile-project-root)
+                            (list
+                             (projectile-project-root))
+                          'nil)))
+           (git-auto-commit-mode)
+           (aggressive-indent-mode))
+     (geiser-insert-actual-lambda)
+     (eval progn
            (when
                (boundp #'projectile-project-root)
              (setenv "GUIX_PACKAGE_PATH"
