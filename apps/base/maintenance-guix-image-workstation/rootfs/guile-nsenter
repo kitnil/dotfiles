@@ -86,6 +86,8 @@
               "--user" (string-append
                         (getenv "RUNC_UID") ":" (getenv "RUNC_GID"))
               "--env" (string-append "GIT_COMMIT=" (getenv "GIT_COMMIT"))
+              "--env" (string-append "RUNC_MAKE_TARGET="
+                                     (getenv "RUNC_MAKE_TARGET"))
               "guix-builder"
               "/run/current-system/profile/bin/guile" "--no-auto-compile"
               "-c" ,(with-output-to-string
