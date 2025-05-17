@@ -16,4 +16,5 @@
                                        (list (concat (projectile-project-root)
                                                      "dotfiles/guixsd/modules"))
                                      '())))
-               (git-auto-commit-mode))))))
+               (git-auto-commit-mode)
+               (aggressive-indent-mode))))))
