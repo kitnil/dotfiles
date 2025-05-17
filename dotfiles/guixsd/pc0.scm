@@ -225,7 +225,7 @@
                                    (openssh-configuration
                                     (openssh openssh-sans-x)
                                     (permit-root-login 'prohibit-password)))
-			  (udisks-service)
+                          (udisks-service)
                           (service upower-service-type)
                           (service accountsservice-service-type)
                           (service colord-service-type)
@@ -299,42 +299,42 @@ trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDS
                                     (flux? #t)
                                     (kubevirt? #t)))
 
-                         (service bluetooth-service-type
-                                  (bluetooth-configuration
-                                   (auto-enable? #t)
-                                   (just-works-repairing 'confirm)
-                                   (controller-mode 'dual)
-                                   (min-connection-interval 7)
-                                   (max-connection-interval 9)
-                                   (connection-latency 0)
-                                   (privacy 'device)))
-                         udev-rules-service-xbox
+                          (service bluetooth-service-type
+                                   (bluetooth-configuration
+                                    (auto-enable? #t)
+                                    (just-works-repairing 'confirm)
+                                    (controller-mode 'dual)
+                                    (min-connection-interval 7)
+                                    (max-connection-interval 9)
+                                    (connection-latency 0)
+                                    (privacy 'device)))
+                          udev-rules-service-xbox
 
-                         (udev-rules-service 'kvm
-                                             (udev-rule
-                                              "91-kvm-custom.rules"
-                                              "KERNEL==\"kvm\", GROUP=\"kvm\", MODE=\"0666\"\n"))
+                          (udev-rules-service 'kvm
+                                              (udev-rule
+                                               "91-kvm-custom.rules"
+                                               "KERNEL==\"kvm\", GROUP=\"kvm\", MODE=\"0666\"\n"))
 
-                         (udev-rules-service 'kvmfr
-                                             (udev-rule
-                                              "99-kvmfr.rules"
-                                              "SUBSYSTEM==\"kvmfr\", OWNER=\"oleg\", GROUP=\"kvm\", MODE=\"0660\"\n"))
+                          (udev-rules-service 'kvmfr
+                                              (udev-rule
+                                               "99-kvmfr.rules"
+                                               "SUBSYSTEM==\"kvmfr\", OWNER=\"oleg\", GROUP=\"kvm\", MODE=\"0660\"\n"))
 
-                         (service ladspa-service-type
-                                  (ladspa-configuration (plugins (list swh-plugins))))
-                         (service libvirt-service-type
-                                  (libvirt-configuration
-                                   ;; XXX: Specify listen-addr after adding networking requirement.
-                                   ;;
-                                   ;; (listen-addr "192.168.0.192")
-                                   (listen-tcp? #t)
-                                   (auth-tcp "none")))
-                         (simple-service 'libvirt-qemu-config activation-service-type
-                                         #~(begin
-                                             (when (file-exists? "/etc/libvirt")
-                                               (with-output-to-file "/etc/libvirt/qemu.conf"
-                                                 (lambda ()
-                                                   (display "\
+                          (service ladspa-service-type
+                                   (ladspa-configuration (plugins (list swh-plugins))))
+                          (service libvirt-service-type
+                                   (libvirt-configuration
+                                    ;; XXX: Specify listen-addr after adding networking requirement.
+                                    ;;
+                                    ;; (listen-addr "192.168.0.192")
+                                    (listen-tcp? #t)
+                                    (auth-tcp "none")))
+                          (simple-service 'libvirt-qemu-config activation-service-type
+                                          #~(begin
+                                              (when (file-exists? "/etc/libvirt")
+                                                (with-output-to-file "/etc/libvirt/qemu.conf"
+                                                  (lambda ()
+                                                    (display "\
 user = \"oleg\"
 
 nvram = [
@@ -352,113 +352,109 @@ cgroup_device_acl = [
 ]
 "))))))
 
-                         (service virtlog-service-type
-                                  (virtlog-configuration
-                                   (max-clients 1000)))
-                         (service console-font-service-type
-                                  (map (lambda (tty)
-                                         (cons tty %default-console-font))
-                                       '("tty1" "tty3" "tty4" "tty5" "tty6")))
-                         (simple-service 'container-guix shepherd-root-service-type
-                                         (list
-                                          (shepherd-service
-                                           (provision '(container-guix))
-                                           (auto-start? #f)
-                                           (one-shot? #t)
-                                           (documentation "Provision Guix container.")
-                                           (requirement '())
-                                           (start #~(make-forkexec-constructor
-                                                     (list #$container-guix-program)))
-                                           (respawn? #f))))
-                         (simple-service 'container-guix-sway-autostart shepherd-root-service-type
-                                         (list
-                                          (shepherd-service
-                                           (provision '(container-guix-sway-autostart))
-                                           (auto-start? #f)
-                                           (documentation "Run programs in Sway inside Guix container.")
-                                           (requirement '())
-                                           (start #~(make-forkexec-constructor
-                                                     (list #$container-guix-sway-autostart-program)))
-                                           (respawn? #f)
-                                           (stop #~(make-kill-destructor)))))
+                          (service virtlog-service-type
+                                   (virtlog-configuration
+                                    (max-clients 1000)))
+                          (service console-font-service-type
+                                   (map (lambda (tty)
+                                          (cons tty %default-console-font))
+                                        '("tty1" "tty3" "tty4" "tty5" "tty6")))
+                          (simple-service 'container-guix shepherd-root-service-type
+                                          (list
+                                           (shepherd-service
+                                            (provision '(container-guix))
+                                            (auto-start? #f)
+                                            (one-shot? #t)
+                                            (documentation "Provision Guix container.")
+                                            (requirement '())
+                                            (start #~(make-forkexec-constructor
+                                                      (list #$container-guix-program)))
+                                            (respawn? #f))))
+                          (simple-service 'container-guix-sway-autostart shepherd-root-service-type
+                                          (list
+                                           (shepherd-service
+                                            (provision '(container-guix-sway-autostart))
+                                            (auto-start? #f)
+                                            (documentation "Run programs in Sway inside Guix container.")
+                                            (requirement '())
+                                            (start #~(make-forkexec-constructor
+                                                      (list #$container-guix-sway-autostart-program)))
+                                            (respawn? #f)
+                                            (stop #~(make-kill-destructor)))))
 
-                         (service knot-resolver-service-type
-                                  (knot-resolver-configuration
-                                   (kresd-config-file
-                                    (generate-kresd-file %private-ip-address))))
+                          (service knot-resolver-service-type
+                                   (knot-resolver-configuration
+                                    (kresd-config-file
+                                     (generate-kresd-file %private-ip-address))))
 
-                         ;; Bring eth0 up and pass it to the networking bridge.
-                         (service static-networking-service-type
-                                  (list
-				   (static-networking
-				    (provision '(eth0))
-                                    (addresses (list
-                                                (network-address
-                                                 (device "eth0")
-                                                 (value "127.0.0.2/8")))))
-                                   (static-networking
-                                    (provision '(br0-link))
-                                    (links (list
-                                            (network-link
-                                             (name "br0")
-                                             (type 'bridge)
-                                             (arguments '()))))
-                                    (addresses '()))
-                                   (static-networking
-                                    (provision '(br0))
-                                    (requirement '(br0-link))
-                                    (addresses (list
-                                                (network-address
-                                                 (device "br0")
-                                                 (value "192.168.0.192/24"))))
-                                    (routes
-                                     (list (network-route
-                                            (destination "default")
-                                            (gateway "192.168.0.1"))))
-                                    (name-servers '("192.168.0.192"
+                          ;; Bring eth0 up and pass it to the networking bridge.
+                          (service static-networking-service-type
+                                   (list
+                                    (static-networking
+                                     (provision '(eth0))
+                                     (addresses (list
+                                                 (network-address
+                                                  (device "eth0")
+                                                  (value "127.0.0.2/8")))))
+                                    (static-networking
+                                     (provision '(br0-link))
+                                     (links (list
+                                             (network-link
+                                              (name "br0")
+                                              (type 'bridge)
+                                              (arguments '()))))
+                                     (addresses '()))
+                                    (static-networking
+                                     (provision '(br0))
+                                     (requirement '(br0-link))
+                                     (addresses (list
+                                                 (network-address
+                                                  (device "br0")
+                                                  (value "192.168.0.192/24"))))
+                                     (routes
+                                      (list (network-route
+                                             (destination "default")
+                                             (gateway "192.168.0.1"))))
+                                     (name-servers '("192.168.0.192"
 
-                                                    ;; local Docker
-                                                    ;; "172.17.0.1"
+                                                     ;; local Docker
+                                                     ;; "172.17.0.1"
 
-                                                    ;; Google
-                                                    ;; "8.8.8.8"
-                                                    ;; "8.8.4.4"
-                                                    )))
-                                   (static-networking
-                                    (provision '(networking))
-                                    (requirement '(eth0 br0))
-                                    (links (list
-                                            (network-link
-                                             (name "eth0")
-                                             (arguments '((master . "br0"))))))
-                                    (addresses '())))))
+                                                     ;; Google
+                                                     ;; "8.8.8.8"
+                                                     ;; "8.8.4.4"
+                                                     )))
+                                    (static-networking
+                                     (provision '(networking))
+                                     (requirement '(eth0 br0))
+                                     (links (list
+                                             (network-link
+                                              (name "eth0")
+                                              (arguments '((master . "br0"))))))
+                                     (addresses '())))))
                     (modify-services
                         (filter (lambda (service)
-                                (let ((value (service-value service)))
-                                  (not (and (mingetty-configuration? value)
-                                            (string= (mingetty-configuration-tty value)
-                                                     "tty2")))))
-                              (modify-services %base-services
-                                (guix-service-type config =>
-                                                   (guix-configuration
-                                                    (authorized-keys (append (list (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/guix.wugi.info.pub")
-                                                                                   (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/vm1.wugi.info.pub")
-                                                                                   (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/vm2.wugi.info.pub")
-                                                                                   (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/mirror.brielmaier.net.pub")
-                                                                                   (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/substitutes.nonguix.org.pub")
-                                                                                   (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/bordeaux.guix.gnu.org.pub"))
-                                                                             %default-authorized-guix-keys))
-                                                    (substitute-urls '("http://10.8.19.125:5556" ;TODO: Replace with domain name.
-                                                                       "https://bordeaux.guix.gnu.org"
-                                                                       "https://substitutes.nonguix.org"
-                                                                       "http://ci.guix.trop.in"))))
-                                (sysctl-service-type _ =>
-                                                     (sysctl-configuration
-                                                      (settings (append ;; '(("net.ipv4.ip_forward" . "1")
-                                                                        ;;   ("net.ipv4.conf.all.rp_filter" . "0")
-                                                                        ;;   ("net.ipv4.conf.default.rp_filter" . "0"))
-								        '(("kernel.sysrq" . "1")
-									  ("net.bridge.bridge-nf-call-iptables" . "0"))
-                                                                        %default-sysctl-settings))))
-                                ))
+                                  (let ((value (service-value service)))
+                                    (not (and (mingetty-configuration? value)
+                                              (string= (mingetty-configuration-tty value)
+                                                       "tty2")))))
+                                (modify-services %base-services
+                                  (guix-service-type config =>
+                                                     (guix-configuration
+                                                      (authorized-keys (append (list (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/guix.wugi.info.pub")
+                                                                                     (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/vm1.wugi.info.pub")
+                                                                                     (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/vm2.wugi.info.pub")
+                                                                                     (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/mirror.brielmaier.net.pub")
+                                                                                     (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/substitutes.nonguix.org.pub")
+                                                                                     (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/bordeaux.guix.gnu.org.pub"))
+                                                                               %default-authorized-guix-keys))
+                                                      (substitute-urls '("http://10.8.19.125:5556" ;TODO: Replace with domain name.
+                                                                         "https://bordeaux.guix.gnu.org"
+                                                                         "https://substitutes.nonguix.org"
+                                                                         "http://ci.guix.trop.in"))))
+                                  (sysctl-service-type _ =>
+                                                       (sysctl-configuration
+                                                        (settings (append '(("kernel.sysrq" . "1")
+                                                                            ("net.bridge.bridge-nf-call-iptables" . "0"))
+                                                                          %default-sysctl-settings))))))
                       (delete console-font-service-type)))))
