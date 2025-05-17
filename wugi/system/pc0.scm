@@ -365,7 +365,12 @@ cgroup_device_acl = [
                                      (map (lambda (tty)
                                             (append (list tty)
                                                     %default-console-font))
-                                          '("tty1" "tty3" "tty4" "tty5" "tty6")))
+                                          '("tty1"
+                                            "tty2"
+                                            "tty3"
+                                            "tty4"
+                                            "tty5"
+                                            "tty6")))
                             (simple-service 'container-guix shepherd-root-service-type
                                             (list
                                              (shepherd-service
