@@ -37,16 +37,7 @@
           font-amiri
           font-anonymous-pro
           font-anonymous-pro-minus
-          ;; font-apl2741-unicode
           font-aporetic
-          ;; font-apple-color-emoji
-          ;; font-apple-new-york
-          ;; font-apple-sf-arabic
-          ;; font-apple-sf-compact
-          ;; font-apple-sf-mono
-          ;; font-apple-sf-pro
-          ;; font-apple-sf-symbols
-          ;; font-apple-symbols
           font-arabic-misc
           font-arapey
           font-arphic-ukai
@@ -54,7 +45,6 @@
           font-atkinson-hyperlegible
           font-atui-feather
           font-awesome
-          ;; font-awesome-nonfree
           font-bitstream-vera
           font-blackfoundry-inria
           font-borg-sans-mono
@@ -89,7 +79,6 @@
           font-fira-sans
           font-fontna-yasashisa-antique
           font-gfs-ambrosia
-          ;; font-ghostscript
           font-gnu-freefont
           font-gnu-unifont
           font-go
@@ -155,23 +144,9 @@
           font-lxgw-neozhisong
           font-lxgw-wenkai
           font-lxgw-wenkai-tc
-          ;; font-mathjax
           font-meera-inimai
           font-micro-misc
-          ;; font-microsoft-andale-mono
-          ;; font-microsoft-arial
-          ;; font-microsoft-arial-black
           font-microsoft-cascadia
-          ;; font-microsoft-comic-sans-ms
-          ;; font-microsoft-couirer-new
-          ;; font-microsoft-courier-new
-          ;; font-microsoft-georgia
-          ;; font-microsoft-impact
-          ;; font-microsoft-times-new-roman
-          ;; font-microsoft-trebuchet-ms
-          ;; font-microsoft-verdana
-          ;; font-microsoft-web-core-fonts
-          ;; font-microsoft-webdings
           font-misc-cyrillic
           font-misc-ethiopic
           font-misc-misc
@@ -212,7 +187,6 @@
           font-termsyn
           font-tex-gyre
           font-tuffy
-          ;; font-ubuntu
           font-un
           font-unscii
           font-util
