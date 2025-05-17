@@ -16,8 +16,6 @@
           font-apple-sf-symbols
           font-apple-symbols
           font-awesome-nonfree
-          font-ghostscript
-          font-mathjax
           font-microsoft-andale-mono
           font-microsoft-arial
           font-microsoft-arial-black
