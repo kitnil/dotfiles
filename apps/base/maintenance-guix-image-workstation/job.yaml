@@ -27,6 +27,8 @@ spec:
         env:
         - name: RUNC_CONTAINER_ID
           value: runc-kube1-guix-builder
+        - name: KUBERNETES_NAMESPACE
+          value: guix
         resources:
           limits:
             cpu: 14000m
