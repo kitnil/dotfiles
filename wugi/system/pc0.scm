@@ -33,6 +33,7 @@
   #:use-module (gnu services xorg)
   #:use-module (gnu system)
   #:use-module (gnu system file-systems)
+  #:use-module (gnu system mapped-devices)
   #:use-module (gnu system setuid)
   #:use-module (guix gexp)
   #:use-module (nongnu packages linux)
