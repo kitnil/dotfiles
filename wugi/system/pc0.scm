@@ -8,7 +8,8 @@
   #:use-module (gnu packages screen)
   #:use-module (gnu packages ssh)
   #:use-module (gnu packages wm)
-  #:use-module ((gnu services) #:select (service-type
+  #:use-module ((gnu services) #:select (delete
+                                         service-type
                                          service-extension
                                          service
                                          simple-service
