@@ -81,6 +81,7 @@
 (load-config-file "yaml.el")
 (load-config-file "kubernetes.el")
 (load-config-file "term.el")
+(load-config-file "window.el")
 (load-config-file "audio.el")
 (load-config-file "mail.el")
 (load-config-file "c.el")
