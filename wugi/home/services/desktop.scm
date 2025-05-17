@@ -152,5 +152,8 @@
                         (list
                          #$(string-append
                             %distro-directory
-                            "/dot_local/bin/sway-display-on-off"))))
+                            "/dot_local/bin/sway-display-on-off"))
+                        #:environment-variables
+                        (append '("WAYLAND_DISPLAY=wayland-1")
+                                (environ))))
                     (respawn? #f)))))
