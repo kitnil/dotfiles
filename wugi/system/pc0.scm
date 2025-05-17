@@ -39,6 +39,7 @@
   #:use-module (wugi services backup)
   #:use-module (wugi services kubernetes)
   #:use-module (wugi utils package)
+  #:use-module (srfi srfi-26)
   #:export (%pc0))
 
 (define %private-ip-address
@@ -446,13 +447,16 @@ cgroup_device_acl = [
                                   (modify-services %base-services
                                     (guix-service-type config =>
                                                        (guix-configuration
-                                                        (authorized-keys (append (list (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/guix.wugi.info.pub")
-                                                                                       (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/vm1.wugi.info.pub")
-                                                                                       (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/vm2.wugi.info.pub")
-                                                                                       (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/mirror.brielmaier.net.pub")
-                                                                                       (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/substitutes.nonguix.org.pub")
-                                                                                       (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/bordeaux.guix.gnu.org.pub"))
-                                                                                 %default-authorized-guix-keys))
+                                                        (authorized-keys
+                                                         (let ((substitute-file
+                                                                (cut string-append %distro-directory "/wugi/etc/substitutes/" <>)))
+                                                           (append (list (local-file (substitute-file "/guix.wugi.info.pub"))
+                                                                         (local-file (substitute-file "/vm1.wugi.info.pub"))
+                                                                         (local-file (substitute-file "/vm2.wugi.info.pub"))
+                                                                         (local-file (substitute-file "/mirror.brielmaier.net.pub"))
+                                                                         (local-file (substitute-file "/substitutes.nonguix.org.pub"))
+                                                                         (local-file (substitute-file "/bordeaux.guix.gnu.org.pub")))
+                                                                   %default-authorized-guix-keys)))
                                                         (substitute-urls '("http://runc-kube1-guix-builder.guix.svc.cluster.local:5556"
                                                                            "https://bordeaux.guix.gnu.org"
                                                                            "https://substitutes.nonguix.org"
