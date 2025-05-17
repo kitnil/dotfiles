@@ -453,7 +453,7 @@ cgroup_device_acl = [
                                                                                        (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/substitutes.nonguix.org.pub")
                                                                                        (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/bordeaux.guix.gnu.org.pub"))
                                                                                  %default-authorized-guix-keys))
-                                                        (substitute-urls '("http://runc-kube1-guix-builder:5556"
+                                                        (substitute-urls '("http://runc-kube1-guix-builder.guix.svc.cluster.local:5556"
                                                                            "https://bordeaux.guix.gnu.org"
                                                                            "https://substitutes.nonguix.org"
                                                                            "http://ci.guix.trop.in"))))
