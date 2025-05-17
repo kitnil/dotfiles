@@ -270,5 +270,5 @@ spec:
         name: home-oleg-dot-kube-config
       - hostPath:
           path: /etc/openvpn
-          type: File
+          type: Directory
         name: etc-openvpn
