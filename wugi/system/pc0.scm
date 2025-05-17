@@ -13,6 +13,7 @@
   #:use-module ((gnu services) #:select (delete
                                          service-type
                                          service-extension
+                                         service-value
                                          service
                                          simple-service
                                          modify-services
