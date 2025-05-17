@@ -46,12 +46,6 @@
 (define %git-origin
   "https://cgit.wugi.info/git/wigust/dotfiles")
 
-(define kubectl
-  "/home/oleg/.guix-profile")
-
-(define kubeconfig
-  "/home/oleg/.kube/config")
-
 (define (runc-code)
   `(begin
      (define (git . args)
@@ -79,6 +73,12 @@
                             "wugi/etc/mjru/intr.json")
                  (zero? (system* "echo" "guix" "shell" "git" "make" "skopeo" "--"
                                  "make" (getenv "RUNC_MAKE_TARGET")))))))))
+
+(define kubectl
+  "/home/oleg/.guix-profile")
+
+(define kubeconfig
+  "/home/oleg/.kube/config")
 
 (define (kubectl-program)
   ;; TODO: Use Kubernetes HTTP API without kubectl.
