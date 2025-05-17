@@ -72,7 +72,7 @@
 
     (initrd microcode-initrd)
     (kernel linux)
-    (firmware (cons* linux-firmware %base-firmware))
+    (firmware (append (list linux-firmware) %base-firmware))
 
     ;; Use the UEFI variant of GRUB with the EFI System
     ;; Partition mounted on /boot/efi.
