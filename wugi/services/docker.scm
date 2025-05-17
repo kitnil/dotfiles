@@ -128,7 +128,7 @@
                                                      docker-compose-activation)
                                   (service-extension shepherd-root-service-type
                                                      docker-compose-shepherd-service)
-                                  (service-extension log-rotation-service-type
+                                  (service-extension rottlog-service-type
                                                      docker-compose-log-rotations)))
                 (description "Run docker-compose.")))
 
