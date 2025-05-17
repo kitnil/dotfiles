@@ -15,7 +15,8 @@
                                          service-extension
                                          service
                                          simple-service
-                                         modify-services))
+                                         modify-services
+                                         activation-service-type))
   #:use-module (gnu services avahi)
   #:use-module (gnu services base)
   #:use-module (gnu services dbus)
