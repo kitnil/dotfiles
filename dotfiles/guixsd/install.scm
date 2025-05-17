@@ -1,5 +1,5 @@
 (use-modules (gnu system)
-             (services autossh))
+             (wugi services autossh))
 
 (define (ssh-private-key)
   (and=> (getenv "HOME")
