@@ -135,3 +135,9 @@
 (add-hook 'eat-exec-hook (lambda (&rest_) (set-no-process-query-on-exit)))
 
 (add-hook 'eat-exec-hook (lambda (&rest_) (eat-char-mode)))
+
+(defun kill-buffer-on-process-exit-status-0 (process)
+  (when (= (process-exit-status process) 0)
+    (kill-buffer-and-frame)))
+
+(add-hook 'eat-exit-hook #'kill-buffer-on-process-exit-status-0)
