@@ -71,7 +71,7 @@
                  ;; TODO: Do not copy intr.json from other location.
                  (copy-file (string-append home "/intr.json")
                             "wugi/etc/mjru/intr.json")
-                 (zero? (system* "echo" "guix" "shell" "git" "make" "skopeo" "--"
+                 (zero? (system* "guix" "shell" "git" "make" "skopeo" "--"
                                  "make" (getenv "RUNC_MAKE_TARGET")))))))))
 
 (define kubectl
