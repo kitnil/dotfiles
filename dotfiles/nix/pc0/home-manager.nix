@@ -25,6 +25,8 @@ in {
     gnumake
 
     strace
+
+    wlvncc
   ];
 
   home.file = {
