@@ -10,6 +10,7 @@
   #:use-module (gnu services)
   #:use-module (gnu services shepherd)
   #:use-module (ice-9 format)
+  #:use-module (wugi utils)
   #:export (home-greenclip-service-type
             greenclip-configuration
             sway-configuration
@@ -130,3 +131,26 @@
                 (default-value (wayvnc-configuration))
                 (description
                  "Run wayvnc.")))
+
+
+;;;
+;;; sway-display-on-off
+;;;
+
+(define sway-display-on-off
+  (simple-service 'sway-display-on-off
+                  home-shepherd-service-type
+                  (list
+                   (shepherd-service
+                    (provision '(sway-display-on-off))
+                    (auto-start? #f)
+                    (one-shot? #f)
+                    (documentation "Turn hdmi-a-1 off and on.")
+                    (requirement '(sway))
+                    (start
+                     #~(make-forkexec-constructor
+                        (list
+                         #$(string-append
+                            %distro-directory
+                            "/dot_local/bin/sway-display-on-off"))))
+                    (respawn? #f)))))
