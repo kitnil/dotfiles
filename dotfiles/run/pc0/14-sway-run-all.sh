@@ -40,7 +40,7 @@ sleep 0.4
 swaymsg splitv
 sleep 0.4
 
-alacritty -e sh -c "sleep 5; exit" &
+alacritty -e sh -c "sleep 10; exit" &
 sleep 0.4
 
 swaymsg resize set height 387px
