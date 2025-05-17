@@ -1013,6 +1013,7 @@ policy.add(policy.suffix(policy.STUB(\"78.108.88.1\"), {todname('corp2.majordomo
 policy.add(policy.suffix(policy.STUB(\"10.8.32.119\"), {todname('home.wugi.info')}))
 
 policy.add(policy.suffix(policy.STUB(\"10.8.255.254\"), {todname('cluster.local')}))
+policy.add(policy.suffix(policy.STUB(\"10.8.255.254\"), {todname('svc.cluster.local')}))
 
 -- -- Forward all queries (complete stub mode)
 policy.add(policy.all(policy.STUB('8.8.8.8')))
