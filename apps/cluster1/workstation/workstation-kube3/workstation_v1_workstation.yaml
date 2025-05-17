@@ -283,5 +283,5 @@ spec:
         name: home-oleg-downloads
       - hostPath:
           path: /etc/openvpn
-          type: File
+          type: Directory
         name: etc-openvpn
