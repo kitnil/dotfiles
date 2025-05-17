@@ -43,8 +43,11 @@
                           (lambda ()
                             (write expression))))))))))
 
+(define %git-origin
+  "https://cgit.wugi.info/git/wigust/dotfiles")
+
 (define (runc-code)
-  '(begin
+  `(begin
      (define (git . args)
        (apply system* (append '("guix" "shell" "git" "--" "git") args)))
      (and=> (getenv "HOME")
@@ -58,8 +61,7 @@
                 (and
                  (zero? (git "init"))
                  (zero?
-                  (git "remote" "add" "origin"
-                       "https://cgit.wugi.info/git/wigust/dotfiles"))
+                  (git "remote" "add" "origin" ,%git-origin))
                  (zero?
                   (git "fetch" "--depth" (number->string 1) "origin" commit))
                  (zero? (git "checkout" commit))
