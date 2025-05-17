@@ -11,4 +11,4 @@ spec:
       - name: nsenter
         env:
         - name: GIT_COMMIT
-          value: a5e55c73a6f5b7b81adbf8ba46e1f4e3afb0ddf4
+          value: 46748597f330c35e02cef2ff206ef85f60f8f8df
