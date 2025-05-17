@@ -125,3 +125,13 @@
                 eat--mouse-movement-mode-map
                 eat-semi-char-mode-map
                 eat-trace-replay-mode-map)))
+
+;; Don't whine if there is a terminal open.
+(defun set-no-process-query-on-exit ()
+  (let ((proc (get-buffer-process (current-buffer))))
+    (when (processp proc)
+      (set-process-query-on-exit-flag proc nil))))
+
+(add-hook 'eat-exec-hook (lambda (&rest_) (set-no-process-query-on-exit)))
+
+(add-hook 'eat-exec-hook (lambda (&rest_) (eat-char-mode)))
