@@ -9,7 +9,7 @@
              (guix gexp)
 	     (nongnu packages linux)
 	     (nongnu system linux-initrd)
-             (bootloader grub)
+             (wugi bootloader grub)
              (wugi config)
              (services kubernetes))
 (use-service-modules avahi desktop dbus dns docker networking nix monitoring linux sound ssh sysctl virtualization xorg)
