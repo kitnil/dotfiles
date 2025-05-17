@@ -145,8 +145,8 @@ program.")))
                                               (start #~(make-forkexec-constructor
                                                         (list #$(file-append nftables "/sbin/nft")
                                                               "-f"
-                                                              #$(local-file (file-append %distro-directory
-                                                                                         "/dotfiles/nftables/nftables")))))
+                                                              #$(local-file (string-append %distro-directory
+                                                                                           "/dotfiles/nftables/nftables")))))
                                               (respawn? #f))))
                             (service openvpn-service-type %openvpn-configuration-majordomo.ru)
                             (service openvpn-service-type %openvpn-configuration-wugi.info))
