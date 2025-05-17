@@ -8,7 +8,7 @@
 (use-modules (gnu packages xorg) (gnu packages ratpoison))
 (use-service-modules xorg desktop)
 
-(use-modules (bootloader grub)
+(use-modules (wugi bootloader grub)
              (packages linux))
 
 (define (amdgpu+amdgpu.conf)
