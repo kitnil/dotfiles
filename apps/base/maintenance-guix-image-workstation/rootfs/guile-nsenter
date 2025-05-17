@@ -62,7 +62,10 @@
                  (zero? (git "checkout" commit))
                  ;; TODO: Do not copy openssh.scm from other location.
                  (copy-file (string-append home "/openssh.scm")
-                            "dotfiles/guixsd/modules/home/config/openssh.scm")
+                            "wugi/home/config/openssh.scm")
+                 ;; TODO: Do not copy intr.json from other location.
+                 (copy-file (string-append home "/intr.json")
+                            "/wugi/etc/mjru/intr.json")
                  (zero? (system* "guix" "shell" "git" "make" "skopeo" "--"
                                  "make" "guix-image-workstation"))))))))
 
