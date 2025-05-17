@@ -37,5 +37,4 @@
                               terminals
                               wm
                               sway-utils
-                              i3
                               wayland-utils)))
