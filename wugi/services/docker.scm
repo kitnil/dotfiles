@@ -17,15 +17,15 @@
 ;;; along with GNU Guix.  If not, see <http://www.gnu.org/licenses/>.
 
 (define-module (wugi services docker)
-  #:use-module (gnu services admin)
-  #:use-module (gnu services shepherd)
+  #:use-module (gnu packages docker)
   #:use-module (gnu services)
+  #:use-module (gnu services admin)
   #:use-module (gnu services configuration)
+  #:use-module (gnu services shepherd)
   #:use-module (guix gexp)
   #:use-module (guix records)
   #:use-module (ice-9 match)
   #:use-module (srfi srfi-1)
-  #:use-module (gnu packages docker)
   #:export (docker-kiwiirc-service
 
             docker-compose-configuration
