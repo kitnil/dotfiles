@@ -7,6 +7,8 @@
   #:use-module (gnu packages fontutils)
   #:use-module (gnu packages freedesktop)
   #:use-module (gnu packages image)
+  #:use-module (gnu packages ghostscript)
+  #:use-module (gnu packages javascript)
   #:use-module (gnu packages suckless)
   #:use-module (gnu packages terminals)
   #:use-module (gnu packages xorg)
@@ -22,10 +24,7 @@
     (list dmenu wofi))
 
   (define fonts
-    (list fontconfig
-          font-abattis-cantarell
-          font-adobe100dpi
-          font-adobe75dpi
+    (list font-abattis-cantarell
           font-adobe-source-code-pro
           font-adobe-source-han-sans
           font-adobe-source-han-serif
@@ -33,6 +32,8 @@
           font-adobe-source-sans-pro
           font-adobe-source-serif
           font-adobe-source-serif-pro
+          font-adobe100dpi
+          font-adobe75dpi
           font-adwaita
           font-alias
           font-amiri
@@ -81,6 +82,7 @@
           font-fira-sans
           font-fontna-yasashisa-antique
           font-gfs-ambrosia
+          font-ghostscript
           font-gnu-freefont
           font-gnu-unifont
           font-go
@@ -146,6 +148,7 @@
           font-lxgw-neozhisong
           font-lxgw-wenkai
           font-lxgw-wenkai-tc
+          font-mathjax
           font-meera-inimai
           font-micro-misc
           font-microsoft-cascadia
@@ -198,7 +201,8 @@
           font-winitzki-cyrillic
           font-wqy-microhei
           font-wqy-zenhei
-          font-xfree86-type1))
+          font-xfree86-type1
+          fontconfig))
 
   (packages->manifest (append fonts
                               menus
