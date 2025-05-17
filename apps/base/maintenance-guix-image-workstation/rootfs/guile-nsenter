@@ -57,8 +57,11 @@
                 (chdir workdir)
                 (and
                  (zero? (git "init"))
-                 (zero? (git "remote" "add" "origin" "https://cgit.wugi.info/git/wigust/dotfiles"))
-                 (zero? (git "fetch" "--depth" (number->string 1) "origin" commit))
+                 (zero?
+                  (git "remote" "add" "origin"
+                       "https://cgit.wugi.info/git/wigust/dotfiles"))
+                 (zero?
+                  (git "fetch" "--depth" (number->string 1) "origin" commit))
                  (zero? (git "checkout" commit))
                  ;; TODO: Do not copy openssh.scm from other location.
                  (copy-file (string-append home "/openssh.scm")
