@@ -9,7 +9,7 @@
 (use-service-modules certbot databases dbus desktop docker dns messaging monitoring networking nix linux ssh sysctl web vpn)
 (use-package-modules admin curl certs databases guile networking linux ssh tmux)
 
-(use-modules (config))
+(use-modules (wugi config))
 
 (use-modules (packages certs)
              (services bird)

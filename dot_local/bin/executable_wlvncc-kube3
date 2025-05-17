@@ -1,3 +1,0 @@
-#!/bin/sh
-
-exec wlvncc --hide-cursor --encodings=raw --shortcut-inhibit --use-sw-renderer --auth-command=/home/oleg/.local/share/chezmoi/dot_local/bin/executable_auth-script.sh --tls-cert=/home/oleg/.config/wayvnc/tls_cert.pem workstation-kube1.workstation

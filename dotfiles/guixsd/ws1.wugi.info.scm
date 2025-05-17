@@ -11,7 +11,7 @@
 
 (use-service-modules desktop dbus monitoring networking ssh xorg web)
 
-(use-modules (config)
+(use-modules (wugi config)
              (wigust packages admin)
              (wigust packages lisp))
 

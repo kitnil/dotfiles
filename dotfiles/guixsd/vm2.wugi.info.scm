@@ -5,7 +5,7 @@
 (use-service-modules desktop dbus docker networking linux nix monitoring ssh)
 (use-package-modules certs linux screen ssh)
 
-(use-modules (config)
+(use-modules (wugi config)
              (services dns)
              (services ipset)
              (services networking)

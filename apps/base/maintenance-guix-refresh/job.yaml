@@ -27,7 +27,7 @@ spec:
         - name: GUIX_SOURCE_DIRECTORY
           value: /home/oleg/src/git.savannah.gnu.org/git/guix
         - name: GUIX_SCRIPT
-          value: /home/oleg/.local/share/chezmoi/dot_local/bin/executable_guix-refresh.sh
+          value: /home/oleg/.local/share/chezmoi/dot_local/bin/guix-refresh.sh
         - name: NIX_SYSTEM
           value: x86_64-linux
         image: docker-registry.wugi.info/library/util-linux-with-udev

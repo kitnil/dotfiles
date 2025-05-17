@@ -33,7 +33,7 @@ spec:
         - /bin/sh
         - -l
         - -c
-        - sudo --chdir=$WORKSPACE --user=oleg --login bash -ic 'dot_local/bin/executable_dotfiles-update-commit'
+        - sudo --chdir=$WORKSPACE --user=oleg --login bash -ic 'dot_local/bin/dotfiles-update-commit'
         env:
         - name: WORKSPACE
           value: /home/oleg/.local/share/chezmoi

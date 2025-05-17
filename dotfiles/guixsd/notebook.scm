@@ -15,7 +15,7 @@
 	     (srfi srfi-1)
 	     (srfi srfi-26)
 
-             (config))
+             (wugi config))
 
 (use-service-modules avahi dbus desktop desktop docker monitoring networking
                      linux networking nix sound ssh xorg)

@@ -2,7 +2,7 @@
 
 set -o nounset -o errexit -o pipefail -o xtrace
 
-/home/oleg/.local/share/chezmoi/dot_local/bin/executable_luks-decrypt.sh
+/home/oleg/.local/share/chezmoi/dot_local/bin/luks-decrypt.sh
 
 sudo swapon /dev/lvm2/swap
 

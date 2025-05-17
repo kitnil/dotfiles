@@ -24,7 +24,7 @@
                      monitoring databases mail vpn virtualization linux sysctl)
 
 ;; Third-party modules
-(use-modules (config)
+(use-modules (wugi config)
              (wigust packages admin)
              (wigust packages web)
              (wigust packages linux)

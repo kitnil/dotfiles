@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+exec &> >(tee "${XDG_CACHE_HOME:-$HOME/.cache}/dotfiles.log")
+
+case "$1" in
+    guix)
+        exec -a chezmoi chezmoi --source @GUIX@ --color="${COLOR:-on}" "${@:2}"
+        ;;
+    pull)
+        guix pull --channels="@GUIX@/dotfiles/channels.scm"
+        sudo --login guix pull --channels="@GUIX@/dotfiles/channels.scm"
+        nix-channel --update
+        ;;
+    reconfigure)
+        chezmoi --source "@GUIX@" apply
+        guix package --manifest="@GUIX@/dotfiles/manifests/$HOSTNAME.scm"
+        sudo --login guix system reconfigure "@GUIX@/dotfiles/guixsd/$HOSTNAME.scm"
+        NIX_PATH=nixpkgs="$HOME/.nix-defexpr/channels/nixos-unstable" nix-env --install '.*' -f "$HOME/manifest.nix"
+        ;;
+    template)
+        exec -a chezmoi chezmoi add --template --autotemplate "$@"
+        ;;
+    bin)
+        diff --unified \
+             <(for file in "$HOME"/bin/*; do basename "$file"; done) \
+             <(for file in "$HOME"/.local/share/chezmoi/bin/*; do basename "$file" | sed 's@@@'; done)
+        ;;
+    *)
+        exec -a chezmoi chezmoi "$@"
+        ;;
+esac

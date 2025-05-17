@@ -425,31 +425,31 @@
     (simple-service 'looking-glass-wrapper
                     home-files-service-type
                     (list `(".local/bin/looking-glass-client-wrapper"
-                            ,(local-file (string-append %project-directory "/dot_local/bin/executable_looking-glass-client-wrapper")
+                            ,(local-file (string-append %project-directory "/dot_local/bin/looking-glass-client-wrapper")
                                          #:recursive? #t))))
 
     (simple-service 'home-firefox-wrapper-twitch
                     home-files-service-type
                     (list `(".local/bin/firefox-twitch"
-                            ,(local-file (string-append %project-directory "/dot_local/bin/executable_firefox-twitch")
+                            ,(local-file (string-append %project-directory "/dot_local/bin/firefox-twitch")
                                          #:recursive? #t))))
 
     (simple-service 'home-firefox-wrapper-react
                     home-files-service-type
                     (list `(".local/bin/firefox-react"
-                            ,(local-file (string-append %project-directory "/dot_local/bin/executable_firefox-react")
+                            ,(local-file (string-append %project-directory "/dot_local/bin/firefox-react")
                                          #:recursive? #t))))
 
     (simple-service 'home-firefox-wrapper-vnc
                     home-files-service-type
                     (list `(".local/bin/firefox-vnc"
-                            ,(local-file (string-append %project-directory "/dot_local/bin/executable_firefox-vnc")
+                            ,(local-file (string-append %project-directory "/dot_local/bin/firefox-vnc")
                                          #:recursive? #t))))
 
     (simple-service 'home-firefox-wrapper-deprecated-default
                     home-files-service-type
                     (list `(".local/bin/firefox-deprecated-default"
-                            ,(local-file (string-append %project-directory "/dot_local/bin/executable_firefox-deprecated-default")
+                            ,(local-file (string-append %project-directory "/dot_local/bin/firefox-deprecated-default")
                                          #:recursive? #t))))
 
     (simple-service 'idea-ultimate-wrapper
@@ -705,12 +705,12 @@ _JAVA_AWT_WM_NONREPARENTING=1 PYTHONPATH='' exec -a \"$0\" ~a/bin/idea-ultimate 
     (simple-service 'vnc-config
                     home-files-service-type
                     (list `(".vnc/default.tigervnc" ,(local-file (string-append %project-directory "/private_dot_vnc/default.tigervnc")))
-                          `(".vnc/xstartup" ,(local-file (string-append %project-directory "/private_dot_vnc/executable_xstartup") #:recursive? #t))
-                          `(".vnc/xstartup-firefox" ,(local-file (string-append %project-directory "/private_dot_vnc/executable_xstartup-firefox") #:recursive? #t))
-                          `(".vnc/xstartup-quassel" ,(local-file (string-append %project-directory "/private_dot_vnc/executable_xstartup-quassel") #:recursive? #t))
-                          `(".vnc/xstartup-ratpoison" ,(local-file (string-append %project-directory "/private_dot_vnc/executable_xstartup-ratpoison") #:recursive? #t))
-                          `(".vnc/xstartup-stumpwm" ,(local-file (string-append %project-directory "/private_dot_vnc/executable_xstartup-stumpwm") #:recursive? #t))
-                          `(".vnc/xstartup-twm" ,(local-file (string-append %project-directory "/private_dot_vnc/executable_xstartup-twm") #:recursive? #t))))
+                          `(".vnc/xstartup" ,(local-file (string-append %project-directory "/private_dot_vnc/xstartup") #:recursive? #t))
+                          `(".vnc/xstartup-firefox" ,(local-file (string-append %project-directory "/private_dot_vnc/xstartup-firefox") #:recursive? #t))
+                          `(".vnc/xstartup-quassel" ,(local-file (string-append %project-directory "/private_dot_vnc/xstartup-quassel") #:recursive? #t))
+                          `(".vnc/xstartup-ratpoison" ,(local-file (string-append %project-directory "/private_dot_vnc/xstartup-ratpoison") #:recursive? #t))
+                          `(".vnc/xstartup-stumpwm" ,(local-file (string-append %project-directory "/private_dot_vnc/xstartup-stumpwm") #:recursive? #t))
+                          `(".vnc/xstartup-twm" ,(local-file (string-append %project-directory "/private_dot_vnc/xstartup-twm") #:recursive? #t))))
 
     (simple-service 'xsession-config
                     home-activation-service-type
@@ -1354,7 +1354,7 @@ account default : gmail
     ;;         "schedule-power"
     ;;         #~(begin
     ;;             (system*
-    ;;              #$(local-file (string-append %project-directory "/dot_local/bin/executable_schedule-power")
+    ;;              #$(local-file (string-append %project-directory "/dot_local/bin/schedule-power")
     ;;                            #:recursive? #t)))))))
 
     (service home-dbus-service-type)

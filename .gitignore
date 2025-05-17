@@ -3,7 +3,7 @@
 /dotfiles/maintenance/github/.terraform
 /tmp-cache
 /test-tmp/
-/bin/executable_xmenu.sh
+/bin/xmenu.sh
 /dot_muttrc_zabbix.guix_yandex.tmpl
 /dot_muttrc_asfjsdf_mail.tmpl
 /dot_muttrc_houdinihar_yandex.tmpl

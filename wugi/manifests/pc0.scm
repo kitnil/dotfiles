@@ -1,0 +1,39 @@
+;; GuixSD configuration file for the desktop machine.
+;; Copyright © 2024, 2025 Oleg Pykhalov <go.wigust@gmail.com>
+;; Released under the GNU GPLv3 or any later version.
+
+(define-module (wugi manifests pc0)
+  #:use-module (srfi srfi-26)
+  #:use-module (wugi manifests wm)
+  #:use-module (wugi utils)
+  #:use-module (wugi manifests ai)
+  #:use-module (wugi manifests deprecated)
+  #:use-module (wugi manifests desktop)
+  #:use-module (wugi manifests dotfiles)
+  #:use-module (wugi manifests emacs)
+  #:use-module (wugi manifests guile)
+  #:use-module (wugi manifests icons)
+  #:use-module (wugi manifests majordomo)
+  #:use-module (wugi manifests notebook-packages)
+  #:use-module (wugi manifests obs)
+  #:use-module (wugi manifests pc0-packages)
+  #:use-module (wugi manifests telegram)
+  #:export (%pc0-manifest))
+
+(define (%pc0-manifest)
+  (combined-manifest-from-files
+   (list (%pc0-packages-manifest)
+         (%desktop-manifest)
+         (%icons-manifest)
+         (%dotfiles-manifest)
+         (%emacs-manifest)
+         (%deprecated-manifest)
+         (%telegram-manifest)
+         (%majordomo-manifest)
+         (%notebook-packages-manifest)
+         (%obs-manifest)
+         (%ai-manifest)
+         (%guile-manifest)
+         (manifest-wm))))
+
+(%pc0-manifest)

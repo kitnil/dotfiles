@@ -30,7 +30,6 @@ check:
 benchmark:
 	emacs --eval "(progn (with-current-buffer (get-buffer \"*Benchmark Init Results Tabulated*\") (princ (buffer-substring-no-properties (point-min) (point-max)) #'external-debugging-output)) (kill-emacs))"
 
-MODULES = dotfiles/guixsd/modules
 HOSTNAME = $(shell hostname)
 
 QEMU_FLAGS =					\
@@ -45,7 +44,7 @@ guix time-machine -C dotfiles/channels-current.scm
 endef
 
 define guix-system-vm-arguments
-system vm -L $(MODULES) --no-offload dotfiles/system/$(1)
+system vm -L wugi --no-offload dotfiles/system/$(1)
 endef
 
 guix-system-vm-configurations =			\
@@ -63,11 +62,11 @@ $(foreach configuration,$(guix-system-vm-configurations),$(time-machine-guix-sys
 
 .PHONY: extension-graph
 extension-graph:
-	guix system -L $(MODULES) extension-graph dotfiles/guixsd/guixsd.scm | xdot -
+	guix system -L wugi extension-graph dotfiles/guixsd/guixsd.scm | xdot -
 
 .PHONY: shepherd-graph
 shepherd-graph:
-	guix system -L $(MODULES) shepherd-graph dotfiles/guixsd/guixsd.scm | xdot -
+	guix system -L wugi shepherd-graph dotfiles/guixsd/guixsd.scm | xdot -
 
 .PHONY: configure
 configure:
@@ -76,8 +75,8 @@ configure:
 dotfiles/guile/ssh.txt: dotfiles/guile/ssh.scm
 	guile dotfiles/guile/ssh.scm > dotfiles/guile/ssh.txt
 
-dotfiles/guixsd/modules/home/config/openssh.scm.gpg:
-	gpg --quiet --decrypt dotfiles/guixsd/modules/home/config/openssh.scm.gpg > dotfiles/guixsd/modules/home/config/openssh.scm
+wugi/home/config/openssh.scm.gpg:
+	gpg --quiet --decrypt wugi/home/config/openssh.scm.gpg > wugi/home/config/openssh.scm
 
 .PHONY: dotfiles/scripts/nix-ssh-known-hosts-to-file.scm
 dotfiles/scripts/nix-ssh-known-hosts-to-file.scm:
@@ -86,7 +85,7 @@ dotfiles/scripts/nix-ssh-known-hosts-to-file.scm:
 
 .PHONY: dotfiles/guixsd/home/guixsd.scm
 dotfiles/guixsd/home/guixsd.scm:
-	guix home -L dotfiles/guixsd/modules build dotfiles/guixsd/home/guixsd.scm
+	guix home -L wugi build dotfiles/guixsd/home/guixsd.scm
 
 .PHONY: dotfiles/nix/flake.lock
 dotfiles/nix/flake.lock:
@@ -126,8 +125,8 @@ dotfiles/mjru/intr.nix:
 	dotfiles/mjru/intr.nix > dotfiles/mjru/intr.json
 
 .PHONY: install
-install: dotfiles/guixsd/modules/home/config/openssh.scm.gpg dotfiles/guixsd/machines.scm dotfiles/nix/nix.conf dotfiles/scripts/nix-ssh-known-hosts-to-file.scm
-	dot_local/bin/executable_gpg-unlock > /dev/null
+install: wugi/home/config/openssh.scm.gpg dotfiles/guixsd/machines.scm dotfiles/nix/nix.conf dotfiles/scripts/nix-ssh-known-hosts-to-file.scm
+	dot_local/bin/gpg-unlock > /dev/null
 	update-desktop-database $(HOME)/.local/share/applications
 	mkdir -p $(HOME)/.config/mpv/scripts
 	ln -sf $(HOME)/.nix-profile/share/mpv/scripts/notify-send.lua $(HOME)/.config/mpv/scripts/notify-send.lua
@@ -141,7 +140,7 @@ install: dotfiles/guixsd/modules/home/config/openssh.scm.gpg dotfiles/guixsd/mac
 	ln -sf $(HOME)/.Xresources $(HOME)/.Xdefaults
 	install -Dm644 dotfiles/guile/pass.scm $(HOME)/.config/guile/pass.scm
 	install -Dm644 dotfiles/guile/config.scm $(HOME)/.config/guile/config.scm
-	guix home --load-path=dotfiles/guixsd/modules reconfigure dotfiles/guixsd/home/$(HOSTNAME).scm
+	guix home --load-path=wugi reconfigure dotfiles/guixsd/home/$(HOSTNAME).scm
 	install -Dm644 private_dot_ssh/known_hosts2 $(HOME)/.ssh/known_hosts2
 
 .PHONY: shepherd-restart
@@ -156,14 +155,14 @@ guile-ihs:
 
 .PHONY: deploy
 deploy:
-	guix deploy -L $(MODULES) dotfiles/guixsd/deploy.scm
+	guix deploy -L wugi dotfiles/guixsd/deploy.scm
 
 .PHONY: dotfiles/channels-current.scm
 dotfiles/channels-current.scm: clean-guile
-	 GUILE_LOAD_PATH="${HOME}/.local/share/chezmoi/dotfiles/guixsd/modules:${GUILE_LOAD_PATH}"	\
+	 GUILE_LOAD_PATH="${HOME}/.local/share/chezmoi/wugi:${GUILE_LOAD_PATH}"	\
          GUILE_AUTO_COMPILE=0										\
-         dot_local/bin/executable_guix-latest								\
-         -L dotfiles/guixsd/modules									\
+         dot_local/bin/guix-latest								\
+         -L wugi									\
          --channels=dotfiles/channels-current.scm							\
          dotfiles/manifests/desktop.scm									\
          dotfiles/manifests/emacs.scm									\
@@ -173,11 +172,11 @@ dotfiles/channels-current.scm: clean-guile
 
 .PHONY: dotfiles/channels-current-local-file.scm
 dotfiles/channels-current-local-file.scm: clean-guile
-	 GUILE_LOAD_PATH="${HOME}/.local/share/chezmoi/dotfiles/guixsd/modules:${GUILE_LOAD_PATH}"	\
+	 GUILE_LOAD_PATH="${HOME}/.local/share/chezmoi/wugi:${GUILE_LOAD_PATH}"	\
          GUILE_AUTO_COMPILE=0										\
-         dot_local/bin/executable_guix-latest								\
+         dot_local/bin/guix-latest								\
          --local-file											\
-         --load-path=dotfiles/guixsd/modules								\
+         --load-path=wugi								\
          --channels=dotfiles/channels-current-local-file.scm						\
          dotfiles/manifests/desktop.scm									\
          dotfiles/manifests/emacs.scm									\
@@ -198,11 +197,11 @@ guix-system-configurations =			\
   ws1.wugi.info
 
 define guix-system-arguments
-system build -L $(MODULES) dotfiles/guixsd/$(subst $(1),,$(2)).scm
+system build -L wugi dotfiles/guixsd/$(subst $(1),,$(2)).scm
 endef
 
 define guix-package-manifest-arguments
-shell -L $(MODULES) --manifest=dotfiles/manifests/$(subst $(1),,$(2)).scm -- exit 0
+shell -L wugi --manifest=dotfiles/manifests/$(subst $(1),,$(2)).scm -- exit 0
 endef
 
 prefix := guix-system-configuration-
@@ -264,7 +263,7 @@ container_registry=harbor.corp1.majordomo.ru
 $(state-to-vc-hostnames):
 	set -o nounset -o errexit -o pipefail
 	commit_8=$$(git rev-parse HEAD | cut -c -8)
-	container=$$($(guix_repository)/pre-inst-env guix pack -f docker-layered -S /bin=bin -L dotfiles/guixsd/modules -e '(@ (packages networking) state-to-vc-$@)')
+	container=$$($(guix_repository)/pre-inst-env guix pack -f docker-layered -S /bin=bin -L wugi -e '(@ (packages networking) state-to-vc-$@)')
 	skopeo copy --insecure-policy docker-archive\:$$container docker://$(container_registry)/monitoring/$@:$$commit_8
 	guix gc --delete $$container
 	cd $(HOME)/src/gitlab.intr/cd/state-to-git/apps/*/state-to-git-$@
@@ -278,11 +277,11 @@ state-to-vc-containers: $(state-to-vc-hostnames)
 
 .PHONY: guix-system-build-channels-current
 guix-system-build-channels-current:
-	sudo --login GUILE_LOAD_PATH="$(PWD)/dotfiles/guixsd/modules:$(GUILE_LOAD_PATH)" \
+	sudo --login GUILE_LOAD_PATH="$(PWD)/wugi:$(GUILE_LOAD_PATH)" \
             guix time-machine \
             --channels="$(PWD)/dotfiles/channels-current.scm" \
             -- system build \
-                --load-path="$(PWD)/dotfiles/guixsd/modules:$(GUILE_LOAD_PATH)" \
+                --load-path="$(PWD)/wugi:$(GUILE_LOAD_PATH)" \
                 "$(PWD)/dotfiles/guixsd/$(HOSTNAME).scm"
 
 container_registry=docker-registry.wugi.info
@@ -290,7 +289,7 @@ container_registry=docker-registry.wugi.info
 util-linux-with-udev:
 	set -o nounset -o errexit -o pipefail -o xtrace
 	commit_8=$$(git rev-parse HEAD | cut -c -8)
-	container=$$(guix pack -f docker -L dotfiles/guixsd/modules --max-layers=100 -S /bin=bin util-linux-with-udev bash coreutils guile guix-refresh.sh)
+	container=$$(guix pack -f docker -L wugi --max-layers=100 -S /bin=bin util-linux-with-udev bash coreutils guile guix-refresh.sh)
 	skopeo copy --insecure-policy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
 	guix gc --delete $$container
 	cd apps/base/maintenance-guix-refresh-gita
@@ -306,7 +305,7 @@ skopeo-umoci:
 skopeo-umoci:
 	set -o nounset -o errexit -o pipefail -o xtrace
 	commit_8=$$(git rev-parse HEAD | cut -c -8)
-	container=$$(guix pack -f docker -L dotfiles/guixsd/modules --max-layers=100 -S /bin=bin -S /etc=etc bash coreutils skopeo umoci nss-certs)
+	container=$$(guix pack -f docker -L wugi --max-layers=100 -S /bin=bin -S /etc=etc bash coreutils skopeo umoci nss-certs)
 	skopeo copy --insecure-policy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
 	guix gc --delete $$container
 
@@ -315,7 +314,7 @@ container_registry=docker-registry.wugi.info
 runc:
 	set -o nounset -o errexit -o pipefail -o xtrace
 	commit_8=$$(git rev-parse HEAD | cut -c -8)
-	container=$$(guix pack -f docker -L dotfiles/guixsd/modules --max-layers=100 -S /bin=bin -S /sbin=sbin util-linux-with-udev bash coreutils runc)
+	container=$$(guix pack -f docker -L wugi --max-layers=100 -S /bin=bin -S /sbin=sbin util-linux-with-udev bash coreutils runc)
 	skopeo copy --insecure-policy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
 	guix gc --delete $$container
 
@@ -332,7 +331,7 @@ container_registry=harbor.home.wugi.info
 isc-dhcp:
 	set -o nounset -o errexit -o pipefail -o xtrace
 	commit_8=$$(git rev-parse HEAD | cut -c -8)
-	container=$$(guix system image --load-path=/home/oleg/.local/share/chezmoi/dotfiles/guixsd/modules --max-layers=100 -t docker --network dotfiles/guixsd/docker-image-isc-dhcp.scm)
+	container=$$(guix system image --load-path=/home/oleg/.local/share/chezmoi/wugi --max-layers=100 -t docker --network dotfiles/guixsd/docker-image-isc-dhcp.scm)
 	skopeo copy docker-archive\:$$container docker://$(container_registry)/library/$@:$$commit_8
 
 container_registry=harbor.home.wugi.info
@@ -345,21 +344,21 @@ mumble:
 
 container_registry=harbor.home.wugi.info
 .ONESHELL:
-guix-image-workstation: dotfiles/guixsd/modules/home/config/openssh.scm.gpg
+guix-image-workstation: wugi/home/config/openssh.scm.gpg
 	set -o nounset -o errexit -o pipefail -o xtrace
 	IMG=$(container_registry)/library/$@:$$(git rev-parse --abbrev-ref HEAD)-$$(git rev-parse HEAD | cut -c -8)-$$(date +%s)
-	container=$$(GUILE_LOAD_PATH="dotfiles/guixsd/modules:${GUILE_LOAD_PATH}" GUIX_PACKAGE_PATH="dotfiles/guixsd/modules:${GUIX_PACKAGE_PATH}" guix time-machine --channels=dotfiles/channels-workstation.scm -- system image --substitute-urls='https://bordeaux.guix.gnu.org https://substitutes.nonguix.org http://ci.guix.trop.in' --max-layers=100 -t docker --network dotfiles/guixsd/guix-image-workstation.scm)
+	container=$$(guix time-machine --channels=wugi/etc/guix/channels/workstation.scm -- system image --load-path=. --substitute-urls='https://bordeaux.guix.gnu.org https://substitutes.nonguix.org http://ci.guix.trop.in' --max-layers=100 -t docker --network -e '((@ (wugi system container-workstation) %container-workstation))')
 	skopeo copy docker-archive\:$$container docker://$$IMG
 	echo $$IMG
 
 .ONESHELL:
 pc0-manifest:
 	set -o nounset -o errexit -o pipefail -o xtrace
-	GUILE_LOAD_PATH="dotfiles/guixsd/modules:${GUILE_LOAD_PATH}" GUIX_PACKAGE_PATH="dotfiles/guixsd/modules:${GUIX_PACKAGE_PATH}" guix time-machine --channels=dotfiles/channels-workstation.scm -- build -m dotfiles/manifests/pc0.scm --substitute-urls='https://bordeaux.guix.gnu.org https://substitutes.nonguix.org http://ci.guix.trop.in'
+	GUILE_LOAD_PATH="wugi:${GUILE_LOAD_PATH}" guix time-machine --channels=wugi/etc/guix/channels/workstation.scm -- build -m wugi/manifests/pc0.scm --substitute-urls='https://bordeaux.guix.gnu.org https://substitutes.nonguix.org http://ci.guix.trop.in'
 
 container_registry=harbor.home.wugi.info
 .ONESHELL:
-guix-image-builder: dotfiles/guixsd/modules/home/config/openssh.scm.gpg
+guix-image-builder: wugi/home/config/openssh.scm.gpg
 	set -o nounset -o errexit -o pipefail -o xtrace
 	commit_8=$$(git rev-parse HEAD | cut -c -8)
 	container=$$(guix time-machine --channels=dotfiles/channels-current-guix-image-builder.scm -- system image --substitute-urls='https://guix.wugi.info https://bordeaux.guix.gnu.org https://substitutes.nonguix.org http://ci.guix.trop.in' --max-layers=100 -t docker --network ~/.local/share/chezmoi/dotfiles/guixsd/guix-image-builder.scm)
@@ -383,7 +382,7 @@ workstation-controller:
 
 .PHONY: dotfiles-update-commit
 dotfiles-update-commit:
-	guix shell guile guile-git guile-gcrypt guile-json yq -- dot_local/bin/executable_dotfiles-update-commit
+	guix shell guile guile-git guile-gcrypt guile-json yq -- dot_local/bin/dotfiles-update-commit
 
 container_registry=harbor.home.wugi.info
 .ONESHELL:
