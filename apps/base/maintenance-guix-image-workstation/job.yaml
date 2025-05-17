@@ -24,6 +24,9 @@ spec:
         - /usr/local/bin/guile-script.scm
         image: harbor.home.wugi.info/library/util-linux-with-udev:44cd2b5c
         name: nsenter
+        env:
+        - name: RUNC_CONTAINER_ID
+          value: runc-kube1-guix-builder
         resources:
           limits:
             cpu: 14000m
