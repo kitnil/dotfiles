@@ -72,7 +72,7 @@
                  (copy-file (string-append home "/intr.json")
                             "wugi/etc/mjru/intr.json")
                  (zero? (system* "echo" "guix" "shell" "git" "make" "skopeo" "--"
-                                 "make" "guix-image-workstation"))))))))
+                                 "make" (getenv "RUNC_MAKE_TARGET")))))))))
 
 (define (kubectl-program)
   ;; TODO: Use Kubernetes HTTP API without kubectl.
@@ -81,7 +81,7 @@
      (system* "/home/oleg/.guix-profile/bin/kubectl"
               (string-append "--namespace=" (getenv "KUBERNETES_NAMESPACE"))
               "exec" "--stdin=true"
-              ,(string-append "pod/" (getenv "RUNC_CONTAINER_ID")) "--"
+              (string-append "pod/" (getenv "RUNC_CONTAINER_ID")) "--"
               "runc" "exec"
               "--user" (string-append
                         (getenv "RUNC_UID") ":" (getenv "RUNC_GID"))
@@ -131,6 +131,11 @@
            ,@(or (and=> (getenv "RUNC_GID")
                         (lambda (gid)
                           (list (string-append "RUNC_GID=" gid))))
+                 '())
+           ,@(or (and=> (getenv "RUNC_MAKE_TARGET")
+                        (lambda (make-target)
+                          (list
+                           (string-append "RUNC_MAKE_TARGET" make-target))))
                  '())
            "/run/current-system/profile/bin/guile" "--no-auto-compile"
            "-c" ,(with-output-to-string (lambda () (write (kubectl-program)))))))
