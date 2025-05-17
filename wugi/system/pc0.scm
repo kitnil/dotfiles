@@ -453,7 +453,7 @@ cgroup_device_acl = [
                                                                                        (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/substitutes.nonguix.org.pub")
                                                                                        (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/bordeaux.guix.gnu.org.pub"))
                                                                                  %default-authorized-guix-keys))
-                                                        (substitute-urls '("http://10.8.19.125:5556" ;TODO: Replace with domain name.
+                                                        (substitute-urls '("http://runc-kube1-guix-builder:5556"
                                                                            "https://bordeaux.guix.gnu.org"
                                                                            "https://substitutes.nonguix.org"
                                                                            "http://ci.guix.trop.in"))))
