@@ -184,23 +184,23 @@
     ;; This is where user accounts are specified.  The "root"
     ;; account is implicit, and is initially created with the
     ;; empty password.
-    (users (cons (user-account
-                  (name "oleg")
-                  (comment "Oleg Pykhalov")
-                  (group "users")
+    (users (append (list (user-account
+                          (name "oleg")
+                          (comment "Oleg Pykhalov")
+                          (group "users")
 
-                  ;; Adding the account to the "wheel" group
-                  ;; makes it a sudoer.  Adding it to "audio"
-                  ;; and "video" allows the user to play sound
-                  ;; and access the webcam.
-                  (supplementary-groups '("wheel"
-                                          "audio"
-                                          "video"
-                                          "docker"
-                                          "kvm"
-                                          "input"
-                                          "libvirt")))
-                 %base-user-accounts))
+                          ;; Adding the account to the "wheel" group
+                          ;; makes it a sudoer.  Adding it to "audio"
+                          ;; and "video" allows the user to play sound
+                          ;; and access the webcam.
+                          (supplementary-groups '("wheel"
+                                                  "audio"
+                                                  "video"
+                                                  "docker"
+                                                  "kvm"
+                                                  "input"
+                                                  "libvirt"))))
+                   %base-user-accounts))
 
     ;; Globally-installed packages.
     (packages (append (list screen sway)
