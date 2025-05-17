@@ -1,0 +1,5 @@
+#!/usr/bin/env bash
+
+swaymsg -m -t SUBSCRIBE "['workspace']" \
+    | jq --unbuffered --raw-output '.current.output' \
+    | while read line; do if [[ "$line" == "HDMI-A-1" ]]; then swaymsg output HDMI-A-1 dpms on; else swaymsg output HDMI-A-1 dpms off; fi; done
