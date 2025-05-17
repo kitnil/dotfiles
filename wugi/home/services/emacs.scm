@@ -93,6 +93,7 @@
                                  "modules/web.el"
                                  "modules/yaml.el"
                                  "modules/youtube.el"
+                                 "modules/window.el"
 
                                  "snippets/erc-mode/problem"
                                  "snippets/markdown-mode/ssl-connect"
