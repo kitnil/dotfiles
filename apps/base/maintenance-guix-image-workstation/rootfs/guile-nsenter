@@ -77,7 +77,8 @@
   `(begin
      (setenv "KUBECONFIG" "/home/oleg/.kube/config")
      (system* "/home/oleg/.guix-profile/bin/kubectl" "--namespace=guix"
-              "exec" "--stdin=true" "pod/runc-kube1-guix-builder" "--"
+              "exec" "--stdin=true"
+              ,(string-append "pod/" (getenv "RUNC_CONTAINER_ID")) "--"
               "runc" "exec"
               "--user" "1000:998"
               "--env" (string-append "GIT_COMMIT=" (getenv "GIT_COMMIT"))
@@ -110,6 +111,7 @@
            (string-append "--setgid=" (number->string 998))
            "/usr/bin/env"
            (string-append "GIT_COMMIT=" (getenv "GIT_COMMIT"))
+           (string-append "RUNC_CONTAINER_ID=" (getenv "RUNC_CONTAINER_ID"))
            "/run/current-system/profile/bin/guile" "--no-auto-compile"
            "-c" (with-output-to-string (lambda () (write (kubectl-program))))))
 
