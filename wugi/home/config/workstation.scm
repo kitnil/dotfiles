@@ -106,6 +106,10 @@
                                     home-files-service-type
                                     (list `(".config/mako/config"
                                             ,(local-file (string-append %distro-directory "/dot_config/mako/config")))))
+                    (simple-service 'aichat-config
+                                    home-files-service-type
+                                    (list `(".config/aichat/config.yaml"
+                                            ,(local-file (string-append %distro-directory "/dot_config/aichat/config.yaml")))))
                     (service home-sway-service-type)
                     (service home-wayvnc-service-type)
                     (service home-scream-service-type
