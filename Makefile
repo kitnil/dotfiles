@@ -354,7 +354,7 @@ guix-image-workstation: wugi/home/config/openssh.scm.gpg
 .ONESHELL:
 pc0-manifest:
 	set -o nounset -o errexit -o pipefail -o xtrace
-	GUILE_LOAD_PATH="wugi:${GUILE_LOAD_PATH}" guix time-machine --channels=wugi/etc/guix/channels/workstation.scm -- build -m wugi/manifests/pc0.scm --substitute-urls='https://bordeaux.guix.gnu.org https://substitutes.nonguix.org http://ci.guix.trop.in'
+	guix time-machine --channels=wugi/etc/guix/channels/workstation.scm -- build --load-path=. -m wugi/manifests/pc0.scm --substitute-urls='https://bordeaux.guix.gnu.org https://substitutes.nonguix.org http://ci.guix.trop.in'
 
 container_registry=harbor.home.wugi.info
 .ONESHELL:
