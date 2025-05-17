@@ -3,17 +3,16 @@
 ;; for a "bare bones" setup, with no X11 display server.
 
 (define-module (wugi system pc0)
-  #:use-module ((gnu services) #:select (service-type
-                                         service-extension
-                                         service
-                                         simple-service
-                                         modify-services))
   #:use-module (gnu packages audio)
   #:use-module (gnu packages linux)
   #:use-module (gnu packages screen)
   #:use-module (gnu packages ssh)
   #:use-module (gnu packages wm)
-  #:use-module (gnu services)
+  #:use-module ((gnu services) #:select (service-type
+                                         service-extension
+                                         service
+                                         simple-service
+                                         modify-services))
   #:use-module (gnu services avahi)
   #:use-module (gnu services dbus)
   #:use-module (gnu services desktop)
