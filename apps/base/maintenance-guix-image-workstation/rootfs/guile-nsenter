@@ -135,7 +135,7 @@
            ,@(or (and=> (getenv "RUNC_MAKE_TARGET")
                         (lambda (make-target)
                           (list
-                           (string-append "RUNC_MAKE_TARGET" make-target))))
+                           (string-append "RUNC_MAKE_TARGET=" make-target))))
                  '())
            "/run/current-system/profile/bin/guile" "--no-auto-compile"
            "-c" ,(with-output-to-string (lambda () (write (kubectl-program)))))))
