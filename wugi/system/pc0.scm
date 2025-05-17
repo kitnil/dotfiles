@@ -3,6 +3,8 @@
 ;; for a "bare bones" setup, with no X11 display server.
 
 (define-module (wugi system pc0)
+  #:use-module (gnu bootloader)
+  #:use-module (gnu bootloader grub)
   #:use-module (gnu packages audio)
   #:use-module (gnu packages linux)
   #:use-module (gnu packages screen)
