@@ -46,6 +46,7 @@
   #:use-module ((wugi packages linux) #:select (kvmfr-linux-module))
   #:use-module (wugi services backup)
   #:use-module (wugi services kubernetes)
+  #:use-module (wugi utils)
   #:use-module (wugi utils package)
   #:use-module (srfi srfi-26)
   #:export (%pc0))
