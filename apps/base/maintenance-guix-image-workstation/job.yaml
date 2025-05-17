@@ -29,6 +29,10 @@ spec:
           value: runc-kube1-guix-builder
         - name: KUBERNETES_NAMESPACE
           value: guix
+        - name: NSENTER_UID
+          value: "1000"
+        - name: NSENTER_GID
+          value: "998"
         resources:
           limits:
             cpu: 14000m
