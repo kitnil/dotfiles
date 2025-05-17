@@ -252,7 +252,7 @@
                                            '()))))
           (service-extension shepherd-root-service-type
                              kubernetes-k3s-shepherd-service)
-          (service-extension log-rotation-service-type
+          (service-extension rottlog-service-type
                              kubernetes-k3s-log-rotations)))
    (default-value '())
    (description "Run the kubernetes-k3s.")))
@@ -364,7 +364,7 @@
    (extensions
     (list (service-extension shepherd-root-service-type
                              kubelet-shepherd-service)
-          (service-extension log-rotation-service-type
+          (service-extension rottlog-service-type
                              kubelet-log-rotations)
           (service-extension profile-service-type
                              (lambda (config)
@@ -430,7 +430,7 @@
    (extensions
     (list (service-extension shepherd-root-service-type
                              edgecore-shepherd-service)
-          (service-extension log-rotation-service-type
+          (service-extension rottlog-service-type
                              edgecore-log-rotations)))
    (default-value '())
    (description "Run the edgecore.")))
