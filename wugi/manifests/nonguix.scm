@@ -7,8 +7,7 @@
 
 (define (%nonguix-manifest)
   (define fonts
-    (list font-apl2741-unicode
-          font-apple-color-emoji
+    (list font-apple-color-emoji
           font-apple-new-york
           font-apple-sf-arabic
           font-apple-sf-compact
