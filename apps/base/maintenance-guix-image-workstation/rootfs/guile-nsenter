@@ -75,7 +75,6 @@
                                  "make" "guix-image-workstation"))))))))
 
 (define (kubectl-program)
-  ;; TODO: Do not hardcode Kubernetes namespace.
   ;; TODO: Do not hardcode uid and gid.
   ;; TODO: Do not hardcode runc container name.
   ;; TODO: Use Kubernetes HTTP API without kubectl.
