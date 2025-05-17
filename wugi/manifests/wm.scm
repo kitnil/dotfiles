@@ -10,40 +10,38 @@
   #:use-module (gnu packages wm)
   #:use-module (gnu packages xdisorg)
   #:use-module (guix profiles)
-  #:export (manifest-wm))
+  #:export (%wm-manifest))
 
+(define (%wm-manifest)
+  (define packages-wm
+    (define terminals
+      (list alacritty))
 
+    (define wm
+      (list sway))
 
-(define (packages-wm)
-  (define terminals
-    (list alacritty))
+    (define i3
+      (list i3-wm i3status))
 
-  (define wm
-    (list sway))
+    (define sway-utils
+      (list bemenu grim fnott slurp swayidle waybar))
 
-  (define i3
-    (list i3-wm i3status))
+    (define clipboard
+      (list wl-clipboard))
 
-  (define sway-utils
-    (list bemenu grim fnott slurp swayidle waybar))
+    (define wayland-utils
+      (list wayvnc
+            wl-mirror
+            wtype
+            xdg-desktop-portal
+            xdg-desktop-portal-gtk
+            xdg-desktop-portal-wlr))
 
-  (define clipboard
-    (list wl-clipboard))
+    (append clipboard
+            terminals
+            wm
+            sway-utils
+            i3
+            wayland-utils))
 
-  (define wayland-utils
-    (list wayvnc
-          wl-mirror
-          wtype
-          xdg-desktop-portal
-          xdg-desktop-portal-gtk
-          xdg-desktop-portal-wlr))
-
-  (append clipboard
-          terminals
-          wm
-          sway-utils
-          i3
-          wayland-utils))
-
-(define (manifest-wm)
-  (packages->manifest (packages-wm)))
+  (packages->manifest packages-wm))

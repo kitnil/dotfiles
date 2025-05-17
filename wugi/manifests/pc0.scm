@@ -36,6 +36,6 @@
          (%obs-manifest)
          (%ai-manifest)
          (%guile-manifest)
-         (manifest-wm))))
+         (%wm-manifest))))
 
 (%pc0-manifest)
