@@ -18,12 +18,14 @@
   #:use-module (wugi manifests obs)
   #:use-module (wugi manifests pc0-packages)
   #:use-module (wugi manifests telegram)
+  #:use-module (wugi manifests nonguix)
   #:export (%pc0-manifest))
 
 (define (%pc0-manifest)
   (combined-manifest-from-files
    (list (%pc0-packages-manifest)
          (%desktop-manifest)
+         (%nonguix-manifest)
          (%icons-manifest)
          (%dotfiles-manifest)
          (%emacs-manifest)
