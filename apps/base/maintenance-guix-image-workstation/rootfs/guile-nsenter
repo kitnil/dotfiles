@@ -46,6 +46,12 @@
 (define %git-origin
   "https://cgit.wugi.info/git/wigust/dotfiles")
 
+(define kubectl
+  "/home/oleg/.guix-profile")
+
+(define kubeconfig
+  "/home/oleg/.kube/config")
+
 (define (runc-code)
   `(begin
      (define (git . args)
@@ -77,8 +83,8 @@
 (define (kubectl-program)
   ;; TODO: Use Kubernetes HTTP API without kubectl.
   `(begin
-     (setenv "KUBECONFIG" "/home/oleg/.kube/config")
-     (system* "/home/oleg/.guix-profile/bin/kubectl"
+     (setenv "KUBECONFIG" ,kubeconfig)
+     (system* ,(string-append kubectl "/bin/kubectl")
               (string-append "--namespace=" (getenv "KUBERNETES_NAMESPACE"))
               "exec" "--stdin=true"
               (string-append "pod/" (getenv "RUNC_CONTAINER_ID")) "--"
