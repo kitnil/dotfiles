@@ -19,9 +19,6 @@
   (define wm
     (list sway))
 
-  (define i3
-    (list i3-wm i3status))
-
   (define sway-utils
     (list bemenu grim fnott slurp swayidle waybar))
 
