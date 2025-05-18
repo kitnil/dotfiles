@@ -338,14 +338,17 @@ remote-random
                           (modify-services %base-services
                             (guix-service-type config =>
                                                (guix-configuration
-                                                (authorized-keys (append (list (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/guix.wugi.info.pub")
-                                                                               (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/vm1.wugi.info.pub")
-                                                                               (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/vm2.wugi.info.pub")
-                                                                               (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/mirror.brielmaier.net.pub")
-                                                                               (local-file "/home/oleg/.local/share/chezmoi/dotfiles/guixsd/etc/substitutes/substitutes.nonguix.org.pub"))
-                                                                         %default-authorized-guix-keys))
-                                                (substitute-urls '("https://guix.wugi.info"
-                                                                   "https://bordeaux.guix.gnu.org"
+                                                (authorized-keys
+                                                 (append
+                                                  (let ((substitute-file
+                                                         (cut string-append %distro-directory "/wugi/etc/substitutes/" <>)))
+                                                    (list (local-file (substitute-file "guix.wugi.info.pub"))
+                                                          (local-file (substitute-file "vm1.wugi.info.pub"))
+                                                          (local-file (substitute-file "vm2.wugi.info.pub"))
+                                                          (local-file (substitute-file "mirror.brielmaier.net.pub"))
+                                                          (local-file (substitute-file "substitutes.nonguix.org.pub"))))
+                                                  %default-authorized-guix-keys))
+                                                (substitute-urls '("https://bordeaux.guix.gnu.org"
                                                                    "https://substitutes.nonguix.org"))))
                             ;; (sysctl-service-type _ =>
                             ;;                      (sysctl-configuration
