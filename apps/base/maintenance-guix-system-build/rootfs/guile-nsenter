@@ -69,6 +69,7 @@
                  (copy-file (string-append home "/openssh.scm")
                             "wugi/home/config/openssh.scm")
                  ;; TODO: Do not copy intr.json from other location.
+                 (system* "mkdir" "-p" "wugi/etc/mjru")
                  (copy-file (string-append home "/intr.json")
                             "wugi/etc/mjru/intr.json")
                  (zero? (system* "guix" "shell" "git" "make" "skopeo" "--"
