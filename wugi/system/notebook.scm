@@ -334,22 +334,23 @@ remote-random
                        (dbus-service)
                        (service ntp-service-type))
 
-                      (modify-services
-                          (modify-services %base-services
-                            (guix-service-type config =>
-                                               (guix-configuration
-                                                (authorized-keys
-                                                 (append
-                                                  (let ((substitute-file
-                                                         (cut string-append %distro-directory "/wugi/etc/substitutes/" <>)))
-                                                    (list (local-file (substitute-file "guix.wugi.info.pub"))
-                                                          (local-file (substitute-file "vm1.wugi.info.pub"))
-                                                          (local-file (substitute-file "vm2.wugi.info.pub"))
-                                                          (local-file (substitute-file "mirror.brielmaier.net.pub"))
-                                                          (local-file (substitute-file "substitutes.nonguix.org.pub"))))
-                                                  %default-authorized-guix-keys))
-                                                (substitute-urls '("https://bordeaux.guix.gnu.org"
-                                                                   "https://substitutes.nonguix.org")))))
+                      (modify-services %base-services
+                        (guix-service-type
+                         config =>
+                         (guix-configuration
+                          (authorized-keys
+                           (append
+                            (let ((substitute-file
+                                   (cut string-append %distro-directory "/wugi/etc/substitutes/" <>)))
+                              (list
+                               (local-file (substitute-file "guix.wugi.info.pub"))
+                               (local-file (substitute-file "vm1.wugi.info.pub"))
+                               (local-file (substitute-file "vm2.wugi.info.pub"))
+                               (local-file (substitute-file "mirror.brielmaier.net.pub"))
+                               (local-file (substitute-file "substitutes.nonguix.org.pub"))))
+                            %default-authorized-guix-keys))
+                          (substitute-urls '("https://bordeaux.guix.gnu.org"
+                                             "https://substitutes.nonguix.org"))))
                         (console-font-service-type
                          configuration =>
                          (map
