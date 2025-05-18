@@ -71,7 +71,7 @@
 
     (initrd microcode-initrd)
     (kernel linux-5.13-with-bpf)
-    (firmware (append (list (@ (packages linux) linux-firmware))
+    (firmware (append (list (@ (wugi packages linux) linux-firmware))
                       %base-firmware))
 
     (kernel-arguments '("net.ifnames=0"
