@@ -70,7 +70,8 @@
 
   (initrd microcode-initrd)
   (kernel linux-5.13-with-bpf)
-  (firmware (cons* (@ (packages linux) linux-firmware) %base-firmware))
+  (firmware (append (list (@ (packages linux) linux-firmware))
+                    %base-firmware))
 
   (kernel-arguments '("net.ifnames=0"
                       "biosdevname=0"
