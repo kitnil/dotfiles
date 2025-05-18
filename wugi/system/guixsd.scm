@@ -1790,7 +1790,9 @@ PasswordAuthentication yes")))
                                    (global-directives
                                     `((events . ()) ;default-value
                                       (include . ,(run-with-store (open-connection)
-                                                    (lower-object (local-file "etc/nginx/stream.conf"))))))
+                                                    (lower-object
+                                                     (local-file
+                                                      (string-append %distro-directory "dotfiles/guixsd/etc/nginx/stream.conf")))))))
                                    (server-blocks %nginx-server-blocks)
                                    (upstream-blocks
                                     (list
