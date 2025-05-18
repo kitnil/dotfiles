@@ -278,7 +278,11 @@ client-to-client
                             (elogind-service)
                             (service bird-service-type
                                      (bird-configuration
-                                      (config-file (local-file "bird.conf"))))
+                                      (config-file
+                                       (local-file
+                                        (string-append
+                                         %distro-directory
+                                         "/dotfiles/guixsd/bird.conf")))))
 
                             (service prometheus-node-exporter-service-type)
                             (service prometheus-bird-exporter-service-type
