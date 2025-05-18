@@ -176,8 +176,8 @@ dotfiles/packer/build.scm:
 
 guix-system-configurations =			\
   guixsd					\
-  vm1.wugi.info					\
-  vm2.wugi.info
+  vm1					\
+  vm2
 
 define guix-system-arguments
 build --load-path=. -e "((@ ($(subst $(1),,$(2))) %$(subst $(1),,$(2))))"
