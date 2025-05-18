@@ -8,7 +8,6 @@
   #:use-module (ice-9 match)
   #:use-module (nongnu packages linux)
   #:use-module (nongnu system linux-initrd)
-  #:use-module (services nix)
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-26)
   #:use-module (wugi bootloader grub)
