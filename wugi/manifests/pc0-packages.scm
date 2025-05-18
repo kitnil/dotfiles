@@ -49,6 +49,7 @@
          dialog
          direnv
          dmenu
+         dtach
          fd
          freerdp
          git
