@@ -234,7 +234,11 @@ client-to-client
 
                             (service dante-service-type
                                      (dante-configuration
-                                      (config-file (local-file "sockd.conf"))
+                                      (config-file
+                                       (local-file
+                                        (string-append
+                                         %distro-directory
+                                         "/dotfiles/guixsd/sockd.conf")))
                                       (requirement '(tor))
                                       (socks-directroute-fallback? #t)))
 
