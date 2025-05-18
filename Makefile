@@ -180,7 +180,7 @@ guix-system-configurations =			\
   vm2.wugi.info
 
 define guix-system-arguments
-system build -L wugi dotfiles/guixsd/$(subst $(1),,$(2)).scm
+build --load-path=. -e "((@ ($(subst $(1),,$(2))) %$(subst $(1),,$(2))))"
 endef
 
 define guix-package-manifest-arguments
