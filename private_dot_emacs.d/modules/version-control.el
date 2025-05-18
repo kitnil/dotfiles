@@ -385,7 +385,9 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
           (replace-string "private_dot_emacs.d: modules: " "emacs: "
                           nil 0 end))
         (save-excursion
-          (replace-string ".el" "" nil 0 end)))
+          (replace-string ".el" "" nil 0 end))
+        (save-excursion
+          (replace-string " -" ":" nil 0 end)))
 
       (goto-char 2)
       (next-line)
