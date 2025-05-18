@@ -11,6 +11,6 @@ spec:
       - name: nsenter
         env:
         - name: GIT_COMMIT
-          value: 2f0582e5be6d45b61775095ff87eb3fc484522a6
+          value: 74ad586b2db0c7c6f7b8f8ae22093c11c9ea4781
         - name: RUNC_MAKE_TARGET
           value: "pc0"
