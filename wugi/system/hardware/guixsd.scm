@@ -132,14 +132,14 @@
 
                       ;; Enable LUKS TRIM/DISCARD pass-through.
                       "rd.luks.options=discard"))
-  (users (cons* (user-account
-                 (name "oleg")
-                 (uid 1000)
-                 (comment "Oleg Pykhalov")
-                 (group "users")
-                 (supplementary-groups '("wheel"))
-                 (home-directory "/home/oleg"))
-                %base-user-accounts))
+  (users (append (list (user-account
+                        (name "oleg")
+                        (uid 1000)
+                        (comment "Oleg Pykhalov")
+                        (group "users")
+                        (supplementary-groups '("wheel"))
+                        (home-directory "/home/oleg")))
+                 %base-user-accounts))
   (sudoers-file (plain-file "sudoers"
                             (string-join `("root ALL=(ALL) ALL"
                                            "%wheel ALL=(ALL) ALL"
