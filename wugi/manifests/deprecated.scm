@@ -4,7 +4,8 @@
   #:use-module (guix profiles)
   #:use-module (guix store)
   #:use-module (srfi srfi-1)
-  #:export (%deprecated-manifest))
+  #:export (%deprecated-manifest
+            openssh))
 
 (define channels
   (list (channel
@@ -18,20 +19,20 @@
          (branch "master")
          (commit "68340baa8cdc1af1b8a8982c2607ff1dda195ee7"))))
 
+(define (inferior)
+  (inferior-for-channels channels))
+
+(define (openssh)
+  (first (lookup-inferior-packages (inferior) "openssh")))
+
+(define (tigervnc-client)
+  (last (lookup-inferior-packages (inferior) "tigervnc-client")))
+
+(define (tigervnc-server)
+  (last (lookup-inferior-packages (inferior) "tigervnc-server")))
+
+(define (autofs)
+  (last (lookup-inferior-packages (inferior) "autofs")))
+
 (define (%deprecated-manifest)
-  (define inferior
-    (inferior-for-channels channels))
-
-  (define openssh
-    (first (lookup-inferior-packages inferior "openssh")))
-
-  (define tigervnc-client
-    (last (lookup-inferior-packages inferior "tigervnc-client")))
-
-  (define tigervnc-server
-    (last (lookup-inferior-packages inferior "tigervnc-server")))
-
-  (define autofs
-    (last (lookup-inferior-packages inferior "autofs")))
-
-  (packages->manifest (list openssh)))
+  (packages->manifest (list (openssh))))
