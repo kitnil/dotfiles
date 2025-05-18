@@ -177,8 +177,7 @@ dotfiles/packer/build.scm:
 guix-system-configurations =			\
   guixsd					\
   vm1.wugi.info					\
-  vm2.wugi.info					\
-  ws1.wugi.info
+  vm2.wugi.info
 
 define guix-system-arguments
 system build -L wugi dotfiles/guixsd/$(subst $(1),,$(2)).scm
