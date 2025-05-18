@@ -64,6 +64,7 @@
   #:use-module (wugi config)
   #:use-module (wugi manifests deprecated)
   #:use-module (wugi packages certs)
+  #:use-module (wugi system hardware guixsd)
   #:use-module (wugi packages monitoring)
   #:use-module (wugi packages netboot)
   #:use-module (wugi services admin)
@@ -1275,15 +1276,8 @@ location / {
 ;;; Entry point
 ;;;
 
-;; TODO: Get rid of full path
-(define %hardware-file
-  (or (and=> (current-filename)
-             (lambda (file)
-               (string-append (dirname file) "/hardware/guixsd.scm")))
-      "/home/oleg/src/dotfiles/guixsd/hardware/guixsd.scm"))
-
 (define (%guixsd)
-  (let ((base-system (load %hardware-file)))
+  (let ((base-system (%guixsd-hardware)))
     (operating-system
       (inherit base-system)
 
