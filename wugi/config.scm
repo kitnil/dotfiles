@@ -835,7 +835,7 @@ remote-random
                                  (with-input-from-file "/etc/jenkins/jenkins.properties"
                                    (@ (ice-9 rdelim) read-string))))
                  #\newline)
-                "Missing `/etc/jenkins/jenkins.properties' file.")))))
+                '("Missing `/etc/jenkins/jenkins.properties' file."))))))
 
 
 ;;;
