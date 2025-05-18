@@ -149,5 +149,5 @@
                                                                    "/run/current-system/profile/bin/herd * vncserver10")
                                                                  ",")))
                                          "\n")))
-  (packages (cons* ratpoison %base-packages))
+  (packages %base-packages)
   (services %base-services))
