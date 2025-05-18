@@ -180,7 +180,7 @@ guix-system-configurations =			\
   vm2
 
 define guix-system-arguments
-build --load-path=. -e "((@ ($(subst $(1),,$(2))) %$(subst $(1),,$(2))))"
+build --load-path=. -e "((@ (wugi system $(subst $(1),,$(2))) %$(subst $(1),,$(2))))"
 endef
 
 define guix-package-manifest-arguments
