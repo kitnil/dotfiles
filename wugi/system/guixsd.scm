@@ -1882,7 +1882,11 @@ PasswordAuthentication yes")))
 
                          (service bird-service-type
                                   (bird-configuration
-                                   (config-file (local-file "bird-wugi.info.conf"))))
+                                   (config-file
+                                    (local-file
+                                     (string-append
+                                      %distro-directory
+                                      "/dotfiles/guixsd/bird-wugi.info.conf")))))
 
                          ;; TODO: Move those services.
 
