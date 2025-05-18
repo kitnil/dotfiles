@@ -32,8 +32,6 @@
   #:use-module (ice-9 match)
   #:use-module (nongnu packages linux)
   #:use-module (nongnu system linux-initrd)
-  #:use-module (services nix)
-  #:use-module (services openvpn)
   #:use-module (srfi srfi-1)
   #:use-module (srfi srfi-26)
   #:use-module (wugi bootloader grub)
@@ -43,6 +41,8 @@
   #:use-module (wugi services backup)
   #:use-module (wugi services kubernetes)
   #:use-module (wugi services monitoring)
+  #:use-module (wugi services nix)
+  #:use-module (wugi services openvpn)
   #:use-module (wugi utils package)
   #:export (%notebook))
 
