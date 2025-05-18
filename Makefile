@@ -170,22 +170,6 @@ dotfiles/channels-current.scm: clean-guile
          dotfiles/manifests/wigust.scm									\
          dotfiles/guixsd/guixsd.scm
 
-.PHONY: dotfiles/channels-current-local-file.scm
-dotfiles/channels-current-local-file.scm: clean-guile
-	 GUILE_LOAD_PATH="${HOME}/.local/share/chezmoi/wugi:${GUILE_LOAD_PATH}"	\
-         GUILE_AUTO_COMPILE=0										\
-         dot_local/bin/guix-latest								\
-         --local-file											\
-         --load-path=wugi								\
-         --channels=dotfiles/channels-current-local-file.scm						\
-         dotfiles/manifests/desktop.scm									\
-         dotfiles/manifests/emacs.scm									\
-         dotfiles/manifests/guix-collection.scm								\
-         dotfiles/manifests/wigust.scm									\
-         dotfiles/guixsd/guixsd.scm									\
-         dotfiles/guixsd/vm1.wugi.info.scm								\
-         dotfiles/guixsd/vm2.wugi.info.scm
-
 .PHONY: dotfiles/packer/build.scm
 dotfiles/packer/build.scm:
 	sh -c 'cd dotfiles/packer; guix build -f build.scm'
@@ -206,11 +190,11 @@ endef
 
 prefix := guix-system-configuration-
 $(foreach configuration,$(guix-system-configurations),guix-system-configuration-$(configuration)):
-	guix $(call guix-system-arguments,$(prefix),$@)
+guix $(call guix-system-arguments,$(prefix),$@)
 
 prefix := time-machine-guix-system-configuration-
 $(foreach configuration,$(guix-system-configurations),time-machine-guix-system-configuration-$(configuration)):
-	$(call guix-time-machine-arguments) -- $(call guix-system-arguments,$(prefix),$@)
+$(call guix-time-machine-arguments) -- $(call guix-system-arguments,$(prefix),$@)
 
 prefix := guix-package-manifest-
 $(foreach configuration,$(guix-system-configurations),guix-package-manifest-$(configuration)):
