@@ -11,23 +11,6 @@
   #:use-module (nongnu system linux-initrd)
   #:use-module (wugi bootloader grub))
 
-(define (amdgpu+amdgpu.conf)
-  (string-append "\
-
-Section \"Device\"
-        Identifier  \"amd-video-card-displayport-0\"
-        Driver      \"amdgpu\"
-        Option      \"TearFree\" \"true\"
-        Option      \"DRI\" \"3\"
-EndSection
-
-Section \"Screen\"
-   Identifier  \"Screen 1\"
-   Device      \"amd-video-card-displayport-0\"
-   Monitor     \"DisplayPort-0\"
-EndSection
-\n\n"))
-
 (operating-system
   (host-name "guixsd")
   (timezone "Europe/Moscow")
@@ -148,22 +131,22 @@ EndSection
 
                       ;; Enable LUKS TRIM/DISCARD pass-through.
                       "rd.luks.options=discard"))
-(users (cons* (user-account
-                     (name "oleg")
-                     (uid 1000)
-                     (comment "Oleg Pykhalov")
-                     (group "users")
-                     (supplementary-groups '("wheel"))
-                     (home-directory "/home/oleg"))
-%base-user-accounts))
-      (sudoers-file (plain-file "sudoers"
-                                (string-join `("root ALL=(ALL) ALL"
-                                               "%wheel ALL=(ALL) ALL"
-                                               "oleg ALL=(ALL) NOPASSWD:ALL"
-                                               ,(format #f "majordomo-ssh-tunnel ALL=(root) NOPASSWD: ~a~%"
-                                                        (string-join '("/run/current-system/profile/bin/herd * vncserver2"
-                                                                       "/run/current-system/profile/bin/herd * vncserver10")
-                                                                     ",")))
-                                             "\n")))
- (packages (cons* ratpoison %base-packages))
- (services %base-services))
+  (users (cons* (user-account
+                 (name "oleg")
+                 (uid 1000)
+                 (comment "Oleg Pykhalov")
+                 (group "users")
+                 (supplementary-groups '("wheel"))
+                 (home-directory "/home/oleg"))
+                %base-user-accounts))
+  (sudoers-file (plain-file "sudoers"
+                            (string-join `("root ALL=(ALL) ALL"
+                                           "%wheel ALL=(ALL) ALL"
+                                           "oleg ALL=(ALL) NOPASSWD:ALL"
+                                           ,(format #f "majordomo-ssh-tunnel ALL=(root) NOPASSWD: ~a~%"
+                                                    (string-join '("/run/current-system/profile/bin/herd * vncserver2"
+                                                                   "/run/current-system/profile/bin/herd * vncserver10")
+                                                                 ",")))
+                                         "\n")))
+  (packages (cons* ratpoison %base-packages))
+  (services %base-services))
