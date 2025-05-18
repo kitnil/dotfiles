@@ -141,13 +141,9 @@
                         (home-directory "/home/oleg")))
                  %base-user-accounts))
   (sudoers-file (plain-file "sudoers"
-                            (string-join `("root ALL=(ALL) ALL"
+                            (string-join '("root ALL=(ALL) ALL"
                                            "%wheel ALL=(ALL) ALL"
-                                           "oleg ALL=(ALL) NOPASSWD:ALL"
-                                           ,(format #f "majordomo-ssh-tunnel ALL=(root) NOPASSWD: ~a~%"
-                                                    (string-join '("/run/current-system/profile/bin/herd * vncserver2"
-                                                                   "/run/current-system/profile/bin/herd * vncserver10")
-                                                                 ",")))
+                                           "oleg ALL=(ALL) NOPASSWD:ALL")
                                          "\n")))
   (packages %base-packages)
   (services %base-services))
