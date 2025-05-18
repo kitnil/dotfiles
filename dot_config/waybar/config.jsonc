@@ -32,7 +32,7 @@
         "temperature",
         "memory",
         "disk#/",
-        // "backlight",
+        "backlight",
         "keyboard-state",
         "sway/language",
         "clock#utc",
