@@ -3,8 +3,6 @@ apiVersion: tekton.dev/v1beta1
 metadata:
   name: wget
 spec:
-  workspaces:
-  - name: data
   steps:
   - name: check-data
     image: nixery.dev/shell/wget
