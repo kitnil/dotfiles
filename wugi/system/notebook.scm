@@ -349,14 +349,7 @@ remote-random
                                                           (local-file (substitute-file "substitutes.nonguix.org.pub"))))
                                                   %default-authorized-guix-keys))
                                                 (substitute-urls '("https://bordeaux.guix.gnu.org"
-                                                                   "https://substitutes.nonguix.org"))))
-                            ;; (sysctl-service-type _ =>
-                            ;;                      (sysctl-configuration
-                            ;;                       (settings (append '(("net.ipv4.ip_forward" . "1")
-                            ;;                                           ("net.ipv4.conf.all.rp_filter" . "0")
-                            ;;                                           ("net.ipv4.conf.default.rp_filter" . "0"))
-                            ;;                                         %default-sysctl-settings))))
-                            )
+                                                                   "https://substitutes.nonguix.org")))))
                         (console-font-service-type
                          configuration =>
                          (map
