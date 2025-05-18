@@ -1,0 +1,7 @@
+kind: TaskRun
+apiVersion: tekton.dev/v1beta1
+metadata:
+  name: wget
+spec:
+  taskRef:
+    name: wget
