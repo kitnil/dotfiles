@@ -3,8 +3,7 @@ apiVersion: tekton.dev/v1beta1
 metadata:
   name: example-taskrun-0
 spec:
-  spec:
-    podTemplate:
-      hostPID: true
+  podTemplate:
+    hostPID: true
   taskRef:
     name: wget
