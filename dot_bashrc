@@ -574,10 +574,10 @@ guix()
                     (
                         set -e
                         cd "${HOME}/.local/share/chezmoi" || exit 1
-                        make dotfiles/channels-current.scm
-                        if [[ $(git diff dotfiles/channels-current.scm) != "" ]]
+                        make wugi/etc/guix/channels/guixsd.scm
+                        if [[ $(wugi/etc/guix/channels/guixsd.scm) != "" ]]
                         then
-                            if git commit -m "channels-current: Update." dotfiles/channels-current.scm
+                            if git commit -m "channels-current: Update." wugi/etc/guix/channels/guixsd.scm
                             then
                                 :
                             else
@@ -598,7 +598,7 @@ guix()
                         )
                     else
                         guix_command+=(
-                            "--channels=${HOME}/.local/share/chezmoi/dotfiles/channels-current.scm"
+                            "--channels=${HOME}/.local/share/chezmoi/wugi/etc/guix/channels/guixsd.scm"
                         )
                     fi
                     if [[ -n $dry_run ]]
