@@ -2398,7 +2398,14 @@ namespaces = [ ]
                                            (respawn? #f)
                                            (stop #~(make-kill-destructor))))))
 
-                        (load "desktop.scm")
+                        (udisks-service)
+                        (service accountsservice-service-type)
+                        (service colord-service-type)
+                        (geoclue-service)
+                        (service polkit-service-type)
+                        (dbus-service #:services (list avahi))
+                        (elogind-service)
+                        (service ntp-service-type)
 
                         (modify-services (operating-system-user-services base-system)
                           (guix-service-type config => (guix-configuration
