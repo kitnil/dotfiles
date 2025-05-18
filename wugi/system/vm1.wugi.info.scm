@@ -1,30 +1,51 @@
 ;; This is an operating system configuration template
 ;; for a "bare bones" setup, with no X11 display server.
 
-(use-modules (gnu)
-             (guix modules)
-             (guix store)
-             (json)
-             (guix gexp))
-(use-service-modules certbot databases dbus desktop docker dns messaging monitoring networking nix linux ssh sysctl web vpn)
-(use-package-modules admin curl certs databases guile networking linux ssh tmux)
-
-(use-modules (wugi config))
-
-(use-modules (packages certs)
-             (services bird)
-             (services dns)
-             (services docker)
-             (services mail)
-             (services monitoring)
-             (services certbot)
-             (services kubernetes)
-             (services networking)
-             (services ipset)
-             (services jenkins)
-             (services openvpn)
-             (services ssh)
-             (services web))
+(define-module (wugi system vm1)
+  #:use-module (gnu)
+  #:use-module (gnu packages admin)
+  #:use-module (gnu packages certs)
+  #:use-module (gnu packages curl)
+  #:use-module (gnu packages databases)
+  #:use-module (gnu packages guile)
+  #:use-module (gnu packages linux)
+  #:use-module (gnu packages networking)
+  #:use-module (gnu packages ssh)
+  #:use-module (gnu packages tmux)
+  #:use-module (gnu services certbot)
+  #:use-module (gnu services databases)
+  #:use-module (gnu services dbus)
+  #:use-module (gnu services desktop)
+  #:use-module (gnu services dns)
+  #:use-module (gnu services docker)
+  #:use-module (gnu services linux)
+  #:use-module (gnu services messaging)
+  #:use-module (gnu services monitoring)
+  #:use-module (gnu services networking)
+  #:use-module (gnu services nix)
+  #:use-module (gnu services ssh)
+  #:use-module (gnu services sysctl)
+  #:use-module (gnu services vpn)
+  #:use-module (gnu services web)
+  #:use-module (guix gexp)
+  #:use-module (guix modules)
+  #:use-module (guix store)
+  #:use-module (json)
+  #:use-module (wugi config)
+  #:use-module (wugi packages certs)
+  #:use-module (wugi services bird)
+  #:use-module (wugi services certbot)
+  #:use-module (wugi services dns)
+  #:use-module (wugi services docker)
+  #:use-module (wugi services ipset)
+  #:use-module (wugi services jenkins)
+  #:use-module (wugi services kubernetes)
+  #:use-module (wugi services mail)
+  #:use-module (wugi services monitoring)
+  #:use-module (wugi services networking)
+  #:use-module (wugi services openvpn)
+  #:use-module (wugi services ssh)
+  #:use-module (wugi services web))
 
 
 ;;;
@@ -40,8 +61,8 @@
   ;; target hard disk, and "my-root" is the label of the target
   ;; root file system.
   (bootloader (bootloader-configuration
-                (bootloader grub-bootloader)
-                (target "/dev/vda")))
+               (bootloader grub-bootloader)
+               (target "/dev/vda")))
   (file-systems (cons (file-system
                         (device (file-system-label "guix-root"))
                         (mount-point "/")
@@ -117,7 +138,7 @@ oleg ALL=(ALL) NOPASSWD:ALL\n"))
                           (service openssh-service-type
                                    (openssh-configuration
                                     (authorized-keys
-                                    `(("jenkins" ,(local-file "ssh/id_rsa_jenkins.wugi.info.pub"))))
+                                     `(("jenkins" ,(local-file "ssh/id_rsa_jenkins.wugi.info.pub"))))
                                     (password-authentication? #f)
                                     (gateway-ports? 'client)
                                     (use-pam? #f)
@@ -207,24 +228,24 @@ client-to-client
                                     (config-file (local-file "tinyproxy.conf"))
                                     (requirement '(tor))))
 
-                         (service tor-service-type
-                                  (tor-configuration
-                                   (config-file (local-file "torrc"))
-                                   (hidden-services
-                                    (list
-                                     (tor-onion-service-configuration
-                                      (name "ssh")
-                                      (mapping '((22 "127.0.0.1:22"))))
-                                     ;; (tor-onion-service-configuration
-                                     ;;  (name "guix-publish")
-                                     ;;  (mapping '((3000 "127.0.0.1:3000"))))
-                                     ))))
+                          (service tor-service-type
+                                   (tor-configuration
+                                    (config-file (local-file "torrc"))
+                                    (hidden-services
+                                     (list
+                                      (tor-onion-service-configuration
+                                       (name "ssh")
+                                       (mapping '((22 "127.0.0.1:22"))))
+                                      ;; (tor-onion-service-configuration
+                                      ;;  (name "guix-publish")
+                                      ;;  (mapping '((3000 "127.0.0.1:3000"))))
+                                      ))))
 
-                         (service jenkins-builder-service-type)
+                          (service jenkins-builder-service-type)
 
-                         (service nix-service-type
-                                  (nix-configuration
-                                   (extra-config '("trusted-users = oleg root"))))
+                          (service nix-service-type
+                                   (nix-configuration
+                                    (extra-config '("trusted-users = oleg root"))))
 
                           (dbus-service)
                           (elogind-service)
