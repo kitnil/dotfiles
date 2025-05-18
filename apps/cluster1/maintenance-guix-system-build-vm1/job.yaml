@@ -1,0 +1,16 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: guix-system-build
+spec:
+  template:
+    spec:
+      nodeSelector:
+        kubernetes.io/hostname: kube1
+      containers:
+      - name: nsenter
+        env:
+        - name: GIT_COMMIT
+          value: 2f0582e5be6d45b61775095ff87eb3fc484522a6
+        - name: RUNC_MAKE_TARGET
+          value: "vm1"
