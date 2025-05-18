@@ -46,6 +46,7 @@
   #:use-module (wugi services openvpn)
   #:use-module (wugi services ssh)
   #:use-module (wugi services web)
+  #:use-module (wugi utils)
   #:export (%vm1))
 
 
@@ -127,8 +128,16 @@ oleg ALL=(ALL) NOPASSWD:ALL\n"))
                                                                         "8.8.4.4"))
                             (service iptables-service-type
                                      (iptables-configuration
-                                      (ipv4-rules (local-file "etc/iptables/iptables.rules"))
-                                      (ipv6-rules (local-file "etc/iptables/ip6tables.rules"))))
+                                      (ipv4-rules
+                                       (local-file
+                                        (string-append
+                                         %distro-directory
+                                         "/etc/iptables/iptables.rules")))
+                                      (ipv6-rules
+                                       (local-file
+                                        (string-append
+                                         %distro-directory
+                                         "/etc/iptables/ip6tables.rules")))))
                             (service ntp-service-type
                                      (ntp-configuration
                                       (servers
@@ -140,7 +149,11 @@ oleg ALL=(ALL) NOPASSWD:ALL\n"))
                             (service openssh-service-type
                                      (openssh-configuration
                                       (authorized-keys
-                                       `(("jenkins" ,(local-file "ssh/id_rsa_jenkins.wugi.info.pub"))))
+                                       `(("jenkins"
+                                          ,(local-file
+                                            (string-append
+                                             %distro-directory
+                                             "/ssh/id_rsa_jenkins.wugi.info.pub")))))
                                       (password-authentication? #f)
                                       (gateway-ports? 'client)
                                       (use-pam? #f)
@@ -464,7 +477,8 @@ client-to-client
                       (%mail-services "78.108.82.44")
 
                       (modify-services %base-services
-                        (guix-service-type config => %guix-daemon-config-with-substitute-urls)
+                        (guix-service-type
+                         config => %guix-daemon-config-with-substitute-urls)
                         (sysctl-service-type _ =>
                                              (sysctl-configuration
                                               (settings (append '(("net.ipv4.ip_forward" . "1")
