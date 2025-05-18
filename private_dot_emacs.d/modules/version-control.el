@@ -332,13 +332,5 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 (with-eval-after-load 'git-auto-commit-mode
   (setq gac-default-message
         #'(lambda (filename)
-            (s-join ": " (append (funcall (-lambda ((a b c))
-                                            (if (string-equal "private_dot_emacs.d" a)
-                                                (list "emacs"
-                                                      (let ((suffix ".el"))
-                                                        (if (string-suffix-p suffix c)
-                                                            (substring c 0 (- (length c) (length suffix)))
-                                                          c)))
-                                              (list a b c)))
-                                          (f-split (gac-relative-file-name filename)))
-                                 (list "Update."))))))
+            (let ((prompt "Generate Git commit message following Changelog style. First commit line should end with a period as a sentence in a format. Each modified file should be described as in example \"* /a/b/c.txt: Add something.\". Without saying what you are doing. Limit is 200 characters."))
+              (shell-command-to-string (concat "git diff " filename " | aichat --prompt \"" prompt "\""))))))
