@@ -389,7 +389,7 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
         (save-excursion
           (replace-string " -" ":" nil 0 end))
         (save-excursion
-          (replace-string "^guixsd.scm " "system: guixsd: " nil 0 end)))
+          (replace-string "guixsd.scm " "system: guixsd: " nil 0 end)))
 
       (goto-char 2)
       (next-line)
