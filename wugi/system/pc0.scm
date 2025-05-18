@@ -133,7 +133,9 @@
                            (options "mode=1777,size=10%")))
                    %base-file-systems))
 
-    (kernel-arguments '("net.ifnames=0"
+    (kernel-arguments '("console=tty2" ;do not follow current tty
+
+                        "net.ifnames=0"
                         "biosdevname=0"
 
                         "modprobe.blacklist=pcspkr,snd_pcsp"
