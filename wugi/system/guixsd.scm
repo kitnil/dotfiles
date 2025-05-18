@@ -1593,7 +1593,7 @@ trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDS
                                    (ssh
                                     (begin
                                       (add-to-load-path (string-append %distro-directory "/dotfiles/manifests"))
-                                      (@ (wugi manifests deprecated) openssh)))
+                                      ((@ (wugi manifests deprecated) openssh))))
                                    (host "192.168.0.1")
                                    (environment-variables
                                     (list
