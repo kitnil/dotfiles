@@ -163,6 +163,37 @@
  '(python-shell-interpreter "python3" t)
  '(safe-local-variable-values
    '((eval progn
+           (setq-local geiser-guile-load-path
+                       (append
+                        (list
+                         (concat
+                          (getenv "HOME")
+                          "/src/cgit.duckdns.org/guix/guix-wigust/guix"))
+                        (list
+                         (concat
+                          (getenv "HOME")
+                          "/src/gitlab.com/nonguix/nonguix"))
+                        (if
+                            (boundp #'projectile-project-root)
+                            (list
+                             (projectile-project-root))
+                          'nil)))
+           (aggressive-indent-mode))
+     (eval with-eval-after-load 'tempel
+           (if
+               (stringp tempel-path)
+               (setq tempel-path
+                     (list tempel-path)))
+           (let
+               ((guix-tempel-snippets
+                 (concat
+                  (expand-file-name "etc/snippets/tempel"
+                                    (locate-dominating-file default-directory ".dir-locals.el"))
+                  "/*.eld")))
+             (unless
+                 (member guix-tempel-snippets tempel-path)
+               (add-to-list 'tempel-path guix-tempel-snippets))))
+     (eval progn
            (when
                (boundp #'projectile-project-root)
              (setenv "GUIX_PACKAGE_PATH"
