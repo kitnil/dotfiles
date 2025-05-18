@@ -2397,16 +2397,16 @@ namespaces = [ ]
                                            (start #~(make-forkexec-constructor
                                                      (list #$container-guix-networking-avahi-program)))
                                            (respawn? #f)
-                                           (stop #~(make-kill-destructor))))))
+                                           (stop #~(make-kill-destructor)))))
 
-                        (udisks-service)
-                        (service accountsservice-service-type)
-                        (service colord-service-type)
-                        (geoclue-service)
-                        (service polkit-service-type)
-                        (dbus-service #:services (list avahi))
-                        (elogind-service)
-                        (service ntp-service-type)
+                         (udisks-service)
+                         (service accountsservice-service-type)
+                         (service colord-service-type)
+                         (geoclue-service)
+                         (service polkit-service-type)
+                         (dbus-service #:services (list avahi))
+                         (elogind-service)
+                         (service ntp-service-type))
 
                         (modify-services (operating-system-user-services base-system)
                           (guix-service-type config => (guix-configuration
