@@ -239,15 +239,6 @@ $(state-to-vc-hostnames):
 
 state-to-vc-containers: $(state-to-vc-hostnames)
 
-.PHONY: guix-system-build-channels-current
-guix-system-build-channels-current:
-	sudo --login GUILE_LOAD_PATH="$(PWD)/wugi:$(GUILE_LOAD_PATH)" \
-            guix time-machine \
-            --channels="$(PWD)/dotfiles/channels-current.scm" \
-            -- system build \
-                --load-path="$(PWD)/wugi:$(GUILE_LOAD_PATH)" \
-                "$(PWD)/dotfiles/guixsd/$(HOSTNAME).scm"
-
 container_registry=docker-registry.wugi.info
 .ONESHELL:
 util-linux-with-udev:
