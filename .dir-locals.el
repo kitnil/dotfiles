@@ -11,5 +11,4 @@
                                    (if (boundp #'projectile-project-root)
                                        (list (projectile-project-root))
                                      '())))
-               (git-auto-commit-mode)
                (aggressive-indent-mode))))))
