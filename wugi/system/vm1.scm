@@ -244,7 +244,11 @@ client-to-client
 
                             (service tinyproxy-service-type
                                      (tinyproxy-configuration
-                                      (config-file (local-file "tinyproxy.conf"))
+                                      (config-file
+                                       (local-file
+                                        (string-append
+                                         %distro-directory
+                                         "/dotfiles/guixsd/tinyproxy.conf")))
                                       (requirement '(tor))))
 
                             (service tor-service-type
