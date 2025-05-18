@@ -24,7 +24,7 @@ spec:
           set -o nounset -o errexit -o pipefail -o xtrace
           kubectl --namespace=guix exec --stdin=true pod/runc-kube1-guix-builder -- runc exec -u 1000:998 guix-builder /bin/sh -le <<'EOL'
           cd "${HOME}/src/git.savannah.gnu.org/git/guix" || exit 1
-          guix shell help2man guile-sqlite3 guile-gcrypt direnv git git:send-email git-cal gnupg guile-colorized guile-readline inetutils less ncurses openssh password-store sshpass xdot which skopeo --development guix <<'EOS'
+          guix shell help2man guile-sqlite3 guile-gcrypt direnv git --development guix <<'EOS'
           set -o nounset -o errexit -o pipefail -o xtrace
           git checkout docker-system
           git reset --hard HEAD
