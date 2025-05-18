@@ -323,7 +323,8 @@ remote-random
                        (extra-special-file "/sbin/blockdev"
                                            (file-append util-linux+udev "/sbin/blockdev")))
 
-                      (list ;; (screen-locker-service slock)
+                      (list
+                       ;; (screen-locker-service slock)
                        (udisks-service)
                        (service upower-service-type)
                        (service accountsservice-service-type)
