@@ -189,7 +189,7 @@ endef
 
 prefix := guix-system-configuration-
 $(foreach configuration,$(guix-system-configurations),guix-system-configuration-$(configuration)):
-guix $(call guix-system-arguments,$(prefix),$@)
+	guix $(call guix-system-arguments,$(prefix),$@)
 
 prefix := time-machine-guix-system-configuration-
 $(foreach configuration,$(guix-system-configurations),time-machine-guix-system-configuration-$(configuration)):
