@@ -1,7 +1,7 @@
 ;; This is an operating system configuration template
 ;; for a "bare bones" setup, with no X11 display server.
 
-(define-module (wugi system vm1)
+(define-module (wugi system vm1.wugi.info)
   #:use-module (gnu)
   #:use-module (gnu packages admin)
   #:use-module (gnu packages certs)
