@@ -340,6 +340,6 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
                                          "Maximum column width is 78 characters."
                                          "Avoid write \"Add\" \"Update\" \"Delete\" words instead \"Fix\" or \"feat\" in a commit title (first line)."
                                          "Make sure dots not duplicated in a first line."
-                                         "If a single file was in a diff then first line should contain a path to this file separated by colon symbol.")
+                                         "If a single file was in a diff then first line should contain a path to this file separated by colon symbol instead of slashes.")
                                        " ")))
               (shell-command-to-string (concat "git diff | aichat --prompt \"" prompt "\""))))))
