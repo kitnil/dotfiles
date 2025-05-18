@@ -253,7 +253,11 @@ client-to-client
 
                             (service tor-service-type
                                      (tor-configuration
-                                      (config-file (local-file "torrc"))
+                                      (config-file
+                                       (local-file
+                                        (string-append
+                                         %distro-directory
+                                         "/dotfiles/guixsd/torrc")))
                                       (hidden-services
                                        (list
                                         (tor-onion-service-configuration
