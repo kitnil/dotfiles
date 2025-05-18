@@ -1869,7 +1869,7 @@ PasswordAuthentication yes")))
                                   (bird-configuration
                                    (config-file (local-file "bird-wugi.info.conf"))))
 
-		         ;; TODO: Move those services.
+                         ;; TODO: Move those services.
 
                          ;; Jun 19 17:51:38 guixsd postgres[27613]: [1-1]
                          ;; 2022-06-19 14:51:38.225 GMT [27613] FATAL:
@@ -1886,11 +1886,11 @@ PasswordAuthentication yes")))
                          ;;                                          (hba-file
                          ;;                                           (plain-file "pg_hba.conf"
                          ;;                                                       "
-                         ;; local	all	all			trust
-                         ;; host	all	all	127.0.0.1/32    trust
-                         ;; host	all	all	::1/128         trust
-                         ;; host	all	all	172.16.0.0/12   trust
-                         ;; host	all	all	192.168.64.0/20   trust"))
+                         ;; local       all     all                     trust
+                         ;; host        all     all     127.0.0.1/32    trust
+                         ;; host        all     all     ::1/128         trust
+                         ;; host        all     all     172.16.0.0/12   trust
+                         ;; host        all     all     192.168.64.0/20   trust"))
                          ;;                                          (extra-config
                          ;;                                           `(("listen_addresses"
                          ;;                                              ,(string-join '("127.0.0.1"
@@ -2282,8 +2282,8 @@ localhost ecdsa-sha2-nistp256 AAAAE2VjZHNhLXNoYTItbmlzdHAyNTYAAAAIbmlzdHAyNTYAAA
                          ;; Bring eth0 up and pass it to the networking bridge.
                          (service static-networking-service-type
                                   (list
-				   (static-networking
-				    (provision '(eth0))
+                                   (static-networking
+                                    (provision '(eth0))
                                     (addresses (list
                                                 (network-address
                                                  (device "eth0")
