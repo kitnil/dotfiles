@@ -188,7 +188,7 @@ shell -L wugi --manifest=dotfiles/manifests/$(subst $(1),,$(2)).scm -- exit 0
 endef
 
 prefix := guix-system-configuration-
-$(foreach configuration,$(guix-system-configurations),guix-system-configuration-$(configuration)):
+$(foreach configuration,$(guix-system-configurations),$(configuration)):
 	guix $(call guix-system-arguments,$(prefix),$@)
 
 prefix := time-machine-guix-system-configuration-
