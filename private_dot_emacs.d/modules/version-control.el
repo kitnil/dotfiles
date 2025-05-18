@@ -351,6 +351,48 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
     (insert
      (shell-command-to-string
       (concat "cat <(git diff --cached) <(git diff --staged) <(git diff) | aichat --prompt \"" prompt "\"")))
-    (fill-region (point-min) (point-max))))
+    (save-excursion
+      (goto-char 0)
+      (replace-string "Fix: job.yaml -" "")
+
+      (goto-char 0)
+      (replace-string ".." ".")
+
+      (goto-char 0)
+      (replace-string "``` " "")
+
+      (goto-char 0)
+      (replace-string " ```" "")
+
+      (goto-char 0)
+      (replace-string "```" "")
+
+      (goto-char 0)
+      (replace-string "Fix: " "")
+
+      (goto-char 0)
+      (replace-string "feat: " "")
+
+      (goto-char 0)
+      (replace-string "`" "")
+
+      (goto-char 2)
+      (let ((end (progn (end-of-line) (point))))
+        (goto-char 0)
+        (save-excursion
+          (replace-string "/" ": " nil 0 end))
+        (save-excursion
+          (replace-string "private_dot_emacs.d: modules: " "emacs: "
+                          nil 0 end))
+        (save-excursion
+          (replace-string ".el" "" nil 0 end)))
+
+      (goto-char 2)
+      (next-line)
+      (fill-region (point) (point-max))
+
+      (goto-char 2)
+      (next-line)
+      (replace-string "  *" "\n*" nil (point) (point-max)))))
 
 (add-hook 'log-edit-hook #'vc-aichat)
