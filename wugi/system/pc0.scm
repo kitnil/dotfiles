@@ -60,7 +60,7 @@
                 #~(begin
                     (setenv "PATH"
                             "/run/setuid-programs:/root/.config/guix/current/bin:/run/current-system/profile/bin:/run/current-system/profile/sbin")
-                    (execl #$(local-file "/home/oleg/.local/share/chezmoi/dotfiles/run/pc0/13-guix-workstation-run.sh"
+                    (execl #$(local-file (string-append %distro-directory "/dotfiles/run/pc0/13-guix-workstation-run.sh")
                                          #:recursive? #t)
                            "13-guix-workstation-run.sh"))))
 
@@ -69,7 +69,7 @@
                 #~(begin
                     (setenv "PATH"
                             "/run/setuid-programs:/root/.config/guix/current/bin:/run/current-system/profile/bin:/run/current-system/profile/sbin")
-                    (execl #$(local-file "/home/oleg/.local/share/chezmoi/dotfiles/run/pc0/14-sway-run-all.sh"
+                    (execl #$(local-file (string-append %distro-directory "/dotfiles/run/pc0/14-sway-run-all.sh")
                                          #:recursive? #t)
                            "sway-run-all"))))
 
