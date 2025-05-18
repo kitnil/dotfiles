@@ -1842,7 +1842,11 @@ PasswordAuthentication yes")))
 
                          (service gitolite-service-type
                                   (gitolite-configuration
-                                   (admin-pubkey (local-file "/home/oleg/.ssh/id_rsa.pub"))))
+                                   (admin-pubkey
+                                    (local-file
+                                     (string-append
+                                      %distro-directory
+                                      "/dotfiles/guixsd/ssh/id_rsa_guixsd.pub")))))
 
                          (service cgit-service-type
                                   (cgit-configuration
