@@ -176,6 +176,8 @@ dotfiles/packer/build.scm:
 
 guix-system-configurations =			\
   guixsd					\
+  notebook					\
+  pc0					\
   vm1					\
   vm2
 
