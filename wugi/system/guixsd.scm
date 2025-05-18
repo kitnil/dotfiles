@@ -61,6 +61,7 @@
              (wigust packages linux)
              (wigust packages web)
              (wugi config)
+             (wugi manifests deprecated)
              (wugi packages certs)
              (wugi packages monitoring)
              (wugi packages netboot)
@@ -78,6 +79,7 @@
              (wugi services jenkins)
              (wugi services kubernetes)
              (wugi services monitoring)
+             (wugi services networking)
              (wugi services nix)
              (wugi services openvpn)
              (wugi services syncthing)
@@ -87,12 +89,6 @@
 
 (define %home
   (passwd:dir (getpw "oleg")))
-
-(add-to-load-path (string-append %home "/.local/share/chezmoi/dotfiles/manifests"))
-(use-modules (deprecated))
-
-(add-to-load-path (string-append %home "/.local/share/chezmoi/dotfiles/guixsd/modules"))
-(use-modules (services networking))
 
 (define %private-ip-address
   "192.168.0.144")
