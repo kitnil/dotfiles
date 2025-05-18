@@ -847,37 +847,11 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: maintenance-guix-system-build-vm2
+  name: maintenance-guix-system-build-guixsd
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./apps/cluster1/maintenance-guix-system-build-vm2
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
-kind: Kustomization
-metadata:
-  name: maintenance-guix-system-build-vm1
-  namespace: flux-system
-spec:
-  interval: 10m0s
-  path: ./apps/cluster1/maintenance-guix-system-build-vm1
-  prune: true
-  sourceRef:
-    kind: GitRepository
-    name: flux-system
----
-apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
-kind: Kustomization
-metadata:
-  name: maintenance-guix-system-build-pc0
-  namespace: flux-system
-spec:
-  interval: 10m0s
-  path: ./apps/cluster1/maintenance-guix-system-build-pc0
+  path: ./apps/cluster1/maintenance-guix-system-build-guixsd
   prune: true
   sourceRef:
     kind: GitRepository
@@ -899,11 +873,37 @@ spec:
 apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
 kind: Kustomization
 metadata:
-  name: maintenance-guix-system-build-guixsd
+  name: maintenance-guix-system-build-pc0
   namespace: flux-system
 spec:
   interval: 10m0s
-  path: ./apps/cluster1/maintenance-guix-system-build-guixsd
+  path: ./apps/cluster1/maintenance-guix-system-build-pc0
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: maintenance-guix-system-build-vm1
+  namespace: flux-system
+spec:
+  interval: 10m0s
+  path: ./apps/cluster1/maintenance-guix-system-build-vm1
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: flux-system
+---
+apiVersion: kustomize.toolkit.fluxcd.io/v1beta2
+kind: Kustomization
+metadata:
+  name: maintenance-guix-system-build-vm2
+  namespace: flux-system
+spec:
+  interval: 10m0s
+  path: ./apps/cluster1/maintenance-guix-system-build-vm2
   prune: true
   sourceRef:
     kind: GitRepository
