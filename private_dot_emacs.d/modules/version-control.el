@@ -350,7 +350,7 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
           " ")))
     (insert
      (shell-command-to-string
-      (concat "git diff | aichat --prompt \"" prompt "\"")))
+      (concat "cat <(git diff --cached) <(git diff --staged) <(git diff) | aichat --prompt \"" prompt "\"")))
     (fill-region (point-min) (point-max))))
 
 (add-hook 'log-edit-hook #'vc-aichat)
