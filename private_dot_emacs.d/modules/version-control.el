@@ -400,3 +400,4 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
       (replace-string "  *" "\n*" nil (point) (point-max)))))
 
 (add-hook 'log-edit-hook #'vc-aichat)
+(add-hook 'log-edit-hook #'auto-fill-mode)
