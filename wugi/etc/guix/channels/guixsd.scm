@@ -22,7 +22,7 @@
           "1cb2b18e4b7e83c396dcdde75ed6b532440d627a"))
         (channel
          (name 'nonguix)
-         (url "https://gitlab.com/nonguix/nonguix")
+         (url "https://cgit.wugi.info/git/guix/nonguix")
          (branch "master")
          (commit
           "639b70063b73cb9ff553b77d51d42c07eb208d91")
