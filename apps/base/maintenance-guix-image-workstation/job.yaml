@@ -37,8 +37,6 @@ spec:
           value: "1000"
         - name: RUNC_GID
           value: "998"
-        - name: RUNC_MAKE_TARGET
-          value: "guix-image-workstation"
         resources:
           limits:
             cpu: 14000m
