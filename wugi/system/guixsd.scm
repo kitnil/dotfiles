@@ -1590,10 +1590,7 @@ trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDS
                          (service prometheus-tp-link-exporter-service-type
                                   (prometheus-tp-link-exporter-configuration
                                    ;; XXX: Deprecated SSH client.
-                                   (ssh
-                                    (begin
-                                      (add-to-load-path (string-append %distro-directory "/dotfiles/manifests"))
-                                      ((@ (wugi manifests deprecated) openssh))))
+                                   (ssh ((@ (wugi manifests deprecated) openssh)))
                                    (host "192.168.0.1")
                                    (environment-variables
                                     (list
