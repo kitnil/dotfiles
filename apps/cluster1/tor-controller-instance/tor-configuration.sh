@@ -11,6 +11,7 @@ data:
     ExitNodes {nl},{fr},{de}
     UseBridges 1
     ClientTransportPlugin obfs4 exec /usr/local/bin/obfs4proxy
+    HTTPTunnelPort 0.0.0.0:9250
     Bridge $(pass show tor/bridge/1)
     Bridge $(pass show tor/bridge/2)
 EOF
