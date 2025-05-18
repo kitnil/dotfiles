@@ -87,6 +87,7 @@
   #:use-module (wugi services syncthing)
   #:use-module (wugi services virtualization)
   #:use-module (wugi services web)
+  #:use-module (wugi utils)
   #:use-module (wugi utils package)
   #:export (%guixsd))
 
@@ -1267,7 +1268,7 @@ location / {
                 #~(begin
                     (setenv "PATH"
                             "/run/setuid-programs:/root/.config/guix/current/bin:/run/current-system/profile/bin:/run/current-system/profile/sbin")
-                    (execl #$(local-file "/home/oleg/.local/share/chezmoi/dotfiles/run/guixsd/10-avahi-namespace.sh"
+                    (execl #$(local-file (string-append %distro-directory "/dotfiles/run/guixsd/10-avahi-namespace.sh")
                                          #:recursive? #t)
                            "container-guix-networking-avahi-program"))))
 
@@ -1583,7 +1584,7 @@ trusted-public-keys = cache.nixos.org-1:6NCHdD59X431o0gWypbMrAURkbJ16ZPMQFGspcDS
                                    ;; XXX: Deprecated SSH client.
                                    (ssh
                                     (begin
-                                      (add-to-load-path (string-append %home "/.local/share/chezmoi/dotfiles/manifests"))
+                                      (add-to-load-path (string-append %distro-directory "/dotfiles/manifests"))
                                       (@ (deprecated) openssh)))
                                    (host "192.168.0.1")
                                    (environment-variables
