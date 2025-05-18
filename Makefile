@@ -39,10 +39,6 @@ QEMU_FLAGS =					\
   -smp 2					\
   -nic user,model=virtio-net-pci,hostfwd=tcp::10022-:22
 
-define guix-time-machine-arguments
-guix time-machine -C dotfiles/channels-current.scm
-endef
-
 define guix-system-vm-arguments
 system vm -L wugi --no-offload dotfiles/system/$(1)
 endef
@@ -55,10 +51,6 @@ guix-system-vm-configurations =			\
 guix-system-vm-configuration-prefix := guix-system-vm-configuration-
 $(foreach configuration,$(guix-system-vm-configurations),$(guix-system-vm-configuration-prefix)-$(configuration)):
 	guix $(call guix-system-vm-arguments,$(guix-system-vm-configuration-prefix),$@)
-
-time-machine-guix-system-vm-configuration-prefix = time-machine-guix-system-vm-configuration-
-$(foreach configuration,$(guix-system-vm-configurations),$(time-machine-guix-system-vm-configuration-prefix)$(configuration)):
-	$(call guix-time-machine-arguments) -- $(call guix-system-vm-arguments,$(subst $(time-machine-guix-system-vm-configuration-prefix),vm-image-,$@).tmpl)
 
 .PHONY: extension-graph
 extension-graph:
