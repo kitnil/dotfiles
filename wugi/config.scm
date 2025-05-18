@@ -263,11 +263,11 @@ EndSection\n")
 
 (define %mtls
   #~(begin
-      #$(if (file-exists? "/home/oleg/src/ssl/ca.pem")
-            (list (format #f "ssl_client_certificate ~a;"
-                          (local-file "/home/oleg/src/ssl/ca.pem"))
-                  "ssl_verify_client on;")
-            "")))
+      '#$(if (file-exists? "/home/oleg/src/ssl/ca.pem")
+             (list (format #f "ssl_client_certificate ~a;"
+                           (local-file "/home/oleg/src/ssl/ca.pem"))
+                   "ssl_verify_client on;")
+             '())))
 
 (define* (proxy host port
                 #:key
