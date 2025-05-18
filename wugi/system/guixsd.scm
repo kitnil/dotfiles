@@ -2,6 +2,7 @@
   #:use-module (gnu)
   #:use-module (gnu packages admin)
   #:use-module (gnu packages android)
+  #:use-module (gnu packages avahi)
   #:use-module (gnu packages audio)
   #:use-module (gnu packages backup)
   #:use-module (gnu packages bash)
