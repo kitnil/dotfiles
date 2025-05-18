@@ -91,6 +91,7 @@
                  (targets '("/boot/efi"))))
 
     (kernel-loadable-modules (list kvmfr-linux-module
+                                   ddcci-driver-linux
                                    v4l2loopback-linux-module))
 
     (mapped-devices
