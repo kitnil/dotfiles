@@ -1443,8 +1443,10 @@ location / {
                          ;; mount -t fuse and autofs
                          (extra-special-file "/bin/sshfs"
                                              (file-append sshfs "/bin/sshfs"))
-                         (extra-special-file "/bin/ssh"
-                                             (file-append openssh "/bin/ssh"))
+                         (extra-special-file
+                          "/bin/ssh"
+                          (file-append (@ (gnu packages ssh) openssh)
+                                       "/bin/ssh"))
 
                          ;; for taskexecutor
                          (extra-special-file "/bin/bash"
