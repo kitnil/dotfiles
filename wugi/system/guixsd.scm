@@ -86,7 +86,8 @@
   #:use-module (wugi services syncthing)
   #:use-module (wugi services virtualization)
   #:use-module (wugi services web)
-  #:use-module (wugi utils package))
+  #:use-module (wugi utils package)
+  #:export (%guixsd))
 
 (define %home
   (passwd:dir (getpw "oleg")))
@@ -1281,7 +1282,7 @@ location / {
                (string-append (dirname file) "/hardware/guixsd.scm")))
       "/home/oleg/src/dotfiles/guixsd/hardware/guixsd.scm"))
 
-(define %system-guixsd
+(define (%guixsd)
   (let ((base-system (load %hardware-file)))
     (operating-system
       (inherit base-system)
@@ -1352,15 +1353,15 @@ location / {
                         %my-system-packages))
 
       (groups (cons* ;; (user-group (name "nixbld")
-                     ;;             (id 30100))
-                     (user-group (name "uinput"))
-                     (user-group (name "postfix")
-                                 (id 13)
-                                 (system? #t))
-                     (user-group (name "postdrop")
-                                 (id 118)
-                                 (system? #t))
-                     %base-groups))
+               ;;             (id 30100))
+               (user-group (name "uinput"))
+               (user-group (name "postfix")
+                           (id 13)
+                           (system? #t))
+               (user-group (name "postdrop")
+                           (id 118)
+                           (system? #t))
+               %base-groups))
 
       (users (cons* (user-account
                      (name "oleg")
@@ -1379,29 +1380,29 @@ location / {
                      (shell "/run/current-system/profile/sbin/nologin")
                      (system? #t))
                     (append #;((lambda* (count #:key
-                                        (group "nixbld")
-                                        (first-uid 30101)
-                                        (shadow shadow))
-                               (unfold (cut > <> count)
-                                       (lambda (n)
-                                         (user-account
-                                          (name (format #f "nixbld~a" n))
-                                          (system? #t)
-                                          (uid (+ first-uid n -1))
-                                          (group group)
+                     (group "nixbld")
+                     (first-uid 30101)
+                     (shadow shadow))
+                     (unfold (cut > <> count)
+                     (lambda (n)
+                     (user-account
+                     (name (format #f "nixbld~a" n))
+                     (system? #t)
+                     (uid (+ first-uid n -1))
+                     (group group)
 
-                                          ;; guix-daemon expects GROUP to be listed as a
-                                          ;; supplementary group too:
-                                          ;; <http://lists.gnu.org/archive/html/bug-guix/2013-01/msg00239.html>.
-                                          (supplementary-groups (list group "kvm"))
+                     ;; guix-daemon expects GROUP to be listed as a
+                     ;; supplementary group too:
+                     ;; <http://lists.gnu.org/archive/html/bug-guix/2013-01/msg00239.html>.
+                     (supplementary-groups (list group "kvm"))
 
-                                          (comment (format #f "Nix Build User ~a" n))
-                                          (home-directory "/var/empty")
-                                          (shell (file-append shadow "/sbin/nologin"))))
-                                       1+
-                                       1))
-                             9)
-                            %base-user-accounts)))
+                     (comment (format #f "Nix Build User ~a" n))
+                     (home-directory "/var/empty")
+                     (shell (file-append shadow "/sbin/nologin"))))
+                     1+
+                     1))
+                     9)
+                     %base-user-accounts)))
 
       (hosts-file
        (generate-hosts-file
@@ -1814,24 +1815,24 @@ PasswordAuthentication yes")))
 ")))
 
                          #;(service homer-service-type
-                                  (homer-configuration
-                                   (config-file %homer-config)
-                                   (nginx
-                                    (list
-                                     (nginx-server-configuration
-                                      (inherit %homer-nginx-configuration-nginx)
-                                      (server-name '("home.wugi.info"))
-                                      (locations
-                                       (list (nginx-location-configuration
-                                              (uri "/.well-known")
-                                              (body '("root /var/www;")))
-                                             (nginx-location-configuration
-                                              (uri "/assets/config.yml")
-                                              (body '("etag off;"
-                                                      "if_modified_since off;"
-                                                      ;; "add_header Last-Modified $date_gmt;"
-                                                      "add_header Last-Modified \"\";")))))
-                                      (listen '("127.0.0.1:80")))))))
+                         (homer-configuration
+                         (config-file %homer-config)
+                         (nginx
+                         (list
+                         (nginx-server-configuration
+                         (inherit %homer-nginx-configuration-nginx)
+                         (server-name '("home.wugi.info"))
+                         (locations
+                         (list (nginx-location-configuration
+                         (uri "/.well-known")
+                         (body '("root /var/www;")))
+                         (nginx-location-configuration
+                         (uri "/assets/config.yml")
+                         (body '("etag off;"
+                         "if_modified_since off;"
+                         ;; "add_header Last-Modified $date_gmt;"
+                         "add_header Last-Modified \"\";")))))
+                         (listen '("127.0.0.1:80")))))))
 
                          (service gitolite-service-type
                                   (gitolite-configuration
@@ -1887,21 +1888,21 @@ PasswordAuthentication yes")))
                          ;; version 14.3.
                          ;;
                          ;; (postgresql-service
-;;                           #:config-file (postgresql-config-file
-;;                                          (hba-file
-;;                                           (plain-file "pg_hba.conf"
-;;                                                       "
-;; local	all	all			trust
-;; host	all	all	127.0.0.1/32    trust
-;; host	all	all	::1/128         trust
-;; host	all	all	172.16.0.0/12   trust
-;; host	all	all	192.168.64.0/20   trust"))
-;;                                          (extra-config
-;;                                           `(("listen_addresses"
-;;                                              ,(string-join '("127.0.0.1"
-;;                                                              "192.168.0.144"
-;;                                                              "172.18.0.1")
-;;                                                            ","))))))
+                         ;;                           #:config-file (postgresql-config-file
+                         ;;                                          (hba-file
+                         ;;                                           (plain-file "pg_hba.conf"
+                         ;;                                                       "
+                         ;; local	all	all			trust
+                         ;; host	all	all	127.0.0.1/32    trust
+                         ;; host	all	all	::1/128         trust
+                         ;; host	all	all	172.16.0.0/12   trust
+                         ;; host	all	all	192.168.64.0/20   trust"))
+                         ;;                                          (extra-config
+                         ;;                                           `(("listen_addresses"
+                         ;;                                              ,(string-join '("127.0.0.1"
+                         ;;                                                              "192.168.0.144"
+                         ;;                                                              "172.18.0.1")
+                         ;;                                                            ","))))))
 
                          ;; (service mongodb-service-type)
 
@@ -2434,5 +2435,3 @@ namespaces = [ ]
 
       ;; Allow resolution of '.local' host names with mDNS.
       (name-service-switch %mdns-host-lookup-nss))))
-
-%system-guixsd
