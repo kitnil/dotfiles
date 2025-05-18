@@ -323,23 +323,3 @@ _p_rev       _u_pper              _=_: upper/lower       _r_esolve
 ;; NOTE: Use ivy-magit-todos instead of magit-todos-mode
 (when (boundp #'magit-todos-mode)
   (magit-todos-mode))
-
-
-;;;
-;;; git-auto-commit-mode
-;;;
-
-(with-eval-after-load 'git-auto-commit-mode
-  (setq gac-default-message
-        #'(lambda (filename)
-            (let ((prompt (string-join '("Generate Git commit message following Changelog style."
-                                         "First commit line should end with a period as a sentence followed by a newline and a more detailed description."
-                                         "Each modified file should be described as in example \"* a/b/c.txt: Add something.\"."
-                                         "Without saying what you are doing."
-                                         "Limit is 200 characters."
-                                         "Maximum column width is 78 characters."
-                                         "Avoid write \"Add\" \"Update\" \"Delete\" words instead \"Fix\" or \"feat\" in a commit title (first line)."
-                                         "Make sure dots not duplicated in a first line."
-                                         "If a single file was in a diff then first line should contain a path to this file separated by colon symbol.")
-                                       " ")))
-              (shell-command-to-string (concat "git diff | aichat --prompt \"" prompt "\""))))))
