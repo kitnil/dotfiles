@@ -4,32 +4,42 @@
 
 (use-modules (gnu)
              (gnu system nss)
+             (ice-9 match)
              (nongnu packages linux)
              (nongnu system linux-initrd)
-
-             (wugi services openvpn)
-
-             (ice-9 match)
-
              (services nix)
              (srfi srfi-1)
              (srfi srfi-26)
-
-             (wugi config))
-
-(use-service-modules avahi dbus desktop desktop docker monitoring networking
-                     linux networking nix sound ssh xorg)
-
-(use-package-modules admin audio bootloaders fonts linux nfs
-                     package-management terminals vpn wm xfce xorg)
-
-(use-modules (wugi bootloader grub)
-             (packages monitoring)
-             (packages linux)
-             (services backup)
-             (services kubernetes)
-             (services monitoring)
-             (utils package))
+             (wugi bootloader grub)
+             (wugi config)
+             (wugi packages admin)
+             (wugi packages audio)
+             (wugi packages bootloaders)
+             (wugi packages fonts)
+             (wugi packages linux)
+             (wugi packages monitoring)
+             (wugi packages nfs)
+             (wugi packages package-management)
+             (wugi packages terminals)
+             (wugi packages vpn)
+             (wugi packages wm)
+             (wugi packages xfce)
+             (wugi packages xorg)
+             (wugi services avahi)
+             (wugi services backup)
+             (wugi services dbus)
+             (wugi services desktop)
+             (wugi services docker)
+             (wugi services kubernetes)
+             (wugi services linux)
+             (wugi services monitoring)
+             (wugi services networking)
+             (wugi services nix)
+             (wugi services openvpn)
+             (wugi services sound)
+             (wugi services ssh)
+             (wugi services xorg)
+             (wugi utils package))
 
 (operating-system
   (host-name "notebook")
