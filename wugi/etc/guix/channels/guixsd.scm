@@ -5,7 +5,7 @@
 (define %channels-guixsd
   (list (channel
          (name 'guix)
-         (url "https://git.savannah.gnu.org/git/guix.git")
+         (url "https://cgit.wugi.info/git/guix/guix")
          (branch "master")
          (commit
           "857f5017507cfe6cbf742bfb7d33c1520f8c6d15")
